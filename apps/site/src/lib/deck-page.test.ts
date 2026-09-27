@@ -25,6 +25,7 @@ const deck = (over: Partial<PublicDeckOut> = {}): PublicDeckOut => ({
   name: "Everyday Estonian",
   summary: "Words for your first weeks.",
   level: "A1",
+  tags: ["core-words"],
   language: "et",
   meaningLanguage: "en",
   originalMeaningLanguage: "en",
@@ -196,6 +197,24 @@ describe("deckContentHash", () => {
     const base = deckContentHash(deck());
     expect(deckContentHash(deck())).toBe(base);
     expect(deckContentHash(deck({ name: "Renamed" }))).not.toBe(base);
+    expect(deckContentHash(deck({ tags: ["travel"] }))).not.toBe(base);
+    const related = {
+      slug: "everyday-finnish",
+      name: "Everyday Finnish",
+      summary: "Home, work and the shop.",
+      level: null,
+      category: "languages",
+      tags: ["core-words" as const],
+      language: "fi",
+      meaningLanguage: "en",
+      cardCount: 12,
+      sectionCount: 0,
+      card: null,
+    };
+    expect(deckContentHash(deck(), [related])).not.toBe(base);
+    expect(deckContentHash(deck(), [{ ...related, tags: ["travel"] }])).not.toBe(
+      deckContentHash(deck(), [related]),
+    );
     expect(
       deckContentHash(
         deck({

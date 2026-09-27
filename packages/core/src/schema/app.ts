@@ -8,6 +8,7 @@ import {
   LOCALIZATION_PROVENANCES,
   LOCALIZATION_STATUSES,
   PUBLICATION_CATEGORIES,
+  type PublicationTag,
   REVIEW_MODE_KEYS,
   type ReviewModeKey,
   SECTION_PROGRESSIONS,
@@ -366,6 +367,8 @@ export const deckPublications = sqliteTable(
     level: text("level"),
     /** Which shelf the deck sits on in Explore. Null until a publisher chooses one. */
     category: text("category", { enum: PUBLICATION_CATEGORIES }),
+    /** Keys from `PUBLICATION_TAGS`, in list order. Not a card's `tags`, and never copied into them. */
+    tags: text("tags", { mode: "json" }).$type<PublicationTag[]>().notNull().default(sql`'[]'`),
     /** The original edition: the language the deck's own fields are written in. */
     meaningLanguage: text("meaning_language").notNull(),
     /**

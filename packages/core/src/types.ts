@@ -303,6 +303,32 @@ export const PUBLICATION_CATEGORIES = [
 export const PublicationCategory = z.enum(PUBLICATION_CATEGORIES);
 export type PublicationCategory = z.infer<typeof PublicationCategory>;
 
+/**
+ * The tags a publisher may put on a published deck, in the order a deck page lists them. Closed
+ * for the same reason as the shelves: each is a label a translator writes. Not a card's `tags`.
+ */
+export const PUBLICATION_TAGS = [
+  "core-words",
+  "conversation",
+  "travel",
+  "alphabet",
+  "grammar",
+  "beginner",
+  "exam-goethe-a1",
+  "exam-hsk-1",
+  "exam-topik-1",
+  "exam-jlpt-n5",
+  "exam-leben-in-deutschland",
+  "exam-us-civics",
+] as const;
+export const PublicationTag = z.enum(PUBLICATION_TAGS);
+export type PublicationTag = z.infer<typeof PublicationTag>;
+
+/** The known keys among these, once each, in list order: a key since dropped from the list goes. */
+export function publicationTags(keys: readonly string[]): PublicationTag[] {
+  return PUBLICATION_TAGS.filter((key) => keys.includes(key));
+}
+
 export const PublicationInput = z
   .object({
     slug: z
@@ -315,6 +341,10 @@ export const PublicationInput = z
     category: PublicationCategory.nullable()
       .optional()
       .meta({ description: "The shelf the deck sits on in Explore. A deck sits on one shelf." }),
+    tags: z.array(PublicationTag).max(PUBLICATION_TAGS.length).optional().meta({
+      description:
+        "Tags from the fixed list, shown on the deck page and used to find related decks. Left out, the deck keeps the tags it has; an empty list clears them.",
+    }),
     level: z
       .enum(["A1", "A2", "B1", "B2", "C1", "C2"])
       .nullable()

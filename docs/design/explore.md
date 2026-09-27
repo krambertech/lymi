@@ -16,7 +16,7 @@ The tray's colour follows the deck to its own page, where the same hue becomes t
 
 ## Search and shelves
 
-Search narrows what is already on the page: the deck's name, summary, level, the card on its tray, and the languages it teaches and explains, in the reading language and in English. Choosing a shelf narrows it the same way. Neither touches the address, so neither makes a page of its own for a crawler to find, and the whole catalogue is in the server-rendered HTML — the page is complete with JavaScript off.
+Search narrows what is already on the page: the deck's name, summary, level, the card on its tray, the languages it teaches and explains, and its tags, the last two in the reading language and in English. Choosing a shelf narrows it the same way. Neither touches the address, so neither makes a page of its own for a crawler to find, and the whole catalogue is in the server-rendered HTML — the page is complete with JavaScript off.
 
 A search with no match shows the lantern with its flame out — the search looked here and found nothing — says so, suggests a word from a card or a language, and offers the way back to everything.
 
@@ -32,6 +32,20 @@ The public page is server-rendered with no island, so it layers the mark behind 
 
 A category is a column on the publication, from a closed list in `packages/core/src/types.ts`. It is closed because each one is a heading a translator writes and a visitor learns; adding a shelf is a deliberate change, not a typo in a publish call. A deck sits on one shelf. A deck with no category, or one naming a category that has since gone, gathers under **More decks** at the end, so publishing is never blocked on choosing a shelf, and a shelf with nothing on it never renders.
 
+## Tags
+
+A tag says what a deck is for, such as **Travel**, **For beginners** or **HSK 1**. The keys are a closed list, `PUBLICATION_TAGS` in `packages/core/src/types.ts`, for the same reason the categories are: each label is a string a translator writes. Each app keeps its labels beside its shelf headings, and the `Record` over the keys fails the typecheck when one is missing. A publisher sets them through `PUT /api/decks/{id}/publication`, which refuses a key not on the list; leaving `tags` out keeps the deck's tags, so a publishing tool that does not know them yet never clears them. A key later dropped from the list disappears from every page rather than breaking it.
+
+A deck page shows its tags as plain chips just above its add button, in the list's order and the reader's language. They lead nowhere until a tag has a page of its own. On the public page they sit on the hero's colour as `over-tint` surfaces; in the product they take the cover's hue a step darker, as Back's hover does, rather than a grey `plate-2`.
+
+A publication's tags are not a card's tags, and nothing copies one into the other.
+
+## More like this
+
+Every deck page ends with a row of the published decks most like it, drawn as Explore draws them. `rankRelated` in `packages/core/src/catalog.ts` orders them by the most shared tags, then the same language (so `pt-BR` and `pt` match), then the same category, and keeps the catalogue's order on a tie. A deck that shares none of the three is not related, and a deck with nothing related shows no row at all rather than a row of strangers.
+
+The public page shows four, one row of its widest column and two by two on a phone. Its validator covers the row as well as the deck, so another deck's new tag or withdrawal reaches the page like an edit to the deck itself.
+
 ## What it costs to be wrong
 
 A deck appears here only while its own page answers 200, from the same conditions, so the two can never disagree: withdrawing a deck or archiving it takes it off this page within the five minutes the cache holds. The response's validator changes with the catalogue's content, the locale and the Worker version, and never with who is asking.
@@ -44,7 +58,9 @@ The shelves and the tray are the public page's. What is added is one press: **Ad
 
 The one departure from the public page is that a tile here **is a card**, where the public page sets the deck's name on the open canvas below its tray. The press is why: a button under a name on bare canvas belongs to nothing and reads as loose, so the group it acts on has to be a surface. The tray keeps its hue inside that card, with its corners stepped down by the card's padding.
 
-`/explore/<slug>` is the deck in the app's chrome, on the same column as every other screen. Its header is one line naming the publisher behind their mark and the deck's card and section counts, then the name, the summary and **Add to Library**, with a hand of up to three of the deck's cards beside them on desktop and above them on a phone. The hand takes one card per section before a second from any, so it shows the deck's range. Under the header come the sections in order and every card under a closed disclosure per section. The product shows no level.
+`/explore/<slug>` is the deck in the app's chrome, on the same column as every other screen. Its header is one line naming the publisher behind their mark and the deck's card and section counts, then the name, the summary and **Add to Library**, with a hand of up to three of the deck's cards beside them on desktop and above them on a phone. The hand takes one card per section before a second from any, so it shows the deck's range. Under the header come the sections in order and every card under a closed disclosure per section, then More like this. The product shows no level.
+
+More like this here leaves out every deck already in the learner's Library before it ranks, so the row fills with decks they could add. It holds three, the column's one row. Its tiles are Explore's without the Add press: they lead to the deck's page, because an add from the row would take the tile out of the row it was pressed in.
 
 The deck's colour is the ground of the whole header, back included: a band from the rail to the window's edge and up under the status bar, with its text on the page's own column. Add is white on it rather than amber, because amber on a coloured ground stops reading as the thing to press.
 

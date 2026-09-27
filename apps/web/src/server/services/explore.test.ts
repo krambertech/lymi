@@ -36,14 +36,18 @@ const input = (slug: string): PublicationInput => ({
   sources: [],
 });
 
-async function publish(slug: string) {
-  const deck = await createDeck(lymi, { name: `Everyday Estonian ${slug}`, defaultLanguage: "et" });
+async function publish(slug: string, over: Partial<PublicationInput> & { language?: string } = {}) {
+  const { language = "et", ...publication } = over;
+  const deck = await createDeck(lymi, {
+    name: `Everyday Estonian ${slug}`,
+    defaultLanguage: language,
+  });
   const greetings = await createSection(lymi, deck.id, { name: "Greetings" });
   await addCards(lymi, [
     { deckId: deck.id, sectionId: greetings.id, term: `tere ${slug}`, meaning: "hello" },
     { deckId: deck.id, sectionId: greetings.id, term: `aitäh ${slug}`, meaning: "thank you" },
   ]);
-  await publishDeck(lymi, deck.id, input(slug), publishers);
+  await publishDeck(lymi, deck.id, { ...input(slug), ...publication }, publishers);
   return deck;
 }
 
@@ -113,5 +117,27 @@ describe("exploreDeck", () => {
     const deck = await publish("gone");
     await withdrawDeck(lymi, deck.id);
     await expect(exploreDeck(anna, "gone")).rejects.toThrow();
+  });
+});
+
+describe("more like this", () => {
+  it("ranks decks sharing tags first and leaves out the ones in the learner's Library", async () => {
+    const science = { category: "science" as const, language: "ja" };
+    await publish("kanji-travel", { ...science, tags: ["travel", "alphabet"] });
+    await publish("kana-plain", science);
+    await publish("kana-travel", { ...science, tags: ["travel"] });
+    await publish("kana-both", { ...science, tags: ["alphabet", "travel"] });
+    await publish("kana-added", { ...science, tags: ["alphabet", "travel"] });
+    await addPublishedDeck(anna, "kana-added");
+
+    const { deck, related } = await exploreDeck(anna, "kanji-travel");
+    expect(deck.tags).toEqual(["travel", "alphabet"]);
+    expect(related.map((row) => row.slug)).toEqual(["kana-both", "kana-travel", "kana-plain"]);
+    expect(related[0]?.tags).toEqual(["travel", "alphabet"]);
+  });
+
+  it("is empty for a deck nothing relates to", async () => {
+    await publish("lonely", { category: null, language: "is" });
+    expect((await exploreDeck(anna, "lonely")).related).toEqual([]);
   });
 });

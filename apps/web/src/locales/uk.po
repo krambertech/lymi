@@ -760,6 +760,10 @@ msgstr "Усі одразу"
 msgid "Allow"
 msgstr "Дозволити"
 
+msgctxt "deck tag"
+msgid "Alphabet"
+msgstr "Алфавіт"
+
 msgid "Also adds, edits and archives them."
 msgstr "Також додає, редагує й архівує їх."
 
@@ -1175,6 +1179,10 @@ msgstr "Продовжити з Google"
 msgid "Continue with Google here:"
 msgstr "Продовжити через Google тут:"
 
+msgctxt "deck tag"
+msgid "Conversation"
+msgstr "Розмовна мова"
+
 msgid "Copied"
 msgstr "Скопійовано"
 
@@ -1183,6 +1191,10 @@ msgstr "Скопіюється, коли збережеш"
 
 msgid "Copy"
 msgstr "Копіювати"
+
+msgctxt "deck tag"
+msgid "Core vocabulary"
+msgstr "Базова лексика"
 
 msgid "Couldn’t add the deck. Check your connection and try again."
 msgstr "Не вдалося додати колоду. Перевір з’єднання й повтори спробу."
@@ -1679,6 +1691,10 @@ msgstr "Фільтр"
 msgid "For Anki, AnkiDroid and Mochi, with due dates, review history and pictures. An .apkg file."
 msgstr "Для Anki, AnkiDroid і Mochi, з датами повторення, історією повторень і зображеннями. Файл .apkg."
 
+msgctxt "deck tag"
+msgid "For beginners"
+msgstr "Для початківців"
+
 msgid "For scripts and curl. For AI apps, use Connected apps instead."
 msgstr "Для скриптів і curl. Для AI-застосунків використовуй «Підключені застосунки»."
 
@@ -1745,6 +1761,10 @@ msgstr "Перейти в Lymi"
 msgid "Go to section"
 msgstr "Перейти до розділу"
 
+msgctxt "deck tag"
+msgid "Goethe-Zertifikat A1"
+msgstr "Goethe-Zertifikat A1"
+
 msgid "Good"
 msgstr "Добре"
 
@@ -1753,6 +1773,10 @@ msgstr "Оцінювати повторення або змінювати про
 
 msgid "Graded Forgot today"
 msgstr "Сьогодні з оцінкою «Не пам’ятаю»"
+
+msgctxt "deck tag"
+msgid "Grammar"
+msgstr "Граматика"
 
 msgid "Hard"
 msgstr "Важко"
@@ -1795,6 +1819,10 @@ msgstr "Як відкриваються розділи"
 
 msgid "How to connect"
 msgstr "Як підключити"
+
+msgctxt "deck tag"
+msgid "HSK 1"
+msgstr "HSK 1"
 
 msgid "Idea"
 msgstr "Ідея"
@@ -1916,6 +1944,10 @@ msgstr "Його не підтвердили протягом трьох дні�
 
 msgid "Its cards and the decks it made are hidden. Restore brings them back with their history."
 msgstr "Його картки й створені ним колоди приховано. Відновлення поверне їх разом з історією."
+
+msgctxt "deck tag"
+msgid "JLPT N5"
+msgstr "JLPT N5"
 
 msgid "Join"
 msgstr "Приєднатися"
@@ -2044,6 +2076,10 @@ msgstr "Вийти з повторення або закрити панель"
 msgid "Leaving this deck"
 msgstr "Вихід із колоди"
 
+msgctxt "deck tag"
+msgid "Leben in Deutschland test"
+msgstr "Тест Leben in Deutschland"
+
 msgid "Left “{deckName}”"
 msgstr "Колода «{deckName}» більше не в Бібліотеці"
 
@@ -2164,6 +2200,9 @@ msgstr "Інші колоди"
 
 msgid "More fields"
 msgstr "Більше полів"
+
+msgid "More like this"
+msgstr "Схожі колоди"
 
 #. placeholder {0}: shortQuote(card.term)
 msgid "Move “{0}” to"
@@ -3517,9 +3556,17 @@ msgstr "Картку «{term}» вийнято з розділу"
 msgid "Took {count, plural, one {# card} other {# cards}} out of their sections"
 msgstr "{count, plural, one {# картку вийнято з розділу} few {# картки вийнято з розділів} many {# карток вийнято з розділів} other {# картки вийнято з розділів}}"
 
+msgctxt "deck tag"
+msgid "TOPIK I"
+msgstr "TOPIK I"
+
 msgctxt "cards in this deck"
 msgid "Total"
 msgstr "Усього"
+
+msgctxt "deck tag"
+msgid "Travel"
+msgstr "Подорожі"
 
 msgid "Try again"
 msgstr "Спробувати ще раз"
@@ -3556,6 +3603,10 @@ msgstr "Оновлено {lastAdded}"
 
 msgid "Uploading"
 msgstr "Завантаження"
+
+msgctxt "deck tag"
+msgid "US civics test"
+msgstr "Тест на громадянство США"
 
 msgid "Use “{tag}” as the tag"
 msgstr "Використати «{tag}» як тег"

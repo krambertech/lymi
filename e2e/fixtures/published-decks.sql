@@ -40,9 +40,9 @@ INSERT INTO card_images (id, card_id, user_id, object_key, content_type, width, 
 INSERT INTO deck_members (id, deck_id, user_id, role, joined_at) VALUES
   ('e2e-member-evening', 'e2e-deck-evening', 'e2e-member', 'learner', unixepoch() * 1000);
 
-INSERT INTO deck_publications (id, deck_id, slug, status, summary, level, category, meaning_language, publisher, sources, revision, published_at, withdrawn_at) VALUES
-  ('e2e-pub-evening', 'e2e-deck-evening', 'evening-estonian', 'published', 'Phrases for the end of the day.', 'A1', 'languages', 'en', 'Lymi', '[{"title":"Keeleklikk","url":"https://www.keeleklikk.ee/"}]', 3, unixepoch() * 1000, NULL),
-  ('e2e-pub-signs', 'e2e-deck-signs', 'estonian-road-signs', 'published', 'The signs the theory test repeats.', NULL, 'driving', 'en', 'Lymi', '[]', 1, unixepoch() * 1000, NULL),
-  ('e2e-pub-withdrawn', 'e2e-deck-withdrawn', 'withdrawn-estonian', 'withdrawn', 'Gone.', 'A1', 'languages', 'en', 'Lymi', '[]', 2, unixepoch() * 1000, unixepoch() * 1000),
-  ('e2e-pub-archived', 'e2e-deck-archived', 'archived-estonian', 'published', 'Archived.', 'A1', 'languages', 'en', 'Lymi', '[]', 1, unixepoch() * 1000, NULL);
+INSERT INTO deck_publications (id, deck_id, slug, status, summary, level, category, tags, meaning_language, publisher, sources, revision, published_at, withdrawn_at) VALUES
+  ('e2e-pub-evening', 'e2e-deck-evening', 'evening-estonian', 'published', 'Phrases for the end of the day.', 'A1', 'languages', '["core-words","travel"]', 'en', 'Lymi', '[{"title":"Keeleklikk","url":"https://www.keeleklikk.ee/"}]', 3, unixepoch() * 1000, NULL),
+  ('e2e-pub-signs', 'e2e-deck-signs', 'estonian-road-signs', 'published', 'The signs the theory test repeats.', NULL, 'driving', '["travel"]', 'en', 'Lymi', '[]', 1, unixepoch() * 1000, NULL),
+  ('e2e-pub-withdrawn', 'e2e-deck-withdrawn', 'withdrawn-estonian', 'withdrawn', 'Gone.', 'A1', 'languages', '["travel"]', 'en', 'Lymi', '[]', 2, unixepoch() * 1000, unixepoch() * 1000),
+  ('e2e-pub-archived', 'e2e-deck-archived', 'archived-estonian', 'published', 'Archived.', 'A1', 'languages', '["travel"]', 'en', 'Lymi', '[]', 1, unixepoch() * 1000, NULL);
 

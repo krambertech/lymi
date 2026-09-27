@@ -11,7 +11,7 @@ import DeckSections from "../islands/DeckSections";
 import DeckStack from "../islands/DeckStack";
 import { EXPLORE_NAME } from "../explore/explore-meta";
 import { deckDescription, deckShareText, deckTitle, MISSING_BLURB, MISSING_TITLE, UNAVAILABLE_BLURB, UNAVAILABLE_TITLE } from "./deck-meta";
-import { addUrl, DeckFooter, DeckFooterFacts, DeckGone, DeckHero, DeckHowItWorks, editionOf } from "./DeckView";
+import { addUrl, DeckFooter, DeckFooterFacts, DeckGone, DeckHero, DeckHowItWorks, DeckRelated, editionOf } from "./DeckView";
 
 interface Props {
   page: DeckPage;
@@ -85,6 +85,7 @@ const share = deck ? deckShareText(i18n, deck) : null;
               )}
             </div>
           </section>
+          <DeckRelated decks={page.related} locale={locale} />
         </main>
         <DeckFooterFacts deck={page.deck} locale={locale} />
         <DeckFooter locale={locale} languagePaths={paths} />

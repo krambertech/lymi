@@ -9,6 +9,7 @@ const deck = (slug: string, category: string | null): PublicDeckSummary => ({
   summary: "",
   level: null,
   category,
+  tags: [],
   language: "et",
   meaningLanguage: "en",
   cardCount: 1,

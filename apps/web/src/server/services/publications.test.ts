@@ -1,4 +1,5 @@
 import type { PublicationInput } from "@lymi/core";
+import { loadPublicDeck } from "@lymi/core/catalog";
 import { and, eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
@@ -111,6 +112,24 @@ describe("publishing", () => {
     expect(again?.publishedAt).toEqual(first?.publishedAt);
     expect(await auditRows(deck.id, "publish")).toHaveLength(1);
     expect(await auditRows(deck.id, "update_publication")).toHaveLength(1);
+  });
+
+  it("stores tags in list order, keeps them when left out and clears them on an empty list", async () => {
+    const deck = await publishedDeck("tagged");
+    const tagged = await publishDeck(
+      lymi,
+      deck.id,
+      { ...input("tagged"), tags: ["travel", "core-words", "travel"] },
+      publishers,
+    );
+    expect(tagged).toMatchObject({ tags: ["core-words", "travel"], revision: 2 });
+    const public_ = await loadPublicDeck(db, "tagged");
+    expect(public_.status === "published" && public_.deck.tags).toEqual(["core-words", "travel"]);
+
+    const kept = await publishDeck(lymi, deck.id, input("tagged"), publishers);
+    expect(kept).toMatchObject({ tags: ["core-words", "travel"], revision: 3 });
+    const cleared = await publishDeck(lymi, deck.id, { ...input("tagged"), tags: [] }, publishers);
+    expect(cleared?.tags).toEqual([]);
   });
 
   it("only the owner reads the publication", async () => {

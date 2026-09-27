@@ -337,6 +337,10 @@ msgstr "Разрешить"
 msgid "Almost! It’s <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: after “dann”, the verb comes second."
 msgstr "Почти! Правильно <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: после «dann» глагол стоит на втором месте."
 
+msgctxt "deck tag"
+msgid "Alphabet"
+msgstr "Алфавит"
+
 msgid "Already in your deck, so it’s skipped"
 msgstr "Уже есть в колоде, поэтому пропущено"
 
@@ -583,6 +587,10 @@ msgstr "Подключай свои инструменты."
 msgid "Conversation"
 msgstr "Разговор"
 
+msgctxt "deck tag"
+msgid "Conversation"
+msgstr "Разговорная речь"
+
 msgid "Cookies and local storage"
 msgstr "Файлы cookie и локальное хранилище"
 
@@ -600,6 +608,10 @@ msgstr "Скопируй адрес Lymi"
 
 msgid "Copy the address"
 msgstr "Скопировать адрес"
+
+msgctxt "deck tag"
+msgid "Core vocabulary"
+msgstr "Базовая лексика"
 
 msgid "Cosy"
 msgstr "Уютный"
@@ -817,6 +829,10 @@ msgstr "Так говорят кассиру, строителю или друг
 msgid "For anything you’re learning."
 msgstr "Для всего, что ты учишь."
 
+msgctxt "deck tag"
+msgid "For beginners"
+msgstr "Для начинающих"
+
 msgid "For here or to go?"
 msgstr "Здесь или с собой?"
 
@@ -883,6 +899,10 @@ msgstr "На главную"
 msgid "God willing"
 msgstr "Даст Бог"
 
+msgctxt "deck tag"
+msgid "Goethe-Zertifikat A1"
+msgstr "Goethe-Zertifikat A1"
+
 msgid "good"
 msgstr "хороший"
 
@@ -906,6 +926,10 @@ msgstr "До свидания"
 
 msgid "Google sign-in gives Lymi your name, email address, profile image if available, and identifiers needed to connect the Google account to Lymi. We also keep session records, which can include an IP address, browser information and sign-in tokens."
 msgstr "При входе через Google Lymi получает твоё имя, адрес электронной почты, изображение профиля, если оно есть, и идентификаторы, необходимые для подключения аккаунта Google к Lymi. Мы также храним записи сессий, которые могут включать IP-адрес, сведения о браузере и токены входа."
+
+msgctxt "deck tag"
+msgid "Grammar"
+msgstr "Грамматика"
 
 msgid "Greetings"
 msgstr "Приветствия"
@@ -984,6 +1008,10 @@ msgstr "Как своевременные повторения помогают 
 
 msgid "How’s it going?"
 msgstr "Как дела?"
+
+msgctxt "deck tag"
+msgid "HSK 1"
+msgstr "HSK 1"
 
 msgid "Hugs"
 msgstr "Объятия"
@@ -1102,6 +1130,10 @@ msgstr "Японский"
 msgid "Japanese 1 · Mondays"
 msgstr "Японский 1 · по понедельникам"
 
+msgctxt "deck tag"
+msgid "JLPT N5"
+msgstr "JLPT N5"
+
 msgid "Join link"
 msgstr "Ссылка для присоединения"
 
@@ -1203,6 +1235,10 @@ msgstr "Без повторений"
 
 msgid "Learning data"
 msgstr "Данные обучения"
+
+msgctxt "deck tag"
+msgid "Leben in Deutschland test"
+msgstr "Тест Leben in Deutschland"
 
 msgid "Lesson"
 msgstr "Урок"
@@ -1353,6 +1389,9 @@ msgstr "Меню"
 
 msgid "More decks"
 msgstr "Другие колоды"
+
+msgid "More like this"
+msgstr "Похожие колоды"
 
 msgid "More than a translation."
 msgstr "Больше, чем перевод."
@@ -1920,6 +1959,9 @@ msgstr "Поддержка"
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведы говорят так и о кофе, и о рабочем времени."
 
+msgid "Tags"
+msgstr "Теги"
+
 msgid "Take a photo"
 msgstr "Сфотографировать"
 
@@ -2154,6 +2196,14 @@ msgstr "Прекращать; останавливаться"
 msgid "Tonight"
 msgstr "Сегодня вечером"
 
+msgctxt "deck tag"
+msgid "TOPIK I"
+msgstr "TOPIK I"
+
+msgctxt "deck tag"
+msgid "Travel"
+msgstr "Путешествия"
+
 msgid "Try a few cards"
 msgstr "Попробовать несколько карточек"
 
@@ -2204,6 +2254,10 @@ msgstr "Введи термин — AI добавит значение, прим
 
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Незавершённые дела удерживаются в памяти лучше завершённых"
+
+msgctxt "deck tag"
+msgid "US civics test"
+msgstr "Тест на гражданство США"
 
 msgid "Use cases"
 msgstr "Для чего"

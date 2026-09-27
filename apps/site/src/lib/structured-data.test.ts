@@ -10,6 +10,7 @@ const deck = (over: Partial<PublicDeckSummary> = {}): PublicDeckSummary => ({
   summary: "Words for your first weeks.",
   level: "A1",
   category: "languages",
+  tags: [],
   language: "et",
   meaningLanguage: "en",
   cardCount: 14,

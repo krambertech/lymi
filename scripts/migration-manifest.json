@@ -129,7 +129,11 @@
       "sha256": "546f66d741629dc70fed096bfea5dfd62935c7302ec4334dd908c562ccb2dc53"
     },
     {
-      "name": "0032_simple_payback.sql",
+      "name": "0032_jazzy_felicia_hardy.sql",
+      "sha256": "e371dd89ecc0a4495ef4b08c0d0818121181b22624ce2af2e44d8e228ddc0ed2"
+    },
+    {
+      "name": "0033_jittery_stature.sql",
       "sha256": "75b3dbcf759fba890281e3c148a687026bf561384da80b807fb5aa2b20244988"
     }
   ]

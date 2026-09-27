@@ -3,6 +3,7 @@ import type {
   AppLanguage,
   Directions,
   PublicationCategory,
+  PublicationTag,
   StatedFieldSource,
 } from "@lymi/core";
 
@@ -55,6 +56,7 @@ export interface PersonaPublication {
   level?: "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
   /** The shelf the deck sits on in Explore. */
   category?: PublicationCategory;
+  tags?: PublicationTag[];
   publisher: string;
   /** The language the deck's own meanings are in. Every edition localizes this one. */
   meaningLanguage: string;
@@ -598,6 +600,7 @@ export const personas: Persona[] = [
           summary: "Words and phrases for your first weeks in Estonia.",
           level: "A1",
           category: "languages",
+          tags: ["core-words", "beginner"],
           publisher: "Lymi",
           meaningLanguage: "en",
           editions: [
@@ -628,6 +631,7 @@ export const personas: Persona[] = [
           summary: "Home, work and the shop, in the words people use.",
           level: "A1",
           category: "languages",
+          tags: ["core-words", "conversation"],
           publisher: "Lymi",
           meaningLanguage: "en",
         },
@@ -643,6 +647,7 @@ export const personas: Persona[] = [
           slug: "driving-theory-estonia",
           summary: "Signs, right of way and the questions the test repeats.",
           category: "driving",
+          tags: ["beginner"],
           publisher: "Lymi",
           meaningLanguage: "en",
         },

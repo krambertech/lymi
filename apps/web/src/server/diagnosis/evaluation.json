@@ -1,0 +1,441 @@
+{
+  "about": "Invented cards for evaluate.ts; no learner's data. A card with `expected` is often forgotten and labelled with the cause a careful teacher would name; the rest are its deck's neighbours.",
+  "decks": [
+    {
+      "name": "Everyday English",
+      "language": "en",
+      "meaningLanguage": "es",
+      "asked": ["term_to_meaning", "meaning_to_term"],
+      "cards": [
+        {
+          "id": "en-es-01",
+          "term": "to borrow",
+          "meaning": "tomar prestado",
+          "notes": "Compare: to lend = prestar.",
+          "expected": "confused_pair",
+          "pair": "en-es-02"
+        },
+        {
+          "id": "en-es-02",
+          "term": "to lend",
+          "meaning": "prestar",
+          "example": "Could you lend me your pen?",
+          "expected": "confused_pair",
+          "pair": "en-es-01"
+        },
+        { "id": "en-es-s1", "term": "to rent", "meaning": "alquilar" },
+        {
+          "id": "en-es-03",
+          "term": "to affect",
+          "meaning": "afectar, influir en",
+          "example": "The weather affects my mood.",
+          "expected": "confused_pair",
+          "pair": "en-es-04"
+        },
+        {
+          "id": "en-es-04",
+          "term": "effect",
+          "meaning": "efecto, resultado",
+          "example": "The medicine had no effect.",
+          "expected": "confused_pair",
+          "pair": "en-es-03"
+        },
+        { "id": "en-es-s2", "term": "to earn", "meaning": "ganar (dinero trabajando)" },
+        { "id": "en-es-s3", "term": "to win", "meaning": "ganar (un premio, un partido)" },
+        {
+          "id": "en-es-05",
+          "term": "to put up with / to put off",
+          "meaning": "aguantar, soportar / posponer",
+          "expected": "two_things"
+        },
+        {
+          "id": "en-es-06",
+          "term": "How long have you lived here? — Since 2019.",
+          "meaning": "¿Cuánto tiempo llevas viviendo aquí? — Desde 2019.",
+          "expected": "two_things"
+        },
+        { "id": "en-es-07", "term": "sick", "meaning": "enfermo", "expected": "several_answers" },
+        { "id": "en-es-08", "term": "quick", "meaning": "rápido", "expected": "several_answers" },
+        { "id": "en-es-s4", "term": "reliable", "meaning": "fiable, de confianza" },
+        {
+          "id": "en-es-09",
+          "term": "wistful",
+          "meaning": "que siente una añoranza suave y algo triste por lo que ya no está",
+          "expected": "no_anchor"
+        },
+        {
+          "id": "en-es-10",
+          "term": "to dwindle",
+          "meaning": "ir disminuyendo poco a poco",
+          "expected": "no_anchor"
+        },
+        { "id": "en-es-s5", "term": "puddle", "meaning": "charco" },
+        {
+          "id": "en-es-11",
+          "term": "to decide",
+          "meaning": "decidir",
+          "example": "We decided to stay.",
+          "expected": "unclear"
+        },
+        { "id": "en-es-12", "term": "comfortable", "meaning": "cómodo", "expected": "unclear" },
+        { "id": "en-es-13", "term": "window", "meaning": "ventana", "expected": "unclear" },
+        { "id": "en-es-s6", "term": "to seize", "meaning": "agarrar con fuerza, apoderarse de" }
+      ]
+    },
+    {
+      "name": "Українська A2",
+      "language": "uk",
+      "meaningLanguage": "en",
+      "asked": ["term_to_meaning", "meaning_to_term"],
+      "cards": [
+        {
+          "id": "uk-en-01",
+          "term": "шукати",
+          "meaning": "to look for, to search",
+          "example": "Я шукаю ключі.",
+          "expected": "confused_pair",
+          "pair": "uk-en-02"
+        },
+        {
+          "id": "uk-en-02",
+          "term": "чекати",
+          "meaning": "to wait (for)",
+          "example": "Я чекаю на автобус.",
+          "expected": "confused_pair",
+          "pair": "uk-en-01"
+        },
+        { "id": "uk-en-s1", "term": "питати", "meaning": "to ask" },
+        { "id": "uk-en-03", "term": "кохати", "meaning": "to love", "expected": "several_answers" },
+        { "id": "uk-en-04", "term": "лист", "meaning": "letter", "expected": "several_answers" },
+        { "id": "uk-en-s2", "term": "місто", "meaning": "city, town" },
+        { "id": "uk-en-s3", "term": "село", "meaning": "village" },
+        {
+          "id": "uk-en-05",
+          "term": "Як тебе звати? — Мене звати Оля.",
+          "meaning": "What's your name? — My name is Olya.",
+          "expected": "two_things"
+        },
+        {
+          "id": "uk-en-06",
+          "term": "дякую; будь ласка",
+          "meaning": "thank you; please, you're welcome",
+          "expected": "two_things"
+        },
+        { "id": "uk-en-07", "term": "затишний", "meaning": "cosy, snug", "expected": "no_anchor" },
+        {
+          "id": "uk-en-08",
+          "term": "зневіра",
+          "meaning": "despair, loss of faith",
+          "expected": "no_anchor"
+        },
+        {
+          "id": "uk-en-09",
+          "term": "навмисно",
+          "meaning": "on purpose, deliberately",
+          "expected": "no_anchor"
+        },
+        { "id": "uk-en-s4", "term": "снідати", "meaning": "to have breakfast" },
+        { "id": "uk-en-s5", "term": "обідати", "meaning": "to have lunch" },
+        { "id": "uk-en-10", "term": "ввечері", "meaning": "in the evening", "expected": "unclear" },
+        { "id": "uk-en-11", "term": "кава", "meaning": "coffee", "expected": "unclear" },
+        { "id": "uk-en-12", "term": "вокзал", "meaning": "railway station", "expected": "unclear" },
+        { "id": "uk-en-13", "term": "чай", "meaning": "tea", "expected": "unclear" },
+        { "id": "uk-en-s6", "term": "їхати", "meaning": "to go (by transport)" }
+      ]
+    },
+    {
+      "name": "Русские глаголы",
+      "language": "ru",
+      "meaningLanguage": "de",
+      "asked": ["term_to_meaning", "meaning_to_term"],
+      "cards": [
+        { "id": "ru-de-s1", "term": "делать / сделать", "meaning": "machen, tun" },
+        { "id": "ru-de-01", "term": "брать / взять", "meaning": "nehmen", "expected": "unclear" },
+        { "id": "ru-de-s2", "term": "писать / написать", "meaning": "schreiben" },
+        {
+          "id": "ru-de-02",
+          "term": "класть / положить",
+          "meaning": "legen",
+          "example": "Положи книгу на стол.",
+          "expected": "confused_pair",
+          "pair": "ru-de-03"
+        },
+        {
+          "id": "ru-de-03",
+          "term": "ставить / поставить",
+          "meaning": "stellen",
+          "example": "Поставь чашку на стол.",
+          "expected": "confused_pair",
+          "pair": "ru-de-02"
+        },
+        { "id": "ru-de-s3", "term": "давать / дать", "meaning": "geben" },
+        {
+          "id": "ru-de-04",
+          "term": "идти / пойти",
+          "meaning": "gehen",
+          "expected": "several_answers"
+        },
+        {
+          "id": "ru-de-05",
+          "term": "надевать / надеть",
+          "meaning": "anziehen",
+          "expected": "several_answers"
+        },
+        { "id": "ru-de-s4", "term": "видеть / увидеть", "meaning": "sehen" },
+        {
+          "id": "ru-de-06",
+          "term": "садиться / сесть; сидеть",
+          "meaning": "sich setzen; sitzen",
+          "expected": "two_things"
+        },
+        {
+          "id": "ru-de-07",
+          "term": "Который час? — Без четверти три.",
+          "meaning": "Wie spät ist es? — Viertel vor drei.",
+          "expected": "two_things"
+        },
+        {
+          "id": "ru-de-08",
+          "term": "стесняться / постесняться",
+          "meaning": "sich genieren, schüchtern sein",
+          "expected": "no_anchor"
+        },
+        {
+          "id": "ru-de-09",
+          "term": "беречь / сберечь",
+          "meaning": "schonen, sorgsam aufbewahren",
+          "expected": "no_anchor"
+        },
+        {
+          "id": "ru-de-10",
+          "term": "уговаривать / уговорить",
+          "meaning": "überreden",
+          "expected": "no_anchor"
+        },
+        { "id": "ru-de-s5", "term": "говорить / сказать", "meaning": "sprechen; sagen" },
+        {
+          "id": "ru-de-11",
+          "term": "покупать / купить",
+          "meaning": "kaufen",
+          "expected": "unclear"
+        },
+        {
+          "id": "ru-de-12",
+          "term": "звонить / позвонить",
+          "meaning": "anrufen",
+          "expected": "unclear"
+        },
+        {
+          "id": "ru-de-13",
+          "term": "открывать / открыть",
+          "meaning": "öffnen",
+          "expected": "unclear"
+        },
+        {
+          "id": "ru-de-14",
+          "term": "читать / прочитать",
+          "meaning": "lesen",
+          "example": "Я прочитал эту книгу за неделю.",
+          "expected": "unclear"
+        }
+      ]
+    },
+    {
+      "name": "Irregular verbs",
+      "language": "en",
+      "meaningLanguage": "ja",
+      "asked": ["term_to_meaning", "meaning_to_term"],
+      "cards": [
+        { "id": "en-ja-s1", "term": "to go (went, gone)", "meaning": "行く" },
+        {
+          "id": "en-ja-01",
+          "term": "to lie (lay, lain)",
+          "meaning": "横になる",
+          "expected": "confused_pair",
+          "pair": "en-ja-02"
+        },
+        {
+          "id": "en-ja-02",
+          "term": "to lay (laid, laid)",
+          "meaning": "（物を）置く、横たえる",
+          "expected": "confused_pair",
+          "pair": "en-ja-01"
+        },
+        { "id": "en-ja-s2", "term": "to take (took, taken)", "meaning": "取る、持って行く" },
+        {
+          "id": "en-ja-03",
+          "term": "to rise (rose, risen)",
+          "meaning": "上がる、昇る",
+          "expected": "confused_pair",
+          "pair": "en-ja-04"
+        },
+        {
+          "id": "en-ja-04",
+          "term": "to raise (raised, raised)",
+          "meaning": "（物を）上げる、育てる",
+          "expected": "confused_pair",
+          "pair": "en-ja-03"
+        },
+        { "id": "en-ja-s3", "term": "to write (wrote, written)", "meaning": "書く" },
+        {
+          "id": "en-ja-05",
+          "term": "Could you pass me the salt? / Here you are.",
+          "meaning": "塩を取ってもらえますか？／はい、どうぞ。",
+          "expected": "two_things"
+        },
+        {
+          "id": "en-ja-06",
+          "term": "to see (saw, seen)",
+          "meaning": "見る",
+          "expected": "several_answers"
+        },
+        {
+          "id": "en-ja-07",
+          "term": "to wear (wore, worn)",
+          "meaning": "着る",
+          "expected": "several_answers"
+        },
+        { "id": "en-ja-s4", "term": "to swim (swam, swum)", "meaning": "泳ぐ" },
+        {
+          "id": "en-ja-08",
+          "term": "to fathom",
+          "meaning": "（深く）理解する、推し量る",
+          "expected": "no_anchor"
+        },
+        { "id": "en-ja-09", "term": "grudge", "meaning": "恨み", "expected": "no_anchor" },
+        {
+          "id": "en-ja-10",
+          "term": "to cringe",
+          "meaning": "（恥ずかしさで）身がすくむ",
+          "expected": "no_anchor"
+        },
+        { "id": "en-ja-s5", "term": "to choose (chose, chosen)", "meaning": "選ぶ" },
+        {
+          "id": "en-ja-11",
+          "term": "to begin (began, begun)",
+          "meaning": "始める、始まる",
+          "expected": "unclear"
+        },
+        {
+          "id": "en-ja-12",
+          "term": "to drink (drank, drunk)",
+          "meaning": "飲む",
+          "expected": "unclear"
+        },
+        {
+          "id": "en-ja-13",
+          "term": "to forget (forgot, forgotten)",
+          "meaning": "忘れる",
+          "expected": "unclear"
+        },
+        { "id": "en-ja-s6", "term": "to bring (brought, brought)", "meaning": "持ってくる" }
+      ]
+    },
+    {
+      "name": "Eesti keel",
+      "language": "et",
+      "meaningLanguage": "ru",
+      "asked": ["meaning_to_term", "term_to_meaning"],
+      "cards": [
+        {
+          "id": "et-ru-01",
+          "term": "tooma · tuua · toon",
+          "meaning": "приносить",
+          "example": "Too mulle vett, palun.",
+          "expected": "unclear"
+        },
+        { "id": "et-ru-s1", "term": "minema · minna · lähen", "meaning": "идти, уходить" },
+        { "id": "et-ru-s2", "term": "tulema · tulla · tulen", "meaning": "приходить" },
+        {
+          "id": "et-ru-02",
+          "term": "alustama · alustada · alustan",
+          "meaning": "начинать (что-то)",
+          "example": "Ma alustan tööd kell üheksa.",
+          "expected": "confused_pair",
+          "pair": "et-ru-03"
+        },
+        {
+          "id": "et-ru-03",
+          "term": "algama · alata · algab",
+          "meaning": "начинаться",
+          "example": "Film algab kell kaheksa.",
+          "expected": "confused_pair",
+          "pair": "et-ru-02"
+        },
+        { "id": "et-ru-s3", "term": "andma · anda · annan", "meaning": "давать" },
+        { "id": "et-ru-04", "term": "kõrge", "meaning": "высокий", "expected": "several_answers" },
+        {
+          "id": "et-ru-05",
+          "term": "õppima · õppida · õpin",
+          "meaning": "учиться, изучать",
+          "expected": "confused_pair",
+          "pair": "et-ru-06"
+        },
+        {
+          "id": "et-ru-06",
+          "term": "õpetama · õpetada · õpetan",
+          "meaning": "учить (кого-то), преподавать",
+          "expected": "confused_pair",
+          "pair": "et-ru-05"
+        },
+        { "id": "et-ru-s4", "term": "võtma · võtta · võtan", "meaning": "брать" },
+        {
+          "id": "et-ru-07",
+          "term": "Kui palju see maksab? — See maksab viis eurot.",
+          "meaning": "Сколько это стоит? — Это стоит пять евро.",
+          "expected": "two_things"
+        },
+        {
+          "id": "et-ru-08",
+          "term": "tere hommikust / head ööd",
+          "meaning": "доброе утро / спокойной ночи",
+          "expected": "two_things"
+        },
+        {
+          "id": "et-ru-09",
+          "term": "igatsema · igatseda · igatsen",
+          "meaning": "тосковать, скучать по",
+          "expected": "no_anchor"
+        },
+        { "id": "et-ru-10", "term": "vaevu", "meaning": "едва, с трудом", "expected": "no_anchor" },
+        {
+          "id": "et-ru-11",
+          "term": "leppima · leppida · lepin",
+          "meaning": "мириться, смиряться",
+          "expected": "no_anchor"
+        },
+        { "id": "et-ru-s5", "term": "kirjutama · kirjutada · kirjutan", "meaning": "писать" },
+        {
+          "id": "et-ru-12",
+          "term": "ostma · osta · ostan",
+          "meaning": "покупать",
+          "expected": "unclear"
+        },
+        {
+          "id": "et-ru-13",
+          "term": "sööma · süüa · söön",
+          "meaning": "есть, кушать",
+          "expected": "unclear"
+        },
+        {
+          "id": "et-ru-14",
+          "term": "lugema · lugeda · loen",
+          "meaning": "читать",
+          "expected": "unclear"
+        },
+        {
+          "id": "et-ru-15",
+          "term": "tegema · teha · teen",
+          "meaning": "делать",
+          "expected": "unclear"
+        },
+        {
+          "id": "et-ru-16",
+          "term": "nägema · näha · näen",
+          "meaning": "видеть",
+          "expected": "unclear"
+        }
+      ]
+    }
+  ]
+}

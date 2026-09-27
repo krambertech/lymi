@@ -22,6 +22,7 @@ erDiagram
   user ||--o{ deck_members : "studies"
   cards ||--o{ card_states : "one per learner per review mode"
   cards ||--o{ card_images : "one active picture"
+  cards ||--o{ card_diagnoses : "one per learner per revision"
   card_states ||--o{ reviews : "append-only"
   user ||--o{ review_days : "one per local date"
   review_days ||--o{ reviews : "counts toward"
@@ -239,6 +240,18 @@ erDiagram
     text user_id FK
     int undone_at
   }
+  card_diagnoses {
+    text id PK
+    text user_id FK "the learner it is about"
+    text card_id FK
+    int revision "the card's revision when diagnosed"
+    text status "working | done | failed"
+    text cause "nullable until done; unclear below the threshold"
+    text proposed_cause "what the model named before the threshold"
+    real confidence "nullable until done, 0 to 1"
+    json draft "nullable, the fix for cause"
+    text model "nullable until done"
+  }
   audit_log {
     text id PK
     text user_id FK
@@ -246,7 +259,7 @@ erDiagram
     text actor_client "OAuth client or API key id"
     text actor_client_name "its name at the write"
     text action "create update archive restore grade"
-    text entity "deck | series | section | card | review | account | import | export"
+    text entity "deck | series | section | card | review | account | import | export | diagnosis"
     text entity_id
     json payload
     int created_at
@@ -321,6 +334,10 @@ The scheduler has one 10-minute learning and relearning step. A row written unde
 ### The review draw
 
 Nothing about a review is stored. `services/draw.ts` loads every asked state due before the learner-local day ends or reviewed today, with its sibling direction, plus today's non-undone reviews in every scope, and hands them to `draw` in `packages/core`. The queue, each deck's count, day exhaustion and the reminder count are that one function over the same rows, so they cannot disagree. The rules are in [ADR 0019](adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md).
+
+### Diagnoses
+
+A diagnosis is one learner's, for one revision of a card, and `card_diagnoses` is unique per `(user_id, card_id, revision)`. When a draw, a queue or the Today rounds find an often-forgotten card whose current revision has no row, `drawInputs` writes one as `working` with `on conflict do nothing` after the response, and hands only the rows it inserted to the `lymi-diagnose` Workflow, at most 20 a draw. Two racing draws therefore queue a card once, and with no OpenAI key nothing is written. The Workflow makes one model call per card and stores `done` with the cause, the confidence and the draft, or `failed`. A row whose card was edited or archived before its turn ends at `failed`; the next draw queues the new revision. `cause` is `unclear`, with no draft, when the confidence is below `DIAGNOSIS_THRESHOLD`; `proposed_cause` keeps what the model named. `draft` is validated by `Diagnosis` in `packages/core/src/types.ts`. The card read returns only a `done` row of the card's current revision, as `diagnosis`. [ADR 0025](adr/0025-the-ai-proposes-card-changes-that-apply-only-when-accepted.md).
 
 ### Review modes
 

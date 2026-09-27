@@ -611,6 +611,71 @@ export const GradeInput = z
   });
 export type GradeInput = z.infer<typeof GradeInput>;
 
+/** Why a card stays often forgotten. `unclear` claims no cause and carries no draft. ADR 0025. */
+export const DIAGNOSIS_CAUSES = [
+  "confused_pair",
+  "two_things",
+  "several_answers",
+  "no_anchor",
+  "unclear",
+] as const;
+export const DiagnosisCause = z.enum(DIAGNOSIS_CAUSES);
+export type DiagnosisCause = z.infer<typeof DiagnosisCause>;
+
+/** A hook is a phrase that leads back to the term, never a paragraph. */
+export const HOOK_LIMIT = 200;
+
+const DraftCard = z.object({
+  term: z.string().trim().min(1).max(CARD_LIMITS.term),
+  meaning: z.string().trim().min(1).max(CARD_LIMITS.meaning),
+});
+
+/** A likely cause and the fix the AI drafted for it. Nothing on a card changes until the learner accepts. */
+export const Diagnosis = z
+  .discriminatedUnion("cause", [
+    z.object({
+      cause: z.literal("confused_pair"),
+      draft: z.object({
+        otherCardId: z.string().min(1).meta({ description: "The card it is mixed up with" }),
+        cards: z.tuple([DraftCard, DraftCard]).meta({
+          description: "Two short new cards that tell the pair apart",
+        }),
+      }),
+    }),
+    z.object({
+      cause: z.literal("two_things"),
+      draft: z.object({
+        cards: z.tuple([DraftCard, DraftCard]).meta({
+          description: "The cards to split into. The first keeps the card's history.",
+        }),
+      }),
+    }),
+    z.object({
+      cause: z.literal("several_answers"),
+      draft: z.object({
+        field: z.enum(["term", "meaning"]).meta({ description: "The cue that fits another word" }),
+        text: z.string().trim().min(1).max(CARD_LIMITS.meaning).meta({
+          description: "The cue with a word of context that leaves one right answer",
+        }),
+        otherAnswer: z.string().trim().min(1).max(CARD_LIMITS.term).meta({
+          description: "The other answer the cue used to allow",
+        }),
+      }),
+    }),
+    z.object({
+      cause: z.literal("no_anchor"),
+      draft: z.object({
+        hook: z.string().trim().min(1).max(HOOK_LIMIT).meta({
+          description: "A short association in the meaning language that leads back to the term",
+        }),
+      }),
+    }),
+    z.object({ cause: z.literal("unclear"), draft: z.null() }),
+  ])
+  .meta({ id: "Diagnosis" });
+export type Diagnosis = z.infer<typeof Diagnosis>;
+export type DiagnosisDraft = NonNullable<Diagnosis["draft"]>;
+
 /** What a picture shows, for a screen reader and when it cannot load, never naming the answer. */
 export const ImageDescription = z
   .string()

@@ -28,7 +28,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Duplicate**: A card whose normalised term and language match an existing active card anywhere in the learner's decks. Adding one is skipped, never rejected, and the caller is told which card already exists.
 
-**Enrich**: The AI filling in missing fields on an existing card: meaning, example, pronunciation, language. It never overwrites a field that has text. The only AI work the server does; extraction from lesson material happens in the MCP client. _Avoid_: Prepare, generate, suggest
+**Enrich**: The AI filling in missing fields on an existing card: meaning, example, pronunciation, language. It never overwrites a field that has text. The only AI write the server makes without asking; a diagnosis drafts changes that wait for the learner, and extraction from lesson material happens in the MCP client. _Avoid_: Prepare, generate, suggest
 
 ### Remembering
 
@@ -47,6 +47,10 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 **Round**: A review of a chosen set beside the day's draw: one of Today's groups, new cards, forgotten today or slipping, or Review forgotten at the end of a review. Each card comes once, and every grade counts like any review. _Avoid_: Session, quiz, practice
 
 **Slipping card**: A card whose first grade of the day was Forgot on at least 3 of the last 5 days it was reviewed, before today. It leaves the group once it is remembered, and a miss brings it back once in a review instead of three times. ADR 0024. Insights lists them; Today offers them as a round. The interface calls the group "Often forgotten"; "slipping" is the code and API name. _Avoid_: Leech, slipping, stuck card, hard card (in copy)
+
+**Diagnosis**: The AI's judgement of why one learner keeps forgetting one card, made once when the card turns often forgotten and kept for that learner and that revision of the card. It names one likely cause and drafts a fix: confused with another card (`confused_pair`), two things on one card (`two_things`), more than one right answer (`several_answers`), or nothing to hang it on (`no_anchor`). When no cause clears the confidence threshold it says there is no clear reason (`unclear`) rather than force one. A format the deck uses throughout, such as Estonian principal parts, is never a cause. The fix changes nothing until the learner accepts it, and an accepted fix is the learner's own edit. Editing the card allows a new diagnosis. The codes are not interface names. ADR 0025. _Avoid_: Suggestion, recommendation, analysis, leech detection
+
+**Hook**: A short association in the meaning language that leads back to a term, such as a sound-alike word or a picture in the mind. It is the fix a diagnosis drafts for a card with nothing to hang it on. A hook leads back to the answer and gives none of it away; a hint gives away part of the answer, such as its first letters, so the two are different things. _Avoid_: Hint, mnemonic
 
 **Rest day**: A past day that fell short of its goal, with reviews or none, and still kept the run, because the run had no other rest day in the six days before it. Automatic and never declared or stored. It keeps the streak without adding to it; any other short day breaks the run. _Avoid_: Freeze, skip, pass, grace
 

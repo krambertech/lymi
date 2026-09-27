@@ -57,7 +57,9 @@
     { "name": "lymi-import", "binding": "IMPORT_WORKFLOW", "class_name": "ImportWorkflow" },
     { "name": "lymi-export", "binding": "EXPORT_WORKFLOW", "class_name": "ExportWorkflow" },
     // Fills the empty fields on cards an add left behind. ADR 0002.
-    { "name": "lymi-enrich", "binding": "ENRICH_WORKFLOW", "class_name": "EnrichWorkflow" }
+    { "name": "lymi-enrich", "binding": "ENRICH_WORKFLOW", "class_name": "EnrichWorkflow" },
+    // Diagnoses why a card stays often forgotten, after the draw that found it. ADR 0025.
+    { "name": "lymi-diagnose", "binding": "DIAGNOSE_WORKFLOW", "class_name": "DiagnoseWorkflow" }
   ],
   // Decodes, resizes and re-encodes uploads; WebP output carries no metadata.
   "images": { "binding": "IMAGES" },

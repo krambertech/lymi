@@ -127,6 +127,10 @@
     {
       "name": "0031_powerful_nocturne.sql",
       "sha256": "546f66d741629dc70fed096bfea5dfd62935c7302ec4334dd908c562ccb2dc53"
+    },
+    {
+      "name": "0032_simple_payback.sql",
+      "sha256": "75b3dbcf759fba890281e3c148a687026bf561384da80b807fb5aa2b20244988"
     }
   ]
 }

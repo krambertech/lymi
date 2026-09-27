@@ -35,7 +35,7 @@ vi.mock("../services", async () => {
     archiveSection: vi.fn(),
     restoreSection: vi.fn(),
     searchCards: vi.fn(),
-    showCard: vi.fn(),
+    showCardWithDiagnosis: vi.fn(),
     addCards: vi.fn(),
     isPublisher: vi.fn(),
     describeCardImage: vi.fn(),
@@ -904,7 +904,7 @@ describe("Lymi MCP server", () => {
 
   it("answers an unexpected failure with a retry message, never the internal error", async () => {
     const spy = vi.spyOn(console, "error").mockImplementation(() => {});
-    services.showCard.mockRejectedValue(
+    services.showCardWithDiagnosis.mockRejectedValue(
       new Error("D1_ERROR: no such column: cards.secret at offset 42 SQLITE_ERROR"),
     );
     const client = await connect("read");
@@ -920,7 +920,7 @@ describe("Lymi MCP server", () => {
   });
 
   it("returns a card without the bookkeeping columns", async () => {
-    services.showCard.mockResolvedValue(card);
+    services.showCardWithDiagnosis.mockResolvedValue({ ...card, diagnosis: null });
     const client = await connect("read");
 
     const res = await client.callTool({ name: "get_card", arguments: { cardId: "card-1" } });
@@ -935,8 +935,25 @@ describe("Lymi MCP server", () => {
     }
   });
 
+  it("returns the learner's diagnosis of an often-forgotten card with it", async () => {
+    const diagnosis = {
+      cause: "no_anchor" as const,
+      draft: { hook: "sbrigati: brisk as a brigade" },
+      confidence: 0.8,
+      model: "test-model",
+      diagnosedAt: now.toISOString(),
+    };
+    services.showCardWithDiagnosis.mockResolvedValue({ ...card, diagnosis });
+    const client = await connect("read");
+
+    const res = await client.callTool({ name: "get_card", arguments: { cardId: "card-1" } });
+
+    expect(res.structuredContent).toMatchObject({ id: "card-1", diagnosis });
+  });
+
   it("returns a card's own review modes as cue and target, beside the legacy direction", async () => {
-    services.showCard.mockResolvedValue({
+    services.showCardWithDiagnosis.mockResolvedValue({
+      diagnosis: null,
       ...card,
       directions: "production",
       reviewModes: [{ cue: "meaning", target: "term" }],

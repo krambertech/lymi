@@ -472,7 +472,7 @@ function CardsView({
                           className="font-medium break-words text-text"
                         >
                           <span className="flex flex-wrap items-center gap-2">
-                            {card.term}
+                            <span className="whitespace-pre-line">{card.term}</span>
                             {card.audio && (
                               <button
                                 type="button"
@@ -524,7 +524,10 @@ function CardsView({
                             </span>
                           </dd>
                         ) : (
-                          <dd lang={meaningLanguage} className="break-words text-text-2">
+                          <dd
+                            lang={meaningLanguage}
+                            className="whitespace-pre-line break-words text-text-2"
+                          >
                             {card.meaning}
                           </dd>
                         )}

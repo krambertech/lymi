@@ -684,6 +684,7 @@
   color: var(--muted);
 }
 .deck-spread-term {
+  white-space: pre-line;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -698,6 +699,7 @@
   color: var(--text);
 }
 .deck-spread-meaning {
+  white-space: pre-line;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -1692,6 +1694,7 @@ html:has(.deck-cards[open]) {
   color: var(--muted);
 }
 .deck-tray-term {
+  white-space: pre-line;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -1706,6 +1709,7 @@ html:has(.deck-cards[open]) {
   color: var(--text);
 }
 .deck-tray-meaning {
+  white-space: pre-line;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;

@@ -208,6 +208,16 @@ describe("rankRelated", () => {
     ]);
   });
 
+  it("counts a shared language only between decks that teach it, never a subject deck's", () => {
+    const science = deck("periodic-table", { category: "science", language: "en" });
+    const english = deck("english-a1", { category: "languages", language: "en" });
+    expect(rankRelated(science, [english], 10)).toEqual([]);
+    expect(rankRelated(english, [science], 10)).toEqual([]);
+    expect(rankRelated(english, [deck("english-b1", { language: "en" })], 10)).toEqual([
+      "english-b1",
+    ]);
+  });
+
   it("leaves out the deck itself and decks that share nothing, and keeps catalogue order on a tie", () => {
     const candidates = [
       anchor,

@@ -22,6 +22,7 @@ const deck = (
   name: slug,
   summary: "",
   category,
+  tags: [],
   language,
   meaningLanguage: "en",
   cardCount: 3,

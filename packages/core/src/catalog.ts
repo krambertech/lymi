@@ -524,7 +524,7 @@ export interface RelatedCandidate {
   slug: string;
   tags: readonly string[];
   category: string | null;
-  /** The deck's language, which is the language its terms are in. */
+  /** The deck's language, which counts only while the deck is not on a subject shelf. */
   language: string | null;
 }
 
@@ -535,7 +535,7 @@ function sameLanguage(a: string | null, b: string | null): boolean {
 }
 
 /**
- * The decks most like one, in order: the most shared tags, then the same language, then the same
+ * The decks most like one, in order: the most shared tags, then the same taught language, then the same
  * shelf, with the catalogue's own order breaking ties. A deck sharing none of the three is left
  * out, so a deck with nothing like it gets an empty list rather than a row of strangers.
  */
@@ -550,7 +550,8 @@ export function rankRelated(
       slug: other.slug,
       at,
       tags: other.tags.filter((tag) => deck.tags.includes(tag)).length,
-      language: sameLanguage(deck.language, other.language) ? 1 : 0,
+      // A subject deck's terms are merely spoken in a language, so it shares no language with anyone.
+      language: sameLanguage(taughtLanguage(deck), taughtLanguage(other)) ? 1 : 0,
       category: deck.category !== null && deck.category === other.category ? 1 : 0,
     }))
     .filter((other) => other.tags + other.language + other.category > 0)

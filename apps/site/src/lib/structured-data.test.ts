@@ -29,6 +29,7 @@ const published = (over: Partial<PublicDeckOut> = {}): PublicDeckOut => ({
   name: "Everyday Estonian",
   summary: "Words for your first weeks.",
   category: "languages",
+  tags: [],
   language: "et",
   meaningLanguage: "en",
   originalMeaningLanguage: "en",

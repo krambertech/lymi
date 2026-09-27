@@ -8,6 +8,7 @@ const deck = (over: Partial<PublicDeckOut> = {}): PublicDeckOut => ({
   name: "Periodic Table",
   summary: "Every element by its symbol.",
   category: "science",
+  tags: [],
   language: null,
   meaningLanguage: "en",
   originalMeaningLanguage: "en",

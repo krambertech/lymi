@@ -77,13 +77,15 @@ A drafted fix at the card's foot arrives half a second after the answer settles,
 
 A peeked hook comes into focus under the cue: it fades in from a 4 px blur with a 4 px rise over 360 ms while the cue glides up to make room. Under reduced motion it only fades; from the keyboard, Enter on the button included, it appears at once. The button that asked for it goes without animating and keeps its room, because the hook is the change to watch. At the reveal the hook never fades or moves apart from the cue: it glides up with it as one block, and the only thing arriving is the answer under it.
 
-After a reveal without a peek, Show hook arrives in the hook's place with the answer's lines, a 10 px rise over 260 ms; under reduced motion it only fades, and after a reveal from the keyboard it is simply there. Pressing it swaps it for the hook with the same focus-in as a peek, and the answer glides if the hook takes more room than the button did. From the keyboard the hook appears at once; under reduced motion it only fades.
+After a reveal without a peek, Show hook arrives in the hook's place with the answer's lines, a 10 px rise over 260 ms; under reduced motion it only fades, and after a reveal from the keyboard it is simply there. Pressing it swaps it for the hook with the same focus-in as a peek, and the answer glides if the hook takes more room than the button did. From the keyboard the hook appears at once; under reduced motion it only fades. A hook kept from the fix sheet after the reveal arrives the same way.
 
-A hint at the card's foot, a pointing hand that taps three times and rests with a line under it saying how to reveal, appears in two cases only: after a second on each of a learner's first three cards, and after a minute on any card with no press, key or scroll. On a card with a peek it rests higher for the whole card, clear of the button, and after a peek its line says to tap the card when you have it.
+Undo taking a hook away fades its lines where they stood over 140 ms while the cue and the answer glide back; after a key it goes at once. Whether the cue and the answer glide is decided at each change, never once per card, so a reveal from the keyboard on one card never stills the glide on the next.
+
+The pointing hand at the card's foot taps three times and rests with a line under it saying how to reveal. It appears in two cases only: after a second on each of a learner's first three cards, and after a minute on any card with no press, key or scroll. On a card with a hook it rests higher for the whole card, clear of Peek at your hook, and after a peek its line says to tap the card when you have it.
 
 A pronunciation that fails to play turns its button red, shakes it once over 400 ms, and says why in a tip over the button that leaves after four seconds or at the next tap. Nothing is added under the card, so the layout never moves for an error.
 
-Easy locked after a peek does not move, shake or change when pressed. A tap, a click or its key opens the same tip over it with the reason, which leaves after four seconds or at the next tap; hover names the reason in a tooltip.
+Easy locked after a peek does not move, shake or change when pressed. A tap, a click or its key opens the same tip over it with the reason, which leaves after four seconds or at the next tap; hover names the reason in a tooltip, which stands aside while the tip shows.
 
 ## The end of a review
 

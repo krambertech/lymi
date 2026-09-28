@@ -6,7 +6,7 @@ import { expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
-import type { FixOfferProps } from "../components/fix-offer";
+import { FixOffer, type FixOfferProps } from "../components/fix-offer";
 import { aidSteps } from "../components/recall-aid";
 import { queueItem, queueItemPicture } from "../design/mock";
 import type { QueueItem } from "../lib/api";
@@ -136,8 +136,34 @@ test("a drafted fix waits for the reveal, then opens from the foot of the card",
   const button = page.getByRole("button", { name: /Often mixed up with sbagliare/ });
   await expect.element(button).toBeVisible();
   await expect.poll(() => shown.mock.calls.length).toBeGreaterThan(0);
+  // A screen reader hears of it as it can be seen, before review counts it as offered.
+  await expect.poll(() => shown.mock.calls.length).toBeGreaterThan(0);
+  await expect
+    .poll(() => page.getByRole("status").element().textContent)
+    .toContain("A fix is ready: Often mixed up with sbagliare");
   await button.click();
   expect(opened).toHaveBeenCalled();
+});
+
+test("a tap where the offer will be, before it has arrived, opens nothing", async () => {
+  const opened = vi.fn();
+  await render(
+    <I18nProvider i18n={i18n}>
+      <FixOffer
+        offer={{ diagnosisId: "d1", cause: "unclear", draft: null }}
+        delay={60}
+        animate
+        parked={false}
+        onOpen={opened}
+        onShown={noop}
+      />
+    </I18nProvider>,
+  );
+  const offer = page.getByRole("button", { name: /Often forgotten/, includeHidden: true });
+  await expect.element(offer).toHaveAttribute("inert");
+  // Forced, because Playwright rightly waits on an inert control; the tap still lands where it is.
+  await offer.click({ force: true });
+  expect(opened).not.toHaveBeenCalled();
 });
 
 const hooked = item({ hook: "Speed up the brigade", hookSource: "ai", notes: "Reflexive." });
@@ -274,6 +300,35 @@ test("a quick second tap on the peek does not turn the card", async () => {
   expect(onReveal).not.toHaveBeenCalled();
 });
 
+test("Show hook cannot be pressed until it has arrived, so a doubled reveal tap shows nothing", async () => {
+  const onShow = vi.fn();
+  await render(
+    <I18nProvider i18n={i18n}>
+      <div className="flex h-[640px] flex-col">
+        <ReviewCard
+          item={hooked}
+          revealed
+          animateReveal
+          onReveal={noop}
+          aid={{
+            steps: aidSteps(hooked.card),
+            taken: 0,
+            shown: false,
+            animate: true,
+            onTake: noop,
+            onShow,
+          }}
+        />
+      </div>
+    </I18nProvider>,
+  );
+  const show = page.getByRole("button", { name: /Show hook/, includeHidden: true });
+  await expect.element(show).toBeInTheDocument();
+  await show.click({ force: true });
+  expect(onShow).not.toHaveBeenCalled();
+  await expect.element(page.getByRole("button", { name: /Show hook/ })).toBeVisible();
+});
+
 test("a card without a hook has no peek control, and none after the reveal", async () => {
   const bare = item({ hook: null, hookSource: null });
   const { rerender } = await render(<PeekHarness card={bare} onReveal={noop} />);
@@ -300,6 +355,8 @@ test("after a peek Easy keeps its slot, locked: a press says why and grades noth
   await easy.click({ force: true });
   await expect.element(page.getByRole("status").filter({ hasText: WHY })).toBeInTheDocument();
   expect(onGrade).not.toHaveBeenCalled();
+  // A click leaves focus on the grades, where the review's keys still reach.
+  await expect.element(page.getByRole("group", { name: "Choose a recall grade" })).toHaveFocus();
   await page.getByRole("button", { name: "Good" }).click();
   expect(onGrade).toHaveBeenCalledWith(3);
   const buttons = page
@@ -310,15 +367,30 @@ test("after a peek Easy keeps its slot, locked: a press says why and grades noth
   expect(buttons[3]?.getAttribute("aria-label")).toBe("Easy, locked");
 });
 
-test("Easy's key after a peek shows the same reason, but not one pressed on an earlier card", async () => {
+test("Easy's key after a peek shows the same reason each time it is pressed", async () => {
   const bar = (nudge: number) => (
     <I18nProvider i18n={i18n}>
       <GradeBar revealed aid="hook" lockedNudge={nudge} onGrade={noop} />
     </I18nProvider>
   );
-  const { rerender } = await render(bar(3));
+  const { rerender } = await render(bar(0));
   const status = page.getByRole("status").filter({ hasText: WHY });
   expect(status.elements()).toHaveLength(0);
-  await rerender(bar(4));
+  await rerender(bar(1));
   await expect.element(status).toBeInTheDocument();
+});
+
+test("the hover tooltip stands aside while the tip says why", async () => {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <GradeBar revealed aid="hook" onGrade={noop} />
+    </I18nProvider>,
+  );
+  const easy = page.getByRole("button", { name: "Easy, locked" });
+  const tooltip = () => document.querySelector('[data-slot="tooltip-content"]');
+  await easy.hover();
+  await expect.poll(tooltip).not.toBeNull();
+  await easy.click({ force: true });
+  await expect.poll(() => document.querySelector('[data-slot="popover-content"]')).not.toBeNull();
+  await expect.poll(tooltip).toBeNull();
 });

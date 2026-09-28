@@ -71,7 +71,8 @@ export function RecallAidNext({ steps, taken, onTake }: NextProps) {
       inert={spent}
       aria-hidden={spent || undefined}
     >
-      <Button kbd={AID_KEY.label} data-aid="" onClick={onTake}>
+      {/* Wider than it looks, so a tap that just misses it peeks rather than reveals. */}
+      <Button kbd={AID_KEY.label} data-aid="" className="before:-inset-x-3!" onClick={onTake}>
         <Icon data-icon="inline-start" aria-hidden="true" />
         {i18n._(take)}
       </Button>
@@ -159,23 +160,12 @@ export function RecallAidShown({ steps, taken, animate }: ShownProps) {
 }
 
 /** One aid as text: its icon, what it says, and the AI badge while the AI's words are unchanged. */
-export function AidLine({ step, size = "md" }: { step: AidStep; size?: "sm" | "md" | undefined }) {
+function AidLine({ step }: { step: AidStep }) {
   const { i18n } = useLingui();
   const { name, icon: Icon } = STEPS[step.aid];
   return (
-    <p
-      className={clsx(
-        "flex items-start gap-2 text-text-2",
-        size === "md" ? "text-md leading-snug" : "text-sm leading-normal",
-      )}
-    >
-      <Icon
-        className={clsx(
-          "shrink-0 text-muted",
-          size === "md" ? "mt-[3px] size-4" : "mt-[2px] size-3.5",
-        )}
-        aria-hidden="true"
-      />
+    <p className="flex items-start gap-2 text-md leading-snug text-text-2">
+      <Icon className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
       <span className="min-w-0 [overflow-wrap:anywhere]">
         <span className="sr-only">{i18n._(name)} </span>
         {step.text}

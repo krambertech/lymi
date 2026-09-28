@@ -1,11 +1,11 @@
 import { CircleAlert, type LucideIcon } from "lucide-react";
-import { type RefObject, useEffect, useState } from "react";
+import { type ComponentProps, type RefObject, useEffect, useState } from "react";
 import { Popover, PopoverContent } from "./ui/popover";
 
 const SHOWN_MS = 4_000;
 
 interface Props {
-  /** The control that failed. The tip points at it. */
+  /** The control that failed or cannot act. The tip points at it. */
   anchor: RefObject<HTMLElement | null>;
   /** Shows the tip when it becomes non-null. A new failure after a retry shows it again. */
   message: string | null;
@@ -16,16 +16,24 @@ interface Props {
    * politely instead of as an alert.
    */
   reason?: LucideIcon | undefined;
+  /** How far over the control the tip sits, to clear something else standing there. */
+  sideOffset?: ComponentProps<typeof PopoverContent>["sideOffset"];
+  /** Told when the tip shows and goes, so the control's own tooltip can stand aside. */
+  onOpenChange?: ((open: boolean) => void) | undefined;
 }
 
 /**
- * What went wrong, over the control it went wrong on, instead of a line of text that pushes the
- * layout down. It leaves on its own after four seconds, or at the next tap, key or scroll.
+ * What went wrong, or why a control cannot act, over that control instead of a line of text that
+ * pushes the layout down. It leaves on its own after four seconds, or at the next tap, key or scroll.
  *
  * It is announced from a separate live region, because the popup's text is not in the page until shown.
  */
-export function ErrorTip({ anchor, message, nudge = 0, reason }: Props) {
+export function ErrorTip({ anchor, message, nudge = 0, reason, sideOffset, onOpenChange }: Props) {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    onOpenChange?.(open);
+  }, [open, onOpenChange]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: a new nudge reopens the same message.
   useEffect(() => {
@@ -52,6 +60,7 @@ export function ErrorTip({ anchor, message, nudge = 0, reason }: Props) {
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverContent
           anchor={anchor}
+          sideOffset={sideOffset}
           initialFocus={false}
           finalFocus={false}
           aria-hidden="true"

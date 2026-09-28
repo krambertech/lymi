@@ -3,13 +3,14 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Button } from "./button";
 import { Kbd } from "./kbd";
+import { AID_KEY } from "./recall-aid";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 
 export const SHORTCUTS: [string, MessageDescriptor][] = [
   ["N", msg`Add a card`],
   ["R", msg`Start review`],
   ["/", msg`Search`],
-  ["H", msg`Peek at your hook`],
+  [AID_KEY.label, msg`Peek at or show your hook`],
   ["Space", msg`Show the meaning, then Good`],
   ["1 – 4", msg`Forgot, Hard, Good, Easy`],
   ["Esc", msg`Leave review or close a sheet`],

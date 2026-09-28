@@ -1,3 +1,4 @@
+import { Rating as FsrsRating } from "ts-fsrs";
 import { z } from "zod";
 
 /** Which way the card is asked. Recognition: see the term, recall the meaning. Production: the reverse. */
@@ -647,7 +648,7 @@ export type ReviewAid = z.infer<typeof ReviewAid>;
 
 /** Whether a grade may follow what the learner used before the reveal: every grade but an aided Easy. */
 export const gradeAllowed = (rating: number, aid: ReviewAid | null | undefined) =>
-  !aid || rating !== 4;
+  !aid || rating !== FsrsRating.Easy;
 
 /**
  * One grade names its review mode. `direction` is the form grades took before review modes,

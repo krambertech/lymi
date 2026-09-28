@@ -579,8 +579,8 @@ msgstr "<0>{0}</0> у «{1}»"
 msgid "<0>{name}</0> is ready. Copy it now. You won’t see it again."
 msgstr "<0>{name}</0> готовий. Скопіюй його зараз. Більше ти його не побачиш."
 
-msgid "<0>{term}</0> and <1>{otherTerm}</1>"
-msgstr "<0>{term}</0> і <1>{otherTerm}</1>"
+msgid "<0>{title}</0> and <1>{otherTitle}</1>"
+msgstr "<0>{title}</0> і <1>{otherTitle}</1>"
 
 msgid "30 days"
 msgstr "30 днів"
@@ -1353,6 +1353,9 @@ msgstr "Не вдалося вилучити учасника. Спробуй щ
 
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Не вдалося зберегти «{failedTerm}». Перевір з’єднання й повтори спробу."
+
+msgid "Couldn’t save that. Check your connection and try again."
+msgstr "Не вдалося зберегти. Перевір з’єднання і спробуй ще раз."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не вдалося зберегти мову. Перевір з’єднання й повтори спробу."
@@ -2234,6 +2237,9 @@ msgstr "Lymi у відкритій беті."
 
 msgid "Lymi is writing the first decks. Until then, make your own in Library."
 msgstr "Lymi пише перші колоди. А поки що створи власну в Бібліотеці."
+
+msgid "Lymi won’t offer this fix again"
+msgstr "Lymi більше не пропонуватиме це виправлення"
 
 msgid "Made the deck {deck}"
 msgstr "Створено колоду «{deck}»"
@@ -3433,6 +3439,9 @@ msgstr "Це все."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "Цього вже немає. Онови сторінку, щоб побачити зміни."
+
+msgid "That’s not it"
+msgstr "Справа не в цьому"
 
 msgid "the AI"
 msgstr "AI"

@@ -11,6 +11,7 @@ import type { Card, Deck } from "@lymi/core/schema";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
 import {
+  DIAGNOSIS_PROMPT_VERSION,
   type DiagnosisCard,
   type DiagnosisInput,
   diagnosisRequest,
@@ -82,9 +83,11 @@ export function diagnosisContext(
 export const DIAGNOSIS_RETRY_MS = 86_400_000;
 
 /**
- * Queue a diagnosis for each often-forgotten card whose current revision has none, or only one
- * that failed over a day ago. Only rows this call inserted or moved back to `working` are
- * queued, so two draws racing queue a card once. Returns the diagnosis ids queued.
+ * Queue a diagnosis for each often-forgotten card whose current revision has none, one that
+ * failed over a day ago, or one an older prompt wrote that the learner has neither accepted nor
+ * dismissed. Only rows this call inserted or moved back to `working` are queued, so two draws
+ * racing queue a card once. A row diagnosed again keeps `offeredAt`, so review still offers a
+ * card at most once a revision. Returns the diagnosis ids queued.
  */
 export async function queueDiagnoses(
   ctx: ServiceContext,
@@ -97,6 +100,14 @@ export async function queueDiagnoses(
     eq(schema.cardDiagnoses.status, "failed"),
     lt(schema.cardDiagnoses.updatedAt, new Date(now.getTime() - DIAGNOSIS_RETRY_MS)),
   );
+  // Only a `done` row: a failure keeps its day's wait, so an outage is not retried every draw.
+  const outdated = and(
+    eq(schema.cardDiagnoses.status, "done"),
+    lt(schema.cardDiagnoses.promptVersion, DIAGNOSIS_PROMPT_VERSION),
+    isNull(schema.cardDiagnoses.acceptedAt),
+    isNull(schema.cardDiagnoses.dismissedAt),
+  );
+  const again = or(staleFailure, outdated);
   const candidates = await selectIn([...new Set(cardIds)], (slice) =>
     db
       .select({
@@ -113,9 +124,7 @@ export async function queueDiagnoses(
           eq(schema.cardDiagnoses.revision, schema.cards.revision),
         ),
       )
-      .where(
-        and(inArray(schema.cards.id, slice), or(isNull(schema.cardDiagnoses.id), staleFailure)),
-      ),
+      .where(and(inArray(schema.cards.id, slice), or(isNull(schema.cardDiagnoses.id), again))),
   ).then((rows) => rows.slice(0, DIAGNOSES_PER_RUN));
   const ids: string[] = [];
   const retries = candidates.flatMap((card) => (card.diagnosisId ? [card.diagnosisId] : []));
@@ -128,7 +137,7 @@ export async function queueDiagnoses(
         and(
           eq(schema.cardDiagnoses.userId, userId),
           inArray(schema.cardDiagnoses.id, slice),
-          staleFailure,
+          again,
         ),
       )
       .returning({ id: schema.cardDiagnoses.id });
@@ -203,6 +212,7 @@ export async function diagnoseCard(
         confidence: proposal.confidence,
         draft: diagnosis.draft,
         model: provider.model,
+        promptVersion: DIAGNOSIS_PROMPT_VERSION,
         updatedAt: now,
       })
       .where(
@@ -241,8 +251,9 @@ export async function failDiagnoses(db: Db, userId: string, diagnosisIds: readon
 }
 
 /**
- * What the model reads: the card as this learner sees it, its deck's nearest neighbours so the
- * deck's own format shows, and the learner's other often-forgotten cards so a pair can be named.
+ * What the model reads: the card as this learner sees it, its deck's nearest neighbours with
+ * their notes so the deck's own format shows, and the learner's other often-forgotten cards so a
+ * pair can be named.
  */
 async function diagnosisInput(
   ctx: ServiceContext,
@@ -285,8 +296,8 @@ async function diagnosisInput(
   // Read through the learner's edition, so the model sees the words on their screen.
   const editions = await editionText(db, userId, [card, ...neighbours, ...others]);
   const seen = (row: Card): DiagnosisCard => {
-    const { id, term, meaning } = inEdition(row, editions.get(row.id));
-    return { id, term, meaning };
+    const { id, term, meaning, notes } = inEdition(row, editions.get(row.id));
+    return { id, term, meaning, notes };
   };
   const own = inEdition(card, editions.get(card.id));
   return {
@@ -330,6 +341,7 @@ export async function currentDiagnosis(
     confidence: row.confidence,
     model: row.model,
     diagnosedAt: row.updatedAt.toISOString(),
+    dismissedAt: row.dismissedAt?.toISOString() ?? null,
   };
 }
 

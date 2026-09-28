@@ -18,4 +18,11 @@ export const diagnosesApi = {
     }),
   undoFix: (id: string) =>
     request<{ ok: true }>(`/api/diagnoses/${encodeURIComponent(id)}/undo`, { method: "POST" }),
+  /** The learner says the cause is wrong; the fix is not offered again for this revision. */
+  dismissDiagnosis: (id: string) =>
+    request<{ ok: true }>(`/api/diagnoses/${encodeURIComponent(id)}/dismiss`, { method: "POST" }),
+  undoDismissal: (id: string) =>
+    request<{ ok: true }>(`/api/diagnoses/${encodeURIComponent(id)}/dismiss/undo`, {
+      method: "POST",
+    }),
 };

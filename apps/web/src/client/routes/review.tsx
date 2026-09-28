@@ -51,6 +51,7 @@ import {
 import { drawState, reviewItem, stateBefore } from "../lib/review-draw";
 import { itemKey } from "../lib/review-modes";
 import { shortQuote } from "../lib/short-quote";
+import { useDismissDiagnosis } from "../lib/use-dismiss-diagnosis";
 import {
   GradeBar,
   ReviewCard,
@@ -663,6 +664,10 @@ function Review() {
     markOffered(offer.diagnosisId);
     setCardOffer((held) => ({ ...held, parked: true }));
   };
+  // Undo brings the panel back while its card is still on screen.
+  const dismissFix = useDismissDiagnosis((id) =>
+    setCardOffer((held) => (held.offer?.diagnosisId === id ? { ...held, parked: false } : held)),
+  );
 
   const doneLink = (variant: "primary" | "secondary") => (
     <Button variant={variant} size="lg" className="w-full" render={<Link to="/today" />}>
@@ -821,6 +826,10 @@ function Review() {
         onEdit={(focus) => {
           closeFix();
           if (current) setEditing({ card: current.card, focus });
+        }}
+        onDismiss={() => {
+          if (offer) dismissFix.mutate(offer.diagnosisId);
+          closeFix();
         }}
       />
       <EditCardSheet

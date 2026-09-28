@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   canSpeakTerm,
+  headword,
   normaliseTerm,
   revealedAnswer,
   revealsAnswer,
@@ -56,5 +57,17 @@ describe("canSpeakTerm", () => {
   });
   it("never speaks a card without a language", () => {
     expect(canSpeakTerm({ term: "Hund", language: null })).toBe(false);
+  });
+});
+
+describe("headword", () => {
+  it("keeps the first of a term's principal parts", () => {
+    expect(headword("pikk · pika · pikka")).toBe("pikk");
+    expect(headword("einsteigen · stieg ein · ist eingestiegen")).toBe("einsteigen");
+  });
+  it("leaves a term without the separator as it is", () => {
+    expect(headword("to lie (lay, lain)")).toBe("to lie (lay, lain)");
+    expect(headword("брать / взять")).toBe("брать / взять");
+    expect(headword("a·b")).toBe("a·b");
   });
 });

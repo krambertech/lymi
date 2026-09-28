@@ -624,11 +624,23 @@ msgstr "Ссылка на изображение в сети."
 msgid "A Lymi file from another Lymi account"
 msgstr "Файл Lymi из другого аккаунта Lymi"
 
+msgid "A memory hook for <0>{term}</0>"
+msgstr "Зацепка для <0>{term}</0>"
+
+msgid "A phrase that leads you back to the answer"
+msgstr "Фраза, которая наведёт тебя на ответ"
+
+msgid "A phrase that leads you back to the answer."
+msgstr "Фраза, которая наведёт тебя на ответ."
+
 msgid "A reset link works once, within an hour."
 msgstr "Ссылка действует один час и только один раз."
 
 msgid "A rest day keeps the streak through one missed day a week."
 msgstr "День отдыха сохраняет дни подряд, когда пропускаешь один день в неделю."
+
+msgid "A sound-alike, or a picture to see"
+msgstr "Созвучное слово или картинка в воображении"
 
 msgid "A–Z"
 msgstr "А–Я"
@@ -660,6 +672,9 @@ msgstr "Добавить 2 карточки"
 
 msgid "Add a card"
 msgstr "Добавить карточку"
+
+msgid "Add a memory hook"
+msgstr "Добавить зацепку"
 
 msgid "Add a picture"
 msgstr "Добавить изображение"
@@ -762,6 +777,9 @@ msgstr "AI-приложения, подключённые к Lymi (Claude, ChatG
 
 msgid "AI example"
 msgstr "Пример от AI"
+
+msgid "AI hook"
+msgstr "Зацепка от AI"
 
 msgid "AI meaning"
 msgstr "Значение от AI"
@@ -1878,6 +1896,15 @@ msgstr "Скрыть пароль"
 msgid "History"
 msgstr "История"
 
+msgid "Hook added"
+msgstr "Зацепка добавлена"
+
+msgid "Hook by you"
+msgstr "Твоя зацепка"
+
+msgid "Hook from lesson"
+msgstr "Зацепка с урока"
+
 msgid "How cards are asked"
 msgstr "Как задаются карточки"
 
@@ -2021,6 +2048,9 @@ msgstr "Возможно, её архивировали или тебя из н�
 msgid "It may have been withdrawn. Find other decks in Explore."
 msgstr "Возможно, её сняли с публикации. Другие колоды можно найти в Каталоге."
 
+msgid "It shows under the answer, and you can peek at it before you turn the card."
+msgstr "Она появится под ответом, а подсмотреть её можно ещё до того, как откроешь карточку."
+
 msgid "It wasn’t confirmed within three days, so Lymi deleted the file. Choose it again to start over."
 msgstr "Импорт не подтвердили за три дня, поэтому Lymi удалил файл. Выбери файл снова, чтобы начать заново."
 
@@ -2053,6 +2083,9 @@ msgctxt "daily goal"
 msgid "Keen"
 msgstr "Усердно"
 
+msgid "Keep hook"
+msgstr "Сохранить зацепку"
+
 msgid "Keep invitation"
 msgstr "Оставить приглашение"
 
@@ -2073,6 +2106,9 @@ msgstr "Описание должно быть короче 300 символов
 
 msgid "Keep the example under 2000 characters."
 msgstr "Пример должен быть короче 2000 символов."
+
+msgid "Keep the hook under 200 characters."
+msgstr "Зацепка должна быть короче 200 символов."
 
 msgid "Keep the language tag under 12 characters."
 msgstr "Языковой тег должен быть короче 12 символов."
@@ -2273,6 +2309,18 @@ msgstr "Новое значение: «{value}»"
 
 msgid "Meaning from lesson"
 msgstr "Значение с урока"
+
+msgid "Memory hook"
+msgstr "Зацепка"
+
+msgid "Memory hook changed to “{value}”"
+msgstr "Новая зацепка: «{value}»"
+
+msgid "Memory hook:"
+msgstr "Зацепка:"
+
+msgid "Memory hook: {peeked}"
+msgstr "Зацепка: {peeked}"
 
 msgid "Message"
 msgstr "Сообщение"
@@ -2523,6 +2571,9 @@ msgstr "Пока колода в архиве, к ней никто не мож�
 msgid "Nobody new can add it."
 msgstr "Новые люди уже не могут её добавить."
 
+msgid "Not after a peek"
+msgstr "Только без зацепки"
+
 msgid "Not available on this server yet."
 msgstr "На этом сервере пока недоступно."
 
@@ -2579,6 +2630,9 @@ msgstr "В этой колоде больше ничего"
 
 msgid "Nothing published yet"
 msgstr "Пока ничего не опубликовано"
+
+msgid "Nothing to hang this one on"
+msgstr "Не за что зацепиться"
 
 msgid "Nothing was added, and the file was deleted."
 msgstr "Ничего не добавлено, а файл удалён."
@@ -2709,6 +2763,9 @@ msgstr "Вставленное изображение"
 msgid "Pause the cards"
 msgstr "Остановить карточки"
 
+msgid "Peek at your hook"
+msgstr "Подсмотреть зацепку"
+
 msgid "People"
 msgstr "Люди"
 
@@ -2750,6 +2807,18 @@ msgstr "Описание изображения изменено"
 
 msgid "Picture description removed"
 msgstr "Описание изображения удалено"
+
+msgid "Picture it when the card asks for “<0>{cue}</0>”."
+msgstr "Представь это, когда карточка спросит «<0>{cue}</0>»."
+
+msgid "Picture it when the card asks for “<0>{cue}</0>”. Change anything that doesn’t click for you."
+msgstr "Представь это, когда карточка спросит «<0>{cue}</0>». Измени всё, что тебе не откликается."
+
+msgid "Picture it when the card shows its picture."
+msgstr "Представь это, когда карточка покажет изображение."
+
+msgid "Picture it when the card shows its picture. Change anything that doesn’t click for you."
+msgstr "Представь это, когда карточка покажет изображение. Измени всё, что тебе не откликается."
 
 msgid "Picture restored"
 msgstr "Изображение восстановлено"
@@ -2975,6 +3044,9 @@ msgstr "Повторить"
 
 msgid "Reveal the card"
 msgstr "Открыть карточку"
+
+msgid "Reveal the card when you have it"
+msgstr "Открой карточку, когда вспомнишь"
 
 msgid "Review"
 msgstr "Повторение"
@@ -3376,6 +3448,9 @@ msgstr "Сфотографировать"
 msgid "Tap Add to Home Screen."
 msgstr "Коснись «На экран “Домой”»."
 
+msgid "Tap the card when you have it"
+msgstr "Нажми на карточку, когда вспомнишь"
+
 msgid "Technology"
 msgstr "Технологии"
 
@@ -3487,6 +3562,9 @@ msgstr "Ссылка действует один час. Если это не т
 
 msgid "the meaning"
 msgstr "значение"
+
+msgid "the memory hook"
+msgstr "зацепка"
 
 msgid "the notes"
 msgstr "заметки"
@@ -3692,6 +3770,9 @@ msgctxt "deck tag"
 msgid "Travel"
 msgstr "Путешествия"
 
+msgid "Try a memory hook"
+msgstr "Попробуй зацепку"
+
 msgid "Try again"
 msgstr "Попробовать снова"
 
@@ -3850,6 +3931,9 @@ msgstr "Кто может присоединиться к этой колоде"
 
 msgid "Work and study"
 msgstr "Работа и учёба"
+
+msgid "Write a hook."
+msgstr "Напиши зацепку."
 
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, что хочешь рассказать Lymi."

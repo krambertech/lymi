@@ -2,6 +2,7 @@ import {
   type FieldRole,
   fieldsFromRoles,
   fitFields,
+  HOOK_LIMIT,
   type ImportedProgress,
   importTags,
   LYMI_FILE_VERSION,
@@ -218,6 +219,9 @@ export const lymi: SourceAdapter<LymiNote> = {
         },
         origin: card.source ?? undefined,
         pictureDescription: card.picture?.description ?? undefined,
+        hook: card.hook
+          ? { text: card.hook.slice(0, HOOK_LIMIT), source: card.hookSource ?? "manual" }
+          : undefined,
       },
     ];
   },

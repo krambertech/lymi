@@ -84,6 +84,15 @@ describe("recording a grade", () => {
     expect(grades.outboxSize()).toBe(0);
   });
 
+  it("keeps a peek with a queued grade and sends it on replay", async () => {
+    grade.mockRejectedValueOnce(offline());
+    expect(await grades.recordGrade({ ...g("a"), aid: "hook" })).toBe("queued");
+    grades.resetGradeCache();
+    grade.mockResolvedValueOnce(accepted("rev-a"));
+    expect(await grades.flushOutbox()).toBe(1);
+    expect(grade.mock.calls.at(-1)?.[0]).toMatchObject({ cardId: "a", rating: 3, aid: "hook" });
+  });
+
   it("drops a refused grade, so the card comes back", async () => {
     grade.mockRejectedValueOnce(new ApiError(422, "invalid"));
     expect(await grades.recordGrade(g("a"))).toBe("refused");

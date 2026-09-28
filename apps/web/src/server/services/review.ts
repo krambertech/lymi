@@ -347,6 +347,7 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
         source: "web",
         reviewDayId: reviewDay.id,
         stateBefore: JSON.stringify(before),
+        aid: input.aid ?? null,
       }),
     ])
     .then(
@@ -364,7 +365,7 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
     entity: "review",
     action: "grade",
     id: cardId,
-    details: { rating, direction, mode: key },
+    details: { rating, direction, mode: key, ...(input.aid ? { aid: input.aid } : {}) },
   });
 
   return {

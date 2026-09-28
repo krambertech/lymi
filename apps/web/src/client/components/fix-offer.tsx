@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/react/macro";
 import { cn } from "cn";
 import {
+  Anchor,
   ArrowLeftRight,
   ChevronRight,
   CircleHelp,
@@ -18,8 +19,7 @@ const ICONS: Record<ReviewOffer["cause"], LucideIcon> = {
   confused_pair: ArrowLeftRight,
   two_things: Split,
   several_answers: CircleHelp,
-  // Review offers no hook yet (#405); the entry only completes the record.
-  no_anchor: Pencil,
+  no_anchor: Anchor,
   unclear: Pencil,
 };
 
@@ -44,6 +44,11 @@ function offerLines(offer: ReviewOffer): [ReactNode, ReactNode] {
       return [
         <Trans key="t">More than one right answer</Trans>,
         <Trans key="l">Make the question clearer</Trans>,
+      ];
+    case "no_anchor":
+      return [
+        <Trans key="t">Nothing to hang this one on</Trans>,
+        <Trans key="l">Try a memory hook</Trans>,
       ];
     default:
       return [

@@ -97,6 +97,7 @@ function input(g: StoredGrade): GradeInput {
     rating: g.rating,
     reviewedAt: new Date(g.reviewedAt),
     ...(g.timezone ? { timezone: g.timezone } : {}),
+    ...(g.aid ? { aid: g.aid } : {}),
   };
 }
 

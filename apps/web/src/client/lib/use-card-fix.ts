@@ -28,6 +28,7 @@ export function useCardFix() {
 
   const title = (cause: FixInput["cause"], result: FixResult) => {
     if (cause === "several_answers") return t`Question changed`;
+    if (cause === "no_anchor") return t`Hook added`;
     const added = result.added.length;
     if (cause === "confused_pair" && added === 0) return t`Both cards are already in your decks.`;
     const skipped = result.skipped[0];

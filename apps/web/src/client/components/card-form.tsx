@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { cn } from "cn";
 import {
   AlertCircle,
+  Anchor,
   AudioLines,
   Check,
   ChevronDown,
@@ -55,6 +56,7 @@ export interface CardFormValues {
   pronunciation: string;
   example: string;
   notes: string;
+  hook: string;
   source: string;
   tags: string[];
   language: string | null;
@@ -124,7 +126,15 @@ export type CardFormProps = AddCardFormProps | EditCardFormProps;
 const NEARLY_FULL = 0.9;
 
 type Notice = { kind: "ok" | "warn" | "dup"; text: string };
-type Panel = "picture" | "example" | "pronunciation" | "notes" | "source" | "tags" | "settings";
+type Panel =
+  | "picture"
+  | "example"
+  | "pronunciation"
+  | "notes"
+  | "hook"
+  | "source"
+  | "tags"
+  | "settings";
 
 /** Which panel holds each field, so a refused field opens where it can be fixed. */
 const PANEL_OF: Record<string, Panel> = {
@@ -132,6 +142,7 @@ const PANEL_OF: Record<string, Panel> = {
   example: "example",
   pronunciation: "pronunciation",
   notes: "notes",
+  hook: "hook",
   source: "source",
   tags: "tags",
   reviewModes: "settings",
@@ -169,6 +180,7 @@ export function CardForm(props: CardFormProps) {
   );
   const [example, setExample] = useState(draft?.example ?? card?.example ?? "");
   const [notes, setNotes] = useState(draft?.notes ?? card?.notes ?? "");
+  const [hook, setHook] = useState(draft?.hook ?? card?.hook ?? "");
   const [source, setSource] = useState(draft?.source ?? card?.source ?? "");
   const [tags, setTags] = useState<string[]>(draft?.tags ?? card?.tags ?? []);
   // Until the learner picks one, a new card takes its deck's language.
@@ -198,6 +210,7 @@ export function CardForm(props: CardFormProps) {
           card.example ||
           card.pronunciation ||
           card.notes ||
+          card.hook ||
           card.source ||
           card.tags.length ||
           card.reviewModes
@@ -263,6 +276,7 @@ export function CardForm(props: CardFormProps) {
     pronunciation: pronunciation.trim(),
     example: example.trim(),
     notes: notes.trim(),
+    hook: hook.trim(),
     source: source.trim(),
     tags,
     language,
@@ -326,6 +340,7 @@ export function CardForm(props: CardFormProps) {
           pronunciation: t`Keep the pronunciation under 200 characters.`,
           example: t`Keep the example under 2000 characters.`,
           notes: t`Keep the notes under 2000 characters.`,
+          hook: t`Keep the hook under 200 characters.`,
           source: t`Keep the source under 200 characters.`,
           tags: t`Use up to 20 tags of 40 characters or fewer.`,
           reviewModes: t`Choose at least one way to be asked.`,
@@ -377,6 +392,7 @@ export function CardForm(props: CardFormProps) {
     setPronunciation("");
     setExample("");
     setNotes("");
+    setHook("");
     setModes(null);
     setPicture({ kind: "none" });
     setDescription("");
@@ -413,6 +429,7 @@ export function CardForm(props: CardFormProps) {
     example.trim(),
     pronunciation.trim(),
     notes.trim(),
+    hook.trim(),
     source.trim(),
     tags.length > 0,
     !!settingsValue,
@@ -630,6 +647,26 @@ export function CardForm(props: CardFormProps) {
     </Field>
   );
 
+  const hookField = (
+    <Field>
+      <FieldLabel className={chips ? "sr-only" : undefined} aside={roomLeft(hook, cardLimits.hook)}>
+        {t`Memory hook`}
+      </FieldLabel>
+      <Textarea
+        maxLength={cardLimits.hook ?? undefined}
+        value={hook}
+        rows={chips ? 2 : 1}
+        className={chips ? undefined : "min-h-10 py-2.5 leading-normal"}
+        onChange={(e) => {
+          setHook(e.target.value);
+          clear("hook");
+        }}
+      />
+      <FieldDescription>{t`A phrase that leads you back to the answer.`}</FieldDescription>
+      <FieldError>{invalid.hook}</FieldError>
+    </Field>
+  );
+
   const sourceField = (
     <Field>
       <FieldLabel
@@ -783,6 +820,15 @@ export function CardForm(props: CardFormProps) {
               {notesField}
             </FieldChip>
             <FieldChip
+              icon={Anchor}
+              label={t`Memory hook`}
+              value={hook.trim()}
+              invalid={!!invalid.hook}
+              {...panelProps("hook")}
+            >
+              {hookField}
+            </FieldChip>
+            <FieldChip
               icon={ImageIcon}
               keyboard={false}
               label={t`Picture`}
@@ -855,6 +901,7 @@ export function CardForm(props: CardFormProps) {
                   </div>
                   {tagsField}
                   {notesField}
+                  {hookField}
                   <div ref={pictureRef} className="grid gap-1.5">
                     <span className="text-sm font-medium text-text-2">
                       <Trans>Picture</Trans>

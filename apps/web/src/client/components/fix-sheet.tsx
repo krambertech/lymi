@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { cardLimits, type DraftCard, type FixInput } from "@lymi/core";
 import { cn } from "cn";
-import { ChevronRight, ImagePlus, Pencil, SquarePen, TextCursorInput } from "lucide-react";
+import { Anchor, ChevronRight, ImagePlus, Pencil, SquarePen, TextCursorInput } from "lucide-react";
 import { type ComponentProps, type ReactNode, type Ref, useId, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { ApiError, type QueueItem, type ReviewOffer } from "../lib/api";
@@ -79,6 +79,8 @@ interface BodyProps {
 function FixBody({ item, offer, titleId, onClose, onEdit }: BodyProps) {
   const accept = useCardFix();
   const [failure, setFailure] = useState<"stale" | "unreachable" | null>(null);
+  // The menu's "Add a memory hook" turns the sheet into the hook's own, with nothing drafted.
+  const [writingHook, setWritingHook] = useState(false);
   const frame = {
     titleId,
     pending: accept.isPending,
@@ -104,8 +106,21 @@ function FixBody({ item, offer, titleId, onClose, onEdit }: BodyProps) {
       return <SplitFix item={item} offer={offer} frame={frame} />;
     case "several_answers":
       return <CueFix item={item} offer={offer} frame={frame} />;
+    case "no_anchor":
+      return <HookFix item={item} drafted={offer.draft.hook} frame={frame} />;
     default:
-      return <ChangeMenu item={item} frame={frame} />;
+      return writingHook ? (
+        <HookFix item={item} drafted={null} frame={frame} focusOnMount />
+      ) : (
+        <ChangeMenu
+          item={item}
+          frame={frame}
+          onHook={() => {
+            // Inside the tap, so iOS raises the keyboard for the field this row opened.
+            flushSync(() => setWritingHook(true));
+          }}
+        />
+      );
   }
 }
 
@@ -393,7 +408,122 @@ function CueFix({
   );
 }
 
-function ChangeMenu({ item, frame }: { item: QueueItem; frame: FrameState }) {
+/**
+ * A memory hook for the card, drafted by the AI or written from nothing. It keeps the AI's badge
+ * until a word of it changes.
+ */
+function HookFix({
+  item,
+  drafted,
+  frame,
+  focusOnMount = false,
+}: {
+  item: QueueItem;
+  drafted: string | null;
+  frame: FrameState;
+  /** Take the caret at once, for a learner who chose to write a hook of their own. */
+  focusOnMount?: boolean | undefined;
+}) {
+  const { t } = useLingui();
+  const { card, mode } = item;
+  const [hook, setHook] = useState(drafted ?? "");
+  const [error, setError] = useState<string | null>(null);
+  const field = useRef<HTMLTextAreaElement>(null);
+  const focused = useRef(false);
+  const focusField = (node: HTMLTextAreaElement | null) => {
+    field.current = node;
+    if (!node || !focusOnMount || focused.current) return;
+    focused.current = true;
+    node.focus({ preventScroll: true });
+  };
+  const term = card.term;
+  const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
+  const cueLanguage = mode.cue === "term" ? (card.language ?? undefined) : undefined;
+  const picture = mode.cue === "image";
+  const submit = () => {
+    const text = hook.trim();
+    if (!text) {
+      setError(t`Write a hook.`);
+      field.current?.focus();
+      return;
+    }
+    frame.submit({ cause: "no_anchor", hook: text });
+  };
+  return (
+    <Frame
+      frame={frame}
+      title={
+        <Trans>
+          A memory hook for <span lang={card.language ?? undefined}>{term}</span>
+        </Trans>
+      }
+      why={
+        drafted === null ? (
+          picture ? (
+            <Trans>Picture it when the card shows its picture.</Trans>
+          ) : (
+            <Trans>
+              Picture it when the card asks for “<span lang={cueLanguage}>{cue}</span>”.
+            </Trans>
+          )
+        ) : picture ? (
+          <Trans>
+            Picture it when the card shows its picture. Change anything that doesn’t click for you.
+          </Trans>
+        ) : (
+          <Trans>
+            Picture it when the card asks for “<span lang={cueLanguage}>{cue}</span>”. Change
+            anything that doesn’t click for you.
+          </Trans>
+        )
+      }
+      primary={<Trans>Keep hook</Trans>}
+      onSubmit={submit}
+    >
+      <Field invalid={!!error}>
+        <div className="flex min-h-[17px] flex-wrap items-center gap-2">
+          <FieldLabel>{t`Memory hook`}</FieldLabel>
+          {drafted !== null && hook === drafted && (
+            <SourceChip source="ai" field="hook" size="xs" />
+          )}
+        </div>
+        <Textarea
+          ref={focusField}
+          rows={2}
+          value={hook}
+          maxLength={cardLimits.hook ?? undefined}
+          placeholder={drafted === null ? t`A sound-alike, or a picture to see` : undefined}
+          onChange={(e) => {
+            setHook(e.target.value);
+            setError(null);
+          }}
+          onKeyDown={(e) => {
+            // A hook is one phrase, so Enter keeps it; Shift Enter still breaks the line.
+            if (e.key !== "Enter" || e.shiftKey || e.nativeEvent.isComposing) return;
+            e.preventDefault();
+            e.currentTarget.form?.requestSubmit();
+          }}
+          autoComplete="off"
+          enterKeyHint="done"
+        />
+        <FieldError>{error}</FieldError>
+      </Field>
+      <p className="-mt-1 text-sm text-muted">
+        <Trans>It shows under the answer, and you can peek at it before you turn the card.</Trans>
+      </p>
+    </Frame>
+  );
+}
+
+function ChangeMenu({
+  item,
+  frame,
+  onHook,
+}: {
+  item: QueueItem;
+  frame: FrameState;
+  onHook: () => void;
+}) {
   const { t } = useLingui();
   const { card, mode } = item;
   const cueField: EditFocus = mode.cue === "image" ? "picture" : mode.cue;
@@ -409,6 +539,14 @@ function ChangeMenu({ item, frame }: { item: QueueItem; frame: FrameState }) {
       }
     >
       <ul aria-label={t`Ways to change the card`} className="-mx-2 grid gap-1">
+        {!card.hook && (
+          <ChangeRow
+            icon={<Anchor />}
+            title={<Trans>Add a memory hook</Trans>}
+            detail={<Trans>A phrase that leads you back to the answer</Trans>}
+            onClick={onHook}
+          />
+        )}
         <ChangeRow
           icon={<TextCursorInput />}
           title={<Trans>Make the question clearer</Trans>}

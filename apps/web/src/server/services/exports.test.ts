@@ -228,7 +228,12 @@ async function library(ctx: ServiceContext) {
   // Only the app's own enrichment writes "ai", so stand in for it to see the badge round-trip.
   await ctx.db
     .update(schema.cards)
-    .set({ exampleSource: "ai", pronunciationSource: "ai" })
+    .set({
+      exampleSource: "ai",
+      pronunciationSource: "ai",
+      hook: "A cat naps in the gatehouse",
+      hookSource: "ai",
+    })
     .where(eq(schema.cards.id, gatto.id));
   const pictures = { bucket: env.PRIVATE_IMAGES, images: env.IMAGES };
   await uploadCardImage(
@@ -341,6 +346,8 @@ async function snapshot(ctx: ServiceContext) {
           meaningSource: card.meaningSource,
           exampleSource: card.exampleSource,
           pronunciationSource: card.pronunciationSource,
+          hook: card.hook,
+          hookSource: card.hookSource,
           reviewModes: card.directions ? card.reviewModeKeys : null,
           archived: card.archivedAt !== null,
           picture: image

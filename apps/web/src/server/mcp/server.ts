@@ -1093,6 +1093,10 @@ const CardOut = z.object({
   pronunciation: z.string().nullable(),
   example: z.string().nullable(),
   notes: z.string().nullable().describe("Markdown source in the notes subset"),
+  hook: z
+    .string()
+    .nullable()
+    .describe("A short association that leads the learner back to the term; never the answer"),
   language: z.string().nullable(),
   tags: z.array(z.string()),
   source: z.string().nullable(),
@@ -1116,6 +1120,7 @@ const CardOut = z.object({
   meaningSource: FieldSource.nullable(),
   exampleSource: FieldSource.nullable(),
   pronunciationSource: FieldSource.nullable(),
+  hookSource: FieldSource.nullable(),
   enrichmentStatus: EnrichmentStatus.nullable().describe(
     "Set while Lymi is filling the card's empty fields, and null once it settles",
   ),
@@ -1159,6 +1164,7 @@ function cardOut(card: CardView): CardOut {
     pronunciation: card.pronunciation,
     example: card.example,
     notes: card.notes,
+    hook: card.hook,
     language: card.language,
     tags: card.tags,
     source: card.source,
@@ -1177,6 +1183,7 @@ function cardOut(card: CardView): CardOut {
     meaningSource: card.meaningSource,
     exampleSource: card.exampleSource,
     pronunciationSource: card.pronunciationSource,
+    hookSource: card.hookSource,
     enrichmentStatus: card.enrichmentStatus,
     archivedAt: card.archivedAt ? card.archivedAt.toISOString() : null,
     createdAt: card.createdAt.toISOString(),

@@ -765,6 +765,10 @@ const FIX_CARDS: Record<
     card: { term: "pikk", meaning: "tall" },
     draft: { field: "meaning", text: "tall (of a person)", otherAnswer: "kõrge" },
   },
+  no_anchor: {
+    card: { term: "kõrvits", meaning: "pumpkin" },
+    draft: { hook: "A pumpkin curves at its sides: “curve-its”." },
+  },
   unclear: {
     card: { term: "vaatama", meaning: "to look, to watch" },
     draft: null,
@@ -777,18 +781,32 @@ const fixCard = (cause: FixCause) =>
 /** The card a confused pair names, which is not often forgotten itself. */
 const PAIR_OTHER: PersonaCard = { term: "algama", meaning: "to begin, to start (by itself)" };
 
+/** A card that already has a hook, recalled once before, so review can show the peek. */
+const HOOKED: PersonaCard & { hook: string } = {
+  term: "lumi",
+  meaning: "snow",
+  hook: "Fresh snow makes the whole street luminous.",
+};
+
 /**
  * One often-forgotten card per cause review offers a fix for, each with a finished diagnosis no
  * model wrote, so the offer can be seen without a vendor key. Asked meaning first, forgotten as
- * the first grade on just enough past days to slip, and due now. A second run replaces the first.
+ * the first grade on just enough past days to slip, and due now. With `hooked`, the default when
+ * no causes are named, a card that already has a hook is due beside them. A second run replaces
+ * the first.
  */
 export async function seedFixes(
   ctx: ServiceContext,
-  causes: readonly FixCause[] = OFFERED_CAUSES,
+  causes?: readonly FixCause[],
+  { hooked = causes === undefined }: { hooked?: boolean } = {},
   now = new Date(),
-): Promise<{ deckId: string; cards: { cause: FixCause; cardId: string }[] }> {
+): Promise<{
+  deckId: string;
+  cards: { cause: FixCause; cardId: string }[];
+  hookedCardId: string | null;
+}> {
   const { db, userId } = ctx;
-  const terms = [PAIR_OTHER, ...OFFERED_CAUSES.map(fixCard)].map((c) => c.term);
+  const terms = [PAIR_OTHER, HOOKED, ...OFFERED_CAUSES.map(fixCard)].map((c) => c.term);
   await db.batch([
     db
       .delete(schema.cards)
@@ -802,16 +820,19 @@ export async function seedFixes(
     defaultLanguage: "et",
     reviewModes: [{ cue: "meaning", target: "term" }],
   });
-  const wanted = [...new Set(causes)];
-  const inputs = [
+  const wanted = [...new Set(causes ?? OFFERED_CAUSES)];
+  const seeds: (PersonaCard & { hook?: string })[] = [
     ...(wanted.includes("confused_pair") ? [PAIR_OTHER] : []),
     ...wanted.map(fixCard),
-  ].map((card) => ({
+    ...(hooked ? [HOOKED] : []),
+  ];
+  const inputs = seeds.map((card) => ({
     deckId: deck.id,
     term: card.term,
     meaning: card.meaning,
     meaningSource: "lesson" as const,
     source: "Tund 7",
+    ...(card.hook ? { hook: card.hook } : {}),
   }));
   const outcomes = await addCards(ctx, inputs);
   const idOf = new Map(
@@ -822,6 +843,7 @@ export async function seedFixes(
     const cardId = idOf.get(fixCard(cause).term);
     return cardId ? [{ cause, cardId }] : [];
   });
+  const hookedCardId = idOf.get(HOOKED.term) ?? null;
 
   const states = await db
     .select()
@@ -829,19 +851,27 @@ export async function seedFixes(
     .where(
       and(
         eq(schema.cardStates.userId, userId),
-        inArray(
-          schema.cardStates.cardId,
-          seeded.map((s) => s.cardId),
-        ),
+        inArray(schema.cardStates.cardId, [
+          ...seeded.map((s) => s.cardId),
+          ...(hookedCardId ? [hookedCardId] : []),
+        ]),
       ),
     );
   const today = dayWindow(now, await reviewZone(ctx)).start.getTime();
   const statements: unknown[] = [];
   for (const state of states) {
+    // The hooked card was recalled once, a few days ago; the others were forgotten day after day.
+    const recalled = state.cardId === hookedCardId;
     let fsrs = emptyState(new Date(today - (SLIPPING_FORGOTTEN_DAYS + 1) * DAY));
-    for (let daysAgo = SLIPPING_FORGOTTEN_DAYS; daysAgo >= 1; daysAgo--) {
+    const days = recalled ? 1 : SLIPPING_FORGOTTEN_DAYS;
+    for (
+      let daysAgo = SLIPPING_FORGOTTEN_DAYS;
+      daysAgo > SLIPPING_FORGOTTEN_DAYS - days;
+      daysAgo--
+    ) {
       const at = new Date(today - daysAgo * DAY + 9 * 3_600_000);
-      const result = schedule(fsrs, 1, at);
+      const rating = recalled ? 3 : 1;
+      const result = schedule(fsrs, rating, at);
       statements.push(
         db.insert(schema.reviews).values({
           id: crypto.randomUUID(),
@@ -850,7 +880,7 @@ export async function seedFixes(
           cardStateId: state.id,
           direction: state.direction,
           mode: state.mode,
-          rating: 1,
+          rating,
           state: result.log.state,
           elapsedDays: result.log.elapsedDays,
           scheduledDays: result.log.scheduledDays,
@@ -904,5 +934,5 @@ export async function seedFixes(
     );
   }
   await runBatched(db, statements);
-  return { deckId: deck.id, cards: seeded };
+  return { deckId: deck.id, cards: seeded, hookedCardId };
 }

@@ -9,6 +9,7 @@ export const SHORTCUTS: [string, MessageDescriptor][] = [
   ["N", msg`Add a card`],
   ["R", msg`Start review`],
   ["/", msg`Search`],
+  ["H", msg`Peek at your hook`],
   ["Space", msg`Show the meaning, then Good`],
   ["1 – 4", msg`Forgot, Hard, Good, Easy`],
   ["Esc", msg`Leave review or close a sheet`],

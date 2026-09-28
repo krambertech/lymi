@@ -153,7 +153,8 @@ export async function presentCards(
 }
 
 /**
- * A field the edition left empty keeps the card's own text, so a partial edition still reads.
+ * A field the edition left empty keeps the card's own text, so a partial edition still reads. A
+ * hook is written in the deck's own meaning language and is not an edition field, so none shows.
  * A localized term carries its own folded key, so search matches the words the learner sees
  * rather than the deck's own. Nothing here is written back: the stored card is unchanged.
  */
@@ -169,6 +170,7 @@ export function inEdition<T extends Pick<Card, "normalizedTerm">>(
     ...card,
     ...replaced,
     ...(text.term ? { normalizedTerm: normaliseTerm(text.term) } : {}),
+    ...("hook" in card ? { hook: null, hookSource: null } : {}),
   };
 }
 

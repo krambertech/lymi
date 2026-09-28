@@ -188,3 +188,67 @@ test("an emptied drafted card is marked and focused, and nothing is sent", async
   await expect.element(term).toHaveFocus();
   expect(accept).not.toHaveBeenCalled();
 });
+
+const hookOffer: ReviewOffer = {
+  diagnosisId: "d-hook",
+  cause: "no_anchor",
+  draft: { hook: "A lass stamps her foot to start the race." },
+};
+
+test("a drafted hook keeps the AI badge until a word of it changes, and keeps as edited", async () => {
+  const accept = accepted();
+  await render(<Harness item={itemWith(hookOffer)} />);
+  const dialog = page.getByRole("dialog");
+  await expect
+    .element(dialog.getByRole("heading", { name: "A memory hook for alustama" }))
+    .toBeVisible();
+  await expect
+    .element(dialog.getByText("Picture it when the card asks for “to start”.", { exact: false }))
+    .toBeVisible();
+  const field = dialog.getByRole("textbox", { name: "Memory hook" });
+  await expect.element(field).toHaveValue("A lass stamps her foot to start the race.");
+  await expect.element(dialog.getByText("AI hook")).toBeInTheDocument();
+
+  await userEvent.clear(field);
+  await userEvent.type(field, "A lass stamps twice to start.");
+  await expect.element(dialog.getByText("AI hook")).not.toBeInTheDocument();
+  await dialog.getByRole("button", { name: "Keep hook" }).click();
+  expect(accept).toHaveBeenCalledWith("d-hook", {
+    cause: "no_anchor",
+    hook: "A lass stamps twice to start.",
+  });
+  await expect.element(dialog).not.toBeInTheDocument();
+});
+
+test("no clear reason lets the learner write a hook of their own, and an empty one is marked", async () => {
+  const accept = accepted();
+  const offer: ReviewOffer = { diagnosisId: "d-unclear", cause: "unclear", draft: null };
+  await render(<Harness item={itemWith(offer)} />);
+  const dialog = page.getByRole("dialog");
+  await dialog.getByRole("button", { name: /Add a memory hook/ }).click();
+  await expect
+    .element(dialog.getByRole("heading", { name: "A memory hook for alustama" }))
+    .toBeVisible();
+  const field = dialog.getByRole("textbox", { name: "Memory hook" });
+  // The learner chose to write, so the caret is already in the one field.
+  await expect.element(field).toHaveFocus();
+  await expect.element(field).toHaveValue("");
+  expect(dialog.getByText("AI hook").elements()).toHaveLength(0);
+
+  await dialog.getByRole("button", { name: "Keep hook" }).click();
+  await expect.element(dialog.getByText("Write a hook.")).toBeVisible();
+  await expect.element(field).toHaveAttribute("aria-invalid", "true");
+  expect(accept).not.toHaveBeenCalled();
+
+  await userEvent.type(field, "Look at the vat");
+  await dialog.getByRole("button", { name: "Keep hook" }).click();
+  expect(accept).toHaveBeenCalledWith("d-unclear", { cause: "no_anchor", hook: "Look at the vat" });
+});
+
+test("a card that already has a hook is not offered another from the menu", async () => {
+  const offer: ReviewOffer = { diagnosisId: "d-unclear", cause: "unclear", draft: null };
+  await render(<Harness item={itemWith(offer, { hook: "Mine", hookSource: "manual" })} />);
+  const dialog = page.getByRole("dialog");
+  await expect.element(dialog.getByRole("button", { name: /Edit the card/ })).toBeVisible();
+  expect(dialog.getByRole("button", { name: /Add a memory hook/ }).elements()).toHaveLength(0);
+});

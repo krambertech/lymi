@@ -1,14 +1,16 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
 import { expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import type { FixOfferProps } from "../components/fix-offer";
+import { aidSteps } from "../components/recall-aid";
 import { queueItem, queueItemPicture } from "../design/mock";
 import type { QueueItem } from "../lib/api";
-import { ReviewCard } from "./review-view";
+import { GradeBar, ReviewCard } from "./review-view";
 
 i18n.load("en", messages);
 i18n.activate("en");
@@ -136,4 +138,86 @@ test("a drafted fix waits for the reveal, then opens from the foot of the card",
   await expect.poll(() => shown.mock.calls.length).toBeGreaterThan(0);
   await button.click();
   expect(opened).toHaveBeenCalled();
+});
+
+const hooked = item({ hook: "Speed up the brigade", hookSource: "ai", notes: "Reflexive." });
+
+/** A card as review holds it: the aid steps taken live in the page, the card only draws them. */
+function PeekHarness({ card, onReveal }: { card: QueueItem; onReveal: () => void }) {
+  const [taken, setTaken] = useState(0);
+  const steps = aidSteps(card.card);
+  return (
+    <I18nProvider i18n={i18n}>
+      <ReviewCard
+        item={card}
+        revealed={false}
+        onReveal={onReveal}
+        aid={
+          steps.length
+            ? { steps, taken, animate: false, onTake: () => setTaken((n) => n + 1) }
+            : undefined
+        }
+      />
+    </I18nProvider>
+  );
+}
+
+test("a peek shows the hook under the cue and says it aloud, without turning the card", async () => {
+  const onReveal = vi.fn();
+  await render(<PeekHarness card={hooked} onReveal={onReveal} />);
+  const card = page.getByRole("region", { name: /Recognition card/ });
+  const status = card.getByRole("status");
+  await expect.element(status).toHaveTextContent("");
+
+  await card.getByRole("button", { name: /Peek at your hook/ }).click();
+  await expect.element(status).toHaveTextContent("Memory hook: Speed up the brigade");
+  expect(onReveal).not.toHaveBeenCalled();
+  // The measuring copy of the answer holds the hook too, hidden; the peeked one is on show.
+  const shown = () =>
+    card
+      .getByText("Speed up the brigade", { exact: false })
+      .elements()
+      .some((el) => el.checkVisibility());
+  await expect.poll(shown).toBe(true);
+  // One step and it is taken, so nothing is left to press.
+  expect(card.getByRole("button", { name: /Peek at your hook/ }).elements()).toHaveLength(0);
+});
+
+test("a card without a hook has no peek control", async () => {
+  await render(<PeekHarness card={item({ hook: null, hookSource: null })} onReveal={noop} />);
+  await expect.element(page.getByRole("button", { name: "Reveal the card" })).toBeInTheDocument();
+  expect(page.getByRole("button", { name: /Peek at your hook/ }).elements()).toHaveLength(0);
+});
+
+test("a revealed hook sits after the notes, marked while the AI's words are unchanged", async () => {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <ReviewCard item={hooked} revealed animateReveal={false} onReveal={noop} />
+    </I18nProvider>,
+  );
+  const card = page.getByRole("region", { name: /Recognition card/ }).element();
+  const text = card.textContent ?? "";
+  expect(text.indexOf("Reflexive.")).toBeLessThan(text.indexOf("Speed up the brigade"));
+  expect(text).toContain("Memory hook: Speed up the brigade");
+  expect(text).toContain("AI hook");
+});
+
+test("after a peek Easy keeps its slot but cannot be pressed, and says why", async () => {
+  const onGrade = vi.fn();
+  await render(
+    <I18nProvider i18n={i18n}>
+      <GradeBar revealed aided onGrade={onGrade} />
+    </I18nProvider>,
+  );
+  const easy = page.getByRole("button", { name: "Easy" });
+  await expect.element(easy).toHaveAttribute("aria-disabled", "true");
+  await expect.element(easy).toHaveAccessibleDescription("Not after a peek");
+  // Forced, because Playwright rightly waits forever on a control marked unavailable.
+  await easy.click({ force: true });
+  expect(onGrade).not.toHaveBeenCalled();
+  await page.getByRole("button", { name: "Good" }).click();
+  expect(onGrade).toHaveBeenCalledWith(3);
+  const buttons = page.getByRole("button").elements();
+  expect(buttons).toHaveLength(4);
+  expect(buttons[3]?.getAttribute("aria-label")).toBe("Easy");
 });

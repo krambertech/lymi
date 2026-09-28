@@ -503,7 +503,11 @@ export const CARD_LIMITS = {
   example: 2000,
   notes: 2000,
   source: 200,
+  hook: 200,
 } as const;
+
+/** A hook is a phrase that leads back to the term, never a paragraph. */
+export const HOOK_LIMIT = CARD_LIMITS.hook;
 
 export const CardInput = z.object({
   id: ClientId.optional(),
@@ -526,6 +530,15 @@ export const CardInput = z.object({
     .max(CARD_LIMITS.notes)
     .optional()
     .meta({ description: `${NOTES_FORMAT} The limit counts the Markdown source.` }),
+  hook: z
+    .string()
+    .trim()
+    .max(CARD_LIMITS.hook, "Keep the hook under 200 characters.")
+    .optional()
+    .meta({
+      description:
+        "A short association in the meaning language that leads back to the term, such as a sound-alike word or a picture in the mind. It never gives the answer away. Review shows it under the answer, and the learner can peek at it before the reveal.",
+    }),
   language: LanguageTag.nullable().optional(),
   tags: z.array(z.string().trim().min(1).max(40)).max(20).optional(),
   source: z.string().trim().max(CARD_LIMITS.source).optional(),
@@ -538,6 +551,7 @@ export const CardInput = z.object({
   meaningSource: StatedFieldSource.optional(),
   exampleSource: StatedFieldSource.optional(),
   pronunciationSource: StatedFieldSource.optional(),
+  hookSource: StatedFieldSource.optional(),
   sectionId: z.string().min(1).nullable().optional().meta({
     description:
       "An active section of the card's deck. Null or left out: no section. Moving a card to another deck clears it.",
@@ -560,6 +574,7 @@ export const cardLimits = {
   example: CardInput.shape.example.unwrap().maxLength,
   notes: CardInput.shape.notes.unwrap().maxLength,
   source: CardInput.shape.source.unwrap().maxLength,
+  hook: CardInput.shape.hook.unwrap().maxLength,
 } satisfies Record<string, number | null>;
 
 /** A batch add. A lesson is 20 to 40 terms; one call, not one per term. */
@@ -622,6 +637,17 @@ export type ResponseShape = z.infer<typeof ResponseShape>;
 export const ResponseShapeQuery = z.object({ response: ResponseShape.optional() });
 
 /**
+ * What helped a recall before the reveal, in the order review offers them, so a later step such as
+ * a hint joins the end. Easy means recall without help, so no aided grade may be Easy.
+ */
+export const REVIEW_AIDS = ["hook"] as const;
+export const ReviewAid = z.enum(REVIEW_AIDS).meta({
+  id: "ReviewAid",
+  description: "hook: the learner peeked at the card's memory hook before the reveal.",
+});
+export type ReviewAid = z.infer<typeof ReviewAid>;
+
+/**
  * One grade names its review mode. `direction` is the form grades took before review modes,
  * still accepted so an older app or a queued offline grade replays onto the same schedule.
  */
@@ -637,10 +663,17 @@ export const GradeInput = z
     reviewedAt: z.coerce.date().optional(),
     /** The device zone, used only to set the review zone the first time one is reported. */
     timezone: z.string().max(64).optional(),
+    aid: ReviewAid.optional().meta({
+      description: "What the learner used before the reveal. Left out, the recall was unaided.",
+    }),
   })
   .refine((grade) => grade.mode || grade.direction, {
     message: "Say which review mode was graded.",
     path: ["mode"],
+  })
+  .refine((grade) => !(grade.aid && grade.rating === 4), {
+    message: "Easy means recall without help, so a grade with an aid cannot be Easy.",
+    path: ["rating"],
   });
 export type GradeInput = z.infer<typeof GradeInput>;
 
@@ -654,9 +687,6 @@ export const DIAGNOSIS_CAUSES = [
 ] as const;
 export const DiagnosisCause = z.enum(DIAGNOSIS_CAUSES);
 export type DiagnosisCause = z.infer<typeof DiagnosisCause>;
-
-/** A hook is a phrase that leads back to the term, never a paragraph. */
-export const HOOK_LIMIT = 200;
 
 const DraftCard = z.object({
   term: z.string().trim().min(1).max(CARD_LIMITS.term),
@@ -711,11 +741,12 @@ export const Diagnosis = z
 export type Diagnosis = z.infer<typeof Diagnosis>;
 export type DiagnosisDraft = NonNullable<Diagnosis["draft"]>;
 
-/** The causes review offers a fix for. A hook comes with its own slice, #405. */
+/** The causes review offers a fix for. */
 export const OFFERED_CAUSES = [
   "confused_pair",
   "two_things",
   "several_answers",
+  "no_anchor",
   "unclear",
 ] as const satisfies readonly DiagnosisCause[];
 
@@ -742,6 +773,13 @@ export const FixInput = z
         description: "The new cue, written to the field the draft names",
       }),
     }),
+    z.object({
+      cause: z.literal("no_anchor"),
+      hook: z.string().trim().min(1, "Write a hook.").max(HOOK_LIMIT).meta({
+        description:
+          "The card's memory hook. Accepted for a card with no clear reason too, when the learner writes their own.",
+      }),
+    }),
   ])
   .meta({ id: "FixInput" });
 export type FixInput = z.infer<typeof FixInput>;
@@ -757,6 +795,8 @@ export type AppliedFix = {
       meaningSource?: FieldSource | null;
       pronunciation?: string | null;
       pronunciationSource?: FieldSource | null;
+      hook?: string | null;
+      hookSource?: FieldSource | null;
     };
   } | null;
 };

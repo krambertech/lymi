@@ -15,6 +15,7 @@ export function addInput(values: CardFormValues): CardInput {
       ? { pronunciation: values.pronunciation, pronunciationSource: "manual" as const }
       : {}),
     ...(values.notes ? { notes: values.notes } : {}),
+    ...(values.hook ? { hook: values.hook, hookSource: "manual" as const } : {}),
     ...(values.source ? { source: values.source } : {}),
     ...(values.tags.length ? { tags: values.tags } : {}),
     ...(values.reviewModes ? { reviewModes: values.reviewModes.map(modeOf) } : {}),
@@ -43,6 +44,10 @@ export function cardPatch(card: Card, values: CardFormValues): CardPatch {
     patch.pronunciationSource = "manual";
   }
   if (values.notes !== (card.notes ?? "")) patch.notes = values.notes;
+  if (values.hook !== (card.hook ?? "")) {
+    patch.hook = values.hook;
+    patch.hookSource = "manual";
+  }
   if (values.source !== (card.source ?? "")) patch.source = values.source;
   if (values.language !== card.language) patch.language = values.language;
   if (values.sectionId !== card.sectionId) patch.sectionId = values.sectionId;

@@ -186,7 +186,7 @@ review.post(
     summary: "Grade a card",
     learnerOnly: true,
     description:
-      "Learner only: API keys and MCP tokens get 403 whatever their scope. Name the graded `mode`; the legacy `direction` is still accepted. A grade older than the state's last review is ignored and reported as `duplicate`, which makes offline replay safe. Every accepted grade is one attempt toward the learner-local day it happened on; `day` says where that day stands.",
+      "Learner only: API keys and MCP tokens get 403 whatever their scope. Name the graded `mode`; the legacy `direction` is still accepted. A grade older than the state's last review is ignored and reported as `duplicate`, which makes offline replay safe. Every accepted grade is one attempt toward the learner-local day it happened on; `day` says where that day stands. Send `aid` when the learner peeked at the card's hook before the reveal; Easy means recall without help, so an aided Easy is 400.",
     ok: { schema: GradeOut, description: "The new schedule" },
     errors: [400, 404],
   }),

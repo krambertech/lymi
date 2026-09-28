@@ -624,11 +624,23 @@ msgstr "Посилання на зображення в мережі."
 msgid "A Lymi file from another Lymi account"
 msgstr "Файл Lymi з іншого акаунта Lymi"
 
+msgid "A memory hook for <0>{term}</0>"
+msgstr "Зачіпка для <0>{term}</0>"
+
+msgid "A phrase that leads you back to the answer"
+msgstr "Фраза, що наведе тебе на відповідь"
+
+msgid "A phrase that leads you back to the answer."
+msgstr "Фраза, що наведе тебе на відповідь."
+
 msgid "A reset link works once, within an hour."
 msgstr "Посилання діє одну годину й тільки один раз."
 
 msgid "A rest day keeps the streak through one missed day a week."
 msgstr "День відпочинку зберігає дні поспіль, коли пропускаєш один день на тиждень."
+
+msgid "A sound-alike, or a picture to see"
+msgstr "Співзвучне слово або картинка в уяві"
 
 msgid "A–Z"
 msgstr "А–Я"
@@ -660,6 +672,9 @@ msgstr "Додати 2 картки"
 
 msgid "Add a card"
 msgstr "Додати картку"
+
+msgid "Add a memory hook"
+msgstr "Додати зачіпку"
 
 msgid "Add a picture"
 msgstr "Додати зображення"
@@ -762,6 +777,9 @@ msgstr "AI-застосунки, підключені до твого акаун
 
 msgid "AI example"
 msgstr "Приклад від AI"
+
+msgid "AI hook"
+msgstr "Зачіпка від AI"
 
 msgid "AI meaning"
 msgstr "Значення від AI"
@@ -1878,6 +1896,15 @@ msgstr "Сховати пароль"
 msgid "History"
 msgstr "Історія"
 
+msgid "Hook added"
+msgstr "Зачіпку додано"
+
+msgid "Hook by you"
+msgstr "Твоя зачіпка"
+
+msgid "Hook from lesson"
+msgstr "Зачіпка з уроку"
+
 msgid "How cards are asked"
 msgstr "Як запитуються картки"
 
@@ -2021,6 +2048,9 @@ msgstr "Можливо, її архівували або тебе з неї пр
 msgid "It may have been withdrawn. Find other decks in Explore."
 msgstr "Можливо, її зняли з публікації. Інші колоди шукай у Каталозі."
 
+msgid "It shows under the answer, and you can peek at it before you turn the card."
+msgstr "Вона з’явиться під відповіддю, а підглянути її можна ще до того, як відкриєш картку."
+
 msgid "It wasn’t confirmed within three days, so Lymi deleted the file. Choose it again to start over."
 msgstr "Його не підтвердили протягом трьох днів, тому Lymi видалив файл. Вибери файл ще раз, щоб почати заново."
 
@@ -2053,6 +2083,9 @@ msgctxt "daily goal"
 msgid "Keen"
 msgstr "Завзято"
 
+msgid "Keep hook"
+msgstr "Зберегти зачіпку"
+
 msgid "Keep invitation"
 msgstr "Залишити запрошення"
 
@@ -2073,6 +2106,9 @@ msgstr "Опис має бути коротшим за 300 символів."
 
 msgid "Keep the example under 2000 characters."
 msgstr "Приклад має бути коротшим за 2000 символів."
+
+msgid "Keep the hook under 200 characters."
+msgstr "Зачіпка має бути коротшою за 200 символів."
 
 msgid "Keep the language tag under 12 characters."
 msgstr "Мовний тег має бути коротшим за 12 символів."
@@ -2273,6 +2309,18 @@ msgstr "Нове значення: «{value}»"
 
 msgid "Meaning from lesson"
 msgstr "Значення з уроку"
+
+msgid "Memory hook"
+msgstr "Зачіпка"
+
+msgid "Memory hook changed to “{value}”"
+msgstr "Нова зачіпка: «{value}»"
+
+msgid "Memory hook:"
+msgstr "Зачіпка:"
+
+msgid "Memory hook: {peeked}"
+msgstr "Зачіпка: {peeked}"
 
 msgid "Message"
 msgstr "Повідомлення"
@@ -2523,6 +2571,9 @@ msgstr "Поки колода в архіві, до неї ніхто не мо�
 msgid "Nobody new can add it."
 msgstr "Нові люди вже не можуть її додати."
 
+msgid "Not after a peek"
+msgstr "Лише без зачіпки"
+
 msgid "Not available on this server yet."
 msgstr "На цьому сервері поки недоступно."
 
@@ -2579,6 +2630,9 @@ msgstr "У цій колоді більше нічого"
 
 msgid "Nothing published yet"
 msgstr "Ще нічого не опубліковано"
+
+msgid "Nothing to hang this one on"
+msgstr "Немає за що зачепитися"
 
 msgid "Nothing was added, and the file was deleted."
 msgstr "Нічого не додано, а файл видалено."
@@ -2709,6 +2763,9 @@ msgstr "Вставлене зображення"
 msgid "Pause the cards"
 msgstr "Зупинити картки"
 
+msgid "Peek at your hook"
+msgstr "Підглянути зачіпку"
+
 msgid "People"
 msgstr "Люди"
 
@@ -2750,6 +2807,18 @@ msgstr "Опис зображення змінено"
 
 msgid "Picture description removed"
 msgstr "Опис зображення видалено"
+
+msgid "Picture it when the card asks for “<0>{cue}</0>”."
+msgstr "Уяви це, коли картка запитає «<0>{cue}</0>»."
+
+msgid "Picture it when the card asks for “<0>{cue}</0>”. Change anything that doesn’t click for you."
+msgstr "Уяви це, коли картка запитає «<0>{cue}</0>». Зміни все, що тобі не відгукується."
+
+msgid "Picture it when the card shows its picture."
+msgstr "Уяви це, коли картка покаже зображення."
+
+msgid "Picture it when the card shows its picture. Change anything that doesn’t click for you."
+msgstr "Уяви це, коли картка покаже зображення. Зміни все, що тобі не відгукується."
 
 msgid "Picture restored"
 msgstr "Зображення відновлено"
@@ -2975,6 +3044,9 @@ msgstr "Повторити"
 
 msgid "Reveal the card"
 msgstr "Відкрити картку"
+
+msgid "Reveal the card when you have it"
+msgstr "Відкрий картку, коли згадаєш"
 
 msgid "Review"
 msgstr "Повторення"
@@ -3376,6 +3448,9 @@ msgstr "Сфотографувати"
 msgid "Tap Add to Home Screen."
 msgstr "Торкнись «На початковий екран»."
 
+msgid "Tap the card when you have it"
+msgstr "Торкнися картки, коли згадаєш"
+
 msgid "Technology"
 msgstr "Технології"
 
@@ -3487,6 +3562,9 @@ msgstr "Посилання діє годину. Якщо це не ти прос
 
 msgid "the meaning"
 msgstr "значення"
+
+msgid "the memory hook"
+msgstr "зачіпку"
 
 msgid "the notes"
 msgstr "нотатки"
@@ -3692,6 +3770,9 @@ msgctxt "deck tag"
 msgid "Travel"
 msgstr "Подорожі"
 
+msgid "Try a memory hook"
+msgstr "Спробуй зачіпку"
+
 msgid "Try again"
 msgstr "Спробувати ще раз"
 
@@ -3850,6 +3931,9 @@ msgstr "Хто може приєднатися до цієї колоди"
 
 msgid "Work and study"
 msgstr "Робота й навчання"
+
+msgid "Write a hook."
+msgstr "Напиши зачіпку."
 
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, що хочеш розповісти Lymi."

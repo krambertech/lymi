@@ -74,6 +74,8 @@ export function localCard(w: Extract<Write, { kind: "card.add" }>, lookup: Looku
     pronunciation: input.pronunciation ?? null,
     example: input.example ?? null,
     notes: input.notes ?? null,
+    hook: input.hook || null,
+    hookSource: input.hook ? (input.hookSource ?? "manual") : null,
     language: input.language === undefined ? (deck?.defaultLanguage ?? null) : input.language,
     tags: input.tags ?? [],
     source: input.source ?? null,

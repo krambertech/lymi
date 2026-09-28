@@ -20,6 +20,8 @@ function card(patch: Partial<Card> = {}): Card {
     pronunciation: null,
     example: null,
     notes: null,
+    hook: null,
+    hookSource: null,
     language: "et",
     tags: [],
     source: null,

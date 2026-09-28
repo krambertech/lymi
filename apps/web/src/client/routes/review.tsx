@@ -17,6 +17,7 @@ import { Button } from "../components/button";
 import { EditCardSheet } from "../components/edit-card-sheet";
 import { type EditFocus, FixSheet } from "../components/fix-sheet";
 import { GRADES } from "../components/grade";
+import { AID_KEY, aidSteps, aidTaken } from "../components/recall-aid";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import {
@@ -197,6 +198,8 @@ function Review() {
     offer: null,
     parked: false,
   });
+  // How far into the card's aids the learner went before the reveal, held for the card on screen.
+  const [aidState, setAidState] = useState({ key: "", taken: 0, animate: true });
   const [fixing, setFixing] = useState(false);
   const [editing, setEditing] = useState<{ card: Card; focus: EditFocus } | null>(null);
   const online = useSyncExternalStore(subscribeOnline, isOnline, () => true);
@@ -541,9 +544,25 @@ function Review() {
     qc.invalidateQueries({ queryKey: ["insights"] });
   }, [qc]);
 
+  const showing = current ? `${itemKey(current)}-${done}` : "";
+  const hook = current?.card.hook ?? null;
+  const hookSource = current?.card.hookSource ?? null;
+  const steps = useMemo(() => aidSteps({ hook, hookSource }), [hook, hookSource]);
+  const taken = aidState.key === showing ? aidState.taken : 0;
+  const aid = aidTaken(steps, taken);
+  const takeAid = useCallback(
+    (input: "keyboard" | "pointer") => {
+      if (revealed || taken >= steps.length) return;
+      setAidState({ key: showing, taken: taken + 1, animate: input !== "keyboard" });
+    },
+    [revealed, taken, steps.length, showing],
+  );
+
   const onGrade = useCallback(
     (rating: Rating, input: "keyboard" | "pointer" = "pointer") => {
       if (!revealed || !current || !data || !state) return;
+      // Easy means recall without help, so after a peek it does nothing, by click or by key.
+      if (rating === 4 && aid) return;
       const item = current;
       const key = modeKey(item.mode);
       const repeat = state.log.some((e) => e.cardId === item.card.id && e.mode === key);
@@ -557,6 +576,7 @@ function Review() {
           ? stateBefore(data, state.log, item.card.id, item.mode)
           : item.fsrsState,
         timezone: deviceTimezone(),
+        ...(aid ? { aid } : {}),
       });
       setFocusReveal(!!document.activeElement?.closest("[data-grade-strip]"));
       const listed = !!leg && !drawLeg;
@@ -600,7 +620,7 @@ function Review() {
         })
         .finally(() => setSending((n) => n - 1));
     },
-    [revealed, current, data, state, leg, drawLeg, invalidateReviewData, qc, t],
+    [revealed, current, data, state, aid, leg, drawLeg, invalidateReviewData, qc, t],
   );
 
   // Leaving mid-stretch ends on the success screen, unless nothing was added since the last one.
@@ -619,7 +639,17 @@ function Review() {
         return;
       }
       const target = e.target as HTMLElement | null;
-      if (target?.closest("button, a, input, textarea, select, [contenteditable='true']")) return;
+      const control = target?.closest(
+        "button, a, input, textarea, select, [contenteditable='true']",
+      );
+      // The aid's key also reaches the card's reveal button, where grading from the strip leaves focus.
+      if (current && !revealed && e.key.toUpperCase() === AID_KEY) {
+        if (control && !control.hasAttribute("data-reveal")) return;
+        e.preventDefault();
+        takeAid("keyboard");
+        return;
+      }
+      if (control) return;
       if (!current) return;
       if (e.key === " ") {
         e.preventDefault();
@@ -638,11 +668,10 @@ function Review() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, onGrade, leave, add.open, fixing, editing, current]);
+  }, [revealed, onGrade, takeAid, leave, add.open, fixing, editing, current]);
 
   // Offline the offer simply does not appear; review goes on as it always has. Once decided it
   // holds, so a refetch or a dropped connection never moves or remounts it mid-card.
-  const showing = current ? `${itemKey(current)}-${done}` : "";
   if (cardOffer.key !== showing) {
     const candidate = current?.offer;
     const offer =
@@ -799,6 +828,16 @@ function Review() {
                     }
                   : undefined
               }
+              aid={
+                steps.length > 0
+                  ? {
+                      steps,
+                      taken,
+                      animate: aidState.key === showing ? aidState.animate : true,
+                      onTake: () => takeAid("pointer"),
+                    }
+                  : undefined
+              }
               className="mt-4 @3xl:max-h-[600px] @3xl:[@media(min-height:40rem)]:min-h-[460px]"
             />
             <GradeBar
@@ -808,6 +847,7 @@ function Review() {
               animateOut={animateNextCard}
               focusOnReveal={focusGrades}
               next={current.next}
+              aided={!!aid}
               onGrade={(rating) => onGrade(rating, "pointer")}
             />
           </motion.div>

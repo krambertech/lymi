@@ -75,6 +75,8 @@ export async function reviewOffers(
       continue;
     }
     if (row.offeredAt || !row.cause || !offered.has(row.cause)) continue;
+    // A hook the learner already wrote is the fix this cause would draft.
+    if (row.cause === "no_anchor" && card.hook) continue;
     const finding = Diagnosis.safeParse({ cause: row.cause, draft: row.draft });
     if (finding.success) current.set(row.cardId, { row, diagnosis: finding.data });
   }
@@ -234,7 +236,12 @@ export async function acceptFix(
     throw new ServiceError("conflict", "This card has changed since Lymi looked at it");
   }
   const finding = Diagnosis.safeParse({ cause: row.cause, draft: row.draft });
-  if (!finding.success || finding.data.cause !== input.cause) {
+  // With no clear reason there is no draft to accept, but the learner may write their own hook.
+  const fits =
+    finding.success &&
+    (finding.data.cause === input.cause ||
+      (finding.data.cause === "unclear" && input.cause === "no_anchor"));
+  if (!finding.success || !fits) {
     throw new ServiceError("invalid", "This card's diagnosis drafted a different fix");
   }
 
@@ -389,6 +396,21 @@ async function applyFix(
               ? { term: card.term }
               : { meaning: card.meaning, meaningSource: card.meaningSource },
         },
+      },
+      outcomes: [],
+    };
+  }
+
+  if (input.cause === "no_anchor") {
+    const drafted = diagnosis.cause === "no_anchor" ? diagnosis.draft.hook : null;
+    await updateCard(ctx, card.id, {
+      hook: input.hook,
+      hookSource: drafted === null ? "manual" : sourceOf(drafted, input.hook),
+    });
+    return {
+      applied: {
+        added: [],
+        edited: { cardId: card.id, before: { hook: card.hook, hookSource: card.hookSource } },
       },
       outcomes: [],
     };

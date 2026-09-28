@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { Rating } from "@lymi/core";
 import { clsx } from "clsx";
-import { BookMarked, Library, Loader2, Pointer, Signpost, Volume2, X } from "lucide-react";
+import { Anchor, BookMarked, Library, Loader2, Pointer, Signpost, Volume2, X } from "lucide-react";
 import {
   AnimatePresence,
   animate as animateValue,
@@ -36,6 +36,13 @@ import { GRADES } from "../components/grade";
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
 import { Progress } from "../components/progress";
+import {
+  AidLine,
+  type AidStep,
+  aidSteps,
+  RecallAidNext,
+  RecallAidShown,
+} from "../components/recall-aid";
 import { SevenLights } from "../components/seven-lights";
 import { Skeleton } from "../components/skeleton";
 import { StateIcon } from "../components/state-mark";
@@ -239,12 +246,16 @@ function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
  * the plate is the button. It taps three times, then rests. When it appears is `useRevealHint`'s
  * decision.
  */
-function TapHint() {
+function TapHint({ lifted, aided }: { lifted: boolean; aided: boolean }) {
   const reduce = useReducedMotionConfig();
   return (
     <motion.div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 bottom-5 flex flex-col items-center gap-1 px-5 text-muted"
+      className={clsx(
+        "pointer-events-none absolute inset-x-0 flex flex-col items-center gap-1 px-5 text-muted",
+        // Above the pill that takes the next aid, which sits where the hint would.
+        lifted ? "bottom-16" : "bottom-5",
+      )}
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, transition: { duration: 0.1 } }}
@@ -282,10 +293,18 @@ function TapHint() {
       {/* Touch wording on a phone, the shortcut where there is a keyboard to press it with. */}
       <p className="flex items-center gap-2 text-center text-sm font-medium">
         <span className="@2xl:hidden">
-          <Trans>Recall the answer, then tap the card</Trans>
+          {aided ? (
+            <Trans>Tap the card when you have it</Trans>
+          ) : (
+            <Trans>Recall the answer, then tap the card</Trans>
+          )}
         </span>
         <span className="hidden @2xl:inline">
-          <Trans>Recall the answer, then reveal the card</Trans>
+          {aided ? (
+            <Trans>Reveal the card when you have it</Trans>
+          ) : (
+            <Trans>Recall the answer, then reveal the card</Trans>
+          )}
         </span>
         <span className="hidden @2xl:inline-flex">
           <Kbd>Space</Kbd>
@@ -336,7 +355,17 @@ export interface ReviewCardProps {
   audioError?: string | null | undefined;
   /** A drafted fix, pinned at the plate's foot once the answer shows. Its room is kept from the reveal. */
   offer?: FixOfferProps | undefined;
+  /** Help before the reveal, from `aidSteps`, and how many steps the learner has taken. */
+  aid?: RecallAidProps | undefined;
   className?: string | undefined;
+}
+
+export interface RecallAidProps {
+  steps: readonly AidStep[];
+  taken: number;
+  /** The last step taken arrives in motion. Off when a key took it. */
+  animate: boolean;
+  onTake: () => void;
 }
 
 /** The grade strip's full height, 72 px grades under a 12 px gap, which the card gives up on reveal. */
@@ -373,7 +402,7 @@ interface FitElements {
  * never shrink the type; they scroll. Heights come from the stage the card fills rather than the
  * card, whose own height is still animating while the grade strip opens.
  */
-function measureFit(els: FitElements, foot: number) {
+function measureFit(els: FitElements, foot: number, frontFoot: number) {
   const { section, inner, head, column, cue, answer, extras } = els;
   const stage = section?.parentElement;
   if (!section || !stage || !inner || !head || !column || !cue || !answer) return null;
@@ -406,7 +435,7 @@ function measureFit(els: FitElements, foot: number) {
   const must = answer.offsetHeight - (extras ? extras.offsetHeight + answerGap : 0);
   return {
     front: cue.offsetHeight,
-    frontRoom: cardHeight(room) - chrome,
+    frontRoom: cardHeight(room) - chrome - frontFoot,
     back: cue.offsetHeight + px(columnStyle.rowGap) + must,
     backRoom: cardHeight(room - GRADE_STRIP_HEIGHT) - chrome - foot,
   };
@@ -435,6 +464,7 @@ export function ReviewCard({
   audioState = "idle",
   audioError = null,
   offer,
+  aid,
   className,
 }: ReviewCardProps) {
   const { t, i18n } = useLingui();
@@ -460,6 +490,7 @@ export function ReviewCard({
   const answerRef = useRef<HTMLDivElement>(null);
   const extrasRef = useRef<HTMLDivElement>(null);
   const revealRef = useRef<HTMLButtonElement>(null);
+  const aidRoom = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (focusOnMount) revealRef.current?.focus({ preventScroll: true });
@@ -481,6 +512,7 @@ export function ReviewCard({
         extras: extrasRef.current,
       },
       offerRoom.current?.offsetHeight ?? 0,
+      aidRoom.current?.offsetHeight ?? 0,
     );
     if (!m) {
       setFit({ ...fit, settled: true });
@@ -525,7 +557,9 @@ export function ReviewCard({
   }, []);
 
   const step = fit.step;
-  const hasExtras = !!(card.example || card.notes);
+  const [hook] = aidSteps(card);
+  const peeked = aid && aid.taken > 0 ? aid.steps[aid.taken - 1]?.text : undefined;
+  const hasExtras = !!(card.example || card.notes || hook);
   const languageCode =
     card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase()
       ? card.language.toUpperCase()
@@ -572,6 +606,11 @@ export function ReviewCard({
       {card.notes && (
         <motion.div variants={answerLine} className="text-sm text-muted">
           <CardNotes source={card.notes} />
+        </motion.div>
+      )}
+      {hook && (
+        <motion.div variants={answerLine}>
+          <AidLine step={hook} size="sm" />
         </motion.div>
       )}
     </>
@@ -714,6 +753,7 @@ export function ReviewCard({
               type="button"
               onClick={onReveal}
               aria-label={t`Reveal the card`}
+              data-reveal=""
               className="absolute inset-0 z-10 rounded-xl"
             />
           )}
@@ -761,7 +801,10 @@ export function ReviewCard({
           >
             <motion.div
               ref={cueRef}
-              layout={animateReveal ? "position" : false}
+              // A peek moves the cue up for the hook under it, as the reveal does for the answer.
+              layout={
+                (revealed ? animateReveal : (aid?.animate ?? animateReveal)) ? "position" : false
+              }
               transition={{ layout: { duration: 0.34, ease: EASE_OUT } }}
               className="grid gap-3"
             >
@@ -796,6 +839,10 @@ export function ReviewCard({
               )}
             </motion.div>
 
+            {!revealed && aid && (
+              <RecallAidShown steps={aid.steps} taken={aid.taken} animate={aid.animate} />
+            )}
+
             {revealed ? (
               <motion.div
                 ref={answerRef}
@@ -827,7 +874,35 @@ export function ReviewCard({
               </div>
             )}
           </div>
-          <AnimatePresence>{!revealed && hint && <TapHint />}</AnimatePresence>
+          {!revealed && aid && (
+            // Out of the way of taps meant for the card: only the pill itself can be pressed.
+            <div
+              ref={aidRoom}
+              className={clsx(
+                "pointer-events-none relative z-20 [&_button]:pointer-events-auto",
+                animateIn && "enter-fade",
+              )}
+            >
+              <RecallAidNext
+                steps={aid.steps}
+                taken={aid.taken}
+                onTake={(e) => {
+                  // The pill leaves with its step, so focus moves to what comes next: the card.
+                  const focused = e.currentTarget === document.activeElement;
+                  aid.onTake();
+                  if (focused) revealRef.current?.focus({ preventScroll: true });
+                }}
+              />
+            </div>
+          )}
+          <AnimatePresence>
+            {!revealed && hint && (
+              <TapHint
+                lifted={!!aid && aid.taken < aid.steps.length}
+                aided={!!aid && aid.taken > 0}
+              />
+            )}
+          </AnimatePresence>
         </div>
       </div>
       {/* Outside the scroller, so a long card never hides it, and inset so its corners follow the plate's. */}
@@ -850,7 +925,7 @@ export function ReviewCard({
         </div>
       )}
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-        {revealed ? t`Answer: ${back}` : ""}
+        {revealed ? t`Answer: ${back}` : peeked ? t`Memory hook: ${peeked}` : ""}
       </p>
     </section>
   );
@@ -915,6 +990,8 @@ export interface GradeBarProps {
   focusOnReveal?: boolean | undefined;
   /** The four dates FSRS would set, keyed by rating. Announced, not shown. */
   next?: Record<Rating, string> | undefined;
+  /** The learner peeked before the reveal, so Easy, which means recall without help, is out. */
+  aided?: boolean | undefined;
   onGrade: (r: Rating) => void;
   className?: string | undefined;
 }
@@ -934,11 +1011,13 @@ export function GradeBar({
   animateOut = false,
   focusOnReveal = false,
   next,
+  aided = false,
   onGrade,
   className,
 }: GradeBarProps) {
   const { t, i18n } = useLingui();
   const now = new Date();
+  const whyNot = useId();
   const group = useRef<HTMLFieldSetElement>(null);
   // The group, not a grade, takes focus: the 1–4 and Space shortcuts skip a focused button.
   useEffect(() => {
@@ -967,6 +1046,27 @@ export function GradeBar({
               {GRADES.map((g) => {
                 const GradeIcon = g.icon;
                 const label = i18n._(g.label);
+                if (aided && g.rating === 4) {
+                  return (
+                    <motion.div key={g.rating} variants={gradeRise} className="grid min-w-0">
+                      {/* In its slot so the others never move, and focusable so it says why. */}
+                      <button
+                        type="button"
+                        aria-label={label}
+                        aria-disabled="true"
+                        aria-describedby={whyNot}
+                        className="edge relative grid h-[72px] min-w-0 cursor-default content-center gap-1 rounded-lg px-1 text-sm font-medium text-muted @2xl:text-base"
+                      >
+                        <span className="mx-auto grid size-5 place-items-center">
+                          <Anchor className="size-[18px]" aria-hidden="true" strokeWidth={1.75} />
+                        </span>
+                        <span id={whyNot} className="text-balance leading-tight">
+                          <Trans>Not after a peek</Trans>
+                        </span>
+                      </button>
+                    </motion.div>
+                  );
+                }
                 const schedules = next
                   ? intervalLabel(i18n, now, new Date(next[g.rating]))
                   : undefined;

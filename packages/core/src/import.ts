@@ -96,6 +96,8 @@ export type ImportedCard = {
   origin?: string | undefined;
   /** What the picture shows, so picture modes are asked from the start. */
   pictureDescription?: string | undefined;
+  /** The card's memory hook and who wrote it, from a Lymi zip. */
+  hook?: { text: string; source: FieldSource } | undefined;
 };
 
 /** The longest text each imported field keeps, from `CardInput` and `DeckInput`. */

@@ -147,6 +147,10 @@
     {
       "name": "0036_famous_the_anarchist.sql",
       "sha256": "5b3eec0fd65624eba5b0d20bfeb80765f425325e654fc64bb421824472713c26"
+    },
+    {
+      "name": "0037_cloudy_black_tarantula.sql",
+      "sha256": "988db69e94abd374a6354f1558a587f6ad51a94162be3c3fa50c32fff810bb0a"
     }
   ]
 }

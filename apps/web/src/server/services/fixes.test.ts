@@ -63,7 +63,7 @@ describe("offering a diagnosis's fix in review", () => {
     const { ctx } = await setup();
     const offers = await offersIn(ctx);
     expect([...offers.keys()].sort()).toEqual(
-      ["Kus sa elad? Ma elan Tallinnas.", "alustama", "pikk", "vaatama"].sort(),
+      ["Kus sa elad? Ma elan Tallinnas.", "alustama", "kõrvits", "pikk", "vaatama"].sort(),
     );
     expect(offers.get("alustama")).toMatchObject({
       cause: "confused_pair",
@@ -97,14 +97,56 @@ describe("offering a diagnosis's fix in review", () => {
     expect(audit).toMatchObject([{ actor: "user", action: "offer", entityId: row.id }]);
   });
 
-  it("offers no hook, which comes in its own slice", async () => {
-    const { ctx, cardOf, diagnosisOf } = await setup(["unclear"]);
-    const row = await diagnosisOf(cardOf("unclear"));
-    await db
-      .update(schema.cardDiagnoses)
-      .set({ cause: "no_anchor", draft: { hook: "watch a vat" } })
-      .where(eq(schema.cardDiagnoses.id, row.id));
+  it("offers a drafted hook, unless the card already has one", async () => {
+    const { ctx, cardOf } = await setup(["no_anchor"]);
+    expect((await offersIn(ctx)).get("kõrvits")).toMatchObject({
+      cause: "no_anchor",
+      draft: { hook: "A pumpkin curves at its sides: “curve-its”." },
+    });
+    await updateCard(ctx, cardOf("no_anchor"), { hook: "My own picture of a pumpkin" });
     expect(await offersIn(ctx)).toEqual(new Map());
+  });
+
+  it("keeps a drafted hook as the AI's, an edited one as the learner's, and Undo clears it", async () => {
+    const { ctx, cardOf, diagnosisOf } = await setup(["no_anchor"]);
+    const cardId = cardOf("no_anchor");
+    const row = await diagnosisOf(cardId);
+    const before = await getCard(ctx, cardId);
+    const drafted = "A pumpkin curves at its sides: “curve-its”.";
+    const out = await acceptFix(ctx, row.id, { cause: "no_anchor", hook: drafted }, null);
+    expect(out).toMatchObject({ added: [], edited: { hook: drafted, hookSource: "ai" } });
+    // A hook is not edition text, so the diagnosis stays on the card's revision.
+    expect((await getCard(ctx, cardId)).revision).toBe(before.revision);
+    await undoFix(ctx, row.id);
+    expect(await getCard(ctx, cardId)).toMatchObject({ hook: null, hookSource: null });
+
+    await acceptFix(ctx, row.id, { cause: "no_anchor", hook: "Curvy pumpkin" }, null);
+    expect(await getCard(ctx, cardId)).toMatchObject({
+      hook: "Curvy pumpkin",
+      hookSource: "manual",
+    });
+    const audit = await db
+      .select()
+      .from(schema.auditLog)
+      .where(and(eq(schema.auditLog.userId, ctx.userId), eq(schema.auditLog.entity, "diagnosis")));
+    expect(audit.map((a) => [a.actor, a.action])).toEqual([
+      ["user", "accept"],
+      ["user", "undo_accept"],
+      ["user", "accept"],
+    ]);
+  });
+
+  it("takes the learner's own hook for a card with no clear reason, and no other fix", async () => {
+    const { ctx, cardOf, diagnosisOf } = await setup(["unclear"]);
+    const cardId = cardOf("unclear");
+    const row = await diagnosisOf(cardId);
+    await expect(
+      acceptFix(ctx, row.id, { cause: "several_answers", text: "to watch (a film)" }, null),
+    ).rejects.toMatchObject({ code: "invalid" });
+    const out = await acceptFix(ctx, row.id, { cause: "no_anchor", hook: "Watch the vat" }, null);
+    expect(out.edited).toMatchObject({ hook: "Watch the vat", hookSource: "manual" });
+    await undoFix(ctx, row.id);
+    expect(await getCard(ctx, cardId)).toMatchObject({ hook: null, hookSource: null });
   });
 
   it("gives a member of a shared deck no offer, since they cannot change the card", async () => {

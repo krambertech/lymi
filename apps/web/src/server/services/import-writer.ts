@@ -481,6 +481,8 @@ export async function writeChunk<Note>(
         pronunciation: fields.pronunciation ?? null,
         example: fields.example ?? null,
         notes: fields.notes ?? null,
+        hook: item.card.hook?.text ?? null,
+        hookSource: item.card.hook?.source ?? null,
         tags: JSON.stringify(tags),
       });
       continue;
@@ -506,6 +508,8 @@ export async function writeChunk<Note>(
       pronunciation: fields.pronunciation ?? null,
       example: fields.example ?? null,
       notes: fields.notes ?? null,
+      hook: item.card.hook?.text ?? null,
+      hookSource: item.card.hook?.source ?? null,
       language: item.language,
       tags: JSON.stringify(item.card.tags),
       directions: followsDeck ? null : directions,
@@ -570,7 +574,8 @@ export async function writeChunk<Note>(
     // Only blank fields are filled: whatever the learner wrote since the first import stays.
     const rows = sql`(select json_extract(value, '$.id') as id, json_extract(value, '$.meaning') as meaning,
         json_extract(value, '$.pronunciation') as pronunciation, json_extract(value, '$.example') as example,
-        json_extract(value, '$.notes') as notes, json_extract(value, '$.tags') as tags
+        json_extract(value, '$.notes') as notes, json_extract(value, '$.hook') as hook,
+        json_extract(value, '$.hookSource') as hook_source, json_extract(value, '$.tags') as tags
       from json_each(${part}))`;
     statements.push(
       sql`update cards set
@@ -580,6 +585,8 @@ export async function writeChunk<Note>(
           pronunciation = coalesce(cards.pronunciation, incoming.pronunciation),
           example = coalesce(cards.example, incoming.example),
           notes = coalesce(cards.notes, incoming.notes),
+          hook_source = case when cards.hook is null and incoming.hook is not null then incoming.hook_source else cards.hook_source end,
+          hook = coalesce(cards.hook, incoming.hook),
           tags = case when cards.tags = '[]' then incoming.tags else cards.tags end,
           -- Filling a blank field is text an edition translates, so its localization goes stale.
           revision = case when (cards.meaning is null and incoming.meaning is not null)
@@ -595,12 +602,12 @@ export async function writeChunk<Note>(
   for (const part of jsonParts(cardRows)) {
     statements.push(
       sql`insert into cards (id, user_id, deck_id, term, normalized_term, meaning, pronunciation, example, notes,
-          language, tags, directions, review_modes, meaning_source, example_source, pronunciation_source, source,
-          created_by, archived_at, import_id, external_id, created_at, updated_at)
+          hook, hook_source, language, tags, directions, review_modes, meaning_source, example_source,
+          pronunciation_source, source, created_by, archived_at, import_id, external_id, created_at, updated_at)
         select ${j("id")}, ${userId}, ${j("deckId")}, ${j("term")}, ${j("normalizedTerm")}, ${j("meaning")},
-          ${j("pronunciation")}, ${j("example")}, ${j("notes")}, ${j("language")}, ${j("tags")}, ${j("directions")},
-          ${j("reviewModes")}, ${j("meaningSource")}, ${j("exampleSource")}, ${j("pronunciationSource")},
-          ${j("source")}, ${actor}, ${j("archivedAt")},
+          ${j("pronunciation")}, ${j("example")}, ${j("notes")}, ${j("hook")}, ${j("hookSource")}, ${j("language")},
+          ${j("tags")}, ${j("directions")}, ${j("reviewModes")}, ${j("meaningSource")}, ${j("exampleSource")},
+          ${j("pronunciationSource")}, ${j("source")}, ${actor}, ${j("archivedAt")},
           ${row.id}, ${j("externalId")}, ${now.getTime()}, ${now.getTime()}
         from json_each(${part}) where ${guard}`,
     );

@@ -118,6 +118,8 @@ export const LymiFileCard = z.object({
   exampleSource: FieldSource.nullable(),
   // Added after the first files were written, so an older zip that lacks it still imports.
   pronunciationSource: FieldSource.nullable().optional(),
+  hook: z.string().nullable().optional(),
+  hookSource: FieldSource.nullable().optional(),
   reviewModes: z.array(ReviewModeKey).nullable().meta({
     description: "The card's own modes, or null when it follows its deck",
   }),

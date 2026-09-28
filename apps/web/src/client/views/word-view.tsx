@@ -76,6 +76,7 @@ const fieldName: Record<string, MessageDescriptor> = {
   pronunciation: msg`the pronunciation`,
   example: msg`the example`,
   notes: msg`the notes`,
+  hook: msg`the memory hook`,
   source: msg`the source`,
   language: msg`the language`,
   tags: msg`the tags`,
@@ -97,6 +98,7 @@ const changedTo: Record<string, (value: string) => MessageDescriptor> = {
   pronunciation: (value) => msg`Pronunciation changed to “${value}”`,
   example: (value) => msg`Example changed to “${value}”`,
   notes: (value) => msg`Notes changed to “${value}”`,
+  hook: (value) => msg`Memory hook changed to “${value}”`,
 };
 
 const eventIcon: Record<WordEvent["kind"], LucideIcon> = {
@@ -647,6 +649,13 @@ export function WordView({
           <ReadField label={t`Notes`}>
             <CardNotes source={card.notes} className="text-md leading-relaxed text-text" />
           </ReadField>
+        )}
+        {card.hook && (
+          <ReadField
+            label={t`Memory hook`}
+            aside={card.hookSource === "ai" && <SourceChip source="ai" field="hook" size="xs" />}
+            value={card.hook}
+          />
         )}
         {/* One quiet line, only here: a row that says "No meaning yet" is already saying enough. */}
         {owner && card.enrichmentStatus === "failed" && (

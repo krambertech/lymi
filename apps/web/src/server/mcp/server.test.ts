@@ -95,6 +95,8 @@ const card: CardView = {
   pronunciation: null,
   example: null,
   notes: null,
+  hook: null,
+  hookSource: null,
   language: "it",
   tags: [],
   source: null,

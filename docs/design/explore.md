@@ -8,11 +8,17 @@ Explore is one catalogue in two places: the public page a visitor lands on, and 
 
 The header is one thing: a search field, under the page's name and one line of what the catalogue is, over a still pool of the lantern's light. It carries no amber, because the page has no single primary action — a visitor is here to find one deck among many, not to press the one button. It does not count the decks: the shelves below already do, each under its own heading.
 
-Under it a chip per shelf, in shelf order, is the way to move through the catalogue: each jumps to its shelf. Below them the catalogue is a **shelf per language, then a shelf per subject**, each wrapping into as many rows as its decks need. Every published deck is on the page, because a sideways scroll puts most of a shelf behind a gesture nobody asked for, and a catalogue this size has nothing worth hiding. The tracks fill the row, so a shelf of three decks is three decks rather than three banners, and a new language or subject adds a shelf rather than changing the layout. A category large enough to bury the page will need paging or its own page; that is a decision to make when those decks exist.
+Under it a chip per shelf, in shelf order, is the way to move through the catalogue: each jumps to its shelf. Below them the catalogue is a **shelf per language, then a shelf per subject**, each wrapping into as many rows as its decks need. Every deck the page's readers can use is on it, because a sideways scroll puts most of a shelf behind a gesture nobody asked for, and a catalogue this size has nothing worth hiding. The tracks fill the row, so a shelf of three decks is three decks rather than three banners, and a new language or subject adds a shelf rather than changing the layout. A category large enough to bury the page will need paging or its own page; that is a decision to make when those decks exist.
 
 A deck on a shelf is one of its own cards in a [tray](system/surfaces.md#the-tray), its name under the tray, then its summary, card count and section count. The card is real, drawn from the deck's own revision so every visitor to one revision sees the same page. The card shows the way the deck asks it, by its picture, its meaning or its term, with the answer under the rule ([surfaces](system/surfaces.md#the-tray)). The name is the largest thing in the group and the card's cue sets smaller than it. Behind the card is a sheet of paper for each further card the deck holds, up to two; pointing at a deck spreads them.
 
 The tray's colour follows the deck to its own page, where the same hue becomes the pool behind its name. Nothing stores it: both pages hash the slug, and neither takes the shelf into account, so narrowing the page never repaints a deck.
+
+## Which decks a locale lists
+
+Each locale's Explore lists only the decks its readers can use. A deck is listed where its original meaning language is the locale's language, or where it has a published edition in that language. On `/uk/explore` and `/ru/explore` a deck written in English is listed too, because those readers can use it; this covers AI Terms and the older English-only decks. The English page therefore leaves out a deck explained only in Ukrainian or Russian, such as an English vocabulary deck for Ukrainian speakers. A draft or withdrawn edition counts for nothing.
+
+The rule is `readableIn` in `packages/core/src/catalog.ts`, and every list of decks follows it: the public Explore in each locale, `GET /api/explore` for the learner's meaning language, each locale's deck entries in `sitemap-decks.xml`, and More like this. A shelf left with no deck a reader can use does not render, and neither does its chip. A deck's own page is not a list: it still answers 200 at every locale's address, so a shared link never breaks.
 
 ## Search and shelves
 
@@ -46,7 +52,7 @@ A publication's tags are not a card's tags, and nothing copies one into the othe
 
 ## More like this
 
-Every deck page ends with a row of the published decks most like it, drawn as Explore draws them. `rankRelated` in `packages/core/src/catalog.ts` orders them by the most shared tags, then the same taught language (so `pt-BR` and `pt` match, and a subject deck matches no language), then the same category, and keeps the catalogue's order on a tie. A deck that shares none of the three is not related, and a deck with nothing related shows no row at all rather than a row of strangers.
+Every deck page ends with a row of the published decks most like it that the page's reader can use, drawn as Explore draws them. `rankRelated` in `packages/core/src/catalog.ts` orders them by the most shared tags, then the same taught language (so `pt-BR` and `pt` match, and a subject deck matches no language), then the same category, and keeps the catalogue's order on a tie. A deck that shares none of the three is not related, and a deck with nothing related shows no row at all rather than a row of strangers.
 
 The public page shows four, one row of its widest column and two by two on a phone. Its validator covers the row as well as the deck, so another deck's new tag or withdrawal reaches the page like an edit to the deck itself.
 
@@ -56,7 +62,7 @@ A deck appears here only while its own page answers 200, from the same condition
 
 ## In the product
 
-A signed-in learner reaches the same catalogue at `my.lymi.app/explore`, under Insights in the rail. On a phone it sits in the learner menu, because the pill is drawn for two destinations. `GET /api/explore` returns the same `PublicDeckSummary` rows the public page reads, in the learner's own meaning language, plus the deck in Library for each published deck they already study.
+A signed-in learner reaches the same catalogue at `my.lymi.app/explore`, under Insights in the rail. On a phone it sits in the learner menu, because the pill is drawn for two destinations. `GET /api/explore` returns the same `PublicDeckSummary` rows the public page reads, listed and written for the learner's own meaning language, plus the deck in Library for each published deck they already study.
 
 The shelves and the tray are the public page's. What is added is one press: **Add** on a tile joins the deck and leaves the learner on the shelf, with a toast that offers to open it; the tile then reads **In your library** and leads there. Add is secondary here rather than amber, because a shelf of decks has no single thing to press.
 

@@ -1591,43 +1591,93 @@ html:has(.deck-cards[open]) {
   --tray-c: 0.017;
 }
 
+/* A shelf's own page: its name over a still pool of the shelf's colour, the way the lantern's light
+   sits behind Explore's search. No card and no hand, because the page holds many decks. */
+.shelf-hero {
+  position: relative;
+  isolation: isolate;
+}
+.shelf-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset-block: -40px -30%;
+  inset-inline: calc(50% - 50vw);
+  background: radial-gradient(
+    46% 90% at 24% 36%,
+    oklch(var(--tray-l) var(--tray-c) var(--tray-h)),
+    oklch(var(--tray-l) var(--tray-c) var(--tray-h) / 0.45) 55%,
+    transparent 85%
+  );
+  --tray-l: 0.955;
+  --tray-c: 0.05;
+  pointer-events: none;
+}
+[data-theme="dark"] .shelf-hero::before {
+  --tray-l: 0.23;
+  --tray-c: 0.045;
+}
+@container (max-width: 40rem) {
+  .shelf-hero::before {
+    background: radial-gradient(
+      90% 70% at 30% 40%,
+      oklch(var(--tray-l) var(--tray-c) var(--tray-h)),
+      oklch(var(--tray-l) var(--tray-c) var(--tray-h) / 0.45) 55%,
+      transparent 88%
+    );
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .shelf-hero::before {
+    display: none;
+  }
+}
+
 .deck-tray[data-hue="0"],
 .deck-hero-tint[data-hue="0"],
+.shelf-hero[data-hue="0"],
 .use-case-tile[data-hue="0"] {
   --tray-h: 25;
 }
 .deck-tray[data-hue="1"],
 .deck-hero-tint[data-hue="1"],
+.shelf-hero[data-hue="1"],
 .use-case-tile[data-hue="1"] {
   --tray-h: 110;
 }
 .deck-tray[data-hue="2"],
 .deck-hero-tint[data-hue="2"],
+.shelf-hero[data-hue="2"],
 .use-case-tile[data-hue="2"] {
   --tray-h: 150;
 }
 .deck-tray[data-hue="3"],
 .deck-hero-tint[data-hue="3"],
+.shelf-hero[data-hue="3"],
 .use-case-tile[data-hue="3"] {
   --tray-h: 195;
 }
 .deck-tray[data-hue="4"],
 .deck-hero-tint[data-hue="4"],
+.shelf-hero[data-hue="4"],
 .use-case-tile[data-hue="4"] {
   --tray-h: 235;
 }
 .deck-tray[data-hue="5"],
 .deck-hero-tint[data-hue="5"],
+.shelf-hero[data-hue="5"],
 .use-case-tile[data-hue="5"] {
   --tray-h: 280;
 }
 .deck-tray[data-hue="6"],
 .deck-hero-tint[data-hue="6"],
+.shelf-hero[data-hue="6"],
 .use-case-tile[data-hue="6"] {
   --tray-h: 320;
 }
 .deck-tray[data-hue="7"],
 .deck-hero-tint[data-hue="7"],
+.shelf-hero[data-hue="7"],
 .use-case-tile[data-hue="7"] {
   --tray-h: 350;
 }

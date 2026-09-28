@@ -1002,6 +1002,53 @@ export function shelvesOf(decks: readonly PublicDeckSummary[]): Shelf[] {
   ];
 }
 
+/** A shelf gets a page of its own from this many decks; below it the page is one deck with a header. */
+export const SHELF_PAGE_MIN_DECKS = 3;
+
+export type ShelfKind = "languages" | "subjects";
+export interface ShelfRoute {
+  kind: ShelfKind;
+  name: string;
+}
+
+function slugify(text: string): string {
+  return text
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+/**
+ * Where a shelf's page lives under Explore, or null for More decks. A language shelf is named by
+ * the language's English name, so the address reads the same in every locale and needs nothing
+ * stored: `languages/brazilian-portuguese`, `subjects/citizenship`.
+ */
+export function shelfRoute(shelf: Pick<Shelf, "key" | "language">): ShelfRoute | null {
+  if (shelf.language) {
+    let name = shelf.language;
+    try {
+      name = new Intl.DisplayNames(["en"], { type: "language" }).of(shelf.language) ?? name;
+    } catch {}
+    return { kind: "languages", name: slugify(name) };
+  }
+  if (shelf.key === UNCATEGORISED) return null;
+  return { kind: "subjects", name: shelf.key };
+}
+
+export function hasShelfPage(shelf: Shelf): boolean {
+  return shelf.decks.length >= SHELF_PAGE_MIN_DECKS && shelfRoute(shelf) !== null;
+}
+
+/** The shelf a page address names, when that shelf is big enough to have a page. */
+export function shelfAt(shelves: readonly Shelf[], route: ShelfRoute): Shelf | undefined {
+  return shelves.find((shelf) => {
+    const at = shelfRoute(shelf);
+    return at?.kind === route.kind && at.name === route.name && hasShelfPage(shelf);
+  });
+}
+
 function push<T>(groups: Map<string, T[]>, key: string, item: T) {
   const group = groups.get(key);
   if (group) group.push(item);

@@ -8,6 +8,20 @@ const entry = (xml: string, path: string) =>
   xml.match(new RegExp(`<url>\\s*<loc>https://lymi\\.app${path}</loc>[\\s\\S]*?</url>`))?.[0] ?? "";
 
 describe("runtimeSitemap", () => {
+  it("lists a shelf's page only in the locales that have it, pointing at each other", () => {
+    const xml = runtimeSitemap(
+      [],
+      [{ en: "/explore/languages/german", uk: "/uk/explore/languages/german" }],
+    );
+    expect(locs(xml).filter((loc) => loc?.includes("german"))).toEqual([
+      "https://lymi.app/explore/languages/german",
+      "https://lymi.app/uk/explore/languages/german",
+    ]);
+    const german = entry(xml, "/explore/languages/german");
+    expect(german).toContain('hreflang="uk" href="https://lymi.app/uk/explore/languages/german"');
+    expect(german).not.toContain('hreflang="ru"');
+  });
+
   it("lists Explore in every locale, pointing at its alternates", () => {
     const xml = runtimeSitemap([]);
     expect(locs(xml)).toEqual([

@@ -83,9 +83,9 @@ export function deckBreadcrumbs(
 export function exploreStructuredData(
   decks: readonly PublicDeckSummary[],
   locale: Locale,
-  page: { name: string; description: string },
+  page: { name: string; description: string; path?: string },
 ) {
-  const url = new URL(explorePath(locale), SITE).toString();
+  const url = new URL(page.path ?? explorePath(locale), SITE).toString();
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -201,4 +201,30 @@ export function marketingPage(page: {
       ? [faqPage(page.questions, page.i18n, { name: page.name, path: page.path })]
       : []),
   ];
+}
+
+/** Explore, then the shelf, for a shelf's own page. */
+export function shelfBreadcrumbs(
+  locale: Locale,
+  explore: string,
+  shelf: { name: string; path: string },
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: explore,
+        item: new URL(explorePath(locale), SITE).toString(),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: shelf.name,
+        item: new URL(shelf.path, SITE).toString(),
+      },
+    ],
+  };
 }

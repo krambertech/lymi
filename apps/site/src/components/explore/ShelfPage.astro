@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { jsonForScript } from "../../lib/deck-page";
+import { explorePath, shelfPath } from "../../lib/explore";
+import { pageI18n } from "../../lib/i18n";
+import type { ShelfPage } from "../../lib/public-catalog";
+import { locales, type Locale } from "../../lib/routes";
+import { exploreStructuredData, faqPage, shelfBreadcrumbs } from "../../lib/structured-data";
+import { trayHue } from "../../lib/tray";
+import PublicNav from "../islands/PublicNav";
+import { shelfLabel } from "./explore-labels";
+import { EXPLORE_NAME } from "./explore-meta";
+import { ExploreFooter } from "./ExploreView";
+import { shelfCopy } from "./shelf-copy";
+import { ShelfAbout, ShelfDecks, ShelfHero, ShelfMore } from "./ShelfView";
+
+interface Props {
+  page: ShelfPage;
+}
+
+const { page } = Astro.props;
+const { locale, shelf, route, alternates, others } = page;
+const i18n = pageI18n(locale);
+const name = shelfLabel(i18n, shelf);
+const copy = shelfCopy(i18n, route, name);
+const path = shelfPath(route, locale);
+const languages = route.kind === "languages";
+// The footer's language links always lead somewhere: this shelf where that locale has it, else Explore.
+const footerPaths = Object.fromEntries(
+  locales.map((each) => [each, alternates[each] ?? explorePath(each)]),
+) as Record<Locale, string>;
+---
+
+<BaseLayout title={copy.pageTitle} description={copy.lede} canonicalPath={path} alternatePaths={alternates}>
+  <script
+    slot="head"
+    is:inline
+    type="application/ld+json"
+    set:html={jsonForScript(exploreStructuredData(shelf.decks, locale, { name: copy.title, description: copy.lede, path }))}
+  />
+  <script
+    slot="head"
+    is:inline
+    type="application/ld+json"
+    set:html={jsonForScript(shelfBreadcrumbs(locale, i18n._(EXPLORE_NAME), { name, path }))}
+  />
+  <script
+    slot="head"
+    is:inline
+    type="application/ld+json"
+    set:html={jsonForScript(faqPage(copy.questions, i18n, { name: copy.title, path }))}
+  />
+  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+    <header class="shelf-hero over-tint" data-hue={trayHue(route.name)}>
+      <PublicNav client:load locale={locale} />
+      <ShelfHero locale={locale} shelf={shelf} copy={copy} />
+    </header>
+    <main>
+      <div class="mx-auto max-w-[1120px] px-5 pt-6 pb-16 @2xl:px-10">
+        <ShelfDecks locale={locale} shelf={shelf} />
+      </div>
+      <ShelfAbout locale={locale} copy={copy} heading={copy.aboutHeading} />
+      <ShelfMore locale={locale} others={others} languages={languages} />
+    </main>
+    <ExploreFooter locale={locale} paths={footerPaths} />
+  </div>
+</BaseLayout>

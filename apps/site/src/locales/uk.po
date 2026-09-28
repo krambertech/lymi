@@ -59,6 +59,9 @@ msgstr "{cardCount, plural, one {Переглянути картку} few {Пе�
 msgid "{cardCount, plural, one {The one card} other {All # cards}}"
 msgstr "{cardCount, plural, one {Єдина картка} few {Усі # картки} many {Усі # карток} other {Усі # картки}}"
 
+msgid "{cards, plural, one {# card} other {# cards}}"
+msgstr "{cards, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
+
 msgid "{cards, plural, one {card} other {cards}}"
 msgstr "{cards, plural, one {картка} few {картки} many {карток} other {картки}}"
 
@@ -101,6 +104,13 @@ msgstr "{name} · {subject} · Lymi"
 msgid "{name} · Flashcards · Lymi"
 msgstr "{name} · Флеш-картки · Lymi"
 
+msgid "{name} flashcards"
+msgstr "{name} мова: флеш-картки"
+
+msgctxt "subject shelf"
+msgid "{name} flashcards"
+msgstr "{name}: флеш-картки"
+
 msgid "{name} on Lymi: {facts}"
 msgstr "{name} у Lymi: {facts}"
 
@@ -109,6 +119,9 @@ msgstr "{pictures, plural, one {# картка переноситься з ка�
 
 msgid "{reviews, plural, one {past review} other {past reviews}}"
 msgstr "{reviews, plural, one {минуле повторення} few {минулі повторення} many {минулих повторень} other {минулого повторення}}"
+
+msgid "{title} · Lymi"
+msgstr "{title} · Lymi"
 
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# картку перевернуто} few {# картки перевернуто} many {# карток перевернуто} other {# картки перевернуто}}"
@@ -241,6 +254,9 @@ msgstr "Штука; штуковина"
 msgid "a word that makes a question"
 msgstr "слово, що робить речення питанням"
 
+msgid "About these decks"
+msgstr "Про ці колоди"
+
 msgid "Accents that land between the beats"
 msgstr "Акценти, що припадають між основними долями"
 
@@ -319,6 +335,9 @@ msgstr "Усе добре?"
 msgid "All known"
 msgstr "Усе засвоєно"
 
+msgid "All of Explore"
+msgstr "Увесь каталог"
+
 msgid "all right"
 msgstr "нормально"
 
@@ -395,6 +414,12 @@ msgstr "Ключі API зберігаються, доки ти їх не від�
 msgid "API reference"
 msgstr "Довідник API"
 
+msgid "Are the decks free?"
+msgstr "Колоди безплатні?"
+
+msgid "Are these the official questions?"
+msgstr "Це офіційні питання?"
+
 msgid "Arts"
 msgstr "Мистецтво"
 
@@ -436,6 +461,9 @@ msgstr "На головну Lymi"
 
 msgid "Biology"
 msgstr "Біологія"
+
+msgid "Breadcrumb"
+msgstr "Навігаційний ланцюжок"
 
 msgid "Bridge, 橋, is also hashi. Only the pitch tells them apart."
 msgstr "Міст, 橋, — теж hashi. Розрізнити їх можна лише за висотою тону."
@@ -549,6 +577,9 @@ msgstr "булочка з корицею"
 
 msgid "Citizenship"
 msgstr "Громадянство"
+
+msgid "Citizenship test flashcards"
+msgstr "Тест на громадянство: флеш-картки"
 
 msgid "City; town"
 msgstr "Місто"
@@ -674,6 +705,12 @@ msgctxt "deck tag"
 msgid "DMV written test"
 msgstr "Теоретичний іспит DMV"
 
+msgid "Do I need to read kana first?"
+msgstr "Чи треба спершу навчитися читати кану?"
+
+msgid "Do the words match the Goethe exams?"
+msgstr "Чи відповідають слова іспитам Goethe?"
+
 msgid "Do you need a bag?"
 msgstr "Пакет потрібен?"
 
@@ -695,6 +732,9 @@ msgstr "Чи бачить Lymi мої чати?"
 msgid "Does the AI write my cards?"
 msgstr "Картки за мене пише AI?"
 
+msgid "Does the German deck include my state’s questions?"
+msgstr "Чи є в німецькій колоді питання моєї землі?"
+
 msgid "Doing it twice has the same effect as doing it once"
 msgstr "Зробити двічі — те саме, що зробити один раз"
 
@@ -709,6 +749,9 @@ msgstr "Пити вдома на самоті в самих трусах"
 
 msgid "Driving"
 msgstr "Водіння"
+
+msgid "Each deck opens on its own page with every card on it, so you can see what you would learn before you add it."
+msgstr "Кожна колода має власну сторінку з усіма картками, тож ти бачиш, що вчитимеш, ще до того, як її додаси."
 
 msgid "Easy"
 msgstr "Легко"
@@ -788,6 +831,9 @@ msgstr "У сюжеті не має бути зайвих деталей."
 msgid "Every language"
 msgstr "Усі мови"
 
+msgid "Every noun carries der, die or das, and the notes add the plural, so the article is learnt with the word rather than after it."
+msgstr "Кожен іменник має der, die або das, а в нотатках є множина, тож артикль запам’ятовується разом зі словом, а не потім."
+
 msgid "Everything prepped and to hand before you start"
 msgstr "Усе готове й під рукою, перш ніж почати"
 
@@ -839,6 +885,9 @@ msgstr "Їжа й напої"
 msgid "For a cashier, a builder, or a friend who is studying."
 msgstr "Так кажуть касиру, будівельнику чи другові, який навчається."
 
+msgid "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
+msgstr "Для подорожі, перших уроків або словників Goethe від A1 до B1."
+
 msgid "For anything you’re learning."
 msgstr "Для всього, що ти вчиш."
 
@@ -848,6 +897,12 @@ msgstr "Для початківців"
 
 msgid "For here or to go?"
 msgstr "Тут чи з собою?"
+
+msgid "For reading kana, a first trip, and JLPT N5 and N4 vocabulary."
+msgstr "Щоб читати кану, вирушити в першу подорож і вивчити лексику JLPT N5 та N4."
+
+msgid "For the German, US, Spanish, Czech and Canadian citizenship tests, with the answers and a short note on each."
+msgstr "Для тестів на громадянство Німеччини, США, Іспанії, Чехії та Канади, з відповідями й короткою приміткою до кожного питання."
 
 msgid "for you"
 msgstr "вам"
@@ -893,6 +948,12 @@ msgstr "Німецька"
 
 msgid "German A2 · Tuesdays"
 msgstr "Німецька A2 · щовівторка"
+
+msgid "Germany’s come from the BAMF catalogue, the US deck has all 128 civics questions of the 2025 version, Spain’s follow the 2026 CCSE manual and Czechia’s the official NPI ČR bank. Canada’s are Lymi’s own questions on every chapter of Discover Canada, not IRCC’s."
+msgstr "Німецькі взято з каталогу BAMF, у колоді США — усі 128 питань з громадянознавства версії 2025 року, іспанські відповідають посібнику CCSE 2026 року, а чеські — офіційній базі NPI ČR. Канадські — власні питання Lymi до кожного розділу Discover Canada, а не питання IRCC."
+
+msgid "Germany’s test asks 300 general questions and 10 about your state. The general questions are one deck, and each state’s 10 are a small deck of their own, so you add only yours."
+msgstr "Тест у Німеччині має 300 загальних питань і 10 про твою федеральну землю. Загальні питання — одна колода, а 10 питань кожної землі — окрема невелика колода, тож ти додаєш лише свою."
 
 msgid "Get started"
 msgstr "Почати"
@@ -994,6 +1055,9 @@ msgstr "Історія"
 
 msgid "how"
 msgstr "як"
+
+msgid "How does Lymi decide when to show a card again?"
+msgstr "Як Lymi вирішує, коли знову показати картку?"
 
 msgid "How it works"
 msgstr "Як це працює"
@@ -1109,6 +1173,12 @@ msgstr "Нічого страшного"
 
 msgid "it goes"
 msgstr "іде"
+
+msgid "It helps. Read Japanese Kana teaches hiragana and katakana, and the other decks are easier once you can read them."
+msgstr "Це допомагає. Колода Read Japanese Kana вчить хірагані й катакані, а з ними інші колоди даються легше."
+
+msgid "It schedules every card with spaced repetition and brings it back right before you’d forget it."
+msgstr "Lymi планує кожну картку за методом інтервальних повторень і повертає її саме перед тим, як ти її забудеш."
 
 msgid "It splits: in “Ich höre jetzt auf”, auf moves to the end."
 msgstr "Дієслово розпадається: в «Ich höre jetzt auf» auf іде в кінець."
@@ -1242,6 +1312,9 @@ msgstr "Заговори естонською."
 
 msgid "Learned once, never revisited"
 msgstr "Без повторень"
+
+msgid "Learning {name} with Lymi"
+msgstr "{name} мова в Lymi"
 
 msgid "Learning data"
 msgstr "Навчальні дані"
@@ -1400,6 +1473,9 @@ msgstr "Меню"
 msgid "More decks"
 msgstr "Інші колоди"
 
+msgid "More languages"
+msgstr "Інші мови"
+
 msgid "More like this"
 msgstr "Схожі колоди"
 
@@ -1476,6 +1552,9 @@ msgstr "ні; не"
 msgid "No. A card can hold anything worth remembering: a term, a date, a formula, a chord. Language cards can also be said aloud."
 msgstr "Ні. На картці може бути будь-що, що варто запам’ятати: термін, дата, формула, акорд. Мовні картки ще й можна прослухати."
 
+msgid "No. Add the Leben in Deutschland deck for the 300 general questions and your state’s deck for its 10."
+msgstr "Ні. Додай колоду Leben in Deutschland для 300 загальних питань і колоду своєї землі для її 10 питань."
+
 msgid "No. Each learner’s reviews stay private to them. Lymi is a place to practise, not to be graded."
 msgstr "Ні. Повторення кожного учня бачить лише сам учень. Lymi — місце для практики, а не для оцінок."
 
@@ -1508,6 +1587,9 @@ msgstr "Її часто називають неофіційним девізом
 
 msgid "Okay"
 msgstr "Гаразд"
+
+msgid "Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day."
+msgstr "Щойно колода потрапляє у твій Lymi, він повертає кожну картку саме перед тим, як ти її забудеш, — кілька хвилин на день."
 
 msgid "one"
 msgstr "один"
@@ -1544,6 +1626,9 @@ msgstr "Кава з собою"
 
 msgid "Other apps"
 msgstr "Інші застосунки"
+
+msgid "Other subjects"
+msgstr "Інші теми"
 
 msgid "Our hosting provider processes request metadata, security signals, timings and error logs needed to operate and protect Lymi. Query strings are redacted from Worker logs. We avoid putting card content, email addresses, access tokens and other private content in logs."
 msgstr "Наш постачальник хостингу обробляє метадані запитів, сигнали безпеки, часові показники та журнали помилок, потрібні для роботи й захисту Lymi. Рядки запитів приховуються в журналах Worker. Ми не додаємо до журналів вміст карток, адреси електронної пошти, токени доступу та інший приватний вміст."
@@ -1642,6 +1727,9 @@ msgstr "Опубліковано {0}"
 msgid "Push subscriptions stay until you disable reminders, the push service reports the subscription expired, or the account is deleted."
 msgstr "Push-підписки зберігаються, доки ти не вимкнеш нагадування, push-сервіс не повідомить про завершення підписки або обліковий запис не буде видалено."
 
+msgid "Questions"
+msgstr "Питання"
+
 msgid "Questions before you connect."
 msgstr "Питання перед підключенням."
 
@@ -1657,6 +1745,9 @@ msgstr "Мати добре нунчі — відчувати настрій, п
 msgid "Raise a glass and it becomes terviseks: to your health."
 msgstr "Коли піднімають келих, кажуть terviseks: за здоров’я."
 
+msgid "Read Japanese Kana covers hiragana and katakana, including voiced and combined sounds, the small tsu and the long-vowel mark."
+msgstr "Read Japanese Kana охоплює хірагану й катакану, зокрема дзвінкі та складені звуки, малу цу й знак довгого голосного."
+
 msgid "Read the docs"
 msgstr "Відкрити документацію"
 
@@ -1671,6 +1762,13 @@ msgstr "Читаємо нотатки…"
 
 msgid "Ready to start"
 msgstr "Можна починати"
+
+msgctxt "subject shelf"
+msgid "Ready-made {name} decks, written by a person and checked card by card."
+msgstr "{name} у готових колодах. Кожну склала людина й перевірила картку за карткою."
+
+msgid "Ready-made decks for learning {name}, written by a person and checked card by card."
+msgstr "{name} мова в готових колодах. Кожну склала людина й перевірила картку за карткою."
 
 msgid "Ready-made flashcard decks, written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one free and review it in your own language, a few minutes a day."
 msgstr "Готові колоди флеш-карток, написані людиною та перевірені картка за карткою: мови, іспити й усе інше, що варто пам’ятати. Додай колоду безкоштовно й повторюй її своєю мовою по кілька хвилин на день."
@@ -2032,6 +2130,12 @@ msgstr "Дякую! Побачимось!"
 msgid "That chess term you just used, add it to my deck."
 msgstr "Додай у мою колоду цей шаховий термін."
 
+msgid "The A1, A2 and B1 decks are checked against the Goethe-Zertifikat word list for each level, but they aren’t official or complete lists."
+msgstr "Колоди A1, A2 і B1 звірено зі словниками Goethe-Zertifikat для кожного рівня, але це не офіційні й не повні списки."
+
+msgid "The A1, A2 and B1 decks are checked against the Goethe-Zertifikat word lists for their level. They follow those levels; they are not official or complete exam lists."
+msgstr "Колоди A1, A2 і B1 звірено зі словниками Goethe-Zertifikat свого рівня. Вони відповідають цим рівням, але не є офіційними чи повними екзаменаційними списками."
+
 msgid "The browning that gives seared, baked and toasted food its flavour"
 msgstr "Підрум’янювання, що надає смаку смаженому, печеному й тостам"
 
@@ -2062,8 +2166,14 @@ msgstr "Вечір після роботи"
 msgid "The free evening after work"
 msgstr "Вільний вечір після роботи"
 
+msgid "The German, Spanish and Czech decks keep questions and answers in the exam’s language, as the exam does; the notes add an English translation and a short explanation."
+msgstr "У німецькій, іспанській і чеській колодах питання й відповіді мовою іспиту, як і на самому іспиті; у нотатках є переклад англійською й коротке пояснення."
+
 msgid "The girl"
 msgstr "Дівчинка"
+
+msgid "The JLPT has published no official word list since 2010, so the N5 and N4 decks follow their level from widely used study lists. Neither is an official list."
+msgstr "Від 2010 року JLPT не публікує офіційного списку слів, тож колоди N5 і N4 складено за поширеними навчальними списками свого рівня. Жодна з них не є офіційним списком."
 
 msgid "The knack of reading the room"
 msgstr "Уміння відчувати настрій людей довкола"
@@ -2082,6 +2192,9 @@ msgstr "Сплетення нервів, що йде від шиї до руки
 
 msgid "The next section opens at 80% known"
 msgstr "Наступний розділ відкривається, коли засвоєно 80%"
+
+msgid "The one that matches your test or topic. You can add more than one, and Lymi mixes their cards into one daily review."
+msgstr "Ту, що відповідає твоєму тесту чи темі. Можна додати кілька, і Lymi змішає їхні картки в одне щоденне повторення."
 
 msgid "The output depends on the history of the input"
 msgstr "Результат залежить від того, що було на вході раніше"
@@ -2356,8 +2469,14 @@ msgstr "Де можуть з’являтися картки"
 msgid "Where cards come from"
 msgstr "Звідки надходять картки"
 
+msgid "Where should I start?"
+msgstr "З чого почати?"
+
 msgid "Which assistants work?"
 msgstr "Які асистенти підтримуються?"
+
+msgid "Which deck should I add?"
+msgstr "Яку колоду додати?"
 
 msgid "Which languages can I learn?"
 msgstr "Які мови можна вчити?"
@@ -2379,6 +2498,9 @@ msgstr "Навіщо ми використовуємо дані"
 
 msgid "Widgets"
 msgstr "Віджети"
+
+msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
+msgstr "З колоди, яка відповідає твоїй меті: подорожі чи першим урокам. Можна додати кілька, і Lymi змішає їхні картки в одне щоденне повторення."
 
 msgid "word"
 msgstr "слово"
@@ -2442,6 +2564,9 @@ msgstr "Так. Натисни «відтворити» на будь-якій �
 
 msgid "Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins gets each new card as it’s added."
 msgstr "Так. Хто робить картки, ділиться посиланням для приєднання, і кожен, хто приєднався, отримує нові картки одразу, як їх додають."
+
+msgid "Yes. You can add a deck and learn it for free."
+msgstr "Так. Колоду можна додати й учити безплатно."
 
 msgid "you"
 msgstr "ти"

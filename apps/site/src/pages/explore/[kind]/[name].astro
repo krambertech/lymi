@@ -1,0 +1,17 @@
+---
+import ShelfMissing from "../../../components/explore/ShelfMissing.astro";
+import ShelfPage from "../../../components/explore/ShelfPage.astro";
+import { MISSING_CACHE_CONTROL } from "../../../lib/deck-page";
+import { resolveShelfPage } from "../../../lib/public-catalog";
+
+export const prerender = false;
+
+const page = await resolveShelfPage(Astro, "en");
+if (page instanceof Response) return page;
+if (!page) {
+  Astro.response.status = 404;
+  Astro.response.headers.set("cache-control", MISSING_CACHE_CONTROL);
+}
+---
+
+{page ? <ShelfPage page={page} /> : <ShelfMissing />}

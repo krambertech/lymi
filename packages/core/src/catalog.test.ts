@@ -10,6 +10,8 @@ import {
   rankRelated,
   readableIn,
   type SectionRow,
+  shelfAt,
+  shelfRoute,
   shelvesOf,
   taughtLanguage,
   UNCATEGORISED,
@@ -381,5 +383,32 @@ describe("readableIn", () => {
   it("matches a regional tag to its language", () => {
     expect(readableIn(deck("en-GB"), "en")).toBe(true);
     expect(readableIn(deck("pt", ["uk-UA"]), "uk")).toBe(true);
+  });
+});
+
+describe("shelf pages", () => {
+  it("a language shelf lives at its English name, a subject at its key, and More decks nowhere", () => {
+    expect(shelfRoute({ key: "language-de", language: "de" })).toEqual({
+      kind: "languages",
+      name: "german",
+    });
+    expect(shelfRoute({ key: "language-pt-BR", language: "pt-BR" })).toEqual({
+      kind: "languages",
+      name: "brazilian-portuguese",
+    });
+    expect(shelfRoute({ key: "citizenship", language: null })).toEqual({
+      kind: "subjects",
+      name: "citizenship",
+    });
+    expect(shelfRoute({ key: UNCATEGORISED, language: null })).toBeNull();
+  });
+
+  it("only a shelf of three decks or more has a page", () => {
+    const deck = (slug: string) => summary(slug, "languages", "de");
+    const two = shelvesOf([deck("a"), deck("b")]);
+    const three = shelvesOf([deck("a"), deck("b"), deck("c")]);
+    expect(shelfAt(two, { kind: "languages", name: "german" })).toBeUndefined();
+    expect(shelfAt(three, { kind: "languages", name: "german" })?.decks).toHaveLength(3);
+    expect(shelfAt(three, { kind: "subjects", name: "german" })).toBeUndefined();
   });
 });

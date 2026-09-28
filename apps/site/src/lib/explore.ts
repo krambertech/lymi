@@ -1,4 +1,4 @@
-import type { PublicDeckSummary } from "@lymi/core/catalog";
+import type { PublicDeckSummary, ShelfRoute } from "@lymi/core/catalog";
 import { type Locale, locales } from "./routes";
 
 export function explorePath(locale: string): string {
@@ -12,8 +12,21 @@ export function explorePaths(): Record<Locale, string> {
   >;
 }
 
+/** A shelf's own page: `/explore/languages/german`, `/uk/explore/subjects/citizenship`. */
+export function shelfPath(route: ShelfRoute, locale: string): string {
+  return `${explorePath(locale)}/${route.kind}/${route.name}`;
+}
+
 /** The shelves and their order live in core, so both Explores group decks the same way. */
-export { type Shelf, shelvesOf, UNCATEGORISED } from "@lymi/core/catalog";
+export {
+  hasShelfPage,
+  type Shelf,
+  type ShelfRoute,
+  shelfAt,
+  shelfRoute,
+  shelvesOf,
+  UNCATEGORISED,
+} from "@lymi/core/catalog";
 
 /** FNV-1a of everything the page shows, folded into one value for the ETag. */
 function hash(text: string): number {
@@ -33,8 +46,10 @@ export function catalogEtag(parts: {
   content: string;
   locale: Locale;
   version: string | undefined;
+  /** Which page of the catalogue, so a shelf's page never validates Explore's copy. */
+  page?: string | undefined;
 }): string {
-  return `W/"explore-${parts.content}-${parts.locale}-${parts.version ?? "dev"}"`;
+  return `W/"${parts.page ?? "explore"}-${parts.content}-${parts.locale}-${parts.version ?? "dev"}"`;
 }
 
 /**

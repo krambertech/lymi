@@ -44,7 +44,7 @@ The radius tokens are `rounded-xs` 6 px, `sm` 10, `md` 14, `lg` 18, `xl` 22, `2x
 
 The only glow in the interface belongs to the lantern, and inside the lantern only the light wears it. In CSS it is the `glow` utility, which puts the drop shadow on the `.lantern-light` group rather than the whole drawing: metal does not glow, and a filter on the drawing halos the frame and traces the glass. Nothing else may use it.
 
-The light spills into the room in two places: around the lantern at the end of a review, under Motion, and as a still pool behind Explore's search, the only background on a public page. Both go under `prefers-reduced-transparency`. The embers and today's light as it fills in the day grid carry the same glow, because they are the flame.
+The light spills into the room in two places: around the lantern at the end of a review, under Motion, and as a still pool behind Explore's search. A shelf's own page has the same still pool behind its name, in the shelf's colour rather than the lantern's. Both go under `prefers-reduced-transparency`. The embers and today's light as it fills in the day grid carry the same glow, because they are the flame.
 
 Never a gradient on a surface. The exceptions are the app icon, the link preview, which shares its warm centre, and the lantern's pool of light at the end of a review.
 

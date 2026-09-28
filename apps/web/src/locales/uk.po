@@ -28,8 +28,8 @@ msgstr "«{label}» уже є в «{deckName}», тож копію, додану
 msgid "“{term}” has nothing left to fill in."
 msgstr "У «{term}» нічого доповнювати."
 
-msgid "“{term}” keeps slipping, likely because the two get mixed up."
-msgstr "«{term}» постійно забувається, схоже, через те, що ти їх плутаєш."
+msgid "“{title}” keeps slipping, likely because the two get mixed up."
+msgstr "«{title}» постійно забувається, схоже, через те, що ти їх плутаєш."
 
 #. placeholder {0}: counts?.decks ?? 0
 msgid "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"

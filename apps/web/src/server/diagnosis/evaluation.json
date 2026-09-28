@@ -895,6 +895,78 @@
           "meaning": "Что ты делаешь? — Я читаю книгу."
         }
       ]
+    },
+    {
+      "name": "Eesti · Laused",
+      "language": "et",
+      "meaningLanguage": "ru",
+      "asked": ["meaning_to_term", "term_to_meaning"],
+      "cards": [
+        {
+          "id": "ph-s1",
+          "term": "Ma elan Tallinnas.",
+          "meaning": "Я живу в Таллинне.",
+          "notes": "- жить — *elama · elada · elan*\n- Таллинн — *Tallinn* (*Tallinnas*: в Таллинне)"
+        },
+        {
+          "id": "ph-01",
+          "term": "Ta võtab tema raamatu.",
+          "meaning": "Он берёт его книгу (чужую).",
+          "notes": "- брать — *võtma · võtta · võtan*\n- книга — *raamat · raamatu · raamatut*\n\nсравни\n*oma raamat* — своя книга\n*tema raamat* — его/её книга (чужая)",
+          "expected": "confused_pair",
+          "pair": "ph-s2"
+        },
+        {
+          "id": "ph-s2",
+          "term": "Ta võtab oma raamatu.",
+          "meaning": "Он берёт свою книгу.",
+          "notes": "- брать — *võtma · võtta · võtan*\n- свой — *oma*"
+        },
+        {
+          "id": "ph-s3",
+          "term": "Me sööme täna kodus.",
+          "meaning": "Сегодня мы едим дома.",
+          "notes": "- есть — *sööma · süüa · söön*\n- дома — *kodus*"
+        },
+        {
+          "id": "ph-02",
+          "term": "Kus on pood? — Pood on seal.",
+          "meaning": "Где магазин? — Магазин там.",
+          "notes": "- где — *kus*\n- магазин — *pood · poe · poodi*",
+          "expected": "two_things"
+        },
+        {
+          "id": "ph-s4",
+          "term": "Mu vend töötab koolis.",
+          "meaning": "Мой брат работает в школе.",
+          "notes": "- брат — *vend · venna · venda*\n- работать — *töötama · töötada · töötan*"
+        },
+        {
+          "id": "ph-s5",
+          "term": "Ilm on täna ilus.",
+          "meaning": "Погода сегодня хорошая.",
+          "notes": "- погода — *ilm · ilma · ilma*\n- красивый — *ilus · ilusa · ilusat*"
+        },
+        {
+          "id": "ph-03",
+          "term": "Mul on kaks last.",
+          "meaning": "У меня двое детей.",
+          "notes": "- у меня — *mina · minu · mind* (*mul*)\n- ребёнок — *laps · lapse · last*",
+          "expected": "unclear"
+        },
+        {
+          "id": "ph-s6",
+          "term": "Ma ei tea, kus ta on.",
+          "meaning": "Я не знаю, где он.",
+          "notes": "- знать — *teadma · teada · tean* (*tea*: после *ei* без -n)"
+        },
+        {
+          "id": "ph-s7",
+          "term": "Kas sa tuled homme?",
+          "meaning": "Ты придёшь завтра?",
+          "notes": "- приходить — *tulema · tulla · tulen*\n- завтра — *homme*"
+        }
+      ]
     }
   ]
 }

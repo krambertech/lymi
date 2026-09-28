@@ -10,6 +10,7 @@ import {
   readReply,
   repeatedNoteLines,
   settle,
+  sharedFormats,
 } from "../diagnosis/prompt";
 import { addCards, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
@@ -142,6 +143,22 @@ describe("the deck's notes as the model reads them", () => {
     expect(asked.deck.repeatedNoteLines).toEqual(["наоборот:", "примеры:"]);
     expect(asked.deck.cards[0].notes).toContain("наоборот:** lühike");
     expect(asked.deck.cards[0].notes.length).toBeLessThanOrEqual(201);
+  });
+
+  it("names a term pattern most of the deck shares, never the one card of its kind", () => {
+    const sentence = (id: string, term: string) => ({ id, term, meaning: null });
+    const phrases = [
+      sentence("p1", "Ma elan Tallinnas."),
+      sentence("p2", "Ilm on täna ilus."),
+      sentence("p3", "Kas sa tuled homme?"),
+      sentence("p4", "Kus on pood? — Pood on seal."),
+    ];
+    expect(sharedFormats(phrases)).toEqual(["a whole sentence"]);
+    expect(sharedFormats(deck)).toEqual([]);
+    const asked = JSON.parse(
+      diagnosisRequest({ ...input, deck: { name: "Verbs", cards: input.deck.cards } }).input,
+    );
+    expect(asked.deck.sharedFormats).toEqual([]);
   });
 
   it("tells the model an opposite is never a pair on its own", () => {

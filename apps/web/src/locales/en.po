@@ -28,8 +28,8 @@ msgstr "“{label}” was already in {deckName}, so the copy added offline was l
 msgid "“{term}” has nothing left to fill in."
 msgstr "“{term}” has nothing left to fill in."
 
-msgid "“{term}” keeps slipping, likely because the two get mixed up."
-msgstr "“{term}” keeps slipping, likely because the two get mixed up."
+msgid "“{title}” keeps slipping, likely because the two get mixed up."
+msgstr "“{title}” keeps slipping, likely because the two get mixed up."
 
 #. placeholder {0}: counts?.decks ?? 0
 msgid "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"

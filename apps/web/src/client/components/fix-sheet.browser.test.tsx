@@ -96,7 +96,7 @@ test("a confused pair shows both cards and adds the two drafted, as the learner 
   await expect.element(dialog).not.toBeInTheDocument();
 });
 
-test("terms written as principal parts are titled by their first forms, and compared in full", async () => {
+test("terms written as principal parts are named by their first forms, and compared in full", async () => {
   const offer: ReviewOffer = {
     ...pair,
     other: { id: "c2", term: "pikk · pika · pikka", meaning: "long", language: "et" },
@@ -106,6 +106,9 @@ test("terms written as principal parts are titled by their first forms, and comp
   );
   const dialog = page.getByRole("dialog");
   await expect.element(dialog.getByRole("heading", { name: "lühike and pikk" })).toBeVisible();
+  await expect
+    .element(dialog.getByText("“lühike” keeps slipping, likely because the two get mixed up."))
+    .toBeVisible();
   await expect.element(dialog.getByText("pikk · pika · pikka", { exact: true })).toBeVisible();
   await expect
     .element(dialog.getByText("lühike · lühikese · lühikest", { exact: true }))

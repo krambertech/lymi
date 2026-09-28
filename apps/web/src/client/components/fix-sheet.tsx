@@ -285,7 +285,7 @@ function PairFix({
           <span lang={other.language ?? undefined}>{otherTitle}</span>
         </Trans>
       }
-      why={<Trans>“{term}” keeps slipping, likely because the two get mixed up.</Trans>}
+      why={<Trans>“{title}” keeps slipping, likely because the two get mixed up.</Trans>}
       primary={<Trans>Add 2 cards</Trans>}
       dismissable
       problem={drafted.problem}

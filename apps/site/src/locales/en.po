@@ -344,6 +344,9 @@ msgstr "all right"
 msgid "All right. Lots of work."
 msgstr "All right. Lots of work."
 
+msgid "All shelves"
+msgstr "All shelves"
+
 msgid "Allow"
 msgstr "Allow"
 
@@ -752,6 +755,9 @@ msgstr "Driving"
 
 msgid "Each deck opens on its own page with every card on it, so you can see what you would learn before you add it."
 msgstr "Each deck opens on its own page with every card on it, so you can see what you would learn before you add it."
+
+msgid "Earlier shelves"
+msgstr "Earlier shelves"
 
 msgid "Easy"
 msgstr "Easy"
@@ -1298,8 +1304,14 @@ msgstr "Language"
 msgid "Language learning"
 msgstr "Language learning"
 
+msgid "Languages"
+msgstr "Languages"
+
 msgid "Last updated"
 msgstr "Last updated"
+
+msgid "Later shelves"
+msgstr "Later shelves"
 
 msgid "Latin for “you shall have the body”."
 msgstr "Latin for “you shall have the body”."
@@ -2045,6 +2057,9 @@ msgstr "Stubborn grit; carrying on anyway"
 
 msgid "Stubborn grit; carrying on when it gets hard"
 msgstr "Stubborn grit; carrying on when it gets hard"
+
+msgid "Subjects"
+msgstr "Subjects"
 
 msgid "Sugars and amino acids reacting in the heat."
 msgstr "Sugars and amino acids reacting in the heat."

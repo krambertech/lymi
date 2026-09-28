@@ -351,3 +351,17 @@
   --tray-l: 0.19;
   --tray-c: 0.03;
 }
+
+/* The shelf bar's strip scrolls sideways and, while more follows, fades at its end edge. */
+.shelf-strip {
+  scrollbar-width: none;
+}
+.shelf-strip[data-fade] {
+  mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+}
+.shelf-strip::-webkit-scrollbar {
+  display: none;
+}
+[dir="rtl"] .shelf-strip[data-fade] {
+  mask-image: linear-gradient(to left, #000 calc(100% - 48px), transparent);
+}

@@ -805,6 +805,9 @@ msgstr "All"
 msgid "All at once"
 msgstr "All at once"
 
+msgid "All shelves"
+msgstr "All shelves"
+
 msgid "Allow"
 msgstr "Allow"
 
@@ -1639,6 +1642,9 @@ msgstr "Each section opens once you know most of the one before it."
 msgid "Earlier months"
 msgstr "Earlier months"
 
+msgid "Earlier shelves"
+msgstr "Earlier shelves"
+
 msgid "Easy"
 msgstr "Easy"
 
@@ -2183,6 +2189,9 @@ msgstr "Later"
 
 msgid "Later months"
 msgstr "Later months"
+
+msgid "Later shelves"
+msgstr "Later shelves"
 
 msgid "Later today"
 msgstr "Later today"
@@ -3468,6 +3477,9 @@ msgstr "Strong"
 
 msgid "Stuck? Read the guide"
 msgstr "Stuck? Read the guide"
+
+msgid "Subjects"
+msgstr "Subjects"
 
 msgid "Support"
 msgstr "Support"

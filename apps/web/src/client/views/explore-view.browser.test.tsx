@@ -102,3 +102,34 @@ test("a shelf of three decks or more shows one row and leads to its own page", a
     page.getByRole("list", { name: "Estonian decks" }).getByRole("listitem").elements(),
   ).toHaveLength(2);
 });
+
+test("All shelves lists the languages A to Z, then the subjects, and a pick jumps to its shelf", async () => {
+  await renderExplore();
+  await page.getByRole("button", { name: "All shelves" }).click();
+  const menu = page.getByRole("menu", { name: "All shelves" });
+  await expect.element(menu).toBeVisible();
+  expect(
+    menu
+      .getByRole("menuitem")
+      .elements()
+      .map((item) => item.textContent),
+  ).toEqual(["Estonian2", "Spanish1", "Science1", "Driving1", "More decks1"]);
+  await menu.getByRole("menuitem", { name: /^Science/ }).click();
+  await expect.element(page.getByRole("heading", { name: "Science", level: 2 })).toHaveFocus();
+});
+
+test("the chip for the shelf under the bar is marked as the current location", async () => {
+  window.scrollTo(0, 0);
+  await renderExplore();
+  const bar = page.getByRole("navigation", { name: "Shelves" });
+  const marked = () =>
+    bar
+      .getByRole("link")
+      .elements()
+      .filter((link) => link.getAttribute("aria-current") === "location");
+  expect(marked()).toHaveLength(0);
+  await bar.getByRole("link", { name: /^Driving/ }).click();
+  await expect
+    .element(bar.getByRole("link", { name: /^Driving/ }))
+    .toHaveAttribute("aria-current", "location");
+});

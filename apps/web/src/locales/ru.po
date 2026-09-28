@@ -805,6 +805,9 @@ msgstr "Все"
 msgid "All at once"
 msgstr "Все сразу"
 
+msgid "All shelves"
+msgstr "Все полки"
+
 msgid "Allow"
 msgstr "Разрешить"
 
@@ -1639,6 +1642,9 @@ msgstr "Каждый раздел открывается, как только в
 msgid "Earlier months"
 msgstr "Предыдущие месяцы"
 
+msgid "Earlier shelves"
+msgstr "Предыдущие полки"
+
 msgid "Easy"
 msgstr "Легко"
 
@@ -2183,6 +2189,9 @@ msgstr "Позже"
 
 msgid "Later months"
 msgstr "Следующие месяцы"
+
+msgid "Later shelves"
+msgstr "Следующие полки"
 
 msgid "Later today"
 msgstr "Позже сегодня"
@@ -3468,6 +3477,9 @@ msgstr "Надёжный"
 
 msgid "Stuck? Read the guide"
 msgstr "Что-то не получается? Прочитай руководство"
+
+msgid "Subjects"
+msgstr "Темы"
 
 msgid "Support"
 msgstr "Поддержка"

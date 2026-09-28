@@ -395,6 +395,9 @@ msgstr "API keys stay until you revoke them or they expire. Connected-app tokens
 msgid "API reference"
 msgstr "API reference"
 
+msgid "Arts"
+msgstr "Arts"
+
 msgid "Ask your AI assistant to add a card while you chat. It shows up in Lymi, ready to review."
 msgstr "Ask your AI assistant to add a card while you chat. It shows up in Lymi, ready to review."
 
@@ -485,6 +488,10 @@ msgstr "Can Lymi say Estonian words aloud?"
 msgid "Can my class use it together?"
 msgstr "Can my class use it together?"
 
+msgctxt "deck tag"
+msgid "Canadian citizenship test"
+msgstr "Canadian citizenship test"
+
 msgid "Card or cash?"
 msgstr "Card or cash?"
 
@@ -505,6 +512,10 @@ msgstr "Cards outside a section"
 
 msgid "Catching up with a friend"
 msgstr "Catching up with a friend"
+
+msgctxt "deck tag"
+msgid "CCSE Spanish nationality test"
+msgstr "CCSE Spanish nationality test"
 
 msgid "cents"
 msgstr "cents"
@@ -616,6 +627,10 @@ msgstr "Cosy"
 msgid "Cosy and convivial; good company"
 msgstr "Cosy and convivial; good company"
 
+msgctxt "deck tag"
+msgid "Czech citizenship test"
+msgstr "Czech citizenship test"
+
 msgid "Data Lymi receives"
 msgstr "Data Lymi receives"
 
@@ -654,6 +669,10 @@ msgstr "Deutsch · verb"
 
 msgid "Deutsch · word"
 msgstr "Deutsch · word"
+
+msgctxt "deck tag"
+msgid "DMV written test"
+msgstr "DMV written test"
 
 msgid "Do you need a bag?"
 msgstr "Do you need a bag?"

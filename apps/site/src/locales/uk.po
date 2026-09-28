@@ -395,6 +395,9 @@ msgstr "Ключі API зберігаються, доки ти їх не від�
 msgid "API reference"
 msgstr "Довідник API"
 
+msgid "Arts"
+msgstr "Мистецтво"
+
 msgid "Ask your AI assistant to add a card while you chat. It shows up in Lymi, ready to review."
 msgstr "Попроси AI-асистента додати картку просто під час розмови. Вона з’явиться в Lymi, готова до повторення."
 
@@ -485,6 +488,10 @@ msgstr "Чи вміє Lymi вимовляти естонські слова?"
 msgid "Can my class use it together?"
 msgstr "Чи може моя група вчитися разом?"
 
+msgctxt "deck tag"
+msgid "Canadian citizenship test"
+msgstr "Тест на громадянство Канади"
+
 msgid "Card or cash?"
 msgstr "Карткою чи готівкою?"
 
@@ -505,6 +512,10 @@ msgstr "Картки без розділу"
 
 msgid "Catching up with a friend"
 msgstr "Коротка розмова з подругою"
+
+msgctxt "deck tag"
+msgid "CCSE Spanish nationality test"
+msgstr "Іспит CCSE на громадянство Іспанії"
 
 msgid "cents"
 msgstr "центів"
@@ -616,6 +627,10 @@ msgstr "Затишний"
 msgid "Cosy and convivial; good company"
 msgstr "Затишний і душевний; у доброму товаристві"
 
+msgctxt "deck tag"
+msgid "Czech citizenship test"
+msgstr "Іспит на громадянство Чехії"
+
 msgid "Data Lymi receives"
 msgstr "Дані, які отримує Lymi"
 
@@ -654,6 +669,10 @@ msgstr "Deutsch · дієслово"
 
 msgid "Deutsch · word"
 msgstr "Deutsch · слово"
+
+msgctxt "deck tag"
+msgid "DMV written test"
+msgstr "Теоретичний іспит DMV"
 
 msgid "Do you need a bag?"
 msgstr "Пакет потрібен?"

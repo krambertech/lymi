@@ -911,6 +911,9 @@ msgstr "Архівування ховає картку або колоду, не
 msgid "Arrange sections"
 msgstr "Упорядкувати розділи"
 
+msgid "Arts"
+msgstr "Мистецтво"
+
 msgid "Ask it another way"
 msgstr "Запитати інакше"
 
@@ -989,6 +992,10 @@ msgstr "автор: {who}"
 msgid "calls itself “{0}”"
 msgstr "називає себе «{0}»"
 
+msgctxt "deck tag"
+msgid "Canadian citizenship test"
+msgstr "Тест на громадянство Канади"
+
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -1051,6 +1058,10 @@ msgstr "Картки збережуть дати повторення, які м
 
 msgid "Cards outside a section"
 msgstr "Картки поза розділами"
+
+msgctxt "deck tag"
+msgid "CCSE Spanish nationality test"
+msgstr "Іспит CCSE на громадянство Іспанії"
 
 msgid "Change"
 msgstr "Змінити"
@@ -1427,6 +1438,10 @@ msgstr "Поточне зображення"
 msgid "Custom"
 msgstr "Своя"
 
+msgctxt "deck tag"
+msgid "Czech citizenship test"
+msgstr "Іспит на громадянство Чехії"
+
 msgid "Daily goal"
 msgstr "Денна мета"
 
@@ -1507,6 +1522,10 @@ msgstr "Відключити"
 
 msgid "Dismiss"
 msgstr "Закрити"
+
+msgctxt "deck tag"
+msgid "DMV written test"
+msgstr "Теоретичний іспит DMV"
 
 msgid "Docs"
 msgstr "Документація"
@@ -2338,6 +2357,9 @@ msgstr "Назва"
 
 msgid "Name the key, so you know which one to revoke later."
 msgstr "Назви ключ, щоб потім знати, який саме відкликати."
+
+msgid "Nature"
+msgstr "Природа"
 
 msgid "Never allowed"
 msgstr "Ніколи не дозволено"

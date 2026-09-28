@@ -1,12 +1,13 @@
-import type { PublicationInput } from "@lymi/core";
+import { newId, type PublicationInput } from "@lymi/core";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import type { Db } from "../db";
+import { type Db, schema } from "../db";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
 import { archiveDeck, createDeck } from "./decks";
 import { exploreCatalog, exploreDeck } from "./explore";
 import { addPublishedDeck, publishDeck, withdrawDeck } from "./publications";
 import { createSection } from "./sections";
+import { updateSettings } from "./settings";
 import { learner, testDb } from "./test-db";
 
 /** Explore inside the product: the public projection, plus what this learner already has. */
@@ -53,6 +54,24 @@ async function publish(slug: string, over: Partial<PublicationInput> & { languag
 const find = (rows: Awaited<ReturnType<typeof exploreCatalog>>, slug: string) =>
   rows.decks.find((deck) => deck.slug === slug);
 
+/** An edition row as publishing one leaves it, without the approval flow the editions tests cover. */
+async function edition(deckId: string, language: string, status: "published" | "withdrawn") {
+  await db.insert(schema.deckEditions).values({
+    id: newId(),
+    deckId,
+    language,
+    status,
+    revision: 1,
+    publishedAt: new Date(),
+  });
+}
+
+async function reader(name: string, appLanguage: "en" | "uk" | "ru") {
+  const ctx = await learner(db, name, name);
+  await updateSettings(ctx, { appLanguage });
+  return ctx;
+}
+
 describe("exploreCatalog", () => {
   it("lists a published deck with the counts and the card its tray shows", async () => {
     await publish("listed");
@@ -95,6 +114,50 @@ describe("exploreCatalog", () => {
   });
 });
 
+describe("which decks a learner's Explore lists", () => {
+  let english: ServiceContext;
+  let ukrainian: ServiceContext;
+  let russian: ServiceContext;
+  const slugs = async (ctx: ServiceContext) =>
+    new Set((await exploreCatalog(ctx)).decks.map((deck) => deck.slug));
+
+  beforeAll(async () => {
+    await publish("read-in-english");
+    const both = await publish("read-in-uk-and-ru", { meaningLanguage: "uk" });
+    await edition(both.id, "ru", "published");
+    const withdrawn = await publish("read-in-uk-only", { meaningLanguage: "uk" });
+    await edition(withdrawn.id, "en", "withdrawn");
+    english = await reader("en-reader", "en");
+    ukrainian = await reader("uk-reader", "uk");
+    russian = await reader("ru-reader", "ru");
+  }, 60_000);
+
+  it("leaves a deck explained only in Ukrainian or Russian off an English learner's", async () => {
+    const listed = await slugs(english);
+    expect(listed).toContain("read-in-english");
+    expect(listed).not.toContain("read-in-uk-and-ru");
+    // A withdrawn English edition counts for nothing.
+    expect(listed).not.toContain("read-in-uk-only");
+  });
+
+  it("lists a deck in its own meaning language and in each published edition", async () => {
+    expect(await slugs(ukrainian)).toContain("read-in-uk-and-ru");
+    expect(await slugs(ukrainian)).toContain("read-in-uk-only");
+    expect(await slugs(russian)).toContain("read-in-uk-and-ru");
+    expect(await slugs(russian)).not.toContain("read-in-uk-only");
+  });
+
+  it("lists a deck written in English for Ukrainian and Russian learners too", async () => {
+    expect(await slugs(ukrainian)).toContain("read-in-english");
+    expect(await slugs(russian)).toContain("read-in-english");
+  });
+
+  it("still opens a deck left off the learner's Explore by its address", async () => {
+    const { deck } = await exploreDeck(english, "read-in-uk-and-ru");
+    expect(deck.slug).toBe("read-in-uk-and-ru");
+  });
+});
+
 describe("exploreDeck", () => {
   it("returns the public projection and no deck id before the learner adds it", async () => {
     await publish("one");
@@ -132,6 +195,22 @@ describe("more like this", () => {
     expect(deck.tags).toEqual(["travel", "alphabet"]);
     expect(related.map((row) => row.slug)).toEqual(["kana-both", "kana-travel", "kana-plain"]);
     expect(related[0]?.tags).toEqual(["travel", "alphabet"]);
+  });
+
+  it("leaves out a related deck the learner cannot read", async () => {
+    const tagged = { category: "geography" as const, language: "la" };
+    await publish("latin-en", tagged);
+    await publish("latin-en-too", tagged);
+    await publish("latin-uk", { ...tagged, meaningLanguage: "uk" });
+    const english = await reader("related-en", "en");
+    expect((await exploreDeck(english, "latin-en")).related.map((row) => row.slug)).toEqual([
+      "latin-en-too",
+    ]);
+    // The deck's own page still ranks the ones this learner can read.
+    expect((await exploreDeck(english, "latin-uk")).related.map((row) => row.slug)).toEqual([
+      "latin-en",
+      "latin-en-too",
+    ]);
   });
 
   it("is empty for a deck nothing relates to", async () => {

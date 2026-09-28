@@ -1,7 +1,10 @@
 import { expect, test } from "@playwright/test";
 import { e2eSiteUrl } from "./ports.mjs";
 
-/** The site reads `e2e/fixtures/published-decks.sql`, which holds two live decks on two shelves. */
+/**
+ * The site reads `e2e/fixtures/published-decks.sql`, which holds two live English decks on two
+ * shelves and one explained only in Ukrainian.
+ */
 const publicSite = e2eSiteUrl;
 
 test("a visitor finds a published deck on Explore, by shelf and by a word on a card", async ({
@@ -142,4 +145,29 @@ test("a tag is found by its name in the reader's language and in English", async
   await expect(decks.first()).toHaveText("Evening Estonian");
   await search.fill("core vocabulary");
   await expect(decks).toHaveCount(1);
+});
+
+test("each locale's Explore lists only the decks its readers can use", async ({ request }) => {
+  const english = await (await request.get(`${publicSite}/explore`)).text();
+  expect(english).not.toContain("Міста Естонії");
+  // Its shelf has nothing an English reader can use, so neither the shelf nor its chip renders.
+  expect(english).not.toContain('href="#shelf-geography"');
+
+  const ukrainian = await (await request.get(`${publicSite}/uk/explore`)).text();
+  expect(ukrainian).toContain("Міста Естонії");
+  expect(ukrainian).toContain('href="#shelf-geography"');
+  // A deck written in English is on the Ukrainian page too.
+  expect(ukrainian).toContain("Evening Estonian");
+
+  const russian = await (await request.get(`${publicSite}/ru/explore`)).text();
+  expect(russian).not.toContain("Міста Естонії");
+  expect(russian).toContain("Evening Estonian");
+
+  // Left off English Explore, the deck still answers at its English address.
+  expect((await request.get(`${publicSite}/explore/estonian-cities`)).status()).toBe(200);
+
+  const sitemap = await (await request.get(`${publicSite}/sitemap-decks.xml`)).text();
+  expect(sitemap).toContain("<loc>https://lymi.app/uk/explore/estonian-cities</loc>");
+  expect(sitemap).not.toContain("<loc>https://lymi.app/explore/estonian-cities</loc>");
+  expect(sitemap).not.toContain("<loc>https://lymi.app/ru/explore/estonian-cities</loc>");
 });

@@ -400,21 +400,28 @@ export async function loadPublicDeck(
  */
 export const SITEMAP_DECK_LIMIT = 10_000;
 
-/** The slugs whose public page answers 200, for the sitemap. */
+/**
+ * The slugs whose public page answers 200, for the sitemap, with the meaning languages each is
+ * published in so the sitemap lists a deck only in the locales `readableIn` allows.
+ */
 export async function listPublicDeckSlugs(db: CatalogDb, limit = SITEMAP_DECK_LIMIT) {
-  return db
-    .select({ slug: deckPublications.slug, updatedAt: deckPublications.updatedAt })
+  const rows = await db
+    .select({
+      deckId: deckPublications.deckId,
+      slug: deckPublications.slug,
+      updatedAt: deckPublications.updatedAt,
+      meaningLanguage: deckPublications.meaningLanguage,
+    })
     .from(deckPublications)
     .innerJoin(decks, eq(decks.id, deckPublications.deckId))
-    .where(
-      and(
-        eq(deckPublications.status, "published"),
-        isNull(decks.archivedAt),
-        sql`exists (select 1 from ${cards} where ${cards.deckId} = ${decks.id} and ${cards.archivedAt} is null)`,
-      ),
-    )
+    .where(publishedAndAlive())
     .orderBy(asc(deckPublications.slug))
     .limit(limit);
+  const editionsOf = await publishedEditionLanguages(
+    db,
+    rows.map((row) => row.deckId),
+  );
+  return rows.map(({ deckId, ...row }) => ({ ...row, editions: editionsOf.get(deckId) ?? [] }));
 }
 
 /**
@@ -455,10 +462,66 @@ const publishedAndAlive = () =>
     sql`exists (select 1 from ${cards} where ${cards.deckId} = ${decks.id} and ${cards.archivedAt} is null)`,
   );
 
+/** The meaning languages whose readers can also use a deck written in English. */
+const READ_ENGLISH_TOO = ["uk", "ru"];
+
 /**
- * Every published deck, for Explore, in the meaning language asked for where the deck has a
- * published edition in it. Reads no cookie and no learner row, so one cached copy per locale
- * is right for every visitor. ADR 0016.
+ * Whether a reader whose meaning language is `language` can use a deck: it is written in that
+ * language or has a published edition in it, or, for a Ukrainian or Russian reader, it is written in
+ * English. Explore, the sitemap and More like this list a deck only where this holds; its own page
+ * answers in every locale. `docs/design/explore.md` owns the rule.
+ */
+export function readableIn(
+  deck: { meaningLanguage: string; editions: readonly string[] },
+  language: string,
+): boolean {
+  if (sameLanguage(deck.meaningLanguage, language)) return true;
+  if (deck.editions.some((edition) => sameLanguage(edition, language))) return true;
+  return (
+    sameLanguage(deck.meaningLanguage, "en") &&
+    READ_ENGLISH_TOO.some((reader) => sameLanguage(reader, language))
+  );
+}
+
+/** The published decks a reader of `language` can use, or every one when no language is given. */
+async function readableRows<T extends { deckId: string; meaningLanguage: string }>(
+  db: CatalogDb,
+  rows: T[],
+  language: string | undefined,
+): Promise<T[]> {
+  if (!language) return rows;
+  const editionsOf = await publishedEditionLanguages(
+    db,
+    rows.map((row) => row.deckId),
+  );
+  return rows.filter((row) =>
+    readableIn(
+      { meaningLanguage: row.meaningLanguage, editions: editionsOf.get(row.deckId) ?? [] },
+      language,
+    ),
+  );
+}
+
+/** Each deck's published editions, by meaning language. A draft or withdrawn one counts for nothing. */
+async function publishedEditionLanguages(
+  db: CatalogDb,
+  deckIds: string[],
+): Promise<Map<string, string[]>> {
+  const rows = await selectIn(deckIds, (slice) =>
+    db
+      .select({ deckId: deckEditions.deckId, language: deckEditions.language })
+      .from(deckEditions)
+      .where(and(inArray(deckEditions.deckId, slice), eq(deckEditions.status, "published"))),
+  );
+  const languages = new Map<string, string[]>();
+  for (const row of rows) push(languages, row.deckId, row.language);
+  return languages;
+}
+
+/**
+ * Every published deck a reader of `language` can use, for Explore, in that meaning language where
+ * the deck has a published edition in it. Reads no cookie and no learner row, so one cached copy per
+ * locale is right for every visitor. ADR 0016.
  */
 export async function listPublicCatalog(
   db: CatalogDb,
@@ -474,7 +537,7 @@ async function catalogSummaries(
   language: string | undefined,
   limit: number,
 ): Promise<PublicDeckSummary[]> {
-  const rows = await db
+  const selected = await db
     .select({
       deckId: deckPublications.deckId,
       slug: deckPublications.slug,
@@ -492,6 +555,7 @@ async function catalogSummaries(
     .where(where)
     .orderBy(asc(deckPublications.publishedAt), asc(deckPublications.slug))
     .limit(limit);
+  const rows = await readableRows(db, selected, language);
   if (rows.length === 0) return [];
 
   const deckIds = rows.map((row) => row.deckId);
@@ -575,23 +639,27 @@ export async function listRelatedDecks(
 ): Promise<PublicDeckSummary[]> {
   const rows = await db
     .select({
+      deckId: deckPublications.deckId,
       slug: deckPublications.slug,
       tags: deckPublications.tags,
       category: deckPublications.category,
       language: decks.defaultLanguage,
+      meaningLanguage: deckPublications.meaningLanguage,
     })
     .from(deckPublications)
     .innerJoin(decks, eq(decks.id, deckPublications.deckId))
     .where(publishedAndAlive())
     .orderBy(asc(deckPublications.publishedAt), asc(deckPublications.slug))
     .limit(SITEMAP_DECK_LIMIT);
+  // The deck itself need not be readable here: its page answers by direct link in every locale.
   const deck = rows.find((row) => row.slug === slug);
   if (!deck) return [];
-  const ranked = rankRelated(
-    deck,
+  const candidates = await readableRows(
+    db,
     rows.filter((row) => !opts.exclude?.has(row.slug)),
-    opts.limit,
+    opts.language,
   );
+  const ranked = rankRelated(deck, candidates, opts.limit);
   if (ranked.length === 0) return [];
   const summaries = await catalogSummaries(
     db,

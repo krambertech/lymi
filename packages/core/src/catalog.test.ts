@@ -8,6 +8,7 @@ import {
   projectPublicDeck,
   type RelatedCandidate,
   rankRelated,
+  readableIn,
   type SectionRow,
   shelvesOf,
   taughtLanguage,
@@ -342,5 +343,43 @@ describe("taughtLanguage", () => {
     expect(taughtLanguage({ category: null, language: "es" })).toBe("es");
     expect(taughtLanguage({ category: "science", language: "en" })).toBeNull();
     expect(taughtLanguage({ category: "geography", language: null })).toBeNull();
+  });
+});
+
+describe("readableIn", () => {
+  const deck = (meaningLanguage: string, editions: string[] = []) => ({
+    meaningLanguage,
+    editions,
+  });
+
+  it("lists a deck for readers of its own meaning language", () => {
+    expect(readableIn(deck("uk"), "uk")).toBe(true);
+    expect(readableIn(deck("en"), "en")).toBe(true);
+    expect(readableIn(deck("de"), "de")).toBe(true);
+  });
+
+  it("lists a deck for readers of a language it has a published edition in", () => {
+    expect(readableIn(deck("uk", ["ru"]), "ru")).toBe(true);
+    expect(readableIn(deck("uk", ["en"]), "en")).toBe(true);
+  });
+
+  it("keeps a deck explained only in Ukrainian or Russian off English", () => {
+    expect(readableIn(deck("uk", ["ru"]), "en")).toBe(false);
+    expect(readableIn(deck("ru"), "en")).toBe(false);
+  });
+
+  it("lists an English deck for Ukrainian and Russian readers too, and for no other", () => {
+    expect(readableIn(deck("en"), "uk")).toBe(true);
+    expect(readableIn(deck("en"), "ru")).toBe(true);
+    expect(readableIn(deck("en"), "de")).toBe(false);
+  });
+
+  it("gives the English exception only to a deck written in English, not to an English edition", () => {
+    expect(readableIn(deck("de", ["en"]), "uk")).toBe(false);
+  });
+
+  it("matches a regional tag to its language", () => {
+    expect(readableIn(deck("en-GB"), "en")).toBe(true);
+    expect(readableIn(deck("pt", ["uk-UA"]), "uk")).toBe(true);
   });
 });

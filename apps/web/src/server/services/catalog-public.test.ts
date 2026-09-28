@@ -124,6 +124,26 @@ describe("loadPublicDeck", () => {
     expect(slugs).not.toContain("archived-page");
   });
 
+  it("gives the sitemap each deck's meaning language and only its published editions", async () => {
+    const deck = await sectionedDeck("sitemap-editions");
+    for (const [language, status] of [
+      ["uk", "published"],
+      ["ru", "withdrawn"],
+    ] as const) {
+      await db.insert(schema.deckEditions).values({
+        id: newId(),
+        deckId: deck.id,
+        language,
+        status,
+        revision: 1,
+        publishedAt: new Date(),
+      });
+    }
+    const row = (await listPublicDeckSlugs(db)).find((entry) => entry.slug === "sitemap-editions");
+    expect(row).toMatchObject({ meaningLanguage: "en", editions: ["uk"] });
+    expect(JSON.stringify(row)).not.toContain(deck.id);
+  });
+
   it("raises the revision a cache keys on when the page changes", async () => {
     const deck = await sectionedDeck("revised-page");
     await publishDeck(lymi, deck.id, { ...input("revised-page"), summary: "New." }, publishers);

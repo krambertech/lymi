@@ -3,6 +3,7 @@ import {
   AddCardsOut,
   ArchiveCardsOut,
   CardArchiveInput,
+  CardDetailOut,
   CardEditsInput,
   CardHistoryOut,
   CardInput,
@@ -35,7 +36,7 @@ import {
   restoreCard,
   restoreCards,
   searchCards,
-  showCard,
+  showCardWithDiagnosis,
   terseOutcome,
   updateCard,
   updateCards,
@@ -208,10 +209,12 @@ cards.get(
   describe({
     tags: ["Cards"],
     summary: "Get a card",
-    ok: { schema: CardOut, description: "The card" },
+    description:
+      "The card, with `diagnosis`: once the card turns often forgotten, the likely reason you keep forgetting it and a drafted fix, or `unclear`. Nothing on the card changes until you accept a fix.",
+    ok: { schema: CardDetailOut, description: "The card" },
     errors: [404],
   }),
-  async (c) => c.json(await showCard(ctxOf(c), c.req.param("id"))),
+  async (c) => c.json(await showCardWithDiagnosis(ctxOf(c), c.req.param("id"))),
 );
 
 cards.get(

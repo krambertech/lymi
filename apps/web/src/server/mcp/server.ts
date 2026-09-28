@@ -2,6 +2,7 @@ import type { Scope } from "@lymi/core";
 import {
   AppLanguage,
   CardArchiveInput,
+  CardDiagnosisOut,
   CardEditsInput,
   CardImageImportInput,
   CardImagePatch,
@@ -76,7 +77,7 @@ import {
   searchCards,
   setCardsSection,
   setSeriesDecks,
-  showCard,
+  showCardWithDiagnosis,
   streak,
   terseOutcome,
   updateCard,
@@ -220,12 +221,17 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     "get_card",
     {
       title: "Get a card",
-      description: "One card by id, with everything the learner wrote on it.",
+      description:
+        "One card by id, with everything the learner wrote on it and, once it is often forgotten, Lymi's diagnosis of why.",
       inputSchema: z.object({ cardId: z.string().min(1) }),
-      outputSchema: CardOut,
+      outputSchema: CardDetailOut,
       ...readTool,
     },
-    ({ cardId }) => run("get_card", async () => result(cardOut(await showCard(ctx, cardId)))),
+    ({ cardId }) =>
+      run("get_card", async () => {
+        const card = await showCardWithDiagnosis(ctx, cardId);
+        return result({ ...cardOut(card), diagnosis: card.diagnosis });
+      }),
   );
 
   server.registerTool(
@@ -1056,6 +1062,12 @@ const CardOut = z.object({
   createdAt: Timestamp,
 });
 type CardOut = z.infer<typeof CardOut>;
+
+const CardDetailOut = CardOut.extend({
+  diagnosis: CardDiagnosisOut.nullable().describe(
+    "Once the card turns often forgotten: the likely reason the learner keeps forgetting it and a drafted fix, or unclear. Null before then and while Lymi is still working. Nothing on the card changes until the learner accepts a fix in the app.",
+  ),
+});
 
 function statsOut(stats: CardReviewStats): CardReviewStatsOut {
   const record = (r: ReviewRecord) => ({

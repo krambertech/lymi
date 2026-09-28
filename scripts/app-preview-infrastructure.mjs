@@ -20,8 +20,13 @@ export function previewNames(value) {
     databaseName: `${workerName}-db`,
     namespaceTitle: `${workerName}-sessions`,
     bucketName: `${workerName}-audio`,
-    // One per production workflow, in wrangler.jsonc's order: lymi-import, then lymi-export.
-    workflowNames: [`${workerName}-import`, `${workerName}-export`],
+    // One per production workflow, in wrangler.jsonc's order.
+    workflowNames: [
+      `${workerName}-import`,
+      `${workerName}-export`,
+      `${workerName}-enrich`,
+      `${workerName}-diagnose`,
+    ],
     alias: "preview",
   };
 }

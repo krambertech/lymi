@@ -22,6 +22,7 @@ import { audit } from "./audit";
 import { presentCards } from "./card-view";
 import { notFound, type ServiceContext } from "./context";
 import { dateFormatter } from "./days";
+import type { DiagnosisRunner } from "./diagnosis";
 import { cardsById, drawInputs } from "./draw";
 import { memberOf } from "./members";
 import {
@@ -49,6 +50,7 @@ export async function reviewQueue(
     sectionId?: string | undefined;
     limit?: number | undefined;
     round?: Round | undefined;
+    diagnose?: DiagnosisRunner | null | undefined;
   } = {},
 ) {
   const limit = Math.min(opts.limit ?? 50, 200);
@@ -64,6 +66,7 @@ export async function reviewQueue(
     now,
     zone,
     slipping: round === "slipping",
+    diagnose: opts.diagnose,
   });
   const order = round
     ? roundOrder(cards, log, day, { deckId, round, slipping })
@@ -101,9 +104,16 @@ export async function reviewQueue(
 }
 
 /** How many cards each Today round holds right now, across every deck. */
-export async function reviewRounds(ctx: ServiceContext, opts: { zone?: string | undefined } = {}) {
+export async function reviewRounds(
+  ctx: ServiceContext,
+  opts: { zone?: string | undefined; diagnose?: DiagnosisRunner | null | undefined } = {},
+) {
   const zone = await reviewZone(ctx, opts.zone);
-  const { cards, log, day, slipping } = await drawInputs(ctx, { zone, slipping: true });
+  const { cards, log, day, slipping } = await drawInputs(ctx, {
+    zone,
+    slipping: true,
+    diagnose: opts.diagnose,
+  });
   const count = (round: Round) => roundOrder(cards, log, day, { round, slipping }).length;
   return { forgotten: count("forgotten"), new: count("new"), slipping: count("slipping") };
 }
@@ -121,6 +131,7 @@ export async function reviewDraw(
     sectionId?: string | undefined;
     limit?: number | undefined;
     zone?: string | undefined;
+    diagnose?: DiagnosisRunner | null | undefined;
   },
 ) {
   const limit = Math.min(opts.limit ?? 100, 500);
@@ -137,6 +148,7 @@ export async function reviewDraw(
     sectionId: opts.sectionId,
     now,
     zone,
+    diagnose: opts.diagnose,
   });
 
   const include = new Set(drawOrder(cards, log, day, scope, limit).map((d) => d.cardId));

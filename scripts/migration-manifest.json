@@ -139,6 +139,10 @@
     {
       "name": "0034_sleepy_sentinel.sql",
       "sha256": "34845ad4b7c68ae1c6f21d71a6886d251f51c2c7cfcc68f082dd19293c95bd9d"
+    },
+    {
+      "name": "0035_wonderful_spyke.sql",
+      "sha256": "75b3dbcf759fba890281e3c148a687026bf561384da80b807fb5aa2b20244988"
     }
   ]
 }

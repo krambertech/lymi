@@ -9,12 +9,13 @@ import {
   UndoInput,
   UndoOut,
 } from "@lymi/core";
-import { Hono } from "hono";
+import { type Context, Hono } from "hono";
 import { z } from "zod";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import {
   checkToday,
+  diagnosisRunner,
   gradeCard,
   reviewDraw,
   reviewHistory,
@@ -24,6 +25,9 @@ import {
 } from "../services";
 
 export const review = new Hono<AppEnv>();
+
+const diagnosisRunnerOf = (c: Context<AppEnv>) =>
+  diagnosisRunner(c.env, (work) => c.executionCtx.waitUntil(work));
 
 const HistoryQuery = z.object({
   days: z.coerce.number().int().min(1).max(90).optional().meta({ description: "Default 7" }),
@@ -74,6 +78,7 @@ review.get(
         sectionId: section,
         limit,
         round,
+        diagnose: diagnosisRunnerOf(c),
       }),
     );
   },
@@ -98,7 +103,13 @@ review.get(
     errors: [400],
   }),
   query(RoundsQuery, "query"),
-  async (c) => c.json(await reviewRounds(ctxOf(c), { zone: c.req.valid("query").tz })),
+  async (c) =>
+    c.json(
+      await reviewRounds(ctxOf(c), {
+        zone: c.req.valid("query").tz,
+        diagnose: diagnosisRunnerOf(c),
+      }),
+    ),
 );
 
 const DrawQuery = z.object({
@@ -145,6 +156,7 @@ review.get(
         sectionId: section,
         limit,
         zone: tz,
+        diagnose: diagnosisRunnerOf(c),
       }),
     );
   },

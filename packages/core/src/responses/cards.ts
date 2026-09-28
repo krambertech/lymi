@@ -1,6 +1,14 @@
 import { z } from "zod";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS } from "../slipping";
-import { Actor, Direction, Directions, EnrichmentStatus, FieldSource, ReviewMode } from "../types";
+import {
+  Actor,
+  Diagnosis,
+  Direction,
+  Directions,
+  EnrichmentStatus,
+  FieldSource,
+  ReviewMode,
+} from "../types";
 import { Timestamp } from "./common";
 
 export const CardImageOut = z
@@ -76,6 +84,29 @@ export const CardOut = z
   })
   .meta({ id: "Card" });
 export type CardOut = z.infer<typeof CardOut>;
+
+/** Why the reader keeps forgetting the card as it reads now. Nothing changes until they accept. */
+export const CardDiagnosisOut = z
+  .object({
+    confidence: z.number().min(0).max(1).meta({
+      description:
+        "How sure the AI was of the cause it named. Below the threshold the cause is unclear.",
+    }),
+    model: z.string().meta({ description: "The model that diagnosed it" }),
+    diagnosedAt: Timestamp,
+  })
+  .and(Diagnosis)
+  .meta({ id: "CardDiagnosis" });
+export type CardDiagnosisOut = z.infer<typeof CardDiagnosisOut>;
+
+/** One card as a single read returns it, with the reader's own diagnosis of it. */
+export const CardDetailOut = CardOut.extend({
+  diagnosis: CardDiagnosisOut.nullable().meta({
+    description:
+      "Why you keep forgetting this card, once it has turned often forgotten. Null before then, while the AI is still working, and after an edit until a new one lands.",
+  }),
+}).meta({ id: "CardDetail" });
+export type CardDetailOut = z.infer<typeof CardDetailOut>;
 
 const ReviewRecord = {
   reviewCount: z.number().int().meta({ description: "Grades counted" }),

@@ -8,6 +8,7 @@ export * from "./cards";
 export * from "./connected-apps";
 export * from "./context";
 export * from "./decks";
+export * from "./diagnosis";
 export * from "./draw";
 export * from "./editions";
 export * from "./email";

@@ -27,19 +27,20 @@ export function useCardFix() {
   });
 
   const title = (cause: FixInput["cause"], result: FixResult) => {
-    const skipped = result.skipped[0];
-    const term = skipped ? shortQuote(skipped.term) : "";
-    const deckName = skipped?.deckName ?? "";
-    const added = result.added.length;
     if (cause === "several_answers") return t`Question changed`;
-    if (cause === "two_things") {
-      return skipped
-        ? t`Changed the card. “${term}” is already in ${deckName}.`
-        : t`Split into 2 cards`;
+    const added = result.added.length;
+    if (cause === "confused_pair" && added === 0) return t`Both cards are already in your decks.`;
+    const skipped = result.skipped[0];
+    if (!skipped) {
+      return cause === "two_things"
+        ? t`Split into 2 cards`
+        : t`${plural(added, { one: "Added # card", other: "Added # cards" })}`;
     }
-    if (added === 0) return t`Both cards are already in your decks.`;
-    if (skipped) return t`Added 1 card. “${term}” is already in ${deckName}.`;
-    return t`${plural(added, { one: "Added # card", other: "Added # cards" })}`;
+    const term = shortQuote(skipped.term);
+    const deckName = skipped.deckName;
+    return cause === "two_things"
+      ? t`Changed the card. “${term}” is already in ${deckName}.`
+      : t`Added 1 card. “${term}” is already in ${deckName}.`;
   };
 
   return useMutation({

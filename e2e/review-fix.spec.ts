@@ -1,5 +1,5 @@
 import { startAsTestLearner } from "./auth";
-import { expect, type Page, test } from "./test";
+import { expect, type Locator, type Page, test } from "./test";
 
 // A journey because it adds a drawer to review: the offer, the drawer on touch and WebKit, the
 // write, and Undo across the Worker and D1. No public route writes a diagnosis without a model,
@@ -11,6 +11,12 @@ async function seedPair(page: Page) {
   });
   expect(seeded.ok()).toBeTruthy();
   return ((await seeded.json()) as { deckId: string }).deckId;
+}
+
+/** A parked offer fades and keeps its room until the grade, so it is transparent and inert, not gone. */
+async function expectParked(offer: Locator) {
+  await expect(offer).toHaveAttribute("inert", "");
+  await expect(offer).toHaveCSS("opacity", "0");
 }
 
 const activeTerms = async (page: Page, deckId: string) => {
@@ -50,7 +56,7 @@ test("a learner accepts a drafted fix after the reveal and can undo it", async (
     await expect
       .poll(() => activeTerms(page, deckId))
       .toEqual(["Ma alustan tööd kell üheksa.", "Töö algab kell üheksa.", "algama", "alustama"]);
-    await expect(offer).toBeHidden();
+    await expectParked(offer);
   });
 
   await test.step("Undo archives exactly the cards the fix added", async () => {
@@ -86,16 +92,40 @@ test("grading without opening the offer parks it", async ({ page }, testInfo) =>
     .toBe(false);
 });
 
-test("Not now parks the offer, and it leaves the card at once", async ({ page }, testInfo) => {
+test("Not now parks the offer: it leaves the card, and the answer stays put", async ({
+  page,
+}, testInfo) => {
   await startAsTestLearner(page, testInfo, "review-fix", "/today");
   const deckId = await seedPair(page);
   await page.goto(`/review?deck=${deckId}`);
   await page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
   const offer = page.getByRole("button", { name: /Often mixed up with algama/ });
+  const answer = page.getByLabel(/ card for /).getByText(/^alustama/);
+  await expect(offer).not.toHaveAttribute("inert");
+  const before = await answer.boundingBox();
   await offer.click();
   const sheet = page.getByRole("dialog", { name: "alustama and algama" });
   await sheet.getByRole("button", { name: "Not now", exact: true }).click();
   await expect(sheet).toBeHidden();
-  await expect(offer).toBeHidden();
-  await expect(page.getByRole("button", { name: /^Good/ })).toBeVisible();
+  await expectParked(offer);
+  // The offer that opened the sheet is inert now, so focus lands on the grades.
+  await expect(page.getByRole("group", { name: "Choose a recall grade" })).toBeFocused();
+  expect((await answer.boundingBox())?.y).toBe(before?.y);
+});
+
+test("a tap where the offer will be, before it has arrived, opens nothing", async ({
+  page,
+}, testInfo) => {
+  await startAsTestLearner(page, testInfo, "review-fix", "/today");
+  const deckId = await seedPair(page);
+  await page.goto(`/review?deck=${deckId}`);
+  await page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
+  // Still transparent and inert, but its room is already there to be tapped.
+  const offer = page.locator("[aria-haspopup=dialog]");
+  await expect(offer).toHaveAttribute("inert", "");
+  const box = await offer.boundingBox();
+  if (!box) throw new Error("the offer has no room");
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+  await expect(offer).not.toHaveAttribute("inert");
+  await expect(page.getByRole("dialog", { name: "alustama and algama" })).toBeHidden();
 });

@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRef, useState } from "react";
+import { type ComponentProps, useRef, useState } from "react";
 import type { Card, DeckSummary } from "../lib/api";
 import { errorMessage } from "../lib/api";
 import { cardPatch, hasChanges, refreshAfterCardWrite, savePicture } from "../lib/card-writes";
@@ -27,6 +27,8 @@ interface Props {
   openPicture?: boolean | undefined;
   /** Opens with the caret in the term or the meaning. */
   focus?: "term" | "meaning" | undefined;
+  /** Where focus goes on closing, when what opened the sheet is gone. */
+  finalFocus?: ComponentProps<typeof DialogContent>["finalFocus"];
   /** After a save, with the deck the card is in now. */
   onSaved?: ((card: Card, movedFrom: string | null) => void) | undefined;
 }
@@ -39,6 +41,7 @@ export function EditCardSheet({
   onReopen,
   openPicture,
   focus,
+  finalFocus,
   onSaved,
 }: Props) {
   const { t } = useLingui();
@@ -107,6 +110,7 @@ export function EditCardSheet({
     <Dialog open={!!card} onOpenChange={(open) => !open && close(true)}>
       <DialogContent
         size="lg"
+        finalFocus={finalFocus}
         className="max-h-[92dvh] [scrollbar-color:var(--edge-2)_transparent] [scrollbar-width:thin]"
       >
         <DialogTitle>{t`Edit card`}</DialogTitle>

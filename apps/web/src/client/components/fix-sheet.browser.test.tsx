@@ -83,10 +83,9 @@ test("a confused pair shows both cards and adds the two drafted, as the learner 
 
 test("two things split into numbered cards, and card 1 keeps the history", async () => {
   const accept = accepted();
-  const offer: ReviewOffer = {
+  const offer: Extract<ReviewOffer, { cause: "two_things" }> = {
     diagnosisId: "d-split",
     cause: "two_things",
-    other: null,
     draft: {
       cards: [
         { term: "Kus sa elad?", meaning: "Where do you live?" },
@@ -110,7 +109,6 @@ test("more than one right answer names the other and sends the rewritten questio
   const offer: ReviewOffer = {
     diagnosisId: "d-cue",
     cause: "several_answers",
-    other: null,
     draft: { field: "meaning", text: "tall (of a person)", otherAnswer: "kõrge" },
   };
   await render(<Harness item={itemWith(offer, { term: "pikk", meaning: "tall" })} />);
@@ -123,6 +121,8 @@ test("more than one right answer names the other and sends the rewritten questio
   await userEvent.clear(cue);
   await dialog.getByRole("button", { name: "Change the question" }).click();
   await expect.element(dialog.getByText("Type the meaning.")).toBeVisible();
+  await expect.element(cue).toHaveAttribute("aria-invalid", "true");
+  await expect.element(cue).toHaveFocus();
   expect(accept).not.toHaveBeenCalled();
 
   await userEvent.type(cue, "tall (a person) ");
@@ -140,7 +140,6 @@ test("no clear reason offers ways to change the card, each opening the editor", 
   const offer: ReviewOffer = {
     diagnosisId: "d-unclear",
     cause: "unclear",
-    other: null,
     draft: null,
   };
   await render(<Harness item={itemWith(offer)} onEdit={onEdit} />);
@@ -158,10 +157,11 @@ test("no clear reason offers ways to change the card, each opening the editor", 
   expect(accept).not.toHaveBeenCalled();
 });
 
-test("a fix that no longer fits says so and keeps the sheet open", async () => {
+test("a fix that no longer fits says so, and leads to the card instead", async () => {
   const { ApiError } = await import("../lib/api");
   vi.spyOn(api, "acceptFix").mockRejectedValue(new ApiError(409, "changed"));
-  await render(<Harness item={itemWith(pair)} />);
+  const onEdit = vi.fn();
+  await render(<Harness item={itemWith(pair)} onEdit={onEdit} />);
   const dialog = page.getByRole("dialog");
   await dialog.getByRole("button", { name: "Add 2 cards" }).click();
   await expect
@@ -169,4 +169,22 @@ test("a fix that no longer fits says so and keeps the sheet open", async () => {
       dialog.getByText("This card changed since Lymi looked at it, so the fix no longer fits."),
     )
     .toBeVisible();
+  await expect.element(dialog.getByRole("button", { name: "Add 2 cards" })).not.toBeInTheDocument();
+  await dialog.getByRole("button", { name: "Edit the card", exact: true }).click();
+  expect(onEdit).toHaveBeenCalledWith(null);
+});
+
+test("an emptied drafted card is marked and focused, and nothing is sent", async () => {
+  const accept = accepted();
+  await render(<Harness item={itemWith(pair)} />);
+  const dialog = page.getByRole("dialog");
+  await dialog.getByRole("button", { name: "Edit “Ma alustan tööd.”" }).click();
+  const term = dialog.getByRole("textbox", { name: "Term" });
+  await expect.element(term).toHaveFocus();
+  await userEvent.clear(term);
+  await dialog.getByRole("button", { name: "Add 2 cards" }).click();
+  await expect.element(dialog.getByText("Give each card a term and a meaning.")).toBeVisible();
+  await expect.element(term).toHaveAttribute("aria-invalid", "true");
+  await expect.element(term).toHaveFocus();
+  expect(accept).not.toHaveBeenCalled();
 });

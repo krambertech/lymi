@@ -656,6 +656,8 @@ const DraftCard = z.object({
   term: z.string().trim().min(1).max(CARD_LIMITS.term),
   meaning: z.string().trim().min(1).max(CARD_LIMITS.meaning),
 });
+/** One card a fix drafts, as the learner accepts it. */
+export type DraftCard = z.infer<typeof DraftCard>;
 
 /** A likely cause and the fix the AI drafted for it. Nothing on a card changes until the learner accepts. */
 export const Diagnosis = z

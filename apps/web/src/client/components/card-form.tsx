@@ -212,7 +212,8 @@ export function CardForm(props: CardFormProps) {
   const meaningRef = useRef<HTMLTextAreaElement>(null);
   const pictureRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (!focus) return;
+    // A drawer settles before any field takes focus, overlays.md; a desktop dialog has no keyboard to raise.
+    if (!focus || chips) return;
     // After the dialog has placed its own initial focus, so this one wins.
     const timer = setTimeout(() => {
       const field = focus === "term" ? termRef.current : meaningRef.current;
@@ -220,7 +221,7 @@ export function CardForm(props: CardFormProps) {
       field?.setSelectionRange(field.value.length, field.value.length);
     }, 80);
     return () => clearTimeout(timer);
-  }, [focus]);
+  }, [focus, chips]);
   useEffect(() => {
     if (!openPicture || chips) return;
     // After the dialog has placed its own initial focus, so this one wins.

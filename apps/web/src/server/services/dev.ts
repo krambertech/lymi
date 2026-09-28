@@ -734,42 +734,45 @@ const FIXES_DECK = "Tricky Estonian";
 
 export type FixCause = (typeof OFFERED_CAUSES)[number];
 
-/** Each cause's card, and the diagnosis a model could plausibly have written for it. */
+/** The confused pair's card; its draft names the other card, which exists only once seeded. */
+const PAIR_CARD: PersonaCard = { term: "alustama", meaning: "to begin, to start (something)" };
+const pairDraft = (otherCardId: string): DiagnosisDraft => ({
+  otherCardId,
+  cards: [
+    { term: "Ma alustan tööd kell üheksa.", meaning: "I start work at nine. (I start it)" },
+    { term: "Töö algab kell üheksa.", meaning: "Work starts at nine. (it starts by itself)" },
+  ],
+});
+
+/** Each other cause's card, and the diagnosis a model could plausibly have written for it. */
 const FIX_CARDS: Record<
-  FixCause,
-  { card: PersonaCard; draft: (otherCardId: string) => DiagnosisDraft | null }
+  Exclude<FixCause, "confused_pair">,
+  { card: PersonaCard; draft: DiagnosisDraft | null }
 > = {
-  confused_pair: {
-    card: { term: "alustama", meaning: "to begin, to start (something)" },
-    draft: (otherCardId) => ({
-      otherCardId,
-      cards: [
-        { term: "Ma alustan tööd kell üheksa.", meaning: "I start work at nine. (I start it)" },
-        { term: "Töö algab kell üheksa.", meaning: "Work starts at nine. (it starts by itself)" },
-      ],
-    }),
-  },
   two_things: {
     card: {
       term: "Kus sa elad? Ma elan Tallinnas.",
       meaning: "Where do you live? I live in Tallinn.",
     },
-    draft: () => ({
+    draft: {
       cards: [
         { term: "Kus sa elad?", meaning: "Where do you live?" },
         { term: "Ma elan Tallinnas.", meaning: "I live in Tallinn." },
       ],
-    }),
+    },
   },
   several_answers: {
     card: { term: "pikk", meaning: "tall" },
-    draft: () => ({ field: "meaning", text: "tall (of a person)", otherAnswer: "kõrge" }),
+    draft: { field: "meaning", text: "tall (of a person)", otherAnswer: "kõrge" },
   },
   unclear: {
     card: { term: "vaatama", meaning: "to look, to watch" },
-    draft: () => null,
+    draft: null,
   },
 };
+
+const fixCard = (cause: FixCause) =>
+  cause === "confused_pair" ? PAIR_CARD : FIX_CARDS[cause].card;
 
 /** The card a confused pair names, which is not often forgotten itself. */
 const PAIR_OTHER: PersonaCard = { term: "algama", meaning: "to begin, to start (by itself)" };
@@ -777,7 +780,7 @@ const PAIR_OTHER: PersonaCard = { term: "algama", meaning: "to begin, to start (
 /**
  * One often-forgotten card per cause review offers a fix for, each with a finished diagnosis no
  * model wrote, so the offer can be seen without a vendor key. Asked meaning first, forgotten as
- * the first grade on each of the last three days, and due now. A second run replaces the first.
+ * the first grade on just enough past days to slip, and due now. A second run replaces the first.
  */
 export async function seedFixes(
   ctx: ServiceContext,
@@ -785,7 +788,7 @@ export async function seedFixes(
   now = new Date(),
 ): Promise<{ deckId: string; cards: { cause: FixCause; cardId: string }[] }> {
   const { db, userId } = ctx;
-  const terms = [PAIR_OTHER, ...Object.values(FIX_CARDS).map((c) => c.card)].map((c) => c.term);
+  const terms = [PAIR_OTHER, ...OFFERED_CAUSES.map(fixCard)].map((c) => c.term);
   await db.batch([
     db
       .delete(schema.cards)
@@ -802,7 +805,7 @@ export async function seedFixes(
   const wanted = [...new Set(causes)];
   const inputs = [
     ...(wanted.includes("confused_pair") ? [PAIR_OTHER] : []),
-    ...wanted.map((cause) => FIX_CARDS[cause].card),
+    ...wanted.map(fixCard),
   ].map((card) => ({
     deckId: deck.id,
     term: card.term,
@@ -816,7 +819,7 @@ export async function seedFixes(
   );
   const other = idOf.get(PAIR_OTHER.term);
   const seeded = wanted.flatMap((cause) => {
-    const cardId = idOf.get(FIX_CARDS[cause].card.term);
+    const cardId = idOf.get(fixCard(cause).term);
     return cardId ? [{ cause, cardId }] : [];
   });
 
@@ -835,8 +838,8 @@ export async function seedFixes(
   const today = dayWindow(now, await reviewZone(ctx)).start.getTime();
   const statements: unknown[] = [];
   for (const state of states) {
-    let fsrs = emptyState(new Date(today - 4 * DAY));
-    for (const daysAgo of [3, 2, 1]) {
+    let fsrs = emptyState(new Date(today - (SLIPPING_FORGOTTEN_DAYS + 1) * DAY));
+    for (let daysAgo = SLIPPING_FORGOTTEN_DAYS; daysAgo >= 1; daysAgo--) {
       const at = new Date(today - daysAgo * DAY + 9 * 3_600_000);
       const result = schedule(fsrs, 1, at);
       statements.push(
@@ -882,6 +885,9 @@ export async function seedFixes(
     );
   }
   for (const { cause, cardId } of seeded) {
+    const pair = other ? pairDraft(other) : undefined;
+    const draft = cause === "confused_pair" ? pair : FIX_CARDS[cause].draft;
+    if (draft === undefined) continue;
     statements.push(
       db.insert(schema.cardDiagnoses).values({
         id: crypto.randomUUID(),
@@ -892,7 +898,7 @@ export async function seedFixes(
         cause,
         proposedCause: cause,
         confidence: cause === "unclear" ? 0.3 : 0.9,
-        draft: FIX_CARDS[cause].draft(other ?? ""),
+        draft,
         model: "dev",
       }),
     );

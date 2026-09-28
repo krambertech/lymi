@@ -15,13 +15,18 @@ import { schema } from "../db";
 import { auditStatement } from "./audit";
 import { runBatch, type Statement, selectIn } from "./batch";
 import { type CardView, editionText, inEdition, presentCard } from "./card-view";
-import { addCards, archiveCards, getCard, type ServerCardPatch, updateCard } from "./cards";
+import {
+  type AddCardOutcome,
+  addCards,
+  archiveCards,
+  getCard,
+  type ServerCardPatch,
+  updateCard,
+} from "./cards";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { dateFormatter } from "./days";
 import type { EnrichmentQueue } from "./enrichment";
 import { memberOf } from "./members";
-
-// The fix a diagnosis drafts, as review offers it and the learner accepts or undoes it. ADR 0025.
 
 const offered = new Set<string>(OFFERED_CAUSES);
 
@@ -82,11 +87,13 @@ export async function reviewOffers(
   );
   for (const [cardId, { row, diagnosis }] of current) {
     if (lastOffered.has(cardId) && !again.has(cardId)) continue;
-    const other =
-      diagnosis.cause === "confused_pair" ? others.get(diagnosis.draft.otherCardId) : null;
+    if (diagnosis.cause !== "confused_pair") {
+      offers.set(cardId, { diagnosisId: row.id, ...diagnosis });
+      continue;
+    }
+    const other = others.get(diagnosis.draft.otherCardId);
     // The pair is named by the other card, so one archived since leaves nothing to show.
-    if (other === undefined) continue;
-    offers.set(cardId, { diagnosisId: row.id, other, ...diagnosis });
+    if (other) offers.set(cardId, { diagnosisId: row.id, ...diagnosis, other });
   }
   return offers;
 }
@@ -201,6 +208,9 @@ export async function markOffered(ctx: ServiceContext, id: string, now = new Dat
 const sourceOf = (drafted: string, accepted: string): FieldSource =>
   drafted === accepted ? "ai" : "manual";
 
+/** The card writes one fix made, and what Undo needs to reverse them. */
+type Written = { applied: AppliedFix; outcomes: AddCardOutcome[] };
+
 /**
  * Apply a diagnosis's fix to the card it is about, through the ordinary card services, so the
  * duplicate rule, the revision and enrichment behave as for any add or edit. Only the card's
@@ -237,30 +247,31 @@ export async function acceptFix(
     .returning({ id: schema.cardDiagnoses.id });
   if (!claimed) throw new ServiceError("conflict", "This fix is already on the card");
 
-  let written: Awaited<ReturnType<typeof applyFix>>;
+  let written: Written | null = null;
   try {
     written = await applyFix(ctx, card, finding.data, input, enrichment);
+    await db.batch([
+      db
+        .update(schema.cardDiagnoses)
+        .set({ offeredAt: row.offeredAt ?? now, fix: written.applied, updatedAt: now })
+        .where(mine),
+      auditStatement(ctx, {
+        entity: "diagnosis",
+        action: "accept",
+        id,
+        details: { cardId: card.id, cause: input.cause, ...written.applied },
+      }),
+    ]);
   } catch (error) {
+    // The fix and its record land together or not at all.
+    if (written) await reverse(ctx, written.applied);
     await db
       .update(schema.cardDiagnoses)
-      .set({ acceptedAt: null, updatedAt: new Date() })
-      .where(and(mine, isNull(schema.cardDiagnoses.fix)));
+      .set({ acceptedAt: null, fix: null, updatedAt: new Date() })
+      .where(mine);
     throw error;
   }
   const { applied, outcomes } = written;
-
-  await db.batch([
-    db
-      .update(schema.cardDiagnoses)
-      .set({ offeredAt: row.offeredAt ?? now, fix: applied, updatedAt: now })
-      .where(mine),
-    auditStatement(ctx, {
-      entity: "diagnosis",
-      action: "accept",
-      id,
-      details: { cardId: card.id, cause: input.cause, ...applied },
-    }),
-  ]);
   return {
     added: outcomes.flatMap((o) => (o.status === "added" ? [o.card] : [])),
     edited: applied.edited ? await presentCard(db, await getCard(ctx, card.id), userId) : null,
@@ -270,25 +281,34 @@ export async function acceptFix(
   };
 }
 
-/** The card writes one fix makes, and what Undo needs to reverse them. */
 async function applyFix(
   ctx: ServiceContext,
   card: Card,
   diagnosis: Diagnosis,
   input: FixInput,
   enrichment: EnrichmentQueue | null,
-): Promise<{ applied: AppliedFix; outcomes: Awaited<ReturnType<typeof addCards>> }> {
+): Promise<Written> {
   const place = { deckId: card.deckId, sectionId: card.sectionId, language: card.language };
 
   if (diagnosis.cause === "confused_pair" && input.cause === "confused_pair") {
+    const [first, second] = input.cards;
+    const [draftFirst, draftSecond] = diagnosis.draft.cards;
     const outcomes = await addCards(
       ctx,
-      input.cards.map((accepted, i) => ({
-        ...place,
-        term: accepted.term,
-        meaning: accepted.meaning,
-        meaningSource: sourceOf(diagnosis.draft.cards[i]?.meaning ?? "", accepted.meaning),
-      })),
+      [
+        {
+          ...place,
+          term: first.term,
+          meaning: first.meaning,
+          meaningSource: sourceOf(draftFirst.meaning, first.meaning),
+        },
+        {
+          ...place,
+          term: second.term,
+          meaning: second.meaning,
+          meaningSource: sourceOf(draftSecond.meaning, second.meaning),
+        },
+      ],
       enrichment,
     );
     return { applied: { added: addedIds(outcomes), edited: null }, outcomes };
@@ -352,7 +372,7 @@ async function applyFix(
   if (diagnosis.cause === "several_answers" && input.cause === "several_answers") {
     const { field } = diagnosis.draft;
     if (field === "term" && input.text.length > CARD_LIMITS.term) {
-      throw new ServiceError("invalid", "Keep the term under 500 characters.");
+      throw new ServiceError("invalid", `Keep the term under ${CARD_LIMITS.term} characters.`);
     }
     const patch: ServerCardPatch =
       field === "term"
@@ -384,25 +404,30 @@ export type FixResult = {
   skipped: { term: string; existingId: string; deckName: string }[];
 };
 
-const addedIds = (outcomes: Awaited<ReturnType<typeof addCards>>) =>
+const addedIds = (outcomes: AddCardOutcome[]) =>
   outcomes.flatMap((o) => (o.status === "added" ? [o.id] : []));
+
+/** Archive the cards a fix added and write back the text it replaced. */
+async function reverse(ctx: ServiceContext, applied: AppliedFix) {
+  if (applied.added.length) await archiveCards(ctx, applied.added);
+  if (applied.edited) await updateCard(ctx, applied.edited.cardId, applied.edited.before);
+}
 
 /**
  * Reverse an accepted fix exactly: archive the cards it added and put back what it changed.
  * The diagnosis stays offered, so it waits for the learner rather than coming back in review.
- * Undoing twice changes nothing.
+ * Undoing twice changes nothing; undoing a fix still being applied is a conflict.
  */
 export async function undoFix(ctx: ServiceContext, id: string, now = new Date()) {
   const { db, userId } = ctx;
   const row = await ownDiagnosis(ctx, id);
+  if (!row.acceptedAt) return;
   const applied = row.fix;
-  if (!row.acceptedAt || !applied) return;
-  if (applied.added.length) await archiveCards(ctx, applied.added);
+  if (!applied) throw new ServiceError("conflict", "This fix is still being applied");
+  await reverse(ctx, applied);
   let carried: Statement | null = null;
   if (applied.edited) {
-    const { cardId, before } = applied.edited;
-    await updateCard(ctx, cardId, before);
-    const card = await getCard(ctx, cardId);
+    const card = await getCard(ctx, applied.edited.cardId);
     // The words are back to the ones diagnosed, so the diagnosis carries to the new revision.
     if (card.revision !== row.revision) {
       carried = db

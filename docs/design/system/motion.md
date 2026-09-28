@@ -73,7 +73,7 @@ Reveal is the one choreographed moment of a card, built with Motion.
 
 A grade plays it backwards: the strip closes over 300 ms, its grades fading in the first 120, and the card grows back into the room while the next card's words fade in over 160 ms. The card is not replaced, because its place on the screen is the same; only what it asks changes. The next card never waits for the server: the grade is kept on the device and sent behind it. The session count rolls up as each card lands.
 
-A drafted fix at the card's foot arrives half a second after the answer settles, with a card's 6 px rise over 200 ms and its icon scaling in from 0.85; under reduced motion it only fades.
+A drafted fix at the card's foot arrives half a second after the answer settles, with a card's 6 px rise over 200 ms and its icon scaling in from 0.85; under reduced motion it only fades, and after a reveal from the keyboard it appears without moving. It cannot be pressed until it has arrived. Left for later, it fades out over 140 ms, at once under reduced motion, and keeps its room until the grade so the answer never moves.
 
 A hint at the card's foot, a pointing hand that taps three times and rests with a line under it saying how to reveal, appears in two cases only: after a second on each of a learner's first three cards, and after a minute on any card with no press, key or scroll.
 

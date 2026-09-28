@@ -15,12 +15,18 @@ import { AnimatePresence, motion, useReducedMotionConfig } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Button } from "../components/button";
 import { EditCardSheet } from "../components/edit-card-sheet";
-import { FixOffer } from "../components/fix-offer";
 import { type EditFocus, FixSheet } from "../components/fix-sheet";
 import { GRADES } from "../components/grade";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
-import { api, type Card, deviceTimezone, type QueueItem, scopeKey } from "../lib/api";
+import {
+  api,
+  type Card,
+  deviceTimezone,
+  type QueueItem,
+  type ReviewOffer,
+  scopeKey,
+} from "../lib/api";
 import { usePrefetchPictures } from "../lib/card-images";
 import { useDocumentTitle } from "../lib/document-title";
 import { lanternFor } from "../lib/flame";
@@ -72,6 +78,18 @@ export const Route = createFileRoute("/review")({
   },
   component: ReviewPage,
 });
+
+const subscribeOnline = (notify: () => void) => onlineManager.subscribe(notify);
+const isOnline = () => onlineManager.isOnline();
+/** The grade strip, where focus goes when a sheet over the card closes. */
+const GRADES_ID = "review-grades";
+const gradesFocus = () => {
+  // The group itself, not its first grade, so Space and 1 to 4 still reach the review's shortcuts.
+  const grades = document.getElementById(GRADES_ID);
+  if (!grades) return true;
+  requestAnimationFrame(() => grades.focus({ preventScroll: true }));
+  return false;
+};
 
 /** Pictures of this many cards after the current one are fetched ahead. */
 const LOOKAHEAD = 3;
@@ -167,16 +185,21 @@ function Review() {
   // Where focus goes when the button holding it unmounts: the grades after a reveal, the next card after a grade.
   const [focusGrades, setFocusGrades] = useState(false);
   const [focusReveal, setFocusReveal] = useState(false);
-  // Each offer shown, by the card showing it, so a card that returns later does not bring it back.
-  // A parked offer maps to no card, so it leaves the one showing it too.
-  const [offered, setOffered] = useState<ReadonlyMap<string, string>>(() => new Map());
+  // Each offer shown, so a card that returns later in the review does not bring it back.
+  const [offered, setOffered] = useState<ReadonlySet<string>>(() => new Set());
+  // The offer of the card on screen, decided as it arrives and held until its grade.
+  const [cardOffer, setCardOffer] = useState<{
+    key: string;
+    offer: ReviewOffer | null;
+    parked: boolean;
+  }>({
+    key: "",
+    offer: null,
+    parked: false,
+  });
   const [fixing, setFixing] = useState(false);
   const [editing, setEditing] = useState<{ card: Card; focus: EditFocus } | null>(null);
-  const online = useSyncExternalStore(
-    onlineManager.subscribe.bind(onlineManager),
-    () => onlineManager.isOnline(),
-    () => true,
-  );
+  const online = useSyncExternalStore(subscribeOnline, isOnline, () => true);
 
   // The persisted cache can predate the last grade, so the first card waits for this mount's fetch.
   const settled = draw.isFetchedAfterMount || draw.fetchStatus !== "fetching";
@@ -617,23 +640,28 @@ function Review() {
     return () => window.removeEventListener("keydown", onKey);
   }, [revealed, onGrade, leave, add.open, fixing, editing, current]);
 
-  // Offline the offer simply does not appear; review goes on as it always has.
+  // Offline the offer simply does not appear; review goes on as it always has. Once decided it
+  // holds, so a refetch or a dropped connection never moves or remounts it mid-card.
   const showing = current ? `${itemKey(current)}-${done}` : "";
-  const offer = current?.offer;
-  const offerShown =
-    !!offer && online && !unreachable && (offered.get(offer.diagnosisId) ?? showing) === showing;
-  const markOffered = (id: string, parked = false) => {
-    if (offered.has(id) && !parked) return;
-    if (!offered.has(id)) {
-      // A mark that does not land only means the offer can come once more.
-      api.markOffered(id).catch(() => undefined);
-    }
-    setOffered((seen) => new Map(seen).set(id, parked ? "" : showing));
+  if (cardOffer.key !== showing) {
+    const candidate = current?.offer;
+    const offer =
+      candidate && online && !unreachable && !offered.has(candidate.diagnosisId) ? candidate : null;
+    setCardOffer({ key: showing, offer, parked: false });
+  }
+  const offer = cardOffer.key === showing ? cardOffer.offer : null;
+  const markOffered = (id: string) => {
+    if (offered.has(id)) return;
+    setOffered((seen) => new Set(seen).add(id));
+    // A mark that does not land only means the offer can come once more.
+    api.markOffered(id).catch(() => undefined);
   };
-  // Closing the sheet without the fix parks it, and the panel goes, so the choice is seen to land.
+  // Closing the sheet without the fix parks it, and the panel fades, so the choice is seen to land.
   const closeFix = () => {
     setFixing(false);
-    if (offer) markOffered(offer.diagnosisId, true);
+    if (!offer) return;
+    markOffered(offer.diagnosisId);
+    setCardOffer((held) => ({ ...held, parked: true }));
   };
 
   const doneLink = (variant: "primary" | "secondary") => (
@@ -759,20 +787,22 @@ function Review() {
                 audioError && audioError.item === currentItemKey ? audioError.message : null
               }
               offer={
-                offer &&
-                offerShown && (
-                  <FixOffer
-                    offer={offer}
-                    // Once the answer has settled: its lines take about half a second to land.
-                    delay={animateReveal ? (reduce ? 0.7 : 0.95) : 0.5}
-                    onOpen={() => setFixing(true)}
-                    onShown={() => markOffered(offer.diagnosisId)}
-                  />
-                )
+                offer
+                  ? {
+                      offer,
+                      // Once the answer has settled: its lines take about half a second to land.
+                      delay: animateReveal ? (reduce ? 0.7 : 0.95) : 0.5,
+                      animate: animateReveal,
+                      parked: cardOffer.parked,
+                      onOpen: () => setFixing(true),
+                      onShown: () => markOffered(offer.diagnosisId),
+                    }
+                  : undefined
               }
               className="mt-4 @3xl:max-h-[600px] @3xl:[@media(min-height:40rem)]:min-h-[460px]"
             />
             <GradeBar
+              id={GRADES_ID}
               revealed={revealed}
               animateIn={animateReveal}
               animateOut={animateNextCard}
@@ -784,8 +814,9 @@ function Review() {
         )}
       </AnimatePresence>
       <FixSheet
-        item={current}
+        item={current && offer ? { ...current, offer } : current}
         open={fixing}
+        finalFocus={gradesFocus}
         onOpenChange={(open) => (open ? setFixing(true) : closeFix())}
         onEdit={(focus) => {
           closeFix();
@@ -801,6 +832,7 @@ function Review() {
         }
         onOpenChange={(open) => !open && setEditing(null)}
         onReopen={(card) => setEditing({ card, focus: null })}
+        finalFocus={gradesFocus}
       />
     </div>
   );

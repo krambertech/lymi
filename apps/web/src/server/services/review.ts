@@ -83,6 +83,7 @@ export async function reviewQueue(
   const items = front.flatMap((drawn) => {
     const state = states.get(drawKey(drawn.cardId, drawn.mode));
     const card = content.get(drawn.cardId);
+    const offer = offers.get(drawn.cardId);
     if (!state || !card) return [];
     const next = preview(deserializeState(state.fsrs), now);
     const direction = legacyDirection(state.mode);
@@ -101,7 +102,7 @@ export async function reviewQueue(
           3: next[3].toISOString(),
           4: next[4].toISOString(),
         },
-        ...(offers.has(drawn.cardId) ? { offer: offers.get(drawn.cardId) } : {}),
+        ...(offer ? { offer } : {}),
       },
     ];
   });
@@ -201,13 +202,14 @@ export async function reviewDraw(
           ];
         });
         const row = content.get(card.cardId);
+        const offer = offers.get(card.cardId);
         return row && modes.length > 0
           ? [
               {
                 card: row,
                 modes,
                 slipping: card.slipping ?? false,
-                ...(offers.has(card.cardId) ? { offer: offers.get(card.cardId) } : {}),
+                ...(offer ? { offer } : {}),
               },
             ]
           : [];

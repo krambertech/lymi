@@ -474,7 +474,9 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         if (!input.success) {
           throw new ServiceError(
             "invalid",
-            "Send two cards for this cause, or text for several_answers.",
+            input.error.issues
+              .map((issue) => `${issue.path.join(".") || "input"}: ${issue.message}`)
+              .join("; "),
           );
         }
         const out = await acceptFix(ctx, diagnosisId, input.data, principal.enrichment ?? null);

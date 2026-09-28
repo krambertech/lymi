@@ -26,20 +26,29 @@ export type ReviewDayProgress = z.infer<typeof ReviewDayProgress>;
  * A fix review offers after the reveal: the card's diagnosis, once, while it is often forgotten
  * and the learner can change it. ADR 0025.
  */
+const [pairDiagnosis, splitDiagnosis, cueDiagnosis, hookDiagnosis, unclearDiagnosis] =
+  Diagnosis.options;
+
 export const ReviewOfferOut = z
-  .object({
-    diagnosisId: z.string(),
-    other: z
-      .object({
-        id: z.string(),
-        term: z.string(),
-        meaning: z.string().nullable(),
-        language: z.string().nullable(),
-      })
-      .nullable()
-      .meta({ description: "The card it is mixed up with, for a confused pair" }),
-  })
-  .and(Diagnosis)
+  .object({ diagnosisId: z.string() })
+  .and(
+    z.discriminatedUnion("cause", [
+      pairDiagnosis.extend({
+        other: z
+          .object({
+            id: z.string(),
+            term: z.string(),
+            meaning: z.string().nullable(),
+            language: z.string().nullable(),
+          })
+          .meta({ description: "The card it is mixed up with, as the learner reads it" }),
+      }),
+      splitDiagnosis,
+      cueDiagnosis,
+      hookDiagnosis,
+      unclearDiagnosis,
+    ]),
+  )
   .meta({ id: "ReviewOffer" });
 export type ReviewOfferOut = z.infer<typeof ReviewOfferOut>;
 

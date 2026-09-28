@@ -30,7 +30,7 @@ import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
-import { FIX_OFFER_HEIGHT } from "../components/fix-offer";
+import { FIX_OFFER_BOX, FixOffer, FixOfferFace, type FixOfferProps } from "../components/fix-offer";
 import { Flame } from "../components/flame";
 import { GRADES } from "../components/grade";
 import { Kbd } from "../components/kbd";
@@ -335,7 +335,7 @@ export interface ReviewCardProps {
   /** Why the pronunciation did not play. Shown on the button, never as a line in the card. */
   audioError?: string | null | undefined;
   /** A drafted fix, pinned at the plate's foot once the answer shows. Its room is kept from the reveal. */
-  offer?: ReactNode | undefined;
+  offer?: FixOfferProps | undefined;
   className?: string | undefined;
 }
 
@@ -466,6 +466,7 @@ export function ReviewCard({
   }, [focusOnMount]);
 
   const hasOffer = !!offer;
+  const offerRoom = useRef<HTMLDivElement>(null);
   // Steps down one size at a time before the first paint, so the card never shows a size it leaves.
   useLayoutEffect(() => {
     if (fit.settled) return;
@@ -479,7 +480,7 @@ export function ReviewCard({
         answer: answerRef.current,
         extras: extrasRef.current,
       },
-      hasOffer ? FIX_OFFER_HEIGHT : 0,
+      offerRoom.current?.offsetHeight ?? 0,
     );
     if (!m) {
       setFit({ ...fit, settled: true });
@@ -489,13 +490,13 @@ export function ReviewCard({
     setFit(
       !fits && fit.step < TEXT_STEPS ? { ...fit, step: fit.step + 1 } : { ...fit, settled: true },
     );
-  }, [fit, hasOffer]);
+  }, [fit]);
 
-  // An offer that comes or goes changes the room the answer has.
+  // An offer arriving takes room from the answer; a parked one keeps its room until the grade.
   const offerSeen = useRef(hasOffer);
   useEffect(() => {
-    if (offerSeen.current === hasOffer) return;
-    offerSeen.current = hasOffer;
+    if (!hasOffer || offerSeen.current) return;
+    offerSeen.current = true;
     setFit(UNMEASURED);
   }, [hasOffer]);
 
@@ -830,21 +831,24 @@ export function ReviewCard({
         </div>
       </div>
       {/* Outside the scroller, so a long card never hides it, and inset so its corners follow the plate's. */}
-      <AnimatePresence initial={false}>
-        {revealed && offer && (
-          <motion.div
-            key="offer"
-            className="shrink-0 overflow-hidden"
-            exit={
-              reduce
-                ? { opacity: 0, transition: { duration: 0.14 } }
-                : { height: 0, opacity: 0, transition: { duration: 0.24, ease: EASE_OUT } }
-            }
-          >
-            <div className="px-2 pb-2">{offer}</div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {offer && revealed && (
+        <div className="shrink-0 px-2 pb-2">
+          <FixOffer {...offer} />
+        </div>
+      )}
+      {/* A still copy, out of the flow, so the fit knows the offer's room before the reveal. */}
+      {offer && (
+        <div
+          ref={offerRoom}
+          aria-hidden="true"
+          inert
+          className="pointer-events-none invisible absolute inset-x-0 bottom-0 px-2 pb-2"
+        >
+          <div className={FIX_OFFER_BOX}>
+            <FixOfferFace offer={offer.offer} />
+          </div>
+        </div>
+      )}
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
         {revealed ? t`Answer: ${back}` : ""}
       </p>

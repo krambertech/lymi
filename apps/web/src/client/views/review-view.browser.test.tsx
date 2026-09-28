@@ -5,7 +5,7 @@ import { expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
-import { FixOffer } from "../components/fix-offer";
+import type { FixOfferProps } from "../components/fix-offer";
 import { queueItem, queueItemPicture } from "../design/mock";
 import type { QueueItem } from "../lib/api";
 import { ReviewCard } from "./review-view";
@@ -100,31 +100,31 @@ test("the head names the deck and the section, and the mode only for a picture",
 test("a drafted fix waits for the reveal, then opens from the foot of the card", async () => {
   const opened = vi.fn();
   const shown = vi.fn();
-  const offer = (
-    <FixOffer
-      offer={{
-        diagnosisId: "d1",
-        cause: "confused_pair",
-        other: { id: "c2", term: "sbagliare", meaning: null, language: "it" },
-        draft: {
-          otherCardId: "c2",
-          cards: [
-            { term: "a", meaning: "b" },
-            { term: "c", meaning: "d" },
-          ],
-        },
-      }}
-      delay={0}
-      onOpen={opened}
-      onShown={shown}
-    />
-  );
+  const offer: FixOfferProps = {
+    offer: {
+      diagnosisId: "d1",
+      cause: "confused_pair",
+      other: { id: "c2", term: "sbagliare", meaning: null, language: "it" },
+      draft: {
+        otherCardId: "c2",
+        cards: [
+          { term: "a", meaning: "b" },
+          { term: "c", meaning: "d" },
+        ],
+      },
+    },
+    delay: 0,
+    animate: false,
+    parked: false,
+    onOpen: opened,
+    onShown: shown,
+  };
   const screen = await render(
     <I18nProvider i18n={i18n}>
       <ReviewCard item={item({})} revealed={false} onReveal={noop} offer={offer} />
     </I18nProvider>,
   );
-  expect(page.getByText(/Often mixed up with/).elements()).toHaveLength(0);
+  expect(page.getByRole("button", { name: /Often mixed up with/ }).elements()).toHaveLength(0);
 
   await screen.rerender(
     <I18nProvider i18n={i18n}>

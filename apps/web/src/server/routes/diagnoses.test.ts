@@ -63,7 +63,8 @@ describe("fixes", () => {
     const draw = async () =>
       DrawOut.parse(await (await app.fetch("/api/review/draw?tz=UTC", { as: learner })).json());
     const offer = (await draw()).cards.find((c) => c.card.id === cardId)?.offer;
-    expect(offer).toMatchObject({ diagnosisId: id, cause: "several_answers", other: null });
+    expect(offer).toMatchObject({ diagnosisId: id, cause: "several_answers" });
+    expect(offer).not.toHaveProperty("other");
 
     const marked = await app.fetch(`/api/diagnoses/${id}/offered`, { method: "POST", as: learner });
     expect(marked.status).toBe(200);

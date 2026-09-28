@@ -69,7 +69,11 @@ describe("offering a diagnosis's fix in review", () => {
       cause: "confused_pair",
       other: { term: "algama", meaning: "to begin, to start (by itself)", language: "et" },
     });
-    expect(offers.get("vaatama")).toMatchObject({ cause: "unclear", draft: null, other: null });
+    expect(offers.get("vaatama")).toEqual({
+      diagnosisId: expect.any(String),
+      cause: "unclear",
+      draft: null,
+    });
 
     const round = await reviewQueue(ctx, { round: "slipping" });
     expect(
@@ -250,6 +254,60 @@ describe("offering a diagnosis's fix in review", () => {
       .from(schema.auditLog)
       .where(and(eq(schema.auditLog.userId, ctx.userId), eq(schema.auditLog.action, "accept")));
     expect(audit).toHaveLength(1);
+  });
+
+  it("reverses the cards it wrote when the fix cannot be recorded", async () => {
+    const { ctx, deckId, cardOf, diagnosisOf } = await setup(["two_things"]);
+    const cardId = cardOf("two_things");
+    const row = await diagnosisOf(cardId);
+    const before = await getCard(ctx, cardId);
+    // The first batch writes the card; the second, which records the fix, fails.
+    let batches = 0;
+    const failing = new Proxy(db, {
+      get(target, prop, receiver) {
+        const value = Reflect.get(target, prop, receiver);
+        if (prop === "batch") {
+          return (statements: Parameters<Db["batch"]>[0]) => {
+            batches += 1;
+            if (batches === 3) return Promise.reject(new Error("D1 went away"));
+            return target.batch(statements);
+          };
+        }
+        return typeof value === "function" ? value.bind(target) : value;
+      },
+    });
+    await expect(
+      acceptFix(
+        { ...ctx, db: failing },
+        row.id,
+        {
+          cause: "two_things",
+          cards: [
+            { term: "Kus sa elad?", meaning: "Where do you live?" },
+            { term: "Ma elan Tallinnas.", meaning: "I live in Tallinn." },
+          ],
+        },
+        null,
+      ),
+    ).rejects.toThrow("D1 went away");
+    expect(await getCard(ctx, cardId)).toMatchObject({
+      term: before.term,
+      meaning: before.meaning,
+      meaningSource: before.meaningSource,
+    });
+    const active = (await cardsIn(ctx, deckId)).filter((c) => !c.archivedAt).map((c) => c.term);
+    expect(active).toEqual([before.term]);
+    expect(await diagnosisOf(cardId)).toMatchObject({ acceptedAt: null, fix: null });
+  });
+
+  it("refuses to undo a fix that is still being applied", async () => {
+    const { ctx, cardOf, diagnosisOf } = await setup(["unclear"]);
+    const row = await diagnosisOf(cardOf("unclear"));
+    await db
+      .update(schema.cardDiagnoses)
+      .set({ acceptedAt: new Date() })
+      .where(eq(schema.cardDiagnoses.id, row.id));
+    await expect(undoFix(ctx, row.id)).rejects.toMatchObject({ code: "conflict" });
   });
 
   it("releases the claim when the fix cannot be written, so it can be accepted again", async () => {

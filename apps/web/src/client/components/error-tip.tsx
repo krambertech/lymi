@@ -59,6 +59,8 @@ export function ErrorTip({ anchor, message, nudge = 0, reason, sideOffset, onOpe
     <>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverContent
+          // A fresh tip per press, so it places itself again around whatever arrived meanwhile.
+          key={nudge}
           anchor={anchor}
           sideOffset={sideOffset}
           initialFocus={false}

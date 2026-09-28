@@ -46,6 +46,10 @@ const TAG_LABELS: Record<PublicationTag, MessageDescriptor> = {
   "exam-jlpt-n5": msg({ message: "JLPT N5", context: "deck tag" }),
   "exam-leben-in-deutschland": msg({ message: "Leben in Deutschland test", context: "deck tag" }),
   "exam-us-civics": msg({ message: "US civics test", context: "deck tag" }),
+  "exam-ccse": msg({ message: "CCSE Spanish nationality test", context: "deck tag" }),
+  "exam-czech-citizenship": msg({ message: "Czech citizenship test", context: "deck tag" }),
+  "exam-canadian-citizenship": msg({ message: "Canadian citizenship test", context: "deck tag" }),
+  "exam-us-dmv": msg({ message: "DMV written test", context: "deck tag" }),
 };
 
 export function tagLabel(i18n: I18n, key: PublicationTag): string {

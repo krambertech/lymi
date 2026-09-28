@@ -959,6 +959,10 @@ msgstr "by {who}"
 msgid "calls itself “{0}”"
 msgstr "calls itself “{0}”"
 
+msgctxt "deck tag"
+msgid "Canadian citizenship test"
+msgstr "Canadian citizenship test"
+
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -1015,6 +1019,10 @@ msgstr "Cards keep the due dates they had in {app}."
 
 msgid "Cards outside a section"
 msgstr "Cards outside a section"
+
+msgctxt "deck tag"
+msgid "CCSE Spanish nationality test"
+msgstr "CCSE Spanish nationality test"
 
 msgid "Change"
 msgstr "Change"
@@ -1376,6 +1384,10 @@ msgstr "Current picture"
 msgid "Custom"
 msgstr "Custom"
 
+msgctxt "deck tag"
+msgid "Czech citizenship test"
+msgstr "Czech citizenship test"
+
 msgid "Daily goal"
 msgstr "Daily goal"
 
@@ -1456,6 +1468,10 @@ msgstr "Disconnect"
 
 msgid "Dismiss"
 msgstr "Dismiss"
+
+msgctxt "deck tag"
+msgid "DMV written test"
+msgstr "DMV written test"
 
 msgid "Docs"
 msgstr "Docs"

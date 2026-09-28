@@ -8,7 +8,8 @@ import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import { queueItem } from "../design/mock";
 import { api, type QueueItem, type ReviewOffer } from "../lib/api";
-import { type EditFocus, FixSheet } from "./fix-sheet";
+import type { EditFocus } from "./card-form";
+import { FixSheet } from "./fix-sheet";
 
 i18n.load("en", messages);
 i18n.activate("en");
@@ -30,7 +31,7 @@ function itemWith(offer: ReviewOffer, card: Partial<QueueItem["card"]> = {}): Qu
 
 interface HarnessProps {
   item: QueueItem;
-  onEdit?: (focus: EditFocus) => void;
+  onEdit?: (focus?: EditFocus) => void;
   onDismiss?: () => void;
 }
 
@@ -41,6 +42,7 @@ function Harness({ item, onEdit, onDismiss }: HarnessProps) {
       <I18nProvider i18n={i18n}>
         <FixSheet
           item={item}
+          offer={item.offer ?? null}
           open={open}
           onOpenChange={setOpen}
           onEdit={onEdit ?? (() => {})}
@@ -74,12 +76,15 @@ test("a confused pair shows both cards and adds the two drafted, as the learner 
   const accept = accepted();
   await render(<Harness item={itemWith(pair)} />);
   const dialog = page.getByRole("dialog");
-  await expect.element(dialog.getByRole("heading", { name: "alustama and algama" })).toBeVisible();
+  const title = dialog.getByRole("heading", { name: "alustama and algama" });
+  await expect.element(title).toBeVisible();
+  // The title takes focus, never the control that dismisses the fix.
+  await expect.element(title).toHaveFocus();
   await expect.element(dialog.getByText("to begin by itself")).toBeVisible();
   expect(dialog.getByText("AI wrote this").elements()).toHaveLength(2);
 
   await dialog.getByRole("button", { name: "Edit “Töö algab.”" }).click();
-  const meaning = dialog.getByRole("textbox", { name: "Meaning" });
+  const meaning = dialog.getByRole("textbox", { name: "Meaning, card 2" });
   await userEvent.clear(meaning);
   await userEvent.type(meaning, "Work begins.");
   // An edited card is the learner's, so only the untouched one keeps the badge.
@@ -107,7 +112,9 @@ test("terms written as principal parts are named by their first forms, and compa
   const dialog = page.getByRole("dialog");
   await expect.element(dialog.getByRole("heading", { name: "lühike and pikk" })).toBeVisible();
   await expect
-    .element(dialog.getByText("“lühike” keeps slipping, likely because the two get mixed up."))
+    .element(
+      dialog.getByText("“lühike” is often forgotten, maybe because the two are easy to mix up."),
+    )
     .toBeVisible();
   await expect.element(dialog.getByText("pikk · pika · pikka", { exact: true })).toBeVisible();
   await expect
@@ -201,7 +208,7 @@ test("no clear reason offers ways to change the card, each opening the editor", 
   await dialog.getByRole("button", { name: /Add a picture/ }).click();
   expect(onEdit).toHaveBeenLastCalledWith("picture");
   await dialog.getByRole("button", { name: /Edit the card/ }).click();
-  expect(onEdit).toHaveBeenLastCalledWith(null);
+  expect(onEdit).toHaveBeenLastCalledWith();
 
   await dialog.getByRole("button", { name: "Not now" }).click();
   await expect.element(dialog).not.toBeInTheDocument();
@@ -217,12 +224,23 @@ test("a fix that no longer fits says so, and leads to the card instead", async (
   await dialog.getByRole("button", { name: "Add 2 cards" }).click();
   await expect
     .element(
-      dialog.getByText("This card changed since Lymi looked at it, so the fix no longer fits."),
+      dialog.getByText("This card changed after Lymi drafted this fix, so it no longer fits."),
     )
     .toBeVisible();
   await expect.element(dialog.getByRole("button", { name: "Add 2 cards" })).not.toBeInTheDocument();
   await dialog.getByRole("button", { name: "Edit the card", exact: true }).click();
-  expect(onEdit).toHaveBeenCalledWith(null);
+  expect(onEdit).toHaveBeenCalledWith(undefined);
+});
+
+test("a hook that no longer fits opens the editor at the hook", async () => {
+  const { ApiError } = await import("../lib/api");
+  vi.spyOn(api, "acceptFix").mockRejectedValue(new ApiError(409, "changed"));
+  const onEdit = vi.fn();
+  await render(<Harness item={itemWith(hookOffer)} onEdit={onEdit} />);
+  const dialog = page.getByRole("dialog");
+  await dialog.getByRole("button", { name: "Add hook" }).click();
+  await dialog.getByRole("button", { name: "Edit the card", exact: true }).click();
+  expect(onEdit).toHaveBeenCalledWith("hook");
 });
 
 test("an emptied drafted card is marked and focused, and nothing is sent", async () => {
@@ -230,7 +248,7 @@ test("an emptied drafted card is marked and focused, and nothing is sent", async
   await render(<Harness item={itemWith(pair)} />);
   const dialog = page.getByRole("dialog");
   await dialog.getByRole("button", { name: "Edit “Ma alustan tööd.”" }).click();
-  const term = dialog.getByRole("textbox", { name: "Term" });
+  const term = dialog.getByRole("textbox", { name: "Term, card 1" });
   await expect.element(term).toHaveFocus();
   await userEvent.clear(term);
   await dialog.getByRole("button", { name: "Add 2 cards" }).click();
@@ -254,17 +272,18 @@ test("a drafted hook keeps the AI badge until a word of it changes, and keeps as
     .element(dialog.getByRole("heading", { name: "A memory hook for alustama" }))
     .toBeVisible();
   await expect
-    .element(dialog.getByText("Picture it when the card asks for “to start”.", { exact: false }))
+    .element(dialog.getByText("Think of it when the card shows “to start”.", { exact: false }))
     .toBeVisible();
   const field = dialog.getByRole("textbox", { name: "Memory hook" });
   await expect.element(field).toHaveValue("A lass stamps her foot to start the race.");
-  await expect.element(dialog.getByRole("button", { name: "That’s not it" })).toBeVisible();
+  // A hook is something to try, not a claim about the card to disagree with.
+  expect(dialog.getByRole("button", { name: "That’s not it" }).elements()).toHaveLength(0);
   await expect.element(dialog.getByText("AI hook")).toBeInTheDocument();
 
   await userEvent.clear(field);
   await userEvent.type(field, "A lass stamps twice to start.");
   await expect.element(dialog.getByText("AI hook")).not.toBeInTheDocument();
-  await dialog.getByRole("button", { name: "Keep hook" }).click();
+  await dialog.getByRole("button", { name: "Add hook" }).click();
   expect(accept).toHaveBeenCalledWith("d-hook", {
     cause: "no_anchor",
     hook: "A lass stamps twice to start.",

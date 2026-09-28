@@ -9,6 +9,7 @@ import { useOverlayShape } from "../lib/device";
 import { focusFirstInvalid } from "../lib/form";
 import { useCardFix } from "../lib/use-card-fix";
 import { Button, IconButton } from "./button";
+import type { EditFocus } from "./card-form";
 import { SourceChip } from "./chip";
 import { InlineError } from "./inline-error";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "./ui/dialog";
@@ -16,19 +17,20 @@ import { Field, FieldDescription, FieldError, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 
-/** Where the card editor opens: at the cue, at the picture, or at the top. */
-export type EditFocus = "term" | "meaning" | "picture" | null;
-
 type Pair = [DraftCard, DraftCard];
 type Offer<C extends ReviewOffer["cause"]> = Extract<ReviewOffer, { cause: C }>;
 
 interface Props {
-  /** The card on screen and the fix drafted for it; the sheet is open while `open` says so. */
+  /** The card on screen; the sheet is open while `open` says so. */
   item: QueueItem | null;
+  /** The fix drafted for it. */
+  offer: ReviewOffer | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  /** Opens the card editor, for a card with no clear reason or a fix that no longer fits. */
-  onEdit: (focus: EditFocus) => void;
+  /** The fix landed on the card; the sheet closes with its toast. */
+  onFixed?: ((cause: FixInput["cause"]) => void) | undefined;
+  /** Opens the card editor at a field, or at the top without one. */
+  onEdit: (focus?: EditFocus) => void;
   /** The learner says the cause is wrong. The sheet closes; the caller records it. */
   onDismiss: () => void;
   /** Where focus goes on closing, since the offer that opened the sheet leaves with it. */
@@ -40,28 +42,37 @@ interface Props {
  * a centred dialog on a desktop, with the title pinned and the actions at the foot. Nothing on
  * the card changes until the primary is pressed, and Undo in the toast reverses it.
  */
-export function FixSheet({ item, open, onOpenChange, onEdit, onDismiss, finalFocus }: Props) {
+export function FixSheet({
+  item,
+  offer,
+  open,
+  onOpenChange,
+  onFixed,
+  onEdit,
+  onDismiss,
+  finalFocus,
+}: Props) {
   // Held while the sheet closes, so its contents do not vanish mid-animation.
-  const [shown, setShown] = useState(item);
-  if (item?.offer && item !== shown) setShown(item);
-  const offer = shown?.offer;
-  const shape = useOverlayShape(open);
+  const [shown, setShown] = useState(item && offer ? { item, offer } : null);
+  if (item && offer && (item !== shown?.item || offer !== shown.offer)) setShown({ item, offer });
   const titleId = useId();
   return (
     <Dialog open={open && !!offer} onOpenChange={onOpenChange}>
       <DialogContent
         size="md"
         finalFocus={finalFocus}
-        // The drawer settles before any field asks for the keyboard, overlays.md.
-        initialFocus={shape === "touch" ? () => document.getElementById(titleId) : undefined}
+        // The title, so the first stop is never a control that dismisses the fix, and a drawer
+        // settles before any field asks for the keyboard, overlays.md.
+        initialFocus={() => document.getElementById(titleId)}
       >
-        {shown && offer && (
+        {shown && (
           <FixBody
-            key={offer.diagnosisId}
-            item={shown}
-            offer={offer}
+            key={shown.offer.diagnosisId}
+            item={shown.item}
+            offer={shown.offer}
             titleId={titleId}
             onClose={() => onOpenChange(false)}
+            onFixed={onFixed}
             onEdit={onEdit}
             onDismiss={onDismiss}
           />
@@ -76,11 +87,12 @@ interface BodyProps {
   offer: ReviewOffer;
   titleId: string;
   onClose: () => void;
-  onEdit: (focus: EditFocus) => void;
+  onFixed?: ((cause: FixInput["cause"]) => void) | undefined;
+  onEdit: (focus?: EditFocus) => void;
   onDismiss: () => void;
 }
 
-function FixBody({ item, offer, titleId, onClose, onEdit, onDismiss }: BodyProps) {
+function FixBody({ item, offer, titleId, onClose, onFixed, onEdit, onDismiss }: BodyProps) {
   const accept = useCardFix();
   const [failure, setFailure] = useState<"stale" | "unreachable" | null>(null);
   // The menu's "Add a memory hook" turns the sheet into the hook's own, with nothing drafted.
@@ -97,7 +109,10 @@ function FixBody({ item, offer, titleId, onClose, onEdit, onDismiss }: BodyProps
       accept.mutate(
         { id: offer.diagnosisId, input },
         {
-          onSuccess: onClose,
+          onSuccess: () => {
+            onClose();
+            onFixed?.(input.cause);
+          },
           onError: (error) =>
             setFailure(error instanceof ApiError && error.status === 409 ? "stale" : "unreachable"),
         },
@@ -134,7 +149,7 @@ interface FrameState {
   pending: boolean;
   failure: "stale" | "unreachable" | null;
   onClose: () => void;
-  onEdit: (focus: EditFocus) => void;
+  onEdit: (focus?: EditFocus) => void;
   onDismiss: () => void;
   submit: (input: FixInput) => void;
 }
@@ -145,8 +160,10 @@ interface FrameProps {
   why: ReactNode;
   /** The fix's own button; none for a card with no clear reason. */
   primary?: ReactNode | undefined;
-  /** The why names a cause the learner can say is wrong; not for a card with no clear reason. */
+  /** The why names a cause the learner can say is wrong; not for a hook or a card with no clear reason. */
   dismissable?: boolean | undefined;
+  /** Where the card editor opens once the fix no longer fits. */
+  editAt?: EditFocus | undefined;
   onSubmit?: (() => void) | undefined;
   /** A problem with what the learner sent, shown with any failure in one live line. */
   problem?: string | null | undefined;
@@ -161,6 +178,7 @@ function Frame({
   why,
   primary,
   dismissable = false,
+  editAt,
   onSubmit,
   problem,
   formRef,
@@ -170,7 +188,7 @@ function Frame({
   const stale = frame.failure === "stale";
   const failure =
     frame.failure === "stale"
-      ? t`This card changed since Lymi looked at it, so the fix no longer fits.`
+      ? t`This card changed after Lymi drafted this fix, so it no longer fits.`
       : frame.failure === "unreachable"
         ? t`Couldn’t change the card. Check your connection and try again.`
         : null;
@@ -193,7 +211,7 @@ function Frame({
         <button
           type="button"
           onClick={frame.onDismiss}
-          className="-mt-4 -mb-2 min-h-11 justify-self-start text-sm text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:hover:text-text hoverable:hover:decoration-current md:-mt-3 md:min-h-8"
+          className="-mt-4 -mb-2 min-h-11 justify-self-start text-sm text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:-mt-3 hoverable:min-h-8 hoverable:hover:text-text hoverable:hover:decoration-current"
         >
           <Trans>That’s not it</Trans>
         </button>
@@ -207,7 +225,7 @@ function Frame({
         primary={
           // A fix that no longer fits cannot be pressed again; the card itself can be changed.
           stale ? (
-            <Button variant="primary" onClick={() => frame.onEdit(null)}>
+            <Button variant="primary" onClick={() => frame.onEdit(editAt)}>
               <Trans>Edit the card</Trans>
             </Button>
           ) : (
@@ -300,7 +318,7 @@ function PairFix({
           <span lang={other.language ?? undefined}>{otherTitle}</span>
         </Trans>
       }
-      why={<Trans>“{title}” keeps slipping, likely because the two get mixed up.</Trans>}
+      why={<Trans>“{title}” is often forgotten, maybe because the two are easy to mix up.</Trans>}
       primary={<Trans>Add 2 cards</Trans>}
       dismissable
       problem={drafted.problem}
@@ -395,7 +413,7 @@ function CueFix({
       title={<Trans>Make the question clearer</Trans>}
       why={
         <Trans>
-          “{current}” fits more than one answer, so the card can’t tell which one you mean.
+          “{current}” fits more than one answer, so you can’t tell which one the card wants.
         </Trans>
       }
       primary={<Trans>Change the question</Trans>}
@@ -411,7 +429,7 @@ function CueFix({
     >
       <p className="rounded-md bg-plate-2 px-3 py-2.5 text-sm text-text-2">
         <Trans>
-          Also a right answer:{" "}
+          Another right answer:{" "}
           <span lang={language} className="font-medium text-text">
             {otherAnswer}
           </span>
@@ -493,26 +511,25 @@ function HookFix({
       why={
         drafted === null ? (
           picture ? (
-            <Trans>Picture it when the card shows its picture.</Trans>
+            <Trans>Think of it when the card shows its picture.</Trans>
           ) : (
             <Trans>
-              Picture it when the card asks for “<span lang={cueLanguage}>{cue}</span>”.
+              Think of it when the card shows “<span lang={cueLanguage}>{cue}</span>”.
             </Trans>
           )
         ) : picture ? (
           <Trans>
-            Picture it when the card shows its picture. Change anything that doesn’t click for you.
+            Think of it when the card shows its picture. Change anything that doesn’t help.
           </Trans>
         ) : (
           <Trans>
-            Picture it when the card asks for “<span lang={cueLanguage}>{cue}</span>”. Change
-            anything that doesn’t click for you.
+            Think of it when the card shows “<span lang={cueLanguage}>{cue}</span>”. Change anything
+            that doesn’t help.
           </Trans>
         )
       }
-      primary={drafted === null ? <Trans>Save hook</Trans> : <Trans>Keep hook</Trans>}
-      // A drafted hook names a cause the learner can reject; one they write from blank names none.
-      dismissable={drafted !== null}
+      primary={drafted === null ? <Trans>Save hook</Trans> : <Trans>Add hook</Trans>}
+      editAt="hook"
       onSubmit={submit}
     >
       <Field invalid={!!error}>
@@ -527,7 +544,7 @@ function HookFix({
           rows={2}
           value={hook}
           maxLength={CARD_LIMITS.hook}
-          placeholder={drafted === null ? t`A sound-alike, or a picture to see` : undefined}
+          placeholder={drafted === null ? t`A sound-alike, or something to picture` : undefined}
           onChange={(e) => {
             setHook(e.target.value);
             setError(null);
@@ -542,7 +559,10 @@ function HookFix({
           enterKeyHint="done"
         />
         <FieldDescription>
-          <Trans>You can peek at it before you turn the card, or show it after.</Trans>
+          <Trans>
+            Peek at it before you reveal the card, or show it after. After a peek, you can’t choose
+            Easy.
+          </Trans>
         </FieldDescription>
         <FieldError>{error}</FieldError>
       </Field>
@@ -568,8 +588,7 @@ function ChangeMenu({
       title={<Trans>Ask it another way</Trans>}
       why={
         <Trans>
-          Lymi can’t tell why this card slips. Changing how it asks usually helps more than another
-          round of the same.
+          Lymi can’t tell why you keep forgetting this card. Changing how it asks often helps.
         </Trans>
       }
     >
@@ -578,7 +597,7 @@ function ChangeMenu({
           <ChangeRow
             icon={<Anchor />}
             title={<Trans>Add a memory hook</Trans>}
-            detail={<Trans>A phrase that leads you back to the answer</Trans>}
+            detail={<Trans>A short phrase that helps you remember it</Trans>}
             onClick={onHook}
           />
         )}
@@ -600,7 +619,7 @@ function ChangeMenu({
           icon={<SquarePen />}
           title={<Trans>Edit the card</Trans>}
           detail={<Trans>Change anything on it</Trans>}
-          onClick={() => frame.onEdit(null)}
+          onClick={() => frame.onEdit()}
         />
       </ul>
     </Frame>
@@ -769,6 +788,8 @@ function DraftCardItem({
               <FieldLabel>{t`Term`}</FieldLabel>
               <Input
                 ref={termInput}
+                // Both cards have a Term and a Meaning, so each says which card it is.
+                aria-label={t`Term, card ${n}`}
                 value={card.term}
                 lang={language}
                 maxLength={cardLimits.term ?? undefined}
@@ -782,6 +803,7 @@ function DraftCardItem({
               <FieldLabel>{t`Meaning`}</FieldLabel>
               <Textarea
                 rows={1}
+                aria-label={t`Meaning, card ${n}`}
                 className="min-h-11 py-2.5 leading-normal md:min-h-10"
                 value={card.meaning}
                 maxLength={cardLimits.meaning ?? undefined}

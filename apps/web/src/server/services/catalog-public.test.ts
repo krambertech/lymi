@@ -30,7 +30,6 @@ afterAll(async () => {
 const input = (slug: string): PublicationInput => ({
   slug,
   summary: "Words and phrases for your first weeks in Estonia.",
-  level: "A1",
   category: "languages",
   meaningLanguage: "en",
   publisher: "Lymi",
@@ -76,7 +75,6 @@ describe("loadPublicDeck", () => {
       language: "et",
       meaningLanguage: "en",
       publisher: "Lymi",
-      level: "A1",
       revision: 1,
       cardCount: 5,
     });
@@ -202,7 +200,6 @@ describe("listPublicCatalog", () => {
     expect(row).toMatchObject({
       name: "Everyday Estonian shelf",
       category: "languages",
-      level: "A1",
       language: "et",
       meaningLanguage: "en",
       cardCount: 5,

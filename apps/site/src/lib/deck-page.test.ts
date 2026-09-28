@@ -4,7 +4,6 @@ import {
   deckContentHash,
   deckEtag,
   deckPaths,
-  deckStructuredData,
   etagMatches,
   jsonForScript,
   languageName,
@@ -24,7 +23,7 @@ const deck = (over: Partial<PublicDeckOut> = {}): PublicDeckOut => ({
   slug: "everyday-estonian",
   name: "Everyday Estonian",
   summary: "Words for your first weeks.",
-  level: "A1",
+  category: "languages",
   tags: ["core-words"],
   language: "et",
   meaningLanguage: "en",
@@ -243,44 +242,7 @@ describe("deck caching", () => {
   });
 });
 
-describe("deckStructuredData", () => {
-  it("describes the deck as a LearningResource with its level and language", () => {
-    expect(deckStructuredData(deck(), "ru")).toEqual({
-      "@context": "https://schema.org",
-      "@type": "LearningResource",
-      "@id": "https://lymi.app/ru/explore/everyday-estonian",
-      url: "https://lymi.app/ru/explore/everyday-estonian",
-      name: "Everyday Estonian",
-      description: "Words for your first weeks.",
-      learningResourceType: "Vocabulary list",
-      inLanguage: ["et", "en"],
-      teaches: "Estonian vocabulary",
-      about: { "@type": "Language", name: "Estonian", alternateName: "et" },
-      educationalLevel: {
-        "@type": "DefinedTerm",
-        name: "A1",
-        termCode: "A1",
-        inDefinedTermSet:
-          "https://www.coe.int/en/web/common-european-framework-reference-languages",
-      },
-      publisher: { "@type": "Organization", name: "Lymi" },
-      datePublished: "2026-09-10T12:00:00.000Z",
-      citation: [
-        { "@type": "CreativeWork", name: "Keeleklikk", url: "https://www.keeleklikk.ee/" },
-        { "@type": "CreativeWork", name: "A teacher" },
-      ],
-      isPartOf: { "@type": "WebSite", name: "Lymi", url: "https://lymi.app/" },
-    });
-  });
-
-  it("leaves out the level and language when the deck has none", () => {
-    const data = deckStructuredData(deck({ level: null, language: null, sources: [] }), "en");
-    expect(data).not.toHaveProperty("educationalLevel");
-    expect(data).not.toHaveProperty("teaches");
-    expect(data).not.toHaveProperty("citation");
-    expect(data.inLanguage).toEqual(["en"]);
-  });
-
+describe("jsonForScript", () => {
   it("cannot close its script element", () => {
     expect(jsonForScript({ name: "</script><script>alert(1)</script>" })).not.toContain(
       "</script>",

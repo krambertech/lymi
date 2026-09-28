@@ -288,16 +288,17 @@ export type AddQuery = z.infer<typeof AddQuery>;
 export const PUBLICATION_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 /**
- * The shelves on Explore. A closed list, because each one is a heading a translator writes and
- * a visitor learns; a new shelf is a deliberate change, not a typo in a publish call.
+ * Where a deck sits on Explore: `languages` puts it on the shelf of the language it teaches, and
+ * each subject is a shelf of its own, in this order. A closed list, because each subject is a
+ * heading a translator writes and a visitor learns; a new shelf is a deliberate change.
  */
 export const PUBLICATION_CATEGORIES = [
   "languages",
-  "exams",
-  "driving",
-  "technology",
-  "science",
   "geography",
+  "science",
+  "driving",
+  "citizenship",
+  "technology",
   "work",
 ] as const;
 export const PublicationCategory = z.enum(PUBLICATION_CATEGORIES);
@@ -338,18 +339,14 @@ export const PublicationInput = z
       .regex(PUBLICATION_SLUG, "Use lower-case words joined by hyphens, like everyday-estonian.")
       .meta({ description: "The public URL part. Changing it breaks links already shared." }),
     summary: z.string().trim().min(1).max(500).meta({ description: "One or two plain sentences" }),
-    category: PublicationCategory.nullable()
-      .optional()
-      .meta({ description: "The shelf the deck sits on in Explore. A deck sits on one shelf." }),
+    category: PublicationCategory.nullable().optional().meta({
+      description:
+        "Where the deck sits in Explore: `languages` for the shelf of the deck's own language, or a subject. A deck sits on one shelf.",
+    }),
     tags: z.array(PublicationTag).max(PUBLICATION_TAGS.length).optional().meta({
       description:
         "Tags from the fixed list, shown on the deck page and used to find related decks. Left out, the deck keeps the tags it has; an empty list clears them.",
     }),
-    level: z
-      .enum(["A1", "A2", "B1", "B2", "C1", "C2"])
-      .nullable()
-      .optional()
-      .meta({ description: "CEFR level" }),
     meaningLanguage: LanguageTag.meta({
       description:
         "The original edition: the language the deck's own meanings are written in. Other editions are localizations of it.",

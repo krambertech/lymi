@@ -1,7 +1,13 @@
 import type { JoinPreviewOut, PublicationInput, PublicationOut } from "@lymi/core";
-import { newId, PUBLICATION_SLUG, publicationTags } from "@lymi/core";
+import {
+  newId,
+  PUBLICATION_CATEGORIES,
+  PUBLICATION_SLUG,
+  type PublicationCategory,
+  publicationTags,
+} from "@lymi/core";
 import { activeAvatarVersion, publisherAvatarPath } from "@lymi/core/catalog";
-import { and, eq, isNull, sql } from "@lymi/core/db";
+import { and, eq, getTableColumns, isNull, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { auditStatement } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
@@ -14,26 +20,33 @@ export function isPublicationSlug(value: string | undefined | null): value is st
   return typeof value === "string" && value.length <= 80 && PUBLICATION_SLUG.test(value);
 }
 
+function isPublicationCategory(value: string | null): value is PublicationCategory {
+  return (PUBLICATION_CATEGORIES as readonly (string | null)[]).includes(value);
+}
+
+// A follow-up drops `level`, so a whole-row read names every other column and survives the drop.
+const { level: _level, ...publicationColumns } = getTableColumns(schema.deckPublications);
+
+export { publicationColumns };
+export type PublicationRow = Omit<typeof schema.deckPublications.$inferSelect, "level">;
+
 async function publicationOf(db: Db, deckId: string) {
   const [row] = await db
-    .select()
+    .select(publicationColumns)
     .from(schema.deckPublications)
     .where(eq(schema.deckPublications.deckId, deckId));
   return row ?? null;
 }
 
-export function publicationOut(
-  productUrl: string,
-  row: typeof schema.deckPublications.$inferSelect | null,
-): PublicationOut {
+export function publicationOut(productUrl: string, row: PublicationRow | null): PublicationOut {
   if (!row) return { publication: null };
   return {
     publication: {
       slug: row.slug,
       status: row.status,
       summary: row.summary,
-      level: row.level,
-      category: row.category,
+      // A subject since retired reads as no shelf, which is where Explore puts the deck.
+      category: isPublicationCategory(row.category) ? row.category : null,
       tags: publicationTags(row.tags),
       meaningLanguage: row.meaningLanguage,
       editionFields: row.editionFields,
@@ -101,7 +114,6 @@ export async function publishDeck(
     slug: input.slug,
     status: "published" as const,
     summary: input.summary,
-    level: input.level ?? null,
     category: input.category ?? null,
     // Left out, the tags stand, so a publisher that does not know them yet never clears them.
     tags: publicationTags(input.tags ?? existing?.tags ?? []),

@@ -1167,6 +1167,9 @@ msgstr "Вибери, чим кожне поле Mochi стане в картц�
 msgid "Choose your {app} file"
 msgstr "Вибір файлу {app}"
 
+msgid "Citizenship"
+msgstr "Громадянство"
+
 msgid "Clear"
 msgstr "Скинути"
 
@@ -1682,9 +1685,6 @@ msgstr "Новий приклад: «{value}»"
 
 msgid "Example from lesson"
 msgstr "Приклад з уроку"
-
-msgid "Exams and tests"
-msgstr "Іспити й тести"
 
 msgid "Explore"
 msgstr "Каталог"
@@ -3174,6 +3174,9 @@ msgstr "Від {owner}"
 
 msgid "Shared with you"
 msgstr "Поділилися з тобою"
+
+msgid "Shelves"
+msgstr "Полиці"
 
 msgid "Show"
 msgstr "Показати"

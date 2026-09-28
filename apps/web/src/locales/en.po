@@ -1167,6 +1167,9 @@ msgstr "Choose what each Mochi field becomes on a Lymi card. One field is the te
 msgid "Choose your {app} file"
 msgstr "Choose your {app} file"
 
+msgid "Citizenship"
+msgstr "Citizenship"
+
 msgid "Clear"
 msgstr "Clear"
 
@@ -1682,9 +1685,6 @@ msgstr "Example changed to “{value}”"
 
 msgid "Example from lesson"
 msgstr "Example from lesson"
-
-msgid "Exams and tests"
-msgstr "Exams and tests"
 
 msgid "Explore"
 msgstr "Explore"
@@ -3174,6 +3174,9 @@ msgstr "Shared by {owner}"
 
 msgid "Shared with you"
 msgstr "Shared with you"
+
+msgid "Shelves"
+msgstr "Shelves"
 
 msgid "Show"
 msgstr "Show"

@@ -16,7 +16,7 @@ const FIELDS: { name: string; type: string; note: string }[] = [
   {
     name: "hook",
     type: "string",
-    note: "A short association that leads back to the term without giving it away. Review shows it under the prompt when the learner peeks at it before the reveal or asks for it after. Up to 200 characters.",
+    note: "A short association that leads back to the answer without giving any of it away. Review shows it under the cue: the learner can peek at it before the reveal, which rules out Easy, or show it after. Up to 200 characters.",
   },
   { name: "language", type: "string | null", note: "BCP 47 tag. Defaults to the deck's." },
   { name: "tags", type: "string[]", note: "Up to 20. Free text." },

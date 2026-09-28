@@ -37,8 +37,9 @@ diagnoses.post(
     summary: "Accept a fix",
     description:
       "Needs the write scope. Applies the fix the diagnosis drafted, as sent, to the card it is about, through the ordinary card writes: " +
-      "a confused pair adds two cards to the card's deck and section, two things on one card changes the card to the first and adds the second, and more than one right answer changes the cue. " +
-      "Text sent as drafted keeps the AI as its source; text you changed is yours. A drafted card that duplicates one in your decks is skipped and listed in `skipped`. Only the card's owner can accept, and only while the card still reads as it did when diagnosed; otherwise 409. Undo with `POST /api/diagnoses/{id}/undo`.",
+      "a confused pair adds two cards to the card's deck and section, two things on one card changes the card to the first and adds the second, more than one right answer changes the cue, and nothing to connect it to sets the card's hook. " +
+      "A hook is a short phrase that leads back to the answer without giving any of it away; review shows it under the cue. A diagnosis with no clear reason accepts `no_anchor` with a hook you wrote. " +
+      "Text sent as drafted keeps the AI as its source; text you changed is yours. A drafted card that duplicates one in your decks is skipped and listed in `skipped`. Only the card's owner can accept, and anyone else gets 403. Once the card no longer reads as it did when diagnosed, the answer is 409. Undo with `POST /api/diagnoses/{id}/undo`.",
     ok: { schema: FixOut, description: "What the fix wrote" },
     errors: [400, 404, 409],
   }),

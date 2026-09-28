@@ -503,7 +503,7 @@ export const CARD_LIMITS = {
   example: 2000,
   notes: 2000,
   source: 200,
-  // A hook is a phrase that leads back to the term, never a paragraph.
+  // A hook is a phrase that leads back to the answer, never a paragraph.
   hook: 200,
 } as const;
 
@@ -535,7 +535,7 @@ export const CardInput = z.object({
     .optional()
     .meta({
       description:
-        "A short association in the meaning language that leads back to the term, such as a sound-alike word or a picture in the mind. It never gives the answer away. Review shows it under the answer, and the learner can peek at it before the reveal.",
+        "A short association in the meaning language, such as a sound-alike word or a picture in the mind, that leads back to the answer without giving any of it away. Review shows it under the cue: the learner can peek at it before the reveal, which rules out Easy, or show it after.",
     }),
   language: LanguageTag.nullable().optional(),
   tags: z.array(z.string().trim().min(1).max(40)).max(20).optional(),
@@ -720,7 +720,9 @@ export const Diagnosis = z
     z.object({
       cause: z.literal("several_answers"),
       draft: z.object({
-        field: z.enum(["term", "meaning"]).meta({ description: "The cue that fits another word" }),
+        field: z
+          .enum(["term", "meaning"])
+          .meta({ description: "The cue that also fits another answer" }),
         text: z.string().trim().min(1).max(CARD_LIMITS.meaning).meta({
           description: "The cue with a word of context that leaves one right answer",
         }),
@@ -733,7 +735,8 @@ export const Diagnosis = z
       cause: z.literal("no_anchor"),
       draft: z.object({
         hook: z.string().trim().min(1).max(CARD_LIMITS.hook).meta({
-          description: "A short association in the meaning language that leads back to the term",
+          description:
+            "A short association in the meaning language that leads back to the answer without giving any of it away",
         }),
       }),
     }),
@@ -766,7 +769,7 @@ export const FixInput = z
       cause: z.literal("two_things"),
       cards: z.tuple([DraftCard, DraftCard]).meta({
         description:
-          "The first replaces the card's term and meaning; the second is added beside it",
+          "The first replaces the card's term and meaning, and a new term clears its hook; the second is added beside it",
       }),
     }),
     z.object({
@@ -779,7 +782,7 @@ export const FixInput = z
       cause: z.literal("no_anchor"),
       hook: z.string().trim().min(1, "Write a hook.").max(CARD_LIMITS.hook).meta({
         description:
-          "The card's memory hook. Accepted for a card with no clear reason too, when the learner writes their own.",
+          "The card's memory hook: a short phrase that leads back to the answer without giving any of it away. Accepted for a card with no clear reason too, when the learner writes their own.",
       }),
     }),
   ])

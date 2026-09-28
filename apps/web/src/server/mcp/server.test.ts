@@ -620,6 +620,18 @@ describe("Lymi MCP server", () => {
     );
     expect(res.structuredContent).toMatchObject({ added: [], edited: { id: card.id } });
 
+    const hooked = await client.callTool({
+      name: "accept_card_fix",
+      arguments: { diagnosisId: "diagnosis-1", cause: "no_anchor", hook: "brisk as a brigade" },
+    });
+    expect(hooked.isError).toBeFalsy();
+    expect(services.acceptFix).toHaveBeenLastCalledWith(
+      expect.anything(),
+      "diagnosis-1",
+      { cause: "no_anchor", hook: "brisk as a brigade" },
+      null,
+    );
+
     await client.callTool({ name: "undo_card_fix", arguments: { diagnosisId: "diagnosis-1" } });
     expect(services.undoFix).toHaveBeenCalledWith(expect.anything(), "diagnosis-1");
   });
@@ -1000,6 +1012,7 @@ describe("Lymi MCP server", () => {
       model: "test-model",
       diagnosedAt: now.toISOString(),
       dismissedAt: null,
+      acceptedAt: now.toISOString(),
     };
     services.showCardWithDiagnosis.mockResolvedValue({ ...card, diagnosis });
     const client = await connect("read");

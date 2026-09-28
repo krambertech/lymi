@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import {
+  CARD_LIMITS,
   CardInput,
   cardLimits,
   ImageDescription,
@@ -649,14 +650,17 @@ export function CardForm(props: CardFormProps) {
 
   const hookField = (
     <Field>
-      <FieldLabel className={chips ? "sr-only" : undefined} aside={roomLeft(hook, cardLimits.hook)}>
+      <FieldLabel
+        className={chips ? "sr-only" : undefined}
+        aside={roomLeft(hook, CARD_LIMITS.hook)}
+      >
         {t`Memory hook`}
       </FieldLabel>
-      <Textarea
-        maxLength={cardLimits.hook ?? undefined}
+      <Input
+        maxLength={CARD_LIMITS.hook}
         value={hook}
-        rows={chips ? 2 : 1}
-        className={chips ? undefined : "min-h-10 py-2.5 leading-normal"}
+        autoComplete="off"
+        onKeyDown={closeOnEnter}
         onChange={(e) => {
           setHook(e.target.value);
           clear("hook");

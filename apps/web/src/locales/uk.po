@@ -496,6 +496,9 @@ msgstr "Колоди: {label}"
 msgid "{label}, next in {schedules}"
 msgstr "{label}, далі через {schedules}"
 
+msgid "{label}, not after a peek"
+msgstr "{label}, лише без зачіпки"
+
 msgid "{left, plural, one {# character left} other {# characters left}}"
 msgstr "{left, plural, one {лишився # символ} few {лишилося # символи} many {лишилося # символів} other {лишилося # символу}}"
 
@@ -2084,7 +2087,7 @@ msgid "Keen"
 msgstr "Завзято"
 
 msgid "Keep hook"
-msgstr "Зберегти зачіпку"
+msgstr "Залишити зачіпку"
 
 msgid "Keep invitation"
 msgstr "Залишити запрошення"
@@ -2571,8 +2574,8 @@ msgstr "Поки колода в архіві, до неї ніхто не мо�
 msgid "Nobody new can add it."
 msgstr "Нові люди вже не можуть її додати."
 
-msgid "Not after a peek"
-msgstr "Лише без зачіпки"
+msgid "not after a peek"
+msgstr "лише без зачіпки"
 
 msgid "Not available on this server yet."
 msgstr "На цьому сервері поки недоступно."
@@ -3116,6 +3119,9 @@ msgstr "Як у колоді"
 
 msgid "Save"
 msgstr "Зберегти"
+
+msgid "Save hook"
+msgstr "Зберегти зачіпку"
 
 msgid "Save password"
 msgstr "Зберегти пароль"

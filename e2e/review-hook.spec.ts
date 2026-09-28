@@ -50,12 +50,10 @@ test("a learner peeks at a hook, Easy is out, and the peek stays on the grade th
   });
 
   await test.step("after the reveal Easy stays in its slot and does nothing, by click or key", async () => {
-    await page
-      .getByRole("button", { name: "Reveal the card" })
-      .click({ position: { x: 24, y: 24 } });
-    const easy = grades.getByRole("button", { name: "Easy" });
+    // A tap on the card this soon after the peek would be taken as a doubled tap, so a key reveals.
+    await page.keyboard.press("Space");
+    const easy = grades.getByRole("button", { name: "Easy, not after a peek" });
     await expect(easy).toHaveAttribute("aria-disabled", "true");
-    await expect(easy).toHaveAccessibleDescription("Not after a peek");
     await easy.click({ force: true });
     await page.keyboard.press("4");
     await expect(grades).toBeVisible();
@@ -97,6 +95,27 @@ test("Undo takes a peeked grade back with its peek", async ({ page }, testInfo) 
   const { log } = (await draw.json()) as { log: { cardId: string }[] };
   expect(log.filter((entry) => entry.cardId === cardId)).toEqual([]);
   expect((await history(page, cardId)).reviews).toMatchObject([{ rating: 3, aid: "hook" }]);
+});
+
+test("a quick double tap on the peek shows the hook and leaves the card unturned", async ({
+  page,
+}, testInfo) => {
+  await startAsTestLearner(page, testInfo, "review-hook");
+  const { deckId } = await cardWithHook(page, "tuul", "The wind plays a tuba.");
+  await page.goto(`/review?deck=${deckId}`);
+  const pill = page.getByRole("button", { name: /Peek at your hook/ });
+  const box = await pill.boundingBox();
+  if (!box) throw new Error("no peek to tap");
+  // Two taps where the pill is: the second lands on the card once the pill has done its work.
+  const x = box.x + box.width / 2;
+  const y = box.y + box.height / 2;
+  await page.mouse.click(x, y);
+  await page.mouse.click(x, y);
+  await expect(
+    page.getByRole("paragraph").filter({ hasText: "The wind plays a tuba." }),
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Reveal the card" })).toBeVisible();
+  await expect(page.getByRole("group", { name: "Choose a recall grade" })).toBeHidden();
 });
 
 test("a card without a hook has no peek control", async ({ page }, testInfo) => {
@@ -153,7 +172,7 @@ test("a learner keeps a drafted hook, can undo it, and writes their own from the
         const field = written.getByRole("textbox", { name: "Memory hook" });
         await expect(field).toHaveValue("");
         await field.fill("Watch the vat boil");
-        await written.getByRole("button", { name: "Keep hook" }).click();
+        await written.getByRole("button", { name: "Save hook" }).click();
         await expect(written).toBeHidden();
         const answer = page.getByLabel("Production card for to look, to watch", { exact: true });
         await expect(answer.getByText("Watch the vat boil")).toBeVisible();

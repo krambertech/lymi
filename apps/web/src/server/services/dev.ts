@@ -798,7 +798,7 @@ const HOOKED: PersonaCard & { hook: string } = {
 export async function seedFixes(
   ctx: ServiceContext,
   causes?: readonly FixCause[],
-  { hooked = causes === undefined }: { hooked?: boolean } = {},
+  { hooked = causes === undefined }: { hooked?: boolean | undefined } = {},
   now = new Date(),
 ): Promise<{
   deckId: string;
@@ -859,18 +859,19 @@ export async function seedFixes(
     );
   const today = dayWindow(now, await reviewZone(ctx)).start.getTime();
   const statements: unknown[] = [];
+  // Oldest first: the days before today on which the often-forgotten cards were missed.
+  const slippedDays = Array.from(
+    { length: SLIPPING_FORGOTTEN_DAYS },
+    (_, i) => SLIPPING_FORGOTTEN_DAYS - i,
+  );
   for (const state of states) {
     // The hooked card was recalled once, a few days ago; the others were forgotten day after day.
     const recalled = state.cardId === hookedCardId;
     let fsrs = emptyState(new Date(today - (SLIPPING_FORGOTTEN_DAYS + 1) * DAY));
-    const days = recalled ? 1 : SLIPPING_FORGOTTEN_DAYS;
-    for (
-      let daysAgo = SLIPPING_FORGOTTEN_DAYS;
-      daysAgo > SLIPPING_FORGOTTEN_DAYS - days;
-      daysAgo--
-    ) {
+    const rating = recalled ? 3 : 1;
+    const days = recalled ? [SLIPPING_FORGOTTEN_DAYS] : slippedDays;
+    for (const daysAgo of days) {
       const at = new Date(today - daysAgo * DAY + 9 * 3_600_000);
-      const rating = recalled ? 3 : 1;
       const result = schedule(fsrs, rating, at);
       statements.push(
         db.insert(schema.reviews).values({

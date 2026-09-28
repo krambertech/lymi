@@ -75,9 +75,9 @@ A grade plays it backwards: the strip closes over 300 ms, its grades fading in t
 
 A drafted fix at the card's foot arrives half a second after the answer settles, with a card's 6 px rise over 200 ms and its icon scaling in from 0.85; under reduced motion it only fades, and after a reveal from the keyboard it appears without moving. It cannot be pressed until it has arrived. Left for later, it fades out over 140 ms, at once under reduced motion, and keeps its room until the grade so the answer never moves.
 
-A peeked hook comes into focus under the cue: it fades in from a 4 px blur with a 4 px rise over 360 ms while the cue glides up to make room. Under reduced motion it only fades; from the keyboard it appears at once. The pill that asked for it leaves without animating, because the hook is the change to watch.
+A peeked hook comes into focus under the cue: it fades in from a 4 px blur with a 4 px rise over 360 ms while the cue glides up to make room. Under reduced motion it only fades; from the keyboard, Enter on the button included, it appears at once. The button that asked for it goes without animating and keeps its room, because the hook is the change to watch. At the reveal the hook fades out over 120 ms as the answer comes in, at once when a key revealed the card.
 
-A hint at the card's foot, a pointing hand that taps three times and rests with a line under it saying how to reveal, appears in two cases only: after a second on each of a learner's first three cards, and after a minute on any card with no press, key or scroll. Above a peek pill it rests higher, and after a peek its line says to tap the card when you have it.
+A hint at the card's foot, a pointing hand that taps three times and rests with a line under it saying how to reveal, appears in two cases only: after a second on each of a learner's first three cards, and after a minute on any card with no press, key or scroll. On a card with a peek it rests higher for the whole card, clear of the button, and after a peek its line says to tap the card when you have it.
 
 A pronunciation that fails to play turns its button red, shakes it once over 400 ms, and says why in a tip over the button that leaves after four seconds or at the next tap. Nothing is added under the card, so the layout never moves for an error.
 

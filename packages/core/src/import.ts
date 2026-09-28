@@ -107,6 +107,7 @@ export const IMPORT_LIMITS = {
   pronunciation: 200,
   example: 2000,
   notes: 2000,
+  hook: 200,
   tags: 20,
   tag: 40,
   deckName: 80,
@@ -210,6 +211,13 @@ function cut(text: string, limit: number): string {
 
 function length(text: string): number {
   return [...text].length;
+}
+
+/** One text cut to its limit by code point, as `fitFields` cuts a field, and whether it was. */
+export function fitText(text: string, limit: number): { text: string; shortened: boolean } {
+  return length(text) <= limit
+    ? { text, shortened: false }
+    : { text: cut(text, limit), shortened: true };
 }
 
 /**

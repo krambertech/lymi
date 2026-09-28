@@ -46,7 +46,7 @@ export function cardPatch(card: Card, values: CardFormValues): CardPatch {
   if (values.notes !== (card.notes ?? "")) patch.notes = values.notes;
   if (values.hook !== (card.hook ?? "")) {
     patch.hook = values.hook;
-    patch.hookSource = "manual";
+    if (values.hook) patch.hookSource = "manual";
   }
   if (values.source !== (card.source ?? "")) patch.source = values.source;
   if (values.language !== card.language) patch.language = values.language;

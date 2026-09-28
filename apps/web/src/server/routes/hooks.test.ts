@@ -1,8 +1,8 @@
-import { AddCardOutcomeOut, CardHistoryOut, CardOut, DeckOut, GradeOut } from "@lymi/core";
+// The HTTP contract of a card's hook and of a grade the hook helped; the rules are service tests.
+import { AddCardOutcomeOut, CardHistoryOut, CardOut, DeckOut, GradeOut, UndoOut } from "@lymi/core";
 import { beforeAll, describe, expect, it } from "vitest";
 import { json, type Session, type TestApp, testApp } from "../test-app";
 
-/** The HTTP contract of a card's hook and of a grade the hook helped. */
 let app: TestApp;
 let learner: Session;
 
@@ -68,6 +68,13 @@ describe("hooks", () => {
       as: learner,
     });
     expect(ai.status).toBe(400);
+
+    // A source alone says nothing about a hook that is not there.
+    const sourceOnly = await app.fetch(`/api/cards/${card.id}`, {
+      ...json({ hookSource: "lesson" }, { method: "PATCH" }),
+      as: learner,
+    });
+    expect(CardOut.parse(await sourceOnly.json())).toMatchObject({ hook: null, hookSource: null });
   });
 
   it("records a peek with the grade, refuses Easy after one, and Undo takes both back", async () => {
@@ -84,9 +91,7 @@ describe("hooks", () => {
       as: learner,
     });
     expect(undone.status).toBe(200);
-    expect((await undone.json()) as { day: { attempts: number } }).toMatchObject({
-      day: { attempts: 0 },
-    });
+    expect(UndoOut.parse(await undone.json()).day.attempts).toBe(0);
 
     // An unaided recall is unchanged: no aid, and Easy is allowed.
     await grade(card.id, 4, { reviewedAt: new Date(Date.now() + 60_000).toISOString() });

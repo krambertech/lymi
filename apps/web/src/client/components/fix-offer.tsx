@@ -12,8 +12,7 @@ import {
 import { motion, useReducedMotionConfig } from "motion/react";
 import { type ReactNode, useState } from "react";
 import type { ReviewOffer } from "../lib/api";
-
-const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+import { EASE_OUT } from "../lib/ease";
 
 const ICONS: Record<ReviewOffer["cause"], LucideIcon> = {
   confused_pair: ArrowLeftRight,

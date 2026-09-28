@@ -7,6 +7,7 @@ import { Anchor, type LucideIcon } from "lucide-react";
 import { motion, useReducedMotionConfig } from "motion/react";
 import type { MouseEvent } from "react";
 import type { Card } from "../lib/api";
+import { EASE_OUT } from "../lib/ease";
 import { Button } from "./button";
 import { SourceChip } from "./chip";
 
@@ -28,20 +29,16 @@ const STEPS: Record<
   hook: { take: msg`Peek at your hook`, name: msg`Memory hook:`, icon: Anchor },
 };
 
-/** The key that takes the next step, whichever step that is. */
-export const AID_KEY = "H";
+/** The key that takes the next step, matched by its place so every keyboard layout reaches it. */
+export const AID_KEY = { code: "KeyH", label: "H" } as const;
 
-/** The help a card has to offer before its reveal, in order. */
 export function aidSteps(card: Pick<Card, "hook" | "hookSource">): AidStep[] {
   return card.hook ? [{ aid: "hook", text: card.hook, source: card.hookSource }] : [];
 }
 
-/** The aid a grade records: the furthest step taken, or none. */
-export function aidTaken(steps: readonly AidStep[], taken: number): ReviewAid | undefined {
-  return taken > 0 ? steps[Math.min(taken, steps.length) - 1]?.aid : undefined;
-}
-
-const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+/** The aid a grade records: the furthest step taken. */
+export const aidTaken = (steps: readonly AidStep[], taken: number): ReviewAid | undefined =>
+  steps[Math.min(taken, steps.length) - 1]?.aid;
 
 interface NextProps {
   steps: readonly AidStep[];
@@ -50,24 +47,24 @@ interface NextProps {
 }
 
 /**
- * The quiet pill at the foot of an unrevealed card that takes the next step; the card stacks it
- * over its reveal button, so a tap on it never turns the card. It goes the moment its step is
- * taken, because what the step shows is the change to watch, and stays gone once nothing is left.
+ * The pill at the foot of an unrevealed card that takes the next step; the card stacks it over
+ * its reveal button, so a tap on it never turns the card. Once every step is taken it stays as
+ * an invisible, inert placeholder, so the cue keeps its room and glides rather than jumps.
  */
 export function RecallAidNext({ steps, taken, onTake }: NextProps) {
   const { i18n } = useLingui();
-  const next = steps[taken];
-  if (!next) return null;
-  const { take, icon: Icon } = STEPS[next.aid];
+  const spent = taken >= steps.length;
+  const step = steps[Math.min(taken, steps.length - 1)];
+  if (!step) return null;
+  const { take, icon: Icon } = STEPS[step.aid];
   return (
-    <div className="flex justify-center pt-3">
-      <Button
-        size="sm"
-        kbd={AID_KEY}
-        onClick={onTake}
-        className="rounded-full text-text-2 hoverable:hover:text-text"
-      >
-        <Icon data-icon="inline-start" aria-hidden="true" className="text-muted" />
+    <div
+      className={clsx("flex justify-center pt-3", spent && "invisible")}
+      inert={spent}
+      aria-hidden={spent || undefined}
+    >
+      <Button kbd={AID_KEY.label} data-aid="" onClick={onTake}>
+        <Icon data-icon="inline-start" aria-hidden="true" />
         {i18n._(take)}
       </Button>
     </div>
@@ -87,8 +84,6 @@ interface ShownProps {
  */
 export function RecallAidShown({ steps, taken, animate }: ShownProps) {
   const reduce = useReducedMotionConfig();
-  const shown = steps.slice(0, taken);
-  if (shown.length === 0) return null;
   const arrive = !animate
     ? false
     : reduce
@@ -96,7 +91,7 @@ export function RecallAidShown({ steps, taken, animate }: ShownProps) {
       : { opacity: 0, y: 4, filter: "blur(4px)" };
   return (
     <div className="grid gap-2">
-      {shown.map((step) => (
+      {steps.slice(0, taken).map((step) => (
         // Blur settles to `none` rather than `blur(0)`, which Safari rasterises soft.
         <motion.div
           key={step.aid}

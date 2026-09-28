@@ -1,8 +1,8 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { Rating } from "@lymi/core";
+import { gradeAllowed, type Rating, type ReviewAid } from "@lymi/core";
 import { clsx } from "clsx";
-import { Anchor, BookMarked, Library, Loader2, Pointer, Signpost, Volume2, X } from "lucide-react";
+import { BookMarked, Library, Loader2, Pointer, Signpost, Volume2, X } from "lucide-react";
 import {
   AnimatePresence,
   animate as animateValue,
@@ -48,6 +48,7 @@ import { Skeleton } from "../components/skeleton";
 import { StateIcon } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
 import type { QueueItem } from "../lib/api";
+import { EASE_OUT } from "../lib/ease";
 import { lanternFor, streakFlameFor } from "../lib/flame";
 import { intervalLabel } from "../lib/i18n";
 import type { EndScreen, Offer } from "../lib/review-complete";
@@ -68,7 +69,6 @@ export interface ReviewHeaderProps {
   onClose?: (() => void) | undefined;
 }
 
-const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 /** The lantern is one object carried between the header and the end of a review. */
 const LANTERN_LAYOUT = "review-lantern";
 const LANTERN_FLIGHT = { type: "spring", visualDuration: 0.6, bounce: 0 } as const;
@@ -253,8 +253,8 @@ function TapHint({ lifted, aided }: { lifted: boolean; aided: boolean }) {
       aria-hidden="true"
       className={clsx(
         "pointer-events-none absolute inset-x-0 flex flex-col items-center gap-1 px-5 text-muted",
-        // Above the pill that takes the next aid, which sits where the hint would.
-        lifted ? "bottom-16" : "bottom-5",
+        // Clear of the aid's pill for the whole card, so it reads as its own line.
+        lifted ? "bottom-20" : "bottom-5",
       )}
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
@@ -365,8 +365,16 @@ export interface RecallAidProps {
   taken: number;
   /** The last step taken arrives in motion. Off when a key took it. */
   animate: boolean;
-  onTake: () => void;
+  onTake: (input: "keyboard" | "pointer") => void;
 }
+
+/** A tap this soon after taking an aid is the same gesture doubled, not a reveal. */
+const AID_TAP_GUARD_MS = 400;
+
+/** The peeked lines leave with the reveal: a short fade, at once when a key revealed the card. */
+const aidLeave: Variants = {
+  leave: (animated: boolean) => ({ opacity: 0, transition: { duration: animated ? 0.12 : 0 } }),
+};
 
 /** The grade strip's full height, 72 px grades under a 12 px gap, which the card gives up on reveal. */
 export const GRADE_STRIP_HEIGHT = 84;
@@ -491,6 +499,7 @@ export function ReviewCard({
   const extrasRef = useRef<HTMLDivElement>(null);
   const revealRef = useRef<HTMLButtonElement>(null);
   const aidRoom = useRef<HTMLDivElement>(null);
+  const tookAidAt = useRef(Number.NEGATIVE_INFINITY);
 
   useEffect(() => {
     if (focusOnMount) revealRef.current?.focus({ preventScroll: true });
@@ -558,7 +567,7 @@ export function ReviewCard({
 
   const step = fit.step;
   const [hook] = aidSteps(card);
-  const peeked = aid && aid.taken > 0 ? aid.steps[aid.taken - 1]?.text : undefined;
+  const peeked = aid ? aid.steps[Math.min(aid.taken, aid.steps.length) - 1]?.text : undefined;
   const hasExtras = !!(card.example || card.notes || hook);
   const languageCode =
     card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase()
@@ -751,7 +760,12 @@ export function ReviewCard({
             <button
               ref={revealRef}
               type="button"
-              onClick={onReveal}
+              onClick={(e) => {
+                // Only a pointer doubles a tap; Space or Enter on the card is always meant.
+                if (e.detail > 0 && performance.now() - tookAidAt.current < AID_TAP_GUARD_MS)
+                  return;
+                onReveal();
+              }}
               aria-label={t`Reveal the card`}
               data-reveal=""
               className="absolute inset-0 z-10 rounded-xl"
@@ -802,9 +816,7 @@ export function ReviewCard({
             <motion.div
               ref={cueRef}
               // A peek moves the cue up for the hook under it, as the reveal does for the answer.
-              layout={
-                (revealed ? animateReveal : (aid?.animate ?? animateReveal)) ? "position" : false
-              }
+              layout={(revealed || !aid?.taken ? animateReveal : aid.animate) ? "position" : false}
               transition={{ layout: { duration: 0.34, ease: EASE_OUT } }}
               className="grid gap-3"
             >
@@ -839,9 +851,13 @@ export function ReviewCard({
               )}
             </motion.div>
 
-            {!revealed && aid && (
-              <RecallAidShown steps={aid.steps} taken={aid.taken} animate={aid.animate} />
-            )}
+            <AnimatePresence mode="popLayout" initial={false} custom={animateReveal}>
+              {!revealed && aid && aid.taken > 0 && (
+                <motion.div key="aid" variants={aidLeave} custom={animateReveal} exit="leave">
+                  <RecallAidShown steps={aid.steps} taken={aid.taken} animate={aid.animate} />
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {revealed ? (
               <motion.div
@@ -887,21 +903,18 @@ export function ReviewCard({
                 steps={aid.steps}
                 taken={aid.taken}
                 onTake={(e) => {
-                  // The pill leaves with its step, so focus moves to what comes next: the card.
+                  tookAidAt.current = performance.now();
+                  // The spent pill turns inert, so focus moves on to what comes next: the card.
                   const focused = e.currentTarget === document.activeElement;
-                  aid.onTake();
+                  // Enter or Space on the pill clicks with no pointer count: a key, which never animates.
+                  aid.onTake(e.detail === 0 ? "keyboard" : "pointer");
                   if (focused) revealRef.current?.focus({ preventScroll: true });
                 }}
               />
             </div>
           )}
           <AnimatePresence>
-            {!revealed && hint && (
-              <TapHint
-                lifted={!!aid && aid.taken < aid.steps.length}
-                aided={!!aid && aid.taken > 0}
-              />
-            )}
+            {!revealed && hint && <TapHint lifted={!!aid} aided={!!aid && aid.taken > 0} />}
           </AnimatePresence>
         </div>
       </div>
@@ -990,8 +1003,8 @@ export interface GradeBarProps {
   focusOnReveal?: boolean | undefined;
   /** The four dates FSRS would set, keyed by rating. Announced, not shown. */
   next?: Record<Rating, string> | undefined;
-  /** The learner peeked before the reveal, so Easy, which means recall without help, is out. */
-  aided?: boolean | undefined;
+  /** What the learner used before the reveal; a grade it rules out keeps its slot but is out. */
+  aid?: ReviewAid | undefined;
   onGrade: (r: Rating) => void;
   className?: string | undefined;
 }
@@ -1011,13 +1024,12 @@ export function GradeBar({
   animateOut = false,
   focusOnReveal = false,
   next,
-  aided = false,
+  aid,
   onGrade,
   className,
 }: GradeBarProps) {
   const { t, i18n } = useLingui();
   const now = new Date();
-  const whyNot = useId();
   const group = useRef<HTMLFieldSetElement>(null);
   // The group, not a grade, takes focus: the 1–4 and Space shortcuts skip a focused button.
   useEffect(() => {
@@ -1046,22 +1058,26 @@ export function GradeBar({
               {GRADES.map((g) => {
                 const GradeIcon = g.icon;
                 const label = i18n._(g.label);
-                if (aided && g.rating === 4) {
+                if (!gradeAllowed(g.rating, aid)) {
                   return (
                     <motion.div key={g.rating} variants={gradeRise} className="grid min-w-0">
                       {/* In its slot so the others never move, and focusable so it says why. */}
                       <button
                         type="button"
-                        aria-label={label}
+                        aria-label={t`${label}, not after a peek`}
                         aria-disabled="true"
-                        aria-describedby={whyNot}
-                        className="edge relative grid h-[72px] min-w-0 cursor-default content-center gap-1 rounded-lg px-1 text-sm font-medium text-muted @2xl:text-base"
+                        className="edge relative grid h-[72px] min-w-0 cursor-default content-center rounded-lg px-1 text-sm font-medium text-muted @2xl:text-base"
                       >
                         <span className="mx-auto grid size-5 place-items-center">
-                          <Anchor className="size-[18px]" aria-hidden="true" strokeWidth={1.75} />
+                          <GradeIcon
+                            className="size-[18px]"
+                            aria-hidden="true"
+                            strokeWidth={1.75}
+                          />
                         </span>
-                        <span id={whyNot} className="text-balance leading-tight">
-                          <Trans>Not after a peek</Trans>
+                        <span>{label}</span>
+                        <span className="text-balance text-2xs font-normal leading-tight @2xl:text-xs">
+                          <Trans>not after a peek</Trans>
                         </span>
                       </button>
                     </motion.div>

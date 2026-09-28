@@ -236,12 +236,13 @@ export async function acceptFix(
     throw new ServiceError("conflict", "This card has changed since Lymi looked at it");
   }
   const finding = Diagnosis.safeParse({ cause: row.cause, draft: row.draft });
+  const diagnosis = finding.success ? finding.data : null;
+  const cause = diagnosis?.cause;
   // With no clear reason there is no draft to accept, but the learner may write their own hook.
-  const fits =
-    finding.success &&
-    (finding.data.cause === input.cause ||
-      (finding.data.cause === "unclear" && input.cause === "no_anchor"));
-  if (!finding.success || !fits) {
+  if (
+    !diagnosis ||
+    (cause !== input.cause && !(cause === "unclear" && input.cause === "no_anchor"))
+  ) {
     throw new ServiceError("invalid", "This card's diagnosis drafted a different fix");
   }
 
@@ -256,7 +257,7 @@ export async function acceptFix(
 
   let written: Written | null = null;
   try {
-    written = await applyFix(ctx, card, finding.data, input, enrichment);
+    written = await applyFix(ctx, card, diagnosis, input, enrichment);
     await db.batch([
       db
         .update(schema.cardDiagnoses)

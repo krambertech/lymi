@@ -154,7 +154,12 @@ function PeekHarness({ card, onReveal }: { card: QueueItem; onReveal: () => void
         onReveal={onReveal}
         aid={
           steps.length
-            ? { steps, taken, animate: false, onTake: () => setTaken((n) => n + 1) }
+            ? {
+                steps,
+                taken,
+                animate: false,
+                onTake: () => setTaken((n) => Math.min(n + 1, steps.length)),
+              }
             : undefined
         }
       />
@@ -183,6 +188,17 @@ test("a peek shows the hook under the cue and says it aloud, without turning the
   expect(card.getByRole("button", { name: /Peek at your hook/ }).elements()).toHaveLength(0);
 });
 
+test("a quick second tap on the peek does not turn the card", async () => {
+  const onReveal = vi.fn();
+  await render(<PeekHarness card={hooked} onReveal={onReveal} />);
+  const card = page.getByRole("region", { name: /Recognition card/ });
+  await card.getByRole("button", { name: /Peek at your hook/ }).dblClick();
+  await expect
+    .element(card.getByRole("status"))
+    .toHaveTextContent("Memory hook: Speed up the brigade");
+  expect(onReveal).not.toHaveBeenCalled();
+});
+
 test("a card without a hook has no peek control", async () => {
   await render(<PeekHarness card={item({ hook: null, hookSource: null })} onReveal={noop} />);
   await expect.element(page.getByRole("button", { name: "Reveal the card" })).toBeInTheDocument();
@@ -206,12 +222,11 @@ test("after a peek Easy keeps its slot but cannot be pressed, and says why", asy
   const onGrade = vi.fn();
   await render(
     <I18nProvider i18n={i18n}>
-      <GradeBar revealed aided onGrade={onGrade} />
+      <GradeBar revealed aid="hook" onGrade={onGrade} />
     </I18nProvider>,
   );
-  const easy = page.getByRole("button", { name: "Easy" });
+  const easy = page.getByRole("button", { name: "Easy, not after a peek" });
   await expect.element(easy).toHaveAttribute("aria-disabled", "true");
-  await expect.element(easy).toHaveAccessibleDescription("Not after a peek");
   // Forced, because Playwright rightly waits forever on a control marked unavailable.
   await easy.click({ force: true });
   expect(onGrade).not.toHaveBeenCalled();
@@ -219,5 +234,5 @@ test("after a peek Easy keeps its slot but cannot be pressed, and says why", asy
   expect(onGrade).toHaveBeenCalledWith(3);
   const buttons = page.getByRole("button").elements();
   expect(buttons).toHaveLength(4);
-  expect(buttons[3]?.getAttribute("aria-label")).toBe("Easy");
+  expect(buttons[3]?.getAttribute("aria-label")).toBe("Easy, not after a peek");
 });

@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { cardLimits, type DraftCard, type FixInput } from "@lymi/core";
+import { CARD_LIMITS, cardLimits, type DraftCard, type FixInput } from "@lymi/core";
 import { cn } from "cn";
 import { Anchor, ChevronRight, ImagePlus, Pencil, SquarePen, TextCursorInput } from "lucide-react";
 import { type ComponentProps, type ReactNode, type Ref, useId, useRef, useState } from "react";
@@ -12,7 +12,7 @@ import { Button, IconButton } from "./button";
 import { SourceChip } from "./chip";
 import { InlineError } from "./inline-error";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "./ui/dialog";
-import { Field, FieldError, FieldLabel } from "./ui/field";
+import { Field, FieldDescription, FieldError, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 
@@ -477,7 +477,7 @@ function HookFix({
           </Trans>
         )
       }
-      primary={<Trans>Keep hook</Trans>}
+      primary={drafted === null ? <Trans>Save hook</Trans> : <Trans>Keep hook</Trans>}
       onSubmit={submit}
     >
       <Field invalid={!!error}>
@@ -491,7 +491,7 @@ function HookFix({
           ref={focusField}
           rows={2}
           value={hook}
-          maxLength={cardLimits.hook ?? undefined}
+          maxLength={CARD_LIMITS.hook}
           placeholder={drafted === null ? t`A sound-alike, or a picture to see` : undefined}
           onChange={(e) => {
             setHook(e.target.value);
@@ -506,11 +506,11 @@ function HookFix({
           autoComplete="off"
           enterKeyHint="done"
         />
+        <FieldDescription>
+          <Trans>It shows under the answer, and you can peek at it before you turn the card.</Trans>
+        </FieldDescription>
         <FieldError>{error}</FieldError>
       </Field>
-      <p className="-mt-1 text-sm text-muted">
-        <Trans>It shows under the answer, and you can peek at it before you turn the card.</Trans>
-      </p>
     </Frame>
   );
 }

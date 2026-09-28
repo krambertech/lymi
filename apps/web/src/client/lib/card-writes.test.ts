@@ -109,6 +109,8 @@ describe("cardPatch", () => {
       hook: "Brigade, hurry",
       hookSource: "manual",
     });
+    // A cleared hook has no source to claim.
+    expect(cardPatch(drafted, { ...kept, hook: "" })).toEqual({ hook: "" });
   });
 });
 

@@ -640,13 +640,14 @@ function editWrite(
     (patch.term !== undefined && patch.term !== current.term) ||
     (patch.language !== undefined && patch.language !== current.language);
   const { reviewModes, directions: _legacy, ...fields } = patch;
+  const hook = patch.hook === undefined ? current.hook : patch.hook || null;
   // Changing a field's text changes where it came from, so an AI fill an app rewrites loses its badge.
   const sources = {
     meaningSource: sourceAfter(patch.meaning, patch.meaningSource),
     exampleSource: sourceAfter(patch.example, patch.exampleSource),
     pronunciationSource: sourceAfter(patch.pronunciation, patch.pronunciationSource),
-    // A hook cleared has no source left, whatever the caller said about it.
-    hookSource: patch.hook === "" ? null : sourceAfter(patch.hook, patch.hookSource),
+    // Only a hook has a source, whatever the caller said about one that is not there.
+    hookSource: hook ? sourceAfter(patch.hook, patch.hookSource) : null,
   };
   const modes = resolveCardModes(
     patch,
@@ -656,7 +657,7 @@ function editWrite(
     .update(schema.cards)
     .set({
       ...fields,
-      ...(patch.hook !== undefined ? { hook: patch.hook || null } : {}),
+      hook,
       ...sources,
       ...(modes ?? {}),
       ...section,

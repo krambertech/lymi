@@ -235,13 +235,13 @@ test("no clear reason lets the learner write a hook of their own, and an empty o
   await expect.element(field).toHaveValue("");
   expect(dialog.getByText("AI hook").elements()).toHaveLength(0);
 
-  await dialog.getByRole("button", { name: "Keep hook" }).click();
+  await dialog.getByRole("button", { name: "Save hook" }).click();
   await expect.element(dialog.getByText("Write a hook.")).toBeVisible();
   await expect.element(field).toHaveAttribute("aria-invalid", "true");
   expect(accept).not.toHaveBeenCalled();
 
   await userEvent.type(field, "Look at the vat");
-  await dialog.getByRole("button", { name: "Keep hook" }).click();
+  await dialog.getByRole("button", { name: "Save hook" }).click();
   expect(accept).toHaveBeenCalledWith("d-unclear", { cause: "no_anchor", hook: "Look at the vat" });
 });
 

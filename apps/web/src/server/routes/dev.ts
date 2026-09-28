@@ -242,7 +242,7 @@ const FixesBody = z.object({
 dev.post("/fixes", describe({ hide: true, open: true }), body(FixesBody, "fixes"), async (c) => {
   const ctx = ctxOf(c);
   const { causes, hooked } = c.req.valid("json");
-  const seeded = await seedFixes(ctx, causes, hooked === undefined ? {} : { hooked });
+  const seeded = await seedFixes(ctx, causes, { hooked });
   return c.json({ ...seeded, counts: await devCounts(ctx) });
 });
 

@@ -1,8 +1,8 @@
 import {
+  CARD_LIMITS,
   DIAGNOSIS_CAUSES,
   Diagnosis,
   type DiagnosisCause,
-  HOOK_LIMIT,
   type ReviewModeKey,
 } from "@lymi/core";
 import { z } from "zod";
@@ -82,7 +82,11 @@ const REPLY_SCHEMA = {
       cueField: { type: ["string", "null"], enum: ["term", "meaning", null] },
       cue: { type: ["string", "null"], description: "several_answers only" },
       otherAnswer: { type: ["string", "null"], description: "several_answers only" },
-      hook: { type: ["string", "null"], maxLength: HOOK_LIMIT, description: "no_anchor only" },
+      hook: {
+        type: ["string", "null"],
+        maxLength: CARD_LIMITS.hook,
+        description: "no_anchor only",
+      },
     },
     required: [
       "reason",

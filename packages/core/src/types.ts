@@ -503,11 +503,9 @@ export const CARD_LIMITS = {
   example: 2000,
   notes: 2000,
   source: 200,
+  // A hook is a phrase that leads back to the term, never a paragraph.
   hook: 200,
 } as const;
-
-/** A hook is a phrase that leads back to the term, never a paragraph. */
-export const HOOK_LIMIT = CARD_LIMITS.hook;
 
 export const CardInput = z.object({
   id: ClientId.optional(),
@@ -647,6 +645,10 @@ export const ReviewAid = z.enum(REVIEW_AIDS).meta({
 });
 export type ReviewAid = z.infer<typeof ReviewAid>;
 
+/** Whether a grade may follow what the learner used before the reveal: every grade but an aided Easy. */
+export const gradeAllowed = (rating: number, aid: ReviewAid | null | undefined) =>
+  !aid || rating !== 4;
+
 /**
  * One grade names its review mode. `direction` is the form grades took before review modes,
  * still accepted so an older app or a queued offline grade replays onto the same schedule.
@@ -671,7 +673,7 @@ export const GradeInput = z
     message: "Say which review mode was graded.",
     path: ["mode"],
   })
-  .refine((grade) => !(grade.aid && grade.rating === 4), {
+  .refine((grade) => gradeAllowed(grade.rating, grade.aid), {
     message: "Easy means recall without help, so a grade with an aid cannot be Easy.",
     path: ["rating"],
   });
@@ -730,7 +732,7 @@ export const Diagnosis = z
     z.object({
       cause: z.literal("no_anchor"),
       draft: z.object({
-        hook: z.string().trim().min(1).max(HOOK_LIMIT).meta({
+        hook: z.string().trim().min(1).max(CARD_LIMITS.hook).meta({
           description: "A short association in the meaning language that leads back to the term",
         }),
       }),
@@ -775,7 +777,7 @@ export const FixInput = z
     }),
     z.object({
       cause: z.literal("no_anchor"),
-      hook: z.string().trim().min(1, "Write a hook.").max(HOOK_LIMIT).meta({
+      hook: z.string().trim().min(1, "Write a hook.").max(CARD_LIMITS.hook).meta({
         description:
           "The card's memory hook. Accepted for a card with no clear reason too, when the learner writes their own.",
       }),

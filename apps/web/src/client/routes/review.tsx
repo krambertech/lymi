@@ -3,6 +3,7 @@ import {
   canSpeakTerm,
   type Drawn,
   drawKey,
+  gradeAllowed,
   modeKey,
   type Rating,
   ROUNDS,
@@ -562,7 +563,7 @@ function Review() {
     (rating: Rating, input: "keyboard" | "pointer" = "pointer") => {
       if (!revealed || !current || !data || !state) return;
       // Easy means recall without help, so after a peek it does nothing, by click or by key.
-      if (rating === 4 && aid) return;
+      if (!gradeAllowed(rating, aid)) return;
       const item = current;
       const key = modeKey(item.mode);
       const repeat = state.log.some((e) => e.cardId === item.card.id && e.mode === key);
@@ -642,9 +643,10 @@ function Review() {
       const control = target?.closest(
         "button, a, input, textarea, select, [contenteditable='true']",
       );
-      // The aid's key also reaches the card's reveal button, where grading from the strip leaves focus.
-      if (current && !revealed && e.key.toUpperCase() === AID_KEY) {
-        if (control && !control.hasAttribute("data-reveal")) return;
+      // The aid's key also reaches the card's reveal button, where grading from the strip leaves
+      // focus, and the pill itself; matched by its place, so every keyboard layout has it.
+      if (current && !revealed && e.code === AID_KEY.code) {
+        if (control && !control.matches("[data-reveal], [data-aid]")) return;
         e.preventDefault();
         takeAid("keyboard");
         return;
@@ -834,7 +836,7 @@ function Review() {
                       steps,
                       taken,
                       animate: aidState.key === showing ? aidState.animate : true,
-                      onTake: () => takeAid("pointer"),
+                      onTake: takeAid,
                     }
                   : undefined
               }
@@ -847,7 +849,7 @@ function Review() {
               animateOut={animateNextCard}
               focusOnReveal={focusGrades}
               next={current.next}
-              aided={!!aid}
+              aid={aid}
               onGrade={(rating) => onGrade(rating, "pointer")}
             />
           </motion.div>

@@ -1,13 +1,15 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { ExploreOut, Shelf } from "@lymi/core/catalog";
-import { shelvesOf } from "@lymi/core/catalog";
-import { Compass } from "lucide-react";
-import { type MouseEvent, useMemo } from "react";
+import { hasShelfPage, shelfRoute, shelvesOf } from "@lymi/core/catalog";
+import { ChevronRight, Compass } from "lucide-react";
+import { type MouseEvent, useMemo, useRef } from "react";
 import { DeckTile } from "../components/deck-tray";
 import { EmptySection, ErrorState } from "../components/empty-state";
 import { Screen } from "../components/layout/screen";
+import { NavLink } from "../components/nav-link";
 import { Skeleton } from "../components/skeleton";
 import { shelfLabel } from "../lib/explore";
+import { useColumns } from "../lib/use-columns";
 
 interface Props {
   data: ExploreOut | undefined;
@@ -56,6 +58,78 @@ function ShelfChips({ shelves }: { shelves: readonly Shelf[] }) {
         ))}
       </ul>
     </nav>
+  );
+}
+
+/**
+ * One shelf. Where the shelf has a page of its own it shows the decks that fit one row and leads to
+ * the rest; a shelf with no page shows every deck, since nothing else would lead to them.
+ */
+function ShelfSection({
+  shelf,
+  added,
+  onAdd,
+  adding,
+}: {
+  shelf: Shelf;
+  added: ExploreOut["added"];
+  onAdd: Props["onAdd"];
+  adding: string | undefined;
+}) {
+  const { i18n, t } = useLingui();
+  const list = useRef<HTMLUListElement>(null);
+  const columns = useColumns(list, 216, 22);
+  const label = shelfLabel(i18n, shelf);
+  const headingId = shelfId(shelf.key);
+  const route = shelfRoute(shelf);
+  const page = route && hasShelfPage(shelf) ? route : null;
+  const decks = page ? shelf.decks.slice(0, columns) : shelf.decks;
+  return (
+    <section aria-labelledby={headingId} className="mt-8 first:mt-0">
+      <div className="flex items-baseline justify-between gap-5 border-b border-edge pb-3">
+        <h2
+          id={headingId}
+          tabIndex={-1}
+          className="scroll-mt-20 text-lg font-medium text-text focus:outline-none"
+        >
+          {label}
+        </h2>
+        {page ? (
+          <NavLink
+            to="/explore/$kind/$name"
+            params={{ kind: page.kind, name: page.name }}
+            className="inline-flex shrink-0 items-center gap-1 rounded-xs text-sm font-medium whitespace-nowrap text-text-2 transition-colors duration-150 hoverable:hover:text-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            <Trans>See all</Trans>
+            <span className="font-normal text-muted tabular-nums">{shelf.decks.length}</span>
+            <ChevronRight aria-hidden="true" className="size-4 text-muted rtl:-scale-x-100" />
+          </NavLink>
+        ) : (
+          <p className="text-sm whitespace-nowrap text-muted tabular-nums">
+            <Plural value={shelf.decks.length} one="# deck" other="# decks" />
+          </p>
+        )}
+      </div>
+      <ul ref={list} className="deck-shelf" aria-label={t`${label} decks`}>
+        {decks.map((deck) => (
+          <li key={deck.slug}>
+            <DeckTile
+              deck={deck}
+              addedTo={added[deck.slug] ?? null}
+              onAdd={() =>
+                onAdd({
+                  slug: deck.slug,
+                  name: deck.name,
+                  // The edition this row was read in, so Library says what the shelf said.
+                  edition: deck.meaningLanguage,
+                })
+              }
+              adding={adding === deck.slug}
+            />
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
@@ -109,45 +183,15 @@ export function ExploreView({ data, failed, busy, onRetry, onAdd, adding }: Prop
       ) : (
         <>
           {shelves.length > 1 && <ShelfChips shelves={shelves} />}
-          {shelves.map((shelf) => {
-            const label = shelfLabel(i18n, shelf);
-            const headingId = shelfId(shelf.key);
-            return (
-              <section key={shelf.key} aria-labelledby={headingId} className="mt-8 first:mt-0">
-                <div className="flex items-baseline justify-between gap-5 border-b border-edge pb-3">
-                  <h2
-                    id={headingId}
-                    tabIndex={-1}
-                    className="scroll-mt-6 text-lg font-medium text-text focus:outline-none"
-                  >
-                    {label}
-                  </h2>
-                  <p className="text-sm whitespace-nowrap text-muted tabular-nums">
-                    <Plural value={shelf.decks.length} one="# deck" other="# decks" />
-                  </p>
-                </div>
-                <ul className="deck-shelf" aria-label={t`${label} decks`}>
-                  {shelf.decks.map((deck) => (
-                    <li key={deck.slug}>
-                      <DeckTile
-                        deck={deck}
-                        addedTo={data.added[deck.slug] ?? null}
-                        onAdd={() =>
-                          onAdd({
-                            slug: deck.slug,
-                            name: deck.name,
-                            // The edition this row was read in, so Library says what the shelf said.
-                            edition: deck.meaningLanguage,
-                          })
-                        }
-                        adding={adding === deck.slug}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            );
-          })}
+          {shelves.map((shelf) => (
+            <ShelfSection
+              key={shelf.key}
+              shelf={shelf}
+              added={data.added}
+              onAdd={onAdd}
+              adding={adding}
+            />
+          ))}
         </>
       )}
     </Screen>

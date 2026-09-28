@@ -354,6 +354,9 @@ msgstr "{attempts, plural, one {повторение сегодня} few {пов
 msgid "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
 msgstr "{cards, plural, one {# карточка добавится в повторения.} few {# карточки добавятся в повторения.} many {# карточек добавится в повторения.} other {# карточки добавится в повторения.}}"
 
+msgid "{cards, plural, one {# card} other {# cards}}"
+msgstr "{cards, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
+
 #. placeholder {0}: fileSize(item.byteSize ?? 0, i18n.locale)
 msgid "{cards, plural, one {# card} other {# cards}} · {0}"
 msgstr "{cards, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}} · {0}"
@@ -1360,6 +1363,9 @@ msgstr "Не удалось загрузить эту колоду"
 msgid "Couldn’t load this import"
 msgstr "Не удалось загрузить этот импорт"
 
+msgid "Couldn’t load this shelf"
+msgstr "Не удалось загрузить полку"
+
 msgid "Couldn’t load Today"
 msgstr "Не удалось загрузить экран «Сегодня»"
 
@@ -2072,6 +2078,9 @@ msgstr "Импорт не подтвердили за три дня, поэто�
 msgid "Its cards and the decks it made are hidden. Restore brings them back with their history."
 msgstr "Его карточки и созданные им колоды скрыты. Восстановление вернёт их вместе с историей."
 
+msgid "Its decks may have been withdrawn. Every deck Lymi publishes is on Explore."
+msgstr "Возможно, её колоды сняли с публикации. Все колоды, которые публикует Lymi, есть в каталоге."
+
 msgctxt "deck tag"
 msgid "JLPT N5"
 msgstr "JLPT N5"
@@ -2354,6 +2363,9 @@ msgstr "Другие колоды"
 
 msgid "More fields"
 msgstr "Больше полей"
+
+msgid "More languages"
+msgstr "Другие языки"
 
 msgid "More like this"
 msgstr "Похожие колоды"
@@ -2709,6 +2721,9 @@ msgstr "Открыть"
 msgid "Open deck"
 msgstr "Открыть колоду"
 
+msgid "Open Explore"
+msgstr "Открыть каталог"
+
 msgid "Open in Library"
 msgstr "Открыть в Библиотеке"
 
@@ -2741,6 +2756,9 @@ msgstr "Параметры «{seriesName}»"
 msgctxt "Between two ways to sign in"
 msgid "or"
 msgstr "или"
+
+msgid "Other subjects"
+msgstr "Другие темы"
 
 msgid "Other ways to add cards"
 msgstr "Другие способы добавить карточки"
@@ -3202,6 +3220,9 @@ msgstr "Увидеть {word} и вспомнить «{answer}»"
 
 msgid "See {word}, recall what it means"
 msgstr "Увидеть {word} и вспомнить значение"
+
+msgid "See all"
+msgstr "Все"
 
 msgid "See the difference"
 msgstr "Увидеть разницу"
@@ -3724,6 +3745,9 @@ msgstr "Эта ссылка для присоединения больше не 
 
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "В этой ссылке нет приложения, которое отправило запрос. Начни снова из приложения."
+
+msgid "This shelf has no page"
+msgstr "У этой полки нет страницы"
 
 msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
 msgstr "Для большинства файлов это занимает несколько секунд. В колоды пока ничего не добавлено."

@@ -354,6 +354,9 @@ msgstr "{attempts, plural, one {review today} other {reviews today}}"
 msgid "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
 msgstr "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
 
+msgid "{cards, plural, one {# card} other {# cards}}"
+msgstr "{cards, plural, one {# card} other {# cards}}"
+
 #. placeholder {0}: fileSize(item.byteSize ?? 0, i18n.locale)
 msgid "{cards, plural, one {# card} other {# cards}} · {0}"
 msgstr "{cards, plural, one {# card} other {# cards}} · {0}"
@@ -1360,6 +1363,9 @@ msgstr "Couldn’t load this deck"
 msgid "Couldn’t load this import"
 msgstr "Couldn’t load this import"
 
+msgid "Couldn’t load this shelf"
+msgstr "Couldn’t load this shelf"
+
 msgid "Couldn’t load Today"
 msgstr "Couldn’t load Today"
 
@@ -2072,6 +2078,9 @@ msgstr "It wasn’t confirmed within three days, so Lymi deleted the file. Choos
 msgid "Its cards and the decks it made are hidden. Restore brings them back with their history."
 msgstr "Its cards and the decks it made are hidden. Restore brings them back with their history."
 
+msgid "Its decks may have been withdrawn. Every deck Lymi publishes is on Explore."
+msgstr "Its decks may have been withdrawn. Every deck Lymi publishes is on Explore."
+
 msgctxt "deck tag"
 msgid "JLPT N5"
 msgstr "JLPT N5"
@@ -2354,6 +2363,9 @@ msgstr "More decks"
 
 msgid "More fields"
 msgstr "More fields"
+
+msgid "More languages"
+msgstr "More languages"
 
 msgid "More like this"
 msgstr "More like this"
@@ -2709,6 +2721,9 @@ msgstr "Open"
 msgid "Open deck"
 msgstr "Open deck"
 
+msgid "Open Explore"
+msgstr "Open Explore"
+
 msgid "Open in Library"
 msgstr "Open in Library"
 
@@ -2741,6 +2756,9 @@ msgstr "Options for {seriesName}"
 msgctxt "Between two ways to sign in"
 msgid "or"
 msgstr "or"
+
+msgid "Other subjects"
+msgstr "Other subjects"
 
 msgid "Other ways to add cards"
 msgstr "Other ways to add cards"
@@ -3202,6 +3220,9 @@ msgstr "See {word}, recall “{answer}”"
 
 msgid "See {word}, recall what it means"
 msgstr "See {word}, recall what it means"
+
+msgid "See all"
+msgstr "See all"
 
 msgid "See the difference"
 msgstr "See the difference"
@@ -3724,6 +3745,9 @@ msgstr "This join link stopped working. Ask the owner for a new one."
 
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "This link is missing the app that asked. Start again from the app."
+
+msgid "This shelf has no page"
+msgstr "This shelf has no page"
 
 msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
 msgstr "This takes a few seconds for most files. Nothing is added to your decks yet."

@@ -1122,6 +1122,9 @@ msgstr "Выбери, чем каждое поле Mochi станет в кар�
 msgid "Choose your {app} file"
 msgstr "Выбор файла {app}"
 
+msgid "Citizenship"
+msgstr "Гражданство"
+
 msgid "Clear"
 msgstr "Сбросить"
 
@@ -1622,9 +1625,6 @@ msgstr "Новый пример: «{value}»"
 
 msgid "Example from lesson"
 msgstr "Пример с урока"
-
-msgid "Exams and tests"
-msgstr "Экзамены и тесты"
 
 msgid "Explore"
 msgstr "Каталог"
@@ -3090,6 +3090,9 @@ msgstr "От {owner}"
 
 msgid "Shared with you"
 msgstr "Поделились с тобой"
+
+msgid "Shelves"
+msgstr "Полки"
 
 msgid "Show"
 msgstr "Показать"

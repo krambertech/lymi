@@ -55,14 +55,6 @@ export function DeckTile({
         {deck.summary}
       </p>
       <p className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-muted tabular-nums">
-        {deck.level && (
-          <>
-            <span>{deck.level}</span>
-            <span aria-hidden="true" className="text-faint">
-              ·
-            </span>
-          </>
-        )}
         <span>
           <Plural value={deck.cardCount} one="# card" other="# cards" />
         </span>

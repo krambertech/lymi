@@ -1,30 +1,24 @@
 import type { I18n } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
-import type { PublicDeckOut } from "@lymi/core/catalog";
+import { type PublicDeckOut, taughtLanguage } from "@lymi/core/catalog";
 import { languageName } from "../../lib/deck-page";
+import { deckSubject } from "../../lib/subjects";
 
-/** The deck's title for the tab and search results: its name, what it teaches and the level. */
+/** The deck's title for the tab and search results: its name, then the language it teaches or its subject. */
 export function deckTitle(i18n: I18n, deck: PublicDeckOut): string {
   const name = deck.name;
-  const level = deck.level;
-  const language = languageName(deck.language, i18n.locale);
-  if (language && level)
-    return i18n._(msg`${name} · ${language} vocabulary, level ${level} · Lymi`);
+  const language = languageName(taughtLanguage(deck), i18n.locale);
   if (language) return i18n._(msg`${name} · ${language} vocabulary · Lymi`);
+  const subject = deckSubject(i18n, deck);
+  if (subject) return i18n._(msg`${name} · ${subject} · Lymi`);
   return i18n._(msg`${name} · Flashcards · Lymi`);
 }
 
 /** Written from the deck's facts so it reads in the page language, whatever the deck is in. */
 export function deckDescription(i18n: I18n, deck: PublicDeckOut): string {
   const count = deck.cardCount;
-  const level = deck.level;
-  const language = languageName(deck.language, i18n.locale);
+  const language = languageName(taughtLanguage(deck), i18n.locale);
   const meaningLanguage = languageName(deck.meaningLanguage, i18n.locale) ?? deck.meaningLanguage;
-  if (language && level) {
-    return i18n._(
-      msg`${plural(count, { one: `# ${language} card`, other: `# ${language} cards` })} at level ${level}, with meanings in ${meaningLanguage}. Try a few, then add the deck to Lymi to review them all.`,
-    );
-  }
   if (language) {
     return i18n._(
       msg`${plural(count, { one: `# ${language} card`, other: `# ${language} cards` })} with meanings in ${meaningLanguage}. Try a few, then add the deck to Lymi to review them all.`,
@@ -47,9 +41,10 @@ export function deckShareText(
 ): { name: string; facts: string; byline: string; alt: string } {
   const name = deck.name;
   const publisher = deck.publisher;
-  const language = languageName(deck.language, i18n.locale, { label: true });
+  const shelf =
+    languageName(taughtLanguage(deck), i18n.locale, { label: true }) ?? deckSubject(i18n, deck);
   const cards = i18n._(msg`${plural(deck.cardCount, { one: "# card", other: "# cards" })}`);
-  const facts = [language, deck.level, cards].filter(Boolean).join(" · ");
+  const facts = [shelf, cards].filter(Boolean).join(" · ");
   return {
     name,
     facts,

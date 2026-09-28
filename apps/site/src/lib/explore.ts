@@ -13,7 +13,7 @@ export function explorePaths(): Record<Locale, string> {
 }
 
 /** The shelves and their order live in core, so both Explores group decks the same way. */
-export { CATEGORY_ORDER, type Shelf, shelvesOf, UNCATEGORISED } from "@lymi/core/catalog";
+export { type Shelf, shelvesOf, UNCATEGORISED } from "@lymi/core/catalog";
 
 /** FNV-1a of everything the page shows, folded into one value for the ETag. */
 function hash(text: string): number {
@@ -38,12 +38,12 @@ export function catalogEtag(parts: {
 }
 
 /**
- * Searchable text for one deck: its name, summary, the card on its tray, and the names of its
+ * Searchable text for one deck: its name, summary, the card on its tray, and the names of its shelf,
  * languages and tags. The locale is the reader's, so the haystack folds case exactly as the typed
  * query does.
  */
 export function searchText(deck: PublicDeckSummary, names: string[], locale: string): string {
-  return [deck.name, deck.summary, deck.level, deck.card?.term, deck.card?.meaning, ...names]
+  return [deck.name, deck.summary, deck.card?.term, deck.card?.meaning, ...names]
     .filter(Boolean)
     .join(" ")
     .toLocaleLowerCase(locale);

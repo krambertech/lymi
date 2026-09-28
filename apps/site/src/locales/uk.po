@@ -65,9 +65,6 @@ msgstr "{cards, plural, one {картка} few {картки} many {карток
 msgid "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}}"
 msgstr "{CLASS_LEARNERS, plural, one {Приєднався # учень} few {Приєдналися # учні} many {Приєдналося # учнів} other {Приєдналося # учня}}"
 
-msgid "{count, plural, one {# {language} card} other {# {language} cards}} at level {level}, with meanings in {meaningLanguage}. Try a few, then add the deck to Lymi to review them all."
-msgstr "{count, plural, one {# картка} few {# картки} many {# карток} other {# картки}}. {language} мова, рівень {level}. Значення — {meaningLanguage}. Спробуй кілька, а потім додай колоду в Lymi, щоб повторювати всі."
-
 msgid "{count, plural, one {# {language} card} other {# {language} cards}} with meanings in {meaningLanguage}. Try a few, then add the deck to Lymi to review them all."
 msgstr "{count, plural, one {# картка} few {# картки} many {# карток} other {# картки}}. {language} мова. Значення — {meaningLanguage}. Спробуй кілька, а потім додай колоду в Lymi, щоб повторювати всі."
 
@@ -98,8 +95,8 @@ msgstr "{left, plural, =0 {Це вся колода. Додай її, і Lymi с
 msgid "{name} · {language} vocabulary · Lymi"
 msgstr "{name} · {language} мова · Lymi"
 
-msgid "{name} · {language} vocabulary, level {level} · Lymi"
-msgstr "{name} · {language} мова, рівень {level} · Lymi"
+msgid "{name} · {subject} · Lymi"
+msgstr "{name} · {subject} · Lymi"
 
 msgid "{name} · Flashcards · Lymi"
 msgstr "{name} · Флеш-картки · Lymi"
@@ -315,9 +312,6 @@ msgstr "AI-асистенти"
 
 msgid "Al que madruga, Dios lo ayuda: the early bird catches the worm."
 msgstr "Al que madruga, Dios lo ayuda: хто рано встає, тому Бог дає."
-
-msgid "All"
-msgstr "Усі"
 
 msgid "All good?"
 msgstr "Усе добре?"
@@ -541,6 +535,9 @@ msgstr "Акорди, гами й теорія до творів, які гра�
 
 msgid "cinnamon bun"
 msgstr "булочка з корицею"
+
+msgid "Citizenship"
+msgstr "Громадянство"
 
 msgid "City; town"
 msgstr "Місто"
@@ -780,9 +777,6 @@ msgstr "Підготовка до іспитів"
 
 msgid "Example"
 msgstr "Приклад"
-
-msgid "Exams and tests"
-msgstr "Іспити й тести"
 
 msgid "Excuse me"
 msgstr "Перепрошую"
@@ -1214,9 +1208,6 @@ msgstr "Мова"
 
 msgid "Language learning"
 msgstr "Вивчення мов"
-
-msgid "Languages"
-msgstr "Мови"
 
 msgid "Last updated"
 msgstr "Оновлено"
@@ -1818,8 +1809,8 @@ msgstr "Одна колода на всю групу."
 msgid "Share one link."
 msgstr "Одне посилання для всіх."
 
-msgid "Shelf"
-msgstr "Полиця"
+msgid "Shelves"
+msgstr "Полиці"
 
 msgid "Shortcuts"
 msgstr "Швидкі команди"

@@ -1,4 +1,4 @@
-import type { PublicationInput } from "@lymi/core";
+import { PublicationInput } from "@lymi/core";
 import { loadPublicDeck } from "@lymi/core/catalog";
 import { and, eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -14,6 +14,8 @@ import {
   isPublicationSlug,
   previewPublication,
   publicationAdmits,
+  publicationColumns,
+  publicationOut,
   publishDeck,
   publisherAvatar,
   withdrawDeck,
@@ -44,7 +46,6 @@ afterAll(async () => {
 const input = (slug: string): PublicationInput => ({
   slug,
   summary: "Words and phrases for your first weeks in Estonia.",
-  level: "A1",
   meaningLanguage: "en",
   publisher: "Lymi",
   sources: [{ title: "EKI A1 word list" }],
@@ -136,6 +137,32 @@ describe("publishing", () => {
     const deck = await publishedDeck("owner-reads");
     expect(await getPublication(lymi, deck.id)).toMatchObject({ slug: "owner-reads" });
     await expect(getPublication(anna, deck.id)).rejects.toEqual(notFound);
+  });
+
+  it("files a deck under citizenship and refuses the retired exams shelf", () => {
+    expect(
+      PublicationInput.parse({ ...input("citizenship"), category: "citizenship" }),
+    ).toMatchObject({ category: "citizenship" });
+    expect(PublicationInput.safeParse({ ...input("exams"), category: "exams" }).success).toBe(
+      false,
+    );
+  });
+
+  it("keeps no level, and reads a deck still on a retired shelf as having none", async () => {
+    const parsed = PublicationInput.parse({ ...input("levelled"), level: "A1" });
+    expect(parsed).not.toHaveProperty("level");
+    // The column is dropped in a follow-up, so no whole-row read may name it.
+    expect(publicationColumns).not.toHaveProperty("level");
+
+    const deck = await publishedDeck("still-on-exams");
+    await db
+      .update(schema.deckPublications)
+      .set({ category: "exams" as never })
+      .where(eq(schema.deckPublications.deckId, deck.id));
+    const row = await getPublication(lymi, deck.id);
+    const { publication } = publicationOut("https://my.lymi.test", row);
+    expect(publication).toMatchObject({ category: null });
+    expect(publication).not.toHaveProperty("level");
   });
 
   it("checks the slug shape", () => {

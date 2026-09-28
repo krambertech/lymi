@@ -3,11 +3,15 @@ import {
   type CardRow,
   isPublicDeckSlug,
   type PublicationRow,
+  type PublicDeckSummary,
   previewMode,
   projectPublicDeck,
   type RelatedCandidate,
   rankRelated,
   type SectionRow,
+  shelvesOf,
+  taughtLanguage,
+  UNCATEGORISED,
 } from "./catalog";
 import { PublicationInput } from "./types";
 
@@ -15,7 +19,7 @@ const publication = (over: Partial<PublicationRow> = {}): PublicationRow => ({
   slug: "everyday-estonian",
   status: "published",
   summary: "Words and phrases for your first weeks in Estonia.",
-  level: "A1",
+  category: "languages",
   tags: [],
   meaningLanguage: "en",
   originalMeaningLanguage: "en",
@@ -204,6 +208,16 @@ describe("rankRelated", () => {
     ]);
   });
 
+  it("counts a shared language only between decks that teach it, never a subject deck's", () => {
+    const science = deck("periodic-table", { category: "science", language: "en" });
+    const english = deck("english-a1", { category: "languages", language: "en" });
+    expect(rankRelated(science, [english], 10)).toEqual([]);
+    expect(rankRelated(english, [science], 10)).toEqual([]);
+    expect(rankRelated(english, [deck("english-b1", { language: "en" })], 10)).toEqual([
+      "english-b1",
+    ]);
+  });
+
   it("leaves out the deck itself and decks that share nothing, and keeps catalogue order on a tie", () => {
     const candidates = [
       anchor,
@@ -244,5 +258,89 @@ describe("isPublicDeckSlug", () => {
     expect(isPublicDeckSlug("../secret")).toBe(false);
     expect(isPublicDeckSlug("a".repeat(81))).toBe(false);
     expect(isPublicDeckSlug(undefined)).toBe(false);
+  });
+});
+
+const summary = (
+  slug: string,
+  category: string | null,
+  language: string | null = "et",
+): PublicDeckSummary => ({
+  slug,
+  name: slug,
+  summary: "",
+  category,
+  tags: [],
+  language,
+  meaningLanguage: "en",
+  cardCount: 1,
+  sectionCount: 0,
+  card: null,
+});
+
+describe("shelvesOf", () => {
+  it("puts language shelves first, most decks first, then the subjects in their fixed order", () => {
+    const shelves = shelvesOf([
+      summary("capitals", "geography", null),
+      summary("road-signs", "driving", null),
+      summary("spanish-a1", "languages", "es"),
+      summary("naturalisation", "citizenship", null),
+      summary("estonian-a1", "languages", "et"),
+      summary("periodic-table", "science", null),
+      summary("estonian-a2", "languages", "et"),
+      summary("prompting", "technology", null),
+      summary("interviews", "work", null),
+    ]);
+    expect(shelves.map((shelf) => shelf.key)).toEqual([
+      "language-et",
+      "language-es",
+      "geography",
+      "science",
+      "driving",
+      "citizenship",
+      "technology",
+      "work",
+    ]);
+    expect(shelves[0]).toMatchObject({ language: "et" });
+    expect(shelves[2]).toMatchObject({ language: null });
+  });
+
+  it("orders language shelves with the same count by their tag, so both Explores agree", () => {
+    const shelves = shelvesOf([
+      summary("korean", "languages", "ko"),
+      summary("finnish", "languages", "fi"),
+    ]);
+    expect(shelves.map((shelf) => shelf.language)).toEqual(["fi", "ko"]);
+  });
+
+  it("gathers a deck with no shelf, a retired subject, or a language deck with no language last", () => {
+    const shelves = shelvesOf([
+      summary("loose", null),
+      summary("ielts", "exams"),
+      summary("estonian", "languages"),
+      summary("unspoken", "languages", null),
+    ]);
+    expect(shelves.map((shelf) => shelf.key)).toEqual(["language-et", UNCATEGORISED]);
+    expect(shelves.at(-1)?.decks.map((d) => d.slug)).toEqual(["loose", "ielts", "unspoken"]);
+  });
+
+  it("puts every deck on exactly one shelf and leaves out empty shelves", () => {
+    const decks = [
+      summary("a", "languages", "de"),
+      summary("b", "science", "en"),
+      summary("c", null, null),
+    ];
+    const shelves = shelvesOf(decks);
+    expect(shelves.flatMap((shelf) => shelf.decks)).toHaveLength(decks.length);
+    expect(shelves.map((shelf) => shelf.key)).toEqual(["language-de", "science", UNCATEGORISED]);
+  });
+});
+
+describe("taughtLanguage", () => {
+  it("is the deck's language unless the deck sits on a subject shelf", () => {
+    expect(taughtLanguage({ category: "languages", language: "es" })).toBe("es");
+    expect(taughtLanguage({ category: null, language: "es" })).toBe("es");
+    expect(taughtLanguage({ category: "science", language: "en" })).toBeNull();
+    expect(taughtLanguage({ category: "geography", language: null })).toBeNull();
   });
 });

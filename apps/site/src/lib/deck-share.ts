@@ -13,7 +13,7 @@ const HUES = [25, 110, 150, 195, 235, 280, 320, 350];
 
 export interface ShareContent {
   name: string;
-  /** Language, level and card count, already in the page language. */
+  /** The language taught or the subject, and the card count, already in the page language. */
   facts: string;
   byline: string;
   /** The deck's tray hue index, so the preview wears the colour its page and tile do. */

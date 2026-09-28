@@ -1,3 +1,4 @@
+import { dayWindow } from "@lymi/core";
 import { and, eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
@@ -13,11 +14,35 @@ import {
   undoFix,
 } from "./fixes";
 import { join } from "./members";
-import { reviewDraw, reviewQueue } from "./review";
+import { gradeCard, reviewDraw, reviewQueue } from "./review";
 import { setReviewTimezone } from "./review-days";
 import { learner, testDb } from "./test-db";
 
 const DAY = 86_400_000;
+const today = () => dayWindow(new Date(), "UTC");
+
+/** The database, except that the batch recording an accepted fix fails, and only that batch. */
+function failingAcceptRecord(db: Db) {
+  let failed = false;
+  const recordsAccept = (statement: unknown) => {
+    const { sql, params } = (statement as { toSQL(): { sql: string; params: unknown[] } }).toSQL();
+    return /^insert into "audit_log"/.test(sql) && params.includes("accept");
+  };
+  const failing = new Proxy(db, {
+    get(target, prop, receiver) {
+      const value = Reflect.get(target, prop, receiver);
+      if (prop === "batch") {
+        return (statements: Parameters<Db["batch"]>[0]) => {
+          if (!statements.some(recordsAccept)) return target.batch(statements);
+          failed = true;
+          return Promise.reject(new Error("D1 went away"));
+        };
+      }
+      return typeof value === "function" ? value.bind(target) : value;
+    },
+  });
+  return { db: failing, failed: () => failed };
+}
 
 describe("offering a diagnosis's fix in review", () => {
   let db: Db;
@@ -171,7 +196,68 @@ describe("offering a diagnosis's fix in review", () => {
       confidence: 0.3,
       model: "test",
     });
-    expect(await reviewOffers(member, [card], new Set([card.id]), "UTC")).toEqual(new Map());
+    expect(await reviewOffers(member, [card], new Set([card.id]), today())).toEqual(new Map());
+  });
+
+  it("draws a member's often-forgotten card from a shared deck with no offer", async () => {
+    const { ctx: owner, cardOf, deckId } = await setup(["several_answers"]);
+    const member = await learner(db, `drawing-member-${people}`, "Member");
+    await setReviewTimezone(member, { mode: "manual", timezone: "UTC" });
+    await join(member, deckId);
+    const cardId = cardOf("several_answers");
+    for (const daysAgo of [3, 2, 1]) {
+      await gradeCard(member, {
+        cardId,
+        direction: "production",
+        rating: 1,
+        reviewedAt: new Date(today().start.getTime() - daysAgo * DAY + 9 * 3_600_000),
+      });
+    }
+    const card = await getCard(owner, cardId);
+    await db.insert(schema.cardDiagnoses).values({
+      id: `drawing-member-diagnosis-${people}`,
+      userId: member.userId,
+      cardId,
+      revision: card.revision,
+      status: "done",
+      cause: "several_answers",
+      draft: { field: "meaning", text: "tall (of a person)", otherAnswer: "kõrge" },
+      confidence: 0.9,
+      model: "test",
+    });
+    const drawn = (await reviewDraw(member, { zone: "UTC" })).cards.find(
+      (c) => c.card.id === cardId,
+    );
+    expect(drawn).toMatchObject({ slipping: true });
+    expect(drawn?.offer).toBeUndefined();
+  });
+
+  it("refuses a fix from a member of a shared deck, since they cannot change the card", async () => {
+    const { ctx: owner, cardOf, deckId } = await setup(["no_anchor"]);
+    const member = await learner(db, `accepting-member-${people}`, "Member");
+    await join(member, deckId);
+    const card = await getCard(owner, cardOf("no_anchor"));
+    const id = `accepting-member-diagnosis-${people}`;
+    await db.insert(schema.cardDiagnoses).values({
+      id,
+      userId: member.userId,
+      cardId: card.id,
+      revision: card.revision,
+      status: "done",
+      cause: "no_anchor",
+      draft: { hook: "A pumpkin curves at its sides" },
+      confidence: 0.9,
+      model: "test",
+    });
+    await expect(
+      acceptFix(member, id, { cause: "no_anchor", hook: "Curvy pumpkin" }, null),
+    ).rejects.toMatchObject({ code: "forbidden" });
+    expect(await getCard(owner, card.id)).toMatchObject({ hook: null, hookSource: null });
+    const [row] = await db
+      .select()
+      .from(schema.cardDiagnoses)
+      .where(eq(schema.cardDiagnoses.id, id));
+    expect(row).toMatchObject({ acceptedAt: null, fix: null });
   });
 
   it("adds a pair's two cards, marks untouched text as the AI's, and Undo archives them", async () => {
@@ -278,6 +364,36 @@ describe("offering a diagnosis's fix in review", () => {
     expect(await offersIn(ctx)).toEqual(new Map());
   });
 
+  it("clears the hook of a card a split gives a new term, and Undo puts it back", async () => {
+    const { ctx, cardOf, diagnosisOf } = await setup(["two_things"]);
+    const cardId = cardOf("two_things");
+    const row = await diagnosisOf(cardId);
+    await db
+      .update(schema.cards)
+      .set({ hook: "Where do you live? In Tallinn.", hookSource: "manual" })
+      .where(eq(schema.cards.id, cardId));
+    const out = await acceptFix(
+      ctx,
+      row.id,
+      {
+        cause: "two_things",
+        cards: [
+          { term: "Kus sa elad?", meaning: "Where do you live?" },
+          { term: "Ma elan Tallinnas.", meaning: "I live in Tallinn." },
+        ],
+      },
+      null,
+    );
+    expect(out.edited).toMatchObject({ term: "Kus sa elad?", hook: null, hookSource: null });
+    expect(out.added).toMatchObject([{ hook: null }]);
+
+    await undoFix(ctx, row.id);
+    expect(await getCard(ctx, cardId)).toMatchObject({
+      hook: "Where do you live? In Tallinn.",
+      hookSource: "manual",
+    });
+  });
+
   it("applies a fix once when two accepts race", async () => {
     const { ctx, deckId, cardOf, diagnosisOf } = await setup(["confused_pair"]);
     const row = await diagnosisOf(cardOf("confused_pair"));
@@ -310,24 +426,10 @@ describe("offering a diagnosis's fix in review", () => {
     const cardId = cardOf("two_things");
     const row = await diagnosisOf(cardId);
     const before = await getCard(ctx, cardId);
-    // The first batch writes the card; the second, which records the fix, fails.
-    let batches = 0;
-    const failing = new Proxy(db, {
-      get(target, prop, receiver) {
-        const value = Reflect.get(target, prop, receiver);
-        if (prop === "batch") {
-          return (statements: Parameters<Db["batch"]>[0]) => {
-            batches += 1;
-            if (batches === 3) return Promise.reject(new Error("D1 went away"));
-            return target.batch(statements);
-          };
-        }
-        return typeof value === "function" ? value.bind(target) : value;
-      },
-    });
+    const failing = failingAcceptRecord(db);
     await expect(
       acceptFix(
-        { ...ctx, db: failing },
+        { ...ctx, db: failing.db },
         row.id,
         {
           cause: "two_things",
@@ -339,6 +441,7 @@ describe("offering a diagnosis's fix in review", () => {
         null,
       ),
     ).rejects.toThrow("D1 went away");
+    expect(failing.failed()).toBe(true);
     expect(await getCard(ctx, cardId)).toMatchObject({
       term: before.term,
       meaning: before.meaning,
@@ -346,6 +449,29 @@ describe("offering a diagnosis's fix in review", () => {
     });
     const active = (await cardsIn(ctx, deckId)).filter((c) => !c.archivedAt).map((c) => c.term);
     expect(active).toEqual([before.term]);
+    expect(await diagnosisOf(cardId)).toMatchObject({ acceptedAt: null, fix: null });
+  });
+
+  it("puts back the cue it changed when the fix cannot be recorded", async () => {
+    const { ctx, cardOf, diagnosisOf } = await setup(["several_answers"]);
+    const cardId = cardOf("several_answers");
+    const row = await diagnosisOf(cardId);
+    const before = await getCard(ctx, cardId);
+    const failing = failingAcceptRecord(db);
+    await expect(
+      acceptFix(
+        { ...ctx, db: failing.db },
+        row.id,
+        { cause: "several_answers", text: "tall (of a person)" },
+        null,
+      ),
+    ).rejects.toThrow("D1 went away");
+    expect(failing.failed()).toBe(true);
+    expect(await getCard(ctx, cardId)).toMatchObject({
+      term: before.term,
+      meaning: before.meaning,
+      meaningSource: before.meaningSource,
+    });
     expect(await diagnosisOf(cardId)).toMatchObject({ acceptedAt: null, fix: null });
   });
 
@@ -491,13 +617,13 @@ describe("offering a diagnosis's fix in review", () => {
       confidence: 0.3,
       model: "test",
     });
-    expect((await reviewOffers(ctx, [card], new Set([cardId]), "UTC")).size).toBe(1);
+    expect((await reviewOffers(ctx, [card], new Set([cardId]), today())).size).toBe(1);
 
     // Offered after them, it has not slipped since.
     await db
       .update(schema.cardDiagnoses)
       .set({ offeredAt: new Date() })
       .where(eq(schema.cardDiagnoses.id, row.id));
-    expect((await reviewOffers(ctx, [card], new Set([cardId]), "UTC")).size).toBe(0);
+    expect((await reviewOffers(ctx, [card], new Set([cardId]), today())).size).toBe(0);
   });
 });

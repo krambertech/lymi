@@ -1,7 +1,8 @@
 import {
   type AppliedFix,
   CARD_LIMITS,
-  Diagnosis,
+  type DayWindow,
+  type Diagnosis,
   type FieldSource,
   type FixInput,
   newId,
@@ -9,7 +10,7 @@ import {
   type ReviewOfferOut,
   SLIPPING_FORGOTTEN_DAYS,
 } from "@lymi/core";
-import { and, asc, eq, gt, inArray, isNotNull, isNull } from "@lymi/core/db";
+import { and, asc, eq, gt, inArray, isNotNull, isNull, lt } from "@lymi/core/db";
 import type { Card, CardDiagnosis } from "@lymi/core/schema";
 import { schema } from "../db";
 import { track } from "./analytics";
@@ -25,9 +26,10 @@ import {
   updateCard,
 } from "./cards";
 import { notFound, type ServiceContext, ServiceError } from "./context";
-import { dateFormatter } from "./days";
+import { readDiagnosis } from "./diagnosis";
 import type { EnrichmentQueue } from "./enrichment";
 import { memberOf } from "./members";
+import { countedReviewsWhere, reviewDaysAgo } from "./slipping";
 
 const offered = new Set<string>(OFFERED_CAUSES);
 
@@ -41,7 +43,7 @@ export async function reviewOffers(
   ctx: ServiceContext,
   cards: readonly Card[],
   slipping: ReadonlySet<string>,
-  zone: string,
+  day: DayWindow,
 ): Promise<Map<string, ReviewOfferOut>> {
   const { db, userId } = ctx;
   const owned = new Map(
@@ -78,10 +80,10 @@ export async function reviewOffers(
     if (row.offeredAt || row.dismissedAt || !row.cause || !offered.has(row.cause)) continue;
     // A hook the learner already wrote is the fix this cause would draft.
     if (row.cause === "no_anchor" && card.hook) continue;
-    const finding = Diagnosis.safeParse({ cause: row.cause, draft: row.draft });
-    if (finding.success) current.set(row.cardId, { row, diagnosis: finding.data });
+    const diagnosis = readDiagnosis(row);
+    if (diagnosis) current.set(row.cardId, { row, diagnosis });
   }
-  const again = await slippedSince(ctx, lastOffered, zone);
+  const again = await slippedSince(ctx, lastOffered, day);
   const others = await otherCards(
     ctx,
     [...current.values()].flatMap(({ diagnosis }) =>
@@ -101,8 +103,11 @@ export async function reviewOffers(
   return offers;
 }
 
-/** Cards whose first grade was Forgot on enough days since review last offered a fix for them. */
-async function slippedSince(ctx: ServiceContext, since: ReadonlyMap<string, Date>, zone: string) {
+/**
+ * Cards whose first grade was Forgot on enough days since review last offered a fix for them,
+ * counting days as `slippingCardIds` does.
+ */
+async function slippedSince(ctx: ServiceContext, since: ReadonlyMap<string, Date>, day: DayWindow) {
   const again = new Set<string>();
   if (since.size === 0) return again;
   const earliest = new Date(Math.min(...[...since.values()].map((at) => at.getTime())));
@@ -112,27 +117,28 @@ async function slippedSince(ctx: ServiceContext, since: ReadonlyMap<string, Date
         cardId: schema.reviews.cardId,
         rating: schema.reviews.rating,
         at: schema.reviews.reviewedAt,
+        ago: reviewDaysAgo(day),
       })
       .from(schema.reviews)
       .leftJoin(schema.reviewUndos, eq(schema.reviewUndos.reviewId, schema.reviews.id))
       .where(
         and(
-          eq(schema.reviews.userId, ctx.userId),
+          countedReviewsWhere(ctx.userId),
           inArray(schema.reviews.cardId, slice),
           gt(schema.reviews.reviewedAt, earliest),
-          isNull(schema.reviewUndos.reviewId),
+          lt(schema.reviews.reviewedAt, day.start),
         ),
       )
-      .orderBy(asc(schema.reviews.reviewedAt)),
+      .orderBy(asc(schema.reviews.reviewedAt), asc(schema.reviews.id)),
   );
-  const fmt = dateFormatter(zone);
-  const firsts = new Map<string, Map<string, number>>();
+  const firsts = new Map<string, Map<number, number>>();
   for (const review of reviews) {
     const after = since.get(review.cardId);
+    // Unlike `slippingCardIds`, the offer's own day counts from its first grade after the offer,
+    // since the miss that showed the offer must not count toward the next one.
     if (!after || review.at <= after) continue;
-    const days = firsts.get(review.cardId) ?? new Map<string, number>();
-    const date = fmt.format(review.at);
-    if (!days.has(date)) days.set(date, review.rating);
+    const days = firsts.get(review.cardId) ?? new Map<number, number>();
+    if (!days.has(review.ago)) days.set(review.ago, review.rating);
     firsts.set(review.cardId, days);
   }
   for (const [cardId, days] of firsts) {
@@ -302,8 +308,7 @@ export async function acceptFix(
   if (row.dismissedAt) {
     throw new ServiceError("conflict", "This diagnosis was dismissed; undo that first");
   }
-  const finding = Diagnosis.safeParse({ cause: row.cause, draft: row.draft });
-  const diagnosis = finding.success ? finding.data : null;
+  const diagnosis = readDiagnosis(row);
   const cause = diagnosis?.cause;
   // With no clear reason there is no draft to accept, but the learner may write their own hook.
   if (
@@ -419,14 +424,16 @@ async function applyFix(
       enrichment,
     );
     const added = addedIds(outcomes);
-    // A new term makes the old pronunciation wrong; enrichment can write the new one.
+    // A new term makes the old pronunciation and hook wrong; enrichment can write the pronunciation.
     const retermed = first.term !== card.term;
     try {
       await updateCard(ctx, card.id, {
         term: first.term,
         meaning: first.meaning,
         meaningSource: sourceOf(draftFirst.meaning, first.meaning),
-        ...(retermed ? { pronunciation: null, pronunciationSource: null } : {}),
+        ...(retermed
+          ? { pronunciation: null, pronunciationSource: null, hook: null, hookSource: null }
+          : {}),
       });
     } catch (error) {
       // The two halves land together or not at all.
@@ -443,7 +450,12 @@ async function applyFix(
             meaning: card.meaning,
             meaningSource: card.meaningSource,
             ...(retermed
-              ? { pronunciation: card.pronunciation, pronunciationSource: card.pronunciationSource }
+              ? {
+                  pronunciation: card.pronunciation,
+                  pronunciationSource: card.pronunciationSource,
+                  hook: card.hook,
+                  hookSource: card.hookSource,
+                }
               : {}),
           },
         },

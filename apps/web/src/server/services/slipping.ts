@@ -23,6 +23,13 @@ export const slippingReviewsWhere = (userId: string) =>
 const DAY_MS = 86_400_000;
 
 /**
+ * How many days before `day` a review earlier than `day.start` fell, 0 for the day before, counted
+ * back from local midnight in 24-hour steps and so an hour off across a DST change.
+ */
+export const reviewDaysAgo = (day: DayWindow) =>
+  sql<number>`cast((${day.start.getTime() - 1} - ${schema.reviews.reviewedAt}) / ${DAY_MS} as integer)`;
+
+/**
  * Often-forgotten cards, as a subquery a caller joins or awaits: the first grade of the day was
  * Forgot on enough of the card's latest review days before today, so returns within a day never
  * count twice and a card that sticks leaves the group. ADR 0024.
@@ -31,8 +38,7 @@ export function slippingCardIds(
   { db, userId }: Pick<ServiceContext, "db" | "userId">,
   day: DayWindow,
 ) {
-  // Days are counted back from local midnight in 24-hour steps, an hour off across a DST change.
-  const ago = sql<number>`cast((${day.start.getTime() - 1} - ${schema.reviews.reviewedAt}) / ${DAY_MS} as integer)`;
+  const ago = reviewDaysAgo(day);
   const firsts = db
     .select({
       cardId: sql<string>`${schema.reviews.cardId}`.as("card_id"),

@@ -7,7 +7,7 @@ import {
   newId,
 } from "@lymi/core";
 import { and, eq, inArray, isNull, lt, ne, or, sql } from "@lymi/core/db";
-import type { Card, Deck } from "@lymi/core/schema";
+import type { Card, CardDiagnosis, Deck } from "@lymi/core/schema";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
 import {
@@ -333,16 +333,23 @@ export async function currentDiagnosis(
       ),
     );
   if (!row || row.confidence === null || !row.model) return null;
-  const finding = Diagnosis.safeParse({ cause: row.cause, draft: row.draft });
-  if (!finding.success) return null;
+  const diagnosis = readDiagnosis(row);
+  if (!diagnosis) return null;
   return {
     id: row.id,
-    ...finding.data,
+    ...diagnosis,
     confidence: row.confidence,
     model: row.model,
     diagnosedAt: row.updatedAt.toISOString(),
     dismissedAt: row.dismissedAt?.toISOString() ?? null,
+    acceptedAt: row.acceptedAt?.toISOString() ?? null,
   };
+}
+
+/** A stored diagnosis's cause and draft, or null when the row names none that parses. */
+export function readDiagnosis(row: Pick<CardDiagnosis, "cause" | "draft">): Diagnosis | null {
+  const finding = Diagnosis.safeParse({ cause: row.cause, draft: row.draft });
+  return finding.success ? finding.data : null;
 }
 
 /** One card as a single read returns it, with the reader's own diagnosis of it. */

@@ -363,7 +363,7 @@ export const deckPublications = sqliteTable(
     slug: text("slug").notNull(),
     status: text("status", { enum: ["published", "withdrawn"] }).notNull(),
     summary: text("summary").notNull(),
-    /** A CEFR level such as A1, or null when the deck has none. */
+    /** Unused: nothing reads or writes it, and a follow-up drops it once no live Worker selects it. */
     level: text("level"),
     /** Which shelf the deck sits on in Explore. Null until a publisher chooses one. */
     category: text("category", { enum: PUBLICATION_CATEGORIES }),

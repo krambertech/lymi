@@ -3,8 +3,6 @@ import { type PublicDeckOut, type PublicDeckSummary, previewMode } from "@lymi/c
 import { HAND_SIZE } from "./hand";
 import { type Locale, locales } from "./routes";
 
-const SITE = "https://lymi.app";
-
 /** The most cards laid out at the top of the page. */
 export const SPREAD_SIZE = 5;
 /** How many cards the page's hand holds, which is the hand's own size so a second round matches. */
@@ -228,45 +226,6 @@ export function etagMatches(ifNoneMatch: string | null, etag: string): boolean {
 /** Short and public: a publisher's correction reaches visitors within minutes. */
 export const DECK_CACHE_CONTROL = "public, max-age=300";
 export const MISSING_CACHE_CONTROL = "public, max-age=60";
-
-/** schema.org LearningResource: a vocabulary list with its CEFR level and the language it teaches. */
-export function deckStructuredData(deck: PublicDeckOut, locale: Locale) {
-  const url = new URL(deckPath(deck.slug, locale), SITE).toString();
-  const language = languageName(deck.language, "en");
-  return {
-    "@context": "https://schema.org",
-    "@type": "LearningResource",
-    "@id": url,
-    url,
-    name: deck.name,
-    description: deck.summary,
-    learningResourceType: "Vocabulary list",
-    inLanguage: [...new Set([deck.language, deck.meaningLanguage].filter(Boolean))],
-    ...(language && {
-      teaches: `${language} vocabulary`,
-      about: { "@type": "Language", name: language, alternateName: deck.language },
-    }),
-    ...(deck.level && {
-      educationalLevel: {
-        "@type": "DefinedTerm",
-        name: deck.level,
-        termCode: deck.level,
-        inDefinedTermSet:
-          "https://www.coe.int/en/web/common-european-framework-reference-languages",
-      },
-    }),
-    publisher: { "@type": "Organization", name: deck.publisher },
-    datePublished: deck.publishedAt,
-    ...(deck.sources.length > 0 && {
-      citation: deck.sources.map((source) => ({
-        "@type": "CreativeWork",
-        name: source.title,
-        ...(source.url && { url: source.url }),
-      })),
-    }),
-    isPartOf: { "@type": "WebSite", name: "Lymi", url: `${SITE}/` },
-  };
-}
 
 /** JSON for a `<script>` element: `<` is escaped so a card cannot close the element. */
 export function jsonForScript(value: unknown): string {

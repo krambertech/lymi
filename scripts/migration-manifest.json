@@ -133,7 +133,11 @@
       "sha256": "e371dd89ecc0a4495ef4b08c0d0818121181b22624ce2af2e44d8e228ddc0ed2"
     },
     {
-      "name": "0033_jittery_stature.sql",
+      "name": "0033_file_exams_under_citizenship.sql",
+      "sha256": "1844ac5f70667badad528a1ee0665db46382b4a7251b39526239de0868fc5551"
+    },
+    {
+      "name": "0034_remarkable_winter_soldier.sql",
       "sha256": "75b3dbcf759fba890281e3c148a687026bf561384da80b807fb5aa2b20244988"
     }
   ]

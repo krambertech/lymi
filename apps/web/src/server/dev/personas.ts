@@ -53,7 +53,6 @@ export interface PersonaDeck {
 export interface PersonaPublication {
   slug: string;
   summary: string;
-  level?: "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
   /** The shelf the deck sits on in Explore. */
   category?: PublicationCategory;
   tags?: PublicationTag[];
@@ -598,7 +597,6 @@ export const personas: Persona[] = [
         publication: {
           slug: "everyday-estonian",
           summary: "Words and phrases for your first weeks in Estonia.",
-          level: "A1",
           category: "languages",
           tags: ["core-words", "beginner"],
           publisher: "Lymi",
@@ -629,7 +627,6 @@ export const personas: Persona[] = [
         publication: {
           slug: "everyday-finnish",
           summary: "Home, work and the shop, in the words people use.",
-          level: "A1",
           category: "languages",
           tags: ["core-words", "conversation"],
           publisher: "Lymi",

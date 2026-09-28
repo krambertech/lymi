@@ -485,6 +485,10 @@ msgstr "Умеет ли Lymi произносить эстонские слов�
 msgid "Can my class use it together?"
 msgstr "Может ли моя группа учиться вместе?"
 
+msgctxt "deck tag"
+msgid "Canadian citizenship test"
+msgstr "Тест на гражданство Канады"
+
 msgid "Card or cash?"
 msgstr "Картой или наличными?"
 
@@ -505,6 +509,10 @@ msgstr "Карточки без раздела"
 
 msgid "Catching up with a friend"
 msgstr "Разговор с подругой"
+
+msgctxt "deck tag"
+msgid "CCSE Spanish nationality test"
+msgstr "Экзамен CCSE на гражданство Испании"
 
 msgid "cents"
 msgstr "центов"
@@ -616,6 +624,10 @@ msgstr "Уютный"
 msgid "Cosy and convivial; good company"
 msgstr "Уютный и душевный; в хорошей компании"
 
+msgctxt "deck tag"
+msgid "Czech citizenship test"
+msgstr "Экзамен на гражданство Чехии"
+
 msgid "Data Lymi receives"
 msgstr "Данные, которые получает Lymi"
 
@@ -654,6 +666,10 @@ msgstr "Deutsch · глагол"
 
 msgid "Deutsch · word"
 msgstr "Deutsch · слово"
+
+msgctxt "deck tag"
+msgid "DMV written test"
+msgstr "Теоретический экзамен DMV"
 
 msgid "Do you need a bag?"
 msgstr "Пакет нужен?"

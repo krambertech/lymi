@@ -321,6 +321,10 @@ export const PUBLICATION_TAGS = [
   "exam-jlpt-n5",
   "exam-leben-in-deutschland",
   "exam-us-civics",
+  "exam-ccse",
+  "exam-czech-citizenship",
+  "exam-canadian-citizenship",
+  "exam-us-dmv",
 ] as const;
 export const PublicationTag = z.enum(PUBLICATION_TAGS);
 export type PublicationTag = z.infer<typeof PublicationTag>;

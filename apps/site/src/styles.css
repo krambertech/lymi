@@ -1784,6 +1784,31 @@ html:has(.deck-cards[open]) {
 .deck-tile {
   border-radius: var(--radius-lg);
 }
+/* A shelf with a page of its own shows one row and leads to the rest. The columns are fixed per
+   width so the row can end on a whole tile; the decks past it are hidden, not clipped, so a
+   keyboard never lands on a tile nobody can see. */
+.deck-shelf[data-row] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.deck-shelf[data-row] > li:nth-child(n + 3) {
+  display: none;
+}
+@container (min-width: 772px) {
+  .deck-shelf[data-row] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .deck-shelf[data-row] > li:nth-child(3) {
+    display: list-item;
+  }
+}
+@container (min-width: 1010px) {
+  .deck-shelf[data-row] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .deck-shelf[data-row] > li:nth-child(4) {
+    display: list-item;
+  }
+}
 @media (max-width: 40rem) {
   .deck-shelf {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));

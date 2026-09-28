@@ -1884,6 +1884,9 @@ msgstr "Sections and the deck library are rolling out during the beta. We’ll t
 msgid "Security and children"
 msgstr "Security and children"
 
+msgid "See all"
+msgstr "See all"
+
 msgid "See how it works"
 msgstr "See how it works"
 

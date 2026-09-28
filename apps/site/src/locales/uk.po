@@ -1884,6 +1884,9 @@ msgstr "Розділи й бібліотека колод з’являютьс�
 msgid "Security and children"
 msgstr "Безпека та діти"
 
+msgid "See all"
+msgstr "Усі"
+
 msgid "See how it works"
 msgstr "Як це працює"
 

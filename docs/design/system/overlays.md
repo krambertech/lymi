@@ -13,7 +13,7 @@ What is opening?
  ├── A page read over the current screen (a word, the streak) → a place: Dialog kind="place", open state in the URL
  ├── What just happened, after the fact → toast
  ├── The name of an icon control → Tooltip, which IconButton already does
- └── Why one control failed (a pronunciation that would not play) → a tip over that control (ErrorTip)
+ └── Why one control failed, or cannot act (a pronunciation that would not play, Easy after a peek) → a tip over that control (ErrorTip)
 ```
 
 **A modal that asks a question is a last resort; Undo replaces confirmation.** A sheet is not that modal: it is a form the learner asked for.

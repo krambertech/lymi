@@ -4,6 +4,8 @@ import { expect, type Page, test } from "./test";
 // A journey because a peek is held by the page and sent with the grade: it has to survive the
 // grade outbox and a reload, and reach D1 with the review. The rules are route and service tests.
 
+const WHY = "You can’t choose Easy after peeking at your hook.";
+
 type History = { reviews: { rating: number; aid: string | null }[] };
 
 /** A deck of its own holding one new card, due now, with a hook or without one. */
@@ -49,13 +51,21 @@ test("a learner peeks at a hook, Easy is out, and the peek stays on the grade th
     await expect(card.getByRole("button", { name: /Peek at your hook/ })).toBeHidden();
   });
 
-  await test.step("after the reveal Easy stays in its slot and does nothing, by click or key", async () => {
+  await test.step("after the reveal Easy is locked: a tap or its key says why and grades nothing", async () => {
     // A tap on the card this soon after the peek would be taken as a doubled tap, so a key reveals.
     await page.keyboard.press("Space");
-    const easy = grades.getByRole("button", { name: "Easy, not after a peek" });
+    const easy = grades.getByRole("button", { name: "Easy, locked" });
     await expect(easy).toHaveAttribute("aria-disabled", "true");
+    await expect(easy).toHaveAccessibleDescription(WHY);
+    // The tip itself is hidden from assistive technology; what it says is read out while it shows.
+    const tip = page.getByRole("status").filter({ hasText: WHY });
     await easy.click({ force: true });
+    await expect(tip).toHaveCount(1);
+    // The next press closes the tip; the key opens it again.
+    await page.mouse.click(1, 1);
+    await expect(tip).toHaveCount(0);
     await page.keyboard.press("4");
+    await expect(tip).toHaveCount(1);
     await expect(grades).toBeVisible();
     expect((await history(page, cardId)).reviews).toEqual([]);
   });

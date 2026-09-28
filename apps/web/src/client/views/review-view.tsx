@@ -2,7 +2,17 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { gradeAllowed, type Rating, type ReviewAid } from "@lymi/core";
 import { clsx } from "clsx";
-import { BookMarked, Library, Loader2, Pointer, Signpost, Volume2, X } from "lucide-react";
+import {
+  BookMarked,
+  Library,
+  Loader2,
+  Lock,
+  type LucideIcon,
+  Pointer,
+  Signpost,
+  Volume2,
+  X,
+} from "lucide-react";
 import {
   AnimatePresence,
   animate as animateValue,
@@ -47,6 +57,7 @@ import { SevenLights } from "../components/seven-lights";
 import { Skeleton } from "../components/skeleton";
 import { StateIcon } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import type { QueueItem } from "../lib/api";
 import { EASE_OUT } from "../lib/ease";
 import { lanternFor, streakFlameFor } from "../lib/flame";
@@ -1005,8 +1016,70 @@ export interface GradeBarProps {
   next?: Record<Rating, string> | undefined;
   /** What the learner used before the reveal; a grade it rules out keeps its slot but is out. */
   aid?: ReviewAid | undefined;
+  /** Grows each time the key of a grade that is out is pressed, so its tip says why again. */
+  lockedNudge?: number | undefined;
   onGrade: (r: Rating) => void;
   className?: string | undefined;
+}
+
+/**
+ * A grade the learner cannot give now, greyed in its slot with a lock where its key would be. It
+ * never grades: hover names why in a tooltip, and a tap, click or its key shows the same reason in
+ * a tip over it.
+ */
+function LockedGrade({
+  label,
+  icon: Icon,
+  nudge,
+}: {
+  label: string;
+  icon: LucideIcon;
+  /** Pressed from the keyboard, where there is no tap to show the tip. */
+  nudge: number;
+}) {
+  const { t } = useLingui();
+  const button = useRef<HTMLButtonElement>(null);
+  const reasonId = useId();
+  const [pressed, setPressed] = useState(0);
+  // Only presses of the key since this tile appeared; an earlier card's do not show the tip.
+  const nudgedBefore = useRef(nudge);
+  const keyed = nudge - nudgedBefore.current;
+  const why = t`You can’t choose Easy after peeking at your hook.`;
+  const shown = pressed + keyed;
+  return (
+    <>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <button
+              ref={button}
+              type="button"
+              aria-label={t`${label}, locked`}
+              aria-disabled="true"
+              aria-describedby={reasonId}
+              onClick={() => setPressed((n) => n + 1)}
+              className="edge relative grid h-[72px] min-w-0 cursor-default content-center gap-1 rounded-lg px-1 text-sm font-medium text-muted @2xl:text-base"
+            />
+          }
+        >
+          <span className="mx-auto grid size-5 place-items-center">
+            <Icon className="size-[18px]" aria-hidden="true" strokeWidth={1.75} />
+          </span>
+          <span>{label}</span>
+          <Lock
+            className="absolute end-2.5 top-2.5 size-3 text-muted"
+            aria-hidden="true"
+            strokeWidth={2}
+          />
+        </TooltipTrigger>
+        <TooltipContent side="top">{why}</TooltipContent>
+      </Tooltip>
+      <span id={reasonId} className="sr-only">
+        {why}
+      </span>
+      <ErrorTip anchor={button} message={shown > 0 ? why : null} nudge={shown} reason={Lock} />
+    </>
+  );
 }
 
 /**
@@ -1025,6 +1098,7 @@ export function GradeBar({
   focusOnReveal = false,
   next,
   aid,
+  lockedNudge = 0,
   onGrade,
   className,
 }: GradeBarProps) {
@@ -1061,25 +1135,7 @@ export function GradeBar({
                 if (!gradeAllowed(g.rating, aid)) {
                   return (
                     <motion.div key={g.rating} variants={gradeRise} className="grid min-w-0">
-                      {/* In its slot so the others never move, and focusable so it says why. */}
-                      <button
-                        type="button"
-                        aria-label={t`${label}, not after a peek`}
-                        aria-disabled="true"
-                        className="edge relative grid h-[72px] min-w-0 cursor-default content-center rounded-lg px-1 text-sm font-medium text-muted @2xl:text-base"
-                      >
-                        <span className="mx-auto grid size-5 place-items-center">
-                          <GradeIcon
-                            className="size-[18px]"
-                            aria-hidden="true"
-                            strokeWidth={1.75}
-                          />
-                        </span>
-                        <span>{label}</span>
-                        <span className="text-balance text-2xs font-normal leading-tight @2xl:text-xs">
-                          <Trans>not after a peek</Trans>
-                        </span>
-                      </button>
+                      <LockedGrade label={label} icon={GradeIcon} nudge={lockedNudge} />
                     </motion.div>
                   );
                 }

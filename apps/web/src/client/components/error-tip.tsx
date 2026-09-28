@@ -1,4 +1,4 @@
-import { CircleAlert } from "lucide-react";
+import { CircleAlert, type LucideIcon } from "lucide-react";
 import { type RefObject, useEffect, useState } from "react";
 import { Popover, PopoverContent } from "./ui/popover";
 
@@ -9,6 +9,13 @@ interface Props {
   anchor: RefObject<HTMLElement | null>;
   /** Shows the tip when it becomes non-null. A new failure after a retry shows it again. */
   message: string | null;
+  /** Shows the same message again each time it changes, as a second press of the same control. */
+  nudge?: number | undefined;
+  /**
+   * Why the control is unavailable rather than what went wrong: its own icon, in `muted`, read out
+   * politely instead of as an alert.
+   */
+  reason?: LucideIcon | undefined;
 }
 
 /**
@@ -17,12 +24,13 @@ interface Props {
  *
  * It is announced from a separate live region, because the popup's text is not in the page until shown.
  */
-export function ErrorTip({ anchor, message }: Props) {
+export function ErrorTip({ anchor, message, nudge = 0, reason }: Props) {
   const [open, setOpen] = useState(false);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: a new nudge reopens the same message.
   useEffect(() => {
     setOpen(message !== null);
-  }, [message]);
+  }, [message, nudge]);
 
   useEffect(() => {
     if (!open) return;
@@ -38,6 +46,7 @@ export function ErrorTip({ anchor, message }: Props) {
     };
   }, [open]);
 
+  const Icon = reason ?? CircleAlert;
   return (
     <>
       <Popover open={open} onOpenChange={setOpen}>
@@ -48,12 +57,17 @@ export function ErrorTip({ anchor, message }: Props) {
           aria-hidden="true"
           className="pointer-events-none flex items-start gap-2 leading-snug"
         >
-          <CircleAlert className="mt-0.5 size-4 shrink-0 text-danger" aria-hidden="true" />
+          <Icon
+            className={
+              reason ? "mt-0.5 size-4 shrink-0 text-muted" : "mt-0.5 size-4 shrink-0 text-danger"
+            }
+            aria-hidden="true"
+          />
           <span>{message}</span>
         </PopoverContent>
       </Popover>
       {/* Only while shown: it sits inside the word's line, and would otherwise be read with it. */}
-      <span className="sr-only" role="alert">
+      <span className="sr-only" role={reason ? "status" : "alert"}>
         {open ? message : null}
       </span>
     </>

@@ -493,11 +493,11 @@ msgstr "{graded, plural, one {Запам’ятовування порахова
 msgid "{label} decks"
 msgstr "Колоди: {label}"
 
+msgid "{label}, locked"
+msgstr "{label}, заблоковано"
+
 msgid "{label}, next in {schedules}"
 msgstr "{label}, далі через {schedules}"
-
-msgid "{label}, not after a peek"
-msgstr "{label}, лише без зачіпки"
 
 msgid "{left, plural, one {# character left} other {# characters left}}"
 msgstr "{left, plural, one {лишився # символ} few {лишилося # символи} many {лишилося # символів} other {лишилося # символу}}"
@@ -2580,9 +2580,6 @@ msgstr "Поки колода в архіві, до неї ніхто не мо�
 msgid "Nobody new can add it."
 msgstr "Нові люди вже не можуть її додати."
 
-msgid "not after a peek"
-msgstr "лише без зачіпки"
-
 msgid "Not available on this server yet."
 msgstr "На цьому сервері поки недоступно."
 
@@ -4006,6 +4003,9 @@ msgstr "На день можна надіслати {FEEDBACK_DAILY_LIMIT} по�
 
 msgid "You can undo the whole import later from Activity."
 msgstr "Увесь імпорт можна потім скасувати в Активності."
+
+msgid "You can’t choose Easy after peeking at your hook."
+msgstr "«Легко» не можна вибрати, якщо підглядаєш зачіпку."
 
 msgid "You can’t undo this."
 msgstr "Цю дію не можна скасувати."

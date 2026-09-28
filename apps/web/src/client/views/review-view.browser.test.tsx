@@ -218,21 +218,41 @@ test("a revealed hook sits after the notes, marked while the AI's words are unch
   expect(text).toContain("AI hook");
 });
 
-test("after a peek Easy keeps its slot but cannot be pressed, and says why", async () => {
+const WHY = "You can’t choose Easy after peeking at your hook.";
+
+test("after a peek Easy keeps its slot, locked: a press says why and grades nothing", async () => {
   const onGrade = vi.fn();
   await render(
     <I18nProvider i18n={i18n}>
       <GradeBar revealed aid="hook" onGrade={onGrade} />
     </I18nProvider>,
   );
-  const easy = page.getByRole("button", { name: "Easy, not after a peek" });
+  const easy = page.getByRole("button", { name: "Easy, locked" });
   await expect.element(easy).toHaveAttribute("aria-disabled", "true");
+  await expect.element(easy).toHaveAccessibleDescription(WHY);
   // Forced, because Playwright rightly waits forever on a control marked unavailable.
   await easy.click({ force: true });
+  await expect.element(page.getByRole("status").filter({ hasText: WHY })).toBeInTheDocument();
   expect(onGrade).not.toHaveBeenCalled();
   await page.getByRole("button", { name: "Good" }).click();
   expect(onGrade).toHaveBeenCalledWith(3);
-  const buttons = page.getByRole("button").elements();
+  const buttons = page
+    .getByRole("group", { name: "Choose a recall grade" })
+    .getByRole("button")
+    .elements();
   expect(buttons).toHaveLength(4);
-  expect(buttons[3]?.getAttribute("aria-label")).toBe("Easy, not after a peek");
+  expect(buttons[3]?.getAttribute("aria-label")).toBe("Easy, locked");
+});
+
+test("Easy's key after a peek shows the same reason, but not one pressed on an earlier card", async () => {
+  const bar = (nudge: number) => (
+    <I18nProvider i18n={i18n}>
+      <GradeBar revealed aid="hook" lockedNudge={nudge} onGrade={noop} />
+    </I18nProvider>
+  );
+  const { rerender } = await render(bar(3));
+  const status = page.getByRole("status").filter({ hasText: WHY });
+  expect(status.elements()).toHaveLength(0);
+  await rerender(bar(4));
+  await expect.element(status).toBeInTheDocument();
 });

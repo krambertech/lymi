@@ -81,6 +81,8 @@ A hint at the card's foot, a pointing hand that taps three times and rests with 
 
 A pronunciation that fails to play turns its button red, shakes it once over 400 ms, and says why in a tip over the button that leaves after four seconds or at the next tap. Nothing is added under the card, so the layout never moves for an error.
 
+Easy locked after a peek does not move, shake or change when pressed. A tap, a click or its key opens the same tip over it with the reason, which leaves after four seconds or at the next tap; hover names the reason in a tooltip.
+
 ## The end of a review
 
 The end of a review is the other choreographed moment, and the one place the interface celebrates, because it is where the day lands. It plays as one sequence over about two seconds:

@@ -493,11 +493,11 @@ msgstr "{graded, plural, one {Recall is based on only # review, so it can swing 
 msgid "{label} decks"
 msgstr "{label} decks"
 
+msgid "{label}, locked"
+msgstr "{label}, locked"
+
 msgid "{label}, next in {schedules}"
 msgstr "{label}, next in {schedules}"
-
-msgid "{label}, not after a peek"
-msgstr "{label}, not after a peek"
 
 msgid "{left, plural, one {# character left} other {# characters left}}"
 msgstr "{left, plural, one {# character left} other {# characters left}}"
@@ -2580,9 +2580,6 @@ msgstr "Nobody can join it while it is archived."
 msgid "Nobody new can add it."
 msgstr "Nobody new can add it."
 
-msgid "not after a peek"
-msgstr "not after a peek"
-
 msgid "Not available on this server yet."
 msgstr "Not available on this server yet."
 
@@ -4006,6 +4003,9 @@ msgstr "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 
 msgid "You can undo the whole import later from Activity."
 msgstr "You can undo the whole import later from Activity."
+
+msgid "You can’t choose Easy after peeking at your hook."
+msgstr "You can’t choose Easy after peeking at your hook."
 
 msgid "You can’t undo this."
 msgstr "You can’t undo this."

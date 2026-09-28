@@ -202,6 +202,7 @@ function Review() {
   });
   // How far into the card's aids the learner went before the reveal, held for the card on screen.
   const [aidState, setAidState] = useState({ key: "", taken: 0, animate: true });
+  const [lockedNudge, setLockedNudge] = useState(0);
   const [fixing, setFixing] = useState(false);
   const [editing, setEditing] = useState<{ card: Card; focus: EditFocus } | null>(null);
   const online = useSyncExternalStore(subscribeOnline, isOnline, () => true);
@@ -563,8 +564,11 @@ function Review() {
   const onGrade = useCallback(
     (rating: Rating, input: "keyboard" | "pointer" = "pointer") => {
       if (!revealed || !current || !data || !state) return;
-      // Easy means recall without help, so after a peek it does nothing, by click or by key.
-      if (!gradeAllowed(rating, aid)) return;
+      // Easy means recall without help, so after a peek its key only says why, and grades nothing.
+      if (!gradeAllowed(rating, aid)) {
+        setLockedNudge((n) => n + 1);
+        return;
+      }
       const item = current;
       const key = modeKey(item.mode);
       const repeat = state.log.some((e) => e.cardId === item.card.id && e.mode === key);
@@ -855,6 +859,7 @@ function Review() {
               focusOnReveal={focusGrades}
               next={current.next}
               aid={aid}
+              lockedNudge={lockedNudge}
               onGrade={(rating) => onGrade(rating, "pointer")}
             />
           </motion.div>

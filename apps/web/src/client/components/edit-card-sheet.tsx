@@ -11,6 +11,7 @@ import {
   type CardFormDraft,
   type CardFormOutcome,
   type CardFormValues,
+  type EditFocus,
 } from "./card-form";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { toast } from "./ui/toast";
@@ -23,10 +24,8 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   /** Undo on a discarded edit opens the same card again. */
   onReopen: (card: Card) => void;
-  /** Opens at the picture field. */
-  openPicture?: boolean | undefined;
-  /** Opens with the caret in the term or the meaning. */
-  focus?: "term" | "meaning" | undefined;
+  /** Opens at this field rather than the top. */
+  focus?: EditFocus | undefined;
   /** Where focus goes on closing, when what opened the sheet is gone. */
   finalFocus?: ComponentProps<typeof DialogContent>["finalFocus"];
   /** After a save, with the deck the card is in now. */
@@ -39,7 +38,6 @@ export function EditCardSheet({
   decks,
   onOpenChange,
   onReopen,
-  openPicture,
   focus,
   finalFocus,
   onSaved,
@@ -123,7 +121,6 @@ export function EditCardSheet({
             decks={decks}
             pending={pending}
             layout={shape === "desktop" ? "whole" : "chips"}
-            openPicture={openPicture}
             focus={focus}
             onCancel={() => close(true)}
             onSubmit={submit}

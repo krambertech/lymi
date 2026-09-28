@@ -364,8 +364,6 @@ export const deckPublications = sqliteTable(
     slug: text("slug").notNull(),
     status: text("status", { enum: ["published", "withdrawn"] }).notNull(),
     summary: text("summary").notNull(),
-    /** Unused: nothing reads or writes it, and a follow-up drops it once no live Worker selects it. */
-    level: text("level"),
     /** Which shelf the deck sits on in Explore. Null until a publisher chooses one. */
     category: text("category", { enum: PUBLICATION_CATEGORIES }),
     /** Keys from `PUBLICATION_TAGS`, in list order. Not a card's `tags`, and never copied into them. */

@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "3a6f195d-1676-4e2a-ba24-46f8e1d426f9",
-  "prevId": "9c57428a-4852-4e12-8eea-1069d00b9f06",
+  "id": "cec4a8f6-7af1-4ac0-b8c4-2debd1c4c6cb",
+  "prevId": "3a6f195d-1676-4e2a-ba24-46f8e1d426f9",
   "tables": {
     "audit_log": {
       "name": "audit_log",
@@ -234,6 +234,27 @@
         },
         "model": {
           "name": "model",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "offered_at": {
+          "name": "offered_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "accepted_at": {
+          "name": "accepted_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "fix": {
+          "name": "fix",
           "type": "text",
           "primaryKey": false,
           "notNull": false,

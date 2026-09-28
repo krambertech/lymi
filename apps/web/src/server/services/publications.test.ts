@@ -14,7 +14,6 @@ import {
   isPublicationSlug,
   previewPublication,
   publicationAdmits,
-  publicationColumns,
   publicationOut,
   publishDeck,
   publisherAvatar,
@@ -151,8 +150,6 @@ describe("publishing", () => {
   it("keeps no level, and reads a deck still on a retired shelf as having none", async () => {
     const parsed = PublicationInput.parse({ ...input("levelled"), level: "A1" });
     expect(parsed).not.toHaveProperty("level");
-    // The column is dropped in a follow-up, so no whole-row read may name it.
-    expect(publicationColumns).not.toHaveProperty("level");
 
     const deck = await publishedDeck("still-on-exams");
     await db

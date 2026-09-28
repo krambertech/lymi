@@ -70,7 +70,6 @@ export default defineConfig({
                 GOOGLE_CLIENT_ID: "e2e-client-id",
                 GOOGLE_CLIENT_SECRET: "e2e-client-secret",
                 OPENAI_API_KEY: "",
-                OPENAI_MODEL: "gpt-5-mini",
                 OPENAI_TTS_MODEL: "gpt-4o-mini-tts",
                 OPENAI_TTS_VOICE: "coral",
                 GOOGLE_TTS_MODEL: "chirp-3-hd",

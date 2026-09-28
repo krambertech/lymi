@@ -6,7 +6,8 @@ INSERT INTO user (id, name, email) VALUES
 INSERT INTO decks (id, user_id, name, default_language, description) VALUES
   ('e2e-deck-evening', 'e2e-publisher', 'Evening Estonian', 'et', 'PRIVATE description'),
   ('e2e-deck-signs', 'e2e-publisher', 'Estonian road signs', 'et', NULL),
-  ('e2e-deck-withdrawn', 'e2e-publisher', 'Withdrawn Estonian', 'et', NULL);
+  ('e2e-deck-withdrawn', 'e2e-publisher', 'Withdrawn Estonian', 'et', NULL),
+  ('e2e-deck-cities', 'e2e-publisher', 'Міста Естонії', 'et', NULL);
 INSERT INTO decks (id, user_id, name, default_language, archived_at) VALUES
   ('e2e-deck-archived', 'e2e-publisher', 'Archived Estonian', 'et', unixepoch() * 1000);
 
@@ -29,7 +30,8 @@ INSERT INTO cards (id, user_id, deck_id, section_id, term) VALUES
 
 INSERT INTO cards (id, user_id, deck_id, section_id, term, meaning) VALUES
   ('e2e-card-signs-1', 'e2e-publisher', 'e2e-deck-signs', NULL, 'peatee', 'priority road'),
-  ('e2e-card-signs-2', 'e2e-publisher', 'e2e-deck-signs', NULL, 'ülekäigurada', 'pedestrian crossing');
+  ('e2e-card-signs-2', 'e2e-publisher', 'e2e-deck-signs', NULL, 'ülekäigurada', 'pedestrian crossing'),
+  ('e2e-card-cities-1', 'e2e-publisher', 'e2e-deck-cities', NULL, 'Tartu', 'друге за розміром місто');
 
 INSERT INTO cards (id, user_id, deck_id, section_id, term, meaning, archived_at) VALUES
   ('e2e-card-archived', 'e2e-publisher', 'e2e-deck-evening', 'e2e-section-greetings', 'PRIVATE archived card', 'gone', unixepoch() * 1000);
@@ -44,5 +46,7 @@ INSERT INTO deck_publications (id, deck_id, slug, status, summary, category, tag
   ('e2e-pub-evening', 'e2e-deck-evening', 'evening-estonian', 'published', 'Phrases for the end of the day.', 'languages', '["core-words","travel"]', 'en', 'Lymi', '[{"title":"Keeleklikk","url":"https://www.keeleklikk.ee/"}]', 3, unixepoch() * 1000, NULL),
   ('e2e-pub-signs', 'e2e-deck-signs', 'estonian-road-signs', 'published', 'The signs the theory test repeats.', 'driving', '["travel"]', 'en', 'Lymi', '[]', 1, unixepoch() * 1000, NULL),
   ('e2e-pub-withdrawn', 'e2e-deck-withdrawn', 'withdrawn-estonian', 'withdrawn', 'Gone.', 'languages', '["travel"]', 'en', 'Lymi', '[]', 2, unixepoch() * 1000, unixepoch() * 1000),
-  ('e2e-pub-archived', 'e2e-deck-archived', 'archived-estonian', 'published', 'Archived.', 'languages', '["travel"]', 'en', 'Lymi', '[]', 1, unixepoch() * 1000, NULL);
+  ('e2e-pub-archived', 'e2e-deck-archived', 'archived-estonian', 'published', 'Archived.', 'languages', '["travel"]', 'en', 'Lymi', '[]', 1, unixepoch() * 1000, NULL),
+  -- Explained only in Ukrainian, so English Explore leaves it out while its page still answers.
+  ('e2e-pub-cities', 'e2e-deck-cities', 'estonian-cities', 'published', 'Міста й містечка Естонії.', 'geography', '[]', 'uk', 'Lymi', '[]', 1, unixepoch() * 1000, NULL);
 

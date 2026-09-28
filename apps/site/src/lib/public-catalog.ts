@@ -12,9 +12,9 @@ export interface ExplorePage {
 }
 
 /**
- * Loads every published deck for Explore and sets the response's cache headers. Nothing here
- * reads a cookie or a session, so one cached copy per locale is right for every visitor, and the
- * validator changes only when the catalogue's own content does. ADR 0016.
+ * Loads the published decks this locale's readers can use and sets the response's cache headers.
+ * Nothing here reads a cookie or a session, so one cached copy per locale is right for every
+ * visitor, and the validator changes only when the catalogue's own content does. ADR 0016.
  */
 export async function resolveExplorePage(
   astro: AstroGlobal,

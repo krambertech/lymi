@@ -11,6 +11,8 @@ import { languageName } from "../components/deck-fields";
 const SUBJECT_LABELS: Record<string, MessageDescriptor> = {
   geography: msg`Geography`,
   science: msg`Science`,
+  nature: msg`Nature`,
+  arts: msg`Arts`,
   driving: msg`Driving`,
   citizenship: msg`Citizenship`,
   technology: msg`Technology`,

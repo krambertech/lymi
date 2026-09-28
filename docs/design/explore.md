@@ -30,7 +30,7 @@ The public page is server-rendered with no island, so it layers the mark behind 
 
 ## Shelves
 
-A publication's category is a column from a closed list in `packages/core/src/types.ts`: `languages`, or one of the subjects `geography`, `science`, `driving`, `citizenship`, `technology` and `work`. It is closed because each subject is a heading a translator writes and a visitor learns; adding one is a deliberate change, not a typo in a publish call.
+A publication's category is a column from a closed list in `packages/core/src/types.ts`: `languages`, or one of the subjects `geography`, `science`, `nature`, `arts`, `driving`, `citizenship`, `technology` and `work`. It is closed because each subject is a heading a translator writes and a visitor learns; adding one is a deliberate change, not a typo in a publish call.
 
 A `languages` deck sits on the shelf of the language it teaches, which is the deck's own language, headed by that language's name in the reader's language; no Languages heading groups them. Language shelves come first, most decks first, then the subjects in the order above. A deck with no category, a `languages` deck with no language, or one naming a category that has since gone, such as `exams`, gathers under **More decks** at the end, so publishing is never blocked on choosing a shelf. A shelf with nothing on it never renders, and every deck sits on exactly one. `shelvesOf` in `packages/core/src/catalog.ts` does the grouping for both Explores.
 

@@ -143,6 +143,10 @@
     {
       "name": "0035_wonderful_spyke.sql",
       "sha256": "75b3dbcf759fba890281e3c148a687026bf561384da80b807fb5aa2b20244988"
+    },
+    {
+      "name": "0036_famous_the_anarchist.sql",
+      "sha256": "5b3eec0fd65624eba5b0d20bfeb80765f425325e654fc64bb421824472713c26"
     }
   ]
 }

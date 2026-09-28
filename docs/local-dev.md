@@ -95,6 +95,7 @@ The panel and the CLI use these. They sit under `/api/dev`, outside the OpenAPI 
 | `POST /api/dev/recall` `{ count, rating? }` | Grades that many due cards through the review service, Good unless `rating` says otherwise. |
 | `POST /api/dev/goal` | Grades Good until today's goal is met, going past the due cards when they run out. |
 | `POST /api/dev/slip` `{ count }` | Gives that many cards four lapses in six reviews on past review days, so they are often forgotten. |
+| `POST /api/dev/fixes` `{ causes? }` | Replaces the deck Tricky Estonian with one often-forgotten card per cause review offers a fix for, each due now with a finished diagnosis no model wrote. `causes` narrows it, such as `["confused_pair"]`. |
 | `POST /api/dev/due` `{ count: n \| "all" }` | Makes exactly `count` cards due now and moves the rest to tomorrow or later. |
 | `POST /api/dev/cards/<id>/enriched` `{ fields }` | Marks the card's `meaning`, `example` or `pronunciation` as written by the enrichment, so the AI badge shows without a vendor key. |
 | `POST /api/dev/outbox` `{ to }` | The last account email sent to that address, so a confirmation or reset link can be opened without a real inbox. |

@@ -46,6 +46,8 @@ vi.mock("../services", async () => {
     restoreCard: vi.fn(),
     restoreCards: vi.fn(),
     requestEnrichment: vi.fn(),
+    acceptFix: vi.fn(),
+    undoFix: vi.fn(),
     getSettings: vi.fn(),
     updateSettings: vi.fn(),
     insights: vi.fn(),
@@ -139,6 +141,7 @@ describe("Lymi MCP server", () => {
     const byName = new Map(tools.map((t) => [t.name, t]));
 
     expect([...byName.keys()].sort()).toEqual([
+      "accept_card_fix",
       "add_cards",
       "archive_card",
       "archive_card_image",
@@ -171,6 +174,7 @@ describe("Lymi MCP server", () => {
       "restore_section",
       "search_cards",
       "set_card_image",
+      "undo_card_fix",
       "update_card",
       "update_cards",
       "update_deck",
@@ -583,6 +587,37 @@ describe("Lymi MCP server", () => {
     expect(services.requestEnrichment).toHaveBeenCalledWith(expect.anything(), "card-1", null);
   });
 
+  it("accepts a drafted fix as the learner edited it, and undoes it", async () => {
+    services.acceptFix.mockResolvedValue({ added: [], edited: card, skipped: [] });
+    const client = await connect("write");
+
+    const missing = await client.callTool({
+      name: "accept_card_fix",
+      arguments: { diagnosisId: "diagnosis-1", cause: "two_things" },
+    });
+    expect(missing.isError).toBe(true);
+
+    const res = await client.callTool({
+      name: "accept_card_fix",
+      arguments: {
+        diagnosisId: "diagnosis-1",
+        cause: "several_answers",
+        text: "tall (of a person)",
+      },
+    });
+    expect(res.isError).toBeFalsy();
+    expect(services.acceptFix).toHaveBeenCalledWith(
+      expect.anything(),
+      "diagnosis-1",
+      { cause: "several_answers", text: "tall (of a person)" },
+      null,
+    );
+    expect(res.structuredContent).toMatchObject({ added: [], edited: { id: card.id } });
+
+    await client.callTool({ name: "undo_card_fix", arguments: { diagnosisId: "diagnosis-1" } });
+    expect(services.undoFix).toHaveBeenCalledWith(expect.anything(), "diagnosis-1");
+  });
+
   it("refuses every write on a read-only token and says how to fix it", async () => {
     const client = await connect("read");
 
@@ -937,6 +972,7 @@ describe("Lymi MCP server", () => {
 
   it("returns the learner's diagnosis of an often-forgotten card with it", async () => {
     const diagnosis = {
+      id: "diagnosis-1",
       cause: "no_anchor" as const,
       draft: { hook: "sbrigati: brisk as a brigade" },
       confidence: 0.8,

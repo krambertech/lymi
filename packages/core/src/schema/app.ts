@@ -1,6 +1,7 @@
 import { sql } from "drizzle-orm";
 import { index, integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 import {
+  type AppliedFix,
   DIAGNOSIS_CAUSES,
   type DiagnosisDraft,
   EDITION_STATUSES,
@@ -651,6 +652,11 @@ export const cardDiagnoses = sqliteTable(
     /** The fix for `cause`, validated by `Diagnosis`. Null for `unclear`. */
     draft: text("draft", { mode: "json" }).$type<DiagnosisDraft>(),
     model: text("model"),
+    /** When review first showed the fix. Review offers it once; after that it waits for the learner. */
+    offeredAt: integer("offered_at", { mode: "timestamp_ms" }),
+    acceptedAt: integer("accepted_at", { mode: "timestamp_ms" }),
+    /** What accepting wrote, so Undo reverses exactly that. Null until accepted and after Undo. */
+    fix: text("fix", { mode: "json" }).$type<AppliedFix>(),
     ...timestamps,
   },
   (t) => [uniqueIndex("card_diagnoses_user_card_revision_idx").on(t.userId, t.cardId, t.revision)],

@@ -59,7 +59,12 @@ export type AuditEvent =
       details?: Details;
     }
   | { entity: "export"; action: "create" | "complete"; id: string; details?: Details }
-  | { entity: "diagnosis"; action: "create"; id: string; details?: Details }
+  | {
+      entity: "diagnosis";
+      action: "create" | "offer" | "accept" | "undo_accept";
+      id: string;
+      details?: Details;
+    }
   | { entity: "account"; action: AccountAction; id: string; details?: Details };
 
 type ImageAction = "set_image" | "update_image" | "archive_image" | "restore_image";

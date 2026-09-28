@@ -3,7 +3,7 @@ import type {
   CardEditInput,
   CardInput,
   CardPatch,
-  StatedFieldSource,
+  FieldSource,
   TerseCardOutcomeOut,
 } from "@lymi/core";
 import {
@@ -41,18 +41,40 @@ export type AddCardOutcome =
   | { id: string; status: "added"; card: CardView }
   | { id: string; status: "skipped"; term: string; existing: CardView; deckName: string };
 
+type Sources = {
+  meaningSource?: FieldSource | null | undefined;
+  exampleSource?: FieldSource | null | undefined;
+  pronunciationSource?: FieldSource | null | undefined;
+};
+/**
+ * A card write from inside the server, which may record Lymi's own AI as a field's source: an
+ * accepted fix keeps the AI's drafted text marked. No caller can claim it; routes parse `CardInput`.
+ */
+export type ServerCardInput = Omit<CardInput, keyof Sources> & Sources;
+export type ServerCardPatch = Omit<CardPatch, keyof Sources | "meaning" | "pronunciation"> &
+  Sources & {
+    /** Null clears a field back to never set, which a split and Undo need. */
+    meaning?: string | null | undefined;
+    pronunciation?: string | null | undefined;
+  };
+type ServerCardEdit = Omit<CardEditInput, keyof Sources | "meaning" | "pronunciation"> &
+  Sources & {
+    meaning?: string | null | undefined;
+    pronunciation?: string | null | undefined;
+  };
+
 /** A publisher's curated decks each stand alone, so its terms repeat across decks but not within one. ADR 0004. */
 export type AddCardsOptions = { allowCrossDeckDuplicates?: boolean };
 
 /** Only the learner in the app enriches unless asked; an integration opts in per card. */
-function wantsEnrichment(input: CardInput, actor: Actor): boolean {
+function wantsEnrichment(input: ServerCardInput, actor: Actor): boolean {
   return input.enrich ?? actor === "user";
 }
 
 /** One card. Same rule as the batch, one outcome. */
 export async function addCard(
   ctx: ServiceContext,
-  input: CardInput,
+  input: ServerCardInput,
   enrichment?: EnrichmentQueue | null,
   options: AddCardsOptions = {},
 ): Promise<AddCardOutcome> {
@@ -73,7 +95,7 @@ export async function addCard(
  */
 export async function addCards(
   ctx: ServiceContext,
-  inputs: CardInput[],
+  inputs: ServerCardInput[],
   enrichment?: EnrichmentQueue | null,
   options: AddCardsOptions = {},
 ): Promise<AddCardOutcome[]> {
@@ -494,12 +516,12 @@ export async function cardHistory(ctx: ServiceContext, id: string) {
 }
 
 /** A field's source after an edit: as stated, or the learner's when only the text was sent. */
-function sourceAfter(text: string | undefined, stated: StatedFieldSource | undefined) {
+function sourceAfter(text: string | null | undefined, stated: FieldSource | null | undefined) {
   if (stated !== undefined || text === undefined) return stated;
   return text ? ("manual" as const) : null;
 }
 
-export async function updateCard(ctx: ServiceContext, id: string, patch: CardPatch) {
+export async function updateCard(ctx: ServiceContext, id: string, patch: ServerCardPatch) {
   const edit = { ...patch, cardId: id };
   const lookups = await editLookups(ctx, [edit]);
   const now = new Date();
@@ -549,7 +571,7 @@ type EditLookups = {
 };
 
 /** Every card, target deck and section a set of edits names, read once for the whole set. */
-async function editLookups(ctx: ServiceContext, edits: CardEditInput[]): Promise<EditLookups> {
+async function editLookups(ctx: ServiceContext, edits: ServerCardEdit[]): Promise<EditLookups> {
   const { db, userId } = ctx;
   const deckIds = [...new Set(edits.flatMap((edit) => (edit.deckId ? [edit.deckId] : [])))];
   const sectionIds = [
@@ -584,7 +606,7 @@ async function editLookups(ctx: ServiceContext, edits: CardEditInput[]): Promise
 function editWrite(
   ctx: ServiceContext,
   lookups: EditLookups,
-  { cardId: id, ...patch }: CardEditInput,
+  { cardId: id, ...patch }: ServerCardEdit,
   now: Date,
 ): CardWrite {
   const { db } = ctx;

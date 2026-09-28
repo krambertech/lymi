@@ -81,3 +81,5 @@ Deck rows and round tiles are whole links that end in a label and an arrow in a 
 ## Review
 
 A review holds the screen: the page never scrolls, and the grade strip always sits under the card. A card too long for its room first steps its cue and target down the type scale; the example and notes never shrink or hide, so whatever still does not fit scrolls inside the plate, softened at its top and bottom edges.
+
+An often-forgotten card with a drafted fix shows it once, after the reveal, as one quiet button pinned to the foot of the plate outside the scroller: a `plate-2` panel inset 8 px with the plate's concentric radius, the cause's icon in a `plate` circle, the cause, the fix, and a chevron. It takes no amber and its room is kept from the reveal, so the answer never jumps and the grade strip never moves. It opens the fix as a sheet ([overlays.md](overlays.md#sheets)); grading without opening it leaves the fix for later. `FixOffer` and `FixSheet` in `components/`.

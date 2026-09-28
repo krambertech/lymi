@@ -114,6 +114,8 @@ export interface EditCardFormProps extends CardFormBase {
   card: Card;
   /** Opens with the picture field showing, for adding a picture that did not go through. */
   openPicture?: boolean | undefined;
+  /** Opens with the caret in this field, for rewording how the card asks. */
+  focus?: "term" | "meaning" | undefined;
 }
 
 export type CardFormProps = AddCardFormProps | EditCardFormProps;
@@ -150,7 +152,7 @@ export function CardForm(props: CardFormProps) {
     onCreateDeck,
     onRetryPicture,
   }: Partial<AddCardFormProps> = adding ? props : {};
-  const { card, openPicture }: Partial<EditCardFormProps> = adding ? {} : props;
+  const { card, openPicture, focus }: Partial<EditCardFormProps> = adding ? {} : props;
   const { t, i18n } = useLingui();
   const st = !!useStaticNav();
   const desktop = useDesktop();
@@ -207,7 +209,19 @@ export function CardForm(props: CardFormProps) {
   const [failure, setFailure] = useState<string | null>(null);
   const [invalid, setInvalid] = useState<FieldErrors>({});
   const termRef = useRef<HTMLInputElement>(null);
+  const meaningRef = useRef<HTMLTextAreaElement>(null);
   const pictureRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    // A drawer settles before any field takes focus, overlays.md; a desktop dialog has no keyboard to raise.
+    if (!focus || chips) return;
+    // After the dialog has placed its own initial focus, so this one wins.
+    const timer = setTimeout(() => {
+      const field = focus === "term" ? termRef.current : meaningRef.current;
+      field?.focus({ preventScroll: true });
+      field?.setSelectionRange(field.value.length, field.value.length);
+    }, 80);
+    return () => clearTimeout(timer);
+  }, [focus, chips]);
   useEffect(() => {
     if (!openPicture || chips) return;
     // After the dialog has placed its own initial focus, so this one wins.
@@ -459,6 +473,7 @@ export function CardForm(props: CardFormProps) {
       >{t`Meaning`}</FieldLabel>
       {/* One line to start, like the term; Enter still adds the card and Shift Enter breaks the line. */}
       <Textarea
+        ref={meaningRef}
         maxLength={cardLimits.meaning ?? undefined}
         value={meaning}
         rows={1}

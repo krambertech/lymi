@@ -1,7 +1,9 @@
 import {
   type Actor,
+  type DiagnosisDraft,
   dayWindow,
   emptyState,
+  OFFERED_CAUSES,
   type Rating,
   SLIPPING_FORGOTTEN_DAYS,
   schedule,
@@ -725,4 +727,182 @@ export async function slipCards(ctx: ServiceContext, count: number): Promise<num
   }
   await runBatched(db, statements);
   return chosen.size;
+}
+
+/** The deck `seedFixes` writes, one card per cause review offers a fix for. */
+const FIXES_DECK = "Tricky Estonian";
+
+export type FixCause = (typeof OFFERED_CAUSES)[number];
+
+/** The confused pair's card; its draft names the other card, which exists only once seeded. */
+const PAIR_CARD: PersonaCard = { term: "alustama", meaning: "to begin, to start (something)" };
+const pairDraft = (otherCardId: string): DiagnosisDraft => ({
+  otherCardId,
+  cards: [
+    { term: "Ma alustan tööd kell üheksa.", meaning: "I start work at nine. (I start it)" },
+    { term: "Töö algab kell üheksa.", meaning: "Work starts at nine. (it starts by itself)" },
+  ],
+});
+
+/** Each other cause's card, and the diagnosis a model could plausibly have written for it. */
+const FIX_CARDS: Record<
+  Exclude<FixCause, "confused_pair">,
+  { card: PersonaCard; draft: DiagnosisDraft | null }
+> = {
+  two_things: {
+    card: {
+      term: "Kus sa elad? Ma elan Tallinnas.",
+      meaning: "Where do you live? I live in Tallinn.",
+    },
+    draft: {
+      cards: [
+        { term: "Kus sa elad?", meaning: "Where do you live?" },
+        { term: "Ma elan Tallinnas.", meaning: "I live in Tallinn." },
+      ],
+    },
+  },
+  several_answers: {
+    card: { term: "pikk", meaning: "tall" },
+    draft: { field: "meaning", text: "tall (of a person)", otherAnswer: "kõrge" },
+  },
+  unclear: {
+    card: { term: "vaatama", meaning: "to look, to watch" },
+    draft: null,
+  },
+};
+
+const fixCard = (cause: FixCause) =>
+  cause === "confused_pair" ? PAIR_CARD : FIX_CARDS[cause].card;
+
+/** The card a confused pair names, which is not often forgotten itself. */
+const PAIR_OTHER: PersonaCard = { term: "algama", meaning: "to begin, to start (by itself)" };
+
+/**
+ * One often-forgotten card per cause review offers a fix for, each with a finished diagnosis no
+ * model wrote, so the offer can be seen without a vendor key. Asked meaning first, forgotten as
+ * the first grade on just enough past days to slip, and due now. A second run replaces the first.
+ */
+export async function seedFixes(
+  ctx: ServiceContext,
+  causes: readonly FixCause[] = OFFERED_CAUSES,
+  now = new Date(),
+): Promise<{ deckId: string; cards: { cause: FixCause; cardId: string }[] }> {
+  const { db, userId } = ctx;
+  const terms = [PAIR_OTHER, ...OFFERED_CAUSES.map(fixCard)].map((c) => c.term);
+  await db.batch([
+    db
+      .delete(schema.cards)
+      .where(and(eq(schema.cards.userId, userId), inArray(schema.cards.term, terms))),
+    db
+      .delete(schema.decks)
+      .where(and(eq(schema.decks.userId, userId), eq(schema.decks.name, FIXES_DECK))),
+  ]);
+  const deck = await createDeck(ctx, {
+    name: FIXES_DECK,
+    defaultLanguage: "et",
+    reviewModes: [{ cue: "meaning", target: "term" }],
+  });
+  const wanted = [...new Set(causes)];
+  const inputs = [
+    ...(wanted.includes("confused_pair") ? [PAIR_OTHER] : []),
+    ...wanted.map(fixCard),
+  ].map((card) => ({
+    deckId: deck.id,
+    term: card.term,
+    meaning: card.meaning,
+    meaningSource: "lesson" as const,
+    source: "Tund 7",
+  }));
+  const outcomes = await addCards(ctx, inputs);
+  const idOf = new Map(
+    outcomes.flatMap((o) => (o.status === "added" ? [[o.card.term, o.card.id] as const] : [])),
+  );
+  const other = idOf.get(PAIR_OTHER.term);
+  const seeded = wanted.flatMap((cause) => {
+    const cardId = idOf.get(fixCard(cause).term);
+    return cardId ? [{ cause, cardId }] : [];
+  });
+
+  const states = await db
+    .select()
+    .from(schema.cardStates)
+    .where(
+      and(
+        eq(schema.cardStates.userId, userId),
+        inArray(
+          schema.cardStates.cardId,
+          seeded.map((s) => s.cardId),
+        ),
+      ),
+    );
+  const today = dayWindow(now, await reviewZone(ctx)).start.getTime();
+  const statements: unknown[] = [];
+  for (const state of states) {
+    let fsrs = emptyState(new Date(today - (SLIPPING_FORGOTTEN_DAYS + 1) * DAY));
+    for (let daysAgo = SLIPPING_FORGOTTEN_DAYS; daysAgo >= 1; daysAgo--) {
+      const at = new Date(today - daysAgo * DAY + 9 * 3_600_000);
+      const result = schedule(fsrs, 1, at);
+      statements.push(
+        db.insert(schema.reviews).values({
+          id: crypto.randomUUID(),
+          userId,
+          cardId: state.cardId,
+          cardStateId: state.id,
+          direction: state.direction,
+          mode: state.mode,
+          rating: 1,
+          state: result.log.state,
+          elapsedDays: result.log.elapsedDays,
+          scheduledDays: result.log.scheduledDays,
+          stabilityAfter: result.card.stability,
+          difficultyAfter: result.card.difficulty,
+          reviewedAt: at,
+          source: "web",
+        }),
+      );
+      fsrs = result.card;
+    }
+    statements.push(
+      db
+        .update(schema.cardStates)
+        .set({
+          due: now,
+          state: fsrs.state,
+          fsrs: serializeState({ ...fsrs, due: now }),
+          lastReview: fsrs.last_review ?? null,
+          updatedAt: now,
+        })
+        .where(eq(schema.cardStates.id, state.id)),
+    );
+  }
+  // The other half of the pair waits, so the card with the offer is the one review shows.
+  if (other) {
+    statements.push(
+      db
+        .update(schema.cardStates)
+        .set({ due: new Date(now.getTime() + 30 * DAY) })
+        .where(eq(schema.cardStates.cardId, other)),
+    );
+  }
+  for (const { cause, cardId } of seeded) {
+    const pair = other ? pairDraft(other) : undefined;
+    const draft = cause === "confused_pair" ? pair : FIX_CARDS[cause].draft;
+    if (draft === undefined) continue;
+    statements.push(
+      db.insert(schema.cardDiagnoses).values({
+        id: crypto.randomUUID(),
+        userId,
+        cardId,
+        revision: 1,
+        status: "done",
+        cause,
+        proposedCause: cause,
+        confidence: cause === "unclear" ? 0.3 : 0.9,
+        draft,
+        model: "dev",
+      }),
+    );
+  }
+  await runBatched(db, statements);
+  return { deckId: deck.id, cards: seeded };
 }

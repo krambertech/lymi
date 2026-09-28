@@ -24,6 +24,7 @@ import { notFound, type ServiceContext } from "./context";
 import { dateFormatter } from "./days";
 import type { DiagnosisRunner } from "./diagnosis";
 import { cardsById, drawInputs } from "./draw";
+import { reviewOffers } from "./fixes";
 import { memberOf } from "./members";
 import {
   type DayProgress,
@@ -72,11 +73,17 @@ export async function reviewQueue(
     ? roundOrder(cards, log, day, { deckId, round, slipping })
     : drawOrder(cards, log, day, { deckId }, limit);
   const front = order.slice(0, limit);
-  const content = await presentContent(ctx, [...new Set(front.map((d) => d.cardId))]);
+  const { views: content, offers } = await presentContent(
+    ctx,
+    [...new Set(front.map((d) => d.cardId))],
+    slipping,
+    zone,
+  );
 
   const items = front.flatMap((drawn) => {
     const state = states.get(drawKey(drawn.cardId, drawn.mode));
     const card = content.get(drawn.cardId);
+    const offer = offers.get(drawn.cardId);
     if (!state || !card) return [];
     const next = preview(deserializeState(state.fsrs), now);
     const direction = legacyDirection(state.mode);
@@ -95,6 +102,7 @@ export async function reviewQueue(
           3: next[3].toISOString(),
           4: next[4].toISOString(),
         },
+        ...(offer ? { offer } : {}),
       },
     ];
   });
@@ -142,7 +150,7 @@ export async function reviewDraw(
   if (opts.sectionId) await visibleSection(ctx, opts.sectionId, opts.deckId);
   // The series or section narrows the rows loaded, so the rules need no scope of their own for it.
   const scope = { deckId: opts.deckId };
-  const { cards, log, day, states } = await drawInputs(ctx, {
+  const { cards, log, day, states, slipping } = await drawInputs(ctx, {
     ...scope,
     seriesId: opts.seriesId,
     sectionId: opts.sectionId,
@@ -158,7 +166,7 @@ export async function reviewDraw(
     if (missed(entry.rating, entry.stateBefore)) include.add(entry.cardId);
   }
   const position = new Map([...include].map((cardId, index) => [cardId, index]));
-  const content = await presentContent(ctx, [...include]);
+  const { views: content, offers } = await presentContent(ctx, [...include], slipping, zone);
 
   return {
     day: { date: day.date, zone, start: day.start, end: day.end },
@@ -194,8 +202,16 @@ export async function reviewDraw(
           ];
         });
         const row = content.get(card.cardId);
+        const offer = offers.get(card.cardId);
         return row && modes.length > 0
-          ? [{ card: row, modes, slipping: card.slipping ?? false }]
+          ? [
+              {
+                card: row,
+                modes,
+                slipping: card.slipping ?? false,
+                ...(offer ? { offer } : {}),
+              },
+            ]
           : [];
       }),
     log: log.map((entry) => ({
@@ -211,11 +227,19 @@ export async function reviewDraw(
   };
 }
 
-/** The cards a draw returned, as the API shows them, by id. */
-async function presentContent(ctx: ServiceContext, ids: string[]) {
-  const rows = await cardsById(ctx, ids);
-  const views = await presentCards(ctx.db, [...rows.values()], ctx.userId);
-  return new Map(views.map((view) => [view.id, view]));
+/** The cards a draw returned, as the API shows them, by id, with the fixes review offers for them. */
+async function presentContent(
+  ctx: ServiceContext,
+  ids: string[],
+  slipping: ReadonlySet<string>,
+  zone: string,
+) {
+  const rows = [...(await cardsById(ctx, ids)).values()];
+  const [views, offers] = await Promise.all([
+    presentCards(ctx.db, rows, ctx.userId),
+    reviewOffers(ctx, rows, slipping, zone),
+  ]);
+  return { views: new Map(views.map((view) => [view.id, view])), offers };
 }
 
 /**

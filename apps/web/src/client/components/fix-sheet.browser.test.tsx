@@ -28,12 +28,27 @@ function itemWith(offer: ReviewOffer, card: Partial<QueueItem["card"]> = {}): Qu
   };
 }
 
-function Harness({ item, onEdit }: { item: QueueItem; onEdit?: (focus: EditFocus) => void }) {
+interface HarnessProps {
+  item: QueueItem;
+  onEdit?: (focus: EditFocus) => void;
+  onDismiss?: () => void;
+}
+
+function Harness({ item, onEdit, onDismiss }: HarnessProps) {
   const [open, setOpen] = useState(true);
   return (
     <QueryClientProvider client={new QueryClient()}>
       <I18nProvider i18n={i18n}>
-        <FixSheet item={item} open={open} onOpenChange={setOpen} onEdit={onEdit ?? (() => {})} />
+        <FixSheet
+          item={item}
+          open={open}
+          onOpenChange={setOpen}
+          onEdit={onEdit ?? (() => {})}
+          onDismiss={() => {
+            onDismiss?.();
+            setOpen(false);
+          }}
+        />
       </I18nProvider>
     </QueryClientProvider>
   );
@@ -81,6 +96,36 @@ test("a confused pair shows both cards and adds the two drafted, as the learner 
   await expect.element(dialog).not.toBeInTheDocument();
 });
 
+test("terms written as principal parts are named by their first forms, and compared in full", async () => {
+  const offer: ReviewOffer = {
+    ...pair,
+    other: { id: "c2", term: "pikk · pika · pikka", meaning: "long", language: "et" },
+  };
+  await render(
+    <Harness item={itemWith(offer, { term: "lühike · lühikese · lühikest", meaning: "short" })} />,
+  );
+  const dialog = page.getByRole("dialog");
+  await expect.element(dialog.getByRole("heading", { name: "lühike and pikk" })).toBeVisible();
+  await expect
+    .element(dialog.getByText("“lühike” keeps slipping, likely because the two get mixed up."))
+    .toBeVisible();
+  await expect.element(dialog.getByText("pikk · pika · pikka", { exact: true })).toBeVisible();
+  await expect
+    .element(dialog.getByText("lühike · lühikese · lühikest", { exact: true }))
+    .toBeVisible();
+});
+
+test("“That’s not it” answers a named cause and closes the sheet without the fix", async () => {
+  const accept = accepted();
+  const onDismiss = vi.fn();
+  await render(<Harness item={itemWith(pair)} onDismiss={onDismiss} />);
+  const dialog = page.getByRole("dialog");
+  await dialog.getByRole("button", { name: "That’s not it" }).click();
+  expect(onDismiss).toHaveBeenCalledOnce();
+  await expect.element(dialog).not.toBeInTheDocument();
+  expect(accept).not.toHaveBeenCalled();
+});
+
 test("two things split into numbered cards, and card 1 keeps the history", async () => {
   const accept = accepted();
   const offer: Extract<ReviewOffer, { cause: "two_things" }> = {
@@ -100,6 +145,7 @@ test("two things split into numbered cards, and card 1 keeps the history", async
     .element(dialog.getByText("Card 1 keeps this card’s history and notes. Card 2 starts as new."))
     .toBeVisible();
   await expect.element(dialog.getByRole("button", { name: "Edit card 2" })).toBeVisible();
+  await expect.element(dialog.getByRole("button", { name: "That’s not it" })).toBeVisible();
   await dialog.getByRole("button", { name: "Split into 2 cards" }).click();
   expect(accept).toHaveBeenCalledWith("d-split", { cause: "two_things", cards: offer.draft.cards });
 });
@@ -117,6 +163,7 @@ test("more than one right answer names the other and sends the rewritten questio
   const cue = dialog.getByRole("textbox", { name: "Meaning" });
   await expect.element(cue).toHaveValue("tall (of a person)");
   await expect.element(dialog.getByText("AI wrote this")).toBeInTheDocument();
+  await expect.element(dialog.getByRole("button", { name: "That’s not it" })).toBeVisible();
 
   await userEvent.clear(cue);
   await dialog.getByRole("button", { name: "Change the question" }).click();
@@ -145,6 +192,10 @@ test("no clear reason offers ways to change the card, each opening the editor", 
   await render(<Harness item={itemWith(offer)} onEdit={onEdit} />);
   const dialog = page.getByRole("dialog");
   await expect.element(dialog.getByRole("heading", { name: "Ask it another way" })).toBeVisible();
+  // There is no cause to disagree with.
+  await expect
+    .element(dialog.getByRole("button", { name: "That’s not it" }))
+    .not.toBeInTheDocument();
   await dialog.getByRole("button", { name: /Make the question clearer/ }).click();
   expect(onEdit).toHaveBeenLastCalledWith("meaning");
   await dialog.getByRole("button", { name: /Add a picture/ }).click();
@@ -207,6 +258,7 @@ test("a drafted hook keeps the AI badge until a word of it changes, and keeps as
     .toBeVisible();
   const field = dialog.getByRole("textbox", { name: "Memory hook" });
   await expect.element(field).toHaveValue("A lass stamps her foot to start the race.");
+  await expect.element(dialog.getByRole("button", { name: "That’s not it" })).toBeVisible();
   await expect.element(dialog.getByText("AI hook")).toBeInTheDocument();
 
   await userEvent.clear(field);
@@ -234,6 +286,7 @@ test("no clear reason lets the learner write a hook of their own, and an empty o
   await expect.element(field).toHaveFocus();
   await expect.element(field).toHaveValue("");
   expect(dialog.getByText("AI hook").elements()).toHaveLength(0);
+  expect(dialog.getByRole("button", { name: "That’s not it" }).elements()).toHaveLength(0);
 
   await dialog.getByRole("button", { name: "Save hook" }).click();
   await expect.element(dialog.getByText("Write a hook.")).toBeVisible();

@@ -2,7 +2,14 @@ import { FixInput, FixOut, OkOut } from "@lymi/core";
 import { Hono } from "hono";
 import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
-import { acceptFix, enrichmentQueue, markOffered, undoFix } from "../services";
+import {
+  acceptFix,
+  dismissDiagnosis,
+  enrichmentQueue,
+  markOffered,
+  undoDismissal,
+  undoFix,
+} from "../services";
 
 export const diagnoses = new Hono<AppEnv>();
 
@@ -54,6 +61,38 @@ diagnoses.post(
   }),
   async (c) => {
     await undoFix(ctxOf(c), c.req.param("id"));
+    return c.json({ ok: true as const });
+  },
+);
+
+diagnoses.post(
+  "/:id/dismiss",
+  describe({
+    tags: ["Cards"],
+    summary: "Dismiss a diagnosis",
+    description:
+      "Needs the write scope. Says the cause the diagnosis names is not why you keep forgetting the card. Its fix is not offered again, and the card is not diagnosed again, until an edit changes the card. A diagnosis with no clear reason has nothing to dismiss (400); one whose fix is on the card, or that is still being made, is a conflict (409). Dismissing twice changes nothing. Undo with `POST /api/diagnoses/{id}/dismiss/undo`.",
+    ok: { schema: OkOut, description: "Dismissed" },
+    errors: [400, 404, 409],
+  }),
+  async (c) => {
+    await dismissDiagnosis(ctxOf(c), c.req.param("id"));
+    return c.json({ ok: true as const });
+  },
+);
+
+diagnoses.post(
+  "/:id/dismiss/undo",
+  describe({
+    tags: ["Cards"],
+    summary: "Undo a dismissal",
+    description:
+      "Needs the write scope. Takes back a dismissal, so the fix can be accepted again. Review does not offer it a second time. Undoing a diagnosis that is not dismissed changes nothing.",
+    ok: { schema: OkOut, description: "Undone" },
+    errors: [404],
+  }),
+  async (c) => {
+    await undoDismissal(ctxOf(c), c.req.param("id"));
     return c.json({ ok: true as const });
   },
 );

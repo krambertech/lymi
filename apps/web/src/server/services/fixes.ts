@@ -12,6 +12,7 @@ import {
 import { and, asc, eq, gt, inArray, isNotNull, isNull } from "@lymi/core/db";
 import type { Card, CardDiagnosis } from "@lymi/core/schema";
 import { schema } from "../db";
+import { track } from "./analytics";
 import { auditStatement } from "./audit";
 import { runBatch, type Statement, selectIn } from "./batch";
 import { type CardView, editionText, inEdition, presentCard } from "./card-view";
@@ -74,7 +75,7 @@ export async function reviewOffers(
       }
       continue;
     }
-    if (row.offeredAt || !row.cause || !offered.has(row.cause)) continue;
+    if (row.offeredAt || row.dismissedAt || !row.cause || !offered.has(row.cause)) continue;
     // A hook the learner already wrote is the fix this cause would draft.
     if (row.cause === "no_anchor" && card.hook) continue;
     const finding = Diagnosis.safeParse({ cause: row.cause, draft: row.draft });
@@ -206,6 +207,69 @@ export async function markOffered(ctx: ServiceContext, id: string, now = new Dat
   ]);
 }
 
+/**
+ * The learner says the cause is wrong. The fix is not offered again, and a new prompt does not
+ * diagnose the card again, until an edit raises its revision. Dismissing twice changes nothing.
+ */
+export async function dismissDiagnosis(ctx: ServiceContext, id: string, now = new Date()) {
+  const { db, userId } = ctx;
+  const row = await ownDiagnosis(ctx, id);
+  if (row.dismissedAt) return;
+  if (row.status !== "done")
+    throw new ServiceError("conflict", "Lymi is still looking at this card");
+  if (!row.cause || row.cause === "unclear") {
+    throw new ServiceError("invalid", "This diagnosis names no cause to dismiss");
+  }
+  if (row.acceptedAt) throw new ServiceError("conflict", "This fix is on the card; undo it first");
+  await db.batch([
+    db
+      .update(schema.cardDiagnoses)
+      .set({ dismissedAt: now, offeredAt: row.offeredAt ?? now, updatedAt: now })
+      .where(
+        and(
+          eq(schema.cardDiagnoses.id, id),
+          eq(schema.cardDiagnoses.userId, userId),
+          eq(schema.cardDiagnoses.status, "done"),
+          isNull(schema.cardDiagnoses.acceptedAt),
+          isNull(schema.cardDiagnoses.dismissedAt),
+        ),
+      ),
+    auditStatement(ctx, {
+      entity: "diagnosis",
+      action: "dismiss",
+      id,
+      details: { cardId: row.cardId, revision: row.revision, cause: row.cause },
+    }),
+  ]);
+  track(ctx.analytics, { name: "diagnosis_dismissed", cause: row.cause });
+}
+
+/** Take back a dismissal. The fix stays offered: it waits for the learner, not for review. */
+export async function undoDismissal(ctx: ServiceContext, id: string, now = new Date()) {
+  const { db, userId } = ctx;
+  const row = await ownDiagnosis(ctx, id);
+  if (!row.dismissedAt || !row.cause) return;
+  await db.batch([
+    db
+      .update(schema.cardDiagnoses)
+      .set({ dismissedAt: null, updatedAt: now })
+      .where(
+        and(
+          eq(schema.cardDiagnoses.id, id),
+          eq(schema.cardDiagnoses.userId, userId),
+          isNotNull(schema.cardDiagnoses.dismissedAt),
+        ),
+      ),
+    auditStatement(ctx, {
+      entity: "diagnosis",
+      action: "undo_dismiss",
+      id,
+      details: { cardId: row.cardId, revision: row.revision, cause: row.cause },
+    }),
+  ]);
+  track(ctx.analytics, { name: "diagnosis_dismiss_undone", cause: row.cause });
+}
+
 /** Drafted text the learner left alone is the AI's; anything they changed is theirs. */
 const sourceOf = (drafted: string, accepted: string): FieldSource =>
   drafted === accepted ? "ai" : "manual";
@@ -235,6 +299,9 @@ export async function acceptFix(
   if (row.status !== "done" || row.revision !== card.revision) {
     throw new ServiceError("conflict", "This card has changed since Lymi looked at it");
   }
+  if (row.dismissedAt) {
+    throw new ServiceError("conflict", "This diagnosis was dismissed; undo that first");
+  }
   const finding = Diagnosis.safeParse({ cause: row.cause, draft: row.draft });
   const diagnosis = finding.success ? finding.data : null;
   const cause = diagnosis?.cause;
@@ -247,11 +314,19 @@ export async function acceptFix(
   }
 
   const mine = and(eq(schema.cardDiagnoses.id, id), eq(schema.cardDiagnoses.userId, userId));
-  // Claimed before anything is written, so two accepts racing apply the fix once.
+  // Claimed before anything is written, so two accepts racing apply the fix once, and a row a
+  // draw moved back to `working` or the learner dismissed meanwhile is never applied.
   const [claimed] = await db
     .update(schema.cardDiagnoses)
     .set({ acceptedAt: now, updatedAt: now })
-    .where(and(mine, isNull(schema.cardDiagnoses.acceptedAt)))
+    .where(
+      and(
+        mine,
+        eq(schema.cardDiagnoses.status, "done"),
+        isNull(schema.cardDiagnoses.acceptedAt),
+        isNull(schema.cardDiagnoses.dismissedAt),
+      ),
+    )
     .returning({ id: schema.cardDiagnoses.id });
   if (!claimed) throw new ServiceError("conflict", "This fix is already on the card");
 

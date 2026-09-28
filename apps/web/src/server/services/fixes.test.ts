@@ -4,7 +4,14 @@ import { type Db, schema } from "../db";
 import { getCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { type FixCause, seedFixes } from "./dev";
-import { acceptFix, markOffered, reviewOffers, undoFix } from "./fixes";
+import {
+  acceptFix,
+  dismissDiagnosis,
+  markOffered,
+  reviewOffers,
+  undoDismissal,
+  undoFix,
+} from "./fixes";
 import { join } from "./members";
 import { reviewDraw, reviewQueue } from "./review";
 import { setReviewTimezone } from "./review-days";
@@ -407,6 +414,60 @@ describe("offering a diagnosis's fix in review", () => {
     await expect(
       acceptFix(ctx, row.id, { cause: "several_answers", text: "tall (of a person)" }, null),
     ).rejects.toMatchObject({ code: "conflict" });
+  });
+
+  it("never offers a dismissed fix again, audits it, and Undo lets it be accepted", async () => {
+    const events: unknown[] = [];
+    const { ctx: own, cardOf, diagnosisOf } = await setup(["several_answers"]);
+    const ctx = { ...own, analytics: { writeDataPoint: (point: unknown) => events.push(point) } };
+    const row = await diagnosisOf(cardOf("several_answers"));
+    await dismissDiagnosis(ctx, row.id);
+    await dismissDiagnosis(ctx, row.id);
+    expect(await offersIn(ctx)).toEqual(new Map());
+    expect(await diagnosisOf(row.cardId)).toMatchObject({
+      dismissedAt: expect.any(Date),
+      offeredAt: expect.any(Date),
+    });
+    await expect(
+      acceptFix(ctx, row.id, { cause: "several_answers", text: "tall (of a person)" }, null),
+    ).rejects.toMatchObject({ code: "conflict" });
+
+    await undoDismissal(ctx, row.id);
+    await undoDismissal(ctx, row.id);
+    expect(await diagnosisOf(row.cardId)).toMatchObject({ dismissedAt: null });
+    // Undo takes the answer back, but review has shown this fix once already.
+    expect(await offersIn(ctx)).toEqual(new Map());
+    await acceptFix(ctx, row.id, { cause: "several_answers", text: "tall (of a person)" }, null);
+
+    const audit = await db
+      .select()
+      .from(schema.auditLog)
+      .where(and(eq(schema.auditLog.userId, ctx.userId), eq(schema.auditLog.entity, "diagnosis")));
+    expect(audit.map((entry) => entry.action)).toEqual(["dismiss", "undo_dismiss", "accept"]);
+    expect(audit[0]).toMatchObject({ actor: "user", entityId: row.id });
+    expect(events).toEqual([
+      { indexes: ["diagnosis_dismissed"], blobs: ["several_answers"], doubles: [1] },
+      { indexes: ["diagnosis_dismiss_undone"], blobs: ["several_answers"], doubles: [1] },
+    ]);
+  });
+
+  it("refuses to dismiss no clear reason, a fix on the card, or a diagnosis still running", async () => {
+    const { ctx, cardOf, diagnosisOf } = await setup(["unclear", "several_answers"]);
+    const unclear = await diagnosisOf(cardOf("unclear"));
+    await expect(dismissDiagnosis(ctx, unclear.id)).rejects.toMatchObject({ code: "invalid" });
+
+    const row = await diagnosisOf(cardOf("several_answers"));
+    await acceptFix(ctx, row.id, { cause: "several_answers", text: "tall (of a person)" }, null);
+    await expect(dismissDiagnosis(ctx, row.id)).rejects.toMatchObject({ code: "conflict" });
+
+    await db
+      .update(schema.cardDiagnoses)
+      .set({ status: "working", acceptedAt: null })
+      .where(eq(schema.cardDiagnoses.id, row.id));
+    await expect(dismissDiagnosis(ctx, row.id)).rejects.toMatchObject({ code: "conflict" });
+    await expect(dismissDiagnosis(ctx, "someone-else")).rejects.toMatchObject({
+      code: "not_found",
+    });
   });
 
   it("waits for a card to slip again after an offer before offering its next diagnosis", async () => {

@@ -39,3 +39,9 @@ export function canSpeakTerm(card: {
 }): boolean {
   return !!card.language && Array.from(card.term).length <= SPOKEN_TERM_MAX;
 }
+
+/** The first form of a term written as principal parts ("pikk · pika · pikka" → "pikk"), for a title. */
+export function headword(term: string): string {
+  const at = term.indexOf(" · ");
+  return at > 0 ? term.slice(0, at) : term;
+}

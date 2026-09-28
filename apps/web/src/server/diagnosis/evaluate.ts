@@ -62,6 +62,14 @@ const option = (name: string) => {
 };
 const verbose = args.includes("--verbose");
 
+/** Another card as the service hands it to the model. */
+const seen = ({ id, term, meaning, notes }: FixtureCard): DiagnosisCard => ({
+  id,
+  term,
+  meaning,
+  notes: notes ?? null,
+});
+
 /** Nearest neighbours by position, as the service takes them by when they were added. */
 function neighbours(deck: FixtureDeck, index: number): DiagnosisCard[] {
   return deck.cards
@@ -69,7 +77,7 @@ function neighbours(deck: FixtureDeck, index: number): DiagnosisCard[] {
     .filter(({ distance }) => distance > 0)
     .sort((a, b) => a.distance - b.distance)
     .slice(0, DECK_SAMPLE)
-    .map(({ card }) => ({ id: card.id, term: card.term, meaning: card.meaning }));
+    .map(({ card }) => seen(card));
 }
 
 function inputFor(deck: FixtureDeck, index: number): DiagnosisInput {
@@ -89,7 +97,7 @@ function inputFor(deck: FixtureDeck, index: number): DiagnosisInput {
     oftenForgotten: deck.cards
       .filter((other) => other.id !== card.id && sticky(other))
       .slice(0, OFTEN_FORGOTTEN_SAMPLE)
-      .map(({ id, term, meaning }) => ({ id, term, meaning })),
+      .map(seen),
   };
 }
 

@@ -53,6 +53,7 @@ import {
   createSeries,
   deleteSeries,
   describeCardImage,
+  dismissDiagnosis,
   getDeck,
   getSeries,
   getSettings,
@@ -82,6 +83,7 @@ import {
   showCardWithDiagnosis,
   streak,
   terseOutcome,
+  undoDismissal,
   undoFix,
   updateCard,
   updateCards,
@@ -502,6 +504,42 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       run("undo_card_fix", async () => {
         requireWrite(principal);
         await undoFix(ctx, diagnosisId);
+        return result({ ok: true });
+      }),
+  );
+
+  server.registerTool(
+    "dismiss_card_diagnosis",
+    {
+      title: "Dismiss a diagnosis",
+      description:
+        "Record that the cause in a card's diagnosis, from get_card, is not why the learner keeps forgetting it, when the learner says so. Its fix is not offered again, and the card is not diagnosed again until it is edited. A diagnosis with no clear reason, or whose fix is on the card, is refused. undo_dismiss_card_diagnosis takes it back. Needs write.",
+      inputSchema: z.object({ diagnosisId: z.string().min(1) }),
+      outputSchema: OkOut,
+      ...writeTool({ idempotent: true }),
+    },
+    ({ diagnosisId }) =>
+      run("dismiss_card_diagnosis", async () => {
+        requireWrite(principal);
+        await dismissDiagnosis(ctx, diagnosisId);
+        return result({ ok: true });
+      }),
+  );
+
+  server.registerTool(
+    "undo_dismiss_card_diagnosis",
+    {
+      title: "Undo a dismissal",
+      description:
+        "Take back dismiss_card_diagnosis, so the fix can be accepted again. Undoing a diagnosis that is not dismissed changes nothing. Needs write.",
+      inputSchema: z.object({ diagnosisId: z.string().min(1) }),
+      outputSchema: OkOut,
+      ...writeTool({ idempotent: true }),
+    },
+    ({ diagnosisId }) =>
+      run("undo_dismiss_card_diagnosis", async () => {
+        requireWrite(principal);
+        await undoDismissal(ctx, diagnosisId);
         return result({ ok: true });
       }),
   );

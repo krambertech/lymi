@@ -129,3 +129,38 @@ test("a tap where the offer will be, before it has arrived, opens nothing", asyn
   await expect(offer).not.toHaveAttribute("inert");
   await expect(page.getByRole("dialog", { name: "alustama and algama" })).toBeHidden();
 });
+
+test("“That’s not it” sets the fix aside for good, and Undo brings the offer back", async ({
+  page,
+}, testInfo) => {
+  await startAsTestLearner(page, testInfo, "review-fix", "/today");
+  const deckId = await seedPair(page);
+  const cards = await page.request.get(`/api/decks/${deckId}/cards`);
+  const rows = (await cards.json()) as { card: { id: string; term: string } }[];
+  const cardId = rows.find((row) => row.card.term === "alustama")?.card.id;
+  const dismissed = async () => {
+    const res = await page.request.get(`/api/cards/${cardId}`);
+    return ((await res.json()) as { diagnosis: { dismissedAt: string | null } }).diagnosis
+      .dismissedAt;
+  };
+  await page.goto(`/review?deck=${deckId}`);
+  await page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
+  const offer = page.getByRole("button", { name: /Often mixed up with algama/ });
+
+  await test.step("the learner says the cause is wrong, and the offer leaves", async () => {
+    await offer.click();
+    const sheet = page.getByRole("dialog", { name: "alustama and algama" });
+    await sheet.getByRole("button", { name: "That’s not it", exact: true }).click();
+    await expect(sheet).toBeHidden();
+    await expect(page.getByText("Lymi won’t offer this fix again")).toBeVisible();
+    await expectParked(offer);
+    await expect.poll(dismissed).not.toBeNull();
+  });
+
+  await test.step("Undo takes the answer back and returns the offer to the card", async () => {
+    await page.getByRole("button", { name: "Undo", exact: true }).click();
+    await expect.poll(dismissed).toBeNull();
+    await expect(offer).not.toHaveAttribute("inert");
+    await expect(offer).toBeVisible();
+  });
+});

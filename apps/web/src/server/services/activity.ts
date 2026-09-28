@@ -85,7 +85,14 @@ const SENTENCES: Sentences = {
   },
   export: { create: "export", complete: "export" },
   // A diagnosis changes nothing on the card; its fix does, and the card rows say so.
-  diagnosis: { create: null, offer: null, accept: null, undo_accept: null },
+  diagnosis: {
+    create: null,
+    offer: null,
+    accept: null,
+    undo_accept: null,
+    dismiss: null,
+    undo_dismiss: null,
+  },
   review: { grade: null, undo_grade: null },
   account: {
     "avatar.upload": null,

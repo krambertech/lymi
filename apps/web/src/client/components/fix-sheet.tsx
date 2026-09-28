@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { CARD_LIMITS, cardLimits, type DraftCard, type FixInput } from "@lymi/core";
+import { CARD_LIMITS, cardLimits, type DraftCard, type FixInput, headword } from "@lymi/core";
 import { cn } from "cn";
 import { Anchor, ChevronRight, ImagePlus, Pencil, SquarePen, TextCursorInput } from "lucide-react";
 import { type ComponentProps, type ReactNode, type Ref, useId, useRef, useState } from "react";
@@ -29,6 +29,8 @@ interface Props {
   onOpenChange: (open: boolean) => void;
   /** Opens the card editor, for a card with no clear reason or a fix that no longer fits. */
   onEdit: (focus: EditFocus) => void;
+  /** The learner says the cause is wrong. The sheet closes; the caller records it. */
+  onDismiss: () => void;
   /** Where focus goes on closing, since the offer that opened the sheet leaves with it. */
   finalFocus?: ComponentProps<typeof DialogContent>["finalFocus"];
 }
@@ -38,7 +40,7 @@ interface Props {
  * a centred dialog on a desktop, with the title pinned and the actions at the foot. Nothing on
  * the card changes until the primary is pressed, and Undo in the toast reverses it.
  */
-export function FixSheet({ item, open, onOpenChange, onEdit, finalFocus }: Props) {
+export function FixSheet({ item, open, onOpenChange, onEdit, onDismiss, finalFocus }: Props) {
   // Held while the sheet closes, so its contents do not vanish mid-animation.
   const [shown, setShown] = useState(item);
   if (item?.offer && item !== shown) setShown(item);
@@ -61,6 +63,7 @@ export function FixSheet({ item, open, onOpenChange, onEdit, finalFocus }: Props
             titleId={titleId}
             onClose={() => onOpenChange(false)}
             onEdit={onEdit}
+            onDismiss={onDismiss}
           />
         )}
       </DialogContent>
@@ -74,9 +77,10 @@ interface BodyProps {
   titleId: string;
   onClose: () => void;
   onEdit: (focus: EditFocus) => void;
+  onDismiss: () => void;
 }
 
-function FixBody({ item, offer, titleId, onClose, onEdit }: BodyProps) {
+function FixBody({ item, offer, titleId, onClose, onEdit, onDismiss }: BodyProps) {
   const accept = useCardFix();
   const [failure, setFailure] = useState<"stale" | "unreachable" | null>(null);
   // The menu's "Add a memory hook" turns the sheet into the hook's own, with nothing drafted.
@@ -87,6 +91,7 @@ function FixBody({ item, offer, titleId, onClose, onEdit }: BodyProps) {
     failure,
     onClose,
     onEdit,
+    onDismiss,
     submit: (input: FixInput) => {
       setFailure(null);
       accept.mutate(
@@ -130,6 +135,7 @@ interface FrameState {
   failure: "stale" | "unreachable" | null;
   onClose: () => void;
   onEdit: (focus: EditFocus) => void;
+  onDismiss: () => void;
   submit: (input: FixInput) => void;
 }
 
@@ -139,6 +145,8 @@ interface FrameProps {
   why: ReactNode;
   /** The fix's own button; none for a card with no clear reason. */
   primary?: ReactNode | undefined;
+  /** The why names a cause the learner can say is wrong; not for a card with no clear reason. */
+  dismissable?: boolean | undefined;
   onSubmit?: (() => void) | undefined;
   /** A problem with what the learner sent, shown with any failure in one live line. */
   problem?: string | null | undefined;
@@ -147,7 +155,17 @@ interface FrameProps {
 }
 
 /** Title and why, the fix, one live line for what went wrong, and the actions at the foot. */
-function Frame({ frame, title, why, primary, onSubmit, problem, formRef, children }: FrameProps) {
+function Frame({
+  frame,
+  title,
+  why,
+  primary,
+  dismissable = false,
+  onSubmit,
+  problem,
+  formRef,
+  children,
+}: FrameProps) {
   const { t } = useLingui();
   const stale = frame.failure === "stale";
   const failure =
@@ -170,6 +188,16 @@ function Frame({ frame, title, why, primary, onSubmit, problem, formRef, childre
         {title}
       </DialogTitle>
       <DialogDescription className="-mt-2 text-pretty">{why}</DialogDescription>
+      {/* Under the claim it answers, and quiet: a third button in the foot would crowd the phone. */}
+      {dismissable && (
+        <button
+          type="button"
+          onClick={frame.onDismiss}
+          className="-mt-4 -mb-2 min-h-11 justify-self-start text-sm text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:hover:text-text hoverable:hover:decoration-current md:-mt-3 md:min-h-8"
+        >
+          <Trans>That’s not it</Trans>
+        </button>
+      )}
       {children}
       <p role="status" className="text-sm empty:hidden">
         {(problem ?? failure) && <InlineError>{problem ?? failure}</InlineError>}
@@ -260,18 +288,21 @@ function PairFix({
   const language = card.language ?? undefined;
   const other = offer.other;
   const otherTerm = other.term;
+  const title = headword(term);
+  const otherTitle = headword(otherTerm);
   return (
     <Frame
       frame={frame}
       formRef={drafted.formRef}
       title={
         <Trans>
-          <span lang={language}>{term}</span> and{" "}
-          <span lang={other.language ?? undefined}>{otherTerm}</span>
+          <span lang={language}>{title}</span> and{" "}
+          <span lang={other.language ?? undefined}>{otherTitle}</span>
         </Trans>
       }
-      why={<Trans>“{term}” keeps slipping, likely because the two get mixed up.</Trans>}
+      why={<Trans>“{title}” keeps slipping, likely because the two get mixed up.</Trans>}
       primary={<Trans>Add 2 cards</Trans>}
+      dismissable
       problem={drafted.problem}
       onSubmit={() => {
         const cards = drafted.ready();
@@ -317,6 +348,7 @@ function SplitFix({
         </Trans>
       }
       primary={<Trans>Split into 2 cards</Trans>}
+      dismissable
       problem={drafted.problem}
       onSubmit={() => {
         const cards = drafted.ready();
@@ -367,6 +399,7 @@ function CueFix({
         </Trans>
       }
       primary={<Trans>Change the question</Trans>}
+      dismissable
       onSubmit={() => {
         if (!cue.trim()) {
           setError(term ? t`Type the term.` : t`Type the meaning.`);
@@ -436,7 +469,7 @@ function HookFix({
     focused.current = true;
     node.focus({ preventScroll: true });
   };
-  const term = card.term;
+  const term = headword(card.term);
   const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
   const cueLanguage = mode.cue === "term" ? (card.language ?? undefined) : undefined;
   const picture = mode.cue === "image";
@@ -478,6 +511,8 @@ function HookFix({
         )
       }
       primary={drafted === null ? <Trans>Save hook</Trans> : <Trans>Keep hook</Trans>}
+      // A drafted hook names a cause the learner can reject; one they write from blank names none.
+      dismissable={drafted !== null}
       onSubmit={submit}
     >
       <Field invalid={!!error}>

@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "6beb6a17-ccaa-478b-8bb1-a0fa78744794",
-  "prevId": "cec4a8f6-7af1-4ac0-b8c4-2debd1c4c6cb",
+  "id": "32ad7e3f-29df-4a9d-8f0d-7a0a555e4ca3",
+  "prevId": "6beb6a17-ccaa-478b-8bb1-a0fa78744794",
   "tables": {
     "audit_log": {
       "name": "audit_log",
@@ -915,6 +915,20 @@
         },
         "pronunciation_source": {
           "name": "pronunciation_source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "hook": {
+          "name": "hook",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "hook_source": {
+          "name": "hook_source",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -2815,6 +2829,13 @@
         },
         "mode": {
           "name": "mode",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "aid": {
+          "name": "aid",
           "type": "text",
           "primaryKey": false,
           "notNull": false,

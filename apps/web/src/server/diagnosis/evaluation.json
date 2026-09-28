@@ -436,6 +436,537 @@
           "expected": "unclear"
         }
       ]
+    },
+    {
+      "name": "Eesti A1 · Sõnad",
+      "language": "et",
+      "meaningLanguage": "ru",
+      "asked": ["meaning_to_term", "term_to_meaning"],
+      "cards": [
+        {
+          "id": "et-op-s1",
+          "term": "pikk · pika · pikka",
+          "meaning": "длинный",
+          "notes": "мн. *pikad*\n\nнаоборот: lühike (короткий)\n\nпримеры:\n*See tee on pikk.* — Эта дорога длинная."
+        },
+        {
+          "id": "et-op-01",
+          "term": "lühike · lühikese · lühikest",
+          "meaning": "короткий",
+          "notes": "мн. *lühikesed*\n\nнаречие: *lühidalt* (кратко)\n\nнаоборот: pikk (длинный)\n\nпримеры:\n*Talvel on päev lühike.* — Зимой день короткий.",
+          "expected": "unclear"
+        },
+        {
+          "id": "et-op-s2",
+          "term": "lai · laia · laia",
+          "meaning": "широкий",
+          "notes": "мн. *laiad*\n\nнаоборот: kitsas (узкий)"
+        },
+        {
+          "id": "et-op-02",
+          "term": "kitsas · kitsa · kitsast",
+          "meaning": "узкий",
+          "notes": "мн. *kitsad*\n\nнаречие: *kitsalt* (узко)\n\nнаоборот: lai (широкий)",
+          "expected": "unclear"
+        },
+        {
+          "id": "et-op-s3",
+          "term": "kerge · kerge · kerget",
+          "meaning": "лёгкий",
+          "notes": "мн. *kerged*\n\nнаоборот: raske (тяжёлый)"
+        },
+        {
+          "id": "et-op-03",
+          "term": "raske · raske · rasket",
+          "meaning": "тяжёлый",
+          "notes": "мн. *rasked*\n\nнаречие: *raskelt* (тяжело)\n\nнаоборот: kerge (лёгкий)\n\nпримеры:\n*Kott on raske.* — Сумка тяжёлая.",
+          "expected": "unclear"
+        },
+        {
+          "id": "et-op-s4",
+          "term": "kallis · kalli · kallist",
+          "meaning": "дорогой",
+          "notes": "мн. *kallid*\n\nнаоборот: odav (дешёвый)"
+        },
+        {
+          "id": "et-op-04",
+          "term": "odav · odava · odavat",
+          "meaning": "дешёвый",
+          "notes": "мн. *odavad*\n\nнаречие: *odavalt* (дёшево)\n\nнаоборот: kallis (дорогой)",
+          "expected": "unclear"
+        },
+        {
+          "id": "et-op-05",
+          "term": "küsima · küsida · küsin",
+          "meaning": "спрашивать",
+          "notes": "Не путай с *paluma* — просить: *küsin* — задаю вопрос, *palun* — прошу о чём-то.\n\nпримеры:\n*Ma küsin õpetajalt.* — Я спрашиваю учителя.",
+          "expected": "confused_pair",
+          "pair": "et-op-s5"
+        },
+        {
+          "id": "et-op-s5",
+          "term": "paluma · paluda · palun",
+          "meaning": "просить",
+          "notes": "*Palun!* — пожалуйста."
+        },
+        {
+          "id": "et-op-06",
+          "term": "laenama · laenata · laenan",
+          "meaning": "брать взаймы, одалживать у кого-то",
+          "notes": "наоборот: laenutama (давать взаймы)",
+          "expected": "confused_pair",
+          "pair": "et-op-07"
+        },
+        {
+          "id": "et-op-07",
+          "term": "laenutama · laenutada · laenutan",
+          "meaning": "давать взаймы, одалживать кому-то",
+          "notes": "наоборот: laenama (брать взаймы)",
+          "expected": "confused_pair",
+          "pair": "et-op-06"
+        },
+        {
+          "id": "et-op-s6",
+          "term": "soe · sooja · sooja",
+          "meaning": "тёплый",
+          "notes": "мн. *soojad*\n\nнаоборот: külm (холодный)"
+        },
+        {
+          "id": "et-op-08",
+          "term": "külm · külma · külma",
+          "meaning": "холодный",
+          "notes": "мн. *külmad*\n\nнаоборот: soe (тёплый)\n\nпримеры:\n*Vesi on külm.* — Вода холодная.",
+          "expected": "unclear"
+        },
+        {
+          "id": "et-op-s7",
+          "term": "vana · vana · vana",
+          "meaning": "старый",
+          "notes": "мн. *vanad*\n\nнаоборот: noor (молодой), uus (новый)"
+        },
+        {
+          "id": "et-op-09",
+          "term": "noor · noore · noort",
+          "meaning": "молодой",
+          "notes": "мн. *noored*\n\nнаоборот: vana (старый)",
+          "expected": "unclear"
+        },
+        {
+          "id": "et-op-10",
+          "term": "kõrge · kõrge · kõrget",
+          "meaning": "высокий (о здании, горе)",
+          "notes": "мн. *kõrged*\n\nнаоборот: madal (низкий)",
+          "expected": "unclear"
+        },
+        {
+          "id": "et-op-s8",
+          "term": "madal · madala · madalat",
+          "meaning": "низкий",
+          "notes": "мн. *madalad*\n\nнаоборот: kõrge (высокий)"
+        }
+      ]
+    },
+    {
+      "name": "Adjetivos B1",
+      "language": "es",
+      "meaningLanguage": "en",
+      "asked": ["term_to_meaning", "meaning_to_term"],
+      "cards": [
+        {
+          "id": "es-op-s1",
+          "term": "bajo, baja",
+          "meaning": "short (height); low",
+          "notes": "Opposite: alto"
+        },
+        {
+          "id": "es-op-01",
+          "term": "alto, alta",
+          "meaning": "tall; high",
+          "notes": "Opposite: bajo\nExample: Mi hermano es muy alto.",
+          "expected": "unclear"
+        },
+        {
+          "id": "es-op-s2",
+          "term": "barato, barata",
+          "meaning": "cheap",
+          "notes": "Opposite: caro"
+        },
+        {
+          "id": "es-op-02",
+          "term": "caro, cara",
+          "meaning": "expensive",
+          "notes": "Opposite: barato",
+          "expected": "unclear"
+        },
+        {
+          "id": "es-op-s3",
+          "term": "vacío, vacía",
+          "meaning": "empty",
+          "notes": "Opposite: lleno"
+        },
+        {
+          "id": "es-op-03",
+          "term": "lleno, llena",
+          "meaning": "full",
+          "notes": "Opposite: vacío\nExample: El vaso está lleno.",
+          "expected": "unclear"
+        },
+        {
+          "id": "es-op-04",
+          "term": "cansado, cansada",
+          "meaning": "tired",
+          "notes": "Opposite: descansado",
+          "expected": "confused_pair",
+          "pair": "es-op-05"
+        },
+        {
+          "id": "es-op-05",
+          "term": "casado, casada",
+          "meaning": "married",
+          "notes": "Opposite: soltero",
+          "expected": "confused_pair",
+          "pair": "es-op-04"
+        },
+        {
+          "id": "es-op-s4",
+          "term": "soltero, soltera",
+          "meaning": "single, unmarried",
+          "notes": "Opposite: casado"
+        },
+        {
+          "id": "es-op-s5",
+          "term": "rápido, rápida",
+          "meaning": "fast, quick",
+          "notes": "Opposite: lento"
+        },
+        {
+          "id": "es-op-06",
+          "term": "lento, lenta",
+          "meaning": "slow",
+          "notes": "Opposite: rápido",
+          "expected": "unclear"
+        },
+        {
+          "id": "es-op-07",
+          "term": "limpio, limpia",
+          "meaning": "clean",
+          "notes": "Opposite: sucio",
+          "expected": "unclear"
+        },
+        {
+          "id": "es-op-s6",
+          "term": "sucio, sucia",
+          "meaning": "dirty",
+          "notes": "Opposite: limpio"
+        },
+        {
+          "id": "es-op-08",
+          "term": "débil",
+          "meaning": "weak",
+          "notes": "Opposite: fuerte",
+          "expected": "unclear"
+        },
+        {
+          "id": "es-op-s7",
+          "term": "fuerte",
+          "meaning": "strong; loud",
+          "notes": "Opposite: débil"
+        },
+        {
+          "id": "es-op-09",
+          "term": "corto, corta",
+          "meaning": "short (in length, not height)",
+          "notes": "Opposite: largo",
+          "expected": "unclear"
+        },
+        { "id": "es-op-s8", "term": "largo, larga", "meaning": "long", "notes": "Opposite: corto" },
+        { "id": "es-op-10", "term": "abrir", "meaning": "to open", "expected": "unclear" },
+        { "id": "es-op-s9", "term": "cerrar", "meaning": "to close, to shut" }
+      ]
+    },
+    {
+      "name": "Deutsch A1 · Adjektive",
+      "language": "de",
+      "meaningLanguage": "uk",
+      "asked": ["meaning_to_term", "term_to_meaning"],
+      "cards": [
+        { "id": "de-op-s1", "term": "lang", "meaning": "довгий", "notes": "протилежне: kurz" },
+        {
+          "id": "de-op-01",
+          "term": "kurz",
+          "meaning": "короткий",
+          "notes": "протилежне: lang\nприклад: Der Film ist kurz.",
+          "expected": "unclear"
+        },
+        {
+          "id": "de-op-s2",
+          "term": "schwer",
+          "meaning": "важкий; складний",
+          "notes": "протилежне: leicht"
+        },
+        {
+          "id": "de-op-02",
+          "term": "leicht",
+          "meaning": "легкий (про вагу)",
+          "notes": "протилежне: schwer",
+          "expected": "unclear"
+        },
+        { "id": "de-op-s3", "term": "kalt", "meaning": "холодний", "notes": "протилежне: warm" },
+        {
+          "id": "de-op-03",
+          "term": "dick",
+          "meaning": "товстий",
+          "notes": "протилежне: dünn",
+          "expected": "unclear"
+        },
+        {
+          "id": "de-op-s4",
+          "term": "dünn",
+          "meaning": "тонкий, худий",
+          "notes": "протилежне: dick"
+        },
+        {
+          "id": "de-op-04",
+          "term": "wichtig",
+          "meaning": "важливий",
+          "notes": "протилежне: unwichtig",
+          "expected": "confused_pair",
+          "pair": "de-op-05"
+        },
+        {
+          "id": "de-op-05",
+          "term": "richtig",
+          "meaning": "правильний",
+          "notes": "протилежне: falsch",
+          "expected": "confused_pair",
+          "pair": "de-op-04"
+        },
+        {
+          "id": "de-op-s5",
+          "term": "falsch",
+          "meaning": "неправильний",
+          "notes": "протилежне: richtig"
+        },
+        {
+          "id": "de-op-06",
+          "term": "voll",
+          "meaning": "повний",
+          "notes": "протилежне: leer",
+          "expected": "unclear"
+        },
+        { "id": "de-op-s6", "term": "leer", "meaning": "порожній", "notes": "протилежне: voll" },
+        {
+          "id": "de-op-07",
+          "term": "früh",
+          "meaning": "ранній; рано",
+          "notes": "протилежне: spät",
+          "expected": "unclear"
+        },
+        {
+          "id": "de-op-s7",
+          "term": "spät",
+          "meaning": "пізній; пізно",
+          "notes": "протилежне: früh"
+        }
+      ]
+    },
+    {
+      "name": "Deutsch A2 · Verben",
+      "language": "de",
+      "meaningLanguage": "uk",
+      "asked": ["meaning_to_term", "term_to_meaning"],
+      "cards": [
+        {
+          "id": "dv-op-01",
+          "term": "einsteigen · stieg ein · ist eingestiegen",
+          "meaning": "сідати (в транспорт)",
+          "notes": "протилежне: aussteigen",
+          "expected": "confused_pair",
+          "pair": "dv-op-02"
+        },
+        {
+          "id": "dv-op-02",
+          "term": "aussteigen · stieg aus · ist ausgestiegen",
+          "meaning": "виходити (з транспорту)",
+          "notes": "протилежне: einsteigen",
+          "expected": "confused_pair",
+          "pair": "dv-op-01"
+        },
+        {
+          "id": "dv-op-s1",
+          "term": "umsteigen · stieg um · ist umgestiegen",
+          "meaning": "робити пересадку"
+        },
+        {
+          "id": "dv-op-03",
+          "term": "kaufen · kaufte · hat gekauft",
+          "meaning": "купувати",
+          "notes": "протилежне: verkaufen",
+          "expected": "unclear"
+        },
+        {
+          "id": "dv-op-s2",
+          "term": "verkaufen · verkaufte · hat verkauft",
+          "meaning": "продавати",
+          "notes": "протилежне: kaufen"
+        },
+        {
+          "id": "dv-op-04",
+          "term": "öffnen · öffnete · hat geöffnet",
+          "meaning": "відчиняти, відкривати",
+          "notes": "протилежне: schließen",
+          "expected": "unclear"
+        },
+        {
+          "id": "dv-op-s3",
+          "term": "schließen · schloss · hat geschlossen",
+          "meaning": "зачиняти, закривати",
+          "notes": "протилежне: öffnen"
+        },
+        {
+          "id": "dv-op-05",
+          "term": "gewinnen · gewann · hat gewonnen",
+          "meaning": "вигравати",
+          "notes": "протилежне: verlieren",
+          "expected": "unclear"
+        },
+        {
+          "id": "dv-op-s4",
+          "term": "verlieren · verlor · hat verloren",
+          "meaning": "програвати; губити",
+          "notes": "протилежне: gewinnen"
+        },
+        { "id": "dv-op-s5", "term": "fahren · fuhr · ist gefahren", "meaning": "їхати" }
+      ]
+    },
+    {
+      "name": "Eesti · Küsimused ja vastused",
+      "language": "et",
+      "meaningLanguage": "ru",
+      "asked": ["meaning_to_term", "term_to_meaning"],
+      "cards": [
+        {
+          "id": "qa-01",
+          "term": "Kuidas läheb? — Hästi, aitäh.",
+          "meaning": "Как дела? — Хорошо, спасибо.",
+          "expected": "unclear"
+        },
+        {
+          "id": "qa-s1",
+          "term": "Kus sa elad? — Ma elan Tallinnas.",
+          "meaning": "Где ты живёшь? — Я живу в Таллинне."
+        },
+        {
+          "id": "qa-02",
+          "term": "Mis kell on? — Kell on kolm.",
+          "meaning": "Который час? — Три часа.",
+          "expected": "unclear"
+        },
+        {
+          "id": "qa-s2",
+          "term": "Kas sa räägid eesti keelt? — Natuke.",
+          "meaning": "Ты говоришь по-эстонски? — Немного."
+        },
+        {
+          "id": "qa-03",
+          "term": "Kui vana sa oled? — Ma olen kolmkümmend.",
+          "meaning": "Сколько тебе лет? — Мне тридцать.",
+          "expected": "unclear"
+        },
+        {
+          "id": "qa-s3",
+          "term": "Mis su nimi on? — Mu nimi on Mari.",
+          "meaning": "Как тебя зовут? — Меня зовут Мари."
+        },
+        {
+          "id": "qa-s4",
+          "term": "Kust sa pärit oled? — Ma olen Eestist.",
+          "meaning": "Откуда ты? — Я из Эстонии."
+        },
+        {
+          "id": "qa-04",
+          "term": "Kas sul on lapsi? — Jah, kaks. Kas sa oled abielus? — Ei.",
+          "meaning": "У тебя есть дети? — Да, двое. Ты женат? — Нет.",
+          "expected": "two_things"
+        },
+        {
+          "id": "qa-s5",
+          "term": "Mida sa teed? — Ma loen raamatut.",
+          "meaning": "Что ты делаешь? — Я читаю книгу."
+        }
+      ]
+    },
+    {
+      "name": "Eesti · Laused",
+      "language": "et",
+      "meaningLanguage": "ru",
+      "asked": ["meaning_to_term", "term_to_meaning"],
+      "cards": [
+        {
+          "id": "ph-s1",
+          "term": "Ma elan Tallinnas.",
+          "meaning": "Я живу в Таллинне.",
+          "notes": "- жить — *elama · elada · elan*\n- Таллинн — *Tallinn* (*Tallinnas*: в Таллинне)"
+        },
+        {
+          "id": "ph-01",
+          "term": "Ta võtab tema raamatu.",
+          "meaning": "Он берёт его книгу (чужую).",
+          "notes": "- брать — *võtma · võtta · võtan*\n- книга — *raamat · raamatu · raamatut*\n\nсравни\n*oma raamat* — своя книга\n*tema raamat* — его/её книга (чужая)",
+          "expected": "confused_pair",
+          "pair": "ph-s2"
+        },
+        {
+          "id": "ph-s2",
+          "term": "Ta võtab oma raamatu.",
+          "meaning": "Он берёт свою книгу.",
+          "notes": "- брать — *võtma · võtta · võtan*\n- свой — *oma*"
+        },
+        {
+          "id": "ph-s3",
+          "term": "Me sööme täna kodus.",
+          "meaning": "Сегодня мы едим дома.",
+          "notes": "- есть — *sööma · süüa · söön*\n- дома — *kodus*"
+        },
+        {
+          "id": "ph-02",
+          "term": "Kus on pood? — Pood on seal.",
+          "meaning": "Где магазин? — Магазин там.",
+          "notes": "- где — *kus*\n- магазин — *pood · poe · poodi*",
+          "expected": "two_things"
+        },
+        {
+          "id": "ph-s4",
+          "term": "Mu vend töötab koolis.",
+          "meaning": "Мой брат работает в школе.",
+          "notes": "- брат — *vend · venna · venda*\n- работать — *töötama · töötada · töötan*"
+        },
+        {
+          "id": "ph-s5",
+          "term": "Ilm on täna ilus.",
+          "meaning": "Погода сегодня хорошая.",
+          "notes": "- погода — *ilm · ilma · ilma*\n- красивый — *ilus · ilusa · ilusat*"
+        },
+        {
+          "id": "ph-03",
+          "term": "Mul on kaks last.",
+          "meaning": "У меня двое детей.",
+          "notes": "- у меня — *mina · minu · mind* (*mul*)\n- ребёнок — *laps · lapse · last*",
+          "expected": "unclear"
+        },
+        {
+          "id": "ph-s6",
+          "term": "Ma ei tea, kus ta on.",
+          "meaning": "Я не знаю, где он.",
+          "notes": "- знать — *teadma · teada · tean* (*tea*: после *ei* без -n)"
+        },
+        {
+          "id": "ph-s7",
+          "term": "Kas sa tuled homme?",
+          "meaning": "Ты придёшь завтра?",
+          "notes": "- приходить — *tulema · tulla · tulen*\n- завтра — *homme*"
+        }
+      ]
     }
   ]
 }

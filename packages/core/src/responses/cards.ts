@@ -101,6 +101,10 @@ export const CardDiagnosisOut = z
     }),
     model: z.string().meta({ description: "The model that diagnosed it" }),
     diagnosedAt: Timestamp,
+    dismissedAt: Timestamp.nullable().meta({
+      description:
+        "When you said this is not the reason. Its fix is not offered again for this revision of the card.",
+    }),
   })
   .and(Diagnosis)
   .meta({ id: "CardDiagnosis" });

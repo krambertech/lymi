@@ -395,6 +395,9 @@ msgstr "Ключі API зберігаються, доки ти їх не від�
 msgid "API reference"
 msgstr "Довідник API"
 
+msgid "Arts"
+msgstr "Мистецтво"
+
 msgid "Ask your AI assistant to add a card while you chat. It shows up in Lymi, ready to review."
 msgstr "Попроси AI-асистента додати картку просто під час розмови. Вона з’явиться в Lymi, готова до повторення."
 

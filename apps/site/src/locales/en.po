@@ -395,6 +395,9 @@ msgstr "API keys stay until you revoke them or they expire. Connected-app tokens
 msgid "API reference"
 msgstr "API reference"
 
+msgid "Arts"
+msgstr "Arts"
+
 msgid "Ask your AI assistant to add a card while you chat. It shows up in Lymi, ready to review."
 msgstr "Ask your AI assistant to add a card while you chat. It shows up in Lymi, ready to review."
 

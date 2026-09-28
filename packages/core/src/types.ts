@@ -296,6 +296,8 @@ export const PUBLICATION_CATEGORIES = [
   "languages",
   "geography",
   "science",
+  "nature",
+  "arts",
   "driving",
   "citizenship",
   "technology",

@@ -7,6 +7,8 @@ import { pageI18n } from "./i18n";
 const SUBJECT_LABELS: Record<string, MessageDescriptor> = {
   geography: msg`Geography`,
   science: msg`Science`,
+  nature: msg`Nature`,
+  arts: msg`Arts`,
   driving: msg`Driving`,
   citizenship: msg`Citizenship`,
   technology: msg`Technology`,

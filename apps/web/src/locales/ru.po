@@ -887,6 +887,9 @@ msgstr "Архивирование скрывает карточку или ко
 msgid "Arrange sections"
 msgstr "Упорядочить разделы"
 
+msgid "Arts"
+msgstr "Искусство"
+
 msgid "Ask the person who shared it for a new link."
 msgstr "Попроси новую ссылку у того, кто ей поделился."
 
@@ -2266,6 +2269,9 @@ msgstr "Название"
 
 msgid "Name the key, so you know which one to revoke later."
 msgstr "Назови ключ, чтобы потом знать, какой именно отозвать."
+
+msgid "Nature"
+msgstr "Природа"
 
 msgid "Never allowed"
 msgstr "Никогда не разрешено"

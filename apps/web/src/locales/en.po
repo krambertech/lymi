@@ -887,6 +887,9 @@ msgstr "Archiving hides a card or deck without deleting it."
 msgid "Arrange sections"
 msgstr "Arrange sections"
 
+msgid "Arts"
+msgstr "Arts"
+
 msgid "Ask the person who shared it for a new link."
 msgstr "Ask the person who shared it for a new link."
 
@@ -2266,6 +2269,9 @@ msgstr "Name"
 
 msgid "Name the key, so you know which one to revoke later."
 msgstr "Name the key, so you know which one to revoke later."
+
+msgid "Nature"
+msgstr "Nature"
 
 msgid "Never allowed"
 msgstr "Never allowed"

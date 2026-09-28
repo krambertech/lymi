@@ -147,6 +147,10 @@
     {
       "name": "0036_famous_the_anarchist.sql",
       "sha256": "5b3eec0fd65624eba5b0d20bfeb80765f425325e654fc64bb421824472713c26"
+    },
+    {
+      "name": "0037_friendly_virginia_dare.sql",
+      "sha256": "44e2e0937655486cc2c1a8f0aac3c740dd215d7dc6f4de5631e9be6f7cc673fc"
     }
   ]
 }

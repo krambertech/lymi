@@ -652,9 +652,13 @@ export const cardDiagnoses = sqliteTable(
     /** The fix for `cause`, validated by `Diagnosis`. Null for `unclear`. */
     draft: text("draft", { mode: "json" }).$type<DiagnosisDraft>(),
     model: text("model"),
+    /** The prompt that named the cause; an older one is diagnosed again until the learner acts. */
+    promptVersion: integer("prompt_version").notNull().default(1),
     /** When review first showed the fix. Review offers it once; after that it waits for the learner. */
     offeredAt: integer("offered_at", { mode: "timestamp_ms" }),
     acceptedAt: integer("accepted_at", { mode: "timestamp_ms" }),
+    /** The learner said the cause is wrong: never offered or diagnosed again for this revision. */
+    dismissedAt: integer("dismissed_at", { mode: "timestamp_ms" }),
     /** What accepting wrote, so Undo reverses exactly that. Null until accepted and after Undo. */
     fix: text("fix", { mode: "json" }).$type<AppliedFix>(),
     ...timestamps,

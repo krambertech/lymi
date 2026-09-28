@@ -61,7 +61,7 @@ export type AuditEvent =
   | { entity: "export"; action: "create" | "complete"; id: string; details?: Details }
   | {
       entity: "diagnosis";
-      action: "create" | "offer" | "accept" | "undo_accept";
+      action: "create" | "offer" | "accept" | "undo_accept" | "dismiss" | "undo_dismiss";
       id: string;
       details?: Details;
     }

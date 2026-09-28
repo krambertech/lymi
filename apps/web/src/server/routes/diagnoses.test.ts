@@ -1,9 +1,9 @@
-import { AddCardOutcomeOut, DeckOut, DrawOut, FixOut } from "@lymi/core";
+import { AddCardOutcomeOut, CardDetailOut, DeckOut, DrawOut, FixOut } from "@lymi/core";
 import { beforeAll, describe, expect, it } from "vitest";
 import { schema } from "../db";
 import { json, type Session, type TestApp, testApp } from "../test-app";
 
-/** The HTTP contract of offering, accepting and undoing a fix; the rules are `services/fixes.test.ts`. */
+/** The HTTP contract of the fix routes; the rules are `services/fixes.test.ts`. */
 let app: TestApp;
 let learner: Session;
 let stranger: Session;
@@ -101,5 +101,25 @@ describe("fixes", () => {
 
     const undone = await app.fetch(`/api/diagnoses/${id}/undo`, { method: "POST", as: learner });
     expect(undone.status).toBe(200);
+  });
+
+  it("dismisses a diagnosis, shows it on the card, and takes the dismissal back", async () => {
+    const { id, cardId } = await diagnosedCard("lühike");
+    const post = (path: string, as: Session) =>
+      app.fetch(`/api/diagnoses/${id}/${path}`, { method: "POST", as });
+    expect((await post("dismiss", stranger)).status).toBe(404);
+    expect((await post("dismiss", learner)).status).toBe(200);
+    const read = async () =>
+      CardDetailOut.parse(await (await app.fetch(`/api/cards/${cardId}`, { as: learner })).json());
+    const card = await read();
+    expect(card.diagnosis).toMatchObject({ id, dismissedAt: expect.any(String) });
+    const accepted = await app.fetch(`/api/diagnoses/${id}/accept`, {
+      ...json({ cause: "several_answers", text: "tall (of a person)" }),
+      as: learner,
+    });
+    expect(accepted.status).toBe(409);
+
+    expect((await post("dismiss/undo", learner)).status).toBe(200);
+    expect((await read()).diagnosis).toMatchObject({ id, dismissedAt: null });
   });
 });

@@ -48,6 +48,8 @@ vi.mock("../services", async () => {
     requestEnrichment: vi.fn(),
     acceptFix: vi.fn(),
     undoFix: vi.fn(),
+    dismissDiagnosis: vi.fn(),
+    undoDismissal: vi.fn(),
     getSettings: vi.fn(),
     updateSettings: vi.fn(),
     insights: vi.fn(),
@@ -153,6 +155,7 @@ describe("Lymi MCP server", () => {
       "create_series",
       "delete_series",
       "describe_card_image",
+      "dismiss_card_diagnosis",
       "due_counts",
       "enrich_card",
       "get_card",
@@ -175,6 +178,7 @@ describe("Lymi MCP server", () => {
       "search_cards",
       "set_card_image",
       "undo_card_fix",
+      "undo_dismiss_card_diagnosis",
       "update_card",
       "update_cards",
       "update_deck",
@@ -618,6 +622,21 @@ describe("Lymi MCP server", () => {
     expect(services.undoFix).toHaveBeenCalledWith(expect.anything(), "diagnosis-1");
   });
 
+  it("dismisses a diagnosis the learner says is wrong, and takes that back", async () => {
+    const client = await connect("write");
+    const res = await client.callTool({
+      name: "dismiss_card_diagnosis",
+      arguments: { diagnosisId: "diagnosis-1" },
+    });
+    expect(res.isError).toBeFalsy();
+    expect(services.dismissDiagnosis).toHaveBeenCalledWith(expect.anything(), "diagnosis-1");
+    await client.callTool({
+      name: "undo_dismiss_card_diagnosis",
+      arguments: { diagnosisId: "diagnosis-1" },
+    });
+    expect(services.undoDismissal).toHaveBeenCalledWith(expect.anything(), "diagnosis-1");
+  });
+
   it("refuses every write on a read-only token and says how to fix it", async () => {
     const client = await connect("read");
 
@@ -978,6 +997,7 @@ describe("Lymi MCP server", () => {
       confidence: 0.8,
       model: "test-model",
       diagnosedAt: now.toISOString(),
+      dismissedAt: null,
     };
     services.showCardWithDiagnosis.mockResolvedValue({ ...card, diagnosis });
     const client = await connect("read");

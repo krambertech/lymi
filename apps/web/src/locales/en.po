@@ -28,8 +28,8 @@ msgstr "“{label}” was already in {deckName}, so the copy added offline was l
 msgid "“{term}” has nothing left to fill in."
 msgstr "“{term}” has nothing left to fill in."
 
-msgid "“{term}” keeps slipping, likely because the two get mixed up."
-msgstr "“{term}” keeps slipping, likely because the two get mixed up."
+msgid "“{title}” keeps slipping, likely because the two get mixed up."
+msgstr "“{title}” keeps slipping, likely because the two get mixed up."
 
 #. placeholder {0}: counts?.decks ?? 0
 msgid "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
@@ -579,8 +579,8 @@ msgstr "<0>{0}</0> in {1}"
 msgid "<0>{name}</0> is ready. Copy it now. You won’t see it again."
 msgstr "<0>{name}</0> is ready. Copy it now. You won’t see it again."
 
-msgid "<0>{term}</0> and <1>{otherTerm}</1>"
-msgstr "<0>{term}</0> and <1>{otherTerm}</1>"
+msgid "<0>{title}</0> and <1>{otherTitle}</1>"
+msgstr "<0>{title}</0> and <1>{otherTitle}</1>"
 
 msgid "30 days"
 msgstr "30 days"
@@ -1353,6 +1353,9 @@ msgstr "Couldn’t remove the member. Try again."
 
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again."
+
+msgid "Couldn’t save that. Check your connection and try again."
+msgstr "Couldn’t save that. Check your connection and try again."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
@@ -2234,6 +2237,9 @@ msgstr "Lymi is in public beta."
 
 msgid "Lymi is writing the first decks. Until then, make your own in Library."
 msgstr "Lymi is writing the first decks. Until then, make your own in Library."
+
+msgid "Lymi won’t offer this fix again"
+msgstr "Lymi won’t offer this fix again"
 
 msgid "Made the deck {deck}"
 msgstr "Made the deck {deck}"
@@ -3433,6 +3439,9 @@ msgstr "That’s everything."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "That’s no longer here. Reload to see what changed."
+
+msgid "That’s not it"
+msgstr "That’s not it"
 
 msgid "the AI"
 msgstr "the AI"

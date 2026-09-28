@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/react/macro";
+import { headword } from "@lymi/core";
 import { cn } from "cn";
 import {
   ArrowLeftRight,
@@ -27,7 +28,7 @@ const ICONS: Record<ReviewOffer["cause"], LucideIcon> = {
 function offerLines(offer: ReviewOffer): [ReactNode, ReactNode] {
   switch (offer.cause) {
     case "confused_pair": {
-      const other = offer.other.term;
+      const other = headword(offer.other.term);
       return [
         <Trans key="t">
           Often mixed up with <span lang={offer.other.language ?? undefined}>{other}</span>

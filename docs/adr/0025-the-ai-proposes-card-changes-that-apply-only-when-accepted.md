@@ -31,6 +31,8 @@ The same card fails for different reasons for different learners of a shared dec
 - `cards.revision` moves only when text an edition translates changes. Changing a card's language or review modes does not allow a new diagnosis.
 - A run that fails, or a Workflow that refuses the run, leaves its row at `failed`. A draw more than a day later moves it back to `working` and queues it once, so an outage delays a diagnosis rather than losing it.
 - The confidence threshold is a named constant set by the evaluation over labelled cards in `apps/web/src/server/diagnosis`. The model's own cause is stored beside the one the learner is told, so a new threshold needs no second call.
+- Each row stores the prompt version that wrote it. When `DIAGNOSIS_PROMPT_VERSION` rises, the next draw that sees the card moves a `done` row of an older version back to `working` and the Workflow writes the new cause over it, unless the learner accepted or dismissed it. `offered_at` stays, so review still offers a card at most once per revision.
+- The learner can say a named cause is wrong. A dismissed diagnosis is never offered or diagnosed again for its revision, and cannot be accepted until the dismissal is undone. Dismissing is the learner's write and records the cause in analytics, so the prompt can be judged by what learners reject.
 - A member of a shared deck gets a diagnosis of a card they cannot edit. Which fixes such a learner can accept is for the offer to decide.
 - Each stored diagnosis writes an audit row with actor `ai` and entity `diagnosis`. Activity does not show it, because nothing on the card changed. The fix, once accepted, is recorded as the learner's edit.
 - `GET /api/cards/:id` and MCP `get_card` carry the diagnosis of the card's current revision.

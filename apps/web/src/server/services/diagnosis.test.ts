@@ -3,11 +3,14 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import type { TextProvider, TextRequest } from "../ai";
 import { type Db, schema } from "../db";
 import {
+  DIAGNOSIS_PROMPT_VERSION,
   DIAGNOSIS_THRESHOLD,
   type DiagnosisInput,
   diagnosisRequest,
   readReply,
+  repeatedNoteLines,
   settle,
+  sharedFormats,
 } from "../diagnosis/prompt";
 import { addCards, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
@@ -111,6 +114,55 @@ describe("readReply and settle", () => {
 
   it("tells the model a deck's own format is never a cause", () => {
     expect(diagnosisRequest(input).instructions).toContain("tooma · tuua · toon");
+  });
+});
+
+describe("the deck's notes as the model reads them", () => {
+  const adjective = (id: string, term: string, opposite: string) => ({
+    id,
+    term,
+    meaning: null,
+    notes: `мн. *${term}d*\n\n**наоборот:** ${opposite}\n\nпримеры:\n*${"x".repeat(300)}*`,
+  });
+  const deck = [
+    adjective("a1", "pikk", "lühike"),
+    adjective("a2", "lai", "kitsas"),
+    adjective("a3", "kerge", "raske"),
+    { id: "v1", term: "tooma", meaning: "приносить", notes: "Не путай с *viima*." },
+  ];
+
+  it("names a note line most of the deck carries, and not one a single card has", () => {
+    expect(repeatedNoteLines(deck)).toEqual(["наоборот:", "примеры:"]);
+    expect(repeatedNoteLines(deck.slice(2))).toEqual([]);
+  });
+
+  it("hands the model the start of each neighbour's notes and the repeated lines", () => {
+    const asked = JSON.parse(
+      diagnosisRequest({ ...input, deck: { name: "Words", cards: deck } }).input,
+    );
+    expect(asked.deck.repeatedNoteLines).toEqual(["наоборот:", "примеры:"]);
+    expect(asked.deck.cards[0].notes).toContain("наоборот:** lühike");
+    expect(asked.deck.cards[0].notes.length).toBeLessThanOrEqual(201);
+  });
+
+  it("names a term pattern most of the deck shares, never the one card of its kind", () => {
+    const sentence = (id: string, term: string) => ({ id, term, meaning: null });
+    const phrases = [
+      sentence("p1", "Ma elan Tallinnas."),
+      sentence("p2", "Ilm on täna ilus."),
+      sentence("p3", "Kas sa tuled homme?"),
+      sentence("p4", "Kus on pood? — Pood on seal."),
+    ];
+    expect(sharedFormats(phrases)).toEqual(["a whole sentence"]);
+    expect(sharedFormats(deck)).toEqual([]);
+    const asked = JSON.parse(
+      diagnosisRequest({ ...input, deck: { name: "Verbs", cards: input.deck.cards } }).input,
+    );
+    expect(asked.deck.sharedFormats).toEqual([]);
+  });
+
+  it("tells the model an opposite is never a pair on its own", () => {
+    expect(diagnosisRequest(input).instructions).toContain("Opposites are not evidence");
   });
 });
 
@@ -326,6 +378,82 @@ describe("diagnosing an often-forgotten card", () => {
     expect(racing.flat()).toEqual([failed.id]);
     expect(runs).toEqual([{ userId: ctx.userId, diagnosisIds: [failed.id] }]);
     expect(await rowsOf(ctx)).toMatchObject([{ id: failed.id, status: "working", revision: 1 }]);
+  });
+
+  /** Queues the setup's card and settles it as a pair with the steady card. */
+  async function diagnosed(ctx: ServiceContext, steadyId: string) {
+    const { runner, settled } = recordingRunner();
+    await reviewRounds(ctx, { diagnose: runner });
+    await settled();
+    const [row] = await rowsOf(ctx);
+    if (!row) throw new Error("no diagnosis");
+    await diagnoseCard(
+      diagnosisContext(db, ctx.userId),
+      row.id,
+      fakeProvider(
+        reply({
+          cause: "confused_pair",
+          otherCardId: steadyId,
+          cards: [
+            { term: "alustan tööd", meaning: "я начинаю работу" },
+            { term: "töö algab", meaning: "работа начинается" },
+          ],
+        }),
+      ),
+    );
+    return row.id;
+  }
+
+  const setRow = (id: string, values: Partial<typeof schema.cardDiagnoses.$inferInsert>) =>
+    db.update(schema.cardDiagnoses).set(values).where(eq(schema.cardDiagnoses.id, id));
+
+  it("diagnoses a row from an older prompt again, once, and keeps when it was offered", async () => {
+    const { ctx, slipping, steady } = await setup();
+    const id = await diagnosed(ctx, steady.id);
+    expect(await rowsOf(ctx)).toMatchObject([{ promptVersion: DIAGNOSIS_PROMPT_VERSION }]);
+    const { runner, runs } = recordingRunner();
+    expect(await queueDiagnoses(ctx, [slipping.id], runner.queue)).toEqual([]);
+
+    const offeredAt = new Date(Date.now() - DAY);
+    await setRow(id, { promptVersion: DIAGNOSIS_PROMPT_VERSION - 1, offeredAt });
+    const racing = await Promise.all([
+      queueDiagnoses(ctx, [slipping.id], runner.queue),
+      queueDiagnoses(ctx, [slipping.id], runner.queue),
+    ]);
+    expect(racing.flat()).toEqual([id]);
+    expect(runs).toEqual([{ userId: ctx.userId, diagnosisIds: [id] }]);
+    expect(await rowsOf(ctx)).toMatchObject([{ id, status: "working", offeredAt }]);
+
+    await diagnoseCard(
+      diagnosisContext(db, ctx.userId),
+      id,
+      fakeProvider(reply({ cause: "unclear", confidence: 0.8 })),
+    );
+    expect(await rowsOf(ctx)).toMatchObject([
+      {
+        id,
+        status: "done",
+        cause: "unclear",
+        draft: null,
+        promptVersion: DIAGNOSIS_PROMPT_VERSION,
+        offeredAt,
+      },
+    ]);
+  });
+
+  it("never diagnoses again a fix the learner accepted or dismissed, or a failure within its day", async () => {
+    const { ctx, slipping, steady } = await setup();
+    const id = await diagnosed(ctx, steady.id);
+    const { runner } = recordingRunner();
+    const older = DIAGNOSIS_PROMPT_VERSION - 1;
+
+    await setRow(id, { promptVersion: older, acceptedAt: new Date() });
+    expect(await queueDiagnoses(ctx, [slipping.id], runner.queue)).toEqual([]);
+    await setRow(id, { acceptedAt: null, dismissedAt: new Date() });
+    expect(await queueDiagnoses(ctx, [slipping.id], runner.queue)).toEqual([]);
+    await setRow(id, { dismissedAt: null, status: "failed", updatedAt: new Date() });
+    expect(await queueDiagnoses(ctx, [slipping.id], runner.queue)).toEqual([]);
+    expect(await rowsOf(ctx)).toMatchObject([{ id, status: "failed", promptVersion: older }]);
   });
 
   it("writes nothing for a draw without a runner", async () => {

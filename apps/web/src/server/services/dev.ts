@@ -13,6 +13,7 @@ import { and, asc, desc, eq, inArray, isNull, lte, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import type { Persona, PersonaCard, PersonaDeck } from "../dev/personas";
 import { personaEmail } from "../dev/personas";
+import { DIAGNOSIS_PROMPT_VERSION } from "../diagnosis/prompt";
 import { auditStatement } from "./audit";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
@@ -900,6 +901,7 @@ export async function seedFixes(
         confidence: cause === "unclear" ? 0.3 : 0.9,
         draft,
         model: "dev",
+        promptVersion: DIAGNOSIS_PROMPT_VERSION,
       }),
     );
   }

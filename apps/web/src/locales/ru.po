@@ -28,8 +28,8 @@ msgstr "«{label}» уже есть в «{deckName}», поэтому копия
 msgid "“{term}” has nothing left to fill in."
 msgstr "В «{term}» нечего дополнять."
 
-msgid "“{term}” keeps slipping, likely because the two get mixed up."
-msgstr "«{term}» постоянно забывается, похоже, потому что ты их путаешь."
+msgid "“{title}” keeps slipping, likely because the two get mixed up."
+msgstr "«{title}» постоянно забывается, похоже, потому что ты их путаешь."
 
 #. placeholder {0}: counts?.decks ?? 0
 msgid "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
@@ -579,8 +579,8 @@ msgstr "<0>{0}</0> в «{1}»"
 msgid "<0>{name}</0> is ready. Copy it now. You won’t see it again."
 msgstr "<0>{name}</0> готов. Скопируй его сейчас: больше ты его не увидишь."
 
-msgid "<0>{term}</0> and <1>{otherTerm}</1>"
-msgstr "<0>{term}</0> и <1>{otherTerm}</1>"
+msgid "<0>{title}</0> and <1>{otherTitle}</1>"
+msgstr "<0>{title}</0> и <1>{otherTitle}</1>"
 
 msgid "30 days"
 msgstr "30 дней"
@@ -1353,6 +1353,9 @@ msgstr "Не удалось исключить участника. Попроб�
 
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Не удалось сохранить «{failedTerm}». Проверь соединение и попробуй снова."
+
+msgid "Couldn’t save that. Check your connection and try again."
+msgstr "Не удалось сохранить. Проверь соединение и попробуй ещё раз."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не удалось сохранить язык. Проверь соединение и попробуй снова."
@@ -2234,6 +2237,9 @@ msgstr "Lymi в открытой бете."
 
 msgid "Lymi is writing the first decks. Until then, make your own in Library."
 msgstr "Lymi пишет первые колоды. А пока создай свою в Библиотеке."
+
+msgid "Lymi won’t offer this fix again"
+msgstr "Lymi больше не будет предлагать это исправление"
 
 msgid "Made the deck {deck}"
 msgstr "Создана колода «{deck}»"
@@ -3433,6 +3439,9 @@ msgstr "Это всё."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "Этого уже нет. Обнови страницу, чтобы увидеть изменения."
+
+msgid "That’s not it"
+msgstr "Дело не в этом"
 
 msgid "the AI"
 msgstr "AI"

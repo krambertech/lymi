@@ -168,6 +168,7 @@ function Review() {
   const [focusGrades, setFocusGrades] = useState(false);
   const [focusReveal, setFocusReveal] = useState(false);
   // Each offer shown, by the card showing it, so a card that returns later does not bring it back.
+  // A parked offer maps to no card, so it leaves the one showing it too.
   const [offered, setOffered] = useState<ReadonlyMap<string, string>>(() => new Map());
   const [fixing, setFixing] = useState(false);
   const [editing, setEditing] = useState<{ card: Card; focus: EditFocus } | null>(null);
@@ -621,11 +622,18 @@ function Review() {
   const offer = current?.offer;
   const offerShown =
     !!offer && online && !unreachable && (offered.get(offer.diagnosisId) ?? showing) === showing;
-  const markOffered = (id: string) => {
-    if (offered.has(id)) return;
-    setOffered((seen) => new Map(seen).set(id, showing));
-    // A mark that does not land only means the offer can come once more.
-    api.markOffered(id).catch(() => undefined);
+  const markOffered = (id: string, parked = false) => {
+    if (offered.has(id) && !parked) return;
+    if (!offered.has(id)) {
+      // A mark that does not land only means the offer can come once more.
+      api.markOffered(id).catch(() => undefined);
+    }
+    setOffered((seen) => new Map(seen).set(id, parked ? "" : showing));
+  };
+  // Closing the sheet without the fix parks it, and the panel goes, so the choice is seen to land.
+  const closeFix = () => {
+    setFixing(false);
+    if (offer) markOffered(offer.diagnosisId, true);
   };
 
   const doneLink = (variant: "primary" | "secondary") => (
@@ -778,9 +786,9 @@ function Review() {
       <FixSheet
         item={current}
         open={fixing}
-        onOpenChange={setFixing}
+        onOpenChange={(open) => (open ? setFixing(true) : closeFix())}
         onEdit={(focus) => {
-          setFixing(false);
+          closeFix();
           if (current) setEditing({ card: current.card, focus });
         }}
       />

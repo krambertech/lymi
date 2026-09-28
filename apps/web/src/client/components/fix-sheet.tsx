@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { cardLimits, type FixInput } from "@lymi/core";
 import { cn } from "cn";
-import { ImagePlus, Pencil, SquarePen, TextCursorInput } from "lucide-react";
+import { ChevronRight, ImagePlus, Pencil, SquarePen, TextCursorInput } from "lucide-react";
 import { type ReactNode, useId, useState } from "react";
 import { ApiError, type QueueItem, type ReviewOffer } from "../lib/api";
 import { useOverlayShape } from "../lib/device";
@@ -9,7 +9,6 @@ import { useCardFix } from "../lib/use-card-fix";
 import { Button, IconButton } from "./button";
 import { SourceChip } from "./chip";
 import { InlineError } from "./inline-error";
-import { NextStep, NextSteps } from "./next-steps";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "./ui/dialog";
 import { Field, FieldError, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
@@ -232,28 +231,28 @@ function FixBody({ item, offer, open, onClose, onEdit }: BodyProps) {
       );
       const cueField: EditFocus = mode.cue === "image" ? "picture" : mode.cue;
       body = (
-        <NextSteps label={t`Ways to change the card`}>
-          <NextStep
+        <ul aria-label={t`Ways to change the card`} className="-mx-2 grid gap-1">
+          <ChangeRow
             icon={<TextCursorInput />}
             title={<Trans>Make the question clearer</Trans>}
             detail={<Trans>Add a word so only one answer fits</Trans>}
             onClick={() => onEdit(cueField)}
           />
           {!card.image && (
-            <NextStep
+            <ChangeRow
               icon={<ImagePlus />}
               title={<Trans>Add a picture</Trans>}
               detail={<Trans>Something to see as well as read</Trans>}
               onClick={() => onEdit("picture")}
             />
           )}
-          <NextStep
+          <ChangeRow
             icon={<SquarePen />}
             title={<Trans>Edit the card</Trans>}
             detail={<Trans>Change anything on it</Trans>}
             onClick={() => onEdit(null)}
           />
-        </NextSteps>
+        </ul>
       );
     }
   }
@@ -315,6 +314,44 @@ function Actions({
         </Button>
       )}
     </DialogFooter>
+  );
+}
+
+/** One way to change the card: the whole row is the button, ending in a plain chevron like the offer's. */
+function ChangeRow({
+  icon,
+  title,
+  detail,
+  onClick,
+}: {
+  icon: ReactNode;
+  title: ReactNode;
+  detail: ReactNode;
+  onClick: () => void;
+}) {
+  return (
+    <li>
+      <button
+        type="button"
+        onClick={onClick}
+        className="group flex min-h-16 w-full items-center gap-4 rounded-sm px-2 py-2.5 text-start transition-[background-color] duration-150 ease-out hoverable:hover:bg-hover"
+      >
+        <span
+          aria-hidden="true"
+          className="edge-inset grid size-10 shrink-0 place-items-center rounded-full text-text-2 [&_svg]:size-[18px]"
+        >
+          {icon}
+        </span>
+        <span className="grid min-w-0 flex-1 gap-0.5">
+          <span className="text-md font-medium text-text">{title}</span>
+          <span className="text-sm text-muted">{detail}</span>
+        </span>
+        <ChevronRight
+          aria-hidden="true"
+          className="size-4 shrink-0 text-faint transition-colors duration-150 hoverable:group-hover:text-muted rtl:-scale-x-100"
+        />
+      </button>
+    </li>
   );
 }
 

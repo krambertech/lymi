@@ -85,3 +85,17 @@ test("grading without opening the offer parks it", async ({ page }, testInfo) =>
     })
     .toBe(false);
 });
+
+test("Not now parks the offer, and it leaves the card at once", async ({ page }, testInfo) => {
+  await startAsTestLearner(page, testInfo, "review-fix", "/today");
+  const deckId = await seedPair(page);
+  await page.goto(`/review?deck=${deckId}`);
+  await page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
+  const offer = page.getByRole("button", { name: /Often mixed up with algama/ });
+  await offer.click();
+  const sheet = page.getByRole("dialog", { name: "alustama and algama" });
+  await sheet.getByRole("button", { name: "Not now", exact: true }).click();
+  await expect(sheet).toBeHidden();
+  await expect(offer).toBeHidden();
+  await expect(page.getByRole("button", { name: /^Good/ })).toBeVisible();
+});

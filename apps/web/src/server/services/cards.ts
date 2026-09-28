@@ -51,14 +51,16 @@ type Sources = {
  * accepted fix keeps the AI's drafted text marked. No caller can claim it; routes parse `CardInput`.
  */
 export type ServerCardInput = Omit<CardInput, keyof Sources> & Sources;
-export type ServerCardPatch = Omit<CardPatch, keyof Sources | "meaning"> &
+export type ServerCardPatch = Omit<CardPatch, keyof Sources | "meaning" | "pronunciation"> &
   Sources & {
-    /** Null puts back a meaning that was never set, which Undo needs. */
+    /** Null clears a field back to never set, which a split and Undo need. */
     meaning?: string | null | undefined;
+    pronunciation?: string | null | undefined;
   };
-type ServerCardEdit = Omit<CardEditInput, keyof Sources | "meaning"> &
+type ServerCardEdit = Omit<CardEditInput, keyof Sources | "meaning" | "pronunciation"> &
   Sources & {
     meaning?: string | null | undefined;
+    pronunciation?: string | null | undefined;
   };
 
 /** A publisher's curated decks each stand alone, so its terms repeat across decks but not within one. ADR 0004. */

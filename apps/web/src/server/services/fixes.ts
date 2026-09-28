@@ -223,18 +223,65 @@ export async function acceptFix(
   if (row.status !== "done" || row.revision !== card.revision) {
     throw new ServiceError("conflict", "This card has changed since Lymi looked at it");
   }
-  if (row.acceptedAt) throw new ServiceError("conflict", "This fix is already on the card");
   const finding = Diagnosis.safeParse({ cause: row.cause, draft: row.draft });
   if (!finding.success || finding.data.cause !== input.cause) {
     throw new ServiceError("invalid", "This card's diagnosis drafted a different fix");
   }
-  const diagnosis = finding.data;
+
+  const mine = and(eq(schema.cardDiagnoses.id, id), eq(schema.cardDiagnoses.userId, userId));
+  // Claimed before anything is written, so two accepts racing apply the fix once.
+  const [claimed] = await db
+    .update(schema.cardDiagnoses)
+    .set({ acceptedAt: now, updatedAt: now })
+    .where(and(mine, isNull(schema.cardDiagnoses.acceptedAt)))
+    .returning({ id: schema.cardDiagnoses.id });
+  if (!claimed) throw new ServiceError("conflict", "This fix is already on the card");
+
+  let written: Awaited<ReturnType<typeof applyFix>>;
+  try {
+    written = await applyFix(ctx, card, finding.data, input, enrichment);
+  } catch (error) {
+    await db
+      .update(schema.cardDiagnoses)
+      .set({ acceptedAt: null, updatedAt: new Date() })
+      .where(and(mine, isNull(schema.cardDiagnoses.fix)));
+    throw error;
+  }
+  const { applied, outcomes } = written;
+
+  await db.batch([
+    db
+      .update(schema.cardDiagnoses)
+      .set({ offeredAt: row.offeredAt ?? now, fix: applied, updatedAt: now })
+      .where(mine),
+    auditStatement(ctx, {
+      entity: "diagnosis",
+      action: "accept",
+      id,
+      details: { cardId: card.id, cause: input.cause, ...applied },
+    }),
+  ]);
+  return {
+    added: outcomes.flatMap((o) => (o.status === "added" ? [o.card] : [])),
+    edited: applied.edited ? await presentCard(db, await getCard(ctx, card.id), userId) : null,
+    skipped: outcomes.flatMap((o) =>
+      o.status === "skipped" ? [{ term: o.term, existingId: o.id, deckName: o.deckName }] : [],
+    ),
+  };
+}
+
+/** The card writes one fix makes, and what Undo needs to reverse them. */
+async function applyFix(
+  ctx: ServiceContext,
+  card: Card,
+  diagnosis: Diagnosis,
+  input: FixInput,
+  enrichment: EnrichmentQueue | null,
+): Promise<{ applied: AppliedFix; outcomes: Awaited<ReturnType<typeof addCards>> }> {
   const place = { deckId: card.deckId, sectionId: card.sectionId, language: card.language };
 
-  let applied: AppliedFix;
-  let outcomes: Awaited<ReturnType<typeof addCards>> = [];
   if (diagnosis.cause === "confused_pair" && input.cause === "confused_pair") {
-    outcomes = await addCards(
+    const outcomes = await addCards(
       ctx,
       input.cards.map((accepted, i) => ({
         ...place,
@@ -244,14 +291,16 @@ export async function acceptFix(
       })),
       enrichment,
     );
-    applied = { added: addedIds(outcomes), edited: null };
-  } else if (diagnosis.cause === "two_things" && input.cause === "two_things") {
+    return { applied: { added: addedIds(outcomes), edited: null }, outcomes };
+  }
+
+  if (diagnosis.cause === "two_things" && input.cause === "two_things") {
     const [first, second] = input.cards;
     const [draftFirst, draftSecond] = diagnosis.draft.cards;
-    const view = await presentCard(db, card, userId);
+    const view = await presentCard(ctx.db, card, ctx.userId);
     const textModes = view.reviewModes?.filter((mode) => mode.cue !== "image");
     // The second part came from the same lesson, so it keeps the card's source and tags.
-    outcomes = await addCards(
+    const outcomes = await addCards(
       ctx,
       [
         {
@@ -267,25 +316,40 @@ export async function acceptFix(
       enrichment,
     );
     const added = addedIds(outcomes);
+    // A new term makes the old pronunciation wrong; enrichment can write the new one.
+    const retermed = first.term !== card.term;
     try {
       await updateCard(ctx, card.id, {
         term: first.term,
         meaning: first.meaning,
         meaningSource: sourceOf(draftFirst.meaning, first.meaning),
+        ...(retermed ? { pronunciation: null, pronunciationSource: null } : {}),
       });
     } catch (error) {
       // The two halves land together or not at all.
       if (added.length) await archiveCards(ctx, added);
       throw error;
     }
-    applied = {
-      added,
-      edited: {
-        cardId: card.id,
-        before: { term: card.term, meaning: card.meaning, meaningSource: card.meaningSource },
+    return {
+      applied: {
+        added,
+        edited: {
+          cardId: card.id,
+          before: {
+            term: card.term,
+            meaning: card.meaning,
+            meaningSource: card.meaningSource,
+            ...(retermed
+              ? { pronunciation: card.pronunciation, pronunciationSource: card.pronunciationSource }
+              : {}),
+          },
+        },
       },
+      outcomes,
     };
-  } else if (diagnosis.cause === "several_answers" && input.cause === "several_answers") {
+  }
+
+  if (diagnosis.cause === "several_answers" && input.cause === "several_answers") {
     const { field } = diagnosis.draft;
     if (field === "term" && input.text.length > CARD_LIMITS.term) {
       throw new ServiceError("invalid", "Keep the term under 500 characters.");
@@ -295,39 +359,22 @@ export async function acceptFix(
         ? { term: input.text }
         : { meaning: input.text, meaningSource: sourceOf(diagnosis.draft.text, input.text) };
     await updateCard(ctx, card.id, patch);
-    applied = {
-      added: [],
-      edited: {
-        cardId: card.id,
-        before:
-          field === "term"
-            ? { term: card.term }
-            : { meaning: card.meaning, meaningSource: card.meaningSource },
+    return {
+      applied: {
+        added: [],
+        edited: {
+          cardId: card.id,
+          before:
+            field === "term"
+              ? { term: card.term }
+              : { meaning: card.meaning, meaningSource: card.meaningSource },
+        },
       },
+      outcomes: [],
     };
-  } else {
-    throw new ServiceError("invalid", "This card's diagnosis drafted a different fix");
   }
 
-  await db.batch([
-    db
-      .update(schema.cardDiagnoses)
-      .set({ acceptedAt: now, offeredAt: row.offeredAt ?? now, fix: applied, updatedAt: now })
-      .where(and(eq(schema.cardDiagnoses.id, id), eq(schema.cardDiagnoses.userId, userId))),
-    auditStatement(ctx, {
-      entity: "diagnosis",
-      action: "accept",
-      id,
-      details: { cardId: card.id, cause: diagnosis.cause, ...applied },
-    }),
-  ]);
-  return {
-    added: outcomes.flatMap((o) => (o.status === "added" ? [o.card] : [])),
-    edited: applied.edited ? await presentCard(db, await getCard(ctx, card.id), userId) : null,
-    skipped: outcomes.flatMap((o) =>
-      o.status === "skipped" ? [{ term: o.term, existingId: o.id, deckName: o.deckName }] : [],
-    ),
-  };
+  throw new ServiceError("invalid", "This card's diagnosis drafted a different fix");
 }
 
 /** What accepting wrote, as `FixOut` sends it. */

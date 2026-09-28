@@ -168,6 +168,11 @@ describe("offering a diagnosis's fix in review", () => {
     const { ctx, deckId, cardOf, diagnosisOf } = await setup(["two_things"]);
     const cardId = cardOf("two_things");
     const row = await diagnosisOf(cardId);
+    // Written straight to the row, since an edit would raise the revision past the diagnosis.
+    await db
+      .update(schema.cards)
+      .set({ pronunciation: "kus sa ˈelad ma ˈelan", pronunciationSource: "ai" })
+      .where(eq(schema.cards.id, cardId));
     const before = await getCard(ctx, cardId);
     const out = await acceptFix(
       ctx,
@@ -186,6 +191,9 @@ describe("offering a diagnosis's fix in review", () => {
       term: "Kus sa elad?",
       meaning: "Where do you live?",
       meaningSource: "ai",
+      // The old pronunciation was of both halves, so it goes with the old term.
+      pronunciation: null,
+      pronunciationSource: null,
     });
     expect(out.added).toMatchObject([
       { term: "Ma elan Tallinnas.", deckId, source: "Tund 7", meaningSource: "ai" },
@@ -199,6 +207,8 @@ describe("offering a diagnosis's fix in review", () => {
       term: before.term,
       meaning: before.meaning,
       meaningSource: "lesson",
+      pronunciation: "kus sa ˈelad ma ˈelan",
+      pronunciationSource: "ai",
     });
     const second = out.added[0]?.id ?? "";
     expect((await getCard(ctx, second)).archivedAt).not.toBeNull();
@@ -213,6 +223,48 @@ describe("offering a diagnosis's fix in review", () => {
       acceptedAt: null,
     });
     expect(await offersIn(ctx)).toEqual(new Map());
+  });
+
+  it("applies a fix once when two accepts race", async () => {
+    const { ctx, deckId, cardOf, diagnosisOf } = await setup(["confused_pair"]);
+    const row = await diagnosisOf(cardOf("confused_pair"));
+    const input = {
+      cause: "confused_pair" as const,
+      cards: [
+        { term: "Ma alustan tööd.", meaning: "I start work." },
+        { term: "Töö algab.", meaning: "Work starts." },
+      ] as [{ term: string; meaning: string }, { term: string; meaning: string }],
+    };
+    const results = await Promise.allSettled([
+      acceptFix(ctx, row.id, input, null),
+      acceptFix(ctx, row.id, input, null),
+    ]);
+    expect(results.filter((r) => r.status === "fulfilled")).toHaveLength(1);
+    expect(results.find((r) => r.status === "rejected")).toMatchObject({
+      reason: { code: "conflict" },
+    });
+    const active = (await cardsIn(ctx, deckId)).filter((c) => !c.archivedAt).map((c) => c.term);
+    expect(active.sort()).toEqual(["Ma alustan tööd.", "Töö algab.", "algama", "alustama"].sort());
+    const audit = await db
+      .select()
+      .from(schema.auditLog)
+      .where(and(eq(schema.auditLog.userId, ctx.userId), eq(schema.auditLog.action, "accept")));
+    expect(audit).toHaveLength(1);
+  });
+
+  it("releases the claim when the fix cannot be written, so it can be accepted again", async () => {
+    const { ctx, cardOf, diagnosisOf } = await setup(["several_answers"]);
+    const row = await diagnosisOf(cardOf("several_answers"));
+    await db
+      .update(schema.cardDiagnoses)
+      .set({ draft: { field: "term", text: "pikk (inimene)", otherAnswer: "kõrge" } })
+      .where(eq(schema.cardDiagnoses.id, row.id));
+    await expect(
+      acceptFix(ctx, row.id, { cause: "several_answers", text: "x".repeat(501) }, null),
+    ).rejects.toMatchObject({ code: "invalid" });
+    expect(await diagnosisOf(row.cardId)).toMatchObject({ acceptedAt: null, fix: null });
+    await acceptFix(ctx, row.id, { cause: "several_answers", text: "pikk (inimene)" }, null);
+    expect(await getCard(ctx, row.cardId)).toMatchObject({ term: "pikk (inimene)" });
   });
 
   it("changes the cue of a card with more than one right answer, and Undo restores it", async () => {

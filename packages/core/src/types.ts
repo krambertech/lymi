@@ -746,7 +746,13 @@ export type AppliedFix = {
   added: string[];
   edited: {
     cardId: string;
-    before: { term?: string; meaning?: string | null; meaningSource?: FieldSource | null };
+    before: {
+      term?: string;
+      meaning?: string | null;
+      meaningSource?: FieldSource | null;
+      pronunciation?: string | null;
+      pronunciationSource?: FieldSource | null;
+    };
   } | null;
 };
 

@@ -7,7 +7,7 @@ import {
   publicationTags,
 } from "@lymi/core";
 import { activeAvatarVersion, publisherAvatarPath } from "@lymi/core/catalog";
-import { and, eq, getTableColumns, isNull, sql } from "@lymi/core/db";
+import { and, eq, isNull, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { auditStatement } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
@@ -24,21 +24,18 @@ function isPublicationCategory(value: string | null): value is PublicationCatego
   return (PUBLICATION_CATEGORIES as readonly (string | null)[]).includes(value);
 }
 
-// A follow-up drops `level`, so a whole-row read names every other column and survives the drop.
-const { level: _level, ...publicationColumns } = getTableColumns(schema.deckPublications);
-
-export { publicationColumns };
-export type PublicationRow = Omit<typeof schema.deckPublications.$inferSelect, "level">;
-
 async function publicationOf(db: Db, deckId: string) {
   const [row] = await db
-    .select(publicationColumns)
+    .select()
     .from(schema.deckPublications)
     .where(eq(schema.deckPublications.deckId, deckId));
   return row ?? null;
 }
 
-export function publicationOut(productUrl: string, row: PublicationRow | null): PublicationOut {
+export function publicationOut(
+  productUrl: string,
+  row: typeof schema.deckPublications.$inferSelect | null,
+): PublicationOut {
   if (!row) return { publication: null };
   return {
     publication: {

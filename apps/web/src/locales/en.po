@@ -1002,6 +1002,9 @@ msgstr "Both ways"
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Brings back every card this import added and the decks it made."
 
+msgid "Brought back the fix for {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Brought back the fix for {count, plural, one {# card} other {# cards}} in {deck}"
+
 msgid "Browse ready-made decks"
 msgstr "Browse ready-made decks"
 
@@ -3814,6 +3817,9 @@ msgstr "Turn off link"
 
 msgid "Turn off the join link?"
 msgstr "Turn off the join link?"
+
+msgid "Turned down the fix for {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Turned down the fix for {count, plural, one {# card} other {# cards}} in {deck}"
 
 msgid "Turned off the join link for {deck}"
 msgstr "Turned off the join link for {deck}"

@@ -486,7 +486,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Undo an accepted fix",
       description:
-        "Reverse a fix accept_card_fix applied: archive the cards it added and put back the text it changed. Undoing a fix that is not in place changes nothing. Needs write.",
+        "Reverse a fix accept_card_fix applied: archive the cards it added and put back the text it changed. Refused, with nothing undone, when the card or a card it added was edited since. Undoing a fix that is not in place changes nothing. Needs write.",
       inputSchema: z.object({ diagnosisId: z.string().min(1) }),
       outputSchema: OkOut,
       ...writeTool({ idempotent: true }),

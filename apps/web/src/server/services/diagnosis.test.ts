@@ -380,6 +380,31 @@ describe("diagnosing an often-forgotten card", () => {
     expect(await rowsOf(ctx)).toMatchObject([{ id: failed.id, status: "working", revision: 1 }]);
   });
 
+  it("queues a row a cut-off run left working after a day, once however many draws race", async () => {
+    const { ctx, slipping } = await setup();
+    // As a draw leaves it when the isolate dies before handing the row to the workflow.
+    const [stuck] = await db
+      .insert(schema.cardDiagnoses)
+      .values({ id: `stuck-${ctx.userId}`, userId: ctx.userId, cardId: slipping.id, revision: 1 })
+      .returning();
+    if (!stuck) throw new Error("no diagnosis");
+    expect(stuck).toMatchObject({ status: "working" });
+    const { runner, runs } = recordingRunner();
+
+    expect(await queueDiagnoses(ctx, [slipping.id], runner.queue)).toEqual([]);
+
+    const tomorrow = new Date(Date.now() + DIAGNOSIS_RETRY_MS + 60_000);
+    const racing = await Promise.all([
+      queueDiagnoses(ctx, [slipping.id], runner.queue, tomorrow),
+      queueDiagnoses(ctx, [slipping.id], runner.queue, tomorrow),
+    ]);
+    expect(racing.flat()).toEqual([stuck.id]);
+    expect(runs).toEqual([{ userId: ctx.userId, diagnosisIds: [stuck.id] }]);
+    expect(await rowsOf(ctx)).toMatchObject([
+      { id: stuck.id, status: "working", updatedAt: tomorrow },
+    ]);
+  });
+
   /** Queues the setup's card and settles it as a pair with the steady card. */
   async function diagnosed(ctx: ServiceContext, steadyId: string) {
     const { runner, settled } = recordingRunner();

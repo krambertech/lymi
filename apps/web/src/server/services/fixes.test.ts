@@ -8,6 +8,7 @@ import { type FixCause, seedFixes } from "./dev";
 import {
   acceptFix,
   dismissDiagnosis,
+  FIX_CLAIM_MS,
   markOffered,
   reviewOffers,
   undoDismissal,
@@ -21,8 +22,11 @@ import { learner, testDb } from "./test-db";
 const DAY = 86_400_000;
 const today = () => dayWindow(new Date(), "UTC");
 
-/** The database, except that the batch recording an accepted fix fails, and only that batch. */
-function failingAcceptRecord(db: Db) {
+/**
+ * The database, except that the batch recording an accepted fix fails, and with `outage` every
+ * batch after it too, as when D1 stays down for the rollback.
+ */
+function failingAcceptRecord(db: Db, { outage = false } = {}) {
   let failed = false;
   const recordsAccept = (statement: unknown) => {
     const { sql, params } = (statement as { toSQL(): { sql: string; params: unknown[] } }).toSQL();
@@ -33,7 +37,9 @@ function failingAcceptRecord(db: Db) {
       const value = Reflect.get(target, prop, receiver);
       if (prop === "batch") {
         return (statements: Parameters<Db["batch"]>[0]) => {
-          if (!statements.some(recordsAccept)) return target.batch(statements);
+          if (!(outage && failed) && !statements.some(recordsAccept)) {
+            return target.batch(statements);
+          }
           failed = true;
           return Promise.reject(new Error("D1 went away"));
         };
@@ -450,6 +456,22 @@ describe("offering a diagnosis's fix in review", () => {
     const active = (await cardsIn(ctx, deckId)).filter((c) => !c.archivedAt).map((c) => c.term);
     expect(active).toEqual([before.term]);
     expect(await diagnosisOf(cardId)).toMatchObject({ acceptedAt: null, fix: null });
+
+    // Put back at the diagnosed revision, so trying again is not refused as a change.
+    expect((await getCard(ctx, cardId)).revision).toBe(before.revision);
+    await acceptFix(
+      ctx,
+      row.id,
+      {
+        cause: "two_things",
+        cards: [
+          { term: "Kus sa elad?", meaning: "Where do you live?" },
+          { term: "Ma elan Tallinnas.", meaning: "I live in Tallinn." },
+        ],
+      },
+      null,
+    );
+    expect(await getCard(ctx, cardId)).toMatchObject({ term: "Kus sa elad?" });
   });
 
   it("puts back the cue it changed when the fix cannot be recorded", async () => {
@@ -471,8 +493,131 @@ describe("offering a diagnosis's fix in review", () => {
       term: before.term,
       meaning: before.meaning,
       meaningSource: before.meaningSource,
+      revision: before.revision,
     });
     expect(await diagnosisOf(cardId)).toMatchObject({ acceptedAt: null, fix: null });
+    await acceptFix(ctx, row.id, { cause: "several_answers", text: "tall (of a person)" }, null);
+    expect(await getCard(ctx, cardId)).toMatchObject({ meaning: "tall (of a person)" });
+  });
+
+  it("releases the claim when the rollback fails in the same outage", async () => {
+    const { ctx, cardOf, diagnosisOf } = await setup(["several_answers"]);
+    const cardId = cardOf("several_answers");
+    const row = await diagnosisOf(cardId);
+    const failing = failingAcceptRecord(db, { outage: true });
+    await expect(
+      acceptFix(
+        { ...ctx, db: failing.db },
+        row.id,
+        { cause: "several_answers", text: "tall (of a person)" },
+        null,
+      ),
+    ).rejects.toThrow("D1 went away");
+    expect(await diagnosisOf(cardId)).toMatchObject({ acceptedAt: null, fix: null });
+    await expect(dismissDiagnosis(ctx, row.id)).resolves.toBeUndefined();
+  });
+
+  it("takes over a claim an accept left when it died, and only once it is stale", async () => {
+    const { ctx, cardOf, diagnosisOf } = await setup(["no_anchor", "several_answers"]);
+    const hook = await diagnosisOf(cardOf("no_anchor"));
+    const cue = await diagnosisOf(cardOf("several_answers"));
+    const claim = (id: string, at: Date) =>
+      db
+        .update(schema.cardDiagnoses)
+        .set({ acceptedAt: at })
+        .where(eq(schema.cardDiagnoses.id, id));
+
+    await claim(hook.id, new Date(Date.now() - 60_000));
+    await expect(
+      acceptFix(ctx, hook.id, { cause: "no_anchor", hook: "Curvy pumpkin" }, null),
+    ).rejects.toMatchObject({ code: "conflict" });
+    await expect(undoFix(ctx, hook.id)).rejects.toMatchObject({ code: "conflict" });
+    await expect(dismissDiagnosis(ctx, hook.id)).rejects.toMatchObject({ code: "conflict" });
+
+    const died = new Date(Date.now() - FIX_CLAIM_MS - 60_000);
+    await claim(hook.id, died);
+    await acceptFix(ctx, hook.id, { cause: "no_anchor", hook: "Curvy pumpkin" }, null);
+    expect(await diagnosisOf(hook.cardId)).toMatchObject({
+      acceptedAt: expect.any(Date),
+      fix: { edited: { after: { hook: "Curvy pumpkin" } } },
+    });
+
+    await claim(cue.id, died);
+    await undoFix(ctx, cue.id);
+    expect(await diagnosisOf(cue.cardId)).toMatchObject({ acceptedAt: null, fix: null });
+    await claim(cue.id, died);
+    await dismissDiagnosis(ctx, cue.id);
+    expect(await diagnosisOf(cue.cardId)).toMatchObject({
+      acceptedAt: null,
+      dismissedAt: expect.any(Date),
+    });
+  });
+
+  it("refuses to undo a hook edited since, and keeps the edit", async () => {
+    const { ctx, cardOf, diagnosisOf } = await setup(["no_anchor"]);
+    const cardId = cardOf("no_anchor");
+    const row = await diagnosisOf(cardId);
+    await acceptFix(ctx, row.id, { cause: "no_anchor", hook: "Curvy pumpkin" }, null);
+    await updateCard(ctx, cardId, { hook: "A pumpkin with curves" });
+    await expect(undoFix(ctx, row.id)).rejects.toMatchObject({
+      code: "conflict",
+      message: expect.stringContaining("edited after the fix"),
+    });
+    expect(await getCard(ctx, cardId)).toMatchObject({
+      hook: "A pumpkin with curves",
+      hookSource: "manual",
+    });
+    expect(await diagnosisOf(cardId)).toMatchObject({ acceptedAt: expect.any(Date) });
+  });
+
+  it("refuses to undo a cue whose meaning was edited since", async () => {
+    const { ctx, cardOf, diagnosisOf } = await setup(["several_answers"]);
+    const cardId = cardOf("several_answers");
+    const row = await diagnosisOf(cardId);
+    await acceptFix(ctx, row.id, { cause: "several_answers", text: "tall (of a person)" }, null);
+    await updateCard(ctx, cardId, { meaning: "tall (of people)" });
+    await expect(undoFix(ctx, row.id)).rejects.toMatchObject({ code: "conflict" });
+    expect(await getCard(ctx, cardId)).toMatchObject({ meaning: "tall (of people)" });
+  });
+
+  it("refuses to undo a split edited since, and carries no diagnosis over", async () => {
+    const { ctx, deckId, cardOf, diagnosisOf } = await setup(["two_things"]);
+    const cardId = cardOf("two_things");
+    const row = await diagnosisOf(cardId);
+    const split = {
+      cause: "two_things" as const,
+      cards: [
+        { term: "Kus sa elad?", meaning: "Where do you live?" },
+        { term: "Ma elan Tallinnas.", meaning: "I live in Tallinn." },
+      ] as [{ term: string; meaning: string }, { term: string; meaning: string }],
+    };
+    const out = await acceptFix(ctx, row.id, split, null);
+    const added = out.added[0]?.id ?? "";
+
+    // Enrichment filling the pronunciation the split cleared is not the learner's edit.
+    await db
+      .update(schema.cards)
+      .set({ pronunciation: "kus sa ˈelad", pronunciationSource: "ai" })
+      .where(eq(schema.cards.id, cardId));
+    await updateCard(ctx, added, { meaning: "I live in Tallinn now." });
+    await expect(undoFix(ctx, row.id)).rejects.toMatchObject({ code: "conflict" });
+    expect(await getCard(ctx, added)).toMatchObject({
+      meaning: "I live in Tallinn now.",
+      archivedAt: null,
+    });
+    expect(await getCard(ctx, cardId)).toMatchObject({ term: "Kus sa elad?" });
+    const rows = await db
+      .select()
+      .from(schema.cardDiagnoses)
+      .where(eq(schema.cardDiagnoses.cardId, cardId));
+    expect(rows).toHaveLength(1);
+
+    // Put back as the fix wrote it, the split undoes whole.
+    await updateCard(ctx, added, { meaning: "I live in Tallinn." });
+    await undoFix(ctx, row.id);
+    expect((await getCard(ctx, cardId)).term).toBe("Kus sa elad? Ma elan Tallinnas.");
+    const archived = (await cardsIn(ctx, deckId)).filter((c) => c.archivedAt).map((c) => c.id);
+    expect(archived).toEqual([added]);
   });
 
   it("refuses to undo a fix that is still being applied", async () => {

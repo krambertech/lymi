@@ -59,12 +59,15 @@ export type ServerCardPatch = Omit<CardPatch, keyof Sources | Cleared> &
     meaning?: string | null | undefined;
     pronunciation?: string | null | undefined;
     hook?: string | null | undefined;
+    /** The revision the card held this text at, for a write that puts earlier text back. */
+    revision?: number | undefined;
   };
 type ServerCardEdit = Omit<CardEditInput, keyof Sources | Cleared> &
   Sources & {
     meaning?: string | null | undefined;
     pronunciation?: string | null | undefined;
     hook?: string | null | undefined;
+    revision?: number | undefined;
   };
 
 /** A publisher's curated decks each stand alone, so its terms repeat across decks but not within one. ADR 0004. */
@@ -612,7 +615,7 @@ async function editLookups(ctx: ServiceContext, edits: ServerCardEdit[]): Promis
 function editWrite(
   ctx: ServiceContext,
   lookups: EditLookups,
-  { cardId: id, ...patch }: ServerCardEdit,
+  { cardId: id, revision, ...patch }: ServerCardEdit,
   now: Date,
 ): CardWrite {
   const { db } = ctx;
@@ -661,7 +664,7 @@ function editWrite(
       ...sources,
       ...(modes ?? {}),
       ...section,
-      ...bumped("card", patch, current),
+      ...(revision === undefined ? bumped("card", patch, current) : { revision }),
       normalizedTerm,
       ...(pronunciationChanged ? { audioKey: null } : {}),
       updatedAt: now,

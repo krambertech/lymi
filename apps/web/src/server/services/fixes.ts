@@ -4,13 +4,14 @@ import {
   type DayWindow,
   type Diagnosis,
   type FieldSource,
+  type FixFields,
   type FixInput,
   newId,
   OFFERED_CAUSES,
   type ReviewOfferOut,
   SLIPPING_FORGOTTEN_DAYS,
 } from "@lymi/core";
-import { and, asc, eq, gt, inArray, isNotNull, isNull, lt } from "@lymi/core/db";
+import { and, asc, eq, gt, inArray, isNotNull, isNull, lt, or } from "@lymi/core/db";
 import type { Card, CardDiagnosis } from "@lymi/core/schema";
 import { schema } from "../db";
 import { track } from "./analytics";
@@ -188,6 +189,21 @@ async function ownDiagnosis({ db, userId }: ServiceContext, id: string) {
   return row;
 }
 
+/** An accept that has not recorded its fix after this long died part-way, so its claim is free. */
+export const FIX_CLAIM_MS = 5 * 60_000;
+
+const staleClaim = (now: Date) => new Date(now.getTime() - FIX_CLAIM_MS);
+
+/** No live accept holds the row: none claimed it, or the one that did died before recording. */
+const unclaimed = (now: Date) =>
+  or(
+    isNull(schema.cardDiagnoses.acceptedAt),
+    and(isNull(schema.cardDiagnoses.fix), lt(schema.cardDiagnoses.acceptedAt, staleClaim(now))),
+  );
+
+const abandoned = (row: CardDiagnosis, now: Date) =>
+  !!row.acceptedAt && !row.fix && row.acceptedAt < staleClaim(now);
+
 /** Review showed the fix. It is not offered again for this revision; it waits for the learner. */
 export async function markOffered(ctx: ServiceContext, id: string, now = new Date()) {
   const { db, userId } = ctx;
@@ -226,17 +242,24 @@ export async function dismissDiagnosis(ctx: ServiceContext, id: string, now = ne
   if (!row.cause || row.cause === "unclear") {
     throw new ServiceError("invalid", "This diagnosis names no cause to dismiss");
   }
-  if (row.acceptedAt) throw new ServiceError("conflict", "This fix is on the card; undo it first");
+  if (row.acceptedAt && !abandoned(row, now)) {
+    throw new ServiceError("conflict", "This fix is on the card; undo it first");
+  }
   await db.batch([
     db
       .update(schema.cardDiagnoses)
-      .set({ dismissedAt: now, offeredAt: row.offeredAt ?? now, updatedAt: now })
+      .set({
+        dismissedAt: now,
+        offeredAt: row.offeredAt ?? now,
+        acceptedAt: null,
+        updatedAt: now,
+      })
       .where(
         and(
           eq(schema.cardDiagnoses.id, id),
           eq(schema.cardDiagnoses.userId, userId),
           eq(schema.cardDiagnoses.status, "done"),
-          isNull(schema.cardDiagnoses.acceptedAt),
+          unclaimed(now),
           isNull(schema.cardDiagnoses.dismissedAt),
         ),
       ),
@@ -328,7 +351,7 @@ export async function acceptFix(
       and(
         mine,
         eq(schema.cardDiagnoses.status, "done"),
-        isNull(schema.cardDiagnoses.acceptedAt),
+        unclaimed(now),
         isNull(schema.cardDiagnoses.dismissedAt),
       ),
     )
@@ -351,12 +374,16 @@ export async function acceptFix(
       }),
     ]);
   } catch (error) {
-    // The fix and its record land together or not at all.
-    if (written) await reverse(ctx, written.applied);
-    await db
-      .update(schema.cardDiagnoses)
-      .set({ acceptedAt: null, fix: null, updatedAt: new Date() })
-      .where(mine);
+    // The fix and its record land together or not at all. The claim goes whatever the rollback
+    // does, so the same outage failing both does not leave the row claimed with no fix.
+    try {
+      if (written) await rollBack(ctx, card, written.applied);
+    } finally {
+      await db
+        .update(schema.cardDiagnoses)
+        .set({ acceptedAt: null, fix: null, updatedAt: new Date() })
+        .where(mine);
+    }
     throw error;
   }
   const { applied, outcomes } = written;
@@ -399,7 +426,7 @@ async function applyFix(
       ],
       enrichment,
     );
-    return { applied: { added: addedIds(outcomes), edited: null }, outcomes };
+    return { applied: { ...addedBy(outcomes), edited: null }, outcomes };
   }
 
   if (diagnosis.cause === "two_things" && input.cause === "two_things") {
@@ -423,11 +450,25 @@ async function applyFix(
       ],
       enrichment,
     );
-    const added = addedIds(outcomes);
+    const { added, wrote } = addedBy(outcomes);
     // A new term makes the old pronunciation and hook wrong; enrichment can write the pronunciation.
     const retermed = first.term !== card.term;
+    const before: FixFields = {
+      term: card.term,
+      meaning: card.meaning,
+      meaningSource: card.meaningSource,
+      ...(retermed
+        ? {
+            pronunciation: card.pronunciation,
+            pronunciationSource: card.pronunciationSource,
+            hook: card.hook,
+            hookSource: card.hookSource,
+          }
+        : {}),
+    };
+    let split: CardView;
     try {
-      await updateCard(ctx, card.id, {
+      split = await updateCard(ctx, card.id, {
         term: first.term,
         meaning: first.meaning,
         meaningSource: sourceOf(draftFirst.meaning, first.meaning),
@@ -440,28 +481,7 @@ async function applyFix(
       if (added.length) await archiveCards(ctx, added);
       throw error;
     }
-    return {
-      applied: {
-        added,
-        edited: {
-          cardId: card.id,
-          before: {
-            term: card.term,
-            meaning: card.meaning,
-            meaningSource: card.meaningSource,
-            ...(retermed
-              ? {
-                  pronunciation: card.pronunciation,
-                  pronunciationSource: card.pronunciationSource,
-                  hook: card.hook,
-                  hookSource: card.hookSource,
-                }
-              : {}),
-          },
-        },
-      },
-      outcomes,
-    };
+    return { applied: { added, wrote, edited: edited(split, before) }, outcomes };
   }
 
   if (diagnosis.cause === "several_answers" && input.cause === "several_answers") {
@@ -473,35 +493,22 @@ async function applyFix(
       field === "term"
         ? { term: input.text }
         : { meaning: input.text, meaningSource: sourceOf(diagnosis.draft.text, input.text) };
-    await updateCard(ctx, card.id, patch);
-    return {
-      applied: {
-        added: [],
-        edited: {
-          cardId: card.id,
-          before:
-            field === "term"
-              ? { term: card.term }
-              : { meaning: card.meaning, meaningSource: card.meaningSource },
-        },
-      },
-      outcomes: [],
-    };
+    const view = await updateCard(ctx, card.id, patch);
+    const before: FixFields =
+      field === "term"
+        ? { term: card.term }
+        : { meaning: card.meaning, meaningSource: card.meaningSource };
+    return { applied: { added: [], edited: edited(view, before) }, outcomes: [] };
   }
 
   if (input.cause === "no_anchor") {
     const drafted = diagnosis.cause === "no_anchor" ? diagnosis.draft.hook : null;
-    await updateCard(ctx, card.id, {
+    const view = await updateCard(ctx, card.id, {
       hook: input.hook,
       hookSource: drafted === null ? "manual" : sourceOf(drafted, input.hook),
     });
-    return {
-      applied: {
-        added: [],
-        edited: { cardId: card.id, before: { hook: card.hook, hookSource: card.hookSource } },
-      },
-      outcomes: [],
-    };
+    const before: FixFields = { hook: card.hook, hookSource: card.hookSource };
+    return { applied: { added: [], edited: edited(view, before) }, outcomes: [] };
   }
 
   throw new ServiceError("invalid", "This card's diagnosis drafted a different fix");
@@ -514,13 +521,101 @@ export type FixResult = {
   skipped: { term: string; existingId: string; deckName: string }[];
 };
 
-const addedIds = (outcomes: AddCardOutcome[]) =>
-  outcomes.flatMap((o) => (o.status === "added" ? [o.id] : []));
+/** The cards a fix added, with the words each was given. */
+function addedBy(outcomes: AddCardOutcome[]) {
+  const added = outcomes.flatMap((o) => (o.status === "added" ? [o.card] : []));
+  return {
+    added: added.map((card) => card.id),
+    wrote: Object.fromEntries(
+      added.map((card) => [card.id, { term: card.term, meaning: card.meaning }]),
+    ),
+  };
+}
+
+/** The fields a fix changed, as they were and as the card holds them after the fix. */
+function edited(card: CardView, before: FixFields) {
+  const after = Object.fromEntries(
+    Object.keys(before).map((field) => [field, card[field as keyof FixFields]]),
+  ) as FixFields;
+  return { cardId: card.id, before, after };
+}
+
+const SOURCE_OF = {
+  meaning: "meaningSource",
+  pronunciation: "pronunciationSource",
+  hook: "hookSource",
+} as const;
+
+/** Whether the card no longer holds what the fix wrote to it. */
+function editedSince(card: Card, after: FixFields): boolean {
+  const refilled = new Set<string>();
+  for (const [text, source] of Object.entries(SOURCE_OF)) {
+    // Enrichment may refill a field the fix emptied, and that is no edit of the learner's.
+    if (after[text as keyof FixFields] === null && card[source] === "ai") {
+      refilled.add(text).add(source);
+    }
+  }
+  return Object.entries(after).some(
+    ([field, wrote]) => !refilled.has(field) && card[field as keyof FixFields] !== wrote,
+  );
+}
 
 /** Archive the cards a fix added and write back the text it replaced. */
 async function reverse(ctx: ServiceContext, applied: AppliedFix) {
   if (applied.added.length) await archiveCards(ctx, applied.added);
   if (applied.edited) await updateCard(ctx, applied.edited.cardId, applied.edited.before);
+}
+
+/**
+ * Reverse a fix whose accept failed. The card is back at the revision it was diagnosed at, so a
+ * retry of the same fix is not refused as a change.
+ */
+async function rollBack(ctx: ServiceContext, card: Card, applied: AppliedFix) {
+  if (applied.added.length) await archiveCards(ctx, applied.added);
+  if (applied.edited) {
+    await updateCard(ctx, applied.edited.cardId, {
+      ...applied.edited.before,
+      revision: card.revision,
+    });
+  }
+}
+
+/**
+ * Refuses an Undo that would overwrite an edit made since the fix: a field the fix changed that
+ * now holds other text, or a card it added, still active, with another term or meaning.
+ */
+async function assertUnchanged(ctx: ServiceContext, applied: AppliedFix) {
+  const { edited: change, wrote } = applied;
+  if (change?.after && editedSince(await getCard(ctx, change.cardId), change.after)) {
+    throw new ServiceError(
+      "conflict",
+      "This card was edited after the fix, so Undo would lose that edit. Edit the card instead.",
+    );
+  }
+  if (!wrote) return;
+  const added = await selectIn(applied.added, (ids) =>
+    ctx.db
+      .select({
+        id: schema.cards.id,
+        term: schema.cards.term,
+        meaning: schema.cards.meaning,
+        archivedAt: schema.cards.archivedAt,
+      })
+      .from(schema.cards)
+      .where(and(inArray(schema.cards.id, ids), eq(schema.cards.userId, ctx.userId))),
+  );
+  const changed = added.some((card) => {
+    const given = wrote[card.id];
+    return (
+      !card.archivedAt && given && (card.term !== given.term || card.meaning !== given.meaning)
+    );
+  });
+  if (changed) {
+    throw new ServiceError(
+      "conflict",
+      "A card this fix added was edited after the fix, so Undo would lose that edit. Change the cards yourself instead.",
+    );
+  }
 }
 
 /**
@@ -533,7 +628,22 @@ export async function undoFix(ctx: ServiceContext, id: string, now = new Date())
   const row = await ownDiagnosis(ctx, id);
   if (!row.acceptedAt) return;
   const applied = row.fix;
-  if (!applied) throw new ServiceError("conflict", "This fix is still being applied");
+  if (!applied) {
+    if (!abandoned(row, now)) throw new ServiceError("conflict", "This fix is still being applied");
+    // The accept died before recording what it wrote, so there is nothing to reverse.
+    await db
+      .update(schema.cardDiagnoses)
+      .set({ acceptedAt: null, updatedAt: now })
+      .where(
+        and(
+          eq(schema.cardDiagnoses.id, id),
+          eq(schema.cardDiagnoses.userId, userId),
+          unclaimed(now),
+        ),
+      );
+    return;
+  }
+  await assertUnchanged(ctx, applied);
   await reverse(ctx, applied);
   let carried: Statement | null = null;
   if (applied.edited) {

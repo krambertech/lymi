@@ -56,9 +56,9 @@ diagnoses.post(
     tags: ["Cards"],
     summary: "Undo a fix",
     description:
-      "Needs the write scope. Reverses an accepted fix: archives the cards it added and puts back the text it changed. Undoing a fix that is not in place changes nothing.",
+      "Needs the write scope. Reverses an accepted fix: archives the cards it added and puts back the text it changed. Undoing a fix that is not in place changes nothing. When a field the fix changed, or a card it added, was edited since, nothing is undone and the answer is 409.",
     ok: { schema: OkOut, description: "Undone" },
-    errors: [404],
+    errors: [404, 409],
   }),
   async (c) => {
     await undoFix(ctxOf(c), c.req.param("id"));

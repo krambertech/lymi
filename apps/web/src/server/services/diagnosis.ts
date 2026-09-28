@@ -84,7 +84,7 @@ export const DIAGNOSIS_RETRY_MS = 86_400_000;
 
 /**
  * Queue a diagnosis for each often-forgotten card whose current revision has none, one that
- * failed over a day ago, or one an older prompt wrote that the learner has neither accepted nor
+ * failed or was left `working` over a day ago, or one an older prompt wrote that the learner has neither accepted nor
  * dismissed. Only rows this call inserted or moved back to `working` are queued, so two draws
  * racing queue a card once. A row diagnosed again keeps `offeredAt`, so review still offers a
  * card at most once a revision. Returns the diagnosis ids queued.
@@ -96,9 +96,15 @@ export async function queueDiagnoses(
   now = new Date(),
 ): Promise<string[]> {
   const { db, userId } = ctx;
+  const dayAgo = new Date(now.getTime() - DIAGNOSIS_RETRY_MS);
   const staleFailure = and(
     eq(schema.cardDiagnoses.status, "failed"),
-    lt(schema.cardDiagnoses.updatedAt, new Date(now.getTime() - DIAGNOSIS_RETRY_MS)),
+    lt(schema.cardDiagnoses.updatedAt, dayAgo),
+  );
+  // A run cut off before it was queued, or before its settle step, leaves the row `working`.
+  const orphaned = and(
+    eq(schema.cardDiagnoses.status, "working"),
+    lt(schema.cardDiagnoses.updatedAt, dayAgo),
   );
   // Only a `done` row: a failure keeps its day's wait, so an outage is not retried every draw.
   const outdated = and(
@@ -107,7 +113,7 @@ export async function queueDiagnoses(
     isNull(schema.cardDiagnoses.acceptedAt),
     isNull(schema.cardDiagnoses.dismissedAt),
   );
-  const again = or(staleFailure, outdated);
+  const again = or(staleFailure, orphaned, outdated);
   const candidates = await selectIn([...new Set(cardIds)], (slice) =>
     db
       .select({

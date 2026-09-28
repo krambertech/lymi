@@ -790,21 +790,26 @@ export const FixInput = z
   .meta({ id: "FixInput" });
 export type FixInput = z.infer<typeof FixInput>;
 
-/** What accepting a fix wrote, kept on the diagnosis so Undo reverses exactly that. */
+/** The card fields a fix can change. */
+export type FixFields = {
+  term?: string;
+  meaning?: string | null;
+  meaningSource?: FieldSource | null;
+  pronunciation?: string | null;
+  pronunciationSource?: FieldSource | null;
+  hook?: string | null;
+  hookSource?: FieldSource | null;
+};
+
+/**
+ * What accepting a fix wrote, kept on the diagnosis so Undo reverses exactly that, and only while
+ * the cards still hold it. Fixes accepted before `wrote` and `after` were kept have neither.
+ */
 export type AppliedFix = {
   added: string[];
-  edited: {
-    cardId: string;
-    before: {
-      term?: string;
-      meaning?: string | null;
-      meaningSource?: FieldSource | null;
-      pronunciation?: string | null;
-      pronunciationSource?: FieldSource | null;
-      hook?: string | null;
-      hookSource?: FieldSource | null;
-    };
-  } | null;
+  /** The term and meaning each added card was given, by card id. */
+  wrote?: Record<string, { term: string; meaning: string | null }>;
+  edited: { cardId: string; before: FixFields; after?: FixFields } | null;
 };
 
 /** What a picture shows, for a screen reader and when it cannot load, never naming the answer. */

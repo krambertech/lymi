@@ -5,8 +5,8 @@ import { Actor } from "../types";
 import { Timestamp } from "./common";
 
 /**
- * What one Activity row says happened. Card and deck kinds are a write by an app, a key or the
- * AI; the member and link kinds are the people of a shared deck; `import` is a file brought in.
+ * What one Activity row says happened. Card, fix and deck kinds are a write by an app, a key or
+ * the AI; the member and link kinds are the people of a shared deck; `import` is a file brought in.
  */
 export const ActivityKind = z.enum([
   "cards_added",
@@ -14,6 +14,8 @@ export const ActivityKind = z.enum([
   "cards_edited",
   "cards_archived",
   "cards_restored",
+  "fix_dismissed",
+  "fix_undismissed",
   "deck_added",
   "deck_edited",
   "deck_archived",

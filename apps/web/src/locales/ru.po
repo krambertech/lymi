@@ -17,7 +17,7 @@ msgid ", not open yet"
 msgstr ", ещё не открыт"
 
 msgid "“{current}” fits more than one answer, so you can’t tell which one the card wants."
-msgstr "«{current}» подходит к нескольким ответам, так что непонятно, какой из них хочет карточка."
+msgstr "Под «{current}» подходит несколько ответов, поэтому непонятно, какой ждёт карточка."
 
 msgid "“{deckName}” is reviewed with the other decks in its series."
 msgstr "«{deckName}» повторяется вместе с другими колодами серии."
@@ -1001,6 +1001,9 @@ msgstr "Оба способа"
 
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Возвращает каждую карточку, которую добавил этот импорт, и созданные им колоды."
+
+msgid "Brought back the fix for {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Возвращено исправление для {count, plural, one {# карточки} few {# карточек} many {# карточек} other {# карточки}} в колоде «{deck}»"
 
 msgid "Browse ready-made decks"
 msgstr "Посмотреть готовые колоды"
@@ -3814,6 +3817,9 @@ msgstr "Выключить ссылку"
 
 msgid "Turn off the join link?"
 msgstr "Выключить ссылку для присоединения?"
+
+msgid "Turned down the fix for {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Отклонено исправление для {count, plural, one {# карточки} few {# карточек} many {# карточек} other {# карточки}} в колоде «{deck}»"
 
 msgid "Turned off the join link for {deck}"
 msgstr "Ссылка для присоединения к «{deck}» выключена"

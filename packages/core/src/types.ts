@@ -706,6 +706,50 @@ export const Diagnosis = z
 export type Diagnosis = z.infer<typeof Diagnosis>;
 export type DiagnosisDraft = NonNullable<Diagnosis["draft"]>;
 
+/** The causes review offers a fix for. A hook comes with its own slice, #405. */
+export const OFFERED_CAUSES = [
+  "confused_pair",
+  "two_things",
+  "several_answers",
+  "unclear",
+] as const satisfies readonly DiagnosisCause[];
+
+/**
+ * The drafted fix as the learner accepts it, possibly edited. Text they left as drafted keeps the
+ * AI as its source; text they changed is theirs. A cause with nothing to accept has no entry.
+ */
+export const FixInput = z
+  .discriminatedUnion("cause", [
+    z.object({
+      cause: z.literal("confused_pair"),
+      cards: z.tuple([DraftCard, DraftCard]).meta({ description: "The two cards to add" }),
+    }),
+    z.object({
+      cause: z.literal("two_things"),
+      cards: z.tuple([DraftCard, DraftCard]).meta({
+        description:
+          "The first replaces the card's term and meaning; the second is added beside it",
+      }),
+    }),
+    z.object({
+      cause: z.literal("several_answers"),
+      text: z.string().trim().min(1).max(CARD_LIMITS.meaning).meta({
+        description: "The new cue, written to the field the draft names",
+      }),
+    }),
+  ])
+  .meta({ id: "FixInput" });
+export type FixInput = z.infer<typeof FixInput>;
+
+/** What accepting a fix wrote, kept on the diagnosis so Undo reverses exactly that. */
+export type AppliedFix = {
+  added: string[];
+  edited: {
+    cardId: string;
+    before: { term?: string; meaning?: string | null; meaningSource?: FieldSource | null };
+  } | null;
+};
+
 /** What a picture shows, for a screen reader and when it cannot load, never naming the answer. */
 export const ImageDescription = z
   .string()

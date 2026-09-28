@@ -325,6 +325,7 @@ export async function currentDiagnosis(
   const finding = Diagnosis.safeParse({ cause: row.cause, draft: row.draft });
   if (!finding.success) return null;
   return {
+    id: row.id,
     ...finding.data,
     confidence: row.confidence,
     model: row.model,

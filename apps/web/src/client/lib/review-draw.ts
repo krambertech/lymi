@@ -147,6 +147,7 @@ export function reviewItem(
     stateId: mode.stateId,
     fsrsState,
     next: since.length === 0 ? mode.next : undefined,
+    ...(entry.offer ? { offer: entry.offer } : {}),
   };
 }
 

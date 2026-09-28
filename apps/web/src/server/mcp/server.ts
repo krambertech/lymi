@@ -16,6 +16,7 @@ import {
   Directions,
   EnrichmentStatus,
   FieldSource,
+  FixInput,
   IMAGE_LIMITS,
   ImageDescription,
   InsightsOut,
@@ -38,6 +39,7 @@ import {
 import { type CallToolResult, McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 import {
+  acceptFix,
   addCards,
   archiveCard,
   archiveCardImage,
@@ -80,6 +82,7 @@ import {
   showCardWithDiagnosis,
   streak,
   terseOutcome,
+  undoFix,
   updateCard,
   updateCards,
   updateDeck,
@@ -442,6 +445,62 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       run("enrich_card", async () => {
         requireWrite(principal);
         return result(cardOut(await requestEnrichment(ctx, cardId, principal.enrichment ?? null)));
+      }),
+  );
+
+  server.registerTool(
+    "accept_card_fix",
+    {
+      title: "Accept a drafted fix",
+      description:
+        "Apply the fix in a card's diagnosis, from get_card, when the learner asks for it. Send the diagnosis id, its cause, and the drafted cards or text, changed where the learner wants: confused_pair adds the two cards beside the card, two_things changes the card to the first card and adds the second, several_answers rewrites the cue with text. Text sent as drafted keeps the AI badge. A drafted card already in the learner's decks is skipped. Refused once the card has changed since the diagnosis. undo_card_fix reverses it. Needs write.",
+      inputSchema: z.object({
+        diagnosisId: z.string().min(1),
+        cause: z.enum(["confused_pair", "two_things", "several_answers"]),
+        cards: z
+          .array(z.object({ term: z.string(), meaning: z.string() }))
+          .length(2)
+          .optional()
+          .describe("For confused_pair and two_things"),
+        text: z.string().optional().describe("For several_answers"),
+      }),
+      outputSchema: FixResultOut,
+      ...writeTool({ idempotent: false, overwrites: true }),
+    },
+    ({ diagnosisId, ...fix }) =>
+      run("accept_card_fix", async () => {
+        requireWrite(principal);
+        const input = FixInput.safeParse(fix);
+        if (!input.success) {
+          throw new ServiceError(
+            "invalid",
+            "Send two cards for this cause, or text for several_answers.",
+          );
+        }
+        const out = await acceptFix(ctx, diagnosisId, input.data, principal.enrichment ?? null);
+        return result({
+          added: out.added.map(cardOut),
+          edited: out.edited && cardOut(out.edited),
+          skipped: out.skipped,
+        });
+      }),
+  );
+
+  server.registerTool(
+    "undo_card_fix",
+    {
+      title: "Undo an accepted fix",
+      description:
+        "Reverse a fix accept_card_fix applied: archive the cards it added and put back the text it changed. Undoing a fix that is not in place changes nothing. Needs write.",
+      inputSchema: z.object({ diagnosisId: z.string().min(1) }),
+      outputSchema: OkOut,
+      ...writeTool({ idempotent: true }),
+    },
+    ({ diagnosisId }) =>
+      run("undo_card_fix", async () => {
+        requireWrite(principal);
+        await undoFix(ctx, diagnosisId);
+        return result({ ok: true });
       }),
   );
 
@@ -1062,6 +1121,14 @@ const CardOut = z.object({
   createdAt: Timestamp,
 });
 type CardOut = z.infer<typeof CardOut>;
+
+const FixResultOut = z.object({
+  added: z.array(CardOut),
+  edited: CardOut.nullable(),
+  skipped: z
+    .array(z.object({ term: z.string(), existingId: z.string(), deckName: z.string() }))
+    .describe("Drafted cards already in the learner's decks, not added again"),
+});
 
 const CardDetailOut = CardOut.extend({
   diagnosis: CardDiagnosisOut.nullable().describe(

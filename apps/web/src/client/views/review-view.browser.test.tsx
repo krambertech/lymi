@@ -1,10 +1,11 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
+import { FixOffer } from "../components/fix-offer";
 import { queueItem, queueItemPicture } from "../design/mock";
 import type { QueueItem } from "../lib/api";
 import { ReviewCard } from "./review-view";
@@ -94,4 +95,45 @@ test("the head names the deck and the section, and the mode only for a picture",
   const picture = page.getByRole("region", { name: "Picture card" }).element().textContent ?? "";
   expect(picture).toContain("Picture → meaning");
   expect(picture).toContain("ET");
+});
+
+test("a drafted fix waits for the reveal, then opens from the foot of the card", async () => {
+  const opened = vi.fn();
+  const shown = vi.fn();
+  const offer = (
+    <FixOffer
+      offer={{
+        diagnosisId: "d1",
+        cause: "confused_pair",
+        other: { id: "c2", term: "sbagliare", meaning: null, language: "it" },
+        draft: {
+          otherCardId: "c2",
+          cards: [
+            { term: "a", meaning: "b" },
+            { term: "c", meaning: "d" },
+          ],
+        },
+      }}
+      delay={0}
+      onOpen={opened}
+      onShown={shown}
+    />
+  );
+  const screen = await render(
+    <I18nProvider i18n={i18n}>
+      <ReviewCard item={item({})} revealed={false} onReveal={noop} offer={offer} />
+    </I18nProvider>,
+  );
+  expect(page.getByText(/Often mixed up with/).elements()).toHaveLength(0);
+
+  await screen.rerender(
+    <I18nProvider i18n={i18n}>
+      <ReviewCard item={item({})} revealed animateReveal={false} onReveal={noop} offer={offer} />
+    </I18nProvider>,
+  );
+  const button = page.getByRole("button", { name: /Often mixed up with sbagliare/ });
+  await expect.element(button).toBeVisible();
+  await expect.poll(() => shown.mock.calls.length).toBeGreaterThan(0);
+  await button.click();
+  expect(opened).toHaveBeenCalled();
 });

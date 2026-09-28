@@ -16,6 +16,7 @@ export type {
 } from "./cards";
 export type { ConnectedApp } from "./connected-apps";
 export type { Deck, DeckSummary } from "./decks";
+export type { FixResult, ReviewOffer } from "./diagnoses";
 export type { Export } from "./exports";
 export type { Import, ImportPreview } from "./imports";
 export type { ApiKeyCreated, ApiKeySummary } from "./keys";
@@ -33,6 +34,7 @@ import { activityApi } from "./activity";
 import { cardsApi } from "./cards";
 import { connectedAppsApi } from "./connected-apps";
 import { decksApi } from "./decks";
+import { diagnosesApi } from "./diagnoses";
 import { exploreApi } from "./explore";
 import { exportsApi } from "./exports";
 import { feedbackApi } from "./feedback";
@@ -52,6 +54,7 @@ export const api = {
   ...cardsApi,
   ...connectedAppsApi,
   ...decksApi,
+  ...diagnosesApi,
   ...exploreApi,
   ...exportsApi,
   ...feedbackApi,

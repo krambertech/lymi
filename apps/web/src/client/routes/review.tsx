@@ -8,16 +8,19 @@ import {
   ROUNDS,
   type Round,
 } from "@lymi/core";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { onlineManager, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotionConfig } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Button } from "../components/button";
+import { EditCardSheet } from "../components/edit-card-sheet";
+import { FixOffer } from "../components/fix-offer";
+import { type EditFocus, FixSheet } from "../components/fix-sheet";
 import { GRADES } from "../components/grade";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
-import { api, deviceTimezone, type QueueItem, scopeKey } from "../lib/api";
+import { api, type Card, deviceTimezone, type QueueItem, scopeKey } from "../lib/api";
 import { usePrefetchPictures } from "../lib/card-images";
 import { useDocumentTitle } from "../lib/document-title";
 import { lanternFor } from "../lib/flame";
@@ -164,6 +167,15 @@ function Review() {
   // Where focus goes when the button holding it unmounts: the grades after a reveal, the next card after a grade.
   const [focusGrades, setFocusGrades] = useState(false);
   const [focusReveal, setFocusReveal] = useState(false);
+  // Each offer shown, by the card showing it, so a card that returns later does not bring it back.
+  const [offered, setOffered] = useState<ReadonlyMap<string, string>>(() => new Map());
+  const [fixing, setFixing] = useState(false);
+  const [editing, setEditing] = useState<{ card: Card; focus: EditFocus } | null>(null);
+  const online = useSyncExternalStore(
+    onlineManager.subscribe.bind(onlineManager),
+    () => onlineManager.isOnline(),
+    () => true,
+  );
 
   // The persisted cache can predate the last grade, so the first card waits for this mount's fetch.
   const settled = draw.isFetchedAfterMount || draw.fetchStatus !== "fetching";
@@ -576,7 +588,8 @@ function Review() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       // A sheet over the review handles its own keys, Escape included.
-      if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented || add.open) return;
+      if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
+      if (add.open || fixing || editing) return;
       if (e.key === "Escape") {
         leave();
         return;
@@ -601,7 +614,19 @@ function Review() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, onGrade, leave, add.open, current]);
+  }, [revealed, onGrade, leave, add.open, fixing, editing, current]);
+
+  // Offline the offer simply does not appear; review goes on as it always has.
+  const showing = current ? `${itemKey(current)}-${done}` : "";
+  const offer = current?.offer;
+  const offerShown =
+    !!offer && online && !unreachable && (offered.get(offer.diagnosisId) ?? showing) === showing;
+  const markOffered = (id: string) => {
+    if (offered.has(id)) return;
+    setOffered((seen) => new Map(seen).set(id, showing));
+    // A mark that does not land only means the offer can come once more.
+    api.markOffered(id).catch(() => undefined);
+  };
 
   const doneLink = (variant: "primary" | "secondary") => (
     <Button variant={variant} size="lg" className="w-full" render={<Link to="/today" />}>
@@ -725,6 +750,18 @@ function Review() {
               audioError={
                 audioError && audioError.item === currentItemKey ? audioError.message : null
               }
+              offer={
+                offer &&
+                offerShown && (
+                  <FixOffer
+                    offer={offer}
+                    // Once the answer has settled: its lines take about half a second to land.
+                    delay={animateReveal ? (reduce ? 0.7 : 0.95) : 0.5}
+                    onOpen={() => setFixing(true)}
+                    onShown={() => markOffered(offer.diagnosisId)}
+                  />
+                )
+              }
               className="mt-4 @3xl:max-h-[600px] @3xl:[@media(min-height:40rem)]:min-h-[460px]"
             />
             <GradeBar
@@ -738,6 +775,25 @@ function Review() {
           </motion.div>
         )}
       </AnimatePresence>
+      <FixSheet
+        item={current}
+        open={fixing}
+        onOpenChange={setFixing}
+        onEdit={(focus) => {
+          setFixing(false);
+          if (current) setEditing({ card: current.card, focus });
+        }}
+      />
+      <EditCardSheet
+        card={editing?.card ?? null}
+        decks={decks.data}
+        openPicture={editing?.focus === "picture"}
+        focus={
+          editing?.focus === "term" || editing?.focus === "meaning" ? editing.focus : undefined
+        }
+        onOpenChange={(open) => !open && setEditing(null)}
+        onReopen={(card) => setEditing({ card, focus: null })}
+      />
     </div>
   );
 }

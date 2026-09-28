@@ -88,6 +88,7 @@ export type CardOut = z.infer<typeof CardOut>;
 /** Why the reader keeps forgetting the card as it reads now. Nothing changes until they accept. */
 export const CardDiagnosisOut = z
   .object({
+    id: z.string().meta({ description: "Names the diagnosis when accepting its fix" }),
     confidence: z.number().min(0).max(1).meta({
       description:
         "How sure the AI was of the cause it named. Below the threshold the cause is unclear.",
@@ -107,6 +108,24 @@ export const CardDetailOut = CardOut.extend({
   }),
 }).meta({ id: "CardDetail" });
 export type CardDetailOut = z.infer<typeof CardDetailOut>;
+
+/** What accepting a fix wrote: ordinary cards added and edited, and any draft a duplicate skipped. */
+export const FixOut = z
+  .object({
+    added: z.array(CardOut).meta({ description: "Cards the fix added" }),
+    edited: CardOut.nullable().meta({ description: "The card the fix changed, if it changed one" }),
+    skipped: z
+      .array(
+        z.object({
+          term: z.string(),
+          existingId: z.string(),
+          deckName: z.string(),
+        }),
+      )
+      .meta({ description: "Drafted cards already in your decks, which were not added again" }),
+  })
+  .meta({ id: "Fix" });
+export type FixOut = z.infer<typeof FixOut>;
 
 const ReviewRecord = {
   reviewCount: z.number().int().meta({ description: "Grades counted" }),

@@ -30,6 +30,7 @@ import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
+import { FIX_OFFER_HEIGHT } from "../components/fix-offer";
 import { Flame } from "../components/flame";
 import { GRADES } from "../components/grade";
 import { Kbd } from "../components/kbd";
@@ -333,6 +334,8 @@ export interface ReviewCardProps {
   audioState?: "idle" | "loading" | "playing" | undefined;
   /** Why the pronunciation did not play. Shown on the button, never as a line in the card. */
   audioError?: string | null | undefined;
+  /** A drafted fix, pinned at the plate's foot once the answer shows. Its room is kept from the reveal. */
+  offer?: ReactNode | undefined;
   className?: string | undefined;
 }
 
@@ -370,7 +373,7 @@ interface FitElements {
  * never shrink the type; they scroll. Heights come from the stage the card fills rather than the
  * card, whose own height is still animating while the grade strip opens.
  */
-function measureFit(els: FitElements) {
+function measureFit(els: FitElements, foot: number) {
   const { section, inner, head, column, cue, answer, extras } = els;
   const stage = section?.parentElement;
   if (!section || !stage || !inner || !head || !column || !cue || !answer) return null;
@@ -405,7 +408,7 @@ function measureFit(els: FitElements) {
     front: cue.offsetHeight,
     frontRoom: cardHeight(room) - chrome,
     back: cue.offsetHeight + px(columnStyle.rowGap) + must,
-    backRoom: cardHeight(room - GRADE_STRIP_HEIGHT) - chrome,
+    backRoom: cardHeight(room - GRADE_STRIP_HEIGHT) - chrome - foot,
   };
 }
 
@@ -431,6 +434,7 @@ export function ReviewCard({
   onPlayAudio,
   audioState = "idle",
   audioError = null,
+  offer,
   className,
 }: ReviewCardProps) {
   const { t, i18n } = useLingui();
@@ -461,18 +465,22 @@ export function ReviewCard({
     if (focusOnMount) revealRef.current?.focus({ preventScroll: true });
   }, [focusOnMount]);
 
+  const hasOffer = !!offer;
   // Steps down one size at a time before the first paint, so the card never shows a size it leaves.
   useLayoutEffect(() => {
     if (fit.settled) return;
-    const m = measureFit({
-      section: sectionRef.current,
-      inner: innerRef.current,
-      head: headRef.current,
-      column: columnRef.current,
-      cue: cueRef.current,
-      answer: answerRef.current,
-      extras: extrasRef.current,
-    });
+    const m = measureFit(
+      {
+        section: sectionRef.current,
+        inner: innerRef.current,
+        head: headRef.current,
+        column: columnRef.current,
+        cue: cueRef.current,
+        answer: answerRef.current,
+        extras: extrasRef.current,
+      },
+      hasOffer ? FIX_OFFER_HEIGHT : 0,
+    );
     if (!m) {
       setFit({ ...fit, settled: true });
       return;
@@ -481,7 +489,15 @@ export function ReviewCard({
     setFit(
       !fits && fit.step < TEXT_STEPS ? { ...fit, step: fit.step + 1 } : { ...fit, settled: true },
     );
-  }, [fit]);
+  }, [fit, hasOffer]);
+
+  // An offer that comes or goes changes the room the answer has.
+  const offerSeen = useRef(hasOffer);
+  useEffect(() => {
+    if (offerSeen.current === hasOffer) return;
+    offerSeen.current = hasOffer;
+    setFit(UNMEASURED);
+  }, [hasOffer]);
 
   // A new size, or the font arriving, measures again from the largest step.
   useEffect(() => {
@@ -813,6 +829,22 @@ export function ReviewCard({
           <AnimatePresence>{!revealed && hint && <TapHint />}</AnimatePresence>
         </div>
       </div>
+      {/* Outside the scroller, so a long card never hides it, and inset so its corners follow the plate's. */}
+      <AnimatePresence initial={false}>
+        {revealed && offer && (
+          <motion.div
+            key="offer"
+            className="shrink-0 overflow-hidden"
+            exit={
+              reduce
+                ? { opacity: 0, transition: { duration: 0.14 } }
+                : { height: 0, opacity: 0, transition: { duration: 0.24, ease: EASE_OUT } }
+            }
+          >
+            <div className="px-2 pb-2">{offer}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
         {revealed ? t`Answer: ${back}` : ""}
       </p>

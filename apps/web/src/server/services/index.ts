@@ -16,6 +16,7 @@ export * from "./enrichment";
 export * from "./explore";
 export * from "./exports";
 export * from "./feedback";
+export * from "./fixes";
 export * from "./imports";
 export * from "./invitations";
 export * from "./members";

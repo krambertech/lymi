@@ -25,6 +25,8 @@ interface Props {
   onReopen: (card: Card) => void;
   /** Opens at the picture field. */
   openPicture?: boolean | undefined;
+  /** Opens with the caret in the term or the meaning. */
+  focus?: "term" | "meaning" | undefined;
   /** After a save, with the deck the card is in now. */
   onSaved?: ((card: Card, movedFrom: string | null) => void) | undefined;
 }
@@ -36,6 +38,7 @@ export function EditCardSheet({
   onOpenChange,
   onReopen,
   openPicture,
+  focus,
   onSaved,
 }: Props) {
   const { t } = useLingui();
@@ -117,6 +120,7 @@ export function EditCardSheet({
             pending={pending}
             layout={shape === "desktop" ? "whole" : "chips"}
             openPicture={openPicture}
+            focus={focus}
             onCancel={() => close(true)}
             onSubmit={submit}
             onDraftChange={(next) => {

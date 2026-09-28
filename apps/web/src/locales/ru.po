@@ -642,6 +642,9 @@ msgstr "Ссылка действует один час и только один
 msgid "A rest day keeps the streak through one missed day a week."
 msgstr "День отдыха сохраняет дни подряд, когда пропускаешь один день в неделю."
 
+msgid "A short phrase that helps you remember it"
+msgstr "Короткая фраза, которая поможет запомнить"
+
 msgid "A sound-alike, or a picture to see"
 msgstr "Созвучное слово или картинка в воображении"
 
@@ -2054,9 +2057,6 @@ msgstr "Возможно, её архивировали или тебя из н�
 msgid "It may have been withdrawn. Find other decks in Explore."
 msgstr "Возможно, её сняли с публикации. Другие колоды можно найти в Каталоге."
 
-msgid "It shows under the answer, and you can peek at it before you turn the card."
-msgstr "Она появится под ответом, а подсмотреть её можно ещё до того, как откроешь карточку."
-
 msgid "It wasn’t confirmed within three days, so Lymi deleted the file. Choose it again to start over."
 msgstr "Импорт не подтвердили за три дня, поэтому Lymi удалил файл. Выбери файл снова, чтобы начать заново."
 
@@ -2328,8 +2328,8 @@ msgstr "Новая зацепка: «{value}»"
 msgid "Memory hook:"
 msgstr "Зацепка:"
 
-msgid "Memory hook: {peeked}"
-msgstr "Зацепка: {peeked}"
+msgid "Memory hook: {spokenAid}"
+msgstr "Зацепка: {spokenAid}"
 
 msgid "Message"
 msgstr "Сообщение"
@@ -2636,9 +2636,6 @@ msgstr "В этой колоде больше ничего"
 
 msgid "Nothing published yet"
 msgstr "Пока ничего не опубликовано"
-
-msgid "Nothing to hang this one on"
-msgstr "Не за что зацепиться"
 
 msgid "Nothing was added, and the file was deleted."
 msgstr "Ничего не добавлено, а файл удалён."
@@ -3289,6 +3286,9 @@ msgstr "Показать все"
 
 msgid "Show another"
 msgstr "Показать другую"
+
+msgid "Show hook"
+msgstr "Показать зацепку"
 
 msgid "Show more"
 msgstr "Показать больше"
@@ -3997,6 +3997,9 @@ msgstr "Эту вкладку можно закрыть."
 
 msgid "You can download it until {until}. Then it’s deleted."
 msgstr "Скачать его можно до {until}. Потом он будет удалён."
+
+msgid "You can peek at it before you turn the card, or show it after."
+msgstr "Её можно подсмотреть ещё до того, как откроешь карточку, или показать после."
 
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "Можно отправлять не больше {FEEDBACK_DAILY_LIMIT} сообщений в день. Попробуй завтра."

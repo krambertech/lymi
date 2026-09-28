@@ -47,10 +47,9 @@ import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
 import { Progress } from "../components/progress";
 import {
-  AidLine,
   type AidStep,
-  aidSteps,
   RecallAidNext,
+  RecallAidShow,
   RecallAidShown,
 } from "../components/recall-aid";
 import { SevenLights } from "../components/seven-lights";
@@ -373,19 +372,24 @@ export interface ReviewCardProps {
 
 export interface RecallAidProps {
   steps: readonly AidStep[];
+  /** Steps taken before the reveal: the help a grade records. */
   taken: number;
-  /** The last step taken arrives in motion. Off when a key took it. */
+  /** Shown on request after the reveal, which is not help and records nothing. */
+  shown: boolean;
+  /** The last step taken or shown arrives in motion. Off when a key asked for it. */
   animate: boolean;
   onTake: (input: "keyboard" | "pointer") => void;
+  onShow: (input: "keyboard" | "pointer", focused: boolean) => void;
 }
 
 /** A tap this soon after taking an aid is the same gesture doubled, not a reveal. */
 const AID_TAP_GUARD_MS = 400;
 
-/** The peeked lines leave with the reveal: a short fade, at once when a key revealed the card. */
-const aidLeave: Variants = {
-  leave: (animated: boolean) => ({ opacity: 0, transition: { duration: animated ? 0.12 : 0 } }),
-};
+/** The cue's glide up as the answer or an aid arrives under it. */
+const CUE_GLIDE = { duration: 0.34, ease: EASE_OUT } as const;
+
+/** The Show hook button's height, `sm`, which the aid's place under the cue never drops below. */
+const AID_SHOW_HEIGHT = 32;
 
 /** The grade strip's full height, 72 px grades under a 12 px gap, which the card gives up on reveal. */
 export const GRADE_STRIP_HEIGHT = 84;
@@ -411,6 +415,7 @@ interface FitElements {
   inner: HTMLElement | null;
   head: HTMLElement | null;
   column: HTMLElement | null;
+  /** The cue itself, without the aid under it, whose room is `aidRoom` whether shown or not. */
   cue: HTMLElement | null;
   answer: HTMLElement | null;
   extras: HTMLElement | null;
@@ -421,7 +426,7 @@ interface FitElements {
  * never shrink the type; they scroll. Heights come from the stage the card fills rather than the
  * card, whose own height is still animating while the grade strip opens.
  */
-function measureFit(els: FitElements, foot: number, frontFoot: number) {
+function measureFit(els: FitElements, foot: number, frontFoot: number, aidRoom: number) {
   const { section, inner, head, column, cue, answer, extras } = els;
   const stage = section?.parentElement;
   if (!section || !stage || !inner || !head || !column || !cue || !answer) return null;
@@ -452,10 +457,11 @@ function measureFit(els: FitElements, foot: number, frontFoot: number) {
     px(columnStyle.paddingBottom);
   const answerGap = extras?.parentElement ? px(getComputedStyle(extras.parentElement).rowGap) : 0;
   const must = answer.offsetHeight - (extras ? extras.offsetHeight + answerGap : 0);
+  const front = cue.offsetHeight + aidRoom;
   return {
-    front: cue.offsetHeight,
+    front,
     frontRoom: cardHeight(room) - chrome - frontFoot,
-    back: cue.offsetHeight + px(columnStyle.rowGap) + must,
+    back: front + px(columnStyle.rowGap) + must,
     backRoom: cardHeight(room - GRADE_STRIP_HEIGHT) - chrome - foot,
   };
 }
@@ -506,11 +512,19 @@ export function ReviewCard({
   const headRef = useRef<HTMLDivElement>(null);
   const columnRef = useRef<HTMLDivElement>(null);
   const cueRef = useRef<HTMLDivElement>(null);
+  const cueTextRef = useRef<HTMLDivElement>(null);
+  const aidMeasure = useRef<HTMLDivElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
   const extrasRef = useRef<HTMLDivElement>(null);
   const revealRef = useRef<HTMLButtonElement>(null);
   const aidRoom = useRef<HTMLDivElement>(null);
   const tookAidAt = useRef(Number.NEGATIVE_INFINITY);
+  // Whether the card had a hook as it was revealed; one kept from the fix sheet after it shows at once.
+  const aidAtReveal = useRef<boolean | null>(null);
+  useLayoutEffect(() => {
+    if (!revealed || aidAtReveal.current !== null) return;
+    aidAtReveal.current = !!aid;
+  }, [revealed, aid]);
 
   useEffect(() => {
     if (focusOnMount) revealRef.current?.focus({ preventScroll: true });
@@ -527,12 +541,16 @@ export function ReviewCard({
         inner: innerRef.current,
         head: headRef.current,
         column: columnRef.current,
-        cue: cueRef.current,
+        cue: cueTextRef.current,
         answer: answerRef.current,
         extras: extrasRef.current,
       },
       offerRoom.current?.offsetHeight ?? 0,
       aidRoom.current?.offsetHeight ?? 0,
+      aidMeasure.current && cueRef.current
+        ? Math.max(aidMeasure.current.offsetHeight, AID_SHOW_HEIGHT) +
+            px(getComputedStyle(cueRef.current).rowGap)
+        : 0,
     );
     if (!m) {
       setFit({ ...fit, settled: true });
@@ -577,9 +595,25 @@ export function ReviewCard({
   }, []);
 
   const step = fit.step;
-  const [hook] = aidSteps(card);
-  const peeked = aid ? aid.steps[Math.min(aid.taken, aid.steps.length) - 1]?.text : undefined;
-  const hasExtras = !!(card.example || card.notes || hook);
+  const addedAfterReveal = revealed && aidAtReveal.current === false && !!aid;
+  const shownAfter = !!aid && revealed && (aid.shown || addedAfterReveal);
+  // Taken before the reveal or shown after it, the aid has one place: under the cue, where it stays.
+  const aidsOnShow = aid
+    ? shownAfter
+      ? aid.steps.length
+      : Math.min(aid.taken, aid.steps.length)
+    : 0;
+  const aidAnimate = addedAfterReveal || (aid?.animate ?? true);
+  const spokenAid = aidsOnShow > 0 ? aid?.steps[aidsOnShow - 1]?.text : undefined;
+  // The last movement in the cue's block: the aid arriving, or else the reveal.
+  const cueGlide = revealed
+    ? shownAfter
+      ? aidAnimate
+      : animateReveal
+    : aidsOnShow > 0
+      ? aidAnimate
+      : animateReveal;
+  const hasExtras = !!(card.example || card.notes);
   const languageCode =
     card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase()
       ? card.language.toUpperCase()
@@ -626,11 +660,6 @@ export function ReviewCard({
       {card.notes && (
         <motion.div variants={answerLine} className="text-sm text-muted">
           <CardNotes source={card.notes} />
-        </motion.div>
-      )}
-      {hook && (
-        <motion.div variants={answerLine}>
-          <AidLine step={hook} size="sm" />
         </motion.div>
       )}
     </>
@@ -826,64 +855,90 @@ export function ReviewCard({
           >
             <motion.div
               ref={cueRef}
-              // A peek moves the cue up for the hook under it, as the reveal does for the answer.
-              layout={(revealed || !aid?.taken ? animateReveal : aid.animate) ? "position" : false}
-              transition={{ layout: { duration: 0.34, ease: EASE_OUT } }}
-              className="grid gap-3"
+              // The aid arriving moves the cue up for it, as the reveal does for the answer.
+              layout={cueGlide ? "position" : false}
+              transition={{ layout: CUE_GLIDE }}
+              className="relative grid grid-cols-[minmax(0,1fr)] gap-3"
             >
-              {mode.cue === "image" ? (
-                card.image ? (
-                  // One size before and after reveal, on the start edge like the text under it.
-                  <CardPicture image={card.image} maxHeight="min(30dvh, 240px)" />
-                ) : (
-                  // A queue fetched before the picture was archived; the server no longer asks this mode.
-                  <p className="text-xl text-muted">
-                    <Trans>This card’s picture was removed.</Trans>
-                  </p>
-                )
-              ) : (
-                <>
-                  <p
-                    lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
-                    className={clsx(
-                      "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
-                      CUE_SIZE[step],
-                    )}
-                  >
-                    {front}
-                    {mode.cue === "term" && audio("z-20")}
-                  </p>
-                  {mode.cue === "term" && card.pronunciation && (
-                    <p className="text-md text-muted [overflow-wrap:anywhere]">
-                      {card.pronunciation}
+              <div ref={cueTextRef} className="grid grid-cols-[minmax(0,1fr)] gap-3">
+                {mode.cue === "image" ? (
+                  card.image ? (
+                    // One size before and after reveal, on the start edge like the text under it.
+                    <CardPicture image={card.image} maxHeight="min(30dvh, 240px)" />
+                  ) : (
+                    // A queue fetched before the picture was archived; the server no longer asks this mode.
+                    <p className="text-xl text-muted">
+                      <Trans>This card’s picture was removed.</Trans>
                     </p>
-                  )}
-                </>
+                  )
+                ) : (
+                  <>
+                    <p
+                      lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
+                      className={clsx(
+                        "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
+                        CUE_SIZE[step],
+                      )}
+                    >
+                      {front}
+                      {mode.cue === "term" && audio("z-20")}
+                    </p>
+                    {mode.cue === "term" && card.pronunciation && (
+                      <p className="text-md text-muted [overflow-wrap:anywhere]">
+                        {card.pronunciation}
+                      </p>
+                    )}
+                  </>
+                )}
+              </div>
+              {aid && aidsOnShow > 0 && (
+                <div className="min-h-8">
+                  <RecallAidShown steps={aid.steps} taken={aidsOnShow} animate={aidAnimate} />
+                </div>
+              )}
+              {aid && revealed && aidsOnShow === 0 && (
+                <RecallAidShow
+                  steps={aid.steps}
+                  animate={animateReveal}
+                  onShow={(e) =>
+                    aid.onShow(
+                      e.detail > 0 ? "pointer" : "keyboard",
+                      e.currentTarget === document.activeElement,
+                    )
+                  }
+                />
+              )}
+              {aid && (
+                // The aid's lines, out of the flow, so the fit keeps their room before they show.
+                <div
+                  aria-hidden="true"
+                  inert
+                  className="pointer-events-none invisible absolute inset-x-0 top-0 h-0 overflow-hidden"
+                >
+                  <div ref={aidMeasure}>
+                    <RecallAidShown steps={aid.steps} taken={aid.steps.length} animate={false} />
+                  </div>
+                </div>
               )}
             </motion.div>
-
-            <AnimatePresence mode="popLayout" initial={false} custom={animateReveal}>
-              {!revealed && aid && aid.taken > 0 && (
-                <motion.div key="aid" variants={aidLeave} custom={animateReveal} exit="leave">
-                  <RecallAidShown steps={aid.steps} taken={aid.taken} animate={aid.animate} />
-                </motion.div>
-              )}
-            </AnimatePresence>
 
             {revealed ? (
               <motion.div
                 ref={answerRef}
+                // Glides, rather than jumps, when the hook shown on request takes a second line.
+                layout={shownAfter && aidAnimate ? "position" : false}
                 // Under reduced motion the answer crossfades whole: no rise, blur or stagger.
                 {...(reduce
                   ? {
                       initial: animateReveal ? { opacity: 0 } : false,
                       animate: { opacity: 1 },
-                      transition: { duration: 0.2, ease: EASE_OUT },
+                      transition: { duration: 0.2, ease: EASE_OUT, layout: CUE_GLIDE },
                     }
                   : {
                       variants: answerGroup,
                       initial: animateReveal ? "hidden" : false,
                       animate: "shown",
+                      transition: { layout: CUE_GLIDE },
                     })}
                 className="grid grid-cols-[minmax(0,1fr)] gap-5"
               >
@@ -949,7 +1004,11 @@ export function ReviewCard({
         </div>
       )}
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-        {revealed ? t`Answer: ${back}` : peeked ? t`Memory hook: ${peeked}` : ""}
+        {spokenAid && (!revealed || shownAfter)
+          ? t`Memory hook: ${spokenAid}`
+          : revealed
+            ? t`Answer: ${back}`
+            : ""}
       </p>
     </section>
   );

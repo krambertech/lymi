@@ -542,7 +542,7 @@ function HookFix({
           enterKeyHint="done"
         />
         <FieldDescription>
-          <Trans>It shows under the answer, and you can peek at it before you turn the card.</Trans>
+          <Trans>You can peek at it before you turn the card, or show it after.</Trans>
         </FieldDescription>
         <FieldError>{error}</FieldError>
       </Field>

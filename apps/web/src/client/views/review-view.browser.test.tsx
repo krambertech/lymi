@@ -143,29 +143,58 @@ test("a drafted fix waits for the reveal, then opens from the foot of the card",
 const hooked = item({ hook: "Speed up the brigade", hookSource: "ai", notes: "Reflexive." });
 
 /** A card as review holds it: the aid steps taken live in the page, the card only draws them. */
-function PeekHarness({ card, onReveal }: { card: QueueItem; onReveal: () => void }) {
+function PeekHarness({
+  card,
+  onReveal,
+  revealed = false,
+  onShow = noop,
+}: {
+  card: QueueItem;
+  onReveal: () => void;
+  revealed?: boolean;
+  onShow?: () => void;
+}) {
   const [taken, setTaken] = useState(0);
+  const [shown, setShown] = useState(false);
   const steps = aidSteps(card.card);
   return (
     <I18nProvider i18n={i18n}>
-      <ReviewCard
-        item={card}
-        revealed={false}
-        onReveal={onReveal}
-        aid={
-          steps.length
-            ? {
-                steps,
-                taken,
-                animate: false,
-                onTake: () => setTaken((n) => Math.min(n + 1, steps.length)),
-              }
-            : undefined
-        }
-      />
+      {/* A stage of fixed height, as review gives the card, so the reveal is not a new size to fit. */}
+      <div className="flex h-[640px] flex-col">
+        <ReviewCard
+          item={card}
+          revealed={revealed}
+          animateReveal={false}
+          onReveal={onReveal}
+          aid={
+            steps.length
+              ? {
+                  steps,
+                  taken,
+                  shown,
+                  animate: false,
+                  onTake: () => setTaken((n) => Math.min(n + 1, steps.length)),
+                  onShow: () => {
+                    onShow();
+                    setShown(true);
+                  },
+                }
+              : undefined
+          }
+        />
+      </div>
     </I18nProvider>
   );
 }
+
+const visible = (text: string) => () =>
+  page
+    .getByText(text, { exact: false })
+    .elements()
+    // The status line says it aloud too; this is what is drawn.
+    .filter(
+      (el) => el.checkVisibility({ visibilityProperty: true }) && !el.closest("[role=status]"),
+    );
 
 test("a peek shows the hook under the cue and says it aloud, without turning the card", async () => {
   const onReveal = vi.fn();
@@ -177,15 +206,61 @@ test("a peek shows the hook under the cue and says it aloud, without turning the
   await card.getByRole("button", { name: /Peek at your hook/ }).click();
   await expect.element(status).toHaveTextContent("Memory hook: Speed up the brigade");
   expect(onReveal).not.toHaveBeenCalled();
-  // The measuring copy of the answer holds the hook too, hidden; the peeked one is on show.
-  const shown = () =>
-    card
-      .getByText("Speed up the brigade", { exact: false })
-      .elements()
-      .some((el) => el.checkVisibility());
-  await expect.poll(shown).toBe(true);
+  // The measuring copy holds the hook too, hidden; the peeked one is on show.
+  await expect.poll(() => visible("Speed up the brigade")().length).toBe(1);
   // One step and it is taken, so nothing is left to press.
   expect(card.getByRole("button", { name: /Peek at your hook/ }).elements()).toHaveLength(0);
+});
+
+test("a peeked hook stays in its place under the cue through the reveal", async () => {
+  const card = hooked;
+  const { rerender } = await render(<PeekHarness card={card} onReveal={noop} />);
+  await page.getByRole("button", { name: /Peek at your hook/ }).click();
+  await expect.poll(() => visible("Speed up the brigade")().length).toBe(1);
+  const cue = page.getByText("sbrigarsi", { exact: true }).element();
+  const [hook] = visible("Speed up the brigade")();
+  if (!hook) throw new Error("no hook on show");
+  const offset = () => hook.getBoundingClientRect().top - cue.getBoundingClientRect().top;
+  const before = offset();
+
+  await rerender(<PeekHarness card={card} onReveal={noop} revealed />);
+  await expect.element(page.getByText("Reflexive.")).toBeVisible();
+  // The same line, not a second copy among the notes, at the same distance from the cue.
+  expect(hook.isConnected).toBe(true);
+  expect(visible("Speed up the brigade")()).toEqual([hook]);
+  expect(offset()).toBe(before);
+  const notes = page.getByText("Reflexive.").element();
+  expect(hook.compareDocumentPosition(notes) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  expect(page.getByRole("button", { name: /Show hook/ }).elements()).toHaveLength(0);
+});
+
+test("revealed without a peek, the hook waits for Show hook, which puts it under the cue", async () => {
+  const onShow = vi.fn();
+  await render(<PeekHarness card={hooked} onReveal={noop} revealed onShow={onShow} />);
+  const card = page.getByRole("region", { name: /Recognition card/ });
+  await expect.poll(() => card.getByRole("status").element().textContent).toMatch(/^Answer:/);
+  expect(visible("Speed up the brigade")()).toHaveLength(0);
+
+  const show = card.getByRole("button", { name: /Show hook/ });
+  await expect.element(show).toBeVisible();
+  // The control stands in the hook's place: after the cue, before the rule and the answer.
+  const cue = page.getByText("sbrigarsi", { exact: true }).element();
+  const notes = page.getByText("Reflexive.").element();
+  expect(
+    cue.compareDocumentPosition(show.element()) & Node.DOCUMENT_POSITION_FOLLOWING,
+  ).toBeTruthy();
+  expect(
+    show.element().compareDocumentPosition(notes) & Node.DOCUMENT_POSITION_FOLLOWING,
+  ).toBeTruthy();
+
+  await show.click();
+  expect(onShow).toHaveBeenCalledOnce();
+  await expect.poll(() => visible("Speed up the brigade")().length).toBe(1);
+  await expect
+    .element(card.getByRole("status"))
+    .toHaveTextContent("Memory hook: Speed up the brigade");
+  expect(card.getByRole("button", { name: /Show hook/ }).elements()).toHaveLength(0);
+  expect(card.element().textContent).toContain("AI hook");
 });
 
 test("a quick second tap on the peek does not turn the card", async () => {
@@ -199,23 +274,14 @@ test("a quick second tap on the peek does not turn the card", async () => {
   expect(onReveal).not.toHaveBeenCalled();
 });
 
-test("a card without a hook has no peek control", async () => {
-  await render(<PeekHarness card={item({ hook: null, hookSource: null })} onReveal={noop} />);
+test("a card without a hook has no peek control, and none after the reveal", async () => {
+  const bare = item({ hook: null, hookSource: null });
+  const { rerender } = await render(<PeekHarness card={bare} onReveal={noop} />);
   await expect.element(page.getByRole("button", { name: "Reveal the card" })).toBeInTheDocument();
   expect(page.getByRole("button", { name: /Peek at your hook/ }).elements()).toHaveLength(0);
-});
-
-test("a revealed hook sits after the notes, marked while the AI's words are unchanged", async () => {
-  await render(
-    <I18nProvider i18n={i18n}>
-      <ReviewCard item={hooked} revealed animateReveal={false} onReveal={noop} />
-    </I18nProvider>,
-  );
-  const card = page.getByRole("region", { name: /Recognition card/ }).element();
-  const text = card.textContent ?? "";
-  expect(text.indexOf("Reflexive.")).toBeLessThan(text.indexOf("Speed up the brigade"));
-  expect(text).toContain("Memory hook: Speed up the brigade");
-  expect(text).toContain("AI hook");
+  await rerender(<PeekHarness card={bare} onReveal={noop} revealed />);
+  await expect.poll(() => page.getByRole("status").element().textContent).toMatch(/^Answer:/);
+  expect(page.getByRole("button", { name: /Show hook/ }).elements()).toHaveLength(0);
 });
 
 const WHY = "You can’t choose Easy after peeking at your hook.";

@@ -47,8 +47,8 @@ function offerLines(offer: ReviewOffer): [ReactNode, ReactNode] {
       ];
     case "no_anchor":
       return [
-        <Trans key="t">Nothing to hang this one on</Trans>,
-        <Trans key="l">Try a memory hook</Trans>,
+        <Trans key="t">Try a memory hook</Trans>,
+        <Trans key="l">A short phrase that helps you remember it</Trans>,
       ];
     default:
       return [
@@ -76,10 +76,10 @@ export function FixOfferFace({ offer, icon }: { offer: ReviewOffer; icon?: React
           <Icon className="size-[18px]" strokeWidth={1.75} />
         </span>
       )}
-      {/* Two lines for the title, so the other term of a pair is never cut away. */}
+      {/* Two lines each, so neither the other term of a pair nor the fix is cut away on a phone. */}
       <span className="grid min-w-0 flex-1 gap-0.5">
         <span className="line-clamp-2 text-md font-medium text-text">{title}</span>
-        <span className="truncate text-sm text-muted">{line}</span>
+        <span className="line-clamp-2 text-sm text-muted">{line}</span>
       </span>
       <ChevronRight
         className="size-4 shrink-0 text-faint transition-colors duration-150 hoverable:group-hover:text-muted rtl:-scale-x-100"

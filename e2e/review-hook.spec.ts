@@ -1,3 +1,4 @@
+import type { ElementHandle } from "@playwright/test";
 import { startAsTestLearner } from "./auth";
 import { expect, type Page, test } from "./test";
 
@@ -26,6 +27,13 @@ async function cardWithHook(page: Page, term: string, hook: string | null) {
 const history = async (page: Page, cardId: string) =>
   (await (await page.request.get(`/api/cards/${cardId}/history`)).json()) as History;
 
+/** How far the hook's line sits below the cue's first line, which the reveal must not change. */
+const hookOffset = (hook: ElementHandle<Element>, cue: ElementHandle<Element>) =>
+  hook.evaluate((line, word) => {
+    const top = (el: Element) => el.getBoundingClientRect().top;
+    return { connected: line.isConnected, offset: Math.round(top(line) - top(word as Element)) };
+  }, cue);
+
 test("a learner peeks at a hook, Easy is out, and the peek stays on the grade through the outbox and a reload", async ({
   page,
 }, testInfo) => {
@@ -51,9 +59,27 @@ test("a learner peeks at a hook, Easy is out, and the peek stays on the grade th
     await expect(card.getByRole("button", { name: /Peek at your hook/ })).toBeHidden();
   });
 
-  await test.step("after the reveal Easy is locked: a tap or its key says why and grades nothing", async () => {
+  await test.step("the reveal leaves the hook in its place under the cue", async () => {
+    const hook = await card
+      .getByRole("paragraph")
+      .filter({ hasText: "Fresh snow makes the street luminous." })
+      .elementHandle();
+    // The cue ends in a word joiner that keeps its pronunciation button on its line.
+    const cue = await card.getByText(/^lumi\u2060?$/).elementHandle();
+    if (!hook || !cue) throw new Error("no hook or cue on the card");
+    const before = await hookOffset(hook, cue);
     // A tap on the card this soon after the peek would be taken as a doubled tap, so a key reveals.
     await page.keyboard.press("Space");
+    await expect(grades).toBeVisible();
+    // The same line, not a new one among the notes, and as far below the cue as it was.
+    expect(await hookOffset(hook, cue)).toEqual({ ...before, connected: true });
+    await expect(
+      card.getByRole("paragraph").filter({ hasText: "Fresh snow makes the street luminous." }),
+    ).toHaveCount(1);
+    await expect(card.getByRole("button", { name: /Show hook/ })).toHaveCount(0);
+  });
+
+  await test.step("after the reveal Easy is locked: a tap or its key says why and grades nothing", async () => {
     const easy = grades.getByRole("button", { name: "Easy, locked" });
     await expect(easy).toHaveAttribute("aria-disabled", "true");
     await expect(easy).toHaveAccessibleDescription(WHY);
@@ -128,12 +154,64 @@ test("a quick double tap on the peek shows the hook and leaves the card unturned
   await expect(page.getByRole("group", { name: "Choose a recall grade" })).toBeHidden();
 });
 
+test("revealed without a peek, Show hook puts the hook under the cue and leaves Easy open", async ({
+  page,
+}, testInfo) => {
+  await startAsTestLearner(page, testInfo, "review-hook");
+  const { deckId, cardId } = await cardWithHook(page, "härm", "Frost is harmful to roses.");
+  await page.goto(`/review?deck=${deckId}`);
+  const card = page.getByLabel("Recognition card for härm", { exact: true });
+  const grades = page.getByRole("group", { name: "Choose a recall grade" });
+  const hook = card.getByRole("paragraph").filter({ hasText: "Frost is harmful to roses." });
+  await page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
+  await expect(grades).toBeVisible();
+  await expect(hook).toHaveCount(0);
+
+  const show = card.getByRole("button", { name: /Show hook/ });
+  await show.click();
+  await expect(hook).toBeVisible();
+  await expect(card.getByRole("status")).toHaveText("Memory hook: Frost is harmful to roses.");
+  await expect(show).toHaveCount(0);
+  // Under the cue, above the answer the reveal brought.
+  const hookBox = await hook.boundingBox();
+  const cueBox = await card.getByText(/^härm\u2060?$/).boundingBox();
+  const answerBox = await card.getByText("snow", { exact: true }).boundingBox();
+  if (!hookBox || !cueBox || !answerBox) throw new Error("no hook, cue or answer to measure");
+  expect(hookBox.y).toBeGreaterThan(cueBox.y);
+  expect(hookBox.y).toBeLessThan(answerBox.y);
+
+  // Seeing the hook with the answer out is not help with recall, so Easy stays and records nothing.
+  const graded = page.waitForRequest((r) => r.url().endsWith("/api/review/grade"));
+  await grades.getByRole("button", { name: /^Easy/ }).click();
+  expect((await graded).postDataJSON()).not.toHaveProperty("aid");
+  await expect
+    .poll(async () => (await history(page, cardId)).reviews)
+    .toEqual([expect.objectContaining({ rating: 4, aid: null })]);
+});
+
+test("H shows the hook after the reveal at once", async ({ page }, testInfo) => {
+  await startAsTestLearner(page, testInfo, "review-hook");
+  const { deckId } = await cardWithHook(page, "kask", "A birch in a cask.");
+  await page.goto(`/review?deck=${deckId}`);
+  await expect(page.getByRole("button", { name: "Reveal the card" })).toBeVisible();
+  await page.keyboard.press("Space");
+  const grades = page.getByRole("group", { name: "Choose a recall grade" });
+  await expect(grades.getByRole("button", { name: /^Easy/ })).toBeVisible();
+  await page.keyboard.press("h");
+  await expect(page.getByRole("paragraph").filter({ hasText: "A birch in a cask." })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Show hook/ })).toHaveCount(0);
+  await expect(grades.getByRole("button", { name: "Easy, locked" })).toHaveCount(0);
+});
+
 test("a card without a hook has no peek control", async ({ page }, testInfo) => {
   await startAsTestLearner(page, testInfo, "review-hook");
   const { deckId } = await cardWithHook(page, "jää", null);
   await page.goto(`/review?deck=${deckId}`);
   await expect(page.getByRole("button", { name: "Reveal the card" })).toBeVisible();
   await expect(page.getByRole("button", { name: /Peek at your hook/ })).toHaveCount(0);
+  await page.keyboard.press("Space");
+  await expect(page.getByRole("group", { name: "Choose a recall grade" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Show hook/ })).toHaveCount(0);
 });
 
 test("a learner keeps a drafted hook, can undo it, and writes their own from the menu", async ({
@@ -153,7 +231,7 @@ test("a learner keeps a drafted hook, can undo it, and writes their own from the
   // The two cards come in the draw's order, so each step finds its own.
   for (let seen = 0; seen < 2; seen++) {
     await reveal();
-    const drafted = page.getByRole("button", { name: /Nothing to hang this one on/ });
+    const drafted = page.getByRole("button", { name: /Try a memory hook/ });
     const unclear = page.getByRole("button", { name: /This one keeps slipping/ });
     await expect(drafted.or(unclear)).toBeVisible();
 
@@ -168,10 +246,13 @@ test("a learner keeps a drafted hook, can undo it, and writes their own from the
         await expect(sheet).toBeHidden();
         // The menu's hook may have left its own toast, so this one is the newest.
         await expect(page.getByText("Hook added").last()).toBeVisible();
+        // Kept after the reveal, it shows at once under the cue: the learner has just read it.
         const answer = page.getByLabel("Production card for pumpkin", { exact: true });
-        await expect(answer.getByText("AI hook")).toBeVisible();
+        // The card also holds a hidden copy of the hook that sizes it; this is the one on show.
+        await expect(answer.getByText("AI hook").filter({ visible: true })).toBeVisible();
+        await expect(answer.getByRole("button", { name: /Show hook/ })).toHaveCount(0);
         await page.getByRole("button", { name: "Undo", exact: true }).last().click();
-        await expect(answer.getByText(/curve-its/)).toBeHidden();
+        await expect(answer.getByRole("paragraph").filter({ hasText: /curve-its/ })).toHaveCount(0);
       });
     } else {
       await test.step("with no clear reason, the menu writes the learner's own hook", async () => {
@@ -185,7 +266,9 @@ test("a learner keeps a drafted hook, can undo it, and writes their own from the
         await written.getByRole("button", { name: "Save hook" }).click();
         await expect(written).toBeHidden();
         const answer = page.getByLabel("Production card for to look, to watch", { exact: true });
-        await expect(answer.getByText("Watch the vat boil")).toBeVisible();
+        await expect(
+          answer.getByRole("paragraph").filter({ hasText: "Watch the vat boil" }),
+        ).toBeVisible();
         await expect(answer.getByText("AI hook")).toBeHidden();
       });
     }

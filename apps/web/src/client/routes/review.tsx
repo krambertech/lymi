@@ -200,8 +200,9 @@ function Review() {
     offer: null,
     parked: false,
   });
-  // How far into the card's aids the learner went before the reveal, held for the card on screen.
-  const [aidState, setAidState] = useState({ key: "", taken: 0, animate: true });
+  // How far into the card's aids the learner went before the reveal, and whether they asked to see
+  // them after it, held for the card on screen.
+  const [aidState, setAidState] = useState({ key: "", taken: 0, shown: false, animate: true });
   const [lockedNudge, setLockedNudge] = useState(0);
   const [fixing, setFixing] = useState(false);
   const [editing, setEditing] = useState<{ card: Card; focus: EditFocus } | null>(null);
@@ -552,13 +553,24 @@ function Review() {
   const hookSource = current?.card.hookSource ?? null;
   const steps = useMemo(() => aidSteps({ hook, hookSource }), [hook, hookSource]);
   const taken = aidState.key === showing ? aidState.taken : 0;
+  const shownAfter = aidState.key === showing && aidState.shown;
+  // Only a step taken before the reveal is help with recall; seeing the hook after it is not.
   const aid = aidTaken(steps, taken);
   const takeAid = useCallback(
     (input: "keyboard" | "pointer") => {
       if (revealed || taken >= steps.length) return;
-      setAidState({ key: showing, taken: taken + 1, animate: input !== "keyboard" });
+      setAidState({ key: showing, taken: taken + 1, shown: false, animate: input !== "keyboard" });
     },
     [revealed, taken, steps.length, showing],
+  );
+  const showAid = useCallback(
+    (input: "keyboard" | "pointer", focused = false) => {
+      if (!revealed || taken > 0 || shownAfter || steps.length === 0) return;
+      setAidState({ key: showing, taken, shown: true, animate: input !== "keyboard" });
+      // The button holding focus goes, so focus moves on to what comes next: the grades.
+      if (focused) gradesFocus();
+    },
+    [revealed, taken, shownAfter, steps.length, showing],
   );
 
   const onGrade = useCallback(
@@ -649,11 +661,12 @@ function Review() {
         "button, a, input, textarea, select, [contenteditable='true']",
       );
       // The aid's key also reaches the card's reveal button, where grading from the strip leaves
-      // focus, and the pill itself; matched by its place, so every keyboard layout has it.
-      if (current && !revealed && e.code === AID_KEY.code) {
+      // focus, and the aid's own buttons; matched by its place, so every keyboard layout has it.
+      if (current && e.code === AID_KEY.code) {
         if (control && !control.matches("[data-reveal], [data-aid]")) return;
         e.preventDefault();
-        takeAid("keyboard");
+        if (revealed) showAid("keyboard", control?.matches("[data-aid]") ?? false);
+        else takeAid("keyboard");
         return;
       }
       if (control) return;
@@ -675,7 +688,7 @@ function Review() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, onGrade, takeAid, leave, add.open, fixing, editing, current]);
+  }, [revealed, onGrade, takeAid, showAid, leave, add.open, fixing, editing, current]);
 
   // Offline the offer simply does not appear; review goes on as it always has. Once decided it
   // holds, so a refetch or a dropped connection never moves or remounts it mid-card.
@@ -844,8 +857,10 @@ function Review() {
                   ? {
                       steps,
                       taken,
+                      shown: shownAfter,
                       animate: aidState.key === showing ? aidState.animate : true,
                       onTake: takeAid,
+                      onShow: showAid,
                     }
                   : undefined
               }

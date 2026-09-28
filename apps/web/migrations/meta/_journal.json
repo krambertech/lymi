@@ -239,6 +239,13 @@
       "when": 1790552683478,
       "tag": "0033_file_exams_under_citizenship",
       "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "6",
+      "when": 1790553096476,
+      "tag": "0034_sleepy_sentinel",
+      "breakpoints": true
     }
   ]
 }

@@ -13,7 +13,6 @@ import { auditStatement } from "./audit";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
 import { type ServiceContext, ServiceError } from "./context";
 import { ownedDeck } from "./members";
-import { type PublicationRow, publicationColumns } from "./publications";
 import { assertPublisher } from "./publishers";
 import { activeCardsOf, activeSectionsOf } from "./revisions";
 
@@ -204,10 +203,7 @@ async function publishedDeck(ctx: ServiceContext, deckId: string, publishers: Se
   if (publishers) await assertPublisher(ctx, publishers);
   const owned = await ownedDeck(ctx, deckId);
   const [[publication], [row]] = await Promise.all([
-    ctx.db
-      .select(publicationColumns)
-      .from(schema.deckPublications)
-      .where(eq(schema.deckPublications.deckId, deckId)),
+    ctx.db.select().from(schema.deckPublications).where(eq(schema.deckPublications.deckId, deckId)),
     ctx.db
       .select({ revision: schema.decks.revision, seriesId: schema.decks.seriesId })
       .from(schema.decks)
@@ -222,7 +218,10 @@ async function publishedDeck(ctx: ServiceContext, deckId: string, publishers: Se
   };
 }
 
-function notTheOriginal(publication: PublicationRow, language: string) {
+function notTheOriginal(
+  publication: typeof schema.deckPublications.$inferSelect,
+  language: string,
+) {
   if (language === publication.meaningLanguage) {
     throw new ServiceError("invalid", "That is the deck's original edition, which needs no text");
   }

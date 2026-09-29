@@ -75,17 +75,27 @@ interface SitemapDeck {
   editions: readonly string[];
 }
 
+/** A shelf's page, in the locales where its readers have enough decks for one. */
+export type SitemapShelf = Partial<Record<Locale, string>>;
+
 /**
- * The pages rendered per request: Explore in every locale, then every published deck in the
- * locales whose Explore lists it. Explore changed when its newest deck did.
+ * The pages rendered per request: Explore in every locale, the shelves' own pages, then every
+ * published deck in the locales whose Explore lists it. Explore changed when its newest deck did.
  */
-export function runtimeSitemap(decks: readonly SitemapDeck[]): string {
+export function runtimeSitemap(
+  decks: readonly SitemapDeck[],
+  shelves: readonly SitemapShelf[] = [],
+): string {
   const latest = decks.reduce<Date | undefined>(
     (max, deck) => (!max || deck.updatedAt > max ? deck.updatedAt : max),
     undefined,
   );
   return urlset([
     ...localized(explorePath, latest),
+    ...shelves.flatMap((paths) => {
+      const listed = locales.filter((locale) => paths[locale]);
+      return localized((locale) => paths[locale] ?? "", undefined, listed);
+    }),
     ...decks.flatMap((deck) =>
       localized(
         (locale) => deckPath(deck.slug, locale),

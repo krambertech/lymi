@@ -171,3 +171,18 @@ test("each locale's Explore lists only the decks its readers can use", async ({ 
   expect(sitemap).not.toContain("<loc>https://lymi.app/explore/estonian-cities</loc>");
   expect(sitemap).not.toContain("<loc>https://lymi.app/ru/explore/estonian-cities</loc>");
 });
+
+test("a shelf gets its own page only once it holds three decks", async ({ request }) => {
+  // The fixture's Estonian shelf holds one deck, so its page is the site's 404, never an empty shelf.
+  for (const path of [
+    "/explore/languages/estonian",
+    "/uk/explore/subjects/driving",
+    "/explore/shelves/estonian",
+  ]) {
+    const response = await request.get(`${publicSite}${path}`);
+    expect(response.status()).toBe(404);
+    expect(await response.text()).toContain('name="robots" content="noindex, nofollow"');
+  }
+  const sitemap = await (await request.get(`${publicSite}/sitemap-decks.xml`)).text();
+  expect(sitemap).not.toContain("/explore/languages/");
+});

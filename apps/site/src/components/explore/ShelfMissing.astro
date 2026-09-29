@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NotFoundPage from "../islands/NotFoundPage";
+
+// A shelf that is gone, too small for a page, or never existed: the site's own 404, from a runtime route.
+---
+
+<BaseLayout title="Page not found · Lymi" description="This page does not exist." canonicalPath="/404">
+  <meta slot="head" name="robots" content="noindex, nofollow" />
+  <NotFoundPage client:load />
+</BaseLayout>

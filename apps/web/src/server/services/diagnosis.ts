@@ -7,7 +7,7 @@ import {
   newId,
 } from "@lymi/core";
 import { and, eq, inArray, isNull, lt, ne, or, sql } from "@lymi/core/db";
-import type { Card, Deck } from "@lymi/core/schema";
+import type { Card, CardDiagnosis, Deck } from "@lymi/core/schema";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
 import {
@@ -84,7 +84,7 @@ export const DIAGNOSIS_RETRY_MS = 86_400_000;
 
 /**
  * Queue a diagnosis for each often-forgotten card whose current revision has none, one that
- * failed over a day ago, or one an older prompt wrote that the learner has neither accepted nor
+ * failed or was left `working` over a day ago, or one an older prompt wrote that the learner has neither accepted nor
  * dismissed. Only rows this call inserted or moved back to `working` are queued, so two draws
  * racing queue a card once. A row diagnosed again keeps `offeredAt`, so review still offers a
  * card at most once a revision. Returns the diagnosis ids queued.
@@ -96,9 +96,15 @@ export async function queueDiagnoses(
   now = new Date(),
 ): Promise<string[]> {
   const { db, userId } = ctx;
+  const dayAgo = new Date(now.getTime() - DIAGNOSIS_RETRY_MS);
   const staleFailure = and(
     eq(schema.cardDiagnoses.status, "failed"),
-    lt(schema.cardDiagnoses.updatedAt, new Date(now.getTime() - DIAGNOSIS_RETRY_MS)),
+    lt(schema.cardDiagnoses.updatedAt, dayAgo),
+  );
+  // A run cut off before it was queued, or before its settle step, leaves the row `working`.
+  const orphaned = and(
+    eq(schema.cardDiagnoses.status, "working"),
+    lt(schema.cardDiagnoses.updatedAt, dayAgo),
   );
   // Only a `done` row: a failure keeps its day's wait, so an outage is not retried every draw.
   const outdated = and(
@@ -107,7 +113,7 @@ export async function queueDiagnoses(
     isNull(schema.cardDiagnoses.acceptedAt),
     isNull(schema.cardDiagnoses.dismissedAt),
   );
-  const again = or(staleFailure, outdated);
+  const again = or(staleFailure, orphaned, outdated);
   const candidates = await selectIn([...new Set(cardIds)], (slice) =>
     db
       .select({
@@ -333,16 +339,23 @@ export async function currentDiagnosis(
       ),
     );
   if (!row || row.confidence === null || !row.model) return null;
-  const finding = Diagnosis.safeParse({ cause: row.cause, draft: row.draft });
-  if (!finding.success) return null;
+  const diagnosis = readDiagnosis(row);
+  if (!diagnosis) return null;
   return {
     id: row.id,
-    ...finding.data,
+    ...diagnosis,
     confidence: row.confidence,
     model: row.model,
     diagnosedAt: row.updatedAt.toISOString(),
     dismissedAt: row.dismissedAt?.toISOString() ?? null,
+    acceptedAt: row.acceptedAt?.toISOString() ?? null,
   };
+}
+
+/** A stored diagnosis's cause and draft, or null when the row names none that parses. */
+export function readDiagnosis(row: Pick<CardDiagnosis, "cause" | "draft">): Diagnosis | null {
+  const finding = Diagnosis.safeParse({ cause: row.cause, draft: row.draft });
+  return finding.success ? finding.data : null;
 }
 
 /** One card as a single read returns it, with the reader's own diagnosis of it. */

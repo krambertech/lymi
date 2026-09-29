@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import {
+  CARD_LIMITS,
   CardInput,
   cardLimits,
   ImageDescription,
@@ -13,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { cn } from "cn";
 import {
   AlertCircle,
+  Anchor,
   AudioLines,
   Check,
   ChevronDown,
@@ -30,6 +32,7 @@ import { type ReactNode, useEffect, useId, useMemo, useRef, useState } from "rea
 import type { Card, DeckSummary } from "../lib/api";
 import { useObjectUrl } from "../lib/avatar";
 import { modShortcut, useDesktop } from "../lib/device";
+import { EASE_OUT } from "../lib/ease";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { lastDeckId } from "../lib/last-deck";
 import { sectionsQuery } from "../lib/queries";
@@ -55,6 +58,7 @@ export interface CardFormValues {
   pronunciation: string;
   example: string;
   notes: string;
+  hook: string;
   source: string;
   tags: string[];
   language: string | null;
@@ -109,13 +113,14 @@ export interface AddCardFormProps extends CardFormBase {
   onRetryPicture?: (() => void) | undefined;
 }
 
+/** The field the card editor opens at: the cue's, the picture, or the hook. */
+export type EditFocus = "term" | "meaning" | "picture" | "hook";
+
 export interface EditCardFormProps extends CardFormBase {
   mode: "edit";
   card: Card;
-  /** Opens with the picture field showing, for adding a picture that did not go through. */
-  openPicture?: boolean | undefined;
-  /** Opens with the caret in this field, for rewording how the card asks. */
-  focus?: "term" | "meaning" | undefined;
+  /** Opens at this field, for rewording how the card asks or adding what did not go through. */
+  focus?: EditFocus | undefined;
 }
 
 export type CardFormProps = AddCardFormProps | EditCardFormProps;
@@ -124,7 +129,15 @@ export type CardFormProps = AddCardFormProps | EditCardFormProps;
 const NEARLY_FULL = 0.9;
 
 type Notice = { kind: "ok" | "warn" | "dup"; text: string };
-type Panel = "picture" | "example" | "pronunciation" | "notes" | "source" | "tags" | "settings";
+type Panel =
+  | "picture"
+  | "example"
+  | "pronunciation"
+  | "notes"
+  | "hook"
+  | "source"
+  | "tags"
+  | "settings";
 
 /** Which panel holds each field, so a refused field opens where it can be fixed. */
 const PANEL_OF: Record<string, Panel> = {
@@ -132,6 +145,7 @@ const PANEL_OF: Record<string, Panel> = {
   example: "example",
   pronunciation: "pronunciation",
   notes: "notes",
+  hook: "hook",
   source: "source",
   tags: "tags",
   reviewModes: "settings",
@@ -152,7 +166,7 @@ export function CardForm(props: CardFormProps) {
     onCreateDeck,
     onRetryPicture,
   }: Partial<AddCardFormProps> = adding ? props : {};
-  const { card, openPicture, focus }: Partial<EditCardFormProps> = adding ? {} : props;
+  const { card, focus }: Partial<EditCardFormProps> = adding ? {} : props;
   const { t, i18n } = useLingui();
   const st = !!useStaticNav();
   const desktop = useDesktop();
@@ -169,6 +183,7 @@ export function CardForm(props: CardFormProps) {
   );
   const [example, setExample] = useState(draft?.example ?? card?.example ?? "");
   const [notes, setNotes] = useState(draft?.notes ?? card?.notes ?? "");
+  const [hook, setHook] = useState(draft?.hook ?? card?.hook ?? "");
   const [source, setSource] = useState(draft?.source ?? card?.source ?? "");
   const [tags, setTags] = useState<string[]>(draft?.tags ?? card?.tags ?? []);
   // Until the learner picks one, a new card takes its deck's language.
@@ -187,17 +202,22 @@ export function CardForm(props: CardFormProps) {
     draft?.description ?? card?.image?.description ?? "",
   );
   const [fileError, setFileError] = useState<string>();
-  const [panel, setPanel] = useState<Panel | null>(openPicture && chips ? "picture" : null);
+  // On a phone the field opens in its own drawer, which focuses it; see the effect below for a desktop.
+  const [panel, setPanel] = useState<Panel | null>(
+    chips && (focus === "picture" || focus === "hook") ? focus : null,
+  );
   // Desktop: the extra fields stay folded until asked for, or until an edited card already uses them.
   const [expanded, setExpanded] = useState(
     () =>
-      !!openPicture ||
+      focus === "picture" ||
+      focus === "hook" ||
       (!!card &&
         !!(
           card.image ||
           card.example ||
           card.pronunciation ||
           card.notes ||
+          card.hook ||
           card.source ||
           card.tags.length ||
           card.reviewModes
@@ -211,28 +231,30 @@ export function CardForm(props: CardFormProps) {
   const termRef = useRef<HTMLInputElement>(null);
   const meaningRef = useRef<HTMLTextAreaElement>(null);
   const pictureRef = useRef<HTMLDivElement>(null);
+  const hookRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
     // A drawer settles before any field takes focus, overlays.md; a desktop dialog has no keyboard to raise.
     if (!focus || chips) return;
     // After the dialog has placed its own initial focus, so this one wins.
     const timer = setTimeout(() => {
-      const field = focus === "term" ? termRef.current : meaningRef.current;
-      field?.focus({ preventScroll: true });
+      if (focus === "picture") {
+        pictureRef.current
+          ?.querySelector<HTMLElement>("button, input")
+          ?.focus({ preventScroll: true });
+        pictureRef.current?.scrollIntoView({ block: "center" });
+        return;
+      }
+      const field =
+        focus === "term"
+          ? termRef.current
+          : focus === "meaning"
+            ? meaningRef.current
+            : hookRef.current;
+      field?.focus({ preventScroll: focus !== "hook" });
       field?.setSelectionRange(field.value.length, field.value.length);
     }, 80);
     return () => clearTimeout(timer);
   }, [focus, chips]);
-  useEffect(() => {
-    if (!openPicture || chips) return;
-    // After the dialog has placed its own initial focus, so this one wins.
-    const timer = setTimeout(() => {
-      pictureRef.current
-        ?.querySelector<HTMLElement>("button, input")
-        ?.focus({ preventScroll: true });
-      pictureRef.current?.scrollIntoView({ block: "center" });
-    }, 80);
-    return () => clearTimeout(timer);
-  }, [openPicture, chips]);
   const formRef = useRef<HTMLFormElement>(null);
 
   const owned = useMemo(() => decks?.filter((d) => d.role === "owner"), [decks]);
@@ -263,6 +285,7 @@ export function CardForm(props: CardFormProps) {
     pronunciation: pronunciation.trim(),
     example: example.trim(),
     notes: notes.trim(),
+    hook: hook.trim(),
     source: source.trim(),
     tags,
     language,
@@ -326,6 +349,7 @@ export function CardForm(props: CardFormProps) {
           pronunciation: t`Keep the pronunciation under 200 characters.`,
           example: t`Keep the example under 2000 characters.`,
           notes: t`Keep the notes under 2000 characters.`,
+          hook: t`Keep the hook under 200 characters.`,
           source: t`Keep the source under 200 characters.`,
           tags: t`Use up to 20 tags of 40 characters or fewer.`,
           reviewModes: t`Choose at least one way to be asked.`,
@@ -377,6 +401,7 @@ export function CardForm(props: CardFormProps) {
     setPronunciation("");
     setExample("");
     setNotes("");
+    setHook("");
     setModes(null);
     setPicture({ kind: "none" });
     setDescription("");
@@ -413,6 +438,7 @@ export function CardForm(props: CardFormProps) {
     example.trim(),
     pronunciation.trim(),
     notes.trim(),
+    hook.trim(),
     source.trim(),
     tags.length > 0,
     !!settingsValue,
@@ -630,6 +656,46 @@ export function CardForm(props: CardFormProps) {
     </Field>
   );
 
+  const hookField = (
+    <Field>
+      <FieldLabel
+        className={chips ? "sr-only" : undefined}
+        aside={roomLeft(hook, CARD_LIMITS.hook)}
+      >
+        {t`Memory hook`}
+      </FieldLabel>
+      {/* Two lines, so a long hook can be read on a phone. */}
+      <Textarea
+        ref={hookRef}
+        rows={2}
+        maxLength={CARD_LIMITS.hook}
+        value={hook}
+        autoComplete="off"
+        enterKeyHint="done"
+        onKeyDown={(e) => {
+          // A hook is one phrase, so Enter is done with it, as in the fix sheet; Shift Enter still breaks the line.
+          if (
+            e.key !== "Enter" ||
+            e.shiftKey ||
+            e.metaKey ||
+            e.ctrlKey ||
+            e.nativeEvent.isComposing
+          )
+            return;
+          e.preventDefault();
+          if (chips) setPanel(null);
+          else e.currentTarget.form?.requestSubmit();
+        }}
+        onChange={(e) => {
+          setHook(e.target.value);
+          clear("hook");
+        }}
+      />
+      <FieldDescription>{t`A short phrase that helps you remember it.`}</FieldDescription>
+      <FieldError>{invalid.hook}</FieldError>
+    </Field>
+  );
+
   const sourceField = (
     <Field>
       <FieldLabel
@@ -783,6 +849,15 @@ export function CardForm(props: CardFormProps) {
               {notesField}
             </FieldChip>
             <FieldChip
+              icon={Anchor}
+              label={t`Memory hook`}
+              value={hook.trim()}
+              invalid={!!invalid.hook}
+              {...panelProps("hook")}
+            >
+              {hookField}
+            </FieldChip>
+            <FieldChip
               icon={ImageIcon}
               keyboard={false}
               label={t`Picture`}
@@ -835,14 +910,12 @@ export function CardForm(props: CardFormProps) {
                 exit={{
                   height: 0,
                   opacity: 0,
-                  ...(reduceMotion
-                    ? {}
-                    : { transition: { duration: 0.18, ease: [0.22, 1, 0.36, 1] } }),
+                  ...(reduceMotion ? {} : { transition: { duration: 0.18, ease: EASE_OUT } }),
                 }}
                 transition={
                   reduceMotion
                     ? { duration: 0.15, height: { duration: 0 } }
-                    : { duration: 0.26, ease: [0.22, 1, 0.36, 1], opacity: { duration: 0.18 } }
+                    : { duration: 0.26, ease: EASE_OUT, opacity: { duration: 0.18 } }
                 }
                 // Room on every side, so the clip while it opens never cuts a focus ring.
                 className="-m-1 -mt-3 overflow-hidden p-1"
@@ -855,6 +928,7 @@ export function CardForm(props: CardFormProps) {
                   </div>
                   {tagsField}
                   {notesField}
+                  {hookField}
                   <div ref={pictureRef} className="grid gap-1.5">
                     <span className="text-sm font-medium text-text-2">
                       <Trans>Picture</Trans>

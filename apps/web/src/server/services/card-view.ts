@@ -140,16 +140,16 @@ export async function presentCards(
     ).map((row) => row.id),
   );
   const editions = await editionText(db, viewerId, cards);
-  // A card in an archived section reads as having none, as a deck in an archived series does.
-  return cards.map((card) =>
-    view(
-      inEdition(
-        card.sectionId && !activeSections.has(card.sectionId) ? { ...card, sectionId: null } : card,
-        editions.get(card.id),
-      ),
-      images.get(card.id),
-    ),
-  );
+  return cards.map((card) => {
+    const text = editions.get(card.id);
+    // A card in an archived section reads as having none, as a deck in an archived series does.
+    const placed =
+      card.sectionId && !activeSections.has(card.sectionId) ? { ...card, sectionId: null } : card;
+    // A hook is in the deck's own meaning language and no edition carries one, so a reader of
+    // another edition gets none.
+    const seen = text ? { ...inEdition(placed, text), hook: null, hookSource: null } : placed;
+    return view(seen, images.get(card.id));
+  });
 }
 
 /**

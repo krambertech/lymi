@@ -231,11 +231,12 @@ function Shell() {
       )
         return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
-      if (e.key === "n" || e.key === "N") {
+      // By the key's place rather than its letter, so a Ukrainian or Russian layout has them too.
+      if (e.code === "KeyN") {
         e.preventDefault();
         add.openCard(activeDeckId);
       }
-      if ((e.key === "r" || e.key === "R") && !onReview) {
+      if (e.code === "KeyR" && !onReview) {
         e.preventDefault();
         navigate({ to: "/review" });
       }

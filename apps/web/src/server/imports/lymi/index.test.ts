@@ -118,6 +118,26 @@ describe("lymi adapter", () => {
     expect(cards[1]?.fieldSources?.pronunciation).toBeNull();
   });
 
+  it("carries a hook with its source, cut by code point and reported when it is too long", async () => {
+    // An emoji is two UTF-16 units, so a cut by units would split it at the limit.
+    const long = `${"a".repeat(198)}🎃🎃 and more`;
+    const file = await zip({}, [
+      card({ id: "c5", hook: "A cat naps in the gatehouse", hookSource: "ai" }),
+      card({ id: "c6", term: "la zucca", hook: long, hookSource: "manual" }),
+    ]);
+    const { summary, notes } = await lymi.inspect(file);
+    const [kept, cut] = [...notes].flatMap((note) =>
+      lymi.cards(note, summary, { languages: {}, roles: {} }),
+    );
+    expect(kept).toMatchObject({
+      hook: { text: "A cat naps in the gatehouse", source: "ai" },
+      shortened: false,
+    });
+    expect(cut?.shortened).toBe(true);
+    expect([...(cut?.hook?.text ?? "")]).toHaveLength(200);
+    expect(cut?.hook?.text).toBe(`${"a".repeat(198)}🎃…`);
+  });
+
   it("refuses a file from a newer Lymi and a damaged card line", async () => {
     await expect(lymi.inspect(await zip({ version: 2 }, [card()]))).rejects.toMatchObject({
       failure: "unrecognized",

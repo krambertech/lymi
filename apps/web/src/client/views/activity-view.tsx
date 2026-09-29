@@ -4,6 +4,7 @@ import {
   Activity as ActivityIcon,
   Archive,
   ArchiveRestore,
+  Ban,
   ChevronDown,
   Download,
   FileUp,
@@ -15,6 +16,7 @@ import {
   Pencil,
   Plus,
   Sparkle,
+  Undo2,
   UserMinus,
   UserPlus,
 } from "lucide-react";
@@ -39,6 +41,8 @@ const KIND_ICONS: Record<string, LucideIcon> = {
   restored: ArchiveRestore,
   import: FileUp,
   export: Download,
+  fix_dismissed: Ban,
+  fix_undismissed: Undo2,
   member_joined: UserPlus,
   member_left: UserMinus,
   member_removed: UserMinus,
@@ -126,6 +130,18 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
       return (
         <Trans>
           Restored <Plural value={count} one="# card" other="# cards" /> in {deck}
+        </Trans>
+      );
+    case "fix_dismissed":
+      return (
+        <Trans>
+          Turned down the fix for <Plural value={count} one="# card" other="# cards" /> in {deck}
+        </Trans>
+      );
+    case "fix_undismissed":
+      return (
+        <Trans>
+          Brought back the fix for <Plural value={count} one="# card" other="# cards" /> in {deck}
         </Trans>
       );
     case "deck_added":

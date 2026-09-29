@@ -28,31 +28,33 @@ export function useCardFix() {
 
   const title = (cause: FixInput["cause"], result: FixResult) => {
     if (cause === "several_answers") return t`Question changed`;
+    if (cause === "no_anchor") return t`Hook added`;
     const added = result.added.length;
     if (cause === "confused_pair" && added === 0) return t`Both cards are already in your decks.`;
     const skipped = result.skipped[0];
     if (!skipped) {
       return cause === "two_things"
-        ? t`Split into 2 cards`
-        : t`${plural(added, { one: "Added # card", other: "Added # cards" })}`;
+        ? t`Card split in 2`
+        : t`${plural(added, { one: "# card added", other: "# cards added" })}`;
     }
     const term = shortQuote(skipped.term);
     const deckName = skipped.deckName;
     return cause === "two_things"
-      ? t`Changed the card. “${term}” is already in ${deckName}.`
-      : t`Added 1 card. “${term}” is already in ${deckName}.`;
+      ? t`Card changed. “${term}” is already in ${deckName}.`
+      : t`1 card added. “${term}” is already in ${deckName}.`;
   };
 
   return useMutation({
     mutationFn: ({ id, input }: { id: string; input: FixInput }) => api.acceptFix(id, input),
-    onSuccess: async (result, { id, input }) => {
+    onSuccess: (result, { id, input }) => {
       const changed = result.added.length > 0 || !!result.edited;
       toast.add({
         id: `fix-${id}`,
         title: title(input.cause, result),
         actionProps: changed ? { children: t`Undo`, onClick: () => undo.mutate(id) } : undefined,
       });
-      await refreshAfterCardWrite(qc, result.edited?.id);
+      // Not awaited, so the sheet closes with the toast and the changed card lands in view.
+      void refreshAfterCardWrite(qc, result.edited?.id);
     },
   });
 }

@@ -7,6 +7,7 @@ import {
   Directions,
   EnrichmentStatus,
   FieldSource,
+  ReviewAid,
   ReviewMode,
 } from "../types";
 import { Timestamp } from "./common";
@@ -48,6 +49,10 @@ export const CardOut = z
     pronunciation: z.string().nullable(),
     example: z.string().nullable(),
     notes: z.string().nullable().meta({ description: "Markdown source in the notes subset" }),
+    hook: z.string().nullable().meta({
+      description:
+        "A short association that leads back to the answer without giving any of it away. Review shows it under the cue. Null for a reader of another edition, whose meanings are in another language.",
+    }),
     language: z.string().nullable().meta({ description: "BCP 47 tag, or null" }),
     tags: z.array(z.string()),
     source: z.string().nullable().meta({ description: "Free text: where the card came from" }),
@@ -69,6 +74,7 @@ export const CardOut = z
     meaningSource: FieldSource.nullable(),
     exampleSource: FieldSource.nullable(),
     pronunciationSource: FieldSource.nullable(),
+    hookSource: FieldSource.nullable(),
     enrichmentStatus: EnrichmentStatus.nullable().meta({
       description: "Set while the AI is filling the card's empty fields, and null once it settles",
     }),
@@ -98,6 +104,10 @@ export const CardDiagnosisOut = z
     dismissedAt: Timestamp.nullable().meta({
       description:
         "When you said this is not the reason. Its fix is not offered again for this revision of the card.",
+    }),
+    acceptedAt: Timestamp.nullable().meta({
+      description:
+        "When you accepted its fix, so the fix is on the card. Null while it is open, and again after Undo.",
     }),
   })
   .and(Diagnosis)
@@ -236,6 +246,7 @@ export const ReviewOut = z
     difficultyAfter: z.number(),
     reviewedAt: Timestamp,
     source: z.enum(["web", "api", "mcp"]),
+    aid: ReviewAid.nullable().meta({ description: "What the learner used before the reveal" }),
   })
   .meta({ id: "Review" });
 export type ReviewOut = z.infer<typeof ReviewOut>;

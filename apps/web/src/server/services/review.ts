@@ -1,4 +1,11 @@
-import type { Direction, DrawLogEntry, GradeInput, ReviewModeKey, Round } from "@lymi/core";
+import type {
+  DayWindow,
+  Direction,
+  DrawLogEntry,
+  GradeInput,
+  ReviewModeKey,
+  Round,
+} from "@lymi/core";
 import {
   deserializeState,
   drawableCount,
@@ -77,7 +84,7 @@ export async function reviewQueue(
     ctx,
     [...new Set(front.map((d) => d.cardId))],
     slipping,
-    zone,
+    day,
   );
 
   const items = front.flatMap((drawn) => {
@@ -166,7 +173,7 @@ export async function reviewDraw(
     if (missed(entry.rating, entry.stateBefore)) include.add(entry.cardId);
   }
   const position = new Map([...include].map((cardId, index) => [cardId, index]));
-  const { views: content, offers } = await presentContent(ctx, [...include], slipping, zone);
+  const { views: content, offers } = await presentContent(ctx, [...include], slipping, day);
 
   return {
     day: { date: day.date, zone, start: day.start, end: day.end },
@@ -232,12 +239,12 @@ async function presentContent(
   ctx: ServiceContext,
   ids: string[],
   slipping: ReadonlySet<string>,
-  zone: string,
+  day: DayWindow,
 ) {
   const rows = [...(await cardsById(ctx, ids)).values()];
   const [views, offers] = await Promise.all([
     presentCards(ctx.db, rows, ctx.userId),
-    reviewOffers(ctx, rows, slipping, zone),
+    reviewOffers(ctx, rows, slipping, day),
   ]);
   return { views: new Map(views.map((view) => [view.id, view])), offers };
 }
@@ -347,6 +354,7 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
         source: "web",
         reviewDayId: reviewDay.id,
         stateBefore: JSON.stringify(before),
+        aid: input.aid ?? null,
       }),
     ])
     .then(
@@ -364,7 +372,7 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
     entity: "review",
     action: "grade",
     id: cardId,
-    details: { rating, direction, mode: key },
+    details: { rating, direction, mode: key, ...(input.aid ? { aid: input.aid } : {}) },
   });
 
   return {

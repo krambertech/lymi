@@ -45,22 +45,29 @@ type Sources = {
   meaningSource?: FieldSource | null | undefined;
   exampleSource?: FieldSource | null | undefined;
   pronunciationSource?: FieldSource | null | undefined;
+  hookSource?: FieldSource | null | undefined;
 };
 /**
  * A card write from inside the server, which may record Lymi's own AI as a field's source: an
  * accepted fix keeps the AI's drafted text marked. No caller can claim it; routes parse `CardInput`.
  */
 export type ServerCardInput = Omit<CardInput, keyof Sources> & Sources;
-export type ServerCardPatch = Omit<CardPatch, keyof Sources | "meaning" | "pronunciation"> &
+type Cleared = "meaning" | "pronunciation" | "hook";
+export type ServerCardPatch = Omit<CardPatch, keyof Sources | Cleared> &
   Sources & {
     /** Null clears a field back to never set, which a split and Undo need. */
     meaning?: string | null | undefined;
     pronunciation?: string | null | undefined;
+    hook?: string | null | undefined;
+    /** The revision the card held this text at, for a write that puts earlier text back. */
+    revision?: number | undefined;
   };
-type ServerCardEdit = Omit<CardEditInput, keyof Sources | "meaning" | "pronunciation"> &
+type ServerCardEdit = Omit<CardEditInput, keyof Sources | Cleared> &
   Sources & {
     meaning?: string | null | undefined;
     pronunciation?: string | null | undefined;
+    hook?: string | null | undefined;
+    revision?: number | undefined;
   };
 
 /** A publisher's curated decks each stand alone, so its terms repeat across decks but not within one. ADR 0004. */
@@ -210,6 +217,7 @@ export async function addCards(
       pronunciation: input.pronunciation ?? null,
       example: input.example ?? null,
       notes: input.notes ?? null,
+      hook: input.hook || null,
       language,
       tags: input.tags ?? [],
       source: input.source ?? null,
@@ -222,6 +230,7 @@ export async function addCards(
       meaningSource: input.meaningSource ?? (input.meaning ? "manual" : null),
       exampleSource: input.exampleSource ?? (input.example ? "manual" : null),
       pronunciationSource: input.pronunciationSource ?? (input.pronunciation ? "manual" : null),
+      hookSource: input.hook ? (input.hookSource ?? "manual") : null,
       enrichmentStatus: null,
       audioKey: null,
       createdBy: actor,
@@ -606,7 +615,7 @@ async function editLookups(ctx: ServiceContext, edits: ServerCardEdit[]): Promis
 function editWrite(
   ctx: ServiceContext,
   lookups: EditLookups,
-  { cardId: id, ...patch }: ServerCardEdit,
+  { cardId: id, revision, ...patch }: ServerCardEdit,
   now: Date,
 ): CardWrite {
   const { db } = ctx;
@@ -634,11 +643,14 @@ function editWrite(
     (patch.term !== undefined && patch.term !== current.term) ||
     (patch.language !== undefined && patch.language !== current.language);
   const { reviewModes, directions: _legacy, ...fields } = patch;
+  const hook = patch.hook === undefined ? current.hook : patch.hook || null;
   // Changing a field's text changes where it came from, so an AI fill an app rewrites loses its badge.
   const sources = {
     meaningSource: sourceAfter(patch.meaning, patch.meaningSource),
     exampleSource: sourceAfter(patch.example, patch.exampleSource),
     pronunciationSource: sourceAfter(patch.pronunciation, patch.pronunciationSource),
+    // Only a hook has a source, whatever the caller said about one that is not there.
+    hookSource: hook ? sourceAfter(patch.hook, patch.hookSource) : null,
   };
   const modes = resolveCardModes(
     patch,
@@ -648,10 +660,11 @@ function editWrite(
     .update(schema.cards)
     .set({
       ...fields,
+      hook,
       ...sources,
       ...(modes ?? {}),
       ...section,
-      ...bumped("card", patch, current),
+      ...(revision === undefined ? bumped("card", patch, current) : { revision }),
       normalizedTerm,
       ...(pronunciationChanged ? { audioKey: null } : {}),
       updatedAt: now,

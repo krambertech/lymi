@@ -10,6 +10,7 @@ import {
   missed,
   modeKey,
   type Rating,
+  type ReviewAid,
   type ReviewMode,
 } from "@lymi/core";
 import type { Draw, QueueItem } from "./api";
@@ -30,6 +31,8 @@ export interface LocalGrade {
   reviewedAt: string;
   /** FSRS state before the grade, fixed when it was made. */
   stateBefore?: number | undefined;
+  /** What the learner used before the reveal, sent with the grade when it replays. */
+  aid?: ReviewAid | undefined;
 }
 
 export type DrawData = Draw;

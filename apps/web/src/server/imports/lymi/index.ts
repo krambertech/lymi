@@ -2,6 +2,8 @@ import {
   type FieldRole,
   fieldsFromRoles,
   fitFields,
+  fitText,
+  IMPORT_LIMITS,
   type ImportedProgress,
   importTags,
   LYMI_FILE_VERSION,
@@ -192,6 +194,7 @@ export const lymi: SourceAdapter<LymiNote> = {
     const fitted = fitFields({ term: raw.term ?? "", ...raw });
     if (!fitted.fields.term) return [];
     const tags = importTags(card.tags);
+    const hook = card.hook ? fitText(card.hook, IMPORT_LIMITS.hook) : null;
     const modes = card.reviewModes ?? note.deckModes;
     const progress = modes.map((mode) => {
       const state = card.states.find((s) => s.mode === mode);
@@ -208,7 +211,7 @@ export const lymi: SourceAdapter<LymiNote> = {
         archived: card.archivedAt !== null,
         picture: note.picture ? card.picture?.file : undefined,
         progress,
-        shortened: fitted.shortened || tags.shortened,
+        shortened: fitted.shortened || tags.shortened || !!hook?.shortened,
         // A card in its deck's language follows the language the learner chooses for the deck.
         language: card.language !== note.deckLanguage ? card.language : undefined,
         fieldSources: {
@@ -218,6 +221,7 @@ export const lymi: SourceAdapter<LymiNote> = {
         },
         origin: card.source ?? undefined,
         pictureDescription: card.picture?.description ?? undefined,
+        hook: hook ? { text: hook.text, source: card.hookSource ?? "manual" } : undefined,
       },
     ];
   },

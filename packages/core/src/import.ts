@@ -96,6 +96,8 @@ export type ImportedCard = {
   origin?: string | undefined;
   /** What the picture shows, so picture modes are asked from the start. */
   pictureDescription?: string | undefined;
+  /** The card's memory hook and who wrote it, from a Lymi zip. */
+  hook?: { text: string; source: FieldSource } | undefined;
 };
 
 /** The longest text each imported field keeps, from `CardInput` and `DeckInput`. */
@@ -105,6 +107,7 @@ export const IMPORT_LIMITS = {
   pronunciation: 200,
   example: 2000,
   notes: 2000,
+  hook: 200,
   tags: 20,
   tag: 40,
   deckName: 80,
@@ -208,6 +211,13 @@ function cut(text: string, limit: number): string {
 
 function length(text: string): number {
   return [...text].length;
+}
+
+/** One text cut to its limit by code point, as `fitFields` cuts a field, and whether it was. */
+export function fitText(text: string, limit: number): { text: string; shortened: boolean } {
+  return length(text) <= limit
+    ? { text, shortened: false }
+    : { text: cut(text, limit), shortened: true };
 }
 
 /**

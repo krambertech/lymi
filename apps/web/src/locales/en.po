@@ -16,8 +16,8 @@ msgstr ""
 msgid ", not open yet"
 msgstr ", not open yet"
 
-msgid "“{current}” fits more than one answer, so the card can’t tell which one you mean."
-msgstr "“{current}” fits more than one answer, so the card can’t tell which one you mean."
+msgid "“{current}” fits more than one answer, so you can’t tell which one the card wants."
+msgstr "“{current}” fits more than one answer, so you can’t tell which one the card wants."
 
 msgid "“{deckName}” is reviewed with the other decks in its series."
 msgstr "“{deckName}” is reviewed with the other decks in its series."
@@ -28,8 +28,8 @@ msgstr "“{label}” was already in {deckName}, so the copy added offline was l
 msgid "“{term}” has nothing left to fill in."
 msgstr "“{term}” has nothing left to fill in."
 
-msgid "“{title}” keeps slipping, likely because the two get mixed up."
-msgstr "“{title}” keeps slipping, likely because the two get mixed up."
+msgid "“{title}” is often forgotten, maybe because the two are easy to mix up."
+msgstr "“{title}” is often forgotten, maybe because the two are easy to mix up."
 
 #. placeholder {0}: counts?.decks ?? 0
 msgid "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
@@ -327,11 +327,11 @@ msgstr "{0} shared a deck with you"
 msgid "{0}% of the file arrived. Choose the same file to send the rest."
 msgstr "{0}% of the file arrived. Choose the same file to send the rest."
 
+msgid "{added, plural, one {# card added} other {# cards added}}"
+msgstr "{added, plural, one {# card added} other {# cards added}}"
+
 msgid "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
 msgstr "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
-
-msgid "{added, plural, one {Added # card} other {Added # cards}}"
-msgstr "{added, plural, one {Added # card} other {Added # cards}}"
 
 msgid "{added, plural, one {Import # card} other {Import # cards}}"
 msgstr "{added, plural, one {Import # card} other {Import # cards}}"
@@ -493,6 +493,9 @@ msgstr "{graded, plural, one {Recall is based on only # review, so it can swing 
 msgid "{label} decks"
 msgstr "{label} decks"
 
+msgid "{label}, locked"
+msgstr "{label}, locked"
+
 msgid "{label}, next in {schedules}"
 msgstr "{label}, next in {schedules}"
 
@@ -582,6 +585,9 @@ msgstr "<0>{name}</0> is ready. Copy it now. You won’t see it again."
 msgid "<0>{title}</0> and <1>{otherTitle}</1>"
 msgstr "<0>{title}</0> and <1>{otherTitle}</1>"
 
+msgid "1 card added. “{term}” is already in {deckName}."
+msgstr "1 card added. “{term}” is already in {deckName}."
+
 msgid "30 days"
 msgstr "30 days"
 
@@ -624,11 +630,23 @@ msgstr "A link to a picture online."
 msgid "A Lymi file from another Lymi account"
 msgstr "A Lymi file from another Lymi account"
 
+msgid "A memory hook for <0>{term}</0>"
+msgstr "A memory hook for <0>{term}</0>"
+
 msgid "A reset link works once, within an hour."
 msgstr "A reset link works once, within an hour."
 
 msgid "A rest day keeps the streak through one missed day a week."
 msgstr "A rest day keeps the streak through one missed day a week."
+
+msgid "A short phrase that helps you remember it"
+msgstr "A short phrase that helps you remember it"
+
+msgid "A short phrase that helps you remember it."
+msgstr "A short phrase that helps you remember it."
+
+msgid "A sound-alike, or something to picture"
+msgstr "A sound-alike, or something to picture"
 
 msgid "A–Z"
 msgstr "A–Z"
@@ -661,6 +679,9 @@ msgstr "Add 2 cards"
 msgid "Add a card"
 msgstr "Add a card"
 
+msgid "Add a memory hook"
+msgstr "Add a memory hook"
+
 msgid "Add a picture"
 msgstr "Add a picture"
 
@@ -690,6 +711,9 @@ msgstr "Add cards from your next lesson"
 
 msgid "Add cards with the API"
 msgstr "Add cards with the API"
+
+msgid "Add hook"
+msgstr "Add hook"
 
 msgid "Add Lymi as an MCP server in Claude or ChatGPT, then sign in when asked."
 msgstr "Add Lymi as an MCP server in Claude or ChatGPT, then sign in when asked."
@@ -742,9 +766,6 @@ msgstr "Added “{term}”. It’s saved on this device until Lymi can be reache
 msgid "Added {count, plural, one {# card} other {# cards}} to {deck}"
 msgstr "Added {count, plural, one {# card} other {# cards}} to {deck}"
 
-msgid "Added 1 card. “{term}” is already in {deckName}."
-msgstr "Added 1 card. “{term}” is already in {deckName}."
-
 msgid "Added today"
 msgstr "Added today"
 
@@ -762,6 +783,9 @@ msgstr "AI apps connected to your Lymi account (Claude, ChatGPT, …)."
 
 msgid "AI example"
 msgstr "AI example"
+
+msgid "AI hook"
+msgstr "AI hook"
 
 msgid "AI meaning"
 msgstr "AI meaning"
@@ -784,9 +808,6 @@ msgstr "Allow"
 msgctxt "deck tag"
 msgid "Alphabet"
 msgstr "Alphabet"
-
-msgid "Also a right answer: <0>{otherAnswer}</0>"
-msgstr "Also a right answer: <0>{otherAnswer}</0>"
 
 msgid "Also adds, edits and archives them."
 msgstr "Also adds, edits and archives them."
@@ -818,8 +839,14 @@ msgstr "Anki package"
 msgid "anna@example.com"
 msgstr "anna@example.com"
 
+msgid "Another right answer: <0>{otherAnswer}</0>"
+msgstr "Another right answer: <0>{otherAnswer}</0>"
+
 msgid "Answer: {back}"
 msgstr "Answer: {back}"
+
+msgid "Answer: {back}. A fix is ready: {fixTitle}"
+msgstr "Answer: {back}. A fix is ready: {fixTitle}"
 
 msgid "Any time"
 msgstr "Any time"
@@ -975,6 +1002,9 @@ msgstr "Both ways"
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Brings back every card this import added and the decks it made."
 
+msgid "Brought back the fix for {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Brought back the fix for {count, plural, one {# card} other {# cards}} in {deck}"
+
 msgid "Browse ready-made decks"
 msgstr "Browse ready-made decks"
 
@@ -1032,6 +1062,9 @@ msgstr "Card added"
 msgid "Card added, meaning from the lesson"
 msgstr "Card added, meaning from the lesson"
 
+msgid "Card changed. “{term}” is already in {deckName}."
+msgstr "Card changed. “{term}” is already in {deckName}."
+
 msgid "Card discarded"
 msgstr "Card discarded"
 
@@ -1040,6 +1073,9 @@ msgstr "Card options"
 
 msgid "Card settings"
 msgstr "Card settings"
+
+msgid "Card split in 2"
+msgstr "Card split in 2"
 
 msgid "Cards"
 msgstr "Cards"
@@ -1080,9 +1116,6 @@ msgstr "Change photo"
 
 msgid "Change the question"
 msgstr "Change the question"
-
-msgid "Changed the card. “{term}” is already in {deckName}."
-msgstr "Changed the card. “{term}” is already in {deckName}."
 
 msgid "Changes appear right away and are listed in Activity. You can edit or archive any card."
 msgstr "Changes appear right away and are listed in Activity. You can edit or archive any card."
@@ -1354,9 +1387,6 @@ msgstr "Couldn’t remove the member. Try again."
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again."
 
-msgid "Couldn’t save that. Check your connection and try again."
-msgstr "Couldn’t save that. Check your connection and try again."
-
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
 
@@ -1383,6 +1413,9 @@ msgstr "Couldn’t send the invitation. Too many went out recently, so try again
 
 msgid "Couldn’t send your feedback"
 msgstr "Couldn’t send your feedback"
+
+msgid "Couldn’t stop offering this fix. Check your connection and try again."
+msgstr "Couldn’t stop offering this fix. Check your connection and try again."
 
 msgid "Couldn’t turn off the join link. Try again."
 msgstr "Couldn’t turn off the join link. Try again."
@@ -1881,6 +1914,15 @@ msgstr "Hide password"
 msgid "History"
 msgstr "History"
 
+msgid "Hook added"
+msgstr "Hook added"
+
+msgid "Hook by you"
+msgstr "Hook by you"
+
+msgid "Hook from lesson"
+msgstr "Hook from lesson"
+
 msgid "How cards are asked"
 msgstr "How cards are asked"
 
@@ -2077,6 +2119,9 @@ msgstr "Keep the description under 300 characters."
 msgid "Keep the example under 2000 characters."
 msgstr "Keep the example under 2000 characters."
 
+msgid "Keep the hook under 200 characters."
+msgstr "Keep the hook under 200 characters."
+
 msgid "Keep the language tag under 12 characters."
 msgstr "Keep the language tag under 12 characters."
 
@@ -2217,8 +2262,8 @@ msgstr "Lymi"
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi also gets the screen you are on, the app version, your browser and your app language."
 
-msgid "Lymi can’t tell why this card slips. Changing how it asks usually helps more than another round of the same."
-msgstr "Lymi can’t tell why this card slips. Changing how it asks usually helps more than another round of the same."
+msgid "Lymi can’t tell why you keep forgetting this card. Changing how it asks often helps."
+msgstr "Lymi can’t tell why you keep forgetting this card. Changing how it asks often helps."
 
 msgid "Lymi doesn’t recognise this app. Allow it only if you trust the address above."
 msgstr "Lymi doesn’t recognise this app. Allow it only if you trust the address above."
@@ -2279,6 +2324,21 @@ msgstr "Meaning changed to “{value}”"
 
 msgid "Meaning from lesson"
 msgstr "Meaning from lesson"
+
+msgid "Meaning, card {n}"
+msgstr "Meaning, card {n}"
+
+msgid "Memory hook"
+msgstr "Memory hook"
+
+msgid "Memory hook changed to “{value}”"
+msgstr "Memory hook changed to “{value}”"
+
+msgid "Memory hook:"
+msgstr "Memory hook:"
+
+msgid "Memory hook: {spokenAid}"
+msgstr "Memory hook: {spokenAid}"
 
 msgid "Message"
 msgstr "Message"
@@ -2613,6 +2673,9 @@ msgstr "Now in {elsewhere}"
 msgid "Often forgotten"
 msgstr "Often forgotten"
 
+msgid "Often mixed up with {other}"
+msgstr "Often mixed up with {other}"
+
 msgid "Often mixed up with <0>{other}</0>"
 msgstr "Often mixed up with <0>{other}</0>"
 
@@ -2714,6 +2777,15 @@ msgstr "Pasted picture"
 
 msgid "Pause the cards"
 msgstr "Pause the cards"
+
+msgid "Peek at it before you reveal the card, or show it after. After a peek, you can’t choose Easy."
+msgstr "Peek at it before you reveal the card, or show it after. After a peek, you can’t choose Easy."
+
+msgid "Peek at or show your hook"
+msgstr "Peek at or show your hook"
+
+msgid "Peek at your hook"
+msgstr "Peek at your hook"
 
 msgid "People"
 msgstr "People"
@@ -2982,6 +3054,9 @@ msgstr "Retry"
 msgid "Reveal the card"
 msgstr "Reveal the card"
 
+msgid "Reveal the card when you have it"
+msgstr "Reveal the card when you have it"
+
 msgid "Review"
 msgstr "Review"
 
@@ -3050,6 +3125,9 @@ msgstr "Same as the deck"
 
 msgid "Save"
 msgstr "Save"
+
+msgid "Save hook"
+msgstr "Save hook"
 
 msgid "Save password"
 msgstr "Save password"
@@ -3214,6 +3292,9 @@ msgstr "Show all"
 
 msgid "Show another"
 msgstr "Show another"
+
+msgid "Show hook"
+msgstr "Show hook"
 
 msgid "Show more"
 msgstr "Show more"
@@ -3382,6 +3463,9 @@ msgstr "Take photo"
 msgid "Tap Add to Home Screen."
 msgstr "Tap Add to Home Screen."
 
+msgid "Tap the card when you have it"
+msgstr "Tap the card when you have it"
+
 msgid "Technology"
 msgstr "Technology"
 
@@ -3393,6 +3477,9 @@ msgstr "Term"
 
 msgid "Term changed to “{value}”"
 msgstr "Term changed to “{value}”"
+
+msgid "Term, card {n}"
+msgstr "Term, card {n}"
 
 msgid "Terms"
 msgstr "Terms"
@@ -3497,6 +3584,9 @@ msgstr "The link works for one hour. If you didn’t ask for a new password, ign
 msgid "the meaning"
 msgstr "the meaning"
 
+msgid "the memory hook"
+msgstr "the memory hook"
+
 msgid "the notes"
 msgstr "the notes"
 
@@ -3536,14 +3626,26 @@ msgstr "They lose this deck and can’t rejoin, by link or invitation. Their rev
 msgid "They’re already in this deck."
 msgstr "They’re already in this deck."
 
+msgid "Think of it when the card shows “<0>{cue}</0>”."
+msgstr "Think of it when the card shows “<0>{cue}</0>”."
+
+msgid "Think of it when the card shows “<0>{cue}</0>”. Change anything that doesn’t help."
+msgstr "Think of it when the card shows “<0>{cue}</0>”. Change anything that doesn’t help."
+
+msgid "Think of it when the card shows its picture."
+msgstr "Think of it when the card shows its picture."
+
+msgid "Think of it when the card shows its picture. Change anything that doesn’t help."
+msgstr "Think of it when the card shows its picture. Change anything that doesn’t help."
+
 msgid "This browser can’t show reminders."
 msgstr "This browser can’t show reminders."
 
 msgid "This card asks for two things at once, so remembering half still counts as a miss."
 msgstr "This card asks for two things at once, so remembering half still counts as a miss."
 
-msgid "This card changed since Lymi looked at it, so the fix no longer fits."
-msgstr "This card changed since Lymi looked at it, so the fix no longer fits."
+msgid "This card changed after Lymi drafted this fix, so it no longer fits."
+msgstr "This card changed after Lymi drafted this fix, so it no longer fits."
 
 msgid "This card’s picture was removed."
 msgstr "This card’s picture was removed."
@@ -3623,9 +3725,6 @@ msgstr "This join link stopped working. Ask the owner for a new one."
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "This link is missing the app that asked. Start again from the app."
 
-msgid "This one keeps slipping"
-msgstr "This one keeps slipping"
-
 msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
 msgstr "This takes a few seconds for most files. Nothing is added to your decks yet."
 
@@ -3701,6 +3800,9 @@ msgctxt "deck tag"
 msgid "Travel"
 msgstr "Travel"
 
+msgid "Try a memory hook"
+msgstr "Try a memory hook"
+
 msgid "Try again"
 msgstr "Try again"
 
@@ -3715,6 +3817,9 @@ msgstr "Turn off link"
 
 msgid "Turn off the join link?"
 msgstr "Turn off the join link?"
+
+msgid "Turned down the fix for {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Turned down the fix for {count, plural, one {# card} other {# cards}} in {deck}"
 
 msgid "Turned off the join link for {deck}"
 msgstr "Turned off the join link for {deck}"
@@ -3860,6 +3965,9 @@ msgstr "Who can join this deck"
 msgid "Work and study"
 msgstr "Work and study"
 
+msgid "Write a hook."
+msgstr "Write a hook."
+
 msgid "Write what you want to tell Lymi."
 msgstr "Write what you want to tell Lymi."
 
@@ -3916,6 +4024,9 @@ msgstr "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 
 msgid "You can undo the whole import later from Activity."
 msgstr "You can undo the whole import later from Activity."
+
+msgid "You can’t choose Easy after peeking at your hook."
+msgstr "You can’t choose Easy after peeking at your hook."
 
 msgid "You can’t undo this."
 msgstr "You can’t undo this."

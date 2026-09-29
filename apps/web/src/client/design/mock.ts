@@ -101,6 +101,8 @@ function card(p: Partial<Card> & Pick<Card, "id" | "term">): Card {
     pronunciation: null,
     example: null,
     notes: null,
+    hook: null,
+    hookSource: null,
     language: "it",
     tags: [],
     source: "Lesson 14",

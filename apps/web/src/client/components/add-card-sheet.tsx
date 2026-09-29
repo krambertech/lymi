@@ -129,7 +129,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, onCreateDe
     <EditCardSheet
       card={pictureFor}
       decks={decks.data}
-      openPicture
+      focus="picture"
       onOpenChange={() => setPictureFor(null)}
       onReopen={setPictureFor}
     />

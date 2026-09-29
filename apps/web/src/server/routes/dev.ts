@@ -233,12 +233,16 @@ dev.post("/slip", describe({ hide: true, open: true }), body(CountBody, "slip"),
   return c.json({ slipped, counts: await devCounts(ctx) });
 });
 
-const FixesBody = z.object({ causes: z.array(z.enum(OFFERED_CAUSES)).min(1).optional() });
+const FixesBody = z.object({
+  causes: z.array(z.enum(OFFERED_CAUSES)).min(1).optional(),
+  hooked: z.boolean().optional(),
+});
 
 // Diagnosed cards without a vendor key, so review's offer can be seen and tested.
 dev.post("/fixes", describe({ hide: true, open: true }), body(FixesBody, "fixes"), async (c) => {
   const ctx = ctxOf(c);
-  const seeded = await seedFixes(ctx, c.req.valid("json").causes);
+  const { causes, hooked } = c.req.valid("json");
+  const seeded = await seedFixes(ctx, causes, { hooked });
   return c.json({ ...seeded, counts: await devCounts(ctx) });
 });
 

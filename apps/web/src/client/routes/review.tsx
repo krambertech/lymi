@@ -3,6 +3,7 @@ import {
   canSpeakTerm,
   type Drawn,
   drawKey,
+  gradeAllowed,
   modeKey,
   type Rating,
   ROUNDS,
@@ -14,9 +15,11 @@ import { Plus } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotionConfig } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Button } from "../components/button";
+import type { EditFocus } from "../components/card-form";
 import { EditCardSheet } from "../components/edit-card-sheet";
-import { type EditFocus, FixSheet } from "../components/fix-sheet";
+import { FixSheet } from "../components/fix-sheet";
 import { GRADES } from "../components/grade";
+import { AID_KEY, aidSteps, aidTaken } from "../components/recall-aid";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import {
@@ -31,6 +34,7 @@ import { usePrefetchPictures } from "../lib/card-images";
 import { useDocumentTitle } from "../lib/document-title";
 import { lanternFor } from "../lib/flame";
 import { gradeStore, recordGrade, retireGrades } from "../lib/grades";
+import { lastInputWasKey } from "../lib/last-input";
 import {
   decksQuery,
   drawQuery,
@@ -198,8 +202,15 @@ function Review() {
     offer: null,
     parked: false,
   });
+  // How far into the card's aids the learner went before the reveal, and whether they asked to see
+  // them after it, held for the card on screen.
+  const [aidState, setAidState] = useState({ key: "", taken: 0, shown: false, animate: true });
+  // Presses of a locked grade's key, counted per card so an earlier card's never show its tip.
+  const [lockedNudge, setLockedNudge] = useState({ key: "", presses: 0 });
   const [fixing, setFixing] = useState(false);
-  const [editing, setEditing] = useState<{ card: Card; focus: EditFocus } | null>(null);
+  const [editing, setEditing] = useState<{ card: Card; focus?: EditFocus | undefined } | null>(
+    null,
+  );
   const online = useSyncExternalStore(subscribeOnline, isOnline, () => true);
 
   // The persisted cache can predate the last grade, so the first card waits for this mount's fetch.
@@ -542,9 +553,42 @@ function Review() {
     qc.invalidateQueries({ queryKey: ["insights"] });
   }, [qc]);
 
+  const showing = current ? `${itemKey(current)}-${done}` : "";
+  const hook = current?.card.hook ?? null;
+  const hookSource = current?.card.hookSource ?? null;
+  const steps = useMemo(() => aidSteps({ hook, hookSource }), [hook, hookSource]);
+  const taken = aidState.key === showing ? aidState.taken : 0;
+  const shownAfter = aidState.key === showing && aidState.shown;
+  // Only a step taken before the reveal is help with recall; seeing the hook after it is not.
+  const aid = aidTaken(steps, taken);
+  const takeAid = useCallback(
+    (input: "keyboard" | "pointer") => {
+      if (revealed || taken >= steps.length) return;
+      setAidState({ key: showing, taken: taken + 1, shown: false, animate: input !== "keyboard" });
+    },
+    [revealed, taken, steps.length, showing],
+  );
+  const showAid = useCallback(
+    (input: "keyboard" | "pointer", focused = false) => {
+      if (!revealed || taken > 0 || shownAfter || steps.length === 0) return;
+      setAidState({ key: showing, taken, shown: true, animate: input !== "keyboard" });
+      // The button holding focus goes, so focus moves on to what comes next: the grades.
+      if (focused) gradesFocus();
+    },
+    [revealed, taken, shownAfter, steps.length, showing],
+  );
+
   const onGrade = useCallback(
     (rating: Rating, input: "keyboard" | "pointer" = "pointer") => {
       if (!revealed || !current || !data || !state) return;
+      // Easy means recall without help, so after a peek its key only says why, and grades nothing.
+      if (!gradeAllowed(rating, aid)) {
+        setLockedNudge((n) => ({
+          key: showing,
+          presses: n.key === showing ? n.presses + 1 : 1,
+        }));
+        return;
+      }
       const item = current;
       const key = modeKey(item.mode);
       const repeat = state.log.some((e) => e.cardId === item.card.id && e.mode === key);
@@ -558,6 +602,7 @@ function Review() {
           ? stateBefore(data, state.log, item.card.id, item.mode)
           : item.fsrsState,
         timezone: deviceTimezone(),
+        ...(aid ? { aid } : {}),
       });
       setFocusReveal(!!document.activeElement?.closest("[data-grade-strip]"));
       const listed = !!leg && !drawLeg;
@@ -601,7 +646,7 @@ function Review() {
         })
         .finally(() => setSending((n) => n - 1));
     },
-    [revealed, current, data, state, leg, drawLeg, invalidateReviewData, qc, t],
+    [revealed, current, data, state, aid, showing, leg, drawLeg, invalidateReviewData, qc, t],
   );
 
   // Leaving mid-stretch ends on the success screen, unless nothing was added since the last one.
@@ -620,7 +665,25 @@ function Review() {
         return;
       }
       const target = e.target as HTMLElement | null;
-      if (target?.closest("button, a, input, textarea, select, [contenteditable='true']")) return;
+      const control = target?.closest(
+        "button, a, input, textarea, select, [contenteditable='true']",
+      );
+      // The aid's key also reaches the card's reveal button, where grading from the strip leaves
+      // focus, and the aid's own buttons; matched by its place, so every keyboard layout has it.
+      if (current && e.code === AID_KEY.code) {
+        if (control && !control.matches("[data-reveal], [data-aid]")) return;
+        e.preventDefault();
+        const onAid = control?.matches("[data-aid]") ?? false;
+        if (revealed) showAid("keyboard", onAid);
+        else {
+          takeAid("keyboard");
+          // The spent pill turns inert, so focus moves on to the card, as a press on the pill does.
+          if (onAid)
+            document.querySelector<HTMLElement>("[data-reveal]")?.focus({ preventScroll: true });
+        }
+        return;
+      }
+      if (control) return;
       if (!current) return;
       if (e.key === " ") {
         e.preventDefault();
@@ -639,11 +702,10 @@ function Review() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, onGrade, leave, add.open, fixing, editing, current]);
+  }, [revealed, onGrade, takeAid, showAid, leave, add.open, fixing, editing, current]);
 
   // Offline the offer simply does not appear; review goes on as it always has. Once decided it
   // holds, so a refetch or a dropped connection never moves or remounts it mid-card.
-  const showing = current ? `${itemKey(current)}-${done}` : "";
   if (cardOffer.key !== showing) {
     const candidate = current?.offer;
     const offer =
@@ -804,6 +866,18 @@ function Review() {
                     }
                   : undefined
               }
+              aid={
+                steps.length > 0
+                  ? {
+                      steps,
+                      taken,
+                      shown: shownAfter,
+                      animate: aidState.key === showing ? aidState.animate : true,
+                      onTake: takeAid,
+                      onShow: showAid,
+                    }
+                  : undefined
+              }
               className="mt-4 @3xl:max-h-[600px] @3xl:[@media(min-height:40rem)]:min-h-[460px]"
             />
             <GradeBar
@@ -813,16 +887,25 @@ function Review() {
               animateOut={animateNextCard}
               focusOnReveal={focusGrades}
               next={current.next}
+              aid={aid}
+              lockedNudge={lockedNudge.key === showing ? lockedNudge.presses : 0}
               onGrade={(rating) => onGrade(rating, "pointer")}
             />
           </motion.div>
         )}
       </AnimatePresence>
       <FixSheet
-        item={current && offer ? { ...current, offer } : current}
+        item={current}
+        offer={offer}
         open={fixing}
         finalFocus={gradesFocus}
         onOpenChange={(open) => (open ? setFixing(true) : closeFix())}
+        onFixed={(cause) => {
+          // A hook kept after the reveal shows at once, where Show hook would have put it.
+          if (cause === "no_anchor" && revealed) {
+            setAidState({ key: showing, taken, shown: true, animate: !lastInputWasKey() });
+          }
+        }}
         onEdit={(focus) => {
           closeFix();
           if (current) setEditing({ card: current.card, focus });
@@ -835,12 +918,9 @@ function Review() {
       <EditCardSheet
         card={editing?.card ?? null}
         decks={decks.data}
-        openPicture={editing?.focus === "picture"}
-        focus={
-          editing?.focus === "term" || editing?.focus === "meaning" ? editing.focus : undefined
-        }
+        focus={editing?.focus}
         onOpenChange={(open) => !open && setEditing(null)}
-        onReopen={(card) => setEditing({ card, focus: null })}
+        onReopen={(card) => setEditing({ card })}
         finalFocus={gradesFocus}
       />
     </div>

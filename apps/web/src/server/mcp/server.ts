@@ -455,17 +455,8 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Accept a drafted fix",
       description:
-        "Apply the fix in a card's diagnosis, from get_card, when the learner asks for it. Send the diagnosis id, its cause, and the drafted cards or text, changed where the learner wants: confused_pair adds the two cards beside the card, two_things changes the card to the first card and adds the second, several_answers rewrites the cue with text. Text sent as drafted keeps the AI badge. A drafted card already in the learner's decks is skipped. Refused once the card has changed since the diagnosis. undo_card_fix reverses it. Needs write.",
-      inputSchema: z.object({
-        diagnosisId: z.string().min(1),
-        cause: z.enum(["confused_pair", "two_things", "several_answers"]),
-        cards: z
-          .array(z.object({ term: z.string(), meaning: z.string() }))
-          .length(2)
-          .optional()
-          .describe("For confused_pair and two_things"),
-        text: z.string().optional().describe("For several_answers"),
-      }),
+        "Apply the fix in a card's diagnosis, from get_card, when the learner asks for it. Send the diagnosis id, its cause, and the drafted cards, text or hook, changed where the learner wants: confused_pair adds the two cards beside the card, two_things changes the card to the first card and adds the second, several_answers rewrites the cue with text, and no_anchor sets the card's hook. A hook is a short phrase that leads back to the answer without giving any of it away. For a diagnosis with no clear reason, send no_anchor with a hook the learner wrote. Text sent as drafted keeps the AI badge. A drafted card already in the learner's decks is skipped. Refused once the card has changed since the diagnosis. undo_card_fix reverses it. Needs write.",
+      inputSchema: AcceptFixInput,
       outputSchema: FixResultOut,
       ...writeTool({ idempotent: false, overwrites: true }),
     },
@@ -495,7 +486,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Undo an accepted fix",
       description:
-        "Reverse a fix accept_card_fix applied: archive the cards it added and put back the text it changed. Undoing a fix that is not in place changes nothing. Needs write.",
+        "Reverse a fix accept_card_fix applied: archive the cards it added and put back the text it changed. Refused, with nothing undone, when the card or a card it added was edited since. Undoing a fix that is not in place changes nothing. Needs write.",
       inputSchema: z.object({ diagnosisId: z.string().min(1) }),
       outputSchema: OkOut,
       ...writeTool({ idempotent: true }),
@@ -1131,6 +1122,12 @@ const CardOut = z.object({
   pronunciation: z.string().nullable(),
   example: z.string().nullable(),
   notes: z.string().nullable().describe("Markdown source in the notes subset"),
+  hook: z
+    .string()
+    .nullable()
+    .describe(
+      "A short phrase that leads back to the answer without giving any of it away. Review shows it under the cue.",
+    ),
   language: z.string().nullable(),
   tags: z.array(z.string()),
   source: z.string().nullable(),
@@ -1154,6 +1151,7 @@ const CardOut = z.object({
   meaningSource: FieldSource.nullable(),
   exampleSource: FieldSource.nullable(),
   pronunciationSource: FieldSource.nullable(),
+  hookSource: FieldSource.nullable(),
   enrichmentStatus: EnrichmentStatus.nullable().describe(
     "Set while Lymi is filling the card's empty fields, and null once it settles",
   ),
@@ -1172,8 +1170,29 @@ const FixResultOut = z.object({
 
 const CardDetailOut = CardOut.extend({
   diagnosis: CardDiagnosisOut.nullable().describe(
-    "Once the card turns often forgotten: the likely reason the learner keeps forgetting it and a drafted fix, or unclear. Null before then and while Lymi is still working. Nothing on the card changes until the learner accepts a fix in the app.",
+    "Once the card turns often forgotten: the likely reason the learner keeps forgetting it and a drafted fix, or unclear. Null before then and while Lymi is still working. Nothing on the card changes until the learner accepts the fix; acceptedAt is set while it is on the card.",
   ),
+});
+
+const [pairFix, , cueFix, hookFix] = FixInput.options;
+
+/** `FixInput` as one flat object, since a tool's input schema cannot be a union at its top level. */
+const AcceptFixInput = z.object({
+  diagnosisId: z.string().min(1),
+  cause: z.enum(FixInput.options.map((option) => option.shape.cause.value)),
+  cards: pairFix.shape.cards
+    .optional()
+    .describe(
+      "For confused_pair, the two cards to add. For two_things, the first replaces the card's term and meaning and the second is added beside it.",
+    ),
+  text: cueFix.shape.text
+    .optional()
+    .describe("For several_answers: the new cue, written to the field the draft names"),
+  hook: hookFix.shape.hook
+    .optional()
+    .describe(
+      "For no_anchor: a short phrase that leads back to the answer without giving any of it away",
+    ),
 });
 
 function statsOut(stats: CardReviewStats): CardReviewStatsOut {
@@ -1197,6 +1216,7 @@ function cardOut(card: CardView): CardOut {
     pronunciation: card.pronunciation,
     example: card.example,
     notes: card.notes,
+    hook: card.hook,
     language: card.language,
     tags: card.tags,
     source: card.source,
@@ -1215,6 +1235,7 @@ function cardOut(card: CardView): CardOut {
     meaningSource: card.meaningSource,
     exampleSource: card.exampleSource,
     pronunciationSource: card.pronunciationSource,
+    hookSource: card.hookSource,
     enrichmentStatus: card.enrichmentStatus,
     archivedAt: card.archivedAt ? card.archivedAt.toISOString() : null,
     createdAt: card.createdAt.toISOString(),

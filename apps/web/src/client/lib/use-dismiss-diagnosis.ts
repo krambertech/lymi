@@ -35,7 +35,7 @@ export function useDismissDiagnosis(onUndone: (id: string) => void) {
       toast.add({
         id: `dismiss-${id}`,
         type: "error",
-        title: t`Couldn’t save that. Check your connection and try again.`,
+        title: t`Couldn’t stop offering this fix. Check your connection and try again.`,
       }),
   });
 }

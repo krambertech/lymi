@@ -12,6 +12,7 @@ const values = (p: Partial<CardFormValues> = {}): CardFormValues => ({
   pronunciation: "",
   example: "",
   notes: "",
+  hook: "",
   source: "",
   tags: [],
   language: "it",
@@ -32,6 +33,8 @@ const card: Card = {
   pronunciation: null,
   example: null,
   notes: null,
+  hook: null,
+  hookSource: null,
   language: "it",
   tags: ["verbs"],
   source: "Lesson 14",
@@ -91,6 +94,23 @@ describe("cardPatch", () => {
       source: "",
       reviewModes: null,
     });
+  });
+
+  it("makes a changed hook the learner's, even one the AI drafted", () => {
+    const drafted: Card = { ...card, hook: "Hurry up the brigade", hookSource: "ai" };
+    const kept = values({
+      meaning: "to hurry up",
+      tags: ["verbs"],
+      source: "Lesson 14",
+      hook: "Hurry up the brigade",
+    });
+    expect(cardPatch(drafted, kept)).toEqual({});
+    expect(cardPatch(drafted, { ...kept, hook: "Brigade, hurry" })).toEqual({
+      hook: "Brigade, hurry",
+      hookSource: "manual",
+    });
+    // A cleared hook has no source to claim.
+    expect(cardPatch(drafted, { ...kept, hook: "" })).toEqual({ hook: "" });
   });
 });
 

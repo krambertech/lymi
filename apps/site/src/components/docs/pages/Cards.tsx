@@ -13,6 +13,11 @@ const FIELDS: { name: string; type: string; note: string }[] = [
     type: "string",
     note: "Anything else worth keeping. Markdown: **bold**, *italic*, and lists starting with - or 1. Anything else, HTML included, shows as typed.",
   },
+  {
+    name: "hook",
+    type: "string",
+    note: "A short association that leads back to the answer without giving any of it away. Review shows it under the cue: the learner can peek at it before the reveal, which rules out Easy, or show it after. Up to 200 characters.",
+  },
   { name: "language", type: "string | null", note: "BCP 47 tag. Defaults to the deck's." },
   { name: "tags", type: "string[]", note: "Up to 20. Free text." },
   { name: "source", type: "string", note: "Where it came from: a lesson, a book, a film." },
@@ -35,6 +40,11 @@ const FIELDS: { name: string; type: string; note: string }[] = [
     name: "pronunciationSource",
     type: '"lesson" | "ai" | "manual"',
     note: "Where the pronunciation came from.",
+  },
+  {
+    name: "hookSource",
+    type: '"lesson" | "ai" | "manual"',
+    note: "Where the hook came from.",
   },
   {
     name: "enrich",

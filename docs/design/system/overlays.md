@@ -13,7 +13,7 @@ What is opening?
  ├── A page read over the current screen (a word, the streak) → a place: Dialog kind="place", open state in the URL
  ├── What just happened, after the fact → toast
  ├── The name of an icon control → Tooltip, which IconButton already does
- └── Why one control failed (a pronunciation that would not play) → a tip over that control (ErrorTip)
+ └── Why one control failed, or cannot act (a pronunciation that would not play, Easy after a peek) → a tip over that control (ErrorTip)
 ```
 
 **A modal that asks a question is a last resort; Undo replaces confirmation.** A sheet is not that modal: it is a form the learner asked for.
@@ -75,6 +75,7 @@ An icon control names itself in a tooltip, never a native `title`, whose delay, 
 - Keyboard focus shows it without the wait; touch never does.
 - Pressing the control, Escape and blur all close it, and a menu button stays quiet while its menu is open.
 - It repeats the accessible name, so it is hidden from assistive technology and never stands in for the control's `aria-label`.
+- A locked control, such as Easy after a peek, may carry its reason in a tooltip. The reason is also its accessible description, and the tip a press opens replaces the tooltip while it shows.
 
 `Tooltip` holds the parts, and one `TooltipProvider` at the client root shares the delay so adjacent tooltips hand off.
 

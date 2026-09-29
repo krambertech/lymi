@@ -4,14 +4,20 @@ import { expect, type Locator, type Page, test } from "./test";
 // A journey because it adds a drawer to review: the offer, the drawer on touch and WebKit, the
 // write, and Undo across the Worker and D1. No public route writes a diagnosis without a model,
 // so the setup is the local-only `/api/dev/fixes`, which the E2E server's loopback origin serves.
+// Every test here signs in as the same account, one per file, and each seed replaces the last, so
+// the tests in this file run in order. Taps timed against the offer's arrival are component tests.
 
-async function seedPair(page: Page) {
-  const seeded = await page.request.post("/api/dev/fixes", {
-    data: { causes: ["confused_pair"] },
-  });
+async function seedPair(page: Page, causes: string[] = ["confused_pair"]) {
+  const seeded = await page.request.post("/api/dev/fixes", { data: { causes } });
   expect(seeded.ok()).toBeTruthy();
   return ((await seeded.json()) as { deckId: string }).deckId;
 }
+
+/**
+ * Whether the revealed card holds an offer at all, arrived or not. The offer is decided as the card
+ * arrives, so this needs no wait; it is the one control that opens a dialog from the card.
+ */
+const offerOnCard = (page: Page) => page.getByLabel(/ card for /).locator("[aria-haspopup=dialog]");
 
 /** A parked offer fades and keeps its room until the grade, so it is transparent and inert, not gone. */
 async function expectParked(offer: Locator) {
@@ -43,7 +49,10 @@ test("a learner accepts a drafted fix after the reveal and can undo it", async (
       .getByRole("button", { name: "Reveal the card" })
       .click({ position: { x: 24, y: 24 } });
     await expect(offer).toBeVisible();
-    await expect(page.getByRole("button", { name: /^Good/ })).toBeVisible();
+    // A trial click fails if anything, the offer included, stands over the grade.
+    for (const grade of [/^Forgot/, /^Hard/, /^Good/, /^Easy/]) {
+      await page.getByRole("button", { name: grade }).click({ trial: true });
+    }
   });
 
   await test.step("the fix opens as a sheet and adds the two drafted cards", async () => {
@@ -52,7 +61,7 @@ test("a learner accepts a drafted fix after the reveal and can undo it", async (
     await expect(sheet.getByRole("heading", { name: "alustama and algama" })).toBeVisible();
     await sheet.getByRole("button", { name: "Add 2 cards", exact: true }).click();
     await expect(sheet).toBeHidden();
-    await expect(page.getByText("Added 2 cards")).toBeVisible();
+    await expect(page.getByText("2 cards added")).toBeVisible();
     await expect
       .poll(() => activeTerms(page, deckId))
       .toEqual(["Ma alustan tööd kell üheksa.", "Töö algab kell üheksa.", "algama", "alustama"]);
@@ -113,21 +122,48 @@ test("Not now parks the offer: it leaves the card, and the answer stays put", as
   expect((await answer.boundingBox())?.y).toBe(before?.y);
 });
 
-test("a tap where the offer will be, before it has arrived, opens nothing", async ({
+test("an offer counts as shown once it can be seen, without a grade or a fix", async ({
   page,
 }, testInfo) => {
   await startAsTestLearner(page, testInfo, "review-fix", "/today");
   const deckId = await seedPair(page);
   await page.goto(`/review?deck=${deckId}`);
+  const marked = page.waitForResponse((r) => r.url().endsWith("/offered") && r.ok());
   await page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
-  // Still transparent and inert, but its room is already there to be tapped.
-  const offer = page.locator("[aria-haspopup=dialog]");
-  await expect(offer).toHaveAttribute("inert", "");
-  const box = await offer.boundingBox();
-  if (!box) throw new Error("the offer has no room");
-  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
-  await expect(offer).not.toHaveAttribute("inert");
-  await expect(page.getByRole("dialog", { name: "alustama and algama" })).toBeHidden();
+  await expect(page.getByRole("button", { name: /Often mixed up with algama/ })).toBeVisible();
+  await marked;
+
+  await page.reload();
+  await page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
+  await expect(page.getByRole("button", { name: /^Good/ })).toBeVisible();
+  await expect(offerOnCard(page)).toHaveCount(0);
+});
+
+test("a card that arrives offline brings no offer", async ({ page }, testInfo) => {
+  await startAsTestLearner(page, testInfo, "review-fix", "/today");
+  const deckId = await seedPair(page, ["confused_pair", "two_things"]);
+  await page.goto(`/review?deck=${deckId}`);
+  const reveal = () =>
+    page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
+  const good = page.getByRole("button", { name: /^Good/ });
+
+  await test.step("online, the first card offers its fix", async () => {
+    await reveal();
+    await expect(
+      page.getByRole("button", { name: /Often mixed up with algama|Two things on one card/ }),
+    ).toBeVisible();
+  });
+
+  await test.step("offline, the next card is reviewed as it always was", async () => {
+    await page.context().setOffline(true);
+    await good.click();
+    await reveal();
+    await expect(good).toBeVisible();
+    await expect(offerOnCard(page)).toHaveCount(0);
+    // Coming back online mid-card does not bring it in under the learner.
+    await page.context().setOffline(false);
+    await expect(offerOnCard(page)).toHaveCount(0);
+  });
 });
 
 test("“That’s not it” sets the fix aside for good, and Undo brings the offer back", async ({

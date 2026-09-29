@@ -446,6 +446,27 @@ describe("a learner's pinned edition", () => {
     expect(englishSections.sections.map((s) => s.name)).toEqual(["Greetings"]);
   });
 
+  it("shows the deck's own hooks to a reader of the original, and none in another edition", async () => {
+    const deck = await estonian("hooked");
+    await publishUkrainian(deck);
+    await db
+      .update(schema.cards)
+      .set({ hook: "Tere sounds like 'there'", hookSource: "manual" })
+      .where(eq(schema.cards.deckId, deck.deckId));
+    await addPublishedDeck(anna, "hooked", "uk");
+    await addPublishedDeck(bohdan, "hooked");
+    const hooks = async (ctx: ServiceContext) =>
+      (await listDeckCards(ctx, deck.deckId)).map((row) => [row.card.hook, row.card.hookSource]);
+    expect(await hooks(anna)).toEqual([
+      [null, null],
+      [null, null],
+    ]);
+    expect(await hooks(bohdan)).toEqual([
+      ["Tere sounds like 'there'", "manual"],
+      ["Tere sounds like 'there'", "manual"],
+    ]);
+  });
+
   it("does not move when the app language changes", async () => {
     const deck = await estonian("settled");
     await publishUkrainian(deck);

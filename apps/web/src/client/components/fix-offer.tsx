@@ -1,7 +1,10 @@
-import { Trans } from "@lingui/react/macro";
+import type { I18n } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { headword } from "@lymi/core";
 import { cn } from "cn";
 import {
+  Anchor,
   ArrowLeftRight,
   ChevronRight,
   CircleHelp,
@@ -12,45 +15,47 @@ import {
 import { motion, useReducedMotionConfig } from "motion/react";
 import { type ReactNode, useState } from "react";
 import type { ReviewOffer } from "../lib/api";
-
-const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+import { EASE_OUT } from "../lib/ease";
 
 const ICONS: Record<ReviewOffer["cause"], LucideIcon> = {
   confused_pair: ArrowLeftRight,
   two_things: Split,
   several_answers: CircleHelp,
-  // Review offers no hook yet (#405); the entry only completes the record.
-  no_anchor: Pencil,
+  no_anchor: Anchor,
   unclear: Pencil,
 };
 
-/** The line that names the cause, and the one that names the fix. */
-function offerLines(offer: ReviewOffer): [ReactNode, ReactNode] {
+/** The line that names the cause, as plain text for the announcement that the fix is ready. */
+export function offerTitle(i18n: I18n, offer: ReviewOffer): string {
   switch (offer.cause) {
     case "confused_pair": {
       const other = headword(offer.other.term);
-      return [
-        <Trans key="t">
-          Often mixed up with <span lang={offer.other.language ?? undefined}>{other}</span>
-        </Trans>,
-        <Trans key="l">See the difference</Trans>,
-      ];
+      return i18n._(msg`Often mixed up with ${other}`);
     }
     case "two_things":
-      return [
-        <Trans key="t">Two things on one card</Trans>,
-        <Trans key="l">Split into 2 cards</Trans>,
-      ];
+      return i18n._(msg`Two things on one card`);
     case "several_answers":
-      return [
-        <Trans key="t">More than one right answer</Trans>,
-        <Trans key="l">Make the question clearer</Trans>,
-      ];
+      return i18n._(msg`More than one right answer`);
+    case "no_anchor":
+      return i18n._(msg`Try a memory hook`);
     default:
-      return [
-        <Trans key="t">This one keeps slipping</Trans>,
-        <Trans key="l">Try asking it another way</Trans>,
-      ];
+      return i18n._(msg`Often forgotten`);
+  }
+}
+
+/** The line that names the fix. */
+function offerLine(offer: ReviewOffer): ReactNode {
+  switch (offer.cause) {
+    case "confused_pair":
+      return <Trans>See the difference</Trans>;
+    case "two_things":
+      return <Trans>Split into 2 cards</Trans>;
+    case "several_answers":
+      return <Trans>Make the question clearer</Trans>;
+    case "no_anchor":
+      return <Trans>A short phrase that helps you remember it</Trans>;
+    default:
+      return <Trans>Try asking it another way</Trans>;
   }
 }
 
@@ -60,8 +65,18 @@ export const FIX_OFFER_BOX =
 
 /** What the panel says, without its motion: the live offer and the measuring copy both hold it. */
 export function FixOfferFace({ offer, icon }: { offer: ReviewOffer; icon?: ReactNode }) {
+  const { i18n } = useLingui();
   const Icon = ICONS[offer.cause];
-  const [title, line] = offerLines(offer);
+  // The other term of a pair is in its own language, which the plain title cannot mark.
+  const pair = offer.cause === "confused_pair" ? offer.other : null;
+  const other = pair ? headword(pair.term) : "";
+  const title = pair ? (
+    <Trans>
+      Often mixed up with <span lang={pair.language ?? undefined}>{other}</span>
+    </Trans>
+  ) : (
+    offerTitle(i18n, offer)
+  );
   return (
     <>
       {icon ?? (
@@ -72,10 +87,10 @@ export function FixOfferFace({ offer, icon }: { offer: ReviewOffer; icon?: React
           <Icon className="size-[18px]" strokeWidth={1.75} />
         </span>
       )}
-      {/* Two lines for the title, so the other term of a pair is never cut away. */}
+      {/* Two lines each, so neither the other term of a pair nor the fix is cut away on a phone. */}
       <span className="grid min-w-0 flex-1 gap-0.5">
         <span className="line-clamp-2 text-md font-medium text-text">{title}</span>
-        <span className="truncate text-sm text-muted">{line}</span>
+        <span className="line-clamp-2 text-sm text-muted">{offerLine(offer)}</span>
       </span>
       <ChevronRight
         className="size-4 shrink-0 text-faint transition-colors duration-150 hoverable:group-hover:text-muted rtl:-scale-x-100"

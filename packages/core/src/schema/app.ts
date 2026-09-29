@@ -10,6 +10,7 @@ import {
   LOCALIZATION_STATUSES,
   PUBLICATION_CATEGORIES,
   type PublicationTag,
+  REVIEW_AIDS,
   REVIEW_MODE_KEYS,
   type ReviewModeKey,
   SECTION_PROGRESSIONS,
@@ -171,6 +172,9 @@ export const cards = sqliteTable(
     meaningSource: text("meaning_source", { enum: ["lesson", "ai", "manual"] }),
     exampleSource: text("example_source", { enum: ["lesson", "ai", "manual"] }),
     pronunciationSource: text("pronunciation_source", { enum: ["lesson", "ai", "manual"] }),
+    /** A memory hook. Not an edition field, so writing one leaves `revision` and every edition alone. */
+    hook: text("hook"),
+    hookSource: text("hook_source", { enum: ["lesson", "ai", "manual"] }),
     /** Set while an enrichment job is outstanding, and cleared once it settles. */
     enrichmentStatus: text("enrichment_status", { enum: ["working", "failed"] }),
     /** R2 key of generated pronunciation audio, if any. */
@@ -578,6 +582,8 @@ export const reviews = sqliteTable(
     stateBefore: text("state_before"),
     /** Canonical review mode. Null only on rows an older Worker wrote. ADR 0014. */
     mode: text("mode", { enum: REVIEW_MODE_KEYS }),
+    /** What the learner used before the reveal; null for an unaided recall. */
+    aid: text("aid", { enum: REVIEW_AIDS }),
   },
   (t) => [
     index("reviews_card_idx").on(t.cardId, t.reviewedAt),

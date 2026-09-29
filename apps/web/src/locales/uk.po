@@ -16,8 +16,8 @@ msgstr ""
 msgid ", not open yet"
 msgstr ", ще не відкрито"
 
-msgid "“{current}” fits more than one answer, so the card can’t tell which one you mean."
-msgstr "«{current}» підходить до кількох відповідей, тож картка не знає, яку з них ти маєш на увазі."
+msgid "“{current}” fits more than one answer, so you can’t tell which one the card wants."
+msgstr "Під «{current}» підходить кілька відповідей, тож незрозуміло, яку чекає картка."
 
 msgid "“{deckName}” is reviewed with the other decks in its series."
 msgstr "«{deckName}» повторюватиметься разом з іншими колодами серії."
@@ -28,8 +28,8 @@ msgstr "«{label}» уже є в «{deckName}», тож копію, додану
 msgid "“{term}” has nothing left to fill in."
 msgstr "У «{term}» нічого доповнювати."
 
-msgid "“{title}” keeps slipping, likely because the two get mixed up."
-msgstr "«{title}» постійно забувається, схоже, через те, що ти їх плутаєш."
+msgid "“{title}” is often forgotten, maybe because the two are easy to mix up."
+msgstr "«{title}» часто забувається, можливо, бо їх легко сплутати."
 
 #. placeholder {0}: counts?.decks ?? 0
 msgid "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
@@ -327,11 +327,11 @@ msgstr "{0} ділиться з тобою колодою"
 msgid "{0}% of the file arrived. Choose the same file to send the rest."
 msgstr "Завантажено {0}% файлу. Вибери той самий файл, щоб надіслати решту."
 
+msgid "{added, plural, one {# card added} other {# cards added}}"
+msgstr "{added, plural, one {# картку додано} few {# картки додано} many {# карток додано} other {# картки додано}}"
+
 msgid "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
 msgstr "{added, plural, one {До зупинки імпорту додано # картку.} few {До зупинки імпорту додано # картки.} many {До зупинки імпорту додано # карток.} other {До зупинки імпорту додано # картки.}}"
-
-msgid "{added, plural, one {Added # card} other {Added # cards}}"
-msgstr "{added, plural, one {Додано # картку} few {Додано # картки} many {Додано # карток} other {Додано # картки}}"
 
 msgid "{added, plural, one {Import # card} other {Import # cards}}"
 msgstr "{added, plural, one {Імпортувати # картку} few {Імпортувати # картки} many {Імпортувати # карток} other {Імпортувати # картки}}"
@@ -493,6 +493,9 @@ msgstr "{graded, plural, one {Запам’ятовування порахова
 msgid "{label} decks"
 msgstr "Колоди: {label}"
 
+msgid "{label}, locked"
+msgstr "{label}, заблоковано"
+
 msgid "{label}, next in {schedules}"
 msgstr "{label}, далі через {schedules}"
 
@@ -582,6 +585,9 @@ msgstr "<0>{name}</0> готовий. Скопіюй його зараз. Біл
 msgid "<0>{title}</0> and <1>{otherTitle}</1>"
 msgstr "<0>{title}</0> і <1>{otherTitle}</1>"
 
+msgid "1 card added. “{term}” is already in {deckName}."
+msgstr "1 картку додано. «{term}» уже є в «{deckName}»."
+
 msgid "30 days"
 msgstr "30 днів"
 
@@ -624,11 +630,23 @@ msgstr "Посилання на зображення в мережі."
 msgid "A Lymi file from another Lymi account"
 msgstr "Файл Lymi з іншого акаунта Lymi"
 
+msgid "A memory hook for <0>{term}</0>"
+msgstr "Зачіпка для <0>{term}</0>"
+
 msgid "A reset link works once, within an hour."
 msgstr "Посилання діє одну годину й тільки один раз."
 
 msgid "A rest day keeps the streak through one missed day a week."
 msgstr "День відпочинку зберігає дні поспіль, коли пропускаєш один день на тиждень."
+
+msgid "A short phrase that helps you remember it"
+msgstr "Коротка фраза, що допоможе запам’ятати"
+
+msgid "A short phrase that helps you remember it."
+msgstr "Коротка фраза, що допоможе запам’ятати."
+
+msgid "A sound-alike, or something to picture"
+msgstr "Співзвучне слово або те, що можна уявити"
 
 msgid "A–Z"
 msgstr "А–Я"
@@ -661,6 +679,9 @@ msgstr "Додати 2 картки"
 msgid "Add a card"
 msgstr "Додати картку"
 
+msgid "Add a memory hook"
+msgstr "Додати зачіпку"
+
 msgid "Add a picture"
 msgstr "Додати зображення"
 
@@ -690,6 +711,9 @@ msgstr "Додай картки з наступного уроку"
 
 msgid "Add cards with the API"
 msgstr "Додавай картки через API"
+
+msgid "Add hook"
+msgstr "Додати зачіпку"
 
 msgid "Add Lymi as an MCP server in Claude or ChatGPT, then sign in when asked."
 msgstr "Додай Lymi як MCP-сервер у Claude або ChatGPT, а потім увійди, коли попросять."
@@ -742,9 +766,6 @@ msgstr "Додано «{term}». Картка збережена на цьому
 msgid "Added {count, plural, one {# card} other {# cards}} to {deck}"
 msgstr "Додано {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} до колоди «{deck}»"
 
-msgid "Added 1 card. “{term}” is already in {deckName}."
-msgstr "Додано 1 картку. «{term}» вже є в колоді {deckName}."
-
 msgid "Added today"
 msgstr "Додано сьогодні"
 
@@ -762,6 +783,9 @@ msgstr "AI-застосунки, підключені до твого акаун
 
 msgid "AI example"
 msgstr "Приклад від AI"
+
+msgid "AI hook"
+msgstr "Зачіпка від AI"
 
 msgid "AI meaning"
 msgstr "Значення від AI"
@@ -784,9 +808,6 @@ msgstr "Дозволити"
 msgctxt "deck tag"
 msgid "Alphabet"
 msgstr "Алфавіт"
-
-msgid "Also a right answer: <0>{otherAnswer}</0>"
-msgstr "Теж правильна відповідь: <0>{otherAnswer}</0>"
 
 msgid "Also adds, edits and archives them."
 msgstr "Також додає, редагує й архівує їх."
@@ -818,8 +839,14 @@ msgstr "Пакет Anki"
 msgid "anna@example.com"
 msgstr "anna@example.com"
 
+msgid "Another right answer: <0>{otherAnswer}</0>"
+msgstr "Інша правильна відповідь: <0>{otherAnswer}</0>"
+
 msgid "Answer: {back}"
 msgstr "Відповідь: {back}"
+
+msgid "Answer: {back}. A fix is ready: {fixTitle}"
+msgstr "Відповідь: {back}. Є виправлення: {fixTitle}"
 
 msgid "Any time"
 msgstr "Будь-коли"
@@ -975,6 +1002,9 @@ msgstr "Обидва способи"
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Повертає кожну картку, яку додав цей імпорт, і створені ним колоди."
 
+msgid "Brought back the fix for {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Повернуто виправлення для {count, plural, one {# картки} few {# карток} many {# карток} other {# картки}} у колоді «{deck}»"
+
 msgid "Browse ready-made decks"
 msgstr "Переглянути готові колоди"
 
@@ -1024,13 +1054,16 @@ msgid "Card {n}"
 msgstr "Картка {n}"
 
 msgid "Card 1 keeps this card’s history and notes. Card 2 starts as new."
-msgstr "Картка 1 зберігає історію й нотатки цієї картки. Картка 2 починає як нова."
+msgstr "Картка 1 зберігає історію й нотатки цієї картки. Картка 2 буде новою."
 
 msgid "Card added"
 msgstr "Картку додано"
 
 msgid "Card added, meaning from the lesson"
 msgstr "Картку додано, значення з уроку"
+
+msgid "Card changed. “{term}” is already in {deckName}."
+msgstr "Картку змінено. «{term}» уже є в «{deckName}»."
 
 msgid "Card discarded"
 msgstr "Картку скасовано"
@@ -1040,6 +1073,9 @@ msgstr "Параметри картки"
 
 msgid "Card settings"
 msgstr "Налаштування картки"
+
+msgid "Card split in 2"
+msgstr "Картку розділено на 2"
 
 msgid "Cards"
 msgstr "Картки"
@@ -1080,9 +1116,6 @@ msgstr "Змінити фото"
 
 msgid "Change the question"
 msgstr "Змінити запитання"
-
-msgid "Changed the card. “{term}” is already in {deckName}."
-msgstr "Картку змінено. «{term}» вже є в колоді {deckName}."
 
 msgid "Changes appear right away and are listed in Activity. You can edit or archive any card."
 msgstr "Зміни з’являються одразу й потрапляють в Активність. Будь-яку картку можна редагувати або архівувати."
@@ -1354,9 +1387,6 @@ msgstr "Не вдалося вилучити учасника. Спробуй щ
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Не вдалося зберегти «{failedTerm}». Перевір з’єднання й повтори спробу."
 
-msgid "Couldn’t save that. Check your connection and try again."
-msgstr "Не вдалося зберегти. Перевір з’єднання і спробуй ще раз."
-
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не вдалося зберегти мову. Перевір з’єднання й повтори спробу."
 
@@ -1383,6 +1413,9 @@ msgstr "Не вдалося надіслати запрошення. Забаг�
 
 msgid "Couldn’t send your feedback"
 msgstr "Не вдалося надіслати повідомлення"
+
+msgid "Couldn’t stop offering this fix. Check your connection and try again."
+msgstr "Не вдалося відмовитися від цього виправлення. Перевір з’єднання і спробуй ще раз."
 
 msgid "Couldn’t turn off the join link. Try again."
 msgstr "Не вдалося вимкнути посилання для приєднання. Спробуй ще раз."
@@ -1881,6 +1914,15 @@ msgstr "Сховати пароль"
 msgid "History"
 msgstr "Історія"
 
+msgid "Hook added"
+msgstr "Зачіпку додано"
+
+msgid "Hook by you"
+msgstr "Твоя зачіпка"
+
+msgid "Hook from lesson"
+msgstr "Зачіпка з уроку"
+
 msgid "How cards are asked"
 msgstr "Як запитуються картки"
 
@@ -2077,6 +2119,9 @@ msgstr "Опис має бути коротшим за 300 символів."
 msgid "Keep the example under 2000 characters."
 msgstr "Приклад має бути коротшим за 2000 символів."
 
+msgid "Keep the hook under 200 characters."
+msgstr "Зачіпка має бути коротшою за 200 символів."
+
 msgid "Keep the language tag under 12 characters."
 msgstr "Мовний тег має бути коротшим за 12 символів."
 
@@ -2217,8 +2262,8 @@ msgstr "Lymi"
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi також отримає екран, на якому ти зараз, версію застосунку, браузер і мову застосунку."
 
-msgid "Lymi can’t tell why this card slips. Changing how it asks usually helps more than another round of the same."
-msgstr "Lymi не може визначити, чому ця картка забувається. Зазвичай краще змінити запитання, ніж повторювати те саме ще раз."
+msgid "Lymi can’t tell why you keep forgetting this card. Changing how it asks often helps."
+msgstr "Lymi не може зрозуміти, чому ти забуваєш цю картку. Часто допомагає запитати інакше."
 
 msgid "Lymi doesn’t recognise this app. Allow it only if you trust the address above."
 msgstr "Lymi не розпізнає цей застосунок. Дозволяй доступ, лише якщо довіряєш адресі вище."
@@ -2279,6 +2324,21 @@ msgstr "Нове значення: «{value}»"
 
 msgid "Meaning from lesson"
 msgstr "Значення з уроку"
+
+msgid "Meaning, card {n}"
+msgstr "Значення, картка {n}"
+
+msgid "Memory hook"
+msgstr "Зачіпка"
+
+msgid "Memory hook changed to “{value}”"
+msgstr "Нова зачіпка: «{value}»"
+
+msgid "Memory hook:"
+msgstr "Зачіпка:"
+
+msgid "Memory hook: {spokenAid}"
+msgstr "Зачіпка: {spokenAid}"
 
 msgid "Message"
 msgstr "Повідомлення"
@@ -2613,6 +2673,9 @@ msgstr "Зараз у «{elsewhere}»"
 msgid "Often forgotten"
 msgstr "Часто забуваються"
 
+msgid "Often mixed up with {other}"
+msgstr "Часто плутається з {other}"
+
 msgid "Often mixed up with <0>{other}</0>"
 msgstr "Часто плутається з <0>{other}</0>"
 
@@ -2714,6 +2777,15 @@ msgstr "Вставлене зображення"
 
 msgid "Pause the cards"
 msgstr "Зупинити картки"
+
+msgid "Peek at it before you reveal the card, or show it after. After a peek, you can’t choose Easy."
+msgstr "Підглянь її, перш ніж відкрити картку, або покажи після. Після того як підглянеш, «Легко» вибрати не можна."
+
+msgid "Peek at or show your hook"
+msgstr "Підглянути або показати зачіпку"
+
+msgid "Peek at your hook"
+msgstr "Підглянути зачіпку"
 
 msgid "People"
 msgstr "Люди"
@@ -2982,6 +3054,9 @@ msgstr "Повторити"
 msgid "Reveal the card"
 msgstr "Відкрити картку"
 
+msgid "Reveal the card when you have it"
+msgstr "Відкрий картку, коли згадаєш"
+
 msgid "Review"
 msgstr "Повторення"
 
@@ -3050,6 +3125,9 @@ msgstr "Як у колоді"
 
 msgid "Save"
 msgstr "Зберегти"
+
+msgid "Save hook"
+msgstr "Зберегти зачіпку"
 
 msgid "Save password"
 msgstr "Зберегти пароль"
@@ -3214,6 +3292,9 @@ msgstr "Показати всі"
 
 msgid "Show another"
 msgstr "Показати іншу"
+
+msgid "Show hook"
+msgstr "Показати зачіпку"
 
 msgid "Show more"
 msgstr "Показати більше"
@@ -3382,6 +3463,9 @@ msgstr "Сфотографувати"
 msgid "Tap Add to Home Screen."
 msgstr "Торкнись «На початковий екран»."
 
+msgid "Tap the card when you have it"
+msgstr "Торкнися картки, коли згадаєш"
+
 msgid "Technology"
 msgstr "Технології"
 
@@ -3393,6 +3477,9 @@ msgstr "Термін"
 
 msgid "Term changed to “{value}”"
 msgstr "Новий термін: «{value}»"
+
+msgid "Term, card {n}"
+msgstr "Термін, картка {n}"
 
 msgid "Terms"
 msgstr "Умови"
@@ -3497,6 +3584,9 @@ msgstr "Посилання діє годину. Якщо це не ти прос
 msgid "the meaning"
 msgstr "значення"
 
+msgid "the memory hook"
+msgstr "зачіпку"
+
 msgid "the notes"
 msgstr "нотатки"
 
@@ -3536,14 +3626,26 @@ msgstr "Людина втратить доступ до колоди й не з�
 msgid "They’re already in this deck."
 msgstr "Ця людина вже в колоді."
 
+msgid "Think of it when the card shows “<0>{cue}</0>”."
+msgstr "Згадай її, коли картка покаже «<0>{cue}</0>»."
+
+msgid "Think of it when the card shows “<0>{cue}</0>”. Change anything that doesn’t help."
+msgstr "Згадай її, коли картка покаже «<0>{cue}</0>». Зміни все, що не допомагає."
+
+msgid "Think of it when the card shows its picture."
+msgstr "Згадай її, коли картка покаже своє зображення."
+
+msgid "Think of it when the card shows its picture. Change anything that doesn’t help."
+msgstr "Згадай її, коли картка покаже своє зображення. Зміни все, що не допомагає."
+
 msgid "This browser can’t show reminders."
 msgstr "Цей браузер не показує нагадувань."
 
 msgid "This card asks for two things at once, so remembering half still counts as a miss."
 msgstr "Ця картка питає про дві речі одразу, тож якщо згадати лише половину, це все одно помилка."
 
-msgid "This card changed since Lymi looked at it, so the fix no longer fits."
-msgstr "Картка змінилася після аналізу, тож це виправлення вже не підходить."
+msgid "This card changed after Lymi drafted this fix, so it no longer fits."
+msgstr "Картка змінилася після того, як Lymi підготував це виправлення, тож воно вже не підходить."
 
 msgid "This card’s picture was removed."
 msgstr "Зображення цієї картки прибрано."
@@ -3623,9 +3725,6 @@ msgstr "Це посилання перестало працювати. Попр�
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "У цьому посиланні немає застосунку, який надіслав запит. Почни знову із застосунку."
 
-msgid "This one keeps slipping"
-msgstr "Ця картка постійно забувається"
-
 msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
 msgstr "Для більшості файлів це займає кілька секунд. У колоди поки нічого не додано."
 
@@ -3701,6 +3800,9 @@ msgctxt "deck tag"
 msgid "Travel"
 msgstr "Подорожі"
 
+msgid "Try a memory hook"
+msgstr "Спробуй зачіпку"
+
 msgid "Try again"
 msgstr "Спробувати ще раз"
 
@@ -3715,6 +3817,9 @@ msgstr "Вимкнути посилання"
 
 msgid "Turn off the join link?"
 msgstr "Вимкнути посилання для приєднання?"
+
+msgid "Turned down the fix for {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Відхилено виправлення для {count, plural, one {# картки} few {# карток} many {# карток} other {# картки}} у колоді «{deck}»"
 
 msgid "Turned off the join link for {deck}"
 msgstr "Посилання для приєднання до «{deck}» вимкнено"
@@ -3860,6 +3965,9 @@ msgstr "Хто може приєднатися до цієї колоди"
 msgid "Work and study"
 msgstr "Робота й навчання"
 
+msgid "Write a hook."
+msgstr "Напиши зачіпку."
+
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, що хочеш розповісти Lymi."
 
@@ -3916,6 +4024,9 @@ msgstr "На день можна надіслати {FEEDBACK_DAILY_LIMIT} по�
 
 msgid "You can undo the whole import later from Activity."
 msgstr "Увесь імпорт можна потім скасувати в Активності."
+
+msgid "You can’t choose Easy after peeking at your hook."
+msgstr "Після того як підглянеш зачіпку, «Легко» вибрати не можна."
 
 msgid "You can’t undo this."
 msgstr "Цю дію не можна скасувати."

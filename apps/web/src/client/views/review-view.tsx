@@ -1,8 +1,18 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { Rating } from "@lymi/core";
+import { gradeAllowed, type Rating, type ReviewAid } from "@lymi/core";
 import { clsx } from "clsx";
-import { BookMarked, Library, Loader2, Pointer, Signpost, Volume2, X } from "lucide-react";
+import {
+  BookMarked,
+  Library,
+  Loader2,
+  Lock,
+  type LucideIcon,
+  Pointer,
+  Signpost,
+  Volume2,
+  X,
+} from "lucide-react";
 import {
   AnimatePresence,
   animate as animateValue,
@@ -30,19 +40,34 @@ import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
-import { FIX_OFFER_BOX, FixOffer, FixOfferFace, type FixOfferProps } from "../components/fix-offer";
+import {
+  FIX_OFFER_BOX,
+  FixOffer,
+  FixOfferFace,
+  type FixOfferProps,
+  offerTitle,
+} from "../components/fix-offer";
 import { Flame } from "../components/flame";
 import { GRADES } from "../components/grade";
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
 import { Progress } from "../components/progress";
+import {
+  type AidStep,
+  RecallAidNext,
+  RecallAidShow,
+  RecallAidShown,
+} from "../components/recall-aid";
 import { SevenLights } from "../components/seven-lights";
 import { Skeleton } from "../components/skeleton";
 import { StateIcon } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import type { QueueItem } from "../lib/api";
+import { EASE_OUT } from "../lib/ease";
 import { lanternFor, streakFlameFor } from "../lib/flame";
 import { intervalLabel } from "../lib/i18n";
+import { lastInputWasKey } from "../lib/last-input";
 import type { EndScreen, Offer } from "../lib/review-complete";
 import { modeLabel } from "../lib/review-modes";
 
@@ -61,7 +86,6 @@ export interface ReviewHeaderProps {
   onClose?: (() => void) | undefined;
 }
 
-const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 /** The lantern is one object carried between the header and the end of a review. */
 const LANTERN_LAYOUT = "review-lantern";
 const LANTERN_FLIGHT = { type: "spring", visualDuration: 0.6, bounce: 0 } as const;
@@ -239,12 +263,16 @@ function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
  * the plate is the button. It taps three times, then rests. When it appears is `useRevealHint`'s
  * decision.
  */
-function TapHint() {
+function TapHint({ lifted, aided }: { lifted: boolean; aided: boolean }) {
   const reduce = useReducedMotionConfig();
   return (
     <motion.div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 bottom-5 flex flex-col items-center gap-1 px-5 text-muted"
+      className={clsx(
+        "pointer-events-none absolute inset-x-0 flex flex-col items-center gap-1 px-5 text-muted",
+        // Clear of the aid's pill for the whole card, so it reads as its own line.
+        lifted ? "bottom-20" : "bottom-5",
+      )}
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, transition: { duration: 0.1 } }}
@@ -282,10 +310,18 @@ function TapHint() {
       {/* Touch wording on a phone, the shortcut where there is a keyboard to press it with. */}
       <p className="flex items-center gap-2 text-center text-sm font-medium">
         <span className="@2xl:hidden">
-          <Trans>Recall the answer, then tap the card</Trans>
+          {aided ? (
+            <Trans>Tap the card when you have it</Trans>
+          ) : (
+            <Trans>Recall the answer, then tap the card</Trans>
+          )}
         </span>
         <span className="hidden @2xl:inline">
-          <Trans>Recall the answer, then reveal the card</Trans>
+          {aided ? (
+            <Trans>Reveal the card when you have it</Trans>
+          ) : (
+            <Trans>Recall the answer, then reveal the card</Trans>
+          )}
         </span>
         <span className="hidden @2xl:inline-flex">
           <Kbd>Space</Kbd>
@@ -336,8 +372,40 @@ export interface ReviewCardProps {
   audioError?: string | null | undefined;
   /** A drafted fix, pinned at the plate's foot once the answer shows. Its room is kept from the reveal. */
   offer?: FixOfferProps | undefined;
+  /** Help before the reveal, from `aidSteps`, and how many steps the learner has taken. */
+  aid?: RecallAidProps | undefined;
   className?: string | undefined;
 }
+
+export interface RecallAidProps {
+  steps: readonly AidStep[];
+  /** Steps taken before the reveal: the help a grade records. */
+  taken: number;
+  /** Shown on request after the reveal, which is not help and records nothing. */
+  shown: boolean;
+  /** The last step taken or shown arrives in motion. Off when a key asked for it. */
+  animate: boolean;
+  onTake: (input: "keyboard" | "pointer") => void;
+  onShow: (input: "keyboard" | "pointer", focused: boolean) => void;
+}
+
+/** A tap this soon after taking an aid is the same gesture doubled, not a reveal. */
+const AID_TAP_GUARD_MS = 400;
+
+/** The cue's glide up as the answer or an aid arrives under it. */
+const CUE_GLIDE = { duration: 0.34, ease: EASE_OUT } as const;
+const INSTANT = { duration: 0 } as const;
+
+/** An aid taken away fades where it stood, or goes at once after a key. */
+const AID_LEAVE: Variants = {
+  gone: (animate: boolean) => ({
+    opacity: 0,
+    transition: { duration: animate ? 0.14 : 0, ease: EASE_OUT },
+  }),
+};
+
+/** The Show hook button's height, `sm`, which the aid's place under the cue never drops below. */
+const AID_SHOW_HEIGHT = 32;
 
 /** The grade strip's full height, 72 px grades under a 12 px gap, which the card gives up on reveal. */
 export const GRADE_STRIP_HEIGHT = 84;
@@ -363,6 +431,7 @@ interface FitElements {
   inner: HTMLElement | null;
   head: HTMLElement | null;
   column: HTMLElement | null;
+  /** The cue itself, without the aid under it, whose room is `aidRoom` whether shown or not. */
   cue: HTMLElement | null;
   answer: HTMLElement | null;
   extras: HTMLElement | null;
@@ -372,8 +441,11 @@ interface FitElements {
  * Whether the cue fits the card before reveal, and the cue with its target after. Example and notes
  * never shrink the type; they scroll. Heights come from the stage the card fills rather than the
  * card, whose own height is still animating while the grade strip opens.
+ *
+ * `offerFoot` is the fix's room at the foot after the reveal, `pillFoot` the aid pill's before it,
+ * and `aidRoom` what the aid's lines take under the cue whether shown or not.
  */
-function measureFit(els: FitElements, foot: number) {
+function measureFit(els: FitElements, offerFoot: number, pillFoot: number, aidRoom: number) {
   const { section, inner, head, column, cue, answer, extras } = els;
   const stage = section?.parentElement;
   if (!section || !stage || !inner || !head || !column || !cue || !answer) return null;
@@ -404,11 +476,12 @@ function measureFit(els: FitElements, foot: number) {
     px(columnStyle.paddingBottom);
   const answerGap = extras?.parentElement ? px(getComputedStyle(extras.parentElement).rowGap) : 0;
   const must = answer.offsetHeight - (extras ? extras.offsetHeight + answerGap : 0);
+  const front = cue.offsetHeight + aidRoom;
   return {
-    front: cue.offsetHeight,
-    frontRoom: cardHeight(room) - chrome,
-    back: cue.offsetHeight + px(columnStyle.rowGap) + must,
-    backRoom: cardHeight(room - GRADE_STRIP_HEIGHT) - chrome - foot,
+    front,
+    frontRoom: cardHeight(room) - chrome - pillFoot,
+    back: front + px(columnStyle.rowGap) + must,
+    backRoom: cardHeight(room - GRADE_STRIP_HEIGHT) - chrome - offerFoot,
   };
 }
 
@@ -435,6 +508,7 @@ export function ReviewCard({
   audioState = "idle",
   audioError = null,
   offer,
+  aid,
   className,
 }: ReviewCardProps) {
   const { t, i18n } = useLingui();
@@ -457,9 +531,22 @@ export function ReviewCard({
   const headRef = useRef<HTMLDivElement>(null);
   const columnRef = useRef<HTMLDivElement>(null);
   const cueRef = useRef<HTMLDivElement>(null);
+  const cueTextRef = useRef<HTMLDivElement>(null);
+  const aidLines = useRef<HTMLDivElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
   const extrasRef = useRef<HTMLDivElement>(null);
   const revealRef = useRef<HTMLButtonElement>(null);
+  const pillRoom = useRef<HTMLDivElement>(null);
+  const tookAidAt = useRef(Number.NEGATIVE_INFINITY);
+  // An aid taken away, as Undo does to a hook kept from the fix sheet, leaves in motion unless a key asked.
+  const [hadAid, setHadAid] = useState(!!aid);
+  const [aidGone, setAidGone] = useState<{ animate: boolean } | null>(null);
+  if (hadAid !== !!aid) {
+    setHadAid(!!aid);
+    setAidGone(aid ? null : { animate: !lastInputWasKey() });
+  }
+  // Read out once it can be seen, so a screen reader hears of the fix when a sighted learner would.
+  const [offerSeen, setOfferSeen] = useState(false);
 
   useEffect(() => {
     if (focusOnMount) revealRef.current?.focus({ preventScroll: true });
@@ -476,11 +563,16 @@ export function ReviewCard({
         inner: innerRef.current,
         head: headRef.current,
         column: columnRef.current,
-        cue: cueRef.current,
+        cue: cueTextRef.current,
         answer: answerRef.current,
         extras: extrasRef.current,
       },
       offerRoom.current?.offsetHeight ?? 0,
+      pillRoom.current?.offsetHeight ?? 0,
+      aidLines.current && cueRef.current
+        ? Math.max(aidLines.current.offsetHeight, AID_SHOW_HEIGHT) +
+            px(getComputedStyle(cueRef.current).rowGap)
+        : 0,
     );
     if (!m) {
       setFit({ ...fit, settled: true });
@@ -493,10 +585,10 @@ export function ReviewCard({
   }, [fit]);
 
   // An offer arriving takes room from the answer; a parked one keeps its room until the grade.
-  const offerSeen = useRef(hasOffer);
+  const offerMeasured = useRef(hasOffer);
   useEffect(() => {
-    if (!hasOffer || offerSeen.current) return;
-    offerSeen.current = true;
+    if (!hasOffer || offerMeasured.current) return;
+    offerMeasured.current = true;
     setFit(UNMEASURED);
   }, [hasOffer]);
 
@@ -525,6 +617,28 @@ export function ReviewCard({
   }, []);
 
   const step = fit.step;
+  const shownAfter = !!aid && revealed && aid.shown;
+  // Taken before the reveal or shown after it, the aid has one place: under the cue, where it stays.
+  const aidsOnShow = aid
+    ? shownAfter
+      ? aid.steps.length
+      : Math.min(aid.taken, aid.steps.length)
+    : 0;
+  const aidAnimate = aid?.animate ?? true;
+  const spokenAid = aidsOnShow > 0 ? aid?.steps[aidsOnShow - 1]?.text : undefined;
+  const fixTitle = offer ? offerTitle(i18n, offer.offer) : "";
+  // The last movement in the cue's block: the aid leaving or arriving, or else the reveal.
+  const cueGlide = aidGone
+    ? aidGone.animate
+    : revealed
+      ? shownAfter
+        ? aidAnimate
+        : animateReveal
+      : aidsOnShow > 0
+        ? aidAnimate
+        : animateReveal;
+  // The answer moves only when the aid over it arrives or leaves after the reveal.
+  const answerGlide = aidGone ? aidGone.animate : shownAfter && aidAnimate;
   const hasExtras = !!(card.example || card.notes);
   const languageCode =
     card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase()
@@ -712,8 +826,14 @@ export function ReviewCard({
             <button
               ref={revealRef}
               type="button"
-              onClick={onReveal}
+              onClick={(e) => {
+                // Only a pointer doubles a tap; Space or Enter on the card is always meant.
+                if (e.detail > 0 && performance.now() - tookAidAt.current < AID_TAP_GUARD_MS)
+                  return;
+                onReveal();
+              }}
               aria-label={t`Reveal the card`}
+              data-reveal=""
               className="absolute inset-0 z-10 rounded-xl"
             />
           )}
@@ -761,55 +881,103 @@ export function ReviewCard({
           >
             <motion.div
               ref={cueRef}
-              layout={animateReveal ? "position" : false}
-              transition={{ layout: { duration: 0.34, ease: EASE_OUT } }}
-              className="grid gap-3"
+              // Always on, because Motion reads `layout` only at mount; the transition says whether it glides.
+              layout="position"
+              transition={{ layout: cueGlide ? CUE_GLIDE : INSTANT }}
+              className="relative grid grid-cols-[minmax(0,1fr)] gap-3"
             >
-              {mode.cue === "image" ? (
-                card.image ? (
-                  // One size before and after reveal, on the start edge like the text under it.
-                  <CardPicture image={card.image} maxHeight="min(30dvh, 240px)" />
-                ) : (
-                  // A queue fetched before the picture was archived; the server no longer asks this mode.
-                  <p className="text-xl text-muted">
-                    <Trans>This card’s picture was removed.</Trans>
-                  </p>
-                )
-              ) : (
-                <>
-                  <p
-                    lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
-                    className={clsx(
-                      "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
-                      CUE_SIZE[step],
-                    )}
-                  >
-                    {front}
-                    {mode.cue === "term" && audio("z-20")}
-                  </p>
-                  {mode.cue === "term" && card.pronunciation && (
-                    <p className="text-md text-muted [overflow-wrap:anywhere]">
-                      {card.pronunciation}
+              <div ref={cueTextRef} className="grid grid-cols-[minmax(0,1fr)] gap-3">
+                {mode.cue === "image" ? (
+                  card.image ? (
+                    // One size before and after reveal, on the start edge like the text under it.
+                    <CardPicture image={card.image} maxHeight="min(30dvh, 240px)" />
+                  ) : (
+                    // A queue fetched before the picture was archived; the server no longer asks this mode.
+                    <p className="text-xl text-muted">
+                      <Trans>This card’s picture was removed.</Trans>
                     </p>
-                  )}
-                </>
+                  )
+                ) : (
+                  <>
+                    <p
+                      lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
+                      className={clsx(
+                        "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
+                        CUE_SIZE[step],
+                      )}
+                    >
+                      {front}
+                      {mode.cue === "term" && audio("z-20")}
+                    </p>
+                    {mode.cue === "term" && card.pronunciation && (
+                      <p className="text-md text-muted [overflow-wrap:anywhere]">
+                        {card.pronunciation}
+                      </p>
+                    )}
+                  </>
+                )}
+              </div>
+              {/* Popped out of the flow as it leaves, so the cue glides back while the lines fade. */}
+              <AnimatePresence mode="popLayout" initial={false} custom={aidGone?.animate ?? false}>
+                {aid && aidsOnShow > 0 && (
+                  <motion.div
+                    key="aid"
+                    className="min-h-8"
+                    variants={AID_LEAVE}
+                    custom={aidGone?.animate ?? false}
+                    exit="gone"
+                  >
+                    <RecallAidShown steps={aid.steps} taken={aidsOnShow} animate={aidAnimate} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              {aid && revealed && aidsOnShow === 0 && (
+                <RecallAidShow
+                  steps={aid.steps}
+                  animate={animateReveal}
+                  onShow={(e) =>
+                    aid.onShow(
+                      e.detail > 0 ? "pointer" : "keyboard",
+                      e.currentTarget === document.activeElement,
+                    )
+                  }
+                />
+              )}
+              {aid && (
+                // The aid's lines, out of the flow, so the fit keeps their room before they show.
+                <div
+                  aria-hidden="true"
+                  inert
+                  className="pointer-events-none invisible absolute inset-x-0 top-0 h-0 overflow-hidden"
+                >
+                  <div ref={aidLines}>
+                    <RecallAidShown steps={aid.steps} taken={aid.steps.length} animate={false} />
+                  </div>
+                </div>
               )}
             </motion.div>
 
             {revealed ? (
               <motion.div
                 ref={answerRef}
+                // Glides, rather than jumps, when the aid over it arrives or leaves; on like the cue's.
+                layout="position"
                 // Under reduced motion the answer crossfades whole: no rise, blur or stagger.
                 {...(reduce
                   ? {
                       initial: animateReveal ? { opacity: 0 } : false,
                       animate: { opacity: 1 },
-                      transition: { duration: 0.2, ease: EASE_OUT },
+                      transition: {
+                        duration: 0.2,
+                        ease: EASE_OUT,
+                        layout: answerGlide ? CUE_GLIDE : INSTANT,
+                      },
                     }
                   : {
                       variants: answerGroup,
                       initial: animateReveal ? "hidden" : false,
                       animate: "shown",
+                      transition: { layout: answerGlide ? CUE_GLIDE : INSTANT },
                     })}
                 className="grid grid-cols-[minmax(0,1fr)] gap-5"
               >
@@ -827,13 +995,44 @@ export function ReviewCard({
               </div>
             )}
           </div>
-          <AnimatePresence>{!revealed && hint && <TapHint />}</AnimatePresence>
+          {!revealed && aid && (
+            // Out of the way of taps meant for the card: only the pill itself can be pressed.
+            <div
+              ref={pillRoom}
+              className={clsx(
+                "pointer-events-none relative z-20 [&_button]:pointer-events-auto",
+                animateIn && "enter-fade",
+              )}
+            >
+              <RecallAidNext
+                steps={aid.steps}
+                taken={aid.taken}
+                onTake={(e) => {
+                  tookAidAt.current = performance.now();
+                  // The spent pill turns inert, so focus moves on to what comes next: the card.
+                  const focused = e.currentTarget === document.activeElement;
+                  // Enter or Space on the pill clicks with no pointer count: a key, which never animates.
+                  aid.onTake(e.detail === 0 ? "keyboard" : "pointer");
+                  if (focused) revealRef.current?.focus({ preventScroll: true });
+                }}
+              />
+            </div>
+          )}
+          <AnimatePresence>
+            {!revealed && hint && <TapHint lifted={!!aid} aided={!!aid && aid.taken > 0} />}
+          </AnimatePresence>
         </div>
       </div>
       {/* Outside the scroller, so a long card never hides it, and inset so its corners follow the plate's. */}
       {offer && revealed && (
         <div className="shrink-0 px-2 pb-2">
-          <FixOffer {...offer} />
+          <FixOffer
+            {...offer}
+            onShown={() => {
+              setOfferSeen(true);
+              offer.onShown();
+            }}
+          />
         </div>
       )}
       {/* A still copy, out of the flow, so the fit knows the offer's room before the reveal. */}
@@ -850,7 +1049,13 @@ export function ReviewCard({
         </div>
       )}
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-        {revealed ? t`Answer: ${back}` : ""}
+        {spokenAid && (!revealed || shownAfter)
+          ? t`Memory hook: ${spokenAid}`
+          : revealed
+            ? offer && offerSeen
+              ? t`Answer: ${back}. A fix is ready: ${fixTitle}`
+              : t`Answer: ${back}`
+            : ""}
       </p>
     </section>
   );
@@ -915,8 +1120,108 @@ export interface GradeBarProps {
   focusOnReveal?: boolean | undefined;
   /** The four dates FSRS would set, keyed by rating. Announced, not shown. */
   next?: Record<Rating, string> | undefined;
+  /** What the learner used before the reveal; a grade it rules out keeps its slot but is out. */
+  aid?: ReviewAid | undefined;
+  /** Presses on this card of the key of a grade that is out, so its tip says why each time. */
+  lockedNudge?: number | undefined;
   onGrade: (r: Rating) => void;
   className?: string | undefined;
+}
+
+/** The popover's own gap, and about the height of a two-line tip over it. */
+const TIP_GAP = 8;
+const TIP_ROOM = 96;
+
+/**
+ * How far over its tile the tip sits: clear of a toast in the tip's way, so it never covers Undo.
+ * In a review toasts stand just over the grade strip, which is where the tip would go.
+ */
+function clearOfToasts(tile: HTMLElement | null) {
+  const box = tile?.getBoundingClientRect();
+  if (!box) return TIP_GAP;
+  let top = box.top;
+  for (const toast of document.querySelectorAll('[data-slot="toast"]:not([data-ending-style])')) {
+    const r = toast.getBoundingClientRect();
+    const inTheWay =
+      r.height > 0 &&
+      r.top < box.top &&
+      r.bottom > box.top - TIP_GAP - TIP_ROOM &&
+      r.left < box.right &&
+      r.right > box.left;
+    if (inTheWay) top = Math.min(top, r.top);
+  }
+  return box.top - top + TIP_GAP;
+}
+
+/**
+ * A grade the learner cannot give now, greyed in its slot with a lock where its key would be. It
+ * never grades: hover names why in a tooltip, and a tap, click or its key shows the same reason in
+ * a tip over it, never both at once.
+ */
+function LockedGrade({
+  label,
+  icon: Icon,
+  nudge,
+}: {
+  label: string;
+  icon: LucideIcon;
+  /** Presses of its key on this card, where there is no tap to show the tip. */
+  nudge: number;
+}) {
+  const { t } = useLingui();
+  const button = useRef<HTMLButtonElement>(null);
+  const reasonId = useId();
+  const [pressed, setPressed] = useState(0);
+  const [hovered, setHovered] = useState(false);
+  const [tipOpen, setTipOpen] = useState(false);
+  const why = t`You can’t choose Easy after peeking at your hook.`;
+  const shown = pressed + nudge;
+  return (
+    <>
+      <Tooltip open={hovered && !tipOpen} onOpenChange={setHovered}>
+        <TooltipTrigger
+          render={
+            <button
+              ref={button}
+              type="button"
+              aria-label={t`${label}, locked`}
+              aria-disabled="true"
+              aria-describedby={reasonId}
+              onClick={(e) => {
+                setPressed((n) => n + 1);
+                // A pointer leaves focus here, where the grade keys would not reach the review; a key keeps it.
+                if (e.detail > 0)
+                  e.currentTarget.closest("fieldset")?.focus({ preventScroll: true });
+              }}
+              className="edge relative grid h-[72px] min-w-0 cursor-default content-center gap-1 rounded-lg px-1 text-sm font-medium text-muted @2xl:text-base"
+            />
+          }
+        >
+          <span className="mx-auto grid size-5 place-items-center">
+            <Icon className="size-[18px]" aria-hidden="true" strokeWidth={1.75} />
+          </span>
+          <span>{label}</span>
+          <Lock
+            className="absolute end-2.5 top-2.5 size-3 text-muted"
+            aria-hidden="true"
+            strokeWidth={2}
+          />
+        </TooltipTrigger>
+        <TooltipContent side="top">{why}</TooltipContent>
+      </Tooltip>
+      <span id={reasonId} className="sr-only">
+        {why}
+      </span>
+      <ErrorTip
+        anchor={button}
+        message={shown > 0 ? why : null}
+        nudge={shown}
+        reason={Lock}
+        sideOffset={() => clearOfToasts(button.current)}
+        onOpenChange={setTipOpen}
+      />
+    </>
+  );
 }
 
 /**
@@ -934,6 +1239,8 @@ export function GradeBar({
   animateOut = false,
   focusOnReveal = false,
   next,
+  aid,
+  lockedNudge = 0,
   onGrade,
   className,
 }: GradeBarProps) {
@@ -967,6 +1274,13 @@ export function GradeBar({
               {GRADES.map((g) => {
                 const GradeIcon = g.icon;
                 const label = i18n._(g.label);
+                if (!gradeAllowed(g.rating, aid)) {
+                  return (
+                    <motion.div key={g.rating} variants={gradeRise} className="grid min-w-0">
+                      <LockedGrade label={label} icon={GradeIcon} nudge={lockedNudge} />
+                    </motion.div>
+                  );
+                }
                 const schedules = next
                   ? intervalLabel(i18n, now, new Date(next[g.rating]))
                   : undefined;

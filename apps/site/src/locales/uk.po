@@ -344,6 +344,9 @@ msgstr "нормально"
 msgid "All right. Lots of work."
 msgstr "Нормально. Багато роботи."
 
+msgid "All shelves"
+msgstr "Усі полиці"
+
 msgid "Allow"
 msgstr "Дозволити"
 
@@ -752,6 +755,9 @@ msgstr "Водіння"
 
 msgid "Each deck opens on its own page with every card on it, so you can see what you would learn before you add it."
 msgstr "Кожна колода має власну сторінку з усіма картками, тож ти бачиш, що вчитимеш, ще до того, як її додаси."
+
+msgid "Earlier shelves"
+msgstr "Попередні полиці"
 
 msgid "Easy"
 msgstr "Легко"
@@ -1298,8 +1304,14 @@ msgstr "Мова"
 msgid "Language learning"
 msgstr "Вивчення мов"
 
+msgid "Languages"
+msgstr "Мови"
+
 msgid "Last updated"
 msgstr "Оновлено"
+
+msgid "Later shelves"
+msgstr "Наступні полиці"
 
 msgid "Latin for “you shall have the body”."
 msgstr "Латиною — «ти матимеш тіло»."
@@ -2045,6 +2057,9 @@ msgstr "Уперта витривалість; не здаватися попр�
 
 msgid "Stubborn grit; carrying on when it gets hard"
 msgstr "Уперта витривалість; не здаватися, коли важко"
+
+msgid "Subjects"
+msgstr "Теми"
 
 msgid "Sugars and amino acids reacting in the heat."
 msgstr "Цукри й амінокислоти реагують під дією тепла."

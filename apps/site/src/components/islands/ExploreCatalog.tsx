@@ -2,7 +2,7 @@ import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { type PublicDeckSummary, subjectOf, taughtLanguage } from "@lymi/core/catalog";
 import { ChevronRight, Search } from "lucide-react";
-import { type MouseEvent, useEffect, useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { languageName } from "../../lib/deck-page";
 import {
   hasShelfPage,
@@ -18,6 +18,7 @@ import { subjectLabel } from "../../lib/subjects";
 import { trayHues } from "../../lib/tray";
 import { DeckTile } from "../explore/DeckTile";
 import { shelfLabel, tagLabel } from "../explore/explore-labels";
+import { ShelfBar, shelfId } from "../explore/ShelfBar";
 import { Lantern } from "../Lantern";
 
 interface Props {
@@ -43,7 +44,7 @@ function ShelfRow({ shelf, locale, trimmed }: { shelf: Shelf; locale: Locale; tr
         <h2
           id={headingId}
           tabIndex={-1}
-          className="scroll-mt-6 text-2xl font-medium tracking-[-0.03em] text-text focus:outline-none"
+          className="scroll-mt-24 text-2xl font-medium tracking-[-0.03em] text-text focus:outline-none"
         >
           {label}
         </h2>
@@ -76,8 +77,6 @@ function ShelfRow({ shelf, locale, trimmed }: { shelf: Shelf; locale: Locale; tr
     </section>
   );
 }
-
-const shelfId = (key: string) => `shelf-${key}`;
 
 /**
  * The whole catalogue, with a search that narrows what is already on the page and a chip per shelf
@@ -154,7 +153,7 @@ function Catalog({ locale, decks }: Props) {
           />
         </div>
       </div>
-      {shelves.length > 1 && <ShelfChips shelves={shelves} />}
+      {shelves.length > 1 && <ShelfBar shelves={shelves} />}
 
       <p role="status" aria-live="polite" className="sr-only">
         <Plural value={found} one="# deck" other="# decks" />
@@ -189,46 +188,6 @@ function Catalog({ locale, decks }: Props) {
         )}
       </div>
     </>
-  );
-}
-
-/**
- * A chip per shelf on the page, in shelf order: the way to move through a catalogue of many
- * shelves. Without JavaScript each is a link to its shelf; once hydrated it scrolls there and moves
- * focus to the heading, and leaves the address alone.
- */
-function ShelfChips({ shelves }: { shelves: readonly Shelf[] }) {
-  const { i18n, t } = useLingui();
-  const jump = (event: MouseEvent<HTMLAnchorElement>, key: string) => {
-    const heading = document.getElementById(shelfId(key));
-    if (!heading) return;
-    event.preventDefault();
-    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    heading.scrollIntoView({ block: "start", behavior: still ? "auto" : "smooth" });
-    // Reading moves with the view, so a screen reader continues at the shelf rather than the chips.
-    heading.focus({ preventScroll: true });
-  };
-  return (
-    // One row that scrolls on a phone, where two dozen wrapped chips would bury the shelves.
-    <nav
-      aria-label={t`Shelves`}
-      className="-mx-5 mt-6 overflow-x-auto px-5 [scrollbar-width:none] @2xl:mx-auto @2xl:max-w-[880px] @2xl:overflow-visible @2xl:px-0"
-    >
-      <ul className="flex w-max gap-2 @2xl:w-auto @2xl:flex-wrap @2xl:justify-center">
-        {shelves.map((shelf) => (
-          <li key={shelf.key}>
-            <a
-              href={`#${shelfId(shelf.key)}`}
-              onClick={(event) => jump(event, shelf.key)}
-              className="inline-flex h-10 items-center gap-2 rounded-full whitespace-nowrap bg-plate-2 px-4 text-md font-medium text-text transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:bg-hover pointer-coarse:h-11"
-            >
-              {shelfLabel(i18n, shelf)}
-              <span className="text-sm text-muted tabular-nums">{shelf.decks.length}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
   );
 }
 

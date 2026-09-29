@@ -113,6 +113,16 @@ test("a visitor finds a published deck on Explore, by shelf and by a word on a c
     expect(page.url()).toBe(`${publicSite}/explore`);
   });
 
+  await test.step("All shelves lists every shelf, and a pick jumps to it", async () => {
+    await page.getByRole("button", { name: "All shelves" }).click();
+    const list = page.getByRole("dialog", { name: "All shelves" });
+    await expect(list.getByRole("link")).toHaveText([/^Estonian/, /^Driving/]);
+    await list.getByRole("link", { name: /^Estonian/ }).click();
+    await expect(page.getByRole("heading", { name: "Estonian", exact: true })).toBeFocused();
+    await expect(list).toBeHidden();
+    expect(page.url()).toBe(`${publicSite}/explore`);
+  });
+
   await test.step("a deck leads to its own page", async () => {
     await page.getByRole("link", { name: /Evening Estonian/ }).click();
     await expect(page).toHaveURL(`${publicSite}/explore/evening-estonian`);

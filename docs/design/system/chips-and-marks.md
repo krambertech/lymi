@@ -68,4 +68,4 @@ chosen ? "bg-amber text-amber-ink" : "bg-plate-2"
 
 ## Shelf chips
 
-Explore's chips are links, not filters: each jumps to its shelf and moves focus to the shelf's heading, so they have no chosen state. They are larger than a `Chip` because they are the page's way around, 40 px on the site and 36 px in the product, and 44 px on a coarse pointer, on `plate-2` with ink text and the shelf's deck count in `muted`. They are drawn in place in the site's `ExploreCatalog` and the product's `ExploreView`. [explore.md](../explore.md)
+Explore's chips are links, not filters: each jumps to its shelf and moves focus to the shelf's heading. Their one chosen state says where the reader is, not what is picked: once the bar has stuck, the chip of the shelf under it takes the chosen chip's fill, `bg-text text-canvas`, with `aria-current="location"`. They are larger than a `Chip` because they are the page's way around, 40 px on the site and 36 px in the product, and 44 px on a coarse pointer, on `plate-2` with ink text and the shelf's deck count in `muted`. They are drawn in the site's `ShelfBar` and the product's `ShelfBar`. [explore.md](../explore.md)

@@ -1480,8 +1480,8 @@ html:has(.deck-cards[open]) {
 .deck-tray {
   --cw: 150px;
   /* Eight hues at one lightness and chroma. The amber band (60–95) is left out: amber means act,
-     and a tray is not a thing to press. At night the tray is darker than the card, so the card
-     still sits proud of it rather than sinking in. */
+     and a tray is not a thing to press. At night the tray is lifted well off the room so its hue
+     reads, and its card is lifted above it, so the card still sits proud. */
   --tray-l: 0.958;
   --tray-c: 0.042;
   display: grid;
@@ -1493,8 +1493,10 @@ html:has(.deck-cards[open]) {
   background: oklch(var(--tray-l) var(--tray-c) var(--tray-h));
 }
 [data-theme="dark"] .deck-tray {
-  --tray-l: 0.192;
-  --tray-c: 0.015;
+  --tray-l: 0.3;
+  --tray-c: 0.065;
+  /* Lighter than the tray, and dark enough that muted text on it keeps 4.5:1. */
+  --tray-card: oklch(0.33 0.012 60);
 }
 
 /* A landing use case in the same trays as Explore, so a subject reads as a deck on a shelf. The
@@ -1506,14 +1508,15 @@ html:has(.deck-cards[open]) {
   background: oklch(var(--tray-l) var(--tray-c) var(--tray-h, 235));
 }
 [data-theme="dark"] .use-case-tile {
-  --tray-l: 0.192;
-  --tray-c: 0.015;
+  --tray-l: 0.3;
+  --tray-c: 0.065;
+  --tray-card: oklch(0.33 0.012 60);
 }
 .use-case-paper {
   position: absolute;
   inset: 0;
   border-radius: var(--radius-xl);
-  background: var(--plate);
+  background: var(--tray-card, var(--plate));
   box-shadow: 0 0 0 1px var(--edge);
   transition: transform 260ms var(--ease-out);
 }
@@ -1525,6 +1528,9 @@ html:has(.deck-cards[open]) {
 }
 .use-case-card {
   transition: transform 260ms var(--ease-out);
+}
+[data-theme="dark"] .use-case-tile .use-case-card {
+  background: var(--tray-card);
 }
 /* A tile that links somewhere spreads its paper when pointed at or focused, as a deck on Explore does. */
 @media (prefers-reduced-motion: no-preference) {
@@ -1644,7 +1650,7 @@ html:has(.deck-cards[open]) {
   position: absolute;
   inset: 0;
   border-radius: calc(var(--cw) * 0.1);
-  background: var(--plate);
+  background: var(--tray-card, var(--plate));
   box-shadow: 0 0 0 1px var(--edge);
   transition: transform 260ms var(--ease-out);
 }

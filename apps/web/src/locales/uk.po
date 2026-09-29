@@ -354,6 +354,9 @@ msgstr "{attempts, plural, one {повторення сьогодні} few {по
 msgid "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
 msgstr "{cards, plural, one {# картку буде додано до повторень.} few {# картки буде додано до повторень.} many {# карток буде додано до повторень.} other {# картки буде додано до повторень.}}"
 
+msgid "{cards, plural, one {# card} other {# cards}}"
+msgstr "{cards, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
+
 #. placeholder {0}: fileSize(item.byteSize ?? 0, i18n.locale)
 msgid "{cards, plural, one {# card} other {# cards}} · {0}"
 msgstr "{cards, plural, one {# картка} few {# картки} many {# карток} other {# картки}} · {0}"
@@ -1360,6 +1363,9 @@ msgstr "Не вдалося завантажити цю колоду"
 msgid "Couldn’t load this import"
 msgstr "Не вдалося завантажити цей імпорт"
 
+msgid "Couldn’t load this shelf"
+msgstr "Не вдалося завантажити полицю"
+
 msgid "Couldn’t load Today"
 msgstr "Не вдалося завантажити екран «Сьогодні»"
 
@@ -2072,6 +2078,9 @@ msgstr "Його не підтвердили протягом трьох дні�
 msgid "Its cards and the decks it made are hidden. Restore brings them back with their history."
 msgstr "Його картки й створені ним колоди приховано. Відновлення поверне їх разом з історією."
 
+msgid "Its decks may have been withdrawn. Every deck Lymi publishes is on Explore."
+msgstr "Можливо, її колоди зняли з публікації. Усі колоди, які публікує Lymi, є в каталозі."
+
 msgctxt "deck tag"
 msgid "JLPT N5"
 msgstr "JLPT N5"
@@ -2354,6 +2363,9 @@ msgstr "Інші колоди"
 
 msgid "More fields"
 msgstr "Більше полів"
+
+msgid "More languages"
+msgstr "Інші мови"
 
 msgid "More like this"
 msgstr "Схожі колоди"
@@ -2709,6 +2721,9 @@ msgstr "Відкрити"
 msgid "Open deck"
 msgstr "Відкрити колоду"
 
+msgid "Open Explore"
+msgstr "Відкрити каталог"
+
 msgid "Open in Library"
 msgstr "Відкрити в Бібліотеці"
 
@@ -2741,6 +2756,9 @@ msgstr "Параметри «{seriesName}»"
 msgctxt "Between two ways to sign in"
 msgid "or"
 msgstr "або"
+
+msgid "Other subjects"
+msgstr "Інші теми"
 
 msgid "Other ways to add cards"
 msgstr "Інші способи додати картки"
@@ -3202,6 +3220,9 @@ msgstr "Побачити {word} і згадати «{answer}»"
 
 msgid "See {word}, recall what it means"
 msgstr "Побачити {word} і згадати значення"
+
+msgid "See all"
+msgstr "Усі"
 
 msgid "See the difference"
 msgstr "Побачити різницю"
@@ -3724,6 +3745,9 @@ msgstr "Це посилання перестало працювати. Попр�
 
 msgid "This link is missing the app that asked. Start again from the app."
 msgstr "У цьому посиланні немає застосунку, який надіслав запит. Почни знову із застосунку."
+
+msgid "This shelf has no page"
+msgstr "У цієї полиці немає сторінки"
 
 msgid "This takes a few seconds for most files. Nothing is added to your decks yet."
 msgstr "Для більшості файлів це займає кілька секунд. У колоди поки нічого не додано."

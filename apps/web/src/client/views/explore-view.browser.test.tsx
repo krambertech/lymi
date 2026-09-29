@@ -39,13 +39,13 @@ const decks = [
   deck("ielts", "exams", "en"),
 ];
 
-async function renderExplore() {
+async function renderExplore(shown: PublicDeckSummary[] = decks) {
   await render(
     <I18nProvider i18n={i18n}>
       <ShellChrome value={designChrome()}>
         <StaticNavProvider path="/explore">
           <div className="@container/shell" style={{ width: 1000 }}>
-            <ExploreView data={{ decks, added: {} }} onAdd={() => {}} />
+            <ExploreView data={{ decks: shown, added: {} }} onAdd={() => {}} />
           </div>
         </StaticNavProvider>
       </ShellChrome>
@@ -81,4 +81,24 @@ test("a chip per shelf, in shelf order, jumps to its shelf and leaves the addres
   await page.getByRole("link", { name: /^Driving/ }).click();
   await expect.element(page.getByRole("heading", { name: "Driving", level: 2 })).toHaveFocus();
   expect(window.location.href).toBe(before);
+});
+
+test("a shelf of three decks or more shows one row and leads to its own page", async () => {
+  const german = ["a", "b", "c", "d", "e", "f"].map((at) =>
+    deck(`german-${at}`, "languages", "de"),
+  );
+  await renderExplore([...german, ...decks]);
+  const shelf = page.getByRole("list", { name: "German decks" });
+  // As many decks as 216 px tracks 22 px apart fit the shelf's width, and no more.
+  const width = shelf.element().clientWidth;
+  const fits = Math.floor((width + 22) / 238);
+  expect(fits).toBeLessThan(german.length);
+  expect(shelf.getByRole("listitem").elements()).toHaveLength(fits);
+  await expect
+    .element(page.getByRole("link", { name: /^See all/ }))
+    .toHaveAttribute("href", "/explore/languages/german");
+  // A shelf too small for a page keeps every deck and its count.
+  expect(
+    page.getByRole("list", { name: "Estonian decks" }).getByRole("listitem").elements(),
+  ).toHaveLength(2);
 });

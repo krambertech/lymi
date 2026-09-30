@@ -1,0 +1,35 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "lymi",
+  "version": "0.1.0",
+  "description": "Turn lessons into Lymi cards, tend them, practise with them and check how the week went.",
+  "author": {
+    "name": "Lymi",
+    "email": "hello@lymi.app",
+    "url": "https://lymi.app"
+  },
+  "homepage": "https://lymi.app/docs/mcp",
+  "repository": "https://github.com/krambertech/lymi",
+  "license": "AGPL-3.0-only",
+  "keywords": ["vocabulary", "language learning", "spaced repetition", "flashcards"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Lymi",
+        "shortDescription": "Keep the words from your lessons",
+        "category": "Education",
+        "brandColor": "#F6B34D",
+        "logo": "./assets/logo.png",
+        "defaultPrompt": [
+          "Add the new words from this lesson to my Lymi deck",
+          "What do I have due in Lymi today?",
+          "Quiz me on the words I keep forgetting"
+        ],
+        "onboardingSkill": "setup",
+        "websiteURL": "https://lymi.app",
+        "privacyPolicyURL": "https://lymi.app/privacy",
+        "termsOfServiceURL": "https://lymi.app/terms"
+      }
+    }
+  }
+}

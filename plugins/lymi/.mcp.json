@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "lymi": {
+      "type": "http",
+      "url": "https://my.lymi.app/mcp"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ChevronDown, ExternalLink, Loader2 } from "lucide-react";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useRef, useState } from "react";
 import { productLinks, type ViewCard } from "../../shared/mcp-app";
 import { Button } from "../components/button";
 import { SourceChip } from "../components/chip";
@@ -80,12 +80,19 @@ function CardRow({
   const host = useHost();
   const links = productLinks(host.origin);
   const panelId = `card-${card.id}`;
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  // Closing the editor removes the focused field, so the keyboard goes back to the card.
+  const finish = (saved: ViewCard | null) => {
+    onDone(saved);
+    requestAnimationFrame(() => toggleRef.current?.focus());
+  };
   return (
     <li className="py-0.5">
       <button
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
+        ref={toggleRef}
         onClick={onToggle}
         className="flex w-full items-start gap-3 rounded-md px-2 py-1.5 text-start transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-ring"
       >
@@ -121,11 +128,7 @@ function CardRow({
       {open && (
         <div id={panelId} className="px-2 pt-2 pb-3">
           {editing ? (
-            <CardEditor
-              card={card}
-              onSaved={(saved) => onDone(saved)}
-              onCancel={() => onDone(null)}
-            />
+            <CardEditor card={card} onSaved={finish} onCancel={() => finish(null)} />
           ) : (
             <CardDetails card={card}>
               <div className="flex flex-wrap gap-2 pt-1">

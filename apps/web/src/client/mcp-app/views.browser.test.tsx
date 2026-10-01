@@ -163,3 +163,15 @@ test("a refused save keeps the draft and says why", async () => {
   await expect.element(page.getByText("This connection can only read.")).toBeVisible();
   await expect.element(meaning).toHaveValue("to get a move on");
 });
+
+test("Edit puts the keyboard in the term, and Escape gives it back to the card", async () => {
+  await renderCapture(fakeHost({ get_card: () => card() }));
+  const row = page.getByRole("button", { name: /sbrigarsi/ });
+  await row.click();
+  await page.getByRole("button", { name: "Edit" }).click();
+  await expect.element(page.getByRole("textbox", { name: "Term" })).toHaveFocus();
+
+  await userEvent.keyboard("{Escape}");
+  await expect.element(page.getByRole("textbox", { name: "Term" })).not.toBeInTheDocument();
+  await expect.element(row).toHaveFocus();
+});

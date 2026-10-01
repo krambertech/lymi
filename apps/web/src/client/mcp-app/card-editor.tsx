@@ -99,6 +99,12 @@ export function CardEditor({ card, onSaved, onCancel }: Props) {
   return (
     <form
       className="flex flex-col gap-4"
+      onKeyDown={(e) => {
+        if (e.key === "Escape" && !saving) {
+          e.stopPropagation();
+          onCancel();
+        }
+      }}
       onSubmit={(e) => {
         e.preventDefault();
         void save(changed !== null);
@@ -111,6 +117,8 @@ export function CardEditor({ card, onSaved, onCancel }: Props) {
           <Field key={field}>
             <FieldLabel>{labels[field]}</FieldLabel>
             <Control
+              // Opened by a press on Edit, so the first field takes the keyboard.
+              autoFocus={field === "term"}
               value={draft[field]}
               autoComplete="off"
               spellCheck={field === "meaning"}

@@ -25,11 +25,11 @@
           "What do I have due in Lymi today?",
           "Quiz me on the words I keep forgetting"
         ],
-        "onboardingSkill": "setup",
         "websiteURL": "https://lymi.app",
         "privacyPolicyURL": "https://lymi.app/privacy",
         "termsOfServiceURL": "https://lymi.app/terms"
-      }
+      },
+      "onboardingSkill": "./skills/setup/SKILL.md"
     }
   }
 }

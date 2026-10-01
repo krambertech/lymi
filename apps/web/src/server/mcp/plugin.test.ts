@@ -56,7 +56,7 @@ describe("the Lymi plugin", () => {
   });
 
   it("runs setup after install in ChatGPT", () => {
-    const onboarding = json("plugin.json").extensions["com.openai"].interface.onboardingSkill;
-    expect(skills.map((s) => s.name)).toContain(onboarding);
+    const onboarding: string = json("plugin.json").extensions["com.openai"].onboardingSkill;
+    expect(skills.map((s) => `./skills/${s.name}/SKILL.md`)).toContain(onboarding);
   });
 });

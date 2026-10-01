@@ -1,67 +1,72 @@
 ---
-status: exploration
-date: 2026-09-13
-decision: none
+status: in_progress
+date: 2026-10-01
+decision: Build interactive MCP results and a Lymi plugin for every major assistant, then submit them to the directories
 ---
 
-# Interactive MCP apps
+# Interactive MCP apps and the Lymi plugin
 
-This proposal explores whether Lymi should add compact interactive responses to its existing remote MCP server so learners can inspect and act on results inside ChatGPT or Claude. It is not a decision to build provider-specific applications, submit a directory listing, or make review available through an assistant.
+A learner turns a lesson into cards from whichever assistant they already use, sees what was added and what was skipped, fixes a card in place, asks about the card they selected, practises, and checks how the week went. Review and grading stay in Lymi. This proposal holds the delivery outline; the platform choices are in [ADR 0026](../adr/0026-interactive-mcp-results-use-the-mcp-apps-standard.md) and [ADR 0027](../adr/0027-each-assistant-signs-in-with-its-own-registered-client.md).
 
-Public legal and support readiness is tracked in [#82](https://github.com/krambertech/lymi/issues/82). Preparing the existing MCP server for public directory review is tracked in [#83](https://github.com/krambertech/lymi/issues/83) and does not depend on interactive UI.
+## Hosts
 
-## Opportunity
+ChatGPT, Codex, Claude (web, desktop and mobile), Claude Code, VS Code Copilot, Gemini CLI, Cursor, Grok and the Gemini app. The first six already sign in through a Client ID Metadata Document, and the Gemini app reportedly does too. Cursor and Grok need a client Lymi registers for them ([ADR 0027](../adr/0027-each-assistant-signs-in-with-its-own-registered-client.md)).
 
-Lymi's MCP tools already return text and structured data for decks, cards, settings, due counts, and insights. A small interactive result could make a few high-value moments easier to understand, especially the outcome of adding several cards, inspecting a found card, or seeing a deck summary without reading a long response.
+## What the assistant shows
 
-Review remains a learner-only experience in Lymi. An MCP App must not expose grading controls or allow an assistant to create review evidence.
+One interface bundle, built on the MCP Apps standard, renders wherever the host supports it. Every tool keeps its complete text and structured result, so a host without the interface loses nothing but the view.
 
-## Confirmed evidence
+| Result | View |
+| --- | --- |
+| `add_cards` | Cards added and skipped, with field sources and enrichment still running; select one to edit in place or open it in Lymi |
+| `get_card`, `update_card` | One card, editable: term, meaning, example, pronunciation and hook |
+| `search_cards` | Matching cards with their deck and state |
+| `get_deck` | The deck's summary and its newest cards |
+| `due_counts` | What is due now, per deck, with a link to review in Lymi |
+| `get_insights`, `get_streak` | Recall, the week's lights and the run |
 
-- As checked on 2026-09-13, OpenAI accepts MCP-only plugins for its public directory and treats UI components as optional, so interactive UI is not a prerequisite for listing Lymi: [OpenAI submission guide](https://developers.openai.com/plugins/deploy/submission).
-- As checked on 2026-09-13, Anthropic accepts remote MCP servers with or without MCP Apps; connectors with interactive UI require additional screenshots and review material: [Anthropic directory submission guide](https://claude.com/docs/connectors/building/submission).
-- Lymi already exposes one standards-based MCP tool surface that can be exercised by multiple clients.
-- Provider capabilities and directory requirements can change and must be rechecked before a decision or submission.
+Selecting a card tells the assistant which card the learner means (`ui/update-model-context`), so "make this example simpler" lands on the right card. The panel never grades, never starts a review and never shows a review control.
 
-## Options
+ChatGPT adds a side-panel tab beside the conversation, a read-only sidebar home (due today, recent adds, search), @-mentions of decks and cards on desktop, native settings for the app language, a setup skill after install, and deep links into Lymi. Rich forms for choosing a deck and section follow the move to MCP `2026-07-28`. Event subscriptions are out: nothing in Lymi needs the assistant to act on its own.
 
-1. **Publish the plain MCP connector.** Complete #82 and #83, then learn from real usage before adding an interface. This is the baseline and lowest-maintenance option.
-2. **Add a few portable MCP App responses.** Keep one shared standards-based server and add UI only where it materially improves comprehension or action. Platform-specific adapters would be added only where required.
-3. **Build separate provider-specific experiences.** Tailor distinct ChatGPT and Claude integrations. This offers the most control but creates the largest product, review, and maintenance burden, with no current evidence that Lymi needs it.
+## The plugin
 
-## Current leaning
+`plugins/lymi/` holds one package with three manifests over the same `skills/`: `plugin.json` (Agent Plugins, read by ChatGPT, Codex, VS Code, Cursor and M365), `.claude-plugin/plugin.json` (Claude and Claude Code) and `gemini-extension.json` (Gemini CLI). Every manifest points at `https://my.lymi.app/mcp`.
 
-Start with the plain connector. If real usage reveals a repeated comprehension or action problem, test one shared interactive response for `add_cards`: show what was added or skipped, preserve provenance, and offer safe ways to inspect the affected cards in Lymi.
+| Skill | Teaches the assistant to |
+| --- | --- |
+| `lesson-to-cards` | Pick the terms worth keeping, write each as used, keep the lesson's wording and sources, and send one `add_cards` call |
+| `tend-cards` | Improve a card on request: an example, a memory hook, splitting a card that keeps being forgotten, accepting a diagnosis fix |
+| `practise` | Quiz or talk with the learner using weak or new cards, record nothing, and say plainly that practice does not count toward the streak |
+| `weekly-check-in` | Read insights and the streak when asked, and suggest what to add or fix |
+| `setup` | Choose the default deck and confirm the meaning language after install |
 
-The text and structured result must remain complete when a client cannot render the component. Interactive UI is an enhancement, not a second product contract.
+## Delivery
 
-## Product boundaries
+1. Publish Cursor's client document and test its sign-in.
+2. Build the plugin package and install it privately in each host.
+3. Serve the interface bundle as a `ui://` resource and render the `add_cards` result; prove it in ChatGPT and Claude.
+4. Edit in place, share the selected card, and keep a draft when the card changed underneath it.
+5. Add the read-only views.
+6. Add the ChatGPT extensions.
+7. Connect Grok and the Gemini app.
+8. Move the server to MCP `2026-07-28`, then add rich forms.
+9. Submit to the ChatGPT and Codex directory, the Claude directory and plugin portal, the Cursor and VS Code marketplaces, the Gemini CLI gallery and the MCP Registry.
 
-- Learner-written content wins, and AI-generated content keeps its provenance.
-- MCP clients may add and tend cards but never grade reviews.
-- Authentication and authorization remain user-specific, private, and scope-limited.
-- Every write remains visible in Activity and the audit trail.
-- Card and lesson content must not leak through logs, analytics, screenshots, or shared component state.
-- No platform-exclusive capability should be added without evidence that the shared MCP contract cannot support the learner need.
+## Done means
 
-## Evidence needed to proceed
+- A real session passes in each host, not only a local host harness.
+- Every write from the interface shows in Activity with the connected app's name, and a read-only grant cannot write.
+- Practice leaves no review, grade or streak change behind.
+- No card content reaches logs, analytics or model context the learner did not select.
+- The interface works in both rooms, in English, Ukrainian and Russian, and at phone width in ChatGPT and Claude mobile.
 
-- Real use of the plain connector shows a repeated problem that a visual response could solve better than clearer text or schemas.
-- A small portability spike demonstrates that the same component and fallback can work acceptably in both ChatGPT and Claude.
-- The added latency, payload size, accessibility work, privacy exposure, testing, and release burden are proportionate to the learner benefit.
-- Provider APIs and review expectations are stable enough to support the experience without parallel products.
+## Constraints found in research
 
-## Open questions
+Checked on 1 October 2026.
 
-- Which MCP result benefits most from an interface rather than better text and structured output?
-- How portable are component rendering, actions, authentication, and fallback behavior across providers?
-- Which actions can safely originate in a component, and which require confirmation or a handoff to Lymi?
-- How should private card content be represented in provider-hosted rendering and review screenshots?
-- What versioning and operational burden does interactive UI add to the MCP server?
-- Does the experience improve learner comprehension enough to justify its maintenance cost?
-
-## Decision gate
-
-Consider accepting this proposal only after #82 and #83 are complete, the plain connector has been tested with public-directory-style accounts, a repeated learner problem has been observed, and a portability spike preserves Lymi's product invariants in both providers.
-
-If accepted, record consequential platform and portability choices in an ADR and add a focused delivery section here. Until then, interactive MCP Apps remain optional future exploration.
+- ChatGPT plugins may not sell subscriptions or show upgrade prompts ([OpenAI app review](https://developers.openai.com/plugins/deploy/app-review)). Premium features reached through ChatGPT can say that another plan is needed and link to an informational page.
+- Claude requires a hashed sandbox domain and 3–5 screenshots for a connector with an interface ([Claude submission guide](https://claude.com/docs/connectors/building/submission)).
+- The Gemini app's custom apps are limited to adults in the US, in English ([Google help](https://support.google.com/gemini/answer/17209137)); testing needs a US account.
+- Grok's sign-in rules come only from third-party guides and need confirming against a real connection.
+- Private card pictures load through authenticated routes and do not reach a sandboxed view in the first version; the view shows the picture's description instead.

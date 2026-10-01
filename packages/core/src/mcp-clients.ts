@@ -1,6 +1,7 @@
 /**
  * Client ID Metadata Documents that Lymi publishes for MCP clients that cannot publish their own.
- * Gemini CLI and Cursor take a client ID but only register dynamically otherwise, which Lymi keeps off (ADR 0027).
+ * Gemini CLI and Cursor accept a client ID in their config; without one they try dynamic
+ * registration, which Lymi keeps off (ADR 0027).
  */
 
 export const GEMINI_CLI_CLIENT_PATH = "/oauth/gemini-cli.json";

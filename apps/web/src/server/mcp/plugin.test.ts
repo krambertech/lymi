@@ -30,9 +30,10 @@ describe("the Lymi plugin", () => {
   it("names only tools the MCP server has", async () => {
     const tools = await toolNames();
     for (const skill of skills) {
-      const named = [...skill.text.matchAll(/`([a-z]+(?:_[a-z]+)+)`/g)].map((m) => m[1]);
+      // Every snake_case word is a tool name: card fields are camelCase and skills are kebab-case.
+      const named = skill.text.match(/\b[a-z]+(?:_[a-z]+)+\b/g) ?? [];
       expect(
-        named.filter((name) => name !== undefined && !tools.has(name)),
+        named.filter((name) => !tools.has(name)),
         `${skill.name} names tools the server lacks`,
       ).toEqual([]);
     }

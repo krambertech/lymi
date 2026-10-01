@@ -41,6 +41,10 @@ msgstr "{0, plural, =0 {The cards went into decks you already had.} one {They’
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 
+#. placeholder {0}: skipped.length
+msgid "{0, plural, one {# already in your decks} other {# already in your decks}}"
+msgstr "{0, plural, one {# already in your decks} other {# already in your decks}}"
+
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# archived card arrives archived.} other {# archived cards arrive archived.}}"
 msgstr "{0, plural, one {# archived card arrives archived.} other {# archived cards arrive archived.}}"
@@ -52,6 +56,10 @@ msgstr "{0, plural, one {# card brings its picture.} other {# cards bring their 
 #. placeholder {0}: s.archivedCards
 msgid "{0, plural, one {# card comes back with it} other {# cards come back with it}}"
 msgstr "{0, plural, one {# card comes back with it} other {# cards come back with it}}"
+
+#. placeholder {0}: result.dueNow
+msgid "{0, plural, one {# card due} other {# cards due}}"
+msgstr "{0, plural, one {# card due} other {# cards due}}"
 
 #. placeholder {0}: counts.existing
 msgid "{0, plural, one {# card from an earlier import was updated.} other {# cards from an earlier import were updated.}}"
@@ -81,6 +89,10 @@ msgstr "{0, plural, one {# card was in an earlier import. Only its empty fields 
 msgid "{0, plural, one {# card you archived in Mochi arrives archived.} other {# cards you archived in Mochi arrive archived.}}"
 msgstr "{0, plural, one {# card you archived in Mochi arrives archived.} other {# cards you archived in Mochi arrive archived.}}"
 
+#. placeholder {0}: result.total
+msgid "{0, plural, one {# card, newest first} other {# cards, newest first}}"
+msgstr "{0, plural, one {# card, newest first} other {# cards, newest first}}"
+
 #. placeholder {0}: deck.cardCount
 #. placeholder {0}: deck.cards
 #. placeholder {0}: deck.total
@@ -104,6 +116,10 @@ msgstr "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 
+#. placeholder {0}: result.rounds.forgotten
+msgid "{0, plural, one {# forgotten today.} other {# forgotten today.}}"
+msgstr "{0, plural, one {# forgotten today.} other {# forgotten today.}}"
+
 #. placeholder {0}: screen.nudge.count
 msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
 msgstr "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
@@ -123,6 +139,10 @@ msgstr "{0, plural, one {# note is image occlusion or has no term, so it’s ski
 #. placeholder {0}: type.notes
 msgid "{0, plural, one {# note} other {# notes}}"
 msgstr "{0, plural, one {# note} other {# notes}}"
+
+#. placeholder {0}: result.rounds.slipping
+msgid "{0, plural, one {# often forgotten.} other {# often forgotten.}}"
+msgstr "{0, plural, one {# often forgotten.} other {# often forgotten.}}"
 
 #. placeholder {0}: counts.reviews
 msgid "{0, plural, one {# past review was imported.} other {# past reviews were imported.}}"
@@ -158,6 +178,14 @@ msgstr "{0, plural, one {# sound is skipped. Lymi reads terms aloud itself.} oth
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
 msgstr "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
+
+#. placeholder {0}: result.added
+msgid "{0, plural, one {Added # card to {deckName}} other {Added # cards to {deckName}}}"
+msgstr "{0, plural, one {Added # card to {deckName}} other {Added # cards to {deckName}}}"
+
+#. placeholder {0}: result.added
+msgid "{0, plural, one {Added # card} other {Added # cards}}"
+msgstr "{0, plural, one {Added # card} other {Added # cards}}"
 
 #. placeholder {0}: preview.duplicates - preview.duplicateExamples.length
 msgid "{0, plural, one {and # more} other {and # more}}"
@@ -363,6 +391,9 @@ msgstr "{cards, plural, one {# card} other {# cards}} · {0}"
 
 msgid "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
 msgstr "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
+
+msgid "{count, plural, one {# card found} other {# cards found}}"
+msgstr "{count, plural, one {# card found} other {# cards found}}"
 
 msgid "{count, plural, one {# new} other {# new}}"
 msgstr "{count, plural, one {# new} other {# new}}"
@@ -606,6 +637,9 @@ msgstr "A .mochi file, up to 1 GB. You can also drop it here."
 msgid "A .zip file, up to 1 GB. You can also drop it here."
 msgstr "A .zip file, up to 1 GB. You can also drop it here."
 
+msgid "A card needs a term."
+msgstr "A card needs a term."
+
 msgid "A change made offline couldn’t be saved. {reason}"
 msgstr "A change made offline couldn’t be saved. {reason}"
 
@@ -745,6 +779,9 @@ msgstr "Add with Google"
 msgid "Add, edit and archive cards"
 msgstr "Add, edit and archive cards"
 
+msgid "Added"
+msgstr "Added"
+
 #. placeholder {0}: outcome.term
 msgid "Added “{0}”"
 msgstr "Added “{0}”"
@@ -814,6 +851,9 @@ msgstr "Allow"
 msgctxt "deck tag"
 msgid "Alphabet"
 msgstr "Alphabet"
+
+msgid "Already in your decks"
+msgstr "Already in your decks"
 
 msgid "Also adds, edits and archives them."
 msgstr "Also adds, edits and archives them."
@@ -1050,6 +1090,9 @@ msgstr "Cancel the link"
 msgid "Cancelled"
 msgstr "Cancelled"
 
+msgid "Cancelled before it finished."
+msgstr "Cancelled before it finished."
+
 msgid "Cancelled the invitation to {name} for {deck}"
 msgstr "Cancelled the invitation to {name} for {deck}"
 
@@ -1088,6 +1131,12 @@ msgstr "Cards"
 
 msgid "Cards appear here when {owner} adds them."
 msgstr "Cards appear here when {owner} adds them."
+
+msgid "Cards by stage"
+msgstr "Cards by stage"
+
+msgid "Cards found"
+msgstr "Cards found"
 
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Cards from Marco’s Tuesday lessons."
@@ -1312,6 +1361,9 @@ msgstr "Couldn’t check for more cards"
 msgid "Couldn’t check this device. Reload to try again."
 msgstr "Couldn’t check this device. Reload to try again."
 
+msgid "Couldn’t connect to Lymi. Try again in a moment."
+msgstr "Couldn’t connect to Lymi. Try again in a moment."
+
 msgid "Couldn’t enrich “{term}”. Check your connection and try again."
 msgstr "Couldn’t enrich “{term}”. Check your connection and try again."
 
@@ -1323,6 +1375,9 @@ msgstr "Couldn’t finish the import"
 
 msgid "Couldn’t finish the upload"
 msgstr "Couldn’t finish the upload"
+
+msgid "Couldn’t finish this. Try again in a moment."
+msgstr "Couldn’t finish this. Try again in a moment."
 
 msgid "Couldn’t fit this in one file. Export one deck at a time instead."
 msgstr "Couldn’t fit this in one file. Export one deck at a time instead."
@@ -1395,6 +1450,9 @@ msgstr "Couldn’t remove the member. Try again."
 
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again."
+
+msgid "Couldn’t save the card. Your changes are still here."
+msgstr "Couldn’t save the card. Your changes are still here."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
@@ -1618,6 +1676,9 @@ msgstr "Dropped {name} at {where}."
 msgid "Due"
 msgstr "Due"
 
+msgid "Due by deck"
+msgstr "Due by deck"
+
 msgid "Due date"
 msgstr "Due date"
 
@@ -1647,6 +1708,9 @@ msgstr "Earlier shelves"
 
 msgid "Easy"
 msgstr "Easy"
+
+msgid "Edit"
+msgstr "Edit"
 
 msgid "Edit “{draftTerm}”"
 msgstr "Edit “{draftTerm}”"
@@ -1701,6 +1765,9 @@ msgstr "Enriched {list}"
 
 msgid "Enriched this card"
 msgstr "Enriched this card"
+
+msgid "Enriching"
+msgstr "Enriching"
 
 msgid "Enriching this card"
 msgstr "Enriching this card"
@@ -1926,6 +1993,9 @@ msgstr "Hide password"
 msgid "History"
 msgstr "History"
 
+msgid "Hook"
+msgstr "Hook"
+
 msgid "Hook added"
 msgstr "Hook added"
 
@@ -1943,6 +2013,9 @@ msgstr "how it is asked"
 
 msgid "How it’s asked"
 msgstr "How it’s asked"
+
+msgid "How it’s going"
+msgstr "How it’s going"
 
 msgid "How many cards come back this week"
 msgstr "How many cards come back this week"
@@ -2525,6 +2598,9 @@ msgstr "No archived sections."
 msgid "No card of this kind has a term."
 msgstr "No card of this kind has a term."
 
+msgid "No cards found"
+msgstr "No cards found"
+
 #. placeholder {0}: deck.name
 msgid "No cards in {0} yet"
 msgstr "No cards in {0} yet"
@@ -2649,6 +2725,9 @@ msgstr "Nothing due"
 msgid "Nothing due in the next seven days."
 msgstr "Nothing due in the next seven days."
 
+msgid "Nothing due right now"
+msgstr "Nothing due right now"
+
 msgid "Nothing due today, so your streak is safe."
 msgstr "Nothing due today, so your streak is safe."
 
@@ -2663,6 +2742,9 @@ msgstr "Nothing left in {scopeName}"
 
 msgid "Nothing left in this deck"
 msgstr "Nothing left in this deck"
+
+msgid "Nothing new to add"
+msgstr "Nothing new to add"
 
 msgid "Nothing published yet"
 msgstr "Nothing published yet"
@@ -2736,8 +2818,17 @@ msgstr "Open Explore"
 msgid "Open in Library"
 msgstr "Open in Library"
 
+msgid "Open in Lymi"
+msgstr "Open in Lymi"
+
+msgid "Open Insights"
+msgstr "Open Insights"
+
 msgid "Open Library"
 msgstr "Open Library"
+
+msgid "Open Lymi"
+msgstr "Open Lymi"
 
 msgid "Open Lymi from the new icon."
 msgstr "Open Lymi from the new icon."
@@ -3093,6 +3184,9 @@ msgstr "Review done"
 msgid "Review forgotten"
 msgstr "Review forgotten"
 
+msgid "Review in Lymi"
+msgstr "Review in Lymi"
+
 msgid "Review new"
 msgstr "Review new"
 
@@ -3155,6 +3249,9 @@ msgstr "Save"
 
 msgid "Save hook"
 msgstr "Save hook"
+
+msgid "Save mine"
+msgstr "Save mine"
 
 msgid "Save password"
 msgstr "Save password"
@@ -3680,6 +3777,9 @@ msgstr "This card asks for two things at once, so remembering half still counts 
 msgid "This card changed after Lymi drafted this fix, so it no longer fits."
 msgstr "This card changed after Lymi drafted this fix, so it no longer fits."
 
+msgid "This card changed while you were editing it."
+msgstr "This card changed while you were editing it."
+
 msgid "This card’s picture was removed."
 msgstr "This card’s picture was removed."
 
@@ -3921,6 +4021,9 @@ msgstr "Use link"
 msgid "Use the deck’s"
 msgstr "Use the deck’s"
 
+msgid "Use the new version"
+msgstr "Use the new version"
+
 msgid "Use these fields"
 msgstr "Use these fields"
 
@@ -4129,6 +4232,9 @@ msgstr "Your password is set"
 
 msgid "Your photo was changed somewhere else. Check it, then try again."
 msgstr "Your photo was changed somewhere else. Check it, then try again."
+
+msgid "Your week"
+msgstr "Your week"
 
 msgid "Zoom"
 msgstr "Zoom"

@@ -41,6 +41,10 @@ msgstr "{0, plural, =0 {Картки потрапили в колоди, які 
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} з # повторення} few {{2} з # повторень} many {{2} з # повторень} other {{2} з # повторення}}"
 
+#. placeholder {0}: skipped.length
+msgid "{0, plural, one {# already in your decks} other {# already in your decks}}"
+msgstr "{0, plural, one {# вже є у твоїх колодах} few {# вже є у твоїх колодах} many {# вже є у твоїх колодах} other {# вже є у твоїх колодах}}"
+
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# archived card arrives archived.} other {# archived cards arrive archived.}}"
 msgstr "{0, plural, one {# архівна картка прийде в архів.} few {# архівні картки прийдуть в архів.} many {# архівних карток прийдуть в архів.} other {# архівної картки прийдуть в архів.}}"
@@ -52,6 +56,10 @@ msgstr "{0, plural, one {# картка переноситься із зобра
 #. placeholder {0}: s.archivedCards
 msgid "{0, plural, one {# card comes back with it} other {# cards come back with it}}"
 msgstr "{0, plural, one {Разом із ним повернеться # картка} few {Разом із ним повернуться # картки} many {Разом із ним повернуться # карток} other {Разом із ним повернуться # картки}}"
+
+#. placeholder {0}: result.dueNow
+msgid "{0, plural, one {# card due} other {# cards due}}"
+msgstr "{0, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
 
 #. placeholder {0}: counts.existing
 msgid "{0, plural, one {# card from an earlier import was updated.} other {# cards from an earlier import were updated.}}"
@@ -81,6 +89,10 @@ msgstr "{0, plural, one {# картка вже була в попередньо�
 msgid "{0, plural, one {# card you archived in Mochi arrives archived.} other {# cards you archived in Mochi arrive archived.}}"
 msgstr "{0, plural, one {# картка з архіву Mochi прийде в архів.} few {# картки з архіву Mochi прийдуть в архів.} many {# карток з архіву Mochi прийдуть в архів.} other {# картки з архіву Mochi прийдуть в архів.}}"
 
+#. placeholder {0}: result.total
+msgid "{0, plural, one {# card, newest first} other {# cards, newest first}}"
+msgstr "{0, plural, one {# картка, спершу нові} few {# картки, спершу нові} many {# карток, спершу нові} other {# картки, спершу нові}}"
+
 #. placeholder {0}: deck.cardCount
 #. placeholder {0}: deck.cards
 #. placeholder {0}: deck.total
@@ -104,6 +116,10 @@ msgstr "{0, plural, one {# колода} few {# колоди} many {# колод
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}} · {total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
+#. placeholder {0}: result.rounds.forgotten
+msgid "{0, plural, one {# forgotten today.} other {# forgotten today.}}"
+msgstr "{0, plural, one {# забута сьогодні.} few {# забуті сьогодні.} many {# забутих сьогодні.} other {# забутої сьогодні.}}"
+
 #. placeholder {0}: screen.nudge.count
 msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
 msgstr "{0, plural, one {Ще # картка — і на сьогодні все} few {Ще # картки — і на сьогодні все} many {Ще # карток — і на сьогодні все} other {Ще # картки — і на сьогодні все}}"
@@ -123,6 +139,10 @@ msgstr "{0, plural, one {# запис має тип image occlusion або не 
 #. placeholder {0}: type.notes
 msgid "{0, plural, one {# note} other {# notes}}"
 msgstr "{0, plural, one {# запис} few {# записи} many {# записів} other {# запису}}"
+
+#. placeholder {0}: result.rounds.slipping
+msgid "{0, plural, one {# often forgotten.} other {# often forgotten.}}"
+msgstr "{0, plural, one {# часто забувається.} few {# часто забуваються.} many {# часто забуваються.} other {# часто забувається.}}"
 
 #. placeholder {0}: counts.reviews
 msgid "{0, plural, one {# past review was imported.} other {# past reviews were imported.}}"
@@ -158,6 +178,14 @@ msgstr "{0, plural, one {# звук пропущено. Lymi сам вимовл
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
 msgstr "{0, plural, one {# призупинена картка прийде в архів.} few {# призупинені картки прийдуть в архів.} many {# призупинених карток прийдуть в архів.} other {# призупиненої картки прийдуть в архів.}}"
+
+#. placeholder {0}: result.added
+msgid "{0, plural, one {Added # card to {deckName}} other {Added # cards to {deckName}}}"
+msgstr "{0, plural, one {Додано # картку в «{deckName}»} few {Додано # картки в «{deckName}»} many {Додано # карток в «{deckName}»} other {Додано # картки в «{deckName}»}}"
+
+#. placeholder {0}: result.added
+msgid "{0, plural, one {Added # card} other {Added # cards}}"
+msgstr "{0, plural, one {Додано # картку} few {Додано # картки} many {Додано # карток} other {Додано # картки}}"
 
 #. placeholder {0}: preview.duplicates - preview.duplicateExamples.length
 msgid "{0, plural, one {and # more} other {and # more}}"
@@ -363,6 +391,9 @@ msgstr "{cards, plural, one {# картка} few {# картки} many {# кар
 
 msgid "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
 msgstr "{count, plural, =0 {Вибрати картки} one {Вибрано: #} few {Вибрано: #} many {Вибрано: #} other {Вибрано: #}}"
+
+msgid "{count, plural, one {# card found} other {# cards found}}"
+msgstr "{count, plural, one {Знайдено # картку} few {Знайдено # картки} many {Знайдено # карток} other {Знайдено # картки}}"
 
 msgid "{count, plural, one {# new} other {# new}}"
 msgstr "{count, plural, one {# нова} few {# нові} many {# нових} other {# нової}}"
@@ -606,6 +637,9 @@ msgstr "Файл .mochi, до 1 ГБ. Можна також перетягнут
 msgid "A .zip file, up to 1 GB. You can also drop it here."
 msgstr "Файл .zip до 1 ГБ. Можна також перетягнути його сюди."
 
+msgid "A card needs a term."
+msgstr "Картці потрібен термін."
+
 msgid "A change made offline couldn’t be saved. {reason}"
 msgstr "Не вдалося зберегти зміну, зроблену офлайн. {reason}"
 
@@ -745,6 +779,9 @@ msgstr "Додати через Google"
 msgid "Add, edit and archive cards"
 msgstr "Додавати, редагувати й архівувати картки"
 
+msgid "Added"
+msgstr "Додані"
+
 #. placeholder {0}: outcome.term
 msgid "Added “{0}”"
 msgstr "Додано «{0}»"
@@ -814,6 +851,9 @@ msgstr "Дозволити"
 msgctxt "deck tag"
 msgid "Alphabet"
 msgstr "Алфавіт"
+
+msgid "Already in your decks"
+msgstr "Вже є у твоїх колодах"
 
 msgid "Also adds, edits and archives them."
 msgstr "Також додає, редагує й архівує їх."
@@ -1050,6 +1090,9 @@ msgstr "Скасувати посилання"
 msgid "Cancelled"
 msgstr "Скасовано"
 
+msgid "Cancelled before it finished."
+msgstr "Скасовано до завершення."
+
 msgid "Cancelled the invitation to {name} for {deck}"
 msgstr "Запрошення для {name} до «{deck}» скасовано"
 
@@ -1088,6 +1131,12 @@ msgstr "Картки"
 
 msgid "Cards appear here when {owner} adds them."
 msgstr "Картки з’являться тут, коли {owner} їх додасть."
+
+msgid "Cards by stage"
+msgstr "Картки за етапами"
+
+msgid "Cards found"
+msgstr "Знайдені картки"
 
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Картки з вівторкових уроків Марко."
@@ -1312,6 +1361,9 @@ msgstr "Не вдалося перевірити, чи є ще картки"
 msgid "Couldn’t check this device. Reload to try again."
 msgstr "Не вдалося перевірити цей пристрій. Онови сторінку, щоб спробувати ще раз."
 
+msgid "Couldn’t connect to Lymi. Try again in a moment."
+msgstr "Не вдалося підключитися до Lymi. Спробуй ще раз за хвилину."
+
 msgid "Couldn’t enrich “{term}”. Check your connection and try again."
 msgstr "Не вдалося доповнити «{term}». Перевір з’єднання й повтори спробу."
 
@@ -1323,6 +1375,9 @@ msgstr "Не вдалося завершити імпорт"
 
 msgid "Couldn’t finish the upload"
 msgstr "Не вдалося завершити завантаження"
+
+msgid "Couldn’t finish this. Try again in a moment."
+msgstr "Не вдалося завершити. Спробуй ще раз за хвилину."
 
 msgid "Couldn’t fit this in one file. Export one deck at a time instead."
 msgstr "Не вдалося вмістити це в один файл. Експортуй колоди по одній."
@@ -1395,6 +1450,9 @@ msgstr "Не вдалося вилучити учасника. Спробуй щ
 
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Не вдалося зберегти «{failedTerm}». Перевір з’єднання й повтори спробу."
+
+msgid "Couldn’t save the card. Your changes are still here."
+msgstr "Не вдалося зберегти картку. Твої зміни нікуди не зникли."
 
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не вдалося зберегти мову. Перевір з’єднання й повтори спробу."
@@ -1618,6 +1676,9 @@ msgstr "{name} тепер у «{where}»."
 msgid "Due"
 msgstr "Коли повторювати"
 
+msgid "Due by deck"
+msgstr "До повторення за колодами"
+
 msgid "Due date"
 msgstr "Дата повторення"
 
@@ -1647,6 +1708,9 @@ msgstr "Попередні полиці"
 
 msgid "Easy"
 msgstr "Легко"
+
+msgid "Edit"
+msgstr "Редагувати"
 
 msgid "Edit “{draftTerm}”"
 msgstr "Редагувати «{draftTerm}»"
@@ -1701,6 +1765,9 @@ msgstr "Доповнено {list}"
 
 msgid "Enriched this card"
 msgstr "Картку доповнено"
+
+msgid "Enriching"
+msgstr "Доповнюємо"
 
 msgid "Enriching this card"
 msgstr "Доповнюємо цю картку"
@@ -1926,6 +1993,9 @@ msgstr "Сховати пароль"
 msgid "History"
 msgstr "Історія"
 
+msgid "Hook"
+msgstr "Зачіпка"
+
 msgid "Hook added"
 msgstr "Зачіпку додано"
 
@@ -1943,6 +2013,9 @@ msgstr "як запитується"
 
 msgid "How it’s asked"
 msgstr "Як запитувати"
+
+msgid "How it’s going"
+msgstr "Як іде навчання"
 
 msgid "How many cards come back this week"
 msgstr "Скільки карток повернеться цього тижня"
@@ -2525,6 +2598,9 @@ msgstr "Архівованих розділів немає."
 msgid "No card of this kind has a term."
 msgstr "Жодна картка цього виду не має терміна."
 
+msgid "No cards found"
+msgstr "Карток не знайдено"
+
 #. placeholder {0}: deck.name
 msgid "No cards in {0} yet"
 msgstr "У колоді {0} ще немає карток"
@@ -2649,6 +2725,9 @@ msgstr "Нічого повторювати"
 msgid "Nothing due in the next seven days."
 msgstr "У найближчі сім днів повторювати нічого."
 
+msgid "Nothing due right now"
+msgstr "Зараз нема що повторювати"
+
 msgid "Nothing due today, so your streak is safe."
 msgstr "Сьогодні нічого повторювати, тож дні поспіль не перервуться."
 
@@ -2663,6 +2742,9 @@ msgstr "У «{scopeName}» більше нічого"
 
 msgid "Nothing left in this deck"
 msgstr "У цій колоді більше нічого"
+
+msgid "Nothing new to add"
+msgstr "Нічого нового не додано"
 
 msgid "Nothing published yet"
 msgstr "Ще нічого не опубліковано"
@@ -2736,8 +2818,17 @@ msgstr "Відкрити каталог"
 msgid "Open in Library"
 msgstr "Відкрити в Бібліотеці"
 
+msgid "Open in Lymi"
+msgstr "Відкрити в Lymi"
+
+msgid "Open Insights"
+msgstr "Відкрити Огляд"
+
 msgid "Open Library"
 msgstr "Відкрити Бібліотеку"
+
+msgid "Open Lymi"
+msgstr "Відкрити Lymi"
 
 msgid "Open Lymi from the new icon."
 msgstr "Відкрий Lymi з нової іконки."
@@ -3093,6 +3184,9 @@ msgstr "Повторення завершено"
 msgid "Review forgotten"
 msgstr "Повторити забуті"
 
+msgid "Review in Lymi"
+msgstr "Повторювати в Lymi"
+
 msgid "Review new"
 msgstr "Повторити нові"
 
@@ -3155,6 +3249,9 @@ msgstr "Зберегти"
 
 msgid "Save hook"
 msgstr "Зберегти зачіпку"
+
+msgid "Save mine"
+msgstr "Зберегти мою"
 
 msgid "Save password"
 msgstr "Зберегти пароль"
@@ -3680,6 +3777,9 @@ msgstr "Ця картка питає про дві речі одразу, тож
 msgid "This card changed after Lymi drafted this fix, so it no longer fits."
 msgstr "Картка змінилася після того, як Lymi підготував це виправлення, тож воно вже не підходить."
 
+msgid "This card changed while you were editing it."
+msgstr "Ця картка змінилася під час редагування."
+
 msgid "This card’s picture was removed."
 msgstr "Зображення цієї картки прибрано."
 
@@ -3921,6 +4021,9 @@ msgstr "Використати посилання"
 msgid "Use the deck’s"
 msgstr "Повернути як у колоді"
 
+msgid "Use the new version"
+msgstr "Узяти нову версію"
+
 msgid "Use these fields"
 msgstr "Використати ці поля"
 
@@ -4129,6 +4232,9 @@ msgstr "Пароль збережено"
 
 msgid "Your photo was changed somewhere else. Check it, then try again."
 msgstr "Фото змінилося деінде. Перевір його й спробуй ще раз."
+
+msgid "Your week"
+msgstr "Твій тиждень"
 
 msgid "Zoom"
 msgstr "Масштаб"

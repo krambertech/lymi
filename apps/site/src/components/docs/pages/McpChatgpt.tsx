@@ -85,8 +85,9 @@ url = "${ORIGIN}/mcp"`}
       <H2>When it does not connect</H2>
       <ul>
         <li>
-          <strong>Sign-in is refused.</strong> Lymi is private. Only the accounts on its allowlist
-          can sign in, whatever the OpenAI account is.
+          <strong>Sign-in is refused.</strong> An account made with an email address and a password
+          cannot sign in until the address is confirmed. Open the link in the confirmation email,
+          then connect again.
         </li>
         <li>
           <strong>Registration fails.</strong> Lymi has no dynamic client registration, by design.

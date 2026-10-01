@@ -270,6 +270,11 @@ export function McpOverview() {
             title: "Cursor",
             blurb: "The mcp.json entry, with the client ID Lymi publishes for it.",
           },
+          {
+            to: "/docs/mcp/grok",
+            title: "Grok",
+            blurb: "A custom connector, with the client ID Lymi publishes for it.",
+          },
         ]}
       />
     </div>

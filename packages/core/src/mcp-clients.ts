@@ -43,3 +43,24 @@ export function cursorClientMetadata(siteOrigin: string) {
     token_endpoint_auth_method: "none",
   };
 }
+
+export const GROK_CLIENT_PATH = "/oauth/grok.json";
+
+/** Both callbacks Grok has been seen to use; xAI documents neither, so a sign-in check guards them. */
+const GROK_REDIRECT_URIS = [
+  "https://grok.com/connectors/oauth/callback",
+  "https://grok.com/connectors-oauth-exchange-code/",
+];
+
+export function grokClientMetadata(siteOrigin: string) {
+  return {
+    client_id: new URL(GROK_CLIENT_PATH, siteOrigin).toString(),
+    client_name: "Grok",
+    client_uri: new URL("/docs/mcp/grok", siteOrigin).toString(),
+    application_type: "web",
+    redirect_uris: GROK_REDIRECT_URIS,
+    grant_types: ["authorization_code", "refresh_token"],
+    response_types: ["code"],
+    token_endpoint_auth_method: "none",
+  };
+}

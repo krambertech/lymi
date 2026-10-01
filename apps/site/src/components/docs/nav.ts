@@ -19,7 +19,8 @@ export type DocPath =
   | "/docs/mcp/claude"
   | "/docs/mcp/chatgpt"
   | "/docs/mcp/gemini"
-  | "/docs/mcp/cursor";
+  | "/docs/mcp/cursor"
+  | "/docs/mcp/grok";
 
 export interface DocPage {
   to: DocPath;
@@ -63,9 +64,10 @@ export const PAGES: DocPage[] = [
   },
   {
     to: "/docs/mcp/gemini",
-    nav: "Gemini CLI",
-    title: "Gemini CLI",
-    blurb: "Connect Lymi to Gemini CLI, with the client ID Lymi publishes for it.",
+    nav: "Gemini",
+    title: "Gemini",
+    blurb:
+      "Connect Lymi to Gemini CLI, with the client ID Lymi publishes for it, and to the Gemini app.",
     section: "Assistants",
   },
   {
@@ -73,6 +75,13 @@ export const PAGES: DocPage[] = [
     nav: "Cursor",
     title: "Cursor",
     blurb: "Connect Lymi to Cursor, with the client ID Lymi publishes for it.",
+    section: "Assistants",
+  },
+  {
+    to: "/docs/mcp/grok",
+    nav: "Grok",
+    title: "Grok",
+    blurb: "Connect Lymi to Grok as a custom connector, with the client ID Lymi publishes for it.",
     section: "Assistants",
   },
   {

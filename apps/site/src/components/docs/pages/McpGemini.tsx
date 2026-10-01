@@ -87,9 +87,29 @@ export function McpGemini() {
 
       <H2>The Gemini app</H2>
       <p>
-        This guide does not cover it. On a personal account, custom connectors in the Gemini app
-        need Gemini Spark, which is only available in the US. Lymi has not been tested there or in
-        Gemini Enterprise.
+        Custom apps in the Gemini app are open to personal accounts of adults in the US, in English.
+        Google signs the app in on its own, so no client ID is needed.
+      </p>
+      <Steps>
+        <div>
+          <StepTitle>Add the app</StepTitle>
+          <p>
+            In Gemini, open <strong>Settings → Connected Apps</strong>, press{" "}
+            <strong>Add a custom app</strong>, and paste the server URL above.
+          </p>
+        </div>
+        <div>
+          <StepTitle>Sign in</StepTitle>
+          <p>
+            Press <strong>Next</strong>. Your browser opens on Lymi. Sign in, then approve the
+            connection. Gemini asks you to confirm each change it makes to your decks.
+          </p>
+        </div>
+      </Steps>
+      <p>
+        If Gemini asks for a client ID and secret instead, it could not identify itself to Lymi.
+        Write to <a href="mailto:hello@lymi.app">hello@lymi.app</a>; Lymi has not been tested there
+        yet.
       </p>
 
       <H2>When it does not connect</H2>

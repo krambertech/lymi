@@ -10,7 +10,7 @@ import { VitePWA } from "vite-plugin-pwa";
 import { configDefaults, type TestProjectConfiguration } from "vitest/config";
 import type { BrowserInstanceOption } from "vitest/node";
 import { e2ePublisherEmails } from "../../e2e/settings.mjs";
-import { mcpApp } from "./mcp-app.build";
+import { mcpApp } from "./mcp-app.build.ts";
 
 const isE2E = process.env.LYMI_E2E === "1";
 const isAppPreview = process.env.LYMI_APP_PREVIEW === "1";

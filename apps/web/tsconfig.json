@@ -2,6 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react-jsx",
+    // vite.config.ts imports mcp-app.build.ts with its extension, as Vite's native config loader needs.
+    "allowImportingTsExtensions": true,
     "types": ["vite/client", "vite-plugin-pwa/client"],
     "baseUrl": ".",
     "paths": {

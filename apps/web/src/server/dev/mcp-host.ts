@@ -107,10 +107,10 @@ const sample = {
     const deck = decks[0];
     const existing = (await call("get_deck", { deckId: deck.id })).structuredContent.cards[0];
     const cards = [
-      { deckId: deck.id, term: "sbrigarsi", meaning: "to hurry up", meaningSource: "lesson", example: "Sbrigati, perdiamo il treno!", exampleSource: "lesson", source: "Lesson 12" },
-      { deckId: deck.id, term: "la coincidenza", meaning: "connection (train)", meaningSource: "lesson", source: "Lesson 12" },
-      { deckId: deck.id, term: "in ritardo", source: "Lesson 12", enrich: true },
-      ...(existing ? [{ deckId: deck.id, term: existing.term, source: "Lesson 12" }] : []),
+      { deckId: deck.id, term: "il binario", meaning: "the platform (track)", meaningSource: "lesson", example: "Il treno parte dal binario tre.", exampleSource: "lesson", source: "Lesson 13" },
+      { deckId: deck.id, term: "la fermata", meaning: "the stop", meaningSource: "lesson", source: "Lesson 13" },
+      { deckId: deck.id, term: "perdere il treno", source: "Lesson 13", enrich: true },
+      ...(existing ? [{ deckId: deck.id, term: existing.term, source: "Lesson 13" }] : []),
     ];
     return ["add_cards", { cards }];
   },

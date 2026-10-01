@@ -179,11 +179,11 @@ msgstr "{0, plural, one {# sound is skipped. Lymi reads terms aloud itself.} oth
 msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
 msgstr "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
 
-#. placeholder {0}: added.length
+#. placeholder {0}: result.added
 msgid "{0, plural, one {Added # card to {deckName}} other {Added # cards to {deckName}}}"
 msgstr "{0, plural, one {Added # card to {deckName}} other {Added # cards to {deckName}}}"
 
-#. placeholder {0}: added.length
+#. placeholder {0}: result.added
 msgid "{0, plural, one {Added # card} other {Added # cards}}"
 msgstr "{0, plural, one {Added # card} other {Added # cards}}"
 

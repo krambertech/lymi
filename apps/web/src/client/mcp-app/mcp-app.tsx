@@ -9,21 +9,27 @@ import { Skeleton } from "../components/skeleton";
 import { bridgeHost, HostContext } from "./host";
 import { ViewFor } from "./view-for";
 
-/** The resource names its view and Lymi's origin in meta tags, so the first paint is right. */
-function meta(name: string): string | null {
-  return document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`)?.content ?? null;
+/** The server writes the view and Lymi's origin into the document it serves. */
+function meta(name: string): string {
+  const content = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`)?.content;
+  if (!content) throw new Error(`The view document has no ${name}`);
+  return content;
 }
 
-function viewOf(value: string | null): McpView | null {
-  return MCP_VIEWS.find((view) => view === value) ?? null;
+function viewOf(name: string): McpView {
+  const known = MCP_VIEWS.find((v) => v === name);
+  if (!known) throw new Error(`Unknown view ${name}`);
+  return known;
 }
+
+const origin = meta("lymi-origin");
+const view = viewOf(meta("lymi-view"));
 
 /**
  * The root of the MCP Apps view. It connects to the host, follows the host's theme, speaks the
  * learner's app language, and renders the view its resource names with the tool's result.
  */
 export function McpApp() {
-  const origin = meta("lymi-origin") ?? window.location.origin;
   const [result, setResult] = useState<CallToolResult | null>(null);
   const [cancelled, setCancelled] = useState(false);
   const { app, error } = useApp({
@@ -40,9 +46,7 @@ export function McpApp() {
     if (context) applyHostContext(context);
   }, [app]);
 
-  const host = useMemo(() => (app ? bridgeHost(app, origin) : null), [app, origin]);
-  const view =
-    viewOf(meta("lymi-view")) ?? viewOf(toolView(app?.getHostContext()?.toolInfo?.tool.name));
+  const host = useMemo(() => (app ? bridgeHost(app, origin) : null), [app]);
 
   return (
     <I18nProvider i18n={i18n}>
@@ -54,7 +58,7 @@ export function McpApp() {
         <Message>
           <Trans>Cancelled before it finished.</Trans>
         </Message>
-      ) : !host || !result || !view ? (
+      ) : !host || !result ? (
         <Loading />
       ) : (
         <HostContext value={host}>
@@ -63,29 +67,6 @@ export function McpApp() {
       )}
     </I18nProvider>
   );
-}
-
-/** Which view a tool's result gets, when the resource did not say. */
-function toolView(tool: string | undefined): string | null {
-  switch (tool) {
-    case "add_cards":
-      return "capture";
-    case "get_card":
-    case "update_card":
-      return "card";
-    case "search_cards":
-      return "search";
-    case "get_deck":
-      return "deck";
-    case "due_counts":
-      return "due";
-    case "get_insights":
-      return "insights";
-    case "get_streak":
-      return "streak";
-    default:
-      return null;
-  }
 }
 
 function applyHostContext(context: { theme?: "light" | "dark" | undefined }) {

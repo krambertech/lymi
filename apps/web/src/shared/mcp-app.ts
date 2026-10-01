@@ -13,7 +13,6 @@ export const MCP_VIEWS = [
   "due",
   "insights",
   "streak",
-  "home",
 ] as const;
 export type McpView = (typeof MCP_VIEWS)[number];
 
@@ -45,12 +44,12 @@ export interface ViewCard {
   createdAt: string;
 }
 
+/** A terse add (`response: "terse"`) carries the status alone, with no card to show. */
 export interface ViewAddOutcome {
   id: string;
-  status: "added" | "skipped";
-  card?: ViewCard;
-  term?: string;
-  existing?: ViewCard & { deckName: string };
+  status: string;
+  card?: ViewCard | undefined;
+  existing?: (ViewCard & { deckName: string }) | undefined;
 }
 
 export interface ViewAddResult {

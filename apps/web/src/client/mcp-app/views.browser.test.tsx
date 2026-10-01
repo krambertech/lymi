@@ -58,23 +58,21 @@ const added: ViewAddResult = {
     {
       id: "card-9",
       status: "skipped",
-      term: "magari",
       existing: { ...card({ id: "card-9", term: "magari", meaning: "maybe" }), deckName: "Verbi" },
     },
     {
       id: "card-9",
       status: "skipped",
-      term: "Magari",
       existing: { ...card({ id: "card-9", term: "magari", meaning: "maybe" }), deckName: "Verbi" },
     },
   ],
 };
 
-async function renderCapture(host: Host) {
+async function renderCapture(host: Host, result: ViewAddResult = added) {
   await render(
     <I18nProvider i18n={i18n}>
       <HostContext value={host}>
-        <CaptureView result={added} decks={{ "deck-1": "Lezione 12" }} />
+        <CaptureView result={result} decks={{ "deck-1": "Lezione 12" }} />
       </HostContext>
     </I18nProvider>,
   );
@@ -90,6 +88,18 @@ test("an add names its deck, lists what landed, and lists an existing card once"
   expect(landed.element().textContent).toContain("sbrigarsi");
   const existing = page.getByRole("list", { name: "Already in your decks" }).getByRole("listitem");
   expect(existing.elements()).toHaveLength(1);
+});
+
+test("a terse add, which carries no cards, still says how many landed", async () => {
+  await renderCapture(fakeHost(), {
+    added: 2,
+    skipped: 0,
+    results: [
+      { id: "card-1", status: "added" },
+      { id: "card-2", status: "added" },
+    ],
+  });
+  await expect.element(page.getByRole("heading", { level: 1 })).toHaveTextContent("Added 2 cards");
 });
 
 test("opening a card tells the assistant which card the learner means, and closing it clears that", async () => {

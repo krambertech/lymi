@@ -56,15 +56,16 @@ export function CaptureView({ result, decks }: Props) {
     );
 
   const deckName = onlyDeck ? decks[onlyDeck] : undefined;
+  // The counts, not the list: a terse add reports cards it does not show.
   const title =
-    added.length === 0
+    result.added === 0
       ? t`Nothing new to add`
       : deckName
-        ? plural(added.length, {
+        ? plural(result.added, {
             one: `Added # card to ${deckName}`,
             other: `Added # cards to ${deckName}`,
           })
-        : plural(added.length, { one: "Added # card", other: "Added # cards" });
+        : plural(result.added, { one: "Added # card", other: "Added # cards" });
 
   return (
     <ViewFrame
@@ -104,7 +105,7 @@ function useEnrichmentRefresh(
   const host = useHost();
   const working = cards.filter((c) => c.enrichmentStatus === "working").length > 0;
   const decks = [...new Set(cards.map((c) => c.deckId))].join(",");
-  const since = cards.reduce((min, c) => (c.createdAt < min ? c.createdAt : min), "9999");
+  const since = cards.map((c) => c.createdAt).sort()[0] ?? "";
   // Counted across restarts, so a batch that never settles stops asking.
   const rounds = useRef(0);
   useEffect(() => {

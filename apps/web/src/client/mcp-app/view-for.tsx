@@ -41,7 +41,5 @@ export function ViewFor({ view, result }: { view: McpView; result: CallToolResul
       return <InsightsView result={data as unknown as InsightsOut} />;
     case "streak":
       return <StreakView result={data as unknown as StreakOut} />;
-    case "home":
-      return <DueView result={data as unknown as ViewDueResult} />;
   }
 }

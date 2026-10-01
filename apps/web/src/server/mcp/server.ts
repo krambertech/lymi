@@ -38,7 +38,15 @@ import {
 } from "@lymi/core";
 import { type CallToolResult, McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
-import { MCP_META, type McpView } from "../../shared/mcp-app";
+import {
+  MCP_META,
+  type McpView,
+  type ViewAddResult,
+  type ViewCard,
+  type ViewDeckResult,
+  type ViewDueResult,
+  type ViewSearchResult,
+} from "../../shared/mcp-app";
 import {
   acceptFix,
   addCards,
@@ -1444,6 +1452,16 @@ const RestoreCardsOut = z.object({
     z.union([z.object({ id: z.string(), status: z.literal("restored") }), WriteErrorOut]),
   ),
 });
+
+/** The views read these results (shared/mcp-app.ts); a field the server drops fails the build here. */
+type Fits<T extends U, U> = T;
+export type _ViewContract = [
+  Fits<CardOut, ViewCard>,
+  Fits<z.infer<typeof AddCardsOut>, ViewAddResult>,
+  Fits<z.infer<typeof SearchOut>, ViewSearchResult>,
+  Fits<z.infer<typeof DeckWithCardsOut>, ViewDeckResult>,
+  Fits<z.infer<typeof DueOut>, ViewDueResult>,
+];
 
 const OkOut = z.object({ ok: z.literal(true) });
 

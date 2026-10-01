@@ -179,11 +179,11 @@ msgstr "{0, plural, one {# звук пропущено. Lymi сам вимовл
 msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
 msgstr "{0, plural, one {# призупинена картка прийде в архів.} few {# призупинені картки прийдуть в архів.} many {# призупинених карток прийдуть в архів.} other {# призупиненої картки прийдуть в архів.}}"
 
-#. placeholder {0}: added.length
+#. placeholder {0}: result.added
 msgid "{0, plural, one {Added # card to {deckName}} other {Added # cards to {deckName}}}"
 msgstr "{0, plural, one {Додано # картку в «{deckName}»} few {Додано # картки в «{deckName}»} many {Додано # карток в «{deckName}»} other {Додано # картки в «{deckName}»}}"
 
-#. placeholder {0}: added.length
+#. placeholder {0}: result.added
 msgid "{0, plural, one {Added # card} other {Added # cards}}"
 msgstr "{0, plural, one {Додано # картку} few {Додано # картки} many {Додано # карток} other {Додано # картки}}"
 

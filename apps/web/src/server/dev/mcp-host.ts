@@ -126,7 +126,6 @@ const sample = {
   async due() { return ["due_counts", {}]; },
   async insights() { return ["get_insights", { timezone: Intl.DateTimeFormat().resolvedOptions().timeZone }]; },
   async streak() { return ["get_streak", { timezone: Intl.DateTimeFormat().resolvedOptions().timeZone }]; },
-  async home() { return ["due_counts", {}]; },
 };
 let tool = null;
 window.addEventListener("message", async (event) => {

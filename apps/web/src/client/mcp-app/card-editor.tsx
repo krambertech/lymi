@@ -66,17 +66,21 @@ export function CardEditor({ card, onSaved, onCancel }: Props) {
     setSaving(true);
     setError(null);
     if (!force) {
+      // Saving without this read could overwrite a change someone made meanwhile, so a failed read stops the save.
       const fresh = await host.call<ViewCard>("get_card", { cardId: card.id });
-      if (fresh.ok) {
-        const now = draftOf(fresh.data);
-        const clash = (Object.keys(patch) as EditableField[]).some(
-          (field) => now[field].trim() !== base[field].trim(),
-        );
-        if (clash) {
-          setChanged(fresh.data);
-          setSaving(false);
-          return;
-        }
+      if (!fresh.ok) {
+        setSaving(false);
+        setError(fresh.message || t`Couldn’t save the card. Your changes are still here.`);
+        return;
+      }
+      const now = draftOf(fresh.data);
+      const clash = (Object.keys(patch) as EditableField[]).some(
+        (field) => now[field].trim() !== base[field].trim(),
+      );
+      if (clash) {
+        setChanged(fresh.data);
+        setSaving(false);
+        return;
       }
     }
     const saved = await host.call<ViewCard>("update_card", { cardId: card.id, ...patch });

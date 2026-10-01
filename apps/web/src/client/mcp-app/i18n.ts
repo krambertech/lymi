@@ -6,17 +6,11 @@ import { i18n, type Messages } from "@lingui/core";
  */
 export function bootstrapI18n(): void {
   const element = document.getElementById("lymi-messages");
-  let locale = document.documentElement.lang || "en";
-  let messages: Messages = {};
-  try {
-    const parsed = JSON.parse(element?.textContent ?? "{}") as {
-      locale?: string;
-      messages?: Messages;
-    };
-    locale = parsed.locale ?? locale;
-    messages = parsed.messages ?? {};
-  } catch {}
+  if (!element?.textContent) throw new Error("The view document has no catalog");
+  const { locale, messages } = JSON.parse(element.textContent) as {
+    locale: string;
+    messages: Messages;
+  };
   i18n.load(locale, messages);
   i18n.activate(locale);
-  document.documentElement.lang = locale;
 }

@@ -13,6 +13,7 @@ export const MCP_VIEWS = [
   "due",
   "insights",
   "streak",
+  "home",
 ] as const;
 export type McpView = (typeof MCP_VIEWS)[number];
 

@@ -32,18 +32,25 @@ const view = viewOf(meta("lymi-view"));
 export function McpApp() {
   const [result, setResult] = useState<CallToolResult | null>(null);
   const [cancelled, setCancelled] = useState(false);
+  const [deepLink, setDeepLink] = useState<string | undefined>();
   const { app, error } = useApp({
     appInfo: { name: "Lymi", version: "1.0.0" },
     capabilities: {},
     onAppCreated: (created) => {
       created.ontoolresult = (params) => setResult(params);
       created.ontoolcancelled = () => setCancelled(true);
-      created.onhostcontextchanged = (context) => applyHostContext(context);
+      created.onhostcontextchanged = (context) => {
+        applyHostContext(context);
+        setDeepLink(deepLinkOf(context) ?? undefined);
+      };
     },
   });
   useEffect(() => {
     const context = app?.getHostContext();
-    if (context) applyHostContext(context);
+    if (context) {
+      applyHostContext(context);
+      setDeepLink(deepLinkOf(context) ?? undefined);
+    }
   }, [app]);
 
   const host = useMemo(() => (app ? bridgeHost(app, origin) : null), [app]);
@@ -62,11 +69,17 @@ export function McpApp() {
         <Loading />
       ) : (
         <HostContext value={host}>
-          <ViewFor view={view} result={result} />
+          <ViewFor view={view} result={result} deepLink={deepLink} />
         </HostContext>
       )}
     </I18nProvider>
   );
+}
+
+/** ChatGPT hands a deep link's path to the app in its host context. */
+function deepLinkOf(context: Record<string, unknown>): string | null {
+  const link = context["openai/deepLink"] as { url?: unknown } | undefined;
+  return typeof link?.url === "string" ? link.url : null;
 }
 
 function applyHostContext(context: { theme?: "light" | "dark" | undefined }) {

@@ -9,17 +9,30 @@ import {
   type ViewDueResult,
   type ViewSearchResult,
 } from "../../shared/mcp-app";
+import { DeepLink, deepLinkTarget } from "./deep-link";
 import { ToolError } from "./tool-error";
 import { CaptureView } from "./views/capture-view";
 import { CardView } from "./views/card-view";
 import { DeckView } from "./views/deck-view";
 import { DueView } from "./views/due-view";
+import { type HomeResult, HomeView } from "./views/home-view";
 import { InsightsView } from "./views/insights-view";
 import { SearchView } from "./views/search-view";
 import { StreakView } from "./views/streak-view";
 
 /** The view for a tool's result. A refused or failed call shows its message instead. */
-export function ViewFor({ view, result }: { view: McpView; result: CallToolResult }) {
+export function ViewFor({
+  view,
+  result,
+  deepLink,
+}: {
+  view: McpView;
+  result: CallToolResult;
+  /** A path ChatGPT opened the home at, such as `/card/<id>`. */
+  deepLink?: string | undefined;
+}) {
+  const target = view === "home" ? deepLinkTarget(deepLink) : null;
+  if (target) return <DeepLink target={target} />;
   if (result.isError || !result.structuredContent) {
     const text = result.content?.find((block) => block.type === "text");
     return <ToolError message={text && "text" in text ? text.text : null} />;
@@ -41,5 +54,7 @@ export function ViewFor({ view, result }: { view: McpView; result: CallToolResul
       return <InsightsView result={data as unknown as InsightsOut} />;
     case "streak":
       return <StreakView result={data as unknown as StreakOut} />;
+    case "home":
+      return <HomeView result={data as unknown as HomeResult} />;
   }
 }

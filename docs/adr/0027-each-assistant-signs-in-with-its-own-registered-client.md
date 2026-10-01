@@ -24,6 +24,6 @@ With dynamic registration on, any program can register itself under any name, an
 - Each registered client names its redirect URIs exactly. A host that changes its redirect breaks until Lymi's document or record changes, so each client has a sign-in check in the host's setup guide.
 - A confidential client's secret lives in the host's own configuration and in Lymi's database, never in the repository.
 - `AppMark` and the connected-apps list learn each registered client's id, so the consent screen and Activity show the assistant's name.
-- The Gemini app's custom apps are limited to adult US accounts, so its client can be tested only from one.
+- The Gemini app's custom apps are limited to adult US accounts, so only such an account can test its sign-in.
 
 [Proposal: interactive MCP apps and the Lymi plugin](../proposals/interactive-mcp-apps.md)

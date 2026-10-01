@@ -12,7 +12,6 @@ import {
   getSettings,
   listDeckCards,
   listDecks,
-  reviewRounds,
   searchCards,
   showCardWithDiagnosis,
   updateSettings,
@@ -59,10 +58,7 @@ const appOnly = { visibility: ["app"] };
 const Count = z.number().int();
 const HomeOut = z.object({
   dueNow: Count,
-  total: Count,
-  decks: z.array(z.object({ id: z.string(), name: z.string(), due: Count, total: Count })),
-  series: z.array(z.never()),
-  rounds: z.object({ forgotten: Count, new: Count, slipping: Count }),
+  decks: z.array(z.object({ id: z.string(), name: z.string(), due: Count })),
   recent: z.array(z.looseObject({ id: z.string(), term: z.string(), deckName: z.string() })),
 });
 const MentionsOut = z.object({
@@ -109,17 +105,13 @@ export function registerHostExtensions(server: McpServer, ctx: ServiceContext, k
     },
     () =>
       kit.run("open_lymi", async () => {
-        const [decks, rounds, recent] = await Promise.all([
+        const [decks, recent] = await Promise.all([
           listDecks(ctx),
-          reviewRounds(ctx),
           searchCards(ctx, { limit: HOME_RECENT }),
         ]);
         return kit.result({
           dueNow: decks.reduce((sum, d) => sum + d.due, 0),
-          total: decks.reduce((sum, d) => sum + d.total, 0),
-          decks: decks.map((d) => ({ id: d.id, name: d.name, due: d.due, total: d.total })),
-          series: [],
-          rounds,
+          decks: decks.map((d) => ({ id: d.id, name: d.name, due: d.due })),
           recent: recent.cards.map((row) => ({ ...kit.cardOut(row.card), deckName: row.deckName })),
         });
       }),
@@ -154,7 +146,7 @@ export function registerHostExtensions(server: McpServer, ctx: ServiceContext, k
               type: "resource_link" as const,
               uri: `lymi://deck/${d.id}`,
               name: d.name,
-              description: `Deck, ${d.total} cards`,
+              description: "Deck",
               mimeType: "application/json",
             })),
           ...(cards?.cards ?? []).map((row) => ({

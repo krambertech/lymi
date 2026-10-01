@@ -18,7 +18,8 @@ export type DocPath =
   | "/docs/mcp"
   | "/docs/mcp/claude"
   | "/docs/mcp/chatgpt"
-  | "/docs/mcp/gemini";
+  | "/docs/mcp/gemini"
+  | "/docs/mcp/cursor";
 
 export interface DocPage {
   to: DocPath;
@@ -65,6 +66,13 @@ export const PAGES: DocPage[] = [
     nav: "Gemini CLI",
     title: "Gemini CLI",
     blurb: "Connect Lymi to Gemini CLI, with the client ID Lymi publishes for it.",
+    section: "Assistants",
+  },
+  {
+    to: "/docs/mcp/cursor",
+    nav: "Cursor",
+    title: "Cursor",
+    blurb: "Connect Lymi to Cursor, with the client ID Lymi publishes for it.",
     section: "Assistants",
   },
   {

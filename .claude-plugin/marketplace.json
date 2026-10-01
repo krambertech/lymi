@@ -1,0 +1,14 @@
+{
+  "name": "lymi",
+  "owner": {
+    "name": "Lymi",
+    "email": "hello@lymi.app"
+  },
+  "plugins": [
+    {
+      "name": "lymi",
+      "source": "./plugins/lymi",
+      "description": "Turn lessons into Lymi cards, tend them, practise with them and check how the week went."
+    }
+  ]
+}

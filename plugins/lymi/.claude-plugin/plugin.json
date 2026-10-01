@@ -1,0 +1,15 @@
+{
+  "name": "lymi",
+  "displayName": "Lymi",
+  "version": "0.1.0",
+  "description": "Turn lessons into Lymi cards, tend them, practise with them and check how the week went.",
+  "author": {
+    "name": "Lymi",
+    "email": "hello@lymi.app",
+    "url": "https://lymi.app"
+  },
+  "homepage": "https://lymi.app/docs/mcp",
+  "repository": "https://github.com/krambertech/lymi",
+  "license": "AGPL-3.0-only",
+  "keywords": ["vocabulary", "language learning", "spaced repetition", "flashcards"]
+}

@@ -10,7 +10,7 @@ A learner turns a lesson into cards from whichever assistant they already use, s
 
 ## Hosts
 
-ChatGPT, Codex, Claude (web, desktop and mobile), Claude Code, VS Code Copilot, Gemini CLI, Cursor, Grok and the Gemini app. The first six already sign in through a Client ID Metadata Document. Cursor, Grok and the Gemini app need a client Lymi registers for them ([ADR 0027](../adr/0027-each-assistant-signs-in-with-its-own-registered-client.md)).
+ChatGPT, Codex, Claude (web, desktop and mobile), Claude Code, VS Code Copilot, Gemini CLI, Cursor, Grok and the Gemini app. The first six already sign in through a Client ID Metadata Document, and the Gemini app reportedly does too. Cursor and Grok need a client Lymi registers for them ([ADR 0027](../adr/0027-each-assistant-signs-in-with-its-own-registered-client.md)).
 
 ## What the assistant shows
 

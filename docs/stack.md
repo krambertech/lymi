@@ -189,6 +189,12 @@ OpenAI remains the text-enrichment vendor, on `gpt-6-luna` with structured outpu
 
 Tools call the same service layer the REST routes call, so MCP cannot bypass product rules and every write lands in the audit log with actor `mcp`. The tool set mirrors the REST API less review grading: list, get, create, update, archive and restore decks; search, get, add, update, archive and restore cards; due counts; settings; insights. An `enrich` tool follows once the enrichment service exists. There is no delete tool because the app has no delete. Claude Desktop does not support elicitation, so the server cannot ask "are you sure". Archive being reversible is the safety. A meaning, example or pronunciation an assistant sends without naming its source is stored as `ai`, so the app never shows an assistant's text as the lesson's.
 
+### MCP views: one bundle under the MCP Apps standard
+
+Results a learner looks at, such as an add, a card, a search, a deck, what is due, insights and the streak, carry a view that renders in hosts supporting MCP Apps: ChatGPT, Claude, VS Code, Cursor and others ([ADR 0026](adr/0026-interactive-mcp-results-use-the-mcp-apps-standard.md)). The view is a React app in `apps/web/src/client/mcp-app`, built by a nested Vite build in `mcp-app.build.ts` into one HTML file and imported by the Worker as `virtual:lymi-mcp-app`. Each view is a `ui://lymi/<language>/<view>-<hash>.html` resource; the hash and language are in the URI because hosts cache by it, and the server writes the learner's one catalog into the document instead of bundling three. The view has no network of its own: it reads and writes through tool calls the host makes with the connection's grant, so every write is an MCP write in Activity. Selecting a card shares its id, term and meaning with the model; nothing else enters model context. `GET /api/dev/mcp-host` renders it locally against the real server.
+
+Alternative considered: serving the view's scripts from `my.lymi.app` and allowing that origin in the view's CSP. It keeps the HTML small, but every host would need the origin approved, and a cached document would load scripts from a newer deploy.
+
 ### Integrations: cards land as cards
 
 A card added through the API or MCP is an ordinary card from the moment it lands. There is no proposals table and no approval step. In its place, an **Activity** view in Settings lists every write made by an integration or the AI, and you can inspect, edit or archive from there. Cards carry a `created_by` actor so Activity can filter without parsing the audit log.

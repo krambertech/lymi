@@ -38,6 +38,7 @@ import {
 } from "@lymi/core";
 import { type CallToolResult, McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
+import { MCP_META, type McpView } from "../../shared/mcp-app";
 import {
   acceptFix,
   addCards,
@@ -95,6 +96,7 @@ import { track } from "../services/analytics";
 import type { CardImageStorage } from "../services/card-images";
 import type { ServiceContext } from "../services/context";
 import type { EnrichmentQueue } from "../services/enrichment";
+import { registerViews, viewUri } from "./app-resource";
 
 /** What one MCP request runs as. Built from the verified access token, never from the body. */
 export interface McpPrincipal {
@@ -108,6 +110,8 @@ export interface McpPrincipal {
   enrichment?: EnrichmentQueue | null | undefined;
   /** `PUBLISHER_EMAILS`, whose accounts may repeat a term across their own decks. */
   publishers?: Set<string> | undefined;
+  /** The learner's app language, which the views are written in. English when unknown. */
+  appLanguage?: AppLanguage | undefined;
 }
 
 /** The most cards `get_deck` returns. Past that, `search_cards` narrows the list. */
@@ -140,6 +144,31 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
   const server = new McpServer({ name: "lymi", version: "0.2.0" }, { instructions: INSTRUCTIONS });
   const { ctx } = principal;
   const run = (tool: string, fn: () => Promise<CallToolResult>) => runTool(tool, fn, principal);
+  // Deck names by id, so a view of cards from several decks can say which.
+  const viewMeta = async (decks: boolean): Promise<Record<string, unknown>> => {
+    if (!decks) return {};
+    const list = await listDecks(ctx);
+    return { [MCP_META.decks]: Object.fromEntries(list.map((d) => [d.id, d.name])) };
+  };
+  /** A tool with a view: its result carries what the view needs in `_meta`, which hosts keep from the model. */
+  const runView = (tool: string, decks: boolean, fn: () => Promise<CallToolResult>) =>
+    run(tool, async () => {
+      const out = await fn();
+      if (out.isError) return out;
+      // The write already happened; a view without deck names is better than reporting a failure.
+      const meta = await viewMeta(decks).catch(() => ({}));
+      return { ...out, _meta: { ...out._meta, ...meta } };
+    });
+  const views = {
+    origin: new URL(principal.resourceMetadataUrl).origin,
+    clientId: ctx.client,
+    locale: principal.appLanguage ?? "en",
+  };
+  registerViews(server, views);
+  const withView = <T extends { _meta: Record<string, unknown> }>(tool: T, view: McpView): T => ({
+    ...tool,
+    _meta: { ...tool._meta, ui: { resourceUri: viewUri(view, views.locale) } },
+  });
 
   server.registerTool(
     "list_decks",
@@ -177,10 +206,10 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       description: `One deck and its active cards, newest first, up to ${DECK_CARD_LIMIT}. For a bigger deck, page through search_cards with its deckId; to find one card, search by its term.`,
       inputSchema: z.object({ deckId: z.string().min(1) }),
       outputSchema: DeckWithCardsOut,
-      ...readTool,
+      ...withView(readTool, "deck"),
     },
     ({ deckId }) =>
-      run("get_deck", async () => {
+      runView("get_deck", false, async () => {
         const [deck, rows] = await Promise.all([getDeck(ctx, deckId), listDeckCards(ctx, deckId)]);
         return result({
           deck: deckOut(deck),
@@ -205,10 +234,10 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "stats adds each card's review record, overall and per review mode. Set archived to true to look through archived cards. Results come a page at a time: pass nextCursor as cursor. A page can be short or even empty; keep going until nextCursor is null. total is null when it is not known exactly.",
       inputSchema: CardSearchInput,
       outputSchema: SearchOut,
-      ...readTool,
+      ...withView(readTool, "search"),
     },
     (search) =>
-      run("search_cards", async () => {
+      runView("search_cards", false, async () => {
         const page = await searchCards(ctx, search);
         return result({
           cards: page.cards.map((row) => ({
@@ -230,10 +259,10 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "One card by id, with everything the learner wrote on it and, once it is often forgotten, Lymi's diagnosis of why.",
       inputSchema: z.object({ cardId: z.string().min(1) }),
       outputSchema: CardDetailOut,
-      ...readTool,
+      ...withView(readTool, "card"),
     },
     ({ cardId }) =>
-      run("get_card", async () => {
+      runView("get_card", false, async () => {
         const card = await showCardWithDiagnosis(ctx, cardId);
         return result({ ...cardOut(card), diagnosis: card.diagnosis });
       }),
@@ -246,10 +275,10 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       description: `How many cards are waiting to be reviewed right now, in total, per deck and per series, and how many are in each Today round: forgotten today, new, and slipping (the first grade was Forgot on ${SLIPPING_FORGOTTEN_DAYS} of the card's last ${SLIPPING_RECENT_DAYS} review days before today). Only the learner can review them, in the app.`,
       inputSchema: z.object({}),
       outputSchema: DueOut,
-      ...readTool,
+      ...withView(readTool, "due"),
     },
     () =>
-      run("due_counts", async () => {
+      runView("due_counts", false, async () => {
         const [decks, series, rounds] = await Promise.all([
           listDecks(ctx),
           listSeries(ctx),
@@ -281,10 +310,10 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         response: ResponseShape.optional(),
       }),
       outputSchema: AddCardsOut,
-      ...writeTool({ idempotent: true }),
+      ...withView(writeTool({ idempotent: true }), "capture"),
     },
     ({ cards, response }) =>
-      run("add_cards", async () => {
+      runView("add_cards", true, async () => {
         requireWrite(principal);
         const outcomes = await addCards(ctx, cards, principal.enrichment, {
           allowCrossDeckDuplicates: await isPublisher(ctx, principal.publishers ?? new Set()),
@@ -316,10 +345,10 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "Change fields on one card. Send only what changes; a field left out keeps its text. A meaning or example you change becomes the learner's unless you say it came from the lesson. Setting deckId moves the card. Needs write.",
       inputSchema: z.object({ cardId: z.string().min(1) }).extend(CardPatch.shape),
       outputSchema: CardOut,
-      ...writeTool({ idempotent: false, overwrites: true }),
+      ...withView(writeTool({ idempotent: false, overwrites: true }), "card"),
     },
     ({ cardId, ...patch }) =>
-      run("update_card", async () => {
+      runView("update_card", false, async () => {
         requireWrite(principal);
         return result(cardOut(await updateCard(ctx, cardId, patch)));
       }),
@@ -966,10 +995,12 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       // Rebuilt without its OpenAPI id: a schema whose JSON form is a $ref makes the SDK
       // wrap the result in { result }, and the assistant would read one level too deep.
       outputSchema: z.object(InsightsOut.shape),
-      ...readTool,
+      ...withView(readTool, "insights"),
     },
     ({ period, timezone }) =>
-      run("get_insights", async () => result(await insights(ctx, { period, zone: timezone }))),
+      runView("get_insights", false, async () =>
+        result(await insights(ctx, { period, zone: timezone })),
+      ),
   );
 
   server.registerTool(
@@ -989,9 +1020,10 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
           ),
       }),
       outputSchema: z.object(StreakOut.shape),
-      ...readTool,
+      ...withView(readTool, "streak"),
     },
-    ({ timezone }) => run("get_streak", async () => result(await streak(ctx, { zone: timezone }))),
+    ({ timezone }) =>
+      runView("get_streak", false, async () => result(await streak(ctx, { zone: timezone }))),
   );
 
   withSecuritySchemes(server);

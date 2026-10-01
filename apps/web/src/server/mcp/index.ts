@@ -1,8 +1,10 @@
 import { requireMcpAuth } from "@better-auth/mcp";
+import { AppLanguage } from "@lymi/core";
 import { createMcpHandler } from "agents/mcp/server";
 import type { Auth } from "../auth";
 import type { Db } from "../db";
 import { type Bindings, publisherEmails } from "../env";
+import { getSettings } from "../services";
 import { clientNames, grantedScope } from "../services/connected-apps";
 import { enrichmentQueue } from "../services/enrichment";
 import { catchUpStates } from "../services/modes";
@@ -75,6 +77,7 @@ export async function authorizeMcpClaims(
   const tokenWrites = scopesOf(claims.scope).has("write");
   // The app's own name, kept on every row it writes so a disconnect does not erase who wrote.
   const named = (await clientNames({ db: deps.db }, [clientId])).get(clientId);
+  const { appLanguage } = await getSettings({ db: deps.db, userId, actor: "mcp" });
   return {
     ctx: {
       db: deps.db,
@@ -92,6 +95,7 @@ export async function authorizeMcpClaims(
         : undefined,
     enrichment: enrichmentQueue(deps.env),
     publishers: publisherEmails(deps.env),
+    appLanguage: AppLanguage.catch("en").parse(appLanguage),
   };
 }
 

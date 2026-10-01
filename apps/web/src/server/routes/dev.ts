@@ -175,6 +175,7 @@ dev.get("/mcp-host", describe({ hide: true, open: true }), async (c) => {
       locale: AppLanguage.catch("en").parse(c.req.query("locale") ?? settings.appLanguage),
       theme: c.req.query("theme") === "dark" ? "dark" : "light",
       width: Number.isFinite(width) ? width : 640,
+      deepLink: c.req.query("deeplink"),
     }),
   );
 });

@@ -60,15 +60,18 @@ export function devHostPage({
   locale,
   theme,
   width,
+  deepLink,
 }: {
   view: McpView;
   origin: string;
   locale: AppLanguage;
   theme: "light" | "dark";
   width: number;
+  /** The path ChatGPT hands the home when it opens from a deep link. */
+  deepLink?: string | undefined;
 }): string {
   const document = viewDocument(view, origin, locale);
-  const config = JSON.stringify({ view, theme, locale }).replace(/</g, "\\u003c");
+  const config = JSON.stringify({ view, theme, locale, deepLink }).replace(/</g, "\\u003c");
   return `<!doctype html>
 <html lang="en" data-theme="${theme}">
 <head>
@@ -126,6 +129,7 @@ const sample = {
   async due() { return ["due_counts", {}]; },
   async insights() { return ["get_insights", { timezone: Intl.DateTimeFormat().resolvedOptions().timeZone }]; },
   async streak() { return ["get_streak", { timezone: Intl.DateTimeFormat().resolvedOptions().timeZone }]; },
+  async home() { return ["open_lymi", {}]; },
 };
 let tool = null;
 window.addEventListener("message", async (event) => {
@@ -140,7 +144,7 @@ window.addEventListener("message", async (event) => {
         protocolVersion: message.params.protocolVersion,
         hostInfo: { name: "Lymi dev host", version: "0.0.0" },
         hostCapabilities: { openLinks: {}, serverTools: {}, updateModelContext: { text: {}, structuredContent: {} } },
-        hostContext: { theme: config.theme, locale: config.locale, displayMode: "inline", availableDisplayModes: ["inline"], platform: "web", toolInfo: { tool: { name, inputSchema: { type: "object" } } } },
+        hostContext: { theme: config.theme, locale: config.locale, displayMode: "inline", availableDisplayModes: ["inline"], platform: "web", toolInfo: { tool: { name, inputSchema: { type: "object" } } }, ...(config.deepLink ? { "openai/deepLink": { url: config.deepLink } } : {}) },
       } });
       return;
     }

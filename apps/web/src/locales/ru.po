@@ -1136,6 +1136,9 @@ msgstr "Карточки сохранят даты повторения, кот�
 msgid "Cards outside a section"
 msgstr "Карточки вне разделов"
 
+msgid "Cards you add show up here."
+msgstr "Здесь появятся карточки, которые ты добавишь."
+
 msgctxt "deck tag"
 msgid "CCSE Spanish nationality test"
 msgstr "Экзамен CCSE на гражданство Испании"
@@ -1460,6 +1463,9 @@ msgstr "Не удалось сохранить оценку для «{term}». �
 
 msgid "Couldn’t save. Try again."
 msgstr "Не удалось сохранить. Попробуй ещё раз."
+
+msgid "Couldn’t search your cards. Try again in a moment."
+msgstr "Не удалось найти карточки. Попробуй ещё раз через минуту."
 
 msgid "Couldn’t send the invitation. Too many went out recently, so try again later."
 msgstr "Не удалось отправить приглашение. Слишком много приглашений за короткое время, попробуй позже."
@@ -2550,6 +2556,9 @@ msgstr "Новая серия"
 msgid "New to Lymi?"
 msgstr "Впервые в Lymi?"
 
+msgid "Newest cards"
+msgstr "Новые карточки"
+
 msgid "Next"
 msgstr "Следующее"
 
@@ -2593,6 +2602,9 @@ msgstr "В колоде {0} ещё нет карточек"
 
 msgid "No cards match “{query}”"
 msgstr "Нет карточек по запросу «{query}»"
+
+msgid "No cards match “{query}”."
+msgstr "Нет карточек по запросу «{query}»."
 
 msgid "No cards match these filters"
 msgstr "Ни одна карточка не подходит под эти фильтры"
@@ -3287,6 +3299,9 @@ msgstr "Поиск смотрит на термин и значение."
 
 msgid "Search this deck"
 msgstr "Искать в этой колоде"
+
+msgid "Search your cards"
+msgstr "Поиск карточек"
 
 msgid "Section"
 msgstr "Раздел"

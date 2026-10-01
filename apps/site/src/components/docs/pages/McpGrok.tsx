@@ -54,9 +54,9 @@ export function McpGrok() {
       <H2>When it does not connect</H2>
       <ul>
         <li>
-          <strong>“Invalid redirect URI”.</strong> Grok changed its callback address. Write to{" "}
-          <a href="mailto:hello@lymi.app">hello@lymi.app</a> with the address in the error, and Lymi
-          will add it.
+          <strong>“Invalid redirect URI”.</strong> Grok signed in from a callback address Lymi does
+          not list. Write to <a href="mailto:hello@lymi.app">hello@lymi.app</a> with the address in
+          the error, and Lymi will add it.
         </li>
         <li>
           <strong>Grok never asks for a client ID.</strong> It tried to register itself and Lymi

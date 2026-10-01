@@ -1,6 +1,6 @@
 /**
  * Client ID Metadata Documents that Lymi publishes for MCP clients that cannot publish their own.
- * Gemini CLI and Cursor accept a client ID in their config; without one they try dynamic
+ * Gemini CLI, Cursor and Grok accept a client ID; without one they try dynamic
  * registration, which Lymi keeps off (ADR 0027).
  */
 

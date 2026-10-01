@@ -2,12 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ExternalLink, Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import {
-  productLinks,
-  type ViewCard,
-  type ViewDueResult,
-  type ViewSearchResult,
-} from "../../../shared/mcp-app";
+import { productLinks, type ViewCard, type ViewSearchResult } from "../../../shared/mcp-app";
 import { Button } from "../../components/button";
 import { DueCount } from "../../components/due-count";
 import { InlineError } from "../../components/inline-error";
@@ -16,7 +11,11 @@ import { CardList, type ListedCard } from "../card-list";
 import { useHost } from "../host";
 import { ViewFrame } from "../view-frame";
 
-export type HomeResult = ViewDueResult & { recent: ListedCard[] };
+export interface HomeResult {
+  dueNow: number;
+  decks: { id: string; name: string; due: number }[];
+  recent: ListedCard[];
+}
 
 /** A search waits this long after the last keystroke, so typing a word is one tool call. */
 const SEARCH_DELAY_MS = 300;

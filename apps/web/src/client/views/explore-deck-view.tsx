@@ -343,7 +343,7 @@ export function ExploreDeckView({
             {keyed(deck.sections, (section) => section.name ?? "loose").map(
               ({ item: section, key }) => (
                 <details key={key} className="group edge overflow-hidden rounded-md bg-plate">
-                  <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-3 text-base text-text transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring">
+                  <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-3 text-base text-text transition-colors duration-150 hoverable:hover:veil focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring">
                     <span lang={deck.meaningLanguage} className="min-w-0 flex-1 truncate">
                       {section.name ?? <Trans>Cards outside a section</Trans>}
                     </span>

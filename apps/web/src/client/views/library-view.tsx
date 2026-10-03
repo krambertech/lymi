@@ -325,13 +325,13 @@ export function LibraryView({
       )}
 
       {archivedCount ? (
-        <section className="mt-8">
-          <h2 className="mb-2 px-1 text-xs font-medium uppercase tracking-[0.06em] text-muted">
+        <section className="tray mt-8 grid gap-2 rounded-xl p-2">
+          <h2 className="flex min-h-10 items-center px-3 pt-1 text-md font-medium">
             <Trans>Archived</Trans>
           </h2>
           <NavLink
             to="/archived"
-            className="edge flex items-center justify-between gap-3 rounded-lg bg-plate px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
+            className="edge tile flex items-center justify-between gap-3 rounded-md px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
           >
             <span className="font-medium">
               <Plural value={archivedCount} one="# archived deck" other="# archived decks" />

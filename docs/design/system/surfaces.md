@@ -1,6 +1,6 @@
 # Surfaces
 
-Every surface is flat. Depth comes from one hairline edge, never from a gradient or a shadow, so nothing lifts.
+By day every surface is flat: depth comes from one hairline edge and nothing lifts. At night the lamp is lit, so plates catch it on their top edge and lift a little off the room. Texture goes only where something is lit or holds a level, never across a whole screen.
 
 ## Which background
 
@@ -12,17 +12,21 @@ What is it?
  ├── The desktop navigation → bg-rail (one step off the room)
  ├── A thing in the room: a card, a panel, a row group, a control → bg-plate with the edge utility
  ├── A well inside a plate: a chip, a track, a nested group → bg-plate-2
+ ├── A set read together, with its title inside it → a tray (below)
+ ├── The chosen option riding in a plate-2 track (Segmented, the pill nav) → bg-chosen
  ├── Something empty that will fill later → no fill, a dashed border-edge-2 outline (see empty-states.md)
  └── A published deck's shelf → a tray (below), and nowhere else
 ```
 
 Hover fills with `bg-hover`, never `plate-2`: in the light room `plate-2` is the rail's tone, so the fill vanishes there.
 
+A chosen option in a `plate-2` track sits on `bg-chosen`, never `bg-plate`. By day the two are the same white; at night `plate` is darker than `plate-2`, so a plate thumb reads as a hole and the choice is unclear.
+
 ```tsx
 // Correct: a plate is a fill and the edge utility
 <section className="edge rounded-xl bg-plate p-5">…</section>
 
-// Incorrect: a shadow is depth this system does not have
+// Incorrect: a drop shadow by hand; the night lift belongs to edge
 <section className="rounded-xl bg-plate p-5 shadow-md">…</section>
 ```
 
@@ -32,9 +36,23 @@ The rail is recessive by day and a step up at night, and it carries the hairline
 
 `edge` is the hairline every plate and control carries: a 1 px ring drawn as a box-shadow, so it never changes the box's size. Hover strengthens it to `edge-2`; `edge-inset` draws it inside the box, for a plate whose content runs to its edge. Use `border-edge` only for a rule between rows. Focus adds the neutral 2 px outline every control gets, in `ring`. Under forced colours, which drop shadows, the edge becomes a 1 px outline in the system colour.
 
+At night `edge` and `edge-2` also carry `--lift`: a warm line where the lamp catches the top edge and a soft shadow under the plate. By day `--lift` is nothing. A form field sets `--lift` to nothing in both rooms, because a field is set into the page and a lifted one reads as a button.
+
 A photo gets `image-edge` instead: a 1 px outline drawn inside its bounds, untinted black by day and white at night, because a warm line reads as grime on a picture. A card picture wears it only when it is opaque, so a drawing on transparency never sits in a box.
 
 An inset `box-shadow` is allowed only as a stroke that a border cannot draw: the invalid ring on a control (`shadow-[0_0_0_1px_var(--danger)]`), a ring on a calendar day, or the hairline on an overlay's edge. Never a blurred shadow.
+
+## Trays
+
+A tray holds a set the learner reads together: its title sits inside it and its items are tiles on it. It is `tray` with `rounded-xl p-2`, and each item is `edge tile rounded-md`, so the corners run parallel. By day a tray is a `plate-2` well with white tiles; at night it is a plate with a rim and its tiles a step lighter, because a tray darker than the room disappears into it.
+
+Use one only for a real set: Today's rounds, the streak's goal and figures, Insights' cards by state, Library's archived decks. A single row, a screen's main list or the grades are never in a tray.
+
+## Lit and set in
+
+A track or an unlit pane is `well`: its hairline drawn inside, and a slight shade along its top, so it reads as set into its plate. What fills it is `lit`: light caught along its top and, at night, the faint glow of the flame. They go on the review progress, today's goal, the seven lights and the thirty-day strip. The progress fill is ink, so it turns its glow off with `[--lit-glow:0_0_#0000]`.
+
+The primary button carries `key-light`, a soft fall of light with no lip and no shadow.
 
 ## Radius
 
@@ -44,9 +62,9 @@ The radius tokens are `rounded-xs` 6 px, `sm` 10, `md` 14, `lg` 18, `xl` 22, `2x
 
 The only glow in the interface belongs to the lantern, and inside the lantern only the light wears it. In CSS it is the `glow` utility, which puts the drop shadow on the `.lantern-light` group rather than the whole drawing: metal does not glow, and a filter on the drawing halos the frame and traces the glass. Nothing else may use it.
 
-The light spills into the room in two places: around the lantern at the end of a review, under Motion, and as a still pool behind Explore's search. A shelf's own page has the same still pool behind its name, in the shelf's colour rather than the lantern's. Both go under `prefers-reduced-transparency`. The embers and today's light as it fills in the day grid carry the same glow, because they are the flame.
+The light spills into the room in three places: as `lamplit` on the lantern's plate on Today, a pool from the lantern's side with a fine grain to hold it; around the lantern at the end of a review, under Motion; and as a still pool behind Explore's search. A shelf's own page has the same still pool behind its name, in the shelf's colour rather than the lantern's. All of them go under `prefers-reduced-transparency`. The embers and today's light as it fills in the day grid carry the same glow, because they are the flame.
 
-Never a gradient on a surface. The exceptions are the app icon, the link preview, which shares its warm centre, and the lantern's pool of light at the end of a review.
+Never a gradient on a surface. The exceptions are the app icon, the link preview, which shares its warm centre, the lantern's pool of light at the end of a review and on Today, and the light in `lit` and `key-light`. Grain goes only where the light pools, never on a plain plate.
 
 ## The tray
 

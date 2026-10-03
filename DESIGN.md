@@ -7,6 +7,10 @@ colors:
   plate: "#ffffff"
   plate-2: "#f2f0ec"
   hover: "#eeebe6"
+  chosen: "#ffffff"
+  tray: "#f2f0ec"
+  tile: "#ffffff"
+  pool: "#ffd79a80"
   edge: "#2013081a"
   edge-2: "#20130833"
   image-edge: "#0000001a"
@@ -51,6 +55,10 @@ colors:
   dark-plate: "#201713"
   dark-plate-2: "#29211b"
   dark-hover: "#302720"
+  dark-chosen: "#40362e"
+  dark-tray: "#201713"
+  dark-tile: "#2f251f"
+  dark-pool: "#b4782529"
   dark-edge: "#ffffff14"
   dark-edge-2: "#ffffff26"
   dark-image-edge: "#ffffff1a"
@@ -253,7 +261,7 @@ components:
 
 # Lymi design system
 
-Lymi is a vocabulary app lit by a storm lantern. The interface is two rooms, a dark one lit by that lantern and a light one at noon, and it follows the OS theme unless the learner picks one in Settings. Both rooms are flat and warm, and amber is the one colour that asks for a press. Three words: warm, calm, quick.
+Lymi is a vocabulary app lit by a storm lantern. The interface is two rooms, a dark one lit by that lantern and a light one at noon, and it follows the OS theme unless the learner picks one in Settings. The light room is flat and the dark one lifts a little where the lamp catches it; both are warm, and amber is the one colour that asks for a press. Three words: warm, calm, quick.
 
 The frontmatter above is generated from `apps/web/src/client/styles.css` by `node scripts/check-design-docs.mjs --write`, and `pnpm check:design` fails when the two disagree. The live version is the `/design` route in local development: every token and component with the real code, each primitive in every state it has, desktop and touch frames side by side, and reduced motion behind a button on each canvas.
 
@@ -263,7 +271,7 @@ Each rule links to the file that holds its detail and its exceptions.
 
 1. **Tokens, never values.** Colour through the semantic utilities (`bg-plate`, `text-muted`), type through the scale (`text-lg`), radius through `rounded-*`. A raw hex or a stock Tailwind colour breaks dark mode, which is its own warm palette rather than an inversion. [colour.md](docs/design/system/colour.md)
 2. **Amber means act.** It is the flame, the one primary button, capture, a due count, a day reviewed, and the Easy grade's icon. Nothing else is amber, including a selected state. [colour.md](docs/design/system/colour.md#amber-means-act)
-3. **Surfaces are flat.** Depth is one hairline edge. No drop shadows and no gradients; the only glow belongs to the lantern. [surfaces.md](docs/design/system/surfaces.md)
+3. **Surfaces are quiet.** By day depth is one hairline edge; at night `edge` lifts a plate off the room. Texture goes only where something is lit or holds a level, and trays only around a real set. Never a hand-made drop shadow or a decorative gradient. [surfaces.md](docs/design/system/surfaces.md)
 4. **One primary per view.** Two primaries means the screen has no hierarchy. `secondary` is the default variant. [buttons.md](docs/design/system/buttons.md)
 5. **A closed set is closed.** Every variant, size and tone a component takes is listed in its file. An unlisted one is a bug, not an option, and a `className` that resizes or recolours a component is the same bug.
 6. **Never `disabled` on a button that cannot run yet.** Forms stay pressable and validate on submit; `aria-disabled` is for mid-request. [buttons.md](docs/design/system/buttons.md#states)

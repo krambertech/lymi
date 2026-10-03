@@ -106,13 +106,13 @@ export function InsightsView({
     return (
       <Screen kind="tab" title={t`Insights`}>
         {/* Same heights the plates settle at, so the screen does not jump when they land. */}
-        <div className="grid gap-3 @3xl:grid-cols-2">
+        <div className="grid gap-4 @3xl:grid-cols-2">
           {[0, 1, 2, 3].map((i) => (
             <Skeleton key={i} className={PLATE_SLOT} />
           ))}
         </div>
         {/* The grid and the `p-5` of the plate it sits on, so what follows does not jump. */}
-        <div className="mt-3" style={{ height: DAY_GRID_HEIGHT + 40 }}>
+        <div className="mt-4" style={{ height: DAY_GRID_HEIGHT + 40 }}>
           <Skeleton className="h-full rounded-xl" />
         </div>
       </Screen>
@@ -142,7 +142,7 @@ export function InsightsView({
           }
         />
         {/* The real plates, outlined and at zero, so the screen shows what will fill it. */}
-        <div className="grid gap-3 @3xl:grid-cols-2" aria-hidden="true">
+        <div className="grid gap-4 @3xl:grid-cols-2" aria-hidden="true">
           <StatPlate
             ghost
             label={t`Recall`}
@@ -226,7 +226,7 @@ export function InsightsView({
     >
       <div
         className={clsx(
-          "grid gap-3 transition-opacity duration-150 @3xl:grid-cols-2",
+          "grid gap-4 transition-opacity duration-150 @3xl:grid-cols-2",
           busy && "opacity-60",
         )}
       >
@@ -284,8 +284,9 @@ export function InsightsView({
           label={t`Cards`}
           value={cards.total}
           unit={t`${plural(cards.total, { one: "card", other: "cards" })}`}
-          figure={<CardSplit cards={cards} />}
-          note={<CardChips cards={cards} />}
+          tray
+          figure={<CardTiles cards={cards} />}
+          note={<CardSplit cards={cards} />}
         />
 
         <StatPlate
@@ -313,7 +314,7 @@ export function InsightsView({
       </div>
 
       {activity.firstDay && (
-        <section className="edge mt-3 flex flex-col gap-4 rounded-xl bg-plate p-5">
+        <section className="edge mt-4 flex flex-col gap-4 rounded-xl bg-plate p-5">
           <DayGrid
             days={activity.days}
             today={activity.today}
@@ -329,7 +330,7 @@ export function InsightsView({
       )}
 
       {leeches.cards.length > 0 && (
-        <section className="edge mt-3 overflow-hidden rounded-xl bg-plate">
+        <section className="edge mt-4 overflow-hidden rounded-xl bg-plate">
           <div className="flex items-baseline justify-between gap-3 px-5 pt-5 pb-3">
             <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
               <Trans>Often forgotten</Trans>
@@ -404,6 +405,24 @@ function CardSplit({ cards }: CardCountsProps) {
           className={clsx("block rounded-full", stateMarks[k].bg)}
           style={{ flexGrow: cards[k] }}
         />
+      ))}
+    </div>
+  );
+}
+
+/** Each state as a tile in the Cards tray: its mark, its count and its word. */
+function CardTiles({ cards }: CardCountsProps) {
+  const { i18n } = useLingui();
+  return (
+    <div className="grid w-full grid-cols-3 gap-2">
+      {(["new", "learning", "known"] as const).map((k) => (
+        <div key={k} className="edge tile grid content-center gap-1 rounded-md px-3 py-2.5">
+          <span className="flex items-center gap-1.5">
+            <StateIcon state={k} className="size-4" />
+            <span className="text-xl font-medium leading-none tabular-nums">{cards[k]}</span>
+          </span>
+          <span className="truncate text-xs text-muted">{i18n._(stateMarks[k].label)}</span>
+        </div>
       ))}
     </div>
   );

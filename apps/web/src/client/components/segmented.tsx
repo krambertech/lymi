@@ -60,7 +60,7 @@ export function Segmented<T extends string>({
         className,
       )}
     >
-      <ToggleGroupIndicator className="edge inset-y-[3px] rounded-[11px] bg-plate" />
+      <ToggleGroupIndicator className="edge inset-y-[3px] rounded-[11px] bg-chosen" />
       {options.map((o) => (
         <ToggleGroupItem<T>
           key={o.value}

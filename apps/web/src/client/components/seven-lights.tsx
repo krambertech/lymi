@@ -159,7 +159,7 @@ export function SevenLights({
                       "border-dashed border-amber bg-[color-mix(in_oklab,var(--amber)_7%,var(--plate-2))]",
                       large ? "border-2" : "border",
                     )
-                  : "edge-inset bg-plate-2",
+                  : "well bg-plate-2",
                 large
                   ? "aspect-[8/11] w-8 rounded-[6px_6px_8px_8px]"
                   : "aspect-[13/18] w-[13px] rounded-[4px_4px_5px_5px]",
@@ -171,6 +171,7 @@ export function SevenLights({
               <i
                 className={clsx(
                   "absolute inset-0 block origin-bottom transition-[scale,background-color] motion-reduce:transition-none",
+                  l > 0 && "lit",
                   flare ? "duration-700 ease-out" : "duration-300",
                   LIGHT_FILL[l === 0 ? 1 : l],
                 )}

@@ -282,24 +282,6 @@ msgstr "{0} уже є в {1}"
 msgid "{0} is the busiest day, with {1, plural, one {# card} other {# cards}}."
 msgstr "{0} — найзавантаженіший день: {1, plural, one {# картка} few {# картки} many {# карток} other {# картки}}."
 
-#. placeholder {0}: cards.known
-msgid "{0} known"
-msgstr "Засвоєно: {0}"
-
-#. placeholder {0}: cards.learning
-msgid "{0} learning"
-msgstr "У вивченні: {0}"
-
-#. placeholder {0}: cards.new
-msgid "{0} new"
-msgstr "Нові: {0}"
-
-#. placeholder {0}: cards.new
-#. placeholder {1}: cards.learning
-#. placeholder {2}: cards.known
-msgid "{0} new, {1} learning, {2} known"
-msgstr "Нові: {0}, у вивченні: {1}, засвоєні: {2}"
-
 #. placeholder {0}: noteTypes.filter((n) => checked.has(n.key)).length
 #. placeholder {1}: noteTypes.length
 msgid "{0} of {1} checked"
@@ -309,6 +291,10 @@ msgstr "Перевірено {0} з {1}"
 #. placeholder {1}: fileSize(upload.total, i18n.locale)
 msgid "{0} of {1}. Keep Lymi open until the upload finishes."
 msgstr "{0} з {1}. Не закривай Lymi, доки файл не завантажиться."
+
+#. placeholder {0}: pct(cards.known / cards.total)
+msgid "{0} of your cards are known."
+msgstr "Засвоєно {0} ваших карток."
 
 #. placeholder {0}: recall.passed
 #. placeholder {1}: recall.failed

@@ -3,7 +3,6 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { type InsightsOut, localDate } from "@lymi/core";
 import { clsx } from "clsx";
 import { Button } from "../components/button";
-import { Chip } from "../components/chip";
 import { DAY_GRID_HEIGHT, DayGrid } from "../components/day-grid";
 import { ErrorState } from "../components/empty-state";
 import { Screen } from "../components/layout/screen";
@@ -169,8 +168,8 @@ export function InsightsView({
             label={t`Cards`}
             value={0}
             unit={t`${plural(0, { one: "card", other: "cards" })}`}
-            figure={<CardSplit cards={empty} />}
-            note={<CardChips cards={empty} />}
+            figure={<CardStates cards={empty} />}
+            note={<Trans>No cards yet</Trans>}
           />
           <StatPlate
             ghost
@@ -284,8 +283,12 @@ export function InsightsView({
           label={t`Cards`}
           value={cards.total}
           unit={t`${plural(cards.total, { one: "card", other: "cards" })}`}
-          figure={<CardSplit cards={cards} />}
-          note={<CardChips cards={cards} />}
+          figure={<CardStates cards={cards} />}
+          note={
+            cards.total === 0
+              ? t`No cards yet`
+              : t`${pct(cards.known / cards.total)} of your cards are known.`
+          }
         />
 
         <StatPlate
@@ -385,46 +388,34 @@ interface CardCountsProps {
   cards: InsightsOut["cards"];
 }
 
-/** The one figure on Insights that carries colour: the state colours every icon in the app uses. */
-function CardSplit({ cards }: CardCountsProps) {
-  const { t } = useLingui();
-  const parts = (["new", "learning", "known"] as const).filter((k) => cards[k] > 0);
+/**
+ * One row per state: its mark and word, a bar in its colour against all the learner's cards, and
+ * the count. The bar never stands alone, so the colour is read with the word beside it.
+ */
+function CardStates({ cards }: CardCountsProps) {
+  const { i18n } = useLingui();
+  const total = Math.max(cards.total, 1);
   return (
-    <div
-      className={clsx(
-        "flex h-3 w-full gap-1",
-        parts.length === 0 && "rounded-full border border-dashed border-edge-2",
-      )}
-      role="img"
-      aria-label={t`${cards.new} new, ${cards.learning} learning, ${cards.known} known`}
-    >
-      {parts.map((k) => (
-        <i
+    <ul className="grid w-full gap-2">
+      {(["new", "learning", "known"] as const).map((k) => (
+        <li
           key={k}
-          className={clsx("block rounded-full", stateMarks[k].bg)}
-          style={{ flexGrow: cards[k] }}
-        />
+          className="grid grid-cols-[6.5rem_minmax(0,1fr)_2.5rem] items-center gap-3 text-sm"
+        >
+          <span className="flex min-w-0 items-center gap-1.5 text-text-2">
+            <StateIcon state={k} className="size-4 shrink-0" />
+            <span className="truncate">{i18n._(stateMarks[k].label)}</span>
+          </span>
+          <span className="well block h-2 overflow-hidden rounded-full bg-plate-2">
+            <span
+              className={clsx("block h-full rounded-full", stateMarks[k].bg)}
+              style={{ width: `${(cards[k] / total) * 100}%` }}
+            />
+          </span>
+          <span className="text-end font-medium tabular-nums text-text">{cards[k]}</span>
+        </li>
       ))}
-    </div>
-  );
-}
-
-function CardChips({ cards }: CardCountsProps) {
-  return (
-    <span className="flex flex-wrap gap-1.5">
-      <Chip size="sm">
-        <StateIcon state="new" className="size-3" />
-        <Trans>{cards.new} new</Trans>
-      </Chip>
-      <Chip size="sm">
-        <StateIcon state="learning" className="size-3" />
-        <Trans>{cards.learning} learning</Trans>
-      </Chip>
-      <Chip size="sm">
-        <StateIcon state="known" className="size-3" />
-        <Trans>{cards.known} known</Trans>
-      </Chip>
-    </span>
+    </ul>
   );
 }
 

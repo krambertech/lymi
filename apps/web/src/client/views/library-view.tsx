@@ -331,7 +331,7 @@ export function LibraryView({
           </h2>
           <NavLink
             to="/archived"
-            className="edge tile flex items-center justify-between gap-3 rounded-md px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
+            className="edge tile flex items-center justify-between gap-3 rounded-md px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-tile-hover"
           >
             <span className="font-medium">
               <Plural value={archivedCount} one="# archived deck" other="# archived decks" />

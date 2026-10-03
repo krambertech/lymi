@@ -98,6 +98,8 @@
   /* A tray holds a set read together; its tiles sit in it. By day a well of plate-2 with white tiles. */
   --tray: var(--plate-2);
   --tile: var(--plate);
+  /* A hovered tile stays lighter than its tray; `hover` is the tray's own tone by day. */
+  --tile-hover: oklch(0.985 0.004 80);
   --tray-depth: inset 0 1px 2px oklch(0.25 0.03 55 / 0.06);
   /* The lantern's light on the plate it stands on. */
   --pool: oklch(0.9 0.09 78 / 0.5);
@@ -170,6 +172,7 @@
   --chosen: oklch(0.34 0.02 58);
   --tray: oklch(0.215 0.016 52);
   --tile: oklch(0.275 0.018 55);
+  --tile-hover: oklch(0.305 0.019 56);
   --tray-depth: 0 0 0 1px oklch(1 0 0 / 0.09), inset 0 1px 2px oklch(0 0 0 / 0.3);
   --pool: oklch(0.62 0.12 70 / 0.16);
   /* At night the lamp catches each plate's top edge and the plate lifts off the room. */
@@ -242,6 +245,7 @@
   --color-chosen: var(--chosen);
   --color-tray: var(--tray);
   --color-tile: var(--tile);
+  --color-tile-hover: var(--tile-hover);
   --color-edge: var(--edge);
   --color-edge-2: var(--edge-2);
   --color-text: var(--text);

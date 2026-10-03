@@ -76,7 +76,7 @@ Amber has exactly these uses. Anything not on the list stays neutral.
 
 A checkbox or switch is amber when checked; that is the control confirming a press, not a new accent. A status chip repeated down a list, as `StateChip` down a deck table or due counts down Library, is one decision shown many times, not many uses of amber.
 
-Never amber for: a selected state (a chosen chip is ink, see [chips-and-marks.md](chips-and-marks.md)), a tray, a heading, a link, or decoration.
+Never amber for: a selected state (a chosen chip is ink, see [chips-and-marks.md](chips-and-marks.md)), a tray or a deck tray, a heading, a link, or decoration.
 
 ## Card states
 
@@ -90,7 +90,7 @@ Each card state has one colour and one icon, the same everywhere a state shows:
 
 They come from `stateMarks` and `StateIcon` in `components/state-mark.tsx`, which also hold the state words, so New, Learning and Known are written once. Never draw a state mark by hand.
 
-The icon, in its colour, marks the counts on a deck's split plate, the deck's filter menu, each word in a deck's list, every state chip, the chips under Insights' Cards bar and the New cards tile on Today. That bar is the one place the colour stands alone, because a segment cannot hold an icon and the chips under it name each state. A deck carries no stripe: its split is the counts on its plate.
+The icon, in its colour, marks the counts on a deck's split plate, the deck's filter menu, each word in a deck's list, every state chip, each row of Insights' Cards plate and the New cards tile on Today. On Insights each state is a row of its mark, its word, a bar in its colour against all the learner's cards, and its count, so the colour is never read alone. A deck carries no stripe: its split is the counts on its plate.
 
 Text stays ink: a state chip is a plain `plate-2` chip, and the colour lives on its icon. Each state colour is a [mark](#fill-text-and-mark): it holds 3:1 against `plate-2` in both rooms. Known is a brighter green than `good` by day, because `good` also colours words and has to hold 4.5:1; in the dark room Known is `good`.
 

@@ -21,7 +21,7 @@ What is empty?
 
 - Each step is done by the learner's own data, never by a dismissal.
 - A done step shows a green check and a struck-through title, the current step holds its action, and a later step stays muted.
-- Under the plate, a banner on a tray colour, **Start with a ready-made deck**, holds a card from each of up to three published decks the learner has not added and leads to Explore (`ReadyDecks`). It is gone once there is nothing left to add.
+- Under the plate, a banner on a deck tray colour, **Start with a ready-made deck**, holds a card from each of up to three published decks the learner has not added and leads to Explore (`ReadyDecks`). It is gone once there is nothing left to add.
 - After the first review the usual Today takes over, and the banner goes with the guide.
 
 ## StartPanel

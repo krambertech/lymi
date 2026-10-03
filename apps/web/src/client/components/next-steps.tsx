@@ -72,7 +72,7 @@ export function NextStep(props: NextStepProps) {
   const { icon, title, detail } = props;
   const st = useStaticNav();
   const className =
-    "group -mx-2 flex min-h-16 w-[calc(100%+1rem)] items-center gap-4 rounded-sm px-2 py-2.5 text-start transition-[background-color] duration-150 hoverable:hover:bg-hover";
+    "group -mx-2 flex min-h-16 w-[calc(100%+1rem)] items-center gap-4 rounded-sm px-2 py-2.5 text-start transition-[background-color] duration-150 hoverable:hover:veil";
   const face = (
     <>
       <span

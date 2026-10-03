@@ -93,6 +93,22 @@
   --plate: oklch(1 0 0);
   --plate-2: oklch(0.955 0.006 80);
   --hover: oklch(0.94 0.007 80);
+  /* A chosen option in a plate-2 track; at night the plate is darker than the track, so it lifts. */
+  --chosen: var(--plate);
+  /* A tray holds a set read together; its tiles sit in it. By day a well of plate-2 with white tiles. */
+  --tray: var(--plate-2);
+  --tile: var(--plate);
+  /* Laid over a filled plate or tile on hover, so it darkens from whatever fill it has. */
+  --veil: oklch(0.2 0.03 60 / 0.035);
+  --tray-depth: inset 0 1px 2px oklch(0.25 0.03 55 / 0.06);
+  /* The lantern's light on the plate it stands on. */
+  --pool: oklch(0.9 0.09 78 / 0.5);
+  /* By day surfaces stay flat; the lift, the well under a track and a lit fill's glow are night-only. */
+  --lift: 0 0 #0000;
+  --well: inset 0 1px 1.5px oklch(0.25 0.03 55 / 0.1);
+  --lit-glow: 0 0 #0000;
+  --grain-opacity: 0.1;
+  --grain-blend: multiply;
   --edge: oklch(0.2 0.03 60 / 0.1);
   --edge-2: oklch(0.2 0.03 60 / 0.2);
   /* A photo's edge is untinted, because a warm line reads as grime on the picture. */
@@ -153,6 +169,20 @@
   --plate: oklch(0.215 0.016 52);
   --plate-2: oklch(0.255 0.017 55);
   --hover: oklch(0.28 0.018 55);
+  --chosen: oklch(0.34 0.02 58);
+  --tray: oklch(0.215 0.016 52);
+  --tile: oklch(0.275 0.018 55);
+  --veil: oklch(1 0 0 / 0.04);
+  --tray-depth: 0 0 0 1px oklch(1 0 0 / 0.09), inset 0 1px 2px oklch(0 0 0 / 0.3);
+  --pool: oklch(0.62 0.12 70 / 0.16);
+  /* At night the lamp catches each plate's top edge and the plate lifts off the room. */
+  --lift:
+    inset 0 1px 0 oklch(0.95 0.06 80 / 0.08), 0 1px 2px oklch(0 0 0 / 0.45),
+    0 12px 24px -14px oklch(0 0 0 / 0.8);
+  --well: inset 0 1px 1px oklch(0 0 0 / 0.25);
+  --lit-glow: 0 0 10px -2px var(--glow);
+  --grain-opacity: 0.12;
+  --grain-blend: screen;
   --edge: oklch(1 0 0 / 0.08);
   --edge-2: oklch(1 0 0 / 0.15);
   --image-edge: oklch(1 0 0 / 0.1);
@@ -212,6 +242,9 @@
   --color-plate: var(--plate);
   --color-plate-2: var(--plate-2);
   --color-hover: var(--hover);
+  --color-chosen: var(--chosen);
+  --color-tray: var(--tray);
+  --color-tile: var(--tile);
   --color-edge: var(--edge);
   --color-edge-2: var(--edge-2);
   --color-text: var(--text);
@@ -395,7 +428,9 @@
 
 /* One hairline edge, a shadow so it never changes layout; forced colours drop shadows, so there it becomes an outline the system paints. */
 @utility edge {
-  box-shadow: 0 0 0 1px var(--edge);
+  box-shadow:
+    0 0 0 1px var(--edge),
+    var(--lift);
   @media (forced-colors: active) {
     &:not(:focus-visible) {
       outline: 1px solid transparent;
@@ -404,7 +439,9 @@
   }
 }
 @utility edge-2 {
-  box-shadow: 0 0 0 1px var(--edge-2);
+  box-shadow:
+    0 0 0 1px var(--edge-2),
+    var(--lift);
   @media (forced-colors: active) {
     &:not(:focus-visible) {
       outline: 1px solid transparent;
@@ -418,6 +455,65 @@
     &:not(:focus-visible) {
       outline: 1px solid transparent;
       outline-offset: -1px;
+    }
+  }
+}
+/* A tray: a set read together, its title inside and its items as `edge tile` on it. */
+@utility tray {
+  background-color: var(--tray);
+  box-shadow: var(--tray-depth);
+  /* A plate in a tray, such as a secondary button in its header, takes the tile's tone; at night the tray is plate-toned, so a plate there would vanish. */
+  & .bg-plate {
+    background-color: var(--tile);
+  }
+}
+@utility tile {
+  background-color: var(--tile);
+}
+/* Hover on anything with a fill and a hairline: a veil over its own fill, so a plate on the room and a tile in a tray answer alike. */
+@utility veil {
+  background-image: linear-gradient(var(--veil), var(--veil));
+}
+/* A track or an unlit pane, set into its plate; the hairline is inside so it costs no layout. */
+@utility well {
+  box-shadow:
+    inset 0 0 0 1px var(--edge),
+    var(--well);
+}
+/* A filled meter or a reviewed day: light caught along its top, and at night a faint glow. */
+@utility lit {
+  background-image: linear-gradient(to bottom, oklch(1 0.03 90 / 0.28), transparent 70%);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0.03 90 / 0.45),
+    var(--lit-glow);
+}
+/* The one button to press: a soft fall of light, no lip and no shadow. */
+@utility key-light {
+  background-image: linear-gradient(to bottom, oklch(1 0.03 90 / 0.16), transparent);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0.03 90 / 0.4),
+    inset 0 0 0 1px oklch(from var(--amber) calc(l - 0.06) c h / 0.35);
+}
+/* The plate the lantern stands on: its light pools from the lantern's side, with a fine grain to hold it. */
+@utility lamplit {
+  position: relative;
+  isolation: isolate;
+  background-image: radial-gradient(110% 85% at 14% 24%, var(--pool), transparent 64%);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    mix-blend-mode: var(--grain-blend);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.42  0 0 0 0 0.34  0 0 0 1.3 -0.15'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    background-image: none;
+    &::after {
+      content: none;
     }
   }
 }

@@ -27,7 +27,7 @@ export function PillNav() {
       <SlidingPlate
         chosen='[aria-current="page"]'
         attribute="aria-current"
-        className="edge inset-y-1.5 rounded-full bg-plate"
+        className="edge inset-y-1.5 rounded-full bg-chosen"
       />
       {PILL_NAV.map((n) => (
         <NavLink key={n.to} to={n.to} exact={n.exact} className={item}>

@@ -515,7 +515,7 @@ export function ImportSources({
         <li key={source} className="group/row border-edge [&:not(:first-child)]:border-t">
           {sourceLink(
             source,
-            "group flex min-h-16 items-center gap-4 px-4 py-3 transition-[background-color] duration-150 hoverable:hover:bg-hover group-first/row:rounded-t-xl group-last/row:rounded-b-xl",
+            "group flex min-h-16 items-center gap-4 px-4 py-3 transition-[background-color] duration-150 hoverable:hover:veil group-first/row:rounded-t-xl group-last/row:rounded-b-xl",
             <>
               <span className="grid min-w-0 flex-1 gap-0.5">
                 <span className="text-md font-medium">{SOURCE_NAMES[source]}</span>

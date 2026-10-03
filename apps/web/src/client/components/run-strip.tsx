@@ -60,7 +60,7 @@ export function RunStrip({
             // unlit day a pixel taller and wider than a lit one all down the strip.
             className={clsx(
               "block rounded-[4px_4px_5px_5px]",
-              r.lit ? "bg-amber" : "edge-inset bg-plate-2",
+              r.lit ? "lit bg-amber" : "well bg-plate-2",
             )}
           />
         );

@@ -70,7 +70,7 @@ function CheckboxBox({ checked, indeterminate }: { checked: boolean; indetermina
       ref={scope}
       className={cn(
         "absolute inset-0 grid place-items-center rounded-[6px] text-amber-ink transition-[background-color,box-shadow] duration-150",
-        on ? "bg-amber" : "edge-2 bg-plate hoverable:group-hover/checkbox:bg-hover",
+        on ? "bg-amber" : "edge-2 bg-plate hoverable:group-hover/checkbox:veil",
         "group-aria-invalid/checkbox:shadow-[0_0_0_1px_var(--danger)]",
       )}
     >

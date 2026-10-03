@@ -154,7 +154,7 @@ export function SeriesForm({
               return (
                 <li
                   key={deck.id}
-                  className="flex min-h-12 items-center gap-2 rounded-md ps-2.5 pe-1 transition-[background-color] duration-150 hoverable:hover:bg-hover"
+                  className="flex min-h-12 items-center gap-2 rounded-md ps-2.5 pe-1 transition-[background-color] duration-150 hoverable:hover:veil"
                 >
                   <Field orientation="horizontal" className="min-w-0 flex-1 py-1.5">
                     <Checkbox

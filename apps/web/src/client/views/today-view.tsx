@@ -163,7 +163,7 @@ export function TodayView({
               ) : (
                 <>
                   {/* The button sits 8 px from the plate's edges, so its radius is the plate's less that gap. */}
-                  <div className="edge grid content-between gap-5 rounded-xl bg-plate p-5 @3xl:p-6">
+                  <div className="edge lamplit grid content-between gap-5 rounded-xl bg-plate p-5 @3xl:p-6">
                     <div className="flex items-center gap-4">
                       <Lantern
                         className="-my-3 -ms-3 size-24 @3xl:size-28"
@@ -221,9 +221,9 @@ export function TodayView({
           {!loading && !nothingYet && rounds && <Rounds rounds={rounds} onAdd={onAdd} />}
 
           {!loading && decks && decks.length > 1 && rows.length > 0 && (
-            <section aria-labelledby="today-decks" className="grid gap-2.5">
-              <div className="flex min-h-8 items-center justify-between gap-3 px-1">
-                <h2 id="today-decks" className="text-lg font-medium">
+            <section aria-labelledby="today-decks" className="tray grid gap-2 rounded-xl p-2">
+              <div className="flex min-h-10 items-center justify-between gap-3 ps-3 pe-2 pt-1">
+                <h2 id="today-decks" className="text-md font-medium">
                   <Trans>Decks to review</Trans>
                 </h2>
                 <NavLink
@@ -234,13 +234,13 @@ export function TodayView({
                   <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />
                 </NavLink>
               </div>
-              <ul className="edge overflow-hidden rounded-xl bg-plate">
+              <ul className="grid gap-2">
                 {rows.map((d) => (
-                  <li key={d.key} className="border-edge not-first:border-t">
+                  <li key={d.key}>
                     <NavLink
                       to="/review"
                       search={d.search}
-                      className="group flex min-h-18 items-center gap-4 py-3 ps-5 pe-4 transition-[background-color] duration-150 hoverable:hover:bg-hover"
+                      className="edge tile group flex min-h-18 items-center gap-4 rounded-md py-3 ps-4 pe-4 transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:veil"
                     >
                       {/* The count leads, as on the round tiles: it is what the row is for. */}
                       <DueCount size="lg">{d.due}</DueCount>
@@ -359,9 +359,9 @@ function Rounds({ rounds, onAdd }: { rounds: RoundsOut; onAdd: (() => void) | un
     },
   ];
   const tile =
-    "edge flex w-full items-center gap-4 rounded-xl bg-plate py-4 ps-5 pe-4 text-start @3xl:h-full @3xl:flex-col @3xl:items-stretch @3xl:gap-0 @3xl:p-0";
+    "edge tile flex w-full items-center gap-4 rounded-md py-4 ps-5 pe-4 text-start @3xl:h-full @3xl:flex-col @3xl:items-stretch @3xl:gap-0 @3xl:p-0";
   const pressable =
-    "group transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:bg-hover";
+    "group transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:veil";
   const face = (item: (typeof tiles)[number], live: boolean) => (
     <>
       <span
@@ -385,11 +385,12 @@ function Rounds({ rounds, onAdd }: { rounds: RoundsOut; onAdd: (() => void) | un
     "@3xl:justify-between @3xl:border-t @3xl:border-edge @3xl:py-2.5 @3xl:ps-5 @3xl:pe-3";
 
   return (
-    <section aria-labelledby="today-more" className="grid gap-2.5">
-      <h2 id="today-more" className="flex min-h-8 items-center px-1 text-lg font-medium">
+    // A tray: the three rounds are one set, so they sit in it with its title, 8 px in from its edge, so their corners are its radius less that.
+    <section aria-labelledby="today-more" className="tray grid gap-2 rounded-xl p-2">
+      <h2 id="today-more" className="flex min-h-10 items-center px-3 pt-1 text-md font-medium">
         <Trans>Also on your list</Trans>
       </h2>
-      <ul className="grid gap-3 @3xl:grid-cols-3 @3xl:gap-4">
+      <ul className="grid gap-2 @3xl:grid-cols-3">
         {tiles.map((item) => (
           <li key={item.round}>
             {item.count > 0 ? (

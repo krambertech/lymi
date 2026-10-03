@@ -4,7 +4,7 @@ export function Space() {
   return (
     <Doc
       title="Space and shape"
-      lede="A 4 px grid. Radii grow with the size of the thing. Depth is one hairline; nothing casts a shadow, nothing is raised. Layout is structural: the rail becomes a floating pill on the phone, the content column caps at 880, screens lay out by their container, and controls and sheets size by the viewport."
+      lede="A 4 px grid. Radii grow with the size of the thing; depth and elevation are on the Surfaces page. Layout is structural: the rail becomes a floating pill on the phone, the content column caps at 880, screens lay out by their container, and controls and sheets size by the viewport."
     >
       <Sub
         title="Spacing"
@@ -41,26 +41,6 @@ export function Space() {
               <span className="max-w-[12ch] text-2xs text-muted">{use}</span>
             </div>
           ))}
-        </Specimen>
-      </Sub>
-
-      <Sub
-        title="Edges, not elevation"
-        note="Every surface is one of four tones: canvas, rail, plate and plate-2. A hairline separates them. Hover strengthens the hairline; focus adds the same neutral outline every control gets; nothing lifts."
-      >
-        <Specimen className="gap-4">
-          <div className="edge grid h-24 w-40 place-items-center rounded-lg bg-plate text-sm text-muted">
-            plate + edge
-          </div>
-          <div className="edge-2 grid h-24 w-40 place-items-center rounded-lg bg-plate text-sm text-muted">
-            hover: edge-2
-          </div>
-          <div className="edge-2 grid h-24 w-40 place-items-center rounded-lg bg-plate text-sm text-muted outline-2 outline-offset-2 outline-ring">
-            focus: outline
-          </div>
-          <div className="grid h-24 w-40 place-items-center rounded-lg bg-plate-2 text-sm text-muted">
-            plate-2, no edge
-          </div>
         </Specimen>
       </Sub>
 

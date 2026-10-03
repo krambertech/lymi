@@ -28,6 +28,8 @@ The column is capped at `--column` (880 px) and centres in whatever the rail lea
 
 Spacing is Tailwind's 4 px scale. DESIGN.md's frontmatter names `xs` 4, `sm` 8, `md` 16, `lg` 24, `xl` 32 and `2xl` 48, which are `1`, `2`, `4`, `6`, `8` and `12` in class names (`gap-4`, `p-6`).
 
+The page gutter is 20 px on a phone (`px-5`). Plates in one group sit `gap-3` apart, `gap-4` from `@3xl`, and Insights' figure plates sit `gap-4` at every width because each one is dense. Groups and sections sit `gap-8`. A tray's tiles sit `gap-2`, the same as its padding, so the inset and the gaps read as one rhythm.
+
 ## Container queries
 
 Views lay out by their container (`@3xl` = 768 px), not the viewport, so the design page and the component tests can render them at any width. Chrome that follows the rail, such as page padding, top bars and back rows, queries the whole window's `@3xl/shell`, because the rail appears at a 768 px window while the column beside it is still narrower. The toast renders outside the shell, so its clearance for the pill uses the matching `md` media query. Form controls size by the viewport ([forms.md](forms.md#the-control-box)).

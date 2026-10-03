@@ -263,7 +263,7 @@ export function ShelfBar({ shelves }: { shelves: readonly Shelf[] }) {
             type="button"
             onClick={() => nudge(-1)}
             aria-label={t`Earlier shelves`}
-            className="grid size-9 place-items-center rounded-full bg-plate text-text edge transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="grid size-9 place-items-center rounded-full bg-plate text-text edge transition-colors duration-150 hoverable:hover:veil focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             <ChevronLeft aria-hidden="true" className="size-4 rtl:-scale-x-100" />
           </button>
@@ -271,7 +271,7 @@ export function ShelfBar({ shelves }: { shelves: readonly Shelf[] }) {
             type="button"
             onClick={() => nudge(1)}
             aria-label={t`Later shelves`}
-            className="grid size-9 place-items-center rounded-full bg-plate text-text edge transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="grid size-9 place-items-center rounded-full bg-plate text-text edge transition-colors duration-150 hoverable:hover:veil focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             <ChevronRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
           </button>

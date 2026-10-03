@@ -643,7 +643,7 @@ function ChangeRow({
       <button
         type="button"
         onClick={onClick}
-        className="group flex min-h-16 w-full items-center gap-4 rounded-sm px-2 py-2.5 text-start transition-[background-color] duration-150 ease-out hoverable:hover:bg-hover"
+        className="group flex min-h-16 w-full items-center gap-4 rounded-sm px-2 py-2.5 text-start transition-[background-color] duration-150 ease-out hoverable:hover:veil"
       >
         <span
           aria-hidden="true"

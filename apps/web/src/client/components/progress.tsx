@@ -30,11 +30,11 @@ export function Progress({
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(pct)}
-      className={clsx("h-2 w-full overflow-hidden rounded-full bg-edge", className)}
+      className={clsx("well h-2 w-full overflow-hidden rounded-full bg-plate-2", className)}
     >
       <i
         className={clsx(
-          "block h-full w-full origin-left rounded-full bg-text-2 rtl:origin-right",
+          "lit block h-full w-full origin-left rounded-full bg-text-2 [--lit-glow:0_0_#0000] rtl:origin-right",
           animate && "transition-transform duration-300 ease-out motion-reduce:transition-none",
         )}
         style={{ transform: `scaleX(${pct / 100})` }}

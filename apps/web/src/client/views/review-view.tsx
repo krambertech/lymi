@@ -1293,7 +1293,7 @@ export function GradeBar({
                       className={clsx(
                         "edge relative grid h-[72px] min-w-0 content-center gap-1 rounded-lg bg-plate px-1 text-sm font-medium text-text-2",
                         "transition-[scale,background-color,box-shadow] duration-150 ease-out @2xl:text-base",
-                        "hoverable:hover:edge-2 hoverable:hover:bg-hover hoverable:hover:text-text active:scale-[0.96] motion-reduce:active:scale-100",
+                        "hoverable:hover:edge-2 hoverable:hover:veil hoverable:hover:text-text active:scale-[0.96] motion-reduce:active:scale-100",
                       )}
                     >
                       <span className={clsx("mx-auto grid size-5 place-items-center", g.iconClass)}>

@@ -1,4 +1,5 @@
 import { Plural, Trans } from "@lingui/react/macro";
+import { clsx } from "clsx";
 import { Avatar } from "./avatar";
 import { languageName } from "./deck-fields";
 import { DueCount } from "./due-count";
@@ -21,6 +22,8 @@ export interface DeckCardProps {
   publisherPhoto?: string | null | undefined;
   /** Instructions a screen reader reads with the link, such as how to drag the deck. */
   "aria-describedby"?: string | undefined;
+  /** In a series' tray, where a deck is a tile rather than a plate. */
+  tile?: boolean | undefined;
 }
 
 /**
@@ -39,6 +42,7 @@ export function DeckCard({
   published,
   publisherPhoto,
   "aria-describedby": describedBy,
+  tile,
 }: DeckCardProps) {
   const lang = language ? languageName(language) : null;
   return (
@@ -46,7 +50,10 @@ export function DeckCard({
       to="/library/$deckId"
       params={{ deckId: id }}
       aria-describedby={describedBy}
-      className="edge group grid w-full min-w-0 content-start gap-1 rounded-lg bg-plate px-4 py-3.5 transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:bg-hover"
+      className={clsx(
+        "edge group grid w-full min-w-0 content-start gap-1 px-4 py-3.5 transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:veil",
+        tile ? "tile rounded-md" : "rounded-lg bg-plate",
+      )}
     >
       <span className="flex min-h-[26px] min-w-0 items-center justify-between gap-3">
         <span className="min-w-0 truncate text-lg font-medium tracking-[-0.01em]">{name}</span>

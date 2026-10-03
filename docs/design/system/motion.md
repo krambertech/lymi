@@ -29,7 +29,7 @@ Name the properties a transition animates; never `transition-all`. Prefer `trans
 
 ## Press
 
-Press scales over 150 ms. Nothing lifts.
+Press scales over 150 ms. Nothing moves up on press.
 
 | Control | Scale |
 | --- | --- |

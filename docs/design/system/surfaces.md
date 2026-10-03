@@ -67,12 +67,13 @@ A tray holds a set the learner reads together, so the set reads as one object ra
 
 **Anatomy.** The tray is `tray grid gap-2 rounded-xl p-2`; each item is `edge tile rounded-md`, so its corners are the tray's radius less the 8 px inset. The title is the section's `h2` at `text-md font-medium`, in a `min-h-10` row inset `px-3 pt-1` to line up with the tiles' text. Actions for the whole set sit on the title's end at 32 px, a small button and the ⋯ menu together, on one line: a long title truncates rather than pushing them under it. A series' Review button is the example. A pressable tile hovers with `veil`. Anything on `bg-plate` inside a tray, such as a secondary button in its header, takes the tile's tone: at night the tray is plate-toned, so a plate there would vanish, while by day the two are the same white. An empty set shows a dashed `rounded-md` placeholder where its tiles would be. Where tiles can be dragged in, the tray shows a 2 px `ring` while one is over it rather than a fill, because its ground is already a fill; a tile dragged out of a tray becomes a plate again (`DeckCard`'s `tile` prop).
 
-**Where.** Today's rounds and its decks to review; the streak's goal and figures; each series in Library, and Library's archived decks; each kind on the Archived page; each day on Activity; the apps you can import from. A set of one is still a set: an Activity day with one entry keeps its tray.
+**Where.** Today's rounds and its decks to review; the streak's goal and figures; each series in Library, and Library's archived decks; each kind on the Archived page; each day on Activity. A set of one is still a set: an Activity day with one entry keeps its tray.
 
 **Where not.**
 
 - A screen's main list, such as Library's loose decks: the page is already the set.
-- A single control or setting. In Settings the import list is the only tray; when a group already has a heading above it, its tray carries no title of its own.
+- A single control or setting, and anything in Settings.
+- A group that already has a heading above it: the heading groups it, so a tray would be a second, untitled box. A tray's title always sits inside it.
 - A lone tray among plates, as on Insights' grid of figures, where it reads as a different kind of thing rather than a set.
 - The grades, the review card or anything else on the review screen, which has to stay plain and fast.
 - Inside another tray, or a tray inside a plate.

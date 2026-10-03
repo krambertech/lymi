@@ -510,12 +510,12 @@ export function ImportSources({
     { source: "lymi", detail: t`A Lymi file from another Lymi account` },
   ];
   return (
-    <ul aria-label={t`Apps you can import from`} className="tray grid gap-2 rounded-xl p-2">
+    <ul aria-label={t`Apps you can import from`} className="edge grid rounded-xl bg-plate">
       {sources.map(({ source, detail }) => (
-        <li key={source} className="edge tile rounded-md">
+        <li key={source} className="group/row border-edge [&:not(:first-child)]:border-t">
           {sourceLink(
             source,
-            "group flex min-h-16 items-center gap-4 rounded-md px-4 py-3 transition-[background-image] duration-150 hoverable:hover:veil",
+            "group flex min-h-16 items-center gap-4 px-4 py-3 transition-[background-color] duration-150 hoverable:hover:bg-hover group-first/row:rounded-t-xl group-last/row:rounded-b-xl",
             <>
               <span className="grid min-w-0 flex-1 gap-0.5">
                 <span className="text-md font-medium">{SOURCE_NAMES[source]}</span>

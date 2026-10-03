@@ -81,9 +81,10 @@ function SeriesTray({ over, empty }: { over?: boolean; empty?: boolean }) {
 
 const NOT_A_TRAY: [string, string][] = [
   ["A screen's main list", "Library's loose decks: the page is already the set."],
+  ["A single control or setting", "Language, theme, a switch: nothing in Settings sits in a tray."],
   [
-    "A single control or setting",
-    "Language, theme, a switch. In Settings only the import list is a tray.",
+    "A group with a heading above it",
+    "The heading already groups it; a tray would be a second, untitled box.",
   ],
   [
     "A lone tray among plates",
@@ -199,7 +200,7 @@ export function Surfaces() {
 
       <Sub
         title="Where a tray goes, and where it does not"
-        note="Today's rounds and decks to review; the streak's goal and figures; each series and the archived decks in Library; each kind on Archived; each day on Activity; the apps you can import from."
+        note="Today's rounds and decks to review; the streak's goal and figures; each series and the archived decks in Library; each kind on Archived; each day on Activity."
       >
         <ul className="grid gap-2 @xl:grid-cols-2">
           {NOT_A_TRAY.map(([title, why]) => (

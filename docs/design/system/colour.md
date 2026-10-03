@@ -76,7 +76,7 @@ Amber has exactly these uses. Anything not on the list stays neutral.
 
 A checkbox or switch is amber when checked; that is the control confirming a press, not a new accent. A status chip repeated down a list, as `StateChip` down a deck table or due counts down Library, is one decision shown many times, not many uses of amber.
 
-Never amber for: a selected state (a chosen chip is ink, see [chips-and-marks.md](chips-and-marks.md)), a tray, a heading, a link, or decoration.
+Never amber for: a selected state (a chosen chip is ink, see [chips-and-marks.md](chips-and-marks.md)), a tray or a deck tray, a heading, a link, or decoration.
 
 ## Card states
 

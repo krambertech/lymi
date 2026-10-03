@@ -292,7 +292,7 @@ Read the file for what you are building. Each is short enough to read whole.
 | --- | --- |
 | Anything: which component exists | [components.md](docs/design/system/components.md) |
 | Colour, amber, card states, the AI badge | [colour.md](docs/design/system/colour.md) |
-| Backgrounds, edges, radius, glow, the tray | [surfaces.md](docs/design/system/surfaces.md) |
+| Backgrounds, elevation and hover, edges, trays, radius, glow, the deck tray | [surfaces.md](docs/design/system/surfaces.md) |
 | Type sizes, weights, monospace | [type.md](docs/design/system/type.md) |
 | Buttons and links | [buttons.md](docs/design/system/buttons.md) |
 | Forms and choice controls | [forms.md](docs/design/system/forms.md) |

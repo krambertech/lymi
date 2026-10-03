@@ -102,11 +102,12 @@ export function ArchivedView({
 
 function Group({ heading, id, children }: { heading: ReactNode; id: string; children: ReactNode }) {
   return (
-    <section aria-labelledby={id} className="grid gap-2">
-      <h2 id={id} className="text-md font-medium">
+    // A tray per kind, so decks and cards read as two sets with their names inside them.
+    <section aria-labelledby={id} className="tray grid gap-2 rounded-xl p-2">
+      <h2 id={id} className="flex min-h-10 items-center px-3 pt-1 text-md font-medium">
         {heading}
       </h2>
-      <ul className="edge grid rounded-xl bg-plate">{children}</ul>
+      <ul className="grid gap-2">{children}</ul>
     </section>
   );
 }
@@ -128,7 +129,7 @@ function Row({
 }) {
   const { t } = useLingui();
   return (
-    <li className="flex min-h-[72px] items-center gap-3 border-edge px-4 py-3 [&:not(:first-child)]:border-t">
+    <li className="edge tile flex min-h-[72px] items-center gap-3 rounded-md px-4 py-3">
       <span className="grid min-w-0 flex-1 gap-0.5">
         <span className="truncate text-md font-medium" lang={language ?? undefined}>
           {name}

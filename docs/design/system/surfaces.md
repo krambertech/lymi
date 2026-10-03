@@ -46,7 +46,7 @@ An inset `box-shadow` is allowed only as a stroke that a border cannot draw: the
 
 A tray holds a set the learner reads together: its title sits inside it and its items are tiles on it. It is `tray` with `rounded-xl p-2`, and each item is `edge tile rounded-md`, so the corners run parallel. By day a tray is a `plate-2` well with white tiles; at night it is a plate with a rim and its tiles a step lighter, because a tray darker than the room disappears into it.
 
-Use one only for a real set: Today's rounds, the streak's goal and figures, Insights' cards by state, Library's archived decks. A single row, a screen's main list or the grades are never in a tray.
+Use one only for a real set: Today's rounds and its decks to review, the streak's goal and figures, Insights' cards by state, Library's archived decks. A single row, a screen's main list or the grades are never in a tray.
 
 ## Lit and set in
 

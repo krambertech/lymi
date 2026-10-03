@@ -221,9 +221,9 @@ export function TodayView({
           {!loading && !nothingYet && rounds && <Rounds rounds={rounds} onAdd={onAdd} />}
 
           {!loading && decks && decks.length > 1 && rows.length > 0 && (
-            <section aria-labelledby="today-decks" className="grid gap-2.5">
-              <div className="flex min-h-8 items-center justify-between gap-3 px-1">
-                <h2 id="today-decks" className="text-lg font-medium">
+            <section aria-labelledby="today-decks" className="tray grid gap-2 rounded-xl p-2">
+              <div className="flex min-h-10 items-center justify-between gap-3 ps-3 pe-2 pt-1">
+                <h2 id="today-decks" className="text-md font-medium">
                   <Trans>Decks to review</Trans>
                 </h2>
                 <NavLink
@@ -234,13 +234,13 @@ export function TodayView({
                   <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />
                 </NavLink>
               </div>
-              <ul className="edge overflow-hidden rounded-xl bg-plate">
+              <ul className="grid gap-2">
                 {rows.map((d) => (
-                  <li key={d.key} className="border-edge not-first:border-t">
+                  <li key={d.key}>
                     <NavLink
                       to="/review"
                       search={d.search}
-                      className="group flex min-h-18 items-center gap-4 py-3 ps-5 pe-4 transition-[background-color] duration-150 hoverable:hover:bg-hover"
+                      className="edge tile group flex min-h-18 items-center gap-4 rounded-md py-3 ps-4 pe-4 transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
                     >
                       {/* The count leads, as on the round tiles: it is what the row is for. */}
                       <DueCount size="lg">{d.due}</DueCount>

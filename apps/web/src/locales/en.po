@@ -478,9 +478,6 @@ msgstr "{due, plural, one {card due in {deckName}} other {cards due in {deckName
 msgid "{due, plural, one {card due today} other {cards due today}}"
 msgstr "{due, plural, one {card due today} other {cards due today}}"
 
-msgid "{due, plural, one {card due} other {cards due}} in {dueDecks, plural, one {# deck} other {# decks}}"
-msgstr "{due, plural, one {card due} other {cards due}} in {dueDecks, plural, one {# deck} other {# decks}}"
-
 msgid "{due, plural, one {card to review now} other {cards to review now}}"
 msgstr "{due, plural, one {card to review now} other {cards to review now}}"
 
@@ -3087,6 +3084,9 @@ msgstr "Reveal the card when you have it"
 msgid "Review"
 msgstr "Review"
 
+msgid "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}"
+msgstr "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}"
+
 msgid "Review done"
 msgstr "Review done"
 
@@ -3113,9 +3113,6 @@ msgstr "Review these decks together, in this order."
 
 msgid "Review this section"
 msgstr "Review this section"
-
-msgid "Review this series"
-msgstr "Review this series"
 
 msgid "Review whenever you have a moment."
 msgstr "Review whenever you have a moment."

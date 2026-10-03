@@ -126,36 +126,28 @@ export function LibraryView({
     const cards = inSeries.reduce((n, d) => n + d.total, 0);
     const due = inSeries.reduce((n, d) => n + d.due, 0);
     const seriesName = s.name;
-    const dueDecks = inSeries.filter((d) => d.due > 0).length;
-    const bannerClass =
-      "group flex min-h-12 w-full items-center gap-3 rounded-lg bg-plate-2 py-2 ps-3 pe-2 text-start transition-[background-color,scale] duration-150 ease-out active:scale-[0.99] hoverable:hover:bg-hover motion-reduce:active:scale-100";
-    const banner = (
-      <>
-        <DueCount>{due}</DueCount>
-        <span className="grid min-w-0 flex-1 gap-0.5 @2xl:flex @2xl:items-baseline @2xl:gap-2">
-          <span className="truncate text-base font-medium">
-            <Trans>Review this series</Trans>
-          </span>
-          <span className="truncate text-sm text-muted">
-            {t`${plural(due, { one: "card due", other: "cards due" })} in ${plural(dueDecks, { one: "# deck", other: "# decks" })}`}
-          </span>
-        </span>
-        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-plate text-text transition-[background-color] duration-150">
-          <ChevronRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />
-        </span>
-      </>
-    );
     return (
       <>
-        {/* The actions wrap under the name on a narrow phone rather than squeezing it. */}
-        <div className="flex min-h-10 flex-wrap items-center gap-x-2 gap-y-2 px-1">
-          <div className="grid min-w-0 flex-1 basis-40 gap-0.5">
+        {/* One line: a long name truncates rather than pushing Review under it. */}
+        <div className="flex min-h-12 items-center gap-2 ps-3 pe-1 pt-1">
+          <div className="grid min-w-0 flex-1 gap-0.5">
             <h2 className="truncate text-lg font-medium tracking-[-0.01em]">{s.name}</h2>
             <p className="truncate text-sm text-muted tabular-nums">
               {t`${plural(inSeries.length, { one: "# deck", other: "# decks" })} · ${plural(cards, { one: "# card", other: "# cards" })}`}
             </p>
           </div>
-          <div className="ms-auto flex items-center gap-2">
+          <div className="ms-auto flex shrink-0 items-center gap-1">
+            {/* The same 32 px as the menu beside it, so the two sit as one row of actions. */}
+            {due > 0 && (
+              <Button
+                size="sm"
+                aria-label={t`Review ${seriesName}, ${plural(due, { one: "# card due", other: "# cards due" })}`}
+                render={<NavLink to="/review" search={{ series: s.id }} />}
+              >
+                <Trans>Review</Trans>
+                <DueCount className="-me-1.5">{due}</DueCount>
+              </Button>
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger
                 render={
@@ -200,18 +192,12 @@ export function LibraryView({
             </DropdownMenu>
           </div>
         </div>
-        {/* Sunk into a well, so it never reads as one more deck. */}
-        {due > 0 && (
-          <NavLink to="/review" search={{ series: s.id }} className={bannerClass}>
-            {banner}
-          </NavLink>
-        )}
       </>
     );
   };
 
   const emptySeries = (s: Series) => (
-    <div className="flex min-h-[72px] w-full flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-lg border border-dashed border-edge-2 px-4 py-3">
+    <div className="flex min-h-[72px] w-full flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-md border border-dashed border-edge-2 px-4 py-3">
       <p className="max-w-sm text-sm text-text-2">
         {onSetSeriesDecks ? (
           <Trans>Drag decks here to add them to this series.</Trans>
@@ -290,8 +276,9 @@ export function LibraryView({
           series={groups.series}
           onSetSeriesDecks={st ? undefined : onSetSeriesDecks}
           onRemoveFromSeries={st ? undefined : onRemoveFromSeries}
-          renderDeck={(d, describedBy) => (
+          renderDeck={(d, describedBy, tile) => (
             <DeckCard
+              tile={tile}
               id={d.id}
               name={d.name}
               language={d.defaultLanguage}

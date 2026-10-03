@@ -478,9 +478,6 @@ msgstr "{due, plural, one {картка до повторення в колод�
 msgid "{due, plural, one {card due today} other {cards due today}}"
 msgstr "{due, plural, one {картка до повторення сьогодні} few {картки до повторення сьогодні} many {карток до повторення сьогодні} other {картки до повторення сьогодні}}"
 
-msgid "{due, plural, one {card due} other {cards due}} in {dueDecks, plural, one {# deck} other {# decks}}"
-msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}} у {dueDecks, plural, one {# колоді} few {# колодах} many {# колодах} other {# колодах}}"
-
 msgid "{due, plural, one {card to review now} other {cards to review now}}"
 msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
@@ -3087,6 +3084,9 @@ msgstr "Відкрий картку, коли згадаєш"
 msgid "Review"
 msgstr "Повторення"
 
+msgid "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}"
+msgstr "Повторити серію «{seriesName}», {due, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
+
 msgid "Review done"
 msgstr "Повторення завершено"
 
@@ -3113,9 +3113,6 @@ msgstr "Повторюй ці колоди разом, у такому поря�
 
 msgid "Review this section"
 msgstr "Повторити розділ"
-
-msgid "Review this series"
-msgstr "Повторити серію"
 
 msgid "Review whenever you have a moment."
 msgstr "Повтори, коли матимеш хвилинку."

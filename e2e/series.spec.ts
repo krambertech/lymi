@@ -27,9 +27,9 @@ function seriesRegion(page: Page, name: string) {
   return page.locator("main").getByRole("region", { name, exact: true });
 }
 
-/** A series' decks in order, leaving out its review banner. */
+/** A series' decks in order, leaving out its Review button. */
 function deckLinks(region: Locator) {
-  return region.getByRole("link", { name: /^(?!.*Review this series)/ });
+  return region.getByRole("link", { name: /^(?!Review )/ });
 }
 
 function deckLink(scope: Locator, name: string) {

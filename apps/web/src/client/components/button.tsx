@@ -36,7 +36,7 @@ const iconSide =
 
 const variants: Record<ButtonVariant, string> = {
   primary: "key-light bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
-  secondary: "edge bg-plate text-text hoverable:hover:bg-hover",
+  secondary: "edge bg-plate text-text hoverable:hover:veil",
   // `hover`, not `plate-2`: in the light room plate-2 is the rail, so the fill vanished there.
   ghost: "bg-transparent text-text-2 hoverable:hover:bg-hover hoverable:hover:text-text",
   danger: "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",

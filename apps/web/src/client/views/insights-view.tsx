@@ -284,9 +284,8 @@ export function InsightsView({
           label={t`Cards`}
           value={cards.total}
           unit={t`${plural(cards.total, { one: "card", other: "cards" })}`}
-          tray
-          figure={<CardTiles cards={cards} />}
-          note={<CardSplit cards={cards} />}
+          figure={<CardSplit cards={cards} />}
+          note={<CardChips cards={cards} />}
         />
 
         <StatPlate
@@ -405,24 +404,6 @@ function CardSplit({ cards }: CardCountsProps) {
           className={clsx("block rounded-full", stateMarks[k].bg)}
           style={{ flexGrow: cards[k] }}
         />
-      ))}
-    </div>
-  );
-}
-
-/** Each state as a tile in the Cards tray: its mark, its count and its word. */
-function CardTiles({ cards }: CardCountsProps) {
-  const { i18n } = useLingui();
-  return (
-    <div className="grid w-full grid-cols-3 gap-2">
-      {(["new", "learning", "known"] as const).map((k) => (
-        <div key={k} className="edge tile grid content-center gap-1 rounded-md px-3 py-2.5">
-          <span className="flex items-center gap-1.5">
-            <StateIcon state={k} className="size-4" />
-            <span className="text-xl font-medium leading-none tabular-nums">{cards[k]}</span>
-          </span>
-          <span className="truncate text-xs text-muted">{i18n._(stateMarks[k].label)}</span>
-        </div>
       ))}
     </div>
   );

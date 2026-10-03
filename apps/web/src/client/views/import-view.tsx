@@ -700,7 +700,7 @@ export function ImportPreviewView({
       <button
         type="button"
         onClick={() => setLanguagesOpen(true)}
-        className="edge group flex items-center gap-4 rounded-xl bg-plate px-4 py-3.5 text-start transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover"
+        className="edge group flex items-center gap-4 rounded-xl bg-plate px-4 py-3.5 text-start transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:veil"
       >
         <span
           className="grid size-10 shrink-0 place-items-center rounded-full bg-plate-2 text-text-2"

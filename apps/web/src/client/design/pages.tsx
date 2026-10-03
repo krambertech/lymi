@@ -58,7 +58,7 @@ function DocFooter({ current }: { current: string }) {
   const prev = at > 0 ? ORDER[at - 1] : undefined;
   const next = at >= 0 ? ORDER[at + 1] : undefined;
   const step =
-    "group edge flex min-w-0 items-center gap-3 rounded-md bg-plate px-4 py-3 transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-hover";
+    "group edge flex min-w-0 items-center gap-3 rounded-md bg-plate px-4 py-3 transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:veil";
   const arrow =
     "size-4 shrink-0 text-muted transition-[translate,color] duration-150 ease-out rtl:-scale-x-100 hoverable:group-hover:text-text motion-reduce:transition-none";
   return (

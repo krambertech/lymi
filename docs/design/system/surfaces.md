@@ -18,7 +18,7 @@ What is it?
  └── A published deck's shelf → a tray (below), and nowhere else
 ```
 
-Hover fills with `bg-hover`, never `plate-2`: in the light room `plate-2` is the rail's tone, so the fill vanishes there.
+Hover depends on what the thing is at rest. Something with a fill and a hairline (a plate you can press, a tile, a secondary button, a grade) strengthens to `edge-2` and lays `veil` over its own fill, so a plate on the room and a tile in a tray answer the same way. Something with no fill at rest (a ghost button, a navigation row, a menu row) fills with `bg-hover`, never `plate-2`: in the light room `plate-2` is the rail's tone, so the fill vanishes there.
 
 A chosen option in a `plate-2` track sits on `bg-chosen`, never `bg-plate`. By day the two are the same white; at night `plate` is darker than `plate-2`, so a plate thumb reads as a hole and the choice is unclear.
 
@@ -44,9 +44,9 @@ An inset `box-shadow` is allowed only as a stroke that a border cannot draw: the
 
 ## Trays
 
-A tray holds a set the learner reads together: its title sits inside it and its items are tiles on it. It is `tray` with `rounded-xl p-2`, and each item is `edge tile rounded-md`, so the corners run parallel. By day a tray is a `plate-2` well with white tiles; at night it is a plate with a rim and its tiles a step lighter, because a tray darker than the room disappears into it. A pressable tile hovers to `bg-tile-hover`, never `bg-hover`, which by day is the tray's own tone and sinks the tile into it.
+A tray holds a set the learner reads together: its title sits inside it and its items are tiles on it. It is `tray` with `rounded-xl p-2`, and each item is `edge tile rounded-md`, so the corners run parallel. By day a tray is a `plate-2` well with white tiles; at night it is a plate with a rim and its tiles a step lighter, because a tray darker than the room disappears into it.
 
-Use one only for a real set: Today's rounds and its decks to review, the streak's goal and figures, Insights' cards by state, Library's archived decks. A single row, a screen's main list or the grades are never in a tray.
+Use one only for a real set: Today's rounds and its decks to review, the streak's goal and figures, Library's archived decks. Never a lone tray among plates, as on a grid of figures, where it reads as a different kind of thing rather than a set. A single row, a screen's main list or the grades are never in a tray.
 
 ## Lit and set in
 

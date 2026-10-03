@@ -240,7 +240,7 @@ export function TodayView({
                     <NavLink
                       to="/review"
                       search={d.search}
-                      className="edge tile group flex min-h-18 items-center gap-4 rounded-md py-3 ps-4 pe-4 transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:bg-tile-hover"
+                      className="edge tile group flex min-h-18 items-center gap-4 rounded-md py-3 ps-4 pe-4 transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:veil"
                     >
                       {/* The count leads, as on the round tiles: it is what the row is for. */}
                       <DueCount size="lg">{d.due}</DueCount>
@@ -361,7 +361,7 @@ function Rounds({ rounds, onAdd }: { rounds: RoundsOut; onAdd: (() => void) | un
   const tile =
     "edge tile flex w-full items-center gap-4 rounded-md py-4 ps-5 pe-4 text-start @3xl:h-full @3xl:flex-col @3xl:items-stretch @3xl:gap-0 @3xl:p-0";
   const pressable =
-    "group transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:bg-tile-hover";
+    "group transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:veil";
   const face = (item: (typeof tiles)[number], live: boolean) => (
     <>
       <span

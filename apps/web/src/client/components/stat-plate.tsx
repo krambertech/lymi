@@ -14,7 +14,6 @@ export function StatPlate({
   control,
   note,
   ghost,
-  tray,
   className,
 }: {
   label: string;
@@ -32,15 +31,13 @@ export function StatPlate({
   note: ReactNode;
   /** A dashed outline with a muted number: the plate before there is anything to count. */
   ghost?: boolean | undefined;
-  /** A tray rather than a plate, for a figure made of tiles. */
-  tray?: boolean | undefined;
   className?: string | undefined;
 }) {
   return (
     <section
       className={clsx(
         "flex flex-col gap-3 rounded-xl p-5",
-        ghost ? "border border-dashed border-edge-2" : tray ? "tray" : "edge bg-plate",
+        ghost ? "border border-dashed border-edge-2" : "edge bg-plate",
         className,
       )}
     >

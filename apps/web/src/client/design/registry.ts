@@ -19,6 +19,7 @@ import { review } from "./parts/review";
 import type { Group } from "./parts/types";
 import { Space } from "./space";
 import { StreakPage } from "./streak";
+import { Surfaces } from "./surfaces";
 import { Typography } from "./typography";
 import { Voice } from "./voice";
 
@@ -36,6 +37,7 @@ export const FOUNDATIONS: Foundation[] = [
   { slug: "flame", title: "Flame", source: "design/flame.tsx", Page: FlamePage },
   { slug: "streak", title: "Streak", source: "design/streak.tsx", Page: StreakPage },
   { slug: "colour", title: "Colour", source: "design/colour.tsx", Page: Colour },
+  { slug: "surfaces", title: "Surfaces", source: "design/surfaces.tsx", Page: Surfaces },
   { slug: "typography", title: "Typography", source: "design/typography.tsx", Page: Typography },
   { slug: "space", title: "Space and shape", source: "design/space.tsx", Page: Space },
   { slug: "layout", title: "Layout", source: "design/layout.tsx", Page: Layout },

@@ -104,7 +104,7 @@ interface TrayProps {
 /**
  * One of the deck's own cards sitting in a tray: the cut reads as tucked into a shelf, and the
  * hue is a pure function of the slug, so this deck arrives at the same colour on `lymi.app`,
- * on its own page here, and anywhere else it is offered. docs/design/system/surfaces.md, "The tray".
+ * on its own page here, and anywhere else it is offered. docs/design/system/surfaces.md, "The deck tray".
  */
 export function DeckTray({
   slug,

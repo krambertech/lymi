@@ -462,6 +462,10 @@
 @utility tray {
   background-color: var(--tray);
   box-shadow: var(--tray-depth);
+  /* A plate in a tray, such as a secondary button in its header, takes the tile's tone; at night the tray is plate-toned, so a plate there would vanish. */
+  & .bg-plate {
+    background-color: var(--tile);
+  }
 }
 @utility tile {
   background-color: var(--tile);

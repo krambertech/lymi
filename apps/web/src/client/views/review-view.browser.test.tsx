@@ -40,11 +40,32 @@ test("a revealed card shows its source, not its tags, and marks only what the AI
 
   expect(page.getByRole("list", { name: "Tags" }).elements()).toHaveLength(0);
   const card = page.getByRole("region", { name: /Recognition card/ }).element();
-  expect(card.textContent).toContain("AI meaning");
+  expect(card.textContent).toContain("AI wrote part of this card");
   expect(card.textContent).toContain("Lesson 14");
   expect(card.textContent).not.toContain("verbs");
   expect(card.textContent).not.toContain("from lesson");
   expect(card.textContent).not.toContain("by you");
+});
+
+test("several AI-written fields share one AI chip", async () => {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <ReviewCard
+        item={item({
+          meaningSource: "ai",
+          example: "Meie maja on madal.",
+          exampleSource: "ai",
+          pronunciation: "ˈmeie ˈmaja",
+          pronunciationSource: "ai",
+        })}
+        revealed
+        animateReveal={false}
+        onReveal={noop}
+      />
+    </I18nProvider>,
+  );
+
+  expect(page.getByText("AI wrote part of this card").elements()).toHaveLength(1);
 });
 
 test("the learner's own text and no source carry no chip", async () => {

@@ -779,6 +779,9 @@ msgstr "AI meaning"
 msgid "AI pronunciation"
 msgstr "AI pronunciation"
 
+msgid "AI wrote part of this card"
+msgstr "AI wrote part of this card"
+
 msgid "AI wrote this"
 msgstr "AI wrote this"
 

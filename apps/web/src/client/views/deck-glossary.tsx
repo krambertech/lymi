@@ -19,6 +19,7 @@ import { clsx } from "clsx";
 import {
   Check,
   Lock,
+  LockOpen,
   MapPin,
   MoreHorizontal,
   PencilLine,
@@ -419,51 +420,73 @@ function SectionHeading({
   // A card started early in a section that is not open is still in review, so it counts here too.
   const reviewable = !!onReview && !!section && section.due > 0;
   const sectionName = section?.name ?? "";
+  const startable = section?.status === "locked" && !!onStart;
+  // One control at the end keeps the menu on the title's first line, so Start anyway joins the menu when there is one.
+  const menu = !!section && (!!editing || reviewable);
   return (
-    <div className="flex min-h-11 flex-wrap items-center gap-x-2 gap-y-1 px-1 pt-6 pb-2">
-      {locked ? (
-        <Lock className="size-4 shrink-0 text-muted" aria-hidden="true" />
-      ) : (
-        section && <SectionRing known={section.known} total={section.total} />
-      )}
-      <h2
-        id={section ? sectionAnchor(section.id) : undefined}
-        tabIndex={section ? -1 : undefined}
-        className={clsx(
-          "flex min-w-0 scroll-mt-6 items-baseline gap-2 text-md font-medium focus-visible:outline-offset-4",
-          locked ? "text-text-2" : "text-text",
+    <div className="flex min-h-11 items-start gap-2 px-1 pt-6 pb-2">
+      <span className="flex h-8 shrink-0 items-center">
+        {locked ? (
+          <Lock className="size-4 text-muted" aria-hidden="true" />
+        ) : (
+          section && <SectionRing known={section.known} total={section.total} />
         )}
-      >
-        {/* A lesson named by a long source keeps two lines, so its count stays beside it. */}
-        <span className="line-clamp-2 min-w-0 text-balance [overflow-wrap:anywhere]">{label}</span>
-        {locked && <span className="sr-only">{t`, not open yet`}</span>}
-        {/* Read as "Lesson 14, 4" rather than "Lesson 144". */}
-        <span className="sr-only">, </span>
-        <span className="shrink-0 text-sm font-normal text-muted">{i18n.number(count)}</span>
-      </h2>
-      {here && (
-        // Green, not amber: it says where the learner is and asks for nothing.
-        <span className="inline-flex h-6 items-center gap-1 rounded-full bg-good ps-1.5 pe-2.5 text-sm font-medium text-canvas">
-          <MapPin className="size-3.5" aria-hidden="true" />
-          <Trans>You are here</Trans>
-        </span>
-      )}
-      <span className="flex-1" />
-      {section?.status === "locked" && onStart && (
-        <Button size="sm" variant="ghost" className="text-text-2" onClick={() => onStart(section)}>
+      </span>
+      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1 py-1">
+        <h2
+          id={section ? sectionAnchor(section.id) : undefined}
+          tabIndex={section ? -1 : undefined}
+          className={clsx(
+            "min-w-0 scroll-mt-6 text-balance text-md font-medium [overflow-wrap:anywhere] focus-visible:outline-offset-4",
+            locked ? "text-text-2" : "text-text",
+          )}
+        >
+          {label}
+          {locked && <span className="sr-only">{t`, not open yet`}</span>}
+          {/* Read as "Lesson 14, 4" rather than "Lesson 144". */}
+          <span className="sr-only">, </span>
+          {/* Inline, so a title that wraps keeps its count after the last word. */}
+          <span className="ms-2 whitespace-nowrap text-sm font-normal text-muted">
+            {i18n.number(count)}
+          </span>
+        </h2>
+        {here && (
+          // Green, not amber: it says where the learner is and asks for nothing.
+          <span className="inline-flex h-6 shrink-0 items-center gap-1 rounded-full bg-good ps-1.5 pe-2.5 text-sm font-medium text-canvas">
+            <MapPin className="size-3.5" aria-hidden="true" />
+            <Trans>You are here</Trans>
+          </span>
+        )}
+      </div>
+      {startable && !menu && (
+        <Button
+          size="sm"
+          variant="ghost"
+          className="shrink-0 text-text-2"
+          onClick={() => onStart(section)}
+        >
           <Trans>Start anyway</Trans>
         </Button>
       )}
-      {section && (editing || reviewable) && (
+      {section && menu && (
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
-              <IconButton size="sm" label={t`Options for ${sectionName}`}>
+              <IconButton size="sm" className="shrink-0" label={t`Options for ${sectionName}`}>
                 <MoreHorizontal />
               </IconButton>
             }
           />
           <DropdownMenuContent aria-label={t`Options for ${sectionName}`} align="end">
+            {startable && (
+              <>
+                <DropdownMenuItem onClick={() => onStart(section)}>
+                  <LockOpen />
+                  <Trans>Start anyway</Trans>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+              </>
+            )}
             {reviewable && (
               <DropdownMenuItem onClick={() => onReview(section)}>
                 <Play />

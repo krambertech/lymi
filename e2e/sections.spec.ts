@@ -42,6 +42,11 @@ test("a learner opens a deck's sections in order and the owner rearranges them",
   await addSection(page, deckId, "Food", ["leib"]);
 
   const today = page.getByRole("region", { name: "Today", exact: true });
+  // The owner's section menu carries Start anyway, so the heading keeps one control beside the title.
+  const startAnyway = async (section: string) => {
+    await page.getByRole("button", { name: `Options for ${section}`, exact: true }).click();
+    return page.getByRole("menuitem", { name: "Start anyway", exact: true });
+  };
   const heading = (name: string) =>
     page.getByRole("heading", { level: 2, name: new RegExp(`^${name}`) });
   const row = (term: string) =>
@@ -54,7 +59,10 @@ test("a learner opens a deck's sections in order and the owner rearranges them",
     await expect(heading("Greetings")).toBeVisible();
     await expect(heading("Numbers")).toHaveAccessibleName(/not open yet/);
     await expect(row("leib")).toContainText("Not in review yet");
-    await expect(page.getByRole("button", { name: "Start anyway", exact: true })).toHaveCount(2);
+    for (const section of ["Numbers", "Food"]) {
+      await expect(await startAnyway(section)).toBeVisible();
+      await page.keyboard.press("Escape");
+    }
   });
 
   await test.step("knowing the first section makes the next one ready, and Start opens it", async () => {
@@ -83,10 +91,11 @@ test("a learner opens a deck's sections in order and the owner rearranges them",
   });
 
   await test.step("Start anyway opens a later section early", async () => {
-    await page.getByRole("button", { name: "Start anyway", exact: true }).click();
+    await (await startAnyway("Food")).click();
     await expect(page.getByText("Started Food", { exact: true })).toBeVisible();
     await expect(today).toContainText("Every section is open");
-    await expect(page.getByRole("button", { name: "Start anyway", exact: true })).toHaveCount(0);
+    await expect(await startAnyway("Food")).toHaveCount(0);
+    await page.keyboard.press("Escape");
   });
 
   await test.step("the owner makes a section and moves cards into it", async () => {
@@ -145,7 +154,8 @@ test("a learner opens a deck's sections in order and the owner rearranges them",
 
     await page.goto(`/library/${deckId}`);
     await expect(today).not.toContainText("section");
-    await expect(page.getByRole("button", { name: "Start anyway", exact: true })).toHaveCount(0);
+    await expect(await startAnyway("Food")).toHaveCount(0);
+    await page.keyboard.press("Escape");
     await expect(page.getByRole("heading", { level: 2 })).toHaveText([
       /^Greetings/,
       /^Numbers/,

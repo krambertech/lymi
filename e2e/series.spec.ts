@@ -245,10 +245,12 @@ test("a deck can be dragged into a series and along it", async ({ page, isMobile
     await expect(deckLinks(region).nth(0)).toContainText(inside);
   });
 
-  await test.step("with every deck in the series, New deck stays", async () => {
-    await expect(
-      page.locator("main").getByRole("button", { name: "New deck", exact: true }),
-    ).toBeVisible();
+  await test.step("with every deck in the series, New deck stays below it", async () => {
+    const newDeck = page.locator("main").getByRole("button", { name: "New deck", exact: true });
+    await expect(newDeck).toBeVisible();
+    const tray = await region.boundingBox();
+    const tile = await newDeck.boundingBox();
+    expect(tile && tray && tile.y > tray.y + tray.height).toBe(true);
   });
 
   await test.step("the keyboard carries a deck out of its series", async () => {
@@ -258,9 +260,9 @@ test("a deck can be dragged into a series and along it", async ({ page, isMobile
     await expect(
       page.getByText(new RegExp(`^(Picked up ${inside}\\.|${inside} is over ${series}\\.)$`)),
     ).toBeAttached();
-    // dnd-kit listens for arrows a tick after the pickup, so a press that lands first is retried; Library is the top, so extras stay there.
+    // dnd-kit listens for arrows a tick after the pickup, so a press that lands first is retried; Library is the bottom, so extras stay there.
     await expect(async () => {
-      await page.keyboard.press("ArrowUp");
+      await page.keyboard.press("ArrowDown");
       await expect(page.getByText(`${inside} is over Library.`)).toBeAttached({ timeout: 1_000 });
     }).toPass();
     await page.keyboard.press("Space");

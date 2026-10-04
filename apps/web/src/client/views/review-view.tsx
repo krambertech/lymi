@@ -355,7 +355,7 @@ export interface ReviewCardProps {
   item: QueueItem;
   /** The deck the card came from, named first on the card. A review can mix every deck. */
   deck?: { name: string; language?: string | null | undefined } | undefined;
-  /** The deck's section the card is in, named after the deck. */
+  /** The deck's section the card is in, named under the answer in place of the card's source. */
   section?: string | undefined;
   revealed: boolean;
   animateReveal?: boolean | undefined;
@@ -652,7 +652,14 @@ export function ReviewCard({
     card.meaningSource === "ai" ||
     (card.exampleSource === "ai" && !!card.example) ||
     (card.pronunciationSource === "ai" && !!card.pronunciation);
-  const chips = aiWritten || !!card.source;
+  // Where the card sits: its section, or the source it came from when it has none. Sources written
+  // before sections existed tend to restate the section, so the two never show together.
+  const place = section
+    ? { Icon: Signpost, label: t`Section`, name: section }
+    : card.source
+      ? { Icon: Library, label: t`Source`, name: card.source }
+      : null;
+  const chips = aiWritten || !!place;
 
   const audio = (className?: string) =>
     onPlayAudio && (
@@ -790,15 +797,15 @@ export function ReviewCard({
             </div>
           )}
           {chips && (
-            <motion.div variants={answerLine} className="mt-1 flex flex-wrap items-center gap-1.5">
-              {aiWritten && <AiCardChip />}
-              {card.source && (
+            <motion.div variants={answerLine} className="mt-1 flex items-center gap-1.5">
+              {place && (
                 <Chip size="sm" className="min-w-0 max-w-full">
-                  <Library className="size-3 shrink-0" aria-hidden="true" />
-                  <span className="sr-only">{t`Source`}</span>
-                  <span className="truncate">{card.source}</span>
+                  <place.Icon className="size-3 shrink-0" aria-hidden="true" />
+                  <span className="sr-only">{place.label}</span>
+                  <span className="truncate">{place.name}</span>
                 </Chip>
               )}
+              {aiWritten && <AiCardChip />}
             </motion.div>
           )}
         </div>
@@ -846,26 +853,18 @@ export function ReviewCard({
             )}
           >
             <span className="flex min-w-0 items-center gap-1.5">
+              {/* The section waits for the answer, at the foot: before it, a lesson's topic is a hint. */}
               {deck && (
                 <>
                   <BookMarked className="size-3.5 shrink-0" aria-hidden="true" />
-                  {/* The section is the news, so on a narrow phone the deck name truncates first. */}
                   <span className="min-w-0 truncate font-medium text-text-2">{deck.name}</span>
-                </>
-              )}
-              {section && (
-                <>
-                  {deck && <span aria-hidden="true">·</span>}
-                  <Signpost className="size-3.5 shrink-0" aria-hidden="true" />
-                  <span className="sr-only">{t`Section`}</span>
-                  <span className="min-w-0 max-w-[60%] shrink-0 truncate">{section}</span>
                 </>
               )}
               {/* A text cue says what to recall by itself; only a picture needs its mode named.
                   The deck implies its language, so the code shows only for a card that differs. */}
               {tail.length > 0 && (
                 <>
-                  {(deck || section) && <span aria-hidden="true">·</span>}
+                  {deck && <span aria-hidden="true">·</span>}
                   <span className="max-w-full shrink-0 truncate">{tail.join(" · ")}</span>
                 </>
               )}

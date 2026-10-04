@@ -1820,6 +1820,9 @@ msgstr "Не помнишь пароль?"
 msgid "Forgot, Hard, Good, Easy"
 msgstr "Не помню, Трудно, Хорошо, Легко"
 
+msgid "Forgotten"
+msgstr "Забытая"
+
 #. placeholder {0}: leeches.forgottenDays
 #. placeholder {1}: leeches.recentDays
 msgid "Forgotten on {0} of the last {1, plural, one {# day} other {# days}} seen"
@@ -1827,9 +1830,6 @@ msgstr "Забыто в {0} из последних {1, plural, one {# дня} f
 
 msgid "Forgotten on {SLIPPING_FORGOTTEN_DAYS} of the last {SLIPPING_RECENT_DAYS, plural, one {# day} other {# days}} seen"
 msgstr "Забыты в {SLIPPING_FORGOTTEN_DAYS} из последних {SLIPPING_RECENT_DAYS, plural, one {# дня} few {# дней} many {# дней} other {# дня}} показа"
-
-msgid "Forgotten recently"
-msgstr "Недавно забыто"
 
 msgid "Forgotten today"
 msgstr "Забытые сегодня"

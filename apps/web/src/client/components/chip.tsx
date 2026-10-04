@@ -148,3 +148,20 @@ export function SourceChip({
     </Chip>
   );
 }
+
+/**
+ * The AI's mark for a whole card, where the fields shown together would otherwise each carry a
+ * badge: one chip when any of them is AI-written, the size of the chips beside it.
+ */
+export function AiCardChip() {
+  const { t } = useLingui();
+  return (
+    <Chip tone="ai" size="sm">
+      <Sparkle className="size-3" aria-hidden="true" />
+      <span aria-hidden="true">
+        <Trans>AI</Trans>
+      </span>
+      <span className="sr-only">{t`AI wrote part of this card`}</span>
+    </Chip>
+  );
+}

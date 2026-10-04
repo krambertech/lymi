@@ -37,7 +37,7 @@ import {
 import { Button, IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
-import { Chip, SourceChip, StateChip } from "../components/chip";
+import { AiCardChip, Chip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
 import {
@@ -648,9 +648,11 @@ export function ReviewCard({
     (part): part is string => !!part,
   );
   // Only the AI is marked: the learner's words and the lesson's are the ordinary case, CONTEXT.md.
-  const aiMeaning = card.meaningSource === "ai";
-  const aiExample = card.exampleSource === "ai" && !!card.example;
-  const chips = aiMeaning || aiExample || !!card.source;
+  const aiWritten =
+    card.meaningSource === "ai" ||
+    (card.exampleSource === "ai" && !!card.example) ||
+    (card.pronunciationSource === "ai" && !!card.pronunciation);
+  const chips = aiWritten || !!card.source;
 
   const audio = (className?: string) =>
     onPlayAudio && (
@@ -788,9 +790,8 @@ export function ReviewCard({
             </div>
           )}
           {chips && (
-            <motion.div variants={answerLine} className="mt-1 flex flex-wrap gap-1.5">
-              {aiMeaning && <SourceChip source="ai" field="meaning" size="xs" />}
-              {aiExample && <SourceChip source="ai" field="example" size="xs" />}
+            <motion.div variants={answerLine} className="mt-1 flex flex-wrap items-center gap-1.5">
+              {aiWritten && <AiCardChip />}
               {card.source && (
                 <Chip size="sm" className="min-w-0 max-w-full">
                   <Library className="size-3 shrink-0" aria-hidden="true" />

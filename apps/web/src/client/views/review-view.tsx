@@ -788,9 +788,9 @@ export function ReviewCard({
             </div>
           )}
           {chips && (
-            <motion.div variants={answerLine} className="mt-1 flex flex-wrap gap-1.5">
-              {aiMeaning && <SourceChip source="ai" field="meaning" size="xs" />}
-              {aiExample && <SourceChip source="ai" field="example" size="xs" />}
+            <motion.div variants={answerLine} className="mt-1 flex flex-wrap items-center gap-1.5">
+              {aiMeaning && <SourceChip source="ai" field="meaning" />}
+              {aiExample && <SourceChip source="ai" field="example" />}
               {card.source && (
                 <Chip size="sm" className="min-w-0 max-w-full">
                   <Library className="size-3 shrink-0" aria-hidden="true" />

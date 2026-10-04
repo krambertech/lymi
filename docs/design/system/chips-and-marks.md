@@ -6,7 +6,7 @@ Small labels that describe: a card's state, where a field came from, how many ca
 
 ```text
 What does the label say?
- ├── A card's state (New, Learning, Known, Forgotten recently) → StateChip, or StateIcon beside a count
+ ├── A card's state (New, Learning, Known, Forgotten) → StateChip, or StateIcon beside a count
  ├── Where a field came from → SourceChip; size="xs" beside a field's label, full in a chip row
  ├── That the AI wrote any of a card's fields shown together → AiCardChip
  ├── How many cards are due → DueCount
@@ -36,7 +36,7 @@ case "failed":
 
 ## StateChip and StateIcon
 
-`StateChip` shows a card's state as the state's icon on a plain chip, so the colour is the mark's alone and the text stays ink. It takes `sm`, `md` or `lg`, and `inReview` under review. There a relearning card says what happened, **Forgotten recently**, with the Forgot grade's mark; elsewhere the lapse may be months old, so it is plain Learning.
+`StateChip` shows a card's state as the state's icon on a plain chip, so the colour is the mark's alone and the text stays ink. It takes `sm`, `md` or `lg`, and `inReview` under review. There a relearning card says what happened, **Forgotten**, with the Forgot grade's mark; elsewhere the lapse may be months old, so it is plain Learning.
 
 `StateIcon` in `components/state-mark.tsx` is the mark on its own, for a count or a row. The colours and why they are what they are: [colour.md](colour.md#card-states).
 

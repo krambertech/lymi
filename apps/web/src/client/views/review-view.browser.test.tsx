@@ -86,7 +86,38 @@ test("the learner's own text and no source carry no chip", async () => {
   expect(card.querySelectorAll(".rounded-full")).toHaveLength(1);
 });
 
-test("the head names the deck and the section, and the mode only for a picture", async () => {
+test("a revealed card names its section in place of its source", async () => {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <ReviewCard
+        item={item({ source: "Lesson 14 · Verbs and more" })}
+        section="Lezione 3"
+        revealed
+        animateReveal={false}
+        onReveal={noop}
+      />
+    </I18nProvider>,
+  );
+
+  const card = page.getByRole("region", { name: /Recognition card/ }).element();
+  expect(card.textContent).toContain("Section");
+  expect(card.textContent).toContain("Lezione 3");
+  expect(card.textContent).not.toContain("Lesson 14");
+});
+
+test("a relearning card under review says Forgotten", async () => {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <ReviewCard item={{ ...queueItem, fsrsState: 3 }} revealed={false} onReveal={noop} />
+    </I18nProvider>,
+  );
+
+  const text = page.getByRole("region", { name: /Recognition card/ }).element().textContent ?? "";
+  expect(text).toContain("Forgotten");
+  expect(text).not.toContain("recently");
+});
+
+test("the head names the deck alone, and the mode only for a picture", async () => {
   // The picture loads through Query, so the picture card needs a client.
   await render(
     <QueryClientProvider client={new QueryClient()}>
@@ -110,8 +141,9 @@ test("the head names the deck and the section, and the mode only for a picture",
 
   const text = page.getByRole("region", { name: /Recognition card/ }).element().textContent ?? "";
   expect(text).toContain("Verbi");
-  expect(text).toContain("Section");
-  expect(text).toContain("Lezione 3");
+  // A lesson's topic is a hint, so the section waits for the answer; the hidden answer is in the DOM.
+  const head = page.getByText("Verbi").element().parentElement?.parentElement;
+  expect(head?.textContent).toBe("VerbiNew");
   expect(text).not.toContain("Recognition card");
   expect(text).not.toMatch(/Recognition(?! card)|Production/);
 

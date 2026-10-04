@@ -40,8 +40,8 @@ export function Chip({ tone = "default", size = "md", className, ...rest }: Chip
 
 /**
  * FSRS state as the learner sees it: the state's icon on a plain chip, so the colour is the mark's
- * alone. Under review a relearning card says what happened, "Forgotten recently", with the Forgot
- * grade's mark; elsewhere the lapse may be months old, so it is plain Learning.
+ * alone. Under review a relearning card says what happened, "Forgotten", with the Forgot grade's
+ * mark; elsewhere the lapse may be months old, so it is plain Learning.
  */
 export function StateChip({
   state,
@@ -58,7 +58,7 @@ export function StateChip({
     return (
       <Chip size={size}>
         <StateIcon state="forgot" className={icon} />
-        <Trans>Forgotten recently</Trans>
+        <Trans>Forgotten</Trans>
       </Chip>
     );
   const key = stateKey(state);

@@ -97,10 +97,17 @@ export function LibraryBoard({
     [series],
   );
 
-  const [drag, setDrag] = useState<{ id: string; from: string; items: Containers } | null>(null);
+  const [drag, setDrag] = useState<{
+    id: string;
+    from: string;
+    items: Containers;
+    looseLast: boolean;
+  } | null>(null);
   // A drop holds its result until the cache catches up, so the deck never flicks back for a frame.
   const [held, setHeld] = useState<{ over: Containers; items: Containers } | null>(null);
   const items = drag?.items ?? (held?.over === given ? held.items : given);
+  // Fixed for a drag, so the drop target out of a series never jumps under the pointer.
+  const looseLast = drag ? drag.looseLast : series.length > 0 && !items[LOOSE]?.length;
   const itemsRef = useRef(items);
   itemsRef.current = items;
   const dropped = useRef(false);
@@ -172,7 +179,7 @@ export function LibraryBoard({
   const onDragStart = ({ active, activatorEvent }: DragStartEvent) => {
     setByKeyboard(activatorEvent instanceof KeyboardEvent);
     const from = containerOf(active.id, given);
-    if (from) setDrag({ id: String(active.id), from, items: given });
+    if (from) setDrag({ id: String(active.id), from, items: given, looseLast });
   };
 
   const onDragOver = ({ active, over }: DragOverEvent) => {
@@ -262,10 +269,11 @@ export function LibraryBoard({
       ];
     });
 
+  // New deck stays even when every deck is in a series, below them, as the drop target out of one.
+  const looseGrid = grid(LOOSE, deckItems(LOOSE), looseTrailer);
   const body = (
     <div className="grid gap-8">
-      {/* New deck stays even when every deck is in a series, and doubles as the drop target out of one. */}
-      {grid(LOOSE, deckItems(LOOSE), looseTrailer)}
+      {!looseLast && looseGrid}
       {series.map(({ series: s }) => {
         const groupDecks = (items[s.id] ?? []).flatMap((id) => decks.get(id) ?? []);
         return (
@@ -282,6 +290,7 @@ export function LibraryBoard({
           </section>
         );
       })}
+      {looseLast && looseGrid}
     </div>
   );
 

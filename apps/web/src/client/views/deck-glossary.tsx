@@ -437,7 +437,7 @@ function SectionHeading({
           id={section ? sectionAnchor(section.id) : undefined}
           tabIndex={section ? -1 : undefined}
           className={clsx(
-            "line-clamp-2 min-w-0 scroll-mt-6 text-balance text-md font-medium [overflow-wrap:anywhere] focus-visible:outline-offset-4",
+            "min-w-0 scroll-mt-6 text-balance text-md font-medium [overflow-wrap:anywhere] focus-visible:outline-offset-4",
             locked ? "text-text-2" : "text-text",
           )}
         >

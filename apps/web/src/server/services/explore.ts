@@ -3,6 +3,7 @@ import { listPublicCatalog, listRelatedDecks, loadPublicDeck } from "@lymi/core/
 import { and, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
 import type { Db } from "../db";
 import { schema } from "../db";
+import { selectIn } from "./batch";
 import type { ServiceContext } from "./context";
 import { ServiceError } from "./context";
 import { getSettings } from "./settings";
@@ -52,24 +53,26 @@ async function addedDecks(
   userId: string,
   slugs?: readonly string[],
 ): Promise<Map<string, string>> {
-  if (slugs?.length === 0) return new Map();
-  const rows = await db
-    .select({ slug: schema.deckPublications.slug, deckId: schema.deckPublications.deckId })
-    .from(schema.deckPublications)
-    .innerJoin(schema.decks, eq(schema.decks.id, schema.deckPublications.deckId))
-    .leftJoin(
-      schema.deckMembers,
-      and(
-        eq(schema.deckMembers.deckId, schema.deckPublications.deckId),
-        eq(schema.deckMembers.userId, userId),
-        isNull(schema.deckMembers.removedAt),
-      ),
-    )
-    .where(
-      and(
-        slugs ? inArray(schema.deckPublications.slug, [...slugs]) : undefined,
-        or(eq(schema.decks.userId, userId), isNotNull(schema.deckMembers.userId)),
-      ),
-    );
+  const select = (slice?: string[]) =>
+    db
+      .select({ slug: schema.deckPublications.slug, deckId: schema.deckPublications.deckId })
+      .from(schema.deckPublications)
+      .innerJoin(schema.decks, eq(schema.decks.id, schema.deckPublications.deckId))
+      .leftJoin(
+        schema.deckMembers,
+        and(
+          eq(schema.deckMembers.deckId, schema.deckPublications.deckId),
+          eq(schema.deckMembers.userId, userId),
+          isNull(schema.deckMembers.removedAt),
+        ),
+      )
+      .where(
+        and(
+          slice ? inArray(schema.deckPublications.slug, slice) : undefined,
+          or(eq(schema.decks.userId, userId), isNotNull(schema.deckMembers.userId)),
+        ),
+      );
+  // The whole catalogue's slugs pass D1's cap of 100 bound parameters, so they go in slices.
+  const rows = slugs ? await selectIn(slugs, select) : await select();
   return new Map(rows.map((row) => [row.slug, row.deckId]));
 }

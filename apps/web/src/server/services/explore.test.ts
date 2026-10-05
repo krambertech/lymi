@@ -112,6 +112,44 @@ describe("exploreCatalog", () => {
     await archiveDeck(lymi, deck.id);
     expect(find(await exploreCatalog(anna), "archived")).toBeUndefined();
   });
+
+  it("lists a catalogue of more decks than D1 binds parameters for", async () => {
+    // Written straight to the tables, a few rows a statement: the service path costs seconds a deck.
+    const slugs = Array.from({ length: 110 }, (_, index) => `wide-${index}`);
+    const rows = slugs.map((slug) => ({ slug, deckId: newId() }));
+    for (const { slug, deckId } of rows) {
+      await db.batch([
+        db.insert(schema.decks).values({
+          id: deckId,
+          userId: lymi.userId,
+          name: `Wide ${slug}`,
+          defaultLanguage: "et",
+        }),
+        db.insert(schema.cards).values({
+          id: newId(),
+          userId: lymi.userId,
+          deckId,
+          term: slug,
+          meaning: "hello",
+        }),
+        db.insert(schema.deckPublications).values({
+          id: newId(),
+          deckId,
+          slug,
+          status: "published",
+          summary: "Words for a wide catalogue.",
+          meaningLanguage: "en",
+          publisher: "Lymi",
+          sources: [],
+          publishedAt: new Date(),
+        }),
+      ]);
+    }
+    await addPublishedDeck(anna, "wide-109");
+    const catalog = await exploreCatalog(anna);
+    expect(catalog.decks.filter((deck) => deck.slug.startsWith("wide-"))).toHaveLength(110);
+    expect(catalog.added["wide-109"]).toBeDefined();
+  });
 });
 
 describe("which decks a learner's Explore lists", () => {

@@ -1,10 +1,11 @@
-import { OFFERED_CAUSES } from "@lymi/core";
+import { AppLanguage, OFFERED_CAUSES } from "@lymi/core";
 import { type Context, Hono } from "hono";
 import { z } from "zod";
 import { devPersonaCookieName } from "../../shared/cookies";
 import { safeProductReturnPath } from "../../shared/origins";
 import type { Auth } from "../auth";
 import type { Db } from "../db";
+import { callAsMcp, devHostPage, devHostView } from "../dev/mcp-host";
 import { DEV_PASSWORD, type Persona, personaEmail, personaFor, personas } from "../dev/personas";
 import { devToolsEnabled } from "../env";
 import { body, describe, query } from "../http";
@@ -162,6 +163,38 @@ dev.get("/state", describe({ hide: true, open: true }), async (c) => {
     settings: { appLanguage: settings.appLanguage, meaningLanguage: settings.meaningLanguage },
   });
 });
+
+/** The MCP Apps view in a stand-in host, for working on it without an assistant. ADR 0026. */
+dev.get("/mcp-host", describe({ hide: true, open: true }), async (c) => {
+  const settings = await getSettings(ctxOf(c));
+  const width = Number(c.req.query("width") ?? 640);
+  return c.html(
+    devHostPage({
+      view: devHostView(c.req.query("view")),
+      origin: c.env.PRODUCT_URL,
+      locale: AppLanguage.catch("en").parse(c.req.query("locale") ?? settings.appLanguage),
+      theme: c.req.query("theme") === "dark" ? "dark" : "light",
+      width: Number.isFinite(width) ? width : 640,
+    }),
+  );
+});
+
+const McpCallBody = z.object({
+  name: z.string().min(1),
+  arguments: z.record(z.string(), z.unknown()).default({}),
+});
+
+dev.post(
+  "/mcp-host/call",
+  describe({ hide: true, open: true }),
+  body(McpCallBody, "mcp-call"),
+  async (c) => {
+    const { name, arguments: args } = c.req.valid("json");
+    return c.json(
+      await callAsMcp({ db: c.get("db"), env: c.env, userId: c.get("user").id }, name, args),
+    );
+  },
+);
 
 const SeedBody = z.object({
   /** Which persona's data to load. Defaults to the account's own persona, then `learner`. */

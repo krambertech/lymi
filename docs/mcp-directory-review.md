@@ -1,6 +1,6 @@
 # MCP directory review
 
-How to get Lymi's MCP server at `https://my.lymi.app/mcp` through ChatGPT plugin review and into the Claude connector directory. Neither directory needs an interactive UI. Issue [#83](https://github.com/krambertech/lymi/issues/83) tracks the work, and the public tool docs are at [lymi.app/docs/mcp](https://lymi.app/docs/mcp).
+How to get Lymi's MCP server at `https://my.lymi.app/mcp` through ChatGPT plugin review and into the Claude connector directory. Neither directory needs an interactive UI; Lymi has one ([ADR 0026](adr/0026-interactive-mcp-results-use-the-mcp-apps-standard.md)), so both review it. Issue [#83](https://github.com/krambertech/lymi/issues/83) tracks the work, and the public tool docs are at [lymi.app/docs/mcp](https://lymi.app/docs/mcp).
 
 ## Accounts
 
@@ -18,6 +18,7 @@ A reviewer can now sign in: sign-up is open to anyone, with Google or an email a
 | Re-auth trigger | Tool error with `_meta["mcp/www_authenticate"]` | HTTP 401 with `resource_metadata` | Both: step-up on a read-only write, 401 after disconnect |
 | Domain proof | Token at `/.well-known/openai-apps-challenge` | None | `OPENAI_APPS_CHALLENGE` secret |
 | Output | No internal, diagnostic or unrequested data | Reasonably sized, helpful errors | See [Tool output](#tool-output) |
+| Views (MCP Apps) | Unique `ui.domain`; CSP checked against behaviour; works on desktop and mobile | `ui.domain` is the hashed `claudemcpcontent.com` subdomain; 3–5 screenshots of the views | `registerViews` in `mcp/app-resource.ts` sets both by client; ADR 0026 |
 
 Checked against [OpenAI's auth guide](https://developers.openai.com/apps-sdk/build/auth), [submission guide](https://developers.openai.com/plugins/deploy/submission), [Anthropic's authentication guide](https://claude.com/docs/connectors/building/authentication) and [review criteria](https://claude.com/docs/connectors/building/review-criteria) on 13 September 2026.
 

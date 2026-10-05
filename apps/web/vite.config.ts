@@ -10,6 +10,7 @@ import { VitePWA } from "vite-plugin-pwa";
 import { configDefaults, type TestProjectConfiguration } from "vitest/config";
 import type { BrowserInstanceOption } from "vitest/node";
 import { e2ePublisherEmails } from "../../e2e/settings.mjs";
+import { mcpApp } from "./mcp-app.build.ts";
 
 const isE2E = process.env.LYMI_E2E === "1";
 const isAppPreview = process.env.LYMI_APP_PREVIEW === "1";
@@ -56,6 +57,12 @@ export default defineConfig({
     // The query suffix matters: TanStack's split route modules end in `?tsr-split=component`.
     babel({ include: [/\/src\/.*\.tsx?(\?.*)?$/], presets: [linguiTransformerBabelPreset()] }),
     tailwindcss(),
+    mcpApp(() => [
+      react(),
+      lingui({ failOnCompileError: true, failOnMissing: true }),
+      babel({ include: [/\/src\/.*\.tsx?(\?.*)?$/], presets: [linguiTransformerBabelPreset()] }),
+      tailwindcss(),
+    ]),
     cloudflare(
       isE2E
         ? {

@@ -409,6 +409,38 @@ describe("Lymi MCP server", () => {
     });
   });
 
+  it("names the decks of an add for its view, where the model does not read them", async () => {
+    services.addCards.mockResolvedValue([
+      { id: "card-2", status: "added", card: { ...card, id: "card-2" } },
+    ]);
+    services.listDecks.mockResolvedValue([{ id: "deck-1", name: "Italian" }] as never);
+    const client = await connect("write");
+
+    const res = await client.callTool({
+      name: "add_cards",
+      arguments: { cards: [{ deckId: "deck-1", term: "sbrigarsi" }] },
+    });
+
+    expect(res._meta).toMatchObject({ "lymi/decks": { "deck-1": "Italian" } });
+    expect(JSON.stringify(res.content)).not.toContain("lymi/decks");
+  });
+
+  it("still reports an add that landed when the deck names cannot be read", async () => {
+    services.addCards.mockResolvedValue([
+      { id: "card-2", status: "added", card: { ...card, id: "card-2" } },
+    ]);
+    services.listDecks.mockRejectedValue(new Error("D1 is busy"));
+    const client = await connect("write");
+
+    const res = await client.callTool({
+      name: "add_cards",
+      arguments: { cards: [{ deckId: "deck-1", term: "sbrigarsi" }] },
+    });
+
+    expect(res.isError).toBeFalsy();
+    expect(res.structuredContent).toMatchObject({ added: 1 });
+  });
+
   it("lets a publisher repeat a term across its own decks, as the API does", async () => {
     services.addCards.mockResolvedValue([]);
     services.isPublisher.mockResolvedValue(true);

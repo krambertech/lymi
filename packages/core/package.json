@@ -21,6 +21,7 @@
   "dependencies": {
     "drizzle-orm": "^0.45.2",
     "markdown-it": "^15.0.2",
+    "markdown-it-ins": "^4.0.0",
     "ts-fsrs": "^5.4.2",
     "zod": "^4.5.4"
   },

@@ -24,6 +24,7 @@ test("a protected deep link survives sign-in", async ({ page }, testInfo) => {
 });
 
 test("a learner can capture and review a new word", async ({ page }, testInfo) => {
+  const notes = "++reflexive++ ~~old form~~ [Dictionary](https://example.com)";
   await test.step("sign in to a disposable account", async () => {
     await startAsTestLearner(page, testInfo, "core-learning");
   });
@@ -46,6 +47,13 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
     await expect(dialog).toBeVisible();
     await page.getByRole("textbox", { name: "Term", exact: true }).fill("sbrigarsi");
     await page.getByRole("textbox", { name: "Meaning", exact: true }).fill("to hurry up");
+    const phone = testInfo.project.name === "webkit";
+    await dialog
+      .getByRole("button", { name: phone ? "Notes" : "More fields", exact: true })
+      .click();
+    const notesPanel = phone ? page.getByRole("dialog", { name: "Notes", exact: true }) : dialog;
+    await notesPanel.getByRole("textbox", { name: "Notes", exact: true }).fill(notes);
+    if (phone) await notesPanel.getByRole("button", { name: "Done", exact: true }).click();
     await page.getByRole("button", { name: "Add to Italian lesson", exact: true }).click();
 
     await expect(dialog).toBeHidden();
@@ -56,6 +64,18 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
     await expect(page.getByText("to hurry up", { exact: true })).toBeVisible();
   });
 
+  await test.step("saved notes render on the card page", async () => {
+    await page.getByRole("button", { name: /sbrigarsi.*to hurry up/ }).click();
+    await page.reload();
+    await expect(page.locator("u").filter({ hasText: "reflexive" })).toBeVisible();
+    await expect(page.locator("s").filter({ hasText: "old form" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Dictionary", exact: true })).toHaveAttribute(
+      "href",
+      "https://example.com",
+    );
+    await page.goto(`/library/${deckId}`);
+  });
+
   await test.step("review and persist the result", async () => {
     await page.getByRole("button", { name: "Review", exact: true }).click();
     await expect(page.getByLabel("Recognition card for sbrigarsi")).toBeVisible();
@@ -64,6 +84,23 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
       .getByRole("button", { name: "Reveal the card" })
       .click({ position: { x: 24, y: 24 } });
     await expect(page.getByText("to hurry up", { exact: true })).toBeVisible();
+    await expect(
+      page.locator("u").filter({ hasText: "reflexive" }).filter({ visible: true }),
+    ).toBeVisible();
+    await expect(
+      page.locator("s").filter({ hasText: "old form" }).filter({ visible: true }),
+    ).toBeVisible();
+    const dictionary = page.getByRole("link", { name: "Dictionary", exact: true });
+    await expect(dictionary).toHaveAttribute("target", "_blank");
+    await page
+      .context()
+      .route("https://example.com/", (route) => route.fulfill({ body: "Dictionary" }));
+    const opened = page.waitForEvent("popup");
+    await dictionary.click();
+    const tab = await opened;
+    await expect(tab).toHaveURL("https://example.com/");
+    await tab.close();
+    await expect(page.getByRole("button", { name: "Good" })).toBeVisible();
     await page.getByRole("button", { name: "Good" }).click();
 
     await expect(page.getByRole("heading", { name: "You’re done for today" })).toBeVisible();

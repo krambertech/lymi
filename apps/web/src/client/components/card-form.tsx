@@ -651,7 +651,7 @@ export function CardForm(props: CardFormProps) {
           clear("notes");
         }}
       />
-      <FieldDescription>{t`Use **bold** and *italic*. Start a line with - or 1. for a list.`}</FieldDescription>
+      <FieldDescription>{t`Use **bold**, *italic*, ++underline++, ~~strikethrough~~, and [text](https://…). Start a line with - or 1. for a list.`}</FieldDescription>
       <FieldError>{invalid.notes}</FieldError>
     </Field>
   );

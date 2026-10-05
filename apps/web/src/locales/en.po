@@ -3883,8 +3883,8 @@ msgstr "US civics test"
 msgid "Use “{tag}” as the tag"
 msgstr "Use “{tag}” as the tag"
 
-msgid "Use **bold** and *italic*. Start a line with - or 1. for a list."
-msgstr "Use **bold** and *italic*. Start a line with - or 1. for a list."
+msgid "Use **bold**, *italic*, ++underline++, ~~strikethrough~~, and [text](https://…). Start a line with - or 1. for a list."
+msgstr "Use **bold**, *italic*, ++underline++, ~~strikethrough~~, and [text](https://…). Start a line with - or 1. for a list."
 
 msgid "Use a JPEG, PNG, WebP or still GIF under 10 MB."
 msgstr "Use a JPEG, PNG, WebP or still GIF under 10 MB."

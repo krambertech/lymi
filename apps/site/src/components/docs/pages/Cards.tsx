@@ -11,7 +11,7 @@ const FIELDS: { name: string; type: string; note: string }[] = [
   {
     name: "notes",
     type: "string",
-    note: "Anything else worth keeping. Markdown: **bold**, *italic*, and lists starting with - or 1. Anything else, HTML included, shows as typed.",
+    note: "Anything else worth keeping. Markdown: **bold**, *italic*, ++underline++, ~~strikethrough~~, links such as [text](https://example.com) or <https://example.com> (http, https or mailto), and lists starting with - or 1. Anything else, HTML included, shows as typed.",
   },
   {
     name: "hook",

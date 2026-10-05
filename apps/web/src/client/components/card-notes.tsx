@@ -7,7 +7,24 @@ function Inlines({ nodes }: { nodes: readonly NoteInline[] }) {
     if (node.type === "text") return node.value;
     // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
     if (node.type === "break") return <br key={i} />;
-    const Tag = node.type === "strong" ? "strong" : "em";
+    if (node.type === "link") {
+      return (
+        <a
+          // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+          key={i}
+          href={node.href}
+          title={node.title}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-text underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        >
+          <Inlines nodes={node.children} />
+        </a>
+      );
+    }
+    const Tag = ({ strong: "strong", emphasis: "em", underline: "u", strikethrough: "s" } as const)[
+      node.type
+    ];
     return (
       // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
       <Tag key={i} className={node.type === "strong" ? "font-semibold" : undefined}>

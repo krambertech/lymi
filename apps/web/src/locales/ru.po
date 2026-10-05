@@ -3883,8 +3883,8 @@ msgstr "Тест на гражданство США"
 msgid "Use “{tag}” as the tag"
 msgstr "Использовать «{tag}» как тег"
 
-msgid "Use **bold** and *italic*. Start a line with - or 1. for a list."
-msgstr "Используй **жирный** и *курсив*. Для списка начни строку с - или 1."
+msgid "Use **bold**, *italic*, ++underline++, ~~strikethrough~~, and [text](https://…). Start a line with - or 1. for a list."
+msgstr "Используй **жирный**, *курсив*, ++подчёркивание++, ~~зачёркивание~~ и [текст](https://…). Начни строку с - или 1. для списка."
 
 msgid "Use a JPEG, PNG, WebP or still GIF under 10 MB."
 msgstr "Используй JPEG, PNG, WebP или статичный GIF до 10 МБ."

@@ -108,6 +108,7 @@ const TERMS: Record<string, string[]> = {
   "/docs/mcp/claude": ["claude desktop", "claude code", "claude.ai", "connector", "mcp add"],
   "/docs/mcp/chatgpt": ["chatgpt", "codex", "connector", "developer mode", "openai"],
   "/docs/mcp/gemini": ["gemini", "google", "settings.json", "mcp auth", "client id"],
+  "/docs/mcp/cursor": ["cursor", "mcp.json", "agent", "client id", "editor"],
 };
 
 function score(page: DocPage, q: string): number {

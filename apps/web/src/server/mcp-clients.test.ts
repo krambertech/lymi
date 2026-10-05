@@ -1,11 +1,19 @@
 import { validateCimdMetadata } from "@better-auth/cimd";
-import { GEMINI_CLI_CLIENT_PATH, geminiCliClientMetadata } from "@lymi/core";
+import {
+  CURSOR_CLIENT_PATH,
+  cursorClientMetadata,
+  GEMINI_CLI_CLIENT_PATH,
+  geminiCliClientMetadata,
+} from "@lymi/core";
 import { describe, expect, it } from "vitest";
 
-describe("Gemini CLI client document", () => {
+describe.each([
+  { name: "Gemini CLI", path: GEMINI_CLI_CLIENT_PATH, metadata: geminiCliClientMetadata },
+  { name: "Cursor", path: CURSOR_CLIENT_PATH, metadata: cursorClientMetadata },
+])("$name client document", ({ path, metadata }) => {
   it("passes the metadata profile Lymi enforces", () => {
-    const clientId = new URL(GEMINI_CLI_CLIENT_PATH, "https://lymi.app").toString();
-    const result = validateCimdMetadata(clientId, geminiCliClientMetadata("https://lymi.app"), {
+    const clientId = new URL(path, "https://lymi.app").toString();
+    const result = validateCimdMetadata(clientId, metadata("https://lymi.app"), {
       metadataProfile: "mcp-2026-07-28",
     });
 

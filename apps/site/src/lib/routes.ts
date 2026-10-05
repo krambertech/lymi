@@ -35,6 +35,7 @@ export const englishOnlyPaths = [
   "/docs/mcp/claude",
   "/docs/mcp/chatgpt",
   "/docs/mcp/gemini",
+  "/docs/mcp/cursor",
   "/docs/authentication",
   "/docs/api",
   "/docs/recipes",

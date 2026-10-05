@@ -265,6 +265,11 @@ export function McpOverview() {
             title: "Gemini CLI",
             blurb: "The settings.json entry, and why it names a client ID.",
           },
+          {
+            to: "/docs/mcp/cursor",
+            title: "Cursor",
+            blurb: "The mcp.json entry, with the client ID Lymi publishes for it.",
+          },
         ]}
       />
     </div>

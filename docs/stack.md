@@ -217,7 +217,7 @@ A publisher may separately approve one exact described picture for public delive
 
 ### Card notes: markdown-it with only the subset switched on
 
-Notes are read by `markdown-it` in `packages/core`, from its zero preset with only lists, line breaks, emphasis and escapes enabled, so every other construct stays literal text by construction and HTML is never on. Core turns its tokens into a small tree that React renders as elements, never as an HTML string. It is imported as `@lymi/core/notes` rather than through the package root, so the public site and the app's first load never carry the parser. The rules are in [the notes guidance](design/library-decks-and-cards.md#notes).
+Notes are read by `markdown-it` in `packages/core`, from its zero preset with only lists, line breaks, emphasis, strikethrough, links, autolinks and escapes enabled, plus `markdown-it-ins` for paired `++` underline markers, so every other construct stays literal text by construction and HTML is never on. Core turns its tokens into a small tree that React renders as elements, never as an HTML string. It is imported as `@lymi/core/notes` rather than through the package root, so the public site and the app's first load never carry the parser. The rules are in [the notes guidance](design/library-decks-and-cards.md#notes).
 
 Alternatives considered: `mdast-util-from-markdown` on micromark, about 16 KB gzipped against markdown-it's 40 KB, lost because its development build imports the CommonJS `debug` package, which the Worker test runtime cannot load, and it parsed a note four to five times slower, which search pays per card. `marked` is smaller still but has no supported way to switch a construct off.
 

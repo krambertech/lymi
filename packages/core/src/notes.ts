@@ -1,4 +1,6 @@
+/// <reference path="./markdown-it-ins.d.ts" />
 import MarkdownIt, { type Token } from "markdown-it";
+import underline from "markdown-it-ins";
 
 // Notes are a Markdown subset; docs/design/library-decks-and-cards.md#notes owns the rules.
 // A subpath of its own, `@lymi/core/notes`, so only a bundle that reads notes carries markdown-it.
@@ -6,14 +8,34 @@ import MarkdownIt, { type Token } from "markdown-it";
 export type NoteInline =
   | { type: "text"; value: string }
   | { type: "break" }
-  | { type: "strong" | "emphasis"; children: NoteInline[] };
+  | { type: "strong" | "emphasis" | "underline" | "strikethrough"; children: NoteInline[] }
+  | { type: "link"; href: string; title?: string; children: NoteInline[] };
 
 export type NoteList = { type: "list"; ordered: boolean; start: number; items: NoteBlock[][] };
 
 export type NoteBlock = { type: "paragraph"; children: NoteInline[] } | NoteList;
 
 // The zero preset reads nothing but paragraphs and text, and HTML stays off; the subset is switched on by name.
-const markdown = new MarkdownIt("zero").enable(["list", "newline", "emphasis", "escape"]);
+const markdown = new MarkdownIt("zero")
+  .enable(["list", "newline", "emphasis", "escape", "strikethrough", "link", "autolink"])
+  .use(underline);
+
+markdown.validateLink = (href) => /^(?:https?:\/\/|mailto:)/i.test(href);
+
+// Keep unsupported images literal rather than turning their destinations into links.
+const link = markdown.inline.ruler.__rules__.find((rule) => rule.name === "link")?.fn;
+if (link) {
+  markdown.inline.ruler.at("link", (state, silent) =>
+    state.src[state.pos - 1] === "!" ? false : link(state, silent),
+  );
+}
+
+const formatting = {
+  strong_open: "strong",
+  em_open: "emphasis",
+  ins_open: "underline",
+  s_open: "strikethrough",
+} as const;
 
 function inlines(tokens: readonly Token[]): NoteInline[] {
   const root: NoteInline[] = [];
@@ -24,11 +46,24 @@ function inlines(tokens: readonly Token[]): NoteInline[] {
       if (token.content) into.push({ type: "text", value: token.content });
     } else if (token.type === "softbreak" || token.type === "hardbreak")
       into.push({ type: "break" });
-    else if (token.type === "strong_open" || token.type === "em_open") {
+    else if (token.type === "link_open") {
       const children: NoteInline[] = [];
-      into.push({ type: token.type === "strong_open" ? "strong" : "emphasis", children });
+      const title = token.attrGet("title");
+      into.push({
+        type: "link",
+        href: String(token.attrGet("href") ?? ""),
+        ...(title ? { title: String(title) } : {}),
+        children,
+      });
       stack.push(children);
-    } else if (token.type === "strong_close" || token.type === "em_close") stack.pop();
+    } else if (Object.hasOwn(formatting, token.type)) {
+      const children: NoteInline[] = [];
+      into.push({ type: formatting[token.type as keyof typeof formatting], children });
+      stack.push(children);
+    } else if (
+      ["strong_close", "em_close", "ins_close", "s_close", "link_close"].includes(token.type)
+    )
+      stack.pop();
   }
   return root;
 }
@@ -93,7 +128,7 @@ function blockText(nodes: readonly NoteBlock[]): string {
 }
 
 /** Any character or line start the subset could read as syntax. */
-const MARKUP = /[*_\\]|^[ \t]*(?:[-+]|\d{1,9}[.)])(?:[ \t]|$)/m;
+const MARKUP = /[*_\\+~[<]|^[ \t]*(?:-|\d{1,9}[.)])(?:[ \t]|$)/m;
 
 /**
  * A note's words without Markdown syntax, one line per line, for search and quoting. Both

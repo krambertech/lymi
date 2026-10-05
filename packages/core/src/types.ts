@@ -491,7 +491,7 @@ export type CardSectionInput = z.infer<typeof CardSectionInput>;
 
 /** The notes subset in one sentence, so assistants write it on purpose. `notes.ts` reads it. */
 const NOTES_FORMAT =
-  "Markdown subset: paragraphs, line breaks, **bold**, *italic*, and bulleted (- item) or numbered (1. item) lists. A single line break stays a line break. Anything else, HTML included, shows as its literal text.";
+  "Markdown subset: paragraphs, line breaks, **bold**, *italic*, ++underline++, ~~strikethrough~~, links ([text](https://example.com) or <https://example.com>, with http, https or mailto destinations), and bulleted (- item) or numbered (1. item) lists. A single line break stays a line break. Anything else, HTML included, shows as its literal text.";
 
 /**
  * How long each field of a card may be. Enrichment bounds what a model returns by the same

@@ -17,8 +17,9 @@ publicMedia.get(
       images: c.env.PRIVATE_IMAGES,
       audio: c.env.AUDIO,
     });
+    const audioType = object.httpMetadata?.contentType === "audio/wav" ? "audio/wav" : "audio/mpeg";
     const headers = new Headers({
-      "Content-Type": kind === "image" ? "image/webp" : "audio/mpeg",
+      "Content-Type": kind === "image" ? "image/webp" : audioType,
       "Cache-Control": "no-store",
       "X-Content-Type-Options": "nosniff",
       "Cross-Origin-Resource-Policy": "cross-origin",

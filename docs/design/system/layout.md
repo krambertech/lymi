@@ -40,7 +40,7 @@ Every screen carries one `h1` and nothing under it skips a level. The page title
 
 ## Desktop: the rail
 
-On desktop the navigation is the 240 px rail, and the rail is a surface: it runs the full height of the window flush to the start edge, in `rail`, with a hairline down its inner side. Top to bottom it holds the app tile beside the wordmark, search and the capture button on that same line, the four tabs, the decks, and the learner at the bottom under a rule: a 34 px avatar, the name, and what the screen behind it holds.
+On desktop the navigation is the 240 px rail, and the rail is a surface: it runs the full height of the window flush to the start edge, in `rail`, with a hairline down its inner side. Top to bottom it holds the app tile beside the wordmark, the streak and capture on that same line, the four tabs, the decks with a section per series, and the learner at the bottom under a rule. The first line and the learner stay put while the decks scroll. [rail.md](rail.md) has its rows, sections and states.
 
 The rail's first line and the page title beside it sit on the same line, 32 px down. That shared line is what makes the two columns read as one app rather than a menu next to a document.
 

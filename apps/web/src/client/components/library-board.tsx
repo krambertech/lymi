@@ -39,8 +39,8 @@ type Containers = Record<string, string[]>;
 export interface LibraryBoardProps {
   loose: DeckSummary[];
   series: { series: Series; decks: DeckSummary[] }[];
-  /** One deck. `describedBy` names the drag instructions for a screen reader; `tile` is true in a series' tray. */
-  renderDeck: (deck: DeckSummary, describedBy: string | undefined, tile: boolean) => ReactNode;
+  /** One deck. `describedBy` names the drag instructions for a screen reader. */
+  renderDeck: (deck: DeckSummary, describedBy: string | undefined) => ReactNode;
   /** The heading over a series' decks. */
   renderSeriesHeader: (series: Series, decks: DeckSummary[]) => ReactNode;
   /** What an empty series shows where its decks would be. */
@@ -230,11 +230,7 @@ export function LibraryBoard({
   const target = drag ? containerOf(drag.id, drag.items) : undefined;
 
   const grid = (container: string, children: ReactNode, trailer?: ReactNode) => (
-    <Group
-      id={container}
-      inTray={container !== LOOSE}
-      over={!!drag && target === container && drag.from !== container}
-    >
+    <Group id={container} over={!!drag && target === container && drag.from !== container}>
       <SortableContext
         id={container}
         items={items[container] ?? []}
@@ -264,7 +260,7 @@ export function LibraryBoard({
             }
           }}
         >
-          {renderDeck(deck, draggable ? instructions : undefined, container !== LOOSE)}
+          {renderDeck(deck, draggable ? instructions : undefined)}
         </SortableDeck>,
       ];
     });
@@ -277,8 +273,7 @@ export function LibraryBoard({
       {series.map(({ series: s }) => {
         const groupDecks = (items[s.id] ?? []).flatMap((id) => decks.get(id) ?? []);
         return (
-          // A tray: the series' name, its review and its decks are one object.
-          <section key={s.id} aria-label={s.name} className="tray grid gap-2 rounded-xl p-2">
+          <section key={s.id} aria-label={s.name} className="grid gap-3">
             {renderSeriesHeader(s, groupDecks)}
             {grid(
               s.id,
@@ -317,7 +312,7 @@ export function LibraryBoard({
       <DragOverlay dropAnimation={still ? null : undefined}>
         {active ? (
           <div className="flex min-w-0 scale-[1.02] cursor-grabbing [&>*]:edge-2">
-            {renderDeck(active, undefined, false)}
+            {renderDeck(active, undefined)}
           </div>
         ) : null}
       </DragOverlay>
@@ -325,27 +320,14 @@ export function LibraryBoard({
   );
 }
 
-function Group({
-  id,
-  inTray,
-  over,
-  children,
-}: {
-  id: string;
-  inTray: boolean;
-  over: boolean;
-  children: ReactNode;
-}) {
+function Group({ id, over, children }: { id: string; over: boolean; children: ReactNode }) {
   const { setNodeRef } = useDroppable({ id });
   return (
     <ul
       ref={setNodeRef}
       className={clsx(
-        "grid transition-[background-color,box-shadow] duration-150 @3xl:grid-cols-2",
-        // In a tray the drop shows as the tray's own ring, since its ground is already a fill.
-        inTray
-          ? clsx("gap-2 rounded-md", over && "shadow-[0_0_0_2px_var(--ring)]")
-          : clsx("-m-1.5 gap-3 rounded-xl p-1.5", over && "bg-plate-2"),
+        "-m-1.5 grid gap-3 rounded-xl p-1.5 transition-[background-color] duration-150 @3xl:grid-cols-2",
+        over && "bg-plate-2",
       )}
     >
       {children}

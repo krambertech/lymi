@@ -294,7 +294,7 @@ interface RowProps {
 }
 
 const ROW =
-  "group flex w-full min-h-[72px] items-center gap-3 rounded-md px-4 py-3 text-start transition-[background-image] duration-150 hoverable:hover:veil";
+  "group flex w-full min-h-[72px] items-center gap-3 px-4 py-3 text-start hoverable:hover:veil group-first/row:rounded-t-xl";
 
 function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
   const { t } = useLingui();
@@ -369,7 +369,7 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
   );
 
   return (
-    <li className="edge tile rounded-md">
+    <li className="group/row border-edge [&:not(:first-child)]:border-t">
       {expandable ? (
         <button
           type="button"
@@ -377,14 +377,14 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
           // AnimatePresence unmounts the region, so the id is only named while it is there.
           {...(open ? { "aria-controls": cardsId } : {})}
           onClick={() => setOpen(!open)}
-          className={clsx(ROW, open && "rounded-b-none")}
+          className={clsx(ROW, !open && "group-last/row:rounded-b-xl")}
         >
           {face}
         </button>
       ) : link ? (
-        link(ROW, face)
+        link(clsx(ROW, "group-last/row:rounded-b-xl"), face)
       ) : (
-        <div className={ROW}>{face}</div>
+        <div className={clsx(ROW, "group-last/row:rounded-b-xl")}>{face}</div>
       )}
       <AnimatePresence initial={false}>
         {expandable && open && (
@@ -403,7 +403,7 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
                 ? { duration: 0.15, height: { duration: 0 } }
                 : { duration: 0.26, ease: [0.22, 1, 0.36, 1], opacity: { duration: 0.18 } }
             }
-            className="overflow-hidden rounded-b-md"
+            className="overflow-hidden group-last/row:rounded-b-xl"
           >
             {/* The cards sit under the sentence they belong to, so the two read as one row. */}
             <ul className="grid pb-2 pe-2 ps-13">
@@ -553,19 +553,11 @@ export function ActivityView({
       ) : (
         <div className="grid gap-6">
           {days.map((day) => (
-            // A tray per day: its entries are one set, read under the day's name.
-            <section
-              key={day.key}
-              aria-labelledby={`day-${day.key}`}
-              className="tray grid gap-2 rounded-xl p-2"
-            >
-              <h2
-                id={`day-${day.key}`}
-                className="flex min-h-9 items-center px-3 pt-1 text-sm font-medium text-text-2"
-              >
+            <section key={day.key} aria-labelledby={`day-${day.key}`} className="grid gap-2">
+              <h2 id={`day-${day.key}`} className="px-1 text-sm font-medium text-muted">
                 {day.label}
               </h2>
-              <ul className="grid gap-2">
+              <ul className="edge grid rounded-xl bg-plate">
                 {day.entries.map((entry) => {
                   const file = entry.import;
                   const deck = entry.deck;

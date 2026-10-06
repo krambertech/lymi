@@ -19,7 +19,7 @@ const DESIGN_CHROME = designChrome();
 
 const heading = "mx-2.5 mb-1.5 text-xs font-medium uppercase tracking-[0.06em] text-muted";
 const item =
-  "flex h-11 items-center rounded-sm px-2.5 text-base text-text-2 transition-[background-color,color,box-shadow] duration-150 hoverable:hover:bg-hover hoverable:hover:text-text md:h-9 [&.active]:edge [&.active]:bg-plate [&.active]:text-text";
+  "flex h-11 items-center rounded-sm px-2.5 text-base text-text-2 transition-[background-color,color,box-shadow] duration-150 hoverable:hover:bg-rail-hover hoverable:hover:text-text md:h-9 [&.active]:edge-inset [&.active]:bg-rail-chosen [&.active]:text-text";
 
 /** The design system's own frame: a rail like the app's, and one page at a time beside it. */
 export function DesignLayout() {

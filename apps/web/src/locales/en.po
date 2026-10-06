@@ -1136,6 +1136,9 @@ msgstr "Cards keep the due dates they had in {app}."
 msgid "Cards outside a section"
 msgstr "Cards outside a section"
 
+msgid "Cards you add show up here."
+msgstr "Cards you add show up here."
+
 msgctxt "deck tag"
 msgid "CCSE Spanish nationality test"
 msgstr "CCSE Spanish nationality test"
@@ -1460,6 +1463,9 @@ msgstr "Couldn’t save your grade for “{term}”. You’ll see it again."
 
 msgid "Couldn’t save. Try again."
 msgstr "Couldn’t save. Try again."
+
+msgid "Couldn’t search your cards. Try again in a moment."
+msgstr "Couldn’t search your cards. Try again in a moment."
 
 msgid "Couldn’t send the invitation. Too many went out recently, so try again later."
 msgstr "Couldn’t send the invitation. Too many went out recently, so try again later."
@@ -2550,6 +2556,9 @@ msgstr "New series"
 msgid "New to Lymi?"
 msgstr "New to Lymi?"
 
+msgid "Newest cards"
+msgstr "Newest cards"
+
 msgid "Next"
 msgstr "Next"
 
@@ -2593,6 +2602,9 @@ msgstr "No cards in {0} yet"
 
 msgid "No cards match “{query}”"
 msgstr "No cards match “{query}”"
+
+msgid "No cards match “{query}”."
+msgstr "No cards match “{query}”."
 
 msgid "No cards match these filters"
 msgstr "No cards match these filters"
@@ -3287,6 +3299,9 @@ msgstr "Search looks at the term and the meaning."
 
 msgid "Search this deck"
 msgstr "Search this deck"
+
+msgid "Search your cards"
+msgstr "Search your cards"
 
 msgid "Section"
 msgstr "Section"

@@ -14,6 +14,7 @@ const VIEW_TOOLS = {
   due_counts: "due",
   get_insights: "insights",
   get_streak: "streak",
+  open_lymi: "home",
 } as const;
 
 async function connect(principal: Partial<McpPrincipal> & { client?: string } = {}) {
@@ -92,5 +93,49 @@ describe("the MCP Apps views", () => {
     );
     const hex = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
     expect(domain).toBe(`${hex.slice(0, 32)}.claudemcpcontent.com`);
+  });
+});
+
+describe("ChatGPT's extensions", () => {
+  it("opens Lymi's home from the sidebar and beside a conversation, out of the model's sight", async () => {
+    const client = await connect();
+    const { tools } = await client.listTools();
+    const home = tools.find((t) => t.name === "open_lymi");
+    expect(home?._meta).toMatchObject({
+      ui: { visibility: ["app"] },
+      "openai/ui": { entrypoints: [{ type: "global" }, { type: "thread" }] },
+    });
+  });
+
+  it("offers decks and cards to mention through an app-only search tool", async () => {
+    const client = await connect();
+    const { tools } = await client.listTools();
+    const mentions = tools.find((t) => t.name === "mention_search");
+    expect(mentions?._meta).toMatchObject({
+      ui: { visibility: ["app"] },
+      "openai/extensions": { "mentions/search": {} },
+    });
+  });
+
+  it("announces native settings, read and written by app-only tools", async () => {
+    const client = await connect();
+    expect(client.getServerCapabilities()?.experimental).toMatchObject({
+      "openai/settings": { readTool: "settings_read", updateTool: "settings_update" },
+    });
+    const { tools } = await client.listTools();
+    for (const name of ["settings_read", "settings_update"]) {
+      expect(tools.find((t) => t.name === name)?._meta, name).toMatchObject({
+        ui: { visibility: ["app"] },
+      });
+    }
+  });
+
+  it("lets a card or a deck be read as a resource, so a mention can carry it", async () => {
+    const client = await connect();
+    const { resourceTemplates } = await client.listResourceTemplates();
+    expect(resourceTemplates.map((t) => t.uriTemplate).sort()).toEqual([
+      "lymi://card/{cardId}",
+      "lymi://deck/{deckId}",
+    ]);
   });
 });

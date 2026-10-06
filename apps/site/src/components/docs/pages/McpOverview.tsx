@@ -243,8 +243,8 @@ export function McpOverview() {
         </li>
       </ul>
       <p>
-        You also need an account on the allowlist. Lymi is private for now, so sign-in is limited to
-        the addresses named in its configuration.
+        You also need a Lymi account. Anyone can sign up, with Google or with an email address and a
+        password.
       </p>
 
       <H2>Set it up</H2>
@@ -269,6 +269,11 @@ export function McpOverview() {
             to: "/docs/mcp/cursor",
             title: "Cursor",
             blurb: "The mcp.json entry, with the client ID Lymi publishes for it.",
+          },
+          {
+            to: "/docs/mcp/grok",
+            title: "Grok",
+            blurb: "A custom connector, with the client ID Lymi publishes for it.",
           },
         ]}
       />

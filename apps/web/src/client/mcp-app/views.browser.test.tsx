@@ -5,6 +5,7 @@ import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import type { ViewAddResult, ViewCard } from "../../shared/mcp-app";
+import { DeepLink, deepLinkTarget } from "./deep-link";
 import { type Host, HostContext } from "./host";
 import { CaptureView } from "./views/capture-view";
 
@@ -184,4 +185,22 @@ test("Edit puts the keyboard in the term, and Escape gives it back to the card",
   await userEvent.keyboard("{Escape}");
   await expect.element(page.getByRole("textbox", { name: "Term" })).not.toBeInTheDocument();
   await expect.element(row).toHaveFocus();
+});
+
+test("a deep link to a card opens that card, and any other path opens the home", async () => {
+  expect(deepLinkTarget("/card/card-1")).toEqual({ kind: "card", id: "card-1" });
+  expect(deepLinkTarget("/deck/deck-1?tab=words")).toEqual({ kind: "deck", id: "deck-1" });
+  expect(deepLinkTarget("/settings")).toBeNull();
+  expect(deepLinkTarget(undefined)).toBeNull();
+
+  const host = fakeHost({ get_card: () => card() });
+  await render(
+    <I18nProvider i18n={i18n}>
+      <HostContext value={host}>
+        <DeepLink target={{ kind: "card", id: "card-1" }} />
+      </HostContext>
+    </I18nProvider>,
+  );
+  await expect.element(page.getByRole("heading", { level: 1 })).toHaveTextContent("sbrigarsi");
+  expect(host.call).toHaveBeenCalledWith("get_card", { cardId: "card-1" });
 });

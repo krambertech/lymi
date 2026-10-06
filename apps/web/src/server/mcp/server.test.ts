@@ -168,7 +168,9 @@ describe("Lymi MCP server", () => {
       "list_decks",
       "list_sections",
       "list_series",
+      "mention_search",
       "move_cards_to_section",
+      "open_lymi",
       "rename_section",
       "reorder_sections",
       "reorder_series",
@@ -179,6 +181,8 @@ describe("Lymi MCP server", () => {
       "restore_section",
       "search_cards",
       "set_card_image",
+      "settings_read",
+      "settings_update",
       "undo_card_fix",
       "undo_dismiss_card_diagnosis",
       "update_card",
@@ -439,6 +443,50 @@ describe("Lymi MCP server", () => {
 
     expect(res.isError).toBeFalsy();
     expect(res.structuredContent).toMatchObject({ added: 1 });
+  });
+
+  it("offers decks by name and cards by text for an @-mention, as links a host can read", async () => {
+    services.listDecks.mockResolvedValue([
+      { id: "deck-1", name: "Italian", total: 12 },
+      { id: "deck-2", name: "Estonian", total: 30 },
+    ] as never);
+    services.searchCards.mockResolvedValue({
+      cards: [{ card, deckName: "Italian" }],
+      nextCursor: null,
+      total: 1,
+    });
+    const client = await connect("read");
+
+    const res = await client.callTool({ name: "mention_search", arguments: { query: "ital" } });
+
+    expect(services.searchCards).toHaveBeenCalledWith(expect.anything(), {
+      query: "ital",
+      limit: 6,
+    });
+    expect(res.structuredContent).toEqual({
+      items: [
+        expect.objectContaining({ uri: "lymi://deck/deck-1", name: "Italian" }),
+        expect.objectContaining({ uri: `lymi://card/${card.id}`, name: card.term }),
+      ],
+    });
+  });
+
+  it("saves the app language from ChatGPT's settings, and only with write", async () => {
+    services.updateSettings.mockResolvedValue({} as never);
+    const write = await connect("write");
+    await write.callTool({
+      name: "settings_update",
+      arguments: { set: { appLanguage: "Українська" } },
+    });
+    expect(services.updateSettings).toHaveBeenCalledWith(expect.anything(), { appLanguage: "uk" });
+
+    const read = await connect("read");
+    const refused = await read.callTool({
+      name: "settings_update",
+      arguments: { set: { appLanguage: "English" } },
+    });
+    expect(refused.isError).toBe(true);
+    expect(services.updateSettings).toHaveBeenCalledTimes(1);
   });
 
   it("lets a publisher repeat a term across its own decks, as the API does", async () => {

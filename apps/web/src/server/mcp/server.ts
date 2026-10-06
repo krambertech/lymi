@@ -105,6 +105,7 @@ import type { CardImageStorage } from "../services/card-images";
 import type { ServiceContext } from "../services/context";
 import type { EnrichmentQueue } from "../services/enrichment";
 import { registerViews, viewUri } from "./app-resource";
+import { HOST_EXTENSION_CAPABILITIES, registerHostExtensions } from "./host-extensions";
 
 /** What one MCP request runs as. Built from the verified access token, never from the body. */
 export interface McpPrincipal {
@@ -149,7 +150,10 @@ Archive is the only removal, and restore undoes it. Nothing is deleted.`;
  * every write lands in Activity.
  */
 export function buildMcpServer(principal: McpPrincipal): McpServer {
-  const server = new McpServer({ name: "lymi", version: "0.2.0" }, { instructions: INSTRUCTIONS });
+  const server = new McpServer(
+    { name: "lymi", version: "0.2.0" },
+    { instructions: INSTRUCTIONS, capabilities: HOST_EXTENSION_CAPABILITIES },
+  );
   const { ctx } = principal;
   const run = (tool: string, fn: () => Promise<CallToolResult>) => runTool(tool, fn, principal);
   // Deck names by id, so a view of cards from several decks can say which.
@@ -1033,6 +1037,16 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     ({ timezone }) =>
       runView("get_streak", false, async () => result(await streak(ctx, { zone: timezone }))),
   );
+
+  registerHostExtensions(server, ctx, {
+    run,
+    result,
+    requireWrite: () => requireWrite(principal),
+    readMeta: readTool._meta,
+    writeMeta: writeTool({ idempotent: true })._meta,
+    viewUri: (view) => viewUri(view, views.locale),
+    cardOut,
+  });
 
   withSecuritySchemes(server);
   return server;

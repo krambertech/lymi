@@ -22,6 +22,7 @@ Lymi-owned components compose the primitives. The ones every screen reaches for:
 | An action | `Button`, `IconButton` | `button.tsx` | [buttons.md](buttons.md) |
 | A screen | `Screen`, `PlaceBar`, `ShellChrome` | `layout/` | [layout.md](layout.md) |
 | A way back, the top bar | `BackButton`, `TopBar` | `views/shell.tsx` | [layout.md](layout.md#back) |
+| The desktop navigation | `Sidebar`, built from `RailNav`, `RailRow`, `RailHeading` | `views/shell.tsx`, `rail-nav.tsx` | [rail.md](rail.md) |
 | A form row and its controls | `Field` and the primitives | `ui/` | [forms.md](forms.md) |
 | Two to four views | `Segmented` | `segmented.tsx` | [forms.md](forms.md#choice-controls) |
 | A choice with a sentence each | `RadioCard` inside `RadioGroup` | `radio-card.tsx` | [forms.md](forms.md#choice-controls) |

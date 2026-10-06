@@ -37,13 +37,13 @@ Press scales over 150 ms. Nothing moves up on press.
 | Deck cards, New deck | 0.98 |
 | Grade buttons | 0.96 |
 | Direction rows | 0.99 |
-| Menu rows, rail rows | none |
+| Menu rows, rail rows | none: they answer with the hover fill |
 
 ## Hover
 
 Hover lasts 150 ms and applies to pointer devices only, through the `hoverable:` variant.
 
-In a menu or a list of options the hover is one fill that slides to the nearest enabled row over those 150 ms, so it never blinks off in the gap between rows and never crosses a separator. The moment the keyboard takes over it goes, because focus carries its own fill and two fills would be two cursors.
+In a menu, a list of options and the rail the hover is one fill that slides to the nearest enabled row over those 150 ms, so it never blinks off in the gap between rows. It never slides across a separator or a heading: past one, it fades in at the new row instead, because a fill passing over a heading reads as a flash. The moment the keyboard takes over it goes, because focus carries its own fill and two fills would be two cursors. In the rail the fill passes under the current row, whose own fill is opaque, so hover never outranks where the learner is ([rail.md](rail.md#hover)).
 
 ## Choices
 

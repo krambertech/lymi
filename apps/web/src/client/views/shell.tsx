@@ -95,7 +95,7 @@ export function Sidebar({
   const { t, i18n } = useLingui();
   const groups = groupDecks(decks ?? [], series);
   const item =
-    "group flex h-10 items-center gap-2.5 rounded-sm px-2.5 text-base text-text-2 transition-[background-color,color,box-shadow] duration-150 hoverable:hover:bg-hover hoverable:hover:text-text [&.active]:bg-plate [&.active]:text-text [&.active]:edge [&_svg]:size-[18px] [&_svg]:text-muted [&.active_svg]:text-text";
+    "group flex h-10 items-center gap-2.5 rounded-sm px-2.5 text-base text-text-2 transition-[background-color,color,box-shadow] duration-150 hoverable:hover:bg-rail-hover hoverable:hover:text-text [&.active]:bg-rail-chosen [&.active]:text-text [&.active]:edge-inset [&_svg]:size-[18px] [&_svg]:text-muted [&.active_svg]:text-text";
   const deckRow = (d: NavDeck) => (
     <NavLink key={d.id} to="/library/$deckId" params={{ deckId: d.id }} className={item}>
       <span className="flex-1 truncate">{d.name}</span>

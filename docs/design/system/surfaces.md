@@ -42,7 +42,7 @@ Never lifted: a form field, which sets `--lift` to nothing because a field is se
 
 ### Hover
 
-Hover follows what the thing is at rest. Something with a fill and a hairline, such as a plate you can press, a secondary button or a grade, strengthens to `edge-2` and lays `veil` over its own fill. Because the veil darkens whatever fill is under it, it answers the same way in both rooms. A row on a white surface, such as a list inside a plate, a dialog's list or the card rows in an Activity entry, is part of that white surface and hovers with `veil` too. Something with no fill at rest, such as a ghost button, a navigation row or a menu row, and a chip or well on `plate-2`, fills with `bg-hover`, never `plate-2`: in the light room `plate-2` is the rail's tone, so the fill vanishes there.
+Hover follows what the thing is at rest. Something with a fill and a hairline, such as a plate you can press, a secondary button or a grade, strengthens to `edge-2` and lays `veil` over its own fill. Because the veil darkens whatever fill is under it, it answers the same way in both rooms. A row on a white surface, such as a list inside a plate, a dialog's list or the card rows in an Activity entry, is part of that white surface and hovers with `veil` too. Something with no fill at rest, such as a ghost button or a menu row, and a chip or well on `plate-2`, fills with `bg-hover`, never `plate-2`: in the light room `plate-2` is the rail's tone, so the fill vanishes there. A row in the rail hovers with `bg-rail-hover` and the current one sits on `bg-rail-chosen` with `edge-inset`, never lifted: at night a lifted current row reads as a button, and hover stays dimmer than it so the row you point at never outranks the one you are on.
 
 ### The chosen option
 

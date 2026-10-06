@@ -95,6 +95,9 @@
   --hover: oklch(0.94 0.007 80);
   /* A chosen option in a plate-2 track; at night the plate is darker than the track, so it lifts. */
   --chosen: var(--plate);
+  /* The current row in the rail, and a row pointed at; at night both stay flat and hover stays under the current row. */
+  --rail-chosen: var(--plate);
+  --rail-hover: var(--hover);
   /* Laid over a filled plate on hover, so it darkens from whatever fill it has. */
   --veil: oklch(0.2 0.03 60 / 0.035);
   /* The lantern's light on the plate it stands on. */
@@ -166,6 +169,8 @@
   --plate-2: oklch(0.255 0.017 55);
   --hover: oklch(0.28 0.018 55);
   --chosen: oklch(0.34 0.02 58);
+  --rail-chosen: oklch(0.245 0.017 54);
+  --rail-hover: oklch(1 0 0 / 0.04);
   --veil: oklch(1 0 0 / 0.04);
   --pool: oklch(0.62 0.12 70 / 0.16);
   /* At night the lamp catches each plate's top edge and the plate lifts off the room. */
@@ -236,6 +241,8 @@
   --color-plate-2: var(--plate-2);
   --color-hover: var(--hover);
   --color-chosen: var(--chosen);
+  --color-rail-chosen: var(--rail-chosen);
+  --color-rail-hover: var(--rail-hover);
   --color-edge: var(--edge);
   --color-edge-2: var(--edge-2);
   --color-text: var(--text);

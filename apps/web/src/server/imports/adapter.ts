@@ -48,6 +48,8 @@ export type ImportChoices = {
   languages: Record<string, string | null>;
   /** Field roles per note type key. */
   roles: Record<string, FieldRole[]>;
+  /** Decks left out, by key. Absent in choices saved before decks could be left out. */
+  skipDecks?: string[] | undefined;
 };
 
 /**

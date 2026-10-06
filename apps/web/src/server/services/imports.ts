@@ -323,7 +323,12 @@ function checkChoices(summary: StoredSummary, input: ImportChoicesInput): Import
         ? (input.languages[deck.key] ?? null)
         : (summary.languages[deck.key] ?? null);
   }
-  return { roles, languages };
+  const keys = new Set(summary.decks.map((deck) => deck.key));
+  const skipDecks = [...new Set(input.skipDecks ?? [])].filter((key) => keys.has(key));
+  if (keys.size > 0 && skipDecks.length === keys.size) {
+    throw new ServiceError("invalid", "Choose at least one deck to import.");
+  }
+  return { roles, languages, skipDecks };
 }
 
 async function readyWork(

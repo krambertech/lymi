@@ -189,6 +189,7 @@ function Ready({
   const [choices, setChoices] = useState<Choices>(() => ({
     languages: { ...summary.languages },
     roles: Object.fromEntries(summary.noteTypes.map((type) => [type.key, type.roles])),
+    skipDecks: [],
   }));
   const key = useMemo(() => JSON.stringify(choices), [choices]);
   const preview = useQuery({

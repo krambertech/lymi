@@ -4,6 +4,7 @@ import { type ImportSource, MAX_IMPORT_BYTES } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
+  BookMarked,
   CircleCheck,
   CircleMinus,
   FileUp,
@@ -16,6 +17,7 @@ import { ErrorState } from "../components/empty-state";
 import {
   CardCheck,
   type Choices,
+  DecksDialog,
   FieldsDialog,
   failureCopy,
   fileSize,
@@ -460,6 +462,43 @@ function Figure({
   );
 }
 
+/** A choice the preview has already answered, as a row that opens its dialog. */
+function PreviewRow({
+  icon,
+  title,
+  detail,
+  attention,
+  onClick,
+}: {
+  icon: ReactNode;
+  title: string;
+  detail: string;
+  attention?: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex w-full items-center gap-4 px-4 py-3.5 text-start transition-[background-color] duration-150 first:rounded-t-xl last:rounded-b-xl hoverable:hover:veil [&:not(:first-child)]:border-t [&:not(:first-child)]:border-edge"
+    >
+      <span
+        className="grid size-10 shrink-0 place-items-center rounded-full bg-plate-2 text-text-2"
+        aria-hidden="true"
+      >
+        {icon}
+      </span>
+      <span className="grid min-w-0 flex-1 gap-0.5">
+        <span className="text-md font-medium">{title}</span>
+        <span className={clsx("text-sm", attention ? "text-text-2" : "text-muted")}>{detail}</span>
+      </span>
+      <span className="text-base font-medium text-text-2">
+        <Trans>Change</Trans>
+      </span>
+    </button>
+  );
+}
+
 /**
  * The preview. It leads with one of the learner's own cards and asks whether it looks right,
  * then says in plain lines what the import keeps and what it skips. Languages and fields are
@@ -499,12 +538,18 @@ export function ImportPreviewView({
   const [checkError, setCheckError] = useState<string>();
   const [fieldsFor, setFieldsFor] = useState<NoteType>();
   const [languagesOpen, setLanguagesOpen] = useState(false);
+  const [decksOpen, setDecksOpen] = useState(false);
+  const leftOut = new Set(choices.skipDecks);
+  const chosenDecks = summary.decks.filter((d) => !leftOut.has(d.key));
+  const leftOutCards = summary.decks
+    .filter((d) => leftOut.has(d.key))
+    .reduce((sum, d) => sum + d.cards, 0);
   const { asked, rest } = useMemo(() => splitNoteTypes(summary.noteTypes), [summary.noteTypes]);
   const [showRest, setShowRest] = useState(false);
   const noteTypes = showRest ? [...asked, ...rest] : asked;
   const restNotes = rest.reduce((sum, type) => sum + type.notes, 0);
   const unchecked = asked.filter((type) => !checked.has(type.key)).length;
-  const missingLanguage = summary.decks.filter(
+  const missingLanguage = chosenDecks.filter(
     (d) => (choices.languages[d.key] ?? null) === null,
   ).length;
   const added = preview?.added ?? 0;
@@ -697,38 +742,46 @@ export function ImportPreviewView({
         )}
       </section>
 
-      <button
-        type="button"
-        onClick={() => setLanguagesOpen(true)}
-        className="edge group flex items-center gap-4 rounded-xl bg-plate px-4 py-3.5 text-start transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:veil"
-      >
-        <span
-          className="grid size-10 shrink-0 place-items-center rounded-full bg-plate-2 text-text-2"
-          aria-hidden="true"
-        >
-          <LanguagesIcon className="size-[18px]" />
-        </span>
-        <span className="grid min-w-0 flex-1 gap-0.5">
-          <span className="text-md font-medium">
-            {plural(summary.decks.length, {
-              one: "Language of # deck",
-              other: "Languages of # decks",
-            })}
-          </span>
-          <span className={clsx("text-sm", missingLanguage > 0 ? "text-text-2" : "text-muted")}>
-            {missingLanguage > 0
+      <div className="edge grid rounded-xl bg-plate">
+        {summary.decks.length > 1 && (
+          <PreviewRow
+            icon={<BookMarked className="size-[18px]" />}
+            title={
+              leftOut.size === 0
+                ? plural(summary.decks.length, { other: "All # decks" })
+                : plural(summary.decks.length, { other: `${chosenDecks.length} of # decks` })
+            }
+            detail={
+              leftOut.size === 0
+                ? t`Leave out the decks you don’t use anymore.`
+                : plural(leftOutCards, {
+                    one: "# card in the decks you left out isn’t imported.",
+                    other: "# cards in the decks you left out aren’t imported.",
+                  })
+            }
+            onClick={() => setDecksOpen(true)}
+          />
+        )}
+
+        <PreviewRow
+          icon={<LanguagesIcon className="size-[18px]" />}
+          title={plural(chosenDecks.length, {
+            one: "Language of # deck",
+            other: "Languages of # decks",
+          })}
+          detail={
+            missingLanguage > 0
               ? plural(missingLanguage, {
                   one: "# deck has no language yet. Choose one so Lymi can find duplicates and read terms aloud.",
                   other:
                     "# decks have no language yet. Choose one so Lymi can find duplicates and read terms aloud.",
                 })
-              : languagesLine(summary.decks, choices.languages, i18n.locale, t`No language`)}
-          </span>
-        </span>
-        <span className="text-base font-medium text-text-2">
-          <Trans>Change</Trans>
-        </span>
-      </button>
+              : languagesLine(chosenDecks, choices.languages, i18n.locale, t`No language`)
+          }
+          attention={missingLanguage > 0}
+          onClick={() => setLanguagesOpen(true)}
+        />
+      </div>
 
       <div className="grid gap-2 border-t border-edge pt-5">
         {(checkError || confirmError) && (
@@ -794,11 +847,19 @@ export function ImportPreviewView({
       <LanguagesDialog
         source={item.source}
         key={languagesOpen ? "languages-open" : "languages"}
-        decks={summary.decks}
+        decks={chosenDecks}
         languages={choices.languages}
         open={languagesOpen}
         onOpenChange={setLanguagesOpen}
         onSave={(languages) => onChoices({ ...choices, languages })}
+      />
+      <DecksDialog
+        key={decksOpen ? "decks-open" : "decks"}
+        decks={summary.decks}
+        skipDecks={choices.skipDecks}
+        open={decksOpen}
+        onOpenChange={setDecksOpen}
+        onSave={(skipDecks) => onChoices({ ...choices, skipDecks })}
       />
     </Shell>
   );

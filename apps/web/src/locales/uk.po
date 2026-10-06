@@ -218,7 +218,7 @@ msgstr "{0, plural, one {Забуто # раз} few {Забуто # рази} ma
 msgid "{0, plural, one {Imported # card} other {Imported # cards}}"
 msgstr "{0, plural, one {Імпортовано # картку} few {Імпортовано # картки} many {Імпортовано # карток} other {Імпортовано # картки}}"
 
-#. placeholder {0}: summary.decks.length
+#. placeholder {0}: chosenDecks.length
 msgid "{0, plural, one {Language of # deck} other {Languages of # decks}}"
 msgstr "{0, plural, one {Мова # колоди} few {Мови # колод} many {Мови # колод} other {Мови # колоди}}"
 
@@ -265,6 +265,15 @@ msgstr "{0, plural, one {Засвоєно {known} з # картки в «{curren
 #. placeholder {0}: current.total
 msgid "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
 msgstr "{0, plural, one {Засвоєно {known} з # картки в «{currentName}».} few {Засвоєно {known} з # карток у «{currentName}».} many {Засвоєно {known} з # карток у «{currentName}».} other {Засвоєно {known} з # картки в «{currentName}».}}"
+
+#. placeholder {0}: summary.decks.length
+#. placeholder {1}: chosenDecks.length
+msgid "{0, plural, other {{1} of # decks}}"
+msgstr "{0, plural, one {Колоди: {1} з #} few {Колоди: {1} з #} many {Колоди: {1} з #} other {Колоди: {1} з #}}"
+
+#. placeholder {0}: summary.decks.length
+msgid "{0, plural, other {All # decks}}"
+msgstr "{0, plural, one {Усі колоди: #} few {Усі колоди: #} many {Усі колоди: #} other {Усі колоди: #}}"
 
 #. placeholder {0}: card.deckName
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
@@ -521,6 +530,9 @@ msgstr "{left, plural, one {лишився # символ} few {лишилося
 
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "До сьогоднішньої мети: {left, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
+
+msgid "{leftOutCards, plural, one {# card in the decks you left out isn’t imported.} other {# cards in the decks you left out aren’t imported.}}"
+msgstr "{leftOutCards, plural, one {# картка з пропущених колод не імпортується.} few {# картки з пропущених колод не імпортуються.} many {# карток з пропущених колод не імпортуються.} other {# картки з пропущених колод не імпортуються.}}"
 
 msgid "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and read terms aloud.} other {# decks have no language yet. Choose one so Lymi can find duplicates and read terms aloud.}}"
 msgstr "{missingLanguage, plural, one {У # колоди ще немає мови. Вибери її, щоб Lymi знаходив дублікати й вимовляв терміни.} few {У # колод ще немає мови. Вибери її, щоб Lymi знаходив дублікати й вимовляв терміни.} many {У # колод ще немає мови. Вибери її, щоб Lymi знаходив дублікати й вимовляв терміни.} other {У # колоди ще немає мови. Вибери її, щоб Lymi знаходив дублікати й вимовляв терміни.}}"
@@ -1215,6 +1227,9 @@ msgstr "Вибери ціле число від 1 до 200."
 msgid "Choose another file"
 msgstr "Вибрати інший файл"
 
+msgid "Choose at least one deck."
+msgstr "Вибери хоча б одну колоду."
+
 msgid "Choose at least one way to be asked."
 msgstr "Вибери хоча б один спосіб запитувати."
 
@@ -1236,6 +1251,9 @@ msgstr "Вибери один варіант"
 
 msgid "Choose the .zip file Lymi exports as a Lymi file, without unzipping it."
 msgstr "Вибери файл .zip, який Lymi експортує як файл Lymi, не розпаковуючи його."
+
+msgid "Choose the decks you want in Lymi. You can import the others from the same file later."
+msgstr "Вибери колоди, які хочеш мати в Lymi. Решту можна імпортувати з того самого файлу пізніше."
 
 msgid "Choose the file again"
 msgstr "Вибрати файл ще раз"
@@ -1260,6 +1278,9 @@ msgstr "Громадянство"
 
 msgid "Clear"
 msgstr "Скинути"
+
+msgid "Clear all"
+msgstr "Зняти всі"
 
 msgid "Clear filters"
 msgstr "Скинути фільтри"
@@ -1581,6 +1602,9 @@ msgstr "Колоди з Anki чи Mochi разом з історією повт�
 
 msgid "Decks from Lymi. Add one to study it in your language."
 msgstr "Колоди від Lymi. Додай одну — вивчай її своєю мовою."
+
+msgid "Decks to import"
+msgstr "Колоди для імпорту"
 
 msgid "Decks to review"
 msgstr "Колоди до повторення"
@@ -2279,6 +2303,9 @@ msgstr "Вийти з колоди"
 
 msgid "Leave out"
 msgstr "Пропустити"
+
+msgid "Leave out the decks you don’t use anymore."
+msgstr "Пропусти колоди, якими вже не користуєшся."
 
 msgid "Leave review"
 msgstr "Вийти з повторення"
@@ -4024,6 +4051,9 @@ msgstr "Повернути як у колоді"
 
 msgid "Use the new version"
 msgstr "Узяти нову версію"
+
+msgid "Use these decks"
+msgstr "Використати ці колоди"
 
 msgid "Use these fields"
 msgstr "Використати ці поля"

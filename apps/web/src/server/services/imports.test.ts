@@ -414,6 +414,35 @@ describe("importing an Anki package", () => {
     expect(preview.added).toBe(10);
   });
 
+  it("leaves out the decks the learner unticks, and refuses leaving out every deck", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    const { summary } = await getImport(ctx, id);
+    const keys = summary?.decks.map((d) => d.key) ?? [];
+    const japanese = summary?.decks.find((d) => d.name === "Japanese")?.key as string;
+    const grammar = summary?.decks.find((d) => d.name === "Italian::Grammar")?.key as string;
+
+    await expect(
+      previewImportChoices(ctx, id, { languages: {}, roles: {}, skipDecks: keys }, env.IMPORTS),
+    ).rejects.toMatchObject({ code: "invalid" });
+
+    const choices = { languages: {}, roles: {}, skipDecks: [japanese, grammar] };
+    const preview = await previewImportChoices(ctx, id, choices, env.IMPORTS);
+    expect(preview.decks.map((d) => [d.name, d.cards])).toEqual([["Italian / Lesson 1", 6]]);
+    expect(preview).toMatchObject({ added: 6, skipped: 0 });
+
+    await confirmImport(ctx, id, choices, env.IMPORTS, async () => {});
+    const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
+    const { progress } = await getImport(ctx, id);
+    for (let chunk = 0; chunk < progress.chunks; chunk++) {
+      await writeImportChunk(ctx, id, chunk, decks, env.IMPORTS);
+    }
+    const made = await db.select().from(schema.decks).where(eq(schema.decks.userId, ctx.userId));
+    expect(made.map((d) => d.name)).toEqual(["Italian / Lesson 1"]);
+    expect(await cardsOf(ctx)).toHaveLength(6);
+  });
+
   it("keeps imported reviews out of today's goal, the streak and today's draw", async () => {
     const ctx = await fresh();
     const before = await streak(ctx);

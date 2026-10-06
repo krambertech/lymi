@@ -129,7 +129,7 @@ export function LibraryView({
     return (
       <>
         {/* One line: a long name truncates rather than pushing Review under it. */}
-        <div className="flex min-h-12 items-center gap-2 ps-3 pe-1 pt-1">
+        <div className="flex min-h-10 items-center gap-2 px-1">
           <div className="grid min-w-0 flex-1 gap-0.5">
             <h2 className="truncate text-lg font-medium tracking-[-0.01em]">{s.name}</h2>
             <p className="truncate text-sm text-muted tabular-nums">
@@ -197,7 +197,7 @@ export function LibraryView({
   };
 
   const emptySeries = (s: Series) => (
-    <div className="flex min-h-[72px] w-full flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-md border border-dashed border-edge-2 px-4 py-3">
+    <div className="flex min-h-[72px] w-full flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-lg border border-dashed border-edge-2 px-4 py-3">
       <p className="max-w-sm text-sm text-text-2">
         {onSetSeriesDecks ? (
           <Trans>Drag decks here to add them to this series.</Trans>
@@ -276,9 +276,8 @@ export function LibraryView({
           series={groups.series}
           onSetSeriesDecks={st ? undefined : onSetSeriesDecks}
           onRemoveFromSeries={st ? undefined : onRemoveFromSeries}
-          renderDeck={(d, describedBy, tile) => (
+          renderDeck={(d, describedBy) => (
             <DeckCard
-              tile={tile}
               id={d.id}
               name={d.name}
               language={d.defaultLanguage}
@@ -312,13 +311,13 @@ export function LibraryView({
       )}
 
       {archivedCount ? (
-        <section className="tray mt-8 grid gap-2 rounded-xl p-2">
-          <h2 className="flex min-h-10 items-center px-3 pt-1 text-md font-medium">
+        <section className="mt-8">
+          <h2 className="mb-2 px-1 text-xs font-medium uppercase tracking-[0.06em] text-muted">
             <Trans>Archived</Trans>
           </h2>
           <NavLink
             to="/archived"
-            className="edge tile flex items-center justify-between gap-3 rounded-md px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:veil"
+            className="edge flex items-center justify-between gap-3 rounded-lg bg-plate px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:veil"
           >
             <span className="font-medium">
               <Plural value={archivedCount} one="# archived deck" other="# archived decks" />

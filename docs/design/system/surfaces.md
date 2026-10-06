@@ -12,7 +12,6 @@ What is it?
  ├── The desktop navigation → bg-rail (one step off the room)
  ├── A thing in the room: a card, a panel, a row group, a control → bg-plate with the edge utility
  ├── A well inside a plate: a chip, a track, a nested group → bg-plate-2
- ├── A set read together, with its title inside it → a tray, its items tiles (see Trays)
  ├── The chosen option riding in a plate-2 track (Segmented, the pill nav) → bg-chosen
  ├── Something empty that will fill later → no fill, a dashed border-edge-2 outline (see empty-states.md)
  └── A published deck on Explore → a deck tray (see The deck tray), and nowhere else
@@ -36,16 +35,14 @@ The light room is noon: nothing casts a shadow, so depth is tone and one hairlin
 | --- | --- | --- | --- |
 | Room | `bg-canvas` | the page | the page |
 | Plate | `edge bg-plate` | white with a hairline | lifted: `--lift`, a warm line along the top and a soft shadow under it |
-| Tray | `tray` | a `plate-2` well, shaded along its top | a plate with a rim, because a tray darker than the room disappears into it |
-| Tile | `edge tile`, inside a tray | white, like a plate | a step lighter than its tray, lifted |
 | Well | `well`, a track or an unlit pane | set into its plate | set into its plate, a step lighter so it still reads |
 | Chosen | `bg-chosen`, in a `plate-2` track | white | a lifted warm grey, above its track |
 
-Never lifted: a form field, which sets `--lift` to nothing because a field is set into the page and a lifted one reads as a button; anything with no fill at rest, such as a ghost button, a navigation row or a menu row; a chip; a well; a tray itself. Overlays keep their own edge and scrim ([overlays.md](overlays.md)).
+Never lifted: a form field, which sets `--lift` to nothing because a field is set into the page and a lifted one reads as a button; anything with no fill at rest, such as a ghost button, a navigation row or a menu row; a chip; a well. Overlays keep their own edge and scrim ([overlays.md](overlays.md)).
 
 ### Hover
 
-Hover follows what the thing is at rest. Something with a fill and a hairline, such as a plate you can press, a tile, a secondary button or a grade, strengthens to `edge-2` and lays `veil` over its own fill. Because the veil darkens whatever fill is under it, a plate on the room and a tile in a tray answer the same way in both rooms. A row on a white surface, such as a list inside a plate, a dialog's list or the card rows in an Activity entry, is part of that white surface and hovers with `veil` too. Something with no fill at rest, such as a ghost button, a navigation row or a menu row, and a chip or well on `plate-2`, fills with `bg-hover`, never `plate-2`: in the light room `plate-2` is the rail's tone, so the fill vanishes there. Never `bg-hover` on a tile: by day it is the tray's own tone, so the tile sinks into it.
+Hover follows what the thing is at rest. Something with a fill and a hairline, such as a plate you can press, a secondary button or a grade, strengthens to `edge-2` and lays `veil` over its own fill. Because the veil darkens whatever fill is under it, it answers the same way in both rooms. A row on a white surface, such as a list inside a plate, a dialog's list or the card rows in an Activity entry, is part of that white surface and hovers with `veil` too. Something with no fill at rest, such as a ghost button, a navigation row or a menu row, and a chip or well on `plate-2`, fills with `bg-hover`, never `plate-2`: in the light room `plate-2` is the rail's tone, so the fill vanishes there.
 
 ### The chosen option
 
@@ -61,22 +58,9 @@ A photo gets `image-edge` instead: a 1 px outline drawn inside its bounds, untin
 
 An inset `box-shadow` is allowed only as a stroke that a border cannot draw: the invalid ring on a control (`shadow-[0_0_0_1px_var(--danger)]`), a ring on a calendar day, or the hairline on an overlay's edge. Never a blurred shadow.
 
-## Trays
+## Sets
 
-A tray holds a set the learner reads together, so the set reads as one object rather than loose plates on the room. Its title sits inside it and its items are tiles on it.
-
-**Anatomy.** The tray is `tray grid gap-2 rounded-xl p-2`; each item is `edge tile rounded-md`, so its corners are the tray's radius less the 8 px inset. The title is the section's `h2` at `text-md font-medium`, in a `min-h-10` row inset `px-3 pt-1` to line up with the tiles' text. Actions for the whole set sit on the title's end at 32 px, a small button and the ⋯ menu together, on one line: a long title truncates rather than pushing them under it. A series' Review button is the example. A pressable tile hovers with `veil`. Anything on `bg-plate` inside a tray, such as a secondary button in its header, takes the tile's tone: at night the tray is plate-toned, so a plate there would vanish, while by day the two are the same white. An empty set shows a dashed `rounded-md` placeholder where its tiles would be. Where tiles can be dragged in, the tray shows a 2 px `ring` while one is over it rather than a fill, because its ground is already a fill; a tile dragged out of a tray becomes a plate again (`DeckCard`'s `tile` prop).
-
-**Where.** Today's rounds and its decks to review; the streak's goal and figures; each series in Library, and Library's archived decks; each kind on the Archived page; each day on Activity. A set of one is still a set: an Activity day with one entry keeps its tray.
-
-**Where not.**
-
-- A screen's main list, such as Library's loose decks: the page is already the set.
-- A single control or setting, and anything in Settings.
-- A group that already has a heading above it: the heading groups it, so a tray would be a second, untitled box. A tray's title always sits inside it.
-- A lone tray among plates, as on Insights' grid of figures, where it reads as a different kind of thing rather than a set.
-- The grades, the review card or anything else on the review screen, which has to stay plain and fast.
-- Inside another tray, or a tray inside a plate.
+A set read together, such as Today's rounds, a series in Library or a day on Activity, is a heading above its plates or a list of rows in one plate. It never sits in a tray: a well with tiles in it read as a box around things the heading already groups, so the trays tried in #430 were taken out.
 
 ## Lit and set in
 
@@ -86,7 +70,7 @@ The primary button carries `key-light`, a soft fall of light with no lip and no 
 
 ## Radius
 
-The radius tokens are `rounded-xs` 6 px, `sm` 10, `md` 14, `lg` 18, `xl` 22, `2xl` 30 and `full`. Controls are `md` (a small button is `sm`), plates and cards are `xl`, rows inside a list are `md` or `lg`, chips and round buttons are `full`. An arbitrary radius is for a drawn illustration only, never a control or a plate. A control inset in a plate takes the plate's radius less the gap, so the corners run parallel: Today's Review button sits 8 px inside a 22 px plate, so it is `rounded-md`, 14 px. A tile in a tray follows the same rule: `rounded-md` in a `rounded-xl` tray with `p-2`.
+The radius tokens are `rounded-xs` 6 px, `sm` 10, `md` 14, `lg` 18, `xl` 22, `2xl` 30 and `full`. Controls are `md` (a small button is `sm`), plates and cards are `xl`, rows inside a list are `md` or `lg`, chips and round buttons are `full`. An arbitrary radius is for a drawn illustration only, never a control or a plate. A control inset in a plate takes the plate's radius less the gap, so the corners run parallel: Today's Review button sits 8 px inside a 22 px plate, so it is `rounded-md`, 14 px.
 
 ## The glow
 
@@ -98,7 +82,7 @@ Never a gradient on a surface. The exceptions are the app icon, the link preview
 
 ## The deck tray
 
-Not the same thing as a tray above. On Explore a published deck shows as one of its own cards sitting in a deck tray: a rounded panel the card is cut against, with the deck's name below it on the open canvas rather than inside a box. The deck tray is why the cut reads as tucked into the shelf; the same card cut in mid-air reads as clipped. It shows two thirds of the card, which is the most that can be taken before the meaning goes with it, and the deck's name is the largest thing in the group.
+On Explore a published deck shows as one of its own cards sitting in a deck tray: a rounded panel the card is cut against, with the deck's name below it on the open canvas rather than inside a box. The deck tray is why the cut reads as tucked into the shelf; the same card cut in mid-air reads as clipped. It shows two thirds of the card, which is the most that can be taken before the meaning goes with it, and the deck's name is the largest thing in the group.
 
 The card in a deck tray sits on paper: one blank sheet per further card the deck holds, at most two, so the stack is the deck's own depth rather than a decoration. Pointing at a deck lifts the card and spreads the sheets either side of it over 260 ms; under reduced motion they rest where they are.
 

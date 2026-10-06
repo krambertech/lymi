@@ -151,7 +151,7 @@ export function useTodayStatus(summary: StreakSummary | undefined): string {
 /** One figure under today, with its icon and the words for it. */
 function Figure({ icon: Icon, value, label }: { icon: LucideIcon; value: number; label: string }) {
   return (
-    <div className="grid gap-0.5 px-4 pt-2 pb-3">
+    <div className="grid gap-0.5 px-4 py-3.5 not-first:border-s not-first:border-edge">
       <dt className="flex items-center gap-1.5 text-xs text-muted">
         <Icon className="size-3.5 shrink-0" aria-hidden="true" />
         {label}
@@ -299,9 +299,8 @@ export function StreakPanel({
         <p className="text-sm text-text-2">{status}</p>
       </header>
 
-      {/* A tray: today's goal is the tile in it, the two figures sit loose beside each other. */}
-      <section className="tray grid gap-2 rounded-xl p-2" aria-label={t`Today`}>
-        <div className="edge tile grid gap-2.5 rounded-md px-4 py-3.5">
+      <section className="grid rounded-lg bg-plate-2" aria-label={t`Today`}>
+        <div className="grid gap-2.5 px-4 py-3.5">
           <div className="flex items-center gap-2">
             {/* The goal is named whether or not the day is done, so the bar below has a number to mean. */}
             <span className="flex flex-1 items-center gap-1.5 text-base font-medium tabular-nums text-text">
@@ -336,7 +335,7 @@ export function StreakPanel({
           </div>
           <GoalTrack today={today} label={t`Today’s goal`} />
         </div>
-        <dl className="grid grid-cols-2">
+        <dl className="grid grid-cols-2 border-t border-edge">
           <Figure icon={Trophy} value={summary.longest} label={t`Longest streak`} />
           <Figure icon={CalendarCheck} value={summary.reviewedDays} label={t`Days reviewed`} />
         </dl>

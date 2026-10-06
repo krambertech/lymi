@@ -1,10 +1,6 @@
-import { clsx } from "clsx";
-import { MoreHorizontal } from "lucide-react";
 import type { ReactNode } from "react";
-import { Button, IconButton } from "../components/button";
-import { DeckCard } from "../components/deck-card";
+import { Button } from "../components/button";
 import { DeckTray } from "../components/deck-tray";
-import { DueCount } from "../components/due-count";
 import { Lantern } from "../components/lantern";
 import { Progress } from "../components/progress";
 import { RunStrip } from "../components/run-strip";
@@ -31,89 +27,21 @@ function Labelled({ label, children }: { label: ReactNode; children: ReactNode }
   );
 }
 
-/** A series as it sits in Library: the reference tray. */
-function SeriesTray({ over, empty }: { over?: boolean; empty?: boolean }) {
-  return (
-    <section className="tray grid gap-2 rounded-xl p-2">
-      <div className="flex min-h-12 items-center gap-2 ps-3 pe-1 pt-1">
-        <div className="grid min-w-0 flex-1 gap-0.5">
-          <h3 className="truncate text-lg font-medium tracking-[-0.01em]">Italiano A2</h3>
-          <p className="truncate text-sm text-muted tabular-nums">
-            {empty ? "0 decks · 0 cards" : "2 decks · 30 cards"}
-          </p>
-        </div>
-        <div className="flex shrink-0 items-center gap-1">
-          {!empty && (
-            <Button size="sm">
-              Review
-              <DueCount className="-me-1.5">30</DueCount>
-            </Button>
-          )}
-          <IconButton label="Options for Italiano A2" size="sm">
-            <MoreHorizontal />
-          </IconButton>
-        </div>
-      </div>
-      <ul
-        className={clsx(
-          "grid gap-2 rounded-md transition-[box-shadow]",
-          over && "shadow-[0_0_0_2px_var(--ring)]",
-        )}
-      >
-        {empty ? (
-          <li className="flex min-h-[72px] items-center rounded-md border border-dashed border-edge-2 px-4 py-3 text-sm text-text-2">
-            Drag decks here to add them to this series.
-          </li>
-        ) : (
-          <>
-            <li className="flex min-w-0">
-              <DeckCard tile id="a" name="Lezione 12" language="it" due={18} total={18} />
-            </li>
-            <li className="flex min-w-0">
-              <DeckCard tile id="b" name="Verbi" language="it" due={12} total={12} />
-            </li>
-          </>
-        )}
-      </ul>
-    </section>
-  );
-}
-
-const NOT_A_TRAY: [string, string][] = [
-  ["A screen's main list", "Library's loose decks: the page is already the set."],
-  ["A single control or setting", "Language, theme, a switch: nothing in Settings sits in a tray."],
-  [
-    "A group with a heading above it",
-    "The heading already groups it; a tray would be a second, untitled box.",
-  ],
-  [
-    "A lone tray among plates",
-    "One tray in Insights' grid of figures reads as a different kind of thing.",
-  ],
-  ["Anything on the review screen", "The card and the grades stay plain and fast."],
-  ["Inside another tray, or a plate", "A tray holds tiles; it never nests."],
-];
-
 export function Surfaces() {
   return (
     <Doc
       title="Surfaces"
-      lede="By day nothing casts a shadow: depth is tone and one hairline. At night the lamp lights the room from above, so plates catch it on their top edge and lift a little. Texture goes only where something is lit or holds a level, and a tray only around a set the learner reads together."
+      lede="By day nothing casts a shadow: depth is tone and one hairline. At night the lamp lights the room from above, so plates catch it on their top edge and lift a little. Texture goes only where something is lit or holds a level."
     >
       <Sub
         title="Elevation"
-        note="Every level comes from a utility, never a hand-written shadow. Compare the rooms: by day the plate and the tile are the same white; at night the plate lifts, the tray gets a rim and its tile sits a step lighter."
+        note="Every level comes from a utility, never a hand-written shadow. Compare the rooms: by day the plate is white with a hairline; at night it lifts off the room."
       >
         <Pair>
           {() => (
             <div className="grid grid-cols-2 gap-4 @xl:grid-cols-3">
               <Labelled label="Plate · edge bg-plate">
                 <div className="edge h-20 rounded-xl bg-plate" />
-              </Labelled>
-              <Labelled label="Tray · tray, with a tile">
-                <div className="tray grid h-20 rounded-xl p-2">
-                  <div className="edge tile rounded-md" />
-                </div>
               </Labelled>
               <Labelled label="Well · a track, set in">
                 <div className="edge grid h-20 content-center rounded-xl bg-plate px-4">
@@ -145,21 +73,15 @@ export function Surfaces() {
 
       <Sub
         title="Hover"
-        note="Something with a fill and a hairline strengthens to edge-2 and lays veil over its own fill, so a plate on the room and a tile in a tray answer alike. Something with no fill at rest fills with bg-hover. Never bg-hover on a tile: by day it is the tray's own tone."
+        note="Something with a fill and a hairline strengthens to edge-2 and lays veil over its own fill, so it darkens from whatever fill it has. Something with no fill at rest fills with bg-hover."
       >
         <Pair>
           {() => (
-            <div className="grid gap-4 @xl:grid-cols-3">
+            <div className="grid gap-4 @xl:grid-cols-2">
               <Labelled label="Plate · rest, then hovered">
                 <div className="grid gap-2">
                   <div className="edge h-12 rounded-lg bg-plate" />
                   <div className="edge-2 veil h-12 rounded-lg bg-plate" />
-                </div>
-              </Labelled>
-              <Labelled label="Tile in a tray · rest, then hovered">
-                <div className="tray grid gap-2 rounded-xl p-2">
-                  <div className="edge tile h-12 rounded-md" />
-                  <div className="edge-2 tile veil h-12 rounded-md" />
                 </div>
               </Labelled>
               <Labelled label="Ghost · rest, then hovered">
@@ -175,41 +97,6 @@ export function Surfaces() {
             </div>
           )}
         </Pair>
-      </Sub>
-
-      <Sub
-        title="Trays"
-        note="A tray holds a set read together: its title inside, its items tiles. tray grid gap-2 rounded-xl p-2, tiles edge tile rounded-md. Actions for the set sit on the title's end at 32 px, on one line; a long title truncates. A set of one is still a set."
-      >
-        <Pair>
-          {() => (
-            <div className="grid gap-4">
-              <SeriesTray />
-              <div className="grid gap-4 @xl:grid-cols-2">
-                <Labelled label="Dragging a deck over it: a ring, not a fill">
-                  <SeriesTray over />
-                </Labelled>
-                <Labelled label="Empty: a dashed placeholder where tiles go">
-                  <SeriesTray empty />
-                </Labelled>
-              </div>
-            </div>
-          )}
-        </Pair>
-      </Sub>
-
-      <Sub
-        title="Where a tray goes, and where it does not"
-        note="Today's rounds and decks to review; the streak's goal and figures; each series and the archived decks in Library; each kind on Archived; each day on Activity."
-      >
-        <ul className="grid gap-2 @xl:grid-cols-2">
-          {NOT_A_TRAY.map(([title, why]) => (
-            <li key={title} className="edge grid gap-0.5 rounded-lg bg-plate px-4 py-3">
-              <span className="text-md font-medium">Never: {title}</span>
-              <span className="text-sm text-muted">{why}</span>
-            </li>
-          ))}
-        </ul>
       </Sub>
 
       <Sub
@@ -249,7 +136,7 @@ export function Surfaces() {
 
       <Sub
         title="The deck tray"
-        note="Not a tray. On Explore a published deck's card sits in a deck tray: one of eight hues chosen from the slug, never amber, because a deck tray is not a thing to press. It is the one surface that carries a hue."
+        note="On Explore a published deck's card sits in a deck tray: one of eight hues chosen from the slug, never amber, because a deck tray is not a thing to press. It is the one surface that carries a hue."
       >
         <Pair>
           {() => (

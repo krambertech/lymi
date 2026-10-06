@@ -8,8 +8,6 @@ colors:
   plate-2: "#f2f0ec"
   hover: "#eeebe6"
   chosen: "#ffffff"
-  tray: "#f2f0ec"
-  tile: "#ffffff"
   veil: "#20130809"
   pool: "#ffd79a80"
   edge: "#2013081a"
@@ -57,8 +55,6 @@ colors:
   dark-plate-2: "#29211b"
   dark-hover: "#302720"
   dark-chosen: "#40362e"
-  dark-tray: "#201713"
-  dark-tile: "#2f251f"
   dark-veil: "#ffffff0a"
   dark-pool: "#b4782529"
   dark-edge: "#ffffff14"
@@ -273,7 +269,7 @@ Each rule links to the file that holds its detail and its exceptions.
 
 1. **Tokens, never values.** Colour through the semantic utilities (`bg-plate`, `text-muted`), type through the scale (`text-lg`), radius through `rounded-*`. A raw hex or a stock Tailwind colour breaks dark mode, which is its own warm palette rather than an inversion. [colour.md](docs/design/system/colour.md)
 2. **Amber means act.** It is the flame, the one primary button, capture, a due count, a day reviewed, and the Easy grade's icon. Nothing else is amber, including a selected state. [colour.md](docs/design/system/colour.md#amber-means-act)
-3. **Surfaces are quiet.** By day depth is one hairline edge; at night `edge` lifts a plate off the room. Texture goes only where something is lit or holds a level, and trays only around a real set. Never a hand-made drop shadow or a decorative gradient. [surfaces.md](docs/design/system/surfaces.md)
+3. **Surfaces are quiet.** By day depth is one hairline edge; at night `edge` lifts a plate off the room. Texture goes only where something is lit or holds a level, and a set never sits in a tray. Never a hand-made drop shadow or a decorative gradient. [surfaces.md](docs/design/system/surfaces.md)
 4. **One primary per view.** Two primaries means the screen has no hierarchy. `secondary` is the default variant. [buttons.md](docs/design/system/buttons.md)
 5. **A closed set is closed.** Every variant, size and tone a component takes is listed in its file. An unlisted one is a bug, not an option, and a `className` that resizes or recolours a component is the same bug.
 6. **Never `disabled` on a button that cannot run yet.** Forms stay pressable and validate on submit; `aria-disabled` is for mid-request. [buttons.md](docs/design/system/buttons.md#states)
@@ -292,7 +288,7 @@ Read the file for what you are building. Each is short enough to read whole.
 | --- | --- |
 | Anything: which component exists | [components.md](docs/design/system/components.md) |
 | Colour, amber, card states, the AI badge | [colour.md](docs/design/system/colour.md) |
-| Backgrounds, elevation and hover, edges, trays, radius, glow, the deck tray | [surfaces.md](docs/design/system/surfaces.md) |
+| Backgrounds, elevation and hover, edges, sets, radius, glow, the deck tray | [surfaces.md](docs/design/system/surfaces.md) |
 | Type sizes, weights, monospace | [type.md](docs/design/system/type.md) |
 | Buttons and links | [buttons.md](docs/design/system/buttons.md) |
 | Forms and choice controls | [forms.md](docs/design/system/forms.md) |

@@ -95,12 +95,8 @@
   --hover: oklch(0.94 0.007 80);
   /* A chosen option in a plate-2 track; at night the plate is darker than the track, so it lifts. */
   --chosen: var(--plate);
-  /* A tray holds a set read together; its tiles sit in it. By day a well of plate-2 with white tiles. */
-  --tray: var(--plate-2);
-  --tile: var(--plate);
-  /* Laid over a filled plate or tile on hover, so it darkens from whatever fill it has. */
+  /* Laid over a filled plate on hover, so it darkens from whatever fill it has. */
   --veil: oklch(0.2 0.03 60 / 0.035);
-  --tray-depth: inset 0 1px 2px oklch(0.25 0.03 55 / 0.06);
   /* The lantern's light on the plate it stands on. */
   --pool: oklch(0.9 0.09 78 / 0.5);
   /* By day surfaces stay flat; the lift, the well under a track and a lit fill's glow are night-only. */
@@ -170,10 +166,7 @@
   --plate-2: oklch(0.255 0.017 55);
   --hover: oklch(0.28 0.018 55);
   --chosen: oklch(0.34 0.02 58);
-  --tray: oklch(0.215 0.016 52);
-  --tile: oklch(0.275 0.018 55);
   --veil: oklch(1 0 0 / 0.04);
-  --tray-depth: 0 0 0 1px oklch(1 0 0 / 0.09), inset 0 1px 2px oklch(0 0 0 / 0.3);
   --pool: oklch(0.62 0.12 70 / 0.16);
   /* At night the lamp catches each plate's top edge and the plate lifts off the room. */
   --lift:
@@ -243,8 +236,6 @@
   --color-plate-2: var(--plate-2);
   --color-hover: var(--hover);
   --color-chosen: var(--chosen);
-  --color-tray: var(--tray);
-  --color-tile: var(--tile);
   --color-edge: var(--edge);
   --color-edge-2: var(--edge-2);
   --color-text: var(--text);
@@ -458,19 +449,7 @@
     }
   }
 }
-/* A tray: a set read together, its title inside and its items as `edge tile` on it. */
-@utility tray {
-  background-color: var(--tray);
-  box-shadow: var(--tray-depth);
-  /* A plate in a tray, such as a secondary button in its header, takes the tile's tone; at night the tray is plate-toned, so a plate there would vanish. */
-  & .bg-plate {
-    background-color: var(--tile);
-  }
-}
-@utility tile {
-  background-color: var(--tile);
-}
-/* Hover on anything with a fill and a hairline: a veil over its own fill, so a plate on the room and a tile in a tray answer alike. */
+/* Hover on anything with a fill and a hairline: a veil over its own fill, so it darkens from whatever fill it has. */
 @utility veil {
   background-image: linear-gradient(var(--veil), var(--veil));
 }

@@ -4,13 +4,13 @@ export type SpeechRequest = {
 };
 
 export interface SpeechProvider {
-  provider: "google-gemini" | "google-chirp" | "openai";
+  provider: "google-gemini" | "gemini-api" | "google-chirp" | "openai" | "elevenlabs";
   model: string;
   voice: string;
   /** The exact locale sent upstream. It is part of the cache identity. */
   locale: string;
-  contentType: "audio/mpeg";
-  extension: "mp3";
+  contentType: "audio/mpeg" | "audio/wav";
+  extension: "mp3" | "wav";
   speech(request: SpeechRequest): Promise<Response>;
 }
 

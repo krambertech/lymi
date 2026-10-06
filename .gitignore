@@ -16,3 +16,5 @@ coverage
 .tanstack
 .astro
 apps/web/src/client/routeTree.gen.ts
+
+.speech-evaluation

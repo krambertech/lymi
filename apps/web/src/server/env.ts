@@ -15,6 +15,10 @@ export interface Bindings extends Omit<Env, "REQUESTS" | "EVENTS"> {
   GOOGLE_CLIENT_SECRET: string;
   /** Full service-account JSON, stored as one encrypted Worker secret. */
   GOOGLE_CLOUD_TTS_CREDENTIALS?: string;
+  GEMINI_API_KEY?: string;
+  ELEVENLABS_API_KEY?: string;
+  ELEVENLABS_SPEECH_MODEL?: string;
+  ELEVENLABS_SPEECH_VOICES?: string;
   GEMINI_SPEECH_MODEL?: string;
   GEMINI_SPEECH_VOICE?: string;
   OPENAI_API_KEY?: string;

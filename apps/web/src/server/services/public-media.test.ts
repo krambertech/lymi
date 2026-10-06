@@ -68,9 +68,9 @@ async function picture(cardId: string, suffix: string, description: string | nul
   return { id, objectKey };
 }
 
-async function storedAudio(cardId: string, bytes: Uint8Array, suffix = "") {
+async function storedAudio(cardId: string, bytes: Uint8Array, suffix = "", contentType?: string) {
   const audioKey = `test/public-audio/${cardId}${suffix}`;
-  await env.AUDIO.put(audioKey, bytes);
+  await env.AUDIO.put(audioKey, bytes, contentType ? { httpMetadata: { contentType } } : undefined);
   await db.update(schema.cards).set({ audioKey }).where(eq(schema.cards.id, cardId));
   return audioKey;
 }
@@ -160,30 +160,39 @@ describe("public deck media", () => {
     await expect(publicMediaFile(db, cardId, "audio", storage())).rejects.toEqual(missing);
   });
 
-  it("serves the whole audio object and stops at the same URL after withdrawal", async () => {
-    const { deckId, cardId } = await publishedCard("audio-response");
-    await storedAudio(cardId, new Uint8Array([10, 20, 30, 40]));
-    const app = new Hono<AppEnv>();
-    app.use("*", (c, next) => {
-      c.set("db", db);
-      return next();
-    });
-    app.route("/public/media", publicMedia);
-    app.onError(handleError);
-    const bindings = env as unknown as AppEnv["Bindings"];
-    const path = `/public/media/card/${cardId}/audio`;
-    const response = await app.request(path, { headers: { Range: "bytes=1-2" } }, bindings);
-    expect(response.status).toBe(200);
-    expect(response.headers.get("Content-Range")).toBeNull();
-    expect(response.headers.get("Cache-Control")).toBe("no-store");
-    expect(new Uint8Array(await response.arrayBuffer())).toEqual(new Uint8Array([10, 20, 30, 40]));
+  it.each(["audio/mpeg", "audio/wav"])(
+    "serves %s audio and stops at the same URL after withdrawal",
+    async (contentType) => {
+      const { deckId, cardId } = await publishedCard(
+        `audio-response-${contentType.replace("/", "-")}`,
+      );
+      await storedAudio(cardId, new Uint8Array([10, 20, 30, 40]), "", contentType);
+      const app = new Hono<AppEnv>();
+      app.use("*", (c, next) => {
+        c.set("db", db);
+        return next();
+      });
+      app.route("/public/media", publicMedia);
+      app.onError(handleError);
+      const bindings = env as unknown as AppEnv["Bindings"];
+      const path = `/public/media/card/${cardId}/audio`;
+      const response = await app.request(path, { headers: { Range: "bytes=1-2" } }, bindings);
+      expect(response.status).toBe(200);
+      expect(response.headers.get("Content-Type")).toBe(contentType);
+      expect(response.headers.get("X-Content-Type-Options")).toBe("nosniff");
+      expect(response.headers.get("Content-Range")).toBeNull();
+      expect(response.headers.get("Cache-Control")).toBe("no-store");
+      expect(new Uint8Array(await response.arrayBuffer())).toEqual(
+        new Uint8Array([10, 20, 30, 40]),
+      );
 
-    expect((await app.request(`/public/media/card/${cardId}/video`, {}, bindings)).status).toBe(
-      404,
-    );
-    await withdrawDeck(publisher, deckId);
-    expect((await app.request(path, {}, bindings)).status).toBe(404);
-  });
+      expect((await app.request(`/public/media/card/${cardId}/video`, {}, bindings)).status).toBe(
+        404,
+      );
+      await withdrawDeck(publisher, deckId);
+      expect((await app.request(path, {}, bindings)).status).toBe(404);
+    },
+  );
 
   it("stops delivery while the picture or card is archived", async () => {
     const { cardId, slug } = await publishedCard("archived-media");

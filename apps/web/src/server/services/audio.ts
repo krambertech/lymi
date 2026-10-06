@@ -2,12 +2,15 @@ import { canSpeakTerm, LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
 import { and, eq } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider } from "../ai";
+import { speechText } from "../ai/speech-text";
 import { schema } from "../db";
 import { audit } from "./audit";
 import { getCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
 
 const MAX_AUDIO_BYTES = 8_000_000;
+// Bump this when every stored pronunciation needs to be regenerated on its next play.
+const AUDIO_CACHE_VERSION = 2;
 
 interface AudioDependencies {
   bucket: R2Bucket;
@@ -59,7 +62,10 @@ export async function pronunciationAudio(
 
     let audio: Uint8Array;
     try {
-      const generated = await provider.speech({ text: card.term, language: language.data });
+      const generated = await provider.speech({
+        text: speechText(card.term),
+        language: language.data,
+      });
       audio = await boundedAudio(generated);
     } catch (error) {
       lastFailure = error;
@@ -196,12 +202,12 @@ async function rememberAudioKey(
 
 async function audioKey(card: Card, provider: SpeechProvider): Promise<string> {
   const bytes = new TextEncoder().encode(
-    `${card.term}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}`,
+    `${speechText(card.term)}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}`,
   );
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
   const fingerprint = [...digest]
     .slice(0, 16)
     .map((byte) => byte.toString(16).padStart(2, "0"))
     .join("");
-  return `cards/${card.id}/${fingerprint}.${provider.extension}`;
+  return `cards/${card.id}/v${AUDIO_CACHE_VERSION}/${fingerprint}.${provider.extension}`;
 }

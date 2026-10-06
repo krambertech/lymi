@@ -14,7 +14,15 @@ GOOGLE_CLIENT_SECRET=
 # Full service-account JSON for the dedicated Google Cloud Text-to-Speech project.
 # Gemini voices also need the account to hold roles/aiplatform.user.
 GOOGLE_CLOUD_TTS_CREDENTIALS=
-# Optional Gemini speech overrides. Gemini is preferred for every language it supports.
+# AI Studio Gemini is the general default; Cloud Gemini is used when this key is absent.
+GEMINI_API_KEY=
+# Native reference voices override Gemini for configured languages.
+ELEVENLABS_API_KEY=
+ELEVENLABS_SPEECH_MODEL=eleven_v4
+# Optional JSON map of locale/root to voice ID; null uses Gemini for that language.
+# Example: {"cs": "KIDKfqJyZ6ASuyzsKfh5", "ru": null}
+ELEVENLABS_SPEECH_VOICES=
+# Optional Gemini speech overrides.
 GEMINI_SPEECH_MODEL=gemini-3.1-flash-tts-preview
 GEMINI_SPEECH_VOICE=Kore
 # Generate once with `pnpm --filter @lymi/web exec web-push generate-vapid-keys`.
@@ -22,7 +30,7 @@ VAPID_PUBLIC_KEY=
 VAPID_PRIVATE_KEY=
 VAPID_SUBJECT=mailto:you@example.com
 OPENAI_API_KEY=
-# Optional OpenAI speech overrides. OpenAI is the last speech fallback.
+# Optional OpenAI speech overrides. OpenAI falls back to Chirp when Cloud credentials are present.
 OPENAI_BASE_URL=
 OPENAI_SPEECH_MODEL=gpt-4o-mini-tts
 OPENAI_SPEECH_VOICE=marin

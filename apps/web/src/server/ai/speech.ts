@@ -1,9 +1,15 @@
+import { createElevenLabsSpeechProvider, type ElevenLabsSpeechBindings } from "./elevenlabs-speech";
+import { createGeminiApiSpeechProvider, type GeminiApiSpeechBindings } from "./gemini-api-speech";
 import { createGoogleChirpProvider } from "./google-chirp";
 import { createGoogleGeminiProvider, type GoogleGeminiBindings } from "./google-gemini";
 import { createOpenAiSpeechProvider, type OpenAiSpeechBindings } from "./openai-speech";
+import { nativeSpeechVoice } from "./speech-voices";
 import type { SpeechProvider } from "./types";
 
-type SpeechBindings = GoogleGeminiBindings & OpenAiSpeechBindings;
+type SpeechBindings = GoogleGeminiBindings &
+  GeminiApiSpeechBindings &
+  OpenAiSpeechBindings &
+  ElevenLabsSpeechBindings;
 
 // https://docs.cloud.google.com/text-to-speech/docs/gemini-tts#available_languages
 // One default locale per root; Arabic uses the Modern Standard "World" locale.
@@ -261,20 +267,27 @@ export function openAiSupportsLanguage(language: string): boolean {
   return root ? OPENAI_TTS_LANGUAGES.has(root) : false;
 }
 
-/** Gemini first, then Chirp's native voices; OpenAI is last because it cannot pin a locale. */
+/** A native reference voice takes precedence; Gemini is the general default. */
 export function createSpeechProviders(env: SpeechBindings, language: string): SpeechProvider[] {
   const providers: SpeechProvider[] = [];
   const google = Boolean(env.GOOGLE_CLOUD_TTS_CREDENTIALS?.trim());
-
   const gemini = geminiLocale(language);
-  if (gemini && google) providers.push(createGoogleGeminiProvider(env, { locale: gemini }));
-
-  const chirp = chirpLocale(language);
-  if (chirp && google) providers.push(createGoogleChirpProvider(env, { locale: chirp }));
+  if (gemini) {
+    const native = nativeSpeechVoice(gemini, env.ELEVENLABS_SPEECH_VOICES);
+    if (native && env.ELEVENLABS_API_KEY?.trim()) {
+      providers.push(createElevenLabsSpeechProvider(env, gemini, native.voice));
+    }
+    if (env.GEMINI_API_KEY?.trim()) {
+      providers.push(createGeminiApiSpeechProvider(env, gemini));
+    } else if (google) {
+      providers.push(createGoogleGeminiProvider(env, { locale: gemini }));
+    }
+  }
 
   if (openAiSupportsLanguage(language) && env.OPENAI_API_KEY?.trim()) {
     providers.push(createOpenAiSpeechProvider(env, language));
   }
-
+  const chirp = chirpLocale(language);
+  if (chirp && google) providers.push(createGoogleChirpProvider(env, { locale: chirp }));
   return providers;
 }

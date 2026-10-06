@@ -40,11 +40,11 @@ describe("speech provider routing", () => {
     expect(openAiSupportsLanguage("gu-IN")).toBe(false);
   });
 
-  it("prefers Gemini, then Chirp, then OpenAI", () => {
+  it("prefers Gemini, then OpenAI, then Chirp", () => {
     expect(names(createSpeechProviders(env, "et"))).toEqual([
       "google-gemini",
-      "google-chirp",
       "openai",
+      "google-chirp",
     ]);
   });
 
@@ -64,5 +64,63 @@ describe("speech provider routing", () => {
 
   it("returns no provider when no vendor covers the language", () => {
     expect(createSpeechProviders(env, "eo")).toEqual([]);
+  });
+  it("uses the AI Studio API instead of Cloud Gemini when its key is configured", () => {
+    const configured = { ...env, GEMINI_API_KEY: "gemini-key" };
+    for (const language of ["et", "uk", "ru", "cs", "pl", "he", "ka", "sr", "en"]) {
+      const providers = createSpeechProviders(configured, language);
+      expect(providers[0]).toMatchObject({
+        provider: "gemini-api",
+        voice: "Kore",
+        extension: "wav",
+      });
+      expect(names(providers)).not.toContain("google-gemini");
+    }
+  });
+
+  it("routes native voices first and leaves Gemini as their fallback", () => {
+    const configured = { ...env, GEMINI_API_KEY: "gemini-key", ELEVENLABS_API_KEY: "eleven-key" };
+    for (const language of ["et-EE", "uk", "ru", "zh", "pt-BR", "ja"]) {
+      expect(names(createSpeechProviders(configured, language))).toEqual([
+        "elevenlabs",
+        "gemini-api",
+        "openai",
+        "google-chirp",
+      ]);
+    }
+    expect(createSpeechProviders(configured, "et")[0]?.voice).toBe("jGja51dd7gcoK0zkxeyg");
+    expect(createSpeechProviders(configured, "pt-PT")[0]?.provider).toBe("gemini-api");
+    for (const language of [
+      "cs",
+      "pl",
+      "no",
+      "nb-NO",
+      "he",
+      "hi",
+      "ko",
+      "ro",
+      "sr",
+      "es",
+      "sv",
+      "tr",
+      "vi",
+      "en",
+      "ka",
+    ]) {
+      expect(createSpeechProviders(configured, language)[0]?.provider).toBe("gemini-api");
+    }
+  });
+
+  it("allows a voice override or Gemini default without adding a credential", () => {
+    const configured = { GEMINI_API_KEY: "gemini-key", ELEVENLABS_API_KEY: "eleven-key" };
+    const override = {
+      ...configured,
+      ELEVENLABS_SPEECH_VOICES: '{"cs": "jGja51dd7gcoK0zkxeyg", "pl": null}',
+    };
+    expect(createSpeechProviders(override, "cs")[0]?.voice).toBe("jGja51dd7gcoK0zkxeyg");
+    expect(createSpeechProviders(override, "pl")[0]?.provider).toBe("gemini-api");
+    expect(
+      createSpeechProviders({ ...configured, ELEVENLABS_SPEECH_VOICES: "invalid" }, "et")[0]?.voice,
+    ).toBe("jGja51dd7gcoK0zkxeyg");
   });
 });

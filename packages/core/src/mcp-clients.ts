@@ -1,6 +1,6 @@
 /**
  * Client ID Metadata Documents that Lymi publishes for MCP clients that cannot publish their own.
- * Gemini CLI and Cursor accept a client ID in their config; without one they try dynamic
+ * Gemini CLI, Cursor and Grok accept a client ID; without one they try dynamic
  * registration, which Lymi keeps off (ADR 0027).
  */
 
@@ -38,6 +38,27 @@ export function cursorClientMetadata(siteOrigin: string) {
     // Native, because a web client may not redirect to localhost.
     application_type: "native",
     redirect_uris: CURSOR_REDIRECT_URIS,
+    grant_types: ["authorization_code", "refresh_token"],
+    response_types: ["code"],
+    token_endpoint_auth_method: "none",
+  };
+}
+
+export const GROK_CLIENT_PATH = "/oauth/grok.json";
+
+/** Both callbacks Grok has been seen to use; xAI documents neither, so a sign-in check guards them. */
+const GROK_REDIRECT_URIS = [
+  "https://grok.com/connectors/oauth/callback",
+  "https://grok.com/connectors-oauth-exchange-code/",
+];
+
+export function grokClientMetadata(siteOrigin: string) {
+  return {
+    client_id: new URL(GROK_CLIENT_PATH, siteOrigin).toString(),
+    client_name: "Grok",
+    client_uri: new URL("/docs/mcp/grok", siteOrigin).toString(),
+    application_type: "web",
+    redirect_uris: GROK_REDIRECT_URIS,
     grant_types: ["authorization_code", "refresh_token"],
     response_types: ["code"],
     token_endpoint_auth_method: "none",

@@ -3,7 +3,6 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import {
-  Activity,
   BookMarked,
   ChartNoAxesColumn,
   ChevronLeft,
@@ -12,13 +11,14 @@ import {
   Search,
   Sun,
 } from "lucide-react";
-import type { ReactNode, Ref } from "react";
+import { Fragment, type ReactNode, type Ref, useMemo } from "react";
 import { AddMenu } from "../components/add-menu";
 import { IconButton } from "../components/button";
 import { DueCount } from "../components/due-count";
 import { LearnerMenu } from "../components/learner-menu";
 import { AppTile, Wordmark } from "../components/logo";
 import { NavLink } from "../components/nav-link";
+import { RailHeading, RailNav, RailRow } from "../components/rail-nav";
 import { groupDecks } from "../lib/library-groups";
 
 export interface NavDeck {
@@ -72,11 +72,9 @@ interface SidebarProps {
 }
 
 /**
- * Desktop navigation. It sits on the rail, one surface off the room, so chrome and content
- * never read as one wash. The lockup tops it on the same line as the page title beside it,
- * capture and search share that line, and the learner closes it under a rule. It fills the
- * height it is given and scrolls its own overflow, so the frame that holds it decides how
- * tall it is: the viewport in the app, the window in the design gallery.
+ * Desktop navigation on the rail; docs/design/system/rail.md. It fills the height it is given
+ * and scrolls only its places, so the frame that holds it decides how tall it is: the viewport
+ * in the app, the window in the design gallery.
  */
 export function Sidebar({
   decks,
@@ -93,23 +91,24 @@ export function Sidebar({
   className,
 }: SidebarProps) {
   const { t, i18n } = useLingui();
-  const groups = groupDecks(decks ?? [], series);
-  const item =
-    "group flex h-10 items-center gap-2.5 rounded-sm px-2.5 text-base text-text-2 transition-[background-color,color,box-shadow] duration-150 hoverable:hover:bg-rail-hover hoverable:hover:text-text [&.active]:bg-rail-chosen [&.active]:text-text [&.active]:edge-inset [&_svg]:size-[18px] [&_svg]:text-muted [&.active_svg]:text-text";
+  const groups = useMemo(() => groupDecks(decks ?? [], series), [decks, series]);
   const deckRow = (d: NavDeck) => (
-    <NavLink key={d.id} to="/library/$deckId" params={{ deckId: d.id }} className={item}>
-      <span className="flex-1 truncate">{d.name}</span>
-      {d.due > 0 && <DueCount>{d.due}</DueCount>}
-    </NavLink>
+    <RailRow
+      key={d.id}
+      render={<NavLink to="/library/$deckId" params={{ deckId: d.id }} />}
+      end={d.due > 0 && <DueCount>{d.due}</DueCount>}
+    >
+      {d.name}
+    </RailRow>
   );
   return (
     <aside
       className={clsx(
-        "flex h-full w-60 shrink-0 flex-col gap-0.5 overflow-y-auto border-e border-edge bg-rail px-3 pb-4 pt-safe",
+        "flex h-full w-60 shrink-0 flex-col border-e border-edge bg-rail pt-safe",
         className,
       )}
     >
-      <div className="mb-6 mt-8 flex h-10 items-center gap-1 px-2.5">
+      <div className="mx-3 mt-8 mb-6 flex h-10 shrink-0 items-center gap-1 px-2.5">
         <TileLockup size="rail" className="me-auto" />
         {streak}
         {onSearch && (
@@ -120,37 +119,39 @@ export function Sidebar({
         <AddMenu onAddCard={onAdd} onCreateDeck={onCreateDeck} size="sm" align="end" />
       </div>
 
-      {NAV.map((n) => (
-        <NavLink key={n.to} to={n.to} exact={n.exact} className={item}>
-          <n.icon aria-hidden="true" />
-          <span className="flex-1">{i18n._(n.label)}</span>
-        </NavLink>
-      ))}
-
-      {decks && decks.length > 0 && (
-        <>
-          <div className="mx-2.5 mb-1.5 mt-7 text-xs font-medium uppercase tracking-[0.06em] text-muted">
-            <Trans>Decks</Trans>
-          </div>
+      {/* Only the places scroll, so capture and the learner stay in reach however many decks there are. */}
+      <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-4">
+        <RailNav rows={groups}>
+          {NAV.map((n) => (
+            <RailRow
+              key={n.to}
+              render={<NavLink to={n.to} exact={n.exact} />}
+              icon={<n.icon aria-hidden="true" />}
+            >
+              {i18n._(n.label)}
+            </RailRow>
+          ))}
+          {/* A series is a section beside Decks, not inside it, so Decks heads only the decks without one. */}
+          {groups.loose.length > 0 && (
+            <RailHeading>
+              <Trans>Decks</Trans>
+            </RailHeading>
+          )}
           {groups.loose.map(deckRow)}
           {groups.series.map(({ series: group, decks: inSeries }) =>
             inSeries.length > 0 ? (
-              <div key={group.id} className="contents">
-                <div className="mx-2.5 mt-3 mb-1 truncate text-sm font-medium text-muted">
-                  {group.name}
-                </div>
+              <Fragment key={group.id}>
+                <RailHeading className="truncate">{group.name}</RailHeading>
                 {inSeries.map(deckRow)}
-              </div>
+              </Fragment>
             ) : null,
           )}
-        </>
-      )}
-
-      <div className="min-h-6 flex-1" />
+        </RailNav>
+      </div>
 
       {/* The rule is its own line across the rail, not a border on the row: a top border on a
           rounded row curves at the corners and reads as a broken card rather than a divider. */}
-      <div className="-mx-3 mt-2 border-t border-edge px-3 pt-2">
+      <div className="shrink-0 border-t border-edge px-3 pt-2 pb-4">
         <LearnerMenu
           variant="rail"
           name={name}

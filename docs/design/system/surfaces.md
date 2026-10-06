@@ -13,6 +13,7 @@ What is it?
  ├── A thing in the room: a card, a panel, a row group, a control → bg-plate with the edge utility
  ├── A well inside a plate: a chip, a track, a nested group → bg-plate-2
  ├── The chosen option riding in a plate-2 track (Segmented, the pill nav) → bg-chosen
+ ├── The current row in the rail → bg-rail-chosen with edge-inset (see The rail's rows)
  ├── Something empty that will fill later → no fill, a dashed border-edge-2 outline (see empty-states.md)
  └── A published deck on Explore → a deck tray (see The deck tray), and nowhere else
 ```
@@ -37,12 +38,19 @@ The light room is noon: nothing casts a shadow, so depth is tone and one hairlin
 | Plate | `edge bg-plate` | white with a hairline | lifted: `--lift`, a warm line along the top and a soft shadow under it |
 | Well | `well`, a track or an unlit pane | set into its plate | set into its plate, a step lighter so it still reads |
 | Chosen | `bg-chosen`, in a `plate-2` track | white | a lifted warm grey, above its track |
+| Current rail row | `bg-rail-chosen edge-inset` | white with a hairline | flat: a step above the rail with a hairline inside, never lifted |
 
 Never lifted: a form field, which sets `--lift` to nothing because a field is set into the page and a lifted one reads as a button; anything with no fill at rest, such as a ghost button, a navigation row or a menu row; a chip; a well. Overlays keep their own edge and scrim ([overlays.md](overlays.md)).
 
 ### Hover
 
-Hover follows what the thing is at rest. Something with a fill and a hairline, such as a plate you can press, a secondary button or a grade, strengthens to `edge-2` and lays `veil` over its own fill. Because the veil darkens whatever fill is under it, it answers the same way in both rooms. A row on a white surface, such as a list inside a plate, a dialog's list or the card rows in an Activity entry, is part of that white surface and hovers with `veil` too. Something with no fill at rest, such as a ghost button or a menu row, and a chip or well on `plate-2`, fills with `bg-hover`, never `plate-2`: in the light room `plate-2` is the rail's tone, so the fill vanishes there. A row in the rail hovers with `bg-rail-hover` and the current one sits on `bg-rail-chosen` with `edge-inset`, never lifted: at night a lifted current row reads as a button, and hover stays dimmer than it so the row you point at never outranks the one you are on.
+Hover follows what the thing is at rest. Something with a fill and a hairline, such as a plate you can press, a secondary button or a grade, strengthens to `edge-2` and lays `veil` over its own fill. Because the veil darkens whatever fill is under it, it answers the same way in both rooms. A row on a white surface, such as a list inside a plate, a dialog's list or the card rows in an Activity entry, is part of that white surface and hovers with `veil` too. Something with no fill at rest, such as a ghost button or a menu row, and a chip or well on `plate-2`, fills with `bg-hover`, never `plate-2`: in the light room `plate-2` is the rail's tone, so the fill vanishes there. A row in the rail has its own pair (see The rail's rows).
+
+### The rail's rows
+
+The rail shows where the learner is, so its current row is the strongest row in it and hover always sits below it. The current row is `bg-rail-chosen` with `edge-inset`; a row under the pointer fills with `bg-rail-hover`. By day these match a plate and `bg-hover`. At night the current row is flat, a step above the rail with a hairline drawn inside it, and hover is a faint white wash.
+
+Never `edge` or `bg-plate` on the current row: at night `edge` lifts it into a dark button, and `plate` sits below `hover`, so the row under the pointer outranked the one the learner is on. The desktop navigation in `shell.tsx` and the design pages' sidebar both follow this.
 
 ### The chosen option
 

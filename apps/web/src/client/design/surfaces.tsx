@@ -1,3 +1,4 @@
+import { clsx } from "clsx";
 import type { ReactNode } from "react";
 import { Button } from "../components/button";
 import { DeckTray } from "../components/deck-tray";
@@ -94,6 +95,36 @@ export function Surfaces() {
                   </div>
                 </div>
               </Labelled>
+            </div>
+          )}
+        </Pair>
+      </Sub>
+
+      <Sub
+        title="The rail's rows"
+        note="The current row is the strongest row in the rail and hover always sits below it. bg-rail-chosen with edge-inset, never lifted; hover fills with bg-rail-hover. At night the current row is a flat step above the rail and hover is a faint wash."
+      >
+        <Pair>
+          {() => (
+            <div className="grid w-60 gap-0.5 rounded-xl bg-rail p-3">
+              {[
+                ["Today", "rest"],
+                ["Library", "current"],
+                ["Insights", "hovered"],
+              ].map(([name, state]) => (
+                <Labelled key={name} label={state}>
+                  <div
+                    className={clsx(
+                      "flex h-10 items-center rounded-sm px-2.5 text-base",
+                      state === "current" && "edge-inset bg-rail-chosen text-text",
+                      state === "hovered" && "bg-rail-hover text-text",
+                      state === "rest" && "text-text-2",
+                    )}
+                  >
+                    {name}
+                  </div>
+                </Labelled>
+              ))}
             </div>
           )}
         </Pair>

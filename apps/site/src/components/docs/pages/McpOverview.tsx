@@ -243,8 +243,8 @@ export function McpOverview() {
         </li>
       </ul>
       <p>
-        You also need an account on the allowlist. Lymi is private for now, so sign-in is limited to
-        the addresses named in its configuration.
+        You also need a Lymi account. Anyone can sign up, with Google or with an email address and a
+        password.
       </p>
 
       <H2>Set it up</H2>

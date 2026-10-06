@@ -124,8 +124,9 @@ export function McpGemini() {
           client.
         </li>
         <li>
-          <strong>Sign-in is refused.</strong> Lymi is private. Only the accounts on its allowlist
-          can sign in, whatever the Google account in Gemini CLI is.
+          <strong>Sign-in is refused.</strong> An account made with an email address and a password
+          cannot sign in until the address is confirmed. Open the link in the confirmation email,
+          then connect again.
         </li>
         <li>
           <strong>The browser never opens.</strong> Gemini CLI prints the sign-in URL. Open it in a

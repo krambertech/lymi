@@ -77,10 +77,10 @@ export function RailRow({ render, icon, end, className, children, ...rest }: Rai
   return useRender({ defaultTagName: "a", render, props: mergeProps<"a">(own, rest) });
 }
 
-/** A section of the rail, such as Decks. */
-export function RailHeading({ className, ...rest }: ComponentProps<"h2">) {
+/** A section of the rail, such as Decks. A label, not a heading, so the screen beside it keeps its own outline. */
+export function RailHeading({ className, ...rest }: ComponentProps<"div">) {
   return (
-    <h2
+    <div
       data-rail-break=""
       className={clsx(
         "relative mx-2.5 mt-7 mb-1.5 text-xs font-medium uppercase tracking-[0.06em] text-muted",

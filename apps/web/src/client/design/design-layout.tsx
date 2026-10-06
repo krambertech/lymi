@@ -115,9 +115,9 @@ function Contents({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   ];
   return (
     <RailNav aria-label="Design system">
-      {sections.map((section) => (
+      {sections.map((section, i) => (
         <Fragment key={section.title}>
-          <RailHeading className="first-of-type:mt-0">{section.title}</RailHeading>
+          <RailHeading className={i === 0 ? "mt-0" : undefined}>{section.title}</RailHeading>
           {section.links.map((l) => (
             <RailRow
               key={l.key}

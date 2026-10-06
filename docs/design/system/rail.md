@@ -32,7 +32,7 @@ A row is `RailRow`, rendered as the router's link: 40 px tall, `text-base` in `t
 
 ## Sections and series
 
-A section heading is `RailHeading`: 12 px tracked capitals in `muted`, 28 px above it. A series' name is a heading in exactly the same style as Decks, because a series is a sibling of Decks rather than something inside it. Decks heads only the decks without a series, and it is left out when there are none, so a learner whose every deck is in one series sees that series alone. A series with no decks has no section.
+A section heading is `RailHeading`: 12 px tracked capitals in `muted`, 28 px above it. It is a label rather than an `h2`, so the screen beside the rail keeps the only heading outline. A series' name is a heading in exactly the same style as Decks, because a series is a sibling of Decks rather than something inside it. Decks heads only the decks without a series, and it is left out when there are none, so a learner whose every deck is in one series sees that series alone. A series with no decks has no section.
 
 A series stays a heading over its decks in the rail. It is not a row, it does not fold, and its decks are not indented: each of those was tried on 6 Oct 2026 and read as either busy or bare. A series has no page yet.
 

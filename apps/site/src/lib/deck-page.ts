@@ -223,6 +223,21 @@ export function etagMatches(ifNoneMatch: string | null, etag: string): boolean {
   return ifNoneMatch.split(",").some((tag) => tag.trim() === "*" || bare(tag) === bare(etag));
 }
 
+const CRAWLER =
+  /bot|crawl|spider|slurp|scrape|preview|facebookexternalhit|embedly|headless|lighthouse|curl|wget|python|go-http|java\/|okhttp|axios|node-fetch|undici|http-client/i;
+
+/**
+ * Whether a request reads as a person opening the page: a GET that is not a prefetch and does not
+ * name itself as a crawler, link previewer or script. User agents can lie, so this filters, never proves.
+ */
+export function countsAsPageView(request: Request): boolean {
+  if (request.method !== "GET") return false;
+  const purpose = request.headers.get("sec-purpose") ?? request.headers.get("purpose") ?? "";
+  if (/prefetch|prerender/i.test(purpose)) return false;
+  const agent = request.headers.get("user-agent") ?? "";
+  return agent !== "" && !CRAWLER.test(agent);
+}
+
 /** Short and public: a publisher's correction reaches visitors within minutes. */
 export const DECK_CACHE_CONTROL = "public, max-age=300";
 export const MISSING_CACHE_CONTROL = "public, max-age=60";

@@ -155,6 +155,10 @@
     {
       "name": "0038_complete_iron_man.sql",
       "sha256": "988db69e94abd374a6354f1558a587f6ad51a94162be3c3fa50c32fff810bb0a"
+    },
+    {
+      "name": "0039_bright_the_hand.sql",
+      "sha256": "f20cad28c09ad4cb83e27ee1e223239d9e3a17987514bc78f76501484ef49c53"
     }
   ]
 }

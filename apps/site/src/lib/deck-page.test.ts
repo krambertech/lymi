@@ -1,6 +1,7 @@
 import type { PublicDeckOut } from "@lymi/core/catalog";
 import { describe, expect, it } from "vitest";
 import {
+  countsAsPageView,
   deckContentHash,
   deckEtag,
   deckPaths,
@@ -280,5 +281,36 @@ describe("productAddPath", () => {
     ]) {
       expect(productAddPath(path)).toBeNull();
     }
+  });
+});
+
+describe("countsAsPageView", () => {
+  const browser =
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1";
+  const request = (headers: Record<string, string>, method = "GET") =>
+    new Request("https://lymi.app/explore/everyday-estonian", { method, headers });
+
+  it("counts a browser opening the page", () => {
+    expect(countsAsPageView(request({ "user-agent": browser }))).toBe(true);
+  });
+
+  it("skips crawlers, link previews and scripts", () => {
+    for (const agent of [
+      "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+      "facebookexternalhit/1.1",
+      "Slackbot-LinkExpanding 1.0",
+      "curl/8.7.1",
+      "python-requests/2.32",
+      "",
+    ]) {
+      expect(countsAsPageView(request({ "user-agent": agent })), agent).toBe(false);
+    }
+  });
+
+  it("skips a prefetch and anything but a GET", () => {
+    expect(countsAsPageView(request({ "user-agent": browser, "sec-purpose": "prefetch" }))).toBe(
+      false,
+    );
+    expect(countsAsPageView(request({ "user-agent": browser }, "HEAD"))).toBe(false);
   });
 });

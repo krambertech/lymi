@@ -48,7 +48,7 @@ On a desktop the rail is the way back and the top bar is hidden, except on a pag
 
 ## Phone: the top bar and the pill
 
-On the phone the navigation is a floating pill, two items wide (Today and Library), opaque over the content and clear of the home indicator. It is a `plate-2` track with a `plate` item selected inside it, the same shape as the segmented control, because a frosted pill is a material the rest of the app does not use. The avatar menu opens the other tabs, so on the phone the avatar carries a small **More** label and chevron that says so; its accessible name is "More, account menu". Tests find either trigger by `data-testid="learner-menu"`.
+On the phone the navigation is a floating pill, two items wide (Today and Library), opaque over the content and clear of the home indicator. It is a `plate-2` track with a `plate` item selected inside it, the same shape as the segmented control, because a frosted pill is a material the rest of the app does not use. The avatar menu opens the other tabs.
 
 Every screen starts with the same top bar: 56 px, the way back on the start side, the screen's own controls on the end, and the title under it on the same line and with the same gap on every screen.
 

@@ -836,6 +836,7 @@ function Review() {
                 currentDeck && {
                   name: currentDeck.name,
                   language: currentDeck.defaultLanguage ?? null,
+                  directions: currentDeck.directions,
                 }
               }
               section={sectionName}

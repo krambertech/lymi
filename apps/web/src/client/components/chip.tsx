@@ -56,10 +56,10 @@ export function StateChip({
   mode?: string | null | undefined;
 }) {
   const { i18n } = useLingui();
-  const icon = size === "lg" ? "size-3.5" : "size-3";
+  const icon = size === "lg" ? "size-3.5 shrink-0" : "size-3 shrink-0";
   if (inReview && state === 3)
     return (
-      <Chip size={size}>
+      <Chip size={size} className={mode ? shrinkable : undefined}>
         <StateIcon state="forgot" className={icon} />
         <Trans>Forgotten</Trans>
         <ModePart mode={mode} />
@@ -67,7 +67,7 @@ export function StateChip({
     );
   const key = stateKey(state);
   return (
-    <Chip size={size}>
+    <Chip size={size} className={mode ? shrinkable : undefined}>
       <StateIcon state={key} className={icon} />
       {i18n._(stateMarks[key].label)}
       <ModePart mode={mode} />
@@ -75,12 +75,16 @@ export function StateChip({
   );
 }
 
+/** With a mode named, the chip shrinks faster than what sits beside it, so the mode truncates first. */
+const shrinkable = "min-w-0 max-w-full shrink-[100]!";
+
 function ModePart({ mode }: { mode?: string | null | undefined }) {
   if (!mode) return null;
   return (
     <>
       <span aria-hidden="true">·</span>
-      <span>{mode}</span>
+      {/* The mode gives way first, so a narrow card keeps its deck name. */}
+      <span className="min-w-0 truncate">{mode}</span>
     </>
   );
 }

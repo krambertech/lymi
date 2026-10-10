@@ -120,12 +120,53 @@ test("a relearning card under review says Forgotten", async () => {
 test("the state pill names its direction, since a card asked both ways has a state per direction", async () => {
   await render(
     <I18nProvider i18n={i18n}>
-      <ReviewCard item={{ ...queueItem, fsrsState: 2 }} revealed={false} onReveal={noop} />
+      <ReviewCard
+        item={{ ...queueItem, fsrsState: 2 }}
+        deck={{ name: "Both ways", directions: "both" }}
+        revealed={false}
+        onReveal={noop}
+      />
     </I18nProvider>,
   );
 
   const text = page.getByRole("region", { name: /Recognition card/ }).element().textContent ?? "";
   expect(text).toContain("Known·Recognition");
+});
+
+test("a card asked one way has one state, so its pill names no direction", async () => {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <ReviewCard
+        item={{ ...queueItem, fsrsState: 2 }}
+        deck={{ name: "One way", language: "it", directions: "recognition" }}
+        revealed={false}
+        onReveal={noop}
+      />
+    </I18nProvider>,
+  );
+
+  const head = page.getByText("One way").element().parentElement?.parentElement;
+  expect(head?.textContent).toBe("One wayKnown");
+});
+
+test("on a phone the pill's direction truncates before the deck name does", async () => {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <div style={{ width: 375 }}>
+        <ReviewCard
+          item={{ ...queueItem, fsrsState: 3 }}
+          deck={{ name: "Eesti keel A1 sõnavara", language: "it", directions: "both" }}
+          revealed={false}
+          onReveal={noop}
+        />
+      </div>
+    </I18nProvider>,
+  );
+
+  const name = page.getByText("Eesti keel A1 sõnavara").element() as HTMLElement;
+  const mode = page.getByText("Recognition", { exact: true }).element() as HTMLElement;
+  expect(name.scrollWidth).toBeLessThanOrEqual(name.clientWidth);
+  expect(mode.scrollWidth).toBeGreaterThan(mode.clientWidth);
 });
 
 test("the head names the deck alone, and the mode only for a picture", async () => {
@@ -154,8 +195,9 @@ test("the head names the deck alone, and the mode only for a picture", async () 
   expect(text).toContain("Verbi");
   // A lesson's topic is a hint, so the section waits for the answer; the hidden answer is in the DOM.
   const head = page.getByText("Verbi").element().parentElement?.parentElement;
-  // The text mode is named only in the state pill, never in the head.
-  expect(head?.firstElementChild?.textContent).toBe("Verbi");
+  // The deck asks one way here, so neither the head nor the pill names the mode.
+  expect(head?.firstElementChild?.textContent).not.toContain("Recognition");
+  expect(head?.textContent).toBe("VerbiNew");
   expect(text).not.toContain("Recognition card");
   expect(text).not.toMatch(/Production/);
 

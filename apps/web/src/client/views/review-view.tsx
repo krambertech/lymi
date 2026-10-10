@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { gradeAllowed, type Rating, type ReviewAid } from "@lymi/core";
+import { type Directions, gradeAllowed, type Rating, type ReviewAid } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   BookMarked,
@@ -354,7 +354,14 @@ const answerLine: Variants = {
 export interface ReviewCardProps {
   item: QueueItem;
   /** The deck the card came from, named first on the card. A review can mix every deck. */
-  deck?: { name: string; language?: string | null | undefined } | undefined;
+  deck?:
+    | {
+        name: string;
+        language?: string | null | undefined;
+        /** Whether the card is asked both ways, which is when its state needs a direction. */
+        directions?: Directions | undefined;
+      }
+    | undefined;
   /** The deck's section the card is in, named under the answer in place of the card's source. */
   section?: string | undefined;
   revealed: boolean;
@@ -644,6 +651,8 @@ export function ReviewCard({
     card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase()
       ? card.language.toUpperCase()
       : null;
+  // Only a card asked both ways has two states that can disagree, #458.
+  const bothWays = (card.directions ?? deck?.directions) === "both";
   const tail = [mode.cue === "image" ? i18n._(modeLabel(mode)) : null, languageCode].filter(
     (part): part is string => !!part,
   );
@@ -874,7 +883,7 @@ export function ReviewCard({
               state={item.fsrsState}
               size="lg"
               inReview
-              mode={mode.cue === "image" ? null : i18n._(modeLabel(mode))}
+              mode={bothWays && mode.cue !== "image" ? i18n._(modeLabel(mode)) : null}
             />
           </div>
 

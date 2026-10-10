@@ -31,6 +31,16 @@ describe("the product origin", () => {
     expect(signedIn.headers.get("location")).toBe(`${PRODUCT_URL}/today`);
   });
 
+  it("sends the site's Open Lymi to sign-up without a session, and to Today with one", async () => {
+    const signedOut = await app.fetch("/?mode=sign-up");
+    expect(signedOut.status).toBe(302);
+    expect(signedOut.headers.get("location")).toBe(`${PRODUCT_URL}/login?mode=sign-up`);
+
+    const signedIn = await app.fetch("/?mode=sign-up", { as: learner });
+    expect(signedIn.status).toBe(302);
+    expect(signedIn.headers.get("location")).toBe(`${PRODUCT_URL}/today`);
+  });
+
   it("sends Explore to the site without a live session", async () => {
     const stale = {
       ...learner,

@@ -73,7 +73,9 @@ app.get("/", async (c) => {
   const db = createDb(c.env.DB);
   const auth = createAuth(c.env, db);
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
-  const destination = new URL(session ? "/today" : "/login", c.env.PRODUCT_URL);
+  // The site's Open Lymi asks for sign-up: a visitor with no session is most likely new.
+  const signedOut = c.req.query("mode") === "sign-up" ? "/login?mode=sign-up" : "/login";
+  const destination = new URL(session ? "/today" : signedOut, c.env.PRODUCT_URL);
   return c.redirect(destination.toString(), 302);
 });
 

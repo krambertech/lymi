@@ -4,7 +4,7 @@ import {
   SLIPPING_FORGOTTEN_DAYS,
   SLIPPING_RECENT_DAYS,
 } from "@lymi/core";
-import { and, desc, eq, gte, isNull, lte, sql } from "@lymi/core/db";
+import { and, desc, eq, gte, isNull, lt, lte, ne, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
 import { addDays, dateFormatter, daysBetween, type LocalDateFormatter } from "./days";
@@ -298,9 +298,10 @@ async function collection({ db, userId }: ServiceContext) {
 /**
  * Cards due on each of the next seven local days, today first. Anything already overdue is
  * counted into today, because that is when the learner will meet it. A card asked in several
- * directions counts once, on the day its first direction comes back.
+ * directions counts once, on the day its first direction comes back. A direction whose sibling
+ * was reviewed today waits for tomorrow, as it does in the draw.
  */
-async function forecast(ctx: ServiceContext, fmt: LocalDateFormatter) {
+async function forecast(ctx: ServiceContext, fmt: LocalDateFormatter, day: DayWindow) {
   const { db, userId } = ctx;
   const today = fmt.format(new Date());
   // Cards in a locked section wait, as they do in the draw, so the forecast never promises them.
@@ -309,7 +310,11 @@ async function forecast(ctx: ServiceContext, fmt: LocalDateFormatter) {
   const horizon = new Date(Date.parse(`${addDays(today, 8)}T00:00:00Z`) + DAY_MS);
 
   const rows = await db
-    .select({ cardId: schema.cardStates.cardId, due: schema.cardStates.due })
+    .select({
+      cardId: schema.cardStates.cardId,
+      direction: schema.cardStates.direction,
+      due: schema.cardStates.due,
+    })
     .from(schema.cardStates)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
     .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
@@ -325,16 +330,39 @@ async function forecast(ctx: ServiceContext, fmt: LocalDateFormatter) {
       ),
     );
 
-  const firstDue = new Map<string, Date>();
+  // The same log the draw reads: undone grades and imported history do not count.
+  const reviewedToday = await db
+    .select({ cardId: schema.reviews.cardId, direction: schema.reviews.direction })
+    .from(schema.reviews)
+    .leftJoin(schema.reviewUndos, eq(schema.reviewUndos.reviewId, schema.reviews.id))
+    .where(
+      and(
+        eq(schema.reviews.userId, userId),
+        gte(schema.reviews.reviewedAt, day.start),
+        lt(schema.reviews.reviewedAt, day.end),
+        isNull(schema.reviewUndos.reviewId),
+        ne(schema.reviews.source, "import"),
+      ),
+    );
+  const reviewed = new Map<string, Set<string>>();
+  for (const r of reviewedToday) {
+    const directions = reviewed.get(r.cardId) ?? new Set<string>();
+    directions.add(r.direction);
+    reviewed.set(r.cardId, directions);
+  }
+
+  const firstDay = new Map<string, number>();
   for (const r of rows) {
-    const seen = firstDue.get(r.cardId);
-    if (!seen || r.due < seen) firstDue.set(r.cardId, r.due);
+    // Anything already overdue counts into today, because that is when it will be met.
+    let i = Math.max(0, daysBetween(today, fmt.format(r.due)));
+    const siblings = reviewed.get(r.cardId);
+    if (i === 0 && siblings && !siblings.has(r.direction)) i = 1;
+    const seen = firstDay.get(r.cardId);
+    if (seen === undefined || i < seen) firstDay.set(r.cardId, i);
   }
 
   const buckets = new Array<number>(7).fill(0);
-  for (const due of firstDue.values()) {
-    // Anything already overdue counts into today, because that is when it will be met.
-    const i = Math.max(0, daysBetween(today, fmt.format(due)));
+  for (const i of firstDay.values()) {
     if (i < 7) buckets[i] = (buckets[i] ?? 0) + 1;
   }
   return buckets.map((count, i) => ({ date: addDays(today, i), count }));
@@ -390,7 +418,7 @@ export async function insights(
     activity(ctx, fmt),
     getSettings(ctx),
     collection(ctx),
-    forecast(ctx, fmt),
+    forecast(ctx, fmt, dayWindow(new Date(), zone)),
     leeches(ctx, dayWindow(new Date(), zone), 10),
   ]);
 

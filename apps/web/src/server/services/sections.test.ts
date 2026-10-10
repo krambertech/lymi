@@ -581,8 +581,51 @@ describe("opening sections in order", () => {
       { deckId: deck.id, term: "one", meaning: "üks" },
       { deckId: deck.id, term: "two", meaning: "kaks" },
     ]);
-    const { forecast, cards } = await insights(me, { zone: "UTC" });
-    expect(forecast.reduce((n, d) => n + d.count, 0)).toBeLessThanOrEqual(cards.total);
+    const { forecast } = await insights(me, { zone: "UTC" });
+    expect(forecast[0]?.count).toBe(2);
+    expect(forecast.reduce((n, d) => n + d.count, 0)).toBe(2);
+  });
+
+  it("files a card on the day its first direction comes back", async () => {
+    const me = await person("Kateryna");
+    const deck = await createDeck(me, { name: "Both ways", directions: "both" });
+    const [added] = await addCards(me, [{ deckId: deck.id, term: "three", meaning: "kolm" }]);
+    if (added?.status !== "added") throw new Error("card not added");
+    const due = (days: number) => new Date(Date.now() + days * 24 * 60 * 60 * 1000);
+    for (const [direction, days] of [
+      ["recognition", 3],
+      ["production", 1],
+    ] as const) {
+      await db
+        .update(schema.cardStates)
+        .set({ due: due(days) })
+        .where(
+          and(
+            eq(schema.cardStates.cardId, added.card.id),
+            eq(schema.cardStates.direction, direction),
+          ),
+        );
+    }
+    const { forecast } = await insights(me, { zone: "UTC" });
+    expect(forecast.map((d) => d.count)).toEqual([0, 1, 0, 0, 0, 0, 0]);
+  });
+
+  it("holds a direction back for tomorrow once its sibling was reviewed today, as Today does", async () => {
+    const me = await person("Kateryna");
+    const deck = await createDeck(me, { name: "Both ways", directions: "both" });
+    const added = await addCards(me, [
+      { deckId: deck.id, term: "four", meaning: "neli" },
+      { deckId: deck.id, term: "five", meaning: "viis" },
+    ]);
+    const [first] = added;
+    if (first?.status !== "added") throw new Error("card not added");
+    const [drawn] = (await reviewQueue(me)).items.filter((i) => i.card.id === first.card.id);
+    if (!drawn?.direction) throw new Error("card not drawn");
+    await gradeCard(me, { cardId: first.card.id, direction: drawn.direction, rating: 4 });
+
+    const { forecast } = await insights(me, { zone: "UTC" });
+    expect(forecast[0]?.count).toBe((await reviewQueue(me)).total);
+    expect(forecast[0]?.count).toBe(1);
   });
 
   it("does not count a mode the deck no longer asks as started", async () => {

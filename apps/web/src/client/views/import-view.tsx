@@ -283,7 +283,10 @@ const LYMI_STEPS = [
       </Trans>
     ),
   },
-  { id: "save", node: <Trans>Sign back in to this account and choose that file, without unzipping it.</Trans> },
+  {
+    id: "save",
+    node: <Trans>Sign back in to this account and choose that file, without unzipping it.</Trans>,
+  },
 ];
 
 /** Uploading, reading, importing: a file on its way, with what the learner may do meanwhile. */

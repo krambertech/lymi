@@ -414,6 +414,29 @@ describe("importing an Anki package", () => {
     expect(preview.added).toBe(10);
   });
 
+  it("counts each deck's Known cards and asks no model when every deck's name gives its language", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    let asked = 0;
+    await inspectImport(ctx, id, env.IMPORTS, {
+      provider: "openai",
+      model: "test",
+      complete: async () => {
+        asked++;
+        return { decks: [] };
+      },
+    });
+    const { summary } = await getImport(ctx, id);
+    // In Lesson 1 the suspended card and the one never reviewed are not Known.
+    expect(summary?.decks.map((d) => [d.name, d.known])).toEqual([
+      ["Italian::Grammar", 0],
+      ["Italian::Lesson 1", 4],
+      ["Japanese", 0],
+    ]);
+    expect(Object.values(summary?.languages ?? {}).sort()).toEqual(["it", "it", "ja"]);
+    expect(asked).toBe(0);
+  });
+
   it("leaves out the decks the learner unticks, and refuses leaving out every deck", async () => {
     const ctx = await fresh();
     const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));

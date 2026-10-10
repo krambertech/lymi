@@ -88,3 +88,30 @@ export function guessLanguage(name: string): string | null {
   }
   return (best as { tag: string } | null)?.tag ?? null;
 }
+
+/** Scripts only one language in Lymi's reach is written in, so a sample of terms settles it. */
+const SCRIPTS: [RegExp, string][] = [
+  [/[\p{Script=Hiragana}\p{Script=Katakana}]/u, "ja"],
+  [/\p{Script=Hangul}/u, "ko"],
+  [/\p{Script=Greek}/u, "el"],
+  [/\p{Script=Hebrew}/u, "he"],
+  [/\p{Script=Thai}/u, "th"],
+  [/\p{Script=Georgian}/u, "ka"],
+  [/\p{Script=Armenian}/u, "hy"],
+];
+
+/**
+ * The language a deck's terms are written in, when their script says so on its own: kana is
+ * Japanese, Hangul Korean. Han, Cyrillic, Arabic and Latin are shared by many languages, so
+ * those decks are null here and left to the model. Most terms must agree, so a Japanese loanword
+ * in a Spanish deck decides nothing.
+ */
+export function languageOfScript(terms: readonly string[]): string | null {
+  const counts = new Map<string, number>();
+  for (const term of terms) {
+    const match = SCRIPTS.find(([pattern]) => pattern.test(term));
+    if (match) counts.set(match[1], (counts.get(match[1]) ?? 0) + 1);
+  }
+  const [best] = [...counts].sort((a, b) => b[1] - a[1]);
+  return best && best[1] * 2 > terms.length ? best[0] : null;
+}

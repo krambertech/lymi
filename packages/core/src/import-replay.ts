@@ -1,5 +1,5 @@
 import { emptyState, type FsrsCard, State, schedule } from "./fsrs";
-import type { ImportedProgress } from "./import";
+import type { ImportedCard, ImportedProgress } from "./import";
 import type { Rating } from "./types";
 
 const DAY_MS = 86_400_000;
@@ -77,4 +77,23 @@ export function replayProgress(
     };
   }
   return { state, reviews };
+}
+
+/** Image modes lead, then term to meaning, as the deck's list picks the state it marks a card by. */
+const leadRank = (mode: string) =>
+  mode.startsWith("image_") ? 0 : mode === "term_to_meaning" ? 1 : 2;
+
+/**
+ * Whether a card arrives Known: its leading asked mode replays to Review, the state a deck's
+ * list marks Known. A suspended card arrives archived and is not counted.
+ */
+export function arrivesKnown(
+  card: Pick<ImportedCard, "modes" | "progress" | "archived">,
+  now: Date,
+): boolean {
+  if (card.archived) return false;
+  const [leading] = card.progress
+    .filter((progress) => card.modes.includes(progress.mode))
+    .sort((a, b) => leadRank(a.mode) - leadRank(b.mode));
+  return leading !== undefined && replayProgress(leading, now).state.state === State.Review;
 }

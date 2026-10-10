@@ -23,20 +23,9 @@ function Menu({ variant }: { variant: "phone" | "rail" }) {
   );
 }
 
-test("on the phone the avatar says there is more, and is named for what it opens", async () => {
+test("on the phone the avatar opens Insights and Explore", async () => {
   await render(<Menu variant="phone" />);
-  const trigger = page.getByRole("button", { name: "More, account menu", exact: true });
-  await expect.element(trigger).toBeVisible();
-  expect(trigger.element().textContent).toContain("More");
-
-  await trigger.click();
+  await page.getByRole("button", { name: "Alex", exact: true }).click();
   await expect.element(page.getByRole("menuitem", { name: "Insights" })).toBeVisible();
   await expect.element(page.getByRole("menuitem", { name: "Explore" })).toBeVisible();
-});
-
-test("the rail's profile row has no More hint", async () => {
-  await render(<Menu variant="rail" />);
-  const trigger = page.getByRole("button", { name: "Alex" });
-  await expect.element(trigger).toBeVisible();
-  expect(trigger.element().textContent).not.toContain("More");
 });

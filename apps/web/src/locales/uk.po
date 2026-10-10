@@ -2429,10 +2429,6 @@ msgstr "Повідомлення"
 msgid "Mode"
 msgstr "Режим"
 
-msgctxt "Phone learner menu"
-msgid "More"
-msgstr "Більше"
-
 msgid "More about this card"
 msgstr "Більше про картку"
 
@@ -2450,10 +2446,6 @@ msgstr "Схожі колоди"
 
 msgid "More than one right answer"
 msgstr "Кілька правильних відповідей"
-
-msgctxt "Phone learner menu"
-msgid "More, account menu"
-msgstr "Більше, меню акаунта"
 
 #. placeholder {0}: shortQuote(card.term)
 msgid "Move “{0}” to"

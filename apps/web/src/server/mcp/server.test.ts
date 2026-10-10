@@ -116,10 +116,11 @@ const card: CardView = {
   updatedAt: now,
 };
 
-async function connect(scope: McpPrincipal["scope"]) {
+async function connect(scope: McpPrincipal["scope"], reportError?: McpPrincipal["reportError"]) {
   const principal: McpPrincipal = {
     ctx: { db: {} as Db, userId: "user-1", actor: "mcp" },
     scope,
+    reportError,
     resourceMetadataUrl: "https://my.lymi.app/.well-known/oauth-protected-resource/mcp",
   };
   const server = buildMcpServer(principal);
@@ -976,30 +977,38 @@ describe("Lymi MCP server", () => {
   it("turns a service error into a tool error instead of a crash", async () => {
     services.getDeck.mockRejectedValue(new ServiceError("not_found", "Deck not found"));
     services.listDeckCards.mockResolvedValue([]);
-    const client = await connect("read");
+    const reportError = vi.fn().mockResolvedValue(undefined);
+    const client = await connect("read", reportError);
 
     const res = await client.callTool({ name: "get_deck", arguments: { deckId: "nope" } });
 
     expect(res.isError).toBe(true);
     expect(res.content[0]).toMatchObject({ type: "text", text: "Deck not found" });
+    expect(reportError).not.toHaveBeenCalled();
   });
 
-  it("answers an unexpected failure with a retry message, never the internal error", async () => {
-    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
-    services.showCard.mockRejectedValue(
-      new Error("D1_ERROR: no such column: cards.secret at offset 42 SQLITE_ERROR"),
-    );
-    const client = await connect("read");
+  it.each([false, true])(
+    "keeps an unexpected tool failure private when monitoring rejects: %s",
+    async (rejects) => {
+      const spy = vi.spyOn(console, "error").mockImplementation(() => {});
+      const error = new Error("D1_ERROR: no such column: cards.secret at offset 42 SQLITE_ERROR");
+      services.showCard.mockRejectedValue(error);
+      const reportError = rejects
+        ? vi.fn().mockRejectedValue(new Error("monitoring unavailable"))
+        : vi.fn().mockResolvedValue(undefined);
+      const client = await connect("read", reportError);
 
-    const res = await client.callTool({ name: "get_card", arguments: { cardId: "card-1" } });
+      const res = await client.callTool({ name: "get_card", arguments: { cardId: "card-1" } });
 
-    expect(res.isError).toBe(true);
-    expect(JSON.stringify(res.content)).not.toContain("D1_ERROR");
-    expect(res.content[0]).toMatchObject({ text: expect.stringContaining("Try again") });
-    expect(JSON.stringify(spy.mock.calls)).not.toContain("D1_ERROR");
-    expect(spy).toHaveBeenCalledWith("MCP tool failed", { tool: "get_card", error: "Error" });
-    spy.mockRestore();
-  });
+      expect(res.isError).toBe(true);
+      expect(reportError).toHaveBeenCalledWith(error, "get_card");
+      expect(JSON.stringify(res.content)).not.toContain("D1_ERROR");
+      expect(res.content[0]).toMatchObject({ text: expect.stringContaining("Try again") });
+      expect(JSON.stringify(spy.mock.calls)).not.toContain("D1_ERROR");
+      expect(spy).toHaveBeenCalledWith("MCP tool failed", { tool: "get_card", error: "Error" });
+      spy.mockRestore();
+    },
+  );
 
   it("returns a card without the bookkeeping columns", async () => {
     services.showCard.mockResolvedValue(card);

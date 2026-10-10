@@ -4,7 +4,7 @@ import { createMcpHandler } from "agents/mcp/server";
 import type { Auth } from "../auth";
 import type { Db } from "../db";
 import { type Bindings, publisherEmails } from "../env";
-import { productAnalytics } from "../posthog";
+import { productAnalytics, reportServerException } from "../posthog";
 import { getSettings } from "../services";
 import { clientNames, grantedScope } from "../services/connected-apps";
 import { enrichmentQueue } from "../services/enrichment";
@@ -93,6 +93,15 @@ export async function authorizeMcpClaims(
       ...(named ? { clientName: named } : {}),
     },
     scope: tokenWrites && consent === "write" ? "write" : "read",
+    reportError: async (error, tool) => {
+      const work = reportServerException(deps.env, error, {
+        route: `mcp/${tool}`,
+        method: "MCP",
+        userId,
+      });
+      if (deps.defer) deps.defer(work);
+      else await work;
+    },
     resourceMetadataUrl: mcpResourceMetadataUrl(deps.env),
     images:
       deps.env.PRIVATE_IMAGES && deps.env.IMAGES

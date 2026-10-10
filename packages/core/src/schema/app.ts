@@ -1,5 +1,13 @@
 import { sql } from "drizzle-orm";
-import { index, integer, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import {
+  index,
+  integer,
+  primaryKey,
+  real,
+  sqliteTable,
+  text,
+  uniqueIndex,
+} from "drizzle-orm/sqlite-core";
 import {
   type AppliedFix,
   DIAGNOSIS_CAUSES,
@@ -429,6 +437,24 @@ export const deckEditions = sqliteTable(
 );
 
 /**
+ * Requests for a published deck's public page, per UTC day and page locale, counted by the site
+ * Worker. Known crawlers are not counted, and a count is requests, never people.
+ */
+export const deckPageViews = sqliteTable(
+  "deck_page_views",
+  {
+    deckId: text("deck_id")
+      .notNull()
+      .references(() => decks.id, { onDelete: "cascade" }),
+    /** UTC YYYY-MM-DD. */
+    day: text("day").notNull(),
+    locale: text("locale").notNull(),
+    views: integer("views").notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.deckId, t.day, t.locale] })],
+);
+
+/**
  * What every localization row records besides its text: who wrote it, how far it has got, and
  * the canonical revision it was written from, which is what makes a stale edition findable.
  */
@@ -837,6 +863,7 @@ export type DeckMember = typeof deckMembers.$inferSelect;
 export type DeckInvitation = typeof deckInvitations.$inferSelect;
 export type DeckPublication = typeof deckPublications.$inferSelect;
 export type DeckEdition = typeof deckEditions.$inferSelect;
+export type DeckPageView = typeof deckPageViews.$inferSelect;
 export type SeriesLocalization = typeof seriesLocalizations.$inferSelect;
 export type DeckLocalization = typeof deckLocalizations.$inferSelect;
 export type SectionLocalization = typeof sectionLocalizations.$inferSelect;

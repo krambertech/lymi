@@ -25,6 +25,7 @@ export * from "./public-media";
 export * from "./publications";
 export * from "./publishers";
 export * from "./push";
+export * from "./reports";
 export * from "./review";
 export * from "./review-days";
 export * from "./sections";

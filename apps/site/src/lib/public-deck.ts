@@ -1,5 +1,6 @@
-import { env } from "cloudflare:workers";
+import { env, waitUntil } from "cloudflare:workers";
 import {
+  countDeckPageView,
   listPublicDeckSlugs,
   listRelatedDecks,
   loadPublicDeck,
@@ -9,6 +10,7 @@ import {
 import { drizzle } from "@lymi/core/db";
 import type { AstroGlobal } from "astro";
 import {
+  countsAsPageView,
   DECK_CACHE_CONTROL,
   deckContentHash,
   deckEtag,
@@ -55,6 +57,8 @@ export async function resolveDeckPage(
   });
   headers.set("cache-control", DECK_CACHE_CONTROL);
   headers.set("etag", etag);
+  // A revalidation is a returning visitor seeing the page, so a 304 counts as well.
+  if (countsAsPageView(astro.request)) waitUntil(countDeckPageView(db, slug, locale));
   if (etagMatches(astro.request.headers.get("if-none-match"), etag)) {
     return new Response(null, {
       status: 304,

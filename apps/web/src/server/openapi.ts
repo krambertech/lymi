@@ -97,6 +97,11 @@ export function mountOpenApi(app: Hono<AppEnv>) {
             description:
               "A card's one private picture: set from bytes or a public link, described, archived and restored.",
           },
+          {
+            name: "Reports",
+            description:
+              "Aggregate results for a publisher's own published decks: adds, first reviews, returning learners and page views. Read-only.",
+          },
           { name: "Settings", description: "The learner's own preferences." },
           {
             name: "API keys",

@@ -10,7 +10,7 @@ test("someone with an AI assistant can reach the assistants page and see how to 
   await test.step("the landing page's assistant section opens the assistants page", async () => {
     await page.goto(publicSite);
     await page.getByRole("link", { name: "Lymi with AI assistants", exact: true }).click();
-    await expect(page).toHaveURL(new RegExp(`^${publicSite}/ai-assistants/?$`));
+    await expect(page).toHaveURL(new RegExp(`^${publicSite}/ai-assistants$`));
     await expect(
       page.getByRole("heading", {
         level: 1,
@@ -34,7 +34,7 @@ test("someone with an AI assistant can reach the assistants page and see how to 
       .getByRole("navigation", { name: "Language" })
       .getByRole("link", { name: "Русский", exact: true })
       .click();
-    await expect(page).toHaveURL(new RegExp(`^${publicSite}/ru/ai-assistants/?$`));
+    await expect(page).toHaveURL(new RegExp(`^${publicSite}/ru/ai-assistants$`));
     await expect(page.locator("html")).toHaveAttribute("lang", "ru");
     await expect(
       page.getByRole("heading", {

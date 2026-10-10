@@ -33,7 +33,7 @@ test("the public surface has no install contract while the product keeps its PWA
   );
 
   await page.goto("/docs/api");
-  await expect(page).toHaveURL(`${publicSite}/docs/api/`);
+  await expect(page).toHaveURL(`${publicSite}/docs/api`);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     "https://lymi.app/docs/api",
@@ -41,7 +41,7 @@ test("the public surface has no install contract while the product keeps its PWA
 
   for (const path of ["privacy", "terms", "support"]) {
     await page.goto(`/${path}`);
-    await expect(page).toHaveURL(`${publicSite}/${path}/`);
+    await expect(page).toHaveURL(`${publicSite}/${path}`);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",
       `https://lymi.app/${path}`,

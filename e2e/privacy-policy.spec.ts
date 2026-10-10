@@ -39,8 +39,8 @@ test("the privacy policy names email delivery in every supported language", asyn
 
 test("a localized page's footer links to the matching privacy policy", async ({ request }) => {
   const pages = [
-    { path: "/uk/", privacy: "/uk/privacy" },
-    { path: "/ru/", privacy: "/ru/privacy" },
+    { path: "/uk", privacy: "/uk/privacy" },
+    { path: "/ru", privacy: "/ru/privacy" },
   ] as const;
 
   for (const entry of pages) {

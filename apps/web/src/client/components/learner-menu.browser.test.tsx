@@ -23,9 +23,9 @@ function Menu({ variant }: { variant: "phone" | "rail" }) {
   );
 }
 
-test("on the phone the avatar says there is more, and keeps the learner's name as its name", async () => {
+test("on the phone the avatar says there is more, and is named for what it opens", async () => {
   await render(<Menu variant="phone" />);
-  const trigger = page.getByRole("button", { name: "Alex", exact: true });
+  const trigger = page.getByRole("button", { name: "More, account menu", exact: true });
   await expect.element(trigger).toBeVisible();
   expect(trigger.element().textContent).toContain("More");
 

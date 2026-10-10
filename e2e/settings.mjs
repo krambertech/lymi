@@ -31,6 +31,7 @@ export const e2eAccounts = [
   "explore",
   "language",
   "join-owner",
+  "join-member",
   "invite-owner",
   "avatar",
   "avatar-other",

@@ -73,7 +73,13 @@ app.get("/", async (c) => {
   const db = createDb(c.env.DB);
   const auth = createAuth(c.env, db);
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
-  const destination = new URL(session ? "/today" : "/login", c.env.PRODUCT_URL);
+  if (session) return c.redirect(new URL("/today", c.env.PRODUCT_URL).toString(), 302);
+  const destination = new URL("/login", c.env.PRODUCT_URL);
+  // The site's Open Lymi and /signup ask for sign-up, since a visitor with no session is most
+  // likely new; the rest of their query, such as campaign tags, rides along to the form.
+  if (c.req.query("mode") === "sign-up") {
+    destination.search = new URL(c.req.url).search;
+  }
   return c.redirect(destination.toString(), 302);
 });
 
@@ -187,9 +193,10 @@ app.all("/mcp", (c) =>
   handleMcpRequest(c.req.raw, { auth: c.get("auth"), db: c.get("db"), env: c.env }),
 );
 
-// Everything on this origin is one learner's product or protocol surface.
+// Everything on this origin is one learner's product or protocol surface. Deck add links are
+// crawlable only so a crawler can read their noindex and drop a shared link from results.
 app.get("/robots.txt", describe({ hide: true }), (c) => {
-  return c.text("User-agent: *\nDisallow: /\n", 200, {
+  return c.text("User-agent: *\nAllow: /add/\nDisallow: /\n", 200, {
     "cache-control": "public, max-age=3600",
   });
 });

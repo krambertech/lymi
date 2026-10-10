@@ -189,7 +189,12 @@ mountOpenApi(app);
 
 // The MCP server. Its own authentication: an OAuth access token this Worker issued.
 app.all("/mcp", (c) =>
-  handleMcpRequest(c.req.raw, { auth: c.get("auth"), db: c.get("db"), env: c.env }),
+  handleMcpRequest(c.req.raw, {
+    auth: c.get("auth"),
+    db: c.get("db"),
+    env: c.env,
+    defer: (work) => c.executionCtx.waitUntil(work),
+  }),
 );
 
 // Everything on this origin is one learner's product or protocol surface. Deck add links are

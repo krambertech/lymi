@@ -1703,7 +1703,7 @@ msgid "Post the join link in your class chat. Everyone who joins gets each card 
 msgstr "Надішли посилання для приєднання в чат групи. Кожен, хто приєднається, отримує нову картку, щойно ти її додаси, а розклад повторень у кожного свій. Коли групу набрано, вимкни посилання."
 
 msgid "PostHog keeps its browser state in memory for the current page and does not set analytics cookies or store an analytics identifier in local storage. Its reports still use the opaque account identifier while you are signed in."
-msgstr "PostHog зберігає свій стан у пам’яті браузера лише для поточної сторінки. Він не встановлює аналітичні cookie й не зберігає аналітичний ідентифікатор у локальному сховищі. Поки ти перебуваєш у своєму обліковому записі, звіти використовують його ідентифікатор, який не містить особистих даних."
+msgstr "PostHog зберігає свій стан у пам’яті браузера лише для поточної сторінки. Він не встановлює аналітичні cookie й не зберігає аналітичний ідентифікатор у локальному сховищі. Поки ти перебуваєш у своєму обліковому записі, звіти використовують його внутрішній ідентифікатор."
 
 msgid "Practise with your own words."
 msgstr "Практикуйся зі словами, які вчиш."
@@ -2428,7 +2428,7 @@ msgid "Waiting for your notes"
 msgstr "Чекаємо на нотатки"
 
 msgid "We also use PostHog’s EU service to understand product use and investigate errors. We send fixed action labels, counts and review grades with an opaque account identifier that connects activity across devices. Error reports contain the error type and technical stack frames; we remove error messages and other context. We do not send card content, email addresses, names, credentials or exact requested URLs, and we do not record sessions."
-msgstr "Ми також використовуємо сервіс PostHog у ЄС, щоб розуміти, як користуються застосунком, і досліджувати помилки. Ми надсилаємо фіксовані назви дій, їхню кількість та оцінки повторень разом з ідентифікатором облікового запису, який не містить особистих даних і пов’язує активність на різних пристроях. Звіти про помилки містять тип помилки й технічні записи стека викликів; ми вилучаємо повідомлення про помилки та інший контекст. Ми не надсилаємо вміст карток, адреси електронної пошти, імена, облікові дані чи точні запитувані URL і не записуємо сеанси."
+msgstr "Ми також використовуємо сервіс PostHog у ЄС, щоб розуміти, як користуються застосунком, і досліджувати помилки. Ми надсилаємо фіксовані назви дій, їхню кількість та оцінки повторень разом із внутрішнім ідентифікатором облікового запису, який пов’язує активність на різних пристроях. Звіти про помилки містять тип помилки й технічні записи стека викликів; ми вилучаємо повідомлення про помилки та інший контекст. Ми не надсилаємо вміст карток, адреси електронної пошти, імена, облікові дані чи точні запитувані URL і не записуємо сеанси."
 
 msgid "We count requests and product actions by type and measure response times. These metrics contain no account identifiers, card content or exact requested URLs."
 msgstr "Ми підраховуємо запити й дії в застосунку за типами та вимірюємо час відповіді. Ці показники не містять ідентифікаторів облікових записів, вмісту карток або точних адрес запитуваних сторінок."

@@ -1703,7 +1703,7 @@ msgid "Post the join link in your class chat. Everyone who joins gets each card 
 msgstr "Отправь ссылку для присоединения в чат группы. Каждый, кто присоединится, получает новую карточку, как только ты её добавишь, а расписание повторений у каждого своё. Когда группа набрана, выключи ссылку."
 
 msgid "PostHog keeps its browser state in memory for the current page and does not set analytics cookies or store an analytics identifier in local storage. Its reports still use the opaque account identifier while you are signed in."
-msgstr "PostHog хранит своё состояние в памяти браузера только для текущей страницы. Он не устанавливает аналитические cookie и не сохраняет аналитический идентификатор в локальном хранилище. Пока ты находишься в своём аккаунте, отчёты используют его идентификатор, который не содержит личных данных."
+msgstr "PostHog хранит своё состояние в памяти браузера только для текущей страницы. Он не устанавливает аналитические cookie и не сохраняет аналитический идентификатор в локальном хранилище. Пока ты находишься в своём аккаунте, отчёты используют его внутренний идентификатор."
 
 msgid "Practise with your own words."
 msgstr "Практикуйся со словами, которые учишь."
@@ -2428,7 +2428,7 @@ msgid "Waiting for your notes"
 msgstr "Ждём заметки"
 
 msgid "We also use PostHog’s EU service to understand product use and investigate errors. We send fixed action labels, counts and review grades with an opaque account identifier that connects activity across devices. Error reports contain the error type and technical stack frames; we remove error messages and other context. We do not send card content, email addresses, names, credentials or exact requested URLs, and we do not record sessions."
-msgstr "Мы также используем сервис PostHog в ЕС, чтобы понимать, как пользуются приложением, и исследовать ошибки. Мы отправляем фиксированные названия действий, их количество и оценки повторений вместе с идентификатором аккаунта, который не содержит личных данных и связывает активность на разных устройствах. Отчёты об ошибках содержат тип ошибки и технические записи стека вызовов; мы удаляем сообщения об ошибках и другой контекст. Мы не отправляем содержимое карточек, адреса электронной почты, имена, учётные данные или точные запрашиваемые URL и не записываем сеансы."
+msgstr "Мы также используем сервис PostHog в ЕС, чтобы понимать, как пользуются приложением, и исследовать ошибки. Мы отправляем фиксированные названия действий, их количество и оценки повторений вместе с внутренним идентификатором аккаунта, который связывает активность на разных устройствах. Отчёты об ошибках содержат тип ошибки и технические записи стека вызовов; мы удаляем сообщения об ошибках и другой контекст. Мы не отправляем содержимое карточек, адреса электронной почты, имена, учётные данные или точные запрашиваемые URL и не записываем сеансы."
 
 msgid "We count requests and product actions by type and measure response times. These metrics contain no account identifiers, card content or exact requested URLs."
 msgstr "Мы подсчитываем запросы и действия в приложении по типам и измеряем время ответа. Эти показатели не содержат идентификаторов аккаунтов, содержимого карточек или точных адресов запрошенных страниц."

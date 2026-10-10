@@ -1273,9 +1273,6 @@ msgstr "Прибрати зображення"
 msgid "Close"
 msgstr "Закрити"
 
-msgid "Come back here and choose that file, without unzipping it."
-msgstr "Повернись сюди й вибери цей файл, не розпаковуючи його."
-
 msgid "Come back later, or add new cards."
 msgstr "Повернися пізніше або додай нові картки."
 
@@ -3435,6 +3432,9 @@ msgstr "Показати пароль"
 
 msgid "Show the meaning, then Good"
 msgstr "Показати значення, потім «Добре»"
+
+msgid "Sign back in to this account and choose that file, without unzipping it."
+msgstr "Знову увійди в цей акаунт і вибери цей файл, не розпаковуючи його."
 
 msgid "Sign in"
 msgstr "Вхід"

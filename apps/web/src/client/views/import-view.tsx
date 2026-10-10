@@ -4,26 +4,28 @@ import { type ImportSource, MAX_IMPORT_BYTES } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
-  BookMarked,
+  Check,
+  ChevronLeft,
   CircleCheck,
   CircleMinus,
   FileUp,
-  Languages as LanguagesIcon,
   RotateCcw,
 } from "lucide-react";
-import { type ReactNode, useId, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useId, useMemo, useRef, useState } from "react";
 import { Button } from "../components/button";
+import { Chip } from "../components/chip";
+import { LanguageField } from "../components/deck-fields";
 import { ErrorState } from "../components/empty-state";
 import {
-  CardCheck,
   type Choices,
-  DecksDialog,
   FieldsDialog,
   failureCopy,
   fileSize,
   LanguagesDialog,
   languagesLine,
   type NoteType,
+  noteTypeName,
+  SampleCard,
   SOURCE_NAMES,
   type Summary,
 } from "../components/import-parts";
@@ -31,6 +33,8 @@ import { InlineError } from "../components/inline-error";
 import { type Back, Screen } from "../components/layout/screen";
 import { Progress } from "../components/progress";
 import { Skeleton } from "../components/skeleton";
+import { Checkbox } from "../components/ui/checkbox";
+import { Field, FieldLabel } from "../components/ui/field";
 import type { Import, ImportPreview } from "../lib/api";
 import { splitNoteTypes } from "../lib/import-note-types";
 import type { UploadState } from "../lib/import-uploads";
@@ -462,47 +466,222 @@ function Figure({
   );
 }
 
-/** A choice the preview has already answered, as a row that opens its dialog. */
-function PreviewRow({
-  icon,
-  title,
-  detail,
-  attention,
-  onClick,
-}: {
-  icon: ReactNode;
-  title: string;
-  detail: string;
-  attention?: boolean;
-  onClick: () => void;
-}) {
+type Step =
+  | { id: "decks" }
+  | { id: "languages" }
+  | { id: "card"; type: NoteType }
+  | { id: "summary" };
+
+/** Each step's question, focused when the step opens so a screen reader starts there. */
+function Question({ title, children }: { title: ReactNode; children?: ReactNode }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="flex w-full items-center gap-4 px-4 py-3.5 text-start transition-[background-color] duration-150 first:rounded-t-xl last:rounded-b-xl hoverable:hover:veil [&:not(:first-child)]:border-t [&:not(:first-child)]:border-edge"
-    >
-      <span
-        className="grid size-10 shrink-0 place-items-center rounded-full bg-plate-2 text-text-2"
-        aria-hidden="true"
+    <div className="grid gap-2">
+      <h2
+        data-step-question
+        tabIndex={-1}
+        className="text-xl font-medium tracking-[-0.01em] text-balance outline-none"
       >
-        {icon}
-      </span>
-      <span className="grid min-w-0 flex-1 gap-0.5">
-        <span className="text-md font-medium">{title}</span>
-        <span className={clsx("text-sm", attention ? "text-text-2" : "text-muted")}>{detail}</span>
-      </span>
-      <span className="text-base font-medium text-text-2">
-        <Trans>Change</Trans>
-      </span>
-    </button>
+        {title}
+      </h2>
+      {children && <p className="max-w-[60ch] text-base text-text-2 text-pretty">{children}</p>}
+    </div>
+  );
+}
+
+/** A step's actions, with Back beside them rather than above the question. */
+function StepActions({
+  onBack,
+  note,
+  children,
+}: {
+  onBack?: (() => void) | undefined;
+  note?: ReactNode;
+  children: ReactNode;
+}) {
+  const back = (className: string, variant: "secondary" | "ghost") =>
+    onBack && (
+      <Button
+        variant={variant}
+        size={variant === "secondary" ? "lg" : "md"}
+        className={className}
+        onClick={onBack}
+      >
+        <ChevronLeft data-icon="inline-start" className="rtl:-scale-x-100" aria-hidden="true" />
+        <Trans>Back</Trans>
+      </Button>
+    );
+  return (
+    <div className="grid gap-2 border-t border-edge pt-5">
+      <div className="flex gap-2">
+        {back("max-sm:hidden", "secondary")}
+        {/* Two answers share the row evenly and stack once a translation can't fit side by side. */}
+        <div className="flex min-w-0 flex-1 flex-wrap gap-2 *:min-w-fit *:flex-[1_1_calc(50%-0.25rem)]">
+          {children}
+        </div>
+      </div>
+      {note && <div className="text-center text-sm text-muted text-pretty">{note}</div>}
+      {back("justify-self-center sm:hidden", "ghost")}
+    </div>
+  );
+}
+
+/** What the import keeps and what it leaves, one plain line each. */
+function ImportLines({
+  item,
+  summary,
+  preview,
+  known,
+}: {
+  item: Import;
+  summary: Summary;
+  preview: ImportPreview;
+  known: number;
+}) {
+  const app = SOURCE_NAMES[item.source];
+  // New Mochi cards with no side break; the adapter names their kind by this key.
+  const oneSided = preview.addedByNoteType["content:one"] ?? 0;
+  return (
+    <ul className="grid gap-2.5">
+      {known > 0 && (
+        <Line tone="good">
+          {plural(known, {
+            one: `# card you know in ${app} comes in as Known, so it doesn’t start over.`,
+            other: `# cards you know in ${app} come in as Known, so they don’t start over.`,
+          })}
+        </Line>
+      )}
+      {preview.reviews > 0 ? (
+        <>
+          <Line tone="good">
+            <Trans>Cards keep the due dates they had in {app}.</Trans>
+          </Line>
+          <Line tone="good">
+            <Trans>
+              Past reviews show in Insights on the days you did them. They don’t count toward
+              today’s goal or your streak.
+            </Trans>
+          </Line>
+        </>
+      ) : summary.reviews > 0 ? null : (
+        <Line tone="skip">
+          {item.source !== "anki" ? (
+            <Trans>This file has no review history, so every card starts as new.</Trans>
+          ) : (
+            <Trans>
+              This file has no review history, so every card starts as new. To keep your progress,
+              export again with Include Scheduling Information ticked.
+            </Trans>
+          )}
+        </Line>
+      )}
+      {preview.pictures > 0 && (
+        <Line tone="good">
+          {plural(preview.pictures, {
+            one: "# card brings its picture.",
+            other: "# cards bring their pictures.",
+          })}
+        </Line>
+      )}
+      {preview.existing > 0 && (
+        <Line tone="good">
+          {plural(preview.existing, {
+            one: "# card was in an earlier import. Only its empty fields are filled.",
+            other: "# cards were in an earlier import. Only their empty fields are filled.",
+          })}
+        </Line>
+      )}
+      {preview.duplicates > 0 && (
+        <Line tone="skip">
+          <details className="group">
+            <summary className="cursor-pointer list-none underline-offset-4 hoverable:hover:underline [&::-webkit-details-marker]:hidden">
+              {plural(preview.duplicates, {
+                one: "# card is already in your decks, so it’s skipped.",
+                other: "# cards are already in your decks, so they’re skipped.",
+              })}
+            </summary>
+            <ul className="mt-2 grid gap-1 text-sm">
+              {preview.duplicateExamples.map((d) => (
+                <li key={`${d.term}-${d.deckName}`}>
+                  <Trans>
+                    <span className="font-medium text-text">{d.term}</span> in {d.deckName}
+                  </Trans>
+                </li>
+              ))}
+              {preview.duplicates > preview.duplicateExamples.length && (
+                <li className="text-muted">
+                  {plural(preview.duplicates - preview.duplicateExamples.length, {
+                    one: "and # more",
+                    other: "and # more",
+                  })}
+                </li>
+              )}
+            </ul>
+          </details>
+        </Line>
+      )}
+      {preview.archived > 0 && (
+        <Line tone="skip">
+          {item.source === "lymi"
+            ? plural(preview.archived, {
+                one: "# archived card arrives archived.",
+                other: "# archived cards arrive archived.",
+              })
+            : item.source === "mochi"
+              ? plural(preview.archived, {
+                  one: "# card you archived in Mochi arrives archived.",
+                  other: "# cards you archived in Mochi arrive archived.",
+                })
+              : plural(preview.archived, {
+                  one: "# suspended card arrives archived.",
+                  other: "# suspended cards arrive archived.",
+                })}
+        </Line>
+      )}
+      {preview.shortened > 0 && (
+        <Line tone="skip">
+          {plural(preview.shortened, {
+            one: "# card has text that’s too long, so part of it moves to notes or is cut.",
+            other: "# cards have text that’s too long, so part of it moves to notes or is cut.",
+          })}
+        </Line>
+      )}
+      {preview.audio > 0 && (
+        <Line tone="skip">
+          {plural(preview.audio, {
+            one: "# sound is skipped. Lymi reads terms aloud itself.",
+            other: "# sounds are skipped. Lymi reads terms aloud itself.",
+          })}
+        </Line>
+      )}
+      {oneSided > 0 && (
+        <Line tone="skip">
+          {plural(oneSided, {
+            one: "# card has no --- line, so it’s imported with a term and no meaning.",
+            other: "# cards have no --- line, so they’re imported with a term and no meaning.",
+          })}
+        </Line>
+      )}
+      {preview.unsupported + preview.skipped > 0 && (
+        <Line tone="skip">
+          {item.source !== "anki"
+            ? plural(preview.skipped, {
+                one: "# card has no term, so it’s skipped.",
+                other: "# cards have no term, so they’re skipped.",
+              })
+            : plural(preview.unsupported + preview.skipped, {
+                one: "# note is image occlusion or has no term, so it’s skipped.",
+                other: "# notes are image occlusion or have no term, so they’re skipped.",
+              })}
+        </Line>
+      )}
+    </ul>
   );
 }
 
 /**
- * The preview. It leads with one of the learner's own cards and asks whether it looks right,
- * then says in plain lines what the import keeps and what it skips. Languages and fields are
- * already answered and open only when the learner wants to change them. docs/design/imports.md.
+ * The preview, one question per screen: which decks, what language when the cards didn't say,
+ * whether each kind of card looks right, then what the import brings with the button that
+ * starts it. A step with nothing to ask is skipped. docs/design/imports.md.
  */
 export function ImportPreviewView({
   item,
@@ -534,36 +713,39 @@ export function ImportPreviewView({
   back?: Back | undefined;
 }) {
   const { t, i18n } = useLingui();
-  const [checked, setChecked] = useState<Set<string>>(new Set());
-  const [checkError, setCheckError] = useState<string>();
+  const [at, setAt] = useState(0);
+  const [showRest, setShowRest] = useState(false);
   const [fieldsFor, setFieldsFor] = useState<NoteType>();
   const [languagesOpen, setLanguagesOpen] = useState(false);
-  const [decksOpen, setDecksOpen] = useState(false);
+  const app = SOURCE_NAMES[item.source];
   const leftOut = new Set(choices.skipDecks);
   const chosenDecks = summary.decks.filter((d) => !leftOut.has(d.key));
-  const leftOutCards = summary.decks
-    .filter((d) => leftOut.has(d.key))
-    .reduce((sum, d) => sum + d.cards, 0);
+  // Asked about only when neither the file, the deck's name nor its cards gave a language,
+  // judged by what Lymi found so the step doesn't vanish while the learner answers it.
+  const unplaced = chosenDecks.filter((d) => (summary.languages[d.key] ?? null) === null);
   const { asked, rest } = useMemo(() => splitNoteTypes(summary.noteTypes), [summary.noteTypes]);
-  const [showRest, setShowRest] = useState(false);
-  const noteTypes = showRest ? [...asked, ...rest] : asked;
   const restNotes = rest.reduce((sum, type) => sum + type.notes, 0);
-  const unchecked = asked.filter((type) => !checked.has(type.key)).length;
-  const missingLanguage = chosenDecks.filter(
-    (d) => (choices.languages[d.key] ?? null) === null,
-  ).length;
-  const added = preview?.added ?? 0;
-  const app = SOURCE_NAMES[item.source];
-  // New Mochi cards with no side break; the adapter names their kind by this key.
-  const oneSided = preview?.addedByNoteType["content:one"] ?? 0;
+  const steps: Step[] = [
+    ...(summary.decks.length > 1 ? [{ id: "decks" } as const] : []),
+    ...(unplaced.length > 0 ? [{ id: "languages" } as const] : []),
+    ...(showRest ? [...asked, ...rest] : asked).map((type) => ({ id: "card", type }) as const),
+    { id: "summary" },
+  ];
+  const step = steps[Math.min(at, steps.length - 1)] as Step;
+  const next = () => setAt((i) => Math.min(i + 1, steps.length - 1));
+  const goBack = at > 0 ? () => setAt(at - 1) : undefined;
+  const known = chosenDecks.reduce((sum, d) => sum + (d.known ?? 0), 0);
 
-  const check = (key: string) =>
-    setChecked((current) => {
-      const next = new Set(current);
-      next.add(key);
-      if (asked.every((type) => next.has(type.key))) setCheckError(undefined);
-      return next;
-    });
+  const opened = useRef(false);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: runs on each new step.
+  useEffect(() => {
+    if (!opened.current) {
+      opened.current = true;
+      return;
+    }
+    window.scrollTo({ top: 0 });
+    document.querySelector<HTMLElement>("[data-step-question]")?.focus({ preventScroll: true });
+  }, [at]);
 
   return (
     <Shell
@@ -571,265 +753,176 @@ export function ImportPreviewView({
       sub={t`${item.fileName} · ${fileSize(item.byteSize, i18n.locale)}`}
       back={back}
     >
-      <CardCheck
-        source={item.source}
-        noteTypes={noteTypes}
-        samples={preview?.samples}
-        loading={previewLoading}
-        checked={checked}
-        onChecked={check}
-        onChangeFields={setFieldsFor}
-        error={checkError ? t`Check this card, then press Import again.` : undefined}
-      />
-
-      {rest.length > 0 && !showRest && (
-        <div className="-mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-base text-text-2">
-          <p className="text-pretty">
-            {plural(restNotes, {
-              one: "# more note of a less common kind is imported as it is.",
-              other: "# more notes of less common kinds are imported as they are.",
-            })}
-          </p>
-          <Button variant="ghost" size="sm" className="-ms-3" onClick={() => setShowRest(true)}>
-            <Trans>Check those too</Trans>
-          </Button>
-        </div>
+      {step.id === "decks" && (
+        <DecksStep
+          decks={summary.decks}
+          skipDecks={choices.skipDecks}
+          onSkipDecks={(skipDecks) => onChoices({ ...choices, skipDecks })}
+          onNext={next}
+        />
       )}
 
-      <section aria-labelledby="coming-across" className="grid gap-3">
-        <h2 id="coming-across" className="text-md font-medium">
-          <Trans>In this import</Trans>
-        </h2>
-        <div className="edge grid grid-cols-3 rounded-xl bg-plate">
-          <Figure value={preview?.added} label={t`new cards`} loading={previewLoading} />
-          <Figure value={preview?.reviews} label={t`past reviews`} loading={previewLoading} />
-          <Figure value={preview?.decks.length} label={t`decks`} loading={previewLoading} />
-        </div>
-        {previewError && (
-          <p className="text-sm" role="alert">
-            <InlineError>{previewError}</InlineError>
-          </p>
-        )}
-        {preview && (
-          <ul className="grid gap-2.5">
-            {preview.reviews > 0 ? (
-              <>
-                <Line tone="good">
-                  <Trans>Cards keep the due dates they had in {app}.</Trans>
-                </Line>
-                <Line tone="good">
-                  <Trans>
-                    Past reviews show in Insights on the days you did them. They don’t count toward
-                    today’s goal or your streak.
-                  </Trans>
-                </Line>
-              </>
-            ) : summary.reviews > 0 ? null : (
-              <Line tone="skip">
-                {item.source !== "anki" ? (
-                  <Trans>This file has no review history, so every card starts as new.</Trans>
-                ) : (
-                  <Trans>
-                    This file has no review history, so every card starts as new. To keep your
-                    progress, export again with Include Scheduling Information ticked.
-                  </Trans>
-                )}
-              </Line>
-            )}
-            {preview.pictures > 0 && (
-              <Line tone="good">
-                {plural(preview.pictures, {
-                  one: "# card brings its picture.",
-                  other: "# cards bring their pictures.",
-                })}
-              </Line>
-            )}
-            {preview.existing > 0 && (
-              <Line tone="good">
-                {plural(preview.existing, {
-                  one: "# card was in an earlier import. Only its empty fields are filled.",
-                  other: "# cards were in an earlier import. Only their empty fields are filled.",
-                })}
-              </Line>
-            )}
-            {preview.duplicates > 0 && (
-              <Line tone="skip">
-                <details className="group">
-                  <summary className="cursor-pointer list-none underline-offset-4 hoverable:hover:underline [&::-webkit-details-marker]:hidden">
-                    {plural(preview.duplicates, {
-                      one: "# card is already in your decks, so it’s skipped.",
-                      other: "# cards are already in your decks, so they’re skipped.",
-                    })}
-                  </summary>
-                  <ul className="mt-2 grid gap-1 text-sm">
-                    {preview.duplicateExamples.map((d) => (
-                      <li key={`${d.term}-${d.deckName}`}>
-                        <Trans>
-                          <span className="font-medium text-text">{d.term}</span> in {d.deckName}
-                        </Trans>
-                      </li>
-                    ))}
-                    {preview.duplicates > preview.duplicateExamples.length && (
-                      <li className="text-muted">
-                        {plural(preview.duplicates - preview.duplicateExamples.length, {
-                          one: "and # more",
-                          other: "and # more",
-                        })}
-                      </li>
-                    )}
-                  </ul>
-                </details>
-              </Line>
-            )}
-            {preview.archived > 0 && (
-              <Line tone="skip">
-                {item.source === "lymi"
-                  ? plural(preview.archived, {
-                      one: "# archived card arrives archived.",
-                      other: "# archived cards arrive archived.",
-                    })
-                  : item.source === "mochi"
-                    ? plural(preview.archived, {
-                        one: "# card you archived in Mochi arrives archived.",
-                        other: "# cards you archived in Mochi arrive archived.",
-                      })
-                    : plural(preview.archived, {
-                        one: "# suspended card arrives archived.",
-                        other: "# suspended cards arrive archived.",
-                      })}
-              </Line>
-            )}
-            {preview.shortened > 0 && (
-              <Line tone="skip">
-                {plural(preview.shortened, {
-                  one: "# card has text that’s too long, so part of it moves to notes or is cut.",
-                  other:
-                    "# cards have text that’s too long, so part of it moves to notes or is cut.",
-                })}
-              </Line>
-            )}
-            {preview.audio > 0 && (
-              <Line tone="skip">
-                {plural(preview.audio, {
-                  one: "# sound is skipped. Lymi reads terms aloud itself.",
-                  other: "# sounds are skipped. Lymi reads terms aloud itself.",
-                })}
-              </Line>
-            )}
-            {oneSided > 0 && (
-              <Line tone="skip">
-                {plural(oneSided, {
-                  one: "# card has no --- line, so it’s imported with a term and no meaning.",
-                  other:
-                    "# cards have no --- line, so they’re imported with a term and no meaning.",
-                })}
-              </Line>
-            )}
-            {preview.unsupported + preview.skipped > 0 && (
-              <Line tone="skip">
-                {item.source !== "anki"
-                  ? plural(preview.skipped, {
-                      one: "# card has no term, so it’s skipped.",
-                      other: "# cards have no term, so they’re skipped.",
-                    })
-                  : plural(preview.unsupported + preview.skipped, {
-                      one: "# note is image occlusion or has no term, so it’s skipped.",
-                      other: "# notes are image occlusion or have no term, so they’re skipped.",
-                    })}
-              </Line>
-            )}
-          </ul>
-        )}
-      </section>
+      {step.id === "languages" && (
+        <>
+          <Question
+            title={plural(unplaced.length, {
+              one: "What language is this deck in?",
+              other: "What language are these decks in?",
+            })}
+          >
+            <Trans>
+              Lymi couldn’t tell from the cards. It uses the language to find cards you already have
+              and to read terms aloud.
+            </Trans>
+          </Question>
+          <div className="edge grid gap-5 rounded-xl bg-plate p-5">
+            {unplaced.map((deck) => (
+              <LanguageField
+                key={deck.key}
+                label={deck.name.split("::").join(" / ")}
+                description={plural(deck.cards, { one: "# card", other: "# cards" })}
+                value={choices.languages[deck.key] ?? null}
+                onChange={(value) =>
+                  onChoices({ ...choices, languages: { ...choices.languages, [deck.key]: value } })
+                }
+              />
+            ))}
+          </div>
+          <StepActions onBack={goBack}>
+            <Button variant="primary" size="lg" onClick={next}>
+              <Trans>Continue</Trans>
+            </Button>
+          </StepActions>
+        </>
+      )}
 
-      <div className="edge grid rounded-xl bg-plate">
-        {summary.decks.length > 1 && (
-          <PreviewRow
-            icon={<BookMarked className="size-[18px]" />}
+      {step.id === "card" && (
+        <CardStep
+          key={step.type.key}
+          source={item.source}
+          type={step.type}
+          samples={preview?.samples[step.type.key]}
+          loading={previewLoading}
+          error={previewError}
+          tail={
+            step.type === asked.at(-1) && !showRest && rest.length > 0 ? (
+              <div className="-mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-base text-text-2">
+                <p className="text-pretty">
+                  {plural(restNotes, {
+                    one: "# more note of a less common kind is imported as it is.",
+                    other: "# more notes of less common kinds are imported as they are.",
+                  })}
+                </p>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="-ms-3"
+                  onClick={() => {
+                    setShowRest(true);
+                    next();
+                  }}
+                >
+                  <Trans>Check those too</Trans>
+                </Button>
+              </div>
+            ) : null
+          }
+          onChangeFields={() => setFieldsFor(step.type)}
+          onBack={goBack}
+          onNext={next}
+        />
+      )}
+
+      {step.id === "summary" && (
+        <>
+          <Question
             title={
-              leftOut.size === 0
-                ? plural(summary.decks.length, { other: "All # decks" })
-                : plural(summary.decks.length, { other: `${chosenDecks.length} of # decks` })
-            }
-            detail={
-              leftOut.size === 0
-                ? t`Leave out the decks you don’t use anymore.`
-                : plural(leftOutCards, {
-                    one: "# card in the decks you left out isn’t imported.",
-                    other: "# cards in the decks you left out aren’t imported.",
+              preview && preview.added === 0 && preview.existing > 0
+                ? plural(preview.existing, {
+                    one: "Ready to update # card",
+                    other: "Ready to update # cards",
+                  })
+                : plural(preview?.added ?? 0, {
+                    one: "Ready to import # card",
+                    other: "Ready to import # cards",
                   })
             }
-            onClick={() => setDecksOpen(true)}
           />
-        )}
-
-        <PreviewRow
-          icon={<LanguagesIcon className="size-[18px]" />}
-          title={plural(chosenDecks.length, {
-            one: "Language of # deck",
-            other: "Languages of # decks",
-          })}
-          detail={
-            missingLanguage > 0
-              ? plural(missingLanguage, {
-                  one: "# deck has no language yet. Choose one so Lymi can find duplicates and read terms aloud.",
-                  other:
-                    "# decks have no language yet. Choose one so Lymi can find duplicates and read terms aloud.",
-                })
-              : languagesLine(chosenDecks, choices.languages, i18n.locale, t`No language`)
-          }
-          attention={missingLanguage > 0}
-          onClick={() => setLanguagesOpen(true)}
-        />
-      </div>
-
-      <div className="grid gap-2 border-t border-edge pt-5">
-        {(checkError || confirmError) && (
-          <p className="text-center text-sm" role="alert">
-            <InlineError>{checkError ?? confirmError}</InlineError>
-          </p>
-        )}
-        <Button
-          variant="primary"
-          size="lg"
-          className="w-full"
-          loading={confirming}
-          aria-disabled={previewLoading && !preview}
-          onClick={() => {
-            if (unchecked > 0) {
-              setCheckError(
-                asked.length === 1
-                  ? t`Check that the card looks right first.`
-                  : plural(unchecked, {
-                      one: "Check # more kind of card first.",
-                      other: "Check # more kinds of card first.",
-                    }),
-              );
-              const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-              document
-                .getElementById("card-check")
-                ?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
-              return;
+          <div className="edge grid grid-cols-3 rounded-xl bg-plate">
+            <Figure value={preview?.added} label={t`cards`} loading={previewLoading} />
+            <Figure value={known} label={t`known`} loading={false} />
+            <Figure value={preview?.reviews} label={t`past reviews`} loading={previewLoading} />
+          </div>
+          {previewError && (
+            <p className="text-sm" role="alert">
+              <InlineError>{previewError}</InlineError>
+            </p>
+          )}
+          {preview && <ImportLines item={item} summary={summary} preview={preview} known={known} />}
+          <div className="edge grid rounded-xl bg-plate">
+            {summary.decks.length > 1 && (
+              <AnswerRow
+                title={t`Decks`}
+                changeLabel={t`Change decks`}
+                detail={
+                  leftOut.size === 0
+                    ? plural(summary.decks.length, { other: "All # decks" })
+                    : plural(summary.decks.length, { other: `${chosenDecks.length} of # decks` })
+                }
+                onChange={() => setAt(steps.findIndex((s) => s.id === "decks"))}
+              />
+            )}
+            <AnswerRow
+              title={t`Languages`}
+              changeLabel={t`Change languages`}
+              detail={languagesLine(chosenDecks, choices.languages, i18n.locale, t`No language`)}
+              onChange={() => setLanguagesOpen(true)}
+            />
+            <AnswerRow
+              title={t`Cards`}
+              changeLabel={t`Check the cards again`}
+              detail={
+                asked.length > 1 ? plural(asked.length, { other: "# kinds checked" }) : t`Checked`
+              }
+              onChange={() => setAt(steps.findIndex((s) => s.id === "card"))}
+            />
+          </div>
+          <StepActions
+            onBack={goBack}
+            note={
+              confirmError ? (
+                <p role="alert">
+                  <InlineError>{confirmError}</InlineError>
+                </p>
+              ) : (
+                <Trans>You can undo the whole import later from Activity.</Trans>
+              )
             }
-            onConfirm();
-          }}
-        >
-          {preview && added === 0 && preview.existing > 0
-            ? plural(preview.existing, { one: "Update # card", other: "Update # cards" })
-            : plural(added, { one: "Import # card", other: "Import # cards" })}
-        </Button>
-        <p className="text-center text-sm text-muted text-pretty">
-          <Trans>You can undo the whole import later from Activity.</Trans>
-        </p>
-        <Button
-          variant="ghost"
-          className="justify-self-center"
-          onClick={onCancel}
-          loading={cancelling}
-        >
-          <Trans>Cancel import</Trans>
-        </Button>
-      </div>
+          >
+            <Button
+              variant="primary"
+              size="lg"
+              loading={confirming}
+              aria-disabled={previewLoading && !preview}
+              onClick={() => {
+                if (preview) onConfirm();
+              }}
+            >
+              {preview && preview.added === 0 && preview.existing > 0
+                ? plural(preview.existing, { one: "Update # card", other: "Update # cards" })
+                : plural(preview?.added ?? 0, { one: "Import # card", other: "Import # cards" })}
+            </Button>
+          </StepActions>
+          <Button
+            variant="ghost"
+            className="-mt-4 justify-self-center"
+            onClick={onCancel}
+            loading={cancelling}
+          >
+            <Trans>Cancel import</Trans>
+          </Button>
+        </>
+      )}
 
       <FieldsDialog
         source={item.source}
@@ -841,7 +934,6 @@ export function ImportPreviewView({
         onSave={(roles) => {
           if (!fieldsFor) return;
           onChoices({ ...choices, roles: { ...choices.roles, [fieldsFor.key]: roles } });
-          check(fieldsFor.key);
         }}
       />
       <LanguagesDialog
@@ -853,15 +945,218 @@ export function ImportPreviewView({
         onOpenChange={setLanguagesOpen}
         onSave={(languages) => onChoices({ ...choices, languages })}
       />
-      <DecksDialog
-        key={decksOpen ? "decks-open" : "decks"}
-        decks={summary.decks}
-        skipDecks={choices.skipDecks}
-        open={decksOpen}
-        onOpenChange={setDecksOpen}
-        onSave={(skipDecks) => onChoices({ ...choices, skipDecks })}
-      />
     </Shell>
+  );
+}
+
+/** Which of the file's decks come into Lymi, for a collection that holds decks the learner no longer uses. */
+function DecksStep({
+  decks,
+  skipDecks,
+  onSkipDecks,
+  onNext,
+}: {
+  decks: Summary["decks"];
+  skipDecks: string[];
+  onSkipDecks: (skipDecks: string[]) => void;
+  onNext: () => void;
+}) {
+  const { t, i18n } = useLingui();
+  const [error, setError] = useState(false);
+  const left = new Set(skipDecks);
+  const chosen = decks.filter((d) => !left.has(d.key));
+  const cards = chosen.reduce((sum, d) => sum + d.cards, 0);
+  const set = (next: Set<string>) => {
+    onSkipDecks(decks.filter((d) => next.has(d.key)).map((d) => d.key));
+    setError(false);
+  };
+  const count = (n: number) => new Intl.NumberFormat(i18n.locale).format(n);
+  return (
+    <>
+      <Question title={t`Which decks do you want in Lymi?`}>
+        <Trans>
+          Leave out the ones you don’t use anymore. You can import them from the same file later.
+        </Trans>
+      </Question>
+      <div className="grid gap-1">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="-ms-3 justify-self-start"
+          onClick={() => set(left.size === 0 ? new Set(decks.map((d) => d.key)) : new Set())}
+        >
+          {left.size === 0 ? <Trans>Clear all</Trans> : <Trans>Select all</Trans>}
+        </Button>
+        <ul className="edge grid rounded-xl bg-plate p-1.5">
+          {decks.map((deck) => {
+            const known = deck.known ?? 0;
+            return (
+              <li key={deck.key}>
+                <Field
+                  orientation="horizontal"
+                  className="relative min-h-12 cursor-pointer rounded-md px-2.5 py-1.5 transition-[background-color] duration-150 hoverable:hover:veil"
+                >
+                  <Checkbox
+                    className="z-1"
+                    checked={!left.has(deck.key)}
+                    onCheckedChange={(on) => {
+                      const next = new Set(left);
+                      if (on) next.delete(deck.key);
+                      else next.add(deck.key);
+                      set(next);
+                    }}
+                  />
+                  <span className="grid min-w-0 flex-1">
+                    {/* Stretched over the row, so the whole row ticks the box. */}
+                    <FieldLabel className="truncate text-base font-normal after:absolute after:inset-0 after:content-['']">
+                      {deck.name.split("::").join(" / ")}
+                    </FieldLabel>
+                    <span className="text-sm text-muted">
+                      {known === 0
+                        ? plural(deck.cards, { one: "# card", other: "# cards" })
+                        : known >= deck.cards
+                          ? plural(deck.cards, {
+                              one: "# card, known",
+                              other: "# cards, all known",
+                            })
+                          : plural(deck.cards, {
+                              one: `# card · ${count(known)} known`,
+                              other: `# cards · ${count(known)} known`,
+                            })}
+                    </span>
+                  </span>
+                </Field>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+      <StepActions
+        note={
+          error ? (
+            <p role="alert">
+              <InlineError>{t`Choose at least one deck.`}</InlineError>
+            </p>
+          ) : (
+            plural(cards, {
+              one: `# card in ${chosen.length} of ${decks.length} decks`,
+              other: `# cards in ${chosen.length} of ${decks.length} decks`,
+            })
+          )
+        }
+      >
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={() => (chosen.length === 0 ? setError(true) : onNext())}
+        >
+          <Trans>Continue</Trans>
+        </Button>
+      </StepActions>
+    </>
+  );
+}
+
+/** One kind of card, drawn the way it will arrive, asking whether it looks right. */
+function CardStep({
+  source,
+  type,
+  samples,
+  loading,
+  error,
+  tail,
+  onChangeFields,
+  onBack,
+  onNext,
+}: {
+  source: ImportSource;
+  type: NoteType;
+  samples: ImportPreview["samples"][string] | undefined;
+  loading: boolean;
+  error?: string | undefined;
+  tail: ReactNode;
+  onChangeFields: () => void;
+  onBack?: (() => void) | undefined;
+  onNext: () => void;
+}) {
+  const { i18n } = useLingui();
+  const [index, setIndex] = useState(0);
+  const list = samples ?? [];
+  const sample = list[index % Math.max(list.length, 1)];
+  return (
+    <>
+      <Question title={<Trans>Does this card look right?</Trans>}>
+        <Trans>
+          This is how it will look in Lymi. Change fields if a part is in the wrong place.
+        </Trans>
+      </Question>
+      <div className="edge grid gap-4 rounded-xl bg-plate p-5">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <Chip>
+            {noteTypeName(type, i18n)} ·{" "}
+            {source !== "anki"
+              ? plural(type.notes, { one: "# card", other: "# cards" })
+              : plural(type.notes, { one: "# note", other: "# notes" })}
+          </Chip>
+          {list.length > 1 && (
+            <button
+              type="button"
+              className="text-sm text-muted underline-offset-4 hoverable:hover:text-text hoverable:hover:underline"
+              onClick={() => setIndex(index + 1)}
+            >
+              <Trans>Show another</Trans>
+            </button>
+          )}
+        </div>
+        <SampleCard sample={sample} loading={loading} />
+      </div>
+      {error && (
+        <p className="text-sm" role="alert">
+          <InlineError>{error}</InlineError>
+        </p>
+      )}
+      {tail}
+      <StepActions onBack={onBack}>
+        <Button variant="secondary" size="lg" onClick={onChangeFields}>
+          <Trans>Change fields</Trans>
+        </Button>
+        <Button variant="primary" size="lg" onClick={onNext}>
+          <Check data-icon="inline-start" aria-hidden="true" />
+          <Trans>Looks right</Trans>
+        </Button>
+      </StepActions>
+    </>
+  );
+}
+
+/** One answer on the last screen, with the way back to change it. */
+function AnswerRow({
+  title,
+  detail,
+  changeLabel,
+  onChange,
+}: {
+  title: string;
+  detail: string;
+  changeLabel: string;
+  onChange: () => void;
+}) {
+  return (
+    <div className="flex items-center gap-4 px-4 py-3 [&:not(:first-child)]:border-t [&:not(:first-child)]:border-edge">
+      <span className="grid min-w-0 flex-1 gap-0.5">
+        <span className="text-sm text-muted">{title}</span>
+        <span className="truncate text-base text-text">{detail}</span>
+      </span>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="-me-2"
+        aria-label={changeLabel}
+        onClick={onChange}
+      >
+        <Trans>Change</Trans>
+      </Button>
+    </div>
   );
 }
 

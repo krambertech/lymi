@@ -187,9 +187,10 @@ app.all("/mcp", (c) =>
   handleMcpRequest(c.req.raw, { auth: c.get("auth"), db: c.get("db"), env: c.env }),
 );
 
-// Everything on this origin is one learner's product or protocol surface.
+// Everything on this origin is one learner's product or protocol surface. Deck add links are
+// crawlable only so a crawler can read their noindex and drop a shared link from results.
 app.get("/robots.txt", describe({ hide: true }), (c) => {
-  return c.text("User-agent: *\nDisallow: /\n", 200, {
+  return c.text("User-agent: *\nAllow: /add/\nDisallow: /\n", 200, {
     "cache-control": "public, max-age=3600",
   });
 });

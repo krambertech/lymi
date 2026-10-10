@@ -67,8 +67,10 @@ declare module "@tanstack/react-router" {
 /** Mount the private product. Public pages are built and deployed from apps/site. */
 export function mountApp(root: HTMLElement) {
   createRoot(root, {
-    onCaughtError: reportClientException,
-    onUncaughtError: reportClientException,
+    onCaughtError: (error, info) => {
+      reportClientException(error);
+      console.error(error, info.componentStack);
+    },
   }).render(
     <StrictMode>
       <PersistQueryClientProvider

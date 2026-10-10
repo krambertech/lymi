@@ -1,5 +1,5 @@
+import { exceptionProperties, POSTHOG_HOST } from "@lymi/core/telemetry";
 import posthog from "posthog-js/no-external";
-import { exceptionProperties, POSTHOG_HOST } from "../../shared/telemetry";
 
 let enabled = false;
 let learner: string | undefined;

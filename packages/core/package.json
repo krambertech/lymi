@@ -11,6 +11,7 @@
     "./notes": "./src/notes.ts",
     "./catalog": "./src/catalog.ts",
     "./publication-media": "./src/publication-media.ts",
+    "./telemetry": "./src/telemetry.ts",
     "./simulation": "./simulation/index.ts"
   },
   "scripts": {

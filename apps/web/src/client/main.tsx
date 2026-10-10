@@ -1,4 +1,4 @@
-import { initTelemetry, reportClientException } from "./lib/telemetry";
+import { initTelemetry } from "./lib/telemetry";
 import { initTheme } from "./lib/theme";
 import "./styles.css";
 
@@ -17,4 +17,4 @@ async function boot(root: HTMLElement) {
   mountApp(root);
 }
 
-void boot(rootEl).catch(reportClientException);
+void boot(rootEl);

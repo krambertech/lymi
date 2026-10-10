@@ -1,5 +1,5 @@
+import { exceptionProperties, POSTHOG_HOST } from "@lymi/core/telemetry";
 import { PostHog } from "posthog-node";
-import { exceptionProperties, POSTHOG_HOST } from "../shared/telemetry";
 import type { Bindings } from "./env";
 import { type AnalyticsEvent, type AnalyticsWriter, track } from "./services/analytics";
 

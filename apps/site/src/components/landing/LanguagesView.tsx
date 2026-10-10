@@ -5,7 +5,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode, useState } from "react";
-import { productUrl } from "../../lib/origins";
+import { openLymiUrl } from "../../lib/origins";
 import { type LocalizedPage, localizedPath } from "../../lib/routes";
 import { Added, AssistantChat, type Turn } from "./AssistantChat";
 import { AssistantMarks, AssistantMarksWithMore } from "./AssistantMarks";
@@ -171,7 +171,7 @@ function HandSection({
 
 /** The sections every language page shares, filled with one page's words and cards. */
 function LanguagePage(props: PageProps) {
-  const openAppUrl = new URL("/", productUrl()).toString();
+  const openAppUrl = openLymiUrl();
 
   return (
     <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
@@ -304,7 +304,7 @@ export function LanguagesView() {
 
 /** The page for people learning Estonian: its words up top, then its notes, reviews and small talk. */
 export function EstonianView() {
-  const openAppUrl = new URL("/", productUrl()).toString();
+  const openAppUrl = openLymiUrl();
 
   return (
     <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">

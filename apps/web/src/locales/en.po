@@ -1197,8 +1197,8 @@ msgstr "Check your inbox"
 msgid "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Information</1> and <2>Include Media</2>."
 msgstr "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Information</1> and <2>Include Media</2>."
 
-msgid "Choose <0>Lymi file</0>, then download the .zip when it’s ready."
-msgstr "Choose <0>Lymi file</0>, then download the .zip when it’s ready."
+msgid "Choose <0>Lymi file</0>, then download it when it’s ready."
+msgstr "Choose <0>Lymi file</0>, then download it when it’s ready."
 
 msgid "Choose 00, 15, 30 or 45 minutes."
 msgstr "Choose 00, 15, 30 or 45 minutes."
@@ -1272,6 +1272,9 @@ msgstr "Clear the picture"
 
 msgid "Close"
 msgstr "Close"
+
+msgid "Come back here and choose that file, without unzipping it."
+msgstr "Come back here and choose that file, without unzipping it."
 
 msgid "Come back later, or add new cards."
 msgstr "Come back later, or add new cards."
@@ -1821,9 +1824,6 @@ msgstr "Export"
 msgid "Export {deckName}"
 msgstr "Export {deckName}"
 
-msgid "Export all decks (pictures, schedule, review history) as a Lymi file or Anki package."
-msgstr "Export all decks (pictures, schedule, review history) as a Lymi file or Anki package."
-
 msgid "Export it again from {app}, then choose the new file."
 msgstr "Export it again from {app}, then choose the new file."
 
@@ -1841,6 +1841,9 @@ msgstr "Export one deck at a time instead of the whole library."
 
 msgid "Export one deck at a time, or export again without media."
 msgstr "Export one deck at a time, or export again without media."
+
+msgid "Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package."
+msgstr "Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package."
 
 msgid "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
 msgstr "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
@@ -3438,9 +3441,6 @@ msgstr "Sign in"
 
 msgid "Sign in as you anywhere else"
 msgstr "Sign in as you anywhere else"
-
-msgid "Sign in here and choose that file, without unzipping it."
-msgstr "Sign in here and choose that file, without unzipping it."
 
 msgid "Sign in here, or reset your password from the same page:"
 msgstr "Sign in here, or reset your password from the same page:"

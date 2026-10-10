@@ -1197,8 +1197,8 @@ msgstr "Проверь почту"
 msgid "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Information</1> and <2>Include Media</2>."
 msgstr "Выбери <0>Anki Deck Package</0> и отметь <1>Include Scheduling Information</1> и <2>Include Media</2>."
 
-msgid "Choose <0>Lymi file</0>, then download the .zip when it’s ready."
-msgstr "Выбери <0>Файл Lymi</0>, а когда он будет готов, скачай .zip."
+msgid "Choose <0>Lymi file</0>, then download it when it’s ready."
+msgstr "Выбери <0>Файл Lymi</0>, а когда он будет готов, скачай его."
 
 msgid "Choose 00, 15, 30 or 45 minutes."
 msgstr "Выбери 00, 15, 30 или 45 минут."
@@ -1272,6 +1272,9 @@ msgstr "Убрать изображение"
 
 msgid "Close"
 msgstr "Закрыть"
+
+msgid "Come back here and choose that file, without unzipping it."
+msgstr "Вернись сюда и выбери этот файл, не распаковывая его."
 
 msgid "Come back later, or add new cards."
 msgstr "Вернись позже или добавь новые карточки."
@@ -1821,9 +1824,6 @@ msgstr "Экспортировать"
 msgid "Export {deckName}"
 msgstr "Экспорт: {deckName}"
 
-msgid "Export all decks (pictures, schedule, review history) as a Lymi file or Anki package."
-msgstr "Экспортируй все колоды (изображения, расписание, история повторений) как файл Lymi или пакет Anki."
-
 msgid "Export it again from {app}, then choose the new file."
 msgstr "Экспортируй его ещё раз из {app} и выбери новый файл."
 
@@ -1841,6 +1841,9 @@ msgstr "Экспортируй колоды по одной, а не всю би
 
 msgid "Export one deck at a time, or export again without media."
 msgstr "Экспортируй колоды по одной или ещё раз без медиа."
+
+msgid "Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package."
+msgstr "Экспортируй всю библиотеку (изображения, расписание, историю повторений) как файл Lymi или пакет Anki."
 
 msgid "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
 msgstr "{cards, plural, one {Экспортирована # карточка} few {Экспортировано # карточки} many {Экспортировано # карточек} other {Экспортировано # карточки}} в файл Lymi"
@@ -3438,9 +3441,6 @@ msgstr "Вход"
 
 msgid "Sign in as you anywhere else"
 msgstr "Войти как ты в других местах"
-
-msgid "Sign in here and choose that file, without unzipping it."
-msgstr "Войди здесь и выбери этот файл, не распаковывая его."
 
 msgid "Sign in here, or reset your password from the same page:"
 msgstr "Войди здесь или задай новый пароль на той же странице:"

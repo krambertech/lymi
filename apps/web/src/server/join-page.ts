@@ -48,6 +48,8 @@ async function doorPage(
     "cache-control": "private, no-store",
     // A join token is in the path; no request from this page may carry it elsewhere.
     "referrer-policy": "same-origin",
+    // robots.txt lets crawlers reach add links so they can see this, #454.
+    "x-robots-tag": "noindex, nofollow",
   });
 
   // Back from sign-in: the session hook has joined or added, so go straight to the deck.

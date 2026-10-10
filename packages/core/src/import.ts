@@ -478,6 +478,9 @@ export const ImportSummaryOut = z
         name: z.string(),
         description: z.string().nullable(),
         cards: z.number().int(),
+        known: z.number().int().optional().meta({
+          description: "Cards that arrive Known; absent for imports read before it was counted",
+        }),
       }),
     ),
     noteTypes: z.array(

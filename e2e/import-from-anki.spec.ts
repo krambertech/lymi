@@ -16,13 +16,16 @@ async function chooseFile(page: Page) {
   await (await chooser).setFiles(ANKI_FILE);
 }
 
-/** Every kind of card in the file has to be confirmed before Import runs. */
+/** Every kind of card in the file is its own question before the last screen. */
 async function confirmEveryCard(page: Page) {
-  const yes = page.getByRole("button", { name: "Yes, looks right", exact: true });
-  const checked = page.getByText(/^(\d+) of \1 checked$/);
-  while (!(await checked.isVisible())) {
-    await yes.click();
+  const looksRight = page.getByRole("button", { name: "Looks right", exact: true });
+  const ready = page.getByRole("heading", { name: /^Ready to (import|update) / });
+  await expect(looksRight.or(ready)).toBeVisible();
+  while (await looksRight.isVisible()) {
+    await looksRight.click();
+    await expect(looksRight.or(ready)).toBeVisible();
   }
+  await expect(ready).toBeVisible();
 }
 
 test("a learner imports an Anki file, sees it in Activity, undoes it and imports it again", async ({
@@ -40,25 +43,37 @@ test("a learner imports an Anki file, sees it in Activity, undoes it and imports
     ).toBeVisible();
   });
 
-  await test.step("upload the file and check one of the learner's own cards", async () => {
+  await test.step("upload the file and choose the decks", async () => {
     await chooseFile(page);
-    await expect(page.getByRole("heading", { name: "Does this card look right?" })).toBeVisible({
-      timeout: 30_000,
-    });
+    await expect(
+      page.getByRole("heading", { name: "Which decks do you want in Lymi?" }),
+    ).toBeVisible({ timeout: 30_000 });
+    await expect(page.getByText("6 cards · 4 known", { exact: true })).toBeVisible();
+    await page.getByRole("button", { name: "Continue", exact: true }).click();
+  });
+
+  await test.step("check each kind of card, going back once", async () => {
+    await expect(page.getByRole("heading", { name: "Does this card look right?" })).toBeVisible();
     await expect(page.getByText("il gatto", { exact: true })).toBeVisible();
+    await page.getByRole("button", { name: "Back", exact: true }).click();
+    await expect(
+      page.getByRole("heading", { name: "Which decks do you want in Lymi?" }),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Continue", exact: true }).click();
+    await confirmEveryCard(page);
+  });
+
+  await test.step("the last screen says what comes across, and imports", async () => {
+    await expect(page.getByRole("heading", { name: "Ready to import 10 cards" })).toBeVisible();
+    await expect(
+      page.getByText("4 cards you know in Anki come in as Known, so they don’t start over."),
+    ).toBeVisible();
     await expect(page.getByText("Cards keep the due dates they had in Anki.")).toBeVisible();
     await expect(
       page.getByText("1 sound is skipped. Lymi reads terms aloud itself."),
     ).toBeVisible();
     await expect(page.getByText("Italian and Japanese", { exact: true })).toBeVisible();
-  });
-
-  await test.step("importing waits until every kind of card is confirmed", async () => {
-    const importButton = page.getByRole("button", { name: "Import 10 cards", exact: true });
-    await importButton.click();
-    await expect(page.getByText("Check 4 more kinds of card first.")).toBeVisible();
-    await confirmEveryCard(page);
-    await importButton.click();
+    await page.getByRole("button", { name: "Import 10 cards", exact: true }).click();
     await expect(page.getByRole("heading", { name: "Imported 10 cards", exact: true })).toBeVisible(
       {
         timeout: 60_000,
@@ -102,9 +117,11 @@ test("a learner imports an Anki file, sees it in Activity, undoes it and imports
   await test.step("the same file again adds nothing twice", async () => {
     await page.goto("/import/anki");
     await chooseFile(page);
+    await page.getByRole("button", { name: "Continue", exact: true }).click({ timeout: 30_000 });
+    await confirmEveryCard(page);
     await expect(
       page.getByText("10 cards were in an earlier import. Only their empty fields are filled."),
-    ).toBeVisible({ timeout: 30_000 });
+    ).toBeVisible();
     await expect(page.getByRole("button", { name: "Update 10 cards", exact: true })).toBeVisible();
   });
 });

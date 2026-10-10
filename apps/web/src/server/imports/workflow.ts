@@ -1,6 +1,7 @@
 import { WorkflowEntrypoint, type WorkflowEvent, type WorkflowStep } from "cloudflare:workers";
 import { NonRetryableError } from "cloudflare:workflows";
 import { ImportFailure as Failures, type ImportFailure } from "@lymi/core";
+import { createTextProvider } from "../ai";
 import { createDb } from "../db";
 import type { Bindings } from "../env";
 import {
@@ -48,7 +49,9 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
     const id = params.importId;
     try {
       if (params.phase === "inspect") {
-        await step.do("inspect", STEP, () => fileErrorsStop(() => inspectImport(ctx, id, uploads)));
+        await step.do("inspect", STEP, () =>
+          fileErrorsStop(() => inspectImport(ctx, id, uploads, createTextProvider(this.env))),
+        );
         return;
       }
       let steps = 0;

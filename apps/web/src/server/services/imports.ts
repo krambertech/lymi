@@ -1,5 +1,6 @@
 import {
   type Actor,
+  arrivesKnown,
   emptyImportCounts,
   guessLanguage,
   IMPORT_PART_BYTES,
@@ -12,6 +13,7 @@ import {
 } from "@lymi/core";
 import { and, desc, eq, inArray, isNull, lt, sql } from "@lymi/core/db";
 import type { Import } from "@lymi/core/schema";
+import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
 import type { ImportChoices, SourceAdapter } from "../imports/adapter";
 import { anki } from "../imports/anki";
@@ -22,6 +24,7 @@ import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement } from "./audit";
 import type { CardImageStorage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
+import { detectDeckLanguages, TERMS_PER_DECK } from "./import-languages";
 import {
   attachPictures,
   noteChunkKey,
@@ -249,15 +252,29 @@ async function usualLanguage(ctx: ServiceContext): Promise<string | null> {
 
 /**
  * The inspection step: finds the adapter, reads the file into a summary and stored note
- * chunks, and leaves the import ready for the learner's preview.
+ * chunks, and leaves the import ready for the learner's preview. Along the way it counts each
+ * deck's Known cards and samples its terms, so a deck's language is read from its cards when
+ * the file and the deck's name don't say.
  */
-export async function inspectImport(ctx: ServiceContext, id: string, uploads: R2Bucket) {
+export async function inspectImport(
+  ctx: ServiceContext,
+  id: string,
+  uploads: R2Bucket,
+  provider: TextProvider | null = null,
+) {
   const row = await ownedImport(ctx, id);
   if (row.status !== "inspecting" || !row.objectKey) return;
   const file = await r2Source(uploads, row.objectKey);
   const adapter = await detect(file, row.fileName);
   if (!adapter) throw new ImportFileError("unrecognized", "No importer recognises the file");
   const { summary, notes } = await adapter.inspect(file);
+  const guessed: ImportChoices = {
+    languages: {},
+    roles: Object.fromEntries(summary.noteTypes.map((type) => [type.key, type.roles])),
+  };
+  const now = new Date();
+  const known = new Map<string, number>();
+  const terms = new Map<string, Set<string>>();
 
   let chunk = 0;
   let batch: unknown[] = [];
@@ -270,19 +287,40 @@ export async function inspectImport(ctx: ServiceContext, id: string, uploads: R2
   };
   for (const note of notes) {
     batch.push(note);
+    for (const card of adapter.cards(note, summary, guessed)) {
+      if (arrivesKnown(card, now)) known.set(card.deckKey, (known.get(card.deckKey) ?? 0) + 1);
+      const sample = terms.get(card.deckKey) ?? new Set<string>();
+      if (sample.size < TERMS_PER_DECK) terms.set(card.deckKey, sample.add(card.fields.term));
+    }
     if (batch.length === NOTES_PER_CHUNK) await flush();
   }
   if (batch.length > 0) await flush();
 
+  // The file's own record wins, then the deck's name, then its cards, then the learner's usual language.
+  const named = new Map(
+    summary.decks.map((d) => [
+      d.key,
+      summary.languages?.[d.key] !== undefined
+        ? (summary.languages[d.key] ?? null)
+        : guessLanguage(d.name),
+    ]),
+  );
+  const detected = await detectDeckLanguages(
+    summary.decks
+      .filter((d) => named.get(d.key) === null && summary.languages?.[d.key] === undefined)
+      .map((d) => ({ key: d.key, name: d.name, terms: [...(terms.get(d.key) ?? [])] })),
+    provider,
+  );
   const fallback = await usualLanguage(ctx);
   const stored: StoredSummary = {
     ...summary,
+    decks: summary.decks.map((d) => ({ ...d, known: known.get(d.key) ?? 0 })),
     languages: Object.fromEntries(
       summary.decks.map((d) => [
         d.key,
         summary.languages?.[d.key] !== undefined
-          ? (summary.languages[d.key] ?? null)
-          : (guessLanguage(d.name) ?? fallback),
+          ? (named.get(d.key) ?? null)
+          : (named.get(d.key) ?? detected[d.key] ?? fallback),
       ]),
     ),
   };

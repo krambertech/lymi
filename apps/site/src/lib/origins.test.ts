@@ -9,9 +9,9 @@ describe("openLymiUrl", () => {
 });
 
 describe("signUpRedirect", () => {
-  it("opens sign-up and keeps the link's campaign tags", () => {
+  it("goes through the product root, like Open Lymi, and keeps the link's campaign tags", () => {
     const url = new URL(signUpRedirect("?utm_source=newsletter&utm_campaign=autumn"));
-    expect(url.toString().startsWith(productUrl("/login"))).toBe(true);
+    expect(url.origin + url.pathname).toBe(productUrl("/"));
     expect(url.searchParams.get("mode")).toBe("sign-up");
     expect(url.searchParams.get("utm_source")).toBe("newsletter");
     expect(url.searchParams.get("utm_campaign")).toBe("autumn");

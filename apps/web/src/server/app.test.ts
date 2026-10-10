@@ -41,6 +41,16 @@ describe("the product origin", () => {
     expect(signedIn.headers.get("location")).toBe(`${PRODUCT_URL}/today`);
   });
 
+  it("carries the site's /signup campaign tags to sign-up, and sends a session to Today", async () => {
+    const signedOut = await app.fetch("/?mode=sign-up&utm_source=newsletter");
+    expect(signedOut.headers.get("location")).toBe(
+      `${PRODUCT_URL}/login?mode=sign-up&utm_source=newsletter`,
+    );
+
+    const signedIn = await app.fetch("/?mode=sign-up&utm_source=newsletter", { as: learner });
+    expect(signedIn.headers.get("location")).toBe(`${PRODUCT_URL}/today`);
+  });
+
   it("sends Explore to the site without a live session", async () => {
     const stale = {
       ...learner,

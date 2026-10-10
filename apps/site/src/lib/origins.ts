@@ -38,9 +38,12 @@ export function openLymiUrl(origin = PRODUCT_ORIGIN): string {
   return new URL("/?mode=sign-up", origin).toString();
 }
 
-/** The site's own /signup: the product's sign-up form, keeping whatever query the link carried. */
+/**
+ * The site's own /signup. It goes through the product root like Open Lymi, so a session lands on
+ * Today, and keeps whatever else the link carried, such as campaign tags.
+ */
 export function signUpRedirect(search: string): string {
-  const url = new URL(signUpUrl());
+  const url = new URL(openLymiUrl());
   for (const [key, value] of new URLSearchParams(search)) {
     if (key !== "mode") url.searchParams.append(key, value);
   }

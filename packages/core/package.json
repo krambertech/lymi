@@ -19,7 +19,7 @@
     "simulate": "tsx simulation/generate.ts"
   },
   "dependencies": {
-    "drizzle-orm": "^0.45.2",
+    "drizzle-orm": "^0.45.4",
     "markdown-it": "^15.0.2",
     "markdown-it-ins": "^4.0.0",
     "ts-fsrs": "^5.4.2",

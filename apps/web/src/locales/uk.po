@@ -1197,8 +1197,8 @@ msgstr "Перевір пошту"
 msgid "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Information</1> and <2>Include Media</2>."
 msgstr "Вибери <0>Anki Deck Package</0> і познач <1>Include Scheduling Information</1> та <2>Include Media</2>."
 
-msgid "Choose <0>Lymi file</0>, then download the .zip when it’s ready."
-msgstr "Вибери <0>Файл Lymi</0>, а коли він буде готовий, завантаж .zip."
+msgid "Choose <0>Lymi file</0>, then download it when it’s ready."
+msgstr "Вибери <0>Файл Lymi</0>, а коли він буде готовий, завантаж його."
 
 msgid "Choose 00, 15, 30 or 45 minutes."
 msgstr "Вибери 00, 15, 30 або 45 хвилин."
@@ -1821,9 +1821,6 @@ msgstr "Експортувати"
 msgid "Export {deckName}"
 msgstr "Експорт: {deckName}"
 
-msgid "Export all decks (pictures, schedule, review history) as a Lymi file or Anki package."
-msgstr "Експортуй усі колоди (зображення, розклад, історію повторень) як файл Lymi або пакет Anki."
-
 msgid "Export it again from {app}, then choose the new file."
 msgstr "Експортуй його ще раз з {app} і вибери новий файл."
 
@@ -1841,6 +1838,9 @@ msgstr "Експортуй колоди по одній, а не всю бібл
 
 msgid "Export one deck at a time, or export again without media."
 msgstr "Експортуй колоди по одній або ще раз без медіа."
+
+msgid "Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package."
+msgstr "Експортуй усю бібліотеку (зображення, розклад, історію повторень) як файл Lymi або пакет Anki."
 
 msgid "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
 msgstr "Експортовано {cards, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у файл Lymi"
@@ -3441,14 +3441,14 @@ msgstr "Показати пароль"
 msgid "Show the meaning, then Good"
 msgstr "Показати значення, потім «Добре»"
 
+msgid "Sign back in to this account and choose that file, without unzipping it."
+msgstr "Знову увійди в цей акаунт і вибери цей файл, не розпаковуючи його."
+
 msgid "Sign in"
 msgstr "Вхід"
 
 msgid "Sign in as you anywhere else"
 msgstr "Увійти як ти в інших місцях"
-
-msgid "Sign in here and choose that file, without unzipping it."
-msgstr "Увійди тут і вибери цей файл, не розпаковуючи його."
 
 msgid "Sign in here, or reset your password from the same page:"
 msgstr "Увійди тут або попроси новий пароль на тій самій сторінці:"

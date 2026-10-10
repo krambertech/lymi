@@ -278,12 +278,15 @@ const LYMI_STEPS = [
     id: "format",
     node: (
       <Trans>
-        Choose <strong className="font-medium text-text">Lymi file</strong>, then download the .zip
-        when it’s ready.
+        Choose <strong className="font-medium text-text">Lymi file</strong>, then download it when
+        it’s ready.
       </Trans>
     ),
   },
-  { id: "save", node: <Trans>Sign in here and choose that file, without unzipping it.</Trans> },
+  {
+    id: "save",
+    node: <Trans>Sign back in to this account and choose that file, without unzipping it.</Trans>,
+  },
 ];
 
 /** Uploading, reading, importing: a file on its way, with what the learner may do meanwhile. */

@@ -4,6 +4,13 @@ import { DEFAULT_PUBLIC_SITE_ORIGIN } from "../shared/origins";
 import { errorResponse } from "./http";
 import type { AppEnv } from "./index";
 
+// hono-openapi leaves a resolver in `defaultOptions` unconverted on validator-first routes, so
+// the shared 403 points at the Error component the route descriptions register.
+const writeForbidden = {
+  description: errorResponse(403).description,
+  content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+};
+
 /**
  * The OpenAPI document is generated from the route descriptions and the Zod schemas in
  * packages/core, and served at /api/openapi.json. It is public: the document describes the
@@ -28,10 +35,10 @@ export function mountOpenApi(app: Hono<AppEnv>) {
       exclude: [/^\/api\/auth/, /^\/api\/audio/],
       // Every write needs the write scope, so every non-read method can answer 403.
       defaultOptions: {
-        POST: { responses: { 403: errorResponse(403) } },
-        PATCH: { responses: { 403: errorResponse(403) } },
-        PUT: { responses: { 403: errorResponse(403) } },
-        DELETE: { responses: { 403: errorResponse(403) } },
+        POST: { responses: { 403: writeForbidden } },
+        PATCH: { responses: { 403: writeForbidden } },
+        PUT: { responses: { 403: writeForbidden } },
+        DELETE: { responses: { 403: writeForbidden } },
       },
       documentation: {
         info: {

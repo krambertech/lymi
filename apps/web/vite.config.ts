@@ -190,6 +190,7 @@ export default defineConfig({
               // Discovered mid-run, a dependency reloads the page and loads a second React.
               "@base-ui/react/**/*",
               "zod",
+              "posthog-js/no-external",
             ],
           },
           test: {

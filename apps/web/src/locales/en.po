@@ -2429,6 +2429,10 @@ msgstr "Message"
 msgid "Mode"
 msgstr "Mode"
 
+msgctxt "Phone learner menu"
+msgid "More"
+msgstr "More"
+
 msgid "More about this card"
 msgstr "More about this card"
 

@@ -5,6 +5,7 @@ import {
   Archive,
   BookOpen,
   ChartNoAxesColumn,
+  ChevronDown,
   Compass,
   Download,
   Keyboard,
@@ -96,12 +97,20 @@ export function LearnerMenu({ name, email, variant, docsUrl, onSignOut, signingO
                 type="button"
                 aria-busy={signingOut || undefined}
                 className={clsx(
-                  "relative inline-flex rounded-full transition-opacity before:absolute before:-inset-1.5 before:content-['']",
+                  "relative inline-flex items-center gap-1 rounded-full bg-plate-2 pe-2.5 edge transition-opacity before:absolute before:-inset-1.5 before:content-['']",
                   signingOut && "opacity-45",
                 )}
               >
                 <Avatar name={name} src={photo.src} pending={photo.pending || !name} size={40} />
                 <span className="sr-only">{short}</span>
+                {/* On the phone this menu also holds Insights and Explore, so it says there is more; #459. */}
+                <span
+                  aria-hidden="true"
+                  className="flex items-center gap-0.5 text-sm font-medium text-text-2"
+                >
+                  <Trans context="Phone learner menu">More</Trans>
+                  <ChevronDown className="size-3.5" />
+                </span>
               </button>
             )
           }

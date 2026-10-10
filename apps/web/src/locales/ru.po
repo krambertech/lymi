@@ -2429,6 +2429,10 @@ msgstr "Сообщение"
 msgid "Mode"
 msgstr "Режим"
 
+msgctxt "Phone learner menu"
+msgid "More"
+msgstr "Ещё"
+
 msgid "More about this card"
 msgstr "Больше о карточке"
 

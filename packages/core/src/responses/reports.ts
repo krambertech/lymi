@@ -65,7 +65,7 @@ export const DeckReportMetricsOut = z.object({
   discovery: z.object({
     pageViews: Count.nullable().meta({
       description:
-        "Requests for the deck's public page in any language, less known crawlers, link previews and prefetches. Requests, not people. Null when Lymi was not counting yet for any day of the period.",
+        "Requests for the deck's public page in any language, less known crawlers, link previews and prefetches. Requests, not people, and a script posing as a browser is counted too. Null when Lymi was not counting yet for any day of the period.",
     }),
     pageViewsCoverage: z.enum(["full", "partial", "none"]).meta({
       description:
@@ -97,7 +97,9 @@ export const DeckReportSummaryOut = z.object({
 
 const ReportFrame = {
   period: ReportPeriodOut,
-  previous: ReportPeriodOut,
+  previousPeriod: ReportPeriodOut.meta({
+    description: "The equal-length period just before `period`, which `previous` figures cover.",
+  }),
   incomplete: z.boolean().meta({
     description: "The period ends today (UTC), so its last day is still filling.",
   }),

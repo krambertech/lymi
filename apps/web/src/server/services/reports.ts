@@ -340,7 +340,11 @@ function ownedSql(ownerId: string, deckId?: string) {
 function frame(periods: Periods, facts: Facts, now: Date) {
   return {
     period: { from: periods.current.from, to: periods.current.to, days: periods.current.days },
-    previous: { from: periods.previous.from, to: periods.previous.to, days: periods.previous.days },
+    previousPeriod: {
+      from: periods.previous.from,
+      to: periods.previous.to,
+      days: periods.previous.days,
+    },
     incomplete: periods.incomplete,
     generatedAt: now.toISOString(),
     pageViewsSince: facts.pageViewsSince,

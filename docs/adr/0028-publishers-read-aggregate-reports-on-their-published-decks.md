@@ -37,5 +37,6 @@ A growth agent working for a publisher needs to know which decks people add, whi
 ## Consequences
 
 - Each counted page view is one D1 write from the site Worker, off the response path.
+- Page views are not abuse-resistant. Nothing limits counting per visitor, so a script with a browser user agent can inflate a deck's figure and cost D1 writes. Adds and reviews need a signed-in learner and are the figures to trust; a per-visitor cap would need a rate-limiting binding on the site Worker.
 - Report queries scan the owner's join audit rows. A publisher whose decks gather many thousands of adds will need a stored daily aggregate.
 - Changing a definition changes past figures, because reports are computed when asked.

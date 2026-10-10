@@ -224,7 +224,7 @@ export function etagMatches(ifNoneMatch: string | null, etag: string): boolean {
 }
 
 const CRAWLER =
-  /bot|crawl|spider|slurp|scrape|preview|facebookexternalhit|embedly|headless|lighthouse|curl|wget|python|go-http|java\/|okhttp|axios|node-fetch|undici|http-client/i;
+  /bot|crawl|spider|slurp|scrape|preview|facebookexternalhit|whatsapp|embedly|headless|lighthouse|curl|wget|python|go-http|java\/|okhttp|axios|node-fetch|undici|http-client/i;
 
 /**
  * Whether a request reads as a person opening the page: a GET that is not a prefetch and does not

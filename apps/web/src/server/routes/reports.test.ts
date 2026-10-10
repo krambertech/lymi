@@ -148,7 +148,7 @@ describe("comparing published decks", () => {
     expect(gone?.publication.status).toBe("withdrawn");
     expect(gone?.deck.archived).toBe(true);
     expect(body.period.days).toBe(7);
-    expect(body.previous.to < body.period.from).toBe(true);
+    expect(body.previousPeriod.to < body.period.from).toBe(true);
     expect(body.incomplete).toBe(true);
   });
 
@@ -211,6 +211,14 @@ describe("one deck's report", () => {
     const today = body.days.at(-1);
     expect(today).toMatchObject({ adds: 3, reviewers: 1, reviews: 1, pageViews: 2 });
     expect(body.days.at(-2)).toMatchObject({ reviewers: 1, reviews: 1, pageViews: null });
+  });
+
+  it("keeps the previous period's dates beside its figures", async () => {
+    const body = (await (
+      await get(`/api/reports/decks/${deck.live}?from=2026-09-08&to=2026-09-14`, key.read)
+    ).json()) as DeckReportOut;
+    expect(body.previousPeriod).toEqual({ from: "2026-09-01", to: "2026-09-07", days: 7 });
+    expect(body.previous.adds.events).toBe(0);
   });
 
   it("is not found for a deck never published, another owner's deck, or a missing one", async () => {

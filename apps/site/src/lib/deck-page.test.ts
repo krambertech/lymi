@@ -298,6 +298,7 @@ describe("countsAsPageView", () => {
     for (const agent of [
       "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
       "facebookexternalhit/1.1",
+      "WhatsApp/2.24.20.80 A",
       "Slackbot-LinkExpanding 1.0",
       "curl/8.7.1",
       "python-requests/2.32",

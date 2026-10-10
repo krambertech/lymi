@@ -230,16 +230,17 @@ function Review() {
   // A leg belongs to its day, so one left open past midnight gives way to a fresh one.
   const leg = chosenLeg && state && chosenLeg.date === state.day.date ? chosenLeg : null;
   // Like the draw, the round's list and the day's streak wait for this mount's fetch, so a leg is sized and judged from now.
-  const roundItems =
+  const roundData =
     roundQueue.isFetchedAfterMount || roundQueue.fetchStatus !== "fetching"
-      ? roundQueue.data?.items
+      ? roundQueue.data
       : undefined;
+  const roundItems = roundData?.items;
   const streakSettled = streak.isFetchedAfterMount || streak.fetchStatus !== "fetching";
   const today = streak.data?.today;
   const scoped = !!deck || !!series;
   // The first leg is Today's round or the draw, which stops at the goal only for the whole day below it.
   useEffect(() => {
-    if (leg || !data || !state || !streakSettled || (round && !roundItems)) return;
+    if (leg || !data || !state || !streakSettled || (round && !roundData)) return;
     const { attempts } = state;
     setMark({
       attempts,
@@ -251,10 +252,11 @@ function Review() {
     setLegCards(NO_LEG_CARDS);
     setPaused(false);
     const base = { date: state.day.date, from: attempts };
-    if (round && roundItems) setLeg({ ...base, kind: "today", size: roundItems.length });
+    // The queue serves a round a page at a time, so the leg is sized by the round's total, not the first page.
+    if (round && roundData) setLeg({ ...base, kind: "today", size: roundData.total });
     else
       setLeg({ ...base, kind: "draw", until: !scoped && attempts < data.goal ? data.goal : null });
-  }, [round, roundItems, leg, data, state, streakSettled, today, scoped]);
+  }, [round, roundData, leg, data, state, streakSettled, today, scoped]);
 
   const drawLeg = leg?.kind === "draw" ? leg : null;
   const until = drawLeg?.until ?? null;

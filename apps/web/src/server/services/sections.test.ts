@@ -574,6 +574,17 @@ describe("opening sections in order", () => {
     expect(forecast[0]?.count).toBe(2);
   });
 
+  it("counts a card asked both ways once in the Insights forecast", async () => {
+    const me = await person("Kateryna");
+    const deck = await createDeck(me, { name: "Both ways", directions: "both" });
+    await addCards(me, [
+      { deckId: deck.id, term: "one", meaning: "üks" },
+      { deckId: deck.id, term: "two", meaning: "kaks" },
+    ]);
+    const { forecast, cards } = await insights(me, { zone: "UTC" });
+    expect(forecast.reduce((n, d) => n + d.count, 0)).toBeLessThanOrEqual(cards.total);
+  });
+
   it("does not count a mode the deck no longer asks as started", async () => {
     const me = await person("Kateryna");
     const deck = await createDeck(me, {

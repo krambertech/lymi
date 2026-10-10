@@ -297,7 +297,8 @@ async function collection({ db, userId }: ServiceContext) {
 
 /**
  * Cards due on each of the next seven local days, today first. Anything already overdue is
- * counted into today, because that is when the learner will meet it.
+ * counted into today, because that is when the learner will meet it. A card asked in several
+ * directions counts once, on the day its first direction comes back.
  */
 async function forecast(ctx: ServiceContext, fmt: LocalDateFormatter) {
   const { db, userId } = ctx;
@@ -308,7 +309,7 @@ async function forecast(ctx: ServiceContext, fmt: LocalDateFormatter) {
   const horizon = new Date(Date.parse(`${addDays(today, 8)}T00:00:00Z`) + DAY_MS);
 
   const rows = await db
-    .select({ due: schema.cardStates.due })
+    .select({ cardId: schema.cardStates.cardId, due: schema.cardStates.due })
     .from(schema.cardStates)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
     .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
@@ -324,10 +325,16 @@ async function forecast(ctx: ServiceContext, fmt: LocalDateFormatter) {
       ),
     );
 
-  const buckets = new Array<number>(7).fill(0);
+  const firstDue = new Map<string, Date>();
   for (const r of rows) {
+    const seen = firstDue.get(r.cardId);
+    if (!seen || r.due < seen) firstDue.set(r.cardId, r.due);
+  }
+
+  const buckets = new Array<number>(7).fill(0);
+  for (const due of firstDue.values()) {
     // Anything already overdue counts into today, because that is when it will be met.
-    const i = Math.max(0, daysBetween(today, fmt.format(r.due)));
+    const i = Math.max(0, daysBetween(today, fmt.format(due)));
     if (i < 7) buckets[i] = (buckets[i] ?? 0) + 1;
   }
   return buckets.map((count, i) => ({ date: addDays(today, i), count }));

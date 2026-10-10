@@ -1,3 +1,4 @@
+import { gunzipSync } from "node:zlib";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { productAnalytics, reportServerException } from "./posthog";
 import { track } from "./services/analytics";
@@ -63,6 +64,13 @@ describe("PostHog delivery", () => {
       userId: "learner-1",
     });
     const sent = bodies.join();
+    const body = JSON.parse(bodies[0] ?? "{}");
+    expect(body.batch[0].properties.$exception_list).toHaveLength(2);
+    expect(body.batch[0].properties.$exception_list[0].mechanism).toMatchObject({
+      type: "generic",
+      exception_id: 0,
+    });
+    expect(body.batch[0].properties.$exception_level).toBe("error");
     expect(sent).toContain("$exception");
     expect(sent).toContain("Unexpected error");
     expect(sent).toContain("/api/cards/:id");
@@ -98,5 +106,3 @@ describe("PostHog delivery", () => {
     ).resolves.toBeUndefined();
   });
 });
-
-import { gunzipSync } from "node:zlib";

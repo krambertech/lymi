@@ -31,7 +31,8 @@ function record(value: unknown): Record<string, unknown> {
 export function exceptionProperties(properties: Record<string, unknown>): Record<string, unknown> {
   const exceptions = Array.isArray(properties.$exception_list) ? properties.$exception_list : [];
   return {
-    $exception_list: exceptions.slice(0, 5).map((value) => {
+    $exception_level: "error",
+    $exception_list: exceptions.slice(0, 5).map((value, index) => {
       const exception = record(value);
       const trace = record(exception.stacktrace);
       const frames = Array.isArray(trace.frames) ? trace.frames : [];
@@ -41,7 +42,12 @@ export function exceptionProperties(properties: Record<string, unknown>): Record
             ? exception.type
             : "Error",
         value: "Unexpected error",
-        mechanism: { handled: record(exception.mechanism).handled === true },
+        mechanism: {
+          type: "generic",
+          handled: record(exception.mechanism).handled === true,
+          synthetic: record(exception.mechanism).synthetic === true,
+          exception_id: index,
+        },
         stacktrace: {
           type: "raw",
           frames: frames.slice(-50).map((value) => {

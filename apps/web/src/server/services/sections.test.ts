@@ -574,6 +574,26 @@ describe("opening sections in order", () => {
     expect(forecast[0]?.count).toBe(2);
   });
 
+  it("a card Known one way and New the other is New in Insights, while Review reports each direction's own state", async () => {
+    const me = await person("Kateryna");
+    const deck = await createDeck(me, { name: "Both ways", directions: "both" });
+    const [added] = await addCards(me, [{ deckId: deck.id, term: "üks", meaning: "one" }]);
+    if (added?.status !== "added") throw new Error("card not added");
+    const cardId = added.card.id;
+    await db
+      .update(schema.cardStates)
+      .set({ state: 2 })
+      .where(
+        and(eq(schema.cardStates.cardId, cardId), eq(schema.cardStates.direction, "recognition")),
+      );
+
+    const { cards } = await insights(me, { zone: "UTC" });
+    expect(cards).toMatchObject({ known: 0, new: 1 });
+    const { items } = await reviewQueue(me);
+    const item = items.find((i) => i.card.id === cardId);
+    expect(item?.fsrsState).toBe(item?.direction === "recognition" ? 2 : 0);
+  });
+
   it("does not count a mode the deck no longer asks as started", async () => {
     const me = await person("Kateryna");
     const deck = await createDeck(me, {

@@ -117,6 +117,17 @@ test("a relearning card under review says Forgotten", async () => {
   expect(text).not.toContain("recently");
 });
 
+test("the state pill names its direction, since a card asked both ways has a state per direction", async () => {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <ReviewCard item={{ ...queueItem, fsrsState: 2 }} revealed={false} onReveal={noop} />
+    </I18nProvider>,
+  );
+
+  const text = page.getByRole("region", { name: /Recognition card/ }).element().textContent ?? "";
+  expect(text).toContain("Known·Recognition");
+});
+
 test("the head names the deck alone, and the mode only for a picture", async () => {
   // The picture loads through Query, so the picture card needs a client.
   await render(
@@ -143,9 +154,10 @@ test("the head names the deck alone, and the mode only for a picture", async () 
   expect(text).toContain("Verbi");
   // A lesson's topic is a hint, so the section waits for the answer; the hidden answer is in the DOM.
   const head = page.getByText("Verbi").element().parentElement?.parentElement;
-  expect(head?.textContent).toBe("VerbiNew");
+  // The text mode is named only in the state pill, never in the head.
+  expect(head?.firstElementChild?.textContent).toBe("Verbi");
   expect(text).not.toContain("Recognition card");
-  expect(text).not.toMatch(/Recognition(?! card)|Production/);
+  expect(text).not.toMatch(/Production/);
 
   const picture = page.getByRole("region", { name: "Picture card" }).element().textContent ?? "";
   expect(picture).toContain("Picture → meaning");

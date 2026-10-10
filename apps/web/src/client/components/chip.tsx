@@ -47,10 +47,13 @@ export function StateChip({
   state,
   size,
   inReview = false,
+  mode,
 }: {
   state: number | null | undefined;
   size?: "sm" | "md" | "lg" | undefined;
   inReview?: boolean | undefined;
+  /** The direction this state belongs to; a card asked both ways has one state per direction. */
+  mode?: string | null | undefined;
 }) {
   const { i18n } = useLingui();
   const icon = size === "lg" ? "size-3.5" : "size-3";
@@ -59,6 +62,7 @@ export function StateChip({
       <Chip size={size}>
         <StateIcon state="forgot" className={icon} />
         <Trans>Forgotten</Trans>
+        <ModePart mode={mode} />
       </Chip>
     );
   const key = stateKey(state);
@@ -66,7 +70,18 @@ export function StateChip({
     <Chip size={size}>
       <StateIcon state={key} className={icon} />
       {i18n._(stateMarks[key].label)}
+      <ModePart mode={mode} />
     </Chip>
+  );
+}
+
+function ModePart({ mode }: { mode?: string | null | undefined }) {
+  if (!mode) return null;
+  return (
+    <>
+      <span aria-hidden="true">·</span>
+      <span>{mode}</span>
+    </>
   );
 }
 

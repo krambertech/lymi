@@ -869,7 +869,13 @@ export function ReviewCard({
                 </>
               )}
             </span>
-            <StateChip state={item.fsrsState} size="lg" inReview />
+            {/* A picture's mode is already in the head; a text card's state is per direction, #458. */}
+            <StateChip
+              state={item.fsrsState}
+              size="lg"
+              inReview
+              mode={mode.cue === "image" ? null : i18n._(modeLabel(mode))}
+            />
           </div>
 
           <div

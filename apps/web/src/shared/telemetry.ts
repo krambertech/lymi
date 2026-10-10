@@ -54,6 +54,7 @@ export function exceptionProperties(properties: Record<string, unknown>): Record
             const frame = record(value);
             const filename = scriptFilename(frame.filename);
             return {
+              platform: frame.platform === "node:javascript" ? "node:javascript" : "web:javascript",
               ...(filename ? { filename } : {}),
               ...(typeof frame.function === "string" && SAFE_FRAME.test(frame.function)
                 ? { function: frame.function }

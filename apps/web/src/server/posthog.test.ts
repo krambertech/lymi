@@ -71,6 +71,9 @@ describe("PostHog delivery", () => {
       exception_id: 0,
     });
     expect(body.batch[0].properties.$exception_level).toBe("error");
+    expect(body.batch[0].properties.$exception_list[0].stacktrace.frames[0].platform).toBe(
+      "node:javascript",
+    );
     expect(sent).toContain("$exception");
     expect(sent).toContain("Unexpected error");
     expect(sent).toContain("/api/cards/:id");

@@ -5,7 +5,7 @@ import { expect, type Page, type TestInfo } from "./test";
 
 const password = "quiet-harbour-morning";
 
-/** The name the dev email form gives a new account, and so the label on the learner menu. */
+/** The name the dev email form gives a new account. */
 const learnerName = "Dev";
 
 type StoredSession = Awaited<ReturnType<APIRequestContext["storageState"]>>;

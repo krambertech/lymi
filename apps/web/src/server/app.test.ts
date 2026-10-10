@@ -14,10 +14,10 @@ beforeAll(async () => {
 }, 60_000);
 
 describe("the product origin", () => {
-  it("disallows every crawler", async () => {
+  it("disallows every crawler except on deck add links", async () => {
     const response = await app.fetch("/robots.txt");
     expect(response.status).toBe(200);
-    expect(await response.text()).toBe("User-agent: *\nDisallow: /\n");
+    expect(await response.text()).toBe("User-agent: *\nAllow: /add/\nDisallow: /\n");
     expect(response.headers.get("cache-control")).toBe("public, max-age=3600");
   });
 
@@ -28,6 +28,26 @@ describe("the product origin", () => {
 
     const signedIn = await app.fetch("/", { as: learner });
     expect(signedIn.status).toBe(302);
+    expect(signedIn.headers.get("location")).toBe(`${PRODUCT_URL}/today`);
+  });
+
+  it("sends the site's Open Lymi to sign-up without a session, and to Today with one", async () => {
+    const signedOut = await app.fetch("/?mode=sign-up");
+    expect(signedOut.status).toBe(302);
+    expect(signedOut.headers.get("location")).toBe(`${PRODUCT_URL}/login?mode=sign-up`);
+
+    const signedIn = await app.fetch("/?mode=sign-up", { as: learner });
+    expect(signedIn.status).toBe(302);
+    expect(signedIn.headers.get("location")).toBe(`${PRODUCT_URL}/today`);
+  });
+
+  it("carries the site's /signup campaign tags to sign-up, and sends a session to Today", async () => {
+    const signedOut = await app.fetch("/?mode=sign-up&utm_source=newsletter");
+    expect(signedOut.headers.get("location")).toBe(
+      `${PRODUCT_URL}/login?mode=sign-up&utm_source=newsletter`,
+    );
+
+    const signedIn = await app.fetch("/?mode=sign-up&utm_source=newsletter", { as: learner });
     expect(signedIn.headers.get("location")).toBe(`${PRODUCT_URL}/today`);
   });
 

@@ -159,7 +159,7 @@ Transactional email has a daily ceiling of its own in KV, under the provider's q
 
 The product Worker writes request counts, status classes and timings to `lymi_requests`, and fixed product action labels and counts to `lymi_events`. Route patterns replace requested paths, and neither dataset receives account identifiers, client names, card content or query strings. Two datasets keep high request volume from sampling product actions under the same index. The bindings are optional in local development and omitted from product previews, whose activity is synthetic.
 
-Cloudflare is already the hosting provider, so Analytics Engine adds no processor. PostHog, GA4, Plausible and self-hosted Umami remain options if a later product question needs richer analysis; this setup does not collect learner-level funnels or session replay. Browser Web Analytics is not configured, so page views and referrers are outside these metrics.
+Cloudflare is already the hosting provider, so Analytics Engine adds no processor. PostHog, GA4, Plausible and self-hosted Umami remain options if a later product question needs richer analysis; this setup does not collect learner-level funnels or session replay. Browser Web Analytics is not configured, so referrers are outside these metrics. Page views of published decks are counted separately: the site Worker adds one to `deck_page_views` in D1 per request, by deck, UTC day and locale, for publisher reports ([ADR 0028](adr/0028-publishers-read-aggregate-reports-on-their-published-decks.md)). It skips known crawlers and stores nothing about the visitor.
 
 ### Transactional email: Cloudflare Email Service from the product Worker
 

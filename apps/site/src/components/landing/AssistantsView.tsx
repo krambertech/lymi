@@ -1,7 +1,7 @@
 import "@fontsource/caveat/500.css";
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import { productUrl } from "../../lib/origins";
+import { openLymiUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { ApiConnections } from "./ApiConnections";
 import { AssistantHero } from "./AssistantHero";
@@ -64,7 +64,7 @@ const TYPED: SampleCard = {
 
 /** The page for people who already use an AI assistant: it makes the cards, Lymi keeps them. */
 export function AssistantsView() {
-  const openAppUrl = new URL("/", productUrl()).toString();
+  const openAppUrl = openLymiUrl();
 
   return (
     <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">

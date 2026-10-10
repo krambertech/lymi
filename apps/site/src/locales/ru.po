@@ -69,7 +69,7 @@ msgid "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}
 msgstr "{CLASS_LEARNERS, plural, one {Присоединился # ученик} few {Присоединились # ученика} many {Присоединились # учеников} other {Присоединились # ученика}}"
 
 msgid "{count, plural, one {# {language} card} other {# {language} cards}} with meanings in {meaningLanguage}. Try a few, then add the deck to Lymi to review them all."
-msgstr "{count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. {language} язык. Значения — {meaningLanguage}. Попробуй несколько, а потом добавь колоду в Lymi, чтобы повторять все."
+msgstr "{count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. Язык: {language}. Значения — {meaningLanguage}. Попробуй несколько, а потом добавь колоду в Lymi, чтобы повторять все."
 
 msgid "{count, plural, one {# card} other {# cards}}. Try a few, then add the deck to Lymi to review them all."
 msgstr "{count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. Попробуй несколько, а потом добавь колоду в Lymi, чтобы повторять все."
@@ -96,7 +96,7 @@ msgid "{left, plural, =0 {That’s the whole deck. Add it, and Lymi chooses when
 msgstr "{left, plural, =0 {Это вся колода. Добавь её, и Lymi сама выберет, когда вернуть каждую карточку.} one {Ждёт ещё одна карточка. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} few {Ждут ещё # карточки. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} many {Ждут ещё # карточек. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} other {Ждут ещё # карточки. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.}}"
 
 msgid "{name} · {language} vocabulary · Lymi"
-msgstr "{name} · {language} язык · Lymi"
+msgstr "{name} · {language} · Lymi"
 
 msgid "{name} · {subject} · Lymi"
 msgstr "{name} · {subject} · Lymi"
@@ -105,7 +105,7 @@ msgid "{name} · Flashcards · Lymi"
 msgstr "{name} · Флеш-карточки · Lymi"
 
 msgid "{name} flashcards"
-msgstr "{name} язык: флеш-карточки"
+msgstr "{name}: флеш-карточки"
 
 msgctxt "subject shelf"
 msgid "{name} flashcards"
@@ -1326,7 +1326,7 @@ msgid "Learned once, never revisited"
 msgstr "Без повторений"
 
 msgid "Learning {name} with Lymi"
-msgstr "{name} язык в Lymi"
+msgstr "{name} в Lymi"
 
 msgid "Learning data"
 msgstr "Данные обучения"
@@ -1780,7 +1780,7 @@ msgid "Ready-made {name} decks, written by a person and checked card by card."
 msgstr "{name} в готовых колодах. Каждую составил человек и проверил карточку за карточкой."
 
 msgid "Ready-made decks for learning {name}, written by a person and checked card by card."
-msgstr "{name} язык в готовых колодах. Каждую составил человек и проверил карточку за карточкой."
+msgstr "{name} в готовых колодах. Каждую составил человек и проверил карточку за карточкой."
 
 msgid "Ready-made flashcard decks, written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one free and review it in your own language, a few minutes a day."
 msgstr "Готовые колоды флеш-карточек, написанные человеком и проверенные карточка за карточкой: языки, экзамены и всё остальное, что стоит помнить. Добавь колоду бесплатно и повторяй её на своём языке по нескольку минут в день."

@@ -102,6 +102,8 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Published deck**: A shared deck anyone can add from its public page, without a link from the owner. Only Lymi's publishers publish. Withdrawing it stops new adds; members keep studying. Its add page says **Add to Lymi**. ADR 0020. _Avoid_: Public deck (in copy), catalog deck, template, marketplace
 
+**Deck report**: Counts a publisher reads about their own published decks through the API: adds, first reviews, returning learners and page views. It never names a learner. ADR 0028. _Avoid_: Analytics, stats, insights (Insights is the learner's own screen)
+
 **Explore**: Where a learner finds a published deck. One catalogue in two places: `lymi.app/explore`, the page a visitor lands on, and Explore in the app, under Insights in the rail and in the learner menu on a phone, where one press adds a deck to Library. Decks sit on a shelf per language they teach, then a shelf per subject, such as Science or Citizenship. Today's getting started guide points to it with a banner, **Start with a ready-made deck**. Both read the same rows, so neither can say something the other does not. _Avoid_: Catalogue (as a screen name), browse, discover, store, marketplace
 
 **Deck tag**: One label from a fixed list that a publisher puts on a published deck, such as Travel or HSK 1. The deck's page shows its tags as plain chips, and Explore's search finds them. It is not one of a card's tags, and nothing copies one into the other. _Avoid_: Topic, keyword, category (the category is the deck's shelf)

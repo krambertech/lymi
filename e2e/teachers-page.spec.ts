@@ -10,7 +10,7 @@ test("a teacher can reach the teachers page, try the join link and see what is r
   await test.step("the languages page's class deck section opens the teachers page", async () => {
     await page.goto(`${publicSite}/languages`);
     await page.getByRole("link", { name: "Lymi for teachers", exact: true }).click();
-    await expect(page).toHaveURL(new RegExp(`^${publicSite}/teachers/?$`));
+    await expect(page).toHaveURL(new RegExp(`^${publicSite}/teachers$`));
     await expect(
       page.getByRole("heading", { level: 1, name: "One deck for your whole class." }),
     ).toBeVisible();

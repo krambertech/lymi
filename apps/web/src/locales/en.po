@@ -2429,6 +2429,10 @@ msgstr "Message"
 msgid "Mode"
 msgstr "Mode"
 
+msgctxt "Phone learner menu"
+msgid "More"
+msgstr "More"
+
 msgid "More about this card"
 msgstr "More about this card"
 
@@ -2446,6 +2450,10 @@ msgstr "More like this"
 
 msgid "More than one right answer"
 msgstr "More than one right answer"
+
+msgctxt "Phone learner menu"
+msgid "More, account menu"
+msgstr "More, account menu"
 
 #. placeholder {0}: shortQuote(card.term)
 msgid "Move “{0}” to"

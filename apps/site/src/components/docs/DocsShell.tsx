@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import { ArrowLeft, ArrowRight, Menu, Moon, Search, Sun, X } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import { productUrl } from "../../lib/origins";
+import { openLymiUrl } from "../../lib/origins";
 import { setTheme } from "../../lib/theme";
 import { Kbd } from "../Kbd";
 import { Wordmark } from "../Logo";
@@ -66,7 +66,7 @@ function SiteNav({ pathname, onNavigate }: { pathname: string; onNavigate?: () =
       {/* The header's own link is hidden on a phone, so the drawer carries the way back. */}
       {onNavigate && (
         <a
-          href={productUrl()}
+          href={openLymiUrl()}
           className={clsx(navItem, "border-t border-edge !h-10 !rounded-none pt-2")}
         >
           Open Lymi
@@ -204,7 +204,7 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
         <ThemeToggle />
 
         <a
-          href={productUrl()}
+          href={openLymiUrl()}
           className="hidden h-9 items-center rounded-sm px-3 text-base text-text-2 transition-colors duration-150 sm:inline-flex hoverable:hover:bg-plate-2 hoverable:hover:text-text"
         >
           Open Lymi

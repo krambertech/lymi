@@ -3,7 +3,7 @@
 
 import { handle } from "@astrojs/cloudflare/handler";
 import { movedDeckPath, productAddPath } from "./lib/deck-page";
-import { productUrl, signUpUrl } from "./lib/origins";
+import { productUrl, signUpRedirect, signUpUrl } from "./lib/origins";
 
 function json(body: unknown, status = 200): Response {
   return Response.json(body, { status });
@@ -11,6 +11,9 @@ function json(body: unknown, status = 200): Response {
 
 /** The waiting list the private beta ran on. Its links are shared, so they now open sign-up. */
 const JOIN_PATHS = /^(?:\/(?:uk|ru))?\/join\/?$/;
+
+/** The address to share for signing up. It keeps its query, so a campaign's UTM tags arrive. */
+const SIGN_UP_PATHS = /^(?:\/(?:uk|ru))?\/signup\/?$/;
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -32,6 +35,7 @@ export default {
     if (url.pathname.startsWith("/api/")) return json({ error: "Not found" }, 404);
 
     if (JOIN_PATHS.test(url.pathname)) return Response.redirect(signUpUrl(), 301);
+    if (SIGN_UP_PATHS.test(url.pathname)) return Response.redirect(signUpRedirect(url.search), 302);
 
     // A deck used to live at /decks/<slug>. Those links are already shared, so they move rather
     // than break, and a search engine is told the address is permanent.

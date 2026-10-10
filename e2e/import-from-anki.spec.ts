@@ -7,7 +7,7 @@ const ANKI_FILE = join(process.cwd(), "apps/web/src/server/imports/anki/fixtures
 
 /** The learner menu sits in the rail on a desktop and in the top bar on a phone; the one on screen is it. */
 function learnerMenu(page: Page) {
-  return page.getByRole("button", { name: "Dev", exact: true }).filter({ visible: true });
+  return page.getByTestId("learner-menu").filter({ visible: true });
 }
 
 async function chooseFile(page: Page) {

@@ -274,6 +274,13 @@
       "when": 1790603423537,
       "tag": "0038_complete_iron_man",
       "breakpoints": true
+    },
+    {
+      "idx": 39,
+      "version": "6",
+      "when": 1791558790592,
+      "tag": "0039_bright_the_hand",
+      "breakpoints": true
     }
   ]
 }

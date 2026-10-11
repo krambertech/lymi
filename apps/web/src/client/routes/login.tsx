@@ -20,6 +20,7 @@ import { useDocumentTitle } from "../lib/document-title";
 import { passwordMessage } from "../lib/password-copy";
 import { clearPersistedLearnerState } from "../lib/persisted";
 import { minutesUntilRetry, tooManyAttempts } from "../lib/retry-after";
+import { firstTouchHeaders } from "../lib/telemetry";
 import type { CredentialValues, LoginMode } from "../views/login-view";
 import { LoginView } from "../views/login-view";
 
@@ -214,12 +215,15 @@ function Login() {
   }
 
   async function signUp(values: CredentialValues) {
-    const res = await authClient.signUp.email({
-      email: values.email,
-      password: values.password,
-      name: values.email.split("@")[0] ?? values.email,
-      callbackURL: verificationCallback(window.location.search),
-    });
+    const res = await authClient.signUp.email(
+      {
+        email: values.email,
+        password: values.password,
+        name: values.email.split("@")[0] ?? values.email,
+        callbackURL: verificationCallback(window.location.search),
+      },
+      { headers: firstTouchHeaders() },
+    );
     if (res.error) {
       const message = messageFor(res.error);
       if (res.error.code?.startsWith("PASSWORD_")) setPasswordError(message);
@@ -394,7 +398,10 @@ function DevSignIn({ returnTo }: { returnTo: string }) {
     // sign-in. A local address is created already confirmed, so that sign-in succeeds; any
     // other address has to open the link in the outbox, which lands on `returnTo`.
     if (mode === "up") {
-      await authClient.signUp.email({ email, password, name: "Dev", callbackURL: returnTo });
+      await authClient.signUp.email(
+        { email, password, name: "Dev", callbackURL: returnTo },
+        { headers: firstTouchHeaders() },
+      );
     }
     const res = await authClient.signIn.email({ email, password });
     setBusy(false);

@@ -12,7 +12,7 @@ import { MotionConfig } from "motion/react";
 import { lazy, Suspense, useEffect, useMemo, useRef } from "react";
 import { z } from "zod";
 import { AddCardSheet } from "../components/add-card-sheet";
-import { AnalyticsConsentSync } from "../components/analytics-consent-sync";
+import { AnalyticsLearnerSync } from "../components/analytics-learner-sync";
 import {
   AssistantMenuItem,
   AssistantOffer,
@@ -78,7 +78,7 @@ function Root() {
         <AddCardProvider>
           <SignOutProvider>
             <Shell />
-            <AnalyticsConsentSync />
+            <AnalyticsLearnerSync />
             <Toaster
               aria-label={t`Notifications`}
               closeLabel={t`Dismiss`}

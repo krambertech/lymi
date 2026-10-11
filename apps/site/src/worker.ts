@@ -2,6 +2,7 @@
 /// <reference types="astro/client" />
 
 import { handle } from "@astrojs/cloudflare/handler";
+import { POSTHOG_PROXY_PATH, proxyPostHog } from "@lymi/core/posthog-proxy";
 import { movedDeckPath, productAddPath } from "./lib/deck-page";
 import { productUrl, signUpRedirect, signUpUrl } from "./lib/origins";
 
@@ -29,6 +30,13 @@ export default {
           tag: env.CF_VERSION_METADATA.tag || null,
           deployedAt: env.CF_VERSION_METADATA.timestamp,
         },
+      });
+    }
+
+    if (url.pathname.startsWith(`${POSTHOG_PROXY_PATH}/`)) {
+      return proxyPostHog(request, {
+        country: request.cf?.country,
+        ip: request.headers.get("cf-connecting-ip"),
       });
     }
 

@@ -1,19 +1,16 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { useLingui } from "@lingui/react/macro";
 import type { AppLanguage } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AccountSection } from "../components/account-section";
 import { ApiKeysSection } from "../components/api-keys-section";
-import { Button } from "../components/button";
 import { ConnectedAppsSection } from "../components/connected-apps-section";
 import { ExportSheet } from "../components/export-sheet";
 import { NotificationsSection } from "../components/notifications-section";
-import { SettingsGroup } from "../components/settings-group";
 import { api, type Settings } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { activate, pickLocale } from "../lib/i18n";
-import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
 import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
 import { SettingsView } from "../views/settings-view";
@@ -23,7 +20,7 @@ export const Route = createFileRoute("/settings")({
 });
 
 function SettingsRoute() {
-  const { t, i18n } = useLingui();
+  const { t } = useLingui();
   useDocumentTitle(t`Settings`);
   const me = useQuery(meQuery);
   const settings = useQuery(settingsQuery);
@@ -74,22 +71,6 @@ function SettingsRoute() {
         setThemeState(t);
       }}
     >
-      <SettingsGroup
-        title={t`Privacy preferences`}
-        description={t`Choose whether Lymi uses optional analytics cookies.`}
-      >
-        <Button
-          render={
-            <a
-              href={publicSiteUrl(
-                `${i18n.locale === "en" ? "" : `/${i18n.locale}`}/privacy#privacy-preferences`,
-              )}
-            />
-          }
-        >
-          <Trans>Open on lymi.app</Trans>
-        </Button>
-      </SettingsGroup>
       <NotificationsSection />
       <ConnectedAppsSection />
       <ApiKeysSection />

@@ -4,10 +4,11 @@ import type { GenericEndpointContext } from "@better-auth/core";
 import { expo } from "@better-auth/expo";
 import { mcp } from "@better-auth/mcp";
 import { MIN_PASSWORD_LENGTH } from "@lymi/core";
-import { readConsent, signupAttribution } from "@lymi/core/analytics";
+import { FIRST_TOUCH_HEADER, parseFirstTouch } from "@lymi/core/analytics";
 import { and, eq, sql } from "@lymi/core/db";
 import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { getOAuthState } from "better-auth/api";
 import { emailOTP } from "better-auth/plugins/email-otp";
 import { jwt } from "better-auth/plugins/jwt";
 import { cookiePrefix } from "../shared/cookies";
@@ -29,7 +30,6 @@ import { ServiceError } from "./services/context";
 import { accountEmailLanguage, sendAccountEmail } from "./services/email";
 import { joinThroughLink } from "./services/invitations";
 import { addPublishedDeck } from "./services/publications";
-import { updateAnalyticsConsent } from "./services/settings";
 import {
   signedUpHere,
   signUpCookieAttributes,
@@ -307,18 +307,14 @@ export function createAuth(
           // Remember the browser that signed up, so confirming from it keeps its password.
           after: async (user, context) => {
             const headers = headersOf(context);
-            const choice = readConsent(headers?.get("cookie") ?? "");
-            if (choice)
-              await updateAnalyticsConsent({ db, userId: user.id, actor: "user" }, choice).catch(
-                () => {},
-              );
+            const google = isGoogleCallback(context);
             await trackProductEvent(
               env,
               user.id,
               {
                 name: "signed_up",
-                method: isGoogleCallback(context) ? "google" : "email",
-                ...signupAttribution(headers?.get("cookie") ?? ""),
+                method: google ? "google" : "email",
+                ...(await firstTouchOf(google, headers)),
               },
               waitUntil,
               analyticsContextFor(db, user.id, headers),
@@ -351,12 +347,6 @@ export function createAuth(
           // learner in; the join or add page then says why.
           after: async (session, context) => {
             const headers = headersOf(context);
-            const choice = readConsent(headers?.get("cookie") ?? "");
-            if (choice)
-              await updateAnalyticsConsent(
-                { db, userId: session.userId, actor: "user" },
-                choice,
-              ).catch(() => {});
             await trackProductEvent(
               env,
               session.userId,
@@ -473,6 +463,16 @@ async function retireUnprovedPassword(db: Db, userId: string): Promise<void> {
 
 export type Auth = ReturnType<typeof createAuth>;
 export type SessionUser = NonNullable<Awaited<ReturnType<Auth["api"]["getSession"]>>>["user"];
+
+/** Where the visit began: the sign-up form sends it, and Google's round trip keeps it in OAuth state. */
+async function firstTouchOf(google: boolean, headers: Headers | undefined) {
+  if (!google) return parseFirstTouch(headers?.get(FIRST_TOUCH_HEADER));
+  try {
+    return parseFirstTouch((await getOAuthState<{ firstTouch?: unknown }>())?.firstTouch);
+  } catch {
+    return parseFirstTouch(undefined);
+  }
+}
 
 function isGoogleCallback(context: GenericEndpointContext | null): boolean {
   // The router sets the matched path, "/callback/google"; direct API calls keep the pattern.

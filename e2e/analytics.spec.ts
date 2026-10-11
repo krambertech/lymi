@@ -16,26 +16,16 @@ test("the public site asks nothing and stores nothing for analytics", async ({ p
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length])).toEqual([0, 0]);
 });
 
-test("a learner's analytics are on by default and turn off in Settings", async ({ page }) => {
+test("a learner's analytics are on with no switch in Settings", async ({ page }) => {
   await page.goto("/api/dev/sign-in?as=learner&reset=1");
   await expect(page.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
   expect(await page.request.get("/api/settings").then((r) => r.json())).toMatchObject({
     analyticsConsent: null,
   });
   await page.goto("/settings");
-  const toggle = page.getByRole("switch", { name: "Product analytics" });
-  await expect(toggle).toBeChecked();
-  await toggle.click();
-  await expect(toggle).not.toBeChecked();
-  await expect
-    .poll(() => page.request.get("/api/settings").then((r) => r.json()))
-    .toMatchObject({ analyticsConsent: false });
-  await page.reload();
-  await expect(page.getByRole("switch", { name: "Product analytics" })).not.toBeChecked();
-  await page.getByRole("switch", { name: "Product analytics" }).click();
-  await expect
-    .poll(() => page.request.get("/api/settings").then((r) => r.json()))
-    .toMatchObject({ analyticsConsent: true });
+  await expect(page.getByRole("heading", { name: "Settings", exact: true })).toBeVisible();
+  await expect(page.getByRole("switch", { name: /analytics/i })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: /privacy preferences/i })).toHaveCount(0);
 });
 
 test("a public visit's source rides the Get started link into sign-up without cookies", async ({

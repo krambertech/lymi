@@ -1499,9 +1499,6 @@ msgstr "Couldn’t save the photo. Try again."
 msgid "Couldn’t save the reminder. Check your connection and try again."
 msgstr "Couldn’t save the reminder. Check your connection and try again."
 
-msgid "Couldn’t save your analytics choice. Try again."
-msgstr "Couldn’t save your analytics choice. Try again."
-
 msgid "Couldn’t save your answers. Check your connection and try again."
 msgstr "Couldn’t save your answers. Check your connection and try again."
 
@@ -2403,9 +2400,6 @@ msgstr "Let this app use your Lymi?"
 msgid "Lets a script read or add to your decks."
 msgstr "Lets a script read or add to your decks."
 
-msgid "Lets us see which parts of Lymi you use, such as reviews and cards added. Never what your cards say."
-msgstr "Lets us see which parts of Lymi you use, such as reviews and cards added. Never what your cards say."
-
 msgid "Library"
 msgstr "Library"
 
@@ -3080,9 +3074,6 @@ msgstr "Privacy"
 msgid "Private"
 msgstr "Private"
 
-msgid "Product analytics"
-msgstr "Product analytics"
-
 msgid "Production"
 msgstr "Production"
 
@@ -3128,9 +3119,6 @@ msgstr "Read lists decks and cards. Read and write also adds, edits and archives
 
 msgid "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 msgstr "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
-
-msgid "Read privacy policy"
-msgstr "Read privacy policy"
 
 msgid "Read the guide"
 msgstr "Read the guide"

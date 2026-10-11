@@ -144,8 +144,10 @@ function PrivacyPolicyContent() {
           counts, review grades, app language, the referring website, limited campaign details and
           the country of the visit, which our hosting provider determines. When you sign up, your
           account records where your visit began. We do not send card content, email addresses,
-          names, credentials or private requested URLs, and we do not record sessions. You can turn
-          off product analytics in Settings.
+          names, credentials or private requested URLs, and we do not record sessions. We do this on
+          the basis of our legitimate interest in understanding and improving Lymi. To object, email{" "}
+          <a href="mailto:hello@lymi.app?subject=Lymi%20analytics">hello@lymi.app</a> and we will
+          stop product analytics for your account.
         </Trans>
       </p>
       <p>
@@ -184,8 +186,8 @@ function PrivacyPolicyContent() {
           Depending on the activity and applicable law, we process data to perform our agreement
           with you, with your consent, for legitimate interests such as security, service
           reliability and understanding how Lymi is used, or to meet a legal obligation. You can
-          object to product analytics by turning them off in Settings, and withdraw optional
-          consent, such as reminders, at any time.
+          object to product analytics by emailing us, and withdraw optional consent, such as
+          reminders, at any time.
         </Trans>
       </p>
 
@@ -318,8 +320,8 @@ function PrivacyPolicyContent() {
         <Trans>
           Analytics use no cookies and store nothing on your device. To tell sign-up where a visit
           began, links on lymi.app may add the referring website and campaign labels to the address
-          they open. Your choice in Settings also covers product analytics from connected apps and
-          background work.
+          they open. An objection also covers product analytics from connected apps and background
+          work.
         </Trans>
       </p>
 

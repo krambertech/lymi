@@ -4,7 +4,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AccountSection } from "../components/account-section";
-import { AnalyticsSection } from "../components/analytics-section";
 import { ApiKeysSection } from "../components/api-keys-section";
 import { ConnectedAppsSection } from "../components/connected-apps-section";
 import { ExportSheet } from "../components/export-sheet";
@@ -72,7 +71,6 @@ function SettingsRoute() {
         setThemeState(t);
       }}
     >
-      <AnalyticsSection />
       <NotificationsSection />
       <ConnectedAppsSection />
       <ApiKeysSection />

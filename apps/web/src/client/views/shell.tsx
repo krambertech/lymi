@@ -68,6 +68,10 @@ interface SidebarProps {
   docsUrl: string;
   /** The streak pill, which shares the first line with capture. */
   streak?: ReactNode | undefined;
+  /** A note above the learner, such as the offer to connect an AI assistant. */
+  aside?: ReactNode | undefined;
+  /** A row beside Docs in the learner menu, such as Connect AI assistant. */
+  connect?: ReactNode | undefined;
   className?: string | undefined;
 }
 
@@ -88,6 +92,8 @@ export function Sidebar({
   signingOut,
   docsUrl,
   streak,
+  aside,
+  connect,
   className,
 }: SidebarProps) {
   const { t, i18n } = useLingui();
@@ -149,6 +155,8 @@ export function Sidebar({
         </RailNav>
       </div>
 
+      {aside && <div className="shrink-0 px-3 pb-3">{aside}</div>}
+
       {/* The rule is its own line across the rail, not a border on the row: a top border on a
           rounded row curves at the corners and reads as a broken card rather than a divider. */}
       <div className="shrink-0 border-t border-edge px-3 pt-2 pb-4">
@@ -159,6 +167,7 @@ export function Sidebar({
           docsUrl={docsUrl}
           onSignOut={onSignOut}
           signingOut={signingOut}
+          connect={connect}
         />
       </div>
     </aside>

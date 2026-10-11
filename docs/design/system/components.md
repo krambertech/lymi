@@ -46,7 +46,7 @@ These belong to one feature and are listed so nothing is drawn twice.
 - Sections and series: `SectionManager`, `SectionNameDialog`, `ArchiveSectionDialog`, `ArchivedSectionsDialog`, `MoveToSectionDialog`, `StartEarlyDialog`, `SeriesSheet`, `SeriesForm`, `DeleteSeriesDialog`, `MoveToSeriesDialog`.
 - Sharing: `InviteDialog`, `RemoveMemberDialog`, `TurnOffLinkDialog`, `CancelInvitationDialog`.
 - The streak: `StreakButton`, `StreakPanel`, `StreakPlace`, `StreakWeek`, `StreakCalendar`, `SevenLights`, `GoalPicker`, `RestDayBanner`.
-- Navigation: `NavLink`, `PillNav`, `AddMenu`, `LearnerMenu`.
+- Navigation: `NavLink`, `PillNav`, `AddMenu`, `LearnerMenu`, `AssistantOffer`, `AssistantMenuItem`.
 - Settings: `AccountSection`, `ApiKeysSection`, `ConnectedAppsSection`, `NotificationsSection`, `ExportSheet`, `ImportSources`.
 - Auth: `AuthFrame`, `AuthNotice`, `PasswordField`, `Connection`, `PublicPolicyLinks`.
 - Dialogs: `FeedbackDialog`, `InstallDialog`, `ShortcutsDialog`.

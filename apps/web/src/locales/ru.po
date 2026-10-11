@@ -974,6 +974,9 @@ msgstr "Упорядочить разделы"
 msgid "Arts"
 msgstr "Искусство"
 
+msgid "Ask Claude or ChatGPT to create cards and decks for you."
+msgstr "Попроси Claude или ChatGPT создать для тебя карточки и колоды."
+
 msgid "Ask the person who shared it for a new link."
 msgstr "Попроси новую ссылку у того, кто ей поделился."
 
@@ -1274,8 +1277,17 @@ msgstr "Подтверди свой адрес"
 msgid "Confirm your email address first."
 msgstr "Сначала подтверди адрес почты."
 
+msgid "Connect"
+msgstr "Подключить"
+
 msgid "Connect {appName}"
 msgstr "Подключить {appName}"
+
+msgid "Connect {name}"
+msgstr "Подключить {name}"
+
+msgid "Connect AI assistant"
+msgstr "Подключить AI-ассистента"
 
 msgid "Connect an app"
 msgstr "Подключить приложение"
@@ -1285,6 +1297,9 @@ msgstr "Подключи ChatGPT или Claude, чтобы они превращ
 
 msgid "Connect Lymi, paste the lesson, and ask for the cards"
 msgstr "Подключи Lymi, вставь урок и попроси сделать карточки"
+
+msgid "Connect your AI assistant"
+msgstr "Подключи своего AI-ассистента"
 
 msgid "connected {connected}"
 msgstr "подключено {connected}"

@@ -11,6 +11,8 @@ export interface ShellChromeValue {
   onCreateDeck?: (() => void) | undefined;
   onSignOut?: (() => void | Promise<void>) | undefined;
   signingOut?: boolean | undefined;
+  /** A row beside Docs in the learner menu, such as Connect AI assistant. */
+  connect?: ReactNode | undefined;
 }
 
 const ShellChromeContext = createContext<ShellChromeValue | null>(null);
@@ -37,6 +39,7 @@ export function TabActions() {
         docsUrl={chrome.docsUrl}
         onSignOut={chrome.onSignOut}
         signingOut={chrome.signingOut}
+        connect={chrome.connect}
       />
     </>
   );

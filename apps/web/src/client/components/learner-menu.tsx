@@ -39,6 +39,8 @@ interface Props {
   docsUrl: string;
   onSignOut?: (() => void | Promise<void>) | undefined;
   signingOut?: boolean | undefined;
+  /** A row beside Docs, such as Connect AI assistant. */
+  connect?: ReactNode | undefined;
 }
 
 /** The part of a name a friend uses. Google sends the full one. */
@@ -53,7 +55,15 @@ export function firstName(name: string | undefined): string | undefined {
  * there is a keyboard; Install appears where the browser can actually do it. Writing to Lymi sits
  * with the docs, since both are where a learner goes when the app has not answered them.
  */
-export function LearnerMenu({ name, email, variant, docsUrl, onSignOut, signingOut }: Props) {
+export function LearnerMenu({
+  name,
+  email,
+  variant,
+  docsUrl,
+  onSignOut,
+  signingOut,
+  connect,
+}: Props) {
   const { t } = useLingui();
   const st = useStaticNav();
   const install = useInstallState();
@@ -160,6 +170,7 @@ export function LearnerMenu({ name, email, variant, docsUrl, onSignOut, signingO
               <Trans>Install Lymi</Trans>
             </DropdownMenuItem>
           )}
+          {connect}
           <DropdownMenuLinkItem render={<a href={docsUrl} />}>
             <BookOpen aria-hidden="true" />
             <Trans>Docs</Trans>

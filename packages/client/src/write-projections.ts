@@ -95,6 +95,7 @@ export function localCard(w: Extract<Write, { kind: "card.add" }>, lookup: Looku
     createdAt: now,
     updatedAt: now,
     image: null,
+    important: false,
   };
 }
 
@@ -218,6 +219,11 @@ function onDeckCards(rows: DeckRow[], deckId: string, w: Write, lookup: Lookup):
     }
     case "card.archive":
       return rows.filter((row) => row.card.id !== w.id);
+    // The draw's cached data keeps the old weight until its next fetch; review shows the mark at once itself.
+    case "card.important":
+      return rows.map((r) =>
+        r.card.id === w.id ? { ...r, card: { ...r.card, important: w.important } } : r,
+      );
     case "card.restore": {
       const card = lookup.card(w.id);
       if (!card || card.deckId !== deckId || rows.some((row) => row.card.id === w.id)) return rows;
@@ -240,6 +246,8 @@ function onArchivedCards(cards: CardHit[], w: Write, lookup: Lookup): CardHit[] 
       return cards.filter((c) => c.id !== w.id);
     case "card.update":
       return cards.map((c) => (c.id === w.id ? { ...c, ...patchCard(c, w.patch) } : c));
+    case "card.important":
+      return cards.map((c) => (c.id === w.id ? { ...c, important: w.important } : c));
     default:
       return cards;
   }

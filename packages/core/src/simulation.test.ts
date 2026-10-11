@@ -3,7 +3,7 @@ import { dayStudy } from "../simulation/day";
 import { fingerprint } from "../simulation/fingerprint";
 import { intervalGuide } from "../simulation/intervals";
 import results from "../simulation/results.json";
-import { CARRY_OVER_EVERY } from "./draw";
+import { CARRY_OVER_EVERY, IMPORTANT_ODDS } from "./draw";
 import { DESIRED_RETENTION } from "./fsrs";
 
 /**
@@ -37,6 +37,28 @@ describe("the year-long results", () => {
     expect(row("lymi").medianWait).toBeLessThanOrEqual(row("halving").medianWait + 2);
     expect(row("lymi").medianWait).toBeLessThan(row("floor").medianWait);
     expect(row("oldest").medianWait).toBeGreaterThan(row("lymi").medianWait * 5);
+  });
+});
+
+describe("the important mark", () => {
+  const row = (importantEvery: number, odds: number) =>
+    results.importance.find(
+      (r) => r.importantEvery === importantEvery && r.odds === odds,
+    ) as (typeof results.importance)[number];
+
+  it("keeps a few marked cards clearly better remembered at little cost to the rest", () => {
+    const unmarked = row(10, 1);
+    const marked = row(10, IMPORTANT_ODDS);
+    expect(marked.important.remembered).toBeGreaterThan(marked.ordinary.remembered + 0.08);
+    expect(marked.important.late).toBeLessThan(unmarked.important.late / 3);
+    expect(unmarked.ordinary.remembered - marked.ordinary.remembered).toBeLessThan(0.02);
+  });
+
+  it("still reviews unmarked cards when half are marked", () => {
+    const strongest = Math.max(...results.importance.map((r) => r.odds));
+    expect(row(2, IMPORTANT_ODDS).ordinary.remembered).toBeGreaterThan(
+      row(2, strongest).ordinary.remembered + 0.05,
+    );
   });
 });
 

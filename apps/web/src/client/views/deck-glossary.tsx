@@ -26,6 +26,7 @@ import {
   Play,
   Plus,
   Settings2,
+  Star,
 } from "lucide-react";
 import {
   type ButtonHTMLAttributes,
@@ -624,6 +625,7 @@ const GlossaryRow = memo(function GlossaryRow({
         <span className="sr-only">
           {waiting ? t`Not in review yet` : i18n._(stateMarks[key].label)}
         </span>
+        {card.important && <span className="sr-only">{t`Important`}</span>}
       </span>
       <span
         className={clsx(
@@ -638,6 +640,12 @@ const GlossaryRow = memo(function GlossaryRow({
             {" · "}
             {forms}
           </span>
+        )}
+        {card.important && (
+          <Star
+            className="ms-1.5 inline size-3.5 fill-current align-[-1px] text-amber-mark"
+            aria-hidden="true"
+          />
         )}
       </span>
       <span

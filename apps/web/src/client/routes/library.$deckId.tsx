@@ -170,6 +170,17 @@ function DeckPage() {
     onError: (error, id) =>
       toast.add({ id: `archive-${id}`, type: "error", title: errorMessage(error) }),
   });
+  // The outbox shows the mark on the list at once, offline too.
+  const mark = useMutation({
+    mutationFn: ({ card, important }: { card: Card; important: boolean }) =>
+      writes.setImportant(card, important),
+    onSuccess: (_r, { card }) => {
+      invalidate();
+      qc.invalidateQueries({ queryKey: ["cards", card.id, "history"] });
+    },
+    onError: (error, { card }) =>
+      toast.add({ id: `important-${card.id}`, type: "error", title: errorMessage(error) }),
+  });
   const restore = useMutation({
     mutationFn: (id: string) => writes.restoreCard(id),
     onSuccess: (_r, id) => {
@@ -240,6 +251,7 @@ function DeckPage() {
         cards={sections.isPending ? undefined : cards.data}
         streak={streak.data}
         onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
+        onImportantChange={(card, important) => mark.mutate({ card, important })}
         onSettings={() => navigate({ to: "/library/$deckId/settings", params: { deckId } })}
         // Every write is the owner's; a member reads the deck and leaves it. ADR 0011.
         owner={

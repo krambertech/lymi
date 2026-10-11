@@ -17,7 +17,13 @@ type Change = "create" | "update" | "archive" | "restore";
 export type AuditEvent =
   | {
       entity: "card";
-      action: Change | "enrich" | "generate_audio" | ImageAction;
+      action:
+        | Change
+        | "enrich"
+        | "generate_audio"
+        | ImageAction
+        | "mark_important"
+        | "unmark_important";
       id: string;
       /** The deck the write named, so a card moved since is not reported against its new deck. */
       deckId: string;

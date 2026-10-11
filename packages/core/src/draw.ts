@@ -21,6 +21,8 @@ export const CARRY_OVER_EVERY = 3;
 export const REVIEW_ODDS_POWER = 4;
 /** An unseen card's odds halve every this many days since it was added. */
 export const UNSEEN_HALF_LIFE_DAYS = 7;
+/** An important card's odds are this many times its own, as a review and as an unseen card. */
+export const IMPORTANT_ODDS = 4;
 
 const DAY_MS = 86_400_000;
 const MIN_WEIGHT = 1e-6;
@@ -44,6 +46,8 @@ export interface DrawMode {
 export interface DrawCard {
   cardId: string;
   deckId: string;
+  /** Marked important by this learner. It weights the draw and never moves a due date. */
+  important?: boolean | undefined;
   modes: DrawMode[];
 }
 
@@ -175,6 +179,7 @@ export function weightedKey(date: string, cardId: string, mode: ModeKey, weight:
 
 export interface Candidate {
   cardId: string;
+  important?: boolean | undefined;
   mode: DrawMode;
 }
 
@@ -207,16 +212,28 @@ export interface DrawPolicy {
   returns: ReturnRule;
 }
 
-export const DRAW_POLICY: DrawPolicy = {
-  reviewKey: (c, day) =>
-    weightedKey(day.date, c.cardId, c.mode.mode, c.mode.retrievability ** REVIEW_ODDS_POWER),
-  unseenKey: (c, day) => {
-    const ageDays = Math.max(0, day.start.getTime() - c.mode.added.getTime()) / DAY_MS;
-    return weightedKey(day.date, c.cardId, c.mode.mode, 0.5 ** (ageDays / UNSEEN_HALF_LIFE_DAYS));
-  },
-  oldestSlotEvery: OLDEST_UNSEEN_SLOT_EVERY,
-  returns: RETURN_RULE,
-};
+/** The production policy with an important card's odds multiplied by `importantOdds`. */
+export function weightedPolicy(importantOdds: number): DrawPolicy {
+  const odds = (c: Candidate) => (c.important ? importantOdds : 1);
+  return {
+    reviewKey: (c, day) =>
+      weightedKey(
+        day.date,
+        c.cardId,
+        c.mode.mode,
+        c.mode.retrievability ** REVIEW_ODDS_POWER * odds(c),
+      ),
+    unseenKey: (c, day) => {
+      const ageDays = Math.max(0, day.start.getTime() - c.mode.added.getTime()) / DAY_MS;
+      const recency = 0.5 ** (ageDays / UNSEEN_HALF_LIFE_DAYS);
+      return weightedKey(day.date, c.cardId, c.mode.mode, recency * odds(c));
+    },
+    oldestSlotEvery: OLDEST_UNSEEN_SLOT_EVERY,
+    returns: RETURN_RULE,
+  };
+}
+
+export const DRAW_POLICY: DrawPolicy = weightedPolicy(IMPORTANT_ODDS);
 
 const reachedReview = (mode: DrawMode | undefined) =>
   mode !== undefined && (mode.state === State.Review || mode.state === State.Relearning);
@@ -263,7 +280,7 @@ function plan(
     const asked = card.modes.filter((mode) => mode.hasCue);
     asked.forEach((mode, index) => {
       if (mode.due.getTime() >= day.end.getTime()) return;
-      const candidate = { cardId: card.cardId, mode };
+      const candidate = { cardId: card.cardId, important: card.important, mode };
       if (mode.state === State.New) {
         // Modes start one at a time: the next waits until the one before reaches Review.
         if (index === 0 || reachedReview(asked[index - 1])) unseen.push(candidate);

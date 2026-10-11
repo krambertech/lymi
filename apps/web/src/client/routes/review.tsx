@@ -215,6 +215,8 @@ function Review() {
   const [menuOpen, setMenuOpen] = useState(false);
   // Cards archived from review, gone from it at once rather than when the draw is fetched again.
   const [archived, setArchived] = useState<ReadonlySet<string>>(() => new Set());
+  // Marks set in this review, shown at once rather than when the draw is fetched again.
+  const [marks, setMarks] = useState<ReadonlyMap<string, boolean>>(() => new Map());
   const [editing, setEditing] = useState<Card | null>(null);
   // A mouse gets a visible ⋯, beside the card where there is room and in its head where there is not.
   const mouse = useMouse();
@@ -882,6 +884,18 @@ function Review() {
     }));
   };
 
+  const importantOf = (card: Card) => marks.get(card.id) ?? card.important;
+  const markImportant = async (card: Card, important: boolean) => {
+    setMarks((m) => new Map(m).set(card.id, important));
+    try {
+      await writes.setImportant(card, important);
+      qc.invalidateQueries({ queryKey: ["cards", card.id, "history"] });
+    } catch (e) {
+      setMarks((m) => new Map(m).set(card.id, !important));
+      toast.add({ type: "error", title: errorMessage(e) });
+    }
+  };
+
   const archiveCurrent = async () => {
     if (!current) return;
     const card = current.card;
@@ -946,6 +960,8 @@ function Review() {
       }}
       visible={mouse}
       hasHook={!!current.card.hook}
+      important={importantOf(current.card)}
+      onImportantChange={(important) => void markImportant(current.card, important)}
       canEdit={owned}
       finalFocus={menuFinalFocus}
       onHook={() => {
@@ -1164,7 +1180,8 @@ function Review() {
         <CardPlace open={placeOpen} onClose={closePlace} titleId={placeTitleId}>
           <WordView
             key={current.card.id}
-            card={current.card}
+            card={{ ...current.card, important: importantOf(current.card) }}
+            onImportantChange={(important) => void markImportant(current.card, important)}
             state={placeHistory?.states[0] ?? null}
             deckName={currentDeck.name}
             modes={current.card.reviewModes ?? currentDeck.reviewModes}

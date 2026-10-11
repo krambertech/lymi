@@ -21,6 +21,7 @@ erDiagram
   decks ||--o| deck_publications : "published as"
   user ||--o{ deck_members : "studies"
   cards ||--o{ card_states : "one per learner per review mode"
+  cards ||--o{ important_cards : "marked by each learner"
   cards ||--o{ card_images : "one active picture"
   card_states ||--o{ reviews : "append-only"
   user ||--o{ review_days : "one per local date"
@@ -198,6 +199,12 @@ erDiagram
     text fsrs "ts-fsrs Card as JSON"
     int last_review "nullable"
   }
+  important_cards {
+    text id PK
+    text card_id FK
+    text user_id FK
+    int created_at
+  }
   reviews {
     text id PK
     text card_state_id FK
@@ -289,7 +296,7 @@ Unless `decks.section_progression` is `open`, each learner opens sections in ord
 
 ### Shared decks
 
-A deck's owner is `decks.user_id`. Everyone else who studies it has a `deck_members` row. Leaving or being removed sets `removed_at` and keeps the row; `removed_by = 'owner'` blocks the join link until a named invitation. `card_states` is unique per `(card_id, user_id, direction)`, so each learner of a shared card has their own schedule. A change to the cards writes the owner's states at once and raises `decks.states_version`; a member whose `deck_members.states_version` is behind gets their missing states on their next request that reads progress ([ADR 0022](adr/0022-a-member-catches-up-on-card-states-at-their-next-request.md)). Every read goes through `memberOf` in `services/members.ts`; every write to a deck's content requires the owner. [ADR 0011](adr/0011-a-shared-deck-is-one-deck-with-many-learners.md).
+A deck's owner is `decks.user_id`. Everyone else who studies it has a `deck_members` row. Leaving or being removed sets `removed_at` and keeps the row; `removed_by = 'owner'` blocks the join link until a named invitation. `card_states` is unique per `(card_id, user_id, direction)`, so each learner of a shared card has their own schedule. A change to the cards writes the owner's states at once and raises `decks.states_version`; a member whose `deck_members.states_version` is behind gets their missing states on their next request that reads progress ([ADR 0022](adr/0022-a-member-catches-up-on-card-states-at-their-next-request.md)). Every read goes through `memberOf` in `services/members.ts`; every write to a deck's content requires the owner. An `important_cards` row is the learner's own mark, so a member writes one for a shared card; unmarking deletes the row, and the draw multiplies the card's weight by `IMPORTANT_ODDS` without touching its `card_states`. Marks outlive leaving a shared deck, like the member's reviews, so rejoining brings them back; only deleting the card removes them. [ADR 0011](adr/0011-a-shared-deck-is-one-deck-with-many-learners.md).
 
 A deck has at most one unrevoked `deck_invitations` link, enforced by a partial unique index. Turning the link off sets `revoked_at` for good, and turning it on again inserts a new row with a new token. The token is a capability: it appears in the join URL and nowhere else, never in audit payloads, logs or error messages. `/join/<token>` is rendered by the product Worker; it shows up to three recent cards, and its title and Open Graph tags carry none. A signed-out visitor's link rides through sign-in in a ten-minute HttpOnly cookie, and `session.create.after` completes the membership. Repeated joins make one membership and one audit row.
 

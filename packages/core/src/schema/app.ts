@@ -591,6 +591,28 @@ export const cardStates = sqliteTable(
   ],
 );
 
+/**
+ * A card this learner marked important. The mark is the learner's own, like a schedule, so a member
+ * can mark a shared deck's card. Unmarking removes the row; it holds nothing the learner wrote.
+ */
+export const importantCards = sqliteTable(
+  "important_cards",
+  {
+    id: text("id").primaryKey(),
+    cardId: text("card_id")
+      .notNull()
+      .references(() => cards.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+  },
+  (t) => [
+    uniqueIndex("important_cards_card_user_idx").on(t.cardId, t.userId),
+    index("important_cards_user_idx").on(t.userId),
+  ],
+);
+
 /** Append-only review history. Never updated, never deleted. */
 export const reviews = sqliteTable(
   "reviews",

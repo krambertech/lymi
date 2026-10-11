@@ -1,5 +1,12 @@
 import { State } from "ts-fsrs";
-import { type Candidate, DRAW_POLICY, type DrawPolicy, weightedKey } from "../src/draw";
+import {
+  type Candidate,
+  DRAW_POLICY,
+  type DrawPolicy,
+  IMPORTANT_ODDS,
+  weightedKey,
+  weightedPolicy,
+} from "../src/draw";
 import { emptyState, retrievability } from "../src/fsrs";
 import { DAY_MS, playDay, rng, type SimMode, utcDay } from "./learner";
 
@@ -155,4 +162,85 @@ export function newCardStudy() {
     id,
     ...newCardRun(NEW_CARD_RULES[id]),
   }));
+}
+
+export const IMPORTANCE_STUDY = {
+  ...REVIEW_ORDER_STUDY,
+  /** One card in this many is marked: a learner marking a few, and one marking half. */
+  importantEvery: [10, 2],
+  odds: [1, 2, IMPORTANT_ODDS, 8, 16],
+} as const;
+
+function importanceRun(policy: DrawPolicy, seed: number, importantEvery: number) {
+  const { days, goal, unseenPool } = IMPORTANCE_STUDY;
+  const random = rng(seed);
+  const modes: SimMode[] = [];
+  const waits = { important: [] as number[], ordinary: [] as number[] };
+  for (let d = 0; d < days; d++) {
+    const day = utcDay(START + d * DAY_MS);
+    const unseen = modes.filter((m) => m.card.state === State.New).length;
+    for (let i = unseen; i < unseenPool; i++) {
+      modes.push({
+        cardId: `c${modes.length}`,
+        deckId: "d",
+        mode: MODE,
+        card: emptyState(day.start),
+        added: day.start,
+        hasCue: true,
+        important: modes.length % importantEvery === 0,
+      });
+    }
+    const byId = new Map(modes.map((m) => [m.cardId, m]));
+    for (const a of playDay(modes, day, random, goal, { policy }).attempts) {
+      const sim = byId.get(a.cardId) as SimMode;
+      if (a.kind !== "unseen") continue;
+      const wait = Math.round((day.start.getTime() - sim.added.getTime()) / DAY_MS);
+      waits[sim.important ? "important" : "ordinary"].push(wait);
+    }
+  }
+  const end = new Date(START + days * DAY_MS);
+  const group = (important: boolean) => {
+    const added = modes.filter((m) => Boolean(m.important) === important);
+    const introduced = added.filter((m) => m.card.state !== State.New);
+    return {
+      added: added.length,
+      introduced: introduced.length,
+      remembered: introduced.reduce((sum, m) => sum + retrievability(m.card, end), 0),
+      late: introduced.filter((m) => m.card.due.getTime() < end.getTime() - 7 * DAY_MS).length,
+      wait: percentile(waits[important ? "important" : "ordinary"], 0.5),
+    };
+  };
+  return { important: group(true), ordinary: group(false) };
+}
+
+/**
+ * A backlogged year with some cards marked important, under each multiplier. Shares are of the
+ * cards added to each group, so the two groups compare despite their sizes.
+ */
+export function importanceStudy() {
+  const { seeds, odds, importantEvery } = IMPORTANCE_STUDY;
+  return importantEvery.flatMap((every) =>
+    odds.map((multiplier) => {
+      const runs = seeds.map((seed) => importanceRun(weightedPolicy(multiplier), seed, every));
+      const share = (group: "important" | "ordinary", key: "introduced" | "remembered" | "late") =>
+        Math.round(
+          (1000 * runs.reduce((sum, run) => sum + run[group][key] / run[group].added, 0)) /
+            runs.length,
+        ) / 1000;
+      const wait = (group: "important" | "ordinary") =>
+        Math.round(runs.reduce((sum, run) => sum + run[group].wait, 0) / runs.length);
+      const summary = (group: "important" | "ordinary") => ({
+        introduced: share(group, "introduced"),
+        remembered: share(group, "remembered"),
+        late: share(group, "late"),
+        medianWait: wait(group),
+      });
+      return {
+        importantEvery: every,
+        odds: multiplier,
+        important: summary("important"),
+        ordinary: summary("ordinary"),
+      };
+    }),
+  );
 }

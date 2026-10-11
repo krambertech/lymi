@@ -1,5 +1,5 @@
 {
-  "fingerprint": "f33161e8293365efcfbe65dfc683e4c90b49546b5382eb5afd371fd0291dcbeb",
+  "fingerprint": "413b6386c8a0d555939efbd5cbc564da0b6e302460db4f6ab9f9cddf9794cc5d",
   "reviewOrder": [
     {
       "id": "due",
@@ -159,6 +159,168 @@
         "returns": 0.6,
         "lag": 19.7,
         "waiting": 7.6
+      }
+    }
+  ],
+  "importance": [
+    {
+      "importantEvery": 10,
+      "odds": 1,
+      "important": {
+        "introduced": 0.995,
+        "remembered": 0.81,
+        "late": 0.357,
+        "medianWait": 1
+      },
+      "ordinary": {
+        "introduced": 0.995,
+        "remembered": 0.814,
+        "late": 0.329,
+        "medianWait": 1
+      }
+    },
+    {
+      "importantEvery": 10,
+      "odds": 2,
+      "important": {
+        "introduced": 0.997,
+        "remembered": 0.864,
+        "late": 0.205,
+        "medianWait": 0
+      },
+      "ordinary": {
+        "introduced": 0.995,
+        "remembered": 0.809,
+        "late": 0.349,
+        "medianWait": 1
+      }
+    },
+    {
+      "importantEvery": 10,
+      "odds": 4,
+      "important": {
+        "introduced": 0.999,
+        "remembered": 0.913,
+        "late": 0.078,
+        "medianWait": 0
+      },
+      "ordinary": {
+        "introduced": 0.995,
+        "remembered": 0.801,
+        "late": 0.367,
+        "medianWait": 1
+      }
+    },
+    {
+      "importantEvery": 10,
+      "odds": 8,
+      "important": {
+        "introduced": 1,
+        "remembered": 0.936,
+        "late": 0.019,
+        "medianWait": 0
+      },
+      "ordinary": {
+        "introduced": 0.995,
+        "remembered": 0.794,
+        "late": 0.388,
+        "medianWait": 1
+      }
+    },
+    {
+      "importantEvery": 10,
+      "odds": 16,
+      "important": {
+        "introduced": 1,
+        "remembered": 0.943,
+        "late": 0.002,
+        "medianWait": 0
+      },
+      "ordinary": {
+        "introduced": 0.995,
+        "remembered": 0.792,
+        "late": 0.392,
+        "medianWait": 1
+      }
+    },
+    {
+      "importantEvery": 2,
+      "odds": 1,
+      "important": {
+        "introduced": 0.995,
+        "remembered": 0.813,
+        "late": 0.334,
+        "medianWait": 1
+      },
+      "ordinary": {
+        "introduced": 0.996,
+        "remembered": 0.814,
+        "late": 0.331,
+        "medianWait": 1
+      }
+    },
+    {
+      "importantEvery": 2,
+      "odds": 2,
+      "important": {
+        "introduced": 0.996,
+        "remembered": 0.847,
+        "late": 0.258,
+        "medianWait": 1
+      },
+      "ordinary": {
+        "introduced": 0.994,
+        "remembered": 0.775,
+        "late": 0.435,
+        "medianWait": 2
+      }
+    },
+    {
+      "importantEvery": 2,
+      "odds": 4,
+      "important": {
+        "introduced": 0.997,
+        "remembered": 0.872,
+        "late": 0.186,
+        "medianWait": 0
+      },
+      "ordinary": {
+        "introduced": 0.993,
+        "remembered": 0.733,
+        "late": 0.538,
+        "medianWait": 2
+      }
+    },
+    {
+      "importantEvery": 2,
+      "odds": 8,
+      "important": {
+        "introduced": 0.999,
+        "remembered": 0.899,
+        "late": 0.123,
+        "medianWait": 0
+      },
+      "ordinary": {
+        "introduced": 0.992,
+        "remembered": 0.695,
+        "late": 0.643,
+        "medianWait": 3
+      }
+    },
+    {
+      "importantEvery": 2,
+      "odds": 16,
+      "important": {
+        "introduced": 1,
+        "remembered": 0.909,
+        "late": 0.092,
+        "medianWait": 0
+      },
+      "ordinary": {
+        "introduced": 0.991,
+        "remembered": 0.661,
+        "late": 0.729,
+        "medianWait": 3
       }
     }
   ]

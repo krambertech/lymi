@@ -105,6 +105,8 @@ export interface DeckDetailProps {
   history?: WordHistory | undefined;
   /** Play the word's pronunciation. Absent, the Say button is not drawn. */
   onPlayAudio?: ((card: DeckRow["card"]) => void) | undefined;
+  /** Mark or unmark a card as important for this learner; a member can, as the mark is their own. */
+  onImportantChange?: ((card: DeckRow["card"], important: boolean) => void) | undefined;
   /** Every deck, so a word can be moved out of this one. */
   decks?: { id: string; name: string }[] | undefined;
   /** How to connect an assistant, offered while the deck has no cards. */
@@ -648,6 +650,7 @@ export function DeckDetailView({
   onOpen,
   history,
   onPlayAudio,
+  onImportantChange,
   decks,
   sections = [],
   progress,
@@ -825,6 +828,9 @@ export function DeckDetailView({
       modes={shownWord.card.reviewModes ?? deck.reviewModes}
       history={history}
       onPlayAudio={onPlayAudio ? () => onPlayAudio(shownWord.card) : undefined}
+      onImportantChange={
+        onImportantChange ? (important) => onImportantChange(shownWord.card, important) : undefined
+      }
       hasPrev={openIndex > 0}
       hasNext={openIndex >= 0 && openIndex < ordered.length - 1}
       onPrev={() => {

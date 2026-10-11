@@ -33,6 +33,7 @@ export interface SimMode {
   card: FsrsCard;
   added: Date;
   hasCue: boolean;
+  important?: boolean;
 }
 
 /** The UTC day that holds an instant, so a run is the same on every machine. */
@@ -90,7 +91,12 @@ export function collection(seed: number, day: DayWindow, size: number): SimMode[
 export function toDrawCards(modes: readonly SimMode[], day: DayWindow): DrawCard[] {
   const byCard = new Map<string, DrawCard>();
   for (const m of modes) {
-    const card = byCard.get(m.cardId) ?? { cardId: m.cardId, deckId: m.deckId, modes: [] };
+    const card = byCard.get(m.cardId) ?? {
+      cardId: m.cardId,
+      deckId: m.deckId,
+      important: m.important,
+      modes: [],
+    };
     card.modes.push({
       mode: m.mode,
       state: m.card.state,

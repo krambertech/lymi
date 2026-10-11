@@ -195,12 +195,20 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
       state: modeColumns,
       sibling: siblingColumns,
       slipping: slip.id,
+      important: schema.importantCards.id,
     })
     .from(schema.cardStates)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
     .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
     .leftJoin(sibling, siblingOn)
     .leftJoin(slip, eq(slip.id, schema.cardStates.cardId))
+    .leftJoin(
+      schema.importantCards,
+      and(
+        eq(schema.importantCards.cardId, schema.cardStates.cardId),
+        eq(schema.importantCards.userId, userId),
+      ),
+    )
     .where(where);
 
   const [candidates, log] = await Promise.all([
@@ -255,6 +263,7 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
     const entry = cards.get(card.id) ?? {
       cardId: card.id,
       deckId: card.deckId,
+      important: row.important !== null,
       modes: [],
       byMode: new Map<ReviewModeKey, DrawMode>(),
       order: modeOrder(card, row.deckDirections),

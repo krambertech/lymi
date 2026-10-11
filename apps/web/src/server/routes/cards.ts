@@ -5,6 +5,7 @@ import {
   CardArchiveInput,
   CardEditsInput,
   CardHistoryOut,
+  CardImportanceInput,
   CardInput,
   CardOut,
   CardPatch,
@@ -38,6 +39,7 @@ import {
   restoreCard,
   restoreCards,
   searchCards,
+  setImportant,
   showCard,
   terseOutcome,
   updateCard,
@@ -243,6 +245,23 @@ cards.patch(
   }),
   body(CardPatch, "patch"),
   async (c) => c.json(await updateCard(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
+);
+
+cards.put(
+  "/:id/important",
+  describe({
+    tags: ["Cards"],
+    summary: "Mark a card as important",
+    description:
+      "Needs the write scope. Marks or unmarks the card as important to you, in any deck you can see, including one you joined. " +
+      "On a day with more to review than the goal, an important card is more likely to come up; when it is due never changes. " +
+      "The mark is yours alone: the deck's owner and other members never see it. Setting the mark the card already has changes nothing.",
+    ok: { schema: CardOut, description: "The card with its mark" },
+    errors: [400, 404],
+  }),
+  body(CardImportanceInput, "important"),
+  async (c) =>
+    c.json(await setImportant(ctxOf(c), c.req.param("id"), c.req.valid("json").important)),
 );
 
 cards.post(

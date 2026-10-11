@@ -2104,6 +2104,12 @@ msgstr "Import from Anki or Mochi"
 msgid "Import your decks with their pictures, tags and review history. Cards keep their due dates, and {app} is unchanged."
 msgstr "Import your decks with their pictures, tags and review history. Cards keep their due dates, and {app} is unchanged."
 
+msgid "Important"
+msgstr "Important"
+
+msgid "Important mark removed"
+msgstr "Important mark removed"
+
 msgid "Imported {added, plural, one {# card} other {# cards}} from {source}"
 msgstr "Imported {added, plural, one {# card} other {# cards}} from {source}"
 
@@ -2450,6 +2456,12 @@ msgstr "Make one for each course or topic."
 
 msgid "Manage connected apps"
 msgstr "Manage connected apps"
+
+msgid "Mark important"
+msgstr "Mark important"
+
+msgid "Marked important"
+msgstr "Marked important"
 
 msgid "Match your device."
 msgstr "Match your device."
@@ -3982,6 +3994,9 @@ msgstr "Undo"
 
 msgid "Undo this import"
 msgstr "Undo this import"
+
+msgid "Unmark important"
+msgstr "Unmark important"
 
 msgid "Untitled key"
 msgstr "Untitled key"

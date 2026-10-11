@@ -55,6 +55,7 @@ export function drawCards(data: DrawData): DrawCard[] {
   return data.cards.map(({ card, modes }) => ({
     cardId: card.id,
     deckId: card.deckId,
+    important: card.important,
     modes: modes.map((m) => ({
       mode: modeKey(m.mode),
       state: m.fsrsState,

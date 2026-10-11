@@ -36,6 +36,9 @@ const SENTENCES: Sentences = {
     update_image: null,
     archive_image: null,
     restore_image: null,
+    // The learner's own mark changes no card content; #531 decides how Activity names an app's.
+    mark_important: null,
+    unmark_important: null,
   },
   deck: {
     create: "deck_added",

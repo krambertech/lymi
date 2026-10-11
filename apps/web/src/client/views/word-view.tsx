@@ -24,6 +24,7 @@ import {
   Plus,
   Signpost,
   Sparkle,
+  Star,
   Volume2,
 } from "lucide-react";
 import { Fragment, type ReactNode, useEffect, useRef, useState } from "react";
@@ -147,6 +148,10 @@ export function describeEvent(e: CardEvent, i18n: I18n = globalI18n): WordEvent 
     return { ...base, kind: "archived", text: i18n._(msg`Archived`), actor: by };
   if (e.action === "restore")
     return { ...base, kind: "restored", text: i18n._(msg`Restored`), actor: by };
+  if (e.action === "mark_important")
+    return { ...base, kind: "edited", text: i18n._(msg`Marked important`), actor: by };
+  if (e.action === "unmark_important")
+    return { ...base, kind: "edited", text: i18n._(msg`Important mark removed`), actor: by };
   if (e.action !== "update" && e.action !== "enrich")
     return { ...base, kind: "edited", text: e.action, actor: by };
   if (e.action === "update" && "deckId" in payload)
@@ -219,6 +224,8 @@ export interface WordProps {
   onClose?: (() => void) | undefined;
   /** Absent, the card cannot be changed from here. */
   owner?: WordOwnerActions | undefined;
+  /** The learner's own mark, so a member of a shared deck sets it too. */
+  onImportantChange?: ((important: boolean) => void) | undefined;
   /** Every deck the word could move to. The menu lists them by name. */
   decks?: { id: string; name: string }[] | undefined;
   onPlayAudio?: (() => void) | undefined;
@@ -393,6 +400,7 @@ export function WordView({
   onNext,
   onClose,
   owner,
+  onImportantChange,
   decks,
   onPlayAudio,
   titleId,
@@ -509,8 +517,8 @@ export function WordView({
           </IconButton>
         </>
       )}
-      {/* Every item here writes the card, so a member of a shared deck gets no menu at all. */}
-      {owner && (
+      {/* The mark is the learner's own; every other item writes the card, so a member gets only the mark. */}
+      {(owner || onImportantChange) && (
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
@@ -520,29 +528,39 @@ export function WordView({
             }
           />
           <DropdownMenuContent aria-label={t`Card options`} align="end">
-            {needsEnrichment(card) && (
+            {onImportantChange && (
+              <DropdownMenuItem onClick={() => onImportantChange(!card.important)}>
+                <Star className={card.important ? "fill-current" : undefined} />
+                {card.important ? t`Unmark important` : t`Mark important`}
+              </DropdownMenuItem>
+            )}
+            {owner && needsEnrichment(card) && (
               <DropdownMenuItem onClick={owner.onEnrich} disabled={filling}>
                 <Sparkle />
                 <Trans>Enrich</Trans>
               </DropdownMenuItem>
             )}
-            {owner.onMove && (
+            {owner?.onMove && (
               <DropdownMenuItem onClick={() => setMoving(true)} disabled={elsewhere.length === 0}>
                 <FolderInput />
                 <Trans>Move to…</Trans>
               </DropdownMenuItem>
             )}
-            {owner.onMoveToSection && (
+            {owner?.onMoveToSection && (
               <DropdownMenuItem onClick={owner.onMoveToSection}>
                 <Signpost />
                 <Trans>Move to section…</Trans>
               </DropdownMenuItem>
             )}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem variant="danger" onClick={owner.onArchive}>
-              <Archive />
-              <Trans>Archive</Trans>
-            </DropdownMenuItem>
+            {owner && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem variant="danger" onClick={owner.onArchive}>
+                  <Archive />
+                  <Trans>Archive</Trans>
+                </DropdownMenuItem>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       )}
@@ -597,6 +615,12 @@ export function WordView({
         )}
         <p className="flex flex-wrap items-center gap-x-1.5 text-sm text-muted">
           {[
+            card.important ? (
+              <span key="important" className="inline-flex items-center gap-1 text-text-2">
+                <Star className="size-3.5 fill-current text-amber-mark" aria-hidden="true" />
+                <Trans>Important</Trans>
+              </span>
+            ) : null,
             card.language ? (
               languageName(card.language)
             ) : waiting("language") ? (

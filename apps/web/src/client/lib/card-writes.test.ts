@@ -54,6 +54,7 @@ const card: Card = {
   archivedAt: null,
   createdAt: new Date(0),
   updatedAt: new Date(0),
+  important: false,
 };
 
 describe("addInput", () => {

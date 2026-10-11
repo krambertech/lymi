@@ -603,6 +603,15 @@ export const CardPatch = CardInput.partial()
   });
 export type CardPatch = z.infer<typeof CardPatch>;
 
+export const CardImportanceInput = z
+  .object({
+    important: z.boolean().meta({
+      description: "Whether the card is important to you. Your own mark: nobody else sees it.",
+    }),
+  })
+  .meta({ id: "CardImportance" });
+export type CardImportanceInput = z.infer<typeof CardImportanceInput>;
+
 /** One card's edit in a bulk edit: which card, and the fields to change on it. */
 export const CardEditInput = CardPatch.extend({ cardId: z.string().min(1) });
 export type CardEditInput = z.infer<typeof CardEditInput>;

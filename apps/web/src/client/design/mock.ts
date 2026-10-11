@@ -122,6 +122,7 @@ function card(p: Partial<Card> & Pick<Card, "id" | "term">): Card {
     archivedAt: null,
     createdAt: new Date(now - 3 * day),
     updatedAt: new Date(now - day),
+    important: false,
     ...p,
   };
 }

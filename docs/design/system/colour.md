@@ -73,6 +73,7 @@ Amber has exactly these uses. Anything not on the list stays neutral.
 4. A due count, as `DueCount`: the number in ink on `amber-tint`, never amber text, which by day has to darken to brown to be readable.
 5. A day the learner reviewed: the seven lights, the streak modal's month and goal track, the thirty-day strip and the Insights day grid. It is the same lit glass at every size, which makes it the flame rather than a sixth thing.
 6. The Easy grade's icon, `text-grade-easy`, which is `amber-mark`.
+7. The star of a card the learner marked important, `amber-mark` and always filled, beside the term in a deck's list and before the word Important on the card page. It is the learner's own choice of what to keep lit, so it borrows the lantern's light; it is a mark, never a button, and the word or the screen reader's label carries it.
 
 A checkbox or switch is amber when checked; that is the control confirming a press, not a new accent. A status chip repeated down a list, as `StateChip` down a deck table or due counts down Library, is one decision shown many times, not many uses of amber.
 

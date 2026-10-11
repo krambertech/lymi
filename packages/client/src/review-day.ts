@@ -53,9 +53,11 @@ export function streakWith(summary: StreakOut, attempts: number, counts: boolean
 export function drawableLeft(data: DrawData, state: DrawState, deckId: string | undefined): number {
   const cards = drawCards(data);
   const scope = { deckId };
-  const held = drawableCount(cards, state.log, state.day, scope);
-  if (data.day.date !== state.day.date) return held;
-  // The fetch holds only the front of the order; the server's total counts the cards behind it too.
-  const fetched = drawableCount(cards, drawLog(data, [], state.day), state.day, scope);
-  return held + Math.max(0, data.total - fetched);
+  if (data.day.date !== state.day.date) return drawableCount(cards, state.log, state.day, scope);
+  // The fetch holds only the front of the order; the server's total counts the cards behind it
+  // too, and they bring a waiting return in reach, so the count behind is settled with them.
+  const log = drawLog(data, [], state.day);
+  let behind = Math.max(0, data.total - drawableCount(cards, log, state.day, scope));
+  behind = Math.max(0, data.total - drawableCount(cards, log, state.day, scope, behind));
+  return drawableCount(cards, state.log, state.day, scope, behind) + behind;
 }

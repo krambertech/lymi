@@ -11,6 +11,7 @@ const INPUTS = [
   "src/fsrs.ts",
   "simulation/learner.ts",
   "simulation/year.ts",
+  "simulation/returns.ts",
   "node_modules/ts-fsrs/package.json",
 ];
 

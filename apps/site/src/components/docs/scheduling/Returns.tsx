@@ -1,58 +1,52 @@
 import { clsx } from "clsx";
 import { ArrowRight, CornerDownLeft, Hourglass, Moon, Sprout, X } from "lucide-react";
-import { ordinal } from "./format";
 
 const cell = "size-2.5 shrink-0 rounded-[3px] sm:size-3.5";
 
 /**
- * Each miss, and how many other attempts pass before the card is back. The dashed cells are the
+ * A forgotten card and how many other attempts pass before it is back. The dashed cells are the
  * jitter: the gap can land on any of them, so returns do not arrive in a visible rhythm.
  */
-export function ReturnGaps({ gaps, jitter }: { gaps: number[]; jitter: number }) {
+export function ReturnGaps({ gap, jitter }: { gap: number; jitter: number }) {
   return (
-    <ol className="grid list-none gap-3 !ps-0" aria-label="How long a missed card waits">
-      {gaps.map((gap, i) => (
-        <li
-          key={gap}
-          className="!m-0 grid gap-1.5 sm:grid-cols-[9rem_1fr] sm:items-center sm:gap-4"
-        >
-          <p className="!m-0 flex items-center gap-1.5 text-sm text-text">
-            <X aria-hidden="true" strokeWidth={2.5} className="size-3.5 text-grade-forgot" />
-            {i === 0 ? "Missed" : i === 1 ? "Missed again" : `Missed a ${ordinal(i + 1)} time`}
-          </p>
-          <div className="flex min-w-0 flex-wrap items-center gap-0.5 sm:gap-1">
-            <span className="sr-only">
-              Back after {gap - jitter} to {gap + jitter} other attempts.
-            </span>
-            {Array.from({ length: gap + jitter }, (_, j) => (
-              <span
-                // biome-ignore lint/suspicious/noArrayIndexKey: cells are positions
-                key={j}
-                aria-hidden="true"
-                className={clsx(
-                  cell,
-                  j < gap - jitter ? "bg-edge-2" : "border border-dashed border-edge-2",
-                )}
-              />
-            ))}
-            <ArrowRight aria-hidden="true" className="mx-1 size-3.5 text-faint" />
-            <span
-              aria-hidden="true"
-              className="flex items-center gap-1 rounded-xs bg-state-learning-soft px-1.5 py-0.5 text-xs font-medium text-state-learning-text"
-            >
-              <CornerDownLeft className="size-3" />
-              {ordinal(i + 1)} return
-            </span>
-            <span aria-hidden="true" className="ms-1 text-xs tabular-nums text-muted">
-              {gap} ± {jitter}
-            </span>
-          </div>
-        </li>
-      ))}
+    <ol className="grid list-none gap-3 !ps-0" aria-label="How long a forgotten card waits">
       <li className="!m-0 grid gap-1.5 sm:grid-cols-[9rem_1fr] sm:items-center sm:gap-4">
         <p className="!m-0 flex items-center gap-1.5 text-sm text-text">
           <X aria-hidden="true" strokeWidth={2.5} className="size-3.5 text-grade-forgot" />
-          Missed a {ordinal(gaps.length + 1)} time
+          Forgot
+        </p>
+        <div className="flex min-w-0 flex-wrap items-center gap-0.5 sm:gap-1">
+          <span className="sr-only">
+            Back after {gap - jitter} to {gap + jitter} other attempts.
+          </span>
+          {Array.from({ length: gap + jitter }, (_, j) => (
+            <span
+              // biome-ignore lint/suspicious/noArrayIndexKey: cells are positions
+              key={j}
+              aria-hidden="true"
+              className={clsx(
+                cell,
+                j < gap - jitter ? "bg-edge-2" : "border border-dashed border-edge-2",
+              )}
+            />
+          ))}
+          <ArrowRight aria-hidden="true" className="mx-1 size-3.5 text-faint" />
+          <span
+            aria-hidden="true"
+            className="flex items-center gap-1 rounded-xs bg-state-learning-soft px-1.5 py-0.5 text-xs font-medium text-state-learning-text"
+          >
+            <CornerDownLeft className="size-3" />
+            Return
+          </span>
+          <span aria-hidden="true" className="ms-1 text-xs tabular-nums text-muted">
+            {gap} ± {jitter}
+          </span>
+        </div>
+      </li>
+      <li className="!m-0 grid gap-1.5 sm:grid-cols-[9rem_1fr] sm:items-center sm:gap-4">
+        <p className="!m-0 flex items-center gap-1.5 text-sm text-text">
+          <X aria-hidden="true" strokeWidth={2.5} className="size-3.5 text-grade-forgot" />
+          Forgot again
         </p>
         <p className="!m-0 flex items-center gap-1.5 text-sm text-muted">
           <Moon aria-hidden="true" className="size-3.5" />

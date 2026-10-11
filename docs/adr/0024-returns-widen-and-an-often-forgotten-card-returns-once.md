@@ -1,6 +1,7 @@
 ---
-status: accepted
+status: superseded
 date: 2026-09-26
+superseded_by: 0031
 ---
 
 # Returns widen, and an often-forgotten card returns once

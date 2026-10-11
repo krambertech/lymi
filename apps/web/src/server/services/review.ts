@@ -1,5 +1,6 @@
 import type { Direction, DrawLogEntry, GradeInput, ReviewModeKey, Round } from "@lymi/core";
 import {
+  countedRating,
   deserializeState,
   drawableCount,
   drawKey,
@@ -132,7 +133,7 @@ export async function reviewDraw(
   if (opts.sectionId) await visibleSection(ctx, opts.sectionId, opts.deckId);
   // The series or section narrows the rows loaded, so the rules need no scope of their own for it.
   const scope = { deckId: opts.deckId };
-  const { cards, log, day, states } = await drawInputs(ctx, {
+  const { cards, log, day, states, slipping } = await drawInputs(ctx, {
     ...scope,
     seriesId: opts.seriesId,
     sectionId: opts.sectionId,
@@ -184,7 +185,7 @@ export async function reviewDraw(
         });
         const row = content.get(card.cardId);
         return row && modes.length > 0
-          ? [{ card: row, modes, slipping: card.slipping ?? false }]
+          ? [{ card: row, modes, slipping: slipping.has(card.cardId) }]
           : [];
       }),
     log: log.map((entry) => ({
@@ -214,7 +215,7 @@ async function presentContent(ctx: ServiceContext, ids: string[]) {
  */
 export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
   const { db, userId } = ctx;
-  const { cardId, rating } = input;
+  const { cardId } = input;
   const key = gradedMode(input);
   const direction = stateDirection(key);
   const reviewedAt = input.reviewedAt ?? new Date();
@@ -248,6 +249,8 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
   const zone = await reviewZone(ctx, input.timezone);
   const settings = await getSettings(ctx);
   const date = dateFormatter(zone).format(reviewedAt);
+  const repeat = !!state.lastReview && dateFormatter(zone).format(state.lastReview) === date;
+  const rating = countedRating(input.rating, repeat);
 
   const duplicate = async () => {
     const [existing] = await db

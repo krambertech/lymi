@@ -650,6 +650,10 @@ export type ReviewAid = z.infer<typeof ReviewAid>;
 export const gradeAllowed = (rating: number, aid: ReviewAid | null | undefined) =>
   !aid || rating !== FsrsRating.Easy;
 
+/** Easy on a mode already graded today counts as Good: a second try is no sign of ease, ADR 0031. */
+export const countedRating = (rating: Rating, repeat: boolean): Rating =>
+  repeat && rating === FsrsRating.Easy ? FsrsRating.Good : rating;
+
 /**
  * One grade names its review mode. `direction` is the form grades took before review modes,
  * still accepted so an older app or a queued offline grade replays onto the same schedule.

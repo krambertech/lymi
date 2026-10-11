@@ -15,11 +15,11 @@ import {
   missed,
   NEW_CARD_SLOT_EVERY,
   OLDEST_UNSEEN_SLOT_EVERY,
-  RETURN_GAPS,
+  owesReturn,
+  RETURN_GAP,
   RETURN_JITTER,
   returnGap,
   roundOrder,
-  SLIPPING_RETURN_GAP,
   startOfLocalDay,
 } from "./draw";
 import type { Rating } from "./types";
@@ -269,69 +269,43 @@ describe("ordinary draws", () => {
 });
 
 describe("returns", () => {
-  it("brings a forgotten mode back after 5, 10 and 20 attempts, then waits for tomorrow", () => {
+  it("brings a forgotten mode back once, about twenty attempts later, then waits for tomorrow", () => {
     const cards = Array.from({ length: 60 }, (_, i) => review(`r${i}`));
     const first = drawOrder(cards, [], day)[0]?.cardId as string;
     const log: DrawLogEntry[] = [];
     const { played } = play(cards, 45, (id) => (id === first ? 1 : 3), log);
     const appearances = played.flatMap((p, i) => (p.cardId === first ? [i] : []));
-    expect(appearances).toHaveLength(4);
-    const gaps = appearances.slice(1).map((at, i) => at - (appearances[i] as number) - 1);
-    gaps.forEach((gap, i) => {
-      expect(gap).toBe(returnGap(day.date, first, "meaning_to_term", i + 1));
-      expect(Math.abs(gap - (RETURN_GAPS[i] as number))).toBeLessThanOrEqual(RETURN_JITTER);
-    });
-    expect(played.filter((p) => p.cardId === first).map((p) => p.kind)).toEqual([
-      "review",
-      "return",
-      "return",
-      "return",
-    ]);
-    // The forgotten card is past its cap, 41 others were reviewed once, 18 are left.
-    expect(drawableCount(cards, log, day)).toBe(18);
-  });
-
-  it("brings an often-forgotten mode back once, about ten attempts later", () => {
-    const cards = Array.from({ length: 30 }, (_, i) => review(`r${i}`));
-    const first = drawOrder(cards, [], day)[0]?.cardId as string;
-    const slipping = cards.map((c) => (c.cardId === first ? { ...c, slipping: true } : c));
-    const { played } = play(slipping, 30, (id) => (id === first ? 1 : 3));
-    const appearances = played.flatMap((p, i) => (p.cardId === first ? [i] : []));
     expect(appearances).toHaveLength(2);
     const gap = (appearances[1] as number) - (appearances[0] as number) - 1;
-    expect(gap).toBe(returnGap(day.date, first, "meaning_to_term", 1, true));
-    expect(Math.abs(gap - SLIPPING_RETURN_GAP)).toBeLessThanOrEqual(RETURN_JITTER);
+    expect(gap).toBe(returnGap(day.date, first, "meaning_to_term"));
+    expect(Math.abs(gap - RETURN_GAP)).toBeLessThanOrEqual(RETURN_JITTER);
+    expect(played[appearances[1] as number]?.kind).toBe("return");
+    // Forgotten again on its return, it waits for tomorrow: 44 others were reviewed once, 16 are left.
+    expect(drawableCount(cards, log, day)).toBe(16);
   });
 
-  it("stops drawing a mode past three returns, and a day of only those is exhausted", () => {
-    const log = [
-      grade("a", 1, State.Review),
-      grade("a", 1, State.Relearning),
-      grade("a", 1, State.Relearning),
-      grade("a", 1, State.Relearning),
-    ];
+  it("leaves a mode forgotten again on its return to tomorrow", () => {
+    const log = [grade("a", 1, State.Review), grade("a", 1, State.Relearning)];
     const cards = [card("a", [{ mode: "meaning_to_term", state: State.Relearning }]), review("b")];
-    const between = grade("b", 3);
-    expect(drawableCount(cards, [...log, between], day)).toBe(0);
-    expect(draw(cards, [...log, between], day)).toBeNull();
-    expect(drawableCount(cards, [...log.slice(0, 3), between], day)).toBe(1);
+    expect(drawableCount(cards, [...log, grade("b", 3)], day)).toBe(0);
+    expect(draw(cards, [...log, grade("b", 3)], day)).toBeNull();
   });
 
-  it("returns Hard while learning, not Hard in Review", () => {
-    const learning = [card("l", [{ mode: "meaning_to_term", state: State.Learning }]), review("x")];
-    const log = [grade("l", 2, State.Learning), grade("x", 3)];
-    expect(draw(learning, log, day)?.kind).toBe("return");
-    const reviewed = [review("r"), review("x")];
-    expect(draw(reviewed, [grade("r", 2, State.Review), grade("x", 3)], day)).toBeNull();
+  it("owes no return for Hard, in learning or in Review", () => {
+    expect(owesReturn(2)).toBe(false);
+    const filler = Array.from({ length: 30 }, (_, i) => review(`x${i}`));
+    const learning = [card("l", [{ mode: "meaning_to_term", state: State.Learning }]), ...filler];
+    const { played } = play(learning, 30, (id) => (id === "l" ? 2 : 3));
+    expect(played.filter((p) => p.cardId === "l")).toHaveLength(1);
   });
 
   it("serves a due return before a new-card slot without spending the slot", () => {
     const cards = [
-      ...Array.from({ length: 12 }, (_, i) => review(`r${i}`)),
-      ...Array.from({ length: 4 }, (_, i) => unseen(`n${i}`)),
+      ...Array.from({ length: 30 }, (_, i) => review(`r${i}`)),
+      ...Array.from({ length: 8 }, (_, i) => unseen(`n${i}`)),
     ];
     const first = draw(cards, [], day) as { cardId: string };
-    const { played } = play(cards, 12, (id, i) => (i === 0 && id === first.cardId ? 1 : 3));
+    const { played } = play(cards, 30, (id, i) => (i === 0 && id === first.cardId ? 1 : 3));
     const back = played.findIndex((p, i) => i > 0 && p.cardId === first.cardId);
     expect(played[back]?.kind).toBe("return");
     const ordinary = played.filter((p) => p.kind !== "return");
@@ -339,27 +313,30 @@ describe("returns", () => {
     expect(ordinary.slice(0, NEW_CARD_SLOT_EVERY - 1).every((p) => p.kind === "review")).toBe(true);
   });
 
-  it("serves the earliest pending return at once when nothing else is drawable", () => {
-    const cards = [review("a"), review("b")];
-    const log = [grade("b", 1), grade("a", 1)];
-    expect(draw(cards, log, day)).toEqual({ cardId: "b", mode: "meaning_to_term", kind: "return" });
+  it("never serves a return before its gap, so a day of only waiting returns is exhausted", () => {
+    const cards = [review("a"), review("b"), review("c")];
+    const log = [grade("b", 1), grade("a", 1), grade("c", 3)];
+    expect(draw(cards, log, day)).toBeNull();
+    expect(drawableCount(cards, log, day)).toBe(0);
+    expect(forgottenToday(log)).toHaveLength(2);
   });
 
-  it("never serves a return straight after the same card, and a lone one ends the day", () => {
-    const cards = [review("a"), review("b")];
-    const log = [grade("a", 1), grade("b", 1)];
-    expect(draw(cards, log, day)).toEqual({ cardId: "a", mode: "meaning_to_term", kind: "return" });
-    const alone = [grade("a", 1), grade("b", 3)].concat(grade("a", 1, State.Relearning));
-    expect(draw(cards, alone, day)).toBeNull();
-    expect(drawableCount(cards, alone, day)).toBe(0);
+  it("counts a waiting return only once the cards still to come reach its gap", () => {
+    const enough = Array.from({ length: RETURN_GAP + RETURN_JITTER }, (_, i) => review(`r${i}`));
+    const log = [grade("a", 1)];
+    const cards = [review("a"), ...enough];
+    expect(drawableCount(cards, log, day)).toBe(enough.length + 1);
+    const few = [review("a"), ...enough.slice(0, 3)];
+    expect(drawableCount(few, log, day)).toBe(3);
   });
 
   it("ignores the clock: a return missed late at night is still due today", () => {
     const cards = [
       card("a", [{ mode: "meaning_to_term", state: State.Relearning, due: day.end }]),
-      review("x"),
+      ...Array.from({ length: 30 }, (_, i) => review(`x${i}`)),
     ];
-    expect(draw(cards, [grade("a", 1), grade("x", 3)], day)?.kind).toBe("return");
+    const { played } = play(cards, 30, (id, i) => (i === 0 && id === "a" ? 1 : 3), [grade("a", 1)]);
+    expect(played.find((p) => p.cardId === "a")?.kind).toBe("return");
   });
 
   it("lists the modes whose latest grade today is Forgot", () => {
@@ -396,14 +373,16 @@ describe("carry-over", () => {
   });
 
   it("lets a due return go before a carry-over", () => {
-    const cards = [
-      ...Array.from({ length: 12 }, (_, i) => review(`r${i}`)),
-      card("l", [{ mode: "meaning_to_term", state: State.Learning, due: daysAgo(1) }]),
-    ];
-    const { played } = play(cards, 8, (id, i) => (i === 0 && id === "l" ? 1 : 3));
-    expect(played[0]).toEqual({ cardId: "l", kind: "carry" });
-    const gap = returnGap(day.date, "l", "meaning_to_term", 1);
-    expect(played[gap + 1]).toEqual({ cardId: "l", kind: "return" });
+    const carries = Array.from({ length: 10 }, (_, i) =>
+      card(`l${i}`, [{ mode: "meaning_to_term", state: State.Learning, due: daysAgo(1) }]),
+    );
+    const cards = [...Array.from({ length: 30 }, (_, i) => review(`r${i}`)), ...carries];
+    const first = draw(cards, [], day)?.cardId as string;
+    const { played } = play(cards, 30, (id, i) => (i === 0 && id === first ? 1 : 3));
+    expect(played[0]).toEqual({ cardId: first, kind: "carry" });
+    const gap = returnGap(day.date, first, "meaning_to_term");
+    expect(played[gap + 1]).toEqual({ cardId: first, kind: "return" });
+    expect(played.slice(gap + 2).some((p) => p.kind === "carry")).toBe(true);
   });
 });
 

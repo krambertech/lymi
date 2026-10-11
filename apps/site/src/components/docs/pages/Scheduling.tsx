@@ -1,4 +1,9 @@
-import type { NewCardRuleId, ReviewOrderId, SchedulingGuide } from "@lymi/core/simulation";
+import type {
+  NewCardRuleId,
+  ReturnRuleId,
+  ReviewOrderId,
+  SchedulingGuide,
+} from "@lymi/core/simulation";
 import { clsx } from "clsx";
 import { Check } from "lucide-react";
 import type { ReactNode } from "react";
@@ -30,6 +35,15 @@ const REVIEW_ORDER_NAMES: Record<ReviewOrderId, string> = {
   random: "Random",
   forgetting: "Weighted by 1 − recall",
   lymi: "Lymi: weighted by recall⁴",
+};
+
+const RETURN_RULE_NAMES: Record<ReturnRuleId, string> = {
+  widening: "After 5, 10 and 20, early at the end",
+  once10: "Once, after 10",
+  hardToo: "Once, after 20, Hard too",
+  once30: "Once, after 30",
+  none: "No return the same day",
+  lymi: "Lymi: once, after 20",
 };
 
 const NEW_CARD_NAMES: Record<NewCardRuleId, string> = {
@@ -97,7 +111,7 @@ function Source({
 }
 
 export function Scheduling({ guide }: { guide: SchedulingGuide }) {
-  const { constants: k, intervals, day, recall, reviewOrder, newCards } = guide;
+  const { constants: k, intervals, day, recall, reviewOrder, newCards, returns } = guide;
   const target = percent(k.retention);
   const ladderLength = intervals.ladders[0]?.steps.length ?? 0;
   const curveDays = intervals.curves.series.map((s) => s.interval);
@@ -119,12 +133,9 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
   const resumedCard = day.day[day.stopAfter]?.card;
 
   const tally = (kind: string) => day.day.filter((t) => t.kind === kind).length;
-  const returnsByCard = new Map<number, number>();
-  for (const t of day.day) {
-    if (t.kind === "return") returnsByCard.set(t.card, (returnsByCard.get(t.card) ?? 0) + 1);
-  }
-  const [busiest, busiestReturns] =
-    [...returnsByCard.entries()].sort((a, b) => b[1] - a[1])[0] ?? [];
+  const returnRow = (id: ReturnRuleId) => returns.rows.find((r) => r.id === id);
+  const lymiReturns = returnRow("lymi");
+  const widening = returnRow("widening");
 
   return (
     <div className="doc-prose">
@@ -308,7 +319,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
             You haven’t reviewed another mode of this card today. A revealed answer stays fresh for
             hours, so a second mode would be too easy.
           </>,
-          <>It hasn’t used up today’s returns.</>,
+          <>It hasn’t been forgotten twice today.</>,
         ]}
       />
       <p>
@@ -326,29 +337,28 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
         <Precedence carryOverEvery={k.carryOverEvery} />
       </Figure>
 
-      <H3>Missed cards come back in the same review</H3>
+      <H3>A forgotten card comes back once, after a while</H3>
       <p>
-        Forgot is always a miss. Hard is a miss while a card is new or still learning. A missed card
-        returns after a set number of other cards, not minutes, so a break doesn’t bring it back
-        sooner. Returns count toward your daily goal.
+        A card you mark Forgot returns once, after about {k.returnGap} other cards. That’s counted
+        in cards, not minutes, so a break doesn’t bring it back sooner. A return counts toward your
+        daily goal. Hard is a recall, so a card you mark Hard waits for tomorrow like any other.
       </p>
       <Figure
-        caption={`Each gap varies by up to ${k.returnJitter}, so returns don’t fall into a pattern you could count.`}
+        caption={`The gap varies by up to ${k.returnJitter}, so returns don’t fall into a pattern you could count.`}
       >
-        <ReturnGaps gaps={k.returnGaps} jitter={k.returnJitter} />
+        <ReturnGaps gap={k.returnGap} jitter={k.returnJitter} />
       </Figure>
       <p>
-        A card you keep forgetting comes back once instead. If its first grade of the day was Forgot
-        on {k.slippingForgottenDays} of the last {k.slippingRecentDays} days it came up, a miss
-        brings it back after about {k.slippingReturnGap} other cards, then it waits for tomorrow. A
-        third or fourth try in one sitting only tests what you saw a minute ago; the next day’s
-        recall does more. The card still comes up every day it’s due, and it leaves the group once
-        you remember it.
+        A second try a minute after the answer only tests what was on screen. Once each in several
+        sittings does more for memory than several tries in one, so the return waits, and a card
+        forgotten again waits for tomorrow. Easy on a card you’ve already seen today counts as Good:
+        the schedule shouldn’t stretch because you saw the answer a few minutes ago.
       </p>
       <p>
-        When only missed cards are left, they come back before their gap, but never straight after
-        themselves. If the card you just missed is all that’s left, the review ends, and Review
-        forgotten brings it back if you want another try.
+        A return is never shown before its gap. If the review runs out first, the card waits in
+        Review forgotten at the end, a second look you choose to take. A card forgotten twice in a
+        day, or on {k.slippingForgottenDays} of the last {k.slippingRecentDays} days it came up,
+        offers to add a memory hook.
       </p>
 
       <H3>Cards left learning come back first</H3>
@@ -426,8 +436,6 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
           <>
             {count(tally("review"))} reviews, {count(tally("unseen"))} new cards,{" "}
             {count(tally("return"))} returns and {count(tally("carry"))} left from yesterday.
-            {busiest !== undefined &&
-              ` Card ${busiest} came back ${busiestReturns} ${busiestReturns === 1 ? "time" : "times"}${busiestReturns === k.returnGaps.length ? ", the most a card can in a day" : ""}.`}
           </>
         }
       >
@@ -509,6 +517,53 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
           cards in the same order every day. Lymi leaves the fewest cards late. Lowest recall first,
           which Anki suggests for a large backlog, leaves the most late when the daily limit never
           lifts.
+        </p>
+      )}
+
+      <H3>Returns</H3>
+      <p>
+        The same learner and year, and {returns.sittings} short reviews of one{" "}
+        {returns.sittingCards}-card deck played to its end. Each rule swaps only when a forgotten
+        card comes back. A sitting’s returns and gap are averages per review; waiting is the cards
+        left for Review forgotten.
+      </p>
+      <div className="my-5">
+        <Table>
+          <thead>
+            <tr>
+              <Th>Rule</Th>
+              <Th align="right">Returns a day</Th>
+              <Th align="right">Mean gap</Th>
+              <Th align="right">Cards seen 3+ times a week</Th>
+              <Th align="right">Short review: returns, gap</Th>
+              <Th align="right">Waiting after it</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {returns.rows.map((r) => (
+              <tr key={r.id} className={rowClass(r.id === "lymi")}>
+                <Td className="text-text">{RETURN_RULE_NAMES[r.id as ReturnRuleId]}</Td>
+                <Td align="right">{r.returnsPerDay}</Td>
+                <Td align="right">{r.lag || "—"}</Td>
+                <Td align="right">{r.thricePerWeek}</Td>
+                <Td align="right">
+                  {r.sitting.returns}
+                  {r.sitting.returns > 0 ? `, ${r.sitting.lag}` : ""}
+                </Td>
+                <Td align="right">{r.sitting.waiting}</Td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
+      {lymiReturns && widening && (
+        <p>
+          The old rule spent {widening.returnsPerDay} of {returns.goal} attempts a day on returns,
+          about {widening.lag} cards after the miss, and in a short review it served them early. One
+          return after {k.returnGap} spends {lymiReturns.returnsPerDay}, and no card is seen three
+          times in a day. The simulated learner recalls a return {percent(recall.again)} of the time
+          whatever the gap, so this table measures what returns cost, not what a longer gap teaches.
+          That part comes from the research below.
         </p>
       )}
 

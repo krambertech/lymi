@@ -1,10 +1,4 @@
-import {
-  type Rating,
-  RETURN_GAPS,
-  RETURN_JITTER,
-  type ReviewMode,
-  SLIPPING_RETURN_GAP,
-} from "@lymi/core";
+import { type Rating, RETURN_GAP, RETURN_JITTER, type ReviewMode } from "@lymi/core";
 import { describe, expect, it } from "vitest";
 import type { Card, Draw } from "./api";
 import {
@@ -131,31 +125,19 @@ describe("the log", () => {
 });
 
 describe("returns", () => {
-  it("brings a forgotten card back after the expected attempts, and a fourth miss keeps it away", () => {
+  it("brings a forgotten card back once, about twenty attempts later", () => {
     const d = data([card("x", { retrievability: 0.99 }), ...many(80)]);
-    const { seen } = play(d, 80, (id) => (id === "x" ? 1 : 3));
-    const positions = seen.flatMap((s, i) => (s.cardId === "x" ? [i] : []));
-    expect(positions).toHaveLength(4);
-    positions.slice(1).forEach((at, i) => {
-      const gap = at - (positions[i] as number) - 1;
-      expect(Math.abs(gap - (RETURN_GAPS[i] as number))).toBeLessThanOrEqual(RETURN_JITTER);
-    });
-    expect(seen.slice(1 + (positions[3] as number)).some((s) => s.cardId === "x")).toBe(false);
-  });
-
-  it("brings an often-forgotten card back once, as the fetched draw flags it", () => {
-    const d = data([card("x", { retrievability: 0.99, slipping: true }), ...many(30)]);
-    const { seen } = play(d, 30, (id) => (id === "x" ? 1 : 3));
+    const { seen } = play(d, 60, (id) => (id === "x" ? 1 : 3));
     const positions = seen.flatMap((s, i) => (s.cardId === "x" ? [i] : []));
     expect(positions).toHaveLength(2);
     const gap = (positions[1] as number) - (positions[0] as number) - 1;
-    expect(Math.abs(gap - SLIPPING_RETURN_GAP)).toBeLessThanOrEqual(RETURN_JITTER);
+    expect(Math.abs(gap - RETURN_GAP)).toBeLessThanOrEqual(RETURN_JITTER);
   });
 
   it("serves a return missed in a deck review in the all-decks review", () => {
     const d = data([
       card("x", { deckId: "a", retrievability: 0.99 }),
-      ...many(20, (i) => (i % 2 ? "a" : "b")),
+      ...many(60, (i) => (i % 2 ? "a" : "b")),
     ]);
     let local = [grade("x", 1, 2)];
     for (let i = 0; i < 2; i++) {
@@ -164,7 +146,7 @@ describe("returns", () => {
     }
     expect(drawState(d, local, noon, undefined).attempts).toBe(3);
     let found = false;
-    for (let i = 0; i < 6 && !found; i++) {
+    for (let i = 0; i < RETURN_GAP + RETURN_JITTER && !found; i++) {
       const s = drawState(d, local, noon, undefined);
       if (s.next?.cardId === "x") found = s.next.kind === "return";
       else if (s.next) local = [...local, grade(s.next.cardId, 3, 2)];

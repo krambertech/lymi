@@ -125,7 +125,9 @@ export function grade(random: Random, sim: SimMode, kind: Drawn["kind"], at: Dat
         : retrievability(sim.card, at);
   if (random() >= chance) return 1;
   const roll = random();
-  return roll < RECALL.hard ? 2 : roll < RECALL.hard + RECALL.easy ? 4 : 3;
+  // A return is the same day's second try, which can't be Easy.
+  const easy = kind === "return" ? 3 : 4;
+  return roll < RECALL.hard ? 2 : roll < RECALL.hard + RECALL.easy ? easy : 3;
 }
 
 export interface Attempt extends Drawn {

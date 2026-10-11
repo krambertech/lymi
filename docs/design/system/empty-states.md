@@ -17,7 +17,7 @@ What is empty?
 
 ## StartGuide
 
-`StartGuide` in `components/start-guide.tsx` is Today before the first review: one plate headed **Getting started**, with a count ("1 of 3 done") and a three-part track, then three steps in order: **Make a deck**, **Add cards from your last lesson**, **Review them**.
+`StartGuide` in `components/start-guide.tsx` is Today before the first review, for a learner who skipped Welcome or left it for their own material ([onboarding.md](../onboarding.md)): one plate headed **Getting started**, with a count ("1 of 3 done") and a three-part track, then three steps in order: **Make a deck**, **Add cards from your last lesson**, **Review them**.
 
 - Each step is done by the learner's own data, never by a dismissal.
 - A done step shows a green check and a struck-through title, the current step holds its action, and a later step stays muted.

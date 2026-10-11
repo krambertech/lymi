@@ -9,7 +9,7 @@ import { RadioCard } from "./radio-card";
 import { Input } from "./ui/input";
 import { RadioGroup } from "./ui/radio-group";
 
-const NAMES: Record<(typeof DAILY_GOAL_PRESETS)[number], MessageDescriptor> = {
+export const GOAL_NAMES: Record<(typeof DAILY_GOAL_PRESETS)[number], MessageDescriptor> = {
   10: msg({ message: "Light", context: "daily goal" }),
   25: msg({ message: "Steady", context: "daily goal" }),
   50: msg({ message: "Keen", context: "daily goal" }),
@@ -77,7 +77,7 @@ export function GoalPicker({ value, onValueChange, className }: Props) {
           <div key={n}>
             <RadioCard value={String(n)} className={row}>
               <span className="flex flex-1 items-baseline justify-between gap-3">
-                <span className="text-base font-medium text-text">{i18n._(NAMES[n])}</span>
+                <span className="text-base font-medium text-text">{i18n._(GOAL_NAMES[n])}</span>
                 <span className="text-sm tabular-nums text-text-2">
                   <Plural value={n} one="# review" other="# reviews" />
                 </span>

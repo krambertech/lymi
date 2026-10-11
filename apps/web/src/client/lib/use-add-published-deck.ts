@@ -20,9 +20,13 @@ export function useAddPublishedDeck({ announce }: { announce: "toast" | "page" }
     mutationFn: ({ slug, edition }: { slug: string; name: string; edition: string }) =>
       api.addPublishedDeck(slug, edition),
     onSuccess: async ({ deckId }, { name }) => {
+      // The deck's cards join the day's review. A cached queue would open the next review on the
+      // old cards before its refetch begins, so it goes rather than going stale.
+      qc.removeQueries({ queryKey: ["queue"] });
       await Promise.all([
         qc.invalidateQueries({ queryKey: ["decks"] }),
         qc.invalidateQueries({ queryKey: ["explore"] }),
+        qc.invalidateQueries({ queryKey: ["rounds"] }),
       ]);
       if (announce === "page") return;
       toast.add({

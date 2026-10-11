@@ -316,3 +316,4 @@ Read the file for what you are building. Each is short enough to read whole.
 - [Imports and exports](docs/design/imports.md)
 - [Activity](docs/design/activity.md)
 - [Explore](docs/design/explore.md)
+- [Welcome](docs/design/onboarding.md)

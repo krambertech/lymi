@@ -7,6 +7,7 @@ Lymi is cut from *lyhty*, the Finnish word for lantern. The symbol is a storm la
 ```text
 Where does it go?
  ├── Login, the app icon, public pages, an empty screen → Lantern with no progress (the brand lantern)
+ ├── Welcome's first screen → the brand lantern catching from out, once, in its pool of light
  ├── Today's due card, the review header, the end of a review → Lantern with lanternFor(streak)
  ├── Beside the streak number (the streak pill, the streak modal) → Flame with streakFlameFor(streak)
  ├── The rail's top line → AppTile at 28 px beside the plain Wordmark

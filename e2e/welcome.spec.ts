@@ -43,6 +43,8 @@ test("a new learner picks a language and a goal and starts reviewing a ready-mad
   await test.step("Today sends a new account to Welcome", async () => {
     await learner.goto("/today");
     await expect(learner).toHaveURL(/\/welcome$/);
+    await expect(learner.getByRole("heading", { name: "Welcome to Lymi" })).toBeVisible();
+    await learner.getByRole("button", { name: "Continue", exact: true }).click();
     await expect(learner.getByRole("heading", { name: "What are you learning?" })).toBeVisible();
   });
 

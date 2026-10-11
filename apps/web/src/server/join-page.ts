@@ -6,7 +6,7 @@ import { configureHtml } from "./html";
 import { serverI18n } from "./i18n";
 import type { AppEnv } from "./index";
 import { clearedJoinCookie } from "./join-cookie";
-import { previewJoin, previewPublication } from "./services";
+import { awaitsWelcome, previewJoin, previewPublication } from "./services";
 
 /** The element the client reads the preview from, so the page paints without a second request. */
 export const JOIN_PREVIEW_ELEMENT_ID = "lymi-join-preview";
@@ -24,7 +24,7 @@ export async function joinPage(c: Context<AppEnv>) {
     c.req.param("token") ?? "",
     session?.user.id ?? null,
   );
-  return doorPage(c, preview, session !== null, "link");
+  return doorPage(c, preview, session?.user.id ?? null, "link");
 }
 
 /** `/add/<slug>`: where "Add to Lymi" on a published deck's public page lands. ADR 0020. */
@@ -35,13 +35,13 @@ export async function addPage(c: Context<AppEnv>) {
     c.req.param("slug") ?? "",
     session?.user.id ?? null,
   );
-  return doorPage(c, preview, session !== null, "publication");
+  return doorPage(c, preview, session?.user.id ?? null, "publication");
 }
 
 async function doorPage(
   c: Context<AppEnv>,
   preview: JoinPreviewOut,
-  signedIn: boolean,
+  viewerId: string | null,
   kind: DoorKind,
 ) {
   const headers = new Headers({
@@ -53,11 +53,14 @@ async function doorPage(
     "x-robots-tag": "noindex, nofollow",
   });
 
-  // Back from sign-in: the session hook has joined or added, so go straight to the deck.
-  if (c.req.query("continue") === "1" && signedIn) {
+  // Back from sign-in: the session hook has joined or added, so go straight to the deck, by way
+  // of the daily goal for an account that has just been made. docs/design/onboarding.md.
+  if (c.req.query("continue") === "1" && viewerId) {
     headers.append("set-cookie", clearedJoinCookie(c.env.PRODUCT_URL));
     if (preview.deckId) {
-      headers.set("location", `/library/${preview.deckId}`);
+      const welcome = await awaitsWelcome(c.get("db"), viewerId);
+      const deckId = encodeURIComponent(preview.deckId);
+      headers.set("location", welcome ? `/welcome?deck=${deckId}` : `/library/${deckId}`);
       return new Response(null, { status: 302, headers });
     }
   }

@@ -76,9 +76,13 @@ test("an owner shares a deck and a classmate joins through the link", async ({
     await expect(classmate).toHaveURL(/\/login\?dev=1/);
     await createAccountThroughDevForm(classmate, outsider(testInfo, "classmate"));
 
-    await expect(classmate).toHaveURL(new RegExp(`/library/${deckId}$`));
+    // A new account is welcomed with the deck and chooses its daily goal, then reviews it.
+    await expect(classmate).toHaveURL(new RegExp(`/welcome\\?deck=${deckId}$`));
     await expect(classmate.getByRole("heading", { name: deckName, exact: true })).toBeVisible();
-    await expect(classmate.getByText("tere hommikust", { exact: true })).toBeVisible();
+    await classmate.getByRole("button", { name: "Continue", exact: true }).click();
+    await classmate.getByRole("button", { name: "Start review", exact: true }).click();
+    await expect(classmate).toHaveURL(new RegExp(`/review\\?deck=${deckId}$`));
+    await expect(classmate.getByLabel(/ card for (tere hommikust|good morning)$/)).toBeVisible();
   });
 
   await test.step("Library names the owner on the joined deck only", async () => {

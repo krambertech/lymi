@@ -654,6 +654,9 @@ msgstr "Подключённое приложение"
 msgid "a day"
 msgstr "день"
 
+msgid "A few quick questions, then your first review."
+msgstr "Несколько быстрых вопросов, а потом первое повторение."
+
 msgid "a field"
 msgstr "поле"
 
@@ -1502,6 +1505,9 @@ msgstr "Не удалось сохранить ответы. Проверь со
 msgid "Couldn’t save your choice. Try again from the app."
 msgstr "Не удалось сохранить выбор. Попробуй снова из приложения."
 
+msgid "Couldn’t save your daily goal. Check your connection and try again."
+msgstr "Не удалось сохранить дневную цель. Проверь соединение и попробуй ещё раз."
+
 msgid "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
 msgstr "Не удалось сохранить оценку для «{term}». Этой карточки больше нет в твоих колодах."
 
@@ -2071,6 +2077,9 @@ msgstr "С чего начнёшь?"
 msgid "how it is asked"
 msgstr "как задаётся"
 
+msgid "How it works"
+msgstr "Как это работает"
+
 msgid "How it’s asked"
 msgstr "Как спрашивать"
 
@@ -2430,6 +2439,9 @@ msgstr "Lymi"
 
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi также получит экран, на котором ты сейчас, версию приложения, браузер и язык приложения."
+
+msgid "Lymi brings it back just before you’d forget it."
+msgstr "Lymi возвращает её как раз перед тем, как ты её забудешь."
 
 msgid "Lymi couldn’t tell from the cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi не удалось определить язык по карточкам. Он нужен, чтобы находить карточки, которые у тебя уже есть, и читать термины вслух."
@@ -3365,6 +3377,9 @@ msgstr "Сохранение…"
 msgid "Say {0}"
 msgstr "Сказать {0}"
 
+msgid "Say how well you knew it."
+msgstr "Оцени, насколько хорошо её помнишь."
+
 msgid "Schedule"
 msgstr "Расписание"
 
@@ -3410,6 +3425,9 @@ msgstr "Увидеть {word} и вспомнить «{answer}»"
 
 msgid "See {word}, recall what it means"
 msgstr "Увидеть {word} и вспомнить значение"
+
+msgid "See a card and recall the answer."
+msgstr "Посмотри на карточку и вспомни ответ."
 
 msgid "See all"
 msgstr "Все"
@@ -4125,6 +4143,9 @@ msgstr "Добро пожаловать"
 msgid "Welcome back."
 msgstr "С возвращением."
 
+msgid "Welcome to Lymi"
+msgstr "Добро пожаловать в Lymi"
+
 msgid "What are you learning?"
 msgstr "Что ты учишь?"
 
@@ -4280,6 +4301,9 @@ msgstr "На сегодня всё."
 
 msgid "Your deck"
 msgstr "Твоя колода"
+
+msgid "Your deck is ready. Choose your daily goal, then review your first cards."
+msgstr "Твоя колода готова. Выбери дневную цель, а потом повтори первые карточки."
 
 msgid "Your Google photo is back"
 msgstr "Снова показываем фото из Google"

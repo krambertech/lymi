@@ -8,7 +8,7 @@ import { messages } from "../../locales/en.po";
 import { ShellChrome } from "../components/layout/shell-chrome";
 import { StaticNavProvider } from "../components/nav-link";
 import { designChrome } from "../design/chrome";
-import { type WelcomeAnswers, WelcomeView } from "./welcome-view";
+import { type JoinedDeck, type WelcomeAnswers, WelcomeView } from "./welcome-view";
 
 i18n.load("en", messages);
 i18n.activate("en");
@@ -37,7 +37,11 @@ const catalog = [
   deck("constellations", "science", null),
 ];
 
-async function renderWelcome(onFinish: (a: WelcomeAnswers) => void, onSkip = () => {}) {
+async function renderWelcome(
+  onFinish: (a: WelcomeAnswers) => void,
+  onSkip = () => {},
+  joined?: { deck: JoinedDeck; onChooseGoal: (goal: number) => void },
+) {
   await render(
     <I18nProvider i18n={i18n}>
       <ShellChrome value={designChrome()}>
@@ -47,6 +51,8 @@ async function renderWelcome(onFinish: (a: WelcomeAnswers) => void, onSkip = () 
               catalog={catalog}
               meaningLanguage="en"
               onFinish={onFinish}
+              joined={joined?.deck}
+              onChooseGoal={joined?.onChooseGoal}
               onSkip={onSkip}
             />
           </div>
@@ -58,9 +64,24 @@ async function renderWelcome(onFinish: (a: WelcomeAnswers) => void, onSkip = () 
 
 const next = () => page.getByRole("button", { name: "Continue" }).click();
 
+/** Past the lit welcome every new account opens on. */
+async function begin() {
+  await expect.element(page.getByRole("heading", { name: "Welcome to Lymi" })).toBeVisible();
+  await expect.element(page.getByRole("progressbar")).not.toBeInTheDocument();
+  await next();
+}
+
 test("a language asks which one, then offers that language's decks beside the learner's own", async () => {
   const onFinish = vi.fn();
   await renderWelcome(onFinish);
+  await expect
+    .element(page.getByText("A few quick questions, then your first review."))
+    .toBeVisible();
+  await expect.element(page.getByRole("heading", { name: "How it works" })).toBeVisible();
+  await expect
+    .element(page.getByText("Lymi brings it back just before you’d forget it."))
+    .toBeVisible();
+  await begin();
   await next();
   await expect.element(page.getByRole("alert")).toHaveTextContent("Choose one to continue.");
 
@@ -98,6 +119,7 @@ test("a language asks which one, then offers that language's decks beside the le
 test("something else skips the language and leads with the learner's own material", async () => {
   const onFinish = vi.fn();
   await renderWelcome(onFinish);
+  await begin();
   await page.getByRole("radio", { name: /Something else/ }).click();
   await next();
   await page.getByRole("radio", { name: /Light/ }).click();
@@ -121,4 +143,41 @@ test("skip leaves at any question", async () => {
   await renderWelcome(() => {}, onSkip);
   await page.getByRole("button", { name: "Skip for now" }).click();
   expect(onSkip).toHaveBeenCalledOnce();
+});
+
+test("a deck joined while signing up leads the welcome, then asks only for the daily goal", async () => {
+  const onChooseGoal = vi.fn();
+  const onFinish = vi.fn();
+  sessionStorage.setItem(
+    "lymi-welcome",
+    JSON.stringify({ trail: ["kind", "goal", "start"], kind: "other", language: null, goal: 10 }),
+  );
+  const deck: JoinedDeck = {
+    name: "Everyday Estonian",
+    defaultLanguage: "et",
+    total: 12,
+    owner: { id: "oksana", name: "Oksana", avatarUrl: null },
+    published: false,
+  };
+  await renderWelcome(onFinish, () => {}, { deck, onChooseGoal });
+
+  await expect.element(page.getByRole("heading", { name: "Welcome to Lymi" })).toBeVisible();
+  await expect.element(page.getByRole("heading", { name: "Everyday Estonian" })).toBeVisible();
+  await expect.element(page.getByText(/Oksana shared a deck/)).toBeVisible();
+  await expect.element(page.getByText("12 cards")).toBeVisible();
+  // The deck anchors the screen on its own.
+  await expect.element(page.getByRole("heading", { name: "How it works" })).not.toBeInTheDocument();
+  await next();
+
+  await expect.element(page.getByRole("heading", { name: "How much time a day?" })).toBeVisible();
+  await expect.element(page.getByRole("progressbar")).not.toBeInTheDocument();
+  await expect.element(page.getByRole("radio", { name: /Steady/ })).toBeChecked();
+  await page.getByRole("button", { name: "Back" }).click();
+  await expect.element(page.getByRole("heading", { name: "Everyday Estonian" })).toBeVisible();
+  await next();
+
+  await page.getByRole("radio", { name: /Keen/ }).click();
+  await page.getByRole("button", { name: "Start review" }).click();
+  expect(onChooseGoal).toHaveBeenCalledWith(50);
+  expect(onFinish).not.toHaveBeenCalled();
 });

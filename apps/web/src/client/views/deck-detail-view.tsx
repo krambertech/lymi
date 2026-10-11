@@ -31,6 +31,7 @@ import {
 } from "react";
 import { Avatar } from "../components/avatar";
 import { Button, IconButton } from "../components/button";
+import { CardPlace } from "../components/card-place";
 import { directionLabel, languageName } from "../components/deck-fields";
 import { ErrorState, NoResults } from "../components/empty-state";
 import { Screen, ScreenBar } from "../components/layout/screen";
@@ -42,7 +43,6 @@ import { Skeleton } from "../components/skeleton";
 import { StartPanel, StartPanelSection } from "../components/start-panel";
 import { StateIcon, stateMarks } from "../components/state-mark";
 import { type StreakSummary, useTodayStatus } from "../components/streak";
-import { Dialog, DialogContent } from "../components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -1174,30 +1174,18 @@ export function DeckDetailView({
         </aside>
       )}
       {!beside && !st && (
-        <Dialog
-          kind="place"
+        <CardPlace
           open={!!open && !measuring}
-          onOpenChange={(next) => {
-            if (next) return;
-            // A field being edited saves on blur, which removing the sheet would skip.
-            (document.activeElement as HTMLElement | null)?.blur();
-            setOpen(null);
+          onClose={() => setOpen(null)}
+          titleId={titleId}
+          finalFocus={() => {
+            const id = archivedNeighbour.current;
+            archivedNeighbour.current = null;
+            return (id && cardRow(id)) || true;
           }}
         >
-          <DialogContent
-            placement="end"
-            aria-labelledby={titleId}
-            initialFocus={() => document.getElementById(titleId)}
-            finalFocus={() => {
-              const id = archivedNeighbour.current;
-              archivedNeighbour.current = null;
-              return (id && cardRow(id)) || true;
-            }}
-            className="px-7 pt-6 pb-10"
-          >
-            {word}
-          </DialogContent>
-        </Dialog>
+          {word}
+        </CardPlace>
       )}
     </div>
   );

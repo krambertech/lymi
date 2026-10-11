@@ -195,9 +195,10 @@ export interface WordOwnerActions {
   /** Opens the card's form. */
   onEdit: () => void;
   onArchive: () => void;
-  onMove: (deckId: string) => void;
+  /** Absent, as in review, the card offers no move. */
+  onMove?: ((deckId: string) => void) | undefined;
   /** Opens the section picker. */
-  onMoveToSection: () => void;
+  onMoveToSection?: (() => void) | undefined;
   /** Asks the AI to fill what is still empty. */
   onEnrich: () => void;
 }
@@ -492,12 +493,22 @@ export function WordView({
           <Pencil />
         </IconButton>
       )}
-      <IconButton label={t`Previous card`} size={size} onClick={onPrev} aria-disabled={!hasPrev}>
-        <ArrowUp />
-      </IconButton>
-      <IconButton label={t`Next card`} size={size} onClick={onNext} aria-disabled={!hasNext}>
-        <ArrowDown />
-      </IconButton>
+      {/* Only beside a list: a card opened on its own, as in review, has no neighbours to walk to. */}
+      {(onPrev || onNext) && (
+        <>
+          <IconButton
+            label={t`Previous card`}
+            size={size}
+            onClick={onPrev}
+            aria-disabled={!hasPrev}
+          >
+            <ArrowUp />
+          </IconButton>
+          <IconButton label={t`Next card`} size={size} onClick={onNext} aria-disabled={!hasNext}>
+            <ArrowDown />
+          </IconButton>
+        </>
+      )}
       {/* Every item here writes the card, so a member of a shared deck gets no menu at all. */}
       {owner && (
         <DropdownMenu>
@@ -515,14 +526,18 @@ export function WordView({
                 <Trans>Enrich</Trans>
               </DropdownMenuItem>
             )}
-            <DropdownMenuItem onClick={() => setMoving(true)} disabled={elsewhere.length === 0}>
-              <FolderInput />
-              <Trans>Move to…</Trans>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={owner.onMoveToSection}>
-              <Signpost />
-              <Trans>Move to section…</Trans>
-            </DropdownMenuItem>
+            {owner.onMove && (
+              <DropdownMenuItem onClick={() => setMoving(true)} disabled={elsewhere.length === 0}>
+                <FolderInput />
+                <Trans>Move to…</Trans>
+              </DropdownMenuItem>
+            )}
+            {owner.onMoveToSection && (
+              <DropdownMenuItem onClick={owner.onMoveToSection}>
+                <Signpost />
+                <Trans>Move to section…</Trans>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuSeparator />
             <DropdownMenuItem variant="danger" onClick={owner.onArchive}>
               <Archive />
@@ -682,7 +697,7 @@ export function WordView({
                   type="button"
                   onClick={() => {
                     setMoving(false);
-                    owner?.onMove(d.id);
+                    owner?.onMove?.(d.id);
                   }}
                   className="edge flex h-12 w-full items-center justify-between gap-3 rounded-md bg-plate px-4 text-start text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:veil"
                 >

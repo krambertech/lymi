@@ -119,6 +119,11 @@ interface ContentProps extends React.ComponentProps<"div"> {
   /** "top" for a trigger at the foot of the screen, so the list opens into the room above. */
   side?: "top" | "bottom" | undefined;
   sideOffset?: number | undefined;
+  /**
+   * Where focus goes as the menu closes: false leaves it where a chosen row put it, an element
+   * takes it, and true or nothing hands it back to the trigger.
+   */
+  finalFocus?: ((closeType: unknown) => boolean | HTMLElement | null | undefined) | undefined;
 }
 
 function DropdownMenuContent(props: ContentProps) {
@@ -130,6 +135,7 @@ function AnchoredContent({
   align = "start",
   side = "bottom",
   sideOffset = 6,
+  finalFocus,
   ref: refProp,
   className,
   children,
@@ -149,6 +155,7 @@ function AnchoredContent({
       >
         <MenuPrimitive.Popup
           ref={refs}
+          finalFocus={finalFocus}
           data-slot="dropdown-menu-content"
           className={cn(
             // Grows out of the corner nearest its trigger, scale 0.94 to 1 over 140 ms.
@@ -182,6 +189,7 @@ function DrawerMenuContent({
   align: _align,
   side: _side,
   sideOffset: _sideOffset,
+  finalFocus,
   ref: refProp,
   className,
   children,
@@ -219,6 +227,7 @@ function DrawerMenuContent({
   return (
     <DrawerContent
       aria-label={label}
+      finalFocus={finalFocus}
       // Through the drawer rather than an effect, so it still knows the trigger to hand focus back to.
       initialFocus={() =>
         ref.current?.querySelector<HTMLElement>(`${ITEM}:not([aria-disabled="true"])`) ?? true

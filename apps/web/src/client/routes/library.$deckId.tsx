@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import type { CardPatch } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EditCardSheet } from "../components/edit-card-sheet";
 import { ExportSheet } from "../components/export-sheet";
 import { LeaveDeckDialog } from "../components/leave-deck-dialog";
@@ -18,7 +18,6 @@ import { ApiError, api, type Card, errorMessage, type Section } from "../lib/api
 import { useDocumentTitle } from "../lib/document-title";
 import { publicSiteUrl } from "../lib/origins";
 import {
-  cardHistoryQuery,
   connectedAppsQuery,
   deckCardsQuery,
   decksQuery,
@@ -31,9 +30,9 @@ import { useArchiveDeck } from "../lib/use-archive-deck";
 import { useLeaveDeck } from "../lib/use-leave-deck";
 import { useSectionActions } from "../lib/use-sections";
 import { useSeriesActions } from "../lib/use-series";
+import { useWordHistory } from "../lib/use-word-history";
 import { writes } from "../lib/writes";
 import { DeckDetailView, type DeckFailure, exportCsv } from "../views/deck-detail-view";
-import { describeEvent } from "../views/word-view";
 
 export const Route = createFileRoute("/library/$deckId")({
   // The open card lives in the URL, so the phone's back gesture closes it and a link from
@@ -55,7 +54,7 @@ function Deck() {
 }
 
 function DeckPage() {
-  const { t, i18n } = useLingui();
+  const { t } = useLingui();
   const { deckId } = Route.useParams();
   const { card: openCardId } = Route.useSearch();
   const qc = useQueryClient();
@@ -64,7 +63,7 @@ function DeckPage() {
   const cards = useQuery(deckCardsQuery(deckId));
   const streak = useQuery(streakQuery);
   const apps = useQuery({ ...connectedAppsQuery, enabled: cards.data?.length === 0 });
-  const history = useQuery({ ...cardHistoryQuery(openCardId ?? ""), enabled: !!openCardId });
+  const wordHistory = useWordHistory(openCardId);
   // The enrichment row only exists once the fill lands, so ask for the history again then.
   const settled = cards.data?.find((row) => row.card.id === openCardId)?.card.enrichmentStatus;
   useEffect(() => {
@@ -128,16 +127,6 @@ function DeckPage() {
   useDocumentTitle(deck?.name);
   const [editingId, setEditingId] = useState<string | null>(null);
   const editing = cards.data?.find((row) => row.card.id === editingId)?.card ?? null;
-
-  const wordHistory = useMemo(
-    () =>
-      history.data && {
-        states: history.data.states,
-        reviews: history.data.reviews,
-        events: history.data.events.map((e) => describeEvent(e, i18n)),
-      },
-    [history.data, i18n],
-  );
 
   // Opening pushes one entry so Back closes the card; walking and closing replace it, so the
   // history never fills with cards and Back after a close does not reopen one.

@@ -21,7 +21,7 @@ Versions checked on 11 October 2026.
 | Framework | Expo SDK 57, React Native 0.86, New Architecture | Capacitor; a WebView shell |
 | Navigation | Expo Router: native stacks, form sheets, `Link.Preview`; our own tab bar | The system tab bar (`NativeTabs`) |
 | Styling | Uniwind (Tailwind v4), class names shared with the web | NativeWind v5, still a release candidate |
-| Motion | Reanimated 4 and Gesture Handler, with Skia for the lantern next | Moti, no longer maintained |
+| Motion | Reanimated 4 and Gesture Handler; React Native Skia draws the lantern, its glow and embers | Moti, no longer maintained |
 | Icons and type | Lucide and Onest, as on the web | SF Symbols and San Francisco |
 | Widgets | `expo-widgets` with `@expo/ui` | `@bacons/apple-targets`, the fallback for full WidgetKit |
 | Data | TanStack Query with an MMKV persister, Better Auth's Expo plugin, Lingui | — |
@@ -89,7 +89,7 @@ Not doing for now: a Live Activity during a review, grading from a widget, Siri 
 
 Done: the base, shared design values, the shared client and sign-in (steps 1 to 4 of the first outline).
 
-1. **TestFlight 1, the daily loop.** Real data for Today, Review and Library (#504); craft foundations (#506); the phone design system and Add a word (#505); the widget (#508); a small You; a device build and TestFlight (#507). The test: the PWA leaves the Home Screen for a week and is not missed.
+1. **TestFlight 1, the daily loop.** Real data for Today, Review and Library (#504); craft foundations (#506); the phone design system, Add a word and keyboard-following inputs (#505); the widget (#508); a small You; a device build and TestFlight (#507). The test: the PWA leaves the Home Screen for a week and is not missed.
 2. **TestFlight 2, outside the app.** Share to Lymi (#509), reminders (#510), controls, Insights and Activity, and the card menu in a review.
 3. **The App Store.** Welcome, Explore, Sign in with Apple (#528), joining and leaving shared decks, Settings in full, and the listing (#492).
 

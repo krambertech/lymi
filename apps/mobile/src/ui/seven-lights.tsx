@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { View, type ViewStyle } from "react-native";
 import Animated, {
   useAnimatedStyle,
-  useReducedMotion,
   useSharedValue,
   withDelay,
   withTiming,
 } from "react-native-reanimated";
+import { useReduceMotion } from "../theme/motion";
 import { type Palette, usePalette } from "../theme/palette";
 import { weekLetters } from "./days";
 import { Text } from "./primitives";
@@ -83,7 +83,7 @@ function Glass({
   today: boolean;
   delay?: number | undefined;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   const h = useSharedValue(delay === undefined ? l / 3 : 0);
   useEffect(() => {
     const to = l / 3;

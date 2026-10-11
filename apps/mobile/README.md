@@ -29,6 +29,10 @@ The proof of concept compared options side by side and kept one of each: the gla
 - `@lymi/design`: colours, radii, the lantern's drawing, the flame's and the seven lights' rules, and motion presets. `src/global.css` imports its Uniwind theme; the phone keeps its own type ramp there under the shared step names, because iOS reads at 17 pt. `src/theme/motion.ts` converts the shared springs and curves for Reanimated.
 - Lucide icons, rendered by `lucide-react-native`.
 
+## Motion and type
+
+React Native Skia draws the lantern (`src/brand/lantern.tsx`) and the end of a review's light and embers (`src/brand/ending.tsx`), so they move on the UI thread. The end of a review runs on one clock that the first tap finishes. `useReduceMotion` in `src/theme/motion.ts` follows the setting while the app runs; every animation takes `ReduceMotion.Never` and the screen picks the reduced version itself. `Text` follows Dynamic Type through the iOS text style nearest its size, capped per size in `src/theme/type.ts`, with tracking set for the size it is drawn at.
+
 ## Widgets
 
 `src/widgets` holds two Home Screen widgets, **Lantern** (small and medium) and **Week** (medium), and a Lock Screen widget, written with `expo-widgets` and `@expo/ui`. Widget layouts are compiled into the native build, so a change to one needs `npx expo run:ios` again. The app pushes today's numbers and the rooms' colours to them through the shared app group whenever they change. On the Simulator, touch and hold the Home Screen, choose **Edit**, then **Add Widget**, and search for Lymi.

@@ -2,6 +2,10 @@ packages:
   - apps/*
   - packages/*
 
+# Skia's postinstall copies its prebuilt iOS frameworks out of their npm package; CocoaPods needs them.
+onlyBuiltDependencies:
+  - "@shopify/react-native-skia"
+
 # Expo's Babel preset and the worklets plugin import Babel 7 without declaring it; the web apps run Babel 8.
 packageExtensions:
   babel-preset-expo:

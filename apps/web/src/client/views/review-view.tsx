@@ -2,7 +2,9 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { gradeAllowed, type Rating, type ReviewAid } from "@lymi/core";
 import {
+  END_OF_REVIEW as AT,
   EASE_OUT,
+  endEmbers,
   INSTANT,
   LANTERN_FLIGHT,
   lanternFor,
@@ -1377,36 +1379,6 @@ export interface ReviewCompleteProps {
   focusOnMount?: boolean | undefined;
 }
 
-/** When each part of the end arrives, in ms after the last grade; docs/design/system/motion.md. */
-const AT = {
-  pool: 280,
-  embers: 620,
-  heading: 640,
-  count: 820,
-  countRoll: 960,
-  lights: 1180,
-  run: 1300,
-  land: 1780,
-  actions: 2000,
-  actionStep: 90,
-} as const;
-
-/** The last ember leaves by then, however many there are. */
-const EMBERS_SPREAD_MS = 1400;
-/** Steps through [0, 1) by a golden ratio, so embers never bunch however many there are. */
-const spread = (i: number, step: number) => (i * step) % 1;
-
-/** Embers off the flame: where each drifts to, when it leaves and how long it lasts. */
-function embersOf(n: number) {
-  return Array.from({ length: n }, (_, i) => ({
-    x: Math.round((spread(i + 1, 0.618034) - 0.5) * 56),
-    y: -Math.round(96 + spread(i + 1, 0.754878) * 90),
-    at: Math.round((i * Math.min(EMBERS_SPREAD_MS, 110 * n)) / n),
-    dur: Math.round(1300 + spread(i + 1, 0.56984) * 900),
-    size: 3 + Math.round(spread(i + 1, 0.414214) * 4) / 2,
-  }));
-}
-
 const at = (ms: number) => ({ "--at": `${ms}ms` }) as CSSProperties;
 /** The `.seq` rise in `styles/entrances.css`. */
 const RISE_MS = 560;
@@ -1439,7 +1411,7 @@ export function ReviewComplete({
   const flame = week ? streakFlameFor(week) : "lit";
   const lit = !lanternFor(streak).out;
   const embers = useMemo(
-    () => (lit && !reduce ? embersOf(screen.embers) : []),
+    () => (lit && !reduce ? endEmbers(screen.embers) : []),
     [lit, reduce, screen.embers],
   );
   // Only the day turning ticks the run; any other end shows the run as it stands.

@@ -6,6 +6,7 @@ import Animated, { useAnimatedKeyboard, useAnimatedStyle } from "react-native-re
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAddCard, useDecks } from "../data/queries";
 import { usePalette } from "../theme/palette";
+import { inputCap } from "../theme/type";
 import { Button, Icon, Text } from "../ui/primitives";
 import { Segmented } from "../ui/segmented";
 
@@ -88,6 +89,7 @@ export default function Capture() {
               letterSpacing: -0.6,
               paddingVertical: 2,
             }}
+            maxFontSizeMultiplier={inputCap(30)}
             accessibilityLabel="Term"
           />
         </View>
@@ -110,6 +112,7 @@ export default function Capture() {
             onSubmitEditing={save}
             className="font-sans text-text"
             style={{ fontSize: 17, lineHeight: 24, paddingVertical: 4 }}
+            maxFontSizeMultiplier={inputCap(17)}
             accessibilityLabel="Meaning"
           />
         </View>

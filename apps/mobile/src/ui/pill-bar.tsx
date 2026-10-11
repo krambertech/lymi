@@ -3,9 +3,9 @@ import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import type { Tabs } from "expo-router";
 import { type ComponentProps, type ReactNode, useState } from "react";
 import { type LayoutRectangle, useColorScheme, View } from "react-native";
-import Animated, { useAnimatedStyle, useReducedMotion, withSpring } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { spring } from "../theme/motion";
+import { spring, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import type { IconName } from "./icons";
 import { Icon, LIFT, Press, Text } from "./primitives";
@@ -28,7 +28,7 @@ export function PillBar({ state, navigation }: BottomTabBarProps) {
   const p = usePalette();
   const dark = useColorScheme() === "dark";
   const insets = useSafeAreaInsets();
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   // Liquid Glass needs iOS 26; earlier versions get the web's opaque pill.
   const glass = isGlassEffectAPIAvailable();
   const [rects, setRects] = useState<Record<number, LayoutRectangle>>({});
@@ -75,7 +75,11 @@ export function PillBar({ state, navigation }: BottomTabBarProps) {
             className="h-12 flex-row items-center gap-2 rounded-full px-5"
           >
             <Icon name={item.icon} size={20} colour={active ? p.text : p["text-2"]} />
-            <Text className={`text-base font-medium ${active ? "text-text" : "text-text-2"}`}>
+            <Text
+              // Three items must fit across the phone at the largest text size.
+              maxFontSizeMultiplier={1.2}
+              className={`text-base font-medium ${active ? "text-text" : "text-text-2"}`}
+            >
               {item.label}
             </Text>
           </Press>

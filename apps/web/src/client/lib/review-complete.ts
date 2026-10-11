@@ -1,6 +1,7 @@
 import { streakWith } from "@lymi/client/review-day";
 import { type DrawData, type DrawState, drawCards } from "@lymi/client/review-draw";
 import { type Drawn, roundOrder, type StreakOut } from "@lymi/core";
+import { emberCount } from "@lymi/design";
 
 export { type DayOutcome, dayOutcome, drawableLeft, streakWith } from "@lymi/client/review-day";
 
@@ -88,25 +89,6 @@ export interface EndScreen {
   continueLeads: boolean;
   /** The line under the number while Continue leads: how many more to the goal, or to the end of the day. */
   nudge: { kind: "goal" | "day"; count: number } | null;
-}
-
-/** Embers at a share of the goal added; between the points the count follows a line. */
-const EMBERS: readonly (readonly [number, number])[] = [
-  [0, 3],
-  [0.25, 6],
-  [0.5, 9],
-  [1, 14],
-  [2, 20],
-];
-
-export function emberCount(added: number, goal: number): number {
-  if (added <= 0) return 0;
-  const share = added / Math.max(goal, 1);
-  const upper = EMBERS.findIndex(([at]) => at >= share);
-  if (upper === -1) return EMBERS[EMBERS.length - 1]?.[1] ?? 0;
-  const [x1, y1] = EMBERS[upper] ?? [0, 0];
-  const [x0, y0] = EMBERS[upper - 1] ?? [x1, y1];
-  return Math.round(x1 === x0 ? y1 : y0 + ((y1 - y0) * (share - x0)) / (x1 - x0));
 }
 
 /** The end of a stretch by where the day stands, or `unchecked`; ADR 0021. */

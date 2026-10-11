@@ -6,7 +6,7 @@
  * Colours and radii come from @lymi/design unchanged. Type does not: iOS reads at 17 pt and
  * Dynamic Type scales from there, so the phone sets its own size under each of the shared step
  * names, which `pnpm check:design` holds to tokens.css. Display steps keep a 1.2 line box: iOS
- * clips any glyph that rises past it.
+ * clips any glyph that rises past it. How far each size grows with Dynamic Type is in src/theme/type.ts.
  */
 @theme {
   --text-2xs: 11px;

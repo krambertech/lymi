@@ -1,4 +1,13 @@
-import { CardInput, CardPatch, emptyFields, needsEnrichment } from "@lymi/core";
+import {
+  CardInput,
+  CardPatch,
+  DECK_ENRICH_FIELDS,
+  deckEnrichFields,
+  defaultEnrichFields,
+  emptyFields,
+  fieldsToFill,
+  needsEnrichment,
+} from "@lymi/core";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider, TextRequest } from "../ai";
 import type { Db } from "../db";
@@ -28,6 +37,7 @@ import { learner, testDb } from "./test-db";
 const full = {
   meaning: "to hurry up",
   example: "Sbrigati, il treno parte!",
+  notes: "*sbrigarsi · mi sbrigo*",
   pronunciation: "zbriˈgarsi",
   language: "it",
 };
@@ -36,8 +46,30 @@ describe("emptyFields", () => {
   it("names every enrichable field with no text, treating whitespace as none", () => {
     expect(emptyFields({ ...full, meaning: null, example: "  " })).toEqual(["meaning", "example"]);
     expect(emptyFields(full)).toEqual([]);
-    expect(needsEnrichment(full)).toBe(false);
-    expect(needsEnrichment({ ...full, pronunciation: null })).toBe(true);
+    expect(needsEnrichment(full, DECK_ENRICH_FIELDS)).toBe(false);
+    expect(needsEnrichment({ ...full, pronunciation: null }, DECK_ENRICH_FIELDS)).toBe(true);
+  });
+
+  it("asks only for a field the deck lets the AI fill, and always for the language", () => {
+    expect(needsEnrichment({ ...full, pronunciation: null }, ["meaning", "example"])).toBe(false);
+    expect(needsEnrichment({ ...full, language: null }, [])).toBe(true);
+  });
+});
+
+describe("deck enrichment fields", () => {
+  it("starts a deck from its language, and keeps an owner's choice", () => {
+    expect(defaultEnrichFields(null)).toEqual(["meaning"]);
+    expect(defaultEnrichFields("it")).toEqual(["meaning", "example"]);
+    expect(defaultEnrichFields("et")).toEqual(["meaning", "example", "notes"]);
+    expect(defaultEnrichFields("zh-Hans")).toEqual(["meaning", "example", "pronunciation"]);
+    expect(deckEnrichFields(null, "et")).toEqual(["meaning", "example", "notes"]);
+    expect(deckEnrichFields(["notes", "meaning"], "it")).toEqual(["meaning", "notes"]);
+    expect(deckEnrichFields([], "it")).toEqual([]);
+  });
+
+  it("fills the unset fields the deck allows, and the language", () => {
+    const card = { ...full, meaning: null, example: "", notes: null, language: null };
+    expect(fieldsToFill(card, ["meaning", "example"])).toEqual(["meaning", "language"]);
   });
 });
 
@@ -72,18 +104,20 @@ describe("enrichmentWrite", () => {
     id: "c1",
     meaning: "AI meaning",
     example: "AI example",
+    notes: "AI notes",
     pronunciation: "ˈaɪ",
     language: "it",
   };
+  const blank = { meaning: null, example: null, notes: null, pronunciation: null, language: null };
 
   it("fills only empty fields and labels each filled text ai", () => {
-    expect(
-      enrichmentWrite({ meaning: null, example: null, pronunciation: null, language: null }, reply),
-    ).toEqual({
+    expect(enrichmentWrite(blank, reply)).toEqual({
       meaning: "AI meaning",
       meaningSource: "ai",
       example: "AI example",
       exampleSource: "ai",
+      notes: "AI notes",
+      notesSource: "ai",
       pronunciation: "ˈaɪ",
       pronunciationSource: "ai",
       language: "it",
@@ -92,18 +126,36 @@ describe("enrichmentWrite", () => {
 
   it("never overwrites text already on the card, whatever wrote it", () => {
     const write = enrichmentWrite(
-      { meaning: "from the lesson", example: null, pronunciation: "zbriˈgarsi", language: "it" },
+      {
+        meaning: "from the lesson",
+        example: null,
+        notes: "",
+        pronunciation: "zbriˈgarsi",
+        language: "it",
+      },
       reply,
     );
     expect(write).toEqual({ example: "AI example", exampleSource: "ai" });
   });
 
+  it("writes only the fields the run may fill", () => {
+    expect(enrichmentWrite(blank, reply, ["meaning", "language"])).toEqual({
+      meaning: "AI meaning",
+      meaningSource: "ai",
+      language: "it",
+    });
+  });
+
   it("drops a value the model left out and a language tag that is not one", () => {
     expect(
-      enrichmentWrite(
-        { meaning: null, example: null, pronunciation: null, language: null },
-        { ...reply, meaning: null, example: "   ", pronunciation: null, language: "Italian" },
-      ),
+      enrichmentWrite(blank, {
+        ...reply,
+        meaning: null,
+        example: "   ",
+        notes: null,
+        pronunciation: null,
+        language: "Italian",
+      }),
     ).toEqual({});
   });
 });
@@ -183,8 +235,10 @@ describe("enrichCards", () => {
     expect(first.meaning).toBe("to hurry up");
     expect(first.meaningSource).toBe("ai");
     expect(first.exampleSource).toBe("ai");
-    expect(first.pronunciationSource).toBe("ai");
+    // An Italian deck starts with meaning and example, so the pronunciation the model gave is dropped.
+    expect(first.pronunciation).toBeNull();
     expect(first.enrichmentStatus).toBeNull();
+    expect(first.enrichmentFields).toBeNull();
 
     const second = await showCard(ctx, ids[1] as string);
     expect(second.meaning).toBe("if only");
@@ -429,6 +483,213 @@ describe("enrichCards", () => {
   });
 });
 
+describe("enrichment that follows the deck", () => {
+  let db: Db;
+  let dispose: () => Promise<void>;
+
+  beforeAll(async () => {
+    ({ db, dispose } = await testDb());
+  }, 60_000);
+
+  afterAll(async () => {
+    await dispose();
+  });
+
+  const queue: EnrichmentQueue = { create: async () => undefined };
+
+  async function added(ctx: Awaited<ReturnType<typeof learner>>, input: CardInput) {
+    const [outcome] = await addCards(ctx, [input], queue);
+    if (outcome?.status !== "added") throw new Error("not added");
+    return outcome.card;
+  }
+
+  it("asks only for the fields the deck allows, and the language", async () => {
+    const ctx = await learner(db, "deck-fields-1", "Kateryna");
+    const subject = await createDeck(ctx, { name: "Cell biology" });
+    const chosen = await createDeck(ctx, {
+      name: "Italiano",
+      defaultLanguage: "it",
+      enrichFields: ["notes"],
+    });
+    expect(
+      (await added(ctx, CardInput.parse({ deckId: subject.id, term: "osmosis" }))).enrichmentFields,
+    ).toEqual(["meaning", "language"]);
+    const card = await added(ctx, CardInput.parse({ deckId: chosen.id, term: "andare" }));
+    expect(card.enrichmentStatus).toBe("working");
+    expect(card.enrichmentFields).toEqual(["notes"]);
+    // Nothing the deck allows is empty, so the add asks for nothing.
+    const done = await added(
+      ctx,
+      CardInput.parse({ deckId: chosen.id, term: "venire", notes: "*vengo, venuto*" }),
+    );
+    expect(done.enrichmentStatus).toBeNull();
+  });
+
+  it("shows the model the deck, its guide, its instructions and the learner's own cards", async () => {
+    const ctx = await learner(db, "deck-fields-2", "Kateryna");
+    await updateSettings(ctx, { appLanguage: "ru" });
+    const deck = await createDeck(ctx, {
+      name: "Eesti A1",
+      defaultLanguage: "et",
+      enrichInstructions: "Значения одним словом.",
+    });
+    await addCards(ctx, [
+      CardInput.parse({
+        deckId: deck.id,
+        term: "maja",
+        meaning: "дом",
+        notes: "*maja · maja · maja*",
+      }),
+      CardInput.parse({ deckId: deck.id, term: "pikk", meaning: "длинный", example: "" }),
+    ]);
+    const aiMeaning = await added(ctx, CardInput.parse({ deckId: deck.id, term: "kass" }));
+    await enrichCards(
+      { ...ctx, actor: "ai" },
+      [aiMeaning.id],
+      fakeProvider({
+        cards: [
+          {
+            id: aiMeaning.id,
+            meaning: "кошка",
+            example: null,
+            notes: null,
+            pronunciation: null,
+            language: null,
+          },
+        ],
+      }),
+    );
+    const card = await added(ctx, CardInput.parse({ deckId: deck.id, term: "tulema" }));
+
+    const provider = fakeProvider({ cards: [] });
+    await enrichCards({ ...ctx, actor: "ai" }, [card.id], provider);
+    const input = JSON.parse(provider.asked[0]?.input ?? "{}");
+    expect(input.meaningLanguage).toBe("ru");
+    expect(input.decks).toEqual([
+      expect.objectContaining({
+        id: deck.id,
+        name: "Eesti A1",
+        language: "et",
+        purpose: "language",
+        guide: expect.stringContaining("tulema · tulla · tulen"),
+        instructions: "Значения одним словом.",
+      }),
+    ]);
+    // The learner's cards, with only the fields the deck lets the AI fill; never the AI's own card,
+    // nor the card being filled.
+    expect(input.decks[0].samples).toHaveLength(2);
+    expect(input.decks[0].samples).toEqual(
+      expect.arrayContaining([
+        { term: "pikk", meaning: "длинный", example: "", notes: "" },
+        { term: "maja", meaning: "дом", example: "", notes: "*maja · maja · maja*" },
+      ]),
+    );
+    expect(input.cards).toEqual([
+      {
+        id: card.id,
+        deck: deck.id,
+        term: "tulema",
+        language: "et",
+        mayFill: ["meaning", "example", "notes"],
+      },
+    ]);
+  });
+
+  it("writes notes as the AI's, and counts the fields it chose to leave", async () => {
+    const ctx = await learner(db, "deck-fields-3", "Kateryna");
+    const capture = vi.fn();
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const card = await added(ctx, CardInput.parse({ deckId: deck.id, term: "tulema" }));
+    await enrichCards(
+      { ...ctx, actor: "ai", analytics: { capture, writeDataPoint: vi.fn() } },
+      [card.id],
+      fakeProvider({
+        cards: [
+          {
+            id: card.id,
+            meaning: "приходить",
+            example: null,
+            notes: "*tulema · tulla · tulen*",
+            pronunciation: null,
+            language: null,
+          },
+        ],
+      }),
+      "add",
+    );
+    const after = await showCard(ctx, card.id);
+    expect(after).toMatchObject({
+      notes: "*tulema · tulla · tulen*",
+      notesSource: "ai",
+      example: null,
+      enrichmentStatus: null,
+      enrichmentFields: null,
+    });
+    expect(capture).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: "enrichment_finished",
+        outcome: "enriched",
+        trigger: "add",
+        has_instructions: false,
+        samples: 0,
+        skipped: 1,
+      }),
+    );
+  });
+
+  it("makes an edited AI note the learner's", async () => {
+    const ctx = await learner(db, "deck-fields-4", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const card = await added(ctx, CardInput.parse({ deckId: deck.id, term: "minema" }));
+    await enrichCards(
+      { ...ctx, actor: "ai" },
+      [card.id],
+      fakeProvider({
+        cards: [
+          {
+            id: card.id,
+            meaning: "идти",
+            example: null,
+            notes: "*minema · minna · lähen*",
+            pronunciation: null,
+            language: null,
+          },
+        ],
+      }),
+    );
+    await updateCard(
+      ctx,
+      card.id,
+      CardPatch.parse({ notes: "*minema · minna · lähen* — неправильный" }),
+    );
+    expect((await showCard(ctx, card.id)).notesSource).toBe("manual");
+  });
+
+  it("lets Enrich on one card follow the deck, leaving a field it does not allow cleared", async () => {
+    const ctx = await learner(db, "deck-fields-5", "Kateryna");
+    const deck = await createDeck(ctx, {
+      name: "Italiano",
+      defaultLanguage: "it",
+      enrichFields: ["meaning"],
+    });
+    const [outcome] = await addCards(ctx, [
+      CardInput.parse({ deckId: deck.id, term: "andare", meaning: "", example: "" }),
+    ]);
+    if (outcome?.status !== "added") throw new Error("not added");
+    const queued: EnrichmentQueue = { create: vi.fn().mockResolvedValue(undefined) };
+    const asked = await requestEnrichment(ctx, outcome.card.id, queued);
+    expect(asked).toMatchObject({ meaning: null, example: "", enrichmentFields: ["meaning"] });
+
+    await updateCard(ctx, outcome.card.id, CardPatch.parse({ meaning: "to go" }));
+    await failEnrichment(db, ctx.userId, [outcome.card.id]);
+    const refusal = await requestEnrichment(ctx, outcome.card.id, queued).then(
+      () => "accepted",
+      (error: unknown) => (error instanceof ServiceError ? error.code : String(error)),
+    );
+    expect(refusal).toBe("invalid");
+  });
+});
+
 describe("requestEnrichment", () => {
   let db: Db;
   let dispose: () => Promise<void>;
@@ -463,7 +724,9 @@ describe("requestEnrichment", () => {
     expect(asked.enrichmentStatus).toBe("working");
     expect((await showCard(ctx, card.id)).enrichmentStatus).toBe("working");
     expect(queue.create).toHaveBeenCalledWith(
-      expect.objectContaining({ params: { userId: ctx.userId, cardIds: [card.id] } }),
+      expect.objectContaining({
+        params: { userId: ctx.userId, cardIds: [card.id], trigger: "card" },
+      }),
     );
   });
 
@@ -486,7 +749,7 @@ describe("requestEnrichment", () => {
   it("refuses a card with no empty field rather than accepting it silently", async () => {
     const { ctx, card } = await bareCard("ask-4");
     await updateCard(ctx, card.id, CardPatch.parse(full));
-    expect(needsEnrichment(await showCard(ctx, card.id))).toBe(false);
+    expect(needsEnrichment(await showCard(ctx, card.id), DECK_ENRICH_FIELDS)).toBe(false);
     const queue: EnrichmentQueue = { create: vi.fn() };
     expect(await code(requestEnrichment(ctx, card.id, queue))).toBe("invalid");
     expect(queue.create).not.toHaveBeenCalled();

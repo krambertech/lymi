@@ -19,7 +19,8 @@
     "db:migrate": "wrangler d1 migrations apply lymi --local",
     "db:migrate:prod": "wrangler d1 migrations apply lymi --remote",
     "auth:schema": "auth generate --config src/server/auth-cli.ts --output ../../packages/core/src/schema/auth.ts -y",
-    "i18n:extract": "lingui extract --clean"
+    "i18n:extract": "lingui extract --clean",
+    "eval:enrichment": "tsx --env-file-if-exists=.dev.vars src/server/enrichment/evaluate.ts"
   },
   "devDependencies": {
     "@babel/core": "8.0.7",

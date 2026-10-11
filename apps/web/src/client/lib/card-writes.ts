@@ -26,7 +26,10 @@ export function cardPatch(card: Card, values: CardFormValues): CardPatch {
     patch.pronunciation = values.pronunciation;
     patch.pronunciationSource = "manual";
   }
-  if (values.notes !== (card.notes ?? "")) patch.notes = values.notes;
+  if (values.notes !== (card.notes ?? "")) {
+    patch.notes = values.notes;
+    patch.notesSource = "manual";
+  }
   if (values.hook !== (card.hook ?? "")) {
     patch.hook = values.hook;
     if (values.hook) patch.hookSource = "manual";

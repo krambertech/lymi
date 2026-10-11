@@ -1,7 +1,8 @@
-import type { DeckInput, NewDeckInput } from "@lymi/core";
-import { newId } from "@lymi/core";
+import type { DeckEnrichField, DeckInput, NewDeckInput } from "@lymi/core";
+import { deckEnrichFields, newId } from "@lymi/core";
 import { and, asc, desc, eq, isNotNull, isNull, sql } from "@lymi/core/db";
 import { schema } from "../db";
+import { track } from "./analytics";
 import { audit } from "./audit";
 import { type CardView, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -51,6 +52,8 @@ export async function listDecks(
       position: deckOrder(userId),
       seriesId: effectiveSeriesId(userId),
       sectionProgression: schema.decks.sectionProgression,
+      enrichFields: schema.decks.enrichFields,
+      enrichInstructions: schema.decks.enrichInstructions,
       total: sql<number>`(select count(*) from cards where cards.deck_id = decks.id and cards.archived_at is null)`,
       archivedAt: schema.decks.archivedAt,
       ownerId: schema.decks.userId,
@@ -113,14 +116,17 @@ export async function listDecks(
         avatarGoogleVersion,
         archivedAt: deck.archivedAt,
       });
+      const owner = ownerId === userId;
       return {
         ...deck,
         name: editionName ?? deck.name,
         description: editionDescription ?? deck.description,
         reviewModes: deckModes(deck.directions),
+        enrichFields: deckEnrichFields(deck.enrichFields, deck.defaultLanguage),
+        enrichInstructions: owner ? deck.enrichInstructions : null,
         // Cards, not direction states: the same count the queue reports as its total.
         due: due.get(deck.id) ?? 0,
-        role: ownerId === userId ? ("owner" as const) : (memberRole ?? ("learner" as const)),
+        role: owner ? ("owner" as const) : (memberRole ?? ("learner" as const)),
         owner: { id: ownerId, name: ownerName, avatarUrl: publisher.avatarUrl },
         published: publisher.published,
       };
@@ -152,11 +158,22 @@ export async function createDeck(ctx: ServiceContext, { id: chosen, ...input }: 
     defaultLanguage: input.defaultLanguage ?? null,
     directions: resolveDeckDirections(input) ?? "recognition",
     sectionProgression: input.sectionProgression ?? "automatic",
+    ...(input.enrichFields ? { enrichFields: input.enrichFields } : {}),
+    ...(input.enrichInstructions?.trim()
+      ? { enrichInstructions: input.enrichInstructions.trim() }
+      : {}),
     seriesId,
     // A deck without a series keeps the default, so Library still orders new decks by date.
     ...(seriesId ? { position: await nextDeckPosition(ctx, seriesId) } : {}),
   });
   await audit(ctx, { entity: "deck", action: "create", id, details: input });
+  if (input.enrichFields !== undefined || input.enrichInstructions?.trim()) {
+    trackEnrichmentChoice(
+      ctx,
+      deckEnrichFields(input.enrichFields, input.defaultLanguage),
+      input.enrichInstructions,
+    );
+  }
   return getDeck(ctx, id);
 }
 
@@ -210,7 +227,7 @@ export type DeckPatch = { [K in keyof DeckInput]?: DeckInput[K] | undefined };
 export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPatch) {
   const { db } = ctx;
   const deck = await ownedDeck(ctx, id);
-  const { reviewModes, seriesId, ...fields } = patch;
+  const { reviewModes, seriesId, enrichInstructions, ...fields } = patch;
   const directions = resolveDeckDirections(patch);
   // The stored row, not the view: the series so clearing an archived one still takes the deck
   // out of it, and the text so an edition goes stale against the deck's own words.
@@ -219,6 +236,9 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
       seriesId: schema.decks.seriesId,
       name: schema.decks.name,
       description: schema.decks.description,
+      defaultLanguage: schema.decks.defaultLanguage,
+      enrichFields: schema.decks.enrichFields,
+      enrichInstructions: schema.decks.enrichInstructions,
     })
     .from(schema.decks)
     .where(eq(schema.decks.id, deck.id));
@@ -235,6 +255,10 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
     .update(schema.decks)
     .set({
       ...fields,
+      // Blank instructions are none, so the prompt never carries an empty section.
+      ...(enrichInstructions === undefined
+        ? {}
+        : { enrichInstructions: enrichInstructions?.trim() || null }),
       ...placement,
       ...(directions ? { directions } : {}),
       ...bumped("deck", fields, stored ?? {}),
@@ -249,7 +273,37 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
     if (first) await db.batch([first, ...rest]);
   }
   await audit(ctx, { entity: "deck", action: "update", id, details: patch });
+  // One language for both sides, so a new language moving the default is not the owner's choice.
+  const language = stored?.defaultLanguage;
+  const before = {
+    fields: deckEnrichFields(stored?.enrichFields, language),
+    instructions: stored?.enrichInstructions ?? null,
+  };
+  const after = {
+    fields: patch.enrichFields ? deckEnrichFields(patch.enrichFields, language) : before.fields,
+    instructions:
+      enrichInstructions === undefined ? before.instructions : enrichInstructions?.trim() || null,
+  };
+  if (after.fields.join() !== before.fields.join() || after.instructions !== before.instructions) {
+    trackEnrichmentChoice(ctx, after.fields, after.instructions);
+  }
   return getDeck(ctx, id);
+}
+
+/** What a deck now asks the AI for, as flags: never the instructions themselves. */
+function trackEnrichmentChoice(
+  ctx: ServiceContext,
+  fields: readonly DeckEnrichField[],
+  instructions: string | null | undefined,
+) {
+  track(ctx.analytics, {
+    name: "deck_enrichment_changed",
+    meaning: fields.includes("meaning"),
+    example: fields.includes("example"),
+    notes: fields.includes("notes"),
+    pronunciation: fields.includes("pronunciation"),
+    has_instructions: !!instructions?.trim(),
+  });
 }
 
 /** Archive, never delete. The cards stay put; the deck leaves every list until restored. */

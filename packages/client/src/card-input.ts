@@ -27,7 +27,7 @@ export function addInput(values: AddValues): CardInput {
     ...(values.pronunciation
       ? { pronunciation: values.pronunciation, pronunciationSource: "manual" as const }
       : {}),
-    ...(values.notes ? { notes: values.notes } : {}),
+    ...(values.notes ? { notes: values.notes, notesSource: "manual" as const } : {}),
     ...(values.hook ? { hook: values.hook, hookSource: "manual" as const } : {}),
     ...(values.source ? { source: values.source } : {}),
     ...(values.tags?.length ? { tags: values.tags } : {}),

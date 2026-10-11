@@ -1,0 +1,69 @@
+import { i18n } from "@lingui/core";
+import { I18nProvider } from "@lingui/react";
+import { expect, test, vi } from "vitest";
+import { page, userEvent } from "vitest/browser";
+import { render } from "vitest-browser-react";
+import { messages } from "../../locales/en.po";
+import { ShellChrome } from "../components/layout/shell-chrome";
+import { StaticNavProvider } from "../components/nav-link";
+import { designChrome } from "../design/chrome";
+import { decks } from "../design/mock";
+import type { DeckSummary } from "../lib/api";
+import { type DeckSettingsPatch, DeckSettingsView } from "./deck-settings-view";
+
+i18n.load("en", messages);
+i18n.activate("en");
+
+const deck = (over: Partial<DeckSummary> = {}): DeckSummary => ({
+  ...(decks[0] as DeckSummary),
+  enrichInstructions: "Lessons with Giulia.",
+  ...over,
+});
+
+const renderSettings = (value: DeckSummary, onSave: (patch: DeckSettingsPatch) => void) =>
+  render(
+    <I18nProvider i18n={i18n}>
+      <ShellChrome value={designChrome()}>
+        <StaticNavProvider path={`/library/${value.id}/settings`}>
+          <div className="@container/shell" style={{ width: 1000 }}>
+            <DeckSettingsView deck={value} onSave={onSave} />
+          </div>
+        </StaticNavProvider>
+      </ShellChrome>
+    </I18nProvider>,
+  );
+
+test("saves a field the owner turns on at once", async () => {
+  const onSave = vi.fn();
+  await renderSettings(deck(), onSave);
+  await expect.element(page.getByRole("checkbox", { name: "Meaning" })).toBeChecked();
+  const notes = page.getByRole("checkbox", { name: "Notes" });
+  await expect.element(notes).not.toBeChecked();
+  await notes.click();
+  expect(onSave).toHaveBeenCalledWith({ enrichFields: ["meaning", "example", "notes"] });
+});
+
+test("saves the instructions when the field is left, and blank as none", async () => {
+  const onSave = vi.fn();
+  await renderSettings(deck(), onSave);
+  const box = page.getByRole("textbox", { name: "Instructions" });
+  await expect.element(box).toHaveValue("Lessons with Giulia.");
+  await userEvent.clear(box);
+  await userEvent.type(box, "  ");
+  expect(onSave).not.toHaveBeenCalled();
+  await userEvent.tab();
+  expect(onSave).toHaveBeenCalledWith({ enrichInstructions: null });
+});
+
+test("shows a member no AI settings and none of the owner's instructions", async () => {
+  await renderSettings(
+    deck({
+      role: "learner",
+      enrichInstructions: null,
+      owner: { id: "u2", name: "Giulia", avatarUrl: null },
+    }),
+    vi.fn(),
+  );
+  await expect.element(page.getByText("About this deck").first()).toBeVisible();
+  expect(page.getByRole("heading", { name: "AI" }).elements()).toHaveLength(0);
+});

@@ -1,16 +1,29 @@
 import {
-  CARD_LIMITS,
+  deckEnrichFields,
   ENRICHED_FIELDS,
   type EnrichedField,
+  fieldsToFill,
   LanguageTag,
   newId,
   unsetFields,
 } from "@lymi/core";
-import { and, eq, inArray, isNull, or, type SQL, sql } from "@lymi/core/db";
+import { and, desc, eq, inArray, isNull, ne, notInArray, or, type SQL, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
-import { z } from "zod";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
+import {
+  cardBrief,
+  type DeckBrief,
+  deckBrief,
+  ENRICHMENT_INSTRUCTIONS,
+  ENRICHMENT_PROMPT_VERSION,
+  enrichmentInput,
+  type Filled,
+  NOTES_READ_MAX,
+  REPLY_SCHEMA,
+  readReply,
+  type Sample,
+} from "../enrichment/prompt";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
@@ -20,13 +33,15 @@ import { getSettings } from "./settings";
 /** Cards per model call. A lesson lands in waves rather than all at once. */
 export const CARDS_PER_CALL = 10;
 
-/** `LanguageTag`'s own ceiling, so an over-long tag is dropped before it reaches the parse. */
-const LANGUAGE_MAX = 12;
+/** The deck's own cards each call shows the model, so it follows the deck's pattern. */
+export const SAMPLES_PER_DECK = 5;
 
-/** What a background enrichment run works on. One run per add. */
+/** What a background enrichment run works on. One run per add, or per Enrich on one card. */
 export type EnrichRunParams = {
   userId: string;
   cardIds: string[];
+  /** Missing on a run queued before Enrich on one card was told apart. */
+  trigger?: "add" | "card" | undefined;
 };
 
 /** Enrichment acts as the AI, so every fill lands in Activity under that actor. */
@@ -47,123 +62,94 @@ export function chunked<T>(items: readonly T[], size: number): T[][] {
   return chunks;
 }
 
-/** What one card's model reply may carry. Every key is present; null means the model had nothing. */
-const Filled = z.object({
-  id: z.string(),
-  meaning: z.string().max(CARD_LIMITS.meaning).nullable().catch(null),
-  example: z.string().max(CARD_LIMITS.example).nullable().catch(null),
-  pronunciation: z.string().max(CARD_LIMITS.pronunciation).nullable().catch(null),
-  language: z.string().max(LANGUAGE_MAX).nullable().catch(null),
-});
-type Filled = z.infer<typeof Filled>;
-
-const Reply = z.object({ cards: z.array(Filled) });
-
-const REPLY_SCHEMA = {
-  name: "enriched_cards",
-  schema: {
-    type: "object",
-    properties: {
-      cards: {
-        type: "array",
-        items: {
-          type: "object",
-          properties: {
-            id: { type: "string" },
-            meaning: { type: ["string", "null"], maxLength: CARD_LIMITS.meaning },
-            example: { type: ["string", "null"], maxLength: CARD_LIMITS.example },
-            pronunciation: { type: ["string", "null"], maxLength: CARD_LIMITS.pronunciation },
-            language: { type: ["string", "null"], maxLength: LANGUAGE_MAX },
-          },
-          required: ["id", "meaning", "example", "pronunciation", "language"],
-          additionalProperties: false,
-        },
-      },
-    },
-    required: ["cards"],
-    additionalProperties: false,
-  },
+/** The text fields enrichment writes, each with the column that records who wrote it. */
+const SOURCE_COLUMN = {
+  meaning: "meaningSource",
+  example: "exampleSource",
+  notes: "notesSource",
+  pronunciation: "pronunciationSource",
 } as const;
+type TextField = keyof typeof SOURCE_COLUMN;
+const TEXT_FIELDS = Object.keys(SOURCE_COLUMN) as TextField[];
 
-/** What enrichment writes to one card: the empty fields it filled, and the `ai` label on each. */
-export type EnrichmentWrite = {
-  meaning?: string;
-  meaningSource?: "ai";
-  example?: string;
-  exampleSource?: "ai";
-  pronunciation?: string;
-  pronunciationSource?: "ai";
-  language?: string;
-};
+/** What enrichment writes to one card: the fields it filled, and the `ai` label on each text. */
+export type EnrichmentWrite = { [F in TextField]?: string } & {
+  [F in TextField as (typeof SOURCE_COLUMN)[F]]?: "ai";
+} & { language?: string };
 
 /**
- * The write for one card: only fields never set, only values the model gave, each
- * text field labelled `ai`. Language carries no source, because nothing in the interface
- * reads a language tag as lesson content.
+ * The write for one card: only fields the run may fill that were never set, only values the
+ * model gave, each text field labelled `ai`. Language carries no source, because nothing in the
+ * interface reads a language tag as lesson content.
  */
-export function enrichmentWrite(card: Fillable, filled: Filled): EnrichmentWrite {
-  const empty = new Set(unsetFields(card));
+export function enrichmentWrite(
+  card: Fillable,
+  filled: Filled,
+  allowed: readonly EnrichedField[] = ENRICHED_FIELDS,
+): EnrichmentWrite {
+  const open = new Set(unsetFields(card).filter((field) => allowed.includes(field)));
   const write: EnrichmentWrite = {};
-  const meaning = filled.meaning?.trim();
-  if (meaning && empty.has("meaning")) {
-    write.meaning = meaning;
-    write.meaningSource = "ai";
-  }
-  const example = filled.example?.trim();
-  if (example && empty.has("example")) {
-    write.example = example;
-    write.exampleSource = "ai";
-  }
-  const pronunciation = filled.pronunciation?.trim();
-  if (pronunciation && empty.has("pronunciation")) {
-    write.pronunciation = pronunciation;
-    write.pronunciationSource = "ai";
+  for (const field of TEXT_FIELDS) {
+    const value = filled[field]?.trim();
+    if (!value || !open.has(field)) continue;
+    write[field] = value;
+    write[SOURCE_COLUMN[field]] = "ai";
   }
   const language = filled.language?.trim();
-  if (language && empty.has("language") && LanguageTag.safeParse(language).success) {
+  if (language && open.has("language") && LanguageTag.safeParse(language).success) {
     write.language = language;
   }
   return write;
 }
 
-const INSTRUCTIONS =
-  "You enrich vocabulary cards for one learner. Each card is a term in the language being learned. " +
-  "For every card you are given, fill only the fields named in its `needs` list and return null for every other field. " +
-  "meaning: a short definition in the learner's meaning language, no more than a sentence, no quotation marks around it. " +
-  "example: one natural sentence using the term, written in the term's own language. " +
-  "pronunciation: how the term is said, as IPA for a language written in the Latin or Cyrillic script, " +
-  "and as the usual reading aid otherwise, such as pinyin, romaji or furigana. " +
-  "language: the BCP 47 tag of the language the term is in, such as it, uk or pt-BR. " +
-  "Return one entry per card, with the id you were given. Return null for a field you are not confident about rather than guessing.";
+type DeckRow = Pick<
+  typeof schema.decks.$inferSelect,
+  "id" | "name" | "description" | "defaultLanguage" | "enrichFields" | "enrichInstructions"
+>;
 
-/** The model's reply for a run of cards, or an empty list when it answers with nothing usable. */
-async function askProvider(
-  provider: TextProvider,
-  meaningLanguage: string,
-  cards: readonly Card[],
-): Promise<Filled[]> {
-  const input = JSON.stringify({
-    meaningLanguage,
-    cards: cards.map((card) => ({
-      id: card.id,
-      term: card.term,
-      language: card.language,
-      meaning: card.meaning,
-      needs: unsetFields(card),
-    })),
-  });
-  const reply = Reply.safeParse(
-    await provider.complete({ instructions: INSTRUCTIONS, input, schema: REPLY_SCHEMA }),
-  );
-  return reply.success ? reply.data.cards : [];
+/** The text of one sample field: the learner's or the lesson's, "" for none, missing when the AI wrote it. */
+function sampleText(card: Card, field: TextField): string | undefined {
+  if (card[SOURCE_COLUMN[field]] === "ai") return undefined;
+  const text = card[field]?.trim() ?? "";
+  return field === "notes" ? text.slice(0, NOTES_READ_MAX) : text;
 }
 
-/** The source column that records who wrote a field. Language carries none. */
-const SOURCE_COLUMN = {
-  meaning: "meaningSource",
-  example: "exampleSource",
-  pronunciation: "pronunciationSource",
-} as const;
+/**
+ * The deck's most recently changed cards whose meaning a person wrote, outside this run. Only the
+ * fields the deck lets the AI fill are shown, because the rest will not be written anyway.
+ */
+async function samplesFor(db: Db, deck: DeckRow, exclude: readonly string[]): Promise<Sample[]> {
+  const fields = deckEnrichFields(deck.enrichFields, deck.defaultLanguage);
+  const rows = await db
+    .select()
+    .from(schema.cards)
+    .where(
+      and(
+        eq(schema.cards.deckId, deck.id),
+        isNull(schema.cards.archivedAt),
+        or(isNull(schema.cards.meaningSource), ne(schema.cards.meaningSource, "ai")),
+        ne(schema.cards.meaning, ""),
+        exclude.length ? notInArray(schema.cards.id, [...exclude]) : undefined,
+      ),
+    )
+    .orderBy(desc(schema.cards.updatedAt), desc(schema.cards.id))
+    .limit(SAMPLES_PER_DECK);
+  return rows.map((card) => {
+    const sample: Sample = { term: card.term };
+    for (const field of fields) {
+      const text = sampleText(card, field);
+      if (text !== undefined) sample[field] = text;
+    }
+    return sample;
+  });
+}
+
+/** The model's reply for a run of cards, or an empty list when it answers with nothing usable. */
+async function askProvider(provider: TextProvider, input: string): Promise<Filled[]> {
+  return readReply(
+    await provider.complete({ instructions: ENRICHMENT_INSTRUCTIONS, input, schema: REPLY_SCHEMA }),
+  );
+}
 
 /** Only a card of this learner's that is still waiting on this run. */
 function stillWorking(userId: string, cardId: string): SQL {
@@ -194,31 +180,82 @@ function landed(after: Card | undefined, write: EnrichmentWrite): EnrichedField[
 }
 
 /**
- * Fill one run of cards and settle their status. The model takes seconds, so every write
- * carries its own test that the field is still unset: a learner who types into or clears a
- * shimmering field before the write keeps what they did, and the field stays theirs. Each card that gains a field
- * gets one audit row naming the fields that actually landed, which Activity renders as
- * "Enriched …".
+ * The fields a run may still fill on a card: those the run started with, less any written since.
+ * A card queued before runs recorded their fields follows its deck.
+ */
+function mayFill(card: Card, deck: DeckRow | undefined): EnrichedField[] {
+  const fields = deckEnrichFields(deck?.enrichFields, deck?.defaultLanguage);
+  const unset = new Set(unsetFields(card));
+  return (card.enrichmentFields ?? fieldsToFill(card, fields)).filter((field) => unset.has(field));
+}
+
+/**
+ * Fill one run of cards and settle their status. The model reads each card's deck, its
+ * instructions and a few of its own cards, and fills only the fields that suit the card. The
+ * model takes seconds, so every write carries its own test that the field is still unset: a
+ * learner who types into or clears a shimmering field before the write keeps what they did, and
+ * the field stays theirs. Each card that gains a field gets one audit row naming the fields that
+ * actually landed, which Activity renders as "Enriched …".
  */
 export async function enrichCards(
   ctx: ServiceContext,
   cardIds: readonly string[],
   provider: TextProvider,
+  trigger?: EnrichRunParams["trigger"],
 ): Promise<{ enriched: number }> {
   const { db, userId } = ctx;
   const before = await workingCards(db, userId, cardIds);
   if (before.length === 0) return { enriched: 0 };
-  const { meaningLanguage } = await getSettings(ctx);
-  const filled = new Map(
-    (await askProvider(provider, meaningLanguage, before)).map((card) => [card.id, card]),
+  const deckRows = await selectIn([...new Set(before.map((card) => card.deckId))], (ids) =>
+    db
+      .select({
+        id: schema.decks.id,
+        name: schema.decks.name,
+        description: schema.decks.description,
+        defaultLanguage: schema.decks.defaultLanguage,
+        enrichFields: schema.decks.enrichFields,
+        enrichInstructions: schema.decks.enrichInstructions,
+      })
+      .from(schema.decks)
+      .where(inArray(schema.decks.id, ids)),
   );
+  const decks = new Map(deckRows.map((deck) => [deck.id, deck]));
+  const asks = before.map((card) => ({ card, mayFill: mayFill(card, decks.get(card.deckId)) }));
+
+  let filled = new Map<string, Filled>();
+  const briefs: DeckBrief[] = [];
+  if (asks.some((ask) => ask.mayFill.length > 0)) {
+    for (const deck of deckRows) {
+      briefs.push(
+        deckBrief({
+          id: deck.id,
+          name: deck.name,
+          description: deck.description,
+          language: deck.defaultLanguage,
+          instructions: deck.enrichInstructions,
+          samples: await samplesFor(db, deck, cardIds),
+        }),
+      );
+    }
+    const { meaningLanguage } = await getSettings(ctx);
+    const input = enrichmentInput(
+      meaningLanguage,
+      briefs,
+      asks.flatMap((ask) => (ask.mayFill.length > 0 ? [cardBrief(ask.card, ask.mayFill)] : [])),
+    );
+    filled = new Map((await askProvider(provider, input)).map((card) => [card.id, card]));
+  }
 
   const now = new Date();
   const writes = [];
   const attempted = new Map<string, EnrichmentWrite>();
-  for (const card of before) {
+  let skipped = 0;
+  for (const { card, mayFill: allowed } of asks) {
     const reply = filled.get(card.id);
-    const write = reply ? enrichmentWrite(card, reply) : {};
+    const write = reply ? enrichmentWrite(card, reply, allowed) : {};
+    if (reply) {
+      skipped += allowed.filter((field) => field !== "language" && !write[field]).length;
+    }
     attempted.set(card.id, write);
     for (const field of ENRICHED_FIELDS) {
       const value = write[field];
@@ -236,7 +273,10 @@ export async function enrichCards(
     }
     // After that card's fields, so each write still sees `working`.
     writes.push(
-      db.update(schema.cards).set({ enrichmentStatus: null }).where(stillWorking(userId, card.id)),
+      db
+        .update(schema.cards)
+        .set({ enrichmentStatus: null, enrichmentFields: null })
+        .where(stillWorking(userId, card.id)),
     );
   }
   const [firstWrite, ...restWrites] = writes;
@@ -276,6 +316,11 @@ export async function enrichCards(
     name: "enrichment_finished",
     outcome: rows.length ? "enriched" : "empty",
     count: rows.length,
+    ...(trigger ? { trigger } : {}),
+    has_instructions: briefs.some((deck) => deck.instructions),
+    samples: briefs.reduce((sum, deck) => sum + deck.samples.length, 0),
+    skipped,
+    prompt_version: ENRICHMENT_PROMPT_VERSION,
   });
   return { enriched: rows.length };
 }
@@ -295,7 +340,7 @@ async function settle(db: Db, userId: string, cardIds: readonly string[], status
   for (const slice of chunked(cardIds, 90)) {
     await db
       .update(schema.cards)
-      .set({ enrichmentStatus: status })
+      .set({ enrichmentStatus: status, enrichmentFields: null })
       .where(
         and(
           eq(schema.cards.userId, userId),
@@ -337,9 +382,10 @@ export async function queueEnrichment(
   userId: string,
   cardIds: string[],
   queue: EnrichmentQueue,
+  trigger: NonNullable<EnrichRunParams["trigger"]> = "add",
 ): Promise<boolean> {
   try {
-    await queue.create({ id: `enrich-${newId()}`, params: { userId, cardIds } });
+    await queue.create({ id: `enrich-${newId()}`, params: { userId, cardIds, trigger } });
     return true;
   } catch {
     await failEnrichment(db, userId, cardIds);

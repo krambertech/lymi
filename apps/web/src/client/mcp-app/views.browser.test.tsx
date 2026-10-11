@@ -29,6 +29,7 @@ const card = (over: Partial<ViewCard> = {}): ViewCard => ({
   meaningSource: "lesson",
   exampleSource: null,
   pronunciationSource: null,
+  notesSource: null,
   hookSource: null,
   enrichmentStatus: null,
   archivedAt: null,

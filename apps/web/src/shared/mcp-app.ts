@@ -25,6 +25,7 @@ export interface ViewCard {
   meaningSource: ViewFieldSource | null;
   exampleSource: ViewFieldSource | null;
   pronunciationSource: ViewFieldSource | null;
+  notesSource: ViewFieldSource | null;
   hookSource: ViewFieldSource | null;
   enrichmentStatus: "working" | "failed" | null;
   archivedAt: string | null;

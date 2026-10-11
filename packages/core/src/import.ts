@@ -90,6 +90,7 @@ export type ImportedCard = {
         meaning: FieldSource | null;
         example: FieldSource | null;
         pronunciation?: FieldSource | null | undefined;
+        notes?: FieldSource | null | undefined;
       }
     | undefined;
   /** Where the learner found the word, such as "Lesson 14". */

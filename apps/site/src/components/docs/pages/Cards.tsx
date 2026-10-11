@@ -122,12 +122,12 @@ export function Cards() {
 
       <H2>Lymi fills what you leave empty, when asked</H2>
       <p>
-        A card sent with <code>enrich: true</code> is enriched in the background: meaning, example,
-        pronunciation and language, written in the learner's meaning language. Without it, a card
-        from an API key or an assistant stays exactly as sent. It fills only fields never set, so
-        any text you send is kept exactly as you sent it, whatever its source, and a field sent or
-        saved as <code>""</code> stays empty. Each filled field is recorded as <code>"ai"</code> and
-        carries the badge.
+        A card sent with <code>enrich: true</code> is enriched in the background: the language, and
+        the fields its deck's <code>enrichFields</code> allow that suit the card, written in the
+        learner's meaning language. Without it, a card from an API key or an assistant stays exactly
+        as sent. It fills only fields never set, so any text you send is kept exactly as you sent
+        it, whatever its source, and a field sent or saved as <code>""</code> stays empty. Each
+        filled field is recorded as <code>"ai"</code> and carries the badge.
       </p>
       <p>
         While a job is outstanding the card reads <code>enrichmentStatus: "working"</code>, and{" "}
@@ -136,8 +136,8 @@ export function Cards() {
       </p>
       <p>
         Ask again for one card, whether its job failed or it was added before enrichment existed.
-        The rules are the add path's: only empty fields, only the card's owner, and a card with
-        nothing left to fill is refused with <code>400</code>.
+        The rules are the add path's: only empty fields the deck allows, only the card's owner, and
+        a card with nothing left to fill is refused with <code>400</code>.
       </p>
       <Code
         lang="bash"

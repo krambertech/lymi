@@ -525,6 +525,7 @@ export async function writeChunk<Note>(
       pronunciationSource: fields.pronunciation
         ? (item.card.fieldSources?.pronunciation ?? "manual")
         : null,
+      notesSource: fields.notes ? (item.card.fieldSources?.notes ?? "manual") : null,
       source: item.card.origin ?? null,
       archivedAt: item.card.archived ? now.getTime() : null,
       externalId: item.card.externalId,
@@ -609,11 +610,11 @@ export async function writeChunk<Note>(
     statements.push(
       sql`insert into cards (id, user_id, deck_id, term, normalized_term, meaning, pronunciation, example, notes,
           hook, hook_source, language, tags, directions, review_modes, meaning_source, example_source,
-          pronunciation_source, source, created_by, archived_at, import_id, external_id, created_at, updated_at)
+          pronunciation_source, notes_source, source, created_by, archived_at, import_id, external_id, created_at, updated_at)
         select ${j("id")}, ${userId}, ${j("deckId")}, ${j("term")}, ${j("normalizedTerm")}, ${j("meaning")},
           ${j("pronunciation")}, ${j("example")}, ${j("notes")}, ${j("hook")}, ${j("hookSource")}, ${j("language")},
           ${j("tags")}, ${j("directions")}, ${j("reviewModes")}, ${j("meaningSource")}, ${j("exampleSource")},
-          ${j("pronunciationSource")}, ${j("source")}, ${actor}, ${j("archivedAt")},
+          ${j("pronunciationSource")}, ${j("notesSource")}, ${j("source")}, ${actor}, ${j("archivedAt")},
           ${row.id}, ${j("externalId")}, ${now.getTime()}, ${now.getTime()}
         from json_each(${part}) where ${guard}`,
     );

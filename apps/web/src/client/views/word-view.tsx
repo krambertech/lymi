@@ -3,7 +3,9 @@ import { msg, plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import {
   canSpeakTerm,
+  type DeckEnrichField,
   deserializeState,
+  type EnrichedField,
   type FsrsCard,
   needsEnrichment,
   type ReviewMode,
@@ -206,6 +208,8 @@ export interface WordOwnerActions {
   onMoveToSection?: (() => void) | undefined;
   /** Asks the AI to fill what is still empty. */
   onEnrich: () => void;
+  /** The fields the card's deck lets the AI fill, so Enrich shows only while one is empty. */
+  enrichFields: readonly DeckEnrichField[];
 }
 
 export interface WordProps {
@@ -473,8 +477,8 @@ export function WordView({
 
   // The AI is filling this card, so each field it will write holds its space until the text lands.
   const filling = card.enrichmentStatus === "working";
-  const waiting = (field: "meaning" | "example" | "pronunciation" | "language") =>
-    filling && !card[field];
+  const waiting = (field: EnrichedField) =>
+    filling && !card[field] && (card.enrichmentFields?.includes(field) ?? true);
 
   // A shimmer says nothing out loud, so the card says it: once when the AI starts on it, once
   // when the text lands. Held per card, so moving to another word does not announce its neighbour.
@@ -534,7 +538,7 @@ export function WordView({
                 {card.important ? t`Unmark important` : t`Mark important`}
               </DropdownMenuItem>
             )}
-            {owner && needsEnrichment(card) && (
+            {owner && needsEnrichment(card, owner.enrichFields) && (
               <DropdownMenuItem onClick={owner.onEnrich} disabled={filling}>
                 <Sparkle />
                 <Trans>Enrich</Trans>
@@ -684,10 +688,15 @@ export function WordView({
             working={waiting("example")}
           />
         )}
-        {card.notes && (
-          <ReadField label={t`Notes`}>
+        {card.notes ? (
+          <ReadField
+            label={t`Notes`}
+            aside={card.notesSource === "ai" && <SourceChip source="ai" field="notes" size="xs" />}
+          >
             <CardNotes source={card.notes} className="text-md leading-relaxed text-text" />
           </ReadField>
+        ) : (
+          waiting("notes") && <ReadField label={t`Notes`} value="" working />
         )}
         {card.hook && (
           <ReadField

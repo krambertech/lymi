@@ -1,5 +1,6 @@
 import { Rating as FsrsRating } from "ts-fsrs";
 import { z } from "zod";
+import { DECK_ENRICH_FIELDS, ENRICH_INSTRUCTIONS_MAX, ENRICHED_FIELDS } from "./enrichment";
 
 /** Which way the card is asked. Recognition: see the term, recall the meaning. Production: the reverse. */
 export const Direction = z.enum(["recognition", "production"]);
@@ -27,6 +28,35 @@ export type StatedFieldSource = z.infer<typeof StatedFieldSource>;
 /** Where a card's enrichment stands. Null once nothing is outstanding. */
 export const EnrichmentStatus = z.enum(["working", "failed"]);
 export type EnrichmentStatus = z.infer<typeof EnrichmentStatus>;
+
+/** A field enrichment fills. */
+export const EnrichedFieldName = z.enum(ENRICHED_FIELDS);
+
+/** What AI may fill on a deck's cards. The language is filled whatever the deck chooses. */
+export const DeckEnrichFields = z
+  .array(z.enum(DECK_ENRICH_FIELDS))
+  .max(DECK_ENRICH_FIELDS.length)
+  .refine((fields) => new Set(fields).size === fields.length, "List each field once.")
+  .meta({
+    id: "DeckEnrichFields",
+    description:
+      "The empty fields AI may fill on the deck's cards, on an add in the app, an add sent with enrich true, or Enrich on one card. It fills those that suit each card, following the deck's own cards. The language is always filled. Until the owner chooses, the deck follows its language's default: meaning alone without a language, meaning and example for most languages, plus notes or pronunciation for some (ADR 0033).",
+  });
+export type DeckEnrichFields = z.infer<typeof DeckEnrichFields>;
+
+/** The deck owner's own words to the AI about the deck. Null clears them. */
+export const DeckEnrichInstructions = z
+  .string()
+  .trim()
+  .max(
+    ENRICH_INSTRUCTIONS_MAX,
+    `Keep the instructions under ${ENRICH_INSTRUCTIONS_MAX} characters.`,
+  )
+  .nullable()
+  .meta({
+    description:
+      "What the deck is about and how the AI should write its cards, such as the register, the senses to prefer or how short a meaning is. Only the owner sees them. They shape the text but never which fields are filled.",
+  });
 
 /** Who performed an action. Written to the audit log. */
 export const Actor = z.enum(["user", "api", "mcp", "ai", "system"]);
@@ -148,6 +178,8 @@ export const DeckInput = z.object({
       "One of the owner's active series; the deck goes last in it. Null takes the deck out of its series.",
   }),
   sectionProgression: SectionProgression.optional(),
+  enrichFields: DeckEnrichFields.optional(),
+  enrichInstructions: DeckEnrichInstructions.optional(),
 });
 export type DeckInput = z.infer<typeof DeckInput>;
 
@@ -155,6 +187,7 @@ export type DeckInput = z.infer<typeof DeckInput>;
 export const deckLimits = {
   name: DeckInput.shape.name.maxLength,
   description: DeckInput.shape.description.unwrap().unwrap().maxLength,
+  enrichInstructions: ENRICH_INSTRUCTIONS_MAX,
 } satisfies Record<string, number | null>;
 
 export const NewDeckInput = DeckInput.extend({ id: ClientId.optional() });
@@ -550,6 +583,7 @@ export const CardInput = z.object({
   meaningSource: StatedFieldSource.optional(),
   exampleSource: StatedFieldSource.optional(),
   pronunciationSource: StatedFieldSource.optional(),
+  notesSource: StatedFieldSource.optional(),
   hookSource: StatedFieldSource.optional(),
   sectionId: z.string().min(1).nullable().optional().meta({
     description:
@@ -557,7 +591,7 @@ export const CardInput = z.object({
   }),
   enrich: z.boolean().optional().meta({
     description:
-      "Fill the empty meaning, example, pronunciation and language with AI after the add. Off by default for API keys and MCP clients; on for the learner in the app.",
+      "Let AI fill the empty fields the deck's enrichFields allow, and the language, after the add. It fills those that suit the card and the deck's own cards. Off by default for API keys and MCP clients; on for the learner in the app.",
   }),
 });
 export type CardInput = z.infer<typeof CardInput>;

@@ -55,7 +55,7 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
       for (const [index, ids] of chunked(params.cardIds, CARDS_PER_CALL).entries()) {
         try {
           await step.do(`cards ${index}`, STEP, () =>
-            analytics.run(() => enrichCards(ctx, ids, provider)),
+            analytics.run(() => enrichCards(ctx, ids, provider, params.trigger)),
           );
         } catch (err) {
           // Inside the step, because code outside one runs again when the engine replays.

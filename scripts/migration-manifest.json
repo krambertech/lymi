@@ -187,6 +187,10 @@
     {
       "name": "0046_clumsy_hardball.sql",
       "sha256": "d30adde53fba6badd37ef2e33319756d0ab6ff78d79831c2d9bb8cd89b6ad964"
+    },
+    {
+      "name": "0047_curious_paibok.sql",
+      "sha256": "8342bc0adcb9b8e1bf85f952b5a551041d3d009ba821098e80d6f5b7f928cc51"
     }
   ]
 }

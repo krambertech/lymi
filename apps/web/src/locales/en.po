@@ -805,11 +805,17 @@ msgstr "AI draft · Tab keeps it"
 msgid "AI example"
 msgstr "AI example"
 
+msgid "AI fills them only when they help. It never changes your text."
+msgstr "AI fills them only when they help. It never changes your text."
+
 msgid "AI hook"
 msgstr "AI hook"
 
 msgid "AI meaning"
 msgstr "AI meaning"
+
+msgid "AI notes"
+msgstr "AI notes"
 
 msgid "AI pronunciation"
 msgstr "AI pronunciation"
@@ -1877,6 +1883,9 @@ msgstr "Feedback sent"
 msgid "Fewer fields"
 msgstr "Fewer fields"
 
+msgid "Fields AI can fill"
+msgstr "Fields AI can fill"
+
 #. placeholder {0}: noteTypeName(type, i18n)
 msgid "Fields of {0}"
 msgstr "Fields of {0}"
@@ -2151,6 +2160,9 @@ msgstr "Insights start after your first review"
 
 msgid "Install Lymi"
 msgstr "Install Lymi"
+
+msgid "Instructions"
+msgstr "Instructions"
 
 msgctxt "daily goal"
 msgid "Intense"
@@ -2481,6 +2493,9 @@ msgstr "Meaning changed to “{value}”"
 msgid "Meaning from lesson"
 msgstr "Meaning from lesson"
 
+msgid "Medical French for nurses. Use the clinical meaning."
+msgstr "Medical French for nurses. Use the clinical meaning."
+
 msgid "Memory hook"
 msgstr "Memory hook"
 
@@ -2770,8 +2785,14 @@ msgstr "Not started"
 msgid "Notes"
 msgstr "Notes"
 
+msgid "Notes by you"
+msgstr "Notes by you"
+
 msgid "Notes changed to “{value}”"
 msgstr "Notes changed to “{value}”"
+
+msgid "Notes from lesson"
+msgstr "Notes from lesson"
 
 msgid "Nothing archived"
 msgstr "Nothing archived"
@@ -2850,6 +2871,9 @@ msgstr "Only people you invite can join. Current members stay."
 
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."
+
+msgid "Only you see these."
+msgstr "Only you see these."
 
 msgid "Only your name is shared, never your progress."
 msgstr "Only your name is shared, never your progress."

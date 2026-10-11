@@ -7,12 +7,13 @@ import type {
   TerseCardOutcomeOut,
 } from "@lymi/core";
 import {
-  ENRICHED_FIELDS,
+  deckEnrichFields,
+  emptyFields,
+  fieldsToFill,
   needsEnrichment,
   newId,
   normaliseTerm,
   TEXT_MODES,
-  unsetFields,
 } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNull } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
@@ -45,6 +46,7 @@ type Sources = {
   meaningSource?: FieldSource | null | undefined;
   exampleSource?: FieldSource | null | undefined;
   pronunciationSource?: FieldSource | null | undefined;
+  notesSource?: FieldSource | null | undefined;
   hookSource?: FieldSource | null | undefined;
 };
 /**
@@ -130,6 +132,7 @@ export async function addCards(
         name: schema.decks.name,
         defaultLanguage: schema.decks.defaultLanguage,
         directions: schema.decks.directions,
+        enrichFields: schema.decks.enrichFields,
       })
       .from(schema.decks)
       .where(and(inArray(schema.decks.id, ids), memberOf(userId), isNull(schema.decks.archivedAt))),
@@ -230,9 +233,11 @@ export async function addCards(
       meaningSource: input.meaningSource ?? (input.meaning ? "manual" : null),
       exampleSource: input.exampleSource ?? (input.example ? "manual" : null),
       pronunciationSource: input.pronunciationSource ?? (input.pronunciation ? "manual" : null),
+      notesSource: input.notesSource ?? (input.notes ? "manual" : null),
       hookSource: input.hook ? (input.hookSource ?? "manual") : null,
       hookDraft: null,
       enrichmentStatus: null,
+      enrichmentFields: null,
       audioKey: null,
       createdBy: actor,
       archivedAt: null,
@@ -240,8 +245,10 @@ export async function addCards(
       updatedAt: now,
       revision: 1,
     };
-    if (enrichment && wantsEnrichment(input, actor) && unsetFields(card).length > 0) {
+    const filling = fieldsToFill(card, deckEnrichFields(deck.enrichFields, deck.defaultLanguage));
+    if (enrichment && wantsEnrichment(input, actor) && filling.length > 0) {
       card.enrichmentStatus = "working";
+      card.enrichmentFields = filling;
       enriching.push(id);
     }
     groups.push([
@@ -435,9 +442,13 @@ function originOf(card: Card): CardOrigin {
 }
 
 const aiWrote = (card: Card) =>
-  [card.meaningSource, card.exampleSource, card.pronunciationSource, card.hookSource].includes(
-    "ai",
-  );
+  [
+    card.meaningSource,
+    card.exampleSource,
+    card.notesSource,
+    card.pronunciationSource,
+    card.hookSource,
+  ].includes("ai");
 
 /**
  * Cards per D1 batch. Each costs two statements, and the batch adds one set of state statements
@@ -497,7 +508,12 @@ export async function requestEnrichment(
   const { db, userId } = ctx;
   const card = await ownedCard(ctx, id);
   if (card.archivedAt) throw new ServiceError("invalid", "An archived card cannot be enriched");
-  if (!needsEnrichment(card)) {
+  const [deck] = await db
+    .select({ enrichFields: schema.decks.enrichFields, language: schema.decks.defaultLanguage })
+    .from(schema.decks)
+    .where(eq(schema.decks.id, card.deckId));
+  const fields = deckEnrichFields(deck?.enrichFields, deck?.language);
+  if (!needsEnrichment(card, fields)) {
     throw new ServiceError("invalid", "This card has nothing left for the AI to fill in");
   }
   if (!enrichment) {
@@ -507,19 +523,23 @@ export async function requestEnrichment(
   if (card.enrichmentStatus === "working") return presentCard(db, card, userId);
   // `updatedAt` moves because the card did, and because the screen stops waiting on a card
   // that has said `working` for too long: a card added months ago must not read as stale.
-  const working = { enrichmentStatus: "working" as const, updatedAt: new Date() };
   // Asking is the learner changing their mind about a field they cleared, so blank becomes unset.
+  const allowed = new Set<string>([...fields, "language"]);
   const reopened = Object.fromEntries(
-    ENRICHED_FIELDS.filter((field) => card[field] !== null && !card[field]?.trim()).map((field) => [
-      field,
-      null,
-    ]),
+    emptyFields(card)
+      .filter((field) => card[field] !== null && allowed.has(field))
+      .map((field) => [field, null]),
   );
+  const working = {
+    enrichmentStatus: "working" as const,
+    enrichmentFields: fieldsToFill({ ...card, ...reopened }, fields),
+    updatedAt: new Date(),
+  };
   await db
     .update(schema.cards)
     .set({ ...working, ...reopened })
     .where(and(eq(schema.cards.id, id), eq(schema.cards.userId, userId)));
-  const queued = await queueEnrichment(db, userId, [id], enrichment);
+  const queued = await queueEnrichment(db, userId, [id], enrichment, "card");
   return presentCard(
     db,
     {
@@ -703,6 +723,7 @@ function editWrite(
     meaningSource: sourceAfter(patch.meaning, patch.meaningSource),
     exampleSource: sourceAfter(patch.example, patch.exampleSource),
     pronunciationSource: sourceAfter(patch.pronunciation, patch.pronunciationSource),
+    notesSource: sourceAfter(patch.notes, patch.notesSource),
     // Only a hook has a source, whatever the caller said about one that is not there. A hook saved
     // exactly as the AI drafted it is the AI's, whoever pressed Save.
     hookSource: !hook

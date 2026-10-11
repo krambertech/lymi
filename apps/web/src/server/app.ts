@@ -1,7 +1,7 @@
 import type { Actor, Scope } from "@lymi/core";
 import { MeOut } from "@lymi/core";
+import { POSTHOG_PROXY_PATH, proxyPostHog } from "@lymi/core/posthog-proxy";
 import { Hono } from "hono";
-import { cors } from "hono/cors";
 import { routePath } from "hono/route";
 import { type Auth, createAuth, type SessionUser } from "./auth";
 import { limitCredentialRequests } from "./auth-rate-limit";
@@ -89,6 +89,14 @@ app.get("/.well-known/openai-apps-challenge", describe({ hide: true }), (c) => {
   if (!token) return c.text("Not found", 404);
   return c.text(token, 200, { "cache-control": "no-store" });
 });
+
+// Analytics from this origin reach PostHog through here, carrying Cloudflare's country.
+app.post(`${POSTHOG_PROXY_PATH}/*`, describe({ hide: true, open: true }), (c) =>
+  proxyPostHog(c.req.raw, {
+    country: c.req.raw.cf?.country,
+    ip: c.req.header("cf-connecting-ip"),
+  }),
+);
 
 // Per-request services. Bindings are only available inside the request on Workers.
 app.use("*", async (c, next) => {
@@ -217,24 +225,9 @@ if (import.meta.env.DEV || import.meta.env.LYMI_APP_PREVIEW) {
 // do is declared on each route with describe(): writes need the write scope, learner-only
 // routes need the learner. A route without describe() has no such check, so every route
 // under /api gets one.
-app.use("/api/settings/analytics-consent", (c, next) =>
-  cors({
-    origin: (origin) =>
-      origin === canonicalOrigins(c.env).publicSite || origin === canonicalOrigins(c.env).product
-        ? origin
-        : "",
-    allowMethods: ["GET", "PUT"],
-    allowHeaders: ["Content-Type"],
-    credentials: true,
-  })(c, next),
-);
 app.use("/api/settings/analytics-consent", async (c, next) => {
   const origin = c.req.header("origin");
-  if (
-    origin &&
-    origin !== canonicalOrigins(c.env).publicSite &&
-    origin !== canonicalOrigins(c.env).product
-  )
+  if (origin && origin !== canonicalOrigins(c.env).product)
     return c.json({ error: "This origin cannot change privacy preferences" }, 403);
   return next();
 });

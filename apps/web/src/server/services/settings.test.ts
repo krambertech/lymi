@@ -160,6 +160,15 @@ describe("awaiting Welcome", () => {
 });
 
 describe("analytics consent", () => {
+  it("measures an account by default, stops on opt-out and never lets the opt-out lapse", async () => {
+    const ctx = await learner(db, "analytics-default", "Learner");
+    expect((await getSettings(ctx)).analyticsConsent).toBeNull();
+    expect((await analyticsContext(db, ctx.userId)).allowed).toBe(true);
+    const longAgo = Date.now() - 400 * 24 * 60 * 60 * 1000;
+    await updateAnalyticsConsent(ctx, { allowed: false, version: 1, updated_at: longAgo });
+    expect((await analyticsContext(db, ctx.userId)).allowed).toBe(false);
+  });
+
   it("requires the learner and preserves the newest choice under concurrent requests", async () => {
     const ctx = await learner(db, "consent-owner", "Learner");
     const now = Date.now();
@@ -181,22 +190,18 @@ describe("analytics consent", () => {
     expect((await analyticsContext(db, ctx.userId)).allowed).toBe(false);
     await updateAnalyticsConsent(ctx, { allowed: true, version: 1, updated_at: now + 1 });
     expect((await analyticsContext(db, ctx.userId)).allowed).toBe(true);
-    expect((await analyticsContext(db, ctx.userId, null)).allowed).toBe(false);
-    expect(
-      (await analyticsContext(db, ctx.userId, { allowed: false, version: 1, updated_at: now + 2 }))
-        .allowed,
-    ).toBe(false);
   });
 
-  it("holds browsers to their consent cookie and native apps to the account choice", async () => {
+  it("treats browser and phone requests alike: only the account's choice counts", async () => {
     const ctx = await learner(db, "consent-phone", "Learner");
-    await updateAnalyticsConsent(ctx, { allowed: true, version: 1, updated_at: Date.now() });
     const session = { cookie: "lymi-session=opaque" };
     const phone = new Headers(session);
     const browser = new Headers({ ...session, "sec-fetch-site": "same-origin" });
     const posted = new Headers({ ...session, origin: "https://my.lymi.app" });
-    expect((await analyticsContextFor(db, ctx.userId, phone)()).allowed).toBe(true);
-    expect((await analyticsContextFor(db, ctx.userId, browser)()).allowed).toBe(false);
-    expect((await analyticsContextFor(db, ctx.userId, posted)()).allowed).toBe(false);
+    for (const headers of [phone, browser, posted])
+      expect((await analyticsContextFor(db, ctx.userId, headers)()).allowed).toBe(true);
+    await updateAnalyticsConsent(ctx, { allowed: false, version: 1, updated_at: Date.now() });
+    for (const headers of [phone, browser, posted])
+      expect((await analyticsContextFor(db, ctx.userId, headers)()).allowed).toBe(false);
   });
 });

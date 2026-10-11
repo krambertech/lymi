@@ -122,6 +122,7 @@ export function decideOriginRoute(
     // A published deck's approved media and publisher photo, embedded from lymi.app.
     atOrBelow(url.pathname, "/public/media") ||
     atOrBelow(url.pathname, "/mcp") ||
+    atOrBelow(url.pathname, "/ingest") ||
     atOrBelow(url.pathname, "/.well-known") ||
     url.pathname === "/robots.txt" ||
     isProductAsset(url.pathname)

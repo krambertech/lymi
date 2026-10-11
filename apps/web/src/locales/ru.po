@@ -1281,9 +1281,6 @@ msgstr "Выбери, чем станет каждое поле новой ка�
 msgid "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 msgstr "Выбери, чем каждое поле Mochi станет в карточке Lymi. Одно поле — это термин."
 
-msgid "Choose whether Lymi uses optional analytics cookies."
-msgstr "Выбери, использует ли Lymi необязательные файлы cookie для аналитики."
-
 msgid "Choose your {app} file"
 msgstr "Выбор файла {app}"
 
@@ -1501,6 +1498,9 @@ msgstr "Не удалось сохранить фото. Попробуй ещё
 
 msgid "Couldn’t save the reminder. Check your connection and try again."
 msgstr "Не удалось сохранить напоминание. Проверь соединение и попробуй снова."
+
+msgid "Couldn’t save your analytics choice. Try again."
+msgstr "Не удалось сохранить выбор насчёт аналитики. Попробуй ещё раз."
 
 msgid "Couldn’t save your answers. Check your connection and try again."
 msgstr "Не удалось сохранить ответы. Проверь соединение и попробуй ещё раз."
@@ -2403,6 +2403,9 @@ msgstr "Разрешить этому приложению пользовать�
 msgid "Lets a script read or add to your decks."
 msgstr "Ключ позволяет скрипту читать колоды или добавлять в них."
 
+msgid "Lets us see which parts of Lymi you use, such as reviews and cards added. Never what your cards say."
+msgstr "Показывает нам, какими частями Lymi ты пользуешься, например повторения и добавленные карточки. Но никогда не то, что написано в карточках."
+
 msgid "Library"
 msgstr "Библиотека"
 
@@ -2930,9 +2933,6 @@ msgstr "Открой Lymi с новой иконки."
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Открой Lymi в Safari и коснись «Поделиться»."
 
-msgid "Open on lymi.app"
-msgstr "Открыть на lymi.app"
-
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Открой меню браузера и выбери «Установить Lymi». Не каждый браузер это предлагает."
 
@@ -3077,11 +3077,11 @@ msgstr "Предыдущий месяц"
 msgid "Privacy"
 msgstr "Конфиденциальность"
 
-msgid "Privacy preferences"
-msgstr "Настройки приватности"
-
 msgid "Private"
 msgstr "Приватная"
+
+msgid "Product analytics"
+msgstr "Аналитика продукта"
 
 msgid "Production"
 msgstr "Воспроизведение"
@@ -3128,6 +3128,9 @@ msgstr "«Чтение» просматривает колоды и карточ
 
 msgid "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 msgstr "Прочитай <0>политику конфиденциальности</0> Lymi или обратись в <1>службу поддержки</1>."
+
+msgid "Read privacy policy"
+msgstr "Политика конфиденциальности"
 
 msgid "Read the guide"
 msgstr "Прочитать руководство"

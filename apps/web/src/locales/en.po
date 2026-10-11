@@ -1281,9 +1281,6 @@ msgstr "Choose what each field becomes on the new card. One field is the term."
 msgid "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 msgstr "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 
-msgid "Choose whether Lymi uses optional analytics cookies."
-msgstr "Choose whether Lymi uses optional analytics cookies."
-
 msgid "Choose your {app} file"
 msgstr "Choose your {app} file"
 
@@ -1501,6 +1498,9 @@ msgstr "Couldn’t save the photo. Try again."
 
 msgid "Couldn’t save the reminder. Check your connection and try again."
 msgstr "Couldn’t save the reminder. Check your connection and try again."
+
+msgid "Couldn’t save your analytics choice. Try again."
+msgstr "Couldn’t save your analytics choice. Try again."
 
 msgid "Couldn’t save your answers. Check your connection and try again."
 msgstr "Couldn’t save your answers. Check your connection and try again."
@@ -2403,6 +2403,9 @@ msgstr "Let this app use your Lymi?"
 msgid "Lets a script read or add to your decks."
 msgstr "Lets a script read or add to your decks."
 
+msgid "Lets us see which parts of Lymi you use, such as reviews and cards added. Never what your cards say."
+msgstr "Lets us see which parts of Lymi you use, such as reviews and cards added. Never what your cards say."
+
 msgid "Library"
 msgstr "Library"
 
@@ -2930,9 +2933,6 @@ msgstr "Open Lymi from the new icon."
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Open Lymi in Safari and tap Share."
 
-msgid "Open on lymi.app"
-msgstr "Open on lymi.app"
-
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Open your browser menu and choose Install Lymi. Not every browser offers it."
 
@@ -3077,11 +3077,11 @@ msgstr "Previous month"
 msgid "Privacy"
 msgstr "Privacy"
 
-msgid "Privacy preferences"
-msgstr "Privacy preferences"
-
 msgid "Private"
 msgstr "Private"
+
+msgid "Product analytics"
+msgstr "Product analytics"
 
 msgid "Production"
 msgstr "Production"
@@ -3128,6 +3128,9 @@ msgstr "Read lists decks and cards. Read and write also adds, edits and archives
 
 msgid "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 msgstr "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
+
+msgid "Read privacy policy"
+msgstr "Read privacy policy"
 
 msgid "Read the guide"
 msgstr "Read the guide"

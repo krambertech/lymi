@@ -136,14 +136,22 @@ function PrivacyPolicyContent() {
       </p>
       <p>
         <Trans>
-          With your permission, we use PostHog’s EU service to understand product use. We send page
-          categories, published deck slugs, fixed action labels, counts, review grades, app language
-          and limited campaign details. An opaque visitor identifier connects visits across our site
-          and app, and links them to your opaque account identifier when you sign in. We also use
-          filtered error monitoring independently of analytics consent: error reports contain the
-          error type and technical stack frames, with messages and other context removed. We do not
-          send card content, email addresses, names, credentials or private requested URLs, and we
-          do not record sessions.
+          We use PostHog’s EU service to understand how Lymi is used. On the public site we count
+          visits without cookies or any identifier stored on your device: PostHog derives a visitor
+          code from the day, your IP address and browser, then discards the address, so a visit
+          cannot be linked to another day’s. In the app, we link product activity to your opaque
+          account identifier. We send page categories, published deck slugs, fixed action labels,
+          counts, review grades, app language, the referring website, limited campaign details and
+          the country of the visit, which our hosting provider determines. When you sign up, your
+          account records where your visit began. We do not send card content, email addresses,
+          names, credentials or private requested URLs, and we do not record sessions. You can turn
+          off product analytics in Settings.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          We also use filtered error monitoring: error reports contain the error type and technical
+          stack frames, with messages and other context removed.
         </Trans>
       </p>
 
@@ -174,9 +182,10 @@ function PrivacyPolicyContent() {
       <p>
         <Trans>
           Depending on the activity and applicable law, we process data to perform our agreement
-          with you, with your consent, for legitimate interests such as security and service
-          reliability, or to meet a legal obligation. You can withdraw optional consent, such as
-          reminders, at any time.
+          with you, with your consent, for legitimate interests such as security, service
+          reliability and understanding how Lymi is used, or to meet a legal obligation. You can
+          object to product analytics by turning them off in Settings, and withdraw optional
+          consent, such as reminders, at any time.
         </Trans>
       </p>
 
@@ -307,13 +316,10 @@ function PrivacyPolicyContent() {
       </p>
       <p>
         <Trans>
-          We remember your analytics choice in a first-party cookie shared between lymi.app and
-          my.lymi.app. If you allow analytics, first-party cookies also store your visitor
-          identifier and limited first-visit attribution for up to six months. No analytics
-          identifier is stored before you agree. Change or withdraw your choice through Privacy
-          preferences in the site footer or app Settings. Declining clears analytics identifiers on
-          that browser. Your account choice also governs product analytics from connected apps and
-          background work; changing the account choice requires a connection to Lymi.
+          Analytics use no cookies and store nothing on your device. To tell sign-up where a visit
+          began, links on lymi.app may add the referring website and campaign labels to the address
+          they open. Your choice in Settings also covers product analytics from connected apps and
+          background work.
         </Trans>
       </p>
 

@@ -263,9 +263,6 @@ msgstr "About these decks"
 msgid "Accents that land between the beats"
 msgstr "Accents that land between the beats"
 
-msgid "Accept cookies"
-msgstr "Accept cookies"
-
 msgid "Access requests from the private beta"
 msgstr "Access requests from the private beta"
 
@@ -378,8 +375,8 @@ msgstr "An idea that only sounds brilliant after a few drinks"
 msgid "An idea that only sounds good after a few drinks"
 msgstr "An idea that only sounds good after a few drinks"
 
-msgid "Analytics details"
-msgstr "Analytics details"
+msgid "Analytics use no cookies and store nothing on your device. To tell sign-up where a visit began, links on lymi.app may add the referring website and campaign labels to the address they open. Your choice in Settings also covers product analytics from connected apps and background work."
+msgstr "Analytics use no cookies and store nothing on your device. To tell sign-up where a visit began, links on lymi.app may add the referring website and campaign labels to the address they open. Your choice in Settings also covers product analytics from connected apps and background work."
 
 msgid "Anatomy"
 msgstr "Anatomy"
@@ -560,9 +557,6 @@ msgstr "CCSE Spanish nationality test"
 msgid "cents"
 msgstr "cents"
 
-msgid "Change your choice in Privacy preferences. Your account choice also applies to analytics from connected apps and background work."
-msgstr "Change your choice in Privacy preferences. Your account choice also applies to analytics from connected apps and background work."
-
 msgid "Changes and contact"
 msgstr "Changes and contact"
 
@@ -607,9 +601,6 @@ msgstr "Click to turn it over"
 
 msgid "Clocking off, and the free evening that follows"
 msgstr "Clocking off, and the free evening that follows"
-
-msgid "Close"
-msgstr "Close"
 
 msgid "Close menu"
 msgstr "Close menu"
@@ -676,9 +667,6 @@ msgstr "Cosy"
 msgid "Cosy and convivial; good company"
 msgstr "Cosy and convivial; good company"
 
-msgid "Couldn’t save your account’s choice. Check your connection and try again."
-msgstr "Couldn’t save your account’s choice. Check your connection and try again."
-
 msgctxt "deck tag"
 msgid "Czech citizenship test"
 msgstr "Czech citizenship test"
@@ -704,14 +692,11 @@ msgstr "Dear; expensive"
 msgid "Decks"
 msgstr "Decks"
 
-msgid "Decline"
-msgstr "Decline"
-
 msgid "Deep, lasting affection"
 msgstr "Deep, lasting affection"
 
-msgid "Depending on the activity and applicable law, we process data to perform our agreement with you, with your consent, for legitimate interests such as security and service reliability, or to meet a legal obligation. You can withdraw optional consent, such as reminders, at any time."
-msgstr "Depending on the activity and applicable law, we process data to perform our agreement with you, with your consent, for legitimate interests such as security and service reliability, or to meet a legal obligation. You can withdraw optional consent, such as reminders, at any time."
+msgid "Depending on the activity and applicable law, we process data to perform our agreement with you, with your consent, for legitimate interests such as security, service reliability and understanding how Lymi is used, or to meet a legal obligation. You can object to product analytics by turning them off in Settings, and withdraw optional consent, such as reminders, at any time."
+msgstr "Depending on the activity and applicable law, we process data to perform our agreement with you, with your consent, for legitimate interests such as security, service reliability and understanding how Lymi is used, or to meet a legal obligation. You can object to product analytics by turning them off in Settings, and withdraw optional consent, such as reminders, at any time."
 
 msgid "Design"
 msgstr "Design"
@@ -1720,9 +1705,6 @@ msgstr "Policies"
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 
-msgid "PostHog processes analytics in its EU cloud. With your permission, we link visits across lymi.app and my.lymi.app and to your account when you sign in."
-msgstr "PostHog processes analytics in its EU cloud. With your permission, we link visits across lymi.app and my.lymi.app and to your account when you sign in."
-
 msgid "Practise with your own words."
 msgstr "Practise with your own words."
 
@@ -1740,9 +1722,6 @@ msgstr "Privacy policy"
 
 msgid "Privacy policy · Lymi"
 msgstr "Privacy policy · Lymi"
-
-msgid "Privacy preferences"
-msgstr "Privacy preferences"
 
 msgid "Programming"
 msgstr "Programming"
@@ -1786,9 +1765,6 @@ msgstr "Raise a glass and it becomes terviseks: to your health."
 
 msgid "Read Japanese Kana covers hiragana and katakana, including voiced and combined sounds, the small tsu and the long-vowel mark."
 msgstr "Read Japanese Kana covers hiragana and katakana, including voiced and combined sounds, the small tsu and the long-vowel mark."
-
-msgid "Read privacy policy"
-msgstr "Read privacy policy"
 
 msgid "Read the docs"
 msgstr "Read the docs"
@@ -2451,8 +2427,8 @@ msgstr "verb"
 msgid "Waiting for your notes"
 msgstr "Waiting for your notes"
 
-msgid "We collect page categories, actions, counts, review grades, app language and campaign details. We don’t send your card content, name or email, and we don’t record sessions."
-msgstr "We collect page categories, actions, counts, review grades, app language and campaign details. We don’t send your card content, name or email, and we don’t record sessions."
+msgid "We also use filtered error monitoring: error reports contain the error type and technical stack frames, with messages and other context removed."
+msgstr "We also use filtered error monitoring: error reports contain the error type and technical stack frames, with messages and other context removed."
 
 msgid "We count requests and product actions by type and measure response times. These metrics contain no account identifiers, card content or exact requested URLs."
 msgstr "We count requests and product actions by type and measure response times. These metrics contain no account identifiers, card content or exact requested URLs."
@@ -2460,17 +2436,14 @@ msgstr "We count requests and product actions by type and measure response times
 msgid "We may update this policy when Lymi or the law changes. We will update the date above and give additional notice when a change materially affects your rights. Questions and privacy requests can be sent to <0>hello@lymi.app</0>."
 msgstr "We may update this policy when Lymi or the law changes. We will update the date above and give additional notice when a change materially affects your rights. Questions and privacy requests can be sent to <0>hello@lymi.app</0>."
 
-msgid "We remember your analytics choice in a first-party cookie shared between lymi.app and my.lymi.app. If you allow analytics, first-party cookies also store your visitor identifier and limited first-visit attribution for up to six months. No analytics identifier is stored before you agree. Change or withdraw your choice through Privacy preferences in the site footer or app Settings. Declining clears analytics identifiers on that browser. Your account choice also governs product analytics from connected apps and background work; changing the account choice requires a connection to Lymi."
-msgstr "We remember your analytics choice in a first-party cookie shared between lymi.app and my.lymi.app. If you allow analytics, first-party cookies also store your visitor identifier and limited first-visit attribution for up to six months. No analytics identifier is stored before you agree. Change or withdraw your choice through Privacy preferences in the site footer or app Settings. Declining clears analytics identifiers on that browser. Your account choice also governs product analytics from connected apps and background work; changing the account choice requires a connection to Lymi."
-
 msgid "We store the decks and cards you create or join. A card can include a term, meaning, pronunciation, example, notes, tags, language, source, learning direction and generated audio. We also store archive state, review history, scheduling state, goals, streaks, time zone, preferences and an activity record of changes."
 msgstr "We store the decks and cards you create or join. A card can include a term, meaning, pronunciation, example, notes, tags, language, source, learning direction and generated audio. We also store archive state, review history, scheduling state, goals, streaks, time zone, preferences and an activity record of changes."
 
 msgid "We use access controls, encrypted transport and provider security controls to protect data, but no online service can guarantee absolute security. Do not share API keys, connection tokens or other credentials. Lymi is not directed to children who cannot lawfully consent to this processing."
 msgstr "We use access controls, encrypted transport and provider security controls to protect data, but no online service can guarantee absolute security. Do not share API keys, connection tokens or other credentials. Lymi is not directed to children who cannot lawfully consent to this processing."
 
-msgid "We use optional analytics cookies to understand how you use Lymi and improve it. You can change your choice anytime."
-msgstr "We use optional analytics cookies to understand how you use Lymi and improve it. You can change your choice anytime."
+msgid "We use PostHog’s EU service to understand how Lymi is used. On the public site we count visits without cookies or any identifier stored on your device: PostHog derives a visitor code from the day, your IP address and browser, then discards the address, so a visit cannot be linked to another day’s. In the app, we link product activity to your opaque account identifier. We send page categories, published deck slugs, fixed action labels, counts, review grades, app language, the referring website, limited campaign details and the country of the visit, which our hosting provider determines. When you sign up, your account records where your visit began. We do not send card content, email addresses, names, credentials or private requested URLs, and we do not record sessions. You can turn off product analytics in Settings."
+msgstr "We use PostHog’s EU service to understand how Lymi is used. On the public site we count visits without cookies or any identifier stored on your device: PostHog derives a visitor code from the day, your IP address and browser, then discards the address, so a visit cannot be linked to another day’s. In the app, we link product activity to your opaque account identifier. We send page categories, published deck slugs, fixed action labels, counts, review grades, app language, the referring website, limited campaign details and the country of the visit, which our hosting provider determines. When you sign up, your account records where your visit began. We do not send card content, email addresses, names, credentials or private requested URLs, and we do not record sessions. You can turn off product analytics in Settings."
 
 msgid "Weather"
 msgstr "Weather"
@@ -2558,9 +2531,6 @@ msgstr "Widgets"
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
-
-msgid "With your permission, we use PostHog’s EU service to understand product use. We send page categories, published deck slugs, fixed action labels, counts, review grades, app language and limited campaign details. An opaque visitor identifier connects visits across our site and app, and links them to your opaque account identifier when you sign in. We also use filtered error monitoring independently of analytics consent: error reports contain the error type and technical stack frames, with messages and other context removed. We do not send card content, email addresses, names, credentials or private requested URLs, and we do not record sessions."
-msgstr "With your permission, we use PostHog’s EU service to understand product use. We send page categories, published deck slugs, fixed action labels, counts, review grades, app language and limited campaign details. An opaque visitor identifier connects visits across our site and app, and links them to your opaque account identifier when you sign in. We also use filtered error monitoring independently of analytics consent: error reports contain the error type and technical stack frames, with messages and other context removed. We do not send card content, email addresses, names, credentials or private requested URLs, and we do not record sessions."
 
 msgid "word"
 msgstr "word"
@@ -2651,9 +2621,6 @@ msgstr "You own this deck"
 
 msgid "You start with <0>{first}</0>, and the next section opens as you learn the one before it."
 msgstr "You start with <0>{first}</0>, and the next section opens as you learn the one before it."
-
-msgid "Your analytics choice and visitor identifier are stored for up to six months. Declining clears analytics identifiers on this browser. Necessary login cookies and filtered error monitoring work independently."
-msgstr "Your analytics choice and visitor identifier are stored for up to six months. Declining clears analytics identifiers on this browser. Necessary login cookies and filtered error monitoring work independently."
 
 msgid "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
 msgstr "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."

@@ -2,6 +2,7 @@ import { oauthProviderClient } from "@better-auth/oauth-provider/client";
 import { createAuthClient } from "better-auth/react";
 import { safeProductReturnPath } from "../../shared/origins";
 import { clearStoredLanguage } from "./i18n";
+import { firstTouchData } from "./telemetry";
 
 /**
  * The oauthProviderClient plugin does two things for the OAuth server: it adds the current
@@ -40,6 +41,7 @@ export function signInWithGoogle(returnTo?: string | null) {
     provider: "google",
     callbackURL: destination,
     errorCallbackURL,
+    additionalData: firstTouchData(),
   });
 }
 

@@ -1,8 +1,13 @@
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { View } from "react-native";
-import { sectionName } from "../../../data/demo-server";
-import { type Standing, standing, useDeckCards, useDecks } from "../../../data/queries";
+import {
+  type Standing,
+  standing,
+  useDeckCards,
+  useDecks,
+  useSections,
+} from "../../../data/queries";
 import { type Palette, usePalette } from "../../../theme/palette";
 import type { IconName } from "../../../ui/icons";
 import { Button, Icon, Plate, SectionTitle, Text } from "../../../ui/primitives";
@@ -18,10 +23,12 @@ export default function Deck() {
   const { deck: id } = useLocalSearchParams<{ deck: string }>();
   const deck = useDecks().data?.find((d) => d.id === id);
   const mine = useDeckCards(id).data ?? [];
+  const names = new Map(useSections(id).data?.sections.map((s) => [s.id, s.name]));
   const router = useRouter();
   const p = usePalette();
   const due = deck?.due ?? 0;
-  const section = (c: (typeof mine)[number]) => sectionName(c.card.sectionId) ?? "Unsorted";
+  const section = (c: (typeof mine)[number]) =>
+    (c.card.sectionId && names.get(c.card.sectionId)) || "Unsorted";
   const sections = [...new Set(mine.map(section))];
 
   return (

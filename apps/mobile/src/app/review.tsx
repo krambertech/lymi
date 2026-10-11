@@ -1,10 +1,23 @@
-import { type QueueItemOut, type Rating, RETURN_GAPS, ROUNDS, type Round } from "@lymi/core";
+import { apiUrl, type QueueItem } from "@lymi/client/api";
+import { gradeStore } from "@lymi/client/grades";
+import { drawableLeft } from "@lymi/client/review-day";
+import { reviewItem, stateBefore } from "@lymi/client/review-draw";
+import { drawKey, modeKey, type Rating, ROUNDS, type Round } from "@lymi/core";
 import { EASE_OUT, REVEAL_GLIDE } from "@lymi/design";
+import { useQueryClient } from "@tanstack/react-query";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { I18nManager, Pressable, useColorScheme, View, type ViewStyle } from "react-native";
+import {
+  Alert,
+  I18nManager,
+  Image,
+  Pressable,
+  useColorScheme,
+  View,
+  type ViewStyle,
+} from "react-native";
 import Animated, {
   FadeIn,
   FadeOut,
@@ -16,16 +29,19 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSessionHeaders } from "../auth/client";
 import { Lantern } from "../brand/lantern";
-import { sectionName } from "../data/demo-server";
 import {
   type Standing,
   standing,
   useDay,
   useDecks,
+  useDraw,
+  useDrawState,
   useGrade,
-  useReviewQueue,
+  useRoundQueue,
   useRounds,
+  useSections,
 } from "../data/queries";
 import { curve } from "../theme/motion";
 import { type Palette, usePalette } from "../theme/palette";
@@ -35,81 +51,252 @@ import { SevenLights } from "../ui/seven-lights";
 
 const EASE = curve(EASE_OUT);
 const GLIDE = REVEAL_GLIDE.duration * 1000;
+/** Cards drawn ahead of the one on screen; fewer left than this and the draw is fetched again. */
+const LOOKAHEAD = 3;
+/** Local grades a fetch can fall behind by before the draw data is refreshed. */
+const REFRESH_AFTER = 20;
+
+type Pinned = { cardId: string; mode: string };
+/** A stretch of review: the draw, which may stop at the goal, or a round's fixed list. ADR 0021. */
+type Leg =
+  | { kind: "draw"; date: string; from: number; until: number | null }
+  | { kind: "list"; date: string; size: number };
+/** A list's cards by key: graded, sent to the end by a refused grade, or out because the card is gone. */
+interface ListCards {
+  graded: ReadonlySet<string>;
+  returned: ReadonlySet<string>;
+  dropped: ReadonlySet<string>;
+}
+const NO_LIST_CARDS: ListCards = { graded: new Set(), returned: new Set(), dropped: new Set() };
+
+const keyOf = (item: Pick<QueueItem, "card" | "mode">) => drawKey(item.card.id, modeKey(item.mode));
+const withKey = (keys: ReadonlySet<string>, key: string) => new Set(keys).add(key);
+const withoutKey = (keys: ReadonlySet<string>, key: string) => {
+  const next = new Set(keys);
+  next.delete(key);
+  return next;
+};
+
+function leftInList(items: readonly QueueItem[], cards: ListCards): QueueItem[] {
+  const left = items.filter((i) => !cards.graded.has(keyOf(i)) && !cards.dropped.has(keyOf(i)));
+  return [
+    ...left.filter((i) => !cards.returned.has(keyOf(i))),
+    ...left.filter((i) => cards.returned.has(keyOf(i))),
+  ];
+}
 
 export default function Review() {
   const params = useLocalSearchParams<{ deck?: string; round?: string }>();
   const round = ROUNDS.find((r) => r === params.round);
-  const { data } = useReviewQueue({ deck: params.deck, round });
+  const deck = params.deck || undefined;
   const router = useRouter();
 
   // Opened from a widget, the review is the only screen, so leaving goes to Today.
   const leave = () => (router.canGoBack() ? router.back() : router.replace("/today"));
 
-  if (!data) return <View className="flex-1 bg-canvas" />;
-  return <Run items={data.items} round={round} onClose={leave} />;
+  // A review of another deck or round starts over, so nothing from this one carries into it.
+  return <Run key={`${deck ?? ""}:${round ?? ""}`} deck={deck} round={round} onClose={leave} />;
 }
 
-/** One review over the cards fetched as it opened, in their order. */
+/**
+ * One review. The draw picks each next card on the device from the fetched draw and this device's
+ * grades, as the web's does (ADR 0019); a round from Today walks the server's list in order.
+ */
 function Run({
-  items,
+  deck,
   round,
   onClose,
 }: {
-  items: QueueItemOut[];
+  deck: string | undefined;
   round: Round | undefined;
   onClose: () => void;
 }) {
+  const qc = useQueryClient();
+  const scope = useMemo(() => ({ deck }), [deck]);
+  const draw = useDraw(scope);
+  const list = useRoundQueue(round, deck);
   const { reviewsToday, goal } = useDay();
   const grade = useGrade();
   const decks = useDecks().data;
   const insets = useSafeAreaInsets();
-  const [queue, setQueue] = useState(items);
-  const [forgotten, setForgotten] = useState(
-    () => new Set(round === "forgotten" ? items.map((i) => i.card.id) : []),
-  );
+  // A cached draw can predate the last grade, so the first card waits for this mount's fetch.
+  const data = draw.isFetchedAfterMount || draw.fetchStatus !== "fetching" ? draw.data : undefined;
+  const listData =
+    list.isFetchedAfterMount || list.fetchStatus !== "fetching" ? list.data : undefined;
+  const { state, grades, setNow } = useDrawState(scope, data, LOOKAHEAD);
+  // The card on screen stays put while a refetch lands; only a grade moves it.
+  const [pinned, setPinned] = useState<Pinned | null>(null);
+  const [chosenLeg, setLeg] = useState<Leg | null>(null);
+  const [listCards, setListCards] = useState(NO_LIST_CARDS);
   const [done, setDone] = useState(0);
   const [revealed, setRevealed] = useState(false);
+  // Grades this review has recorded that the server has not answered yet.
+  const [sending, setSending] = useState(0);
   // Each position in the review takes one grade, however fast the taps come.
   const gradedAt = useRef(-1);
 
-  const item = queue[0];
-  if (!item) return <Completion added={done} onClose={onClose} />;
-  const { card } = item;
+  // Leaving refreshes what this review, or another device meanwhile, moved under it.
+  useEffect(
+    () => () => {
+      for (const queryKey of [["decks"], ["rounds"], ["streak"], ["queue"]]) {
+        void qc.invalidateQueries({ queryKey });
+      }
+    },
+    [qc],
+  );
+
+  // A leg belongs to its day, so one left open past midnight gives way to a fresh one.
+  const leg = chosenLeg && state && chosenLeg.date === state.day.date ? chosenLeg : null;
+  // The draw stops at the goal only for the whole day below it; deck reviews and rounds run to their end.
+  useEffect(() => {
+    if (leg || !data || !state || (round && !listData)) return;
+    setListCards(NO_LIST_CARDS);
+    const date = state.day.date;
+    setLeg(
+      round && listData
+        ? { kind: "list", date, size: listData.total }
+        : {
+            kind: "draw",
+            date,
+            from: state.attempts,
+            until: !deck && state.attempts < data.goal ? data.goal : null,
+          },
+    );
+  }, [leg, data, state, round, listData, deck]);
+
+  const pinnedItem = data && state && pinned ? reviewItem(data, state.log, pinned) : null;
+  // Past midnight, yesterday's data does not know yesterday's grades moved the schedule, so a new card waits for today's.
+  const staleDay = !!data && !!state && data.day.date !== state.day.date && draw.isFetching;
+  const drawn =
+    pinnedItem ??
+    (data && state?.next && !staleDay ? reviewItem(data, state.log, state.next) : null);
+  // A goal lowered on another device meanwhile stops the stretch there instead.
+  const atStop =
+    leg?.kind === "draw" &&
+    leg.until !== null &&
+    !!data &&
+    !!state &&
+    state.attempts >= Math.min(leg.until, data.goal);
+  const listLeft = leg?.kind === "list" ? leftInList(listData?.items ?? [], listCards) : [];
+  const current = !leg ? null : leg.kind === "draw" ? (atStop ? null : drawn) : listLeft[0];
+
+  // A pinned card a refetch no longer holds, such as one archived meanwhile, gives way.
+  const repin = !!state?.next && !staleDay && (!pinned || !pinnedItem);
+  useEffect(() => {
+    if (repin && state?.next) setPinned({ cardId: state.next.cardId, mode: state.next.mode });
+  }, [repin, state?.next]);
+
+  // An empty draw is confirmed by a fetch begun after the last grade, or taken as it is offline.
+  const lastChange = Math.max(0, ...grades.map((g) => new Date(g.reviewedAt).getTime()));
+  const unreachable = draw.fetchStatus === "paused" || draw.isError;
+  const confirmed = !!data && data.fetchedAt >= lastChange;
+  const stopped = !!leg && !current;
+  const checking =
+    stopped && leg?.kind === "draw" && !atStop && !confirmed && !(unreachable && !draw.isFetching);
+  useEffect(() => {
+    if (checking && !unreachable && !draw.isFetching) void draw.refetch();
+  }, [checking, unreachable, draw.isFetching, draw.refetch]);
+  // The server sends a round a page at a time, so an emptied page asks for the next one.
+  const listOwed =
+    stopped &&
+    leg?.kind === "list" &&
+    listCards.graded.size + listCards.dropped.size < leg.size &&
+    list.fetchStatus === "idle" &&
+    !list.isError;
+  useEffect(() => {
+    if (listOwed) void list.refetch();
+  }, [listOwed, list.refetch]);
+  // The end waits for the last grades to land, so a refusal never takes back an end already shown.
+  const landing = sending > 0 && !unreachable;
+
+  if (!leg || (stopped && (checking || landing || listOwed))) {
+    return <View className="flex-1 bg-canvas" />;
+  }
+  if (!current || !data || !state) return <Completion added={done} onClose={onClose} />;
+  const { card } = current;
+
+  // What the header counts: today's attempts to the goal's stop, and a list's own otherwise.
+  const legDone = leg.kind === "draw" ? state.attempts - leg.from : listCards.graded.size;
+  const left = drawableLeft(data, state, deck);
+  const total =
+    leg.kind === "list"
+      ? leg.size - listCards.dropped.size
+      : leg.until !== null
+        ? Math.min(leg.until - leg.from, legDone + left)
+        : legDone + left;
+  const lastToday = state.log
+    .filter((e) => e.cardId === card.id && e.mode === modeKey(current.mode))
+    .pop();
 
   const onGrade = (rating: Rating) => {
     if (gradedAt.current === done) return;
     gradedAt.current = done;
     // Every grade is the same small tap: Forgot feeds the flame exactly as Easy does.
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
-    grade.mutate({ cardId: card.id, rating });
-    if (rating === 1) setForgotten((f) => new Set(f).add(card.id));
-    setQueue((q) => {
-      const rest = q.slice(1);
-      if (rating !== 1) return rest;
-      // A forgotten card comes back a few cards later, by the same gap the Worker's draw uses.
-      const at = Math.min(RETURN_GAPS[0] - 1, rest.length);
-      return [...rest.slice(0, at), item, ...rest.slice(at)];
+    const item = current;
+    const key = keyOf(item);
+    const repeat = state.log.some(
+      (e) => e.cardId === item.card.id && e.mode === modeKey(item.mode),
+    );
+    const runningShort = state.upcoming.length <= LOOKAHEAD;
+    const listed = leg.kind === "list";
+    const recorded = grade({
+      cardId: item.card.id,
+      mode: item.mode,
+      rating,
+      reviewedAt: new Date().toISOString(),
+      stateBefore: repeat ? stateBefore(data, state.log, item.card.id, item.mode) : item.fsrsState,
     });
-    setDone((n) => n + 1);
+    if (listed) setListCards((c) => ({ ...c, graded: withKey(c.graded, key) }));
+    setSending((n) => n + 1);
     setRevealed(false);
-    const reachesGoal = reviewsToday + 1 === goal;
-    if (reachesGoal) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    setNow(new Date());
+    setPinned(null);
+    setDone((n) => n + 1);
+    if (reviewsToday + 1 === goal)
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
+    void recorded
+      .then((outcome) => {
+        if (outcome === "queued") return;
+        if (outcome === "refused" || outcome === "gone") {
+          if (listed) {
+            setListCards((c) => ({
+              graded: withoutKey(c.graded, key),
+              returned: outcome === "refused" ? withKey(c.returned, key) : c.returned,
+              dropped: outcome === "gone" ? withKey(c.dropped, key) : c.dropped,
+            }));
+          }
+          Alert.alert(
+            outcome === "gone"
+              ? `Couldn’t save your grade for “${item.card.term}”. The card is no longer in your decks.`
+              : `Couldn’t save your grade for “${item.card.term}”. You’ll see it again.`,
+          );
+        }
+        // A dropped grade leaves the fetched data behind, and so does a long run of sent ones.
+        const behind = gradeStore
+          .snapshot()
+          .filter((g) => new Date(g.reviewedAt).getTime() >= data.fetchedAt).length;
+        if (outcome !== "sent" || behind >= REFRESH_AFTER || runningShort) {
+          void qc.invalidateQueries({ queryKey: ["queue"] });
+        }
+      })
+      .finally(() => setSending((n) => n - 1));
   };
 
-  const total = done + queue.length;
   return (
     <View
       className="flex-1 bg-canvas"
       style={{ paddingTop: insets.top + 4, paddingBottom: Math.max(insets.bottom, 12) }}
     >
-      <Header done={done} total={total} onClose={onClose} />
+      <Header done={legDone} total={total} onClose={onClose} />
       <View className="flex-1 px-4 pt-3">
         <CardPlate
           // A forgotten card can come straight back; keyed by position it arrives afresh.
-          key={`${card.id}:${done}`}
-          item={item}
+          key={`${keyOf(current)}:${done}`}
+          item={current}
           deckName={decks?.find((d) => d.id === card.deckId)?.name}
-          forgotten={forgotten.has(card.id)}
+          forgotten={round === "forgotten" || lastToday?.rating === 1}
           revealed={revealed}
           onReveal={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -201,15 +388,34 @@ const rise = (i: number) =>
     .duration(260)
     .delay(80 + i * 50);
 
-/** The card holds the screen. Unrevealed it is the word alone; a tap anywhere reveals. */
+/** The card's picture, fetched with the learner's session like every other request. */
+function Picture({ card }: { card: QueueItem["card"] }) {
+  const headers = useSessionHeaders();
+  const image = card.image;
+  if (!image || !headers) return null;
+  return (
+    <Image
+      source={{ uri: apiUrl(image.url), headers }}
+      accessibilityLabel={image.description ?? undefined}
+      resizeMode="contain"
+      className="w-full rounded-lg"
+      style={{ aspectRatio: image.width / Math.max(1, image.height), maxHeight: 280 }}
+    />
+  );
+}
+
+/**
+ * The card holds the screen. Unrevealed it is the cue alone (the term, the meaning, or a picture,
+ * by the mode the draw chose); a tap anywhere reveals what is asked for.
+ */
 function CardPlate({
-  item: { card, fsrsState },
+  item: { card, fsrsState, mode },
   deckName,
   forgotten,
   revealed,
   onReveal,
 }: {
-  item: QueueItemOut;
+  item: QueueItem;
   deckName: string | undefined;
   forgotten: boolean;
   revealed: boolean;
@@ -219,7 +425,13 @@ function CardPlate({
   const dark = useColorScheme() === "dark";
   const reduce = useReducedMotion();
   const state = STATE[standing(fsrsState)];
-  const section = sectionName(card.sectionId);
+  const section = useSections(card.sectionId ? card.deckId : undefined).data?.sections.find(
+    (s) => s.id === card.sectionId,
+  )?.name;
+  const answer = mode.target === "term" ? card.term : (card.meaning ?? "");
+  const cue = mode.cue === "image" ? null : mode.cue === "term" ? card.term : (card.meaning ?? "");
+  // A picture cue shows neither side, so the answer comes with the other one.
+  const other = mode.cue !== "image" ? null : mode.target === "term" ? card.meaning : card.term;
 
   return (
     <Animated.View
@@ -231,7 +443,9 @@ function CardPlate({
         onPress={revealed ? undefined : onReveal}
         disabled={revealed}
         accessibilityRole={revealed ? undefined : "button"}
-        accessibilityLabel={revealed ? undefined : `${card.term}. Tap to reveal`}
+        accessibilityLabel={
+          revealed ? undefined : `${cue ?? card.image?.description ?? ""}. Tap to reveal`
+        }
         className="flex-1 overflow-hidden rounded-2xl border border-edge bg-plate"
         style={dark ? LIFT : undefined}
       >
@@ -256,12 +470,16 @@ function CardPlate({
           <Animated.View
             layout={reduce ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
           >
-            <Text
-              className="text-text"
-              style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
-            >
-              {card.term}
-            </Text>
+            {cue === null ? (
+              <Picture card={card} />
+            ) : (
+              <Text
+                className="text-text"
+                style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
+              >
+                {cue}
+              </Text>
+            )}
           </Animated.View>
           {revealed && (
             <View className="gap-4 pt-5">
@@ -272,15 +490,20 @@ function CardPlate({
                 style={{ transformOrigin: I18nManager.isRTL ? "100% 50%" : "0% 50%" }}
               />
               <Animated.View entering={reduce ? FadeIn : rise(0)}>
-                <Text className="text-xl text-text">{card.meaning}</Text>
+                <Text className="text-xl text-text">{answer}</Text>
               </Animated.View>
-              {card.example && (
+              {other && (
                 <Animated.View entering={reduce ? FadeIn : rise(1)}>
+                  <Text className="text-md text-text-2">{other}</Text>
+                </Animated.View>
+              )}
+              {card.example && (
+                <Animated.View entering={reduce ? FadeIn : rise(2)}>
                   <Text className="text-md text-text-2">{card.example}</Text>
                 </Animated.View>
               )}
               {section && (
-                <Animated.View entering={reduce ? FadeIn : rise(2)} className="flex-row">
+                <Animated.View entering={reduce ? FadeIn : rise(3)} className="flex-row">
                   <View className="h-8 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3">
                     <Icon name="section" size={15} colour={p.muted} />
                     <Text className="text-base text-text-2">{section}</Text>

@@ -1,53 +1,11 @@
-import { type DrawData, type DrawState, drawCards, drawLog } from "@lymi/client/review-draw";
-import { type Drawn, drawableCount, roundOrder, type StreakOut } from "@lymi/core";
+import { streakWith } from "@lymi/client/review-day";
+import { type DrawData, type DrawState, drawCards } from "@lymi/client/review-draw";
+import { type Drawn, roundOrder, type StreakOut } from "@lymi/core";
 
-export type DayOutcome = "goal_met" | "exhausted" | "nothing_due";
-
-/** How a review that stopped leaves the day, by the server's rules in `settleDay`. */
-export function dayOutcome(attempts: number, goal: number): DayOutcome {
-  if (attempts >= goal) return "goal_met";
-  return attempts > 0 ? "exhausted" : "nothing_due";
-}
+export { type DayOutcome, dayOutcome, drawableLeft, streakWith } from "@lymi/client/review-day";
 
 const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
   outcome === "goal_met" || outcome === "exhausted";
-
-/**
- * The streak once today's attempts are in, before the refetch that confirms them lands. The run
- * grows by one only when today turns satisfied, so a summary that already counts today is kept.
- */
-export function streakWith(summary: StreakOut, attempts: number, counts: boolean): StreakOut {
-  const { today } = summary;
-  const already = satisfied(today.outcome);
-  const now = already || counts;
-  const outcome = already
-    ? today.outcome
-    : counts
-      ? dayOutcome(attempts, today.goal) === "goal_met"
-        ? "goal_met"
-        : "exhausted"
-      : today.outcome;
-  const current = now && !already ? summary.current + 1 : summary.current;
-  const day = {
-    date: today.date,
-    attempts,
-    goal: today.goal,
-    satisfied: now,
-    outcome,
-  };
-  const listed = summary.days.some((d) => d.date === today.date);
-  return {
-    ...summary,
-    current,
-    longest: Math.max(summary.longest, current),
-    today: { ...today, attempts, outcome },
-    days: listed
-      ? summary.days.map((d) =>
-          d.date === today.date ? { ...d, attempts, satisfied: d.satisfied || now, outcome } : d,
-        )
-      : [...summary.days, day],
-  };
-}
 
 /**
  * The streak as it stood earlier today, from a summary that may count today already: the run and
@@ -74,17 +32,6 @@ export function streakAsOf(
 /** The cards Review forgotten walks: each mode whose latest grade today is Forgot, once. */
 export function forgottenRound(data: DrawData, state: DrawState, deckId?: string): Drawn[] {
   return roundOrder(drawCards(data), state.log, state.day, { deckId, round: "forgotten" });
-}
-
-/** Cards the draw still holds in scope, the number Today shows beside it. */
-export function drawableLeft(data: DrawData, state: DrawState, deckId: string | undefined): number {
-  const cards = drawCards(data);
-  const scope = { deckId };
-  const held = drawableCount(cards, state.log, state.day, scope);
-  if (data.day.date !== state.day.date) return held;
-  // The fetch holds only the front of the order; the server's total counts the cards behind it too.
-  const fetched = drawableCount(cards, drawLog(data, [], state.day), state.day, scope);
-  return held + Math.max(0, data.total - fetched);
 }
 
 /**

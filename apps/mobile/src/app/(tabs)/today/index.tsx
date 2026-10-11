@@ -1,6 +1,6 @@
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS } from "@lymi/core";
 import * as Haptics from "expo-haptics";
-import { type Href, useRouter } from "expo-router";
+import { type Href, useIsFocused, useRouter } from "expo-router";
 import { View, type ViewStyle } from "react-native";
 import { Flame } from "../../../brand/flame";
 import { Lantern } from "../../../brand/lantern";
@@ -49,6 +49,8 @@ function LitDue() {
   const router = useRouter();
   const p = usePalette();
   const { count, line } = useDueLine();
+  // The flame stops flickering while Today is out of sight.
+  const focused = useIsFocused();
   return (
     <View className="items-center gap-5 pb-2">
       <View
@@ -60,7 +62,14 @@ function LitDue() {
           } as ViewStyle
         }
       />
-      <Lantern size={150} progress={progress} out={out} fed={fed} style={{ marginTop: 4 }} />
+      <Lantern
+        size={150}
+        progress={progress}
+        out={out}
+        fed={fed}
+        flicker={focused}
+        style={{ marginTop: 4 }}
+      />
       <View className="items-center gap-0.5">
         <Text
           className="text-6xl font-medium text-text"

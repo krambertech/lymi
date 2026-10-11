@@ -1,8 +1,8 @@
-import type { DeckSummaryOut } from "@lymi/core";
+import type { DeckSummary } from "@lymi/client/api";
 import * as Haptics from "expo-haptics";
 import { Link, useRouter } from "expo-router";
 import { Pressable, View, type ViewStyle } from "react-native";
-import { LANGUAGE_NAMES } from "../../../data/demo";
+import { languageName } from "../../../data/languages";
 import { standing, useDeckCards, useDecks } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { Plate, RowArrow, Text } from "../../../ui/primitives";
@@ -22,12 +22,12 @@ export default function Library() {
   );
 }
 
-function DeckRow({ deck: d }: { deck: DeckSummaryOut }) {
+function DeckRow({ deck: d }: { deck: DeckSummary }) {
   const router = useRouter();
   const p = usePalette();
   const cards = useDeckCards(d.id).data ?? [];
   const known = cards.filter((c) => standing(c.state?.state) === "known").length;
-  const language = LANGUAGE_NAMES[d.defaultLanguage ?? ""] ?? d.defaultLanguage;
+  const language = d.defaultLanguage ? languageName(d.defaultLanguage) : null;
   return (
     <Link href={`/library/${d.id}`} asChild>
       <Link.Trigger>
@@ -40,7 +40,7 @@ function DeckRow({ deck: d }: { deck: DeckSummaryOut }) {
               <View className="flex-1 gap-0.5">
                 <Text className="text-xl font-medium text-text">{d.name}</Text>
                 <Text className="text-base text-muted">
-                  {language} · {d.total} cards
+                  {language ? `${language} · ${d.total} cards` : `${d.total} cards`}
                 </Text>
               </View>
               {d.due > 0 && (
@@ -74,7 +74,6 @@ function DeckRow({ deck: d }: { deck: DeckSummaryOut }) {
           }}
         />
         <Link.MenuAction title="Add a card" icon="plus" onPress={() => router.push("/capture")} />
-        <Link.MenuAction title="Archive" icon="archivebox" onPress={() => {}} />
       </Link.Menu>
     </Link>
   );

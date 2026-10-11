@@ -1,6 +1,6 @@
 # Lymi for iOS (proof of concept)
 
-An Expo app that shows the phone's design language and stack. It signs in to a real Lymi account and still runs Today, Review and Library on demo data held on the device; [the proposal](../../docs/proposals/native-mobile-app.md) has what is decided and what is not.
+An Expo app that shows the phone's design language and stack. It signs in to a real Lymi account and runs Today, Review and Library on the learner's own data; [the proposal](../../docs/proposals/native-mobile-app.md) has what is decided and what is not.
 
 ## Run it
 
@@ -24,8 +24,8 @@ The proof of concept compared options side by side and kept one of each: the gla
 
 ## What is shared with the web
 
-- `@lymi/core` unchanged: the review uses its FSRS `schedule` and the draw's `RETURN_GAPS`.
-- `@lymi/client`: screens read hooks in `src/data/queries.ts` under the web's query keys, returning the API's response types. `src/data/demo-server.ts` answers them until the phone signs in, and `src/data/client.ts` configures the client for `my.lymi.app`.
+- `@lymi/core` unchanged: the review draws each next card with core's `draw` (ADR 0019), and today's count turns at the learner's midnight by the review zone.
+- `@lymi/client`: screens read hooks in `src/data/queries.ts`, which spread the web's query options. Grades and card writes go through the shared outboxes, kept in MMKV so they survive a quit and replay in order (ADR 0023). `src/data/client.ts` configures the client, and `src/data/sync.ts` replays the outboxes at sign-in, on reconnect and on return to the front, as the web's root does.
 - `@lymi/design`: colours, radii, the lantern's drawing, the flame's and the seven lights' rules, and motion presets. `src/global.css` imports its Uniwind theme; the phone keeps its own type ramp there under the shared step names, because iOS reads at 17 pt. `src/theme/motion.ts` converts the shared springs and curves for Reanimated.
 - Lucide icons, rendered by `lucide-react-native`.
 

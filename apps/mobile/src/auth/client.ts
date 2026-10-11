@@ -2,6 +2,7 @@ import { expoClient } from "@better-auth/expo/client";
 import { emailOTPClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 import * as SecureStore from "expo-secure-store";
+import { useEffect, useState } from "react";
 
 /** The Worker the app talks to. `EXPO_PUBLIC_API_URL=http://localhost:5241` points it at a local one. */
 export const API_URL = process.env.EXPO_PUBLIC_API_URL ?? "https://my.lymi.app";
@@ -44,4 +45,17 @@ export async function sessionHeaders(): Promise<Record<string, string>> {
 
 export function useSession() {
   return authClient.useSession();
+}
+
+/** The session headers for a request React Native makes itself, such as a picture's. */
+export function useSessionHeaders() {
+  const [headers, setHeaders] = useState<Record<string, string> | null>(null);
+  useEffect(() => {
+    let live = true;
+    void sessionHeaders().then((h) => live && setHeaders(h));
+    return () => {
+      live = false;
+    };
+  }, []);
+  return headers;
 }

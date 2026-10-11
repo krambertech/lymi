@@ -3,6 +3,9 @@ name: Phone
 # The phone's smoke journey on an iOS Simulator against a local Worker, before a release and on
 # Mondays; the phone's other checks run in CI's quality job. docs/testing.md has the plan.
 on:
+  # DO NOT MERGE: measures the job on GitHub's runner.
+  push:
+    branches: [kateryna/do-not-merge-phone-ci]
   workflow_dispatch:
   # Promote calls it, and a release waits for it to pass.
   workflow_call:

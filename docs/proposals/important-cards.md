@@ -37,7 +37,7 @@ Learner-set marks in consumer apps are binary. Only SuperMemo has levels, and it
 
 ## Where it is set
 
-- The card screen, as a star toggle in its bar, with the mark in words under the term.
+- The card screen, from its menu (Mark important, Unmark important), with an amber star and the word Important under the term.
 - Review, from the revealed card's menu (Mark important, Unmark important), so a card can be marked at the moment it matters.
 - The API and MCP, so an assistant can mark the exam terms it extracts ([#531](https://github.com/krambertech/lymi/issues/531)).
 
@@ -74,5 +74,4 @@ Late is more than a week overdue at the year's end. Four takes most of the gain:
 
 ## Open questions
 
-- The icon: a star is the convention, but it must not read as a rating or a favourite.
 - The mark outlives archiving and restoring a card, since nothing about the learner's intent changed. Confirm this reads right in Archived.

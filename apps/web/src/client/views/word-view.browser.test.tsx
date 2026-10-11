@@ -30,28 +30,29 @@ function Word({ onImportantChange }: { onImportantChange: (important: boolean) =
   );
 }
 
-test("a learner marks the card important, and the card says so in words", async () => {
+test("a learner marks the card important from its menu, and the card says so in words", async () => {
   const changed = vi.fn();
   await render(<Word onImportantChange={changed} />);
-  const toggle = page.getByRole("button", { name: "Important" });
-  await expect.element(toggle).toHaveAttribute("aria-pressed", "false");
   expect(page.getByText("Important", { exact: true }).elements()).toHaveLength(0);
 
-  await toggle.click();
+  await page.getByRole("button", { name: "Card options" }).click();
+  // A member has no other item here: every other one writes the card.
+  expect(page.getByRole("menuitem").elements()).toHaveLength(1);
+  await page.getByRole("menuitem", { name: "Mark important" }).click();
   expect(changed).toHaveBeenCalledWith(true);
-  await expect.element(toggle).toHaveAttribute("aria-pressed", "true");
   await expect.element(page.getByText("Important", { exact: true })).toBeVisible();
 
-  await toggle.click();
+  await page.getByRole("button", { name: "Card options" }).click();
+  await page.getByRole("menuitem", { name: "Unmark important" }).click();
   expect(changed).toHaveBeenLastCalledWith(false);
 });
 
-test("a card without the handler shows no toggle", async () => {
+test("a card that cannot be marked from here has no menu, and still shows its mark", async () => {
   await render(
     <I18nProvider i18n={i18n}>
       <WordView card={{ ...card, important: true }} state={null} deckName="Lezione" />
     </I18nProvider>,
   );
-  expect(page.getByRole("button", { name: "Important" }).elements()).toHaveLength(0);
+  expect(page.getByRole("button", { name: "Card options" }).elements()).toHaveLength(0);
   await expect.element(page.getByText("Important", { exact: true })).toBeVisible();
 });

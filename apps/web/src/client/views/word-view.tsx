@@ -496,16 +496,6 @@ export function WordView({
   const size = useDesktop() ? "sm" : "md";
   const controls = (
     <>
-      {onImportantChange && (
-        <IconButton
-          label={t`Important`}
-          size={size}
-          aria-pressed={card.important}
-          onClick={() => onImportantChange(!card.important)}
-        >
-          <Star className={card.important ? "fill-current" : undefined} />
-        </IconButton>
-      )}
       {owner && (
         <IconButton label={t`Edit card`} size={size} onClick={owner.onEdit}>
           <Pencil />
@@ -527,8 +517,8 @@ export function WordView({
           </IconButton>
         </>
       )}
-      {/* Every item here writes the card, so a member of a shared deck gets no menu at all. */}
-      {owner && (
+      {/* The mark is the learner's own; every other item writes the card, so a member gets only the mark. */}
+      {(owner || onImportantChange) && (
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
@@ -538,29 +528,39 @@ export function WordView({
             }
           />
           <DropdownMenuContent aria-label={t`Card options`} align="end">
-            {needsEnrichment(card) && (
+            {onImportantChange && (
+              <DropdownMenuItem onClick={() => onImportantChange(!card.important)}>
+                <Star className={card.important ? "fill-current" : undefined} />
+                {card.important ? t`Unmark important` : t`Mark important`}
+              </DropdownMenuItem>
+            )}
+            {owner && needsEnrichment(card) && (
               <DropdownMenuItem onClick={owner.onEnrich} disabled={filling}>
                 <Sparkle />
                 <Trans>Enrich</Trans>
               </DropdownMenuItem>
             )}
-            {owner.onMove && (
+            {owner?.onMove && (
               <DropdownMenuItem onClick={() => setMoving(true)} disabled={elsewhere.length === 0}>
                 <FolderInput />
                 <Trans>Move to…</Trans>
               </DropdownMenuItem>
             )}
-            {owner.onMoveToSection && (
+            {owner?.onMoveToSection && (
               <DropdownMenuItem onClick={owner.onMoveToSection}>
                 <Signpost />
                 <Trans>Move to section…</Trans>
               </DropdownMenuItem>
             )}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem variant="danger" onClick={owner.onArchive}>
-              <Archive />
-              <Trans>Archive</Trans>
-            </DropdownMenuItem>
+            {owner && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem variant="danger" onClick={owner.onArchive}>
+                  <Archive />
+                  <Trans>Archive</Trans>
+                </DropdownMenuItem>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       )}
@@ -617,7 +617,7 @@ export function WordView({
           {[
             card.important ? (
               <span key="important" className="inline-flex items-center gap-1 text-text-2">
-                <Star className="size-3.5 fill-current" aria-hidden="true" />
+                <Star className="size-3.5 fill-current text-amber-mark" aria-hidden="true" />
                 <Trans>Important</Trans>
               </span>
             ) : null,

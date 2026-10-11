@@ -643,7 +643,7 @@ const GlossaryRow = memo(function GlossaryRow({
         )}
         {card.important && (
           <Star
-            className="ms-1.5 inline size-3.5 fill-current align-[-1px] text-text-2"
+            className="ms-1.5 inline size-3.5 fill-current align-[-1px] text-amber-mark"
             aria-hidden="true"
           />
         )}

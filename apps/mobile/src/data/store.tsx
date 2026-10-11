@@ -1,27 +1,6 @@
 import { emptyState, type FsrsCard, type Rating, schedule } from "@lymi/core";
-import * as Linking from "expo-linking";
-import {
-  createContext,
-  type ReactNode,
-  use,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, type ReactNode, use, useCallback, useMemo, useState } from "react";
 import { CARDS, DAILY_GOAL, type DemoCard, PAST_WEEK, STREAK_BEFORE_TODAY } from "./demo";
-
-/** The design choices this proof of concept puts side by side. */
-export interface Directions {
-  /** Glass: the web's pill and top bar drawn in Liquid Glass. Lymi: the same, opaque. */
-  chrome: "glass" | "lymi";
-  /** Plate: Today's due card as on the web. Lit: the lantern lights the top of the screen. */
-  today: "plate" | "lit";
-  /** Buttons: the four grades as plates. Glass: the same four in Liquid Glass. Swipe: plates plus swiping the card. */
-  review: "buttons" | "glass" | "swipe";
-  /** Onest: the brand face everywhere. System: San Francisco everywhere. Mixed: Onest for display, SF for the rest. */
-  type: "onest" | "system" | "mixed";
-}
 
 export interface Card extends DemoCard {
   fsrs: FsrsCard;
@@ -39,8 +18,6 @@ interface Store {
   /** Today's draw has nothing left. With reviews below the goal that still counts the day. */
   dayDone: boolean;
   due: Card[];
-  directions: Directions;
-  setDirection: <K extends keyof Directions>(key: K, value: Directions[K]) => void;
   grade: (id: string, rating: Rating) => void;
   addCard: (card: Pick<DemoCard, "term" | "meaning" | "deck">) => void;
   reset: () => void;
@@ -55,30 +32,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [reviewsToday, setReviews] = useState(0);
   const [fed, setFed] = useState(0);
   const [forgottenToday, setForgotten] = useState<string[]>([]);
-  const [directions, setDirections] = useState<Directions>({
-    chrome: "glass",
-    today: "lit",
-    review: "buttons",
-    type: "onest",
-  });
-
-  // lymi://today?chrome=lymi&lead=lit&grade=swipe&font=system opens the proof of concept in one combination.
-  const url = Linking.useLinkingURL();
-  useEffect(() => {
-    if (!url) return;
-    const { queryParams } = Linking.parse(url);
-    const chrome = queryParams?.chrome;
-    const lead = queryParams?.lead;
-    const grading = queryParams?.grade;
-    const type = queryParams?.font;
-    setDirections((d) => ({
-      chrome: chrome === "glass" || chrome === "lymi" ? chrome : d.chrome,
-      today: lead === "plate" || lead === "lit" ? lead : d.today,
-      review:
-        grading === "buttons" || grading === "glass" || grading === "swipe" ? grading : d.review,
-      type: type === "onest" || type === "system" || type === "mixed" ? type : d.type,
-    }));
-  }, [url]);
 
   const grade = useCallback((id: string, rating: Rating) => {
     setCards((all) =>
@@ -114,12 +67,6 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setForgotten([]);
   }, []);
 
-  const setDirection = useCallback(
-    <K extends keyof Directions>(key: K, value: Directions[K]) =>
-      setDirections((d) => ({ ...d, [key]: value })),
-    [],
-  );
-
   const value = useMemo<Store>(() => {
     const due = cards.filter((c) => c.due);
     const dayDone = reviewsToday > 0 && due.length === 0;
@@ -134,13 +81,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       streak: STREAK_BEFORE_TODAY + (satisfied ? 1 : 0),
       dayDone,
       due,
-      directions,
-      setDirection,
       grade,
       addCard,
       reset,
     };
-  }, [cards, reviewsToday, fed, forgottenToday, directions, setDirection, grade, addCard, reset]);
+  }, [cards, reviewsToday, fed, forgottenToday, grade, addCard, reset]);
 
   return <Context value={value}>{children}</Context>;
 }

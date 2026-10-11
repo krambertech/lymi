@@ -8,17 +8,8 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { type Palette, usePalette } from "../theme/palette";
+import { weekLetters } from "./days";
 import { Text } from "./primitives";
-
-const DAYS = [
-  { id: "mon", letter: "M" },
-  { id: "tue", letter: "T" },
-  { id: "wed", letter: "W" },
-  { id: "thu", letter: "T" },
-  { id: "fri", letter: "F" },
-  { id: "sat", letter: "S" },
-  { id: "sun", letter: "S" },
-];
 
 function mix(a: string, b: string, t: number) {
   const ch = (hex: string, i: number) => Number.parseInt(hex.slice(1 + i * 2, 3 + i * 2), 16);
@@ -54,6 +45,7 @@ export function SevenLights({
   const p = usePalette();
   const lg = size === "lg";
   const today = days.length - 1;
+  const letters = weekLetters(days.length);
   const label = `Reviewed on ${days.filter((n) => n > 0).length} of the last 7 days`;
   return (
     <View
@@ -65,7 +57,8 @@ export function SevenLights({
       {days.map((n, i) => {
         const l = i === today && todayDone ? 3 : level(n, goal);
         return (
-          <View key={DAYS[i]?.id} className={`items-center ${lg ? "gap-2" : "gap-1.5"}`}>
+          // biome-ignore lint/suspicious/noArrayIndexKey: a day's place in the week is its identity.
+          <View key={i} className={`items-center ${lg ? "gap-2" : "gap-1.5"}`}>
             <Glass
               level={l}
               lg={lg}
@@ -76,7 +69,7 @@ export function SevenLights({
             <Text
               className={`${lg ? "text-xs" : "text-2xs"} ${i === today ? "font-medium text-text-2" : "text-faint"}`}
             >
-              {DAYS[i]?.letter}
+              {letters[i]}
             </Text>
           </View>
         );

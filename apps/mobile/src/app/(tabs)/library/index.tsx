@@ -65,7 +65,7 @@ export default function Library() {
                   }}
                 />
                 <Link.MenuAction
-                  title="Add a word"
+                  title="Add a card"
                   icon="plus"
                   onPress={() => router.push("/capture")}
                 />

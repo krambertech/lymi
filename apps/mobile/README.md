@@ -14,13 +14,9 @@ LANG=en_US.UTF-8 npx expo run:ios
 
 The first build takes several minutes; after that `npx expo start --dev-client` reloads JavaScript in place. CocoaPods fails with an encoding error unless `LANG` is UTF-8. A change to `app.json`, a config plugin or a native module needs `npx expo prebuild --clean` and a new build.
 
-## Compare the design directions
+## Design choices
 
-The **You** tab switches the design choices the proof of concept compared. The defaults are the ones chosen: the glass pill, the lit room, Onest and plate grades. A link sets them in one go:
-
-```bash
-xcrun simctl openurl booted "lymi://today?chrome=lymi&lead=plate&grade=swipe&font=system"
-```
+The proof of concept compared options side by side and kept one of each: the glass pill (opaque before iOS 26), the title in the top bar, the lit room on Today, Onest everywhere and plate grades. [The proposal](../../docs/proposals/native-mobile-app.md#design-language) records them.
 
 ## What is shared with the web
 

@@ -37,9 +37,14 @@ const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
   const muted = dark ? "#a89c90" : "#72665f";
   const canvas = dark ? "#130d09" : "#f8f6f4";
   const pool = dark ? "#5a3a14" : "#ffdca6";
-  const room = props.out ? (dark ? props.lanterns.darkOut : props.lanterns.lightOut) : null;
-  const lantern = room ?? (dark ? props.lanterns.dark : props.lanterns.light);
-  const line = props.due === 1 ? "card due" : "cards due";
+  // The gallery and a fresh install render the widget before the app has sent anything.
+  const due = props.due ?? 0;
+  const streak = props.streak ?? 0;
+  const lanterns = props.lanterns;
+  const lit = dark ? lanterns?.dark : lanterns?.light;
+  const out = dark ? lanterns?.darkOut : lanterns?.lightOut;
+  const lantern = (props.out ? out : lit) ?? "";
+  const line = due === 1 ? "card due" : "cards due";
 
   if (env.widgetFamily === "systemMedium") {
     return (
@@ -59,7 +64,9 @@ const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
           widgetURL("lymi://review"),
         ]}
       >
-        <Image uiImage={lantern} modifiers={[resizable(), frame({ width: 116, height: 116 })]} />
+        {lantern ? (
+          <Image uiImage={lantern} modifiers={[resizable(), frame({ width: 116, height: 116 })]} />
+        ) : null}
         <VStack alignment="leading" spacing={0}>
           <Text
             modifiers={[
@@ -68,12 +75,12 @@ const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
               foregroundStyle(ink),
             ]}
           >
-            {String(props.due)}
+            {String(due)}
           </Text>
           <Text modifiers={[font({ size: 16 }), foregroundStyle(muted)]}>{line}</Text>
           <Spacer />
           <Text modifiers={[font({ size: 14, weight: "medium" }), foregroundStyle(muted)]}>
-            {`${props.streak} days in a row`}
+            {`${streak} days in a row`}
           </Text>
         </VStack>
         <Spacer />
@@ -98,7 +105,9 @@ const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
         widgetURL("lymi://review"),
       ]}
     >
-      <Image uiImage={lantern} modifiers={[resizable(), frame({ width: 88, height: 88 })]} />
+      {lantern ? (
+        <Image uiImage={lantern} modifiers={[resizable(), frame({ width: 88, height: 88 })]} />
+      ) : null}
       <HStack spacing={5} alignment="firstTextBaseline">
         <Text
           modifiers={[
@@ -107,7 +116,7 @@ const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
             foregroundStyle(ink),
           ]}
         >
-          {String(props.due)}
+          {String(due)}
         </Text>
         <Text modifiers={[font({ size: 15 }), foregroundStyle(muted)]}>due</Text>
       </HStack>

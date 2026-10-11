@@ -2,24 +2,20 @@ import { type Rating, RETURN_GAPS } from "@lymi/core";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useEffect, useMemo, useState } from "react";
-import { Pressable, useColorScheme, View, type ViewStyle } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { I18nManager, Pressable, useColorScheme, View, type ViewStyle } from "react-native";
 import Animated, {
   Easing,
   FadeIn,
   FadeOut,
-  interpolate,
   Keyframe,
   LinearTransition,
   useAnimatedStyle,
   useReducedMotion,
   useSharedValue,
-  withSpring,
   withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { scheduleOnRN } from "react-native-worklets";
 import { Lantern } from "../brand/lantern";
 import { DECKS } from "../data/demo";
 import { type Card, useProgress, useStore } from "../data/store";
@@ -49,12 +45,15 @@ export default function Review() {
   });
   const [done, setDone] = useState(0);
   const [revealed, setRevealed] = useState(false);
+  // Each position in the review takes one grade, however fast the taps come.
+  const gradedAt = useRef(-1);
 
   const card = store.cards.find((c) => c.id === queue[0]);
   const finished = !card;
 
   const grade = (rating: Rating) => {
-    if (!card) return;
+    if (!card || gradedAt.current === done) return;
+    gradedAt.current = done;
     // Every grade is the same small tap: Forgot feeds the flame exactly as Easy does.
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
     store.grade(card.id, rating);
@@ -71,30 +70,31 @@ export default function Review() {
     if (reachesGoal) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
   };
 
-  if (finished) return <Completion added={done} onClose={() => router.back()} />;
+  // Opened from a widget, the review is the only screen, so leaving goes to Today.
+  const leave = () => (router.canGoBack() ? router.back() : router.replace("/today"));
+
+  if (finished) return <Completion added={done} onClose={leave} />;
 
   const total = done + queue.length;
-  // Glass or plates, the grades open under the card and the card makes room for them.
-  const glassBar = store.directions.review === "glass" && isGlassEffectAPIAvailable();
   return (
     <View
       className="flex-1 bg-canvas"
       style={{ paddingTop: insets.top + 4, paddingBottom: Math.max(insets.bottom, 12) }}
     >
-      <Header done={done} total={total} onClose={() => router.back()} />
+      <Header done={done} total={total} onClose={leave} />
       <View className="flex-1 px-4 pt-3">
         <CardPlate
-          key={card.id}
+          // A forgotten card can come straight back; keyed by position it arrives afresh.
+          key={`${card.id}:${done}`}
           card={card}
           revealed={revealed}
           onReveal={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             setRevealed(true);
           }}
-          onSwipe={grade}
         />
       </View>
-      {revealed && (glassBar ? <GlassGrades onGrade={grade} /> : <GradeStrip onGrade={grade} />)}
+      {revealed && <GradeStrip onGrade={grade} />}
     </View>
   );
 }
@@ -114,7 +114,7 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
         className="h-1.5 flex-1 overflow-hidden rounded-full bg-plate-2"
         style={{ boxShadow: `inset 0 0 0 1px ${p.edge}` } as ViewStyle}
       >
-        <Animated.View className="h-full rounded-full bg-amber" style={fill} />
+        <Animated.View className="h-full rounded-full bg-text-2" style={fill} />
       </View>
       <Text
         className="min-w-12 text-end text-md text-text-2"
@@ -184,170 +184,94 @@ function CardPlate({
   card,
   revealed,
   onReveal,
-  onSwipe,
 }: {
   card: Card;
   revealed: boolean;
   onReveal: () => void;
-  onSwipe: (r: Rating) => void;
 }) {
   const p = usePalette();
   const dark = useColorScheme() === "dark";
-  const { directions, forgottenToday } = useStore();
+  const { forgottenToday } = useStore();
   const reduce = useReducedMotion();
   const deck = DECKS.find((d) => d.id === card.deck);
   const forgotten = forgottenToday.includes(card.id);
   const state = STATE[card.state];
 
-  const tx = useSharedValue(0);
-  const crossed = useSharedValue(0);
-  const swipe = directions.review === "swipe" && revealed;
-  const THRESHOLD = 110;
-
-  const tick = () => Haptics.selectionAsync();
-  const pan = Gesture.Pan()
-    .enabled(swipe)
-    .activeOffsetX([-12, 12])
-    .onUpdate((e) => {
-      tx.value = e.translationX;
-      const side = e.translationX > THRESHOLD ? 1 : e.translationX < -THRESHOLD ? -1 : 0;
-      if (side !== crossed.value) {
-        crossed.value = side;
-        if (side !== 0) scheduleOnRN(tick);
-      }
-    })
-    .onEnd((e) => {
-      const side = e.translationX > THRESHOLD ? 1 : e.translationX < -THRESHOLD ? -1 : 0;
-      crossed.value = 0;
-      if (side === 0) {
-        tx.value = withSpring(0, { duration: 350, dampingRatio: 0.8 });
-        return;
-      }
-      tx.value = withTiming(side * 520, { duration: 220, easing: Easing.in(Easing.quad) }, () => {
-        scheduleOnRN(onSwipe, side > 0 ? 3 : 1);
-      });
-    });
-
-  const moving = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: tx.value },
-      { rotate: `${interpolate(tx.value, [-300, 0, 300], [-6, 0, 6])}deg` },
-    ],
-  }));
-  const goodTint = useAnimatedStyle(() => ({
-    opacity: interpolate(tx.value, [0, THRESHOLD], [0, 1], "clamp"),
-  }));
-  const forgotTint = useAnimatedStyle(() => ({
-    opacity: interpolate(tx.value, [-THRESHOLD, 0], [1, 0], "clamp"),
-  }));
-
   return (
-    <GestureDetector gesture={pan}>
-      <Animated.View
-        layout={reduce ? undefined : LinearTransition.duration(340).easing(EASE)}
-        entering={FadeIn.duration(160)}
-        className="flex-1"
-        style={moving}
+    <Animated.View
+      layout={reduce ? undefined : LinearTransition.duration(340).easing(EASE)}
+      entering={FadeIn.duration(160)}
+      className="flex-1"
+    >
+      <Pressable
+        onPress={revealed ? undefined : onReveal}
+        disabled={revealed}
+        accessibilityRole={revealed ? undefined : "button"}
+        accessibilityLabel={revealed ? undefined : `${card.term}. Tap to reveal`}
+        className="flex-1 overflow-hidden rounded-2xl border border-edge bg-plate"
+        style={dark ? LIFT : undefined}
       >
-        <Pressable
-          onPress={revealed ? undefined : onReveal}
-          accessibilityRole="button"
-          accessibilityLabel={revealed ? undefined : `${card.term}. Tap to reveal`}
-          className="flex-1 overflow-hidden rounded-2xl border border-edge bg-plate"
-          style={dark ? LIFT : undefined}
-        >
-          <View className="flex-row items-center justify-between px-6 pt-5">
-            <View className="flex-row items-center gap-2">
-              <Icon name="deck" size={18} colour={p.muted} />
-              <Text className="text-md text-text-2">{deck?.name}</Text>
-            </View>
-            <View className="h-9 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3.5">
-              <Icon
-                name={forgotten ? "forgot" : state.icon}
-                size={16}
-                colour={forgotten ? p["grade-forgot"] : p[state.tint]}
-              />
-              <Text className="text-base font-medium text-text-2">
-                {forgotten ? "Forgotten" : state.label}
-              </Text>
-            </View>
+        <View className="flex-row items-center justify-between px-6 pt-5">
+          <View className="flex-row items-center gap-2">
+            <Icon name="deck" size={18} colour={p.muted} />
+            <Text className="text-md text-text-2">{deck?.name}</Text>
           </View>
+          <View className="h-9 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3.5">
+            <Icon
+              name={forgotten ? "forgot" : state.icon}
+              size={16}
+              colour={forgotten ? p["grade-forgot"] : p[state.tint]}
+            />
+            <Text className="text-base font-medium text-text-2">
+              {forgotten ? "Forgotten" : state.label}
+            </Text>
+          </View>
+        </View>
 
-          <View className="flex-1 justify-center px-6">
-            <Animated.View
-              layout={reduce ? undefined : LinearTransition.duration(340).easing(EASE)}
+        <View className="flex-1 justify-center px-6">
+          <Animated.View layout={reduce ? undefined : LinearTransition.duration(340).easing(EASE)}>
+            <Text
+              className="text-text"
+              style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
             >
-              <Text
-                className="text-text"
-                style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
-              >
-                {card.term}
-              </Text>
-            </Animated.View>
-            {revealed && (
-              <View className="gap-4 pt-5">
-                <Animated.View
-                  entering={reduce ? FadeIn : rule}
-                  className="h-px bg-edge-2"
-                  style={{ transformOrigin: "0% 50%" }}
-                />
-                <Animated.View entering={reduce ? FadeIn : rise(0)}>
-                  <Text className="text-xl text-text">{card.meaning}</Text>
+              {card.term}
+            </Text>
+          </Animated.View>
+          {revealed && (
+            <View className="gap-4 pt-5">
+              <Animated.View
+                entering={reduce ? FadeIn : rule}
+                className="h-px bg-edge-2"
+                // The rule draws from the start edge, which is the right in a right-to-left language.
+                style={{ transformOrigin: I18nManager.isRTL ? "100% 50%" : "0% 50%" }}
+              />
+              <Animated.View entering={reduce ? FadeIn : rise(0)}>
+                <Text className="text-xl text-text">{card.meaning}</Text>
+              </Animated.View>
+              {card.example && (
+                <Animated.View entering={reduce ? FadeIn : rise(1)}>
+                  <Text className="text-md text-text-2">{card.example}</Text>
                 </Animated.View>
-                {card.example && (
-                  <Animated.View entering={reduce ? FadeIn : rise(1)}>
-                    <Text className="text-md text-text-2">{card.example}</Text>
-                  </Animated.View>
-                )}
-                {card.section && (
-                  <Animated.View entering={reduce ? FadeIn : rise(2)} className="flex-row">
-                    <View className="h-8 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3">
-                      <Icon name="section" size={15} colour={p.muted} />
-                      <Text className="text-base text-text-2">{card.section}</Text>
-                    </View>
-                  </Animated.View>
-                )}
-              </View>
-            )}
-          </View>
-
-          {!revealed && (
-            <Animated.View entering={FadeIn.delay(900).duration(400)} className="items-center pb-6">
-              <Text className="text-base text-faint">Tap to reveal</Text>
-            </Animated.View>
+              )}
+              {card.section && (
+                <Animated.View entering={reduce ? FadeIn : rise(2)} className="flex-row">
+                  <View className="h-8 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3">
+                    <Icon name="section" size={15} colour={p.muted} />
+                    <Text className="text-base text-text-2">{card.section}</Text>
+                  </View>
+                </Animated.View>
+              )}
+            </View>
           )}
-          {swipe && (
-            <>
-              <Animated.View
-                pointerEvents="none"
-                className="absolute inset-0 items-start justify-start rounded-2xl p-5"
-                style={[{ backgroundColor: p["good-soft"] }, goodTint]}
-              >
-                <SwipeBadge icon="good" label="Good" colour={p["grade-good"]} />
-              </Animated.View>
-              <Animated.View
-                pointerEvents="none"
-                className="absolute inset-0 items-end justify-start rounded-2xl p-5"
-                style={[{ backgroundColor: p["danger-soft"] }, forgotTint]}
-              >
-                <SwipeBadge icon="forgot" label="Forgot" colour={p["grade-forgot"]} />
-              </Animated.View>
-            </>
-          )}
-        </Pressable>
-      </Animated.View>
-    </GestureDetector>
-  );
-}
+        </View>
 
-function SwipeBadge({ icon, label, colour }: { icon: IconName; label: string; colour: string }) {
-  return (
-    <View className="mt-16 flex-row items-center gap-2 rounded-full bg-plate px-4 py-2 border border-edge">
-      <Icon name={icon} size={16} colour={colour} />
-      <Text className="text-lg font-medium" style={{ color: colour }}>
-        {label}
-      </Text>
-    </View>
+        {!revealed && (
+          <Animated.View entering={FadeIn.delay(900).duration(400)} className="items-center pb-6">
+            <Text className="text-base text-muted">Tap to reveal</Text>
+          </Animated.View>
+        )}
+      </Pressable>
+    </Animated.View>
   );
 }
 
@@ -366,50 +290,7 @@ const gradeIn = (i: number) =>
     .duration(220)
     .delay(80 + i * 35);
 
-const glassIn = (i: number) =>
-  // Translate only: a fading parent stops the glass from rendering at all.
-  new Keyframe({
-    0: { transform: [{ translateY: 24 }] },
-    100: { transform: [{ translateY: 0 }], easing: EASE },
-  })
-    .duration(260)
-    .delay(80 + i * 35);
-
-/** The four grades in glass; each one gives under the thumb. */
-function GlassGrades({ onGrade }: { onGrade: (r: Rating) => void }) {
-  const p = usePalette();
-  const reduce = useReducedMotion();
-  return (
-    <View style={{ flexDirection: "row", gap: 8, paddingHorizontal: 16, paddingTop: 12 }}>
-      {GRADES.map((g, i) => (
-        <Animated.View key={g.label} entering={reduce ? undefined : glassIn(i)} style={{ flex: 1 }}>
-          <Pressable
-            onPress={() => onGrade((i + 1) as Rating)}
-            accessibilityRole="button"
-            accessibilityLabel={g.label}
-          >
-            <GlassView
-              isInteractive
-              glassEffectStyle="regular"
-              style={{
-                height: 76,
-                borderRadius: 26,
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 6,
-              }}
-            >
-              <Icon name={g.icon} size={20} colour={p[g.tint]} />
-              <Text className="text-base font-medium text-text">{g.label}</Text>
-            </GlassView>
-          </Pressable>
-        </Animated.View>
-      ))}
-    </View>
-  );
-}
-
-/** Four grades, 72 px tall, always under the card. Same tap, same weight, whichever is chosen. */
+/** Four grades, 64 pt tall, always under the card. Same tap, same weight, whichever is chosen. */
 function GradeStrip({ onGrade }: { onGrade: (r: Rating) => void }) {
   const p = usePalette();
   const dark = useColorScheme() === "dark";

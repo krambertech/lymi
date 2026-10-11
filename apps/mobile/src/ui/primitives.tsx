@@ -17,7 +17,6 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { usePalette } from "../theme/palette";
-import { isDisplay, useFontFamily } from "./font";
 import { Icon, type IconName } from "./icons";
 
 export { Icon };
@@ -25,15 +24,9 @@ export { Icon };
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 /** Text in Onest. Size and colour come from the token classes, as on the web. */
-export function Text({ className, style, ...props }: TextProps & { className?: string }) {
-  const fontFamily = useFontFamily(isDisplay(className, style));
+export function Text({ className, ...props }: TextProps & { className?: string }) {
   return (
-    <RNText
-      className={className}
-      maxFontSizeMultiplier={1.6}
-      style={[{ fontFamily }, style]}
-      {...props}
-    />
+    <RNText className={`font-sans ${className ?? ""}`} maxFontSizeMultiplier={1.6} {...props} />
   );
 }
 

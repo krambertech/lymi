@@ -74,7 +74,10 @@ function SettingsRoute() {
         setThemeState(t);
       }}
     >
-      <SettingsGroup title={t`Privacy preferences`}>
+      <SettingsGroup
+        title={t`Privacy preferences`}
+        description={t`Choose whether Lymi uses optional analytics cookies.`}
+      >
         <Button
           render={
             <a
@@ -84,7 +87,7 @@ function SettingsRoute() {
             />
           }
         >
-          <Trans>Privacy preferences</Trans>
+          <Trans>Open on lymi.app</Trans>
         </Button>
       </SettingsGroup>
       <NotificationsSection />

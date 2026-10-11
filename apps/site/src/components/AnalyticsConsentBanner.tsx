@@ -35,6 +35,8 @@ export function AnalyticsConsentBanner() {
   }
 
   const refreshAccount = useCallback(async () => {
+    // Only an allowed choice needs the account's; skipping leaves analytics off.
+    if (!analyticsConsent()?.allowed) return;
     try {
       const response = await fetch(productUrl("/api/settings/analytics-consent"), {
         credentials: "include",

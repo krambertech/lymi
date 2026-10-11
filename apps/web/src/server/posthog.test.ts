@@ -108,7 +108,10 @@ describe("PostHog delivery", () => {
       { PRODUCT_URL: production.PRODUCT_URL },
     ]) {
       const analytics = productAnalytics(env, "learner-1");
+      const later = vi.fn(async () => {});
+      analytics.later?.(later);
       await analytics.run(async () => track(analytics, { name: "signed_in" }));
+      expect(later).not.toHaveBeenCalled();
       await reportServerException(env, new Error("private"), { route: "/api/me", method: "GET" });
     }
     expect(fetch).not.toHaveBeenCalled();

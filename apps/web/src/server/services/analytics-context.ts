@@ -26,7 +26,13 @@ export async function analyticsContext(
     ),
   };
 }
+/** Native apps send neither header and carry no consent cookie, so the account choice governs them. */
+function fromBrowser(headers: Headers): boolean {
+  return headers.has("sec-fetch-site") || /^https?:\/\//.test(headers.get("origin") ?? "");
+}
+
 export function analyticsContextFor(db: Db, userId: string, headers?: Headers) {
-  const choice = headers ? readConsent(headers.get("cookie") ?? "") : undefined;
+  const choice =
+    headers && fromBrowser(headers) ? readConsent(headers.get("cookie") ?? "") : undefined;
   return () => analyticsContext(db, userId, choice, headers?.get("accept-language") ?? undefined);
 }

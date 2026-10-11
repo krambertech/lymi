@@ -1,6 +1,7 @@
-import type { SettingsPatch } from "@lymi/core";
+import { type OnboardingInput, type SettingsPatch, STARTING_DAILY_GOAL } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import { schema } from "../db";
+import { track } from "./analytics";
 import { type ServiceContext, ServiceError } from "./context";
 import { applyGoalToToday } from "./review-days";
 
@@ -27,6 +28,9 @@ export function defaultSettings(userId: string): UserSettings {
     reviewTimezone: null,
     reviewTimezoneMode: "automatic",
     reviewTimezoneUpdatedAt: null,
+    onboardedAt: null,
+    learningKind: null,
+    learningLanguage: null,
     createdAt: now,
     updatedAt: now,
   };
@@ -60,5 +64,34 @@ export async function updateSettings(ctx: ServiceContext, patch: SettingsPatch) 
     })
     .where(eq(schema.userSettings.userId, ctx.userId));
   if (patch.dailyGoal !== undefined) await applyGoalToToday(ctx, patch.dailyGoal);
+  return getSettings(ctx);
+}
+
+/**
+ * Getting set up, finished or skipped. A goal the learner picked counts as chosen; a skip starts
+ * them on the lighter goal unless they had already chosen one. docs/design/onboarding.md.
+ */
+export async function finishOnboarding(ctx: ServiceContext, input: OnboardingInput) {
+  if (ctx.actor !== "user") {
+    throw new ServiceError("forbidden", "Only the learner can get set up.");
+  }
+  const before = await getSettings(ctx);
+  const dailyGoal =
+    input.dailyGoal ?? (before.dailyGoalChosenAt ? before.dailyGoal : STARTING_DAILY_GOAL);
+  const now = new Date();
+  await ensureSettings(ctx);
+  await ctx.db
+    .update(schema.userSettings)
+    .set({
+      onboardedAt: now,
+      learningKind: input.learningKind,
+      learningLanguage: input.learningLanguage,
+      dailyGoal,
+      ...(input.dailyGoal !== null && { dailyGoalChosenAt: now }),
+      updatedAt: now,
+    })
+    .where(eq(schema.userSettings.userId, ctx.userId));
+  if (dailyGoal !== before.dailyGoal) await applyGoalToToday(ctx, dailyGoal);
+  track(ctx.analytics, { name: "onboarding_finished", kind: input.learningKind ?? "skipped" });
   return getSettings(ctx);
 }

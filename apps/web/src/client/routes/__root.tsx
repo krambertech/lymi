@@ -99,6 +99,8 @@ function Shell() {
   // Consent is a stop inside another app's sign-in; the local design page is its own document.
   const bare = isBareShell(location.pathname);
   const onReview = location.pathname.startsWith("/review");
+  // Getting set up closes the app around it as review does, so the way out is Skip, not the rail.
+  const closed = onReview || location.pathname === "/welcome";
   const me = useQuery({ ...meQuery, enabled: !bare });
   const decks = useQuery({ ...decksQuery, enabled: !bare && me.isSuccess });
   const series = useQuery({ ...seriesQuery, enabled: !bare && me.isSuccess });
@@ -275,7 +277,7 @@ function Shell() {
           // rail stayed up with search, capture, every deck and the profile, which made focus a
           // phone-only idea. Both go now, and both come back when the session ends.
           sidebar={
-            onReview ? undefined : (
+            closed ? undefined : (
               <Sidebar
                 decks={decks.data}
                 series={series.data}
@@ -291,7 +293,7 @@ function Shell() {
               />
             )
           }
-          nav={onReview ? undefined : <PillNav />}
+          nav={closed ? undefined : <PillNav />}
           fill={onReview}
         >
           <Outlet />

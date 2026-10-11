@@ -28,6 +28,7 @@ export const e2eAccounts = [
   "word-detail",
   "deck-page",
   "explore",
+  "welcome",
   "language",
   "join-owner",
   "join-member",

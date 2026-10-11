@@ -1,4 +1,4 @@
-import type { ReviewModeKey } from "@lymi/core";
+import type { LearningKind, ReviewModeKey } from "@lymi/core";
 
 export type AnalyticsWriter = Pick<AnalyticsEngineDataset, "writeDataPoint">;
 
@@ -11,7 +11,8 @@ export type AnalyticsEvent =
       adapter: "anki" | "mochi" | "lymi" | "unknown";
       outcome: "started" | "done" | "failed";
     }
-  | { name: "enrichment_finished"; outcome: "enriched" | "empty" | "failed"; count: number };
+  | { name: "enrichment_finished"; outcome: "enriched" | "empty" | "failed"; count: number }
+  | { name: "onboarding_finished"; kind: LearningKind | "skipped" };
 
 /** Only fixed action labels and counts reach Analytics Engine. */
 export function track(dataset: AnalyticsWriter | undefined, event: AnalyticsEvent): void {
@@ -25,7 +26,9 @@ export function track(dataset: AnalyticsWriter | undefined, event: AnalyticsEven
           ? `${event.adapter}:${event.outcome}`
           : event.name === "enrichment_finished"
             ? event.outcome
-            : "";
+            : event.name === "onboarding_finished"
+              ? event.kind
+              : "";
   const value =
     event.name === "card_added" || event.name === "enrichment_finished"
       ? event.count

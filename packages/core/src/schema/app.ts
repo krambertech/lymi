@@ -233,6 +233,12 @@ export const userSettings = sqliteTable("user_settings", {
     .default("automatic"),
   /** When a visible page last moved the automatic zone. */
   reviewTimezoneUpdatedAt: integer("review_timezone_updated_at", { mode: "timestamp_ms" }),
+  /** When the learner finished or skipped getting set up. Null shows it to an account with nothing in it. */
+  onboardedAt: integer("onboarded_at", { mode: "timestamp_ms" }),
+  /** What they said they are learning while getting set up. */
+  learningKind: text("learning_kind", { enum: ["language", "test", "subject", "other"] }),
+  /** The language they said they are learning: a BCP 47 tag, or the name they typed. */
+  learningLanguage: text("learning_language"),
   ...timestamps,
 });
 

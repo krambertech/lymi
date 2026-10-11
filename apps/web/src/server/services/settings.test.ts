@@ -2,7 +2,7 @@ import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
 import type { ServiceContext } from "./context";
-import { ensureSettings, getSettings, updateSettings } from "./settings";
+import { ensureSettings, finishOnboarding, getSettings, updateSettings } from "./settings";
 import { learner, testDb } from "./test-db";
 
 let db: Db;
@@ -55,5 +55,42 @@ describe("reading settings", () => {
     const [stored] = await rows();
     const { createdAt: _createdAt, updatedAt: _updatedAt, ...defaults } = read;
     expect(stored).toMatchObject(defaults);
+  });
+});
+
+describe("getting set up", () => {
+  const skip = { learningKind: null, learningLanguage: null, dailyGoal: null };
+
+  it("records the answers and counts the goal as chosen", async () => {
+    const who = await learner(db, "onboarded", "Onboarded");
+    const done = await finishOnboarding(who, {
+      learningKind: "language",
+      learningLanguage: "es",
+      dailyGoal: 10,
+    });
+    expect(done).toMatchObject({ learningKind: "language", learningLanguage: "es", dailyGoal: 10 });
+    expect(done.onboardedAt).toBeInstanceOf(Date);
+    expect(done.dailyGoalChosenAt).toBeInstanceOf(Date);
+  });
+
+  it("starts a skip on the lighter goal without calling it chosen", async () => {
+    const who = await learner(db, "skipper", "Skipper");
+    const done = await finishOnboarding(who, skip);
+    expect(done).toMatchObject({ dailyGoal: 25, dailyGoalChosenAt: null, learningKind: null });
+    expect(done.onboardedAt).toBeInstanceOf(Date);
+  });
+
+  it("keeps a goal the learner had already chosen when they skip", async () => {
+    const who = await learner(db, "chooser", "Chooser");
+    await updateSettings(who, { dailyGoal: 100 });
+    expect((await finishOnboarding(who, skip)).dailyGoal).toBe(100);
+  });
+
+  it("refuses an integration", async () => {
+    const who = await learner(db, "keyholder", "Keyholder");
+    await expect(finishOnboarding({ ...who, actor: "api" }, skip)).rejects.toMatchObject({
+      code: "forbidden",
+    });
+    expect((await getSettings(who)).onboardedAt).toBeNull();
   });
 });

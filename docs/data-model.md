@@ -140,6 +140,9 @@ erDiagram
     text review_timezone "nullable IANA zone"
     text review_timezone_mode "automatic | manual"
     int review_timezone_updated_at "nullable"
+    int onboarded_at "nullable until Welcome is finished or skipped"
+    text learning_kind "nullable language | test | subject | other"
+    text learning_language "nullable BCP 47 tag or typed name"
   }
   user_avatars {
     text user_id PK

@@ -734,6 +734,23 @@ export const DailyGoal = z
   .max(200, "Keep the goal to 200 reviews or fewer.");
 export type DailyGoal = z.infer<typeof DailyGoal>;
 
+/** The goal a learner starts with when they skip choosing one while getting set up. */
+export const STARTING_DAILY_GOAL = 25;
+
+/** What a learner said they are learning when they got set up; it chooses the ready-made decks offered. */
+export const LEARNING_KINDS = ["language", "test", "subject", "other"] as const;
+export const LearningKind = z.enum(LEARNING_KINDS);
+export type LearningKind = z.infer<typeof LearningKind>;
+
+/** The answers from getting set up. Every field null is a skip. */
+export const OnboardingInput = z.object({
+  learningKind: LearningKind.nullable(),
+  /** A BCP 47 tag, or the name the learner typed for a language Lymi does not list. */
+  learningLanguage: z.string().trim().min(1).max(60).nullable(),
+  dailyGoal: DailyGoal.nullable(),
+});
+export type OnboardingInput = z.infer<typeof OnboardingInput>;
+
 export const SettingsPatch = z.object({
   /** The language of the interface and reminders. Meanings follow it. */
   appLanguage: AppLanguage.optional(),

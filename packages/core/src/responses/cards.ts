@@ -189,6 +189,7 @@ export const CardStateOut = z
 export const CardWithStateOut = z
   .object({ card: CardOut, state: CardStateOut.nullable() })
   .meta({ id: "CardWithState" });
+export type CardWithStateOut = z.infer<typeof CardWithStateOut>;
 /** One review of one card, as the card's history shows it. */
 export const ReviewOut = z
   .object({

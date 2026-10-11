@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { writes } from "@lymi/client/writes";
 import { DeckInput, type Directions, deckLimits } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
@@ -7,7 +8,6 @@ import { useRef, useState } from "react";
 import { errorMessage } from "../lib/api";
 import { useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
-import { writes } from "../lib/writes";
 import { Button } from "./button";
 import { DirectionCompact, LanguageField } from "./deck-fields";
 import { InlineError } from "./inline-error";

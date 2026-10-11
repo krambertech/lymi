@@ -1,4 +1,6 @@
 import { Plural, Trans } from "@lingui/react/macro";
+import { outboxSize } from "@lymi/client/grades";
+import { flushWrites, pendingWrites } from "@lymi/client/writes";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { createContext, type ReactNode, useCallback, useContext, useRef, useState } from "react";
@@ -12,10 +14,8 @@ import {
   DialogTitle,
 } from "../components/ui/dialog";
 import { signOut as endSession } from "./auth";
-import { outboxSize } from "./grades";
 import { clearPersistedLearnerState } from "./persisted";
 import { setTelemetryLearner } from "./telemetry";
-import { flushWrites, pendingWrites } from "./writes";
 
 interface Ctx {
   signOut: () => Promise<void>;

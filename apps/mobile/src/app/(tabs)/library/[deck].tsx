@@ -1,14 +1,14 @@
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { View } from "react-native";
-import { DECKS } from "../../../data/demo";
-import { type Card, useStore } from "../../../data/store";
+import { sectionName } from "../../../data/demo-server";
+import { type Standing, standing, useDeckCards, useDecks } from "../../../data/queries";
 import { type Palette, usePalette } from "../../../theme/palette";
 import type { IconName } from "../../../ui/icons";
 import { Button, Icon, Plate, SectionTitle, Text } from "../../../ui/primitives";
 import { Screen } from "../../../ui/screen";
 
-const STATE: Record<Card["state"], { label: string; icon: IconName; tint: keyof Palette }> = {
+const STATE: Record<Standing, { label: string; icon: IconName; tint: keyof Palette }> = {
   new: { label: "New", icon: "new", tint: "state-new" },
   learning: { label: "Learning", icon: "learning", tint: "state-learning" },
   known: { label: "Known", icon: "known", tint: "state-known" },
@@ -16,13 +16,13 @@ const STATE: Record<Card["state"], { label: string; icon: IconName; tint: keyof 
 
 export default function Deck() {
   const { deck: id } = useLocalSearchParams<{ deck: string }>();
-  const { cards } = useStore();
+  const deck = useDecks().data?.find((d) => d.id === id);
+  const mine = useDeckCards(id).data ?? [];
   const router = useRouter();
   const p = usePalette();
-  const deck = DECKS.find((d) => d.id === id);
-  const mine = cards.filter((c) => c.deck === id);
-  const due = mine.filter((c) => c.due).length;
-  const sections = [...new Set(mine.map((c) => c.section ?? "Unsorted"))];
+  const due = deck?.due ?? 0;
+  const section = (c: (typeof mine)[number]) => sectionName(c.card.sectionId) ?? "Unsorted";
+  const sections = [...new Set(mine.map(section))];
 
   return (
     <Screen title={deck?.name ?? "Deck"} kind="page" back="Library">
@@ -42,9 +42,9 @@ export default function Deck() {
           <SectionTitle>{s}</SectionTitle>
           <Plate className="overflow-hidden">
             {mine
-              .filter((c) => (c.section ?? "Unsorted") === s)
-              .map((c, i) => {
-                const st = STATE[c.state];
+              .filter((c) => section(c) === s)
+              .map(({ card: c, state }, i) => {
+                const st = STATE[standing(state?.state)];
                 return (
                   <View
                     key={c.id}

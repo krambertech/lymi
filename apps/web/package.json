@@ -65,6 +65,7 @@
     "@hono/standard-validator": "^0.4.0",
     "@lingui/core": "6.9.1",
     "@lingui/react": "6.9.1",
+    "@lymi/client": "workspace:*",
     "@lymi/core": "workspace:*",
     "@modelcontextprotocol/ext-apps": "2.0.3",
     "@modelcontextprotocol/sdk": "1.30.0",

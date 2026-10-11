@@ -42,10 +42,12 @@ export const QueueItemOut = z
     slipping,
   })
   .meta({ id: "QueueItem" });
+export type QueueItemOut = z.infer<typeof QueueItemOut>;
 
 export const QueueOut = z
   .object({ total: z.number().int(), items: z.array(QueueItemOut) })
   .meta({ id: "Queue" });
+export type QueueOut = z.infer<typeof QueueOut>;
 
 export const RoundsOut = z
   .object({

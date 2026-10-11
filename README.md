@@ -40,6 +40,7 @@ apps/web          Product deployable: Vite React PWA client + Hono Worker
   migrations      Drizzle-generated SQL for D1
 apps/mobile       Phone app: Expo React Native, demo data for now (see its README)
 packages/core     Drizzle schema, Zod types, FSRS scheduling. Shared by the web and the phone app.
+packages/client   API client, query options, grade and write outboxes, review draw. Shared by both clients.
 scripts           Brand assets (brand.mjs) and icon generation (icons.sh)
 ```
 

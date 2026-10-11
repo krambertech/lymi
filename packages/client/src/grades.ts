@@ -1,10 +1,12 @@
 import type { GradeInput, ReviewMode } from "@lymi/core";
 import { modeKey, modeOf, modeOfStateDirection } from "@lymi/core";
 import { ApiError, api } from "./api";
+import { clientConfig } from "./config";
+import { OUTBOX_KEY } from "./queued";
 import type { LocalGrade } from "./review-draw";
 
 /** Today's grades from this device, queued or sent, so every scope's draw and a reload see them. */
-const KEY = "lymi-outbox";
+const KEY = OUTBOX_KEY;
 
 export interface StoredGrade extends LocalGrade {
   timezone?: string | undefined;
@@ -20,8 +22,9 @@ let cache: { raw: string | null; grades: StoredGrade[] } | null = null;
 const listeners = new Set<() => void>();
 
 function stored(): string | null {
+  const { storage } = clientConfig();
   try {
-    return localStorage.getItem(KEY);
+    return storage.getItem(KEY);
   } catch {
     return cache?.raw ?? null;
   }
@@ -49,10 +52,11 @@ function read(): StoredGrade[] {
 }
 
 function write(next: StoredGrade[]) {
+  const { storage } = clientConfig();
   const raw = JSON.stringify(next);
   cache = { raw, grades: next };
   try {
-    localStorage.setItem(KEY, raw);
+    storage.setItem(KEY, raw);
   } catch {
     // A full or blocked storage keeps the grades for this page's life.
   }
@@ -65,13 +69,12 @@ const same = (a: LocalGrade, b: LocalGrade) =>
 export const gradeStore = {
   subscribe(listener: () => void) {
     listeners.add(listener);
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === KEY) listener();
-    };
-    window.addEventListener("storage", onStorage);
+    const unsubscribe = clientConfig().storage.subscribe?.((key) => {
+      if (key === KEY) listener();
+    });
     return () => {
       listeners.delete(listener);
-      window.removeEventListener("storage", onStorage);
+      unsubscribe?.();
     };
   },
   snapshot: read,

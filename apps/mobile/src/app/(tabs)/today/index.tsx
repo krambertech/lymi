@@ -4,8 +4,7 @@ import { type Href, useRouter } from "expo-router";
 import { View, type ViewStyle } from "react-native";
 import { Flame } from "../../../brand/flame";
 import { Lantern } from "../../../brand/lantern";
-import { DECKS } from "../../../data/demo";
-import { useProgress, useStore } from "../../../data/store";
+import { useDay, useDecks, useRounds } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { Button, Icon, Plate, Press, RowArrow, SectionTitle, Text } from "../../../ui/primitives";
 import { Screen } from "../../../ui/screen";
@@ -24,10 +23,15 @@ export default function Today() {
   );
 }
 
+/** Cards due across every deck. */
+function useDue() {
+  return useDecks().data?.reduce((n, d) => n + d.due, 0) ?? 0;
+}
+
 function useDueLine() {
-  const { due, reviewsToday, goal, dayDone } = useStore();
-  if (due.length > 0)
-    return { count: due.length, line: due.length === 1 ? "card due today" : "cards due today" };
+  const due = useDue();
+  const { reviewsToday, goal, dayDone } = useDay();
+  if (due > 0) return { count: due, line: due === 1 ? "card due today" : "cards due today" };
   if (reviewsToday >= goal) return { count: reviewsToday, line: "reviews today, goal reached" };
   if (dayDone) return { count: reviewsToday, line: "reviews today, you’re done" };
   return { count: 0, line: "Nothing due today" };
@@ -40,8 +44,8 @@ function startReview(router: ReturnType<typeof useRouter>, href: Href = "/review
 
 /** The lantern lights the top of the screen; no plate, the room itself is warm there. */
 function LitDue() {
-  const { due, fed } = useStore();
-  const progress = useProgress();
+  const due = useDue();
+  const { fed, progress } = useDay();
   const router = useRouter();
   const p = usePalette();
   const { count, line } = useDueLine();
@@ -67,7 +71,7 @@ function LitDue() {
         <Text className="text-lg text-text-2">{line}</Text>
       </View>
       <View className="self-stretch">
-        {due.length > 0 ? (
+        {due > 0 ? (
           <Button label="Review" variant="primary" size="xl" onPress={() => startReview(router)} />
         ) : (
           <Button label="Add cards" icon="plus" onPress={() => router.push("/capture")} />
@@ -78,7 +82,7 @@ function LitDue() {
 }
 
 function StreakPlate() {
-  const { streak, week, goal, reviewsToday, dayDone } = useStore();
+  const { streak, week, goal, reviewsToday, dayDone } = useDay();
   const router = useRouter();
   const left = Math.max(0, goal - reviewsToday);
   const line = dayDone || left === 0 ? "Today counts" : `${left} reviews to today’s goal`;
@@ -111,13 +115,12 @@ function StreakPlate() {
 
 /** Also on your list: the three rounds, always in this order, each a whole-row link. */
 function Rounds() {
-  const { forgottenToday, cards } = useStore();
+  const rounds = useRounds().data;
   const router = useRouter();
   const p = usePalette();
-  const fresh = cards.filter((c) => c.state === "new").length;
   const rows = [
     {
-      n: forgottenToday.length,
+      n: rounds?.forgotten ?? 0,
       title: "Forgotten today",
       empty: "Nothing forgotten today",
       line: "Graded Forgot today",
@@ -126,7 +129,7 @@ function Rounds() {
       href: "/review?round=forgotten" as const,
     },
     {
-      n: fresh,
+      n: rounds?.new ?? 0,
       title: "New cards",
       empty: "Add cards from your next lesson",
       line: "Not reviewed yet",
@@ -135,7 +138,7 @@ function Rounds() {
       href: "/review?round=new" as const,
     },
     {
-      n: 2,
+      n: rounds?.slipping ?? 0,
       title: "Often forgotten",
       empty: "No cards you keep forgetting",
       line: `Forgotten on ${SLIPPING_FORGOTTEN_DAYS} of the last ${SLIPPING_RECENT_DAYS} days seen`,
@@ -184,11 +187,8 @@ function Rounds() {
 }
 
 function DecksToReview() {
-  const { due } = useStore();
   const router = useRouter();
-  const decks = DECKS.map((d) => ({ ...d, due: due.filter((c) => c.deck === d.id).length })).filter(
-    (d) => d.due > 0,
-  );
+  const decks = useDecks().data?.filter((d) => d.due > 0) ?? [];
   if (decks.length < 2) return null;
   return (
     <View>

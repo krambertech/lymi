@@ -1,4 +1,4 @@
-import { t } from "@lingui/core/macro";
+import { clientConfig } from "../config";
 
 /** The device's IANA zone. The server decides whether it moves the review day. */
 export function deviceTimezone(): string {
@@ -16,23 +16,31 @@ export class ApiError extends Error {
   }
 }
 
+/** A path on the product API as this app reaches it: the web's own origin, or the phone's base URL. */
+export function apiUrl(path: string): string {
+  return `${clientConfig().baseUrl ?? ""}${path}`;
+}
+
 export async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const config = clientConfig();
+  const session = config.headers ? await config.headers() : {};
   let res: Response;
   try {
-    res = await fetch(path, {
+    res = await fetch(apiUrl(path), {
       ...init,
       // A form body sets its own multipart boundary.
       headers: {
         ...(init?.body instanceof FormData ? {} : { "content-type": "application/json" }),
+        ...session,
         ...(init?.headers ?? {}),
       },
-      credentials: "include",
+      credentials: config.credentials ?? "include",
     });
   } catch {
     // Status 0 is what the grade outbox reads as offline.
     throw new ApiError(0, unreachable());
   }
-  if (res.status === 401) throw new ApiError(401, t`Sign in to continue.`);
+  if (res.status === 401) throw new ApiError(401, config.messages.signIn());
   if (!res.ok) {
     const body = (await res.json().catch(() => null)) as { issues?: unknown } | null;
     throw new ApiError(res.status, failureMessage(res.status, body), body?.issues);
@@ -41,11 +49,11 @@ export async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 function unreachable() {
-  return t`Couldn’t reach Lymi. Check your connection and try again.`;
+  return clientConfig().messages.unreachable();
 }
 
 /**
- * The server's `error` is English and meant for integrations, so the learner sees a catalog
+ * The server's `error` is English and meant for integrations, so the learner sees the app's catalog
  * sentence instead; a 400 keeps the schema's own message, which is written for a person.
  */
 function failureMessage(status: number, body: { issues?: unknown } | null): string {
@@ -56,9 +64,10 @@ function failureMessage(status: number, body: { issues?: unknown } | null): stri
     }
   }
   if (status >= 500) return unreachable();
-  if (status === 403) return t`Only the deck’s owner can change this.`;
-  if (status === 404) return t`That’s no longer here. Reload to see what changed.`;
-  return t`That didn’t go through. Reload and try again.`;
+  const { messages } = clientConfig();
+  if (status === 403) return messages.ownerOnly();
+  if (status === 404) return messages.gone();
+  return messages.failed();
 }
 
 /** The sentence to show for a failed request, whatever was thrown. */

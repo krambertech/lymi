@@ -27,7 +27,10 @@ flowchart LR
   subgraph Core["packages/core"]
     Schema[Drizzle schema + Zod types]
     FSRS[ts-fsrs scheduling]
-    Client[Typed API client]
+  end
+  subgraph Shared["packages/client"]
+    Client[Typed API client
+query options, outboxes]
   end
   D1[(D1, SQLite)]
   R2[(R2, audio + private images)]
@@ -83,7 +86,7 @@ The bar is "could be mistaken for native." Every screen is checked on a real iPh
 
 ### Phone app: Expo React Native, sharing Lymi's packages
 
-`apps/mobile` is an Expo SDK 57 React Native app with Expo Router, Uniwind (Tailwind v4 class names shared with the web), Reanimated with Gesture Handler, Lucide and Onest, and Home Screen widgets through `expo-widgets`. It imports `packages/core` unchanged; the API client and design values move into shared packages before its screens use real data. It lost to Capacitor around the existing React app, which keeps every screen a WebView. [ADR 0029](adr/0029-the-phone-app-is-expo-react-native-sharing-core.md) has the decision and [the proposal](proposals/native-mobile-app.md) the delivery outline.
+`apps/mobile` is an Expo SDK 57 React Native app with Expo Router, Uniwind (Tailwind v4 class names shared with the web), Reanimated with Gesture Handler, Lucide and Onest, and Home Screen widgets through `expo-widgets`. It imports `packages/core` unchanged, and `packages/client` with its own origin, session headers and storage: `my.lymi.app`, Better Auth's cookie, and MMKV once it has real data. Its screens read query-shaped hooks that return the API's response types, answered by demo data until it signs in. Design values move into a shared package too. It lost to Capacitor around the existing React app, which keeps every screen a WebView. [ADR 0029](adr/0029-the-phone-app-is-expo-react-native-sharing-core.md) has the decision and [the proposal](proposals/native-mobile-app.md) the delivery outline.
 
 ### UI: Tailwind v4 + shadcn/ui on Base UI, tokens in styles.css
 

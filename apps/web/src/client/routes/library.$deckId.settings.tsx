@@ -1,5 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { writes } from "@lymi/client/writes";
 import { type InviteRefusal, PENDING_INVITATION_LIMIT } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
@@ -37,7 +38,6 @@ import {
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { useLeaveDeck } from "../lib/use-leave-deck";
 import { useSectionActions } from "../lib/use-sections";
-import { writes } from "../lib/writes";
 import { type DeckSettingsPatch, DeckSettingsView } from "../views/deck-settings-view";
 
 export const Route = createFileRoute("/library/$deckId/settings")({

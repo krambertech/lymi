@@ -1,4 +1,5 @@
 import "../styles.css";
+import { configureWebClient } from "../lib/client";
 
 declare module "vitest" {
   export interface ProvidedContext {
@@ -6,3 +7,6 @@ declare module "vitest" {
     machine: "desktop" | "touch";
   }
 }
+
+// Components read the shared API client and its outboxes, as the app does after `main.tsx`.
+configureWebClient();

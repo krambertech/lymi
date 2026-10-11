@@ -2,7 +2,7 @@ import { Asset } from "expo-asset";
 import { File } from "expo-file-system";
 import { widgetsDirectory } from "expo-widgets";
 import { useEffect, useState } from "react";
-import { useStore } from "../data/store";
+import { useDay, useDecks } from "../data/queries";
 import { weekLetters } from "../ui/days";
 import LockWidget from "./lock-widget";
 import TodayWidget, { type Lanterns } from "./today-widget";
@@ -44,7 +44,8 @@ function level(n: number, goal: number) {
 
 /** Pushes today's numbers to the widgets whenever they change. The real app does this after each sync. */
 export function WidgetSync() {
-  const { due, streak, reviewsToday, goal, week, dayDone } = useStore();
+  const { streak, reviewsToday, goal, week, dayDone } = useDay();
+  const due = useDecks().data?.reduce((n, d) => n + d.due, 0) ?? 0;
   const [images, setImages] = useState<Images>({});
 
   useEffect(() => {
@@ -66,12 +67,10 @@ export function WidgetSync() {
           console.warn(`widget ${name}`, e);
         }
       };
-      send("lock", () =>
-        LockWidget.updateSnapshot({ due: due.length, streak, reviewed: reviewsToday, goal }),
-      );
+      send("lock", () => LockWidget.updateSnapshot({ due, streak, reviewed: reviewsToday, goal }));
       send("today", () =>
         TodayWidget.updateSnapshot({
-          due: due.length,
+          due,
           streak,
           out: streak === 0 && reviewsToday === 0,
           lanterns: lanterns as Lanterns,
@@ -80,7 +79,7 @@ export function WidgetSync() {
       send("week", () =>
         WeekWidget.updateSnapshot({
           streak,
-          due: due.length,
+          due,
           left,
           week: steps,
           letters: weekLetters(steps.length),
@@ -89,7 +88,7 @@ export function WidgetSync() {
       );
     }, 1500);
     return () => clearTimeout(timer);
-  }, [images, due.length, streak, reviewsToday, goal, weekKey, dayDone]);
+  }, [images, due, streak, reviewsToday, goal, weekKey, dayDone]);
 
   return null;
 }

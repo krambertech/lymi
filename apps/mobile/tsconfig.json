@@ -5,7 +5,9 @@
     "noUncheckedIndexedAccess": true,
     "paths": {
       "react": ["./node_modules/@types/react"],
-      "react/*": ["./node_modules/@types/react/*"]
+      "react/*": ["./node_modules/@types/react/*"],
+      // The phone's own TanStack Query, for `packages/client` too, as Metro resolves it.
+      "@tanstack/react-query": ["./node_modules/@tanstack/react-query/build/modern/index.d.ts"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]

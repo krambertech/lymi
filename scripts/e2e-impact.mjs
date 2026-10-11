@@ -10,6 +10,7 @@ const productionPrefixes = [
   "apps/web/src/server/",
   "apps/site/",
   "e2e/",
+  "packages/client/",
   "packages/core/",
 ];
 

@@ -6,7 +6,7 @@ A vocabulary app for one learner. Read [`CONTEXT.md`](CONTEXT.md) before naming 
 
 [`README.md`](README.md) has the layout and the commands. [`docs/stack.md`](docs/stack.md) has every technical decision with the alternative that lost, so read it before proposing a different shape. [`PRODUCT.md`](PRODUCT.md) is who it is for; [`DESIGN.md`](DESIGN.md) holds the rules every screen follows and indexes the system files in `docs/design/system` and the feature design in `docs/design`; read the system file for what you are building before writing UI.
 
-Two deployables: `apps/site` is the Astro public site plus its narrow health-and-redirects Worker; `apps/web` is the Vite React product and Hono Worker. `packages/core` is what both Workers and a future React Native app import unchanged — Drizzle schema, Zod types, FSRS. Anything the product client and server both need lives there.
+Two deployables: `apps/site` is the Astro public site plus its narrow health-and-redirects Worker; `apps/web` is the Vite React product and Hono Worker. `packages/core` is what both Workers and the React Native app in `apps/mobile` import unchanged — Drizzle schema, Zod types, FSRS. Anything the product client and server both need lives there. `packages/client` is what the web and phone clients share: the API client, query options, the grade and write outboxes, and the review draw. Each app configures it once with its origin, session headers and storage.
 
 ## Testing locally
 
@@ -40,7 +40,7 @@ Cloudflare Workers Builds owns deployment after merge. A green build is not proo
 
 **Server layering.** `routes/*` parse, describe for OpenAPI, and return; `services/*` hold the logic and own the database; `db.ts` and the schema sit underneath. A route that reaches past a service into Drizzle is a layering break. Every write goes through `services/audit.ts`, which takes the actor and the connected app from the service context — the Activity screen exists so nothing an integration does lands unseen.
 
-**Client data.** TanStack Query owns every read and cache. The service worker precaches the shell only; API responses go through Query so offline reviews have one path. `client/lib/api`, `client/lib/queries` and `packages/core/src/responses` hold one module per resource behind a barrel: add a card method to `api/cards.ts`, not to the barrel, and callers keep importing `@/lib/api`.
+**Client data.** TanStack Query owns every read and cache. The service worker precaches the shell only; API responses go through Query so offline reviews have one path. `packages/client/src/api`, `packages/client/src/queries` and `packages/core/src/responses` hold one module per resource behind a barrel: add a card method to `api/cards.ts`, not to the barrel. Web callers keep importing `@/lib/api` and `@/lib/queries`, which re-export the package.
 
 ## Concise writing
 

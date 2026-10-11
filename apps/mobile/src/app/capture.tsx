@@ -4,19 +4,20 @@ import { useRef, useState } from "react";
 import { Switch, TextInput, View } from "react-native";
 import Animated, { useAnimatedKeyboard, useAnimatedStyle } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { DECKS } from "../data/demo";
-import { useStore } from "../data/store";
+import { useAddCard, useDecks } from "../data/queries";
 import { usePalette } from "../theme/palette";
 import { Button, Icon, Text } from "../ui/primitives";
 import { Segmented } from "../ui/segmented";
 
 /** Capture while the lesson is fresh: the term is the only field a card needs. */
 export default function Capture() {
-  const { addCard } = useStore();
+  const addCard = useAddCard();
+  const decks = useDecks().data ?? [];
   const router = useRouter();
   const p = usePalette();
   const insets = useSafeAreaInsets();
-  const [deck, setDeck] = useState(DECKS[0]?.id ?? "");
+  const [chosen, setDeck] = useState<string | null>(null);
+  const deck = chosen ?? decks[0]?.id ?? "";
   const [term, setTerm] = useState("");
   const [meaning, setMeaning] = useState("");
   const [enrich, setEnrich] = useState(true);
@@ -33,7 +34,12 @@ export default function Capture() {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
       return;
     }
-    addCard({ term: term.trim(), meaning: meaning.trim(), deck });
+    addCard.mutate({
+      deckId: deck,
+      term: term.trim(),
+      ...(meaning.trim() ? { meaning: meaning.trim(), meaningSource: "manual" as const } : {}),
+      enrich,
+    });
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     router.back();
   };
@@ -49,7 +55,7 @@ export default function Capture() {
       <Segmented
         label="Deck"
         value={deck}
-        options={DECKS.map((d) => ({ value: d.id, label: d.name }))}
+        options={decks.map((d) => ({ value: d.id, label: d.name }))}
         onChange={setDeck}
       />
 

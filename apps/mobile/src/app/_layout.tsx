@@ -1,22 +1,25 @@
 import "../global.css";
+import "../data/client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { StoreProvider } from "../data/store";
 import { usePalette } from "../theme/palette";
 import { WidgetSync } from "../widgets/sync";
 
 // A link straight to a review, such as from a widget, still has the tabs under it.
 export const unstable_settings = { initialRouteName: "(tabs)" };
 
+const queryClient = new QueryClient();
+
 export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <StoreProvider>
+      <QueryClientProvider client={queryClient}>
         <Root />
         <WidgetSync />
-      </StoreProvider>
+      </QueryClientProvider>
     </GestureHandlerRootView>
   );
 }

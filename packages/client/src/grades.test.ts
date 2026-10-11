@@ -1,12 +1,9 @@
 import type { ReviewMode } from "@lymi/core";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { configureForTest } from "./test/configure";
 
 const store = new Map<string, string>();
-vi.stubGlobal("localStorage", {
-  getItem: (k: string) => store.get(k) ?? null,
-  setItem: (k: string, v: string) => store.set(k, v),
-  removeItem: (k: string) => store.delete(k),
-});
+configureForTest(store);
 
 const grade = vi.fn();
 vi.mock("./api", async () => {

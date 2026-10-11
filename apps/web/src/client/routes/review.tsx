@@ -1,4 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { gradeStore, recordGrade, retireGrades } from "@lymi/client/grades";
+import { drawState, reviewItem, stateBefore } from "@lymi/client/review-draw";
+import { writes } from "@lymi/client/writes";
 import {
   canSpeakTerm,
   type Drawn,
@@ -37,7 +40,6 @@ import { refreshAfterCardWrite } from "../lib/card-writes";
 import { useMouse, useWide } from "../lib/device";
 import { useDocumentTitle } from "../lib/document-title";
 import { lanternFor } from "../lib/flame";
-import { gradeStore, recordGrade, retireGrades } from "../lib/grades";
 import { lastInputWasKey } from "../lib/last-input";
 import {
   decksQuery,
@@ -57,11 +59,9 @@ import {
   streakAsOf,
   streakWith,
 } from "../lib/review-complete";
-import { drawState, reviewItem, stateBefore } from "../lib/review-draw";
 import { itemKey } from "../lib/review-modes";
 import { shortQuote } from "../lib/short-quote";
 import { useWordHistory } from "../lib/use-word-history";
-import { writes } from "../lib/writes";
 import {
   GradeBar,
   ReviewCard,

@@ -1,15 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { configureForTest } from "./test/configure";
 
 const store = new Map<string, string>();
-vi.stubGlobal("localStorage", {
-  get length() {
-    return store.size;
-  },
-  key: (i: number) => [...store.keys()][i] ?? null,
-  getItem: (k: string) => store.get(k) ?? null,
-  setItem: (k: string, v: string) => store.set(k, v),
-  removeItem: (k: string) => store.delete(k),
-});
+configureForTest(store);
 
 const calls: string[] = [];
 const answers: (() => unknown)[] = [];

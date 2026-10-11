@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { ScrollView, View, type ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Flame } from "../brand/flame";
-import { useStore } from "../data/store";
+import { useDay } from "../data/queries";
 import { usePalette } from "../theme/palette";
 import { Icon, Press, Text } from "./primitives";
 
@@ -97,7 +97,7 @@ function BackChevron() {
 
 /** The streak and capture, the two things every tab carries. You is a tab here, so no avatar. */
 function TabActions() {
-  const { streak, reviewsToday } = useStore();
+  const { streak, reviewsToday } = useDay();
   const router = useRouter();
   const p = usePalette();
   const glass = isGlassEffectAPIAvailable();

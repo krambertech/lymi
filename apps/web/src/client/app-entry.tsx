@@ -8,9 +8,9 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { bootstrapLanguage } from "./lib/i18n";
 import "./lib/pwa-install";
+import { bindWriteCache } from "@lymi/client/writes";
 import { queryPersister } from "./lib/query-persister";
 import { reportClientException } from "./lib/telemetry";
-import { bindWriteCache } from "./lib/writes";
 import { routeTree } from "./routeTree.gen";
 
 // Before the first render so no screen paints in the wrong language. The settings query

@@ -6,6 +6,7 @@ test("requires a preview for the product and its build inputs", () => {
   assert.equal(requiresAppPreview(["apps/web/src/client/routes/today.tsx"]), true);
   assert.equal(requiresAppPreview(["apps/web/migrations/0010_example.sql"]), true);
   assert.equal(requiresAppPreview(["packages/core/src/index.ts"]), true);
+  assert.equal(requiresAppPreview(["packages/client/src/api/request.ts"]), true);
   assert.equal(requiresAppPreview(["scripts/check-deployment.mjs"]), true);
   assert.equal(requiresAppPreview(["pnpm-lock.yaml"]), true);
   assert.equal(requiresAppPreview([".github/workflows/ci.yml"]), true);

@@ -1,11 +1,11 @@
 import { useLingui } from "@lingui/react/macro";
+import { writes } from "@lymi/client/writes";
 import { useQueryClient } from "@tanstack/react-query";
 import { type ComponentProps, useRef, useState } from "react";
 import type { Card, DeckSummary } from "../lib/api";
 import { errorMessage } from "../lib/api";
 import { cardPatch, hasChanges, refreshAfterCardWrite, savePicture } from "../lib/card-writes";
 import { useOverlayShape } from "../lib/device";
-import { writes } from "../lib/writes";
 import {
   CardForm,
   type CardFormDraft,

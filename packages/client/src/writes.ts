@@ -2,8 +2,9 @@ import type { CardInput, CardPatch, DeckInput, NewDeckInput } from "@lymi/core";
 import { newId, normaliseTerm } from "@lymi/core";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import { type AddCardOutcome, ApiError, api, type Card, type Deck, errorMessage } from "./api";
+import { clientConfig, type KeyValueStore } from "./config";
 import { flushOutbox as flushGrades } from "./grades";
-import { claimQueued, WRITE_PREFIX } from "./persisted";
+import { claimQueued, WRITE_PREFIX } from "./queued";
 import { cacheLookup, localCard, patchCard, rebase, showWrite } from "./write-projections";
 
 /**
@@ -79,14 +80,15 @@ function readable(e: unknown): e is QueuedWrite {
 }
 
 function read(): QueuedWrite[] {
+  const { storage } = clientConfig();
+  watch(storage);
   if (cache) return cache;
   const writes: QueuedWrite[] = [];
   try {
-    for (let i = 0; i < localStorage.length; i++) {
-      const name = localStorage.key(i);
-      if (!name?.startsWith(WRITE_PREFIX)) continue;
+    for (const name of storage.keys()) {
+      if (!name.startsWith(WRITE_PREFIX)) continue;
       try {
-        const entry: unknown = JSON.parse(localStorage.getItem(name) ?? "null");
+        const entry: unknown = JSON.parse(storage.getItem(name) ?? "null");
         // Unreadable or from another version: left where it is, so it cannot hold up the rest.
         if (readable(entry)) writes.push(entry);
       } catch {}
@@ -104,13 +106,14 @@ function changed() {
 }
 
 function put(entry: QueuedWrite) {
+  const { storage } = clientConfig();
   const raw = JSON.stringify(entry);
   const current = read();
   cache = current.some((e) => e.key === entry.key)
     ? current.map((e) => (e.key === entry.key ? entry : e))
     : [...current, entry];
   try {
-    localStorage.setItem(WRITE_PREFIX + entry.key, raw);
+    storage.setItem(WRITE_PREFIX + entry.key, raw);
   } catch {
     // Blocked or full storage keeps the write for this page's life.
   }
@@ -118,17 +121,22 @@ function put(entry: QueuedWrite) {
 }
 
 function remove(key: string) {
+  const { storage } = clientConfig();
   cache = read().filter((e) => e.key !== key);
   try {
-    localStorage.removeItem(WRITE_PREFIX + key);
+    storage.removeItem(WRITE_PREFIX + key);
   } catch {}
   changed();
 }
 
-// Another tab's queue changes arrive as storage events; the next read picks them up.
-if (typeof window !== "undefined") {
-  window.addEventListener("storage", (e) => {
-    if (e.key === null || e.key.startsWith(WRITE_PREFIX)) {
+let watched: KeyValueStore | null = null;
+
+// Another tab's queue changes arrive through the storage; the next read picks them up.
+function watch(storage: KeyValueStore) {
+  if (watched === storage) return;
+  watched = storage;
+  storage.subscribe?.((key) => {
+    if (key === null || key.startsWith(WRITE_PREFIX)) {
       cache = null;
       changed();
     }

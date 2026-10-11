@@ -1,4 +1,4 @@
-import { type Rating, RETURN_GAPS } from "@lymi/core";
+import { type QueueItemOut, type Rating, RETURN_GAPS, ROUNDS, type Round } from "@lymi/core";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -17,8 +17,16 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Lantern } from "../brand/lantern";
-import { DECKS } from "../data/demo";
-import { type Card, useProgress, useStore } from "../data/store";
+import { sectionName } from "../data/demo-server";
+import {
+  type Standing,
+  standing,
+  useDay,
+  useDecks,
+  useGrade,
+  useReviewQueue,
+  useRounds,
+} from "../data/queries";
 import { type Palette, usePalette } from "../theme/palette";
 import type { IconName } from "../ui/icons";
 import { Button, Icon, LIFT, Press, Text } from "../ui/primitives";
@@ -27,53 +35,64 @@ import { SevenLights } from "../ui/seven-lights";
 const EASE = Easing.bezier(0.22, 1, 0.36, 1);
 
 export default function Review() {
-  const store = useStore();
   const params = useLocalSearchParams<{ deck?: string; round?: string }>();
+  const round = ROUNDS.find((r) => r === params.round);
+  const { data } = useReviewQueue({ deck: params.deck, round });
   const router = useRouter();
-  const insets = useSafeAreaInsets();
 
-  const [queue, setQueue] = useState<string[]>(() => {
-    const { cards, forgottenToday } = store;
-    if (params.round === "forgotten") return [...forgottenToday];
-    if (params.round === "new") return cards.filter((c) => c.state === "new").map((c) => c.id);
-    if (params.round === "slipping")
-      return cards
-        .filter((c) => c.state === "learning")
-        .slice(0, 2)
-        .map((c) => c.id);
-    return cards.filter((c) => c.due && (!params.deck || c.deck === params.deck)).map((c) => c.id);
-  });
+  // Opened from a widget, the review is the only screen, so leaving goes to Today.
+  const leave = () => (router.canGoBack() ? router.back() : router.replace("/today"));
+
+  if (!data) return <View className="flex-1 bg-canvas" />;
+  return <Run items={data.items} round={round} onClose={leave} />;
+}
+
+/** One review over the cards fetched as it opened, in their order. */
+function Run({
+  items,
+  round,
+  onClose,
+}: {
+  items: QueueItemOut[];
+  round: Round | undefined;
+  onClose: () => void;
+}) {
+  const { reviewsToday, goal } = useDay();
+  const grade = useGrade();
+  const decks = useDecks().data;
+  const insets = useSafeAreaInsets();
+  const [queue, setQueue] = useState(items);
+  const [forgotten, setForgotten] = useState(
+    () => new Set(round === "forgotten" ? items.map((i) => i.card.id) : []),
+  );
   const [done, setDone] = useState(0);
   const [revealed, setRevealed] = useState(false);
   // Each position in the review takes one grade, however fast the taps come.
   const gradedAt = useRef(-1);
 
-  const card = store.cards.find((c) => c.id === queue[0]);
-  const finished = !card;
+  const item = queue[0];
+  if (!item) return <Completion added={done} onClose={onClose} />;
+  const { card } = item;
 
-  const grade = (rating: Rating) => {
-    if (!card || gradedAt.current === done) return;
+  const onGrade = (rating: Rating) => {
+    if (gradedAt.current === done) return;
     gradedAt.current = done;
     // Every grade is the same small tap: Forgot feeds the flame exactly as Easy does.
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
-    store.grade(card.id, rating);
+    grade.mutate({ cardId: card.id, rating });
+    if (rating === 1) setForgotten((f) => new Set(f).add(card.id));
     setQueue((q) => {
       const rest = q.slice(1);
       if (rating !== 1) return rest;
       // A forgotten card comes back a few cards later, by the same gap the Worker's draw uses.
       const at = Math.min(RETURN_GAPS[0] - 1, rest.length);
-      return [...rest.slice(0, at), card.id, ...rest.slice(at)];
+      return [...rest.slice(0, at), item, ...rest.slice(at)];
     });
     setDone((n) => n + 1);
     setRevealed(false);
-    const reachesGoal = store.reviewsToday + 1 === store.goal;
+    const reachesGoal = reviewsToday + 1 === goal;
     if (reachesGoal) Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
   };
-
-  // Opened from a widget, the review is the only screen, so leaving goes to Today.
-  const leave = () => (router.canGoBack() ? router.back() : router.replace("/today"));
-
-  if (finished) return <Completion added={done} onClose={leave} />;
 
   const total = done + queue.length;
   return (
@@ -81,12 +100,14 @@ export default function Review() {
       className="flex-1 bg-canvas"
       style={{ paddingTop: insets.top + 4, paddingBottom: Math.max(insets.bottom, 12) }}
     >
-      <Header done={done} total={total} onClose={leave} />
+      <Header done={done} total={total} onClose={onClose} />
       <View className="flex-1 px-4 pt-3">
         <CardPlate
           // A forgotten card can come straight back; keyed by position it arrives afresh.
           key={`${card.id}:${done}`}
-          card={card}
+          item={item}
+          deckName={decks?.find((d) => d.id === card.deckId)?.name}
+          forgotten={forgotten.has(card.id)}
           revealed={revealed}
           onReveal={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -94,14 +115,13 @@ export default function Review() {
           }}
         />
       </View>
-      {revealed && <GradeStrip onGrade={grade} />}
+      {revealed && <GradeStrip onGrade={onGrade} />}
     </View>
   );
 }
 
 function Header({ done, total, onClose }: { done: number; total: number; onClose: () => void }) {
-  const { fed } = useStore();
-  const progress = useProgress();
+  const { fed, progress } = useDay();
   const p = usePalette();
   const share = total === 0 ? 0 : done / total;
   const fill = useAnimatedStyle(() => ({
@@ -160,7 +180,7 @@ function CloseButton({ onPress }: { onPress: () => void }) {
   );
 }
 
-const STATE: Record<Card["state"], { label: string; icon: IconName; tint: keyof Palette }> = {
+const STATE: Record<Standing, { label: string; icon: IconName; tint: keyof Palette }> = {
   new: { label: "New", icon: "new", tint: "state-new" },
   learning: { label: "Learning", icon: "learning", tint: "state-learning" },
   known: { label: "Known", icon: "known", tint: "state-known" },
@@ -181,21 +201,23 @@ const rise = (i: number) =>
 
 /** The card holds the screen. Unrevealed it is the word alone; a tap anywhere reveals. */
 function CardPlate({
-  card,
+  item: { card, fsrsState },
+  deckName,
+  forgotten,
   revealed,
   onReveal,
 }: {
-  card: Card;
+  item: QueueItemOut;
+  deckName: string | undefined;
+  forgotten: boolean;
   revealed: boolean;
   onReveal: () => void;
 }) {
   const p = usePalette();
   const dark = useColorScheme() === "dark";
-  const { forgottenToday } = useStore();
   const reduce = useReducedMotion();
-  const deck = DECKS.find((d) => d.id === card.deck);
-  const forgotten = forgottenToday.includes(card.id);
-  const state = STATE[card.state];
+  const state = STATE[standing(fsrsState)];
+  const section = sectionName(card.sectionId);
 
   return (
     <Animated.View
@@ -214,7 +236,7 @@ function CardPlate({
         <View className="flex-row items-center justify-between px-6 pt-5">
           <View className="flex-row items-center gap-2">
             <Icon name="deck" size={18} colour={p.muted} />
-            <Text className="text-md text-text-2">{deck?.name}</Text>
+            <Text className="text-md text-text-2">{deckName}</Text>
           </View>
           <View className="h-9 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3.5">
             <Icon
@@ -253,11 +275,11 @@ function CardPlate({
                   <Text className="text-md text-text-2">{card.example}</Text>
                 </Animated.View>
               )}
-              {card.section && (
+              {section && (
                 <Animated.View entering={reduce ? FadeIn : rise(2)} className="flex-row">
                   <View className="h-8 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3">
                     <Icon name="section" size={15} colour={p.muted} />
-                    <Text className="text-base text-text-2">{card.section}</Text>
+                    <Text className="text-base text-text-2">{section}</Text>
                   </View>
                 </Animated.View>
               )}
@@ -319,7 +341,8 @@ function GradeStrip({ onGrade }: { onGrade: (r: Rating) => void }) {
 
 /** The one place the interface celebrates: the lantern lit large in a pool of its glow. motion.md. */
 function Completion({ added, onClose }: { added: number; onClose: () => void }) {
-  const { reviewsToday, goal, week, streak, dayDone, forgottenToday, fed } = useStore();
+  const { reviewsToday, goal, week, streak, dayDone, fed } = useDay();
+  const forgottenToday = useRounds().data?.forgotten ?? 0;
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const dark = useColorScheme() === "dark";
@@ -406,9 +429,9 @@ function Completion({ added, onClose }: { added: number; onClose: () => void }) 
         </Animated.View>
       </View>
       <Animated.View entering={reduce ? FadeIn : up(2000)} className="gap-3 px-5">
-        {forgottenToday.length > 0 && (
+        {forgottenToday > 0 && (
           <Button
-            label={`Review ${forgottenToday.length} forgotten ${forgottenToday.length === 1 ? "card" : "cards"}`}
+            label={`Review ${forgottenToday} forgotten ${forgottenToday === 1 ? "card" : "cards"}`}
             onPress={() => router.replace("/review?round=forgotten")}
           />
         )}

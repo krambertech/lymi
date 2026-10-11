@@ -1,11 +1,11 @@
 import { useLingui } from "@lingui/react/macro";
+import { writes } from "@lymi/client/writes";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "../components/ui/toast";
 import { type CardHit, type DeckSummary, errorMessage } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { archivedCardsQuery, archivedDecksQuery } from "../lib/queries";
-import { writes } from "../lib/writes";
 import { ArchivedView } from "../views/archived-view";
 
 export const Route = createFileRoute("/archived")({

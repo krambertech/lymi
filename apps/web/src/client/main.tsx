@@ -1,7 +1,9 @@
+import { configureWebClient } from "./lib/client";
 import { initTelemetry } from "./lib/telemetry";
 import { initTheme } from "./lib/theme";
 import "./styles.css";
 
+configureWebClient();
 initTheme();
 initTelemetry();
 

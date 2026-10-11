@@ -19,6 +19,7 @@ import {
   runContext,
   writeImportChunk,
 } from "../services";
+import { textCallReporter } from "../services/analytics";
 import { analyticsContextFor } from "../services/analytics-context";
 import { ImportFileError } from "./files";
 
@@ -59,7 +60,14 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
       if (params.phase === "inspect") {
         await step.do("inspect", STEP, () =>
           analytics.run(() =>
-            fileErrorsStop(() => inspectImport(ctx, id, uploads, createTextProvider(this.env))),
+            fileErrorsStop(() =>
+              inspectImport(
+                ctx,
+                id,
+                uploads,
+                createTextProvider(this.env, textCallReporter(analytics, "import_languages")),
+              ),
+            ),
           ),
         );
         return;

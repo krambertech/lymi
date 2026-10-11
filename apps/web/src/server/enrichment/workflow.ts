@@ -12,7 +12,7 @@ import {
   failEnrichment,
   settleEnrichment,
 } from "../services";
-import { track } from "../services/analytics";
+import { textCallReporter, track } from "../services/analytics";
 import { analyticsContextFor } from "../services/analytics-context";
 
 const STEP = {
@@ -37,7 +37,13 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
     const params = event.payload;
     const db = createDb(this.env.DB);
     try {
-      const provider = createTextProvider(this.env);
+      const analytics = productAnalytics(
+        this.env,
+        params.userId,
+        undefined,
+        analyticsContextFor(db, params.userId),
+      );
+      const provider = createTextProvider(this.env, textCallReporter(analytics, "enrich"));
       // The key went away between the add and this run, so nothing was ever asked.
       if (!provider) {
         await step.do("unconfigured", STEP, () =>
@@ -45,12 +51,6 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
         );
         return;
       }
-      const analytics = productAnalytics(
-        this.env,
-        params.userId,
-        undefined,
-        analyticsContextFor(db, params.userId),
-      );
       const ctx = enrichmentContext(db, params, analytics);
       for (const [index, ids] of chunked(params.cardIds, CARDS_PER_CALL).entries()) {
         try {

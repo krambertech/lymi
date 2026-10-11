@@ -18,7 +18,7 @@ import { and, asc, desc, eq, inArray, isNull } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
-import { track } from "./analytics";
+import { type AnalyticsEvent, track } from "./analytics";
 import { auditStatement } from "./audit";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
 import { type CardView, presentCard, presentCards } from "./card-view";
@@ -393,7 +393,51 @@ function refusalOf(id: string, check: () => void): CardWriteError | null {
 }
 
 /** One card's write and its audit row, and whether the card's review states need adding after it. */
-type CardWrite = { id: string; statements: Statement[]; states: boolean };
+type CardWrite = {
+  id: string;
+  statements: Statement[];
+  states: boolean;
+  /** What product analytics reports once the write lands. */
+  reports?: AnalyticsEvent | undefined;
+};
+
+/** Reports the writes that landed, one archive event per origin rather than per card. */
+function reportWrites(ctx: ServiceContext, writes: CardWrite[], failed: ReadonlySet<string>) {
+  const archived = new Map<CardOrigin, { count: number; ai_written: number }>();
+  for (const write of writes) {
+    const event = write.reports;
+    if (!event || failed.has(write.id)) continue;
+    if (event.name !== "cards_archived") {
+      track(ctx.analytics, event);
+      continue;
+    }
+    const total = archived.get(event.origin) ?? { count: 0, ai_written: 0 };
+    total.count += event.count;
+    total.ai_written += event.ai_written;
+    archived.set(event.origin, total);
+  }
+  for (const [origin, total] of archived)
+    track(ctx.analytics, { name: "cards_archived", origin, ...total });
+}
+
+type CardOrigin = Extract<AnalyticsEvent, { name: "cards_archived" }>["origin"];
+
+/** How a card arrived, in the terms `cards_added` uses. */
+function originOf(card: Card): CardOrigin {
+  if (card.importId) return "import";
+  return card.createdBy === "user"
+    ? "typed"
+    : card.createdBy === "api"
+      ? "api"
+      : card.createdBy === "mcp"
+        ? "ai_mcp"
+        : "other";
+}
+
+const aiWrote = (card: Card) =>
+  [card.meaningSource, card.exampleSource, card.pronunciationSource, card.hookSource].includes(
+    "ai",
+  );
 
 /**
  * Cards per D1 batch. Each costs two statements, and the batch adds one set of state statements
@@ -541,7 +585,9 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: ServerC
   const edit = { ...patch, cardId: id };
   const lookups = await editLookups(ctx, [edit]);
   const now = new Date();
-  await runBatch(ctx.db, batchOf(ctx.db, [editWrite(ctx, lookups, edit, now)], now));
+  const write = editWrite(ctx, lookups, edit, now);
+  await runBatch(ctx.db, batchOf(ctx.db, [write], now));
+  reportWrites(ctx, [write], new Set());
   return showCard(ctx, id);
 }
 
@@ -565,6 +611,7 @@ export async function updateCards(
     refusalOf(edit.cardId, () => writes.push(editWrite(ctx, lookups, edit, now))),
   );
   const failed = await runCardWrites(db, writes, now);
+  reportWrites(ctx, writes, failed);
   const written = await visibleCards(
     ctx,
     writes.filter((write) => !failed.has(write.id)).map((write) => write.id),
@@ -694,6 +741,10 @@ function editWrite(
       auditStatement(ctx, { entity: "card", action: "update", id, deckId, details: patch }),
     ],
     states: modes !== undefined || patch.deckId !== undefined,
+    reports:
+      hook && !current.hook && sources.hookSource
+        ? { name: "hook_added", source: sources.hookSource }
+        : undefined,
   };
 }
 
@@ -726,7 +777,9 @@ export function restoreCards(ctx: ServiceContext, ids: readonly string[]) {
 async function setArchived(ctx: ServiceContext, id: string, archivedAt: Date | null) {
   const cards = await visibleCards(ctx, [id]);
   const write = archiveWrite(ctx, cards, id, archivedAt);
-  if (write) await runBatch(ctx.db, batchOf(ctx.db, [write], new Date()));
+  if (!write) return;
+  await runBatch(ctx.db, batchOf(ctx.db, [write], new Date()));
+  reportWrites(ctx, [write], new Set());
 }
 
 async function setArchivedMany(
@@ -744,6 +797,7 @@ async function setArchivedMany(
     }),
   );
   const failed = await runCardWrites(ctx.db, writes, now);
+  reportWrites(ctx, writes, failed);
   const status = archivedAt ? ("archived" as const) : ("restored" as const);
   return ids.map(
     (id, index) => refusals[index] ?? (failed.has(id) ? writeFailed(id) : { id, status }),
@@ -779,6 +833,14 @@ function archiveWrite(
       }),
     ],
     states: archivedAt === null,
+    reports: archivedAt
+      ? {
+          name: "cards_archived",
+          origin: originOf(current),
+          count: 1,
+          ai_written: aiWrote(current) ? 1 : 0,
+        }
+      : undefined,
   };
 }
 

@@ -4,9 +4,10 @@ import {
   initAnalytics,
   reportBrowserException,
   setAnalyticsLearner,
+  setAnalyticsOpening,
   visitFirstTouch,
 } from "@lymi/client/analytics";
-import { FIRST_TOUCH_HEADER } from "@lymi/core/analytics";
+import { FIRST_TOUCH_HEADER, REMINDER_ENTRY } from "@lymi/core/analytics";
 
 export { captureAnalytics, capturePageview };
 
@@ -34,6 +35,16 @@ export function initTelemetry(): void {
     if (event.error) reportClientException(event.error);
   });
   window.addEventListener("unhandledrejection", (event) => reportClientException(event.reason));
+  dropReminderEntry();
+}
+
+/** Analytics read the reminder's mark at load; a reload of the same address is not another reminder. */
+function dropReminderEntry(): void {
+  const url = new URL(location.href);
+  if (url.searchParams.get(REMINDER_ENTRY.key) !== REMINDER_ENTRY.value) return;
+  url.searchParams.delete(REMINDER_ENTRY.key);
+  history.replaceState(history.state, "", url);
 }
 export const setTelemetryLearner = setAnalyticsLearner;
+export const setTelemetryOpening = setAnalyticsOpening;
 export const reportClientException = reportBrowserException;

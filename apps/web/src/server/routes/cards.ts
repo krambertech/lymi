@@ -43,6 +43,7 @@ import {
   updateCard,
   updateCards,
 } from "../services";
+import { textCallReporter } from "../services/analytics";
 
 export const cards = new Hono<AppEnv>();
 
@@ -272,8 +273,11 @@ cards.post(
     ok: { schema: HookDraftOut, description: "The draft, or null" },
     errors: [404],
   }),
-  async (c) =>
-    c.json({ hook: await hookDraftFor(ctxOf(c), c.req.param("id"), createTextProvider(c.env)) }),
+  async (c) => {
+    const ctx = ctxOf(c);
+    const provider = createTextProvider(c.env, textCallReporter(ctx.analytics, "hook"));
+    return c.json({ hook: await hookDraftFor(ctx, c.req.param("id"), provider) });
+  },
 );
 
 cards.post(

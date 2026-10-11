@@ -1,7 +1,10 @@
 import { msg, plural } from "@lingui/core/macro";
+import { backlogOf, REMINDER_ENTRY } from "@lymi/core/analytics";
 import { createDb } from "./db";
 import type { Bindings } from "./env";
 import { serverI18n } from "./i18n";
+import { trackProductEvent } from "./posthog";
+import { analyticsContextFor } from "./services/analytics-context";
 import { drawableCount } from "./services/draw";
 import { catchUpStates } from "./services/modes";
 
@@ -102,7 +105,11 @@ async function sendWebPush(candidate: ReminderCandidate, due: number, env: Bindi
     throw new Error("VAPID secrets are not configured");
   }
   const copy = await reminderCopy(due, candidate.app_language ?? "en");
-  const navigate = new URL("/review", env.PRODUCT_URL).toString();
+  // The query names the reminder as the way in, for app_opened; the app drops it on arrival.
+  const navigate = new URL(
+    `/review?${REMINDER_ENTRY.key}=${REMINDER_ENTRY.value}`,
+    env.PRODUCT_URL,
+  ).toString();
   const icon = new URL("/icons/icon-192.png", env.PRODUCT_URL).toString();
   const payload = JSON.stringify({
     // Declarative Web Push is a fallback on supporting WebKit versions; the service worker
@@ -147,6 +154,8 @@ export async function dispatchReviewReminders(
   send: SendPush = sendWebPush,
   count: CountDrawable = countWith(createDb(env.DB)),
 ): Promise<ReminderDispatchResult> {
+  const db = createDb(env.DB);
+  const reports: Promise<void>[] = [];
   // A learner with several devices is counted once per dispatch.
   const counts = new Map<string, Promise<number>>();
   const countOnce: CountDrawable = (userId, zone, at) => {
@@ -194,6 +203,15 @@ export async function dispatchReviewReminders(
     try {
       await send(candidate, due, env);
       summary.sent += 1;
+      reports.push(
+        trackProductEvent(
+          env,
+          candidate.user_id,
+          { name: "reminder_sent", backlog: backlogOf(due) },
+          undefined,
+          analyticsContextFor(db, candidate.user_id),
+        ),
+      );
     } catch (error) {
       const statusCode = (error as { statusCode?: number }).statusCode;
       if (statusCode === 404 || statusCode === 410) {
@@ -215,6 +233,7 @@ export async function dispatchReviewReminders(
     }
   }
 
+  await Promise.all(reports);
   console.log(JSON.stringify({ event: "review_reminders_dispatched", ...summary }));
   return summary;
 }

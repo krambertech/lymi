@@ -223,8 +223,8 @@ msgstr "Изображение → термин"
 msgid "Picture added"
 msgstr "Изображение добавлено"
 
-msgid "Pictures need a connection. Add it once you’re back online."
-msgstr "Для изображений нужно соединение. Добавь его, когда снова будешь онлайн."
+msgid "Pictures need a connection. Try again once you’re back online."
+msgstr "Для изображений нужно соединение. Попробуй ещё раз, когда снова будешь онлайн."
 
 msgid "Production"
 msgstr "Воспроизведение"
@@ -285,6 +285,9 @@ msgstr "Сегодня"
 
 msgid "Today counts."
 msgstr "Сегодня засчитано."
+
+msgid "Try again"
+msgstr "Попробовать ещё раз"
 
 msgid "Undo"
 msgstr "Отменить действие"

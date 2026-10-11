@@ -115,7 +115,8 @@ function Root() {
             }}
           />
         </Stack.Protected>
-        <Stack.Screen name="design" />
+        {/* The design system is for development builds; release builds redirect it home. */}
+        {__DEV__ && <Stack.Screen name="design" />}
       </Stack>
     </ThemeProvider>
   );

@@ -48,6 +48,15 @@ export type AddCardOutcome =
 /** A file on the phone, as React Native's FormData takes one. */
 export type NativeFile = { uri: string; name: string; type: string };
 
+function isNativeFile(file: Blob | NativeFile): file is NativeFile {
+  return typeof (file as NativeFile).uri === "string";
+}
+
+/** React Native's FormData takes `{ uri, name, type }` where the DOM's types expect a Blob. */
+function formFile(file: Blob | NativeFile): Blob {
+  return isNativeFile(file) ? (file as unknown as Blob) : file;
+}
+
 export const cardsApi = {
   archivedCards: async () =>
     (await request<{ cards: CardHit[] }>("/api/cards?archived=true")).cards,
@@ -77,7 +86,8 @@ export const cardsApi = {
     description?: string,
   ) => {
     const form = new FormData();
-    form.append("file", file as Blob);
+    // `append`, not `set`: React Native's FormData has no `set`, and each name is sent once.
+    form.append("file", formFile(file));
     form.append("version", version ?? "");
     if (description) form.append("description", description);
     return request<Card>(`/api/cards/${id}/image`, { method: "PUT", body: form });

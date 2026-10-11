@@ -5,8 +5,8 @@ import { focusManager, onlineManager, QueryClient } from "@tanstack/react-query"
 import { getRandomValues } from "expo-crypto";
 import { addNetworkStateListener } from "expo-network";
 import { AppState } from "react-native";
-import { createMMKV } from "react-native-mmkv";
 import { API_URL, sessionHeaders } from "../auth/client";
+import { outboxStore } from "./kept";
 
 // Hermes has no Web Crypto, and core's `newId` makes every id on the device with it.
 if (typeof globalThis.crypto?.getRandomValues !== "function") {
@@ -14,12 +14,11 @@ if (typeof globalThis.crypto?.getRandomValues !== "function") {
 }
 
 // The outboxes outlive a quit, so grades and writes made offline still replay. ADR 0023.
-const kept = createMMKV({ id: "lymi-outboxes" });
 const storage: KeyValueStore = {
-  getItem: (key) => kept.getString(key) ?? null,
-  setItem: (key, value) => kept.set(key, value),
-  removeItem: (key) => void kept.remove(key),
-  keys: () => kept.getAllKeys(),
+  getItem: (key) => outboxStore.getString(key) ?? null,
+  setItem: (key, value) => outboxStore.set(key, value),
+  removeItem: (key) => void outboxStore.remove(key),
+  keys: () => outboxStore.getAllKeys(),
 };
 
 /** Every request carries the signed-in learner's session; the native cookie jar never sends a second one. */

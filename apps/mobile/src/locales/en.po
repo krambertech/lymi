@@ -223,8 +223,8 @@ msgstr "Picture → term"
 msgid "Picture added"
 msgstr "Picture added"
 
-msgid "Pictures need a connection. Add it once you’re back online."
-msgstr "Pictures need a connection. Add it once you’re back online."
+msgid "Pictures need a connection. Try again once you’re back online."
+msgstr "Pictures need a connection. Try again once you’re back online."
 
 msgid "Production"
 msgstr "Production"
@@ -285,6 +285,9 @@ msgstr "Today"
 
 msgid "Today counts."
 msgstr "Today counts."
+
+msgid "Try again"
+msgstr "Try again"
 
 msgid "Undo"
 msgstr "Undo"

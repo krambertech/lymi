@@ -22,3 +22,4 @@ The agent working on a pull request drafts the Ukrainian and Russian from a `tra
 - `.po` files live in git. `lineNumbers` and `origins` are off, so moving a string between files does not churn the diff or conflict with another branch.
 - The product Worker uses `@lingui/core` with the same catalogs for push copy. Everything else server-side stays English, because the API's other callers are scripts and MCP clients.
 - Biome cannot flag a hardcoded string. Review has to.
+- The phone app is a third Lingui config, in `apps/mobile`, run by Expo's Babel 7 rather than Vite. Its message IDs match the web's because the macro hashes the same English, but its `.po` files are its own: a translation fixed in one app's catalog is copied to the other by hand. Sharing one catalog for shared strings waits until the copies drift often enough to cost more than the setup.

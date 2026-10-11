@@ -8,7 +8,7 @@ import { json, type Session, type TestApp, testApp } from "./test-app";
 
 /**
  * Every phone release freezes the API it was built against in apps/mobile/contract, and the
- * Worker stays compatible with each frozen release that is still supported. ADR 0031.
+ * Worker stays compatible with each frozen release that is still supported. ADR 0032.
  */
 const contracts = join(import.meta.dirname, "../../../mobile/contract");
 const appVersion = (): string =>

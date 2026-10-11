@@ -1,6 +1,6 @@
 // Whether a newer OpenAPI document still serves a client built against an older one.
 // An installed phone app lags the Worker by weeks, so every phone release freezes the document it
-// was built against and the Worker must stay compatible with each frozen one. ADR 0031.
+// was built against and the Worker must stay compatible with each frozen one. ADR 0032.
 //
 // Responses may gain fields, endpoints may be added, and requests may gain optional fields. A
 // response may gain an enum value or a union branch only where the frozen document marks the

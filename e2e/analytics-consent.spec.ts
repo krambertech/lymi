@@ -69,7 +69,7 @@ for (const choice of ["accepted", "declined", "untouched"] as const) {
       await expect(banner(page)).toBeHidden();
     }
     await page.goto("/login?dev=1");
-    await expect(page.getByRole("heading", { name: "Sign in", exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Sign in to Lymi", exact: true })).toBeVisible();
     await expect(banner(page)).toHaveCount(0);
     await expect(page.getByRole("checkbox")).toHaveCount(0);
     await createAccountThroughDevForm(

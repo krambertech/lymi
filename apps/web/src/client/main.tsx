@@ -1,7 +1,9 @@
+import { initTelemetry } from "./lib/telemetry";
 import { initTheme } from "./lib/theme";
 import "./styles.css";
 
 initTheme();
+initTelemetry();
 
 const rootEl = document.getElementById("root");
 if (!rootEl) throw new Error("#root missing");

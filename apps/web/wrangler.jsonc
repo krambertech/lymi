@@ -27,6 +27,8 @@
   "vars": {
     "PUBLIC_SITE_URL": "https://lymi.app",
     "PRODUCT_URL": "https://my.lymi.app",
+    // Public write-only ingestion token; never a PostHog personal API key.
+    "POSTHOG_PROJECT_TOKEN": "phc_mz7nfyKuwoSbZ787CAdbYhihXMEwYKbnNvGQ7LUuxPnU",
     // Comma-separated. Accounts that may exercise operational capabilities.
     "OPERATOR_EMAILS": "kateryna@buffer.com,k.porshnieva@gmail.com",
     // Comma-separated. Accounts that may publish decks they own to the public catalog. ADR 0020.

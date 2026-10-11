@@ -4,6 +4,7 @@ import { createMcpHandler } from "agents/mcp/server";
 import type { Auth } from "../auth";
 import type { Db } from "../db";
 import { type Bindings, publisherEmails } from "../env";
+import { productAnalytics, reportServerException } from "../posthog";
 import { getSettings } from "../services";
 import { clientNames, grantedScope } from "../services/connected-apps";
 import { enrichmentQueue } from "../services/enrichment";
@@ -19,7 +20,7 @@ export const MCP_CHALLENGE_SCOPES = ["read", "write", "offline_access"] as const
  */
 export function handleMcpRequest(
   request: Request,
-  deps: { auth: Auth; db: Db; env: Bindings },
+  deps: { auth: Auth; db: Db; env: Bindings; defer?: (work: Promise<unknown>) => void },
 ): Promise<Response> {
   const protectedHandler = requireMcpAuth(
     deps.auth,
@@ -51,6 +52,7 @@ export async function authorizeMcpClaims(
   claims: Record<string, unknown>,
   deps: {
     db: Db;
+    defer?: (work: Promise<unknown>) => void;
     env: ProductOrigin &
       Partial<
         Pick<
@@ -60,6 +62,9 @@ export async function authorizeMcpClaims(
           | "OPENAI_API_KEY"
           | "ENRICH_WORKFLOW"
           | "EVENTS"
+          | "POSTHOG_PROJECT_TOKEN"
+          | "APP_PREVIEW"
+          | "CF_VERSION_METADATA"
           | "PUBLISHER_EMAILS"
         >
       >;
@@ -83,11 +88,20 @@ export async function authorizeMcpClaims(
       db: deps.db,
       userId,
       actor: "mcp",
-      analytics: deps.env.EVENTS,
+      analytics: productAnalytics(deps.env, userId, deps.defer),
       client: clientId,
       ...(named ? { clientName: named } : {}),
     },
     scope: tokenWrites && consent === "write" ? "write" : "read",
+    reportError: async (error, tool) => {
+      const work = reportServerException(deps.env, error, {
+        route: `mcp/${tool}`,
+        method: "MCP",
+        userId,
+      });
+      if (deps.defer) deps.defer(work);
+      else await work;
+    },
     resourceMetadataUrl: mcpResourceMetadataUrl(deps.env),
     images:
       deps.env.PRIVATE_IMAGES && deps.env.IMAGES

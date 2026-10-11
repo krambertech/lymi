@@ -9,6 +9,7 @@ import { createRoot } from "react-dom/client";
 import { bootstrapLanguage } from "./lib/i18n";
 import "./lib/pwa-install";
 import { queryPersister } from "./lib/query-persister";
+import { reportClientException } from "./lib/telemetry";
 import { bindWriteCache } from "./lib/writes";
 import { routeTree } from "./routeTree.gen";
 
@@ -54,6 +55,7 @@ const router = createRouter({
   context: { queryClient },
   defaultPreload: "intent",
   scrollRestoration: true,
+  defaultOnCatch: reportClientException,
 });
 
 declare module "@tanstack/react-router" {
@@ -64,7 +66,12 @@ declare module "@tanstack/react-router" {
 
 /** Mount the private product. Public pages are built and deployed from apps/site. */
 export function mountApp(root: HTMLElement) {
-  createRoot(root).render(
+  createRoot(root, {
+    onCaughtError: (error, info) => {
+      reportClientException(error);
+      console.error(error, info.componentStack);
+    },
+  }).render(
     <StrictMode>
       <PersistQueryClientProvider
         client={queryClient}

@@ -1,6 +1,8 @@
 import type { ReviewModeKey } from "@lymi/core";
 
-export type AnalyticsWriter = Pick<AnalyticsEngineDataset, "writeDataPoint">;
+export type AnalyticsWriter = Pick<AnalyticsEngineDataset, "writeDataPoint"> & {
+  capture?: (event: AnalyticsEvent) => void;
+};
 
 export type AnalyticsEvent =
   | { name: "signed_up" | "signed_in" | "deck_joined" | "mcp_tool" }
@@ -16,6 +18,11 @@ export type AnalyticsEvent =
 /** Only fixed action labels and counts reach Analytics Engine. */
 export function track(dataset: AnalyticsWriter | undefined, event: AnalyticsEvent): void {
   if (!dataset) return;
+  try {
+    dataset.capture?.(event);
+  } catch {
+    // Analytics never decides whether a product write succeeds.
+  }
   const detail =
     event.name === "card_added"
       ? event.source

@@ -32,6 +32,7 @@ import { useRouteFocus } from "../lib/page-focus";
 import { decksQuery, meQuery, seriesQuery, settingsQuery } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
 import { Streak, StreakPlace, useSettleToday } from "../lib/streak";
+import { setTelemetryLearner } from "../lib/telemetry";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { warmCache } from "../lib/warm-cache";
 import { claimWrites, flushWrites, onNotice } from "../lib/writes";
@@ -100,6 +101,9 @@ function Shell() {
   const bare = isBareShell(location.pathname);
   const onReview = location.pathname.startsWith("/review");
   const me = useQuery({ ...meQuery, enabled: !bare });
+  useEffect(() => {
+    setTelemetryLearner(me.data?.id);
+  }, [me.data?.id]);
   const decks = useQuery({ ...decksQuery, enabled: !bare && me.isSuccess });
   const series = useQuery({ ...seriesQuery, enabled: !bare && me.isSuccess });
   const settings = useQuery({ ...settingsQuery, enabled: !bare && me.isSuccess });

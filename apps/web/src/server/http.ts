@@ -12,6 +12,7 @@ import {
 } from "hono-openapi";
 import type { ZodType } from "zod";
 import type { AppEnv } from "./index";
+import { posthogEnabled, productAnalytics, reportServerException } from "./posthog";
 import { requireLearner, requireScopeForWrites } from "./principal";
 import { type ServiceContext, ServiceError } from "./services/context";
 
@@ -21,7 +22,9 @@ export function ctxOf(c: Context<AppEnv>): ServiceContext {
     db: c.get("db"),
     userId: c.get("user").id,
     actor: c.get("actor"),
-    analytics: c.env?.EVENTS,
+    analytics: c.env
+      ? productAnalytics(c.env, c.get("user").id, (work) => c.executionCtx.waitUntil(work))
+      : undefined,
     client: c.get("client"),
     clientName: c.get("clientName"),
   };
@@ -163,6 +166,15 @@ export const handleError: ErrorHandler<AppEnv> = (err, c) => {
     route: routePath(c, -1),
     error: err.name,
   });
+  if (c.env && posthogEnabled(c.env)) {
+    c.executionCtx.waitUntil(
+      reportServerException(c.env, err, {
+        method: c.req.method,
+        route: routePath(c, -1) || "unmatched",
+        userId: c.get("user")?.id,
+      }),
+    );
+  }
   return c.json({ error: "Something went wrong" }, 500);
 };
 

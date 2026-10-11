@@ -144,7 +144,9 @@ export default defineConfig({
   // the optimiser it picks up its own copy, and the client only finds out as "Invalid hook
   // call" the first time a motion component renders.
   resolve: { tsconfigPaths: true, dedupe: ["react", "react-dom"] },
-  optimizeDeps: { include: ["motion/react", "react", "react-dom", "react-dom/client"] },
+  optimizeDeps: {
+    include: ["motion/react", "react", "react-dom", "react-dom/client", "posthog-js/no-external"],
+  },
   server: { port: 5173 },
   test: {
     projects: (
@@ -188,6 +190,7 @@ export default defineConfig({
               // Discovered mid-run, a dependency reloads the page and loads a second React.
               "@base-ui/react/**/*",
               "zod",
+              "posthog-js/no-external",
             ],
           },
           test: {

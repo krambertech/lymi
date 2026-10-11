@@ -2,6 +2,7 @@ import { WorkflowEntrypoint, type WorkflowEvent, type WorkflowStep } from "cloud
 import { createTextProvider } from "../ai";
 import { createDb } from "../db";
 import type { Bindings } from "../env";
+import { productAnalytics, reportServerException } from "../posthog";
 import {
   CARDS_PER_CALL,
   chunked,
@@ -43,18 +44,27 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
         );
         return;
       }
-      const ctx = enrichmentContext(db, params, this.env.EVENTS);
+      const analytics = productAnalytics(this.env, params.userId);
+      const ctx = enrichmentContext(db, params, analytics);
       for (const [index, ids] of chunked(params.cardIds, CARDS_PER_CALL).entries()) {
         try {
-          await step.do(`cards ${index}`, STEP, () => enrichCards(ctx, ids, provider));
-        } catch {
+          await step.do(`cards ${index}`, STEP, () =>
+            analytics.run(() => enrichCards(ctx, ids, provider)),
+          );
+        } catch (err) {
           // Inside the step, because code outside one runs again when the engine replays.
           await step.do(`fail ${index}`, STEP, async () => {
             await failEnrichment(db, params.userId, ids);
-            track(this.env.EVENTS, {
+            track(analytics, {
               name: "enrichment_finished",
               outcome: "failed",
               count: ids.length,
+            });
+            await analytics.flush();
+            await reportServerException(this.env, err, {
+              route: "enrichment",
+              method: "WORKFLOW",
+              userId: params.userId,
             });
           });
         }

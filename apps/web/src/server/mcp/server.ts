@@ -115,6 +115,7 @@ export interface McpPrincipal {
   publishers?: Set<string> | undefined;
   /** The learner's app language, which the views are written in. English when unknown. */
   appLanguage?: AppLanguage | undefined;
+  reportError?: ((error: unknown, tool: string) => Promise<void>) | undefined;
 }
 
 /** The most cards `get_deck` returns. Past that, `search_cards` narrows the list. */
@@ -1037,6 +1038,11 @@ async function runTool(
       return failure(err.reason ? `${err.reason}: ${err.message}` : err.message);
     }
     console.error("MCP tool failed", { tool, error: err instanceof Error ? err.name : typeof err });
+    try {
+      await principal.reportError?.(err, tool);
+    } catch {
+      // Monitoring cannot change the tool's error response.
+    }
     return failure("Lymi could not finish this just now. Try again in a moment.");
   }
 }

@@ -754,7 +754,6 @@ function LanguagePicker({
                     aria-hidden="true"
                   />
                   <Input
-                    // biome-ignore lint/a11y/noAutofocus: the learner just asked for this field.
                     autoFocus
                     value={typed}
                     onChange={(e) => {

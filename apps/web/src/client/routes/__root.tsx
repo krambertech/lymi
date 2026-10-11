@@ -52,10 +52,11 @@ const DevPanel =
 /**
  * A review has no pill nav, so a toast clears the grade strip instead. On a phone the strip sits on
  * the bottom edge; on a desktop its top is 116 px up while the card fits, or 692 px down once the
- * card reaches its 600 px cap; from 92 rem the corner is beside the strip.
+ * card reaches its 600 px cap, with its foot at 776 px; from 58 rem tall the corner is under the
+ * strip with room for a four-line toast, and from 92 rem wide it is beside it.
  */
 const REVIEW_TOAST_INSET =
-  "[--toast-inset:calc(env(safe-area-inset-bottom)+108px)] md:[--toast-inset:max(128px,calc(100dvh-680px))] min-[92rem]:[--toast-inset:1rem]";
+  "[--toast-inset:calc(env(safe-area-inset-bottom)+108px)] md:[--toast-inset:max(128px,calc(100dvh-680px))] md:[@media(min-height:58rem)]:[--toast-inset:1rem] min-[92rem]:[--toast-inset:1rem]";
 
 /** The streak is a place, so its open state is here: Back closes it, and a reload or a link keeps it. ADR 0017. */
 const RootSearch = z.object({ streak: z.literal(true).optional().catch(undefined) });

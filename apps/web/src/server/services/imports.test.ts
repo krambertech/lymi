@@ -363,7 +363,9 @@ describe("importing an Anki package", () => {
       .where(eq(schema.reviews.userId, ctx.userId));
 
     const second = await runImport(ctx, "legacy.apkg");
-    expect(second.preview).toMatchObject({ added: 0, existing: 10, duplicates: 0 });
+    expect(first.preview.known).toBe(4);
+    // Cards already in Lymi keep their own progress, so none of them arrives Known.
+    expect(second.preview).toMatchObject({ added: 0, existing: 10, duplicates: 0, known: 0 });
     expect(second.result.counts).toMatchObject({ added: 0, existing: 10, decks: 0 });
     expect((await cardsOf(ctx)).length).toBe(before);
     expect((await card(ctx, "a cat, my edit".length ? "il gatto" : "")).meaning).toBe(
@@ -414,6 +416,34 @@ describe("importing an Anki package", () => {
     expect(preview.added).toBe(10);
   });
 
+  it("counts each deck's Known cards and asks no model when every deck's name gives its language", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    let asked = 0;
+    await inspectImport(ctx, id, env.IMPORTS, {
+      provider: "openai",
+      model: "test",
+      complete: async () => {
+        asked++;
+        return { decks: [] };
+      },
+    });
+    const { summary } = await getImport(ctx, id);
+    // In Lesson 1 the suspended card and the one never reviewed are not Known.
+    expect(summary?.decks.map((d) => [d.name, d.known])).toEqual([
+      ["Italian::Grammar", 0],
+      ["Italian::Lesson 1", 4],
+      ["Japanese", 0],
+    ]);
+    expect(Object.values(summary?.languages ?? {}).sort()).toEqual(["it", "it", "ja"]);
+    const deckKeys = new Set(summary?.decks.map((d) => d.key));
+    for (const type of summary?.noteTypes ?? []) {
+      expect(type.decks?.length).toBeGreaterThan(0);
+      expect(type.decks?.every((key) => deckKeys.has(key))).toBe(true);
+    }
+    expect(asked).toBe(0);
+  });
+
   it("leaves out the decks the learner unticks, and refuses leaving out every deck", async () => {
     const ctx = await fresh();
     const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
@@ -430,7 +460,7 @@ describe("importing an Anki package", () => {
     const choices = { languages: {}, roles: {}, skipDecks: [japanese, grammar] };
     const preview = await previewImportChoices(ctx, id, choices, env.IMPORTS);
     expect(preview.decks.map((d) => [d.name, d.cards])).toEqual([["Italian / Lesson 1", 6]]);
-    expect(preview).toMatchObject({ added: 6, skipped: 0 });
+    expect(preview).toMatchObject({ added: 6, skipped: 0, known: 4 });
 
     await confirmImport(ctx, id, choices, env.IMPORTS, async () => {});
     const decks = await prepareImportDecks(ctx, id, env.IMPORTS);

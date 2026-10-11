@@ -26,25 +26,28 @@ test("a learner imports a Mochi export and finds it in Activity", async ({ page 
     ).toHaveAttribute("href", /\/docs\/import-from-mochi$/);
   });
 
-  await test.step("upload the export and check what comes across", async () => {
+  await test.step("upload the export and choose the decks", async () => {
     const chooser = page.waitForEvent("filechooser");
     await page.getByRole("button", { name: "Choose file", exact: true }).click();
     await (await chooser).setFiles(MOCHI_FILE);
-    await expect(page.getByRole("heading", { name: "Does this card look right?" })).toBeVisible({
-      timeout: 30_000,
-    });
+    await expect(
+      page.getByRole("heading", { name: "Which decks do you want in Lymi?" }),
+    ).toBeVisible({ timeout: 30_000 });
+    await page.getByRole("button", { name: "Continue", exact: true }).click();
+  });
+
+  await test.step("confirm every kind of card and import", async () => {
+    const looksRight = page.getByRole("button", { name: "Looks right", exact: true });
+    const ready = page.getByRole("heading", { name: "Ready to import 12 cards" });
+    await expect(looksRight.or(ready)).toBeVisible();
+    while (await looksRight.isVisible()) {
+      await looksRight.click();
+      await expect(looksRight.or(ready)).toBeVisible();
+    }
     await expect(page.getByText("Cards keep the due dates they had in Mochi.")).toBeVisible();
     await expect(
       page.getByText("1 card has no --- line, so it’s imported with a term and no meaning."),
     ).toBeVisible();
-  });
-
-  await test.step("confirm every kind of card and import", async () => {
-    const yes = page.getByRole("button", { name: "Yes, looks right", exact: true });
-    const checked = page.getByText(/^(\d+) of \1 checked$/);
-    while (!(await checked.isVisible())) {
-      await yes.click();
-    }
     await page.getByRole("button", { name: "Import 12 cards", exact: true }).click();
     await expect(page.getByRole("heading", { name: "Imported 12 cards", exact: true })).toBeVisible(
       { timeout: 60_000 },

@@ -11,6 +11,8 @@ export type SourceDeck = {
   archived?: boolean | undefined;
   /** How the source asked the deck's own cards, where it records that; otherwise its cards decide. */
   reviewModes?: ReviewModeKey[] | undefined;
+  /** Cards that arrive Known, counted by the server while it inspects the file. */
+  known?: number | undefined;
 };
 
 /** A kind of note the file holds, with the fields the learner maps in the preview. */
@@ -24,6 +26,8 @@ export type SourceNoteType = {
   /** For each card template, the field its question shows, which decides the review mode. */
   questions: (number | null)[];
   notes: number;
+  /** Keys of the decks holding this kind's cards, found while inspecting; absent for older imports. */
+  decks?: string[] | undefined;
   /** Up to three notes' fields as plain text, so the learner can see what each field holds. */
   samples: string[][];
 };
@@ -38,7 +42,7 @@ export type SourceSummary = {
   audio: number;
   /** Notes of a kind Lymi cannot ask, such as image occlusion, which are left out. */
   unsupported: number;
-  /** Each deck's language, when the file records it; otherwise the server guesses from names. */
+  /** Each deck's language, when the file records it; otherwise the server reads names, then cards. */
   languages?: Record<string, string | null> | undefined;
 };
 

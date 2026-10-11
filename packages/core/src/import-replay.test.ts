@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { State } from "./fsrs";
-import { replayProgress } from "./import-replay";
+import { arrivesKnown, replayProgress } from "./import-replay";
 import { guessLanguage } from "./languages";
 
 const day = (n: number) => new Date(Date.UTC(2026, 0, 1 + n, 15));
@@ -94,5 +94,45 @@ describe("guessLanguage", () => {
   it("says nothing when the name names no language", () => {
     expect(guessLanguage("Lesson 1")).toBeNull();
     expect(guessLanguage("Default")).toBeNull();
+  });
+});
+
+describe("arrivesKnown", () => {
+  const learned = {
+    mode: "term_to_meaning" as const,
+    reviews: [
+      { at: day(10), rating: 3 as const },
+      { at: day(14), rating: 3 as const },
+    ],
+  };
+  const fresh = { mode: "meaning_to_term" as const, reviews: [] };
+
+  it("follows the leading mode: term to meaning before meaning to term", () => {
+    const card = { modes: ["meaning_to_term", "term_to_meaning"] as const, archived: false };
+    expect(arrivesKnown({ ...card, modes: [...card.modes], progress: [fresh, learned] }, now)).toBe(
+      true,
+    );
+  });
+
+  it("is not Known when the leading mode is new or the card arrives archived", () => {
+    const progress = [
+      { ...fresh, mode: "term_to_meaning" as const },
+      { ...learned, mode: "meaning_to_term" as const },
+    ];
+    expect(
+      arrivesKnown(
+        { modes: ["term_to_meaning", "meaning_to_term"], archived: false, progress },
+        now,
+      ),
+    ).toBe(false);
+    expect(
+      arrivesKnown({ modes: ["term_to_meaning"], archived: true, progress: [learned] }, now),
+    ).toBe(false);
+  });
+
+  it("ignores progress for a mode the card isn't asked in", () => {
+    expect(
+      arrivesKnown({ modes: ["meaning_to_term"], archived: false, progress: [learned] }, now),
+    ).toBe(false);
   });
 });

@@ -3,15 +3,14 @@ import { msg, plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { FieldRole, ImportFailure, ImportSource } from "@lymi/core";
 import { clsx } from "clsx";
-import { Check, ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
+import { Image as ImageIcon } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import type { Import, ImportPreview } from "../lib/api";
-import { Button, IconButton } from "./button";
+import { Button } from "./button";
 import { Chip } from "./chip";
 import { LanguageField, languageName } from "./deck-fields";
 import { InlineError } from "./inline-error";
 import { Go } from "./next-steps";
-import { Checkbox } from "./ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog";
 import { Field, FieldLabel } from "./ui/field";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
@@ -199,122 +198,6 @@ export function SampleCard({ sample, loading }: { sample: Sample | undefined; lo
   );
 }
 
-/**
- * The note types, one at a time, each asking whether its card looks right. A note type counts
- * as checked once the learner says so or changes its fields.
- */
-export function CardCheck({
-  noteTypes,
-  samples,
-  loading,
-  checked,
-  onChecked,
-  onChangeFields,
-  error,
-  source,
-}: {
-  noteTypes: NoteType[];
-  samples: ImportPreview["samples"] | undefined;
-  loading: boolean;
-  checked: Set<string>;
-  onChecked: (key: string) => void;
-  onChangeFields: (type: NoteType) => void;
-  error?: string | undefined;
-  source: ImportSource;
-}) {
-  const { t, i18n } = useLingui();
-  const [index, setIndex] = useState(0);
-  const [sampleIndex, setSampleIndex] = useState(0);
-  const type = noteTypes[Math.min(index, noteTypes.length - 1)];
-  if (!type) return null;
-  const list = samples?.[type.key] ?? [];
-  const sample = list[Math.min(sampleIndex, list.length - 1)];
-  const isChecked = checked.has(type.key);
-  const go = (next: number) => {
-    setIndex(next);
-    setSampleIndex(0);
-  };
-
-  return (
-    <section aria-labelledby="card-check" className="grid gap-3">
-      <div className="flex items-end justify-between gap-3">
-        <h2 id="card-check" className="text-md font-medium text-text">
-          <Trans>Does this card look right?</Trans>
-        </h2>
-        {noteTypes.length > 1 && (
-          <p className="text-sm text-muted tabular-nums">
-            {t`${noteTypes.filter((n) => checked.has(n.key)).length} of ${noteTypes.length} checked`}
-          </p>
-        )}
-      </div>
-      <div className="edge grid gap-4 rounded-xl bg-plate p-5">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <Chip>
-            {noteTypeName(type, i18n)} ·{" "}
-            {source !== "anki"
-              ? plural(type.notes, { one: "# card", other: "# cards" })
-              : plural(type.notes, { one: "# note", other: "# notes" })}
-          </Chip>
-          {list.length > 1 && (
-            <button
-              type="button"
-              className="text-sm text-muted underline-offset-4 hoverable:hover:text-text hoverable:hover:underline"
-              onClick={() => setSampleIndex((sampleIndex + 1) % list.length)}
-            >
-              <Trans>Show another</Trans>
-            </button>
-          )}
-        </div>
-        <SampleCard sample={sample} loading={loading} />
-        <div className="flex flex-wrap items-center gap-2 border-t border-edge pt-4">
-          <Button
-            variant="secondary"
-            aria-pressed={isChecked}
-            onClick={() => {
-              onChecked(type.key);
-              const next = noteTypes.findIndex((n, i) => i > index && !checked.has(n.key));
-              if (next >= 0) go(next);
-            }}
-            className={clsx(isChecked && "text-good")}
-          >
-            <Check data-icon="inline-start" aria-hidden="true" />
-            {isChecked ? <Trans>Looks right</Trans> : <Trans>Yes, looks right</Trans>}
-          </Button>
-          <Button variant="ghost" onClick={() => onChangeFields(type)}>
-            <Trans>Change fields</Trans>
-          </Button>
-          {noteTypes.length > 1 && (
-            <div className="ms-auto flex items-center gap-1">
-              <IconButton
-                label={t`Previous kind of card`}
-                size="sm"
-                onClick={() => go((index - 1 + noteTypes.length) % noteTypes.length)}
-              >
-                <ChevronLeft className="rtl:-scale-x-100" />
-              </IconButton>
-              <span className="min-w-12 text-center text-sm text-muted tabular-nums">
-                {index + 1} / {noteTypes.length}
-              </span>
-              <IconButton
-                label={t`Next kind of card`}
-                size="sm"
-                onClick={() => go((index + 1) % noteTypes.length)}
-              >
-                <ChevronRight className="rtl:-scale-x-100" />
-              </IconButton>
-            </div>
-          )}
-        </div>
-      </div>
-      {error && (
-        <p className="text-sm" role="alert">
-          <InlineError>{error}</InlineError>
-        </p>
-      )}
-    </section>
-  );
-}
-
 /** What each field of one note type becomes, with the first note's text beside it. */
 export function FieldsDialog({
   type,
@@ -448,8 +331,8 @@ export function LanguagesDialog({
         <DialogTitle>{t`Languages`}</DialogTitle>
         <DialogDescription>
           <Trans>
-            {app} doesn’t store a language, so Lymi guessed from each deck’s name. Lymi uses it to
-            find cards you already have and to read terms aloud.
+            Lymi read each deck’s language from {app}, its name or its cards. It uses the language
+            to find cards you already have and to read terms aloud.
           </Trans>
         </DialogDescription>
         <form
@@ -478,109 +361,6 @@ export function LanguagesDialog({
             </Button>
             <Button variant="primary" type="submit">
               <Trans>Use these languages</Trans>
-            </Button>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-/** Which of the file's decks come into Lymi, for a collection that holds decks the learner no longer uses. */
-export function DecksDialog({
-  decks,
-  skipDecks,
-  open,
-  onOpenChange,
-  onSave,
-}: {
-  decks: Summary["decks"];
-  skipDecks: string[];
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSave: (skipDecks: string[]) => void;
-}) {
-  const { t } = useLingui();
-  const [left, setLeft] = useState(() => new Set(skipDecks));
-  const [error, setError] = useState(false);
-  const none = left.size === decks.length;
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent size="md">
-        <DialogTitle>{t`Decks to import`}</DialogTitle>
-        <DialogDescription>
-          <Trans>
-            Choose the decks you want in Lymi. You can import the others from the same file later.
-          </Trans>
-        </DialogDescription>
-        <form
-          key={open ? "open" : "closed"}
-          className="grid gap-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (none) {
-              setError(true);
-              return;
-            }
-            onSave(decks.filter((deck) => left.has(deck.key)).map((deck) => deck.key));
-            onOpenChange(false);
-          }}
-        >
-          <div className="grid gap-1">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="-ms-3 justify-self-start"
-              onClick={() => {
-                setLeft(left.size === 0 ? new Set(decks.map((deck) => deck.key)) : new Set());
-                setError(false);
-              }}
-            >
-              {left.size === 0 ? <Trans>Clear all</Trans> : <Trans>Select all</Trans>}
-            </Button>
-            <ul className="grid max-h-[50dvh] overflow-y-auto pe-1">
-              {decks.map((deck) => (
-                <li key={deck.key}>
-                  <Field
-                    orientation="horizontal"
-                    className="min-h-12 rounded-md px-2.5 py-1.5 transition-[background-color] duration-150 hoverable:hover:veil"
-                  >
-                    <Checkbox
-                      checked={!left.has(deck.key)}
-                      onCheckedChange={(on) => {
-                        setLeft((current) => {
-                          const next = new Set(current);
-                          if (on) next.delete(deck.key);
-                          else next.add(deck.key);
-                          return next;
-                        });
-                        setError(false);
-                      }}
-                    />
-                    <span className="grid min-w-0 flex-1">
-                      <FieldLabel className="truncate text-base font-normal">
-                        {deck.name.split("::").join(" / ")}
-                      </FieldLabel>
-                      <span className="text-sm text-muted">
-                        {plural(deck.cards, { one: "# card", other: "# cards" })}
-                      </span>
-                    </span>
-                  </Field>
-                </li>
-              ))}
-            </ul>
-          </div>
-          {error && (
-            <p className="text-sm" role="alert">
-              <InlineError>{t`Choose at least one deck.`}</InlineError>
-            </p>
-          )}
-          <div className="flex items-center justify-end gap-2 pt-1">
-            <Button variant="ghost" onClick={() => onOpenChange(false)}>
-              <Trans>Cancel</Trans>
-            </Button>
-            <Button variant="primary" type="submit">
-              <Trans>Use these decks</Trans>
             </Button>
           </div>
         </form>

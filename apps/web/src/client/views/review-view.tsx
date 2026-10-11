@@ -373,6 +373,8 @@ export interface ReviewCardProps {
   offer?: HookOfferProps | undefined;
   /** Help before the reveal, from `aidSteps`, and how many steps the learner has taken. */
   aid?: RecallAidProps | undefined;
+  /** The hook's editor, in the hook's own place under the cue, while the learner writes one. */
+  hookEditor?: ReactNode | undefined;
   className?: string | undefined;
 }
 
@@ -508,6 +510,7 @@ export function ReviewCard({
   audioError = null,
   offer,
   aid,
+  hookEditor,
   className,
 }: ReviewCardProps) {
   const { t, i18n } = useLingui();
@@ -941,6 +944,7 @@ export function ReviewCard({
                   }
                 />
               )}
+              {hookEditor}
               {aid && (
                 // The aid's lines, out of the flow, so the fit keeps their room before they show.
                 <div

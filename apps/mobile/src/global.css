@@ -1,0 +1,37 @@
+@import "tailwindcss";
+@import "uniwind";
+@import "./theme.gen.css";
+
+/*
+ * Colours, radii and motion come from the web unchanged. Type does not: iOS reads at 17 pt and
+ * Dynamic Type scales from there, so the phone keeps the web's step names on its own ramp.
+ * Display steps keep a 1.2 line box: iOS clips any glyph that rises past it.
+ */
+@theme {
+  --text-2xs: 11px;
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-sm--line-height: 1.35;
+  --text-base: 15px;
+  --text-base--line-height: 1.4;
+  --text-md: 17px;
+  --text-md--line-height: 1.35;
+  --text-lg: 20px;
+  --text-lg--line-height: 1.3;
+  --text-xl: 22px;
+  --text-xl--line-height: 1.3;
+  --text-2xl: 28px;
+  --text-2xl--line-height: 1.2;
+  --text-3xl: 34px;
+  --text-3xl--line-height: 1.2;
+  --text-4xl: 40px;
+  --text-4xl--line-height: 1.2;
+  --text-5xl: 56px;
+  --text-5xl--line-height: 1.2;
+  --text-6xl: 68px;
+  --text-6xl--line-height: 1.2;
+  --text-7xl: 80px;
+  --text-7xl--line-height: 1.2;
+}
+
+@source "./";

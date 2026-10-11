@@ -38,7 +38,8 @@ apps/web          Product deployable: Vite React PWA client + Hono Worker
   src/client      Routes, views, components, styles, and the /design page
   src/server      Hono app, auth, API, static asset fallback
   migrations      Drizzle-generated SQL for D1
-packages/core     Drizzle schema, Zod types, FSRS scheduling. Shared with a future React Native app.
+apps/mobile       Phone app: Expo React Native, demo data for now (see its README)
+packages/core     Drizzle schema, Zod types, FSRS scheduling. Shared by the web and the phone app.
 scripts           Brand assets (brand.mjs) and icon generation (icons.sh)
 ```
 

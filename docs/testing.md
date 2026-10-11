@@ -15,6 +15,7 @@ pnpm test:e2e:ui      # Playwright's interactive UI
 pnpm deploy:check     # production builds and both deployment-package dry runs
 pnpm deploy:health    # check both production origins and print their deployed versions
 pnpm exec playwright show-report
+pnpm --filter @lymi/mobile e2e # the phone's smoke journey; see The phone app
 ```
 
 Install the configured browsers once on a new machine:
@@ -195,6 +196,64 @@ Then, with a listener on `127.0.0.1:8765` and a PKCE verifier in hand:
 4. Call `/mcp` with `Authorization: Bearer` and the `accept: application/json, text/event-stream` header. Responses arrive as one SSE `data:` line.
 
 The consent is remembered per client and learner, so a second authorize goes straight to the code. Disconnect the client from the You screen to see the consent screen again.
+
+## The phone app
+
+The phone app is tested mostly below its screens, on Linux, and its one Simulator journey is a smoke test before a release. Screens stay thin, so the rules they show live in `packages/core` and `packages/client`, where Vitest already tests them. An installed app cannot be fixed by the next merge, so what the API owes it is checked on every pull request. [ADR 0032](adr/0032-the-phone-ships-over-the-air-and-the-api-keeps-every-supported-release-working.md) has the release model behind it.
+
+| Layer | Question | Where | Costs |
+| --- | --- | --- | --- |
+| Unit | Is the shared rule right: the draw, FSRS, the outboxes, the review day? | `packages/core`, `packages/client` | Milliseconds a file |
+| Typecheck | Does the phone's code still fit the shared types? | `pnpm typecheck`, which includes `apps/mobile` | Part of the quality job |
+| Contract | Does the Worker still serve every phone release that is supported? | `apps/web/src/server/phone-contract.test.ts` | About 30 seconds |
+| Client against the Worker | Does the shared client, configured as the phone configures it, sign in, draw, grade and replay against the real Worker? | `apps/web/src/server/phone-client.test.ts` | Seconds |
+| Smoke journey | Does the Release build launch, sign in, keep its session, review and sync? | `apps/mobile/e2e`, on a Simulator | 8 minutes on a cached build, 27 on a cold one |
+
+The phone has no component tests. React Native has no working Vitest setup, so they would bring Jest in as a second runner; add them when a screen grows logic of its own that cannot move into a shared package.
+
+### The contract check
+
+Each phone release freezes the API it was built against: Promote writes the Worker's OpenAPI document, without its prose, to `apps/mobile/contract/<version>.json`. `phone-contract.test.ts` then checks the current Worker against every file in that folder in two ways. `breakingChanges` in `scripts/api-compat.mjs` compares the schemas, and the test calls the phone's reads as a seeded learner and validates each response against the frozen schema, which catches a route whose answer has drifted from its own description. Both run in the `unit` project, so every pull request and every push to `main` runs them.
+
+A response may gain fields and the API may gain endpoints. The check fails when a frozen release would lose something it reads, when a request it sends would be refused, or when a response field gains an enum value or a union branch the release has never seen. When the check fails on a web-first feature, choose one of these:
+
+1. Leave the new value out of responses to older clients, using the version the app sends in `x-lymi-client`.
+2. If the phone already shows an unknown value safely, mark the field with `.meta({ "x-lymi-open": true })` in `packages/core` and freeze a release that carries the mark.
+3. To remove something, raise the minimum version first and delete the frozen releases below it in the same pull request.
+
+Freeze by hand, for example to record the baseline after a change to the check itself:
+
+```bash
+pnpm --filter @lymi/mobile contract:freeze
+```
+
+### The smoke journey
+
+`apps/mobile/e2e/flows/sign-in-and-review.yaml` is one Maestro flow: it signs in with the email form, opens a review, grades three cards Good and ends the review. `apps/mobile/e2e/run.sh` seeds the `learner` persona on a local Worker first and checks afterwards that the three grades reached it, because the screen moves on before the grade outbox sends. It drives the same Release build a learner installs, with `EXPO_PUBLIC_API_URL` pointing at the local Worker, and finds controls by their visible text and accessibility labels.
+
+The journey is a smoke test and stays one flow. A behaviour it could cover belongs in the layer that can see it: a rule in a unit test, an answer in a route test, the client's handling of it in `phone-client.test.ts`. Add a step only for something that exists solely in the native build, such as a session surviving a relaunch.
+
+`.github/workflows/phone.yml` runs it on GitHub's `macos-26` runner, which is free for a public repository. It fingerprints the native inputs with `@expo/fingerprint` and caches the Simulator build under that hash, so a run without a native change only re-bundles the JavaScript into the cached app, starts the Worker, boots a Simulator and runs the flow. A failed flow runs once more and reports a pass on retry as a warning. A failed run keeps Maestro's screenshots, its JUnit report and the Worker log for seven days.
+
+To run it on your Mac, build the Release app against a local Worker, install it on your own Simulator, and run the script with that Worker's port:
+
+```bash
+cd apps/mobile
+EXPO_PUBLIC_API_URL=http://localhost:5241 LANG=en_US.UTF-8 npx expo run:ios --configuration Release --device <udid> --no-bundler
+API_URL=http://localhost:5241 DEVICE=<udid> pnpm e2e
+```
+
+Maestro needs Java 17 or later on `JAVA_HOME`.
+
+### What runs when for the phone
+
+| Check | Pull request | Main | Promote | Monday |
+| --- | --- | --- | --- | --- |
+| Unit, typecheck, contract, client against the Worker | all | all | all | — |
+| Contract against production's `/api/openapi.json` | — | — | — | yes |
+| Smoke journey | by hand | — | must pass | yes |
+
+A pull request that touches only the web or the Worker runs the same Linux checks as one that touches the phone: the contract is what an installed app depends on, and it costs seconds. Start the journey by hand from the Actions tab, on the `Phone` workflow, when a pull request changes something native or the sign-in path.
 
 ## Canonical coverage
 

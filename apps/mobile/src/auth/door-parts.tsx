@@ -205,6 +205,7 @@ function CredentialForm({ door }: { door: SignIn }) {
     <View className="gap-4">
       <Field
         label="Email"
+        testID="email"
         value={door.email}
         onChangeText={door.setEmail}
         error={door.errors.email}
@@ -222,6 +223,7 @@ function CredentialForm({ door }: { door: SignIn }) {
           <Field
             ref={passwordRef}
             label="Password"
+            testID="password"
             secret
             value={door.password}
             onChangeText={door.setPassword}

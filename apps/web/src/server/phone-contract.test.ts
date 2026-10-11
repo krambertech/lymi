@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { DeckOut } from "@lymi/core";
-import Ajv2020 from "ajv/dist/2020";
+import Ajv2020, { type AnySchema } from "ajv/dist/2020";
 import { beforeAll, describe, expect, it } from "vitest";
 import { breakingChanges, type Contract, contractOf } from "../../../../scripts/api-compat.mjs";
 import { json, type Session, type TestApp, testApp } from "./test-app";
@@ -109,7 +109,7 @@ function tolerant<T>(schema: T): T {
 }
 
 /** Points the document's local references at the registered contract. */
-function rebase(schema: unknown): unknown {
+function rebase(schema: unknown): AnySchema {
   return JSON.parse(
     JSON.stringify(schema ?? {}).replaceAll('"#/components/', '"contract#/components/'),
   );

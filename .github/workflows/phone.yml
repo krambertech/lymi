@@ -1,31 +1,17 @@
 name: Phone
 
-# The phone's journey on an iOS Simulator against a local Worker. docs/testing.md has when it runs.
+# The phone's smoke journey on an iOS Simulator against a local Worker, before a release and on
+# Mondays; the phone's other checks run in CI's quality job. docs/testing.md has the plan.
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-    paths:
-      - apps/mobile/**
-      - packages/client/**
-      - packages/core/**
-      - packages/design/**
-      - .github/workflows/phone.yml
-  push:
-    branches: [main]
-    paths:
-      - apps/mobile/**
-      - packages/**
-      - apps/web/src/server/**
-      - apps/web/migrations/**
-      - pnpm-lock.yaml
-      - .github/workflows/phone.yml
-  schedule:
-    # Monday 05:00 UTC, so a drift nothing else caught shows up before the week's release.
-    - cron: "0 5 * * 1"
   workflow_dispatch:
+  # Promote calls it, and a release waits for it to pass.
+  workflow_call:
+  schedule:
+    # Monday 05:00 UTC, so drift nothing else caught shows before the week's release.
+    - cron: "0 5 * * 1"
 
 concurrency:
-  group: phone-${{ github.event.pull_request.number || github.ref }}
+  group: phone-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -34,8 +20,22 @@ env:
   SIMULATOR: iPhone 17 Pro
 
 jobs:
+  # An installed app reads production's Worker, so its document must still serve every frozen release.
+  production_contract:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+      - name: Check production against the frozen releases
+        run: node scripts/check-phone-contract.mjs https://my.lymi.app/api/openapi.json
+
   journey:
-    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
     runs-on: macos-26
     # A safety net, not a budget: a cached run takes a few minutes and a native build about twenty.
     timeout-minutes: 45
@@ -62,7 +62,7 @@ jobs:
 
       - name: Restore the Simulator build
         id: native
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: apps/mobile/build/Lymi.app
           key: phone-simulator-${{ runner.os }}-xcode-26.6-${{ steps.fingerprint.outputs.hash }}
@@ -82,13 +82,21 @@ jobs:
           rm -rf build/Lymi.app
           cp -R build/derived/Build/Products/Release-iphonesimulator/Lymi.app build/Lymi.app
 
+      # Saved at once, so a journey that fails later still leaves the next run a warm build.
+      - name: Save the Simulator build
+        if: steps.native.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: apps/mobile/build/Lymi.app
+          key: ${{ steps.native.outputs.cache-primary-key }}
+
       # The cached binary keeps its native code; this run's JavaScript replaces its bundle.
       - name: Bundle this commit's JavaScript into the app
         working-directory: apps/mobile
         env:
           EXPO_PUBLIC_API_URL: ${{ env.API_URL }}
         run: |
-          npx expo export:embed --platform ios --dev false --entry-file node_modules/expo-router/entry.js \
+          npx expo export:embed --platform ios --dev false --bytecode --entry-file node_modules/expo-router/entry.js \
             --bundle-output build/Lymi.app/main.jsbundle --assets-dest build/Lymi.app
           codesign --force --sign - --deep build/Lymi.app
 

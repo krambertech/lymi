@@ -1,4 +1,4 @@
-# The phone's canonical journey: sign in with a password, grade three cards, end the review.
+# The phone's smoke journey: sign in with a password, grade three cards, end the review.
 # run.sh seeds the learner persona first and checks afterwards that the grades reached the Worker.
 appId: app.lymi.poc
 name: Sign in and review
@@ -7,19 +7,27 @@ name: Sign in and review
     clearState: true
     clearKeychain: true
 - tapOn: "Sign in with email"
-- tapOn: "Email"
+- tapOn:
+    id: "email"
 - inputText: ${EMAIL}
-- tapOn: "Password"
+- tapOn:
+    id: "password"
 - inputText: ${PASSWORD}
 - tapOn: "^Sign in$"
+# iOS may offer to save the password, and Today stays hidden under the offer until it closes.
 - extendedWaitUntil:
-    visible: "^Review$"
+    visible: "Not Now|^Review$"
     timeout: 30000
+- tapOn:
+    text: "Not Now"
+    optional: true
+- assertVisible: "^Review$"
 - tapOn: "^Review$"
 - repeat:
     times: 3
     commands:
-      - tapOn: "Tap to reveal"
+      - tapOn: ".*Tap to reveal"
       - tapOn: "^Good$"
+# Ending short of the goal goes straight back to Today.
 - tapOn: "End review"
-- assertVisible: ".*reviews today.*"
+- assertVisible: "cards due today"

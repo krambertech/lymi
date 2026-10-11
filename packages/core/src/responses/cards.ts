@@ -90,6 +90,17 @@ export const CardOut = z
   .meta({ id: "Card" });
 export type CardOut = z.infer<typeof CardOut>;
 
+/** The AI's draft for a card's memory hook, shown greyed in the owner's hook editor until kept. */
+export const HookDraftOut = z
+  .object({
+    hook: z.string().nullable().meta({
+      description:
+        "A short mnemonic in the meaning's language, or null for a card the keyword method does not fit, such as a sentence or a term in the learner's own language. Saving exactly this text marks the hook as the AI's.",
+    }),
+  })
+  .meta({ id: "HookDraft" });
+export type HookDraftOut = z.infer<typeof HookDraftOut>;
+
 const ReviewRecord = {
   reviewCount: z.number().int().meta({ description: "Grades counted" }),
   lapses: z.number().int().meta({ description: "Forgot grades counted" }),

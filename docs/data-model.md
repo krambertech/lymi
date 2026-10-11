@@ -85,6 +85,7 @@ erDiagram
     text notes "nullable, grammar etc"
     text hook "nullable memory hook, not an edition field"
     text hook_source "nullable lesson | ai | manual"
+    text hook_draft "nullable, the AI's draft for the owner's editor; empty when it had none"
     text language "nullable BCP 47"
     json tags "string array, global per user"
     text source "nullable free text: where it came from"

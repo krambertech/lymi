@@ -218,7 +218,7 @@ msgstr "{0, plural, one {Forgotten once} other {Forgotten # times}}"
 msgid "{0, plural, one {Imported # card} other {Imported # cards}}"
 msgstr "{0, plural, one {Imported # card} other {Imported # cards}}"
 
-#. placeholder {0}: summary.decks.length
+#. placeholder {0}: chosenDecks.length
 msgid "{0, plural, one {Language of # deck} other {Languages of # decks}}"
 msgstr "{0, plural, one {Language of # deck} other {Languages of # decks}}"
 
@@ -265,6 +265,15 @@ msgstr "{0, plural, one {You know {known} of # card in {currentName}, the last s
 #. placeholder {0}: current.total
 msgid "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
 msgstr "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
+
+#. placeholder {0}: summary.decks.length
+#. placeholder {1}: chosenDecks.length
+msgid "{0, plural, other {{1} of # decks}}"
+msgstr "{0, plural, other {{1} of # decks}}"
+
+#. placeholder {0}: summary.decks.length
+msgid "{0, plural, other {All # decks}}"
+msgstr "{0, plural, other {All # decks}}"
 
 #. placeholder {0}: card.deckName
 #. placeholder {0}: i18n._(modeLabel(item.review.mode))
@@ -521,6 +530,9 @@ msgstr "{left, plural, one {# character left} other {# characters left}}"
 
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
+
+msgid "{leftOutCards, plural, one {# card in the decks you left out isn’t imported.} other {# cards in the decks you left out aren’t imported.}}"
+msgstr "{leftOutCards, plural, one {# card in the decks you left out isn’t imported.} other {# cards in the decks you left out aren’t imported.}}"
 
 msgid "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and read terms aloud.} other {# decks have no language yet. Choose one so Lymi can find duplicates and read terms aloud.}}"
 msgstr "{missingLanguage, plural, one {# deck has no language yet. Choose one so Lymi can find duplicates and read terms aloud.} other {# decks have no language yet. Choose one so Lymi can find duplicates and read terms aloud.}}"
@@ -1215,6 +1227,9 @@ msgstr "Choose a whole number from 1 to 200."
 msgid "Choose another file"
 msgstr "Choose another file"
 
+msgid "Choose at least one deck."
+msgstr "Choose at least one deck."
+
 msgid "Choose at least one way to be asked."
 msgstr "Choose at least one way to be asked."
 
@@ -1236,6 +1251,9 @@ msgstr "Choose one"
 
 msgid "Choose the .zip file Lymi exports as a Lymi file, without unzipping it."
 msgstr "Choose the .zip file Lymi exports as a Lymi file, without unzipping it."
+
+msgid "Choose the decks you want in Lymi. You can import the others from the same file later."
+msgstr "Choose the decks you want in Lymi. You can import the others from the same file later."
 
 msgid "Choose the file again"
 msgstr "Choose the file again"
@@ -1260,6 +1278,9 @@ msgstr "Citizenship"
 
 msgid "Clear"
 msgstr "Clear"
+
+msgid "Clear all"
+msgstr "Clear all"
 
 msgid "Clear filters"
 msgstr "Clear filters"
@@ -1581,6 +1602,9 @@ msgstr "Decks from Anki or Mochi, with their review history."
 
 msgid "Decks from Lymi. Add one to study it in your language."
 msgstr "Decks from Lymi. Add one to study it in your language."
+
+msgid "Decks to import"
+msgstr "Decks to import"
 
 msgid "Decks to review"
 msgstr "Decks to review"
@@ -2279,6 +2303,9 @@ msgstr "Leave deck"
 
 msgid "Leave out"
 msgstr "Leave out"
+
+msgid "Leave out the decks you don’t use anymore."
+msgstr "Leave out the decks you don’t use anymore."
 
 msgid "Leave review"
 msgstr "Leave review"
@@ -4024,6 +4051,9 @@ msgstr "Use the deck’s"
 
 msgid "Use the new version"
 msgstr "Use the new version"
+
+msgid "Use these decks"
+msgstr "Use these decks"
 
 msgid "Use these fields"
 msgstr "Use these fields"

@@ -283,17 +283,42 @@ const ROLE_PATTERNS: [Exclude<FieldRole, "term" | "skip">, RegExp][] = [
   ],
   ["example", /\b(example|sentence|context|usage)s?\b|例文/i],
   ["notes", /\b(notes?|extra|comments?|hint|grammar|remarks?|mnemonic)\b/i],
-  ["meaning", /\b(back|meaning|definition|translation|english|gloss|answer)\b|意味/i],
+  ["meaning", /\b(back|meaning|definition|translation|english|gloss(ary)?|answer)\b|意味/i],
 ];
 const TERM_PATTERN =
   /\b(front|word|term|expression|vocab(ulary)?|kanji|question|target|phrase)\b|単語/i;
-const SKIP_PATTERN = /\b(audio|sound|image|picture|photo|add reverse)\b/i;
+const SKIP_PATTERN = /\b(audio|sound|image|picture|photo|add reverse|pitch|sort)\b/i;
+/** Switches such as Lapis's `IsSentenceCard`, which choose a template rather than hold text. */
+const FLAG_PATTERN = /^(is|has)\s/i;
 
-/** The role a field's name alone names, if any. */
+/** "ExpressionFurigana" and "word_audio" as spaced words, so the patterns' word edges find them. */
+function fieldWords(name: string): string {
+  return name
+    .replace(/(\p{Ll}|\d)(\p{Lu})/gu, "$1 $2")
+    .replace(/[_\-.]+/g, " ")
+    .trim();
+}
+
+function patternRole(text: string): FieldRole | undefined {
+  if (TERM_PATTERN.test(text)) return "term";
+  return ROLE_PATTERNS.find(([, pattern]) => pattern.test(text))?.[0];
+}
+
+/**
+ * The role a field's name alone names, if any. In a name of several words the last one decides,
+ * so "Expression Reading" is a reading and "Main Definition" a meaning.
+ */
 export function namedFieldRole(name: string): FieldRole | undefined {
-  if (SKIP_PATTERN.test(name)) return "skip";
-  if (TERM_PATTERN.test(name)) return "term";
-  return ROLE_PATTERNS.find(([, pattern]) => pattern.test(name))?.[0];
+  const words = fieldWords(name);
+  if (SKIP_PATTERN.test(words) || FLAG_PATTERN.test(words)) return "skip";
+  return patternRole(words.split(/\s+/).at(-1) ?? "") ?? patternRole(words);
+}
+
+/** "Expression Furigana" beside "Expression" repeats that field with readings over its kanji. */
+function isFuriganaOf(name: string, names: readonly string[]): boolean {
+  const match = /^(.+?)\s*furigana$/i.exec(fieldWords(name));
+  const base = match?.[1]?.toLowerCase();
+  return !!base && names.some((other) => fieldWords(other).toLowerCase() === base);
 }
 
 /**
@@ -303,7 +328,7 @@ export function namedFieldRole(name: string): FieldRole | undefined {
  * learner corrects this in the preview.
  */
 export function guessFieldRoles(names: readonly string[]): FieldRole[] {
-  const roles = names.map(namedFieldRole);
+  const roles = names.map((name) => (isFuriganaOf(name, names) ? "skip" : namedFieldRole(name)));
   const claim = (role: FieldRole) => {
     let found = false;
     for (let i = 0; i < roles.length; i++) {
@@ -386,6 +411,11 @@ export const ImportChoicesInput = z.object({
   roles: z
     .record(z.string(), z.array(FieldRole).max(64))
     .meta({ description: "What each field becomes, per note type key from the summary" }),
+  skipDecks: z
+    .array(z.string())
+    .max(5000)
+    .optional()
+    .meta({ description: "Deck keys from the summary whose cards stay out of the import" }),
 });
 export type ImportChoicesInput = z.infer<typeof ImportChoicesInput>;
 

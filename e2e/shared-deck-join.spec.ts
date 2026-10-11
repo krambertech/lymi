@@ -3,10 +3,10 @@ import { type Browser, expect, type Page, type TestInfo, test } from "./test";
 
 /**
  * A classmate's email: not a local persona, so it has to confirm its address like a real one.
- * One per project and retry, like every other account in the suite.
+ * One per project, retry and repeat, like every other account in the suite.
  */
 function outsider(testInfo: TestInfo, who: string) {
-  return `e2e-${who}-${testInfo.project.name}-r${testInfo.retry}@example.test`;
+  return `e2e-${who}-${testInfo.project.name}-r${testInfo.retry}-p${testInfo.repeatEachIndex}@example.test`;
 }
 
 /** The radio input is visually hidden; a learner presses the card around it. */
@@ -125,6 +125,44 @@ test("an owner shares a deck and a classmate joins through the link", async ({
       data: { format: "anki", deckId },
     });
     expect(file.status()).toBe(403);
+  });
+
+  await classmate.context().close();
+});
+
+/**
+ * The rest of the link's life. The join itself is the first test's subject, so here the link and
+ * the membership come from the API: one test driving two sign-ups ran past its timeout (#481).
+ */
+test("an owner turns the join link off and a member leaves", async ({
+  page,
+  browser,
+}, testInfo) => {
+  const deckName = `Estonian club ${testInfo.project.name}`;
+  let deckId = "";
+  let joinUrl = "";
+  const classmate = await signedOutPage(browser);
+
+  await test.step("the owner shares a deck and a member joins through the API", async () => {
+    await startAsTestLearner(page, testInfo, "join-owner");
+    const deck = await page.request.post("/api/decks", {
+      data: { name: deckName, defaultLanguage: "et" },
+    });
+    expect(deck.ok()).toBeTruthy();
+    deckId = ((await deck.json()) as { id: string }).id;
+    const card = await page.request.post("/api/cards", {
+      data: { deckId, term: "tere hommikust", meaning: "good morning" },
+    });
+    expect(card.ok()).toBeTruthy();
+    const on = await page.request.post(`/api/decks/${deckId}/join-link`);
+    expect(on.ok()).toBeTruthy();
+    joinUrl = ((await on.json()) as { link: { url: string } }).link.url;
+
+    await startAsTestLearner(classmate, testInfo, "join-member");
+    const joined = await classmate.request.post(`/api/join/${joinUrl.split("/").at(-1)}`, {
+      headers: { "content-type": "application/json" },
+    });
+    expect(joined.ok()).toBeTruthy();
   });
 
   await test.step("the owner's Activity says the link went on and who joined", async () => {

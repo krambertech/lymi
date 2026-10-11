@@ -44,7 +44,7 @@ Lymi has three surfaces: the web app, the phone app and the public site. They sh
 - The web leads the jobs that want a keyboard and room: turning a lesson into cards, tidying a deck, reading Insights at length, and setup.
 - The site is where a visitor meets Lymi and finds a published deck.
 
-Every learning feature reaches both apps, and the web may ship first with a linked phone issue. Five setup jobs stay on the web, and the phone links to them: import, export, API keys and connected apps, publishing, and deck reports. A setup job moves to the phone once learners reach for it there. [ADR 0030](docs/adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)
+Every learning feature reaches both apps. It ships on the web first by default and reaches the phone through a linked phone issue once it is verified. Five setup jobs stay on the web, and the phone links to them: import, export, API keys and connected apps, publishing, and deck reports. A setup job moves to the phone once learners reach for it there. [ADR 0030](docs/adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)
 
 ## Daily Review Goal
 

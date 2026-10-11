@@ -15,7 +15,8 @@ const PUSH_ATTEMPTS = 3;
 
 const USAGE = `Usage: pnpm pr:media [--body <file>] [--dry-run] <file[#alt text]>...
 
-Pushes images and videos to the ${MEDIA_BRANCH} branch and prints commit-pinned links.
+Pushes images and videos to the ${MEDIA_BRANCH} branch and prints commit-pinned links, for cloud
+sessions, where the GitHub proxy refuses gh --attach.
 With --body, rewrites references such as ![After](./deck-after.png) in that file in place.
 Videos become an inline GIF that links to the full recording.`;
 

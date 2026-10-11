@@ -23,7 +23,7 @@ As of 1 October 2026 the same MCP Apps resource renders in ChatGPT, Claude on we
 - The view is its own Vite build into a single HTML file, so it runs on any sandbox origin. It lives in `apps/web/src/client/mcp-app`, reuses Lymi's tokens, primitives and Lingui catalogs, and never imports the product's query cache, router or offline outbox.
 - The view reads and writes only through MCP tools the host calls on the learner's behalf, with the connection's own grant. Every write goes through the service layer as actor `mcp`, so Activity shows it under the connected app, and a read-only grant is refused as it is for the assistant.
 - The resource URI carries a content version, because hosts cache a resource by its URI.
-- Selecting a card shares its id, term and meaning with the model. Nothing else the view shows enters model context unless the learner asks the assistant about it.
+- The views show status and one card at a time, and change nothing; the assistant makes every change. Nothing a view shows enters model context.
 - A tool whose only job is the view is marked `visibility: ["app"]`, so the model never calls it.
 - The view never grades a review or starts one; a link opens review in Lymi.
 - Host differences, such as Claude's hashed sandbox domain and ChatGPT's unique `ui.domain`, are set per host in the resource metadata. The interface is tested in each host before a directory submission.

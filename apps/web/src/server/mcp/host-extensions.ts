@@ -32,8 +32,7 @@ export const HOST_EXTENSION_CAPABILITIES = {
   },
 };
 
-/** How many of the newest cards the home shows, and how many of each kind a mention offers. */
-const HOME_RECENT = 10;
+/** How many of each kind a mention offers. */
 const MENTIONS_PER_KIND = 6;
 
 /** The app language as a learner reads it, since a native settings control shows enum values as written. */
@@ -59,7 +58,6 @@ const Count = z.number().int();
 const HomeOut = z.object({
   dueNow: Count,
   decks: z.array(z.object({ id: z.string(), name: z.string(), due: Count })),
-  recent: z.array(z.looseObject({ id: z.string(), term: z.string(), deckName: z.string() })),
 });
 const MentionsOut = z.object({
   items: z.array(
@@ -89,7 +87,7 @@ export function registerHostExtensions(server: McpServer, ctx: ServiceContext, k
     {
       title: "Lymi",
       description:
-        "Lymi's home inside the assistant: what is due and the newest cards. The learner opens it from the sidebar or beside a conversation.",
+        "Lymi's home inside the assistant: what is due, per deck. The learner opens it from the sidebar or beside a conversation.",
       inputSchema: z.object({}),
       outputSchema: HomeOut,
       annotations: { readOnlyHint: true, destructiveHint: false, openWorldHint: false },
@@ -105,14 +103,10 @@ export function registerHostExtensions(server: McpServer, ctx: ServiceContext, k
     },
     () =>
       kit.run("open_lymi", async () => {
-        const [decks, recent] = await Promise.all([
-          listDecks(ctx),
-          searchCards(ctx, { limit: HOME_RECENT }),
-        ]);
+        const decks = await listDecks(ctx);
         return kit.result({
           dueNow: decks.reduce((sum, d) => sum + d.due, 0),
           decks: decks.map((d) => ({ id: d.id, name: d.name, due: d.due })),
-          recent: recent.cards.map((row) => ({ ...kit.cardOut(row.card), deckName: row.deckName })),
         });
       }),
   );

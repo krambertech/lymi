@@ -36,15 +36,7 @@ import {
 } from "@lymi/core";
 import { type CallToolResult, McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
-import {
-  MCP_META,
-  type McpView,
-  type ViewAddResult,
-  type ViewCard,
-  type ViewDeckResult,
-  type ViewDueResult,
-  type ViewSearchResult,
-} from "../../shared/mcp-app";
+import type { McpView, ViewCard, ViewDeckResult, ViewDueResult } from "../../shared/mcp-app";
 import {
   addCards,
   archiveCard,
@@ -57,6 +49,7 @@ import {
   createDeck,
   createSection,
   createSeries,
+  deckStages,
   deleteSeries,
   describeCardImage,
   getDeck,
@@ -151,21 +144,6 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
   );
   const { ctx } = principal;
   const run = (tool: string, fn: () => Promise<CallToolResult>) => runTool(tool, fn, principal);
-  // Deck names by id, so a view of cards from several decks can say which.
-  const viewMeta = async (decks: boolean): Promise<Record<string, unknown>> => {
-    if (!decks) return {};
-    const list = await listDecks(ctx);
-    return { [MCP_META.decks]: Object.fromEntries(list.map((d) => [d.id, d.name])) };
-  };
-  /** A tool with a view: its result carries what the view needs in `_meta`, which hosts keep from the model. */
-  const runView = (tool: string, decks: boolean, fn: () => Promise<CallToolResult>) =>
-    run(tool, async () => {
-      const out = await fn();
-      if (out.isError) return out;
-      // The write already happened; a view without deck names is better than reporting a failure.
-      const meta = await viewMeta(decks).catch(() => ({}));
-      return { ...out, _meta: { ...out._meta, ...meta } };
-    });
   const views = {
     origin: new URL(principal.resourceMetadataUrl).origin,
     clientId: ctx.client,
@@ -210,17 +188,24 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     "get_deck",
     {
       title: "Get a deck",
-      description: `One deck and its active cards, newest first, up to ${DECK_CARD_LIMIT}. For a bigger deck, page through search_cards with its deckId; to find one card, search by its term.`,
+      description: `One deck: how many of its cards are due now and how many are new, learning and known, then its active cards, newest first, up to ${DECK_CARD_LIMIT}. For a bigger deck, page through search_cards with its deckId; to find one card, search by its term.`,
       inputSchema: z.object({ deckId: z.string().min(1) }),
       outputSchema: DeckWithCardsOut,
       ...withView(readTool, "deck"),
     },
     ({ deckId }) =>
-      runView("get_deck", false, async () => {
-        const [deck, rows] = await Promise.all([getDeck(ctx, deckId), listDeckCards(ctx, deckId)]);
+      run("get_deck", async () => {
+        const [deck, rows, decks, stages] = await Promise.all([
+          getDeck(ctx, deckId),
+          listDeckCards(ctx, deckId),
+          listDecks(ctx),
+          deckStages(ctx, deckId),
+        ]);
         return result({
           deck: deckOut(deck),
           total: rows.length,
+          due: decks.find((d) => d.id === deckId)?.due ?? 0,
+          stages,
           truncated: rows.length > DECK_CARD_LIMIT,
           cards: rows.slice(0, DECK_CARD_LIMIT).map((row) => ({
             ...cardOut(row.card),
@@ -241,10 +226,10 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         "stats adds each card's review record, overall and per review mode. Set archived to true to look through archived cards. Results come a page at a time: pass nextCursor as cursor. A page can be short or even empty; keep going until nextCursor is null. total is null when it is not known exactly.",
       inputSchema: CardSearchInput,
       outputSchema: SearchOut,
-      ...withView(readTool, "search"),
+      ...readTool,
     },
     (search) =>
-      runView("search_cards", false, async () => {
+      run("search_cards", async () => {
         const page = await searchCards(ctx, search);
         return result({
           cards: page.cards.map((row) => ({
@@ -267,8 +252,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       outputSchema: CardOut,
       ...withView(readTool, "card"),
     },
-    ({ cardId }) =>
-      runView("get_card", false, async () => result(cardOut(await showCard(ctx, cardId)))),
+    ({ cardId }) => run("get_card", async () => result(cardOut(await showCard(ctx, cardId)))),
   );
 
   server.registerTool(
@@ -281,7 +265,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       ...withView(readTool, "due"),
     },
     () =>
-      runView("due_counts", false, async () => {
+      run("due_counts", async () => {
         const [decks, series, rounds] = await Promise.all([
           listDecks(ctx),
           listSeries(ctx),
@@ -313,10 +297,10 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
         response: ResponseShape.optional(),
       }),
       outputSchema: AddCardsOut,
-      ...withView(writeTool({ idempotent: true }), "capture"),
+      ...writeTool({ idempotent: true }),
     },
     ({ cards, response }) =>
-      runView("add_cards", true, async () => {
+      run("add_cards", async () => {
         requireWrite(principal);
         const outcomes = await addCards(ctx, cards, principal.enrichment, {
           allowCrossDeckDuplicates: await isPublisher(ctx, principal.publishers ?? new Set()),
@@ -351,7 +335,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       ...withView(writeTool({ idempotent: false, overwrites: true }), "card"),
     },
     ({ cardId, ...patch }) =>
-      runView("update_card", false, async () => {
+      run("update_card", async () => {
         requireWrite(principal);
         return result(cardOut(await updateCard(ctx, cardId, patch)));
       }),
@@ -916,9 +900,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       ...withView(readTool, "insights"),
     },
     ({ period, timezone }) =>
-      runView("get_insights", false, async () =>
-        result(await insights(ctx, { period, zone: timezone })),
-      ),
+      run("get_insights", async () => result(await insights(ctx, { period, zone: timezone }))),
   );
 
   server.registerTool(
@@ -940,8 +922,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       outputSchema: z.object(StreakOut.shape),
       ...withView(readTool, "streak"),
     },
-    ({ timezone }) =>
-      runView("get_streak", false, async () => result(await streak(ctx, { zone: timezone }))),
+    ({ timezone }) => run("get_streak", async () => result(await streak(ctx, { zone: timezone }))),
   );
 
   registerHostExtensions(server, ctx, {
@@ -1274,6 +1255,10 @@ const DecksOut = z.object({
 const DeckWithCardsOut = z.object({
   deck: DeckOut,
   total: z.number().int(),
+  due: z.number().int().describe("Cards in the deck due now"),
+  stages: z
+    .object({ new: z.number().int(), learning: z.number().int(), known: z.number().int() })
+    .describe("Active cards by stage: a card is known only once every way it is asked is"),
   truncated: z.boolean().describe(`True when the deck has more than ${DECK_CARD_LIMIT} cards`),
   cards: z.array(CardOut.extend({ dueAt: Timestamp.nullable() })),
 });
@@ -1357,8 +1342,6 @@ const RestoreCardsOut = z.object({
 type Fits<T extends U, U> = T;
 export type _ViewContract = [
   Fits<CardOut, ViewCard>,
-  Fits<z.infer<typeof AddCardsOut>, ViewAddResult>,
-  Fits<z.infer<typeof SearchOut>, ViewSearchResult>,
   Fits<z.infer<typeof DeckWithCardsOut>, ViewDeckResult>,
   Fits<z.infer<typeof DueOut>, ViewDueResult>,
 ];

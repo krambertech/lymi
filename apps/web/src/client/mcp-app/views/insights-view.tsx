@@ -7,8 +7,8 @@ import { Button } from "../../components/button";
 import { RecallTally } from "../../components/recall-tally";
 import { RunStrip } from "../../components/run-strip";
 import { StatPlate } from "../../components/stat-plate";
-import { StateIcon, stateMarks } from "../../components/state-mark";
 import { useHost } from "../host";
+import { StageCounts } from "../stage-counts";
 import { ViewFrame } from "../view-frame";
 
 /** Recall, the days reviewed and the cards by stage: the first three plates of Insights. */
@@ -55,15 +55,7 @@ export function InsightsView({ result }: { result: InsightsOut }) {
           }
         />
       </div>
-      <ul aria-label={t`Cards by stage`} className="flex flex-wrap gap-x-5 gap-y-2 px-1 text-sm">
-        {(["new", "learning", "known"] as const).map((stage) => (
-          <li key={stage} className="inline-flex items-center gap-1.5 text-text-2">
-            <StateIcon state={stage} className="size-3.5" />
-            <span className="font-medium tabular-nums text-text">{i18n.number(cards[stage])}</span>
-            {i18n._(stateMarks[stage].groupLabel)}
-          </li>
-        ))}
-      </ul>
+      <StageCounts stages={cards} />
     </ViewFrame>
   );
 }

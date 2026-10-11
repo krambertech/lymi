@@ -1,13 +1,15 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
+import type { ReactNode } from "react";
 import { expect, test, vi } from "vitest";
-import { page, userEvent } from "vitest/browser";
+import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
-import type { ViewAddResult, ViewCard } from "../../shared/mcp-app";
+import type { ViewCard, ViewDeckResult } from "../../shared/mcp-app";
 import { DeepLink, deepLinkTarget } from "./deep-link";
 import { type Host, HostContext } from "./host";
-import { CaptureView } from "./views/capture-view";
+import { CardView } from "./views/card-view";
+import { DeckView } from "./views/deck-view";
 
 i18n.load("en", messages);
 i18n.activate("en");
@@ -46,145 +48,68 @@ function fakeHost(calls: Record<string, (args: Record<string, unknown>) => unkno
         : { ok: true as const, data };
     }),
     open: vi.fn(),
-    select: vi.fn(),
   };
   return host as typeof host & Host;
 }
 
-const added: ViewAddResult = {
-  added: 1,
-  skipped: 2,
-  results: [
-    { id: "card-1", status: "added", card: card() },
-    {
-      id: "card-9",
-      status: "skipped",
-      existing: { ...card({ id: "card-9", term: "magari", meaning: "maybe" }), deckName: "Verbi" },
-    },
-    {
-      id: "card-9",
-      status: "skipped",
-      existing: { ...card({ id: "card-9", term: "magari", meaning: "maybe" }), deckName: "Verbi" },
-    },
-  ],
-};
-
-async function renderCapture(host: Host, result: ViewAddResult = added) {
+async function renderIn(host: Host, view: ReactNode) {
   await render(
     <I18nProvider i18n={i18n}>
-      <HostContext value={host}>
-        <CaptureView result={result} decks={{ "deck-1": "Lezione 12" }} />
-      </HostContext>
+      <HostContext value={host}>{view}</HostContext>
     </I18nProvider>,
   );
 }
 
-test("an add names its deck, lists what landed, and lists an existing card once", async () => {
-  await renderCapture(fakeHost());
-  await expect
-    .element(page.getByRole("heading", { level: 1 }))
-    .toHaveTextContent("Added 1 card to Lezione 12");
-  const landed = page.getByRole("list", { name: "Added", exact: true }).getByRole("listitem");
-  await expect.element(landed).toBeVisible();
-  expect(landed.element().textContent).toContain("sbrigarsi");
-  const existing = page.getByRole("list", { name: "Already in your decks" }).getByRole("listitem");
-  expect(existing.elements()).toHaveLength(1);
+const deck = (over: Partial<ViewDeckResult> = {}): ViewDeckResult => ({
+  deck: { id: "deck-1", name: "Lezione 12", description: null, defaultLanguage: "it" },
+  total: 48,
+  due: 12,
+  stages: { new: 20, learning: 16, known: 12 },
+  ...over,
 });
 
-test("a terse add, which carries no cards, still says how many landed", async () => {
-  await renderCapture(fakeHost(), {
-    added: 2,
-    skipped: 0,
-    results: [
-      { id: "card-1", status: "added" },
-      { id: "card-2", status: "added" },
-    ],
-  });
-  await expect.element(page.getByRole("heading", { level: 1 })).toHaveTextContent("Added 2 cards");
-});
-
-test("opening a card tells the assistant which card the learner means, and closing it clears that", async () => {
-  const host = fakeHost();
-  await renderCapture(host);
-  const row = page.getByRole("button", { name: /sbrigarsi/ });
-  await row.click();
-  expect(host.select).toHaveBeenLastCalledWith(
-    expect.objectContaining({ id: "card-1", deckName: "Lezione 12" }),
+test("a card shows its fields, marks what Lymi wrote, and offers no editing", async () => {
+  await renderIn(
+    fakeHost(),
+    <CardView card={card({ example: "Sbrigati!", exampleSource: "ai" })} />,
   );
-  await row.click();
-  expect(host.select).toHaveBeenLastCalledWith(null);
+  await expect.element(page.getByRole("heading", { level: 1 })).toHaveTextContent("sbrigarsi");
+  await expect.element(page.getByText("to hurry up")).toBeVisible();
+  await expect.element(page.getByText("Sbrigati!")).toHaveAttribute("lang", "it");
+  await expect.element(page.getByRole("button", { name: "Edit" })).not.toBeInTheDocument();
 });
 
-test("a save sends only the changed field and shows the saved card", async () => {
-  const host = fakeHost({
-    get_card: () => card(),
-    update_card: (args) => card({ meaning: String(args.meaning), meaningSource: "manual" }),
-  });
-  await renderCapture(host);
-  await page.getByRole("button", { name: /sbrigarsi/ }).click();
-  await page.getByRole("button", { name: "Edit" }).click();
-  const meaning = page.getByRole("textbox", { name: "Meaning" });
-  await meaning.clear();
-  await userEvent.type(meaning, "to get a move on");
-  await page.getByRole("button", { name: "Save" }).click();
-
-  await expect.element(page.getByText("to get a move on")).toBeVisible();
-  expect(host.call).toHaveBeenLastCalledWith("update_card", {
-    cardId: "card-1",
-    meaning: "to get a move on",
-  });
+test("Open in Lymi opens the card in the app", async () => {
+  const host = fakeHost();
+  await renderIn(host, <CardView card={card()} />);
+  await page.getByRole("button", { name: "Open in Lymi" }).click();
+  expect(host.open).toHaveBeenCalledWith("https://my.lymi.app/library/deck-1?card=card-1");
 });
 
-test("a field someone else changed while the learner edited keeps the draft and asks", async () => {
-  const host = fakeHost({
-    get_card: () => card({ meaning: "to rush" }),
-    update_card: (args) => card({ meaning: String(args.meaning) }),
-  });
-  await renderCapture(host);
-  await page.getByRole("button", { name: /sbrigarsi/ }).click();
-  await page.getByRole("button", { name: "Edit" }).click();
-  const meaning = page.getByRole("textbox", { name: "Meaning" });
-  await meaning.clear();
-  await userEvent.type(meaning, "to get a move on");
-  await page.getByRole("button", { name: "Save" }).click();
+test("a deck says its size, what is due and its cards by stage, and reviews in Lymi", async () => {
+  const host = fakeHost();
+  await renderIn(host, <DeckView result={deck()} />);
+  await expect.element(page.getByRole("heading", { level: 1 })).toHaveTextContent("Lezione 12");
+  await expect.element(page.getByText("48 cards")).toBeVisible();
+  await expect.element(page.getByText("12 due now")).toBeVisible();
+  const stages = page.getByRole("list", { name: "Cards by stage" });
+  expect(stages.element().textContent).toBe("20New16Learning12Known");
+  await page.getByRole("button", { name: "Review in Lymi" }).click();
+  expect(host.open).toHaveBeenCalledWith("https://my.lymi.app/review?deck=deck-1");
+});
 
+test("a deck with nothing due offers no review, and an empty deck says so", async () => {
+  await renderIn(fakeHost(), <DeckView result={deck({ due: 0 })} />);
+  await expect.element(page.getByText("due now")).not.toBeInTheDocument();
   await expect
-    .element(page.getByText("This card changed while you were editing it."))
-    .toBeVisible();
-  await expect.element(meaning).toHaveValue("to get a move on");
-  expect(host.call).not.toHaveBeenCalledWith("update_card", expect.anything());
+    .element(page.getByRole("button", { name: "Review in Lymi" }))
+    .not.toBeInTheDocument();
 
-  await page.getByRole("button", { name: "Use the new version" }).click();
-  await expect.element(meaning).toHaveValue("to rush");
-});
-
-test("a refused save keeps the draft and says why", async () => {
-  const host = fakeHost({
-    get_card: () => card(),
-    update_card: () => new Error("This connection can only read."),
-  });
-  await renderCapture(host);
-  await page.getByRole("button", { name: /sbrigarsi/ }).click();
-  await page.getByRole("button", { name: "Edit" }).click();
-  const meaning = page.getByRole("textbox", { name: "Meaning" });
-  await meaning.clear();
-  await userEvent.type(meaning, "to get a move on");
-  await page.getByRole("button", { name: "Save" }).click();
-
-  await expect.element(page.getByText("This connection can only read.")).toBeVisible();
-  await expect.element(meaning).toHaveValue("to get a move on");
-});
-
-test("Edit puts the keyboard in the term, and Escape gives it back to the card", async () => {
-  await renderCapture(fakeHost({ get_card: () => card() }));
-  const row = page.getByRole("button", { name: /sbrigarsi/ });
-  await row.click();
-  await page.getByRole("button", { name: "Edit" }).click();
-  await expect.element(page.getByRole("textbox", { name: "Term" })).toHaveFocus();
-
-  await userEvent.keyboard("{Escape}");
-  await expect.element(page.getByRole("textbox", { name: "Term" })).not.toBeInTheDocument();
-  await expect.element(row).toHaveFocus();
+  await renderIn(
+    fakeHost(),
+    <DeckView result={deck({ total: 0, due: 0, stages: { new: 0, learning: 0, known: 0 } })} />,
+  );
+  await expect.element(page.getByText("No cards yet.")).toBeVisible();
 });
 
 test("a deep link to a card opens that card, and any other path opens the home", async () => {

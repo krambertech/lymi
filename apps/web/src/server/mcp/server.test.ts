@@ -16,6 +16,7 @@ vi.mock("../services", async () => {
     listDecks: vi.fn(),
     getDeck: vi.fn(),
     listDeckCards: vi.fn(),
+    deckStages: vi.fn(),
     createDeck: vi.fn(),
     updateDeck: vi.fn(),
     archiveDeck: vi.fn(),
@@ -414,38 +415,6 @@ describe("Lymi MCP server", () => {
         },
       ],
     });
-  });
-
-  it("names the decks of an add for its view, where the model does not read them", async () => {
-    services.addCards.mockResolvedValue([
-      { id: "card-2", status: "added", card: { ...card, id: "card-2" } },
-    ]);
-    services.listDecks.mockResolvedValue([{ id: "deck-1", name: "Italian" }] as never);
-    const client = await connect("write");
-
-    const res = await client.callTool({
-      name: "add_cards",
-      arguments: { cards: [{ deckId: "deck-1", term: "sbrigarsi" }] },
-    });
-
-    expect(res._meta).toMatchObject({ "lymi/decks": { "deck-1": "Italian" } });
-    expect(JSON.stringify(res.content)).not.toContain("lymi/decks");
-  });
-
-  it("still reports an add that landed when the deck names cannot be read", async () => {
-    services.addCards.mockResolvedValue([
-      { id: "card-2", status: "added", card: { ...card, id: "card-2" } },
-    ]);
-    services.listDecks.mockRejectedValue(new Error("D1 is busy"));
-    const client = await connect("write");
-
-    const res = await client.callTool({
-      name: "add_cards",
-      arguments: { cards: [{ deckId: "deck-1", term: "sbrigarsi" }] },
-    });
-
-    expect(res.isError).toBeFalsy();
-    expect(res.structuredContent).toMatchObject({ added: 1 });
   });
 
   it("offers decks by name and cards by text for an @-mention, as links a host can read", async () => {
@@ -1052,8 +1021,10 @@ describe("Lymi MCP server", () => {
     });
   });
 
-  it("returns a deck with its cards and each card's due time, dates as ISO strings", async () => {
+  it("returns a deck with its progress, its cards and each card's due time, dates as ISO strings", async () => {
     services.getDeck.mockResolvedValue(deck);
+    services.listDecks.mockResolvedValue([{ ...deck, total: 1, due: 1 }]);
+    services.deckStages.mockResolvedValue({ new: 1, learning: 0, known: 0 });
     services.listDeckCards.mockResolvedValue([
       {
         card,
@@ -1080,6 +1051,8 @@ describe("Lymi MCP server", () => {
     expect(res.structuredContent).toMatchObject({
       deck: { id: "deck-1", name: "Italian", createdAt: now.toISOString() },
       total: 1,
+      due: 1,
+      stages: { new: 1, learning: 0, known: 0 },
       truncated: false,
       cards: [{ id: "card-1", term: "sbrigarsi", dueAt: now.toISOString() }],
     });

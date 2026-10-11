@@ -18,16 +18,14 @@ One interface bundle, built on the MCP Apps standard, renders wherever the host 
 
 | Result | View |
 | --- | --- |
-| `add_cards` | Cards added and skipped, with field sources and enrichment still running; select one to edit in place or open it in Lymi |
-| `get_card`, `update_card` | One card, editable: term, meaning, example, pronunciation and hook |
-| `search_cards` | Matching cards with their deck and state |
-| `get_deck` | The deck's summary and its newest cards |
+| `get_card`, `update_card` | One card, read-only, with a link to it in Lymi |
+| `get_deck` | How the deck is doing: its size, what is due and its cards by stage |
 | `due_counts` | What is due now, per deck, with a link to review in Lymi |
 | `get_insights`, `get_streak` | Recall, the week's lights and the run |
 
-Selecting a card tells the assistant which card the learner means (`ui/update-model-context`), so "make this example simpler" lands on the right card. The panel never grades, never starts a review and never shows a review control.
+A view shows status, one thing at a time; it never lists cards. A list of added, found or newest cards repeated what the assistant already wrote and was longer, so `add_cards` and `search_cards` stay text and the assistant makes every change. The panel never grades, never starts a review and never shows a review control; review in the assistant may come later as its own decision.
 
-ChatGPT adds a side-panel tab beside the conversation, a read-only sidebar home (due today, recent adds, search), @-mentions of decks and cards on desktop, native settings for the app language, a setup skill after install, and deep links into Lymi. Rich forms for choosing a deck and section follow the move to MCP `2026-07-28`. Event subscriptions are out: nothing in Lymi needs the assistant to act on its own.
+ChatGPT adds a side-panel tab beside the conversation, a read-only sidebar home (what is due, per deck), @-mentions of decks and cards on desktop, native settings for the app language, a setup skill after install, and deep links into Lymi. Rich forms for choosing a deck and section follow the move to MCP `2026-07-28`. Event subscriptions are out: nothing in Lymi needs the assistant to act on its own.
 
 ## The plugin
 
@@ -46,7 +44,7 @@ ChatGPT adds a side-panel tab beside the conversation, a read-only sidebar home 
 1. Publish Cursor's client document and test its sign-in.
 2. Build the plugin package and install it privately in each host.
 3. Serve the interface bundle as a `ui://` resource and render the `add_cards` result; prove it in ChatGPT and Claude.
-4. Edit in place, share the selected card, and keep a draft when the card changed underneath it.
+4. Keep the views to status and one card: no list, no editing, no selection.
 5. Add the read-only views.
 6. Add the ChatGPT extensions.
 7. Connect Grok and the Gemini app.

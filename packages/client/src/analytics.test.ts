@@ -163,7 +163,9 @@ it("counts a signed-out visitor anonymously and joins them to the account they c
 });
 
 it("names a reminder as the way in, and opens without a backlog when none is known", async () => {
-  await load("https://my.lymi.app/review?from=reminder", "");
+  await load("https://my.lymi.app/review?lymi_entry=reminder&deck=italian", "");
+  const replaceState = vi.fn();
+  vi.stubGlobal("history", { state: null, replaceState });
   analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
   analytics.setAnalyticsOpening();
   expect(sdk.sent.filter((e) => e.event === "app_opened")).toEqual([]);
@@ -171,6 +173,7 @@ it("names a reminder as the way in, and opens without a backlog when none is kno
   const [opened] = sdk.sent.filter((e) => e.event === "app_opened");
   expect(opened?.properties).toMatchObject({ entry: "reminder" });
   expect(opened?.properties).not.toHaveProperty("backlog");
+  expect(String(replaceState.mock.calls[0]?.[2])).toBe("https://my.lymi.app/review?deck=italian");
 });
 
 it("resets identity when another account signs in", async () => {

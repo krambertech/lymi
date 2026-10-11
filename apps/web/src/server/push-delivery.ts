@@ -105,7 +105,7 @@ async function sendWebPush(candidate: ReminderCandidate, due: number, env: Bindi
     throw new Error("VAPID secrets are not configured");
   }
   const copy = await reminderCopy(due, candidate.app_language ?? "en");
-  // The query names the reminder as the way in, for app_opened; the app drops it on arrival.
+  // The query names the reminder as the way in, for app_opened, which drops it once counted.
   const navigate = new URL(
     `/review?${REMINDER_ENTRY.key}=${REMINDER_ENTRY.value}`,
     env.PRODUCT_URL,

@@ -64,12 +64,16 @@ function forget(): void {
   opening = undefined;
 }
 
-/** How this page load began: a reminder's link, a link from another site, or neither. */
+const fromReminder = (url: string) =>
+  new URL(url).searchParams.get(REMINDER_ENTRY.key) === REMINDER_ENTRY.value;
+
+/**
+ * How this page load began: a reminder's link, a link from another site, or neither. The address
+ * still carries a reminder's mark after sign-in, which returns to it.
+ */
 function arrivalEntry(): "reminder" | "link" | "direct" {
-  if (!arrival) return "direct";
   try {
-    if (new URL(arrival.url).searchParams.get(REMINDER_ENTRY.key) === REMINDER_ENTRY.value)
-      return "reminder";
+    if ((arrival && fromReminder(arrival.url)) || fromReminder(location.href)) return "reminder";
   } catch {
     return "direct";
   }
@@ -78,7 +82,21 @@ function arrivalEntry(): "reminder" | "link" | "direct" {
 
 function sendOpening(): void {
   if (openingSent || !opening || !learner || identifySent !== learner) return;
-  if (captureAnalytics("app_opened", { entry: arrivalEntry(), ...opening })) openingSent = true;
+  if (!captureAnalytics("app_opened", { entry: arrivalEntry(), ...opening })) return;
+  openingSent = true;
+  dropReminderMark();
+}
+
+/** Once the opening is counted, a reload of the same address is not another reminder. */
+function dropReminderMark(): void {
+  try {
+    const url = new URL(location.href);
+    if (!fromReminder(url.href)) return;
+    url.searchParams.delete(REMINDER_ENTRY.key);
+    history.replaceState(history.state, "", url);
+  } catch {
+    /* The mark only costs a duplicate opening on reload. */
+  }
 }
 
 /**

@@ -6,6 +6,7 @@ import {
   eventProperties,
   firstTouch,
   parseFirstTouch,
+  textCallCost,
 } from "./analytics";
 
 describe("analytics privacy contract", () => {
@@ -60,6 +61,10 @@ describe("analytics privacy contract", () => {
       ),
     ).toEqual(call);
     expect(eventProperties("$ai_generation", call, "browser")).toBeNull();
+    const cost = textCallCost("gpt-6-luna", { input: 1_000_000, cached: 500_000, output: 200_000 });
+    expect(cost?.input).toBeCloseTo(0.055);
+    expect(cost?.output).toBeCloseTo(0.1);
+    expect(textCallCost("unpriced-model", { input: 10, output: 10 })).toBeUndefined();
     expect(
       eventProperties("cards_archived", { origin: "ai_mcp", count: 3, ai_written: 2, term: "x" }),
     ).toEqual({ origin: "ai_mcp", count: 3, ai_written: 2 });

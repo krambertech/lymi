@@ -65,7 +65,27 @@ export function backlogOf(due: number): Backlog {
   return due <= 0 ? "0" : due <= 20 ? "1-20" : due <= 100 ? "21-100" : "100+";
 }
 /** Added to a reminder's link so the app it opens can say a reminder brought the learner. */
-export const REMINDER_ENTRY = { key: "from", value: "reminder" } as const;
+export const REMINDER_ENTRY = { key: "lymi_entry", value: "reminder" } as const;
+
+/** USD per million tokens, from OpenAI's price list, so a call's cost never waits on PostHog's table. */
+const TEXT_PRICES: Record<string, { input: number; cachedInput: number; output: number }> = {
+  "gpt-6-luna": { input: 0.1, cachedInput: 0.01, output: 0.5 },
+};
+
+/** A text call's cost in USD, or nothing for a model without a known price. */
+export function textCallCost(
+  model: string,
+  tokens: { input: number; cached?: number | undefined; output: number },
+): { input: number; output: number } | undefined {
+  const price = TEXT_PRICES[model];
+  if (!price) return;
+  const cached = Math.min(tokens.cached ?? 0, tokens.input);
+  return {
+    input: ((tokens.input - cached) * price.input + cached * price.cachedInput) / 1e6,
+    output: (tokens.output * price.output) / 1e6,
+  };
+}
+const usd = z.number().nonnegative().max(1000);
 /** The scheduler's card state before a grade, by its number in ts-fsrs. */
 export const CARD_STATES = ["new", "learning", "review", "relearning"] as const;
 const tokens = z.number().int().nonnegative().max(10_000_000);
@@ -155,6 +175,9 @@ export const analyticsEvents = {
     $ai_output_tokens: tokens,
     $ai_reasoning_tokens: tokens.optional(),
     $ai_cache_read_input_tokens: tokens.optional(),
+    $ai_input_cost_usd: usd.optional(),
+    $ai_output_cost_usd: usd.optional(),
+    $ai_total_cost_usd: usd.optional(),
     $ai_latency: z.number().nonnegative().max(600),
     $ai_is_error: z.boolean(),
     $ai_http_status: z.number().int().min(100).max(599).optional(),

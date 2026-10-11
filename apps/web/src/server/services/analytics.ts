@@ -1,4 +1,4 @@
-import type { ProductAnalyticsEvent } from "@lymi/core/analytics";
+import { type ProductAnalyticsEvent, textCallCost } from "@lymi/core/analytics";
 import type { TextObserver } from "../ai";
 
 export type AnalyticsWriter = Pick<AnalyticsEngineDataset, "writeDataPoint"> & {
@@ -46,7 +46,12 @@ type AiSpan = Extract<AnalyticsEvent, { name: "$ai_generation" }>["$ai_span_name
 
 /** Reports each model call's tokens and time as PostHog's LLM analytics expects, never its text. */
 export function textCallReporter(dataset: AnalyticsWriter | undefined, span: AiSpan): TextObserver {
-  return (call) =>
+  return (call) => {
+    const cost = textCallCost(call.model, {
+      input: call.inputTokens,
+      cached: call.cachedTokens,
+      output: call.outputTokens,
+    });
     track(dataset, {
       name: "$ai_generation",
       $ai_trace_id: crypto.randomUUID(),
@@ -63,7 +68,15 @@ export function textCallReporter(dataset: AnalyticsWriter | undefined, span: AiS
       $ai_latency: call.latencyMs / 1000,
       $ai_is_error: call.error,
       ...(call.status !== undefined ? { $ai_http_status: call.status } : {}),
+      ...(cost
+        ? {
+            $ai_input_cost_usd: cost.input,
+            $ai_output_cost_usd: cost.output,
+            $ai_total_cost_usd: cost.input + cost.output,
+          }
+        : {}),
     });
+  };
 }
 
 export function recordRequest(

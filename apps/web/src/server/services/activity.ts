@@ -86,6 +86,9 @@ const SENTENCES: Sentences = {
   export: { create: "export", complete: "export" },
   review: { grade: null, undo_grade: null },
   account: {
+    "onboarding.finish": null,
+    "analytics.consent": null,
+    "analytics.review_start": null,
     "avatar.upload": null,
     "avatar.remove": null,
     "avatar.google_refresh": null,

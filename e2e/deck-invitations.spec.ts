@@ -1,5 +1,5 @@
 import { createAccountThroughDevForm, signInAsTestLearner } from "./auth";
-import { type Browser, expect, type Page, type TestInfo, test } from "./test";
+import { type Browser, expect, newTestContext, type Page, type TestInfo, test } from "./test";
 
 /** A classmate's address that is not a local persona. One per project, retry and repeat. */
 function outsider(testInfo: TestInfo, who: string) {
@@ -8,7 +8,7 @@ function outsider(testInfo: TestInfo, who: string) {
 }
 
 async function signedOutPage(browser: Browser) {
-  const context = await browser.newContext();
+  const context = await newTestContext(browser);
   return context.newPage();
 }
 

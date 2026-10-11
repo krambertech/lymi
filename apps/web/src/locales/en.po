@@ -3071,6 +3071,9 @@ msgstr "Previous month"
 msgid "Privacy"
 msgstr "Privacy"
 
+msgid "Privacy preferences"
+msgstr "Privacy preferences"
+
 msgid "Private"
 msgstr "Private"
 

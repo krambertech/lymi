@@ -1,20 +1,10 @@
-import type { LearningKind, ReviewModeKey } from "@lymi/core";
+import type { ProductAnalyticsEvent } from "@lymi/core/analytics";
 
 export type AnalyticsWriter = Pick<AnalyticsEngineDataset, "writeDataPoint"> & {
   capture?: (event: AnalyticsEvent) => void;
 };
 
-export type AnalyticsEvent =
-  | { name: "signed_up" | "signed_in" | "deck_joined" | "mcp_tool" }
-  | { name: "card_added"; count: number; source: "manual" | "api" | "mcp" | "import" }
-  | { name: "review_graded"; mode: ReviewModeKey; grade: number }
-  | {
-      name: "import_started" | "import_finished";
-      adapter: "anki" | "mochi" | "lymi" | "unknown";
-      outcome: "started" | "done" | "failed";
-    }
-  | { name: "enrichment_finished"; outcome: "enriched" | "empty" | "failed"; count: number }
-  | { name: "onboarding_finished"; kind: LearningKind | "skipped" | "joined" };
+export type AnalyticsEvent = ProductAnalyticsEvent;
 
 /** Only fixed action labels and counts reach Analytics Engine. */
 export function track(dataset: AnalyticsWriter | undefined, event: AnalyticsEvent): void {

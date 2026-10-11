@@ -272,6 +272,12 @@ export async function addCards(
       source: actor === "api" || actor === "mcp" ? actor : "manual",
     });
   }
+  if (groups.length > 0)
+    track(ctx.analytics, {
+      name: "cards_added",
+      count: groups.length,
+      source: actor === "mcp" ? "ai_mcp" : actor === "api" ? "api" : "typed",
+    });
   // The add stands whatever the queue does; a refused run leaves its cards saying so.
   if (
     enrichment &&

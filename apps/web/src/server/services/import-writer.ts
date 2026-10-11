@@ -659,6 +659,8 @@ export async function writeChunk<Note>(
   const addedCount = counts.added - ((row.counts as ImportCounts | null)?.added ?? 0);
   if (moved && addedCount > 0)
     track(ctx.analytics, { name: "card_added", count: addedCount, source: "import" });
+  if (moved && addedCount > 0)
+    track(ctx.analytics, { name: "cards_added", count: addedCount, source: row.source });
   return { pictures: moved ? pictures : [] };
 }
 

@@ -6,6 +6,7 @@ import { Bell } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ApiError, api } from "../lib/api";
 import { useInstallState } from "../lib/pwa-install";
+import { captureAnalytics } from "../lib/telemetry";
 import { Button } from "./button";
 import { InlineError } from "./inline-error";
 import { InstallDialog } from "./install-dialog";
@@ -123,6 +124,8 @@ export function NotificationsSection() {
     }
     setBusy(true);
     try {
+      const prompted = Notification.permission === "default";
+      if (prompted) captureAnalytics("reminder_prompt_shown", {});
       const permission = await Notification.requestPermission();
       if (permission !== "granted") {
         setError(
@@ -132,6 +135,7 @@ export function NotificationsSection() {
         );
         return;
       }
+      if (prompted) captureAnalytics("reminder_prompt_accepted", {});
       const registration = await navigator.serviceWorker.ready;
       const subscription =
         (await registration.pushManager.getSubscription()) ??

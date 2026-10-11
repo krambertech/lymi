@@ -1,8 +1,16 @@
-import type { AppLanguage, LearningKind, OnboardingInput, SettingsPatch } from "@lymi/core";
+import type {
+  AnalyticsConsentInput,
+  AppLanguage,
+  LearningKind,
+  OnboardingInput,
+  SettingsPatch,
+} from "@lymi/core";
 import { deviceTimezone, request } from "./request";
 
 export type Settings = {
   userId: string;
+  analyticsConsent: boolean | null;
+  analyticsConsentUpdatedAt: string | null;
   appLanguage: AppLanguage | null;
   meaningLanguage: string;
   dailyGoal: number;
@@ -17,6 +25,11 @@ export type Settings = {
 };
 
 export const settingsApi = {
+  updateAnalyticsConsent: (body: AnalyticsConsentInput) =>
+    request<Settings>("/api/settings/analytics-consent", {
+      method: "PUT",
+      body: JSON.stringify(body),
+    }),
   settings: () => request<Settings>("/api/settings"),
   updateSettings: (body: SettingsPatch) =>
     request<Settings>("/api/settings", { method: "PATCH", body: JSON.stringify(body) }),

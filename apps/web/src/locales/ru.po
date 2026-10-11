@@ -3071,6 +3071,9 @@ msgstr "Предыдущий месяц"
 msgid "Privacy"
 msgstr "Конфиденциальность"
 
+msgid "Privacy preferences"
+msgstr "Настройки приватности"
+
 msgid "Private"
 msgstr "Приватная"
 

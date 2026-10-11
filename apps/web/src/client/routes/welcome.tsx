@@ -9,8 +9,14 @@ import { api, type DeckSummary } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, exploreQuery, settingsQuery } from "../lib/queries";
+import { captureAnalytics } from "../lib/telemetry";
 import { useAddPublishedDeck } from "../lib/use-add-published-deck";
-import { clearWelcomeProgress, type WelcomeAnswers, WelcomeView } from "../views/welcome-view";
+import {
+  clearWelcomeProgress,
+  type Step,
+  type WelcomeAnswers,
+  WelcomeView,
+} from "../views/welcome-view";
 
 const Search = z.object({
   /** A deck an invitation or a public page added while signing up, set by the door page's redirect. */
@@ -44,6 +50,16 @@ function Welcome() {
   });
 
   const finish = async (answers: WelcomeAnswers) => {
+    captureAnalytics("empty_state_option_picked", {
+      option:
+        answers.start.kind === "deck"
+          ? "explore"
+          : answers.start.own === "assistant"
+            ? "ai_mcp"
+            : answers.start.own === "type"
+              ? "typed"
+              : "import",
+    });
     setError(null);
     const { start } = answers;
     // Opened inside the press, before anything is awaited, or the browser blocks the new tab.
@@ -70,6 +86,7 @@ function Welcome() {
       if (saving) setError(t`Couldn’t save your answers. Check your connection and try again.`);
       return;
     }
+    captureAnalytics("welcome_step_finished", { step_name: "start", skipped: false });
     clearWelcomeProgress();
     if (start.kind === "deck") return navigate({ to: "/review", replace: true });
     if (start.own === "import") return navigate({ to: "/settings", hash: "import", replace: true });
@@ -85,6 +102,7 @@ function Welcome() {
       setError(t`Couldn’t save your daily goal. Check your connection and try again.`);
       return;
     }
+    captureAnalytics("welcome_step_finished", { step_name: "goal", skipped: false });
     clearWelcomeProgress();
     // A deck shared before its owner added a card has nothing to review yet, so its page says so.
     if (deck.total === 0) {
@@ -93,7 +111,7 @@ function Welcome() {
     await navigate({ to: "/review", search: { deck: deck.id }, replace: true });
   };
 
-  const skip = async () => {
+  const skip = async (step: Step) => {
     setError(null);
     try {
       await save.mutateAsync(SKIP);
@@ -101,6 +119,7 @@ function Welcome() {
       setError(t`Couldn’t skip for now. Check your connection and try again.`);
       return;
     }
+    captureAnalytics("welcome_step_finished", { step_name: step, skipped: true });
     clearWelcomeProgress();
     // Their deck's page, not Today's guide, which is about making a deck of their own.
     if (joined)
@@ -121,7 +140,7 @@ function Welcome() {
       onFinish={(answers) => void finish(answers)}
       joined={joined}
       onChooseGoal={joined && ((dailyGoal) => void startJoined(joined, dailyGoal))}
-      onSkip={() => void skip()}
+      onSkip={(step) => void skip(step)}
       busy={save.isPending || addDeck.isPending}
       error={error}
     />

@@ -70,6 +70,9 @@ type EditionAction =
   | "withdraw_edition";
 type PublicationAction = "publish" | "update_publication" | "withdraw_publication";
 type AccountAction =
+  | "onboarding.finish"
+  | "analytics.consent"
+  | "analytics.review_start"
   | "avatar.upload"
   | "avatar.remove"
   | "avatar.google_refresh"

@@ -1,5 +1,5 @@
-import { expect, test } from "@playwright/test";
 import { e2eProductUrl, e2eSiteUrl } from "./ports.mjs";
+import { expect, newTestContext, test } from "./test";
 
 /** The site reads `e2e/fixtures/published-decks.sql`; publishing itself is covered by the add spec. */
 const publicSite = e2eSiteUrl;
@@ -222,7 +222,7 @@ test("a deck page shows its tags in the reader's language and leads to decks lik
 });
 
 test("without JavaScript the page still shows the deck and its sections", async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false });
+  const context = await newTestContext(browser, { javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto(`${publicSite}${pagePath}`);
   await expect(page.getByRole("heading", { level: 1, name: "Evening Estonian" })).toBeVisible();

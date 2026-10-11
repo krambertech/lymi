@@ -69,3 +69,5 @@ export function exceptionProperties(properties: Record<string, unknown>): Record
     }),
   };
 }
+
+export const POSTHOG_PROJECT_TOKEN = "phc_mz7nfyKuwoSbZ787CAdbYhihXMEwYKbnNvGQ7LUuxPnU";

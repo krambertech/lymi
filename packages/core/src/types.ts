@@ -766,6 +766,13 @@ export const OnboardingInput = z.object({
   dailyGoal: DailyGoal.nullable(),
 });
 export type OnboardingInput = z.infer<typeof OnboardingInput>;
+export const ANALYTICS_CONSENT_VERSION = 1;
+export const AnalyticsConsentInput = z.object({
+  allowed: z.boolean(),
+  version: z.literal(ANALYTICS_CONSENT_VERSION),
+  updated_at: z.number().int().positive(),
+});
+export type AnalyticsConsentInput = z.infer<typeof AnalyticsConsentInput>;
 
 export const SettingsPatch = z.object({
   /** The language of the interface and reminders. Meanings follow it. */

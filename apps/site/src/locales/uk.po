@@ -263,6 +263,9 @@ msgstr "Про ці колоди"
 msgid "Accents that land between the beats"
 msgstr "Акценти, що припадають між основними долями"
 
+msgid "Accept cookies"
+msgstr "Прийняти файли cookie"
+
 msgid "Access requests from the private beta"
 msgstr "Запити доступу з часів закритої бети"
 
@@ -374,6 +377,9 @@ msgstr "Ідея, що здається геніальною лише після
 
 msgid "An idea that only sounds good after a few drinks"
 msgstr "Ідея, яка здається геніальною лише після кількох чарок"
+
+msgid "Analytics details"
+msgstr "Про аналітику"
 
 msgid "Anatomy"
 msgstr "Анатомія"
@@ -554,6 +560,9 @@ msgstr "Іспит CCSE на громадянство Іспанії"
 msgid "cents"
 msgstr "центів"
 
+msgid "Change your choice in Privacy preferences. Your account choice also applies to analytics from connected apps and background work."
+msgstr "Зміни свій вибір у налаштуваннях приватності. Вибір для твого акаунта також поширюється на аналітику підключених застосунків і фонових дій."
+
 msgid "Changes and contact"
 msgstr "Зміни та контакти"
 
@@ -598,6 +607,9 @@ msgstr "Натисни, щоб перевернути"
 
 msgid "Clocking off, and the free evening that follows"
 msgstr "Кінець робочого дня й вільний вечір після нього"
+
+msgid "Close"
+msgstr "Закрити"
 
 msgid "Close menu"
 msgstr "Закрити меню"
@@ -664,6 +676,9 @@ msgstr "Затишний"
 msgid "Cosy and convivial; good company"
 msgstr "Затишний і душевний; у доброму товаристві"
 
+msgid "Couldn’t save your account’s choice. Check your connection and try again."
+msgstr "Не вдалося зберегти вибір для твого акаунта. Перевір з’єднання та спробуй ще раз."
+
 msgctxt "deck tag"
 msgid "Czech citizenship test"
 msgstr "Іспит на громадянство Чехії"
@@ -688,6 +703,9 @@ msgstr "Любий; дорогий"
 
 msgid "Decks"
 msgstr "Колоди"
+
+msgid "Decline"
+msgstr "Відхилити"
 
 msgid "Deep, lasting affection"
 msgstr "Глибока, тривала прихильність"
@@ -1702,8 +1720,8 @@ msgstr "Правила"
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Надішли посилання для приєднання в чат групи. Кожен, хто приєднається, отримує нову картку, щойно ти її додаси, а розклад повторень у кожного свій. Коли групу набрано, вимкни посилання."
 
-msgid "PostHog keeps its browser state in memory for the current page and does not set analytics cookies or store an analytics identifier in local storage. Its reports still use the opaque account identifier while you are signed in."
-msgstr "PostHog зберігає свій стан у пам’яті браузера лише для поточної сторінки. Він не встановлює аналітичні cookie й не зберігає аналітичний ідентифікатор у локальному сховищі. Поки ти перебуваєш у своєму обліковому записі, звіти використовують його внутрішній ідентифікатор."
+msgid "PostHog processes analytics in its EU cloud. With your permission, we link visits across lymi.app and my.lymi.app and to your account when you sign in."
+msgstr "PostHog обробляє аналітику у своїй хмарі в ЄС. З твого дозволу ми пов’язуємо відвідування lymi.app і my.lymi.app, а після входу — і з твоїм акаунтом."
 
 msgid "Practise with your own words."
 msgstr "Практикуйся зі словами, які вчиш."
@@ -1722,6 +1740,9 @@ msgstr "Політика конфіденційності"
 
 msgid "Privacy policy · Lymi"
 msgstr "Політика конфіденційності · Lymi"
+
+msgid "Privacy preferences"
+msgstr "Налаштування приватності"
 
 msgid "Programming"
 msgstr "Програмування"
@@ -1765,6 +1786,9 @@ msgstr "Коли піднімають келих, кажуть terviseks: за �
 
 msgid "Read Japanese Kana covers hiragana and katakana, including voiced and combined sounds, the small tsu and the long-vowel mark."
 msgstr "Read Japanese Kana охоплює хірагану й катакану, зокрема дзвінкі та складені звуки, малу цу й знак довгого голосного."
+
+msgid "Read privacy policy"
+msgstr "Політика приватності"
 
 msgid "Read the docs"
 msgstr "Відкрити документацію"
@@ -2427,8 +2451,8 @@ msgstr "дієслово"
 msgid "Waiting for your notes"
 msgstr "Чекаємо на нотатки"
 
-msgid "We also use PostHog’s EU service to understand product use and investigate errors. We send fixed action labels, counts and review grades with an opaque account identifier that connects activity across devices. Error reports contain the error type and technical stack frames; we remove error messages and other context. We do not send card content, email addresses, names, credentials or exact requested URLs, and we do not record sessions."
-msgstr "Ми також використовуємо сервіс PostHog у ЄС, щоб розуміти, як користуються застосунком, і досліджувати помилки. Ми надсилаємо фіксовані назви дій, їхню кількість та оцінки повторень разом із внутрішнім ідентифікатором облікового запису, який пов’язує активність на різних пристроях. Звіти про помилки містять тип помилки й технічні записи стека викликів; ми вилучаємо повідомлення про помилки та інший контекст. Ми не надсилаємо вміст карток, адреси електронної пошти, імена, облікові дані чи точні запитувані URL і не записуємо сеанси."
+msgid "We collect page categories, actions, counts, review grades, app language and campaign details. We don’t send your card content, name or email, and we don’t record sessions."
+msgstr "Ми збираємо категорії сторінок, дії, кількості, оцінки повторень, мову застосунку й дані кампаній. Ми не надсилаємо вміст твоїх карток, ім’я чи електронну адресу та не записуємо сеанси."
 
 msgid "We count requests and product actions by type and measure response times. These metrics contain no account identifiers, card content or exact requested URLs."
 msgstr "Ми підраховуємо запити й дії в застосунку за типами та вимірюємо час відповіді. Ці показники не містять ідентифікаторів облікових записів, вмісту карток або точних адрес запитуваних сторінок."
@@ -2436,11 +2460,17 @@ msgstr "Ми підраховуємо запити й дії в застосун
 msgid "We may update this policy when Lymi or the law changes. We will update the date above and give additional notice when a change materially affects your rights. Questions and privacy requests can be sent to <0>hello@lymi.app</0>."
 msgstr "Ми можемо оновлювати цю політику, коли змінюється Lymi або закон. Ми оновимо дату вище й додатково повідомимо, якщо зміна суттєво вплине на твої права. Запитання та запити щодо конфіденційності можна надсилати на <0>hello@lymi.app</0>."
 
+msgid "We remember your analytics choice in a first-party cookie shared between lymi.app and my.lymi.app. If you allow analytics, first-party cookies also store your visitor identifier and limited first-visit attribution for up to six months. No analytics identifier is stored before you agree. Change or withdraw your choice through Privacy preferences in the site footer or app Settings. Declining clears analytics identifiers on that browser. Your account choice also governs product analytics from connected apps and background work; changing the account choice requires a connection to Lymi."
+msgstr "Ми запам’ятовуємо твій вибір щодо аналітики у власному файлі cookie, спільному для lymi.app і my.lymi.app. Якщо ти дозволиш аналітику, власні файли cookie також зберігатимуть ідентифікатор відвідувача й обмежені дані про джерело першого відвідування до шести місяців. Ідентифікатор аналітики не зберігається до твоєї згоди. Зміни або відклич свій вибір через налаштування приватності внизу сайту чи в налаштуваннях застосунку. Відмова очищає ідентифікатори аналітики в цьому браузері. Вибір для твого облікового запису також керує аналітикою підключених застосунків і фонових дій; для його зміни потрібне з’єднання з Lymi."
+
 msgid "We store the decks and cards you create or join. A card can include a term, meaning, pronunciation, example, notes, tags, language, source, learning direction and generated audio. We also store archive state, review history, scheduling state, goals, streaks, time zone, preferences and an activity record of changes."
 msgstr "Ми зберігаємо колоди й картки, які ти створюєш або до яких долучаєшся. Картка може містити термін, значення, вимову, приклад, нотатки, теги, мову, джерело, напрям навчання та створене озвучення. Ми також зберігаємо стан архіву, історію повторень, стан розкладу, цілі, дні поспіль, часовий пояс, налаштування й журнал змін."
 
 msgid "We use access controls, encrypted transport and provider security controls to protect data, but no online service can guarantee absolute security. Do not share API keys, connection tokens or other credentials. Lymi is not directed to children who cannot lawfully consent to this processing."
 msgstr "Для захисту даних ми використовуємо контроль доступу, зашифроване передавання та засоби безпеки постачальників, але жоден онлайн-сервіс не може гарантувати абсолютну безпеку. Не передавай іншим ключі API, токени підключення чи інші облікові дані. Lymi не призначений для дітей, які не можуть законно погодитися на таку обробку."
+
+msgid "We use optional analytics cookies to understand how you use Lymi and improve it. You can change your choice anytime."
+msgstr "Ми використовуємо необов’язкові файли cookie для аналітики, щоб розуміти, як ти користуєшся Lymi, і покращувати його. Ти можеш змінити свій вибір будь-коли."
 
 msgid "Weather"
 msgstr "Погода"
@@ -2528,6 +2558,9 @@ msgstr "Віджети"
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "З колоди, яка відповідає твоїй меті: подорожі чи першим урокам. Можна додати кілька, і Lymi змішає їхні картки в одне щоденне повторення."
+
+msgid "With your permission, we use PostHog’s EU service to understand product use. We send page categories, published deck slugs, fixed action labels, counts, review grades, app language and limited campaign details. An opaque visitor identifier connects visits across our site and app, and links them to your opaque account identifier when you sign in. We also use filtered error monitoring independently of analytics consent: error reports contain the error type and technical stack frames, with messages and other context removed. We do not send card content, email addresses, names, credentials or private requested URLs, and we do not record sessions."
+msgstr "З твого дозволу ми використовуємо сервіс PostHog у ЄС, щоб розуміти, як люди користуються продуктом. Ми надсилаємо категорії сторінок, адресні ідентифікатори опублікованих колод, фіксовані назви дій, кількості, оцінки повторень, мову застосунку та обмежені дані кампаній. Непрозорий ідентифікатор відвідувача пов’язує відвідування нашого сайту й застосунку, а після входу — і з непрозорим ідентифікатором твого облікового запису. Ми також використовуємо моніторинг помилок з відфільтрованими даними незалежно від згоди на аналітику: звіти містять тип помилки й технічні кадри стека, а повідомлення та інший контекст вилучаються. Ми не надсилаємо вміст карток, електронні адреси, імена, облікові дані чи приватні запитувані URL-адреси та не записуємо сеанси."
 
 msgid "word"
 msgstr "слово"
@@ -2618,6 +2651,9 @@ msgstr "Твоя колода"
 
 msgid "You start with <0>{first}</0>, and the next section opens as you learn the one before it."
 msgstr "Починаєш із розділу <0>{first}</0>, а наступний відкривається, щойно вивчиш попередній."
+
+msgid "Your analytics choice and visitor identifier are stored for up to six months. Declining clears analytics identifiers on this browser. Necessary login cookies and filtered error monitoring work independently."
+msgstr "Твій вибір щодо аналітики та ідентифікатор відвідувача зберігаються до шести місяців. Відмова очищає ідентифікатори аналітики в цьому браузері. Необхідні файли cookie для входу та моніторинг помилок з відфільтрованими даними працюють незалежно."
 
 msgid "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
 msgstr "Асистент може читати твої колоди. Попроси його про розмову зі словами, які ти вчиш, і він виправлятиме тебе по ходу."

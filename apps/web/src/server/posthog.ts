@@ -1,3 +1,4 @@
+import { ANALYTICS_SCHEMA_VERSION, AnalyticsLocale, eventProperties } from "@lymi/core/analytics";
 import { exceptionProperties, POSTHOG_HOST } from "@lymi/core/telemetry";
 import { PostHog } from "posthog-node";
 import type { Bindings } from "./env";
@@ -33,6 +34,8 @@ function clientFor(env: TelemetryEnv): PostHog | undefined {
           route: event.properties?.route,
           method: event.properties?.method,
           surface: "worker",
+          ui_locale: AnalyticsLocale.catch("en").parse(event.properties?.ui_locale),
+          schema_version: ANALYTICS_SCHEMA_VERSION,
           release: env.CF_VERSION_METADATA?.tag ?? null,
           $process_person_profile: false,
           $geoip_disable: true,
@@ -47,6 +50,7 @@ export function productAnalytics(
   env: TelemetryEnv,
   userId: string,
   defer?: Defer,
+  context?: () => Promise<{ allowed: boolean; ui_locale: "en" | "uk" | "ru"; is_internal?: true }>,
 ): AnalyticsWriter & {
   flush: () => Promise<void>;
   run: <T>(work: () => Promise<T>) => Promise<T>;
@@ -60,14 +64,27 @@ export function productAnalytics(
     writeDataPoint: (point) => env.EVENTS?.writeDataPoint(point),
     capture: (event: AnalyticsEvent) => {
       if (!client) return;
-      const properties = productProperties(event);
-      const work = client
-        .captureImmediate({
+      const work = (async () => {
+        if (!context) return;
+        const metadata = await context();
+        if (!metadata.allowed) return;
+        const properties = eventProperties(event.name, event, "worker");
+        if (!properties) return;
+        await client.captureImmediate({
           distinctId: userId,
           event: event.name,
-          properties: { ...properties, surface: "worker", $process_person_profile: false },
-        })
-        .catch(() => {});
+          properties: {
+            ...properties,
+            ui_locale: metadata.ui_locale,
+            surface: "worker",
+            schema_version: ANALYTICS_SCHEMA_VERSION,
+            $set: {
+              ui_locale: metadata.ui_locale,
+              ...(metadata.is_internal ? { is_internal: true } : {}),
+            },
+          },
+        });
+      })().catch(() => {});
       if (defer) defer(work);
       else pending.push(work);
     },
@@ -82,29 +99,14 @@ export function productAnalytics(
   };
 }
 
-function productProperties(event: AnalyticsEvent): Record<string, unknown> {
-  switch (event.name) {
-    case "card_added":
-      return { count: event.count, source: event.source };
-    case "review_graded":
-      return { mode: event.mode, grade: event.grade };
-    case "import_started":
-    case "import_finished":
-      return { adapter: event.adapter, outcome: event.outcome };
-    case "enrichment_finished":
-      return { outcome: event.outcome, count: event.count };
-    default:
-      return {};
-  }
-}
-
 export async function trackProductEvent(
   env: TelemetryEnv,
   userId: string,
   event: AnalyticsEvent,
   defer?: Defer,
+  context?: () => Promise<{ allowed: boolean; ui_locale: "en" | "uk" | "ru"; is_internal?: true }>,
 ): Promise<void> {
-  const analytics = productAnalytics(env, userId, defer);
+  const analytics = productAnalytics(env, userId, defer, context);
   track(analytics, event);
   await analytics.flush();
 }

@@ -1,5 +1,5 @@
 import { createAccountThroughDevForm, startAsTestLearner } from "./auth";
-import { type Browser, expect, type Page, type TestInfo, test } from "./test";
+import { type Browser, expect, newTestContext, type Page, type TestInfo, test } from "./test";
 
 /**
  * A classmate's email: not a local persona, so it has to confirm its address like a real one.
@@ -15,7 +15,7 @@ function choice(page: Page, value: "private" | "link") {
 }
 
 async function signedOutPage(browser: Browser) {
-  const context = await browser.newContext();
+  const context = await newTestContext(browser);
   return context.newPage();
 }
 

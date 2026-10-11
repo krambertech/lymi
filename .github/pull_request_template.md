@@ -8,6 +8,10 @@
 
 <!-- Required for any rendered UI change. Attach an after image at minimum; use before and after when comparison helps. Cover only the materially affected viewport, theme, and state. Remove this section when the diff has no visible UI effect. -->
 
+## Instrumentation
+
+<!-- Required: name the measurement question, new or reused events and their producers, and the evidence that they fire correctly without private content or duplicates. For work that needs no event, state why. -->
+
 ## Verification
 
 <!-- List only checks actually run and their result. Report skipped checks directly. -->

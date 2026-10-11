@@ -49,7 +49,7 @@ async function renderWelcome(
       <I18nProvider i18n={i18n}>
         <ShellChrome value={designChrome()}>
           <StaticNavProvider path="/welcome">
-            <div className="@container/shell" style={{ width: 800 }}>
+            <div className="@container/shell" style={{ width: "min(800px, 100%)" }}>
               <WelcomeView
                 catalog={catalog}
                 meaningLanguage="en"

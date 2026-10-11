@@ -26,6 +26,8 @@ describe("PostHog delivery", () => {
     const analytics = productAnalytics(
       { ...production, EVENTS: { writeDataPoint } as AnalyticsEngineDataset },
       "learner-1",
+      undefined,
+      async () => ({ allowed: true, ui_locale: "uk", is_internal: true }),
     );
     const event = {
       name: "card_added" as const,
@@ -45,10 +47,27 @@ describe("PostHog delivery", () => {
         count: 2,
         source: "manual",
         $geoip_disable: true,
-        $process_person_profile: false,
+        ui_locale: "uk",
+        $set: { ui_locale: "uk", is_internal: true },
       },
     });
     expect(bodies.join()).not.toContain("private term");
+  });
+
+  it("suppresses product events without consent while keeping aggregate metrics", async () => {
+    const { fetch } = interceptedEvents();
+    const writeDataPoint = vi.fn();
+    for (const context of [undefined, async () => ({ allowed: false, ui_locale: "en" as const })]) {
+      const analytics = productAnalytics(
+        { ...production, EVENTS: { writeDataPoint } as AnalyticsEngineDataset },
+        "learner-1",
+        undefined,
+        context,
+      );
+      await analytics.run(async () => track(analytics, { name: "signed_in" }));
+    }
+    expect(fetch).not.toHaveBeenCalled();
+    expect(writeDataPoint).toHaveBeenCalledTimes(2);
   });
 
   it("redacts SDK exception messages, nested causes and context before delivery", async () => {
@@ -97,7 +116,10 @@ describe("PostHog delivery", () => {
 
   it("does not fail a write or exception response when PostHog is unavailable", async () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("network unavailable")));
-    const analytics = productAnalytics(production, "learner-1");
+    const analytics = productAnalytics(production, "learner-1", undefined, async () => ({
+      allowed: true,
+      ui_locale: "en",
+    }));
     await expect(
       analytics.run(async () => {
         track(analytics, { name: "signed_in" });

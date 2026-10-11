@@ -6,6 +6,7 @@ import type { Db } from "../db";
 import { type Bindings, publisherEmails } from "../env";
 import { productAnalytics, reportServerException } from "../posthog";
 import { getSettings } from "../services";
+import { analyticsContextFor } from "../services/analytics-context";
 import { clientNames, grantedScope } from "../services/connected-apps";
 import { enrichmentQueue } from "../services/enrichment";
 import { catchUpStates } from "../services/modes";
@@ -88,7 +89,12 @@ export async function authorizeMcpClaims(
       db: deps.db,
       userId,
       actor: "mcp",
-      analytics: productAnalytics(deps.env, userId, deps.defer),
+      analytics: productAnalytics(
+        deps.env,
+        userId,
+        deps.defer,
+        analyticsContextFor(deps.db, userId),
+      ),
       client: clientId,
       ...(named ? { clientName: named } : {}),
     },

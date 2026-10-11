@@ -1,4 +1,5 @@
 import {
+  AnalyticsConsentInput,
   DeviceTimezoneInput,
   OnboardingInput,
   ReviewTimezoneInput,
@@ -15,6 +16,7 @@ import {
   setReviewTimezone,
   updateSettings,
 } from "../services";
+import { updateAnalyticsConsent } from "../services/settings";
 
 export const settings = new Hono<AppEnv>();
 
@@ -87,4 +89,30 @@ settings.put(
   }),
   body(ReviewTimezoneInput, "timezone"),
   async (c) => c.json(await setReviewTimezone(ctxOf(c), c.req.valid("json"))),
+);
+
+settings.get(
+  "/analytics-consent",
+  describe({
+    tags: ["Settings"],
+    summary: "Read analytics consent",
+    learnerOnly: true,
+    ok: { schema: SettingsOut, description: "Account privacy preference" },
+  }),
+  async (c) => c.json(await getSettings(ctxOf(c))),
+);
+
+settings.put(
+  "/analytics-consent",
+  describe({
+    tags: ["Settings"],
+    summary: "Choose analytics consent",
+    learnerOnly: true,
+    description:
+      "Saves a versioned privacy preference for product analytics, including connected apps and background work. Only the learner's session can change it.",
+    ok: { schema: SettingsOut, description: "Settings after the choice" },
+    errors: [400],
+  }),
+  body(AnalyticsConsentInput, "privacy preference"),
+  async (c) => c.json(await updateAnalyticsConsent(ctxOf(c), c.req.valid("json"))),
 );

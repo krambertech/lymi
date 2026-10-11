@@ -1,7 +1,13 @@
-import { type OnboardingInput, type SettingsPatch, STARTING_DAILY_GOAL } from "@lymi/core";
-import { eq } from "@lymi/core/db";
+import {
+  type AnalyticsConsentInput,
+  type OnboardingInput,
+  type SettingsPatch,
+  STARTING_DAILY_GOAL,
+} from "@lymi/core";
+import { and, eq, isNull, lt, or } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { track } from "./analytics";
+import { auditStatementWhen } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
 import { applyGoalToToday } from "./review-days";
 
@@ -21,6 +27,8 @@ export function defaultSettings(userId: string): UserSettings {
   const now = new Date();
   return {
     userId,
+    analyticsConsent: null,
+    analyticsConsentUpdatedAt: null,
     appLanguage: null,
     meaningLanguage: "en",
     dailyGoal: 50,
@@ -48,6 +56,7 @@ export async function updateSettings(ctx: ServiceContext, patch: SettingsPatch) 
     throw new ServiceError("forbidden", "Only the learner can change the daily goal.");
   }
   if (patch.appLanguage === undefined && patch.dailyGoal === undefined) return getSettings(ctx);
+  const before = await getSettings(ctx);
   await ensureSettings(ctx);
   await ctx.db
     .update(schema.userSettings)
@@ -63,7 +72,58 @@ export async function updateSettings(ctx: ServiceContext, patch: SettingsPatch) 
       updatedAt: new Date(),
     })
     .where(eq(schema.userSettings.userId, ctx.userId));
-  if (patch.dailyGoal !== undefined) await applyGoalToToday(ctx, patch.dailyGoal);
+  if (patch.dailyGoal !== undefined) {
+    await applyGoalToToday(ctx, patch.dailyGoal);
+    if (!before.dailyGoalChosenAt || before.dailyGoal !== patch.dailyGoal)
+      track(ctx.analytics, {
+        name: "daily_goal_set",
+        value: patch.dailyGoal,
+        is_change: before.dailyGoalChosenAt !== null,
+      });
+  }
+  return getSettings(ctx);
+}
+
+export async function updateAnalyticsConsent(ctx: ServiceContext, choice: AnalyticsConsentInput) {
+  if (ctx.actor !== "user")
+    throw new ServiceError("forbidden", "Only the learner can change analytics consent.");
+  if (choice.updated_at > Date.now() + 60_000)
+    throw new ServiceError("invalid", "This privacy preference has a future date.");
+  const before = await getSettings(ctx);
+  if (
+    before.analyticsConsentUpdatedAt &&
+    choice.updated_at <= before.analyticsConsentUpdatedAt.getTime()
+  )
+    return before;
+  await ensureSettings(ctx);
+  const eligible = and(
+    eq(schema.userSettings.userId, ctx.userId),
+    or(
+      isNull(schema.userSettings.analyticsConsentUpdatedAt),
+      lt(schema.userSettings.analyticsConsentUpdatedAt, new Date(choice.updated_at)),
+    ),
+  )!;
+  await ctx.db.batch([
+    auditStatementWhen(
+      ctx,
+      {
+        entity: "account",
+        action: "analytics.consent",
+        id: ctx.userId,
+        details: { allowed: choice.allowed, version: choice.version },
+      },
+      schema.userSettings,
+      eligible,
+    ),
+    ctx.db
+      .update(schema.userSettings)
+      .set({
+        analyticsConsent: choice.allowed,
+        analyticsConsentUpdatedAt: new Date(choice.updated_at),
+        updatedAt: new Date(),
+      })
+      .where(eligible),
+  ]);
   return getSettings(ctx);
 }
 
@@ -82,17 +142,42 @@ export async function finishOnboarding(ctx: ServiceContext, input: OnboardingInp
     input.dailyGoal ?? (before.dailyGoalChosenAt ? before.dailyGoal : STARTING_DAILY_GOAL);
   const now = new Date();
   await ensureSettings(ctx);
-  await ctx.db
-    .update(schema.userSettings)
-    .set({
-      onboardedAt: now,
-      learningKind: input.learningKind,
-      learningLanguage: input.learningLanguage,
-      dailyGoal,
-      ...(input.dailyGoal !== null && { dailyGoalChosenAt: now }),
-      updatedAt: now,
-    })
-    .where(eq(schema.userSettings.userId, ctx.userId));
+  const eligible = and(
+    eq(schema.userSettings.userId, ctx.userId),
+    isNull(schema.userSettings.onboardedAt),
+  )!;
+  const [, updated] = await ctx.db.batch([
+    auditStatementWhen(
+      ctx,
+      { entity: "account", action: "onboarding.finish", id: ctx.userId },
+      schema.userSettings,
+      eligible,
+    ),
+    ctx.db
+      .update(schema.userSettings)
+      .set({
+        onboardedAt: now,
+        learningKind: input.learningKind,
+        learningLanguage: input.learningLanguage,
+        dailyGoal,
+        ...(input.dailyGoal !== null && { dailyGoalChosenAt: now }),
+        updatedAt: now,
+      })
+      .where(eligible)
+      .returning(),
+  ]);
+  if (!updated.length) return getSettings(ctx);
+  if (input.dailyGoal !== null && (!before.dailyGoalChosenAt || before.dailyGoal !== dailyGoal))
+    track(ctx.analytics, {
+      name: "daily_goal_set",
+      value: dailyGoal,
+      is_change: before.dailyGoalChosenAt !== null,
+    });
+  track(ctx.analytics, {
+    name: "welcome_step_finished",
+    step_name: "setup",
+    skipped: input.learningKind === null && input.dailyGoal === null,
+  });
   if (dailyGoal !== before.dailyGoal) await applyGoalToToday(ctx, dailyGoal);
   // Only the shortcut from a shared or published deck chooses a goal without saying what it is for.
   const kind = input.learningKind ?? (input.dailyGoal === null ? "skipped" : "joined");

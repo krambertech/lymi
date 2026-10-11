@@ -49,6 +49,16 @@ const LIMITS: Record<string, Limits> = {
     address: { max: 6, window: 60 * 60 },
     ip: { max: 10, window: 60 * 60 },
   },
+  // The phone app's sign-up confirms by code. Sending one is a send; checking one is a guess.
+  "/api/auth/email-otp/send-verification-otp": {
+    address: { max: 6, window: 60 * 60 },
+    ip: { max: 10, window: 60 * 60 },
+  },
+  "/api/auth/email-otp/verify-email": {
+    address: { max: 10, window: 15 * 60 },
+    ip: { max: 30, window: 15 * 60 },
+    spare: "on-success",
+  },
 };
 
 /**

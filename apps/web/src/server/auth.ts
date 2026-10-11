@@ -1,11 +1,13 @@
 import { apiKey } from "@better-auth/api-key";
 import { cimd } from "@better-auth/cimd";
 import type { GenericEndpointContext } from "@better-auth/core";
+import { expo } from "@better-auth/expo";
 import { mcp } from "@better-auth/mcp";
 import { MIN_PASSWORD_LENGTH } from "@lymi/core";
-import { and, eq } from "@lymi/core/db";
+import { and, eq, sql } from "@lymi/core/db";
 import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { emailOTP } from "better-auth/plugins/email-otp";
 import { jwt } from "better-auth/plugins/jwt";
 import { cookiePrefix } from "../shared/cookies";
 import { fetchClientMetadataResource } from "./cimd-fetch";
@@ -39,6 +41,32 @@ import {
  */
 export const API_KEY_WINDOW_MS = 60_000;
 
+/** The phone app's URL scheme. It is where Google sends the phone back, and its requests' origin. ADR 0029. */
+export const PHONE_APP_ORIGIN = "lymi://";
+
+/** How long the code the phone app confirms a new account with works. */
+const CONFIRMATION_CODE_SECONDS = 15 * 60;
+
+/**
+ * The email OTP plugin's routes beyond sending and checking a confirmation code. Each is a way
+ * in, or a way to set a password, that Lymi has not designed, such as a password on a Google
+ * account, so none of them answers.
+ */
+const UNUSED_OTP_PATHS = [
+  "/sign-in/email-otp",
+  "/forget-password/email-otp",
+  "/email-otp/request-password-reset",
+  "/email-otp/reset-password",
+  "/email-otp/request-email-change",
+  "/email-otp/change-email",
+  "/email-otp/check-verification-otp",
+];
+
+/** Whether Better Auth's Expo plugin marked this request as the phone app's. */
+function fromPhoneApp(request: Request | undefined): boolean {
+  return request?.headers.get("origin")?.startsWith(PHONE_APP_ORIGIN) ?? false;
+}
+
 export function createAuth(
   env: Bindings,
   db: Db,
@@ -61,7 +89,8 @@ export function createAuth(
     baseURL: env.PRODUCT_URL,
     basePath: "/api/auth",
     secret: env.BETTER_AUTH_SECRET,
-    trustedOrigins: [env.PRODUCT_URL],
+    trustedOrigins: [env.PRODUCT_URL, PHONE_APP_ORIGIN],
+    disabledPaths: UNUSED_OTP_PATHS,
     database: drizzleAdapter(db, {
       provider: "sqlite",
       // D1 has no interactive transactions. Operations run one after another instead.
@@ -109,6 +138,31 @@ export function createAuth(
       // Clients identify themselves with a Client ID Metadata Document at their client_id URL.
       // No dynamic registration: it is deprecated by the MCP 2026-07-28 spec.
       cimd({ fetchClientMetadataResource, metadataProfile: "mcp-2026-07-28" }),
+      // The phone app sends no Origin, so this takes it from `expo-origin` and hands the
+      // session cookie back on the deep link that ends a Google sign-in.
+      expo(),
+      // The phone app confirms a new account with a code, because a link opens in Safari, which
+      // did not sign up, and issue 251's rule would retire the password. The web keeps its link.
+      emailOTP({
+        otpLength: 6,
+        expiresIn: CONFIRMATION_CODE_SECONDS,
+        allowedAttempts: 5,
+        storeOTP: "hashed",
+        sendVerificationOTP: async ({ email, otp, type }, context) => {
+          if (type !== "email-verification" || isPersona(email)) return;
+          const [user] = await db
+            .select({ id: schema.user.id })
+            .from(schema.user)
+            .where(sql`lower(${schema.user.email}) = ${email.toLowerCase()}`);
+          if (!user) return;
+          await sendAccountEmail({ db, userId: user.id, actor: "user" }, env, {
+            kind: "verify-email-code",
+            to: email,
+            language: await accountEmailLanguage(db, user.id, context?.request),
+            code: otp,
+          });
+        },
+      }),
     ],
     // Sessions are looked up from KV first, so most requests never touch D1.
     secondaryStorage: {
@@ -194,6 +248,12 @@ export function createAuth(
       },
       sendVerificationEmail: async ({ user, url }, request) => {
         if (isPersona(user.email)) return;
+        if (fromPhoneApp(request)) {
+          await self?.api.sendVerificationOTP({
+            body: { email: user.email, type: "email-verification" },
+          });
+          return;
+        }
         const ctx = { db, userId: user.id, actor: "user" as const };
         await sendAccountEmail(ctx, env, {
           kind: "verify-email",

@@ -1820,6 +1820,9 @@ msgstr "Введи адрес почты, например you@example.com."
 msgid "Enter an email address."
 msgstr "Введи адрес электронной почты."
 
+msgid "Enter this code in the Lymi app to finish creating your account:"
+msgstr "Введи этот код в приложении Lymi, чтобы закончить создание аккаунта:"
+
 msgid "Every card"
 msgstr "Все карточки"
 
@@ -3756,6 +3759,9 @@ msgstr "карточку"
 msgid "The cards you kept move back into it"
 msgstr "Оставленные карточки вернутся в него"
 
+msgid "The code works for 15 minutes. If you didn’t create a Lymi account, ignore this email."
+msgstr "Код действует 15 минут. Если это не ты создаёшь аккаунт Lymi, просто не обращай внимания на это письмо."
+
 msgid "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 msgstr "Колода исчезнет из Библиотеки, и её карточки перестанут появляться в повторениях. Если присоединишься снова, твои повторения сохранятся."
 
@@ -4283,6 +4289,9 @@ msgstr "Твои оценки сохранены. Проверь соедине�
 
 msgid "Your Lymi account signs in with Google"
 msgstr "Твой аккаунт Lymi входит через Google"
+
+msgid "Your Lymi confirmation code"
+msgstr "Твой код подтверждения Lymi"
 
 msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Твоё сообщение сохранено. Попробуй ещё раз или напиши на <0>hello@lymi.app</0>."

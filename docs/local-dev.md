@@ -79,6 +79,17 @@ pnpm local db:fresh               # rebuild the local D1 from the migrations
 
 `--as` defaults to `LYMI_PERSONA`, then `learner`. `--url` defaults to `LYMI_URL`, then `PRODUCT_URL` in `apps/web/.dev.vars`, then `http://localhost:5241`.
 
+## Sign the phone app in
+
+`EXPO_PUBLIC_API_URL` points the phone app at a Worker, and it defaults to production. Start Metro against the local one, using the port the server printed:
+
+```bash
+cd apps/mobile
+EXPO_PUBLIC_API_URL=http://localhost:5241 npx expo start --dev-client
+```
+
+The Simulator reaches the Mac at `localhost`. In a development build the sign-in screen offers **Dev sign-in as learner**, which calls `POST /api/dev/sign-in?as=learner` and keeps the cookie it returns, so no password is typed. A new account made in the app is confirmed with a 6-digit code instead of a link; `POST /api/dev/outbox` with the address returns the email that carries it. Google needs `GOOGLE_CLIENT_ID` and a callback registered for the local port, so try it against a deployed Worker.
+
 ## Call the routes directly
 
 The panel and the CLI use these. They sit under `/api/dev`, outside the OpenAPI document.

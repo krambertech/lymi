@@ -8,8 +8,12 @@ import {
   CircleCheck,
   CircleDashed,
   CircleUserRound,
+  Eye,
+  EyeOff,
   LayoutGrid,
   Library,
+  LogOut,
+  Mail,
   Play,
   Plus,
   RotateCcw,
@@ -66,6 +70,10 @@ const ICONS = {
   alert: CircleAlert,
   widgets: LayoutGrid,
   reset: RotateCcw,
+  show: Eye,
+  hide: EyeOff,
+  signOut: LogOut,
+  email: Mail,
 } as const;
 
 export type IconName = keyof typeof ICONS;

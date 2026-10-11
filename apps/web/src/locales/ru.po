@@ -735,9 +735,6 @@ msgstr "Добавляй карточки через API"
 msgid "Add hook"
 msgstr "Добавить зацепку"
 
-msgid "Add Lymi as an MCP server in Claude or ChatGPT, then sign in when asked."
-msgstr "Добавь Lymi как MCP-сервер в Claude или ChatGPT, затем войди, когда попросят."
-
 msgid "Add Lymi to your Home Screen"
 msgstr "Добавить Lymi на экран «Домой»"
 
@@ -800,9 +797,6 @@ msgstr "Впереди"
 
 msgid "AI"
 msgstr "AI"
-
-msgid "AI apps connected to your Lymi account (Claude, ChatGPT, …)."
-msgstr "AI-приложения, подключённые к Lymi (Claude, ChatGPT…)."
 
 msgid "AI example"
 msgstr "Пример от AI"
@@ -1290,6 +1284,9 @@ msgstr "Подключить {appName}"
 
 msgid "Connect an app"
 msgstr "Подключить приложение"
+
+msgid "Connect ChatGPT or Claude so it can turn your notes, PDFs or textbook into Lymi cards."
+msgstr "Подключи ChatGPT или Claude, чтобы они превращали твои заметки, PDF или учебник в карточки Lymi."
 
 msgid "Connect Lymi, paste the lesson, and ask for the cards"
 msgstr "Подключи Lymi, вставь урок и попроси сделать карточки"
@@ -1880,6 +1877,9 @@ msgstr "Для Anki, AnkiDroid и Mochi, с датами повторения, �
 msgctxt "deck tag"
 msgid "For beginners"
 msgstr "Для начинающих"
+
+msgid "For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute."
+msgstr "Например, вставь урок и попроси: «Сделай из этого эстонские карточки». Настройка займёт минуту."
 
 msgid "For scripts and curl. For AI apps, use Connected apps instead."
 msgstr "Для скриптов и curl. Для AI-приложений используй «Подключённые приложения»."

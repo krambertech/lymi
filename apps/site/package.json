@@ -33,7 +33,7 @@
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.6",
+    "@astrojs/check": "^0.9.10",
     "@astrojs/react": "^6.0.5",
     "@babel/core": "7.29.7",
     "@lingui/babel-plugin-lingui-macro": "6.9.1",
@@ -44,7 +44,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "astro": "^7.3.1",
+    "astro": "^7.3.8",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
     "vitest": "^5.0.3",

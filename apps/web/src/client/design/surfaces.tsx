@@ -32,7 +32,7 @@ export function Surfaces() {
   return (
     <Doc
       title="Surfaces"
-      lede="By day nothing casts a shadow: depth is tone and one hairline. At night the lamp lights the room from above, so plates catch it on their top edge and lift a little. Texture goes only where something is lit or holds a level."
+      lede="By day nothing casts a shadow: depth is tone and one hairline. At night plates sit a little off the room on a soft shadow. Texture goes only where something is lit or holds a level."
     >
       <Sub
         title="Elevation"

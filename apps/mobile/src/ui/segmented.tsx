@@ -4,6 +4,7 @@ import { type LayoutRectangle, View } from "react-native";
 import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
 import { spring, useReduceMotion } from "../theme/motion";
 import { Press, Text } from "./primitives";
+import { useOnGlass } from "./surface";
 
 const SLIDE = spring(CHOICE_SLIDE);
 
@@ -20,6 +21,7 @@ export function Segmented<T extends string>({
   label: string;
 }) {
   const reduce = useReduceMotion();
+  const glass = useOnGlass();
   const [rects, setRects] = useState<Partial<Record<T, LayoutRectangle>>>({});
   const chosen = rects[value];
   const plate = useAnimatedStyle(() => {
@@ -32,12 +34,12 @@ export function Segmented<T extends string>({
   });
   return (
     <View
-      className="flex-row rounded-md bg-plate-2 p-1"
+      className={`flex-row rounded-lg p-1 ${glass ? "bg-glass-plate" : "bg-plate-2"}`}
       accessibilityRole="radiogroup"
       accessibilityLabel={label}
     >
       <Animated.View
-        className="absolute top-1 bottom-1 rounded-sm border border-edge bg-chosen"
+        className={`absolute top-1 bottom-1 rounded-md border border-edge ${glass ? "bg-glass-chosen" : "bg-chosen"}`}
         style={[{ left: 0 }, plate]}
       />
       {options.map((o) => (

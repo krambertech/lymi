@@ -1,0 +1,338 @@
+import { useState } from "react";
+import { View } from "react-native";
+import { Flame } from "../../brand/flame";
+import { usePalette } from "../../theme/palette";
+import { GlassButton, GlassPill } from "../../ui/glass";
+import { Icon } from "../../ui/icons";
+import { DropdownMenu, Select } from "../../ui/menu";
+import { Button, IconButton, Text } from "../../ui/primitives";
+import { Sheet, SheetGroup, SheetRow } from "../../ui/sheet";
+import { Row, Sub, Variants } from "../frame";
+
+// How the phone's screens are put together and how they arrive. phone.md "How a screen arrives".
+
+const MONO = { fontFamily: "Menlo", letterSpacing: 0 } as const;
+
+const DECKS = [
+  { value: "lezione", label: "Lezione 12" },
+  { value: "verbi", label: "Verbi" },
+  { value: "work", label: "Words from work" },
+];
+
+/** A rule set as a short list, for what a picture cannot show. */
+function Rules({ items }: { items: [string, string][] }) {
+  return (
+    <View className="gap-3">
+      {items.map(([name, rule]) => (
+        <View key={name} className="gap-0.5">
+          <Text className="text-sm font-medium text-text" style={MONO}>
+            {name}
+          </Text>
+          <Text className="text-base text-text-2">{rule}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
+export function Pages() {
+  const p = usePalette();
+  return (
+    <>
+      <Sub
+        title="Three ways in"
+        note="How a screen arrives says how to leave it: from the side means back, from below means swipe down. This is overlays.md’s rule in iOS’s own navigation."
+        source="docs/design/system/phone.md"
+      >
+        <Variants
+          items={[
+            {
+              label: "Push, from the side",
+              note: "A page to read or work in: a deck, a card, Insights, Settings. Leaves by the named back or a swipe from the start edge.",
+              render: () => (
+                <View className="gap-1">
+                  <View className="h-11 flex-row items-center gap-1">
+                    <Icon name="back" size={20} colour={p.text} />
+                    <Text className="text-md font-medium text-text-2">Library</Text>
+                  </View>
+                  <Text className="text-3xl font-medium text-text">Lezione 12</Text>
+                </View>
+              ),
+            },
+            {
+              label: "Sheet, from below",
+              note: "A task with an end: Add a word, a menu, a choice list. Glass buttons float in its top corners; it leaves by a swipe down.",
+              render: () => (
+                <View className="flex-row items-center justify-between">
+                  <GlassButton icon="close" label="Done" />
+                  <GlassPill icon="deck">Verbi</GlassPill>
+                  <GlassButton icon="plus" label="Add" primary />
+                </View>
+              ),
+            },
+            {
+              label: "Cover, from below",
+              note: "A mode that takes the screen: a review, Welcome. Leaves by X or by pulling the top bar down.",
+              render: () => (
+                <Row>
+                  <IconButton icon="close" label="End review" />
+                </Row>
+              ),
+            },
+          ]}
+        />
+      </Sub>
+      <Sub
+        title="The top of a screen"
+        note="A tab names itself in its bar, beside the streak and capture. A page puts the way back in its bar, named for where it goes, and its title large underneath: iOS’s own large-title pattern, so a learner already knows it."
+        source="src/ui/screen.tsx"
+      >
+        <Variants
+          items={[
+            {
+              label: "Tab",
+              note: "Today, Library, You. No back: the tab bar is the way around.",
+              render: () => (
+                <View className="h-14 flex-row items-center justify-between">
+                  <Text className="text-3xl font-medium text-text">Today</Text>
+                  <View className="flex-row items-center gap-2.5">
+                    <View className="h-10 flex-row items-center gap-1.5 rounded-full bg-plate px-3.5">
+                      <Flame height={18} />
+                      <Text className="text-md font-medium text-text">5</Text>
+                    </View>
+                    <View className="size-10 items-center justify-center rounded-full bg-amber">
+                      <Icon name="plus" size={20} colour={p["amber-ink"]} strokeWidth={2.25} />
+                    </View>
+                  </View>
+                </View>
+              ),
+            },
+            {
+              label: "Page",
+              note: "The back names its parent and goes there, whatever the history holds. The large title is the page’s heading for VoiceOver.",
+              render: () => (
+                <View className="gap-1">
+                  <View className="h-11 flex-row items-center gap-1">
+                    <Icon name="back" size={20} colour={p.text} />
+                    <Text className="text-md font-medium text-text-2">Design system</Text>
+                  </View>
+                  <Text className="text-3xl font-medium text-text">Sheets</Text>
+                </View>
+              ),
+            },
+          ]}
+        />
+      </Sub>
+      <Sub
+        title="Spacing and edges"
+        note="What stays the same on every screen, so a page needs no layout decisions of its own."
+      >
+        <Rules
+          items={[
+            ["20 pt", "From the screen’s side edges to the content, on every screen."],
+            ["28 pt", "Between sections of a page. A section’s title sits 12 pt over its plate."],
+            ["44 pt", "The smallest thing a finger presses, whatever it looks like."],
+            [
+              "Concentric",
+              "Something that sits near a rounded edge, a sheet’s or the screen’s, takes a corner that follows it: its radius is the edge’s less the space between them.",
+            ],
+            [
+              "Under the thumb",
+              "A screen’s one action sits low, where the thumb is; what it acts on sits above.",
+            ],
+          ]}
+        />
+      </Sub>
+    </>
+  );
+}
+
+export function Sheets() {
+  const [menuLast, setMenuLast] = useState("nothing yet");
+  const [deck, setDeck] = useState("lezione");
+  const [streakOpen, setStreakOpen] = useState(false);
+  const deckName = DECKS.find((d) => d.value === deck)?.label ?? "";
+  return (
+    <>
+      <Sub
+        title="What a sheet is"
+        note="iOS presents every sheet, so it is Liquid Glass, follows the finger and swipes away; what is inside is Lymi’s. Before iOS 26 the same sheet is opaque."
+        source="src/ui/sheet.tsx"
+      >
+        <Rules
+          items={[
+            [
+              "Sized to what it holds",
+              "A sheet opens at the height of its rows. One with more to show drags up to the full screen, where iOS turns the glass opaque so what is under it stops showing through.",
+            ],
+            [
+              "Groups on plates",
+              "Rows that belong together share one plate, inset 16 pt from the sheet’s edge and 12 pt from the next group. A hairline between rows runs the plate’s full width, as on every plate.",
+            ],
+            [
+              "Rows",
+              "52 pt, a Lucide icon in the slot every row keeps, the label in Onest. A row that removes something is red, icon included. A chosen row leads with a check; a row that opens more ends in a chevron.",
+            ],
+            [
+              "Title",
+              "Says what the sheet is about, a field’s name or a card’s term, in line with the rows’ text.",
+            ],
+            [
+              "A choice runs once the sheet has gone",
+              "So nothing moves under a sheet that is still leaving. A sheet over a form gives the cursor back to the field it came from.",
+            ],
+          ]}
+        />
+      </Sub>
+      <Sub title="Menu" note="A list of actions from a button, in groups." source="src/ui/menu.tsx">
+        <Variants
+          items={[
+            {
+              label: "From an icon button",
+              note: `Tap it. Last chosen: ${menuLast}.`,
+              render: () => (
+                <Row>
+                  <DropdownMenu
+                    title="hämarik"
+                    trigger={(open) => (
+                      <IconButton
+                        icon="more"
+                        label="Card options"
+                        variant="secondary"
+                        onPress={open}
+                      />
+                    )}
+                    items={[
+                      [
+                        { label: "Edit card", icon: "edit", onSelect: () => setMenuLast("Edit") },
+                        { label: "Move to…", icon: "move", onSelect: () => setMenuLast("Move") },
+                      ],
+                      [
+                        {
+                          label: "Archive card",
+                          icon: "archive",
+                          destructive: true,
+                          onSelect: () => setMenuLast("Archive"),
+                        },
+                      ],
+                    ]}
+                  />
+                </Row>
+              ),
+            },
+          ]}
+        />
+      </Sub>
+      <Sub
+        title="Choice"
+        note="One of a list, titled with the field’s name. The chosen row leads with a check."
+        source="src/ui/menu.tsx"
+      >
+        <Variants
+          items={[
+            {
+              label: "From a glass pill",
+              note: "As Add a word picks its deck.",
+              render: () => (
+                <Row>
+                  <Select
+                    label="Deck"
+                    value={deck}
+                    options={DECKS}
+                    onChange={setDeck}
+                    trigger={<GlassPill icon="deck">{deckName}</GlassPill>}
+                  />
+                </Row>
+              ),
+            },
+          ]}
+        />
+      </Sub>
+      <Sub
+        title="Drags up for more"
+        note="A sheet that peeks with what matters and opens to the full screen for the rest, as the dev menu does. The streak is the first to use it."
+        source="src/ui/sheet.tsx"
+      >
+        <Variants
+          items={[
+            {
+              label: "Peek, then drag up",
+              note: "Opens at the streak and its goal; drag the sheet up for the week and the actions.",
+              render: () => (
+                <Row>
+                  <Button label="Open the streak" onPress={() => setStreakOpen(true)} />
+                  <Sheet
+                    title="5 days in a row"
+                    open={streakOpen}
+                    onOpenChange={setStreakOpen}
+                    more={
+                      <>
+                        <SheetGroup>
+                          <SheetRow label="Monday" detail="50 reviews" onPress={() => undefined} />
+                          <SheetRow
+                            label="Tuesday"
+                            detail="12 reviews, a rest day"
+                            onPress={() => undefined}
+                          />
+                          <SheetRow
+                            label="Wednesday"
+                            detail="50 reviews"
+                            onPress={() => undefined}
+                          />
+                        </SheetGroup>
+                        <SheetGroup>
+                          <SheetRow
+                            label="Reminders"
+                            icon="email"
+                            opens
+                            onPress={() => undefined}
+                          />
+                        </SheetGroup>
+                      </>
+                    }
+                  >
+                    <SheetGroup>
+                      <SheetRow
+                        label="Daily goal"
+                        icon="check"
+                        detail="50 reviews a day"
+                        opens
+                        onPress={() => undefined}
+                      />
+                      <SheetRow
+                        label="Today"
+                        icon="today"
+                        detail="47 reviews to go"
+                        onPress={() => undefined}
+                      />
+                    </SheetGroup>
+                  </Sheet>
+                </Row>
+              ),
+            },
+          ]}
+        />
+      </Sub>
+      <Sub
+        title="Glass corners"
+        note="A sheet’s own controls float on it as glass, 44 pt: close at the start, the sheet’s one action at the end in amber, and between them a pill for what the sheet works in."
+        source="src/ui/glass.tsx"
+      >
+        <Variants
+          items={[
+            {
+              label: "Add a word’s top",
+              render: () => (
+                <View className="flex-row items-center justify-between">
+                  <GlassButton icon="close" label="Done" />
+                  <GlassPill icon="deck">Verbi</GlassPill>
+                  <GlassButton icon="plus" label="Add" primary />
+                </View>
+              ),
+            },
+          ]}
+        />
+      </Sub>
+    </>
+  );
+}

@@ -45,6 +45,18 @@ export type AddCardOutcome =
   | { status: "added"; card: Card }
   | { status: "skipped"; term: string; existing: Card; deckName: string };
 
+/** A file on the phone, as React Native's FormData takes one. */
+export type NativeFile = { uri: string; name: string; type: string };
+
+function isNativeFile(file: Blob | NativeFile): file is NativeFile {
+  return typeof (file as NativeFile).uri === "string";
+}
+
+/** React Native's FormData takes `{ uri, name, type }` where the DOM's types expect a Blob. */
+function formFile(file: Blob | NativeFile): Blob {
+  return isNativeFile(file) ? (file as unknown as Blob) : file;
+}
+
 export const cardsApi = {
   archivedCards: async () =>
     (await request<{ cards: CardHit[] }>("/api/cards?archived=true")).cards,
@@ -63,12 +75,21 @@ export const cardsApi = {
   /** Every review and every write, newest first. */
   cardHistory: (id: string) => request<CardHistory>(`/api/cards/${id}/history`),
   audioUrl: (cardId: string) => apiUrl(`/api/audio/${encodeURIComponent(cardId)}`),
-  /** `version` is the card's `imageVersion` as last read; null expects a card with no picture yet. */
-  uploadCardImage: (id: string, file: Blob, version: string | null, description?: string) => {
+  /**
+   * `version` is the card's `imageVersion` as last read; null expects a card with no picture yet.
+   * The phone passes a file as React Native's `{ uri, name, type }`, which its FormData uploads.
+   */
+  uploadCardImage: (
+    id: string,
+    file: Blob | NativeFile,
+    version: string | null,
+    description?: string,
+  ) => {
     const form = new FormData();
-    form.set("file", file);
-    form.set("version", version ?? "");
-    if (description) form.set("description", description);
+    // `append`, not `set`: React Native's FormData has no `set`, and each name is sent once.
+    form.append("file", formFile(file));
+    form.append("version", version ?? "");
+    if (description) form.append("description", description);
     return request<Card>(`/api/cards/${id}/image`, { method: "PUT", body: form });
   },
   importCardImage: (id: string, body: CardImageImportInput) =>

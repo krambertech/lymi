@@ -5,14 +5,14 @@ import { View, type ViewStyle } from "react-native";
 import { Flame } from "../../../brand/flame";
 import { Lantern } from "../../../brand/lantern";
 import { useDay, useDecks, useRounds } from "../../../data/queries";
-import { usePalette } from "../../../theme/palette";
+import { clear, usePalette, useRoom } from "../../../theme/palette";
 import { Button, Icon, Plate, Press, RowArrow, SectionTitle, Text } from "../../../ui/primitives";
 import { Screen } from "../../../ui/screen";
 import { SevenLights } from "../../../ui/seven-lights";
 
 export default function Today() {
   return (
-    <Screen title="Today">
+    <Screen title="Today" kind="tab">
       <View className="gap-3">
         <LitDue />
         <StreakPlate />
@@ -48,6 +48,8 @@ function LitDue() {
   const { fed, out, progress } = useDay();
   const router = useRouter();
   const p = usePalette();
+  // At night the pool stays close to the lantern, so Today reads as the same room as every other screen.
+  const room = useRoom();
   const { count, line } = useDueLine();
   // The flame stops flickering while Today is out of sight.
   const focused = useIsFocused();
@@ -58,7 +60,7 @@ function LitDue() {
         className="absolute -inset-x-5 -top-56 bottom-10"
         style={
           {
-            experimental_backgroundImage: `radial-gradient(closest-side at 50% 52%, ${p.pool}, transparent 100%)`,
+            experimental_backgroundImage: `radial-gradient(closest-side at 50% 52%, ${p.pool}, ${clear(p.pool)} ${room === "dark" ? 70 : 100}%)`,
           } as ViewStyle
         }
       />

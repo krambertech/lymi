@@ -22,7 +22,8 @@ export function PillNav() {
   return (
     <nav
       aria-label={t`Main`}
-      className="pointer-events-auto relative flex gap-1 rounded-full bg-plate-2 p-1.5 edge"
+      // A plate-2 track under the glass, so the chosen tab's plate stands out by day as well.
+      className="glass pointer-events-auto relative flex gap-1 rounded-full p-1.5 [--glass-fill:color-mix(in_oklab,var(--plate-2)_86%,transparent)] [--plate:var(--plate-2)]"
     >
       <SlidingPlate
         chosen='[aria-current="page"]'

@@ -64,6 +64,8 @@ The phone app keeps this rule with iOS's own navigation: a place is pushed from 
 
 On a desktop a menu is anchored to its trigger. On touch the same rows rise in a drawer from the bottom edge, where the thumb is, and swipe away. The rows keep their menu roles and arrow keys in both shapes, and a keyboard hint is left out of the drawer because there is no keyboard to hint at. `DropdownMenu` holds both shapes; use shadcn's parts.
 
+A menu's surface, like a popover's and a list's, is the slight `glass` ([surfaces.md](surfaces.md#on-glass)); a dialog or a drawer stays solid.
+
 `DropdownMenuItem` variants: `default` and `destructive`, for Archive, Remove or Leave. Nothing else exists. A destructive row that can be undone acts at once and offers Undo in a toast; one that cannot opens a question.
 
 Menu rows do not scale on press. The hover is one fill that slides between rows ([motion.md](motion.md#hover)).

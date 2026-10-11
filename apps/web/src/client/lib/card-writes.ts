@@ -1,27 +1,10 @@
-import { type CardInput, type CardPatch, modeKey, modeOf } from "@lymi/core";
+import { type CardPatch, modeKey, modeOf } from "@lymi/core";
 import type { QueryClient } from "@tanstack/react-query";
 import type { CardFormValues } from "../components/card-form";
 import { api, type Card } from "./api";
 
-/** A new card as the add route takes it: typed text is the learner's, and empty fields stay out. */
-export function addInput(values: CardFormValues): CardInput {
-  return {
-    deckId: values.deckId,
-    term: values.term,
-    language: values.language,
-    ...(values.meaning ? { meaning: values.meaning, meaningSource: "manual" } : {}),
-    ...(values.example ? { example: values.example, exampleSource: "manual" } : {}),
-    ...(values.pronunciation
-      ? { pronunciation: values.pronunciation, pronunciationSource: "manual" as const }
-      : {}),
-    ...(values.notes ? { notes: values.notes } : {}),
-    ...(values.hook ? { hook: values.hook, hookSource: "manual" as const } : {}),
-    ...(values.source ? { source: values.source } : {}),
-    ...(values.tags.length ? { tags: values.tags } : {}),
-    ...(values.reviewModes ? { reviewModes: values.reviewModes.map(modeOf) } : {}),
-    ...(values.sectionId ? { sectionId: values.sectionId } : {}),
-  };
-}
+/** A new card as the add route takes it; shared with the phone so a new field reaches both. */
+export { addInput } from "@lymi/client/card-input";
 
 const same = (a: readonly string[] | null, b: readonly string[] | null) =>
   a === b || (!!a && !!b && a.length === b.length && a.every((v, i) => v === b[i]));

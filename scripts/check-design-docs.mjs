@@ -60,7 +60,13 @@ function exportedNames() {
       }
     }
   };
-  for (const dir of ["apps/web/src", "apps/site/src", "packages/core/src", "packages/design/src"])
+  for (const dir of [
+    "apps/web/src",
+    "apps/site/src",
+    "apps/mobile/src",
+    "packages/core/src",
+    "packages/design/src",
+  ])
     walk(dir);
   return names;
 }

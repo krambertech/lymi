@@ -9,7 +9,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useReduceMotion } from "../theme/motion";
-import { type Palette, usePalette } from "../theme/palette";
+import { clear, type Palette, usePalette } from "../theme/palette";
 import { weekLetters } from "./days";
 import { Text } from "./primitives";
 
@@ -58,9 +58,7 @@ export function SevenLights({
               today={i === today}
               delay={sequence === undefined ? undefined : sequence + i * LIGHT_STEP_MS}
             />
-            <Text
-              className={`${lg ? "text-xs" : "text-2xs"} ${i === today ? "font-medium text-text-2" : "text-faint"}`}
-            >
+            <Text className={`text-xs ${i === today ? "font-medium text-text-2" : "text-faint"}`}>
               {letters[i]}
             </Text>
           </View>
@@ -115,7 +113,7 @@ function Glass({
             inset: 0,
             transformOrigin: "50% 100%",
             backgroundColor: fill(p, l === 0 ? 1 : l),
-            experimental_backgroundImage: `linear-gradient(to bottom, ${p["lit-sheen"]}, transparent 70%)`,
+            experimental_backgroundImage: `linear-gradient(to bottom, ${p["lit-sheen"]}, ${clear(p["lit-sheen"])} 70%)`,
             // Light caught along the top edge. A border, because a shadow on a clipped child breaks its corners.
             borderTopWidth: 1,
             borderTopColor: p["lit-edge"],

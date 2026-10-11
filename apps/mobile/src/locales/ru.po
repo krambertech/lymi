@@ -1,0 +1,305 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 17:27+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "“{term}” is already in {deckName}"
+msgstr "«{term}» уже есть в колоде {deckName}"
+
+msgid "{label}: {chosen}"
+msgstr "{label}: {chosen}"
+
+msgid "{label}: {value}"
+msgstr "{label}: {value}"
+
+msgid "{left, plural, one {# more review and today counts.} other {# more reviews and today counts.}}"
+msgstr "{left, plural, one {Ещё # повторение, и сегодня засчитается.} few {Ещё # повторения, и сегодня засчитается.} many {Ещё # повторений, и сегодня засчитается.} other {Ещё # повторения, и сегодня засчитается.}}"
+
+msgid "{reviewsToday} of {goal}"
+msgstr "{reviewsToday} из {goal}"
+
+msgid "{streak, plural, one {day in a row} other {days in a row}}"
+msgstr "{streak, plural, one {день подряд} few {дня подряд} many {дней подряд} other {дня подряд}}"
+
+msgid "A sentence that uses it"
+msgstr "Предложение, где оно встречается"
+
+msgid "A short phrase that helps you remember it."
+msgstr "Короткая фраза, которая поможет запомнить."
+
+msgid "A word or phrase"
+msgstr "Слово или фраза"
+
+msgid "Add a card"
+msgstr "Добавить карточку"
+
+msgid "Add to {deckName}"
+msgstr "Добавить в {deckName}"
+
+msgid "Added “{term}”"
+msgstr "Добавлено «{term}»"
+
+msgid "Added “{term}” to {deckName}"
+msgstr "«{term}» добавлено в колоду {deckName}"
+
+msgid "Added “{term}” without its picture. {reason}"
+msgstr "«{term}» добавлено без изображения. {reason}"
+
+msgid "Added “{term}”. It’s saved on this phone until Lymi can be reached."
+msgstr "«{term}» добавлено. Карточка сохранена на этом телефоне, пока Lymi снова не будет на связи."
+
+msgid "AI"
+msgstr "AI"
+
+msgid "AI example"
+msgstr "Пример от AI"
+
+msgid "AI fills in"
+msgstr "AI дополнит"
+
+msgid "AI hook"
+msgstr "Зацепка от AI"
+
+msgid "AI meaning"
+msgstr "Значение от AI"
+
+msgid "AI off"
+msgstr "AI выключен"
+
+msgid "AI pronunciation"
+msgstr "Произношение от AI"
+
+msgid "AI wrote part of this card"
+msgstr "Часть этой карточки написал AI"
+
+msgid "AI wrote this"
+msgstr "Это написал AI"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Choose another"
+msgstr "Выбрать другое"
+
+msgid "Choose from photos"
+msgstr "Выбрать из фото"
+
+msgid "Clear the picture"
+msgstr "Убрать изображение"
+
+msgid "Couldn’t reach Lymi. Check your connection and try again."
+msgstr "Не удалось связаться с Lymi. Проверь соединение и попробуй снова."
+
+msgid "Create a deck on the web first, then add cards here."
+msgstr "Сначала создай колоду в веб-версии, а потом добавляй карточки здесь."
+
+msgid "Daily goal"
+msgstr "Дневная цель"
+
+msgid "Deck"
+msgstr "Колода"
+
+msgid "Describe what the picture shows without naming the term or the meaning."
+msgstr "Опиши, что на изображении, не называя термин или значение."
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Done"
+msgstr "Готово"
+
+msgid "Easy"
+msgstr "Легко"
+
+msgid "Example"
+msgstr "Пример"
+
+msgid "Example by you"
+msgstr "Твой пример"
+
+msgid "Example from lesson"
+msgstr "Пример с урока"
+
+msgid "Fill in the rest with AI"
+msgstr "Дополнить остальное с AI"
+
+msgid "Forgot"
+msgstr "Не помню"
+
+msgid "Forgotten"
+msgstr "Забытая"
+
+msgid "From the lesson"
+msgstr "С урока"
+
+msgid "Good"
+msgstr "Хорошо"
+
+msgid "Grammar, usage, anything else"
+msgstr "Грамматика, употребление, что угодно ещё"
+
+msgid "Hard"
+msgstr "Трудно"
+
+msgid "Hide password"
+msgstr "Скрыть пароль"
+
+msgid "Hook by you"
+msgstr "Твоя зацепка"
+
+msgid "Hook from lesson"
+msgstr "Зацепка с урока"
+
+msgid "How it sounds"
+msgstr "Как это звучит"
+
+msgid "How it’s asked"
+msgstr "Как спрашивать"
+
+msgid "Known"
+msgstr "Выученная"
+
+msgctxt "cards in this state"
+msgid "Known"
+msgstr "Выученные"
+
+msgid "Learning"
+msgstr "В изучении"
+
+msgctxt "cards in this state"
+msgid "Learning"
+msgstr "В изучении"
+
+msgid "Leave it empty and the AI fills it in"
+msgstr "Оставь пустым, и AI дополнит"
+
+msgid "Lesson"
+msgstr "Урок"
+
+msgid "Meaning"
+msgstr "Значение"
+
+msgid "Meaning by you"
+msgstr "Твоё значение"
+
+msgid "Meaning from lesson"
+msgstr "Значение с урока"
+
+msgid "Memory hook"
+msgstr "Зацепка"
+
+msgid "More about this card"
+msgstr "Больше о карточке"
+
+msgid "New"
+msgstr "Новая"
+
+msgctxt "cards in this state"
+msgid "New"
+msgstr "Новые"
+
+msgid "No section"
+msgstr "Без раздела"
+
+msgid "Notes"
+msgstr "Заметки"
+
+msgid "Only the deck’s owner can change this."
+msgstr "Менять это может только владелец колоды."
+
+msgid "Picture"
+msgstr "Изображение"
+
+msgid "Picture → meaning"
+msgstr "Изображение → значение"
+
+msgid "Picture → term"
+msgstr "Изображение → термин"
+
+msgid "Picture added"
+msgstr "Изображение добавлено"
+
+msgid "Pictures need a connection. Try again once you’re back online."
+msgstr "Для изображений нужно соединение. Попробуй ещё раз, когда снова будешь онлайн."
+
+msgid "Production"
+msgstr "Воспроизведение"
+
+msgid "Pronunciation"
+msgstr "Произношение"
+
+msgid "Pronunciation by you"
+msgstr "Твоё произношение"
+
+msgid "Pronunciation from lesson"
+msgstr "Произношение с урока"
+
+msgid "Recognition"
+msgstr "Распознавание"
+
+msgid "Reviews a day. Finishing everything due also counts."
+msgstr "Повторений в день. Если повторишь всё запланированное, день тоже засчитается."
+
+msgid "Same as the deck"
+msgstr "Как в колоде"
+
+msgid "Section"
+msgstr "Раздел"
+
+msgid "See the meaning, recall the term"
+msgstr "Видишь значение, вспоминаешь термин"
+
+msgid "See the term, recall what it means"
+msgstr "Видишь термин, вспоминаешь значение"
+
+msgid "Show password"
+msgstr "Показать пароль"
+
+msgid "Sign in to continue."
+msgstr "Войди, чтобы продолжить."
+
+msgid "Source"
+msgstr "Источник"
+
+msgid "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
+msgstr "Дни подряд: {streak, plural, one {# день подряд} few {# дня подряд} many {# дней подряд} other {# дня подряд}}"
+
+msgid "Take a photo"
+msgstr "Сделать фото"
+
+msgid "Term"
+msgstr "Термин"
+
+msgid "That didn’t go through. Reload and try again."
+msgstr "Не получилось. Обнови страницу и попробуй снова."
+
+msgid "That’s no longer here. Reload to see what changed."
+msgstr "Этого уже нет. Обнови страницу, чтобы увидеть изменения."
+
+msgid "Today"
+msgstr "Сегодня"
+
+msgid "Today counts."
+msgstr "Сегодня засчитано."
+
+msgid "Try again"
+msgstr "Попробовать ещё раз"
+
+msgid "Undo"
+msgstr "Отменить действие"
+
+msgid "What it means"
+msgstr "Что это значит"
+
+msgid "Where you met it, such as a lesson"
+msgstr "Откуда это, например урок"
+
+msgid "You"
+msgstr "Ты"
+
+msgid "You wrote this"
+msgstr "Это написано тобой"

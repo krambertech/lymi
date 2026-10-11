@@ -703,6 +703,12 @@ export const ImageDescription = z
   .min(1, "Describe the picture.")
   .max(300, "Keep the description under 300 characters.");
 
+/** A picture description's limit, read off `ImageDescription` the way `cardLimits` reads a card's. */
+export const imageLimits = { description: ImageDescription.maxLength } satisfies Record<
+  string,
+  number | null
+>;
+
 /** The card's `imageVersion` as last read, so a newer change makes the write a 409; null expects no picture yet. */
 const ImageVersion = z
   .string()

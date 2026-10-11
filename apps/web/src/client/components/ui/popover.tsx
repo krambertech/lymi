@@ -38,7 +38,7 @@ function PopoverContent({
           data-slot="popover-content"
           className={cn(
             // Grows out of the side nearest its control over 180 ms and shrinks back into it in 100.
-            "edge-2 w-max max-w-64 origin-(--transform-origin) rounded-md bg-plate px-3 py-2 text-start text-sm text-text outline-none transition-[opacity,translate,scale] duration-100 ease-(--ease-out) [--pop-y:-4px] data-open:duration-180 data-[side=top]:[--pop-y:4px] data-starting-style:translate-y-(--pop-y) data-starting-style:scale-98 data-starting-style:opacity-0 data-ending-style:translate-y-(--pop-y) data-ending-style:scale-98 data-ending-style:opacity-0 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
+            "glass w-max max-w-64 origin-(--transform-origin) rounded-md px-3 py-2 text-start text-sm text-text outline-none transition-[opacity,translate,scale] duration-100 ease-(--ease-out) [--pop-y:-4px] data-open:duration-180 data-[side=top]:[--pop-y:4px] data-starting-style:translate-y-(--pop-y) data-starting-style:scale-98 data-starting-style:opacity-0 data-ending-style:translate-y-(--pop-y) data-ending-style:scale-98 data-ending-style:opacity-0 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
             className,
           )}
           {...props}

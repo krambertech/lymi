@@ -6,6 +6,9 @@
     "@better-auth/expo": "1.7.7",
     "@expo-google-fonts/onest": "^0.4.2",
     "@expo/ui": "~57.0.22",
+    "@formatjs/intl-pluralrules": "6.3.15",
+    "@lingui/core": "6.9.1",
+    "@lingui/react": "6.9.1",
     "@lymi/client": "workspace:*",
     "@lymi/core": "workspace:*",
     "@lymi/design": "workspace:*",
@@ -18,11 +21,14 @@
     "expo-constants": "~57.0.21",
     "expo-crypto": "~57.0.3",
     "expo-dev-client": "~57.0.19",
+    "expo-dev-menu": "57.0.19",
     "expo-file-system": "~57.0.7",
     "expo-font": "~57.0.4",
     "expo-glass-effect": "~57.0.4",
     "expo-haptics": "~57.0.3",
+    "expo-image-picker": "~57.0.20",
     "expo-linking": "~57.0.12",
+    "expo-localization": "~57.0.2",
     "expo-network": "~57.0.2",
     "expo-router": "~57.0.25",
     "expo-secure-store": "~57.0.4",
@@ -36,6 +42,7 @@
     "react": "19.2.3",
     "react-native": "0.86.3",
     "react-native-gesture-handler": "~2.32.0",
+    "react-native-keyboard-controller": "1.21.9",
     "react-native-mmkv": "^4.3.2",
     "react-native-nitro-modules": "^0.37.1",
     "react-native-reanimated": "4.5.1",
@@ -49,6 +56,10 @@
   "devDependencies": {
     "@babel/core": "^7.29.7",
     "@expo/fingerprint": "0.20.13",
+    "@lingui/babel-plugin-lingui-macro": "6.9.1",
+    "@lingui/cli": "6.9.1",
+    "@lingui/format-po": "6.9.1",
+    "@lingui/metro-transformer": "6.9.1",
     "@types/react": "^19.3.0",
     "typescript": "~6.0.3"
   },
@@ -60,7 +71,8 @@
     "typecheck": "tsc --noEmit",
     "fingerprint": "fingerprint fingerprint:generate --platform ios",
     "contract:freeze": "FREEZE_PHONE_CONTRACT=1 pnpm --filter @lymi/web exec vitest run --project unit src/server/phone-contract.test.ts",
-    "e2e": "bash e2e/run.sh"
+    "e2e": "bash e2e/run.sh",
+    "i18n:extract": "lingui extract --clean"
   },
   "private": true,
   "license": "AGPL-3.0-only"

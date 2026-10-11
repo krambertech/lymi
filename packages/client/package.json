@@ -15,7 +15,8 @@
     "./recall-clock": "./src/recall-clock.ts",
     "./queued": "./src/queued.ts",
     "./review-day": "./src/review-day.ts",
-    "./analytics": "./src/analytics.ts"
+    "./analytics": "./src/analytics.ts",
+    "./card-input": "./src/card-input.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",

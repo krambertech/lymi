@@ -680,12 +680,12 @@ function Review() {
     return () => window.removeEventListener("keydown", onKey);
   }, [revealed, onGrade, takeAid, showAid, leave, add.open, writingHook, current]);
 
-  // An often-forgotten card with no hook offers one. Once decided it holds, so a refetch never
-  // moves or remounts it mid-card.
-  if (cardOffer.key !== showing) {
+  // An often-forgotten card with no hook offers one, in a deck the learner owns, since only the
+  // owner changes its cards. Once decided it holds, so a refetch never moves it mid-card.
+  if (cardOffer.key !== showing && (!current || decks.data)) {
     setCardOffer({
       key: showing,
-      offer: !!current?.slipping && !current.card.hook,
+      offer: !!current?.slipping && !current.card.hook && currentDeck?.role === "owner",
       parked: false,
     });
   }

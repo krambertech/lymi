@@ -36,6 +36,16 @@ A published deck may show its publisher-approved pictures and pronunciation on i
 
 Product success is repeated use of real material and retained recall, not the number of generated cards, public pages, or AI actions.
 
+## Surfaces
+
+Lymi has three surfaces: the web app, the phone app and the public site. They are one product, with the same rules, the same data and one design language, laid out for the screen and the input each one has.
+
+- The phone leads the daily jobs: reviewing in the evening, glancing at what is due, and catching a word while the lesson is fresh. It also reaches the learner outside the app, through a widget, the Lock Screen, controls, sharing from other apps and one reminder.
+- The web leads the jobs that want a keyboard and room: turning a lesson into cards, tidying a deck, reading Insights at length, and setup.
+- The site is where a visitor meets Lymi and finds a published deck.
+
+Every learning feature reaches both apps, and the web may ship first with a linked phone issue. Five setup jobs stay on the web, and the phone links to them: import, export, API keys and connected apps, publishing, and deck reports. A setup job moves to the phone once learners reach for it there. [ADR 0030](docs/adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)
+
 ## Daily Review Goal
 
 The daily review goal and the streak are one mechanic. The learner chooses how many recall attempts they want to complete per learner-local day. Reaching that number satisfies the day's streak goal; if at least one review is available but fewer than the goal, completing all available reviews also satisfies it without pulling future cards forward.
@@ -70,7 +80,7 @@ Brand-only appearances do not expose learner state. The app icon, login, and pub
 
 Voice is plain and friendly. It says "Daily goal reached" when the chosen number is complete and "Nothing left today" when no useful reviews remain, not "Congratulations!" It counts cards, not points. It never nags. Undo is everywhere, because cheap mistakes are most of what "delightful" means in a review app.
 
-Playfulness is allowed in four places, each tied to honest product state: the flame growing and sparking after a saved review, the stronger rise when the daily goal is complete, seven small lights for the last seven days, and the Undo toast. Forgot feeds the flame just as Easy does because both are repetitions. Everywhere else the interface is quiet. The lantern and what it lights are the only things that glow; every other surface is quiet, flat by day and lifted only slightly at night.
+Playfulness is allowed in four places, each tied to honest product state: the flame growing and sparking after a saved review, the stronger rise when the daily goal is complete, seven small lights for the last seven days, and the Undo toast. Forgot feeds the flame just as Easy does because both are repetitions. On the phone these moments can also be felt: a haptic answers every touch that changes state, and one sound marks the daily goal, which the learner can turn off. Everywhere else the interface is quiet. The lantern and what it lights are the only things that glow; every other surface is quiet, flat by day and lifted only slightly at night.
 
 ## Anti-references
 
@@ -88,7 +98,7 @@ Playfulness is allowed in four places, each tied to honest product state: the fl
 3. **Show what the AI did.** Anything the AI wrote carries its field source, so AI text is never mistaken for the lesson. Enrichment fills only empty fields and never overwrites text. A card an integration adds is an ordinary card from the moment it lands, and Activity lists the write so the learner can inspect, edit or archive it.
 4. **Standard controls, one symbol.** Buttons, inputs, chips and lists look like what they are. The lantern is the single piece of illustration in the app, and it appears at full size only where there is nothing else to look at.
 5. **Cheap mistakes.** Every destructive or scheduling action can be undone within a few seconds. Archive instead of delete. Progress is never lost to a wrong tap.
-6. **Same app on both screens.** Desktop and phone are the same product with different layouts, not a main app and a companion. Review continuity across devices is a feature, not a sync detail.
+6. **Same app on both screens.** Desktop and phone are the same product with different layouts, not a main app and a companion. Review continuity across devices is a feature, not a sync detail. Setup is the one job the phone hands to the web.
 
 ## Accessibility & Inclusion
 
@@ -96,7 +106,7 @@ Playfulness is allowed in four places, each tied to honest product state: the fl
 - Light and dark themes are both first-class. The app follows the OS unless the user picks one. Dark is a warm room lit by the lantern, not black.
 - All motion respects `prefers-reduced-motion`. The flame's flicker, its breath and spark after a review, and its rise at the goal each have a still alternative: the flame takes its new size and halo at once, and no spark plays.
 - Everything works from the keyboard on desktop: grading (1 to 4), reveal (Space), add (N), review (R), search (/).
-- Tap targets are at least 44 px on the phone. Grade buttons are 72 px tall.
+- Tap targets are at least 44 px on the phone. Grade buttons are 72 px tall on the web and 80 pt, nearly square, in the phone app.
 - Inputs are 16 px or larger so iOS does not zoom.
 - Status is never colour alone. "New", "Learning" and "Known" carry a label and, where colour is used, the state's icon.
 - Audio has a visible control and never autoplays.

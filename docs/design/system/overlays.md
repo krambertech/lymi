@@ -56,6 +56,8 @@ A place is a page that opens over the screen the learner was on: a word, the str
 - On touch it fills the screen, arrives from the end edge and leaves by back, which names the screen under it. The phone has no X anywhere, and the motion says how to leave: from the side means back, from below means a drawer to swipe down.
 - On a desktop the same place is a side sheet at the end edge (`placement="end"`), a centred dialog, or a panel beside its list when both fit, and ends in an X.
 
+The phone app keeps this rule with iOS's own navigation: a place is pushed from the side, a sheet rises from below, and a review covers the screen ([phone.md](phone.md#how-a-screen-arrives)).
+
 `PlaceBar` in `components/layout/place-bar.tsx` is its first line in every shape and reads the shape from the `Dialog` around it. A view inside a place, such as the daily goal in the streak, puts its own back in the same slot. In a dialog or sheet the bar can carry the view's own title, as the streak and its daily goal do; on the whole screen the bar is only the way back. The rules with pictures are on the design system's Layout page.
 
 ## Menus

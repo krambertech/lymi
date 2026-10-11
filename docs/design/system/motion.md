@@ -67,7 +67,7 @@ Reveal is the one choreographed moment of a card, built with Motion.
 
 1. Before reveal there is no grade strip and the card takes the room. An unrevealed card is the word alone.
 2. On reveal the word glides up to make room over 340 ms, and the strip opens over the same 340 ms while the card shrinks, so the glide and the shrink read as one movement.
-3. The rule draws across from the start edge over 360 ms.
+3. The rule draws across from the start edge over 360 ms as a line of the lantern's light, in `amber` with its glow, then cools to `edge-2` over the next 700 ms. This is the wick, Lymi's one gesture on every card. Under reduced motion the rule appears as a hairline.
 4. The meaning, example and sources rise 10 px out of a 4 px blur over 260 ms, 50 ms apart.
 5. The four grade controls rise 10 px over 220 ms, 35 ms apart, starting 80 ms after the strip begins to open.
 
@@ -94,7 +94,7 @@ The end of a review is the other choreographed moment, and the one place the int
 | At | What happens |
 | --- | --- |
 | 0 | The last card steps back 8 px, to 0.98, over 200 ms, while the lantern leaves the header for the middle of the screen on a 600 ms spring and rises to full on the way. |
-| 280 ms | The lantern lights the room: a pool of its glow blooms behind it over 1.6 s, then breathes on the flicker's loop. Embers lift off the flame once, as many as the review earned: 3 for one review, 14 for a goal's worth, 20 at most. |
+| 280 ms | The lantern lights the room: a pool of its glow blooms behind it over 1.6 s and reaches the edges of the screen, or of the window behind the column on a desktop, then breathes on the flicker's loop. Embers lift off the flame once, as many as the review earned: 3 for one review, 14 for a goal's worth, 20 at most. |
 | 640 ms | The heading rises out of a blur. |
 | 820 ms | The count rises and rolls up from where the last end left the day. |
 | 1.18 s | The seven lights switch on, 70 ms apart. |
@@ -102,6 +102,10 @@ The end of a review is the other choreographed moment, and the one place the int
 | 2 s | The ways on arrive, 90 ms apart. |
 
 The first tap or key finishes the sequence at once, so it is never a wait. Choosing Continue or Review forgotten carries the lantern back to the header.
+
+## Numbers
+
+A count that changes in front of the learner rolls digit by digit, like a departure board, rather than snapping: the due count, the streak, today's reviews, and the count that ends a review. Each digit settles on a spring with a trace of overshoot, and a digit that does not change stays still. Under reduced motion the new number appears at once.
 
 ## The auth connection
 
@@ -114,6 +118,7 @@ Every animation ships a reduced version. Under `prefers-reduced-motion`:
 - reveal, completion, a card, a toast, the spinner and the phone drawer crossfade with no travel, and the grade strip closes at once;
 - the lantern does not travel at the end of a review, there are no embers or breathing, and the screen crossfades with its final numbers in place;
 - the flame holds still and takes each new size at once, with no breath and no spark;
+- the wick's rule appears as a hairline, and a rolling number shows its new value at once;
 - the pointing hand appears without tapping;
 - the list hover fades in on the row under the pointer instead of sliding;
 - a segmented plate fades in at its new option, a switch thumb takes its new place at once, and a radio dot and a tick fade in where they are;

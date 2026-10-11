@@ -136,11 +136,14 @@ function PrivacyPolicyContent() {
       </p>
       <p>
         <Trans>
-          We also use PostHog’s EU service to understand product use and investigate errors. We send
-          fixed action labels, counts and review grades with an opaque account identifier that
-          connects activity across devices. Error reports contain the error type and technical stack
-          frames; we remove error messages and other context. We do not send card content, email
-          addresses, names, credentials or exact requested URLs, and we do not record sessions.
+          With your permission, we use PostHog’s EU service to understand product use. We send page
+          categories, published deck slugs, fixed action labels, counts, review grades, app language
+          and limited campaign details. An opaque visitor identifier connects visits across our site
+          and app, and links them to your opaque account identifier when you sign in. We also use
+          filtered error monitoring independently of analytics consent: error reports contain the
+          error type and technical stack frames, with messages and other context removed. We do not
+          send card content, email addresses, names, credentials or private requested URLs, and we
+          do not record sessions.
         </Trans>
       </p>
 
@@ -304,9 +307,13 @@ function PrivacyPolicyContent() {
       </p>
       <p>
         <Trans>
-          PostHog keeps its browser state in memory for the current page and does not set analytics
-          cookies or store an analytics identifier in local storage. Its reports still use the
-          opaque account identifier while you are signed in.
+          We remember your analytics choice in a first-party cookie shared between lymi.app and
+          my.lymi.app. If you allow analytics, first-party cookies also store your visitor
+          identifier and limited first-visit attribution for up to six months. No analytics
+          identifier is stored before you agree. Change or withdraw your choice through Privacy
+          preferences in the site footer or app Settings. Declining clears analytics identifiers on
+          that browser. Your account choice also governs product analytics from connected apps and
+          background work; changing the account choice requires a connection to Lymi.
         </Trans>
       </p>
 

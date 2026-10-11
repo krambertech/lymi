@@ -304,6 +304,7 @@ export async function addPublishedDeck(
   const pinned = chosen && chosen !== publication.meaningLanguage ? chosen : undefined;
   const { role } = await join(ctx, publication.deckId, {
     publicationId: publication.id,
+    publicationSlug: publication.slug,
     meaningLanguage: pinned,
   });
   return { deckId: publication.deckId, role };

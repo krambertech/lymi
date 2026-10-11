@@ -14,6 +14,7 @@ import type { ZodType } from "zod";
 import type { AppEnv } from "./index";
 import { posthogEnabled, productAnalytics, reportServerException } from "./posthog";
 import { requireLearner, requireScopeForWrites } from "./principal";
+import { analyticsContextFor } from "./services/analytics-context";
 import { type ServiceContext, ServiceError } from "./services/context";
 
 /** Build the service context for the caller of this request. */
@@ -23,7 +24,16 @@ export function ctxOf(c: Context<AppEnv>): ServiceContext {
     userId: c.get("user").id,
     actor: c.get("actor"),
     analytics: c.env
-      ? productAnalytics(c.env, c.get("user").id, (work) => c.executionCtx.waitUntil(work))
+      ? productAnalytics(
+          c.env,
+          c.get("user").id,
+          (work) => c.executionCtx.waitUntil(work),
+          analyticsContextFor(
+            c.get("db"),
+            c.get("user").id,
+            c.get("actor") === "user" ? c.req.raw.headers : undefined,
+          ),
+        )
       : undefined,
     client: c.get("client"),
     clientName: c.get("clientName"),

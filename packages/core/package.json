@@ -12,7 +12,9 @@
     "./catalog": "./src/catalog.ts",
     "./publication-media": "./src/publication-media.ts",
     "./telemetry": "./src/telemetry.ts",
-    "./simulation": "./simulation/index.ts"
+    "./simulation": "./simulation/index.ts",
+    "./analytics": "./src/analytics.ts",
+    "./analytics-review-session": "./src/analytics-review-session.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",

@@ -1,0 +1,54 @@
+# Product analytics
+
+Understand how a visitor becomes a learner and completes a useful review. EU PostHog project 292417 serves both production domains. The [growth dashboard](https://eu.posthog.com/project/292417/dashboard/1013943) uses `review_graded` for weekly learners and retention; preserve its mode, grade and accepted-server-write meaning.
+
+## Consent and identity
+
+The custom banner offers a primary Accept cookies button and a visible, one-click secondary Decline button, with PostHog named in expandable details. Privacy preferences are available in product Settings and the public footer. English, Ukrainian and Russian share the same behavior. No visitor identifier or attribution is persisted before permission. The necessary choice cookie remembers either answer for 180 days; consent version 1 expires or fails closed when malformed.
+
+The three manual cookies use `Domain=lymi.app`, `Path=/`, `Secure` and `SameSite=Lax` in production: `lymi_analytics_consent` stores version, boolean choice and timestamp; `lymi_analytics_identity` stores an anonymous ID or opaque account ID; `lymi_analytics_attribution` stores approved first-touch metadata. The SDK persists only in memory. Decline, sign-out and account switching clear identity and attribution. Cookie changes are checked before capture and when a tab returns to the foreground.
+
+Anonymous opt-in visits have no person profile. After authenticated consent is saved, `identify` links that visitor to the Lymi account ID; browser and server producers use that same ID. Profiles contain only `ui_locale` and a positive `is_internal` flag for explicitly configured internal IDs. The confirmed personal and work accounts and the explicitly named Spark onboarding test account are listed in `INTERNAL_ACCOUNT_IDS`; use a local account lookup to extend it, never send the lookup's names or addresses to PostHog. An absent internal flag never overwrites a manually classified profile.
+
+A learner-only, versioned `/api/settings/analytics-consent` endpoint saves account consent. GET and PUT permit credentialed requests only from the two canonical origins, without granting cross-origin access to other APIs. Newer timestamps win atomically. Both surfaces resolve the account before capture; signed-in learners also require saved account permission. A newer account withdrawal also clears browser tracking. Anonymous choice can be recorded without sign-in. Offline decline stops this browser immediately and visibly reports an account-save failure; reconnect retries in the product. Connected apps and Workflows stop only after the account withdrawal reaches the server.
+
+Every server delivery reloads account consent and expires it after 180 days. Browser HTTP events also require a current allowed choice cookie; API/MCP and durable work use the saved account choice. Error monitoring works independently and strips private messages, URLs and context before delivery. Session replay, click autocapture, surveys, feature flags, geolocation and performance autocapture remain off.
+
+## Contract and producers
+
+`packages/core/src/analytics.ts` owns the typed event catalog, permitted producers and Zod property allowlists. `packages/client/src/analytics.ts` is a browser-only export, separate from the mobile client's root. `apps/web/src/server/posthog.ts` adapts accepted service outcomes. Call `captureAnalytics` for a browser interaction and `track(ctx.analytics, event)` for a committed server outcome; never call PostHog directly from a screen or service. Every delivered event has `ui_locale` (`en`, `uk`, `ru`), `surface`, and `schema_version=1`. Background locale uses the account preference, then English; browser events use the active document language.
+
+Page properties contain approved routes, with private dynamic IDs replaced by `:item`. Queries and fragments are omitted. First-touch attribution stores that route, an external referrer hostname and bounded alphanumeric `utm_source`, `utm_medium`, `utm_campaign` labels. Search terms, `utm_term`, `utm_content`, auth tokens, names, emails, private card/deck IDs, card content, MCP arguments, responses and prompts are excluded. The adapter also removes SDK-generated top-level person properties, including initial URLs; approved profile fields remain inside the sanitized event properties.
+
+| Event | Owner and firing condition |
+| --- | --- |
+| `$pageview` | Browser initial load and committed product navigation, deduplicated on initialization while actual navigations retain their counts; `$pathname`, `$current_url` and `$host` contain only safe production paths. |
+| `$identify`, `app_opened` | Browser account permission confirmed; identify links anonymous visits and app_opened fires once per product page lifetime/account. |
+| `signed_up` | Auth account creation, before email verification: `method` and approved first-touch attribution. |
+| `onboarding_finished` | Compatible server outcome after welcome is saved, with a fixed learning kind, `joined` for an account arriving with a deck, or `skipped`; no typed language answer is collected. |
+| `signed_in` | Auth session creation; do not interpret as every explicit sign-in click or as a session refresh. |
+| `review_graded` | Accepted server grade: unchanged `mode`, `grade`; replay of the same review ID adds no event. |
+| `cards_added` | Committed additions, excluding duplicate cards and edits: `source`, `count`. `typed`, `api`, `ai_mcp`, `anki`, `mochi`, `lymi` are implemented; CSV/Quizlet remain reserved until adapters exist. `ai_mcp` denotes the channel, not authorship. |
+| `card_added` | Legacy addition event retained for existing consumers; never sum with `cards_added`. |
+| `welcome_step_viewed`, `welcome_step_finished` | Browser observes current guide step and progression for `deck`/`cards`; first accepted non-import grade finishes `review` on the server. The welcome flow uses `hello`, `kind`, `language`, `goal`, `start`; an account arriving with a deck uses only `hello` and `goal`; progression and saved completion fire step outcomes, and a saved Skip fires its current step with `skipped=true`. The server emits `setup` once for overall completion or Skip, with `skipped=true` only when both learning kind and daily goal are absent. Existing progress on mount is not replayed as completion. |
+| `empty_state_option_picked` | Explicit guide or empty-library action; fixed option, never displayed text. Reserved options are emitted only when their UI exists. |
+| `import_started` | Import successfully claimed for writing: selected expected `card_count`, source and adapter. |
+| `import_finished`, `import_failed` | Terminal transition: actual newly added `card_count`, including partial failed work. Legacy `import_finished(outcome=failed)` accompanies `import_failed`; success has `outcome=done`. Retry does not duplicate terminal delivery. |
+| `daily_goal_set` | Saved first choice or changed value: `value`, `is_change`; not an optimistic click or refetch. |
+| `reminder_prompt_shown`, `reminder_prompt_accepted` | A browser permission request from default permission, then its granted result. Permission acceptance is not proof the subscription saved; failures remain separate. |
+| `public_deck_viewed` | Opted-in browser view of a published slug, with active locale; separate from aggregate publisher request counts. |
+| `add_to_lymi_clicked`, `deck_added` | Browser add intent, then server's new published membership. Existing membership is not another addition. |
+| `first_session_started` | First accepted non-import grade on a published deck, once per account/deck; includes public `deck_slug`. Imported history does not activate the learner. |
+| `review_session_finished`, `review_session_abandoned` | Browser review leg: `session_id`, first-session eligibility, net recall counts and fixed ending/reason. |
+| `mcp_tool` | MCP tool result: fixed tool name, success/error and elapsed milliseconds, with no request or response content. |
+| `enrichment_finished`, `deck_joined` | Existing server outcome contracts remain available. |
+
+A measured review leg begins when a card is presented. Finished legs end at a goal or confirmed empty queue and count net recall attempts since presentation, including repeated cards and subtracting Undo. Abandonment reports net `cards_done` against the frozen initial planned `card_count`; left, navigation and pagehide are observable exits. Continue starts another leg and does not retain first-session eligibility after actual work. An empty screen, failed refresh or offline exhaustion cannot manufacture a completion. Browser shutdown delivery is best effort; absence of abandonment proves nothing. These counts are attempts, not unique cards, and are distinct from accepted server grades queued offline.
+
+The first-review marker is stored separately from mutable/imported history, so retries and Undo do not repeat activation. Historical non-import reviews seed existing learners as already active. Marker errors never roll back grades. Account deletion cascades markers and settings with the account.
+
+## Extend and verify
+
+For each feature, state the measurement question in the PR's Instrumentation section, reuse or add a catalog event, document its owner and exact firing condition here, and test allowed properties plus meaningful retry/failure behavior. Use fixed categories and counts rather than user-entered strings. Keep outcome ownership on the server and interaction ownership in the browser. If no event answers a useful question, state why. Add properties compatibly; a changed meaning needs a new event or explicit schema migration.
+
+Run contract/identity tests, service tests and the repository gates. Development and previews never send to PostHog. Before using a production funnel, verify one opted-in journey in live ingestion: anonymous public page → identify → committed membership/cards → accepted review, matching distinct IDs and locale; also verify decline/withdrawal. Do not infer live delivery from a passing test or a green deploy. Filter person `is_internal=true` out of growth charts. Project timezone is Europe/Tallinn. Source maps and native mobile instrumentation remain separate work; shared contracts can be reused by a React Native adapter without importing this DOM-based browser module.

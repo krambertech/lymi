@@ -149,6 +149,7 @@ export async function join(
   opts: {
     invitationId?: string | undefined;
     publicationId?: string | undefined;
+    publicationSlug?: string | undefined;
     /** The edition being added. Pinned on the membership and never moved again. ADR 0015. */
     meaningLanguage?: string | undefined;
   } = {},
@@ -281,6 +282,8 @@ export async function join(
   await spendNamedInvitations(db, deckId, userId, now);
   if (after.id === membershipId && after.joinedAt.getTime() === now.getTime()) {
     track(ctx.analytics, { name: "deck_joined" });
+    if (opts.publicationSlug)
+      track(ctx.analytics, { name: "deck_added", deck_slug: opts.publicationSlug });
   }
   return { ok: true as const, role: "learner" as const };
 }

@@ -700,6 +700,9 @@ msgstr "Близько {0, plural, one {# хвилини} few {# хвилин} m
 msgid "About this deck"
 msgstr "Про колоду"
 
+msgid "Accept cookies"
+msgstr "Прийняти файли cookie"
+
 msgid "Access"
 msgstr "Доступ"
 
@@ -881,6 +884,9 @@ msgstr "Застосунок"
 
 msgid "an app with no address"
 msgstr "застосунок без адреси"
+
+msgid "Analytics details"
+msgstr "Про аналітику"
 
 msgid "Animated images can’t be used. Choose a still image."
 msgstr "Анімовані зображення не підходять. Вибери нерухоме."
@@ -1177,6 +1183,9 @@ msgstr "Змінити мови"
 
 msgid "Change photo"
 msgstr "Змінити фото"
+
+msgid "Change your choice in Privacy preferences. Your account choice also applies to analytics from connected apps and background work."
+msgstr "Зміни свій вибір у налаштуваннях приватності. Вибір для твого акаунта також поширюється на аналітику підключених застосунків і фонових дій."
 
 msgid "Changes appear right away and are listed in Activity. You can edit or archive any card."
 msgstr "Зміни з’являються одразу й потрапляють в Активність. Будь-яку картку можна редагувати або архівувати."
@@ -1499,6 +1508,9 @@ msgstr "Не вдалося зберегти фото. Спробуй ще ра�
 msgid "Couldn’t save the reminder. Check your connection and try again."
 msgstr "Не вдалося зберегти нагадування. Перевір з’єднання й повтори спробу."
 
+msgid "Couldn’t save your account’s choice. Check your connection and try again."
+msgstr "Не вдалося зберегти вибір для твого акаунта. Перевір з’єднання та спробуй ще раз."
+
 msgid "Couldn’t save your answers. Check your connection and try again."
 msgstr "Не вдалося зберегти відповіді. Перевір з’єднання і спробуй ще раз."
 
@@ -1637,6 +1649,9 @@ msgstr "Колоди від Lymi. Додай одну — вивчай її св
 
 msgid "Decks to review"
 msgstr "Колоди до повторення"
+
+msgid "Decline"
+msgstr "Відхилити"
 
 msgid "Delete “{seriesName}”?"
 msgstr "Видалити «{seriesName}»?"
@@ -3056,6 +3071,9 @@ msgstr "Правила й підтримка"
 msgid "Position your photo"
 msgstr "Розташуй фото"
 
+msgid "PostHog processes analytics in its EU cloud. With your permission, we link visits across lymi.app and my.lymi.app and to your account when you sign in."
+msgstr "PostHog обробляє аналітику у своїй хмарі в ЄС. З твого дозволу ми пов’язуємо відвідування lymi.app і my.lymi.app, а після входу — і з твоїм акаунтом."
+
 msgid "Press Enter after each tag."
 msgstr "Натискай Enter після кожного тегу."
 
@@ -3070,6 +3088,9 @@ msgstr "Попередній місяць"
 
 msgid "Privacy"
 msgstr "Конфіденційність"
+
+msgid "Privacy preferences"
+msgstr "Налаштування приватності"
 
 msgid "Private"
 msgstr "Приватна"
@@ -3119,6 +3140,9 @@ msgstr "«Читання» переглядає колоди й картки. «
 
 msgid "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 msgstr "Прочитай <0>політику конфіденційності</0> Lymi або звернися до <1>служби підтримки</1>."
+
+msgid "Read privacy policy"
+msgstr "Політика приватності"
 
 msgid "Read the guide"
 msgstr "Прочитати посібник"
@@ -4120,8 +4144,14 @@ msgstr "Переглянути картку"
 msgid "Visibility"
 msgstr "Видимість"
 
+msgid "We collect page categories, actions, counts, review grades, app language and campaign details. We don’t send your card content, name or email, and we don’t record sessions."
+msgstr "Ми збираємо категорії сторінок, дії, кількості, оцінки повторень, мову застосунку й дані кампаній. Ми не надсилаємо вміст твоїх карток, ім’я чи електронну адресу та не записуємо сеанси."
+
 msgid "We signed out your other devices."
 msgstr "Ми вийшли з акаунта на інших пристроях."
+
+msgid "We use optional analytics cookies to understand how you use Lymi and improve it. You can change your choice anytime."
+msgstr "Ми використовуємо необов’язкові файли cookie для аналітики, щоб розуміти, як ти користуєшся Lymi, і покращувати його. Ти можеш змінити свій вибір будь-коли."
 
 msgid "We’ll email you a link to set a new one."
 msgstr "Надішлемо на пошту посилання, щоб задати новий."
@@ -4298,6 +4328,9 @@ msgstr "На сьогодні все"
 
 msgid "You’re done for today."
 msgstr "На сьогодні все."
+
+msgid "Your analytics choice and visitor identifier are stored for up to six months. Declining clears analytics identifiers on this browser. Necessary login cookies and filtered error monitoring work independently."
+msgstr "Твій вибір щодо аналітики та ідентифікатор відвідувача зберігаються до шести місяців. Відмова очищає ідентифікатори аналітики в цьому браузері. Необхідні файли cookie для входу та моніторинг помилок з відфільтрованими даними працюють незалежно."
 
 msgid "Your deck"
 msgstr "Твоя колода"

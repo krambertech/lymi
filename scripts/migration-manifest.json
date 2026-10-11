@@ -179,6 +179,10 @@
     {
       "name": "0044_serious_magus.sql",
       "sha256": "4401101c147e5f5b69603063a956225f8eca225cdda9f85f0d2ea8d1baba17ad"
+    },
+    {
+      "name": "0045_messy_the_fury.sql",
+      "sha256": "73774b63ef13518f9c9dd262bc3aa7a0e8338e9d5cf7582db769d79d9341ec0c"
     }
   ]
 }

@@ -14,6 +14,7 @@ import {
   ROUNDS,
   type Round,
 } from "@lymi/core";
+import { ReviewSessionTracker } from "@lymi/core/analytics-review-session";
 import { lanternFor } from "@lymi/design";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
@@ -63,6 +64,7 @@ import {
 } from "../lib/review-complete";
 import { itemKey } from "../lib/review-modes";
 import { shortQuote } from "../lib/short-quote";
+import { captureAnalytics } from "../lib/telemetry";
 import { useWordHistory } from "../lib/use-word-history";
 import {
   GradeBar,
@@ -442,6 +444,67 @@ function Review() {
   // Running out offline, or after a failed refresh, proves nothing about the day unless the goal is met.
   const unconfirmed = result === "unchecked";
   const end = result === "unchecked" ? null : result;
+  const sessionTracker = useRef<ReviewSessionTracker | null>(null);
+  if (!sessionTracker.current)
+    sessionTracker.current = new ReviewSessionTracker(
+      (event) => {
+        if (event.name === "review_session_finished") captureAnalytics(event.name, event);
+        if (event.name === "review_session_abandoned") captureAnalytics(event.name, event);
+      },
+      () => crypto.randomUUID(),
+    );
+  const sessionFirst = useRef<boolean | null>(null);
+  useEffect(() => {
+    if (sessionFirst.current === null && streakSettled && streak.data)
+      sessionFirst.current = streak.data.reviewedDays === 0 && streak.data.today.attempts === 0;
+    const tracker = sessionTracker.current;
+    if (!tracker || !leg || sessionFirst.current === null) return;
+    const key = `${leg.date}:${leg.kind}:${leg.from}`;
+    if (current && !paused)
+      tracker.update(key, {
+        cardsDone: legDone,
+        cardCount:
+          drawLeg && leg.kind === "draw" && leg.until !== null
+            ? Math.min(legSize, leg.until - leg.from)
+            : legSize,
+        first: sessionFirst.current,
+      });
+    else if (stopped) {
+      tracker.update(
+        key,
+        { cardsDone: legDone, cardCount: legSize, first: sessionFirst.current },
+        false,
+      );
+      if (paused) tracker.abandon("left");
+      else if (end && (ending === "goal" || confirmed))
+        tracker.finish(ending === "goal" ? "goal" : "empty");
+    }
+  }, [
+    leg,
+    current,
+    paused,
+    stopped,
+    end,
+    ending,
+    confirmed,
+    legDone,
+    legSize,
+    drawLeg,
+    streakSettled,
+    streak.data,
+  ]);
+  const sessionMount = useRef(0);
+  useEffect(() => {
+    const mount = ++sessionMount.current;
+    const leaving = () => sessionTracker.current?.abandon("pagehide");
+    window.addEventListener("pagehide", leaving);
+    return () => {
+      window.removeEventListener("pagehide", leaving);
+      queueMicrotask(() => {
+        if (sessionMount.current === mount) sessionTracker.current?.abandon("navigation");
+      });
+    };
+  }, []);
   const failed = round ? roundQueue.isError && !roundQueue.data : draw.isError && !draw.data;
 
   const counts = !!end?.satisfied;

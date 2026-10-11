@@ -1,10 +1,17 @@
-import { test as base, type Page } from "@playwright/test";
+import {
+  type Browser,
+  type BrowserContext,
+  type BrowserContextOptions,
+  test as base,
+  type Page,
+} from "@playwright/test";
 
 export * from "@playwright/test";
 
 /** Playwright's test, with the end-of-review blur off in every page: it stalls WebKit without a GPU. docs/testing.md. */
 export const test = base.extend({
   context: async ({ context }, use) => {
+    await declineAnalytics(context);
     await context.addInitScript(() => {
       const sheet = new CSSStyleSheet();
       sheet.replaceSync(":root { --seq-filter: none; }");
@@ -13,6 +20,29 @@ export const test = base.extend({
     await use(context);
   },
 });
+
+async function declineAnalytics(context: BrowserContext): Promise<void> {
+  await context.addCookies([
+    {
+      name: "lymi_analytics_consent",
+      value: encodeURIComponent(
+        JSON.stringify({ version: 1, allowed: false, updated_at: Date.now() }),
+      ),
+      domain: "localhost",
+      path: "/",
+      sameSite: "Lax",
+    },
+  ]);
+}
+
+export async function newTestContext(
+  browser: Browser,
+  options?: BrowserContextOptions,
+): Promise<BrowserContext> {
+  const context = await browser.newContext(options);
+  await declineAnalytics(context);
+  return context;
+}
 
 /** The product's persisted query cache, as the JSON `lib/query-persister.ts` keeps in IndexedDB. */
 export function persistedCache(page: Page): Promise<string> {

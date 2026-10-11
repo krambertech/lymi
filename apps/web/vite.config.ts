@@ -9,6 +9,7 @@ import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import { configDefaults, type TestProjectConfiguration } from "vitest/config";
 import type { BrowserInstanceOption } from "vitest/node";
+import { e2eProductUrl, e2eSiteUrl } from "../../e2e/ports.mjs";
 import { e2ePublisherEmails } from "../../e2e/settings.mjs";
 import { mcpApp } from "./mcp-app.build.ts";
 
@@ -72,8 +73,8 @@ export default defineConfig({
               inspectorPort: false,
               config: {
                 vars: {
-                  PUBLIC_SITE_URL: "http://localhost:4174",
-                  PRODUCT_URL: "http://localhost:4173",
+                  PUBLIC_SITE_URL: e2eSiteUrl,
+                  PRODUCT_URL: e2eProductUrl,
                   PUBLISHER_EMAILS: e2ePublisherEmails.join(","),
                   BETTER_AUTH_SECRET: "lymi-e2e-secret-at-least-thirty-two-characters",
                   GOOGLE_CLIENT_ID: "e2e-client-id",
@@ -148,7 +149,8 @@ export default defineConfig({
   optimizeDeps: {
     include: ["motion/react", "react", "react-dom", "react-dom/client", "posthog-js/no-external"],
   },
-  server: { port: 5173 },
+  // E2E preflights must reach the Worker’s credentialed CORS policy.
+  server: { port: 5173, ...(isE2E && { cors: false }) },
   test: {
     projects: (
       [

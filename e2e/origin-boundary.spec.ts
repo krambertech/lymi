@@ -1,5 +1,5 @@
 import { e2eProductUrl, e2eSiteUrl } from "./ports.mjs";
-import { expect, test } from "./test";
+import { expect, newTestContext, test } from "./test";
 
 const publicSite = e2eSiteUrl;
 
@@ -94,7 +94,7 @@ test("the site keeps product APIs off its origin and sends /join to sign-up", as
 test("clearing an installed product origin recovers from stale browser storage", async ({
   browser,
 }) => {
-  const staleContext = await browser.newContext({ baseURL: e2eProductUrl });
+  const staleContext = await newTestContext(browser, { baseURL: e2eProductUrl });
   const page = await staleContext.newPage();
   await page.goto("/login?dev=1");
   await page.evaluate(async () => {
@@ -110,7 +110,7 @@ test("clearing an installed product origin recovers from stale browser storage",
   // An unregistered worker can keep controlling its current document until that client closes.
   // A fresh context represents clearing all site data and reopening the browser or installed app.
   await staleContext.close();
-  const recoveredContext = await browser.newContext({ baseURL: e2eProductUrl });
+  const recoveredContext = await newTestContext(browser, { baseURL: e2eProductUrl });
   const recoveredPage = await recoveredContext.newPage();
 
   await recoveredPage.goto("/");

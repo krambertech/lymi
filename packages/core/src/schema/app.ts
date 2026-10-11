@@ -224,6 +224,8 @@ export const userSettings = sqliteTable("user_settings", {
     .references(() => user.id, { onDelete: "cascade" }),
   /** The language of the interface and reminders. Null until the learner has chosen. */
   appLanguage: text("app_language"),
+  analyticsConsent: integer("analytics_consent", { mode: "boolean" }),
+  analyticsConsentUpdatedAt: integer("analytics_consent_updated_at", { mode: "timestamp_ms" }),
   /** The language meanings are written in. Written from the app language, never on its own. */
   meaningLanguage: text("meaning_language").notNull().default("en"),
   /** Recall attempts that satisfy a learner-local day's streak goal. 50 is the suggestion. */
@@ -245,6 +247,14 @@ export const userSettings = sqliteTable("user_settings", {
   /** The language they said they are learning: a BCP 47 tag, or the name they typed. */
   learningLanguage: text("learning_language"),
   ...timestamps,
+});
+
+export const analyticsReviewStarts = sqliteTable("analytics_review_starts", {
+  key: text("key").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  firstReviewId: text("first_review_id"),
 });
 
 /**

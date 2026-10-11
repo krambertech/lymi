@@ -1,5 +1,5 @@
-import { expect, type TestInfo, test } from "@playwright/test";
 import { createAccountThroughDevForm, startAsTestLearner } from "./auth";
+import { expect, newTestContext, type TestInfo, test } from "./test";
 
 /** An email on no allowlist and not a local persona, so only the published deck can admit it. */
 function stranger(testInfo: TestInfo, who: string) {
@@ -51,7 +51,7 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
     expect(meta).not.toMatch(/tere hommikust|good morning/);
   });
 
-  const visitor = await (await browser.newContext()).newPage();
+  const visitor = await (await newTestContext(browser)).newPage();
 
   await test.step("a signed-out visitor signs up from the add page", async () => {
     await visitor.goto(`/add/${slug}?dev=1`);
@@ -104,7 +104,7 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
     ).toBeVisible();
     await expect(visitor.getByRole("link", { name: "Open deck" })).toBeVisible();
 
-    const latecomer = await (await browser.newContext()).newPage();
+    const latecomer = await (await newTestContext(browser)).newPage();
     await latecomer.goto(`/add/${slug}?dev=1`);
     await expect(
       latecomer.getByRole("heading", { name: "This deck is no longer published" }),

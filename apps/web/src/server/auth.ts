@@ -4,6 +4,7 @@ import type { GenericEndpointContext } from "@better-auth/core";
 import { expo } from "@better-auth/expo";
 import { mcp } from "@better-auth/mcp";
 import { MIN_PASSWORD_LENGTH } from "@lymi/core";
+import { readConsent, signupAttribution } from "@lymi/core/analytics";
 import { and, eq, sql } from "@lymi/core/db";
 import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
@@ -16,6 +17,7 @@ import { schema } from "./db";
 import { type Bindings, DEV_EMAIL_DOMAIN, devToolsEnabled } from "./env";
 import { admissionFrom, attributes, cookieName } from "./join-cookie";
 import { productAnalytics, trackProductEvent } from "./posthog";
+import { analyticsContextFor } from "./services/analytics-context";
 import { audit } from "./services/audit";
 import {
   avatarRow,
@@ -27,6 +29,7 @@ import { ServiceError } from "./services/context";
 import { accountEmailLanguage, sendAccountEmail } from "./services/email";
 import { joinThroughLink } from "./services/invitations";
 import { addPublishedDeck } from "./services/publications";
+import { updateAnalyticsConsent } from "./services/settings";
 import {
   signedUpHere,
   signUpCookieAttributes,
@@ -303,7 +306,23 @@ export function createAuth(
           },
           // Remember the browser that signed up, so confirming from it keeps its password.
           after: async (user, context) => {
-            await trackProductEvent(env, user.id, { name: "signed_up" }, waitUntil);
+            const headers = headersOf(context);
+            const choice = readConsent(headers?.get("cookie") ?? "");
+            if (choice)
+              await updateAnalyticsConsent({ db, userId: user.id, actor: "user" }, choice).catch(
+                () => {},
+              );
+            await trackProductEvent(
+              env,
+              user.id,
+              {
+                name: "signed_up",
+                method: isGoogleCallback(context) ? "google" : "email",
+                ...signupAttribution(headers?.get("cookie") ?? ""),
+              },
+              waitUntil,
+              analyticsContextFor(db, user.id, headers),
+            );
             if (user.emailVerified) return;
             context?.setCookie(
               signUpCookieName(env.PRODUCT_URL),
@@ -331,7 +350,20 @@ export function createAuth(
           // Finish a join or an add that sign-in interrupted. A refused one still signs the
           // learner in; the join or add page then says why.
           after: async (session, context) => {
-            await trackProductEvent(env, session.userId, { name: "signed_in" }, waitUntil);
+            const headers = headersOf(context);
+            const choice = readConsent(headers?.get("cookie") ?? "");
+            if (choice)
+              await updateAnalyticsConsent(
+                { db, userId: session.userId, actor: "user" },
+                choice,
+              ).catch(() => {});
+            await trackProductEvent(
+              env,
+              session.userId,
+              { name: "signed_in" },
+              waitUntil,
+              analyticsContextFor(db, session.userId, headers),
+            );
             if (isGoogleCallback(context)) {
               // An unproved password was set by whoever typed the address first, who need not
               // be its owner, so Google's proof retires it. A password the owner had already
@@ -345,7 +377,12 @@ export function createAuth(
               db,
               userId: session.userId,
               actor: "user" as const,
-              analytics: productAnalytics(env, session.userId, waitUntil),
+              analytics: productAnalytics(
+                env,
+                session.userId,
+                waitUntil,
+                analyticsContextFor(db, session.userId, headers),
+              ),
             };
             try {
               if (admission.kind === "link") await joinThroughLink(ctx, admission.token);

@@ -5,6 +5,8 @@ import { Timestamp } from "./common";
 export const SettingsOut = z
   .object({
     userId: z.string(),
+    analyticsConsent: z.boolean().nullable(),
+    analyticsConsentUpdatedAt: Timestamp.nullable(),
     appLanguage: AppLanguage.nullable().meta({
       description:
         "The language of the interface and reminders. Null until the learner has chosen.",

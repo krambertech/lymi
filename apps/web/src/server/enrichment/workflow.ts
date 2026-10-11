@@ -13,6 +13,7 @@ import {
   settleEnrichment,
 } from "../services";
 import { track } from "../services/analytics";
+import { analyticsContextFor } from "../services/analytics-context";
 
 const STEP = {
   retries: { limit: 3, delay: "5 seconds", backoff: "exponential" },
@@ -44,7 +45,12 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
         );
         return;
       }
-      const analytics = productAnalytics(this.env, params.userId);
+      const analytics = productAnalytics(
+        this.env,
+        params.userId,
+        undefined,
+        analyticsContextFor(db, params.userId),
+      );
       const ctx = enrichmentContext(db, params, analytics);
       for (const [index, ids] of chunked(params.cardIds, CARDS_PER_CALL).entries()) {
         try {

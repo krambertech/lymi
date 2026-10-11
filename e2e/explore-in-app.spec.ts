@@ -1,6 +1,6 @@
 import { startAsTestLearner } from "./auth";
 import type { Page } from "./test";
-import { expect, test } from "./test";
+import { expect, newTestContext, test } from "./test";
 
 /**
  * One deck's tile on a shelf, found by its name. The tile's link wraps the whole group, so its
@@ -54,7 +54,7 @@ test("a learner adds a published deck from Explore without leaving the app", asy
     }
   });
 
-  const learner = await (await browser.newContext()).newPage();
+  const learner = await (await newTestContext(browser)).newPage();
   await startAsTestLearner(learner, testInfo, "explore");
 
   await test.step("Today's guide points a new learner to the ready-made decks in Explore", async () => {

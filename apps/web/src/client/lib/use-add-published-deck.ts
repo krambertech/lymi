@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "../components/ui/toast";
 import { ApiError, api } from "./api";
+import { captureAnalytics } from "./telemetry";
 
 /**
  * Adding a published deck, from wherever Explore offers it. The caller passes the edition the row
@@ -17,8 +18,10 @@ export function useAddPublishedDeck({ announce }: { announce: "toast" | "page" }
   const qc = useQueryClient();
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: ({ slug, edition }: { slug: string; name: string; edition: string }) =>
-      api.addPublishedDeck(slug, edition),
+    mutationFn: ({ slug, edition }: { slug: string; name: string; edition: string }) => {
+      captureAnalytics("add_to_lymi_clicked", { deck_slug: slug });
+      return api.addPublishedDeck(slug, edition);
+    },
     onSuccess: async ({ deckId }, { name }) => {
       // The deck's cards join the day's review. A cached queue would open the next review on the
       // old cards before its refetch begins, so it goes rather than going stale.

@@ -1,5 +1,5 @@
-import { expect, test } from "@playwright/test";
 import { e2eSiteUrl } from "./ports.mjs";
+import { expect, test } from "./test";
 
 /**
  * The site reads `e2e/fixtures/published-decks.sql`, which holds two live English decks on two

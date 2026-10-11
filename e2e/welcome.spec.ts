@@ -1,5 +1,5 @@
 import { startAsTestLearner } from "./auth";
-import { expect, test } from "./test";
+import { expect, newTestContext, test } from "./test";
 
 /**
  * Welcome: a new account answers three questions and is reviewing a ready-made deck in the
@@ -37,7 +37,7 @@ test("a new learner picks a language and a goal and starts reviewing a ready-mad
     expect(published.ok()).toBeTruthy();
   });
 
-  const learner = await (await browser.newContext()).newPage();
+  const learner = await (await newTestContext(browser)).newPage();
   await startAsTestLearner(learner, testInfo, "welcome", undefined, { welcomed: false });
 
   await test.step("Today sends a new account to Welcome", async () => {

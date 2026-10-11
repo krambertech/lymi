@@ -19,6 +19,7 @@ import {
   runContext,
   writeImportChunk,
 } from "../services";
+import { analyticsContextFor } from "../services/analytics-context";
 import { ImportFileError } from "./files";
 
 const STEP = {
@@ -45,7 +46,12 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
   async run(event: WorkflowEvent<ImportRunParams>, step: WorkflowStep) {
     const params = event.payload;
     const db = createDb(this.env.DB);
-    const analytics = productAnalytics(this.env, params.userId);
+    const analytics = productAnalytics(
+      this.env,
+      params.userId,
+      undefined,
+      analyticsContextFor(db, params.userId),
+    );
     const ctx = runContext(db, params, analytics);
     const uploads = this.env.IMPORTS;
     const id = params.importId;

@@ -31,6 +31,7 @@ import {
 } from "../components/ui/dropdown-menu";
 import type { DeckSummary, Series } from "../lib/api";
 import { groupDecks } from "../lib/library-groups";
+import { captureAnalytics } from "../lib/telemetry";
 
 export interface LibraryProps {
   decks: DeckSummary[] | undefined;
@@ -247,7 +248,10 @@ export function LibraryView({
             <Button
               variant="primary"
               className="justify-self-start"
-              onClick={onCreateDeck}
+              onClick={() => {
+                captureAnalytics("empty_state_option_picked", { option: "create_deck" });
+                onCreateDeck?.();
+              }}
               aria-disabled={!onCreateDeck}
             >
               <Plus data-icon="inline-start" aria-hidden="true" />
@@ -262,7 +266,10 @@ export function LibraryView({
                   icon={<FileUp />}
                   title={<Trans>Import decks</Trans>}
                   detail={<Trans>Decks from Anki or Mochi, with their review history.</Trans>}
-                  onClick={onImport}
+                  onClick={() => {
+                    captureAnalytics("empty_state_option_picked", { option: "import" });
+                    onImport?.();
+                  }}
                 />
               </NextSteps>
             </StartPanelSection>
@@ -298,7 +305,10 @@ export function LibraryView({
                   thing on the page would make the due counts read as buttons. */}
               <button
                 type="button"
-                onClick={onCreateDeck}
+                onClick={() => {
+                  captureAnalytics("empty_state_option_picked", { option: "create_deck" });
+                  onCreateDeck?.();
+                }}
                 aria-disabled={!onCreateDeck}
                 className="flex min-h-[72px] w-full items-center justify-center gap-2 rounded-lg border border-dashed border-edge-2 text-base font-medium text-text-2 transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:bg-plate hoverable:hover:text-text"
               >

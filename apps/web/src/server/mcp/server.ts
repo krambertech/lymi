@@ -1029,9 +1029,12 @@ async function runTool(
   fn: () => Promise<CallToolResult>,
   principal: McpPrincipal,
 ): Promise<CallToolResult> {
-  track(principal.ctx.analytics, { name: "mcp_tool" });
+  const started = performance.now();
+  let outcome: "success" | "error" = "error";
   try {
-    return await fn();
+    const result = await fn();
+    outcome = result.isError ? "error" : "success";
+    return result;
   } catch (err) {
     if (err instanceof ReadOnlyConnection) return readOnlyFailure(principal);
     if (err instanceof ServiceError) {
@@ -1044,6 +1047,13 @@ async function runTool(
       // Monitoring cannot change the tool's error response.
     }
     return failure("Lymi could not finish this just now. Try again in a moment.");
+  } finally {
+    track(principal.ctx.analytics, {
+      name: "mcp_tool",
+      tool,
+      outcome,
+      duration_ms: Math.min(3_600_000, Math.max(0, performance.now() - started)),
+    });
   }
 }
 

@@ -1,7 +1,10 @@
 import { Trans } from "@lingui/react/macro";
+import { ANALYTICS_READY } from "@lymi/client/analytics";
 import { clsx } from "clsx";
 import { Check, Plus } from "lucide-react";
 import type { ReactNode } from "react";
+import { useEffect, useRef } from "react";
+import { captureAnalytics } from "../lib/telemetry";
 import { Button } from "./button";
 import { Lantern } from "./lantern";
 import { NavLink, useStaticNav } from "./nav-link";
@@ -30,6 +33,26 @@ export function StartGuide({
 }: StartGuideProps) {
   const st = useStaticNav();
   const current = decks === 0 ? 0 : cards === 0 ? 1 : 2;
+  const observed = useRef<number | null>(null);
+  useEffect(() => {
+    const names = ["deck", "cards", "review"] as const;
+    const observe = () => {
+      const previous = observed.current;
+      if (previous === current) return;
+      if (previous !== null && current > previous) {
+        const step_name = names[previous];
+        if (step_name) captureAnalytics("welcome_step_finished", { step_name, skipped: false });
+      }
+      const step_name = names[current];
+      if (step_name && captureAnalytics("welcome_step_viewed", { step_name, skipped: false }))
+        observed.current = current;
+    };
+    observe();
+    window.addEventListener(ANALYTICS_READY, observe);
+    return () => window.removeEventListener(ANALYTICS_READY, observe);
+  }, [current]);
+  const pick = (option: "create_deck" | "typed" | "ai_mcp" | "api") =>
+    captureAnalytics("empty_state_option_picked", { option });
   const link =
     "text-base font-medium text-text-2 underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:text-text hoverable:hover:decoration-text";
   const steps: { key: string; title: ReactNode; body: ReactNode }[] = [
@@ -43,7 +66,10 @@ export function StartGuide({
           </p>
           <Button
             variant="primary"
-            onClick={onCreateDeck}
+            onClick={() => {
+              pick("create_deck");
+              onCreateDeck?.();
+            }}
             aria-disabled={!onCreateDeck}
             className="justify-self-start"
           >
@@ -60,7 +86,10 @@ export function StartGuide({
         <>
           <Button
             variant="primary"
-            onClick={onAdd}
+            onClick={() => {
+              pick("typed");
+              onAdd?.();
+            }}
             aria-disabled={!onAdd}
             kbd="N"
             className="justify-self-start"
@@ -71,13 +100,16 @@ export function StartGuide({
             {connected === false && connectUrl && (
               <a
                 href={connectUrl}
-                onClick={st ? (e) => e.preventDefault() : undefined}
+                onClick={(e) => {
+                  if (st) e.preventDefault();
+                  else pick("ai_mcp");
+                }}
                 className={link}
               >
                 <Trans>Send a lesson from Claude or ChatGPT</Trans>
               </a>
             )}
-            <NavLink to="/settings" hash="api-keys" className={link}>
+            <NavLink to="/settings" hash="api-keys" className={link} onClick={() => pick("api")}>
               <Trans>Add cards with the API</Trans>
             </NavLink>
           </div>

@@ -21,7 +21,7 @@ import { ImportFileError, type RandomAccess, r2Source } from "../imports/files";
 import { lymi } from "../imports/lymi";
 import { mochi } from "../imports/mochi";
 import { type AnalyticsWriter, track } from "./analytics";
-import { auditStatement } from "./audit";
+import { auditStatement, auditStatementWhen } from "./audit";
 import type { CardImageStorage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { detectDeckLanguages, TERMS_PER_DECK } from "./import-languages";
@@ -431,7 +431,15 @@ export async function confirmImport(
     .returning({ id: schema.imports.id });
   if (claimed) {
     await start({ importId: id, userId: ctx.userId, actor: ctx.actor, phase: "write" });
-    track(ctx.analytics, { name: "import_started", adapter: work.row.source, outcome: "started" });
+    track(ctx.analytics, {
+      name: "import_started",
+      adapter: work.row.source,
+      source: work.row.source,
+      card_count: work.summary.decks
+        .filter((deck) => !work.choices.skipDecks?.includes(deck.key))
+        .reduce((count, deck) => count + deck.cards, 0),
+      outcome: "started",
+    });
   }
   return getImport(ctx, id);
 }
@@ -475,19 +483,33 @@ export async function finishImport(
   counts.pictures = pictures.stored;
   counts.picturesSkipped = pictures.skipped;
   const now = new Date();
-  await ctx.db.batch([
+  const eligible = and(eq(schema.imports.id, id), eq(schema.imports.status, "importing"))!;
+  const [, completed] = await ctx.db.batch([
+    auditStatementWhen(
+      ctx,
+      {
+        entity: "import",
+        action: "complete",
+        id,
+        details: { added: counts.added, existing: counts.existing, duplicates: counts.duplicates },
+      },
+      schema.imports,
+      eligible,
+    ),
     ctx.db
       .update(schema.imports)
       .set({ status: "done", counts, finishedAt: now, updatedAt: now })
-      .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "importing"))),
-    auditStatement(ctx, {
-      entity: "import",
-      action: "complete",
-      id,
-      details: { added: counts.added, existing: counts.existing, duplicates: counts.duplicates },
-    }),
+      .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "importing")))
+      .returning(),
   ]);
-  track(ctx.analytics, { name: "import_finished", adapter: row.source, outcome: "done" });
+  if (!completed.length) return;
+  track(ctx.analytics, {
+    name: "import_finished",
+    adapter: row.source,
+    source: row.source,
+    card_count: counts.added,
+    outcome: "done",
+  });
   await deleteFiles(uploads, row);
 }
 
@@ -503,11 +525,21 @@ export async function failImport(
   if (!row || row.status === "done" || row.status === "failed" || row.status === "cancelled")
     return;
   const now = new Date();
-  await db
+  const failed = await db
     .update(schema.imports)
     .set({ status: "failed", failure, finishedAt: now, updatedAt: now })
-    .where(eq(schema.imports.id, id));
-  track(analytics, { name: "import_finished", adapter: row.source, outcome: "failed" });
+    .where(and(eq(schema.imports.id, id), eq(schema.imports.status, row.status)))
+    .returning();
+  if (!failed.length) return;
+  const card_count = (row.counts as ImportCounts | null)?.added ?? 0;
+  track(analytics, {
+    name: "import_finished",
+    adapter: row.source,
+    source: row.source,
+    card_count,
+    outcome: "failed",
+  });
+  track(analytics, { name: "import_failed", source: row.source, card_count });
   await deleteFiles(uploads, row);
 }
 

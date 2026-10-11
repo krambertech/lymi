@@ -12,6 +12,7 @@ import { MotionConfig } from "motion/react";
 import { lazy, Suspense, useEffect, useMemo, useRef } from "react";
 import { z } from "zod";
 import { AddCardSheet } from "../components/add-card-sheet";
+import { AnalyticsConsentBanner } from "../components/analytics-consent-banner";
 import {
   AssistantMenuItem,
   AssistantOffer,
@@ -38,7 +39,7 @@ import { useRouteFocus } from "../lib/page-focus";
 import { decksQuery, meQuery, seriesQuery, settingsQuery } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
 import { Streak, StreakPlace, useSettleToday } from "../lib/streak";
-import { setTelemetryLearner } from "../lib/telemetry";
+import { capturePageview } from "../lib/telemetry";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { warmCache } from "../lib/warm-cache";
 import { AppShell, Sidebar } from "../views/shell";
@@ -77,6 +78,7 @@ function Root() {
         <AddCardProvider>
           <SignOutProvider>
             <Shell />
+            <AnalyticsConsentBanner />
             <Toaster
               aria-label={t`Notifications`}
               closeLabel={t`Dismiss`}
@@ -110,8 +112,8 @@ function Shell() {
   const closed = onReview || location.pathname === "/welcome";
   const me = useQuery({ ...meQuery, enabled: !bare });
   useEffect(() => {
-    setTelemetryLearner(me.data?.id);
-  }, [me.data?.id]);
+    capturePageview(location.pathname);
+  }, [location.pathname]);
   const decks = useQuery({ ...decksQuery, enabled: !bare && me.isSuccess });
   const series = useQuery({ ...seriesQuery, enabled: !bare && me.isSuccess });
   const settings = useQuery({ ...settingsQuery, enabled: !bare && me.isSuccess });

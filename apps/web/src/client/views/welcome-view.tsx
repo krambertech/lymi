@@ -1,5 +1,6 @@
 import { Radio as RadioPrimitive } from "@base-ui/react/radio";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { ANALYTICS_READY } from "@lymi/client/analytics";
 import {
   DAILY_GOAL_PRESETS,
   LANGUAGE_TAGS,
@@ -42,6 +43,7 @@ import { PublisherMark } from "../components/publisher-mark";
 import { Input } from "../components/ui/input";
 import { RadioGroup } from "../components/ui/radio-group";
 import type { DeckSummary } from "../lib/api";
+import { captureAnalytics } from "../lib/telemetry";
 import { BackButton } from "./shell";
 
 /** How a learner without decks gets started: bring their own, or add a ready-made deck. */
@@ -70,14 +72,14 @@ interface Props {
   joined?: JoinedDeck | undefined;
   /** Finishing when `joined` is set. */
   onChooseGoal?: ((dailyGoal: number) => void) | undefined;
-  onSkip: () => void;
+  onSkip: (step: Step) => void;
   /** The final press is saving and, for a deck, adding it. */
   busy?: boolean | undefined;
   /** What went wrong with the final press, in the learner's language. */
   error?: string | null | undefined;
 }
 
-type Step = "hello" | "kind" | "language" | "goal" | "start";
+export type Step = "hello" | "kind" | "language" | "goal" | "start";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -194,6 +196,19 @@ export function WelcomeView({
   }, [shortcut, trail, kind, language, goal]);
 
   const step = trail.at(-1) ?? "kind";
+  const seenStep = useRef<Step | null>(null);
+  useEffect(() => {
+    const viewed = () => {
+      if (
+        seenStep.current !== step &&
+        captureAnalytics("welcome_step_viewed", { step_name: step, skipped: false })
+      )
+        seenStep.current = step;
+    };
+    viewed();
+    window.addEventListener(ANALYTICS_READY, viewed);
+    return () => window.removeEventListener(ANALYTICS_READY, viewed);
+  }, [step]);
   // A new question opens at its top, not where the last one was scrolled to.
   // biome-ignore lint/correctness/useExhaustiveDependencies: the step is the trigger.
   useEffect(() => {
@@ -220,6 +235,7 @@ export function WelcomeView({
       setDir(-1);
       setTrail((t) => (t.length > 1 ? t.slice(0, -1) : t));
     } else {
+      captureAnalytics("welcome_step_finished", { step_name: step, skipped: false });
       setDir(1);
       setTrail((t) => [...t, to]);
     }
@@ -283,7 +299,7 @@ export function WelcomeView({
           variant="ghost"
           size="sm"
           className="-me-3 ms-auto"
-          onClick={onSkip}
+          onClick={() => onSkip(step)}
           aria-disabled={busy}
         >
           <Trans>Skip for now</Trans>

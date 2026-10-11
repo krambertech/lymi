@@ -1,6 +1,6 @@
 import { startAsTestLearner } from "./auth";
 import { e2eProductUrl } from "./ports.mjs";
-import { expect, test } from "./test";
+import { expect, newTestContext, test } from "./test";
 
 test("a learner can switch the app language and keep it after reload", async ({
   page,
@@ -41,7 +41,7 @@ test("a learner can switch the app language and keep it after reload", async ({
 });
 
 test("sign-in follows the browser language", async ({ browser }) => {
-  const context = await browser.newContext({ baseURL: e2eProductUrl, locale: "uk-UA" });
+  const context = await newTestContext(browser, { baseURL: e2eProductUrl, locale: "uk-UA" });
   const page = await context.newPage();
   await page.goto("/login");
   await expect(page.locator("html")).toHaveAttribute("lang", "uk");

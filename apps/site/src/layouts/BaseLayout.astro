@@ -3,6 +3,7 @@ import onestLatin from "@fontsource-variable/onest/files/onest-latin-wght-normal
 import onestCyrillic from "@fontsource-variable/onest/files/onest-cyrillic-wght-normal.woff2?url";
 import { type Locale, type LocalizedPage, localizedPath } from "../lib/routes";
 import "../styles.css";
+import AnalyticsConsentIsland from "../components/AnalyticsConsentBanner";
 
 interface Props {
   title: string;
@@ -89,6 +90,7 @@ const locale = Astro.currentLocale ?? "en";
   </head>
   <body>
     <slot />
+    <AnalyticsConsentIsland client:load locale={locale} />
     <script>
       import { pauseLoopsOffscreen } from "../lib/offscreen";
       pauseLoopsOffscreen();

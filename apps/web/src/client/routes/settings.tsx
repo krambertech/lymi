@@ -1,13 +1,16 @@
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
+import { openPrivacyPreferences } from "@lymi/client/analytics";
 import type { AppLanguage } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { AccountSection } from "../components/account-section";
 import { ApiKeysSection } from "../components/api-keys-section";
+import { Button } from "../components/button";
 import { ConnectedAppsSection } from "../components/connected-apps-section";
 import { ExportSheet } from "../components/export-sheet";
 import { NotificationsSection } from "../components/notifications-section";
+import { SettingsGroup } from "../components/settings-group";
 import { api, type Settings } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { activate, pickLocale } from "../lib/i18n";
@@ -71,6 +74,11 @@ function SettingsRoute() {
         setThemeState(t);
       }}
     >
+      <SettingsGroup title={t`Privacy preferences`}>
+        <Button onClick={openPrivacyPreferences}>
+          <Trans>Privacy preferences</Trans>
+        </Button>
+      </SettingsGroup>
       <NotificationsSection />
       <ConnectedAppsSection />
       <ApiKeysSection />

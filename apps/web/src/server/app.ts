@@ -1,6 +1,7 @@
 import type { Actor, Scope } from "@lymi/core";
 import { MeOut } from "@lymi/core";
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { routePath } from "hono/route";
 import { type Auth, createAuth, type SessionUser } from "./auth";
 import { limitCredentialRequests } from "./auth-rate-limit";
@@ -216,6 +217,27 @@ if (import.meta.env.DEV || import.meta.env.LYMI_APP_PREVIEW) {
 // do is declared on each route with describe(): writes need the write scope, learner-only
 // routes need the learner. A route without describe() has no such check, so every route
 // under /api gets one.
+app.use("/api/settings/analytics-consent", (c, next) =>
+  cors({
+    origin: (origin) =>
+      origin === canonicalOrigins(c.env).publicSite || origin === canonicalOrigins(c.env).product
+        ? origin
+        : "",
+    allowMethods: ["GET", "PUT"],
+    allowHeaders: ["Content-Type"],
+    credentials: true,
+  })(c, next),
+);
+app.use("/api/settings/analytics-consent", async (c, next) => {
+  const origin = c.req.header("origin");
+  if (
+    origin &&
+    origin !== canonicalOrigins(c.env).publicSite &&
+    origin !== canonicalOrigins(c.env).product
+  )
+    return c.json({ error: "This origin cannot change privacy preferences" }, 403);
+  return next();
+});
 app.use("/api/*", authenticate);
 
 app.get(

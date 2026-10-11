@@ -2,6 +2,8 @@ import { CardInput } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
+import type { AnalyticsEvent } from "./analytics";
+import { analyticsContext } from "./analytics-context";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
@@ -11,6 +13,7 @@ import {
   ensureSettings,
   finishOnboarding,
   getSettings,
+  updateAnalyticsConsent,
   updateSettings,
 } from "./settings";
 import { learner, testDb } from "./test-db";
@@ -114,7 +117,17 @@ describe("getting set up", () => {
 
   it("counts a goal chosen without a subject as joined, not skipped", async () => {
     const who = await learner(db, "joiner", "Joiner");
-    const done = await finishOnboarding(who, { ...skip, dailyGoal: 10 });
+    const events: AnalyticsEvent[] = [];
+    const done = await finishOnboarding(
+      { ...who, analytics: { writeDataPoint: () => {}, capture: (event) => events.push(event) } },
+      { ...skip, dailyGoal: 10 },
+    );
+    expect(events).toContainEqual({ name: "onboarding_finished", kind: "joined" });
+    expect(events).toContainEqual({
+      name: "welcome_step_finished",
+      step_name: "setup",
+      skipped: false,
+    });
     expect(done).toMatchObject({ dailyGoal: 10, learningKind: null });
     expect(done.dailyGoalChosenAt).toBeInstanceOf(Date);
   });
@@ -143,5 +156,35 @@ describe("awaiting Welcome", () => {
     if (outcome?.status !== "added") throw new Error("not added");
     await gradeCard(who, { cardId: outcome.card.id, direction: "recognition", rating: 3 });
     expect(await awaitsWelcome(db, who.userId)).toBe(false);
+  });
+});
+
+describe("analytics consent", () => {
+  it("requires the learner and preserves the newest choice under concurrent requests", async () => {
+    const ctx = await learner(db, "consent-owner", "Learner");
+    const now = Date.now();
+    await expect(
+      updateAnalyticsConsent(
+        { ...ctx, actor: "mcp" },
+        { allowed: true, version: 1, updated_at: now },
+      ),
+    ).rejects.toMatchObject({ code: "forbidden" });
+    await Promise.all([
+      updateAnalyticsConsent(ctx, { allowed: true, version: 1, updated_at: now - 1000 }),
+      updateAnalyticsConsent(ctx, { allowed: false, version: 1, updated_at: now }),
+    ]);
+    expect(await getSettings(ctx)).toMatchObject({
+      analyticsConsent: false,
+      analyticsConsentUpdatedAt: new Date(now),
+    });
+    await updateAnalyticsConsent(ctx, { allowed: true, version: 1, updated_at: now - 500 });
+    expect((await analyticsContext(db, ctx.userId)).allowed).toBe(false);
+    await updateAnalyticsConsent(ctx, { allowed: true, version: 1, updated_at: now + 1 });
+    expect((await analyticsContext(db, ctx.userId)).allowed).toBe(true);
+    expect((await analyticsContext(db, ctx.userId, null)).allowed).toBe(false);
+    expect(
+      (await analyticsContext(db, ctx.userId, { allowed: false, version: 1, updated_at: now + 2 }))
+        .allowed,
+    ).toBe(false);
   });
 });

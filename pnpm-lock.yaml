@@ -208,6 +208,9 @@ importers:
       react-dom:
         specifier: ^19.3.0
         version: 19.3.0(react@19.3.0)
+      '@lymi/client':
+        specifier: workspace:*
+        version: link:../../packages/client
     devDependencies:
       '@astrojs/check':
         specifier: ^0.9.10
@@ -471,6 +474,9 @@ importers:
       '@lymi/core':
         specifier: workspace:*
         version: link:../core
+      posthog-js:
+        specifier: ^1.438.7
+        version: 1.438.7(@types/react@19.3.0)(react@19.3.0)
     devDependencies:
       '@tanstack/react-query':
         specifier: ^5.104.1

@@ -1,0 +1,146 @@
+name: Phone
+
+# The phone's journey on an iOS Simulator against a local Worker. docs/testing.md has when it runs.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - apps/mobile/**
+      - packages/client/**
+      - packages/core/**
+      - packages/design/**
+      - .github/workflows/phone.yml
+  push:
+    branches: [main]
+    paths:
+      - apps/mobile/**
+      - packages/**
+      - apps/web/src/server/**
+      - apps/web/migrations/**
+      - pnpm-lock.yaml
+      - .github/workflows/phone.yml
+  schedule:
+    # Monday 05:00 UTC, so a drift nothing else caught shows up before the week's release.
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: phone-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  API_URL: http://localhost:5241
+  MAESTRO_VERSION: 2.11.0
+  SIMULATOR: iPhone 17 Pro
+
+jobs:
+  journey:
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
+    runs-on: macos-26
+    # A safety net, not a budget: a cached run takes a few minutes and a native build about twenty.
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Everything native the app is built from; JavaScript is outside it and re-bundled every run.
+      - name: Fingerprint the native build
+        id: fingerprint
+        working-directory: apps/mobile
+        run: echo "hash=$(pnpm --silent fingerprint | node -pe 'JSON.parse(require("fs").readFileSync(0)).hash')" >> "$GITHUB_OUTPUT"
+
+      - name: Restore the Simulator build
+        id: native
+        uses: actions/cache@v4
+        with:
+          path: apps/mobile/build/Lymi.app
+          key: phone-simulator-${{ runner.os }}-xcode-26.6-${{ steps.fingerprint.outputs.hash }}
+
+      - name: Build the app for the Simulator
+        if: steps.native.outputs.cache-hit != 'true'
+        working-directory: apps/mobile
+        env:
+          LANG: en_US.UTF-8
+          EXPO_PUBLIC_API_URL: ${{ env.API_URL }}
+        run: |
+          npx expo prebuild --clean --platform ios
+          sudo xcode-select -s /Applications/Xcode_26.6.app
+          xcodebuild -workspace ios/Lymi.xcworkspace -scheme Lymi -configuration Release \
+            -sdk iphonesimulator -destination "generic/platform=iOS Simulator" \
+            -derivedDataPath build/derived CODE_SIGNING_ALLOWED=NO -quiet
+          rm -rf build/Lymi.app
+          cp -R build/derived/Build/Products/Release-iphonesimulator/Lymi.app build/Lymi.app
+
+      # The cached binary keeps its native code; this run's JavaScript replaces its bundle.
+      - name: Bundle this commit's JavaScript into the app
+        working-directory: apps/mobile
+        env:
+          EXPO_PUBLIC_API_URL: ${{ env.API_URL }}
+        run: |
+          npx expo export:embed --platform ios --dev false --entry-file node_modules/expo-router/entry.js \
+            --bundle-output build/Lymi.app/main.jsbundle --assets-dest build/Lymi.app
+          codesign --force --sign - --deep build/Lymi.app
+
+      - name: Start the local Worker
+        working-directory: apps/web
+        run: |
+          printf '%s\n' "PRODUCT_URL=$API_URL" "PUBLIC_SITE_URL=http://localhost:4321" \
+            "BETTER_AUTH_SECRET=lymi-phone-e2e-secret-at-least-thirty-two-characters" \
+            "GOOGLE_CLIENT_ID=" "GOOGLE_CLIENT_SECRET=" "OPENAI_API_KEY=" > .dev.vars
+          pnpm db:migrate
+          nohup pnpm dev --port 5241 --strictPort > "$RUNNER_TEMP/worker.log" 2>&1 &
+          for _ in $(seq 1 90); do curl -fsS "$API_URL/api/health" > /dev/null && exit 0; sleep 2; done
+          cat "$RUNNER_TEMP/worker.log"; exit 1
+
+      - name: Boot the Simulator and install the app
+        id: simulator
+        # An iOS 26 Simulator occasionally hangs on its first boot, which this turns into a fast failure.
+        timeout-minutes: 6
+        run: |
+          udid=$(xcrun simctl create "Lymi CI" "$SIMULATOR" com.apple.CoreSimulator.SimRuntime.iOS-26-5)
+          xcrun simctl bootstatus "$udid" -b
+          xcrun simctl install "$udid" apps/mobile/build/Lymi.app
+          echo "udid=$udid" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 17
+
+      - name: Install Maestro ${{ env.MAESTRO_VERSION }}
+        run: |
+          curl -fsSL "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+
+      - name: Run the journey
+        env:
+          DEVICE: ${{ steps.simulator.outputs.udid }}
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: 240000
+          MAESTRO_REPORT: ${{ runner.temp }}/maestro.xml
+        # One retry, reported in the summary, so a flaky pass is visible rather than silent.
+        run: |
+          if apps/mobile/e2e/run.sh; then exit 0; fi
+          echo "::warning title=Phone journey::Passed only on retry"
+          apps/mobile/e2e/run.sh
+
+      - name: Keep the evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phone-journey
+          retention-days: 7
+          path: |
+            ~/.maestro/tests
+            ${{ runner.temp }}/maestro.xml
+            ${{ runner.temp }}/worker.log

@@ -1,0 +1,25 @@
+# The phone's canonical journey: sign in with a password, grade three cards, end the review.
+# run.sh seeds the learner persona first and checks afterwards that the grades reached the Worker.
+appId: app.lymi.poc
+name: Sign in and review
+---
+- launchApp:
+    clearState: true
+    clearKeychain: true
+- tapOn: "Sign in with email"
+- tapOn: "Email"
+- inputText: ${EMAIL}
+- tapOn: "Password"
+- inputText: ${PASSWORD}
+- tapOn: "^Sign in$"
+- extendedWaitUntil:
+    visible: "^Review$"
+    timeout: 30000
+- tapOn: "^Review$"
+- repeat:
+    times: 3
+    commands:
+      - tapOn: "Tap to reveal"
+      - tapOn: "^Good$"
+- tapOn: "End review"
+- assertVisible: ".*reviews today.*"

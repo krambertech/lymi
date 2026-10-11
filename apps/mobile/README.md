@@ -1,6 +1,6 @@
 # Lymi for iOS (proof of concept)
 
-An Expo app that shows the phone's design language and stack. It runs on demo data held on the device and does not sign in; [the proposal](../../docs/proposals/native-mobile-app.md) has what is decided and what is not.
+An Expo app that shows the phone's design language and stack. It signs in to a real Lymi account and still runs Today, Review and Library on demo data held on the device; [the proposal](../../docs/proposals/native-mobile-app.md) has what is decided and what is not.
 
 ## Run it
 
@@ -13,6 +13,10 @@ LANG=en_US.UTF-8 npx expo run:ios
 ```
 
 The first build takes several minutes; after that `npx expo start --dev-client` reloads JavaScript in place. CocoaPods fails with an encoding error unless `LANG` is UTF-8. A change to `app.json`, a config plugin or a native module needs `npx expo prebuild --clean` and a new build.
+
+## Sign-in
+
+Better Auth's Expo plugin keeps the session cookie in SecureStore, and `sessionHeaders()` in `src/auth/client.ts` returns it for any request to the API. Signed out, the root layout shows only the sign-in screen: Google through the system browser, or an email and password. A new password account is confirmed with a code from its email, because a confirmation link would open in Safari, which did not sign up, and the Worker would retire the password (issue 251). The app talks to production unless `EXPO_PUBLIC_API_URL` names another Worker; [local development](../../docs/local-dev.md#sign-the-phone-app-in) has the local setup.
 
 ## Design choices
 

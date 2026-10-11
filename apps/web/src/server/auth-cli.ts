@@ -9,9 +9,11 @@
  */
 import { apiKey } from "@better-auth/api-key";
 import { cimd } from "@better-auth/cimd";
+import { expo } from "@better-auth/expo";
 import { mcp } from "@better-auth/mcp";
 import type { BetterAuthOptions, BetterAuthPlugin } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { emailOTP } from "better-auth/plugins/email-otp";
 import { jwt } from "better-auth/plugins/jwt";
 
 const options = {
@@ -29,6 +31,8 @@ const options = {
       resource: "https://cli.invalid/mcp",
     }) as unknown as BetterAuthPlugin,
     cimd({ fetchClientMetadataResource: fetch }),
+    expo(),
+    emailOTP({ sendVerificationOTP: async () => {} }),
   ],
 } satisfies BetterAuthOptions;
 

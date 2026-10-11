@@ -1820,6 +1820,9 @@ msgstr "Enter an email address, like you@example.com."
 msgid "Enter an email address."
 msgstr "Enter an email address."
 
+msgid "Enter this code in the Lymi app to finish creating your account:"
+msgstr "Enter this code in the Lymi app to finish creating your account:"
+
 msgid "Every card"
 msgstr "Every card"
 
@@ -3756,6 +3759,9 @@ msgstr "the card"
 msgid "The cards you kept move back into it"
 msgstr "The cards you kept move back into it"
 
+msgid "The code works for 15 minutes. If you didn’t create a Lymi account, ignore this email."
+msgstr "The code works for 15 minutes. If you didn’t create a Lymi account, ignore this email."
+
 msgid "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 msgstr "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 
@@ -4283,6 +4289,9 @@ msgstr "Your grades are saved. Check your connection and try again."
 
 msgid "Your Lymi account signs in with Google"
 msgstr "Your Lymi account signs in with Google"
+
+msgid "Your Lymi confirmation code"
+msgstr "Your Lymi confirmation code"
 
 msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."

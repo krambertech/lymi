@@ -13,6 +13,7 @@ import { type ServiceContext, ServiceError } from "./context";
 export type TransactionalEmailKind =
   | "test"
   | "verify-email"
+  | "verify-email-code"
   | "reset-password"
   | "existing-account"
   | "google-account"
@@ -43,9 +44,11 @@ export interface DeckInvitationEmailData {
   cards: number;
 }
 
-/** What a message needs beyond its kind: an account kind's one link, or a learner's note. */
+/** What a message needs beyond its kind: an account kind's one link or code, or a learner's note. */
 export interface TransactionalEmailParams {
   url?: string;
+  /** The confirmation code the phone app asks for, in place of a link. */
+  code?: string;
   feedback?: FeedbackEmailData;
   invitation?: DeckInvitationEmailData;
 }
@@ -190,6 +193,21 @@ function compose(
           signature,
         ],
       };
+    case "verify-email-code": {
+      if (!params.code) throw new Error("The verify-email-code email needs a code");
+      return {
+        subject: i18n._(msg`Your Lymi confirmation code`),
+        blocks: [
+          hello,
+          i18n._(msg`Enter this code in the Lymi app to finish creating your account:`),
+          params.code,
+          i18n._(
+            msg`The code works for 15 minutes. If you didn’t create a Lymi account, ignore this email.`,
+          ),
+          signature,
+        ],
+      };
+    }
     case "reset-password":
       return {
         subject: i18n._(msg`Reset your Lymi password`),
@@ -339,6 +357,7 @@ export async function sendTransactionalEmail(
 ): Promise<{ delivery: "provider" | "outbox" }> {
   const message = await renderTransactionalEmail(input.kind, input.language, {
     ...(input.url ? { url: input.url } : {}),
+    ...(input.code ? { code: input.code } : {}),
     ...(input.feedback ? { feedback: input.feedback } : {}),
     ...(input.invitation ? { invitation: input.invitation } : {}),
   });

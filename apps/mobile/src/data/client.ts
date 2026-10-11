@@ -1,5 +1,6 @@
 import { configureClient, type KeyValueStore } from "@lymi/client";
 import { getRandomValues } from "expo-crypto";
+import { API_URL, sessionHeaders } from "../auth/client";
 
 // Hermes has no Web Crypto, and core's `newId` makes every id on the device with it.
 if (typeof globalThis.crypto?.getRandomValues !== "function") {
@@ -15,12 +16,11 @@ const memory: KeyValueStore = {
   keys: () => [...held.keys()],
 };
 
-/**
- * The phone calls the product's origin. Signing in (#503) adds `headers` with Better Auth's
- * session cookie and `credentials: "omit"`, so the cookie jar never sends a second one.
- */
+/** Every request carries the signed-in learner's session; the native cookie jar never sends a second one. */
 configureClient({
-  baseUrl: "https://my.lymi.app",
+  baseUrl: API_URL,
+  headers: sessionHeaders,
+  credentials: "omit",
   storage: memory,
   messages: {
     unreachable: () => "Couldn’t reach Lymi. Check your connection and try again.",

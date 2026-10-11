@@ -2,6 +2,7 @@ import { shadows } from "@lymi/design";
 import * as Haptics from "expo-haptics";
 import type { ReactNode } from "react";
 import {
+  ActivityIndicator,
   Pressable,
   type PressableProps,
   Text as RNText,
@@ -72,18 +73,28 @@ export function Press({
 
 type Variant = "primary" | "secondary" | "ghost";
 
-/** buttons.md: one primary per view, secondary by default. `xl` is Today's Review, 64 px. */
+const HEIGHT = { md: "h-11 px-4", lg: "h-12 px-5", xl: "h-16 px-5" } as const;
+
+/**
+ * buttons.md: one primary per view, secondary by default. `lg` ends a flow such as sign-in,
+ * `xl` is Today's Review. `loading` keeps the width, shows a spinner and swallows a press.
+ */
 export function Button({
   label,
   variant = "secondary",
   size = "md",
   icon,
+  lead,
+  loading = false,
   onPress,
 }: {
   label: string;
   variant?: Variant;
-  size?: "md" | "xl";
+  size?: keyof typeof HEIGHT;
   icon?: IconName;
+  /** A mark that is not one of Lymi's icons, such as Google's G. */
+  lead?: ReactNode;
+  loading?: boolean;
   onPress?: () => void;
 }) {
   const p = usePalette();
@@ -96,18 +107,23 @@ export function Button({
   const ink = variant === "primary" ? p["amber-ink"] : p.text;
   return (
     <Press
-      onPress={onPress}
+      onPress={loading ? undefined : onPress}
       accessibilityRole="button"
-      className={`flex-row items-center justify-center gap-2 rounded-md ${box} ${size === "xl" ? "h-16 px-5" : "h-11 px-4"}`}
+      accessibilityState={{ busy: loading }}
+      className={`flex-row items-center justify-center gap-2 rounded-md ${box} ${HEIGHT[size]}`}
       style={variant === "primary" ? keyLight(p) : undefined}
     >
-      {icon && <Icon name={icon} colour={ink} size={20} />}
-      <Text
-        className={`${size === "xl" ? "text-lg" : "text-md"} font-medium`}
-        style={{ color: ink }}
-      >
-        {label}
-      </Text>
+      <View className={`flex-row items-center gap-2 ${loading ? "opacity-0" : ""}`}>
+        {lead}
+        {icon && <Icon name={icon} colour={ink} size={20} />}
+        <Text
+          className={`${size === "md" ? "text-md" : "text-lg"} font-medium`}
+          style={{ color: ink }}
+        >
+          {label}
+        </Text>
+      </View>
+      {loading && <ActivityIndicator color={ink} className="absolute" />}
     </Press>
   );
 }

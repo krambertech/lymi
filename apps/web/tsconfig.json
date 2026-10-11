@@ -5,9 +5,8 @@
     // vite.config.ts imports mcp-app.build.ts with its extension, as Vite's native config loader needs.
     "allowImportingTsExtensions": true,
     "types": ["vite/client", "vite-plugin-pwa/client"],
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/client/*"]
+      "@/*": ["./src/client/*"]
     }
   },
   "include": ["src/client", "src/shared", "vite.config.ts", "mcp-app.build.ts", "drizzle.config.ts"]

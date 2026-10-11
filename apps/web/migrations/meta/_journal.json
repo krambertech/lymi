@@ -288,6 +288,13 @@
       "when": 1791674915178,
       "tag": "0040_common_skullbuster",
       "breakpoints": true
+    },
+    {
+      "idx": 41,
+      "version": "6",
+      "when": 1791689279625,
+      "tag": "0041_slippery_gideon",
+      "breakpoints": true
     }
   ]
 }

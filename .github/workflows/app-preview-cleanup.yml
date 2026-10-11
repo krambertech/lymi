@@ -3,14 +3,22 @@ name: App preview cleanup
 on:
   pull_request:
     types: [closed]
+  # Re-runs a failed cleanup with current code; a re-run of the original job replays its old commit.
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: Closed pull request whose preview to remove
+        required: true
+        type: number
 
+# CI's group for the pull request, so an in-flight preview deploy is cancelled instead of recreating what this removes.
 concurrency:
-  group: app-preview-cleanup-${{ github.event.pull_request.number }}
-  cancel-in-progress: false
+  group: ci-CI-${{ github.event.pull_request.number || inputs.pr_number }}
+  cancel-in-progress: true
 
 jobs:
   cleanup:
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -19,12 +27,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      # Version comes from "packageManager" in package.json.
-      - uses: pnpm/action-setup@v4
-
+      # The script needs no dependencies, and caching a pnpm store that was never created fails the job.
       - uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
+          package-manager-cache: false
 
       - name: Check preview credentials
         env:
@@ -40,4 +47,5 @@ jobs:
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_APP_PREVIEW_TOKEN }}
-        run: node scripts/app-preview-infrastructure.mjs cleanup "${{ github.event.pull_request.number }}"
+          PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
+        run: node scripts/app-preview-infrastructure.mjs cleanup "$PR_NUMBER"

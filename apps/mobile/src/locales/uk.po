@@ -25,6 +25,9 @@ msgstr "{reviewsToday} з {goal}"
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
 
+msgid "A new code is on its way to {address}."
+msgstr "Надсилаємо новий код на {address}."
+
 msgid "A sentence that uses it"
 msgstr "Речення, де воно трапляється"
 
@@ -79,8 +82,17 @@ msgstr "Частину цієї картки написав AI"
 msgid "AI wrote this"
 msgstr "Це написав AI"
 
+msgid "At least {MIN_PASSWORD_LENGTH} characters."
+msgstr "Щонайменше {MIN_PASSWORD_LENGTH} символів."
+
 msgid "Back"
 msgstr "Назад"
+
+msgid "Back to sign in"
+msgstr "Назад до входу"
+
+msgid "Check your inbox"
+msgstr "Перевір пошту"
 
 msgid "Choose another"
 msgstr "Вибрати інше"
@@ -91,11 +103,32 @@ msgstr "Вибрати з фото"
 msgid "Clear the picture"
 msgstr "Прибрати зображення"
 
+msgid "Code"
+msgstr "Код"
+
+msgid "Confirm"
+msgstr "Підтвердити"
+
+msgid "Continue with Google"
+msgstr "Продовжити з Google"
+
 msgid "Couldn’t reach Lymi. Check your connection and try again."
 msgstr "Не вдалося зв’язатися з Lymi. Перевір з’єднання й повтори спробу."
 
+msgid "Couldn’t reach the sign-in service. Check your connection and try again."
+msgstr "Не вдалося зв’язатися із сервісом входу. Перевір з’єднання й повтори спробу."
+
 msgid "Create a deck on the web first, then add cards here."
 msgstr "Спершу створи колоду у вебверсії, а тоді додавай картки тут."
+
+msgid "Create account"
+msgstr "Створити акаунт"
+
+msgid "Create an account"
+msgstr "Створити акаунт"
+
+msgid "Create your Lymi account"
+msgstr "Створи акаунт Lymi"
 
 msgid "Daily goal"
 msgstr "Денна мета"
@@ -109,11 +142,29 @@ msgstr "Опиши, що на зображенні, не називаючи те
 msgid "Description"
 msgstr "Опис"
 
+msgid "Don’t use “Lymi” in your password."
+msgstr "Не використовуй «Lymi» в паролі."
+
+msgid "Don’t use your email address in your password."
+msgstr "Не використовуй адресу пошти в паролі."
+
 msgid "Done"
 msgstr "Готово"
 
 msgid "Easy"
 msgstr "Легко"
+
+msgid "Email"
+msgstr "Пошта"
+
+msgid "Enter an email address, like you@example.com."
+msgstr "Введи адресу пошти, як-от you@example.com."
+
+msgid "Enter the 6-digit code we sent to {email}."
+msgstr "Введи 6-значний код, який ми надіслали на {email}."
+
+msgid "Enter the 6-digit code."
+msgstr "Введи 6-значний код."
 
 msgid "Example"
 msgstr "Приклад"
@@ -130,6 +181,9 @@ msgstr "Доповнити решту з AI"
 msgid "Forgot"
 msgstr "Не пам’ятаю"
 
+msgid "Forgot your password?"
+msgstr "Не пам’ятаєш пароль?"
+
 msgid "Forgotten"
 msgstr "Забута"
 
@@ -145,6 +199,9 @@ msgstr "Граматика, вживання, будь-що інше"
 msgid "Hard"
 msgstr "Важко"
 
+msgid "Have an account?"
+msgstr "Уже маєш акаунт?"
+
 msgid "Hide password"
 msgstr "Сховати пароль"
 
@@ -159,6 +216,9 @@ msgstr "Як це звучить"
 
 msgid "How it’s asked"
 msgstr "Як питати"
+
+msgid "If {address} has a Lymi password, a reset link is on the way. It works for one hour."
+msgstr "Якщо для {address} є пароль Lymi, посилання для нового пароля вже в дорозі. Воно діє одну годину."
 
 msgid "Known"
 msgstr "Засвоєна"
@@ -179,6 +239,9 @@ msgstr "Залиш порожнім, і AI доповнить"
 
 msgid "Lesson"
 msgstr "Урок"
+
+msgid "Lymi is free to use."
+msgstr "Lymi безкоштовний."
 
 msgid "Meaning"
 msgstr "Значення"
@@ -202,6 +265,9 @@ msgctxt "cards in this state"
 msgid "New"
 msgstr "Нові"
 
+msgid "New to Lymi?"
+msgstr "Уперше в Lymi?"
+
 msgid "No section"
 msgstr "Без розділу"
 
@@ -210,6 +276,9 @@ msgstr "Нотатки"
 
 msgid "Only the deck’s owner can change this."
 msgstr "Змінювати це може лише власник колоди."
+
+msgid "Password"
+msgstr "Пароль"
 
 msgid "Picture"
 msgstr "Зображення"
@@ -241,6 +310,9 @@ msgstr "Вимова з уроку"
 msgid "Recognition"
 msgstr "Розпізнавання"
 
+msgid "Reset your password"
+msgstr "Новий пароль"
+
 msgid "Reviews a day. Finishing everything due also counts."
 msgstr "Повторень на день. Якщо повториш усе заплановане, день теж зарахується."
 
@@ -256,11 +328,32 @@ msgstr "Бачиш значення, згадуєш термін"
 msgid "See the term, recall what it means"
 msgstr "Бачиш термін, згадуєш значення"
 
+msgid "Send a new code"
+msgstr "Надіслати новий код"
+
+msgid "Send reset link"
+msgstr "Надіслати посилання"
+
+msgid "Sent again"
+msgstr "Надіслали ще раз"
+
 msgid "Show password"
 msgstr "Показати пароль"
 
+msgid "Sign in"
+msgstr "Увійти"
+
 msgid "Sign in to continue."
 msgstr "Увійди, щоб продовжити."
+
+msgid "Sign in to Lymi"
+msgstr "Увійти в Lymi"
+
+msgid "Sign in with email"
+msgstr "Увійти через пошту"
+
+msgid "Sign-in didn’t finish. Try again."
+msgstr "Вхід не завершено. Спробуй ще раз."
 
 msgid "Source"
 msgstr "Джерело"
@@ -274,8 +367,20 @@ msgstr "Зробити фото"
 msgid "Term"
 msgstr "Термін"
 
+msgid "That code doesn’t match. Check the email and try again."
+msgstr "Код не збігається. Перевір лист і спробуй ще раз."
+
+msgid "That code has expired. Send a new one."
+msgstr "Цей код уже не діє. Надішли новий."
+
 msgid "That didn’t go through. Reload and try again."
 msgstr "Не вдалося. Онови сторінку й повтори спробу."
+
+msgid "That email and password don’t match."
+msgstr "Ця пошта й пароль не збігаються."
+
+msgid "That password is too easy to guess. Try another."
+msgstr "Цей пароль легко вгадати. Спробуй інший."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "Цього вже немає. Онови сторінку, щоб побачити зміни."
@@ -286,11 +391,29 @@ msgstr "Сьогодні"
 msgid "Today counts."
 msgstr "Сьогодні зараховано."
 
+msgid "Too many attempts. Try again later."
+msgstr "Забагато спроб. Спробуй трохи згодом."
+
+msgid "Too many tries with this code. Send a new one."
+msgstr "Забагато спроб із цим кодом. Надішли новий."
+
 msgid "Try again"
 msgstr "Спробувати ще раз"
 
 msgid "Undo"
 msgstr "Скасувати дію"
+
+msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
+msgstr "Використай щонайменше {MIN_PASSWORD_LENGTH} символів."
+
+msgid "Use at most {MAX_PASSWORD_LENGTH} characters."
+msgstr "Використай не більше {MAX_PASSWORD_LENGTH} символів."
+
+msgid "We’ll email you a link to set a new one."
+msgstr "Надішлемо на пошту посилання, щоб задати новий."
+
+msgid "Welcome back."
+msgstr "З поверненням."
 
 msgid "What it means"
 msgstr "Що це означає"
@@ -303,3 +426,6 @@ msgstr "Ти"
 
 msgid "You wrote this"
 msgstr "Це написано тобою"
+
+msgid "Your cards and your streak, on every device."
+msgstr "Твої картки й лік днів поспіль на будь-якому пристрої."

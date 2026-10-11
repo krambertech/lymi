@@ -25,6 +25,9 @@ msgstr "{reviewsToday} of {goal}"
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {day in a row} other {days in a row}}"
 
+msgid "A new code is on its way to {address}."
+msgstr "A new code is on its way to {address}."
+
 msgid "A sentence that uses it"
 msgstr "A sentence that uses it"
 
@@ -79,8 +82,17 @@ msgstr "AI wrote part of this card"
 msgid "AI wrote this"
 msgstr "AI wrote this"
 
+msgid "At least {MIN_PASSWORD_LENGTH} characters."
+msgstr "At least {MIN_PASSWORD_LENGTH} characters."
+
 msgid "Back"
 msgstr "Back"
+
+msgid "Back to sign in"
+msgstr "Back to sign in"
+
+msgid "Check your inbox"
+msgstr "Check your inbox"
 
 msgid "Choose another"
 msgstr "Choose another"
@@ -91,11 +103,32 @@ msgstr "Choose from photos"
 msgid "Clear the picture"
 msgstr "Clear the picture"
 
+msgid "Code"
+msgstr "Code"
+
+msgid "Confirm"
+msgstr "Confirm"
+
+msgid "Continue with Google"
+msgstr "Continue with Google"
+
 msgid "Couldn’t reach Lymi. Check your connection and try again."
 msgstr "Couldn’t reach Lymi. Check your connection and try again."
 
+msgid "Couldn’t reach the sign-in service. Check your connection and try again."
+msgstr "Couldn’t reach the sign-in service. Check your connection and try again."
+
 msgid "Create a deck on the web first, then add cards here."
 msgstr "Create a deck on the web first, then add cards here."
+
+msgid "Create account"
+msgstr "Create account"
+
+msgid "Create an account"
+msgstr "Create an account"
+
+msgid "Create your Lymi account"
+msgstr "Create your Lymi account"
 
 msgid "Daily goal"
 msgstr "Daily goal"
@@ -109,11 +142,29 @@ msgstr "Describe what the picture shows without naming the term or the meaning."
 msgid "Description"
 msgstr "Description"
 
+msgid "Don’t use “Lymi” in your password."
+msgstr "Don’t use “Lymi” in your password."
+
+msgid "Don’t use your email address in your password."
+msgstr "Don’t use your email address in your password."
+
 msgid "Done"
 msgstr "Done"
 
 msgid "Easy"
 msgstr "Easy"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Enter an email address, like you@example.com."
+msgstr "Enter an email address, like you@example.com."
+
+msgid "Enter the 6-digit code we sent to {email}."
+msgstr "Enter the 6-digit code we sent to {email}."
+
+msgid "Enter the 6-digit code."
+msgstr "Enter the 6-digit code."
 
 msgid "Example"
 msgstr "Example"
@@ -130,6 +181,9 @@ msgstr "Fill in the rest with AI"
 msgid "Forgot"
 msgstr "Forgot"
 
+msgid "Forgot your password?"
+msgstr "Forgot your password?"
+
 msgid "Forgotten"
 msgstr "Forgotten"
 
@@ -145,6 +199,9 @@ msgstr "Grammar, usage, anything else"
 msgid "Hard"
 msgstr "Hard"
 
+msgid "Have an account?"
+msgstr "Have an account?"
+
 msgid "Hide password"
 msgstr "Hide password"
 
@@ -159,6 +216,9 @@ msgstr "How it sounds"
 
 msgid "How it’s asked"
 msgstr "How it’s asked"
+
+msgid "If {address} has a Lymi password, a reset link is on the way. It works for one hour."
+msgstr "If {address} has a Lymi password, a reset link is on the way. It works for one hour."
 
 msgid "Known"
 msgstr "Known"
@@ -179,6 +239,9 @@ msgstr "Leave it empty and the AI fills it in"
 
 msgid "Lesson"
 msgstr "Lesson"
+
+msgid "Lymi is free to use."
+msgstr "Lymi is free to use."
 
 msgid "Meaning"
 msgstr "Meaning"
@@ -202,6 +265,9 @@ msgctxt "cards in this state"
 msgid "New"
 msgstr "New"
 
+msgid "New to Lymi?"
+msgstr "New to Lymi?"
+
 msgid "No section"
 msgstr "No section"
 
@@ -210,6 +276,9 @@ msgstr "Notes"
 
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."
+
+msgid "Password"
+msgstr "Password"
 
 msgid "Picture"
 msgstr "Picture"
@@ -241,6 +310,9 @@ msgstr "Pronunciation from lesson"
 msgid "Recognition"
 msgstr "Recognition"
 
+msgid "Reset your password"
+msgstr "Reset your password"
+
 msgid "Reviews a day. Finishing everything due also counts."
 msgstr "Reviews a day. Finishing everything due also counts."
 
@@ -256,11 +328,32 @@ msgstr "See the meaning, recall the term"
 msgid "See the term, recall what it means"
 msgstr "See the term, recall what it means"
 
+msgid "Send a new code"
+msgstr "Send a new code"
+
+msgid "Send reset link"
+msgstr "Send reset link"
+
+msgid "Sent again"
+msgstr "Sent again"
+
 msgid "Show password"
 msgstr "Show password"
 
+msgid "Sign in"
+msgstr "Sign in"
+
 msgid "Sign in to continue."
 msgstr "Sign in to continue."
+
+msgid "Sign in to Lymi"
+msgstr "Sign in to Lymi"
+
+msgid "Sign in with email"
+msgstr "Sign in with email"
+
+msgid "Sign-in didn’t finish. Try again."
+msgstr "Sign-in didn’t finish. Try again."
 
 msgid "Source"
 msgstr "Source"
@@ -274,8 +367,20 @@ msgstr "Take a photo"
 msgid "Term"
 msgstr "Term"
 
+msgid "That code doesn’t match. Check the email and try again."
+msgstr "That code doesn’t match. Check the email and try again."
+
+msgid "That code has expired. Send a new one."
+msgstr "That code has expired. Send a new one."
+
 msgid "That didn’t go through. Reload and try again."
 msgstr "That didn’t go through. Reload and try again."
+
+msgid "That email and password don’t match."
+msgstr "That email and password don’t match."
+
+msgid "That password is too easy to guess. Try another."
+msgstr "That password is too easy to guess. Try another."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "That’s no longer here. Reload to see what changed."
@@ -286,11 +391,29 @@ msgstr "Today"
 msgid "Today counts."
 msgstr "Today counts."
 
+msgid "Too many attempts. Try again later."
+msgstr "Too many attempts. Try again later."
+
+msgid "Too many tries with this code. Send a new one."
+msgstr "Too many tries with this code. Send a new one."
+
 msgid "Try again"
 msgstr "Try again"
 
 msgid "Undo"
 msgstr "Undo"
+
+msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
+msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
+
+msgid "Use at most {MAX_PASSWORD_LENGTH} characters."
+msgstr "Use at most {MAX_PASSWORD_LENGTH} characters."
+
+msgid "We’ll email you a link to set a new one."
+msgstr "We’ll email you a link to set a new one."
+
+msgid "Welcome back."
+msgstr "Welcome back."
 
 msgid "What it means"
 msgstr "What it means"
@@ -303,3 +426,6 @@ msgstr "You"
 
 msgid "You wrote this"
 msgstr "You wrote this"
+
+msgid "Your cards and your streak, on every device."
+msgstr "Your cards and your streak, on every device."

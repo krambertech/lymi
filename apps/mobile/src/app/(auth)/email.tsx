@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { useRouter } from "expo-router";
 import { useEffect, useRef } from "react";
 import { ScrollView, View } from "react-native";
@@ -9,6 +10,7 @@ import { Icon, Press, Text } from "../../ui/primitives";
 
 /** The email forms on their own screen, top-aligned, so nothing re-centres as a step changes. */
 export default function Email() {
+  const { t } = useLingui();
   const door = useDoor();
   const router = useRouter();
   const insets = useSafeAreaInsets();
@@ -32,7 +34,7 @@ export default function Email() {
           accessibilityRole="link"
         >
           <Icon name="back" size={20} colour={p.text} />
-          <Text className="text-md font-medium text-text-2">Back</Text>
+          <Text className="text-md font-medium text-text-2">{t`Back`}</Text>
         </Press>
       </View>
       <EmailContent door={door} />

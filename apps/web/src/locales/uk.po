@@ -35,10 +35,6 @@ msgstr "{0, plural, =0 {Картки потрапили в колоди, які 
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} з # повторення} few {{2} з # повторень} many {{2} з # повторень} other {{2} з # повторення}}"
 
-#. placeholder {0}: skipped.length
-msgid "{0, plural, one {# already in your decks} other {# already in your decks}}"
-msgstr "{0, plural, one {# вже є у твоїх колодах} few {# вже є у твоїх колодах} many {# вже є у твоїх колодах} other {# вже є у твоїх колодах}}"
-
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# archived card arrives archived.} other {# archived cards arrive archived.}}"
 msgstr "{0, plural, one {# архівна картка прийде в архів.} few {# архівні картки прийдуть в архів.} many {# архівних карток прийдуть в архів.} other {# архівної картки прийдуть в архів.}}"
@@ -92,10 +88,6 @@ msgstr "{0, plural, one {# картка з архіву Mochi прийде в а
 #. placeholder {0}: deck.cards
 msgid "{0, plural, one {# card, known} other {# cards, all known}}"
 msgstr "{0, plural, one {# картка, засвоєна} few {# картки, усі засвоєні} many {# карток, усі засвоєні} other {# картки, усі засвоєні}}"
-
-#. placeholder {0}: result.total
-msgid "{0, plural, one {# card, newest first} other {# cards, newest first}}"
-msgstr "{0, plural, one {# картка, спершу нові} few {# картки, спершу нові} many {# карток, спершу нові} other {# картки, спершу нові}}"
 
 #. placeholder {0}: deck.cardCount
 #. placeholder {0}: deck.cards
@@ -182,14 +174,6 @@ msgstr "{0, plural, one {# звук пропущено. Lymi сам вимовл
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
 msgstr "{0, plural, one {# призупинена картка прийде в архів.} few {# призупинені картки прийдуть в архів.} many {# призупинених карток прийдуть в архів.} other {# призупиненої картки прийдуть в архів.}}"
-
-#. placeholder {0}: result.added
-msgid "{0, plural, one {Added # card to {deckName}} other {Added # cards to {deckName}}}"
-msgstr "{0, plural, one {Додано # картку в «{deckName}»} few {Додано # картки в «{deckName}»} many {Додано # карток в «{deckName}»} other {Додано # картки в «{deckName}»}}"
-
-#. placeholder {0}: result.added
-msgid "{0, plural, one {Added # card} other {Added # cards}}"
-msgstr "{0, plural, one {Додано # картку} few {Додано # картки} many {Додано # карток} other {Додано # картки}}"
 
 #. placeholder {0}: preview.duplicates - preview.duplicateExamples.length
 msgid "{0, plural, one {and # more} other {and # more}}"
@@ -400,9 +384,6 @@ msgstr "{cards, plural, one {# картка} few {# картки} many {# кар
 msgid "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
 msgstr "{count, plural, =0 {Вибрати картки} one {Вибрано: #} few {Вибрано: #} many {Вибрано: #} other {Вибрано: #}}"
 
-msgid "{count, plural, one {# card found} other {# cards found}}"
-msgstr "{count, plural, one {Знайдено # картку} few {Знайдено # картки} many {Знайдено # карток} other {Знайдено # картки}}"
-
 msgid "{count, plural, one {# new} other {# new}}"
 msgstr "{count, plural, one {# нова} few {# нові} many {# нових} other {# нової}}"
 
@@ -507,6 +488,9 @@ msgstr "{done} із {size}"
 
 msgid "{due, plural, one {# card to review} other {# cards to review}}"
 msgstr "{due, plural, one {# картка для повторення} few {# картки для повторення} many {# карток для повторення} other {# картки для повторення}}"
+
+msgid "{due, plural, one {# due now} other {# due now}}"
+msgstr "{due, plural, one {# до повторення зараз} few {# до повторення зараз} many {# до повторення зараз} other {# до повторення зараз}}"
 
 msgid "{due, plural, one {# due today} other {# due today}}"
 msgstr "{due, plural, one {# на сьогодні} few {# на сьогодні} many {# на сьогодні} other {# на сьогодні}}"
@@ -632,9 +616,6 @@ msgstr "Файл .mochi, до 1 ГБ. Можна також перетягнут
 
 msgid "A .zip file, up to 1 GB. You can also drop it here."
 msgstr "Файл .zip до 1 ГБ. Можна також перетягнути його сюди."
-
-msgid "A card needs a term."
-msgstr "Картці потрібен термін."
 
 msgid "A change made offline couldn’t be saved. {reason}"
 msgstr "Не вдалося зберегти зміну, зроблену офлайн. {reason}"
@@ -779,9 +760,6 @@ msgstr "Додати через Google"
 msgid "Add, edit and archive cards"
 msgstr "Додавати, редагувати й архівувати картки"
 
-msgid "Added"
-msgstr "Додані"
-
 #. placeholder {0}: outcome.term
 msgid "Added “{0}”"
 msgstr "Додано «{0}»"
@@ -857,9 +835,6 @@ msgstr "Дозволити"
 msgctxt "deck tag"
 msgid "Alphabet"
 msgstr "Алфавіт"
-
-msgid "Already in your decks"
-msgstr "Вже є у твоїх колодах"
 
 msgid "Also adds, edits and archives them."
 msgstr "Також додає, редагує й архівує їх."
@@ -1138,9 +1113,6 @@ msgstr "Картки з’являться тут, коли {owner} їх дод�
 msgid "Cards by stage"
 msgstr "Картки за етапами"
 
-msgid "Cards found"
-msgstr "Знайдені картки"
-
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Картки з вівторкових уроків Марко."
 
@@ -1152,9 +1124,6 @@ msgstr "Картки збережуть дати повторення, які м
 
 msgid "Cards outside a section"
 msgstr "Картки поза розділами"
-
-msgid "Cards you add show up here."
-msgstr "Тут з’являться картки, які ти додаси."
 
 msgctxt "deck tag"
 msgid "CCSE Spanish nationality test"
@@ -1487,9 +1456,6 @@ msgstr "Не вдалося вилучити учасника. Спробуй щ
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Не вдалося зберегти «{failedTerm}». Перевір з’єднання й повтори спробу."
 
-msgid "Couldn’t save the card. Your changes are still here."
-msgstr "Не вдалося зберегти картку. Твої зміни нікуди не зникли."
-
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не вдалося зберегти мову. Перевір з’єднання й повтори спробу."
 
@@ -1516,9 +1482,6 @@ msgstr "Не вдалося зберегти оцінку для «{term}». Ц�
 
 msgid "Couldn’t save. Try again."
 msgstr "Не вдалося зберегти. Спробуй ще раз."
-
-msgid "Couldn’t search your cards. Try again in a moment."
-msgstr "Не вдалося знайти картки. Спробуй ще раз за хвилину."
 
 msgid "Couldn’t send the invitation. Too many went out recently, so try again later."
 msgstr "Не вдалося надіслати запрошення. Забагато запрошень за короткий час, тож спробуй пізніше."
@@ -1757,9 +1720,6 @@ msgstr "Попередні полиці"
 msgid "Easy"
 msgstr "Легко"
 
-msgid "Edit"
-msgstr "Редагувати"
-
 msgid "Edit card"
 msgstr "Редагувати картку"
 
@@ -1807,9 +1767,6 @@ msgstr "Доповнено {list}"
 
 msgid "Enriched this card"
 msgstr "Картку доповнено"
-
-msgid "Enriching"
-msgstr "Доповнюємо"
 
 msgid "Enriching this card"
 msgstr "Доповнюємо цю картку"
@@ -2654,9 +2611,6 @@ msgstr "Нова серія"
 msgid "New to Lymi?"
 msgstr "Уперше в Lymi?"
 
-msgid "Newest cards"
-msgstr "Найновіші картки"
-
 msgid "Next"
 msgstr "Наступне"
 
@@ -2688,18 +2642,12 @@ msgstr "Архівованих розділів немає."
 msgid "No card of this kind has a term."
 msgstr "Жодна картка цього виду не має терміна."
 
-msgid "No cards found"
-msgstr "Карток не знайдено"
-
 #. placeholder {0}: deck.name
 msgid "No cards in {0} yet"
 msgstr "У колоді {0} ще немає карток"
 
 msgid "No cards match “{query}”"
 msgstr "Немає карток за запитом «{query}»"
-
-msgid "No cards match “{query}”."
-msgstr "Немає карток для «{query}»."
 
 msgid "No cards match these filters"
 msgstr "Жодна картка не підходить під ці фільтри"
@@ -2839,9 +2787,6 @@ msgstr "У «{scopeName}» більше нічого"
 
 msgid "Nothing left in this deck"
 msgstr "У цій колоді більше нічого"
-
-msgid "Nothing new to add"
-msgstr "Нічого нового не додано"
 
 msgid "Nothing published yet"
 msgstr "Ще нічого не опубліковано"
@@ -3343,9 +3288,6 @@ msgstr "Як у колоді"
 msgid "Save"
 msgstr "Зберегти"
 
-msgid "Save mine"
-msgstr "Зберегти мою"
-
 msgid "Save password"
 msgstr "Зберегти пароль"
 
@@ -3397,9 +3339,6 @@ msgstr "Пошук дивиться на термін і значення."
 
 msgid "Search this deck"
 msgstr "Шукати в цій колоді"
-
-msgid "Search your cards"
-msgstr "Пошук карток"
 
 msgid "Section"
 msgstr "Розділ"
@@ -3852,9 +3791,6 @@ msgstr "Ця людина вже в колоді."
 msgid "This browser can’t show reminders."
 msgstr "Цей браузер не показує нагадувань."
 
-msgid "This card changed while you were editing it."
-msgstr "Ця картка змінилася під час редагування."
-
 msgid "This card’s picture was removed."
 msgstr "Зображення цієї картки прибрано."
 
@@ -4086,9 +4022,6 @@ msgstr "Використати посилання"
 
 msgid "Use the deck’s"
 msgstr "Повернути як у колоді"
-
-msgid "Use the new version"
-msgstr "Узяти нову версію"
 
 msgid "Use these fields"
 msgstr "Використати ці поля"

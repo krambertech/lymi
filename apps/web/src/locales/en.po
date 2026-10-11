@@ -35,10 +35,6 @@ msgstr "{0, plural, =0 {The cards went into decks you already had.} one {They’
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 
-#. placeholder {0}: skipped.length
-msgid "{0, plural, one {# already in your decks} other {# already in your decks}}"
-msgstr "{0, plural, one {# already in your decks} other {# already in your decks}}"
-
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# archived card arrives archived.} other {# archived cards arrive archived.}}"
 msgstr "{0, plural, one {# archived card arrives archived.} other {# archived cards arrive archived.}}"
@@ -92,10 +88,6 @@ msgstr "{0, plural, one {# card you archived in Mochi arrives archived.} other {
 #. placeholder {0}: deck.cards
 msgid "{0, plural, one {# card, known} other {# cards, all known}}"
 msgstr "{0, plural, one {# card, known} other {# cards, all known}}"
-
-#. placeholder {0}: result.total
-msgid "{0, plural, one {# card, newest first} other {# cards, newest first}}"
-msgstr "{0, plural, one {# card, newest first} other {# cards, newest first}}"
 
 #. placeholder {0}: deck.cardCount
 #. placeholder {0}: deck.cards
@@ -182,14 +174,6 @@ msgstr "{0, plural, one {# sound is skipped. Lymi reads terms aloud itself.} oth
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
 msgstr "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
-
-#. placeholder {0}: result.added
-msgid "{0, plural, one {Added # card to {deckName}} other {Added # cards to {deckName}}}"
-msgstr "{0, plural, one {Added # card to {deckName}} other {Added # cards to {deckName}}}"
-
-#. placeholder {0}: result.added
-msgid "{0, plural, one {Added # card} other {Added # cards}}"
-msgstr "{0, plural, one {Added # card} other {Added # cards}}"
 
 #. placeholder {0}: preview.duplicates - preview.duplicateExamples.length
 msgid "{0, plural, one {and # more} other {and # more}}"
@@ -400,9 +384,6 @@ msgstr "{cards, plural, one {# card} other {# cards}} · {0}"
 msgid "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
 msgstr "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
 
-msgid "{count, plural, one {# card found} other {# cards found}}"
-msgstr "{count, plural, one {# card found} other {# cards found}}"
-
 msgid "{count, plural, one {# new} other {# new}}"
 msgstr "{count, plural, one {# new} other {# new}}"
 
@@ -507,6 +488,9 @@ msgstr "{done} of {size}"
 
 msgid "{due, plural, one {# card to review} other {# cards to review}}"
 msgstr "{due, plural, one {# card to review} other {# cards to review}}"
+
+msgid "{due, plural, one {# due now} other {# due now}}"
+msgstr "{due, plural, one {# due now} other {# due now}}"
 
 msgid "{due, plural, one {# due today} other {# due today}}"
 msgstr "{due, plural, one {# due today} other {# due today}}"
@@ -632,9 +616,6 @@ msgstr "A .mochi file, up to 1 GB. You can also drop it here."
 
 msgid "A .zip file, up to 1 GB. You can also drop it here."
 msgstr "A .zip file, up to 1 GB. You can also drop it here."
-
-msgid "A card needs a term."
-msgstr "A card needs a term."
 
 msgid "A change made offline couldn’t be saved. {reason}"
 msgstr "A change made offline couldn’t be saved. {reason}"
@@ -779,9 +760,6 @@ msgstr "Add with Google"
 msgid "Add, edit and archive cards"
 msgstr "Add, edit and archive cards"
 
-msgid "Added"
-msgstr "Added"
-
 #. placeholder {0}: outcome.term
 msgid "Added “{0}”"
 msgstr "Added “{0}”"
@@ -857,9 +835,6 @@ msgstr "Allow"
 msgctxt "deck tag"
 msgid "Alphabet"
 msgstr "Alphabet"
-
-msgid "Already in your decks"
-msgstr "Already in your decks"
 
 msgid "Also adds, edits and archives them."
 msgstr "Also adds, edits and archives them."
@@ -1138,9 +1113,6 @@ msgstr "Cards appear here when {owner} adds them."
 msgid "Cards by stage"
 msgstr "Cards by stage"
 
-msgid "Cards found"
-msgstr "Cards found"
-
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Cards from Marco’s Tuesday lessons."
 
@@ -1152,9 +1124,6 @@ msgstr "Cards keep the due dates they had in {app}."
 
 msgid "Cards outside a section"
 msgstr "Cards outside a section"
-
-msgid "Cards you add show up here."
-msgstr "Cards you add show up here."
 
 msgctxt "deck tag"
 msgid "CCSE Spanish nationality test"
@@ -1487,9 +1456,6 @@ msgstr "Couldn’t remove the member. Try again."
 msgid "Couldn’t save “{failedTerm}”. Check your connection and try again."
 msgstr "Couldn’t save “{failedTerm}”. Check your connection and try again."
 
-msgid "Couldn’t save the card. Your changes are still here."
-msgstr "Couldn’t save the card. Your changes are still here."
-
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Couldn’t save the language. Check your connection and try again."
 
@@ -1516,9 +1482,6 @@ msgstr "Couldn’t save your grade for “{term}”. You’ll see it again."
 
 msgid "Couldn’t save. Try again."
 msgstr "Couldn’t save. Try again."
-
-msgid "Couldn’t search your cards. Try again in a moment."
-msgstr "Couldn’t search your cards. Try again in a moment."
 
 msgid "Couldn’t send the invitation. Too many went out recently, so try again later."
 msgstr "Couldn’t send the invitation. Too many went out recently, so try again later."
@@ -1757,9 +1720,6 @@ msgstr "Earlier shelves"
 msgid "Easy"
 msgstr "Easy"
 
-msgid "Edit"
-msgstr "Edit"
-
 msgid "Edit card"
 msgstr "Edit card"
 
@@ -1807,9 +1767,6 @@ msgstr "Enriched {list}"
 
 msgid "Enriched this card"
 msgstr "Enriched this card"
-
-msgid "Enriching"
-msgstr "Enriching"
 
 msgid "Enriching this card"
 msgstr "Enriching this card"
@@ -2654,9 +2611,6 @@ msgstr "New series"
 msgid "New to Lymi?"
 msgstr "New to Lymi?"
 
-msgid "Newest cards"
-msgstr "Newest cards"
-
 msgid "Next"
 msgstr "Next"
 
@@ -2688,18 +2642,12 @@ msgstr "No archived sections."
 msgid "No card of this kind has a term."
 msgstr "No card of this kind has a term."
 
-msgid "No cards found"
-msgstr "No cards found"
-
 #. placeholder {0}: deck.name
 msgid "No cards in {0} yet"
 msgstr "No cards in {0} yet"
 
 msgid "No cards match “{query}”"
 msgstr "No cards match “{query}”"
-
-msgid "No cards match “{query}”."
-msgstr "No cards match “{query}”."
 
 msgid "No cards match these filters"
 msgstr "No cards match these filters"
@@ -2839,9 +2787,6 @@ msgstr "Nothing left in {scopeName}"
 
 msgid "Nothing left in this deck"
 msgstr "Nothing left in this deck"
-
-msgid "Nothing new to add"
-msgstr "Nothing new to add"
 
 msgid "Nothing published yet"
 msgstr "Nothing published yet"
@@ -3343,9 +3288,6 @@ msgstr "Same as the deck"
 msgid "Save"
 msgstr "Save"
 
-msgid "Save mine"
-msgstr "Save mine"
-
 msgid "Save password"
 msgstr "Save password"
 
@@ -3397,9 +3339,6 @@ msgstr "Search looks at the term and the meaning."
 
 msgid "Search this deck"
 msgstr "Search this deck"
-
-msgid "Search your cards"
-msgstr "Search your cards"
 
 msgid "Section"
 msgstr "Section"
@@ -3852,9 +3791,6 @@ msgstr "They’re already in this deck."
 msgid "This browser can’t show reminders."
 msgstr "This browser can’t show reminders."
 
-msgid "This card changed while you were editing it."
-msgstr "This card changed while you were editing it."
-
 msgid "This card’s picture was removed."
 msgstr "This card’s picture was removed."
 
@@ -4086,9 +4022,6 @@ msgstr "Use link"
 
 msgid "Use the deck’s"
 msgstr "Use the deck’s"
-
-msgid "Use the new version"
-msgstr "Use the new version"
 
 msgid "Use these fields"
 msgstr "Use these fields"

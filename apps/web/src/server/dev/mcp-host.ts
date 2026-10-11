@@ -50,7 +50,7 @@ export async function callAsMcp(
 }
 
 export function devHostView(value: string | undefined): McpView {
-  return MCP_VIEWS.find((view) => view === value) ?? "capture";
+  return MCP_VIEWS.find((view) => view === value) ?? "card";
 }
 
 /** The harness page: the view in a frame, and what the view told the host beside it. */
@@ -105,23 +105,10 @@ const call = async (name, args) => {
   return response.json();
 };
 const sample = {
-  async capture() {
-    const decks = (await call("list_decks", {})).structuredContent.decks;
-    const deck = decks[0];
-    const existing = (await call("get_deck", { deckId: deck.id })).structuredContent.cards[0];
-    const cards = [
-      { deckId: deck.id, term: "il binario", meaning: "the platform (track)", meaningSource: "lesson", example: "Il treno parte dal binario tre.", exampleSource: "lesson", source: "Lesson 13" },
-      { deckId: deck.id, term: "la fermata", meaning: "the stop", meaningSource: "lesson", source: "Lesson 13" },
-      { deckId: deck.id, term: "perdere il treno", source: "Lesson 13", enrich: true },
-      ...(existing ? [{ deckId: deck.id, term: existing.term, source: "Lesson 13" }] : []),
-    ];
-    return ["add_cards", { cards }];
-  },
   async card() {
     const found = (await call("search_cards", { limit: 1 })).structuredContent.cards[0];
     return ["get_card", { cardId: found.id }];
   },
-  async search() { return ["search_cards", { limit: 8 }]; },
   async deck() {
     const decks = (await call("list_decks", {})).structuredContent.decks;
     return ["get_deck", { deckId: decks[0].id }];

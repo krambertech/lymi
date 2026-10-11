@@ -6,10 +6,8 @@ import type { Db } from "../db";
 import { buildMcpServer, type McpPrincipal } from "./server";
 
 const VIEW_TOOLS = {
-  add_cards: "capture",
   get_card: "card",
   update_card: "card",
-  search_cards: "search",
   get_deck: "deck",
   due_counts: "due",
   get_insights: "insights",
@@ -52,7 +50,7 @@ describe("the MCP Apps views", () => {
   it("serves the view in the learner's language, naming the view and Lymi's origin", async () => {
     const client = await connect({ appLanguage: "uk" });
     const { tools } = await client.listTools();
-    const meta = tools.find((t) => t.name === "add_cards")?._meta?.ui as
+    const meta = tools.find((t) => t.name === "get_card")?._meta?.ui as
       | { resourceUri: string }
       | undefined;
     const uri = meta?.resourceUri ?? "";
@@ -63,7 +61,7 @@ describe("the MCP Apps views", () => {
     expect(content?.mimeType).toBe(RESOURCE_MIME_TYPE);
     const html = content && "text" in content ? content.text : "";
     expect(html).toContain('<html lang="uk"');
-    expect(html).toContain('<meta name="lymi-view" content="capture">');
+    expect(html).toContain('<meta name="lymi-view" content="card">');
     expect(html).toContain('<meta name="lymi-origin" content="https://my.lymi.app">');
     const catalog = html.match(
       /<script type="application\/json" id="lymi-messages">(.*?)<\/script>/,

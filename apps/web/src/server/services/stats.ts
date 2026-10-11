@@ -9,7 +9,7 @@ import { schema } from "../db";
 import type { ServiceContext } from "./context";
 import { addDays, dateFormatter, daysBetween, type LocalDateFormatter } from "./days";
 import { asked } from "./decks";
-import { memberOf } from "./members";
+import { deckAccess, memberOf } from "./members";
 import { type Outcome, reviewZone, type StreakDay, streakDays } from "./review-days";
 import { waitingCardsSql } from "./sections";
 import { getSettings } from "./settings";
@@ -254,7 +254,7 @@ export function withImported(
 }
 
 /** Cards by FSRS state, plus the ones that have no state yet because nothing asked them. */
-async function collection({ db, userId }: ServiceContext) {
+async function collection({ db, userId }: ServiceContext, deckId?: string) {
   // A card is counted once, at the least advanced of the directions it is actually asked
   // in: it is not Known until every direction is. Hardcoding `recognition` here would file
   // every card in a production-only deck under New.
@@ -282,6 +282,7 @@ async function collection({ db, userId }: ServiceContext) {
       where ${memberOf(userId)}
         and cards.archived_at is null
         and decks.archived_at is null
+        ${deckId ? sql`and cards.deck_id = ${deckId}` : sql``}
       group by cards.id
     )
   `);
@@ -293,6 +294,13 @@ async function collection({ db, userId }: ServiceContext) {
     learning: totals?.learning ?? 0,
     known: totals?.known ?? 0,
   };
+}
+
+/** One deck's active cards by stage, counted as Insights counts the whole collection. */
+export async function deckStages(ctx: ServiceContext, deckId: string) {
+  await deckAccess(ctx, deckId);
+  const { new: fresh, learning, known } = await collection(ctx, deckId);
+  return { new: fresh, learning, known };
 }
 
 /**

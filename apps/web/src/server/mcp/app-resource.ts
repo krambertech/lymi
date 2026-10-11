@@ -87,7 +87,7 @@ export function registerViews(
                 redirect_domains: [origin],
               },
               "openai/widgetDescription":
-                "Shows the Lymi result to the learner, who can open a card, edit it, or open it in Lymi.",
+                "Shows the learner a Lymi card, a deck's progress, what is due, or how the week went, with a link into Lymi.",
             },
           },
         ],

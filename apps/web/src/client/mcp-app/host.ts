@@ -1,7 +1,6 @@
 import type { CallToolResult } from "@modelcontextprotocol/client";
 import type { App } from "@modelcontextprotocol/ext-apps";
 import { createContext, useContext } from "react";
-import type { ViewCard } from "../../shared/mcp-app";
 
 export type ToolOutcome<T> = { ok: true; data: T } | { ok: false; message: string };
 
@@ -13,8 +12,6 @@ export interface Host {
   /** A Lymi tool, called with the connection's own grant. */
   call<T>(tool: string, args: Record<string, unknown>): Promise<ToolOutcome<T>>;
   open(url: string): void;
-  /** Tells the assistant which card the learner means, or that they deselected it. */
-  select(card: (ViewCard & { deckName?: string | undefined }) | null): void;
   /** Lymi's own origin, for links into the app. */
   origin: string;
 }
@@ -48,32 +45,6 @@ export function bridgeHost(app: App, origin: string): Host {
     },
     open(url) {
       void app.openLink({ url }).catch(() => window.open(url, "_blank", "noopener"));
-    },
-    select(card) {
-      // Only the card in hand: its id, so a follow-up tool call can name it, and the text the
-      // learner sees. Nothing else the view shows enters model context. ADR 0026.
-      void app
-        .updateModelContext(
-          card
-            ? {
-                content: [
-                  {
-                    type: "text",
-                    text: `The learner selected the Lymi card "${card.term}" (cardId ${card.id}${card.deckName ? `, deck ${card.deckName}` : ""}). Meaning: ${card.meaning ?? "none yet"}.`,
-                  },
-                ],
-                structuredContent: {
-                  selectedCard: {
-                    id: card.id,
-                    deckId: card.deckId,
-                    term: card.term,
-                    meaning: card.meaning,
-                  },
-                },
-              }
-            : { content: [] },
-        )
-        .catch(() => {});
     },
   };
 }

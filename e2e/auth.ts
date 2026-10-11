@@ -27,15 +27,18 @@ const sessions = new Map<string, StoredSession>();
  * The session comes from the same email endpoints the form posts to, so the account, the
  * allowlist and Better Auth are all real; only the walk through the form is skipped. A journey
  * whose subject is arriving drives the form instead, through `signInAsTestLearner`.
+ *
+ * A new account starts past Welcome, on the old default goal, unless `welcomed` is false.
  */
 export async function startAsTestLearner(
   page: Page,
   testInfo: TestInfo,
   account: E2EAccount,
   landOn?: string,
+  { welcomed = true }: { welcomed?: boolean } = {},
 ) {
   const email = emailFor(testInfo, account);
-  const session = sessions.get(email) ?? (await establishSession(email));
+  const session = sessions.get(email) ?? (await establishSession(email, welcomed));
   sessions.set(email, session);
   await page.context().addCookies(session.cookies);
   if (!landOn) return;
@@ -82,6 +85,15 @@ export async function signInAsTestLearner(
     await panel.getByRole("button", { name: "Create account", exact: true }).click();
     const retry = await created;
     expect(retry.ok(), `Sign in after creating failed with HTTP ${retry.status()}`).toBe(true);
+    // These journeys are about what comes after Welcome, wherever they land first.
+    await getPastWelcome(page.request, email);
+    // Today may have sent the account to Welcome before the answers landed.
+    await expect
+      .poll(async () => {
+        if (pathOf(page) === "/welcome") await page.goto(returnTo);
+        return pathOf(page);
+      })
+      .toBe(returnTo);
   } else {
     expect(signIn.ok(), `Sign in failed with HTTP ${signIn.status()}`).toBe(true);
   }
@@ -119,7 +131,7 @@ async function expectToday(page: Page) {
  * account on first use. Creating issues no session while verification is required, but a local
  * address is created already confirmed, so the sign-in straight after succeeds.
  */
-async function establishSession(email: string): Promise<StoredSession> {
+async function establishSession(email: string, welcomed: boolean): Promise<StoredSession> {
   const api = await request.newContext({
     baseURL: e2eProductUrl,
     // Better Auth trusts the product origin. A browser sends it, so this sends it too.
@@ -137,6 +149,7 @@ async function establishSession(email: string): Promise<StoredSession> {
       response = await signIn();
     }
     expect(response.ok(), `Sign in as ${email} failed with HTTP ${response.status()}`).toBe(true);
+    if (welcomed) await getPastWelcome(api, email);
 
     const state = await api.storageState();
     expect(state.cookies.length, `Sign in as ${email} set no cookie`).toBeGreaterThan(0);
@@ -144,6 +157,16 @@ async function establishSession(email: string): Promise<StoredSession> {
   } finally {
     await api.dispose();
   }
+}
+
+/** Through Welcome on the old default goal, so goal-counting journeys count as they did. */
+async function getPastWelcome(api: APIRequestContext, email: string) {
+  const welcome = await api.put("/api/settings/onboarding", {
+    data: { learningKind: null, learningLanguage: null, dailyGoal: 50 },
+  });
+  expect(welcome.ok(), `Getting ${email} past Welcome failed with HTTP ${welcome.status()}`).toBe(
+    true,
+  );
 }
 
 /** Ask the dev email form to create an account, without waiting for what it leads to. */

@@ -1,8 +1,20 @@
-import { DeviceTimezoneInput, ReviewTimezoneInput, SettingsOut, SettingsPatch } from "@lymi/core";
+import {
+  DeviceTimezoneInput,
+  OnboardingInput,
+  ReviewTimezoneInput,
+  SettingsOut,
+  SettingsPatch,
+} from "@lymi/core";
 import { Hono } from "hono";
 import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
-import { getSettings, reportDeviceTimezone, setReviewTimezone, updateSettings } from "../services";
+import {
+  finishOnboarding,
+  getSettings,
+  reportDeviceTimezone,
+  setReviewTimezone,
+  updateSettings,
+} from "../services";
 
 export const settings = new Hono<AppEnv>();
 
@@ -12,7 +24,7 @@ settings.get(
     tags: ["Settings"],
     summary: "Get settings",
     description:
-      "Created with defaults on first read. `appLanguage` is null until the learner chooses; `meaningLanguage` follows it and defaults to `en`.",
+      "Defaults until the first change. `appLanguage` is null until the learner chooses; `meaningLanguage` follows it and defaults to `en`.",
     ok: { schema: SettingsOut, description: "Settings" },
   }),
   async (c) => c.json(await getSettings(ctxOf(c))),
@@ -30,6 +42,21 @@ settings.patch(
   }),
   body(SettingsPatch, "settings"),
   async (c) => c.json(await updateSettings(ctxOf(c), c.req.valid("json"))),
+);
+
+settings.put(
+  "/onboarding",
+  describe({
+    tags: ["Settings"],
+    summary: "Finish getting set up",
+    learnerOnly: true,
+    description:
+      "Learner only. Records what the learner is learning and their daily goal from getting set up. Send every field null to skip: the goal becomes 25 unless the learner had already chosen one.",
+    ok: { schema: SettingsOut, description: "Settings after getting set up" },
+    errors: [400],
+  }),
+  body(OnboardingInput, "onboarding"),
+  async (c) => c.json(await finishOnboarding(ctxOf(c), c.req.valid("json"))),
 );
 
 settings.put(

@@ -82,6 +82,8 @@ export interface ReviewHeaderProps {
   streak?: StreakSummary | undefined;
   /** The review has stopped: the lantern has moved to the end screen and the track steps back. */
   complete?: boolean | undefined;
+  /** The cards have not arrived, so there is no count yet: a "0/0" read as an empty review. */
+  loading?: boolean | undefined;
   onClose?: (() => void) | undefined;
 }
 
@@ -105,6 +107,7 @@ export function ReviewHeader({
   animateCount = true,
   streak,
   complete = false,
+  loading = false,
   onClose,
 }: ReviewHeaderProps) {
   const { t } = useLingui();
@@ -142,17 +145,21 @@ export function ReviewHeader({
           animate={animateCount}
           className="min-w-0 flex-1"
         />
-        <span className="shrink-0 text-sm font-medium tabular-nums text-text-2">
-          {/* The slash is read aloud as a fraction, so a screen reader gets the sentence instead. */}
-          <span aria-hidden="true">
-            <RollingCount value={done} animate={animateCount} />/{size}
+        {loading ? (
+          <Skeleton className="h-4 w-9 shrink-0" />
+        ) : (
+          <span className="shrink-0 text-sm font-medium tabular-nums text-text-2">
+            {/* The slash is read aloud as a fraction, so a screen reader gets the sentence instead. */}
+            <span aria-hidden="true">
+              <RollingCount value={done} animate={animateCount} />/{size}
+            </span>
+            <span className="sr-only">
+              <Trans>
+                {done} of {size}
+              </Trans>
+            </span>
           </span>
-          <span className="sr-only">
-            <Trans>
-              {done} of {size}
-            </Trans>
-          </span>
-        </span>
+        )}
       </motion.span>
       {/* Quiet but not small: a 40 px circle with a 52 px hit area, pulled out so the X sits on the card edge. */}
       <IconButton

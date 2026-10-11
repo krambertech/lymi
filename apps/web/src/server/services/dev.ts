@@ -59,7 +59,7 @@ export async function devCounts({ db, userId }: ServiceContext): Promise<DevCoun
   };
 }
 
-/** Everything the account holds in the product: decks, cards, states, reviews, audit, settings. */
+/** Everything the account holds in the product: decks and memberships, cards, states, reviews, audit, settings. */
 export async function resetAccount({ db, userId }: ServiceContext): Promise<void> {
   await db.batch([
     db.delete(schema.reviewUndos).where(eq(schema.reviewUndos.userId, userId)),
@@ -68,6 +68,8 @@ export async function resetAccount({ db, userId }: ServiceContext): Promise<void
     db.delete(schema.reviewDays).where(eq(schema.reviewDays.userId, userId)),
     db.delete(schema.cardStates).where(eq(schema.cardStates.userId, userId)),
     db.delete(schema.cards).where(eq(schema.cards.userId, userId)),
+    // A published deck the persona added is someone else's, so only the membership goes.
+    db.delete(schema.deckMembers).where(eq(schema.deckMembers.userId, userId)),
     db.delete(schema.decks).where(eq(schema.decks.userId, userId)),
     db.delete(schema.series).where(eq(schema.series.userId, userId)),
     db.delete(schema.auditLog).where(eq(schema.auditLog.userId, userId)),

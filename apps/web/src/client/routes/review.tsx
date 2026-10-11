@@ -896,6 +896,7 @@ function Review() {
         round={leg && until === null ? { done: legDone, size: legSize } : undefined}
         streak={streakNow}
         complete={!!end}
+        loading={!data && !failed}
         onClose={leave}
       />
 

@@ -71,7 +71,7 @@ Capture is one plus for what a learner adds by hand: a word or a deck. It is rou
 
 ## Today
 
-Today is a page of cards, not a single stage. Until the first review it is the getting started guide ([empty-states.md](empty-states.md)).
+Today is a page of cards, not a single stage. An account with nothing in it that has not been through Welcome opens there instead ([onboarding.md](../onboarding.md)). Until the first review Today is the getting started guide ([empty-states.md](empty-states.md)).
 
 1. The due card leads: the lantern beside how many cards are due, then one full-width Review button, `size="xl"`. With a single deck it names the deck.
 2. The streak card sits beside it on desktop, in the narrower column, and under it on the phone.

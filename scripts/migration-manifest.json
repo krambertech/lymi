@@ -171,6 +171,10 @@
     {
       "name": "0042_crazy_vengeance.sql",
       "sha256": "07e2a07b5a9894077d9176141a38efc00022e11a67bc7c00e00fcfed07b05f0d"
+    },
+    {
+      "name": "0043_mixed_ink.sql",
+      "sha256": "d54bf5d7c971b7dc0e9ad54b8ffc981060b22505a323ed4e6edf48de85668811"
     }
   ]
 }

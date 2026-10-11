@@ -10,7 +10,7 @@ import {
 import type { CSSProperties, ReactNode } from "react";
 import { type DeckCard, languageName, type RecallCue } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
-import { productUrl } from "../../lib/origins";
+import { openLymiUrl, productUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { deckSubject } from "../../lib/subjects";
 import { buttonClass } from "../Button";
@@ -439,7 +439,7 @@ interface FooterProps extends LocaleProps {
 export function DeckFooter({ locale, languagePaths }: FooterProps) {
   return (
     <Localized locale={locale}>
-      <SiteFooter openAppUrl={productUrl()} paths={languagePaths} />
+      <SiteFooter openAppUrl={openLymiUrl()} paths={languagePaths} />
     </Localized>
   );
 }

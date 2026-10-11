@@ -26,7 +26,6 @@ export default {
   },
 } satisfies ExportedHandler<Bindings>;
 
-export { DiagnoseWorkflow } from "./diagnosis/workflow";
 export { EnrichWorkflow } from "./enrichment/workflow";
 export { ExportWorkflow } from "./exports/workflow";
 export { ImportWorkflow } from "./imports/workflow";

@@ -31,7 +31,7 @@ export function ConnectedAppsSection() {
   return (
     <SettingsGroup
       title={t`Connected apps`}
-      description={t`AI apps connected to your Lymi account (Claude, ChatGPT, …).`}
+      description={t`Connect ChatGPT or Claude so it can turn your notes, PDFs or textbook into Lymi cards.`}
     >
       {apps.isPending && <Skeleton className="h-14 w-full" />}
 
@@ -39,7 +39,7 @@ export function ConnectedAppsSection() {
         <EmptySection
           icon={<Plug />}
           title={t`No apps connected`}
-          body={t`Add Lymi as an MCP server in Claude or ChatGPT, then sign in when asked.`}
+          body={t`For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute.`}
           action={
             <Button render={<a href={publicSiteUrl("/docs/mcp")} />}>
               <Trans>How to connect</Trans>

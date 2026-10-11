@@ -26,6 +26,8 @@ export type SourceNoteType = {
   /** For each card template, the field its question shows, which decides the review mode. */
   questions: (number | null)[];
   notes: number;
+  /** Keys of the decks holding this kind's cards, found while inspecting; absent for older imports. */
+  decks?: string[] | undefined;
   /** Up to three notes' fields as plain text, so the learner can see what each field holds. */
   samples: string[][];
 };

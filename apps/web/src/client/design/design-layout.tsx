@@ -1,11 +1,12 @@
 import { Link, Outlet } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { Menu } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { IconButton } from "../components/button";
 import { ShellChrome } from "../components/layout/shell-chrome";
 import { AppTile, Wordmark } from "../components/logo";
 import { StaticNavProvider } from "../components/nav-link";
+import { RailHeading, RailNav, RailRow } from "../components/rail-nav";
 import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import { setTheme } from "../lib/theme";
 import { designChrome } from "./chrome";
@@ -16,10 +17,6 @@ import { IconToggle } from "./icon-toggle";
 import { type DocRef, FOUNDATIONS, GROUPS } from "./registry";
 
 const DESIGN_CHROME = designChrome();
-
-const heading = "mx-2.5 mb-1.5 text-xs font-medium uppercase tracking-[0.06em] text-muted";
-const item =
-  "flex h-11 items-center rounded-sm px-2.5 text-base text-text-2 transition-[background-color,color,box-shadow] duration-150 hoverable:hover:bg-rail-hover hoverable:hover:text-text md:h-9 [&.active]:edge-inset [&.active]:bg-rail-chosen [&.active]:text-text";
 
 /** The design system's own frame: a rail like the app's, and one page at a time beside it. */
 export function DesignLayout() {
@@ -44,9 +41,9 @@ export function DesignLayout() {
             <Home />
             <IconToggle label="Theme" value={theme} onChange={setTheme} options={ROOM_THEMES} />
           </div>
-          <nav aria-label="Design system" className="min-h-0 flex-1 overflow-y-auto px-3 pb-8">
+          <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-8">
             <Contents />
-          </nav>
+          </div>
         </aside>
       </div>
 
@@ -70,9 +67,9 @@ export function DesignLayout() {
       <Dialog open={menu} onOpenChange={setMenu}>
         <DialogContent>
           <DialogTitle>Design system</DialogTitle>
-          <nav aria-label="Design system" className="-mx-3 max-h-[70dvh] overflow-y-auto px-3">
+          <div className="-mx-3 max-h-[70dvh] overflow-y-auto px-3">
             <Contents onNavigate={() => setMenu(false)} />
-          </nav>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
@@ -117,21 +114,21 @@ function Contents({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
     },
   ];
   return (
-    <div className="grid gap-7">
-      {sections.map((section) => (
-        <section key={section.title}>
-          <h2 className={heading}>{section.title}</h2>
-          <ul className="grid gap-0.5">
-            {section.links.map((l) => (
-              <li key={l.key}>
-                <DocLink to={l.to} className={item} onClick={onNavigate}>
-                  {l.name}
-                </DocLink>
-              </li>
-            ))}
-          </ul>
-        </section>
+    <RailNav aria-label="Design system">
+      {sections.map((section, i) => (
+        <Fragment key={section.title}>
+          <RailHeading className={i === 0 ? "mt-0" : undefined}>{section.title}</RailHeading>
+          {section.links.map((l) => (
+            <RailRow
+              key={l.key}
+              render={<DocLink to={l.to} onClick={onNavigate} />}
+              className="h-11 md:h-9"
+            >
+              {l.name}
+            </RailRow>
+          ))}
+        </Fragment>
       ))}
-    </div>
+    </RailNav>
   );
 }

@@ -478,3 +478,14 @@ export function streakFrom(counts: number[], goal = 10): StreakSummary {
 
 /** The streak panel's data: a run up to today with a gap before it. */
 export const streak = streakFrom(streakDays.map((n) => n * 2));
+
+/** Decks in a series, for the rail: a lesson series beside the loose decks above. */
+export const seriesDecks = [
+  { id: "s1", name: "Lezione 12", total: 18, due: 2, seriesId: "lessons" },
+  { id: "s2", name: "Lezione 13", total: 21, due: 0, seriesId: "lessons" },
+  { id: "s3", name: "Lezione 14", total: 16, due: 3, seriesId: "lessons" },
+];
+
+export const railSeries = [
+  { id: "lessons", name: "Italiano A2 con Giulia", deckIds: seriesDecks.map((d) => d.id) },
+];

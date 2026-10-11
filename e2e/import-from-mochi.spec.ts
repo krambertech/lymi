@@ -7,7 +7,7 @@ const MOCHI_FILE = join(process.cwd(), "apps/web/src/server/imports/mochi/fixtur
 
 /** The learner menu sits in the rail on a desktop and in the top bar on a phone; the one on screen is it. */
 function learnerMenu(page: Page) {
-  return page.getByRole("button", { name: "Dev", exact: true }).filter({ visible: true });
+  return page.getByTestId("learner-menu").filter({ visible: true });
 }
 
 test("a learner imports a Mochi export and finds it in Activity", async ({ page }, testInfo) => {

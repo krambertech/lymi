@@ -152,7 +152,11 @@ export function useFluidHover(ref: RefObject<HTMLElement | null>, options: Optio
         if (index === null) return s.shown ? { ...s, shown: false } : s;
         if (s.shown && s.index === index) return s;
         const rect = items[index]?.rect ?? null;
-        return s.shown ? { ...s, index, rect } : { index, rect, shown: true, enters: s.enters + 1 };
+        // Across a divider it fades in at the new row, so it never slides over a heading.
+        const crossed = s.index !== null && items[s.index]?.group !== items[index]?.group;
+        return s.shown && !crossed
+          ? { ...s, index, rect }
+          : { index, rect, shown: true, enters: s.enters + 1 };
       });
     },
     [ref, axis],

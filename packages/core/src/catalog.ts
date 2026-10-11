@@ -9,6 +9,7 @@ import {
   cards,
   deckEditions,
   deckLocalizations,
+  deckPageViews,
   deckPublications,
   decks,
   sectionLocalizations,
@@ -156,6 +157,44 @@ export function publisherAvatarPath(slug: string, version: string): string {
 
 export function isPublicDeckSlug(slug: string | undefined): slug is string {
   return typeof slug === "string" && slug.length <= 80 && PUBLICATION_SLUG.test(slug);
+}
+
+/**
+ * Count one request for a published deck's public page on its UTC day. A slug that is missing,
+ * withdrawn or archived counts nothing. Publisher reports read these rows; ADR 0028.
+ */
+export async function countDeckPageView(
+  db: CatalogDb,
+  slug: string,
+  locale: string,
+  at: Date = new Date(),
+): Promise<void> {
+  if (!isPublicDeckSlug(slug)) return;
+  const day = at.toISOString().slice(0, 10);
+  await db
+    .insert(deckPageViews)
+    .select(
+      db
+        .select({
+          deckId: deckPublications.deckId,
+          day: sql<string>`${day}`.as("day"),
+          locale: sql<string>`${locale}`.as("locale"),
+          views: sql<number>`1`.as("views"),
+        })
+        .from(deckPublications)
+        .innerJoin(decks, eq(decks.id, deckPublications.deckId))
+        .where(
+          and(
+            eq(deckPublications.slug, slug),
+            eq(deckPublications.status, "published"),
+            isNull(decks.archivedAt),
+          ),
+        ),
+    )
+    .onConflictDoUpdate({
+      target: [deckPageViews.deckId, deckPageViews.day, deckPageViews.locale],
+      set: { views: sql`${deckPageViews.views} + 1` },
+    });
 }
 
 /** A source link is shown only when it is a web address, never another scheme. */

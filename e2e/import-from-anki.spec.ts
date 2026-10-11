@@ -7,7 +7,7 @@ const ANKI_FILE = join(process.cwd(), "apps/web/src/server/imports/anki/fixtures
 
 /** The learner menu sits in the rail on a desktop and in the top bar on a phone; the one on screen is it. */
 function learnerMenu(page: Page) {
-  return page.getByRole("button", { name: "Dev", exact: true }).filter({ visible: true });
+  return page.getByTestId("learner-menu").filter({ visible: true });
 }
 
 async function chooseFile(page: Page) {
@@ -123,5 +123,7 @@ test("a learner imports an Anki file, sees it in Activity, undoes it and imports
       page.getByText("10 cards were in an earlier import. Only their empty fields are filled."),
     ).toBeVisible();
     await expect(page.getByRole("button", { name: "Update 10 cards", exact: true })).toBeVisible();
+    // Cards already in Lymi keep their own progress, so the summary promises no Known cards.
+    await expect(page.getByText(/come in as Known/)).toHaveCount(0);
   });
 });

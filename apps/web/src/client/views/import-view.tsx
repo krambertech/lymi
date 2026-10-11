@@ -284,12 +284,15 @@ const LYMI_STEPS = [
     id: "format",
     node: (
       <Trans>
-        Choose <strong className="font-medium text-text">Lymi file</strong>, then download the .zip
-        when it’s ready.
+        Choose <strong className="font-medium text-text">Lymi file</strong>, then download it when
+        it’s ready.
       </Trans>
     ),
   },
-  { id: "save", node: <Trans>Sign in here and choose that file, without unzipping it.</Trans> },
+  {
+    id: "save",
+    node: <Trans>Sign back in to this account and choose that file, without unzipping it.</Trans>,
+  },
 ];
 
 /** Uploading, reading, importing: a file on its way, with what the learner may do meanwhile. */
@@ -718,12 +721,21 @@ export function ImportPreviewView({
   const [fieldsFor, setFieldsFor] = useState<NoteType>();
   const [languagesOpen, setLanguagesOpen] = useState(false);
   const app = SOURCE_NAMES[item.source];
-  const leftOut = new Set(choices.skipDecks);
+  const skipDecks = choices.skipDecks;
+  const leftOut = new Set(skipDecks);
   const chosenDecks = summary.decks.filter((d) => !leftOut.has(d.key));
   // Asked about only when neither the file, the deck's name nor its cards gave a language,
   // judged by what Lymi found so the step doesn't vanish while the learner answers it.
   const unplaced = chosenDecks.filter((d) => (summary.languages[d.key] ?? null) === null);
-  const { asked, rest } = useMemo(() => splitNoteTypes(summary.noteTypes), [summary.noteTypes]);
+  // A kind of card found only in decks left out is not asked about.
+  const { asked, rest } = useMemo(() => {
+    const skipped = new Set(skipDecks);
+    return splitNoteTypes(
+      summary.noteTypes.filter(
+        (type) => !type.decks || type.decks.some((key) => !skipped.has(key)),
+      ),
+    );
+  }, [summary.noteTypes, skipDecks]);
   const restNotes = rest.reduce((sum, type) => sum + type.notes, 0);
   const steps: Step[] = [
     ...(summary.decks.length > 1 ? [{ id: "decks" } as const] : []),
@@ -734,7 +746,6 @@ export function ImportPreviewView({
   const step = steps[Math.min(at, steps.length - 1)] as Step;
   const next = () => setAt((i) => Math.min(i + 1, steps.length - 1));
   const goBack = at > 0 ? () => setAt(at - 1) : undefined;
-  const known = chosenDecks.reduce((sum, d) => sum + (d.known ?? 0), 0);
 
   const opened = useRef(false);
   // biome-ignore lint/correctness/useExhaustiveDependencies: runs on each new step.
@@ -850,7 +861,7 @@ export function ImportPreviewView({
           />
           <div className="edge grid grid-cols-3 rounded-xl bg-plate">
             <Figure value={preview?.added} label={t`cards`} loading={previewLoading} />
-            <Figure value={known} label={t`known`} loading={false} />
+            <Figure value={preview?.known} label={t`known`} loading={previewLoading} />
             <Figure value={preview?.reviews} label={t`past reviews`} loading={previewLoading} />
           </div>
           {previewError && (
@@ -858,7 +869,9 @@ export function ImportPreviewView({
               <InlineError>{previewError}</InlineError>
             </p>
           )}
-          {preview && <ImportLines item={item} summary={summary} preview={preview} known={known} />}
+          {preview && (
+            <ImportLines item={item} summary={summary} preview={preview} known={preview.known} />
+          )}
           <div className="edge grid rounded-xl bg-plate">
             {summary.decks.length > 1 && (
               <AnswerRow
@@ -878,14 +891,16 @@ export function ImportPreviewView({
               detail={languagesLine(chosenDecks, choices.languages, i18n.locale, t`No language`)}
               onChange={() => setLanguagesOpen(true)}
             />
-            <AnswerRow
-              title={t`Cards`}
-              changeLabel={t`Check the cards again`}
-              detail={
-                asked.length > 1 ? plural(asked.length, { other: "# kinds checked" }) : t`Checked`
-              }
-              onChange={() => setAt(steps.findIndex((s) => s.id === "card"))}
-            />
+            {asked.length > 0 && (
+              <AnswerRow
+                title={t`Cards`}
+                changeLabel={t`Check the cards again`}
+                detail={
+                  asked.length > 1 ? plural(asked.length, { other: "# kinds checked" }) : t`Checked`
+                }
+                onChange={() => setAt(steps.findIndex((s) => s.id === "card"))}
+              />
+            )}
           </div>
           <StepActions
             onBack={goBack}

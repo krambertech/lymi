@@ -1,4 +1,5 @@
 import {
+  arrivesKnown,
   type Directions,
   directionsFromModes,
   emptyImportCounts,
@@ -276,6 +277,8 @@ export async function previewImport<Note>(
   const seen = new Map<string, string>();
   const samples: ImportPreviewOut["samples"] = {};
   const found = await lookupAll(ctx);
+  const now = new Date();
+  let known = 0;
   for await (const { cards, skipped } of importedCards(work)) {
     counts.skipped += skipped;
     for (const card of cards) {
@@ -297,6 +300,7 @@ export async function previewImport<Note>(
     tally(counts, classified, { pictures: true });
     for (const item of classified) {
       if (item.kind !== "added") continue;
+      if (arrivesKnown(item.card, now)) known++;
       perDeck.set(item.card.deckKey, (perDeck.get(item.card.deckKey) ?? 0) + 1);
       addedByNoteType[item.card.noteTypeKey] = (addedByNoteType[item.card.noteTypeKey] ?? 0) + 1;
       for (const tag of item.card.tags) tags.add(tag.toLowerCase());
@@ -315,6 +319,7 @@ export async function previewImport<Note>(
     ...counts,
     decks,
     samples,
+    known,
     tags: tags.size,
     addedByNoteType,
     audio: work.summary.audio,

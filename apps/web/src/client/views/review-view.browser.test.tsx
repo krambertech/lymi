@@ -6,7 +6,7 @@ import { expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
-import { FixOffer, type FixOfferProps } from "../components/fix-offer";
+import { HookOffer, type HookOfferProps } from "../components/hook-offer";
 import { aidSteps } from "../components/recall-aid";
 import { queueItem, queueItemPicture } from "../design/mock";
 import type { QueueItem } from "../lib/api";
@@ -152,22 +152,10 @@ test("the head names the deck alone, and the mode only for a picture", async () 
   expect(picture).toContain("ET");
 });
 
-test("a drafted fix waits for the reveal, then opens from the foot of the card", async () => {
+test("the hook offer waits for the reveal, then opens from the foot of the card", async () => {
   const opened = vi.fn();
   const shown = vi.fn();
-  const offer: FixOfferProps = {
-    offer: {
-      diagnosisId: "d1",
-      cause: "confused_pair",
-      other: { id: "c2", term: "sbagliare", meaning: null, language: "it" },
-      draft: {
-        otherCardId: "c2",
-        cards: [
-          { term: "a", meaning: "b" },
-          { term: "c", meaning: "d" },
-        ],
-      },
-    },
+  const offer: HookOfferProps = {
     delay: 0,
     animate: false,
     parked: false,
@@ -179,21 +167,20 @@ test("a drafted fix waits for the reveal, then opens from the foot of the card",
       <ReviewCard item={item({})} revealed={false} onReveal={noop} offer={offer} />
     </I18nProvider>,
   );
-  expect(page.getByRole("button", { name: /Often mixed up with/ }).elements()).toHaveLength(0);
+  expect(page.getByRole("button", { name: /Try a memory hook/ }).elements()).toHaveLength(0);
 
   await screen.rerender(
     <I18nProvider i18n={i18n}>
       <ReviewCard item={item({})} revealed animateReveal={false} onReveal={noop} offer={offer} />
     </I18nProvider>,
   );
-  const button = page.getByRole("button", { name: /Often mixed up with sbagliare/ });
+  const button = page.getByRole("button", { name: /Try a memory hook/ });
   await expect.element(button).toBeVisible();
   await expect.poll(() => shown.mock.calls.length).toBeGreaterThan(0);
-  // A screen reader hears of it as it can be seen, before review counts it as offered.
-  await expect.poll(() => shown.mock.calls.length).toBeGreaterThan(0);
+  // A screen reader hears of it once it can be seen.
   await expect
     .poll(() => page.getByRole("status").element().textContent)
-    .toContain("A fix is ready: Often mixed up with sbagliare");
+    .toContain("You can add a memory hook.");
   await button.click();
   expect(opened).toHaveBeenCalled();
 });
@@ -202,17 +189,10 @@ test("a tap where the offer will be, before it has arrived, opens nothing", asyn
   const opened = vi.fn();
   await render(
     <I18nProvider i18n={i18n}>
-      <FixOffer
-        offer={{ diagnosisId: "d1", cause: "unclear", draft: null }}
-        delay={60}
-        animate
-        parked={false}
-        onOpen={opened}
-        onShown={noop}
-      />
+      <HookOffer delay={60} animate parked={false} onOpen={opened} onShown={noop} />
     </I18nProvider>,
   );
-  const offer = page.getByRole("button", { name: /Often forgotten/, includeHidden: true });
+  const offer = page.getByRole("button", { name: /Try a memory hook/, includeHidden: true });
   await expect.element(offer).toHaveAttribute("inert");
   // Forced, because Playwright rightly waits on an inert control; the tap still lands where it is.
   await offer.click({ force: true });

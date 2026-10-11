@@ -10,7 +10,7 @@ test("a language learner can reach the languages pages and turn notes and cards 
   await test.step("the landing page's language use case opens the languages page", async () => {
     await page.goto(publicSite);
     await page.getByRole("link", { name: "Lymi for language learning", exact: true }).click();
-    await expect(page).toHaveURL(new RegExp(`^${publicSite}/languages/?$`));
+    await expect(page).toHaveURL(new RegExp(`^${publicSite}/languages$`));
     await expect(
       page.getByRole("heading", { level: 1, name: "Keep what you learn in any language." }),
     ).toBeVisible();
@@ -40,7 +40,7 @@ test("a language learner can reach the languages pages and turn notes and cards 
       .getByRole("contentinfo")
       .getByRole("link", { name: "Estonian", exact: true })
       .click();
-    await expect(page).toHaveURL(new RegExp(`^${publicSite}/languages/estonian/?$`));
+    await expect(page).toHaveURL(new RegExp(`^${publicSite}/languages/estonian$`));
     await expect(
       page.getByRole("heading", { level: 1, name: "Keep what you learn in Estonian." }),
     ).toBeVisible();
@@ -61,9 +61,9 @@ test("a language learner can reach the languages pages and turn notes and cards 
   });
 
   await test.step("the Ukrainian landing page opens the Ukrainian languages page", async () => {
-    await page.goto(`${publicSite}/uk/`);
+    await page.goto(`${publicSite}/uk`);
     await page.getByRole("link", { name: "Lymi для вивчення мов", exact: true }).click();
-    await expect(page).toHaveURL(new RegExp(`^${publicSite}/uk/languages/?$`));
+    await expect(page).toHaveURL(new RegExp(`^${publicSite}/uk/languages$`));
     await expect(page.locator("html")).toHaveAttribute("lang", "uk");
     await expect(
       page.getByRole("heading", { level: 1, name: "Бережи вивчене будь-якою мовою." }),
@@ -79,7 +79,7 @@ test("a language learner can reach the languages pages and turn notes and cards 
       .getByRole("navigation", { name: "Мова" })
       .getByRole("link", { name: "Русский", exact: true })
       .click();
-    await expect(page).toHaveURL(new RegExp(`^${publicSite}/ru/languages/?$`));
+    await expect(page).toHaveURL(new RegExp(`^${publicSite}/ru/languages$`));
     await expect(
       page.getByRole("heading", { level: 1, name: "Сохраняй выученное на любом языке." }),
     ).toBeVisible();

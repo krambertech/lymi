@@ -1,3 +1,17 @@
 packages:
   - apps/*
   - packages/*
+
+# Expo's Babel preset and the worklets plugin import Babel 7 without declaring it; the web apps run Babel 8.
+packageExtensions:
+  babel-preset-expo:
+    dependencies:
+      "@babel/core": ^7.29.7
+      "@babel/generator": ^7.29.0
+      "@babel/traverse": ^7.29.0
+      "@babel/types": ^7.29.0
+  react-native-worklets:
+    dependencies:
+      "@babel/core": ^7.29.7
+      "@babel/generator": ^7.29.0
+      "@babel/traverse": ^7.29.0

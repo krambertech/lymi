@@ -45,5 +45,5 @@ export const englishOnlyPaths = [
 export function localizedPath(page: LocalizedPage, locale: string): string {
   const path = localizedPages[page];
   if (locale === "en" || !(locales as readonly string[]).includes(locale)) return path;
-  return path === "/" ? `/${locale}/` : `/${locale}${path}`;
+  return path === "/" ? `/${locale}` : `/${locale}${path}`;
 }

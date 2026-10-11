@@ -16,7 +16,7 @@ test("a protected deep link survives sign-in", async ({ page }, testInfo) => {
   // The docs link is the one place the product points at the public site's configured origin.
   // Today carries the learner menu on both machines: the rail on desktop, the avatar on the phone.
   await page.goto("/today");
-  await page.getByRole("button", { name: "Dev", exact: true }).click();
+  await page.getByTestId("learner-menu").filter({ visible: true }).click();
   await expect(page.getByRole("menuitem", { name: "Docs" })).toHaveAttribute(
     "href",
     `${e2eSiteUrl}/docs`,

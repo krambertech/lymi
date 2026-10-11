@@ -43,6 +43,8 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
   await test.step("the add page's metadata names the deck and carries no cards", async () => {
     const response = await page.request.get(`/add/${slug}`);
     expect(response.status()).toBe(200);
+    // robots.txt allows add links so a crawler can read this and keep them out of results.
+    expect(response.headers()["x-robots-tag"]).toBe("noindex, nofollow");
     const html = await response.text();
     expect(html).toContain(`<title>Add ${deckName} to Lymi</title>`);
     const meta = (html.match(/<meta [^>]*>/g) ?? []).join("\n");

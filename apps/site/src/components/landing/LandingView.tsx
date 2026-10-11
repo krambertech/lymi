@@ -1,7 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Gift, GitFork, KeyRound } from "lucide-react";
-import { productUrl } from "../../lib/origins";
+import { openLymiUrl } from "../../lib/origins";
 import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { ApiConnections } from "./ApiConnections";
@@ -28,7 +28,7 @@ export const SHARE_IMAGE_ALT = msg`The Lymi lantern and wordmark above the Engli
 /** The public front door: a hand of real cards to turn over, then how Lymi keeps them. */
 export function LandingView({ productOrigin }: { productOrigin?: string | undefined } = {}) {
   const { i18n } = useLingui();
-  const openAppUrl = new URL("/", productOrigin ?? productUrl()).toString();
+  const openAppUrl = openLymiUrl(productOrigin);
   const useCases: UseCase[] = [
     {
       id: "languages",

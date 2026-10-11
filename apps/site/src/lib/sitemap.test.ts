@@ -90,7 +90,7 @@ describe("pagesSitemap", () => {
     expect(teachers).toContain('hreflang="uk" href="https://lymi.app/uk/teachers"');
     expect(teachers).toContain('hreflang="ru" href="https://lymi.app/ru/teachers"');
     expect(teachers).toContain('hreflang="x-default" href="https://lymi.app/teachers"');
-    expect(entry(xml, "/uk/")).toContain('hreflang="x-default" href="https://lymi.app/"');
+    expect(entry(xml, "/uk")).toContain('hreflang="x-default" href="https://lymi.app/"');
     expect(entry(xml, "/docs/api")).not.toContain("hreflang");
     expect(xml).not.toContain("/explore");
   });

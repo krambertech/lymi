@@ -23,7 +23,6 @@ import { avatar } from "./routes/avatar";
 import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
-import { diagnoses } from "./routes/diagnoses";
 import { email } from "./routes/email";
 import { explore } from "./routes/explore";
 import { exports as exportRoutes } from "./routes/exports";
@@ -34,6 +33,7 @@ import { join, joinOpen } from "./routes/join";
 import { keys } from "./routes/keys";
 import { publicMedia } from "./routes/public-media";
 import { push } from "./routes/push";
+import { reports } from "./routes/reports";
 import { review } from "./routes/review";
 import { deckSections, sections } from "./routes/sections";
 import { series } from "./routes/series";
@@ -72,7 +72,13 @@ app.get("/", async (c) => {
   const db = createDb(c.env.DB);
   const auth = createAuth(c.env, db);
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
-  const destination = new URL(session ? "/today" : "/login", c.env.PRODUCT_URL);
+  if (session) return c.redirect(new URL("/today", c.env.PRODUCT_URL).toString(), 302);
+  const destination = new URL("/login", c.env.PRODUCT_URL);
+  // The site's Open Lymi and /signup ask for sign-up, since a visitor with no session is most
+  // likely new; the rest of their query, such as campaign tags, rides along to the form.
+  if (c.req.query("mode") === "sign-up") {
+    destination.search = new URL(c.req.url).search;
+  }
   return c.redirect(destination.toString(), 302);
 });
 
@@ -183,12 +189,18 @@ mountOpenApi(app);
 
 // The MCP server. Its own authentication: an OAuth access token this Worker issued.
 app.all("/mcp", (c) =>
-  handleMcpRequest(c.req.raw, { auth: c.get("auth"), db: c.get("db"), env: c.env }),
+  handleMcpRequest(c.req.raw, {
+    auth: c.get("auth"),
+    db: c.get("db"),
+    env: c.env,
+    defer: (work) => c.executionCtx.waitUntil(work),
+  }),
 );
 
-// Everything on this origin is one learner's product or protocol surface.
+// Everything on this origin is one learner's product or protocol surface. Deck add links are
+// crawlable only so a crawler can read their noindex and drop a shared link from results.
 app.get("/robots.txt", describe({ hide: true }), (c) => {
-  return c.text("User-agent: *\nDisallow: /\n", 200, {
+  return c.text("User-agent: *\nAllow: /add/\nDisallow: /\n", 200, {
     "cache-control": "public, max-age=3600",
   });
 });
@@ -248,9 +260,9 @@ app.route("/api/add", add);
 app.route("/api/cards", cards);
 app.route("/api/cards", images);
 app.route("/api/review", review);
-app.route("/api/diagnoses", diagnoses);
 app.route("/api/settings", settings);
 app.route("/api/stats", stats);
+app.route("/api/reports", reports);
 app.route("/api/keys", keys);
 app.route("/api/connected-apps", connectedApps);
 app.route("/api/push", push);

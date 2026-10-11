@@ -2,7 +2,7 @@ import { I18nProvider } from "@lingui/react";
 import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { pageI18n } from "../../lib/i18n";
-import { productUrl } from "../../lib/origins";
+import { openLymiUrl } from "../../lib/origins";
 import type { Locale } from "../../lib/routes";
 import { SiteFooter } from "../landing/SiteFooter";
 
@@ -52,7 +52,7 @@ export function ExploreEmpty({ locale }: LocaleProps) {
 export function ExploreFooter({ locale, paths }: LocaleProps & { paths: Record<Locale, string> }) {
   return (
     <Localized locale={locale}>
-      <SiteFooter openAppUrl={productUrl()} paths={paths} />
+      <SiteFooter openAppUrl={openLymiUrl()} paths={paths} />
     </Localized>
   );
 }

@@ -492,6 +492,9 @@ export const ImportSummaryOut = z
         roles: z.array(FieldRole),
         questions: z.array(z.number().int().nullable()),
         notes: z.number().int(),
+        decks: z.array(z.string()).optional().meta({
+          description: "Keys of the decks holding this kind's cards; absent for older imports",
+        }),
         samples: z.array(z.array(z.string())),
       }),
     ),
@@ -539,6 +542,7 @@ export const ImportPreviewOut = ImportCounts.extend({
       ),
     )
     .meta({ description: "Up to three cards per note type key, as they would arrive" }),
+  known: z.number().int().meta({ description: "New cards that arrive Known" }),
   tags: z.number().int().meta({ description: "Distinct tags on the new cards" }),
   addedByNoteType: z
     .record(z.string(), z.number().int())

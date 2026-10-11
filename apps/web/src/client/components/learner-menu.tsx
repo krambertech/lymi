@@ -80,11 +80,12 @@ export function LearnerMenu({ name, email, variant, docsUrl, onSignOut, signingO
             variant === "rail" ? (
               <button
                 type="button"
+                data-testid="learner-menu"
                 aria-busy={signingOut || undefined}
                 className={clsx(
                   "flex h-14 w-full items-center gap-3 rounded-md px-2 text-start transition-[background-color,box-shadow,opacity] duration-150",
                   // Open wins over hover: the pointer is still on the row when the menu appears.
-                  "hoverable:hover:not-aria-expanded:bg-hover aria-expanded:edge aria-expanded:bg-plate",
+                  "hoverable:hover:not-aria-expanded:bg-rail-hover aria-expanded:edge-inset aria-expanded:bg-rail-chosen",
                   signingOut && "opacity-45",
                 )}
               >
@@ -94,6 +95,7 @@ export function LearnerMenu({ name, email, variant, docsUrl, onSignOut, signingO
             ) : (
               <button
                 type="button"
+                data-testid="learner-menu"
                 aria-busy={signingOut || undefined}
                 className={clsx(
                   "relative inline-flex rounded-full transition-opacity before:absolute before:-inset-1.5 before:content-['']",

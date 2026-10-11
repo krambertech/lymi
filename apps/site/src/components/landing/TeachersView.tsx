@@ -1,6 +1,6 @@
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import { productUrl } from "../../lib/origins";
+import { openLymiUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { ApiConnections } from "./ApiConnections";
 import { ClassHero } from "./ClassHero";
@@ -21,7 +21,7 @@ export const TEACHERS_BLURB = msg`Build a course in sections, share it with one 
 
 /** The page for tutors and small classes: build the course, share it, keep adding to it. */
 export function TeachersView() {
-  const openAppUrl = new URL("/", productUrl()).toString();
+  const openAppUrl = openLymiUrl();
   const subjects: UseCase[] = [
     {
       id: "languages",

@@ -5,10 +5,11 @@ import { isLoopbackUrl } from "../shared/origins";
  * from wrangler.jsonc; this narrows the secrets, which live in .dev.vars locally and in
  * `wrangler secret` in production.
  */
-export interface Bindings extends Omit<Env, "REQUESTS" | "EVENTS"> {
+export interface Bindings extends Omit<Env, "REQUESTS" | "EVENTS" | "POSTHOG_PROJECT_TOKEN"> {
   /** Optional in local tests and loopback; previews use isolated datasets. */
   REQUESTS?: AnalyticsEngineDataset;
   EVENTS?: AnalyticsEngineDataset;
+  POSTHOG_PROJECT_TOKEN?: string;
   /** Secrets are not emitted by `wrangler types` unless they exist in the local environment. */
   BETTER_AUTH_SECRET: string;
   GOOGLE_CLIENT_ID: string;

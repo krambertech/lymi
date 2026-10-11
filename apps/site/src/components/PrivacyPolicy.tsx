@@ -7,7 +7,7 @@ export const PRIVACY_TITLE = msg`Privacy policy · Lymi`;
 export const PRIVACY_DESCRIPTION = msg`How Lymi handles account, learning, integration and service data.`;
 export const PRIVACY_HEADING = msg`Privacy policy`;
 export const PRIVACY_LEAD = msg`This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have.`;
-export const PRIVACY_UPDATED = msg`20 September 2026`;
+export const PRIVACY_UPDATED = msg`11 October 2026`;
 
 function PrivacyPolicyContent() {
   return (
@@ -134,6 +134,15 @@ function PrivacyPolicyContent() {
           contain no account identifiers, card content or exact requested URLs.
         </Trans>
       </p>
+      <p>
+        <Trans>
+          We also use PostHog’s EU service to understand product use and investigate errors. We send
+          fixed action labels, counts and review grades with an opaque account identifier that
+          connects activity across devices. Error reports contain the error type and technical stack
+          frames; we remove error messages and other context. We do not send card content, email
+          addresses, names, credentials or exact requested URLs, and we do not record sessions.
+        </Trans>
+      </p>
 
       <h2>
         <Trans>Why we use data</Trans>
@@ -183,6 +192,12 @@ function PrivacyPolicyContent() {
           <Trans>
             <strong>Google</strong> provides Google sign-in and may provide speech generation when
             configured as the fallback provider.
+          </Trans>
+        </li>
+        <li>
+          <Trans>
+            <strong>PostHog</strong> provides product analytics and error tracking in its EU cloud.
+            It receives the limited product and error data described above.
           </Trans>
         </li>
         <li>
@@ -285,6 +300,13 @@ function PrivacyPolicyContent() {
           Lymi uses an authentication cookie to keep you signed in. The public site and app also use
           local browser storage for preferences and offline product behavior. We do not use
           advertising cookies.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          PostHog keeps its browser state in memory for the current page and does not set analytics
+          cookies or store an analytics identifier in local storage. Its reports still use the
+          opaque account identifier while you are signed in.
         </Trans>
       </p>
 

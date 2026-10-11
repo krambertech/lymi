@@ -1,4 +1,4 @@
-import { clsx } from "clsx";
+import { cn } from "cn";
 import type { FluidHover } from "../lib/fluid-hover";
 
 /**
@@ -13,7 +13,7 @@ export function FluidHighlight({ hover, className }: { hover: FluidHover; classN
       key={hover.enters}
       aria-hidden="true"
       data-hidden={hover.shown ? undefined : ""}
-      className={clsx(
+      className={cn(
         "fluid-highlight pointer-events-none absolute left-0 top-0 rounded-sm bg-hover",
         className,
       )}

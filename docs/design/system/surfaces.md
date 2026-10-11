@@ -50,7 +50,7 @@ Hover follows what the thing is at rest. Something with a fill and a hairline, s
 
 The rail shows where the learner is, so its current row is the strongest row in it and hover always sits below it. The current row is `bg-rail-chosen` with `edge-inset`; a row under the pointer fills with `bg-rail-hover`. By day these match a plate and `bg-hover`. At night the current row is flat, a step above the rail with a hairline drawn inside it, and hover is a faint white wash.
 
-Never `edge` or `bg-plate` on the current row: at night `edge` lifts it into a dark button, and `plate` sits below `hover`, so the row under the pointer outranked the one the learner is on. The desktop navigation in `shell.tsx` and the design pages' sidebar both follow this.
+Never `edge` or `bg-plate` on the current row: at night `edge` lifts it into a dark button, and `plate` sits below `hover`, so the row under the pointer outranked the one the learner is on. Anything else in the rail that hovers, such as the learner row and the streak pill, uses `rail-hover` too. Both rails draw their rows with `RailRow` ([rail.md](rail.md)).
 
 ### The chosen option
 

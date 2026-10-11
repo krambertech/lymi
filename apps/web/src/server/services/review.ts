@@ -1,11 +1,4 @@
-import type {
-  DayWindow,
-  Direction,
-  DrawLogEntry,
-  GradeInput,
-  ReviewModeKey,
-  Round,
-} from "@lymi/core";
+import type { Direction, DrawLogEntry, GradeInput, ReviewModeKey, Round } from "@lymi/core";
 import {
   deserializeState,
   drawableCount,
@@ -29,9 +22,7 @@ import { audit } from "./audit";
 import { presentCards } from "./card-view";
 import { notFound, type ServiceContext } from "./context";
 import { dateFormatter } from "./days";
-import type { DiagnosisRunner } from "./diagnosis";
 import { cardsById, drawInputs } from "./draw";
-import { reviewOffers } from "./fixes";
 import { memberOf } from "./members";
 import {
   type DayProgress,
@@ -58,7 +49,6 @@ export async function reviewQueue(
     sectionId?: string | undefined;
     limit?: number | undefined;
     round?: Round | undefined;
-    diagnose?: DiagnosisRunner | null | undefined;
   } = {},
 ) {
   const limit = Math.min(opts.limit ?? 50, 200);
@@ -74,23 +64,16 @@ export async function reviewQueue(
     now,
     zone,
     slipping: round === "slipping",
-    diagnose: opts.diagnose,
   });
   const order = round
     ? roundOrder(cards, log, day, { deckId, round, slipping })
     : drawOrder(cards, log, day, { deckId }, limit);
   const front = order.slice(0, limit);
-  const { views: content, offers } = await presentContent(
-    ctx,
-    [...new Set(front.map((d) => d.cardId))],
-    slipping,
-    day,
-  );
+  const content = await presentContent(ctx, [...new Set(front.map((d) => d.cardId))]);
 
   const items = front.flatMap((drawn) => {
     const state = states.get(drawKey(drawn.cardId, drawn.mode));
     const card = content.get(drawn.cardId);
-    const offer = offers.get(drawn.cardId);
     if (!state || !card) return [];
     const next = preview(deserializeState(state.fsrs), now);
     const direction = legacyDirection(state.mode);
@@ -109,7 +92,7 @@ export async function reviewQueue(
           3: next[3].toISOString(),
           4: next[4].toISOString(),
         },
-        ...(offer ? { offer } : {}),
+        slipping: slipping.has(drawn.cardId),
       },
     ];
   });
@@ -119,16 +102,9 @@ export async function reviewQueue(
 }
 
 /** How many cards each Today round holds right now, across every deck. */
-export async function reviewRounds(
-  ctx: ServiceContext,
-  opts: { zone?: string | undefined; diagnose?: DiagnosisRunner | null | undefined } = {},
-) {
+export async function reviewRounds(ctx: ServiceContext, opts: { zone?: string | undefined } = {}) {
   const zone = await reviewZone(ctx, opts.zone);
-  const { cards, log, day, slipping } = await drawInputs(ctx, {
-    zone,
-    slipping: true,
-    diagnose: opts.diagnose,
-  });
+  const { cards, log, day, slipping } = await drawInputs(ctx, { zone, slipping: true });
   const count = (round: Round) => roundOrder(cards, log, day, { round, slipping }).length;
   return { forgotten: count("forgotten"), new: count("new"), slipping: count("slipping") };
 }
@@ -146,7 +122,6 @@ export async function reviewDraw(
     sectionId?: string | undefined;
     limit?: number | undefined;
     zone?: string | undefined;
-    diagnose?: DiagnosisRunner | null | undefined;
   },
 ) {
   const limit = Math.min(opts.limit ?? 100, 500);
@@ -157,13 +132,12 @@ export async function reviewDraw(
   if (opts.sectionId) await visibleSection(ctx, opts.sectionId, opts.deckId);
   // The series or section narrows the rows loaded, so the rules need no scope of their own for it.
   const scope = { deckId: opts.deckId };
-  const { cards, log, day, states, slipping } = await drawInputs(ctx, {
+  const { cards, log, day, states } = await drawInputs(ctx, {
     ...scope,
     seriesId: opts.seriesId,
     sectionId: opts.sectionId,
     now,
     zone,
-    diagnose: opts.diagnose,
   });
 
   const include = new Set(drawOrder(cards, log, day, scope, limit).map((d) => d.cardId));
@@ -173,7 +147,7 @@ export async function reviewDraw(
     if (missed(entry.rating, entry.stateBefore)) include.add(entry.cardId);
   }
   const position = new Map([...include].map((cardId, index) => [cardId, index]));
-  const { views: content, offers } = await presentContent(ctx, [...include], slipping, day);
+  const content = await presentContent(ctx, [...include]);
 
   return {
     day: { date: day.date, zone, start: day.start, end: day.end },
@@ -209,16 +183,8 @@ export async function reviewDraw(
           ];
         });
         const row = content.get(card.cardId);
-        const offer = offers.get(card.cardId);
         return row && modes.length > 0
-          ? [
-              {
-                card: row,
-                modes,
-                slipping: card.slipping ?? false,
-                ...(offer ? { offer } : {}),
-              },
-            ]
+          ? [{ card: row, modes, slipping: card.slipping ?? false }]
           : [];
       }),
     log: log.map((entry) => ({
@@ -234,19 +200,11 @@ export async function reviewDraw(
   };
 }
 
-/** The cards a draw returned, as the API shows them, by id, with the fixes review offers for them. */
-async function presentContent(
-  ctx: ServiceContext,
-  ids: string[],
-  slipping: ReadonlySet<string>,
-  day: DayWindow,
-) {
+/** The cards a draw returned, as the API shows them, by id. */
+async function presentContent(ctx: ServiceContext, ids: string[]) {
   const rows = [...(await cardsById(ctx, ids)).values()];
-  const [views, offers] = await Promise.all([
-    presentCards(ctx.db, rows, ctx.userId),
-    reviewOffers(ctx, rows, slipping, day),
-  ]);
-  return { views: new Map(views.map((view) => [view.id, view])), offers };
+  const views = await presentCards(ctx.db, rows, ctx.userId);
+  return new Map(views.map((view) => [view.id, view]));
 }
 
 /**

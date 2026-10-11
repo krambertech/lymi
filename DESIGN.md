@@ -299,6 +299,7 @@ Read the file for what you are building. Each is short enough to read whole.
 | Dialogs, sheets, places, menus, tooltips, toasts | [overlays.md](docs/design/system/overlays.md) |
 | Chips, state marks, due counts, keys | [chips-and-marks.md](docs/design/system/chips-and-marks.md) |
 | Screens, navigation, Today, review | [layout.md](docs/design/system/layout.md) |
+| The desktop rail: rows, sections, series, hover | [rail.md](docs/design/system/rail.md) |
 | Empty, loading and error states | [empty-states.md](docs/design/system/empty-states.md) |
 | Timing, choreography, reduced motion | [motion.md](docs/design/system/motion.md) |
 | The lantern, the flame, the wordmark, the app icon | [brand.md](docs/design/system/brand.md) |

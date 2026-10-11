@@ -37,13 +37,13 @@ Press scales over 150 ms. Nothing moves up on press.
 | Deck cards, New deck | 0.98 |
 | Grade buttons | 0.96 |
 | Direction rows | 0.99 |
-| Menu rows, rail rows | none |
+| Menu rows, rail rows | none: they answer with the hover fill |
 
 ## Hover
 
 Hover lasts 150 ms and applies to pointer devices only, through the `hoverable:` variant.
 
-In a menu or a list of options the hover is one fill that slides to the nearest enabled row over those 150 ms, so it never blinks off in the gap between rows and never crosses a separator. The moment the keyboard takes over it goes, because focus carries its own fill and two fills would be two cursors.
+In a menu, a list of options and the rail the hover is one fill that slides to the nearest enabled row over those 150 ms, so it never blinks off in the gap between rows. It never slides across a separator or a heading: past one, it fades in at the new row instead, because a fill passing over a heading reads as a flash. The moment the keyboard takes over it goes, because focus carries its own fill and two fills would be two cursors. In the rail the fill passes under the current row, whose own fill is opaque, so hover never outranks where the learner is ([rail.md](rail.md#hover)).
 
 ## Choices
 
@@ -73,11 +73,11 @@ Reveal is the one choreographed moment of a card, built with Motion.
 
 A grade plays it backwards: the strip closes over 300 ms, its grades fading in the first 120, and the card grows back into the room while the next card's words fade in over 160 ms. The card is not replaced, because its place on the screen is the same; only what it asks changes. The next card never waits for the server: the grade is kept on the device and sent behind it. The session count rolls up as each card lands.
 
-A drafted fix at the card's foot arrives half a second after the answer settles, with a card's 6 px rise over 200 ms and its icon scaling in from 0.85; under reduced motion it only fades, and after a reveal from the keyboard it appears without moving. It cannot be pressed until it has arrived. Left for later, it fades out over 140 ms, at once under reduced motion, and keeps its room until the grade so the answer never moves.
+The hook offer at the card's foot arrives half a second after the answer settles, with a card's 6 px rise over 200 ms and its icon scaling in from 0.85; under reduced motion it only fades, and after a reveal from the keyboard it appears without moving. It cannot be pressed until it has arrived. Left for later, it fades out over 140 ms, at once under reduced motion, and keeps its room until the grade so the answer never moves.
 
 A peeked hook comes into focus under the cue: it fades in from a 4 px blur with a 4 px rise over 360 ms while the cue glides up to make room. Under reduced motion it only fades; from the keyboard, Enter on the button included, it appears at once. The button that asked for it goes without animating and keeps its room, because the hook is the change to watch. At the reveal the hook never fades or moves apart from the cue: it glides up with it as one block, and the only thing arriving is the answer under it.
 
-After a reveal without a peek, Show hook arrives in the hook's place with the answer's lines, a 10 px rise over 260 ms; under reduced motion it only fades, and after a reveal from the keyboard it is simply there. Pressing it swaps it for the hook with the same focus-in as a peek, and the answer glides if the hook takes more room than the button did. From the keyboard the hook appears at once; under reduced motion it only fades. A hook kept from the fix sheet after the reveal arrives the same way.
+After a reveal without a peek, Show hook arrives in the hook's place with the answer's lines, a 10 px rise over 260 ms; under reduced motion it only fades, and after a reveal from the keyboard it is simply there. Pressing it swaps it for the hook with the same focus-in as a peek, and the answer glides if the hook takes more room than the button did. From the keyboard the hook appears at once; under reduced motion it only fades. A hook written from the offer after the reveal arrives the same way.
 
 Undo taking a hook away fades its lines where they stood over 140 ms while the cue and the answer glide back; after a key it goes at once. Whether the cue and the answer glide is decided at each change, never once per card, so a reveal from the keyboard on one card never stills the glide on the next.
 

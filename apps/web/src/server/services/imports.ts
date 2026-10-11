@@ -275,6 +275,7 @@ export async function inspectImport(
   const now = new Date();
   const known = new Map<string, number>();
   const terms = new Map<string, Set<string>>();
+  const typeDecks = new Map<string, Set<string>>();
 
   let chunk = 0;
   let batch: unknown[] = [];
@@ -291,6 +292,10 @@ export async function inspectImport(
       if (arrivesKnown(card, now)) known.set(card.deckKey, (known.get(card.deckKey) ?? 0) + 1);
       const sample = terms.get(card.deckKey) ?? new Set<string>();
       if (sample.size < TERMS_PER_DECK) terms.set(card.deckKey, sample.add(card.fields.term));
+      typeDecks.set(
+        card.noteTypeKey,
+        (typeDecks.get(card.noteTypeKey) ?? new Set<string>()).add(card.deckKey),
+      );
     }
     if (batch.length === NOTES_PER_CHUNK) await flush();
   }
@@ -315,6 +320,10 @@ export async function inspectImport(
   const stored: StoredSummary = {
     ...summary,
     decks: summary.decks.map((d) => ({ ...d, known: known.get(d.key) ?? 0 })),
+    noteTypes: summary.noteTypes.map((type) => ({
+      ...type,
+      decks: [...(typeDecks.get(type.key) ?? [])],
+    })),
     languages: Object.fromEntries(
       summary.decks.map((d) => [
         d.key,

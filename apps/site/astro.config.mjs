@@ -7,6 +7,7 @@ import { defineConfig } from "astro/config";
 
 export default defineConfig({
   site: "https://lymi.app",
+  trailingSlash: "never",
   i18n: { defaultLocale: "en", locales: ["en", "uk", "ru"] },
   // Pages prerender unless they opt out; only published deck pages render per request. ADR 0016.
   adapter: cloudflare({ imageService: "passthrough" }),

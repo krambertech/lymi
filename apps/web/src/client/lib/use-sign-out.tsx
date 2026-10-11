@@ -14,6 +14,7 @@ import {
 import { signOut as endSession } from "./auth";
 import { outboxSize } from "./grades";
 import { clearPersistedLearnerState } from "./persisted";
+import { setTelemetryLearner } from "./telemetry";
 import { flushWrites, pendingWrites } from "./writes";
 
 interface Ctx {
@@ -47,6 +48,7 @@ export function SignOutProvider({ children }: { children: ReactNode }) {
     }
     // Whoever signs in next must not inherit this learner's cache or queued grades.
     queryClient.clear();
+    setTelemetryLearner(undefined);
     clearPersistedLearnerState();
     navigate({ to: "/login" });
   }, [navigate, queryClient]);

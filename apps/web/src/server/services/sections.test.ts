@@ -302,8 +302,14 @@ describe("reviewing one section", () => {
       "loose",
     ]);
     // Started early: a locked section's started card stays in review, and its section says so.
-    await forget(me, cards.b1 as string);
-    // Another grade after it, since a return never comes straight after its own card.
+    // Forgotten yesterday, it is left learning today; a return today would be out of reach.
+    await gradeCard(me, {
+      cardId: cards.b1 as string,
+      direction: "recognition",
+      rating: 1,
+      reviewedAt: new Date(Date.now() - 86_400_000),
+      timezone: "UTC",
+    });
     await gradeCard(me, {
       cardId: cards.loose as string,
       direction: "recognition",

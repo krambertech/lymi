@@ -2,10 +2,9 @@ import {
   CARRY_OVER_EVERY,
   NEW_CARD_SLOT_EVERY,
   OLDEST_UNSEEN_SLOT_EVERY,
-  RETURN_GAPS,
+  RETURN_GAP,
   RETURN_JITTER,
   REVIEW_ODDS_POWER,
-  SLIPPING_RETURN_GAP,
   UNSEEN_HALF_LIFE_DAYS,
 } from "../src/draw";
 import { DESIRED_RETENTION, LEARNING_STEPS } from "../src/fsrs";
@@ -14,10 +13,12 @@ import { DAY_STUDY, dayStudy } from "./day";
 import { intervalGuide } from "./intervals";
 import { RECALL } from "./learner";
 import results from "./results.json";
+import { RETURN_STUDY } from "./returns";
 import { NEW_CARD_STUDY, REVIEW_ORDER_STUDY } from "./year";
 
 export type { DayStudy, DayTile } from "./day";
 export type { IntervalGuide, Step } from "./intervals";
+export type { ReturnRuleId } from "./returns";
 export type { NewCardRuleId, ReviewOrderId } from "./year";
 
 /**
@@ -32,9 +33,8 @@ export function schedulingGuide() {
       learningStep: LEARNING_STEPS[0],
       newCardSlotEvery: NEW_CARD_SLOT_EVERY,
       oldestSlotEvery: OLDEST_UNSEEN_SLOT_EVERY,
-      returnGaps: [...RETURN_GAPS],
+      returnGap: RETURN_GAP,
       returnJitter: RETURN_JITTER,
-      slippingReturnGap: SLIPPING_RETURN_GAP,
       slippingForgottenDays: SLIPPING_FORGOTTEN_DAYS,
       slippingRecentDays: SLIPPING_RECENT_DAYS,
       carryOverEvery: CARRY_OVER_EVERY,
@@ -50,6 +50,7 @@ export function schedulingGuide() {
       rows: results.reviewOrder,
     },
     newCards: { ...NEW_CARD_STUDY, rows: results.newCards },
+    returns: { ...RETURN_STUDY, seeds: [...RETURN_STUDY.seeds], rows: results.returns },
   };
 }
 

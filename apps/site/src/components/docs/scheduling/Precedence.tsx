@@ -15,7 +15,7 @@ export function Precedence({ carryOverEvery }: { carryOverEvery: number }) {
   const steps: Step[] = [
     {
       icon: <CornerDownLeft className="size-4" aria-hidden="true" />,
-      ask: "Has a missed card waited out its gap?",
+      ask: "Has a forgotten card waited out its gap?",
       take: "Show that card",
     },
     {
@@ -32,11 +32,6 @@ export function Precedence({ carryOverEvery }: { carryOverEvery: number }) {
       icon: <Shuffle className="size-4" aria-hidden="true" />,
       ask: "Are reviews or new cards left?",
       take: "Ordinary draw",
-    },
-    {
-      icon: <CornerDownLeft className="size-4" aria-hidden="true" />,
-      ask: "Is a missed card still waiting?",
-      take: "Show the earliest one early",
     },
   ];
 
@@ -81,7 +76,10 @@ export function Precedence({ carryOverEvery }: { carryOverEvery: number }) {
         <span aria-hidden="true" className="grid size-8 place-items-center rounded-full edge">
           <Moon className="size-4 text-muted" />
         </span>
-        <p className="!m-0 pt-1.5 text-base text-text">Nothing is left. The day is done.</p>
+        <p className="!m-0 pt-1.5 text-base text-text">
+          Nothing is left. The day is done, and forgotten cards still waiting go to Review
+          forgotten.
+        </p>
       </li>
     </ol>
   );

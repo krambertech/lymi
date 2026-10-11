@@ -9,8 +9,9 @@ import {
   draw,
   drawableCount,
   drawOrder,
+  forgottenToday,
   missed,
-  RETURN_GAPS,
+  owesReturn,
   returnGap,
   UNSEEN_HALF_LIFE_DAYS,
 } from "./draw";
@@ -124,48 +125,21 @@ describe("a generated day holds every rule", () => {
           ).toBe(true);
         } else expect(a.kind).not.toBe("return");
 
-        // A repeat comes only after a miss, never after a success.
+        // A repeat comes only after a Forgot, once, and never before its gap.
         const last = cardBefore.at(-1);
-        if (last) expect(missed(last.rating, last.stateBefore), `attempt ${i}`).toBe(true);
-
-        // Its gap is the named one: reached, and served the moment it was reached.
-        if (a.kind === "return") {
-          const misses = cardBefore.filter((e) => missed(e.rating, e.stateBefore)).length;
-          const missedAt = before.lastIndexOf(last as DrawLogEntry);
-          const since = i - missedAt - 1;
-          const gap = returnGap(day.date, a.cardId, a.mode, misses);
-          expect(misses).toBeLessThanOrEqual(RETURN_GAPS.length);
-          if (since < gap) {
-            // Early only when nothing else was drawable: every card left was a pending return.
-            const pending = new Map<string, number>();
-            for (const e of before) {
-              const ek = `${e.cardId} ${e.mode}`;
-              if (missed(e.rating, e.stateBefore)) pending.set(ek, (pending.get(ek) ?? 0) + 1);
-              else pending.delete(ek);
-            }
-            const stillReturning = new Set(
-              [...pending.entries()]
-                .filter(([, n]) => n <= RETURN_GAPS.length)
-                .map(([ek]) => ek.split(" ")[0]),
-            );
-            expect(drawableCount(cards, before, day), `attempt ${i}`).toBe(stillReturning.size);
-          }
+        if (last) {
+          expect(owesReturn(last.rating), `attempt ${i}`).toBe(true);
+          expect(cardBefore).toHaveLength(1);
+          const since = i - before.lastIndexOf(last) - 1;
+          expect(since, `attempt ${i}`).toBeGreaterThanOrEqual(
+            returnGap(day.date, a.cardId, a.mode),
+          );
         }
 
         // Whenever some return has reached its gap, the attempt is a return.
-        const pending = new Map<string, { misses: number; at: number }>();
-        before.forEach((e, j) => {
-          const ek = `${e.cardId} ${e.mode}`;
-          if (missed(e.rating, e.stateBefore)) {
-            pending.set(ek, { misses: (pending.get(ek)?.misses ?? 0) + 1, at: j });
-          } else pending.delete(ek);
-        });
-        const reached = [...pending.entries()].some(([ek, p]) => {
-          const [cardId, mode] = ek.split(" ") as [string, string];
-          return (
-            p.misses <= RETURN_GAPS.length &&
-            i - p.at - 1 >= returnGap(day.date, cardId, mode, p.misses)
-          );
+        const reached = before.some((e, j) => {
+          const once = before.filter((f) => f.cardId === e.cardId).length === 1;
+          return once && owesReturn(e.rating) && i - j - 1 >= returnGap(day.date, e.cardId, e.mode);
         });
         if (reached) expect(a.kind, `attempt ${i}`).toBe("return");
 
@@ -184,10 +158,8 @@ describe("a generated day holds every rule", () => {
         seen.set(k, [...(seen.get(k) ?? []), i]);
       });
 
-      // No mode is seen more than once plus its three returns.
-      for (const positions of seen.values()) {
-        expect(positions.length).toBeLessThanOrEqual(1 + RETURN_GAPS.length);
-      }
+      // No mode is seen more than once plus its one return.
+      for (const positions of seen.values()) expect(positions.length).toBeLessThanOrEqual(2);
 
       // The day ended for a reason: nothing is left that the rules allow.
       expect(exhausted).toBe(true);
@@ -259,7 +231,7 @@ describe("a generated day holds every rule", () => {
     expect(draw(cards, log, day, { deckId })).toEqual(pick);
   });
 
-  it("never draws a mode graded to Review today, and serves a last-minute miss at once", () => {
+  it("never draws a mode graded to Review today, and leaves a last-minute miss to Review forgotten", () => {
     const modes = collection(21, day, 40);
     const { cards, log, attempts } = playDay(modes, day, 21);
     const finished = new Set<string>();
@@ -268,12 +240,12 @@ describe("a generated day holds every rule", () => {
       expect(finished.has(k), `attempt ${i} redrew a finished mode`).toBe(false);
       if (!missed(a.rating, a.stateBefore)) finished.add(k);
     });
-    // Forget the last drawable card with nothing else left: it is the next card, not tomorrow's.
+    // Forget the last drawable card with nothing else left: the day ends, and the card waits.
     const last = attempts.at(-1) as Attempt;
-    if (missed(last.rating, last.stateBefore)) return;
     const trimmed = log.slice(0, -1);
     trimmed.push({ ...(log.at(-1) as DrawLogEntry), rating: 1 });
-    expect(draw(cards, trimmed, day)).toMatchObject({ cardId: last.cardId, kind: "return" });
+    expect(draw(cards, trimmed, day)).toBeNull();
+    expect(forgottenToday(trimmed)).toContainEqual({ cardId: last.cardId, mode: last.mode });
   });
 });
 
@@ -347,12 +319,8 @@ describe("the weights are the ones the simulations chose", () => {
 describe("the order is pinned", () => {
   // A change here changes every learner's order on deploy. Change it on purpose or not at all.
   it("hashes the date, card and mode to the same keys as before", () => {
-    expect([1, 2, 3].map((m) => returnGap("2026-09-13", "card-a", "term_to_meaning", m))).toEqual([
-      6, 9, 20,
-    ]);
-    expect([1, 2, 3].map((m) => returnGap("2026-09-14", "card-a", "term_to_meaning", m))).toEqual([
-      4, 9, 20,
-    ]);
+    expect(returnGap("2026-09-13", "card-a", "term_to_meaning")).toBe(22);
+    expect(returnGap("2026-09-14", "card-a", "term_to_meaning")).toBe(19);
     const modes = collection(42, day, 30);
     const order = drawOrder(toDrawCards(modes, day), [], day, {}, 12).map(
       (d) => `${d.cardId}:${d.kind[0]}`,

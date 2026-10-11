@@ -256,7 +256,6 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
       cardId: card.id,
       deckId: card.deckId,
       modes: [],
-      slipping: row.slipping !== null,
       byMode: new Map<ReviewModeKey, DrawMode>(),
       order: modeOrder(card, row.deckDirections),
     };

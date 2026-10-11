@@ -2,7 +2,7 @@ import { apiUrl, type QueueItem } from "@lymi/client/api";
 import { gradeStore } from "@lymi/client/grades";
 import { drawableLeft } from "@lymi/client/review-day";
 import { reviewItem, stateBefore } from "@lymi/client/review-draw";
-import { drawKey, modeKey, type Rating, ROUNDS, type Round } from "@lymi/core";
+import { countedRating, drawKey, modeKey, type Rating, ROUNDS, type Round } from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
   COUNT_ROLL,
@@ -267,7 +267,7 @@ function Run({
     const recorded = grade({
       cardId: item.card.id,
       mode: item.mode,
-      rating,
+      rating: countedRating(rating, repeat),
       reviewedAt: new Date().toISOString(),
       stateBefore: repeat ? stateBefore(data, state.log, item.card.id, item.mode) : item.fsrsState,
     });

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { RETURN_GAPS, SLIPPING_RETURN_GAP } from "../draw";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS } from "../slipping";
 import { Direction, Rating, ReviewMode } from "../types";
 import { CardOut } from "./cards";
@@ -96,7 +95,7 @@ const DrawCardOut = z
     card: CardOut,
     modes: z.array(DrawModeOut).meta({ description: "In the order they are introduced" }),
     slipping: slipping.meta({
-      description: `Often forgotten: a miss returns once, ${SLIPPING_RETURN_GAP} attempts later, instead of up to ${RETURN_GAPS.length} times`,
+      description: "Often forgotten: review offers a hook for it when it has none",
     }),
   })
   .meta({ id: "DrawCard" });

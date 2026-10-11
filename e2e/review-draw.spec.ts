@@ -1,7 +1,7 @@
 import { startAsTestLearner } from "./auth";
 import { expect, type Page, test } from "./test";
 
-/** A forgotten card returns within the review, and the same log gives the same next card anywhere, ADR 0019. */
+/** A forgotten card returns once within the review, and the same log gives the same next card anywhere, ADR 0019 and 0030. */
 
 async function addDeck(page: Page, name: string, terms: number) {
   const deck = await page.request.post("/api/decks", { data: { name, defaultLanguage: "it" } });
@@ -44,10 +44,12 @@ async function gradeUntil(page: Page, card: string, attempts: number, limit: num
 }
 
 test("a forgotten card comes back in the same review", async ({ page }, testInfo) => {
+  // A return waits about twenty cards, so these reviews run long.
+  test.setTimeout(120_000);
   await startAsTestLearner(page, testInfo, "review-returns");
-  await addDeck(page, "Returns", 10);
+  await addDeck(page, "Returns", 30);
   await page.goto("/review");
-  await expect(page.getByText("0 of 10", { exact: true })).toBeVisible();
+  await expect(page.getByText("0 of 30", { exact: true })).toBeVisible();
 
   const forgotten = await currentCard(page);
   await test.step("forget a card", async () => {
@@ -55,9 +57,9 @@ test("a forgotten card comes back in the same review", async ({ page }, testInfo
     expect(await currentCard(page)).not.toBe(forgotten);
   });
 
-  await test.step("it returns after four to six other cards", async () => {
-    const between = await gradeUntil(page, forgotten, 1, 6);
-    expect(between).toBeGreaterThanOrEqual(4);
+  await test.step("it returns after eighteen to twenty-two other cards", async () => {
+    const between = await gradeUntil(page, forgotten, 1, 22);
+    expect(between).toBeGreaterThanOrEqual(18);
   });
 
   await test.step("a reload shows the same card and count", async () => {
@@ -73,10 +75,12 @@ test("grades that could not be sent still decide the next card after a reload", 
   browserName,
 }, testInfo) => {
   test.skip(browserName !== "chromium", "logic, not rendering");
+  // A return waits about twenty cards, so these reviews run long.
+  test.setTimeout(120_000);
   await startAsTestLearner(page, testInfo, "review-queued");
-  await addDeck(page, "Queued", 10);
+  await addDeck(page, "Queued", 30);
   await page.goto("/review");
-  await expect(page.getByText("0 of 10", { exact: true })).toBeVisible();
+  await expect(page.getByText("0 of 30", { exact: true })).toBeVisible();
 
   // The connection drops for grades only, so the page itself can still reload.
   await page.route("**/api/review/grade", (route) => route.abort("internetdisconnected"));
@@ -88,7 +92,7 @@ test("grades that could not be sent still decide the next card after a reload", 
   await page.reload();
   await expect(page.getByText(/^2 of \d+$/)).toBeVisible();
   await expect(page.getByLabel(next, { exact: true })).toBeVisible();
-  await gradeUntil(page, forgotten, 2, 5);
+  await gradeUntil(page, forgotten, 2, 21);
 
   await test.step("the queued grades reach the server once the connection returns", async () => {
     await page.unroute("**/api/review/grade");
@@ -168,9 +172,11 @@ test("a return missed in a deck review comes up in the all-decks review", async 
   browserName,
 }, testInfo) => {
   test.skip(browserName !== "chromium", "logic, not rendering");
+  // A return waits about twenty cards, so these reviews run long.
+  test.setTimeout(120_000);
   await startAsTestLearner(page, testInfo, "review-scope");
-  const first = await addDeck(page, "First", 6);
-  await addDeck(page, "Second", 6);
+  const first = await addDeck(page, "First", 15);
+  await addDeck(page, "Second", 15);
 
   await page.goto(`/review?deck=${first}`);
   const forgotten = await currentCard(page);
@@ -179,7 +185,7 @@ test("a return missed in a deck review comes up in the all-decks review", async 
 
   await page.goto("/review");
   await expect(page.getByText(/^1 of \d+$/)).toBeVisible();
-  await gradeUntil(page, forgotten, 1, 6);
+  await gradeUntil(page, forgotten, 1, 22);
 });
 
 test("midnight starts a new day, and yesterday's forgotten card comes first", async ({

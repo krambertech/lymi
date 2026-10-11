@@ -155,17 +155,15 @@ describe("what the end of a review offers", () => {
     expect(forgottenRound(d, state).map((r) => r.cardId)).toEqual(expected);
   });
 
-  it("counts the cards the draw still holds, keeping a forgotten card owed a return", () => {
+  it("counts the cards the draw still holds, and a forgotten card once its return is in reach", () => {
     const d = data(8);
     expect(drawableLeft(d, play(d, 0), undefined)).toBe(8);
     expect(drawableLeft(d, play(d, 3), undefined)).toBe(5);
-    expect(
-      drawableLeft(
-        d,
-        play(d, 3, (i) => (i === 0 ? 1 : 3)),
-        undefined,
-      ),
-    ).toBe(6);
+    const forgetFirst = (i: number) => (i === 0 ? 1 : 3);
+    // Five cards are too few to reach a return, so the forgotten card waits for Review forgotten.
+    expect(drawableLeft(d, play(d, 3, forgetFirst), undefined)).toBe(5);
+    const long = data(30);
+    expect(drawableLeft(long, play(long, 3, forgetFirst), undefined)).toBe(28);
     expect(drawableLeft(d, play(d, 8), undefined)).toBe(0);
   });
 

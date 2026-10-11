@@ -243,10 +243,9 @@ describe("a client can draw for itself", () => {
   });
 
   it("forgets a return when the miss is undone", async () => {
-    const { ctx, cards } = await setup([
-      { term: "üks", meaning: "one" },
-      { term: "kaks", meaning: "two" },
-    ]);
+    // Enough cards that the return is in reach, ADR 0031.
+    const terms = Array.from({ length: 25 }, (_, i) => ({ term: `sõna ${i}`, meaning: `${i}` }));
+    const { ctx, cards } = await setup(terms);
     const [a] = cards;
     if (!a) throw new Error("no card");
     const miss = await gradeCard(ctx, { cardId: a.id, direction: "recognition", rating: 1 });
@@ -255,8 +254,8 @@ describe("a client can draw for itself", () => {
     await undoReview(ctx, miss.reviewId);
     const draw = await reviewDraw(ctx, {});
     expect(draw.log).toEqual([]);
-    expect(draw.cards.map((c) => c.modes[0]?.fsrsState)).toEqual([0, 0]);
-    expect(draw.total).toBe(2);
+    expect(draw.cards.every((c) => c.modes[0]?.fsrsState === 0)).toBe(true);
+    expect(draw.total).toBe(25);
   });
 });
 
@@ -269,7 +268,7 @@ describe("the day follows the review zone", () => {
     const [card, other] = cards;
     if (!card || !other) throw new Error("no card");
     await setReviewTimezone(ctx, { mode: "manual", timezone: "Asia/Tokyo" });
-    // 14:50 UTC is 23:50 in Tokyo. Missed then, the card is a pending return until midnight.
+    // 14:50 UTC is 23:50 in Tokyo. Missed then, the card waits for Review forgotten until midnight.
     const lateNight = new Date(Date.now() + 5 * 3_600_000);
     lateNight.setUTCHours(14, 50, 0, 0);
     await gradeCard(ctx, {
@@ -287,7 +286,8 @@ describe("the day follows the review zone", () => {
     });
     const beforeMidnight = new Date(lateNight.getTime() + 5 * 60_000);
     const afterMidnight = new Date(lateNight.getTime() + 20 * 60_000);
-    expect(await drawableCount(ctx, { zone: "Asia/Tokyo", now: beforeMidnight })).toBe(1);
+    // Before midnight the return is out of reach; after it the card is left learning from yesterday.
+    expect(await drawableCount(ctx, { zone: "Asia/Tokyo", now: beforeMidnight })).toBe(0);
     expect(await drawableCount(ctx, { zone: "Asia/Tokyo", now: afterMidnight })).toBe(1);
     // Seen from a zone still on the earlier date, the grade is in today's log; from Tokyo it is yesterday's.
     const tokyo = await reviewDraw(ctx, {});

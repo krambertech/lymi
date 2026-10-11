@@ -4,6 +4,7 @@ import { drawState, reviewItem, stateBefore } from "@lymi/client/review-draw";
 import { writes } from "@lymi/client/writes";
 import {
   canSpeakTerm,
+  countedRating,
   type Drawn,
   drawKey,
   gradeAllowed,
@@ -590,6 +591,13 @@ function Review() {
   const shownAfter = aidState.key === showing && aidState.shown;
   // Only a step taken before the reveal is help with recall; seeing the hook after it is not.
   const aid = aidTaken(steps, taken);
+  // This mode's grades earlier today: on a second try Easy counts as Good, ADR 0031.
+  const gradedToday = useMemo(() => {
+    if (!current || !state) return [];
+    const key = modeKey(current.mode);
+    return state.log.filter((e) => e.cardId === current.card.id && e.mode === key);
+  }, [current, state]);
+  const repeat = gradedToday.length > 0;
   const takeAid = useCallback(
     (input: "keyboard" | "pointer") => {
       if (revealed || taken >= steps.length) return;
@@ -619,13 +627,11 @@ function Review() {
         return;
       }
       const item = current;
-      const key = modeKey(item.mode);
-      const repeat = state.log.some((e) => e.cardId === item.card.id && e.mode === key);
       const runningShort = state.upcoming.length <= LOOKAHEAD;
       const recorded = recordGrade({
         cardId: item.card.id,
         mode: item.mode,
-        rating,
+        rating: countedRating(rating, repeat),
         reviewedAt: new Date().toISOString(),
         stateBefore: repeat
           ? stateBefore(data, state.log, item.card.id, item.mode)
@@ -675,7 +681,20 @@ function Review() {
         })
         .finally(() => setSending((n) => n - 1));
     },
-    [revealed, current, data, state, aid, showing, leg, drawLeg, invalidateReviewData, qc, t],
+    [
+      revealed,
+      current,
+      data,
+      state,
+      aid,
+      repeat,
+      showing,
+      leg,
+      drawLeg,
+      invalidateReviewData,
+      qc,
+      t,
+    ],
   );
 
   // Leaving mid-stretch ends on the success screen, unless nothing was added since the last one.
@@ -745,13 +764,14 @@ function Review() {
     current,
   ]);
 
-  // An often-forgotten card with no hook offers one, in a deck the learner owns, since only the
-  // owner changes its cards. It waits for the card's deck, which a deck list cached before the
-  // deck existed lacks, and once decided it holds, so a refetch never moves it mid-card.
+  // A card often forgotten, or forgotten twice today, with no hook offers one, in a deck the learner
+  // owns, since only the owner changes its cards. It waits for the card's deck, which a deck list
+  // cached before the deck existed lacks, and once decided it holds, so a refetch never moves it mid-card.
   if (cardOffer.key !== showing && (!current || currentDeck)) {
+    const stuck = !!current?.slipping || gradedToday.filter((e) => e.rating === 1).length >= 2;
     setCardOffer({
       key: showing,
-      offer: !!current?.slipping && !current.card.hook && currentDeck?.role === "owner",
+      offer: stuck && !current?.card.hook && currentDeck?.role === "owner",
       parked: false,
     });
   }

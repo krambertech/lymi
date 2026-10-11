@@ -1,73 +1,165 @@
 {
-  "fingerprint": "aba9db85df7ff8ae6467c40f4b19cd51ae9d6b29795f042898f72a78c8d4ea3f",
+  "fingerprint": "f33161e8293365efcfbe65dfc683e4c90b49546b5382eb5afd371fd0291dcbeb",
   "reviewOrder": [
     {
       "id": "due",
-      "introduced": 2434,
-      "remembered": 1992,
-      "late": 1160
+      "introduced": 2528,
+      "remembered": 2144,
+      "late": 1057
     },
     {
       "id": "lowest",
-      "introduced": 2496,
-      "remembered": 2018,
-      "late": 1917
+      "introduced": 2588,
+      "remembered": 2163,
+      "late": 1824
     },
     {
       "id": "highest",
-      "introduced": 2861,
-      "remembered": 2276,
-      "late": 1308
+      "introduced": 2880,
+      "remembered": 2321,
+      "late": 1255
     },
     {
       "id": "random",
-      "introduced": 2512,
-      "remembered": 2040,
-      "late": 1189
+      "introduced": 2580,
+      "remembered": 2160,
+      "late": 1108
     },
     {
       "id": "forgetting",
-      "introduced": 2459,
-      "remembered": 2013,
-      "late": 1338
+      "introduced": 2545,
+      "remembered": 2149,
+      "late": 1240
     },
     {
       "id": "lymi",
-      "introduced": 2637,
-      "remembered": 2091,
-      "late": 933
+      "introduced": 2677,
+      "remembered": 2188,
+      "late": 893
     }
   ],
   "newCards": [
     {
       "id": "halving",
       "medianWait": 6,
-      "p90Wait": 20,
-      "joinedStarted": 111
+      "p90Wait": 19,
+      "joinedStarted": 118
     },
     {
       "id": "floor",
-      "medianWait": 25,
-      "p90Wait": 177,
-      "joinedStarted": 219
+      "medianWait": 22,
+      "p90Wait": 176,
+      "joinedStarted": 224
     },
     {
       "id": "equal",
-      "medianWait": 63,
+      "medianWait": 61,
       "p90Wait": 189,
-      "joinedStarted": 248
+      "joinedStarted": 256
     },
     {
       "id": "oldest",
-      "medianWait": 157,
-      "p90Wait": 231,
+      "medianWait": 144,
+      "p90Wait": 222,
       "joinedStarted": 300
     },
     {
       "id": "lymi",
       "medianWait": 6,
       "p90Wait": 20,
-      "joinedStarted": 229
+      "joinedStarted": 251
+    }
+  ],
+  "returns": [
+    {
+      "id": "widening",
+      "introduced": 2645,
+      "remembered": 2082,
+      "returnsPerDay": 10.8,
+      "lag": 6.4,
+      "thricePerWeek": 13.9,
+      "waitingPerDay": 2,
+      "sitting": {
+        "attempts": 36.2,
+        "returns": 12.7,
+        "lag": 5.5,
+        "waiting": 0.4
+      }
+    },
+    {
+      "id": "once10",
+      "introduced": 2657,
+      "remembered": 2143,
+      "returnsPerDay": 7.6,
+      "lag": 10,
+      "thricePerWeek": 0,
+      "waitingPerDay": 4.1,
+      "sitting": {
+        "attempts": 28.2,
+        "returns": 4.7,
+        "lag": 10.1,
+        "waiting": 4.4
+      }
+    },
+    {
+      "id": "hardToo",
+      "introduced": 2685,
+      "remembered": 2198,
+      "returnsPerDay": 6.6,
+      "lag": 20,
+      "thricePerWeek": 0,
+      "waitingPerDay": 5.5,
+      "sitting": {
+        "attempts": 24.3,
+        "returns": 0.8,
+        "lag": 19.8,
+        "waiting": 7.6
+      }
+    },
+    {
+      "id": "once30",
+      "introduced": 2704,
+      "remembered": 2242,
+      "returnsPerDay": 4.2,
+      "lag": 30,
+      "thricePerWeek": 0,
+      "waitingPerDay": 7.3,
+      "sitting": {
+        "attempts": 23.5,
+        "returns": 0,
+        "lag": 0,
+        "waiting": 8.1
+      }
+    },
+    {
+      "id": "none",
+      "introduced": 2729,
+      "remembered": 2336,
+      "returnsPerDay": 0,
+      "lag": 0,
+      "thricePerWeek": 0,
+      "waitingPerDay": 11.4,
+      "sitting": {
+        "attempts": 23.5,
+        "returns": 0,
+        "lag": 0,
+        "waiting": 8.1
+      }
+    },
+    {
+      "id": "lymi",
+      "introduced": 2677,
+      "remembered": 2188,
+      "returnsPerDay": 6,
+      "lag": 20.1,
+      "thricePerWeek": 0,
+      "waitingPerDay": 5.6,
+      "sitting": {
+        "attempts": 24.1,
+        "returns": 0.6,
+        "lag": 19.7,
+        "waiting": 7.6
+      }
     }
   ]
 }

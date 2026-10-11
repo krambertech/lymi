@@ -4,9 +4,9 @@ The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the rev
 
 ## Navigation
 
-- The tabs are a pill in Liquid Glass, tinted toward the room and opaque before iOS 26, with the chosen tab on a plate that springs between items. Each tab names itself in the top bar beside the streak; there is no large title row. Tapping the current tab returns its stack to the top.
+- The tabs are a bar in Liquid Glass, tinted toward the room and opaque before iOS 26. Every tab carries its label, an icon over the word, as iOS lays out its own tab bars. Each tab names itself in the top bar beside the streak; there is no large title row. Tapping the current tab returns its stack to the top. The bar is being built and tuned in #549.
 - **You** gathers what is about the learner: Insights first as one plate that opens the full page, then the reminder time and the theme, then Activity, Settings, feedback and sign-out. Archived closes Library.
-- Capture sits at the bottom of the screen, in the thumb's reach. A tap opens Add a word.
+- Capture is an amber-tinted glass circle at the end of the tab bar, the bar's height, in the thumb's reach. A tap opens Add a word.
 
 ## How a screen arrives
 
@@ -43,6 +43,10 @@ A haptic answers a touch or marks the goal. These are all of them:
 ## Sound
 
 One sound, when the daily goal is reached. It follows the silent switch, and You has a setting to turn sound off entirely.
+
+## Glass
+
+Liquid Glass suits Lymi: it is a material that holds light, and the lantern is a light. The phone uses it for chrome that floats over content, so the bar and the capture circle refract what scrolls beneath them and morph as the learner moves. Tinted amber, glass marks the one standing action, as plain amber marks a press on the web. Where else tinted glass carries Lymi's light is open, to try on a device rather than in mockups. Glass never sits behind the card in a review or behind text that has to be read. Reduce Transparency, and iOS before 26, get the web's opaque surfaces. The web keeps its opaque pill.
 
 ## Light
 

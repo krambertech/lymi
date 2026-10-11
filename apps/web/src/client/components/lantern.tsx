@@ -1,3 +1,14 @@
+import {
+  EMBER,
+  FLAME_MOTION,
+  FLAME_SIZE,
+  FLAME_SPARKS,
+  flameSize,
+  LANTERN_BAIL,
+  LANTERN_FRAME,
+  LANTERN_GLASS,
+  VENT,
+} from "@lymi/design";
 import { clsx } from "clsx";
 import {
   interpolate,
@@ -7,16 +18,8 @@ import {
   useTransform,
 } from "motion/react";
 import { type CSSProperties, type RefObject, useEffect, useRef, useState } from "react";
-import { FLAME_MOTION, FLAME_SIZE, FLAME_SPARKS, flameSize } from "../lib/flame";
 import { useFlame } from "../lib/use-flame";
-import {
-  draw,
-  EMBER,
-  FLAME_PARTS,
-  LANTERN_BAIL,
-  LANTERN_FRAME,
-  LANTERN_GLASS,
-} from "./lantern-geometry";
+import { draw, FLAME_PARTS } from "./lantern-geometry";
 
 function startSize(from: Props["from"], target: number) {
   if (from === undefined) return target;
@@ -131,9 +134,6 @@ function usePauseOffscreen(ref: RefObject<Element | null>, looping: boolean) {
     };
   }, [ref, looping]);
 }
-
-/** Where the embers leave the lantern: the top of the hood, where a real one vents. */
-const VENT = { x: 60, y: 38 } as const;
 
 /**
  * The embers each grade throws up out of the hood, drawn over the metal. The breath says the

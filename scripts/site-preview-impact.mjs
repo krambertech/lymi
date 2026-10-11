@@ -1,4 +1,10 @@
-const sitePreviewPrefixes = ["apps/site/", "apps/web/migrations/", "packages/core/", "scripts/"];
+const sitePreviewPrefixes = [
+  "apps/site/",
+  "apps/web/migrations/",
+  "packages/core/",
+  "packages/design/",
+  "scripts/",
+];
 
 const sitePreviewFiles = new Set([
   ".github/workflows/ci.yml",

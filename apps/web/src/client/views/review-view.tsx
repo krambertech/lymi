@@ -1,6 +1,14 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { gradeAllowed, type Rating, type ReviewAid } from "@lymi/core";
+import {
+  EASE_OUT,
+  INSTANT,
+  LANTERN_FLIGHT,
+  lanternFor,
+  REVEAL_GLIDE,
+  streakFlameFor,
+} from "@lymi/design";
 import { clsx } from "clsx";
 import {
   BookMarked,
@@ -63,8 +71,6 @@ import { StateIcon } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import type { QueueItem } from "../lib/api";
-import { EASE_OUT } from "../lib/ease";
-import { lanternFor, streakFlameFor } from "../lib/flame";
 import { intervalLabel } from "../lib/i18n";
 import { lastInputWasKey } from "../lib/last-input";
 import type { EndScreen, Offer } from "../lib/review-complete";
@@ -89,7 +95,6 @@ export interface ReviewHeaderProps {
 
 /** The lantern is one object carried between the header and the end of a review. */
 const LANTERN_LAYOUT = "review-lantern";
-const LANTERN_FLIGHT = { type: "spring", visualDuration: 0.6, bounce: 0 } as const;
 
 /**
  * The lantern, today's attempts against the goal, and the exit, on one line.
@@ -405,8 +410,6 @@ export interface RecallAidProps {
 const AID_TAP_GUARD_MS = 400;
 
 /** The cue's glide up as the answer or an aid arrives under it. */
-const CUE_GLIDE = { duration: 0.34, ease: EASE_OUT } as const;
-const INSTANT = { duration: 0 } as const;
 
 /** An aid taken away fades where it stood, or goes at once after a key. */
 const AID_LEAVE: Variants = {
@@ -912,7 +915,7 @@ export function ReviewCard({
               ref={cueRef}
               // Always on, because Motion reads `layout` only at mount; the transition says whether it glides.
               layout="position"
-              transition={{ layout: cueGlide ? CUE_GLIDE : INSTANT }}
+              transition={{ layout: cueGlide ? REVEAL_GLIDE : INSTANT }}
               className="relative grid grid-cols-[minmax(0,1fr)] gap-3"
             >
               <div ref={cueTextRef} className="grid grid-cols-[minmax(0,1fr)] gap-3">
@@ -1000,14 +1003,14 @@ export function ReviewCard({
                       transition: {
                         duration: 0.2,
                         ease: EASE_OUT,
-                        layout: answerGlide ? CUE_GLIDE : INSTANT,
+                        layout: answerGlide ? REVEAL_GLIDE : INSTANT,
                       },
                     }
                   : {
                       variants: answerGroup,
                       initial: animateReveal ? "hidden" : false,
                       animate: "shown",
-                      transition: { layout: answerGlide ? CUE_GLIDE : INSTANT },
+                      transition: { layout: answerGlide ? REVEAL_GLIDE : INSTANT },
                     })}
                 className="grid grid-cols-[minmax(0,1fr)] gap-5"
               >
@@ -1121,7 +1124,7 @@ function OpeningStrip({ animate: wanted, children }: { animate: boolean; childre
       initial={animate ? { height: 0 } : false}
       animate={{ height: "auto" }}
       exit="closed"
-      transition={{ duration: 0.34, ease: EASE_OUT }}
+      transition={REVEAL_GLIDE}
       onAnimationComplete={() => setOpened(true)}
       inert={!present}
       aria-hidden={!present || undefined}

@@ -10,7 +10,7 @@ import { SevenLights } from "../ui/seven-lights";
 
 /** The streak: the run, one plain line about today, today against the goal, and the goal itself. */
 export default function Streak() {
-  const { streak, reviewsToday, goal, week, dayDone } = useDay();
+  const { streak, reviewsToday, goal, week, dayDone, flame } = useDay();
   const p = usePalette();
   const insets = useSafeAreaInsets();
   const [choice, setChoice] = useState(String(goal));
@@ -20,7 +20,7 @@ export default function Streak() {
     <View className="gap-6 bg-canvas px-5 pt-8" style={{ paddingBottom: insets.bottom + 16 }}>
       <View className="gap-1.5">
         <View className="flex-row items-center gap-3">
-          <Flame height={34} state={dayDone || left === 0 ? "full" : "lit"} />
+          <Flame height={34} state={flame} />
           <Text
             className="text-4xl font-medium text-text"
             style={{ fontVariant: ["tabular-nums"] }}

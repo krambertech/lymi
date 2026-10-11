@@ -1,7 +1,8 @@
+import { LANTERN_BOUNDS } from "@lymi/design";
 import { clsx } from "clsx";
 import type { CSSProperties } from "react";
 import { Lantern } from "./Lantern";
-import { LANTERN_BOUNDS, LANTERN_PARTS } from "./lantern-geometry";
+import { LANTERN_PARTS } from "./lantern-geometry";
 import { WORDMARK } from "./wordmark-paths";
 
 const EM = 100; // wordmark units per em

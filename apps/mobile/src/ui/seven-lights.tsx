@@ -1,3 +1,5 @@
+import { daysReviewed } from "@lymi/core";
+import { LIGHT_STEP_MS, type LightLevel, lightLevel, lightReference } from "@lymi/design";
 import { useEffect } from "react";
 import { View, type ViewStyle } from "react-native";
 import Animated, {
@@ -11,20 +13,9 @@ import { type Palette, usePalette } from "../theme/palette";
 import { weekLetters } from "./days";
 import { Text } from "./primitives";
 
-function mix(a: string, b: string, t: number) {
-  const ch = (hex: string, i: number) => Number.parseInt(hex.slice(1 + i * 2, 3 + i * 2), 16);
-  const c = [0, 1, 2].map((i) => Math.round(ch(a, i) * t + ch(b, i) * (1 - t)));
-  return `rgb(${c.join(",")})`;
-}
-
 /** Three steps of amber from the lantern's glass to its flame. streak.md. */
-function fill(p: Palette, level: 1 | 2 | 3) {
-  return level === 3 ? p.amber : mix(p.amber, p.glass, level === 2 ? 0.75 : 0.45);
-}
-
-function level(n: number, goal: number): 0 | 1 | 2 | 3 {
-  if (n <= 0) return 0;
-  return n >= goal ? 3 : n >= goal / 2 ? 2 : 1;
+function fill(p: Palette, level: Exclude<LightLevel, 0>) {
+  return level === 3 ? p.amber : p[`light-${level}`];
 }
 
 /** The last seven days as seven glasses; the light climbs each one with what the day held. */
@@ -46,7 +37,8 @@ export function SevenLights({
   const lg = size === "lg";
   const today = days.length - 1;
   const letters = weekLetters(days.length);
-  const label = `Reviewed on ${days.filter((n) => n > 0).length} of the last 7 days`;
+  const reference = lightReference(days);
+  const label = `Reviewed on ${daysReviewed(days, days.length)} of the last ${days.length} days`;
   return (
     <View
       className={`flex-row items-end ${lg ? "justify-between" : "gap-2"}`}
@@ -55,7 +47,7 @@ export function SevenLights({
       accessibilityLabel={label}
     >
       {days.map((n, i) => {
-        const l = i === today && todayDone ? 3 : level(n, goal);
+        const l = lightLevel(n, reference, goal, i === today && todayDone);
         return (
           // biome-ignore lint/suspicious/noArrayIndexKey: a day's place in the week is its identity.
           <View key={i} className={`items-center ${lg ? "gap-2" : "gap-1.5"}`}>
@@ -64,7 +56,7 @@ export function SevenLights({
               lg={lg}
               p={p}
               today={i === today}
-              delay={sequence === undefined ? undefined : sequence + i * 70}
+              delay={sequence === undefined ? undefined : sequence + i * LIGHT_STEP_MS}
             />
             <Text
               className={`${lg ? "text-xs" : "text-2xs"} ${i === today ? "font-medium text-text-2" : "text-faint"}`}
@@ -85,7 +77,7 @@ function Glass({
   today,
   delay,
 }: {
-  level: 0 | 1 | 2 | 3;
+  level: LightLevel;
   lg: boolean;
   p: Palette;
   today: boolean;
@@ -123,11 +115,10 @@ function Glass({
             inset: 0,
             transformOrigin: "50% 100%",
             backgroundColor: fill(p, l === 0 ? 1 : l),
-            experimental_backgroundImage:
-              "linear-gradient(to bottom, rgba(255,250,230,0.28), transparent 70%)",
+            experimental_backgroundImage: `linear-gradient(to bottom, ${p["lit-sheen"]}, transparent 70%)`,
             // Light caught along the top edge. A border, because a shadow on a clipped child breaks its corners.
             borderTopWidth: 1,
-            borderTopColor: "rgba(255,250,230,0.45)",
+            borderTopColor: p["lit-edge"],
           } as ViewStyle,
           rise,
         ]}

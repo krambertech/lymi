@@ -1,7 +1,7 @@
+import { CHOICE_FADE, CHOICE_SLIDE } from "@lymi/design";
 import { cn } from "cn";
 import { animate, motion, useMotionValue, useReducedMotionConfig } from "motion/react";
 import * as React from "react";
-import { CHOICE_FADE, CHOICE_SLIDE } from "../../lib/choice-motion";
 
 interface SlidingPlateProps {
   /** Selector for the chosen item among the plate's siblings. */

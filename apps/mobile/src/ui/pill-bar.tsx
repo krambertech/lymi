@@ -1,9 +1,11 @@
+import { CHOICE_SLIDE } from "@lymi/design";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import type { Tabs } from "expo-router";
 import { type ComponentProps, type ReactNode, useState } from "react";
 import { type LayoutRectangle, useColorScheme, View } from "react-native";
 import Animated, { useAnimatedStyle, useReducedMotion, withSpring } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { spring } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import type { IconName } from "./icons";
 import { Icon, LIFT, Press, Text } from "./primitives";
@@ -16,7 +18,7 @@ const ITEMS: Record<string, { label: string; icon: IconName }> = {
   you: { label: "You", icon: "you" },
 };
 
-const SPRING = { duration: 340, dampingRatio: 0.82 };
+const SPRING = spring(CHOICE_SLIDE);
 
 /**
  * The web's phone pill: a track with the chosen item on a plate that springs between items.
@@ -46,11 +48,7 @@ export function PillBar({ state, navigation }: BottomTabBarProps) {
       <Animated.View
         className={`absolute top-1.5 bottom-1.5 rounded-full ${glass ? "" : "border border-edge bg-chosen"}`}
         // On glass the chosen plate is a veil of the room's ink, as iOS marks its own selected tab.
-        style={[
-          { left: 0 },
-          glass ? { backgroundColor: dark ? "#ffffff1f" : "#2013080f" } : null,
-          plate,
-        ]}
+        style={[{ left: 0 }, glass ? { backgroundColor: p["glass-veil"] } : null, plate]}
       />
       {state.routes.map((route, i) => {
         const item = ITEMS[route.name];

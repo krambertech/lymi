@@ -1,3 +1,4 @@
+import { FLAME_BREATH, FLAME_MOTION, FLAME_SIZE } from "@lymi/design";
 import { clsx } from "clsx";
 import { Play } from "lucide-react";
 import { MotionConfig } from "motion/react";
@@ -5,7 +6,6 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Button } from "../components/button";
 import { Lantern } from "../components/lantern";
 import { Segmented } from "../components/segmented";
-import { FLAME_BREATH, FLAME_MOTION, FLAME_SIZE } from "../lib/flame";
 import { Doc, type FrameTheme, ROOM_THEMES, Sub, usePageTheme, Variants } from "./frame";
 import { IconToggle } from "./icon-toggle";
 

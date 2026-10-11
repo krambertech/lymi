@@ -24,7 +24,7 @@ Drawn in a 120 unit box. Top to bottom: a bail tall enough to read as a handle r
 - When the flame is out, the glass is `glass-unlit` and an ember in `edge-2` sits where the flame was.
 - There is one drawing for every size. The rods and the flame are what keep the drawing legible when it is tiny; a simplified cut that drops them collapses into a mushroom by 24 px. The browser tab uses the same drawing with the viewBox squared around its own bounds.
 
-The geometry lives in `components/lantern-geometry.tsx` and nowhere else. `Lantern`, `Lockup` and `scripts/brand.mjs` all draw from it, so the mark cannot drift between the app and its assets.
+The geometry lives in `packages/design/src/lantern.ts` and nowhere else. The web's `Lantern` and `Lockup`, the site and the phone all draw from it, so the mark cannot drift between them.
 
 Never: grey metal, translucent glass, a room colour painted inside the mark, an outline, a rotation, a bevel, a second illustration, or two flames in one mark. If the lantern is on the screen, the wordmark is plain.
 
@@ -36,7 +36,7 @@ The flame shows how far today has come. **Whether the streak is alive is the num
 - The first accepted review lights it small, it grows through the day, and it is full at the goal. A live streak keeps its flame lit from the start of the day.
 - Nothing due, an ended session and an unfinished morning never put it out. A confirmed nothing-due day holds the start-of-day flame: alive, not grown.
 
-`Lantern` takes facts and moves itself: `progress` is today's accepted reviews over the daily goal, `out` is no streak and no review yet today, and `fed` goes up by one for every accepted review. `lanternFor` in `lib/flame.ts` turns the streak summary into those props. A screen never asks the lantern to celebrate.
+`Lantern` takes facts and moves itself: `progress` is today's accepted reviews over the daily goal, `out` is no streak and no review yet today, and `fed` goes up by one for every accepted review. `lanternFor` in `@lymi/design` turns the streak summary into those props. A screen never asks the lantern to celebrate.
 
 While lit, the flame is one continuous size. It starts each day at 0.72× the brand flame and grows with progress to 1.02× just before the goal; height carries the growth and width follows at half the rate. Growth stops short of full so that reaching the goal is a rise of its own, to 1.16×, where the flame stays for the rest of the day. The halo's width follows, from 0.7× the brand halo to 1.7× at the goal.
 
@@ -54,13 +54,13 @@ The brand lantern omits `progress` and shows the one canonical flame. It never s
 - **Lit** from the first review of the day until the goal, or all day on a live streak, including a day with nothing due: the brand flame, held still.
 - **Full** once today's goal is met or every available review is done: 1.16× the brand flame, and flickering.
 
-`streakFlameFor` in `lib/flame.ts` reads the state from the streak summary. `Flame` crops to the flame's exact bounds, so its tip sits on the top edge of its box and a full or flickering flame grows past it. The drawing overflows its box rather than being cropped, because a clipped tip is the one thing that makes the mark look broken. It never sparks; the spark belongs to the lantern. The streak's flame is a component, not a second mark, and may sit on a screen the lantern is already on.
+`streakFlameFor` in `@lymi/design` reads the state from the streak summary. `Flame` crops to the flame's exact bounds, so its tip sits on the top edge of its box and a full or flickering flame grows past it. The drawing overflows its box rather than being cropped, because a clipped tip is the one thing that makes the mark look broken. It never sparks; the spark belongs to the lantern. The streak's flame is a component, not a second mark, and may sit on a screen the lantern is already on.
 
 ## How the flame moves
 
 The flame flickers on a 2.6 s loop, and three things move on that loop: the flame scales, the bright core beats slightly out of phase inside it, and the halo breathes with both. A flame that changes size under a still halo reads as fake. The flicker multiplies whatever size the flame has, so a small flame flickers small. The loop holds still while the lantern is off screen, as does every other endless loop on the public site.
 
-Its changes are springs from Motion, so an interrupted movement keeps its speed instead of starting over. The values live in `FLAME_MOTION` in `lib/flame.ts`, and the design system reads them from there.
+Its changes are springs from Motion, so an interrupted movement keeps its speed instead of starting over. The values live in `FLAME_MOTION` in `@lymi/design`, and the design system and the phone read them from there.
 
 | Change | Timing |
 | --- | --- |

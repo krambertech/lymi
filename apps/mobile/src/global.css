@@ -1,15 +1,18 @@
 @import "tailwindcss";
 @import "uniwind";
-@import "./theme.gen.css";
+@import "@lymi/design/uniwind.css";
 
 /*
- * Colours, radii and motion come from the web unchanged. Type does not: iOS reads at 17 pt and
- * Dynamic Type scales from there, so the phone keeps the web's step names on its own ramp.
- * Display steps keep a 1.2 line box: iOS clips any glyph that rises past it.
+ * Colours and radii come from @lymi/design unchanged. Type does not: iOS reads at 17 pt and
+ * Dynamic Type scales from there, so the phone sets its own size under each of the shared step
+ * names, which `pnpm check:design` holds to tokens.css. Display steps keep a 1.2 line box: iOS
+ * clips any glyph that rises past it.
  */
 @theme {
   --text-2xs: 11px;
+  --text-2xs--line-height: 1.3;
   --text-xs: 12px;
+  --text-xs--line-height: 1.4;
   --text-sm: 13px;
   --text-sm--line-height: 1.35;
   --text-base: 15px;

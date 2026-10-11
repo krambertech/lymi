@@ -49,7 +49,7 @@ flowchart LR
   mobile -->|"Better Auth Expo session"| worker
 ```
 
-Product rules stay in `packages/core`. Screens keep the web's component names, so a design-system rule reads the same on both. Today `pnpm tokens` in `apps/mobile` reads the web's `styles.css`; `packages/design` replaces that.
+Product rules stay in `packages/core`. Screens keep the web's component names, so a design-system rule reads the same on both. Design values come from `packages/design`, which the web and the site import too.
 
 ## Design language
 

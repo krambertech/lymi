@@ -31,7 +31,7 @@ const dark = {
   canvas: "#151210",
 };
 
-// Kept in step with apps/web/src/client/components/lantern-geometry.tsx. The bail is drawn first so
+// Kept in step with packages/design/src/lantern.ts. The bail is drawn first so
 // the hood covers its feet, and every metal part overlaps the glass so nothing can spill.
 const lanternBody = (c, { flame = true, glow = false } = {}) => `
   <path d="M40.5 48 A19.5 30 0 0 1 79.5 48" fill="none" stroke="${c.metal}" stroke-width="5.5" stroke-linecap="round"/>

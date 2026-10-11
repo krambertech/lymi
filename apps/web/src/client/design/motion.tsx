@@ -1,8 +1,8 @@
+import { FLAME_MOTION } from "@lymi/design";
 import { useState } from "react";
 import { Button } from "../components/button";
 import { Lantern } from "../components/lantern";
 import { toast } from "../components/ui/toast";
-import { FLAME_MOTION } from "../lib/flame";
 import { DocLink } from "./doc-link";
 import { Doc, Specimen, Sub } from "./frame";
 

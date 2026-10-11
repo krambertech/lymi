@@ -46,6 +46,7 @@ export function planSteps({ base, paths, hasRouteTree }) {
     { label: "TypeScript", args: ["typecheck"] },
     vitest("@lymi/core"),
     vitest("@lymi/client"),
+    vitest("@lymi/design"),
     vitest("@lymi/web"),
     vitest("@lymi/site"),
     ...(paths.some((path) => path.startsWith("scripts/"))

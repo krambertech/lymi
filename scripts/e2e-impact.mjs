@@ -12,6 +12,7 @@ const productionPrefixes = [
   "e2e/",
   "packages/client/",
   "packages/core/",
+  "packages/design/",
 ];
 
 const nonProductionPrefixes = ["apps/web/src/client/design/", "apps/web/src/client/studio/"];

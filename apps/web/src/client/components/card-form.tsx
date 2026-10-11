@@ -10,6 +10,7 @@ import {
   type ReviewModeKey,
   revealsAnswer,
 } from "@lymi/core";
+import { EASE_OUT } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { cn } from "cn";
 import {
@@ -32,7 +33,6 @@ import { type ReactNode, useEffect, useId, useMemo, useRef, useState } from "rea
 import type { Card, DeckSummary } from "../lib/api";
 import { useObjectUrl } from "../lib/avatar";
 import { modShortcut, useDesktop } from "../lib/device";
-import { EASE_OUT } from "../lib/ease";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { lastDeckId } from "../lib/last-deck";
 import { sectionsQuery } from "../lib/queries";

@@ -20,6 +20,7 @@ test("a screen change runs static checks and the changed tests on desktop Chromi
       "typecheck",
       `--filter @lymi/core exec vitest run --changed ${base} --passWithNoTests`,
       `--filter @lymi/client exec vitest run --changed ${base} --passWithNoTests`,
+      `--filter @lymi/design exec vitest run --changed ${base} --passWithNoTests`,
       `--filter @lymi/web exec vitest run --changed ${base} --passWithNoTests`,
       `--filter @lymi/site exec vitest run --changed ${base} --passWithNoTests`,
     ],

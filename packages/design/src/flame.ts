@@ -1,29 +1,10 @@
 import type { StreakOut } from "@lymi/core";
-import type { SpringOptions } from "motion/react";
 
 /**
  * How tall the flame stands. 0 is out and 1 is the brand flame. Growth before the goal stops
  * short of full, so reaching the goal is a rise of its own rather than one more step.
  */
 export const FLAME_SIZE = { out: 0, start: 0.72, nearly: 1.02, full: 1.16 } as const;
-
-type Spring = SpringOptions & { type: "spring"; visualDuration: number; bounce: number };
-const spring = (visualDuration: number, bounce = 0): Spring => ({
-  type: "spring",
-  visualDuration,
-  bounce,
-});
-
-/** Every flame movement, in one place so the design system reads the same numbers. */
-export const FLAME_MOTION = {
-  settle: spring(0.9),
-  rise: spring(1.4),
-  catch: spring(0.7, 0.12),
-  goOut: spring(1.6),
-  breathIn: spring(0.28),
-  breathOut: spring(0.9),
-  spark: spring(0.62),
-} as const;
 
 /** How deep a breath goes: one review, and the goal. */
 export const FLAME_BREATH = { feed: 1, rise: 1.6 } as const;
@@ -59,20 +40,29 @@ export function flameSize(progress: number | undefined, out = false): number {
   return FLAME_SIZE.start + (FLAME_SIZE.nearly - FLAME_SIZE.start) * p;
 }
 
+/** What the flame reads of a day; the phone builds it from its own store. */
+export interface LanternDay {
+  current: StreakOut["current"];
+  today: Pick<StreakOut["today"], "attempts" | "goal" | "outcome">;
+}
+
+/** Today's progress toward the goal, 0 to 1. A day that met its goal or ran out of cards is full. */
+export function todayProgress(today: LanternDay["today"]): number {
+  if (today.outcome === "goal_met" || today.outcome === "exhausted") return 1;
+  return today.goal > 0 ? Math.min(today.attempts / today.goal, 1) : 0;
+}
+
 /**
  * What the lantern shows for a day. The flame is out only with no streak and no review yet
  * today, so the first review lights it; from there today's attempts grow it to full at the goal.
  */
-export function lanternFor(summary: StreakOut | undefined): {
+export function lanternFor(day: LanternDay | undefined): {
   out: boolean;
   progress: number | undefined;
 } {
-  if (!summary) return { out: false, progress: undefined };
-  if (summary.current === 0 && summary.today.attempts === 0) return { out: true, progress: 0 };
-  if (summary.today.outcome === "goal_met" || summary.today.outcome === "exhausted")
-    return { out: false, progress: 1 };
-  const { attempts, goal } = summary.today;
-  return { out: false, progress: goal > 0 ? Math.min(attempts / goal, 1) : 0 };
+  if (!day) return { out: false, progress: undefined };
+  if (day.current === 0 && day.today.attempts === 0) return { out: true, progress: 0 };
+  return { out: false, progress: todayProgress(day.today) };
 }
 
 export type StreakFlameState = "out" | "lit" | "full";
@@ -88,8 +78,8 @@ export const STREAK_FLAME_SIZE: Record<StreakFlameState, number> = {
  * What the pill and the streak modal show. Read from `lanternFor`, so the small flame is out,
  * lit or full exactly when the lantern is; it only leaves out the growth between reviews.
  */
-export function streakFlameFor(summary: StreakOut): StreakFlameState {
-  const { out, progress } = lanternFor(summary);
+export function streakFlameFor(day: LanternDay): StreakFlameState {
+  const { out, progress } = lanternFor(day);
   if (out) return "out";
   return progress === 1 ? "full" : "lit";
 }

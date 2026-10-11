@@ -1,7 +1,11 @@
+import { CHOICE_SLIDE } from "@lymi/design";
 import { useState } from "react";
 import { type LayoutRectangle, View } from "react-native";
 import Animated, { useAnimatedStyle, useReducedMotion, withSpring } from "react-native-reanimated";
+import { spring } from "../theme/motion";
 import { Press, Text } from "./primitives";
+
+const SLIDE = spring(CHOICE_SLIDE);
 
 /** The chosen plate springs to the new option with a trace of overshoot. motion.md "Choices". */
 export function Segmented<T extends string>({
@@ -20,11 +24,10 @@ export function Segmented<T extends string>({
   const chosen = rects[value];
   const plate = useAnimatedStyle(() => {
     if (!chosen) return { opacity: 0 };
-    const spring = { duration: 340, dampingRatio: 0.82 };
     return {
       opacity: 1,
-      width: reduce ? chosen.width : withSpring(chosen.width, spring),
-      transform: [{ translateX: reduce ? chosen.x : withSpring(chosen.x, spring) }],
+      width: reduce ? chosen.width : withSpring(chosen.width, SLIDE),
+      transform: [{ translateX: reduce ? chosen.x : withSpring(chosen.x, SLIDE) }],
     };
   });
   return (

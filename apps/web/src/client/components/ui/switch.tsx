@@ -1,8 +1,8 @@
 import { Switch as SwitchPrimitive } from "@base-ui/react/switch";
+import { CHOICE_SLIDE, INSTANT } from "@lymi/design";
 import { cn } from "cn";
 import { motion, useReducedMotionConfig } from "motion/react";
 import * as React from "react";
-import { CHOICE_SLIDE, INSTANT } from "../../lib/choice-motion";
 import { useField, useFieldControl } from "./field";
 
 // shadcn's Switch: on or off, taking effect the moment it changes.

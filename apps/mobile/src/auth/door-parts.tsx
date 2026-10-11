@@ -1,3 +1,6 @@
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { MIN_PASSWORD_LENGTH } from "@lymi/core";
 import { type ReactNode, useEffect, useRef } from "react";
 import { type TextInput, View, type ViewStyle } from "react-native";
@@ -20,11 +23,11 @@ import { devSignIn, type SignIn, type Step } from "./use-sign-in";
 
 type EmailStep = Exclude<Step, "doors">;
 
-const HEADINGS: Record<EmailStep, { title: string; line?: string }> = {
-  "sign-in": { title: "Sign in to Lymi", line: "Welcome back." },
-  "sign-up": { title: "Create your Lymi account", line: "Lymi is free to use." },
-  code: { title: "Check your inbox" },
-  forgot: { title: "Reset your password", line: "We’ll email you a link to set a new one." },
+const HEADINGS: Record<EmailStep, { title: MessageDescriptor; line?: MessageDescriptor }> = {
+  "sign-in": { title: msg`Sign in to Lymi`, line: msg`Welcome back.` },
+  "sign-up": { title: msg`Create your Lymi account`, line: msg`Lymi is free to use.` },
+  code: { title: msg`Check your inbox` },
+  forgot: { title: msg`Reset your password`, line: msg`We’ll email you a link to set a new one.` },
 };
 
 /** A card's arrival from motion.md: a 6 px rise over 200 ms; under reduced motion, a fade. */
@@ -66,6 +69,7 @@ export function Pool({ className }: { className: string }) {
 
 /** The brand moment: the lantern, the name, and why an account is worth having. */
 export function Brand() {
+  const { t } = useLingui();
   const arrive = useArrival();
   return (
     <View className="items-center gap-3">
@@ -81,7 +85,7 @@ export function Brand() {
           Lymi
         </Text>
         <Text className="text-center text-md text-text-2">
-          Your cards and your streak, on every device.
+          {t`Your cards and your streak, on every device.`}
         </Text>
       </Animated.View>
     </View>
@@ -90,12 +94,13 @@ export function Brand() {
 
 /** Two equal ways in, each with the stronger edge the web gives Google, and a door for someone new. */
 export function DoorButtons({ door, open }: { door: SignIn; open: (step: EmailStep) => void }) {
+  const { t } = useLingui();
   const arrive = useArrival();
   return (
     <View className="gap-3">
       <Animated.View entering={arrive(280)}>
         <Button
-          label="Continue with Google"
+          label={t`Continue with Google`}
           size="lg"
           strong
           lead={<GoogleMark size={20} />}
@@ -106,7 +111,7 @@ export function DoorButtons({ door, open }: { door: SignIn; open: (step: EmailSt
       {door.errors.google && <Alert>{door.errors.google}</Alert>}
       <Animated.View entering={arrive(340)}>
         <Button
-          label="Sign in with email"
+          label={t`Sign in with email`}
           icon="email"
           size="lg"
           strong
@@ -116,10 +121,10 @@ export function DoorButtons({ door, open }: { door: SignIn; open: (step: EmailSt
       <Animated.View entering={arrive(400)} className="gap-3 pt-3">
         <View className="flex-row items-center gap-3" accessibilityElementsHidden>
           <View className="h-px flex-1 bg-edge" />
-          <Text className="text-sm text-muted">New to Lymi?</Text>
+          <Text className="text-sm text-muted">{t`New to Lymi?`}</Text>
           <View className="h-px flex-1 bg-edge" />
         </View>
-        <Button label="Create an account" size="lg" onPress={() => open("sign-up")} />
+        <Button label={t`Create an account`} size="lg" onPress={() => open("sign-up")} />
       </Animated.View>
     </View>
   );
@@ -130,19 +135,21 @@ export function DoorButtons({ door, open }: { door: SignIn; open: (step: EmailSt
  * rise in 50 ms apart; the old step goes at once, so nothing overlaps or shifts.
  */
 export function EmailContent({ door }: { door: SignIn }) {
+  const { t, i18n } = useLingui();
   const arrive = useArrival();
   const step = (door.step === "doors" ? "sign-in" : door.step) as EmailStep;
   const heading = HEADINGS[step];
+  const email = door.email.trim();
   return (
     <View key={step} className="gap-6">
       <Animated.View entering={arrive(0)} className="gap-1">
         <Text className="text-3xl font-medium text-text" accessibilityRole="header">
-          {heading.title}
+          {i18n._(heading.title)}
         </Text>
         <Text className="text-md text-text-2">
           {step === "code"
-            ? `Enter the 6-digit code we sent to ${door.email.trim()}.`
-            : heading.line}
+            ? t`Enter the 6-digit code we sent to ${email}.`
+            : heading.line && i18n._(heading.line)}
         </Text>
       </Animated.View>
       {door.notice && <NoticeBlock notice={door.notice} />}
@@ -163,12 +170,13 @@ export function EmailContent({ door }: { door: SignIn }) {
 
 /** How to switch between having an account and making one, and back from a side step. */
 function SwitchLinks({ door, step }: { door: SignIn; step: EmailStep }) {
+  const { t } = useLingui();
   const link =
     step === "sign-up"
-      ? { lead: "Have an account?", label: "Sign in", to: "sign-in" as const }
+      ? { lead: t`Have an account?`, label: t`Sign in`, to: "sign-in" as const }
       : step === "code" || step === "forgot"
-        ? { lead: null, label: "Back to sign in", to: "sign-in" as const }
-        : { lead: "New to Lymi?", label: "Create an account", to: "sign-up" as const };
+        ? { lead: null, label: t`Back to sign in`, to: "sign-in" as const }
+        : { lead: t`New to Lymi?`, label: t`Create an account`, to: "sign-up" as const };
   return (
     <View className="items-center">
       <View className="flex-row flex-wrap items-center justify-center gap-1">
@@ -197,6 +205,7 @@ export function DevSignIn() {
 }
 
 function CredentialForm({ door }: { door: SignIn }) {
+  const { t } = useLingui();
   const p = usePalette();
   const passwordRef = useRef<TextInput>(null);
   const step = door.step === "doors" ? "sign-in" : door.step;
@@ -204,7 +213,7 @@ function CredentialForm({ door }: { door: SignIn }) {
   return (
     <View className="gap-4">
       <Field>
-        <FieldLabel>Email</FieldLabel>
+        <FieldLabel>{t`Email`}</FieldLabel>
         <Input
           testID="email"
           value={door.email}
@@ -223,7 +232,7 @@ function CredentialForm({ door }: { door: SignIn }) {
       {!forgot && (
         <View className="gap-1">
           <Field>
-            <FieldLabel>Password</FieldLabel>
+            <FieldLabel>{t`Password`}</FieldLabel>
             <PasswordInput
               ref={passwordRef}
               testID="password"
@@ -235,7 +244,7 @@ function CredentialForm({ door }: { door: SignIn }) {
               onSubmitEditing={door.submit}
             />
             {step === "sign-up" && (
-              <FieldDescription>At least {MIN_PASSWORD_LENGTH} characters.</FieldDescription>
+              <FieldDescription>{t`At least ${MIN_PASSWORD_LENGTH} characters.`}</FieldDescription>
             )}
             <FieldError>{door.errors.password}</FieldError>
           </Field>
@@ -247,14 +256,14 @@ function CredentialForm({ door }: { door: SignIn }) {
               accessibilityRole="button"
             >
               <Text className="text-base text-muted" style={{ textDecorationColor: p["edge-2"] }}>
-                Forgot your password?
+                {t`Forgot your password?`}
               </Text>
             </Press>
           )}
         </View>
       )}
       <Button
-        label={forgot ? "Send reset link" : step === "sign-up" ? "Create account" : "Sign in"}
+        label={forgot ? t`Send reset link` : step === "sign-up" ? t`Create account` : t`Sign in`}
         variant="primary"
         size="lg"
         loading={door.pending === "form"}
@@ -265,10 +274,11 @@ function CredentialForm({ door }: { door: SignIn }) {
 }
 
 function CodeForm({ door }: { door: SignIn }) {
+  const { t } = useLingui();
   return (
     <View className="gap-4">
       <Field>
-        <FieldLabel>Code</FieldLabel>
+        <FieldLabel>{t`Code`}</FieldLabel>
         <Input
           value={door.code}
           onChangeText={door.setCode}
@@ -283,14 +293,14 @@ function CodeForm({ door }: { door: SignIn }) {
         <FieldError>{door.errors.code}</FieldError>
       </Field>
       <Button
-        label="Confirm"
+        label={t`Confirm`}
         variant="primary"
         size="lg"
         loading={door.pending === "form"}
         onPress={door.submit}
       />
       <Button
-        label="Send a new code"
+        label={t`Send a new code`}
         variant="ghost"
         loading={door.pending === "resend"}
         onPress={door.resend}

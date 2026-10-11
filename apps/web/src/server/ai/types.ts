@@ -22,6 +22,8 @@ export type TextRequest = {
   input: string;
   /** JSON Schema the reply must satisfy, named for the vendor's structured-output call. */
   schema: { name: string; schema: Record<string, unknown> };
+  /** How hard the model reasons; left out, the provider's own default. */
+  effort?: "low" | "medium" | "high" | undefined;
 };
 
 export interface TextProvider {

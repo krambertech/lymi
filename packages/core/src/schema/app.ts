@@ -180,6 +180,11 @@ export const cards = sqliteTable(
     /** A memory hook. Not an edition field, so writing one leaves `revision` and every edition alone. */
     hook: text("hook"),
     hookSource: text("hook_source", { enum: ["lesson", "ai", "manual"] }),
+    /**
+     * The hook the AI drafted for the owner's editor, kept until the term or meaning changes; empty
+     * when it had none. Saving exactly this text marks the hook as the AI's.
+     */
+    hookDraft: text("hook_draft"),
     /** Set while an enrichment job is outstanding, and cleared once it settles. */
     enrichmentStatus: text("enrichment_status", { enum: ["working", "failed"] }),
     /** R2 key of generated pronunciation audio, if any. */

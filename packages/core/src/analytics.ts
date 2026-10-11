@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ReviewModeKey } from "./types";
+import { ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
 export const INTERNAL_ACCOUNT_IDS = new Set([
@@ -57,17 +57,66 @@ const source_fields = {
   utm_campaign: campaign.optional().catch(undefined),
 };
 export const Attribution = z.object({ first_landing_page: path, ...source_fields });
+export const Backlog = z.enum(["0", "1-20", "21-100", "100+"]);
+export type Backlog = z.infer<typeof Backlog>;
+
+/** Due cards in a few bands, so a pile-up shows without sending the exact count. */
+export function backlogOf(due: number): Backlog {
+  return due <= 0 ? "0" : due <= 20 ? "1-20" : due <= 100 ? "21-100" : "100+";
+}
+/** Added to a reminder's link so the app it opens can say a reminder brought the learner. */
+export const REMINDER_ENTRY = { key: "lymi_entry", value: "reminder" } as const;
+
+/** USD per million tokens, from OpenAI's price list, so a call's cost never waits on PostHog's table. */
+const TEXT_PRICES: Record<string, { input: number; cachedInput: number; output: number }> = {
+  "gpt-6-luna": { input: 0.1, cachedInput: 0.01, output: 0.5 },
+};
+
+/** A text call's cost in USD, or nothing for a model without a known price. */
+export function textCallCost(
+  model: string,
+  tokens: { input: number; cached?: number | undefined; output: number },
+): { input: number; output: number } | undefined {
+  const price = TEXT_PRICES[model];
+  if (!price) return;
+  const cached = Math.min(tokens.cached ?? 0, tokens.input);
+  return {
+    input: ((tokens.input - cached) * price.input + cached * price.cachedInput) / 1e6,
+    output: (tokens.output * price.output) / 1e6,
+  };
+}
+const usd = z.number().nonnegative().max(1000);
+/** The scheduler's card state before a grade, by its number in ts-fsrs. */
+export const CARD_STATES = ["new", "learning", "review", "relearning"] as const;
+const tokens = z.number().int().nonnegative().max(10_000_000);
 export type Attribution = z.infer<typeof Attribution>;
 
 export const analyticsEvents = {
   $pageview: z.object({ pathname: path, ...source_fields }),
-  app_opened: z.object({}),
+  app_opened: z.object({
+    entry: z.enum(["reminder", "link", "direct"]).optional(),
+    backlog: Backlog.optional(),
+  }),
   onboarding_finished: z.object({
     kind: z.enum(["language", "test", "subject", "other", "skipped", "joined"]),
   }),
   signed_up: Attribution.extend({ method: z.enum(["google", "email"]) }),
   signed_in: z.object({}),
-  review_graded: z.object({ mode: ReviewModeKey, grade: z.number().int().min(1).max(4) }),
+  review_graded: z.object({
+    mode: ReviewModeKey,
+    grade: z.number().int().min(1).max(4),
+    state: z.enum(CARD_STATES).optional(),
+    aid: ReviewAid.optional(),
+  }),
+  streak_ended: z.object({ streak_days: count }),
+  rest_day_used: z.object({ streak_days: count }),
+  hook_added: z.object({ source: z.enum(["lesson", "ai", "manual"]) }),
+  cards_archived: z.object({
+    origin: z.enum(["typed", "api", "ai_mcp", "import", "other"]),
+    count,
+    ai_written: count,
+  }),
+  reminder_sent: z.object({ backlog: Backlog }),
   review_session_finished: z.object({
     ...session,
     card_count: count,
@@ -115,6 +164,24 @@ export const analyticsEvents = {
     duration_ms: z.number().nonnegative().max(3_600_000),
   }),
   enrichment_finished: z.object({ outcome: z.enum(["enriched", "empty", "failed"]), count }),
+  // PostHog's LLM analytics shape, without $ai_input or $ai_output_choices: no prompt or reply leaves.
+  $ai_generation: z.object({
+    $ai_trace_id: z.uuid(),
+    $ai_session_id: z.null(),
+    $ai_span_name: z.enum(["enrich", "hook", "import_languages"]),
+    $ai_provider: z.literal("openai"),
+    $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),
+    $ai_input_tokens: tokens,
+    $ai_output_tokens: tokens,
+    $ai_reasoning_tokens: tokens.optional(),
+    $ai_cache_read_input_tokens: tokens.optional(),
+    $ai_input_cost_usd: usd.optional(),
+    $ai_output_cost_usd: usd.optional(),
+    $ai_total_cost_usd: usd.optional(),
+    $ai_latency: z.number().nonnegative().max(600),
+    $ai_is_error: z.boolean(),
+    $ai_http_status: z.number().int().min(100).max(599).optional(),
+  }),
 } as const;
 export type AnalyticsName = keyof typeof analyticsEvents;
 export type AnalyticsProperties<N extends AnalyticsName> = z.infer<(typeof analyticsEvents)[N]>;
@@ -131,6 +198,11 @@ export const analyticsProducers = {
   signed_in: ["worker"],
   onboarding_finished: ["worker"],
   review_graded: ["worker"],
+  streak_ended: ["worker"],
+  rest_day_used: ["worker"],
+  hook_added: ["worker"],
+  cards_archived: ["worker"],
+  reminder_sent: ["worker"],
   review_session_finished: ["browser"],
   review_session_abandoned: ["browser"],
   first_session_started: ["worker"],
@@ -151,6 +223,7 @@ export const analyticsProducers = {
   deck_joined: ["worker"],
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
+  $ai_generation: ["worker"],
 } satisfies Record<AnalyticsName, readonly ("browser" | "worker")[]>;
 
 export function eventProperties(

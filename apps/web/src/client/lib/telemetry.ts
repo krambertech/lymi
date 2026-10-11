@@ -4,6 +4,7 @@ import {
   initAnalytics,
   reportBrowserException,
   setAnalyticsLearner,
+  setAnalyticsOpening,
   visitFirstTouch,
 } from "@lymi/client/analytics";
 import { FIRST_TOUCH_HEADER } from "@lymi/core/analytics";
@@ -36,4 +37,5 @@ export function initTelemetry(): void {
   window.addEventListener("unhandledrejection", (event) => reportClientException(event.reason));
 }
 export const setTelemetryLearner = setAnalyticsLearner;
+export const setTelemetryOpening = setAnalyticsOpening;
 export const reportClientException = reportBrowserException;

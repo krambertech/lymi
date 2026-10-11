@@ -5,9 +5,11 @@ import {
   type AnalyticsProperties,
   type Attribution,
   analyticsPath,
+  type Backlog,
   eventProperties,
   firstTouch,
   INTERNAL_ACCOUNT_IDS,
+  REMINDER_ENTRY,
 } from "@lymi/core/analytics";
 import { POSTHOG_PROXY_PATH } from "@lymi/core/posthog-proxy";
 import { exceptionProperties } from "@lymi/core/telemetry";
@@ -26,6 +28,7 @@ let accountChecked = false;
 let identifySent: string | undefined;
 let lastPage: string | undefined;
 let openingSent = false;
+let opening: AnalyticsProperties<"app_opened"> | undefined;
 let publicDeckSent = false;
 let pageSource: Omit<Attribution, "first_landing_page"> | undefined;
 
@@ -58,6 +61,51 @@ function forget(): void {
   identifySent = undefined;
   lastPage = undefined;
   openingSent = false;
+  opening = undefined;
+}
+
+const fromReminder = (url: string) =>
+  new URL(url).searchParams.get(REMINDER_ENTRY.key) === REMINDER_ENTRY.value;
+
+/**
+ * How this page load began: a reminder's link, a link from another site, or neither. The address
+ * still carries a reminder's mark after sign-in, which returns to it.
+ */
+function arrivalEntry(): "reminder" | "link" | "direct" {
+  try {
+    if ((arrival && fromReminder(arrival.url)) || fromReminder(location.href)) return "reminder";
+  } catch {
+    return "direct";
+  }
+  return visitFirstTouch("product")?.referrer ? "link" : "direct";
+}
+
+function sendOpening(): void {
+  if (openingSent || !opening || !learner || identifySent !== learner) return;
+  if (!captureAnalytics("app_opened", { entry: arrivalEntry(), ...opening })) return;
+  openingSent = true;
+  dropReminderMark();
+}
+
+/** Once the opening is counted, a reload of the same address is not another reminder. */
+function dropReminderMark(): void {
+  try {
+    const url = new URL(location.href);
+    if (!fromReminder(url.href)) return;
+    url.searchParams.delete(REMINDER_ENTRY.key);
+    history.replaceState(history.state, "", url);
+  } catch {
+    /* The mark only costs a duplicate opening on reload. */
+  }
+}
+
+/**
+ * The product reports what was due when it opened, from the deck list it loads anyway, so the
+ * opening waits for that list rather than asking for anything.
+ */
+export function setAnalyticsOpening(backlog?: Backlog): void {
+  opening = backlog ? { backlog } : {};
+  sendOpening();
 }
 
 export function initAnalytics(options: {
@@ -205,10 +253,7 @@ function identifyLearner(): void {
     ...(INTERNAL_ACCOUNT_IDS.has(learner) ? { is_internal: true } : {}),
   });
   identifySent = learner;
-  if (!openingSent) {
-    captureAnalytics("app_opened", {});
-    openingSent = true;
-  }
+  sendOpening();
 }
 
 /** The product reports who is signed in and whether their account turned analytics off. */

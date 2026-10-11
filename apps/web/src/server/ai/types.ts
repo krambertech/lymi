@@ -26,6 +26,20 @@ export type TextRequest = {
   effort?: "low" | "medium" | "high" | undefined;
 };
 
+/** One model call's size and time, for cost; it never carries the prompt or the reply. */
+export type TextCall = {
+  provider: "openai";
+  model: string;
+  inputTokens: number;
+  outputTokens: number;
+  reasoningTokens?: number | undefined;
+  cachedTokens?: number | undefined;
+  latencyMs: number;
+  error: boolean;
+  status?: number | undefined;
+};
+export type TextObserver = (call: TextCall) => void;
+
 export interface TextProvider {
   provider: "openai";
   model: string;

@@ -3,6 +3,7 @@ import { newId } from "@lymi/core";
 import { and, eq, isNotNull, isNull, ne, sql } from "@lymi/core/db";
 import type { ReviewDay } from "@lymi/core/schema";
 import { schema } from "../db";
+import { track } from "./analytics";
 import { audit } from "./audit";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { addDays, dateFormatter, daysBetween, type LocalDateFormatter } from "./days";
@@ -96,10 +97,12 @@ export async function openDay(
   zone: string,
   goal: number,
 ): Promise<ReviewDay> {
-  await ctx.db
+  const created = await ctx.db
     .insert(schema.reviewDays)
     .values({ id: newId(), userId: ctx.userId, date, goal, timezone: zone })
-    .onConflictDoNothing();
+    .onConflictDoNothing()
+    .returning({ id: schema.reviewDays.id });
+  if (created.length) recordStreakChange(ctx, date, zone);
   const [day] = await ctx.db
     .select()
     .from(schema.reviewDays)
@@ -319,6 +322,30 @@ export async function undoReview(ctx: ServiceContext, reviewId: string): Promise
     return { date, attempts: 0, goal: settings.dailyGoal, outcome: "open" };
   }
   return settleDay(ctx, day, "undo");
+}
+
+/**
+ * A day's first activity decides the days since the last one: each was a rest day or ended the
+ * run. Only the request that creates the day's row reports them, after the response.
+ */
+function recordStreakChange(ctx: ServiceContext, today: string, zone: string): void {
+  ctx.analytics?.later?.(async () => {
+    try {
+      const before = (await streakDays(ctx, dateFormatter(zone))).filter((d) => d.date < today);
+      const last = before.at(-1);
+      if (!last) return;
+      // The run as the last active day left it, which the days since then kept or ended.
+      const was = summariseStreak(before, last.date).current;
+      const now = summariseStreak(before, today);
+      for (const date of now.restDays) {
+        if (date >= last.date) track(ctx.analytics, { name: "rest_day_used", streak_days: was });
+      }
+      if (was > 0 && now.current === 0)
+        track(ctx.analytics, { name: "streak_ended", streak_days: was });
+    } catch {
+      /* A failed analytics read cannot undo the day it describes. */
+    }
+  });
 }
 
 /** A day on the streak calendar. */

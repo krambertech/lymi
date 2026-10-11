@@ -16,6 +16,7 @@ import {
   serializeState,
   stateDirection,
 } from "@lymi/core";
+import { CARD_STATES } from "@lymi/core/analytics";
 import { and, eq, gte, ne } from "@lymi/core/db";
 import { schema } from "../db";
 import { track } from "./analytics";
@@ -329,7 +330,13 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
       },
     );
   if (!stored) return duplicate();
-  track(ctx.analytics, { name: "review_graded", mode: key, grade: rating });
+  track(ctx.analytics, {
+    name: "review_graded",
+    mode: key,
+    grade: rating,
+    ...(CARD_STATES[state.state] ? { state: CARD_STATES[state.state] } : {}),
+    ...(input.aid ? { aid: input.aid } : {}),
+  });
   recordFirstReview(ctx, row.deckId, { id: reviewId, reviewedAt });
   // Readiness only moves when a card leaves New or becomes Known, so other grades skip the check.
   if (state.state === 0 || result.card.state === 2) await advance();

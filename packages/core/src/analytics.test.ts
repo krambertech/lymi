@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
   analyticsPath,
+  backlogOf,
   carryFirstTouch,
   eventProperties,
   firstTouch,
   parseFirstTouch,
+  textCallCost,
 } from "./analytics";
 
 describe("analytics privacy contract", () => {
@@ -30,6 +32,42 @@ describe("analytics privacy contract", () => {
       grade: 4,
     });
     expect(eventProperties("cards_added", { source: "private", count: -1 })).toBeNull();
+  });
+  it("bands a backlog and sends an AI call's size without its text", () => {
+    expect([0, 1, 20, 21, 100, 101].map(backlogOf)).toEqual([
+      "0",
+      "1-20",
+      "1-20",
+      "21-100",
+      "21-100",
+      "100+",
+    ]);
+    const call = {
+      $ai_trace_id: "0b9d5d8e-4c1f-4d43-9a5b-3f0c2b6f1e11",
+      $ai_session_id: null,
+      $ai_span_name: "enrich",
+      $ai_provider: "openai",
+      $ai_model: "gpt-6-luna",
+      $ai_input_tokens: 900,
+      $ai_output_tokens: 120,
+      $ai_latency: 2.5,
+      $ai_is_error: false,
+    };
+    expect(
+      eventProperties(
+        "$ai_generation",
+        { ...call, $ai_input: [{ content: "private" }], $ai_output_choices: ["private"] },
+        "worker",
+      ),
+    ).toEqual(call);
+    expect(eventProperties("$ai_generation", call, "browser")).toBeNull();
+    const cost = textCallCost("gpt-6-luna", { input: 1_000_000, cached: 500_000, output: 200_000 });
+    expect(cost?.input).toBeCloseTo(0.055);
+    expect(cost?.output).toBeCloseTo(0.1);
+    expect(textCallCost("unpriced-model", { input: 10, output: 10 })).toBeUndefined();
+    expect(
+      eventProperties("cards_archived", { origin: "ai_mcp", count: 3, ai_written: 2, term: "x" }),
+    ).toEqual({ origin: "ai_mcp", count: 3, ai_written: 2 });
   });
   it("keeps public slugs and replaces private route identifiers", () => {
     expect(analyticsPath("/library/private-deck", "product")).toBe("/library/:item");

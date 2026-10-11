@@ -111,7 +111,13 @@ it("measures a signed-in learner by default, keyed to the account, without cooki
       $geoip_disable: true,
     },
   });
-  expect(sdk.sent.filter((e) => e.event === "app_opened")).toHaveLength(1);
+  // The opening waits for the deck list, so it can say what was due.
+  expect(sdk.sent.filter((e) => e.event === "app_opened")).toHaveLength(0);
+  analytics.setAnalyticsOpening("21-100");
+  analytics.setAnalyticsOpening("100+");
+  expect(sdk.sent.filter((e) => e.event === "app_opened")).toMatchObject([
+    { properties: { entry: "link", backlog: "21-100" } },
+  ]);
   expect(JSON.stringify(sdk.sent)).not.toContain("never@example.com");
   expect(JSON.stringify(sdk.sent)).not.toContain("secret");
   expect(JSON.stringify(sdk.sent)).not.toContain("Test/1.0");
@@ -154,6 +160,20 @@ it("counts a signed-out visitor anonymously and joins them to the account they c
     first_landing_page: "/teachers",
     referrer: "www.google.com",
   });
+});
+
+it("names a reminder as the way in, and opens without a backlog when none is known", async () => {
+  await load("https://my.lymi.app/review?lymi_entry=reminder&deck=italian", "");
+  const replaceState = vi.fn();
+  vi.stubGlobal("history", { state: null, replaceState });
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsOpening();
+  expect(sdk.sent.filter((e) => e.event === "app_opened")).toEqual([]);
+  analytics.setAnalyticsLearner("account-1", true);
+  const [opened] = sdk.sent.filter((e) => e.event === "app_opened");
+  expect(opened?.properties).toMatchObject({ entry: "reminder" });
+  expect(opened?.properties).not.toHaveProperty("backlog");
+  expect(String(replaceState.mock.calls[0]?.[2])).toBe("https://my.lymi.app/review?deck=italian");
 });
 
 it("resets identity when another account signs in", async () => {

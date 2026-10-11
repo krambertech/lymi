@@ -32,7 +32,6 @@ import { Chip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
 import { DeckMeta, DeckTray } from "../components/deck-tray";
 import { GOAL_NAMES } from "../components/goal-picker";
-import { Lantern } from "../components/lantern";
 import { Screen, ScreenBar } from "../components/layout/screen";
 import { Input } from "../components/ui/input";
 import { RadioGroup } from "../components/ui/radio-group";
@@ -166,7 +165,16 @@ export function WelcomeView({ catalog, meaningLanguage, onFinish, onSkip, busy, 
   useEffect(() => writeProgress({ trail, kind, language, goal }), [trail, kind, language, goal]);
 
   const step = trail.at(-1) ?? "kind";
-  const count = step === "kind" || step === "language" ? 1 : step === "goal" ? 2 : 3;
+  // A new question opens at its top, not where the last one was scrolled to.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the step is the trigger.
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+    document.querySelector("main")?.scrollTo({ top: 0 });
+  }, [step]);
+  // The learner's own path: the language question joins it only after A language.
+  const path: Step[] =
+    kind === "language" ? ["kind", "language", "goal", "start"] : ["kind", "goal", "start"];
+  const position = path.indexOf(step) + 1;
   const languages = catalogLanguages(catalog ?? [], meaningLanguage);
   const matched = decksFor(catalog ?? [], kind, language).slice(0, START_DECKS);
   const ownFirst = matched.length === 0;
@@ -239,39 +247,17 @@ export function WelcomeView({ catalog, meaningLanguage, onFinish, onSkip, busy, 
 
   const bar = (
     <ScreenBar>
-      {/* Three columns, so the track stays put whether Back or the lantern holds the start. */}
-      <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-2 @md/shell:gap-3">
-        {/* Back's own cap is a share of its column, which here would cut "Назад" to a letter. */}
-        <div className="flex min-w-max [&>.screen-back]:max-w-none">
-          {trail.length > 1 ? (
-            <BackButton label={t`Back`} onClick={() => move(null, false)} />
-          ) : (
-            <Lantern className="-ms-2 size-11" />
-          )}
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="grid w-14 grid-cols-3 gap-1 @md/shell:w-20" aria-hidden="true">
-            {[1, 2, 3].map((n) => (
-              <span key={n} className="block h-1 overflow-hidden rounded-full bg-plate-2">
-                <motion.span
-                  className="block h-full origin-left rounded-full bg-text rtl:origin-right"
-                  initial={false}
-                  animate={{ scaleX: n <= count ? 1 : 0 }}
-                  transition={still ? { duration: 0 } : { duration: 0.32, ease: EASE }}
-                />
-              </span>
-            ))}
-          </div>
-          {/* A phone's bar has room for Back, the track and Skip; the count is read out there instead. */}
-          <span className="sr-only whitespace-nowrap text-sm text-muted tabular-nums @md/shell:not-sr-only">
-            <Trans>{count} of 3</Trans>
-          </span>
-        </div>
-        <div className="flex min-w-max justify-end">
-          <Button variant="ghost" size="sm" className="-me-3" onClick={onSkip} aria-disabled={busy}>
-            <Trans>Skip for now</Trans>
-          </Button>
-        </div>
+      <div className="flex w-full items-center">
+        {trail.length > 1 && <BackButton label={t`Back`} onClick={() => move(null, false)} />}
+        <Button
+          variant="ghost"
+          size="sm"
+          className="-me-3 ms-auto"
+          onClick={onSkip}
+          aria-disabled={busy}
+        >
+          <Trans>Skip for now</Trans>
+        </Button>
       </div>
     </ScreenBar>
   );
@@ -366,6 +352,23 @@ export function WelcomeView({ catalog, meaningLanguage, onFinish, onSkip, busy, 
 
   return (
     <Screen ownTitle backOnDesktop bar={bar} width="md">
+      {/* One bar rather than a segment per question: the language question comes only after A language. */}
+      <div
+        role="progressbar"
+        aria-label={t`Getting set up`}
+        aria-valuemin={0}
+        aria-valuemax={path.length}
+        aria-valuenow={position}
+        aria-valuetext={t`Question ${position} of ${path.length}`}
+        className="-mt-1 mb-7 h-1 overflow-hidden rounded-full bg-plate-2"
+      >
+        <motion.div
+          className="h-full origin-left rounded-full bg-text rtl:origin-right"
+          initial={false}
+          animate={{ scaleX: position / path.length }}
+          transition={still ? { duration: 0 } : { duration: 0.32, ease: EASE }}
+        />
+      </div>
       <form
         className="flex flex-1 flex-col"
         onSubmit={(e) => {

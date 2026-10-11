@@ -299,7 +299,7 @@ Each rule links to the file that holds its detail and its exceptions.
 10. **Status is never colour alone.** A state carries an icon and a word; an error carries an icon. [colour.md](docs/design/system/colour.md#status-is-never-colour-alone)
 11. **Every control has** default, hover, focus, active, disabled and, where it applies, loading. Hover goes through `hoverable:` so touch never sticks.
 12. **Motion conveys state**, leaves faster than it arrives, never animates a keyboard action, and has a reduced version. [motion.md](docs/design/system/motion.md)
-13. **One language on every surface.** The web, the site and the phone share tokens, the lantern and its moments. A surface differs only where its input or its OS gives a better way, and a change to a shared mechanic says what it does on the other surfaces. [phone.md](docs/design/system/phone.md)
+13. **One language on every surface.** The web, the site and the phone share the tokens, the lantern and the moments in motion.md. A change to a shared mechanic names its behaviour on all three surfaces in the same pull request or proposal. [phone.md](docs/design/system/phone.md)
 
 ## Where the rules live
 

@@ -62,7 +62,7 @@ Decided in the design-vision session on 11 October:
 - **What the phone is for.** It leads the daily jobs, and setup stays on the web ([ADR 0030](../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)).
 - **Review.** Grades 80 pt and nearly square, a flat X, pull the top bar down to end, swipe from the start edge to undo one grade, the spark from the hood after a grade, the end's light reaching the screen's edges, and a haptic for every touch that changes state.
 - **Navigation.** You holds Insights, the reminder and theme, Activity and Settings; Archived closes Library. Pages push from the side, tasks rise as sheets, a review covers the screen. Capture moves to the bottom of the screen.
-- **Shared moments** ([lit design language](lit-design-language.md)), for the web and the site too: the wick on reveal, numbers that roll, the end lighting the room, the pool following the hour, sound only at the goal and off with one setting, and the tilt highlight on Today's lantern on the phone.
+- **Shared moments,** on the web and the site too ([lit design language](lit-design-language.md)): the wick on reveal, numbers that roll, the end lighting the room, the pool following the hour, sound only at the goal and off with one setting, and the tilt highlight on Today's lantern on the phone.
 - **Outside the app.** One widget in two sizes (Lantern small, Week medium), the Lock Screen ring, Add a word and Review controls, one plain reminder, no Live Activity for now.
 - **Share to Lymi.** A Lymi sheet inside the share sheet, so the learner never leaves the app they were reading. The page title becomes the card's source.
 
@@ -70,10 +70,10 @@ Still open, with options to compare:
 
 - **Tabs and capture.** Whether Explore takes a fourth tab, and whether capture sits beside the pill or in its middle. The pill keeps the proof of concept's styling.
 - **Add a word.** How several words in a row and the optional fields work on a phone. The pattern to beat is Reminders' Return-adds-the-next with Linear's chips above the keyboard.
-- **Widget actions.** A widget that only shows feels inert; the medium size may carry Add a word and Review as two links.
+- **Widget actions.** The widgets show state but offer no action. The medium size may carry Add a word and Review as two links.
 - **Controls.** Their look, and whether Review shows the count and the goal. Controls take a custom symbol, a title and a value; there is no ring.
 - **Choosing the deck when sharing.** Apple's on-device model does not support Estonian, Ukrainian or Russian, and its language detector has no Estonian, so the pick likely comes from the last deck used, the deck languages, and the server.
-- **A faint ember at the thumb** after a grade, to try against the spark alone.
+- **A faint ember at the thumb.** Try it after a grade, against the spark alone.
 
 ## Native features, in order of value
 

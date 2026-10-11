@@ -67,7 +67,7 @@ Reveal is the one choreographed moment of a card, built with Motion.
 
 1. Before reveal there is no grade strip and the card takes the room. An unrevealed card is the word alone.
 2. On reveal the word glides up to make room over 340 ms, and the strip opens over the same 340 ms while the card shrinks, so the glide and the shrink read as one movement.
-3. The rule draws across from the start edge over 360 ms as a line of the lantern's light, in `amber` with its glow, then cools to `edge-2` over the next 700 ms. This is the wick, Lymi's one gesture on every card. Under reduced motion the rule appears as a hairline.
+3. The rule draws across from the start edge over 360 ms as a line of the lantern's light, in `amber` with its glow, then cools to `edge-2` over the next 700 ms. This is the wick. Under reduced motion the rule appears as a hairline.
 4. The meaning, example and sources rise 10 px out of a 4 px blur over 260 ms, 50 ms apart.
 5. The four grade controls rise 10 px over 220 ms, 35 ms apart, starting 80 ms after the strip begins to open.
 

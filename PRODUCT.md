@@ -38,7 +38,7 @@ Product success is repeated use of real material and retained recall, not the nu
 
 ## Surfaces
 
-Lymi has three surfaces: the web app, the phone app and the public site. They are one product, with the same rules, the same data and one design language, laid out for the screen and the input each one has.
+Lymi has three surfaces: the web app, the phone app and the public site. They share the rules, the data and the design language. Only the layout and the input change with the screen.
 
 - The phone leads the daily jobs: reviewing in the evening, glancing at what is due, and catching a word while the lesson is fresh. It also reaches the learner outside the app, through a widget, the Lock Screen, controls, sharing from other apps and one reminder.
 - The web leads the jobs that want a keyboard and room: turning a lesson into cards, tidying a deck, reading Insights at length, and setup.
@@ -80,7 +80,7 @@ Brand-only appearances do not expose learner state. The app icon, login, and pub
 
 Voice is plain and friendly. It says "Daily goal reached" when the chosen number is complete and "Nothing left today" when no useful reviews remain, not "Congratulations!" It counts cards, not points. It never nags. Undo is everywhere, because cheap mistakes are most of what "delightful" means in a review app.
 
-Playfulness is allowed in four places, each tied to honest product state: the flame growing and sparking after a saved review, the stronger rise when the daily goal is complete, seven small lights for the last seven days, and the Undo toast. Forgot feeds the flame just as Easy does because both are repetitions. On the phone these moments can also be felt: a haptic answers every touch that changes state, and one sound marks the daily goal, which the learner can turn off. Everywhere else the interface is quiet. The lantern and what it lights are the only things that glow; every other surface is quiet, flat by day and lifted only slightly at night.
+Playfulness is allowed in four places, each tied to honest product state: the flame growing and sparking after a saved review, the stronger rise when the daily goal is complete, seven small lights for the last seven days, and the Undo toast. Forgot feeds the flame just as Easy does because both are repetitions. On the phone they can also be felt. A haptic answers every touch that changes state, and one sound, which the learner can turn off, marks the daily goal. Everywhere else the interface is quiet. The lantern and what it lights are the only things that glow; every other surface is quiet, flat by day and lifted only slightly at night.
 
 ## Anti-references
 

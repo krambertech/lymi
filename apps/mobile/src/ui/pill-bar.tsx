@@ -64,7 +64,13 @@ export function PillBar({ state, navigation }: BottomTabBarProps) {
               setRects((r) => ({ ...r, [i]: layout }));
             }}
             onPress={() => {
-              if (!active) navigation.navigate(route.name);
+              // The tab's stack hears this and returns to its top when the tab is already chosen, as iOS does.
+              const press = navigation.emit({
+                type: "tabPress",
+                target: route.key,
+                canPreventDefault: true,
+              });
+              if (!active && !press.defaultPrevented) navigation.navigate(route.name);
             }}
             className="h-12 flex-row items-center gap-2 rounded-full px-5"
           >

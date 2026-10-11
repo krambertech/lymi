@@ -4,14 +4,12 @@ import { useState } from "react";
 import { View } from "react-native";
 import { Uniwind } from "uniwind";
 import { authClient, useSession } from "../../../auth/client";
-import { useResetDemo } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { Button, Icon, Plate, SectionTitle, Text } from "../../../ui/primitives";
 import { Screen } from "../../../ui/screen";
 import { Segmented } from "../../../ui/segmented";
 
 export default function You() {
-  const reset = useResetDemo();
   const p = usePalette();
   const [theme, setTheme] = useState<"system" | "light" | "dark">("system");
   const [signingOut, setSigningOut] = useState(false);
@@ -62,8 +60,6 @@ export default function You() {
           </Text>
         </Plate>
       </View>
-
-      <Button label="Start today again" icon="reset" onPress={reset} />
 
       <Button
         label="Sign out"

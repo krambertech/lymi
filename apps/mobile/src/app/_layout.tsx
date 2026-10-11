@@ -1,6 +1,5 @@
 import "../global.css";
-import "../data/client";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
@@ -8,13 +7,13 @@ import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSession } from "../auth/client";
+import { queryClient } from "../data/client";
+import { Sync } from "../data/sync";
 import { usePalette } from "../theme/palette";
 import { WidgetSync } from "../widgets/sync";
 
 // A link straight to a review, such as from a widget, still has the tabs under it.
 export const unstable_settings = { initialRouteName: "(tabs)" };
-
-const queryClient = new QueryClient();
 
 // The splash stays until the stored session is read, so a signed-in learner never sees sign-in flash past.
 SplashScreen.preventAutoHideAsync();
@@ -24,7 +23,6 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
         <Root />
-        <WidgetSync />
       </QueryClientProvider>
     </GestureHandlerRootView>
   );
@@ -34,6 +32,7 @@ function Root() {
   const dark = useColorScheme() === "dark";
   const p = usePalette();
   const session = useSession();
+  const learnerId = session.data?.user.id;
   const signedIn = Boolean(session.data);
   useEffect(() => {
     if (!session.isPending) SplashScreen.hideAsync();
@@ -54,6 +53,12 @@ function Root() {
   return (
     <ThemeProvider value={theme}>
       <StatusBar style="auto" />
+      {learnerId && (
+        <>
+          <Sync learnerId={learnerId} />
+          <WidgetSync />
+        </>
+      )}
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: p.canvas } }}>
         <Stack.Protected guard={!signedIn}>
           <Stack.Screen name="(auth)" options={{ animation: "fade" }} />

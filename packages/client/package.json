@@ -12,7 +12,8 @@
     "./writes": "./src/writes.ts",
     "./write-projections": "./src/write-projections.ts",
     "./review-draw": "./src/review-draw.ts",
-    "./queued": "./src/queued.ts"
+    "./queued": "./src/queued.ts",
+    "./review-day": "./src/review-day.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",

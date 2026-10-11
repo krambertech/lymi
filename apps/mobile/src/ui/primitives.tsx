@@ -1,6 +1,6 @@
 import { shadows } from "@lymi/design";
 import * as Haptics from "expo-haptics";
-import type { ReactNode } from "react";
+import { createContext, type ReactNode, useContext } from "react";
 import {
   ActivityIndicator,
   Pressable,
@@ -8,7 +8,6 @@ import {
   Text as RNText,
   StyleSheet,
   type TextProps,
-  useColorScheme,
   useWindowDimensions,
   View,
   type ViewProps,
@@ -17,9 +16,10 @@ import {
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { useResolveClassNames } from "uniwind";
 import { useReduceMotion } from "../theme/motion";
-import { type Palette, usePalette } from "../theme/palette";
+import { clear, type Palette, usePalette, useRoom } from "../theme/palette";
 import { fitType } from "../theme/type";
 import { Icon, type IconName } from "./icons";
+import { useOnGlass } from "./surface";
 
 export { Icon };
 
@@ -52,6 +52,10 @@ export function Text({
   );
 }
 
+/** A state the design screen holds a control in, so each can be seen without a finger on it. */
+export type ForcedState = "pressed" | "focused" | null;
+export const ForcedStateContext = createContext<ForcedState>(null);
+
 interface PressProps extends Omit<PressableProps, "style"> {
   /** How far a press gives, from motion.md: 0.97 buttons, 0.98 cards, 0.96 grades. */
   scale?: number;
@@ -70,7 +74,8 @@ export function Press({
   ...props
 }: PressProps) {
   const reduce = useReduceMotion();
-  const s = useSharedValue(1);
+  const forced = useContext(ForcedStateContext) === "pressed";
+  const s = useSharedValue(forced && !reduce ? scale : 1);
   const animated = useAnimatedStyle(() => ({ transform: [{ scale: s.value }] }));
   return (
     <AnimatedPressable
@@ -91,9 +96,53 @@ export function Press({
   );
 }
 
-type Variant = "primary" | "secondary" | "ghost";
+export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
+export type ButtonSize = "sm" | "md" | "lg" | "xl";
 
-const HEIGHT = { md: "h-11 px-4", lg: "h-12 px-5", xl: "h-16 px-5" } as const;
+// Every control on the phone is 44 pt, so `md` is too; `sm` reaches 44 through its hit slop.
+const HEIGHT: Record<ButtonSize, string> = {
+  sm: "h-8 px-3 rounded-sm",
+  md: "h-11 px-4 rounded-md",
+  lg: "h-12 px-5 rounded-md",
+  xl: "h-16 px-5 rounded-md",
+};
+const LABEL: Record<ButtonSize, string> = {
+  sm: "text-sm",
+  md: "text-md",
+  lg: "text-md",
+  xl: "text-lg",
+};
+const ICON: Record<ButtonSize, number> = { sm: 16, md: 18, lg: 20, xl: 20 };
+const SLOP = { sm: 6, md: 0, lg: 0, xl: 0 } as const;
+
+function look(variant: ButtonVariant, p: Palette, strong = false) {
+  switch (variant) {
+    case "primary":
+      return { box: "bg-amber", ink: p["amber-ink"] };
+    case "secondary":
+      return { box: `bg-plate border ${strong ? "border-edge-2" : "border-edge"}`, ink: p.text };
+    case "ghost":
+      return { box: "bg-transparent", ink: p["text-2"] };
+    case "danger":
+      return { box: "bg-danger-soft", ink: p.danger };
+  }
+}
+
+interface ButtonProps {
+  label: string;
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  icon?: IconName;
+  /** A mark that is not one of Lymi's icons, such as Google's G. */
+  lead?: ReactNode;
+  loading?: boolean;
+  /** Pressing cannot do anything yet. It dims and swallows the press, and VoiceOver still finds it. */
+  disabled?: boolean;
+  /** A secondary with a stronger edge, for the way in most learners take (Google on sign-in). */
+  strong?: boolean;
+  onPress?: () => void;
+  testID?: string;
+}
 
 /**
  * buttons.md: one primary per view, secondary by default. `lg` ends a flow such as sign-in,
@@ -106,43 +155,29 @@ export function Button({
   icon,
   lead,
   loading = false,
+  disabled = false,
   strong = false,
   onPress,
-}: {
-  label: string;
-  variant?: Variant;
-  size?: keyof typeof HEIGHT;
-  icon?: IconName;
-  /** A mark that is not one of Lymi's icons, such as Google's G. */
-  lead?: ReactNode;
-  loading?: boolean;
-  /** A secondary with a stronger edge, for the way in most learners take (Google on sign-in). */
-  strong?: boolean;
-  onPress?: () => void;
-}) {
+  testID,
+}: ButtonProps) {
   const p = usePalette();
-  const box =
-    variant === "primary"
-      ? "bg-amber"
-      : variant === "secondary"
-        ? `bg-plate border ${strong ? "border-edge-2" : "border-edge"}`
-        : "bg-transparent";
-  const ink = variant === "primary" ? p["amber-ink"] : p.text;
+  const { box, ink } = look(variant, p, strong);
+  const inert = loading || disabled;
   return (
     <Press
-      onPress={loading ? undefined : onPress}
+      onPress={inert ? undefined : onPress}
+      haptic={!inert}
+      hitSlop={SLOP[size]}
+      testID={testID}
       accessibilityRole="button"
-      accessibilityState={{ busy: loading }}
-      className={`flex-row items-center justify-center gap-2 rounded-md ${box} ${HEIGHT[size]}`}
+      accessibilityState={{ busy: loading, disabled }}
+      className={`flex-row items-center justify-center gap-2 ${box} ${HEIGHT[size]} ${disabled ? "opacity-45" : ""}`}
       style={variant === "primary" ? keyLight(p) : undefined}
     >
       <View className={`flex-row items-center gap-2 ${loading ? "opacity-0" : ""}`}>
         {lead}
-        {icon && <Icon name={icon} colour={ink} size={20} />}
-        <Text
-          className={`${size === "xl" ? "text-lg" : "text-md"} font-medium`}
-          style={{ color: ink }}
-        >
+        {icon && <Icon name={icon} colour={ink} size={ICON[size]} />}
+        <Text className={`${LABEL[size]} font-medium`} style={{ color: ink }}>
           {label}
         </Text>
       </View>
@@ -151,27 +186,81 @@ export function Button({
   );
 }
 
+const ICON_BOX = { sm: "size-8", md: "size-11", lg: "size-12" } as const;
+const ICON_GLYPH = { sm: 16, md: 20, lg: 22 } as const;
+
+interface IconButtonProps {
+  icon: IconName;
+  /** What pressing does, never what the icon is: "Add card", not "Plus". */
+  label: string;
+  variant?: ButtonVariant;
+  size?: keyof typeof ICON_BOX;
+  /** A circle, for capture and the pronunciation button only. */
+  round?: boolean;
+  disabled?: boolean;
+  onPress?: () => void;
+  testID?: string;
+}
+
+/** One icon whose meaning carries alone. Ghost by default; every size reaches a 44 pt target. */
+export function IconButton({
+  icon,
+  label,
+  variant = "ghost",
+  size = "md",
+  round = false,
+  disabled = false,
+  onPress,
+  testID,
+}: IconButtonProps) {
+  const p = usePalette();
+  const { box, ink } = look(variant, p);
+  const slop = size === "sm" ? 6 : 0;
+  return (
+    <Press
+      onPress={disabled ? undefined : onPress}
+      haptic={!disabled}
+      hitSlop={slop}
+      testID={testID}
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={{ disabled }}
+      className={`items-center justify-center ${box} ${ICON_BOX[size]} ${round ? "rounded-full" : "rounded-md"} ${disabled ? "opacity-45" : ""}`}
+      style={variant === "primary" ? keyLight(p) : undefined}
+    >
+      <Icon
+        name={icon}
+        size={ICON_GLYPH[size]}
+        colour={ink}
+        strokeWidth={variant === "primary" ? 2.25 : 2}
+      />
+    </Press>
+  );
+}
+
 /** The one button to press: a soft fall of light along its top. surfaces.md "key-light". */
 function keyLight(p: Palette): ViewStyle {
   return {
-    experimental_backgroundImage: `linear-gradient(to bottom, ${p["key-sheen"]}, transparent)`,
+    experimental_backgroundImage: `linear-gradient(to bottom, ${p["key-sheen"]}, ${clear(p["key-sheen"])})`,
     boxShadow: `inset 0 1px 0 ${p["key-edge"]}, inset 0 0 0 1px ${p["key-rim"]}`,
   } as ViewStyle;
 }
 
-/** A plate: flat by day with one hairline, lifted at night where the lamp catches its top edge. */
+/** A plate: flat by day with one hairline, a little off the room at night on a soft shadow. */
 export function Plate({
   className,
   style,
   children,
   ...props
 }: ViewProps & { className?: string; children?: ReactNode }) {
-  const dark = useColorScheme() === "dark";
+  const dark = useRoom() === "dark";
+  // On glass a plate lets the glass through, and nothing lifts off a surface that already floats.
+  const glass = useOnGlass();
   return (
     <View
       {...props}
-      className={`rounded-xl bg-plate border border-edge ${className ?? ""}`}
-      style={[dark ? LIFT : null, style]}
+      className={`rounded-xl border border-edge ${glass ? "bg-glass-plate" : "bg-plate"} ${className ?? ""}`}
+      style={[dark && !glass ? LIFT : null, style]}
     >
       {children}
     </View>

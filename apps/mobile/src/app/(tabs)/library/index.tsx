@@ -12,7 +12,7 @@ import { Screen } from "../../../ui/screen";
 export default function Library() {
   const decks = useDecks().data ?? [];
   return (
-    <Screen title="Library">
+    <Screen title="Library" kind="tab">
       <View className="gap-3">
         {decks.map((d) => (
           <DeckRow key={d.id} deck={d} />

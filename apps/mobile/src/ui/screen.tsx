@@ -1,5 +1,7 @@
+import { plural } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
-import { useRouter } from "expo-router";
+import { type Href, useRouter } from "expo-router";
 import type { ReactNode } from "react";
 import { ScrollView, View, type ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -18,14 +20,16 @@ interface Props {
   title: string;
   /** A tab carries the streak and capture; a page carries its own actions and a named back. */
   kind?: "tab" | "page";
-  back?: string;
+  /** Where a page goes back to: its parent, named, whatever the history holds. */
+  back?: { label: string; to: Href };
   children: ReactNode;
 }
 
 /** Every screen is built with Screen, as on the web: the chrome tells you how to leave. */
-export function Screen({ title, kind = "tab", back, children }: Props) {
+export function Screen({ title, kind = "page", back, children }: Props) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const { t } = useLingui();
 
   // The bar scrolls with the page, as on the web, so nothing cuts across what the lantern lights.
   // A tab names itself in the bar; a page puts its named back there and its title under it.
@@ -50,12 +54,12 @@ export function Screen({ title, kind = "tab", back, children }: Props) {
           <View className="gap-1">
             <View className="h-14 flex-row items-center">
               <Press
-                onPress={() => router.back()}
+                onPress={() => (back ? router.dismissTo(back.to) : router.back())}
                 className="h-11 flex-row items-center gap-1 -ms-1.5 pe-2"
                 accessibilityRole="link"
               >
                 <BackChevron />
-                <Text className="text-md font-medium text-text-2">{back ?? "Back"}</Text>
+                <Text className="text-md font-medium text-text-2">{back?.label ?? t`Back`}</Text>
               </Press>
             </View>
             <Text
@@ -97,6 +101,7 @@ function BackChevron() {
 
 /** The streak and capture, the two things every tab carries. You is a tab here, so no avatar. */
 function TabActions() {
+  const { t } = useLingui();
   const { streak, flame } = useDay();
   const router = useRouter();
   const p = usePalette();
@@ -113,7 +118,7 @@ function TabActions() {
     <View className="flex-row items-center gap-2.5">
       <Press
         onPress={() => router.push("/streak")}
-        accessibilityLabel={`Streak: ${streak} days in a row`}
+        accessibilityLabel={t`Streak: ${plural(streak, { one: "# day in a row", other: "# days in a row" })}`}
         accessibilityRole="button"
       >
         {glass ? (
@@ -139,7 +144,7 @@ function TabActions() {
       <Press
         onPress={() => router.push("/capture")}
         className="size-10 items-center justify-center rounded-full bg-amber"
-        accessibilityLabel="Add"
+        accessibilityLabel={t`Add a card`}
       >
         <Icon name="plus" size={20} colour={p["amber-ink"]} strokeWidth={2.25} />
       </Press>

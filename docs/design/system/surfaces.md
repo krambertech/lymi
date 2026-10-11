@@ -1,15 +1,16 @@
 # Surfaces
 
-By day every surface is flat: depth comes from one hairline edge and nothing lifts. At night the lamp is lit, so plates catch it on their top edge and lift a little off the room. Texture goes only where something is lit or holds a level, never across a whole screen.
+By day every surface is flat: depth comes from one hairline edge and nothing lifts. At night plates sit a little off the room on a soft shadow, with no lit lip along the top, which read as a ridge. Texture goes only where something is lit or holds a level, never across a whole screen.
 
 ## Which background
 
-Every surface is one of four tones.
+Every surface is one of these tones.
 
 ```text
 What is it?
  ├── The page itself → bg-canvas (the room)
  ├── The desktop navigation → bg-rail (one step off the room)
+ ├── A sheet that rises over the room, on the phone → bg-sheet
  ├── A thing in the room: a card, a panel, a row group, a control → bg-plate with the edge utility
  ├── A well inside a plate: a chip, a track, a nested group → bg-plate-2
  ├── The chosen option riding in a plate-2 track (Segmented, the pill nav) → bg-chosen
@@ -30,12 +31,13 @@ The rail is recessive by day and a step up at night, and it carries the hairline
 
 ## Elevation
 
-The light room is noon: nothing casts a shadow, so depth is tone and one hairline. The dark room is lit by the lamp from above, so a plate catches it on its top edge and lifts a little off the room. Every level comes from a utility; a hand-written `shadow-*` is never right.
+The light room is noon: nothing casts a shadow, so depth is tone and one hairline. The dark room sits each plate a little off the room on a soft shadow under it. Every level comes from a utility; a hand-written `shadow-*` is never right.
 
 | Level | What | By day | At night |
 | --- | --- | --- | --- |
 | Room | `bg-canvas` | the page | the page |
-| Plate | `edge bg-plate` | white with a hairline | lifted: `--lift`, a warm line along the top and a soft shadow under it |
+| Sheet | Liquid Glass on iOS 26; `bg-sheet` before it | the room, set apart by the scrim behind it | a step lighter than the room, since a scrim cannot darken the dark |
+| Plate | `edge bg-plate` | white with a hairline | lifted: `--lift`, a soft shadow under the hairline |
 | Well | `well`, a track or an unlit pane | set into its plate | set into its plate, a step lighter so it still reads |
 | Chosen | `bg-chosen`, in a `plate-2` track | white | a lifted warm grey, above its track |
 | Current rail row | `bg-rail-chosen edge-inset` | white with a hairline | flat: a step above the rail with a hairline inside, never lifted |
@@ -55,6 +57,12 @@ Never `edge` or `bg-plate` on the current row: at night `edge` lifts it into a d
 ### The chosen option
 
 A chosen option in a `plate-2` track sits on `bg-chosen`, never `bg-plate`. By day the two are the same white; at night `plate` is darker than `plate-2`, so a plate thumb reads as a hole and the choice is unclear.
+
+## On glass
+
+On the phone, sheets, their corner buttons and the tab bar are iOS's Liquid Glass with no room tint: the glass is the platform's, and a tint only turns it into a slab. The two exceptions are the amber of the one standing action and the frost a partial sheet that is a whole screen needs ([phone.md](phone.md#components)). What sits on glass lets it through and takes its colour, as iOS's own grouped rows do. A plate, a field, a sheet's row group or a chip is `bg-glass-plate`; a chosen option is `bg-glass-chosen`; neither lifts, because the glass already floats. `OnGlass` in `apps/mobile/src/ui/surface.tsx` switches `Plate`, `Segmented`, `Input` and the field chips to these fills, and every `Sheet` wraps its content in it. An opaque warm plate on glass reads as a brown box on a grey sheet.
+
+On the web, `glass` is a slight version for what floats without a scrim: menus, popovers, select and combobox lists, and the pill nav. It is the plate nearly opaque over a 12 px blur, with a sheen along the top, the `edge-2` hairline and a soft shadow, the one shadow a day surface carries, because these float over the page. Dialogs, drawers and side sheets stay solid, since glass over a scrim only turns grey. Under reduced transparency, or where the browser has no `backdrop-filter`, it falls back to the plate.
 
 ## Edges
 

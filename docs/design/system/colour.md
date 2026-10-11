@@ -17,7 +17,7 @@ Warm neutrals, nearly grey, with amber as the only saturated accent. Amber is th
 
 The one exception is a third party's own mark, which keeps its brand colours: `GoogleMark` and the brand colour of each connected app in `AppMark`.
 
-Dark is not inverted light: the plate is lighter than the canvas in both rooms. Surfaces and their tokens are in [surfaces.md](surfaces.md).
+Dark is not inverted light: the plate is lighter than the canvas in both rooms. The night room is a warm charcoal rather than a brown, so iOS's neutral Liquid Glass sits in it; the warmth comes from the lamp, the amber and the text. Surfaces and their tokens are in [surfaces.md](surfaces.md).
 
 ## Which text colour
 

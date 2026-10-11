@@ -4,6 +4,10 @@ const { withUniwindConfig } = require("uniwind/metro");
 
 const config = getDefaultConfig(__dirname);
 
+// `.po` catalogs compile on import, as the web's do through Lingui's Vite plugin.
+config.transformer.babelTransformerPath = require.resolve("@lingui/metro-transformer/expo");
+config.resolver.sourceExts = [...config.resolver.sourceExts, "po"];
+
 // From `packages/client`, these would resolve to the web's copies, and a second React fails every hook with "Invalid hook call".
 const fromApp = ["@tanstack/react-query", "react"];
 const appOrigin = path.join(__dirname, "package.json");

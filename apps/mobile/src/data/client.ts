@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import { configureClient, type KeyValueStore } from "@lymi/client";
 import { bindWriteCache } from "@lymi/client/writes";
 import { focusManager, onlineManager, QueryClient } from "@tanstack/react-query";
@@ -28,11 +29,11 @@ configureClient({
   credentials: "omit",
   storage,
   messages: {
-    unreachable: () => "Couldn’t reach Lymi. Check your connection and try again.",
-    signIn: () => "Sign in to continue.",
-    ownerOnly: () => "Only the deck’s owner can change this.",
-    gone: () => "That’s no longer here. Reload to see what changed.",
-    failed: () => "That didn’t go through. Reload and try again.",
+    unreachable: () => t`Couldn’t reach Lymi. Check your connection and try again.`,
+    signIn: () => t`Sign in to continue.`,
+    ownerOnly: () => t`Only the deck’s owner can change this.`,
+    gone: () => t`That’s no longer here. Reload to see what changed.`,
+    failed: () => t`That didn’t go through. Reload and try again.`,
   },
 });
 

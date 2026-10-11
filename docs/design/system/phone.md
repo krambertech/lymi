@@ -1,6 +1,6 @@
 # The phone app
 
-The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the reveal, the end of a review and the moments in [motion.md](motion.md) from `packages/design`, and keeps the web's component names, Onest and Lucide. This file lists only where the phone differs, each time because touch or iOS gives it a better way. Lymi draws its persistent chrome; Apple draws what comes and goes: long-press menus, ⋯ menus, the share sheet, alerts, the keyboard and permission prompts ([ADR 0029](../../adr/0029-the-phone-app-is-expo-react-native-sharing-core.md)). Which jobs the phone leads is in [PRODUCT.md](../../../PRODUCT.md#surfaces).
+The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the reveal, the end of a review and the moments in [motion.md](motion.md) from `packages/design`, and keeps the web's component names, Onest and Lucide. This file lists only where the phone differs, each time because touch or iOS gives it a better way. Lymi draws its persistent chrome and every row and icon; Apple draws the sheets they sit in, the share sheet, alerts, the keyboard and permission prompts ([ADR 0029](../../adr/0029-the-phone-app-is-expo-react-native-sharing-core.md)). iOS's pull-down menus brought SF Symbols and a morph that did not match Lymi, so a menu is a sheet of Lymi's rows instead. Which jobs the phone leads is in [PRODUCT.md](../../../PRODUCT.md#surfaces).
 
 ## Navigation
 
@@ -17,6 +17,26 @@ The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the rev
 | Cover from below | A mode that takes the screen: a review, Welcome and sign-in | X, or pulling the top bar down |
 
 This is [overlays.md](overlays.md)'s rule in iOS's own navigation: from the side means back, from below means swipe down.
+
+## Components
+
+The phone's components are in `apps/mobile/src/ui` under the web's names, and follow [forms.md](forms.md), [buttons.md](buttons.md) and [chips-and-marks.md](chips-and-marks.md). They differ in these ways:
+
+- Every control is 44 pt, so a `md` button is 44 pt tall and `sm` reaches 44 pt through its hit area.
+- `Sheet` is iOS's own sheet with Lymi's content, so it is Liquid Glass, follows the finger and swipes away. Every sheet and glass control is iOS's glass, untinted, so the screen shows through it; iOS makes a full-height sheet opaque. A screen presented as a partial sheet, such as the streak, gets a clearer glass than `Sheet` does, so it lays `useFrost` over it: the sheet colour at 70%, which matches the system's frosting. Add a word opens at full height, where iOS makes the sheet opaque, so it needs none. What sits on it uses the on-glass fills ([surfaces.md](surfaces.md#on-glass)). It opens at the height of what it holds, titled in line with the rows' text. Rows that belong together share one plate inset 16 pt from the sheet's edge, 12 pt from the next, split by full-width hairlines, as every plate in Lymi is. A row is 52 pt with a Lucide icon in the slot every row keeps, red when it removes something, a check when chosen, a chevron when it opens more. A sheet with more to show peeks at its first group and drags up to the full screen, where iOS makes it opaque and the sheet colour keeps the plates apart, as the dev menu does. `DropdownMenu` and `Select` are sheets of rows; a choice runs once the sheet has gone.
+- A sheet's own controls float on it as glass: a round 44 pt button in each top corner, close at the start and the sheet's action at the end, tinted amber, with a glass pill between them for what the sheet works in, such as the deck.
+- Chips come in `sm` and `md`, and a state chip is one size wherever it shows, Forgotten included; the AI badge is the `sm` chip. A due count has one size. The web's `xs` chip, `lg` chip, `lg` due count and `xs` icon button have no phone use yet.
+- `Switch` is drawn by Lymi, amber when on, so it sits in a form beside the other controls.
+
+The design screen shows each component in every state. Open `lymi://design`, as the web has `/design`; each canvas has its own switch for the other room.
+
+## Add a word
+
+Add a word composes a card the way Linear composes an issue: a Liquid Glass sheet with close, the deck and Add as glass in its top corners, then the term, large with the keyboard already up, the meaning and the notes. Each is its name in small text over a line with no box, so a filled line still says what it holds and the empty one says what goes in it; all wrap as they fill. Return in the term goes to the meaning, Return in the meaning adds, and Return in the notes starts a new line.
+
+The card's other fields are chips over the keyboard, after the AI's fill: example, pronunciation, memory hook, source, the section when the deck has any, the picture, and how it's asked. A chip adds nothing to the form. A text field's chip opens that one field in a sheet with the keyboard up, as the web's FieldChip opens a drawer; the keyboard's done key or a swipe closes it, and the chip then shows what it holds. The section is a choice list, and how it's asked is the deck's modes or the text modes ticked here; unticking the last one goes back to the deck's. The picture is taken or chosen in its sheet with a description that does not name the answer, and uploads once the card exists; one chosen offline is dropped with a line that says so. Tags wait for their own phone control. Autocorrect is off wherever the text is in the language being learned: the term, the example and the pronunciation.
+
+The sheet stays for the next card: a line under the fields says where the last one went, with Undo for five seconds, or which deck already has it. A duplicate keeps the form with the term selected, as on the web. The deck, the AI choice, the picture until it is added, and the source carry over.
 
 ## Review
 

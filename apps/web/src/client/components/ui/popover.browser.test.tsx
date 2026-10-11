@@ -22,7 +22,7 @@ function Anchored({ top }: { top: number }) {
   );
 }
 
-test("sits over the control it is anchored to, with no trigger, in Lymi's plate", async () => {
+test("sits over the control it is anchored to, with no trigger, in Lymi's glass", async () => {
   await render(<Anchored top={200} />);
   await expect.element(page.getByText("Couldn’t play it")).toBeVisible();
   const tip = popup();
@@ -35,7 +35,7 @@ test("sits over the control it is anchored to, with no trigger, in Lymi's plate"
     Math.abs((box?.left ?? 0) + (box?.width ?? 0) / 2 - (control.left + control.width / 2)),
   ).toBeLessThan(1);
   const probe = document.body.appendChild(document.createElement("div"));
-  probe.className = "bg-plate";
+  probe.className = "glass";
   expect(tip && getComputedStyle(tip).backgroundColor).toBe(
     getComputedStyle(probe).backgroundColor,
   );

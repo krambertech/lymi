@@ -1,14 +1,20 @@
 import "../global.css";
+import { I18nProvider } from "@lingui/react";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from "expo-router";
+import { registerDevMenuItems } from "expo-dev-menu";
+import { isGlassEffectAPIAvailable } from "expo-glass-effect";
+import { DarkTheme, DefaultTheme, router, Stack, ThemeProvider } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 import { useSession } from "../auth/client";
 import { queryClient } from "../data/client";
 import { Sync } from "../data/sync";
+import { i18n } from "../i18n";
+import { LanguageSync } from "../i18n/sync";
 import { usePalette } from "../theme/palette";
 import { WidgetSync } from "../widgets/sync";
 
@@ -18,11 +24,20 @@ export const unstable_settings = { initialRouteName: "(tabs)" };
 // The splash stays until the stored session is read, so a signed-in learner never sees sign-in flash past.
 SplashScreen.preventAutoHideAsync();
 
+// In a development build the dev menu opens the design system, as the web has /design.
+if (__DEV__) {
+  void registerDevMenuItems([{ name: "Design system", callback: () => router.push("/design") }]);
+}
+
 export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
-        <Root />
+        <I18nProvider i18n={i18n}>
+          <KeyboardProvider>
+            <Root />
+          </KeyboardProvider>
+        </I18nProvider>
       </QueryClientProvider>
     </GestureHandlerRootView>
   );
@@ -53,6 +68,7 @@ function Root() {
   return (
     <ThemeProvider value={theme}>
       <StatusBar style="auto" />
+      {!session.isPending && <LanguageSync signedIn={signedIn} />}
       {learnerId && (
         <>
           <Sync learnerId={learnerId} />
@@ -80,8 +96,10 @@ function Root() {
               presentation: "formSheet",
               sheetAllowedDetents: [1],
               sheetGrabberVisible: true,
-              sheetCornerRadius: 30,
-              contentStyle: { backgroundColor: p.canvas },
+              // Clear, so iOS 26 draws the glass under the screen's own fill; before 26, the sheet colour.
+              contentStyle: {
+                backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
+              },
             }}
           />
           <Stack.Screen
@@ -91,10 +109,13 @@ function Root() {
               sheetAllowedDetents: "fitToContents",
               sheetGrabberVisible: true,
               sheetCornerRadius: 30,
-              contentStyle: { backgroundColor: p.canvas },
+              contentStyle: {
+                backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
+              },
             }}
           />
         </Stack.Protected>
+        <Stack.Screen name="design" />
       </Stack>
     </ThemeProvider>
   );

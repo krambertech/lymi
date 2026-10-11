@@ -12,8 +12,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { Lantern } from "../brand/lantern";
 import { useReduceMotion } from "../theme/motion";
-import { usePalette } from "../theme/palette";
-import { Field } from "../ui/field";
+import { clear, usePalette } from "../theme/palette";
+import { Field, FieldDescription, FieldError, FieldLabel, Input, PasswordInput } from "../ui/field";
 import { GoogleMark } from "../ui/google-mark";
 import { Button, Icon, Press, Text } from "../ui/primitives";
 import { devSignIn, type SignIn, type Step } from "./use-sign-in";
@@ -56,7 +56,7 @@ export function Pool({ className }: { className: string }) {
       className={`absolute ${className}`}
       style={[
         {
-          experimental_backgroundImage: `radial-gradient(closest-side at 50% 50%, ${p.pool}, transparent 100%)`,
+          experimental_backgroundImage: `radial-gradient(closest-side at 50% 50%, ${p.pool}, ${clear(p.pool)} 100%)`,
         } as ViewStyle,
         style,
       ]}
@@ -203,37 +203,42 @@ function CredentialForm({ door }: { door: SignIn }) {
   const forgot = step === "forgot";
   return (
     <View className="gap-4">
-      <Field
-        label="Email"
-        testID="email"
-        value={door.email}
-        onChangeText={door.setEmail}
-        error={door.errors.email}
-        keyboardType="email-address"
-        textContentType={step === "sign-up" ? "emailAddress" : "username"}
-        autoComplete="email"
-        autoCapitalize="none"
-        autoCorrect={false}
-        autoFocus={!door.email}
-        returnKeyType={forgot ? "send" : "next"}
-        onSubmitEditing={() => (forgot ? door.submit() : passwordRef.current?.focus())}
-      />
+      <Field>
+        <FieldLabel>Email</FieldLabel>
+        <Input
+          testID="email"
+          value={door.email}
+          onChangeText={door.setEmail}
+          keyboardType="email-address"
+          textContentType={step === "sign-up" ? "emailAddress" : "username"}
+          autoComplete="email"
+          autoCapitalize="none"
+          autoCorrect={false}
+          autoFocus={!door.email}
+          returnKeyType={forgot ? "send" : "next"}
+          onSubmitEditing={() => (forgot ? door.submit() : passwordRef.current?.focus())}
+        />
+        <FieldError>{door.errors.email}</FieldError>
+      </Field>
       {!forgot && (
         <View className="gap-1">
-          <Field
-            ref={passwordRef}
-            label="Password"
-            testID="password"
-            secret
-            value={door.password}
-            onChangeText={door.setPassword}
-            error={door.errors.password}
-            hint={step === "sign-up" ? `At least ${MIN_PASSWORD_LENGTH} characters.` : undefined}
-            textContentType={step === "sign-up" ? "newPassword" : "password"}
-            autoComplete={step === "sign-up" ? "new-password" : "current-password"}
-            returnKeyType="go"
-            onSubmitEditing={door.submit}
-          />
+          <Field>
+            <FieldLabel>Password</FieldLabel>
+            <PasswordInput
+              ref={passwordRef}
+              testID="password"
+              value={door.password}
+              onChangeText={door.setPassword}
+              textContentType={step === "sign-up" ? "newPassword" : "password"}
+              autoComplete={step === "sign-up" ? "new-password" : "current-password"}
+              returnKeyType="go"
+              onSubmitEditing={door.submit}
+            />
+            {step === "sign-up" && (
+              <FieldDescription>At least {MIN_PASSWORD_LENGTH} characters.</FieldDescription>
+            )}
+            <FieldError>{door.errors.password}</FieldError>
+          </Field>
           {step === "sign-in" && (
             <Press
               onPress={() => door.goTo("forgot")}
@@ -262,19 +267,21 @@ function CredentialForm({ door }: { door: SignIn }) {
 function CodeForm({ door }: { door: SignIn }) {
   return (
     <View className="gap-4">
-      <Field
-        label="Code"
-        value={door.code}
-        onChangeText={door.setCode}
-        error={door.errors.code}
-        keyboardType="number-pad"
-        textContentType="oneTimeCode"
-        autoComplete="one-time-code"
-        maxLength={6}
-        autoFocus
-        returnKeyType="done"
-        onSubmitEditing={door.submit}
-      />
+      <Field>
+        <FieldLabel>Code</FieldLabel>
+        <Input
+          value={door.code}
+          onChangeText={door.setCode}
+          keyboardType="number-pad"
+          textContentType="oneTimeCode"
+          autoComplete="one-time-code"
+          maxLength={6}
+          autoFocus
+          returnKeyType="done"
+          onSubmitEditing={door.submit}
+        />
+        <FieldError>{door.errors.code}</FieldError>
+      </Field>
       <Button
         label="Confirm"
         variant="primary"

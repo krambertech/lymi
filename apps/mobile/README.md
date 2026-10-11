@@ -29,6 +29,10 @@ The proof of concept compared options side by side and kept one of each: the gla
 - `@lymi/design`: colours, radii, the lantern's drawing, the flame's and the seven lights' rules, and motion presets. `src/global.css` imports its Uniwind theme; the phone keeps its own type ramp there under the shared step names, because iOS reads at 17 pt. `src/theme/motion.ts` converts the shared springs and curves for Reanimated.
 - Lucide icons, rendered by `lucide-react-native`.
 
+## Interface text
+
+Strings use the web's Lingui macros, compiled by `babel.config.js` on Expo's own Babel 7; the web compiles on Babel 8. The catalogs are `src/locales/*.po`, which Metro compiles on import, and `pnpm i18n:extract` at the root writes them with the web's and the site's. A message the web already has keeps its translation when it is worded the same. `src/i18n` opens in the phone's language until the learner's setting arrives. Widgets cannot run Lingui, so their text is formatted in the app and sent with their data.
+
 ## Motion and type
 
 React Native Skia draws the lantern (`src/brand/lantern.tsx`) and the end of a review's light and embers (`src/brand/ending.tsx`), so they move on the UI thread. The end of a review runs on one clock that the first tap finishes. `useReduceMotion` in `src/theme/motion.ts` follows the setting while the app runs; every animation takes `ReduceMotion.Never` and the screen picks the reduced version itself. `Text` follows Dynamic Type through the iOS text style nearest its size, capped per size in `src/theme/type.ts`, with tracking set for the size it is drawn at.

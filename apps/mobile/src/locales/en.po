@@ -1,0 +1,302 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 17:27+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "“{term}” is already in {deckName}"
+msgstr "“{term}” is already in {deckName}"
+
+msgid "{label}: {chosen}"
+msgstr "{label}: {chosen}"
+
+msgid "{label}: {value}"
+msgstr "{label}: {value}"
+
+msgid "{left, plural, one {# more review and today counts.} other {# more reviews and today counts.}}"
+msgstr "{left, plural, one {# more review and today counts.} other {# more reviews and today counts.}}"
+
+msgid "{reviewsToday} of {goal}"
+msgstr "{reviewsToday} of {goal}"
+
+msgid "{streak, plural, one {day in a row} other {days in a row}}"
+msgstr "{streak, plural, one {day in a row} other {days in a row}}"
+
+msgid "A sentence that uses it"
+msgstr "A sentence that uses it"
+
+msgid "A short phrase that helps you remember it."
+msgstr "A short phrase that helps you remember it."
+
+msgid "A word or phrase"
+msgstr "A word or phrase"
+
+msgid "Add a card"
+msgstr "Add a card"
+
+msgid "Add to {deckName}"
+msgstr "Add to {deckName}"
+
+msgid "Added “{term}”"
+msgstr "Added “{term}”"
+
+msgid "Added “{term}” to {deckName}"
+msgstr "Added “{term}” to {deckName}"
+
+msgid "Added “{term}” without its picture. {reason}"
+msgstr "Added “{term}” without its picture. {reason}"
+
+msgid "Added “{term}”. It’s saved on this phone until Lymi can be reached."
+msgstr "Added “{term}”. It’s saved on this phone until Lymi can be reached."
+
+msgid "AI"
+msgstr "AI"
+
+msgid "AI example"
+msgstr "AI example"
+
+msgid "AI fills in"
+msgstr "AI fills in"
+
+msgid "AI hook"
+msgstr "AI hook"
+
+msgid "AI meaning"
+msgstr "AI meaning"
+
+msgid "AI off"
+msgstr "AI off"
+
+msgid "AI pronunciation"
+msgstr "AI pronunciation"
+
+msgid "AI wrote part of this card"
+msgstr "AI wrote part of this card"
+
+msgid "AI wrote this"
+msgstr "AI wrote this"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Choose another"
+msgstr "Choose another"
+
+msgid "Choose from photos"
+msgstr "Choose from photos"
+
+msgid "Clear the picture"
+msgstr "Clear the picture"
+
+msgid "Couldn’t reach Lymi. Check your connection and try again."
+msgstr "Couldn’t reach Lymi. Check your connection and try again."
+
+msgid "Create a deck on the web first, then add cards here."
+msgstr "Create a deck on the web first, then add cards here."
+
+msgid "Daily goal"
+msgstr "Daily goal"
+
+msgid "Deck"
+msgstr "Deck"
+
+msgid "Describe what the picture shows without naming the term or the meaning."
+msgstr "Describe what the picture shows without naming the term or the meaning."
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Done"
+msgstr "Done"
+
+msgid "Easy"
+msgstr "Easy"
+
+msgid "Example"
+msgstr "Example"
+
+msgid "Example by you"
+msgstr "Example by you"
+
+msgid "Example from lesson"
+msgstr "Example from lesson"
+
+msgid "Fill in the rest with AI"
+msgstr "Fill in the rest with AI"
+
+msgid "Forgot"
+msgstr "Forgot"
+
+msgid "Forgotten"
+msgstr "Forgotten"
+
+msgid "From the lesson"
+msgstr "From the lesson"
+
+msgid "Good"
+msgstr "Good"
+
+msgid "Grammar, usage, anything else"
+msgstr "Grammar, usage, anything else"
+
+msgid "Hard"
+msgstr "Hard"
+
+msgid "Hide password"
+msgstr "Hide password"
+
+msgid "Hook by you"
+msgstr "Hook by you"
+
+msgid "Hook from lesson"
+msgstr "Hook from lesson"
+
+msgid "How it sounds"
+msgstr "How it sounds"
+
+msgid "How it’s asked"
+msgstr "How it’s asked"
+
+msgid "Known"
+msgstr "Known"
+
+msgctxt "cards in this state"
+msgid "Known"
+msgstr "Known"
+
+msgid "Learning"
+msgstr "Learning"
+
+msgctxt "cards in this state"
+msgid "Learning"
+msgstr "Learning"
+
+msgid "Leave it empty and the AI fills it in"
+msgstr "Leave it empty and the AI fills it in"
+
+msgid "Lesson"
+msgstr "Lesson"
+
+msgid "Meaning"
+msgstr "Meaning"
+
+msgid "Meaning by you"
+msgstr "Meaning by you"
+
+msgid "Meaning from lesson"
+msgstr "Meaning from lesson"
+
+msgid "Memory hook"
+msgstr "Memory hook"
+
+msgid "More about this card"
+msgstr "More about this card"
+
+msgid "New"
+msgstr "New"
+
+msgctxt "cards in this state"
+msgid "New"
+msgstr "New"
+
+msgid "No section"
+msgstr "No section"
+
+msgid "Notes"
+msgstr "Notes"
+
+msgid "Only the deck’s owner can change this."
+msgstr "Only the deck’s owner can change this."
+
+msgid "Picture"
+msgstr "Picture"
+
+msgid "Picture → meaning"
+msgstr "Picture → meaning"
+
+msgid "Picture → term"
+msgstr "Picture → term"
+
+msgid "Picture added"
+msgstr "Picture added"
+
+msgid "Pictures need a connection. Add it once you’re back online."
+msgstr "Pictures need a connection. Add it once you’re back online."
+
+msgid "Production"
+msgstr "Production"
+
+msgid "Pronunciation"
+msgstr "Pronunciation"
+
+msgid "Pronunciation by you"
+msgstr "Pronunciation by you"
+
+msgid "Pronunciation from lesson"
+msgstr "Pronunciation from lesson"
+
+msgid "Recognition"
+msgstr "Recognition"
+
+msgid "Reviews a day. Finishing everything due also counts."
+msgstr "Reviews a day. Finishing everything due also counts."
+
+msgid "Same as the deck"
+msgstr "Same as the deck"
+
+msgid "Section"
+msgstr "Section"
+
+msgid "See the meaning, recall the term"
+msgstr "See the meaning, recall the term"
+
+msgid "See the term, recall what it means"
+msgstr "See the term, recall what it means"
+
+msgid "Show password"
+msgstr "Show password"
+
+msgid "Sign in to continue."
+msgstr "Sign in to continue."
+
+msgid "Source"
+msgstr "Source"
+
+msgid "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
+msgstr "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
+
+msgid "Take a photo"
+msgstr "Take a photo"
+
+msgid "Term"
+msgstr "Term"
+
+msgid "That didn’t go through. Reload and try again."
+msgstr "That didn’t go through. Reload and try again."
+
+msgid "That’s no longer here. Reload to see what changed."
+msgstr "That’s no longer here. Reload to see what changed."
+
+msgid "Today"
+msgstr "Today"
+
+msgid "Today counts."
+msgstr "Today counts."
+
+msgid "Undo"
+msgstr "Undo"
+
+msgid "What it means"
+msgstr "What it means"
+
+msgid "Where you met it, such as a lesson"
+msgstr "Where you met it, such as a lesson"
+
+msgid "You"
+msgstr "You"
+
+msgid "You wrote this"
+msgstr "You wrote this"

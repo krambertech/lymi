@@ -19,6 +19,8 @@
   /* The rail the navigation sits on. One step off the room, so chrome and content are
      two surfaces rather than one wash: recessive by day, a step up at night. */
   --rail: oklch(0.955 0.006 80);
+  /* What rises over the room: a sheet. By day the room itself, as the scrim behind it sets it apart. */
+  --sheet: var(--canvas);
   --plate: oklch(1 0 0);
   --plate-2: oklch(0.955 0.006 80);
   --hover: oklch(0.94 0.007 80);
@@ -31,6 +33,13 @@
   --veil: oklch(0.2 0.03 60 / 0.035);
   /* The phone's chosen tab on Liquid Glass: a veil of the room's ink, as iOS marks its own. */
   --glass-veil: oklch(0.2 0.03 60 / 0.06);
+  /* On Liquid Glass a fill lets the glass through and takes its colour, as iOS's own grouped rows do. */
+  --glass-plate: oklch(1 0 0 / 0.72);
+  --glass-chosen: oklch(1 0 0);
+  /* The web's slight glass: the plate, nearly opaque over a blur, with a sheen along the top. */
+  --glass-fill: oklch(1 0 0 / 0.86);
+  --glass-sheen: oklch(1 0 0 / 0.9);
+  --glass-drop: 0 8px 24px -12px oklch(0.25 0.03 55 / 0.18);
   /* The lantern's light on the plate it stands on. */
   --pool: oklch(0.9 0.09 78 / 0.5);
   /* By day surfaces stay flat; the lift, the well under a track and a lit fill's glow are night-only. */
@@ -103,34 +112,41 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --canvas: oklch(0.165 0.014 48);
-  --rail: oklch(0.192 0.015 50);
-  --plate: oklch(0.215 0.016 52);
-  --plate-2: oklch(0.255 0.017 55);
-  --hover: oklch(0.28 0.018 55);
-  --chosen: oklch(0.34 0.02 58);
-  --rail-chosen: oklch(0.245 0.017 54);
+  --canvas: oklch(0.17 0.008 62);
+  --rail: oklch(0.195 0.009 62);
+  /* At night a scrim cannot darken the dark, so what rises is lighter than the room, as iOS's own sheets are. */
+  --sheet: oklch(0.205 0.009 62);
+  --plate: oklch(0.24 0.01 64);
+  --plate-2: oklch(0.275 0.011 66);
+  --hover: oklch(0.295 0.011 66);
+  --chosen: oklch(0.355 0.013 68);
+  --rail-chosen: oklch(0.255 0.01 64);
   --rail-hover: oklch(1 0 0 / 0.04);
   --veil: oklch(1 0 0 / 0.04);
   --glass-veil: oklch(1 0 0 / 0.12);
-  --pool: oklch(0.62 0.12 70 / 0.16);
-  /* At night the lamp catches each plate's top edge and the plate lifts off the room. */
-  --lift:
-    inset 0 1px 0 oklch(0.95 0.06 80 / 0.08), 0 1px 2px oklch(0 0 0 / 0.45),
-    0 12px 24px -14px oklch(0 0 0 / 0.8);
+  --glass-plate: oklch(1 0 0 / 0.08);
+  --glass-chosen: oklch(1 0 0 / 0.16);
+  --glass-fill: oklch(0.24 0.01 64 / 0.86);
+  --glass-sheen: oklch(1 0 0 / 0.07);
+  --glass-drop: 0 12px 32px -14px oklch(0 0 0 / 0.7);
+  --pool: oklch(0.78 0.15 74 / 0.18);
+  /* At night a plate sits a little off the room on a soft shadow; no lit lip, which read as a ridge. */
+  --lift: 0 1px 2px oklch(0 0 0 / 0.22), 0 8px 16px -12px oklch(0 0 0 / 0.4);
   --well: inset 0 1px 1px oklch(0 0 0 / 0.25);
   --lit-glow: 0 0 10px -2px var(--glow);
+  /* At night a bright lip on the amber reads as a ridge, so it is half as strong. */
+  --key-edge: oklch(1 0.03 90 / 0.22);
   --key-rim: oklch(from var(--amber) calc(l - 0.06) c h / 0.35);
   --grain-opacity: 0.12;
   --grain-blend: screen;
-  --edge: oklch(1 0 0 / 0.08);
-  --edge-2: oklch(1 0 0 / 0.15);
+  --edge: oklch(1 0 0 / 0.07);
+  --edge-2: oklch(1 0 0 / 0.13);
   --image-edge: oklch(1 0 0 / 0.1);
 
   --text: oklch(0.95 0.01 85);
-  --text-2: oklch(0.8 0.018 75);
-  --muted: oklch(0.7 0.022 70);
-  --faint: oklch(0.48 0.02 65);
+  --text-2: oklch(0.8 0.014 75);
+  --muted: oklch(0.7 0.016 70);
+  --faint: oklch(0.48 0.014 65);
 
   --amber: oklch(0.82 0.15 74);
   --amber-hover: oklch(0.86 0.15 76);
@@ -142,9 +158,9 @@
   --amber-tint-ink: var(--amber-text);
   --flame-core: oklch(0.97 0.08 92);
   --glass: oklch(0.315 0.048 62);
-  --glass-unlit: oklch(0.245 0.016 55);
+  --glass-unlit: oklch(0.265 0.01 64);
   --metal: var(--text);
-  --glow: oklch(0.8 0.15 74 / 0.5);
+  --glow: oklch(0.82 0.15 74 / 0.6);
   --light-1: color-mix(in oklab, var(--amber) 45%, var(--glass));
   --light-2: color-mix(in oklab, var(--amber) 75%, var(--glass));
 
@@ -181,6 +197,9 @@
 
   --color-canvas: var(--canvas);
   --color-rail: var(--rail);
+  --color-sheet: var(--sheet);
+  --color-glass-plate: var(--glass-plate);
+  --color-glass-chosen: var(--glass-chosen);
   --color-plate: var(--plate);
   --color-plate-2: var(--plate-2);
   --color-hover: var(--hover);

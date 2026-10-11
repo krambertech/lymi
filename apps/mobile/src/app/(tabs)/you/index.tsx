@@ -16,7 +16,7 @@ export default function You() {
   const user = useSession().data?.user;
   const queryClient = useQueryClient();
   return (
-    <Screen title="You">
+    <Screen title="You" kind="tab">
       <Plate className="flex-row items-center gap-4 p-4">
         <View className="size-14 items-center justify-center rounded-full border border-edge bg-plate-2">
           <Text className="text-xl font-medium text-text-2">

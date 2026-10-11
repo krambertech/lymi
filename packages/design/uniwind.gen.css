@@ -15,6 +15,7 @@
     @variant light {
       --color-canvas: #f8f6f4;
       --color-rail: #f2f0ec;
+      --color-sheet: #f8f6f4;
       --color-plate: #ffffff;
       --color-plate-2: #f2f0ec;
       --color-hover: #eeebe6;
@@ -23,6 +24,10 @@
       --color-rail-hover: #eeebe6;
       --color-veil: #20130809;
       --color-glass-veil: #2013080f;
+      --color-glass-plate: #ffffffb8;
+      --color-glass-chosen: #ffffff;
+      --color-glass-fill: #ffffffdb;
+      --color-glass-sheen: #ffffffe6;
       --color-pool: #ffd79a80;
       --color-lit-sheen: #ffffe947;
       --color-lit-edge: #ffffe973;
@@ -72,29 +77,34 @@
       --color-grade-easy: #d36d00;
     }
     @variant dark {
-      --color-canvas: #130d09;
-      --color-rail: #1a120e;
-      --color-plate: #201713;
-      --color-plate-2: #29211b;
-      --color-hover: #302720;
-      --color-chosen: #40362e;
-      --color-rail-chosen: #271e19;
+      --color-canvas: #120f0c;
+      --color-rail: #181411;
+      --color-sheet: #1a1613;
+      --color-plate: #231e1a;
+      --color-plate-2: #2b2722;
+      --color-hover: #302c27;
+      --color-chosen: #413b35;
+      --color-rail-chosen: #26221e;
       --color-rail-hover: #ffffff0a;
       --color-veil: #ffffff0a;
       --color-glass-veil: #ffffff1f;
-      --color-pool: #b4782529;
+      --color-glass-plate: #ffffff14;
+      --color-glass-chosen: #ffffff29;
+      --color-glass-fill: #231e1adb;
+      --color-glass-sheen: #ffffff12;
+      --color-pool: #f0a7322e;
       --color-lit-sheen: #ffffe947;
       --color-lit-edge: #ffffe973;
       --color-key-sheen: #ffffe929;
-      --color-key-edge: #ffffe966;
+      --color-key-edge: #ffffe938;
       --color-key-rim: #e9a12859;
-      --color-edge: #ffffff14;
-      --color-edge-2: #ffffff26;
+      --color-edge: #ffffff12;
+      --color-edge-2: #ffffff21;
       --color-image-edge: #ffffff1a;
       --color-text: #f1eee7;
-      --color-text-2: #c5bcb1;
-      --color-muted: #a89c90;
-      --color-faint: #665c52;
+      --color-text-2: #c3bdb4;
+      --color-muted: #a59d94;
+      --color-faint: #635c56;
       --color-amber: #fdb443;
       --color-amber-hover: #ffc250;
       --color-amber-ink: #2b1401;
@@ -105,9 +115,9 @@
       --color-amber-tint-ink: #f9bf60;
       --color-flame-core: #fff4b7;
       --color-glass: #432c17;
-      --color-glass-unlit: #271f19;
+      --color-glass-unlit: #292420;
       --color-metal: #f1eee7;
-      --color-glow: #f6ad3b80;
+      --color-glow: #fdb44399;
       --color-light-1: #91652b;
       --color-light-2: #cb8f38;
       --color-good: #7bc495;
@@ -126,7 +136,7 @@
       --color-shimmer: #ffffff0f;
       --color-toast-action: #9f4500;
       --color-grade-forgot: #fb8274;
-      --color-grade-hard: #a89c90;
+      --color-grade-hard: #a59d94;
       --color-grade-good: #7bc495;
       --color-grade-easy: #fdb443;
     }

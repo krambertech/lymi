@@ -32,7 +32,7 @@ export default function Deck() {
   const sections = [...new Set(mine.map(section))];
 
   return (
-    <Screen title={deck?.name ?? "Deck"} kind="page" back="Library">
+    <Screen title={deck?.name ?? "Deck"} back={{ label: "Library", to: "/library" }}>
       {due > 0 && (
         <Button
           label={`Review ${due} due`}

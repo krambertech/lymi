@@ -251,6 +251,9 @@ describe("Lymi MCP server", () => {
       reviewTimezone: null,
       reviewTimezoneMode: "automatic",
       reviewTimezoneUpdatedAt: null,
+      onboardedAt: null,
+      learningKind: null,
+      learningLanguage: null,
       createdAt: now,
       updatedAt: now,
     });
@@ -310,6 +313,9 @@ describe("Lymi MCP server", () => {
       reviewTimezone: null,
       reviewTimezoneMode: "automatic",
       reviewTimezoneUpdatedAt: null,
+      onboardedAt: null,
+      learningKind: null,
+      learningLanguage: null,
       createdAt: now,
       updatedAt: now,
     });

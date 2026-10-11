@@ -1,17 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
-  ATTRIBUTION_COOKIE,
   analyticsPath,
-  CONSENT_COOKIE,
-  CONSENT_MAX_AGE,
+  carryFirstTouch,
   eventProperties,
   firstTouch,
-  readConsent,
-  signupAttribution,
+  parseFirstTouch,
 } from "./analytics";
 
-const cookie = (name: string, value: unknown) =>
-  `${name}=${encodeURIComponent(JSON.stringify(value))}`;
 describe("analytics privacy contract", () => {
   it("rejects unknown events and strips private fields", () => {
     expect(
@@ -57,24 +52,48 @@ describe("analytics privacy contract", () => {
       "notlymi.app",
     );
     expect(
-      signupAttribution(
-        cookie(ATTRIBUTION_COOKIE, {
+      parseFirstTouch(
+        JSON.stringify({
           first_landing_page: "/private?email=secret",
           referrer: "email@example.com",
         }),
       ),
     ).toEqual({ first_landing_page: "/other" });
+    expect(parseFirstTouch("{not json")).toEqual({ first_landing_page: "/other" });
   });
-  it("fails closed on malformed, future, obsolete and expired choices", () => {
-    const now = 1_800_000_000_000;
-    const choice = { allowed: true, version: 1, updated_at: now };
-    expect(readConsent(cookie(CONSENT_COOKIE, choice), now)).toEqual(choice);
-    for (const invalid of [
-      { ...choice, version: 2 },
-      { ...choice, updated_at: now + 60_001 },
-      { ...choice, updated_at: now - CONSENT_MAX_AGE * 1000 - 1 },
-    ])
-      expect(readConsent(cookie(CONSENT_COOKIE, invalid), now)).toBeNull();
-    expect(readConsent(`${CONSENT_COOKIE}=%invalid`, now)).toBeNull();
+  it("carries a public visit's source through a link and reads it back in the product", () => {
+    const touch = firstTouch(
+      "https://lymi.app/teachers?utm_source=reddit",
+      "https://www.google.com/search?q=private",
+      "public",
+    );
+    const link = carryFirstTouch(new URL("https://my.lymi.app/?mode=sign-up"), touch);
+    expect(Object.fromEntries(link.searchParams)).toEqual({
+      mode: "sign-up",
+      lp: "/teachers",
+      ref: "www.google.com",
+      utm_source: "reddit",
+    });
+    expect(firstTouch(link.toString(), "https://lymi.app/teachers", "product")).toEqual({
+      first_landing_page: "/teachers",
+      referrer: "www.google.com",
+      utm_source: "reddit",
+    });
+    const direct = carryFirstTouch(
+      new URL("https://my.lymi.app/"),
+      firstTouch("https://lymi.app/", "", "public"),
+    );
+    expect(direct.search).toBe("");
+    const tagged = new URL("https://my.lymi.app/?utm_source=newsletter");
+    expect(carryFirstTouch(tagged, touch).search).toBe("?utm_source=newsletter");
+  });
+  it("adds only a bounded referrer host and campaign labels to page views", () => {
+    expect(
+      eventProperties(
+        "$pageview",
+        { pathname: "/", referrer: "https://evil/?q=1", utm_source: "a b", utm_medium: "social" },
+        "browser",
+      ),
+    ).toEqual({ pathname: "/", utm_medium: "social" });
   });
 });

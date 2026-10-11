@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { AnalyticsConsentInput, ReviewModeKey } from "./types";
+import { ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
 export const INTERNAL_ACCOUNT_IDS = new Set([
@@ -8,10 +8,8 @@ export const INTERNAL_ACCOUNT_IDS = new Set([
   "Ke5PiWMwvkod6tYTzX5oUWi3gz5haGuI",
 ]);
 export { ANALYTICS_CONSENT_VERSION } from "./types";
-export const CONSENT_COOKIE = "lymi_analytics_consent";
-export const IDENTITY_COOKIE = "lymi_analytics_identity";
-export const ATTRIBUTION_COOKIE = "lymi_analytics_attribution";
-export const CONSENT_MAX_AGE = 180 * 24 * 60 * 60;
+/** Carries the visit's first touch with a sign-up request, since no cookie does. */
+export const FIRST_TOUCH_HEADER = "x-lymi-first-touch";
 export const AnalyticsLocale = z.enum(["en", "uk", "ru"]);
 const session = { session_id: z.uuid() };
 const count = z.number().int().nonnegative().max(1_000_000);
@@ -48,16 +46,21 @@ function approvedPath(value: string): string {
 }
 const path = z.string().max(200).transform(approvedPath);
 const campaign = z.string().regex(/^[a-zA-Z0-9_-]{1,80}$/);
-export const Attribution = z.object({
-  first_landing_page: path,
-  referrer: z.string().max(253).optional(),
-  utm_source: campaign.optional(),
-  utm_medium: campaign.optional(),
-  utm_campaign: campaign.optional(),
-});
+const host = z
+  .string()
+  .max(253)
+  .regex(/^(?:[a-z0-9-]+\.)+[a-z]{2,63}$/);
+const source_fields = {
+  referrer: host.optional().catch(undefined),
+  utm_source: campaign.optional().catch(undefined),
+  utm_medium: campaign.optional().catch(undefined),
+  utm_campaign: campaign.optional().catch(undefined),
+};
+export const Attribution = z.object({ first_landing_page: path, ...source_fields });
+export type Attribution = z.infer<typeof Attribution>;
 
 export const analyticsEvents = {
-  $pageview: z.object({ pathname: path }),
+  $pageview: z.object({ pathname: path, ...source_fields }),
   app_opened: z.object({}),
   onboarding_finished: z.object({
     kind: z.enum(["language", "test", "subject", "other", "skipped", "joined"]),
@@ -165,38 +168,6 @@ export function eventProperties(
   return result.success ? result.data : null;
 }
 
-export const AnalyticsConsent = AnalyticsConsentInput;
-export type AnalyticsConsent = z.infer<typeof AnalyticsConsent>;
-
-export function readCookie(header: string, name: string): string | undefined {
-  const part = header
-    .split(";")
-    .map((item) => item.trim())
-    .find((item) => item.startsWith(`${name}=`));
-  try {
-    return part ? decodeURIComponent(part.slice(name.length + 1)) : undefined;
-  } catch {
-    return undefined;
-  }
-}
-
-export function readConsent(header: string, now = Date.now()): AnalyticsConsent | null {
-  try {
-    const result = AnalyticsConsent.safeParse(
-      JSON.parse(readCookie(header, CONSENT_COOKIE) ?? "null"),
-    );
-    if (
-      !result.success ||
-      result.data.updated_at > now + 60_000 ||
-      now - result.data.updated_at > CONSENT_MAX_AGE * 1000
-    )
-      return null;
-    return result.data;
-  } catch {
-    return null;
-  }
-}
-
 export function analyticsPath(path: string, surface: "public" | "product"): string {
   if (surface === "public") {
     const clean = path.replace(/^\/(uk|ru)(?=\/|$)/, "") || "/";
@@ -229,37 +200,65 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
   return base ? (path === base ? base : `${base}/:item`) : "/other";
 }
 
-export function firstTouch(url: string, referrer: string, surface: "public" | "product") {
-  const parsed = new URL(url);
-  const result: z.infer<typeof Attribution> = {
-    first_landing_page: analyticsPath(parsed.pathname, surface),
-  };
+/** Query parameters a public page adds to its links so the product learns where a visit began. */
+const CARRIED = { referrer: "ref", landing: "lp" } as const;
+const CAMPAIGN_KEYS = ["utm_source", "utm_medium", "utm_campaign"] as const;
+
+function externalHost(value: string | null | undefined): string | undefined {
+  if (!value) return;
   try {
-    const hostname = new URL(referrer).hostname;
-    if (hostname !== "lymi.app" && !hostname.endsWith(".lymi.app")) result.referrer = hostname;
+    const hostname = value.includes("/") ? new URL(value).hostname : value.toLowerCase();
+    if (hostname === "lymi.app" || hostname.endsWith(".lymi.app")) return;
+    return host.safeParse(hostname).data;
   } catch {
-    /* Direct visits have no referrer. */
+    return;
   }
-  for (const key of ["utm_source", "utm_medium", "utm_campaign"] as const) {
-    const value = campaign.safeParse(parsed.searchParams.get(key));
+}
+
+/**
+ * Where this visit began: a source carried from a public page's link wins over this page's own
+ * landing path and referrer.
+ */
+export function firstTouch(
+  url: string,
+  referrer: string,
+  surface: "public" | "product",
+): Attribution {
+  const parsed = new URL(url);
+  const params = parsed.searchParams;
+  const carried = params.get(CARRIED.landing);
+  const result: Attribution = {
+    first_landing_page: carried
+      ? analyticsPath(carried, "public")
+      : analyticsPath(parsed.pathname, surface),
+  };
+  const source = externalHost(params.get(CARRIED.referrer)) ?? externalHost(referrer);
+  if (source) result.referrer = source;
+  for (const key of CAMPAIGN_KEYS) {
+    const value = campaign.safeParse(params.get(key));
     if (value.success) result[key] = value.data;
   }
   return result;
 }
 
-export function signupAttribution(header: string): ReturnType<typeof firstTouch> {
+/** Adds a visit's source to a link that leaves the page, unless the link already names one. */
+export function carryFirstTouch(target: URL, touch: Attribution): URL {
+  const params = target.searchParams;
+  if (params.has(CARRIED.landing) || CAMPAIGN_KEYS.some((key) => params.has(key))) return target;
+  if (!touch.referrer && !CAMPAIGN_KEYS.some((key) => touch[key])) return target;
+  params.set(CARRIED.landing, touch.first_landing_page);
+  if (touch.referrer) params.set(CARRIED.referrer, touch.referrer);
+  for (const key of CAMPAIGN_KEYS) if (touch[key]) params.set(key, touch[key]);
+  return target;
+}
+
+/** Reads a first touch that arrived from the browser, which can send anything. */
+export function parseFirstTouch(value: unknown): Attribution {
   try {
-    const result = Attribution.safeParse(
-      JSON.parse(readCookie(header, ATTRIBUTION_COOKIE) ?? "null"),
-    );
-    if (result.success) {
-      const data = result.data;
-      if (data.referrer && !/^(?:[a-z0-9-]+\.)+[a-z]{2,63}$/.test(data.referrer))
-        delete data.referrer;
-      return data;
-    }
+    const result = Attribution.safeParse(typeof value === "string" ? JSON.parse(value) : value);
+    if (result.success) return result.data;
   } catch {
-    /* Untrusted cookies are optional attribution. */
+    /* Attribution is optional. */
   }
   return { first_landing_page: "/other" };
 }

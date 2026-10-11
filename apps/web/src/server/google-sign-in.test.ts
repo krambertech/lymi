@@ -111,26 +111,18 @@ function cookieHeader(jar: Map<string, string>) {
 }
 
 /** The whole redirect sign-in against the real auth handler, as a browser would drive it. */
-async function signInWithGoogle(pending: Promise<unknown>[], choiceCookie?: string) {
+async function signInWithGoogle(pending: Promise<unknown>[], firstTouch?: unknown) {
   const auth = createAuth(env, db, (work) => pending.push(work));
   const jar = new Map<string, string>();
-  if (choiceCookie) jar.set("lymi_analytics_consent", choiceCookie);
-  if (choiceCookie)
-    jar.set(
-      "lymi_analytics_attribution",
-      encodeURIComponent(
-        JSON.stringify({
-          first_landing_page: "/explore/estonian-a1",
-          referrer: "lennysnewsletter.com",
-          utm_source: "lenny",
-        }),
-      ),
-    );
   const start = await auth.handler(
     new Request(`${PRODUCT_URL}/api/auth/sign-in/social`, {
       method: "POST",
       headers: { "content-type": "application/json", origin: PRODUCT_URL },
-      body: JSON.stringify({ provider: "google", callbackURL: "/today" }),
+      body: JSON.stringify({
+        provider: "google",
+        callbackURL: "/today",
+        ...(firstTouch ? { additionalData: { firstTouch } } : {}),
+      }),
     }),
   );
   expect(start.status).toBe(200);
@@ -159,10 +151,11 @@ describe("signing in with Google", () => {
     );
     const pending: Promise<unknown>[] = [];
     const delivered = vi.spyOn(posthog, "trackProductEvent").mockResolvedValue();
-    const choiceCookie = encodeURIComponent(
-      JSON.stringify({ version: 1, allowed: true, updated_at: Date.now() }),
-    );
-    const result = await signInWithGoogle(pending, choiceCookie);
+    const result = await signInWithGoogle(pending, {
+      first_landing_page: "/explore/estonian-a1",
+      referrer: "lennysnewsletter.com",
+      utm_source: "lenny",
+    });
     const signup = delivered.mock.calls.find((call) => call[2].name === "signed_up");
     expect(signup?.[1]).toBe(result.userId);
     expect(signup?.[2]).toEqual({

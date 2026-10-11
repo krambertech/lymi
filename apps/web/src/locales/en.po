@@ -1250,9 +1250,6 @@ msgstr "Choose what each field becomes on the new card. One field is the term."
 msgid "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 msgstr "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 
-msgid "Choose whether Lymi uses optional analytics cookies."
-msgstr "Choose whether Lymi uses optional analytics cookies."
-
 msgid "Choose your {app} file"
 msgstr "Choose your {app} file"
 
@@ -2875,9 +2872,6 @@ msgstr "Open Lymi from the new icon."
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Open Lymi in Safari and tap Share."
 
-msgid "Open on lymi.app"
-msgstr "Open on lymi.app"
-
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Open your browser menu and choose Install Lymi. Not every browser offers it."
 
@@ -3021,9 +3015,6 @@ msgstr "Previous month"
 
 msgid "Privacy"
 msgstr "Privacy"
-
-msgid "Privacy preferences"
-msgstr "Privacy preferences"
 
 msgid "Private"
 msgstr "Private"

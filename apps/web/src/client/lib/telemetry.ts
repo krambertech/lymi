@@ -4,9 +4,22 @@ import {
   initAnalytics,
   reportBrowserException,
   setAnalyticsLearner,
+  visitFirstTouch,
 } from "@lymi/client/analytics";
+import { FIRST_TOUCH_HEADER } from "@lymi/core/analytics";
 
 export { captureAnalytics, capturePageview };
+
+/** Where this visit began, sent with sign-up so the new account records its source. */
+export function firstTouchHeaders(): Record<string, string> {
+  const touch = visitFirstTouch("product");
+  return touch ? { [FIRST_TOUCH_HEADER]: JSON.stringify(touch) } : {};
+}
+
+export function firstTouchData(): { firstTouch?: unknown } {
+  const touch = visitFirstTouch("product");
+  return touch ? { firstTouch: touch } : {};
+}
 
 export function initTelemetry(): void {
   initAnalytics({

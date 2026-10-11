@@ -1250,9 +1250,6 @@ msgstr "Вибери, чим стане кожне поле нової карт�
 msgid "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 msgstr "Вибери, чим кожне поле Mochi стане в картці Lymi. Одне поле — це термін."
 
-msgid "Choose whether Lymi uses optional analytics cookies."
-msgstr "Обери, чи використовує Lymi необов’язкові файли cookie для аналітики."
-
 msgid "Choose your {app} file"
 msgstr "Вибір файлу {app}"
 
@@ -2875,9 +2872,6 @@ msgstr "Відкрий Lymi з нової іконки."
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Відкрий Lymi в Safari і торкнись «Поділитися»."
 
-msgid "Open on lymi.app"
-msgstr "Відкрити на lymi.app"
-
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Відкрий меню браузера і вибери «Встановити Lymi». Не кожен браузер це пропонує."
 
@@ -3021,9 +3015,6 @@ msgstr "Попередній місяць"
 
 msgid "Privacy"
 msgstr "Конфіденційність"
-
-msgid "Privacy preferences"
-msgstr "Налаштування приватності"
 
 msgid "Private"
 msgstr "Приватна"

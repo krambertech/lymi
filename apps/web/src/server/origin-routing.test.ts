@@ -35,6 +35,7 @@ describe("product origin routing", () => {
     "/_preview?key=capability",
     "/api/openapi.json",
     "/mcp",
+    "/ingest/e/",
     "/.well-known/oauth-protected-resource/mcp",
     "/manifest.webmanifest",
     "/sw.js",

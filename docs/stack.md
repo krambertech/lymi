@@ -22,7 +22,7 @@ flowchart LR
     Services[Service layer\ndb, userId, actor]
     Auth[Better Auth /api/auth\nsessions, API keys, OAuth server]
     MCP[MCP server /mcp\ncreateMcpHandler, stateless]
-    AI[Enrichment, diagnosis, TTS\nOpenAI text, Gemini speech]
+    AI[Enrichment + TTS\nOpenAI text, Gemini speech]
   end
   subgraph Core["packages/core"]
     Schema[Drizzle schema + Zod types]
@@ -171,15 +171,13 @@ Cloudflare Email Service won over Resend because it is a native Worker binding w
 
 FSRS in TypeScript, in `packages/core`, used by the client (to schedule offline) and the server (to validate and persist). Grades and intervals are the algorithm's, not invented. One 10-minute learning step sets FSRS state only; which card comes next, and when a missed card returns, is the weighted draw in `packages/core/src/draw.ts` ([ADR 0019](adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md)).
 
-### AI: enrichment, diagnosis and lazy multilingual speech
+### AI: enrichment plus lazy multilingual speech
 
-**The server does not extract vocabulary from lessons. The MCP client does.** Claude Desktop or Codex already holds the transcript and a model, so it reads the lesson and calls `add_cards`. That keeps the Worker's AI to two jobs. Enrichment fills the empty fields on a card (meaning, example, pronunciation, language) and leaves every field that already has text alone. Diagnosis names why a card stays often forgotten and drafts a fix that waits for the learner.
+**The server does not extract vocabulary from lessons. The MCP client does.** Claude Desktop or Codex already holds the transcript and a model, so it reads the lesson and calls `add_cards`. That keeps the Worker's AI to one job, enrichment: fill the empty fields on a card (meaning, example, pronunciation, language) and leave every field that already has text alone.
 
 Enrichment runs in the background after an add that leaves fields unset. The learner's adds in the app enrich by default; an API key or MCP client asks per card with `enrich: true`, because an agent tending a deck in bulk should not get text it did not ask for. A field stored as `""` is a deliberate clear and is never filled by a run; asking to enrich that card reopens it. Typing "sbrigarsi" on the phone and finding the meaning there by the time you open the deck is the point. Each filled field is stored with `source: "ai"` so the UI labels it. Meanings are written in the learner's meaning language, a per-user setting, English by default.
 
 One Cloudflare Workflow per add batch does the work, alongside the import and export workflows, asking for about ten cards per model call so a lesson lands in waves rather than all at once. `cards.enrichment_status` is `working` or `failed` while a job is outstanding and null otherwise, and the reads that already load cards carry it, so each empty field can hold its space until the text lands. A run that gives up leaves its cards at `failed` and the add itself still succeeds; with no OpenAI key configured no run is queued at all and the cards stay exactly as they arrived.
-
-A diagnosis may propose changing text the learner wrote, so it only drafts: nothing on the card changes until the learner accepts the fix ([ADR 0025](adr/0025-the-ai-proposes-card-changes-that-apply-only-when-accepted.md)). It runs once per learner and card revision, in the `lymi-diagnose` Workflow, queued after the response of the first draw that finds the card often forgotten, so the model never sits in a draw's latency. One call per card reads the card, its nearest deck neighbours so the deck's own format shows, and the learner's other often-forgotten cards so a confused pair can be named; the prompt says a format the deck uses throughout is never a cause. Below a confidence threshold the stored cause is `unclear`. `apps/web/src/server/diagnosis/evaluate.ts` runs the prompt over invented, labelled cards and prints the agreement that sets the threshold; it calls OpenAI, so it is a script and not a test.
 
 OpenAI remains the text-enrichment vendor, on `gpt-6-luna` with structured outputs, so a reply either parses against the schema or the step retries. It runs at `high` reasoning effort: meanings and examples were right at every effort, but lower efforts put the stress mark on the wrong syllable in IPA far more often, and `high` still writes far fewer output tokens than `gpt-5-mini` did. Claude and Gemini both write good definitions; OpenAI wins on already being the speech fallback vendor, so enrichment adds no second text credential. The model is overridable per environment with `OPENAI_TEXT_MODEL`, because the cheap tier moves faster than this document; an override must be a reasoning model, because the request always sends an effort. Speech defaults to Gemini-TTS through the Gemini API used by AI Studio, with the native ElevenLabs v4 reference voices chosen by listening in `speech-voices.ts`, including Priit for Estonian. Czech, Polish and unrated languages keep Gemini. The locale is pinned because a single word is too little text to detect a language from. Gemini uses Kore by default; OpenAI and then Chirp 3 HD are runtime fallbacks. Cloud Gemini remains available when only the Google service account is configured. Speech prompts name the language in English ("Estonian"), never as a bare code such as `et`. The routing layer is provider-neutral, so an R2 hit does not parse credentials or call a vendor.
 
@@ -289,7 +287,7 @@ Persona accounts under `@lymi.local` are created already confirmed and send no c
 - Cards from integrations are ordinary cards. No proposals table. Activity in Settings is the oversight.
 - Duplicate means same normalised term and same language anywhere in the learner's decks. Skipped and reported, never rejected.
 - The server enriches, the MCP client extracts. Enrichment is background and fills only empty fields; on by default in the app, opt-in per card for integrations (21 September 2026).
-- The AI diagnoses an often-forgotten card once per learner and revision, in the background, and its fix applies only when the learner accepts it (28 September 2026). ADR 0025.
+- The AI diagnosed often-forgotten cards and drafted fixes from 28 September to 11 October 2026; it was withdrawn because the diagnoses were rarely right. Review now offers a hook the learner writes. ADR 0025.
 - App language (12 September 2026): one per-user setting, seeded from the browser, drives the interface, push copy and the meaning language. Ukrainian and Russian first. ADR 0013.
 - Interface text is English source in the code, translated through Lingui `.po` catalogs, extracted in `pnpm verify`, drafted by the agent on the PR. ADR 0012.
 - Integrations never grade reviews.

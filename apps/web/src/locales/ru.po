@@ -16,9 +16,6 @@ msgstr ""
 msgid ", not open yet"
 msgstr ", ещё не открыт"
 
-msgid "“{current}” fits more than one answer, so you can’t tell which one the card wants."
-msgstr "Под «{current}» подходит несколько ответов, поэтому непонятно, какой ждёт карточка."
-
 msgid "“{deckName}” is reviewed with the other decks in its series."
 msgstr "«{deckName}» повторяется вместе с другими колодами серии."
 
@@ -27,9 +24,6 @@ msgstr "«{label}» уже есть в «{deckName}», поэтому копия
 
 msgid "“{term}” has nothing left to fill in."
 msgstr "В «{term}» нечего дополнять."
-
-msgid "“{title}” is often forgotten, maybe because the two are easy to mix up."
-msgstr "«{title}» часто забывается, возможно, потому что их легко перепутать."
 
 #. placeholder {0}: counts?.decks ?? 0
 msgid "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
@@ -350,9 +344,6 @@ msgstr "{0} делится с тобой колодой"
 msgid "{0}% of the file arrived. Choose the same file to send the rest."
 msgstr "Загружено {0}% файла. Выбери тот же файл, чтобы отправить остальное."
 
-msgid "{added, plural, one {# card added} other {# cards added}}"
-msgstr "{added, plural, one {# карточка добавлена} few {# карточки добавлены} many {# карточек добавлено} other {# карточки добавлено}}"
-
 msgid "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
 msgstr "{added, plural, one {До остановки импорта добавлена # карточка.} few {До остановки импорта добавлены # карточки.} many {До остановки импорта добавлено # карточек.} other {До остановки импорта добавлено # карточки.}}"
 
@@ -611,12 +602,6 @@ msgstr "<0>{0}</0> в «{1}»"
 msgid "<0>{name}</0> is ready. Copy it now. You won’t see it again."
 msgstr "<0>{name}</0> готов. Скопируй его сейчас: больше ты его не увидишь."
 
-msgid "<0>{title}</0> and <1>{otherTitle}</1>"
-msgstr "<0>{title}</0> и <1>{otherTitle}</1>"
-
-msgid "1 card added. “{term}” is already in {deckName}."
-msgstr "1 карточка добавлена. «{term}» уже есть в «{deckName}»."
-
 msgid "30 days"
 msgstr "30 дней"
 
@@ -705,20 +690,11 @@ msgstr "Добавить «{0}» в Библиотеку"
 msgid "Add {name} to Lymi"
 msgstr "Добавь колоду «{name}» в Lymi"
 
-msgid "Add 2 cards"
-msgstr "Добавить 2 карточки"
-
 msgid "Add a card"
 msgstr "Добавить карточку"
 
-msgid "Add a memory hook"
-msgstr "Добавить зацепку"
-
 msgid "Add a picture"
 msgstr "Добавить изображение"
-
-msgid "Add a word so only one answer fits"
-msgstr "Добавь слово, чтобы подходил только один ответ"
 
 msgid "Add card"
 msgstr "Добавить карточку"
@@ -743,9 +719,6 @@ msgstr "Добавь карточки из следующего урока"
 
 msgid "Add cards with the API"
 msgstr "Добавляй карточки через API"
-
-msgid "Add hook"
-msgstr "Добавить зацепку"
 
 msgid "Add Lymi as an MCP server in Claude or ChatGPT, then sign in when asked."
 msgstr "Добавь Lymi как MCP-сервер в Claude или ChatGPT, затем войди, когда попросят."
@@ -883,14 +856,11 @@ msgstr "Пакет Anki"
 msgid "anna@example.com"
 msgstr "anna@example.com"
 
-msgid "Another right answer: <0>{otherAnswer}</0>"
-msgstr "Другой правильный ответ: <0>{otherAnswer}</0>"
-
 msgid "Answer: {back}"
 msgstr "Ответ: {back}"
 
-msgid "Answer: {back}. A fix is ready: {fixTitle}"
-msgstr "Ответ: {back}. Есть исправление: {fixTitle}"
+msgid "Answer: {back}. You can add a memory hook."
+msgstr "Ответ: {back}. Можно добавить зацепку."
 
 msgid "Any time"
 msgstr "В любое время"
@@ -985,9 +955,6 @@ msgstr "Упорядочить разделы"
 msgid "Arts"
 msgstr "Искусство"
 
-msgid "Ask it another way"
-msgstr "Спросить по-другому"
-
 msgid "Ask the person who shared it for a new link."
 msgstr "Попроси новую ссылку у того, кто ей поделился."
 
@@ -1034,9 +1001,6 @@ msgstr "Скрипт резервной копии на ноутбуке"
 msgid "Both"
 msgstr "Оба"
 
-msgid "Both cards are already in your decks."
-msgstr "Обе карточки уже есть в твоих колодах."
-
 msgid "Both of the above, one card at a time."
 msgstr "Оба варианта, по одной карточке за раз."
 
@@ -1045,9 +1009,6 @@ msgstr "Оба способа"
 
 msgid "Brings back every card this import added and the decks it made."
 msgstr "Возвращает каждую карточку, которую добавил этот импорт, и созданные им колоды."
-
-msgid "Brought back the fix for {count, plural, one {# card} other {# cards}} in {deck}"
-msgstr "Возвращено исправление для {count, plural, one {# карточки} few {# карточек} many {# карточек} other {# карточки}} в колоде «{deck}»"
 
 msgid "Browse ready-made decks"
 msgstr "Посмотреть готовые колоды"
@@ -1097,20 +1058,11 @@ msgstr "Приглашение для {name} в «{deck}» отменено"
 msgid "Card"
 msgstr "Карточка"
 
-msgid "Card {n}"
-msgstr "Карточка {n}"
-
-msgid "Card 1 keeps this card’s history and notes. Card 2 starts as new."
-msgstr "Карточка 1 сохраняет историю и заметки этой карточки. Карточка 2 будет новой."
-
 msgid "Card added"
 msgstr "Карточка добавлена"
 
 msgid "Card added, meaning from the lesson"
 msgstr "Карточка добавлена, значение из урока"
-
-msgid "Card changed. “{term}” is already in {deckName}."
-msgstr "Карточка изменена. «{term}» уже есть в «{deckName}»."
 
 msgid "Card discarded"
 msgstr "Карточка отменена"
@@ -1120,9 +1072,6 @@ msgstr "Параметры карточки"
 
 msgid "Card settings"
 msgstr "Настройки карточки"
-
-msgid "Card split in 2"
-msgstr "Карточка разделена на 2"
 
 msgid "Cards"
 msgstr "Карточки"
@@ -1158,9 +1107,6 @@ msgstr "Экзамен CCSE на гражданство Испании"
 msgid "Change"
 msgstr "Изменить"
 
-msgid "Change anything on it"
-msgstr "Измени в ней что угодно"
-
 msgid "Change daily goal"
 msgstr "Изменить дневную цель"
 
@@ -1169,9 +1115,6 @@ msgstr "Изменить поля"
 
 msgid "Change photo"
 msgstr "Изменить фото"
-
-msgid "Change the question"
-msgstr "Изменить вопрос"
 
 msgid "Changes appear right away and are listed in Activity. You can edit or archive any card."
 msgstr "Изменения появляются сразу и видны в Активности. Любую карточку можно отредактировать или архивировать."
@@ -1362,9 +1305,6 @@ msgstr "Не удалось добавить колоду. Она больше �
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Не удалось отменить приглашение. Попробуй ещё раз."
 
-msgid "Couldn’t change the card. Check your connection and try again."
-msgstr "Не удалось изменить карточку. Проверь соединение и попробуй ещё раз."
-
 msgid "Couldn’t check for more cards"
 msgstr "Не удалось проверить, есть ли ещё карточки"
 
@@ -1494,17 +1434,11 @@ msgstr "Не удалось отправить приглашение. Слиш�
 msgid "Couldn’t send your feedback"
 msgstr "Не удалось отправить сообщение"
 
-msgid "Couldn’t stop offering this fix. Check your connection and try again."
-msgstr "Не удалось отказаться от этого исправления. Проверь соединение и попробуй ещё раз."
-
 msgid "Couldn’t turn off the join link. Try again."
 msgstr "Не удалось выключить ссылку для присоединения. Попробуй ещё раз."
 
 msgid "Couldn’t turn on the join link. Try again."
 msgstr "Не удалось включить ссылку для присоединения. Попробуй ещё раз."
-
-msgid "Couldn’t undo the change. Check your connection and try again."
-msgstr "Не удалось отменить изменение. Проверь соединение и попробуй ещё раз."
 
 msgid "Couldn’t use that image. Choose a still JPEG, PNG or WebP image."
 msgstr "Не удалось использовать это изображение. Выбери неподвижное изображение JPEG, PNG или WebP."
@@ -1728,20 +1662,11 @@ msgstr "Легко"
 msgid "Edit"
 msgstr "Редактировать"
 
-msgid "Edit “{draftTerm}”"
-msgstr "Редактировать «{draftTerm}»"
-
 msgid "Edit card"
 msgstr "Редактировать карточку"
 
-msgid "Edit card {n}"
-msgstr "Редактировать карточку {n}"
-
 msgid "Edit series"
 msgstr "Изменить серию"
-
-msgid "Edit the card"
-msgstr "Редактировать карточку"
 
 msgid "Edited {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "{count, plural, one {Изменена # карточка} few {Изменено # карточки} many {Изменено # карточек} other {Изменено # карточки}} в колоде «{deck}»"
@@ -1952,9 +1877,6 @@ msgstr "Готовим карточку…"
 
 msgid "Getting started"
 msgstr "Начало работы"
-
-msgid "Give each card a term and a meaning."
-msgstr "Дай каждой карточке термин и значение."
 
 msgid "Give the deck a name."
 msgstr "Назови колоду."
@@ -2372,9 +2294,6 @@ msgstr "Lymi"
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi также получит экран, на котором ты сейчас, версию приложения, браузер и язык приложения."
 
-msgid "Lymi can’t tell why you keep forgetting this card. Changing how it asks often helps."
-msgstr "Lymi не может понять, почему ты забываешь эту карточку. Часто помогает спросить по-другому."
-
 msgid "Lymi doesn’t recognise this app. Allow it only if you trust the address above."
 msgstr "Lymi не распознаёт это приложение. Разрешай доступ, только если доверяешь адресу выше."
 
@@ -2392,9 +2311,6 @@ msgstr "Lymi в открытой бете."
 
 msgid "Lymi is writing the first decks. Until then, make your own in Library."
 msgstr "Lymi пишет первые колоды. А пока создай свою в Библиотеке."
-
-msgid "Lymi won’t offer this fix again"
-msgstr "Lymi больше не будет предлагать это исправление"
 
 msgid "Made the deck {deck}"
 msgstr "Создана колода «{deck}»"
@@ -2414,9 +2330,6 @@ msgstr "Создай колоду"
 msgid "Make one for each course or topic."
 msgstr "Создай колоду для каждого курса или темы."
 
-msgid "Make the question clearer"
-msgstr "Уточнить вопрос"
-
 msgid "Manage connected apps"
 msgstr "Управлять подключёнными приложениями"
 
@@ -2434,9 +2347,6 @@ msgstr "Новое значение: «{value}»"
 
 msgid "Meaning from lesson"
 msgstr "Значение с урока"
-
-msgid "Meaning, card {n}"
-msgstr "Значение, карточка {n}"
 
 msgid "Memory hook"
 msgstr "Зацепка"
@@ -2470,9 +2380,6 @@ msgstr "Другие языки"
 
 msgid "More like this"
 msgstr "Похожие колоды"
-
-msgid "More than one right answer"
-msgstr "Несколько правильных ответов"
 
 #. placeholder {0}: shortQuote(card.term)
 msgid "Move “{0}” to"
@@ -2801,12 +2708,6 @@ msgstr "Сейчас в «{elsewhere}»"
 msgid "Often forgotten"
 msgstr "Часто забываются"
 
-msgid "Often mixed up with {other}"
-msgstr "Часто путается с {other}"
-
-msgid "Often mixed up with <0>{other}</0>"
-msgstr "Часто путается с <0>{other}</0>"
-
 msgid "On a phone, or stuck? Read the guide"
 msgstr "На телефоне или что-то не получается? Прочитай руководство"
 
@@ -3028,9 +2929,6 @@ msgstr "Новое произношение: «{value}»"
 
 msgid "Pronunciation from lesson"
 msgstr "Произношение с урока"
-
-msgid "Question changed"
-msgstr "Вопрос изменён"
 
 msgid "Quickstart"
 msgstr "Быстрый старт"
@@ -3358,9 +3256,6 @@ msgstr "Увидеть {word} и вспомнить значение"
 msgid "See all"
 msgstr "Все"
 
-msgid "See the difference"
-msgstr "Увидеть разницу"
-
 msgid "See the meaning, recall {word}"
 msgstr "Увидеть значение и вспомнить {word}"
 
@@ -3520,9 +3415,6 @@ msgstr "Кто-то попробовал создать аккаунт Lymi на
 msgid "Something else"
 msgstr "Другое"
 
-msgid "Something to see as well as read"
-msgstr "Чтобы видеть, а не только читать"
-
 msgid "Something went wrong on Lymi’s side. Choose the same file again to add the missing cards."
 msgstr "На стороне Lymi что-то пошло не так. Выбери тот же файл ещё раз, чтобы добавить недостающие карточки."
 
@@ -3535,9 +3427,6 @@ msgstr "Сортировка: {0}"
 
 msgid "Source"
 msgstr "Источник"
-
-msgid "Split into 2 cards"
-msgstr "Разделить на 2 карточки"
 
 msgid "Spreadsheet"
 msgstr "Таблица"
@@ -3636,9 +3525,6 @@ msgstr "Термин"
 msgid "Term changed to “{value}”"
 msgstr "Новый термин: «{value}»"
 
-msgid "Term, card {n}"
-msgstr "Термин, карточка {n}"
-
 msgid "Terms"
 msgstr "Условия"
 
@@ -3684,9 +3570,6 @@ msgstr "Это всё."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "Этого уже нет. Обнови страницу, чтобы увидеть изменения."
-
-msgid "That’s not it"
-msgstr "Дело не в этом"
 
 msgid "the AI"
 msgstr "AI"
@@ -3787,23 +3670,11 @@ msgstr "Этот человек уже в колоде."
 msgid "Think of it when the card shows “<0>{cue}</0>”."
 msgstr "Вспомни её, когда карточка покажет «<0>{cue}</0>»."
 
-msgid "Think of it when the card shows “<0>{cue}</0>”. Change anything that doesn’t help."
-msgstr "Вспомни её, когда карточка покажет «<0>{cue}</0>». Измени всё, что не помогает."
-
 msgid "Think of it when the card shows its picture."
 msgstr "Вспомни её, когда карточка покажет своё изображение."
 
-msgid "Think of it when the card shows its picture. Change anything that doesn’t help."
-msgstr "Вспомни её, когда карточка покажет своё изображение. Измени всё, что не помогает."
-
 msgid "This browser can’t show reminders."
 msgstr "Этот браузер не показывает напоминания."
-
-msgid "This card asks for two things at once, so remembering half still counts as a miss."
-msgstr "Эта карточка спрашивает о двух вещах сразу, поэтому если вспомнить только половину, это всё равно ошибка."
-
-msgid "This card changed after Lymi drafted this fix, so it no longer fits."
-msgstr "Карточка изменилась после того, как Lymi подготовил это исправление, поэтому оно больше не подходит."
 
 msgid "This card changed while you were editing it."
 msgstr "Эта карточка изменилась во время редактирования."
@@ -3973,32 +3844,17 @@ msgstr "Попробовать снова"
 msgid "Try again on a steadier connection and keep Lymi open until the upload finishes."
 msgstr "Попробуй ещё раз с более стабильным соединением и не закрывай Lymi, пока файл не загрузится."
 
-msgid "Try asking it another way"
-msgstr "Попробуй спросить по-другому"
-
 msgid "Turn off link"
 msgstr "Выключить ссылку"
 
 msgid "Turn off the join link?"
 msgstr "Выключить ссылку для присоединения?"
 
-msgid "Turned down the fix for {count, plural, one {# card} other {# cards}} in {deck}"
-msgstr "Отклонено исправление для {count, plural, one {# карточки} few {# карточек} many {# карточек} other {# карточки}} в колоде «{deck}»"
-
 msgid "Turned off the join link for {deck}"
 msgstr "Ссылка для присоединения к «{deck}» выключена"
 
 msgid "Turned on the join link for {deck}"
 msgstr "Ссылка для присоединения к «{deck}» включена"
-
-msgid "Two cards that tell them apart"
-msgstr "Две карточки, которые помогут их различать"
-
-msgid "Two things on one card"
-msgstr "Две вещи на одной карточке"
-
-msgid "Type the meaning."
-msgstr "Введи значение."
 
 msgid "Type the term."
 msgstr "Введи термин."
@@ -4081,9 +3937,6 @@ msgstr "только что использован"
 
 msgid "Visibility"
 msgstr "Видимость"
-
-msgid "Ways to change the card"
-msgstr "Как изменить карточку"
 
 msgid "We signed out your other devices."
 msgstr "Мы вышли из аккаунта на других устройствах."

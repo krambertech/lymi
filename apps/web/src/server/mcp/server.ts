@@ -2,7 +2,6 @@ import type { Scope } from "@lymi/core";
 import {
   AppLanguage,
   CardArchiveInput,
-  CardDiagnosisOut,
   CardEditsInput,
   CardImageImportInput,
   CardImagePatch,
@@ -16,7 +15,6 @@ import {
   Directions,
   EnrichmentStatus,
   FieldSource,
-  FixInput,
   IMAGE_LIMITS,
   ImageDescription,
   InsightsOut,
@@ -48,7 +46,6 @@ import {
   type ViewSearchResult,
 } from "../../shared/mcp-app";
 import {
-  acceptFix,
   addCards,
   archiveCard,
   archiveCardImage,
@@ -62,7 +59,6 @@ import {
   createSeries,
   deleteSeries,
   describeCardImage,
-  dismissDiagnosis,
   getDeck,
   getSeries,
   getSettings,
@@ -89,11 +85,9 @@ import {
   searchCards,
   setCardsSection,
   setSeriesDecks,
-  showCardWithDiagnosis,
+  showCard,
   streak,
   terseOutcome,
-  undoDismissal,
-  undoFix,
   updateCard,
   updateCards,
   updateDeck,
@@ -267,17 +261,13 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     "get_card",
     {
       title: "Get a card",
-      description:
-        "One card by id, with everything the learner wrote on it and, once it is often forgotten, Lymi's diagnosis of why.",
+      description: "One card by id, with everything the learner wrote on it.",
       inputSchema: z.object({ cardId: z.string().min(1) }),
-      outputSchema: CardDetailOut,
+      outputSchema: CardOut,
       ...withView(readTool, "card"),
     },
     ({ cardId }) =>
-      runView("get_card", false, async () => {
-        const card = await showCardWithDiagnosis(ctx, cardId);
-        return result({ ...cardOut(card), diagnosis: card.diagnosis });
-      }),
+      runView("get_card", false, async () => result(cardOut(await showCard(ctx, cardId)))),
   );
 
   server.registerTool(
@@ -488,91 +478,6 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       run("enrich_card", async () => {
         requireWrite(principal);
         return result(cardOut(await requestEnrichment(ctx, cardId, principal.enrichment ?? null)));
-      }),
-  );
-
-  server.registerTool(
-    "accept_card_fix",
-    {
-      title: "Accept a drafted fix",
-      description:
-        "Apply the fix in a card's diagnosis, from get_card, when the learner asks for it. Send the diagnosis id, its cause, and the drafted cards, text or hook, changed where the learner wants: confused_pair adds the two cards beside the card, two_things changes the card to the first card and adds the second, several_answers rewrites the cue with text, and no_anchor sets the card's hook. A hook is a short phrase that leads back to the answer without giving any of it away. For a diagnosis with no clear reason, send no_anchor with a hook the learner wrote. Text sent as drafted keeps the AI badge. A drafted card already in the learner's decks is skipped. Refused once the card has changed since the diagnosis. undo_card_fix reverses it. Needs write.",
-      inputSchema: AcceptFixInput,
-      outputSchema: FixResultOut,
-      ...writeTool({ idempotent: false, overwrites: true }),
-    },
-    ({ diagnosisId, ...fix }) =>
-      run("accept_card_fix", async () => {
-        requireWrite(principal);
-        const input = FixInput.safeParse(fix);
-        if (!input.success) {
-          throw new ServiceError(
-            "invalid",
-            input.error.issues
-              .map((issue) => `${issue.path.join(".") || "input"}: ${issue.message}`)
-              .join("; "),
-          );
-        }
-        const out = await acceptFix(ctx, diagnosisId, input.data, principal.enrichment ?? null);
-        return result({
-          added: out.added.map(cardOut),
-          edited: out.edited && cardOut(out.edited),
-          skipped: out.skipped,
-        });
-      }),
-  );
-
-  server.registerTool(
-    "undo_card_fix",
-    {
-      title: "Undo an accepted fix",
-      description:
-        "Reverse a fix accept_card_fix applied: archive the cards it added and put back the text it changed. Refused, with nothing undone, when the card or a card it added was edited since. Undoing a fix that is not in place changes nothing. Needs write.",
-      inputSchema: z.object({ diagnosisId: z.string().min(1) }),
-      outputSchema: OkOut,
-      ...writeTool({ idempotent: true }),
-    },
-    ({ diagnosisId }) =>
-      run("undo_card_fix", async () => {
-        requireWrite(principal);
-        await undoFix(ctx, diagnosisId);
-        return result({ ok: true });
-      }),
-  );
-
-  server.registerTool(
-    "dismiss_card_diagnosis",
-    {
-      title: "Dismiss a diagnosis",
-      description:
-        "Record that the cause in a card's diagnosis, from get_card, is not why the learner keeps forgetting it, when the learner says so. Its fix is not offered again, and the card is not diagnosed again until it is edited. A diagnosis with no clear reason, or whose fix is on the card, is refused. undo_dismiss_card_diagnosis takes it back. Needs write.",
-      inputSchema: z.object({ diagnosisId: z.string().min(1) }),
-      outputSchema: OkOut,
-      ...writeTool({ idempotent: true }),
-    },
-    ({ diagnosisId }) =>
-      run("dismiss_card_diagnosis", async () => {
-        requireWrite(principal);
-        await dismissDiagnosis(ctx, diagnosisId);
-        return result({ ok: true });
-      }),
-  );
-
-  server.registerTool(
-    "undo_dismiss_card_diagnosis",
-    {
-      title: "Undo a dismissal",
-      description:
-        "Take back dismiss_card_diagnosis, so the fix can be accepted again. Undoing a diagnosis that is not dismissed changes nothing. Needs write.",
-      inputSchema: z.object({ diagnosisId: z.string().min(1) }),
-      outputSchema: OkOut,
-      ...writeTool({ idempotent: true }),
-    },
-    ({ diagnosisId }) =>
-      run("undo_dismiss_card_diagnosis", async () => {
-        requireWrite(principal);
-        await undoDismissal(ctx, diagnosisId);
-        return result({ ok: true });
       }),
   );
 
@@ -1213,41 +1118,6 @@ const CardOut = z.object({
   createdAt: Timestamp,
 });
 type CardOut = z.infer<typeof CardOut>;
-
-const FixResultOut = z.object({
-  added: z.array(CardOut),
-  edited: CardOut.nullable(),
-  skipped: z
-    .array(z.object({ term: z.string(), existingId: z.string(), deckName: z.string() }))
-    .describe("Drafted cards already in the learner's decks, not added again"),
-});
-
-const CardDetailOut = CardOut.extend({
-  diagnosis: CardDiagnosisOut.nullable().describe(
-    "Once the card turns often forgotten: the likely reason the learner keeps forgetting it and a drafted fix, or unclear. Null before then and while Lymi is still working. Nothing on the card changes until the learner accepts the fix; acceptedAt is set while it is on the card.",
-  ),
-});
-
-const [pairFix, , cueFix, hookFix] = FixInput.options;
-
-/** `FixInput` as one flat object, since a tool's input schema cannot be a union at its top level. */
-const AcceptFixInput = z.object({
-  diagnosisId: z.string().min(1),
-  cause: z.enum(FixInput.options.map((option) => option.shape.cause.value)),
-  cards: pairFix.shape.cards
-    .optional()
-    .describe(
-      "For confused_pair, the two cards to add. For two_things, the first replaces the card's term and meaning and the second is added beside it.",
-    ),
-  text: cueFix.shape.text
-    .optional()
-    .describe("For several_answers: the new cue, written to the field the draft names"),
-  hook: hookFix.shape.hook
-    .optional()
-    .describe(
-      "For no_anchor: a short phrase that leads back to the answer without giving any of it away",
-    ),
-});
 
 function statsOut(stats: CardReviewStats): CardReviewStatsOut {
   const record = (r: ReviewRecord) => ({

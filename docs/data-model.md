@@ -22,7 +22,6 @@ erDiagram
   user ||--o{ deck_members : "studies"
   cards ||--o{ card_states : "one per learner per review mode"
   cards ||--o{ card_images : "one active picture"
-  cards ||--o{ card_diagnoses : "one per learner per revision"
   card_states ||--o{ reviews : "append-only"
   user ||--o{ review_days : "one per local date"
   review_days ||--o{ reviews : "counts toward"
@@ -243,23 +242,6 @@ erDiagram
     text user_id FK
     int undone_at
   }
-  card_diagnoses {
-    text id PK
-    text user_id FK "the learner it is about"
-    text card_id FK
-    int revision "the card's revision when diagnosed"
-    text status "working | done | failed"
-    text cause "nullable until done; unclear below the threshold"
-    text proposed_cause "what the model named before the threshold"
-    real confidence "nullable until done, 0 to 1"
-    json draft "nullable, the fix for cause"
-    text model "nullable until done"
-    int prompt_version "the prompt that wrote the cause, 1 before versions"
-    int offered_at "nullable, when review showed the fix"
-    int accepted_at "nullable, cleared by Undo"
-    int dismissed_at "nullable, when the learner said the cause is wrong"
-    json fix "nullable, what accepting wrote, for Undo"
-  }
   audit_log {
     text id PK
     text user_id FK
@@ -267,7 +249,7 @@ erDiagram
     text actor_client "OAuth client or API key id"
     text actor_client_name "its name at the write"
     text action "create update archive restore grade"
-    text entity "deck | series | section | card | review | account | import | export | diagnosis"
+    text entity "deck | series | section | card | review | account | import | export"
     text entity_id
     json payload
     int created_at
@@ -345,15 +327,7 @@ The scheduler has one 10-minute learning and relearning step. A row written unde
 
 Nothing about a review is stored. `services/draw.ts` loads every asked state due before the learner-local day ends or reviewed today, with its sibling direction, plus today's non-undone reviews in every scope, and hands them to `draw` in `packages/core`. The queue, each deck's count, day exhaustion and the reminder count are that one function over the same rows, so they cannot disagree. The rules are in [ADR 0019](adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md).
 
-### Diagnoses
-
-A diagnosis is one learner's, for one revision of a card, and `card_diagnoses` is unique per `(user_id, card_id, revision)`. When a draw, a queue or the Today rounds find an often-forgotten card whose current revision has no row, or only a `failed` or `working` one last written over a day ago, `drawInputs` writes one as `working` with `on conflict do nothing` after the response (a stale row is moved back to `working` by an update that checks the same condition, so a run cut off before it was queued or before it settled is retried) and hands only the rows it inserted or moved to the `lymi-diagnose` Workflow, at most 20 a draw. Two racing draws therefore queue a card once, and with no OpenAI key nothing is written. The Workflow makes one model call per card and stores `done` with the cause, the confidence and the draft, or `failed`. A row whose card was edited or archived before its turn ends at `failed`; the next draw queues the new revision. `cause` is `unclear`, with no draft, when the confidence is below `DIAGNOSIS_THRESHOLD`; `proposed_cause` keeps what the model named. `draft` is validated by `Diagnosis` in `packages/core/src/types.ts`. `prompt_version` is the `DIAGNOSIS_PROMPT_VERSION` that wrote the cause; rows written before the column existed count as 1. A draw also re-queues a `done` row of an older version whose `accepted_at` and `dismissed_at` are empty, moving it back to `working` by an update that checks the same condition, and leaves `offered_at` as it was. The card read returns only a `done` row of the card's current revision, as `diagnosis`. [ADR 0025](adr/0025-the-ai-proposes-card-changes-that-apply-only-when-accepted.md).
-
-The draw and the queue carry a card's fix as `offer` when the learner owns the card, it is often forgotten, and its current revision has a `done` row with no `offered_at`, unless the cause is `no_anchor` and the card already has a hook. A member of a shared deck gets no offer, and accepting is refused for one. Review sets `offered_at` once the offer has shown, so it comes once per revision. After an earlier revision's offer, the next one waits until the card's first grade was Forgot on `SLIPPING_FORGOTTEN_DAYS` more days after that offer, counted before today as the often-forgotten group counts them, so a fix just accepted or an edit just made is not second-guessed.
-
-Accepting first claims the row by setting `accepted_at` where it is null, so two racing accepts apply it once. If recording the fix fails, it puts the card's text back at the revision it was diagnosed at, so a retry is not refused as a change, and releases the claim even when that rollback fails too. A claim with `fix` still empty after `FIX_CLAIM_MS` (five minutes) belonged to an accept that died part-way, and accept, undo and dismiss treat it as free, taking it over by an update that checks the same condition. It writes through the card services with the learner as actor, then sets `fix`: the ids of the cards it added with the term and meaning each was given, and each field it changed as it was before and after. A split that changes the term clears the card's pronunciation and hook, which no longer match. Drafted text accepted unchanged keeps meaning source `ai`; the term has no source column, so it is stored like any term. A hook is written to `cards.hook` with `hook_source` `ai` while it is the draft as drafted; a diagnosis of no clear reason also accepts a hook the learner wrote, as `manual`. The hook is not edition text, so it leaves the revision, and the diagnosis, where they were.
-
-Undo archives the cards the fix added, writes the old text back, clears both columns and, when that raised the revision, copies the row to the new revision as already offered. It has no time limit, so it first checks that nothing was edited since: when a field the fix changed no longer holds what the fix wrote, or a card it added is still active with another term or meaning, Undo refuses as a whole with 409 and writes nothing, and the learner edits or archives the cards instead. A field the fix emptied that enrichment has since filled is not an edit. A fix accepted before these were kept is undone without the check. Dismissing sets `dismissed_at`, and `offered_at` if review had not shown the fix, on a `done` row that names a cause and is not accepted; such a row is never offered, re-diagnosed or accepted, and Undo clears the column.
+### Recall aids
 
 A grade names what helped it as `aid`, today only `hook` for a peek before the reveal, and the grade route refuses an aided Easy with 400, because Easy means recall without help. The column is an enum so a later hint joins it. Undo marks the review undone like any other, so its aid goes with it; the offline outbox stores the aid with the queued grade and sends it on replay.
 

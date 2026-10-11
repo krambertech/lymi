@@ -13,7 +13,7 @@ import {
   listDeckCards,
   listDecks,
   searchCards,
-  showCardWithDiagnosis,
+  showCard,
   updateSettings,
 } from "../services";
 import type { ServiceContext } from "../services/context";
@@ -170,7 +170,7 @@ export function registerHostExtensions(server: McpServer, ctx: ServiceContext, k
       mimeType: "application/json",
     },
     async (uri, { cardId }) => {
-      const card = await showCardWithDiagnosis(ctx, String(cardId));
+      const card = await showCard(ctx, String(cardId));
       return {
         contents: [
           { uri: uri.href, mimeType: "application/json", text: JSON.stringify(kit.cardOut(card)) },

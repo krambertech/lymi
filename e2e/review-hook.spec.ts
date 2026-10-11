@@ -191,64 +191,34 @@ test("H shows the hook after the reveal at once", async ({ page }, testInfo) => 
   await expect(grades.getByRole("button", { name: "Easy, locked" })).toHaveCount(0);
 });
 
-test("a learner keeps a drafted hook, can undo it, and writes their own from the menu", async ({
+test("an often-forgotten card offers a hook the learner writes, and Undo takes it off", async ({
   page,
 }, testInfo) => {
   await startAsTestLearner(page, testInfo, "review-hook");
-  const seeded = await page.request.post("/api/dev/fixes", {
-    data: { causes: ["no_anchor", "unclear"] },
-  });
+  const seeded = await page.request.post("/api/dev/often-forgotten", { data: { hooked: false } });
   expect(seeded.ok()).toBeTruthy();
   const { deckId } = (await seeded.json()) as { deckId: string };
   await page.goto(`/review?deck=${deckId}`);
-  const reveal = () =>
-    page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
-  const good = () => page.getByRole("button", { name: /^Good/ }).click();
+  await page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
 
-  // The two cards come in the draw's order, so each step finds its own.
-  for (let seen = 0; seen < 2; seen++) {
-    await reveal();
-    const drafted = page.getByRole("button", { name: /Try a memory hook/ });
-    const unclear = page.getByRole("button", { name: /Often forgotten/ });
-    await expect(drafted.or(unclear)).toBeVisible();
+  await page.getByRole("button", { name: /Try a memory hook/ }).click();
+  const sheet = page.getByRole("dialog", { name: /^A memory hook for / });
+  const field = sheet.getByRole("textbox", { name: "Memory hook" });
+  await expect(field).toHaveValue("");
+  await field.fill("Picture it carved for the season");
+  await sheet.getByRole("button", { name: "Save hook" }).click();
+  await expect(sheet).toBeHidden();
+  await expect(page.getByText("Hook added")).toBeVisible();
 
-    if (await drafted.isVisible()) {
-      await test.step("the drafted hook is kept as the AI's, and Undo takes it off", async () => {
-        await drafted.click();
-        const sheet = page.getByRole("dialog", { name: "A memory hook for kõrvits" });
-        await expect(sheet.getByRole("textbox", { name: "Memory hook" })).toHaveValue(
-          "A pumpkin curves at its sides: “curve-its”.",
-        );
-        await sheet.getByRole("button", { name: "Add hook" }).click();
-        await expect(sheet).toBeHidden();
-        // The menu's hook may have left its own toast, so this one is the newest.
-        await expect(page.getByText("Hook added").last()).toBeVisible();
-        // Kept after the reveal, it shows at once under the cue: the learner has just read it.
-        const answer = page.getByLabel("Production card for pumpkin", { exact: true });
-        // The card also holds a hidden copy of the hook that sizes it; this is the one on show.
-        await expect(answer.getByText("AI hook").filter({ visible: true })).toBeVisible();
-        await expect(answer.getByRole("button", { name: /Show hook/ })).toHaveCount(0);
-        await page.getByRole("button", { name: "Undo", exact: true }).last().click();
-        await expect(answer.getByRole("paragraph").filter({ hasText: /curve-its/ })).toHaveCount(0);
-      });
-    } else {
-      await test.step("with no clear reason, the menu writes the learner's own hook", async () => {
-        await unclear.click();
-        const sheet = page.getByRole("dialog", { name: "Ask it another way" });
-        await sheet.getByRole("button", { name: /Add a memory hook/ }).click();
-        const written = page.getByRole("dialog", { name: "A memory hook for vaatama" });
-        const field = written.getByRole("textbox", { name: "Memory hook" });
-        await expect(field).toHaveValue("");
-        await field.fill("Watch the vat boil");
-        await written.getByRole("button", { name: "Save hook" }).click();
-        await expect(written).toBeHidden();
-        const answer = page.getByLabel("Production card for to look, to watch", { exact: true });
-        await expect(
-          answer.getByRole("paragraph").filter({ hasText: "Watch the vat boil" }),
-        ).toBeVisible();
-        await expect(answer.getByText("AI hook")).toBeHidden();
-      });
-    }
-    await good();
-  }
+  // Written after the reveal, it shows at once under the cue, as the learner's own.
+  const card = page.getByLabel(/^Production card for /);
+  const written = card
+    .getByRole("paragraph")
+    .filter({ hasText: "Picture it carved for the season" });
+  await expect(written).toBeVisible();
+  await expect(card.getByText("AI hook")).toBeHidden();
+  await expect(card.getByRole("button", { name: /Show hook/ })).toHaveCount(0);
+
+  await page.getByRole("button", { name: "Undo", exact: true }).click();
+  await expect(written).toHaveCount(0);
 });

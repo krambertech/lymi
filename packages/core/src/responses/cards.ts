@@ -2,7 +2,6 @@ import { z } from "zod";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS } from "../slipping";
 import {
   Actor,
-  Diagnosis,
   Direction,
   Directions,
   EnrichmentStatus,
@@ -90,56 +89,6 @@ export const CardOut = z
   })
   .meta({ id: "Card" });
 export type CardOut = z.infer<typeof CardOut>;
-
-/** Why the reader keeps forgetting the card as it reads now. Nothing changes until they accept. */
-export const CardDiagnosisOut = z
-  .object({
-    id: z.string().meta({ description: "Names the diagnosis when accepting its fix" }),
-    confidence: z.number().min(0).max(1).meta({
-      description:
-        "How sure the AI was of the cause it named. Below the threshold the cause is unclear.",
-    }),
-    model: z.string().meta({ description: "The model that diagnosed it" }),
-    diagnosedAt: Timestamp,
-    dismissedAt: Timestamp.nullable().meta({
-      description:
-        "When you said this is not the reason. Its fix is not offered again for this revision of the card.",
-    }),
-    acceptedAt: Timestamp.nullable().meta({
-      description:
-        "When you accepted its fix, so the fix is on the card. Null while it is open, and again after Undo.",
-    }),
-  })
-  .and(Diagnosis)
-  .meta({ id: "CardDiagnosis" });
-export type CardDiagnosisOut = z.infer<typeof CardDiagnosisOut>;
-
-/** One card as a single read returns it, with the reader's own diagnosis of it. */
-export const CardDetailOut = CardOut.extend({
-  diagnosis: CardDiagnosisOut.nullable().meta({
-    description:
-      "Why you keep forgetting this card, once it has turned often forgotten. Null before then, while the AI is still working, and after an edit until a new one lands.",
-  }),
-}).meta({ id: "CardDetail" });
-export type CardDetailOut = z.infer<typeof CardDetailOut>;
-
-/** What accepting a fix wrote: ordinary cards added and edited, and any draft a duplicate skipped. */
-export const FixOut = z
-  .object({
-    added: z.array(CardOut).meta({ description: "Cards the fix added" }),
-    edited: CardOut.nullable().meta({ description: "The card the fix changed, if it changed one" }),
-    skipped: z
-      .array(
-        z.object({
-          term: z.string(),
-          existingId: z.string(),
-          deckName: z.string(),
-        }),
-      )
-      .meta({ description: "Drafted cards already in your decks, which were not added again" }),
-  })
-  .meta({ id: "Fix" });
-export type FixOut = z.infer<typeof FixOut>;
 
 const ReviewRecord = {
   reviewCount: z.number().int().meta({ description: "Grades counted" }),

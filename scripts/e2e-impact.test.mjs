@@ -7,6 +7,7 @@ test("requires E2E for production behavior and harness changes", () => {
   assert.equal(requiresE2E(["apps/web/src/server/routes/cards.ts"]), true);
   assert.equal(requiresE2E(["apps/site/src/pages/index.astro"]), true);
   assert.equal(requiresE2E(["packages/core/src/fsrs.ts"]), true);
+  assert.equal(requiresE2E(["packages/client/src/grades.ts"]), true);
   assert.equal(requiresE2E(["playwright.config.ts"]), true);
   assert.equal(requiresE2E(["scripts/ci-plan.mjs"]), true);
   assert.equal(requiresE2E(["scripts/e2e-shard-outcome.mjs"]), true);

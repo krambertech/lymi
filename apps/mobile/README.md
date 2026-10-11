@@ -21,6 +21,7 @@ The proof of concept compared options side by side and kept one of each: the gla
 ## What is shared with the web
 
 - `@lymi/core` unchanged: the review uses its FSRS `schedule` and the draw's `RETURN_GAPS`.
+- `@lymi/client`: screens read hooks in `src/data/queries.ts` under the web's query keys, returning the API's response types. `src/data/demo-server.ts` answers them until the phone signs in, and `src/data/client.ts` configures the client for `my.lymi.app`.
 - Colours, radii and type step names: `pnpm tokens` writes `src/theme.gen.css` and `src/theme/tokens.gen.ts` from `apps/web/src/client/styles.css`. The phone keeps its own type ramp in `src/global.css`, because iOS reads at 17 pt.
 - The lantern's drawing and flame sizes, copied into `src/brand/geometry.ts` until they move to a shared package.
 - Lucide icons, rendered by `lucide-react-native`.

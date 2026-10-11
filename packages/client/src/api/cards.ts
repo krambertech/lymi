@@ -13,7 +13,7 @@ import type {
   CardState as CardStateRow,
   Review as ReviewRow,
 } from "@lymi/core/schema";
-import { request } from "./request";
+import { apiUrl, request } from "./request";
 
 export type CardImage = CardImageOut;
 /** A card as the API sends it: its own review modes or null when it follows its deck, and its picture. */
@@ -62,7 +62,7 @@ export const cardsApi = {
     request<HookDraftOut>(`/api/cards/${id}/hook-draft`, { method: "POST" }),
   /** Every review and every write, newest first. */
   cardHistory: (id: string) => request<CardHistory>(`/api/cards/${id}/history`),
-  audioUrl: (cardId: string) => `/api/audio/${encodeURIComponent(cardId)}`,
+  audioUrl: (cardId: string) => apiUrl(`/api/audio/${encodeURIComponent(cardId)}`),
   /** `version` is the card's `imageVersion` as last read; null expects a card with no picture yet. */
   uploadCardImage: (id: string, file: Blob, version: string | null, description?: string) => {
     const form = new FormData();

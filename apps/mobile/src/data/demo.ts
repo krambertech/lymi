@@ -1,5 +1,5 @@
-// A learner's week, held on the device for the proof of concept. The real app reads the same
-// shapes from the Worker through the shared API client.
+// A learner's week, held on the device for the proof of concept. `demo-server.ts` answers from it
+// in the Worker's response shapes, so the screens read what the shared API client will return.
 
 export type CardState = "new" | "learning" | "known";
 
@@ -12,19 +12,24 @@ export interface DemoCard {
   section?: string;
   state: CardState;
   due: boolean;
+  /** Often forgotten, so the third round offers it. */
+  slipping?: boolean;
 }
 
 export interface DemoDeck {
   id: string;
   name: string;
+  /** BCP 47, as a deck's `defaultLanguage`. */
   language: string;
-  flag: string;
 }
 
 export const DECKS: DemoDeck[] = [
-  { id: "eesti", name: "Eesti keel", language: "Estonian", flag: "🇪🇪" },
-  { id: "pt", name: "Portuguese", language: "Portuguese", flag: "🇵🇹" },
+  { id: "eesti", name: "Eesti keel", language: "et" },
+  { id: "pt", name: "Portuguese", language: "pt" },
 ];
+
+/** Language names until the phone has the app's catalog. */
+export const LANGUAGE_NAMES: Record<string, string> = { et: "Estonian", pt: "Portuguese" };
 
 export const CARDS: DemoCard[] = [
   {
@@ -36,6 +41,7 @@ export const CARDS: DemoCard[] = [
     section: "Tund 6",
     state: "learning",
     due: true,
+    slipping: true,
   },
   {
     id: "c2",
@@ -65,6 +71,7 @@ export const CARDS: DemoCard[] = [
     section: "Tund 6",
     state: "learning",
     due: true,
+    slipping: true,
   },
   {
     id: "c5",
@@ -144,7 +151,7 @@ export const CARDS: DemoCard[] = [
   },
 ];
 
-/** Reviews on each of the last six days, oldest first. Today is added from the store. */
+/** Reviews on each of the last six days, oldest first. Today comes from the grades. */
 export const PAST_WEEK = [12, 0, 31, 27, 25, 40];
 export const STREAK_BEFORE_TODAY = 4;
 export const DAILY_GOAL = 25;

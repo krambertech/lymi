@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { View } from "react-native";
 import { Uniwind } from "uniwind";
-import { useStore } from "../../../data/store";
+import { useResetDemo } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { Button, Icon, Plate, SectionTitle, Text } from "../../../ui/primitives";
 import { Screen } from "../../../ui/screen";
 import { Segmented } from "../../../ui/segmented";
 
 export default function You() {
-  const { reset } = useStore();
+  const reset = useResetDemo();
   const p = usePalette();
   const [theme, setTheme] = useState<"system" | "light" | "dark">("system");
   return (

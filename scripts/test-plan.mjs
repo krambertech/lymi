@@ -33,6 +33,8 @@ const wideningFiles = new Set([
   "apps/site/src/styles.css",
   "packages/core/package.json",
   "packages/core/vitest.config.ts",
+  "packages/client/package.json",
+  "packages/client/vitest.config.ts",
   "scripts/test-plan.mjs",
   "scripts/verify-changed.mjs",
 ]);

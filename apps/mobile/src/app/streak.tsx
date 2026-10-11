@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, type ViewStyle } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Flame } from "../brand/flame";
-import { useStore } from "../data/store";
+import { useDay } from "../data/queries";
 import { usePalette } from "../theme/palette";
 import { Plate, Text } from "../ui/primitives";
 import { Segmented } from "../ui/segmented";
@@ -10,7 +10,7 @@ import { SevenLights } from "../ui/seven-lights";
 
 /** The streak: the run, one plain line about today, today against the goal, and the goal itself. */
 export default function Streak() {
-  const { streak, reviewsToday, goal, week, dayDone } = useStore();
+  const { streak, reviewsToday, goal, week, dayDone } = useDay();
   const p = usePalette();
   const insets = useSafeAreaInsets();
   const [choice, setChoice] = useState(String(goal));

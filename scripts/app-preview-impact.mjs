@@ -1,6 +1,6 @@
 import { isTestFile } from "./e2e-impact.mjs";
 
-const appPreviewPrefixes = ["apps/web/", "packages/core/", "scripts/"];
+const appPreviewPrefixes = ["apps/web/", "packages/client/", "packages/core/", "scripts/"];
 
 const appPreviewFiles = new Set([
   ".github/workflows/ci.yml",

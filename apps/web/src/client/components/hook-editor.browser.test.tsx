@@ -1,5 +1,6 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
+import { writes } from "@lymi/client/writes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
@@ -7,7 +8,6 @@ import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import { queueItem } from "../design/mock";
 import { api } from "../lib/api";
-import { writes } from "../lib/writes";
 import { HookEditor } from "./hook-editor";
 
 i18n.load("en", messages);

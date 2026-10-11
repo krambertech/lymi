@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { writes } from "@lymi/client/writes";
 import type { CardPatch } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useMatches, useNavigate } from "@tanstack/react-router";
@@ -31,7 +32,6 @@ import { useLeaveDeck } from "../lib/use-leave-deck";
 import { useSectionActions } from "../lib/use-sections";
 import { useSeriesActions } from "../lib/use-series";
 import { useWordHistory } from "../lib/use-word-history";
-import { writes } from "../lib/writes";
 import { DeckDetailView, type DeckFailure, exportCsv } from "../views/deck-detail-view";
 
 export const Route = createFileRoute("/library/$deckId")({

@@ -1,3 +1,4 @@
+import { dropQueued } from "@lymi/client/queued";
 import { clearCardImages } from "./card-images";
 import { clearQueryCache } from "./query-persister";
 
@@ -9,11 +10,7 @@ import { clearQueryCache } from "./query-persister";
  * Cache Storage, the card pictures kept for offline review. All of it belongs to whoever was
  * signed in, so it is cleared when the learner changes: on sign-out, and before any sign-in starts.
  */
-/** Grades waiting to send, whose they are, and each queued write under `lymi-writes:<key>`. */
-const QUEUED = ["lymi-outbox", "lymi-queued-for"];
-export const WRITE_PREFIX = "lymi-writes:";
 const KEYS = [
-  ...QUEUED,
   "lymi-reveals",
   "lymi-dev-persona",
   "lymi-last-deck",
@@ -27,32 +24,9 @@ const KEYS = [
  */
 export function clearPersistedLearnerState(opts: { keepQueued?: boolean } = {}): void {
   try {
-    for (const key of KEYS) {
-      if (!(opts.keepQueued && QUEUED.includes(key))) localStorage.removeItem(key);
-    }
-    if (!opts.keepQueued) removeQueuedWrites();
+    for (const key of KEYS) localStorage.removeItem(key);
   } catch {}
+  if (!opts.keepQueued) dropQueued();
   void clearQueryCache();
   void clearCardImages().catch(() => undefined);
-}
-
-/** Keeps the outboxes for the learner now signed in, and drops them if they were another's. */
-export function claimQueued(userId: string): void {
-  try {
-    const owner = localStorage.getItem("lymi-queued-for");
-    if (owner && owner !== userId) {
-      localStorage.removeItem("lymi-outbox");
-      removeQueuedWrites();
-    }
-    localStorage.setItem("lymi-queued-for", userId);
-  } catch {}
-}
-
-function removeQueuedWrites() {
-  const names: string[] = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const name = localStorage.key(i);
-    if (name?.startsWith(WRITE_PREFIX)) names.push(name);
-  }
-  for (const name of names) localStorage.removeItem(name);
 }

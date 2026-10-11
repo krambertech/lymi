@@ -1,9 +1,9 @@
 import { useLingui } from "@lingui/react/macro";
+import { writes } from "@lymi/client/writes";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "../components/ui/toast";
 import { errorMessage } from "./api";
-import { writes } from "./writes";
 
 /** Archives a deck, returns to the deck list, and offers Undo there. */
 export function useArchiveDeck(deckId: string, name: string | undefined) {

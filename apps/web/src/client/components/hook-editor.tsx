@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { writes } from "@lymi/client/writes";
 import { CARD_LIMITS } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Anchor, Sparkle } from "lucide-react";
@@ -7,7 +8,6 @@ import { type Card, errorMessage } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
 import { useMouse } from "../lib/device";
 import { hookDraftQuery } from "../lib/queries";
-import { writes } from "../lib/writes";
 import { Button } from "./button";
 import { InlineError } from "./inline-error";
 import { toast } from "./ui/toast";

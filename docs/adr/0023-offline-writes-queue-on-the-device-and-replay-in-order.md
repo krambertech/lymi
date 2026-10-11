@@ -5,7 +5,7 @@ date: 2026-09-23
 
 # Offline writes queue on the device and replay in order
 
-A learner's card and deck writes go through a write outbox in `apps/web/src/client/lib/writes.ts`, next to the grade outbox. Each write is kept on the device before it is sent. It shows in the cached lists at once and replays in the order it was made when the connection returns. The server stays the only source of truth. The client never merges state; it replays intents the server can apply twice without harm.
+A learner's card and deck writes go through a write outbox in `packages/client/src/writes.ts`, next to the grade outbox. Each write is kept on the device before it is sent. It shows in the cached lists at once and replays in the order it was made when the connection returns. The server stays the only source of truth. The client never merges state; it replays intents the server can apply twice without harm.
 
 ## Context
 

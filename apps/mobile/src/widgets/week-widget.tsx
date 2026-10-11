@@ -17,6 +17,8 @@ export interface WeekProps {
   left: number;
   /** Seven days, oldest first; each 0 to 3, the steps of the seven lights. */
   week: number[];
+  /** Each day's narrow weekday, oldest first, so today's letter is right on every day. */
+  letters: string[];
   flame: string;
 }
 
@@ -31,10 +33,14 @@ const WeekWidget = (props: WeekProps, env: WidgetEnvironment) => {
   const steps = dark
     ? ["#29211b", "#8a6333", "#c88e3e", "#fdb443"]
     : ["#ece8e2", "#f7d29a", "#f6bd63", "#f8ac3d"];
-  const days = ["M", "T", "W", "T", "F", "S", "S"];
-  const ids = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
-  const today = props.left === 0 ? "Today counts" : `${props.left} to today’s goal`;
-  const due = props.due === 1 ? "1 card due" : `${props.due} cards due`;
+  // The gallery and a fresh install render the widget before the app has sent anything.
+  const week = props.week ?? [0, 0, 0, 0, 0, 0, 0];
+  const letters = props.letters ?? ["", "", "", "", "", "", ""];
+  const ids = ["d1", "d2", "d3", "d4", "d5", "d6", "d7"];
+  const left = props.left ?? 0;
+  const dueCount = props.due ?? 0;
+  const today = left === 0 ? "Today counts" : `${left} to today’s goal`;
+  const due = dueCount === 1 ? "1 card due" : `${dueCount} cards due`;
 
   return (
     <VStack
@@ -43,7 +49,12 @@ const WeekWidget = (props: WeekProps, env: WidgetEnvironment) => {
       modifiers={[containerBackground(canvas, "widget"), widgetURL("lymi://review")]}
     >
       <HStack spacing={6} alignment="center">
-        <Image uiImage={props.flame} modifiers={[resizable(), frame({ width: 15, height: 19 })]} />
+        {props.flame ? (
+          <Image
+            uiImage={props.flame}
+            modifiers={[resizable(), frame({ width: 15, height: 19 })]}
+          />
+        ) : null}
         <Text
           modifiers={[
             font({ size: 22, weight: "medium" }),
@@ -51,7 +62,7 @@ const WeekWidget = (props: WeekProps, env: WidgetEnvironment) => {
             foregroundStyle(ink),
           ]}
         >
-          {String(props.streak)}
+          {String(props.streak ?? 0)}
         </Text>
         <Text modifiers={[font({ size: 15 }), foregroundStyle(muted)]}>days in a row</Text>
         <Spacer />
@@ -61,7 +72,7 @@ const WeekWidget = (props: WeekProps, env: WidgetEnvironment) => {
       </HStack>
       <Spacer />
       <HStack spacing={0} alignment="bottom">
-        {props.week.map((level, i) => (
+        {week.map((level, i) => (
           <VStack spacing={6} key={ids[i]} modifiers={[frame({ maxWidth: 1000 })]}>
             <ZStack alignment="bottom">
               <RoundedRectangle
@@ -82,7 +93,7 @@ const WeekWidget = (props: WeekProps, env: WidgetEnvironment) => {
                 foregroundStyle(i === 6 ? ink : muted),
               ]}
             >
-              {days[i] ?? ""}
+              {letters[i] ?? ""}
             </Text>
           </VStack>
         ))}

@@ -1,6 +1,7 @@
+import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS } from "@lymi/core";
 import * as Haptics from "expo-haptics";
 import { type Href, useRouter } from "expo-router";
-import { useColorScheme, View, type ViewStyle } from "react-native";
+import { View, type ViewStyle } from "react-native";
 import { Flame } from "../../../brand/flame";
 import { Lantern } from "../../../brand/lantern";
 import { DECKS } from "../../../data/demo";
@@ -11,11 +12,10 @@ import { Screen } from "../../../ui/screen";
 import { SevenLights } from "../../../ui/seven-lights";
 
 export default function Today() {
-  const { directions } = useStore();
   return (
     <Screen title="Today">
       <View className="gap-3">
-        {directions.today === "lit" ? <LitDue /> : <DuePlate />}
+        <LitDue />
         <StreakPlate />
       </View>
       <Rounds />
@@ -38,42 +38,12 @@ function startReview(router: ReturnType<typeof useRouter>, href: Href = "/review
   router.push(href);
 }
 
-/** The due card as on the web: the lantern on its lit plate, the count, one big Review. */
-function DuePlate() {
-  const { due, fed } = useStore();
-  const progress = useProgress();
-  const router = useRouter();
-  const p = usePalette();
-  const { count, line } = useDueLine();
-  return (
-    <Plate className="gap-4 p-3" style={lamplit(p.pool)}>
-      <View className="flex-row items-center gap-5 px-3 pt-3">
-        <Lantern size={108} progress={progress} fed={fed} />
-        <View className="gap-1">
-          <Text
-            className="text-5xl font-medium text-text"
-            style={{ fontVariant: ["tabular-nums"], letterSpacing: -1.4 }}
-          >
-            {count}
-          </Text>
-          <Text className="text-md text-text-2">{line}</Text>
-        </View>
-      </View>
-      {due.length > 0 ? (
-        <Button label="Review" variant="primary" size="xl" onPress={() => startReview(router)} />
-      ) : (
-        <Button label="Add cards" icon="plus" onPress={() => router.push("/capture")} />
-      )}
-    </Plate>
-  );
-}
-
 /** The lantern lights the top of the screen; no plate, the room itself is warm there. */
 function LitDue() {
   const { due, fed } = useStore();
   const progress = useProgress();
   const router = useRouter();
-  const dark = useColorScheme() === "dark";
+  const p = usePalette();
   const { count, line } = useDueLine();
   return (
     <View className="items-center gap-5 pb-2">
@@ -82,7 +52,7 @@ function LitDue() {
         className="absolute -inset-x-5 -top-56 bottom-10"
         style={
           {
-            experimental_backgroundImage: `radial-gradient(closest-side at 50% 52%, ${dark ? "rgba(214,145,48,0.22)" : "rgba(255,200,120,0.55)"}, transparent 100%)`,
+            experimental_backgroundImage: `radial-gradient(closest-side at 50% 52%, ${p.pool}, transparent 100%)`,
           } as ViewStyle
         }
       />
@@ -105,13 +75,6 @@ function LitDue() {
       </View>
     </View>
   );
-}
-
-/** surfaces.md "lamplit": the plate's light pools from the lantern's side. */
-function lamplit(pool: string): ViewStyle {
-  return {
-    experimental_backgroundImage: `radial-gradient(110% 85% at 14% 24%, ${pool}, transparent 64%)`,
-  } as ViewStyle;
 }
 
 function StreakPlate() {
@@ -157,7 +120,7 @@ function Rounds() {
       n: forgottenToday.length,
       title: "Forgotten today",
       empty: "Nothing forgotten today",
-      line: "From today’s reviews",
+      line: "Graded Forgot today",
       mark: "forgot" as const,
       tint: p["grade-forgot"],
       href: "/review?round=forgotten" as const,
@@ -166,7 +129,7 @@ function Rounds() {
       n: fresh,
       title: "New cards",
       empty: "Add cards from your next lesson",
-      line: "Waiting to start",
+      line: "Not reviewed yet",
       mark: "new" as const,
       tint: p["state-new"],
       href: "/review?round=new" as const,
@@ -174,8 +137,8 @@ function Rounds() {
     {
       n: 2,
       title: "Often forgotten",
-      empty: "No cards keep slipping",
-      line: "Forgotten 4 times or more",
+      empty: "No cards you keep forgetting",
+      line: `Forgotten on ${SLIPPING_FORGOTTEN_DAYS} of the last ${SLIPPING_RECENT_DAYS} days seen`,
       mark: undefined,
       tint: p.muted,
       href: "/review?round=slipping" as const,
@@ -189,13 +152,17 @@ function Rounds() {
           <Press
             key={r.title}
             scale={0.98}
-            disabled={r.n === 0}
-            onPress={() => startReview(router, r.href)}
+            // An empty tile keeps its place; empty New cards offers Add cards rather than going dead.
+            onPress={() =>
+              r.n > 0
+                ? startReview(router, r.href)
+                : r.href === "/review?round=new" && router.push("/capture")
+            }
             accessibilityRole="link"
           >
             <Plate className="flex-row items-center gap-4 px-5 py-4">
               <Text
-                className={`w-10 text-3xl font-medium ${r.n === 0 ? "text-faint" : "text-text"}`}
+                className={`w-10 text-3xl font-medium ${r.n === 0 ? "text-muted" : "text-text"}`}
                 style={{ fontVariant: ["tabular-nums"] }}
               >
                 {r.n}
@@ -227,9 +194,14 @@ function DecksToReview() {
     <View>
       <SectionTitle
         end={
-          <Text className="text-base text-muted" onPress={() => router.navigate("/library")}>
-            Library
-          </Text>
+          <Press
+            onPress={() => router.navigate("/library")}
+            accessibilityRole="link"
+            hitSlop={12}
+            className="py-1"
+          >
+            <Text className="text-base text-muted">Library</Text>
+          </Press>
         }
       >
         Decks to review

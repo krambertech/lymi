@@ -57,10 +57,10 @@ Unchanged from the web: both rooms and their colours, Onest, the lantern and eve
 
 Decided for the phone in the proof of concept:
 
-- **Navigation** is the web's pill, drawn in Liquid Glass tinted toward the room. The system tab bar was tried and dropped: it drew its own chrome and needed Lucide icons pre-rendered as images.
+- **Navigation** is the web's pill, drawn in Liquid Glass tinted toward the room, and opaque as on the web before iOS 26. The system tab bar was tried and dropped: it drew its own chrome and needed Lucide icons pre-rendered as images.
 - **A tab names itself in the top bar**, beside the streak and capture. There is no large title row and no avatar, because You is a tab.
 - **Today leads with the lit room:** no plate, the lantern lights the top of the screen.
-- **Grades are plates** under the card, 64 px tall, and the card shrinks to make room. Glass grades and swipe stay as options.
+- **Grades are plates** under the card, 64 pt tall, and the card shrinks to make room. Glass grades and swipe to grade were tried and dropped.
 - **Onest everywhere** Lymi draws text. Lymi draws its own persistent chrome; Apple draws only what comes and goes, such as long-press menus, the share sheet, alerts and the keyboard, in SF.
 - **Display type keeps a 1.2 line box**, because iOS clips any glyph that rises past it.
 - **Haptics:** a light tap on reveal, one soft tap for every grade, a success haptic at the goal. No Undo toast while grading.

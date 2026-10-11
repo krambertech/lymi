@@ -97,10 +97,10 @@ function BackChevron() {
 
 /** The streak and capture, the two things every tab carries. You is a tab here, so no avatar. */
 function TabActions() {
-  const { streak, reviewsToday, directions } = useStore();
+  const { streak, reviewsToday } = useStore();
   const router = useRouter();
   const p = usePalette();
-  const glass = directions.chrome === "glass" && isGlassEffectAPIAvailable();
+  const glass = isGlassEffectAPIAvailable();
   const streakInner = (
     <>
       <Flame height={18} state={reviewsToday > 0 || streak > 0 ? "lit" : "out"} />

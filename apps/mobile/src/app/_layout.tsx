@@ -7,6 +7,9 @@ import { StoreProvider } from "../data/store";
 import { usePalette } from "../theme/palette";
 import { WidgetSync } from "../widgets/sync";
 
+// A link straight to a review, such as from a widget, still has the tabs under it.
+export const unstable_settings = { initialRouteName: "(tabs)" };
+
 export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

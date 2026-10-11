@@ -4,7 +4,6 @@ import { type ComponentProps, type ReactNode, useState } from "react";
 import { type LayoutRectangle, useColorScheme, View } from "react-native";
 import Animated, { useAnimatedStyle, useReducedMotion, withSpring } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useStore } from "../data/store";
 import { usePalette } from "../theme/palette";
 import type { IconName } from "./icons";
 import { Icon, LIFT, Press, Text } from "./primitives";
@@ -28,8 +27,8 @@ export function PillBar({ state, navigation }: BottomTabBarProps) {
   const dark = useColorScheme() === "dark";
   const insets = useSafeAreaInsets();
   const reduce = useReducedMotion();
-  const { directions } = useStore();
-  const glass = directions.chrome === "glass" && isGlassEffectAPIAvailable();
+  // Liquid Glass needs iOS 26; earlier versions get the web's opaque pill.
+  const glass = isGlassEffectAPIAvailable();
   const [rects, setRects] = useState<Record<number, LayoutRectangle>>({});
   const chosen = rects[state.index];
   const plate = useAnimatedStyle(() =>

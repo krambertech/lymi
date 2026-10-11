@@ -7,7 +7,7 @@ import {
   STARTING_DAILY_GOAL,
 } from "@lymi/core";
 import { type PublicDeckSummary, shelvesOf, subjectOf, taughtLanguage } from "@lymi/core/catalog";
-import { CHOICE_POP } from "@lymi/design";
+import { CHOICE_POP, endEmbers } from "@lymi/design";
 import { clsx } from "clsx";
 import {
   Bot,
@@ -16,6 +16,7 @@ import {
   Download,
   Globe,
   Languages,
+  Layers,
   PenLine,
   Search,
   Shapes,
@@ -27,20 +28,31 @@ import {
   useReducedMotionConfig,
   type Variants,
 } from "motion/react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
+import { Avatar } from "../components/avatar";
 import { Button } from "../components/button";
 import { Chip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
 import { DeckMeta, DeckTray } from "../components/deck-tray";
 import { GOAL_NAMES } from "../components/goal-picker";
+import { Lantern } from "../components/lantern";
+import { LanternLight } from "../components/lantern-light";
 import { Screen, ScreenBar } from "../components/layout/screen";
+import { PublisherMark } from "../components/publisher-mark";
 import { Input } from "../components/ui/input";
 import { RadioGroup } from "../components/ui/radio-group";
+import type { DeckSummary } from "../lib/api";
 import { BackButton } from "./shell";
 
 /** How a learner without decks gets started: bring their own, or add a ready-made deck. */
 export type Own = "import" | "assistant" | "type";
 export type WelcomeStart = { kind: "deck"; deck: PublicDeckSummary } | { kind: "own"; own: Own };
+
+/** A deck an invitation or a public page added while signing up. */
+export type JoinedDeck = Pick<
+  DeckSummary,
+  "name" | "defaultLanguage" | "total" | "owner" | "published"
+>;
 
 export interface WelcomeAnswers {
   learningKind: LearningKind;
@@ -54,6 +66,10 @@ interface Props {
   catalog: PublicDeckSummary[] | undefined;
   meaningLanguage: string;
   onFinish: (answers: WelcomeAnswers) => void;
+  /** Welcome then opens on this deck and asks only the daily goal. */
+  joined?: JoinedDeck | undefined;
+  /** Finishing when `joined` is set. */
+  onChooseGoal?: ((dailyGoal: number) => void) | undefined;
   onSkip: () => void;
   /** The final press is saving and, for a deck, adding it. */
   busy?: boolean | undefined;
@@ -61,7 +77,7 @@ interface Props {
   error?: string | null | undefined;
 }
 
-type Step = "kind" | "language" | "goal" | "start";
+type Step = "hello" | "kind" | "language" | "goal" | "start";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -147,11 +163,22 @@ function catalogLanguages(catalog: PublicDeckSummary[], meaningLanguage: string)
  * Getting set up: what the learner is learning, a daily goal, and a way to start. Shown once to
  * an account with nothing in it, before Today. docs/design/onboarding.md.
  */
-export function WelcomeView({ catalog, meaningLanguage, onFinish, onSkip, busy, error }: Props) {
+export function WelcomeView({
+  catalog,
+  meaningLanguage,
+  onFinish,
+  joined,
+  onChooseGoal,
+  onSkip,
+  busy,
+  error,
+}: Props) {
   const { t, i18n } = useLingui();
   const reduce = useReducedMotionConfig();
-  const [saved] = useState(readProgress);
-  const [trail, setTrail] = useState<Step[]>(saved?.trail ?? ["kind"]);
+  const shortcut = joined !== undefined;
+  // The shortcut is two short screens with its deck on the URL, so a reload has nothing to restore.
+  const [saved] = useState(() => (shortcut ? null : readProgress()));
+  const [trail, setTrail] = useState<Step[]>(saved?.trail ?? ["hello"]);
   const [dir, setDir] = useState<1 | -1>(1);
   // A key press changes the screen at once; motion answers a pointer. docs/design/system/motion.md.
   const [still, setStill] = useState(false);
@@ -162,7 +189,9 @@ export function WelcomeView({ catalog, meaningLanguage, onFinish, onSkip, busy, 
   const [missing, setMissing] = useState<string | null>(null);
   const keyed = useRef(true);
 
-  useEffect(() => writeProgress({ trail, kind, language, goal }), [trail, kind, language, goal]);
+  useEffect(() => {
+    if (!shortcut) writeProgress({ trail, kind, language, goal });
+  }, [shortcut, trail, kind, language, goal]);
 
   const step = trail.at(-1) ?? "kind";
   // A new question opens at its top, not where the last one was scrolled to.
@@ -197,6 +226,7 @@ export function WelcomeView({ catalog, meaningLanguage, onFinish, onSkip, busy, 
   };
 
   const next = (keyed: boolean) => {
+    if (step === "hello") return move(shortcut ? "goal" : "kind", keyed);
     if (step === "kind") {
       if (!kind) return setMissing(t`Choose one to continue.`);
       return move(kind === "language" ? "language" : "goal", keyed);
@@ -205,7 +235,7 @@ export function WelcomeView({ catalog, meaningLanguage, onFinish, onSkip, busy, 
       if (!language) return setMissing(t`Choose the language you’re learning.`);
       return move("goal", keyed);
     }
-    if (step === "goal") return move("start", keyed);
+    if (step === "goal") return shortcut ? onChooseGoal?.(goal) : move("start", keyed);
     if (!start || !kind) return setMissing(t`Choose a deck or a way to bring your own.`);
     onFinish({
       learningKind: kind,
@@ -353,22 +383,24 @@ export function WelcomeView({ catalog, meaningLanguage, onFinish, onSkip, busy, 
   return (
     <Screen ownTitle backOnDesktop bar={bar} width="md">
       {/* One bar rather than a segment per question: the language question comes only after A language. */}
-      <div
-        role="progressbar"
-        aria-label={t`Getting set up`}
-        aria-valuemin={0}
-        aria-valuemax={path.length}
-        aria-valuenow={position}
-        aria-valuetext={t`Question ${position} of ${path.length}`}
-        className="-mt-1 mb-7 h-1 overflow-hidden rounded-full bg-plate-2"
-      >
-        <motion.div
-          className="h-full origin-left rounded-full bg-text rtl:origin-right"
-          initial={false}
-          animate={{ scaleX: position / path.length }}
-          transition={still ? { duration: 0 } : { duration: 0.32, ease: EASE }}
-        />
-      </div>
+      {!shortcut && step !== "hello" && (
+        <div
+          role="progressbar"
+          aria-label={t`Getting set up`}
+          aria-valuemin={0}
+          aria-valuemax={path.length}
+          aria-valuenow={position}
+          aria-valuetext={t`Question ${position} of ${path.length}`}
+          className="-mt-1 mb-7 h-1 overflow-hidden rounded-full bg-plate-2"
+        >
+          <motion.div
+            className="h-full origin-left rounded-full bg-text rtl:origin-right"
+            initial={false}
+            animate={{ scaleX: position / path.length }}
+            transition={still ? { duration: 0 } : { duration: 0.32, ease: EASE }}
+          />
+        </div>
+      )}
       <form
         className="flex flex-1 flex-col"
         onSubmit={(e) => {
@@ -387,6 +419,8 @@ export function WelcomeView({ catalog, meaningLanguage, onFinish, onSkip, busy, 
             exit="leave"
             className="grid content-start"
           >
+            {step === "hello" && <Hello joined={joined} />}
+
             {step === "kind" && (
               <>
                 {heading(
@@ -526,7 +560,12 @@ export function WelcomeView({ catalog, meaningLanguage, onFinish, onSkip, busy, 
           </p>
         )}
         {/* The page keeps room for the pill, which this screen hides, so the foot takes it back on a phone. */}
-        <div className="sticky bottom-0 -mx-5 mt-auto -mb-[calc(env(safe-area-inset-bottom)+96px)] border-t border-edge bg-canvas px-5 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] @3xl/shell:static @3xl/shell:mx-0 @3xl/shell:mt-8 @3xl/shell:mb-0 @3xl/shell:border-0 @3xl/shell:bg-transparent @3xl/shell:p-0">
+        <div
+          className={clsx(
+            step === "hello" && "@3xl/shell:flex @3xl/shell:justify-center",
+            "sticky bottom-0 -mx-5 mt-auto -mb-[calc(env(safe-area-inset-bottom)+96px)] border-t border-edge bg-canvas px-5 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] @3xl/shell:static @3xl/shell:mx-0 @3xl/shell:mt-8 @3xl/shell:mb-0 @3xl/shell:border-0 @3xl/shell:bg-transparent @3xl/shell:p-0",
+          )}
+        >
           <Button
             type="submit"
             variant="primary"
@@ -538,11 +577,175 @@ export function WelcomeView({ catalog, meaningLanguage, onFinish, onSkip, busy, 
             }}
             className="w-full @3xl/shell:w-auto"
           >
-            {step === "start" ? finalLabel : <Trans>Continue</Trans>}
+            {step === "start" ? (
+              finalLabel
+            ) : shortcut && step === "goal" ? (
+              <Trans>Start review</Trans>
+            ) : (
+              <Trans>Continue</Trans>
+            )}
           </Button>
         </div>
       </form>
     </Screen>
+  );
+}
+
+const at = (ms: number) => ({ "--at": `${ms}ms` }) as CSSProperties;
+
+/** When each part comes in: the lantern catches from its ember first, then the room fills in. */
+const HELLO = { pool: 180, embers: 520, heading: 420, lede: 520, body: 700 } as const;
+
+/**
+ * The first screen of getting set up, for every new account: the lantern catches and lights the
+ * room, then what comes next. A deck the learner arrived with leads, so they see it made it.
+ */
+function Hello({ joined }: { joined: JoinedDeck | undefined }) {
+  const reduce = useReducedMotionConfig();
+  const [embers] = useState(() => (reduce ? [] : endEmbers(9)));
+  return (
+    <div className="mx-auto grid w-full max-w-md justify-items-center pt-2 text-center">
+      <div className="relative isolate mb-7 size-28 @3xl/shell:size-32">
+        <LanternLight poolAt={HELLO.pool} embers={embers} embersAt={HELLO.embers}>
+          <Lantern className="size-full" from="out" flicker glow />
+        </LanternLight>
+      </div>
+      <h1
+        tabIndex={-1}
+        className="seq text-3xl font-medium tracking-[-0.03em] text-balance @3xl/shell:text-4xl"
+        style={at(HELLO.heading)}
+      >
+        <Trans>Welcome to Lymi</Trans>
+      </h1>
+      <p className="seq mt-2 max-w-[36ch] text-md text-text-2 text-pretty" style={at(HELLO.lede)}>
+        {joined ? (
+          <Trans>Your deck is ready. Choose your daily goal, then review your first cards.</Trans>
+        ) : (
+          <Trans>A few quick questions, then your first review.</Trans>
+        )}
+      </p>
+      {/* One thing to anchor the screen: the deck they arrived with, or else how review works. */}
+      <div className="seq mt-8 grid w-full text-start" style={at(HELLO.body)}>
+        {joined ? <JoinedPlate deck={joined} /> : <HowItWorks startAt={HELLO.body + 520} />}
+      </div>
+    </div>
+  );
+}
+
+const HOW_STEP_MS = 650;
+
+/**
+ * Review in three steps down one line. Once the card has risen, the line fills with the flame's light
+ * from step to step and each number lights as the light reaches it; then it rests.
+ */
+function HowItWorks({ startAt }: { startAt: number }) {
+  const reduce = useReducedMotionConfig();
+  const [reached, setReached] = useState(reduce ? 3 : 0);
+  useEffect(() => {
+    if (reduce) return;
+    const timers = [0, 1, 2].map((i) =>
+      window.setTimeout(() => setReached(i + 1), startAt + i * HOW_STEP_MS),
+    );
+    return () => timers.forEach(window.clearTimeout);
+  }, [reduce, startAt]);
+  const steps = [
+    <Trans key="see">See a card and recall the answer.</Trans>,
+    <Trans key="say">Say how well you knew it.</Trans>,
+    <Trans key="back">Lymi brings it back just before you’d forget it.</Trans>,
+  ];
+  return (
+    <section aria-labelledby="welcome-how" className="edge grid gap-4 rounded-xl bg-plate p-5">
+      <h2 id="welcome-how" className="text-sm font-medium text-muted">
+        <Trans>How it works</Trans>
+      </h2>
+      <ol className="grid gap-5">
+        {steps.map((line, i) => {
+          const lit = reached > i;
+          return (
+            <li key={line.key} className="relative flex items-start gap-3">
+              {/* A segment from this number down to the next, so the line ends on the last number however lines wrap. */}
+              {i < steps.length - 1 && (
+                <span
+                  aria-hidden="true"
+                  className="well absolute start-[11px] top-7 -bottom-4 w-0.5 overflow-hidden rounded-full bg-plate-2"
+                >
+                  <motion.span
+                    className="lit block size-full origin-top rounded-full bg-amber"
+                    initial={false}
+                    animate={{ scaleY: reached > i ? 1 : 0 }}
+                    transition={
+                      reduce
+                        ? { duration: 0 }
+                        : { duration: (HOW_STEP_MS * 0.8) / 1000, ease: EASE }
+                    }
+                  />
+                </span>
+              )}
+              <span
+                aria-hidden="true"
+                className={clsx(
+                  "grid size-6 shrink-0 place-items-center rounded-full text-xs font-medium tabular-nums transition-[background-color,color,box-shadow] duration-300",
+                  lit ? "lit bg-amber text-amber-ink" : "well bg-plate-2 text-muted",
+                )}
+              >
+                {i + 1}
+              </span>
+              <span
+                className={clsx(
+                  "pt-0.5 text-base text-pretty transition-colors duration-300",
+                  lit ? "text-text" : "text-muted",
+                )}
+              >
+                {line}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
+  );
+}
+
+/** Whose deck it is and what is in it, in the join page's words, so the learner sees what they signed up for. */
+function JoinedPlate({ deck }: { deck: JoinedDeck }) {
+  const { i18n } = useLingui();
+  const owner = deck.owner.name;
+  return (
+    <section className="edge grid gap-3 rounded-xl bg-plate p-5">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p className="flex min-w-0 items-center gap-2 text-base text-text-2">
+          {deck.published ? (
+            <PublisherMark name={owner} src={deck.owner.avatarUrl} size={24} />
+          ) : (
+            <Avatar name={owner} size={24} />
+          )}
+          {deck.published ? (
+            <Trans>From {deck.owner.name}</Trans>
+          ) : (
+            <Trans>{deck.owner.name} shared a deck</Trans>
+          )}
+        </p>
+        <Chip>
+          <Check aria-hidden="true" strokeWidth={2.5} className="size-3.5" />
+          <Trans>In Library</Trans>
+        </Chip>
+      </div>
+      <h2 className="text-xl font-medium tracking-[-0.02em] break-words text-balance">
+        {deck.name}
+      </h2>
+      <ul className="flex flex-wrap gap-x-4 gap-y-1.5 text-base text-muted">
+        {deck.defaultLanguage && (
+          <li className="flex items-center gap-1.5">
+            <Languages aria-hidden="true" strokeWidth={1.75} className="size-4 shrink-0" />
+            {languageName(deck.defaultLanguage, i18n.locale)}
+          </li>
+        )}
+        <li className="flex items-center gap-1.5 tabular-nums">
+          <Layers aria-hidden="true" strokeWidth={1.75} className="size-4 shrink-0" />
+          <Plural value={deck.total} one="# card" other="# cards" />
+        </li>
+      </ul>
+    </section>
   );
 }
 

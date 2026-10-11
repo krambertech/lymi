@@ -14,7 +14,7 @@ export type AnalyticsEvent =
       outcome: "started" | "done" | "failed";
     }
   | { name: "enrichment_finished"; outcome: "enriched" | "empty" | "failed"; count: number }
-  | { name: "onboarding_finished"; kind: LearningKind | "skipped" };
+  | { name: "onboarding_finished"; kind: LearningKind | "skipped" | "joined" };
 
 /** Only fixed action labels and counts reach Analytics Engine. */
 export function track(dataset: AnalyticsWriter | undefined, event: AnalyticsEvent): void {

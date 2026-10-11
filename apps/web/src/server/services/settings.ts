@@ -1,6 +1,6 @@
 import { type OnboardingInput, type SettingsPatch, STARTING_DAILY_GOAL } from "@lymi/core";
 import { eq } from "@lymi/core/db";
-import { schema } from "../db";
+import { type Db, schema } from "../db";
 import { track } from "./analytics";
 import { type ServiceContext, ServiceError } from "./context";
 import { applyGoalToToday } from "./review-days";
@@ -94,6 +94,26 @@ export async function finishOnboarding(ctx: ServiceContext, input: OnboardingInp
     })
     .where(eq(schema.userSettings.userId, ctx.userId));
   if (dailyGoal !== before.dailyGoal) await applyGoalToToday(ctx, dailyGoal);
-  track(ctx.analytics, { name: "onboarding_finished", kind: input.learningKind ?? "skipped" });
+  // Only the shortcut from a shared or published deck chooses a goal without saying what it is for.
+  const kind = input.learningKind ?? (input.dailyGoal === null ? "skipped" : "joined");
+  track(ctx.analytics, { name: "onboarding_finished", kind });
   return getSettings(ctx);
+}
+
+/**
+ * Whether an account that has just joined or added a deck still asks for its daily goal: it has
+ * not got set up and has never reviewed. docs/design/onboarding.md.
+ */
+export async function awaitsWelcome(db: Db, userId: string): Promise<boolean> {
+  const [settings] = await db
+    .select({ onboardedAt: schema.userSettings.onboardedAt })
+    .from(schema.userSettings)
+    .where(eq(schema.userSettings.userId, userId));
+  if (settings?.onboardedAt) return false;
+  const [reviewed] = await db
+    .select({ id: schema.reviews.id })
+    .from(schema.reviews)
+    .where(eq(schema.reviews.userId, userId))
+    .limit(1);
+  return !reviewed;
 }

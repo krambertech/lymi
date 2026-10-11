@@ -3,15 +3,22 @@ import type { OnboardingInput } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { z } from "zod";
 import { useAddCard } from "../lib/add-card";
-import { api } from "../lib/api";
+import { api, type DeckSummary } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { publicSiteUrl } from "../lib/origins";
-import { exploreQuery, settingsQuery } from "../lib/queries";
+import { decksQuery, exploreQuery, settingsQuery } from "../lib/queries";
 import { useAddPublishedDeck } from "../lib/use-add-published-deck";
 import { clearWelcomeProgress, type WelcomeAnswers, WelcomeView } from "../views/welcome-view";
 
+const Search = z.object({
+  /** A deck an invitation or a public page added while signing up, set by the door page's redirect. */
+  deck: z.string().optional(),
+});
+
 export const Route = createFileRoute("/welcome")({
+  validateSearch: Search,
   component: Welcome,
 });
 
@@ -21,10 +28,13 @@ function Welcome() {
   const { t } = useLingui();
   useDocumentTitle(t`Welcome`);
   const navigate = useNavigate();
+  const { deck } = Route.useSearch();
   const qc = useQueryClient();
   const add = useAddCard();
   const settings = useQuery(settingsQuery);
   const explore = useQuery(exploreQuery);
+  const decks = useQuery({ ...decksQuery, enabled: deck !== undefined });
+  const joined = deck ? decks.data?.find((d) => d.id === deck) : undefined;
   const addDeck = useAddPublishedDeck({ announce: "page" });
   const [error, setError] = useState<string | null>(null);
 
@@ -67,6 +77,22 @@ function Welcome() {
     if (start.own === "type") add.openDeck();
   };
 
+  const startJoined = async (deck: DeckSummary, dailyGoal: number) => {
+    setError(null);
+    try {
+      await save.mutateAsync({ ...SKIP, dailyGoal });
+    } catch {
+      setError(t`Couldn’t save your daily goal. Check your connection and try again.`);
+      return;
+    }
+    clearWelcomeProgress();
+    // A deck shared before its owner added a card has nothing to review yet, so its page says so.
+    if (deck.total === 0) {
+      return navigate({ to: "/library/$deckId", params: { deckId: deck.id }, replace: true });
+    }
+    await navigate({ to: "/review", search: { deck: deck.id }, replace: true });
+  };
+
   const skip = async () => {
     setError(null);
     try {
@@ -76,6 +102,9 @@ function Welcome() {
       return;
     }
     clearWelcomeProgress();
+    // Their deck's page, not Today's guide, which is about making a deck of their own.
+    if (joined)
+      return navigate({ to: "/library/$deckId", params: { deckId: joined.id }, replace: true });
     await navigate({ to: "/today", replace: true });
   };
 
@@ -83,11 +112,15 @@ function Welcome() {
   if (settings.data?.onboardedAt && !save.isPending && !save.isSuccess) {
     return <Navigate to="/today" replace />;
   }
+  // The view picks its questions once, so it waits for the deck; one no longer in Library gets them all.
+  if (deck && !joined && (decks.isPending || decks.isFetching)) return null;
   return (
     <WelcomeView
       catalog={explore.data?.decks.filter((deck) => !explore.data.added[deck.slug])}
       meaningLanguage={settings.data?.meaningLanguage ?? "en"}
       onFinish={(answers) => void finish(answers)}
+      joined={joined}
+      onChooseGoal={joined && ((dailyGoal) => void startJoined(joined, dailyGoal))}
       onSkip={() => void skip()}
       busy={save.isPending || addDeck.isPending}
       error={error}

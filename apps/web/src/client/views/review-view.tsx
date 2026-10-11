@@ -60,6 +60,7 @@ import {
 } from "../components/hook-offer";
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
+import { embersEnd, LanternLight } from "../components/lantern-light";
 import { Progress } from "../components/progress";
 import {
   type AidStep,
@@ -1429,8 +1430,7 @@ export function ReviewComplete({
       onClick: () => onOffer?.(offer),
     }));
   const actionsAt = AT.actions + ways.length * AT.actionStep;
-  const embersEnd = AT.embers + Math.max(0, ...embers.map((e) => e.at + e.dur));
-  const end = Math.max(actionsAt + RISE_MS, embers.length ? embersEnd : 0);
+  const end = Math.max(actionsAt + RISE_MS, embers.length ? AT.embers + embersEnd(embers) : 0);
 
   useEffect(() => {
     if (focusOnMount) heading.current?.focus({ preventScroll: true });
@@ -1469,39 +1469,21 @@ export function ReviewComplete({
           transition={LANTERN_FLIGHT}
           className={clsx("relative isolate mb-1 size-32 @3xl:size-44", reduce && "enter-fade")}
         >
-          {lit && (
-            <div
-              aria-hidden="true"
-              className={clsx(
-                "light-pool pointer-events-none absolute -inset-[85%] -z-10 rounded-full",
-                !embers.length && "opacity-50",
-              )}
-              style={at(AT.pool)}
-            >
-              <div className="light-pool-breath size-full rounded-full" />
-            </div>
-          )}
-          <Lantern className="size-full" {...lanternFor(streak)} from={lanternFrom} flicker glow />
-          {embers.length > 0 && (
-            <div aria-hidden="true" className="pointer-events-none absolute start-1/2 top-[52%]">
-              {embers.map((e) => (
-                <i
-                  key={e.at}
-                  className="ember absolute -ms-0.5 -mt-0.5 block rounded-full bg-flame-core shadow-[0_0_4px_1px_var(--amber),0_0_10px_var(--glow)]"
-                  style={
-                    {
-                      width: e.size,
-                      height: e.size,
-                      "--x": `${e.x}px`,
-                      "--y": `${e.y}px`,
-                      "--dur": `${e.dur}ms`,
-                      "--at": `${AT.embers + e.at}ms`,
-                    } as CSSProperties
-                  }
-                />
-              ))}
-            </div>
-          )}
+          <LanternLight
+            lit={lit}
+            dim={!embers.length}
+            poolAt={AT.pool}
+            embers={embers}
+            embersAt={AT.embers}
+          >
+            <Lantern
+              className="size-full"
+              {...lanternFor(streak)}
+              from={lanternFrom}
+              flicker
+              glow
+            />
+          </LanternLight>
         </motion.div>
 
         <h2

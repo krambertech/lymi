@@ -1,8 +1,18 @@
+import { CardInput } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
+import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
-import { ensureSettings, finishOnboarding, getSettings, updateSettings } from "./settings";
+import { createDeck } from "./decks";
+import { gradeCard } from "./review";
+import {
+  awaitsWelcome,
+  ensureSettings,
+  finishOnboarding,
+  getSettings,
+  updateSettings,
+} from "./settings";
 import { learner, testDb } from "./test-db";
 
 let db: Db;
@@ -102,11 +112,36 @@ describe("getting set up", () => {
     expect(again.onboardedAt).toEqual(first.onboardedAt);
   });
 
+  it("counts a goal chosen without a subject as joined, not skipped", async () => {
+    const who = await learner(db, "joiner", "Joiner");
+    const done = await finishOnboarding(who, { ...skip, dailyGoal: 10 });
+    expect(done).toMatchObject({ dailyGoal: 10, learningKind: null });
+    expect(done.dailyGoalChosenAt).toBeInstanceOf(Date);
+  });
+
   it("refuses an integration", async () => {
     const who = await learner(db, "keyholder", "Keyholder");
     await expect(finishOnboarding({ ...who, actor: "api" }, skip)).rejects.toMatchObject({
       code: "forbidden",
     });
     expect((await getSettings(who)).onboardedAt).toBeNull();
+  });
+});
+
+describe("awaiting Welcome", () => {
+  it("holds for a new account, and ends once it is set up", async () => {
+    const who = await learner(db, "newcomer", "Newcomer");
+    expect(await awaitsWelcome(db, who.userId)).toBe(true);
+    await finishOnboarding(who, { learningKind: null, learningLanguage: null, dailyGoal: null });
+    expect(await awaitsWelcome(db, who.userId)).toBe(false);
+  });
+
+  it("ends with the first review, set up or not", async () => {
+    const who = await learner(db, "studied", "Studied");
+    const deck = await createDeck(who, { name: "Estonian", defaultLanguage: "et" });
+    const [outcome] = await addCards(who, [CardInput.parse({ deckId: deck.id, term: "tere" })]);
+    if (outcome?.status !== "added") throw new Error("not added");
+    await gradeCard(who, { cardId: outcome.card.id, direction: "recognition", rating: 3 });
+    expect(await awaitsWelcome(db, who.userId)).toBe(false);
   });
 });

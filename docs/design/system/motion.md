@@ -107,6 +107,10 @@ The first tap or key finishes the sequence at once, so it is never a wait. Choos
 
 A count that changes in front of the learner rolls digit by digit, like a departure board, rather than snapping: the due count, the streak, today's reviews, and the count that ends a review. Each digit settles on a spring with a trace of overshoot, and a digit that does not change stays still. Under reduced motion the new number appears at once.
 
+## The welcome
+
+A new account's first screen lights the lantern once: it catches from its ember, its pool blooms and a few embers lift, then the welcome rises in. It is an arrival, not a celebration, so it plays once and never on a return. [onboarding.md](../onboarding.md) has the timings.
+
 ## The auth connection
 
 The auth screens have one moving part, `Connection`. The app that asked and the lantern sit in matching tiles joined by a rail, dotted while the decision is open. When the grant lands the rail draws across in amber over 420 ms and the flame rises 300 ms in, so the two read as one movement. A refusal leaves the rail dotted and the flame goes out. Nothing else on those screens animates.

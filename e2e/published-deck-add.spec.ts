@@ -53,7 +53,7 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
 
   const visitor = await (await browser.newContext()).newPage();
 
-  await test.step("a signed-out visitor adds the deck and lands in it", async () => {
+  await test.step("a signed-out visitor signs up from the add page", async () => {
     await visitor.goto(`/add/${slug}?dev=1`);
     await expect(visitor.getByRole("heading", { name: deckName, exact: true })).toBeVisible();
     await expect(visitor.getByText("From Lymi")).toBeVisible();
@@ -62,9 +62,29 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
     await visitor.getByRole("button", { name: "Dev sign-in", exact: true }).click();
     await expect(visitor).toHaveURL(/\/login\?dev=1/);
     await createAccountThroughDevForm(visitor, stranger(testInfo, "visitor"));
+  });
 
-    await expect(visitor).toHaveURL(new RegExp(`/library/${deckId}$`));
-    await expect(visitor.getByText("tere hommikust", { exact: true })).toBeVisible();
+  await test.step("the new account is welcomed with its deck, chooses a goal and reviews", async () => {
+    await expect(visitor).toHaveURL(new RegExp(`/welcome\\?deck=${deckId}$`));
+    await expect(visitor.getByRole("heading", { name: "Welcome to Lymi" })).toBeVisible();
+    await expect(visitor.getByRole("heading", { name: deckName, exact: true })).toBeVisible();
+    await visitor.getByRole("button", { name: "Continue", exact: true }).click();
+    await expect(visitor.getByRole("heading", { name: "How much time a day?" })).toBeVisible();
+    await visitor.getByRole("radio", { name: /Light/ }).click();
+    await visitor.getByRole("button", { name: "Start review", exact: true }).click();
+
+    await expect(visitor).toHaveURL(new RegExp(`/review\\?deck=${deckId}$`));
+    // The card's label names what it asks, whichever direction the deck starts with.
+    await expect(visitor.getByLabel(/ card for (tere hommikust|good morning)$/)).toBeVisible();
+    const settings = await visitor.request.get("/api/settings");
+    expect(await settings.json()).toMatchObject({ dailyGoal: 10, learningKind: null });
+  });
+
+  await test.step("leaving the review lands on Today, and the goal question never returns", async () => {
+    await visitor.getByRole("button", { name: "Leave review" }).click();
+    await expect(visitor).toHaveURL(/\/today$/);
+    await visitor.goto("/welcome");
+    await expect(visitor).toHaveURL(/\/today$/);
   });
 
   await test.step("opening the add page again changes nothing", async () => {

@@ -866,7 +866,10 @@ export function ReviewCard({
               {deck && (
                 <>
                   <BookMarked className="size-3.5 shrink-0" aria-hidden="true" />
-                  <span className="min-w-0 truncate font-medium text-text-2">{deck.name}</span>
+                  {/* A long name may truncate on a narrow phone; hover and assistive tech still get it whole. */}
+                  <span className="min-w-0 truncate font-medium text-text-2" title={deck.name}>
+                    {deck.name}
+                  </span>
                 </>
               )}
               {/* A text cue says what to recall by itself; only a picture needs its mode named.

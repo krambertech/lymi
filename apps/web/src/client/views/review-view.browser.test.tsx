@@ -6,6 +6,8 @@ import { expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
+import { messages as ruMessages } from "../../locales/ru.po";
+import { messages as ukMessages } from "../../locales/uk.po";
 import { FixOffer, type FixOfferProps } from "../components/fix-offer";
 import { aidSteps } from "../components/recall-aid";
 import { queueItem, queueItemPicture } from "../design/mock";
@@ -149,10 +151,10 @@ test("a card asked one way has one state, so its pill names no direction", async
   expect(head?.textContent).toBe("One wayKnown");
 });
 
-test("on a phone the pill's direction wraps under its state, and nothing truncates", async () => {
-  await render(
+function renderBothWays(width: number) {
+  return render(
     <I18nProvider i18n={i18n}>
-      <div style={{ width: 375 }}>
+      <div style={{ width }}>
         <ReviewCard
           item={{ ...queueItem, fsrsState: 3 }}
           deck={{ name: "Eesti keel A1 sõnavara", language: "it", directions: "both" }}
@@ -162,13 +164,54 @@ test("on a phone the pill's direction wraps under its state, and nothing truncat
       </div>
     </I18nProvider>,
   );
+}
 
-  const name = page.getByText("Eesti keel A1 sõnavara").element() as HTMLElement;
-  const mode = page.getByText("Recognition", { exact: true }).element() as HTMLElement;
-  expect(name.scrollWidth).toBeLessThanOrEqual(name.clientWidth);
-  expect(mode.scrollWidth).toBeLessThanOrEqual(mode.clientWidth);
-  // The state stays on the deck name's line; the direction goes below it.
-  expect(mode.getBoundingClientRect().top).toBeGreaterThan(name.getBoundingClientRect().top);
+/** The pill's direction: the last line of the state chip. */
+function pillParts(container: HTMLElement) {
+  const mode = container.querySelector(".col-span-2") as HTMLElement;
+  const chip = mode.parentElement as HTMLElement;
+  const name = container.querySelector("[title]") as HTMLElement;
+  return { mode, chip, name };
+}
+
+for (const width of [320, 375, 600, 1280]) {
+  test(`at ${width}px the pill's direction sits on its own line under the state`, async () => {
+    const { container } = await renderBothWays(width);
+    const { mode, chip } = pillParts(container);
+    const state = chip.firstElementChild as HTMLElement;
+    expect(mode.getBoundingClientRect().top).toBeGreaterThanOrEqual(
+      state.getBoundingClientRect().bottom - 1,
+    );
+    expect(mode.scrollWidth).toBeLessThanOrEqual(mode.clientWidth);
+  });
+}
+
+for (const [lang, catalog] of [
+  ["en", messages],
+  ["uk", ukMessages],
+  ["ru", ruMessages],
+] as const) {
+  test(`at 375px in ${lang} the direction is never clipped`, async () => {
+    i18n.load(lang, catalog);
+    i18n.activate(lang);
+    try {
+      const { container } = await renderBothWays(375);
+      const { mode, chip } = pillParts(container);
+      expect(mode.scrollWidth).toBeLessThanOrEqual(mode.clientWidth);
+      expect(mode.getBoundingClientRect().right).toBeLessThanOrEqual(
+        chip.getBoundingClientRect().right,
+      );
+    } finally {
+      i18n.activate("en");
+    }
+  });
+}
+
+test("a deck name that has to truncate keeps its full name for hover and assistive tech", async () => {
+  const { container } = await renderBothWays(320);
+  const { name } = pillParts(container);
+  expect(name.title).toBe("Eesti keel A1 sõnavara");
+  expect(name.textContent).toBe("Eesti keel A1 sõnavara");
 });
 
 test("the head names the deck alone, and the mode only for a picture", async () => {

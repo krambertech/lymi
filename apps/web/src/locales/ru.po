@@ -1281,6 +1281,9 @@ msgstr "Выбери, чем станет каждое поле новой ка�
 msgid "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 msgstr "Выбери, чем каждое поле Mochi станет в карточке Lymi. Одно поле — это термин."
 
+msgid "Choose whether Lymi uses optional analytics cookies."
+msgstr "Выбери, использует ли Lymi необязательные файлы cookie для аналитики."
+
 msgid "Choose your {app} file"
 msgstr "Выбор файла {app}"
 
@@ -2926,6 +2929,9 @@ msgstr "Открой Lymi с новой иконки."
 
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Открой Lymi в Safari и коснись «Поделиться»."
+
+msgid "Open on lymi.app"
+msgstr "Открыть на lymi.app"
 
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Открой меню браузера и выбери «Установить Lymi». Не каждый браузер это предлагает."

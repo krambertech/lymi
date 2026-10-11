@@ -2,6 +2,8 @@ import type { ProductAnalyticsEvent } from "@lymi/core/analytics";
 
 export type AnalyticsWriter = Pick<AnalyticsEngineDataset, "writeDataPoint"> & {
   capture?: (event: AnalyticsEvent) => void;
+  /** Work that only feeds product analytics, run after the response when PostHog is on. */
+  later?: (work: () => Promise<void>) => void;
 };
 
 export type AnalyticsEvent = ProductAnalyticsEvent;

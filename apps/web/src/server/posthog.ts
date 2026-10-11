@@ -88,6 +88,12 @@ export function productAnalytics(
       if (defer) defer(work);
       else pending.push(work);
     },
+    later: (work) => {
+      if (!client) return;
+      const run = work().catch(() => {});
+      if (defer) defer(run);
+      else pending.push(run);
+    },
     flush,
     run: async (work) => {
       try {

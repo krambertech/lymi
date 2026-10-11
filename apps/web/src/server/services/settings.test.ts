@@ -3,7 +3,7 @@ import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
 import type { AnalyticsEvent } from "./analytics";
-import { analyticsContext } from "./analytics-context";
+import { analyticsContext, analyticsContextFor } from "./analytics-context";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
@@ -186,5 +186,17 @@ describe("analytics consent", () => {
       (await analyticsContext(db, ctx.userId, { allowed: false, version: 1, updated_at: now + 2 }))
         .allowed,
     ).toBe(false);
+  });
+
+  it("holds browsers to their consent cookie and native apps to the account choice", async () => {
+    const ctx = await learner(db, "consent-phone", "Learner");
+    await updateAnalyticsConsent(ctx, { allowed: true, version: 1, updated_at: Date.now() });
+    const session = { cookie: "lymi-session=opaque" };
+    const phone = new Headers(session);
+    const browser = new Headers({ ...session, "sec-fetch-site": "same-origin" });
+    const posted = new Headers({ ...session, origin: "https://my.lymi.app" });
+    expect((await analyticsContextFor(db, ctx.userId, phone)()).allowed).toBe(true);
+    expect((await analyticsContextFor(db, ctx.userId, browser)()).allowed).toBe(false);
+    expect((await analyticsContextFor(db, ctx.userId, posted)()).allowed).toBe(false);
   });
 });

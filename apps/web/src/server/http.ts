@@ -19,6 +19,12 @@ import { type ServiceContext, ServiceError } from "./services/context";
 
 /** Build the service context for the caller of this request. */
 export function ctxOf(c: Context<AppEnv>): ServiceContext {
+  const load = analyticsContextFor(
+    c.get("db"),
+    c.get("user").id,
+    c.get("actor") === "user" ? c.req.raw.headers : undefined,
+  );
+  let loaded: ReturnType<typeof load> | undefined;
   return {
     db: c.get("db"),
     userId: c.get("user").id,
@@ -28,11 +34,11 @@ export function ctxOf(c: Context<AppEnv>): ServiceContext {
           c.env,
           c.get("user").id,
           (work) => c.executionCtx.waitUntil(work),
-          analyticsContextFor(
-            c.get("db"),
-            c.get("user").id,
-            c.get("actor") === "user" ? c.req.raw.headers : undefined,
-          ),
+          // One request's events share one consent read.
+          () => {
+            loaded ??= load();
+            return loaded;
+          },
         )
       : undefined,
     client: c.get("client"),

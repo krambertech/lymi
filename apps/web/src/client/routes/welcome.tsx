@@ -50,16 +50,6 @@ function Welcome() {
   });
 
   const finish = async (answers: WelcomeAnswers) => {
-    captureAnalytics("empty_state_option_picked", {
-      option:
-        answers.start.kind === "deck"
-          ? "explore"
-          : answers.start.own === "assistant"
-            ? "ai_mcp"
-            : answers.start.own === "type"
-              ? "typed"
-              : "import",
-    });
     setError(null);
     const { start } = answers;
     // Opened inside the press, before anything is awaited, or the browser blocks the new tab.
@@ -86,6 +76,16 @@ function Welcome() {
       if (saving) setError(t`Couldn’t save your answers. Check your connection and try again.`);
       return;
     }
+    captureAnalytics("empty_state_option_picked", {
+      option:
+        start.kind === "deck"
+          ? "explore"
+          : start.own === "assistant"
+            ? "ai_mcp"
+            : start.own === "type"
+              ? "typed"
+              : "import",
+    });
     captureAnalytics("welcome_step_finished", { step_name: "start", skipped: false });
     clearWelcomeProgress();
     if (start.kind === "deck") return navigate({ to: "/review", replace: true });

@@ -24,6 +24,7 @@ export type Write =
   | { kind: "card.update"; id: string; patch: CardPatch }
   | { kind: "card.archive"; id: string }
   | { kind: "card.restore"; id: string }
+  | { kind: "card.important"; id: string; important: boolean }
   | { kind: "deck.create"; input: NewDeckInput & { id: string } }
   | { kind: "deck.update"; id: string; patch: DeckPatch }
   | { kind: "deck.archive"; id: string }
@@ -57,6 +58,7 @@ const KINDS = new Set<Write["kind"]>([
   "card.update",
   "card.archive",
   "card.restore",
+  "card.important",
   "deck.create",
   "deck.update",
   "deck.archive",
@@ -200,6 +202,8 @@ function send(w: Write): Promise<Result> {
       return api.archiveCard(w.id);
     case "card.restore":
       return api.restoreCard(w.id);
+    case "card.important":
+      return api.setCardImportant(w.id, w.important);
     case "deck.create":
       return api.createDeck(w.input);
     case "deck.update":
@@ -499,6 +503,8 @@ export const writes = {
   updateDeck: (id: string, patch: DeckPatch) => queued(make({ kind: "deck.update", id, patch })),
   archiveCard: (id: string) => queued(make({ kind: "card.archive", id })),
   restoreCard: (id: string) => queued(make({ kind: "card.restore", id })),
+  setImportant: (card: Card, important: boolean) =>
+    queued(make({ kind: "card.important", id: card.id, important }, card.term)),
   archiveDeck: (id: string) => queued(make({ kind: "deck.archive", id })),
   restoreDeck: (id: string) => queued(make({ kind: "deck.restore", id })),
 };

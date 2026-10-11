@@ -24,6 +24,7 @@ import {
   Plus,
   Signpost,
   Sparkle,
+  Star,
   Volume2,
 } from "lucide-react";
 import { Fragment, type ReactNode, useEffect, useRef, useState } from "react";
@@ -223,6 +224,8 @@ export interface WordProps {
   onClose?: (() => void) | undefined;
   /** Absent, the card cannot be changed from here. */
   owner?: WordOwnerActions | undefined;
+  /** The learner's own mark, so a member of a shared deck sets it too. */
+  onImportantChange?: ((important: boolean) => void) | undefined;
   /** Every deck the word could move to. The menu lists them by name. */
   decks?: { id: string; name: string }[] | undefined;
   onPlayAudio?: (() => void) | undefined;
@@ -397,6 +400,7 @@ export function WordView({
   onNext,
   onClose,
   owner,
+  onImportantChange,
   decks,
   onPlayAudio,
   titleId,
@@ -492,6 +496,16 @@ export function WordView({
   const size = useDesktop() ? "sm" : "md";
   const controls = (
     <>
+      {onImportantChange && (
+        <IconButton
+          label={t`Important`}
+          size={size}
+          aria-pressed={card.important}
+          onClick={() => onImportantChange(!card.important)}
+        >
+          <Star className={card.important ? "fill-current" : undefined} />
+        </IconButton>
+      )}
       {owner && (
         <IconButton label={t`Edit card`} size={size} onClick={owner.onEdit}>
           <Pencil />
@@ -601,6 +615,12 @@ export function WordView({
         )}
         <p className="flex flex-wrap items-center gap-x-1.5 text-sm text-muted">
           {[
+            card.important ? (
+              <span key="important" className="inline-flex items-center gap-1 text-text-2">
+                <Star className="size-3.5 fill-current" aria-hidden="true" />
+                <Trans>Important</Trans>
+              </span>
+            ) : null,
             card.language ? (
               languageName(card.language)
             ) : waiting("language") ? (

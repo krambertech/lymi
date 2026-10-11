@@ -73,6 +73,15 @@ describe("a write on the device", () => {
     expect(moved?.[0]?.card).toMatchObject({ id: "magari", deckId: "et", meaning: "maybe" });
   });
 
+  it("marks a card important in its deck, and unmarks it", () => {
+    const qc = cache();
+    showWrite(qc, { kind: "card.important", id: "magari", important: true });
+    const rows = () => qc.getQueryData<{ card: Card }[]>(["decks", "it", "cards"]);
+    expect(rows()?.[0]?.card.important).toBe(true);
+    showWrite(qc, { kind: "card.important", id: "magari", important: false });
+    expect(rows()?.[0]?.card.important).toBe(false);
+  });
+
   it("opens a new deck empty, so its screen needs nothing from the server", () => {
     const qc = cache();
     showWrite(qc, { kind: "deck.create", input: { id: "pt", name: "Portuguese" } });

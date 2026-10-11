@@ -1,5 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import { Anchor, Archive, ChartNoAxesColumn, Ellipsis, SquarePen } from "lucide-react";
+import { Anchor, Archive, ChartNoAxesColumn, Ellipsis, SquarePen, Star } from "lucide-react";
 import { IconButton } from "./button";
 import {
   DropdownMenu,
@@ -15,6 +15,9 @@ interface Props {
   /** A ⋯ beside the card with a mouse; on touch the trigger is for a screen reader alone. */
   visible: boolean;
   hasHook: boolean;
+  /** The learner's own mark, so a member of a shared deck sets it too. */
+  important: boolean;
+  onImportantChange: (important: boolean) => void;
   /** Only the deck's owner changes its cards, so a member can only view the card. */
   canEdit: boolean;
   onHook: () => void;
@@ -35,6 +38,8 @@ export function CardMenu({
   onOpenChange,
   visible,
   hasHook,
+  important,
+  onImportantChange,
   canEdit,
   onHook,
   onEdit,
@@ -75,6 +80,10 @@ export function CardMenu({
             {t`Edit card`}
           </DropdownMenuItem>
         )}
+        <DropdownMenuItem onClick={() => onImportantChange(!important)}>
+          <Star aria-hidden="true" className={important ? "fill-current" : undefined} />
+          {important ? t`Unmark important` : t`Mark important`}
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={onView}>
           <ChartNoAxesColumn aria-hidden="true" />
           {t`View card`}

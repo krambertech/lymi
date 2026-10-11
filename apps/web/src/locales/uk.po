@@ -2104,6 +2104,9 @@ msgstr "Імпорт з Anki або Mochi"
 msgid "Import your decks with their pictures, tags and review history. Cards keep their due dates, and {app} is unchanged."
 msgstr "Імпортуй колоди із зображеннями, тегами й історією повторень. Картки збережуть дати повторення, а в {app} нічого не зміниться."
 
+msgid "Important"
+msgstr "Важлива"
+
 msgid "Important mark removed"
 msgstr "Позначку «важлива» знято"
 
@@ -2453,6 +2456,9 @@ msgstr "Створи колоду для кожного курсу чи теми
 
 msgid "Manage connected apps"
 msgstr "Керувати підключеними застосунками"
+
+msgid "Mark important"
+msgstr "Позначити важливою"
 
 msgid "Marked important"
 msgstr "Позначено як важливу"
@@ -3988,6 +3994,9 @@ msgstr "Скасувати дію"
 
 msgid "Undo this import"
 msgstr "Скасувати цей імпорт"
+
+msgid "Unmark important"
+msgstr "Зняти позначку «важлива»"
 
 msgid "Untitled key"
 msgstr "Ключ без назви"

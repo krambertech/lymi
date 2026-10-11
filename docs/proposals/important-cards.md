@@ -37,11 +37,11 @@ Learner-set marks in consumer apps are binary. Only SuperMemo has levels, and it
 
 ## Where it is set
 
-- The card screen, as a toggle.
-- Review, from the revealed card's menu, so a card can be marked at the moment it matters.
+- The card screen, as a star toggle in its bar, with the mark in words under the term.
+- Review, from the revealed card's menu (Mark important, Unmark important), so a card can be marked at the moment it matters.
 - The API and MCP, so an assistant can mark the exam terms it extracts ([#531](https://github.com/krambertech/lymi/issues/531)).
 
-The card screen and Library show the mark; a Library filter waits until learners ask for one.
+The card screen and a deck's list show the mark; a filter waits until learners ask for one. A mark made offline waits in the write outbox like any card edit.
 
 ## Boundaries
 

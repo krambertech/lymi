@@ -1,6 +1,7 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
+import { MotionConfig } from "motion/react";
 import { beforeEach, expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
@@ -42,23 +43,26 @@ async function renderWelcome(
   onSkip = () => {},
   joined?: { deck: JoinedDeck; onChooseGoal: (goal: number) => void },
 ) {
+  // Each question slides in and staggers its options, which a slow WebKit runner can still be moving at the click.
   await render(
-    <I18nProvider i18n={i18n}>
-      <ShellChrome value={designChrome()}>
-        <StaticNavProvider path="/welcome">
-          <div className="@container/shell" style={{ width: 800 }}>
-            <WelcomeView
-              catalog={catalog}
-              meaningLanguage="en"
-              onFinish={onFinish}
-              joined={joined?.deck}
-              onChooseGoal={joined?.onChooseGoal}
-              onSkip={onSkip}
-            />
-          </div>
-        </StaticNavProvider>
-      </ShellChrome>
-    </I18nProvider>,
+    <MotionConfig reducedMotion="always">
+      <I18nProvider i18n={i18n}>
+        <ShellChrome value={designChrome()}>
+          <StaticNavProvider path="/welcome">
+            <div className="@container/shell" style={{ width: 800 }}>
+              <WelcomeView
+                catalog={catalog}
+                meaningLanguage="en"
+                onFinish={onFinish}
+                joined={joined?.deck}
+                onChooseGoal={joined?.onChooseGoal}
+                onSkip={onSkip}
+              />
+            </div>
+          </StaticNavProvider>
+        </ShellChrome>
+      </I18nProvider>
+    </MotionConfig>,
   );
 }
 

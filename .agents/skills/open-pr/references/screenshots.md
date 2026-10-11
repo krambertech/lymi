@@ -16,7 +16,7 @@
 
 ## Fill the template
 
-Keep the template's `## Screenshots` heading. Reference each file by its basename so GitHub CLI can replace it with the uploaded asset URL:
+Keep the template's `## Screenshots` heading. Reference each file as `./<basename>` so the upload can replace it in place:
 
 ```markdown
 ## Screenshots
@@ -26,16 +26,20 @@ Keep the template's `## Screenshots` heading. Reference each file by its basenam
 | ![Deck before](./deck-phone-before.png) | ![Deck after](./deck-phone-after.png) |
 ```
 
-For a new surface or a change where comparison adds no value, use one labelled image instead of an empty table cell. Remove the section only when the diff has no rendered UI effect.
+For a new surface or a change where comparison adds no value, use one labelled image instead of an empty table cell. A recording referenced as `![Grading a card](./review.webm)` on its own paragraph becomes a video player locally, or an inline GIF linking to the video in a cloud session. Remove the section only when the diff has no rendered UI effect.
 
-## Attach with GitHub CLI
+## Upload
 
-GitHub CLI 2.100 and later uploads images with `--attach` and rewrites a local Markdown reference only when the attach path matches it exactly. Run `gh` from the screenshot folder with bare filenames; an absolute or folder-prefixed path leaves `./file.png` broken and appends the uploads to the end of the body. That folder is not the repository, so pass `-R` and `--head`:
+Pick the path by environment: a cloud session has `CLAUDE_CODE_REMOTE=true`.
+
+### Local session: GitHub CLI
+
+GitHub CLI 2.99 and later uploads to GitHub's own attachment storage with `--attach`, which also gives a recording a video player. It rewrites a local reference only when the attach path matches it exactly, so run `gh` from the screenshot folder with bare filenames; that folder is not the repository, so pass `-R` and `--head`:
 
 ```bash
 cd "$SCREENSHOT_DIR"
 gh pr create \
-  -R <owner>/<repo> \
+  -R krambertech/lymi \
   --head <branch> \
   --base main \
   --title "feat(web): describe the outcome" \
@@ -44,6 +48,18 @@ gh pr create \
   --attach "deck-phone-after.png#Deck after"
 ```
 
-Use `gh pr edit <number> -R <owner>/<repo> --attach ...` the same way when updating an existing PR. Run `gh pr create --help` first if the installed CLI may be older than 2.100.
+Use `gh pr edit <number> -R krambertech/lymi --attach ...` the same way for an existing PR. When the installed CLI is older than 2.99, use the cloud path instead.
 
-Read the PR body back after the upload and search it for `](./`. Completion requires every local reference to have become a `https://github.com/user-attachments/assets/` URL in its table cell. If the uploads were appended instead, move those URLs into the table and replace the body with `gh pr edit <number> --body-file`. If capture or upload fails, retain the files, report the exact failure, and leave the PR blocked instead of silently omitting screenshots.
+### Cloud session: `pnpm pr:media`
+
+The session's GitHub proxy refuses `gh pr create`, `gh pr edit` and `--attach`, so upload from the repository first:
+
+```bash
+pnpm pr:media --body "$PR_BODY_FILE" "$SCREENSHOT_DIR"/deck-phone-before.png "$SCREENSHOT_DIR"/deck-phone-after.png
+```
+
+It pushes the files to the shared `pr-media` branch under a folder named for the current branch, and rewrites each `./<basename>` reference in the body file to a link pinned to that commit; a video becomes an inline GIF that links to the recording. This push is the one push outside your own branch that the repository authorises; never create a separate screenshot branch. Without `--body` it prints a Markdown line per file, and it exits non-zero when the body still points at a local file. Then create or update the pull request with the GitHub tools and the rewritten body.
+
+### Confirm
+
+Read the PR body back and confirm no `](./` reference remains: each screenshot is a `https://github.com/user-attachments/assets/` URL (local) or a `https://github.com/krambertech/lymi/blob/<sha>/...` link (cloud) in its table cell. If `gh` appended uploads instead of rewriting them, move those URLs into the table and replace the body with `gh pr edit <number> --body-file`. If capture or upload fails, retain the files, report the exact failure, and leave the PR blocked instead of silently omitting screenshots.

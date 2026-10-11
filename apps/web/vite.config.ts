@@ -63,29 +63,31 @@ export default defineConfig({
       babel({ include: [/\/src\/.*\.tsx?(\?.*)?$/], presets: [linguiTransformerBabelPreset()] }),
       tailwindcss(),
     ]),
-    cloudflare(
-      isE2E
-        ? {
-            persistState: { path: ".wrangler/e2e" },
-            inspectorPort: false,
-            config: {
-              vars: {
-                PUBLIC_SITE_URL: "http://localhost:4174",
-                PRODUCT_URL: "http://localhost:4173",
-                PUBLISHER_EMAILS: e2ePublisherEmails.join(","),
-                BETTER_AUTH_SECRET: "lymi-e2e-secret-at-least-thirty-two-characters",
-                GOOGLE_CLIENT_ID: "e2e-client-id",
-                GOOGLE_CLIENT_SECRET: "e2e-client-secret",
-                OPENAI_API_KEY: "",
-                OPENAI_TTS_MODEL: "gpt-4o-mini-tts",
-                OPENAI_TTS_VOICE: "coral",
-                GOOGLE_TTS_MODEL: "chirp-3-hd",
-                GOOGLE_TTS_VOICE: "Kore",
+    // Unit tests reach D1 through getPlatformProxy, and the plugin's dev hook stops Vitest starting a project server.
+    !process.env.VITEST &&
+      cloudflare(
+        isE2E
+          ? {
+              persistState: { path: ".wrangler/e2e" },
+              inspectorPort: false,
+              config: {
+                vars: {
+                  PUBLIC_SITE_URL: "http://localhost:4174",
+                  PRODUCT_URL: "http://localhost:4173",
+                  PUBLISHER_EMAILS: e2ePublisherEmails.join(","),
+                  BETTER_AUTH_SECRET: "lymi-e2e-secret-at-least-thirty-two-characters",
+                  GOOGLE_CLIENT_ID: "e2e-client-id",
+                  GOOGLE_CLIENT_SECRET: "e2e-client-secret",
+                  OPENAI_API_KEY: "",
+                  OPENAI_TTS_MODEL: "gpt-4o-mini-tts",
+                  OPENAI_TTS_VOICE: "coral",
+                  GOOGLE_TTS_MODEL: "chirp-3-hd",
+                  GOOGLE_TTS_VOICE: "Kore",
+                },
               },
-            },
-          }
-        : undefined,
-    ),
+            }
+          : undefined,
+      ),
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["icon.svg", "icons/apple-touch-icon.png"],

@@ -76,7 +76,7 @@ it("adds, joins and activates a published deck once, without private fields", as
   expect(events.filter((event) => event.name === "review_graded")).toHaveLength(1);
   expect(JSON.stringify(events)).not.toContain("private");
   await db.delete(schema.reviews).where(eq(schema.reviews.userId, student.userId));
-  recordFirstReview(ctx, deck.id, "later-review");
+  recordFirstReview(ctx, deck.id, { id: "later-review", reviewedAt: new Date() });
   await settled();
   expect(
     capture.mock.calls.filter((call) => call[0].name === "first_session_started"),
@@ -89,7 +89,10 @@ it("does not manufacture first activation for historical learners", async () => 
   if (added?.status !== "added") throw new Error("Card not added");
   await gradeCard(student, { cardId: added.card.id, direction: "recognition", rating: 3 });
   const { analytics, capture, settled } = writer();
-  recordFirstReview({ ...student, analytics }, deck.id, "later-review");
+  recordFirstReview({ ...student, analytics }, deck.id, {
+    id: "later-review",
+    reviewedAt: new Date(),
+  });
   await settled();
   expect(capture).not.toHaveBeenCalled();
 });
@@ -105,6 +108,38 @@ it("does not fail a stored grade when analytics storage is unavailable", async (
     actor: "user" as const,
     analytics,
   };
-  recordFirstReview(ctx, "deck", "review");
+  recordFirstReview(ctx, "deck", { id: "review", reviewedAt: new Date() });
   await expect(settled()).resolves.toEqual([undefined]);
+});
+it("activates the earlier grade when a later one's marker runs first", async () => {
+  const student = await learner(db, "racing-learner", "Learner");
+  const deck = await createDeck(student, { name: "Race" });
+  const added = await addCards(student, [
+    { deckId: deck.id, term: "first" },
+    { deckId: deck.id, term: "second" },
+  ]);
+  const queued: (() => Promise<void>)[] = [];
+  const capture = vi.fn();
+  const ctx = {
+    ...student,
+    analytics: {
+      capture,
+      writeDataPoint: vi.fn(),
+      later: (run: () => Promise<void>) => queued.push(run),
+    },
+  };
+  const now = Date.now();
+  for (const [index, outcome] of added.entries()) {
+    if (outcome.status !== "added") throw new Error("Card not added");
+    await gradeCard(ctx, {
+      cardId: outcome.card.id,
+      direction: "recognition",
+      rating: 3,
+      reviewedAt: new Date(now + index),
+    });
+  }
+  for (const run of queued.reverse()) await run();
+  expect(capture.mock.calls.filter((call) => call[0].name === "welcome_step_finished")).toEqual([
+    [{ name: "welcome_step_finished", step_name: "review", skipped: false }],
+  ]);
 });

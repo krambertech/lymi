@@ -1,21 +1,29 @@
-import { and, eq, isNull, ne } from "@lymi/core/db";
+import { and, eq, isNull, lt, ne, or } from "@lymi/core/db";
 import { schema } from "../db";
 import { track } from "./analytics";
 import { audit, auditStatementWhen } from "./audit";
 import type { ServiceContext } from "./context";
 
 /** Marks a stored grade as the account's or a published deck's first, after the response. */
-export function recordFirstReview(ctx: ServiceContext, deckId: string, reviewId: string): void {
+export function recordFirstReview(
+  ctx: ServiceContext,
+  deckId: string,
+  review: { id: string; reviewedAt: Date },
+): void {
   ctx.analytics?.later?.(async () => {
     try {
-      await record(ctx, deckId, reviewId);
+      await record(ctx, deckId, review);
     } catch {
       /* A failed analytics marker cannot undo a stored grade. */
     }
   });
 }
 
-async function record(ctx: ServiceContext, deckId: string, reviewId: string) {
+async function record(
+  ctx: ServiceContext,
+  deckId: string,
+  review: { id: string; reviewedAt: Date },
+) {
   const [publication] = await ctx.db
     .select({ slug: schema.deckPublications.slug })
     .from(schema.deckPublications)
@@ -40,7 +48,9 @@ async function record(ctx: ServiceContext, deckId: string, reviewId: string) {
       .select()
       .from(schema.analyticsReviewStarts)
       .where(eq(schema.analyticsReviewStarts.key, item.key));
-    if (existing && existing.firstReviewId !== null) continue;
+    // A later grade may already have named this one first; it still owes the event.
+    if (existing && existing.firstReviewId !== null && existing.firstReviewId !== review.id)
+      continue;
     if (!existing) {
       const [before] = await ctx.db
         .select({ id: schema.reviews.id })
@@ -49,8 +59,14 @@ async function record(ctx: ServiceContext, deckId: string, reviewId: string) {
         .where(
           and(
             eq(schema.reviews.userId, ctx.userId),
-            ne(schema.reviews.id, reviewId),
             ne(schema.reviews.source, "import"),
+            or(
+              lt(schema.reviews.reviewedAt, review.reviewedAt),
+              and(
+                eq(schema.reviews.reviewedAt, review.reviewedAt),
+                lt(schema.reviews.id, review.id),
+              ),
+            ),
             ...(item.deckId ? [eq(schema.cards.deckId, item.deckId)] : []),
           ),
         )
@@ -72,7 +88,10 @@ async function record(ctx: ServiceContext, deckId: string, reviewId: string) {
     }
     const eligible = and(
       eq(schema.analyticsReviewStarts.key, item.key),
-      isNull(schema.analyticsReviewStarts.firstReviewId),
+      or(
+        isNull(schema.analyticsReviewStarts.firstReviewId),
+        eq(schema.analyticsReviewStarts.firstReviewId, review.id),
+      ),
     )!;
     const [, rows] = await ctx.db.batch([
       auditStatementWhen(
@@ -83,7 +102,7 @@ async function record(ctx: ServiceContext, deckId: string, reviewId: string) {
       ),
       ctx.db
         .update(schema.analyticsReviewStarts)
-        .set({ firstReviewId: reviewId })
+        .set({ firstReviewId: review.id })
         .where(eligible)
         .returning(),
     ]);

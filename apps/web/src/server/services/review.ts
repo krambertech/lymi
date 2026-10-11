@@ -330,7 +330,7 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
     );
   if (!stored) return duplicate();
   track(ctx.analytics, { name: "review_graded", mode: key, grade: rating });
-  recordFirstReview(ctx, row.deckId, reviewId);
+  recordFirstReview(ctx, row.deckId, { id: reviewId, reviewedAt });
   // Readiness only moves when a card leaves New or becomes Known, so other grades skip the check.
   if (state.state === 0 || result.card.state === 2) await advance();
   await audit(ctx, {

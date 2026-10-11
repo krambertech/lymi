@@ -93,11 +93,6 @@ function productProperties(event: AnalyticsEvent): Record<string, unknown> {
       return { adapter: event.adapter, outcome: event.outcome };
     case "enrichment_finished":
       return { outcome: event.outcome, count: event.count };
-    case "diagnosis_finished":
-      return { outcome: event.outcome };
-    case "diagnosis_dismissed":
-    case "diagnosis_dismiss_undone":
-      return { cause: event.cause };
     default:
       return {};
   }

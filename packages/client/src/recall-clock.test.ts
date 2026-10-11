@@ -19,7 +19,9 @@ function setup(startVisible = true) {
   return {
     clock,
     stop,
-    wait: (ms: number) => void (now += ms),
+    wait: (ms: number) => {
+      now += ms;
+    },
     show: (next: boolean) => {
       visible = next;
       for (const listener of listeners) listener(next);

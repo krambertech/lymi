@@ -27,7 +27,6 @@ test("names every resource from a validated pull request number", () => {
     databaseName: "lymi-app-pr-105-db",
     namespaceTitle: "lymi-app-pr-105-sessions",
     bucketName: "lymi-app-pr-105-audio",
-    workflowNames: ["lymi-app-pr-105-import", "lymi-app-pr-105-export", "lymi-app-pr-105-enrich"],
     alias: "preview",
   });
   assert.throws(() => previewNames("../production"), /positive integer/);
@@ -141,12 +140,23 @@ test("creates preview KV without an account-restricted jurisdiction", async () =
   assert.equal(result.workerExists, false);
 });
 
-test("cleanup deletes only the exact pull request resources", async () => {
+test("cleanup empties the bucket, then deletes only the exact pull request resources", async () => {
   const deleted = [];
+  let objects = [{ key: "audio/hello world.mp3" }, { key: "imports/batch-1" }];
   const fetchImpl = async (url, init = {}) => {
     if ((init.method ?? "GET") === "DELETE") {
       deleted.push(url);
+      const key = url.split("/objects/")[1];
+      if (key) objects = objects.filter((item) => item.key !== decodeURIComponent(key));
       return response(null);
+    }
+    if (url.includes("/r2/buckets/lymi-app-pr-105-audio/objects?")) return response(objects);
+    if (url.includes("/workflows?search=lymi-app-pr-105&")) {
+      return response([
+        { name: "lymi-app-pr-105-import" },
+        { name: "lymi-app-pr-105-diagnose" },
+        { name: "lymi-app-pr-1050-import" },
+      ]);
     }
     if (url.includes("/d1/database?")) {
       return response([{ name: "lymi-app-pr-105-db", uuid: "db-id" }]);
@@ -164,8 +174,9 @@ test("cleanup deletes only the exact pull request resources", async () => {
   assert.deepEqual(deleted, [
     `${apiRoot()}/workers/scripts/lymi-app-pr-105?force=true`,
     `${apiRoot()}/workflows/lymi-app-pr-105-import`,
-    `${apiRoot()}/workflows/lymi-app-pr-105-export`,
-    `${apiRoot()}/workflows/lymi-app-pr-105-enrich`,
+    `${apiRoot()}/workflows/lymi-app-pr-105-diagnose`,
+    `${apiRoot()}/r2/buckets/lymi-app-pr-105-audio/objects/audio/hello%20world.mp3`,
+    `${apiRoot()}/r2/buckets/lymi-app-pr-105-audio/objects/imports/batch-1`,
     `${apiRoot()}/r2/buckets/lymi-app-pr-105-audio`,
     `${apiRoot()}/storage/kv/namespaces/kv-id`,
     `${apiRoot()}/d1/database/db-id`,
@@ -326,16 +337,33 @@ test("cleanup succeeds for a pull request that never deployed a preview", async 
     if (url.includes("/d1/database?")) return response([]);
     if (url.includes("/storage/kv/namespaces?")) return response([]);
     if (url.includes("/r2/buckets?")) return response({ buckets: [] });
+    if (url.includes("/workflows?")) return response([]);
     throw new Error(`Unexpected ${url}`);
   };
 
   await cleanupPreviewInfrastructure({ accountId, token, prNumber: 105, fetchImpl });
-  assert.deepEqual(deleted, [
-    `${apiRoot()}/workers/scripts/lymi-app-pr-105?force=true`,
-    `${apiRoot()}/workflows/lymi-app-pr-105-import`,
-    `${apiRoot()}/workflows/lymi-app-pr-105-export`,
-    `${apiRoot()}/workflows/lymi-app-pr-105-enrich`,
-  ]);
+  assert.deepEqual(deleted, [`${apiRoot()}/workers/scripts/lymi-app-pr-105?force=true`]);
+});
+
+test("cleanup succeeds when the bucket disappears before it is deleted", async () => {
+  const deleted = [];
+  const fetchImpl = async (url, init = {}) => {
+    if ((init.method ?? "GET") === "DELETE") {
+      deleted.push(url);
+      return response(null, 404);
+    }
+    if (url.includes("/r2/buckets/lymi-app-pr-105-audio/objects?")) return response(null, 404);
+    if (url.includes("/workflows?")) return response([]);
+    if (url.includes("/d1/database?")) return response([]);
+    if (url.includes("/storage/kv/namespaces?")) return response([]);
+    if (url.includes("/r2/buckets?")) {
+      return response({ buckets: [{ name: "lymi-app-pr-105-audio" }] });
+    }
+    throw new Error(`Unexpected ${url}`);
+  };
+
+  await cleanupPreviewInfrastructure({ accountId, token, prNumber: 105, fetchImpl });
+  assert.equal(deleted.at(-1), `${apiRoot()}/r2/buckets/lymi-app-pr-105-audio`);
 });
 
 function apiRoot() {

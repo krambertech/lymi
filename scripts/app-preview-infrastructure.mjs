@@ -20,8 +20,6 @@ export function previewNames(value) {
     databaseName: `${workerName}-db`,
     namespaceTitle: `${workerName}-sessions`,
     bucketName: `${workerName}-audio`,
-    // One per production workflow, in wrangler.jsonc's order.
-    workflowNames: [`${workerName}-import`, `${workerName}-export`, `${workerName}-enrich`],
     alias: "preview",
   };
 }
@@ -129,6 +127,38 @@ async function exactBucket(client, name) {
     `/r2/buckets?name_contains=${encodeURIComponent(name)}&per_page=1000`,
   );
   return result.buckets?.find((item) => item.name === name) ?? null;
+}
+
+// R2 refuses to delete a bucket that still holds objects; the first page is re-listed until empty because deletions shift any cursor.
+async function emptyBucket(client, name) {
+  const bucketPath = `/r2/buckets/${encodeURIComponent(name)}`;
+  for (;;) {
+    const objects = await cfRequest(client, `${bucketPath}/objects?per_page=1000`, {}, true);
+    if (!objects?.length) return;
+    for (let start = 0; start < objects.length; start += 10) {
+      await Promise.all(
+        objects
+          .slice(start, start + 10)
+          .map(({ key }) =>
+            cfRequest(
+              client,
+              `${bucketPath}/objects/${key.split("/").map(encodeURIComponent).join("/")}`,
+              { method: "DELETE" },
+              true,
+            ),
+          ),
+      );
+    }
+  }
+}
+
+// Listed rather than derived from wrangler.jsonc, so a workflow the branch later removed is still found.
+async function previewWorkflows(client, workerName) {
+  const result = await cfRequest(
+    client,
+    `/workflows?search=${encodeURIComponent(workerName)}&per_page=100`,
+  );
+  return result.filter((workflow) => workflow.name.startsWith(`${workerName}-`));
 }
 
 async function workerExists(client, name) {
@@ -298,10 +328,11 @@ export async function cleanupPreviewInfrastructure({
   if (!accountId || !token) throw new Error("Cloudflare preview credentials are required");
   const names = previewNames(prNumber);
   const client = { accountId, token, fetchImpl };
-  const [database, namespace, bucket] = await Promise.all([
+  const [database, namespace, bucket, workflows] = await Promise.all([
     exactD1(client, names.databaseName),
     exactNamespace(client, names.namespaceTitle),
     exactBucket(client, names.bucketName),
+    previewWorkflows(client, names.workerName),
   ]);
 
   await cfRequest(
@@ -310,18 +341,22 @@ export async function cleanupPreviewInfrastructure({
     { method: "DELETE" },
     true,
   );
-  for (const workflowName of names.workflowNames) {
+  for (const workflow of workflows) {
     await cfRequest(
       client,
-      `/workflows/${encodeURIComponent(workflowName)}`,
+      `/workflows/${encodeURIComponent(workflow.name)}`,
       { method: "DELETE" },
       true,
     );
   }
   if (bucket) {
-    await cfRequest(client, `/r2/buckets/${encodeURIComponent(names.bucketName)}`, {
-      method: "DELETE",
-    });
+    await emptyBucket(client, names.bucketName);
+    await cfRequest(
+      client,
+      `/r2/buckets/${encodeURIComponent(names.bucketName)}`,
+      { method: "DELETE" },
+      true,
+    );
   }
   if (namespace) {
     await cfRequest(client, `/storage/kv/namespaces/${namespace.id}`, { method: "DELETE" });

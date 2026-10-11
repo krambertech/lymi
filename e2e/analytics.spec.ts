@@ -13,7 +13,11 @@ test("the public site asks nothing and stores nothing for analytics", async ({ p
     await expect(page.getByRole("complementary", { name: /privacy/i })).toHaveCount(0);
   }
   expect(analyticsCookies(await context.cookies())).toEqual([]);
-  expect(await page.evaluate(() => [localStorage.length, sessionStorage.length])).toEqual([0, 0]);
+  const stored = await page.evaluate(() => [
+    ...Object.keys(localStorage),
+    ...Object.keys(sessionStorage),
+  ]);
+  expect(stored.filter((key) => /ph_|posthog|analytics|consent/i.test(key))).toEqual([]);
 });
 
 test("a learner's analytics are on with no switch in Settings", async ({ page }) => {

@@ -202,16 +202,19 @@ test("an often-forgotten card offers a hook the learner writes, and Undo takes i
   await page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
 
   await page.getByRole("button", { name: /Try a memory hook/ }).click();
-  const sheet = page.getByRole("dialog", { name: /^A memory hook for / });
-  const field = sheet.getByRole("textbox", { name: "Memory hook" });
+  // Written in its own place on the card, with no dialog over it.
+  const card = page.getByLabel(/^Production card for /);
+  const field = card.getByRole("textbox", { name: "Memory hook" });
+  await expect(field).toBeFocused();
   await expect(field).toHaveValue("");
   await field.fill("Picture it carved for the season");
-  await sheet.getByRole("button", { name: "Save hook" }).click();
-  await expect(sheet).toBeHidden();
+  await card.getByRole("button", { name: "Save", exact: true }).click();
+  await expect(field).toHaveCount(0);
+  // Saving hands focus back to the grades.
+  await expect(page.getByRole("group", { name: "Choose a recall grade" })).toBeFocused();
   await expect(page.getByText("Hook added")).toBeVisible();
 
   // Written after the reveal, it shows at once under the cue, as the learner's own.
-  const card = page.getByLabel(/^Production card for /);
   const written = card
     .getByRole("paragraph")
     .filter({ hasText: "Picture it carved for the season" });
@@ -221,4 +224,57 @@ test("an often-forgotten card offers a hook the learner writes, and Undo takes i
 
   await page.getByRole("button", { name: "Undo", exact: true }).click();
   await expect(written).toHaveCount(0);
+});
+
+test("the revealed card's menu archives it, review moves on, and Undo brings it back", async ({
+  page,
+}, testInfo) => {
+  await startAsTestLearner(page, testInfo, "review-hook");
+  const seeded = await page.request.post("/api/dev/often-forgotten", { data: { hooked: false } });
+  expect(seeded.ok()).toBeTruthy();
+  const { deckId } = (await seeded.json()) as { deckId: string };
+  await page.goto(`/review?deck=${deckId}`);
+  // Nothing to open before the answer shows.
+  await expect(page.getByRole("button", { name: "Card options" })).toHaveCount(0);
+  await page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
+
+  const archived = await page.getByLabel(/^Production card for /).getAttribute("aria-label");
+  const grades = page.getByRole("group", { name: "Choose a recall grade" });
+  // Closing the menu hands focus to the grades, so the grade keys still work.
+  await page.getByRole("button", { name: "Card options" }).focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("menuitem", { name: "Archive card" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(grades).toBeFocused();
+  // View card opens the card over review, and closing it leaves the same card revealed.
+  await page.getByRole("button", { name: "Card options" }).focus();
+  await page.keyboard.press("Enter");
+  await page.getByRole("menuitem", { name: "View card" }).click();
+  const place = page.getByRole("dialog");
+  await expect(place.getByRole("heading", { level: 1 })).toBeVisible();
+  await expect(page).toHaveURL(/[?&]card=/);
+  await page.keyboard.press("Escape");
+  await expect(place).toBeHidden();
+  await expect(page.getByLabel(archived ?? "", { exact: true })).toBeVisible();
+
+  // Offline, so the card can only leave review on the device, not by a refetch.
+  await page.context().setOffline(true);
+  // A ⋯ with a mouse and a screen reader's button on touch: the keyboard opens either.
+  await page.getByRole("button", { name: "Card options" }).focus();
+  await page.keyboard.press("Enter");
+  await page.getByRole("menuitem", { name: "Archive card" }).click();
+  await expect(page.getByText(/^Archived “/)).toBeVisible();
+  await expect(page.getByRole("button", { name: "Reveal the card" })).toBeVisible();
+  await expect(page.getByLabel(archived ?? "", { exact: true })).toHaveCount(0);
+  await page.context().setOffline(false);
+
+  await page.getByRole("button", { name: "Undo", exact: true }).click();
+  await expect
+    .poll(async () => {
+      const rows = (await (await page.request.get(`/api/decks/${deckId}/cards`)).json()) as {
+        card: { archivedAt: string | null };
+      }[];
+      return rows.filter((row) => !row.card.archivedAt).length;
+    })
+    .toBe(2);
 });

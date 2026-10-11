@@ -13,15 +13,28 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotionConfig } from "motion/react";
-import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { Button } from "../components/button";
+import { CardMenu } from "../components/card-menu";
+import { CardPlace } from "../components/card-place";
+import { EditCardSheet } from "../components/edit-card-sheet";
 import { GRADES } from "../components/grade";
-import { HookSheet } from "../components/hook-sheet";
+import { HookEditor } from "../components/hook-editor";
 import { AID_KEY, aidSteps, aidTaken } from "../components/recall-aid";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
-import { api, deviceTimezone, type QueueItem, scopeKey } from "../lib/api";
+import { api, type Card, deviceTimezone, errorMessage, type QueueItem, scopeKey } from "../lib/api";
 import { usePrefetchPictures } from "../lib/card-images";
+import { refreshAfterCardWrite } from "../lib/card-writes";
+import { useMouse, useWide } from "../lib/device";
 import { useDocumentTitle } from "../lib/document-title";
 import { lanternFor } from "../lib/flame";
 import { gradeStore, recordGrade, retireGrades } from "../lib/grades";
@@ -46,6 +59,8 @@ import {
 import { drawState, reviewItem, stateBefore } from "../lib/review-draw";
 import { itemKey } from "../lib/review-modes";
 import { shortQuote } from "../lib/short-quote";
+import { useWordHistory } from "../lib/use-word-history";
+import { writes } from "../lib/writes";
 import {
   GradeBar,
   ReviewCard,
@@ -54,11 +69,12 @@ import {
   ReviewHeader,
   ReviewSkeleton,
 } from "../views/review-view";
+import { WordView } from "../views/word-view";
 
 export const Route = createFileRoute("/review")({
   validateSearch: (
     s: Record<string, unknown>,
-  ): { deck?: string; series?: string; section?: string; round?: Round } => {
+  ): { deck?: string; series?: string; section?: string; round?: Round; card?: string } => {
     const round = ROUNDS.find((r) => r === s.round);
     return {
       ...(typeof s.deck === "string" ? { deck: s.deck } : {}),
@@ -69,11 +85,15 @@ export const Route = createFileRoute("/review")({
       // One scope at a time: a deck wins over a series.
       ...(typeof s.series === "string" && typeof s.deck !== "string" ? { series: s.series } : {}),
       ...(round ? { round } : {}),
+      // The card open as a place, so the phone's back gesture closes it, as on the deck page.
+      ...(typeof s.card === "string" ? { card: s.card } : {}),
     };
   },
   component: ReviewPage,
 });
 
+/** How long after the reveal a tap on the card still counts as the reveal's. */
+const REVEAL_TAP_GUARD_MS = 400;
 /** The grade strip, where focus goes when a sheet over the card closes. */
 const GRADES_ID = "review-grades";
 const gradesFocus = () => {
@@ -143,7 +163,7 @@ function ReviewPage() {
 function Review() {
   const { t } = useLingui();
   useDocumentTitle(t`Review`);
-  const { deck, series, section, round } = Route.useSearch();
+  const { deck, series, section, round, card: placeCardId } = Route.useSearch();
   const scope = useMemo(() => ({ deck, series, section }), [deck, series, section]);
   const qc = useQueryClient();
   const navigate = useNavigate();
@@ -185,11 +205,23 @@ function Review() {
   const [aidState, setAidState] = useState({ key: "", taken: 0, shown: false, animate: true });
   // Presses of a locked grade's key, counted per card so an earlier card's never show its tip.
   const [lockedNudge, setLockedNudge] = useState({ key: "", presses: 0 });
-  const [writingHook, setWritingHook] = useState(false);
+  // The card whose hook is being written, so the editor never outlives its card.
+  const [hookFor, setHookFor] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  // Cards archived from review, gone from it at once rather than when the draw is fetched again.
+  const [archived, setArchived] = useState<ReadonlySet<string>>(() => new Set());
+  const [editing, setEditing] = useState<Card | null>(null);
+  // A mouse gets a visible ⋯, beside the card where there is room and in its head where there is not.
+  const mouse = useMouse();
+  const wide = useWide();
 
   // The persisted cache can predate the last grade, so the first card waits for this mount's fetch.
   const settled = draw.isFetchedAfterMount || draw.fetchStatus !== "fetching";
-  const data = settled ? draw.data : undefined;
+  const data = useMemo(() => {
+    const fetched = settled ? draw.data : undefined;
+    if (!fetched || archived.size === 0) return fetched;
+    return { ...fetched, cards: fetched.cards.filter((c) => !archived.has(c.card.id)) };
+  }, [settled, draw.data, archived]);
   const state = useMemo(
     () => (data ? drawState(data, grades, now, deck, LOOKAHEAD) : undefined),
     [data, grades, now, deck],
@@ -530,6 +562,26 @@ function Review() {
   }, [qc]);
 
   const showing = current ? `${itemKey(current)}-${done}` : "";
+  const writingHook = !!showing && hookFor === showing;
+  const revealedAt = useRef(0);
+  useEffect(() => {
+    if (revealed) revealedAt.current = performance.now();
+  }, [revealed]);
+  // Only the card on screen opens as a place; a link to another one is left closed.
+  const placeOpen = !!current && placeCardId === current.card.id;
+  const placeTitleId = useId();
+  const placeHistory = useWordHistory(placeOpen ? placeCardId : null);
+  const openPlace = () => {
+    if (current) void navigate({ to: ".", search: (prev) => ({ ...prev, card: current.card.id }) });
+  };
+  const closePlace = () =>
+    void navigate({ to: ".", search: ({ card: _closed, ...rest }) => rest, replace: true });
+  // A card that leaves without a grade, such as one archived from its menu, takes its reveal with it.
+  const [revealedFor, setRevealedFor] = useState(showing);
+  if (revealedFor !== showing) {
+    setRevealedFor(showing);
+    if (revealed) setRevealed(false);
+  }
   const hook = current?.card.hook ?? null;
   const hookSource = current?.card.hookSource ?? null;
   const steps = useMemo(() => aidSteps({ hook, hookSource }), [hook, hookSource]);
@@ -635,7 +687,7 @@ function Review() {
     const onKey = (e: KeyboardEvent) => {
       // A sheet over the review handles its own keys, Escape included.
       if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
-      if (add.open || writingHook) return;
+      if (add.open || writingHook || menuOpen || editing || placeOpen) return;
       if (e.key === "Escape") {
         leave();
         return;
@@ -678,7 +730,19 @@ function Review() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, onGrade, takeAid, showAid, leave, add.open, writingHook, current]);
+  }, [
+    revealed,
+    onGrade,
+    takeAid,
+    showAid,
+    leave,
+    add.open,
+    writingHook,
+    menuOpen,
+    editing,
+    placeOpen,
+    current,
+  ]);
 
   // An often-forgotten card with no hook offers one, in a deck the learner owns, since only the
   // owner changes its cards. It waits for the card's deck, which a deck list cached before the
@@ -691,11 +755,114 @@ function Review() {
     });
   }
   const offer = cardOffer.key === showing && cardOffer.offer;
-  // Closing the sheet parks the offer, and the panel fades, so the choice is seen to land.
-  const closeHook = () => {
-    setWritingHook(false);
+  const owned = currentDeck?.role === "owner";
+  // Writing a hook parks the offer, and the panel fades, so it never stands beside the editor.
+  // Where focus goes as the menu closes: the grades, unless the chosen row opened something that
+  // takes focus itself, such as the hook editor, the card editor or the card's place.
+  const menuHandsFocus = useRef(false);
+  const menuFinalFocus = () => {
+    if (menuHandsFocus.current) {
+      menuHandsFocus.current = false;
+      return false;
+    }
+    return gradesFocus();
+  };
+  const openHook = () => {
+    setHookFor(showing);
     setCardOffer((held) => ({ ...held, parked: true }));
   };
+  const closeHook = () => {
+    setHookFor(null);
+    gradesFocus();
+  };
+
+  // Out of review at once, and out of a round's count, offline too; the write queues like a grade.
+  const setArchivedLocally = (cardId: string, gone: boolean) => {
+    const keys =
+      leg?.kind === "today"
+        ? (roundItems ?? []).filter((item) => item.card.id === cardId).map(gradedKey)
+        : leg?.kind === "forgotten"
+          ? leg.items.filter((d) => d.cardId === cardId).map((d) => drawKey(d.cardId, d.mode))
+          : [];
+    setArchived((ids) => (gone ? withKey(ids, cardId) : withoutKey(ids, cardId)));
+    setLegCards((c) => ({
+      ...c,
+      dropped: keys.reduce(
+        (set, key) => (gone ? withKey(set, key) : withoutKey(set, key)),
+        c.dropped,
+      ),
+    }));
+  };
+
+  const archiveCurrent = async () => {
+    if (!current) return;
+    const card = current.card;
+    const archivedTerm = shortQuote(card.term);
+    setArchivedLocally(card.id, true);
+    try {
+      await writes.archiveCard(card.id);
+    } catch (e) {
+      setArchivedLocally(card.id, false);
+      toast.add({ type: "error", title: errorMessage(e) });
+      return;
+    }
+    toast.add({
+      id: `archived-${card.id}`,
+      title: t`Archived “${archivedTerm}”`,
+      actionProps: {
+        children: t`Undo`,
+        onClick: async () => {
+          toast.close(`archived-${card.id}`);
+          try {
+            await writes.restoreCard(card.id);
+            setArchivedLocally(card.id, false);
+          } catch (e) {
+            toast.add({ type: "error", title: errorMessage(e) });
+          }
+          await refreshAfterCardWrite(qc, card.id);
+        },
+      },
+    });
+    void refreshAfterCardWrite(qc, card.id);
+  };
+
+  // On touch the revealed card is the menu's handle: a tap opens it. A tap this soon after the
+  // reveal is the reveal's own tap doubled, not a second one.
+  const openFromCard = (e: React.MouseEvent<HTMLElement>) => {
+    if (mouse || !revealed || writingHook) return;
+    // A tap in a portal, such as the drawer's own backdrop, still bubbles here through React.
+    if (!e.currentTarget.contains(e.target as Node)) return;
+    if (performance.now() - revealedAt.current < REVEAL_TAP_GUARD_MS) return;
+    const target = e.target as HTMLElement;
+    if (target.closest(`button, a, input, textarea, [role="menu"], #${GRADES_ID}`)) return;
+    // A press that selected text was a selection, not a tap.
+    if (window.getSelection()?.toString()) return;
+    setMenuOpen(true);
+  };
+
+  const cardMenu = current && (
+    <CardMenu
+      open={menuOpen}
+      onOpenChange={setMenuOpen}
+      visible={mouse}
+      hasHook={!!current.card.hook}
+      canEdit={owned}
+      finalFocus={menuFinalFocus}
+      onHook={() => {
+        menuHandsFocus.current = true;
+        openHook();
+      }}
+      onEdit={() => {
+        menuHandsFocus.current = true;
+        setEditing(current.card);
+      }}
+      onView={() => {
+        menuHandsFocus.current = true;
+        openPlace();
+      }}
+      onArchive={() => void archiveCurrent()}
+    />
+  );
 
   const doneLink = (variant: "primary" | "secondary") => (
     <Button variant={variant} size="lg" className="w-full" render={<Link to="/today" />}>
@@ -704,7 +871,7 @@ function Review() {
   );
 
   return (
-    <div className="relative mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col overflow-x-clip px-4 pb-[calc(env(safe-area-inset-bottom)+12px)] @3xl:max-w-2xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
+    <div className="relative mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col overflow-x-clip px-4 @3xl:overflow-x-visible pb-[calc(env(safe-area-inset-bottom)+12px)] @3xl:max-w-2xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
       <ReviewHeader
         attempts={state?.attempts ?? 0}
         goal={
@@ -781,7 +948,8 @@ function Review() {
         {current && (
           <motion.div
             key="cards"
-            className="flex min-h-0 flex-1 flex-col"
+            className="relative flex min-h-0 flex-1 flex-col"
+            onClick={openFromCard}
             exit={
               reduce
                 ? { opacity: 0, transition: { duration: 0.12 } }
@@ -826,12 +994,12 @@ function Review() {
                       delay: animateReveal ? (reduce ? 0.7 : 0.95) : 0.5,
                       animate: animateReveal,
                       parked: cardOffer.parked,
-                      onOpen: () => setWritingHook(true),
+                      onOpen: openHook,
                     }
                   : undefined
               }
               aid={
-                steps.length > 0
+                steps.length > 0 && !writingHook
                   ? {
                       steps,
                       taken,
@@ -842,8 +1010,41 @@ function Review() {
                     }
                   : undefined
               }
+              headSlot={mouse && !wide}
+              headEnd={
+                mouse && !wide && revealed ? (
+                  <span className="enter-fade">{cardMenu}</span>
+                ) : undefined
+              }
+              hookEditor={
+                writingHook ? (
+                  <HookEditor
+                    card={current.card}
+                    onCancel={closeHook}
+                    onSaved={() => {
+                      closeHook();
+                      // Written after the reveal, it shows at once where Show hook would have put it.
+                      setAidState({
+                        key: showing,
+                        taken,
+                        shown: true,
+                        animate: !lastInputWasKey(),
+                      });
+                    }}
+                  />
+                ) : undefined
+              }
               className="mt-4 @3xl:max-h-[600px] @3xl:[@media(min-height:40rem)]:min-h-[460px]"
             />
+            {/* Only once the answer shows. With a mouse and room, beside the card, so nothing on it
+                moves; on touch the card is the handle and this button is for a screen reader. */}
+            {revealed && !(mouse && !wide) && (
+              <span
+                className={mouse ? "absolute -end-10 top-7 enter-fade" : "absolute top-0 start-0"}
+              >
+                {cardMenu}
+              </span>
+            )}
             <GradeBar
               id={GRADES_ID}
               revealed={revealed}
@@ -858,17 +1059,45 @@ function Review() {
           </motion.div>
         )}
       </AnimatePresence>
-      <HookSheet
-        item={current}
-        open={writingHook}
+      {current && currentDeck && (
+        <CardPlace open={placeOpen} onClose={closePlace} titleId={placeTitleId}>
+          <WordView
+            key={current.card.id}
+            card={current.card}
+            state={placeHistory?.states[0] ?? null}
+            deckName={currentDeck.name}
+            modes={current.card.reviewModes ?? currentDeck.reviewModes}
+            history={placeHistory}
+            titleId={placeTitleId}
+            onPlayAudio={canSpeakTerm(current.card) ? playAudio : undefined}
+            onClose={closePlace}
+            owner={
+              owned
+                ? {
+                    onEdit: () => setEditing(current.card),
+                    onEnrich: () =>
+                      void api
+                        .enrichCard(current.card.id)
+                        .then(() => refreshAfterCardWrite(qc, current.card.id))
+                        .catch((e: unknown) =>
+                          toast.add({ type: "error", title: errorMessage(e) }),
+                        ),
+                    onArchive: () => {
+                      closePlace();
+                      void archiveCurrent();
+                    },
+                  }
+                : undefined
+            }
+          />
+        </CardPlace>
+      )}
+      <EditCardSheet
+        card={editing}
+        decks={decks.data}
+        onOpenChange={(open) => !open && setEditing(null)}
+        onReopen={(card) => setEditing(card)}
         finalFocus={gradesFocus}
-        onOpenChange={(open) => (open ? setWritingHook(true) : closeHook())}
-        onSaved={() => {
-          // A hook written after the reveal shows at once, where Show hook would have put it.
-          if (revealed) {
-            setAidState({ key: showing, taken, shown: true, animate: !lastInputWasKey() });
-          }
-        }}
       />
     </div>
   );

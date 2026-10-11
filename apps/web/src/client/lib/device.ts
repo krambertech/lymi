@@ -24,6 +24,37 @@ export function useDesktop(): boolean {
   return useSyncExternalStore(subscribe, isDesktop, () => false);
 }
 
+const MOUSE_QUERY = "(hover: hover) and (pointer: fine)";
+const WIDE_QUERY = "(min-width: 768px)";
+
+function media(query: string) {
+  return (onChange: () => void) => {
+    const mq = window.matchMedia(query);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  };
+}
+const subscribeMouse = media(MOUSE_QUERY);
+const subscribeWide = media(WIDE_QUERY);
+
+/** True with a mouse or trackpad, whatever the width: hover works and a click lands where aimed. */
+export function useMouse(): boolean {
+  return useSyncExternalStore(
+    subscribeMouse,
+    () => window.matchMedia(MOUSE_QUERY).matches,
+    () => false,
+  );
+}
+
+/** True at the width where the review card has room beside it. */
+export function useWide(): boolean {
+  return useSyncExternalStore(
+    subscribeWide,
+    () => window.matchMedia(WIDE_QUERY).matches,
+    () => false,
+  );
+}
+
 /**
  * The device shape, read afresh as the overlay opens and held until it closes: crossing the
  * breakpoint mid-edit would swap shapes, remount the content, and take the half-typed word with it.

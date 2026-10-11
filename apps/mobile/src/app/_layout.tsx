@@ -56,7 +56,7 @@ function Root() {
       <StatusBar style="auto" />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: p.canvas } }}>
         <Stack.Protected guard={!signedIn}>
-          <Stack.Screen name="sign-in" options={{ animation: "fade" }} />
+          <Stack.Screen name="(auth)" options={{ animation: "fade" }} />
         </Stack.Protected>
         <Stack.Protected guard={signedIn}>
           <Stack.Screen name="index" />

@@ -1,0 +1,89 @@
+{
+  "expo": {
+    "name": "Lymi",
+    "slug": "lymi",
+    "scheme": "lymi",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#130d09",
+    "ios": {
+      "bundleIdentifier": "app.lymi.poc",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "app.lymi.poc",
+      "adaptiveIcon": {
+        "backgroundColor": "#130d09",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": true
+    },
+    "experiments": {
+      "typedRoutes": true
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 96,
+          "backgroundColor": "#f8f6f4",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "backgroundColor": "#130d09"
+          }
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./node_modules/@expo-google-fonts/onest/400Regular/Onest_400Regular.ttf",
+            "./node_modules/@expo-google-fonts/onest/500Medium/Onest_500Medium.ttf",
+            "./node_modules/@expo-google-fonts/onest/600SemiBold/Onest_600SemiBold.ttf"
+          ]
+        }
+      ],
+      [
+        "expo-widgets",
+        {
+          "widgets": [
+            {
+              "name": "TodayWidget",
+              "displayName": "Lantern",
+              "description": "What's due, under the lantern.",
+              "ios": {
+                "supportedFamilies": ["systemSmall", "systemMedium"]
+              }
+            },
+            {
+              "name": "WeekWidget",
+              "displayName": "Week",
+              "description": "Your streak's week, as seven lights.",
+              "ios": {
+                "supportedFamilies": ["systemMedium"]
+              }
+            },
+            {
+              "name": "LockWidget",
+              "displayName": "Lantern",
+              "description": "Cards due on your Lock Screen.",
+              "ios": {
+                "supportedFamilies": [
+                  "accessoryCircular",
+                  "accessoryRectangular",
+                  "accessoryInline"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "expo-asset"
+    ]
+  }
+}

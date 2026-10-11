@@ -84,16 +84,6 @@ const SENTENCES: Sentences = {
     restore: "import",
   },
   export: { create: "export", complete: "export" },
-  // A diagnosis changes nothing on the card; its fix does, and the card rows say so. Turning a
-  // fix down, or taking that back, is a decision about the card an app can make unseen.
-  diagnosis: {
-    create: null,
-    offer: null,
-    accept: null,
-    undo_accept: null,
-    dismiss: "fix_dismissed",
-    undo_dismiss: "fix_undismissed",
-  },
   review: { grade: null, undo_grade: null },
   account: {
     "avatar.upload": null,
@@ -133,9 +123,6 @@ const UNSAID_ACTIONS = (() => {
   }
   return [...unsaid].filter((action) => !said.has(action));
 })();
-
-/** The diagnosis writes with a sentence; the AI records one for every card it looks at. */
-const DIAGNOSIS_ACTIONS = entries("diagnosis").flatMap(([action, kind]) => (kind ? [action] : []));
 
 const PEOPLE_ACTIONS = entries("deck").flatMap(([action, kind]) =>
   kind && PEOPLE_KINDS.has(kind) ? [action] : [],
@@ -246,7 +233,6 @@ function fromOutside(): SQL | undefined {
     ne(schema.auditLog.entity, "review"),
     inArray(schema.auditLog.entity, ENTITIES),
     notInArray(schema.auditLog.action, UNSAID_ACTIONS),
-    or(ne(schema.auditLog.entity, "diagnosis"), inArray(schema.auditLog.action, DIAGNOSIS_ACTIONS)),
     or(
       inArray(schema.auditLog.entity, FILES),
       ne(schema.auditLog.actor, "user"),
@@ -295,7 +281,7 @@ function kindOf(row: Row): ActivityKind | null {
 function groupKey(row: Row, kind: ActivityKind, day: string): string {
   const caller = `${row.actor}:${row.actorClient ?? ""}`;
   let one = row.entityId;
-  if (aboutCards(kind)) one = "";
+  if (kind.startsWith("cards_")) one = "";
   // Per address, or a class invited in one sitting would be one row naming only the last of them.
   if (kind.startsWith("invitation_")) one = `${row.entityId}|${invitedAddress(row) ?? ""}`;
   return `${day}|${caller}|${kind}|${one}`;
@@ -308,11 +294,7 @@ async function present(ctx: ServiceContext, groups: Group[]): Promise<Entry[]> {
       groups.flatMap((g) => (g.rows[0]?.entity === entity ? g.rows.map((r) => r.entityId) : [])),
     ),
   ];
-  const cardIds = [
-    ...new Set(
-      groups.flatMap((g) => (aboutCards(g.kind) ? g.rows.flatMap((r) => cardOf(r) ?? []) : [])),
-    ),
-  ];
+  const cardIds = idsOf("card");
   const deckIds = idsOf("deck");
   const sectionIds = idsOf("section");
   const seriesIds = idsOf("series");
@@ -435,12 +417,12 @@ async function present(ctx: ServiceContext, groups: Group[]): Promise<Entry[]> {
       continue;
     }
 
-    if (aboutCards(group.kind)) {
+    if (group.kind.startsWith("cards_")) {
       // One call can write to two decks, and a row names one deck, so each deck is its own row.
       type Written = (typeof cards)[number];
       const byDeck = new Map<string, { at: Date; id: string; cards: Written[] }>();
       for (const row of group.rows) {
-        const written = card.get(cardOf(row) ?? "");
+        const written = card.get(row.entityId);
         if (!written) continue;
         // The deck the call named, so a card moved since is not reported against its new deck.
         const landed = landedIn(row) ?? written.deckId;
@@ -504,18 +486,6 @@ async function present(ctx: ServiceContext, groups: Group[]): Promise<Entry[]> {
     entries.push({ ...base, deck: naming(where), person });
   }
   return entries;
-}
-
-/** Kinds whose rows are about cards, which a row lists and groups by the deck they are in. */
-function aboutCards(kind: ActivityKind): boolean {
-  return kind.startsWith("cards_") || kind.startsWith("fix_");
-}
-
-/** The card a row is about: the card written, or the one a diagnosis is of. */
-function cardOf(row: Row): string | null {
-  if (row.entity === "card") return row.entityId;
-  const payload = row.payload as { cardId?: unknown } | null;
-  return payload && typeof payload.cardId === "string" ? payload.cardId : null;
 }
 
 /** The deck a card write named. Rows from before the key existed carry it only on an add. */

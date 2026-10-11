@@ -3,6 +3,7 @@ import { NonRetryableError } from "cloudflare:workflows";
 import { ImportFailure as Failures, type ImportFailure } from "@lymi/core";
 import { createDb } from "../db";
 import type { Bindings } from "../env";
+import { productAnalytics, reportServerException } from "../posthog";
 import {
   attachImportPictures,
   failImport,
@@ -43,18 +44,21 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
   async run(event: WorkflowEvent<ImportRunParams>, step: WorkflowStep) {
     const params = event.payload;
     const db = createDb(this.env.DB);
-    const ctx = runContext(db, params, this.env.EVENTS);
+    const analytics = productAnalytics(this.env, params.userId);
+    const ctx = runContext(db, params, analytics);
     const uploads = this.env.IMPORTS;
     const id = params.importId;
     try {
       if (params.phase === "inspect") {
-        await step.do("inspect", STEP, () => fileErrorsStop(() => inspectImport(ctx, id, uploads)));
+        await step.do("inspect", STEP, () =>
+          analytics.run(() => fileErrorsStop(() => inspectImport(ctx, id, uploads))),
+        );
         return;
       }
       let steps = 0;
       const counted = <T>(name: string, work: () => Promise<T>) => {
         steps++;
-        return step.do(name, STEP, work as () => Promise<never>) as Promise<T>;
+        return step.do(name, STEP, () => analytics.run(work) as Promise<never>) as Promise<T>;
       };
       const decks = await counted("decks", () => prepareImportDecks(ctx, id, uploads));
       const chunks = await counted("chunks", async () => (await ownedImport(ctx, id)).chunks);
@@ -105,13 +109,24 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
         pending = written.pictures;
         chunk++;
       }
-      await step.do("finish", STEP, () => finishImport(ctx, id, pictures, uploads));
+      await step.do("finish", STEP, () =>
+        analytics.run(() => finishImport(ctx, id, pictures, uploads)),
+      );
     } catch (err) {
       const failure: ImportFailure =
         err instanceof Error && Failures.safeParse(err.message).success
           ? (err.message as ImportFailure)
           : failureOf(err);
-      await step.do("fail", STEP, () => failImport(db, id, failure, uploads, this.env.EVENTS));
+      await step.do("fail", STEP, async () => {
+        await analytics.run(() => failImport(db, id, failure, uploads, analytics));
+        if (failure === "internal") {
+          await reportServerException(this.env, err, {
+            route: "import",
+            method: "WORKFLOW",
+            userId: params.userId,
+          });
+        }
+      });
     }
   }
 }

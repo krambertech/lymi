@@ -10,7 +10,6 @@ import type {
   RoundsOut,
 } from "@lymi/core";
 import type { Card } from "./cards";
-import type { ReviewOffer } from "./diagnoses";
 import { deviceTimezone, request } from "./request";
 
 /** What a review draws from: every deck, one deck or one of its sections, or one of the learner's series. */
@@ -43,8 +42,8 @@ export type QueueItem = {
   fsrsState: number;
   /** Absent once a grade since the fetch has moved the schedule. */
   next?: Record<Rating, string> | undefined;
-  /** A drafted fix to show after the reveal, while the card is often forgotten. */
-  offer?: ReviewOffer | undefined;
+  /** Often forgotten, so review offers to write a memory hook. */
+  slipping?: boolean | undefined;
 };
 export type Queue = { total: number; items: QueueItem[] };
 /** `GET /api/review/draw`, with cards in the shape the rest of the client reads. */

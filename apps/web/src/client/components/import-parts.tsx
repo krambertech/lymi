@@ -11,6 +11,7 @@ import { Chip } from "./chip";
 import { LanguageField, languageName } from "./deck-fields";
 import { InlineError } from "./inline-error";
 import { Go } from "./next-steps";
+import { Checkbox } from "./ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog";
 import { Field, FieldLabel } from "./ui/field";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
@@ -21,6 +22,7 @@ export type Sample = ImportPreview["samples"][string][number];
 export type Choices = {
   languages: Record<string, string | null>;
   roles: Record<string, FieldRole[]>;
+  skipDecks: string[];
 };
 
 export const ROLE_LABELS: Record<FieldRole, MessageDescriptor> = {
@@ -476,6 +478,109 @@ export function LanguagesDialog({
             </Button>
             <Button variant="primary" type="submit">
               <Trans>Use these languages</Trans>
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+/** Which of the file's decks come into Lymi, for a collection that holds decks the learner no longer uses. */
+export function DecksDialog({
+  decks,
+  skipDecks,
+  open,
+  onOpenChange,
+  onSave,
+}: {
+  decks: Summary["decks"];
+  skipDecks: string[];
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSave: (skipDecks: string[]) => void;
+}) {
+  const { t } = useLingui();
+  const [left, setLeft] = useState(() => new Set(skipDecks));
+  const [error, setError] = useState(false);
+  const none = left.size === decks.length;
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent size="md">
+        <DialogTitle>{t`Decks to import`}</DialogTitle>
+        <DialogDescription>
+          <Trans>
+            Choose the decks you want in Lymi. You can import the others from the same file later.
+          </Trans>
+        </DialogDescription>
+        <form
+          key={open ? "open" : "closed"}
+          className="grid gap-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (none) {
+              setError(true);
+              return;
+            }
+            onSave(decks.filter((deck) => left.has(deck.key)).map((deck) => deck.key));
+            onOpenChange(false);
+          }}
+        >
+          <div className="grid gap-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="-ms-3 justify-self-start"
+              onClick={() => {
+                setLeft(left.size === 0 ? new Set(decks.map((deck) => deck.key)) : new Set());
+                setError(false);
+              }}
+            >
+              {left.size === 0 ? <Trans>Clear all</Trans> : <Trans>Select all</Trans>}
+            </Button>
+            <ul className="grid max-h-[50dvh] overflow-y-auto pe-1">
+              {decks.map((deck) => (
+                <li key={deck.key}>
+                  <Field
+                    orientation="horizontal"
+                    className="min-h-12 rounded-md px-2.5 py-1.5 transition-[background-color] duration-150 hoverable:hover:veil"
+                  >
+                    <Checkbox
+                      checked={!left.has(deck.key)}
+                      onCheckedChange={(on) => {
+                        setLeft((current) => {
+                          const next = new Set(current);
+                          if (on) next.delete(deck.key);
+                          else next.add(deck.key);
+                          return next;
+                        });
+                        setError(false);
+                      }}
+                    />
+                    <span className="grid min-w-0 flex-1">
+                      <FieldLabel className="truncate text-base font-normal">
+                        {deck.name.split("::").join(" / ")}
+                      </FieldLabel>
+                      <span className="text-sm text-muted">
+                        {plural(deck.cards, { one: "# card", other: "# cards" })}
+                      </span>
+                    </span>
+                  </Field>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {error && (
+            <p className="text-sm" role="alert">
+              <InlineError>{t`Choose at least one deck.`}</InlineError>
+            </p>
+          )}
+          <div className="flex items-center justify-end gap-2 pt-1">
+            <Button variant="ghost" onClick={() => onOpenChange(false)}>
+              <Trans>Cancel</Trans>
+            </Button>
+            <Button variant="primary" type="submit">
+              <Trans>Use these decks</Trans>
             </Button>
           </div>
         </form>

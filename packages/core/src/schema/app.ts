@@ -9,9 +9,6 @@ import {
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
 import {
-  type AppliedFix,
-  DIAGNOSIS_CAUSES,
-  type DiagnosisDraft,
   EDITION_STATUSES,
   type EditionCardField,
   LOCALIZATION_PROVENANCES,
@@ -657,47 +654,6 @@ export const reviewUndos = sqliteTable("review_undos", {
   undoneAt: integer("undone_at", { mode: "timestamp_ms" }).notNull(),
 });
 
-/**
- * Why one learner keeps forgetting one revision of a card, as the AI judged it once. Written as
- * `working` when the card turns often forgotten, so a draw queues it once. ADR 0025.
- */
-export const cardDiagnoses = sqliteTable(
-  "card_diagnoses",
-  {
-    id: text("id").primaryKey(),
-    userId: text("user_id")
-      .notNull()
-      .references(() => user.id, { onDelete: "cascade" }),
-    cardId: text("card_id")
-      .notNull()
-      .references(() => cards.id, { onDelete: "cascade" }),
-    /** The card's `revision` when it was diagnosed. An edit raises it and allows a new diagnosis. */
-    revision: integer("revision").notNull(),
-    status: text("status", { enum: ["working", "done", "failed"] })
-      .notNull()
-      .default("working"),
-    /** `unclear` whenever the confidence is below the threshold. */
-    cause: text("cause", { enum: DIAGNOSIS_CAUSES }),
-    /** What the model named before the threshold, so a new threshold needs no second call. */
-    proposedCause: text("proposed_cause", { enum: DIAGNOSIS_CAUSES }),
-    confidence: real("confidence"),
-    /** The fix for `cause`, validated by `Diagnosis`. Null for `unclear`. */
-    draft: text("draft", { mode: "json" }).$type<DiagnosisDraft>(),
-    model: text("model"),
-    /** The prompt that named the cause; an older one is diagnosed again until the learner acts. */
-    promptVersion: integer("prompt_version").notNull().default(1),
-    /** When review first showed the fix. Review offers it once; after that it waits for the learner. */
-    offeredAt: integer("offered_at", { mode: "timestamp_ms" }),
-    acceptedAt: integer("accepted_at", { mode: "timestamp_ms" }),
-    /** The learner said the cause is wrong: never offered or diagnosed again for this revision. */
-    dismissedAt: integer("dismissed_at", { mode: "timestamp_ms" }),
-    /** What accepting wrote, so Undo reverses exactly that. Null until accepted and after Undo. */
-    fix: text("fix", { mode: "json" }).$type<AppliedFix>(),
-    ...timestamps,
-  },
-  (t) => [uniqueIndex("card_diagnoses_user_card_revision_idx").on(t.userId, t.cardId, t.revision)],
-);
-
 /** A card's picture, at most one active per card; the storage rules are in docs/data-model.md. */
 export const cardImages = sqliteTable(
   "card_images",
@@ -874,7 +830,6 @@ export type Review = typeof reviews.$inferSelect;
 export type UserSettings = typeof userSettings.$inferSelect;
 export type UserAvatar = typeof userAvatars.$inferSelect;
 export type ReviewDay = typeof reviewDays.$inferSelect;
-export type CardDiagnosis = typeof cardDiagnoses.$inferSelect;
 export type PushSubscription = typeof pushSubscriptions.$inferSelect;
 export type AuditEntry = typeof auditLog.$inferSelect;
 export type Import = typeof imports.$inferSelect;

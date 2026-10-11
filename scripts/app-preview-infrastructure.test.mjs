@@ -27,12 +27,7 @@ test("names every resource from a validated pull request number", () => {
     databaseName: "lymi-app-pr-105-db",
     namespaceTitle: "lymi-app-pr-105-sessions",
     bucketName: "lymi-app-pr-105-audio",
-    workflowNames: [
-      "lymi-app-pr-105-import",
-      "lymi-app-pr-105-export",
-      "lymi-app-pr-105-enrich",
-      "lymi-app-pr-105-diagnose",
-    ],
+    workflowNames: ["lymi-app-pr-105-import", "lymi-app-pr-105-export", "lymi-app-pr-105-enrich"],
     alias: "preview",
   });
   assert.throws(() => previewNames("../production"), /positive integer/);
@@ -171,7 +166,6 @@ test("cleanup deletes only the exact pull request resources", async () => {
     `${apiRoot()}/workflows/lymi-app-pr-105-import`,
     `${apiRoot()}/workflows/lymi-app-pr-105-export`,
     `${apiRoot()}/workflows/lymi-app-pr-105-enrich`,
-    `${apiRoot()}/workflows/lymi-app-pr-105-diagnose`,
     `${apiRoot()}/r2/buckets/lymi-app-pr-105-audio`,
     `${apiRoot()}/storage/kv/namespaces/kv-id`,
     `${apiRoot()}/d1/database/db-id`,
@@ -341,7 +335,6 @@ test("cleanup succeeds for a pull request that never deployed a preview", async 
     `${apiRoot()}/workflows/lymi-app-pr-105-import`,
     `${apiRoot()}/workflows/lymi-app-pr-105-export`,
     `${apiRoot()}/workflows/lymi-app-pr-105-enrich`,
-    `${apiRoot()}/workflows/lymi-app-pr-105-diagnose`,
   ]);
 });
 

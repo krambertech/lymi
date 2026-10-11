@@ -1,5 +1,6 @@
 import type { Bindings } from "./env";
 import { canonicalOrigins } from "./origin-routing";
+import { posthogEnabled } from "./posthog";
 
 /** Attach the product origin contract and indexing boundary to the application shell. */
 export function configureHtml(response: Response, env: Bindings): Response {
@@ -15,7 +16,10 @@ export function configureHtml(response: Response, env: Bindings): Response {
         element.append(
           `<meta name="lymi-public-site-origin" content="${origins.publicSite}">` +
             `<meta name="lymi-product-origin" content="${origins.product}">` +
-            '<meta name="robots" content="noindex, nofollow">',
+            '<meta name="robots" content="noindex, nofollow">' +
+            (posthogEnabled(env)
+              ? `<meta name="lymi-posthog-token" content="${env.POSTHOG_PROJECT_TOKEN}">`
+              : ""),
           { html: true },
         );
       },

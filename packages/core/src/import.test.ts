@@ -111,6 +111,58 @@ describe("guessFieldRoles", () => {
       "meaning",
     ]);
   });
+  it("reads Lapis, whose field names run together", () => {
+    const lapis = {
+      Expression: "term",
+      ExpressionFurigana: "skip",
+      ExpressionReading: "pronunciation",
+      ExpressionAudio: "skip",
+      SelectionText: "notes",
+      MainDefinition: "meaning",
+      DefinitionPicture: "skip",
+      Sentence: "example",
+      SentenceFurigana: "skip",
+      SentenceAudio: "skip",
+      Picture: "skip",
+      Glossary: "notes",
+      Hint: "notes",
+      IsWordAndSentenceCard: "skip",
+      IsClickCard: "skip",
+      IsSentenceCard: "skip",
+      IsAudioCard: "skip",
+      PitchPosition: "skip",
+      PitchCategories: "skip",
+      Frequency: "notes",
+      FreqSort: "skip",
+      MiscInfo: "notes",
+    };
+    expect(guessFieldRoles(Object.keys(lapis))).toEqual(Object.values(lapis));
+  });
+  it("reads spaced names by their last word", () => {
+    expect(
+      guessFieldRoles([
+        "Word",
+        "Word Reading",
+        "Word Meaning",
+        "Word Furigana",
+        "Word Audio",
+        "Sentence",
+        "Sentence Meaning",
+        "Pitch Accent",
+        "word_audio",
+      ]),
+    ).toEqual([
+      "term",
+      "pronunciation",
+      "meaning",
+      "skip",
+      "skip",
+      "example",
+      "notes",
+      "skip",
+      "skip",
+    ]);
+  });
   it("gives each single role to one field", () => {
     expect(guessFieldRoles(["Word", "Term", "Meaning", "Translation"])).toEqual([
       "term",

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { RETURN_GAPS, SLIPPING_RETURN_GAP } from "../draw";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS } from "../slipping";
-import { Diagnosis, Direction, Rating, ReviewMode } from "../types";
+import { Direction, Rating, ReviewMode } from "../types";
 import { CardOut } from "./cards";
 import { Timestamp } from "./common";
 
@@ -22,39 +22,8 @@ export const ReviewDayProgress = z
   .meta({ id: "ReviewDayProgress" });
 export type ReviewDayProgress = z.infer<typeof ReviewDayProgress>;
 
-/**
- * A fix review offers after the reveal: the card's diagnosis, once, while it is often forgotten
- * and the learner can change it. ADR 0025.
- */
-const [pairDiagnosis, splitDiagnosis, cueDiagnosis, hookDiagnosis, unclearDiagnosis] =
-  Diagnosis.options;
-
-export const ReviewOfferOut = z
-  .object({ diagnosisId: z.string() })
-  .and(
-    z.discriminatedUnion("cause", [
-      pairDiagnosis.extend({
-        other: z
-          .object({
-            id: z.string(),
-            term: z.string(),
-            meaning: z.string().nullable(),
-            language: z.string().nullable(),
-          })
-          .meta({ description: "The card it is mixed up with, as the learner reads it" }),
-      }),
-      splitDiagnosis,
-      cueDiagnosis,
-      hookDiagnosis,
-      unclearDiagnosis,
-    ]),
-  )
-  .meta({ id: "ReviewOffer" });
-export type ReviewOfferOut = z.infer<typeof ReviewOfferOut>;
-
-const offer = ReviewOfferOut.optional().meta({
-  description:
-    "A drafted fix to show after the reveal. Mark it offered once shown; it is not sent again.",
+const slipping = z.boolean().meta({
+  description: `Often forgotten: the first grade was Forgot on ${SLIPPING_FORGOTTEN_DAYS} of its last ${SLIPPING_RECENT_DAYS} review days before today`,
 });
 
 export const QueueItemOut = z
@@ -70,7 +39,7 @@ export const QueueItemOut = z
     next: z
       .object({ 1: Timestamp, 2: Timestamp, 3: Timestamp, 4: Timestamp })
       .meta({ description: "When each grade would schedule the card" }),
-    offer,
+    slipping,
   })
   .meta({ id: "QueueItem" });
 
@@ -124,10 +93,9 @@ const DrawCardOut = z
   .object({
     card: CardOut,
     modes: z.array(DrawModeOut).meta({ description: "In the order they are introduced" }),
-    slipping: z.boolean().meta({
+    slipping: slipping.meta({
       description: `Often forgotten: a miss returns once, ${SLIPPING_RETURN_GAP} attempts later, instead of up to ${RETURN_GAPS.length} times`,
     }),
-    offer,
   })
   .meta({ id: "DrawCard" });
 

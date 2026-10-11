@@ -26,6 +26,7 @@ export type E2EAccount =
   | "activity"
   | "language"
   | "join-owner"
+  | "join-member"
   | "invite-owner"
   | "avatar"
   | "avatar-other"

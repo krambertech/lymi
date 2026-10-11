@@ -2,7 +2,7 @@
 
 **Status:** Agreed 5 September 2026, integrations layer decided the same day. Edit in place as decisions change. Vocabulary is in [CONTEXT.md](../CONTEXT.md).
 
-Everything runs on Cloudflare. An Astro site and narrow Worker serve the public website and docs on `lymi.app`. A separate Vite React and Hono Worker serves the product, API, auth and MCP server on `my.lymi.app`. Interactive public sections hydrate as React islands, while the private product remains a client-rendered PWA that behaves like a native app on the phone and like a keyboard-driven web app on the desktop. Shared logic lives in a package a future React Native app can import unchanged.
+Everything runs on Cloudflare. An Astro site and narrow Worker serve the public website and docs on `lymi.app`. A separate Vite React and Hono Worker serves the product, API, auth and MCP server on `my.lymi.app`. Interactive public sections hydrate as React islands, while the private product remains a client-rendered PWA that behaves like a native app on the phone and like a keyboard-driven web app on the desktop. Shared logic lives in a package the phone app in `apps/mobile` imports unchanged.
 
 ## Shape
 
@@ -22,7 +22,7 @@ flowchart LR
     Services[Service layer\ndb, userId, actor]
     Auth[Better Auth /api/auth\nsessions, API keys, OAuth server]
     MCP[MCP server /mcp\ncreateMcpHandler, stateless]
-    AI[Enrichment, diagnosis, TTS\nOpenAI text, Gemini speech]
+    AI[Enrichment + TTS\nOpenAI text, Gemini speech]
   end
   subgraph Core["packages/core"]
     Schema[Drizzle schema + Zod types]
@@ -80,6 +80,10 @@ This is a design requirement with a technical checklist:
 - Keyboard shortcuts and a command palette on desktop; the same routes, a different shell.
 
 The bar is "could be mistaken for native." Every screen is checked on a real iPhone in standalone mode before it ships.
+
+### Phone app: Expo React Native, sharing Lymi's packages
+
+`apps/mobile` is an Expo SDK 57 React Native app with Expo Router, Uniwind (Tailwind v4 class names shared with the web), Reanimated with Gesture Handler, Lucide and Onest, and Home Screen widgets through `expo-widgets`. It imports `packages/core` unchanged; the API client and design values move into shared packages before its screens use real data. It lost to Capacitor around the existing React app, which keeps every screen a WebView. [ADR 0029](adr/0029-the-phone-app-is-expo-react-native-sharing-core.md) has the decision and [the proposal](proposals/native-mobile-app.md) the delivery outline.
 
 ### UI: Tailwind v4 + shadcn/ui on Base UI, tokens in styles.css
 
@@ -155,11 +159,15 @@ Rate limits are per address as well as per caller. Better Auth's own limiter cou
 
 Transactional email has a daily ceiling of its own in KV, under the provider's quota, so a spread of machines inside the per-caller budgets cannot spend the day's allowance and leave a real learner's reset undelivered.
 
-### Analytics: aggregate usage in Workers Analytics Engine
+### Analytics: Workers Analytics Engine and PostHog EU
 
 The product Worker writes request counts, status classes and timings to `lymi_requests`, and fixed product action labels and counts to `lymi_events`. Route patterns replace requested paths, and neither dataset receives account identifiers, client names, card content or query strings. Two datasets keep high request volume from sampling product actions under the same index. The bindings are optional in local development and omitted from product previews, whose activity is synthetic.
 
-Cloudflare is already the hosting provider, so Analytics Engine adds no processor. PostHog, GA4, Plausible and self-hosted Umami remain options if a later product question needs richer analysis; this setup does not collect learner-level funnels or session replay. Browser Web Analytics is not configured, so referrers are outside these metrics. Page views of published decks are counted separately: the site Worker adds one to `deck_page_views` in D1 per request, by deck, UTC day and locale, for publisher reports ([ADR 0028](adr/0028-publishers-read-aggregate-reports-on-their-published-decks.md)). It skips known crawlers and stores nothing about the visitor.
+PostHog EU receives the same product actions with an opaque account ID, plus `app_opened` from the signed-in browser. The ID joins activity across devices without sending names or email addresses. Unexpected HTTP and MCP tool failures, browser exceptions and exhausted enrichment and internal import failures reach Error Tracking. Exception messages, request URLs, SQL, SDK context and source snippets are discarded; reports retain error classes, compiled script names, line numbers and fixed route patterns. Session replay, click autocapture, automatic page views, feature flags and geolocation enrichment are disabled. Browser state stays in memory, with no analytics cookies or persisted identifier. Analytics failures never change a product response; HTTP sends use `waitUntil`, and Workflow sends finish inside their durable step.
+
+`POSTHOG_PROJECT_TOKEN` is the public write-only ingestion token in the product Wrangler configuration, not a personal API key. Monitoring runs only with the production product origin and never in isolated previews or loopback development. The server injects the token into the product shell only when enabled; the browser also checks its actual origin. PostHog adds one processor, disclosed in the privacy policy, and gives account-level funnels and grouped exceptions that aggregate Cloudflare metrics cannot provide. Source map uploads and outbound error alerts are not configured. Keep usage billing limits at $0 in the PostHog organization. Promotional platform add-ons have their own expiry and must be reviewed separately from those usage limits.
+
+Browser Web Analytics is not configured, so referrers are outside these metrics. Page views of published decks are counted separately: the site Worker adds one to `deck_page_views` in D1 per request, by deck, UTC day and locale, for publisher reports ([ADR 0028](adr/0028-publishers-read-aggregate-reports-on-their-published-decks.md)). It skips known crawlers and stores nothing about the visitor.
 
 ### Transactional email: Cloudflare Email Service from the product Worker
 
@@ -171,15 +179,13 @@ Cloudflare Email Service won over Resend because it is a native Worker binding w
 
 FSRS in TypeScript, in `packages/core`, used by the client (to schedule offline) and the server (to validate and persist). Grades and intervals are the algorithm's, not invented. One 10-minute learning step sets FSRS state only; which card comes next, and when a missed card returns, is the weighted draw in `packages/core/src/draw.ts` ([ADR 0019](adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md)).
 
-### AI: enrichment, diagnosis and lazy multilingual speech
+### AI: enrichment plus lazy multilingual speech
 
-**The server does not extract vocabulary from lessons. The MCP client does.** Claude Desktop or Codex already holds the transcript and a model, so it reads the lesson and calls `add_cards`. That keeps the Worker's AI to two jobs. Enrichment fills the empty fields on a card (meaning, example, pronunciation, language) and leaves every field that already has text alone. Diagnosis names why a card stays often forgotten and drafts a fix that waits for the learner.
+**The server does not extract vocabulary from lessons. The MCP client does.** Claude Desktop or Codex already holds the transcript and a model, so it reads the lesson and calls `add_cards`. That keeps the Worker's AI to one job, enrichment: fill the empty fields on a card (meaning, example, pronunciation, language) and leave every field that already has text alone.
 
 Enrichment runs in the background after an add that leaves fields unset. The learner's adds in the app enrich by default; an API key or MCP client asks per card with `enrich: true`, because an agent tending a deck in bulk should not get text it did not ask for. A field stored as `""` is a deliberate clear and is never filled by a run; asking to enrich that card reopens it. Typing "sbrigarsi" on the phone and finding the meaning there by the time you open the deck is the point. Each filled field is stored with `source: "ai"` so the UI labels it. Meanings are written in the learner's meaning language, a per-user setting, English by default.
 
 One Cloudflare Workflow per add batch does the work, alongside the import and export workflows, asking for about ten cards per model call so a lesson lands in waves rather than all at once. `cards.enrichment_status` is `working` or `failed` while a job is outstanding and null otherwise, and the reads that already load cards carry it, so each empty field can hold its space until the text lands. A run that gives up leaves its cards at `failed` and the add itself still succeeds; with no OpenAI key configured no run is queued at all and the cards stay exactly as they arrived.
-
-A diagnosis may propose changing text the learner wrote, so it only drafts: nothing on the card changes until the learner accepts the fix ([ADR 0025](adr/0025-the-ai-proposes-card-changes-that-apply-only-when-accepted.md)). It runs once per learner and card revision, in the `lymi-diagnose` Workflow, queued after the response of the first draw that finds the card often forgotten, so the model never sits in a draw's latency. One call per card reads the card, its nearest deck neighbours so the deck's own format shows, and the learner's other often-forgotten cards so a confused pair can be named; the prompt says a format the deck uses throughout is never a cause. Below a confidence threshold the stored cause is `unclear`. `apps/web/src/server/diagnosis/evaluate.ts` runs the prompt over invented, labelled cards and prints the agreement that sets the threshold; it calls OpenAI, so it is a script and not a test.
 
 OpenAI remains the text-enrichment vendor, on `gpt-6-luna` with structured outputs, so a reply either parses against the schema or the step retries. It runs at `high` reasoning effort: meanings and examples were right at every effort, but lower efforts put the stress mark on the wrong syllable in IPA far more often, and `high` still writes far fewer output tokens than `gpt-5-mini` did. Claude and Gemini both write good definitions; OpenAI wins on already being the speech fallback vendor, so enrichment adds no second text credential. The model is overridable per environment with `OPENAI_TEXT_MODEL`, because the cheap tier moves faster than this document; an override must be a reasoning model, because the request always sends an effort. Speech defaults to Gemini-TTS through the Gemini API used by AI Studio, with the native ElevenLabs v4 reference voices chosen by listening in `speech-voices.ts`, including Priit for Estonian. Czech, Polish and unrated languages keep Gemini. The locale is pinned because a single word is too little text to detect a language from. Gemini uses Kore by default; OpenAI and then Chirp 3 HD are runtime fallbacks. Cloud Gemini remains available when only the Google service account is configured. Speech prompts name the language in English ("Estonian"), never as a bare code such as `et`. The routing layer is provider-neutral, so an R2 hit does not parse credentials or call a vendor.
 
@@ -263,7 +269,7 @@ lymi/
   docs/             This file and the brief
 ```
 
-Each app owns one build artifact and Worker configuration so its custom domain and release lifecycle can change independently. `packages/core` is the stable domain layer both Workers and a future React Native app can import. Brand SVGs and foundational styles are duplicated deliberately for now; a shared design or UI package waits until both clients need a stable common API.
+Each app owns one build artifact and Worker configuration so its custom domain and release lifecycle can change independently. `packages/core` is the stable domain layer both Workers and the phone app import. Brand SVGs and foundational styles are duplicated deliberately for now; a shared design or UI package waits until both clients need a stable common API.
 
 Two workspace details worth knowing. `drizzle-orm` is a dependency of `packages/core` only and is re-exported as `@lymi/core/db`, because better-auth pulls in kysely and pnpm would otherwise build two copies of drizzle with incompatible types. And the Better Auth tables are generated, not hand-written: `pnpm --filter @lymi/web auth:schema` reads `src/server/auth-cli.ts` and writes `packages/core/src/schema/auth.ts`.
 
@@ -289,7 +295,7 @@ Persona accounts under `@lymi.local` are created already confirmed and send no c
 - Cards from integrations are ordinary cards. No proposals table. Activity in Settings is the oversight.
 - Duplicate means same normalised term and same language anywhere in the learner's decks. Skipped and reported, never rejected.
 - The server enriches, the MCP client extracts. Enrichment is background and fills only empty fields; on by default in the app, opt-in per card for integrations (21 September 2026).
-- The AI diagnoses an often-forgotten card once per learner and revision, in the background, and its fix applies only when the learner accepts it (28 September 2026). ADR 0025.
+- The AI diagnosed often-forgotten cards and drafted fixes from 28 September to 11 October 2026; it was withdrawn because the diagnoses were rarely right. Review now offers a hook the learner writes. ADR 0025.
 - App language (12 September 2026): one per-user setting, seeded from the browser, drives the interface, push copy and the meaning language. Ukrainian and Russian first. ADR 0013.
 - Interface text is English source in the code, translated through Lingui `.po` catalogs, extracted in `pnpm verify`, drafted by the agent on the PR. ADR 0012.
 - Integrations never grade reviews.

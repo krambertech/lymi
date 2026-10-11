@@ -222,13 +222,14 @@ export type ImportWork<Note> = {
 
 async function* importedCards<Note>(work: ImportWork<Note>, from = 0) {
   if (!work.row.objectKey) throw new ServiceError("unavailable", "The import's file is gone");
+  const leftOut = new Set(work.choices.skipDecks ?? []);
   for (let chunk = from; chunk < work.row.chunks; chunk++) {
     const notes = await readNoteChunk<Note>(work.bucket, work.row.objectKey, chunk);
     let skipped = 0;
     const cards = notes.flatMap((note) => {
       const made = work.adapter.cards(note, work.summary, work.choices);
       if (made.length === 0) skipped++;
-      return made;
+      return made.filter((card) => !leftOut.has(card.deckKey));
     });
     yield { chunk, cards, skipped };
   }

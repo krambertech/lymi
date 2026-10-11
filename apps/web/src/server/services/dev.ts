@@ -1,9 +1,7 @@
 import {
   type Actor,
-  type DiagnosisDraft,
   dayWindow,
   emptyState,
-  OFFERED_CAUSES,
   type Rating,
   SLIPPING_FORGOTTEN_DAYS,
   schedule,
@@ -13,7 +11,6 @@ import { and, asc, desc, eq, inArray, isNull, lte, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import type { Persona, PersonaCard, PersonaDeck } from "../dev/personas";
 import { personaEmail } from "../dev/personas";
-import { DIAGNOSIS_PROMPT_VERSION } from "../diagnosis/prompt";
 import { auditStatement } from "./audit";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
@@ -730,57 +727,14 @@ export async function slipCards(ctx: ServiceContext, count: number): Promise<num
   return chosen.size;
 }
 
-/** The deck `seedFixes` writes, one card per cause review offers a fix for. */
-const FIXES_DECK = "Tricky Estonian";
+/** The deck `seedOftenForgotten` writes. */
+const OFTEN_FORGOTTEN_DECK = "Tricky Estonian";
 
-export type FixCause = (typeof OFFERED_CAUSES)[number];
-
-/** The confused pair's card; its draft names the other card, which exists only once seeded. */
-const PAIR_CARD: PersonaCard = { term: "alustama", meaning: "to begin, to start (something)" };
-const pairDraft = (otherCardId: string): DiagnosisDraft => ({
-  otherCardId,
-  cards: [
-    { term: "Ma alustan tööd kell üheksa.", meaning: "I start work at nine. (I start it)" },
-    { term: "Töö algab kell üheksa.", meaning: "Work starts at nine. (it starts by itself)" },
-  ],
-});
-
-/** Each other cause's card, and the diagnosis a model could plausibly have written for it. */
-const FIX_CARDS: Record<
-  Exclude<FixCause, "confused_pair">,
-  { card: PersonaCard; draft: DiagnosisDraft | null }
-> = {
-  two_things: {
-    card: {
-      term: "Kus sa elad? Ma elan Tallinnas.",
-      meaning: "Where do you live? I live in Tallinn.",
-    },
-    draft: {
-      cards: [
-        { term: "Kus sa elad?", meaning: "Where do you live?" },
-        { term: "Ma elan Tallinnas.", meaning: "I live in Tallinn." },
-      ],
-    },
-  },
-  several_answers: {
-    card: { term: "pikk", meaning: "tall" },
-    draft: { field: "meaning", text: "tall (of a person)", otherAnswer: "kõrge" },
-  },
-  no_anchor: {
-    card: { term: "kõrvits", meaning: "pumpkin" },
-    draft: { hook: "A pumpkin curves at its sides: “curve-its”." },
-  },
-  unclear: {
-    card: { term: "vaatama", meaning: "to look, to watch" },
-    draft: null,
-  },
-};
-
-const fixCard = (cause: FixCause) =>
-  cause === "confused_pair" ? PAIR_CARD : FIX_CARDS[cause].card;
-
-/** The card a confused pair names, which is not often forgotten itself. */
-const PAIR_OTHER: PersonaCard = { term: "algama", meaning: "to begin, to start (by itself)" };
+/** Cards with no hook yet, so review offers to write one. */
+const OFTEN_FORGOTTEN: PersonaCard[] = [
+  { term: "kõrvits", meaning: "pumpkin" },
+  { term: "vaatama", meaning: "to look, to watch" },
+];
 
 /** A card that already has a hook, recalled once before, so review can show the peek. */
 const HOOKED: PersonaCard & { hook: string } = {
@@ -790,60 +744,49 @@ const HOOKED: PersonaCard & { hook: string } = {
 };
 
 /**
- * One often-forgotten card per cause review offers a fix for, each with a finished diagnosis no
- * model wrote, so the offer can be seen without a vendor key. Asked meaning first, forgotten as
- * the first grade on just enough past days to slip, and due now. With `hooked`, the default when
- * no causes are named, a card that already has a hook is due beside them. A second run replaces
- * the first.
+ * Often-forgotten cards with no hook, asked meaning first, forgotten as the first grade on just
+ * enough past days to slip, and due now. With `hooked`, a card that already has a hook is due
+ * beside them. A second run replaces the first.
  */
-export async function seedFixes(
+export async function seedOftenForgotten(
   ctx: ServiceContext,
-  causes?: readonly FixCause[],
-  { hooked = causes === undefined }: { hooked?: boolean | undefined } = {},
+  { hooked = true }: { hooked?: boolean | undefined } = {},
   now = new Date(),
-): Promise<{
-  deckId: string;
-  cards: { cause: FixCause; cardId: string }[];
-  hookedCardId: string | null;
-}> {
+): Promise<{ deckId: string; cardIds: string[]; hookedCardId: string | null }> {
   const { db, userId } = ctx;
-  const terms = [PAIR_OTHER, HOOKED, ...OFFERED_CAUSES.map(fixCard)].map((c) => c.term);
+  const terms = [HOOKED, ...OFTEN_FORGOTTEN].map((c) => c.term);
   await db.batch([
     db
       .delete(schema.cards)
       .where(and(eq(schema.cards.userId, userId), inArray(schema.cards.term, terms))),
     db
       .delete(schema.decks)
-      .where(and(eq(schema.decks.userId, userId), eq(schema.decks.name, FIXES_DECK))),
+      .where(and(eq(schema.decks.userId, userId), eq(schema.decks.name, OFTEN_FORGOTTEN_DECK))),
   ]);
   const deck = await createDeck(ctx, {
-    name: FIXES_DECK,
+    name: OFTEN_FORGOTTEN_DECK,
     defaultLanguage: "et",
     reviewModes: [{ cue: "meaning", target: "term" }],
   });
-  const wanted = [...new Set(causes ?? OFFERED_CAUSES)];
   const seeds: (PersonaCard & { hook?: string })[] = [
-    ...(wanted.includes("confused_pair") ? [PAIR_OTHER] : []),
-    ...wanted.map(fixCard),
+    ...OFTEN_FORGOTTEN,
     ...(hooked ? [HOOKED] : []),
   ];
-  const inputs = seeds.map((card) => ({
-    deckId: deck.id,
-    term: card.term,
-    meaning: card.meaning,
-    meaningSource: "lesson" as const,
-    source: "Tund 7",
-    ...(card.hook ? { hook: card.hook } : {}),
-  }));
-  const outcomes = await addCards(ctx, inputs);
+  const outcomes = await addCards(
+    ctx,
+    seeds.map((card) => ({
+      deckId: deck.id,
+      term: card.term,
+      meaning: card.meaning,
+      meaningSource: "lesson" as const,
+      source: "Tund 7",
+      ...(card.hook ? { hook: card.hook } : {}),
+    })),
+  );
   const idOf = new Map(
     outcomes.flatMap((o) => (o.status === "added" ? [[o.card.term, o.card.id] as const] : [])),
   );
-  const other = idOf.get(PAIR_OTHER.term);
-  const seeded = wanted.flatMap((cause) => {
-    const cardId = idOf.get(fixCard(cause).term);
-    return cardId ? [{ cause, cardId }] : [];
-  });
+  const cardIds = OFTEN_FORGOTTEN.flatMap((card) => idOf.get(card.term) ?? []);
   const hookedCardId = idOf.get(HOOKED.term) ?? null;
 
   const states = await db
@@ -852,10 +795,7 @@ export async function seedFixes(
     .where(
       and(
         eq(schema.cardStates.userId, userId),
-        inArray(schema.cardStates.cardId, [
-          ...seeded.map((s) => s.cardId),
-          ...(hookedCardId ? [hookedCardId] : []),
-        ]),
+        inArray(schema.cardStates.cardId, [...cardIds, ...(hookedCardId ? [hookedCardId] : [])]),
       ),
     );
   const today = dayWindow(now, await reviewZone(ctx)).start.getTime();
@@ -907,35 +847,6 @@ export async function seedFixes(
         .where(eq(schema.cardStates.id, state.id)),
     );
   }
-  // The other half of the pair waits, so the card with the offer is the one review shows.
-  if (other) {
-    statements.push(
-      db
-        .update(schema.cardStates)
-        .set({ due: new Date(now.getTime() + 30 * DAY) })
-        .where(eq(schema.cardStates.cardId, other)),
-    );
-  }
-  for (const { cause, cardId } of seeded) {
-    const pair = other ? pairDraft(other) : undefined;
-    const draft = cause === "confused_pair" ? pair : FIX_CARDS[cause].draft;
-    if (draft === undefined) continue;
-    statements.push(
-      db.insert(schema.cardDiagnoses).values({
-        id: crypto.randomUUID(),
-        userId,
-        cardId,
-        revision: 1,
-        status: "done",
-        cause,
-        proposedCause: cause,
-        confidence: cause === "unclear" ? 0.3 : 0.9,
-        draft,
-        model: "dev",
-        promptVersion: DIAGNOSIS_PROMPT_VERSION,
-      }),
-    );
-  }
   await runBatched(db, statements);
-  return { deckId: deck.id, cards: seeded, hookedCardId };
+  return { deckId: deck.id, cardIds, hookedCardId };
 }

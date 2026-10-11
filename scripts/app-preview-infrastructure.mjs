@@ -21,12 +21,7 @@ export function previewNames(value) {
     namespaceTitle: `${workerName}-sessions`,
     bucketName: `${workerName}-audio`,
     // One per production workflow, in wrangler.jsonc's order.
-    workflowNames: [
-      `${workerName}-import`,
-      `${workerName}-export`,
-      `${workerName}-enrich`,
-      `${workerName}-diagnose`,
-    ],
+    workflowNames: [`${workerName}-import`, `${workerName}-export`, `${workerName}-enrich`],
     alias: "preview",
   };
 }

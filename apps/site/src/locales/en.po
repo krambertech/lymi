@@ -140,6 +140,9 @@ msgstr "<0>Google</0> provides Google sign-in and may provide speech generation 
 msgid "<0>OpenAI</0> may provide speech generation. A configured Cloudflare AI Gateway may relay that request."
 msgstr "<0>OpenAI</0> may provide speech generation. A configured Cloudflare AI Gateway may relay that request."
 
+msgid "<0>PostHog</0> provides product analytics and error tracking in its EU cloud. It receives the limited product and error data described above."
+msgstr "<0>PostHog</0> provides product analytics and error tracking in its EU cloud. It receives the limited product and error data described above."
+
 msgid "<0>Your browser’s push service</0> receives an encrypted reminder when you enable notifications."
 msgstr "<0>Your browser’s push service</0> receives an encrypted reminder when you enable notifications."
 
@@ -149,11 +152,11 @@ msgstr "<0>Your connected apps</0> receive only the data allowed by the permissi
 msgid "10 min"
 msgstr "10 min"
 
+msgid "11 October 2026"
+msgstr "11 October 2026"
+
 msgid "2 days"
 msgstr "2 days"
-
-msgid "20 September 2026"
-msgstr "20 September 2026"
 
 msgid "4 days"
 msgstr "4 days"
@@ -1699,6 +1702,9 @@ msgstr "Policies"
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 
+msgid "PostHog keeps its browser state in memory for the current page and does not set analytics cookies or store an analytics identifier in local storage. Its reports still use the opaque account identifier while you are signed in."
+msgstr "PostHog keeps its browser state in memory for the current page and does not set analytics cookies or store an analytics identifier in local storage. Its reports still use the opaque account identifier while you are signed in."
+
 msgid "Practise with your own words."
 msgstr "Practise with your own words."
 
@@ -2420,6 +2426,9 @@ msgstr "verb"
 
 msgid "Waiting for your notes"
 msgstr "Waiting for your notes"
+
+msgid "We also use PostHog’s EU service to understand product use and investigate errors. We send fixed action labels, counts and review grades with an opaque account identifier that connects activity across devices. Error reports contain the error type and technical stack frames; we remove error messages and other context. We do not send card content, email addresses, names, credentials or exact requested URLs, and we do not record sessions."
+msgstr "We also use PostHog’s EU service to understand product use and investigate errors. We send fixed action labels, counts and review grades with an opaque account identifier that connects activity across devices. Error reports contain the error type and technical stack frames; we remove error messages and other context. We do not send card content, email addresses, names, credentials or exact requested URLs, and we do not record sessions."
 
 msgid "We count requests and product actions by type and measure response times. These metrics contain no account identifiers, card content or exact requested URLs."
 msgstr "We count requests and product actions by type and measure response times. These metrics contain no account identifiers, card content or exact requested URLs."

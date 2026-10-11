@@ -117,7 +117,7 @@ export function SettingsView({
       <SettingsGroup
         id="export"
         title={t`Export`}
-        description={t`Export all decks (pictures, schedule, review history) as a Lymi file or Anki package.`}
+        description={t`Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package.`}
       >
         <Button
           variant="secondary"

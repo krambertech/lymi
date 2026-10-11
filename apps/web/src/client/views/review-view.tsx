@@ -40,15 +40,14 @@ import { CardPicture } from "../components/card-picture";
 import { AiCardChip, Chip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
-import {
-  FIX_OFFER_BOX,
-  FixOffer,
-  FixOfferFace,
-  type FixOfferProps,
-  offerTitle,
-} from "../components/fix-offer";
 import { Flame } from "../components/flame";
 import { GRADES } from "../components/grade";
+import {
+  HOOK_OFFER_BOX,
+  HookOffer,
+  HookOfferFace,
+  type HookOfferProps,
+} from "../components/hook-offer";
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
 import { Progress } from "../components/progress";
@@ -370,8 +369,8 @@ export interface ReviewCardProps {
   audioState?: "idle" | "loading" | "playing" | undefined;
   /** Why the pronunciation did not play. Shown on the button, never as a line in the card. */
   audioError?: string | null | undefined;
-  /** A drafted fix, pinned at the plate's foot once the answer shows. Its room is kept from the reveal. */
-  offer?: FixOfferProps | undefined;
+  /** The offer to write a hook, pinned at the plate's foot once the answer shows. Its room is kept from the reveal. */
+  offer?: HookOfferProps | undefined;
   /** Help before the reveal, from `aidSteps`, and how many steps the learner has taken. */
   aid?: RecallAidProps | undefined;
   className?: string | undefined;
@@ -626,7 +625,6 @@ export function ReviewCard({
     : 0;
   const aidAnimate = aid?.animate ?? true;
   const spokenAid = aidsOnShow > 0 ? aid?.steps[aidsOnShow - 1]?.text : undefined;
-  const fixTitle = offer ? offerTitle(i18n, offer.offer) : "";
   // The last movement in the cue's block: the aid leaving or arriving, or else the reveal.
   const cueGlide = aidGone
     ? aidGone.animate
@@ -1026,11 +1024,11 @@ export function ReviewCard({
       {/* Outside the scroller, so a long card never hides it, and inset so its corners follow the plate's. */}
       {offer && revealed && (
         <div className="shrink-0 px-2 pb-2">
-          <FixOffer
+          <HookOffer
             {...offer}
             onShown={() => {
               setOfferSeen(true);
-              offer.onShown();
+              offer.onShown?.();
             }}
           />
         </div>
@@ -1043,8 +1041,8 @@ export function ReviewCard({
           inert
           className="pointer-events-none invisible absolute inset-x-0 bottom-0 px-2 pb-2"
         >
-          <div className={FIX_OFFER_BOX}>
-            <FixOfferFace offer={offer.offer} />
+          <div className={HOOK_OFFER_BOX}>
+            <HookOfferFace />
           </div>
         </div>
       )}
@@ -1053,7 +1051,7 @@ export function ReviewCard({
           ? t`Memory hook: ${spokenAid}`
           : revealed
             ? offer && offerSeen
-              ? t`Answer: ${back}. A fix is ready: ${fixTitle}`
+              ? t`Answer: ${back}. You can add a memory hook.`
               : t`Answer: ${back}`
             : ""}
       </p>

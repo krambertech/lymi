@@ -14,7 +14,7 @@ test("privacy choices live on the public site and synchronize without an app ban
   await expect(page.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
   await expect(banner(page)).toHaveCount(0);
   await page.goto("/settings");
-  const preferences = page.getByRole("link", { name: "Privacy preferences", exact: true });
+  const preferences = page.getByRole("link", { name: "Open on lymi.app", exact: true });
   await expect(preferences).toHaveAttribute("href", `${e2eSiteUrl}/privacy#privacy-preferences`);
   await preferences.focus();
   await page.keyboard.press("Enter");

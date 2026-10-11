@@ -32,9 +32,9 @@ export const archivedCardsQuery = queryOptions({
 export const hookDraftQuery = (card: { id: string; term: string; meaning: string | null }) =>
   queryOptions({
     queryKey: ["cards", card.id, "hook-draft", card.term, card.meaning],
-    queryFn: async () => (await api.draftHook(card.id)).hook,
+    // A draft that cannot be had is no draft: the plain placeholder, settled, not asked again.
+    queryFn: async () => (await api.draftHook(card.id).catch(() => ({ hook: null }))).hook,
     staleTime: Number.POSITIVE_INFINITY,
-    // A draft is a nicety: one that fails leaves the plain placeholder rather than asking again.
     retry: false,
     // The server keeps the draft; a copy kept across reloads would outlive a better one.
     meta: { persist: false },

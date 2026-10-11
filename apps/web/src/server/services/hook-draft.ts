@@ -5,7 +5,7 @@ import {
   modesFromDirections,
   type ReviewModeKey,
 } from "@lymi/core";
-import { and, eq } from "@lymi/core/db";
+import { and, eq, isNull } from "@lymi/core/db";
 import { z } from "zod";
 import type { TextProvider } from "../ai";
 import { schema } from "../db";
@@ -46,7 +46,7 @@ export const HOOK_INSTRUCTIONS = [
   "- The keyword is a real everyday word or a name everyone knows, never a made-up word, a fragment split across words, or a brand or abbreviation.",
   "- The keyword must truly sound like the start of the term. If no keyword sounds close, return null.",
   "- The picture is ordinary and instant: no puzzles, nothing surreal, no alcohol, drugs, violence or illness.",
-  "- The card lists the modes it is asked in. meaning_to_term: the learner sees the meaning and recalls the term, so never write the term or any word of it in its own spelling. term_to_meaning: the learner sees the term and recalls the meaning, so never write the meaning or a word sharing its root.",
+  "- The card lists the modes it is asked in. meaning_to_term: the learner sees the meaning and recalls the term, so never write the term or any word of it in its own spelling. term_to_meaning: the learner sees the term and recalls the meaning, so never write the meaning or a word sharing its root. image_to_term asks for the term as meaning_to_term does, and image_to_meaning asks for the meaning as term_to_meaning does.",
   "- A term with forms separated by ' · ' is hooked on its first form.",
   "- A phrase of up to three words is hooked on its hardest word. Return null for a longer sentence.",
   "- Return null when the term is in the same language as its meaning, or when the card is not a word or phrase with a translation. Null is better than a strange hook.",
@@ -64,36 +64,83 @@ const REPLY_SCHEMA = {
 
 const Reply = z.object({ hook: z.string().nullable() });
 
-/** Lowercase, without accents, so "Kõrvits" and "korvits" compare alike. */
+/** Lowercase, without accents, so "Kõrvits" and "korvits" compare alike, and "ё" reads as "е". */
 function fold(text: string): string {
   return text.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
 }
 
-/** The words of a text worth guarding: four letters or more, parentheses left out. */
+/** Short words that carry no meaning of their own, so a hook may say them whatever the card is. */
+const FUNCTION_WORDS = new Set([
+  "the",
+  "and",
+  "for",
+  "but",
+  "not",
+  "you",
+  "are",
+  "was",
+  "his",
+  "her",
+  "its",
+  "who",
+  "how",
+  "что",
+  "как",
+  "это",
+  "для",
+  "или",
+  "при",
+  "над",
+  "под",
+  "без",
+  "его",
+  "она",
+  "они",
+  "кто",
+  "так",
+  "уже",
+  "ещё",
+  "еще",
+  "щоб",
+  "або",
+  "вже",
+  "вони",
+]);
+
+/** The words of a text worth guarding: three letters or more, parentheses and function words left out. */
 function contentWords(text: string): string[] {
   return fold(text.replace(/\([^)]*\)/g, " "))
     .split(/[^\p{L}]+/u)
-    .filter((word) => word.length >= 4);
-}
-
-/** True when one of `words` appears in `hook`, compared on the first five letters so inflections count. */
-function mentions(hook: string, words: readonly string[]): boolean {
-  const said = contentWords(hook);
-  return words.some((word) => {
-    const stem = word.slice(0, 5);
-    return said.some((w) => w.startsWith(stem) || (w.length >= 4 && stem.startsWith(w)));
-  });
+    .filter((word) => word.length >= 3 && !FUNCTION_WORDS.has(word));
 }
 
 /**
- * Whether a draft gives away what the card asks for: the term where the meaning is the cue, the
- * meaning where the term is. A sound-alike written in the learner's own script is not the term.
+ * True when one of `words` appears in `hook`. A short word must match whole; a longer one matches
+ * on its first letters, up to four, so an inflection or a vowel change in the ending counts too:
+ * "слабый" catches "слабая", "приносить" catches "принёс".
+ */
+function mentions(hook: string, words: readonly string[]): boolean {
+  const said = contentWords(hook);
+  return words.some((word) => {
+    if (word.length <= 3) return said.includes(word);
+    const stem = word.slice(0, Math.max(3, Math.min(4, word.length - 2)));
+    return said.some((w) => w.startsWith(stem));
+  });
+}
+
+/** Modes that ask for the term, the meaning, or both, picture modes included. */
+const ASKS_TERM = new Set<ReviewModeKey>(["meaning_to_term", "image_to_term"]);
+const ASKS_MEANING = new Set<ReviewModeKey>(["term_to_meaning", "image_to_meaning"]);
+
+/**
+ * Whether a draft gives away what the card asks for: the term where the meaning or a picture is
+ * the cue, the meaning where the term or a picture is. A sound-alike in the learner's script is not
+ * the term.
  */
 export function givesAway(hook: string, card: HookCard): boolean {
-  if (card.asked.includes("meaning_to_term") && mentions(hook, contentWords(headword(card.term)))) {
-    return true;
-  }
-  return card.asked.includes("term_to_meaning") && mentions(hook, contentWords(card.meaning));
+  const asks = (modes: Set<ReviewModeKey>) => card.asked.some((mode) => modes.has(mode));
+  if (asks(ASKS_TERM) && mentions(hook, contentWords(headword(card.term)))) return true;
+  return asks(ASKS_MEANING) && mentions(hook, contentWords(card.meaning));
 }
 
 /** The draft as the model wrote it, trimmed, or null when it broke a rule the prompt sets. */
@@ -125,7 +172,7 @@ export async function draftHook(provider: TextProvider, card: HookCard): Promise
     meaning: card.meaning,
     termLanguage: card.language,
     ...(card.pronunciation ? { pronunciation: card.pronunciation } : {}),
-    asked: card.asked.filter((mode) => mode === "meaning_to_term" || mode === "term_to_meaning"),
+    asked: card.asked,
   });
   const reply = Reply.safeParse(
     await provider.complete({
@@ -154,7 +201,6 @@ export async function hookDraftFor(
   if (card.userId !== ctx.userId) {
     throw new ServiceError("forbidden", "Only the deck's owner can change its cards");
   }
-  if (card.hookDraft !== null) return card.hookDraft || null;
   const { meaningLanguage } = await getSettings(ctx);
   const subject = {
     term: card.term,
@@ -162,7 +208,7 @@ export async function hookDraftFor(
     language: card.language ?? "",
     pronunciation: card.pronunciation,
   };
-  if (!provider || !hookable(subject, meaningLanguage)) return null;
+  if (!hookable(subject, meaningLanguage)) return null;
   const [deck] = await ctx.db
     .select({ directions: schema.decks.directions })
     .from(schema.decks)
@@ -170,11 +216,24 @@ export async function hookDraftFor(
   const asked = card.directions
     ? effectiveModes(card.directions, card.reviewModeKeys)
     : modesFromDirections(deck?.directions ?? "recognition");
+  const hookCard = { ...subject, asked };
+  // A kept draft is checked again, since the card's modes or its deck's may have changed since.
+  if (card.hookDraft === "") return null;
+  if (card.hookDraft !== null && !givesAway(card.hookDraft, hookCard)) return card.hookDraft;
+  if (!provider) return null;
+
   // A reply can come back empty or break a rule now and then, so one more try before keeping "none".
-  const draft =
-    (await draftHook(provider, { ...subject, asked })) ??
-    (await draftHook(provider, { ...subject, asked }));
-  // Only while the card still reads as it did, so a draft for an old meaning never lands.
+  let draft: string | null;
+  try {
+    draft = (await draftHook(provider, hookCard)) ?? (await draftHook(provider, hookCard));
+  } catch (error) {
+    // An outage is not an answer, so nothing is kept and the next editor asks again.
+    console.error("Drafting a hook failed", {
+      error: error instanceof Error ? error.name : "unknown",
+    });
+    return null;
+  }
+  // Only while the card still reads as it did and no other request kept a draft meanwhile.
   await ctx.db
     .update(schema.cards)
     .set({ hookDraft: draft ?? "" })
@@ -183,6 +242,9 @@ export async function hookDraftFor(
         eq(schema.cards.id, card.id),
         eq(schema.cards.term, card.term),
         eq(schema.cards.meaning, subject.meaning),
+        card.hookDraft === null
+          ? isNull(schema.cards.hookDraft)
+          : eq(schema.cards.hookDraft, card.hookDraft),
       ),
     );
   return draft;

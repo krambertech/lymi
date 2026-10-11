@@ -12,6 +12,7 @@
     "./writes": "./src/writes.ts",
     "./write-projections": "./src/write-projections.ts",
     "./review-draw": "./src/review-draw.ts",
+    "./recall-clock": "./src/recall-clock.ts",
     "./queued": "./src/queued.ts",
     "./review-day": "./src/review-day.ts"
   },
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "@tanstack/react-query": "^5.104.1",
+    "@types/react": "^19.3.0",
     "react": "^19.3.0",
     "typescript": "^6.0.3",
     "vitest": "^5.0.3"

@@ -9,7 +9,7 @@ import {
   modesFromDirections,
   stateDirection,
 } from "./modes";
-import { GradeInput, ReviewMode, ReviewModeKey, ReviewModes } from "./types";
+import { GradeInput, REVIEW_TIME_LIMIT_MS, ReviewMode, ReviewModeKey, ReviewModes } from "./types";
 
 describe("review modes", () => {
   it("round-trips every key through its cue-target object", () => {
@@ -63,5 +63,16 @@ describe("review modes", () => {
     const mode = { cue: "meaning", target: "term" };
     expect(GradeInput.safeParse({ cardId: "c", mode, rating: 3 }).success).toBe(true);
     expect(GradeInput.safeParse({ cardId: "c", rating: 3 }).success).toBe(false);
+  });
+
+  it("takes recall and grade times as whole milliseconds up to the limit", () => {
+    const grade = { cardId: "c", mode: { cue: "term", target: "meaning" }, rating: 3 };
+    const parses = (times: object) => GradeInput.safeParse({ ...grade, ...times }).success;
+    expect(parses({})).toBe(true);
+    expect(parses({ recallMs: 0, gradeMs: REVIEW_TIME_LIMIT_MS })).toBe(true);
+    expect(parses({ recallMs: -1 })).toBe(false);
+    expect(parses({ gradeMs: 1.5 })).toBe(false);
+    expect(parses({ recallMs: REVIEW_TIME_LIMIT_MS + 1 })).toBe(false);
+    expect(parses({ recallMs: null })).toBe(false);
   });
 });

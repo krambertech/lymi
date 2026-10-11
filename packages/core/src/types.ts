@@ -654,6 +654,10 @@ export const gradeAllowed = (rating: number, aid: ReviewAid | null | undefined) 
 export const countedRating = (rating: Rating, repeat: boolean): Rating =>
   repeat && rating === FsrsRating.Easy ? FsrsRating.Good : rating;
 
+/** Longer than this in the foreground, a recall or grade time no longer measures thinking, so it is unknown. */
+export const REVIEW_TIME_LIMIT_MS = 10 * 60_000;
+const ReviewTime = z.number().int().min(0).max(REVIEW_TIME_LIMIT_MS);
+
 /**
  * One grade names its review mode. `direction` is the form grades took before review modes,
  * still accepted so an older app or a queued offline grade replays onto the same schedule.
@@ -672,6 +676,14 @@ export const GradeInput = z
     timezone: z.string().max(64).optional(),
     aid: ReviewAid.optional().meta({
       description: "What the learner used before the reveal. Left out, the recall was unaided.",
+    }),
+    recallMs: ReviewTime.optional().meta({
+      description:
+        "Milliseconds the cue was on screen in the foreground before the reveal, or before the grade when there was no reveal. Left out when unknown or over 10 minutes.",
+    }),
+    gradeMs: ReviewTime.optional().meta({
+      description:
+        "Milliseconds the answer was on screen in the foreground before the grade. Left out when unknown, over 10 minutes or with no reveal.",
     }),
   })
   .refine((grade) => grade.mode || grade.direction, {

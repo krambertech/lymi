@@ -101,6 +101,8 @@ function input(g: StoredGrade): GradeInput {
     reviewedAt: new Date(g.reviewedAt),
     ...(g.timezone ? { timezone: g.timezone } : {}),
     ...(g.aid ? { aid: g.aid } : {}),
+    ...(g.recallMs !== undefined ? { recallMs: g.recallMs } : {}),
+    ...(g.gradeMs !== undefined ? { gradeMs: g.gradeMs } : {}),
   };
 }
 

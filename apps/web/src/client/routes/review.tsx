@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { gradeStore, recordGrade, retireGrades } from "@lymi/client/grades";
+import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawState, reviewItem, stateBefore } from "@lymi/client/review-draw";
 import { writes } from "@lymi/client/writes";
 import {
@@ -564,6 +565,7 @@ function Review() {
   }, [qc]);
 
   const showing = current ? `${itemKey(current)}-${done}` : "";
+  const recallTimes = useRecallClock(showing || null, revealed);
   const writingHook = !!showing && hookFor === showing;
   const revealedAt = useRef(0);
   useEffect(() => {
@@ -638,6 +640,7 @@ function Review() {
           : item.fsrsState,
         timezone: deviceTimezone(),
         ...(aid ? { aid } : {}),
+        ...recallTimes(),
       });
       setFocusReveal(!!document.activeElement?.closest("[data-grade-strip]"));
       const listed = !!leg && !drawLeg;
@@ -689,6 +692,7 @@ function Review() {
       aid,
       repeat,
       showing,
+      recallTimes,
       leg,
       drawLeg,
       invalidateReviewData,

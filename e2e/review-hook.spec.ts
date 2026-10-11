@@ -118,7 +118,14 @@ test("a learner peeks at a hook, Easy is out, and the peek stays on the grade th
     await page.unroute("**/api/review/grade");
     const sent = page.waitForRequest((r) => r.url().endsWith("/api/review/grade"));
     await page.reload();
-    expect((await sent).postDataJSON()).toMatchObject({ cardId, rating: 3, aid: "hook" });
+    // The times measured before going offline ride the outbox with the peek.
+    expect((await sent).postDataJSON()).toMatchObject({
+      cardId,
+      rating: 3,
+      aid: "hook",
+      recallMs: expect.any(Number),
+      gradeMs: expect.any(Number),
+    });
     await expect
       .poll(async () => (await history(page, cardId)).reviews)
       .toEqual([expect.objectContaining({ rating: 3, aid: "hook" })]);

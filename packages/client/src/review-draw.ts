@@ -33,6 +33,9 @@ export interface LocalGrade {
   stateBefore?: number | undefined;
   /** What the learner used before the reveal, sent with the grade when it replays. */
   aid?: ReviewAid | undefined;
+  /** Foreground time before the reveal and before the grade, from `RecallClock`. */
+  recallMs?: number | undefined;
+  gradeMs?: number | undefined;
 }
 
 export type DrawData = Draw;

@@ -618,6 +618,10 @@ export const reviews = sqliteTable(
     mode: text("mode", { enum: REVIEW_MODE_KEYS }),
     /** What the learner used before the reveal; null for an unaided recall. */
     aid: text("aid", { enum: REVIEW_AIDS }),
+    /** Foreground milliseconds from the cue to the reveal; null when unknown or over the limit. */
+    recallMs: integer("recall_ms"),
+    /** Foreground milliseconds from the reveal to the grade; null when unknown, over the limit or unrevealed. */
+    gradeMs: integer("grade_ms"),
   },
   (t) => [
     index("reviews_card_idx").on(t.cardId, t.reviewedAt),

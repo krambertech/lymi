@@ -968,6 +968,9 @@ msgstr "Arrange sections"
 msgid "Arts"
 msgstr "Arts"
 
+msgid "Ask Claude or ChatGPT to create cards and decks for you."
+msgstr "Ask Claude or ChatGPT to create cards and decks for you."
+
 msgid "Ask the person who shared it for a new link."
 msgstr "Ask the person who shared it for a new link."
 
@@ -1268,8 +1271,17 @@ msgstr "Confirm your email address"
 msgid "Confirm your email address first."
 msgstr "Confirm your email address first."
 
+msgid "Connect"
+msgstr "Connect"
+
 msgid "Connect {appName}"
 msgstr "Connect {appName}"
+
+msgid "Connect {name}"
+msgstr "Connect {name}"
+
+msgid "Connect AI assistant"
+msgstr "Connect AI assistant"
 
 msgid "Connect an app"
 msgstr "Connect an app"
@@ -1279,6 +1291,9 @@ msgstr "Connect ChatGPT or Claude so it can turn your notes, PDFs or textbook in
 
 msgid "Connect Lymi, paste the lesson, and ask for the cards"
 msgstr "Connect Lymi, paste the lesson, and ask for the cards"
+
+msgid "Connect your AI assistant"
+msgstr "Connect your AI assistant"
 
 msgid "connected {connected}"
 msgstr "connected {connected}"

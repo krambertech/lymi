@@ -11,6 +11,11 @@ import { MotionConfig } from "motion/react";
 import { lazy, Suspense, useEffect, useMemo, useRef } from "react";
 import { z } from "zod";
 import { AddCardSheet } from "../components/add-card-sheet";
+import {
+  AssistantMenuItem,
+  AssistantOffer,
+  useAssistantOffer,
+} from "../components/assistant-offer";
 import { ShellChrome } from "../components/layout/shell-chrome";
 import { NewDeckSheet } from "../components/new-deck-sheet";
 import { PillNav } from "../components/pill-nav";
@@ -254,6 +259,8 @@ function Shell() {
   const learnerEmail = me.data?.email;
   const { openCard, openDeck } = add;
   const { signOut, busy: signingOut } = leave;
+  const assistant = useAssistantOffer(signedIn);
+  const assistantRow = assistant.row;
   // One object until something in it changes, so a query tick does not re-render every screen's bar.
   const chrome = useMemo(
     () => ({
@@ -265,8 +272,9 @@ function Shell() {
       onCreateDeck: openDeck,
       onSignOut: signOut,
       signingOut,
+      connect: assistantRow ? <AssistantMenuItem /> : undefined,
     }),
-    [signedIn, learnerName, learnerEmail, openCard, openDeck, signOut, signingOut],
+    [signedIn, learnerName, learnerEmail, openCard, openDeck, signOut, signingOut, assistantRow],
   );
 
   if (bare) return <Outlet />;
@@ -291,6 +299,10 @@ function Shell() {
                 onSignOut={leave.signOut}
                 signingOut={leave.busy}
                 streak={me.isSuccess ? <Streak variant="rail" /> : undefined}
+                aside={
+                  assistant.card ? <AssistantOffer onDismiss={assistant.dismiss} /> : undefined
+                }
+                connect={assistantRow ? <AssistantMenuItem /> : undefined}
                 className="hidden @3xl/shell:flex"
               />
             )

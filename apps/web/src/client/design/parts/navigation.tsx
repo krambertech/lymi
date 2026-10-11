@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { AssistantMenuItem, AssistantOffer } from "../../components/assistant-offer";
 import { DueCount } from "../../components/due-count";
 import { NavLink, StaticNavProvider } from "../../components/nav-link";
 import { PillNav } from "../../components/pill-nav";
@@ -10,7 +11,15 @@ import { Variants } from "../frame";
 import { decks, me, railSeries, seriesDecks, streak } from "../mock";
 import { type Group, noop } from "./types";
 
-function RailScene({ path, decks: shown }: { path: string; decks: NavDeck[] }): ReactNode {
+function RailScene({
+  path,
+  decks: shown,
+  aside,
+}: {
+  path: string;
+  decks: NavDeck[];
+  aside?: ReactNode;
+}): ReactNode {
   return (
     <div className="edge flex h-[640px] w-full overflow-hidden rounded-md">
       <StaticNavProvider path={path}>
@@ -21,6 +30,8 @@ function RailScene({ path, decks: shown }: { path: string; decks: NavDeck[] }): 
           docsUrl="https://lymi.app/docs"
           onAdd={noop}
           streak={<StreakButton variant="rail" summary={streak} />}
+          aside={aside}
+          connect={aside ? <AssistantMenuItem /> : undefined}
         />
       </StaticNavProvider>
       <div className="flex-1 bg-canvas" />
@@ -53,6 +64,17 @@ export const navigation: Group = {
               label: "Every deck in one series",
               note: "With no decks outside a series, Decks is left out and the series stands alone.",
               render: () => <RailScene path="/today" decks={seriesDecks} />,
+            },
+            {
+              label: "No AI assistant connected",
+              note: "A card above the learner offers the setup guides until an app connects. Its dismiss shows on hover and hides it on this device; the learner menu keeps a Connect AI assistant row beside Docs until an app connects.",
+              render: () => (
+                <RailScene
+                  path="/today"
+                  decks={decks.slice(0, 3)}
+                  aside={<AssistantOffer onDismiss={noop} />}
+                />
+              ),
             },
           ]}
         />

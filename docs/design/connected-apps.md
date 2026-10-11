@@ -10,4 +10,6 @@ Read access is stated, not offered, because a connector cannot work without it. 
 
 The ending is not optional. An MCP client's redirect is usually a custom scheme, so the browser hands off to the app and leaves the tab where it was; without this screen that tab sits on a blank form. It says what happened, what the app got, and that the tab is finished with.
 
+Until the learner has connected one, the rail offers the setup guides and the learner menu has a Connect AI assistant row ([rail.md](system/rail.md#the-offer-to-connect-an-assistant)).
+
 A grant lasts until it is taken back, so Settings has Connected apps beside API keys, with the same row shape: name, what it may do, the host, and an inline confirm to cut it off.

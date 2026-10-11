@@ -5,7 +5,7 @@ import { clearQueryCache } from "./query-persister";
  * What the client keeps for one learner: in IndexedDB, the query cache that survives reloads and
  * offline starts; in localStorage, the outboxes of grades and of card and deck writes made offline, whose they
  * are, how many cards the learner has revealed while the reveal hint still counts, the deck a card
- * was last added to, the day the rest-day banner was dismissed, and the local-only marker of which persona the developer last became; in
+ * was last added to, the day the rest-day banner was dismissed, whether the offer to connect an AI assistant was, and the local-only marker of which persona the developer last became; in
  * Cache Storage, the card pictures kept for offline review. All of it belongs to whoever was
  * signed in, so it is cleared when the learner changes: on sign-out, and before any sign-in starts.
  */
@@ -19,6 +19,7 @@ const KEYS = [
   "lymi-last-deck",
   "lymi-create-more",
   "lymi-rest-dismissed",
+  "lymi-assistant-offer-dismissed",
 ];
 
 /**

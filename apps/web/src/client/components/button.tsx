@@ -9,7 +9,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md" | "lg" | "xl";
-type IconButtonSize = Exclude<ButtonSize, "xl">;
+type IconButtonSize = Exclude<ButtonSize, "xl"> | "xs";
 
 interface Props extends useRender.ComponentProps<"button"> {
   variant?: ButtonVariant | undefined;
@@ -136,6 +136,8 @@ const iconVariants: Record<ButtonVariant, string> = {
 };
 
 const iconSizes: Record<IconButtonSize, string> = {
+  // Dismissing a card, where a 32 px button would push the content down.
+  xs: "size-6 [&_svg]:size-3.5 before:absolute before:-inset-2.5 before:content-['']",
   sm: "size-8 [&_svg]:size-4 before:absolute before:-inset-y-1.5 before:[inset-inline:var(--hit-x,-6px)] before:content-['']",
   md: "size-10 [&_svg]:size-[18px] before:absolute before:-inset-y-0.5 before:[inset-inline:var(--hit-x,-2px)] before:content-['']",
   lg: "size-12 [&_svg]:size-5",
@@ -169,7 +171,7 @@ export function IconButton({
             aria-label={label}
             className={clsx(
               "relative inline-flex shrink-0 items-center justify-center transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100 disabled:pointer-events-none disabled:opacity-45 aria-disabled:opacity-45 aria-disabled:active:scale-100",
-              round ? "rounded-full" : "rounded-sm",
+              round ? "rounded-full" : size === "xs" ? "rounded-xs" : "rounded-sm",
               iconVariants[variant],
               iconSizes[size],
               className,

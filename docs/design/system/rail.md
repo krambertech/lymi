@@ -10,9 +10,10 @@ Top to bottom:
 2. The places: Today, Library, Insights and Explore, each with an icon.
 3. **Decks**, for the decks that belong to no series.
 4. One section per series, in Library's order, headed by the series' name.
-5. The learner, under a rule across the rail.
+5. The offer to connect an AI assistant, while none is connected.
+6. The learner, under a rule across the rail.
 
-The first line and the learner stay put; only the places between them scroll, so capture and the learner menu are in reach however many decks there are.
+The first line, the offer and the learner stay put; only the places between them scroll, so capture and the learner menu are in reach however many decks there are.
 
 ```tsx
 <RailNav rows={groups}>
@@ -54,3 +55,7 @@ The current row is always the strongest row and hover always sits under it. Neve
 ## The learner
 
 The learner row is `LearnerMenu` with `variant="rail"`: 56 px, a 34 px avatar and the learner's first name, opening upward. It sits under a rule that runs the rail's full width, never a border on the row, because a top border on a rounded row curves at its corners.
+
+## The offer to connect an assistant
+
+`AssistantOffer` is a plate above the learner's rule, shown once the learner's connected apps have loaded and there are none. It holds the marks of Claude, ChatGPT, Gemini and Grok, each linking to its own setup guide, a title, one line on what an assistant does for the learner, and Connect, which opens the guides. It is the only plate in the rail, so it is the only thing there that reads as a note rather than a place. Its `xs` dismiss sits at the end of the marks' row and shows only while the pointer is on the card or focus is in it, because a corner button beside the tiles reads as misaligned; on touch it always shows. Dismissing hides the card on this device. The learner menu keeps `AssistantMenuItem`, a Connect AI assistant row beside Docs and Send feedback with the plug icon and the four marks at its end, on the rail and the phone alike, until an app connects; dismissing the card never removes the row, so the way in is never lost.

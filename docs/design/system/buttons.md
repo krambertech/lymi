@@ -69,7 +69,7 @@ Where does the button sit?
 
 ## IconButton
 
-`IconButton` holds one icon and requires `label`, which describes the action, not the icon ("Edit card", never "Pencil"). The label is the accessible name and shows as the tooltip, so never add a `title`. Its default variant is `ghost` and default size `md`; it takes `sm`, `md` and `lg` but not `xl`. `round` makes a circle, for the pronunciation button and capture only.
+`IconButton` holds one icon and requires `label`, which describes the action, not the icon ("Edit card", never "Pencil"). The label is the accessible name and shows as the tooltip, so never add a `title`. Its default variant is `ghost` and default size `md`; it takes `sm`, `md` and `lg` but not `xl`, and `xs` (24 px, a 14 px icon, a 44 px hit area) only to dismiss a card. `round` makes a circle, for the pronunciation button and capture only.
 
 In a screen's top bar every control is a square ghost `IconButton` at 40 px, except capture, which is round and amber (see [layout.md](layout.md)).
 

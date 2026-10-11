@@ -681,8 +681,9 @@ function Review() {
   }, [revealed, onGrade, takeAid, showAid, leave, add.open, writingHook, current]);
 
   // An often-forgotten card with no hook offers one, in a deck the learner owns, since only the
-  // owner changes its cards. Once decided it holds, so a refetch never moves it mid-card.
-  if (cardOffer.key !== showing && (!current || decks.data)) {
+  // owner changes its cards. It waits for the card's deck, which a deck list cached before the
+  // deck existed lacks, and once decided it holds, so a refetch never moves it mid-card.
+  if (cardOffer.key !== showing && (!current || currentDeck)) {
     setCardOffer({
       key: showing,
       offer: !!current?.slipping && !current.card.hook && currentDeck?.role === "owner",

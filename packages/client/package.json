@@ -12,6 +12,7 @@
     "./writes": "./src/writes.ts",
     "./write-projections": "./src/write-projections.ts",
     "./review-draw": "./src/review-draw.ts",
+    "./recall-clock": "./src/recall-clock.ts",
     "./queued": "./src/queued.ts",
     "./review-day": "./src/review-day.ts"
   },

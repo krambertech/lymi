@@ -316,6 +316,8 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
         reviewDayId: reviewDay.id,
         stateBefore: JSON.stringify(before),
         aid: input.aid ?? null,
+        recallMs: input.recallMs ?? null,
+        gradeMs: input.gradeMs ?? null,
       }),
     ])
     .then(

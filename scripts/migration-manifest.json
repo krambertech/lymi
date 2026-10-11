@@ -175,6 +175,10 @@
     {
       "name": "0043_mixed_ink.sql",
       "sha256": "d54bf5d7c971b7dc0e9ad54b8ffc981060b22505a323ed4e6edf48de85668811"
+    },
+    {
+      "name": "0044_serious_magus.sql",
+      "sha256": "4401101c147e5f5b69603063a956225f8eca225cdda9f85f0d2ea8d1baba17ad"
     }
   ]
 }

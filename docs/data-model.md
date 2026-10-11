@@ -216,6 +216,8 @@ erDiagram
     text review_day_id FK "nullable: null before daily goals"
     text state_before "nullable JSON card state this grade replaced, for Undo"
     text aid "nullable hook: what the learner used before the reveal"
+    int recall_ms "nullable foreground ms from cue to reveal"
+    int grade_ms "nullable foreground ms from reveal to grade"
   }
   card_images {
     text id PK
@@ -334,6 +336,8 @@ Nothing about a review is stored. `services/draw.ts` loads every asked state due
 ### Recall aids
 
 A grade names what helped it as `aid`, today only `hook` for a peek before the reveal, and the grade route refuses an aided Easy with 400, because Easy means recall without help. The column is an enum so a later hint joins it. Undo marks the review undone like any other, so its aid goes with it; the offline outbox stores the aid with the queued grade and sends it on replay.
+
+A grade from the app also carries `recallMs`, the time from the cue appearing to the reveal, and `gradeMs`, from the reveal to the grade, in whole milliseconds. `RecallClock` in `packages/client` measures both for the web and the phone and counts only foreground time, pausing on what pauses Query: a hidden tab or a backgrounded app. A time over 10 minutes no longer measures thinking and is left out, a grade with no reveal before it is all recall time, and a peek does not stop the clock. The route refuses a negative, fractional or over-limit time with 400; a grade without them, from an older client, the API, MCP or an import, stores nulls. They ride the outbox and leave with Undo like the aid, and nothing reads them yet: the schedule, the draw, often forgotten and the daily goal are the same with or without them.
 
 ### Review modes
 

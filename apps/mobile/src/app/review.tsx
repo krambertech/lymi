@@ -1,5 +1,6 @@
 import { apiUrl, type QueueItem } from "@lymi/client/api";
 import { gradeStore } from "@lymi/client/grades";
+import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawableLeft } from "@lymi/client/review-day";
 import { reviewItem, stateBefore } from "@lymi/client/review-draw";
 import { countedRating, drawKey, modeKey, type Rating, ROUNDS, type Round } from "@lymi/core";
@@ -199,6 +200,7 @@ function Run({
     state.attempts >= Math.min(leg.until, data.goal);
   const listLeft = leg?.kind === "list" ? leftInList(listData?.items ?? [], listCards) : [];
   const current = !leg ? null : leg.kind === "draw" ? (atStop ? null : drawn) : listLeft[0];
+  const recallTimes = useRecallClock(current ? `${keyOf(current)}:${done}` : null, revealed);
 
   // A pinned card a refetch no longer holds, such as one archived meanwhile, gives way.
   const repin = !!state?.next && !staleDay && (!pinned || !pinnedItem);
@@ -270,6 +272,7 @@ function Run({
       rating: countedRating(rating, repeat),
       reviewedAt: new Date().toISOString(),
       stateBefore: repeat ? stateBefore(data, state.log, item.card.id, item.mode) : item.fsrsState,
+      ...recallTimes(),
     });
     if (listed) setListCards((c) => ({ ...c, graded: withKey(c.graded, key) }));
     setSending((n) => n + 1);

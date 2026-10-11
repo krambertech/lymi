@@ -83,8 +83,10 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
   await test.step("leaving the review lands on Today, and the goal question never returns", async () => {
     await visitor.getByRole("button", { name: "Leave review" }).click();
     await expect(visitor).toHaveURL(/\/today$/);
-    await visitor.goto("/welcome");
+    await expect(visitor.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
+    await visitor.goto("/welcome", { waitUntil: "commit" });
     await expect(visitor).toHaveURL(/\/today$/);
+    await expect(visitor.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
   });
 
   await test.step("opening the add page again changes nothing", async () => {

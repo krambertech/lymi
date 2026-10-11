@@ -13,8 +13,8 @@ import { CARDS, DAILY_GOAL, type DemoCard, PAST_WEEK, STREAK_BEFORE_TODAY } from
 
 /** The design choices this proof of concept puts side by side. */
 export interface Directions {
-  /** Glass: the web's pill and top bar drawn in Liquid Glass. Lymi: the same, opaque. Native: the system tab bar and large titles. */
-  chrome: "glass" | "lymi" | "native";
+  /** Glass: the web's pill and top bar drawn in Liquid Glass. Lymi: the same, opaque. */
+  chrome: "glass" | "lymi";
   /** Plate: Today's due card as on the web. Lit: the lantern lights the top of the screen. */
   today: "plate" | "lit";
   /** Buttons: the four grades as plates. Glass: the same four in Liquid Glass. Swipe: plates plus swiping the card. */
@@ -72,7 +72,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     const grading = queryParams?.grade;
     const type = queryParams?.font;
     setDirections((d) => ({
-      chrome: chrome === "glass" || chrome === "native" || chrome === "lymi" ? chrome : d.chrome,
+      chrome: chrome === "glass" || chrome === "lymi" ? chrome : d.chrome,
       today: lead === "plate" || lead === "lit" ? lead : d.today,
       review:
         grading === "buttons" || grading === "glass" || grading === "swipe" ? grading : d.review,

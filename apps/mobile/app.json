@@ -22,7 +22,8 @@
       "predictiveBackGestureEnabled": true
     },
     "experiments": {
-      "typedRoutes": true
+      "typedRoutes": true,
+      "tsconfigPaths": false
     },
     "plugins": [
       "expo-router",

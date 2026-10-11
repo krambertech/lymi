@@ -19,7 +19,7 @@ The first build takes several minutes; after that `npx expo start --dev-client` 
 The **You** tab switches the design choices the proof of concept compared. The defaults are the ones chosen: the glass pill, the lit room, Onest and plate grades. A link sets them in one go:
 
 ```bash
-xcrun simctl openurl booted "lymi://today?chrome=native&lead=plate&grade=swipe&font=system"
+xcrun simctl openurl booted "lymi://today?chrome=lymi&lead=plate&grade=swipe&font=system"
 ```
 
 ## What is shared with the web
@@ -27,7 +27,7 @@ xcrun simctl openurl booted "lymi://today?chrome=native&lead=plate&grade=swipe&f
 - `@lymi/core` unchanged: the review uses its FSRS `schedule` and the draw's `RETURN_GAPS`.
 - Colours, radii and type step names: `pnpm tokens` writes `src/theme.gen.css` and `src/theme/tokens.gen.ts` from `apps/web/src/client/styles.css`. The phone keeps its own type ramp in `src/global.css`, because iOS reads at 17 pt.
 - The lantern's drawing and flame sizes, copied into `src/brand/geometry.ts` until they move to a shared package.
-- Lucide icons. `pnpm tab-icons` renders the system tab bar's three into template PNGs.
+- Lucide icons, rendered by `lucide-react-native`.
 
 ## Widgets
 

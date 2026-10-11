@@ -647,9 +647,6 @@ msgstr "A link to a picture online."
 msgid "A Lymi file from another Lymi account"
 msgstr "A Lymi file from another Lymi account"
 
-msgid "A memory hook for <0>{term}</0>"
-msgstr "A memory hook for <0>{term}</0>"
-
 msgid "A reset link works once, within an hour."
 msgstr "A reset link works once, within an hour."
 
@@ -719,6 +716,9 @@ msgstr "Add cards from your next lesson"
 
 msgid "Add cards with the API"
 msgstr "Add cards with the API"
+
+msgid "Add hook"
+msgstr "Add hook"
 
 msgid "Add Lymi as an MCP server in Claude or ChatGPT, then sign in when asked."
 msgstr "Add Lymi as an MCP server in Claude or ChatGPT, then sign in when asked."
@@ -900,6 +900,9 @@ msgstr "Archive “{sectionName}”?"
 
 msgid "Archive {sectionName}"
 msgstr "Archive {sectionName}"
+
+msgid "Archive card"
+msgstr "Archive card"
 
 msgid "Archive deck"
 msgstr "Archive deck"
@@ -1665,6 +1668,9 @@ msgstr "Edit"
 msgid "Edit card"
 msgstr "Edit card"
 
+msgid "Edit hook"
+msgstr "Edit hook"
+
 msgid "Edit series"
 msgstr "Edit series"
 
@@ -1942,6 +1948,9 @@ msgstr "Hook by you"
 
 msgid "Hook from lesson"
 msgstr "Hook from lesson"
+
+msgid "Hook saved"
+msgstr "Hook saved"
 
 msgid "How cards are asked"
 msgstr "How cards are asked"
@@ -2627,9 +2636,6 @@ msgstr "Not in review yet"
 msgid "Not joined yet"
 msgstr "Not joined yet"
 
-msgid "Not now"
-msgstr "Not now"
-
 msgid "Not reviewed yet"
 msgstr "Not reviewed yet"
 
@@ -2821,9 +2827,6 @@ msgstr "Pasted picture"
 
 msgid "Pause the cards"
 msgstr "Pause the cards"
-
-msgid "Peek at it before you reveal the card, or show it after. After a peek, you can’t choose Easy."
-msgstr "Peek at it before you reveal the card, or show it after. After a peek, you can’t choose Easy."
 
 msgid "Peek at or show your hook"
 msgstr "Peek at or show your hook"
@@ -3170,9 +3173,6 @@ msgstr "Same as the deck"
 msgid "Save"
 msgstr "Save"
 
-msgid "Save hook"
-msgstr "Save hook"
-
 msgid "Save mine"
 msgstr "Save mine"
 
@@ -3255,6 +3255,9 @@ msgstr "See {word}, recall what it means"
 
 msgid "See all"
 msgstr "See all"
+
+msgid "See stats"
+msgstr "See stats"
 
 msgid "See the meaning, recall {word}"
 msgstr "See the meaning, recall {word}"
@@ -3666,12 +3669,6 @@ msgstr "They lose this deck and can’t rejoin, by link or invitation. Their rev
 
 msgid "They’re already in this deck."
 msgstr "They’re already in this deck."
-
-msgid "Think of it when the card shows “<0>{cue}</0>”."
-msgstr "Think of it when the card shows “<0>{cue}</0>”."
-
-msgid "Think of it when the card shows its picture."
-msgstr "Think of it when the card shows its picture."
 
 msgid "This browser can’t show reminders."
 msgstr "This browser can’t show reminders."

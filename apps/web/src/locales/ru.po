@@ -647,9 +647,6 @@ msgstr "Ссылка на изображение в сети."
 msgid "A Lymi file from another Lymi account"
 msgstr "Файл Lymi из другого аккаунта Lymi"
 
-msgid "A memory hook for <0>{term}</0>"
-msgstr "Зацепка для <0>{term}</0>"
-
 msgid "A reset link works once, within an hour."
 msgstr "Ссылка действует один час и только один раз."
 
@@ -719,6 +716,9 @@ msgstr "Добавь карточки из следующего урока"
 
 msgid "Add cards with the API"
 msgstr "Добавляй карточки через API"
+
+msgid "Add hook"
+msgstr "Добавить зацепку"
 
 msgid "Add Lymi as an MCP server in Claude or ChatGPT, then sign in when asked."
 msgstr "Добавь Lymi как MCP-сервер в Claude или ChatGPT, затем войди, когда попросят."
@@ -900,6 +900,9 @@ msgstr "Архивировать «{sectionName}»?"
 
 msgid "Archive {sectionName}"
 msgstr "Архивировать «{sectionName}»"
+
+msgid "Archive card"
+msgstr "Архивировать карточку"
 
 msgid "Archive deck"
 msgstr "Архивировать колоду"
@@ -1665,6 +1668,9 @@ msgstr "Редактировать"
 msgid "Edit card"
 msgstr "Редактировать карточку"
 
+msgid "Edit hook"
+msgstr "Изменить зацепку"
+
 msgid "Edit series"
 msgstr "Изменить серию"
 
@@ -1942,6 +1948,9 @@ msgstr "Твоя зацепка"
 
 msgid "Hook from lesson"
 msgstr "Зацепка с урока"
+
+msgid "Hook saved"
+msgstr "Зацепка сохранена"
 
 msgid "How cards are asked"
 msgstr "Как задаются карточки"
@@ -2627,9 +2636,6 @@ msgstr "Пока не в повторениях"
 msgid "Not joined yet"
 msgstr "Ещё не присоединился"
 
-msgid "Not now"
-msgstr "Не сейчас"
-
 msgid "Not reviewed yet"
 msgstr "Ещё не повторялись"
 
@@ -2821,9 +2827,6 @@ msgstr "Вставленное изображение"
 
 msgid "Pause the cards"
 msgstr "Остановить карточки"
-
-msgid "Peek at it before you reveal the card, or show it after. After a peek, you can’t choose Easy."
-msgstr "Загляни в неё, прежде чем открыть карточку, или покажи после. После того как заглянешь, «Легко» выбрать нельзя."
 
 msgid "Peek at or show your hook"
 msgstr "Заглянуть в зацепку или показать её"
@@ -3170,9 +3173,6 @@ msgstr "Как в колоде"
 msgid "Save"
 msgstr "Сохранить"
 
-msgid "Save hook"
-msgstr "Сохранить зацепку"
-
 msgid "Save mine"
 msgstr "Сохранить мою"
 
@@ -3255,6 +3255,9 @@ msgstr "Увидеть {word} и вспомнить значение"
 
 msgid "See all"
 msgstr "Все"
+
+msgid "See stats"
+msgstr "Посмотреть статистику"
 
 msgid "See the meaning, recall {word}"
 msgstr "Увидеть значение и вспомнить {word}"
@@ -3666,12 +3669,6 @@ msgstr "Человек потеряет доступ к колоде и не с�
 
 msgid "They’re already in this deck."
 msgstr "Этот человек уже в колоде."
-
-msgid "Think of it when the card shows “<0>{cue}</0>”."
-msgstr "Вспомни её, когда карточка покажет «<0>{cue}</0>»."
-
-msgid "Think of it when the card shows its picture."
-msgstr "Вспомни её, когда карточка покажет своё изображение."
 
 msgid "This browser can’t show reminders."
 msgstr "Этот браузер не показывает напоминания."

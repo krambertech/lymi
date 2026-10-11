@@ -700,9 +700,6 @@ msgstr "About {0, plural, one {# minute} other {# minutes}}, {n, plural, one {# 
 msgid "About this deck"
 msgstr "About this deck"
 
-msgid "Accept cookies"
-msgstr "Accept cookies"
-
 msgid "Access"
 msgstr "Access"
 
@@ -884,9 +881,6 @@ msgstr "An app"
 
 msgid "an app with no address"
 msgstr "an app with no address"
-
-msgid "Analytics details"
-msgstr "Analytics details"
 
 msgid "Animated images can’t be used. Choose a still image."
 msgstr "Animated images can’t be used. Choose a still image."
@@ -1183,9 +1177,6 @@ msgstr "Change languages"
 
 msgid "Change photo"
 msgstr "Change photo"
-
-msgid "Change your choice in Privacy preferences. Your account choice also applies to analytics from connected apps and background work."
-msgstr "Change your choice in Privacy preferences. Your account choice also applies to analytics from connected apps and background work."
 
 msgid "Changes appear right away and are listed in Activity. You can edit or archive any card."
 msgstr "Changes appear right away and are listed in Activity. You can edit or archive any card."
@@ -1508,9 +1499,6 @@ msgstr "Couldn’t save the photo. Try again."
 msgid "Couldn’t save the reminder. Check your connection and try again."
 msgstr "Couldn’t save the reminder. Check your connection and try again."
 
-msgid "Couldn’t save your account’s choice. Check your connection and try again."
-msgstr "Couldn’t save your account’s choice. Check your connection and try again."
-
 msgid "Couldn’t save your answers. Check your connection and try again."
 msgstr "Couldn’t save your answers. Check your connection and try again."
 
@@ -1649,9 +1637,6 @@ msgstr "Decks from Lymi. Add one to study it in your language."
 
 msgid "Decks to review"
 msgstr "Decks to review"
-
-msgid "Decline"
-msgstr "Decline"
 
 msgid "Delete “{seriesName}”?"
 msgstr "Delete “{seriesName}”?"
@@ -3071,9 +3056,6 @@ msgstr "Policies and support"
 msgid "Position your photo"
 msgstr "Position your photo"
 
-msgid "PostHog processes analytics in its EU cloud. With your permission, we link visits across lymi.app and my.lymi.app and to your account when you sign in."
-msgstr "PostHog processes analytics in its EU cloud. With your permission, we link visits across lymi.app and my.lymi.app and to your account when you sign in."
-
 msgid "Press Enter after each tag."
 msgstr "Press Enter after each tag."
 
@@ -3140,9 +3122,6 @@ msgstr "Read lists decks and cards. Read and write also adds, edits and archives
 
 msgid "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 msgstr "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
-
-msgid "Read privacy policy"
-msgstr "Read privacy policy"
 
 msgid "Read the guide"
 msgstr "Read the guide"
@@ -4144,14 +4123,8 @@ msgstr "View card"
 msgid "Visibility"
 msgstr "Visibility"
 
-msgid "We collect page categories, actions, counts, review grades, app language and campaign details. We don’t send your card content, name or email, and we don’t record sessions."
-msgstr "We collect page categories, actions, counts, review grades, app language and campaign details. We don’t send your card content, name or email, and we don’t record sessions."
-
 msgid "We signed out your other devices."
 msgstr "We signed out your other devices."
-
-msgid "We use optional analytics cookies to understand how you use Lymi and improve it. You can change your choice anytime."
-msgstr "We use optional analytics cookies to understand how you use Lymi and improve it. You can change your choice anytime."
 
 msgid "We’ll email you a link to set a new one."
 msgstr "We’ll email you a link to set a new one."
@@ -4328,9 +4301,6 @@ msgstr "You’re done for today"
 
 msgid "You’re done for today."
 msgstr "You’re done for today."
-
-msgid "Your analytics choice and visitor identifier are stored for up to six months. Declining clears analytics identifiers on this browser. Necessary login cookies and filtered error monitoring work independently."
-msgstr "Your analytics choice and visitor identifier are stored for up to six months. Declining clears analytics identifiers on this browser. Necessary login cookies and filtered error monitoring work independently."
 
 msgid "Your deck"
 msgstr "Your deck"

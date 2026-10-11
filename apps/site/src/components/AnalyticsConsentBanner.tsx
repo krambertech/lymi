@@ -99,13 +99,19 @@ export function AnalyticsConsentBanner() {
       setDetails(true);
       requestAnimationFrame(() => region.current?.focus());
     };
+    const openFromLink = () => {
+      if (location.hash === "#privacy-preferences") open(new Event(OPEN_PRIVACY_PREFERENCES));
+    };
     refresh();
+    openFromLink();
+    window.addEventListener("hashchange", openFromLink);
     window.addEventListener(CONSENT_CHANGED, refresh);
     window.addEventListener(OPEN_PRIVACY_PREFERENCES, open);
     return () => {
       active = false;
       window.removeEventListener("focus", focus);
       document.removeEventListener("click", addClick);
+      window.removeEventListener("hashchange", openFromLink);
       window.removeEventListener(CONSENT_CHANGED, refresh);
       window.removeEventListener(OPEN_PRIVACY_PREFERENCES, open);
     };

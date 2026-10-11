@@ -184,3 +184,29 @@ it("checks the account before treating a fresh opted-in browser as anonymous", a
   analytics.setAnalyticsLearner(undefined);
   expect(sdk.sent.some((event) => event.event === "$pageview")).toBe(true);
 });
+
+it("carries a consented public visitor and attribution into the identified product", async () => {
+  vi.stubGlobal("location", new URL("https://lymi.app/explore/eesti-a1?utm_source=lenny"));
+  analytics.initAnalytics({ token: "phc_test", surface: "public", enabled: true });
+  analytics.setAnalyticsConsent(true);
+  const visitor = JSON.parse(decodeURIComponent(cookies.get(IDENTITY_COOKIE) ?? "null"));
+  const attribution = cookies.get(ATTRIBUTION_COOKIE);
+  expect(JSON.parse(decodeURIComponent(attribution ?? "null"))).toEqual({
+    first_landing_page: "/explore/eesti-a1",
+    referrer: "example.com",
+    utm_source: "lenny",
+  });
+  vi.resetModules();
+  analytics = await import("./analytics");
+  vi.stubGlobal("location", new URL("https://my.lymi.app/welcome"));
+  sdk.sent.length = 0;
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  expect(sdk.sent).toEqual([]);
+  analytics.setAnalyticsLearner("account-from-signup", true);
+  expect(sdk.sent.find((event) => event.event === "$identify")).toMatchObject({
+    properties: { $anon_distinct_id: visitor.id, distinct_id: "account-from-signup" },
+  });
+  expect(sdk.sent.filter((event) => event.event === "app_opened")).toHaveLength(1);
+  expect(cookies.get(ATTRIBUTION_COOKIE)).toBe(attribution);
+  expect(analytics.analyticsConsent()?.allowed).toBe(true);
+});

@@ -1,5 +1,4 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { openPrivacyPreferences } from "@lymi/client/analytics";
 import type { AppLanguage } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -14,6 +13,7 @@ import { SettingsGroup } from "../components/settings-group";
 import { api, type Settings } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { activate, pickLocale } from "../lib/i18n";
+import { publicSiteUrl } from "../lib/origins";
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
 import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
 import { SettingsView } from "../views/settings-view";
@@ -23,7 +23,7 @@ export const Route = createFileRoute("/settings")({
 });
 
 function SettingsRoute() {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   useDocumentTitle(t`Settings`);
   const me = useQuery(meQuery);
   const settings = useQuery(settingsQuery);
@@ -75,7 +75,15 @@ function SettingsRoute() {
       }}
     >
       <SettingsGroup title={t`Privacy preferences`}>
-        <Button onClick={openPrivacyPreferences}>
+        <Button
+          render={
+            <a
+              href={publicSiteUrl(
+                `${i18n.locale === "en" ? "" : `/${i18n.locale}`}/privacy#privacy-preferences`,
+              )}
+            />
+          }
+        >
           <Trans>Privacy preferences</Trans>
         </Button>
       </SettingsGroup>

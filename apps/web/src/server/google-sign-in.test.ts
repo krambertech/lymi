@@ -4,6 +4,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest
 import { createAuth } from "./auth";
 import { type Db, schema } from "./db";
 import type { Bindings } from "./env";
+import * as posthog from "./posthog";
 import { getAvatar, uploadAvatar } from "./services/avatars";
 import { type TestBindings, testDb } from "./services/test-db";
 
@@ -34,6 +35,7 @@ afterAll(async () => {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
 
 function png(size: number, rgb: [number, number, number]) {
@@ -109,9 +111,21 @@ function cookieHeader(jar: Map<string, string>) {
 }
 
 /** The whole redirect sign-in against the real auth handler, as a browser would drive it. */
-async function signInWithGoogle(pending: Promise<unknown>[]) {
+async function signInWithGoogle(pending: Promise<unknown>[], choiceCookie?: string) {
   const auth = createAuth(env, db, (work) => pending.push(work));
   const jar = new Map<string, string>();
+  if (choiceCookie) jar.set("lymi_analytics_consent", choiceCookie);
+  if (choiceCookie)
+    jar.set(
+      "lymi_analytics_attribution",
+      encodeURIComponent(
+        JSON.stringify({
+          first_landing_page: "/explore/estonian-a1",
+          referrer: "lennysnewsletter.com",
+          utm_source: "lenny",
+        }),
+      ),
+    );
   const start = await auth.handler(
     new Request(`${PRODUCT_URL}/api/auth/sign-in/social`, {
       method: "POST",
@@ -144,7 +158,21 @@ describe("signing in with Google", () => {
       () => new Response(png(96, [30, 90, 200])),
     );
     const pending: Promise<unknown>[] = [];
-    const result = await signInWithGoogle(pending);
+    const delivered = vi.spyOn(posthog, "trackProductEvent").mockResolvedValue();
+    const choiceCookie = encodeURIComponent(
+      JSON.stringify({ version: 1, allowed: true, updated_at: Date.now() }),
+    );
+    const result = await signInWithGoogle(pending, choiceCookie);
+    const signup = delivered.mock.calls.find((call) => call[2].name === "signed_up");
+    expect(signup?.[1]).toBe(result.userId);
+    expect(signup?.[2]).toEqual({
+      name: "signed_up",
+      method: "google",
+      first_landing_page: "/explore/estonian-a1",
+      referrer: "lennysnewsletter.com",
+      utm_source: "lenny",
+    });
+    expect(await signup?.[4]?.()).toMatchObject({ allowed: true });
 
     expect(result.status).toBe(302);
     expect(result.location).toBe("/today");

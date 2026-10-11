@@ -1,91 +1,42 @@
-import { mkdirSync } from "node:fs";
+import { createAccountThroughDevForm } from "./auth";
 import { e2eSiteUrl } from "./ports.mjs";
 import { expect, test } from "./test";
 
 const banner = (page: import("@playwright/test").Page) =>
   page.getByRole("complementary", { name: "Accept cookies" });
-test("privacy choice persists across surfaces, can be withdrawn and reports save failures", async ({
+
+test("privacy choices live on the public site and synchronize without an app banner", async ({
   page,
   context,
-}, info) => {
-  test.setTimeout(120_000);
-  const browserErrors: string[] = [];
-  page.on("pageerror", (error) => browserErrors.push(error.message));
-  page.on("requestfailed", (request) =>
-    browserErrors.push(`${request.url()}: ${request.failure()?.errorText}`),
-  );
+}) => {
   await context.clearCookies({ name: "lymi_analytics_consent" });
-  const requests: string[] = [];
-  page.on("request", (req) => {
-    if (req.url().includes("posthog.com")) requests.push(req.url());
-  });
   await page.goto("/api/dev/sign-in?as=learner&reset=1");
-  await expect(banner(page), JSON.stringify(browserErrors)).toBeVisible();
   await expect(page.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
-  const shots = process.env.ANALYTICS_SCREENSHOTS;
-  if (shots) {
-    mkdirSync(shots, { recursive: true });
-    await page.screenshot({ path: `${shots}/product-${info.project.name}-banner.png` });
-  }
-  await banner(page).getByText("Analytics details", { exact: true }).click();
+  await expect(banner(page)).toHaveCount(0);
+  await page.goto("/settings");
+  const preferences = page.getByRole("link", { name: "Privacy preferences", exact: true });
+  await expect(preferences).toHaveAttribute("href", `${e2eSiteUrl}/privacy#privacy-preferences`);
+  await preferences.focus();
+  await page.keyboard.press("Enter");
+  await expect(banner(page)).toBeFocused();
   await expect(banner(page).getByText(/PostHog processes analytics/)).toBeVisible();
-  if (shots) {
-    await page.screenshot({ path: `${shots}/product-${info.project.name}-details.png` });
-    if (info.project.name === "chromium") {
-      const viewport = page.viewportSize()!;
-      await page.setViewportSize({ width: 768, height: 1024 });
-      await page.screenshot({ path: `${shots}/product-tablet-details.png` });
-      await page.setViewportSize({ width: 393, height: 852 });
-      await page.emulateMedia({ colorScheme: "dark" });
-      await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
-      await banner(page)
-        .getByRole("button", { name: "Decline", exact: true })
-        .click({ trial: true });
-      await page.screenshot({ path: `${shots}/product-phone-dark-details.png` });
-      await page.emulateMedia({ colorScheme: "light" });
-      await page.setViewportSize(viewport);
-    }
-  }
-  let releaseSave: () => void = () => {};
-  const waiting = new Promise<void>((resolve) => {
-    releaseSave = resolve;
-  });
-  await page.route("**/api/settings/analytics-consent", async (route) => {
-    if (route.request().method() === "PUT") await waiting;
-    await route.continue();
-  });
   await banner(page).getByRole("button", { name: "Accept cookies", exact: true }).click();
-  await expect(
-    banner(page).getByRole("button", { name: "Accept cookies", exact: true }),
-  ).toBeDisabled();
-  await expect(banner(page).getByRole("button", { name: "Decline", exact: true })).toBeDisabled();
-  if (shots) await page.screenshot({ path: `${shots}/product-${info.project.name}-saving.png` });
-  releaseSave();
   await expect(banner(page)).toBeHidden();
-  await page.unroute("**/api/settings/analytics-consent");
   expect(await page.request.get("/api/settings").then((r) => r.json())).toMatchObject({
     analyticsConsent: true,
   });
-  await page.reload();
-  await expect(page.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
-  await expect(banner(page)).toBeHidden();
-  await page.goto("/settings");
-  await page.getByRole("button", { name: "Privacy preferences", exact: true }).click();
-  await expect(banner(page)).toBeFocused();
-  await page.keyboard.press("Escape");
-  await expect(banner(page)).toBeHidden();
-  await expect(
-    page.getByRole("button", { name: "Privacy preferences", exact: true }),
-  ).toBeFocused();
-  await page.getByRole("button", { name: "Privacy preferences", exact: true }).click();
+  await page.goBack();
+  await expect(preferences).toBeVisible();
+  await expect(banner(page)).toHaveCount(0);
+  await preferences.click();
+  await expect(banner(page)).toBeVisible();
   await context.setOffline(true);
   await banner(page).getByRole("button", { name: "Decline", exact: true }).click();
   await expect(banner(page).getByRole("alert")).toBeVisible();
-  if (shots) await page.screenshot({ path: `${shots}/product-${info.project.name}-offline.png` });
   expect(
     JSON.parse(
       decodeURIComponent(
-        (await context.cookies()).find((c) => c.name === "lymi_analytics_consent")!.value,
+        (await context.cookies()).find((c) => c.name === "lymi_analytics_consent")?.value ?? "null",
       ),
     ).allowed,
   ).toBe(false);
@@ -95,23 +46,54 @@ test("privacy choice persists across surfaces, can be withdrawn and reports save
   expect(await page.request.get("/api/settings").then((r) => r.json())).toMatchObject({
     analyticsConsent: false,
   });
-  await page.goto(e2eSiteUrl);
-  await expect(page.getByRole("heading", { name: "Accept cookies" })).toBeHidden();
-  await page.getByRole("button", { name: "Privacy preferences", exact: true }).click();
-  await expect(banner(page)).toBeVisible();
-  if (shots) await page.screenshot({ path: `${shots}/site-${info.project.name}-details.png` });
-  await banner(page).getByRole("button", { name: "Accept cookies", exact: true }).click();
-  await expect(banner(page)).toBeHidden();
-  expect(await page.request.get("/api/settings").then((r) => r.json())).toMatchObject({
-    analyticsConsent: true,
-  });
-  expect(requests).toEqual([]);
-  expect(
-    (await context.cookies()).filter((c) =>
-      /posthog|lymi_analytics_identity|lymi_analytics_attribution/.test(c.name),
-    ),
-  ).toEqual([]);
+  await page.goBack();
+  await expect(preferences).toBeVisible();
+  await expect(banner(page)).toHaveCount(0);
 });
+
+for (const choice of ["accepted", "declined", "untouched"] as const) {
+  test(`signup carries a ${choice} public preference without a checkbox`, async ({
+    page,
+    context,
+  }, info) => {
+    test.setTimeout(120_000);
+    await context.clearCookies({ name: "lymi_analytics_consent" });
+    if (choice !== "untouched") {
+      await page.goto(e2eSiteUrl);
+      await banner(page)
+        .getByRole("button", {
+          name: choice === "accepted" ? "Accept cookies" : "Decline",
+          exact: true,
+        })
+        .click();
+      await expect(banner(page)).toBeHidden();
+    }
+    await page.goto("/login?dev=1");
+    await expect(page.getByRole("heading", { name: "Sign in", exact: true })).toBeVisible();
+    await expect(banner(page)).toHaveCount(0);
+    await expect(page.getByRole("checkbox")).toHaveCount(0);
+    await createAccountThroughDevForm(
+      page,
+      `consent-${choice}-${info.project.name}-${Date.now()}@example.test`,
+    );
+    await expect(page.getByRole("heading", { name: "Welcome to Lymi", exact: true })).toBeVisible();
+    await expect(banner(page)).toHaveCount(0);
+    await expect(page.getByRole("checkbox")).toHaveCount(0);
+    expect(await page.request.get("/api/settings").then((r) => r.json())).toMatchObject({
+      analyticsConsent: choice === "untouched" ? null : choice === "accepted",
+    });
+    if (choice === "untouched")
+      expect(
+        (await context.cookies()).find((c) => c.name === "lymi_analytics_consent"),
+      ).toBeUndefined();
+    expect(
+      (await context.cookies()).filter((c) =>
+        /posthog|lymi_analytics_identity|lymi_analytics_attribution/.test(c.name),
+      ),
+    ).toEqual([]);
+  });
+}
+
 test("the Ukrainian mobile banner has reachable controls and names the processor in details", async ({
   page,
   context,

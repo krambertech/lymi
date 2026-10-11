@@ -219,6 +219,7 @@ function onDeckCards(rows: DeckRow[], deckId: string, w: Write, lookup: Lookup):
     }
     case "card.archive":
       return rows.filter((row) => row.card.id !== w.id);
+    // The draw's cached data keeps the old weight until its next fetch; review shows the mark at once itself.
     case "card.important":
       return rows.map((r) =>
         r.card.id === w.id ? { ...r, card: { ...r.card, important: w.important } } : r,

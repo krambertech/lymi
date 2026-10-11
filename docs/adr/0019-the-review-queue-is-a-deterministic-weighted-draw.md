@@ -40,6 +40,7 @@ The client walks a fixed list of 50 due cards, oldest first. A forgotten card ca
 
 - Review odds are retrievability at the start of the day, to the fourth power.
 - Three new-card slots in four weight a card by half per week since it was added. The fourth takes the oldest unseen card.
+- A card the learner marked important has its review and new-card odds multiplied by `IMPORTANT_ODDS`; the oldest-card slot ignores the mark. [The important-cards proposal](../proposals/important-cards.md) has the simulation behind the multiplier.
 
 All numbers are named constants in core.
 

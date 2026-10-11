@@ -105,7 +105,7 @@ export interface DeckDetailProps {
   history?: WordHistory | undefined;
   /** Play the word's pronunciation. Absent, the Say button is not drawn. */
   onPlayAudio?: ((card: DeckRow["card"]) => void) | undefined;
-  /** Mark or unmark a card as important, for anyone studying the deck. */
+  /** Mark or unmark a card as important for this learner; a member can, as the mark is their own. */
   onImportantChange?: ((card: DeckRow["card"], important: boolean) => void) | undefined;
   /** Every deck, so a word can be moved out of this one. */
   decks?: { id: string; name: string }[] | undefined;

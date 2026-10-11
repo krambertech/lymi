@@ -24,7 +24,6 @@ export const e2eAccounts = [
   "review-deck-out",
   "review-leave",
   "review-deck-past",
-  "review-fix",
   "review-hook",
   "word-detail",
   "deck-page",

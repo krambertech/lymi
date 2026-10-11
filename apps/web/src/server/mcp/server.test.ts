@@ -35,7 +35,7 @@ vi.mock("../services", async () => {
     archiveSection: vi.fn(),
     restoreSection: vi.fn(),
     searchCards: vi.fn(),
-    showCardWithDiagnosis: vi.fn(),
+    showCard: vi.fn(),
     addCards: vi.fn(),
     isPublisher: vi.fn(),
     describeCardImage: vi.fn(),
@@ -46,10 +46,6 @@ vi.mock("../services", async () => {
     restoreCard: vi.fn(),
     restoreCards: vi.fn(),
     requestEnrichment: vi.fn(),
-    acceptFix: vi.fn(),
-    undoFix: vi.fn(),
-    dismissDiagnosis: vi.fn(),
-    undoDismissal: vi.fn(),
     getSettings: vi.fn(),
     updateSettings: vi.fn(),
     insights: vi.fn(),
@@ -145,7 +141,6 @@ describe("Lymi MCP server", () => {
     const byName = new Map(tools.map((t) => [t.name, t]));
 
     expect([...byName.keys()].sort()).toEqual([
-      "accept_card_fix",
       "add_cards",
       "archive_card",
       "archive_card_image",
@@ -157,7 +152,6 @@ describe("Lymi MCP server", () => {
       "create_series",
       "delete_series",
       "describe_card_image",
-      "dismiss_card_diagnosis",
       "due_counts",
       "enrich_card",
       "get_card",
@@ -183,8 +177,6 @@ describe("Lymi MCP server", () => {
       "set_card_image",
       "settings_read",
       "settings_update",
-      "undo_card_fix",
-      "undo_dismiss_card_diagnosis",
       "update_card",
       "update_cards",
       "update_deck",
@@ -673,64 +665,6 @@ describe("Lymi MCP server", () => {
     expect(services.requestEnrichment).toHaveBeenCalledWith(expect.anything(), "card-1", null);
   });
 
-  it("accepts a drafted fix as the learner edited it, and undoes it", async () => {
-    services.acceptFix.mockResolvedValue({ added: [], edited: card, skipped: [] });
-    const client = await connect("write");
-
-    const missing = await client.callTool({
-      name: "accept_card_fix",
-      arguments: { diagnosisId: "diagnosis-1", cause: "two_things" },
-    });
-    expect(missing.isError).toBe(true);
-
-    const res = await client.callTool({
-      name: "accept_card_fix",
-      arguments: {
-        diagnosisId: "diagnosis-1",
-        cause: "several_answers",
-        text: "tall (of a person)",
-      },
-    });
-    expect(res.isError).toBeFalsy();
-    expect(services.acceptFix).toHaveBeenCalledWith(
-      expect.anything(),
-      "diagnosis-1",
-      { cause: "several_answers", text: "tall (of a person)" },
-      null,
-    );
-    expect(res.structuredContent).toMatchObject({ added: [], edited: { id: card.id } });
-
-    const hooked = await client.callTool({
-      name: "accept_card_fix",
-      arguments: { diagnosisId: "diagnosis-1", cause: "no_anchor", hook: "brisk as a brigade" },
-    });
-    expect(hooked.isError).toBeFalsy();
-    expect(services.acceptFix).toHaveBeenLastCalledWith(
-      expect.anything(),
-      "diagnosis-1",
-      { cause: "no_anchor", hook: "brisk as a brigade" },
-      null,
-    );
-
-    await client.callTool({ name: "undo_card_fix", arguments: { diagnosisId: "diagnosis-1" } });
-    expect(services.undoFix).toHaveBeenCalledWith(expect.anything(), "diagnosis-1");
-  });
-
-  it("dismisses a diagnosis the learner says is wrong, and takes that back", async () => {
-    const client = await connect("write");
-    const res = await client.callTool({
-      name: "dismiss_card_diagnosis",
-      arguments: { diagnosisId: "diagnosis-1" },
-    });
-    expect(res.isError).toBeFalsy();
-    expect(services.dismissDiagnosis).toHaveBeenCalledWith(expect.anything(), "diagnosis-1");
-    await client.callTool({
-      name: "undo_dismiss_card_diagnosis",
-      arguments: { diagnosisId: "diagnosis-1" },
-    });
-    expect(services.undoDismissal).toHaveBeenCalledWith(expect.anything(), "diagnosis-1");
-  });
-
   it("refuses every write on a read-only token and says how to fix it", async () => {
     const client = await connect("read");
 
@@ -1052,7 +986,7 @@ describe("Lymi MCP server", () => {
 
   it("answers an unexpected failure with a retry message, never the internal error", async () => {
     const spy = vi.spyOn(console, "error").mockImplementation(() => {});
-    services.showCardWithDiagnosis.mockRejectedValue(
+    services.showCard.mockRejectedValue(
       new Error("D1_ERROR: no such column: cards.secret at offset 42 SQLITE_ERROR"),
     );
     const client = await connect("read");
@@ -1068,7 +1002,7 @@ describe("Lymi MCP server", () => {
   });
 
   it("returns a card without the bookkeeping columns", async () => {
-    services.showCardWithDiagnosis.mockResolvedValue({ ...card, diagnosis: null });
+    services.showCard.mockResolvedValue(card);
     const client = await connect("read");
 
     const res = await client.callTool({ name: "get_card", arguments: { cardId: "card-1" } });
@@ -1083,28 +1017,8 @@ describe("Lymi MCP server", () => {
     }
   });
 
-  it("returns the learner's diagnosis of an often-forgotten card with it", async () => {
-    const diagnosis = {
-      id: "diagnosis-1",
-      cause: "no_anchor" as const,
-      draft: { hook: "sbrigati: brisk as a brigade" },
-      confidence: 0.8,
-      model: "test-model",
-      diagnosedAt: now.toISOString(),
-      dismissedAt: null,
-      acceptedAt: now.toISOString(),
-    };
-    services.showCardWithDiagnosis.mockResolvedValue({ ...card, diagnosis });
-    const client = await connect("read");
-
-    const res = await client.callTool({ name: "get_card", arguments: { cardId: "card-1" } });
-
-    expect(res.structuredContent).toMatchObject({ id: "card-1", diagnosis });
-  });
-
   it("returns a card's own review modes as cue and target, beside the legacy direction", async () => {
-    services.showCardWithDiagnosis.mockResolvedValue({
-      diagnosis: null,
+    services.showCard.mockResolvedValue({
       ...card,
       directions: "production",
       reviewModes: [{ cue: "meaning", target: "term" }],

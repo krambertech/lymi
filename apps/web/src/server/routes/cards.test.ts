@@ -2,7 +2,6 @@ import {
   AddCardsOut,
   ApiKeyCreatedOut,
   ArchiveCardsOut,
-  CardDetailOut,
   CardOut,
   DeckOut,
   EditCardsOut,
@@ -133,9 +132,8 @@ describe("bulk card writes", () => {
       { id: second, status: "restored" },
     ]);
     const back = await app.fetch(`/api/cards/${first}`, { as: learner });
-    const read = CardDetailOut.parse(await back.json());
+    const read = CardOut.parse(await back.json());
     expect(read.archivedAt).toBeNull();
-    expect(read.diagnosis).toBeNull();
   });
 
   it("refuses a bulk edit that lists a card twice", async () => {

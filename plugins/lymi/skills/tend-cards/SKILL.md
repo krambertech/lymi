@@ -27,10 +27,6 @@ A hook is a short association in the meaning language that leads back to the ter
 
 ## Often forgotten
 
-`get_card` carries a `diagnosis` once Lymi has judged why the card keeps being forgotten.
-
-- With a named cause and a drafted fix: tell the learner the cause in one sentence and show the fix. Apply it with `accept_card_fix` only on their yes. `undo_card_fix` takes it back.
-- The learner says the cause is wrong: `dismiss_card_diagnosis`. `undo_dismiss_card_diagnosis` takes that back.
-- `unclear`, or no diagnosis yet: offer a hook, a clearer meaning, or splitting the card in two with `add_cards` and `update_card`.
+`search_cards` with `filter.reviews.slipping` set to `{ eq: true }` finds the cards the learner keeps forgetting. Look at one before proposing anything, and offer one change: a hook, a clearer meaning, or splitting the card in two with `add_cards` and `update_card`. Write it only on the learner's yes.
 
 A member of a shared deck cannot change the owner's cards. Say so when a write is refused for that reason, and suggest they ask the deck's owner.

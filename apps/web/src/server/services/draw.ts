@@ -29,7 +29,6 @@ import {
 import type { Card } from "@lymi/core/schema";
 import { schema } from "../db";
 import type { ServiceContext } from "./context";
-import { type DiagnosisRunner, queueDiagnoses } from "./diagnosis";
 import { memberOf } from "./members";
 import { askedSql, stateMode } from "./modes";
 import { waitingCardsSql } from "./sections";
@@ -96,8 +95,6 @@ export interface DrawOptions {
   sectionId?: string | undefined;
   /** Also load slipping cards whatever their due, for the slipping round. */
   slipping?: boolean | undefined;
-  /** Queue a diagnosis for each often-forgotten card loaded that has none for its revision. */
-  diagnose?: DiagnosisRunner | null | undefined;
 }
 
 interface ModeRow {
@@ -269,17 +266,6 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
   }
 
   const slipping = new Set(candidates.flatMap((row) => (row.slipping ? [row.card.id] : [])));
-  // After the response, so the model never sits in a draw's latency. ADR 0025.
-  if (opts.diagnose && slipping.size > 0) {
-    opts.diagnose.defer(
-      queueDiagnoses(ctx, [...slipping], opts.diagnose.queue).catch((error: unknown) => {
-        // The draw has answered; a lost queueing only waits for the next draw.
-        console.error("Queueing diagnoses failed", {
-          error: error instanceof Error ? error.name : "unknown",
-        });
-      }),
-    );
-  }
 
   return {
     day,

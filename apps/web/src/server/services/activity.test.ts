@@ -8,7 +8,6 @@ import { addCards, archiveCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
 import { startExport } from "./exports";
-import { dismissDiagnosis, undoDismissal } from "./fixes";
 import {
   cancelInvitation,
   inviteByEmail,
@@ -256,49 +255,6 @@ describe("what the AI filled in", () => {
 
     const [row] = await inDeck(deck.id);
     expect(row).toMatchObject({ kind: "cards_enriched", actor: "ai", count: 1 });
-  });
-});
-
-describe("a fix an app turned down", () => {
-  /** A card with a diagnosis naming a cause, as the workflow leaves it. */
-  async function diagnosed(deckName: string, term: string) {
-    const deck = await createDeck(kateryna, { name: deckName, defaultLanguage: "et" });
-    const [added] = await addCards(kateryna, [{ deckId: deck.id, term, meaning: "tall" }]);
-    if (added?.status !== "added") throw new Error("the card was not added");
-    const id = newId();
-    await db.insert(schema.cardDiagnoses).values({
-      id,
-      userId: kateryna.userId,
-      cardId: added.card.id,
-      revision: 1,
-      status: "done",
-      cause: "several_answers",
-      draft: { field: "meaning", text: "tall (of a person)", otherAnswer: "kõrge" },
-      confidence: 0.9,
-      model: "test",
-    });
-    await audit(
-      { ...kateryna, actor: "ai" },
-      { entity: "diagnosis", action: "create", id, details: { cardId: added.card.id } },
-    );
-    return { deck, card: added.card, id };
-  }
-
-  it("says an app turned a fix down and brought it back, naming the card", async () => {
-    const { deck, card, id } = await diagnosed("Fixes", "pikk");
-    await dismissDiagnosis(claude, id);
-    await undoDismissal(claude, id);
-
-    const rows = await inDeck(deck.id);
-    expect(rows.map((row) => row.kind)).toEqual(["fix_undismissed", "fix_dismissed"]);
-    expect(rows[1]).toMatchObject({ actor: "mcp", app: "Claude", count: 1 });
-    expect(rows[1]?.cards).toMatchObject([{ id: card.id, term: "pikk" }]);
-  });
-
-  it("leaves out the learner's own dismissal and the AI's diagnosis", async () => {
-    const { deck, id } = await diagnosed("Own fixes", "lühike");
-    await dismissDiagnosis(kateryna, id);
-    expect(await inDeck(deck.id)).toHaveLength(0);
   });
 });
 

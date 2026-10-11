@@ -34,6 +34,4 @@ An event appears here because a service wrote an audit row for it, so the screen
 
 The AI's own writes are here too: a run that fills empty fields after an add is "Enriched 3 cards in Verbi", the word CONTEXT.md owns for it, and never an edit.
 
-A connected app that turns down a card's fix, or takes that back, is here as "Turned down the fix for 1 card in Verbi" and "Brought back the fix for 1 card in Verbi", with the cards under it. The learner doing the same in review is not, like their other edits.
-
 Only a caller Lymi can name is named. Every row keeps the app or key behind the write and its name at the time, taken from the service context rather than passed by each writer, so no write can lose it; a caller the context cannot name shows as "a connected app". A row keeps the name it had at the write, so revoking a key leaves its history readable.

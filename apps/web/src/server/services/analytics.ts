@@ -1,4 +1,4 @@
-import type { DiagnosisCause, ReviewModeKey } from "@lymi/core";
+import type { ReviewModeKey } from "@lymi/core";
 
 export type AnalyticsWriter = Pick<AnalyticsEngineDataset, "writeDataPoint">;
 
@@ -11,9 +11,7 @@ export type AnalyticsEvent =
       adapter: "anki" | "mochi" | "lymi" | "unknown";
       outcome: "started" | "done" | "failed";
     }
-  | { name: "enrichment_finished"; outcome: "enriched" | "empty" | "failed"; count: number }
-  | { name: "diagnosis_finished"; outcome: DiagnosisCause | "failed" }
-  | { name: "diagnosis_dismissed" | "diagnosis_dismiss_undone"; cause: DiagnosisCause };
+  | { name: "enrichment_finished"; outcome: "enriched" | "empty" | "failed"; count: number };
 
 /** Only fixed action labels and counts reach Analytics Engine. */
 export function track(dataset: AnalyticsWriter | undefined, event: AnalyticsEvent): void {
@@ -25,11 +23,9 @@ export function track(dataset: AnalyticsWriter | undefined, event: AnalyticsEven
         ? event.mode
         : event.name === "import_started" || event.name === "import_finished"
           ? `${event.adapter}:${event.outcome}`
-          : event.name === "enrichment_finished" || event.name === "diagnosis_finished"
+          : event.name === "enrichment_finished"
             ? event.outcome
-            : event.name === "diagnosis_dismissed" || event.name === "diagnosis_dismiss_undone"
-              ? event.cause
-              : "";
+            : "";
   const value =
     event.name === "card_added" || event.name === "enrichment_finished"
       ? event.count

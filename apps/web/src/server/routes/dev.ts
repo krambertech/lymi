@@ -1,4 +1,4 @@
-import { AppLanguage, OFFERED_CAUSES } from "@lymi/core";
+import { AppLanguage } from "@lymi/core";
 import { type Context, Hono } from "hono";
 import { z } from "zod";
 import { devPersonaCookieName } from "../../shared/cookies";
@@ -20,7 +20,7 @@ import {
   reachGoal,
   recallCards,
   resetAccount,
-  seedFixes,
+  seedOftenForgotten,
   seedPersona,
   setDue,
   slipCards,
@@ -267,18 +267,19 @@ dev.post("/slip", describe({ hide: true, open: true }), body(CountBody, "slip"),
   return c.json({ slipped, counts: await devCounts(ctx) });
 });
 
-const FixesBody = z.object({
-  causes: z.array(z.enum(OFFERED_CAUSES)).min(1).optional(),
-  hooked: z.boolean().optional(),
-});
+const OftenForgottenBody = z.object({ hooked: z.boolean().optional() });
 
-// Diagnosed cards without a vendor key, so review's offer can be seen and tested.
-dev.post("/fixes", describe({ hide: true, open: true }), body(FixesBody, "fixes"), async (c) => {
-  const ctx = ctxOf(c);
-  const { causes, hooked } = c.req.valid("json");
-  const seeded = await seedFixes(ctx, causes, { hooked });
-  return c.json({ ...seeded, counts: await devCounts(ctx) });
-});
+// Often-forgotten cards with no hook, so review's offer to write one can be seen and tested.
+dev.post(
+  "/often-forgotten",
+  describe({ hide: true, open: true }),
+  body(OftenForgottenBody, "often-forgotten"),
+  async (c) => {
+    const ctx = ctxOf(c);
+    const seeded = await seedOftenForgotten(ctx, c.req.valid("json"));
+    return c.json({ ...seeded, counts: await devCounts(ctx) });
+  },
+);
 
 const EnrichedBody = z.object({
   fields: z.array(z.enum(["meaning", "example", "pronunciation"])).min(1),

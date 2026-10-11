@@ -159,6 +159,10 @@
     {
       "name": "0039_bright_the_hand.sql",
       "sha256": "f20cad28c09ad4cb83e27ee1e223239d9e3a17987514bc78f76501484ef49c53"
+    },
+    {
+      "name": "0040_common_skullbuster.sql",
+      "sha256": "bd261693358f74874197ba69871723320692c5416bda177a91acf15d0d470401"
     }
   ]
 }

@@ -9,27 +9,18 @@ import {
   ROUNDS,
   type Round,
 } from "@lymi/core";
-import { onlineManager, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotionConfig } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Button } from "../components/button";
-import type { EditFocus } from "../components/card-form";
-import { EditCardSheet } from "../components/edit-card-sheet";
-import { FixSheet } from "../components/fix-sheet";
 import { GRADES } from "../components/grade";
+import { HookSheet } from "../components/hook-sheet";
 import { AID_KEY, aidSteps, aidTaken } from "../components/recall-aid";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
-import {
-  api,
-  type Card,
-  deviceTimezone,
-  type QueueItem,
-  type ReviewOffer,
-  scopeKey,
-} from "../lib/api";
+import { api, deviceTimezone, type QueueItem, scopeKey } from "../lib/api";
 import { usePrefetchPictures } from "../lib/card-images";
 import { useDocumentTitle } from "../lib/document-title";
 import { lanternFor } from "../lib/flame";
@@ -55,7 +46,6 @@ import {
 import { drawState, reviewItem, stateBefore } from "../lib/review-draw";
 import { itemKey } from "../lib/review-modes";
 import { shortQuote } from "../lib/short-quote";
-import { useDismissDiagnosis } from "../lib/use-dismiss-diagnosis";
 import {
   GradeBar,
   ReviewCard,
@@ -84,8 +74,6 @@ export const Route = createFileRoute("/review")({
   component: ReviewPage,
 });
 
-const subscribeOnline = (notify: () => void) => onlineManager.subscribe(notify);
-const isOnline = () => onlineManager.isOnline();
 /** The grade strip, where focus goes when a sheet over the card closes. */
 const GRADES_ID = "review-grades";
 const gradesFocus = () => {
@@ -190,28 +178,14 @@ function Review() {
   // Where focus goes when the button holding it unmounts: the grades after a reveal, the next card after a grade.
   const [focusGrades, setFocusGrades] = useState(false);
   const [focusReveal, setFocusReveal] = useState(false);
-  // Each offer shown, so a card that returns later in the review does not bring it back.
-  const [offered, setOffered] = useState<ReadonlySet<string>>(() => new Set());
-  // The offer of the card on screen, decided as it arrives and held until its grade.
-  const [cardOffer, setCardOffer] = useState<{
-    key: string;
-    offer: ReviewOffer | null;
-    parked: boolean;
-  }>({
-    key: "",
-    offer: null,
-    parked: false,
-  });
+  // Whether the card on screen offers a hook, decided as it arrives and held until its grade.
+  const [cardOffer, setCardOffer] = useState({ key: "", offer: false, parked: false });
   // How far into the card's aids the learner went before the reveal, and whether they asked to see
   // them after it, held for the card on screen.
   const [aidState, setAidState] = useState({ key: "", taken: 0, shown: false, animate: true });
   // Presses of a locked grade's key, counted per card so an earlier card's never show its tip.
   const [lockedNudge, setLockedNudge] = useState({ key: "", presses: 0 });
-  const [fixing, setFixing] = useState(false);
-  const [editing, setEditing] = useState<{ card: Card; focus?: EditFocus | undefined } | null>(
-    null,
-  );
-  const online = useSyncExternalStore(subscribeOnline, isOnline, () => true);
+  const [writingHook, setWritingHook] = useState(false);
 
   // The persisted cache can predate the last grade, so the first card waits for this mount's fetch.
   const settled = draw.isFetchedAfterMount || draw.fetchStatus !== "fetching";
@@ -661,7 +635,7 @@ function Review() {
     const onKey = (e: KeyboardEvent) => {
       // A sheet over the review handles its own keys, Escape included.
       if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
-      if (add.open || fixing || editing) return;
+      if (add.open || writingHook) return;
       if (e.key === "Escape") {
         leave();
         return;
@@ -704,34 +678,23 @@ function Review() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, onGrade, takeAid, showAid, leave, add.open, fixing, editing, current]);
+  }, [revealed, onGrade, takeAid, showAid, leave, add.open, writingHook, current]);
 
-  // Offline the offer simply does not appear; review goes on as it always has. Once decided it
-  // holds, so a refetch or a dropped connection never moves or remounts it mid-card.
+  // An often-forgotten card with no hook offers one. Once decided it holds, so a refetch never
+  // moves or remounts it mid-card.
   if (cardOffer.key !== showing) {
-    const candidate = current?.offer;
-    const offer =
-      candidate && online && !unreachable && !offered.has(candidate.diagnosisId) ? candidate : null;
-    setCardOffer({ key: showing, offer, parked: false });
+    setCardOffer({
+      key: showing,
+      offer: !!current?.slipping && !current.card.hook,
+      parked: false,
+    });
   }
-  const offer = cardOffer.key === showing ? cardOffer.offer : null;
-  const markOffered = (id: string) => {
-    if (offered.has(id)) return;
-    setOffered((seen) => new Set(seen).add(id));
-    // A mark that does not land only means the offer can come once more.
-    api.markOffered(id).catch(() => undefined);
-  };
-  // Closing the sheet without the fix parks it, and the panel fades, so the choice is seen to land.
-  const closeFix = () => {
-    setFixing(false);
-    if (!offer) return;
-    markOffered(offer.diagnosisId);
+  const offer = cardOffer.key === showing && cardOffer.offer;
+  // Closing the sheet parks the offer, and the panel fades, so the choice is seen to land.
+  const closeHook = () => {
+    setWritingHook(false);
     setCardOffer((held) => ({ ...held, parked: true }));
   };
-  // Undo brings the panel back while its card is still on screen.
-  const dismissFix = useDismissDiagnosis((id) =>
-    setCardOffer((held) => (held.offer?.diagnosisId === id ? { ...held, parked: false } : held)),
-  );
 
   const doneLink = (variant: "primary" | "secondary") => (
     <Button variant={variant} size="lg" className="w-full" render={<Link to="/today" />}>
@@ -858,13 +821,11 @@ function Review() {
               offer={
                 offer
                   ? {
-                      offer,
                       // Once the answer has settled: its lines take about half a second to land.
                       delay: animateReveal ? (reduce ? 0.7 : 0.95) : 0.5,
                       animate: animateReveal,
                       parked: cardOffer.parked,
-                      onOpen: () => setFixing(true),
-                      onShown: () => markOffered(offer.diagnosisId),
+                      onOpen: () => setWritingHook(true),
                     }
                   : undefined
               }
@@ -896,34 +857,17 @@ function Review() {
           </motion.div>
         )}
       </AnimatePresence>
-      <FixSheet
+      <HookSheet
         item={current}
-        offer={offer}
-        open={fixing}
+        open={writingHook}
         finalFocus={gradesFocus}
-        onOpenChange={(open) => (open ? setFixing(true) : closeFix())}
-        onFixed={(cause) => {
-          // A hook kept after the reveal shows at once, where Show hook would have put it.
-          if (cause === "no_anchor" && revealed) {
+        onOpenChange={(open) => (open ? setWritingHook(true) : closeHook())}
+        onSaved={() => {
+          // A hook written after the reveal shows at once, where Show hook would have put it.
+          if (revealed) {
             setAidState({ key: showing, taken, shown: true, animate: !lastInputWasKey() });
           }
         }}
-        onEdit={(focus) => {
-          closeFix();
-          if (current) setEditing({ card: current.card, focus });
-        }}
-        onDismiss={() => {
-          if (offer) dismissFix.mutate(offer.diagnosisId);
-          closeFix();
-        }}
-      />
-      <EditCardSheet
-        card={editing?.card ?? null}
-        decks={decks.data}
-        focus={editing?.focus}
-        onOpenChange={(open) => !open && setEditing(null)}
-        onReopen={(card) => setEditing({ card })}
-        finalFocus={gradesFocus}
       />
     </div>
   );

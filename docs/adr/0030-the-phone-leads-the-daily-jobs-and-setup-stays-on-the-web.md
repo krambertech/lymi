@@ -19,7 +19,8 @@ ADR 0029 made the phone a second set of screens over shared packages, so every s
 
 ## Consequences
 
-- A learning feature lands on both apps, or the web ships first with a linked phone issue, as before.
+- A new learning feature ships on the web first by default, is verified there, and reaches the phone through a linked phone issue. The web deploys continuously while the phone ships as releases, so the web is where a feature settles before it is built twice.
+- The API stays compatible with installed phone versions, and the phone tolerates fields and kinds it does not know yet, because it regularly runs behind web-first features.
 - A setup job is web-only until learners reach for it on the phone; moving one is a product decision, not a parity bug.
 - The phone's You and Settings show the five jobs as rows that open them on the web.
 - The order of phone work follows the daily jobs: the review loop and capture before Insights, Explore and shared-deck management.

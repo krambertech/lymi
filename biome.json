@@ -18,7 +18,9 @@
       "!design",
       "!**/public",
       "!apps/web/index.html",
-      "!**/worker-configuration.d.ts"
+      "!**/worker-configuration.d.ts",
+      "!apps/mobile/src/theme.gen.css",
+      "!apps/mobile/src/uniwind-types.d.ts"
     ]
   },
   "formatter": {

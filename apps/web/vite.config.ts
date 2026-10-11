@@ -142,8 +142,9 @@ export default defineConfig({
   ],
   // motion/react has to be pre-bundled against the same React the app renders with. Left to
   // the optimiser it picks up its own copy, and the client only finds out as "Invalid hook
-  // call" the first time a motion component renders.
-  resolve: { tsconfigPaths: true, dedupe: ["react", "react-dom"] },
+  // call" the first time a motion component renders. `packages/client` shares the app's one
+  // TanStack Query, so its query options and the app's provider can never come from two copies.
+  resolve: { tsconfigPaths: true, dedupe: ["react", "react-dom", "@tanstack/react-query"] },
   optimizeDeps: {
     include: ["motion/react", "react", "react-dom", "react-dom/client", "posthog-js/no-external"],
   },
@@ -178,7 +179,7 @@ export default defineConfig({
             }),
             tailwindcss(),
           ],
-          resolve: { tsconfigPaths: true, dedupe: ["react", "react-dom"] },
+          resolve: { tsconfigPaths: true, dedupe: ["react", "react-dom", "@tanstack/react-query"] },
           optimizeDeps: {
             include: [
               "react",

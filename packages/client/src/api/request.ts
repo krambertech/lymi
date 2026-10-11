@@ -23,7 +23,13 @@ export function apiUrl(path: string): string {
 
 export async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const config = clientConfig();
-  const session = config.headers ? await config.headers() : {};
+  let session: Record<string, string> = {};
+  try {
+    if (config.headers) session = await config.headers();
+  } catch {
+    // An unreadable session is a signed-out one: the outboxes hold their queue for sign-in.
+    throw new ApiError(401, config.messages.signIn());
+  }
   let res: Response;
   try {
     res = await fetch(apiUrl(path), {

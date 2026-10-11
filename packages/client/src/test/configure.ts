@@ -1,7 +1,7 @@
-import { configureClient } from "../config";
+import { type ClientConfig, configureClient } from "../config";
 
 /** Configures the client over a map the test can read and seed, in place of the browser's storage. */
-export function configureForTest(store: Map<string, string>) {
+export function configureForTest(store: Map<string, string>, rest: Partial<ClientConfig> = {}) {
   configureClient({
     storage: {
       getItem: (k) => store.get(k) ?? null,
@@ -16,5 +16,6 @@ export function configureForTest(store: Map<string, string>) {
       gone: () => "gone",
       failed: () => "failed",
     },
+    ...rest,
   });
 }

@@ -54,6 +54,18 @@ describe("a request", () => {
     expect(apiUrl("/api/audio/c1")).toBe("https://my.lymi.app/api/audio/c1");
   });
 
+  it("reads a session it cannot read as signed out, so nothing queued is dropped", async () => {
+    configureForTest(new Map(), {
+      headers: () => {
+        throw new Error("keychain locked");
+      },
+    });
+    const error = await request("/api/decks").catch((e: unknown) => e);
+    expect(error).toBeInstanceOf(ApiError);
+    expect(error).toMatchObject({ status: 401, message: "sign in" });
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
   it("reads a network failure as offline, with the app's sentence", async () => {
     configureForTest(new Map());
     fetch.mockRejectedValueOnce(new TypeError("Network request failed"));

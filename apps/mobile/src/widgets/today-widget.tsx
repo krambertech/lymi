@@ -9,6 +9,9 @@ import {
   widgetURL,
 } from "@expo/ui/swift-ui/modifiers";
 import { createWidget, type WidgetEnvironment } from "expo-widgets";
+import type { WidgetColours } from "./colours";
+
+type Paint = Parameters<typeof foregroundStyle>[0];
 
 export interface Lanterns {
   dark: string;
@@ -24,6 +27,7 @@ export interface TodayProps {
   out: boolean;
   /** file:// paths in the shared app group, one lantern per room and state. */
   lanterns: Lanterns;
+  colours: WidgetColours;
 }
 
 /**
@@ -33,11 +37,20 @@ export interface TodayProps {
 const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
   "widget";
   const dark = env.colorScheme === "dark";
-  const ink = dark ? "#f1eee7" : "#1c140f";
-  const muted = dark ? "#a89c90" : "#72665f";
-  const canvas = dark ? "#130d09" : "#f8f6f4";
-  const pool = dark ? "#5a3a14" : "#ffdca6";
   // The gallery and a fresh install render the widget before the app has sent anything.
+  const room = props.colours?.[dark ? "dark" : "light"];
+  const ink: Paint = room?.ink ?? { type: "hierarchical", style: "primary" };
+  const muted: Paint = room?.muted ?? { type: "hierarchical", style: "secondary" };
+  const backdrop = (center: { x: number; y: number }, endRadius: number): Paint =>
+    room
+      ? {
+          type: "radialGradient",
+          colors: [room.pool, room.canvas],
+          center,
+          startRadius: 0,
+          endRadius,
+        }
+      : { type: "material", material: "regular" };
   const due = props.due ?? 0;
   const streak = props.streak ?? 0;
   const lanterns = props.lanterns;
@@ -51,16 +64,7 @@ const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
       <HStack
         spacing={18}
         modifiers={[
-          containerBackground(
-            {
-              type: "radialGradient",
-              colors: [pool, canvas],
-              center: { x: 0.22, y: 0.5 },
-              startRadius: 0,
-              endRadius: 150,
-            },
-            "widget",
-          ),
+          containerBackground(backdrop({ x: 0.22, y: 0.5 }, 150), "widget"),
           widgetURL("lymi://review"),
         ]}
       >
@@ -92,16 +96,7 @@ const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
     <VStack
       spacing={4}
       modifiers={[
-        containerBackground(
-          {
-            type: "radialGradient",
-            colors: [pool, canvas],
-            center: { x: 0.5, y: 0.38 },
-            startRadius: 0,
-            endRadius: 96,
-          },
-          "widget",
-        ),
+        containerBackground(backdrop({ x: 0.5, y: 0.38 }, 96), "widget"),
         widgetURL("lymi://review"),
       ]}
     >

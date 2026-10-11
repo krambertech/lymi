@@ -1,80 +1,16 @@
+import {
+  EMBER,
+  FLAME_CORE,
+  FLAME_OUTER,
+  type Ink,
+  LANTERN_BAIL,
+  LANTERN_FRAME,
+  LANTERN_GLASS,
+  type Shape,
+} from "@lymi/design";
 import type { ReactNode } from "react";
 
-/**
- * The lantern, as data, in a 120 unit box. One source of truth: the component, the lockup and
- * scripts/brand.mjs all draw from here, so the mark cannot drift between the app and its assets.
- *
- * The parts, top to bottom: a bail tall enough to read as a handle rather than a keyring, a hood
- * that flares wide over the glass, two rods down the sides, an opaque glass, and a fount on a foot.
- * The glass is a solid colour and every metal part overlaps its edges, so the mark carries its own
- * interior and can sit on any surface without painting a hole in it.
- *
- * There is no second cut for small sizes. The rods and the flame are exactly what keep the drawing
- * legible when it is tiny; a simplified version that drops them collapses into a mushroom by 24 px.
- * One drawing, every size.
- */
-
-export type Ink = "metal" | "glass" | "glass-unlit" | "amber" | "flame" | "flame-core" | "ember";
-
-export interface Shape {
-  /** A rounded rect (x, y, w, h, r) or a path (d). */
-  x?: number;
-  y?: number;
-  w?: number;
-  h?: number;
-  r?: number;
-  d?: string;
-  fill?: Ink;
-  stroke?: Ink;
-  strokeWidth?: number;
-  /** Round the outline of a filled path, e.g. the hood's corners. */
-  round?: boolean;
-}
-
-/** Where the drawing actually sits inside the 120 box. The lockup measures from these. */
-export const LANTERN_BOUNDS = { left: 31.5, right: 88.5, top: 15.25, bottom: 106 } as const;
-
-export const FLAME: Shape[] = [
-  {
-    d: "M60 58 C66.5 64.5 73.8 73 73.8 84 C73.8 90.9 67.62 96.5 60 96.5 C52.38 96.5 46.2 90.9 46.2 84 C46.2 73 53.5 64.5 60 58 Z",
-    fill: "flame",
-  },
-  {
-    d: "M60 71.25 C63.25 74.5 66.9 78.75 66.9 84.25 C66.9 87.7 63.81 90.5 60 90.5 C56.19 90.5 53.1 87.7 53.1 84.25 C53.1 78.75 56.75 74.5 60 71.25 Z",
-    fill: "flame-core",
-  },
-];
-
-/**
- * The flame's own box inside the 120 unit one. The streak's Flame crops to this, so the mark and
- * the streak are one drawing rather than two that drift.
- */
-export const FLAME_BOUNDS = { left: 44, right: 76, top: 58, bottom: 96.5 } as const;
-
-export const EMBER: Shape = {
-  d: "M60 72 C65.6 78.5 67 82 65.4 86 A5.7 5.7 0 0 1 54.6 86 C53 82 54.4 78.5 60 72 Z",
-  fill: "ember",
-};
-
-/** The bail, drawn behind the hood so the two never merge into one blob. */
-export const LANTERN_BAIL: Shape = {
-  d: "M40.5 48 A19.5 30 0 0 1 79.5 48",
-  stroke: "metal",
-  strokeWidth: 5.5,
-};
-
-export const LANTERN_GLASS: Shape = { x: 38.5, y: 49, w: 43, h: 46, r: 3, fill: "glass" };
-
-/** Everything painted over the glass: rods, hood, the bail's pivots, fount and foot. */
-export const LANTERN_FRAME: Shape[] = [
-  { x: 34, y: 50, w: 5, h: 46, r: 2.5, fill: "metal" },
-  { x: 81, y: 50, w: 5, h: 46, r: 2.5, fill: "metal" },
-  { d: "M50 36 H70 L87 51 H33 Z", fill: "metal", stroke: "metal", strokeWidth: 3, round: true },
-  { x: 37.3, y: 44.8, w: 6.4, h: 6.4, r: 3.2, fill: "metal" },
-  { x: 76.3, y: 44.8, w: 6.4, h: 6.4, r: 3.2, fill: "metal" },
-  { x: 31, y: 92, w: 58, h: 9, r: 4.5, fill: "metal" },
-  { x: 38, y: 101, w: 44, h: 5, r: 2.5, fill: "metal" },
-];
+// How the site draws the lantern from @lymi/design's geometry: each ink is a CSS colour.
 
 const PAINT: Record<Ink, string> = {
   metal: "currentColor",
@@ -105,8 +41,8 @@ function draw(s: Shape, key: string, className?: string) {
 export function FLAME_PARTS(): ReactNode {
   return (
     <g className="flame">
-      {draw(FLAME[0] as Shape, "flame")}
-      {draw(FLAME[1] as Shape, "core", "flame-core")}
+      {draw(FLAME_OUTER, "flame")}
+      {draw(FLAME_CORE, "core", "flame-core")}
     </g>
   );
 }

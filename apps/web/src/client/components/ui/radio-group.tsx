@@ -1,9 +1,9 @@
 import { Radio as RadioPrimitive } from "@base-ui/react/radio";
 import { RadioGroup as RadioGroupPrimitive } from "@base-ui/react/radio-group";
+import { CHOICE_FADE, CHOICE_LEAVE, CHOICE_POP } from "@lymi/design";
 import { cn } from "cn";
 import { motion, useReducedMotionConfig } from "motion/react";
 import { focusChosen, fromItem } from "../../lib/choice-focus";
-import { CHOICE_FADE, CHOICE_LEAVE, CHOICE_POP } from "../../lib/choice-motion";
 import { FieldItems, useField, useFieldControl } from "./field";
 
 // shadcn's Radio Group; selection is the ring and an ink dot, because amber stays on the flame.

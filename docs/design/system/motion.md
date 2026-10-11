@@ -55,7 +55,7 @@ A choice control answers the press it was given:
 - a radio's dot swells past its size and settles;
 - a held switch thumb stretches toward the end it is leaving for, then springs across when let go.
 
-Those share one set of springs in `lib/choice-motion.ts`, and each leaves faster than it arrives. A control's own mark still moves when a key changes it, because the mark is the answer to the key; the segmented plate travels across the interface, so for a key it jumps.
+Those share one set of springs, the `CHOICE_` presets in `@lymi/design`, and each leaves faster than it arrives. A control's own mark still moves when a key changes it, because the mark is the answer to the key; the segmented plate travels across the interface, so for a key it jumps.
 
 ## The keyboard does not animate
 

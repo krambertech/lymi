@@ -41,6 +41,7 @@ apps/web          Product deployable: Vite React PWA client + Hono Worker
 apps/mobile       Phone app: Expo React Native, demo data for now (see its README)
 packages/core     Drizzle schema, Zod types, FSRS scheduling. Shared by the web and the phone app.
 packages/client   API client, query options, grade and write outboxes, review draw. Shared by both clients.
+packages/design   Tokens, the lantern's geometry, flame rules and motion. Shared by the web, the site and the phone.
 scripts           Brand assets (brand.mjs) and icon generation (icons.sh)
 ```
 
@@ -50,7 +51,7 @@ scripts           Brand assets (brand.mjs) and icon generation (icons.sh)
 pnpm verify:changed # push gate: static checks, then the tests the change affects
 pnpm verify       # full gate: check, i18n:check, build, typecheck, test
 pnpm check        # Biome lint + format check, then check:design
-pnpm check:design # DESIGN.md colours match styles.css; design docs name real components
+pnpm check:design # DESIGN.md and the phone's values match packages/design; design docs name real components
 pnpm build        # production build
 pnpm fix          # Biome, writing fixes
 pnpm i18n:extract # pull new interface strings into the uk and ru catalogs

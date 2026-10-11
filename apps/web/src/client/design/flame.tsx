@@ -1,15 +1,15 @@
 import type { StreakOut } from "@lymi/core";
-import { Play } from "lucide-react";
-import { MotionConfig } from "motion/react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
-import { Button } from "../components/button";
-import { Flame } from "../components/flame";
 import {
   FLAME_MOTION,
   STREAK_FLAME_SIZE,
   type StreakFlameState,
   streakFlameFor,
-} from "../lib/flame";
+} from "@lymi/design";
+import { Play } from "lucide-react";
+import { MotionConfig } from "motion/react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { Button } from "../components/button";
+import { Flame } from "../components/flame";
 import { DocLink } from "./doc-link";
 import { Doc, Pair, Sub } from "./frame";
 

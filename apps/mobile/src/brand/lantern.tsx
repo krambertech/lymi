@@ -1,3 +1,19 @@
+import {
+  EMBER,
+  FLAME_BOUNDS,
+  FLAME_BREATH,
+  FLAME_CORE,
+  FLAME_CORE_BASE,
+  FLAME_MOTION,
+  FLAME_OUTER,
+  FLAME_SIZE,
+  FLAME_SPARKS,
+  flameSize,
+  LANTERN_BAIL,
+  LANTERN_FRAME,
+  LANTERN_GLASS,
+  VENT,
+} from "@lymi/design";
 import { useEffect, useRef, useState } from "react";
 import { StyleSheet, View, type ViewStyle } from "react-native";
 import Animated, {
@@ -13,29 +29,18 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import Svg, { Circle, Defs, Path, RadialGradient, Rect, Stop } from "react-native-svg";
+import { spring } from "../theme/motion";
 import { usePalette } from "../theme/palette";
-import {
-  BAIL,
-  EMBER,
-  FLAME_CORE,
-  FLAME_OUTER,
-  FLAME_SIZE,
-  FLAME_SPARKS,
-  FRAME,
-  flameSize,
-  GLASS,
-  VENT,
-} from "./geometry";
 
-// The springs from apps/web lib/flame.ts, as Reanimated configs.
 const SPRING = {
-  settle: { duration: 900, dampingRatio: 1 },
-  rise: { duration: 1400, dampingRatio: 1 },
-  catch: { duration: 700, dampingRatio: 0.75 },
-  goOut: { duration: 1600, dampingRatio: 1 },
-  breathIn: { duration: 280, dampingRatio: 1 },
-  breathOut: { duration: 900, dampingRatio: 1 },
-} as const;
+  settle: spring(FLAME_MOTION.settle),
+  rise: spring(FLAME_MOTION.rise),
+  catch: spring(FLAME_MOTION.catch),
+  goOut: spring(FLAME_MOTION.goOut),
+  breathIn: spring(FLAME_MOTION.breathIn),
+  breathOut: spring(FLAME_MOTION.breathOut),
+  spark: spring(FLAME_MOTION.spark),
+};
 
 const LOOP = 2600;
 
@@ -75,7 +80,7 @@ export function Lantern({
       return;
     }
     const was = flame.value;
-    const spring =
+    const settle =
       target === FLAME_SIZE.out
         ? SPRING.goOut
         : was < 0.3
@@ -83,10 +88,10 @@ export function Lantern({
           : target === FLAME_SIZE.full && was < FLAME_SIZE.full
             ? SPRING.rise
             : SPRING.settle;
-    flame.value = withSpring(target, spring);
+    flame.value = withSpring(target, settle);
     if (target === FLAME_SIZE.full && was < FLAME_SIZE.full && was >= 0.3)
       breath.value = withSequence(
-        withSpring(1.6, SPRING.breathIn),
+        withSpring(FLAME_BREATH.rise, SPRING.breathIn),
         withSpring(0, SPRING.breathOut),
       );
   }, [target, reduce, flame, breath]);
@@ -95,7 +100,10 @@ export function Lantern({
     if (fed === lastFed.current) return;
     lastFed.current = fed;
     if (reduce || out) return;
-    breath.value = withSequence(withSpring(1, SPRING.breathIn), withSpring(0, SPRING.breathOut));
+    breath.value = withSequence(
+      withSpring(FLAME_BREATH.feed, SPRING.breathIn),
+      withSpring(0, SPRING.breathOut),
+    );
   }, [fed, out, reduce, breath]);
 
   useEffect(() => {
@@ -151,37 +159,43 @@ export function Lantern({
 
   const box = { width: size, height: size };
   // The flame grows from its own base, not from the middle of the drawing.
-  const flameOrigin = { transformOrigin: [size / 2, (size * 96.5) / 120, 0] };
-  const coreOrigin = { transformOrigin: [size / 2, (size * 90.5) / 120, 0] };
+  const flameOrigin = { transformOrigin: [size / 2, (size * FLAME_BOUNDS.bottom) / 120, 0] };
+  const coreOrigin = { transformOrigin: [size / 2, (size * FLAME_CORE_BASE) / 120, 0] };
 
   return (
     <View style={[box, style]} pointerEvents="none">
       <Svg width={size} height={size} viewBox="0 0 120 120" style={StyleSheet.absoluteFill}>
-        <Path d={BAIL} stroke={p.metal} strokeWidth={5.5} strokeLinecap="round" fill="none" />
+        <Path
+          d={LANTERN_BAIL.d}
+          stroke={p.metal}
+          strokeWidth={LANTERN_BAIL.strokeWidth}
+          strokeLinecap="round"
+          fill="none"
+        />
         <Rect
-          x={GLASS.x}
-          y={GLASS.y}
-          width={GLASS.w}
-          height={GLASS.h}
-          rx={GLASS.r}
+          x={LANTERN_GLASS.x}
+          y={LANTERN_GLASS.y}
+          width={LANTERN_GLASS.w}
+          height={LANTERN_GLASS.h}
+          rx={LANTERN_GLASS.r}
           fill={p.glass}
         />
       </Svg>
       <Animated.View style={[StyleSheet.absoluteFill, unlitStyle]}>
         <Svg width={size} height={size} viewBox="0 0 120 120">
           <Rect
-            x={GLASS.x}
-            y={GLASS.y}
-            width={GLASS.w}
-            height={GLASS.h}
-            rx={GLASS.r}
+            x={LANTERN_GLASS.x}
+            y={LANTERN_GLASS.y}
+            width={LANTERN_GLASS.w}
+            height={LANTERN_GLASS.h}
+            rx={LANTERN_GLASS.r}
             fill={p["glass-unlit"]}
           />
         </Svg>
       </Animated.View>
       <Animated.View style={[StyleSheet.absoluteFill, emberStyle]}>
         <Svg width={size} height={size} viewBox="0 0 120 120">
-          <Path d={EMBER} fill={p["edge-2"]} />
+          <Path d={EMBER.d} fill={p["edge-2"]} />
         </Svg>
       </Animated.View>
       {glow && (
@@ -206,16 +220,16 @@ export function Lantern({
       )}
       <Animated.View style={[StyleSheet.absoluteFill, flameOrigin, flameStyle]}>
         <Svg width={size} height={size} viewBox="0 0 120 120">
-          <Path d={FLAME_OUTER} fill={p.amber} />
+          <Path d={FLAME_OUTER.d} fill={p.amber} />
         </Svg>
         <Animated.View style={[StyleSheet.absoluteFill, coreOrigin, coreStyle]}>
           <Svg width={size} height={size} viewBox="0 0 120 120">
-            <Path d={FLAME_CORE} fill={p["flame-core"]} />
+            <Path d={FLAME_CORE.d} fill={p["flame-core"]} />
           </Svg>
         </Animated.View>
       </Animated.View>
       <Svg width={size} height={size} viewBox="0 0 120 120" style={StyleSheet.absoluteFill}>
-        {FRAME.map((s) =>
+        {LANTERN_FRAME.map((s) =>
           s.d ? (
             <Path
               key={s.d}
@@ -297,7 +311,7 @@ function Ember({
 }) {
   const t = useSharedValue(0);
   useEffect(() => {
-    t.value = withDelay(at, withSpring(1, { duration: 620, dampingRatio: 1 }));
+    t.value = withDelay(at, withSpring(1, SPRING.spark));
   }, [t, at]);
   const style = useAnimatedStyle(() => ({
     opacity: interpolate(t.value, [0, 0.1, 0.5, 1], [0, 1, 1, 0]),

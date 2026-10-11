@@ -1,11 +1,11 @@
 import { type QueueItemOut, type Rating, RETURN_GAPS, ROUNDS, type Round } from "@lymi/core";
+import { EASE_OUT, REVEAL_GLIDE } from "@lymi/design";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { I18nManager, Pressable, useColorScheme, View, type ViewStyle } from "react-native";
 import Animated, {
-  Easing,
   FadeIn,
   FadeOut,
   Keyframe,
@@ -27,12 +27,14 @@ import {
   useReviewQueue,
   useRounds,
 } from "../data/queries";
+import { curve } from "../theme/motion";
 import { type Palette, usePalette } from "../theme/palette";
 import type { IconName } from "../ui/icons";
 import { Button, Icon, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
 
-const EASE = Easing.bezier(0.22, 1, 0.36, 1);
+const EASE = curve(EASE_OUT);
+const GLIDE = REVEAL_GLIDE.duration * 1000;
 
 export default function Review() {
   const params = useLocalSearchParams<{ deck?: string; round?: string }>();
@@ -121,7 +123,7 @@ function Run({
 }
 
 function Header({ done, total, onClose }: { done: number; total: number; onClose: () => void }) {
-  const { fed, progress } = useDay();
+  const { fed, out, progress } = useDay();
   const p = usePalette();
   const share = total === 0 ? 0 : done / total;
   const fill = useAnimatedStyle(() => ({
@@ -129,7 +131,7 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
   }));
   return (
     <View className="h-12 flex-row items-center gap-3 px-4">
-      <Lantern size={48} progress={progress} fed={fed} />
+      <Lantern size={48} progress={progress} out={out} fed={fed} />
       <View
         className="h-1.5 flex-1 overflow-hidden rounded-full bg-plate-2"
         style={{ boxShadow: `inset 0 0 0 1px ${p.edge}` } as ViewStyle}
@@ -221,7 +223,7 @@ function CardPlate({
 
   return (
     <Animated.View
-      layout={reduce ? undefined : LinearTransition.duration(340).easing(EASE)}
+      layout={reduce ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
       entering={FadeIn.duration(160)}
       className="flex-1"
     >
@@ -251,7 +253,9 @@ function CardPlate({
         </View>
 
         <View className="flex-1 justify-center px-6">
-          <Animated.View layout={reduce ? undefined : LinearTransition.duration(340).easing(EASE)}>
+          <Animated.View
+            layout={reduce ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
+          >
             <Text
               className="text-text"
               style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
@@ -341,11 +345,11 @@ function GradeStrip({ onGrade }: { onGrade: (r: Rating) => void }) {
 
 /** The one place the interface celebrates: the lantern lit large in a pool of its glow. motion.md. */
 function Completion({ added, onClose }: { added: number; onClose: () => void }) {
-  const { reviewsToday, goal, week, streak, dayDone, fed } = useDay();
+  const { reviewsToday, goal, week, streak, dayDone, fed, progress } = useDay();
   const forgottenToday = useRounds().data?.forgotten ?? 0;
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const dark = useColorScheme() === "dark";
+  const p = usePalette();
   const reduce = useReducedMotion();
   const satisfied = reviewsToday >= goal || dayDone;
   const heading =
@@ -389,18 +393,14 @@ function Completion({ added, onClose }: { added: number; onClose: () => void }) 
         className="absolute inset-x-0 top-0 h-[70%]"
         style={[
           {
-            experimental_backgroundImage: `radial-gradient(60% 45% at 50% 34%, ${dark ? "rgba(214,145,48,0.28)" : "rgba(255,196,110,0.6)"}, transparent 100%)`,
+            experimental_backgroundImage: `radial-gradient(60% 45% at 50% 34%, ${p.glow}, transparent 100%)`,
           } as ViewStyle,
           poolStyle,
         ]}
       />
       <View className="flex-1 items-center justify-center gap-6 px-6">
         <Animated.View entering={reduce ? FadeIn : lantern}>
-          <Lantern
-            size={168}
-            progress={satisfied ? 1 : Math.min(1, reviewsToday / goal)}
-            fed={fed + embers}
-          />
+          <Lantern size={168} progress={progress} fed={fed + embers} />
         </Animated.View>
         <Animated.View entering={reduce ? FadeIn : up(640)} className="items-center gap-2">
           <Text className="text-2xl font-medium text-text" accessibilityRole="header">

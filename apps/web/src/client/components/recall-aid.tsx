@@ -2,12 +2,12 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { FieldSource, ReviewAid } from "@lymi/core";
+import { EASE_OUT } from "@lymi/design";
 import { clsx } from "clsx";
 import { Anchor, type LucideIcon } from "lucide-react";
 import { motion, useReducedMotionConfig } from "motion/react";
 import { type MouseEvent, useState } from "react";
 import type { Card } from "../lib/api";
-import { EASE_OUT } from "../lib/ease";
 import { Button } from "./button";
 import { SourceChip } from "./chip";
 

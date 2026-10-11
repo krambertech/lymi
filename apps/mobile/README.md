@@ -22,10 +22,9 @@ The proof of concept compared options side by side and kept one of each: the gla
 
 - `@lymi/core` unchanged: the review uses its FSRS `schedule` and the draw's `RETURN_GAPS`.
 - `@lymi/client`: screens read hooks in `src/data/queries.ts` under the web's query keys, returning the API's response types. `src/data/demo-server.ts` answers them until the phone signs in, and `src/data/client.ts` configures the client for `my.lymi.app`.
-- Colours, radii and type step names: `pnpm tokens` writes `src/theme.gen.css` and `src/theme/tokens.gen.ts` from `apps/web/src/client/styles.css`. The phone keeps its own type ramp in `src/global.css`, because iOS reads at 17 pt.
-- The lantern's drawing and flame sizes, copied into `src/brand/geometry.ts` until they move to a shared package.
+- `@lymi/design`: colours, radii, the lantern's drawing, the flame's and the seven lights' rules, and motion presets. `src/global.css` imports its Uniwind theme; the phone keeps its own type ramp there under the shared step names, because iOS reads at 17 pt. `src/theme/motion.ts` converts the shared springs and curves for Reanimated.
 - Lucide icons, rendered by `lucide-react-native`.
 
 ## Widgets
 
-`src/widgets` holds two Home Screen widgets, **Lantern** (small and medium) and **Week** (medium), and a Lock Screen widget, written with `expo-widgets` and `@expo/ui`. Widget layouts are compiled into the native build, so a change to one needs `npx expo run:ios` again. The app pushes today's numbers to them through the shared app group whenever they change. On the Simulator, touch and hold the Home Screen, choose **Edit**, then **Add Widget**, and search for Lymi.
+`src/widgets` holds two Home Screen widgets, **Lantern** (small and medium) and **Week** (medium), and a Lock Screen widget, written with `expo-widgets` and `@expo/ui`. Widget layouts are compiled into the native build, so a change to one needs `npx expo run:ios` again. The app pushes today's numbers and the rooms' colours to them through the shared app group whenever they change. On the Simulator, touch and hold the Home Screen, choose **Edit**, then **Add Widget**, and search for Lymi.

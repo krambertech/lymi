@@ -1,3 +1,4 @@
+import { shadows } from "@lymi/design";
 import * as Haptics from "expo-haptics";
 import type { ReactNode } from "react";
 import {
@@ -16,7 +17,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { usePalette } from "../theme/palette";
+import { type Palette, usePalette } from "../theme/palette";
 import { Icon, type IconName } from "./icons";
 
 export { Icon };
@@ -86,7 +87,6 @@ export function Button({
   onPress?: () => void;
 }) {
   const p = usePalette();
-  const dark = useColorScheme() === "dark";
   const box =
     variant === "primary"
       ? "bg-amber"
@@ -99,7 +99,7 @@ export function Button({
       onPress={onPress}
       accessibilityRole="button"
       className={`flex-row items-center justify-center gap-2 rounded-md ${box} ${size === "xl" ? "h-16 px-5" : "h-11 px-4"}`}
-      style={variant === "primary" ? keyLight(dark) : undefined}
+      style={variant === "primary" ? keyLight(p) : undefined}
     >
       {icon && <Icon name={icon} colour={ink} size={20} />}
       <Text
@@ -113,10 +113,10 @@ export function Button({
 }
 
 /** The one button to press: a soft fall of light along its top. surfaces.md "key-light". */
-function keyLight(dark: boolean): ViewStyle {
+function keyLight(p: Palette): ViewStyle {
   return {
-    experimental_backgroundImage: `linear-gradient(to bottom, rgba(255,250,235,${dark ? 0.2 : 0.16}), transparent)`,
-    boxShadow: "inset 0 1px 0 rgba(255,250,235,0.4)",
+    experimental_backgroundImage: `linear-gradient(to bottom, ${p["key-sheen"]}, transparent)`,
+    boxShadow: `inset 0 1px 0 ${p["key-edge"]}, inset 0 0 0 1px ${p["key-rim"]}`,
   } as ViewStyle;
 }
 
@@ -139,10 +139,8 @@ export function Plate({
   );
 }
 
-export const LIFT = {
-  boxShadow:
-    "inset 0 1px 0 rgba(255,240,215,0.08), 0 1px 2px rgba(0,0,0,0.45), 0 12px 24px -14px rgba(0,0,0,0.8)",
-} as ViewStyle;
+/** The night's lift; by day surfaces stay flat. */
+export const LIFT = { boxShadow: shadows.dark.lift } as ViewStyle;
 
 /** An arrow in a circle: how a whole-row link ends. layout.md "Today". */
 export function RowArrow() {

@@ -1,10 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { outputs } from "../packages/design/scripts/generate.mjs";
 import {
   frontmatterColours,
   namedComponents,
   oklchToHex,
   paletteFrom,
+  stepNames,
 } from "./check-design-docs.mjs";
 
 test("converts OKLCH to the hex DESIGN.md records, with alpha as a fourth byte", () => {
@@ -39,6 +41,47 @@ test("reads both rooms and gives a Tailwind alias its own entry", () => {
     ["dark-metal", "#ffffff"],
     ["dark-grade-easy", "#ffffff"],
   ]);
+});
+
+test("mixes in oklab, lowers lightness relatively, and lets the dark room inherit a constant", () => {
+  const css = `:root,
+[data-theme="light"] {
+  --white: oklch(1 0 0);
+  --black: oklch(0 0 0);
+  --half: color-mix(in oklab, var(--white) 50%, var(--black));
+  --dimmer: oklch(from var(--white) calc(l - 0.5) c h / 0.5);
+}
+
+[data-theme="dark"] {
+  --white: oklch(0.9 0 0);
+}
+
+@theme inline {
+}
+`;
+  assert.deepEqual(paletteFrom(css), [
+    ["white", "#ffffff"],
+    ["black", "#000000"],
+    ["half", "#636363"],
+    ["dimmer", "#63636380"],
+    ["dark-white", "#dedede"],
+    ["dark-black", "#000000"],
+    ["dark-half", "#555555"],
+    ["dark-dimmer", "#48484880"],
+  ]);
+});
+
+test("generates the phone's values from tokens.css", () => {
+  const generated = outputs();
+  assert.match(generated["packages/design/src/tokens.gen.ts"], /"light-1": "#[0-9a-f]{6}"/);
+  assert.match(generated["packages/design/uniwind.gen.css"], /--color-amber: #/);
+  assert.doesNotMatch(generated["packages/design/uniwind.gen.css"], /--text-/);
+});
+
+test("names the type steps a theme sets, without their line heights", () => {
+  const css =
+    "@theme {\n  --text-xs: 12px;\n  --text-xs--line-height: 1.4;\n  --radius-sm: 10px;\n  --text-lg: 20px;\n}\n";
+  assert.deepEqual(stepNames(css, "@theme"), ["xs", "lg"]);
 });
 
 test("reads the colours out of the frontmatter", () => {

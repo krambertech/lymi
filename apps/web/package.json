@@ -67,6 +67,7 @@
     "@lingui/react": "6.9.1",
     "@lymi/client": "workspace:*",
     "@lymi/core": "workspace:*",
+    "@lymi/design": "workspace:*",
     "@modelcontextprotocol/ext-apps": "2.0.3",
     "@modelcontextprotocol/sdk": "1.30.0",
     "@modelcontextprotocol/server": "2.0.0",

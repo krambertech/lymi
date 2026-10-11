@@ -4,7 +4,7 @@ Warm neutrals, nearly grey, with amber as the only saturated accent. Amber is th
 
 ## Use a token, never a value
 
-**Components use the semantic tokens through Tailwind (`bg-plate`, `text-text-2`, `border-edge`), never a raw hex, an `oklch()` value or a stock Tailwind colour.** Dark mode is a separate warm palette rather than an inversion, so a raw value is right in one room and wrong in the other. The values live in `apps/web/src/client/styles.css`, mirrored in `apps/site/src/styles.css`; DESIGN.md's frontmatter is generated from them, and `pnpm check:design` fails when either copy drifts.
+**Components use the semantic tokens through Tailwind (`bg-plate`, `text-text-2`, `border-edge`), never a raw hex, an `oklch()` value or a stock Tailwind colour.** Dark mode is a separate warm palette rather than an inversion, so a raw value is right in one room and wrong in the other. The values live in `packages/design/tokens.css`, which the web and the site import; DESIGN.md's frontmatter and the phone's hex values are generated from them, and `pnpm check:design` fails when either drifts.
 
 ```tsx
 // Correct

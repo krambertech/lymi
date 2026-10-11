@@ -97,13 +97,13 @@ function BackChevron() {
 
 /** The streak and capture, the two things every tab carries. You is a tab here, so no avatar. */
 function TabActions() {
-  const { streak, reviewsToday } = useDay();
+  const { streak, flame } = useDay();
   const router = useRouter();
   const p = usePalette();
   const glass = isGlassEffectAPIAvailable();
   const streakInner = (
     <>
-      <Flame height={18} state={reviewsToday > 0 || streak > 0 ? "lit" : "out"} />
+      <Flame height={18} state={flame} />
       <Text className="text-md font-medium text-text" style={{ fontVariant: ["tabular-nums"] }}>
         {streak}
       </Text>

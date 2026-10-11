@@ -6,6 +6,7 @@ import {
   streakQuery,
 } from "@lymi/client/queries";
 import { type CardInput, DEFAULT_DAILY_GOAL, type Rating, type Round } from "@lymi/core";
+import { lanternFor, streakFlameFor } from "@lymi/design";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { demoServer } from "./demo-server";
 
@@ -55,6 +56,7 @@ export function useDay() {
     day.setDate(day.getDate() - (6 - i));
     return attempts.get(localDate(day)) ?? 0;
   });
+  const { out, progress } = lanternFor(data);
   return {
     streak: data?.current ?? 0,
     reviewsToday,
@@ -63,8 +65,11 @@ export function useDay() {
     week,
     /** Bumped by every accepted grade; the lantern breathes and sparks on it. */
     fed: reviewsToday,
-    /** 0 to 1. Finishing everything is full. */
-    progress: dayDone ? 1 : Math.min(1, reviewsToday / goal),
+    /** The lantern by the web's rule: out with no streak and no review yet, and today's growth. */
+    out,
+    progress,
+    /** The streak flame: out, lit or full exactly when the lantern is. */
+    flame: data ? streakFlameFor(data) : ("lit" as const),
   };
 }
 

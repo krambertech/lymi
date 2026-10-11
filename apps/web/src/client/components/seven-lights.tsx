@@ -1,5 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { LIGHT_STEP_MS, lightLevel, lightReference } from "@lymi/design";
 import { clsx } from "clsx";
 import type { CSSProperties } from "react";
 
@@ -26,38 +27,13 @@ interface Props {
   className?: string | undefined;
 }
 
-/** How far apart the lights switch on in a sequence. */
-export const LIGHT_STEP_MS = 70;
-
 /**
- * A day's light carries three steps of amber, by how much that day held. A day that counted toward
- * a streak is full, and one measured against a goal reaches the middle step at half of that
- * day's own goal, so lowering today's goal never rewrites how an earlier day looks. Without a goal
- * the reference is
- * the week's own busiest day with a floor under it, so a quiet week is not flattered into looking
- * heavy and one big Tuesday does not wash the rest of the week out.
- *
- * Seven days grade, and so does the Insights day grid, which reuses these steps; the
+ * A day's light carries three steps of amber, by how much that day held; `lightLevel` decides
+ * which. Seven days grade, and so does the Insights day grid, which reuses these steps; the
  * thirty-day strip between them deliberately does not. Over a week a step is the difference
  * between "I turned up" and "I turned up and reviewed everything", which is a thing the
  * learner already knows and likes seeing.
- */
-function level(
-  n: number,
-  reference: number,
-  goal?: number | null,
-  counted?: boolean,
-): 0 | 1 | 2 | 3 {
-  if (counted) return 3;
-  if (n <= 0) return 0;
-  if (goal) return n >= goal ? 3 : n >= goal / 2 ? 2 : 1;
-  const share = n / reference;
-  if (share >= 0.67) return 3;
-  if (share >= 0.34) return 2;
-  return 1;
-}
-
-/**
+ *
  * The steps run from the lantern's glass to its flame, which is what a light does as it comes
  * up. Mixing toward `--glass` rather than toward transparency or the plate keeps the chroma:
  * a translucent amber lands on whatever is behind it, and in the dark room that is the same
@@ -65,8 +41,8 @@ function level(
  * neutral plate separates them but turns the low step to mud.
  */
 export const LIGHT_FILL: Record<1 | 2 | 3, string> = {
-  1: "bg-[color-mix(in_oklab,var(--amber)_45%,var(--glass))]",
-  2: "bg-[color-mix(in_oklab,var(--amber)_75%,var(--glass))]",
+  1: "bg-light-1",
+  2: "bg-light-2",
   3: "bg-amber",
 };
 
@@ -106,8 +82,7 @@ export function SevenLights({
   });
   const lit = days.filter((n) => n > 0).length;
   const total = days.length;
-  // A floor under the reference, so a week of two-card days does not read as a full week.
-  const reference = Math.max(...days, 10);
+  const reference = lightReference(days);
   const large = size === "lg";
   const perDay = days
     .map((n, i) => {
@@ -130,7 +105,7 @@ export function SevenLights({
       aria-label={description}
     >
       {days.map((n, i) => {
-        const l = level(n, reference, goals?.[i], satisfied?.[i]);
+        const l = lightLevel(n, reference, goals?.[i], satisfied?.[i]);
         const isToday = i === days.length - 1;
         const resting = !!rest?.[i];
         const day = labels[i];

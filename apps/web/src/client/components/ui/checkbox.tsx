@@ -1,14 +1,8 @@
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
+import { CHOICE_DRAW, CHOICE_FADE, CHOICE_LEAVE, CHOICE_POP, INSTANT } from "@lymi/design";
 import { cn } from "cn";
 import { motion, useAnimate, useReducedMotionConfig } from "motion/react";
 import * as React from "react";
-import {
-  CHOICE_DRAW,
-  CHOICE_FADE,
-  CHOICE_LEAVE,
-  CHOICE_POP,
-  INSTANT,
-} from "../../lib/choice-motion";
 import { useField, useFieldControl } from "./field";
 
 // shadcn's Checkbox; the indicator draws the box and stays mounted so the tick can leave as well as arrive.

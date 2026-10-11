@@ -7,6 +7,7 @@ import {
   STARTING_DAILY_GOAL,
 } from "@lymi/core";
 import { type PublicDeckSummary, shelvesOf, subjectOf, taughtLanguage } from "@lymi/core/catalog";
+import { CHOICE_POP } from "@lymi/design";
 import { clsx } from "clsx";
 import {
   Bot,
@@ -35,7 +36,6 @@ import { GOAL_NAMES } from "../components/goal-picker";
 import { Screen, ScreenBar } from "../components/layout/screen";
 import { Input } from "../components/ui/input";
 import { RadioGroup } from "../components/ui/radio-group";
-import { CHOICE_POP } from "../lib/choice-motion";
 import { BackButton } from "./shell";
 
 /** How a learner without decks gets started: bring their own, or add a ready-made deck. */

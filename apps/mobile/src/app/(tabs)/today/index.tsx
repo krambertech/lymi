@@ -45,7 +45,7 @@ function startReview(router: ReturnType<typeof useRouter>, href: Href = "/review
 /** The lantern lights the top of the screen; no plate, the room itself is warm there. */
 function LitDue() {
   const due = useDue();
-  const { fed, progress } = useDay();
+  const { fed, out, progress } = useDay();
   const router = useRouter();
   const p = usePalette();
   const { count, line } = useDueLine();
@@ -60,7 +60,7 @@ function LitDue() {
           } as ViewStyle
         }
       />
-      <Lantern size={150} progress={progress} fed={fed} style={{ marginTop: 4 }} />
+      <Lantern size={150} progress={progress} out={out} fed={fed} style={{ marginTop: 4 }} />
       <View className="items-center gap-0.5">
         <Text
           className="text-6xl font-medium text-text"
@@ -82,7 +82,7 @@ function LitDue() {
 }
 
 function StreakPlate() {
-  const { streak, week, goal, reviewsToday, dayDone } = useDay();
+  const { streak, week, goal, reviewsToday, dayDone, flame } = useDay();
   const router = useRouter();
   const left = Math.max(0, goal - reviewsToday);
   const line = dayDone || left === 0 ? "Today counts" : `${left} reviews to today’s goal`;
@@ -96,7 +96,7 @@ function StreakPlate() {
       <Plate className="gap-5 p-5">
         <View className="gap-1.5">
           <View className="flex-row items-center gap-2.5">
-            <Flame height={30} state={dayDone || reviewsToday >= goal ? "full" : "lit"} />
+            <Flame height={30} state={flame} />
             <Text
               className="text-3xl font-medium text-text"
               style={{ fontVariant: ["tabular-nums"] }}

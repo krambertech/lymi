@@ -12,6 +12,7 @@ import {
   ROUNDS,
   type Round,
 } from "@lymi/core";
+import { lanternFor } from "@lymi/design";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
@@ -39,7 +40,6 @@ import { usePrefetchPictures } from "../lib/card-images";
 import { refreshAfterCardWrite } from "../lib/card-writes";
 import { useMouse, useWide } from "../lib/device";
 import { useDocumentTitle } from "../lib/document-title";
-import { lanternFor } from "../lib/flame";
 import { lastInputWasKey } from "../lib/last-input";
 import {
   decksQuery,

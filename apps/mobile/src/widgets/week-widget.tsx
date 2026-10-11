@@ -9,6 +9,9 @@ import {
   widgetURL,
 } from "@expo/ui/swift-ui/modifiers";
 import { createWidget, type WidgetEnvironment } from "expo-widgets";
+import type { WidgetColours } from "./colours";
+
+type Paint = Parameters<typeof foregroundStyle>[0];
 
 export interface WeekProps {
   streak: number;
@@ -20,20 +23,18 @@ export interface WeekProps {
   /** Each day's narrow weekday, oldest first, so today's letter is right on every day. */
   letters: string[];
   flame: string;
+  colours: WidgetColours;
 }
 
 /** The streak's week as seven glasses, the light climbing each with what the day held. */
 const WeekWidget = (props: WeekProps, env: WidgetEnvironment) => {
   "widget";
-  const dark = env.colorScheme === "dark";
-  const ink = dark ? "#f1eee7" : "#1c140f";
-  const muted = dark ? "#a89c90" : "#72665f";
-  const canvas = dark ? "#130d09" : "#f8f6f4";
-  const glass = dark ? "#29211b" : "#ece8e2";
-  const steps = dark
-    ? ["#29211b", "#8a6333", "#c88e3e", "#fdb443"]
-    : ["#ece8e2", "#f7d29a", "#f6bd63", "#f8ac3d"];
   // The gallery and a fresh install render the widget before the app has sent anything.
+  const room = props.colours?.[env.colorScheme === "dark" ? "dark" : "light"];
+  const ink: Paint = room?.ink ?? { type: "hierarchical", style: "primary" };
+  const muted: Paint = room?.muted ?? { type: "hierarchical", style: "secondary" };
+  const canvas: Paint = room?.canvas ?? { type: "material", material: "regular" };
+  const glass: Paint = room?.lights[0] ?? { type: "hierarchical", style: "quaternary" };
   const week = props.week ?? [0, 0, 0, 0, 0, 0, 0];
   const letters = props.letters ?? ["", "", "", "", "", "", ""];
   const ids = ["d1", "d2", "d3", "d4", "d5", "d6", "d7"];
@@ -82,7 +83,7 @@ const WeekWidget = (props: WeekProps, env: WidgetEnvironment) => {
               <RoundedRectangle
                 cornerRadius={7}
                 modifiers={[
-                  foregroundStyle(steps[level] ?? glass),
+                  foregroundStyle(room?.lights[level] ?? glass),
                   frame({ width: 30, height: (40 * level) / 3 }),
                 ]}
               />

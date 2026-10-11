@@ -1,10 +1,10 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { StreakOut } from "@lymi/core";
+import { streakFlameFor } from "@lymi/design";
 import { clsx } from "clsx";
 import { CalendarCheck, Check, type LucideIcon, Pencil, Trophy } from "lucide-react";
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { streakFlameFor } from "../lib/flame";
 import { IconButton } from "./button";
 import { Flame } from "./flame";
 import { GoalPicker } from "./goal-picker";

@@ -7,6 +7,7 @@ import {
   STREAK_FLAME_SIZE,
   type StreakFlameState,
   streakFlameFor,
+  todayProgress,
 } from "./flame";
 
 describe("flameSize", () => {
@@ -115,5 +116,20 @@ describe("streakFlameFor", () => {
     expect(state === "out").toBe(lantern.out);
     expect(state === "full").toBe(flameSize(lantern.progress, lantern.out) === FLAME_SIZE.full);
     expect(STREAK_FLAME_SIZE[state] === FLAME_SIZE.out).toBe(lantern.out);
+  });
+});
+
+describe("todayProgress", () => {
+  it("counts attempts against the goal and stops at full", () => {
+    expect(todayProgress({ attempts: 10, goal: 40, outcome: "open" })).toBe(0.25);
+    expect(todayProgress({ attempts: 60, goal: 40, outcome: "open" })).toBe(1);
+  });
+
+  it("is full once the queue is exhausted below the goal", () => {
+    expect(todayProgress({ attempts: 3, goal: 40, outcome: "exhausted" })).toBe(1);
+  });
+
+  it("is empty without a goal", () => {
+    expect(todayProgress({ attempts: 3, goal: 0, outcome: "open" })).toBe(0);
   });
 });

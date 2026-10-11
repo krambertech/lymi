@@ -11,7 +11,13 @@ colors:
   rail-chosen: "#ffffff"
   rail-hover: "#eeebe6"
   veil: "#20130809"
+  glass-veil: "#2013080f"
   pool: "#ffd79a80"
+  lit-sheen: "#ffffe947"
+  lit-edge: "#ffffe973"
+  key-sheen: "#ffffe929"
+  key-edge: "#ffffe966"
+  key-rim: "#e4992159"
   edge: "#2013081a"
   edge-2: "#20130833"
   image-edge: "#0000001a"
@@ -32,6 +38,8 @@ colors:
   glass-unlit: "#f0ede9"
   metal: "#1c140f"
   glow: "#f8ac3d73"
+  light-1: "#facc91"
+  light-2: "#fabb68"
   good: "#006e42"
   good-soft: "#006e421f"
   state-new: "#867f79"
@@ -60,7 +68,13 @@ colors:
   dark-rail-chosen: "#271e19"
   dark-rail-hover: "#ffffff0a"
   dark-veil: "#ffffff0a"
+  dark-glass-veil: "#ffffff1f"
   dark-pool: "#b4782529"
+  dark-lit-sheen: "#ffffe947"
+  dark-lit-edge: "#ffffe973"
+  dark-key-sheen: "#ffffe929"
+  dark-key-edge: "#ffffe966"
+  dark-key-rim: "#e9a12859"
   dark-edge: "#ffffff14"
   dark-edge-2: "#ffffff26"
   dark-image-edge: "#ffffff1a"
@@ -81,6 +95,8 @@ colors:
   dark-glass-unlit: "#271f19"
   dark-metal: "#f1eee7"
   dark-glow: "#f6ad3b80"
+  dark-light-1: "#91652b"
+  dark-light-2: "#cb8f38"
   dark-good: "#7bc495"
   dark-good-soft: "#7bc49524"
   dark-state-new: "#83786e"
@@ -265,7 +281,7 @@ components:
 
 Lymi is a vocabulary app lit by a storm lantern. The interface is two rooms, a dark one lit by that lantern and a light one at noon, and it follows the OS theme unless the learner picks one in Settings. The light room is flat and the dark one lifts a little where the lamp catches it; both are warm, and amber is the one colour that asks for a press. Three words: warm, calm, quick.
 
-The frontmatter above is generated from `apps/web/src/client/styles.css` by `node scripts/check-design-docs.mjs --write`, and `pnpm check:design` fails when the two disagree. The live version is the `/design` route in local development: every token and component with the real code, each primitive in every state it has, desktop and touch frames side by side, and reduced motion behind a button on each canvas.
+The frontmatter above is generated from `packages/design/tokens.css` by `node scripts/check-design-docs.mjs --write`, and `pnpm check:design` fails when the two disagree. The live version is the `/design` route in local development: every token and component with the real code, each primitive in every state it has, desktop and touch frames side by side, and reduced motion behind a button on each canvas.
 
 ## Rules every screen follows
 

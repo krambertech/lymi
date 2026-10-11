@@ -1,9 +1,11 @@
+import { lightLevel, lightReference } from "@lymi/design";
 import { Asset } from "expo-asset";
 import { File } from "expo-file-system";
 import { widgetsDirectory } from "expo-widgets";
 import { useEffect, useState } from "react";
 import { useDay, useDecks } from "../data/queries";
 import { weekLetters } from "../ui/days";
+import { WIDGET_COLOURS } from "./colours";
 import LockWidget from "./lock-widget";
 import TodayWidget, { type Lanterns } from "./today-widget";
 import WeekWidget from "./week-widget";
@@ -37,14 +39,9 @@ async function shareImages(): Promise<Images> {
   return out;
 }
 
-function level(n: number, goal: number) {
-  if (n <= 0) return 0;
-  return n >= goal ? 3 : n >= goal / 2 ? 2 : 1;
-}
-
 /** Pushes today's numbers to the widgets whenever they change. The real app does this after each sync. */
 export function WidgetSync() {
-  const { streak, reviewsToday, goal, week, dayDone } = useDay();
+  const { streak, reviewsToday, goal, week, dayDone, out } = useDay();
   const due = useDecks().data?.reduce((n, d) => n + d.due, 0) ?? 0;
   const [images, setImages] = useState<Images>({});
 
@@ -55,7 +52,10 @@ export function WidgetSync() {
   const weekKey = week.join(",");
   useEffect(() => {
     const days = weekKey.split(",").map(Number);
-    const steps = days.map((n, i) => (i === days.length - 1 && dayDone ? 3 : level(n, goal)));
+    const reference = lightReference(days);
+    const steps = days.map((n, i) =>
+      lightLevel(n, reference, goal, i === days.length - 1 && dayDone),
+    );
     const left = dayDone ? 0 : Math.max(0, goal - reviewsToday);
     const { flame, ...lanterns } = images;
     // A review grades every few seconds; the widget only needs where the day settled.
@@ -72,8 +72,9 @@ export function WidgetSync() {
         TodayWidget.updateSnapshot({
           due,
           streak,
-          out: streak === 0 && reviewsToday === 0,
+          out,
           lanterns: lanterns as Lanterns,
+          colours: WIDGET_COLOURS,
         }),
       );
       send("week", () =>
@@ -84,11 +85,12 @@ export function WidgetSync() {
           week: steps,
           letters: weekLetters(steps.length),
           flame: flame ?? "",
+          colours: WIDGET_COLOURS,
         }),
       );
     }, 1500);
     return () => clearTimeout(timer);
-  }, [images, due, streak, reviewsToday, goal, weekKey, dayDone]);
+  }, [images, due, streak, reviewsToday, goal, weekKey, dayDone, out]);
 
   return null;
 }

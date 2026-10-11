@@ -1,9 +1,9 @@
 import { Trans } from "@lingui/react/macro";
+import { EASE_OUT } from "@lymi/design";
 import { cn } from "cn";
 import { Anchor, ChevronRight } from "lucide-react";
 import { motion, useReducedMotionConfig } from "motion/react";
 import { type ReactNode, useState } from "react";
-import { EASE_OUT } from "../lib/ease";
 
 /** The panel's box, shared by the live offer and the hidden copy that measures its room. */
 export const HOOK_OFFER_BOX =

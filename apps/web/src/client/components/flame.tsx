@@ -1,8 +1,14 @@
+import {
+  EMBER,
+  EMBER_AT_FLAME_SIZE,
+  FLAME_BOUNDS,
+  STREAK_FLAME_SIZE,
+  type StreakFlameState,
+} from "@lymi/design";
 import { clsx } from "clsx";
 import { motion } from "motion/react";
-import { STREAK_FLAME_SIZE, type StreakFlameState } from "../lib/flame";
 import { useFlame } from "../lib/use-flame";
-import { draw, EMBER, EMBER_AT_FLAME_SIZE, FLAME_BOUNDS, FLAME_PARTS } from "./lantern-geometry";
+import { draw, FLAME_PARTS } from "./lantern-geometry";
 
 const { left, right, top, bottom } = FLAME_BOUNDS;
 

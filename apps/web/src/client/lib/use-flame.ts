@@ -1,3 +1,4 @@
+import { FLAME_BREATH, FLAME_MOTION, FLAME_SIZE } from "@lymi/design";
 import {
   type AnimationPlaybackControls,
   animate,
@@ -7,14 +8,13 @@ import {
   useTransform,
 } from "motion/react";
 import { useEffect, useRef } from "react";
-import { FLAME_BREATH, FLAME_MOTION, FLAME_SIZE } from "./flame";
 
 /** Below this size the flame has faded into the ember, so growing from it is a catch. */
 const VISIBLE = 0.3;
 
 /**
  * The flame's movement, shared by the lantern and the streak flame so both catch, rise, settle
- * and go out on the same springs. `target` is a size from `lib/flame.ts`.
+ * and go out on the same springs. `target` is a size from `@lymi/design`'s flame rules.
  */
 export function useFlame({
   target,

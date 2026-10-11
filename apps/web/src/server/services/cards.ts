@@ -48,8 +48,8 @@ type Sources = {
   hookSource?: FieldSource | null | undefined;
 };
 /**
- * A card write from inside the server, which may record Lymi's own AI as a field's source: an
- * accepted fix keeps the AI's drafted text marked. No caller can claim it; routes parse `CardInput`.
+ * A card write from inside the server, which may record Lymi's own AI as a field's source. No
+ * caller can claim it; routes parse `CardInput`.
  */
 export type ServerCardInput = Omit<CardInput, keyof Sources> & Sources;
 type Cleared = "meaning" | "pronunciation" | "hook";
@@ -231,6 +231,7 @@ export async function addCards(
       exampleSource: input.exampleSource ?? (input.example ? "manual" : null),
       pronunciationSource: input.pronunciationSource ?? (input.pronunciation ? "manual" : null),
       hookSource: input.hook ? (input.hookSource ?? "manual") : null,
+      hookDraft: null,
       enrichmentStatus: null,
       audioKey: null,
       createdBy: actor,
@@ -649,9 +650,18 @@ function editWrite(
     meaningSource: sourceAfter(patch.meaning, patch.meaningSource),
     exampleSource: sourceAfter(patch.example, patch.exampleSource),
     pronunciationSource: sourceAfter(patch.pronunciation, patch.pronunciationSource),
-    // Only a hook has a source, whatever the caller said about one that is not there.
-    hookSource: hook ? sourceAfter(patch.hook, patch.hookSource) : null,
+    // Only a hook has a source, whatever the caller said about one that is not there. A hook saved
+    // exactly as the AI drafted it is the AI's, whoever pressed Save.
+    hookSource: !hook
+      ? null
+      : patch.hook !== undefined && hook === current.hookDraft
+        ? ("ai" as const)
+        : sourceAfter(patch.hook, patch.hookSource),
   };
+  // A draft fits the text it was drafted for, so a new term or meaning sends the next one back to the AI.
+  const draftStale =
+    (patch.term !== undefined && patch.term !== current.term) ||
+    (patch.meaning !== undefined && patch.meaning !== current.meaning);
   const modes = resolveCardModes(
     patch,
     current.directions ? (current.reviewModeKeys ?? null) : null,
@@ -667,6 +677,7 @@ function editWrite(
       ...(revision === undefined ? bumped("card", patch, current) : { revision }),
       normalizedTerm,
       ...(pronunciationChanged ? { audioKey: null } : {}),
+      ...(draftStale ? { hookDraft: null } : {}),
       updatedAt: now,
     })
     .where(eq(schema.cards.id, id));

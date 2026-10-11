@@ -23,7 +23,7 @@ export interface CardImageView {
 }
 
 /** A card as the API, MCP and app see it: its own review modes as objects, and its active picture. */
-export type CardView = Omit<Card, "reviewModeKeys" | "revision"> & {
+export type CardView = Omit<Card, "reviewModeKeys" | "revision" | "hookDraft"> & {
   reviewModes: ReviewMode[] | null;
   image: CardImageView | null;
 };
@@ -46,7 +46,8 @@ export function imageView(image: CardImage): CardImageView {
 }
 
 function view(card: Card, image: CardImage | undefined): CardView {
-  const { reviewModeKeys, revision, ...rest } = card;
+  // The draft is the owner's editor's, never shown on the card, so a member never reads it.
+  const { reviewModeKeys, revision, hookDraft: _draft, ...rest } = card;
   return {
     ...rest,
     reviewModes: cardModes({ directions: card.directions, reviewModeKeys }),

@@ -799,6 +799,12 @@ msgstr "Ahead"
 msgid "AI"
 msgstr "AI"
 
+msgid "AI draft"
+msgstr "AI draft"
+
+msgid "AI draft · Tab keeps it"
+msgstr "AI draft · Tab keeps it"
+
 msgid "AI example"
 msgstr "AI example"
 
@@ -1617,6 +1623,9 @@ msgstr "Download"
 #. placeholder {0}: entry.export?.fileName ?? ""
 msgid "Download {0}"
 msgstr "Download {0}"
+
+msgid "Drafting a hook…"
+msgstr "Drafting a hook…"
 
 msgid "Drag decks here to add them to this series."
 msgstr "Drag decks here to add them to this series."

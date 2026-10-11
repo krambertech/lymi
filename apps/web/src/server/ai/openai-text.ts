@@ -43,7 +43,7 @@ export function createOpenAiTextProvider(
         headers,
         body: JSON.stringify({
           model,
-          reasoning_effort: REASONING_EFFORT,
+          reasoning_effort: input.effort ?? REASONING_EFFORT,
           messages: [
             { role: "system", content: input.instructions },
             { role: "user", content: input.input },

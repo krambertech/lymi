@@ -13,12 +13,14 @@ import {
   CardSearchQuery,
   CardsInput,
   EditCardsOut,
+  HookDraftOut,
   OkOut,
   ResponseShapeQuery,
   TerseCardsOut,
 } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
+import { createTextProvider } from "../ai";
 import { publisherEmails } from "../env";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
@@ -30,6 +32,7 @@ import {
   assertPublisher,
   cardHistory,
   enrichmentQueue,
+  hookDraftFor,
   isPublisherEmail,
   requestEnrichment,
   restoreCard,
@@ -255,6 +258,22 @@ cards.post(
     errors: [400, 404, 503],
   }),
   async (c) => c.json(await requestEnrichment(ctxOf(c), c.req.param("id"), enrichmentQueue(c.env))),
+);
+
+cards.post(
+  "/:id/hook-draft",
+  describe({
+    tags: ["Cards"],
+    summary: "Draft a memory hook",
+    description:
+      "The AI's draft for the card's memory hook: a short mnemonic, in the meaning's language, that leads back to the answer without writing it. " +
+      "The draft is kept until the card's term or meaning changes, so asking again returns it at once. Nothing on the card changes. " +
+      "Only the card's owner may ask.",
+    ok: { schema: HookDraftOut, description: "The draft, or null" },
+    errors: [404],
+  }),
+  async (c) =>
+    c.json({ hook: await hookDraftFor(ctxOf(c), c.req.param("id"), createTextProvider(c.env)) }),
 );
 
 cards.post(

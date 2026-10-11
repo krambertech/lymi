@@ -22,6 +22,7 @@ function card(patch: Partial<Card> = {}): Card {
     notes: null,
     hook: null,
     hookSource: null,
+    hookDraft: null,
     language: "et",
     tags: [],
     source: null,

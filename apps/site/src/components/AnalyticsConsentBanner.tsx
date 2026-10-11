@@ -23,6 +23,7 @@ export function AnalyticsConsentBanner() {
   const [visible, setVisible] = useState(false);
   const [interactive, setInteractive] = useState(false);
   const [details, setDetails] = useState(false);
+  const [focusRequest, setFocusRequest] = useState(0);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
   const region = useRef<HTMLElement>(null);
@@ -97,7 +98,7 @@ export function AnalyticsConsentBanner() {
             : null;
       setVisible(true);
       setDetails(true);
-      requestAnimationFrame(() => region.current?.focus());
+      setFocusRequest((request) => request + 1);
     };
     const openFromLink = () => {
       if (location.hash === "#privacy-preferences") open(new Event(OPEN_PRIVACY_PREFERENCES));
@@ -116,6 +117,14 @@ export function AnalyticsConsentBanner() {
       window.removeEventListener(OPEN_PRIVACY_PREFERENCES, open);
     };
   }, [refreshAccount]);
+
+  useEffect(() => {
+    if (!focusRequest) return;
+    const focus = () => region.current?.focus({ preventScroll: true });
+    if (document.readyState === "complete") focus();
+    else window.addEventListener("load", focus, { once: true });
+    return () => window.removeEventListener("load", focus);
+  }, [focusRequest]);
 
   async function choose(allowed: boolean) {
     setAnalyticsConsent(allowed);

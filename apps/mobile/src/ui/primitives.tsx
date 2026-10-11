@@ -86,6 +86,7 @@ export function Button({
   icon,
   lead,
   loading = false,
+  strong = false,
   onPress,
 }: {
   label: string;
@@ -95,6 +96,8 @@ export function Button({
   /** A mark that is not one of Lymi's icons, such as Google's G. */
   lead?: ReactNode;
   loading?: boolean;
+  /** A secondary with a stronger edge, for the way in most learners take (Google on sign-in). */
+  strong?: boolean;
   onPress?: () => void;
 }) {
   const p = usePalette();
@@ -102,7 +105,7 @@ export function Button({
     variant === "primary"
       ? "bg-amber"
       : variant === "secondary"
-        ? "bg-plate border border-edge"
+        ? `bg-plate border ${strong ? "border-edge-2" : "border-edge"}`
         : "bg-transparent";
   const ink = variant === "primary" ? p["amber-ink"] : p.text;
   return (
@@ -117,7 +120,7 @@ export function Button({
         {lead}
         {icon && <Icon name={icon} colour={ink} size={20} />}
         <Text
-          className={`${size === "md" ? "text-md" : "text-lg"} font-medium`}
+          className={`${size === "xl" ? "text-lg" : "text-md"} font-medium`}
           style={{ color: ink }}
         >
           {label}

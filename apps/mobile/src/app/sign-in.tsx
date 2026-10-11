@@ -34,7 +34,7 @@ export default function SignInScreen() {
       keyboardShouldPersistTaps="handled"
       automaticallyAdjustKeyboardInsets
     >
-      <View className={`items-center gap-3 ${atDoors ? "pt-16" : "pb-2"}`}>
+      <View className={`items-center gap-3 ${atDoors ? "pt-10" : "pb-2"}`}>
         <Pool />
         <Lantern size={atDoors ? 150 : 88} />
         <Text
@@ -74,12 +74,14 @@ function Pool() {
   );
 }
 
+/** Two equal ways in, each with the stronger edge the web gives Google, and a door for someone new. */
 function Doors({ door }: { door: SignIn }) {
   return (
     <View className="gap-3">
       <Button
         label="Continue with Google"
         size="lg"
+        strong
         lead={<GoogleMark size={20} />}
         loading={door.pending === "google"}
         onPress={door.google}
@@ -89,8 +91,15 @@ function Doors({ door }: { door: SignIn }) {
         label="Sign in with email"
         icon="email"
         size="lg"
+        strong
         onPress={() => door.goTo("sign-in")}
       />
+      <View className="flex-row items-center gap-3 pt-3" accessibilityElementsHidden>
+        <View className="h-px flex-1 bg-edge" />
+        <Text className="text-sm text-muted">New to Lymi?</Text>
+        <View className="h-px flex-1 bg-edge" />
+      </View>
+      <Button label="Create an account" size="lg" onPress={() => door.goTo("sign-up")} />
     </View>
   );
 }
@@ -248,6 +257,8 @@ function Alert({ children }: { children: ReactNode }) {
 /** How to switch between having an account and making one, and back from a side step. */
 function Footer({ door }: { door: SignIn }) {
   const { step } = door;
+  // The doors carry Create account as a door of its own.
+  const hidden = step === "doors";
   const link =
     step === "sign-up"
       ? { lead: "Have an account?", label: "Sign in", to: "sign-in" as const }
@@ -256,17 +267,19 @@ function Footer({ door }: { door: SignIn }) {
         : { lead: "New to Lymi?", label: "Create an account", to: "sign-up" as const };
   return (
     <View className="items-center gap-1 pt-6">
-      <View className="flex-row flex-wrap items-center justify-center gap-1">
-        {link.lead && <Text className="text-base text-muted">{link.lead}</Text>}
-        <Press
-          onPress={() => door.goTo(link.to)}
-          haptic={false}
-          className="py-2"
-          accessibilityRole="button"
-        >
-          <Text className="text-base font-medium text-text">{link.label}</Text>
-        </Press>
-      </View>
+      {!hidden && (
+        <View className="flex-row flex-wrap items-center justify-center gap-1">
+          {link.lead && <Text className="text-base text-muted">{link.lead}</Text>}
+          <Press
+            onPress={() => door.goTo(link.to)}
+            haptic={false}
+            className="py-2"
+            accessibilityRole="button"
+          >
+            <Text className="text-base font-medium text-text">{link.label}</Text>
+          </Press>
+        </View>
+      )}
       {__DEV__ && (
         <Press onPress={() => devSignIn()} haptic={false} className="px-2 py-2">
           <Text className="text-xs text-faint">Dev sign-in as learner</Text>

@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
+    "@expo/fingerprint": "0.20.13",
     "@types/react": "^19.3.0",
     "typescript": "~6.0.3"
   },
@@ -56,7 +57,10 @@
     "ios": "expo run:ios",
     "android": "expo run:android",
     "prebuild": "expo prebuild --clean",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "fingerprint": "fingerprint fingerprint:generate --platform ios",
+    "contract:freeze": "FREEZE_PHONE_CONTRACT=1 pnpm --filter @lymi/web exec vitest run --project unit src/server/phone-contract.test.ts",
+    "e2e": "bash e2e/run.sh"
   },
   "private": true,
   "license": "AGPL-3.0-only"

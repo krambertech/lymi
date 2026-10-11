@@ -20,7 +20,8 @@
       "!apps/web/index.html",
       "!**/worker-configuration.d.ts",
       "!packages/design/uniwind.gen.css",
-      "!apps/mobile/src/uniwind-types.d.ts"
+      "!apps/mobile/src/uniwind-types.d.ts",
+      "!apps/mobile/contract"
     ]
   },
   "formatter": {

@@ -5,6 +5,7 @@ import type {
   CardInput,
   CardPatch,
   Direction,
+  HookDraftOut,
   ReviewMode,
 } from "@lymi/core";
 import type {
@@ -16,7 +17,7 @@ import { request } from "./request";
 
 export type CardImage = CardImageOut;
 /** A card as the API sends it: its own review modes or null when it follows its deck, and its picture. */
-export type Card = Omit<CardRow, "reviewModeKeys" | "revision"> & {
+export type Card = Omit<CardRow, "reviewModeKeys" | "revision" | "hookDraft"> & {
   reviewModes: ReviewMode[] | null;
   image: CardImage | null;
 };
@@ -56,6 +57,9 @@ export const cardsApi = {
     request<Card>(`/api/cards/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
   /** Ask the AI to fill the card's empty fields. Comes back working; the deck's poll watches it. */
   enrichCard: (id: string) => request<Card>(`/api/cards/${id}/enrich`, { method: "POST" }),
+  /** The AI's draft for the card's memory hook, kept on the server until the card's text changes. */
+  draftHook: (id: string) =>
+    request<HookDraftOut>(`/api/cards/${id}/hook-draft`, { method: "POST" }),
   /** Every review and every write, newest first. */
   cardHistory: (id: string) => request<CardHistory>(`/api/cards/${id}/history`),
   audioUrl: (cardId: string) => `/api/audio/${encodeURIComponent(cardId)}`,

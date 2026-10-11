@@ -1,0 +1,1 @@
+ALTER TABLE `cards` ADD `hook_draft` text;

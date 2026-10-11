@@ -789,6 +789,12 @@ msgstr "AI"
 msgid "AI apps connected to your Lymi account (Claude, ChatGPT, …)."
 msgstr "AI-приложения, подключённые к Lymi (Claude, ChatGPT…)."
 
+msgid "AI draft"
+msgstr "Черновик AI"
+
+msgid "AI draft · Tab keeps it"
+msgstr "Черновик AI · Tab, чтобы взять"
+
 msgid "AI example"
 msgstr "Пример от AI"
 
@@ -1604,6 +1610,9 @@ msgstr "Скачать"
 #. placeholder {0}: entry.export?.fileName ?? ""
 msgid "Download {0}"
 msgstr "Скачать {0}"
+
+msgid "Drafting a hook…"
+msgstr "Готовим зацепку…"
 
 msgid "Drag decks here to add them to this series."
 msgstr "Перетащи сюда колоды, чтобы добавить их в серию."

@@ -20,6 +20,7 @@ import {
 import { ShellChrome } from "../components/layout/shell-chrome";
 import { NewDeckSheet } from "../components/new-deck-sheet";
 import { PillNav } from "../components/pill-nav";
+import { SmartAddDialog } from "../components/smart-add";
 import { Toaster, toast } from "../components/ui/toast";
 import { TooltipProvider } from "../components/ui/tooltip";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
@@ -115,6 +116,12 @@ function Shell() {
   const decks = useQuery({ ...decksQuery, enabled: !bare && me.isSuccess });
   const series = useQuery({ ...seriesQuery, enabled: !bare && me.isSuccess });
   const settings = useQuery({ ...settingsQuery, enabled: !bare && me.isSuccess });
+  const smartAccess = useQuery({
+    queryKey: ["lesson-reads", "access"],
+    queryFn: api.lessonAccess,
+    enabled: !bare && me.isSuccess,
+    staleTime: Number.POSITIVE_INFINITY,
+  });
   const leave = useSignOut();
   useSettleToday(!bare && me.isSuccess);
   useRouteFocus();
@@ -260,7 +267,12 @@ function Shell() {
   const signedIn = me.isSuccess;
   const learnerName = me.data?.name;
   const learnerEmail = me.data?.email;
-  const { openCard, openDeck } = add;
+  const { openCard, openDeck, openSmart } = add;
+  // Smart add starts on the deck on screen when it is the learner's own.
+  const ownedActive = decks.data?.some((d) => d.id === activeDeckId && d.role === "owner");
+  const onSmartAdd = smartAccess.data?.allowed
+    ? () => openSmart(ownedActive ? activeDeckId : undefined)
+    : undefined;
   const { signOut, busy: signingOut } = leave;
   const assistant = useAssistantOffer(signedIn);
   const assistantRow = assistant.row;
@@ -273,11 +285,22 @@ function Shell() {
       docsUrl: publicSiteUrl("/docs"),
       onAddCard: () => openCard(),
       onCreateDeck: openDeck,
+      onSmartAdd,
       onSignOut: signOut,
       signingOut,
       connect: assistantRow ? <AssistantMenuItem /> : undefined,
     }),
-    [signedIn, learnerName, learnerEmail, openCard, openDeck, signOut, signingOut, assistantRow],
+    [
+      signedIn,
+      learnerName,
+      learnerEmail,
+      openCard,
+      openDeck,
+      onSmartAdd,
+      signOut,
+      signingOut,
+      assistantRow,
+    ],
   );
 
   if (bare) return <Outlet />;
@@ -299,6 +322,7 @@ function Shell() {
                 docsUrl={publicSiteUrl("/docs")}
                 onAdd={() => add.openCard()}
                 onCreateDeck={add.openDeck}
+                onSmartAdd={onSmartAdd}
                 onSignOut={leave.signOut}
                 signingOut={leave.busy}
                 streak={me.isSuccess ? <Streak variant="rail" /> : undefined}
@@ -327,6 +351,14 @@ function Shell() {
         open={add.open === "deck"}
         onOpenChange={(v) => (v ? add.openDeck() : add.close("deck"))}
       />
+      {smartAccess.data?.allowed && (
+        <SmartAddDialog
+          open={add.open === "smart"}
+          onOpenChange={(v) => (v ? add.openSmart(add.deckId) : add.close("smart"))}
+          deckId={add.deckId}
+          decks={(decks.data ?? []).filter((d) => d.role === "owner")}
+        />
+      )}
       {me.isSuccess && <StreakPlace />}
     </LearnerAvatarProvider>
   );

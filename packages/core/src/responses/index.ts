@@ -10,6 +10,7 @@ export { ErrorOut, OkOut } from "./common";
 export * from "./connected-apps";
 export * from "./decks";
 export * from "./keys";
+export * from "./lessons";
 export * from "./publications";
 export * from "./push";
 export * from "./reports";

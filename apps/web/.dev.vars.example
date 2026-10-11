@@ -37,3 +37,8 @@ OPENAI_SPEECH_VOICE=marin
 AI_GATEWAY_TOKEN=
 # Only while an OpenAI plugin submission is verifying the domain.
 OPENAI_APPS_CHALLENGE=
+# Reads lesson photos, PDFs and text into a pick list. Operators only until a paid plan exists.
+ANTHROPIC_API_KEY=
+# Needed when the key belongs to the organisation rather than one workspace.
+ANTHROPIC_WORKSPACE_ID=
+ANTHROPIC_LESSON_MODEL=claude-haiku-5-5

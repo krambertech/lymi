@@ -47,6 +47,8 @@ A question is a centred dialog on a desktop with its actions in a row, the prima
 
 On touch a sheet is a drawer that rises from the bottom edge and can be swiped away. Its title stays pinned at its top and its actions at its foot. When the software keyboard rises, the drawer shortens to the room above the keys and only the fields between scroll, so the title and the action are always in sight. On a desktop a panel pinned to the bottom of a 1400 px window is a phone pattern nobody finished, so the same sheet is a centred dialog. The forms inside know nothing about either shape.
 
+A centred dialog that holds a task with steps, such as Smart add, keeps one height for every step and scrolls only its middle: `DialogContent scroll="body"` holds the frame still, `PlaceBar` stays at the top, the actions stay at the foot, and `DialogBody` is the part that scrolls. A short question or form scrolls as one and leaves `scroll` at its default.
+
 No field takes focus as the drawer opens: the drawer settles first, and the keyboard comes when the learner taps a field. The exception is a drawer that holds the one field it opened for, such as a field chip or a search, which focuses at once. A drawer opened from inside another, such as a choice list over a form, rises over a drawer that stays put under its scrim, the way an action sheet sits over a sheet. A drawer never fills the screen.
 
 ## Places

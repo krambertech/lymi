@@ -80,6 +80,12 @@ function DeckPage() {
   const seriesActions = useSeriesActions();
   const [movingToSeries, setMovingToSeries] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const lessons = useQuery({
+    queryKey: ["lesson-reads", "access"],
+    queryFn: api.lessonAccess,
+    enabled: isOwner,
+    staleTime: Number.POSITIVE_INFINITY,
+  });
   const sections = useQuery(sectionsQuery(deckId));
   const sectionActions = useSectionActions(deckId);
   const [naming, setNaming] = useState<{ section?: Section | undefined } | null>(null);
@@ -246,6 +252,7 @@ function DeckPage() {
           isOwner
             ? {
                 onAddCard: () => add.openCard(deckId),
+                onSmartAdd: lessons.data?.allowed ? () => add.openSmart(deckId) : undefined,
                 onArchiveCard: (id) => archive.mutate(id),
                 onEditCard: (card) => setEditingId(card.id),
                 onEnrichCard: (card) => enrich.mutate(card),

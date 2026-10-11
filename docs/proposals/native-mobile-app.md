@@ -19,7 +19,7 @@ Versions checked on 11 October 2026.
 | Layer | Choice | Lost to it |
 | --- | --- | --- |
 | Framework | Expo SDK 57, React Native 0.86, New Architecture | Capacitor; a WebView shell |
-| Navigation | Expo Router: native stacks, form sheets, `Link.Preview`; our own tab bar | System `NativeTabs`, kept as a fallback |
+| Navigation | Expo Router: native stacks, form sheets, `Link.Preview`; our own tab bar | The system tab bar (`NativeTabs`) |
 | Styling | Uniwind (Tailwind v4), class names shared with the web | NativeWind v5, still a release candidate |
 | Motion | Reanimated 4 and Gesture Handler, with Skia for the lantern next | Moti, no longer maintained |
 | Icons and type | Lucide and Onest, as on the web | SF Symbols and San Francisco |
@@ -57,7 +57,7 @@ Unchanged from the web: both rooms and their colours, Onest, the lantern and eve
 
 Decided for the phone in the proof of concept:
 
-- **Navigation** is the web's pill, drawn in Liquid Glass tinted toward the room. The system tab bar and an opaque pill remain switchable options in the **You** tab.
+- **Navigation** is the web's pill, drawn in Liquid Glass tinted toward the room. The system tab bar was tried and dropped: it drew its own chrome and needed Lucide icons pre-rendered as images.
 - **A tab names itself in the top bar**, beside the streak and capture. There is no large title row and no avatar, because You is a tab.
 - **Today leads with the lit room:** no plate, the lantern lights the top of the screen.
 - **Grades are plates** under the card, 64 px tall, and the card shrinks to make room. Glass grades and swipe stay as options.
@@ -91,7 +91,7 @@ Still open: which widget ships (a calm **Lantern** in small and medium, or the *
 
 - **Two sets of screens.** Shared packages and the parity rule keep logic in one place, but every screen is built twice.
 - **Taps dropped during animations in the debug build.** Settle this in step 8 before any performance claim.
-- **Young APIs.** `NativeTabs` is still `unstable-native-tabs` on SDK 57, and `expo-widgets` is months old.
+- **Young APIs.** `expo-widgets` is months old.
 
 ## Sources checked
 

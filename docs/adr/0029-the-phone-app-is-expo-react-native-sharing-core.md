@@ -26,6 +26,6 @@ The proof of concept in `apps/mobile` (11 October 2026, Expo SDK 57, React Nativ
 - Motion runs on Reanimated and Gesture Handler on the UI thread. The web's timings in `motion.md` become shared presets.
 - The Worker serves a second client. Sign-in uses Better Auth's Expo plugin with the app's URL scheme as a trusted origin, and the API stays compatible with installed app versions, which can lag the web by weeks.
 - Shipping needs the Apple Developer Program. Expo's cloud services (EAS Build, Submit and Update) are optional.
-- `NativeTabs` and `expo-widgets` are young APIs; the app keeps its own tab bar and can fall back to `@bacons/apple-targets` for widgets that need full WidgetKit.
+- `expo-widgets` is a young API; widgets that need full WidgetKit can fall back to `@bacons/apple-targets`.
 
 [Proposal: native mobile app](../proposals/native-mobile-app.md)

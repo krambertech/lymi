@@ -114,9 +114,6 @@ importers:
       '@types/react':
         specifier: ^19.3.0
         version: 19.3.0
-      lucide-static:
-        specifier: ^1.55.0
-        version: 1.55.0
       typescript:
         specifier: ~6.0.3
         version: 6.0.3
@@ -6122,9 +6119,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  lucide-static@1.55.0:
-    resolution: {integrity: sha512-h18lunTFsIJWnY0FMRPjXeO9KcAtNi7fDqtqgWHOFbssfgUWsctn/pA7bpiyrd4g1DuBOJ24CsRnPfkYblwm/A==}
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -14285,8 +14279,6 @@ snapshots:
       react: 19.3.0
     optionalDependencies:
       '@types/react': 19.3.0
-
-  lucide-static@1.55.0: {}
 
   magic-string@0.30.21:
     dependencies:

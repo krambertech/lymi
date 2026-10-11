@@ -22,11 +22,6 @@ const CHOICES: {
         label: "Opaque pill",
         line: "The web’s pill and top bar, exactly as on the web.",
       },
-      {
-        value: "native",
-        label: "System",
-        line: "The iOS 26 tab bar and large titles, drawn by the system.",
-      },
     ],
   },
   {

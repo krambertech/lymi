@@ -3,7 +3,7 @@ import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { StoreProvider, useStore } from "../data/store";
+import { StoreProvider } from "../data/store";
 import { usePalette } from "../theme/palette";
 import { WidgetSync } from "../widgets/sync";
 
@@ -21,9 +21,6 @@ export default function RootLayout() {
 function Root() {
   const dark = useColorScheme() === "dark";
   const p = usePalette();
-  const { directions } = useStore();
-  // A sheet that stops short of the top is glass on iOS 26; a full-height one keeps the room.
-  const glassSheet = directions.chrome === "native";
   const base = dark ? DarkTheme : DefaultTheme;
   // The navigation theme carries the room, so native chrome never flashes white between tabs.
   const theme = {
@@ -66,8 +63,8 @@ function Root() {
             presentation: "formSheet",
             sheetAllowedDetents: "fitToContents",
             sheetGrabberVisible: true,
-            ...(glassSheet ? {} : { sheetCornerRadius: 30 }),
-            contentStyle: { backgroundColor: glassSheet ? "transparent" : p.canvas },
+            sheetCornerRadius: 30,
+            contentStyle: { backgroundColor: p.canvas },
           }}
         />
       </Stack>

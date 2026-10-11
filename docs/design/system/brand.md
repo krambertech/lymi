@@ -73,6 +73,8 @@ Its changes are springs from Motion, so an interrupted movement keeps its speed 
 
 `Flame` uses the same springs: out to lit is the catch, lit to full the rise, full to lit a settle, lit to out the going out. Under reduced motion it jumps to the new state without flickering, and the three states still read apart.
 
+The light follows the hour. On Today and at the end of a review the lantern's pool is small at noon and grows and warms toward evening, in whichever room the learner's theme chose; the hour never switches the room. The flame still shows only today's progress.
+
 Carried, the lantern swings from the bail at app launch and on pull to refresh: the body rocks ±5° from the bail's pivot while the bail counters at ∓3.5°.
 
 ## Wordmark and lockups

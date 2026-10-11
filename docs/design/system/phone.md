@@ -46,7 +46,7 @@ One sound, when the daily goal is reached. It follows the silent switch, and You
 
 ## Glass
 
-Liquid Glass suits Lymi: it is a material that holds light, and the lantern is a light. The phone uses it for chrome that floats over content, so the bar and the capture circle refract what scrolls beneath them and morph as the learner moves. Tinted amber, glass marks the one standing action, as plain amber marks a press on the web. Where else tinted glass carries Lymi's light is open, to try on a device rather than in mockups. Glass never sits behind the card in a review or behind text that has to be read. Reduce Transparency, and iOS before 26, get the web's opaque surfaces. The web keeps its opaque pill.
+Liquid Glass suits Lymi: it is a material that holds light, and the lantern is a light. The phone uses it for chrome that floats over content, so the bar and the capture circle refract what scrolls beneath them and morph as the learner moves. Tinted amber, glass marks the one standing action, as plain amber marks a press on the web. Where else tinted glass carries Lymi's light is open, to try on a device rather than in mockups. What the learner reads, such as the review card, stays on opaque plates. Reduce Transparency, and iOS before 26, get the web's opaque surfaces. The web keeps its opaque pill.
 
 ## Light
 

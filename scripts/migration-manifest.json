@@ -163,6 +163,10 @@
     {
       "name": "0040_common_skullbuster.sql",
       "sha256": "bd261693358f74874197ba69871723320692c5416bda177a91acf15d0d470401"
+    },
+    {
+      "name": "0041_slippery_gideon.sql",
+      "sha256": "0f8d5417a1c64e1884e30a07521387daecd2a482630c3333abd9a971e82f14e1"
     }
   ]
 }

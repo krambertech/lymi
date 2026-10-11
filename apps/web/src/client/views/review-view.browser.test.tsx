@@ -149,7 +149,7 @@ test("a card asked one way has one state, so its pill names no direction", async
   expect(head?.textContent).toBe("One wayKnown");
 });
 
-test("on a phone the pill's direction truncates before the deck name does", async () => {
+test("on a phone the pill's direction wraps under its state, and nothing truncates", async () => {
   await render(
     <I18nProvider i18n={i18n}>
       <div style={{ width: 375 }}>
@@ -166,7 +166,9 @@ test("on a phone the pill's direction truncates before the deck name does", asyn
   const name = page.getByText("Eesti keel A1 sõnavara").element() as HTMLElement;
   const mode = page.getByText("Recognition", { exact: true }).element() as HTMLElement;
   expect(name.scrollWidth).toBeLessThanOrEqual(name.clientWidth);
-  expect(mode.scrollWidth).toBeGreaterThan(mode.clientWidth);
+  expect(mode.scrollWidth).toBeLessThanOrEqual(mode.clientWidth);
+  // The state stays on the deck name's line; the direction goes below it.
+  expect(mode.getBoundingClientRect().top).toBeGreaterThan(name.getBoundingClientRect().top);
 });
 
 test("the head names the deck alone, and the mode only for a picture", async () => {

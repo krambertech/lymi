@@ -75,16 +75,23 @@ export function StateChip({
   );
 }
 
-/** With a mode named, the chip shrinks faster than what sits beside it, so the mode truncates first. */
-const shrinkable = "min-w-0 max-w-full shrink-[100]!";
+/**
+ * With a mode named: on a phone the mode wraps onto its own line under the state, so neither the
+ * deck name nor the mode is cut short (#458). On a wider card they share one line again, and the
+ * chip shrinks faster than the deck name beside it, so the mode truncates first.
+ */
+const shrinkable =
+  "h-auto! inline-grid! grid-cols-[auto_auto] gap-x-2 gap-y-0 rounded-2xl py-1 leading-tight @lg:inline-flex! @lg:h-7! @lg:min-w-0 @lg:max-w-full @lg:rounded-full @lg:py-0 @lg:shrink-[100]!";
 
 function ModePart({ mode }: { mode?: string | null | undefined }) {
   if (!mode) return null;
   return (
     <>
-      <span aria-hidden="true">·</span>
-      {/* The mode gives way first, so a narrow card keeps its deck name. */}
-      <span className="min-w-0 truncate">{mode}</span>
+      <span aria-hidden="true" className="hidden @lg:inline">
+        ·
+      </span>
+      {/* Sighted on a phone, the line break separates it; a screen reader hears it after the state. */}
+      <span className="col-span-2 @lg:min-w-0 @lg:truncate">{mode}</span>
     </>
   );
 }

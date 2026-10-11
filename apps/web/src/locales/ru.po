@@ -2104,6 +2104,9 @@ msgstr "Импорт из Anki или Mochi"
 msgid "Import your decks with their pictures, tags and review history. Cards keep their due dates, and {app} is unchanged."
 msgstr "Импортируй колоды с изображениями, тегами и историей повторений. Карточки сохранят даты повторения, а в {app} ничего не изменится."
 
+msgid "Important mark removed"
+msgstr "Отметка «важная» снята"
+
 msgid "Imported {added, plural, one {# card} other {# cards}} from {source}"
 msgstr "{added, plural, one {Импортирована # карточка} few {Импортировано # карточки} many {Импортировано # карточек} other {Импортировано # карточки}} из {source}"
 
@@ -2450,6 +2453,9 @@ msgstr "Создай колоду для каждого курса или тем
 
 msgid "Manage connected apps"
 msgstr "Управлять подключёнными приложениями"
+
+msgid "Marked important"
+msgstr "Отмечена как важная"
 
 msgid "Match your device."
 msgstr "Как на устройстве."

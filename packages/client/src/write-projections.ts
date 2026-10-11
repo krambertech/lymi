@@ -95,6 +95,7 @@ export function localCard(w: Extract<Write, { kind: "card.add" }>, lookup: Looku
     createdAt: now,
     updatedAt: now,
     image: null,
+    important: false,
   };
 }
 

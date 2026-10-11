@@ -115,6 +115,7 @@ const card: CardView = {
   archivedAt: null,
   createdAt: now,
   updatedAt: now,
+  important: false,
 };
 
 async function connect(scope: McpPrincipal["scope"], reportError?: McpPrincipal["reportError"]) {

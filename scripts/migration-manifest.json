@@ -183,6 +183,10 @@
     {
       "name": "0045_messy_the_fury.sql",
       "sha256": "73774b63ef13518f9c9dd262bc3aa7a0e8338e9d5cf7582db769d79d9341ec0c"
+    },
+    {
+      "name": "0046_clumsy_hardball.sql",
+      "sha256": "d30adde53fba6badd37ef2e33319756d0ab6ff78d79831c2d9bb8cd89b6ad964"
     }
   ]
 }

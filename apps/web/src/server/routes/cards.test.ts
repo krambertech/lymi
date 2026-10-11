@@ -146,6 +146,31 @@ describe("bulk card writes", () => {
   });
 });
 
+describe("the important mark", () => {
+  it("sets the caller's mark with the write scope, and refuses a read key and a bad body", async () => {
+    const [cardId] = await ids(["tuttavia"]);
+    const put = (body: unknown, headers: Record<string, string> = {}) =>
+      app.fetch(`/api/cards/${cardId}/important`, {
+        ...json(body, { method: "PUT", headers }),
+        ...(headers["x-api-key"] ? {} : { as: learner }),
+      });
+
+    const marked = await put({ important: true });
+    expect(marked.status).toBe(200);
+    expect(CardOut.parse(await marked.json()).important).toBe(true);
+    expect((await put({ important: "yes" })).status).toBe(400);
+
+    const madeKey = await app.fetch("/api/keys", {
+      ...json({ name: "Reader", scope: "read" }),
+      as: learner,
+    });
+    const key = ApiKeyCreatedOut.parse(await madeKey.json()).key;
+    expect((await put({ important: false }, { "x-api-key": key })).status).toBe(403);
+    const read = await app.fetch(`/api/cards/${cardId}`, { headers: { "x-api-key": key } });
+    expect(CardOut.parse(await read.json()).important).toBe(true);
+  });
+});
+
 describe("publisher deck overlap", () => {
   it("lets a publisher repeat a term across its own decks, never within one", async () => {
     const app = await testApp({ publishers: ["publisher@lymi.local"] });

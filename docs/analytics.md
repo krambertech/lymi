@@ -45,6 +45,7 @@ Page properties contain approved routes, with private dynamic IDs replaced by `:
 | `review_session_finished`, `review_session_abandoned` | Browser review leg: `session_id`, first-session eligibility, net recall counts and fixed ending/reason. |
 | `mcp_tool` | MCP tool result: fixed tool name, success/error and elapsed milliseconds, with no request or response content. |
 | `enrichment_finished`, `deck_joined` | Existing server outcome contracts remain available. |
+| `card_importance_set` | Committed change to a learner's important mark: `important` and the fixed `channel` (`app`, `api`, `mcp`). Setting the mark a card already has adds no event. Answers whether learners use the mark and from where; never carries the card. |
 
 A measured review leg begins when a card is presented. Finished legs end at a goal or confirmed empty queue and count net recall attempts since presentation, including repeated cards and subtracting Undo. Abandonment reports net `cards_done` against the frozen initial planned `card_count`; left, navigation and pagehide are observable exits. Continue starts another leg and does not retain first-session eligibility after actual work. An empty screen, failed refresh or offline exhaustion cannot manufacture a completion. Browser shutdown delivery is best effort; absence of abandonment proves nothing. These counts are attempts, not unique cards, and are distinct from accepted server grades queued offline.
 

@@ -147,6 +147,10 @@ export function describeEvent(e: CardEvent, i18n: I18n = globalI18n): WordEvent 
     return { ...base, kind: "archived", text: i18n._(msg`Archived`), actor: by };
   if (e.action === "restore")
     return { ...base, kind: "restored", text: i18n._(msg`Restored`), actor: by };
+  if (e.action === "mark_important")
+    return { ...base, kind: "edited", text: i18n._(msg`Marked important`), actor: by };
+  if (e.action === "unmark_important")
+    return { ...base, kind: "edited", text: i18n._(msg`Important mark removed`), actor: by };
   if (e.action !== "update" && e.action !== "enrich")
     return { ...base, kind: "edited", text: e.action, actor: by };
   if (e.action === "update" && "deckId" in payload)

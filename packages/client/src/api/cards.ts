@@ -20,6 +20,8 @@ export type CardImage = CardImageOut;
 export type Card = Omit<CardRow, "reviewModeKeys" | "revision" | "hookDraft"> & {
   reviewModes: ReviewMode[] | null;
   image: CardImage | null;
+  /** The learner's own mark, never another member's. */
+  important: boolean;
 };
 /** `direction` is the legacy name of a text mode, and null for a picture mode. */
 export type CardState = Omit<CardStateRow, "mode" | "direction"> & {
@@ -105,4 +107,9 @@ export const cardsApi = {
     request<{ ok: true }>(`/api/cards/${id}/archive`, { method: "POST" }),
   restoreCard: (id: string) =>
     request<{ ok: true }>(`/api/cards/${id}/restore`, { method: "POST" }),
+  setCardImportant: (id: string, important: boolean) =>
+    request<Card>(`/api/cards/${id}/important`, {
+      method: "PUT",
+      body: JSON.stringify({ important }),
+    }),
 };

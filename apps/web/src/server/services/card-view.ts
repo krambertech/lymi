@@ -26,6 +26,8 @@ export interface CardImageView {
 export type CardView = Omit<Card, "reviewModeKeys" | "revision" | "hookDraft"> & {
   reviewModes: ReviewMode[] | null;
   image: CardImageView | null;
+  /** The viewer's own mark, never the owner's. */
+  important: boolean;
 };
 
 export function imageView(image: CardImage): CardImageView {
@@ -45,14 +47,31 @@ export function imageView(image: CardImage): CardImageView {
   };
 }
 
-function view(card: Card, image: CardImage | undefined): CardView {
+function view(card: Card, image: CardImage | undefined, important: boolean): CardView {
   // The draft is the owner's editor's, never shown on the card, so a member never reads it.
   const { reviewModeKeys, revision, hookDraft: _draft, ...rest } = card;
   return {
     ...rest,
     reviewModes: cardModes({ directions: card.directions, reviewModeKeys }),
     image: image ? imageView(image) : null,
+    important,
   };
+}
+
+/** Which of these cards the viewer marked important. */
+export async function importantIds(db: Db, viewerId: string, cardIds: readonly string[]) {
+  const rows = await selectIn([...new Set(cardIds)], (slice) =>
+    db
+      .select({ cardId: schema.importantCards.cardId })
+      .from(schema.importantCards)
+      .where(
+        and(
+          eq(schema.importantCards.userId, viewerId),
+          inArray(schema.importantCards.cardId, slice),
+        ),
+      ),
+  );
+  return new Set(rows.map((row) => row.cardId));
 }
 
 /**
@@ -140,7 +159,10 @@ export async function presentCards(
       )
     ).map((row) => row.id),
   );
-  const editions = await editionText(db, viewerId, cards);
+  const [editions, important] = await Promise.all([
+    editionText(db, viewerId, cards),
+    importantIds(db, viewerId, ids),
+  ]);
   return cards.map((card) => {
     const text = editions.get(card.id);
     // A card in an archived section reads as having none, as a deck in an archived series does.
@@ -149,7 +171,7 @@ export async function presentCards(
     // A hook is in the deck's own meaning language and no edition carries one, so a reader of
     // another edition gets none.
     const seen = text ? { ...inEdition(placed, text), hook: null, hookSource: null } : placed;
-    return view(seen, images.get(card.id));
+    return view(seen, images.get(card.id), important.has(card.id));
   });
 }
 

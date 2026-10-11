@@ -182,6 +182,10 @@ export const analyticsEvents = {
     $ai_is_error: z.boolean(),
     $ai_http_status: z.number().int().min(100).max(599).optional(),
   }),
+  card_importance_set: z.object({
+    important: z.boolean(),
+    channel: z.enum(["app", "api", "mcp"]),
+  }),
 } as const;
 export type AnalyticsName = keyof typeof analyticsEvents;
 export type AnalyticsProperties<N extends AnalyticsName> = z.infer<(typeof analyticsEvents)[N]>;
@@ -224,6 +228,7 @@ export const analyticsProducers = {
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
   $ai_generation: ["worker"],
+  card_importance_set: ["worker"],
 } satisfies Record<AnalyticsName, readonly ("browser" | "worker")[]>;
 
 export function eventProperties(

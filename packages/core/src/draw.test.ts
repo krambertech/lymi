@@ -11,6 +11,7 @@ import {
   drawableCount,
   drawOrder,
   forgottenToday,
+  IMPORTANT_ODDS,
   localDate,
   missed,
   NEW_CARD_SLOT_EVERY,
@@ -254,6 +255,34 @@ describe("ordinary draws", () => {
       if (first?.cardId === "strong") strongFirst++;
     }
     expect(strongFirst).toBeGreaterThan(150);
+  });
+
+  it("favours an important card by its odds, as a review and as an unseen card", () => {
+    const firsts = (cards: DrawCard[]) => {
+      let importantFirst = 0;
+      for (let i = 0; i < 1000; i++) {
+        const date = new Date(Date.UTC(2026, 0, 1 + i)).toISOString().slice(0, 10);
+        if (drawOrder(cards, [], { ...day, date })[0]?.cardId === "marked") importantFirst++;
+      }
+      return importantFirst / 1000;
+    };
+    const share = IMPORTANT_ODDS / (IMPORTANT_ODDS + 1);
+    const reviews = [{ ...review("marked"), important: true }, review("plain")];
+    const fresh = [{ ...unseen("marked"), important: true }, unseen("plain")];
+    expect(firsts(reviews)).toBeCloseTo(share, 1);
+    expect(firsts(fresh)).toBeCloseTo(share, 1);
+  });
+
+  it("never draws an important card before it is due, and keeps every ordinary card", () => {
+    const cards = [
+      { ...card("later", [{ mode: "meaning_to_term", due: day.end }]), important: true },
+      ...Array.from({ length: 5 }, (_, i) => ({ ...review(`marked${i}`), important: true })),
+      review("plain"),
+    ];
+    const order = drawOrder(cards, [], day).map((d) => d.cardId);
+    expect(order).not.toContain("later");
+    expect(order).toContain("plain");
+    expect(drawableCount(cards, [], day)).toBe(6);
   });
 
   it("favours recently added cards in three new-card slots of four", () => {

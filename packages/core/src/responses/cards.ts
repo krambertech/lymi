@@ -83,6 +83,10 @@ export const CardOut = z
       .string()
       .nullable()
       .meta({ description: "The import that added the card, if one did" }),
+    important: z.boolean().meta({
+      description:
+        "Marked important by you. On a day with more to review than the goal it is more likely to come up; when it is due never changes. Your own mark, so it differs between members of a shared deck.",
+    }),
     archivedAt: Timestamp.nullable(),
     createdAt: Timestamp,
     updatedAt: Timestamp,

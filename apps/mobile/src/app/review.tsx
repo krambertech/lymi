@@ -135,6 +135,16 @@ function Run({
   // Each position in the review takes one grade, however fast the taps come.
   const gradedAt = useRef(-1);
 
+  // Leaving refreshes what this review, or another device meanwhile, moved under it.
+  useEffect(
+    () => () => {
+      for (const queryKey of [["decks"], ["rounds"], ["streak"], ["queue"]]) {
+        void qc.invalidateQueries({ queryKey });
+      }
+    },
+    [qc],
+  );
+
   // A leg belongs to its day, so one left open past midnight gives way to a fresh one.
   const leg = chosenLeg && state && chosenLeg.date === state.day.date ? chosenLeg : null;
   // The draw stops at the goal only for the whole day below it; deck reviews and rounds run to their end.

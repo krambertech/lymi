@@ -3,7 +3,7 @@ import type { TextProvider } from "../ai";
 import type { Db } from "../db";
 import { addCards, showCard, updateCard } from "./cards";
 import { ServiceError } from "./context";
-import { createDeck } from "./decks";
+import { createDeck, updateDeck } from "./decks";
 import { acceptDraft, givesAway, type HookCard, hookable, hookDraftFor } from "./hook-draft";
 import { learner, testDb } from "./test-db";
 
@@ -24,6 +24,31 @@ describe("givesAway", () => {
     const card: HookCard = { ...kurb, asked: ["term_to_meaning"] };
     expect(givesAway("КУРБан грустит", card)).toBe(true);
     expect(givesAway("КУРБан опустил голову", card)).toBe(false);
+  });
+
+  it("catches an inflected meaning in each of the prompt's own hooks when the term is the cue", () => {
+    const examples: [string, string][] = [
+      ["КУРБан грустит", "грустный"],
+      ["НОРКа слабая", "слабый"],
+      ["МЭРИ у моря", "море"],
+      ["Смотри, ВАТА летит!", "смотреть"],
+      ["пАСТУх шагает за стадом", "шагать"],
+      ["ТОМ принёс томатный сок", "приносить"],
+    ];
+    for (const [hook, meaning] of examples) {
+      expect(givesAway(hook, { ...kurb, meaning, asked: ["term_to_meaning"] }), hook).toBe(true);
+    }
+  });
+
+  it("matches a short meaning whole, so it does not catch longer words that start alike", () => {
+    const sea: HookCard = { ...kurb, meaning: "sea", asked: ["term_to_meaning"] };
+    expect(givesAway("MERRY at the sea", sea)).toBe(true);
+    expect(givesAway("MERRY seasons", sea)).toBe(false);
+  });
+
+  it("guards picture modes as their text counterparts", () => {
+    expect(givesAway("КУРБан грустит", { ...kurb, asked: ["image_to_meaning"] })).toBe(true);
+    expect(givesAway("Kurb Kurban", { ...kurb, asked: ["image_to_term"] })).toBe(true);
   });
 });
 
@@ -73,7 +98,7 @@ describe("hookDraftFor", () => {
       { deckId: deck.id, term: kurb.term, meaning: kurb.meaning },
     ]);
     if (added?.status !== "added") throw new Error("not added");
-    return { ctx, cardId: added.card.id };
+    return { ctx, cardId: added.card.id, deckId: deck.id };
   }
 
   it("drafts once, keeps the draft until the meaning changes, and marks a hook saved as drafted as the AI's", async () => {
@@ -102,6 +127,31 @@ describe("hookDraftFor", () => {
     expect(await hookDraftFor(ctx, cardId, none.provider)).toBeNull();
     // Asked twice the first time, then never again until the card's text changes.
     expect(none.complete).toHaveBeenCalledTimes(2);
+  });
+
+  it("checks a kept draft again once the deck asks for the meaning", async () => {
+    const { ctx, cardId, deckId } = await card("hook-draft-5");
+    expect(await hookDraftFor(ctx, cardId, provider("КУРБан грустит").provider)).toBe(
+      "КУРБан грустит",
+    );
+    await updateDeck(ctx, deckId, { directions: "recognition" });
+    const next = provider("КУРБан опустил голову");
+    expect(await hookDraftFor(ctx, cardId, next.provider)).toBe("КУРБан опустил голову");
+    expect(next.complete).toHaveBeenCalledOnce();
+  });
+
+  it("keeps nothing when the vendor fails, so the next editor asks again", async () => {
+    const { ctx, cardId } = await card("hook-draft-6");
+    const complete = vi.fn(async () => {
+      throw new Error("outage");
+    });
+    const failing = { provider: "openai", model: "test", complete } as TextProvider;
+    const quiet = vi.spyOn(console, "error").mockImplementation(() => {});
+    expect(await hookDraftFor(ctx, cardId, failing)).toBeNull();
+    quiet.mockRestore();
+    const after = provider("КУРБан грустит");
+    expect(await hookDraftFor(ctx, cardId, after.provider)).toBe("КУРБан грустит");
+    expect(after.complete).toHaveBeenCalledOnce();
   });
 
   it("refuses a draft that writes the term the card asks for", async () => {

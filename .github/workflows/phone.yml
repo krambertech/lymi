@@ -65,7 +65,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: apps/mobile/build/Lymi.app
-          key: phone-simulator-${{ runner.os }}-xcode-26.6-${{ steps.fingerprint.outputs.hash }}
+          key: phone-simulator-v2-${{ runner.os }}-xcode-26.6-${{ steps.fingerprint.outputs.hash }}
 
       - name: Build the app for the Simulator
         if: steps.native.outputs.cache-hit != 'true'
@@ -76,9 +76,10 @@ jobs:
         run: |
           npx expo prebuild --clean --platform ios
           sudo xcode-select -s /Applications/Xcode_26.6.app
+          # Signing to run locally embeds the entitlements the keychain needs; unsigned, sign-in fails.
           xcodebuild -workspace ios/Lymi.xcworkspace -scheme Lymi -configuration Release \
             -sdk iphonesimulator -destination "generic/platform=iOS Simulator" \
-            -derivedDataPath build/derived CODE_SIGNING_ALLOWED=NO -quiet
+            -derivedDataPath build/derived -quiet
           rm -rf build/Lymi.app
           cp -R build/derived/Build/Products/Release-iphonesimulator/Lymi.app build/Lymi.app
 
@@ -98,7 +99,7 @@ jobs:
         run: |
           npx expo export:embed --platform ios --dev false --bytecode --entry-file node_modules/expo-router/entry.js \
             --bundle-output build/Lymi.app/main.jsbundle --assets-dest build/Lymi.app
-          codesign --force --sign - --deep build/Lymi.app
+          codesign --force --sign - --preserve-metadata=identifier,entitlements,flags build/Lymi.app
 
       - name: Start the local Worker
         working-directory: apps/web
@@ -139,8 +140,8 @@ jobs:
         # One retry, reported in the summary, so a flaky pass is visible rather than silent.
         run: |
           if apps/mobile/e2e/run.sh; then exit 0; fi
-          echo "::warning title=Phone journey::Passed only on retry"
           apps/mobile/e2e/run.sh
+          echo "::warning title=Phone journey::Passed only on retry"
 
       - name: Keep the evidence
         if: failure()

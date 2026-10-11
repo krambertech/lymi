@@ -375,6 +375,10 @@ export interface ReviewCardProps {
   aid?: RecallAidProps | undefined;
   /** The hook's editor, in the hook's own place under the cue, while the learner writes one. */
   hookEditor?: ReactNode | undefined;
+  /** A control after the state chip; the chip slides aside as it arrives. */
+  headEnd?: ReactNode | undefined;
+  /** Give the head a slot for `headEnd`, empty and closed until it holds one. */
+  headSlot?: boolean | undefined;
   className?: string | undefined;
 }
 
@@ -511,6 +515,8 @@ export function ReviewCard({
   offer,
   aid,
   hookEditor,
+  headEnd,
+  headSlot = false,
   className,
 }: ReviewCardProps) {
   const { t, i18n } = useLingui();
@@ -870,7 +876,22 @@ export function ReviewCard({
                 </>
               )}
             </span>
-            <StateChip state={item.fsrsState} size="lg" inReview />
+            {headSlot ? (
+              <span className="flex shrink-0 items-center">
+                <StateChip state={item.fsrsState} size="lg" inReview />
+                {/* Opens as the control arrives, so the chip slides aside rather than waiting beside a gap. */}
+                <span
+                  className={clsx(
+                    "relative z-20 flex justify-end overflow-hidden transition-[width] duration-200 ease-out motion-reduce:transition-none",
+                    headEnd ? "w-[38px] -me-1.5" : "w-0",
+                  )}
+                >
+                  {headEnd}
+                </span>
+              </span>
+            ) : (
+              <StateChip state={item.fsrsState} size="lg" inReview />
+            )}
           </div>
 
           <div

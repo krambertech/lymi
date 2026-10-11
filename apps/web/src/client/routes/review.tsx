@@ -25,7 +25,7 @@ import { useAddCard } from "../lib/add-card";
 import { api, type Card, deviceTimezone, errorMessage, type QueueItem, scopeKey } from "../lib/api";
 import { usePrefetchPictures } from "../lib/card-images";
 import { refreshAfterCardWrite } from "../lib/card-writes";
-import { useDesktop } from "../lib/device";
+import { useMouse, useWide } from "../lib/device";
 import { useDocumentTitle } from "../lib/document-title";
 import { lanternFor } from "../lib/flame";
 import { gradeStore, recordGrade, retireGrades } from "../lib/grades";
@@ -194,7 +194,9 @@ function Review() {
   const [hookFor, setHookFor] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [editing, setEditing] = useState<Card | null>(null);
-  const desktop = useDesktop();
+  // A mouse gets a visible ⋯, beside the card where there is room and in its head where there is not.
+  const mouse = useMouse();
+  const wide = useWide();
 
   // The persisted cache can predate the last grade, so the first card waits for this mount's fetch.
   const settled = draw.isFetchedAfterMount || draw.fetchStatus !== "fetching";
@@ -753,7 +755,7 @@ function Review() {
 
   // On touch the revealed card is the menu's handle: a tap, or a press and hold, opens it.
   const openFromCard = (e: React.MouseEvent<HTMLElement>) => {
-    if (desktop || !revealed || writingHook) return;
+    if (mouse || !revealed || writingHook) return;
     const target = e.target as HTMLElement;
     if (target.closest(`button, a, input, textarea, [role="menu"], #${GRADES_ID}`)) return;
     // A press that selected text was a selection, not a tap.
@@ -762,6 +764,26 @@ function Review() {
     setMenuOpen(true);
   };
 
+  const cardMenu = current && (
+    <CardMenu
+      open={menuOpen}
+      onOpenChange={setMenuOpen}
+      visible={mouse}
+      hasHook={!!current.card.hook}
+      canEdit={owned}
+      onHook={openHook}
+      onEdit={() => setEditing(current.card)}
+      onStats={() =>
+        void navigate({
+          to: "/library/$deckId",
+          params: { deckId: current.card.deckId },
+          search: { card: current.card.id },
+        })
+      }
+      onArchive={() => void archiveCurrent()}
+    />
+  );
+
   const doneLink = (variant: "primary" | "secondary") => (
     <Button variant={variant} size="lg" className="w-full" render={<Link to="/today" />}>
       <Trans>Done</Trans>
@@ -769,7 +791,7 @@ function Review() {
   );
 
   return (
-    <div className="relative mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col overflow-x-clip px-4 pb-[calc(env(safe-area-inset-bottom)+12px)] @3xl:max-w-2xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
+    <div className="relative mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col overflow-x-clip px-4 @3xl:overflow-x-visible pb-[calc(env(safe-area-inset-bottom)+12px)] @3xl:max-w-2xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
       <ReviewHeader
         attempts={state?.attempts ?? 0}
         goal={
@@ -909,6 +931,12 @@ function Review() {
                     }
                   : undefined
               }
+              headSlot={mouse && !wide}
+              headEnd={
+                mouse && !wide && revealed ? (
+                  <span className="enter-fade">{cardMenu}</span>
+                ) : undefined
+              }
               hookEditor={
                 writingHook ? (
                   <HookEditor
@@ -929,29 +957,13 @@ function Review() {
               }
               className="mt-4 @3xl:max-h-[600px] @3xl:[@media(min-height:40rem)]:min-h-[460px]"
             />
-            {/* Only once the answer shows. Beside the card with a mouse, so nothing on it moves;
-                on touch the card is the handle and this button is for a screen reader. */}
-            {revealed && (
+            {/* Only once the answer shows. With a mouse and room, beside the card, so nothing on it
+                moves; on touch the card is the handle and this button is for a screen reader. */}
+            {revealed && !(mouse && !wide) && (
               <span
-                className={desktop ? "absolute -end-8 top-7 enter-fade" : "absolute top-0 start-0"}
+                className={mouse ? "absolute -end-10 top-7 enter-fade" : "absolute top-0 start-0"}
               >
-                <CardMenu
-                  open={menuOpen}
-                  onOpenChange={setMenuOpen}
-                  visible={desktop}
-                  hasHook={!!current.card.hook}
-                  canEdit={owned}
-                  onHook={openHook}
-                  onEdit={() => setEditing(current.card)}
-                  onStats={() =>
-                    void navigate({
-                      to: "/library/$deckId",
-                      params: { deckId: current.card.deckId },
-                      search: { card: current.card.id },
-                    })
-                  }
-                  onArchive={() => void archiveCurrent()}
-                />
+                {cardMenu}
               </span>
             )}
             <GradeBar

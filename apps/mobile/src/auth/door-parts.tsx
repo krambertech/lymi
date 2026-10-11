@@ -6,12 +6,12 @@ import Animated, {
   FadeIn,
   Keyframe,
   useAnimatedStyle,
-  useReducedMotion,
   useSharedValue,
   withDelay,
   withTiming,
 } from "react-native-reanimated";
 import { Lantern } from "../brand/lantern";
+import { useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { Field } from "../ui/field";
 import { GoogleMark } from "../ui/google-mark";
@@ -29,7 +29,7 @@ const HEADINGS: Record<EmailStep, { title: string; line?: string }> = {
 
 /** A card's arrival from motion.md: a 6 px rise over 200 ms; under reduced motion, a fade. */
 export function useArrival() {
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   return (delay = 0) =>
     reduce
       ? FadeIn.duration(150)
@@ -44,7 +44,7 @@ export function useArrival() {
 /** The warm pool the lantern throws on the room, as on Today. It blooms as the room is lit. */
 export function Pool({ className }: { className: string }) {
   const p = usePalette();
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   const lit = useSharedValue(reduce ? 1 : 0);
   useEffect(() => {
     lit.value = withDelay(80, withTiming(1, { duration: 1200, easing: Easing.out(Easing.quad) }));

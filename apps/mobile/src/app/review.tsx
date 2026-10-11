@@ -3,33 +3,52 @@ import { gradeStore } from "@lymi/client/grades";
 import { drawableLeft } from "@lymi/client/review-day";
 import { reviewItem, stateBefore } from "@lymi/client/review-draw";
 import { drawKey, modeKey, type Rating, ROUNDS, type Round } from "@lymi/core";
-import { EASE_OUT, REVEAL_GLIDE } from "@lymi/design";
+import {
+  END_OF_REVIEW as AT,
+  COUNT_ROLL,
+  countRollMs,
+  EASE_OUT,
+  emberCount,
+  endEmbers,
+  LANTERN_FLIGHT,
+  REVEAL_GLIDE,
+} from "@lymi/design";
 import { useQueryClient } from "@tanstack/react-query";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
   I18nManager,
   Image,
   Pressable,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  type TextInputProps,
   useColorScheme,
+  useWindowDimensions,
   View,
   type ViewStyle,
 } from "react-native";
 import Animated, {
+  Easing,
   FadeIn,
   FadeOut,
   Keyframe,
   LinearTransition,
+  measure,
+  type SharedValue,
+  useAnimatedProps,
+  useAnimatedRef,
   useAnimatedStyle,
-  useReducedMotion,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSessionHeaders } from "../auth/client";
+import { EndEmbers, LightPool } from "../brand/ending";
 import { Lantern } from "../brand/lantern";
 import {
   type Standing,
@@ -43,8 +62,9 @@ import {
   useRounds,
   useSections,
 } from "../data/queries";
-import { curve } from "../theme/motion";
+import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { type Palette, usePalette } from "../theme/palette";
+import { fitType } from "../theme/type";
 import type { IconName } from "../ui/icons";
 import { Button, Icon, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
@@ -212,7 +232,11 @@ function Run({
   if (!leg || (stopped && (checking || landing || listOwed))) {
     return <View className="flex-1 bg-canvas" />;
   }
-  if (!current || !data || !state) return <Completion added={done} onClose={onClose} />;
+  if (!current || !data || !state) {
+    // The count rolls up to today's attempts as this device knows them, from where this review began.
+    const to = state?.attempts ?? reviewsToday;
+    return <Completion from={Math.max(0, to - done)} added={done} onClose={onClose} />;
+  }
   const { card } = current;
 
   // What the header counts: today's attempts to the goal's stop, and a list's own otherwise.
@@ -326,6 +350,8 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
         <Animated.View className="h-full rounded-full bg-text-2" style={fill} />
       </View>
       <Text
+        // The count shares a 48 pt bar with the lantern and the progress, so it grows least.
+        maxFontSizeMultiplier={1.3}
         className="min-w-12 text-end text-md text-text-2"
         style={{ fontVariant: ["tabular-nums"] }}
       >
@@ -378,7 +404,9 @@ const STATE: Record<Standing, { label: string; icon: IconName; tint: keyof Palet
 const rule = new Keyframe({
   0: { transform: [{ scaleX: 0 }] },
   100: { transform: [{ scaleX: 1 }], easing: EASE },
-}).duration(360);
+})
+  .duration(360)
+  .reduceMotion(ALWAYS);
 
 const rise = (i: number) =>
   new Keyframe({
@@ -386,7 +414,8 @@ const rise = (i: number) =>
     100: { opacity: 1, transform: [{ translateY: 0 }], easing: EASE },
   })
     .duration(260)
-    .delay(80 + i * 50);
+    .delay(80 + i * 50)
+    .reduceMotion(ALWAYS);
 
 /** The card's picture, fetched with the learner's session like every other request. */
 function Picture({ card }: { card: QueueItem["card"] }) {
@@ -423,7 +452,7 @@ function CardPlate({
 }) {
   const p = usePalette();
   const dark = useColorScheme() === "dark";
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   const state = STATE[standing(fsrsState)];
   const section = useSections(card.sectionId ? card.deckId : undefined).data?.sections.find(
     (s) => s.id === card.sectionId,
@@ -436,7 +465,7 @@ function CardPlate({
   return (
     <Animated.View
       layout={reduce ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
-      entering={FadeIn.duration(160)}
+      entering={FadeIn.duration(160).reduceMotion(ALWAYS)}
       className="flex-1"
     >
       <Pressable
@@ -449,12 +478,13 @@ function CardPlate({
         className="flex-1 overflow-hidden rounded-2xl border border-edge bg-plate"
         style={dark ? LIFT : undefined}
       >
-        <View className="flex-row items-center justify-between px-6 pt-5">
+        {/* At large text sizes the deck and the state stack rather than clip. */}
+        <View className="flex-row flex-wrap items-center justify-between gap-2 px-6 pt-5">
           <View className="flex-row items-center gap-2">
             <Icon name="deck" size={18} colour={p.muted} />
             <Text className="text-md text-text-2">{deckName}</Text>
           </View>
-          <View className="h-9 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3.5">
+          <View className="min-h-9 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3.5 py-1">
             <Icon
               name={forgotten ? "forgot" : state.icon}
               size={16}
@@ -476,6 +506,8 @@ function CardPlate({
               <Text
                 className="text-text"
                 style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
+                // The word is already the largest text on the card; grown, a long one would break mid-word.
+                maxFontSizeMultiplier={1}
               >
                 {cue}
               </Text>
@@ -484,27 +516,27 @@ function CardPlate({
           {revealed && (
             <View className="gap-4 pt-5">
               <Animated.View
-                entering={reduce ? FadeIn : rule}
+                entering={reduce ? CROSSFADE : rule}
                 className="h-px bg-edge-2"
                 // The rule draws from the start edge, which is the right in a right-to-left language.
                 style={{ transformOrigin: I18nManager.isRTL ? "100% 50%" : "0% 50%" }}
               />
-              <Animated.View entering={reduce ? FadeIn : rise(0)}>
+              <Animated.View entering={reduce ? CROSSFADE : rise(0)}>
                 <Text className="text-xl text-text">{answer}</Text>
               </Animated.View>
               {other && (
-                <Animated.View entering={reduce ? FadeIn : rise(1)}>
+                <Animated.View entering={reduce ? CROSSFADE : rise(1)}>
                   <Text className="text-md text-text-2">{other}</Text>
                 </Animated.View>
               )}
               {card.example && (
-                <Animated.View entering={reduce ? FadeIn : rise(2)}>
+                <Animated.View entering={reduce ? CROSSFADE : rise(2)}>
                   <Text className="text-md text-text-2">{card.example}</Text>
                 </Animated.View>
               )}
               {section && (
-                <Animated.View entering={reduce ? FadeIn : rise(3)} className="flex-row">
-                  <View className="h-8 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3">
+                <Animated.View entering={reduce ? CROSSFADE : rise(3)} className="flex-row">
+                  <View className="min-h-8 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3 py-1">
                     <Icon name="section" size={15} colour={p.muted} />
                     <Text className="text-base text-text-2">{section}</Text>
                   </View>
@@ -515,7 +547,10 @@ function CardPlate({
         </View>
 
         {!revealed && (
-          <Animated.View entering={FadeIn.delay(900).duration(400)} className="items-center pb-6">
+          <Animated.View
+            entering={FadeIn.delay(900).duration(400).reduceMotion(ALWAYS)}
+            className="items-center pb-6"
+          >
             <Text className="text-base text-muted">Tap to reveal</Text>
           </Animated.View>
         )}
@@ -537,17 +572,21 @@ const gradeIn = (i: number) =>
     100: { opacity: 1, transform: [{ translateY: 0 }], easing: EASE },
   })
     .duration(220)
-    .delay(80 + i * 35);
+    .delay(80 + i * 35)
+    .reduceMotion(ALWAYS);
 
 /** Four grades, 64 pt tall, always under the card. Same tap, same weight, whichever is chosen. */
 function GradeStrip({ onGrade }: { onGrade: (r: Rating) => void }) {
   const p = usePalette();
   const dark = useColorScheme() === "dark";
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   return (
-    <Animated.View exiting={FadeOut.duration(120)} className="flex-row gap-2 px-4 pt-3">
+    <Animated.View
+      exiting={FadeOut.duration(120).reduceMotion(ALWAYS)}
+      className="flex-row gap-2 px-4 pt-3"
+    >
       {GRADES.map((g, i) => (
-        <Animated.View key={g.label} entering={reduce ? FadeIn : gradeIn(i)} className="flex-1">
+        <Animated.View key={g.label} entering={reduce ? CROSSFADE : gradeIn(i)} className="flex-1">
           <Press
             scale={0.96}
             haptic={false}
@@ -558,7 +597,9 @@ function GradeStrip({ onGrade }: { onGrade: (r: Rating) => void }) {
             style={dark ? LIFT : undefined}
           >
             <Icon name={g.icon} size={20} colour={p[g.tint]} />
-            <Text className="text-base font-medium text-text-2">{g.label}</Text>
+            <Text maxFontSizeMultiplier={1.3} className="text-base font-medium text-text-2">
+              {g.label}
+            </Text>
           </Press>
         </Animated.View>
       ))}
@@ -566,135 +607,288 @@ function GradeStrip({ onGrade }: { onGrade: (r: Rating) => void }) {
   );
 }
 
-/** The one place the interface celebrates: the lantern lit large in a pool of its glow. motion.md. */
-function Completion({ added, onClose }: { added: number; onClose: () => void }) {
-  const { reviewsToday, goal, week, streak, dayDone, fed, progress } = useDay();
+/** A part of the end rising into place: the web's `.seq`, without the blur iOS cannot draw on a view. */
+const RISE = { ms: 560, y: 14 };
+/** The count's own rise, from a little smaller. */
+const COUNT_RISE = { ms: 720, y: 10, scale: 0.86 };
+/** The lantern's place in the review's header, which it leaves from. */
+const HEADER_LANTERN = { size: 48, inset: 16, top: 4 };
+const END_LANTERN = 168;
+
+const AnimatedInput = Animated.createAnimatedComponent(TextInput);
+const easeOut = curveFn(EASE_OUT);
+const roll = curveFn(COUNT_ROLL);
+
+/** How far into its own movement a part is, eased, by the screen's clock. */
+function beat(clock: number, at: number, ms: number) {
+  "worklet";
+  return easeOut(Math.min(1, Math.max(0, (clock - at) / ms)));
+}
+
+function useRise(
+  clock: SharedValue<number>,
+  at: number,
+  { ms, y, scale = 1 }: { ms: number; y: number; scale?: number } = RISE,
+) {
+  return useAnimatedStyle(() => {
+    const t = beat(clock.value, at, ms);
+    return {
+      opacity: t,
+      transform: [{ translateY: (1 - t) * y }, { scale: scale + (1 - scale) * t }],
+    };
+  });
+}
+
+/**
+ * The one place the interface celebrates: the lantern lit large in a pool of its glow. It plays as one
+ * sequence on one clock, and the first tap finishes the clock. motion.md "The end of a review".
+ */
+function Completion({
+  from,
+  added,
+  onClose,
+}: {
+  /** Today's reviews when this review began, where the count rolls up from. */
+  from: number;
+  added: number;
+  onClose: () => void;
+}) {
+  const { goal, week, streak, dayDone, out, progress, fed } = useDay();
   const forgottenToday = useRounds().data?.forgotten ?? 0;
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const p = usePalette();
-  const reduce = useReducedMotion();
-  const satisfied = reviewsToday >= goal || dayDone;
+  const reduce = useReduceMotion();
+  const to = from + added;
+  const satisfied = to >= goal || dayDone;
   const heading =
-    reviewsToday >= goal
-      ? "Daily goal reached"
-      : dayDone
-        ? "You’re done for today"
-        : "Nothing left here";
+    to >= goal ? "Daily goal reached" : dayDone ? "You’re done for today" : "Nothing left here";
 
-  const pool = useSharedValue(reduce ? 1 : 0);
+  const embers = useMemo(
+    () => (reduce || out ? [] : endEmbers(emberCount(added, goal))),
+    [reduce, out, added, goal],
+  );
+  const rollMs = countRollMs(from, to);
+  const actionsAt = AT.actions + (forgottenToday > 0 ? AT.actionStep : 0);
+  const end = Math.max(
+    actionsAt + RISE.ms,
+    AT.countRoll + rollMs,
+    AT.embers + Math.max(0, ...embers.map((e) => e.at + e.dur)),
+  );
+
+  const clock = useSharedValue(reduce ? end : 0);
+  // The ways on cannot be pressed until they have arrived, so the tap that finishes the sequence never presses one.
+  const [settled, setSettled] = useState(reduce);
+  const finish = () => {
+    clock.value = end;
+    setSettled(true);
+  };
   useEffect(() => {
-    if (!reduce) pool.value = withTiming(added > 0 ? 1 : 0.5, { duration: 1600, easing: EASE });
-  }, [pool, reduce, added]);
-  const poolStyle = useAnimatedStyle(() => ({
-    opacity: pool.value,
-    transform: [{ scale: 0.8 + pool.value * 0.2 }],
-  }));
+    if (reduce) {
+      clock.value = end;
+      setSettled(true);
+      return;
+    }
+    clock.value = withTiming(end, { duration: end, easing: Easing.linear, reduceMotion: ALWAYS });
+    const timer = setTimeout(() => setSettled(true), actionsAt + RISE.ms);
+    return () => clearTimeout(timer);
+  }, [reduce, clock, end, actionsAt]);
 
-  const count = useRollUp(Math.max(0, reviewsToday - added), reviewsToday, reduce ? 0 : 820);
-  const embers = useEmbers(added, reduce);
-
-  const lantern = new Keyframe({
-    0: { opacity: 0, transform: [{ scale: 0.6 }, { translateY: -80 }] },
-    100: { opacity: 1, transform: [{ scale: 1 }, { translateY: 0 }], easing: EASE },
-  }).duration(600);
-  const up = (at: number) =>
-    new Keyframe({
-      0: { opacity: 0, transform: [{ translateY: 10 }] },
-      100: { opacity: 1, transform: [{ translateY: 0 }], easing: EASE },
-    })
-      .duration(360)
-      .delay(at);
+  const heading$ = useRise(clock, AT.heading);
+  const count$ = useRise(clock, AT.count, COUNT_RISE);
+  const label$ = useRise(clock, AT.count + 80);
+  const lights$ = useRise(clock, AT.lights, { ms: 300, y: 0 });
+  const run$ = useRise(clock, AT.run);
+  const forgotten$ = useRise(clock, AT.actions);
+  const done$ = useRise(clock, actionsAt);
 
   return (
-    <View
-      className="flex-1 bg-canvas"
-      style={{ paddingTop: insets.top + 24, paddingBottom: Math.max(insets.bottom, 16) }}
+    <Animated.View
+      // Under reduced motion the whole screen crossfades in with its final numbers in place.
+      entering={reduce ? CROSSFADE : undefined}
+      onTouchStart={settled ? undefined : finish}
+      style={StyleSheet.absoluteFill}
     >
-      <Animated.View
-        pointerEvents="none"
-        className="absolute inset-x-0 top-0 h-[70%]"
+      {/* It scrolls only when the reader's text size outgrows the screen; the light is never clipped at its edge. */}
+      <ScrollView
+        style={styles.unclipped}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingTop: insets.top + 24,
+          paddingBottom: Math.max(insets.bottom, 16),
+        }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View className="flex-1 items-center justify-center gap-6 px-6">
+          <Flight clock={clock} still={reduce}>
+            <LightPool
+              size={END_LANTERN}
+              clock={clock}
+              strength={added > 0 ? 1 : 0.5}
+              still={reduce}
+            />
+            <Lantern size={END_LANTERN} progress={progress} out={out} fed={fed} />
+            <EndEmbers size={END_LANTERN} clock={clock} embers={embers} />
+          </Flight>
+          <View className="items-center gap-2">
+            <Animated.View style={heading$}>
+              <Text className="text-2xl font-medium text-text" accessibilityRole="header">
+                {heading}
+              </Text>
+            </Animated.View>
+            <View accessible accessibilityLabel={`${to} reviews today`} className="items-center">
+              <Animated.View style={count$}>
+                <RollingCount clock={clock} from={from} to={to} rollMs={rollMs} />
+              </Animated.View>
+              <Animated.View style={label$}>
+                <Text className="text-md text-muted">reviews today</Text>
+              </Animated.View>
+            </View>
+          </View>
+          <View className="w-full max-w-[300px] gap-3">
+            <Animated.View style={lights$}>
+              <SevenLights
+                // Finished early, the lights take their final heights at once rather than replaying.
+                key={settled ? "settled" : "playing"}
+                days={week}
+                goal={goal}
+                todayDone={dayDone}
+                sequence={settled ? undefined : AT.lights}
+              />
+            </Animated.View>
+            <Animated.View style={run$}>
+              <Text className="text-center text-base text-text-2">
+                {satisfied
+                  ? `${streak} days in a row`
+                  : `${goal - to} more reviews reach your goal`}
+              </Text>
+            </Animated.View>
+          </View>
+        </View>
+        <View className="gap-3 px-5 pt-6" pointerEvents={settled ? "auto" : "none"}>
+          {forgottenToday > 0 && (
+            <Animated.View style={forgotten$}>
+              <Button
+                label={`Review ${forgottenToday} forgotten ${forgottenToday === 1 ? "card" : "cards"}`}
+                onPress={() => router.replace("/review?round=forgotten")}
+              />
+            </Animated.View>
+          )}
+          <Animated.View style={done$}>
+            <Button label="Done" variant="primary" size="xl" onPress={onClose} />
+          </Animated.View>
+        </View>
+      </ScrollView>
+    </Animated.View>
+  );
+}
+
+/**
+ * The lantern leaves the header for the middle of the screen on a spring, growing to full size on
+ * the way. Under reduced motion it does not travel.
+ */
+function Flight({
+  clock,
+  still,
+  children,
+}: {
+  clock: SharedValue<number>;
+  still: boolean;
+  children: ReactNode;
+}) {
+  const insets = useSafeAreaInsets();
+  const { width } = useWindowDimensions();
+  // The place it lands, read on the UI thread each frame, so a layout that settles late never misplaces the start.
+  const place = useAnimatedRef<Animated.View>();
+  const half = HEADER_LANTERN.size / 2;
+  const fromX = I18nManager.isRTL
+    ? width - HEADER_LANTERN.inset - half
+    : HEADER_LANTERN.inset + half;
+  const fromY = insets.top + HEADER_LANTERN.top + half;
+  const style = useAnimatedStyle(() => {
+    if (still) return { opacity: 1, transform: [] };
+    const at = measure(place);
+    if (!at) return { opacity: 0, transform: [] };
+    const f = springAt(clock.value, LANTERN_FLIGHT);
+    const scale = HEADER_LANTERN.size / END_LANTERN;
+    return {
+      opacity: 1,
+      transform: [
+        { translateX: (fromX - (at.pageX + at.width / 2)) * (1 - f) },
+        { translateY: (fromY - (at.pageY + at.height / 2)) * (1 - f) },
+        { scale: scale + (1 - scale) * f },
+      ],
+    };
+  });
+  return (
+    <Animated.View ref={place} style={{ width: END_LANTERN, height: END_LANTERN }}>
+      <Animated.View style={[StyleSheet.absoluteFill, style]}>{children}</Animated.View>
+    </Animated.View>
+  );
+}
+
+/**
+ * Today's count rolls up from where this review began. The digits are written on the UI thread into a
+ * read-only field over the final number, which holds the width, so the screen never re-renders as they roll.
+ */
+function RollingCount({
+  clock,
+  from,
+  to,
+  rollMs,
+}: {
+  clock: SharedValue<number>;
+  from: number;
+  to: number;
+  rollMs: number;
+}) {
+  const p = usePalette();
+  const { fontScale } = useWindowDimensions();
+  const labels = useMemo(() => {
+    const format = new Intl.NumberFormat();
+    return Array.from({ length: to - from + 1 }, (_, i) => format.format(from + i));
+  }, [from, to]);
+  const fit = fitType(COUNT_SIZE, fontScale);
+  const animated = useAnimatedProps(() => {
+    const t = roll(Math.min(1, Math.max(0, (clock.value - AT.countRoll) / rollMs)));
+    const text = labels[Math.round(t * (labels.length - 1))] ?? "";
+    return { text, defaultValue: text } as Partial<TextInputProps>;
+  });
+  return (
+    <View>
+      <Text
+        className="font-medium"
+        style={[styles.count, { color: "transparent" }]}
+        importantForAccessibility="no"
+      >
+        {labels[labels.length - 1]}
+      </Text>
+      <AnimatedInput
+        editable={false}
+        allowFontScaling={false}
+        accessibilityElementsHidden
+        animatedProps={animated}
+        defaultValue={labels[0]}
+        className="absolute inset-0 font-sans font-medium"
         style={[
+          styles.count,
           {
-            experimental_backgroundImage: `radial-gradient(60% 45% at 50% 34%, ${p.glow}, transparent 100%)`,
-          } as ViewStyle,
-          poolStyle,
+            color: p.text,
+            fontSize: fit.drawn,
+            lineHeight: fit.drawn * 1.2,
+            letterSpacing: fit.letterSpacing,
+            padding: 0,
+            textAlign: "center",
+          },
         ]}
       />
-      <View className="flex-1 items-center justify-center gap-6 px-6">
-        <Animated.View entering={reduce ? FadeIn : lantern}>
-          <Lantern size={168} progress={progress} fed={fed + embers} />
-        </Animated.View>
-        <Animated.View entering={reduce ? FadeIn : up(640)} className="items-center gap-2">
-          <Text className="text-2xl font-medium text-text" accessibilityRole="header">
-            {heading}
-          </Text>
-          <Text
-            className="text-7xl font-medium text-text"
-            style={{ fontVariant: ["tabular-nums"], letterSpacing: -2 }}
-          >
-            {count}
-          </Text>
-          <Text className="text-md text-muted">reviews today</Text>
-        </Animated.View>
-        <Animated.View entering={reduce ? FadeIn : up(1000)} className="w-full max-w-[300px] gap-3">
-          <SevenLights
-            days={week}
-            goal={goal}
-            todayDone={dayDone}
-            sequence={reduce ? undefined : 1180}
-          />
-          <Text className="text-center text-base text-text-2">
-            {satisfied
-              ? `${streak} days in a row`
-              : `${goal - reviewsToday} more reviews reach your goal`}
-          </Text>
-        </Animated.View>
-      </View>
-      <Animated.View entering={reduce ? FadeIn : up(2000)} className="gap-3 px-5">
-        {forgottenToday > 0 && (
-          <Button
-            label={`Review ${forgottenToday} forgotten ${forgottenToday === 1 ? "card" : "cards"}`}
-            onPress={() => router.replace("/review?round=forgotten")}
-          />
-        )}
-        <Button label="Done" variant="primary" size="xl" onPress={onClose} />
-      </Animated.View>
     </View>
   );
 }
 
-/** Today's count rolls up from where the last end left the day. */
-function useRollUp(from: number, to: number, delay: number) {
-  const [n, setN] = useState(delay === 0 ? to : from);
-  useEffect(() => {
-    if (delay === 0) return setN(to);
-    let frame = 0;
-    const start = Date.now() + delay;
-    const tick = () => {
-      const t = Math.min(1, Math.max(0, (Date.now() - start) / 700));
-      setN(Math.round(from + (to - from) * (1 - (1 - t) ** 3)));
-      if (t < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [from, to, delay]);
-  return n;
-}
+/** The count that ends a review, the largest thing on the phone; it keeps a 1.2 line box. */
+const COUNT_SIZE = 80;
 
-/** Embers lift off the flame once, more for more work: 3 for one review, 20 at most. */
-function useEmbers(added: number, reduce: boolean) {
-  const [bursts, setBursts] = useState(0);
-  const total = useMemo(
-    () => (reduce || added === 0 ? 0 : Math.min(7, Math.max(1, Math.round(added / 3)))),
-    [added, reduce],
-  );
-  useEffect(() => {
-    if (total === 0) return;
-    const timers = Array.from({ length: total }, (_, i) =>
-      setTimeout(() => setBursts((b) => b + 1), 280 + i * 220),
-    );
-    return () => timers.forEach(clearTimeout);
-  }, [total]);
-  return bursts;
-}
+const styles = StyleSheet.create({
+  unclipped: { overflow: "visible" },
+  count: { fontSize: COUNT_SIZE, lineHeight: COUNT_SIZE * 1.2, fontVariant: ["tabular-nums"] },
+});

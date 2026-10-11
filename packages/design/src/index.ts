@@ -1,3 +1,4 @@
+export * from "./ending";
 export * from "./flame";
 export * from "./lantern";
 export * from "./lights";

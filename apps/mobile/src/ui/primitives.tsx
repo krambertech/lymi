@@ -6,29 +6,49 @@ import {
   Pressable,
   type PressableProps,
   Text as RNText,
+  StyleSheet,
   type TextProps,
   useColorScheme,
+  useWindowDimensions,
   View,
   type ViewProps,
   type ViewStyle,
 } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  useReducedMotion,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { useResolveClassNames } from "uniwind";
+import { useReduceMotion } from "../theme/motion";
 import { type Palette, usePalette } from "../theme/palette";
+import { fitType } from "../theme/type";
 import { Icon, type IconName } from "./icons";
 
 export { Icon };
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-/** Text in Onest. Size and colour come from the token classes, as on the web. */
-export function Text({ className, ...props }: TextProps & { className?: string }) {
+const STEP = /(?:^|\s)(text-(?:2xs|xs|sm|base|md|lg|[2-7]?xl))(?=\s|$)/;
+
+/**
+ * Text in Onest. Size and colour come from the token classes, as on the web. It follows Dynamic Type
+ * by the size it is set in, and `maxFontSizeMultiplier` can only lower that size's own cap.
+ */
+export function Text({
+  className,
+  style,
+  maxFontSizeMultiplier,
+  ...props
+}: TextProps & { className?: string }) {
+  const step = useResolveClassNames(className?.match(STEP)?.[1] ?? "");
+  const { fontScale } = useWindowDimensions();
+  const size = StyleSheet.flatten(style)?.fontSize ?? step.fontSize ?? 17;
+  const fit = fitType(size, fontScale, maxFontSizeMultiplier ?? undefined);
   return (
-    <RNText className={`font-sans ${className ?? ""}`} maxFontSizeMultiplier={1.6} {...props} />
+    <RNText
+      className={`font-sans ${className ?? ""}`}
+      dynamicTypeRamp={fit.ramp}
+      maxFontSizeMultiplier={fit.cap}
+      style={[{ letterSpacing: fit.letterSpacing }, style]}
+      {...props}
+    />
   );
 }
 
@@ -49,7 +69,7 @@ export function Press({
   style,
   ...props
 }: PressProps) {
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   const s = useSharedValue(1);
   const animated = useAnimatedStyle(() => ({ transform: [{ scale: s.value }] }));
   return (

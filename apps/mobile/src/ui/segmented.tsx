@@ -1,8 +1,8 @@
 import { CHOICE_SLIDE } from "@lymi/design";
 import { useState } from "react";
 import { type LayoutRectangle, View } from "react-native";
-import Animated, { useAnimatedStyle, useReducedMotion, withSpring } from "react-native-reanimated";
-import { spring } from "../theme/motion";
+import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
+import { spring, useReduceMotion } from "../theme/motion";
 import { Press, Text } from "./primitives";
 
 const SLIDE = spring(CHOICE_SLIDE);
@@ -19,7 +19,7 @@ export function Segmented<T extends string>({
   onChange: (v: T) => void;
   label: string;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   const [rects, setRects] = useState<Partial<Record<T, LayoutRectangle>>>({});
   const chosen = rects[value];
   const plate = useAnimatedStyle(() => {
@@ -55,6 +55,8 @@ export function Segmented<T extends string>({
           <Text
             className={`text-md font-medium ${value === o.value ? "text-text" : "text-muted"}`}
             numberOfLines={1}
+            // Options share one row, so a deck's name grows only as far as it still reads whole.
+            maxFontSizeMultiplier={1.3}
           >
             {o.label}
           </Text>

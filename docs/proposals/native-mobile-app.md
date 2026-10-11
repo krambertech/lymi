@@ -21,7 +21,7 @@ Versions checked on 11 October 2026.
 | Framework | Expo SDK 57, React Native 0.86, New Architecture | Capacitor; a WebView shell |
 | Navigation | Expo Router: native stacks, form sheets, `Link.Preview`; our own tab bar | The system tab bar (`NativeTabs`) |
 | Styling | Uniwind (Tailwind v4), class names shared with the web | NativeWind v5, still a release candidate |
-| Motion | Reanimated 4 and Gesture Handler, with Skia for the lantern next | Moti, no longer maintained |
+| Motion | Reanimated 4 and Gesture Handler; React Native Skia draws the lantern, its glow and embers | Moti, no longer maintained |
 | Icons and type | Lucide and Onest, as on the web | SF Symbols and San Francisco |
 | Widgets | `expo-widgets` with `@expo/ui` | `@bacons/apple-targets`, the fallback for full WidgetKit |
 | Data | TanStack Query with an MMKV persister, Better Auth's Expo plugin, Lingui | — |
@@ -83,7 +83,7 @@ Still open: which widget ships (a calm **Lantern** in small and medium, or the *
 4. **Sign-in.** Better Auth's Expo plugin, the `lymi://` scheme as a trusted origin, the session in SecureStore.
 5. **Real data.** Today, Review with the offline outbox, Library and the deck page.
 6. **Phone design system.** Form controls, menus and sheets under the web's names, with an in-app design screen; then Add a word redesigned with them.
-7. **Craft foundations.** Skia for the lantern, keyboard-following inputs, Dynamic Type for Onest.
+7. **Craft foundations.** Skia for the lantern and the end of a review, Dynamic Type for Onest, Reduce Motion followed live. Keyboard-following inputs moved to step 6, with Add a word.
 8. **On a device.** A release build profiled on a real phone, then TestFlight.
 9. **Native features.** The chosen widget, Share to Lymi, then reminders.
 

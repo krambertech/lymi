@@ -7,7 +7,6 @@ import {
   drawableLeft,
   type EndInput,
   type EndScreen,
-  emberCount,
   forgottenRound,
   reviewEnd,
   streakAsOf,
@@ -186,21 +185,6 @@ describe("what the end of a review offers", () => {
         undefined,
       ),
     ).toBe(148);
-  });
-});
-
-describe("embers", () => {
-  it("rise for any review, grow with the share of the goal added, and stop at twice the goal", () => {
-    expect(emberCount(0, 50)).toBe(0);
-    expect(emberCount(1, 50)).toBe(3);
-    expect(emberCount(12.5, 50)).toBe(6);
-    expect(emberCount(25, 50)).toBe(9);
-    expect(emberCount(50, 50)).toBe(14);
-    expect(emberCount(100, 50)).toBe(20);
-    expect(emberCount(400, 50)).toBe(20);
-    for (let n = 1; n < 120; n++) {
-      expect(emberCount(n + 1, 50)).toBeGreaterThanOrEqual(emberCount(n, 50));
-    }
   });
 });
 

@@ -1,6 +1,7 @@
 import { forwardRef, useState } from "react";
 import { TextInput, type TextInputProps, View } from "react-native";
 import { usePalette } from "../theme/palette";
+import { inputCap } from "../theme/type";
 import { Icon, Press, Text } from "./primitives";
 
 interface Props extends Omit<TextInputProps, "style" | "className"> {
@@ -43,6 +44,7 @@ export const Field = forwardRef<TextInput, Props>(function Field(
           accessibilityHint={error ?? hint}
           className="h-full flex-1 px-3.5 font-sans text-text"
           style={{ fontSize: 17 }}
+          maxFontSizeMultiplier={inputCap(17)}
         />
         {secret && (
           <Press

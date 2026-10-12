@@ -1,4 +1,3 @@
-import { isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { Stack } from "expo-router";
 import { usePalette } from "../../../theme/palette";
 import { useStackOptions } from "../../../ui/screen";
@@ -17,10 +16,8 @@ export default function TabStack() {
           presentation: "formSheet",
           sheetAllowedDetents: [1],
           sheetGrabberVisible: true,
-          // Clear, so iOS 26 draws the glass under the screen's own fill; before 26, the sheet colour.
-          contentStyle: {
-            backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
-          },
+          // Opaque at full height, as iOS makes it, so the form's fills keep their contrast.
+          contentStyle: { backgroundColor: p.sheet },
         }}
       />
     </Stack>

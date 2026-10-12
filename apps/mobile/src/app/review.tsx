@@ -69,7 +69,7 @@ import {
 import { endHaptics } from "../review/end-haptics";
 import { Cover, usePullToEnd } from "../review/pull-to-end";
 import { markUndoHintSeen, UndoHint, undoHintSeen } from "../review/undo-hint";
-import { UndoArea, UndoCards, useUndoSwipe } from "../review/undo-swipe";
+import { CardStack, type TopCard, UndoArea, useUndoSwipe } from "../review/undo-swipe";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { type Palette, usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
@@ -369,6 +369,8 @@ function Run({
       stateBefore: repeat ? stateBefore(data, state.log, item.card.id, item.mode) : item.fsrsState,
       ...recallTimes(),
     };
+    // The graded step shows under the next card from the frame it starts to slide in.
+    swipe.arrive();
     const recorded = grade(record);
     if (listed) setListCards((c) => ({ ...c, graded: withKey(c.graded, key) }));
     setLastGraded({ item, grade: record, listed, deckName, forgotten });
@@ -426,38 +428,41 @@ function Run({
           </Animated.View>
         </GestureDetector>
         <UndoArea gesture={swipe.gesture}>
-          <Turn
+          <CardStack
+            swipe={swipe}
             // A forgotten card can come straight back; by position it arrives afresh.
             turn={`${keyOf(current)}:${done}`}
-            item={current}
-            deckName={deckName}
-            forgotten={forgotten}
-            revealed={revealed}
-            still={returned}
-            onReveal={() => {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              setRevealed(true);
-            }}
-            onGrade={onGrade}
-            onUndo={lastGraded ? undo : undefined}
-            swipe={{
-              x: swipe.x,
-              dir: swipe.dir,
-              // A card brought back is already in place; only a new one slides in.
-              arrive: !returned && done > 0,
-              under: lastGraded && (
-                <CardPlate
+            // A card brought back is already in place; only a new one slides in.
+            arrive={!returned && done > 0}
+            under={
+              lastGraded && (
+                <Turn
                   item={lastGraded.item}
                   deckName={lastGraded.deckName}
                   forgotten={lastGraded.forgotten}
                   revealed
                   still
-                  onReveal={undefined}
-                  onUndo={undefined}
                 />
-              ),
-            }}
-          />
+              )
+            }
+          >
+            {(top) => (
+              <Turn
+                top={top}
+                item={current}
+                deckName={deckName}
+                forgotten={forgotten}
+                revealed={revealed}
+                still={returned}
+                onReveal={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  setRevealed(true);
+                }}
+                onGrade={onGrade}
+                onUndo={lastGraded ? undo : undefined}
+              />
+            )}
+          </CardStack>
           {hint && !revealed && <UndoHint />}
         </UndoArea>
       </View>
@@ -465,9 +470,9 @@ function Run({
   );
 }
 
-/** A card and, once it is revealed, its grades under it. */
+/** A card and, once it is revealed, its grades under it: one step of the stack. */
 function Turn({
-  turn,
+  top,
   item,
   deckName,
   forgotten,
@@ -476,50 +481,42 @@ function Turn({
   onReveal,
   onGrade,
   onUndo,
-  swipe,
 }: {
-  /** Which card this is at which point of the review; a new one slides in over the last. */
-  turn: string;
+  /** On the top step, how the card moves; the step underneath stays still. */
+  top?: TopCard;
   item: QueueItem;
   deckName: string | undefined;
   forgotten: boolean;
   revealed: boolean;
-  /** Shown as it already stands, with nothing arriving: a card brought back, or one waiting under. */
+  /** Shown as it already stands, with nothing arriving: a card brought back, or one underneath. */
   still?: boolean;
   onReveal?: () => void;
   onGrade?: (r: Rating) => void;
   onUndo?: (() => void) | undefined;
-  /** The swipe that takes the last grade back moves this card and the graded one, nothing else. */
-  swipe: {
-    x: SharedValue<number>;
-    dir: number;
-    arrive: boolean;
-    under: ReactNode;
-  };
 }) {
+  const card = (
+    <CardPlate
+      item={item}
+      deckName={deckName}
+      forgotten={forgotten}
+      revealed={revealed}
+      still={still}
+      onReveal={onReveal}
+      onUndo={onUndo}
+    />
+  );
   return (
     <>
       <View className="flex-1 px-4 pt-3">
-        <UndoCards
-          x={swipe.x}
-          dir={swipe.dir}
-          turn={turn}
-          arrive={swipe.arrive}
-          under={swipe.under}
-        >
-          <CardPlate
-            item={item}
-            deckName={deckName}
-            forgotten={forgotten}
-            revealed={revealed}
-            still={still}
-            onReveal={onReveal}
-            onUndo={onUndo}
-          />
-        </UndoCards>
+        {top ? (
+          <Animated.View key={top.turn} entering={top.entering} style={{ flex: 1 }}>
+            <Animated.View style={[{ flex: 1 }, top.style]}>{card}</Animated.View>
+          </Animated.View>
+        ) : (
+          card
+        )}
       </View>
-      {/* The grades arrive once a card brought back has landed. */}
-      {revealed && <GradeStrip onGrade={onGrade} />}
+      {revealed && <GradeStrip still={!top} onGrade={onGrade} />}
     </>
   );
 }
@@ -753,7 +750,14 @@ const gradeIn = (i: number) =>
  * Four grades under the card, 80 pt tall and nearly square, in the thumb's reach. Same tap, same
  * weight, whichever is chosen. phone.md "Review".
  */
-function GradeStrip({ onGrade }: { onGrade: ((r: Rating) => void) | undefined }) {
+function GradeStrip({
+  still = false,
+  onGrade,
+}: {
+  /** Underneath, the grades are already in place. */
+  still?: boolean;
+  onGrade: ((r: Rating) => void) | undefined;
+}) {
   const p = usePalette();
   const dark = useColorScheme() === "dark";
   const reduce = useReduceMotion();
@@ -763,7 +767,11 @@ function GradeStrip({ onGrade }: { onGrade: ((r: Rating) => void) | undefined })
       className="flex-row gap-2 px-4 pt-3"
     >
       {GRADES.map((g, i) => (
-        <Animated.View key={g.label} entering={reduce ? CROSSFADE : gradeIn(i)} className="flex-1">
+        <Animated.View
+          key={g.label}
+          entering={still ? undefined : reduce ? CROSSFADE : gradeIn(i)}
+          className="flex-1"
+        >
           <Press
             scale={0.96}
             haptic={false}

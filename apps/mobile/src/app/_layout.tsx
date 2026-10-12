@@ -70,7 +70,8 @@ function Root() {
   }, [replays]);
   const shown = useCallback(() => SplashScreen.hideAsync(), []);
   const done = useCallback(() => setKindling(false), []);
-  const lands = session.isPending && !update ? undefined : signedIn && !update ? "today" : "welcome";
+  const lands =
+    session.isPending && !update ? undefined : signedIn && !update ? "today" : "welcome";
   const giveUp = useCallback(() => {
     void SplashScreen.hideAsync();
     setKindling(false);

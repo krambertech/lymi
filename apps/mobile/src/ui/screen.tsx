@@ -287,6 +287,43 @@ export function BarButton({
   );
 }
 
+/** One of a bar group's buttons; `on` marks one that is narrowing the page, as a chosen filter. */
+export interface BarGroupItem {
+  icon: IconName;
+  /** What pressing does, for VoiceOver. */
+  label: string;
+  on?: boolean;
+  onPress: () => void;
+}
+
+/**
+ * Related bar buttons share one glass capsule, as iOS groups a toolbar's items, so Explore's filter
+ * and search read as one control.
+ */
+export function BarGroup({ items }: { items: BarGroupItem[] }) {
+  const p = usePalette();
+  return (
+    <GlassSurface
+      tint="room"
+      style={{ height: 40, borderRadius: 20, flexDirection: "row", paddingHorizontal: 2 }}
+    >
+      {items.map((item) => (
+        <Press
+          key={item.icon}
+          onPress={item.onPress}
+          accessibilityRole="button"
+          accessibilityLabel={item.label}
+          accessibilityState={{ selected: item.on }}
+          className="h-10 w-11 items-center justify-center"
+        >
+          <Icon name={item.icon} size={19} colour={p.text} strokeWidth={item.on ? 2.5 : 2} />
+          {item.on && <View className="absolute end-2.5 top-2 size-2 rounded-full bg-text" />}
+        </Press>
+      ))}
+    </GlassSurface>
+  );
+}
+
 /**
  * The streak and capture, the two things a tab carries unless it brings its own: Library trades
  * them for search and a plus that also makes decks and series.

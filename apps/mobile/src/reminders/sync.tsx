@@ -4,12 +4,12 @@ import { insightsQuery } from "@lymi/client/queries";
 import { useQuery } from "@tanstack/react-query";
 import * as Notifications from "expo-notifications";
 import { usePathname, useRouter } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AppState } from "react-native";
 import { useMMKVString } from "react-native-mmkv";
 import { dueToday } from "../data/due";
 import { DEVICE_KEYS, deviceStore } from "../data/kept";
-import { useDay, useDecks, useDraw, useGrades, useKeptSince } from "../data/queries";
+import { useDay, useDecks, useDraw, useKeptSince } from "../data/queries";
 import {
   notificationPermission,
   opensReview,
@@ -17,12 +17,10 @@ import {
   schedule,
   snoozedUntil,
 } from "./notifications";
-import { forecastFrom, gradeRevision, planReminders, replans } from "./plan";
+import { forecastFrom, planReminders, replans } from "./plan";
 
 /** The forecast moves with grades and the day; an hour old is close enough for a week ahead. */
 const FORECAST_STALE_MS = 60 * 60 * 1000;
-/** A review grades every few seconds; the forecast only needs where it settled. */
-const GRADES_SETTLE_MS = 20_000;
 
 /**
  * Plans the week's reminders again whenever what they say could change: the time, a grade, the
@@ -41,31 +39,16 @@ export function ReminderSync() {
     ...insightsQuery(30),
     enabled: !!time,
     staleTime: FORECAST_STALE_MS,
-    // A restart can land before the refresh a grade waits for, so each launch asks again.
+    // A restart can cut short the shared refresh a grade waits for, so each launch asks again.
     refetchOnMount: "always",
   });
   const reviewDay = summary?.today.date;
   const zone = useDraw().data?.day.zone ?? deviceTimezone();
   const forecastByDay = forecastFrom(insights.data?.forecast, reviewDay);
   const forecast = forecastByDay && JSON.stringify([...forecastByDay]);
-  // Past the review day's midnight the forecast no longer starts today, so fetch today's; until one
-  // arrives, offline or failing included, the reminders already planned from the last one stay.
+  // Past the review day's midnight the forecast no longer starts today; until the shared refresh
+  // brings today's, offline or failing included, the reminders already planned from it stay.
   const stale = !!insights.data && !!reviewDay && !forecastByDay;
-  const refetch = insights.refetch;
-  useEffect(() => {
-    if (time && stale) void refetch();
-  }, [time, stale, refetch]);
-  // A grade or an Undo moves tomorrow's forecast once the server has it; refresh after it settles.
-  const revision = gradeRevision(useGrades());
-  const seen = useRef(revision);
-  useEffect(() => {
-    if (!time || revision === seen.current) return;
-    const timer = setTimeout(() => {
-      seen.current = revision;
-      void refetch();
-    }, GRADES_SETTLE_MS);
-    return () => clearTimeout(timer);
-  }, [time, revision, refetch]);
   const [front, setFront] = useState(0);
 
   useEffect(() => {

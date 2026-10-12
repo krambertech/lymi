@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DAYS_AHEAD, forecastFrom, gradeRevision, lineFor, planReminders, replans } from "./plan";
+import { DAYS_AHEAD, forecastFrom, lineFor, planReminders, replans } from "./plan";
 
 // The phone's clock in these cases; Node applies a TZ set at run time.
 process.env.TZ = "Europe/Tallinn";
@@ -165,29 +165,6 @@ describe("forecastFrom", () => {
       forecast: forecastFrom(yesterday, today),
     });
     expect(plan).toEqual([]);
-  });
-});
-
-describe("gradeRevision", () => {
-  const graded = { cardId: "a", reviewedAt: "2026-10-12T09:00:00Z" };
-
-  it("leaves out grades still queued offline", () => {
-    expect(gradeRevision([{ ...graded }])).toBe("");
-    expect(gradeRevision([{ ...graded, sentAt: 1 }])).not.toBe("");
-  });
-
-  it("moves when a queued grade lands", () => {
-    const first = { ...graded, sentAt: 1 };
-    const second = { cardId: "b", reviewedAt: "2026-10-12T09:01:00Z" };
-    expect(gradeRevision([first, { ...second, sentAt: 2 }])).not.toBe(
-      gradeRevision([first, second]),
-    );
-  });
-
-  it("moves when an Undo takes back the only grade, down to none", () => {
-    const before = gradeRevision([{ ...graded, sentAt: 1 }]);
-    expect(gradeRevision([{ ...graded, sentAt: 1, undone: true }])).not.toBe(before);
-    expect(gradeRevision([])).not.toBe(before);
   });
 });
 

@@ -92,25 +92,6 @@ export function forecastFrom(
 }
 
 /**
- * What the server has of today's grades: those it took in and those taken back. Tomorrow's
- * forecast moves whenever this does, including an Undo that leaves none, while a grade still
- * queued offline changes nothing until it lands.
- */
-export function gradeRevision(
-  grades: readonly {
-    cardId: string;
-    reviewedAt: string;
-    sentAt?: number | undefined;
-    undone?: boolean | undefined;
-  }[],
-): string {
-  return grades
-    .filter((g) => g.sentAt !== undefined || g.undone)
-    .map((g) => `${g.cardId}@${g.reviewedAt}${g.undone ? "-" : "+"}`)
-    .join(" ");
-}
-
-/**
  * Whether to plan again now. Turning the reminder off always clears it; otherwise the plan waits
  * for today's count and keeps the reminders it has while the forecast is from an earlier day, so a
  * refresh that is offline or fails never leaves fewer than were planned.

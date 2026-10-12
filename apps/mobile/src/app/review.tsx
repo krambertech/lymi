@@ -1,16 +1,25 @@
+import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { apiUrl, type QueueItem } from "@lymi/client/api";
+import { apiUrl, type QueueItem, type ReviewScope } from "@lymi/client/api";
 import { gradeStore } from "@lymi/client/grades";
 import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawableLeft } from "@lymi/client/review-day";
 import { type LocalGrade, reviewItem, stateBefore } from "@lymi/client/review-draw";
-import { countedRating, drawKey, modeKey, type Rating, ROUNDS, type Round } from "@lymi/core";
+import { type EndScreen, forgottenRound, type Offer, reviewEnd } from "@lymi/client/review-end";
+import {
+  countedRating,
+  type Drawn,
+  drawKey,
+  modeKey,
+  type Rating,
+  ROUNDS,
+  type Round,
+} from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
   COUNT_ROLL,
   countRollMs,
   EASE_OUT,
-  emberCount,
   endEmbers,
   LANTERN_FLIGHT,
   REVEAL_GLIDE,
@@ -52,6 +61,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { playHaptics, stopHaptics } from "../../modules/lymi-haptics";
 import { useSessionHeaders } from "../auth/client";
 import { EndEmbers, LightPool } from "../brand/ending";
+import { Flame } from "../brand/flame";
 import { Lantern } from "../brand/lantern";
 import {
   type Standing,
@@ -62,8 +72,8 @@ import {
   useDrawState,
   useGrade,
   useRoundQueue,
-  useRounds,
   useSections,
+  useSeriesList,
   useUndoGrade,
 } from "../data/queries";
 import { endHaptics } from "../review/end-haptics";
@@ -76,6 +86,7 @@ import { fitType } from "../theme/type";
 import type { IconName } from "../ui/icons";
 import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
+import { Skeleton } from "../ui/skeleton";
 
 const EASE = curve(EASE_OUT);
 const GLIDE = REVEAL_GLIDE.duration * 1000;
@@ -88,7 +99,13 @@ type Pinned = { cardId: string; mode: string };
 /** A stretch of review: the draw, which may stop at the goal, or a round's fixed list. ADR 0021. */
 type Leg =
   | { kind: "draw"; date: string; from: number; until: number | null }
-  | { kind: "list"; date: string; size: number };
+  | { kind: "list"; date: string; size: number }
+  | { kind: "forgotten"; date: string; items: Drawn[] };
+/** Today's attempts at the last end screen or when the review opened, and whether the day counted then. */
+interface Mark {
+  attempts: number;
+  satisfied: boolean;
+}
 /** A list's cards by key: graded, sent to the end by a refused grade, or out because the card is gone. */
 interface ListCards {
   graded: ReadonlySet<string>;
@@ -122,16 +139,31 @@ function leftInList(items: readonly QueueItem[], cards: ListCards): QueueItem[] 
 }
 
 export default function Review() {
-  const params = useLocalSearchParams<{ deck?: string; round?: string }>();
+  const params = useLocalSearchParams<{
+    deck?: string;
+    series?: string;
+    section?: string;
+    round?: string;
+  }>();
   const round = ROUNDS.find((r) => r === params.round);
   const deck = params.deck || undefined;
+  // One scope at a time, as on the web: a deck wins over a series, and a section needs its deck.
+  const series = deck ? undefined : params.series || undefined;
+  const section = deck ? params.section || undefined : undefined;
   const router = useRouter();
 
   // Opened from a widget, the review is the only screen, so leaving goes to Today.
   const leave = () => (router.canGoBack() ? router.back() : router.replace("/today"));
 
-  // A review of another deck or round starts over, so nothing from this one carries into it.
-  return <Run key={`${deck ?? ""}:${round ?? ""}`} deck={deck} round={round} onClose={leave} />;
+  // A review of another scope or round starts over, so nothing from this one carries into it.
+  return (
+    <Run
+      key={`${deck ?? ""}:${series ?? ""}:${section ?? ""}:${round ?? ""}`}
+      scope={{ deck, series, section }}
+      round={round}
+      onClose={leave}
+    />
+  );
 }
 
 /**
@@ -139,23 +171,29 @@ export default function Review() {
  * grades, as the web's does (ADR 0019); a round from Today walks the server's list in order.
  */
 function Run({
-  deck,
+  scope: given,
   round,
   onClose,
 }: {
-  deck: string | undefined;
+  scope: ReviewScope;
   round: Round | undefined;
   onClose: () => void;
 }) {
   const qc = useQueryClient();
-  const scope = useMemo(() => ({ deck }), [deck]);
+  const router = useRouter();
+  const { deck, series, section } = given;
+  const scope = useMemo(() => ({ deck, series, section }), [deck, series, section]);
+  const scoped = !!deck || !!series;
   const draw = useDraw(scope);
-  const list = useRoundQueue(round, deck);
-  const { reviewsToday, goal } = useDay();
+  const list = useRoundQueue(round, scope);
+  const { reviewsToday, goal, dayDone } = useDay();
   const grade = useGrade();
   const takeBack = useUndoGrade();
   const { t } = useLingui();
-  const decks = useDecks().data;
+  const decksQuery = useDecks();
+  const decks = decksQuery.data;
+  const seriesList = useSeriesList(!!series);
+  const scopeSections = useSections(section ? deck : undefined);
   const insets = useSafeAreaInsets();
   // A cached draw can predate the last grade, so the first card waits for this mount's fetch.
   const data = draw.isFetchedAfterMount || draw.fetchStatus !== "fetching" ? draw.data : undefined;
@@ -167,6 +205,7 @@ function Run({
   const [chosenLeg, setLeg] = useState<Leg | null>(null);
   const [listCards, setListCards] = useState(NO_LIST_CARDS);
   const [done, setDone] = useState(0);
+  const [mark, setMark] = useState<Mark | null>(null);
   const [revealed, setRevealed] = useState(false);
   // Grades this review has recorded that the server has not answered yet.
   const [sending, setSending] = useState(0);
@@ -199,6 +238,7 @@ function Run({
     if (leg || !data || !state || (round && !listData)) return;
     setListCards(NO_LIST_CARDS);
     const date = state.day.date;
+    setMark({ attempts: state.attempts, satisfied: state.attempts >= data.goal || dayDone });
     setLeg(
       round && listData
         ? { kind: "list", date, size: listData.total }
@@ -206,10 +246,10 @@ function Run({
             kind: "draw",
             date,
             from: state.attempts,
-            until: !deck && state.attempts < data.goal ? data.goal : null,
+            until: !scoped && state.attempts < data.goal ? data.goal : null,
           },
     );
-  }, [leg, data, state, round, listData, deck]);
+  }, [leg, data, state, round, listData, scoped, dayDone]);
 
   const pinnedItem = data && state && pinned ? reviewItem(data, state.log, pinned) : null;
   // Past midnight, yesterday's data does not know yesterday's grades moved the schedule, so a new card waits for today's.
@@ -224,8 +264,17 @@ function Run({
     !!data &&
     !!state &&
     state.attempts >= Math.min(leg.until, data.goal);
-  const listLeft = leg?.kind === "list" ? leftInList(listData?.items ?? [], listCards) : [];
-  const current = !leg ? null : leg.kind === "draw" ? (atStop ? null : drawn) : listLeft[0];
+  const listLeft =
+    leg?.kind === "list"
+      ? leftInList(listData?.items ?? [], listCards)
+      : leg?.kind === "forgotten" && data && state
+        ? leftInList(
+            leg.items.flatMap((d) => reviewItem(data, state.log, d) ?? []),
+            listCards,
+          )
+        : [];
+  const current =
+    !leg || paused ? null : leg.kind === "draw" ? (atStop ? null : drawn) : (listLeft[0] ?? null);
   const recallTimes = useRecallClock(current ? `${keyOf(current)}:${done}` : null, revealed);
 
   // A review starts with one firm tap as its first card arrives.
@@ -248,11 +297,10 @@ function Run({
   }, [hint]);
 
   const ended = paused || (!!leg && !current);
-  // Leaving partway ends on the end screen, as the web does, unless nothing was graded here.
-  const pull = usePullToEnd({
-    onEnd: ended || done === 0 ? onClose : () => setPaused(true),
-    away: ended || done === 0,
-  });
+  // Leaving partway ends on the end screen, as the web does, unless nothing was added since the last one.
+  const added = !!state && !!mark && state.attempts > mark.attempts;
+  const leave = () => (added ? setPaused(true) : onClose());
+  const pull = usePullToEnd({ onEnd: ended || !added ? onClose : leave, away: ended || !added });
 
   /** One step back: the last graded card returns revealed, and its grade leaves the day. */
   const undo = () => {
@@ -299,20 +347,42 @@ function Run({
     if (repin && state?.next) setPinned({ cardId: state.next.cardId, mode: state.next.mode });
   }, [repin, state?.next]);
 
+  // Cards the draw still holds in this scope, the number Today shows.
+  const left = useMemo(
+    () => (data && state ? drawableLeft(data, state, deck) : 0),
+    [data, state, deck],
+  );
   // An empty draw is confirmed by a fetch begun after the last grade, or taken as it is offline.
   const lastChange = Math.max(0, ...grades.map((g) => new Date(g.reviewedAt).getTime()));
   const unreachable = draw.fetchStatus === "paused" || draw.isError;
   const confirmed = !!data && data.fetchedAt >= lastChange;
-  const stopped = !!leg && !current;
+  const exhausted = !!data && !state?.next;
+  const stopped =
+    !!leg &&
+    !!data &&
+    !!state &&
+    !current &&
+    (paused || leg.kind !== "draw" || atStop || exhausted);
+  const ending = paused ? "left" : atStop ? "goal" : "empty";
+  const forgottenItems = useMemo(
+    () => (stopped && data && state ? forgottenRound(data, state, deck) : []),
+    [stopped, data, state, deck],
+  );
+  // An empty draw waits for a fetch begun after the last grade, so the heading never changes once shown.
   const checking =
-    stopped && leg?.kind === "draw" && !atStop && !confirmed && !(unreachable && !draw.isFetching);
+    stopped &&
+    !paused &&
+    (left === 0 || (leg?.kind === "draw" && !atStop)) &&
+    !confirmed &&
+    !(unreachable && !draw.isFetching);
   useEffect(() => {
     if (checking && !unreachable && !draw.isFetching) void draw.refetch();
   }, [checking, unreachable, draw.isFetching, draw.refetch]);
   // The server sends a round a page at a time, so an emptied page asks for the next one.
   const listOwed =
-    stopped &&
-    leg?.kind === "list" &&
+    !!leg &&
+    !current &&
+    leg.kind === "list" &&
     listCards.graded.size + listCards.dropped.size < leg.size &&
     list.fetchStatus === "idle" &&
     !list.isError;
@@ -321,20 +391,130 @@ function Run({
   }, [listOwed, list.refetch]);
   // The end waits for the last grades to land, so a refusal never takes back an end already shown.
   const landing = sending > 0 && !unreachable;
+  // A scoped end names its deck, series or section and weighs the decks outside it, so it waits for them.
+  const decksLoading =
+    (scoped && !decksQuery.isFetchedAfterMount && decksQuery.fetchStatus === "fetching") ||
+    (!!series && !seriesList.data && seriesList.fetchStatus === "fetching") ||
+    (!!section && !scopeSections.data && scopeSections.fetchStatus === "fetching");
+  const scopeSection = section
+    ? scopeSections.data?.sections.find((s) => s.id === section)
+    : undefined;
+  const scopeName = section
+    ? scopeSection?.name
+    : deck
+      ? decks?.find((d) => d.id === deck)?.name
+      : series
+        ? seriesList.data?.find((s) => s.id === series)?.name
+        : undefined;
+  const result =
+    stopped && !checking && !landing && !listOwed && !decksLoading && mark && data && state
+      ? reviewEnd({
+          stretch: leg?.kind !== "draw" ? "list" : scoped ? "scope" : "day",
+          ending,
+          goal: data.goal,
+          from: mark.attempts,
+          attempts: state.attempts,
+          satisfiedBefore: mark.satisfied,
+          left,
+          confirmed,
+          elsewhere: !scoped
+            ? 0
+            : decks && (!section || scopeSection)
+              ? decks
+                  .filter((d) => (series ? d.seriesId !== series : d.id !== deck))
+                  .reduce((n, d) => n + d.due, 0) +
+                // The rest of a section's deck is its other sections.
+                (section && scopeSection
+                  ? Math.max(0, (decks.find((d) => d.id === deck)?.due ?? 0) - scopeSection.due)
+                  : 0)
+              : null,
+          forgotten: forgottenItems.length,
+        })
+      : null;
 
-  if (!leg || (stopped && (checking || landing || listOwed))) {
-    return <Cover style={pull.style} />;
+  /** Past this end screen: the next one reports what changes from here. */
+  const moveOn = () => {
+    if (!state) return;
+    const satisfied =
+      !!mark?.satisfied || (result !== null && result !== "unchecked" && result.satisfied);
+    setMark({ attempts: state.attempts, satisfied });
+    setPaused(false);
+    setPinned(null);
+    setRevealed(false);
+    setLastGraded(null);
+  };
+  const onOffer = (offer: Offer) => {
+    if (!data || !state) return;
+    if (offer.kind === "continue" && offer.to === "resume") {
+      moveOn();
+      return;
+    }
+    // The day's draw is a review without a scope, which starts over from where the day stands.
+    if (offer.kind === "continue" && scoped) {
+      router.replace("/review");
+      return;
+    }
+    const date = state.day.date;
+    moveOn();
+    setListCards(NO_LIST_CARDS);
+    if (offer.kind === "forgotten") setLeg({ kind: "forgotten", date, items: forgottenItems });
+    else
+      setLeg({
+        kind: "draw",
+        date,
+        from: state.attempts,
+        until: state.attempts < data.goal ? data.goal : null,
+      });
+  };
+
+  // Nothing loaded and the fetch failed: say so, rather than wait on a blank screen.
+  const failed =
+    (!data && draw.isError && !draw.isFetching) ||
+    (!!round && !listData && list.isError && !list.isFetching);
+  if (failed) {
+    return (
+      <Cover style={pull.style}>
+        <ReviewError
+          title={t`Couldn’t load your cards`}
+          body={t`Check your connection and try again.`}
+          onRetry={() => void (round ? list.refetch() : draw.refetch())}
+          action={t`Back`}
+          onAction={onClose}
+        />
+      </Cover>
+    );
   }
-  if (!current || !data || !state || paused) {
-    // The count rolls up to today's attempts as this device knows them, from where this review began.
-    const to = state?.attempts ?? reviewsToday;
+  if (!leg || (stopped && !result) || (!current && !stopped)) {
+    return (
+      <Cover style={pull.style}>
+        <ReviewSkeleton />
+      </Cover>
+    );
+  }
+  if (result === "unchecked") {
+    return (
+      <Cover style={pull.style}>
+        <ReviewError
+          title={t`Couldn’t check for more cards`}
+          body={t`Your grades are saved. Check your connection and try again.`}
+          onRetry={() => void draw.refetch()}
+          action={t`Done`}
+          onAction={onClose}
+        />
+      </Cover>
+    );
+  }
+  if (result && mark && state) {
     return (
       <Cover style={pull.style}>
         <Completion
-          from={Math.max(0, to - done)}
-          added={done}
+          screen={result}
+          from={mark.attempts}
+          to={state.attempts}
+          scopeName={scopeName}
+          onOffer={onOffer}
           onClose={onClose}
-          onContinue={paused && current ? () => setPaused(false) : undefined}
+          onAddCards={() => router.push("/capture")}
         />
         <GestureDetector gesture={pull.gesture}>
           <Animated.View
@@ -345,22 +525,24 @@ function Run({
       </Cover>
     );
   }
+  if (!current || !data || !state) return null;
   const { card } = current;
 
   // What the header counts: today's attempts to the goal's stop, and a list's own otherwise.
   const legDone = leg.kind === "draw" ? state.attempts - leg.from : listCards.graded.size;
-  const left = drawableLeft(data, state, deck);
   const total =
     leg.kind === "list"
       ? leg.size - listCards.dropped.size
-      : leg.until !== null
-        ? Math.min(leg.until - leg.from, legDone + left)
-        : legDone + left;
+      : leg.kind === "forgotten"
+        ? leg.items.length - listCards.dropped.size
+        : leg.until !== null
+          ? Math.min(leg.until - leg.from, legDone + left)
+          : legDone + left;
   const lastToday = state.log
     .filter((e) => e.cardId === card.id && e.mode === modeKey(current.mode))
     .pop();
   const deckName = decks?.find((d) => d.id === card.deckId)?.name;
-  const forgotten = round === "forgotten" || lastToday?.rating === 1;
+  const forgotten = round === "forgotten" || leg.kind === "forgotten" || lastToday?.rating === 1;
 
   const onGrade = (rating: Rating) => {
     if (gradedAt.current === done) return;
@@ -373,7 +555,7 @@ function Run({
       (e) => e.cardId === item.card.id && e.mode === modeKey(item.mode),
     );
     const runningShort = state.upcoming.length <= LOOKAHEAD;
-    const listed = leg.kind === "list";
+    const listed = leg.kind !== "draw";
     const record: LocalGrade = {
       cardId: item.card.id,
       mode: item.mode,
@@ -433,11 +615,7 @@ function Run({
       >
         <GestureDetector gesture={pull.gesture}>
           <Animated.View collapsable={false}>
-            <Header
-              done={legDone}
-              total={total}
-              onClose={done > 0 ? () => setPaused(true) : onClose}
-            />
+            <Header done={legDone} total={total} onClose={leave} />
           </Animated.View>
         </GestureDetector>
         <UndoArea gesture={swipe.gesture}>
@@ -482,6 +660,60 @@ function Run({
         </UndoArea>
       </View>
     </Cover>
+  );
+}
+
+/** While the cards load: the card's place held, so the review never opens on a blank room. */
+function ReviewSkeleton() {
+  const insets = useSafeAreaInsets();
+  return (
+    <View
+      className="flex-1 px-4"
+      style={{ paddingTop: insets.top + 64, paddingBottom: Math.max(insets.bottom, 12) }}
+    >
+      <View className="flex-1 gap-4 rounded-2xl border border-edge bg-plate p-6">
+        <Skeleton width="40%" height={14} />
+        <View className="flex-1 justify-center gap-4">
+          <Skeleton width="70%" height={36} />
+          <Skeleton width="45%" height={16} />
+        </View>
+      </View>
+    </View>
+  );
+}
+
+/** A review that cannot go on: what happened, a retry, and a way out. */
+function ReviewError({
+  title,
+  body,
+  onRetry,
+  action,
+  onAction,
+}: {
+  title: string;
+  body: string;
+  onRetry: () => void;
+  action: string;
+  onAction: () => void;
+}) {
+  const { t } = useLingui();
+  const insets = useSafeAreaInsets();
+  return (
+    <View
+      className="flex-1 justify-between px-5"
+      style={{ paddingTop: insets.top + 24, paddingBottom: Math.max(insets.bottom, 16) }}
+    >
+      <View className="flex-1 items-center justify-center gap-3 px-2">
+        <Text className="text-center text-xl font-medium text-text" accessibilityRole="header">
+          {title}
+        </Text>
+        <Text className="text-center text-md text-text-2">{body}</Text>
+      </View>
+      <View className="gap-3">
+        <Button label={action} size="xl" onPress={onAction} />
+        <Button label={t`Try again`} variant="primary" size="xl" onPress={onRetry} />
+      </View>
+    </View>
   );
 }
 
@@ -843,45 +1075,50 @@ function useRise(
 
 /**
  * The one place the interface celebrates: the lantern lit large in a pool of its glow. It plays as one
- * sequence on one clock, and the first tap finishes the clock. motion.md "The end of a review".
+ * sequence on one clock, and the first tap finishes the clock. What it says and offers is the web's
+ * `reviewEnd` (ADR 0021). motion.md "The end of a review".
  */
 function Completion({
+  screen,
   from,
-  added,
+  to,
+  scopeName,
+  onOffer,
   onClose,
-  onContinue,
+  onAddCards,
 }: {
-  /** Today's reviews when this review began, where the count rolls up from. */
+  screen: EndScreen;
+  /** Today's reviews at the last end screen or when the review opened, where the count rolls up from. */
   from: number;
-  added: number;
+  to: number;
+  scopeName: string | undefined;
+  onOffer: (offer: Offer) => void;
   onClose: () => void;
-  /** Left partway: the way back to the card still drawn. */
-  onContinue?: (() => void) | undefined;
+  onAddCards: () => void;
 }) {
   const { t } = useLingui();
-  const { goal, week, streak, dayDone, out, progress, fed } = useDay();
-  const forgottenToday = useRounds().data?.forgotten ?? 0;
-  const router = useRouter();
+  const p = usePalette();
+  const { goal, streak, lights, flame, out, progress, fed } = useDay();
   const insets = useSafeAreaInsets();
   const reduce = useReduceMotion();
-  const to = from + added;
-  const satisfied = to >= goal || dayDone;
-  const heading =
-    to >= goal
-      ? "Daily goal reached"
-      : onContinue
-        ? t`Review done`
-        : dayDone
-          ? "You’re done for today"
-          : "Nothing left here";
+  const counted = screen.heading !== "nothing_due";
+  const heading = {
+    goal_reached: t`Daily goal reached`,
+    day_done: t`You’re done for today`,
+    scope_done: scopeName ? t`Nothing left in ${scopeName}` : t`Nothing left in this deck`,
+    nothing_due: t`Nothing due`,
+    round_done: t`Round done`,
+    review_done: t`Review done`,
+  }[screen.heading];
 
+  const proceed = screen.offers.find((o) => o.kind === "continue");
+  const ways = screen.offers.filter((o) => !(o.kind === "continue" && screen.continueLeads));
   const embers = useMemo(
-    () => (reduce || out ? [] : endEmbers(emberCount(added, goal))),
-    [reduce, out, added, goal],
+    () => (reduce || out ? [] : endEmbers(screen.embers)),
+    [reduce, out, screen.embers],
   );
   const rollMs = countRollMs(from, to);
-  const ways = (forgottenToday > 0 ? 1 : 0) + (onContinue ? 1 : 0);
-  const actionsAt = AT.actions + ways * AT.actionStep;
+  const actionsAt = AT.actions + ways.length * AT.actionStep;
   const end = Math.max(
     actionsAt + RISE.ms,
     AT.countRoll + rollMs,
@@ -897,11 +1134,10 @@ function Completion({
     void stopHaptics();
   };
 
-  const turned = satisfied && from < goal && added > 0;
   useEffect(() => {
-    void playHaptics(endHaptics(embers, turned, reduce));
+    void playHaptics(endHaptics(embers, screen.streak, reduce));
     return () => void stopHaptics();
-  }, [embers, turned, reduce]);
+  }, [embers, screen.streak, reduce]);
   useEffect(() => {
     if (reduce) {
       clock.value = end;
@@ -918,9 +1154,14 @@ function Completion({
   const label$ = useRise(clock, AT.count + 80);
   const lights$ = useRise(clock, AT.lights, { ms: 300, y: 0 });
   const run$ = useRise(clock, AT.run);
-  const continue$ = useRise(clock, AT.actions);
-  const forgotten$ = useRise(clock, AT.actions + (onContinue ? AT.actionStep : 0));
+  const nudge$ = useRise(clock, AT.run + 120);
+  // At most two ways sit above the last row: Continue and Review forgotten.
+  const way$ = [useRise(clock, AT.actions), useRise(clock, AT.actions + AT.actionStep)];
   const done$ = useRise(clock, actionsAt);
+
+  const doneButton = (variant: "primary" | "secondary") => (
+    <Button label={t`Done`} variant={variant} size="xl" onPress={onClose} />
+  );
 
   return (
     <Animated.View
@@ -944,7 +1185,7 @@ function Completion({
             <LightPool
               size={END_LANTERN}
               clock={clock}
-              strength={added > 0 ? 1 : 0.5}
+              strength={to > from ? 1 : 0.5}
               still={reduce}
             />
             <Lantern size={END_LANTERN} progress={progress} out={out} fed={fed} />
@@ -952,55 +1193,105 @@ function Completion({
           </Flight>
           <View className="items-center gap-2">
             <Animated.View style={heading$}>
-              <Text className="text-2xl font-medium text-text" accessibilityRole="header">
+              <Text
+                className="text-center text-2xl font-medium text-text"
+                accessibilityRole="header"
+              >
                 {heading}
               </Text>
             </Animated.View>
-            <View accessible accessibilityLabel={`${to} reviews today`} className="items-center">
+            {counted ? (
+              <View
+                accessible
+                accessibilityLabel={t`${plural(to, { one: "# review today", other: "# reviews today" })}`}
+                className="items-center"
+              >
+                <Animated.View style={count$}>
+                  <RollingCount clock={clock} from={from} to={to} rollMs={rollMs} />
+                </Animated.View>
+                <Animated.View style={label$}>
+                  <Text className="text-md text-muted">
+                    {t`${plural(to, { one: "review today", other: "reviews today" })}`}
+                  </Text>
+                </Animated.View>
+              </View>
+            ) : (
               <Animated.View style={count$}>
-                <RollingCount clock={clock} from={from} to={to} rollMs={rollMs} />
+                <Text className="text-center text-md text-text-2">
+                  {t`Come back later, or add new cards.`}
+                </Text>
               </Animated.View>
-              <Animated.View style={label$}>
-                <Text className="text-md text-muted">reviews today</Text>
-              </Animated.View>
-            </View>
+            )}
           </View>
-          <View className="w-full max-w-[300px] gap-3">
-            <Animated.View style={lights$}>
+          <View className="w-full max-w-[300px] items-center gap-3">
+            <Animated.View style={lights$} className="w-full">
               <SevenLights
                 // Finished early, the lights take their final heights at once rather than replaying.
                 key={settled ? "settled" : "playing"}
-                days={week}
+                days={lights.days}
+                satisfied={lights.satisfied}
+                rest={lights.rest}
+                goals={lights.goals}
                 goal={goal}
-                todayDone={dayDone}
                 sequence={settled ? undefined : AT.lights}
               />
             </Animated.View>
-            <Animated.View style={run$}>
-              <Text className="text-center text-base text-text-2">
-                {satisfied
-                  ? `${streak} days in a row`
-                  : `${goal - to} more reviews reach your goal`}
+            <Animated.View style={run$} className="flex-row items-center gap-2">
+              <Flame height={20} state={flame} />
+              <Text className="text-md font-semibold text-text" style={styles.figures}>
+                {streak}
+              </Text>
+              <Text className="text-md text-text-2">
+                {t`${plural(streak, { one: "day in a row", other: "days in a row" })}`}
               </Text>
             </Animated.View>
+            {/* While Continue leads, what is left of the day sits under its lights. */}
+            {screen.nudge && (
+              <Animated.View style={nudge$}>
+                <Text className="text-center text-base text-muted">
+                  {screen.nudge.kind === "goal"
+                    ? t`${plural(screen.nudge.count, { one: "# more review to your daily goal", other: "# more reviews to your daily goal" })}`
+                    : t`${plural(screen.nudge.count, { one: "# more card and you’re done for today", other: "# more cards and you’re done for today" })}`}
+                </Text>
+              </Animated.View>
+            )}
           </View>
         </View>
+        {/* One shape for every way on, the count said in words; the primary sits last. */}
         <View className="gap-3 px-5 pt-6" pointerEvents={settled ? "auto" : "none"}>
-          {onContinue && (
-            <Animated.View style={continue$}>
-              <Button label={t`Continue`} onPress={onContinue} />
+          {ways.map((way, i) => (
+            <Animated.View key={way.kind} style={way$[i]}>
+              {way.kind === "forgotten" ? (
+                <Button
+                  label={t`${plural(way.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`}
+                  lead={<Icon name="forgot" size={20} colour={p["grade-forgot"]} />}
+                  size="xl"
+                  onPress={() => onOffer(way)}
+                />
+              ) : (
+                <Button label={t`Continue`} size="xl" onPress={() => onOffer(way)} />
+              )}
             </Animated.View>
-          )}
-          {forgottenToday > 0 && (
-            <Animated.View style={forgotten$}>
-              <Button
-                label={`Review ${forgottenToday} forgotten ${forgottenToday === 1 ? "card" : "cards"}`}
-                onPress={() => router.replace("/review?round=forgotten")}
-              />
-            </Animated.View>
-          )}
-          <Animated.View style={done$}>
-            <Button label="Done" variant="primary" size="xl" onPress={onClose} />
+          ))}
+          <Animated.View style={done$} className="gap-3">
+            {!counted ? (
+              <>
+                <Button label={t`Add cards`} variant="primary" size="xl" onPress={onAddCards} />
+                {doneButton("secondary")}
+              </>
+            ) : screen.continueLeads && proceed ? (
+              <>
+                {doneButton("secondary")}
+                <Button
+                  label={t`Continue`}
+                  variant="primary"
+                  size="xl"
+                  onPress={() => onOffer(proceed)}
+                />
+              </>
+            ) : (
+              doneButton("primary")
+            )}
           </Animated.View>
         </View>
       </ScrollView>
@@ -1117,4 +1408,5 @@ const COUNT_SIZE = 80;
 const styles = StyleSheet.create({
   unclipped: { overflow: "visible" },
   count: { fontSize: COUNT_SIZE, lineHeight: COUNT_SIZE * 1.2, fontVariant: ["tabular-nums"] },
+  figures: { fontVariant: ["tabular-nums"] },
 });

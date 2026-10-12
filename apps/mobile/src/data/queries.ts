@@ -13,6 +13,7 @@ import {
   queueQuery,
   roundsQuery,
   sectionsQuery,
+  seriesQuery,
   streakQuery,
 } from "@lymi/client/queries";
 import { streakWith } from "@lymi/client/review-day";
@@ -40,8 +41,10 @@ export const useRounds = () => useQuery(roundsQuery);
 /** What the review draws from, ADR 0019. Unscoped, it also holds today's log for the day's count. */
 export const useDraw = (scope: ReviewScope = {}) => useQuery(drawQuery(scope));
 /** A round from Today is a fixed list the server picks, walked in order. */
-export const useRoundQueue = (round: Round | undefined, deck: string | undefined) =>
-  useQuery({ ...queueQuery({ deck }, round), enabled: !!round });
+export const useRoundQueue = (round: Round | undefined, scope: ReviewScope) =>
+  useQuery({ ...queueQuery(scope, round), enabled: !!round });
+/** The learner's series, to name a series a review is scoped to. */
+export const useSeriesList = (enabled: boolean) => useQuery({ ...seriesQuery, enabled });
 
 const NO_GRADES: never[] = [];
 /** Today's grades from this device, queued or sent, the moment each is made. */

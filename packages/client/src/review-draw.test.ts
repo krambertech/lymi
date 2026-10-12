@@ -174,6 +174,25 @@ describe("reload and a grade taken back elsewhere", () => {
     expect(before.next?.cardId).toBe(grades[grades.length - 1]?.cardId);
   });
 
+  it("forgets a grade taken back on this device, even once the fetched log holds it", () => {
+    const { grades } = play(data(many(12)), 3, () => 3);
+    const last = grades[grades.length - 1] as LocalGrade;
+    const fetched = data(
+      many(12),
+      grades.map((g) => ({
+        cardId: g.cardId,
+        mode: M,
+        rating: g.rating,
+        stateBefore: 2,
+        at: g.reviewedAt,
+      })),
+    );
+    const taken = [...grades.slice(0, -1), { ...last, undone: true }];
+    const state = drawState(fetched, taken, noon, undefined);
+    expect(state.attempts).toBe(2);
+    expect(state.log.map((e) => e.cardId)).not.toContain(last.cardId);
+  });
+
   it("gives the same next card from the same data and grades", () => {
     const d = data(many(12));
     const { grades } = play(d, 6, (id) => (id === "r2" ? 1 : 3));

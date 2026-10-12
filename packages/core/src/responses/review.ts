@@ -152,3 +152,4 @@ export type GradeOut = z.infer<typeof GradeOut>;
 export const UndoOut = z
   .object({ ok: z.literal(true), day: ReviewDayProgress })
   .meta({ id: "UndoResult" });
+export type UndoOut = z.infer<typeof UndoOut>;

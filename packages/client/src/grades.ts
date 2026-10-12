@@ -12,6 +12,8 @@ export interface StoredGrade extends LocalGrade {
   timezone?: string | undefined;
   /** When the server accepted it; absent while the grade is queued. */
   sentAt?: number | undefined;
+  /** The attempt the server recorded, which Undo names. */
+  reviewId?: string | undefined;
 }
 
 /** A grade queued before modes existed names a legacy direction instead. */
@@ -80,9 +82,9 @@ export const gradeStore = {
   snapshot: read,
 };
 
-/** Grades still waiting to reach the server. */
+/** Grades, and grades taken back, still waiting to reach the server. */
 export function outboxSize(): number {
-  return read().filter((g) => g.sentAt === undefined).length;
+  return read().filter((g) => g.sentAt === undefined || g.undone).length;
 }
 
 let chain: Promise<unknown> = Promise.resolve();
@@ -116,7 +118,8 @@ async function send(grade: StoredGrade): Promise<Sent> {
       write(read().filter((g) => !same(g, grade)));
       return "duplicate";
     }
-    write(read().map((g) => (same(g, grade) ? { ...g, sentAt: Date.now() } : g)));
+    const reviewId = result.reviewId ?? undefined;
+    write(read().map((g) => (same(g, grade) ? { ...g, sentAt: Date.now(), reviewId } : g)));
     return "sent";
   } catch (err) {
     if (err instanceof ApiError && err.status === 0) return "offline";
@@ -138,8 +141,9 @@ interface Flushed {
 async function flushQueued(before?: string): Promise<Flushed> {
   const result: Flushed = { sent: 0, offline: false, held: new Set(), refused: [] };
   const cutoff = before ? new Date(before).getTime() : Number.POSITIVE_INFINITY;
+  if ((await settleUndos()) === "offline") result.offline = true;
   for (const grade of read().filter(
-    (g) => g.sentAt === undefined && new Date(g.reviewedAt).getTime() < cutoff,
+    (g) => g.sentAt === undefined && !g.undone && new Date(g.reviewedAt).getTime() < cutoff,
   )) {
     if (result.offline || result.held.has(modeOfGrade(grade))) {
       result.held.add(modeOfGrade(grade));
@@ -185,12 +189,58 @@ export function recordGrade(grade: LocalGrade & { timezone?: string }): Promise<
   });
 }
 
-/** Drops sent grades from before the fetched day; queued ones stay until they land. */
+/** How taking a grade back ended: done, waiting to tell the server, or refused so the grade stands. */
+export type Undone = "undone" | "pending" | "kept";
+
+/**
+ * Tells the server about grades taken back on this device. One never sent is simply dropped; a sent
+ * one is undone by its attempt, and one the server will not undo stands again.
+ */
+async function settleUndos(): Promise<"offline" | undefined> {
+  const forget = (grade: StoredGrade) => write(read().filter((g) => !same(g, grade)));
+  const stand = (grade: StoredGrade) =>
+    write(read().map((g) => (same(g, grade) ? { ...g, undone: undefined } : g)));
+  for (const grade of read().filter((g) => g.undone)) {
+    if (grade.sentAt === undefined) {
+      forget(grade);
+      continue;
+    }
+    // A grade sent before the outbox kept attempts has nothing to name.
+    if (!grade.reviewId) {
+      stand(grade);
+      continue;
+    }
+    try {
+      await api.undoReview(grade.reviewId);
+      forget(grade);
+    } catch (err) {
+      if (!(err instanceof ApiError)) throw err;
+      if (err.status === 0) return "offline";
+      // Refused, such as a later grade of the mode from another device; a lapsed session waits.
+      if (err.status >= 400 && err.status < 500 && err.status !== 401) stand(grade);
+    }
+  }
+}
+
+/**
+ * Takes a grade back. The draw forgets it at once; a grade still queued never leaves the device,
+ * and a sent one is undone on the server now or once the connection returns.
+ */
+export function undoGrade(grade: LocalGrade): Promise<Undone> {
+  write(read().map((g) => (same(g, grade) ? { ...g, undone: true } : g)));
+  return serial(async (): Promise<Undone> => {
+    await settleUndos();
+    const kept = read().find((g) => same(g, grade));
+    return !kept ? "undone" : kept.undone ? "pending" : "kept";
+  });
+}
+
+/** Drops sent grades from before the fetched day; queued ones and undos stay until they land. */
 export function retireGrades(dayStart: string) {
   const start = new Date(dayStart).getTime();
   const current = read();
   const kept = current.filter(
-    (g) => g.sentAt === undefined || new Date(g.reviewedAt).getTime() >= start,
+    (g) => g.sentAt === undefined || g.undone || new Date(g.reviewedAt).getTime() >= start,
   );
   if (kept.length !== current.length) write(kept);
 }

@@ -36,6 +36,8 @@ export interface LocalGrade {
   /** Foreground time before the reveal and before the grade, from `RecallClock`. */
   recallMs?: number | undefined;
   gradeMs?: number | undefined;
+  /** Taken back on this device, so no draw counts it, even once the fetched log holds it. */
+  undone?: boolean | undefined;
 }
 
 export type DrawData = Draw;
@@ -102,10 +104,13 @@ export function drawLog(
     stateBefore: e.stateBefore,
     at: new Date(e.at),
   }));
+  const undone = new Set(
+    grades.filter((g) => g.undone).map((g) => logKey(g.cardId, modeKey(g.mode), g.reviewedAt)),
+  );
   const known = new Set(fetched.map((e) => logKey(e.cardId, e.mode, e.at)));
-  const log = fetched.filter((e) => inDay(e.at));
+  const log = fetched.filter((e) => inDay(e.at) && !undone.has(logKey(e.cardId, e.mode, e.at)));
   const local = grades
-    .filter((g) => !known.has(logKey(g.cardId, modeKey(g.mode), g.reviewedAt)))
+    .filter((g) => !g.undone && !known.has(logKey(g.cardId, modeKey(g.mode), g.reviewedAt)))
     .map((g) => ({ grade: g, at: new Date(g.reviewedAt) }))
     .filter(({ at }) => inDay(at))
     .sort((a, b) => a.at.getTime() - b.at.getTime());

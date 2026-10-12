@@ -105,10 +105,6 @@ One sound, when the daily goal is reached. It follows the silent switch, and You
 
 Liquid Glass suits Lymi: it is a material that holds light, and the lantern is a light. The phone uses it for chrome that floats over content: the tab bar, the top bar's buttons and sheets refract what scrolls beneath them and morph as the learner moves. Tinted amber, glass marks the one standing action, as plain amber marks a press on the web. Where else tinted glass carries Lymi's light is open, to try on a device rather than in mockups. What the learner reads, such as the review card, stays on opaque plates. Reduce Transparency, and iOS before 26, get the web's opaque surfaces. The web keeps its opaque pill.
 
-## Light
-
-The big lantern on Today catches a highlight across its glass as the phone tilts, as iOS 26's own glass does. It is the only tilting thing, and Reduce Motion turns it off.
-
 ## Outside the app
 
 - **Widget:** one widget, two sizes. Small is the lantern with what is due; medium is the Week, the run and seven glasses with the due count. Both open a review. In a tinted or clear Home Screen the lantern has its own one-colour drawing.

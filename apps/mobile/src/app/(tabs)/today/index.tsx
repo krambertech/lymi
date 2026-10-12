@@ -132,14 +132,7 @@ function LitDue({ decks, nothingYet }: { decks: Deck[]; nothingYet: boolean }) {
         }
       />
       <LanternSpot style={{ marginTop: 4 }} flame={flameSize(progress, out)}>
-        <Lantern
-          size={150}
-          progress={progress}
-          out={out}
-          fed={fed}
-          flicker={focused}
-          tilt={focused}
-        />
+        <Lantern size={150} progress={progress} out={out} fed={fed} flicker={focused} />
       </LanternSpot>
       <DueHeading due={due} nothingYet={nothingYet} noDecks={noDecks} deckName={onlyDeck?.name} />
       <View className="self-stretch">

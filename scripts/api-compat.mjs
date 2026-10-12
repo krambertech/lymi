@@ -111,9 +111,11 @@ export function breakingChanges(frozen, next) {
       checkParameters(where, before, after, check, problems);
       const beforeBody = jsonSchema(before.requestBody);
       const afterBody = jsonSchema(after.requestBody);
-      if (afterBody && after.requestBody?.required && !beforeBody) {
+      // An old client may leave out a body its document called optional.
+      if (after.requestBody?.required && !before.requestBody?.required) {
         problems.push(`${where}: now requires a body`);
-      } else if (beforeBody && afterBody) {
+      }
+      if (beforeBody && afterBody) {
         // An old client's request must still be accepted.
         check("request", beforeBody, afterBody, `${where} body`);
       }
@@ -126,8 +128,10 @@ export function breakingChanges(frozen, next) {
         }
         const beforeSchema = jsonSchema(response);
         const afterSchema = jsonSchema(afterResponse);
-        // Every response the new Worker sends must read as the old client expects.
-        if (beforeSchema && afterSchema) {
+        if (beforeSchema && !afterSchema) {
+          problems.push(`${where}: ${status} no longer declares the JSON body the client reads`);
+        } else if (beforeSchema && afterSchema) {
+          // Every response the new Worker sends must read as the old client expects.
           check("response", afterSchema, beforeSchema, `${where} ${status}`);
         }
       }

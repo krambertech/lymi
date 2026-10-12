@@ -124,11 +124,12 @@ export function Select<T extends string>({
     : options;
   const rows = (
     <SheetGroup>
-      {shown.map((o) => (
+      {shown.map((o, i) => (
         <SheetRow
           key={o.value}
           label={o.label}
           chosen={o.value === value}
+          active={!!needle && i === 0}
           onPress={() => menu.choose(() => o.value !== value && onChange(o.value))}
         />
       ))}

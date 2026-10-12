@@ -38,7 +38,8 @@ function useFigures(data: InsightsOut, period: Period, onPeriod: (p: Period) => 
   const { t, i18n } = useLingui();
   const pct = (v: number) => i18n.number(v, { style: "percent" });
   const { recall, consistency, cards, forecast } = data;
-  const monthly = period === "0";
+  // Read from the data, not the period: the last period's series shows while the next one loads.
+  const monthly = recall.series[0]?.at.length === 7;
   const trend = recall.series.map((pt) => {
     const start = asDate(monthly ? `${pt.at}-01` : pt.at);
     return {

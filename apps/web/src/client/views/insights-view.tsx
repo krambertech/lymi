@@ -185,7 +185,8 @@ export function InsightsView({
   }
 
   const graded = recall.passed + recall.failed;
-  const monthly = period === "0";
+  // Read from the data, not the period: the last period's series shows while the next one loads.
+  const monthly = recall.series[0]?.at.length === 7;
   const trend = recall.series.map((p) => {
     const start = parseLocal(monthly ? `${p.at}-01` : p.at);
     return {

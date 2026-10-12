@@ -18,9 +18,12 @@ describe("moveBack", () => {
     expect(moveBack(null, before)).toEqual({ kind: "move", seriesId: null });
   });
 
-  it("knows no way back while the old series is not loaded or not in the list", () => {
-    expect(moveBack("gone", before)).toBeUndefined();
+  it("knows no way back while the list has not loaded", () => {
     expect(moveBack("a", undefined)).toBeUndefined();
+  });
+
+  it("moves back by id when the loaded list no longer holds the old series", () => {
+    expect(moveBack("gone", before)).toEqual({ kind: "move", seriesId: "gone" });
   });
 
   it("needs no list for a deck that had no series", () => {

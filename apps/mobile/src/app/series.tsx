@@ -57,7 +57,7 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
   // From a deck, Undo needs the deck's place in its old series, so saving waits for it.
   const back = moving ? moveBack(moving.seriesId, listQuery.data) : undefined;
   const waiting = !!deck && !back;
-  // Not loading and still no place: the read failed, or the list no longer holds the old series.
+  // Not loading and still no place: the read failed.
   const stuck = waiting && !listQuery.isPending && !listQuery.isFetching;
 
   const submit = () => {

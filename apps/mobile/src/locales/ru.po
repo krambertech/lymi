@@ -87,6 +87,9 @@ msgstr "{due, plural, one {карточка к повторению сегодн
 msgid "{due, plural, one {card to review} other {cards to review}}"
 msgstr "{due, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}}"
 
+msgid "{label}, locked"
+msgstr "{label}, заблокировано"
+
 msgid "{label}, next in {schedules}"
 msgstr "{label}, дальше через {schedules}"
 
@@ -120,8 +123,14 @@ msgstr "День отдыха сохраняет дни подряд, когда
 msgid "A sentence that uses it"
 msgstr "Предложение, где оно встречается"
 
+msgid "A short phrase that helps you remember it"
+msgstr "Короткая фраза, которая поможет запомнить"
+
 msgid "A short phrase that helps you remember it."
 msgstr "Короткая фраза, которая поможет запомнить."
+
+msgid "A sound-alike, or something to picture"
+msgstr "Созвучное слово или то, что можно представить"
 
 msgid "A word or phrase"
 msgstr "Слово или фраза"
@@ -144,6 +153,9 @@ msgstr "Добавь карточки с последнего урока, а п�
 msgid "Add cards from your next lesson"
 msgstr "Добавь карточки из следующего урока"
 
+msgid "Add hook"
+msgstr "Добавить зацепку"
+
 msgid "Add to {deckName}"
 msgstr "Добавить в {deckName}"
 
@@ -161,6 +173,9 @@ msgstr "«{term}» добавлено. Карточка сохранена на 
 
 msgid "AI"
 msgstr "AI"
+
+msgid "AI draft · Save keeps it"
+msgstr "Черновик AI · «Сохранить» оставит его"
 
 msgid "AI example"
 msgstr "Пример от AI"
@@ -212,6 +227,9 @@ msgstr "Ошибка"
 
 msgid "Cancel"
 msgstr "Отмена"
+
+msgid "Card options"
+msgstr "Параметры карточки"
 
 msgid "Change daily goal"
 msgstr "Изменить дневную цель"
@@ -282,8 +300,14 @@ msgstr "Не удалось связаться с Lymi. Проверь соед�
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Не удалось связаться с сервисом входа. Проверь соединение и попробуй снова."
 
+msgid "Couldn’t save that."
+msgstr "Не удалось сохранить."
+
 msgid "Couldn’t save the goal. Try again."
 msgstr "Не удалось сохранить цель. Попробуй ещё раз."
+
+msgid "Couldn’t save the hook."
+msgstr "Не удалось сохранить зацепку."
 
 msgid "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
 msgstr "Не удалось сохранить оценку для «{term}». Этой карточки больше нет в твоих колодах."
@@ -360,8 +384,14 @@ msgstr "Не используй адрес почты в пароле."
 msgid "Done"
 msgstr "Готово"
 
+msgid "Drafting a hook…"
+msgstr "Готовим зацепку…"
+
 msgid "Easy"
 msgstr "Легко"
+
+msgid "Edit hook"
+msgstr "Изменить зацепку"
 
 msgid "Edit your name and photo"
 msgstr "Изменить имя и фото"
@@ -527,6 +557,9 @@ msgstr "Lymi бесплатный."
 msgid "Make one for each course or topic."
 msgstr "Создай колоду для каждого курса или темы."
 
+msgid "Mark important"
+msgstr "Отметить важной"
+
 msgid "Meaning"
 msgstr "Значение"
 
@@ -538,6 +571,9 @@ msgstr "Значение с урока"
 
 msgid "Memory hook"
 msgstr "Зацепка"
+
+msgid "Memory hook: {text}"
+msgstr "Зацепка: {text}"
 
 msgid "Message"
 msgstr "Сообщение"
@@ -633,6 +669,9 @@ msgstr "Другое"
 
 msgid "Password"
 msgstr "Пароль"
+
+msgid "Peek at your hook"
+msgstr "Заглянуть в зацепку"
 
 msgid "Picture"
 msgstr "Изображение"
@@ -763,6 +802,9 @@ msgstr "Настройки"
 msgid "Settings is coming to the phone"
 msgstr "Настройки скоро появятся на телефоне"
 
+msgid "Show hook"
+msgstr "Показать зацепку"
+
 msgid "Show password"
 msgstr "Показать пароль"
 
@@ -878,11 +920,17 @@ msgstr "Слишком много попыток. Попробуй чуть по
 msgid "Too many tries with this code. Send a new one."
 msgstr "Слишком много попыток с этим кодом. Отправь новый."
 
+msgid "Try a memory hook"
+msgstr "Попробуй зацепку"
+
 msgid "Try again"
 msgstr "Попробовать ещё раз"
 
 msgid "Undo"
 msgstr "Отменить действие"
+
+msgid "Unmark important"
+msgstr "Снять отметку «важная»"
 
 msgid "Until then, change your settings on the web."
 msgstr "А пока изменить настройки можно в веб-версии."
@@ -920,6 +968,9 @@ msgstr "О чём это"
 msgid "Where you met it, such as a lesson"
 msgstr "Откуда это, например урок"
 
+msgid "Write a hook."
+msgstr "Напиши зацепку."
+
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, что хочешь рассказать Lymi."
 
@@ -934,6 +985,9 @@ msgstr "Ты"
 
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "Можно отправлять не больше {FEEDBACK_DAILY_LIMIT} сообщений в день. Попробуй завтра."
+
+msgid "You can’t choose Easy after peeking at your hook."
+msgstr "После того как заглянешь в зацепку, «Легко» выбрать нельзя."
 
 msgid "You wrote this"
 msgstr "Это написано тобой"

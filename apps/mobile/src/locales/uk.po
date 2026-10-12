@@ -87,6 +87,9 @@ msgstr "{due, plural, one {картка до повторення сьогодн
 msgid "{due, plural, one {card to review} other {cards to review}}"
 msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
+msgid "{label}, locked"
+msgstr "{label}, заблоковано"
+
 msgid "{label}, next in {schedules}"
 msgstr "{label}, далі через {schedules}"
 
@@ -120,8 +123,14 @@ msgstr "День відпочинку зберігає дні поспіль, к
 msgid "A sentence that uses it"
 msgstr "Речення, де воно трапляється"
 
+msgid "A short phrase that helps you remember it"
+msgstr "Коротка фраза, що допоможе запам’ятати"
+
 msgid "A short phrase that helps you remember it."
 msgstr "Коротка фраза, що допоможе запам’ятати."
+
+msgid "A sound-alike, or something to picture"
+msgstr "Співзвучне слово або те, що можна уявити"
 
 msgid "A word or phrase"
 msgstr "Слово чи фраза"
@@ -144,6 +153,9 @@ msgstr "Додай картки з останнього уроку, а поті�
 msgid "Add cards from your next lesson"
 msgstr "Додай картки з наступного уроку"
 
+msgid "Add hook"
+msgstr "Додати зачіпку"
+
 msgid "Add to {deckName}"
 msgstr "Додати до {deckName}"
 
@@ -161,6 +173,9 @@ msgstr "«{term}» додано. Картка збережена на цьому
 
 msgid "AI"
 msgstr "AI"
+
+msgid "AI draft · Save keeps it"
+msgstr "Чернетка AI · «Зберегти» залишить її"
 
 msgid "AI example"
 msgstr "Приклад від AI"
@@ -212,6 +227,9 @@ msgstr "Помилка"
 
 msgid "Cancel"
 msgstr "Скасувати"
+
+msgid "Card options"
+msgstr "Параметри картки"
 
 msgid "Change daily goal"
 msgstr "Змінити денну мету"
@@ -282,8 +300,14 @@ msgstr "Не вдалося зв’язатися з Lymi. Перевір з’�
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Не вдалося зв’язатися із сервісом входу. Перевір з’єднання й повтори спробу."
 
+msgid "Couldn’t save that."
+msgstr "Не вдалося зберегти."
+
 msgid "Couldn’t save the goal. Try again."
 msgstr "Не вдалося зберегти мету. Спробуй ще раз."
+
+msgid "Couldn’t save the hook."
+msgstr "Не вдалося зберегти зачіпку."
 
 msgid "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
 msgstr "Не вдалося зберегти оцінку для «{term}». Цієї картки більше немає у твоїх колодах."
@@ -360,8 +384,14 @@ msgstr "Не використовуй адресу пошти в паролі."
 msgid "Done"
 msgstr "Готово"
 
+msgid "Drafting a hook…"
+msgstr "Готуємо зачіпку…"
+
 msgid "Easy"
 msgstr "Легко"
+
+msgid "Edit hook"
+msgstr "Змінити зачіпку"
 
 msgid "Edit your name and photo"
 msgstr "Змінити ім’я та фото"
@@ -527,6 +557,9 @@ msgstr "Lymi безкоштовний."
 msgid "Make one for each course or topic."
 msgstr "Створи колоду для кожного курсу чи теми."
 
+msgid "Mark important"
+msgstr "Позначити важливою"
+
 msgid "Meaning"
 msgstr "Значення"
 
@@ -538,6 +571,9 @@ msgstr "Значення з уроку"
 
 msgid "Memory hook"
 msgstr "Зачіпка"
+
+msgid "Memory hook: {text}"
+msgstr "Зачіпка: {text}"
 
 msgid "Message"
 msgstr "Повідомлення"
@@ -633,6 +669,9 @@ msgstr "Інше"
 
 msgid "Password"
 msgstr "Пароль"
+
+msgid "Peek at your hook"
+msgstr "Підглянути зачіпку"
 
 msgid "Picture"
 msgstr "Зображення"
@@ -763,6 +802,9 @@ msgstr "Налаштування"
 msgid "Settings is coming to the phone"
 msgstr "Налаштування скоро будуть на телефоні"
 
+msgid "Show hook"
+msgstr "Показати зачіпку"
+
 msgid "Show password"
 msgstr "Показати пароль"
 
@@ -878,11 +920,17 @@ msgstr "Забагато спроб. Спробуй трохи згодом."
 msgid "Too many tries with this code. Send a new one."
 msgstr "Забагато спроб із цим кодом. Надішли новий."
 
+msgid "Try a memory hook"
+msgstr "Спробуй зачіпку"
+
 msgid "Try again"
 msgstr "Спробувати ще раз"
 
 msgid "Undo"
 msgstr "Скасувати дію"
+
+msgid "Unmark important"
+msgstr "Зняти позначку «важлива»"
 
 msgid "Until then, change your settings on the web."
 msgstr "А поки змінити налаштування можна у вебверсії."
@@ -920,6 +968,9 @@ msgstr "Про що це"
 msgid "Where you met it, such as a lesson"
 msgstr "Звідки це, наприклад урок"
 
+msgid "Write a hook."
+msgstr "Напиши зачіпку."
+
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, що хочеш розповісти Lymi."
 
@@ -934,6 +985,9 @@ msgstr "Ти"
 
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "На день можна надіслати {FEEDBACK_DAILY_LIMIT} повідомлень. Спробуй завтра."
+
+msgid "You can’t choose Easy after peeking at your hook."
+msgstr "Після того як підглянеш зачіпку, «Легко» вибрати не можна."
 
 msgid "You wrote this"
 msgstr "Це написано тобою"

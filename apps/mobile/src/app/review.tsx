@@ -2,14 +2,18 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { apiUrl, type QueueItem, type ReviewScope } from "@lymi/client/api";
 import { gradeStore } from "@lymi/client/grades";
+import { hookDraftQuery } from "@lymi/client/queries";
 import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawableLeft } from "@lymi/client/review-day";
 import { type LocalGrade, reviewItem, stateBefore } from "@lymi/client/review-draw";
 import { type EndScreen, forgottenRound, type Offer, reviewEnd } from "@lymi/client/review-end";
+import { writes } from "@lymi/client/writes";
 import {
   countedRating,
   type Drawn,
   drawKey,
+  type FieldSource,
+  gradeAllowed,
   interval,
   modeKey,
   type Rating,
@@ -30,6 +34,7 @@ import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
+  AccessibilityInfo,
   Alert,
   I18nManager,
   Image,
@@ -46,6 +51,7 @@ import {
 import { GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   Easing,
+  FadeIn,
   FadeOut,
   Keyframe,
   LinearTransition,
@@ -76,6 +82,7 @@ import {
 } from "../data/queries";
 import { CardNotes } from "../review/card-notes";
 import { endHaptics } from "../review/end-haptics";
+import { HookLine, HookOffer, HookSheet, PeekButton, ShowHookButton } from "../review/hooks";
 import { modeLabel } from "../review/modes";
 import { PronounceButton, type Pronunciation, usePronunciation } from "../review/pronounce";
 import { Cover, usePullToEnd } from "../review/pull-to-end";
@@ -90,6 +97,7 @@ import { AiCardChip, Chip, StateChip } from "../ui/chip";
 import { GRADES } from "../ui/grade";
 import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
+import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { Skeleton } from "../ui/skeleton";
 
 const EASE = curve(EASE_OUT);
@@ -119,6 +127,10 @@ interface ListCards {
 const NO_LIST_CARDS: ListCards = { graded: new Set(), returned: new Set(), dropped: new Set() };
 /** The deck a card came from, named first on the card. A review can mix every deck. */
 type CardDeck = { name: string; language?: string | null | undefined } | undefined;
+/** A card's memory hook as review shows it: its words and who wrote them. */
+type Hook = { text: string; source: FieldSource | null };
+/** A tap this soon after the reveal is the reveal's own tap doubled, not one for the menu. */
+const REVEAL_TAP_GUARD_MS = 400;
 /** The last grade and the card as it was shown, so a swipe from the start edge can bring both back. */
 interface Graded {
   item: QueueItem;
@@ -126,6 +138,8 @@ interface Graded {
   listed: boolean;
   deck: CardDeck;
   forgotten: boolean;
+  /** The hook as it showed under the cue at the grade, or nothing when it was not showing. */
+  hook: Hook | null;
 }
 
 const keyOf = (item: Pick<QueueItem, "card" | "mode">) => drawKey(item.card.id, modeKey(item.mode));
@@ -223,6 +237,21 @@ function Run({
   // A card a swipe brought back arrives revealed, with nothing left to play.
   const [returned, setReturned] = useState(false);
   const [hint, setHint] = useState(false);
+  // How far into the card's hook the learner went, held for the card on screen: a peek before the
+  // reveal is help with recall, and a look after it is not.
+  const [aidState, setAidState] = useState({ key: "", peeked: false, shown: false });
+  // Whether the card on screen offers a hook, decided as it arrives and held until its grade.
+  const [cardOffer, setCardOffer] = useState({ key: "", offer: false, parked: false });
+  // Presses of Easy after a peek, counted per card so an earlier card's never show its tip.
+  const [locked, setLocked] = useState({ key: "", presses: 0 });
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [hookOpen, setHookOpen] = useState(false);
+  // What the menu chose, run once its sheet has gone, so nothing moves under it.
+  const chosen = useRef<(() => void) | null>(null);
+  // Hooks and marks set in this review, shown at once rather than when the draw is fetched again.
+  const [hooks, setHooks] = useState<ReadonlyMap<string, Hook>>(() => new Map());
+  const [marks, setMarks] = useState<ReadonlyMap<string, boolean>>(() => new Map());
+  const revealedAt = useRef(0);
   // Grades taken back, by when they were made, whose answers from the server no longer apply.
   const undone = useRef(new Set<string>());
   const started = useRef(false);
@@ -322,6 +351,11 @@ function Run({
       setListCards((c) => ({ ...c, graded: withoutKey(c.graded, key) }));
     }
     setPinned({ cardId: last.item.card.id, mode: modeKey(last.item.mode) });
+    setAidState({
+      key: `${keyOf(last.item)}:${done - 1}`,
+      peeked: last.grade.aid === "hook",
+      shown: !!last.hook,
+    });
     setReturned(true);
     setRevealed(true);
     setDone((n) => n - 1);
@@ -551,8 +585,56 @@ function Run({
   const deckRow = decks?.find((d) => d.id === card.deckId);
   const cardDeck = deckRow && { name: deckRow.name, language: deckRow.defaultLanguage ?? null };
   const forgotten = round === "forgotten" || leg.kind === "forgotten" || lastToday?.rating === 1;
+  const showing = `${keyOf(current)}:${done}`;
+  const hook: Hook | null =
+    hooks.get(card.id) ?? (card.hook ? { text: card.hook, source: card.hookSource ?? null } : null);
+  const peeked = aidState.key === showing && aidState.peeked;
+  const hookShown = !!hook && aidState.key === showing && (aidState.peeked || aidState.shown);
+  const owned = deckRow?.role === "owner";
+  const important = marks.get(card.id) ?? card.important;
+  // A card often forgotten, or forgotten twice today, with no hook offers one in a deck the learner
+  // owns. It waits for the card's deck, and once decided it holds, so a refetch never moves it mid-card.
+  if (cardOffer.key !== showing && deckRow) {
+    const forgotToday = state.log.filter(
+      (e) => e.cardId === card.id && e.mode === modeKey(current.mode) && e.rating === 1,
+    ).length;
+    setCardOffer({
+      key: showing,
+      offer: (current.slipping || forgotToday >= 2) && !hook && owned,
+      parked: false,
+    });
+  }
+  const offer = cardOffer.key === showing && cardOffer.offer && !cardOffer.parked;
+  // The AI's draft takes seconds, so it starts as soon as writing a hook is one tap away.
+  const prefetchDraft = () => {
+    if (owned && !hook) void qc.prefetchQuery(hookDraftQuery(card));
+  };
+  const openHook = () => {
+    setHookOpen(true);
+    setCardOffer((held) => ({ ...held, parked: true }));
+  };
+  const markImportant = async (value: boolean) => {
+    setMarks((m) => new Map(m).set(card.id, value));
+    try {
+      await writes.setImportant(card, value);
+    } catch (e) {
+      setMarks((m) => new Map(m).set(card.id, !value));
+      Alert.alert(t`Couldn’t save that.`, e instanceof Error ? e.message : undefined);
+    }
+  };
+  const openMenu = () => {
+    if (performance.now() - revealedAt.current < REVEAL_TAP_GUARD_MS) return;
+    prefetchDraft();
+    setMenuOpen(true);
+  };
 
   const onGrade = (rating: Rating) => {
+    // Easy means recall without help, so after a peek it only says why, and grades nothing.
+    if (!gradeAllowed(rating, peeked ? "hook" : undefined)) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+      setLocked((l) => ({ key: showing, presses: l.key === showing ? l.presses + 1 : 1 }));
+      return;
+    }
     if (gradedAt.current === done) return;
     gradedAt.current = done;
     // Every grade is the same small tap: Forgot feeds the flame exactly as Easy does.
@@ -570,13 +652,21 @@ function Run({
       rating: countedRating(rating, repeat),
       reviewedAt: new Date().toISOString(),
       stateBefore: repeat ? stateBefore(data, state.log, item.card.id, item.mode) : item.fsrsState,
+      ...(peeked ? { aid: "hook" as const } : {}),
       ...recallTimes(),
     };
     // The graded step shows under the next card from the frame it starts to slide in.
     swipe.arrive();
     const recorded = grade(record);
     if (listed) setListCards((c) => ({ ...c, graded: withKey(c.graded, key) }));
-    setLastGraded({ item, grade: record, listed, deck: cardDeck, forgotten });
+    setLastGraded({
+      item,
+      grade: record,
+      listed,
+      deck: cardDeck,
+      forgotten,
+      hook: hookShown ? hook : null,
+    });
     setReturned(false);
     setHint(false);
     setSending((n) => n + 1);
@@ -642,6 +732,9 @@ function Run({
                   item={lastGraded.item}
                   deck={lastGraded.deck}
                   forgotten={lastGraded.forgotten}
+                  hook={lastGraded.hook}
+                  hookShown={!!lastGraded.hook}
+                  easyLocked={lastGraded.grade.aid === "hook"}
                   revealed
                   still
                 />
@@ -654,12 +747,28 @@ function Run({
                 item={current}
                 deck={cardDeck}
                 forgotten={forgotten}
+                hook={hook}
+                hookShown={hookShown}
                 revealed={revealed}
                 still={returned}
                 onReveal={() => {
                   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  revealedAt.current = performance.now();
                   setRevealed(true);
                 }}
+                onPeek={() => {
+                  Haptics.selectionAsync();
+                  setAidState({ key: showing, peeked: true, shown: false });
+                }}
+                onShowHook={() => setAidState({ key: showing, peeked: false, shown: true })}
+                offer={offer && revealed}
+                onOffer={() => {
+                  prefetchDraft();
+                  openHook();
+                }}
+                onMenu={openMenu}
+                easyLocked={peeked}
+                lockedTip={locked.key === showing ? locked.presses : 0}
                 onGrade={onGrade}
                 onUndo={lastGraded ? undo : undefined}
                 pronounce={pronounce}
@@ -669,6 +778,50 @@ function Run({
           {hint && !revealed && <UndoHint />}
         </UndoArea>
       </View>
+      {/* The card's menu, after the reveal: a tap on the card, never a primary action of review. */}
+      <Sheet
+        title={card.term}
+        open={menuOpen}
+        onOpenChange={setMenuOpen}
+        onDismiss={() => {
+          chosen.current?.();
+          chosen.current = null;
+        }}
+      >
+        <SheetGroup>
+          {owned && (
+            <SheetRow
+              icon="hook"
+              label={hook ? t`Edit hook` : t`Add hook`}
+              onPress={() => {
+                chosen.current = openHook;
+                setMenuOpen(false);
+              }}
+            />
+          )}
+          <SheetRow
+            icon="important"
+            label={important ? t`Unmark important` : t`Mark important`}
+            onPress={() => {
+              chosen.current = () => void markImportant(!important);
+              setMenuOpen(false);
+            }}
+          />
+        </SheetGroup>
+      </Sheet>
+      <HookSheet
+        card={{ ...card, hook: hook?.text ?? null, hookSource: hook?.source ?? null }}
+        open={hookOpen}
+        onClose={() => setHookOpen(false)}
+        onSaved={(saved) => {
+          setHooks((m) => new Map(m).set(card.id, saved));
+          setHookOpen(false);
+          // Written after the reveal, it shows at once where Show hook would have put it.
+          if (revealed) setAidState({ key: showing, peeked, shown: true });
+          void qc.invalidateQueries({ queryKey: ["queue"] });
+          void qc.invalidateQueries({ queryKey: ["decks"] });
+        }}
+      />
     </Cover>
   );
 }
@@ -733,9 +886,18 @@ function Turn({
   item,
   deck,
   forgotten,
+  hook,
+  hookShown,
   revealed,
   still = false,
   onReveal,
+  onPeek,
+  onShowHook,
+  offer = false,
+  onOffer,
+  onMenu,
+  easyLocked = false,
+  lockedTip = 0,
   onGrade,
   onUndo,
   pronounce,
@@ -745,10 +907,23 @@ function Turn({
   item: QueueItem;
   deck: CardDeck;
   forgotten: boolean;
+  hook: Hook | null;
+  /** The hook shows under the cue: peeked at before the reveal, or shown after it. */
+  hookShown: boolean;
   revealed: boolean;
   /** Shown as it already stands, with nothing arriving: a card brought back, or one underneath. */
   still?: boolean;
   onReveal?: () => void;
+  onPeek?: () => void;
+  onShowHook?: () => void;
+  /** The offer to write a hook, at the foot of the revealed card. */
+  offer?: boolean;
+  onOffer?: () => void;
+  onMenu?: () => void;
+  /** Peeked at the hook before the reveal, so Easy cannot be chosen. */
+  easyLocked?: boolean;
+  /** Presses of Easy after a peek on this card, each showing why it is locked. */
+  lockedTip?: number;
   onGrade?: (r: Rating) => void;
   onUndo?: (() => void) | undefined;
   pronounce?: Pronunciation | null;
@@ -759,9 +934,16 @@ function Turn({
       item={item}
       deck={deck}
       forgotten={forgotten}
+      hook={hook}
+      hookShown={hookShown}
       revealed={revealed}
       still={still}
       onReveal={onReveal}
+      onPeek={onPeek}
+      onShowHook={onShowHook}
+      offer={offer}
+      onOffer={onOffer}
+      onMenu={onMenu}
       onUndo={onUndo}
     />
   );
@@ -776,7 +958,15 @@ function Turn({
           card
         )}
       </View>
-      {revealed && <GradeStrip still={!top} next={item.next} onGrade={onGrade} />}
+      {revealed && (
+        <GradeStrip
+          still={!top}
+          next={item.next}
+          easyLocked={easyLocked}
+          lockedTip={lockedTip}
+          onGrade={onGrade}
+        />
+      )}
     </>
   );
 }
@@ -849,9 +1039,16 @@ function CardPlate({
   item: { card, fsrsState, mode },
   deck,
   forgotten,
+  hook,
+  hookShown,
   revealed,
   still,
   onReveal,
+  onPeek,
+  onShowHook,
+  offer,
+  onOffer,
+  onMenu,
   onUndo,
 }: {
   /** The pronunciation on the top card; none underneath. */
@@ -859,9 +1056,17 @@ function CardPlate({
   item: QueueItem;
   deck: CardDeck;
   forgotten: boolean;
+  hook: Hook | null;
+  hookShown: boolean;
   revealed: boolean;
   still: boolean;
   onReveal: (() => void) | undefined;
+  onPeek: (() => void) | undefined;
+  onShowHook: (() => void) | undefined;
+  offer: boolean;
+  onOffer: (() => void) | undefined;
+  /** Revealed, a tap on the card opens its menu. */
+  onMenu: (() => void) | undefined;
   /** Offered to VoiceOver as an action on the card while there is a grade to take back. */
   onUndo: (() => void) | undefined;
 }) {
@@ -896,6 +1101,7 @@ function CardPlate({
     : card.source
       ? { icon: "source" as const, name: card.source }
       : null;
+  const canPeek = !revealed && !!hook && !hookShown && !!onPeek;
   let line = 0;
   const arrive = () => (still ? undefined : reduce ? CROSSFADE : rise(line++));
   const glide = reduce || still ? undefined : LinearTransition.duration(GLIDE).easing(EASE);
@@ -905,16 +1111,23 @@ function CardPlate({
       <Pressable
         onPress={
           revealed
-            ? undefined
+            ? onMenu
             : () => {
                 countReveal();
                 onReveal?.();
               }
         }
-        disabled={revealed || !onReveal}
-        accessibilityActions={onUndo ? [{ name: "undo", label: t`Take back the last grade` }] : []}
+        disabled={revealed ? !onMenu : !onReveal}
+        accessibilityActions={[
+          ...(canPeek ? [{ name: "peek", label: t`Peek at your hook` }] : []),
+          ...(revealed && onMenu ? [{ name: "menu", label: t`Card options` }] : []),
+          ...(onUndo ? [{ name: "undo", label: t`Take back the last grade` }] : []),
+        ]}
         onAccessibilityAction={(e) => {
-          if (e.nativeEvent.actionName === "undo") onUndo?.();
+          const action = e.nativeEvent.actionName;
+          if (action === "peek") onPeek?.();
+          if (action === "menu") onMenu?.();
+          if (action === "undo") onUndo?.();
         }}
         accessibilityRole={revealed ? undefined : "button"}
         accessibilityLabel={
@@ -968,6 +1181,16 @@ function CardPlate({
                 {pronounce && mode.cue === "term" && <PronounceButton pronounce={pronounce} />}
               </View>
             )}
+            {/* The hook has one place, under the cue, before the reveal and after it. */}
+            {hook && hookShown ? (
+              <View className="pt-3">
+                <HookLine text={hook.text} source={hook.source} still={still} />
+              </View>
+            ) : hook && revealed && onShowHook ? (
+              <View className="pt-2">
+                <ShowHookButton still={still} onShow={onShowHook} />
+              </View>
+            ) : null}
           </Animated.View>
           {revealed && (
             <View className="gap-4 pt-5">
@@ -1027,10 +1250,14 @@ function CardPlate({
         </ScrollView>
 
         {!revealed && hint && <RevealHint />}
+        {canPeek && onPeek && <PeekButton onPeek={onPeek} />}
+        {revealed && offer && onOffer && <HookOffer still={still} onOpen={onOffer} />}
       </Pressable>
     </Animated.View>
   );
 }
+
+const LOCK_TIP_MS = 4000;
 
 const gradeIn = (i: number) =>
   new Keyframe({
@@ -1048,29 +1275,58 @@ const gradeIn = (i: number) =>
 function GradeStrip({
   still = false,
   next,
+  easyLocked,
+  lockedTip,
   onGrade,
 }: {
   /** Underneath, the grades are already in place. */
   still?: boolean;
   /** When each grade brings the card back, which VoiceOver reads with it, as on the web. */
   next: QueueItem["next"];
+  /** After a peek, Easy stays in its slot, dimmed with a lock, and grades nothing. */
+  easyLocked: boolean;
+  /** Each press of the locked Easy says why in a tip over it. */
+  lockedTip: number;
   onGrade: ((r: Rating) => void) | undefined;
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
   const dark = useColorScheme() === "dark";
   const reduce = useReduceMotion();
+  const why = t`You can’t choose Easy after peeking at your hook.`;
+  const [tip, setTip] = useState(false);
+  useEffect(() => {
+    if (lockedTip === 0) return;
+    setTip(true);
+    AccessibilityInfo.announceForAccessibility(why);
+    const timer = setTimeout(() => setTip(false), LOCK_TIP_MS);
+    return () => clearTimeout(timer);
+  }, [lockedTip, why]);
   return (
     <Animated.View
       exiting={FadeOut.duration(120).reduceMotion(ALWAYS)}
       className="flex-row gap-2 px-4 pt-3"
     >
+      {tip && (
+        <Animated.View
+          entering={FadeIn.duration(150).reduceMotion(ALWAYS)}
+          exiting={FadeOut.duration(100).reduceMotion(ALWAYS)}
+          pointerEvents="none"
+          className="absolute bottom-full end-4 mb-2 max-w-64 flex-row items-start gap-2 rounded-lg bg-text px-3 py-2"
+        >
+          <View className="pt-0.5">
+            <Icon name="lock" size={14} colour={p.canvas} />
+          </View>
+          <Text className="shrink text-sm text-canvas">{why}</Text>
+        </Animated.View>
+      )}
       {GRADES.map((g, i) => {
         const label = i18n._(g.label);
         const back = next ? interval(new Date(), new Date(next[g.rating])) : null;
         const schedules = back
           ? i18n.number(back.value, { style: "unit", unit: back.unit, unitDisplay: "narrow" })
           : null;
+        const lock = easyLocked && g.rating === 4;
         return (
           <Animated.View
             key={g.rating}
@@ -1082,14 +1338,25 @@ function GradeStrip({
               haptic={false}
               onPress={() => onGrade?.(g.rating)}
               accessibilityRole="button"
-              accessibilityLabel={schedules ? t`${label}, next in ${schedules}` : label}
+              accessibilityLabel={
+                lock ? t`${label}, locked` : schedules ? t`${label}, next in ${schedules}` : label
+              }
+              accessibilityHint={lock ? why : undefined}
+              accessibilityState={lock ? { disabled: true } : undefined}
               className="h-20 items-center justify-center gap-1.5 rounded-xl border border-edge bg-plate"
               style={dark ? LIFT : undefined}
             >
-              <Icon name={g.icon} size={20} colour={p[g.tint]} />
-              <Text maxFontSizeMultiplier={1.3} className="text-base font-medium text-text-2">
-                {label}
-              </Text>
+              <View className="items-center gap-1.5" style={lock ? { opacity: 0.45 } : undefined}>
+                <Icon name={g.icon} size={20} colour={lock ? p.muted : p[g.tint]} />
+                <Text maxFontSizeMultiplier={1.3} className="text-base font-medium text-text-2">
+                  {label}
+                </Text>
+              </View>
+              {lock && (
+                <View className="absolute end-2.5 top-2.5">
+                  <Icon name="lock" size={12} colour={p.muted} />
+                </View>
+              )}
             </Press>
           </Animated.View>
         );

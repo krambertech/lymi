@@ -87,6 +87,9 @@ msgstr "{due, plural, one {card due today} other {cards due today}}"
 msgid "{due, plural, one {card to review} other {cards to review}}"
 msgstr "{due, plural, one {card to review} other {cards to review}}"
 
+msgid "{label}, locked"
+msgstr "{label}, locked"
+
 msgid "{label}, next in {schedules}"
 msgstr "{label}, next in {schedules}"
 
@@ -120,8 +123,14 @@ msgstr "A rest day keeps the streak through one missed day a week."
 msgid "A sentence that uses it"
 msgstr "A sentence that uses it"
 
+msgid "A short phrase that helps you remember it"
+msgstr "A short phrase that helps you remember it"
+
 msgid "A short phrase that helps you remember it."
 msgstr "A short phrase that helps you remember it."
+
+msgid "A sound-alike, or something to picture"
+msgstr "A sound-alike, or something to picture"
 
 msgid "A word or phrase"
 msgstr "A word or phrase"
@@ -144,6 +153,9 @@ msgstr "Add cards from your last lesson, then review them here."
 msgid "Add cards from your next lesson"
 msgstr "Add cards from your next lesson"
 
+msgid "Add hook"
+msgstr "Add hook"
+
 msgid "Add to {deckName}"
 msgstr "Add to {deckName}"
 
@@ -161,6 +173,9 @@ msgstr "Added “{term}”. It’s saved on this phone until Lymi can be reached
 
 msgid "AI"
 msgstr "AI"
+
+msgid "AI draft · Save keeps it"
+msgstr "AI draft · Save keeps it"
 
 msgid "AI example"
 msgstr "AI example"
@@ -212,6 +227,9 @@ msgstr "Bug"
 
 msgid "Cancel"
 msgstr "Cancel"
+
+msgid "Card options"
+msgstr "Card options"
 
 msgid "Change daily goal"
 msgstr "Change daily goal"
@@ -282,8 +300,14 @@ msgstr "Couldn’t reach Lymi. Check your connection and try again."
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Couldn’t reach the sign-in service. Check your connection and try again."
 
+msgid "Couldn’t save that."
+msgstr "Couldn’t save that."
+
 msgid "Couldn’t save the goal. Try again."
 msgstr "Couldn’t save the goal. Try again."
+
+msgid "Couldn’t save the hook."
+msgstr "Couldn’t save the hook."
 
 msgid "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
 msgstr "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
@@ -360,8 +384,14 @@ msgstr "Don’t use your email address in your password."
 msgid "Done"
 msgstr "Done"
 
+msgid "Drafting a hook…"
+msgstr "Drafting a hook…"
+
 msgid "Easy"
 msgstr "Easy"
+
+msgid "Edit hook"
+msgstr "Edit hook"
 
 msgid "Edit your name and photo"
 msgstr "Edit your name and photo"
@@ -527,6 +557,9 @@ msgstr "Lymi is free to use."
 msgid "Make one for each course or topic."
 msgstr "Make one for each course or topic."
 
+msgid "Mark important"
+msgstr "Mark important"
+
 msgid "Meaning"
 msgstr "Meaning"
 
@@ -538,6 +571,9 @@ msgstr "Meaning from lesson"
 
 msgid "Memory hook"
 msgstr "Memory hook"
+
+msgid "Memory hook: {text}"
+msgstr "Memory hook: {text}"
 
 msgid "Message"
 msgstr "Message"
@@ -633,6 +669,9 @@ msgstr "Other"
 
 msgid "Password"
 msgstr "Password"
+
+msgid "Peek at your hook"
+msgstr "Peek at your hook"
 
 msgid "Picture"
 msgstr "Picture"
@@ -763,6 +802,9 @@ msgstr "Settings"
 msgid "Settings is coming to the phone"
 msgstr "Settings is coming to the phone"
 
+msgid "Show hook"
+msgstr "Show hook"
+
 msgid "Show password"
 msgstr "Show password"
 
@@ -878,11 +920,17 @@ msgstr "Too many attempts. Try again later."
 msgid "Too many tries with this code. Send a new one."
 msgstr "Too many tries with this code. Send a new one."
 
+msgid "Try a memory hook"
+msgstr "Try a memory hook"
+
 msgid "Try again"
 msgstr "Try again"
 
 msgid "Undo"
 msgstr "Undo"
+
+msgid "Unmark important"
+msgstr "Unmark important"
 
 msgid "Until then, change your settings on the web."
 msgstr "Until then, change your settings on the web."
@@ -920,6 +968,9 @@ msgstr "What this is about"
 msgid "Where you met it, such as a lesson"
 msgstr "Where you met it, such as a lesson"
 
+msgid "Write a hook."
+msgstr "Write a hook."
+
 msgid "Write what you want to tell Lymi."
 msgstr "Write what you want to tell Lymi."
 
@@ -934,6 +985,9 @@ msgstr "You"
 
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
+
+msgid "You can’t choose Easy after peeking at your hook."
+msgstr "You can’t choose Easy after peeking at your hook."
 
 msgid "You wrote this"
 msgstr "You wrote this"

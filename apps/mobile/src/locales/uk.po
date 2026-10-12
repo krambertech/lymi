@@ -401,6 +401,9 @@ msgstr "Ще для повторення"
 msgid "Another way"
 msgstr "Інший спосіб"
 
+msgid "Any"
+msgstr ""
+
 msgid "Any time"
 msgstr "Будь-коли"
 
@@ -443,6 +446,9 @@ msgstr "Щонайменше {MIN_PASSWORD_LENGTH} символів."
 
 msgid "Back"
 msgstr "Назад"
+
+msgid "Back to Filter"
+msgstr ""
 
 msgid "Back to Library"
 msgstr "До Бібліотеки"
@@ -817,6 +823,9 @@ msgstr "Готуємо зачіпку…"
 
 msgid "Driving"
 msgstr "Водіння"
+
+msgid "Due"
+msgstr ""
 
 msgid "Due now"
 msgstr "Час повторити"
@@ -1903,6 +1912,9 @@ msgstr "Іспанська"
 
 msgid "Start with a deck"
 msgstr "Почни з колоди"
+
+msgid "State"
+msgstr ""
 
 msgid "Stay signed in"
 msgstr "Залишитися в застосунку"

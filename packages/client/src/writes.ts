@@ -440,6 +440,7 @@ async function make<T extends Result>(w: Write, label?: string): Promise<Written
 function forget() {
   void client?.invalidateQueries({ queryKey: ["decks"] });
   void client?.invalidateQueries({ queryKey: ["cards"] });
+  void client?.invalidateQueries({ queryKey: ["queue"] });
 }
 
 /** A card already on the device with the same term, which the server would skip the add for. */

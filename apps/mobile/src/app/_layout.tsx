@@ -17,7 +17,6 @@ import { Sync } from "../data/sync";
 import { i18n } from "../i18n";
 import { LanguageSync } from "../i18n/sync";
 import { usePalette } from "../theme/palette";
-import { UpdateLymi } from "../update/update-lymi";
 import { WidgetSync } from "../widgets/sync";
 
 // A link straight to a review, such as from a widget, still has the tabs under it.
@@ -69,29 +68,25 @@ function Root() {
       primary: p.text,
     },
   };
-  if (update) {
-    return (
-      <ThemeProvider value={theme}>
-        <StatusBar style="auto" />
-        <UpdateLymi state={update} />
-      </ThemeProvider>
-    );
-  }
   return (
     <ThemeProvider value={theme}>
       <StatusBar style="auto" />
       {!session.isPending && <LanguageSync signedIn={signedIn} />}
-      {learnerId && (
+      {learnerId && !update && (
         <>
           <Sync learnerId={learnerId} />
           <WidgetSync />
         </>
       )}
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: p.canvas } }}>
-        <Stack.Protected guard={!signedIn}>
+        {/* First, so a link opened while it shows lands on it rather than on a refused screen. */}
+        <Stack.Protected guard={!!update}>
+          <Stack.Screen name="update" options={{ animation: "fade", gestureEnabled: false }} />
+        </Stack.Protected>
+        <Stack.Protected guard={!update && !signedIn}>
           <Stack.Screen name="(auth)" options={{ animation: "fade" }} />
         </Stack.Protected>
-        <Stack.Protected guard={signedIn}>
+        <Stack.Protected guard={!update && signedIn}>
           <Stack.Screen name="index" />
           <Stack.Screen name="(tabs)" />
           <Stack.Screen

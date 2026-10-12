@@ -68,7 +68,7 @@ The sheet stays for the next card: a line under the fields says where the last o
 
 ## Update Lymi
 
-When the Worker no longer serves the installed release, the whole app becomes one screen: the lantern, Update Lymi, a line saying unsent reviews and cards are kept when there are any, and one amber Update that opens TestFlight or the App Store. It has no close and no way back, because every request would be refused. ADR 0032 owns when it shows.
+When the Worker no longer serves the installed release, the whole app becomes one screen: the lantern, Update Lymi, a line saying unsent reviews and cards are kept when there are any, and one amber Update that opens TestFlight or the App Store. It has no close and no way back, because every request would be refused. It is a route guarded ahead of every other, so an open review closes under it and a widget or notification link lands on it. ADR 0032 owns when it shows.
 
 ## Haptics
 

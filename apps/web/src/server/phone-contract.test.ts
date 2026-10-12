@@ -57,6 +57,7 @@ const phoneOperations = [
   "POST /api/decks",
   "PATCH /api/decks/{id}",
   "POST /api/decks/{id}/archive",
+  "POST /api/decks/{id}/leave",
   "GET /api/cards/{id}/history",
   "GET /api/cards",
   "POST /api/cards",
@@ -87,6 +88,7 @@ const closedOnPurpose = [
   "POST /api/cards/{id}/archive 200 .ok",
   "DELETE /api/series/{id} 200 .ok",
   "POST /api/decks/{id}/archive 200 .ok",
+  "POST /api/decks/{id}/leave 200 .ok",
   "POST /api/review/grade 200 .ok",
   "POST /api/review/undo 200 .ok",
   // Capture says where an added card went, so a new outcome needs a version gate first.
@@ -95,7 +97,7 @@ const closedOnPurpose = [
 ];
 
 let app: TestApp;
-let learner: { session: Session; deckId: string };
+let learner: { session: Session; deckId: string; cardId: string };
 let document: unknown;
 let current: Contract;
 
@@ -132,7 +134,8 @@ describe.each(frozen)("the phone release $version", ({ version, contract }) => {
     ajv.addFormat("uri", true);
     ajv.addSchema({ $id: "contract", components: tolerant(contract.components) });
     for (const template of phoneReads) {
-      const path = template.replace("{id}", learner.deckId);
+      const id = template.startsWith("/api/cards/") ? learner.cardId : learner.deckId;
+      const path = template.replace("{id}", id);
       const operation = contract.paths[template]?.get as
         | { responses: Record<string, { content?: Record<string, { schema: unknown }> }> }
         | undefined;
@@ -159,7 +162,7 @@ describe.each(frozen)("the phone release $version", ({ version, contract }) => {
  * A learner with a deck of due cards in a series and one graded review, so each read answers with
  * rows rather than empty lists.
  */
-async function seededLearner(): Promise<{ session: Session; deckId: string }> {
+async function seededLearner(): Promise<{ session: Session; deckId: string; cardId: string }> {
   const session = await app.signUp("phone-contract");
   const deck = await app.fetch("/api/decks", {
     ...json({ name: "Lesson 3", defaultLanguage: "et" }),
@@ -188,7 +191,7 @@ async function seededLearner(): Promise<{ session: Session; deckId: string }> {
     as: session,
   });
   expect(grade.status).toBe(200);
-  return { session, deckId };
+  return { session, deckId, cardId: first.card.id };
 }
 
 /** The client reads JSON without parsing it, so a key it does not know is never a failure. */

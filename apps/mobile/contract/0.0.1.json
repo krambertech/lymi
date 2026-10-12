@@ -2026,6 +2026,73 @@
     ]
    }
   },
+  "/api/decks/{id}/leave": {
+   "post": {
+    "operationId": "postApiDecksByIdLeave",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "session": []
+     }
+    ],
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   }
+  },
   "/api/cards/{id}/history": {
    "get": {
     "operationId": "getApiCardsByIdHistory",

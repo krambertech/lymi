@@ -13,10 +13,15 @@ const DUE = hashKey(decksQuery.queryKey);
  */
 export function followDueCounts(qc: QueryClient, settle = FORECAST_SETTLE_MS): () => void {
   let timer: ReturnType<typeof setTimeout> | undefined;
+  let counts = qc.getQueryData(decksQuery.queryKey);
   const unsubscribe = qc.getQueryCache().subscribe((event) => {
     if (event.type !== "updated" || event.query.queryHash !== DUE) return;
-    // Query reports only the first invalidation while one is pending, so new counts arriving count too.
-    if (event.action.type !== "invalidate" && event.action.type !== "success") return;
+    // Query reports only the first invalidation while one is pending, so changed counts arriving
+    // count too; structural sharing keeps the reference when a refetch changed nothing.
+    if (event.action.type === "success") {
+      if (event.query.state.data === counts) return;
+      counts = event.query.state.data;
+    } else if (event.action.type !== "invalidate") return;
     clearTimeout(timer);
     timer = setTimeout(() => void qc.invalidateQueries({ queryKey: ["insights"] }), settle);
   });

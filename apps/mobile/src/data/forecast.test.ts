@@ -55,6 +55,15 @@ describe("followDueCounts", () => {
     expect(stale()).toBe(true);
   });
 
+  it("ignores a refetch that brings the same counts", () => {
+    qc.setQueryData(["decks"], [{ id: "d1" }]);
+    vi.advanceTimersByTime(1000);
+    qc.setQueryData(["insights", 30], { forecast: [] });
+    qc.setQueryData(["decks"], [{ id: "d1" }]);
+    vi.advanceTimersByTime(1000);
+    expect(stale()).toBe(false);
+  });
+
   it("ignores everything else", async () => {
     await qc.invalidateQueries({ queryKey: ["streak"] });
     qc.setQueryData(["streak"], {});

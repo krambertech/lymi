@@ -3722,8 +3722,8 @@ msgstr "You own this deck"
 msgid "You start with <0>{first}</0>, and the next section opens as you learn the one before it."
 msgstr "You start with <0>{first}</0>, and the next section opens as you learn the one before it."
 
-msgid "You start with <0>{first}</0>. When you know most of a section, the next one is ready and you choose when to start it."
-msgstr "You start with <0>{first}</0>. When you know most of a section, the next one is ready and you choose when to start it."
+msgid "You start with <0>{first}</0>. When you know most of it, you choose when to start the next."
+msgstr ""
 
 msgid "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
 msgstr "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."

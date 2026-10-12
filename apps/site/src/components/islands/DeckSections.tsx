@@ -181,8 +181,8 @@ function Progression({
     case "manual":
       return (
         <Trans>
-          You start with <span lang={meaningLanguage}>{first}</span>. When you know most of a
-          section, the next one is ready and you choose when to start it.
+          You start with <span lang={meaningLanguage}>{first}</span>. When you know most of it, you
+          choose when to start the next.
         </Trans>
       );
     default:

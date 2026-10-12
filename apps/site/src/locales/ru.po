@@ -3722,8 +3722,8 @@ msgstr "Твоя колода"
 msgid "You start with <0>{first}</0>, and the next section opens as you learn the one before it."
 msgstr "Начинаешь с раздела <0>{first}</0>, а следующий открывается, как только выучишь предыдущий."
 
-msgid "You start with <0>{first}</0>. When you know most of a section, the next one is ready and you choose when to start it."
-msgstr "Начинаешь с раздела <0>{first}</0>. Когда большая часть раздела выучена, следующий готов, и ты решаешь, когда его начать."
+msgid "You start with <0>{first}</0>. When you know most of it, you choose when to start the next."
+msgstr "Начинаешь с раздела <0>{first}</0>. Когда выучишь большую его часть, ты решаешь, когда начать следующий."
 
 msgid "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
 msgstr "Ассистент может читать твои колоды. Попроси его о разговоре со словами, которые ты учишь, и он будет поправлять тебя по ходу."

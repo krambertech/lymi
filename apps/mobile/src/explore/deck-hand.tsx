@@ -63,14 +63,12 @@ function HandCard({
   at,
   count,
   gathered,
-  imageBase,
   ground,
 }: {
   card: TrayCard;
   at: number;
   count: number;
   gathered: boolean;
-  imageBase: string;
   ground: string;
 }) {
   const p = usePalette();
@@ -112,7 +110,7 @@ function HandCard({
         moving,
       ]}
     >
-      <CardFace card={card} cw={CW} imageBase={imageBase} />
+      <CardFace card={card} cw={CW} />
       {at === 0 && (
         <Animated.View
           className="absolute size-[30px] items-center justify-center rounded-full bg-state-known"
@@ -132,12 +130,10 @@ function HandCard({
 export function DeckHand({
   cards,
   gathered,
-  imageBase,
   ground,
 }: {
   cards: TrayCard[];
   gathered: boolean;
-  imageBase: string;
   ground: string;
 }) {
   return (
@@ -154,7 +150,6 @@ export function DeckHand({
           at={at}
           count={cards.length}
           gathered={gathered}
-          imageBase={imageBase}
           ground={ground}
         />
       ))}

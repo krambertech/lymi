@@ -84,7 +84,7 @@ function DeckPage({
   const router = useRouter();
   const { deck, related } = data;
   const [deckId, setDeckId] = useState(data.deckId);
-  const add = useAddDeck(false, (_slug, id) => setDeckId(id));
+  const add = useAddDeck((_slug, id) => setDeckId(id));
   const sections = deck.sections.filter((section) => section.name !== null);
   const hand = handOf(deck);
   const cards = plural(deck.cardCount, { one: "# card", other: "# cards" });
@@ -92,9 +92,7 @@ function DeckPage({
 
   const header = (
     <View className="items-center gap-5">
-      {hand.length > 0 && (
-        <DeckHand cards={hand} gathered={!!deckId} imageBase={API_URL} ground={ground} />
-      )}
+      {hand.length > 0 && <DeckHand cards={hand} gathered={!!deckId} ground={ground} />}
       <View className="items-center gap-2.5">
         <View className="flex-row items-center gap-2">
           <PublisherMark slug={deck.slug} name={deck.publisher} avatar={deck.publisherAvatar} />
@@ -306,7 +304,7 @@ function MoreLikeThis({ related }: { related: Data["related"] }) {
         contentContainerStyle={{ paddingHorizontal: 20, gap: 12 }}
       >
         {related.map((deck) => (
-          <DeckTile key={deck.slug} deck={deck} width={tile} added={false} imageBase={API_URL} />
+          <DeckTile key={deck.slug} deck={deck} width={tile} added={false} />
         ))}
       </ScrollView>
     </View>

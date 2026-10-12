@@ -43,12 +43,10 @@ export function DeckTile({
   deck,
   width,
   added,
-  imageBase,
 }: {
   deck: PublicDeckSummary;
   width: number;
   added: boolean;
-  imageBase: string;
 }) {
   const open = useOpenDeck();
   return (
@@ -60,7 +58,7 @@ export function DeckTile({
       style={{ width }}
       className="gap-2.5"
     >
-      <DeckTray deck={deck} cw={width * 0.7} imageBase={imageBase} />
+      <DeckTray deck={deck} cw={width * 0.7} />
       <View className="gap-0.5 px-0.5">
         <Text className="text-md font-medium leading-snug text-text" numberOfLines={2}>
           {deck.name}
@@ -112,11 +110,10 @@ function ShelfHeader({ shelf }: { shelf: Shelf }) {
 interface ShelvesProps {
   shelves: Shelf[];
   added: Record<string, string>;
-  imageBase: string;
 }
 
 /** Every shelf as a row that swipes sideways, two decks and a bit in view, as the App Store's do. */
-export function ShelfRows({ shelves, added, imageBase }: ShelvesProps) {
+export function ShelfRows({ shelves, added }: ShelvesProps) {
   const { width } = useWindowDimensions();
   const tile = Math.round((width - GUTTER * 2 - 12) / 2.15);
   return (
@@ -134,13 +131,7 @@ export function ShelfRows({ shelves, added, imageBase }: ShelvesProps) {
             contentContainerStyle={{ paddingHorizontal: GUTTER, gap: 12 }}
           >
             {shelf.decks.slice(0, 10).map((deck) => (
-              <DeckTile
-                key={deck.slug}
-                deck={deck}
-                width={tile}
-                added={!!added[deck.slug]}
-                imageBase={imageBase}
-              />
+              <DeckTile key={deck.slug} deck={deck} width={tile} added={!!added[deck.slug]} />
             ))}
           </ScrollView>
         </View>
@@ -153,24 +144,16 @@ export function ShelfRows({ shelves, added, imageBase }: ShelvesProps) {
 export function ShelfGrid({
   decks,
   added,
-  imageBase,
 }: {
   decks: PublicDeckSummary[];
   added: Record<string, string>;
-  imageBase: string;
 }) {
   const { width } = useWindowDimensions();
   const tile = (width - GUTTER * 2 - 12) / 2;
   return (
     <View className="flex-row flex-wrap" style={{ gap: 12, rowGap: 24 }}>
       {decks.map((deck) => (
-        <DeckTile
-          key={deck.slug}
-          deck={deck}
-          width={tile}
-          added={!!added[deck.slug]}
-          imageBase={imageBase}
-        />
+        <DeckTile key={deck.slug} deck={deck} width={tile} added={!!added[deck.slug]} />
       ))}
     </View>
   );

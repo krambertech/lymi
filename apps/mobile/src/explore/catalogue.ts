@@ -3,10 +3,9 @@ import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { api } from "@lymi/client/api";
 import { exploreQuery } from "@lymi/client/queries";
-import { type ExploreOut, type PublicDeckSummary, type Shelf, shelvesOf } from "@lymi/core/catalog";
+import { type PublicDeckSummary, type Shelf, shelvesOf } from "@lymi/core/catalog";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
-import { API_URL } from "../auth/client";
+import { useMemo } from "react";
 import { languageName } from "../data/languages";
 
 /** A heading per subject, as the web's; each app extracts its own catalogue. */
@@ -97,38 +96,25 @@ export function searchShelves(shelves: Shelf[], query: string, label: (shelf: Sh
   });
 }
 
-// Prototype only: the production catalogue as lymi.app/explore showed it on 12 Oct 2026, so the
-// layouts can be judged at their real size while the local Worker holds one published deck.
-const SAMPLE = require("./sample-catalogue.json") as ExploreOut;
-
-/** Explore's catalogue grouped into shelves, and where its pictures load from. */
+/** Explore's catalogue grouped into shelves, and the decks already in Library. */
 export function useCatalogue() {
   const query = useQuery(exploreQuery);
-  const sample = __DEV__ && (query.data?.decks.length ?? 0) < 10;
-  const data = sample ? SAMPLE : query.data;
-  const [addedHere, setAddedHere] = useState<Record<string, string>>({});
+  const data = query.data;
   const shelves = useMemo(() => shelvesOf(data?.decks ?? []), [data]);
   return {
     shelves,
-    added: { ...data?.added, ...addedHere },
+    added: data?.added ?? {},
     loading: !data && query.isPending,
     failed: !data && query.isError,
     retry: () => query.refetch(),
-    imageBase: sample ? "https://my.lymi.app" : API_URL,
-    sample,
-    markAdded: (slug: string) => setAddedHere((a) => ({ ...a, [slug]: slug })),
   };
 }
 
-/** Adds a published deck in the edition the shelf showed; the sample only pretends. */
-export function useAddDeck(sample: boolean, onAdded: (slug: string, deckId: string) => void) {
+/** Adds a published deck in the edition its page showed; the edition is pinned on the membership. */
+export function useAddDeck(onAdded: (slug: string, deckId: string) => void) {
   const client = useQueryClient();
   return useMutation({
     mutationFn: async ({ slug, edition }: { slug: string; edition: string }) => {
-      if (sample) {
-        await new Promise((resolve) => setTimeout(resolve, 600));
-        return { slug, deckId: slug };
-      }
       const out = await api.addPublishedDeck(slug, edition);
       return { slug, deckId: out.deckId };
     },

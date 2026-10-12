@@ -64,14 +64,10 @@ export default function Explore() {
       ) : shelf ? (
         <View className="gap-4">
           <FilterLine shelf={shelf} label={label(shelf)} onClear={() => setFilter(undefined)} />
-          <ShelfGrid decks={shelf.decks} added={catalogue.added} imageBase={catalogue.imageBase} />
+          <ShelfGrid decks={shelf.decks} added={catalogue.added} />
         </View>
       ) : (
-        <ShelfRows
-          shelves={catalogue.shelves}
-          added={catalogue.added}
-          imageBase={catalogue.imageBase}
-        />
+        <ShelfRows shelves={catalogue.shelves} added={catalogue.added} />
       )}
       <ShelfPicker
         open={choosing}

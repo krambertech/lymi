@@ -1,6 +1,7 @@
 import { modeOf } from "@lymi/core";
 import { type PublicDeckSummary, trayHue } from "@lymi/core/catalog";
 import { Image, View } from "react-native";
+import { API_URL } from "../auth/client";
 import { usePalette, useRoom } from "../theme/palette";
 import { Text } from "../ui/primitives";
 
@@ -53,15 +54,7 @@ function cueStep(text: string): number {
 export type TrayCard = NonNullable<PublicDeckSummary["card"]>;
 
 /** The card turned over as a tray draws it: what its mode asks above the rule, the answer under it. */
-export function CardFace({
-  card,
-  cw,
-  imageBase,
-}: {
-  card: TrayCard;
-  cw: number;
-  imageBase: string;
-}) {
+export function CardFace({ card, cw }: { card: TrayCard; cw: number }) {
   const p = usePalette();
   const { cue, target } = modeOf(card.mode);
   const picture = cue === "image" ? card.image : undefined;
@@ -83,7 +76,7 @@ export function CardFace({
         <View style={{ flex: 1, minHeight: 0, marginVertical: cw * 0.06 }}>
           <Image
             source={{
-              uri: `${imageBase}/public/media/card/${encodeURIComponent(picture.cardId)}/image`,
+              uri: `${API_URL}/public/media/card/${encodeURIComponent(picture.cardId)}/image`,
             }}
             accessibilityLabel={picture.description}
             style={{
@@ -147,7 +140,6 @@ interface TrayProps {
   deck: Pick<PublicDeckSummary, "slug" | "cardCount" | "card">;
   /** The card's width; the tray is cut at two thirds of the card's height. */
   cw: number;
-  imageBase: string;
   /** Square corners where the tray runs to the edges of a card that clips it. */
   flush?: boolean;
 }
@@ -156,7 +148,7 @@ interface TrayProps {
  * One of the deck's own cards tucked into a tray of the deck's hue, with a sheet of paper behind it
  * for each further card, up to two. docs/design/system/surfaces.md "The deck tray".
  */
-export function DeckTray({ deck, cw, imageBase, flush = false }: TrayProps) {
+export function DeckTray({ deck, cw, flush = false }: TrayProps) {
   const p = usePalette();
   const dark = useRoom() === "dark";
   const tray = useTrayColour(deck.slug);
@@ -203,7 +195,7 @@ export function DeckTray({ deck, cw, imageBase, flush = false }: TrayProps) {
             />
           ))}
           <View style={{ ...sheet, padding: cw * 0.085 }}>
-            <CardFace card={deck.card} cw={cw} imageBase={imageBase} />
+            <CardFace card={deck.card} cw={cw} />
           </View>
         </View>
       )}

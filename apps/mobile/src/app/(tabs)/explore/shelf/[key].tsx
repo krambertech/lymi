@@ -50,7 +50,7 @@ export default function ExploreShelf() {
     >
       {shelf && (
         <>
-          <ShelfGrid decks={shelf.decks} added={catalogue.added} imageBase={catalogue.imageBase} />
+          <ShelfGrid decks={shelf.decks} added={catalogue.added} />
           <OtherShelves shelf={shelf} shelves={catalogue.shelves} />
         </>
       )}
@@ -70,12 +70,14 @@ function ShelfHeader({
 }) {
   const { t, i18n } = useLingui();
   const written = LEDES[address];
+  // Named as the site names it, so the two apps share the sentence and its translations.
+  const name = title;
   const lede = written
     ? i18n._(written)
     : shelf.language
-      ? t`Ready-made decks for learning ${title}, written by a person and checked card by card.`
+      ? t`Ready-made decks for learning ${name}, written by a person and checked card by card.`
       : t({
-          message: `Ready-made ${title} decks, written by a person and checked card by card.`,
+          message: `Ready-made ${name} decks, written by a person and checked card by card.`,
           context: "subject shelf",
         });
   const cards = shelf.decks.reduce((sum, deck) => sum + deck.cardCount, 0);

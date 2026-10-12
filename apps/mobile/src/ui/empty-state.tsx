@@ -26,6 +26,11 @@ interface Props {
   action?: { label: string; onPress: () => void; busy?: boolean };
   /** Overrides the kind's own icon, for a start state that names its place. */
   icon?: IconName;
+  /**
+   * Fills the room it is given rather than most of the window, for a page whose free space is
+   * smaller than the screen, such as search above the keyboard.
+   */
+  fill?: boolean;
 }
 
 const ICON: Record<EmptyKind, IconName> = {
@@ -39,7 +44,15 @@ const ICON: Record<EmptyKind, IconName> = {
  * A place with nothing to show says why and how to fill it, and looks temporary so it is never
  * mistaken for content. phone.md "Empty states".
  */
-export function EmptyState({ kind, size = "page", title, body, action, icon }: Props) {
+export function EmptyState({
+  kind,
+  size = "page",
+  title,
+  body,
+  action,
+  icon,
+  fill = false,
+}: Props) {
   const p = usePalette();
   const { height } = useWindowDimensions();
   const glyph = icon ?? ICON[kind];
@@ -69,9 +82,9 @@ export function EmptyState({ kind, size = "page", title, body, action, icon }: P
 
   return (
     <View
-      className={`items-center ${page ? "justify-center gap-2 px-6 py-8" : "gap-1.5 px-5 py-8"}`}
+      className={`items-center ${page ? "justify-center gap-2 px-6 py-8" : "gap-1.5 px-5 py-8"} ${fill ? "flex-1" : ""}`}
       // A whole empty page holds it in the middle of the room the bars leave.
-      style={page ? { minHeight: height * 0.62 } : undefined}
+      style={page && !fill ? { minHeight: height * 0.62 } : undefined}
       accessibilityLiveRegion="polite"
     >
       <View className={page ? "pb-4" : "pb-2"}>{mark}</View>

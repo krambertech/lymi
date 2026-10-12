@@ -6,8 +6,9 @@ import { usePathname, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { AppState } from "react-native";
 import { useMMKVString } from "react-native-mmkv";
+import { dueToday } from "../data/due";
 import { DEVICE_KEYS, deviceStore } from "../data/kept";
-import { useDay } from "../data/queries";
+import { useDay, useDecks, useKeptSince } from "../data/queries";
 import {
   notificationPermission,
   opensReview,
@@ -28,8 +29,11 @@ export function ReminderSync() {
   const router = useRouter();
   const { i18n } = useLingui();
   const [time] = useMMKVString(DEVICE_KEYS.reminder, deviceStore);
-  // TODO(#641): count today with dueToday once it lands, so the reminder matches Today and the widgets.
   const { left, dayDone } = useDay();
+  const decks = useDecks();
+  const kept = !!useKeptSince(decks);
+  // The number Today and the widgets show, so the reminder never says another.
+  const due = decks.data ? dueToday(decks.data, left, kept) : undefined;
   const insights = useQuery({
     ...insightsQuery(30),
     enabled: !!time,
@@ -53,7 +57,7 @@ export function ReminderSync() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: a return to the front and the language replan too.
   useEffect(() => {
-    if (time && left === undefined) return;
+    if (time && due === undefined) return;
     // A review grades every few seconds; the plan only needs where the day settled.
     let live = true;
     const timer = setTimeout(async () => {
@@ -64,7 +68,7 @@ export function ReminderSync() {
         planReminders({
           time,
           now: new Date(),
-          left: left ?? 0,
+          left: due ?? 0,
           dayDone,
           forecast: forecast?.split(",").map(Number),
           snoozedUntil: snoozedUntil(),
@@ -75,7 +79,7 @@ export function ReminderSync() {
       live = false;
       clearTimeout(timer);
     };
-  }, [time, left, dayDone, forecast, front, i18n.locale]);
+  }, [time, due, dayDone, forecast, front, i18n.locale]);
 
   // A cold start opens on "/", which redirects to Today; a review opened before that is replaced.
   const path = usePathname();

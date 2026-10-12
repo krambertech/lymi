@@ -7,7 +7,7 @@ export interface ReminderInput {
   /** The reminder's local time, `HH:MM`. */
   time: string;
   now: Date;
-  /** Cards today's draw still holds. */
+  /** Cards still due today, as Today shows them. */
   left: number;
   /** Today already counts: the goal is met or nothing was left to review. */
   dayDone: boolean;

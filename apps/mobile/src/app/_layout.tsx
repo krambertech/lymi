@@ -149,6 +149,17 @@ function Root() {
               },
             }}
           />
+          <Stack.Screen
+            name="edit-card"
+            options={{
+              presentation: "formSheet",
+              sheetAllowedDetents: [1],
+              sheetGrabberVisible: true,
+              contentStyle: {
+                backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
+              },
+            }}
+          />
           {/* Over everything, tab bar included, since its field sits where the tab bar does. */}
           <Stack.Screen
             name="search"

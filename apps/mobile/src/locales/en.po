@@ -212,9 +212,6 @@ msgstr "{label}, next in {schedules}"
 msgid "{label}: {chosen}"
 msgstr "{label}: {chosen}"
 
-msgid "{label}: {value}"
-msgstr "{label}: {value}"
-
 msgid "{lapses, plural, one {forgotten once} other {forgotten # times}}"
 msgstr "{lapses, plural, one {forgotten once} other {forgotten # times}}"
 
@@ -280,9 +277,6 @@ msgstr "A sentence that uses it"
 msgid "A short phrase that helps you remember it"
 msgstr "A short phrase that helps you remember it"
 
-msgid "A short phrase that helps you remember it."
-msgstr "A short phrase that helps you remember it."
-
 msgid "A sound-alike, or something to picture"
 msgstr "A sound-alike, or something to picture"
 
@@ -330,6 +324,9 @@ msgstr "Add to {deckName}"
 
 msgid "Add to Library"
 msgstr "Add to Library"
+
+msgid "Add to this card"
+msgstr "Add to this card"
 
 msgid "Added “{term}”"
 msgstr "Added “{term}”"
@@ -414,23 +411,38 @@ msgstr "Arabic"
 msgid "Archive “{name}”?"
 msgstr "Archive “{name}”?"
 
+msgid "Archive card"
+msgstr "Archive card"
+
 msgid "Archive deck"
 msgstr "Archive deck"
 
 msgid "Archived"
 msgstr "Archived"
 
+msgid "Archived “{term}”"
+msgstr "Archived “{term}”"
+
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 
-msgid "Archived is coming to the phone"
-msgstr "Archived is coming to the phone"
+msgid "Archived cards need a connection"
+msgstr "Archived cards need a connection"
+
+msgid "Archived decks and cards wait here, out of your reviews, until you restore them."
+msgstr "Archived decks and cards wait here, out of your reviews, until you restore them."
+
+msgid "Archived decks need a connection"
+msgstr "Archived decks need a connection"
 
 msgid "Archived the deck {deck}"
 msgstr "Archived the deck {deck}"
 
 msgid "Archived the section {name} in {deck}"
 msgstr "Archived the section {name} in {deck}"
+
+msgid "Archived. It’s out of your reviews until you restore it."
+msgstr "Archived. It’s out of your reviews until you restore it."
 
 msgid "Arts"
 msgstr "Arts"
@@ -615,6 +627,13 @@ msgstr "Couldn’t add the deck. Check your connection and try again."
 msgid "Couldn’t add the deck. It’s no longer published."
 msgstr "Couldn’t add the deck. It’s no longer published."
 
+#. placeholder {0}: card.term
+msgid "Couldn’t archive “{0}”."
+msgstr "Couldn’t archive “{0}”."
+
+msgid "Couldn’t archive the card."
+msgstr "Couldn’t archive the card."
+
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Couldn’t change your photo. Check your connection and try again."
 
@@ -623,6 +642,12 @@ msgstr "Couldn’t check for more cards"
 
 msgid "Couldn’t load Activity"
 msgstr "Couldn’t load Activity"
+
+msgid "Couldn’t load archived cards"
+msgstr "Couldn’t load archived cards"
+
+msgid "Couldn’t load archived decks"
+msgstr "Couldn’t load archived decks"
 
 msgid "Couldn’t load Explore"
 msgstr "Couldn’t load Explore"
@@ -672,8 +697,18 @@ msgstr "Couldn’t reach Lymi. Check your connection and try again."
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Couldn’t reach the sign-in service. Check your connection and try again."
 
+#. placeholder {0}: back.term
+msgid "Couldn’t restore “{0}”."
+msgstr "Couldn’t restore “{0}”."
+
+msgid "Couldn’t restore the card."
+msgstr "Couldn’t restore the card."
+
 msgid "Couldn’t save that."
 msgstr "Couldn’t save that."
+
+msgid "Couldn’t save the card."
+msgstr "Couldn’t save the card."
 
 msgid "Couldn’t save the goal. Try again."
 msgstr "Couldn’t save the goal. Try again."
@@ -842,6 +877,12 @@ msgstr "Each card is asked both ways, each way on its own schedule."
 
 msgid "Easy"
 msgstr "Easy"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Edit card"
+msgstr "Edit card"
 
 msgid "Edit hook"
 msgstr "Edit hook"
@@ -1472,6 +1513,9 @@ msgstr "Not started"
 msgid "Notes"
 msgstr "Notes"
 
+msgid "Nothing archived"
+msgstr "Nothing archived"
+
 msgid "Nothing due"
 msgstr "Nothing due"
 
@@ -1516,9 +1560,6 @@ msgstr "Only you see these."
 
 msgid "Open {name}"
 msgstr "Open {name}"
-
-msgid "Open Archived on the web"
-msgstr "Open Archived on the web"
 
 msgid "Open Explore"
 msgstr "Open Explore"
@@ -1677,6 +1718,15 @@ msgstr "Replay pronunciation"
 
 msgid "Reset your password"
 msgstr "Reset your password"
+
+msgid "Restore"
+msgstr "Restore"
+
+msgid "Restore {title}"
+msgstr "Restore {title}"
+
+msgid "Restore card"
+msgstr "Restore card"
 
 msgid "Restored"
 msgstr "Restored"
@@ -2110,14 +2160,14 @@ msgstr "Ukrainian"
 msgid "Undo"
 msgstr "Undo"
 
+msgid "Undo restoring {title}"
+msgstr "Undo restoring {title}"
+
 msgid "Unmark important"
 msgstr "Unmark important"
 
 msgid "Until then, change your settings on the web."
 msgstr "Until then, change your settings on the web."
-
-msgid "Until then, restore archived cards on the web."
-msgstr "Until then, restore archived cards on the web."
 
 msgid "Update"
 msgstr "Update"

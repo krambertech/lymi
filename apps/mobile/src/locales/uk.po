@@ -212,9 +212,6 @@ msgstr "{label}, далі через {schedules}"
 msgid "{label}: {chosen}"
 msgstr "{label}: {chosen}"
 
-msgid "{label}: {value}"
-msgstr "{label}: {value}"
-
 msgid "{lapses, plural, one {forgotten once} other {forgotten # times}}"
 msgstr "{lapses, plural, one {забуто # раз} few {забуто # рази} many {забуто # разів} other {забуто # рази}}"
 
@@ -280,9 +277,6 @@ msgstr "Речення, де воно трапляється"
 msgid "A short phrase that helps you remember it"
 msgstr "Коротка фраза, що допоможе запам’ятати"
 
-msgid "A short phrase that helps you remember it."
-msgstr "Коротка фраза, що допоможе запам’ятати."
-
 msgid "A sound-alike, or something to picture"
 msgstr "Співзвучне слово або те, що можна уявити"
 
@@ -330,6 +324,9 @@ msgstr "Додати до {deckName}"
 
 msgid "Add to Library"
 msgstr "Додати до Бібліотеки"
+
+msgid "Add to this card"
+msgstr ""
 
 msgid "Added “{term}”"
 msgstr "Додано «{term}»"
@@ -414,23 +411,38 @@ msgstr "Арабська"
 msgid "Archive “{name}”?"
 msgstr "Архівувати «{name}»?"
 
+msgid "Archive card"
+msgstr ""
+
 msgid "Archive deck"
 msgstr "Архівувати колоду"
 
 msgid "Archived"
 msgstr "Архів"
 
+msgid "Archived “{term}”"
+msgstr ""
+
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Заархівовано {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у колоді «{deck}»"
 
-msgid "Archived is coming to the phone"
-msgstr "Архів скоро буде на телефоні"
+msgid "Archived cards need a connection"
+msgstr ""
+
+msgid "Archived decks and cards wait here, out of your reviews, until you restore them."
+msgstr ""
+
+msgid "Archived decks need a connection"
+msgstr ""
 
 msgid "Archived the deck {deck}"
 msgstr "Заархівовано колоду «{deck}»"
 
 msgid "Archived the section {name} in {deck}"
 msgstr "Заархівовано розділ «{name}» у колоді «{deck}»"
+
+msgid "Archived. It’s out of your reviews until you restore it."
+msgstr ""
 
 msgid "Arts"
 msgstr "Мистецтво"
@@ -615,6 +627,13 @@ msgstr "Не вдалося додати колоду. Перевір з’єд�
 msgid "Couldn’t add the deck. It’s no longer published."
 msgstr "Не вдалося додати колоду. Її більше не опубліковано."
 
+#. placeholder {0}: card.term
+msgid "Couldn’t archive “{0}”."
+msgstr ""
+
+msgid "Couldn’t archive the card."
+msgstr ""
+
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Не вдалося змінити фото. Перевір з’єднання й спробуй ще раз."
 
@@ -623,6 +642,12 @@ msgstr "Не вдалося перевірити, чи є ще картки"
 
 msgid "Couldn’t load Activity"
 msgstr "Не вдалося завантажити Активність"
+
+msgid "Couldn’t load archived cards"
+msgstr ""
+
+msgid "Couldn’t load archived decks"
+msgstr ""
 
 msgid "Couldn’t load Explore"
 msgstr "Не вдалося завантажити Каталог"
@@ -672,8 +697,18 @@ msgstr "Не вдалося зв’язатися з Lymi. Перевір з’�
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Не вдалося зв’язатися із сервісом входу. Перевір з’єднання й повтори спробу."
 
+#. placeholder {0}: back.term
+msgid "Couldn’t restore “{0}”."
+msgstr ""
+
+msgid "Couldn’t restore the card."
+msgstr ""
+
 msgid "Couldn’t save that."
 msgstr "Не вдалося зберегти."
+
+msgid "Couldn’t save the card."
+msgstr ""
 
 msgid "Couldn’t save the goal. Try again."
 msgstr "Не вдалося зберегти мету. Спробуй ще раз."
@@ -842,6 +877,12 @@ msgstr "Кожну картку питають в обидва боки, кож�
 
 msgid "Easy"
 msgstr "Легко"
+
+msgid "Edit"
+msgstr ""
+
+msgid "Edit card"
+msgstr ""
 
 msgid "Edit hook"
 msgstr "Змінити зачіпку"
@@ -1472,6 +1513,9 @@ msgstr "Ще не почато"
 msgid "Notes"
 msgstr "Нотатки"
 
+msgid "Nothing archived"
+msgstr ""
+
 msgid "Nothing due"
 msgstr "Нічого повторювати"
 
@@ -1516,9 +1560,6 @@ msgstr "Їх бачиш лише ти."
 
 msgid "Open {name}"
 msgstr "Відкрити «{name}»"
-
-msgid "Open Archived on the web"
-msgstr "Відкрити архів у вебверсії"
 
 msgid "Open Explore"
 msgstr "Відкрити каталог"
@@ -1677,6 +1718,15 @@ msgstr "Відтворити вимову ще раз"
 
 msgid "Reset your password"
 msgstr "Новий пароль"
+
+msgid "Restore"
+msgstr ""
+
+msgid "Restore {title}"
+msgstr ""
+
+msgid "Restore card"
+msgstr ""
 
 msgid "Restored"
 msgstr "Відновлено"
@@ -2110,14 +2160,14 @@ msgstr "Українська"
 msgid "Undo"
 msgstr "Скасувати дію"
 
+msgid "Undo restoring {title}"
+msgstr ""
+
 msgid "Unmark important"
 msgstr "Зняти позначку «важлива»"
 
 msgid "Until then, change your settings on the web."
 msgstr "А поки змінити налаштування можна у вебверсії."
-
-msgid "Until then, restore archived cards on the web."
-msgstr "А поки відновити картки з архіву можна у вебверсії."
 
 msgid "Update"
 msgstr "Оновити"

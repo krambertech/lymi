@@ -67,6 +67,7 @@
   "scripts": {
     "start": "expo start",
     "ios": "expo run:ios",
+    "dev-client": "node scripts/dev-client.mjs",
     "android": "expo run:android",
     "prebuild": "expo prebuild --clean",
     "typecheck": "tsc --noEmit",

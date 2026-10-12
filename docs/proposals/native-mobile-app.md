@@ -19,7 +19,7 @@ Versions checked on 11 October 2026.
 | Layer | Choice | Lost to it |
 | --- | --- | --- |
 | Framework | Expo SDK 57, React Native 0.86, New Architecture | Capacitor; a WebView shell |
-| Navigation | Expo Router: native stacks, form sheets, `Link.Preview`; our own tab bar | The system tab bar (`NativeTabs`) |
+| Navigation | Expo Router: native stacks, form sheets, `Link.Preview`; iOS's own tab bar (`NativeTabs`) | A tab bar Lymi draws in Liquid Glass ([ADR 0034](../adr/0034-the-phone-uses-the-system-tab-bar-and-captures-from-the-top-bar.md)) |
 | Styling | Uniwind (Tailwind v4), class names shared with the web | NativeWind v5, still a release candidate |
 | Motion | Reanimated 4 and Gesture Handler; React Native Skia draws the lantern, its glow and embers | Moti, no longer maintained |
 | Icons and type | Lucide and Onest, as on the web | SF Symbols and San Francisco |
@@ -55,20 +55,21 @@ Product rules stay in `packages/core`. Screens keep the web's component names, s
 
 Unchanged from the web: both rooms and their colours, Onest, the lantern and every flame rule, amber meaning act, one primary per view, the reveal, the end of a review, the seven lights and Lucide icons. The phone's own rules are in [phone.md](../design/system/phone.md); the moments it shares with the web and the site are in [motion.md](../design/system/motion.md) and [brand.md](../design/system/brand.md).
 
-Decided in the proof of concept: the pill in Liquid Glass, the title in the top bar, the lit room on Today, plate grades, Onest everywhere, display type in a 1.2 line box, and no Undo toast while grading.
+Decided in the proof of concept: the title in the top bar, the lit room on Today, plate grades, Onest everywhere, display type in a 1.2 line box, and no Undo toast while grading.
 
 Decided in the design-vision session on 11 October:
 
 - **What the phone is for.** It leads the daily jobs, and setup stays on the web ([ADR 0030](../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)).
 - **Review.** Grades 80 pt and nearly square, a flat X, pull the top bar down to end, swipe from the start edge to undo one grade, the spark from the hood after a grade, the end's light reaching the screen's edges, and a haptic for every touch that changes state.
-- **Navigation.** You holds Insights, the reminder and theme, Activity and Settings; Archived closes Library. Pages push from the side, tasks rise as sheets, a review covers the screen. Capture moves to the bottom of the screen.
+- **Navigation.** You holds Insights, the reminder and theme, Activity and Settings; Archived closes Library. Pages push from the side, tasks rise as sheets, a review covers the screen.
 - **Shared moments,** on the web and the site too ([lit design language](lit-design-language.md)): the wick on reveal, numbers that roll, the end lighting the room, the pool following the hour, sound only at the goal and off with one setting, and the tilt highlight on Today's lantern on the phone.
 - **Outside the app.** One widget in two sizes (Lantern small, Week medium), the Lock Screen ring, Add a word and Review controls, one plain reminder, no Live Activity for now.
 - **Share to Lymi.** A Lymi sheet inside the share sheet, so the learner never leaves the app they were reading. The page title becomes the card's source.
 
+Decided on 12 October ([ADR 0034](../adr/0034-the-phone-uses-the-system-tab-bar-and-captures-from-the-top-bar.md)): the tabs are iOS's own tab bar with Today, Library, Explore and You; capture is an amber glass button at the end of every tab's top bar; inside a deck with cards due, the tab bar's accessory starts its review.
+
 Still open, with options to compare:
 
-- **Tabs and capture.** Whether Explore takes a fourth tab, and whether capture sits beside the pill or in its middle. The pill keeps the proof of concept's styling.
 - **Add a word.** How several words in a row and the optional fields work on a phone. The pattern to beat is Reminders' Return-adds-the-next with Linear's chips above the keyboard.
 - **Widget actions.** The widgets show state but offer no action. The medium size may carry Add a word and Review as two links.
 - **Controls.** Their look, and whether Review shows the count and the goal. Controls take a custom symbol, a title and a value; there is no ring.

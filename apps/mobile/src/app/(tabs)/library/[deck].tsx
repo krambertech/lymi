@@ -385,7 +385,7 @@ function Tools({
           onPress={() => setLevel(null)}
           accessibilityRole={level ? "button" : "header"}
           accessibilityLabel={level ? t`Back to Filter` : t`Filter`}
-          className="self-start pb-3 ps-4 pe-3"
+          className="self-start ps-4 pe-3"
         >
           {/* The chevron sits in the inset, so the title starts at the same place at both levels. */}
           {level && (
@@ -418,9 +418,7 @@ function Tools({
             {sections.length > 0 && (
               <SheetRow
                 label={levelName.section}
-                detail={
-                  filters.sections.length ? filters.sections.map(sectionName).join(", ") : t`Any`
-                }
+                detail={filters.sections.length ? list(filters.sections.map(sectionName)) : t`Any`}
                 opens
                 onPress={() => setLevel("section")}
               />

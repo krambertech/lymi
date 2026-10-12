@@ -9,7 +9,7 @@ import {
   normaliseTerm,
 } from "@lymi/core";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
-import type { Card, CardHit, CardState, DeckSummary, Me } from "./api";
+import type { Card, CardHit, CardSearchPage, CardState, DeckSummary, Me } from "./api";
 import { type DrawData, drawCards, drawLog } from "./review-draw";
 import type { DeckPatch, QueuedWrite, Write } from "./writes";
 
@@ -31,6 +31,13 @@ export function cacheLookup(qc: QueryClient): Lookup {
   const cards = new Map<string, Card>();
   for (const card of qc.getQueryData<CardHit[]>(["cards", "archived"]) ?? [])
     cards.set(card.id, card);
+  const pages = qc.getQueryData<{ pages: CardSearchPage[] }>(["cards", "archived", "pages"]);
+  for (const page of pages?.pages ?? []) for (const card of page.cards) cards.set(card.id, card);
+  // Review data can hold a card no deck list has yet, such as one drawn before warming reached its deck.
+  for (const [key, data] of qc.getQueriesData<Review>({ queryKey: ["queue"] })) {
+    if (!shapeOf(key) || !data) continue;
+    for (const e of data.cards ?? data.items ?? []) if (e?.card) cards.set(e.card.id, e.card);
+  }
   for (const [key, rows] of qc.getQueriesData<DeckRow[]>({ queryKey: ["decks"] })) {
     if (shapeOf(key)?.shape !== "deckCards" || !Array.isArray(rows)) continue;
     for (const row of rows) cards.set(row.card.id, row.card);
@@ -46,9 +53,17 @@ export function cacheLookup(qc: QueryClient): Lookup {
   };
 }
 
-type Shape = "decks" | "archivedDecks" | "deckCards" | "archivedCards" | "draw" | "queue";
+type Shape =
+  | "decks"
+  | "archivedDecks"
+  | "deckCards"
+  | "archivedCards"
+  | "archivedCardPages"
+  | "archivedCardPage"
+  | "draw"
+  | "queue";
 
-function shapeOf(key: QueryKey): { shape: Shape; deckId?: string } | null {
+function shapeOf(key: QueryKey): { shape: Shape; deckId?: string; first?: boolean } | null {
   if (key[0] === "decks" && key.length === 1) return { shape: "decks" };
   if (key[0] === "decks" && key[1] === "archived" && key.length === 2) {
     return { shape: "archivedDecks" };
@@ -58,6 +73,11 @@ function shapeOf(key: QueryKey): { shape: Shape; deckId?: string } | null {
   }
   if (key[0] === "cards" && key[1] === "archived" && key.length === 2) {
     return { shape: "archivedCards" };
+  }
+  // Archived a page at a time: the cached pages, and one page as it is fetched.
+  if (key[0] === "cards" && key[1] === "archived" && key[2] === "pages") {
+    if (key.length === 3) return { shape: "archivedCardPages" };
+    if (key.length === 4) return { shape: "archivedCardPage", first: key[3] === "first" };
   }
   // A review's draw and a round's queue, so a card edited or archived offline reads as it will.
   if (key[0] === "queue" && key.length === 3)
@@ -332,6 +352,44 @@ function withoutDeck<T extends Review>(
   return removed === 0 && total === data.total ? data : { ...data, cards: rest, total };
 }
 
+/** A draw's count for one deck moved by `by`, where the draw carries per-deck counts. */
+const recount = (decks: Review["decks"], deckId: string, by: number) =>
+  decks && deckId in decks ? { ...decks, [deckId]: Math.max(0, (decks[deckId] ?? 0) + by) } : decks;
+
+/**
+ * A draw or a round with a card write applied: an edit or a mark shows on the card, an archive
+ * takes it out. A restore waits for the next fetch, which knows its schedule, unless Undo brings it.
+ */
+function withCard<T extends Review>(data: T, w: Write): T {
+  const list = data.cards ? "cards" : "items";
+  const entries = data[list];
+  if (!entries) return data;
+  switch (w.kind) {
+    case "card.update":
+    case "card.important": {
+      if (!entries.some((e) => e.card.id === w.id)) return data;
+      const card = (c: Card) =>
+        w.kind === "card.update" ? patchCard(c, w.patch) : { ...c, important: w.important };
+      return {
+        ...data,
+        [list]: entries.map((e) => (e.card.id === w.id ? { ...e, card: card(e.card) } : e)),
+      };
+    }
+    case "card.archive": {
+      const gone = entries.find((e) => e.card.id === w.id);
+      if (!gone) return data;
+      return {
+        ...data,
+        [list]: entries.filter((e) => e !== gone),
+        total: Math.max(0, data.total - 1),
+        ...(data.decks ? { decks: recount(data.decks, gone.card.deckId, -1) } : {}),
+      };
+    }
+    default:
+      return data;
+  }
+}
+
 function onReview<T extends Review>(
   scope: string,
   data: T,
@@ -342,9 +400,32 @@ function onReview<T extends Review>(
   switch (w.kind) {
     case "deck.archive":
       return withoutDeck(scope, data, w.id, lookup, fetched);
+    case "card.update":
+    case "card.important":
+    case "card.archive":
+      return withCard(data, w);
     default:
       return data;
   }
+}
+
+type Page = CardSearchPage;
+
+/**
+ * Archived a page at a time. An edit, mark or restore reaches the card on whichever page holds it;
+ * an archive joins the first page, once across all of them. Cursors are the server's and stay.
+ */
+function onArchivedPages(pages: Page[], w: Write, lookup: Lookup): Page[] {
+  const held = w.kind === "card.archive" && pages.some((p) => p.cards.some((c) => c.id === w.id));
+  let changed = false;
+  const next = pages.map((page, i) => {
+    if (w.kind === "card.archive" && (held || i > 0)) return page;
+    const cards = onArchivedCards(page.cards, w, lookup);
+    if (cards === page.cards) return page;
+    changed = true;
+    return { ...page, cards };
+  });
+  return changed ? next : pages;
 }
 
 /**
@@ -360,6 +441,20 @@ export function applyWrite<T>(
 ): T {
   const target = shapeOf(key);
   if (!target || !data || typeof data !== "object") return data;
+  if (target.shape === "archivedCardPages") {
+    const infinite = data as T & { pages?: Page[] };
+    if (!Array.isArray(infinite.pages)) return data;
+    const pages = onArchivedPages(infinite.pages, w, lookup);
+    return pages === infinite.pages ? data : { ...infinite, pages };
+  }
+  if (target.shape === "archivedCardPage") {
+    const page = data as T & Page;
+    if (!Array.isArray(page.cards)) return data;
+    // A later page never gains an archive; the first page holds the newest.
+    if (w.kind === "card.archive" && !target.first) return data;
+    const cards = onArchivedCards(page.cards, w, lookup);
+    return cards === page.cards ? data : { ...page, cards };
+  }
   if (target.shape === "draw" || target.shape === "queue") {
     if (!("total" in data)) return data;
     return onReview(String(key[1]), data as T & Review, w, lookup, fetched);
@@ -374,6 +469,8 @@ export function applyWrite<T>(
       return onDeckCards(data as DeckRow[], target.deckId ?? "", w, lookup) as T;
     case "archivedCards":
       return onArchivedCards(data as CardHit[], w, lookup) as T;
+    default:
+      return data;
   }
 }
 
@@ -433,9 +530,45 @@ function unparkDeck(qc: QueryClient, id: string) {
   parkedDecks.delete(id);
 }
 
+/**
+ * What a card archive took out of each cached draw and round, so a restore, such as Undo, puts it
+ * back at once, offline too. A fetch while the restore waits knows only the server's.
+ */
+const parkedCards = new Map<string, { key: QueryKey; entries: Reviewed[] }[]>();
+
+function parkCard(qc: QueryClient, id: string) {
+  const held: { key: QueryKey; entries: Reviewed[] }[] = [];
+  for (const [key, data] of qc.getQueriesData<Review>({ queryKey: ["queue"] })) {
+    if (!shapeOf(key) || !data) continue;
+    const entries = (data.cards ?? data.items ?? []).filter((e) => e.card.id === id);
+    if (entries.length) held.push({ key, entries });
+  }
+  if (held.length) parkedCards.set(id, held);
+}
+
+function unparkCard(qc: QueryClient, id: string) {
+  for (const { key, entries } of parkedCards.get(id) ?? []) {
+    qc.setQueryData<Review>(key, (data) => {
+      const list = data?.cards ? "cards" : "items";
+      const current = data?.[list];
+      if (!data || !current || current.some((e) => e.card.id === id)) return data;
+      const deckId = entries[0]?.card.deckId ?? "";
+      return {
+        ...data,
+        [list]: [...entries, ...current],
+        total: data.total + 1,
+        ...(data.decks ? { decks: recount(data.decks, deckId, 1) } : {}),
+      };
+    });
+  }
+  parkedCards.delete(id);
+}
+
 /** Shows a write in every cached list at once, before the server has it. */
 export function showWrite(qc: QueryClient, w: Write) {
   if (w.kind === "deck.restore") unparkDeck(qc, w.id);
+  if (w.kind === "card.restore") unparkCard(qc, w.id);
+  if (w.kind === "card.archive") parkCard(qc, w.id);
   const held: ReturnType<typeof taken>[] = [];
   const lookup = cacheLookup(qc);
   for (const query of qc.getQueryCache().getAll()) {

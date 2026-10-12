@@ -43,6 +43,18 @@ export const cardSearchQuery = (query: string, deckId?: string) =>
     staleTime: 30_000,
     enabled: query.length > 0,
   });
+/** Every archived card, a page at a time, for a screen that shows Show more. */
+export const archivedCardPagesQuery = infiniteQueryOptions({
+  queryKey: ["cards", "archived", "pages"],
+  // Each page is fetched through the write outbox, so a waiting archive or restore lies over it.
+  queryFn: ({ pageParam }) =>
+    fresh(["cards", "archived", "pages", pageParam ? "next" : "first"], () =>
+      api.archivedCardsPage(pageParam),
+    ),
+  initialPageParam: undefined as string | undefined,
+  getNextPageParam: (last: CardSearchPage) => last.nextCursor ?? undefined,
+  staleTime: 0,
+});
 export const archivedCardsQuery = queryOptions({
   queryKey: ["cards", "archived"],
   queryFn: () => fresh(["cards", "archived"], api.archivedCards),

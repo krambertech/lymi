@@ -355,3 +355,127 @@ describe("a refetch while writes wait", () => {
     expect(rebase(["streak"], data, pending, cacheLookup(qc))).toBe(data);
   });
 });
+
+describe("a card write in review", () => {
+  const draw = () => ({
+    total: 2,
+    cards: [
+      { card: card("magari", "it"), modes: [] },
+      { card: card("sbrigarsi", "it"), modes: [] },
+    ],
+  });
+  const round = () => ({
+    total: 2,
+    items: [{ card: card("magari", "it") }, { card: card("sbrigarsi", "it") }],
+  });
+
+  it("shows an edit and takes an archived card out of a cached draw", () => {
+    const qc = cache();
+    qc.setQueryData(["queue", "all", "draw"], draw());
+    showWrite(qc, { kind: "card.update", id: "magari", patch: { meaning: "perhaps" } });
+    showWrite(qc, { kind: "card.archive", id: "sbrigarsi" });
+    const data = qc.getQueryData<ReturnType<typeof draw>>(["queue", "all", "draw"]);
+    expect(ids(data?.cards)).toEqual(["magari"]);
+    expect(data?.cards[0]?.card.meaning).toBe("perhaps");
+    expect(data?.total).toBe(1);
+  });
+
+  it("does the same to a round's queue", () => {
+    const qc = cache();
+    qc.setQueryData(["queue", "all", "forgotten"], round());
+    showWrite(qc, { kind: "card.archive", id: "magari" });
+    showWrite(qc, { kind: "card.important", id: "sbrigarsi", important: true });
+    const data = qc.getQueryData<ReturnType<typeof round>>(["queue", "all", "forgotten"]);
+    expect(ids(data?.items)).toEqual(["sbrigarsi"]);
+    expect(data?.items[0]?.card.important).toBe(true);
+    expect(data?.total).toBe(1);
+  });
+
+  it("puts a card back in the draw and the round when its archive is undone", () => {
+    const qc = cache();
+    qc.setQueryData(["queue", "all", "draw"], draw());
+    qc.setQueryData(["queue", "all", "forgotten"], round());
+    showWrite(qc, { kind: "card.archive", id: "magari" });
+    showWrite(qc, { kind: "card.restore", id: "magari" });
+    const d = qc.getQueryData<ReturnType<typeof draw>>(["queue", "all", "draw"]);
+    const r = qc.getQueryData<ReturnType<typeof round>>(["queue", "all", "forgotten"]);
+    expect(ids(d?.cards)?.sort()).toEqual(["magari", "sbrigarsi"]);
+    expect(d?.total).toBe(2);
+    expect(ids(r?.items)?.sort()).toEqual(["magari", "sbrigarsi"]);
+  });
+
+  it("lays an archive still waiting over a draw fetched again", () => {
+    const qc = cache();
+    const pending: QueuedWrite[] = [
+      { v: 1, key: "k", at: 0, write: { kind: "card.archive", id: "magari" }, label: "" },
+    ];
+    const rebased = rebase(["queue", "all", "draw"], draw(), pending, cacheLookup(qc));
+    expect(ids(rebased.cards)).toEqual(["sbrigarsi"]);
+  });
+});
+
+describe("archived cards a page at a time", () => {
+  const page = (ids: string[], nextCursor: string | null) => ({
+    cards: ids.map((id) => ({ ...card(id, "it"), deckName: "it" })),
+    nextCursor,
+    total: null,
+  });
+  const pagesKey = ["cards", "archived", "pages"];
+  const cached = () => ({
+    pages: [page(["a"], "c1"), page(["b"], null)],
+    pageParams: [undefined, "c1"],
+  });
+  type Pages = ReturnType<typeof cached>;
+
+  it("adds an archive to the first page once and keeps the cursors", () => {
+    const qc = cache();
+    qc.setQueryData(pagesKey, cached());
+    showWrite(qc, { kind: "card.archive", id: "magari" });
+    showWrite(qc, { kind: "card.archive", id: "magari" });
+    const data = qc.getQueryData<Pages>(pagesKey);
+    expect(data?.pages.map((p) => p.cards.map((c) => c.id))).toEqual([["magari", "a"], ["b"]]);
+    expect(data?.pages.map((p) => p.nextCursor)).toEqual(["c1", null]);
+    expect(data?.pageParams).toEqual([undefined, "c1"]);
+  });
+
+  it("takes a restored card off whichever page holds it", () => {
+    const qc = cache();
+    qc.setQueryData(pagesKey, cached());
+    showWrite(qc, { kind: "card.restore", id: "b" });
+    const data = qc.getQueryData<Pages>(pagesKey);
+    expect(data?.pages.map((p) => p.cards.map((c) => c.id))).toEqual([["a"], []]);
+  });
+
+  it("lays waiting writes over a page fetched again: an archive on the first page only", () => {
+    const qc = cache();
+    const pending: QueuedWrite[] = [
+      { v: 1, key: "k", at: 0, write: { kind: "card.archive", id: "magari" }, label: "" },
+      { v: 1, key: "k2", at: 1, write: { kind: "card.restore", id: "b" }, label: "" },
+    ];
+    const lookup = cacheLookup(qc);
+    const first = rebase([...pagesKey, "first"], page(["a"], "c1"), pending, lookup);
+    const next = rebase([...pagesKey, "next"], page(["b", "x"], null), pending, lookup);
+    expect(first.cards.map((c) => c.id)).toEqual(["magari", "a"]);
+    expect(first.nextCursor).toBe("c1");
+    expect(next.cards.map((c) => c.id)).toEqual(["x"]);
+  });
+});
+
+describe("a card only review data holds", () => {
+  it("is found for its archive, so Archived and its deck's count follow", () => {
+    const qc = cache();
+    qc.setQueryData(["queue", "all", "draw"], {
+      total: 1,
+      cards: [{ card: card("farcela", "it"), modes: [] }],
+    });
+    qc.setQueryData(["cards", "archived", "pages"], {
+      pages: [{ cards: [], nextCursor: null, total: null }],
+      pageParams: [undefined],
+    });
+    showWrite(qc, { kind: "card.archive", id: "farcela" });
+    const pages = qc.getQueryData<{ pages: { cards: Card[] }[] }>(["cards", "archived", "pages"]);
+    expect(pages?.pages[0]?.cards.map((c) => c.id)).toEqual(["farcela"]);
+    expect(qc.getQueryData<Card[]>(["cards", "archived"])?.map((c) => c.id)).toEqual(["farcela"]);
+    expect(qc.getQueryData<DeckSummary[]>(["decks"])?.[0]?.total).toBe(0);
+  });
+});

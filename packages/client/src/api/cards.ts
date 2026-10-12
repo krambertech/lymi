@@ -73,6 +73,12 @@ export const cardsApi = {
   },
   archivedCards: async () =>
     (await request<{ cards: CardHit[] }>("/api/cards?archived=true")).cards,
+  /** One page of archived cards, newest first; `cursor` is the last page's `nextCursor`. */
+  archivedCardsPage: (cursor?: string) => {
+    const params = new URLSearchParams({ archived: "true", limit: "50" });
+    if (cursor) params.set("cursor", cursor);
+    return request<CardSearchPage>(`/api/cards?${params.toString()}`);
+  },
   deckCards: (deckId: string) =>
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
   addCard: (body: CardInput) =>

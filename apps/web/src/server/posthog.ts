@@ -1,3 +1,4 @@
+import type { PhoneClient } from "@lymi/core";
 import { ANALYTICS_SCHEMA_VERSION, AnalyticsLocale, eventProperties } from "@lymi/core/analytics";
 import { exceptionProperties, POSTHOG_HOST } from "@lymi/core/telemetry";
 import { PostHog } from "posthog-node";
@@ -8,6 +9,24 @@ type TelemetryEnv = { PRODUCT_URL: string } & Partial<
   Pick<Bindings, "POSTHOG_PROJECT_TOKEN" | "EVENTS" | "CF_VERSION_METADATA" | "APP_PREVIEW">
 >;
 type Defer = (work: Promise<unknown>) => void;
+type AnalyticsContext = () => Promise<{
+  allowed: boolean;
+  ui_locale: "en" | "uk" | "ru";
+  is_internal?: true;
+  phone?: PhoneClient;
+}>;
+
+/** An outcome the phone asked for names its release, as the phone's own events do. */
+function phoneProperties(phone: PhoneClient | undefined) {
+  if (!phone) return {};
+  return {
+    client: "phone",
+    $os: phone.platform === "android" ? "Android" : "iOS",
+    $app_version: phone.version,
+    ...(phone.build ? { $app_build: phone.build } : {}),
+    ...(phone.update ? { app_update: phone.update } : {}),
+  };
+}
 
 export function posthogEnabled(env: TelemetryEnv): boolean {
   return (
@@ -50,7 +69,7 @@ export function productAnalytics(
   env: TelemetryEnv,
   userId: string,
   defer?: Defer,
-  context?: () => Promise<{ allowed: boolean; ui_locale: "en" | "uk" | "ru"; is_internal?: true }>,
+  context?: AnalyticsContext,
 ): AnalyticsWriter & {
   flush: () => Promise<void>;
   run: <T>(work: () => Promise<T>) => Promise<T>;
@@ -75,6 +94,7 @@ export function productAnalytics(
           event: event.name,
           properties: {
             ...properties,
+            ...phoneProperties(metadata.phone),
             ui_locale: metadata.ui_locale,
             surface: "worker",
             schema_version: ANALYTICS_SCHEMA_VERSION,
@@ -110,7 +130,7 @@ export async function trackProductEvent(
   userId: string,
   event: AnalyticsEvent,
   defer?: Defer,
-  context?: () => Promise<{ allowed: boolean; ui_locale: "en" | "uk" | "ru"; is_internal?: true }>,
+  context?: AnalyticsContext,
 ): Promise<void> {
   const analytics = productAnalytics(env, userId, defer, context);
   track(analytics, event);

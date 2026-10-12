@@ -21,11 +21,12 @@ import { LanguageSync } from "../i18n/sync";
 import { SplashGuard, useGiveUp } from "../splash/guard";
 import { Kindling } from "../splash/kindling";
 import { replaySplash, useReplays } from "../splash/replay";
-import { setExceptionLearner, startExceptionReporting } from "../telemetry/exceptions";
+import { Analytics } from "../telemetry/analytics";
+import { startTelemetry } from "../telemetry/posthog";
 import { usePalette } from "../theme/palette";
 import { clearWidgets, WidgetSync } from "../widgets/sync";
 
-startExceptionReporting();
+startTelemetry();
 
 // A link straight to a review, such as from a widget, still has the tabs under it.
 export const unstable_settings = { initialRouteName: "(tabs)" };
@@ -64,7 +65,6 @@ function Root() {
   const signedIn = Boolean(session.data);
   // A 426 from any request: this release is too old for the API, so nothing else can work.
   const update = useUpdateRequired();
-  useEffect(() => setExceptionLearner(learnerId), [learnerId]);
   // A cold start mounts this once; a return from the background does not, so the splash never replays.
   const [kindling, setKindling] = useState(true);
   const replays = useReplays();
@@ -110,6 +110,7 @@ function Root() {
     <ThemeProvider value={theme}>
       <StatusBar style="auto" />
       {!session.isPending && <LanguageSync signedIn={signedIn} />}
+      <Analytics learnerId={learnerId} />
       {learnerId && !update && (
         <>
           <Sync learnerId={learnerId} />

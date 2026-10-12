@@ -78,22 +78,39 @@ export async function askPermission(): Promise<Permission> {
   );
 }
 
-/** Replaces every scheduled reminder with the plan. */
-export async function schedule(plan: readonly PlannedReminder[]) {
-  await Notifications.cancelAllScheduledNotificationsAsync();
-  for (const { at, due } of plan) {
-    await Notifications.scheduleNotificationAsync({
-      content: content(due, at),
-      trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: at },
-    });
-  }
+// Each change waits for the one before it, so a sign-out's cancel can never land between a plan's
+// own cancel and its scheduling and leave reminders for the learner who left.
+let queue: Promise<unknown> = Promise.resolve();
+let latest = 0;
+function inTurn(task: () => Promise<void>): Promise<void> {
+  const run = queue.then(task, task);
+  queue = run.catch(() => undefined);
+  return run;
+}
+
+/** Replaces every scheduled reminder with the plan, unless a newer plan or a sign-out came after it. */
+export function schedule(plan: readonly PlannedReminder[]) {
+  const mine = ++latest;
+  return inTurn(async () => {
+    if (mine !== latest) return;
+    await Notifications.cancelAllScheduledNotificationsAsync();
+    for (const { at, due } of plan) {
+      await Notifications.scheduleNotificationAsync({
+        content: content(due, at),
+        trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: at },
+      });
+    }
+  });
 }
 
 /** Sign-out: nothing scheduled or still on the Lock Screen speaks for the learner who left. */
-export async function cancelReminders() {
+export function cancelReminders() {
+  latest++;
   deviceStore.remove(DEVICE_KEYS.snoozed);
-  await Notifications.cancelAllScheduledNotificationsAsync();
-  await Notifications.dismissAllNotificationsAsync();
+  return inTurn(async () => {
+    await Notifications.cancelAllScheduledNotificationsAsync();
+    await Notifications.dismissAllNotificationsAsync();
+  });
 }
 
 export function snoozedUntil(): Date | undefined {
@@ -119,9 +136,11 @@ export function listenForLater() {
     const at = new Date(Date.now() + HOUR_MS);
     deviceStore.set(DEVICE_KEYS.snoozed, at.getTime());
     const { title, body } = r.notification.request.content;
-    void Notifications.scheduleNotificationAsync({
-      content: { ...content(0, at), title, body },
-      trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: at },
+    void inTurn(async () => {
+      await Notifications.scheduleNotificationAsync({
+        content: { ...content(0, at), title, body },
+        trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: at },
+      });
     });
   };
   const last = Notifications.getLastNotificationResponse();

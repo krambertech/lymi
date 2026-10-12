@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { insightsQuery } from "@lymi/client/queries";
 import { useQuery } from "@tanstack/react-query";
 import * as Notifications from "expo-notifications";
-import { useRouter } from "expo-router";
+import { usePathname, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { AppState } from "react-native";
 import { useMMKVString } from "react-native-mmkv";
@@ -28,6 +28,7 @@ export function ReminderSync() {
   const router = useRouter();
   const { i18n } = useLingui();
   const [time] = useMMKVString(DEVICE_KEYS.reminder, deviceStore);
+  // TODO(#641): count today with dueToday once it lands, so the reminder matches Today and the widgets.
   const { left, dayDone } = useDay();
   const insights = useQuery({
     ...insightsQuery(30),
@@ -54,9 +55,11 @@ export function ReminderSync() {
   useEffect(() => {
     if (time && left === undefined) return;
     // A review grades every few seconds; the plan only needs where the day settled.
+    let live = true;
     const timer = setTimeout(async () => {
       if (!time) return schedule([]);
-      if ((await notificationPermission()) !== "granted") return;
+      // A sign-out while iOS answers unmounts this; its plan would be for the learner who left.
+      if ((await notificationPermission()) !== "granted" || !live) return;
       await schedule(
         planReminders({
           time,
@@ -68,20 +71,31 @@ export function ReminderSync() {
         }),
       );
     }, 1500);
-    return () => clearTimeout(timer);
+    return () => {
+      live = false;
+      clearTimeout(timer);
+    };
   }, [time, left, dayDone, forecast, front, i18n.locale]);
 
+  // A cold start opens on "/", which redirects to Today; a review opened before that is replaced.
+  const path = usePathname();
+  const [opening, setOpening] = useState(false);
   useEffect(() => {
     const open = (response: Notifications.NotificationResponse) => {
       if (!opensReview(response)) return;
       Notifications.clearLastNotificationResponse();
-      router.navigate("/review");
+      setOpening(true);
     };
     const last = Notifications.getLastNotificationResponse();
     if (last) open(last);
     const listener = Notifications.addNotificationResponseReceivedListener(open);
     return () => listener.remove();
-  }, [router]);
+  }, []);
+  useEffect(() => {
+    if (!opening || path === "/") return;
+    setOpening(false);
+    router.navigate("/review");
+  }, [opening, path, router]);
 
   return null;
 }

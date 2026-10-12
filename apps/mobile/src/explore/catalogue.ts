@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { api } from "@lymi/client/api";
 import { exploreQuery } from "@lymi/client/queries";
-import { type ExploreOut, type Shelf, shelvesOf } from "@lymi/core/catalog";
+import { type ExploreOut, type PublicDeckSummary, type Shelf, shelvesOf } from "@lymi/core/catalog";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { API_URL } from "../auth/client";
@@ -28,6 +28,42 @@ export function useShelfLabel() {
     shelf.language
       ? languageName(shelf.language)
       : i18n._(SUBJECT_LABELS[shelf.key] ?? UNCATEGORISED_LABEL);
+}
+
+/** Lower case with the accents gone, so "cafe" finds "Café" and "zurich" finds "Zürich". */
+function fold(text: string) {
+  return text.normalize("NFD").replace(/\p{M}/gu, "").toLocaleLowerCase();
+}
+
+/**
+ * The decks every word of the query is somewhere in: the name, the summary, the card on the tray,
+ * and the shelf it sits on, as the public page's search reads them. Names that match come first.
+ */
+export function searchDecks(
+  shelves: Shelf[],
+  query: string,
+  label: (shelf: Shelf) => string,
+): PublicDeckSummary[] {
+  const words = fold(query).split(/\s+/).filter(Boolean);
+  if (words.length === 0) return [];
+  const named: PublicDeckSummary[] = [];
+  const rest: PublicDeckSummary[] = [];
+  for (const shelf of shelves) {
+    const shelfText = fold(label(shelf));
+    for (const deck of shelf.decks) {
+      const name = fold(deck.name);
+      const all = [
+        name,
+        fold(deck.summary),
+        fold(deck.card?.term ?? ""),
+        fold(deck.card?.meaning ?? ""),
+        shelfText,
+      ].join(" ");
+      if (!words.every((word) => all.includes(word))) continue;
+      (words.every((word) => name.includes(word)) ? named : rest).push(deck);
+    }
+  }
+  return [...named, ...rest];
 }
 
 // Prototype only: the production catalogue as lymi.app/explore showed it on 12 Oct 2026, so the

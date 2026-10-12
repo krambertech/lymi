@@ -15,8 +15,20 @@ const TRAY = {
 /** The card at night sits lighter than its tray, dark enough that muted text keeps 4.5:1. */
 const NIGHT_CARD = "#3a342f";
 
-export function useTrayColour(slug: string) {
-  return TRAY[useRoom()][trayHue(slug)];
+export function useTrayColour(slug: string): string {
+  const room = TRAY[useRoom()];
+  return room[trayHue(slug)] ?? room[0];
+}
+
+/** A deck's page wears its hue a step quieter, oklch(0.958 0.034 h) and oklch(0.19 0.03 h). */
+const COVER = {
+  light: ["#ffe9e6", "#f2f4da", "#e2f8e5", "#d8f9f8", "#dcf6ff", "#ecefff", "#fceaff", "#ffe8f4"],
+  dark: ["#200e0d", "#151505", "#09180c", "#021818", "#05161f", "#111221", "#1a0f1c", "#1e0e16"],
+} as const;
+
+export function useCoverColour(slug: string): string {
+  const room = COVER[useRoom()];
+  return room[trayHue(slug)] ?? room[0];
 }
 
 /** A long word would break mid-letter at the full size, and a long cue would run past three lines. */
@@ -26,10 +38,18 @@ function cueStep(text: string): number {
   return text.length > 28 ? Math.min(step, 0.1) : step;
 }
 
-type TrayCard = NonNullable<PublicDeckSummary["card"]>;
+export type TrayCard = NonNullable<PublicDeckSummary["card"]>;
 
 /** The card turned over as a tray draws it: what its mode asks above the rule, the answer under it. */
-function CardFace({ card, cw, imageBase }: { card: TrayCard; cw: number; imageBase: string }) {
+export function CardFace({
+  card,
+  cw,
+  imageBase,
+}: {
+  card: TrayCard;
+  cw: number;
+  imageBase: string;
+}) {
   const p = usePalette();
   const { cue, target } = modeOf(card.mode);
   const picture = cue === "image" ? card.image : undefined;

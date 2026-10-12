@@ -1,47 +1,56 @@
+import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { useLocalSearchParams } from "expo-router";
+import type { Shelf } from "@lymi/core/catalog";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import { useAddDeck, useCatalogue } from "../../../explore/catalogue";
-import { OneShelf, SwipeRows, TwoByTwo } from "../../../explore/layouts";
-import { Button, Text } from "../../../ui/primitives";
-import { Screen } from "../../../ui/screen";
-import { Segmented } from "../../../ui/segmented";
+import { useCatalogue, useShelfLabel } from "../../../explore/catalogue";
+import { ShelfGrid, ShelfRows } from "../../../explore/layouts";
+import { Button, Press, Text } from "../../../ui/primitives";
+import { BarGroup, Screen } from "../../../ui/screen";
+import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 
-type Layout = "rows" | "shelf" | "grid";
-const LAYOUTS = { rows: SwipeRows, shelf: OneShelf, grid: TwoByTwo };
-
-/** Explore: every deck Lymi publishes, a shelf per language and then per subject. explore.md. */
+/**
+ * Explore: every deck Lymi publishes, a shelf per language and then per subject, each a row that
+ * swipes sideways. The bar's filter narrows the page to one shelf; search opens its own screen.
+ * docs/design/explore.md.
+ */
 export default function Explore() {
   const { t } = useLingui();
+  const router = useRouter();
   const catalogue = useCatalogue();
-  const { layout: asked, skip } = useLocalSearchParams<{ layout?: Layout; skip?: string }>();
-  const [layout, setLayout] = useState<Layout>(asked ?? "rows");
-  useEffect(() => {
-    if (asked) setLayout(asked);
-  }, [asked]);
-  const add = useAddDeck(catalogue.sample, (slug) => catalogue.markAdded(slug));
-  const Shelves = LAYOUTS[layout];
+  const label = useShelfLabel();
+  // A link can open Explore on one shelf, as `lymi://explore?shelf=language-de`.
+  const { shelf: linked } = useLocalSearchParams<{ shelf?: string }>();
+  const [filter, setFilter] = useState<string | undefined>(linked);
+  useEffect(() => setFilter(linked), [linked]);
+  const [choosing, setChoosing] = useState(false);
+  const [chosen, setChosen] = useState<string | null | undefined>();
+  const shelf = catalogue.shelves.find((s) => s.key === filter);
+
   return (
-    <Screen title={t`Explore`} kind="tab">
-      <View className="gap-4">
-        <Text className="text-base text-text-2">
-          {t`Ready-made decks from Lymi. Add one to study it in your language.`}
-        </Text>
-        {__DEV__ && (
-          <Segmented
-            label="Prototype layout"
-            value={layout}
-            onChange={setLayout}
-            options={[
-              { value: "rows", label: "A · Rows" },
-              { value: "shelf", label: "B · Shelf" },
-              { value: "grid", label: "C · Grid" },
-            ]}
-          />
-        )}
-      </View>
+    <Screen
+      title={t`Explore`}
+      kind="tab"
+      actions={
+        <BarGroup
+          items={[
+            {
+              icon: "filter",
+              label: t`Show one shelf`,
+              on: !!shelf,
+              onPress: () => setChoosing(true),
+            },
+            {
+              icon: "search",
+              label: t`Search decks`,
+              onPress: () => router.push("/explore-search"),
+            },
+          ]}
+        />
+      }
+    >
       {catalogue.failed ? (
         <View className="items-start gap-3">
           <Text className="text-md text-text">{t`Couldn’t load Explore`}</Text>
@@ -52,15 +61,117 @@ export default function Explore() {
           <Skeleton width={160} height={28} />
           <Skeleton height={144} />
         </View>
+      ) : shelf ? (
+        <View className="gap-4">
+          <FilterLine shelf={shelf} label={label(shelf)} onClear={() => setFilter(undefined)} />
+          <ShelfGrid decks={shelf.decks} added={catalogue.added} imageBase={catalogue.imageBase} />
+        </View>
       ) : (
-        <Shelves
-          shelves={catalogue.shelves.slice(Number(skip ?? 0))}
+        <ShelfRows
+          shelves={catalogue.shelves}
           added={catalogue.added}
           imageBase={catalogue.imageBase}
-          adding={add.isPending ? add.variables?.slug : undefined}
-          onAdd={(deck) => add.mutate({ slug: deck.slug, edition: deck.meaningLanguage })}
         />
       )}
+      <ShelfPicker
+        open={choosing}
+        onOpenChange={setChoosing}
+        shelves={catalogue.shelves}
+        current={shelf?.key}
+        label={label}
+        onChoose={(key) => {
+          setChosen(key);
+          setChoosing(false);
+        }}
+        // The page changes once the sheet has gone, so nothing moves under it. phone.md "Components".
+        onDismiss={() => {
+          if (chosen !== undefined) setFilter(chosen ?? undefined);
+          setChosen(undefined);
+        }}
+      />
     </Screen>
+  );
+}
+
+/** Which shelf the page shows, with the way back to every shelf. */
+function FilterLine({
+  shelf,
+  label,
+  onClear,
+}: {
+  shelf: Shelf;
+  label: string;
+  onClear: () => void;
+}) {
+  const { t } = useLingui();
+  return (
+    <View className="flex-row items-center justify-between gap-4">
+      <View className="flex-1 gap-0.5">
+        <Text className="text-xl font-medium text-text" accessibilityRole="header">
+          {label}
+        </Text>
+        <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+          {plural(shelf.decks.length, { one: "# deck", other: "# decks" })}
+        </Text>
+      </View>
+      <Press onPress={onClear} accessibilityRole="button" className="h-11 justify-center ps-2">
+        <Text className="text-base font-medium text-text-2">{t`All shelves`}</Text>
+      </Press>
+    </View>
+  );
+}
+
+/**
+ * The shelves as a choice list: every shelf first, then the subjects, which are few, and the
+ * languages under the fold, where dragging the sheet up reaches them.
+ */
+function ShelfPicker({
+  open,
+  onOpenChange,
+  shelves,
+  current,
+  label,
+  onChoose,
+  onDismiss,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  shelves: Shelf[];
+  current: string | undefined;
+  label: (shelf: Shelf) => string;
+  onChoose: (key: string | null) => void;
+  onDismiss: () => void;
+}) {
+  const { t } = useLingui();
+  const languages = shelves.filter((s) => s.language);
+  const subjects = shelves.filter((s) => !s.language);
+  const row = (s: Shelf) => (
+    <SheetRow
+      key={s.key}
+      label={label(s)}
+      detail={plural(s.decks.length, { one: "# deck", other: "# decks" })}
+      chosen={current === s.key}
+      onPress={() => onChoose(s.key)}
+    />
+  );
+  return (
+    <Sheet
+      open={open}
+      onOpenChange={onOpenChange}
+      onDismiss={onDismiss}
+      title={t`Show`}
+      more={
+        <>
+          <Text className="px-4 pb-1 pt-2 text-sm font-medium text-muted">{t`Languages`}</Text>
+          <SheetGroup>{languages.map(row)}</SheetGroup>
+        </>
+      }
+    >
+      <SheetGroup>
+        <SheetRow label={t`Every shelf`} chosen={!current} onPress={() => onChoose(null)} />
+      </SheetGroup>
+      <Text className="px-4 pb-1 pt-2 text-sm font-medium text-muted">{t`Subjects`}</Text>
+      <SheetGroup>{subjects.map(row)}</SheetGroup>
+    </Sheet>
   );
 }

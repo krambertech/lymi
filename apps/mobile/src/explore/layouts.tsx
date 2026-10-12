@@ -2,57 +2,73 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { hasShelfPage, type PublicDeckSummary, type Shelf } from "@lymi/core/catalog";
 import { useRouter } from "expo-router";
-import { useState } from "react";
 import { ScrollView, useWindowDimensions, View } from "react-native";
 import { usePalette } from "../theme/palette";
-import { Button, Icon, Plate, Press, Text } from "../ui/primitives";
+import { Icon, Plate, Press, RowArrow, Text } from "../ui/primitives";
 import { useShelfLabel } from "./catalogue";
-import { DeckTray } from "./tray";
-
-export interface LayoutProps {
-  shelves: Shelf[];
-  added: Record<string, string>;
-  imageBase: string;
-  onAdd: (deck: PublicDeckSummary) => void;
-  adding: string | undefined;
-}
+import { DeckTray, useTrayColour } from "./tray";
 
 /** The page's own gutter, which a sideways row bleeds through to the screen's edges. */
 const GUTTER = 20;
 
-function DeckMeta({
-  deck,
-  added,
-  small,
-}: {
-  deck: PublicDeckSummary;
-  added: boolean;
-  small?: boolean;
-}) {
+/** Cards and sections on one line, or that the deck is already in Library. */
+export function DeckMeta({ deck, added }: { deck: PublicDeckSummary; added: boolean }) {
   const p = usePalette();
   const { t } = useLingui();
-  const size = small ? "text-sm" : "text-base";
   if (added) {
     return (
       <View className="flex-row items-center gap-1.5">
-        <Icon name="check" size={small ? 14 : 16} colour={p["state-known"]} strokeWidth={2.5} />
-        <Text className={`${size} font-medium text-text-2`}>{t`In Library`}</Text>
+        <Icon name="check" size={14} colour={p["state-known"]} strokeWidth={2.5} />
+        <Text className="text-sm font-medium text-text-2">{t`In Library`}</Text>
       </View>
     );
   }
   const cards = plural(deck.cardCount, { one: "# card", other: "# cards" });
   const sections = plural(deck.sectionCount, { one: "# section", other: "# sections" });
   return (
-    <Text className={`${size} text-muted`} style={{ fontVariant: ["tabular-nums"] }}>
-      {deck.sectionCount > 0 ? `${cards} · ${sections}` : cards}
+    <Text className="text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+      {deck.sectionCount > 0 ? t`${cards} · ${sections}` : cards}
     </Text>
   );
 }
 
-function useOpen() {
+export function useOpenDeck() {
   const router = useRouter();
-  return (deck: PublicDeckSummary) =>
+  return (deck: Pick<PublicDeckSummary, "slug" | "name">) =>
     router.push({ pathname: "/explore/[slug]", params: { slug: deck.slug, name: deck.name } });
+}
+
+/** A deck as a shelf shows it: its card in a tray, its name, and its counts. */
+export function DeckTile({
+  deck,
+  width,
+  added,
+  imageBase,
+}: {
+  deck: PublicDeckSummary;
+  width: number;
+  added: boolean;
+  imageBase: string;
+}) {
+  const open = useOpenDeck();
+  return (
+    <Press
+      scale={0.98}
+      onPress={() => open(deck)}
+      accessibilityRole="link"
+      accessibilityLabel={deck.name}
+      style={{ width }}
+      className="gap-2.5"
+    >
+      <DeckTray deck={deck} cw={width * 0.7} imageBase={imageBase} />
+      <View className="gap-0.5 px-0.5">
+        <Text className="text-md font-medium leading-snug text-text" numberOfLines={2}>
+          {deck.name}
+        </Text>
+        <DeckMeta deck={deck} added={added} />
+      </View>
+    </Press>
+  );
 }
 
 /** A shelf's heading, with the way to its page when it has one and its count when it has not. */
@@ -61,15 +77,13 @@ function ShelfHeader({ shelf }: { shelf: Shelf }) {
   const { t } = useLingui();
   const label = useShelfLabel()(shelf);
   const router = useRouter();
-  const page = hasShelfPage(shelf);
   return (
     <View className="flex-row items-center justify-between gap-4">
       <Text className="text-xl font-medium text-text" accessibilityRole="header" numberOfLines={1}>
         {label}
       </Text>
-      {page ? (
+      {hasShelfPage(shelf) ? (
         <Press
-          scale={0.97}
           onPress={() =>
             router.push({
               pathname: "/explore/shelf/[key]",
@@ -95,11 +109,15 @@ function ShelfHeader({ shelf }: { shelf: Shelf }) {
   );
 }
 
-// A. Each shelf is a row that swipes sideways, as the App Store's are, two decks and a bit in view.
+interface ShelvesProps {
+  shelves: Shelf[];
+  added: Record<string, string>;
+  imageBase: string;
+}
 
-export function SwipeRows({ shelves, added, imageBase }: LayoutProps) {
+/** Every shelf as a row that swipes sideways, two decks and a bit in view, as the App Store's do. */
+export function ShelfRows({ shelves, added, imageBase }: ShelvesProps) {
   const { width } = useWindowDimensions();
-  const open = useOpen();
   const tile = Math.round((width - GUTTER * 2 - 12) / 2.15);
   return (
     <View className="gap-9">
@@ -116,23 +134,13 @@ export function SwipeRows({ shelves, added, imageBase }: LayoutProps) {
             contentContainerStyle={{ paddingHorizontal: GUTTER, gap: 12 }}
           >
             {shelf.decks.slice(0, 10).map((deck) => (
-              <Press
+              <DeckTile
                 key={deck.slug}
-                scale={0.98}
-                onPress={() => open(deck)}
-                accessibilityRole="link"
-                accessibilityLabel={deck.name}
-                style={{ width: tile }}
-                className="gap-2.5"
-              >
-                <DeckTray deck={deck} cw={tile * 0.7} imageBase={imageBase} />
-                <View className="gap-0.5 px-0.5">
-                  <Text className="text-md font-medium leading-snug text-text" numberOfLines={2}>
-                    {deck.name}
-                  </Text>
-                  <DeckMeta deck={deck} added={!!added[deck.slug]} small />
-                </View>
-              </Press>
+                deck={deck}
+                width={tile}
+                added={!!added[deck.slug]}
+                imageBase={imageBase}
+              />
             ))}
           </ScrollView>
         </View>
@@ -141,124 +149,84 @@ export function SwipeRows({ shelves, added, imageBase }: LayoutProps) {
   );
 }
 
-// B. One shelf at a time: the shelves as chips, the chosen one's decks as the web's tiles, Add and all.
-
-export function OneShelf({ shelves, added, imageBase, onAdd, adding }: LayoutProps) {
-  const { t } = useLingui();
-  const label = useShelfLabel();
-  const open = useOpen();
-  const p = usePalette();
-  const [key, setKey] = useState(shelves[0]?.key);
-  const shelf = shelves.find((s) => s.key === key) ?? shelves[0];
-  if (!shelf) return null;
+/** Every deck on one shelf, two by two: a filtered Explore and a shelf's own page. */
+export function ShelfGrid({
+  decks,
+  added,
+  imageBase,
+}: {
+  decks: PublicDeckSummary[];
+  added: Record<string, string>;
+  imageBase: string;
+}) {
+  const { width } = useWindowDimensions();
+  const tile = (width - GUTTER * 2 - 12) / 2;
   return (
-    <View className="gap-5">
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{ marginHorizontal: -GUTTER }}
-        contentContainerStyle={{ paddingHorizontal: GUTTER, gap: 8 }}
-        accessibilityRole="tablist"
-        accessibilityLabel={t`Shelves`}
-      >
-        {shelves.map((s) => {
-          const on = s.key === shelf.key;
-          return (
-            <Press
-              key={s.key}
-              onPress={() => setKey(s.key)}
-              accessibilityRole="tab"
-              accessibilityState={{ selected: on }}
-              className={`h-10 flex-row items-center gap-1.5 rounded-full px-4 ${on ? "bg-text" : "bg-plate-2"}`}
-            >
-              <Text className={`text-base font-medium ${on ? "text-canvas" : "text-text"}`}>
-                {label(s)}
-              </Text>
-              <Text
-                className="text-sm"
-                style={{ color: on ? `${p.canvas}99` : p.muted, fontVariant: ["tabular-nums"] }}
-              >
-                {s.decks.length}
-              </Text>
-            </Press>
-          );
-        })}
-      </ScrollView>
-      <View className="gap-4">
-        {shelf.decks.map((deck) => {
-          const isAdded = !!added[deck.slug];
-          return (
-            <Plate key={deck.slug} className="overflow-hidden">
-              <Press
-                scale={0.98}
-                onPress={() => open(deck)}
-                accessibilityRole="link"
-                accessibilityLabel={deck.name}
-              >
-                <DeckTray deck={deck} cw={150} imageBase={imageBase} flush />
-                <View className="gap-1 px-4 pt-4">
-                  <Text className="text-xl font-medium text-text">{deck.name}</Text>
-                  <Text className="text-base text-text-2" numberOfLines={2}>
-                    {deck.summary}
-                  </Text>
-                  {!isAdded && <DeckMeta deck={deck} added={false} small />}
-                </View>
-              </Press>
-              <View className="flex-row px-4 pb-4 pt-3.5">
-                {isAdded ? (
-                  <DeckMeta deck={deck} added small />
-                ) : (
-                  <Button
-                    label={t`Add`}
-                    icon="plus"
-                    size="sm"
-                    loading={adding === deck.slug}
-                    onPress={() => onAdd(deck)}
-                  />
-                )}
-              </View>
-            </Plate>
-          );
-        })}
-      </View>
+    <View className="flex-row flex-wrap" style={{ gap: 12, rowGap: 24 }}>
+      {decks.map((deck) => (
+        <DeckTile
+          key={deck.slug}
+          deck={deck}
+          width={tile}
+          added={!!added[deck.slug]}
+          imageBase={imageBase}
+        />
+      ))}
     </View>
   );
 }
 
-// C. Two by two: every shelf shows its first four decks in a grid, and See all leads to the rest.
-
-export function TwoByTwo({ shelves, added, imageBase }: LayoutProps) {
-  const { width } = useWindowDimensions();
-  const open = useOpen();
-  const tile = (width - GUTTER * 2 - 12) / 2;
+/** A tray in miniature for a list: the deck's hue with the edge of a card tucked into it. */
+function TrayMark({ slug }: { slug: string }) {
+  const p = usePalette();
   return (
-    <View className="gap-9">
-      {shelves.map((shelf) => (
-        <View key={shelf.key} className="gap-3">
-          <ShelfHeader shelf={shelf} />
-          <View className="flex-row flex-wrap" style={{ gap: 12, rowGap: 20 }}>
-            {shelf.decks.slice(0, 4).map((deck) => (
-              <Press
-                key={deck.slug}
-                scale={0.98}
-                onPress={() => open(deck)}
-                accessibilityRole="link"
-                accessibilityLabel={deck.name}
-                style={{ width: tile }}
-                className="gap-2.5"
-              >
-                <DeckTray deck={deck} cw={tile * 0.68} imageBase={imageBase} />
-                <View className="gap-0.5 px-0.5">
-                  <Text className="text-md font-medium leading-snug text-text" numberOfLines={2}>
-                    {deck.name}
-                  </Text>
-                  <DeckMeta deck={deck} added={!!added[deck.slug]} small />
-                </View>
-              </Press>
-            ))}
-          </View>
-        </View>
-      ))}
+    <View
+      className="h-12 w-14 items-center overflow-hidden rounded-md pt-2"
+      style={{ backgroundColor: useTrayColour(slug) }}
+    >
+      <View
+        className="h-12 w-9 rounded-sm border border-edge"
+        style={{ backgroundColor: p.plate }}
+      />
     </View>
+  );
+}
+
+/** Decks as one plate of rows, for search results: the tray in miniature, name, shelf and counts. */
+export function DeckList({
+  decks,
+  added,
+  shelfOf,
+}: {
+  decks: PublicDeckSummary[];
+  added: Record<string, string>;
+  shelfOf: (deck: PublicDeckSummary) => string;
+}) {
+  const { t } = useLingui();
+  const open = useOpenDeck();
+  return (
+    <Plate className="overflow-hidden">
+      {decks.map((deck, i) => (
+        <Press
+          key={deck.slug}
+          scale={0.99}
+          onPress={() => open(deck)}
+          accessibilityRole="link"
+          accessibilityLabel={deck.name}
+          className={`flex-row items-center gap-3.5 py-3 ps-3 pe-4 ${i > 0 ? "border-t border-edge" : ""}`}
+        >
+          <TrayMark slug={deck.slug} />
+          <View className="flex-1 gap-0.5">
+            <Text className="text-md font-medium text-text" numberOfLines={2}>
+              {deck.name}
+            </Text>
+            <Text className="text-sm text-muted" numberOfLines={1}>
+              {added[deck.slug] ? t`${shelfOf(deck)} · In Library` : shelfOf(deck)}
+            </Text>
+          </View>
+          <RowArrow />
+        </Press>
+      ))}
+    </Plate>
   );
 }

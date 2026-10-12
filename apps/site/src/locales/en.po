@@ -857,8 +857,8 @@ msgstr "City; town"
 msgid "Claude · from your lesson notes"
 msgstr "Claude · from your lesson notes"
 
-msgid "Claude, Claude Code, ChatGPT, Codex and Gemini CLI. Other apps that support MCP can connect too."
-msgstr "Claude, Claude Code, ChatGPT, Codex and Gemini CLI. Other apps that support MCP can connect too."
+msgid "Claude, Claude Code, ChatGPT, Codex, Gemini CLI, Cursor and Grok. Other apps that support MCP can connect too."
+msgstr "Claude, Claude Code, ChatGPT, Codex, Gemini CLI, Cursor and Grok. Other apps that support MCP can connect too."
 
 msgid "Click to turn it over"
 msgstr "Click to turn it over"

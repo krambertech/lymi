@@ -162,6 +162,137 @@
       }
      }
     ]
+   },
+   "post": {
+    "operationId": "postApiDecks",
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Deck"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+         },
+         "defaultLanguage": {
+          "anyOf": [
+           {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 12,
+            "pattern": "^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$"
+           },
+           {
+            "type": "null"
+           }
+          ]
+         },
+         "directions": {
+          "type": "string",
+          "enum": [
+           "recognition",
+           "production",
+           "both"
+          ]
+         },
+         "reviewModes": {
+          "minItems": 1,
+          "maxItems": 4,
+          "type": "array",
+          "items": {
+           "$ref": "#/components/schemas/ReviewMode"
+          }
+         },
+         "seriesId": {
+          "anyOf": [
+           {
+            "type": "string",
+            "minLength": 1
+           },
+           {
+            "type": "null"
+           }
+          ]
+         },
+         "sectionProgression": {
+          "$ref": "#/components/schemas/SectionProgression"
+         },
+         "enrichFields": {
+          "$ref": "#/components/schemas/DeckEnrichFields"
+         },
+         "enrichInstructions": {
+          "anyOf": [
+           {
+            "type": "string",
+            "maxLength": 1000
+           },
+           {
+            "type": "null"
+           }
+          ]
+         },
+         "id": {
+          "type": "string",
+          "pattern": "^[0-9a-z]{16,40}$"
+         }
+        },
+        "required": [
+         "name"
+        ]
+       }
+      }
+     }
+    }
    }
   },
   "/api/decks/{id}/cards": {
@@ -1246,9 +1377,569 @@
       }
      }
     }
+   },
+   "post": {
+    "operationId": "postApiSeries",
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Series"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+         },
+         "deckIds": {
+          "maxItems": 200,
+          "type": "array",
+          "items": {
+           "type": "string",
+           "minLength": 1
+          }
+         }
+        },
+        "required": [
+         "name"
+        ]
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/series/{id}": {
+   "patch": {
+    "operationId": "patchApiSeriesById",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Series"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+         }
+        },
+        "required": [
+         "name"
+        ]
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   },
+   "delete": {
+    "operationId": "deleteApiSeriesById",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "in": "query",
+      "name": "decks",
+      "schema": {
+       "type": "string",
+       "enum": [
+        "archive",
+        "keep"
+       ]
+      },
+      "required": true
+     },
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   }
+  },
+  "/api/series/{id}/decks": {
+   "put": {
+    "operationId": "putApiSeriesByIdDecks",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Series"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "deckIds": {
+          "maxItems": 200,
+          "type": "array",
+          "items": {
+           "type": "string",
+           "minLength": 1
+          }
+         }
+        },
+        "required": [
+         "deckIds"
+        ]
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   }
+  },
+  "/api/series/order": {
+   "put": {
+    "operationId": "putApiSeriesOrder",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/Series"
+         }
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "409": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "seriesIds": {
+          "maxItems": 200,
+          "type": "array",
+          "items": {
+           "type": "string",
+           "minLength": 1
+          }
+         }
+        },
+        "required": [
+         "seriesIds"
+        ]
+       }
+      }
+     }
+    }
    }
   },
   "/api/cards": {
+   "get": {
+    "operationId": "getApiCards",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/CardSearchPage"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "in": "query",
+      "name": "query",
+      "schema": {
+       "type": "string",
+       "maxLength": 200
+      }
+     },
+     {
+      "in": "query",
+      "name": "archived",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "in": "query",
+      "name": "deckId",
+      "schema": {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 100
+      }
+     },
+     {
+      "in": "query",
+      "name": "sectionId",
+      "schema": {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 100
+      }
+     },
+     {
+      "in": "query",
+      "name": "term",
+      "schema": {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 500
+      }
+     },
+     {
+      "in": "query",
+      "name": "language",
+      "schema": {
+       "type": "string",
+       "minLength": 2,
+       "maxLength": 12,
+       "pattern": "^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$"
+      }
+     },
+     {
+      "in": "query",
+      "name": "stats",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "in": "query",
+      "name": "limit",
+      "schema": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 200
+      }
+     },
+     {
+      "in": "query",
+      "name": "cursor",
+      "schema": {
+       "type": "string",
+       "maxLength": 2000,
+       "pattern": "^[\\w-]+$"
+      }
+     }
+    ]
+   },
    "post": {
     "operationId": "postApiCards",
     "responses": {
@@ -2319,6 +3010,160 @@
      "x-lymi-open": true
     }
    },
+   "Deck": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "userId": {
+      "type": "string"
+     },
+     "name": {
+      "type": "string"
+     },
+     "defaultLanguage": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "directions": {
+      "type": "string",
+      "enum": [
+       "recognition",
+       "production",
+       "both"
+      ],
+      "x-lymi-open": true
+     },
+     "reviewModes": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/ReviewMode"
+      }
+     },
+     "position": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "seriesId": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "sectionProgression": {
+      "$ref": "#/components/schemas/SectionProgression"
+     },
+     "enrichFields": {
+      "$ref": "#/components/schemas/DeckEnrichFields"
+     },
+     "enrichInstructions": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 1000
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "meaningLanguage": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "archivedAt": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "importId": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+     },
+     "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+     },
+     "role": {
+      "type": "string",
+      "enum": [
+       "owner",
+       "editor",
+       "contributor",
+       "learner"
+      ],
+      "x-lymi-open": true
+     },
+     "owner": {
+      "type": "object",
+      "properties": {
+       "id": {
+        "type": "string"
+       },
+       "name": {
+        "type": "string"
+       },
+       "avatarUrl": {
+        "default": null,
+        "type": [
+         "string",
+         "null"
+        ]
+       }
+      },
+      "required": [
+       "id",
+       "name"
+      ]
+     },
+     "published": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "id",
+     "userId",
+     "name",
+     "description",
+     "defaultLanguage",
+     "directions",
+     "reviewModes",
+     "position",
+     "seriesId",
+     "sectionProgression",
+     "enrichFields",
+     "enrichInstructions",
+     "meaningLanguage",
+     "archivedAt",
+     "importId",
+     "createdAt",
+     "updatedAt",
+     "role",
+     "owner",
+     "published"
+    ]
+   },
    "CardWithState": {
     "type": "object",
     "properties": {
@@ -2997,6 +3842,484 @@
      "archivedAt",
      "createdAt",
      "updatedAt"
+    ]
+   },
+   "CardSearchPage": {
+    "type": "object",
+    "properties": {
+     "cards": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/CardHit"
+      }
+     },
+     "nextCursor": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "total": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "required": [
+     "cards",
+     "nextCursor",
+     "total"
+    ]
+   },
+   "CardHit": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "userId": {
+      "type": "string"
+     },
+     "deckId": {
+      "type": "string"
+     },
+     "term": {
+      "type": "string"
+     },
+     "normalizedTerm": {
+      "type": "string"
+     },
+     "meaning": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "pronunciation": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "notes": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "hook": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "language": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "source": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "sectionId": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "directions": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "recognition",
+         "production",
+         "both"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "x-lymi-open": true
+     },
+     "reviewModes": {
+      "anyOf": [
+       {
+        "type": "array",
+        "items": {
+         "$ref": "#/components/schemas/ReviewMode"
+        }
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "image": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/CardImage"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "imageVersion": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "meaningSource": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "lesson",
+         "ai",
+         "manual"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "x-lymi-open": true
+     },
+     "exampleSource": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "lesson",
+         "ai",
+         "manual"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "x-lymi-open": true
+     },
+     "pronunciationSource": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "lesson",
+         "ai",
+         "manual"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "x-lymi-open": true
+     },
+     "notesSource": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "lesson",
+         "ai",
+         "manual"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "x-lymi-open": true
+     },
+     "hookSource": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "lesson",
+         "ai",
+         "manual"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "x-lymi-open": true
+     },
+     "enrichmentStatus": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "working",
+         "failed"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "x-lymi-open": true
+     },
+     "enrichmentFields": {
+      "anyOf": [
+       {
+        "type": "array",
+        "items": {
+         "type": "string",
+         "enum": [
+          "meaning",
+          "example",
+          "notes",
+          "pronunciation",
+          "language"
+         ]
+        }
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "x-lymi-open": true
+     },
+     "audioKey": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "createdBy": {
+      "type": "string",
+      "enum": [
+       "user",
+       "api",
+       "mcp",
+       "ai",
+       "system"
+      ],
+      "x-lymi-open": true
+     },
+     "importId": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "important": {
+      "type": "boolean"
+     },
+     "archivedAt": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+     },
+     "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+     },
+     "deckName": {
+      "type": "string"
+     },
+     "stats": {
+      "$ref": "#/components/schemas/CardReviewStats"
+     }
+    },
+    "required": [
+     "id",
+     "userId",
+     "deckId",
+     "term",
+     "normalizedTerm",
+     "meaning",
+     "pronunciation",
+     "example",
+     "notes",
+     "hook",
+     "language",
+     "tags",
+     "source",
+     "sectionId",
+     "directions",
+     "reviewModes",
+     "image",
+     "imageVersion",
+     "meaningSource",
+     "exampleSource",
+     "pronunciationSource",
+     "notesSource",
+     "hookSource",
+     "enrichmentStatus",
+     "enrichmentFields",
+     "audioKey",
+     "createdBy",
+     "importId",
+     "important",
+     "archivedAt",
+     "createdAt",
+     "updatedAt",
+     "deckName"
+    ]
+   },
+   "CardReviewStats": {
+    "type": "object",
+    "properties": {
+     "reviewCount": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "lapses": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "lastRating": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 4
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "lastReviewedAt": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "dueAt": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "slipping": {
+      "type": "boolean"
+     },
+     "modes": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "mode": {
+         "$ref": "#/components/schemas/ReviewMode"
+        },
+        "reviewCount": {
+         "type": "integer",
+         "minimum": -9007199254740991,
+         "maximum": 9007199254740991
+        },
+        "lapses": {
+         "type": "integer",
+         "minimum": -9007199254740991,
+         "maximum": 9007199254740991
+        },
+        "lastRating": {
+         "anyOf": [
+          {
+           "type": "integer",
+           "minimum": 1,
+           "maximum": 4
+          },
+          {
+           "type": "null"
+          }
+         ]
+        },
+        "lastReviewedAt": {
+         "anyOf": [
+          {
+           "type": "string",
+           "format": "date-time",
+           "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          {
+           "type": "null"
+          }
+         ]
+        },
+        "dueAt": {
+         "anyOf": [
+          {
+           "type": "string",
+           "format": "date-time",
+           "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          {
+           "type": "null"
+          }
+         ]
+        },
+        "slipping": {
+         "type": "boolean"
+        }
+       },
+       "required": [
+        "mode",
+        "reviewCount",
+        "lapses",
+        "lastRating",
+        "lastReviewedAt",
+        "dueAt",
+        "slipping"
+       ]
+      }
+     }
+    },
+    "required": [
+     "reviewCount",
+     "lapses",
+     "lastRating",
+     "lastReviewedAt",
+     "dueAt",
+     "slipping",
+     "modes"
     ]
    },
    "AddCardOutcome": {

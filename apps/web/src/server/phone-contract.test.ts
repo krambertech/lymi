@@ -82,6 +82,7 @@ const closedOnPurpose = [
   "GET /api/review/draw 200 .log[].rating",
   // A literal `true` acknowledgement.
   "POST /api/cards/{id}/archive 200 .ok",
+  "DELETE /api/series/{id} 200 .ok",
   "POST /api/review/grade 200 .ok",
   "POST /api/review/undo 200 .ok",
   // Capture says where an added card went, so a new outcome needs a version gate first.

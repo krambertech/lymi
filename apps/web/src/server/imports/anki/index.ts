@@ -34,6 +34,7 @@ import {
   furiganaReading,
   hasFurigana,
   isImageOcclusion,
+  plainReading,
   questionField,
   revealCloze,
 } from "./text";
@@ -410,7 +411,11 @@ export const anki: SourceAdapter<AnkiNote> = {
       const fitted = fitFields({
         term: withoutReadings(term) ?? "",
         meaning: withoutReadings(raw.meaning),
-        pronunciation: raw.pronunciation || (hasFurigana(term) ? furiganaReading(term) : undefined),
+        pronunciation: raw.pronunciation
+          ? plainReading(raw.pronunciation)
+          : hasFurigana(term)
+            ? furiganaReading(term)
+            : undefined,
         example: withoutReadings(raw.example),
         notes: raw.notes,
       });

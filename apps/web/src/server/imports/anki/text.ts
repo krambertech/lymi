@@ -102,6 +102,11 @@ export function furiganaReading(text: string): string {
   );
 }
 
+/** A reading field as plain kana: bracket furigana is read through, plain text is kept. */
+export function plainReading(text: string): string {
+  return hasFurigana(text) ? furiganaReading(text) : text;
+}
+
 /**
  * The field a card template's question shows first, by index. Conditionals and FrontSide are
  * skipped and filters such as `type:` or `cloze:` are read through. Null when the question

@@ -6,6 +6,7 @@ import {
   furiganaReading,
   hasFurigana,
   isImageOcclusion,
+  plainReading,
   questionField,
   revealCloze,
 } from "./text";
@@ -60,5 +61,19 @@ describe("questionField", () => {
     const template = "{{#Image Occlusion}}{{image-occlusion:Occlusion}}{{/Image Occlusion}}";
     expect(isImageOcclusion(template)).toBe(true);
     expect(questionField(template, ["Occlusion", "Image"])).toBeNull();
+  });
+});
+
+describe("plainReading", () => {
+  it("reads bracket furigana through to plain kana", () => {
+    expect(plainReading("漢字[かんじ]")).toBe("かんじ");
+    expect(plainReading("食[た]べる")).toBe("たべる");
+    expect(plainReading("日本[にほん] 語[ご]")).toBe("にほんご");
+  });
+
+  it("keeps a reading that is already plain", () => {
+    expect(plainReading("かんじ")).toBe("かんじ");
+    expect(plainReading("ネコ")).toBe("ネコ");
+    expect(plainReading("[sound:neko.mp3]")).toBe("[sound:neko.mp3]");
   });
 });

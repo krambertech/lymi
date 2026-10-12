@@ -7,7 +7,7 @@ import { type Href, Link, useRouter } from "expo-router";
 import { Alert, Pressable, View } from "react-native";
 import { languageName } from "../../../data/languages";
 import { useArchivedDecks, useDecks, useSeriesList } from "../../../data/queries";
-import { useSeriesActions } from "../../../data/series";
+import { useOnline, useSeriesActions } from "../../../data/series";
 import { usePalette } from "../../../theme/palette";
 import { ListRow, ListRowFace, listRowLabel } from "../../../ui/list-row";
 import { DropdownMenu } from "../../../ui/menu";
@@ -132,6 +132,7 @@ function SeriesGroup({
         {due > 0 && (
           <Press
             onPress={review}
+            drawn={36}
             accessibilityRole="button"
             accessibilityLabel={reviewLabel}
             className="h-9 flex-row items-center gap-1.5 rounded-full bg-amber ps-3 pe-3.5"
@@ -171,8 +172,12 @@ function SeriesMenu({
   const router = useRouter();
   const actions = useSeriesActions();
   const seriesName = s.name;
+  const online = useOnline();
   // A series write has no place on screen to say it failed, so iOS says it.
   const failed = (e: unknown) => Alert.alert(t`That didn’t go through`, errorMessage(e));
+  // Series writes go straight to the Worker, so offline the menu says so instead of waiting.
+  const needsConnection = (then: () => void) => () =>
+    online ? then() : Alert.alert(t`Changing series needs a connection.`);
   return (
     <DropdownMenu
       title={seriesName}
@@ -196,7 +201,9 @@ function SeriesMenu({
                 {
                   label: t`Move up`,
                   icon: "moveUp" as const,
-                  onSelect: () => actions.move.mutate({ series: s, by: -1 }, { onError: failed }),
+                  onSelect: needsConnection(() =>
+                    actions.move.mutate({ series: s, by: -1 }, { onError: failed }),
+                  ),
                 },
               ]
             : []),
@@ -205,7 +212,9 @@ function SeriesMenu({
                 {
                   label: t`Move down`,
                   icon: "moveDown" as const,
-                  onSelect: () => actions.move.mutate({ series: s, by: 1 }, { onError: failed }),
+                  onSelect: needsConnection(() =>
+                    actions.move.mutate({ series: s, by: 1 }, { onError: failed }),
+                  ),
                 },
               ]
             : []),
@@ -215,10 +224,11 @@ function SeriesMenu({
             label: t`Delete series`,
             icon: "delete",
             destructive: true,
-            onSelect: () =>
+            onSelect: needsConnection(() =>
               confirmDelete(t, s, decks, (input) =>
                 actions.remove.mutate(input, { onError: failed }),
               ),
+            ),
           },
         ],
       ]}

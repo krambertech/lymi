@@ -1,12 +1,13 @@
 import { useLingui } from "@lingui/react/macro";
-import { errorMessage } from "@lymi/client/api";
+import { errorMessage, type Series } from "@lymi/client/api";
+import { seriesForm } from "@lymi/client/library-groups";
 import { SeriesInput, seriesLimits } from "@lymi/core";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { TextInput, View } from "react-native";
 import { FieldName } from "../capture/composer-field";
 import { useSeriesList } from "../data/queries";
-import { useSeriesActions } from "../data/series";
+import { useOnline, useSeriesActions } from "../data/series";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { GlassButton } from "../ui/glass";
@@ -20,16 +21,36 @@ import { OnGlass } from "../ui/surface";
 export default function SeriesName() {
   const { t } = useLingui();
   const router = useRouter();
-  const p = usePalette();
   const { id } = useLocalSearchParams<{ id?: string }>();
-  const all = useSeriesList(true).data;
-  const series = id ? all?.find((s) => s.id === id) : undefined;
+  const form = seriesForm(id, useSeriesList(true).data);
+  if (form.mode === "create" || form.mode === "rename") {
+    const series = form.mode === "rename" ? form.series : undefined;
+    // Keyed by the series, so the name starts from it once it has arrived and never from nothing.
+    return <NameForm key={series?.id ?? "new"} series={series} />;
+  }
+  return (
+    <OnGlass>
+      <View className="flex-row items-center gap-3 px-4 pt-5 pb-6">
+        <GlassButton icon="close" label={t`Cancel`} onPress={() => router.back()} />
+        {form.mode === "missing" && (
+          <Text className="flex-1 text-base text-muted">{t`This series is no longer here.`}</Text>
+        )}
+      </View>
+    </OnGlass>
+  );
+}
+
+function NameForm({ series }: { series: Series | undefined }) {
+  const { t } = useLingui();
+  const router = useRouter();
+  const p = usePalette();
+  const online = useOnline();
   const [name, setName] = useState(series?.name ?? "");
   const [error, setError] = useState<string | null>(null);
   const { name: save } = useSeriesActions();
 
   const submit = () => {
-    if (save.isPending) return;
+    if (save.isPending || !online) return;
     const parsed = SeriesInput.safeParse({ name });
     if (!parsed.success) {
       setError(name.trim() ? t`Keep the name under 80 characters.` : t`Give the series a name.`);
@@ -83,6 +104,11 @@ export default function SeriesName() {
           style={{ fontSize: 28, letterSpacing: -0.56 }}
           maxFontSizeMultiplier={inputCap(28)}
         />
+        {!online && (
+          <Text className="pt-2 text-base text-muted">
+            {t`Changing series needs a connection.`}
+          </Text>
+        )}
         {error && (
           <View className="flex-row items-center gap-1.5 pt-2" accessibilityLiveRegion="polite">
             <Icon name="alert" size={14} colour={p.danger} />

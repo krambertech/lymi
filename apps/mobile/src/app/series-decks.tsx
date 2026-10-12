@@ -1,11 +1,13 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@lymi/client/api";
+import { seriesForm } from "@lymi/client/library-groups";
+import { madeHere } from "@lymi/client/writes";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { useDecks, useSeriesList } from "../data/queries";
-import { useSeriesActions } from "../data/series";
+import { useOnline, useSeriesActions } from "../data/series";
 import { usePalette } from "../theme/palette";
 import { GlassButton } from "../ui/glass";
 import { KeyboardRoom } from "../ui/keyboard";
@@ -21,8 +23,11 @@ export default function SeriesDecks() {
   const router = useRouter();
   const p = usePalette();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const all = useSeriesList(true).data ?? [];
-  const series = all.find((s) => s.id === id);
+  const list = useSeriesList(true).data;
+  const all = list ?? [];
+  const form = seriesForm(id, list);
+  const series = form.mode === "rename" ? form.series : undefined;
+  const online = useOnline();
   const decks = (useDecks().data ?? []).filter((d) => d.role === "owner");
   const [chosen, setChosen] = useState<string[] | null>(null);
   // The series arrives with the sheet when it was just created, so its decks are read once it does.
@@ -46,7 +51,7 @@ export default function SeriesDecks() {
       return next;
     });
   const done = () => {
-    if (!series || setDecks.isPending) return;
+    if (!series || setDecks.isPending || !online) return;
     setDecks.mutate(
       { series, deckIds: picked },
       { onSuccess: () => router.back(), onError: (e) => setError(errorMessage(e)) },
@@ -82,6 +87,14 @@ export default function SeriesDecks() {
               ? t`No decks of your own yet. Only decks you create can go in a series.`
               : t`Review these decks together, in this order.`}
           </Text>
+          {form.mode === "missing" && (
+            <Text className="px-1 text-base text-muted">{t`This series is no longer here.`}</Text>
+          )}
+          {!online && (
+            <Text className="px-1 text-base text-muted">
+              {t`Changing series needs a connection.`}
+            </Text>
+          )}
           {error && (
             <View className="flex-row items-center gap-1.5 px-1" accessibilityLiveRegion="polite">
               <Icon name="alert" size={14} colour={p.danger} />
@@ -96,6 +109,8 @@ export default function SeriesDecks() {
                 const elsewhere =
                   !inIt && d.seriesId && d.seriesId !== id ? seriesName.get(d.seriesId) : undefined;
                 const deckName = d.name;
+                // A deck made offline joins a series once the Worker has it.
+                const waiting = !inIt && madeHere(d.id);
                 return (
                   <View
                     key={d.id}
@@ -105,8 +120,9 @@ export default function SeriesDecks() {
                       scale={0.99}
                       className="flex-1 flex-row items-center gap-3 py-3"
                       accessibilityRole="checkbox"
-                      accessibilityState={{ checked: inIt }}
+                      accessibilityState={{ checked: inIt, disabled: waiting }}
                       accessibilityLabel={deckName}
+                      disabled={waiting}
                       onPress={() =>
                         setChosen((ids) =>
                           inIt ? (ids ?? []).filter((x) => x !== d.id) : [...(ids ?? []), d.id],
@@ -123,11 +139,13 @@ export default function SeriesDecks() {
                           {deckName}
                         </Text>
                         <Text className="text-sm text-muted" numberOfLines={1}>
-                          {elsewhere
-                            ? t`Moves from ${elsewhere}`
-                            : d.total === 0
-                              ? t`No cards yet`
-                              : plural(d.total, { one: "# card", other: "# cards" })}
+                          {waiting
+                            ? t`Waiting to reach Lymi`
+                            : elsewhere
+                              ? t`Moves from ${elsewhere}`
+                              : d.total === 0
+                                ? t`No cards yet`
+                                : plural(d.total, { one: "# card", other: "# cards" })}
                         </Text>
                       </View>
                     </Press>

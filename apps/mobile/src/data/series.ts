@@ -1,7 +1,8 @@
 import { api, type Series } from "@lymi/client/api";
 import { seriesQuery } from "@lymi/client/queries";
 import type { SeriesDeleteInput } from "@lymi/core";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { onlineManager, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useSyncExternalStore } from "react";
 
 /**
  * The series writes Library makes, as the web's useSeriesActions. A series moves decks between
@@ -45,4 +46,14 @@ export function useSeriesActions() {
   });
 
   return { name, setDecks, move, remove };
+}
+
+/**
+ * Whether the phone can reach Lymi. Series writes go straight to the Worker rather than through the
+ * write outbox, so they need a connection, and a screen says so rather than leaving a spinner.
+ */
+export function useOnline() {
+  return useSyncExternalStore(onlineManager.subscribe.bind(onlineManager), () =>
+    onlineManager.isOnline(),
+  );
 }

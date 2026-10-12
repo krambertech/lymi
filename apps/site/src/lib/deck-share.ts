@@ -8,7 +8,7 @@ const MAX_LINE = SHARE_WIDTH - PAD * 2;
 const CANVAS = "#151210";
 const TEXT = "#f3f0eb";
 
-/** The tray hues by index, mirrored from `.deck-hero-tint[data-hue]` in styles.css. */
+/** The tray hues by index, mirrored from `[data-hue]` in `packages/design/tray.css`. */
 const HUES = [25, 110, 150, 195, 235, 280, 320, 350];
 
 export interface ShareContent {

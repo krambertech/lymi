@@ -1318,7 +1318,7 @@ function CardPlate({
         style={dark ? LIFT : undefined}
       >
         {/* At large text sizes the deck and the state stack rather than clip. */}
-        <View className="flex-row flex-wrap items-center justify-between gap-2 px-6 pt-5">
+        <View className="flex-row flex-wrap items-center justify-between gap-2 px-5 pt-4">
           <View className="min-w-0 shrink flex-row items-center gap-2">
             <Icon name="deck" size={16} colour={p.muted} />
             <Text className="shrink text-base text-text-2" numberOfLines={1}>
@@ -1330,7 +1330,7 @@ function CardPlate({
 
         <ScrollView
           className="flex-1"
-          contentContainerClassName="grow justify-center px-6 py-5"
+          contentContainerClassName="grow justify-center px-5 py-4"
           // Unrevealed, the whole plate is the button, so nothing scrolls under the finger.
           scrollEnabled={revealed}
           showsVerticalScrollIndicator={false}
@@ -1368,7 +1368,7 @@ function CardPlate({
             ) : null}
           </Animated.View>
           {revealed && (
-            <View className="gap-4 pt-5">
+            <View className="gap-3 pt-4">
               <Wick still={still} />
               <Animated.View entering={arrive()} className="flex-row items-center gap-3">
                 <Text

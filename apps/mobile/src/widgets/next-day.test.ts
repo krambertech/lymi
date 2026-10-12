@@ -33,6 +33,11 @@ describe("nextDay", () => {
     expect(next?.snapshot.due).toBe(1);
   });
 
+  it("adds the cards that first fall due tomorrow, so a finished day does not show 0", () => {
+    expect(nextDay(now(0, 4, 20), summary(4, 20), days, midnight, 9)?.snapshot.due).toBe(9);
+    expect(nextDay(now(2, 4, 20), summary(4, 20), days, midnight, 9)?.snapshot.due).toBe(11);
+  });
+
   it("counts every card left, not only the ones the phone holds", () => {
     expect(nextDay(now(300, 3, 0), summary(3, 0), days, midnight)?.snapshot.due).toBe(300);
   });

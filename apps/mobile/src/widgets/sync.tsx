@@ -1,4 +1,6 @@
+import { insightsQuery } from "@lymi/client/queries";
 import { lightLevel, lightReference } from "@lymi/design";
+import { useQuery } from "@tanstack/react-query";
 import { Asset } from "expo-asset";
 import { File } from "expo-file-system";
 import { widgetsDirectory } from "expo-widgets";
@@ -143,6 +145,13 @@ export function WidgetSync() {
   const due = dueToday(decks.data ?? [], left, !!useKeptSince(decks));
   // The draw knows when the learner's day ends.
   const end = useDraw().data?.day.end;
+  // Tomorrow's new arrivals, as the reminders read them; an hour old is close enough.
+  const forecast = useQuery({ ...insightsQuery(30), staleTime: 60 * 60_000 }).data?.forecast;
+  // Only a forecast that starts today knows which day is tomorrow.
+  const tomorrow =
+    forecast && summary && forecast[0]?.date === summary.today.date
+      ? forecast[1]?.count
+      : undefined;
   const [images, setImages] = useState<Images>({});
 
   useEffect(() => {
@@ -169,12 +178,13 @@ export function WidgetSync() {
     };
     // A review grades every few seconds; the widget only needs where the day settled.
     const timer = setTimeout(() => {
-      const next = summary && end ? nextDay(now, summary, days, new Date(end)) : undefined;
+      const next =
+        summary && end ? nextDay(now, summary, days, new Date(end), tomorrow) : undefined;
       if (next) sendTimeline(now, next, images);
       else sendSnapshot(now, images);
     }, 1500);
     return () => clearTimeout(timer);
-  }, [images, due, streak, reviewsToday, goal, weekKey, dayDone, out, summary, end]);
+  }, [images, due, streak, reviewsToday, goal, weekKey, dayDone, out, summary, end, tomorrow]);
 
   return null;
 }

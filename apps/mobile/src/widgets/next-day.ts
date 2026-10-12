@@ -17,8 +17,8 @@ export interface Snapshot {
 /**
  * The widgets as the learner's next day opens, sent ahead because a widget cannot fetch: nothing
  * reviewed, the week moved on a day, and the streak with this device's grades in it. What is due
- * is what is due now, since a card left today is still due tomorrow; cards that first fall due
- * tomorrow show once the app opens. `summary` is today's streak with the device's grades.
+ * is what is left now, still due tomorrow, plus the cards Insights forecasts for tomorrow, as the
+ * reminders count it. `summary` is today's streak with the device's grades.
  */
 export function nextDay(
   now: Snapshot,
@@ -26,6 +26,8 @@ export function nextDay(
   /** Today's attempts per day, oldest first, as the week counts them. */
   days: readonly number[],
   end: Date,
+  /** Cards that first fall due tomorrow, from Insights' forecast; unknown leaves today's carry. */
+  tomorrow?: number,
 ): { at: Date; snapshot: Snapshot } | undefined {
   if (!(end.getTime() > Date.now())) return undefined;
   const goal = summary.goal;
@@ -34,7 +36,7 @@ export function nextDay(
   return {
     at: end,
     snapshot: {
-      due: now.due,
+      due: now.due + (tomorrow ?? 0),
       // The run as it stands tonight carries over; only the server knows a rest day.
       streak: summary.current,
       reviewed: 0,

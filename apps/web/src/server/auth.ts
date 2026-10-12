@@ -272,10 +272,12 @@ export function createAuth(
     },
     account: {
       accountLinking: {
-        // Google and Apple own the address they return, so either may claim a user that signed
-        // up with a password and never confirmed. The credential account is dropped on the way
-        // in, so an unconfirmed sign-up on someone else's address grants nothing. Issue 251.
-        trustedProviders: [...PROVING_PROVIDERS],
+        // Google owns the address it returns, so it may claim a user that signed up with a
+        // password and never confirmed. The credential account is dropped on the way in, so
+        // an unconfirmed sign-up on someone else's address grants nothing. Issue 251. Apple is
+        // left out because it may not verify a managed Apple ID's address; without trust it
+        // links only when its token says `email_verified`.
+        trustedProviders: ["google"],
         requireLocalEmailVerified: false,
       },
     },

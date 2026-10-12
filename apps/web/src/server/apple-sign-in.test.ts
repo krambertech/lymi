@@ -135,6 +135,27 @@ describe("signing in with Apple from the phone app", () => {
     expect(response.status).toBe(200);
     const providers = (await accountsOf(learner.userId)).map((account) => account.providerId);
     expect(providers.sort()).toEqual(["apple", "credential"]);
+
+    // A later sign-in links nothing, so it has nothing to retire either.
+    const again = await signInWithApple({
+      token: appleToken({ sub: "apple-linked", email: learner.email }),
+    });
+    expect(again.status).toBe(200);
+    const after = (await accountsOf(learner.userId)).map((account) => account.providerId);
+    expect(after.sort()).toEqual(["apple", "credential"]);
+  });
+
+  it("never links an address Apple did not verify to an existing account", async () => {
+    stubAppleKeys();
+    const learner = await app.signUp("apple-unverified");
+    // Apple may not verify a managed Apple ID's address, and says so in the token.
+    const response = await signInWithApple({
+      token: appleToken({ sub: "apple-unverified", email: learner.email, email_verified: "false" }),
+    });
+    expect(response.status).not.toBe(200);
+    expect(cookieOf(response)).not.toContain("session_token=");
+    const providers = (await accountsOf(learner.userId)).map((account) => account.providerId);
+    expect(providers).toEqual(["credential"]);
   });
 
   it("takes an unconfirmed password off the account Apple proves, and says so in Activity", async () => {

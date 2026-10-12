@@ -47,7 +47,7 @@ export function RowFace({ label, icon, value, end = "open", destructive = false 
       {label}
     </Text>
   );
-  // A long value gives way to its label: one line beside it, cut at most of half the row, or two
+  // A long value gives way to its label: one line beside it, at most 42% of the row, or two
   // lines under it at the accessibility sizes.
   const now = value && (
     <Text

@@ -276,7 +276,6 @@ function Settings({ deck }: { deck: DeckSummary }) {
               onPress={() => setAsking(true)}
             />
           </Rows>
-          {/* As on the web: the fields AI may fill, and what the owner tells it about the deck. */}
           <Group title={t`AI`}>
             <Rows>
               <Row

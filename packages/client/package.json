@@ -15,6 +15,7 @@
     "./recall-clock": "./src/recall-clock.ts",
     "./queued": "./src/queued.ts",
     "./review-day": "./src/review-day.ts",
+    "./daily-goal": "./src/daily-goal.ts",
     "./analytics": "./src/analytics.ts",
     "./card-input": "./src/card-input.ts"
   },

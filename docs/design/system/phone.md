@@ -12,11 +12,13 @@ The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the rev
 
 | Motion | For | Leaves by |
 | --- | --- | --- |
-| Push from the side | A page to read or work in: a deck, a card, a series, Insights, Activity, Settings, the streak, a deck in Explore | The named back, or a swipe from the start edge |
-| Sheet from below | A task with an end: Add a word, New deck, Edit card, a choice list, the card menu in a review, the reminder time | A swipe down, with detents where the task grows |
+| Push from the side | A page to read or work in: a deck, a card, a series, Insights, Activity, Settings, a deck in Explore | The named back, or a swipe from the start edge |
+| Sheet from below | A task with an end: Add a word, New deck, Edit card, a choice list such as the daily goal, the card menu in a review, the reminder time, the streak | A swipe down, with detents where the task grows |
 | Cover from below | A mode that takes the screen: a review, Welcome and sign-in | X, or pulling the top bar down |
 
 This is [overlays.md](overlays.md)'s rule in iOS's own navigation: from the side means back, from below means swipe down.
+
+The streak is the one place that differs from the web, where touch shows it as a page from the end edge ([streak.md](../streak.md)). On the phone it peeks at the run and today and drags up for the month, so glancing at it never leaves the screen under it. Its daily goal is a choice list in a sheet of its own over it: a preset is saved once the sheet has gone, a number of one's own on Save, and with no connection the list says it needs one.
 
 ## Components
 

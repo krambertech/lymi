@@ -102,11 +102,12 @@ function Root() {
               },
             }}
           />
+          {/* Peeks at the run and today, and drags up for the month. phone.md. */}
           <Stack.Screen
             name="streak"
             options={{
               presentation: "formSheet",
-              sheetAllowedDetents: "fitToContents",
+              sheetAllowedDetents: [0.62, 1],
               sheetGrabberVisible: true,
               sheetCornerRadius: 30,
               contentStyle: {

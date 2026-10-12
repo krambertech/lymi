@@ -5,6 +5,7 @@ import {
   BookMarked,
   BookOpen,
   Brain,
+  CalendarCheck,
   Camera,
   Check,
   ChevronDown,
@@ -35,6 +36,7 @@ import {
   Sparkle,
   Sun,
   TextQuote,
+  Trophy,
   Undo2,
   X,
   Zap,
@@ -113,6 +115,8 @@ const ICONS = {
   hide: EyeOff,
   signOut: LogOut,
   email: Mail,
+  longest: Trophy,
+  reviewedDays: CalendarCheck,
 } as const;
 
 export type IconName = keyof typeof ICONS;

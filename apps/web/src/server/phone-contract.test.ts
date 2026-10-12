@@ -46,14 +46,18 @@ const phoneOperations = [
   "GET /api/settings",
   "PATCH /api/settings",
   "PUT /api/settings/timezone/device",
+  "GET /api/series",
   "POST /api/cards",
+  "PATCH /api/cards/{id}",
   "POST /api/cards/{id}/archive",
+  "POST /api/cards/{id}/hook-draft",
+  "PUT /api/cards/{id}/important",
   "PUT /api/cards/{id}/image",
   "GET /api/cards/{id}/image/{imageId}",
 ];
 
-// The phone also calls Better Auth under /api/auth, /api/avatar and POST /api/feedback, which
-// the document hides, so no freeze guards them.
+// The phone also calls Better Auth under /api/auth, /api/avatar, /api/audio and POST
+// /api/feedback, which the document hides, so no freeze guards them.
 
 /** The phone's reads a seeded learner can make, with its deck as `{id}`. */
 const phoneReads = phoneOperations

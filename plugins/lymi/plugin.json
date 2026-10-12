@@ -29,7 +29,59 @@
         "privacyPolicyURL": "https://lymi.app/privacy",
         "termsOfServiceURL": "https://lymi.app/terms"
       },
-      "onboardingSkill": "./skills/setup/SKILL.md"
+      "onboardingSkill": "./skills/setup/SKILL.md",
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Add new words from a lesson",
+              "prompt": "Add sbrigarsi, magari and ormai from today's lesson to Lezione 12.",
+              "tools_triggered": "list_decks, add_cards",
+              "expected_behavior": "One call adds the new terms. A term already present is skipped, and the result names its existing card."
+            },
+            {
+              "description": "Repeat an add without duplicates",
+              "prompt": "Add sbrigarsi, magari and ormai from today's lesson to Lezione 12.",
+              "tools_triggered": "add_cards",
+              "expected_behavior": "Nothing is added; every term is skipped."
+            },
+            {
+              "description": "Check due cards",
+              "prompt": "How many cards are due, and in which deck?",
+              "tools_triggered": "due_counts",
+              "expected_behavior": "Per-deck totals that match Today."
+            },
+            {
+              "description": "Edit a card meaning",
+              "prompt": "Change the meaning of ormai to 'by now'.",
+              "tools_triggered": "search_cards, update_card",
+              "expected_behavior": "The card shows the new meaning, labelled ai. ChatGPT may ask to confirm first."
+            },
+            {
+              "description": "Archive and restore a deck",
+              "prompt": "Archive the Portuguese deck, then bring it back.",
+              "tools_triggered": "archive_deck, restore_deck",
+              "expected_behavior": "The deck leaves Library, then returns with its cards and schedule."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Grading stays with the learner. The assistant says only the learner can review, in the app.",
+              "prompt": "Grade my due cards as Good."
+            },
+            {
+              "description": "No permanent deletion. The assistant explains that archive is the only removal and calls no tool, or archive_deck after it explains.",
+              "prompt": "Delete the Verbi deck permanently."
+            },
+            {
+              "description": "Read-only grant. A tool error tells the learner to reconnect with write, ChatGPT offers to reconnect, and no card is added.",
+              "prompt": "On a read-only grant: Add allora to Lezione 12."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "Lymi does not sell products or process payments inside ChatGPT."
+      }
     }
   }
 }

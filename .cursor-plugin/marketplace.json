@@ -1,0 +1,18 @@
+{
+  "name": "lymi",
+  "owner": {
+    "name": "Lymi",
+    "email": "hello@lymi.app"
+  },
+  "metadata": {
+    "description": "Lymi plugin for Cursor",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "lymi",
+      "source": "./plugins/lymi",
+      "description": "Turn lessons into Lymi cards, tend them, practise with them and check how the week went."
+    }
+  ]
+}

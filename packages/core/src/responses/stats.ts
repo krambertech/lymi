@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { OPEN } from "./common";
 import { ReviewDayOutcome, ReviewDayProgress } from "./review";
 
 const LocalDate = z.string().meta({ description: "Local YYYY-MM-DD in the learner's timezone" });
@@ -7,7 +8,7 @@ export const InsightsOut = z
   .object({
     period: z
       .union([z.literal(30), z.literal(90), z.literal(0)])
-      .meta({ description: "Days the recall figure covers. 0 is everything." }),
+      .meta({ ...OPEN, description: "Days the recall figure covers. 0 is everything." }),
     recall: z.object({
       passed: z.number().int(),
       failed: z.number().int(),

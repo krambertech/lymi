@@ -6,7 +6,8 @@ import { openBrowserAsync } from "expo-web-browser";
 import { useState } from "react";
 import { View } from "react-native";
 import { authClient } from "../../../auth/client";
-import { useDecks } from "../../../data/queries";
+import { useDecks, useInsights } from "../../../data/queries";
+import { RunStrip } from "../../../insights/figures";
 import { chooseTheme, savedTheme, type ThemeChoice } from "../../../theme/choice";
 import { usePalette } from "../../../theme/palette";
 import { Select } from "../../../ui/menu";
@@ -168,21 +169,59 @@ function Profile({
   );
 }
 
-/** Insights as one plate; the whole of it opens the page. */
+/**
+ * Insights as one plate that opens the page: the month's recall and the thirty days, the two figures
+ * a glance can carry. Until they load, or before a first review, it says what the page holds.
+ */
 function InsightsPlate({ onPress }: { onPress: () => void }) {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const p = usePalette();
+  const { data } = useInsights(30);
+  const reviewed = data && data.consistency.daysAllTime > 0;
+  const recall =
+    data?.recall.rate == null ? "—" : i18n.number(data.recall.rate, { style: "percent" });
   return (
-    <Press scale={0.98} onPress={onPress} accessibilityRole="link" accessibilityLabel={t`Insights`}>
-      <Plate className="flex-row items-center gap-4 p-5">
-        <View className="size-11 items-center justify-center rounded-full bg-plate-2">
-          <Icon name="insights" size={22} colour={p["text-2"]} />
+    <Press
+      scale={0.98}
+      onPress={onPress}
+      accessibilityRole="link"
+      accessibilityLabel={
+        reviewed
+          ? t`Insights: recall ${recall}, reviewed on ${data.consistency.lit} of the last 30 days`
+          : t`Insights`
+      }
+    >
+      <Plate className="gap-4 p-5">
+        <View className="flex-row items-center gap-4">
+          <View className="size-11 items-center justify-center rounded-full bg-plate-2">
+            <Icon name="insights" size={22} colour={p["text-2"]} />
+          </View>
+          <View className="flex-1 gap-0.5">
+            <Text className="text-lg font-medium text-text">{t`Insights`}</Text>
+            {!reviewed && (
+              <Text className="text-base text-muted">{t`How your memory is doing`}</Text>
+            )}
+          </View>
+          <RowArrow />
         </View>
-        <View className="flex-1 gap-0.5">
-          <Text className="text-lg font-medium text-text">{t`Insights`}</Text>
-          <Text className="text-base text-muted">{t`How your memory is doing`}</Text>
-        </View>
-        <RowArrow />
+        {reviewed && (
+          <View className="gap-3">
+            <View className="flex-row gap-6">
+              <View className="gap-0.5">
+                <Text className="text-2xl font-medium tracking-tight text-text">{recall}</Text>
+                <Text className="text-sm text-muted">{t`Recall`}</Text>
+              </View>
+              <View className="gap-0.5">
+                <Text className="text-2xl font-medium tracking-tight text-text">
+                  {i18n.number(data.consistency.lit)}
+                  <Text className="text-base font-normal text-muted"> / 30</Text>
+                </Text>
+                <Text className="text-sm text-muted">{t`Days reviewed`}</Text>
+              </View>
+            </View>
+            <RunStrip days={data.consistency.days} height={20} />
+          </View>
+        )}
       </Plate>
     </Press>
   );

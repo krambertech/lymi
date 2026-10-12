@@ -23,7 +23,7 @@ import { Kindling } from "../splash/kindling";
 import { replaySplash, useReplays } from "../splash/replay";
 import { setExceptionLearner, startExceptionReporting } from "../telemetry/exceptions";
 import { usePalette } from "../theme/palette";
-import { WidgetSync } from "../widgets/sync";
+import { clearWidgets, WidgetSync } from "../widgets/sync";
 
 startExceptionReporting();
 
@@ -65,6 +65,11 @@ function Root() {
   // A 426 from any request: this release is too old for the API, so nothing else can work.
   const update = useUpdateRequired();
   useEffect(() => setExceptionLearner(learnerId), [learnerId]);
+  // Sign-out and a session the Worker no longer accepts both land here; the widgets outlive the app.
+  const signedOut = !session.isPending && !learnerId;
+  useEffect(() => {
+    if (signedOut) clearWidgets();
+  }, [signedOut]);
   // A cold start mounts this once; a return from the background does not, so the splash never replays.
   const [kindling, setKindling] = useState(true);
   const replays = useReplays();

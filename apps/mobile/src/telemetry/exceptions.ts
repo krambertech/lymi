@@ -3,8 +3,43 @@ import { ANALYTICS_SCHEMA_VERSION, AnalyticsLocale } from "@lymi/core/analytics"
 import { POSTHOG_PROXY_PATH } from "@lymi/core/posthog-proxy";
 import { exceptionProperties, POSTHOG_PROJECT_TOKEN } from "@lymi/core/telemetry";
 import Constants from "expo-constants";
-import PostHog from "posthog-react-native";
+import { File, Paths } from "expo-file-system";
+import PostHog, { type PostHogCustomStorage } from "posthog-react-native";
 import { API_URL, PHONE_CLIENT } from "../auth/client";
+
+// Who sent a report and in which session never outlives the launch; only the queued reports do.
+const LAUNCH_ONLY = [
+  "anonymous_id",
+  "distinct_id",
+  "device_id",
+  "session_id",
+  "session_start_timestamp",
+  "session_timestamp",
+  "props",
+  "person_properties",
+];
+
+function withoutIdentity(stored: string): string {
+  try {
+    const payload = JSON.parse(stored) as { content?: Record<string, unknown> };
+    for (const key of LAUNCH_ONLY) delete payload.content?.[key];
+    return JSON.stringify(payload);
+  } catch {
+    return stored;
+  }
+}
+
+/** The SDK's own file storage, kept so a crash's report is sent on the next launch. */
+const reportQueue: PostHogCustomStorage = {
+  getItem: async (key) => {
+    try {
+      return withoutIdentity(await new File(Paths.document, key).text());
+    } catch {
+      return null;
+    }
+  },
+  setItem: (key, value) => new File(Paths.document, key).write(withoutIdentity(value)),
+};
 
 /**
  * Reports uncaught errors and unhandled promise rejections to PostHog Error Tracking, scrubbed
@@ -16,8 +51,9 @@ export function startExceptionReporting(): void {
     new PostHog(POSTHOG_PROJECT_TOKEN, {
       // Through the Worker, as the web sends, so PostHog's own geolocation never runs.
       host: `${API_URL}${POSTHOG_PROXY_PATH}`,
-      // The anonymous ID lives in memory for one launch and is never joined to the learner.
-      persistence: "memory",
+      // Queued reports survive a crash; the anonymous ID lasts one launch and is never joined to the learner.
+      persistence: "file",
+      customStorage: reportQueue,
       personProfiles: "never",
       captureAppLifecycleEvents: false,
       enableSessionReplay: false,

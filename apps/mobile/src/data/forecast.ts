@@ -8,14 +8,15 @@ const DUE = hashKey(decksQuery.queryKey);
 
 /**
  * Refetches the Insights forecast that the widgets and the reminders read whenever the due counts
- * are refetched, which every grade, Undo, archive, restore, replayed write and new review day
+ * are invalidated or change, which every grade, Undo, archive, restore, replayed write and new review day
  * already does, so no caller can move a card's due date and leave tomorrow's count behind.
  */
 export function followDueCounts(qc: QueryClient, settle = FORECAST_SETTLE_MS): () => void {
   let timer: ReturnType<typeof setTimeout> | undefined;
   const unsubscribe = qc.getQueryCache().subscribe((event) => {
-    if (event.type !== "updated" || event.action.type !== "invalidate") return;
-    if (event.query.queryHash !== DUE) return;
+    if (event.type !== "updated" || event.query.queryHash !== DUE) return;
+    // Query reports only the first invalidation while one is pending, so new counts arriving count too.
+    if (event.action.type !== "invalidate" && event.action.type !== "success") return;
     clearTimeout(timer);
     timer = setTimeout(() => void qc.invalidateQueries({ queryKey: ["insights"] }), settle);
   });

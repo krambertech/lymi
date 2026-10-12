@@ -41,9 +41,23 @@ describe("followDueCounts", () => {
     expect(invalidate.mock.calls.filter(([f]) => f?.queryKey?.[0] === "insights")).toHaveLength(1);
   });
 
+  it("catches a grade made while the due counts are still waiting to refetch", async () => {
+    await qc.invalidateQueries({ queryKey: ["decks"] });
+    vi.advanceTimersByTime(1000);
+    qc.setQueryData(["insights", 30], { forecast: [] });
+    // The deck request is still pending, so this second grade's invalidation emits nothing.
+    await qc.invalidateQueries({ queryKey: ["decks"] });
+    vi.advanceTimersByTime(1000);
+    expect(stale()).toBe(false);
+    // Its counts arriving is what follows it.
+    qc.setQueryData(["decks"], [{ id: "d1" }]);
+    vi.advanceTimersByTime(1000);
+    expect(stale()).toBe(true);
+  });
+
   it("ignores everything else", async () => {
     await qc.invalidateQueries({ queryKey: ["streak"] });
-    qc.setQueryData(["decks"], [{ id: "d1" }]);
+    qc.setQueryData(["streak"], {});
     vi.advanceTimersByTime(5000);
     expect(stale()).toBe(false);
   });

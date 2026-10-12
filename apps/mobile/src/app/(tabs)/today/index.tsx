@@ -4,7 +4,7 @@ import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS, type StreakOut } from "@
 import { flameSize } from "@lymi/design";
 import * as Haptics from "expo-haptics";
 import { type Href, useIsFocused, useRouter } from "expo-router";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import { View, type ViewStyle } from "react-native";
 import { Flame } from "../../../brand/flame";
 import { Lantern } from "../../../brand/lantern";

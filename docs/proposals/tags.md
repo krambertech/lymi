@@ -8,7 +8,7 @@ decision: Tags let a learner find and review cards across decks; each learner ha
 
 A learner should be able to find and review one slice of everything they study, such as every food word across their Italian deck and their Estonian class deck. Sections and series group cards within one deck or one chain of decks; a tag cuts across them.
 
-Today a tag does almost nothing once typed. Tags are a JSON list of names on each card, up to 20 of 40 characters ([data model](../data-model.md#tags-and-source)). The card form doesn't suggest existing tags, so "verbs" and "Verbs" become two. Tags show on the word screen and on the review card after reveal, and travel through imports and exports, but nothing in the app filters or reviews by them. Only card search in the API and MCP reads them.
+Today a tag does almost nothing once typed. Tags are a JSON list of names on each card, up to 20 of 40 characters ([data model](../data-model.md#tags-and-source)). The card form doesn't suggest existing tags, so "verbs" and "Verbs" become two. Tags show on the word screen and the revealed review card, but nothing in the app filters or reviews by them; only API and MCP card search reads them.
 
 ## Evidence
 
@@ -24,13 +24,13 @@ Every flashcard failure comes from one list holding two people's tags. Lymi keep
 ## Decisions
 
 - **Two kinds of tag, one owner each.** A learner's own tags are theirs alone, on any card they study, including cards in a joined deck. A deck's tags are the ones its owner puts on its cards: every learner of the deck sees them and can filter and review by them, but only the owner changes them.
-- **Published decks follow the same rule.** A publisher's tags are translated per edition, like section names ([ADR 0015](../adr/0015-published-decks-use-pinned-localized-editions.md)). An edition whose tags aren't translated yet shows none.
+- **Published decks follow the same rule, in the learner's edition.** A publisher's tag gets a localization per edition, like a section name ([ADR 0015](../adr/0015-published-decks-use-pinned-localized-editions.md)). Everything a learner does with it uses the name in their pinned edition, so a Ukrainian-edition "їжа" joins their own "їжа", not "food". Tag names count toward an edition being complete, so a published edition never shows a mix; renaming one makes its localizations stale, like any edited field. Until tag localizations exist, a non-original edition shows no publisher tags.
 - **The same name is the same tag for finding and reviewing.** Reviewing "food" covers the learner's "food" and every deck's "food". Renaming or archiving changes only the learner's own.
 - **Typing suggests existing tags**, so near-duplicates stop multiplying.
 - **Review a tag is a round.** It sits beside New cards and Forgotten today and draws from every deck. It takes the cards with that tag the learner has already started, due ones first, under the usual round rules in `CONTEXT.md`. Unseen cards stay with New cards, so a tag never opens a section early.
 - **A Tags screen in Settings manages them.** It lists each of the learner's tags with its card count. Renaming one to a name already in use merges the two. Archiving takes the tag off every card until it is restored.
-- **Tags are plain chips with no colour.** Amber, violet and green already mean the one action, the AI badge and "You are here"; a fourth colour system would compete with the term ([`PRODUCT.md`](../../PRODUCT.md), "The words are the content").
-- **The card payload keeps its shape.** The API, MCP and the frozen phone contracts still carry `tags` as a list of names. Storage moves to a table, because renaming and per-learner tags on shared cards need one.
+- **Tags are plain chips with no colour.** Colour already marks the one action, the AI badge and "You are here"; more would compete with the term ([`PRODUCT.md`](../../PRODUCT.md), "The words are the content").
+- **The API says which tags a learner can change.** A card's `tags` stays every name the learner sees, so existing API and MCP clients keep working. A new read-only `deckTags` lists the ones that come from the deck's owner, and is empty on the learner's own cards. Writing `tags` sets only the caller's own tags; a name that is also in `deckTags` stays on the card because the deck has it. A member may write a card's tags and nothing else on it. Storage moves to a table, because per-learner tags on shared cards need one.
 
 ## Not in scope
 
@@ -45,8 +45,8 @@ Every flashcard failure comes from one list holding two people's tags. Lymi keep
 
 ## Delivery
 
-1. **Find and review by tag on the web.** Tags move to a table, typing suggests existing ones, the deck page filters by tag, and Review a tag runs across decks. Members of a shared deck already see its tags, so they can filter and review by them, and a deck's tag joins a member's own tag of the same name. Non-original editions of a published deck hide its tags until slice 4.
-2. **Your own tags on joined decks.** A member tags a shared or published deck's cards privately.
+1. **Find and review by tag on the web.** Tags move to a table, typing suggests existing ones, the deck page filters by tag, and Review a tag runs across decks. Members already see a deck's tags, so they can filter and review by them too, with `deckTags` marking them. Non-original editions hide publisher tags until slice 4.
+2. **Your own tags on joined decks.** A member may write a joined card's tags, privately.
 3. **The Tags screen.** Rename, merge, archive and restore.
 4. **Published tags per edition.** Publishers translate tag names, and each edition shows them once translated.
 5. **The phone.** Each slice gets a linked phone issue once it is verified on the web ([ADR 0030](../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)).

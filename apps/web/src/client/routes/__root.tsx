@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { warmCache } from "@lymi/client/cache";
 import { claimWrites, flushWrites, onNotice } from "@lymi/client/writes";
 import type { QueryClient } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -41,7 +42,6 @@ import { shortQuote } from "../lib/short-quote";
 import { Streak, StreakPlace, useSettleToday } from "../lib/streak";
 import { capturePageview } from "../lib/telemetry";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
-import { warmCache } from "../lib/warm-cache";
 import { AppShell, Sidebar } from "../views/shell";
 
 // Local and isolated preview builds only. Vite drops the import from production.

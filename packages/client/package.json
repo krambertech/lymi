@@ -20,7 +20,8 @@
     "./analytics": "./src/analytics.ts",
     "./card-input": "./src/card-input.ts",
     "./review-end": "./src/review-end.ts",
-    "./update-required": "./src/update-required.ts"
+    "./update-required": "./src/update-required.ts",
+    "./cache": "./src/cache.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",

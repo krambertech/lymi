@@ -1,13 +1,14 @@
 import { registerSW } from "virtual:pwa-register";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
-import { defaultShouldDehydrateQuery, QueryClient } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { bootstrapLanguage } from "./lib/i18n";
 import "./lib/pwa-install";
+import { shouldPersistQuery } from "@lymi/client/cache";
 import { bindWriteCache } from "@lymi/client/writes";
 import { queryPersister } from "./lib/query-persister";
 import { reportClientException } from "./lib/telemetry";
@@ -82,13 +83,7 @@ export function mountApp(root: HTMLElement) {
           persister: queryPersister,
           maxAge: 1000 * 60 * 60 * 24 * 7,
           buster: __QUERY_CACHE_BUSTER__,
-          dehydrateOptions: {
-            // A Blob does not survive JSON, and a query filled by setQueryData carries no meta.
-            shouldDehydrateQuery: (query) =>
-              defaultShouldDehydrateQuery(query) &&
-              query.meta?.persist !== false &&
-              !(query.state.data instanceof Blob),
-          },
+          dehydrateOptions: { shouldDehydrateQuery: shouldPersistQuery },
         }}
       >
         <I18nProvider i18n={i18n}>

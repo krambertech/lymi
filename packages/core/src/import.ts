@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { OPEN } from "./responses/common";
 import { type FieldSource, LanguageTag, type Rating, ReviewModeKey } from "./types";
 
 /** Where an import's file came from. Each source is one adapter on the server. */
@@ -558,11 +559,11 @@ const Timestamp = z.iso.datetime().meta({ description: "ISO 8601 timestamp" });
 export const ImportOut = z
   .object({
     id: z.string(),
-    source: ImportSource,
+    source: ImportSource.meta(OPEN),
     fileName: z.string(),
     byteSize: z.number().int(),
-    status: ImportStatus,
-    failure: ImportFailure.nullable(),
+    status: ImportStatus.meta(OPEN),
+    failure: ImportFailure.nullable().meta(OPEN),
     summary: ImportSummaryOut.nullable().meta({
       description: "What the file holds, once it has been read",
     }),
@@ -581,7 +582,7 @@ export const ImportOut = z
       parts: z.number().int().meta({ description: "How many parts the file is sent in" }),
       received: z.number().int(),
     }),
-    createdBy: z.enum(["user", "api", "mcp", "ai", "system"]),
+    createdBy: z.enum(["user", "api", "mcp", "ai", "system"]).meta(OPEN),
     createdAt: Timestamp,
     updatedAt: Timestamp,
     finishedAt: Timestamp.nullable(),

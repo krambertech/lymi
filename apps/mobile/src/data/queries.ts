@@ -7,6 +7,7 @@ import {
   undoGrade,
 } from "@lymi/client/grades";
 import {
+  activityQuery,
   deckCardsQuery,
   decksQuery,
   drawQuery,
@@ -27,7 +28,7 @@ import {
 import { writes } from "@lymi/client/writes";
 import { type CardInput, DEFAULT_DAILY_GOAL, type Round, type StreakOut } from "@lymi/core";
 import { lanternFor, streakFlameFor } from "@lymi/design";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { AppState } from "react-native";
 
@@ -40,6 +41,7 @@ export const useSections = (deckId: string | undefined) =>
 export const useStreak = () => useQuery(streakQuery);
 export const useRounds = () => useQuery(roundsQuery);
 export const useInsights = (period: 30 | 90 | 0) => useQuery(insightsQuery(period));
+export const useActivity = () => useInfiniteQuery(activityQuery);
 /** What the review draws from, ADR 0019. Unscoped, it also holds today's log for the day's count. */
 export const useDraw = (scope: ReviewScope = {}) => useQuery(drawQuery(scope));
 /** A round from Today is a fixed list the server picks, walked in order. */

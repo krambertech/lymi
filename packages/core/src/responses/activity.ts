@@ -2,7 +2,7 @@ import { z } from "zod";
 import { ExportOut } from "../export";
 import { ImportOut } from "../import";
 import { Actor } from "../types";
-import { Timestamp } from "./common";
+import { OPEN, Timestamp } from "./common";
 
 /**
  * What one Activity row says happened. Card and deck kinds are a write by an app, a key or the
@@ -60,8 +60,8 @@ export const ActivityEntryOut = z
     group: z.string().meta({
       description: "Day, caller, kind and deck. Two pages meeting on the same group are one row.",
     }),
-    kind: ActivityKind,
-    actor: Actor,
+    kind: ActivityKind.meta(OPEN),
+    actor: Actor.meta(OPEN),
     app: z
       .string()
       .nullable()

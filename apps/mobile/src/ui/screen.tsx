@@ -88,13 +88,15 @@ export function Screen({
     y.value = e.contentOffset.y;
   });
   const pastY = past?.y ?? Number.POSITIVE_INFINITY;
-  const pastChange = (now: boolean) => past?.onChange(now);
+  const pastChange = past?.onChange;
+  const tellPast = (now: boolean) => pastChange?.(now);
   useAnimatedReaction(
     () => y.value > pastY,
+    // The first value is reported too, so a page already scrolled says so when the point moves.
     (now, was) => {
-      if (was !== null && now !== was) runOnJS(pastChange)(now);
+      if (now !== was) runOnJS(tellPast)(now);
     },
-    [pastY],
+    [pastY, pastChange],
   );
   useAnimatedReaction(
     () => y.value > TITLE_GONE / 2,

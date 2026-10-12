@@ -14,22 +14,27 @@ import { Text } from "./primitives";
 export const DECK_ACCESSORY =
   Platform.OS === "ios" && Number.parseInt(String(Platform.Version), 10) >= 26;
 
-// Whether the open deck's own Review button has scrolled out of sight; the accessory waits for it.
-let reviewHidden = false;
+// The decks whose own Review button has scrolled out of sight; the accessory waits for it. Kept per
+// deck, since a second deck page can be pushed over a scrolled one.
+const hiddenDecks = new Set<string>();
 const listeners = new Set<() => void>();
-export function setDeckReviewHidden(hidden: boolean) {
-  if (hidden === reviewHidden) return;
-  reviewHidden = hidden;
+let version = 0;
+export function setDeckReviewHidden(deckId: string, hidden: boolean) {
+  if (hiddenDecks.has(deckId) === hidden) return;
+  if (hidden) hiddenDecks.add(deckId);
+  else hiddenDecks.delete(deckId);
+  version++;
   for (const l of listeners) l();
 }
-function useDeckReviewHidden() {
-  return useSyncExternalStore(
+function useDeckReviewHidden(deckId: string | undefined) {
+  useSyncExternalStore(
     (l) => {
       listeners.add(l);
       return () => listeners.delete(l);
     },
-    () => reviewHidden,
+    () => version,
   );
+  return !!deckId && hiddenDecks.has(deckId);
 }
 
 /**
@@ -43,7 +48,7 @@ export function TabBar() {
   const { t } = useLingui();
   const deckId = usePathname().match(/^\/library\/([^/]+)$/)?.[1];
   const due = useDecks().data?.find((d) => d.id === deckId)?.due ?? 0;
-  const hidden = useDeckReviewHidden();
+  const hidden = useDeckReviewHidden(deckId);
   const label = { fontFamily: "Onest", fontWeight: "500", fontSize: 10 } as const;
   return (
     <NativeTabs

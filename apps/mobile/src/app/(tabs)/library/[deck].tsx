@@ -15,7 +15,7 @@ import {
 import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Alert, type TextStyle, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDeckExits } from "../../../data/decks";
@@ -70,7 +70,8 @@ export default function Deck() {
   // Where Review ends on the page; past it, under the bar, the tab bar's accessory takes over.
   const [reviewEnd, setReviewEnd] = useState<number | null>(null);
   const insets = useSafeAreaInsets();
-  useEffect(() => () => setDeckReviewHidden(false), []);
+  const onReviewPast = useCallback((hidden: boolean) => setDeckReviewHidden(id, hidden), [id]);
+  useEffect(() => () => setDeckReviewHidden(id, false), [id]);
   // The deck's name and counts come from the deck list, its words from its cards: either can fail.
   const cardsFailed = useLoadFailed(cards);
   const decksFailed = useLoadFailed(decks);
@@ -81,9 +82,7 @@ export default function Deck() {
       title={deck?.name ?? ""}
       back={{ label: t`Library`, to: "/library" }}
       past={
-        reviewEnd === null
-          ? undefined
-          : { y: reviewEnd - insets.top - 56, onChange: setDeckReviewHidden }
+        reviewEnd === null ? undefined : { y: reviewEnd - insets.top - 56, onChange: onReviewPast }
       }
       actions={
         // A deck that has gone has nothing to search or change.

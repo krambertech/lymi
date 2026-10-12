@@ -1523,9 +1523,6 @@ msgstr "Відкрити архів у вебверсії"
 msgid "Open Explore"
 msgstr "Відкрити каталог"
 
-msgid "Open in Library"
-msgstr "Відкрити в Бібліотеці"
-
 msgid "Open it once with a connection, and it stays on this phone."
 msgstr "Відкрий це раз зі з’єднанням, і воно залишиться на телефоні."
 

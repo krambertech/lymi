@@ -36,6 +36,14 @@ The phone's components are in `apps/mobile/src/ui` under the web's names, and fo
 
 The design screen shows each component in every state. Open `lymi://design`, as the web has `/design`; each canvas has its own switch for the other room.
 
+## Empty states
+
+`EmptyState` in `ui/empty-state.tsx` is every place with nothing to show, following [empty-states.md](empty-states.md)'s rules in one component rather than the web's several. Why the place is empty picks the icon, and where it sits picks the size.
+
+- **Kinds:** `start` for nothing made yet, `noMatch` for a search or filter that matched nothing, `failed` for a read that failed, and `offline` for a place that needs a connection the phone does not have. Only `failed` is red; being offline is no failure.
+- **Sizes:** `page` when the whole screen is empty, large and centred in the room the bars leave, with a primary button; `inline` inside a plate already on the screen, which is its surface, with a small secondary button. It never brings a plate of its own.
+- The icon sits in a soft disc, never the lantern, and the title names what is missing: "No decks match “map”", not "Nothing here". Still loading is a skeleton, never an empty state.
+
 ## Sheets
 
 Every sheet rises from below and swipes away. What the task holds decides its kind, and the kind decides its glass and its fills:

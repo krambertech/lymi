@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import { Actions, Choices, Feedback, Forms, Labels } from "./pages/components";
+import { EmptyStates } from "./pages/empty";
 import { Colour, HapticsPage, Icons, Motion, Surfaces, Type } from "./pages/foundations";
 import { Pages, Sheets } from "./pages/patterns";
 
@@ -122,6 +123,14 @@ export const COMPONENTS: DesignPage[] = [
     lede: "What is happening while the learner waits, said as quietly as it can be.",
     doc: "motion.md",
     Page: Feedback,
+  },
+  {
+    slug: "empty-states",
+    title: "Empty states",
+    summary: "Nothing yet, no match, couldn’t load, offline",
+    lede: "A place with nothing to show says why and how to fill it, and looks temporary, so it is never mistaken for content.",
+    doc: "empty-states.md",
+    Page: EmptyStates,
   },
 ];
 

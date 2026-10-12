@@ -17,9 +17,9 @@ const asked: string[] = [];
 beforeEach(() => {
   asked.length = 0;
   vi.stubGlobal("fetch", (input: RequestInfo | URL) => {
-    const path = new URL(String(input)).pathname;
-    asked.push(path);
-    return Promise.resolve(Response.json(path.endsWith("/cards") ? { cards: [] } : {}));
+    asked.push(new URL(String(input)).pathname);
+    // Enough of a draw and of a deck's cards for each read to succeed.
+    return Promise.resolve(Response.json({ cards: [] }));
   });
 });
 

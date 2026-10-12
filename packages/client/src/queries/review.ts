@@ -2,15 +2,17 @@ import type { Round } from "@lymi/core";
 import { queryOptions } from "@tanstack/react-query";
 import { api, type ReviewScope, scopeKey } from "../api";
 import { flushOutbox } from "../grades";
+import { fresh } from "../writes";
 
 export const queueQuery = (scope: ReviewScope, round?: Round) =>
   queryOptions({
     queryKey: ["queue", scopeKey(scope), round ?? "order"],
     // The server chooses a round's cards, so grades still on their way land first.
-    queryFn: async () => {
-      await flushOutbox();
-      return api.queue(scope, round);
-    },
+    queryFn: () =>
+      fresh(["queue", scopeKey(scope), round ?? "order"], async () => {
+        await flushOutbox();
+        return api.queue(scope, round);
+      }),
     staleTime: 0,
     // A review keeps its initial order; a new mount still fetches a freshly shuffled queue.
     refetchOnWindowFocus: false,
@@ -20,10 +22,12 @@ export const queueQuery = (scope: ReviewScope, round?: Round) =>
 export const drawQuery = (scope: ReviewScope) =>
   queryOptions({
     queryKey: ["queue", scopeKey(scope), "draw"],
-    queryFn: async () => {
-      const fetchedAt = Date.now();
-      return { ...(await api.draw(scope)), fetchedAt };
-    },
+    // Card writes still on the device lie over it, so a review reopened offline reads as they will.
+    queryFn: () =>
+      fresh(["queue", scopeKey(scope), "draw"], async () => {
+        const fetchedAt = Date.now();
+        return { ...(await api.draw(scope)), fetchedAt };
+      }),
     staleTime: 0,
     refetchOnWindowFocus: false,
   });

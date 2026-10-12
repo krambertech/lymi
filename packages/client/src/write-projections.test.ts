@@ -1,6 +1,8 @@
 import { QueryClient } from "@tanstack/react-query";
 import { describe, expect, it } from "vitest";
-import type { Card, DeckSummary } from "./api";
+import type { Card, DeckSummary, Draw } from "./api";
+import { drawableLeft } from "./review-day";
+import { drawState } from "./review-draw";
 import { cacheLookup, localCard, localDeck, rebase, showWrite } from "./write-projections";
 import type { QueuedWrite, Write } from "./writes";
 
@@ -103,6 +105,114 @@ describe("a write on the device", () => {
     expect(qc.getQueryData<DeckSummary[]>(["decks", "archived"])).toMatchObject([
       { id: "et", name: "Estonian" },
     ]);
+  });
+});
+
+describe("a deck archive in review", () => {
+  const start = new Date("2026-10-12T00:00:00Z");
+  const noon = new Date("2026-10-12T12:00:00Z");
+  const end = new Date("2026-10-13T00:00:00Z");
+  const yesterday = new Date("2026-10-11T00:00:00Z").toISOString();
+  const entry = (id: string, deckId: string) => ({
+    card: card(id, deckId),
+    modes: [
+      {
+        mode: { cue: "meaning" as const, target: "term" as const },
+        stateId: `s-${id}`,
+        fsrsState: 2,
+        due: yesterday,
+        retrievability: 0.6,
+        added: "2026-09-01T00:00:00Z",
+        hasCue: true,
+        next: { 1: yesterday, 2: yesterday, 3: yesterday, 4: yesterday },
+      },
+    ],
+    slipping: false,
+  });
+  const draw = (cards: Draw["cards"], total = cards.length): Draw => ({
+    day: { date: "2026-10-12", zone: "UTC", start: start.toISOString(), end: end.toISOString() },
+    goal: 20,
+    attempts: 0,
+    total,
+    cards,
+    log: [],
+  });
+  // What Today, the widgets and the reminders count as left.
+  const left = (qc: QueryClient, key: string[]) => {
+    const data = qc.getQueryData<Draw>(key);
+    return data ? drawableLeft(data, drawState(data, [], noon, undefined), undefined) : undefined;
+  };
+  const all = ["queue", "all", "draw"];
+
+  it("leaves nothing to review when the only deck is archived", () => {
+    const qc = cache();
+    qc.setQueryData(all, draw([entry("a", "it"), entry("b", "it"), entry("c", "it")]));
+    expect(left(qc, all)).toBe(3);
+    showWrite(qc, { kind: "deck.archive", id: "it" });
+    expect(qc.getQueryData<Draw>(all)?.cards).toEqual([]);
+    expect(left(qc, all)).toBe(0);
+  });
+
+  it("keeps the other decks' cards", () => {
+    const qc = cache();
+    qc.setQueryData(all, draw([entry("a", "it"), entry("b", "et"), entry("c", "it")]));
+    showWrite(qc, { kind: "deck.archive", id: "it" });
+    expect(ids(qc.getQueryData<Draw>(all)?.cards)).toEqual(["b"]);
+    expect(left(qc, all)).toBe(1);
+  });
+
+  it("takes the deck's cards behind the fetched front out of the total too", () => {
+    const qc = cache();
+    qc.setQueryData(["decks"], [deck("it", { due: 60 }), deck("et", { due: 90 })]);
+    qc.setQueryData(all, draw([entry("a", "it"), entry("b", "et")], 150));
+    showWrite(qc, { kind: "deck.archive", id: "it" });
+    expect(qc.getQueryData<Draw>(all)?.total).toBe(90);
+    expect(left(qc, all)).toBe(90);
+  });
+
+  it("empties the deck's own draw and leaves a series draw it is not in", () => {
+    const qc = cache();
+    qc.setQueryData(["decks"], [deck("it", { due: 5 }), deck("et", { seriesId: "s" })]);
+    const own = ["queue", "deck:it", "draw"];
+    const series = ["queue", "series:s", "draw"];
+    qc.setQueryData(own, draw([entry("a", "it")], 5));
+    qc.setQueryData(series, draw([entry("b", "et")], 4));
+    showWrite(qc, { kind: "deck.archive", id: "it" });
+    expect(qc.getQueryData<Draw>(own)).toMatchObject({ cards: [], total: 0 });
+    expect(qc.getQueryData<Draw>(series)?.total).toBe(4);
+  });
+
+  it("takes the deck's cards out of a round", () => {
+    const qc = cache();
+    const round = ["queue", "all", "forgotten"];
+    qc.setQueryData(round, {
+      total: 3,
+      items: [{ card: card("a", "it") }, { card: card("b", "et") }],
+    });
+    showWrite(qc, { kind: "deck.archive", id: "it" });
+    expect(qc.getQueryData(round)).toMatchObject({ total: 2, items: [{ card: { id: "b" } }] });
+  });
+
+  it("puts the cards and the count back when the archive is undone", () => {
+    const qc = cache();
+    qc.setQueryData(["decks"], [deck("it", { due: 60 }), deck("et", { due: 90 })]);
+    qc.setQueryData(all, draw([entry("a", "it"), entry("b", "et")], 150));
+    showWrite(qc, { kind: "deck.archive", id: "it" });
+    showWrite(qc, { kind: "deck.restore", id: "it" });
+    const data = qc.getQueryData<Draw>(all);
+    expect(ids(data?.cards)?.sort()).toEqual(["a", "b"]);
+    expect(data?.total).toBe(150);
+  });
+
+  it("lays an archive still waiting over a draw fetched again", () => {
+    const qc = cache();
+    const pending: QueuedWrite[] = [
+      { v: 1, key: "k", at: 0, write: { kind: "deck.archive", id: "it" }, label: "" },
+    ];
+    const fetched = draw([entry("a", "it"), entry("b", "et")]);
+    const rebased = rebase(all, fetched, pending, cacheLookup(qc));
+    expect(ids(rebased.cards)).toEqual(["b"]);
+    expect(rebased.total).toBe(1);
   });
 });
 

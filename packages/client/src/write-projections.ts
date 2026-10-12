@@ -2,6 +2,7 @@ import {
   type CardPatch,
   deckEnrichFields,
   directionsFromModes,
+  drawableCount,
   modeKey,
   modeOf,
   modesFromDirections,
@@ -9,6 +10,7 @@ import {
 } from "@lymi/core";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import type { Card, CardHit, CardState, DeckSummary, Me } from "./api";
+import { type DrawData, drawCards, drawLog } from "./review-draw";
 import type { DeckPatch, QueuedWrite, Write } from "./writes";
 
 /**
@@ -44,7 +46,7 @@ export function cacheLookup(qc: QueryClient): Lookup {
   };
 }
 
-type Shape = "decks" | "archivedDecks" | "deckCards" | "archivedCards";
+type Shape = "decks" | "archivedDecks" | "deckCards" | "archivedCards" | "draw" | "queue";
 
 function shapeOf(key: QueryKey): { shape: Shape; deckId?: string } | null {
   if (key[0] === "decks" && key.length === 1) return { shape: "decks" };
@@ -57,6 +59,9 @@ function shapeOf(key: QueryKey): { shape: Shape; deckId?: string } | null {
   if (key[0] === "cards" && key[1] === "archived" && key.length === 2) {
     return { shape: "archivedCards" };
   }
+  // A review's draw and a round's queue, so a card edited or archived offline reads as it will.
+  if (key[0] === "queue" && key.length === 3)
+    return { shape: key[2] === "draw" ? "draw" : "queue" };
   return null;
 }
 
@@ -264,10 +269,59 @@ function onArchivedCards(cards: CardHit[], w: Write, lookup: Lookup): CardHit[] 
   }
 }
 
+type Reviewed = { card: Card };
+type Review = { total: number; cards?: Reviewed[]; items?: Reviewed[] };
+
+/**
+ * A draw or a round without an archived deck's cards. The fetch holds only the front of the order,
+ * so the total also loses the deck's own count from Library when the deck is in the scope.
+ */
+function withoutDeck<T extends Review>(scope: string, data: T, id: string, lookup: Lookup): T {
+  const list = data.cards ? "cards" : "items";
+  const entries = data[list];
+  if (!entries) return data;
+  const rest = entries.filter((e) => e.card.deckId !== id);
+  const removed = entries.length - rest.length;
+  // A section lives in one deck, so a section draw holding the deck's cards goes with it.
+  if (scope === `deck:${id}` || (scope.startsWith("section:") && removed > 0)) {
+    return entries.length || data.total ? { ...data, [list]: [], total: 0 } : data;
+  }
+  const deck = lookup.deck(id);
+  const inScope =
+    removed > 0 || scope === "all" || (!!deck?.seriesId && scope === `series:${deck.seriesId}`);
+  if (!inScope) return data;
+  // A round's total counts only its own cards, which Library's due count says nothing about.
+  if (list === "items") {
+    return removed ? { ...data, items: rest, total: Math.max(0, data.total - removed) } : data;
+  }
+  const draw = data as unknown as DrawData;
+  const day = { date: draw.day.date, start: new Date(draw.day.start), end: new Date(draw.day.end) };
+  const log = drawLog(draw, [], day);
+  const left = drawableCount(drawCards({ ...draw, cards: rest as DrawData["cards"] }), log, day);
+  const front = drawableCount(drawCards(draw), log, day) - left;
+  const total = Math.max(left, data.total - Math.max(front, deck?.due ?? 0));
+  if (removed === 0 && total === data.total) return data;
+  return { ...data, cards: rest, total };
+}
+
+function onReview<T extends Review>(scope: string, data: T, w: Write, lookup: Lookup): T {
+  switch (w.kind) {
+    case "deck.archive":
+      return withoutDeck(scope, data, w.id, lookup);
+    default:
+      return data;
+  }
+}
+
 /** One write's effect on one query's data, or the data untouched when the write does not show there. */
 export function applyWrite<T>(key: QueryKey, data: T, w: Write, lookup: Lookup): T {
   const target = shapeOf(key);
-  if (!target || !Array.isArray(data)) return data;
+  if (!target || !data || typeof data !== "object") return data;
+  if (target.shape === "draw" || target.shape === "queue") {
+    if (!("total" in data)) return data;
+    return onReview(String(key[1]), data as T & Review, w, lookup);
+  }
+  if (!Array.isArray(data)) return data;
   switch (target.shape) {
     case "decks":
       return onDecks(data as DeckSummary[], w, lookup) as T;
@@ -285,14 +339,49 @@ export function rebase<T>(key: QueryKey, data: T, pending: QueuedWrite[], lookup
   return pending.reduce((current, entry) => applyWrite(key, current, entry.write, lookup), data);
 }
 
+/**
+ * What a deck archive took out of each cached draw and round, so a restore puts it back at once.
+ * A fetch while the restore waits knows only the server's, which still has the deck archived.
+ */
+const parkedDecks = new Map<string, { key: QueryKey; entries: Reviewed[]; total: number }[]>();
+
+function taken(key: QueryKey, before: Review, after: Review) {
+  const list = before.cards ? "cards" : "items";
+  const kept = new Set(after[list]?.map((e) => e.card.id));
+  const entries = (before[list] ?? []).filter((e) => !kept.has(e.card.id));
+  return { key, entries, total: before.total - after.total };
+}
+
+function unparkDeck(qc: QueryClient, id: string) {
+  for (const { key, entries, total } of parkedDecks.get(id) ?? []) {
+    qc.setQueryData<Review>(key, (data) => {
+      const list = data?.cards ? "cards" : "items";
+      const current = data?.[list];
+      if (!data || !current) return data;
+      const present = new Set(current.map((e) => e.card.id));
+      const back = entries.filter((e) => !present.has(e.card.id));
+      return { ...data, [list]: [...back, ...current], total: data.total + total };
+    });
+  }
+  parkedDecks.delete(id);
+}
+
 /** Shows a write in every cached list at once, before the server has it. */
 export function showWrite(qc: QueryClient, w: Write) {
+  if (w.kind === "deck.restore") unparkDeck(qc, w.id);
+  const held: ReturnType<typeof taken>[] = [];
   const lookup = cacheLookup(qc);
   for (const query of qc.getQueryCache().getAll()) {
-    if (!shapeOf(query.queryKey) || query.state.data === undefined) continue;
+    const shape = shapeOf(query.queryKey)?.shape;
+    if (!shape || query.state.data === undefined) continue;
     const next = applyWrite(query.queryKey, query.state.data, w, lookup);
-    if (next !== query.state.data) qc.setQueryData(query.queryKey, next);
+    if (next === query.state.data) continue;
+    if (w.kind === "deck.archive" && (shape === "draw" || shape === "queue")) {
+      held.push(taken(query.queryKey, query.state.data as Review, next as Review));
+    }
+    qc.setQueryData(query.queryKey, next);
   }
+  if (w.kind === "deck.archive" && held.length) parkedDecks.set(w.id, held);
   // A deck made here has nothing on the server to fetch yet, so its screen opens empty.
   if (w.kind === "deck.create") {
     const id = w.input.id;

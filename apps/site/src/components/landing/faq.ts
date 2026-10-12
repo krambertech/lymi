@@ -69,7 +69,7 @@ export const ASSISTANTS_QUESTIONS: Question[] = [
   {
     id: "which",
     question: msg`Which assistants work?`,
-    answer: msg`Claude, Claude Code, ChatGPT, Codex and Gemini CLI. Other apps that support MCP can connect too.`,
+    answer: msg`Claude, Claude Code, ChatGPT, Codex, Gemini CLI, Cursor and Grok. Other apps that support MCP can connect too.`,
   },
   {
     id: "wrong",

@@ -293,8 +293,11 @@ function Tools({
   // Filter lists what can be filtered by; each opens its values in the same sheet.
   const [level, setLevel] = useState<"state" | "due" | "section" | null>(null);
   const levelName = { state: t`State`, due: t`Due`, section: t`Section` };
+  // Hermes may not ship Intl.ListFormat, so a plain comma list stands in for it.
   const list = (items: string[]) =>
-    new Intl.ListFormat(i18n.locale, { type: "conjunction", style: "narrow" }).format(items);
+    typeof Intl.ListFormat === "function"
+      ? new Intl.ListFormat(i18n.locale, { type: "conjunction", style: "narrow" }).format(items)
+      : items.join(", ");
   const sortName: Record<DeckSort, string> = {
     section: t`Section`,
     due: t`When it’s back`,

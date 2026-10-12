@@ -1,11 +1,10 @@
 import { useLingui } from "@lingui/react/macro";
 import { type ReactNode, useEffect, useState } from "react";
 import { TextInput, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
-import { GlassSurface } from "./glass";
-import { Icon, Press, Text } from "./primitives";
+import { GlassButton, GlassSurface } from "./glass";
+import { Icon } from "./primitives";
 
 /** Long enough to skip the letters of a word being typed, short enough to feel live. */
 const SETTLE = 250;
@@ -22,9 +21,10 @@ export function useSearchText(initial = "") {
 }
 
 /**
- * Search takes the top bar while it is open, as iOS's own search does: a glass field with the
- * keyboard up, then Cancel. Every search on the phone uses it, so they read as one; anything that
- * narrows the results, such as filters, sits after the field.
+ * Search sits at the foot of the screen and rides on the keyboard, as iOS 26's own search does: a
+ * glass field, then a round glass close. Put it last inside a KeyboardRoom, under the results.
+ * Every search on the phone uses it, so they read as one; a control that narrows the results, such
+ * as a filter, goes in `after`, between the field and close.
  */
 export function SearchBar({
   value,
@@ -38,14 +38,13 @@ export function SearchBar({
   /** What is searched, as "Search all cards". It is the field's name for VoiceOver too. */
   placeholder: string;
   onCancel: () => void;
-  /** Glass controls beside the field, before Cancel. */
+  /** Glass controls beside the field, before close. */
   after?: ReactNode;
 }) {
   const { t } = useLingui();
   const p = usePalette();
-  const insets = useSafeAreaInsets();
   return (
-    <View className="flex-row items-center gap-3 px-4 pb-3" style={{ paddingTop: insets.top + 8 }}>
+    <View className="flex-row items-center gap-2.5 px-4 pt-2 pb-2">
       <GlassSurface
         tint="room"
         style={{
@@ -79,9 +78,7 @@ export function SearchBar({
         />
       </GlassSurface>
       {after}
-      <Press onPress={onCancel} accessibilityRole="button" hitSlop={8}>
-        <Text className="text-md font-medium text-text">{t`Cancel`}</Text>
-      </Press>
+      <GlassButton icon="close" label={t`Close search`} onPress={onCancel} />
     </View>
   );
 }

@@ -18,7 +18,7 @@ import {
   seriesQuery,
   streakQuery,
 } from "@lymi/client/queries";
-import { streakWith } from "@lymi/client/review-day";
+import { drawableLeft, streakWith } from "@lymi/client/review-day";
 import {
   type DrawData,
   type DrawState,
@@ -113,6 +113,10 @@ export function useDay() {
   const streak = useStreak().data;
   const draw = useDraw().data;
   const { state } = useDrawState({}, draw);
+  const left = useMemo(
+    () => (draw && state ? drawableLeft(draw, state, undefined) : undefined),
+    [draw, state],
+  );
   const data = streak && state ? streakToday(streak, state) : streak;
   const reviewsToday = data?.today.attempts ?? state?.attempts ?? 0;
   const goal = data?.today.goal ?? data?.goal ?? draw?.goal ?? DEFAULT_DAILY_GOAL;
@@ -141,6 +145,8 @@ export function useDay() {
     goal,
     dayDone,
     week,
+    /** Cards the day's draw still holds, counted on the device, so it stays true offline. */
+    left,
     /** Moves with every grade as it is made; the lantern breathes and sparks on it. */
     fed: reviewsToday,
     /** The lantern by the web's rule: out with no streak and no review yet, and today's growth. */

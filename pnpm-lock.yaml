@@ -57,6 +57,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.104.1
         version: 5.104.1(react@19.2.3)
+      '@tanstack/react-query-persist-client':
+        specifier: ^5.104.1
+        version: 5.104.1(@tanstack/react-query@5.104.1(react@19.2.3))(react@19.2.3)
       better-auth:
         specifier: ^1.7.7
         version: 1.7.7(@prisma/client@5.22.0)(drizzle-kit@0.31.11)(drizzle-orm@0.45.4(@prisma/client@5.22.0)(@types/pg@8.23.1)(better-sqlite3@12.11.1)(kysely@0.29.5)(pg@8.23.0))(pg@8.23.0)(react-dom@19.3.0(react@19.2.3))(react@19.2.3)(vitest@5.0.3)
@@ -12078,6 +12081,12 @@ snapshots:
   '@tanstack/query-persist-client-core@5.104.1':
     dependencies:
       '@tanstack/query-core': 5.104.1
+
+  '@tanstack/react-query-persist-client@5.104.1(@tanstack/react-query@5.104.1(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@tanstack/query-persist-client-core': 5.104.1
+      '@tanstack/react-query': 5.104.1(react@19.2.3)
+      react: 19.2.3
 
   '@tanstack/react-query-persist-client@5.104.1(@tanstack/react-query@5.104.1(react@19.3.0))(react@19.3.0)':
     dependencies:

@@ -12,6 +12,7 @@ import { REST_DISMISSED_KEY, todayStore } from "../../../data/kept";
 import { useDay, useDecks, useRounds, useStreak } from "../../../data/queries";
 import { useLandingSpot } from "../../../splash/landing";
 import { clear, usePalette, useRoom } from "../../../theme/palette";
+import { OfflineNote, useKeptSince } from "../../../ui/offline-note";
 import {
   Button,
   Icon,
@@ -40,9 +41,13 @@ export default function Today() {
   const day = useDay();
   const rest = useRestDismissal(day.summary?.today.date);
   const total = decks.data?.reduce((n, d) => n + d.total, 0) ?? 0;
-  const failed = (decks.isError && !decks.data) || (streak.isError && !streak.data);
+  // Offline with nothing kept yet, the reads wait rather than fail, so waiting counts as failing here.
+  const unloaded = (q: typeof decks | typeof streak) =>
+    !q.data && (q.isError || q.fetchStatus === "paused");
+  const failed = unloaded(decks) || unloaded(streak);
   const loading = (!decks.data || !streak.data) && !failed;
   const nothingYet = !loading && total === 0;
+  const kept = !!useKeptSince(decks);
 
   if (failed) {
     return (
@@ -61,6 +66,7 @@ export default function Today() {
     <Screen title={t`Today`} kind="tab">
       {/* The banner sits at the cards' own gap, because it is about the streak below it. */}
       <View className="gap-3">
+        {!loading && <OfflineNote query={decks} />}
         {!loading && day.restedYesterday && !rest.dismissed && (
           <RestDayBanner current={day.streak} onDismiss={rest.dismiss} />
         )}
@@ -73,7 +79,7 @@ export default function Today() {
             <Skeleton height={64} />
           </View>
         ) : (
-          <LitDue decks={decks.data ?? []} nothingYet={nothingYet} />
+          <LitDue decks={decks.data ?? []} nothingYet={nothingYet} kept={kept} />
         )}
         {loading ? (
           <Skeleton height={150} />
@@ -108,16 +114,25 @@ function useRestDismissal(today: string | undefined) {
 type Deck = NonNullable<ReturnType<typeof useDecks>["data"]>[number];
 
 /** The lantern lights the top of the screen; no plate, the room itself is warm there. */
-function LitDue({ decks, nothingYet }: { decks: Deck[]; nothingYet: boolean }) {
+function LitDue({
+  decks,
+  nothingYet,
+  kept,
+}: {
+  decks: Deck[];
+  nothingYet: boolean;
+  /** The decks are as of the last sync, so their counts miss grades and days since. */
+  kept: boolean;
+}) {
   const { t } = useLingui();
-  const { fed, out, progress } = useDay();
+  const { fed, out, progress, left } = useDay();
   const router = useRouter();
   const p = usePalette();
   // At night the pool stays close to the lantern, so Today reads as the same room as every other screen.
   const room = useRoom();
   // The flame stops flickering while Today is out of sight.
   const focused = useIsFocused();
-  const due = decks.reduce((n, d) => n + d.due, 0);
+  const due = kept && left !== undefined ? left : decks.reduce((n, d) => n + d.due, 0);
   const [onlyDeck] = decks.length === 1 ? decks : [];
   const noDecks = nothingYet && decks.length === 0;
   return (

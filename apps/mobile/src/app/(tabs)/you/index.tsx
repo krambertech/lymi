@@ -1,10 +1,12 @@
+import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { outboxSize } from "@lymi/client/grades";
 import { dropQueued } from "@lymi/client/queued";
-import { useQueryClient } from "@tanstack/react-query";
+import { flushWrites, pendingWrites } from "@lymi/client/writes";
 import { useRouter } from "expo-router";
 import { openBrowserAsync } from "expo-web-browser";
 import { useState } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { authClient } from "../../../auth/client";
 import { useDecks, useInsights } from "../../../data/queries";
 import { RunStrip } from "../../../insights/figures";
@@ -229,8 +231,35 @@ function InsightsPlate({ onPress }: { onPress: () => void }) {
 
 function SignOut() {
   const { t } = useLingui();
-  const queryClient = useQueryClient();
   const [signingOut, setSigningOut] = useState(false);
+  const leave = async () => {
+    setSigningOut(true);
+    // The stored session is cleared before the request, so an unreachable Worker still signs out.
+    await authClient.signOut().catch(() => undefined);
+    // The root forgets the rest of this learner once the session is gone, as the web does.
+    dropQueued();
+    setSigningOut(false);
+  };
+  // Work made offline lives only on this phone until it lands, so losing it is never the default.
+  const signOut = async () => {
+    setSigningOut(true);
+    await flushWrites().catch(() => undefined);
+    const queued = outboxSize() + pendingWrites();
+    if (queued === 0) return leave();
+    setSigningOut(false);
+    Alert.alert(
+      t`Some offline work hasn’t synced`,
+      plural(queued, {
+        one: "# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it.",
+        other:
+          "# grades and changes made offline are still waiting to reach Lymi. Sign out once you’re back online to keep them.",
+      }),
+      [
+        { text: t`Stay signed in`, style: "cancel" },
+        { text: t`Sign out and lose them`, style: "destructive", onPress: () => void leave() },
+      ],
+    );
+  };
   return (
     <View
       className={signingOut ? "opacity-45" : undefined}
@@ -242,15 +271,7 @@ function SignOut() {
           label={t`Sign out`}
           end="none"
           destructive
-          onPress={async () => {
-            setSigningOut(true);
-            // The stored session is cleared before the request, so an unreachable Worker still signs out.
-            await authClient.signOut().catch(() => undefined);
-            // Nothing of this learner stays on the device for the next one, as on the web.
-            dropQueued();
-            queryClient.clear();
-            setSigningOut(false);
-          }}
+          onPress={() => void signOut()}
         />
       </Rows>
     </View>

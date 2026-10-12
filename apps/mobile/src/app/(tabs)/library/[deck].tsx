@@ -10,6 +10,7 @@ import {
 } from "../../../data/queries";
 import { type Palette, usePalette } from "../../../theme/palette";
 import type { IconName } from "../../../ui/icons";
+import { OfflineNote } from "../../../ui/offline-note";
 import { Button, Icon, Plate, SectionTitle, Text } from "../../../ui/primitives";
 import { Screen } from "../../../ui/screen";
 import { DECK_ACCESSORY } from "../../../ui/tab-bar";
@@ -23,7 +24,8 @@ const STATE: Record<Standing, { label: string; icon: IconName; tint: keyof Palet
 export default function Deck() {
   const { deck: id } = useLocalSearchParams<{ deck: string }>();
   const deck = useDecks().data?.find((d) => d.id === id);
-  const mine = useDeckCards(id).data ?? [];
+  const cards = useDeckCards(id);
+  const mine = cards.data ?? [];
   const names = new Map(useSections(id).data?.sections.map((s) => [s.id, s.name]));
   const router = useRouter();
   const p = usePalette();
@@ -34,6 +36,7 @@ export default function Deck() {
 
   return (
     <Screen title={deck?.name ?? "Deck"} back={{ label: "Library", to: "/library" }}>
+      <OfflineNote query={cards} />
       {/* From iOS 26 the deck's review rides in the tab bar's accessory instead. */}
       {!DECK_ACCESSORY && due > 0 && (
         <Button

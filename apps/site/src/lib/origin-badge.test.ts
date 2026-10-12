@@ -1,7 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { originBadge } from "./origin-badge";
+import { originBadge as detect, originScript } from "./origin-badge";
 
-const visitor = { timeZone: "Europe/Berlin", languages: ["en-US"], pageLocale: "en" };
+interface Visitor {
+  timeZone: string | undefined;
+  languages: string[];
+  pageLocale: string;
+}
+
+const originBadge = (v: Visitor) => detect(v.timeZone, v.languages, v.pageLocale);
+
+const visitor: Visitor = { timeZone: "Europe/Berlin", languages: ["en-US"], pageLocale: "en" };
 
 describe("originBadge", () => {
   it("names Ukraine for the Ukrainian page, a Ukrainian browser or a Ukrainian time zone", () => {
@@ -31,5 +39,15 @@ describe("originBadge", () => {
     expect(originBadge(visitor)).toBeNull();
     expect(originBadge({ ...visitor, languages: [], timeZone: undefined })).toBeNull();
     expect(originBadge({ ...visitor, languages: ["ru-RU"], timeZone: "Europe/Moscow" })).toBeNull();
+  });
+
+  it("runs on its own as the pre-paint script", () => {
+    const root = { dataset: {} as Record<string, string> };
+    const run = new Function("document", "navigator", "Intl", originScript("en"));
+    const intl = {
+      DateTimeFormat: () => ({ resolvedOptions: () => ({ timeZone: "Europe/Tallinn" }) }),
+    };
+    run({ documentElement: root }, { languages: ["en-US"] }, intl);
+    expect(root.dataset.origin).toBe("estonia");
   });
 });

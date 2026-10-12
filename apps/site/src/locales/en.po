@@ -1449,6 +1449,9 @@ msgstr "Lymi’s own AI fills in the meaning, an example and how to say it. It m
 msgid "Made by Lymi"
 msgstr "Made by Lymi"
 
+msgid "Made by Ukrainians"
+msgstr "Made by Ukrainians"
+
 msgid "Main navigation"
 msgstr "Main navigation"
 
@@ -2401,9 +2404,6 @@ msgstr "Two euros ten."
 
 msgid "Type the term, and AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
 msgstr "Type the term, and AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
-
-msgid "Ukrainian-made"
-msgstr "Ukrainian-made"
 
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Unfinished tasks stay on your mind more than finished ones"

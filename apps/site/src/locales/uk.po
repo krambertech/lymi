@@ -1449,6 +1449,9 @@ msgstr "Власний AI Lymi доповнить картку значення�
 msgid "Made by Lymi"
 msgstr "Від Lymi"
 
+msgid "Made by Ukrainians"
+msgstr "Створено українцями"
+
 msgid "Main navigation"
 msgstr "Основна навігація"
 
@@ -2401,9 +2404,6 @@ msgstr "Два євро десять центів."
 
 msgid "Type the term, and AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
 msgstr "Введи термін — AI додасть значення, приклад і вимову. Твого тексту він не змінює, а все, що написав сам, позначає."
-
-msgid "Ukrainian-made"
-msgstr "Українська розробка"
 
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Незавершені справи тримаються в пам’яті краще за завершені"

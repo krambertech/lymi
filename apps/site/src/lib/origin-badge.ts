@@ -1,43 +1,32 @@
 export type OriginBadge = "ukraine" | "estonia";
 
-interface Signals {
-  timeZone: string | undefined;
-  languages: readonly string[];
-  pageLocale: string;
-}
-
-const ZONES: Record<string, OriginBadge> = {
-  "Europe/Kyiv": "ukraine",
-  "Europe/Kiev": "ukraine",
-  "Europe/Uzhgorod": "ukraine",
-  "Europe/Zaporozhye": "ukraine",
-  "Europe/Tallinn": "estonia",
-};
-
-function fromLanguage(tag: string): OriginBadge | null {
-  const [language, ...rest] = tag.toLowerCase().split("-");
-  if (language === "uk" || rest.includes("ua")) return "ukraine";
-  if (language === "et" || rest.includes("ee")) return "estonia";
-  return null;
-}
-
 /**
  * Which origin the site names to this visitor, read from the browser alone so no address is looked
  * up. Language outranks time zone, so a Ukrainian speaker living in Tallinn sees Ukraine.
+ * BaseLayout inlines this function's source to run before first paint, so it closes over nothing.
  */
-export function originBadge({ timeZone, languages, pageLocale }: Signals): OriginBadge | null {
+export function originBadge(
+  timeZone: string | undefined,
+  languages: readonly string[],
+  pageLocale: string,
+): OriginBadge | null {
   if (pageLocale === "uk") return "ukraine";
   for (const tag of languages) {
-    const badge = fromLanguage(tag);
-    if (badge) return badge;
+    const [language, ...rest] = tag.toLowerCase().split("-");
+    if (language === "uk" || rest.includes("ua")) return "ukraine";
+    if (language === "et" || rest.includes("ee")) return "estonia";
   }
-  return (timeZone && ZONES[timeZone]) || null;
+  if (timeZone === "Europe/Tallinn") return "estonia";
+  const ukraine = ["Europe/Kyiv", "Europe/Kiev", "Europe/Uzhgorod", "Europe/Zaporozhye"];
+  return timeZone && ukraine.includes(timeZone) ? "ukraine" : null;
 }
 
-export function visitorOriginBadge(pageLocale: string): OriginBadge | null {
-  let timeZone: string | undefined;
-  try {
-    timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  } catch {}
-  return originBadge({ timeZone, languages: navigator.languages ?? [], pageLocale });
+/** Sets `data-origin` on the document before first paint; the hero's badge shows from it. */
+export function originScript(pageLocale: string): string {
+  return `try{var o=(${originBadge.toString()})(Intl.DateTimeFormat().resolvedOptions().timeZone,navigator.languages||[],${JSON.stringify(pageLocale)});if(o)document.documentElement.dataset.origin=o}catch(e){}`;
+}
+
+export function shownOriginBadge(): OriginBadge | null {
+  const origin = document.documentElement.dataset.origin;
+  return origin === "ukraine" || origin === "estonia" ? origin : null;
 }

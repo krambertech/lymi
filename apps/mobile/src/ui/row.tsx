@@ -47,11 +47,12 @@ export function RowFace({ label, icon, value, end = "open", destructive = false 
       {label}
     </Text>
   );
-  // Side by side, a long value gives way to its label: one line, cut at most of half the row.
+  // A long value gives way to its label: one line beside it, cut at most of half the row, or two
+  // lines under it at the accessibility sizes.
   const now = value && (
     <Text
       className="text-md text-muted"
-      numberOfLines={stacked ? undefined : 1}
+      numberOfLines={stacked ? 2 : 1}
       style={[{ fontVariant: ["tabular-nums"] }, !stacked && { flexShrink: 1, maxWidth: "42%" }]}
     >
       {value}

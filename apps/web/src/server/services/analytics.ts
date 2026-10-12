@@ -87,6 +87,8 @@ export function recordRequest(
     status: number;
     durationMs: number;
     actor: "anon" | "public" | "user" | "api" | "mcp";
+    /** The phone's platform and version, such as `ios 1.2.0`, or `none` without `x-lymi-client`. */
+    client: string;
   },
 ): void {
   if (!dataset) return;
@@ -96,7 +98,7 @@ export function recordRequest(
   try {
     dataset.writeDataPoint({
       indexes: [point.actor],
-      blobs: [point.route, method, `${Math.floor(point.status / 100)}xx`],
+      blobs: [point.route, method, `${Math.floor(point.status / 100)}xx`, point.client],
       doubles: [point.durationMs],
     });
   } catch {

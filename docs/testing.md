@@ -219,9 +219,11 @@ Each phone release freezes the API it was built against: Promote writes the Work
 
 A response may gain fields and the API may gain endpoints. The check fails when a frozen release would lose something it reads, when a request it sends would be refused, or when a response field gains an enum value or a union branch the release has never seen. When the check fails on a web-first feature, choose one of these:
 
-1. Leave the new value out of responses to older clients, using the version the app sends in `x-lymi-client`.
+1. Leave the new value out of responses to older clients: the route asks `clientSupports(c, { ios: "<first release that shows it>" })` from `apps/web/src/server/phone-clients.ts`, which reads the version the app sends in `x-lymi-client`. A platform left out has no release that shows it yet.
 2. If the phone already shows an unknown value safely, mark the field with `.meta({ "x-lymi-open": true })` in `packages/core` and freeze a release that carries the mark.
 3. To remove something, raise the minimum version first and delete the frozen releases below it in the same pull request.
+
+The minimum version is `PHONE_MINIMUM_VERSION_IOS` in `apps/web/wrangler.jsonc`, and `PHONE_UPDATE_URL_IOS` is where Update Lymi sends the learner. Raising it needs a Worker deploy and no app build: every request from an older release then gets 426, and the app shows only Update Lymi, keeping its unsent grades and writes for the updated release.
 
 Freeze by hand, for example to record the baseline after a change to the check itself:
 

@@ -5,11 +5,22 @@ import { isLoopbackUrl } from "../shared/origins";
  * from wrangler.jsonc; this narrows the secrets, which live in .dev.vars locally and in
  * `wrangler secret` in production.
  */
-export interface Bindings extends Omit<Env, "REQUESTS" | "EVENTS" | "POSTHOG_PROJECT_TOKEN"> {
+export interface Bindings
+  extends Omit<
+    Env,
+    | "REQUESTS"
+    | "EVENTS"
+    | "POSTHOG_PROJECT_TOKEN"
+    | "PHONE_MINIMUM_VERSION_IOS"
+    | "PHONE_UPDATE_URL_IOS"
+  > {
   /** Optional in local tests and loopback; previews use isolated datasets. */
   REQUESTS?: AnalyticsEngineDataset;
   EVENTS?: AnalyticsEngineDataset;
   POSTHOG_PROJECT_TOKEN?: string;
+  /** Unset means every iPhone release is served. */
+  PHONE_MINIMUM_VERSION_IOS?: string;
+  PHONE_UPDATE_URL_IOS?: string;
   /** Secrets are not emitted by `wrangler types` unless they exist in the local environment. */
   BETTER_AUTH_SECRET: string;
   GOOGLE_CLIENT_ID: string;

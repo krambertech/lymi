@@ -890,6 +890,9 @@ msgstr "Theme"
 msgid "This card’s picture was removed."
 msgstr "This card’s picture was removed."
 
+msgid "This version of the app is out of date. Update it to keep reviewing."
+msgstr "This version of the app is out of date. Update it to keep reviewing."
+
 msgid "Time"
 msgstr "Time"
 
@@ -946,6 +949,12 @@ msgstr "Until then, see how your memory is doing on the web."
 
 msgid "Until then, see what changed in your Library on the web."
 msgstr "Until then, see what changed in your Library on the web."
+
+msgid "Update"
+msgstr "Update"
+
+msgid "Update Lymi"
+msgstr "Update Lymi"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
@@ -1015,3 +1024,6 @@ msgstr "Your name"
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Your photo changed on another device. Try again."
+
+msgid "Your unsent reviews and cards are saved on this phone. They send after the update."
+msgstr "Your unsent reviews and cards are saved on this phone. They send after the update."

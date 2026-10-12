@@ -1,5 +1,6 @@
 import "../global.css";
 import { I18nProvider } from "@lingui/react";
+import { useUpdateRequired } from "@lymi/client/update-required";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { registerDevMenuItems } from "expo-dev-menu";
 import { isGlassEffectAPIAvailable } from "expo-glass-effect";
@@ -49,9 +50,11 @@ function Root() {
   const session = useSession();
   const learnerId = session.data?.user.id;
   const signedIn = Boolean(session.data);
+  // A 426 from any request: this release is too old for the API, so nothing else can work.
+  const update = useUpdateRequired();
   useEffect(() => {
-    if (!session.isPending) SplashScreen.hideAsync();
-  }, [session.isPending]);
+    if (!session.isPending || update) SplashScreen.hideAsync();
+  }, [session.isPending, update]);
   const base = dark ? DarkTheme : DefaultTheme;
   // The navigation theme carries the room, so native chrome never flashes white between tabs.
   const theme = {
@@ -69,17 +72,21 @@ function Root() {
     <ThemeProvider value={theme}>
       <StatusBar style="auto" />
       {!session.isPending && <LanguageSync signedIn={signedIn} />}
-      {learnerId && (
+      {learnerId && !update && (
         <>
           <Sync learnerId={learnerId} />
           <WidgetSync />
         </>
       )}
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: p.canvas } }}>
-        <Stack.Protected guard={!signedIn}>
+        {/* First, so a link opened while it shows lands on it rather than on a refused screen. */}
+        <Stack.Protected guard={!!update}>
+          <Stack.Screen name="update" options={{ animation: "fade", gestureEnabled: false }} />
+        </Stack.Protected>
+        <Stack.Protected guard={!update && !signedIn}>
           <Stack.Screen name="(auth)" options={{ animation: "fade" }} />
         </Stack.Protected>
-        <Stack.Protected guard={signedIn}>
+        <Stack.Protected guard={!update && signedIn}>
           <Stack.Screen name="index" />
           <Stack.Screen name="(tabs)" />
           {/* Over Today rather than in place of it, so pulling the review's top bar down shows Today. */}

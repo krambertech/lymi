@@ -2,7 +2,8 @@ import { configureClient, type KeyValueStore } from "@lymi/client";
 import { api } from "@lymi/client/api";
 import { flushOutbox, outboxSize, recordGrade } from "@lymi/client/grades";
 import { drawState } from "@lymi/client/review-draw";
-import { DeckOut, modeKey } from "@lymi/core";
+import { resetUpdateRequired, updateRequired } from "@lymi/client/update-required";
+import { DeckOut, formatClientHeader, modeKey } from "@lymi/core";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { json, type Session, type TestApp, testApp } from "./test-app";
 
@@ -41,7 +42,10 @@ beforeAll(async () => {
   };
   configureClient({
     baseUrl: PHONE_ORIGIN,
-    headers: () => ({ cookie: learner.cookie }),
+    headers: () => ({
+      cookie: learner.cookie,
+      "x-lymi-client": formatClientHeader({ platform: "ios", version: "1.0.0", build: "1" }),
+    }),
     credentials: "omit",
     storage,
     messages: {
@@ -105,5 +109,25 @@ describe("the phone's shared client against the Worker", () => {
     expect(outboxSize()).toBe(0);
     const streak = await api.streak();
     expect(streak.today.attempts).toBe(2);
+  });
+
+  it("turns 426 into Update Lymi and keeps a grade made after it for the updated app", async () => {
+    const grade = await nextGrade();
+    app.env.PHONE_MINIMUM_VERSION_IOS = "1.1.0";
+    app.env.PHONE_UPDATE_URL_IOS = "itms-beta://";
+    try {
+      await expect(api.decks()).rejects.toMatchObject({ status: 426 });
+      expect(updateRequired()).toEqual({ updateUrl: "itms-beta://" });
+      expect(await recordGrade(grade)).toBe("queued");
+      expect(outboxSize()).toBe(1);
+    } finally {
+      delete app.env.PHONE_MINIMUM_VERSION_IOS;
+      resetUpdateRequired();
+    }
+
+    // The updated release sends what the old one kept.
+    expect(await flushOutbox()).toBe(1);
+    expect(outboxSize()).toBe(0);
+    expect((await api.streak()).today.attempts).toBe(3);
   });
 });

@@ -12,6 +12,7 @@ it("writes only fixed labels and counts, and stays silent without a binding", as
     status: 200,
     durationMs: 1,
     actor: "anon",
+    client: "none",
   });
   expect(points).toEqual([]);
 
@@ -25,8 +26,9 @@ it("writes only fixed labels and counts, and stays silent without a binding", as
     status: 404,
     durationMs: 2,
     actor: "anon",
+    client: "none",
   });
-  expect(points.at(-1)?.blobs).toEqual(["/api/*", "OTHER", "4xx"]);
+  expect(points.at(-1)?.blobs).toEqual(["/api/*", "OTHER", "4xx", "none"]);
 
   const app = await testApp();
   app.env.REQUESTS = writer;
@@ -34,7 +36,7 @@ it("writes only fixed labels and counts, and stays silent without a binding", as
   expect(response.status).toBe(200);
   const request = points.at(-1);
   expect(request?.indexes).toEqual(["public"]);
-  expect(request?.blobs).toEqual(["/api/health", "GET", "2xx"]);
+  expect(request?.blobs).toEqual(["/api/health", "GET", "2xx", "none"]);
   expect(request?.doubles?.[0]).toBeGreaterThanOrEqual(0);
   expect(JSON.stringify(points)).not.toContain("private");
 });
@@ -63,4 +65,11 @@ it("labels callers and routes without recording requested paths", async () => {
   expect(await label("/api/nothing/card_missing", learner)).toEqual(["user", "unmatched", "4xx"]);
   expect(await label("/api/auth/get-session", learner)).toEqual(["public", "/api/auth/*", "2xx"]);
   expect(JSON.stringify(points)).not.toContain("card_missing");
+
+  // The phone's version, and nothing else from its header, labels its requests.
+  await app.fetch("/api/me", {
+    as: learner,
+    headers: { "x-lymi-client": "platform=ios; version=1.2.0; build=34; update=abc" },
+  });
+  expect(points.at(-1)?.blobs?.[3]).toBe("ios 1.2.0");
 });

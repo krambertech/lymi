@@ -19,7 +19,7 @@ import { LearnerMenu } from "../components/learner-menu";
 import { AppTile, Wordmark } from "../components/logo";
 import { NavLink } from "../components/nav-link";
 import { RailHeading, RailNav, RailRow } from "../components/rail-nav";
-import { groupDecks } from "../lib/library-groups";
+import { groupDecks } from "@lymi/client/library-groups";
 
 export interface NavDeck {
   id: string;

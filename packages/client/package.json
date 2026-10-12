@@ -20,6 +20,7 @@
     "./analytics": "./src/analytics.ts",
     "./card-input": "./src/card-input.ts",
     "./review-end": "./src/review-end.ts",
+    "./library-groups": "./src/library-groups.ts",
     "./update-required": "./src/update-required.ts",
     "./cache": "./src/cache.ts"
   },

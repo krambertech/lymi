@@ -30,7 +30,7 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import type { DeckSummary, Series } from "../lib/api";
-import { groupDecks } from "../lib/library-groups";
+import { groupDecks } from "@lymi/client/library-groups";
 import { captureAnalytics } from "../lib/telemetry";
 
 export interface LibraryProps {

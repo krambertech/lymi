@@ -20,7 +20,7 @@ import { StartGuide } from "../components/start-guide";
 import { StateIcon } from "../components/state-mark";
 import { restedYesterday, type StreakSummary } from "../components/streak";
 import type { DeckSummary, Series } from "../lib/api";
-import { groupDecks } from "../lib/library-groups";
+import { groupDecks } from "@lymi/client/library-groups";
 
 export interface TodayProps {
   decks: DeckSummary[] | undefined;

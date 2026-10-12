@@ -174,8 +174,8 @@ msgstr "«{term}» додано. Картка збережена на цьому
 msgid "AI"
 msgstr "AI"
 
-msgid "AI draft · Save keeps it"
-msgstr "Чернетка AI · «Зберегти» залишить її"
+msgid "AI draft · Done keeps it"
+msgstr "Чернетка AI · «Готово» залишить її"
 
 msgid "AI example"
 msgstr "Приклад від AI"

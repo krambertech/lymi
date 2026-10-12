@@ -174,8 +174,8 @@ msgstr "«{term}» добавлено. Карточка сохранена на 
 msgid "AI"
 msgstr "AI"
 
-msgid "AI draft · Save keeps it"
-msgstr "Черновик AI · «Сохранить» оставит его"
+msgid "AI draft · Done keeps it"
+msgstr "Черновик AI · «Готово» оставит его"
 
 msgid "AI example"
 msgstr "Пример от AI"

@@ -148,8 +148,8 @@ export function HookOffer({ still, onOpen }: { still: boolean; onOpen: () => voi
 
 /**
  * The card's memory hook, written in a sheet with the keyboard up, as the card's other fields are.
- * A card with no hook shows the AI's draft as the placeholder, which Save keeps when the field is
- * empty. A swipe down lets go.
+ * The keyboard's done key saves, as no button repeats it; on an empty field it keeps the AI's draft,
+ * which is the placeholder. A swipe down lets go.
  */
 export function HookSheet({
   card,
@@ -231,18 +231,16 @@ export function HookSheet({
             maxFontSizeMultiplier={inputCap(17)}
           />
         </View>
-        <View className="flex-row items-center gap-3 ps-4">
-          <View className="min-w-0 flex-1 flex-row items-center gap-1.5">
-            {empty && drafted ? (
-              <>
-                <Icon name="ai" size={14} colour={p.muted} />
-                <Text className="text-sm text-muted">{t`AI draft · Save keeps it`}</Text>
-              </>
-            ) : empty && draft.isFetching ? (
-              <Text className="text-sm text-muted">{t`Drafting a hook…`}</Text>
-            ) : null}
-          </View>
-          <Button variant="primary" label={t`Save`} loading={pending} onPress={() => void save()} />
+        {/* Its room is kept, so the sheet never changes height as the draft arrives. */}
+        <View className="min-h-5 flex-row items-center gap-1.5 ps-4">
+          {empty && drafted ? (
+            <>
+              <Icon name="ai" size={14} colour={p.muted} />
+              <Text className="text-sm text-muted">{t`AI draft · Done keeps it`}</Text>
+            </>
+          ) : empty && draft.isFetching ? (
+            <Text className="text-sm text-muted">{t`Drafting a hook…`}</Text>
+          ) : null}
         </View>
       </View>
     </Sheet>

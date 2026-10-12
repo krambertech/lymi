@@ -1,7 +1,15 @@
+import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type DeckSummary, errorMessage } from "@lymi/client/api";
 import { type DeckPatch, writes } from "@lymi/client/writes";
-import { DeckInput, type Directions, deckLimits, LANGUAGE_TAGS } from "@lymi/core";
+import {
+  DECK_ENRICH_FIELDS,
+  type DeckEnrichField,
+  DeckInput,
+  type Directions,
+  deckLimits,
+  LANGUAGE_TAGS,
+} from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams } from "expo-router";
 import { type ReactNode, useRef, useState } from "react";
@@ -45,6 +53,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
   const example = useDeckCards(deck.id).data?.find((r) => r.card.meaning)?.card;
   const [name, setName] = useState(deck.name);
   const [description, setDescription] = useState(deck.description ?? "");
+  const [instructions, setInstructions] = useState(deck.enrichInstructions ?? "");
   const [saved, setSaved] = useState<"saving" | "saved" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const owner = deck.role === "owner";
@@ -62,7 +71,11 @@ function Settings({ deck }: { deck: DeckSummary }) {
     }
   };
   // What each text field last saved, so a sheet closing after its done key does not save twice.
-  const kept = useRef({ name: deck.name, description: deck.description ?? null });
+  const kept = useRef({
+    name: deck.name,
+    description: deck.description ?? null,
+    instructions: deck.enrichInstructions ?? null,
+  });
   const commitName = () => {
     if (name.trim() === kept.current.name) return;
     const parsed = DeckInput.shape.name.safeParse(name);
@@ -79,13 +92,21 @@ function Settings({ deck }: { deck: DeckSummary }) {
     kept.current.description = next;
     void save({ description: next });
   };
+  const commitInstructions = () => {
+    const next = instructions.trim() || null;
+    if (next === kept.current.instructions) return;
+    kept.current.instructions = next;
+    void save({ enrichInstructions: next });
+  };
   const { archive, leave } = useDeckExits(deck);
-  const [editing, setEditing] = useState<"name" | "description" | null>(null);
+  const [editing, setEditing] = useState<"name" | "description" | "instructions" | null>(null);
   const [asking, setAsking] = useState(false);
+  const [choosingFields, setChoosingFields] = useState(false);
   // The keyboard's done key or a swipe keeps what was typed, as every row sheet does. phone.md.
   const finishEditing = () => {
     if (editing === "name") commitName();
     if (editing === "description") commitDescription();
+    if (editing === "instructions") commitInstructions();
     setEditing(null);
   };
 
@@ -116,6 +137,25 @@ function Settings({ deck }: { deck: DeckSummary }) {
       line: t`Each card is asked both ways, each way on its own schedule.`,
     },
   ];
+  const fieldLabels: Record<DeckEnrichField, string> = {
+    meaning: t`Meaning`,
+    example: t`Example`,
+    notes: t`Notes`,
+    pronunciation: t`Pronunciation`,
+  };
+  const filled = DECK_ENRICH_FIELDS.filter((f) => deck.enrichFields.includes(f));
+  const fieldsValue =
+    filled.length === 0
+      ? t`None`
+      : filled.length <= 2
+        ? filled.map((f) => fieldLabels[f]).join(", ")
+        : plural(filled.length, { one: "# field", other: "# fields" });
+  const toggleField = (field: DeckEnrichField) =>
+    void save({
+      enrichFields: DECK_ENRICH_FIELDS.filter((f) =>
+        f === field ? !deck.enrichFields.includes(f) : deck.enrichFields.includes(f),
+      ),
+    });
   const language = deck.defaultLanguage ? languageName(deck.defaultLanguage) : t`No language`;
   const way = asked.find((a) => a.value === deck.directions) ?? asked[0];
 
@@ -146,6 +186,25 @@ function Settings({ deck }: { deck: DeckSummary }) {
       placeholder={t`Cards from Marco’s Tuesday lessons.`}
       placeholderTextColor={p.muted}
       accessibilityLabel={t`Description`}
+      multiline
+      selectionColor={p.text}
+      className="min-h-11 py-2 font-sans text-text"
+      style={{ fontSize: 17 }}
+      maxFontSizeMultiplier={inputCap(17)}
+    />
+  );
+  const instructionsField = (
+    <TextInput
+      value={instructions}
+      onChangeText={setInstructions}
+      autoFocus
+      submitBehavior="blurAndSubmit"
+      returnKeyType="done"
+      onSubmitEditing={finishEditing}
+      maxLength={deckLimits.enrichInstructions ?? undefined}
+      placeholder={t`Medical French for nurses. Use the clinical meaning.`}
+      placeholderTextColor={p.muted}
+      accessibilityLabel={t`Instructions`}
       multiline
       selectionColor={p.text}
       className="min-h-11 py-2 font-sans text-text"
@@ -204,13 +263,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
             <Row
               icon="notes"
               label={t`Description`}
-              value={
-                !deck.description
-                  ? t`None`
-                  : deck.description.length > 24
-                    ? `${deck.description.slice(0, 23).trimEnd()}…`
-                    : deck.description
-              }
+              value={short(deck.description) ?? t`None`}
               onPress={() => setEditing("description")}
             />
             {languageSelect(<RowFace icon="meaning" label={t`Language`} value={language} />)}
@@ -221,14 +274,64 @@ function Settings({ deck }: { deck: DeckSummary }) {
               onPress={() => setAsking(true)}
             />
           </Rows>
+          {/* As on the web: the fields AI may fill, and what the owner tells it about the deck. */}
+          <Group title={t`AI`}>
+            <Rows>
+              <Row
+                icon="ai"
+                label={t`Fields AI can fill`}
+                value={fieldsValue}
+                onPress={() => setChoosingFields(true)}
+              />
+              <Row
+                icon="lesson"
+                label={t`Instructions`}
+                value={short(deck.enrichInstructions) ?? t`None`}
+                onPress={() => setEditing("instructions")}
+              />
+            </Rows>
+          </Group>
           <Sheet
-            title={editing === "description" ? t`Description` : t`Name`}
+            title={
+              editing === "description"
+                ? t`Description`
+                : editing === "instructions"
+                  ? t`Instructions`
+                  : t`Name`
+            }
             open={editing !== null}
             onOpenChange={(open) => !open && finishEditing()}
           >
             <View className="rounded-xl bg-glass-plate px-4">
-              {editing === "description" ? descriptionField : nameField}
+              {editing === "description"
+                ? descriptionField
+                : editing === "instructions"
+                  ? instructionsField
+                  : nameField}
             </View>
+            {editing === "instructions" && (
+              <Text className="px-1 text-base text-text-2">{t`Only you see these.`}</Text>
+            )}
+          </Sheet>
+          <Sheet
+            title={t`Fields AI can fill`}
+            open={choosingFields}
+            onOpenChange={setChoosingFields}
+          >
+            <Text className="px-1 text-base text-text-2">
+              {t`AI fills them only when they help. It never changes your text.`}
+            </Text>
+            <SheetGroup>
+              {DECK_ENRICH_FIELDS.map((field) => (
+                <SheetRow
+                  key={field}
+                  label={fieldLabels[field]}
+                  multiple
+                  chosen={deck.enrichFields.includes(field)}
+                  onPress={() => toggleField(field)}
+                />
+              ))}
+            </SheetGroup>
           </Sheet>
           <Sheet title={t`How cards are asked`} open={asking} onOpenChange={setAsking}>
             <SheetGroup>
@@ -261,6 +364,12 @@ function Settings({ deck }: { deck: DeckSummary }) {
       )}
     </Screen>
   );
+}
+
+/** A long text as a row's value: its start, cut at 24 characters. */
+function short(text: string | null | undefined) {
+  if (!text) return null;
+  return text.length > 24 ? `${text.slice(0, 23).trimEnd()}…` : text;
 }
 
 function Group({ title, children }: { title: string; children: ReactNode }) {

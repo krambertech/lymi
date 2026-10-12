@@ -35,6 +35,10 @@ msgstr "{0, plural, one {# deck} other {# decks}}"
 msgid "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
 
+#. placeholder {0}: filled.length
+msgid "{0, plural, one {# field} other {# fields}}"
+msgstr "{0, plural, one {# field} other {# fields}}"
+
 #. placeholder {0}: c.lapses
 msgid "{0, plural, one {# forgotten} other {# forgotten}}"
 msgstr "{0, plural, one {# forgotten} other {# forgotten}}"
@@ -350,6 +354,9 @@ msgstr "AI example"
 
 msgid "AI fills in"
 msgstr "AI fills in"
+
+msgid "AI fills them only when they help. It never changes your text."
+msgstr "AI fills them only when they help. It never changes your text."
 
 msgid "AI hook"
 msgstr "AI hook"
@@ -913,6 +920,9 @@ msgstr "Exporting your cards"
 msgid "Feedback sent"
 msgstr "Feedback sent"
 
+msgid "Fields AI can fill"
+msgstr "Fields AI can fill"
+
 msgid "Fill in the rest with AI"
 msgstr "Fill in the rest with AI"
 
@@ -1104,6 +1114,9 @@ msgstr "Insights start after your first review"
 msgid "Insights: recall {recall}, reviewed on {0} of the last 30 days"
 msgstr "Insights: recall {recall}, reviewed on {0} of the last 30 days"
 
+msgid "Instructions"
+msgstr "Instructions"
+
 msgctxt "daily goal"
 msgid "Intense"
 msgstr "Intense"
@@ -1271,6 +1284,9 @@ msgstr "Meaning by you"
 
 msgid "Meaning from lesson"
 msgstr "Meaning from lesson"
+
+msgid "Medical French for nurses. Use the clinical meaning."
+msgstr "Medical French for nurses. Use the clinical meaning."
 
 msgid "Memory hook"
 msgstr "Memory hook"
@@ -1452,6 +1468,9 @@ msgstr "Only on days with cards due."
 
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."
+
+msgid "Only you see these."
+msgstr "Only you see these."
 
 msgid "Open {name}"
 msgstr "Open {name}"

@@ -55,6 +55,9 @@ const phoneOperations = [
   "PUT /api/series/order",
   "DELETE /api/series/{id}",
   "POST /api/decks",
+  "PATCH /api/decks/{id}",
+  "POST /api/decks/{id}/archive",
+  "GET /api/cards/{id}/history",
   "GET /api/cards",
   "POST /api/cards",
   "PATCH /api/cards/{id}",
@@ -83,6 +86,7 @@ const closedOnPurpose = [
   // A literal `true` acknowledgement.
   "POST /api/cards/{id}/archive 200 .ok",
   "DELETE /api/series/{id} 200 .ok",
+  "POST /api/decks/{id}/archive 200 .ok",
   "POST /api/review/grade 200 .ok",
   "POST /api/review/undo 200 .ok",
   // Capture says where an added card went, so a new outcome needs a version gate first.

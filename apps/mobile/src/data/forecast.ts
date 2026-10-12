@@ -1,8 +1,8 @@
 import { decksQuery } from "@lymi/client/queries";
 import { hashKey, type QueryClient } from "@tanstack/react-query";
 
-/** Grades come every few seconds; the forecast only needs where the session settled. */
-export const FORECAST_SETTLE_MS = 5000;
+/** A pause in grading, as the reminders settle on, so a session refetches once rather than per card. */
+export const FORECAST_SETTLE_MS = 20_000;
 
 const DUE = hashKey(decksQuery.queryKey);
 

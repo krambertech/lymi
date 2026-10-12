@@ -479,3 +479,17 @@ describe("a card only review data holds", () => {
     expect(qc.getQueryData<DeckSummary[]>(["decks"])?.[0]?.total).toBe(0);
   });
 });
+
+describe("a card archive undone while both wait", () => {
+  it("is not replayed over a draw fetched again", () => {
+    const qc = cache();
+    const pending: QueuedWrite[] = [
+      { v: 1, key: "k", at: 0, write: { kind: "card.archive", id: "x" }, label: "" },
+      { v: 1, key: "k2", at: 1, write: { kind: "card.restore", id: "x" }, label: "" },
+    ];
+    const fetched = { total: 5, decks: { d: 5 }, cards: [{ card: card("x", "d"), modes: [] }] };
+    const rebased = rebase(["queue", "all", "draw"], fetched, pending, cacheLookup(qc));
+    expect(rebased).toMatchObject({ total: 5, decks: { d: 5 } });
+    expect(ids(rebased.cards)).toEqual(["x"]);
+  });
+});

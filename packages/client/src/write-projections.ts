@@ -483,20 +483,23 @@ export function rebase<T>(key: QueryKey, data: T, pending: QueuedWrite[], lookup
 }
 
 /**
- * The waiting writes a refetch replays. A review cannot rebuild a restored deck's cards, so a deck
- * archive with a restore of the same deck waiting after it is not replayed there.
+ * The waiting writes a refetch replays. A fetch still holds what the server has not archived yet,
+ * and a review cannot rebuild what an archive takes out, so a deck or card archive with a restore
+ * of the same item waiting after it is not replayed there.
  */
 function replayed(key: QueryKey, pending: QueuedWrite[]): QueuedWrite[] {
   const shape = shapeOf(key)?.shape;
   if (shape !== "draw" && shape !== "queue") return pending;
   return pending.filter(
     ({ write }, i) =>
-      write.kind !== "deck.archive" ||
-      !pending.slice(i + 1).some((later) => isRestore(later.write, write.id)),
+      (write.kind !== "deck.archive" && write.kind !== "card.archive") ||
+      !pending.slice(i + 1).some((later) => isRestore(later.write, write)),
   );
 }
 
-const isRestore = (w: Write, id: string) => w.kind === "deck.restore" && w.id === id;
+const isRestore = (w: Write, archive: { kind: "deck.archive" | "card.archive"; id: string }) =>
+  w.kind === (archive.kind === "deck.archive" ? "deck.restore" : "card.restore") &&
+  w.id === archive.id;
 
 /**
  * What a deck archive took out of each cached draw and round, so a restore puts it back at once.
@@ -557,7 +560,9 @@ function unparkCard(qc: QueryClient, id: string) {
         ...data,
         [list]: [...entries, ...current],
         total: data.total + 1,
-        ...(data.decks ? { decks: recount(data.decks, deckId, 1) } : {}),
+        ...(data.decks
+          ? { decks: { ...data.decks, [deckId]: (data.decks[deckId] ?? 0) + 1 } }
+          : {}),
       };
     });
   }

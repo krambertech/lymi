@@ -47,14 +47,23 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
   const [error, setError] = useState<string | null>(null);
   const chosen = useRef<number | null>(null);
   const input = useRef<TextInput>(null);
+  // Each opening starts from the saved goal, so a Custom left unsaved or a change made on the web never lingers.
+  const [shown, setShown] = useState(open);
+  if (open !== shown) {
+    setShown(open);
+    if (open) {
+      setCustom(!isPreset(value));
+      setDraft(isPreset(value) ? "" : String(value));
+      setError(null);
+    }
+  }
 
   const close = (goal: number | null) => {
     chosen.current = goal;
     onOpenChange(false);
   };
   const commit = () => {
-    if (draft.trim() === "") return setError(null);
-    const parsed = DailyGoal.safeParse(Number(draft));
+    const parsed = DailyGoal.safeParse(draft.trim() === "" ? Number.NaN : Number(draft));
     if (!parsed.success) return setError(t`Choose a whole number from 1 to 200.`);
     setError(null);
     close(parsed.data);

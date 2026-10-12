@@ -1,11 +1,13 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import {
+  BadgeCheck,
   ClipboardCheck,
   Languages,
   type LucideIcon,
   MessagesSquare,
   Presentation,
+  Stethoscope,
 } from "lucide-react";
 import type { LocalizedPage } from "../../lib/routes";
 
@@ -54,6 +56,20 @@ export const USE_CASE_LINKS: UseCaseLink[] = [
     hue: 3,
   },
   { page: "einbuergerungstest", label: msg`Einbürgerungstest`, footerOnly: true },
+  {
+    page: "medicine",
+    label: msg`Medical students`,
+    blurb: msg`Anatomy, drugs and lab values, with your Anki decks brought along.`,
+    icon: Stethoscope,
+    hue: 7,
+  },
+  {
+    page: "certifications",
+    label: msg`Certifications`,
+    blurb: msg`Turn a study guide into cards for cloud, security or finance exams.`,
+    icon: BadgeCheck,
+    hue: 1,
+  },
 ];
 
 export const MENU_USE_CASE_LINKS = USE_CASE_LINKS.filter((link) => !link.footerOnly);

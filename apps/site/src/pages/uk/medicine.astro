@@ -1,0 +1,41 @@
+---
+import MedicinePage from "../../components/islands/MedicinePage";
+import { MEDICINE_BLURB, MEDICINE_TITLE } from "../../components/landing/MedicineView";
+import { SHARE_IMAGE_ALT } from "../../components/landing/LandingView";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { pageI18n } from "../../lib/i18n";
+import { localizedPath } from "../../lib/routes";
+import { marketingPage } from "../../lib/structured-data";
+import { MEDICINE_QUESTIONS } from "../../components/landing/faq";
+
+const locale = Astro.currentLocale ?? "uk";
+const i18n = pageI18n(locale);
+const title = i18n._(MEDICINE_TITLE);
+const description = i18n._(MEDICINE_BLURB);
+const shareImageAlt = i18n._(SHARE_IMAGE_ALT);
+const path = localizedPath("medicine", locale);
+
+const structuredData = marketingPage({
+  name: title,
+  description,
+  path,
+  i18n,
+  questions: MEDICINE_QUESTIONS,
+});
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={path}
+  localizedPage="medicine"
+  shareImageAlt={shareImageAlt}
+>
+  <script
+    slot="head"
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(structuredData).replaceAll("<", "\\u003c")}
+  />
+  <MedicinePage client:load locale={locale} />
+</BaseLayout>

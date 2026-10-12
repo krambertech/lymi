@@ -5,6 +5,8 @@ export const localizedPages = {
   estonian: "/languages/estonian",
   assistants: "/ai-assistants",
   teachers: "/teachers",
+  medicine: "/medicine",
+  certifications: "/certifications",
   exams: "/exams",
   einbuergerungstest: "/exams/einbuergerungstest",
   privacy: "/privacy",

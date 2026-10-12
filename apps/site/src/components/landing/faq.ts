@@ -155,3 +155,42 @@ export const EINBUERGERUNGSTEST_QUESTIONS: Question[] = [
   },
   OFFLINE,
 ];
+
+const AI_MARKED: Question = {
+  id: "ai",
+  question: msg`Does the AI write my cards?`,
+  answer: msg`Only when you ask your assistant to. Anything it writes on a card is marked AI, so you can always tell it from your own notes.`,
+};
+
+export const MEDICINE_QUESTIONS: Question[] = [
+  {
+    id: "anki",
+    question: msg`Can I bring my Anki decks?`,
+    answer: msg`Yes. An Anki package imports with its cards, tags, pictures and review history, so your schedule carries on where it stopped.`,
+    link: { href: "/docs/import-from-anki", label: msg`Moving from Anki` },
+  },
+  {
+    id: "pictures",
+    question: msg`Can a card have a picture?`,
+    answer: msg`Yes. A card can hold one picture, such as a diagram or a slide, and a review can ask from the picture instead of the words.`,
+  },
+  AI_MARKED,
+  OFFLINE,
+  ...COMMON,
+];
+
+export const CERTIFICATIONS_QUESTIONS: Question[] = [
+  {
+    id: "ready-decks",
+    question: msg`Is there a ready-made deck for my certification?`,
+    answer: msg`Not for most certifications yet. Your assistant can turn your study guide into a deck in a few minutes, and a deck from Anki or Mochi imports with its review history.`,
+  },
+  {
+    id: "material",
+    question: msg`Who can see the cards I make?`,
+    answer: msg`Only you, unless you share the deck. Cards made from your study material stay in your account.`,
+  },
+  AI_MARKED,
+  OFFLINE,
+  ...COMMON,
+];

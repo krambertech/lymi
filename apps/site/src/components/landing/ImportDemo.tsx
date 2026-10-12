@@ -4,7 +4,17 @@ import { CircleCheck, FileArchive } from "lucide-react";
 import { animate, useInView, useReducedMotion } from "motion/react";
 import { useEffect, useRef } from "react";
 
-const COLLECTION = {
+export interface Collection {
+  app: string;
+  fileName: string;
+  megabytes: number;
+  cards: number;
+  reviews: number;
+  decks: number;
+  pictures: number;
+}
+
+const COLLECTION: Collection = {
   app: "Anki",
   fileName: "Spanish.apkg",
   megabytes: 14,
@@ -36,19 +46,19 @@ function Count({ value, run }: { value: number; run: boolean }) {
 }
 
 /** The app's import preview for a made-up Anki collection. */
-export function ImportDemo() {
+export function ImportDemo({ collection = COLLECTION }: { collection?: Collection } = {}) {
   const { t, i18n } = useLingui();
   const root = useRef<HTMLDivElement>(null);
   const visible = useInView(root, { once: true, amount: 0.6 });
   const still = useReducedMotion();
   const run = visible && !still;
 
-  const { app, cards, reviews, decks, pictures } = COLLECTION;
+  const { app, cards, reviews, decks, pictures } = collection;
   const size = new Intl.NumberFormat(i18n.locale, {
     style: "unit",
     unit: "megabyte",
     unitDisplay: "short",
-  }).format(COLLECTION.megabytes);
+  }).format(collection.megabytes);
   const figures = [
     { id: "cards", value: cards, label: t`${plural(cards, { one: "card", other: "cards" })}` },
     {
@@ -70,7 +80,7 @@ export function ImportDemo() {
             <Trans>Import</Trans>
           </p>
           <p className="truncate text-sm text-muted">
-            {COLLECTION.fileName} · {size}
+            {collection.fileName} · {size}
           </p>
         </div>
       </div>

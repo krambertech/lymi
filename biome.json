@@ -75,9 +75,21 @@
               "level": "error",
               "options": {
                 "paths": {
-                  "posthog-js": "Only the browser adapter in analytics.ts may load posthog-js; keep the rest of @lymi/client portable to the phone.",
-                  "./analytics": "analytics.ts is the browser adapter; the phone cannot load it."
-                }
+                  "posthog-js": "Only the browser adapter in analytics.ts may load posthog-js; keep the rest of @lymi/client portable to the phone."
+                },
+                "patterns": [
+                  {
+                    "group": [
+                      "./analytics",
+                      "./analytics.ts",
+                      "../**/analytics",
+                      "../**/analytics.ts",
+                      "../analytics",
+                      "../analytics.ts"
+                    ],
+                    "message": "analytics.ts is the browser adapter; the phone cannot load it."
+                  }
+                ]
               }
             }
           }

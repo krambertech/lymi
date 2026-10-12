@@ -84,11 +84,11 @@ export function createAuth(
   // after this function returns, so the holder is always filled by the time one reads it.
   let self: Auth | undefined;
   /**
-   * Whether the account Google or Apple is about to claim had already proved its address. Read
-   * before the link, because linking sets `emailVerified` itself. `createAuth` is built per
-   * request, so this holds one request's answer.
+   * Whether the account Google or Apple is about to claim had already proved its address, or
+   * null when this request links nothing. Read before the link, because linking sets
+   * `emailVerified` itself. `createAuth` is built per request, so this holds one request's answer.
    */
-  let provenBeforeProvider = false;
+  let provenBeforeProvider: boolean | null = null;
   /** A persona has no inbox, so nothing Lymi sends should ever be addressed to one. */
   const isPersona = (email: string) => dev && email.toLowerCase().endsWith(DEV_EMAIL_DOMAIN);
 
@@ -377,7 +377,8 @@ export function createAuth(
               // An unproved password was set by whoever typed the address first, who need not
               // be its owner, so the provider's proof retires it. A password the owner had already
               // confirmed stays: taking it would leave them with one way in and no way back.
-              if (!provenBeforeProvider) await retireUnprovedPassword(db, session.userId, provider);
+              if (provenBeforeProvider === false)
+                await retireUnprovedPassword(db, session.userId, provider);
             }
             if (provider === "google") await syncGoogleAvatar(env, db, session.userId, waitUntil);
             const admission = admissionFrom(env.PRODUCT_URL, headersOf(context));

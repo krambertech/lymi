@@ -358,5 +358,11 @@ describe("what a Google sign-in leaves behind", () => {
     expect(callback.status).toBe(302);
     await expect(credentialsOf(userId)).resolves.toHaveLength(1);
     expect((await signIn(email)).status).toBe(200);
+
+    // A later Google sign-in links nothing, so it has nothing to retire either.
+    const again = await signInWithGoogle(email);
+    expect(again.status).toBe(302);
+    await expect(credentialsOf(userId)).resolves.toHaveLength(1);
+    expect((await signIn(email)).status).toBe(200);
   });
 });

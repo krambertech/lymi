@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { Check } from "lucide-react";
+import { Brain, Check, type LucideIcon, RotateCcw, Zap } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import type { Exam } from "../../lib/exams";
@@ -23,12 +23,43 @@ export function ExamReview({ exams }: Props) {
   const [index, setIndex] = useState(0);
   const [revealedFor, setRevealedFor] = useState(-1);
   const [answered, setAnswered] = useState<number | null>(null);
-  const grades = [
-    { name: t`Forgot`, when: t`10 min`, announcement: t`Back in 10 minutes.` },
-    { name: t`Hard`, when: t`2 days`, announcement: t`Back in 2 days.` },
-    { name: t`Good`, when: t`4 days`, announcement: t`Back in 4 days.` },
-    { name: t`Easy`, when: t`9 days`, announcement: t`Back in 9 days.` },
-  ] as const;
+  // The app's own grade buttons: its icons and colours, with the gap each grade would set.
+  const grades: {
+    name: string;
+    when: string;
+    announcement: string;
+    icon: LucideIcon;
+    tone: string;
+  }[] = [
+    {
+      name: t`Forgot`,
+      when: t`10 min`,
+      announcement: t`Back in 10 minutes.`,
+      icon: RotateCcw,
+      tone: "text-grade-forgot",
+    },
+    {
+      name: t`Hard`,
+      when: t`2 days`,
+      announcement: t`Back in 2 days.`,
+      icon: Brain,
+      tone: "text-grade-hard",
+    },
+    {
+      name: t`Good`,
+      when: t`4 days`,
+      announcement: t`Back in 4 days.`,
+      icon: Check,
+      tone: "text-grade-good",
+    },
+    {
+      name: t`Easy`,
+      when: t`9 days`,
+      announcement: t`Back in 9 days.`,
+      icon: Zap,
+      tone: "text-grade-easy",
+    },
+  ];
 
   useEffect(
     () => () => {
@@ -161,31 +192,35 @@ export function ExamReview({ exams }: Props) {
               </AnimatePresence>
             </div>
 
-            <div className="mt-5 flex gap-1.5">
-              {grades.map((g, n) => (
-                <motion.button
-                  key={g.name}
-                  type="button"
-                  onClick={() => grade(n)}
-                  disabled={!revealed || answered !== null}
-                  animate={{ opacity: revealed ? 1 : 0.3, scale: answered === n ? 1.05 : 1 }}
-                  transition={still ? { duration: 0 } : { duration: 0.2 }}
-                  className={clsx(
-                    "flex flex-1 flex-col items-center gap-0.5 rounded-[10px] py-2 edge disabled:cursor-default",
-                    answered === n ? "bg-amber-soft" : "bg-plate-2 hoverable:hover:bg-hover",
-                  )}
-                >
-                  <span
+            <div className="mt-5 grid grid-cols-4 gap-2">
+              {grades.map((g, n) => {
+                const Icon = g.icon;
+                return (
+                  <motion.button
+                    key={g.name}
+                    type="button"
+                    onClick={() => grade(n)}
+                    disabled={!revealed || answered !== null}
+                    aria-label={t`${g.name}, next in ${g.when}`}
+                    animate={{ opacity: revealed ? 1 : 0.35, scale: answered === n ? 1.04 : 1 }}
+                    transition={still ? { duration: 0 } : { duration: 0.2 }}
                     className={clsx(
-                      "text-sm font-medium",
-                      answered === n ? "text-amber-text" : "text-text",
+                      "grid h-[72px] min-w-0 content-center justify-items-center gap-1 rounded-lg px-1 text-sm font-medium edge transition-colors duration-150 disabled:cursor-default",
+                      answered === n
+                        ? "bg-plate-2 text-text"
+                        : "bg-plate text-text-2 hoverable:hover:bg-plate-2 hoverable:hover:text-text",
                     )}
                   >
-                    {g.name}
-                  </span>
-                  <span className="text-2xs text-muted tabular-nums">{g.when}</span>
-                </motion.button>
-              ))}
+                    <Icon
+                      aria-hidden="true"
+                      strokeWidth={1.75}
+                      className={clsx("size-[18px]", g.tone)}
+                    />
+                    <span>{g.name}</span>
+                    <span className="text-2xs font-normal text-muted tabular-nums">{g.when}</span>
+                  </motion.button>
+                );
+              })}
             </div>
           </motion.article>
         </AnimatePresence>

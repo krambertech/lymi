@@ -4,7 +4,6 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { Check, ChevronRight, List } from "lucide-react";
 import type { ReactNode } from "react";
-import { deckPath } from "../../lib/deck-page";
 import {
   EINBUERGERUNGSTEST,
   EXAMS,
@@ -12,18 +11,15 @@ import {
   type ExamSource,
   examPath,
   examsPath,
-  GERMAN_GENERAL_DECK,
-  GERMAN_STATES,
 } from "../../lib/exams";
 import { pageI18n } from "../../lib/i18n";
 import type { Locale } from "../../lib/routes";
-import { trayHue } from "../../lib/tray";
 import { buttonClass } from "../Button";
 import { addUrl } from "../deck/DeckView";
-import { DeckTile } from "../explore/DeckTile";
 import { SectionTitle } from "../landing/FeatureSection";
 import type { Question } from "../landing/faq";
 import { Questions } from "../landing/Questions";
+import { DeckShowcase } from "./DeckShowcase";
 
 export const EINBUERGERUNGSTEST_TITLE = msg`Einbürgerungstest and Leben in Deutschland: questions and answers in English · Lymi`;
 export const EINBUERGERUNGSTEST_BLURB = msg`All 300 general questions of the Einbürgerungstest and the 10 for your state, in German as on the test, with English next to each. Free flashcards from the BAMF catalogue.`;
@@ -34,11 +30,6 @@ interface LocaleProps {
 
 interface ExamProps extends LocaleProps {
   exam: Exam;
-}
-
-interface DecksProps extends ExamProps {
-  decks: PublicDeckSummary[];
-  updated: Record<string, string>;
 }
 
 /** Server-rendered parts share one provider each; only the nav hydrates. */
@@ -104,24 +95,6 @@ function SourceLine({ source, changed }: { source: ExamSource; changed: string |
       )}
       {source.licence && <p>{i18n._(source.licence)}</p>}
     </div>
-  );
-}
-
-/** A deck on its tray, with the one click that adds it under it. */
-function DeckWithAdd({ deck, locale }: LocaleProps & { deck: PublicDeckSummary }) {
-  const { t } = useLingui();
-  const name = deck.name;
-  return (
-    <li className="grid content-start gap-3">
-      <DeckTile deck={deck} hue={trayHue(deck.slug)} locale={locale} />
-      <a
-        href={addUrl(deck.slug, deck.meaningLanguage)}
-        aria-label={t`Add ${name} to Lymi`}
-        className={buttonClass("secondary", "md", "w-full")}
-      >
-        <Trans>Add to Lymi</Trans>
-      </a>
-    </li>
   );
 }
 
@@ -326,143 +299,51 @@ function EinbuergerungstestFormatNotes() {
   );
 }
 
-/** The exam's line that Lymi is not the authority, under its sources. */
-function Disclaimer({ exam }: { exam: Exam }) {
-  const authority = exam.authority;
-  return (
-    <p className="mt-1 max-w-[62ch] text-sm text-pretty text-muted">
-      <Trans>Lymi isn’t affiliated with {authority} and can’t promise a pass.</Trans>
-    </p>
-  );
-}
-
-/** Every deck for the exam, each with its add, then where the questions come from. */
-export function ExamDecks({ locale, exam, decks, updated }: DecksProps) {
+/** Every deck for the exam, each shown large with its add. */
+export function ExamDecks({ locale, decks }: LocaleProps & { decks: PublicDeckSummary[] }) {
   return (
     <Localized locale={locale}>
-      <ExamDecksContent locale={locale} exam={exam} decks={decks} updated={updated} />
+      <section
+        id="decks"
+        aria-labelledby="decks-title"
+        className="scroll-mt-6 border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-24"
+      >
+        <div className="mx-auto max-w-[1040px]">
+          <SectionTitle>
+            <span id="decks-title">
+              <Plural value={decks.length} one="Your deck" other="Your decks" />
+            </span>
+          </SectionTitle>
+          <div className="mt-10 grid gap-5">
+            {decks.map((deck) => (
+              <DeckShowcase key={deck.slug} deck={deck} locale={locale} />
+            ))}
+          </div>
+        </div>
+      </section>
     </Localized>
   );
 }
 
-function ExamDecksContent({ locale, exam, decks, updated }: DecksProps) {
-  const { i18n } = useLingui();
-  return (
-    <section
-      id="decks"
-      aria-labelledby="decks-title"
-      className="scroll-mt-6 border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-20"
-    >
-      <div className="mx-auto max-w-[1040px]">
-        <SectionTitle>
-          <span id="decks-title">
-            <Plural value={decks.length} one="The deck" other="The decks" />
-          </span>
-        </SectionTitle>
-        {exam.note && (
-          <p className="mt-4 max-w-[56ch] text-md text-pretty text-text-2">{i18n._(exam.note)}</p>
-        )}
-        <ul className="mt-8 grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-x-5 gap-y-8">
-          {decks.map((deck) => (
-            <DeckWithAdd key={deck.slug} deck={deck} locale={locale} />
-          ))}
-        </ul>
-        <div className="mt-10">
-          <SourceLine source={exam.source} changed={latest(exam.decks, updated)} />
-          <Disclaimer exam={exam} />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/** Germany's two decks: the general one, and one row per state. */
-export function EinbuergerungstestDecks({ locale, exam, decks, updated }: DecksProps) {
+/** Where the questions come from and anything its licence asks, quietly, at the page's end. */
+export function ExamSources({
+  locale,
+  exam,
+  updated,
+}: ExamProps & { updated: Record<string, string> }) {
   return (
     <Localized locale={locale}>
-      <EinbuergerungstestDecksContent locale={locale} exam={exam} decks={decks} updated={updated} />
+      <section aria-labelledby="sources-title" className="px-5 pb-10 @2xl:px-10">
+        <div className="mx-auto max-w-[1040px] border-t border-edge pt-6">
+          <h2 id="sources-title" className="text-sm font-medium text-text-2">
+            <Trans>Sources</Trans>
+          </h2>
+          <div className="mt-2">
+            <SourceLine source={exam.source} changed={latest(exam.decks, updated)} />
+          </div>
+        </div>
+      </section>
     </Localized>
-  );
-}
-
-function EinbuergerungstestDecksContent({ locale, exam, decks, updated }: DecksProps) {
-  const { t } = useLingui();
-  const bySlug = new Map(decks.map((deck) => [deck.slug, deck]));
-  const general = bySlug.get(GERMAN_GENERAL_DECK);
-  const states = GERMAN_STATES.flatMap((state) => {
-    const deck = bySlug.get(state.slug);
-    return deck ? [{ ...state, deck }] : [];
-  });
-  return (
-    <section
-      id="decks"
-      aria-labelledby="decks-title"
-      className="scroll-mt-6 border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-20"
-    >
-      <div className="mx-auto max-w-[1040px]">
-        <SectionTitle>
-          <span id="decks-title">
-            <Trans>Two decks: the general questions and your state’s</Trans>
-          </span>
-        </SectionTitle>
-        <div className="mt-10 grid gap-12 @4xl:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] @4xl:gap-16">
-          {general && (
-            <div>
-              <h3 className="text-lg font-medium tracking-[-0.02em] text-text">
-                <Trans>The 300 general questions</Trans>
-              </h3>
-              <ul className="mt-4 grid max-w-[280px]">
-                <DeckWithAdd deck={general} locale={locale} />
-              </ul>
-            </div>
-          )}
-          {states.length > 0 && (
-            <div id="states" className="scroll-mt-6">
-              <h3 className="text-lg font-medium tracking-[-0.02em] text-text">
-                <Trans>The 10 questions for your state</Trans>
-              </h3>
-              <p className="mt-1 text-md text-pretty text-text-2">
-                <Trans>Pick the state where you’re registered.</Trans>
-              </p>
-              <ul className="mt-4 grid gap-2 @xl:grid-cols-2">
-                {states.map(({ slug, name, deck }) => (
-                  <li
-                    key={slug}
-                    className="flex min-h-14 items-center justify-between gap-3 rounded-md bg-plate px-4 py-2 edge"
-                  >
-                    <a
-                      href={deckPath(slug, locale)}
-                      lang="de"
-                      className="min-w-0 rounded-xs text-md font-medium text-text hoverable:hover:underline"
-                    >
-                      {name}
-                      <span className="sr-only">
-                        {" "}
-                        <Plural value={deck.cardCount} one="# card" other="# cards" />
-                      </span>
-                    </a>
-                    <a
-                      href={addUrl(slug, deck.meaningLanguage)}
-                      aria-label={t`Add ${name} to Lymi`}
-                      className={buttonClass("ghost", "sm", "shrink-0")}
-                    >
-                      <Trans>Add</Trans>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-        <div className="mt-10">
-          <SourceLine source={exam.source} changed={latest(exam.decks, updated)} />
-          <p className="mt-1 max-w-[62ch] text-sm text-pretty text-muted">
-            <Trans>The translations and notes are Lymi’s.</Trans>
-          </p>
-          <Disclaimer exam={exam} />
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -536,16 +417,21 @@ function ExamPlanContent({ several }: { several: boolean }) {
 }
 
 /** The questions an exam page answers, built from the exam so the schema reads the same. */
-export function examQuestions(exam: Exam): Question[] {
+export function examQuestions(exam: Exam, locale: Locale): Question[] {
+  const i18n = pageI18n(locale);
   const authority = exam.authority;
   const source = exam.source.title;
+  const edition = exam.source.edition ? i18n._(exam.source.edition) : "";
+  const note = exam.note ? i18n._(exam.note) : "";
   return [
     {
       id: "official",
       question: msg`Are these the official questions?`,
-      answer:
-        exam.note ??
-        msg`The questions and answers follow ${source}. Lymi isn’t affiliated with ${authority} and can’t promise a pass.`,
+      answer: note
+        ? msg`${note} Lymi isn’t affiliated with ${authority} and can’t promise a pass.`
+        : edition
+          ? msg`They follow ${source} (${edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with ${authority} and can’t promise a pass.`
+          : msg`They follow ${source}, in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with ${authority} and can’t promise a pass.`,
     },
     {
       id: "cost",

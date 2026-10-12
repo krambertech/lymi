@@ -2,11 +2,10 @@ import { msg } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight, Languages, ListChecks, Smartphone } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
-import { useState } from "react";
+import { AnimatePresence, animate, motion, useInView, useReducedMotion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 import { EXAMS, type Exam, examPath } from "../../lib/exams";
 import { openLymiUrl } from "../../lib/origins";
-import type { Locale } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { Assurances } from "../landing/Assurances";
 import { FeatureSection, SectionTitle } from "../landing/FeatureSection";
@@ -98,27 +97,13 @@ export function ExamsHub({ counts }: Props) {
         </div>
 
         <FeatureSection
-          id="language"
-          title={<Trans>The exam’s words, your language.</Trans>}
-          body={
-            <Trans>
-              Every question and answer stays word for word as the test prints it, in German,
-              Spanish or Czech. Beside each one is a translation and a short note, so you learn what
-              it means and how it will look on the day.
-            </Trans>
-          }
-        >
-          <LanguageSwitch />
-        </FeatureSection>
-
-        <FeatureSection
-          demoFirst
           tinted
-          title={<Trans>See the catalogue move to Known.</Trans>}
+          title={<Trans>Know where you stand.</Trans>}
           body={
             <Trans>
-              Each deck counts its questions as New, Learning and Known. A few minutes a day, and
-              you can see how much of the catalogue you already know before your test date.
+              Each deck counts its questions as New, Learning and Known. A few minutes a day moves
+              them along, and one look tells you how much of the catalogue you already know before
+              your test date.
             </Trans>
           }
         >
@@ -280,103 +265,58 @@ function ExamTile({ exam, cards }: { exam: Exam; cards: number }) {
   );
 }
 
-const SWITCH = [
-  {
-    locale: "en",
-    label: "English",
-    question: "Who elects the members of the Bundestag in Germany?",
-    answer: "the people entitled to vote",
-  },
-  {
-    locale: "uk",
-    label: "Українська",
-    question: "Хто обирає депутатів Бундестагу в Німеччині?",
-    answer: "народ, що має право голосу",
-  },
-  {
-    locale: "ru",
-    label: "Русский",
-    question: "Кто выбирает депутатов бундестага в Германии?",
-    answer: "народ, имеющий право голоса",
-  },
-] as const;
-
-/** One card from the general deck, its translation switched between the three editions. */
-function LanguageSwitch() {
-  const { t, i18n } = useLingui();
-  const still = useReducedMotion();
-  const [chosen, setChosen] = useState<Locale>(
-    (SWITCH.find((each) => each.locale === i18n.locale)?.locale ?? "en") as Locale,
-  );
-  const edition = SWITCH.find((each) => each.locale === chosen) ?? SWITCH[0];
-  return (
-    <div className="mx-auto w-full max-w-[440px]">
-      <fieldset className="flex rounded-full bg-plate-2 p-1">
-        <legend className="sr-only">{t`Translation language`}</legend>
-        {SWITCH.map((each) => (
-          <button
-            key={each.locale}
-            type="button"
-            aria-pressed={chosen === each.locale}
-            lang={each.locale}
-            onClick={() => setChosen(each.locale as Locale)}
-            className={clsx(
-              "relative h-9 flex-1 rounded-full text-sm font-medium transition-colors duration-150",
-              chosen === each.locale ? "text-text" : "text-muted hoverable:hover:text-text-2",
-            )}
-          >
-            {chosen === each.locale && (
-              <motion.span
-                layoutId="language-switch"
-                transition={
-                  still ? { duration: 0 } : { type: "spring", duration: 0.4, bounce: 0.1 }
-                }
-                className="absolute inset-0 rounded-full bg-plate edge"
-              />
-            )}
-            <span className="relative">{each.label}</span>
-          </button>
-        ))}
-      </fieldset>
-      <article className="mt-4 rounded-xl bg-plate p-6 edge">
-        <p className="text-xs font-medium tracking-[0.07em] text-muted uppercase">
-          Leben in Deutschland
-        </p>
-        <p lang="de" className="mt-3 text-xl leading-snug font-medium text-text">
-          Wer wählt in Deutschland die Abgeordneten zum Bundestag?
-        </p>
-        <p lang="de" className="mt-3 rounded-md bg-good-soft px-3 py-2 text-md text-text">
-          das wahlberechtigte Volk
-        </p>
-        <motion.div
-          key={edition.locale}
-          initial={still ? false : { opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.28 }}
-          lang={edition.locale}
-          className="mt-4 border-t border-edge pt-3 text-md text-pretty text-text-2"
-        >
-          {edition.question} <span className="font-medium text-text">{edition.answer}</span>
-        </motion.div>
-      </article>
-    </div>
-  );
-}
-
 const STAGES = [
-  { id: "start", label: msg`First day`, known: 0, learning: 0 },
+  { id: "start", label: msg`First day`, known: 0, learning: 12 },
   { id: "weeks", label: msg`A few weeks in`, known: 96, learning: 58 },
   { id: "test", label: msg`Before the test`, known: 271, learning: 29 },
 ] as const;
 
-/** A deck's own counts at three moments, as an example of what daily review does to them. */
+const TOTAL = 300;
+
+/** A number that moves to its new value rather than jumping. */
+function Count({ value, still }: { value: number; still: boolean | null }) {
+  const { i18n } = useLingui();
+  const ref = useRef<HTMLSpanElement>(null);
+  const from = useRef(value);
+  useEffect(() => {
+    const format = new Intl.NumberFormat(i18n.locale);
+    if (still) {
+      if (ref.current) ref.current.textContent = format.format(value);
+      from.current = value;
+      return;
+    }
+    const controls = animate(from.current, value, {
+      duration: 0.9,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate: (latest) => {
+        if (ref.current) ref.current.textContent = format.format(Math.round(latest));
+      },
+    });
+    from.current = value;
+    return () => controls.stop();
+  }, [value, still, i18n.locale]);
+  return <span ref={ref}>{new Intl.NumberFormat(i18n.locale).format(value)}</span>;
+}
+
+/**
+ * An example deck's counts moving from the first day to the test, once it is on screen. Under
+ * reduced motion it holds the last moment.
+ */
 function ProgressDemo() {
   const { t, i18n } = useLingui();
   const still = useReducedMotion();
-  const [at, setAt] = useState(1);
-  const total = 300;
+  const root = useRef<HTMLDivElement>(null);
+  const visible = useInView(root, { amount: 0.5 });
+  const [at, setAt] = useState(still ? STAGES.length - 1 : 0);
+
+  useEffect(() => {
+    if (still || !visible) return;
+    const timer = window.setInterval(() => setAt((n) => (n + 1) % STAGES.length), 2600);
+    return () => window.clearInterval(timer);
+  }, [still, visible]);
+
   const stage = STAGES[at] ?? STAGES[0];
-  const fresh = total - stage.known - stage.learning;
+  const fresh = TOTAL - stage.known - stage.learning;
   const bars = [
     {
       id: "known",
@@ -398,26 +338,36 @@ function ProgressDemo() {
     },
   ];
   return (
-    <div className="mx-auto w-full max-w-[440px]">
+    <div ref={root} className="mx-auto w-full max-w-[440px]" aria-hidden="true">
       <article className="rounded-xl bg-canvas p-6 edge">
-        <p className="text-xs font-medium tracking-[0.07em] text-muted uppercase">
-          <Trans>An example deck</Trans>
-        </p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-xs font-medium tracking-[0.07em] text-muted uppercase">
+            <Trans>An example deck</Trans>
+          </p>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.p
+              key={stage.id}
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: still ? 0 : 0.25 }}
+              className="rounded-full bg-plate-2 px-2.5 py-1 text-xs font-medium text-text-2"
+            >
+              {i18n._(stage.label)}
+            </motion.p>
+          </AnimatePresence>
+        </div>
         <p className="mt-2 text-xl font-medium tracking-[-0.02em] text-text">
           Leben in Deutschland
         </p>
-        <div
-          className="mt-5 flex h-3 overflow-hidden rounded-full bg-plate-2"
-          role="img"
-          aria-label={t`${stage.known} Known, ${stage.learning} Learning, ${fresh} New, of ${total}`}
-        >
+        <div className="mt-5 flex h-3 overflow-hidden rounded-full bg-plate-2">
           {bars.map((bar) => (
             <motion.span
               key={bar.id}
               className={bar.className}
               initial={false}
-              animate={{ width: `${(bar.value / total) * 100}%` }}
-              transition={still ? { duration: 0 } : { type: "spring", duration: 0.7, bounce: 0.1 }}
+              animate={{ width: `${(bar.value / TOTAL) * 100}%` }}
+              transition={still ? { duration: 0 } : { type: "spring", duration: 0.9, bounce: 0.08 }}
             />
           ))}
         </div>
@@ -429,25 +379,23 @@ function ProgressDemo() {
                 {bar.label}
               </dt>
               <dd className="mt-0.5 text-2xl font-medium tracking-[-0.03em] text-text tabular-nums">
-                {bar.value}
+                <Count value={bar.value} still={still} />
               </dd>
             </div>
           ))}
         </dl>
+        <div className="mt-5 flex gap-1.5">
+          {STAGES.map((each, n) => (
+            <span
+              key={each.id}
+              className={clsx(
+                "h-1 flex-1 rounded-full transition-colors duration-300",
+                n <= at ? "bg-text-2" : "bg-plate-2",
+              )}
+            />
+          ))}
+        </div>
       </article>
-      <div className="mt-4 flex flex-wrap gap-1.5">
-        {STAGES.map((each, n) => (
-          <button
-            key={each.id}
-            type="button"
-            aria-pressed={n === at}
-            onClick={() => setAt(n)}
-            className={buttonClass(n === at ? "secondary" : "ghost", "sm")}
-          >
-            {i18n._(each.label)}
-          </button>
-        ))}
-      </div>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import type { DeckSummary } from "@lymi/client/api";
 import * as Haptics from "expo-haptics";
 import { Link, useRouter } from "expo-router";
@@ -6,10 +7,16 @@ import { languageName } from "../../../data/languages";
 import { standing, useDeckCards, useDecks } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { Plate, RowArrow, Text } from "../../../ui/primitives";
+import { Row, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
 
-/** Library: every deck as a whole-row link. Touch and hold peeks the deck with its actions. */
+/**
+ * Library: every deck as a whole-row link, then Archived last. Touch and hold peeks the deck with
+ * its actions.
+ */
 export default function Library() {
+  const { t } = useLingui();
+  const router = useRouter();
   const decks = useDecks().data ?? [];
   return (
     <Screen title="Library" kind="tab">
@@ -18,6 +25,9 @@ export default function Library() {
           <DeckRow key={d.id} deck={d} />
         ))}
       </View>
+      <Rows>
+        <Row icon="archive" label={t`Archived`} onPress={() => router.push("/library/archived")} />
+      </Rows>
     </Screen>
   );
 }

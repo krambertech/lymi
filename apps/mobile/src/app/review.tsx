@@ -437,6 +437,8 @@ function Run({
             under={
               lastGraded && (
                 <Turn
+                  // Each graded card is drawn afresh, so nothing glides from the one before it.
+                  key={lastGraded.grade.reviewedAt}
                   item={lastGraded.item}
                   deckName={lastGraded.deckName}
                   forgotten={lastGraded.forgotten}
@@ -627,7 +629,7 @@ function CardPlate({
 
   return (
     <Animated.View
-      layout={reduce ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
+      layout={reduce || still ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
       className="flex-1"
     >
       <Pressable
@@ -665,7 +667,7 @@ function CardPlate({
 
           <View className="flex-1 justify-center px-6">
             <Animated.View
-              layout={reduce ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
+              layout={reduce || still ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
             >
               {cue === null ? (
                 <Picture card={card} />

@@ -22,7 +22,8 @@ export default function Activity() {
   const entries = merged && more ? (merged.length > 1 ? merged.slice(0, -1) : undefined) : merged;
   const loadMore = () => {
     if (more && !query.isFetchingNextPage && !query.isFetchNextPageError)
-      void query.fetchNextPage();
+      // The end fires every frame near it; a page already on its way is not asked for again.
+      void query.fetchNextPage({ cancelRefetch: false });
   };
   // A short first read, such as one large archive, reads on until the screen has something to show.
   useEffect(() => {

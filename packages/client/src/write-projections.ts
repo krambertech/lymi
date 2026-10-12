@@ -274,7 +274,8 @@ type Review = { total: number; cards?: Reviewed[]; items?: Reviewed[] };
 
 /**
  * A draw or a round without an archived deck's cards. The fetch holds only the front of the order,
- * so the total also loses the deck's own count from Library when the deck is in the scope.
+ * so a draw still holding the deck also loses the deck's Library due count behind the front,
+ * capped by what the draw itself counts there; a draw already without the deck is left as it is.
  */
 function withoutDeck<T extends Review>(scope: string, data: T, id: string, lookup: Lookup): T {
   const list = data.cards ? "cards" : "items";
@@ -286,22 +287,22 @@ function withoutDeck<T extends Review>(scope: string, data: T, id: string, looku
   if (scope === `deck:${id}` || (scope.startsWith("section:") && removed > 0)) {
     return entries.length || data.total ? { ...data, [list]: [], total: 0 } : data;
   }
-  const deck = lookup.deck(id);
-  const inScope =
-    removed > 0 || scope === "all" || (!!deck?.seriesId && scope === `series:${deck.seriesId}`);
-  if (!inScope) return data;
+  if (removed === 0) return data;
   // A round's total counts only its own cards, which Library's due count says nothing about.
   if (list === "items") {
-    return removed ? { ...data, items: rest, total: Math.max(0, data.total - removed) } : data;
+    return { ...data, items: rest, total: Math.max(0, data.total - removed) };
   }
   const draw = data as unknown as DrawData;
   const day = { date: draw.day.date, start: new Date(draw.day.start), end: new Date(draw.day.end) };
   const log = drawLog(draw, [], day);
+  const all = drawableCount(drawCards(draw), log, day);
   const left = drawableCount(drawCards({ ...draw, cards: rest as DrawData["cards"] }), log, day);
-  const front = drawableCount(drawCards(draw), log, day) - left;
-  const total = Math.max(left, data.total - Math.max(front, deck?.due ?? 0));
-  if (removed === 0 && total === data.total) return data;
-  return { ...data, cards: rest, total };
+  const front = all - left;
+  const behind = Math.min(
+    Math.max(0, data.total - all),
+    Math.max(0, (lookup.deck(id)?.due ?? 0) - front),
+  );
+  return { ...data, cards: rest, total: Math.max(left, data.total - front - behind) };
 }
 
 function onReview<T extends Review>(scope: string, data: T, w: Write, lookup: Lookup): T {
@@ -336,8 +337,27 @@ export function applyWrite<T>(key: QueryKey, data: T, w: Write, lookup: Lookup):
 
 /** Fetched data with every write still waiting laid over it, oldest first. */
 export function rebase<T>(key: QueryKey, data: T, pending: QueuedWrite[], lookup: Lookup): T {
-  return pending.reduce((current, entry) => applyWrite(key, current, entry.write, lookup), data);
+  return replayed(key, pending).reduce(
+    (current, entry) => applyWrite(key, current, entry.write, lookup),
+    data,
+  );
 }
+
+/**
+ * The waiting writes a refetch replays. A review cannot rebuild a restored deck's cards, so a deck
+ * archive with a restore of the same deck waiting after it is not replayed there.
+ */
+function replayed(key: QueryKey, pending: QueuedWrite[]): QueuedWrite[] {
+  const shape = shapeOf(key)?.shape;
+  if (shape !== "draw" && shape !== "queue") return pending;
+  return pending.filter(
+    ({ write }, i) =>
+      write.kind !== "deck.archive" ||
+      !pending.slice(i + 1).some((later) => isRestore(later.write, write.id)),
+  );
+}
+
+const isRestore = (w: Write, id: string) => w.kind === "deck.restore" && w.id === id;
 
 /**
  * What a deck archive took out of each cached draw and round, so a restore puts it back at once.

@@ -185,9 +185,12 @@ function TrayMark({ slug }: { slug: string }) {
       style={{ backgroundColor: useTrayColour(slug) }}
     >
       <View
-        className="h-12 w-9 rounded-sm border border-edge"
+        className="h-12 w-9 gap-1 rounded-sm border border-edge px-1.5 pt-2"
         style={{ backgroundColor: p.plate }}
-      />
+      >
+        <View className="h-1 w-5 rounded-full bg-edge-2" />
+        <View className="h-1 w-3 rounded-full bg-edge-2" />
+      </View>
     </View>
   );
 }

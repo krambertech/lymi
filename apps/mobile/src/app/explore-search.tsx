@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useMemo } from "react";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -20,7 +20,9 @@ export default function ExploreSearch() {
   const insets = useSafeAreaInsets();
   const catalogue = useCatalogue();
   const label = useShelfLabel();
-  const { text, setText } = useSearchText();
+  // A link can open search with its text already in, as `lymi://explore-search?q=…`.
+  const { q } = useLocalSearchParams<{ q?: string }>();
+  const { text, setText } = useSearchText(q);
   const query = text.trim();
   const hits = useMemo(
     () => searchDecks(catalogue.shelves, query, label),

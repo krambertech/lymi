@@ -1358,6 +1358,12 @@ html:has(.deck-cards[open]) {
   --hover: color-mix(in oklch, var(--text) 15%, transparent);
 }
 
+/* These heroes isolate their tint, which traps the nav's menu inside them, so while it shows the
+   hero rises over the page below, the sticky shelf bar included. */
+:is(.explore-hero, .shelf-hero, .deck-hero-tint):has([data-use-cases-panel]) {
+  z-index: var(--z-popup);
+}
+
 /* The deck page wears the same colour as its tray on Explore, washed down from the top of the
    page and gone by the time the reading starts: click a lilac tray, land on a lilac page. The
    hue is a pure function of the slug, so nothing is stored and the two pages cannot disagree. */

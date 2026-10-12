@@ -20,3 +20,7 @@ export const REST_DISMISSED_KEY = "rest-dismissed";
 /** This phone's own choices, which outlast a sign-out: the theme and the reminder time. */
 export const deviceStore = createMMKV({ id: "lymi-device" });
 export const DEVICE_KEYS = { theme: "theme", reminder: "reminder" } as const;
+
+/** What the review has shown once on this phone, such as how to take back a grade. */
+export const reviewStore = createMMKV({ id: "lymi-review" });
+export const UNDO_HINT_KEY = "undo-hint";

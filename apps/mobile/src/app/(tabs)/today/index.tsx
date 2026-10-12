@@ -133,6 +133,7 @@ function LitDue({ decks, nothingYet }: { decks: Deck[]; nothingYet: boolean }) {
         out={out}
         fed={fed}
         flicker={focused}
+        tilt={focused}
         style={{ marginTop: 4 }}
       />
       <DueHeading due={due} nothingYet={nothingYet} noDecks={noDecks} deckName={onlyDeck?.name} />

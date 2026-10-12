@@ -1,5 +1,11 @@
 import { deviceTimezone, type ReviewScope } from "@lymi/client/api";
-import { gradeStore, type Recorded, recordGrade } from "@lymi/client/grades";
+import {
+  gradeStore,
+  type Recorded,
+  recordGrade,
+  type Undone,
+  undoGrade,
+} from "@lymi/client/grades";
 import {
   deckCardsQuery,
   decksQuery,
@@ -154,6 +160,18 @@ export function useGrade() {
     recordGrade({ ...grade, timezone: deviceTimezone() }).then((outcome) => {
       for (const queryKey of [decksQuery.queryKey, roundsQuery.queryKey, streakQuery.queryKey]) {
         void qc.invalidateQueries({ queryKey: [...queryKey] });
+      }
+      return outcome;
+    });
+}
+
+/** Takes back a grade through the outbox, then refreshes what it had moved. */
+export function useUndoGrade() {
+  const qc = useQueryClient();
+  return (grade: LocalGrade): Promise<Undone> =>
+    undoGrade(grade).then((outcome) => {
+      for (const queryKey of [["queue"], ["decks"], ["rounds"], ["streak"]]) {
+        void qc.invalidateQueries({ queryKey });
       }
       return outcome;
     });

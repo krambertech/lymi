@@ -1,8 +1,9 @@
+import { useLingui } from "@lingui/react/macro";
 import { apiUrl, type QueueItem } from "@lymi/client/api";
 import { gradeStore } from "@lymi/client/grades";
 import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawableLeft } from "@lymi/client/review-day";
-import { reviewItem, stateBefore } from "@lymi/client/review-draw";
+import { type LocalGrade, reviewItem, stateBefore } from "@lymi/client/review-draw";
 import { countedRating, drawKey, modeKey, type Rating, ROUNDS, type Round } from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
@@ -15,7 +16,6 @@ import {
   REVEAL_GLIDE,
 } from "@lymi/design";
 import { useQueryClient } from "@tanstack/react-query";
-import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
@@ -33,6 +33,7 @@ import {
   View,
   type ViewStyle,
 } from "react-native";
+import { GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   Easing,
   FadeIn,
@@ -48,6 +49,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { playHaptics, stopHaptics } from "../../modules/lymi-haptics";
 import { useSessionHeaders } from "../auth/client";
 import { EndEmbers, LightPool } from "../brand/ending";
 import { Lantern } from "../brand/lantern";
@@ -62,12 +64,17 @@ import {
   useRoundQueue,
   useRounds,
   useSections,
+  useUndoGrade,
 } from "../data/queries";
+import { endHaptics } from "../review/end-haptics";
+import { Cover, usePullToEnd } from "../review/pull-to-end";
+import { markUndoHintSeen, UndoHint, undoHintSeen } from "../review/undo-hint";
+import { UndoStack, useUndoSwipe } from "../review/undo-swipe";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { type Palette, usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
 import type { IconName } from "../ui/icons";
-import { Button, Icon, LIFT, Press, Text } from "../ui/primitives";
+import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
 
 const EASE = curve(EASE_OUT);
@@ -89,6 +96,14 @@ interface ListCards {
   dropped: ReadonlySet<string>;
 }
 const NO_LIST_CARDS: ListCards = { graded: new Set(), returned: new Set(), dropped: new Set() };
+/** The last grade and the card as it was shown, so a swipe from the start edge can bring both back. */
+interface Graded {
+  item: QueueItem;
+  grade: LocalGrade;
+  listed: boolean;
+  deckName: string | undefined;
+  forgotten: boolean;
+}
 
 const keyOf = (item: Pick<QueueItem, "card" | "mode">) => drawKey(item.card.id, modeKey(item.mode));
 const withKey = (keys: ReadonlySet<string>, key: string) => new Set(keys).add(key);
@@ -138,6 +153,8 @@ function Run({
   const list = useRoundQueue(round, deck);
   const { reviewsToday, goal } = useDay();
   const grade = useGrade();
+  const takeBack = useUndoGrade();
+  const { t } = useLingui();
   const decks = useDecks().data;
   const insets = useSafeAreaInsets();
   // A cached draw can predate the last grade, so the first card waits for this mount's fetch.
@@ -155,6 +172,15 @@ function Run({
   const [sending, setSending] = useState(0);
   // Each position in the review takes one grade, however fast the taps come.
   const gradedAt = useRef(-1);
+  // Left partway: the end screen shows over the card still drawn, which Continue goes back to.
+  const [paused, setPaused] = useState(false);
+  const [lastGraded, setLastGraded] = useState<Graded | null>(null);
+  // A card a swipe brought back arrives revealed, with nothing left to play.
+  const [returned, setReturned] = useState(false);
+  const [hint, setHint] = useState(false);
+  // Grades taken back, by when they were made, whose answers from the server no longer apply.
+  const undone = useRef(new Set<string>());
+  const started = useRef(false);
 
   // Leaving refreshes what this review, or another device meanwhile, moved under it.
   useEffect(
@@ -202,6 +228,58 @@ function Run({
   const current = !leg ? null : leg.kind === "draw" ? (atStop ? null : drawn) : listLeft[0];
   const recallTimes = useRecallClock(current ? `${keyOf(current)}:${done}` : null, revealed);
 
+  // A review starts with one firm tap as its first card arrives.
+  useEffect(() => {
+    if (!current || started.current) return;
+    started.current = true;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+  }, [current]);
+
+  // The first card with a grade before it shows how to take that grade back, once on this phone.
+  useEffect(() => {
+    if (!lastGraded || undoHintSeen()) return;
+    markUndoHintSeen();
+    setHint(true);
+  }, [lastGraded]);
+  useEffect(() => {
+    if (!hint) return;
+    const timer = setTimeout(() => setHint(false), 6000);
+    return () => clearTimeout(timer);
+  }, [hint]);
+
+  const ended = paused || (!!leg && !current);
+  // Leaving partway ends on the end screen, as the web does, unless nothing was graded here.
+  const pull = usePullToEnd({
+    onEnd: ended || done === 0 ? onClose : () => setPaused(true),
+    away: ended || done === 0,
+  });
+
+  /** One step back: the last graded card returns revealed, and its grade leaves the day. */
+  const undo = () => {
+    const last = lastGraded;
+    if (!last) return;
+    Haptics.selectionAsync();
+    undone.current.add(last.grade.reviewedAt);
+    setLastGraded(null);
+    setHint(false);
+    if (last.listed) {
+      const key = keyOf(last.item);
+      setListCards((c) => ({ ...c, graded: withoutKey(c.graded, key) }));
+    }
+    setPinned({ cardId: last.item.card.id, mode: modeKey(last.item.mode) });
+    setReturned(true);
+    setRevealed(true);
+    setDone((n) => n - 1);
+    gradedAt.current = -1;
+    const term = last.item.card.term;
+    void takeBack(last.grade).then((outcome) => {
+      if (outcome === "kept") {
+        Alert.alert(t`Couldn’t take back your grade for “${term}”. It still counts.`);
+      }
+    });
+  };
+  const swipe = useUndoSwipe({ enabled: !!lastGraded && !ended, onUndo: undo });
+
   // A pinned card a refetch no longer holds, such as one archived meanwhile, gives way.
   const repin = !!state?.next && !staleDay && (!pinned || !pinnedItem);
   useEffect(() => {
@@ -232,12 +310,24 @@ function Run({
   const landing = sending > 0 && !unreachable;
 
   if (!leg || (stopped && (checking || landing || listOwed))) {
-    return <View className="flex-1 bg-canvas" />;
+    return <Cover style={pull.style} />;
   }
-  if (!current || !data || !state) {
+  if (!current || !data || !state || paused) {
     // The count rolls up to today's attempts as this device knows them, from where this review began.
     const to = state?.attempts ?? reviewsToday;
-    return <Completion from={Math.max(0, to - done)} added={done} onClose={onClose} />;
+    return (
+      <Cover style={pull.style}>
+        <Completion
+          from={Math.max(0, to - done)}
+          added={done}
+          onClose={onClose}
+          onContinue={paused && current ? () => setPaused(false) : undefined}
+        />
+        <GestureDetector gesture={pull.gesture}>
+          <View className="absolute inset-x-0 top-0" style={{ height: insets.top + 64 }} />
+        </GestureDetector>
+      </Cover>
+    );
   }
   const { card } = current;
 
@@ -253,6 +343,8 @@ function Run({
   const lastToday = state.log
     .filter((e) => e.cardId === card.id && e.mode === modeKey(current.mode))
     .pop();
+  const deckName = decks?.find((d) => d.id === card.deckId)?.name;
+  const forgotten = round === "forgotten" || lastToday?.rating === 1;
 
   const onGrade = (rating: Rating) => {
     if (gradedAt.current === done) return;
@@ -266,15 +358,19 @@ function Run({
     );
     const runningShort = state.upcoming.length <= LOOKAHEAD;
     const listed = leg.kind === "list";
-    const recorded = grade({
+    const record: LocalGrade = {
       cardId: item.card.id,
       mode: item.mode,
       rating: countedRating(rating, repeat),
       reviewedAt: new Date().toISOString(),
       stateBefore: repeat ? stateBefore(data, state.log, item.card.id, item.mode) : item.fsrsState,
       ...recallTimes(),
-    });
+    };
+    const recorded = grade(record);
     if (listed) setListCards((c) => ({ ...c, graded: withKey(c.graded, key) }));
+    setLastGraded({ item, grade: record, listed, deckName, forgotten });
+    setReturned(false);
+    setHint(false);
     setSending((n) => n + 1);
     setRevealed(false);
     setNow(new Date());
@@ -285,7 +381,7 @@ function Run({
 
     void recorded
       .then((outcome) => {
-        if (outcome === "queued") return;
+        if (outcome === "queued" || undone.current.has(record.reviewedAt)) return;
         if (outcome === "refused" || outcome === "gone") {
           if (listed) {
             setListCards((c) => ({
@@ -312,31 +408,98 @@ function Run({
   };
 
   return (
-    <View
-      className="flex-1 bg-canvas"
-      style={{ paddingTop: insets.top + 4, paddingBottom: Math.max(insets.bottom, 12) }}
-    >
-      <Header done={legDone} total={total} onClose={onClose} />
+    <Cover style={pull.style}>
+      <View
+        className="flex-1"
+        style={{ paddingTop: insets.top + 4, paddingBottom: Math.max(insets.bottom, 12) }}
+      >
+        <GestureDetector gesture={pull.gesture}>
+          <Header
+            done={legDone}
+            total={total}
+            onClose={done > 0 ? () => setPaused(true) : onClose}
+          />
+        </GestureDetector>
+        <UndoStack
+          x={swipe.x}
+          dir={swipe.dir}
+          gesture={swipe.gesture}
+          turn={lastGraded?.grade.reviewedAt ?? null}
+          under={
+            lastGraded && (
+              <Turn
+                item={lastGraded.item}
+                deckName={lastGraded.deckName}
+                forgotten={lastGraded.forgotten}
+                revealed
+                still
+              />
+            )
+          }
+        >
+          <Turn
+            // A forgotten card can come straight back; keyed by position it arrives afresh.
+            key={`${keyOf(current)}:${done}`}
+            item={current}
+            deckName={deckName}
+            forgotten={forgotten}
+            revealed={revealed}
+            still={returned}
+            onReveal={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              setRevealed(true);
+            }}
+            onGrade={onGrade}
+            onUndo={lastGraded ? undo : undefined}
+          />
+          {hint && !revealed && <UndoHint />}
+        </UndoStack>
+      </View>
+    </Cover>
+  );
+}
+
+/** A card and, once it is revealed, its grades under it. */
+function Turn({
+  item,
+  deckName,
+  forgotten,
+  revealed,
+  still = false,
+  onReveal,
+  onGrade,
+  onUndo,
+}: {
+  item: QueueItem;
+  deckName: string | undefined;
+  forgotten: boolean;
+  revealed: boolean;
+  /** Shown as it already stands, with nothing arriving: a card brought back, or one waiting under. */
+  still?: boolean;
+  onReveal?: () => void;
+  onGrade?: (r: Rating) => void;
+  onUndo?: (() => void) | undefined;
+}) {
+  return (
+    <>
       <View className="flex-1 px-4 pt-3">
         <CardPlate
-          // A forgotten card can come straight back; keyed by position it arrives afresh.
-          key={`${keyOf(current)}:${done}`}
-          item={current}
-          deckName={decks?.find((d) => d.id === card.deckId)?.name}
-          forgotten={round === "forgotten" || lastToday?.rating === 1}
+          item={item}
+          deckName={deckName}
+          forgotten={forgotten}
           revealed={revealed}
-          onReveal={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            setRevealed(true);
-          }}
+          still={still}
+          onReveal={onReveal}
+          onUndo={onUndo}
         />
       </View>
-      {revealed && <GradeStrip onGrade={onGrade} />}
-    </View>
+      {revealed && <GradeStrip still={still} onGrade={onGrade} />}
+    </>
   );
 }
 
 function Header({ done, total, onClose }: { done: number; total: number; onClose: () => void }) {
+  const { t } = useLingui();
   const { fed, out, progress } = useDay();
   const p = usePalette();
   const share = total === 0 ? 0 : done / total;
@@ -360,41 +523,9 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
       >
         {done}/{total}
       </Text>
-      <CloseButton onPress={onClose} />
+      {/* Plain, because leaving is rare; pulling the bar down does the same. phone.md "Review". */}
+      <IconButton icon="close" label={t`End review`} haptic={false} onPress={onClose} />
     </View>
-  );
-}
-
-/** On iOS 26 the close button sits in a disc of glass, as system sheets do. */
-function CloseButton({ onPress }: { onPress: () => void }) {
-  const p = usePalette();
-  const glass = isGlassEffectAPIAvailable();
-  const icon = <Icon name="close" size={18} colour={p.text} />;
-  return (
-    <Press
-      onPress={onPress}
-      accessibilityLabel="End review"
-      accessibilityRole="button"
-      className="size-11 items-center justify-center"
-    >
-      {glass ? (
-        <GlassView
-          isInteractive
-          glassEffectStyle="regular"
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 20,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {icon}
-        </GlassView>
-      ) : (
-        icon
-      )}
-    </Press>
   );
 }
 
@@ -445,14 +576,20 @@ function CardPlate({
   deckName,
   forgotten,
   revealed,
+  still,
   onReveal,
+  onUndo,
 }: {
   item: QueueItem;
   deckName: string | undefined;
   forgotten: boolean;
   revealed: boolean;
-  onReveal: () => void;
+  still: boolean;
+  onReveal: (() => void) | undefined;
+  /** Offered to VoiceOver as an action on the card while there is a grade to take back. */
+  onUndo: (() => void) | undefined;
 }) {
+  const { t } = useLingui();
   const p = usePalette();
   const dark = useColorScheme() === "dark";
   const reduce = useReduceMotion();
@@ -468,12 +605,16 @@ function CardPlate({
   return (
     <Animated.View
       layout={reduce ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
-      entering={FadeIn.duration(160).reduceMotion(ALWAYS)}
+      entering={still ? undefined : FadeIn.duration(160).reduceMotion(ALWAYS)}
       className="flex-1"
     >
       <Pressable
         onPress={revealed ? undefined : onReveal}
-        disabled={revealed}
+        disabled={revealed || !onReveal}
+        accessibilityActions={onUndo ? [{ name: "undo", label: t`Take back the last grade` }] : []}
+        onAccessibilityAction={(e) => {
+          if (e.nativeEvent.actionName === "undo") onUndo?.();
+        }}
         accessibilityRole={revealed ? undefined : "button"}
         accessibilityLabel={
           revealed ? undefined : `${cue ?? card.image?.description ?? ""}. Tap to reveal`
@@ -519,26 +660,29 @@ function CardPlate({
           {revealed && (
             <View className="gap-4 pt-5">
               <Animated.View
-                entering={reduce ? CROSSFADE : rule}
+                entering={still ? undefined : reduce ? CROSSFADE : rule}
                 className="h-px bg-edge-2"
                 // The rule draws from the start edge, which is the right in a right-to-left language.
                 style={{ transformOrigin: I18nManager.isRTL ? "100% 50%" : "0% 50%" }}
               />
-              <Animated.View entering={reduce ? CROSSFADE : rise(0)}>
+              <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(0)}>
                 <Text className="text-xl text-text">{answer}</Text>
               </Animated.View>
               {other && (
-                <Animated.View entering={reduce ? CROSSFADE : rise(1)}>
+                <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(1)}>
                   <Text className="text-md text-text-2">{other}</Text>
                 </Animated.View>
               )}
               {card.example && (
-                <Animated.View entering={reduce ? CROSSFADE : rise(2)}>
+                <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(2)}>
                   <Text className="text-md text-text-2">{card.example}</Text>
                 </Animated.View>
               )}
               {section && (
-                <Animated.View entering={reduce ? CROSSFADE : rise(3)} className="flex-row">
+                <Animated.View
+                  entering={still ? undefined : reduce ? CROSSFADE : rise(3)}
+                  className="flex-row"
+                >
                   <View className="min-h-8 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3 py-1">
                     <Icon name="section" size={15} colour={p.muted} />
                     <Text className="text-base text-text-2">{section}</Text>
@@ -578,8 +722,17 @@ const gradeIn = (i: number) =>
     .delay(80 + i * 35)
     .reduceMotion(ALWAYS);
 
-/** Four grades, 64 pt tall, always under the card. Same tap, same weight, whichever is chosen. */
-function GradeStrip({ onGrade }: { onGrade: (r: Rating) => void }) {
+/**
+ * Four grades under the card, 80 pt tall and nearly square, in the thumb's reach. Same tap, same
+ * weight, whichever is chosen. phone.md "Review".
+ */
+function GradeStrip({
+  still = false,
+  onGrade,
+}: {
+  still?: boolean;
+  onGrade: ((r: Rating) => void) | undefined;
+}) {
   const p = usePalette();
   const dark = useColorScheme() === "dark";
   const reduce = useReduceMotion();
@@ -589,17 +742,21 @@ function GradeStrip({ onGrade }: { onGrade: (r: Rating) => void }) {
       className="flex-row gap-2 px-4 pt-3"
     >
       {GRADES.map((g, i) => (
-        <Animated.View key={g.label} entering={reduce ? CROSSFADE : gradeIn(i)} className="flex-1">
+        <Animated.View
+          key={g.label}
+          entering={still ? undefined : reduce ? CROSSFADE : gradeIn(i)}
+          className="flex-1"
+        >
           <Press
             scale={0.96}
             haptic={false}
-            onPress={() => onGrade((i + 1) as Rating)}
+            onPress={() => onGrade?.((i + 1) as Rating)}
             accessibilityRole="button"
             accessibilityLabel={g.label}
-            className="h-16 items-center justify-center gap-1 rounded-lg border border-edge bg-plate"
+            className="h-20 items-center justify-center gap-1.5 rounded-xl border border-edge bg-plate"
             style={dark ? LIFT : undefined}
           >
-            <Icon name={g.icon} size={20} colour={p[g.tint]} />
+            <Icon name={g.icon} size={24} colour={p[g.tint]} />
             <Text maxFontSizeMultiplier={1.3} className="text-base font-medium text-text-2">
               {g.label}
             </Text>
@@ -650,12 +807,16 @@ function Completion({
   from,
   added,
   onClose,
+  onContinue,
 }: {
   /** Today's reviews when this review began, where the count rolls up from. */
   from: number;
   added: number;
   onClose: () => void;
+  /** Left partway: the way back to the card still drawn. */
+  onContinue?: (() => void) | undefined;
 }) {
+  const { t } = useLingui();
   const { goal, week, streak, dayDone, out, progress, fed } = useDay();
   const forgottenToday = useRounds().data?.forgotten ?? 0;
   const router = useRouter();
@@ -664,14 +825,21 @@ function Completion({
   const to = from + added;
   const satisfied = to >= goal || dayDone;
   const heading =
-    to >= goal ? "Daily goal reached" : dayDone ? "You’re done for today" : "Nothing left here";
+    to >= goal
+      ? "Daily goal reached"
+      : onContinue
+        ? t`Review done`
+        : dayDone
+          ? "You’re done for today"
+          : "Nothing left here";
 
   const embers = useMemo(
     () => (reduce || out ? [] : endEmbers(emberCount(added, goal))),
     [reduce, out, added, goal],
   );
   const rollMs = countRollMs(from, to);
-  const actionsAt = AT.actions + (forgottenToday > 0 ? AT.actionStep : 0);
+  const ways = (forgottenToday > 0 ? 1 : 0) + (onContinue ? 1 : 0);
+  const actionsAt = AT.actions + ways * AT.actionStep;
   const end = Math.max(
     actionsAt + RISE.ms,
     AT.countRoll + rollMs,
@@ -684,7 +852,14 @@ function Completion({
   const finish = () => {
     clock.value = end;
     setSettled(true);
+    void stopHaptics();
   };
+
+  const turned = satisfied && from < goal && added > 0;
+  useEffect(() => {
+    void playHaptics(endHaptics(embers, turned, reduce));
+    return () => void stopHaptics();
+  }, [embers, turned, reduce]);
   useEffect(() => {
     if (reduce) {
       clock.value = end;
@@ -701,7 +876,8 @@ function Completion({
   const label$ = useRise(clock, AT.count + 80);
   const lights$ = useRise(clock, AT.lights, { ms: 300, y: 0 });
   const run$ = useRise(clock, AT.run);
-  const forgotten$ = useRise(clock, AT.actions);
+  const continue$ = useRise(clock, AT.actions);
+  const forgotten$ = useRise(clock, AT.actions + (onContinue ? AT.actionStep : 0));
   const done$ = useRise(clock, actionsAt);
 
   return (
@@ -768,6 +944,11 @@ function Completion({
           </View>
         </View>
         <View className="gap-3 px-5 pt-6" pointerEvents={settled ? "auto" : "none"}>
+          {onContinue && (
+            <Animated.View style={continue$}>
+              <Button label={t`Continue`} onPress={onContinue} />
+            </Animated.View>
+          )}
           {forgottenToday > 0 && (
             <Animated.View style={forgotten$}>
               <Button

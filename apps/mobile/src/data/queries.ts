@@ -7,6 +7,7 @@ import {
   queueQuery,
   roundsQuery,
   sectionsQuery,
+  seriesQuery,
   streakQuery,
 } from "@lymi/client/queries";
 import { streakWith } from "@lymi/client/review-day";
@@ -31,6 +32,7 @@ export const useSections = (deckId: string | undefined) =>
   useQuery({ ...sectionsQuery(deckId ?? ""), enabled: !!deckId });
 export const useStreak = () => useQuery(streakQuery);
 export const useRounds = () => useQuery(roundsQuery);
+export const useSeries = () => useQuery(seriesQuery);
 /** What the review draws from, ADR 0019. Unscoped, it also holds today's log for the day's count. */
 export const useDraw = (scope: ReviewScope = {}) => useQuery(drawQuery(scope));
 /** A round from Today is a fixed list the server picks, walked in order. */
@@ -106,12 +108,23 @@ export function useDay() {
   // Finishing everything due counts the day, even below the goal.
   const dayDone = !!data && satisfied(data.today.outcome);
   const today = state?.day.date ?? data?.today.date;
-  const attempts = new Map(data?.days.map((d) => [d.date, d.attempts]));
-  const week = Array.from({ length: 7 }, (_, i) =>
-    today ? (attempts.get(addDays(today, i - 6)) ?? 0) : 0,
-  );
+  const byDate = new Map(data?.days.map((d) => [d.date, d]));
+  const rest = new Set(data?.restDays);
+  const dates = Array.from({ length: 7 }, (_, i) => (today ? addDays(today, i - 6) : ""));
+  const week = dates.map((date) => byDate.get(date)?.attempts ?? 0);
   const { out, progress } = lanternFor(data);
   return {
+    /** The streak with this device's grades in it; undefined until the first read. */
+    summary: data,
+    /** The seven lights as the web draws them: each day's own goal, whether it counted, and rest. */
+    lights: {
+      days: week,
+      satisfied: dates.map((date, i) => (i === 6 ? dayDone : !!byDate.get(date)?.satisfied)),
+      rest: dates.map((date) => rest.has(date)),
+      goals: dates.map((date, i) => (i === 6 ? goal : (byDate.get(date)?.goal ?? null))),
+    },
+    /** The morning after a rest day, the one time Today mentions it. */
+    restedYesterday: !!today && rest.has(addDays(today, -1)),
     streak: data?.current ?? 0,
     reviewsToday,
     goal,

@@ -10,6 +10,24 @@ msgstr ""
 msgid "“{term}” is already in {deckName}"
 msgstr "«{term}» уже є в колоді {deckName}"
 
+#. placeholder {0}: d.due
+msgid "{0, plural, one {card due} other {cards due}}"
+msgstr "{0, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
+
+#. placeholder {0}: d.due
+#. placeholder {1}: d.decks
+msgid "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck} other {# decks}}"
+msgstr "{0, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}} у {1, plural, one {# колоді} few {# колодах} many {# колодах} other {# колодах}}"
+
+msgid "{current, plural, one {Your #-day streak carries on.} other {Your #-day streak carries on.}}"
+msgstr "{current, plural, one {# день поспіль, і лік триває.} few {# дні поспіль, і лік триває.} many {# днів поспіль, і лік триває.} other {# дня поспіль, і лік триває.}}"
+
+msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
+msgstr "{due, plural, one {картка до повторення в колоді {deckName}} few {картки до повторення в колоді {deckName}} many {карток до повторення в колоді {deckName}} other {картки до повторення в колоді {deckName}}}"
+
+msgid "{due, plural, one {card due today} other {cards due today}}"
+msgstr "{due, plural, one {картка до повторення сьогодні} few {картки до повторення сьогодні} many {карток до повторення сьогодні} other {картки до повторення сьогодні}}"
+
 msgid "{label}: {chosen}"
 msgstr "{label}: {chosen}"
 
@@ -18,6 +36,9 @@ msgstr "{label}: {value}"
 
 msgid "{left, plural, one {# more review and today counts.} other {# more reviews and today counts.}}"
 msgstr "{left, plural, one {Ще # повторення, і сьогодні зарахується.} few {Ще # повторення, і сьогодні зарахується.} many {Ще # повторень, і сьогодні зарахується.} other {Ще # повторення, і сьогодні зарахується.}}"
+
+msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
+msgstr "До сьогоднішньої мети: {left, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
 
 msgid "{reviewsToday} of {goal}"
 msgstr "{reviewsToday} з {goal}"
@@ -39,6 +60,12 @@ msgstr "Слово чи фраза"
 
 msgid "Add a card"
 msgstr "Додати картку"
+
+msgid "Add cards from your last lesson, then review them here."
+msgstr "Додай картки з останнього уроку, а потім повторюй їх тут."
+
+msgid "Add cards from your next lesson"
+msgstr "Додай картки з наступного уроку"
 
 msgid "Add to {deckName}"
 msgstr "Додати до {deckName}"
@@ -82,6 +109,9 @@ msgstr "Частину цієї картки написав AI"
 msgid "AI wrote this"
 msgstr "Це написав AI"
 
+msgid "Also on your list"
+msgstr "Ще для повторення"
+
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Щонайменше {MIN_PASSWORD_LENGTH} символів."
 
@@ -90,6 +120,9 @@ msgstr "Назад"
 
 msgid "Back to sign in"
 msgstr "Назад до входу"
+
+msgid "Check your connection and try again."
+msgstr "Перевір з’єднання й повтори спробу."
 
 msgid "Check your inbox"
 msgstr "Перевір пошту"
@@ -112,6 +145,9 @@ msgstr "Підтвердити"
 msgid "Continue with Google"
 msgstr "Продовжити з Google"
 
+msgid "Couldn’t load Today"
+msgstr "Не вдалося завантажити екран «Сьогодні»"
+
 msgid "Couldn’t reach Lymi. Check your connection and try again."
 msgstr "Не вдалося зв’язатися з Lymi. Перевір з’єднання й повтори спробу."
 
@@ -133,14 +169,23 @@ msgstr "Створи акаунт Lymi"
 msgid "Daily goal"
 msgstr "Денна мета"
 
+msgid "Daily goal reached."
+msgstr "Денну мету досягнуто."
+
 msgid "Deck"
 msgstr "Колода"
+
+msgid "Decks to review"
+msgstr "Колоди до повторення"
 
 msgid "Describe what the picture shows without naming the term or the meaning."
 msgstr "Опиши, що на зображенні, не називаючи терміна чи значення."
 
 msgid "Description"
 msgstr "Опис"
+
+msgid "Dismiss"
+msgstr "Закрити"
 
 msgid "Don’t use “Lymi” in your password."
 msgstr "Не використовуй «Lymi» в паролі."
@@ -187,11 +232,20 @@ msgstr "Не пам’ятаєш пароль?"
 msgid "Forgotten"
 msgstr "Забута"
 
+msgid "Forgotten on {SLIPPING_FORGOTTEN_DAYS} of the last {SLIPPING_RECENT_DAYS, plural, one {# day} other {# days}} seen"
+msgstr "Забуті в {SLIPPING_FORGOTTEN_DAYS} з останніх {SLIPPING_RECENT_DAYS, plural, one {# дня} few {# днів} many {# днів} other {# дня}} показу"
+
+msgid "Forgotten today"
+msgstr "Забуті сьогодні"
+
 msgid "From the lesson"
 msgstr "З уроку"
 
 msgid "Good"
 msgstr "Добре"
+
+msgid "Graded Forgot today"
+msgstr "Сьогодні з оцінкою «Не пам’ятаю»"
 
 msgid "Grammar, usage, anything else"
 msgstr "Граматика, вживання, будь-що інше"
@@ -240,8 +294,14 @@ msgstr "Залиш порожнім, і AI доповнить"
 msgid "Lesson"
 msgstr "Урок"
 
+msgid "Library"
+msgstr "Бібліотека"
+
 msgid "Lymi is free to use."
 msgstr "Lymi безкоштовний."
+
+msgid "Make one for each course or topic."
+msgstr "Створи колоду для кожного курсу чи теми."
 
 msgid "Meaning"
 msgstr "Значення"
@@ -265,14 +325,41 @@ msgctxt "cards in this state"
 msgid "New"
 msgstr "Нові"
 
+msgid "New cards"
+msgstr "Нові картки"
+
+msgid "New deck"
+msgstr "Нова колода"
+
 msgid "New to Lymi?"
 msgstr "Уперше в Lymi?"
+
+msgid "No cards yet"
+msgstr "Карток ще немає"
+
+msgid "No cards you keep forgetting"
+msgstr "Немає карток, які ти часто забуваєш"
 
 msgid "No section"
 msgstr "Без розділу"
 
+msgid "Not reviewed yet"
+msgstr "Ще не повторювались"
+
 msgid "Notes"
 msgstr "Нотатки"
+
+msgid "Nothing due"
+msgstr "Нічого повторювати"
+
+msgid "Nothing due today, so your streak is safe."
+msgstr "Сьогодні нічого повторювати, тож дні поспіль не перервуться."
+
+msgid "Nothing forgotten today"
+msgstr "Сьогодні нічого не забуто"
+
+msgid "Often forgotten"
+msgstr "Часто забуваються"
 
 msgid "Only the deck’s owner can change this."
 msgstr "Змінювати це може лише власник колоди."
@@ -312,6 +399,17 @@ msgstr "Розпізнавання"
 
 msgid "Reset your password"
 msgstr "Новий пароль"
+
+msgid "Review"
+msgstr "Повторення"
+
+#. placeholder {0}: days.length
+msgid "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}"
+msgstr "Дні з повтореннями: {lit} з останніх {0, plural, one {# дня} few {# днів} many {# днів} other {# дня}}"
+
+#. placeholder {0}: days.length
+msgid "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}, including a rest day"
+msgstr "Дні з повтореннями: {lit} з останніх {0, plural, one {# дня} few {# днів} many {# днів} other {# дня}}, з днем відпочинку"
 
 msgid "Reviews a day. Finishing everything due also counts."
 msgstr "Повторень на день. Якщо повториш усе заплановане, день теж зарахується."
@@ -357,6 +455,9 @@ msgstr "Вхід не завершено. Спробуй ще раз."
 
 msgid "Source"
 msgstr "Джерело"
+
+msgid "Start with a deck"
+msgstr "Почни з колоди"
 
 msgid "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Дні поспіль: {streak, plural, one {# день поспіль} few {# дні поспіль} many {# днів поспіль} other {# дня поспіль}}"
@@ -421,11 +522,17 @@ msgstr "Що це означає"
 msgid "Where you met it, such as a lesson"
 msgstr "Звідки це, наприклад урок"
 
+msgid "Yesterday was a rest day"
+msgstr "Учора був день відпочинку"
+
 msgid "You"
 msgstr "Ти"
 
 msgid "You wrote this"
 msgstr "Це написано тобою"
+
+msgid "You’re done for today."
+msgstr "На сьогодні все."
 
 msgid "Your cards and your streak, on every device."
 msgstr "Твої картки й лік днів поспіль на будь-якому пристрої."

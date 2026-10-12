@@ -15,6 +15,7 @@
     "./recall-clock": "./src/recall-clock.ts",
     "./queued": "./src/queued.ts",
     "./review-day": "./src/review-day.ts",
+    "./library-groups": "./src/library-groups.ts",
     "./analytics": "./src/analytics.ts",
     "./card-input": "./src/card-input.ts"
   },

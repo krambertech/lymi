@@ -52,10 +52,10 @@ Every sheet rises from below and swipes away. What the task holds decides its ki
 | --- | --- | --- | --- | --- |
 | Row sheet | A choice or a small edit over the screen: a menu, a `Select`, one of Add a word's fields, the daily goal, the reminder time, the learner's name and photo | `Sheet`, inside the screen | iOS's glass, untinted, at the height of what it holds | On-glass |
 | Peek sheet | A screen to glance at that drags up for more: the streak | A route presented as `formSheet`, with detents | `useFrost`, the sheet colour at 50%, while it peeks; iOS makes it opaque at full height | On-glass |
-| Full sheet | A form with long text or several fields, keyboard up: Add a word, feedback | A route presented as `formSheet` at full height | Opaque, the sheet colour | The room's own, since on-glass fills vanish against an opaque sheet |
+| Full sheet | A form with long text or several fields, keyboard up: Add a word, New deck, feedback | A route presented as `formSheet` at full height | Opaque, the sheet colour | The room's own, since on-glass fills vanish against an opaque sheet |
 
 - Reach for a row sheet first. A small edit belongs in one even when it has a text field: the field is a `bg-glass-plate` box with no label over it, and the keyboard's done key or a swipe keeps the value, with no Save button.
-- A row sheet never opens a sheet, the camera or the photo library over itself. A row that needs one closes the sheet and acts once it has gone.
+- A row sheet never opens a sheet, the camera or the photo library over itself. A row that needs one closes the sheet and acts once it has gone. A full sheet may open a row sheet over itself, which stacks on it; a part-height sheet cannot, because iOS hides it under the new one.
 - A peek sheet and a full sheet carry their controls as glass in the top corners; a row sheet has none.
 - Whatever fails after a row sheet has gone says so on the screen under it, beside what it changed.
 

@@ -20,11 +20,23 @@ msgstr "{0, plural, one {{1} з # повторення} few {{2} з # повто
 msgid "{0, plural, one {# card due} other {# cards due}}"
 msgstr "{0, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
 
+#. placeholder {0}: screen.nudge.count
+msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
+msgstr "{0, plural, one {Ще # картка — і на сьогодні все} few {Ще # картки — і на сьогодні все} many {Ще # карток — і на сьогодні все} other {Ще # картки — і на сьогодні все}}"
+
+#. placeholder {0}: screen.nudge.count
+msgid "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
+msgstr "{0, plural, one {Ще # повторення до денної мети} few {Ще # повторення до денної мети} many {Ще # повторень до денної мети} other {Ще # повторення до денної мети}}"
+
 #. placeholder {0}: today.attempts
 #. placeholder {1}: today.goal
 #. placeholder {2}: today.goal
 msgid "{0, plural, one {# review, goal {1}} other {# reviews, goal {2}}}"
 msgstr "{0, plural, one {# повторення, мета {1}} few {# повторення, мета {1}} many {# повторень, мета {1}} other {# повторення, мета {2}}}"
+
+#. placeholder {0}: way.count
+msgid "{0, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
+msgstr "{0, plural, one {Повторити # забуту картку} few {Повторити # забуті картки} many {Повторити # забутих карток} other {Повторити # забутої картки}}"
 
 #. placeholder {0}: Number(draft) || 0
 msgid "{0, plural, one {review a day} other {reviews a day}}"
@@ -75,6 +87,12 @@ msgstr "{due, plural, one {картка до повторення сьогодн
 msgid "{due, plural, one {card to review} other {cards to review}}"
 msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
+msgid "{label}, locked"
+msgstr "{label}, заблоковано"
+
+msgid "{label}, next in {schedules}"
+msgstr "{label}, далі через {schedules}"
+
 msgid "{label}: {chosen}"
 msgstr "{label}: {chosen}"
 
@@ -90,6 +108,12 @@ msgstr "{n, plural, one {# повторення} few {# повторення} ma
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
 
+msgid "{to, plural, one {# review today} other {# reviews today}}"
+msgstr "{to, plural, one {# повторення сьогодні} few {# повторення сьогодні} many {# повторень сьогодні} other {# повторення сьогодні}}"
+
+msgid "{to, plural, one {review today} other {reviews today}}"
+msgstr "{to, plural, one {повторення сьогодні} few {повторення сьогодні} many {повторень сьогодні} other {повторення сьогодні}}"
+
 msgid "A new code is on its way to {address}."
 msgstr "Надсилаємо новий код на {address}."
 
@@ -99,8 +123,14 @@ msgstr "День відпочинку зберігає дні поспіль, к
 msgid "A sentence that uses it"
 msgstr "Речення, де воно трапляється"
 
+msgid "A short phrase that helps you remember it"
+msgstr "Коротка фраза, що допоможе запам’ятати"
+
 msgid "A short phrase that helps you remember it."
 msgstr "Коротка фраза, що допоможе запам’ятати."
+
+msgid "A sound-alike, or something to picture"
+msgstr "Співзвучне слово або те, що можна уявити"
 
 msgid "A word or phrase"
 msgstr "Слово чи фраза"
@@ -114,11 +144,17 @@ msgstr "Активність скоро буде на телефоні"
 msgid "Add a card"
 msgstr "Додати картку"
 
+msgid "Add cards"
+msgstr "Додати картки"
+
 msgid "Add cards from your last lesson, then review them here."
 msgstr "Додай картки з останнього уроку, а потім повторюй їх тут."
 
 msgid "Add cards from your next lesson"
 msgstr "Додай картки з наступного уроку"
+
+msgid "Add hook"
+msgstr "Додати зачіпку"
 
 msgid "Add to {deckName}"
 msgstr "Додати до {deckName}"
@@ -137,6 +173,9 @@ msgstr "«{term}» додано. Картка збережена на цьому
 
 msgid "AI"
 msgstr "AI"
+
+msgid "AI draft"
+msgstr "Чернетка AI"
 
 msgid "AI example"
 msgstr "Приклад від AI"
@@ -189,6 +228,9 @@ msgstr "Помилка"
 msgid "Cancel"
 msgstr "Скасувати"
 
+msgid "Card options"
+msgstr "Параметри картки"
+
 msgid "Change daily goal"
 msgstr "Змінити денну мету"
 
@@ -222,6 +264,9 @@ msgstr "Закрити"
 msgid "Code"
 msgstr "Код"
 
+msgid "Come back later, or add new cards."
+msgstr "Повернися пізніше або додай нові картки."
+
 msgid "Confirm"
 msgstr "Підтвердити"
 
@@ -237,8 +282,17 @@ msgstr "Продовжити з Google"
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Не вдалося змінити фото. Перевір з’єднання й спробуй ще раз."
 
+msgid "Couldn’t check for more cards"
+msgstr "Не вдалося перевірити, чи є ще картки"
+
 msgid "Couldn’t load Today"
 msgstr "Не вдалося завантажити екран «Сьогодні»"
+
+msgid "Couldn’t load your cards"
+msgstr "Не вдалося завантажити картки"
+
+msgid "Couldn’t play the pronunciation. Try again in a moment."
+msgstr "Не вдалося відтворити вимову. Спробуй ще раз за мить."
 
 msgid "Couldn’t reach Lymi. Check your connection and try again."
 msgstr "Не вдалося зв’язатися з Lymi. Перевір з’єднання й повтори спробу."
@@ -246,8 +300,20 @@ msgstr "Не вдалося зв’язатися з Lymi. Перевір з’�
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Не вдалося зв’язатися із сервісом входу. Перевір з’єднання й повтори спробу."
 
+msgid "Couldn’t save that."
+msgstr "Не вдалося зберегти."
+
 msgid "Couldn’t save the goal. Try again."
 msgstr "Не вдалося зберегти мету. Спробуй ще раз."
+
+msgid "Couldn’t save the hook."
+msgstr "Не вдалося зберегти зачіпку."
+
+msgid "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
+msgstr "Не вдалося зберегти оцінку для «{term}». Цієї картки більше немає у твоїх колодах."
+
+msgid "Couldn’t save your grade for “{term}”. You’ll see it again."
+msgstr "Не вдалося зберегти оцінку для «{term}». Ця картка ще повернеться."
 
 msgid "Couldn’t save your name. Check your connection and try again."
 msgstr "Не вдалося зберегти ім’я. Перевір з’єднання й спробуй ще раз."
@@ -275,6 +341,9 @@ msgstr "Своя"
 
 msgid "Daily goal"
 msgstr "Денна мета"
+
+msgid "Daily goal reached"
+msgstr "Денну мету досягнуто"
 
 msgid "Daily goal reached."
 msgstr "Денну мету досягнуто."
@@ -315,8 +384,14 @@ msgstr "Не використовуй адресу пошти в паролі."
 msgid "Done"
 msgstr "Готово"
 
+msgid "Drafting a hook…"
+msgstr "Готуємо зачіпку…"
+
 msgid "Easy"
 msgstr "Легко"
+
+msgid "Edit hook"
+msgstr "Змінити зачіпку"
 
 msgid "Edit your name and photo"
 msgstr "Змінити ім’я та фото"
@@ -482,6 +557,9 @@ msgstr "Lymi безкоштовний."
 msgid "Make one for each course or topic."
 msgstr "Створи колоду для кожного курсу чи теми."
 
+msgid "Mark important"
+msgstr "Позначити важливою"
+
 msgid "Meaning"
 msgstr "Значення"
 
@@ -493,6 +571,9 @@ msgstr "Значення з уроку"
 
 msgid "Memory hook"
 msgstr "Зачіпка"
+
+msgid "Memory hook: {text}"
+msgstr "Зачіпка: {text}"
 
 msgid "Message"
 msgstr "Повідомлення"
@@ -529,6 +610,9 @@ msgstr "Карток ще немає"
 msgid "No cards you keep forgetting"
 msgstr "Немає карток, які ти часто забуваєш"
 
+msgid "No meaning yet"
+msgstr "Значення поки немає"
+
 msgid "No section"
 msgstr "Без розділу"
 
@@ -546,6 +630,12 @@ msgstr "Сьогодні нічого повторювати, тож дні по
 
 msgid "Nothing forgotten today"
 msgstr "Сьогодні нічого не забуто"
+
+msgid "Nothing left in {scopeName}"
+msgstr "У «{scopeName}» більше нічого"
+
+msgid "Nothing left in this deck"
+msgstr "У цій колоді більше нічого"
 
 msgid "Off"
 msgstr "Вимкнено"
@@ -580,6 +670,9 @@ msgstr "Інше"
 msgid "Password"
 msgstr "Пароль"
 
+msgid "Peek at your hook"
+msgstr "Підглянути зачіпку"
+
 msgid "Picture"
 msgstr "Зображення"
 
@@ -592,14 +685,24 @@ msgstr "Зображення → термін"
 msgid "Picture added"
 msgstr "Зображення додано"
 
+#. placeholder {0}: card.image?.description ?? ""
+msgid "Picture card: {0}. Tap to reveal"
+msgstr "Картка з картинкою: {0}. Торкнися, щоб відкрити"
+
 msgid "Pictures need a connection. Try again once you’re back online."
 msgstr "Для зображень потрібне з’єднання. Спробуй ще раз, коли знову будеш онлайн."
+
+msgid "Play pronunciation"
+msgstr "Відтворити вимову"
 
 msgid "Previous month"
 msgstr "Попередній місяць"
 
 msgid "Production"
 msgstr "Відтворення"
+
+msgid "Production card for {cue}. Tap to reveal"
+msgstr "Картка на відтворення для {cue}. Торкнися, щоб відкрити"
 
 msgid "Pronunciation"
 msgstr "Вимова"
@@ -619,14 +722,23 @@ msgstr "Досягни сьогоднішньої мети, щоб не пере
 msgid "Reach today’s goal to start a streak."
 msgstr "Досягни сьогоднішньої мети, щоб почати лік днів поспіль."
 
+msgid "Recall the answer, then tap the card"
+msgstr "Згадай відповідь, а потім торкнися картки"
+
 msgid "Recognition"
 msgstr "Розпізнавання"
+
+msgid "Recognition card for {cue}. Tap to reveal"
+msgstr "Картка на розпізнавання для {cue}. Торкнися, щоб відкрити"
 
 msgid "Remind me to review"
 msgstr "Нагадувати про повторення"
 
 msgid "Remove photo"
 msgstr "Видалити фото"
+
+msgid "Replay pronunciation"
+msgstr "Відтворити вимову ще раз"
 
 msgid "Reset your password"
 msgstr "Новий пароль"
@@ -650,6 +762,9 @@ msgstr "Дні з повтореннями: {lit} з останніх {0, plural
 
 msgid "Reviews a day"
 msgstr "Повторень на день"
+
+msgid "Round done"
+msgstr "Раунд завершено"
 
 msgid "Same as the deck"
 msgstr "Як у колоді"
@@ -686,6 +801,9 @@ msgstr "Налаштування"
 
 msgid "Settings is coming to the phone"
 msgstr "Налаштування скоро будуть на телефоні"
+
+msgid "Show hook"
+msgstr "Показати зачіпку"
 
 msgid "Show password"
 msgstr "Показати пароль"
@@ -769,6 +887,9 @@ msgstr "Цього вже немає. Онови сторінку, щоб поб
 msgid "Theme"
 msgstr "Тема"
 
+msgid "This card’s picture was removed."
+msgstr "Зображення цієї картки прибрано."
+
 msgid "This version of the app is out of date. Update it to keep reviewing."
 msgstr "Ця версія застосунку застаріла. Онови її, щоб і далі повторювати картки."
 
@@ -802,11 +923,17 @@ msgstr "Забагато спроб. Спробуй трохи згодом."
 msgid "Too many tries with this code. Send a new one."
 msgstr "Забагато спроб із цим кодом. Надішли новий."
 
+msgid "Try a memory hook"
+msgstr "Спробуй зачіпку"
+
 msgid "Try again"
 msgstr "Спробувати ще раз"
 
 msgid "Undo"
 msgstr "Скасувати дію"
+
+msgid "Unmark important"
+msgstr "Зняти позначку «важлива»"
 
 msgid "Until then, change your settings on the web."
 msgstr "А поки змінити налаштування можна у вебверсії."
@@ -850,6 +977,9 @@ msgstr "Про що це"
 msgid "Where you met it, such as a lesson"
 msgstr "Звідки це, наприклад урок"
 
+msgid "Write a hook."
+msgstr "Напиши зачіпку."
+
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, що хочеш розповісти Lymi."
 
@@ -865,8 +995,14 @@ msgstr "Ти"
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "На день можна надіслати {FEEDBACK_DAILY_LIMIT} повідомлень. Спробуй завтра."
 
+msgid "You can’t choose Easy after peeking at your hook."
+msgstr "Після того як підглянеш зачіпку, «Легко» вибрати не можна."
+
 msgid "You wrote this"
 msgstr "Це написано тобою"
+
+msgid "You’re done for today"
+msgstr "На сьогодні все"
 
 msgid "You’re done for today."
 msgstr "На сьогодні все."
@@ -876,6 +1012,9 @@ msgstr "Твої картки й лік днів поспіль на будь-я
 
 msgid "Your data"
 msgstr "Твої дані"
+
+msgid "Your grades are saved. Check your connection and try again."
+msgstr "Твої оцінки збережено. Перевір з’єднання й повтори спробу."
 
 msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Твоє повідомлення збережено. Спробуй ще раз або напиши на <0>hello@lymi.app</0>."

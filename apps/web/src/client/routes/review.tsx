@@ -2,6 +2,14 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { gradeStore, recordGrade, retireGrades } from "@lymi/client/grades";
 import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawState, reviewItem, stateBefore } from "@lymi/client/review-draw";
+import {
+  drawableLeft,
+  forgottenRound,
+  type Offer,
+  reviewEnd,
+  streakAsOf,
+  streakWith,
+} from "@lymi/client/review-end";
 import { writes } from "@lymi/client/writes";
 import {
   canSpeakTerm,
@@ -54,14 +62,6 @@ import {
   streakQuery,
 } from "../lib/queries";
 import { recordReveal, useRevealHint } from "../lib/reveal-hint";
-import {
-  drawableLeft,
-  forgottenRound,
-  type Offer,
-  reviewEnd,
-  streakAsOf,
-  streakWith,
-} from "../lib/review-complete";
 import { itemKey } from "../lib/review-modes";
 import { shortQuote } from "../lib/short-quote";
 import { captureAnalytics } from "../lib/telemetry";

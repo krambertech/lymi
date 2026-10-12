@@ -1,16 +1,30 @@
+import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { apiUrl, type QueueItem } from "@lymi/client/api";
+import { apiUrl, type QueueItem, type ReviewScope } from "@lymi/client/api";
 import { gradeStore } from "@lymi/client/grades";
+import { hookDraftQuery } from "@lymi/client/queries";
 import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawableLeft } from "@lymi/client/review-day";
 import { type LocalGrade, reviewItem, stateBefore } from "@lymi/client/review-draw";
-import { countedRating, drawKey, modeKey, type Rating, ROUNDS, type Round } from "@lymi/core";
+import { type EndScreen, forgottenRound, type Offer, reviewEnd } from "@lymi/client/review-end";
+import { writes } from "@lymi/client/writes";
+import {
+  countedRating,
+  type Drawn,
+  drawKey,
+  type FieldSource,
+  gradeAllowed,
+  interval,
+  modeKey,
+  type Rating,
+  ROUNDS,
+  type Round,
+} from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
   COUNT_ROLL,
   countRollMs,
   EASE_OUT,
-  emberCount,
   endEmbers,
   LANTERN_FLIGHT,
   REVEAL_GLIDE,
@@ -20,6 +34,7 @@ import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
+  AccessibilityInfo,
   Alert,
   I18nManager,
   Image,
@@ -52,30 +67,38 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { playHaptics, stopHaptics } from "../../modules/lymi-haptics";
 import { useSessionHeaders } from "../auth/client";
 import { EndEmbers, LightPool } from "../brand/ending";
+import { Flame } from "../brand/flame";
 import { Lantern } from "../brand/lantern";
 import {
-  type Standing,
-  standing,
   useDay,
   useDecks,
   useDraw,
   useDrawState,
   useGrade,
   useRoundQueue,
-  useRounds,
   useSections,
+  useSeriesList,
   useUndoGrade,
 } from "../data/queries";
+import { CardNotes } from "../review/card-notes";
 import { endHaptics } from "../review/end-haptics";
+import { HookLine, HookOffer, HookSheet, PeekButton, ShowHookButton } from "../review/hooks";
+import { modeLabel } from "../review/modes";
+import { PronounceButton, type Pronunciation, usePronunciation } from "../review/pronounce";
 import { Cover, usePullToEnd } from "../review/pull-to-end";
+import { countReveal, RevealHint, useRevealHint } from "../review/reveal-hint";
 import { markUndoHintSeen, UndoHint, undoHintSeen } from "../review/undo-hint";
 import { CardStack, type TopCard, UndoArea, useUndoSwipe } from "../review/undo-swipe";
+import { Wick } from "../review/wick";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
-import { type Palette, usePalette } from "../theme/palette";
+import { usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
-import type { IconName } from "../ui/icons";
+import { AiCardChip, Chip, StateChip } from "../ui/chip";
+import { GRADES } from "../ui/grade";
 import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
+import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
+import { Skeleton } from "../ui/skeleton";
 
 const EASE = curve(EASE_OUT);
 const GLIDE = REVEAL_GLIDE.duration * 1000;
@@ -88,7 +111,13 @@ type Pinned = { cardId: string; mode: string };
 /** A stretch of review: the draw, which may stop at the goal, or a round's fixed list. ADR 0021. */
 type Leg =
   | { kind: "draw"; date: string; from: number; until: number | null }
-  | { kind: "list"; date: string; size: number };
+  | { kind: "list"; date: string; size: number }
+  | { kind: "forgotten"; date: string; items: Drawn[] };
+/** Today's attempts at the last end screen or when the review opened, and whether the day counted then. */
+interface Mark {
+  attempts: number;
+  satisfied: boolean;
+}
 /** A list's cards by key: graded, sent to the end by a refused grade, or out because the card is gone. */
 interface ListCards {
   graded: ReadonlySet<string>;
@@ -96,13 +125,21 @@ interface ListCards {
   dropped: ReadonlySet<string>;
 }
 const NO_LIST_CARDS: ListCards = { graded: new Set(), returned: new Set(), dropped: new Set() };
+/** The deck a card came from, named first on the card. A review can mix every deck. */
+type CardDeck = { name: string; language?: string | null | undefined } | undefined;
+/** A card's memory hook as review shows it: its words and who wrote them. */
+type Hook = { text: string; source: FieldSource | null };
+/** A tap this soon after the reveal is the reveal's own tap doubled, not one for the menu. */
+const REVEAL_TAP_GUARD_MS = 400;
 /** The last grade and the card as it was shown, so a swipe from the start edge can bring both back. */
 interface Graded {
   item: QueueItem;
   grade: LocalGrade;
   listed: boolean;
-  deckName: string | undefined;
+  deck: CardDeck;
   forgotten: boolean;
+  /** The hook as it showed under the cue at the grade, or nothing when it was not showing. */
+  hook: Hook | null;
 }
 
 const keyOf = (item: Pick<QueueItem, "card" | "mode">) => drawKey(item.card.id, modeKey(item.mode));
@@ -122,16 +159,31 @@ function leftInList(items: readonly QueueItem[], cards: ListCards): QueueItem[] 
 }
 
 export default function Review() {
-  const params = useLocalSearchParams<{ deck?: string; round?: string }>();
+  const params = useLocalSearchParams<{
+    deck?: string;
+    series?: string;
+    section?: string;
+    round?: string;
+  }>();
   const round = ROUNDS.find((r) => r === params.round);
   const deck = params.deck || undefined;
+  // One scope at a time, as on the web: a deck wins over a series, and a section needs its deck.
+  const series = deck ? undefined : params.series || undefined;
+  const section = deck ? params.section || undefined : undefined;
   const router = useRouter();
 
   // Opened from a widget, the review is the only screen, so leaving goes to Today.
   const leave = () => (router.canGoBack() ? router.back() : router.replace("/today"));
 
-  // A review of another deck or round starts over, so nothing from this one carries into it.
-  return <Run key={`${deck ?? ""}:${round ?? ""}`} deck={deck} round={round} onClose={leave} />;
+  // A review of another scope or round starts over, so nothing from this one carries into it.
+  return (
+    <Run
+      key={`${deck ?? ""}:${series ?? ""}:${section ?? ""}:${round ?? ""}`}
+      scope={{ deck, series, section }}
+      round={round}
+      onClose={leave}
+    />
+  );
 }
 
 /**
@@ -139,23 +191,29 @@ export default function Review() {
  * grades, as the web's does (ADR 0019); a round from Today walks the server's list in order.
  */
 function Run({
-  deck,
+  scope: given,
   round,
   onClose,
 }: {
-  deck: string | undefined;
+  scope: ReviewScope;
   round: Round | undefined;
   onClose: () => void;
 }) {
   const qc = useQueryClient();
-  const scope = useMemo(() => ({ deck }), [deck]);
+  const router = useRouter();
+  const { deck, series, section } = given;
+  const scope = useMemo(() => ({ deck, series, section }), [deck, series, section]);
+  const scoped = !!deck || !!series;
   const draw = useDraw(scope);
-  const list = useRoundQueue(round, deck);
-  const { reviewsToday, goal } = useDay();
+  const list = useRoundQueue(round, scope);
+  const { reviewsToday, goal, dayDone } = useDay();
   const grade = useGrade();
   const takeBack = useUndoGrade();
   const { t } = useLingui();
-  const decks = useDecks().data;
+  const decksQuery = useDecks();
+  const decks = decksQuery.data;
+  const seriesList = useSeriesList(!!series);
+  const scopeSections = useSections(section ? deck : undefined);
   const insets = useSafeAreaInsets();
   // A cached draw can predate the last grade, so the first card waits for this mount's fetch.
   const data = draw.isFetchedAfterMount || draw.fetchStatus !== "fetching" ? draw.data : undefined;
@@ -167,6 +225,7 @@ function Run({
   const [chosenLeg, setLeg] = useState<Leg | null>(null);
   const [listCards, setListCards] = useState(NO_LIST_CARDS);
   const [done, setDone] = useState(0);
+  const [mark, setMark] = useState<Mark | null>(null);
   const [revealed, setRevealed] = useState(false);
   // Grades this review has recorded that the server has not answered yet.
   const [sending, setSending] = useState(0);
@@ -178,6 +237,21 @@ function Run({
   // A card a swipe brought back arrives revealed, with nothing left to play.
   const [returned, setReturned] = useState(false);
   const [hint, setHint] = useState(false);
+  // How far into the card's hook the learner went, held for the card on screen: a peek before the
+  // reveal is help with recall, and a look after it is not.
+  const [aidState, setAidState] = useState({ key: "", peeked: false, shown: false });
+  // Whether the card on screen offers a hook, decided as it arrives and held until its grade.
+  const [cardOffer, setCardOffer] = useState({ key: "", offer: false, parked: false });
+  // Presses of Easy after a peek, counted per card so an earlier card's never show its tip.
+  const [locked, setLocked] = useState({ key: "", presses: 0 });
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [hookOpen, setHookOpen] = useState(false);
+  // What the menu chose, run once its sheet has gone, so nothing moves under it.
+  const chosen = useRef<(() => void) | null>(null);
+  // Hooks and marks set in this review, shown at once rather than when the draw is fetched again.
+  const [hooks, setHooks] = useState<ReadonlyMap<string, Hook>>(() => new Map());
+  const [marks, setMarks] = useState<ReadonlyMap<string, boolean>>(() => new Map());
+  const revealedAt = useRef(0);
   // Grades taken back, by when they were made, whose answers from the server no longer apply.
   const undone = useRef(new Set<string>());
   const started = useRef(false);
@@ -199,6 +273,7 @@ function Run({
     if (leg || !data || !state || (round && !listData)) return;
     setListCards(NO_LIST_CARDS);
     const date = state.day.date;
+    setMark({ attempts: state.attempts, satisfied: state.attempts >= data.goal || dayDone });
     setLeg(
       round && listData
         ? { kind: "list", date, size: listData.total }
@@ -206,10 +281,10 @@ function Run({
             kind: "draw",
             date,
             from: state.attempts,
-            until: !deck && state.attempts < data.goal ? data.goal : null,
+            until: !scoped && state.attempts < data.goal ? data.goal : null,
           },
     );
-  }, [leg, data, state, round, listData, deck]);
+  }, [leg, data, state, round, listData, scoped, dayDone]);
 
   const pinnedItem = data && state && pinned ? reviewItem(data, state.log, pinned) : null;
   // Past midnight, yesterday's data does not know yesterday's grades moved the schedule, so a new card waits for today's.
@@ -224,9 +299,19 @@ function Run({
     !!data &&
     !!state &&
     state.attempts >= Math.min(leg.until, data.goal);
-  const listLeft = leg?.kind === "list" ? leftInList(listData?.items ?? [], listCards) : [];
-  const current = !leg ? null : leg.kind === "draw" ? (atStop ? null : drawn) : listLeft[0];
+  const listLeft =
+    leg?.kind === "list"
+      ? leftInList(listData?.items ?? [], listCards)
+      : leg?.kind === "forgotten" && data && state
+        ? leftInList(
+            leg.items.flatMap((d) => reviewItem(data, state.log, d) ?? []),
+            listCards,
+          )
+        : [];
+  const current =
+    !leg || paused ? null : leg.kind === "draw" ? (atStop ? null : drawn) : (listLeft[0] ?? null);
   const recallTimes = useRecallClock(current ? `${keyOf(current)}:${done}` : null, revealed);
+  const pronounce = usePronunciation(current?.card ?? null);
 
   // A review starts with one firm tap as its first card arrives.
   useEffect(() => {
@@ -248,11 +333,10 @@ function Run({
   }, [hint]);
 
   const ended = paused || (!!leg && !current);
-  // Leaving partway ends on the end screen, as the web does, unless nothing was graded here.
-  const pull = usePullToEnd({
-    onEnd: ended || done === 0 ? onClose : () => setPaused(true),
-    away: ended || done === 0,
-  });
+  // Leaving partway ends on the end screen, as the web does, unless nothing was added since the last one.
+  const added = !!state && !!mark && state.attempts > mark.attempts;
+  const leave = () => (added ? setPaused(true) : onClose());
+  const pull = usePullToEnd({ onEnd: ended || !added ? onClose : leave, away: ended || !added });
 
   /** One step back: the last graded card returns revealed, and its grade leaves the day. */
   const undo = () => {
@@ -267,6 +351,11 @@ function Run({
       setListCards((c) => ({ ...c, graded: withoutKey(c.graded, key) }));
     }
     setPinned({ cardId: last.item.card.id, mode: modeKey(last.item.mode) });
+    setAidState({
+      key: `${keyOf(last.item)}:${done - 1}`,
+      peeked: last.grade.aid === "hook",
+      shown: !!last.hook,
+    });
     setReturned(true);
     setRevealed(true);
     setDone((n) => n - 1);
@@ -299,20 +388,42 @@ function Run({
     if (repin && state?.next) setPinned({ cardId: state.next.cardId, mode: state.next.mode });
   }, [repin, state?.next]);
 
+  // Cards the draw still holds in this scope, the number Today shows.
+  const left = useMemo(
+    () => (data && state ? drawableLeft(data, state, deck) : 0),
+    [data, state, deck],
+  );
   // An empty draw is confirmed by a fetch begun after the last grade, or taken as it is offline.
   const lastChange = Math.max(0, ...grades.map((g) => new Date(g.reviewedAt).getTime()));
   const unreachable = draw.fetchStatus === "paused" || draw.isError;
   const confirmed = !!data && data.fetchedAt >= lastChange;
-  const stopped = !!leg && !current;
+  const exhausted = !!data && !state?.next;
+  const stopped =
+    !!leg &&
+    !!data &&
+    !!state &&
+    !current &&
+    (paused || leg.kind !== "draw" || atStop || exhausted);
+  const ending = paused ? "left" : atStop ? "goal" : "empty";
+  const forgottenItems = useMemo(
+    () => (stopped && data && state ? forgottenRound(data, state, deck) : []),
+    [stopped, data, state, deck],
+  );
+  // An empty draw waits for a fetch begun after the last grade, so the heading never changes once shown.
   const checking =
-    stopped && leg?.kind === "draw" && !atStop && !confirmed && !(unreachable && !draw.isFetching);
+    stopped &&
+    !paused &&
+    (left === 0 || (leg?.kind === "draw" && !atStop)) &&
+    !confirmed &&
+    !(unreachable && !draw.isFetching);
   useEffect(() => {
     if (checking && !unreachable && !draw.isFetching) void draw.refetch();
   }, [checking, unreachable, draw.isFetching, draw.refetch]);
   // The server sends a round a page at a time, so an emptied page asks for the next one.
   const listOwed =
-    stopped &&
-    leg?.kind === "list" &&
+    !!leg &&
+    !current &&
+    leg.kind === "list" &&
     listCards.graded.size + listCards.dropped.size < leg.size &&
     list.fetchStatus === "idle" &&
     !list.isError;
@@ -321,20 +432,130 @@ function Run({
   }, [listOwed, list.refetch]);
   // The end waits for the last grades to land, so a refusal never takes back an end already shown.
   const landing = sending > 0 && !unreachable;
+  // A scoped end names its deck, series or section and weighs the decks outside it, so it waits for them.
+  const decksLoading =
+    (scoped && !decksQuery.isFetchedAfterMount && decksQuery.fetchStatus === "fetching") ||
+    (!!series && !seriesList.data && seriesList.fetchStatus === "fetching") ||
+    (!!section && !scopeSections.data && scopeSections.fetchStatus === "fetching");
+  const scopeSection = section
+    ? scopeSections.data?.sections.find((s) => s.id === section)
+    : undefined;
+  const scopeName = section
+    ? scopeSection?.name
+    : deck
+      ? decks?.find((d) => d.id === deck)?.name
+      : series
+        ? seriesList.data?.find((s) => s.id === series)?.name
+        : undefined;
+  const result =
+    stopped && !checking && !landing && !listOwed && !decksLoading && mark && data && state
+      ? reviewEnd({
+          stretch: leg?.kind !== "draw" ? "list" : scoped ? "scope" : "day",
+          ending,
+          goal: data.goal,
+          from: mark.attempts,
+          attempts: state.attempts,
+          satisfiedBefore: mark.satisfied,
+          left,
+          confirmed,
+          elsewhere: !scoped
+            ? 0
+            : decks && (!section || scopeSection)
+              ? decks
+                  .filter((d) => (series ? d.seriesId !== series : d.id !== deck))
+                  .reduce((n, d) => n + d.due, 0) +
+                // The rest of a section's deck is its other sections.
+                (section && scopeSection
+                  ? Math.max(0, (decks.find((d) => d.id === deck)?.due ?? 0) - scopeSection.due)
+                  : 0)
+              : null,
+          forgotten: forgottenItems.length,
+        })
+      : null;
 
-  if (!leg || (stopped && (checking || landing || listOwed))) {
-    return <Cover style={pull.style} />;
+  /** Past this end screen: the next one reports what changes from here. */
+  const moveOn = () => {
+    if (!state) return;
+    const satisfied =
+      !!mark?.satisfied || (result !== null && result !== "unchecked" && result.satisfied);
+    setMark({ attempts: state.attempts, satisfied });
+    setPaused(false);
+    setPinned(null);
+    setRevealed(false);
+    setLastGraded(null);
+  };
+  const onOffer = (offer: Offer) => {
+    if (!data || !state) return;
+    if (offer.kind === "continue" && offer.to === "resume") {
+      moveOn();
+      return;
+    }
+    // The day's draw is a review without a scope, which starts over from where the day stands.
+    if (offer.kind === "continue" && scoped) {
+      router.replace("/review");
+      return;
+    }
+    const date = state.day.date;
+    moveOn();
+    setListCards(NO_LIST_CARDS);
+    if (offer.kind === "forgotten") setLeg({ kind: "forgotten", date, items: forgottenItems });
+    else
+      setLeg({
+        kind: "draw",
+        date,
+        from: state.attempts,
+        until: state.attempts < data.goal ? data.goal : null,
+      });
+  };
+
+  // Nothing loaded and the fetch failed: say so, rather than wait on a blank screen.
+  const failed =
+    (!data && draw.isError && !draw.isFetching) ||
+    (!!round && !listData && list.isError && !list.isFetching);
+  if (failed) {
+    return (
+      <Cover style={pull.style}>
+        <ReviewError
+          title={t`Couldn’t load your cards`}
+          body={t`Check your connection and try again.`}
+          onRetry={() => void (round ? list.refetch() : draw.refetch())}
+          action={t`Back`}
+          onAction={onClose}
+        />
+      </Cover>
+    );
   }
-  if (!current || !data || !state || paused) {
-    // The count rolls up to today's attempts as this device knows them, from where this review began.
-    const to = state?.attempts ?? reviewsToday;
+  if (!leg || (stopped && !result) || (!current && !stopped)) {
+    return (
+      <Cover style={pull.style}>
+        <ReviewSkeleton />
+      </Cover>
+    );
+  }
+  if (result === "unchecked") {
+    return (
+      <Cover style={pull.style}>
+        <ReviewError
+          title={t`Couldn’t check for more cards`}
+          body={t`Your grades are saved. Check your connection and try again.`}
+          onRetry={() => void draw.refetch()}
+          action={t`Done`}
+          onAction={onClose}
+        />
+      </Cover>
+    );
+  }
+  if (result && mark && state) {
     return (
       <Cover style={pull.style}>
         <Completion
-          from={Math.max(0, to - done)}
-          added={done}
+          screen={result}
+          from={mark.attempts}
+          to={state.attempts}
+          scopeName={scopeName}
+          onOffer={onOffer}
           onClose={onClose}
-          onContinue={paused && current ? () => setPaused(false) : undefined}
+          onAddCards={() => router.push("/capture")}
         />
         <GestureDetector gesture={pull.gesture}>
           <Animated.View
@@ -345,24 +566,75 @@ function Run({
       </Cover>
     );
   }
+  if (!current || !data || !state) return null;
   const { card } = current;
 
   // What the header counts: today's attempts to the goal's stop, and a list's own otherwise.
   const legDone = leg.kind === "draw" ? state.attempts - leg.from : listCards.graded.size;
-  const left = drawableLeft(data, state, deck);
   const total =
     leg.kind === "list"
       ? leg.size - listCards.dropped.size
-      : leg.until !== null
-        ? Math.min(leg.until - leg.from, legDone + left)
-        : legDone + left;
+      : leg.kind === "forgotten"
+        ? leg.items.length - listCards.dropped.size
+        : leg.until !== null
+          ? Math.min(leg.until - leg.from, legDone + left)
+          : legDone + left;
   const lastToday = state.log
     .filter((e) => e.cardId === card.id && e.mode === modeKey(current.mode))
     .pop();
-  const deckName = decks?.find((d) => d.id === card.deckId)?.name;
-  const forgotten = round === "forgotten" || lastToday?.rating === 1;
+  const deckRow = decks?.find((d) => d.id === card.deckId);
+  const cardDeck = deckRow && { name: deckRow.name, language: deckRow.defaultLanguage ?? null };
+  const forgotten = round === "forgotten" || leg.kind === "forgotten" || lastToday?.rating === 1;
+  const showing = `${keyOf(current)}:${done}`;
+  const hook: Hook | null =
+    hooks.get(card.id) ?? (card.hook ? { text: card.hook, source: card.hookSource ?? null } : null);
+  const peeked = aidState.key === showing && aidState.peeked;
+  const hookShown = !!hook && aidState.key === showing && (aidState.peeked || aidState.shown);
+  const owned = deckRow?.role === "owner";
+  const important = marks.get(card.id) ?? card.important;
+  // A card often forgotten, or forgotten twice today, with no hook offers one in a deck the learner
+  // owns. It waits for the card's deck, and once decided it holds, so a refetch never moves it mid-card.
+  if (cardOffer.key !== showing && deckRow) {
+    const forgotToday = state.log.filter(
+      (e) => e.cardId === card.id && e.mode === modeKey(current.mode) && e.rating === 1,
+    ).length;
+    setCardOffer({
+      key: showing,
+      offer: (current.slipping || forgotToday >= 2) && !hook && owned,
+      parked: false,
+    });
+  }
+  const offer = cardOffer.key === showing && cardOffer.offer && !cardOffer.parked;
+  // The AI's draft takes seconds, so it starts as soon as writing a hook is one tap away.
+  const prefetchDraft = () => {
+    if (owned && !hook) void qc.prefetchQuery(hookDraftQuery(card));
+  };
+  const openHook = () => {
+    setHookOpen(true);
+    setCardOffer((held) => ({ ...held, parked: true }));
+  };
+  const markImportant = async (value: boolean) => {
+    setMarks((m) => new Map(m).set(card.id, value));
+    try {
+      await writes.setImportant(card, value);
+    } catch (e) {
+      setMarks((m) => new Map(m).set(card.id, !value));
+      Alert.alert(t`Couldn’t save that.`, e instanceof Error ? e.message : undefined);
+    }
+  };
+  const openMenu = () => {
+    if (performance.now() - revealedAt.current < REVEAL_TAP_GUARD_MS) return;
+    prefetchDraft();
+    setMenuOpen(true);
+  };
 
   const onGrade = (rating: Rating) => {
+    // Easy means recall without help, so after a peek it only says why, and grades nothing.
+    if (!gradeAllowed(rating, peeked ? "hook" : undefined)) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+      setLocked((l) => ({ key: showing, presses: l.key === showing ? l.presses + 1 : 1 }));
+      return;
+    }
     if (gradedAt.current === done) return;
     gradedAt.current = done;
     // Every grade is the same small tap: Forgot feeds the flame exactly as Easy does.
@@ -373,20 +645,28 @@ function Run({
       (e) => e.cardId === item.card.id && e.mode === modeKey(item.mode),
     );
     const runningShort = state.upcoming.length <= LOOKAHEAD;
-    const listed = leg.kind === "list";
+    const listed = leg.kind !== "draw";
     const record: LocalGrade = {
       cardId: item.card.id,
       mode: item.mode,
       rating: countedRating(rating, repeat),
       reviewedAt: new Date().toISOString(),
       stateBefore: repeat ? stateBefore(data, state.log, item.card.id, item.mode) : item.fsrsState,
+      ...(peeked ? { aid: "hook" as const } : {}),
       ...recallTimes(),
     };
     // The graded step shows under the next card from the frame it starts to slide in.
     swipe.arrive();
     const recorded = grade(record);
     if (listed) setListCards((c) => ({ ...c, graded: withKey(c.graded, key) }));
-    setLastGraded({ item, grade: record, listed, deckName, forgotten });
+    setLastGraded({
+      item,
+      grade: record,
+      listed,
+      deck: cardDeck,
+      forgotten,
+      hook: hookShown ? hook : null,
+    });
     setReturned(false);
     setHint(false);
     setSending((n) => n + 1);
@@ -401,6 +681,7 @@ function Run({
       .then((outcome) => {
         if (outcome === "queued" || undone.current.has(record.reviewedAt)) return;
         if (outcome === "refused" || outcome === "gone") {
+          const term = item.card.term;
           if (listed) {
             setListCards((c) => ({
               graded: withoutKey(c.graded, key),
@@ -410,8 +691,8 @@ function Run({
           }
           Alert.alert(
             outcome === "gone"
-              ? `Couldn’t save your grade for “${item.card.term}”. The card is no longer in your decks.`
-              : `Couldn’t save your grade for “${item.card.term}”. You’ll see it again.`,
+              ? t`Couldn’t save your grade for “${term}”. The card is no longer in your decks.`
+              : t`Couldn’t save your grade for “${term}”. You’ll see it again.`,
           );
         }
         // A dropped grade leaves the fetched data behind, and so does a long run of sent ones.
@@ -433,11 +714,7 @@ function Run({
       >
         <GestureDetector gesture={pull.gesture}>
           <Animated.View collapsable={false}>
-            <Header
-              done={legDone}
-              total={total}
-              onClose={done > 0 ? () => setPaused(true) : onClose}
-            />
+            <Header done={legDone} total={total} onClose={leave} />
           </Animated.View>
         </GestureDetector>
         <UndoArea gesture={swipe.gesture}>
@@ -453,8 +730,11 @@ function Run({
                   // Each graded card is drawn afresh, so nothing glides from the one before it.
                   key={lastGraded.grade.reviewedAt}
                   item={lastGraded.item}
-                  deckName={lastGraded.deckName}
+                  deck={lastGraded.deck}
                   forgotten={lastGraded.forgotten}
+                  hook={lastGraded.hook}
+                  hookShown={!!lastGraded.hook}
+                  easyLocked={lastGraded.grade.aid === "hook"}
                   revealed
                   still
                 />
@@ -465,23 +745,138 @@ function Run({
               <Turn
                 top={top}
                 item={current}
-                deckName={deckName}
+                deck={cardDeck}
                 forgotten={forgotten}
+                hook={hook}
+                hookShown={hookShown}
                 revealed={revealed}
                 still={returned}
                 onReveal={() => {
                   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  revealedAt.current = performance.now();
                   setRevealed(true);
                 }}
+                onPeek={() => {
+                  Haptics.selectionAsync();
+                  setAidState({ key: showing, peeked: true, shown: false });
+                }}
+                onShowHook={() => setAidState({ key: showing, peeked: false, shown: true })}
+                offer={offer && revealed}
+                onOffer={() => {
+                  prefetchDraft();
+                  openHook();
+                }}
+                onMenu={openMenu}
+                easyLocked={peeked}
+                lockedTip={locked.key === showing ? locked.presses : 0}
                 onGrade={onGrade}
                 onUndo={lastGraded ? undo : undefined}
+                pronounce={pronounce}
               />
             )}
           </CardStack>
           {hint && !revealed && <UndoHint />}
         </UndoArea>
       </View>
+      {/* The card's menu, after the reveal: a tap on the card, never a primary action of review. */}
+      <Sheet
+        title={card.term}
+        open={menuOpen}
+        onOpenChange={setMenuOpen}
+        onDismiss={() => {
+          chosen.current?.();
+          chosen.current = null;
+        }}
+      >
+        <SheetGroup>
+          {owned && (
+            <SheetRow
+              icon="hook"
+              label={hook ? t`Edit hook` : t`Add hook`}
+              onPress={() => {
+                chosen.current = openHook;
+                setMenuOpen(false);
+              }}
+            />
+          )}
+          <SheetRow
+            icon="important"
+            label={important ? t`Unmark important` : t`Mark important`}
+            onPress={() => {
+              chosen.current = () => void markImportant(!important);
+              setMenuOpen(false);
+            }}
+          />
+        </SheetGroup>
+      </Sheet>
+      <HookSheet
+        card={{ ...card, hook: hook?.text ?? null, hookSource: hook?.source ?? null }}
+        open={hookOpen}
+        onClose={() => setHookOpen(false)}
+        onSaved={(saved) => {
+          setHooks((m) => new Map(m).set(card.id, saved));
+          setHookOpen(false);
+          // Written after the reveal, it shows at once where Show hook would have put it.
+          if (revealed) setAidState({ key: showing, peeked, shown: true });
+          void qc.invalidateQueries({ queryKey: ["queue"] });
+          void qc.invalidateQueries({ queryKey: ["decks"] });
+        }}
+      />
     </Cover>
+  );
+}
+
+/** While the cards load: the card's place held, so the review never opens on a blank room. */
+function ReviewSkeleton() {
+  const insets = useSafeAreaInsets();
+  return (
+    <View
+      className="flex-1 px-4"
+      style={{ paddingTop: insets.top + 64, paddingBottom: Math.max(insets.bottom, 12) }}
+    >
+      <View className="flex-1 gap-4 rounded-2xl border border-edge bg-plate p-6">
+        <Skeleton width="40%" height={14} />
+        <View className="flex-1 justify-center gap-4">
+          <Skeleton width="70%" height={36} />
+          <Skeleton width="45%" height={16} />
+        </View>
+      </View>
+    </View>
+  );
+}
+
+/** A review that cannot go on: what happened, a retry, and a way out. */
+function ReviewError({
+  title,
+  body,
+  onRetry,
+  action,
+  onAction,
+}: {
+  title: string;
+  body: string;
+  onRetry: () => void;
+  action: string;
+  onAction: () => void;
+}) {
+  const { t } = useLingui();
+  const insets = useSafeAreaInsets();
+  return (
+    <View
+      className="flex-1 justify-between px-5"
+      style={{ paddingTop: insets.top + 24, paddingBottom: Math.max(insets.bottom, 16) }}
+    >
+      <View className="flex-1 items-center justify-center gap-3 px-2">
+        <Text className="text-center text-xl font-medium text-text" accessibilityRole="header">
+          {title}
+        </Text>
+        <Text className="text-center text-md text-text-2">{body}</Text>
+      </View>
+      <View className="gap-3">
+        <Button label={action} size="xl" onPress={onAction} />
+        <Button label={t`Try again`} variant="primary" size="xl" onPress={onRetry} />
+      </View>
+    </View>
   );
 }
 
@@ -489,34 +884,66 @@ function Run({
 function Turn({
   top,
   item,
-  deckName,
+  deck,
   forgotten,
+  hook,
+  hookShown,
   revealed,
   still = false,
   onReveal,
+  onPeek,
+  onShowHook,
+  offer = false,
+  onOffer,
+  onMenu,
+  easyLocked = false,
+  lockedTip = 0,
   onGrade,
   onUndo,
+  pronounce,
 }: {
   /** On the top step, how the card moves; the step underneath stays still. */
   top?: TopCard;
   item: QueueItem;
-  deckName: string | undefined;
+  deck: CardDeck;
   forgotten: boolean;
+  hook: Hook | null;
+  /** The hook shows under the cue: peeked at before the reveal, or shown after it. */
+  hookShown: boolean;
   revealed: boolean;
   /** Shown as it already stands, with nothing arriving: a card brought back, or one underneath. */
   still?: boolean;
   onReveal?: () => void;
+  onPeek?: () => void;
+  onShowHook?: () => void;
+  /** The offer to write a hook, at the foot of the revealed card. */
+  offer?: boolean;
+  onOffer?: () => void;
+  onMenu?: () => void;
+  /** Peeked at the hook before the reveal, so Easy cannot be chosen. */
+  easyLocked?: boolean;
+  /** Presses of Easy after a peek on this card, each showing why it is locked. */
+  lockedTip?: number;
   onGrade?: (r: Rating) => void;
   onUndo?: (() => void) | undefined;
+  pronounce?: Pronunciation | null;
 }) {
   const card = (
     <CardPlate
+      pronounce={pronounce ?? null}
       item={item}
-      deckName={deckName}
+      deck={deck}
       forgotten={forgotten}
+      hook={hook}
+      hookShown={hookShown}
       revealed={revealed}
       still={still}
       onReveal={onReveal}
+      onPeek={onPeek}
+      onShowHook={onShowHook}
+      offer={offer}
+      onOffer={onOffer}
+      onMenu={onMenu}
       onUndo={onUndo}
     />
   );
@@ -531,7 +958,15 @@ function Turn({
           card
         )}
       </View>
-      {revealed && <GradeStrip still={!top} onGrade={onGrade} />}
+      {revealed && (
+        <GradeStrip
+          still={!top}
+          next={item.next}
+          easyLocked={easyLocked}
+          lockedTip={lockedTip}
+          onGrade={onGrade}
+        />
+      )}
     </>
   );
 }
@@ -569,19 +1004,6 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
   );
 }
 
-const STATE: Record<Standing, { label: string; icon: IconName; tint: keyof Palette }> = {
-  new: { label: "New", icon: "new", tint: "state-new" },
-  learning: { label: "Learning", icon: "learning", tint: "state-learning" },
-  known: { label: "Known", icon: "known", tint: "state-known" },
-};
-
-const rule = new Keyframe({
-  0: { transform: [{ scaleX: 0 }] },
-  100: { transform: [{ scaleX: 1 }], easing: EASE },
-})
-  .duration(360)
-  .reduceMotion(ALWAYS);
-
 const rise = (i: number) =>
   new Keyframe({
     0: { opacity: 0, transform: [{ translateY: 10 }] },
@@ -592,7 +1014,7 @@ const rise = (i: number) =>
     .reduceMotion(ALWAYS);
 
 /** The card's picture, fetched with the learner's session like every other request. */
-function Picture({ card }: { card: QueueItem["card"] }) {
+function Picture({ card, maxHeight = 280 }: { card: QueueItem["card"]; maxHeight?: number }) {
   const headers = useSessionHeaders();
   const image = card.image;
   if (!image || !headers) return null;
@@ -602,157 +1024,240 @@ function Picture({ card }: { card: QueueItem["card"] }) {
       accessibilityLabel={image.description ?? undefined}
       resizeMode="contain"
       className="w-full rounded-lg"
-      style={{ aspectRatio: image.width / Math.max(1, image.height), maxHeight: 280 }}
+      style={{ aspectRatio: image.width / Math.max(1, image.height), maxHeight }}
     />
   );
 }
 
 /**
  * The card holds the screen. Unrevealed it is the cue alone (the term, the meaning, or a picture,
- * by the mode the draw chose); a tap anywhere reveals what is asked for.
+ * by the mode the draw chose); a tap anywhere reveals what is asked for. A long answer scrolls inside
+ * the plate, so the grades never move.
  */
 function CardPlate({
+  pronounce,
   item: { card, fsrsState, mode },
-  deckName,
+  deck,
   forgotten,
+  hook,
+  hookShown,
   revealed,
   still,
   onReveal,
+  onPeek,
+  onShowHook,
+  offer,
+  onOffer,
+  onMenu,
   onUndo,
 }: {
+  /** The pronunciation on the top card; none underneath. */
+  pronounce: Pronunciation | null;
   item: QueueItem;
-  deckName: string | undefined;
+  deck: CardDeck;
   forgotten: boolean;
+  hook: Hook | null;
+  hookShown: boolean;
   revealed: boolean;
   still: boolean;
   onReveal: (() => void) | undefined;
+  onPeek: (() => void) | undefined;
+  onShowHook: (() => void) | undefined;
+  offer: boolean;
+  onOffer: (() => void) | undefined;
+  /** Revealed, a tap on the card opens its menu. */
+  onMenu: (() => void) | undefined;
   /** Offered to VoiceOver as an action on the card while there is a grade to take back. */
   onUndo: (() => void) | undefined;
 }) {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const p = usePalette();
   const dark = useColorScheme() === "dark";
   const reduce = useReduceMotion();
-  const state = STATE[standing(fsrsState)];
+  const hint = useRevealHint(onReveal ? `${card.id}:${modeKey(mode)}` : null, revealed);
   const section = useSections(card.sectionId ? card.deckId : undefined).data?.sections.find(
     (s) => s.id === card.sectionId,
   )?.name;
-  const answer = mode.target === "term" ? card.term : (card.meaning ?? "");
-  const cue = mode.cue === "image" ? null : mode.cue === "term" ? card.term : (card.meaning ?? "");
-  // A picture cue shows neither side, so the answer comes with the other one.
-  const other = mode.cue !== "image" ? null : mode.target === "term" ? card.meaning : card.term;
+  const picture = mode.cue === "image";
+  const noMeaning = t`No meaning yet`;
+  const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
+  const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
+  const languageCode =
+    card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase()
+      ? card.language.toUpperCase()
+      : null;
+  const tail = [picture ? i18n._(modeLabel(mode)) : null, languageCode].filter(
+    (part): part is string => !!part,
+  );
+  // Only the AI is marked: the learner's words and the lesson's are the ordinary case, CONTEXT.md.
+  const aiWritten =
+    card.meaningSource === "ai" ||
+    (card.exampleSource === "ai" && !!card.example) ||
+    (card.notesSource === "ai" && !!card.notes) ||
+    (card.pronunciationSource === "ai" && !!card.pronunciation);
+  // Where the card sits: its section, or the source it came from when it has none.
+  const place = section
+    ? { icon: "section" as const, name: section }
+    : card.source
+      ? { icon: "source" as const, name: card.source }
+      : null;
+  const canPeek = !revealed && !!hook && !hookShown && !!onPeek;
+  let line = 0;
+  const arrive = () => (still ? undefined : reduce ? CROSSFADE : rise(line++));
+  const glide = reduce || still ? undefined : LinearTransition.duration(GLIDE).easing(EASE);
 
   return (
-    <Animated.View
-      layout={reduce || still ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
-      className="flex-1"
-    >
+    <Animated.View layout={glide} className="flex-1">
       <Pressable
-        onPress={revealed ? undefined : onReveal}
-        disabled={revealed || !onReveal}
-        accessibilityActions={onUndo ? [{ name: "undo", label: t`Take back the last grade` }] : []}
+        onPress={
+          revealed
+            ? onMenu
+            : () => {
+                countReveal();
+                onReveal?.();
+              }
+        }
+        disabled={revealed ? !onMenu : !onReveal}
+        accessibilityActions={[
+          ...(canPeek ? [{ name: "peek", label: t`Peek at your hook` }] : []),
+          ...(revealed && onMenu ? [{ name: "menu", label: t`Card options` }] : []),
+          ...(onUndo ? [{ name: "undo", label: t`Take back the last grade` }] : []),
+        ]}
         onAccessibilityAction={(e) => {
-          if (e.nativeEvent.actionName === "undo") onUndo?.();
+          const action = e.nativeEvent.actionName;
+          if (action === "peek") onPeek?.();
+          if (action === "menu") onMenu?.();
+          if (action === "undo") onUndo?.();
         }}
         accessibilityRole={revealed ? undefined : "button"}
         accessibilityLabel={
-          revealed ? undefined : `${cue ?? card.image?.description ?? ""}. Tap to reveal`
+          revealed
+            ? undefined
+            : picture
+              ? t`Picture card: ${card.image?.description ?? ""}. Tap to reveal`
+              : mode.cue === "term"
+                ? t`Recognition card for ${cue}. Tap to reveal`
+                : t`Production card for ${cue}. Tap to reveal`
         }
         className="flex-1 overflow-hidden rounded-2xl border border-edge bg-plate"
         style={dark ? LIFT : undefined}
       >
-        <View className="flex-1">
-          {/* At large text sizes the deck and the state stack rather than clip. */}
-          <View className="flex-row flex-wrap items-center justify-between gap-2 px-6 pt-5">
-            <View className="flex-row items-center gap-2">
-              <Icon name="deck" size={18} colour={p.muted} />
-              <Text className="text-md text-text-2">{deckName}</Text>
-            </View>
-            <View className="min-h-9 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3.5 py-1">
-              <Icon
-                name={forgotten ? "forgot" : state.icon}
-                size={16}
-                colour={forgotten ? p["grade-forgot"] : p[state.tint]}
-              />
-              <Text className="text-base font-medium text-text-2">
-                {forgotten ? "Forgotten" : state.label}
-              </Text>
-            </View>
+        {/* At large text sizes the deck and the state stack rather than clip. */}
+        <View className="flex-row flex-wrap items-center justify-between gap-2 px-6 pt-5">
+          <View className="min-w-0 shrink flex-row items-center gap-2">
+            <Icon name="deck" size={18} colour={p.muted} />
+            <Text className="shrink text-md text-text-2" numberOfLines={1}>
+              {[deck?.name, ...tail].filter(Boolean).join(" · ")}
+            </Text>
           </View>
+          <StateChip state={forgotten ? 3 : fsrsState} inReview />
+        </View>
 
-          <View className="flex-1 justify-center px-6">
-            <Animated.View
-              layout={reduce || still ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
-            >
-              {cue === null ? (
+        <ScrollView
+          className="flex-1"
+          contentContainerClassName="grow justify-center px-6 py-5"
+          // Unrevealed, the whole plate is the button, so nothing scrolls under the finger.
+          scrollEnabled={revealed}
+          showsVerticalScrollIndicator={false}
+        >
+          <Animated.View layout={glide}>
+            {picture ? (
+              card.image ? (
                 <Picture card={card} />
               ) : (
+                <Text className="text-md text-muted">{t`This card’s picture was removed.`}</Text>
+              )
+            ) : (
+              <View className="flex-row items-center gap-3">
                 <Text
-                  className="text-text"
+                  className="shrink text-text"
                   style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
                   // The word is already the largest text on the card; grown, a long one would break mid-word.
                   maxFontSizeMultiplier={1}
                 >
                   {cue}
                 </Text>
-              )}
-            </Animated.View>
-            {revealed && (
-              <View className="gap-4 pt-5">
-                <Animated.View
-                  entering={still ? undefined : reduce ? CROSSFADE : rule}
-                  className="h-px bg-edge-2"
-                  // The rule draws from the start edge, which is the right in a right-to-left language.
-                  style={{ transformOrigin: I18nManager.isRTL ? "100% 50%" : "0% 50%" }}
-                />
-                <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(0)}>
-                  <Text className="text-xl text-text">{answer}</Text>
-                </Animated.View>
-                {other && (
-                  <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(1)}>
-                    <Text className="text-md text-text-2">{other}</Text>
-                  </Animated.View>
-                )}
-                {card.example && (
-                  <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(2)}>
-                    <Text className="text-md text-text-2">{card.example}</Text>
-                  </Animated.View>
-                )}
-                {section && (
-                  <Animated.View
-                    entering={still ? undefined : reduce ? CROSSFADE : rise(3)}
-                    className="flex-row"
-                  >
-                    <View className="min-h-8 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3 py-1">
-                      <Icon name="section" size={15} colour={p.muted} />
-                      <Text className="text-base text-text-2">{section}</Text>
-                    </View>
-                  </Animated.View>
-                )}
+                {/* The term can be heard as soon as it is the question. */}
+                {pronounce && mode.cue === "term" && <PronounceButton pronounce={pronounce} />}
               </View>
             )}
-          </View>
-
-          {!revealed && (
-            <Animated.View
-              entering={FadeIn.delay(900).duration(400).reduceMotion(ALWAYS)}
-              className="items-center pb-6"
-            >
-              <Text className="text-base text-muted">Tap to reveal</Text>
-            </Animated.View>
+            {/* The hook has one place, under the cue, before the reveal and after it. */}
+            {hook && hookShown ? (
+              <View className="pt-3">
+                <HookLine text={hook.text} source={hook.source} still={still} />
+              </View>
+            ) : hook && revealed && onShowHook ? (
+              <View className="pt-2">
+                <ShowHookButton still={still} onShow={onShowHook} />
+              </View>
+            ) : null}
+          </Animated.View>
+          {revealed && (
+            <View className="gap-4 pt-5">
+              <Wick still={still} />
+              <Animated.View entering={arrive()} className="flex-row items-center gap-3">
+                <Text
+                  className={`shrink ${picture ? "text-2xl font-medium text-text" : "text-xl text-text"}`}
+                  style={back === noMeaning ? { color: p.muted } : undefined}
+                >
+                  {back}
+                </Text>
+                {pronounce && mode.target === "term" && <PronounceButton pronounce={pronounce} />}
+              </Animated.View>
+              {picture && (
+                <Animated.View entering={arrive()} className="flex-row items-center gap-3">
+                  <Text className="shrink text-lg text-text-2">
+                    {mode.target === "term" ? card.meaning : card.term}
+                  </Text>
+                  {pronounce && mode.target !== "term" && <PronounceButton pronounce={pronounce} />}
+                </Animated.View>
+              )}
+              {card.pronunciation && (mode.target === "term" || picture) && (
+                <Animated.View entering={arrive()}>
+                  <Text className="text-md text-muted">{card.pronunciation}</Text>
+                </Animated.View>
+              )}
+              {!picture && card.image && (
+                <Animated.View entering={arrive()} style={{ maxWidth: 220 }}>
+                  <Picture card={card} maxHeight={120} />
+                </Animated.View>
+              )}
+              {card.example && (
+                <Animated.View entering={arrive()}>
+                  <Text className="text-md text-text-2">{card.example}</Text>
+                </Animated.View>
+              )}
+              {card.notes && (
+                <Animated.View entering={arrive()}>
+                  <CardNotes source={card.notes} className="text-base text-muted" />
+                </Animated.View>
+              )}
+              {(place || aiWritten) && (
+                <Animated.View
+                  entering={arrive()}
+                  className="flex-row flex-wrap items-center gap-1.5"
+                >
+                  {place && (
+                    <Chip size="sm" icon={place.icon}>
+                      {place.name}
+                    </Chip>
+                  )}
+                  {aiWritten && <AiCardChip />}
+                </Animated.View>
+              )}
+            </View>
           )}
-        </View>
+        </ScrollView>
+
+        {!revealed && hint && <RevealHint />}
+        {canPeek && onPeek && <PeekButton onPeek={onPeek} />}
+        {revealed && offer && onOffer && <HookOffer still={still} onOpen={onOffer} />}
       </Pressable>
     </Animated.View>
   );
 }
 
-const GRADES: { label: string; icon: IconName; tint: keyof Palette }[] = [
-  { label: "Forgot", icon: "forgot", tint: "grade-forgot" },
-  { label: "Hard", icon: "hard", tint: "grade-hard" },
-  { label: "Good", icon: "good", tint: "grade-good" },
-  { label: "Easy", icon: "easy", tint: "grade-easy" },
-];
+const LOCK_TIP_MS = 4000;
 
 const gradeIn = (i: number) =>
   new Keyframe({
@@ -769,42 +1274,93 @@ const gradeIn = (i: number) =>
  */
 function GradeStrip({
   still = false,
+  next,
+  easyLocked,
+  lockedTip,
   onGrade,
 }: {
   /** Underneath, the grades are already in place. */
   still?: boolean;
+  /** When each grade brings the card back, which VoiceOver reads with it, as on the web. */
+  next: QueueItem["next"];
+  /** After a peek, Easy stays in its slot, dimmed with a lock, and grades nothing. */
+  easyLocked: boolean;
+  /** Each press of the locked Easy says why in a tip over it. */
+  lockedTip: number;
   onGrade: ((r: Rating) => void) | undefined;
 }) {
+  const { t, i18n } = useLingui();
   const p = usePalette();
   const dark = useColorScheme() === "dark";
   const reduce = useReduceMotion();
+  const why = t`You can’t choose Easy after peeking at your hook.`;
+  const [tip, setTip] = useState(false);
+  useEffect(() => {
+    if (lockedTip === 0) return;
+    setTip(true);
+    AccessibilityInfo.announceForAccessibility(why);
+    const timer = setTimeout(() => setTip(false), LOCK_TIP_MS);
+    return () => clearTimeout(timer);
+  }, [lockedTip, why]);
   return (
     <Animated.View
       exiting={FadeOut.duration(120).reduceMotion(ALWAYS)}
       className="flex-row gap-2 px-4 pt-3"
     >
-      {GRADES.map((g, i) => (
+      {tip && (
         <Animated.View
-          key={g.label}
-          entering={still ? undefined : reduce ? CROSSFADE : gradeIn(i)}
-          className="flex-1"
+          entering={FadeIn.duration(150).reduceMotion(ALWAYS)}
+          exiting={FadeOut.duration(100).reduceMotion(ALWAYS)}
+          pointerEvents="none"
+          className="absolute bottom-full end-4 mb-2 max-w-64 flex-row items-start gap-2 rounded-lg bg-text px-3 py-2"
         >
-          <Press
-            scale={0.96}
-            haptic={false}
-            onPress={() => onGrade?.((i + 1) as Rating)}
-            accessibilityRole="button"
-            accessibilityLabel={g.label}
-            className="h-20 items-center justify-center gap-1.5 rounded-xl border border-edge bg-plate"
-            style={dark ? LIFT : undefined}
-          >
-            <Icon name={g.icon} size={20} colour={p[g.tint]} />
-            <Text maxFontSizeMultiplier={1.3} className="text-base font-medium text-text-2">
-              {g.label}
-            </Text>
-          </Press>
+          <View className="pt-0.5">
+            <Icon name="lock" size={14} colour={p.canvas} />
+          </View>
+          <Text className="shrink text-sm text-canvas">{why}</Text>
         </Animated.View>
-      ))}
+      )}
+      {GRADES.map((g, i) => {
+        const label = i18n._(g.label);
+        const back = next ? interval(new Date(), new Date(next[g.rating])) : null;
+        const schedules = back
+          ? i18n.number(back.value, { style: "unit", unit: back.unit, unitDisplay: "narrow" })
+          : null;
+        const lock = easyLocked && g.rating === 4;
+        return (
+          <Animated.View
+            key={g.rating}
+            entering={still ? undefined : reduce ? CROSSFADE : gradeIn(i)}
+            className="flex-1"
+          >
+            <Press
+              scale={0.96}
+              haptic={false}
+              onPress={() => onGrade?.(g.rating)}
+              accessibilityRole="button"
+              accessibilityLabel={
+                lock ? t`${label}, locked` : schedules ? t`${label}, next in ${schedules}` : label
+              }
+              accessibilityHint={lock ? why : undefined}
+              accessibilityState={lock ? { disabled: true } : undefined}
+              className="h-20 items-center justify-center gap-1.5 rounded-xl border border-edge bg-plate"
+              style={dark ? LIFT : undefined}
+            >
+              <View className="items-center gap-1.5" style={lock ? { opacity: 0.45 } : undefined}>
+                <Icon name={g.icon} size={20} colour={lock ? p.muted : p[g.tint]} />
+                <Text maxFontSizeMultiplier={1.3} className="text-base font-medium text-text-2">
+                  {label}
+                </Text>
+              </View>
+              {lock && (
+                <View className="absolute end-2.5 top-2.5">
+                  <Icon name="lock" size={12} colour={p.muted} />
+                </View>
+              )}
+            </Press>
+          </Animated.View>
+        );
+      })}
     </Animated.View>
   );
 }
@@ -843,45 +1399,50 @@ function useRise(
 
 /**
  * The one place the interface celebrates: the lantern lit large in a pool of its glow. It plays as one
- * sequence on one clock, and the first tap finishes the clock. motion.md "The end of a review".
+ * sequence on one clock, and the first tap finishes the clock. What it says and offers is the web's
+ * `reviewEnd` (ADR 0021). motion.md "The end of a review".
  */
 function Completion({
+  screen,
   from,
-  added,
+  to,
+  scopeName,
+  onOffer,
   onClose,
-  onContinue,
+  onAddCards,
 }: {
-  /** Today's reviews when this review began, where the count rolls up from. */
+  screen: EndScreen;
+  /** Today's reviews at the last end screen or when the review opened, where the count rolls up from. */
   from: number;
-  added: number;
+  to: number;
+  scopeName: string | undefined;
+  onOffer: (offer: Offer) => void;
   onClose: () => void;
-  /** Left partway: the way back to the card still drawn. */
-  onContinue?: (() => void) | undefined;
+  onAddCards: () => void;
 }) {
   const { t } = useLingui();
-  const { goal, week, streak, dayDone, out, progress, fed } = useDay();
-  const forgottenToday = useRounds().data?.forgotten ?? 0;
-  const router = useRouter();
+  const p = usePalette();
+  const { goal, streak, lights, flame, out, progress, fed } = useDay();
   const insets = useSafeAreaInsets();
   const reduce = useReduceMotion();
-  const to = from + added;
-  const satisfied = to >= goal || dayDone;
-  const heading =
-    to >= goal
-      ? "Daily goal reached"
-      : onContinue
-        ? t`Review done`
-        : dayDone
-          ? "You’re done for today"
-          : "Nothing left here";
+  const counted = screen.heading !== "nothing_due";
+  const heading = {
+    goal_reached: t`Daily goal reached`,
+    day_done: t`You’re done for today`,
+    scope_done: scopeName ? t`Nothing left in ${scopeName}` : t`Nothing left in this deck`,
+    nothing_due: t`Nothing due`,
+    round_done: t`Round done`,
+    review_done: t`Review done`,
+  }[screen.heading];
 
+  const proceed = screen.offers.find((o) => o.kind === "continue");
+  const ways = screen.offers.filter((o) => !(o.kind === "continue" && screen.continueLeads));
   const embers = useMemo(
-    () => (reduce || out ? [] : endEmbers(emberCount(added, goal))),
-    [reduce, out, added, goal],
+    () => (reduce || out ? [] : endEmbers(screen.embers)),
+    [reduce, out, screen.embers],
   );
   const rollMs = countRollMs(from, to);
-  const ways = (forgottenToday > 0 ? 1 : 0) + (onContinue ? 1 : 0);
-  const actionsAt = AT.actions + ways * AT.actionStep;
+  const actionsAt = AT.actions + ways.length * AT.actionStep;
   const end = Math.max(
     actionsAt + RISE.ms,
     AT.countRoll + rollMs,
@@ -897,11 +1458,10 @@ function Completion({
     void stopHaptics();
   };
 
-  const turned = satisfied && from < goal && added > 0;
   useEffect(() => {
-    void playHaptics(endHaptics(embers, turned, reduce));
+    void playHaptics(endHaptics(embers, screen.streak, reduce));
     return () => void stopHaptics();
-  }, [embers, turned, reduce]);
+  }, [embers, screen.streak, reduce]);
   useEffect(() => {
     if (reduce) {
       clock.value = end;
@@ -918,9 +1478,14 @@ function Completion({
   const label$ = useRise(clock, AT.count + 80);
   const lights$ = useRise(clock, AT.lights, { ms: 300, y: 0 });
   const run$ = useRise(clock, AT.run);
-  const continue$ = useRise(clock, AT.actions);
-  const forgotten$ = useRise(clock, AT.actions + (onContinue ? AT.actionStep : 0));
+  const nudge$ = useRise(clock, AT.run + 120);
+  // At most two ways sit above the last row: Continue and Review forgotten.
+  const way$ = [useRise(clock, AT.actions), useRise(clock, AT.actions + AT.actionStep)];
   const done$ = useRise(clock, actionsAt);
+
+  const doneButton = (variant: "primary" | "secondary") => (
+    <Button label={t`Done`} variant={variant} size="xl" onPress={onClose} />
+  );
 
   return (
     <Animated.View
@@ -944,7 +1509,7 @@ function Completion({
             <LightPool
               size={END_LANTERN}
               clock={clock}
-              strength={added > 0 ? 1 : 0.5}
+              strength={to > from ? 1 : 0.5}
               still={reduce}
             />
             <Lantern size={END_LANTERN} progress={progress} out={out} fed={fed} />
@@ -952,55 +1517,105 @@ function Completion({
           </Flight>
           <View className="items-center gap-2">
             <Animated.View style={heading$}>
-              <Text className="text-2xl font-medium text-text" accessibilityRole="header">
+              <Text
+                className="text-center text-2xl font-medium text-text"
+                accessibilityRole="header"
+              >
                 {heading}
               </Text>
             </Animated.View>
-            <View accessible accessibilityLabel={`${to} reviews today`} className="items-center">
+            {counted ? (
+              <View
+                accessible
+                accessibilityLabel={t`${plural(to, { one: "# review today", other: "# reviews today" })}`}
+                className="items-center"
+              >
+                <Animated.View style={count$}>
+                  <RollingCount clock={clock} from={from} to={to} rollMs={rollMs} />
+                </Animated.View>
+                <Animated.View style={label$}>
+                  <Text className="text-md text-muted">
+                    {t`${plural(to, { one: "review today", other: "reviews today" })}`}
+                  </Text>
+                </Animated.View>
+              </View>
+            ) : (
               <Animated.View style={count$}>
-                <RollingCount clock={clock} from={from} to={to} rollMs={rollMs} />
+                <Text className="text-center text-md text-text-2">
+                  {t`Come back later, or add new cards.`}
+                </Text>
               </Animated.View>
-              <Animated.View style={label$}>
-                <Text className="text-md text-muted">reviews today</Text>
-              </Animated.View>
-            </View>
+            )}
           </View>
-          <View className="w-full max-w-[300px] gap-3">
-            <Animated.View style={lights$}>
+          <View className="w-full max-w-[300px] items-center gap-3">
+            <Animated.View style={lights$} className="w-full">
               <SevenLights
                 // Finished early, the lights take their final heights at once rather than replaying.
                 key={settled ? "settled" : "playing"}
-                days={week}
+                days={lights.days}
+                satisfied={lights.satisfied}
+                rest={lights.rest}
+                goals={lights.goals}
                 goal={goal}
-                todayDone={dayDone}
                 sequence={settled ? undefined : AT.lights}
               />
             </Animated.View>
-            <Animated.View style={run$}>
-              <Text className="text-center text-base text-text-2">
-                {satisfied
-                  ? `${streak} days in a row`
-                  : `${goal - to} more reviews reach your goal`}
+            <Animated.View style={run$} className="flex-row items-center gap-2">
+              <Flame height={20} state={flame} />
+              <Text className="text-md font-semibold text-text" style={styles.figures}>
+                {streak}
+              </Text>
+              <Text className="text-md text-text-2">
+                {t`${plural(streak, { one: "day in a row", other: "days in a row" })}`}
               </Text>
             </Animated.View>
+            {/* While Continue leads, what is left of the day sits under its lights. */}
+            {screen.nudge && (
+              <Animated.View style={nudge$}>
+                <Text className="text-center text-base text-muted">
+                  {screen.nudge.kind === "goal"
+                    ? t`${plural(screen.nudge.count, { one: "# more review to your daily goal", other: "# more reviews to your daily goal" })}`
+                    : t`${plural(screen.nudge.count, { one: "# more card and you’re done for today", other: "# more cards and you’re done for today" })}`}
+                </Text>
+              </Animated.View>
+            )}
           </View>
         </View>
+        {/* One shape for every way on, the count said in words; the primary sits last. */}
         <View className="gap-3 px-5 pt-6" pointerEvents={settled ? "auto" : "none"}>
-          {onContinue && (
-            <Animated.View style={continue$}>
-              <Button label={t`Continue`} onPress={onContinue} />
+          {ways.map((way, i) => (
+            <Animated.View key={way.kind} style={way$[i]}>
+              {way.kind === "forgotten" ? (
+                <Button
+                  label={t`${plural(way.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`}
+                  lead={<Icon name="forgot" size={20} colour={p["grade-forgot"]} />}
+                  size="xl"
+                  onPress={() => onOffer(way)}
+                />
+              ) : (
+                <Button label={t`Continue`} size="xl" onPress={() => onOffer(way)} />
+              )}
             </Animated.View>
-          )}
-          {forgottenToday > 0 && (
-            <Animated.View style={forgotten$}>
-              <Button
-                label={`Review ${forgottenToday} forgotten ${forgottenToday === 1 ? "card" : "cards"}`}
-                onPress={() => router.replace("/review?round=forgotten")}
-              />
-            </Animated.View>
-          )}
-          <Animated.View style={done$}>
-            <Button label="Done" variant="primary" size="xl" onPress={onClose} />
+          ))}
+          <Animated.View style={done$} className="gap-3">
+            {!counted ? (
+              <>
+                <Button label={t`Add cards`} variant="primary" size="xl" onPress={onAddCards} />
+                {doneButton("secondary")}
+              </>
+            ) : screen.continueLeads && proceed ? (
+              <>
+                {doneButton("secondary")}
+                <Button
+                  label={t`Continue`}
+                  variant="primary"
+                  size="xl"
+                  onPress={() => onOffer(proceed)}
+                />
+              </>
+            ) : (
+              doneButton("primary")
+            )}
           </Animated.View>
         </View>
       </ScrollView>
@@ -1117,4 +1732,5 @@ const COUNT_SIZE = 80;
 const styles = StyleSheet.create({
   unclipped: { overflow: "visible" },
   count: { fontSize: COUNT_SIZE, lineHeight: COUNT_SIZE * 1.2, fontVariant: ["tabular-nums"] },
+  figures: { fontVariant: ["tabular-nums"] },
 });

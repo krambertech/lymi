@@ -1,10 +1,10 @@
+import { type Ending, reviewEnd, type Stretch, streakWith } from "@lymi/client/review-end";
 import { LayoutGroup } from "motion/react";
 import type { ReactNode } from "react";
 import { useId, useState } from "react";
 import { Button } from "../../components/button";
 import { StaticNavProvider } from "../../components/nav-link";
 import { PillNav } from "../../components/pill-nav";
-import { type Ending, reviewEnd, type Stretch, streakWith } from "../../lib/review-complete";
 import { GradeBar, ReviewCard, ReviewComplete, ReviewHeader } from "../../views/review-view";
 import { type FrameTheme, Phone, useFrameTheme } from "../frame";
 import * as m from "../mock";

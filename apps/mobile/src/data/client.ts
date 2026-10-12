@@ -53,7 +53,8 @@ focusManager.setEventListener((setFocused) => {
 });
 
 export const queryClient = new QueryClient({
-  // A read nothing shows stays in the cache as long as the kept copy does, so it is kept too.
-  defaultOptions: { queries: { gcTime: CACHE_MAX_AGE } },
+  // A read nothing shows stays in the cache as long as the kept copy does, so it is kept too. One
+  // retry, as on the web, so a Worker that cannot be reached gives way to what was kept quickly.
+  defaultOptions: { queries: { gcTime: CACHE_MAX_AGE, retry: 1 } },
 });
 bindWriteCache(queryClient);

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { AppLanguage, LearningKind } from "../types";
-import { Timestamp } from "./common";
+import { OPEN, Timestamp } from "./common";
 
 export const SettingsOut = z
   .object({
@@ -8,6 +8,7 @@ export const SettingsOut = z
     analyticsConsent: z.boolean().nullable(),
     analyticsConsentUpdatedAt: Timestamp.nullable(),
     appLanguage: AppLanguage.nullable().meta({
+      ...OPEN,
       description:
         "The language of the interface and reminders. Null until the learner has chosen.",
     }),
@@ -25,11 +26,12 @@ export const SettingsOut = z
       .string()
       .nullable()
       .meta({ description: "IANA zone that decides where a review day begins" }),
-    reviewTimezoneMode: z.enum(["automatic", "manual"]),
+    reviewTimezoneMode: z.enum(["automatic", "manual"]).meta(OPEN),
     onboardedAt: Timestamp.nullable().meta({
       description: "When the learner finished or skipped getting set up. Null until then.",
     }),
     learningKind: LearningKind.nullable().meta({
+      ...OPEN,
       description: "What the learner said they are learning while getting set up.",
     }),
     learningLanguage: z.string().nullable().meta({

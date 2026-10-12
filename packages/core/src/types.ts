@@ -1,12 +1,13 @@
 import { Rating as FsrsRating } from "ts-fsrs";
 import { z } from "zod";
 import { DECK_ENRICH_FIELDS, ENRICH_INSTRUCTIONS_MAX, ENRICHED_FIELDS } from "./enrichment";
+import { OPEN } from "./responses/common";
 
 /** Which way the card is asked. Recognition: see the term, recall the meaning. Production: the reverse. */
 export const Direction = z.enum(["recognition", "production"]);
 export type Direction = z.infer<typeof Direction>;
 
-/** FSRS grade. 1 Again, 2 Hard, 3 Good, 4 Easy. */
+/** FSRS grade. 1 Again, 2 Hard, 3 Good, 4 Easy. Closed: the scheduler has exactly four. */
 export const Rating = z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4)]);
 export type Rating = z.infer<typeof Rating>;
 
@@ -34,7 +35,7 @@ export const EnrichedFieldName = z.enum(ENRICHED_FIELDS);
 
 /** What AI may fill on a deck's cards. The language is filled whatever the deck chooses. */
 export const DeckEnrichFields = z
-  .array(z.enum(DECK_ENRICH_FIELDS))
+  .array(z.enum(DECK_ENRICH_FIELDS).meta(OPEN))
   .max(DECK_ENRICH_FIELDS.length)
   .refine((fields) => new Set(fields).size === fields.length, "List each field once.")
   .meta({
@@ -103,6 +104,7 @@ export const ReviewMode = z
     z.object({ cue: z.literal("image"), target: z.literal("meaning") }),
   ])
   .meta({
+    ...OPEN,
     id: "ReviewMode",
     description: "The cue shown before reveal and the target the learner grades",
   });
@@ -137,6 +139,7 @@ export type MemberRole = z.infer<typeof MemberRole>;
 /** How a deck's sections open for each learner. */
 export const SECTION_PROGRESSIONS = ["automatic", "manual", "open"] as const;
 export const SectionProgression = z.enum(SECTION_PROGRESSIONS).meta({
+  ...OPEN,
   id: "SectionProgression",
   description:
     "How each learner's sections open. automatic, the default: the next section opens once every card of the current one has come up and 80% are Known. manual: it becomes ready then, and the learner starts it. open: every section is open. Anyone can start a later section early.",

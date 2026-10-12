@@ -9,8 +9,11 @@
 const PROSE = new Set(["description", "summary", "examples", "example", "tags", "externalDocs"]);
 const METHODS = ["get", "put", "post", "patch", "delete"];
 
-/** The parts of a document a client depends on: paths and schemas, without prose. */
-export function contractOf(document) {
+/**
+ * The parts of a document a client depends on: paths and schemas, without prose. Given the
+ * client's `operations`, such as `GET /api/decks`, it keeps only those and the schemas they reach.
+ */
+export function contractOf(document, operations) {
   const strip = (value) => {
     if (Array.isArray(value)) return value.map(strip);
     if (!value || typeof value !== "object") return value;
@@ -20,10 +23,71 @@ export function contractOf(document) {
         .map(([key, entry]) => [key, strip(entry)]),
     );
   };
-  return strip({
-    paths: document.paths ?? {},
-    components: { schemas: document.components?.schemas ?? {} },
-  });
+  const schemas = document.components?.schemas ?? {};
+  if (!operations) return strip({ paths: document.paths ?? {}, components: { schemas } });
+
+  const paths = {};
+  for (const operation of operations) {
+    const [verb, path] = operation.split(" ");
+    const method = verb?.toLowerCase();
+    const found = document.paths?.[path]?.[method];
+    if (!found) throw new Error(`${operation} is not in the document`);
+    paths[path] = { ...paths[path], [method]: found };
+  }
+  const reached = new Set();
+  const visit = (value) => {
+    if (Array.isArray(value)) return value.forEach(visit);
+    if (!value || typeof value !== "object") return;
+    const name = typeof value.$ref === "string" && value.$ref.replace("#/components/schemas/", "");
+    if (name && !reached.has(name)) {
+      reached.add(name);
+      visit(schemas[name]);
+    }
+    Object.values(value).forEach(visit);
+  };
+  visit(paths);
+  const kept = Object.fromEntries(Object.entries(schemas).filter(([name]) => reached.has(name)));
+  return strip({ paths, components: { schemas: kept } });
+}
+
+/**
+ * Every response field in `contract` whose values are a fixed list without `x-lymi-open`, as
+ * `GET /api/x 200 .field`: a field a client release reads that can never gain a value.
+ */
+export function closedChoices(contract) {
+  const found = new Set();
+  const walk = (schema, label, at, seen) => {
+    if (!schema || typeof schema !== "object") return;
+    // As in `compare`, the mark opens a node's own values and branches, not what lies below it.
+    if (schema["x-lymi-open"] === true && (valuesOf(schema) || branches(schema))) return;
+    if (schema.$ref) {
+      if (seen.has(schema.$ref)) return;
+      const name = schema.$ref.replace("#/components/schemas/", "");
+      walk(contract.components?.schemas?.[name], label, at, new Set([...seen, schema.$ref]));
+      return;
+    }
+    if (valuesOf(schema)) found.add(`${label} ${at || "(body)"}`);
+    for (const part of [
+      ...(schema.anyOf ?? []),
+      ...(schema.oneOf ?? []),
+      ...(schema.allOf ?? []),
+    ]) {
+      walk(part, label, at, seen);
+    }
+    if (schema.items) walk(schema.items, label, `${at}[]`, seen);
+    for (const [name, property] of Object.entries(schema.properties ?? {})) {
+      walk(property, label, `${at}.${name}`, seen);
+    }
+  };
+  for (const [path, item] of Object.entries(contract.paths ?? {})) {
+    for (const method of METHODS) {
+      for (const [status, response] of Object.entries(item[method]?.responses ?? {})) {
+        if (!status.startsWith("2")) continue;
+        walk(jsonSchema(response), `${method.toUpperCase()} ${path} ${status}`, "", new Set());
+      }
+    }
+  }
+  return [...found].sort();
 }
 
 /** Every way `next` would break a client built against `frozen`, as readable lines. */

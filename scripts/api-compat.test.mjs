@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { breakingChanges, contractOf } from "./api-compat.mjs";
+import { breakingChanges, closedChoices, contractOf } from "./api-compat.mjs";
 
 const mode = {
   anyOf: [
@@ -219,4 +219,25 @@ test("the contract drops prose so rewording a description changes nothing", () =
     },
   });
   assert.deepEqual(reworded, frozen);
+});
+
+test("a contract of named operations keeps them and the schemas they reach", () => {
+  const draw = contractOf(documentWith(), ["GET /api/review/draw"]);
+  assert.deepEqual(Object.keys(draw.paths), ["/api/review/draw"]);
+  assert.deepEqual(Object.keys(draw.components.schemas).sort(), ["Card", "Draw", "ReviewMode"]);
+
+  // A change to an operation the client never calls is no part of its contract.
+  const next = documentWith({ grade: { properties: {}, required: ["durationMs"] } });
+  assert.deepEqual(breakingChanges(draw, next), []);
+  assert.throws(() => contractOf(documentWith(), ["GET /api/nothing"]), /not in the document/);
+});
+
+test("closedChoices lists each fixed list a response holds without the open mark", () => {
+  assert.deepEqual(closedChoices(documentWith()), [
+    "GET /api/review/draw 200 .cards[].mode.cue",
+    "GET /api/review/draw 200 .cards[].mode.target",
+    "POST /api/review/grade 200 .ok",
+  ]);
+  const open = documentWith({ modeSchema: { ...mode, "x-lymi-open": true } });
+  assert.deepEqual(closedChoices(open), ["POST /api/review/grade 200 .ok"]);
 });

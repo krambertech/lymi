@@ -10,7 +10,7 @@ import {
   ReviewAid,
   ReviewMode,
 } from "../types";
-import { Timestamp } from "./common";
+import { OPEN, Timestamp } from "./common";
 
 export const CardImageOut = z
   .object({
@@ -27,9 +27,9 @@ export const CardImageOut = z
       description:
         "What the picture shows, without naming the answer. Picture modes wait until there is one.",
     }),
-    source: z.enum(["upload", "url"]),
+    source: z.enum(["upload", "url"]).meta(OPEN),
     sourceHost: z.string().nullable().meta({ description: "Host of an imported link" }),
-    createdBy: Actor,
+    createdBy: Actor.meta(OPEN),
     createdAt: Timestamp,
     updatedAt: Timestamp,
   })
@@ -60,6 +60,7 @@ export const CardOut = z
       description: "The card's active section. Null without one, and while it is archived.",
     }),
     directions: Directions.nullable().meta({
+      ...OPEN,
       description: "Legacy form of `reviewModes`. Overrides the deck when set.",
     }),
     reviewModes: z
@@ -71,20 +72,25 @@ export const CardOut = z
       description:
         "Changes with every picture write. Send it back as `version` so a stale write gets 409.",
     }),
-    meaningSource: FieldSource.nullable(),
-    exampleSource: FieldSource.nullable(),
-    pronunciationSource: FieldSource.nullable(),
-    notesSource: FieldSource.nullable(),
-    hookSource: FieldSource.nullable(),
+    meaningSource: FieldSource.nullable().meta(OPEN),
+    exampleSource: FieldSource.nullable().meta(OPEN),
+    pronunciationSource: FieldSource.nullable().meta(OPEN),
+    notesSource: FieldSource.nullable().meta(OPEN),
+    hookSource: FieldSource.nullable().meta(OPEN),
     enrichmentStatus: EnrichmentStatus.nullable().meta({
+      ...OPEN,
       description: "Set while the AI is filling the card's empty fields, and null once it settles",
     }),
-    enrichmentFields: z.array(EnrichedFieldName).nullable().meta({
-      description:
-        "The fields an outstanding enrichment may fill, so a screen holds space for those alone. Null when none is outstanding.",
-    }),
+    enrichmentFields: z
+      .array(EnrichedFieldName)
+      .nullable()
+      .meta({
+        ...OPEN,
+        description:
+          "The fields an outstanding enrichment may fill, so a screen holds space for those alone. Null when none is outstanding.",
+      }),
     audioKey: z.string().nullable(),
-    createdBy: Actor.meta({ description: "Who added the card" }),
+    createdBy: Actor.meta({ ...OPEN, description: "Who added the card" }),
     importId: z
       .string()
       .nullable()
@@ -180,6 +186,7 @@ export const CardStateOut = z
     userId: z.string(),
     mode: ReviewMode,
     direction: Direction.nullable().meta({
+      ...OPEN,
       description: "Legacy form of `mode`. Null for picture modes.",
     }),
     due: Timestamp,
@@ -207,6 +214,7 @@ export const ReviewOut = z
     cardId: z.string(),
     mode: ReviewMode,
     direction: Direction.nullable().meta({
+      ...OPEN,
       description: "Legacy form of `mode`. Null for picture modes.",
     }),
     rating: z.number().int().min(1).max(4),
@@ -262,7 +270,10 @@ const CardWriteErrorOut = z.object({
   error: z.string().meta({ description: "Why this card was not changed, in plain words" }),
 });
 
-/** One outcome per card sent. A duplicate is skipped, never rejected. See ADR 0004. */
+/**
+ * One outcome per card sent. A duplicate is skipped, never rejected. See ADR 0004. Closed: the
+ * phone says where an added card went, so a new outcome needs a version gate first.
+ */
 export const AddCardOutcomeOut = z
   .discriminatedUnion("status", [
     z.object({ id: OutcomeId, status: z.literal("added"), card: CardOut }),

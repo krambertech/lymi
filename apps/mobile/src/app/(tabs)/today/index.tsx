@@ -8,12 +8,13 @@ import { type ReactNode, useState } from "react";
 import { View, type ViewStyle } from "react-native";
 import { Flame } from "../../../brand/flame";
 import { Lantern } from "../../../brand/lantern";
+import { dueToday } from "../../../data/due";
 import { REST_DISMISSED_KEY, todayStore } from "../../../data/kept";
-import { useDay, useDecks, useRounds, useStreak } from "../../../data/queries";
+import { useDay, useDecks, useKeptSince, useRounds, useStreak } from "../../../data/queries";
 import { useLandingSpot } from "../../../splash/landing";
 import { clear, usePalette, useRoom } from "../../../theme/palette";
 import { ListRow } from "../../../ui/list-row";
-import { OfflineNote, useKeptSince } from "../../../ui/offline-note";
+import { OfflineNote } from "../../../ui/offline-note";
 import { Button, Icon, IconButton, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
 import { RestGlyph } from "../../../ui/rest-glyph";
 import { Screen } from "../../../ui/screen";
@@ -124,7 +125,7 @@ function LitDue({
   const room = useRoom();
   // The flame stops flickering while Today is out of sight.
   const focused = useIsFocused();
-  const due = kept && left !== undefined ? left : decks.reduce((n, d) => n + d.due, 0);
+  const due = dueToday(decks, left, kept);
   const [onlyDeck] = decks.length === 1 ? decks : [];
   const noDecks = nothingYet && decks.length === 0;
   return (

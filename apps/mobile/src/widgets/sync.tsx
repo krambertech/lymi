@@ -3,7 +3,8 @@ import { Asset } from "expo-asset";
 import { File } from "expo-file-system";
 import { widgetsDirectory } from "expo-widgets";
 import { useEffect, useState } from "react";
-import { useDay, useDecks } from "../data/queries";
+import { dueToday } from "../data/due";
+import { useDay, useDecks, useKeptSince } from "../data/queries";
 import { weekLetters } from "../ui/days";
 import { WIDGET_COLOURS } from "./colours";
 import LockWidget from "./lock-widget";
@@ -120,8 +121,9 @@ export function clearWidgets() {
 
 /** Pushes today's numbers to the widgets whenever they change. The real app does this after each sync. */
 export function WidgetSync() {
-  const { streak, reviewsToday, goal, week, dayDone, out } = useDay();
-  const due = useDecks().data?.reduce((n, d) => n + d.due, 0) ?? 0;
+  const { streak, reviewsToday, goal, week, dayDone, out, left } = useDay();
+  const decks = useDecks();
+  const due = dueToday(decks.data ?? [], left, !!useKeptSince(decks));
   const [images, setImages] = useState<Images>({});
 
   useEffect(() => {

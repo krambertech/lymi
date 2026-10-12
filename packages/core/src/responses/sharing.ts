@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { MemberRole } from "../types";
-import { Timestamp } from "./common";
+import { OPEN, Timestamp } from "./common";
 
 export const JoinLinkOut = z
   .object({
@@ -77,5 +77,7 @@ export const JoinPreviewOut = z
   .meta({ id: "JoinPreview" });
 export type JoinPreviewOut = z.infer<typeof JoinPreviewOut>;
 
-export const JoinOut = z.object({ deckId: z.string(), role: MemberRole }).meta({ id: "Join" });
+export const JoinOut = z
+  .object({ deckId: z.string(), role: MemberRole.meta(OPEN) })
+  .meta({ id: "Join" });
 export type JoinOut = z.infer<typeof JoinOut>;

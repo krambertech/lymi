@@ -1,6 +1,7 @@
 // Portable: the phone imports this, so database reads stay in catalog-server.ts.
 import { z } from "zod";
 import { isImageMode } from "./modes";
+import { OPEN } from "./responses/common";
 import { PUBLICATION_CATEGORIES, PUBLICATION_SLUG, PublicationTag, ReviewModeKey } from "./types";
 
 /** A card's picture on a public page: only one whose publisher described it is ever public. */
@@ -50,7 +51,7 @@ export const PublicDeckOut = z.object({
           term: z.string(),
           meaning: z.string().nullable(),
           /** The modes a learner is asked this card in, so a preview asks it the same way. */
-          modes: z.array(ReviewModeKey).min(1),
+          modes: z.array(ReviewModeKey.meta(OPEN)).min(1),
           image: PublicImage.optional(),
           audio: z.object({ cardId: z.string() }).optional(),
         }),
@@ -127,7 +128,7 @@ export const PublicDeckSummary = z.object({
       meaning: z.string(),
       section: z.string().nullable(),
       /** The mode the tray shows it in, as the deck page's preview would. */
-      mode: ReviewModeKey,
+      mode: ReviewModeKey.meta(OPEN),
       image: PublicImage.optional(),
     })
     .nullable(),

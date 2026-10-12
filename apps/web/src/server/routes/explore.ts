@@ -10,7 +10,6 @@ export const explore = new Hono<AppEnv>();
 explore.get(
   "/",
   describe({
-    hide: true,
     learnerOnly: true,
     summary: "Every published deck, for Explore",
     ok: { schema: ExploreOut, description: "The catalogue, and the decks already in Library" },
@@ -21,7 +20,6 @@ explore.get(
 explore.get(
   "/:slug",
   describe({
-    hide: true,
     learnerOnly: true,
     summary: "One published deck, in the app",
     ok: { schema: ExploreDeckOut, description: "What the public page shows, plus its deck id" },

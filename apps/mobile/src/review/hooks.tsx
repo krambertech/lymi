@@ -149,7 +149,7 @@ export function HookOffer({ still, onOpen }: { still: boolean; onOpen: () => voi
 /**
  * The card's memory hook, written in a sheet with the keyboard up, as the card's other fields are.
  * The keyboard's done key saves, as no button repeats it; on an empty field it keeps the AI's draft,
- * which is the placeholder. A swipe down lets go.
+ * which is the placeholder, as the web's touch editor does. A swipe down lets go.
  */
 export function HookSheet({
   card,
@@ -209,7 +209,8 @@ export function HookSheet({
     <Sheet
       open={open}
       onOpenChange={(o) => !o && onClose()}
-      title={editing?.hook ? t`Edit hook` : t`Add hook`}
+      // Named as it opened, so a saved first hook never retitles the sheet on its way out.
+      title={shown?.hook ? t`Edit hook` : t`Add hook`}
     >
       <View className="gap-3">
         <View className="rounded-xl bg-glass-plate px-4">
@@ -236,7 +237,7 @@ export function HookSheet({
           {empty && drafted ? (
             <>
               <Icon name="ai" size={14} colour={p.muted} />
-              <Text className="text-sm text-muted">{t`AI draft · Done keeps it`}</Text>
+              <Text className="text-sm text-muted">{t`AI draft`}</Text>
             </>
           ) : empty && draft.isFetching ? (
             <Text className="text-sm text-muted">{t`Drafting a hook…`}</Text>

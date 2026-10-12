@@ -174,8 +174,8 @@ msgstr "Added “{term}”. It’s saved on this phone until Lymi can be reached
 msgid "AI"
 msgstr "AI"
 
-msgid "AI draft · Done keeps it"
-msgstr "AI draft · Done keeps it"
+msgid "AI draft"
+msgstr "AI draft"
 
 msgid "AI example"
 msgstr "AI example"

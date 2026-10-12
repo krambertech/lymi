@@ -15,8 +15,7 @@ const isOnline = () => onlineManager.isOnline();
 export function useKeptSince(query: UseQueryResult): Date | undefined {
   const online = useSyncExternalStore(onlineManager.subscribe, isOnline, isOnline);
   const kept =
-    query.data !== undefined &&
-    (!online || query.fetchStatus === "paused" || query.failureCount > 0);
+    query.data !== undefined && (!online || query.fetchStatus === "paused" || query.isError);
   return kept ? new Date(query.dataUpdatedAt) : undefined;
 }
 

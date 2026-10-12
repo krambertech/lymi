@@ -1,4 +1,4 @@
-import { shouldPersistQuery } from "@lymi/client/cache";
+import { outboxDehydrateOptions } from "@lymi/client/cache";
 import type { QueryClient } from "@tanstack/react-query";
 import type {
   PersistedClient,
@@ -65,7 +65,7 @@ export const persistOptions: Omit<PersistQueryClientOptions, "queryClient"> = {
   persister,
   maxAge: CACHE_MAX_AGE,
   buster: CACHE_SHAPE,
-  dehydrateOptions: { shouldDehydrateQuery: shouldPersistQuery },
+  dehydrateOptions: outboxDehydrateOptions,
 };
 
 function forgetCache() {

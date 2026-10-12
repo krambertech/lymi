@@ -9,19 +9,20 @@ const PLACES = /^\/(review|capture|library|today|explore|you|search|streak)(?=[/
 
 let last: { path: string; at: number } | null = null;
 let atDoor = false;
-let held: string | null = null;
+let held: { path: string; at: number } | null = null;
 
-/** `lymi://review?deck=1` as the router's `/review?deck=1`. */
+/** A held link older than this is let go: an hour on, it is not what the learner came for. */
+const KEEP_MS = 60 * 60_000;
+
 function routePath(url: string): string {
   return url.replace(/^[a-z][a-z0-9+.-]*:\/\//i, "/").replace(/^\/{2,}/, "/");
 }
 
-/** Every link the system opens the app with passes here, from `+native-intent`. */
 export function noteLink(url: string) {
   const path = routePath(url);
   if (!PLACES.test(path)) return;
   last = { path, at: Date.now() };
-  if (atDoor) held = path;
+  if (atDoor) held = last;
 }
 
 /**
@@ -31,7 +32,8 @@ export function noteLink(url: string) {
 export function useHoldLinks() {
   useEffect(() => {
     atDoor = true;
-    if (last && Date.now() - last.at < 5_000) held = last.path;
+    // Mounting here is also a sign-out, which lets go of whatever an earlier visit held.
+    held = last && Date.now() - last.at < 5_000 ? last : null;
     return () => {
       atDoor = false;
     };
@@ -42,8 +44,8 @@ export function useHoldLinks() {
 export function useOpenHeldLink() {
   const router = useRouter();
   useEffect(() => {
-    const path = held;
+    const link = held;
     held = null;
-    if (path) router.push(path as Href);
+    if (link && Date.now() - link.at < KEEP_MS) router.push(link.path as Href);
   }, [router]);
 }

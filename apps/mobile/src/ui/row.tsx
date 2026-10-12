@@ -1,8 +1,11 @@
 import { Children, Fragment, type ReactNode } from "react";
-import { View } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import { usePalette } from "../theme/palette";
 import { Icon, type IconName } from "./icons";
 import { Plate, Press, RowArrow, Text } from "./primitives";
+
+/** Body text at the first accessibility size, 28 pt, over its 17 pt default. */
+const ACCESSIBILITY_SIZES = 28 / 17;
 
 /** Rows that belong together on one plate, split by full-width hairlines. */
 export function Rows({ children }: { children: ReactNode }) {
@@ -37,20 +40,31 @@ interface RowFaceProps {
 /** What a row shows, for a control that brings its own press, such as a Select. */
 export function RowFace({ label, icon, value, end = "open", destructive = false }: RowFaceProps) {
   const p = usePalette();
+  // At the accessibility sizes the value moves under the label, as iOS Settings does, so neither breaks mid-word.
+  const stacked = useWindowDimensions().fontScale >= ACCESSIBILITY_SIZES;
+  const name = (
+    <Text className="text-md" style={{ color: destructive ? p.danger : p.text }}>
+      {label}
+    </Text>
+  );
+  const now = value && (
+    <Text className="text-md text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+      {value}
+    </Text>
+  );
   return (
     <View className="min-h-[52px] flex-row items-center gap-3 py-3 ps-4 pe-4">
       <Icon name={icon} size={20} colour={destructive ? p.danger : p["text-2"]} />
-      <Text
-        className="flex-1 text-md"
-        style={{ color: destructive ? p.danger : p.text }}
-        numberOfLines={2}
-      >
-        {label}
-      </Text>
-      {value && (
-        <Text className="text-md text-muted" style={{ fontVariant: ["tabular-nums"] }}>
-          {value}
-        </Text>
+      {stacked ? (
+        <View className="flex-1 gap-0.5">
+          {name}
+          {now}
+        </View>
+      ) : (
+        <>
+          <View className="flex-1">{name}</View>
+          {now}
+        </>
       )}
       {end === "open" ? (
         <RowArrow />

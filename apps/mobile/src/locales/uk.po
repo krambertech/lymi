@@ -328,7 +328,7 @@ msgid "Explore is coming to the phone"
 msgstr "Каталог скоро буде на телефоні"
 
 msgid "Export"
-msgstr "Експортувати"
+msgstr "Експорт"
 
 msgid "Feedback sent"
 msgstr "Повідомлення надіслано"

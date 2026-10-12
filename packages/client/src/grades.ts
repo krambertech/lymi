@@ -1,6 +1,7 @@
 import type { GradeInput, ReviewMode } from "@lymi/core";
 import { modeKey, modeOf, modeOfStateDirection } from "@lymi/core";
 import { ApiError, api } from "./api";
+import { waitsToSend } from "./api/request";
 import { clientConfig } from "./config";
 import { OUTBOX_KEY } from "./queued";
 import type { LocalGrade } from "./review-draw";
@@ -152,9 +153,9 @@ async function flushQueued(before?: string): Promise<Flushed> {
         result.held.add(modeOfGrade(grade));
       } else if (outcome === "sent") result.sent += 1;
     } catch (err) {
-      // A refused grade can never land, but one refused for a lapsed session waits for sign-in.
+      // A refused grade can never land, unless the refusal is one to wait out.
       const refused = err instanceof ApiError && err.status >= 400 && err.status < 500;
-      if (refused && err.status !== 401) {
+      if (refused && !waitsToSend(err.status)) {
         write(read().filter((g) => !same(g, grade)));
         result.refused.push({ grade, status: err.status });
       } else result.held.add(modeOfGrade(grade));

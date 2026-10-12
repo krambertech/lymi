@@ -154,10 +154,13 @@ describe("retiring", () => {
 });
 
 describe("resilience", () => {
-  it("keeps queued grades when the session has lapsed", async () => {
+  it.each([
+    [401, "the session has lapsed"],
+    [426, "the release is too old for the API"],
+  ])("keeps queued grades at %i, when %s", async (status) => {
     grade.mockRejectedValueOnce(offline());
     await grades.recordGrade(g("a"));
-    grade.mockRejectedValueOnce(new ApiError(401, "sign in"));
+    grade.mockRejectedValueOnce(new ApiError(status, "wait"));
     expect(await grades.flushOutbox()).toBe(0);
     expect(grades.outboxSize()).toBe(1);
   });

@@ -1,4 +1,5 @@
 export * from "./card-search";
+export * from "./client-version";
 export * from "./draw";
 export * from "./enrichment";
 export * from "./export";

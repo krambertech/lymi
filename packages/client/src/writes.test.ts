@@ -153,13 +153,16 @@ describe("flushing", () => {
     expect(notices).toEqual([{ reason: "skipped", label: "magari", deckName: "Italian" }]);
   });
 
-  it("stops at a lapsed session and keeps everything for after sign-in", async () => {
+  it.each([
+    [401, "a lapsed session"],
+    [426, "a release too old for the API"],
+  ])("stops at %i, %s, and keeps everything for after it", async (status) => {
     answers.push(offline);
     await w.submit(add("a"), "a");
     answers.push(offline);
     await w.submit(add("b"), "b");
     calls.length = 0;
-    answers.push(fail(401));
+    answers.push(fail(status));
     expect(await w.flushWrites()).toMatchObject({ sent: 0, stopped: true });
     expect(calls).toEqual(["add a"]);
     expect(w.pendingWrites()).toBe(2);

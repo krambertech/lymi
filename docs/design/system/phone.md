@@ -66,6 +66,10 @@ The sheet stays for the next card: a line under the fields says where the last o
 - After a grade the flame breathes and sparks from the hood, as on the web.
 - At the end the lantern's light reaches the edges of the screen. Review forgotten leads with the Forgot mark, as on the web.
 
+## Update Lymi
+
+When the Worker no longer serves the installed release, the whole app becomes one screen: the lantern, Update Lymi, a line saying unsent reviews and cards are kept when there are any, and one amber Update that opens TestFlight or the App Store. It has no close and no way back, because every request would be refused. ADR 0032 owns when it shows.
+
 ## Haptics
 
 A haptic answers a touch or marks the goal. These are all of them:

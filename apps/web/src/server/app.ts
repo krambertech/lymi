@@ -1,5 +1,5 @@
-import type { Actor, Scope } from "@lymi/core";
-import { MeOut, NameInput } from "@lymi/core";
+import type { Actor, PhoneClient, Scope } from "@lymi/core";
+import { CLIENT_HEADER, MeOut, NameInput, parseClientHeader } from "@lymi/core";
 import { POSTHOG_PROXY_PATH, proxyPostHog } from "@lymi/core/posthog-proxy";
 import { Hono } from "hono";
 import { routePath } from "hono/route";
@@ -15,6 +15,7 @@ import { advertisePublicResourceMetadata } from "./oauth-metadata";
 import { mountOpenApi } from "./openapi";
 import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "./origin-routing";
 import { requireStrongPassword } from "./password-rules";
+import { requireSupportedPhone } from "./phone-clients";
 import { openPreview, requirePreviewAccess } from "./preview-access";
 import { authenticate } from "./principal";
 import { activity } from "./routes/activity";
@@ -58,6 +59,8 @@ export type AppEnv = {
     client?: string | undefined;
     /** That key's name, written onto the rows it makes. */
     clientName?: string | undefined;
+    /** The phone release behind this request, from `x-lymi-client`. Unset for every other caller. */
+    phone?: PhoneClient | undefined;
     /** Set when no route answered, so analytics never records the requested path. */
     unmatched?: true;
   };
@@ -120,6 +123,7 @@ app.use("*", async (c, next) => {
   try {
     const route = routePath(c);
     const actor = c.get("actor");
+    const phone = parseClientHeader(c.req.header(CLIENT_HEADER));
     recordRequest(c.env.REQUESTS, {
       route: c.get("unmatched") ? "unmatched" : route || "unmatched",
       method: c.req.method,
@@ -134,6 +138,7 @@ app.use("*", async (c, next) => {
             : c.res.status === 401
               ? "anon"
               : "public",
+      client: phone ? `${phone.platform} ${phone.version}` : "none",
     });
   } catch {
     // Measurement cannot change the response.
@@ -152,6 +157,9 @@ app.get("/api/health", describe({ hide: true }), (c) =>
     },
   }),
 );
+
+// A phone release too old for this API is told to update before anything else answers it.
+app.use("/api/*", requireSupportedPhone);
 
 // Better Auth owns everything under /api/auth. The credential endpoints are metered first.
 app.use("/api/auth/*", limitCredentialRequests);

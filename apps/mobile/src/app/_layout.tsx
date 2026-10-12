@@ -1,5 +1,6 @@
 import "../global.css";
 import { I18nProvider } from "@lingui/react";
+import { useUpdateRequired } from "@lymi/client/update-required";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { registerDevMenuItems } from "expo-dev-menu";
 import { isGlassEffectAPIAvailable } from "expo-glass-effect";
@@ -16,6 +17,7 @@ import { Sync } from "../data/sync";
 import { i18n } from "../i18n";
 import { LanguageSync } from "../i18n/sync";
 import { usePalette } from "../theme/palette";
+import { UpdateLymi } from "../update/update-lymi";
 import { WidgetSync } from "../widgets/sync";
 
 // A link straight to a review, such as from a widget, still has the tabs under it.
@@ -49,9 +51,11 @@ function Root() {
   const session = useSession();
   const learnerId = session.data?.user.id;
   const signedIn = Boolean(session.data);
+  // A 426 from any request: this release is too old for the API, so nothing else can work.
+  const update = useUpdateRequired();
   useEffect(() => {
-    if (!session.isPending) SplashScreen.hideAsync();
-  }, [session.isPending]);
+    if (!session.isPending || update) SplashScreen.hideAsync();
+  }, [session.isPending, update]);
   const base = dark ? DarkTheme : DefaultTheme;
   // The navigation theme carries the room, so native chrome never flashes white between tabs.
   const theme = {
@@ -65,6 +69,14 @@ function Root() {
       primary: p.text,
     },
   };
+  if (update) {
+    return (
+      <ThemeProvider value={theme}>
+        <StatusBar style="auto" />
+        <UpdateLymi state={update} />
+      </ThemeProvider>
+    );
+  }
   return (
     <ThemeProvider value={theme}>
       <StatusBar style="auto" />

@@ -126,7 +126,7 @@ The Playwright suite runs the product through Vite with a loopback `PRODUCT_URL`
 
 The production product Worker writes aggregate points to `lymi_events` and `lymi_requests`. Query them through the [Analytics Engine SQL API](https://developers.cloudflare.com/analytics/analytics-engine/sql-api/) with an account token that has Analytics Read permission. `_sample_interval` weights rows when Cloudflare samples them. These metrics contain no learner identifier, so sign-ins below are a count of events, not distinct daily active learners.
 
-In `lymi_requests`, `index1` is the caller: `user` for a session, `api` for an API key, `mcp` for an authorized MCP call, `anon` for a request refused with 401, and `public` for a route that runs before authentication and never identifies the caller, such as `/api/auth/*`, `/api/join/*` and `/public/media/*`. `blob1` is the route pattern, or `unmatched` when no route answered.
+In `lymi_requests`, `index1` is the caller: `user` for a session, `api` for an API key, `mcp` for an authorized MCP call, `anon` for a request refused with 401, and `public` for a route that runs before authentication and never identifies the caller, such as `/api/auth/*`, `/api/join/*` and `/public/media/*`. `blob1` is the route pattern, or `unmatched` when no route answered. `blob2` is the method, `blob3` the status class, and `blob4` the phone release from `x-lymi-client`, such as `ios 1.2.0`, or `none` for the web, API keys and MCP. A release below the minimum version gets only 426, counted as `public` and `4xx`.
 
 Daily sign-ins:
 
@@ -153,4 +153,13 @@ SELECT index1 AS actor, blob1 AS route, SUM(_sample_interval) AS calls
 FROM lymi_requests
 WHERE index1 IN ('api', 'mcp') AND timestamp > NOW() - INTERVAL '30' DAY
 GROUP BY actor, route ORDER BY calls DESC
+```
+
+Phone releases still calling, to choose a minimum version:
+
+```sql
+SELECT blob4 AS release, blob3 AS status, SUM(_sample_interval) AS calls
+FROM lymi_requests
+WHERE blob4 != 'none' AND timestamp > NOW() - INTERVAL '30' DAY
+GROUP BY release, status ORDER BY release DESC
 ```

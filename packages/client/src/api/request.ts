@@ -1,4 +1,6 @@
+import { UpdateRequiredOut } from "@lymi/core";
 import { clientConfig } from "../config";
+import { requireUpdate } from "../update-required";
 
 /** The device's IANA zone. The server decides whether it moves the review day. */
 export function deviceTimezone(): string {
@@ -47,6 +49,11 @@ export async function request<T>(path: string, init?: RequestInit): Promise<T> {
     throw new ApiError(0, unreachable());
   }
   if (res.status === 401) throw new ApiError(401, config.messages.signIn());
+  if (res.status === 426) {
+    const body = UpdateRequiredOut.safeParse(await res.json().catch(() => null));
+    requireUpdate({ updateUrl: body.success ? (body.data.updateUrl ?? null) : null });
+    throw new ApiError(426, config.messages.failed());
+  }
   if (!res.ok) {
     const body = (await res.json().catch(() => null)) as { issues?: unknown } | null;
     throw new ApiError(res.status, failureMessage(res.status, body), body?.issues);
@@ -74,6 +81,14 @@ function failureMessage(status: number, body: { issues?: unknown } | null): stri
   if (status === 403) return messages.ownerOnly();
   if (status === 404) return messages.gone();
   return messages.failed();
+}
+
+/**
+ * A refusal the outboxes wait out rather than drop: a lapsed session waits for sign-in, and a
+ * release too old for the API waits for the update.
+ */
+export function waitsToSend(status: number): boolean {
+  return status === 401 || status === 426;
 }
 
 /** The sentence to show for a failed request, whatever was thrown. */

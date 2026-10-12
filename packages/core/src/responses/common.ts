@@ -18,3 +18,11 @@ export const ErrorOut = z
       .meta({ description: "On 400, what failed: Zod issues, or the refusal's details" }),
   })
   .meta({ id: "Error" });
+
+/** A phone release below the minimum version gets this with 426. ADR 0032. */
+export const UpdateRequiredOut = ErrorOut.extend({
+  code: z.literal("update_required"),
+  updateUrl: z.string().optional().meta({
+    description: "Where this platform's app gets its new version, when one is configured",
+  }),
+}).meta({ id: "UpdateRequired" });

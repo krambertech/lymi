@@ -6,7 +6,7 @@
 export * from "./account";
 export * from "./activity";
 export * from "./cards";
-export { ErrorOut, OkOut } from "./common";
+export { ErrorOut, OkOut, UpdateRequiredOut } from "./common";
 export * from "./connected-apps";
 export * from "./decks";
 export * from "./keys";

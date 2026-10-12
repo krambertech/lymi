@@ -204,6 +204,65 @@ describe("a deck archive in review", () => {
     expect(data?.total).toBe(150);
   });
 
+  const waiting = (...writes: Write[]): QueuedWrite[] =>
+    writes.map((write) => ({ v: 1, key: "k", at: 0, write, label: "" }));
+  const twoDecks = () => {
+    const qc = cache();
+    qc.setQueryData(["decks"], [deck("it", { due: 60 }), deck("et", { due: 90 })]);
+    return qc;
+  };
+
+  it("takes a deck whose cards all sit behind the front out of the total", () => {
+    const qc = twoDecks();
+    qc.setQueryData(all, draw([entry("b", "et")], 150));
+    showWrite(qc, { kind: "deck.archive", id: "it" });
+    expect(qc.getQueryData<Draw>(all)?.total).toBe(90);
+  });
+
+  it("leaves a fetched draw that already lacks the deck as it is", () => {
+    const qc = twoDecks();
+    const landed = draw([entry("b", "et")], 90);
+    const rebased = rebase(
+      all,
+      landed,
+      waiting({ kind: "deck.archive", id: "it" }),
+      cacheLookup(qc),
+    );
+    expect(rebased).toBe(landed);
+  });
+
+  it("counts an archive once however often it is laid over the same draw", () => {
+    const qc = twoDecks();
+    const fetched = draw([entry("a", "it"), entry("b", "et")], 150);
+    const archive: Write = { kind: "deck.archive", id: "it" };
+    const once = rebase(all, fetched, waiting(archive), cacheLookup(qc));
+    expect(once.total).toBe(90);
+    expect(rebase(all, once, waiting(archive), cacheLookup(qc))).toBe(once);
+  });
+
+  it("keeps a deck whose archive was undone while both wait, through a refetch", () => {
+    const qc = twoDecks();
+    const fetched = draw([entry("a", "it"), entry("b", "et")], 150);
+    const pending = waiting({ kind: "deck.archive", id: "it" }, { kind: "deck.restore", id: "it" });
+    const rebased = rebase(all, fetched, pending, cacheLookup(qc));
+    expect(rebased).toBe(fetched);
+    const round = { total: 2, items: [{ card: card("a", "it") }, { card: card("b", "et") }] };
+    expect(rebase(["queue", "all", "forgotten"], round, pending, cacheLookup(qc))).toBe(round);
+  });
+
+  it("archives again when the deck is archived after its Undo", () => {
+    const qc = twoDecks();
+    const fetched = draw([entry("a", "it"), entry("b", "et")], 150);
+    const pending = waiting(
+      { kind: "deck.archive", id: "it" },
+      { kind: "deck.restore", id: "it" },
+      { kind: "deck.archive", id: "it" },
+    );
+    const rebased = rebase(all, fetched, pending, cacheLookup(qc));
+    expect(ids(rebased.cards)).toEqual(["b"]);
+    expect(rebased.total).toBe(90);
+  });
+
   it("lays an archive still waiting over a draw fetched again", () => {
     const qc = cache();
     const pending: QueuedWrite[] = [
@@ -213,6 +272,58 @@ describe("a deck archive in review", () => {
     const rebased = rebase(all, fetched, pending, cacheLookup(qc));
     expect(ids(rebased.cards)).toEqual(["b"]);
     expect(rebased.total).toBe(1);
+  });
+  describe("with each deck's count in the draw", () => {
+    const counted = (cards: Draw["cards"], decks: Record<string, number>): Draw => ({
+      ...draw(
+        cards,
+        Object.values(decks).reduce((a, b) => a + b, 0),
+      ),
+      decks,
+    });
+    const archive: Write = { kind: "deck.archive", id: "it" };
+
+    it("takes the deck's count out of a refetch that still counts it, though none of its cards are in front", () => {
+      const qc = twoDecks();
+      const fetched = counted([entry("b", "et")], { it: 60, et: 100 });
+      const rebased = rebase(all, fetched, waiting(archive), cacheLookup(qc));
+      expect(rebased.total).toBe(100);
+      expect(rebased.decks).toEqual({ et: 100 });
+    });
+
+    it("leaves a refetch that no longer counts the deck as it is", () => {
+      const qc = twoDecks();
+      const landed = counted([entry("b", "et")], { et: 100 });
+      expect(rebase(all, landed, waiting(archive), cacheLookup(qc))).toBe(landed);
+    });
+
+    it("counts the archive once over the same draw", () => {
+      const qc = twoDecks();
+      const fetched = counted([entry("a", "it"), entry("b", "et")], { it: 60, et: 100 });
+      const once = rebase(all, fetched, waiting(archive), cacheLookup(qc));
+      expect(ids(once.cards)).toEqual(["b"]);
+      expect(once.total).toBe(100);
+      expect(rebase(all, once, waiting(archive), cacheLookup(qc))).toBe(once);
+    });
+
+    it("keeps the deck when its Undo waits after the archive", () => {
+      const qc = twoDecks();
+      const fetched = counted([entry("b", "et")], { it: 60, et: 100 });
+      const pending = waiting(archive, { kind: "deck.restore", id: "it" });
+      expect(rebase(all, fetched, pending, cacheLookup(qc))).toBe(fetched);
+    });
+
+    it("puts the deck's count back on Undo", () => {
+      const qc = twoDecks();
+      qc.setQueryData(all, counted([entry("a", "it"), entry("b", "et")], { it: 60, et: 100 }));
+      showWrite(qc, archive);
+      expect(qc.getQueryData<Draw>(all)?.total).toBe(100);
+      showWrite(qc, { kind: "deck.restore", id: "it" });
+      const data = qc.getQueryData<Draw>(all);
+      expect(data?.total).toBe(160);
+      expect(data?.decks).toEqual({ it: 60, et: 100 });
+      expect(ids(data?.cards)?.sort()).toEqual(["a", "b"]);
+    });
   });
 });
 

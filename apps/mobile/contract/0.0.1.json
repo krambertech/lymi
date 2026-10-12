@@ -5730,6 +5730,17 @@
       "minimum": -9007199254740991,
       "maximum": 9007199254740991
      },
+     "decks": {
+      "type": "object",
+      "propertyNames": {
+       "type": "string"
+      },
+      "additionalProperties": {
+       "type": "integer",
+       "minimum": -9007199254740991,
+       "maximum": 9007199254740991
+      }
+     },
      "cards": {
       "type": "array",
       "items": {

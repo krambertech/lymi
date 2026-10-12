@@ -128,6 +128,10 @@ export const DrawOut = z
     goal: z.number().int(),
     attempts: z.number().int().meta({ description: "Accepted, non-undone grades today" }),
     total: z.number().int().meta({ description: "Cards that can be reviewed today in this scope" }),
+    decks: z.record(z.string(), z.number().int()).optional().meta({
+      description:
+        "Cards each deck in the scope can review today on its own, by deck id, from the same snapshot as `total`",
+    }),
     cards: z.array(DrawCardOut),
     log: z
       .array(DrawLogEntryOut)

@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import type { DeckSummary, Series } from "@lymi/client/api";
+import { type DeckSummary, errorMessage, type Series } from "@lymi/client/api";
 import { groupDecks } from "@lymi/client/library-groups";
 import * as Haptics from "expo-haptics";
 import { type Href, Link, useRouter } from "expo-router";
@@ -171,6 +171,8 @@ function SeriesMenu({
   const router = useRouter();
   const actions = useSeriesActions();
   const seriesName = s.name;
+  // A series write has no place on screen to say it failed, so iOS says it.
+  const failed = (e: unknown) => Alert.alert(t`That didn’t go through`, errorMessage(e));
   return (
     <DropdownMenu
       title={seriesName}
@@ -194,7 +196,7 @@ function SeriesMenu({
                 {
                   label: t`Move up`,
                   icon: "moveUp" as const,
-                  onSelect: () => actions.move.mutate({ series: s, by: -1 }),
+                  onSelect: () => actions.move.mutate({ series: s, by: -1 }, { onError: failed }),
                 },
               ]
             : []),
@@ -203,7 +205,7 @@ function SeriesMenu({
                 {
                   label: t`Move down`,
                   icon: "moveDown" as const,
-                  onSelect: () => actions.move.mutate({ series: s, by: 1 }),
+                  onSelect: () => actions.move.mutate({ series: s, by: 1 }, { onError: failed }),
                 },
               ]
             : []),
@@ -213,7 +215,10 @@ function SeriesMenu({
             label: t`Delete series`,
             icon: "delete",
             destructive: true,
-            onSelect: () => confirmDelete(t, s, decks, actions.remove.mutate),
+            onSelect: () =>
+              confirmDelete(t, s, decks, (input) =>
+                actions.remove.mutate(input, { onError: failed }),
+              ),
           },
         ],
       ]}

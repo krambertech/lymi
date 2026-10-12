@@ -1140,6 +1140,9 @@ msgstr "Код не совпадает. Проверь письмо и попр�
 msgid "That code has expired. Send a new one."
 msgstr "Этот код больше не действует. Отправь новый."
 
+msgid "That didn’t go through"
+msgstr "Не получилось"
+
 msgid "That didn’t go through. Reload and try again."
 msgstr "Не получилось. Обнови страницу и попробуй снова."
 

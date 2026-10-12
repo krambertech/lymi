@@ -548,8 +548,7 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
       >
         {done}/{total}
       </Text>
-      {/* Plain, because leaving is rare; pulling the bar down does the same. phone.md "Review". */}
-      {/* Its 44 pt target reaches past the glyph, so the glyph lines up with the card's edge. */}
+      {/* Plain, because leaving is rare; its 44 pt target overlaps the gap so the glyph sits by the count. phone.md "Review". */}
       <View style={{ marginStart: -14 }}>
         <IconButton icon="close" label={t`End review`} haptic={false} onPress={onClose} />
       </View>

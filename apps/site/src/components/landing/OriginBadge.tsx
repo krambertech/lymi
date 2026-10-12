@@ -22,13 +22,13 @@ function Badge({ origin, children }: { origin: Origin; children: ReactNode }) {
   return (
     <p
       className={clsx(
-        "mb-6 hidden h-8 w-fit items-center gap-2 rounded-full bg-plate-2 px-3 text-sm text-text-2",
+        "edge mb-6 hidden h-8 w-fit items-center gap-2 rounded-full bg-plate ps-2.5 pe-3.5 text-sm font-medium text-text",
         SHOWN[origin],
       )}
     >
       <svg
         viewBox="0 0 18 12"
-        className="h-3 w-[18px] shrink-0 overflow-hidden rounded-[2px] ring-1 ring-edge"
+        className="h-3.5 w-[21px] shrink-0 overflow-hidden rounded-[2px] ring-1 ring-edge"
         aria-hidden="true"
       >
         {stripes.map((fill, index) => (

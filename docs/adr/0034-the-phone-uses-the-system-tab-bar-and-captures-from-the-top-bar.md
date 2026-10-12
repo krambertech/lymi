@@ -5,7 +5,7 @@ date: 2026-10-12
 
 # The phone uses iOS's own tab bar, and capture moves to the top bar
 
-The phone's tabs are iOS's own tab bar, styled with Lymi's Onest labels and Lucide icons, rather than a bar Lymi draws in Liquid Glass. Capture leaves the tab bar for an amber glass button at the end of every tab's top bar, which grows into Add a word. This narrows [ADR 0029](0029-the-phone-app-is-expo-react-native-sharing-core.md), which had Lymi draw its persistent chrome, including the pill navigation in Liquid Glass.
+The phone's tabs are iOS's own tab bar, styled with Lymi's Onest labels and Lucide icons, rather than a bar Lymi draws in Liquid Glass. Capture leaves the tab bar for an amber glass button at the end of every tab’s top bar, which opens Add a word as a sheet from below. This narrows [ADR 0029](0029-the-phone-app-is-expo-react-native-sharing-core.md), which had Lymi draw its persistent chrome, including the pill navigation in Liquid Glass.
 
 ## Context
 

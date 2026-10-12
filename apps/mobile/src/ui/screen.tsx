@@ -265,7 +265,7 @@ export function BarButton({
 }) {
   const p = usePalette();
   return (
-    <Press onPress={onPress} accessibilityRole="button" accessibilityLabel={label}>
+    <Press onPress={onPress} drawn={40} accessibilityRole="button" accessibilityLabel={label}>
       <GlassSurface
         tint={amber ? "amber" : "room"}
         style={{

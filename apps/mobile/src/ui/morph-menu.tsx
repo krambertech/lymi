@@ -89,7 +89,7 @@ export function MorphMenu({ label, items }: { label: string; items: MenuItem[] }
     <>
       {/* The panel grows from the button itself, so the button steps out while it is open. */}
       <View ref={button} collapsable={false} style={{ opacity: frame ? 0 : 1 }}>
-        <Press onPress={open} accessibilityRole="button" accessibilityLabel={label}>
+        <Press onPress={open} drawn={BUTTON} accessibilityRole="button" accessibilityLabel={label}>
           <GlassSurface
             tint="amber"
             style={{

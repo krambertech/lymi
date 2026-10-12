@@ -651,6 +651,12 @@ msgstr "Не вдалося завантажити картки"
 msgid "Couldn’t load your Library"
 msgstr "Не вдалося завантажити Бібліотеку"
 
+msgid "Couldn’t load your series"
+msgstr ""
+
+msgid "Couldn’t load your series. Try again"
+msgstr ""
+
 msgid "Couldn’t move the deck"
 msgstr "Не вдалося перемістити колоду"
 

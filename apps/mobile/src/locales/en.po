@@ -651,6 +651,12 @@ msgstr "Couldn’t load your cards"
 msgid "Couldn’t load your Library"
 msgstr "Couldn’t load your Library"
 
+msgid "Couldn’t load your series"
+msgstr "Couldn’t load your series"
+
+msgid "Couldn’t load your series. Try again"
+msgstr "Couldn’t load your series. Try again"
+
 msgid "Couldn’t move the deck"
 msgstr "Couldn’t move the deck"
 

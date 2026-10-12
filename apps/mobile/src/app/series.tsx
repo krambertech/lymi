@@ -13,7 +13,7 @@ import { useOnline } from "../streak/goal-picker";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { GlassButton } from "../ui/glass";
-import { Icon, Text } from "../ui/primitives";
+import { Icon, Press, Text } from "../ui/primitives";
 import { OnGlass } from "../ui/surface";
 
 /**
@@ -51,20 +51,23 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
   const [name, setName] = useState(series?.name ?? "");
   const [error, setError] = useState<string | null>(null);
   const { name: save, undoMove } = useSeriesActions();
-  const list = useSeriesList(true).data;
+  const listQuery = useSeriesList(true);
   const notice = useMoveNotice();
   const moving = useDecks().data?.find((d) => d.id === deck);
+  // From a deck, Undo needs the deck's place in its old series, so saving waits for it.
+  const back = moving ? moveBack(moving.seriesId, listQuery.data) : undefined;
+  const waiting = !!deck && !back;
+  // Not loading and still no place: the read failed.
+  const stuck = waiting && !listQuery.isPending && !listQuery.isFetching;
 
   const submit = () => {
-    if (save.isPending || !online) return;
+    if (save.isPending || !online || waiting) return;
     const parsed = SeriesInput.safeParse({ name });
     if (!parsed.success) {
       setError(name.trim() ? t`Keep the name under 80 characters.` : t`Give the series a name.`);
       return;
     }
     setError(null);
-    // Taken before the save, while the deck's old series still holds it in its place.
-    const back = moving ? moveBack(moving.seriesId, list) : undefined;
     save.mutate(
       { series, name: parsed.data.name, deckIds: deck ? [deck] : undefined },
       {
@@ -95,7 +98,7 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
           icon={series || deck ? "check" : "forward"}
           label={series ? t`Save` : deck ? t`Create and move` : t`Next: choose decks`}
           primary
-          busy={save.isPending}
+          busy={save.isPending || (waiting && !stuck)}
           onPress={submit}
         />
       </View>
@@ -124,6 +127,18 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
           <Text className="pt-2 text-base text-muted">
             {t`Changing series needs a connection.`}
           </Text>
+        )}
+        {stuck && (
+          <Press
+            onPress={() => void listQuery.refetch()}
+            accessibilityRole="button"
+            className="flex-row items-center gap-1.5 pt-2"
+          >
+            <Icon name="alert" size={14} colour={p.danger} />
+            <Text className="flex-1 text-base text-danger">
+              {t`Couldn’t load your series. Try again`}
+            </Text>
+          </Press>
         )}
         {error && (
           <View className="flex-row items-center gap-1.5 pt-2" accessibilityLiveRegion="polite">

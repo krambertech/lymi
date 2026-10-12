@@ -3,22 +3,27 @@ import { api } from "@lymi/client/api";
 import { canSpeakTerm } from "@lymi/core";
 import { requireOptionalNativeModule } from "expo";
 import { useEffect, useRef, useState } from "react";
-import { AccessibilityInfo, View } from "react-native";
+import { AccessibilityInfo, ActivityIndicator, View } from "react-native";
 import Animated, {
+  cancelAnimation,
   FadeIn,
   FadeOut,
   useAnimatedStyle,
   useSharedValue,
+  withRepeat,
   withSequence,
   withTiming,
 } from "react-native-reanimated";
 import { useSessionHeaders } from "../auth/client";
 import { ALWAYS, useReduceMotion } from "../theme/motion";
+import { usePalette } from "../theme/palette";
 import { IconButton, Text } from "../ui/primitives";
 
 /** Long enough for speech the server makes on first ask; past it, the play counts as failed. */
 const LOAD_LIMIT_MS = 12_000;
 const TIP_MS = 4000;
+/** How long a play waits before a spinner says it is still coming. */
+const SLOW_MS = 600;
 
 type ExpoAudio = typeof import("expo-audio");
 // A build from before the audio module has no pronunciation rather than a broken review.
@@ -113,6 +118,7 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
   const shake = useSharedValue(0);
   const [tip, setTip] = useState<string | null>(null);
   const { error, state, play } = pronounce;
+  const p = usePalette();
 
   useEffect(() => {
     if (!error) return;
@@ -127,9 +133,39 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
     return () => clearTimeout(timer);
   }, [error, reduce, shake]);
   const style = useAnimatedStyle(() => ({ transform: [{ translateX: shake.value }] }));
+  // Loading dims the speaker and a slow load adds a spinner, as the web's does; playing breathes.
+  const glow = useSharedValue(1);
+  const [slow, setSlow] = useState(false);
+  useEffect(() => {
+    if (state !== "loading") {
+      setSlow(false);
+      return;
+    }
+    const timer = setTimeout(() => setSlow(true), SLOW_MS);
+    return () => clearTimeout(timer);
+  }, [state]);
+  useEffect(() => {
+    cancelAnimation(glow);
+    if (state === "playing" && !reduce) {
+      glow.value = withRepeat(
+        withSequence(
+          withTiming(0.45, { duration: 450, reduceMotion: ALWAYS }),
+          withTiming(1, { duration: 450, reduceMotion: ALWAYS }),
+        ),
+        -1,
+        false,
+        undefined,
+        ALWAYS,
+      );
+    } else {
+      glow.value = state === "loading" ? 0.5 : 1;
+    }
+  }, [state, reduce, glow]);
+  const dim = useAnimatedStyle(() => ({ opacity: glow.value }));
 
   return (
-    <View>
+    // Its box sits inside the text's line height, so the line never moves when it appears.
+    <View className="-my-2">
       {tip && (
         <Animated.View
           entering={FadeIn.duration(150).reduceMotion(ALWAYS)}
@@ -141,17 +177,24 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
         </Animated.View>
       )}
       <Animated.View style={style}>
-        <IconButton
-          icon="pronunciation"
-          label={state === "playing" ? t`Replay pronunciation` : t`Play pronunciation`}
-          variant={error ? "danger" : "secondary"}
-          size="md"
-          round
-          onPress={() => {
-            setTip(null);
-            play();
-          }}
-        />
+        <Animated.View style={dim}>
+          <IconButton
+            icon="pronunciation"
+            label={state === "playing" ? t`Replay pronunciation` : t`Play pronunciation`}
+            variant={error ? "danger" : "secondary"}
+            size="sm"
+            round
+            onPress={() => {
+              setTip(null);
+              play();
+            }}
+          />
+        </Animated.View>
+        {slow && (
+          <View pointerEvents="none" className="absolute inset-0 items-center justify-center">
+            <ActivityIndicator size="small" color={p.muted} />
+          </View>
+        )}
       </Animated.View>
     </View>
   );

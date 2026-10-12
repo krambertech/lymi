@@ -982,9 +982,18 @@ function Run({
   );
 }
 
-/** While the cards load: the card's place held, so the review never opens on a blank room. */
+/** Cards kept on the phone draw in a moment, so the skeleton waits this long before it shows. */
+const SKELETON_AFTER_MS = 400;
+
+/** While the cards load: the card's place held, once loading is slow enough to notice. */
 function ReviewSkeleton() {
   const insets = useSafeAreaInsets();
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setShown(true), SKELETON_AFTER_MS);
+    return () => clearTimeout(timer);
+  }, []);
+  if (!shown) return null;
   return (
     <View
       className="flex-1 px-4"
@@ -1137,7 +1146,7 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
   }));
   return (
     <View className="h-12 flex-row items-center gap-3 ps-4 pe-1">
-      <Lantern size={48} progress={progress} out={out} fed={fed} />
+      <Lantern size={36} progress={progress} out={out} fed={fed} />
       <View
         className="h-1.5 flex-1 overflow-hidden rounded-full bg-plate-2"
         style={{ boxShadow: `inset 0 0 0 1px ${p.edge}` } as ViewStyle}
@@ -1147,7 +1156,7 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
       <Text
         // The count shares a 48 pt bar with the lantern and the progress, so it grows least.
         maxFontSizeMultiplier={1.3}
-        className="min-w-12 text-end text-md text-text-2"
+        className="min-w-12 text-end text-base text-text-2"
         style={{ fontVariant: ["tabular-nums"] }}
       >
         {done}/{total}
@@ -1221,7 +1230,7 @@ function CardPlate({
   onShowHook: (() => void) | undefined;
   offer: boolean;
   onOffer: (() => void) | undefined;
-  /** Revealed, a tap on the card opens its menu. */
+  /** Revealed, holding the card opens its menu. */
   onMenu: (() => void) | undefined;
   /** Offered to VoiceOver as an action on the card while there is a grade to take back. */
   onUndo: (() => void) | undefined;
@@ -1265,14 +1274,24 @@ function CardPlate({
   return (
     <Animated.View layout={glide} className="flex-1">
       <Pressable
+        // Revealed, a tap does nothing and a hold opens the card's menu, so it never opens by accident.
         onPress={
           revealed
-            ? onMenu
+            ? undefined
             : () => {
                 countReveal();
                 onReveal?.();
               }
         }
+        onLongPress={
+          revealed && onMenu
+            ? () => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                onMenu();
+              }
+            : undefined
+        }
+        delayLongPress={400}
         disabled={revealed ? !onMenu : !onReveal}
         accessibilityActions={[
           ...(canPeek ? [{ name: "peek", label: t`Peek at your hook` }] : []),
@@ -1301,8 +1320,8 @@ function CardPlate({
         {/* At large text sizes the deck and the state stack rather than clip. */}
         <View className="flex-row flex-wrap items-center justify-between gap-2 px-6 pt-5">
           <View className="min-w-0 shrink flex-row items-center gap-2">
-            <Icon name="deck" size={18} colour={p.muted} />
-            <Text className="shrink text-md text-text-2" numberOfLines={1}>
+            <Icon name="deck" size={16} colour={p.muted} />
+            <Text className="shrink text-base text-text-2" numberOfLines={1}>
               {[deck?.name, ...tail].filter(Boolean).join(" · ")}
             </Text>
           </View>
@@ -1327,7 +1346,7 @@ function CardPlate({
               <View className="flex-row items-center gap-3">
                 <Text
                   className="shrink text-text"
-                  style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
+                  style={{ fontSize: 38, lineHeight: 48, fontWeight: "500", letterSpacing: -0.9 }}
                   // The word is already the largest text on the card; grown, a long one would break mid-word.
                   maxFontSizeMultiplier={1}
                 >
@@ -1405,7 +1424,7 @@ function CardPlate({
           )}
         </ScrollView>
 
-        {!revealed && hint && <RevealHint />}
+        {!revealed && hint && <RevealHint lifted={canPeek} />}
         {canPeek && onPeek && <PeekButton onPeek={onPeek} />}
         {revealed && offer && onOffer && <HookOffer still={still} onOpen={onOffer} />}
       </Pressable>
@@ -1504,7 +1523,7 @@ function GradeStrip({
             >
               <View className="items-center gap-1.5" style={lock ? { opacity: 0.45 } : undefined}>
                 <Icon name={g.icon} size={20} colour={lock ? p.muted : p[g.tint]} />
-                <Text maxFontSizeMultiplier={1.3} className="text-base font-medium text-text-2">
+                <Text maxFontSizeMultiplier={1.3} className="text-sm font-medium text-text-2">
                   {label}
                 </Text>
               </View>

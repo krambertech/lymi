@@ -10,6 +10,7 @@ import {
   countedRating,
   type Drawn,
   drawKey,
+  interval,
   modeKey,
   type Rating,
   ROUNDS,
@@ -45,7 +46,6 @@ import {
 import { GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   Easing,
-  FadeIn,
   FadeOut,
   Keyframe,
   LinearTransition,
@@ -64,8 +64,6 @@ import { EndEmbers, LightPool } from "../brand/ending";
 import { Flame } from "../brand/flame";
 import { Lantern } from "../brand/lantern";
 import {
-  type Standing,
-  standing,
   useDay,
   useDecks,
   useDraw,
@@ -76,14 +74,19 @@ import {
   useSeriesList,
   useUndoGrade,
 } from "../data/queries";
+import { CardNotes } from "../review/card-notes";
 import { endHaptics } from "../review/end-haptics";
+import { modeLabel } from "../review/modes";
 import { Cover, usePullToEnd } from "../review/pull-to-end";
+import { countReveal, RevealHint, useRevealHint } from "../review/reveal-hint";
 import { markUndoHintSeen, UndoHint, undoHintSeen } from "../review/undo-hint";
 import { CardStack, type TopCard, UndoArea, useUndoSwipe } from "../review/undo-swipe";
+import { Wick } from "../review/wick";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
-import { type Palette, usePalette } from "../theme/palette";
+import { usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
-import type { IconName } from "../ui/icons";
+import { AiCardChip, Chip, StateChip } from "../ui/chip";
+import { GRADES } from "../ui/grade";
 import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
 import { Skeleton } from "../ui/skeleton";
@@ -113,12 +116,14 @@ interface ListCards {
   dropped: ReadonlySet<string>;
 }
 const NO_LIST_CARDS: ListCards = { graded: new Set(), returned: new Set(), dropped: new Set() };
+/** The deck a card came from, named first on the card. A review can mix every deck. */
+type CardDeck = { name: string; language?: string | null | undefined } | undefined;
 /** The last grade and the card as it was shown, so a swipe from the start edge can bring both back. */
 interface Graded {
   item: QueueItem;
   grade: LocalGrade;
   listed: boolean;
-  deckName: string | undefined;
+  deck: CardDeck;
   forgotten: boolean;
 }
 
@@ -541,7 +546,7 @@ function Run({
   const lastToday = state.log
     .filter((e) => e.cardId === card.id && e.mode === modeKey(current.mode))
     .pop();
-  const deckName = decks?.find((d) => d.id === card.deckId)?.name;
+  const cardDeck = decks?.find((d) => d.id === card.deckId);
   const forgotten = round === "forgotten" || leg.kind === "forgotten" || lastToday?.rating === 1;
 
   const onGrade = (rating: Rating) => {
@@ -568,7 +573,7 @@ function Run({
     swipe.arrive();
     const recorded = grade(record);
     if (listed) setListCards((c) => ({ ...c, graded: withKey(c.graded, key) }));
-    setLastGraded({ item, grade: record, listed, deckName, forgotten });
+    setLastGraded({ item, grade: record, listed, deck: cardDeck, forgotten });
     setReturned(false);
     setHint(false);
     setSending((n) => n + 1);
@@ -583,6 +588,7 @@ function Run({
       .then((outcome) => {
         if (outcome === "queued" || undone.current.has(record.reviewedAt)) return;
         if (outcome === "refused" || outcome === "gone") {
+          const term = item.card.term;
           if (listed) {
             setListCards((c) => ({
               graded: withoutKey(c.graded, key),
@@ -592,8 +598,8 @@ function Run({
           }
           Alert.alert(
             outcome === "gone"
-              ? `Couldn’t save your grade for “${item.card.term}”. The card is no longer in your decks.`
-              : `Couldn’t save your grade for “${item.card.term}”. You’ll see it again.`,
+              ? t`Couldn’t save your grade for “${term}”. The card is no longer in your decks.`
+              : t`Couldn’t save your grade for “${term}”. You’ll see it again.`,
           );
         }
         // A dropped grade leaves the fetched data behind, and so does a long run of sent ones.
@@ -631,7 +637,7 @@ function Run({
                   // Each graded card is drawn afresh, so nothing glides from the one before it.
                   key={lastGraded.grade.reviewedAt}
                   item={lastGraded.item}
-                  deckName={lastGraded.deckName}
+                  deck={lastGraded.deck}
                   forgotten={lastGraded.forgotten}
                   revealed
                   still
@@ -643,7 +649,7 @@ function Run({
               <Turn
                 top={top}
                 item={current}
-                deckName={deckName}
+                deck={cardDeck}
                 forgotten={forgotten}
                 revealed={revealed}
                 still={returned}
@@ -721,7 +727,7 @@ function ReviewError({
 function Turn({
   top,
   item,
-  deckName,
+  deck,
   forgotten,
   revealed,
   still = false,
@@ -732,7 +738,7 @@ function Turn({
   /** On the top step, how the card moves; the step underneath stays still. */
   top?: TopCard;
   item: QueueItem;
-  deckName: string | undefined;
+  deck: CardDeck;
   forgotten: boolean;
   revealed: boolean;
   /** Shown as it already stands, with nothing arriving: a card brought back, or one underneath. */
@@ -744,7 +750,7 @@ function Turn({
   const card = (
     <CardPlate
       item={item}
-      deckName={deckName}
+      deck={deck}
       forgotten={forgotten}
       revealed={revealed}
       still={still}
@@ -763,7 +769,7 @@ function Turn({
           card
         )}
       </View>
-      {revealed && <GradeStrip still={!top} onGrade={onGrade} />}
+      {revealed && <GradeStrip still={!top} next={item.next} onGrade={onGrade} />}
     </>
   );
 }
@@ -801,19 +807,6 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
   );
 }
 
-const STATE: Record<Standing, { label: string; icon: IconName; tint: keyof Palette }> = {
-  new: { label: "New", icon: "new", tint: "state-new" },
-  learning: { label: "Learning", icon: "learning", tint: "state-learning" },
-  known: { label: "Known", icon: "known", tint: "state-known" },
-};
-
-const rule = new Keyframe({
-  0: { transform: [{ scaleX: 0 }] },
-  100: { transform: [{ scaleX: 1 }], easing: EASE },
-})
-  .duration(360)
-  .reduceMotion(ALWAYS);
-
 const rise = (i: number) =>
   new Keyframe({
     0: { opacity: 0, transform: [{ translateY: 10 }] },
@@ -824,7 +817,7 @@ const rise = (i: number) =>
     .reduceMotion(ALWAYS);
 
 /** The card's picture, fetched with the learner's session like every other request. */
-function Picture({ card }: { card: QueueItem["card"] }) {
+function Picture({ card, maxHeight = 280 }: { card: QueueItem["card"]; maxHeight?: number }) {
   const headers = useSessionHeaders();
   const image = card.image;
   if (!image || !headers) return null;
@@ -834,18 +827,19 @@ function Picture({ card }: { card: QueueItem["card"] }) {
       accessibilityLabel={image.description ?? undefined}
       resizeMode="contain"
       className="w-full rounded-lg"
-      style={{ aspectRatio: image.width / Math.max(1, image.height), maxHeight: 280 }}
+      style={{ aspectRatio: image.width / Math.max(1, image.height), maxHeight }}
     />
   );
 }
 
 /**
  * The card holds the screen. Unrevealed it is the cue alone (the term, the meaning, or a picture,
- * by the mode the draw chose); a tap anywhere reveals what is asked for.
+ * by the mode the draw chose); a tap anywhere reveals what is asked for. A long answer scrolls inside
+ * the plate, so the grades never move.
  */
 function CardPlate({
   item: { card, fsrsState, mode },
-  deckName,
+  deck,
   forgotten,
   revealed,
   still,
@@ -853,7 +847,7 @@ function CardPlate({
   onUndo,
 }: {
   item: QueueItem;
-  deckName: string | undefined;
+  deck: CardDeck;
   forgotten: boolean;
   revealed: boolean;
   still: boolean;
@@ -861,26 +855,52 @@ function CardPlate({
   /** Offered to VoiceOver as an action on the card while there is a grade to take back. */
   onUndo: (() => void) | undefined;
 }) {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const p = usePalette();
   const dark = useColorScheme() === "dark";
   const reduce = useReduceMotion();
-  const state = STATE[standing(fsrsState)];
+  const hint = useRevealHint(onReveal ? `${card.id}:${modeKey(mode)}` : null, revealed);
   const section = useSections(card.sectionId ? card.deckId : undefined).data?.sections.find(
     (s) => s.id === card.sectionId,
   )?.name;
-  const answer = mode.target === "term" ? card.term : (card.meaning ?? "");
-  const cue = mode.cue === "image" ? null : mode.cue === "term" ? card.term : (card.meaning ?? "");
-  // A picture cue shows neither side, so the answer comes with the other one.
-  const other = mode.cue !== "image" ? null : mode.target === "term" ? card.meaning : card.term;
+  const picture = mode.cue === "image";
+  const noMeaning = t`No meaning yet`;
+  const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
+  const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
+  const languageCode =
+    card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase()
+      ? card.language.toUpperCase()
+      : null;
+  const tail = [picture ? i18n._(modeLabel(mode)) : null, languageCode].filter(
+    (part): part is string => !!part,
+  );
+  // Only the AI is marked: the learner's words and the lesson's are the ordinary case, CONTEXT.md.
+  const aiWritten =
+    card.meaningSource === "ai" ||
+    (card.exampleSource === "ai" && !!card.example) ||
+    (card.notesSource === "ai" && !!card.notes) ||
+    (card.pronunciationSource === "ai" && !!card.pronunciation);
+  // Where the card sits: its section, or the source it came from when it has none.
+  const place = section
+    ? { icon: "section" as const, name: section }
+    : card.source
+      ? { icon: "source" as const, name: card.source }
+      : null;
+  let line = 0;
+  const arrive = () => (still ? undefined : reduce ? CROSSFADE : rise(line++));
+  const glide = reduce || still ? undefined : LinearTransition.duration(GLIDE).easing(EASE);
 
   return (
-    <Animated.View
-      layout={reduce || still ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
-      className="flex-1"
-    >
+    <Animated.View layout={glide} className="flex-1">
       <Pressable
-        onPress={revealed ? undefined : onReveal}
+        onPress={
+          revealed
+            ? undefined
+            : () => {
+                countReveal();
+                onReveal?.();
+              }
+        }
         disabled={revealed || !onReveal}
         accessibilityActions={onUndo ? [{ name: "undo", label: t`Take back the last grade` }] : []}
         onAccessibilityAction={(e) => {
@@ -888,103 +908,113 @@ function CardPlate({
         }}
         accessibilityRole={revealed ? undefined : "button"}
         accessibilityLabel={
-          revealed ? undefined : `${cue ?? card.image?.description ?? ""}. Tap to reveal`
+          revealed
+            ? undefined
+            : picture
+              ? t`Picture card: ${card.image?.description ?? ""}. Tap to reveal`
+              : mode.cue === "term"
+                ? t`Recognition card for ${cue}. Tap to reveal`
+                : t`Production card for ${cue}. Tap to reveal`
         }
         className="flex-1 overflow-hidden rounded-2xl border border-edge bg-plate"
         style={dark ? LIFT : undefined}
       >
-        <View className="flex-1">
-          {/* At large text sizes the deck and the state stack rather than clip. */}
-          <View className="flex-row flex-wrap items-center justify-between gap-2 px-6 pt-5">
-            <View className="flex-row items-center gap-2">
-              <Icon name="deck" size={18} colour={p.muted} />
-              <Text className="text-md text-text-2">{deckName}</Text>
-            </View>
-            <View className="min-h-9 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3.5 py-1">
-              <Icon
-                name={forgotten ? "forgot" : state.icon}
-                size={16}
-                colour={forgotten ? p["grade-forgot"] : p[state.tint]}
-              />
-              <Text className="text-base font-medium text-text-2">
-                {forgotten ? "Forgotten" : state.label}
-              </Text>
-            </View>
+        {/* At large text sizes the deck and the state stack rather than clip. */}
+        <View className="flex-row flex-wrap items-center justify-between gap-2 px-6 pt-5">
+          <View className="min-w-0 shrink flex-row items-center gap-2">
+            <Icon name="deck" size={18} colour={p.muted} />
+            <Text className="shrink text-md text-text-2" numberOfLines={1}>
+              {[deck?.name, ...tail].filter(Boolean).join(" · ")}
+            </Text>
           </View>
+          <StateChip state={forgotten ? 3 : fsrsState} inReview />
+        </View>
 
-          <View className="flex-1 justify-center px-6">
-            <Animated.View
-              layout={reduce || still ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
-            >
-              {cue === null ? (
+        <ScrollView
+          className="flex-1"
+          contentContainerClassName="grow justify-center px-6 py-5"
+          // Unrevealed, the whole plate is the button, so nothing scrolls under the finger.
+          scrollEnabled={revealed}
+          showsVerticalScrollIndicator={false}
+        >
+          <Animated.View layout={glide}>
+            {picture ? (
+              card.image ? (
                 <Picture card={card} />
               ) : (
-                <Text
-                  className="text-text"
-                  style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
-                  // The word is already the largest text on the card; grown, a long one would break mid-word.
-                  maxFontSizeMultiplier={1}
-                >
-                  {cue}
-                </Text>
-              )}
-            </Animated.View>
-            {revealed && (
-              <View className="gap-4 pt-5">
-                <Animated.View
-                  entering={still ? undefined : reduce ? CROSSFADE : rule}
-                  className="h-px bg-edge-2"
-                  // The rule draws from the start edge, which is the right in a right-to-left language.
-                  style={{ transformOrigin: I18nManager.isRTL ? "100% 50%" : "0% 50%" }}
-                />
-                <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(0)}>
-                  <Text className="text-xl text-text">{answer}</Text>
-                </Animated.View>
-                {other && (
-                  <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(1)}>
-                    <Text className="text-md text-text-2">{other}</Text>
-                  </Animated.View>
-                )}
-                {card.example && (
-                  <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(2)}>
-                    <Text className="text-md text-text-2">{card.example}</Text>
-                  </Animated.View>
-                )}
-                {section && (
-                  <Animated.View
-                    entering={still ? undefined : reduce ? CROSSFADE : rise(3)}
-                    className="flex-row"
-                  >
-                    <View className="min-h-8 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3 py-1">
-                      <Icon name="section" size={15} colour={p.muted} />
-                      <Text className="text-base text-text-2">{section}</Text>
-                    </View>
-                  </Animated.View>
-                )}
-              </View>
+                <Text className="text-md text-muted">{t`This card’s picture was removed.`}</Text>
+              )
+            ) : (
+              <Text
+                className="text-text"
+                style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
+                // The word is already the largest text on the card; grown, a long one would break mid-word.
+                maxFontSizeMultiplier={1}
+              >
+                {cue}
+              </Text>
             )}
-          </View>
-
-          {!revealed && (
-            <Animated.View
-              entering={FadeIn.delay(900).duration(400).reduceMotion(ALWAYS)}
-              className="items-center pb-6"
-            >
-              <Text className="text-base text-muted">Tap to reveal</Text>
-            </Animated.View>
+          </Animated.View>
+          {revealed && (
+            <View className="gap-4 pt-5">
+              <Wick still={still} />
+              <Animated.View entering={arrive()}>
+                <Text
+                  className={picture ? "text-2xl font-medium text-text" : "text-xl text-text"}
+                  style={back === noMeaning ? { color: p.muted } : undefined}
+                >
+                  {back}
+                </Text>
+              </Animated.View>
+              {picture && (
+                <Animated.View entering={arrive()}>
+                  <Text className="text-lg text-text-2">
+                    {mode.target === "term" ? card.meaning : card.term}
+                  </Text>
+                </Animated.View>
+              )}
+              {card.pronunciation && (mode.target === "term" || picture) && (
+                <Animated.View entering={arrive()}>
+                  <Text className="text-md text-muted">{card.pronunciation}</Text>
+                </Animated.View>
+              )}
+              {!picture && card.image && (
+                <Animated.View entering={arrive()} style={{ maxWidth: 220 }}>
+                  <Picture card={card} maxHeight={120} />
+                </Animated.View>
+              )}
+              {card.example && (
+                <Animated.View entering={arrive()}>
+                  <Text className="text-md text-text-2">{card.example}</Text>
+                </Animated.View>
+              )}
+              {card.notes && (
+                <Animated.View entering={arrive()}>
+                  <CardNotes source={card.notes} className="text-base text-muted" />
+                </Animated.View>
+              )}
+              {(place || aiWritten) && (
+                <Animated.View
+                  entering={arrive()}
+                  className="flex-row flex-wrap items-center gap-1.5"
+                >
+                  {place && (
+                    <Chip size="sm" icon={place.icon}>
+                      {place.name}
+                    </Chip>
+                  )}
+                  {aiWritten && <AiCardChip />}
+                </Animated.View>
+              )}
+            </View>
           )}
-        </View>
+        </ScrollView>
+
+        {!revealed && hint && <RevealHint />}
       </Pressable>
     </Animated.View>
   );
 }
-
-const GRADES: { label: string; icon: IconName; tint: keyof Palette }[] = [
-  { label: "Forgot", icon: "forgot", tint: "grade-forgot" },
-  { label: "Hard", icon: "hard", tint: "grade-hard" },
-  { label: "Good", icon: "good", tint: "grade-good" },
-  { label: "Easy", icon: "easy", tint: "grade-easy" },
-];
 
 const gradeIn = (i: number) =>
   new Keyframe({
@@ -1001,12 +1031,16 @@ const gradeIn = (i: number) =>
  */
 function GradeStrip({
   still = false,
+  next,
   onGrade,
 }: {
   /** Underneath, the grades are already in place. */
   still?: boolean;
+  /** When each grade brings the card back, which VoiceOver reads with it, as on the web. */
+  next: QueueItem["next"];
   onGrade: ((r: Rating) => void) | undefined;
 }) {
+  const { t, i18n } = useLingui();
   const p = usePalette();
   const dark = useColorScheme() === "dark";
   const reduce = useReduceMotion();
@@ -1015,28 +1049,35 @@ function GradeStrip({
       exiting={FadeOut.duration(120).reduceMotion(ALWAYS)}
       className="flex-row gap-2 px-4 pt-3"
     >
-      {GRADES.map((g, i) => (
-        <Animated.View
-          key={g.label}
-          entering={still ? undefined : reduce ? CROSSFADE : gradeIn(i)}
-          className="flex-1"
-        >
-          <Press
-            scale={0.96}
-            haptic={false}
-            onPress={() => onGrade?.((i + 1) as Rating)}
-            accessibilityRole="button"
-            accessibilityLabel={g.label}
-            className="h-20 items-center justify-center gap-1.5 rounded-xl border border-edge bg-plate"
-            style={dark ? LIFT : undefined}
+      {GRADES.map((g, i) => {
+        const label = i18n._(g.label);
+        const back = next ? interval(new Date(), new Date(next[g.rating])) : null;
+        const schedules = back
+          ? i18n.number(back.value, { style: "unit", unit: back.unit, unitDisplay: "narrow" })
+          : null;
+        return (
+          <Animated.View
+            key={g.rating}
+            entering={still ? undefined : reduce ? CROSSFADE : gradeIn(i)}
+            className="flex-1"
           >
-            <Icon name={g.icon} size={20} colour={p[g.tint]} />
-            <Text maxFontSizeMultiplier={1.3} className="text-base font-medium text-text-2">
-              {g.label}
-            </Text>
-          </Press>
-        </Animated.View>
-      ))}
+            <Press
+              scale={0.96}
+              haptic={false}
+              onPress={() => onGrade?.(g.rating)}
+              accessibilityRole="button"
+              accessibilityLabel={schedules ? t`${label}, next in ${schedules}` : label}
+              className="h-20 items-center justify-center gap-1.5 rounded-xl border border-edge bg-plate"
+              style={dark ? LIFT : undefined}
+            >
+              <Icon name={g.icon} size={20} colour={p[g.tint]} />
+              <Text maxFontSizeMultiplier={1.3} className="text-base font-medium text-text-2">
+                {label}
+              </Text>
+            </Press>
+          </Animated.View>
+        );
+      })}
     </Animated.View>
   );
 }

@@ -17,7 +17,7 @@ const SIZE = 44;
  */
 export function useFrost() {
   const sheet = usePalette().sheet;
-  return useGlass() ? `${sheet}66` : sheet;
+  return useGlass() ? `${sheet}80` : sheet;
 }
 
 /** Glass tinted toward the room or amber, opaque without glass; capture in the top bar uses it too. */

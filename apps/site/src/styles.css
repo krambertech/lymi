@@ -1287,6 +1287,22 @@ html:has(.deck-cards[open]) {
   --tray-c: 0.065;
   --tray-card: oklch(0.33 0.012 60);
 }
+/* The sheets behind an exam question, so the card reads as the top of a deck. */
+.exam-review-paper {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  background: var(--plate);
+  box-shadow: 0 0 0 1px var(--edge);
+}
+.exam-review-paper[data-at="1"] {
+  transform: translate(8px, 6px) rotate(1.8deg);
+}
+.exam-review-paper[data-at="2"] {
+  transform: translate(-6px, 10px) rotate(-2.4deg);
+  opacity: 0.7;
+}
+
 /* A use case's mark in the menus, on the same tray as its landing tile. */
 .use-case-mark {
   background: oklch(0.93 0.05 var(--tray-h, 235));

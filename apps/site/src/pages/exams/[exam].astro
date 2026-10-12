@@ -1,0 +1,21 @@
+---
+import ExamPage from "../../components/exams/ExamPage.astro";
+import ShelfMissing from "../../components/explore/ShelfMissing.astro";
+import { MISSING_CACHE_CONTROL } from "../../lib/deck-page";
+import { EINBUERGERUNGSTEST, examBySlug } from "../../lib/exams";
+import { resolveExamsPage } from "../../lib/public-catalog";
+
+export const prerender = false;
+
+// Germany's exam has its own route, so its slug never reaches this one.
+const exam = examBySlug(Astro.params.exam ?? "");
+const known = exam && exam.slug !== EINBUERGERUNGSTEST ? exam : undefined;
+const page = known ? await resolveExamsPage(Astro, "en", known.slug) : null;
+if (page instanceof Response) return page;
+if (!page) {
+  Astro.response.status = 404;
+  Astro.response.headers.set("cache-control", MISSING_CACHE_CONTROL);
+}
+---
+
+{page && known ? <ExamPage page={page} exam={known} /> : <ShelfMissing />}

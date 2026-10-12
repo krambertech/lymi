@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { jsonForScript } from "../../lib/deck-page";
+import { type Exam, examPath } from "../../lib/exams";
+import { pageI18n } from "../../lib/i18n";
+import type { ExamsPage } from "../../lib/public-catalog";
+import { locales } from "../../lib/routes";
+import { exploreStructuredData, faqPage, softwareApplication } from "../../lib/structured-data";
+import PublicNav from "../islands/PublicNav";
+import { ExploreFooter } from "../explore/ExploreView";
+import { EINBUERGERUNGSTEST_QUESTIONS } from "../landing/faq";
+import {
+  EINBUERGERUNGSTEST_BLURB,
+  EINBUERGERUNGSTEST_TITLE,
+  EinbuergerungstestDecks,
+  ExamDecks,
+  ExamFacts,
+  ExamHero,
+  ExamPlan,
+  ExamQuestions,
+  examQuestions,
+  examTitle,
+  OtherExams,
+} from "./ExamPageView";
+
+interface Props {
+  page: ExamsPage;
+  exam: Exam;
+}
+
+const { page, exam } = Astro.props;
+const { locale, updated } = page;
+const i18n = pageI18n(locale);
+const germany = exam.slug === "einbuergerungstest";
+const decks = page.exams.find((each) => each.exam.id === exam.id)?.decks ?? [];
+const listed = page.exams.map((each) => each.exam.id);
+const title = germany ? i18n._(EINBUERGERUNGSTEST_TITLE) : examTitle(exam, locale);
+const description = germany ? i18n._(EINBUERGERUNGSTEST_BLURB) : i18n._(exam.lede);
+const heading = i18n._(exam.heading);
+const path = examPath(exam, locale);
+const questions = germany ? EINBUERGERUNGSTEST_QUESTIONS : examQuestions(exam);
+const paths = Object.fromEntries(locales.map((each) => [each, examPath(exam, each)])) as Record<
+  (typeof locales)[number],
+  string
+>;
+const structuredData = [
+  softwareApplication({ description, path, locale }),
+  faqPage(questions, i18n, { name: heading, path }),
+  exploreStructuredData(decks, locale, { name: heading, description, path }),
+];
+---
+
+<BaseLayout title={title} description={description} canonicalPath={path} alternatePaths={paths}>
+  <script slot="head" is:inline type="application/ld+json" set:html={jsonForScript(structuredData)} />
+  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+    <header class="shelf-hero over-tint" data-hue="3">
+      <PublicNav client:load locale={locale} current="exams" />
+      <ExamHero
+        locale={locale}
+        exam={exam}
+        first={decks[0]}
+      />
+    </header>
+    <main class="relative">
+      <ExamFacts locale={locale} exam={exam} />
+      {germany ? (
+        <EinbuergerungstestDecks locale={locale} exam={exam} decks={decks} updated={updated} />
+      ) : (
+        <ExamDecks locale={locale} exam={exam} decks={decks} updated={updated} />
+      )}
+      <ExamPlan locale={locale} several={germany || decks.length > 1} />
+      <ExamQuestions locale={locale} items={questions} />
+      <OtherExams locale={locale} exam={exam} listed={listed} />
+    </main>
+    <ExploreFooter locale={locale} paths={paths} />
+  </div>
+</BaseLayout>

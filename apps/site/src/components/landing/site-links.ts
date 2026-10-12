@@ -1,6 +1,12 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import { Languages, type LucideIcon, MessagesSquare, Presentation } from "lucide-react";
+import {
+  ClipboardCheck,
+  Languages,
+  type LucideIcon,
+  MessagesSquare,
+  Presentation,
+} from "lucide-react";
 import type { LocalizedPage } from "../../lib/routes";
 
 export const SOURCE_CODE_URL = "https://github.com/krambertech/lymi";
@@ -40,6 +46,14 @@ export const USE_CASE_LINKS: UseCaseLink[] = [
     icon: Presentation,
     hue: 0,
   },
+  {
+    page: "exams",
+    label: msg`Exam prep`,
+    blurb: msg`Citizenship and driving tests, with every question in a ready deck.`,
+    icon: ClipboardCheck,
+    hue: 3,
+  },
+  { page: "einbuergerungstest", label: msg`Einbürgerungstest`, footerOnly: true },
 ];
 
 export const MENU_USE_CASE_LINKS = USE_CASE_LINKS.filter((link) => !link.footerOnly);

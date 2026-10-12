@@ -110,3 +110,48 @@ export const TEACHERS_QUESTIONS: Question[] = [
     answer: msg`It’s made for tutors and small classes. There are no rosters, assignments or grades.`,
   },
 ];
+
+const OFFLINE: Question = {
+  id: "offline",
+  question: msg`Can I review offline?`,
+  answer: msg`Yes. Open Lymi once while you’re online, and after that you can review without a connection. Your answers are sent when you’re back online.`,
+};
+
+export const EXAMS_QUESTIONS: Question[] = [
+  {
+    id: "official",
+    question: msg`Are these the official questions?`,
+    answer: msg`For Germany, the US, Czechia and Spain, the decks follow the question list each exam publishes, named under the exam. Canada and the DMVs don’t publish their questions, so those decks are practice questions written from the official guide. Lymi isn’t affiliated with any exam authority and can’t promise a pass.`,
+  },
+  {
+    id: "language",
+    question: msg`Which language are the translations in?`,
+    answer: msg`Questions and answers stay in the exam’s language. Each card adds a translation in English, Ukrainian or Russian: the language of the page you add the deck from.`,
+  },
+  OFFLINE,
+  ...COMMON,
+];
+
+export const EINBUERGERUNGSTEST_QUESTIONS: Question[] = [
+  {
+    id: "cost",
+    question: msg`Is it free?`,
+    answer: msg`Yes. Adding the decks and reviewing them is free.`,
+  },
+  {
+    id: "official",
+    question: msg`Is it the official question set?`,
+    answer: msg`The questions and answers are BAMF’s, from its catalogue of 7 May 2025, in German as they appear on the test. The translations and notes are Lymi’s. Lymi isn’t affiliated with BAMF and can’t promise a pass.`,
+  },
+  {
+    id: "state",
+    question: msg`Do I need my state’s deck?`,
+    answer: msg`Yes. Three of the 33 questions are about the state where you’re registered, so add its 10 questions as well as the 300 general ones.`,
+  },
+  {
+    id: "phone",
+    question: msg`Does it work on my phone?`,
+    answer: msg`Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both.`,
+  },
+  OFFLINE,
+];

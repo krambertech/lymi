@@ -9,11 +9,13 @@ import {
 } from "@lymi/core/catalog";
 import type { CSSProperties, ReactNode } from "react";
 import { type DeckCard, languageName, type RecallCue } from "../../lib/deck-page";
+import { examOfDeck } from "../../lib/exams";
 import { pageI18n } from "../../lib/i18n";
 import { openLymiUrl, productUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { deckSubject } from "../../lib/subjects";
 import { buttonClass } from "../Button";
+import { ExamPageLink } from "../exams/ExamPageLink";
 import { DeckTile } from "../explore/DeckTile";
 import { tagLabel } from "../explore/explore-labels";
 import { AppTile } from "../Logo";
@@ -282,6 +284,7 @@ function DeckSpread({ deck, cards }: { deck: PublicDeckOut; cards: DeckCard[] })
 
 /** The name, who made it, what it is, the way to add it, and a few of its cards. */
 export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCard[] }) {
+  const exam = examOfDeck(deck.slug);
   return (
     <Localized locale={locale}>
       <div className="mx-auto max-w-[1120px] px-5 pt-8 pb-10 text-center @2xl:px-10 @4xl:pt-12 @4xl:pb-16">
@@ -316,6 +319,7 @@ export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCar
             use.
           </Trans>
         </p>
+        {exam && <ExamPageLink locale={locale} exam={exam} className="mt-3" />}
         {spread.length > 0 && <DeckSpread deck={deck} cards={spread} />}
       </div>
     </Localized>

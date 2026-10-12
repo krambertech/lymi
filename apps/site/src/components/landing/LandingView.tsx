@@ -45,6 +45,10 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
       title: <Trans>A course or lesson</Trans>,
       body: <Trans>What you need to know for a class or an exam.</Trans>,
       card: USE_CASE_CARDS.courses,
+      link: {
+        href: localizedPath("exams", i18n.locale),
+        label: <Trans>Citizenship and driving tests</Trans>,
+      },
     },
     {
       id: "professional-terms",

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { GET } from "../pages/sitemap-pages.xml";
 import {
   englishOnlyPaths,
+  isRuntimePage,
   type LocalizedPage,
   locales,
   localizedPages,
@@ -22,7 +23,9 @@ const routeOf = (file: string) =>
       .replace(/\/index$/, ""),
   );
 
-const pages = Object.keys(localizedPages) as LocalizedPage[];
+const pages = (Object.keys(localizedPages) as LocalizedPage[]).filter(
+  (page) => !isRuntimePage(page),
+);
 const translatedPaths = (locale: string) => pages.map((page) => bare(localizedPath(page, locale)));
 const translatedPrefix = new RegExp(`^/(${locales.filter((l) => l !== "en").join("|")})(/|$)`);
 const allRoutes = new Set(pageFiles.map(routeOf).filter((route) => route !== "/404"));

@@ -4,6 +4,7 @@ import { type PublicDeckSummary, subjectOf, taughtLanguage } from "@lymi/core/ca
 import { ChevronRight, Search } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { languageName } from "../../lib/deck-page";
+import { isExamShelf } from "../../lib/exams";
 import {
   hasShelfPage,
   type Shelf,
@@ -16,6 +17,7 @@ import { pageI18n } from "../../lib/i18n";
 import type { Locale } from "../../lib/routes";
 import { subjectLabel } from "../../lib/subjects";
 import { trayHues } from "../../lib/tray";
+import { ExamPageLink } from "../exams/ExamPageLink";
 import { DeckTile } from "../explore/DeckTile";
 import { shelfLabel, tagLabel } from "../explore/explore-labels";
 import { ShelfBar, shelfId } from "../explore/ShelfBar";
@@ -63,6 +65,7 @@ function ShelfRow({ shelf, locale, trimmed }: { shelf: Shelf; locale: Locale; tr
           </p>
         )}
       </div>
+      {isExamShelf(route) && <ExamPageLink locale={locale} className="mt-3" />}
       <ul
         className="deck-shelf"
         data-row={(trimmed && page !== null) || undefined}

@@ -2,10 +2,12 @@ import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { ChevronRight, List } from "lucide-react";
 import type { ReactNode } from "react";
-import { explorePath, type Shelf, type ShelfRoute, shelfPath } from "../../lib/explore";
+import { isExamShelf } from "../../lib/exams";
+import { explorePath, type Shelf, type ShelfRoute, shelfPath, shelfRoute } from "../../lib/explore";
 import { pageI18n } from "../../lib/i18n";
 import type { Locale } from "../../lib/routes";
 import { trayHue } from "../../lib/tray";
+import { ExamPageLink } from "../exams/ExamPageLink";
 import { Questions } from "../landing/Questions";
 import { DeckTile } from "./DeckTile";
 import { shelfLabel } from "./explore-labels";
@@ -64,6 +66,7 @@ function ShelfHeroContent({
         {copy.title}
       </h1>
       <p className="mt-4 max-w-[52ch] text-lg text-pretty text-text-2 @2xl:text-xl">{copy.lede}</p>
+      {isExamShelf(shelfRoute(shelf)) && <ExamPageLink locale={locale} className="mt-4" />}
       <p className="mt-3 text-sm text-muted tabular-nums">
         <Plural value={shelf.decks.length} one="# deck" other="# decks" />
         <span aria-hidden="true" className="px-1.5 text-faint">

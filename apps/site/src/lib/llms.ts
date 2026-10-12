@@ -22,6 +22,8 @@ export function llmsTxt(): string {
     `- [Language learning](${SITE}/languages): keeping words from lessons, tutors and reading.`,
     `- [AI assistants](${SITE}/ai-assistants): connecting Claude, ChatGPT or Gemini so they write cards.`,
     `- [Teachers](${SITE}/teachers): one deck shared with a class, in sections.`,
+    `- [Exam prep](${SITE}/exams): ready decks for citizenship and driving tests, with a page per exam giving its format, decks and source.`,
+    `- [Einbürgerungstest](${SITE}/exams/einbuergerungstest): Germany's citizenship test, its format, and the general and state decks.`,
     `- [Documentation](${SITE}/docs): guides, the MCP setup, the API reference and the import guides.`,
     `- [Privacy](${SITE}/privacy): what Lymi stores and who can read it.`,
     `- [Support](${SITE}/support): sign-in, connected apps, API keys and data requests.`,

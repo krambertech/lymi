@@ -50,6 +50,15 @@ msgstr "{0, plural, one {# section} other {# sections}}"
 msgid "{0, plural, one {One more card in this section, in Lymi.} other {# more cards in this section, in Lymi.}}"
 msgstr "{0, plural, one {One more card in this section, in Lymi.} other {# more cards in this section, in Lymi.}}"
 
+#. placeholder {0}: decks.length
+msgid "{0, plural, one {The deck} other {The decks}}"
+msgstr "{0, plural, one {The deck} other {The decks}}"
+
+#. placeholder {0}: stage.known
+#. placeholder {1}: stage.learning
+msgid "{0} Known, {1} Learning, {fresh} New, of {total}"
+msgstr "{0} Known, {1} Learning, {fresh} New, of {total}"
+
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {# card added} other {# cards added}}"
 
@@ -79,6 +88,9 @@ msgstr "{decks, plural, one {deck} other {decks}}"
 
 msgid "{found, plural, one {# deck} other {# decks}}"
 msgstr "{found, plural, one {# deck} other {# decks}}"
+
+msgid "{heading} · Lymi"
+msgstr "{heading} · Lymi"
 
 msgid "{known}% known"
 msgstr "{known}% known"
@@ -114,8 +126,14 @@ msgstr "{name} flashcards"
 msgid "{name} on Lymi: {facts}"
 msgstr "{name} on Lymi: {facts}"
 
+msgid "{name}: the format, every deck and its source"
+msgstr "{name}: the format, every deck and its source"
+
 msgid "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 msgstr "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
+
+msgid "{position} of {total}"
+msgstr "{position} of {total}"
 
 msgid "{reviews, plural, one {past review} other {past reviews}}"
 msgstr "{reviews, plural, one {past review} other {past reviews}}"
@@ -155,11 +173,44 @@ msgstr "10 min"
 msgid "11 October 2026"
 msgstr "11 October 2026"
 
+msgid "17."
+msgstr "17."
+
 msgid "2 days"
 msgstr "2 days"
 
+msgid "20 questions asked aloud, 12 to pass. 128 to learn."
+msgstr "20 questions asked aloud, 12 to pass. 128 to learn."
+
+msgid "20 questions, 14 to pass."
+msgstr "20 questions, 14 to pass."
+
+msgid "20 questions, 15 to pass, 45 minutes."
+msgstr "20 questions, 15 to pass, 45 minutes."
+
+msgid "2025 version"
+msgstr "2025 version"
+
+msgid "2026 edition"
+msgstr "2026 edition"
+
+msgid "25 questions, 15 to pass. 300 to learn."
+msgstr "25 questions, 15 to pass. 300 to learn."
+
+msgid "30 questions, 18 to pass. 300 to learn."
+msgstr "30 questions, 18 to pass. 300 to learn."
+
+msgid "33 questions, 17 to pass. 300 general questions and 10 for your state to learn."
+msgstr "33 questions, 17 to pass. 300 general questions and 10 for your state to learn."
+
 msgid "4 days"
 msgstr "4 days"
+
+msgid "500 feet in either direction"
+msgstr "500 feet in either direction"
+
+msgid "80% to pass. Questions from the official handbook."
+msgstr "80% to pass. Questions from the official handbook."
 
 msgid "9 days"
 msgstr "9 days"
@@ -197,8 +248,20 @@ msgstr "A course or lesson"
 msgid "A deck in four sections. Greetings is done, Numbers and time is 82% known, so Food and drink opens next. Getting around stays locked."
 msgstr "A deck in four sections. Greetings is done, Numbers and time is 82% known, so Food and drink opens next. Getting around stays locked."
 
+msgid "A deck, not a quiz."
+msgstr "A deck, not a quiz."
+
 msgid "A false friend. Embarrassed is avergonzado."
 msgstr "A false friend. Embarrassed is avergonzado."
+
+msgid "a federal state."
+msgstr "a federal state."
+
+msgid "A few minutes a day"
+msgstr "A few minutes a day"
+
+msgid "A few weeks in"
+msgstr "A few weeks in"
 
 msgid "A flat plate on a door says push; a handle says pull."
 msgstr "A flat plate on a door says push; a handle says pull."
@@ -221,6 +284,9 @@ msgstr "A longing for someone or something that is gone"
 msgid "a lot of"
 msgstr "a lot of"
 
+msgid "A Lymi deck"
+msgstr "A Lymi deck"
+
 msgid "A major chord with a minor seventh, built on the fifth note of the key"
 msgstr "A major chord with a minor seventh, built on the fifth note of the key"
 
@@ -242,8 +308,20 @@ msgstr "A photo of the board, your tutor’s message, a lesson transcript, the b
 msgid "A pile of unread books"
 msgstr "A pile of unread books"
 
+msgid "A practice quiz"
+msgstr "A practice quiz"
+
+msgid "A practice quiz tells you how you did today. A deck keeps track of every question, so the review you do tomorrow is the one you need."
+msgstr "A practice quiz tells you how you did today. A deck keeps track of every question, so the review you do tomorrow is the one you need."
+
 msgid "A pun on tsunde oku, to leave piled, and doku, reading."
 msgstr "A pun on tsunde oku, to leave piled, and doku, reading."
+
+msgid "A question you got wrong"
+msgstr "A question you got wrong"
+
+msgid "A score for one attempt"
+msgstr "A score for one attempt"
 
 msgid "A thank-you to everyone who brought the food to the table."
 msgstr "A thank-you to everyone who brought the food to the table."
@@ -253,6 +331,9 @@ msgstr "A thermostat that turns on at 19° and off at 21°."
 
 msgid "A thing; a whatsit"
 msgstr "A thing; a whatsit"
+
+msgid "A translation beside each one"
+msgstr "A translation beside each one"
 
 msgid "a word that makes a question"
 msgstr "a word that makes a question"
@@ -284,14 +365,23 @@ msgstr "Actually; really"
 msgid "Add"
 msgstr "Add"
 
+msgid "Add {name} to Lymi"
+msgstr "Add {name} to Lymi"
+
 msgid "Add {title}"
 msgstr "Add {title}"
+
+msgid "Add both decks"
+msgstr "Add both decks"
 
 msgid "Add it to your assistant"
 msgstr "Add it to your assistant"
 
 msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
 msgstr "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
+
+msgid "Add the 300 questions"
+msgstr "Add the 300 questions"
 
 msgid "Add the deck"
 msgstr "Add the deck"
@@ -332,6 +422,12 @@ msgstr "AI assistants"
 msgid "Al que madruga, Dios lo ayuda: the early bird catches the worm."
 msgstr "Al que madruga, Dios lo ayuda: the early bird catches the worm."
 
+msgid "All 300 general questions of the Einbürgerungstest and the 10 for your state, in German as on the test, with English next to each. Free flashcards from the BAMF catalogue."
+msgstr "All 300 general questions of the Einbürgerungstest and the 10 for your state, in German as on the test, with English next to each. Free flashcards from the BAMF catalogue."
+
+msgid "All exams"
+msgstr "All exams"
+
 msgid "All good?"
 msgstr "All good?"
 
@@ -340,6 +436,9 @@ msgstr "All known"
 
 msgid "All of Explore"
 msgstr "All of Explore"
+
+msgid "All of them, equally often"
+msgstr "All of them, equally often"
 
 msgid "all right"
 msgstr "all right"
@@ -365,6 +464,9 @@ msgstr "Already in your deck, so it’s skipped"
 
 msgid "Also called the frequency illusion."
 msgstr "Also called the frequency illusion."
+
+msgid "An example deck"
+msgstr "An example deck"
 
 msgid "An extreme result is usually followed by a more ordinary one"
 msgstr "An extreme result is usually followed by a more ordinary one"
@@ -432,6 +534,15 @@ msgstr "Are these the official questions?"
 msgid "Arts"
 msgstr "Arts"
 
+msgid "As amended on 1 April 2026"
+msgstr "As amended on 1 April 2026"
+
+msgid "As amended on 19 February 2026"
+msgstr "As amended on 19 February 2026"
+
+msgid "As amended on 30 January 2026"
+msgstr "As amended on 30 January 2026"
+
 msgid "Ask your AI assistant to add a card while you chat. It shows up in Lymi, ready to review."
 msgstr "Ask your AI assistant to add a card while you chat. It shows up in Lymi, ready to review."
 
@@ -467,6 +578,9 @@ msgstr "Back to {name}"
 
 msgid "Back to Lymi"
 msgstr "Back to Lymi"
+
+msgid "Before the test"
+msgstr "Before the test"
 
 msgid "Biology"
 msgstr "Biology"
@@ -510,8 +624,20 @@ msgstr "By {publisher}"
 msgid "by card"
 msgstr "by card"
 
+msgid "California DMV knowledge test"
+msgstr "California DMV knowledge test"
+
+msgid "California DMV knowledge test: the rules of the road"
+msgstr "California DMV knowledge test: the rules of the road"
+
+msgid "California Driver’s Handbook © California DMV, licensed CC BY-NC 4.0."
+msgstr "California Driver’s Handbook © California DMV, licensed CC BY-NC 4.0."
+
 msgid "Can I get a coffee?"
 msgstr "Can I get a coffee?"
+
+msgid "Can I review offline?"
+msgstr "Can I review offline?"
 
 msgid "Can I see how each learner is doing?"
 msgstr "Can I see how each learner is doing?"
@@ -525,9 +651,21 @@ msgstr "Can Lymi say Estonian words aloud?"
 msgid "Can my class use it together?"
 msgstr "Can my class use it together?"
 
+msgid "Can you make a U-turn on a one-way street?"
+msgstr "Can you make a U-turn on a one-way street?"
+
+msgid "Canada"
+msgstr "Canada"
+
+msgid "Canadian citizenship test"
+msgstr "Canadian citizenship test"
+
 msgctxt "deck tag"
 msgid "Canadian citizenship test"
 msgstr "Canadian citizenship test"
+
+msgid "Canadian citizenship test: practice questions on every chapter"
+msgstr "Canadian citizenship test: practice questions on every chapter"
 
 msgid "Card or cash?"
 msgstr "Card or cash?"
@@ -550,9 +688,15 @@ msgstr "Cards outside a section"
 msgid "Catching up with a friend"
 msgstr "Catching up with a friend"
 
+msgid "CCSE Spanish nationality test"
+msgstr "CCSE Spanish nationality test"
+
 msgctxt "deck tag"
 msgid "CCSE Spanish nationality test"
 msgstr "CCSE Spanish nationality test"
+
+msgid "CCSE Spanish nationality test: all 300 questions"
+msgstr "CCSE Spanish nationality test: all 300 questions"
 
 msgid "cents"
 msgstr "cents"
@@ -572,8 +716,14 @@ msgstr "Chess · new"
 msgid "Choose a grade to move to the next card."
 msgstr "Choose a grade to move to the next card."
 
+msgid "Choose a grade to move to the next question."
+msgstr "Choose a grade to move to the next question."
+
 msgid "Choose how many cards a day. Lymi brings each one back right before you’d forget it."
 msgstr "Choose how many cards a day. Lymi brings each one back right before you’d forget it."
+
+msgid "Choose your state"
+msgstr "Choose your state"
 
 msgid "Chopsticks"
 msgstr "Chopsticks"
@@ -587,8 +737,20 @@ msgstr "cinnamon bun"
 msgid "Citizenship"
 msgstr "Citizenship"
 
+msgid "Citizenship and driving test prep with flashcards · Lymi"
+msgstr "Citizenship and driving test prep with flashcards · Lymi"
+
+msgid "Citizenship and driving tests"
+msgstr "Citizenship and driving tests"
+
+msgid "Citizenship and driving tests, with every question in a ready deck."
+msgstr "Citizenship and driving tests, with every question in a ready deck."
+
 msgid "Citizenship test flashcards"
 msgstr "Citizenship test flashcards"
+
+msgid "Citizenship tests"
+msgstr "Citizenship tests"
 
 msgid "City; town"
 msgstr "City; town"
@@ -616,6 +778,9 @@ msgstr "Colleagues say it in the corridor, in emails and at the end of the day."
 
 msgid "Come on; let’s go"
 msgstr "Come on; let’s go"
+
+msgid "Comes back a few cards later, then after longer gaps"
+msgstr "Comes back a few cards later, then after longer gaps"
 
 msgid "Congratulations"
 msgstr "Congratulations"
@@ -661,15 +826,33 @@ msgctxt "deck tag"
 msgid "Core vocabulary"
 msgstr "Core vocabulary"
 
+msgid "correct answers to pass"
+msgstr "correct answers to pass"
+
+msgid "correct answers to pass, with 2 of the 4 on road signs"
+msgstr "correct answers to pass, with 2 of the 4 on road signs"
+
 msgid "Cosy"
 msgstr "Cosy"
 
 msgid "Cosy and convivial; good company"
 msgstr "Cosy and convivial; good company"
 
+msgid "Cramming fades. Spacing lasts."
+msgstr "Cramming fades. Spacing lasts."
+
+msgid "Czech citizenship test"
+msgstr "Czech citizenship test"
+
 msgctxt "deck tag"
 msgid "Czech citizenship test"
 msgstr "Czech citizenship test"
+
+msgid "Czech citizenship test: all 300 questions"
+msgstr "Czech citizenship test: all 300 questions"
+
+msgid "Czechia"
+msgstr "Czechia"
 
 msgid "Data Lymi receives"
 msgstr "Data Lymi receives"
@@ -692,6 +875,10 @@ msgstr "Dear; expensive"
 msgid "Decks"
 msgstr "Decks"
 
+#. placeholder {0}: date(changed)
+msgid "Decks updated {0}"
+msgstr "Decks updated {0}"
+
 msgid "Deep, lasting affection"
 msgstr "Deep, lasting affection"
 
@@ -713,6 +900,9 @@ msgstr "Deutsch · word"
 msgctxt "deck tag"
 msgid "DMV written test"
 msgstr "DMV written test"
+
+msgid "Do I need my state’s deck?"
+msgstr "Do I need my state’s deck?"
 
 msgid "Do I need to read kana first?"
 msgstr "Do I need to read kana first?"
@@ -759,8 +949,26 @@ msgstr "Drinking at home, alone, in your underwear"
 msgid "Driving"
 msgstr "Driving"
 
+msgid "Driving tests"
+msgstr "Driving tests"
+
+msgid "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
+msgstr "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
+
+msgid "Each deck counts its questions as New, Learning and Known. A few minutes a day, and you can see how much of the catalogue you already know before your test date."
+msgstr "Each deck counts its questions as New, Learning and Known. A few minutes a day, and you can see how much of the catalogue you already know before your test date."
+
+msgid "Each deck holds the exam’s published questions, or practice questions from its official guide, each with its answer."
+msgstr "Each deck holds the exam’s published questions, or practice questions from its official guide, each with its answer."
+
 msgid "Each deck opens on its own page with every card on it, so you can see what you would learn before you add it."
 msgstr "Each deck opens on its own page with every card on it, so you can see what you would learn before you add it."
+
+msgid "Each question as New, Learning or Known"
+msgstr "Each question as New, Learning or Known"
+
+msgid "Each question comes back right before you’d forget it, and the ones you get wrong come back sooner."
+msgstr "Each question comes back right before you’d forget it, and the ones you get wrong come back sooner."
 
 msgid "Earlier shelves"
 msgstr "Earlier shelves"
@@ -788,6 +996,18 @@ msgstr "Eesti · word"
 
 msgid "Effortless grace"
 msgstr "Effortless grace"
+
+msgid "Einbürgerungstest"
+msgstr "Einbürgerungstest"
+
+msgid "Einbürgerungstest and Leben in Deutschland"
+msgstr "Einbürgerungstest and Leben in Deutschland"
+
+msgid "Einbürgerungstest and Leben in Deutschland: every question in English"
+msgstr "Einbürgerungstest and Leben in Deutschland: every question in English"
+
+msgid "Einbürgerungstest and Leben in Deutschland: questions and answers in English · Lymi"
+msgstr "Einbürgerungstest and Leben in Deutschland: questions and answers in English · Lymi"
 
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "English has no õ. Say “o” without rounding your lips."
@@ -849,8 +1069,38 @@ msgstr "Every language"
 msgid "Every noun carries der, die or das, and the notes add the plural, so the article is learnt with the word rather than after it."
 msgstr "Every noun carries der, die or das, and the notes add the plural, so the article is learnt with the word rather than after it."
 
+msgid "Every question and answer stays word for word as the test prints it, in German, Spanish or Czech. Beside each one is a translation and a short note, so you learn what it means and how it will look on the day."
+msgstr "Every question and answer stays word for word as the test prints it, in German, Spanish or Czech. Beside each one is a translation and a short note, so you learn what it means and how it will look on the day."
+
+msgid "Every question has four answers and one is right. Because you learn 310 questions in all, it’s often called the 310-question test."
+msgstr "Every question has four answers and one is right. Because you learn 310 questions in all, it’s often called the 310-question test."
+
+msgid "Every question in the Instituto Cervantes manual, in Spanish as on the test, with a translation next to each."
+msgstr "Every question in the Instituto Cervantes manual, in Spanish as on the test, with a translation next to each."
+
+msgid "Every question of the 2025 civics test with its accepted answers, and the words of the reading and writing test."
+msgstr "Every question of the 2025 civics test with its accepted answers, and the words of the reading and writing test."
+
+msgid "Every sign by its picture and German name."
+msgstr "Every sign by its picture and German name."
+
+msgid "Every sign by its picture and Polish name."
+msgstr "Every sign by its picture and Polish name."
+
+msgid "Every sign by its picture, with its German name and number, for the theory test and the road."
+msgstr "Every sign by its picture, with its German name and number, for the theory test and the road."
+
+msgid "Every sign of the Polish regulation by its picture, with its Polish name and code."
+msgstr "Every sign of the Polish regulation by its picture, with its Polish name and code."
+
 msgid "Everything prepped and to hand before you start"
 msgstr "Everything prepped and to hand before you start"
+
+msgid "Exam prep"
+msgstr "Exam prep"
+
+msgid "Exam prep: every test deck and its source"
+msgstr "Exam prep: every test deck and its source"
 
 msgid "Exam preparation"
 msgstr "Exam preparation"
@@ -885,17 +1135,29 @@ msgstr "Feeling low; in a slump"
 msgid "Fill decks from the tools you already use."
 msgstr "Fill decks from the tools you already use."
 
+msgid "Find your exam"
+msgstr "Find your exam"
+
 msgid "Finnish has a word for a night with no plans to go out."
 msgstr "Finnish has a word for a night with no plans to go out."
 
 msgid "Finns often name it as part of the national character."
 msgstr "Finns often name it as part of the national character."
 
+msgid "First day"
+msgstr "First day"
+
 msgid "Flashcard decks, ready to learn"
 msgstr "Flashcard decks, ready to learn"
 
+msgid "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, and driving theory. Questions in the exam’s language, with a translation alongside. Free."
+msgstr "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, and driving theory. Questions in the exam’s language, with a translation alongside. Free."
+
 msgid "Food and drink"
 msgstr "Food and drink"
+
+msgid "Footpath"
+msgstr "Footpath"
 
 msgid "For a cashier, a builder, or a friend who is studying."
 msgstr "For a cashier, a builder, or a friend who is studying."
@@ -906,9 +1168,15 @@ msgstr "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
 msgid "For anything you’re learning."
 msgstr "For anything you’re learning."
 
+msgid "For applications filed on or after 20 October 2025. The officer stops once you have 12 right, or 9 wrong."
+msgstr "For applications filed on or after 20 October 2025. The officer stops once you have 12 right, or 9 wrong."
+
 msgctxt "deck tag"
 msgid "For beginners"
 msgstr "For beginners"
+
+msgid "For Germany, the US, Czechia and Spain, the decks follow the question list each exam publishes, named under the exam. Canada and the DMVs don’t publish their questions, so those decks are practice questions written from the official guide. Lymi isn’t affiliated with any exam authority and can’t promise a pass."
+msgstr "For Germany, the US, Czechia and Spain, the decks follow the question list each exam publishes, named under the exam. Canada and the DMVs don’t publish their questions, so those decks are practice questions written from the official guide. Lymi isn’t affiliated with any exam authority and can’t promise a pass."
 
 msgid "For here or to go?"
 msgstr "For here or to go?"
@@ -952,6 +1220,9 @@ msgstr "From Arabic law šāʼ Allāh, “if God wills”."
 msgid "From G. K. Chesterton’s 1929 book The Thing."
 msgstr "From G. K. Chesterton’s 1929 book The Thing."
 
+msgid "From now until your test date"
+msgstr "From now until your test date"
+
 msgid "Generated audio stays with the related card or account until it is removed under the service’s storage lifecycle."
 msgstr "Generated audio stays with the related card or account until it is removed under the service’s storage lifecycle."
 
@@ -963,6 +1234,18 @@ msgstr "German"
 
 msgid "German A2 · Tuesdays"
 msgstr "German A2 · Tuesdays"
+
+msgid "German road signs for the theory test"
+msgstr "German road signs for the theory test"
+
+msgid "German road signs: every sign of the StVO"
+msgstr "German road signs: every sign of the StVO"
+
+msgid "Germany"
+msgstr "Germany"
+
+msgid "Germany is …"
+msgstr "Germany is …"
 
 msgid "Germany’s come from the BAMF catalogue, the US deck has all 128 civics questions of the 2025 version, Spain’s follow the 2026 CCSE manual and Czechia’s the official NPI ČR bank. Canada’s are Lymi’s own questions on every chapter of Discover Canada, not IRCC’s."
 msgstr "Germany’s come from the BAMF catalogue, the US deck has all 128 civics questions of the 2025 version, Spain’s follow the 2026 CCSE manual and Czechia’s the official NPI ČR bank. Canada’s are Lymi’s own questions on every chapter of Discover Canada, not IRCC’s."
@@ -978,6 +1261,9 @@ msgstr "get up early"
 
 msgid "Getting around"
 msgstr "Getting around"
+
+msgid "Give way"
+msgstr "Give way"
 
 msgid "Gladly"
 msgstr "Gladly"
@@ -1074,6 +1360,9 @@ msgstr "how"
 msgid "How does Lymi decide when to show a card again?"
 msgstr "How does Lymi decide when to show a card again?"
 
+msgid "How far must other drivers be able to see you for a legal U-turn?"
+msgstr "How far must other drivers be able to see you for a legal U-turn?"
+
 msgid "How it works"
 msgstr "How it works"
 
@@ -1089,8 +1378,14 @@ msgstr "How Lymi handles account, learning, integration and service data."
 msgid "How many are waiting for me tonight?"
 msgstr "How many are waiting for me tonight?"
 
+msgid "How many autonomous communities does Spain have?"
+msgstr "How many autonomous communities does Spain have?"
+
 msgid "How sections work"
 msgstr "How sections work"
+
+msgid "How the Einbürgerungstest works, with a deck for each state"
+msgstr "How the Einbürgerungstest works, with a deck for each state"
 
 msgid "How to connect"
 msgstr "How to connect"
@@ -1168,14 +1463,23 @@ msgstr "In many real data sets, about 30% of numbers start with a 1"
 msgid "In the order you learn them, one section at a time."
 msgstr "In the order you learn them, one section at a time."
 
+msgid "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
+msgstr "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
+
 msgid "is"
 msgstr "is"
 
 msgid "Is it for schools?"
 msgstr "Is it for schools?"
 
+msgid "Is it free?"
+msgstr "Is it free?"
+
 msgid "Is it only for languages?"
 msgstr "Is it only for languages?"
+
+msgid "Is it the official question set?"
+msgstr "Is it the official question set?"
 
 msgid "is; have"
 msgstr "is; have"
@@ -1191,6 +1495,9 @@ msgstr "it goes"
 
 msgid "It helps. Read Japanese Kana teaches hiragana and katakana, and the other decks are easier once you can read them."
 msgstr "It helps. Read Japanese Kana teaches hiragana and katakana, and the other decks are easier once you can read them."
+
+msgid "It joins your daily review straight away. There is nothing to build."
+msgstr "It joins your daily review straight away. There is nothing to build."
 
 msgid "It schedules every card with spaced repetition and brings it back right before you’d forget it."
 msgstr "It schedules every card with spaced repetition and brings it back right before you’d forget it."
@@ -1307,6 +1614,10 @@ msgstr "Keep what you learn in Estonian."
 msgid "Keep what you learn."
 msgstr "Keep what you learn."
 
+msgctxt "cards in this state"
+msgid "Known"
+msgstr "Known"
+
 msgid "Language"
 msgstr "Language"
 
@@ -1328,11 +1639,18 @@ msgstr "Latin for “you shall have the body”."
 msgid "Law"
 msgstr "Law"
 
+msgid "Learn the questions once. Keep them until exam day."
+msgstr "Learn the questions once. Keep them until exam day."
+
 msgid "Learn to speak Estonian."
 msgstr "Learn to speak Estonian."
 
 msgid "Learned once, never revisited"
 msgstr "Learned once, never revisited"
+
+msgctxt "cards in this state"
+msgid "Learning"
+msgstr "Learning"
 
 msgid "Learning {name} with Lymi"
 msgstr "Learning {name} with Lymi"
@@ -1431,6 +1749,12 @@ msgstr "Lymi is provided by Krambertech OÜ, an Estonian private limited company
 msgid "Lymi is writing the first decks now. In the meantime you can make your own and share it with anyone."
 msgstr "Lymi is writing the first decks now. In the meantime you can make your own and share it with anyone."
 
+msgid "Lymi isn’t affiliated with {authority} and can’t promise a pass."
+msgstr "Lymi isn’t affiliated with {authority} and can’t promise a pass."
+
+msgid "Lymi mixes their questions into one daily review."
+msgstr "Lymi mixes their questions into one daily review."
+
 msgid "Lymi schedules every card around it."
 msgstr "Lymi schedules every card around it."
 
@@ -1494,6 +1818,9 @@ msgstr "Memory fades. Recalling something at the right time strengthens it and l
 msgid "Menu"
 msgstr "Menu"
 
+msgid "minutes to answer them"
+msgstr "minutes to answer them"
+
 msgid "More decks"
 msgstr "More decks"
 
@@ -1514,6 +1841,9 @@ msgstr "Moving from Anki"
 
 msgid "Moving from Mochi"
 msgstr "Moving from Mochi"
+
+msgid "multiple-choice questions"
+msgstr "multiple-choice questions"
 
 msgid "Music"
 msgstr "Music"
@@ -1548,6 +1878,16 @@ msgstr "Neuter, not feminine: every noun ending in -chen takes das."
 msgid "New"
 msgstr "New"
 
+msgctxt "cards in this state"
+msgid "New"
+msgstr "New"
+
+msgid "New York DMV written test"
+msgstr "New York DMV written test"
+
+msgid "New York DMV written test: the rules of the road"
+msgstr "New York DMV written test: the rules of the road"
+
 msgid "Next card"
 msgstr "Next card"
 
@@ -1557,6 +1897,9 @@ msgstr "Next card: <0>{0}</0>"
 
 msgid "Nice to meet you; thanks in advance"
 msgstr "Nice to meet you; thanks in advance"
+
+msgid "No"
+msgstr "No"
 
 msgid "No chat? Type the word."
 msgstr "No chat? Type the word."
@@ -1651,6 +1994,9 @@ msgstr "Ordering a coffee to go"
 msgid "Other apps"
 msgstr "Other apps"
 
+msgid "Other exams"
+msgstr "Other exams"
+
 msgid "Other subjects"
 msgstr "Other subjects"
 
@@ -1669,6 +2015,9 @@ msgstr "Page not found · Lymi"
 msgid "Paying at the checkout"
 msgstr "Paying at the checkout"
 
+msgid "Pedestrian crossing"
+msgstr "Pedestrian crossing"
+
 msgid "Personal ID code"
 msgstr "Personal ID code"
 
@@ -1684,8 +2033,14 @@ msgstr "Physics"
 msgid "Pick a course from the deck library, add it to your class and adapt it as you go. Share your own when it’s ready."
 msgstr "Pick a course from the deck library, add it to your class and adapt it as you go. Share your own when it’s ready."
 
+msgid "Pick the state where you’re registered."
+msgstr "Pick the state where you’re registered."
+
 msgid "Pick your assistant for its steps."
 msgstr "Pick your assistant for its steps."
+
+msgid "Pick your exam."
+msgstr "Pick your exam."
 
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
@@ -1705,11 +2060,26 @@ msgstr "Please; here you go"
 msgid "Please; here you go; you’re welcome"
 msgstr "Please; here you go; you’re welcome"
 
+msgid "Poland"
+msgstr "Poland"
+
 msgid "Policies"
 msgstr "Policies"
 
+msgid "Polish road signs for the theory test"
+msgstr "Polish road signs for the theory test"
+
+msgid "Polish road signs: every sign, by its picture"
+msgstr "Polish road signs: every sign, by its picture"
+
 msgid "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
 msgstr "Post the join link in your class chat. Everyone who joins gets each card as you add it, and keeps their own schedule. Turn the link off once the class is full."
+
+msgid "Practice questions on the California Driver’s Handbook, one rule to a card."
+msgstr "Practice questions on the California Driver’s Handbook, one rule to a card."
+
+msgid "Practice questions on the New York State Driver’s Manual, one rule to a card."
+msgstr "Practice questions on the New York State Driver’s Manual, one rule to a card."
 
 msgid "Practise with your own words."
 msgstr "Practise with your own words."
@@ -1754,14 +2124,50 @@ msgstr "Push subscriptions stay until you disable reminders, the push service re
 msgid "Questions"
 msgstr "Questions"
 
+msgid "questions an officer asks aloud"
+msgstr "questions an officer asks aloud"
+
+msgid "Questions and answers stay in the exam’s language. Each card adds a translation in English, Ukrainian or Russian: the language of the page you add the deck from."
+msgstr "Questions and answers stay in the exam’s language. Each card adds a translation in English, Ukrainian or Russian: the language of the page you add the deck from."
+
 msgid "Questions before you connect."
 msgstr "Questions before you connect."
 
 msgid "Questions before you start."
 msgstr "Questions before you start."
 
+msgid "Questions from <0>{title}</0>"
+msgstr "Questions from <0>{title}</0>"
+
 msgid "Questions from teachers."
 msgstr "Questions from teachers."
+
+msgid "questions in the manual"
+msgstr "questions in the manual"
+
+msgid "questions in the official bank"
+msgstr "questions in the official bank"
+
+msgid "Questions on every chapter of Discover Canada, the official study guide, with the answer and a short note on each."
+msgstr "Questions on every chapter of Discover Canada, the official study guide, with the answer and a short note on each."
+
+msgid "Questions stay in the exam’s language, with English, Ukrainian or Russian next to them."
+msgstr "Questions stay in the exam’s language, with English, Ukrainian or Russian next to them."
+
+msgid "questions to learn"
+msgstr "questions to learn"
+
+msgid "questions to learn: 300 general and 10 for your state"
+msgstr "questions to learn: 300 general and 10 for your state"
+
+msgid "questions, each with four answers"
+msgstr "questions, each with four answers"
+
+msgid "questions, multiple choice or true or false"
+msgstr "questions, multiple choice or true or false"
+
+msgid "questions: 30 general and 3 about your state"
+msgstr "questions: 30 general and 3 about your state"
 
 msgid "Quick nunchi means sensing a mood before anyone says a word."
 msgstr "Quick nunchi means sensing a mood before anyone says a word."
@@ -1783,6 +2189,9 @@ msgstr "Read your German deck"
 
 msgid "Reading your notes…"
 msgstr "Reading your notes…"
+
+msgid "Ready decks for citizenship and driving theory tests after a move. Each holds the exam’s questions in its own language, with a translation alongside, and brings back the ones you get wrong until they stick."
+msgstr "Ready decks for citizenship and driving theory tests after a move. Each holds the exam’s questions in its own language, with a translation alongside, and brings back the ones you get wrong until they stick."
 
 msgid "Ready to start"
 msgstr "Ready to start"
@@ -1842,14 +2251,23 @@ msgstr "Review history is append-only while the account exists so the schedule a
 msgid "Review less, remember longer."
 msgstr "Review less, remember longer."
 
+msgid "Review on your phone or your computer, for free, even without a connection."
+msgstr "Review on your phone or your computer, for free, even without a connection."
+
 msgid "Reviewed with Lymi"
 msgstr "Reviewed with Lymi"
 
 msgid "Reviews spread over days stick better than the same reviews crammed together"
 msgstr "Reviews spread over days stick better than the same reviews crammed together"
 
+msgid "Revised June 2025"
+msgstr "Revised June 2025"
+
 msgid "Reward lines of code, and the code gets longer."
 msgstr "Reward lines of code, and the code gets longer."
+
+msgid "Right answer"
+msgstr "Right answer"
 
 msgid "Running your fingers through someone’s hair"
 msgstr "Running your fingers through someone’s hair"
@@ -1914,6 +2332,15 @@ msgstr "See all"
 msgid "See how it works"
 msgstr "See how it works"
 
+msgid "See the catalogue move to Known."
+msgstr "See the catalogue move to Known."
+
+msgid "See the decks"
+msgstr "See the decks"
+
+msgid "See what you know"
+msgstr "See what you know"
+
 msgid "See you soon"
 msgstr "See you soon"
 
@@ -1962,11 +2389,20 @@ msgstr "Shortcuts"
 msgid "Show every deck"
 msgstr "Show every deck"
 
+msgid "Show the answer"
+msgstr "Show the answer"
+
+msgid "Show the answer, then grade how well you knew it."
+msgstr "Show the answer, then grade how well you knew it."
+
 msgid "Show the meaning"
 msgstr "Show the meaning"
 
 msgid "sight (to see)"
 msgstr "sight (to see)"
+
+msgid "Sign drawings from Wikimedia Commons: public domain, and C-18 and C-19 by Harry-C under CC BY 3.0."
+msgstr "Sign drawings from Wikimedia Commons: public domain, and C-18 and C-19 by Harry-C under CC BY 3.0."
 
 msgid "Sign in and let it add cards. Then send it your notes."
 msgstr "Sign in and let it add cards. Then send it your notes."
@@ -1982,6 +2418,9 @@ msgstr "Sitting through a bad film because you paid for the ticket."
 
 msgid "Skip to the document"
 msgstr "Skip to the document"
+
+msgid "Slow or stop so others can pass without you forcing them to change speed or path."
+msgstr "Slow or stop so others can pass without you forcing them to change speed or path."
 
 msgid "So-so"
 msgstr "So-so"
@@ -2013,6 +2452,9 @@ msgstr "Soviet Russia recognised Estonia’s independence"
 msgid "Spacing"
 msgstr "Spacing"
 
+msgid "Spain"
+msgstr "Spain"
+
 msgid "Spanish"
 msgstr "Spanish"
 
@@ -2039,6 +2481,9 @@ msgstr "Start learning"
 
 msgid "Start with a ready-made course."
 msgstr "Start with a ready-made course."
+
+msgid "Start with your exam’s deck."
+msgstr "Start with your exam’s deck."
 
 msgid "station"
 msgstr "station"
@@ -2160,6 +2605,12 @@ msgstr "Thanks! See you!"
 msgid "That chess term you just used, add it to my deck."
 msgstr "That chess term you just used, add it to my deck."
 
+msgid "The 10 questions for your state"
+msgstr "The 10 questions for your state"
+
+msgid "The 300 general questions"
+msgstr "The 300 general questions"
+
 msgid "The A1, A2 and B1 decks are checked against the Goethe-Zertifikat word list for each level, but they aren’t official or complete lists."
 msgstr "The A1, A2 and B1 decks are checked against the Goethe-Zertifikat word list for each level, but they aren’t official or complete lists."
 
@@ -2181,6 +2632,12 @@ msgstr "the day before"
 msgid "The day before"
 msgstr "The day before"
 
+msgid "The DMV doesn’t publish its questions. These are practice questions written from the official handbook."
+msgstr "The DMV doesn’t publish its questions. These are practice questions written from the official handbook."
+
+msgid "The DMV doesn’t publish its questions. These are practice questions written from the official manual."
+msgstr "The DMV doesn’t publish its questions. These are practice questions written from the official manual."
+
 msgid "The duck never answers. It doesn’t need to."
 msgstr "The duck never answers. It doesn’t need to."
 
@@ -2193,8 +2650,14 @@ msgstr "The edge of the ice"
 msgid "The evening after work"
 msgstr "The evening after work"
 
+msgid "The exam’s words, your language."
+msgstr "The exam’s words, your language."
+
 msgid "The free evening after work"
 msgstr "The free evening after work"
+
+msgid "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
+msgstr "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
 
 msgid "The German, Spanish and Czech decks keep questions and answers in the exam’s language, as the exam does; the notes add an English translation and a short explanation."
 msgstr "The German, Spanish and Czech decks keep questions and answers in the exam’s language, as the exam does; the notes add an English translation and a short explanation."
@@ -2202,11 +2665,17 @@ msgstr "The German, Spanish and Czech decks keep questions and answers in the ex
 msgid "The girl"
 msgstr "The girl"
 
+msgid "The Hradec Králové and Pardubice regions."
+msgstr "The Hradec Králové and Pardubice regions."
+
 msgid "The JLPT has published no official word list since 2010, so the N5 and N4 decks follow their level from widely used study lists. Neither is an official list."
 msgstr "The JLPT has published no official word list since 2010, so the N5 and N4 decks follow their level from widely used study lists. Neither is an official list."
 
 msgid "The knack of reading the room"
 msgstr "The knack of reading the room"
+
+msgid "The Leben in Deutschland test at the end of an integration course uses the same questions. There, 15 correct answers earn the certificate; for citizenship you need 17."
+msgstr "The Leben in Deutschland test at the end of an integration course uses the same questions. There, 15 correct answers earn the certificate; for citizenship you need 17."
 
 msgid "The link is off. Nobody new can join."
 msgstr "The link is off. Nobody new can join."
@@ -2226,6 +2695,9 @@ msgstr "The next section opens at 80% known"
 msgid "The one that matches your test or topic. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "The one that matches your test or topic. You can add more than one, and Lymi mixes their cards into one daily review."
 
+msgid "The ones you’re about to forget"
+msgstr "The ones you’re about to forget"
+
 msgid "The output depends on the history of the input"
 msgstr "The output depends on the history of the input"
 
@@ -2241,11 +2713,26 @@ msgstr "The player would pass, if chess allowed it."
 msgid "The push behind ragtime, funk and reggae."
 msgstr "The push behind ragtime, funk and reggae."
 
+msgid "The questions and answers are BAMF’s, from its catalogue of 7 May 2025, in German as they appear on the test. The translations and notes are Lymi’s. Lymi isn’t affiliated with BAMF and can’t promise a pass."
+msgstr "The questions and answers are BAMF’s, from its catalogue of 7 May 2025, in German as they appear on the test. The translations and notes are Lymi’s. Lymi isn’t affiliated with BAMF and can’t promise a pass."
+
+msgid "The questions and answers follow {source}. Lymi isn’t affiliated with {authority} and can’t promise a pass."
+msgstr "The questions and answers follow {source}. Lymi isn’t affiliated with {authority} and can’t promise a pass."
+
+msgid "The questions, with answers"
+msgstr "The questions, with answers"
+
 msgid "The right moment matters."
 msgstr "The right moment matters."
 
 msgid "The right to be brought before a judge rather than held without charge"
 msgstr "The right to be brought before a judge rather than held without charge"
+
+msgid "The rules the theory test asks about, and every sign of the ПДР by its picture."
+msgstr "The rules the theory test asks about, and every sign of the ПДР by its picture."
+
+msgid "The rules, and every sign by its picture."
+msgstr "The rules, and every sign by its picture."
 
 msgid "The same address works everywhere. Nothing to install."
 msgstr "The same address works everywhere. Nothing to install."
@@ -2256,8 +2743,17 @@ msgstr "The same word for someone you love and a price you’d rather not pay."
 msgid "The steam in a sauna"
 msgstr "The steam in a sauna"
 
+msgid "The translations and notes are Lymi’s."
+msgstr "The translations and notes are Lymi’s."
+
+msgid "The Vikings"
+msgstr "The Vikings"
+
 msgid "The whiteboard"
 msgstr "The whiteboard"
+
+msgid "The whole official bank for the test of Czech life and institutions, in Czech as on the test, with a translation next to each."
+msgstr "The whole official bank for the test of Czech life and institutions, in Czech as on the test, with a translation next to each."
 
 msgid "The words and phrases from each unit of the course."
 msgstr "The words and phrases from each unit of the course."
@@ -2353,12 +2849,18 @@ msgctxt "deck tag"
 msgid "TOPIK I"
 msgstr "TOPIK I"
 
+msgid "Translation language"
+msgstr "Translation language"
+
 msgctxt "deck tag"
 msgid "Travel"
 msgstr "Travel"
 
 msgid "Try a few cards"
 msgstr "Try a few cards"
+
+msgid "Try a question"
+msgstr "Try a question"
 
 msgid "Try a word you would find on a card, or the language you are learning. Lymi publishes a deck as soon as it is written and checked."
 msgstr "Try a word you would find on a card, or the language you are learning. Lymi publishes a deck as soon as it is written and checked."
@@ -2399,14 +2901,38 @@ msgstr "Twelve. Today’s new words will start coming up a few at a time."
 msgid "two"
 msgstr "two"
 
+msgid "Two decks: the general questions and your state’s"
+msgstr "Two decks: the general questions and your state’s"
+
 msgid "Two euros ten."
 msgstr "Two euros ten."
 
 msgid "Type the term, and AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
 msgstr "Type the term, and AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
 
+msgid "U.S. citizens"
+msgstr "U.S. citizens"
+
+msgid "Ukraine"
+msgstr "Ukraine"
+
+msgid "Ukrainian driving theory (ПДР)"
+msgstr "Ukrainian driving theory (ПДР)"
+
+msgid "Ukrainian driving theory: the rules and every sign"
+msgstr "Ukrainian driving theory: the rules and every sign"
+
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Unfinished tasks stay on your mind more than finished ones"
+
+msgid "United States"
+msgstr "United States"
+
+msgid "US citizenship test"
+msgstr "US citizenship test"
+
+msgid "US citizenship test: all 128 civics questions"
+msgstr "US citizenship test: all 128 civics questions"
 
 msgctxt "deck tag"
 msgid "US civics test"
@@ -2430,8 +2956,17 @@ msgstr "Usually"
 msgid "verb"
 msgstr "verb"
 
+msgid "Version of 5 January 2026"
+msgstr "Version of 5 January 2026"
+
+msgid "Version of 7 May 2025"
+msgstr "Version of 7 May 2025"
+
 msgid "Waiting for your notes"
 msgstr "Waiting for your notes"
+
+msgid "Waits for its turn"
+msgstr "Waits for its turn"
 
 msgid "We also use filtered error monitoring: error reports contain the error type and technical stack frames, with messages and other context removed."
 msgstr "We also use filtered error monitoring: error reports contain the error type and technical stack frames, with messages and other context removed."
@@ -2472,11 +3007,23 @@ msgstr "What comes across"
 msgid "What does it cost?"
 msgstr "What does it cost?"
 
+msgid "What every exam deck gives you"
+msgstr "What every exam deck gives you"
+
 msgid "What if I already use Anki?"
 msgstr "What if I already use Anki?"
 
 msgid "What if it gets something wrong?"
 msgstr "What if it gets something wrong?"
+
+msgid "What the test looks like"
+msgstr "What the test looks like"
+
+msgid "What you can see"
+msgstr "What you can see"
+
+msgid "What you cram the night before fades within days. Spaced repetition asks each question again just as you’re about to forget it, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
+msgstr "What you cram the night before fades within days. Spaced repetition asks each question again just as you’re about to forget it, and every time you remember, the next gap grows. Lymi uses your grade to decide when each question comes back."
 
 msgid "What you need to know for a class or an exam."
 msgstr "What you need to know for a class or an exam."
@@ -2514,17 +3061,32 @@ msgstr "Which assistants work?"
 msgid "Which deck should I add?"
 msgstr "Which deck should I add?"
 
+msgid "Which language are the translations in?"
+msgstr "Which language are the translations in?"
+
 msgid "Which languages can I learn?"
 msgstr "Which languages can I learn?"
 
+msgid "Which pair of regions is in East Bohemia?"
+msgstr "Which pair of regions is in East Bohemia?"
+
+msgid "Which questions come up"
+msgstr "Which questions come up"
+
 msgid "While Lymi was private, we stored the email address of anyone who asked for access, where on the site they asked, and when. We no longer collect these, and anyone can sign up."
 msgstr "While Lymi was private, we stored the email address of anyone who asked for access, where on the site they asked, and when. We no longer collect these, and anyone can sign up."
+
+msgid "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?"
+msgstr "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?"
 
 msgid "Who is responsible"
 msgstr "Who is responsible"
 
 msgid "Who knows?"
 msgstr "Who knows?"
+
+msgid "Who were the first Europeans to reach Canada?"
+msgstr "Who were the first Europeans to reach Canada?"
 
 msgid "Whose notes"
 msgstr "Whose notes"
@@ -2589,14 +3151,23 @@ msgstr "Yes, please; I’d be glad to"
 msgid "Yes, to everyone."
 msgstr "Yes, to everyone."
 
+msgid "Yes. Adding the decks and reviewing them is free."
+msgstr "Yes. Adding the decks and reviewing them is free."
+
 msgid "Yes. Every letter stays as you typed it, so tuli, fire, and tüli, a quarrel, are two different cards."
 msgstr "Yes. Every letter stays as you typed it, so tuli, fire, and tüli, a quarrel, are two different cards."
 
 msgid "Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both."
 msgstr "Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both."
 
+msgid "Yes. Open Lymi once while you’re online, and after that you can review without a connection. Your answers are sent when you’re back online."
+msgstr "Yes. Open Lymi once while you’re online, and after that you can review without a connection. Your answers are sent when you’re back online."
+
 msgid "Yes. Press play on any card to hear it in Estonian."
 msgstr "Yes. Press play on any card to hear it in Estonian."
+
+msgid "Yes. Three of the 33 questions are about the state where you’re registered, so add its 10 questions as well as the 300 general ones."
+msgstr "Yes. Three of the 33 questions are about the state where you’re registered, so add its 10 questions as well as the 300 general ones."
 
 msgid "Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins gets each new card as it’s added."
 msgstr "Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins gets each new card as it’s added."

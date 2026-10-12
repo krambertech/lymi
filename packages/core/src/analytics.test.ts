@@ -78,6 +78,9 @@ describe("analytics privacy contract", () => {
     expect(analyticsPath("/library/private-deck", "product")).toBe("/library/:item");
     expect(analyticsPath("/reset-password/token", "product")).toBe("/other");
     expect(analyticsPath("/uk/explore/eesti-a1", "public")).toBe("/uk/explore/eesti-a1");
+    expect(analyticsPath("/ru/exams/einbuergerungstest", "public")).toBe(
+      "/ru/exams/einbuergerungstest",
+    );
     expect(analyticsPath("/unknown/private", "public")).toBe("/other");
   });
   it("keeps only bounded campaign labels and the referrer hostname", () => {

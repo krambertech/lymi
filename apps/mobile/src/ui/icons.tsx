@@ -28,6 +28,7 @@ import {
   EyeOff,
   FolderInput,
   Image as ImageIcon,
+  ImageMinus,
   Import,
   KeyRound,
   Languages,
@@ -43,6 +44,7 @@ import {
   Pencil,
   PencilLine,
   Play,
+  Plug,
   Plus,
   Repeat2,
   RotateCcw,
@@ -147,6 +149,8 @@ const ICONS = {
   idea: Lightbulb,
   explore: Compass,
   send: ArrowUp,
+  apps: Plug,
+  removePhoto: ImageMinus,
 } as const;
 
 export type IconName = keyof typeof ICONS;

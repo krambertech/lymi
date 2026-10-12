@@ -1,5 +1,5 @@
 import type { Actor, Scope } from "@lymi/core";
-import { MeOut } from "@lymi/core";
+import { MeOut, NameInput } from "@lymi/core";
 import { POSTHOG_PROXY_PATH, proxyPostHog } from "@lymi/core/posthog-proxy";
 import { Hono } from "hono";
 import { routePath } from "hono/route";
@@ -8,7 +8,7 @@ import { limitCredentialRequests } from "./auth-rate-limit";
 import { createDb, type Db } from "./db";
 import { type Bindings, withServedOrigin } from "./env";
 import { fetchConfiguredAsset } from "./html";
-import { describe, handleError } from "./http";
+import { body, ctxOf, describe, handleError } from "./http";
 import { addPage, joinPage } from "./join-page";
 import { handleMcpRequest } from "./mcp";
 import { advertisePublicResourceMetadata } from "./oauth-metadata";
@@ -40,6 +40,7 @@ import { deckSections, sections } from "./routes/sections";
 import { series } from "./routes/series";
 import { settings } from "./routes/settings";
 import { stats } from "./routes/stats";
+import { renameLearner } from "./services/account";
 import { recordRequest } from "./services/analytics";
 import { catchUpStates } from "./services/modes";
 
@@ -245,6 +246,20 @@ app.get(
     const { id, name, email } = c.get("user");
     return c.json({ id, name, email });
   },
+);
+
+app.patch(
+  "/api/me",
+  describe({
+    tags: ["Account"],
+    summary: "Change my name",
+    learnerOnly: true,
+    description: "Learner only. Sets the name the app shows, and that people in a shared deck see.",
+    ok: { schema: MeOut, description: "The learner after the change" },
+    errors: [400],
+  }),
+  body(NameInput, "name"),
+  async (c) => c.json(await renameLearner(ctxOf(c), c.req.valid("json").name)),
 );
 
 // A member's states catch up to their decks before anything that reads progress. ADR 0022.

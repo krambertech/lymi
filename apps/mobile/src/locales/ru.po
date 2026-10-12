@@ -165,8 +165,8 @@ msgstr "Это написал AI"
 msgid "Also on your list"
 msgstr "Ещё для повторения"
 
-msgid "API keys and connected apps"
-msgstr "Ключи API и подключённые приложения"
+msgid "API keys"
+msgstr "Ключи API"
 
 msgid "Archived"
 msgstr "Архив"
@@ -192,6 +192,9 @@ msgstr "Отмена"
 msgid "Change daily goal"
 msgstr "Изменить дневную цель"
 
+msgid "Change photo"
+msgstr "Изменить фото"
+
 msgid "Changing the goal needs a connection."
 msgstr "Чтобы изменить цель, нужно подключение."
 
@@ -210,6 +213,9 @@ msgstr "Выбрать другое"
 msgid "Choose from photos"
 msgstr "Выбрать из фото"
 
+msgid "Choose photo"
+msgstr "Выбрать фото"
+
 msgid "Clear the picture"
 msgstr "Убрать изображение"
 
@@ -222,8 +228,14 @@ msgstr "Код"
 msgid "Confirm"
 msgstr "Подтвердить"
 
+msgid "Connected apps"
+msgstr "Подключённые приложения"
+
 msgid "Continue with Google"
 msgstr "Продолжить с Google"
+
+msgid "Couldn’t change your photo. Check your connection and try again."
+msgstr "Не удалось изменить фото. Проверь соединение и попробуй ещё раз."
 
 msgid "Couldn’t load Today"
 msgstr "Не удалось загрузить экран «Сегодня»"
@@ -236,6 +248,9 @@ msgstr "Не удалось связаться с сервисом входа. �
 
 msgid "Couldn’t save the goal. Try again."
 msgstr "Не удалось сохранить цель. Попробуй ещё раз."
+
+msgid "Couldn’t save your name. Check your connection and try again."
+msgstr "Не удалось сохранить имя. Проверь соединение и попробуй ещё раз."
 
 msgid "Couldn’t send your feedback"
 msgstr "Не удалось отправить сообщение"
@@ -299,6 +314,9 @@ msgstr "Готово"
 
 msgid "Easy"
 msgstr "Легко"
+
+msgid "Edit your name and photo"
+msgstr "Изменить имя и фото"
 
 msgid "Email"
 msgstr "Почта"
@@ -416,6 +434,9 @@ msgstr "Усердно"
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Сообщение должно быть короче {FEEDBACK_MESSAGE_MAX} символов."
 
+msgid "Keep your name under 80 characters."
+msgstr "Имя должно быть короче 80 символов."
+
 msgid "Known"
 msgstr "Выученная"
 
@@ -476,6 +497,10 @@ msgstr "Сообщение"
 msgid "More about this card"
 msgstr "Больше о карточке"
 
+msgctxt "person"
+msgid "Name"
+msgstr "Имя"
+
 msgid "New"
 msgstr "Новая"
 
@@ -524,9 +549,6 @@ msgstr "Выключено"
 
 msgid "Often forgotten"
 msgstr "Часто забываются"
-
-msgid "On the web"
-msgstr "В веб-версии"
 
 msgid "Only on days with cards due."
 msgstr "Только в дни, когда есть карточки к повторению."
@@ -599,6 +621,9 @@ msgstr "Распознавание"
 
 msgid "Remind me to review"
 msgstr "Напоминать о повторении"
+
+msgid "Remove photo"
+msgstr "Удалить фото"
 
 msgid "Reset your password"
 msgstr "Новый пароль"
@@ -677,10 +702,6 @@ msgstr "Выйти"
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Вход не завершён. Попробуй снова."
 
-#. placeholder {0}: user.email
-msgid "Signed in as {0}"
-msgstr "Аккаунт: {0}"
-
 msgid "Source"
 msgstr "Источник"
 
@@ -702,6 +723,9 @@ msgstr "Системная"
 
 msgid "Take a photo"
 msgstr "Сделать фото"
+
+msgid "Take photo"
+msgstr "Сфотографировать"
 
 msgid "Tell Lymi what broke or what it should do. Replies come to your email."
 msgstr "Расскажи Lymi, что сломалось или что стоит добавить. Ответ придёт на твою почту."
@@ -808,6 +832,9 @@ msgstr "Откуда это, например урок"
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, что хочешь рассказать Lymi."
 
+msgid "Write your name."
+msgstr "Напиши своё имя."
+
 msgid "Yesterday was a rest day"
 msgstr "Вчера был день отдыха"
 
@@ -829,5 +856,11 @@ msgstr "На сегодня всё."
 msgid "Your cards and your streak, on every device."
 msgstr "Твои карточки и счёт дней подряд на любом устройстве."
 
+msgid "Your data"
+msgstr "Твои данные"
+
 msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Твоё сообщение сохранено. Попробуй ещё раз или напиши на <0>hello@lymi.app</0>."
+
+msgid "Your photo changed on another device. Try again."
+msgstr "Фото изменилось на другом устройстве. Попробуй ещё раз."

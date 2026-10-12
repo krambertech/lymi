@@ -165,8 +165,8 @@ msgstr "AI wrote this"
 msgid "Also on your list"
 msgstr "Also on your list"
 
-msgid "API keys and connected apps"
-msgstr "API keys and connected apps"
+msgid "API keys"
+msgstr "API keys"
 
 msgid "Archived"
 msgstr "Archived"
@@ -192,6 +192,9 @@ msgstr "Cancel"
 msgid "Change daily goal"
 msgstr "Change daily goal"
 
+msgid "Change photo"
+msgstr "Change photo"
+
 msgid "Changing the goal needs a connection."
 msgstr "Changing the goal needs a connection."
 
@@ -210,6 +213,9 @@ msgstr "Choose another"
 msgid "Choose from photos"
 msgstr "Choose from photos"
 
+msgid "Choose photo"
+msgstr "Choose photo"
+
 msgid "Clear the picture"
 msgstr "Clear the picture"
 
@@ -222,8 +228,14 @@ msgstr "Code"
 msgid "Confirm"
 msgstr "Confirm"
 
+msgid "Connected apps"
+msgstr "Connected apps"
+
 msgid "Continue with Google"
 msgstr "Continue with Google"
+
+msgid "Couldn’t change your photo. Check your connection and try again."
+msgstr "Couldn’t change your photo. Check your connection and try again."
 
 msgid "Couldn’t load Today"
 msgstr "Couldn’t load Today"
@@ -236,6 +248,9 @@ msgstr "Couldn’t reach the sign-in service. Check your connection and try agai
 
 msgid "Couldn’t save the goal. Try again."
 msgstr "Couldn’t save the goal. Try again."
+
+msgid "Couldn’t save your name. Check your connection and try again."
+msgstr "Couldn’t save your name. Check your connection and try again."
 
 msgid "Couldn’t send your feedback"
 msgstr "Couldn’t send your feedback"
@@ -299,6 +314,9 @@ msgstr "Done"
 
 msgid "Easy"
 msgstr "Easy"
+
+msgid "Edit your name and photo"
+msgstr "Edit your name and photo"
 
 msgid "Email"
 msgstr "Email"
@@ -416,6 +434,9 @@ msgstr "Keen"
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 
+msgid "Keep your name under 80 characters."
+msgstr "Keep your name under 80 characters."
+
 msgid "Known"
 msgstr "Known"
 
@@ -476,6 +497,10 @@ msgstr "Message"
 msgid "More about this card"
 msgstr "More about this card"
 
+msgctxt "person"
+msgid "Name"
+msgstr "Name"
+
 msgid "New"
 msgstr "New"
 
@@ -524,9 +549,6 @@ msgstr "Off"
 
 msgid "Often forgotten"
 msgstr "Often forgotten"
-
-msgid "On the web"
-msgstr "On the web"
 
 msgid "Only on days with cards due."
 msgstr "Only on days with cards due."
@@ -599,6 +621,9 @@ msgstr "Recognition"
 
 msgid "Remind me to review"
 msgstr "Remind me to review"
+
+msgid "Remove photo"
+msgstr "Remove photo"
 
 msgid "Reset your password"
 msgstr "Reset your password"
@@ -677,10 +702,6 @@ msgstr "Sign out"
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Sign-in didn’t finish. Try again."
 
-#. placeholder {0}: user.email
-msgid "Signed in as {0}"
-msgstr "Signed in as {0}"
-
 msgid "Source"
 msgstr "Source"
 
@@ -702,6 +723,9 @@ msgstr "System"
 
 msgid "Take a photo"
 msgstr "Take a photo"
+
+msgid "Take photo"
+msgstr "Take photo"
 
 msgid "Tell Lymi what broke or what it should do. Replies come to your email."
 msgstr "Tell Lymi what broke or what it should do. Replies come to your email."
@@ -808,6 +832,9 @@ msgstr "Where you met it, such as a lesson"
 msgid "Write what you want to tell Lymi."
 msgstr "Write what you want to tell Lymi."
 
+msgid "Write your name."
+msgstr "Write your name."
+
 msgid "Yesterday was a rest day"
 msgstr "Yesterday was a rest day"
 
@@ -829,5 +856,11 @@ msgstr "You’re done for today."
 msgid "Your cards and your streak, on every device."
 msgstr "Your cards and your streak, on every device."
 
+msgid "Your data"
+msgstr "Your data"
+
 msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
+
+msgid "Your photo changed on another device. Try again."
+msgstr "Your photo changed on another device. Try again."

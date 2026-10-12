@@ -79,6 +79,7 @@ type AccountAction =
   | "onboarding.finish"
   | "analytics.consent"
   | "analytics.review_start"
+  | "rename"
   | "avatar.upload"
   | "avatar.remove"
   | "avatar.google_refresh"

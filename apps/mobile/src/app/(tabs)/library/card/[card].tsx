@@ -60,7 +60,8 @@ export default function CardPage() {
   const deck = useDecks().data?.find((d) => d.id === deckId);
   const cards = useDeckCards(deckId);
   const row = cards.data?.find((r) => r.card.id === id);
-  const history = useQuery(cardHistoryQuery(id)).data;
+  const historyQuery = useQuery(cardHistoryQuery(id));
+  const history = historyQuery.data;
   const [older, setOlder] = useState(false);
   const now = new Date();
   const card = row?.card;
@@ -230,7 +231,25 @@ export default function CardPage() {
           <Text className="text-sm text-muted">{dayLabel(item.at)}</Text>
         </View>
       ))}
-      {items.length === 0 && <Text className="text-base text-muted">{t`No history yet.`}</Text>}
+      {/* The history is read on its own, so offline it can be missing for a card that has one. */}
+      {!history && historyQuery.isPending && <Skeleton height={48} />}
+      {!history && historyQuery.isError && (
+        <View className="flex-row items-center gap-3">
+          <Text className="flex-1 text-base text-muted">
+            {t`Couldn’t load the history. Check your connection.`}
+          </Text>
+          <Press
+            onPress={() => void historyQuery.refetch()}
+            accessibilityRole="button"
+            className="h-11 justify-center px-2"
+          >
+            <Text className="text-base font-medium text-text-2">{t`Try again`}</Text>
+          </Press>
+        </View>
+      )}
+      {history && items.length === 0 && (
+        <Text className="text-base text-muted">{t`No history yet.`}</Text>
+      )}
       {items.length > HISTORY_ROWS && !older && (
         <Press onPress={() => setOlder(true)} accessibilityRole="button" className="py-2">
           <Text className="text-base font-medium text-text-2">

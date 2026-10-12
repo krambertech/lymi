@@ -101,6 +101,9 @@ msgstr "{0} remembered, {1} forgotten."
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# review} other {# reviews}}"
 
+msgid "{count, plural, one {It leaves Library and stops coming up in review. Restore it from Archived.} other {They leave Library and stop coming up in review. Restore them from Archived.}}"
+msgstr "{count, plural, one {It leaves Library and stops coming up in review. Restore it from Archived.} other {They leave Library and stop coming up in review. Restore them from Archived.}}"
+
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {day in a row} other {days in a row}}"
 
@@ -337,15 +340,17 @@ msgstr "All"
 msgid "Also on your list"
 msgstr "Also on your list"
 
+msgid "Another way"
+msgstr "Another way"
+
 msgid "Any time"
 msgstr "Any time"
 
 msgid "API keys"
 msgstr "API keys"
 
-#. placeholder {0}: deck.name
-msgid "Archive “{0}”?"
-msgstr "Archive “{0}”?"
+msgid "Archive “{name}”?"
+msgstr "Archive “{name}”?"
 
 msgid "Archive deck"
 msgstr "Archive deck"
@@ -500,6 +505,9 @@ msgstr "Couldn’t load Insights"
 msgid "Couldn’t load more."
 msgstr "Couldn’t load more."
 
+msgid "Couldn’t load the history. Check your connection."
+msgstr "Couldn’t load the history. Check your connection."
+
 msgid "Couldn’t load Today"
 msgstr "Couldn’t load Today"
 
@@ -644,6 +652,9 @@ msgstr "Due today"
 msgid "Each block is one day you reviewed."
 msgstr "Each block is one day you reviewed."
 
+msgid "Each card is asked both ways, each way on its own schedule."
+msgstr "Each card is asked both ways, each way on its own schedule."
+
 msgid "Easy"
 msgstr "Easy"
 
@@ -688,9 +699,6 @@ msgstr "Enter the 6-digit code we sent to {email}."
 
 msgid "Enter the 6-digit code."
 msgstr "Enter the 6-digit code."
-
-msgid "Every card is asked twice."
-msgstr "Every card is asked twice."
 
 msgid "Example"
 msgstr "Example"
@@ -865,9 +873,6 @@ msgstr "Intense"
 msgid "Invited {name} to {deck}"
 msgstr "Invited {name} to {deck}"
 
-msgid "It leaves Library. You can restore it from Archived."
-msgstr "It leaves Library. You can restore it from Archived."
-
 msgid "It loads as soon as you’re back online."
 msgstr "It loads as soon as you’re back online."
 
@@ -910,9 +915,8 @@ msgctxt "cards in this state"
 msgid "Learning"
 msgstr "Learning"
 
-#. placeholder {0}: deck.name
-msgid "Leave “{0}”?"
-msgstr "Leave “{0}”?"
+msgid "Leave {name}?"
+msgstr "Leave {name}?"
 
 msgid "Leave deck"
 msgstr "Leave deck"
@@ -1511,6 +1515,9 @@ msgstr "The AI"
 msgid "The API"
 msgstr "The API"
 
+msgid "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
+msgstr "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
+
 msgid "Theme"
 msgstr "Theme"
 
@@ -1695,9 +1702,6 @@ msgstr "Your name"
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Your photo changed on another device. Try again."
-
-msgid "Your reviews are kept if you join it again."
-msgstr "Your reviews are kept if you join it again."
 
 msgid "Your unsent reviews and cards are saved on this phone. They send after the update."
 msgstr "Your unsent reviews and cards are saved on this phone. They send after the update."

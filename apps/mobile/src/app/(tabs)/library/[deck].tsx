@@ -16,6 +16,7 @@ import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
 import { useMemo, useState } from "react";
 import { View } from "react-native";
+import { useDeckExits } from "../../../data/decks";
 import { useDeckCards, useDecks, useSections } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { Icon } from "../../../ui/icons";
@@ -56,6 +57,7 @@ export default function Deck() {
     );
   }, [rows, filters, sort, i18n.locale, sections]);
   const owner = deck?.role === "owner";
+  const exits = useDeckExits(deck);
 
   return (
     <Screen
@@ -95,7 +97,7 @@ export default function Deck() {
                         label: t`Archive deck`,
                         icon: "archive" as const,
                         destructive: true,
-                        onSelect: () => {},
+                        onSelect: exits.archive,
                       },
                     ],
                   ]

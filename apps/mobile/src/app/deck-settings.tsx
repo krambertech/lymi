@@ -1,11 +1,12 @@
 import { useLingui } from "@lingui/react/macro";
-import { api, type DeckSummary, errorMessage } from "@lymi/client/api";
+import { type DeckSummary, errorMessage } from "@lymi/client/api";
 import { type DeckPatch, writes } from "@lymi/client/writes";
 import { DeckInput, type Directions, deckLimits, LANGUAGE_TAGS } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
-import { type Href, useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
-import { Alert, ScrollView, TextInput, View } from "react-native";
+import { ScrollView, TextInput, View } from "react-native";
+import { useDeckExits } from "../data/decks";
 import { languageName } from "../data/languages";
 import { useDeckCards, useDecks } from "../data/queries";
 import { usePalette } from "../theme/palette";
@@ -42,11 +43,6 @@ function Settings({ deck }: { deck: DeckSummary }) {
   const [saved, setSaved] = useState<"saving" | "saved" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const owner = deck.role === "owner";
-  // Archiving or leaving moves the deck out of the review draw and its series, as on the web.
-  const refresh = () =>
-    Promise.all(
-      [["decks"], ["series"], ["queue"]].map((queryKey) => qc.invalidateQueries({ queryKey })),
-    );
 
   const save = async (patch: DeckPatch) => {
     setSaved("saving");
@@ -73,45 +69,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
     const next = description.trim() || null;
     if (next !== (deck.description ?? null)) void save({ description: next });
   };
-  const archive = () =>
-    Alert.alert(
-      t`Archive “${deck.name}”?`,
-      t`It leaves Library. You can restore it from Archived.`,
-      [
-        { text: t`Cancel`, style: "cancel" },
-        {
-          text: t`Archive deck`,
-          style: "destructive",
-          onPress: async () => {
-            try {
-              await writes.archiveDeck(deck.id);
-              void refresh();
-              router.dismissTo("/library" as Href);
-            } catch (e) {
-              setError(errorMessage(e));
-            }
-          },
-        },
-      ],
-    );
-
-  const leave = () =>
-    Alert.alert(t`Leave “${deck.name}”?`, t`Your reviews are kept if you join it again.`, [
-      { text: t`Keep studying`, style: "cancel" },
-      {
-        text: t`Leave deck`,
-        style: "destructive",
-        onPress: async () => {
-          try {
-            await api.leaveDeck(deck.id);
-            void refresh();
-            router.dismissTo("/library" as Href);
-          } catch (e) {
-            setError(errorMessage(e));
-          }
-        },
-      },
-    ]);
+  const { archive, leave } = useDeckExits(deck);
 
   const languages = [
     { value: "", label: t`No language` },
@@ -134,7 +92,11 @@ function Settings({ deck }: { deck: DeckSummary }) {
         ? t`See “${example.meaning}”, recall ${example.term}`
         : t`See the meaning, recall the term.`,
     },
-    { value: "both", label: t`Both ways`, line: t`Every card is asked twice.` },
+    {
+      value: "both",
+      label: t`Both ways`,
+      line: t`Each card is asked both ways, each way on its own schedule.`,
+    },
   ];
   const language = deck.defaultLanguage ? languageName(deck.defaultLanguage) : t`No language`;
   const way = asked.find((a) => a.value === deck.directions) ?? asked[0];

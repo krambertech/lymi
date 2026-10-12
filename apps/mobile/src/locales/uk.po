@@ -101,6 +101,9 @@ msgstr "Запам’ятано: {0}, забуто: {1}."
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
 
+msgid "{count, plural, one {It leaves Library and stops coming up in review. Restore it from Archived.} other {They leave Library and stop coming up in review. Restore them from Archived.}}"
+msgstr "{count, plural, one {Вона зникне з Бібліотеки й повторень. Відновити її можна в Архіві.} few {Вони зникнуть з Бібліотеки й повторень. Відновити їх можна в Архіві.} many {Вони зникнуть з Бібліотеки й повторень. Відновити їх можна в Архіві.} other {Вони зникнуть з Бібліотеки й повторень. Відновити їх можна в Архіві.}}"
+
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
 
@@ -337,15 +340,17 @@ msgstr "Усі"
 msgid "Also on your list"
 msgstr "Ще для повторення"
 
+msgid "Another way"
+msgstr "Інший спосіб"
+
 msgid "Any time"
 msgstr "Будь-коли"
 
 msgid "API keys"
 msgstr "Ключі API"
 
-#. placeholder {0}: deck.name
-msgid "Archive “{0}”?"
-msgstr "Архівувати «{0}»?"
+msgid "Archive “{name}”?"
+msgstr "Архівувати «{name}»?"
 
 msgid "Archive deck"
 msgstr "Архівувати колоду"
@@ -500,6 +505,9 @@ msgstr "Не вдалося завантажити Огляд"
 msgid "Couldn’t load more."
 msgstr "Не вдалося завантажити більше."
 
+msgid "Couldn’t load the history. Check your connection."
+msgstr "Не вдалося завантажити історію. Перевір з’єднання."
+
 msgid "Couldn’t load Today"
 msgstr "Не вдалося завантажити екран «Сьогодні»"
 
@@ -644,6 +652,9 @@ msgstr "Повторити сьогодні"
 msgid "Each block is one day you reviewed."
 msgstr "Кожен блок — день із повтореннями."
 
+msgid "Each card is asked both ways, each way on its own schedule."
+msgstr "Кожну картку питають в обидва боки, кожен бік за своїм розкладом."
+
 msgid "Easy"
 msgstr "Легко"
 
@@ -688,9 +699,6 @@ msgstr "Введи 6-значний код, який ми надіслали н�
 
 msgid "Enter the 6-digit code."
 msgstr "Введи 6-значний код."
-
-msgid "Every card is asked twice."
-msgstr "Кожну картку запитують двічі."
 
 msgid "Example"
 msgstr "Приклад"
@@ -865,9 +873,6 @@ msgstr "Інтенсивно"
 msgid "Invited {name} to {deck}"
 msgstr "{name} запрошено до «{deck}»"
 
-msgid "It leaves Library. You can restore it from Archived."
-msgstr "Вона зникне з бібліотеки. Її можна відновити з архіву."
-
 msgid "It loads as soon as you’re back online."
 msgstr "Вона завантажиться, щойно ти знову будеш онлайн."
 
@@ -910,9 +915,8 @@ msgctxt "cards in this state"
 msgid "Learning"
 msgstr "У вивченні"
 
-#. placeholder {0}: deck.name
-msgid "Leave “{0}”?"
-msgstr "Вийти з «{0}»?"
+msgid "Leave {name}?"
+msgstr "Вийти з {name}?"
 
 msgid "Leave deck"
 msgstr "Вийти з колоди"
@@ -1511,6 +1515,9 @@ msgstr "AI"
 msgid "The API"
 msgstr "API"
 
+msgid "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
+msgstr "Колода зникне з Бібліотеки, а її картки перестануть з’являтися в повтореннях. Якщо приєднаєшся знову, твої повторення будуть на місці."
+
 msgid "Theme"
 msgstr "Тема"
 
@@ -1695,9 +1702,6 @@ msgstr "Твоє ім’я"
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Фото змінилося на іншому пристрої. Спробуй ще раз."
-
-msgid "Your reviews are kept if you join it again."
-msgstr "Твої повторення збережуться, якщо ти приєднаєшся знову."
 
 msgid "Your unsent reviews and cards are saved on this phone. They send after the update."
 msgstr "Твої ненадіслані повторення й картки збережено на цьому телефоні. Вони надішлються після оновлення."

@@ -101,6 +101,9 @@ msgstr "Запомнено: {0}, забыто: {1}."
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
+msgid "{count, plural, one {It leaves Library and stops coming up in review. Restore it from Archived.} other {They leave Library and stop coming up in review. Restore them from Archived.}}"
+msgstr "{count, plural, one {Она исчезнет из Библиотеки и повторений. Восстановить её можно в Архиве.} few {Они исчезнут из Библиотеки и повторений. Восстановить их можно в Архиве.} many {Они исчезнут из Библиотеки и повторений. Восстановить их можно в Архиве.} other {Они исчезнут из Библиотеки и повторений. Восстановить их можно в Архиве.}}"
+
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {день подряд} few {дня подряд} many {дней подряд} other {дня подряд}}"
 
@@ -337,15 +340,17 @@ msgstr "Все"
 msgid "Also on your list"
 msgstr "Ещё для повторения"
 
+msgid "Another way"
+msgstr "Другой способ"
+
 msgid "Any time"
 msgstr "В любое время"
 
 msgid "API keys"
 msgstr "Ключи API"
 
-#. placeholder {0}: deck.name
-msgid "Archive “{0}”?"
-msgstr "Архивировать «{0}»?"
+msgid "Archive “{name}”?"
+msgstr "Архивировать «{name}»?"
 
 msgid "Archive deck"
 msgstr "Архивировать колоду"
@@ -500,6 +505,9 @@ msgstr "Не удалось загрузить Обзор"
 msgid "Couldn’t load more."
 msgstr "Не удалось загрузить больше."
 
+msgid "Couldn’t load the history. Check your connection."
+msgstr "Не удалось загрузить историю. Проверь соединение."
+
 msgid "Couldn’t load Today"
 msgstr "Не удалось загрузить экран «Сегодня»"
 
@@ -644,6 +652,9 @@ msgstr "Повторить сегодня"
 msgid "Each block is one day you reviewed."
 msgstr "Каждый блок — день с повторениями."
 
+msgid "Each card is asked both ways, each way on its own schedule."
+msgstr "Каждую карточку спрашивают в обе стороны, каждую сторону по своему расписанию."
+
 msgid "Easy"
 msgstr "Легко"
 
@@ -688,9 +699,6 @@ msgstr "Введи 6-значный код, который мы отправил
 
 msgid "Enter the 6-digit code."
 msgstr "Введи 6-значный код."
-
-msgid "Every card is asked twice."
-msgstr "Каждая карточка задаётся дважды."
 
 msgid "Example"
 msgstr "Пример"
@@ -865,9 +873,6 @@ msgstr "Интенсивно"
 msgid "Invited {name} to {deck}"
 msgstr "{name} приглашён в «{deck}»"
 
-msgid "It leaves Library. You can restore it from Archived."
-msgstr "Она исчезнет из библиотеки. Её можно восстановить из архива."
-
 msgid "It loads as soon as you’re back online."
 msgstr "Она загрузится, как только ты снова будешь онлайн."
 
@@ -910,9 +915,8 @@ msgctxt "cards in this state"
 msgid "Learning"
 msgstr "В изучении"
 
-#. placeholder {0}: deck.name
-msgid "Leave “{0}”?"
-msgstr "Выйти из «{0}»?"
+msgid "Leave {name}?"
+msgstr "Выйти из {name}?"
 
 msgid "Leave deck"
 msgstr "Выйти из колоды"
@@ -1511,6 +1515,9 @@ msgstr "AI"
 msgid "The API"
 msgstr "API"
 
+msgid "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
+msgstr "Колода исчезнет из Библиотеки, и её карточки перестанут появляться в повторениях. Если присоединишься снова, твои повторения сохранятся."
+
 msgid "Theme"
 msgstr "Тема"
 
@@ -1695,9 +1702,6 @@ msgstr "Твоё имя"
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Фото изменилось на другом устройстве. Попробуй ещё раз."
-
-msgid "Your reviews are kept if you join it again."
-msgstr "Твои повторения сохранятся, если ты присоединишься снова."
 
 msgid "Your unsent reviews and cards are saved on this phone. They send after the update."
 msgstr "Твои неотправленные повторения и карточки сохранены на этом телефоне. Они отправятся после обновления."

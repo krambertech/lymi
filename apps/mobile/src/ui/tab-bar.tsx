@@ -9,8 +9,9 @@ import { useDecks } from "../data/queries";
 import { usePalette } from "../theme/palette";
 import { Text } from "./primitives";
 
-/** iOS gives a tab bar an accessory from iOS 26; before it, a deck keeps its own Review button. */
-export const DECK_ACCESSORY = Number.parseInt(String(Platform.Version), 10) >= 26;
+/** iOS gives a tab bar an accessory from iOS 26; elsewhere a deck keeps its own Review button. */
+export const DECK_ACCESSORY =
+  Platform.OS === "ios" && Number.parseInt(String(Platform.Version), 10) >= 26;
 
 /**
  * The phone's tabs are iOS's own tab bar, so the lens and the press are Apple's Liquid Glass, in

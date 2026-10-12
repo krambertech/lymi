@@ -54,6 +54,10 @@ jobs:
         if: steps.eas.outputs.ready == 'true'
         run: pnpm install --frozen-lockfile
 
+      - name: Create the beta and production channels a fresh project lacks
+        if: steps.eas.outputs.ready == 'true'
+        run: node scripts/phone-release.mjs channels
+
       - name: Find the update installs have now
         id: latest
         if: steps.eas.outputs.ready == 'true'
@@ -105,21 +109,15 @@ jobs:
       # A new binary embeds this commit, and the update lets earlier ones on the same runtime catch up.
       - name: Build and send to TestFlight
         if: steps.plan.outputs.release == 'true' && steps.build.outputs.build == 'false'
-        working-directory: apps/mobile
         env:
           WHAT_TO_TEST: ${{ steps.plan.outputs.what_to_test }}
-        run: >-
-          npx --yes eas-cli@24.13.0 build --profile beta --platform ios --auto-submit --no-wait
-          --non-interactive --what-to-test "$WHAT_TO_TEST"
+        run: node scripts/phone-release.mjs build beta "$WHAT_TO_TEST"
 
       - name: Publish the update to beta
         if: steps.plan.outputs.release == 'true'
-        working-directory: apps/mobile
         env:
           MESSAGE: ${{ steps.plan.outputs.message }}
-        run: >-
-          npx --yes eas-cli@24.13.0 update --branch beta --platform ios --environment preview
-          --message "$MESSAGE" --non-interactive
+        run: node scripts/phone-release.mjs publish beta preview "$MESSAGE"
 
       # Hermes stack traces are unreadable without them; uploads match frames by the bundle's chunk ID.
       - name: Upload the update's source maps to PostHog

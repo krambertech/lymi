@@ -1,11 +1,15 @@
 // Reads and moves the phone's EAS Update branches for the release workflows; docs/phone-release.md.
 import { execFileSync } from "node:child_process";
-import { appendFileSync, readFileSync } from "node:fs";
+import { appendFileSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
-const EAS_CLI = "eas-cli@24.13.0";
-const APP = join(dirname(fileURLToPath(import.meta.url)), "../apps/mobile");
+export const EAS_CLI_VERSION = "24.13.0";
+export const CHANNELS = ["beta", "production"];
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const APP = join(ROOT, "apps/mobile");
+const MANIFEST = join(ROOT, "scripts/eas-cli-commands.json");
 const DEAD_BUILDS = new Set(["ERRORED", "CANCELED"]);
 
 /** Whether the workflows can reach EAS, and what is missing when they cannot. */
@@ -55,138 +59,289 @@ export function rollbackPlan(groups, group) {
   return { action: "embedded", runtime: latest.runtimeVersion };
 }
 
-function eas(args, { json = true } = {}) {
-  const output = execFileSync(
-    "npx",
-    ["--yes", EAS_CLI, ...args, ...(json ? ["--json"] : []), "--non-interactive"],
-    { cwd: APP, encoding: "utf8", stdio: ["ignore", "pipe", "inherit"] },
-  );
-  if (!json) return output;
-  return JSON.parse(output);
+/** Whether production may take this beta group now, or why not. */
+export function promotionCheck({ planned, beta, production, commit }) {
+  if (beta?.group !== planned) {
+    return { ok: false, reason: "Beta moved on since the smoke journey; run Promote again." };
+  }
+  const [latest] = production;
+  if (latest?.message?.includes(promoteMessage(commit))) {
+    return { ok: false, done: true, reason: `${commit.slice(0, 7)} is already on production.` };
+  }
+  if (latest?.rolloutPercentage !== undefined && latest.rolloutPercentage < 100) {
+    return {
+      ok: false,
+      reason: "A production rollout is still running; let Phone rollout finish it or roll it back.",
+    };
+  }
+  return { ok: true };
+}
+
+export function promoteMessage(commit) {
+  return `Promote ${commit.slice(0, 7)}`;
+}
+
+// Only JSON calls capture stdout; the rest print update IDs and links straight into the job log.
+function defaultRunner(argv, { capture }) {
+  return execFileSync(argv[0], argv.slice(1), {
+    cwd: APP,
+    encoding: "utf8",
+    maxBuffer: 16 * 1024 * 1024,
+    stdio: ["ignore", capture ? "pipe" : "inherit", "inherit"],
+  });
+}
+
+/** Every EAS call, with each command's own flags; tests swap the runner to check them. */
+export function createEas(runner = defaultRunner) {
+  const run = (args, capture) =>
+    runner(["npx", "--yes", `eas-cli@${EAS_CLI_VERSION}`, ...args], { capture });
+  const call = (args) => run(args, false);
+  const json = (args) => JSON.parse(run(args, true));
+  return {
+    channels: () => json(["channel:list", "--limit", "50", "--json", "--non-interactive"]),
+    createChannel: (name) => call(["channel:create", name, "--json", "--non-interactive"]),
+    groups: (branch) =>
+      iosGroups(
+        json([
+          "update:list",
+          "--branch",
+          branch,
+          "--platform",
+          "ios",
+          "--limit",
+          "25",
+          "--json",
+          "--non-interactive",
+        ]),
+      ),
+    // update:view takes --json and no --non-interactive.
+    view: (group) => {
+      const updates = json(["update:view", group, "--json"]);
+      return updates.find((update) => update.platform === "ios") ?? updates[0];
+    },
+    builds: (profile, runtime) =>
+      json([
+        "build:list",
+        "--platform",
+        "ios",
+        "--build-profile",
+        profile,
+        "--runtime-version",
+        runtime,
+        "--limit",
+        "10",
+        "--json",
+        "--non-interactive",
+      ]),
+    build: (profile, whatToTest) =>
+      call([
+        "build",
+        "--profile",
+        profile,
+        "--platform",
+        "ios",
+        "--auto-submit",
+        "--no-wait",
+        ...(whatToTest ? ["--what-to-test", whatToTest] : []),
+        "--non-interactive",
+      ]),
+    publish: (branch, environment, message) =>
+      call([
+        "update",
+        "--branch",
+        branch,
+        "--platform",
+        "ios",
+        "--environment",
+        environment,
+        "--message",
+        message,
+        "--non-interactive",
+      ]),
+    republish: (group, branch, message, rollout) =>
+      call([
+        "update:republish",
+        "--group",
+        group,
+        "--destination-branch",
+        branch,
+        "--platform",
+        "ios",
+        ...(rollout ? ["--rollout-percentage", String(rollout)] : []),
+        "--message",
+        message,
+        "--non-interactive",
+      ]),
+    finishRollout: (group) =>
+      call(["update:edit", group, "--rollout-percentage", "100", "--non-interactive"]),
+    revertRollout: (group, message) =>
+      call([
+        "update:revert-update-rollout",
+        "--group",
+        group,
+        "--message",
+        message,
+        "--non-interactive",
+      ]),
+    rollBackToEmbedded: (branch, runtime, message) =>
+      call([
+        "update:roll-back-to-embedded",
+        "--branch",
+        branch,
+        "--runtime-version",
+        runtime,
+        "--platform",
+        "ios",
+        "--message",
+        message,
+        "--non-interactive",
+      ]),
+  };
+}
+
+/** The release commands; each returns the values the workflow reads as step outputs. */
+export function createCommands(eas = createEas()) {
+  return {
+    ready() {
+      const config = JSON.parse(readFileSync(join(APP, "app.json"), "utf8")).expo;
+      const { ready, reason } = readiness({ token: process.env.EXPO_TOKEN, config });
+      if (!ready) {
+        console.log(`::notice title=Phone release skipped::${reason} docs/phone-release.md`);
+      }
+      return { ready };
+    },
+
+    runtime() {
+      const cli = join(APP, "node_modules/expo-updates/bin/cli.js");
+      const resolved = execFileSync("node", [cli, "runtimeversion:resolve", "--platform", "ios"], {
+        cwd: APP,
+        encoding: "utf8",
+      });
+      return { runtime: JSON.parse(resolved).runtimeVersion };
+    },
+
+    // A fresh project has no branches, and update:list and republish refuse a missing one.
+    channels() {
+      const existing = new Set(eas.channels().currentPage.map((channel) => channel.name));
+      for (const name of CHANNELS.filter((channel) => !existing.has(channel))) {
+        eas.createChannel(name);
+        console.log(`Created the ${name} channel and its branch.`);
+      }
+    },
+
+    latest(branch) {
+      const [latest] = eas.groups(branch);
+      if (!latest) return { group: "", runtime: "", rollout: "", commit: "" };
+      return {
+        group: latest.group,
+        runtime: latest.runtimeVersion,
+        rollout: latest.rolloutPercentage ?? 100,
+        commit: eas.view(latest.group).gitCommitHash ?? "",
+      };
+    },
+
+    "has-build"(profile, runtime) {
+      return { build: hasLiveBuild(eas.builds(profile, runtime)) };
+    },
+
+    build(profile, whatToTest) {
+      eas.build(profile, whatToTest);
+    },
+
+    publish(branch, environment, message) {
+      eas.publish(branch, environment, message);
+    },
+
+    promote(group, commit) {
+      const check = promotionCheck({
+        planned: group,
+        beta: eas.groups("beta")[0],
+        production: eas.groups("production"),
+        commit,
+      });
+      if (check.done) {
+        console.log(`::notice title=Phone promote::${check.reason}`);
+        return { promoted: false };
+      }
+      if (!check.ok) throw new Error(check.reason);
+      eas.republish(group, "production", promoteMessage(commit), 10);
+      return { promoted: true };
+    },
+
+    "finish-rollout"(branch, hours) {
+      const [latest] = eas.groups(branch);
+      if (!latest) return console.log(`Nothing is published on ${branch}.`);
+      if (!rolloutDue(latest, eas.view(latest.group).createdAt, Date.now(), Number(hours))) {
+        return console.log(`No rollout on ${branch} is due to finish.`);
+      }
+      eas.finishRollout(latest.group);
+      console.log(`Rolled ${latest.group} out to everyone on ${branch}.`);
+    },
+
+    rollback(branch, group) {
+      const plan = rollbackPlan(eas.groups(branch), group);
+      const message = `Roll back ${branch}`;
+      if (plan.action === "none") {
+        throw new Error(`Nothing is published on ${branch}, so there is nothing to roll back.`);
+      }
+      if (plan.action === "revert-rollout") eas.revertRollout(plan.group, message);
+      if (plan.action === "republish") eas.republish(plan.group, branch, message);
+      if (plan.action === "embedded") eas.rollBackToEmbedded(branch, plan.runtime, message);
+      console.log(`Rolled back ${branch}: ${JSON.stringify(plan)}`);
+    },
+
+    // Records the pinned CLI's commands and flags, which the tests check every call against.
+    manifest() {
+      const dir = mkdtempSync(join(tmpdir(), "eas-cli-"));
+      const tarball = execFileSync(
+        "npm",
+        ["pack", `eas-cli@${EAS_CLI_VERSION}`, "--pack-destination", dir],
+        { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] },
+      ).trim();
+      execFileSync("tar", ["-xzf", join(dir, tarball), "-C", dir, "package/oclif.manifest.json"]);
+      const { commands } = JSON.parse(
+        readFileSync(join(dir, "package/oclif.manifest.json"), "utf8"),
+      );
+      const used = Object.fromEntries(
+        Object.entries(commands)
+          .filter(
+            ([id]) => id === "build" || id === "update" || /^(update|build|channel):/.test(id),
+          )
+          .map(([id, command]) => [
+            id,
+            {
+              args: Object.keys(command.args ?? {}),
+              flags: Object.fromEntries(
+                Object.entries(command.flags).map(([name, flag]) => [
+                  name,
+                  flag.type === "option" ? "option" : flag.allowNo ? "boolean-or-no" : "boolean",
+                ]),
+              ),
+            },
+          ]),
+      );
+      writeFileSync(
+        MANIFEST,
+        `${JSON.stringify({ version: EAS_CLI_VERSION, commands: used }, null, 2)}\n`,
+      );
+    },
+  };
 }
 
 function output(values) {
-  for (const [key, value] of Object.entries(values)) {
+  for (const [key, value] of Object.entries(values ?? {})) {
     console.log(`${key}=${value}`);
     if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `${key}=${value}\n`);
   }
 }
 
-function listGroups(branch) {
-  return iosGroups(eas(["update:list", "--branch", branch, "--platform", "ios", "--limit", "25"]));
-}
-
-function viewGroup(group) {
-  const updates = eas(["update:view", group]);
-  return updates.find((update) => update.platform === "ios") ?? updates[0];
-}
-
-const commands = {
-  ready() {
-    const config = JSON.parse(readFileSync(join(APP, "app.json"), "utf8")).expo;
-    const { ready, reason } = readiness({ token: process.env.EXPO_TOKEN, config });
-    if (!ready)
-      console.log(`::notice title=Phone release skipped::${reason} docs/phone-release.md`);
-    output({ ready });
-  },
-
-  runtime() {
-    const cli = join(APP, "node_modules/expo-updates/bin/cli.js");
-    const resolved = execFileSync("node", [cli, "runtimeversion:resolve", "--platform", "ios"], {
-      cwd: APP,
-      encoding: "utf8",
-    });
-    output({ runtime: JSON.parse(resolved).runtimeVersion });
-  },
-
-  latest(branch) {
-    const [latest] = listGroups(branch);
-    if (!latest) return output({ group: "", runtime: "", rollout: "", commit: "" });
-    const update = viewGroup(latest.group);
-    output({
-      group: latest.group,
-      runtime: latest.runtimeVersion,
-      rollout: latest.rolloutPercentage ?? 100,
-      commit: update.gitCommitHash ?? "",
-    });
-  },
-
-  "has-build"(profile, runtime) {
-    const builds = eas([
-      "build:list",
-      "--platform",
-      "ios",
-      "--build-profile",
-      profile,
-      "--runtime-version",
-      runtime,
-      "--limit",
-      "10",
-    ]);
-    output({ build: hasLiveBuild(builds) });
-  },
-
-  "finish-rollout"(branch, hours) {
-    const [latest] = listGroups(branch);
-    if (!latest) return console.log(`Nothing is published on ${branch}.`);
-    const { createdAt } = viewGroup(latest.group);
-    if (!rolloutDue(latest, createdAt, Date.now(), Number(hours))) {
-      return console.log(`No rollout on ${branch} is due to finish.`);
-    }
-    eas(["update:edit", latest.group, "--rollout-percentage", "100"], { json: false });
-    console.log(`Rolled ${latest.group} out to everyone on ${branch}.`);
-  },
-
-  rollback(branch, group) {
-    const plan = rollbackPlan(listGroups(branch), group);
-    const message = ["--message", `Roll back ${branch}`];
-    switch (plan.action) {
-      case "none":
-        throw new Error(`Nothing is published on ${branch}, so there is nothing to roll back.`);
-      case "revert-rollout":
-        eas(["update:revert-update-rollout", "--group", plan.group, ...message], { json: false });
-        break;
-      case "republish":
-        eas(
-          [
-            "update:republish",
-            "--group",
-            plan.group,
-            "--destination-branch",
-            branch,
-            "--platform",
-            "ios",
-            ...message,
-          ],
-          { json: false },
-        );
-        break;
-      case "embedded":
-        eas(
-          [
-            "update:roll-back-to-embedded",
-            "--branch",
-            branch,
-            "--runtime-version",
-            plan.runtime,
-            "--platform",
-            "ios",
-            ...message,
-          ],
-          { json: false },
-        );
-        break;
-    }
-    console.log(`Rolled back ${branch}: ${JSON.stringify(plan)}`);
-  },
-};
-
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const [name, ...args] = process.argv.slice(2);
+  const commands = createCommands();
   const command = commands[name];
   if (!command) {
     console.error(`Usage: node scripts/phone-release.mjs <${Object.keys(commands).join("|")}> …`);
     process.exit(1);
   }
-  command(...args);
+  output(command(...args));
 }

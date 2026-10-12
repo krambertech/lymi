@@ -4,16 +4,22 @@ The phone's JavaScript ships over the air with `expo-updates` and EAS Update, an
 
 ## How a change reaches phones
 
-The runtime version is the iOS fingerprint (`runtimeVersion.policy: fingerprint` in `apps/mobile/app.json`), so an update is only offered to binaries with the same native code. `node scripts/phone-release.mjs runtime` prints it. `app.json` lists its `platforms` because Expo otherwise detects web from whether `react-dom` is hoisted, which made the fingerprint differ between a pnpm script and a plain `node` call.
+The runtime version is the iOS fingerprint (`runtimeVersion.policy: fingerprint` in `apps/mobile/app.json`), so an update is only offered to binaries with the same native code. `node scripts/phone-release.mjs runtime` prints it. `app.json` lists its `platforms` because Expo otherwise detects web from whether `react-dom` is hoisted, which made the fingerprint differ between a pnpm script and a plain `node` call. `apps/mobile/fingerprint.config.js` leaves `version` out of the fingerprint, so an update can carry a new release version without a new binary.
 
 An installed app checks for an update on every launch without waiting for it, so an update downloads on one launch and runs from the next. Until an update arrives, or when one cannot load, the app runs the bundle inside the binary. The `x-lymi-client` header names the running update, which the Worker adds to the phone's server outcomes as `app_update`.
 
 | Workflow | When | What it does |
 | --- | --- | --- |
 | Phone beta | Each green CI run on `main`, or by hand | When the phone or a shared package changed since the last beta update, publishes an update to the `beta` branch, and starts a `beta` build that goes to TestFlight when no build has this runtime yet. TestFlight's What to Test lists the merged pull request titles. |
-| Phone promote | By hand, once a week | Runs the Phone smoke journey on the commit behind the latest beta update and stops if it fails. Then republishes that update to `production` for 10% of installs, starts a `production` build uploaded to App Store Connect when no build has this runtime yet, and freezes the API contract in a pull request that merges itself once green. |
+| Phone promote | By hand, once a week | Runs the Phone smoke journey on the commit behind the latest beta update and freezes that commit's API contract, and stops if either fails. Then checks that beta still has that update and no production rollout is running, republishes it to `production` for 10% of installs, starts a `production` build uploaded to App Store Connect when no build has this runtime yet, and adds a newly frozen contract in a pull request that merges itself once green. |
 | Phone rollout | Every six hours, or by hand | Widens a `production` rollout that is at least a day old to every install. |
 | Phone rollback | By hand | Reverts the newest update on `production` or `beta`: a partial rollout is reverted, otherwise the previous update on the same runtime is republished, or the binary's own bundle when there is none. A group ID input republishes that update instead. |
+
+The first run of any of them creates the `beta` and `production` channels and their branches when the project lacks them. Promote, rollout and production rollback share one `phone-production` lock, so they never change production at the same time.
+
+Each release version keeps its frozen contract in `apps/mobile/contract/<version>.json` until the minimum version passes it. Promote fails before publishing when the commit calls an API that differs from the contract already frozen for its version; raise `expo.version` in `app.json`, merge it, let Phone beta publish it, then promote. A version that has no contract yet gets one.
+
+Every EAS call goes through `scripts/phone-release.mjs`, and its tests check each call's flags against `scripts/eas-cli-commands.json`, the pinned `eas-cli` version's own command list. After changing the pin, run `node scripts/phone-release.mjs manifest` to record the new list.
 
 `beta` builds read the `beta` channel and `production` builds the `production` channel, with one bundle identifier ([`apps/mobile/eas.json`](../apps/mobile/eas.json)). EAS owns the build number. A native change costs two of the free tier's 15 iOS builds a month, one for TestFlight and one at Promote. Submitting a version for App Store review stays a person's step in App Store Connect.
 

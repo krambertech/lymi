@@ -9,8 +9,10 @@ import {
   iosGroups,
   promotionCheck,
   readiness,
+  recordSampleCalls,
   rollbackPlan,
   rolloutDue,
+  sampleCalls,
 } from "./phone-release.mjs";
 
 const linked = {
@@ -154,21 +156,17 @@ test("records the pinned CLI's commands", () => {
 
 test("sends only flags the pinned CLI accepts, for every call", () => {
   const { calls, eas } = stubEas();
-  eas.channels();
-  eas.createChannel("production");
-  eas.groups("beta");
-  eas.view("g1");
-  eas.builds("beta", "r1");
-  eas.build("beta", "- feat(mobile): add reminders");
-  eas.build("production");
-  eas.publish("beta", "preview", "feat(mobile): add reminders");
-  eas.republish("g1", "production", "Promote abc1234", 10);
-  eas.republish("g1", "production", "Roll back production");
-  eas.finishRollout("g2");
-  eas.revertRollout("g2", "Roll back production");
-  eas.rollBackToEmbedded("production", "r1", "Roll back production");
+  sampleCalls(eas);
   assert.equal(calls.length, 13);
   for (const argv of calls) assertAccepted(argv);
+});
+
+test("sends exactly the calls the pinned CLI's own parser accepted, values included", () => {
+  assert.deepEqual(
+    recordSampleCalls(),
+    manifest.accepted,
+    "An EAS call changed; run node scripts/phone-release.mjs manifest to check it with the CLI.",
+  );
 });
 
 test("captures only the output it parses, so the rest reaches the job log", () => {

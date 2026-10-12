@@ -1,6 +1,7 @@
 // Reads and moves the phone's EAS Update branches for the release workflows; docs/phone-release.md.
 import { execFileSync } from "node:child_process";
 import { appendFileSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -98,7 +99,7 @@ export function createEas(runner = defaultRunner) {
   const call = (args) => run(args, false);
   const json = (args) => JSON.parse(run(args, true));
   return {
-    channels: () => json(["channel:list", "--limit", "50", "--json", "--non-interactive"]),
+    channels: () => json(["channel:list", "--limit", "25", "--json", "--non-interactive"]),
     createChannel: (name) => call(["channel:create", name, "--json", "--non-interactive"]),
     groups: (branch) =>
       iosGroups(
@@ -199,6 +200,35 @@ export function createEas(runner = defaultRunner) {
   };
 }
 
+/** Makes every kind of EAS call once, so the tests and the manifest check the same argv. */
+export function sampleCalls(eas) {
+  eas.channels();
+  eas.createChannel("production");
+  eas.groups("beta");
+  eas.view("g1");
+  eas.builds("beta", "r1");
+  eas.build("beta", "- feat(mobile): add reminders");
+  eas.build("production");
+  eas.publish("beta", "preview", "feat(mobile): add reminders");
+  eas.republish("g1", "production", "Promote abc1234", 10);
+  eas.republish("g1", "production", "Roll back production");
+  eas.finishRollout("g2");
+  eas.revertRollout("g2", "Roll back production");
+  eas.rollBackToEmbedded("production", "r1", "Roll back production");
+}
+
+/** The argv of each sample call, without the npx prefix. */
+export function recordSampleCalls() {
+  const calls = [];
+  sampleCalls(
+    createEas((argv) => {
+      calls.push(argv.slice(3));
+      return "[]";
+    }),
+  );
+  return calls;
+}
+
 /** The release commands; each returns the values the workflow reads as step outputs. */
 export function createCommands(eas = createEas()) {
   return {
@@ -290,18 +320,36 @@ export function createCommands(eas = createEas()) {
       console.log(`Rolled back ${branch}: ${JSON.stringify(plan)}`);
     },
 
-    // Records the pinned CLI's commands and flags, which the tests check every call against.
-    manifest() {
+    // Records the pinned CLI's commands and flags, and every sample call its own parser accepted, values included.
+    async manifest() {
       const dir = mkdtempSync(join(tmpdir(), "eas-cli-"));
-      const tarball = execFileSync(
+      execFileSync(
         "npm",
-        ["pack", `eas-cli@${EAS_CLI_VERSION}`, "--pack-destination", dir],
-        { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] },
-      ).trim();
-      execFileSync("tar", ["-xzf", join(dir, tarball), "-C", dir, "package/oclif.manifest.json"]);
-      const { commands } = JSON.parse(
-        readFileSync(join(dir, "package/oclif.manifest.json"), "utf8"),
+        [
+          "install",
+          "--prefix",
+          dir,
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund",
+          `eas-cli@${EAS_CLI_VERSION}`,
+        ],
+        { stdio: ["ignore", "ignore", "pipe"] },
       );
+      const require = createRequire(join(dir, "node_modules/eas-cli/package.json"));
+      const { Parser } = require("@oclif/core");
+      const { commands } = require("./oclif.manifest.json");
+      const accepted = recordSampleCalls();
+      for (const [id, ...argv] of accepted) {
+        const { args, flags } = require(`./${commands[id].relativePath.join("/")}`).default;
+        try {
+          await Parser.parse(argv, { args, flags, strict: true });
+        } catch (error) {
+          throw new Error(
+            `eas-cli ${EAS_CLI_VERSION} rejects ${id} ${argv.join(" ")}: ${error.message}`,
+          );
+        }
+      }
       const used = Object.fromEntries(
         Object.entries(commands)
           .filter(
@@ -322,7 +370,7 @@ export function createCommands(eas = createEas()) {
       );
       writeFileSync(
         MANIFEST,
-        `${JSON.stringify({ version: EAS_CLI_VERSION, commands: used }, null, 2)}\n`,
+        `${JSON.stringify({ version: EAS_CLI_VERSION, commands: used, accepted }, null, 2)}\n`,
       );
     },
   };
@@ -343,5 +391,5 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     console.error(`Usage: node scripts/phone-release.mjs <${Object.keys(commands).join("|")}> …`);
     process.exit(1);
   }
-  output(command(...args));
+  output(await command(...args));
 }

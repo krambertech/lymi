@@ -436,5 +436,115 @@
         "json": "boolean"
       }
     }
-  }
+  },
+  "accepted": [
+    ["channel:list", "--limit", "25", "--json", "--non-interactive"],
+    ["channel:create", "production", "--json", "--non-interactive"],
+    [
+      "update:list",
+      "--branch",
+      "beta",
+      "--platform",
+      "ios",
+      "--limit",
+      "25",
+      "--json",
+      "--non-interactive"
+    ],
+    ["update:view", "g1", "--json"],
+    [
+      "build:list",
+      "--platform",
+      "ios",
+      "--build-profile",
+      "beta",
+      "--runtime-version",
+      "r1",
+      "--limit",
+      "10",
+      "--json",
+      "--non-interactive"
+    ],
+    [
+      "build",
+      "--profile",
+      "beta",
+      "--platform",
+      "ios",
+      "--auto-submit",
+      "--no-wait",
+      "--what-to-test",
+      "- feat(mobile): add reminders",
+      "--non-interactive"
+    ],
+    [
+      "build",
+      "--profile",
+      "production",
+      "--platform",
+      "ios",
+      "--auto-submit",
+      "--no-wait",
+      "--non-interactive"
+    ],
+    [
+      "update",
+      "--branch",
+      "beta",
+      "--platform",
+      "ios",
+      "--environment",
+      "preview",
+      "--message",
+      "feat(mobile): add reminders",
+      "--non-interactive"
+    ],
+    [
+      "update:republish",
+      "--group",
+      "g1",
+      "--destination-branch",
+      "production",
+      "--platform",
+      "ios",
+      "--rollout-percentage",
+      "10",
+      "--message",
+      "Promote abc1234",
+      "--non-interactive"
+    ],
+    [
+      "update:republish",
+      "--group",
+      "g1",
+      "--destination-branch",
+      "production",
+      "--platform",
+      "ios",
+      "--message",
+      "Roll back production",
+      "--non-interactive"
+    ],
+    ["update:edit", "g2", "--rollout-percentage", "100", "--non-interactive"],
+    [
+      "update:revert-update-rollout",
+      "--group",
+      "g2",
+      "--message",
+      "Roll back production",
+      "--non-interactive"
+    ],
+    [
+      "update:roll-back-to-embedded",
+      "--branch",
+      "production",
+      "--runtime-version",
+      "r1",
+      "--platform",
+      "ios",
+      "--message",
+      "Roll back production",
+      "--non-interactive"
+    ]
+  ]
 }

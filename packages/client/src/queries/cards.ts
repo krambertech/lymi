@@ -23,6 +23,14 @@ export const deckCardsQuery = (deckId: string) =>
         ? 2000
         : false,
   });
+/** Every deck's cards matching the text, as Library's search asks for them. Never kept offline. */
+export const cardSearchQuery = (query: string) =>
+  queryOptions({
+    queryKey: ["cards", "search", query],
+    queryFn: () => api.searchCards(query),
+    staleTime: 30_000,
+    enabled: query.length > 0,
+  });
 export const archivedCardsQuery = queryOptions({
   queryKey: ["cards", "archived"],
   queryFn: () => fresh(["cards", "archived"], api.archivedCards),

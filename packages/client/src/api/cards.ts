@@ -59,7 +59,14 @@ function formFile(file: Blob | NativeFile): Blob {
   return isNativeFile(file) ? (file as unknown as Blob) : file;
 }
 
+/** One page of a search, newest first. `total` is null when it is not known exactly. */
+export type CardSearchPage = { cards: CardHit[]; nextCursor: string | null; total: number | null };
+
 export const cardsApi = {
+  searchCards: (query: string, limit = 50) =>
+    request<CardSearchPage>(
+      `/api/cards?${new URLSearchParams({ query, limit: String(limit) }).toString()}`,
+    ),
   archivedCards: async () =>
     (await request<{ cards: CardHit[] }>("/api/cards?archived=true")).cards,
   deckCards: (deckId: string) =>

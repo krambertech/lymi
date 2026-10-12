@@ -11,6 +11,8 @@ PUBLISHER_EMAILS=dev@lymi.local
 BETTER_AUTH_SECRET=change-me-to-32-random-chars
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
+# The iPhone app's bundle identifier, which Apple's ID tokens name as their audience.
+APPLE_APP_BUNDLE_IDENTIFIER=
 # Full service-account JSON for the dedicated Google Cloud Text-to-Speech project.
 # Gemini voices also need the account to hold roles/aiplatform.user.
 GOOGLE_CLOUD_TTS_CREDENTIALS=

@@ -25,6 +25,8 @@ export interface Bindings
   BETTER_AUTH_SECRET: string;
   GOOGLE_CLIENT_ID: string;
   GOOGLE_CLIENT_SECRET: string;
+  /** The iPhone app's bundle identifier; Sign in with Apple is unavailable until it is set. */
+  APPLE_APP_BUNDLE_IDENTIFIER?: string;
   /** Full service-account JSON, stored as one encrypted Worker secret. */
   GOOGLE_CLOUD_TTS_CREDENTIALS?: string;
   GEMINI_API_KEY?: string;

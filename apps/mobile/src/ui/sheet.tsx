@@ -123,6 +123,8 @@ interface SheetRowProps {
   multiple?: boolean | undefined;
   /** Opens more, so it ends in a chevron. */
   opens?: boolean | undefined;
+  /** The match Return takes in a searched list, lit as a pressed row is. */
+  active?: boolean | undefined;
   onPress: () => void;
 }
 
@@ -135,6 +137,7 @@ export function SheetRow({
   chosen,
   multiple = false,
   opens = false,
+  active = false,
   onPress,
 }: SheetRowProps) {
   const p = usePalette();
@@ -152,7 +155,7 @@ export function SheetRow({
       accessibilityRole={chosen === undefined ? "menuitem" : multiple ? "checkbox" : "radio"}
       accessibilityState={chosen === undefined ? undefined : { checked: chosen }}
       className="min-h-[52px] flex-row items-center gap-3 ps-4 pe-3.5"
-      style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
+      style={({ pressed }) => (pressed || active ? { backgroundColor: p.hover } : null)}
     >
       <View className="w-5 items-center">{mark}</View>
       <View className="flex-1 gap-0.5 py-2.5">

@@ -293,6 +293,8 @@ function Tools({
   // Filter lists what can be filtered by; each opens its values in the same sheet.
   const [level, setLevel] = useState<"state" | "due" | "section" | null>(null);
   const levelName = { state: t`State`, due: t`Due`, section: t`Section` };
+  const list = (items: string[]) =>
+    new Intl.ListFormat(i18n.locale, { type: "conjunction", style: "narrow" }).format(items);
   const sortName: Record<DeckSort, string> = {
     section: t`Section`,
     due: t`When it’s back`,
@@ -380,10 +382,15 @@ function Tools({
           onPress={() => setLevel(null)}
           accessibilityRole={level ? "button" : "header"}
           accessibilityLabel={level ? t`Back to Filter` : t`Filter`}
-          className="h-11 flex-row items-center gap-1 self-start pe-3"
+          className="self-start pb-3 ps-4 pe-3"
         >
-          {level && <Icon name="back" size={20} colour={p["text-2"]} />}
-          <Text className={`text-lg font-medium text-text ${level ? "" : "ps-4"}`}>
+          {/* The chevron sits in the inset, so the title starts at the same place at both levels. */}
+          {level && (
+            <View className="absolute start-0 top-0 h-7 justify-center">
+              <Icon name="back" size={16} colour={p["text-2"]} />
+            </View>
+          )}
+          <Text className="text-lg font-medium text-text">
             {level ? levelName[level] : t`Filter`}
           </Text>
         </Pressable>
@@ -393,7 +400,7 @@ function Tools({
               label={levelName.state}
               detail={
                 filters.states.length
-                  ? filters.states.map((s) => i18n._(stateMarks[s].groupLabel)).join(", ")
+                  ? list(filters.states.map((s) => i18n._(stateMarks[s].groupLabel)))
                   : t`Any`
               }
               opens

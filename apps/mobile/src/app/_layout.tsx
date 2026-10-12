@@ -15,6 +15,7 @@ import { queryClient } from "../data/client";
 import { Sync } from "../data/sync";
 import { i18n } from "../i18n";
 import { LanguageSync } from "../i18n/sync";
+import { toggleUndoMotion } from "../review/undo-swipe";
 import { usePalette } from "../theme/palette";
 import { WidgetSync } from "../widgets/sync";
 
@@ -26,7 +27,11 @@ SplashScreen.preventAutoHideAsync();
 
 // In a development build the dev menu opens the design system, as the web has /design.
 if (__DEV__) {
-  void registerDevMenuItems([{ name: "Design system", callback: () => router.push("/design") }]);
+  void registerDevMenuItems([
+    { name: "Design system", callback: () => router.push("/design") },
+    // Until the review's undo swipe is picked (#551).
+    { name: "Undo swipe: slide off ⇄ slide back", callback: toggleUndoMotion },
+  ]);
 }
 
 export default function RootLayout() {

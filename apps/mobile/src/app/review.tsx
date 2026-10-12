@@ -69,7 +69,13 @@ import {
 import { endHaptics } from "../review/end-haptics";
 import { Cover, usePullToEnd } from "../review/pull-to-end";
 import { markUndoHintSeen, UndoHint, undoHintSeen } from "../review/undo-hint";
-import { UndoStack, useUndoSwipe } from "../review/undo-swipe";
+import {
+  UndoArea,
+  UndoCards,
+  type UndoMotion,
+  useUndoMotion,
+  useUndoSwipe,
+} from "../review/undo-swipe";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { type Palette, usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
@@ -279,6 +285,7 @@ function Run({
     });
   };
   const swipe = useUndoSwipe({ enabled: !!lastGraded && !ended, onUndo: undo });
+  const undoMotion = useUndoMotion();
 
   // A pinned card a refetch no longer holds, such as one archived meanwhile, gives way.
   const repin = !!state?.next && !staleDay && (!pinned || !pinnedItem);
@@ -425,24 +432,7 @@ function Run({
             />
           </Animated.View>
         </GestureDetector>
-        <UndoStack
-          x={swipe.x}
-          dir={swipe.dir}
-          gesture={swipe.gesture}
-          turn={lastGraded?.grade.reviewedAt ?? null}
-          under={
-            lastGraded && (
-              <Turn
-                turn={lastGraded.grade.reviewedAt}
-                item={lastGraded.item}
-                deckName={lastGraded.deckName}
-                forgotten={lastGraded.forgotten}
-                revealed
-                still
-              />
-            )
-          }
-        >
+        <UndoArea gesture={swipe.gesture}>
           <Turn
             // A forgotten card can come straight back; by position it arrives afresh.
             turn={`${keyOf(current)}:${done}`}
@@ -457,9 +447,27 @@ function Run({
             }}
             onGrade={onGrade}
             onUndo={lastGraded ? undo : undefined}
+            swipe={{
+              x: swipe.x,
+              dir: swipe.dir,
+              motion: undoMotion,
+              turn: lastGraded?.grade.reviewedAt ?? null,
+              under: lastGraded && (
+                <CardPlate
+                  turn={lastGraded.grade.reviewedAt}
+                  item={lastGraded.item}
+                  deckName={lastGraded.deckName}
+                  forgotten={lastGraded.forgotten}
+                  revealed
+                  still
+                  onReveal={undefined}
+                  onUndo={undefined}
+                />
+              ),
+            }}
           />
           {hint && !revealed && <UndoHint />}
-        </UndoStack>
+        </UndoArea>
       </View>
     </Cover>
   );
@@ -476,6 +484,7 @@ function Turn({
   onReveal,
   onGrade,
   onUndo,
+  swipe,
 }: {
   /** Which card this is at which point of the review; a new one fades its words in on the same plate. */
   turn: string;
@@ -488,22 +497,39 @@ function Turn({
   onReveal?: () => void;
   onGrade?: (r: Rating) => void;
   onUndo?: (() => void) | undefined;
+  /** The swipe that takes the last grade back moves this card and the graded one, nothing else. */
+  swipe: {
+    x: SharedValue<number>;
+    dir: number;
+    motion: UndoMotion;
+    turn: string | null;
+    under: ReactNode;
+  };
 }) {
   return (
     <>
       <View className="flex-1 px-4 pt-3">
-        <CardPlate
-          turn={turn}
-          item={item}
-          deckName={deckName}
-          forgotten={forgotten}
-          revealed={revealed}
-          still={still}
-          onReveal={onReveal}
-          onUndo={onUndo}
-        />
+        <UndoCards
+          x={swipe.x}
+          dir={swipe.dir}
+          motion={swipe.motion}
+          turn={swipe.turn}
+          under={swipe.under}
+        >
+          <CardPlate
+            turn={turn}
+            item={item}
+            deckName={deckName}
+            forgotten={forgotten}
+            revealed={revealed}
+            still={still}
+            onReveal={onReveal}
+            onUndo={onUndo}
+          />
+        </UndoCards>
       </View>
-      {revealed && <GradeStrip still={still} onGrade={onGrade} />}
+      {/* The grades arrive once a card brought back has landed. */}
+      {revealed && <GradeStrip onGrade={onGrade} />}
     </>
   );
 }
@@ -745,13 +771,7 @@ const gradeIn = (i: number) =>
  * Four grades under the card, 80 pt tall and nearly square, in the thumb's reach. Same tap, same
  * weight, whichever is chosen. phone.md "Review".
  */
-function GradeStrip({
-  still = false,
-  onGrade,
-}: {
-  still?: boolean;
-  onGrade: ((r: Rating) => void) | undefined;
-}) {
+function GradeStrip({ onGrade }: { onGrade: ((r: Rating) => void) | undefined }) {
   const p = usePalette();
   const dark = useColorScheme() === "dark";
   const reduce = useReduceMotion();
@@ -761,11 +781,7 @@ function GradeStrip({
       className="flex-row gap-2 px-4 pt-3"
     >
       {GRADES.map((g, i) => (
-        <Animated.View
-          key={g.label}
-          entering={still ? undefined : reduce ? CROSSFADE : gradeIn(i)}
-          className="flex-1"
-        >
+        <Animated.View key={g.label} entering={reduce ? CROSSFADE : gradeIn(i)} className="flex-1">
           <Press
             scale={0.96}
             haptic={false}

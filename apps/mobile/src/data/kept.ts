@@ -24,3 +24,5 @@ export const DEVICE_KEYS = { theme: "theme", reminder: "reminder" } as const;
 /** What the review has shown once on this phone, such as how to take back a grade. */
 export const reviewStore = createMMKV({ id: "lymi-review" });
 export const UNDO_HINT_KEY = "undo-hint";
+/** Which undo swipe the development build shows while one is being picked, from the dev menu. */
+export const UNDO_MOTION_KEY = "undo-motion";

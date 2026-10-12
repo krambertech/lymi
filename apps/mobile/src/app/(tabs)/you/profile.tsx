@@ -6,13 +6,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import { useSession } from "../../../auth/client";
 import { Field, FieldError, FieldLabel, Input } from "../../../ui/field";
 import { GlassButton } from "../../../ui/glass";
-import { KeyboardRoom } from "../../../ui/keyboard";
 import { DropdownMenu, type MenuItem } from "../../../ui/menu";
 import { Press, Text } from "../../../ui/primitives";
+import { OnGlass } from "../../../ui/surface";
 import { Avatar } from "../../../you/avatar";
 
 /** The learner's name and photo. A photo change saves at once, as on the web; the name on Save. */
@@ -93,62 +93,67 @@ export default function Profile() {
   }
 
   return (
-    <KeyboardRoom>
-      <View className="flex-row items-center justify-between px-4 pt-5 pb-2">
-        <GlassButton icon="close" label={t`Cancel`} onPress={() => router.back()} />
-        <GlassButton icon="check" label={t`Save`} primary busy={rename.isPending} onPress={save} />
-      </View>
-      <ScrollView
-        contentContainerClassName="gap-7 px-5 pt-2 pb-6"
-        keyboardShouldPersistTaps="handled"
-      >
-        <View className="items-center gap-3">
-          <Avatar name={name || me?.name} size={96} pending={photo.isPending} />
-          <DropdownMenu
-            items={items}
-            trigger={(open) => (
-              <Press
-                onPress={open}
-                disabled={photo.isPending}
-                accessibilityRole="button"
-                hitSlop={8}
-                className="px-3 py-1.5"
-              >
-                <Text className="text-md font-medium text-text">{t`Change photo`}</Text>
-              </Press>
-            )}
+    <OnGlass>
+      <View className="flex-1 pb-6">
+        <View className="flex-row items-center justify-between px-4 pt-5 pb-2">
+          <GlassButton icon="close" label={t`Cancel`} onPress={() => router.back()} />
+          <GlassButton
+            icon="check"
+            label={t`Save`}
+            primary
+            busy={rename.isPending}
+            onPress={save}
           />
-          {photo.isError && (
-            <Text className="text-center text-base text-danger" accessibilityLiveRegion="polite">
-              {photo.error instanceof ApiError && photo.error.status === 409
-                ? t`Your photo changed on another device. Try again.`
-                : t`Couldn’t change your photo. Check your connection and try again.`}
-            </Text>
-          )}
         </View>
-        <Field disabled={rename.isPending}>
-          <FieldLabel>{t({ message: "Name", context: "person" })}</FieldLabel>
-          <Input
-            value={name}
-            onChangeText={(text) => {
-              setName(text);
-              setInvalid(null);
-            }}
-            autoCapitalize="words"
-            autoComplete="name"
-            textContentType="name"
-            returnKeyType="done"
-            onSubmitEditing={save}
-            maxLength={80}
-          />
-          <FieldError>
-            {invalid ??
-              (rename.isError
-                ? t`Couldn’t save your name. Check your connection and try again.`
-                : null)}
-          </FieldError>
-        </Field>
-      </ScrollView>
-    </KeyboardRoom>
+        <View className="gap-6 px-5 pt-1">
+          <View className="items-center gap-3">
+            <Avatar name={name || me?.name} size={96} pending={photo.isPending} />
+            <DropdownMenu
+              items={items}
+              trigger={(open) => (
+                <Press
+                  onPress={open}
+                  disabled={photo.isPending}
+                  accessibilityRole="button"
+                  hitSlop={8}
+                  className="px-3 py-1.5"
+                >
+                  <Text className="text-md font-medium text-text">{t`Change photo`}</Text>
+                </Press>
+              )}
+            />
+            {photo.isError && (
+              <Text className="text-center text-base text-danger" accessibilityLiveRegion="polite">
+                {photo.error instanceof ApiError && photo.error.status === 409
+                  ? t`Your photo changed on another device. Try again.`
+                  : t`Couldn’t change your photo. Check your connection and try again.`}
+              </Text>
+            )}
+          </View>
+          <Field disabled={rename.isPending}>
+            <FieldLabel>{t({ message: "Name", context: "person" })}</FieldLabel>
+            <Input
+              value={name}
+              onChangeText={(text) => {
+                setName(text);
+                setInvalid(null);
+              }}
+              autoCapitalize="words"
+              autoComplete="name"
+              textContentType="name"
+              returnKeyType="done"
+              onSubmitEditing={save}
+              maxLength={80}
+            />
+            <FieldError>
+              {invalid ??
+                (rename.isError
+                  ? t`Couldn’t save your name. Check your connection and try again.`
+                  : null)}
+            </FieldError>
+          </Field>
+        </View>
+      </View>
+    </OnGlass>
   );
 }

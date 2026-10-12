@@ -1,14 +1,15 @@
 import { useLingui } from "@lingui/react/macro";
+import { deviceTimezone } from "@lymi/client/api";
 import { insightsQuery } from "@lymi/client/queries";
 import { useQuery } from "@tanstack/react-query";
 import * as Notifications from "expo-notifications";
 import { usePathname, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AppState } from "react-native";
 import { useMMKVString } from "react-native-mmkv";
 import { dueToday } from "../data/due";
 import { DEVICE_KEYS, deviceStore } from "../data/kept";
-import { useDay, useDecks, useGrades, useKeptSince } from "../data/queries";
+import { useDay, useDecks, useDraw, useGrades, useKeptSince } from "../data/queries";
 import {
   notificationPermission,
   opensReview,
@@ -16,7 +17,7 @@ import {
   schedule,
   snoozedUntil,
 } from "./notifications";
-import { forecastFrom, landedGrades, planReminders } from "./plan";
+import { forecastFrom, gradeRevision, planReminders } from "./plan";
 
 /** The forecast moves with grades and the day; an hour old is close enough for a week ahead. */
 const FORECAST_STALE_MS = 60 * 60 * 1000;
@@ -42,15 +43,29 @@ export function ReminderSync() {
     staleTime: FORECAST_STALE_MS,
     refetchOnMount: true,
   });
-  const forecast = forecastFrom(insights.data?.forecast, summary?.today.date)?.join(",");
-  // A grade moves tomorrow's forecast once the server has it, so refresh after grading settles.
-  const landed = landedGrades(useGrades());
+  const reviewDay = summary?.today.date;
+  const zone = useDraw().data?.day.zone ?? deviceTimezone();
+  const forecastByDay = forecastFrom(insights.data?.forecast, reviewDay);
+  const forecast = forecastByDay && JSON.stringify([...forecastByDay]);
+  // Past the review day's midnight the forecast no longer starts today, so fetch today's; while it
+  // is on its way, the reminders already planned from the last one stay.
+  const stale = !!insights.data && !!reviewDay && !forecastByDay;
+  const replacing = stale && insights.fetchStatus === "fetching";
   const refetch = insights.refetch;
   useEffect(() => {
-    if (!time || landed === 0) return;
-    const timer = setTimeout(() => void refetch(), GRADES_SETTLE_MS);
+    if (time && stale) void refetch();
+  }, [time, stale, refetch]);
+  // A grade or an Undo moves tomorrow's forecast once the server has it; refresh after it settles.
+  const revision = gradeRevision(useGrades());
+  const seen = useRef(revision);
+  useEffect(() => {
+    if (!time || revision === seen.current) return;
+    const timer = setTimeout(() => {
+      seen.current = revision;
+      void refetch();
+    }, GRADES_SETTLE_MS);
     return () => clearTimeout(timer);
-  }, [time, landed, refetch]);
+  }, [time, revision, refetch]);
   const [front, setFront] = useState(0);
 
   useEffect(() => {
@@ -67,7 +82,7 @@ export function ReminderSync() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: a return to the front and the language replan too.
   useEffect(() => {
-    if (time && due === undefined) return;
+    if (time && (due === undefined || replacing)) return;
     // A review grades every few seconds; the plan only needs where the day settled.
     let live = true;
     const timer = setTimeout(async () => {
@@ -78,9 +93,10 @@ export function ReminderSync() {
         planReminders({
           time,
           now: new Date(),
+          zone,
           left: due ?? 0,
           dayDone,
-          forecast: forecast?.split(",").map(Number),
+          forecast: forecast ? new Map(JSON.parse(forecast)) : undefined,
           snoozedUntil: snoozedUntil(),
         }),
       );
@@ -89,7 +105,7 @@ export function ReminderSync() {
       live = false;
       clearTimeout(timer);
     };
-  }, [time, due, dayDone, forecast, front, i18n.locale]);
+  }, [time, due, dayDone, forecast, zone, replacing, front, i18n.locale]);
 
   // A cold start opens on "/", which redirects to Today; a review opened before that is replaced.
   const path = usePathname();

@@ -1,18 +1,22 @@
+import { dayWindow } from "@lymi/core";
+
 // When the daily reminder fires, worked out on the phone so it holds without a connection. #510.
 
 /** Days scheduled ahead, so a learner who stays away still hears from Lymi for a week. */
 export const DAYS_AHEAD = 7;
 
 export interface ReminderInput {
-  /** The reminder's local time, `HH:MM`. */
+  /** The reminder's local time, `HH:MM`, on the phone's own clock. */
   time: string;
   now: Date;
+  /** The learner's review zone, which decides which review day a reminder falls on. */
+  zone: string;
   /** Cards still due today, as Today shows them. */
   left: number;
   /** Today already counts: the goal is met or nothing was left to review. */
   dayDone: boolean;
-  /** Cards that fall due on each day from today, today's first; see `forecastFrom`. */
-  forecast?: readonly number[] | undefined;
+  /** Cards that fall due on each review day, by date; see `forecastFrom`. */
+  forecast?: ReadonlyMap<string, number> | undefined;
   /** Until when the learner put today's reminder off, from its In an hour action. */
   snoozedUntil?: Date | undefined;
 }
@@ -30,38 +34,6 @@ function atTime(day: Date, time: string, offset: number): Date {
   return at;
 }
 
-/**
- * One reminder a day while something is due and the day is still open. Later days count what is
- * left today plus what falls due by then, since a learner who does not open the app reviews none
- * of it; the next launch plans again from the real numbers.
- */
-export function planReminders({
-  time,
-  now,
-  left,
-  dayDone,
-  forecast,
-  snoozedUntil,
-}: ReminderInput): PlannedReminder[] {
-  const planned: PlannedReminder[] = [];
-  let due = left;
-  for (let offset = 0; offset < DAYS_AHEAD; offset++) {
-    if (offset > 0) {
-      // Without a forecast, later days know only what today leaves behind.
-      due += forecast?.[offset] ?? 0;
-    }
-    if (due < 1) continue;
-    if (offset === 0) {
-      if (dayDone) continue;
-      const at = snoozedUntil && snoozedUntil > now ? snoozedUntil : atTime(now, time, 0);
-      if (at > now) planned.push({ at, due });
-      continue;
-    }
-    planned.push({ at: atTime(now, time, offset), due });
-  }
-  return planned;
-}
-
 /** Calendar arithmetic on a local YYYY-MM-DD, which no timezone can shift. */
 function addDays(date: string, days: number): string {
   const [y = 0, m = 1, d = 1] = date.split("-").map(Number);
@@ -69,27 +41,73 @@ function addDays(date: string, days: number): string {
 }
 
 /**
- * Insights' dated forecast as one count per day from the learner's `today`, or nothing when it
- * does not start today: a forecast fetched on an earlier day still counts work since done, so the
- * plan falls back to what today leaves rather than remind about it.
+ * One reminder a day at the phone's own time, while something is due and the review day it falls
+ * on is still open. Each reminder counts by that review day, which can differ from the phone's
+ * date when the review zone does: what is left today, plus what falls due by then, since a learner
+ * who does not open the app reviews none of it. The next launch plans again from the real numbers.
+ */
+export function planReminders({
+  time,
+  now,
+  zone,
+  left,
+  dayDone,
+  forecast,
+  snoozedUntil,
+}: ReminderInput): PlannedReminder[] {
+  const today = dayWindow(now, zone).date;
+  const planned: PlannedReminder[] = [];
+  const snoozed = snoozedUntil && snoozedUntil > now ? snoozedUntil : undefined;
+  // One more phone day than the week, so a zone running behind the phone still fills it.
+  for (let offset = 0; offset <= DAYS_AHEAD; offset++) {
+    const candidate = atTime(now, time, offset);
+    const date = dayWindow(candidate, zone).date;
+    if (date < today) continue;
+    if (date === today) {
+      if (dayDone || left < 1) continue;
+      const at = snoozed ?? candidate;
+      if (at > now) planned.push({ at, due: left });
+      continue;
+    }
+    let due = left;
+    // Without a forecast, later days know only what today leaves behind.
+    for (let d = addDays(today, 1); d <= date; d = addDays(d, 1)) due += forecast?.get(d) ?? 0;
+    if (due > 0) planned.push({ at: candidate, due });
+    if (planned.length === DAYS_AHEAD) break;
+  }
+  return planned;
+}
+
+/**
+ * Insights' forecast by review date, or nothing when it does not start on the learner's `today`:
+ * a forecast fetched on an earlier day still counts work since done, so the plan falls back to
+ * what today leaves rather than remind about it.
  */
 export function forecastFrom(
   buckets: readonly { date: string; count: number }[] | undefined,
   today: string | undefined,
-): number[] | undefined {
+): Map<string, number> | undefined {
   if (!buckets || !today || buckets[0]?.date !== today) return undefined;
-  const byDate = new Map(buckets.map((b) => [b.date, b.count]));
-  return Array.from({ length: DAYS_AHEAD }, (_, i) => byDate.get(addDays(today, i)) ?? 0);
+  return new Map(buckets.map((b) => [b.date, b.count]));
 }
 
 /**
- * Grades the server has taken in, sent or taken back. Tomorrow's forecast only moves once one
- * lands, so a grade still queued offline changes nothing until it does.
+ * What the server has of today's grades: those it took in and those taken back. Tomorrow's
+ * forecast moves whenever this does, including an Undo that leaves none, while a grade still
+ * queued offline changes nothing until it lands.
  */
-export function landedGrades(
-  grades: readonly { sentAt?: number | undefined; undone?: boolean | undefined }[],
-): number {
-  return grades.filter((g) => g.sentAt !== undefined || g.undone).length;
+export function gradeRevision(
+  grades: readonly {
+    cardId: string;
+    reviewedAt: string;
+    sentAt?: number | undefined;
+    undone?: boolean | undefined;
+  }[],
+): string {
+  return grades
+    .filter((g) => g.sentAt !== undefined || g.undone)
+    .map((g) => `${g.cardId}@${g.reviewedAt}${g.undone ? "-" : "+"}`)
+    .join(" ");
 }
 
 /** Picks one of `count` lines by the day, so the wording changes from one day to the next. */

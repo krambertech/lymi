@@ -940,6 +940,82 @@
     ]
    }
   },
+  "/api/activity": {
+   "get": {
+    "operationId": "getApiActivity",
+    "security": [
+     {
+      "session": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ActivityPage"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "in": "query",
+      "name": "cursor",
+      "schema": {
+       "type": "string",
+       "minLength": 1
+      }
+     },
+     {
+      "in": "query",
+      "name": "limit",
+      "schema": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 200
+      }
+     }
+    ]
+   }
+  },
   "/api/settings": {
    "get": {
     "operationId": "getApiSettings",
@@ -4009,6 +4085,878 @@
      "reviewedDays",
      "restDays",
      "days"
+    ]
+   },
+   "Import": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "source": {
+      "type": "string",
+      "enum": [
+       "anki",
+       "mochi",
+       "lymi"
+      ],
+      "x-lymi-open": true
+     },
+     "fileName": {
+      "type": "string"
+     },
+     "byteSize": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "uploading",
+       "inspecting",
+       "ready",
+       "importing",
+       "done",
+       "failed",
+       "cancelled"
+      ],
+      "x-lymi-open": true
+     },
+     "failure": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "unrecognized",
+         "damaged",
+         "too_large",
+         "empty",
+         "upload_incomplete",
+         "expired",
+         "internal"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "x-lymi-open": true
+     },
+     "choices": {
+      "anyOf": [
+       {
+        "type": "object",
+        "properties": {
+         "languages": {
+          "type": "object",
+          "propertyNames": {
+           "type": "string"
+          },
+          "additionalProperties": {
+           "anyOf": [
+            {
+             "type": "string",
+             "minLength": 2,
+             "maxLength": 12,
+             "pattern": "^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$"
+            },
+            {
+             "type": "null"
+            }
+           ]
+          }
+         },
+         "roles": {
+          "type": "object",
+          "propertyNames": {
+           "type": "string"
+          },
+          "additionalProperties": {
+           "maxItems": 64,
+           "type": "array",
+           "items": {
+            "type": "string",
+            "enum": [
+             "term",
+             "meaning",
+             "pronunciation",
+             "example",
+             "notes",
+             "skip"
+            ]
+           }
+          }
+         },
+         "skipDecks": {
+          "maxItems": 5000,
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "languages",
+         "roles"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "counts": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/ImportCounts"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "progress": {
+      "type": "object",
+      "properties": {
+       "written": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "chunks": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       }
+      },
+      "required": [
+       "written",
+       "chunks"
+      ]
+     },
+     "upload": {
+      "type": "object",
+      "properties": {
+       "partBytes": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "parts": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "received": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       }
+      },
+      "required": [
+       "partBytes",
+       "parts",
+       "received"
+      ]
+     },
+     "createdBy": {
+      "type": "string",
+      "enum": [
+       "user",
+       "api",
+       "mcp",
+       "ai",
+       "system"
+      ],
+      "x-lymi-open": true
+     },
+     "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+     },
+     "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+     },
+     "finishedAt": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "archivedAt": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "required": [
+     "id",
+     "source",
+     "fileName",
+     "byteSize",
+     "status",
+     "failure",
+     "summary",
+     "choices",
+     "counts",
+     "progress",
+     "upload",
+     "createdBy",
+     "createdAt",
+     "updatedAt",
+     "finishedAt",
+     "archivedAt"
+    ]
+   },
+   "ImportSummary": {
+    "type": "object",
+    "properties": {
+     "decks": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "key": {
+         "type": "string"
+        },
+        "name": {
+         "type": "string"
+        },
+        "cards": {
+         "type": "integer",
+         "minimum": -9007199254740991,
+         "maximum": 9007199254740991
+        },
+        "known": {
+         "type": "integer",
+         "minimum": -9007199254740991,
+         "maximum": 9007199254740991
+        }
+       },
+       "required": [
+        "key",
+        "name",
+        "description",
+        "cards"
+       ]
+      }
+     },
+     "noteTypes": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "key": {
+         "type": "string"
+        },
+        "name": {
+         "type": "string"
+        },
+        "kind": {
+         "type": "string",
+         "enum": [
+          "basic",
+          "cloze"
+         ]
+        },
+        "fields": {
+         "type": "array",
+         "items": {
+          "type": "string"
+         }
+        },
+        "roles": {
+         "type": "array",
+         "items": {
+          "type": "string",
+          "enum": [
+           "term",
+           "meaning",
+           "pronunciation",
+           "example",
+           "notes",
+           "skip"
+          ]
+         }
+        },
+        "questions": {
+         "type": "array",
+         "items": {
+          "anyOf": [
+           {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+           },
+           {
+            "type": "null"
+           }
+          ]
+         }
+        },
+        "notes": {
+         "type": "integer",
+         "minimum": -9007199254740991,
+         "maximum": 9007199254740991
+        },
+        "decks": {
+         "type": "array",
+         "items": {
+          "type": "string"
+         }
+        },
+        "samples": {
+         "type": "array",
+         "items": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         }
+        }
+       },
+       "required": [
+        "key",
+        "name",
+        "kind",
+        "fields",
+        "roles",
+        "questions",
+        "notes",
+        "samples"
+       ]
+      }
+     },
+     "notes": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "reviews": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "pictures": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "audio": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "unsupported": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "languages": {
+      "type": "object",
+      "propertyNames": {
+       "type": "string"
+      },
+      "additionalProperties": {
+       "type": [
+        "string",
+        "null"
+       ]
+      }
+     }
+    },
+    "required": [
+     "decks",
+     "noteTypes",
+     "notes",
+     "reviews",
+     "pictures",
+     "audio",
+     "unsupported",
+     "languages"
+    ]
+   },
+   "ImportCounts": {
+    "type": "object",
+    "properties": {
+     "added": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "existing": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "duplicates": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "duplicateExamples": {
+      "maxItems": 20,
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "term": {
+         "type": "string"
+        },
+        "deckName": {
+         "type": "string"
+        }
+       },
+       "required": [
+        "term",
+        "deckName"
+       ]
+      }
+     },
+     "skipped": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "archived": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "shortened": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "reviews": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "pictures": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "picturesSkipped": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "decks": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     }
+    },
+    "required": [
+     "added",
+     "existing",
+     "duplicates",
+     "duplicateExamples",
+     "skipped",
+     "archived",
+     "shortened",
+     "reviews",
+     "pictures",
+     "picturesSkipped",
+     "decks"
+    ]
+   },
+   "Export": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "format": {
+      "type": "string",
+      "enum": [
+       "lymi",
+       "anki"
+      ],
+      "x-lymi-open": true
+     },
+     "deckId": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "fileName": {
+      "type": "string"
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "exporting",
+       "done",
+       "failed",
+       "expired"
+      ],
+      "x-lymi-open": true
+     },
+     "failure": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "too_large",
+         "internal"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "x-lymi-open": true
+     },
+     "byteSize": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "counts": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/ExportCounts"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "downloadUrl": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "createdBy": {
+      "type": "string",
+      "enum": [
+       "user",
+       "api",
+       "mcp",
+       "ai",
+       "system"
+      ],
+      "x-lymi-open": true
+     },
+     "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+     },
+     "finishedAt": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "expiresAt": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time",
+        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "required": [
+     "id",
+     "format",
+     "deckId",
+     "fileName",
+     "status",
+     "failure",
+     "byteSize",
+     "counts",
+     "downloadUrl",
+     "createdBy",
+     "createdAt",
+     "finishedAt",
+     "expiresAt"
+    ]
+   },
+   "ExportCounts": {
+    "type": "object",
+    "properties": {
+     "decks": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "cards": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "reviews": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "pictures": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "sounds": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     }
+    },
+    "required": [
+     "decks",
+     "cards",
+     "reviews",
+     "pictures",
+     "sounds"
+    ]
+   },
+   "ActivityPage": {
+    "type": "object",
+    "properties": {
+     "entries": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/ActivityEntry"
+      }
+     },
+     "today": {
+      "type": "string"
+     },
+     "zone": {
+      "type": "string"
+     },
+     "nextCursor": {
+      "type": [
+       "string",
+       "null"
+      ]
+     }
+    },
+    "required": [
+     "entries",
+     "today",
+     "zone",
+     "nextCursor"
+    ]
+   },
+   "ActivityEntry": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "group": {
+      "type": "string"
+     },
+     "kind": {
+      "type": "string",
+      "enum": [
+       "cards_added",
+       "cards_enriched",
+       "cards_edited",
+       "cards_archived",
+       "cards_restored",
+       "deck_added",
+       "deck_edited",
+       "deck_archived",
+       "deck_restored",
+       "series_added",
+       "series_edited",
+       "series_deleted",
+       "series_restored",
+       "section_added",
+       "section_edited",
+       "section_archived",
+       "section_restored",
+       "import",
+       "export",
+       "member_joined",
+       "member_left",
+       "member_removed",
+       "invitation_sent",
+       "invitation_cancelled",
+       "link_on",
+       "link_off"
+      ],
+      "x-lymi-open": true
+     },
+     "actor": {
+      "type": "string",
+      "enum": [
+       "user",
+       "api",
+       "mcp",
+       "ai",
+       "system"
+      ],
+      "x-lymi-open": true
+     },
+     "app": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+     },
+     "day": {
+      "type": "string"
+     },
+     "count": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "deck": {
+      "anyOf": [
+       {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string"
+         },
+         "name": {
+          "type": "string"
+         },
+         "archived": {
+          "type": "boolean"
+         }
+        },
+        "required": [
+         "id",
+         "name",
+         "archived"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "person": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "cards": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/ActivityCard"
+      }
+     },
+     "import": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/Import"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "export": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/Export"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "required": [
+     "id",
+     "group",
+     "kind",
+     "actor",
+     "app",
+     "at",
+     "day",
+     "count",
+     "deck",
+     "person",
+     "cards",
+     "import",
+     "export"
+    ]
+   },
+   "ActivityCard": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "term": {
+      "type": "string"
+     },
+     "meaning": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "archived": {
+      "type": "boolean"
+     },
+     "deckId": {
+      "type": "string"
+     },
+     "deckArchived": {
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "id",
+     "term",
+     "meaning",
+     "archived",
+     "deckId",
+     "deckArchived"
     ]
    }
   }

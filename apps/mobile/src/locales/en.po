@@ -28,6 +28,10 @@ msgstr "{0, plural, one {# forgotten} other {# forgotten}}"
 msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
 msgstr "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
 
+#. placeholder {0}: entry.count - entry.cards.length
+msgid "{0, plural, one {# more card} other {# more cards}}"
+msgstr "{0, plural, one {# more card} other {# more cards}}"
+
 #. placeholder {0}: screen.nudge.count
 msgid "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
 msgstr "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
@@ -136,6 +140,12 @@ msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# review} other {# reviews}}"
 
+msgid "{name} joined {deck}"
+msgstr "{name} joined {deck}"
+
+msgid "{name} left {deck}"
+msgstr "{name} left {deck}"
+
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "{passed} remembered, {failed} forgotten"
 
@@ -162,6 +172,9 @@ msgstr "30 days"
 msgid "90 days"
 msgstr "90 days"
 
+msgid "A connected app"
+msgstr "A connected app"
+
 msgid "A new code is on its way to {address}."
 msgstr "A new code is on its way to {address}."
 
@@ -185,9 +198,6 @@ msgstr "A word or phrase"
 
 msgid "Activity"
 msgstr "Activity"
-
-msgid "Activity is coming to the phone"
-msgstr "Activity is coming to the phone"
 
 msgid "Add a card"
 msgstr "Add a card"
@@ -221,6 +231,9 @@ msgstr "Added “{term}” without its picture. {reason}"
 
 msgid "Added “{term}”. It’s saved on this phone until Lymi can be reached."
 msgstr "Added “{term}”. It’s saved on this phone until Lymi can be reached."
+
+msgid "Added {count, plural, one {# card} other {# cards}} to {deck}"
+msgstr "Added {count, plural, one {# card} other {# cards}} to {deck}"
 
 msgid "Ahead"
 msgstr "Ahead"
@@ -267,8 +280,17 @@ msgstr "API keys"
 msgid "Archived"
 msgstr "Archived"
 
+msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Archived {count, plural, one {# card} other {# cards}} in {deck}"
+
 msgid "Archived is coming to the phone"
 msgstr "Archived is coming to the phone"
+
+msgid "Archived the deck {deck}"
+msgstr "Archived the deck {deck}"
+
+msgid "Archived the section {name} in {deck}"
+msgstr "Archived the section {name} in {deck}"
 
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "At least {MIN_PASSWORD_LENGTH} characters."
@@ -285,6 +307,12 @@ msgstr "Bug"
 msgid "Cancel"
 msgstr "Cancel"
 
+msgid "Cancelled"
+msgstr "Cancelled"
+
+msgid "Cancelled the invitation to {name} for {deck}"
+msgstr "Cancelled the invitation to {name} for {deck}"
+
 msgid "Card options"
 msgstr "Card options"
 
@@ -293,6 +321,9 @@ msgstr "Cards"
 
 msgid "Change daily goal"
 msgstr "Change daily goal"
+
+msgid "Changes from AI apps, imports, AI enrichment and shared decks show up here."
+msgstr "Changes from AI apps, imports, AI enrichment and shared decks show up here."
 
 msgid "Changing the goal needs a connection."
 msgstr "Changing the goal needs a connection."
@@ -348,8 +379,14 @@ msgstr "Couldn’t change your photo. Check your connection and try again."
 msgid "Couldn’t check for more cards"
 msgstr "Couldn’t check for more cards"
 
+msgid "Couldn’t load Activity"
+msgstr "Couldn’t load Activity"
+
 msgid "Couldn’t load Insights"
 msgstr "Couldn’t load Insights"
+
+msgid "Couldn’t load more."
+msgstr "Couldn’t load more."
 
 msgid "Couldn’t load Today"
 msgstr "Couldn’t load Today"
@@ -435,6 +472,12 @@ msgstr "Deck"
 msgid "Decks to review"
 msgstr "Decks to review"
 
+msgid "Deleted"
+msgstr "Deleted"
+
+msgid "Deleted the series {name}"
+msgstr "Deleted the series {name}"
+
 msgid "Describe what the picture shows without naming the term or the meaning."
 msgstr "Describe what the picture shows without naming the term or the meaning."
 
@@ -471,11 +514,26 @@ msgstr "Edit hook"
 msgid "Edit your name and photo"
 msgstr "Edit your name and photo"
 
+msgid "Edited {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Edited {count, plural, one {# card} other {# cards}} in {deck}"
+
+msgid "Edited the deck {deck}"
+msgstr "Edited the deck {deck}"
+
+msgid "Edited the section {name} in {deck}"
+msgstr "Edited the section {name} in {deck}"
+
+msgid "Edited the series {name}"
+msgstr "Edited the series {name}"
+
 msgid "Email"
 msgstr "Email"
 
 msgid "End review"
 msgstr "End review"
+
+msgid "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
 
 msgid "Enter an email address, like you@example.com."
 msgstr "Enter an email address, like you@example.com."
@@ -503,6 +561,21 @@ msgstr "Explore is coming to the phone"
 
 msgid "Export"
 msgstr "Export"
+
+msgid "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
+msgstr "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
+
+msgid "Exported {cards, plural, one {# card} other {# cards}} as an Anki package"
+msgstr "Exported {cards, plural, one {# card} other {# cards}} as an Anki package"
+
+msgid "Exported your cards"
+msgstr "Exported your cards"
+
+msgid "Exporting as a Lymi file"
+msgstr "Exporting as a Lymi file"
+
+msgid "Exporting as an Anki package"
+msgstr "Exporting as an Anki package"
 
 msgid "Feedback sent"
 msgstr "Feedback sent"
@@ -578,6 +651,15 @@ msgstr "If {address} has a Lymi password, a reset link is on the way. It works f
 msgid "Import"
 msgstr "Import"
 
+msgid "Imported {added, plural, one {# card} other {# cards}} from {source}"
+msgstr "Imported {added, plural, one {# card} other {# cards}} from {source}"
+
+msgid "Importing"
+msgstr "Importing"
+
+msgid "Importing from {source}"
+msgstr "Importing from {source}"
+
 msgid "Insights"
 msgstr "Insights"
 
@@ -591,6 +673,9 @@ msgstr "Insights: recall {recall}, reviewed on {0} of the last 30 days"
 msgctxt "daily goal"
 msgid "Intense"
 msgstr "Intense"
+
+msgid "Invited {name} to {deck}"
+msgstr "Invited {name} to {deck}"
 
 msgctxt "daily goal"
 msgid "Keen"
@@ -632,11 +717,29 @@ msgstr "Light"
 msgid "Longest streak"
 msgstr "Longest streak"
 
+msgid "Lymi"
+msgstr "Lymi"
+
 msgid "Lymi also gets the screen you are on, the app version, your phone and your app language."
 msgstr "Lymi also gets the screen you are on, the app version, your phone and your app language."
 
 msgid "Lymi is free to use."
 msgstr "Lymi is free to use."
+
+msgid "Made a change"
+msgstr "Made a change"
+
+msgid "Made a change in {deck}"
+msgstr "Made a change in {deck}"
+
+msgid "Made the deck {deck}"
+msgstr "Made the deck {deck}"
+
+msgid "Made the section {name} in {deck}"
+msgstr "Made the section {name} in {deck}"
+
+msgid "Made the series {name}"
+msgstr "Made the series {name}"
 
 msgid "Make one for each course or topic."
 msgstr "Make one for each course or topic."
@@ -687,6 +790,9 @@ msgstr "New to Lymi?"
 
 msgid "Next month"
 msgstr "Next month"
+
+msgid "No activity yet"
+msgstr "No activity yet"
 
 msgid "No cards yet"
 msgstr "No cards yet"
@@ -742,8 +848,8 @@ msgstr "Only on days with cards due."
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."
 
-msgid "Open Activity on the web"
-msgstr "Open Activity on the web"
+msgid "Open {name}"
+msgstr "Open {name}"
 
 msgid "Open Archived on the web"
 msgstr "Open Archived on the web"
@@ -812,6 +918,12 @@ msgstr "Reach today’s goal to keep it going."
 msgid "Reach today’s goal to start a streak."
 msgstr "Reach today’s goal to start a streak."
 
+msgid "Reading"
+msgstr "Reading"
+
+msgid "Ready to import"
+msgstr "Ready to import"
+
 msgid "Recall"
 msgstr "Recall"
 
@@ -839,11 +951,26 @@ msgstr "Remind me to review"
 msgid "Remove photo"
 msgstr "Remove photo"
 
+msgid "Removed {name} from {deck}"
+msgstr "Removed {name} from {deck}"
+
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
 
 msgid "Reset your password"
 msgstr "Reset your password"
+
+msgid "Restored {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "Restored {count, plural, one {# card} other {# cards}} in {deck}"
+
+msgid "Restored the deck {deck}"
+msgstr "Restored the deck {deck}"
+
+msgid "Restored the section {name} in {deck}"
+msgstr "Restored the section {name} in {deck}"
+
+msgid "Restored the series {name}"
+msgstr "Restored the series {name}"
 
 msgid "Review"
 msgstr "Review"
@@ -907,6 +1034,9 @@ msgstr "Settings is coming to the phone"
 msgid "Show hook"
 msgstr "Show hook"
 
+msgid "Show more"
+msgstr "Show more"
+
 msgid "Show password"
 msgstr "Show password"
 
@@ -928,6 +1058,9 @@ msgstr "Sign out"
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Sign-in didn’t finish. Try again."
 
+msgid "Someone"
+msgstr "Someone"
+
 msgid "Source"
 msgstr "Source"
 
@@ -937,6 +1070,9 @@ msgstr "Start with a deck"
 msgctxt "daily goal"
 msgid "Steady"
 msgstr "Steady"
+
+msgid "Stopped"
+msgstr "Stopped"
 
 msgid "Streak: {current, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Streak: {current, plural, one {# day in a row} other {# days in a row}}"
@@ -983,8 +1119,17 @@ msgstr "That email and password don’t match."
 msgid "That password is too easy to guess. Try another."
 msgstr "That password is too easy to guess. Try another."
 
+msgid "That’s everything."
+msgstr "That’s everything."
+
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "That’s no longer here. Reload to see what changed."
+
+msgid "The AI"
+msgstr "The AI"
+
+msgid "The API"
+msgstr "The API"
 
 msgid "Theme"
 msgstr "Theme"
@@ -1038,6 +1183,12 @@ msgstr "Try a memory hook"
 msgid "Try again"
 msgstr "Try again"
 
+msgid "Turned off the join link for {deck}"
+msgstr "Turned off the join link for {deck}"
+
+msgid "Turned on the join link for {deck}"
+msgstr "Turned on the join link for {deck}"
+
 msgid "Undo"
 msgstr "Undo"
 
@@ -1053,14 +1204,14 @@ msgstr "Until then, find ready decks to add on the web."
 msgid "Until then, restore archived cards on the web."
 msgstr "Until then, restore archived cards on the web."
 
-msgid "Until then, see what changed in your Library on the web."
-msgstr "Until then, see what changed in your Library on the web."
-
 msgid "Update"
 msgstr "Update"
 
 msgid "Update Lymi"
 msgstr "Update Lymi"
+
+msgid "Uploading"
+msgstr "Uploading"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
@@ -1092,6 +1243,12 @@ msgstr "Write a hook."
 
 msgid "Write what you want to tell Lymi."
 msgstr "Write what you want to tell Lymi."
+
+msgid "Writing"
+msgstr "Writing"
+
+msgid "Yesterday"
+msgstr "Yesterday"
 
 msgid "Yesterday was a rest day"
 msgstr "Yesterday was a rest day"

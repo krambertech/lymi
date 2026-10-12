@@ -71,6 +71,7 @@ The sheet stays for the next card: a line under the fields says where the last o
 ## Insights
 
 Insights keeps the web's figures, lines and order ([insights.md](../insights.md)), and changes the grid of four plates, whose lines are too narrow to read at phone width. Recall keeps a plate of its own with its period switcher and chart. Consistency, Cards and Ahead are rows on one plate, each figure beside its number and its line under both: Cards draws its three states as one bar and Ahead its seven days as bars without labels. Day by day shows two months, swipes back through the year and opens on today; a tap on a day says what it held on the line under the field, which starts on today. Often forgotten closes the page: each row is the term and how often it was forgotten, and opens its deck.
+
 ## Activity
 
 Activity is the web's list ([activity.md](../activity.md)): day headings over plates of rows, and Show more at the foot. A row that wrote cards opens them in a sheet over the list rather than in place, so the day keeps its shape; it peeks at the first six and drags up for the rest. A card or a deck opens its deck in Library. An import or an export opens on the web with an arrow out, because files are handled there ([ADR 0030](../../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)). A kind of row a newer server sends reads as a change to its deck, so an older release never shows a blank row.

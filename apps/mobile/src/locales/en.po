@@ -105,6 +105,12 @@ msgstr "A short phrase that helps you remember it."
 msgid "A word or phrase"
 msgstr "A word or phrase"
 
+msgid "Activity"
+msgstr "Activity"
+
+msgid "Activity is coming to the phone"
+msgstr "Activity is coming to the phone"
+
 msgid "Add a card"
 msgstr "Add a card"
 
@@ -159,6 +165,15 @@ msgstr "AI wrote this"
 msgid "Also on your list"
 msgstr "Also on your list"
 
+msgid "API keys"
+msgstr "API keys"
+
+msgid "Archived"
+msgstr "Archived"
+
+msgid "Archived is coming to the phone"
+msgstr "Archived is coming to the phone"
+
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "At least {MIN_PASSWORD_LENGTH} characters."
 
@@ -167,6 +182,12 @@ msgstr "Back"
 
 msgid "Back to sign in"
 msgstr "Back to sign in"
+
+msgid "Bug"
+msgstr "Bug"
+
+msgid "Cancel"
+msgstr "Cancel"
 
 msgid "Change daily goal"
 msgstr "Change daily goal"
@@ -189,8 +210,14 @@ msgstr "Choose another"
 msgid "Choose from photos"
 msgstr "Choose from photos"
 
+msgid "Choose photo"
+msgstr "Choose photo"
+
 msgid "Clear the picture"
 msgstr "Clear the picture"
+
+msgid "Close"
+msgstr "Close"
 
 msgid "Code"
 msgstr "Code"
@@ -198,8 +225,14 @@ msgstr "Code"
 msgid "Confirm"
 msgstr "Confirm"
 
+msgid "Connected apps"
+msgstr "Connected apps"
+
 msgid "Continue with Google"
 msgstr "Continue with Google"
+
+msgid "Couldn’t change your photo. Check your connection and try again."
+msgstr "Couldn’t change your photo. Check your connection and try again."
 
 msgid "Couldn’t load Today"
 msgstr "Couldn’t load Today"
@@ -212,6 +245,12 @@ msgstr "Couldn’t reach the sign-in service. Check your connection and try agai
 
 msgid "Couldn’t save the goal. Try again."
 msgstr "Couldn’t save the goal. Try again."
+
+msgid "Couldn’t save your name. Check your connection and try again."
+msgstr "Couldn’t save your name. Check your connection and try again."
+
+msgid "Couldn’t send your feedback"
+msgstr "Couldn’t send your feedback"
 
 msgid "Create a deck on the web first, then add cards here."
 msgstr "Create a deck on the web first, then add cards here."
@@ -236,6 +275,12 @@ msgstr "Daily goal reached."
 
 msgid "Daily goal saved."
 msgstr "Daily goal saved."
+
+msgid "Daily reminder"
+msgstr "Daily reminder"
+
+msgid "Dark"
+msgstr "Dark"
 
 msgid "Days reviewed"
 msgstr "Days reviewed"
@@ -267,6 +312,9 @@ msgstr "Done"
 msgid "Easy"
 msgstr "Easy"
 
+msgid "Edit your name and photo"
+msgstr "Edit your name and photo"
+
 msgid "Email"
 msgstr "Email"
 
@@ -293,6 +341,12 @@ msgstr "Explore"
 
 msgid "Explore is coming to the phone"
 msgstr "Explore is coming to the phone"
+
+msgid "Export"
+msgstr "Export"
+
+msgid "Feedback sent"
+msgstr "Feedback sent"
 
 msgid "Fill in the rest with AI"
 msgstr "Fill in the rest with AI"
@@ -348,8 +402,23 @@ msgstr "How it’s asked"
 msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
 msgstr "How many reviews a day keep your streak. Every grade counts, even Forgot."
 
+msgid "How your memory is doing"
+msgstr "How your memory is doing"
+
+msgid "Idea"
+msgstr "Idea"
+
 msgid "If {address} has a Lymi password, a reset link is on the way. It works for one hour."
 msgstr "If {address} has a Lymi password, a reset link is on the way. It works for one hour."
+
+msgid "Import"
+msgstr "Import"
+
+msgid "Insights"
+msgstr "Insights"
+
+msgid "Insights is coming to the phone"
+msgstr "Insights is coming to the phone"
 
 msgctxt "daily goal"
 msgid "Intense"
@@ -358,6 +427,9 @@ msgstr "Intense"
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Keen"
+
+msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
+msgstr "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 
 msgid "Known"
 msgstr "Known"
@@ -382,12 +454,18 @@ msgstr "Lesson"
 msgid "Library"
 msgstr "Library"
 
+msgid "Light"
+msgstr "Light"
+
 msgctxt "daily goal"
 msgid "Light"
 msgstr "Light"
 
 msgid "Longest streak"
 msgstr "Longest streak"
+
+msgid "Lymi also gets the screen you are on, the app version, your phone and your app language."
+msgstr "Lymi also gets the screen you are on, the app version, your phone and your app language."
 
 msgid "Lymi is free to use."
 msgstr "Lymi is free to use."
@@ -407,8 +485,15 @@ msgstr "Meaning from lesson"
 msgid "Memory hook"
 msgstr "Memory hook"
 
+msgid "Message"
+msgstr "Message"
+
 msgid "More about this card"
 msgstr "More about this card"
+
+msgctxt "person"
+msgid "Name"
+msgstr "Name"
 
 msgid "New"
 msgstr "New"
@@ -453,14 +538,35 @@ msgstr "Nothing due today, so your streak is safe."
 msgid "Nothing forgotten today"
 msgstr "Nothing forgotten today"
 
+msgid "Off"
+msgstr "Off"
+
 msgid "Often forgotten"
 msgstr "Often forgotten"
+
+msgid "Only on days with cards due."
+msgstr "Only on days with cards due."
 
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."
 
+msgid "Open Activity on the web"
+msgstr "Open Activity on the web"
+
+msgid "Open Archived on the web"
+msgstr "Open Archived on the web"
+
 msgid "Open Explore on the web"
 msgstr "Open Explore on the web"
+
+msgid "Open Insights on the web"
+msgstr "Open Insights on the web"
+
+msgid "Open Settings on the web"
+msgstr "Open Settings on the web"
+
+msgid "Other"
+msgstr "Other"
 
 msgid "Password"
 msgstr "Password"
@@ -495,6 +601,9 @@ msgstr "Pronunciation by you"
 msgid "Pronunciation from lesson"
 msgstr "Pronunciation from lesson"
 
+msgid "Publishing and deck reports"
+msgstr "Publishing and deck reports"
+
 msgid "Reach today’s goal to keep it going."
 msgstr "Reach today’s goal to keep it going."
 
@@ -503,6 +612,12 @@ msgstr "Reach today’s goal to start a streak."
 
 msgid "Recognition"
 msgstr "Recognition"
+
+msgid "Remind me to review"
+msgstr "Remind me to review"
+
+msgid "Remove photo"
+msgstr "Remove photo"
 
 msgid "Reset your password"
 msgstr "Reset your password"
@@ -539,14 +654,26 @@ msgstr "See the meaning, recall the term"
 msgid "See the term, recall what it means"
 msgstr "See the term, recall what it means"
 
+msgid "Send"
+msgstr "Send"
+
 msgid "Send a new code"
 msgstr "Send a new code"
+
+msgid "Send feedback"
+msgstr "Send feedback"
 
 msgid "Send reset link"
 msgstr "Send reset link"
 
 msgid "Sent again"
 msgstr "Sent again"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Settings is coming to the phone"
+msgstr "Settings is coming to the phone"
 
 msgid "Show password"
 msgstr "Show password"
@@ -562,6 +689,9 @@ msgstr "Sign in to Lymi"
 
 msgid "Sign in with email"
 msgstr "Sign in with email"
+
+msgid "Sign out"
+msgstr "Sign out"
 
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Sign-in didn’t finish. Try again."
@@ -582,11 +712,23 @@ msgstr "Streak: {current, plural, one {# day in a row} other {# days in a row}}"
 msgid "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
 
+msgid "System"
+msgstr "System"
+
 msgid "Take a photo"
 msgstr "Take a photo"
 
+msgid "Take photo"
+msgstr "Take photo"
+
+msgid "Tell Lymi what broke or what it should do. Replies come to your email."
+msgstr "Tell Lymi what broke or what it should do. Replies come to your email."
+
 msgid "Term"
 msgstr "Term"
+
+msgid "Thank you. Replies come to your email."
+msgstr "Thank you. Replies come to your email."
 
 msgid "That code doesn’t match. Check the email and try again."
 msgstr "That code doesn’t match. Check the email and try again."
@@ -605,6 +747,12 @@ msgstr "That password is too easy to guess. Try another."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "That’s no longer here. Reload to see what changed."
+
+msgid "Theme"
+msgstr "Theme"
+
+msgid "Time"
+msgstr "Time"
 
 msgid "Today"
 msgstr "Today"
@@ -639,8 +787,20 @@ msgstr "Try again"
 msgid "Undo"
 msgstr "Undo"
 
+msgid "Until then, change your settings on the web."
+msgstr "Until then, change your settings on the web."
+
 msgid "Until then, find ready decks to add on the web."
 msgstr "Until then, find ready decks to add on the web."
+
+msgid "Until then, restore archived cards on the web."
+msgstr "Until then, restore archived cards on the web."
+
+msgid "Until then, see how your memory is doing on the web."
+msgstr "Until then, see how your memory is doing on the web."
+
+msgid "Until then, see what changed in your Library on the web."
+msgstr "Until then, see what changed in your Library on the web."
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
@@ -657,8 +817,14 @@ msgstr "Welcome back."
 msgid "What it means"
 msgstr "What it means"
 
+msgid "What this is about"
+msgstr "What this is about"
+
 msgid "Where you met it, such as a lesson"
 msgstr "Where you met it, such as a lesson"
+
+msgid "Write what you want to tell Lymi."
+msgstr "Write what you want to tell Lymi."
 
 msgid "Yesterday was a rest day"
 msgstr "Yesterday was a rest day"
@@ -669,6 +835,9 @@ msgstr "Yesterday was a rest day. Reach today’s goal to keep it going."
 msgid "You"
 msgstr "You"
 
+msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
+msgstr "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
+
 msgid "You wrote this"
 msgstr "You wrote this"
 
@@ -677,3 +846,15 @@ msgstr "You’re done for today."
 
 msgid "Your cards and your streak, on every device."
 msgstr "Your cards and your streak, on every device."
+
+msgid "Your data"
+msgstr "Your data"
+
+msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
+msgstr "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
+
+msgid "Your name"
+msgstr "Your name"
+
+msgid "Your photo changed on another device. Try again."
+msgstr "Your photo changed on another device. Try again."

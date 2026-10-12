@@ -92,6 +92,7 @@ const SENTENCES: Sentences = {
     "onboarding.finish": null,
     "analytics.consent": null,
     "analytics.review_start": null,
+    rename: null,
     "avatar.upload": null,
     "avatar.remove": null,
     "avatar.google_refresh": null,

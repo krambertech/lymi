@@ -30,6 +30,7 @@ export function ConnectedAppsSection() {
 
   return (
     <SettingsGroup
+      id="connected-apps"
       title={t`Connected apps`}
       description={t`Connect ChatGPT or Claude so it can turn your notes, PDFs or textbook into Lymi cards.`}
     >

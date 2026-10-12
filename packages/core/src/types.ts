@@ -823,6 +823,12 @@ export const AnalyticsConsentInput = z.object({
 });
 export type AnalyticsConsentInput = z.infer<typeof AnalyticsConsentInput>;
 
+/** The learner's name, as the app shows it. */
+export const NameInput = z.object({
+  name: z.string().trim().min(1, "Write your name.").max(80, "Keep your name under 80 characters."),
+});
+export type NameInput = z.infer<typeof NameInput>;
+
 export const SettingsPatch = z.object({
   /** The language of the interface and reminders. Meanings follow it. */
   appLanguage: AppLanguage.optional(),

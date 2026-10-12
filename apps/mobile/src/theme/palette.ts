@@ -1,5 +1,7 @@
 import { palette, shadows } from "@lymi/design";
 import { useUniwind } from "uniwind";
+// Every screen draws through the palette, so the chosen room is applied before the first one.
+import "./choice";
 
 export type Room = "light" | "dark";
 

@@ -1,6 +1,6 @@
 import { GlassView } from "expo-glass-effect";
 import type { ReactNode } from "react";
-import { View, type ViewStyle } from "react-native";
+import { ActivityIndicator, View, type ViewStyle } from "react-native";
 import { useGlass } from "../theme/glass";
 import { usePalette, useRoom } from "../theme/palette";
 import { Icon, type IconName } from "./icons";
@@ -17,7 +17,7 @@ const SIZE = 44;
  */
 export function useFrost() {
   const sheet = usePalette().sheet;
-  return useGlass() ? `${sheet}b3` : sheet;
+  return useGlass() ? `${sheet}80` : sheet;
 }
 
 /** Glass tinted toward the room or amber, opaque without glass; capture in the top bar uses it too. */
@@ -58,14 +58,29 @@ interface GlassButtonProps {
   label: string;
   /** The one standing action, as Add in a sheet. */
   primary?: boolean;
+  /** Its work is under way: a spinner in place of the icon, and no second press. */
+  busy?: boolean;
   onPress?: () => void;
 }
 
 /** A round glass button, 44 pt, for a sheet's corners. */
-export function GlassButton({ icon, label, primary = false, onPress }: GlassButtonProps) {
+export function GlassButton({
+  icon,
+  label,
+  primary = false,
+  busy = false,
+  onPress,
+}: GlassButtonProps) {
   const p = usePalette();
+  const ink = primary ? p["amber-ink"] : p.text;
   return (
-    <Press onPress={onPress} accessibilityRole="button" accessibilityLabel={label}>
+    <Press
+      onPress={onPress}
+      disabled={busy}
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={{ busy }}
+    >
       <GlassSurface
         tint={primary ? "amber" : "room"}
         style={{
@@ -76,12 +91,11 @@ export function GlassButton({ icon, label, primary = false, onPress }: GlassButt
           justifyContent: "center",
         }}
       >
-        <Icon
-          name={icon}
-          size={20}
-          colour={primary ? p["amber-ink"] : p.text}
-          strokeWidth={primary ? 2.25 : 2}
-        />
+        {busy ? (
+          <ActivityIndicator size="small" color={ink} />
+        ) : (
+          <Icon name={icon} size={20} colour={ink} strokeWidth={primary ? 2.25 : 2} />
+        )}
       </GlassSurface>
     </Press>
   );

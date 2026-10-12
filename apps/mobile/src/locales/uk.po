@@ -105,6 +105,12 @@ msgstr "Коротка фраза, що допоможе запам’ятати
 msgid "A word or phrase"
 msgstr "Слово чи фраза"
 
+msgid "Activity"
+msgstr "Активність"
+
+msgid "Activity is coming to the phone"
+msgstr "Активність скоро буде на телефоні"
+
 msgid "Add a card"
 msgstr "Додати картку"
 
@@ -159,6 +165,15 @@ msgstr "Це написав AI"
 msgid "Also on your list"
 msgstr "Ще для повторення"
 
+msgid "API keys"
+msgstr "Ключі API"
+
+msgid "Archived"
+msgstr "Архів"
+
+msgid "Archived is coming to the phone"
+msgstr "Архів скоро буде на телефоні"
+
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Щонайменше {MIN_PASSWORD_LENGTH} символів."
 
@@ -167,6 +182,12 @@ msgstr "Назад"
 
 msgid "Back to sign in"
 msgstr "Назад до входу"
+
+msgid "Bug"
+msgstr "Помилка"
+
+msgid "Cancel"
+msgstr "Скасувати"
 
 msgid "Change daily goal"
 msgstr "Змінити денну мету"
@@ -189,8 +210,14 @@ msgstr "Вибрати інше"
 msgid "Choose from photos"
 msgstr "Вибрати з фото"
 
+msgid "Choose photo"
+msgstr "Вибрати фото"
+
 msgid "Clear the picture"
 msgstr "Прибрати зображення"
+
+msgid "Close"
+msgstr "Закрити"
 
 msgid "Code"
 msgstr "Код"
@@ -198,8 +225,14 @@ msgstr "Код"
 msgid "Confirm"
 msgstr "Підтвердити"
 
+msgid "Connected apps"
+msgstr "Підключені застосунки"
+
 msgid "Continue with Google"
 msgstr "Продовжити з Google"
+
+msgid "Couldn’t change your photo. Check your connection and try again."
+msgstr "Не вдалося змінити фото. Перевір з’єднання й спробуй ще раз."
 
 msgid "Couldn’t load Today"
 msgstr "Не вдалося завантажити екран «Сьогодні»"
@@ -212,6 +245,12 @@ msgstr "Не вдалося зв’язатися із сервісом вход
 
 msgid "Couldn’t save the goal. Try again."
 msgstr "Не вдалося зберегти мету. Спробуй ще раз."
+
+msgid "Couldn’t save your name. Check your connection and try again."
+msgstr "Не вдалося зберегти ім’я. Перевір з’єднання й спробуй ще раз."
+
+msgid "Couldn’t send your feedback"
+msgstr "Не вдалося надіслати повідомлення"
 
 msgid "Create a deck on the web first, then add cards here."
 msgstr "Спершу створи колоду у вебверсії, а тоді додавай картки тут."
@@ -236,6 +275,12 @@ msgstr "Денну мету досягнуто."
 
 msgid "Daily goal saved."
 msgstr "Денну мету збережено."
+
+msgid "Daily reminder"
+msgstr "Щоденне нагадування"
+
+msgid "Dark"
+msgstr "Темна"
 
 msgid "Days reviewed"
 msgstr "Днів із повтореннями"
@@ -267,6 +312,9 @@ msgstr "Готово"
 msgid "Easy"
 msgstr "Легко"
 
+msgid "Edit your name and photo"
+msgstr "Змінити ім’я та фото"
+
 msgid "Email"
 msgstr "Пошта"
 
@@ -293,6 +341,12 @@ msgstr "Каталог"
 
 msgid "Explore is coming to the phone"
 msgstr "Каталог скоро буде на телефоні"
+
+msgid "Export"
+msgstr "Експорт"
+
+msgid "Feedback sent"
+msgstr "Повідомлення надіслано"
 
 msgid "Fill in the rest with AI"
 msgstr "Доповнити решту з AI"
@@ -348,8 +402,23 @@ msgstr "Як питати"
 msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
 msgstr "Скільки повторень на день зберігає лік днів поспіль. Рахується кожна оцінка, навіть «Не пам’ятаю»."
 
+msgid "How your memory is doing"
+msgstr "Як справи з твоєю пам’яттю"
+
+msgid "Idea"
+msgstr "Ідея"
+
 msgid "If {address} has a Lymi password, a reset link is on the way. It works for one hour."
 msgstr "Якщо для {address} є пароль Lymi, посилання для нового пароля вже в дорозі. Воно діє одну годину."
+
+msgid "Import"
+msgstr "Імпорт"
+
+msgid "Insights"
+msgstr "Огляд"
+
+msgid "Insights is coming to the phone"
+msgstr "Огляд скоро буде на телефоні"
 
 msgctxt "daily goal"
 msgid "Intense"
@@ -358,6 +427,9 @@ msgstr "Інтенсивно"
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Завзято"
+
+msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
+msgstr "Повідомлення має бути коротшим за {FEEDBACK_MESSAGE_MAX} символів."
 
 msgid "Known"
 msgstr "Засвоєна"
@@ -382,12 +454,18 @@ msgstr "Урок"
 msgid "Library"
 msgstr "Бібліотека"
 
+msgid "Light"
+msgstr "Світла"
+
 msgctxt "daily goal"
 msgid "Light"
 msgstr "Легко"
 
 msgid "Longest streak"
 msgstr "Найбільше днів поспіль"
+
+msgid "Lymi also gets the screen you are on, the app version, your phone and your app language."
+msgstr "Lymi також отримає екран, на якому ти зараз, версію застосунку, модель телефона й мову застосунку."
 
 msgid "Lymi is free to use."
 msgstr "Lymi безкоштовний."
@@ -407,8 +485,15 @@ msgstr "Значення з уроку"
 msgid "Memory hook"
 msgstr "Зачіпка"
 
+msgid "Message"
+msgstr "Повідомлення"
+
 msgid "More about this card"
 msgstr "Більше про картку"
+
+msgctxt "person"
+msgid "Name"
+msgstr "Ім’я"
 
 msgid "New"
 msgstr "Нова"
@@ -453,14 +538,35 @@ msgstr "Сьогодні нічого повторювати, тож дні по
 msgid "Nothing forgotten today"
 msgstr "Сьогодні нічого не забуто"
 
+msgid "Off"
+msgstr "Вимкнено"
+
 msgid "Often forgotten"
 msgstr "Часто забуваються"
+
+msgid "Only on days with cards due."
+msgstr "Лише в дні, коли є картки до повторення."
 
 msgid "Only the deck’s owner can change this."
 msgstr "Змінювати це може лише власник колоди."
 
+msgid "Open Activity on the web"
+msgstr "Відкрити активність у вебверсії"
+
+msgid "Open Archived on the web"
+msgstr "Відкрити архів у вебверсії"
+
 msgid "Open Explore on the web"
 msgstr "Відкрити каталог у вебверсії"
+
+msgid "Open Insights on the web"
+msgstr "Відкрити огляд у вебверсії"
+
+msgid "Open Settings on the web"
+msgstr "Відкрити налаштування у вебверсії"
+
+msgid "Other"
+msgstr "Інше"
 
 msgid "Password"
 msgstr "Пароль"
@@ -495,6 +601,9 @@ msgstr "Твоя вимова"
 msgid "Pronunciation from lesson"
 msgstr "Вимова з уроку"
 
+msgid "Publishing and deck reports"
+msgstr "Публікація та звіти про колоди"
+
 msgid "Reach today’s goal to keep it going."
 msgstr "Досягни сьогоднішньої мети, щоб не перервати дні поспіль."
 
@@ -503,6 +612,12 @@ msgstr "Досягни сьогоднішньої мети, щоб почати 
 
 msgid "Recognition"
 msgstr "Розпізнавання"
+
+msgid "Remind me to review"
+msgstr "Нагадувати про повторення"
+
+msgid "Remove photo"
+msgstr "Видалити фото"
 
 msgid "Reset your password"
 msgstr "Новий пароль"
@@ -539,14 +654,26 @@ msgstr "Бачиш значення, згадуєш термін"
 msgid "See the term, recall what it means"
 msgstr "Бачиш термін, згадуєш значення"
 
+msgid "Send"
+msgstr "Надіслати"
+
 msgid "Send a new code"
 msgstr "Надіслати новий код"
+
+msgid "Send feedback"
+msgstr "Зворотний зв’язок"
 
 msgid "Send reset link"
 msgstr "Надіслати посилання"
 
 msgid "Sent again"
 msgstr "Надіслали ще раз"
+
+msgid "Settings"
+msgstr "Налаштування"
+
+msgid "Settings is coming to the phone"
+msgstr "Налаштування скоро будуть на телефоні"
 
 msgid "Show password"
 msgstr "Показати пароль"
@@ -562,6 +689,9 @@ msgstr "Увійти в Lymi"
 
 msgid "Sign in with email"
 msgstr "Увійти через пошту"
+
+msgid "Sign out"
+msgstr "Вийти"
 
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Вхід не завершено. Спробуй ще раз."
@@ -582,11 +712,23 @@ msgstr "{current, plural, one {# день поспіль} few {# дні посп
 msgid "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Дні поспіль: {streak, plural, one {# день поспіль} few {# дні поспіль} many {# днів поспіль} other {# дня поспіль}}"
 
+msgid "System"
+msgstr "Системна"
+
 msgid "Take a photo"
 msgstr "Зробити фото"
 
+msgid "Take photo"
+msgstr "Сфотографувати"
+
+msgid "Tell Lymi what broke or what it should do. Replies come to your email."
+msgstr "Розкажи Lymi, що зламалося або що варто додати. Відповідь прийде на твою пошту."
+
 msgid "Term"
 msgstr "Термін"
+
+msgid "Thank you. Replies come to your email."
+msgstr "Дякуємо. Відповідь прийде на твою пошту."
 
 msgid "That code doesn’t match. Check the email and try again."
 msgstr "Код не збігається. Перевір лист і спробуй ще раз."
@@ -605,6 +747,12 @@ msgstr "Цей пароль легко вгадати. Спробуй інший
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "Цього вже немає. Онови сторінку, щоб побачити зміни."
+
+msgid "Theme"
+msgstr "Тема"
+
+msgid "Time"
+msgstr "Час"
 
 msgid "Today"
 msgstr "Сьогодні"
@@ -639,8 +787,20 @@ msgstr "Спробувати ще раз"
 msgid "Undo"
 msgstr "Скасувати дію"
 
+msgid "Until then, change your settings on the web."
+msgstr "А поки змінити налаштування можна у вебверсії."
+
 msgid "Until then, find ready decks to add on the web."
 msgstr "А поки готові колоди можна знайти й додати у вебверсії."
+
+msgid "Until then, restore archived cards on the web."
+msgstr "А поки відновити картки з архіву можна у вебверсії."
+
+msgid "Until then, see how your memory is doing on the web."
+msgstr "А поки подивитися, як справи з твоєю пам’яттю, можна у вебверсії."
+
+msgid "Until then, see what changed in your Library on the web."
+msgstr "А поки подивитися, що змінилося в Бібліотеці, можна у вебверсії."
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Використай щонайменше {MIN_PASSWORD_LENGTH} символів."
@@ -657,8 +817,14 @@ msgstr "З поверненням."
 msgid "What it means"
 msgstr "Що це означає"
 
+msgid "What this is about"
+msgstr "Про що це"
+
 msgid "Where you met it, such as a lesson"
 msgstr "Звідки це, наприклад урок"
+
+msgid "Write what you want to tell Lymi."
+msgstr "Напиши, що хочеш розповісти Lymi."
 
 msgid "Yesterday was a rest day"
 msgstr "Учора був день відпочинку"
@@ -669,6 +835,9 @@ msgstr "Учора був день відпочинку. Досягни сьог
 msgid "You"
 msgstr "Ти"
 
+msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
+msgstr "На день можна надіслати {FEEDBACK_DAILY_LIMIT} повідомлень. Спробуй завтра."
+
 msgid "You wrote this"
 msgstr "Це написано тобою"
 
@@ -677,3 +846,15 @@ msgstr "На сьогодні все."
 
 msgid "Your cards and your streak, on every device."
 msgstr "Твої картки й лік днів поспіль на будь-якому пристрої."
+
+msgid "Your data"
+msgstr "Твої дані"
+
+msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
+msgstr "Твоє повідомлення збережено. Спробуй ще раз або напиши на <0>hello@lymi.app</0>."
+
+msgid "Your name"
+msgstr "Твоє ім’я"
+
+msgid "Your photo changed on another device. Try again."
+msgstr "Фото змінилося на іншому пристрої. Спробуй ще раз."

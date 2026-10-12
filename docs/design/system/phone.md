@@ -6,7 +6,7 @@ The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the rev
 
 - The tabs are iOS's own tab bar, in Onest with Lucide icons: Today, Library, Explore and You, each an icon over its label. The chosen tab is ink on the system's lens; the rest take iOS's monochrome style. Tapping the current tab returns its stack to the top. Before iOS 26 it is the system's classic bar ([ADR 0034](../../adr/0034-the-phone-uses-the-system-tab-bar-and-captures-from-the-top-bar.md)).
 - Every screen's top bar is pinned, with its actions as glass buttons at its end. A tab's large title starts in the bar and shrinks to an inline title at its start as the page scrolls; a page's title travels from under the bar into its middle, and its named back folds into a round glass back. What scrolls beneath softens into the room, never at rest, so nothing crosses the lantern's light.
-- **You** gathers what is about the learner: Insights first as one plate that opens the full page, then the reminder time and the theme, then Activity, Settings, feedback and sign-out. Archived closes Library.
+- **You** gathers what is about the learner: their photo, name and email at the top, where a tap opens a sheet of Lymi's rows, as a Select does, to rename and to take, choose or remove the photo; Insights as one plate that opens the full page; then the reminder time and the theme, then Activity, Settings, feedback and sign-out. The theme and the reminder time belong to the phone, as the web keeps them per browser. Between Settings and feedback, **Your data** holds the setup jobs that stay on the web ([ADR 0030](../../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)) as rows that end in an arrow out and open the web; publishing and deck reports, done with an API key, show only to an account with a published deck. A place the phone does not have yet pushes a page that says so and opens the web's. Archived closes Library.
 - Capture is an amber glass button at the end of every tab's top bar, beside the streak. A tap grows it into Add a word, and the sheet shrinks back into it.
 - Inside a deck with cards due, the tab bar's accessory shows how many and a play button, as Podcasts shows what is playing; a tap starts the deck's review. Before iOS 26 the deck shows its Review button instead.
 
@@ -27,12 +27,27 @@ The streak is the one place that differs from the web, where touch shows it as a
 The phone's components are in `apps/mobile/src/ui` under the web's names, and follow [forms.md](forms.md), [buttons.md](buttons.md) and [chips-and-marks.md](chips-and-marks.md). They differ in these ways:
 
 - Every control is 44 pt, so a `md` button is 44 pt tall and `sm` reaches 44 pt through its hit area.
-- `Sheet` is iOS's own sheet with Lymi's content, so it is Liquid Glass, follows the finger and swipes away. Every sheet and glass control is iOS's glass, untinted, so the screen shows through it; iOS makes a full-height sheet opaque. A screen presented as a partial sheet, such as the streak, gets a clearer glass than `Sheet` does, so it lays `useFrost` over it: the sheet colour at 70%, which matches the system's frosting. Add a word opens at full height, where iOS makes the sheet opaque, so it needs none. What sits on it uses the on-glass fills ([surfaces.md](surfaces.md#on-glass)). It opens at the height of what it holds, titled in line with the rows' text. Rows that belong together share one plate inset 16 pt from the sheet's edge, 12 pt from the next, split by full-width hairlines, as every plate in Lymi is. A row is 52 pt with a Lucide icon in the slot every row keeps, red when it removes something, a check when chosen, a chevron when it opens more. A sheet with more to show peeks at its first group and drags up to the full screen, where iOS makes it opaque and the sheet colour keeps the plates apart, as the dev menu does. `DropdownMenu` and `Select` are sheets of rows; a choice runs once the sheet has gone.
+- `Sheet` is iOS's own sheet with Lymi's content, so it is Liquid Glass, follows the finger and swipes away. It opens at the height of what it holds, titled in line with the rows' text. Rows that belong together share one plate inset 16 pt from the sheet's edge, 12 pt from the next, split by full-width hairlines, as every plate in Lymi is. A row is 52 pt with a Lucide icon in the slot every row keeps, red when it removes something, a check when chosen, a chevron when it opens more. A sheet with more to show peeks at its first group and drags up to the full screen, where iOS makes it opaque and the sheet colour keeps the plates apart, as the dev menu does. `DropdownMenu` and `Select` are sheets of rows; a choice runs once the sheet has gone. Which kind of sheet a task gets is in [Sheets](#sheets).
 - A sheet's own controls float on it as glass: a round 44 pt button in each top corner, close at the start and the sheet's action at the end, tinted amber, with a glass pill between them for what the sheet works in, such as the deck.
 - Chips come in `sm` and `md`, and a state chip is one size wherever it shows, Forgotten included; the AI badge is the `sm` chip. A due count has one size. The web's `xs` chip, `lg` chip, `lg` due count and `xs` icon button have no phone use yet.
 - `Switch` is drawn by Lymi, amber when on, so it sits in a form beside the other controls.
 
 The design screen shows each component in every state. Open `lymi://design`, as the web has `/design`; each canvas has its own switch for the other room.
+
+## Sheets
+
+Every sheet rises from below and swipes away. What the task holds decides its kind, and the kind decides its glass and its fills:
+
+| Kind | For | Built with | Surface | Fills |
+| --- | --- | --- | --- | --- |
+| Row sheet | A choice or a small edit over the screen: a menu, a `Select`, one of Add a word's fields, the daily goal, the reminder time, the learner's name and photo | `Sheet`, inside the screen | iOS's glass, untinted, at the height of what it holds | On-glass |
+| Peek sheet | A screen to glance at that drags up for more: the streak | A route presented as `formSheet`, with detents | `useFrost`, the sheet colour at 50%, while it peeks; iOS makes it opaque at full height | On-glass |
+| Full sheet | A form with long text or several fields, keyboard up: Add a word, feedback | A route presented as `formSheet` at full height | Opaque, the sheet colour | The room's own, since on-glass fills vanish against an opaque sheet |
+
+- Reach for a row sheet first. A small edit belongs in one even when it has a text field: the field is a `bg-glass-plate` box with no label over it, and the keyboard's done key or a swipe keeps the value, with no Save button.
+- A row sheet never opens a sheet, the camera or the photo library over itself. A row that needs one closes the sheet and acts once it has gone.
+- A peek sheet and a full sheet carry their controls as glass in the top corners; a row sheet has none.
+- Whatever fails after a row sheet has gone says so on the screen under it, beside what it changed.
 
 ## Add a word
 

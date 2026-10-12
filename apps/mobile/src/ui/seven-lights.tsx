@@ -22,6 +22,7 @@ function fill(p: Palette, level: Exclude<LightLevel, 0>) {
 
 /** The last seven days as seven glasses; the light climbs each one with what the day held. */
 export function SevenLights({
+  dates,
   days,
   goal,
   todayDone = false,
@@ -31,6 +32,8 @@ export function SevenLights({
   size = "lg",
   sequence,
 }: {
+  /** Each day's review-local YYYY-MM-DD, oldest first; a blank date has no letter. */
+  dates: string[];
   days: number[];
   goal: number;
   todayDone?: boolean;
@@ -48,7 +51,7 @@ export function SevenLights({
   const p = usePalette();
   const lg = size === "lg";
   const today = days.length - 1;
-  const letters = weekLetters(days.length);
+  const letters = weekLetters(dates);
   const reference = lightReference(days);
   const lit = daysReviewed(days, days.length);
   // Rest is named, never counted. PRODUCT.md.

@@ -1,5 +1,6 @@
 import type { StreakOut } from "@lymi/core";
 import { lightLevel, lightReference } from "@lymi/design";
+import { addDays } from "../ui/days";
 
 /** What the widgets show for one day. */
 export interface Snapshot {
@@ -12,6 +13,8 @@ export interface Snapshot {
   signedIn: boolean;
   /** Each day's step of the seven lights, oldest first. */
   week: number[];
+  /** Each of those days' review-local YYYY-MM-DD, which names its weekday; blank when unknown. */
+  dates: string[];
 }
 
 /**
@@ -32,6 +35,8 @@ export function nextDay(
   if (!(end.getTime() > Date.now())) return undefined;
   const goal = summary.goal;
   const week = [...days.slice(1), 0];
+  const today = now.dates.at(-1);
+  const dates = [...now.dates.slice(1), today ? addDays(today, 1) : ""];
   const reference = lightReference(week);
   return {
     at: end,
@@ -46,6 +51,7 @@ export function nextDay(
       out: summary.current === 0,
       signedIn: true,
       week: week.map((n) => lightLevel(n, reference, goal, false)),
+      dates,
     },
   };
 }

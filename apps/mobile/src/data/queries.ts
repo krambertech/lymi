@@ -39,6 +39,7 @@ import {
 } from "@tanstack/react-query";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { AppState } from "react-native";
+import { addDays, lastSevenDays } from "../ui/days";
 
 // Each screen reads one resource under the web's query key, so a grade refreshes only what it moves.
 
@@ -147,7 +148,7 @@ export function useDay() {
   const today = state?.day.date ?? data?.today.date;
   const byDate = new Map(data?.days.map((d) => [d.date, d]));
   const rest = new Set(data?.restDays);
-  const dates = Array.from({ length: 7 }, (_, i) => (today ? addDays(today, i - 6) : ""));
+  const dates = lastSevenDays(today);
   const week = dates.map((date) => byDate.get(date)?.attempts ?? 0);
   const { out, progress } = lanternFor(data);
   return {
@@ -155,6 +156,8 @@ export function useDay() {
     summary: data,
     /** The seven lights as the web draws them: each day's own goal, whether it counted, and rest. */
     lights: {
+      /** Each glass's review-local date, so its weekday is the account's, not the phone's. */
+      dates,
       days: week,
       satisfied: dates.map((date, i) => (i === 6 ? dayDone : !!byDate.get(date)?.satisfied)),
       rest: dates.map((date) => rest.has(date)),
@@ -177,12 +180,6 @@ export function useDay() {
     /** The streak flame: out, lit or full exactly when the lantern is. */
     flame: data ? streakFlameFor(data) : ("lit" as const),
   };
-}
-
-/** Calendar arithmetic on a local YYYY-MM-DD, which no timezone can shift. */
-function addDays(date: string, days: number): string {
-  const [y = 0, m = 1, d = 1] = date.split("-").map(Number);
-  return new Date(Date.UTC(y, m - 1, d + days)).toISOString().slice(0, 10);
 }
 
 /**

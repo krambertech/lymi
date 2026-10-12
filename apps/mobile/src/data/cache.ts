@@ -1,4 +1,4 @@
-import { outboxDehydrateOptions } from "@lymi/client/cache";
+import { asLastGood, outboxDehydrateOptions } from "@lymi/client/cache";
 import type { QueryClient } from "@tanstack/react-query";
 import type {
   PersistedClient,
@@ -6,6 +6,7 @@ import type {
   PersistQueryClientOptions,
 } from "@tanstack/react-query-persist-client";
 import { AppState } from "react-native";
+import { API_URL } from "../auth/client";
 import { cacheStore, captureStore, todayStore } from "./kept";
 
 const KEY = "queries";
@@ -32,7 +33,7 @@ function write() {
   // A cache that cannot be kept is fetched again next time; nothing is lost.
   if (next) {
     try {
-      cacheStore.set(KEY, JSON.stringify(next));
+      cacheStore.set(KEY, JSON.stringify({ ...next, clientState: asLastGood(next.clientState) }));
     } catch {}
   }
 }
@@ -64,9 +65,22 @@ const persister: Persister = {
 export const persistOptions: Omit<PersistQueryClientOptions, "queryClient"> = {
   persister,
   maxAge: CACHE_MAX_AGE,
-  buster: CACHE_SHAPE,
+  // A cache from another Worker, such as production's in a local build, is never restored.
+  buster: `${CACHE_SHAPE} ${API_URL}`,
   dehydrateOptions: outboxDehydrateOptions,
 };
+
+/**
+ * Keeps the cache for the learner now signed in, and forgets it, with the rest of what was kept
+ * for them, when it was another learner's: the same rule `claimWrites` applies to the outboxes.
+ */
+export function claimCache(learnerId: string, qc: QueryClient) {
+  const owner = cacheStore.getString(OWNER_KEY);
+  if (owner && owner !== learnerId) forgetLearner(qc);
+  cacheStore.set(OWNER_KEY, learnerId);
+}
+
+const OWNER_KEY = "owner";
 
 function forgetCache() {
   clearTimeout(timer);

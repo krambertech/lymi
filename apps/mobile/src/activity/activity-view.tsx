@@ -1,15 +1,15 @@
+import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { ActivityCard, ActivityEntry } from "@lymi/client/api";
 import { useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
 import { View } from "react-native";
-import Animated, { FadeIn, FadeOut, LinearTransition } from "react-native-reanimated";
-import { useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { Chip } from "../ui/chip";
 import type { IconName } from "../ui/icons";
 import { openWeb } from "../ui/on-the-web";
 import { Button, Icon, Plate, Press, RowArrow, Text } from "../ui/primitives";
+import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { Skeleton } from "../ui/skeleton";
 
 // The web's Activity on the phone: one list under day headings, each day a plate of rows.
@@ -249,14 +249,13 @@ interface RowProps {
 }
 
 /**
- * One row: the verb's mark, the sentence, and who and when under it. Rows that wrote cards open in
- * place to the cards; a file opens on the web, where files are handled (ADR 0030); a deck opens.
+ * One row: the verb's mark, the sentence, and who and when under it. Rows that wrote cards open the
+ * cards in a sheet over the list; a file opens on the web, where files are handled (ADR 0030); a
+ * deck opens in Library.
  */
 function ActivityRow({ entry, time, first }: RowProps) {
-  const { t } = useLingui();
   const p = usePalette();
   const router = useRouter();
-  const reduce = useReduceMotion();
   const caller = useCaller()(entry);
   const [open, setOpen] = useState(false);
   // The people rows name the person in the sentence, so the line under it would say them twice.
@@ -264,15 +263,15 @@ function ActivityRow({ entry, time, first }: RowProps) {
   const file = entry.import ?? entry.export;
   const own = !!file && entry.actor === "user";
   const meta = [named || own ? null : caller, file?.fileName, time].filter(Boolean).join(" · ");
-  const expandable = entry.cards.length > 0;
+  const hasCards = entry.cards.length > 0;
   const deck = entry.deck && !entry.deck.archived ? entry.deck : null;
   const onWeb = entry.import
     ? `/import/${entry.import.id}`
     : entry.export
       ? "/settings#export"
       : null;
-  const press = expandable
-    ? () => setOpen(!open)
+  const press = hasCards
+    ? () => setOpen(true)
     : onWeb
       ? () => openWeb(onWeb)
       : deck
@@ -293,11 +292,7 @@ function ActivityRow({ entry, time, first }: RowProps) {
           {meta}
         </Text>
       </View>
-      {expandable ? (
-        <View style={{ transform: [{ rotate: open ? "180deg" : "0deg" }] }}>
-          <Icon name="down" size={18} colour={p.muted} strokeWidth={2.5} />
-        </View>
-      ) : onWeb ? (
+      {onWeb && !hasCards ? (
         <Icon name="web" size={18} colour={p.muted} strokeWidth={2.25} />
       ) : press ? (
         <RowArrow />
@@ -306,64 +301,105 @@ function ActivityRow({ entry, time, first }: RowProps) {
   );
 
   return (
-    <Animated.View
-      layout={reduce ? undefined : LinearTransition.duration(260)}
-      className={first ? undefined : "border-t border-edge"}
-    >
+    <View className={first ? undefined : "border-t border-edge"}>
       {press ? (
-        <Press
-          scale={0.99}
-          onPress={press}
-          accessibilityRole={expandable ? "button" : "link"}
-          accessibilityState={expandable ? { expanded: open } : undefined}
-          accessibilityHint={expandable ? t`Shows the cards` : undefined}
-        >
+        <Press scale={0.99} onPress={press} accessibilityRole={hasCards ? "button" : "link"}>
           {face}
         </Press>
       ) : (
         face
       )}
-      {expandable && open && (
-        <Animated.View
-          entering={reduce ? undefined : FadeIn.duration(180)}
-          exiting={reduce ? undefined : FadeOut.duration(120)}
-          className="pb-2 pe-2 ps-14"
-        >
-          {entry.cards.map((card) => (
-            <CardRow key={card.id} card={card} />
-          ))}
-          {deck && entry.count > entry.cards.length && (
-            <Press
-              scale={0.99}
-              onPress={() => router.push(`/library/${deck.id}`)}
-              accessibilityRole="link"
-            >
-              <View className="min-h-11 flex-row items-center gap-3 px-3 py-2.5">
-                <Text className="flex-1 text-base text-text-2">
-                  <Plural
-                    value={entry.count - entry.cards.length}
-                    one="# more card in this deck"
-                    other="# more cards in this deck"
-                  />
-                </Text>
-                <RowArrow />
-              </View>
-            </Press>
-          )}
-        </Animated.View>
-      )}
-    </Animated.View>
+      {hasCards && <CardsSheet entry={entry} meta={meta} open={open} onOpenChange={setOpen} />}
+    </View>
   );
 }
 
-/** A card the row wrote, opening its deck; a card in an archived deck is read, not pressed. */
-function CardRow({ card }: { card: ActivityCard }) {
+/** How many cards the sheet shows before it is dragged up for the rest. */
+const PEEK = 6;
+
+/**
+ * The cards a row wrote, in a sheet over the list so the day stays as it was. A card opens its deck
+ * once the sheet has gone; a card in an archived deck has no screen, so it is read, not pressed.
+ */
+function CardsSheet({
+  entry,
+  meta,
+  open,
+  onOpenChange,
+}: {
+  entry: ActivityEntry;
+  /** Who and when, as the row says it. */
+  meta: string;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   const { t } = useLingui();
   const router = useRouter();
+  const [going, setGoing] = useState<string | null>(null);
+  const deck = entry.deck && !entry.deck.archived ? entry.deck : null;
+  const rows = (cards: ActivityCard[]) =>
+    cards.map((card) => (
+      <CardRow
+        key={card.id}
+        card={card}
+        onPress={() => {
+          setGoing(card.deckId);
+          onOpenChange(false);
+        }}
+      />
+    ));
+  const rest = entry.cards.slice(PEEK);
+  const name = deck?.name ?? "";
+  const more = deck && entry.count > entry.cards.length && (
+    <SheetGroup>
+      <SheetRow
+        icon="deck"
+        label={t`Open ${name}`}
+        detail={t`${plural(entry.count - entry.cards.length, { one: "# more card", other: "# more cards" })}`}
+        opens
+        onPress={() => {
+          setGoing(deck.id);
+          onOpenChange(false);
+        }}
+      />
+    </SheetGroup>
+  );
+  return (
+    <Sheet
+      open={open}
+      onOpenChange={onOpenChange}
+      onDismiss={() => {
+        if (going) router.push(`/library/${going}`);
+        setGoing(null);
+      }}
+      more={
+        rest.length > 0 ? (
+          <>
+            <SheetGroup>{rows(rest)}</SheetGroup>
+            {more}
+          </>
+        ) : undefined
+      }
+    >
+      <View className="gap-1 px-4 pb-1">
+        <Text className="text-lg font-medium text-text" accessibilityRole="header">
+          <Sentence entry={entry} />
+        </Text>
+        <Text className="text-sm text-muted">{meta}</Text>
+      </View>
+      <SheetGroup>{rows(entry.cards.slice(0, PEEK))}</SheetGroup>
+      {rest.length === 0 && more}
+    </Sheet>
+  );
+}
+
+function CardRow({ card, onPress }: { card: ActivityCard; onPress: () => void }) {
+  const { t } = useLingui();
+  const p = usePalette();
   const face = (
-    <View className="min-h-11 flex-row items-center gap-3 px-3 py-2">
+    <View className="min-h-[52px] flex-row items-center gap-3 py-2.5 ps-4 pe-3.5">
       <View className="flex-1 gap-0.5">
-        <Text className="text-base font-medium text-text" numberOfLines={1}>
+        <Text className="text-md font-medium text-text" numberOfLines={1}>
           {card.term}
         </Text>
         {card.meaning && (
@@ -373,16 +409,12 @@ function CardRow({ card }: { card: ActivityCard }) {
         )}
       </View>
       {card.archived && <Chip size="sm">{t`Archived`}</Chip>}
-      {!card.deckArchived && <RowArrow />}
+      {!card.deckArchived && <Icon name="forward" size={18} colour={p.faint} />}
     </View>
   );
   if (card.deckArchived) return face;
   return (
-    <Press
-      scale={0.99}
-      onPress={() => router.push(`/library/${card.deckId}`)}
-      accessibilityRole="link"
-    >
+    <Press scale={0.99} onPress={onPress} accessibilityRole="link">
       {face}
     </Press>
   );

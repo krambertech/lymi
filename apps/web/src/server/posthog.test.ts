@@ -54,6 +54,26 @@ describe("PostHog delivery", () => {
     expect(bodies.join()).not.toContain("private term");
   });
 
+  it("names the phone release behind an outcome the phone asked for", async () => {
+    const { bodies } = interceptedEvents();
+    const analytics = productAnalytics(production, "learner-1", undefined, async () => ({
+      allowed: true,
+      ui_locale: "en",
+      phone: { platform: "ios", version: "1.2.0", build: "34" },
+    }));
+    await analytics.run(async () =>
+      track(analytics, { name: "review_graded", mode: "term_to_meaning", grade: 3 }),
+    );
+    const body = JSON.parse(bodies[0] ?? "{}");
+    expect(body.batch[0].properties).toMatchObject({
+      surface: "worker",
+      client: "phone",
+      $os: "iOS",
+      $app_version: "1.2.0",
+      $app_build: "34",
+    });
+  });
+
   it("suppresses product events without consent while keeping aggregate metrics", async () => {
     const { fetch } = interceptedEvents();
     const writeDataPoint = vi.fn();

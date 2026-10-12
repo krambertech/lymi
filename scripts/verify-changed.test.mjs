@@ -23,6 +23,7 @@ test("a screen change runs static checks and the changed tests on desktop Chromi
       `--filter @lymi/design exec vitest run --changed ${base} --passWithNoTests`,
       `--filter @lymi/web exec vitest run --changed ${base} --passWithNoTests`,
       `--filter @lymi/site exec vitest run --changed ${base} --passWithNoTests`,
+      `--filter @lymi/mobile exec vitest run --changed ${base} --passWithNoTests`,
     ],
   );
   const web = steps.find((step) => step.args.includes("@lymi/web"));

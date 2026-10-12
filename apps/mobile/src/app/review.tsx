@@ -90,6 +90,7 @@ import { countReveal, RevealHint, useRevealHint } from "../review/reveal-hint";
 import { markUndoHintSeen, UndoHint, undoHintSeen } from "../review/undo-hint";
 import { CardStack, type TopCard, UndoArea, useUndoSwipe } from "../review/undo-swipe";
 import { Wick } from "../review/wick";
+import { useReviewSession } from "../telemetry/review-session";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
@@ -149,6 +150,20 @@ const withoutKey = (keys: ReadonlySet<string>, key: string) => {
   next.delete(key);
   return next;
 };
+
+/** What the header counts: today's attempts to the goal's stop, and a list's own otherwise. */
+function legProgress(leg: Leg, attempts: number, cards: ListCards, left: number) {
+  const done = leg.kind === "draw" ? attempts - leg.from : cards.graded.size;
+  const total =
+    leg.kind === "list"
+      ? leg.size - cards.dropped.size
+      : leg.kind === "forgotten"
+        ? leg.items.length - cards.dropped.size
+        : leg.until !== null
+          ? Math.min(leg.until - leg.from, done + left)
+          : done + left;
+  return { done, total };
+}
 
 function leftInList(items: readonly QueueItem[], cards: ListCards): QueueItem[] {
   const left = items.filter((i) => !cards.graded.has(keyOf(i)) && !cards.dropped.has(keyOf(i)));
@@ -473,6 +488,24 @@ function Run({
         })
       : null;
 
+  const progress = leg && state ? legProgress(leg, state.attempts, listCards, left) : null;
+  useReviewSession({
+    key: leg && mark ? `${leg.date}:${leg.kind}:${mark.attempts}` : null,
+    date: leg?.date ?? null,
+    before: mark?.attempts ?? 0,
+    done: progress?.done ?? 0,
+    count: progress?.total ?? 0,
+    presenting: !!current,
+    stopped,
+    paused,
+    finished:
+      result && result !== "unchecked" && (ending === "goal" || confirmed)
+        ? ending === "goal"
+          ? "goal"
+          : "empty"
+        : null,
+  });
+
   /** Past this end screen: the next one reports what changes from here. */
   const moveOn = () => {
     if (!state) return;
@@ -569,16 +602,7 @@ function Run({
   if (!current || !data || !state) return null;
   const { card } = current;
 
-  // What the header counts: today's attempts to the goal's stop, and a list's own otherwise.
-  const legDone = leg.kind === "draw" ? state.attempts - leg.from : listCards.graded.size;
-  const total =
-    leg.kind === "list"
-      ? leg.size - listCards.dropped.size
-      : leg.kind === "forgotten"
-        ? leg.items.length - listCards.dropped.size
-        : leg.until !== null
-          ? Math.min(leg.until - leg.from, legDone + left)
-          : legDone + left;
+  const { done: legDone, total } = legProgress(leg, state.attempts, listCards, left);
   const lastToday = state.log
     .filter((e) => e.cardId === card.id && e.mode === modeKey(current.mode))
     .pop();

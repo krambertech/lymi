@@ -36,6 +36,14 @@ describe("analytics privacy contract", () => {
       badge: "estonia",
     });
     expect(eventProperties("origin_badge_shown", { badge: "estonia" }, "worker")).toBeNull();
+    // The phone sends its own openings, screens and review legs; outcomes stay the server's.
+    expect(eventProperties("app_opened", { backlog: "1-20" }, "phone")).toEqual({
+      backlog: "1-20",
+    });
+    expect(
+      eventProperties("review_graded", { mode: "term_to_meaning", grade: 4 }, "phone"),
+    ).toBeNull();
+    expect(eventProperties("origin_badge_shown", { badge: "estonia" }, "phone")).toBeNull();
     expect(eventProperties("origin_badge_shown", { badge: "Europe/Tallinn" })).toBeNull();
   });
   it("bands a backlog and sends an AI call's size without its text", () => {
@@ -77,6 +85,7 @@ describe("analytics privacy contract", () => {
   it("keeps public slugs and replaces private route identifiers", () => {
     expect(analyticsPath("/library/private-deck", "product")).toBe("/library/:item");
     expect(analyticsPath("/reset-password/token", "product")).toBe("/other");
+    expect(analyticsPath("/you", "product")).toBe("/you");
     expect(analyticsPath("/uk/explore/eesti-a1", "public")).toBe("/uk/explore/eesti-a1");
     expect(analyticsPath("/uk/medicine", "public")).toBe("/uk/medicine");
     expect(analyticsPath("/certifications", "public")).toBe("/certifications");

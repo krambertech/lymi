@@ -63,8 +63,10 @@
     "@lingui/cli": "6.9.1",
     "@lingui/format-po": "6.9.1",
     "@lingui/metro-transformer": "6.9.1",
+    "@posthog/core": "1.58.0",
     "@types/react": "^19.3.0",
-    "typescript": "~6.0.3"
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.3"
   },
   "scripts": {
     "start": "expo start",
@@ -73,6 +75,7 @@
     "android": "expo run:android",
     "prebuild": "expo prebuild --clean",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "fingerprint": "fingerprint fingerprint:generate --platform ios",
     "contract:freeze": "FREEZE_PHONE_CONTRACT=1 pnpm --filter @lymi/web exec vitest run --project unit src/server/phone-contract.test.ts",
     "e2e": "bash e2e/run.sh",

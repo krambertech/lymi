@@ -207,11 +207,12 @@ The phone app is tested mostly below its screens, on Linux, and its one Simulato
 | --- | --- | --- | --- |
 | Unit | Is the shared rule right: the draw, FSRS, the outboxes, the review day? | `packages/core`, `packages/client` | Milliseconds a file |
 | Typecheck | Does the phone's code still fit the shared types? | `pnpm typecheck`, which includes `apps/mobile` | Part of the quality job |
+| Unit | Do the phone's own plain-logic modules, such as its analytics queue and review legs, behave? | `apps/mobile/src/**/*.test.ts`, with `pnpm --filter @lymi/mobile test` | Seconds, in `pnpm test` |
 | Contract | Does the Worker still serve every phone release that is supported? | `apps/web/src/server/phone-contract.test.ts` | About 30 seconds |
 | Client against the Worker | Does the shared client, configured as the phone configures it, sign in, draw, grade and replay against the real Worker? | `apps/web/src/server/phone-client.test.ts` | Seconds |
 | Smoke journey | Does the Release build launch, sign in, keep its session, review and sync? | `apps/mobile/e2e`, on a Simulator | 8 minutes on a cached build, 27 on a cold one |
 
-The phone has no component tests. React Native has no working Vitest setup, so they would bring Jest in as a second runner; add them when a screen grows logic of its own that cannot move into a shared package.
+The phone's Vitest runs only modules that import nothing native, in Node, on every pull request. It has no screen or component tests. React Native has no working Vitest setup, so they would bring Jest in as a second runner; add them when a screen grows logic of its own that cannot move into a shared package or a plain module.
 
 ### The contract check
 

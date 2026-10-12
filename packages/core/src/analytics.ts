@@ -215,9 +215,10 @@ export type ProductAnalyticsEvent = {
     : { name: N } & AnalyticsProperties<N>;
 }[AnalyticsName];
 
+export type AnalyticsProducer = "browser" | "phone" | "worker";
 export const analyticsProducers = {
-  $pageview: ["browser"],
-  app_opened: ["browser"],
+  $pageview: ["browser", "phone"],
+  app_opened: ["browser", "phone"],
   signed_up: ["worker"],
   signed_in: ["worker"],
   onboarding_finished: ["worker"],
@@ -228,8 +229,8 @@ export const analyticsProducers = {
   hook_added: ["worker"],
   cards_archived: ["worker"],
   reminder_sent: ["worker"],
-  review_session_finished: ["browser"],
-  review_session_abandoned: ["browser"],
+  review_session_finished: ["browser", "phone"],
+  review_session_abandoned: ["browser", "phone"],
   first_session_started: ["worker"],
   cards_added: ["worker"],
   card_added: ["worker"],
@@ -252,12 +253,12 @@ export const analyticsProducers = {
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   deck_enrichment_changed: ["worker"],
-} satisfies Record<AnalyticsName, readonly ("browser" | "worker")[]>;
+} satisfies Record<AnalyticsName, readonly AnalyticsProducer[]>;
 
 export function eventProperties(
   name: string,
   properties: unknown,
-  producer?: "browser" | "worker",
+  producer?: AnalyticsProducer,
 ): Record<string, unknown> | null {
   if (!Object.hasOwn(analyticsEvents, name)) return null;
   if (
@@ -296,6 +297,11 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     "/import",
     "/add",
     "/join",
+    // Phone screens without a web page of their own.
+    "/you",
+    "/capture",
+    "/streak",
+    "/feedback",
   ];
   const base = routes.find((route) => path === route || path.startsWith(`${route}/`));
   return base ? (path === base ? base : `${base}/:item`) : "/other";

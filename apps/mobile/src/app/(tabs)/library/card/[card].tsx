@@ -6,7 +6,7 @@ import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
 import { deserializeState } from "@lymi/core";
 import { useQuery } from "@tanstack/react-query";
-import { useLocalSearchParams } from "expo-router";
+import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
 import { Image, View } from "react-native";
 import { useSessionHeaders } from "../../../../auth/client";
@@ -17,8 +17,10 @@ import { modeLabel } from "../../../../review/modes";
 import { PronounceButton, usePronunciation } from "../../../../review/pronounce";
 import { usePalette } from "../../../../theme/palette";
 import { SourceChip, StateChip } from "../../../../ui/chip";
+import { EmptyState } from "../../../../ui/empty-state";
 import { GRADES, GradeMark } from "../../../../ui/grade";
 import { Icon, type IconName } from "../../../../ui/icons";
+import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
 import { DropdownMenu } from "../../../../ui/menu";
 import { Plate, Press, Text } from "../../../../ui/primitives";
 import { BarButton, Screen } from "../../../../ui/screen";
@@ -59,6 +61,7 @@ const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDat
 export default function CardPage() {
   const { t, i18n } = useLingui();
   const p = usePalette();
+  const router = useRouter();
   const { card: id, deck: deckId } = useLocalSearchParams<{ card: string; deck: string }>();
   const deck = useDecks().data?.find((d) => d.id === deckId);
   const cards = useDeckCards(deckId);
@@ -69,12 +72,27 @@ export default function CardPage() {
   const now = new Date();
   const card = row?.card;
   const pronounce = usePronunciation(card ?? null);
+  const failed = useLoadFailed(cards);
   if (!card) {
     return (
       <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>
         {cards.data ? (
           // Archived or moved elsewhere since the list was opened.
-          <Text className="px-1 text-base text-muted">{t`This card is no longer in this deck.`}</Text>
+          <EmptyState
+            kind="noMatch"
+            title={t`This card isn’t in this deck`}
+            body={t`It was archived or moved since you opened the deck.`}
+            action={{
+              label: t`Back to the deck`,
+              onPress: () => router.dismissTo(`/library/${deckId}` as Href),
+            }}
+          />
+        ) : failed ? (
+          <LoadFailed
+            query={cards}
+            failed={t`Couldn’t load this card`}
+            offline={t`This card needs a connection`}
+          />
         ) : (
           <Skeleton height={120} />
         )}
@@ -247,21 +265,19 @@ export default function CardPage() {
         </View>
       )}
       {!history && historyQuery.isError && (
-        <View className="flex-row items-center gap-3 px-5 py-3">
-          <Text className="flex-1 text-base text-muted">
-            {t`Couldn’t load the history. Check your connection.`}
-          </Text>
-          <Press
-            onPress={() => void historyQuery.refetch()}
-            accessibilityRole="button"
-            className="h-11 justify-center px-2"
-          >
-            <Text className="text-base font-medium text-text-2">{t`Try again`}</Text>
-          </Press>
-        </View>
+        <EmptyState
+          kind="failed"
+          size="inline"
+          title={t`Couldn’t load this card’s history`}
+          action={{
+            label: t`Try again`,
+            onPress: () => void historyQuery.refetch(),
+            busy: historyQuery.isFetching,
+          }}
+        />
       )}
       {history && items.length === 0 && (
-        <Text className="px-5 py-4 text-base text-muted">{t`No history yet.`}</Text>
+        <EmptyState kind="start" size="inline" icon="activity" title={t`No history yet`} />
       )}
       {items.length > HISTORY_ROWS && !older && (
         <Press

@@ -10,7 +10,9 @@ import { useArchivedDecks, useDecks, useSeriesList } from "../../../data/queries
 import { useSeriesActions } from "../../../data/series";
 import { useOnline } from "../../../streak/goal-picker";
 import { usePalette } from "../../../theme/palette";
+import { EmptyState } from "../../../ui/empty-state";
 import { ListRow, ListRowFace, listRowLabel } from "../../../ui/list-row";
+import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
 import { DropdownMenu } from "../../../ui/menu";
 import { MorphMenu } from "../../../ui/morph-menu";
 import { OfflineNote } from "../../../ui/offline-note";
@@ -18,6 +20,7 @@ import { openWeb } from "../../../ui/on-the-web";
 import { Icon, IconButton, Plate, Press, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { BarButton, Screen } from "../../../ui/screen";
+import { Skeleton } from "../../../ui/skeleton";
 
 /**
  * Library: the decks without a series in one plate, then each series under its heading, then
@@ -35,6 +38,8 @@ export default function Library() {
   const p = usePalette();
   const newDeck = () => router.push("/new-deck");
   const newSeries = () => router.push("/series");
+  const failed = useLoadFailed(query);
+  const empty = query.data?.length === 0 && groups.series.length === 0;
   return (
     <Screen
       title={t`Library`}
@@ -55,35 +60,60 @@ export default function Library() {
       }
     >
       <OfflineNote query={query} />
-      <Plate className="overflow-hidden">
-        {groups.loose.map((d, i) => (
-          <DeckRow key={d.id} deck={d} first={i === 0} />
-        ))}
-        <ListRow
-          first={groups.loose.length === 0}
-          title={t`New deck`}
-          mark={<Icon name="plus" size={16} colour={p["text-2"]} strokeWidth={2.25} />}
-          end="none"
-          onPress={newDeck}
+      {failed ? (
+        <LoadFailed
+          query={query}
+          failed={t`Couldn’t load your Library`}
+          offline={t`Your Library needs a connection`}
         />
-      </Plate>
-      {groups.series.map(({ series: s, decks: inSeries }, i) => (
-        <SeriesGroup
-          key={s.id}
-          series={s}
-          decks={inSeries}
-          index={i}
-          count={groups.series.length}
+      ) : !query.data ? (
+        <View className="gap-3">
+          <Skeleton height={64} />
+          <Skeleton height={64} />
+        </View>
+      ) : empty ? (
+        <EmptyState
+          kind="start"
+          icon="library"
+          title={t`No decks yet`}
+          body={t`A deck holds the words you learn together. Make one, or import decks on the web.`}
+          action={{ label: t`New deck`, onPress: newDeck }}
         />
-      ))}
-      <Rows>
-        <Row
-          icon="archive"
-          label={t`Archived`}
-          value={archived ? String(archived) : undefined}
-          onPress={() => router.push("/library/archived")}
-        />
-      </Rows>
+      ) : (
+        <>
+          <Plate className="overflow-hidden">
+            {groups.loose.map((d, i) => (
+              <DeckRow key={d.id} deck={d} first={i === 0} />
+            ))}
+            <ListRow
+              first={groups.loose.length === 0}
+              title={t`New deck`}
+              mark={<Icon name="plus" size={16} colour={p["text-2"]} strokeWidth={2.25} />}
+              end="none"
+              onPress={newDeck}
+            />
+          </Plate>
+          {groups.series.map(({ series: s, decks: inSeries }, i) => (
+            <SeriesGroup
+              key={s.id}
+              series={s}
+              decks={inSeries}
+              index={i}
+              count={groups.series.length}
+            />
+          ))}
+        </>
+      )}
+      {query.data && (!empty || archived > 0) && (
+        <Rows>
+          <Row
+            icon="archive"
+            label={t`Archived`}
+            value={archived ? String(archived) : undefined}
+            onPress={() => router.push("/library/archived")}
+          />
+        </Rows>
+      )}
     </Screen>
   );
 }

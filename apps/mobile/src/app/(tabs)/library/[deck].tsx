@@ -19,7 +19,9 @@ import { View } from "react-native";
 import { useDeckExits } from "../../../data/decks";
 import { useDeckCards, useDecks, useSections } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
+import { EmptyState } from "../../../ui/empty-state";
 import { Icon } from "../../../ui/icons";
+import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
 import { DropdownMenu, Select } from "../../../ui/menu";
 import { OfflineNote } from "../../../ui/offline-note";
 import { Button, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
@@ -39,7 +41,8 @@ export default function Deck() {
   const { t, i18n } = useLingui();
   const router = useRouter();
   const { deck: id } = useLocalSearchParams<{ deck: string }>();
-  const deck = useDecks().data?.find((d) => d.id === id);
+  const decks = useDecks();
+  const deck = decks.data?.find((d) => d.id === id);
   const cards = useDeckCards(id);
   const rows: DeckRow[] = cards.data ?? [];
   const sections = useSections(id).data?.sections ?? [];
@@ -58,6 +61,8 @@ export default function Deck() {
   }, [rows, filters, sort, i18n.locale, sections]);
   const owner = deck?.role === "owner";
   const exits = useDeckExits(deck);
+  const failed = useLoadFailed(cards);
+  const addCard = () => router.push(`/capture?deck=${id}` as Href);
 
   return (
     <Screen
@@ -80,7 +85,7 @@ export default function Deck() {
                       {
                         label: t`Add a card`,
                         icon: "plus" as const,
-                        onSelect: () => router.push(`/capture?deck=${id}` as Href),
+                        onSelect: addCard,
                       },
                     ]
                   : []),
@@ -108,11 +113,38 @@ export default function Deck() {
       }
     >
       <OfflineNote query={cards} />
-      {!deck || !cards.data ? (
+      {decks.data && !deck ? (
+        // Archived or left elsewhere since Library was opened.
+        <EmptyState
+          kind="noMatch"
+          icon="deck"
+          title={t`This deck isn’t in your Library`}
+          body={t`It was archived, or you left it.`}
+          action={{ label: t`Back to Library`, onPress: () => router.dismissTo("/library") }}
+        />
+      ) : failed ? (
+        <LoadFailed
+          query={cards}
+          failed={t`Couldn’t load this deck`}
+          offline={t`This deck needs a connection`}
+        />
+      ) : !deck || !cards.data ? (
         <View className="gap-3">
           <Skeleton height={120} />
           <Skeleton height={64} />
         </View>
+      ) : rows.length === 0 ? (
+        <EmptyState
+          kind="start"
+          icon="deck"
+          title={t`No cards yet`}
+          body={
+            owner
+              ? t`Add the words you want to learn, and they show here.`
+              : t`Cards the owner adds show here.`
+          }
+          action={owner ? { label: t`Add a card`, onPress: addCard } : undefined}
+        />
       ) : (
         <>
           <Top deck={deck} rows={rows} />
@@ -125,9 +157,14 @@ export default function Deck() {
               setSort={setSort}
             />
             {groups.length === 0 ? (
-              <Text className="px-1 text-base text-muted">
-                {rows.length === 0 ? t`No cards yet.` : t`No cards match these filters.`}
-              </Text>
+              <Plate>
+                <EmptyState
+                  kind="noMatch"
+                  size="inline"
+                  title={t`No cards match these filters`}
+                  action={{ label: t`Show all`, onPress: () => setFilters(noFilters) }}
+                />
+              </Plate>
             ) : (
               groups.map((g) => <Group key={g.key} group={g} />)
             )}

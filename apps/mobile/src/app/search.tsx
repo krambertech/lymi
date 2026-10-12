@@ -8,8 +8,11 @@ import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { languageName } from "../data/languages";
 import { useDecks } from "../data/queries";
+import { useOnline } from "../streak/goal-picker";
+import { EmptyState } from "../ui/empty-state";
 import { KeyboardRoom } from "../ui/keyboard";
 import { ListRow } from "../ui/list-row";
+import { useLoadFailed } from "../ui/load-failed";
 import { Plate, Press, SectionTitle, Text } from "../ui/primitives";
 import { SearchBar, useSearchText } from "../ui/search-bar";
 import { Skeleton } from "../ui/skeleton";
@@ -41,7 +44,31 @@ export default function Search() {
     query && !deckId
       ? allDecks.filter((d) => d.name.toLocaleLowerCase(i18n.locale).includes(needle))
       : [];
-  const nothing = query && !search.isPending && !more && cards.length === 0 && decks.length === 0;
+  const unread = useLoadFailed(search);
+  const failed = !!query && unread;
+  const nothing =
+    query && !failed && !search.isPending && !more && cards.length === 0 && decks.length === 0;
+  const online = useOnline();
+  // Matched decks keep the page, so a search that could not reach cards sits in a plate below them.
+  const missed = (
+    <EmptyState
+      kind={online ? "failed" : "offline"}
+      size={decks.length > 0 ? "inline" : "page"}
+      title={online ? t`Couldn’t search cards` : t`Searching cards needs a connection`}
+      body={
+        online
+          ? t`Check your connection and try again.`
+          : deckId
+            ? undefined
+            : t`Deck names still match without one.`
+      }
+      action={{
+        label: t`Try again`,
+        onPress: () => void search.refetch(),
+        busy: search.isFetching,
+      }}
+    />
+  );
 
   return (
     <View className="flex-1 bg-canvas">
@@ -63,7 +90,7 @@ export default function Search() {
               </Plate>
             </View>
           )}
-          {query && search.isPending && (
+          {query && search.isPending && !failed && (
             <View className="gap-3">
               <Skeleton height={64} />
               <Skeleton height={64} />
@@ -124,13 +151,22 @@ export default function Search() {
               </Text>
             </Press>
           )}
-          {query && search.isError && !search.data && (
-            <Text className="px-1 text-base text-muted">
-              {t`Searching cards needs a connection. Check it and try again.`}
-            </Text>
-          )}
-          {nothing && !search.isError && (
-            <Text className="px-1 text-base text-muted">{t`Nothing matches “${query}”.`}</Text>
+          {failed &&
+            (decks.length > 0 ? (
+              <View>
+                <SectionTitle>{t`Cards`}</SectionTitle>
+                <Plate>{missed}</Plate>
+              </View>
+            ) : (
+              missed
+            ))}
+          {nothing && (
+            <EmptyState
+              kind="noMatch"
+              title={deckId ? t`No cards match “${query}”` : t`No decks or cards match “${query}”`}
+              body={t`Try another word, or part of one.`}
+              action={{ label: t`Clear search`, onPress: () => setText("") }}
+            />
           )}
         </ScrollView>
         <SearchBar

@@ -35,6 +35,10 @@ msgstr "{0, plural, one {# колода} few {# колоди} many {# колод
 msgid "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}} · {cards, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
+#. placeholder {0}: filled.length
+msgid "{0, plural, one {# field} other {# fields}}"
+msgstr "{0, plural, one {# поле} few {# поля} many {# полів} other {# поля}}"
+
 #. placeholder {0}: c.lapses
 msgid "{0, plural, one {# forgotten} other {# forgotten}}"
 msgstr "{0, plural, one {Забуто # раз} few {Забуто # рази} many {Забуто # разів} other {Забуто # разу}}"
@@ -350,6 +354,9 @@ msgstr "Приклад від AI"
 
 msgid "AI fills in"
 msgstr "AI доповнить"
+
+msgid "AI fills them only when they help. It never changes your text."
+msgstr "AI заповнює їх, лише коли це корисно. Твій текст він не змінює."
 
 msgid "AI hook"
 msgstr "Зачіпка від AI"
@@ -916,6 +923,9 @@ msgstr "Експорт карток триває"
 msgid "Feedback sent"
 msgstr "Повідомлення надіслано"
 
+msgid "Fields AI can fill"
+msgstr "Що може заповнити AI"
+
 msgid "Fill in the rest with AI"
 msgstr "Доповнити решту з AI"
 
@@ -1107,6 +1117,9 @@ msgstr "Огляд з’явиться після першого повторе�
 msgid "Insights: recall {recall}, reviewed on {0} of the last 30 days"
 msgstr "Огляд: запам’ятовування {recall}, повторення були в {0} з останніх 30 днів"
 
+msgid "Instructions"
+msgstr "Інструкції"
+
 msgctxt "daily goal"
 msgid "Intense"
 msgstr "Інтенсивно"
@@ -1274,6 +1287,9 @@ msgstr "Твоє значення"
 
 msgid "Meaning from lesson"
 msgstr "Значення з уроку"
+
+msgid "Medical French for nurses. Use the clinical meaning."
+msgstr "Медична французька для медсестер. Бери медичне значення."
 
 msgid "Memory hook"
 msgstr "Зачіпка"
@@ -1455,6 +1471,9 @@ msgstr "Лише в дні, коли є картки до повторення."
 
 msgid "Only the deck’s owner can change this."
 msgstr "Змінювати це може лише власник колоди."
+
+msgid "Only you see these."
+msgstr "Їх бачиш лише ти."
 
 msgid "Open {name}"
 msgstr "Відкрити «{name}»"

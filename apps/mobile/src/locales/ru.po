@@ -35,6 +35,10 @@ msgstr "{0, plural, one {# колода} few {# колоды} many {# колод
 msgid "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# колода} few {# колоды} many {# колод} other {# колоды}} · {cards, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
 
+#. placeholder {0}: filled.length
+msgid "{0, plural, one {# field} other {# fields}}"
+msgstr "{0, plural, one {# поле} few {# поля} many {# полей} other {# поля}}"
+
 #. placeholder {0}: c.lapses
 msgid "{0, plural, one {# forgotten} other {# forgotten}}"
 msgstr "{0, plural, one {Забыто # раз} few {Забыто # раза} many {Забыто # раз} other {Забыто # раза}}"
@@ -350,6 +354,9 @@ msgstr "Пример от AI"
 
 msgid "AI fills in"
 msgstr "AI дополнит"
+
+msgid "AI fills them only when they help. It never changes your text."
+msgstr "AI заполняет их, только когда это полезно. Твой текст он не меняет."
 
 msgid "AI hook"
 msgstr "Зацепка от AI"
@@ -916,6 +923,9 @@ msgstr "Экспорт карточек идёт"
 msgid "Feedback sent"
 msgstr "Обратная связь отправлена"
 
+msgid "Fields AI can fill"
+msgstr "Что может заполнить AI"
+
 msgid "Fill in the rest with AI"
 msgstr "Дополнить остальное с AI"
 
@@ -1107,6 +1117,9 @@ msgstr "Обзор появится после первого повторени
 msgid "Insights: recall {recall}, reviewed on {0} of the last 30 days"
 msgstr "Обзор: запоминание {recall}, повторения были в {0} из последних 30 дней"
 
+msgid "Instructions"
+msgstr "Инструкции"
+
 msgctxt "daily goal"
 msgid "Intense"
 msgstr "Интенсивно"
@@ -1274,6 +1287,9 @@ msgstr "Твоё значение"
 
 msgid "Meaning from lesson"
 msgstr "Значение с урока"
+
+msgid "Medical French for nurses. Use the clinical meaning."
+msgstr "Медицинский французский для медсестёр. Бери медицинское значение."
 
 msgid "Memory hook"
 msgstr "Зацепка"
@@ -1455,6 +1471,9 @@ msgstr "Только в дни, когда есть карточки к повт
 
 msgid "Only the deck’s owner can change this."
 msgstr "Менять это может только владелец колоды."
+
+msgid "Only you see these."
+msgstr "Их видишь только ты."
 
 msgid "Open {name}"
 msgstr "Открыть «{name}»"

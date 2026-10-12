@@ -25,6 +25,25 @@
   --tray-card: oklch(0.33 0.012 60);
 }
 
+/* The quieter surfaces that wear a hue: a deck's own page, and the pool of light behind a shelf's
+   page. The phone reads every step here through packages/design/scripts/generate.mjs. */
+.deck-cover {
+  --tray-l: 0.958;
+  --tray-c: 0.034;
+}
+[data-theme="dark"] .deck-cover {
+  --tray-l: 0.19;
+  --tray-c: 0.03;
+}
+.shelf-hero::before {
+  --tray-l: 0.955;
+  --tray-c: 0.05;
+}
+[data-theme="dark"] .shelf-hero::before {
+  --tray-l: 0.23;
+  --tray-c: 0.045;
+}
+
 /* The eight hues, for the tray and for every surface that wears a deck's or a shelf's colour. */
 [data-hue="0"] {
   --tray-h: 25;

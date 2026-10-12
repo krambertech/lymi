@@ -1406,13 +1406,8 @@ html:has(.deck-cards[open]) {
     oklch(var(--tray-l) var(--tray-c) var(--tray-h) / 0.45) 55%,
     transparent 85%
   );
-  --tray-l: 0.955;
-  --tray-c: 0.05;
+  /* Its lightness and chroma are in @lymi/design/tray.css, which the phone reads too. */
   pointer-events: none;
-}
-[data-theme="dark"] .shelf-hero::before {
-  --tray-l: 0.23;
-  --tray-c: 0.045;
 }
 @container (max-width: 40rem) {
   .shelf-hero::before {

@@ -1,16 +1,11 @@
 /* A deck page's header on its tray's hue, with less chroma because a header reads louder than a tile. */
 .deck-cover {
-  --tray-l: 0.958;
-  --tray-c: 0.034;
+  /* Its lightness and chroma are in @lymi/design/tray.css, which the phone reads too. */
   --ground: oklch(var(--tray-l) var(--tray-c) var(--tray-h));
   /* Up under the status bar; the element's own top padding adds the inset back. */
   margin-top: calc(env(safe-area-inset-top) * -1);
   overflow: clip;
   background: var(--ground);
-}
-[data-theme="dark"] .deck-cover {
-  --tray-l: 0.19;
-  --tray-c: 0.03;
 }
 /* Back darkens in the ground's own hue rather than laying grey over it. */
 @media (hover: hover) and (pointer: fine) {

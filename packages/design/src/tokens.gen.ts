@@ -181,3 +181,20 @@ export const textSteps = [
   "6xl",
   "7xl",
 ] as const;
+
+/** The eight deck hues per surface and room, from tray.css, indexed by core's `trayHue`. */
+export const hues = {
+  tray: {
+    light: ["#ffe7e3", "#f2f4d4", "#defae3", "#d2fbfa", "#d7f6ff", "#ebefff", "#fee9ff", "#ffe6f5"],
+    dark: ["#491f1d", "#303000", "#11371b", "#003738", "#003249", "#28294e", "#3c2242", "#451f32"],
+  },
+  cover: {
+    light: ["#ffe9e6", "#f2f4da", "#e2f8e5", "#d8f9f8", "#dcf6ff", "#ecefff", "#fceaff", "#ffe8f4"],
+    dark: ["#200e0d", "#151505", "#09180c", "#021818", "#05161f", "#111221", "#1a0f1c", "#1e0e16"],
+  },
+  pool: {
+    light: ["#ffe4df", "#f2f4cd", "#d9fadf", "#cafbfa", "#d1f6ff", "#e9edff", "#ffe6ff", "#ffe3f5"],
+    dark: ["#2f1412", "#1e1f03", "#0b2311", "#002323", "#03202f", "#191a32", "#26152a", "#2c1320"],
+  },
+  nightCard: "#3a342f",
+} as const;

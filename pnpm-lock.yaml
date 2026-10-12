@@ -513,6 +513,9 @@ importers:
       '@lymi/core':
         specifier: workspace:*
         version: link:../core
+      '@lymi/design':
+        specifier: workspace:*
+        version: link:../design
       posthog-js:
         specifier: ^1.438.7
         version: 1.438.7(@types/react@19.3.0)(react@19.3.0)

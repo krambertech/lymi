@@ -1,9 +1,9 @@
-import { streakWith } from "@lymi/client/review-day";
-import { type DrawData, type DrawState, drawCards } from "@lymi/client/review-draw";
 import { type Drawn, roundOrder, type StreakOut } from "@lymi/core";
 import { emberCount } from "@lymi/design";
+import { streakWith } from "./review-day";
+import { type DrawData, type DrawState, drawCards } from "./review-draw";
 
-export { type DayOutcome, dayOutcome, drawableLeft, streakWith } from "@lymi/client/review-day";
+export { type DayOutcome, dayOutcome, drawableLeft, streakWith } from "./review-day";
 
 const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
   outcome === "goal_met" || outcome === "exhausted";

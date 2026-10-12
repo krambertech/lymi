@@ -1,5 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import type { EndScreen, Offer } from "@lymi/client/review-end";
 import { gradeAllowed, type Rating, type ReviewAid } from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
@@ -76,7 +77,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/toolti
 import type { QueueItem } from "../lib/api";
 import { intervalLabel } from "../lib/i18n";
 import { lastInputWasKey } from "../lib/last-input";
-import type { EndScreen, Offer } from "../lib/review-complete";
 import { modeLabel } from "../lib/review-modes";
 
 export interface ReviewHeaderProps {

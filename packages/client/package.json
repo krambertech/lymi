@@ -17,7 +17,8 @@
     "./review-day": "./src/review-day.ts",
     "./daily-goal": "./src/daily-goal.ts",
     "./analytics": "./src/analytics.ts",
-    "./card-input": "./src/card-input.ts"
+    "./card-input": "./src/card-input.ts",
+    "./review-end": "./src/review-end.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
@@ -25,6 +26,7 @@
   },
   "dependencies": {
     "@lymi/core": "workspace:*",
+    "@lymi/design": "workspace:*",
     "posthog-js": "^1.438.7"
   },
   "peerDependencies": {

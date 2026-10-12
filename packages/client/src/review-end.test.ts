@@ -1,7 +1,7 @@
-import { drawState, type LocalGrade } from "@lymi/client/review-draw";
 import type { Rating, ReviewMode, StreakOut } from "@lymi/core";
 import { describe, expect, it } from "vitest";
 import type { Card, Draw } from "./api";
+import { drawState, type LocalGrade } from "./review-draw";
 import {
   dayOutcome,
   drawableLeft,
@@ -11,7 +11,7 @@ import {
   reviewEnd,
   streakAsOf,
   streakWith,
-} from "./review-complete";
+} from "./review-end";
 
 const DAY = 86_400_000;
 const start = new Date("2026-09-13T00:00:00Z");

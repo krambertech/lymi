@@ -43,6 +43,7 @@ const phoneOperations = [
   "POST /api/review/grade",
   "POST /api/review/undo",
   "GET /api/stats/streak",
+  "GET /api/stats/insights",
   "GET /api/settings",
   "PATCH /api/settings",
   "PUT /api/settings/timezone/device",

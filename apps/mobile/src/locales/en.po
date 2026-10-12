@@ -20,6 +20,10 @@ msgstr "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgid "{0, plural, one {# card due} other {# cards due}}"
 msgstr "{0, plural, one {# card due} other {# cards due}}"
 
+#. placeholder {0}: c.lapses
+msgid "{0, plural, one {# forgotten} other {# forgotten}}"
+msgstr "{0, plural, one {# forgotten} other {# forgotten}}"
+
 #. placeholder {0}: screen.nudge.count
 msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
 msgstr "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
@@ -34,6 +38,14 @@ msgstr "{0, plural, one {# more review to your daily goal} other {# more reviews
 msgid "{0, plural, one {# review, goal {1}} other {# reviews, goal {2}}}"
 msgstr "{0, plural, one {# review, goal {1}} other {# reviews, goal {2}}}"
 
+#. placeholder {0}: cards.total
+msgid "{0, plural, one {card} other {cards}}"
+msgstr "{0, plural, one {card} other {cards}}"
+
+#. placeholder {0}: consistency.longestRun
+msgid "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
+msgstr "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
+
 #. placeholder {0}: way.count
 msgid "{0, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
 msgstr "{0, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
@@ -41,6 +53,19 @@ msgstr "{0, plural, one {Review # forgotten card} other {Review # forgotten card
 #. placeholder {0}: Number(draft) || 0
 msgid "{0, plural, one {review a day} other {reviews a day}}"
 msgstr "{0, plural, one {review a day} other {reviews a day}}"
+
+#. placeholder {0}: busiest.count
+msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
+msgstr "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
+
+#. placeholder {0}: pct(cards.known / cards.total)
+msgid "{0} of your cards are known."
+msgstr "{0} of your cards are known."
+
+#. placeholder {0}: recall.passed
+#. placeholder {1}: recall.failed
+msgid "{0} remembered, {1} forgotten."
+msgstr "{0} remembered, {1} forgotten."
 
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# review} other {# reviews}}"
@@ -53,6 +78,9 @@ msgstr "{current, plural, one {Your #-day streak carries on.} other {Your #-day 
 
 msgid "{day}: {reviews}"
 msgstr "{day}: {reviews}"
+
+msgid "{day}: {reviews}, from an import"
+msgstr "{day}: {reviews}, from an import"
 
 msgid "{day}: {reviews}, goal missed"
 msgstr "{day}: {reviews}, goal missed"
@@ -87,6 +115,9 @@ msgstr "{due, plural, one {card due today} other {cards due today}}"
 msgid "{due, plural, one {card to review} other {cards to review}}"
 msgstr "{due, plural, one {card to review} other {cards to review}}"
 
+msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
+msgstr "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
+
 msgid "{label}, locked"
 msgstr "{label}, locked"
 
@@ -105,6 +136,9 @@ msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# review} other {# reviews}}"
 
+msgid "{passed} remembered, {failed} forgotten"
+msgstr "{passed} remembered, {failed} forgotten"
+
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {day in a row} other {days in a row}}"
 
@@ -113,6 +147,20 @@ msgstr "{to, plural, one {# review today} other {# reviews today}}"
 
 msgid "{to, plural, one {review today} other {reviews today}}"
 msgstr "{to, plural, one {review today} other {reviews today}}"
+
+#. placeholder {0}: busiest.count
+msgid "{weekday} is the busiest day, with {0, plural, one {# card} other {# cards}}."
+msgstr "{weekday} is the busiest day, with {0, plural, one {# card} other {# cards}}."
+
+#. placeholder {0}: consistency.days.length
+msgid "/ {0, plural, one {# day} other {# days}}"
+msgstr "/ {0, plural, one {# day} other {# days}}"
+
+msgid "30 days"
+msgstr "30 days"
+
+msgid "90 days"
+msgstr "90 days"
 
 msgid "A new code is on its way to {address}."
 msgstr "A new code is on its way to {address}."
@@ -147,6 +195,9 @@ msgstr "Add a card"
 msgid "Add cards"
 msgstr "Add cards"
 
+msgid "Add cards and review them to see your progress here."
+msgstr "Add cards and review them to see your progress here."
+
 msgid "Add cards from your last lesson, then review them here."
 msgstr "Add cards from your last lesson, then review them here."
 
@@ -170,6 +221,9 @@ msgstr "Added “{term}” without its picture. {reason}"
 
 msgid "Added “{term}”. It’s saved on this phone until Lymi can be reached."
 msgstr "Added “{term}”. It’s saved on this phone until Lymi can be reached."
+
+msgid "Ahead"
+msgstr "Ahead"
 
 msgid "AI"
 msgstr "AI"
@@ -201,6 +255,9 @@ msgstr "AI wrote part of this card"
 msgid "AI wrote this"
 msgstr "AI wrote this"
 
+msgid "All"
+msgstr "All"
+
 msgid "Also on your list"
 msgstr "Also on your list"
 
@@ -230,6 +287,9 @@ msgstr "Cancel"
 
 msgid "Card options"
 msgstr "Card options"
+
+msgid "Cards"
+msgstr "Cards"
 
 msgid "Change daily goal"
 msgstr "Change daily goal"
@@ -273,6 +333,9 @@ msgstr "Confirm"
 msgid "Connected apps"
 msgstr "Connected apps"
 
+msgid "Consistency"
+msgstr "Consistency"
+
 msgid "Continue"
 msgstr "Continue"
 
@@ -284,6 +347,9 @@ msgstr "Couldn’t change your photo. Check your connection and try again."
 
 msgid "Couldn’t check for more cards"
 msgstr "Couldn’t check for more cards"
+
+msgid "Couldn’t load Insights"
+msgstr "Couldn’t load Insights"
 
 msgid "Couldn’t load Today"
 msgstr "Couldn’t load Today"
@@ -357,6 +423,9 @@ msgstr "Daily reminder"
 msgid "Dark"
 msgstr "Dark"
 
+msgid "Day by day"
+msgstr "Day by day"
+
 msgid "Days reviewed"
 msgstr "Days reviewed"
 
@@ -386,6 +455,12 @@ msgstr "Done"
 
 msgid "Drafting a hook…"
 msgstr "Drafting a hook…"
+
+msgid "due this week"
+msgstr "due this week"
+
+msgid "Each block is one day you reviewed."
+msgstr "Each block is one day you reviewed."
 
 msgid "Easy"
 msgstr "Easy"
@@ -444,6 +519,11 @@ msgstr "Forgot your password?"
 msgid "Forgotten"
 msgstr "Forgotten"
 
+#. placeholder {0}: leeches.forgottenDays
+#. placeholder {1}: leeches.recentDays
+msgid "Forgotten on {0} of the last {1, plural, one {# day} other {# days}} seen"
+msgstr "Forgotten on {0} of the last {1, plural, one {# day} other {# days}} seen"
+
 msgid "Forgotten on {SLIPPING_FORGOTTEN_DAYS} of the last {SLIPPING_RECENT_DAYS, plural, one {# day} other {# days}} seen"
 msgstr "Forgotten on {SLIPPING_FORGOTTEN_DAYS} of the last {SLIPPING_RECENT_DAYS, plural, one {# day} other {# days}} seen"
 
@@ -501,8 +581,12 @@ msgstr "Import"
 msgid "Insights"
 msgstr "Insights"
 
-msgid "Insights is coming to the phone"
-msgstr "Insights is coming to the phone"
+msgid "Insights start after your first review"
+msgstr "Insights start after your first review"
+
+#. placeholder {0}: data.consistency.lit
+msgid "Insights: recall {recall}, reviewed on {0} of the last 30 days"
+msgstr "Insights: recall {recall}, reviewed on {0} of the last 30 days"
 
 msgctxt "daily goal"
 msgid "Intense"
@@ -613,6 +697,12 @@ msgstr "No cards you keep forgetting"
 msgid "No meaning yet"
 msgstr "No meaning yet"
 
+msgid "No recall data yet. Review more cards to see how you’re doing."
+msgstr "No recall data yet. Review more cards to see how you’re doing."
+
+msgid "No reviews yet. Each day you review adds a block."
+msgstr "No reviews yet. Each day you review adds a block."
+
 msgid "No section"
 msgstr "No section"
 
@@ -624,6 +714,9 @@ msgstr "Notes"
 
 msgid "Nothing due"
 msgstr "Nothing due"
+
+msgid "Nothing due in the next seven days."
+msgstr "Nothing due in the next seven days."
 
 msgid "Nothing due today, so your streak is safe."
 msgstr "Nothing due today, so your streak is safe."
@@ -657,9 +750,6 @@ msgstr "Open Archived on the web"
 
 msgid "Open Explore on the web"
 msgstr "Open Explore on the web"
-
-msgid "Open Insights on the web"
-msgstr "Open Insights on the web"
 
 msgid "Open Settings on the web"
 msgstr "Open Settings on the web"
@@ -721,6 +811,18 @@ msgstr "Reach today’s goal to keep it going."
 
 msgid "Reach today’s goal to start a streak."
 msgstr "Reach today’s goal to start a streak."
+
+msgid "Recall"
+msgstr "Recall"
+
+msgid "Recall by month: {series}. The schedule aims for 90%."
+msgstr "Recall by month: {series}. The schedule aims for 90%."
+
+msgid "Recall by week: {series}. The schedule aims for 90%."
+msgstr "Recall by week: {series}. The schedule aims for 90%."
+
+msgid "Recall period"
+msgstr "Recall period"
 
 msgid "Recall the answer, then tap the card"
 msgstr "Recall the answer, then tap the card"
@@ -902,6 +1004,13 @@ msgstr "Today"
 msgid "Today, {day}: {reviews}"
 msgstr "Today, {day}: {reviews}"
 
+#. placeholder {0}: entry.goal
+msgid "Today, {day}: {reviews} of {0}"
+msgstr "Today, {day}: {reviews} of {0}"
+
+msgid "Today, {day}: {reviews}, from an import"
+msgstr "Today, {day}: {reviews}, from an import"
+
 msgid "Today, {day}: all due cards reviewed, {reviews}"
 msgstr "Today, {day}: all due cards reviewed, {reviews}"
 
@@ -944,9 +1053,6 @@ msgstr "Until then, find ready decks to add on the web."
 msgid "Until then, restore archived cards on the web."
 msgstr "Until then, restore archived cards on the web."
 
-msgid "Until then, see how your memory is doing on the web."
-msgstr "Until then, see how your memory is doing on the web."
-
 msgid "Until then, see what changed in your Library on the web."
 msgstr "Until then, see what changed in your Library on the web."
 
@@ -964,6 +1070,10 @@ msgstr "Use at most {MAX_PASSWORD_LENGTH} characters."
 
 msgid "We’ll email you a link to set a new one."
 msgstr "We’ll email you a link to set a new one."
+
+#. placeholder {0}: i18n.date(start, { day: "numeric", month: "short", timeZone: "UTC" })
+msgid "week of {0}"
+msgstr "week of {0}"
 
 msgid "Welcome back."
 msgstr "Welcome back."

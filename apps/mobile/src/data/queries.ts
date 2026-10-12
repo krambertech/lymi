@@ -10,6 +10,7 @@ import {
   deckCardsQuery,
   decksQuery,
   drawQuery,
+  insightsQuery,
   queueQuery,
   roundsQuery,
   sectionsQuery,
@@ -38,6 +39,7 @@ export const useSections = (deckId: string | undefined) =>
   useQuery({ ...sectionsQuery(deckId ?? ""), enabled: !!deckId });
 export const useStreak = () => useQuery(streakQuery);
 export const useRounds = () => useQuery(roundsQuery);
+export const useInsights = (period: 30 | 90 | 0) => useQuery(insightsQuery(period));
 /** What the review draws from, ADR 0019. Unscoped, it also holds today's log for the day's count. */
 export const useDraw = (scope: ReviewScope = {}) => useQuery(drawQuery(scope));
 /** A round from Today is a fixed list the server picks, walked in order. */

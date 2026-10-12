@@ -1,18 +1,23 @@
 import { useLingui } from "@lingui/react/macro";
-import { OnTheWeb } from "../../../ui/on-the-web";
+import { useState } from "react";
+import { useInsights } from "../../../data/queries";
+import { InsightsView, type Period } from "../../../insights/insights-view";
 import { Screen } from "../../../ui/screen";
 
-/** The phone's own Insights is #582; until then this page opens the web's. */
+/** How the learner's memory is doing: the web's Insights at phone width. insights.md. */
 export default function Insights() {
   const { t } = useLingui();
+  const [period, setPeriod] = useState<Period>("30");
+  const { data, isError, isFetching, refetch } = useInsights(Number(period) as 30 | 90 | 0);
   return (
     <Screen title={t`Insights`} back={{ label: t`You`, to: "/you" }}>
-      <OnTheWeb
-        icon="insights"
-        title={t`Insights is coming to the phone`}
-        line={t`Until then, see how your memory is doing on the web.`}
-        action={t`Open Insights on the web`}
-        path="/insights"
+      <InsightsView
+        data={data}
+        period={period}
+        onPeriod={setPeriod}
+        failed={isError && data === undefined}
+        busy={isFetching}
+        onRetry={() => void refetch()}
       />
     </Screen>
   );

@@ -4,10 +4,10 @@ import { useUpdateRequired } from "@lymi/client/update-required";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { registerDevMenuItems } from "expo-dev-menu";
 import { isGlassEffectAPIAvailable } from "expo-glass-effect";
-import { DarkTheme, DefaultTheme, router, Stack, ThemeProvider } from "expo-router";
+import { DarkTheme, DefaultTheme, router, Stack, ThemeProvider, usePathname } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -16,6 +16,9 @@ import { queryClient } from "../data/client";
 import { Sync } from "../data/sync";
 import { i18n } from "../i18n";
 import { LanguageSync } from "../i18n/sync";
+import { SplashGuard, useGiveUp } from "../splash/guard";
+import { Kindling } from "../splash/kindling";
+import { replaySplash, useReplays } from "../splash/replay";
 import { setExceptionLearner, startExceptionReporting } from "../telemetry/exceptions";
 import { usePalette } from "../theme/palette";
 import { WidgetSync } from "../widgets/sync";
@@ -25,12 +28,15 @@ startExceptionReporting();
 // A link straight to a review, such as from a widget, still has the tabs under it.
 export const unstable_settings = { initialRouteName: "(tabs)" };
 
-// The splash stays until the stored session is read, so a signed-in learner never sees sign-in flash past.
+// The launch screen stays until Kindling has drawn the same frame over the app, so nothing flashes.
 SplashScreen.preventAutoHideAsync();
 
-// In a development build the dev menu opens the design system, as the web has /design.
+// In a development build the dev menu opens the design system, as the web has /design, and replays the splash.
 if (__DEV__) {
-  void registerDevMenuItems([{ name: "Design system", callback: () => router.push("/design") }]);
+  void registerDevMenuItems([
+    { name: "Design system", callback: () => router.push("/design") },
+    { name: "Replay the splash", callback: replaySplash },
+  ]);
 }
 
 export default function RootLayout() {
@@ -56,9 +62,25 @@ function Root() {
   // A 426 from any request: this release is too old for the API, so nothing else can work.
   const update = useUpdateRequired();
   useEffect(() => setExceptionLearner(learnerId), [learnerId]);
+  // A cold start mounts this once; a return from the background does not, so the splash never replays.
+  const [kindling, setKindling] = useState(true);
+  const replays = useReplays();
   useEffect(() => {
-    if (!session.isPending || update) SplashScreen.hideAsync();
-  }, [session.isPending, update]);
+    if (replays > 0) setKindling(true);
+  }, [replays]);
+  const shown = useCallback(() => SplashScreen.hideAsync(), []);
+  const done = useCallback(() => setKindling(false), []);
+  // The splash lands on Today's lantern, or Welcome's when signed out, chosen from the session since the
+  // route can still read Welcome for a moment after it is read. A link into anywhere else has none.
+  const path = usePathname();
+  const landsOnFirst = !signedIn || ["/", "/today", "/welcome"].includes(path);
+  const first = !landsOnFirst ? "elsewhere" : signedIn ? "today" : "welcome";
+  const lands = session.isPending && !update ? undefined : update ? "elsewhere" : first;
+  const giveUp = useCallback(() => {
+    void SplashScreen.hideAsync();
+    setKindling(false);
+  }, []);
+  useGiveUp(kindling, lands !== undefined, giveUp);
   const base = dark ? DarkTheme : DefaultTheme;
   // The navigation theme carries the room, so native chrome never flashes white between tabs.
   const theme = {
@@ -131,6 +153,11 @@ function Root() {
         {/* The design system is for development builds; release builds redirect it home. */}
         {__DEV__ && <Stack.Screen name="design" />}
       </Stack>
+      {kindling && (
+        <SplashGuard key={replays} onFail={giveUp}>
+          <Kindling lands={lands} onShown={shown} onDone={done} />
+        </SplashGuard>
+      )}
     </ThemeProvider>
   );
 }

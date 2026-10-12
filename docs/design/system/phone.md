@@ -76,6 +76,10 @@ Insights keeps the web's figures, lines and order ([insights.md](../insights.md)
 
 Activity is the web's list ([activity.md](../activity.md)): day headings over plates of rows, and Show more at the foot. A row that wrote cards opens them in a sheet over the list rather than in place, so the day keeps its shape; it peeks at the first six and drags up for the rest. A card or a deck opens its deck in Library. An import or an export opens on the web with an arrow out, because files are handled there ([ADR 0030](../../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)). A kind of row a newer server sends reads as a change to its deck, and a file's stage or format it does not know is named neutrally, never as finished or as a Lymi file. Activity is not kept on the phone, so opened with no connection it says it needs one.
 
+## Opening
+
+A cold start lights the lantern. The launch screen is the unlit lantern in the middle of the room's colour, in each room, drawn by `apps/mobile/scripts/splash-images.mjs` from the lantern data and the palette. As the app's code loads, the flame catches, its warm light floods the room, then the lantern rises to its place on Today, or on Welcome when signed out, while the flood draws back into that screen's pool. Opened by a link into any other screen, the lit room fades where it is. [motion.md](motion.md#opening-the-phone-app) has the timings. It never waits for data: the screen underneath shows its own loading state, and a return from the background shows nothing.
+
 ## Update Lymi
 
 When the Worker no longer serves the installed release, the whole app becomes one screen: the lantern, Update Lymi, a line saying unsent reviews and cards are kept when there are any, and one amber Update that opens TestFlight or the App Store. It has no close and no way back, because every request would be refused. It is a route guarded ahead of every other, so an open review closes under it and a widget or notification link lands on it. ADR 0032 owns when it shows.
@@ -100,10 +104,6 @@ One sound, when the daily goal is reached. It follows the silent switch, and You
 ## Glass
 
 Liquid Glass suits Lymi: it is a material that holds light, and the lantern is a light. The phone uses it for chrome that floats over content: the tab bar, the top bar's buttons and sheets refract what scrolls beneath them and morph as the learner moves. Tinted amber, glass marks the one standing action, as plain amber marks a press on the web. Where else tinted glass carries Lymi's light is open, to try on a device rather than in mockups. What the learner reads, such as the review card, stays on opaque plates. Reduce Transparency, and iOS before 26, get the web's opaque surfaces. The web keeps its opaque pill.
-
-## Light
-
-The big lantern on Today catches a highlight across its glass as the phone tilts, as iOS 26's own glass does. It is the only tilting thing, and Reduce Motion turns it off.
 
 ## Outside the app
 

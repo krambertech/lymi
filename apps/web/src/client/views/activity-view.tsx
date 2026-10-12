@@ -1,4 +1,12 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import {
+  type ActivityMark,
+  activityCaller,
+  activityMark,
+  exportStage,
+  importStage,
+  namesCaller,
+} from "@lymi/client/activity";
 import { clsx } from "clsx";
 import {
   Activity as ActivityIcon,
@@ -31,7 +39,7 @@ import { Skeleton } from "../components/skeleton";
 import type { ActivityCard, ActivityEntry, Export, Import } from "../lib/api";
 
 /** The verb of a row, which is what its mark says. The sentence says what the verb was done to. */
-const KIND_ICONS: Record<string, LucideIcon> = {
+const MARK_ICONS: Record<ActivityMark, LucideIcon> = {
   added: Plus,
   enriched: Sparkle,
   edited: Pencil,
@@ -48,25 +56,21 @@ const KIND_ICONS: Record<string, LucideIcon> = {
   link_off: Link2Off,
 };
 
-function iconFor(kind: ActivityEntry["kind"]): LucideIcon {
-  const verb = kind.slice(kind.indexOf("_") + 1);
-  return KIND_ICONS[kind] ?? KIND_ICONS[verb] ?? Pencil;
-}
-
 /** What an import row says about where its import is. Done says nothing: its count says it. */
 function StatusChip({ item }: { item: Import }) {
   const { t } = useLingui();
-  if (item.archivedAt) return <Chip>{t`Archived`}</Chip>;
-  switch (item.status) {
+  switch (importStage(item)) {
+    case "archived":
+      return <Chip>{t`Archived`}</Chip>;
     case "uploading":
       return <Chip>{t`Uploading`}</Chip>;
-    case "inspecting":
+    case "reading":
       return <Chip>{t`Reading`}</Chip>;
     case "ready":
       return <Chip>{t`Ready to import`}</Chip>;
     case "importing":
       return <Chip>{t`Importing`}</Chip>;
-    case "failed":
+    case "stopped":
       return <Chip tone="danger">{t`Stopped`}</Chip>;
     case "cancelled":
       return <Chip>{t`Cancelled`}</Chip>;
@@ -78,12 +82,12 @@ function StatusChip({ item }: { item: Import }) {
 /** Where an export stands. Done says nothing: its count says it, and its file is on the row. */
 function ExportChip({ item }: { item: Export }) {
   const { t } = useLingui();
-  switch (item.status) {
-    case "exporting":
+  switch (exportStage(item)) {
+    case "writing":
       return <Chip>{t`Writing`}</Chip>;
-    case "failed":
+    case "stopped":
       return <Chip tone="danger">{t`Stopped`}</Chip>;
-    case "expired":
+    case "deleted":
       return <Chip>{t`Deleted`}</Chip>;
     default:
       return null;
@@ -251,9 +255,11 @@ function ImportSentence({ item }: { item: Import | null }) {
 /** Who wrote, as the line under the sentence says it. A named app says its own name. */
 function useCaller() {
   const { t } = useLingui();
-  return (entry: ActivityEntry): string | null => {
-    if (entry.app) return entry.app;
-    switch (entry.actor) {
+  return (entry: ActivityEntry): string => {
+    const caller = activityCaller(entry);
+    switch (caller.kind) {
+      case "app":
+        return caller.name;
       case "user":
         return t`You`;
       case "api":
@@ -286,13 +292,9 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
   const reduceMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
   const cardsId = useId();
-  const Icon = iconFor(entry.kind);
-  // The people rows name the person in the sentence, so the line under it would say them twice.
-  const named = entry.kind.startsWith("member_") && entry.kind !== "member_removed";
-  // A file the learner moved themselves says so by being theirs; what it needs is which file.
+  const Icon = MARK_ICONS[activityMark(entry.kind)];
   const file = entry.import ?? entry.export;
-  const own = !!file && entry.actor === "user";
-  const meta = [named || own ? null : caller, file?.fileName, time].filter(Boolean);
+  const meta = [namesCaller(entry) ? caller : null, file?.fileName, time].filter(Boolean);
   const expandable = entry.cards.length > 0;
   // The one row whose action is on the row itself, because the file is what it offers.
   const download = entry.export?.status === "done" ? entry.export.downloadUrl : null;

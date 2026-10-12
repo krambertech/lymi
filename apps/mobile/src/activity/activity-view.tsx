@@ -1,5 +1,16 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import {
+  type ActivityMark,
+  activityCaller,
+  activityMark,
+  exportFormat,
+  exportOutcome,
+  exportStage,
+  importOutcome,
+  importStage,
+  namesCaller,
+} from "@lymi/client/activity";
 import type { ActivityCard, ActivityEntry } from "@lymi/client/api";
 import { useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
@@ -16,13 +27,12 @@ import { Skeleton } from "../ui/skeleton";
 // docs/design/activity.md.
 
 /** The verb of a row, which is what its mark says; the sentence says what it was done to. */
-const VERB_ICONS: Record<string, IconName> = {
+const MARK_ICONS: Record<ActivityMark, IconName> = {
   added: "plus",
   enriched: "ai",
   edited: "edit",
   archived: "archive",
   restored: "restore",
-  deleted: "archive",
   import: "fileIn",
   export: "export",
   member_joined: "joined",
@@ -33,10 +43,6 @@ const VERB_ICONS: Record<string, IconName> = {
   link_on: "linkOn",
   link_off: "linkOff",
 };
-
-function iconFor(kind: string): IconName {
-  return VERB_ICONS[kind] ?? VERB_ICONS[kind.slice(kind.indexOf("_") + 1)] ?? "edit";
-}
 
 const SOURCE_NAMES: Record<string, string> = { anki: "Anki", mochi: "Mochi", lymi: "Lymi" };
 
@@ -161,73 +167,107 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
   }
 }
 
+/**
+ * An export says it wrote a file only once it did, and names only a format this release knows.
+ * Still writing or stopped, it says it was exporting; a stage a newer server adds claims neither.
+ */
 function ExportSentence({ entry }: { entry: ActivityEntry }) {
   const item = entry.export;
-  if (!item) return <Trans>Exported your cards</Trans>;
+  if (!item) return <Trans>Export of your cards</Trans>;
   const cards = item.counts?.cards ?? 0;
-  if (item.status === "exporting") {
-    return item.format === "anki" ? (
-      <Trans>Exporting as an Anki package</Trans>
-    ) : (
-      <Trans>Exporting as a Lymi file</Trans>
-    );
+  const format = exportFormat(item);
+  switch (exportOutcome(item)) {
+    case "exported":
+      return format === "anki" ? (
+        <Trans>
+          Exported <Plural value={cards} one="# card" other="# cards" /> as an Anki package
+        </Trans>
+      ) : format === "lymi" ? (
+        <Trans>
+          Exported <Plural value={cards} one="# card" other="# cards" /> as a Lymi file
+        </Trans>
+      ) : (
+        <Trans>
+          Exported <Plural value={cards} one="# card" other="# cards" />
+        </Trans>
+      );
+    case "exporting":
+      return format === "anki" ? (
+        <Trans>Exporting as an Anki package</Trans>
+      ) : format === "lymi" ? (
+        <Trans>Exporting as a Lymi file</Trans>
+      ) : (
+        <Trans>Exporting your cards</Trans>
+      );
+    default:
+      return <Trans>Export of your cards</Trans>;
   }
-  return item.format === "anki" ? (
-    <Trans>
-      Exported <Plural value={cards} one="# card" other="# cards" /> as an Anki package
-    </Trans>
-  ) : (
-    <Trans>
-      Exported <Plural value={cards} one="# card" other="# cards" /> as a Lymi file
-    </Trans>
-  );
 }
 
+/** An import says it brought cards in only when it did; a stage this release doesn't know says neither. */
 function ImportSentence({ entry }: { entry: ActivityEntry }) {
   const item = entry.import;
   const source = item ? (SOURCE_NAMES[item.source] ?? item.source) : "";
-  const added = item?.counts?.added ?? 0;
-  if (item && (item.status === "done" || (item.status === "failed" && added > 0))) {
-    return (
-      <Trans>
-        Imported <Plural value={added} one="# card" other="# cards" /> from {source}
-      </Trans>
-    );
+  if (!item) return <Trans>Import of your cards</Trans>;
+  const added = item.counts?.added ?? 0;
+  switch (importOutcome(item)) {
+    case "imported":
+      return (
+        <Trans>
+          Imported <Plural value={added} one="# card" other="# cards" /> from {source}
+        </Trans>
+      );
+    case "importing":
+      return <Trans>Importing from {source}</Trans>;
+    default:
+      return <Trans>Import from {source}</Trans>;
   }
-  return <Trans>Importing from {source}</Trans>;
 }
 
-/** Where a file stands, when it is not simply done; a status a newer server adds says nothing. */
+/** Where a file stands, when it is not simply done; a stage a newer server adds says nothing. */
 function FileChip({ entry }: { entry: ActivityEntry }) {
   const { t } = useLingui();
-  const item = entry.import;
-  if (item) {
-    if (item.archivedAt) return <Chip size="sm">{t`Archived`}</Chip>;
-    const label: Record<string, string> = {
-      uploading: t`Uploading`,
-      inspecting: t`Reading`,
-      ready: t`Ready to import`,
-      importing: t`Importing`,
-      cancelled: t`Cancelled`,
-    };
-    if (item.status === "failed") return <Chip size="sm" tone="danger">{t`Stopped`}</Chip>;
-    const text = label[item.status];
-    return text ? <Chip size="sm">{text}</Chip> : null;
+  if (entry.import) {
+    switch (importStage(entry.import)) {
+      case "archived":
+        return <Chip size="sm">{t`Archived`}</Chip>;
+      case "uploading":
+        return <Chip size="sm">{t`Uploading`}</Chip>;
+      case "reading":
+        return <Chip size="sm">{t`Reading`}</Chip>;
+      case "ready":
+        return <Chip size="sm">{t`Ready to import`}</Chip>;
+      case "importing":
+        return <Chip size="sm">{t`Importing`}</Chip>;
+      case "stopped":
+        return <Chip size="sm" tone="danger">{t`Stopped`}</Chip>;
+      case "cancelled":
+        return <Chip size="sm">{t`Cancelled`}</Chip>;
+      default:
+        return null;
+    }
   }
-  const file = entry.export;
-  if (!file) return null;
-  if (file.status === "failed") return <Chip size="sm" tone="danger">{t`Stopped`}</Chip>;
-  if (file.status === "exporting") return <Chip size="sm">{t`Writing`}</Chip>;
-  if (file.status === "expired") return <Chip size="sm">{t`Deleted`}</Chip>;
-  return null;
+  if (!entry.export) return null;
+  switch (exportStage(entry.export)) {
+    case "writing":
+      return <Chip size="sm">{t`Writing`}</Chip>;
+    case "stopped":
+      return <Chip size="sm" tone="danger">{t`Stopped`}</Chip>;
+    case "deleted":
+      return <Chip size="sm">{t`Deleted`}</Chip>;
+    default:
+      return null;
+  }
 }
 
 /** Who wrote, as the line under the sentence says it. A named app says its own name. */
 function useCaller() {
   const { t } = useLingui();
   return (entry: ActivityEntry): string => {
-    if (entry.app) return entry.app;
-    switch (entry.actor as string) {
+    const caller = activityCaller(entry);
+    switch (caller.kind) {
+      case "app":
+        return caller.name;
       case "user":
         return t`You`;
       case "api":
@@ -259,11 +299,10 @@ function ActivityRow({ entry, time, first, onCards }: RowProps) {
   const p = usePalette();
   const router = useRouter();
   const caller = useCaller()(entry);
-  // The people rows name the person in the sentence, so the line under it would say them twice.
-  const named = entry.kind.startsWith("member_") && entry.kind !== "member_removed";
   const file = entry.import ?? entry.export;
-  const own = !!file && entry.actor === "user";
-  const meta = [named || own ? null : caller, file?.fileName, time].filter(Boolean).join(" · ");
+  const meta = [namesCaller(entry) ? caller : null, file?.fileName, time]
+    .filter(Boolean)
+    .join(" · ");
   const hasCards = entry.cards.length > 0;
   const deck = entry.deck && !entry.deck.archived ? entry.deck : null;
   const onWeb = entry.import
@@ -282,7 +321,7 @@ function ActivityRow({ entry, time, first, onCards }: RowProps) {
   const face = (
     <View className="min-h-[72px] flex-row items-center gap-3 py-3 ps-4 pe-4">
       <View className="size-9 items-center justify-center rounded-full bg-plate-2">
-        <Icon name={iconFor(entry.kind)} size={17} colour={p["text-2"]} />
+        <Icon name={MARK_ICONS[activityMark(entry.kind)]} size={17} colour={p["text-2"]} />
       </View>
       <View className="flex-1 gap-1">
         <Text className="text-md font-medium text-text" numberOfLines={3}>
@@ -456,6 +495,8 @@ interface Props {
   today: string | undefined;
   zone: string | undefined;
   failed: boolean;
+  /** No connection and nothing loaded: Activity is read from the server each time. */
+  offline: boolean;
   retrying: boolean;
   onRetry: () => void;
   hasMore: boolean;
@@ -469,6 +510,7 @@ export function ActivityView({
   today,
   zone,
   failed,
+  offline,
   retrying,
   onRetry,
   hasMore,
@@ -481,6 +523,21 @@ export function ActivityView({
   const [chosen, setChosen] = useState<{ entry: ActivityEntry; meta: string } | null>(null);
   const [open, setOpen] = useState(false);
   const p = usePalette();
+  if (offline) {
+    return (
+      <View className="items-center gap-3 pt-20">
+        <View className="size-16 items-center justify-center rounded-full bg-plate-2">
+          <Icon name="activity" size={28} colour={p["text-2"]} strokeWidth={1.75} />
+        </View>
+        <Text className="text-center text-lg font-medium text-text">
+          {t`Activity needs a connection`}
+        </Text>
+        <Text className="max-w-72 text-center text-base text-text-2">
+          {t`It loads as soon as you’re back online.`}
+        </Text>
+      </View>
+    );
+  }
   if (failed && !entries) {
     return (
       <Plate className="items-start gap-3 p-5">

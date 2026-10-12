@@ -199,6 +199,9 @@ msgstr "Слово чи фраза"
 msgid "Activity"
 msgstr "Активність"
 
+msgid "Activity needs a connection"
+msgstr "Для активності потрібне з’єднання"
+
 msgid "Add a card"
 msgstr "Додати картку"
 
@@ -562,20 +565,26 @@ msgstr "Каталог скоро буде на телефоні"
 msgid "Export"
 msgstr "Експорт"
 
+msgid "Export of your cards"
+msgstr "Експорт карток"
+
+msgid "Exported {cards, plural, one {# card} other {# cards}}"
+msgstr "Експортовано {cards, plural, one {# картку} few {# картки} many {# карток} other {# картки}}"
+
 msgid "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
 msgstr "Експортовано {cards, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у файл Lymi"
 
 msgid "Exported {cards, plural, one {# card} other {# cards}} as an Anki package"
 msgstr "Експортовано {cards, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у пакет Anki"
 
-msgid "Exported your cards"
-msgstr "Експортовано картки"
-
 msgid "Exporting as a Lymi file"
 msgstr "Експорт у файл Lymi"
 
 msgid "Exporting as an Anki package"
 msgstr "Експорт у пакет Anki"
+
+msgid "Exporting your cards"
+msgstr "Експорт карток триває"
 
 msgid "Feedback sent"
 msgstr "Повідомлення надіслано"
@@ -651,6 +660,12 @@ msgstr "Якщо для {address} є пароль Lymi, посилання дл�
 msgid "Import"
 msgstr "Імпорт"
 
+msgid "Import from {source}"
+msgstr "Імпорт із {source}"
+
+msgid "Import of your cards"
+msgstr "Імпорт карток"
+
 msgid "Imported {added, plural, one {# card} other {# cards}} from {source}"
 msgstr "Імпортовано {added, plural, one {# картку} few {# картки} many {# карток} other {# картки}} із {source}"
 
@@ -676,6 +691,9 @@ msgstr "Інтенсивно"
 
 msgid "Invited {name} to {deck}"
 msgstr "{name} запрошено до «{deck}»"
+
+msgid "It loads as soon as you’re back online."
+msgstr "Вона завантажиться, щойно ти знову будеш онлайн."
 
 msgctxt "daily goal"
 msgid "Keen"

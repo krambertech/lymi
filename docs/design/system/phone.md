@@ -74,7 +74,7 @@ Insights keeps the web's figures, lines and order ([insights.md](../insights.md)
 
 ## Activity
 
-Activity is the web's list ([activity.md](../activity.md)): day headings over plates of rows, and Show more at the foot. A row that wrote cards opens them in a sheet over the list rather than in place, so the day keeps its shape; it peeks at the first six and drags up for the rest. A card or a deck opens its deck in Library. An import or an export opens on the web with an arrow out, because files are handled there ([ADR 0030](../../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)). A kind of row a newer server sends reads as a change to its deck, so an older release never shows a blank row.
+Activity is the web's list ([activity.md](../activity.md)): day headings over plates of rows, and Show more at the foot. A row that wrote cards opens them in a sheet over the list rather than in place, so the day keeps its shape; it peeks at the first six and drags up for the rest. A card or a deck opens its deck in Library. An import or an export opens on the web with an arrow out, because files are handled there ([ADR 0030](../../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)). A kind of row a newer server sends reads as a change to its deck, and a file's stage or format it does not know is named neutrally, never as finished or as a Lymi file. Activity is not kept on the phone, so opened with no connection it says it needs one.
 
 ## Update Lymi
 

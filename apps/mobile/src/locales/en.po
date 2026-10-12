@@ -199,6 +199,9 @@ msgstr "A word or phrase"
 msgid "Activity"
 msgstr "Activity"
 
+msgid "Activity needs a connection"
+msgstr "Activity needs a connection"
+
 msgid "Add a card"
 msgstr "Add a card"
 
@@ -562,20 +565,26 @@ msgstr "Explore is coming to the phone"
 msgid "Export"
 msgstr "Export"
 
+msgid "Export of your cards"
+msgstr "Export of your cards"
+
+msgid "Exported {cards, plural, one {# card} other {# cards}}"
+msgstr "Exported {cards, plural, one {# card} other {# cards}}"
+
 msgid "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
 msgstr "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
 
 msgid "Exported {cards, plural, one {# card} other {# cards}} as an Anki package"
 msgstr "Exported {cards, plural, one {# card} other {# cards}} as an Anki package"
 
-msgid "Exported your cards"
-msgstr "Exported your cards"
-
 msgid "Exporting as a Lymi file"
 msgstr "Exporting as a Lymi file"
 
 msgid "Exporting as an Anki package"
 msgstr "Exporting as an Anki package"
+
+msgid "Exporting your cards"
+msgstr "Exporting your cards"
 
 msgid "Feedback sent"
 msgstr "Feedback sent"
@@ -651,6 +660,12 @@ msgstr "If {address} has a Lymi password, a reset link is on the way. It works f
 msgid "Import"
 msgstr "Import"
 
+msgid "Import from {source}"
+msgstr "Import from {source}"
+
+msgid "Import of your cards"
+msgstr "Import of your cards"
+
 msgid "Imported {added, plural, one {# card} other {# cards}} from {source}"
 msgstr "Imported {added, plural, one {# card} other {# cards}} from {source}"
 
@@ -676,6 +691,9 @@ msgstr "Intense"
 
 msgid "Invited {name} to {deck}"
 msgstr "Invited {name} to {deck}"
+
+msgid "It loads as soon as you’re back online."
+msgstr "It loads as soon as you’re back online."
 
 msgctxt "daily goal"
 msgid "Keen"

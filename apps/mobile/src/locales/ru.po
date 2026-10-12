@@ -199,6 +199,9 @@ msgstr "Слово или фраза"
 msgid "Activity"
 msgstr "Активность"
 
+msgid "Activity needs a connection"
+msgstr "Для активности нужно соединение"
+
 msgid "Add a card"
 msgstr "Добавить карточку"
 
@@ -562,20 +565,26 @@ msgstr "Каталог скоро появится на телефоне"
 msgid "Export"
 msgstr "Экспорт"
 
+msgid "Export of your cards"
+msgstr "Экспорт карточек"
+
+msgid "Exported {cards, plural, one {# card} other {# cards}}"
+msgstr "{cards, plural, one {Экспортирована # карточка} few {Экспортировано # карточки} many {Экспортировано # карточек} other {Экспортировано # карточки}}"
+
 msgid "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
 msgstr "{cards, plural, one {Экспортирована # карточка} few {Экспортировано # карточки} many {Экспортировано # карточек} other {Экспортировано # карточки}} в файл Lymi"
 
 msgid "Exported {cards, plural, one {# card} other {# cards}} as an Anki package"
 msgstr "{cards, plural, one {Экспортирована # карточка} few {Экспортировано # карточки} many {Экспортировано # карточек} other {Экспортировано # карточки}} в пакет Anki"
 
-msgid "Exported your cards"
-msgstr "Экспортированы карточки"
-
 msgid "Exporting as a Lymi file"
 msgstr "Экспорт в файл Lymi"
 
 msgid "Exporting as an Anki package"
 msgstr "Экспорт в пакет Anki"
+
+msgid "Exporting your cards"
+msgstr "Экспорт карточек идёт"
 
 msgid "Feedback sent"
 msgstr "Обратная связь отправлена"
@@ -651,6 +660,12 @@ msgstr "Если у адреса {address} есть пароль Lymi, ссыл�
 msgid "Import"
 msgstr "Импорт"
 
+msgid "Import from {source}"
+msgstr "Импорт из {source}"
+
+msgid "Import of your cards"
+msgstr "Импорт карточек"
+
 msgid "Imported {added, plural, one {# card} other {# cards}} from {source}"
 msgstr "{added, plural, one {Импортирована # карточка} few {Импортировано # карточки} many {Импортировано # карточек} other {Импортировано # карточки}} из {source}"
 
@@ -676,6 +691,9 @@ msgstr "Интенсивно"
 
 msgid "Invited {name} to {deck}"
 msgstr "{name} приглашён в «{deck}»"
+
+msgid "It loads as soon as you’re back online."
+msgstr "Она загрузится, как только ты снова будешь онлайн."
 
 msgctxt "daily goal"
 msgid "Keen"

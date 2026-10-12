@@ -1,5 +1,5 @@
 import type { ExploreDeckOut, ExploreOut } from "@lymi/core/catalog";
-import { listPublicCatalog, listRelatedDecks, loadPublicDeck } from "@lymi/core/catalog";
+import { listPublicCatalog, listRelatedDecks, loadPublicDeck } from "@lymi/core/catalog/server";
 import { and, eq, inArray, isNotNull, isNull, or } from "@lymi/core/db";
 import type { Db } from "../db";
 import { schema } from "../db";

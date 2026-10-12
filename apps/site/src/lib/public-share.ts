@@ -1,5 +1,6 @@
 import { env } from "cloudflare:workers";
-import { loadPublicDeck, trayHue } from "@lymi/core/catalog";
+import { trayHue } from "@lymi/core/catalog";
+import { loadPublicDeck } from "@lymi/core/catalog/server";
 import { drizzle } from "@lymi/core/db";
 import type { APIContext } from "astro";
 import { deckShareText } from "../components/deck/deck-meta";

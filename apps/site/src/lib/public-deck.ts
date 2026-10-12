@@ -1,12 +1,11 @@
 import { env, waitUntil } from "cloudflare:workers";
+import type { PublicDeckOut, PublicDeckSummary } from "@lymi/core/catalog";
 import {
   countDeckPageView,
   listPublicDeckSlugs,
   listRelatedDecks,
   loadPublicDeck,
-  type PublicDeckOut,
-  type PublicDeckSummary,
-} from "@lymi/core/catalog";
+} from "@lymi/core/catalog/server";
 import { drizzle } from "@lymi/core/db";
 import type { AstroGlobal } from "astro";
 import {

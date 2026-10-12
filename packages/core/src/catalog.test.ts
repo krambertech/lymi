@@ -1,21 +1,24 @@
+import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
-  type CardRow,
   isPublicDeckSlug,
-  type PublicationRow,
   type PublicDeckSummary,
   previewMode,
-  projectPublicDeck,
   type RelatedCandidate,
   rankRelated,
   readableIn,
-  type SectionRow,
   shelfAt,
   shelfRoute,
   shelvesOf,
   taughtLanguage,
   UNCATEGORISED,
 } from "./catalog";
+import {
+  type CardRow,
+  type PublicationRow,
+  projectPublicDeck,
+  type SectionRow,
+} from "./catalog-server";
 import { PublicationInput } from "./types";
 
 const publication = (over: Partial<PublicationRow> = {}): PublicationRow => ({
@@ -410,5 +413,28 @@ describe("shelf pages", () => {
     expect(shelfAt(two, { kind: "languages", name: "german" })).toBeUndefined();
     expect(shelfAt(three, { kind: "languages", name: "german" })?.decks).toHaveLength(3);
     expect(shelfAt(three, { kind: "subjects", name: "german" })).toBeUndefined();
+  });
+});
+
+describe("the portable entry point", () => {
+  it("reaches no database module, so the phone can import it", () => {
+    const seen = new Set<string>();
+    const packages = new Set<string>();
+    const visit = (url: URL) => {
+      if (seen.has(url.href)) return;
+      seen.add(url.href);
+      for (const [, from] of readFileSync(url, "utf8").matchAll(/from "([^"]+)"/g)) {
+        if (!from?.startsWith(".")) {
+          packages.add(from ?? "");
+          continue;
+        }
+        const file = new URL(`${from}.ts`, url);
+        visit(existsSync(file) ? file : new URL(`${from}/index.ts`, url));
+      }
+    };
+    visit(new URL("./catalog.ts", import.meta.url));
+    const modules = [...seen].map((href) => href.slice(href.indexOf("/src/") + 1));
+    expect(modules.filter((path) => /^src\/(db|schema\/|catalog-server)/.test(path))).toEqual([]);
+    expect([...packages].filter((name) => name.startsWith("drizzle"))).toEqual([]);
   });
 });

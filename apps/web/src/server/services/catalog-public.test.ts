@@ -1,5 +1,5 @@
 import { newId, type PublicationInput } from "@lymi/core";
-import { listPublicCatalog, listPublicDeckSlugs, loadPublicDeck } from "@lymi/core/catalog";
+import { listPublicCatalog, listPublicDeckSlugs, loadPublicDeck } from "@lymi/core/catalog/server";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
 import { addCards, archiveCard } from "./cards";

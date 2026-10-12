@@ -1,5 +1,5 @@
 import type { DeckReportOut, DeckReportsOut } from "@lymi/core";
-import { countDeckPageView } from "@lymi/core/catalog";
+import { countDeckPageView } from "@lymi/core/catalog/server";
 import { eq } from "@lymi/core/db";
 import { Hono } from "hono";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";

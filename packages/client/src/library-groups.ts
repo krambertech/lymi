@@ -44,3 +44,24 @@ export function groupDecks<D extends GroupableDeck, S extends GroupableSeries>(
   }
   return { loose: decks.filter((deck) => !placed.has(deck.id)), series: groups };
 }
+
+/**
+ * What a series form shows. A route with an id renames that series; without one it makes a new one.
+ * The mode comes from the route, never from whether the list has arrived, so a cold rename waits
+ * for its series rather than starting a blank create.
+ */
+export type SeriesForm<S> =
+  | { mode: "create" }
+  | { mode: "loading" }
+  | { mode: "missing" }
+  | { mode: "rename"; series: S };
+
+export function seriesForm<S extends GroupableSeries>(
+  id: string | undefined,
+  series: readonly S[] | undefined,
+): SeriesForm<S> {
+  if (!id) return { mode: "create" };
+  if (!series) return { mode: "loading" };
+  const found = series.find((s) => s.id === id);
+  return found ? { mode: "rename", series: found } : { mode: "missing" };
+}

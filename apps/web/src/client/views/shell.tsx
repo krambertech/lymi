@@ -1,6 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { groupDecks } from "@lymi/client/library-groups";
 import { clsx } from "clsx";
 import {
   BookMarked,
@@ -19,7 +20,6 @@ import { LearnerMenu } from "../components/learner-menu";
 import { AppTile, Wordmark } from "../components/logo";
 import { NavLink } from "../components/nav-link";
 import { RailHeading, RailNav, RailRow } from "../components/rail-nav";
-import { groupDecks } from "../lib/library-groups";
 
 export interface NavDeck {
   id: string;

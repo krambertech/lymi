@@ -1,5 +1,13 @@
-import { type StateKey, stateKey } from "../components/state-mark";
 import type { Card, CardState, Section } from "./api";
+
+/** How the learner reads an FSRS state: Review is Known, and Relearning is Learning again. */
+export type StateKey = "new" | "learning" | "known";
+
+export function stateKey(state: number | null | undefined): StateKey {
+  if (state === 2) return "known";
+  if (state === 1 || state === 3) return "learning";
+  return "new";
+}
 
 export type DeckRow = { card: Card; state: CardState | null };
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { groupDecks } from "./library-groups";
+import { groupDecks, seriesForm } from "./library-groups";
 
 const deck = (id: string, seriesId: string | null = null) => ({ id, seriesId });
 
@@ -29,5 +29,25 @@ describe("groupDecks", () => {
 
     expect(groups.series[0]?.decks.map((d) => d.id)).toEqual(["b", "a"]);
     expect(groups.loose.map((d) => d.id)).toEqual(["x"]);
+  });
+});
+
+describe("seriesForm", () => {
+  const list = [{ id: "s1", deckIds: [] }];
+
+  it("makes a new series when the route names none", () => {
+    expect(seriesForm(undefined, undefined)).toEqual({ mode: "create" });
+  });
+
+  it("waits for the list on a cold rename instead of starting a blank create", () => {
+    expect(seriesForm("s1", undefined)).toEqual({ mode: "loading" });
+  });
+
+  it("renames the series once the list holds it", () => {
+    expect(seriesForm("s1", list)).toEqual({ mode: "rename", series: list[0] });
+  });
+
+  it("says a series that has gone is missing rather than creating one", () => {
+    expect(seriesForm("s2", list)).toEqual({ mode: "missing" });
   });
 });

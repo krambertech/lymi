@@ -1,7 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
-import { type Href, Link, useRouter } from "expo-router";
+import { type Href, useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
 import { I18nManager, useWindowDimensions, View, type ViewStyle } from "react-native";
 import Animated, {
@@ -20,6 +20,7 @@ import { useDay } from "../data/queries";
 import { useGlass } from "../theme/glass";
 import { usePalette } from "../theme/palette";
 import { GlassSurface } from "./glass";
+import type { IconName } from "./icons";
 import { Icon, Press, Text } from "./primitives";
 
 /** Each tab's stack draws no header: every screen builds its own bar with Screen. */
@@ -34,7 +35,7 @@ interface Props {
   kind?: "tab" | "page";
   /** Where a page goes back to: its parent, named, whatever the history holds. */
   back?: { label: string; to: Href };
-  /** A page's own buttons, pinned at the bar's end. */
+  /** Buttons pinned at the bar's end; on a tab they take the place of the streak and capture. */
   actions?: ReactNode;
   children: ReactNode;
 }
@@ -101,7 +102,7 @@ export function Screen({ title, kind = "page", back, actions, children }: Props)
     opacity: interpolate(y.value, [0, 24], [0, 1], Extrapolation.CLAMP),
   }));
   const bar = insets.top + 56;
-  const trailing = kind === "tab" ? <TabActions /> : actions;
+  const trailing = kind === "tab" ? <TabActions own={actions} /> : actions;
 
   return (
     <View className="flex-1 bg-canvas">
@@ -248,13 +249,55 @@ function StatusFade({ height }: { height: number }) {
   );
 }
 
-/** The streak and capture, the two things every tab carries. You is a tab here, so no avatar. */
-function TabActions() {
+/** A round glass button in the top bar, the streak's height, so the bar reads as one row. */
+export function BarButton({
+  icon,
+  label,
+  amber = false,
+  onPress,
+}: {
+  icon: IconName;
+  /** What pressing does, for VoiceOver. */
+  label: string;
+  /** The tab's standing action. */
+  amber?: boolean;
+  onPress?: () => void;
+}) {
+  const p = usePalette();
+  return (
+    <Press onPress={onPress} drawn={40} accessibilityRole="button" accessibilityLabel={label}>
+      <GlassSurface
+        tint={amber ? "amber" : "room"}
+        style={{
+          width: 40,
+          height: 40,
+          borderRadius: 20,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Icon
+          name={icon}
+          size={amber ? 20 : 19}
+          colour={amber ? p["amber-ink"] : p.text}
+          strokeWidth={amber ? 2.25 : 2}
+        />
+      </GlassSurface>
+    </Press>
+  );
+}
+
+/**
+ * The streak and capture, the two things a tab carries unless it brings its own: Library trades
+ * them for search and a plus that also makes decks and series.
+ */
+function TabActions({ own }: { own?: ReactNode }) {
   const { t } = useLingui();
   const { streak, flame } = useDay();
   const router = useRouter();
   const p = usePalette();
   const glass = isGlassEffectAPIAvailable();
+  if (own) return <View className="flex-row items-center gap-2.5">{own}</View>;
   const streakInner = (
     <>
       <Flame height={18} state={flame} />
@@ -291,22 +334,7 @@ function TabActions() {
         )}
       </Press>
       {/* Add a word rises as a sheet from below, as every task with an end does. phone.md. */}
-      <Link href="/capture" asChild>
-        <Press accessibilityRole="button" accessibilityLabel={t`Add a card`}>
-          <GlassSurface
-            tint="amber"
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Icon name="plus" size={20} colour={p["amber-ink"]} strokeWidth={2.25} />
-          </GlassSurface>
-        </Press>
-      </Link>
+      <BarButton icon="plus" label={t`Add a card`} amber onPress={() => router.push("/capture")} />
     </View>
   );
 }

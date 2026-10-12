@@ -8,6 +8,7 @@ import {
 } from "@lymi/client/grades";
 import {
   activityQuery,
+  archivedDecksQuery,
   deckCardsQuery,
   decksQuery,
   drawQuery,
@@ -35,6 +36,7 @@ import { AppState } from "react-native";
 // Each screen reads one resource under the web's query key, so a grade refreshes only what it moves.
 
 export const useDecks = () => useQuery(decksQuery);
+export const useArchivedDecks = () => useQuery(archivedDecksQuery);
 export const useDeckCards = (deckId: string) => useQuery(deckCardsQuery(deckId));
 export const useSections = (deckId: string | undefined) =>
   useQuery({ ...sectionsQuery(deckId ?? ""), enabled: !!deckId });

@@ -1,6 +1,7 @@
 import { i18n as globalI18n, type I18n, type MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { splitForms } from "@lymi/client/deck-list";
 import {
   canSpeakTerm,
   type DeckEnrichField,
@@ -48,7 +49,6 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import type { Card, CardEvent, CardState, Review } from "../lib/api";
-import { splitForms } from "../lib/deck-list";
 import { useDesktop } from "../lib/device";
 import { modeLabel } from "../lib/review-modes";
 import { QUOTE_MAX, shortQuote } from "../lib/short-quote";

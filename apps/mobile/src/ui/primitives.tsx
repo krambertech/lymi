@@ -62,7 +62,12 @@ interface PressProps extends Omit<PressableProps, "style"> {
   haptic?: boolean;
   className?: string;
   style?: ViewStyle | ViewStyle[];
+  /** The drawn control's shorter side, when it is under 44 pt; the touch area grows to 44 around it. */
+  drawn?: number;
 }
+
+/** Every control's touch area is at least this, whatever is drawn. phone.md "Components". */
+export const TARGET = 44;
 
 /** A press that gives a little over 150 ms and answers with a light tap. Nothing moves up. */
 export function Press({
@@ -71,8 +76,11 @@ export function Press({
   onPressIn,
   onPress,
   style,
+  drawn,
+  hitSlop,
   ...props
 }: PressProps) {
+  const reach = drawn !== undefined && drawn < TARGET ? Math.ceil((TARGET - drawn) / 2) : undefined;
   const reduce = useReduceMotion();
   const forced = useContext(ForcedStateContext) === "pressed";
   const s = useSharedValue(forced && !reduce ? scale : 1);
@@ -80,6 +88,7 @@ export function Press({
   return (
     <AnimatedPressable
       {...props}
+      hitSlop={hitSlop ?? reach}
       onPressIn={(e) => {
         if (!reduce) s.value = withTiming(scale, { duration: 150 });
         onPressIn?.(e);

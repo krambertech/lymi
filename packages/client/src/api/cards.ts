@@ -59,7 +59,18 @@ function formFile(file: Blob | NativeFile): Blob {
   return isNativeFile(file) ? (file as unknown as Blob) : file;
 }
 
+/** One page of a search, newest first. `total` is null when it is not known exactly. */
+export type CardSearchPage = { cards: CardHit[]; nextCursor: string | null; total: number | null };
+export type CardSearch = { query: string; deckId?: string; cursor?: string; limit?: number };
+
 export const cardsApi = {
+  /** One page of the cards matching the text, in every deck or in `deckId`; `cursor` is the last page's `nextCursor`. */
+  searchCards: ({ query, deckId, cursor, limit = 50 }: CardSearch) => {
+    const params = new URLSearchParams({ query, limit: String(limit) });
+    if (deckId) params.set("deckId", deckId);
+    if (cursor) params.set("cursor", cursor);
+    return request<CardSearchPage>(`/api/cards?${params.toString()}`);
+  },
   archivedCards: async () =>
     (await request<{ cards: CardHit[] }>("/api/cards?archived=true")).cards,
   deckCards: (deckId: string) =>

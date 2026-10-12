@@ -1,5 +1,5 @@
-import { queryOptions } from "@tanstack/react-query";
-import { api } from "../api";
+import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
+import { api, type CardSearchPage } from "../api";
 import { fresh } from "../writes";
 
 /** How long a card may say it is working before the screen stops waiting on it. */
@@ -22,6 +22,26 @@ export const deckCardsQuery = (deckId: string) =>
       )
         ? 2000
         : false,
+  });
+/**
+ * Cards matching the text, in every deck or in one, a page at a time. A page can be short or even
+ * empty while there is more, so the next page follows the cursor rather than the page's length.
+ */
+export const cardSearchQuery = (query: string, deckId?: string) =>
+  infiniteQueryOptions({
+    queryKey: ["cards", "search", deckId ?? "", query],
+    queryFn: ({ pageParam }) =>
+      api.searchCards({
+        query,
+        ...(deckId ? { deckId } : {}),
+        ...(pageParam ? { cursor: pageParam } : {}),
+      }),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (last: CardSearchPage) => last.nextCursor ?? undefined,
+    // What was searched for and what came back stay off the device.
+    meta: { persist: false },
+    staleTime: 30_000,
+    enabled: query.length > 0,
   });
 export const archivedCardsQuery = queryOptions({
   queryKey: ["cards", "archived"],

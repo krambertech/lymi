@@ -1,5 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { groupDecks } from "@lymi/client/library-groups";
 import { type RoundsOut, SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS } from "@lymi/core";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { lanternFor } from "@lymi/design";
@@ -20,7 +21,6 @@ import { StartGuide } from "../components/start-guide";
 import { StateIcon } from "../components/state-mark";
 import { restedYesterday, type StreakSummary } from "../components/streak";
 import type { DeckSummary, Series } from "../lib/api";
-import { groupDecks } from "../lib/library-groups";
 
 export interface TodayProps {
   decks: DeckSummary[] | undefined;

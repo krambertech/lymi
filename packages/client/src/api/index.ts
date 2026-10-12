@@ -11,6 +11,8 @@ export type {
   CardHistory,
   CardHit,
   CardImage,
+  CardSearch,
+  CardSearchPage,
   CardState,
   Review,
 } from "./cards";

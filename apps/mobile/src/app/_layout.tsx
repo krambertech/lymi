@@ -145,6 +145,41 @@ function Root() {
               },
             }}
           />
+          {/* Over everything, tab bar included, since its field sits where the tab bar does. */}
+          <Stack.Screen
+            name="search"
+            options={{ presentation: "fullScreenModal", animation: "fade" }}
+          />
+          <Stack.Screen
+            name="new-deck"
+            options={{
+              presentation: "formSheet",
+              sheetAllowedDetents: "fitToContents",
+              sheetGrabberVisible: true,
+              // Its keyboard is up, so it is opaque like a full sheet. phone.md "Sheets".
+              contentStyle: { backgroundColor: p.sheet },
+            }}
+          />
+          <Stack.Screen
+            name="series"
+            options={{
+              presentation: "formSheet",
+              sheetAllowedDetents: "fitToContents",
+              sheetGrabberVisible: true,
+              contentStyle: { backgroundColor: p.sheet },
+            }}
+          />
+          <Stack.Screen
+            name="series-decks"
+            options={{
+              presentation: "formSheet",
+              sheetAllowedDetents: [1],
+              sheetGrabberVisible: true,
+              contentStyle: {
+                backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
+              },
+            }}
+          />
           {/* Peeks at the run and today, and drags up for the month. phone.md. */}
           <Stack.Screen
             name="streak"

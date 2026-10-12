@@ -1,11 +1,11 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
+import type { DeckGroup } from "@lymi/client/deck-list";
 import { expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import type { Card, Section } from "../lib/api";
-import type { DeckGroup } from "../lib/deck-list";
 import { Glossary, type SectionEditing } from "./deck-glossary";
 
 i18n.load("en", messages);

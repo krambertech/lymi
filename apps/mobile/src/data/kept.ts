@@ -12,3 +12,7 @@ export const LANGUAGE_KEY = "language";
 /** Add a word's choices that carry over to the next card. */
 export const captureStore = createMMKV({ id: "lymi-capture" });
 export const CAPTURE_KEYS = { deck: "deck", enrich: "enrich" } as const;
+
+/** The day Today's rest-day banner was closed on, so it stays away until that day ends. */
+export const todayStore = createMMKV({ id: "lymi-today" });
+export const REST_DISMISSED_KEY = "rest-dismissed";

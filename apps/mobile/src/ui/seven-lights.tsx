@@ -1,3 +1,5 @@
+import { plural } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import { daysReviewed } from "@lymi/core";
 import { LIGHT_STEP_MS, type LightLevel, lightLevel, lightReference } from "@lymi/design";
 import { useEffect } from "react";
@@ -23,22 +25,36 @@ export function SevenLights({
   days,
   goal,
   todayDone = false,
+  satisfied,
+  rest,
+  goals,
   size = "lg",
   sequence,
 }: {
   days: number[];
   goal: number;
   todayDone?: boolean;
+  /** Which days counted toward a streak; those are full whatever they held. */
+  satisfied?: boolean[];
+  /** Which days were rest days; their glass is edged in dashes. streak.md. */
+  rest?: boolean[];
+  /** Each day's own goal, so lowering today's goal never redraws an earlier day. */
+  goals?: (number | null)[];
   size?: "sm" | "lg";
   /** At the end of a review the lights switch on one after another, from this many ms. */
   sequence?: number;
 }) {
+  const { t } = useLingui();
   const p = usePalette();
   const lg = size === "lg";
   const today = days.length - 1;
   const letters = weekLetters(days.length);
   const reference = lightReference(days);
-  const label = `Reviewed on ${daysReviewed(days, days.length)} of the last ${days.length} days`;
+  const lit = daysReviewed(days, days.length);
+  // Rest is named, never counted. PRODUCT.md.
+  const label = rest?.some(Boolean)
+    ? t`Reviewed on ${lit} of the last ${plural(days.length, { one: "# day", other: "# days" })}, including a rest day`
+    : t`Reviewed on ${lit} of the last ${plural(days.length, { one: "# day", other: "# days" })}`;
   return (
     <View
       className={`flex-row items-end ${lg ? "justify-between" : "gap-2"}`}
@@ -47,7 +63,12 @@ export function SevenLights({
       accessibilityLabel={label}
     >
       {days.map((n, i) => {
-        const l = lightLevel(n, reference, goal, i === today && todayDone);
+        const l = lightLevel(
+          n,
+          reference,
+          goals ? goals[i] : goal,
+          satisfied ? satisfied[i] : i === today && todayDone,
+        );
         return (
           // biome-ignore lint/suspicious/noArrayIndexKey: a day's place in the week is its identity.
           <View key={i} className={`items-center ${lg ? "gap-2" : "gap-1.5"}`}>
@@ -56,6 +77,7 @@ export function SevenLights({
               lg={lg}
               p={p}
               today={i === today}
+              resting={!!rest?.[i]}
               delay={sequence === undefined ? undefined : sequence + i * LIGHT_STEP_MS}
             />
             <Text className={`text-xs ${i === today ? "font-medium text-text-2" : "text-faint"}`}>
@@ -73,12 +95,14 @@ function Glass({
   lg,
   p,
   today,
+  resting,
   delay,
 }: {
   level: LightLevel;
   lg: boolean;
   p: Palette;
   today: boolean;
+  resting: boolean;
   delay?: number | undefined;
 }) {
   const reduce = useReduceMotion();
@@ -101,11 +125,14 @@ function Glass({
     borderBottomRightRadius: bottom,
     overflow: "hidden",
     backgroundColor: p["plate-2"],
-    borderWidth: 1,
-    borderColor: today && l === 0 ? p["edge-2"] : p.edge,
+    borderWidth: resting && lg ? 2 : 1,
+    borderStyle: resting ? "dashed" : "solid",
+    borderColor: resting ? p.amber : today && l === 0 ? p["edge-2"] : p.edge,
   };
   return (
     <View style={box}>
+      {/* Tinted like the month's rest band, so the two read as one mark. */}
+      {resting && <View className="absolute inset-0" style={{ backgroundColor: `${p.amber}12` }} />}
       <Animated.View
         style={[
           {

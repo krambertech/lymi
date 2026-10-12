@@ -270,14 +270,10 @@ export function Plate({
 /** The night's lift; by day surfaces stay flat. */
 export const LIFT = { boxShadow: shadows.dark.lift } as ViewStyle;
 
-/** An arrow in a circle: how a whole-row link ends. layout.md "Today". */
+/** A bare chevron: how a whole-row link ends; the row itself is the target. */
 export function RowArrow() {
   const p = usePalette();
-  return (
-    <View className="size-9 items-center justify-center rounded-full bg-plate-2">
-      <Icon name="forward" size={15} colour={p["text-2"]} />
-    </View>
-  );
+  return <Icon name="forward" size={18} colour={p.muted} strokeWidth={2.5} />;
 }
 
 export function SectionTitle({ children, end }: { children: string; end?: ReactNode }) {

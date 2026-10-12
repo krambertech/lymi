@@ -1,9 +1,10 @@
 import { configureClient, type KeyValueStore } from "@lymi/client";
-import { api } from "@lymi/client/api";
+import { api, type Draw } from "@lymi/client/api";
 import { flushOutbox, outboxSize, recordGrade } from "@lymi/client/grades";
+import { streakWith } from "@lymi/client/review-day";
 import { drawState } from "@lymi/client/review-draw";
 import { resetUpdateRequired, updateRequired } from "@lymi/client/update-required";
-import { DeckOut, formatClientHeader, modeKey } from "@lymi/core";
+import { DeckOut, formatClientHeader, modeKey, REVIEW_MODE_KEYS, ReviewMode } from "@lymi/core";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { json, type Session, type TestApp, testApp } from "./test-app";
 
@@ -15,7 +16,10 @@ import { json, type Session, type TestApp, testApp } from "./test-app";
 const PHONE_ORIGIN = "https://phone.test";
 let app: TestApp;
 let learner: Session;
+let deckId: string;
 let offline = false;
+/** Changes a response on its way to the client, as a newer Worker's would differ. */
+let rewrite: ((path: string, body: Record<string, unknown>) => void) | null = null;
 
 beforeAll(async () => {
   app = await testApp();
@@ -24,7 +28,7 @@ beforeAll(async () => {
     ...json({ name: "Lesson 5", defaultLanguage: "et" }),
     as: learner,
   });
-  const deckId = DeckOut.parse(await deck.json()).id;
+  deckId = DeckOut.parse(await deck.json()).id;
   const cards = await app.fetch("/api/cards/batch", {
     ...json({
       cards: ["maja", "kass", "koer"].map((term) => ({ deckId, term, meaning: term })),
@@ -62,12 +66,17 @@ beforeAll(async () => {
     const url = new URL(input);
     expect(url.origin).toBe(PHONE_ORIGIN);
     expect(init?.credentials).toBe("omit");
-    return app.fetch(`${url.pathname}${url.search}`, init);
+    const response = await app.fetch(`${url.pathname}${url.search}`, init);
+    if (!rewrite || !response.ok) return response;
+    const body = (await response.json()) as Record<string, unknown>;
+    rewrite(url.pathname, body);
+    return Response.json(body, { status: response.status });
   });
 }, 60_000);
 
 afterEach(() => {
   offline = false;
+  rewrite = null;
 });
 
 /** The next card the review would show, and the grade the phone records for it. */
@@ -129,5 +138,57 @@ describe("the phone's shared client against the Worker", () => {
     expect(await flushOutbox()).toBe(1);
     expect(outboxSize()).toBe(0);
     expect((await api.streak()).today.attempts).toBe(3);
+  });
+
+  it("reads an unknown value in an open field safely", async () => {
+    // The tests before grade every card, so this one brings its own to draw.
+    const added = await app.fetch("/api/cards/batch", {
+      ...json({ cards: [{ deckId, term: "lind", meaning: "lind" }] }),
+      as: learner,
+    });
+    expect(added.status).toBe(200);
+    const audio = { cue: "audio", target: "term" };
+    rewrite = (path, body) => {
+      if (path === "/api/review/draw") {
+        const draw = body as unknown as Draw;
+        const [first] = draw.cards;
+        if (!first?.modes[0]) throw new Error("The draw is empty");
+        const unknown = { ...first.modes[0], mode: audio, stateId: "state_audio" };
+        first.modes.push(unknown as never);
+        draw.cards.push({
+          ...first,
+          card: { ...first.card, id: "card_audio" },
+          modes: [unknown],
+        } as never);
+        draw.log.push({
+          cardId: "card_audio",
+          mode: audio,
+          rating: 1,
+          stateBefore: 2,
+          at: new Date().toISOString(),
+        } as never);
+      }
+      if (path === "/api/review/queue") {
+        const queue = body as { items: { mode: unknown }[] };
+        queue.items.push({ ...queue.items[0], mode: audio });
+      }
+      if (path === "/api/stats/streak") (body.today as { outcome: string }).outcome = "paused";
+    };
+
+    // A mode this release cannot ask is left out; its grade still counts toward today.
+    const draw = await api.draw();
+    const modes = draw.cards.flatMap((c) => c.modes.map((m) => m.mode));
+    expect(modes.every((mode) => ReviewMode.safeParse(mode).success)).toBe(true);
+    expect(draw.cards.map((c) => c.card.id)).not.toContain("card_audio");
+    const state = drawState(draw, [], new Date(), undefined);
+    expect(REVIEW_MODE_KEYS).toContain(state.next?.mode);
+    expect(state.attempts).toBe(draw.log.length);
+
+    const queue = await api.queue();
+    expect(queue.items.every((item) => ReviewMode.safeParse(item.mode).success)).toBe(true);
+
+    // An outcome this release does not know reads as a day not yet satisfied.
+    const streak = await api.streak();
+    expect(streakWith(streak, streak.today.attempts, false).today.outcome).toBe("paused");
   });
 });

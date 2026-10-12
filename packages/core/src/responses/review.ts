@@ -2,10 +2,11 @@ import { z } from "zod";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS } from "../slipping";
 import { Direction, Rating, ReviewMode } from "../types";
 import { CardOut } from "./cards";
-import { Timestamp } from "./common";
+import { OPEN, Timestamp } from "./common";
 
 /** Where one learner-local day stands against its streak goal. */
 export const ReviewDayOutcome = z.enum(["open", "goal_met", "exhausted", "nothing_due"]).meta({
+  ...OPEN,
   description:
     "open: not yet satisfied. goal_met: the goal's attempts landed. exhausted: every eligible review was done below the goal. nothing_due: nothing was eligible, which protects the streak without adding to it.",
 });
@@ -30,6 +31,7 @@ export const QueueItemOut = z
     card: CardOut,
     mode: ReviewMode.meta({ description: "Show the cue before reveal and grade the target" }),
     direction: Direction.optional().meta({
+      ...OPEN,
       description:
         "Legacy form of `mode`, present for text modes only so an older client never grades a picture mode as its text sibling.",
     }),
@@ -72,6 +74,7 @@ const DrawModeOut = z
   .object({
     mode: ReviewMode.meta({ description: "Show the cue before reveal and grade the target" }),
     direction: Direction.optional().meta({
+      ...OPEN,
       description: "Legacy form of `mode`, present for text modes only",
     }),
     stateId: z.string(),
@@ -105,6 +108,7 @@ const DrawLogEntryOut = z
     cardId: z.string(),
     mode: ReviewMode,
     direction: Direction.optional().meta({
+      ...OPEN,
       description: "Legacy form of `mode`, present for text modes only",
     }),
     rating: Rating,

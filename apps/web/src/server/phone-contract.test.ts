@@ -3,7 +3,12 @@ import { join } from "node:path";
 import { DeckOut } from "@lymi/core";
 import Ajv2020, { type AnySchema } from "ajv/dist/2020";
 import { beforeAll, describe, expect, it } from "vitest";
-import { breakingChanges, type Contract, contractOf } from "../../../../scripts/api-compat.mjs";
+import {
+  breakingChanges,
+  type Contract,
+  closedChoices,
+  contractOf,
+} from "../../../../scripts/api-compat.mjs";
 import { json, type Session, type TestApp, testApp } from "./test-app";
 
 /**
@@ -21,35 +26,81 @@ const frozen = readdirSync(contracts)
     contract: JSON.parse(readFileSync(join(contracts, name), "utf8")) as Contract,
   }));
 
-/** The phone's reads, with the ids a seeded learner fills in. */
-const phoneReads = [
-  "/api/decks",
-  "/api/decks/{id}/cards",
-  "/api/decks/{id}/sections",
-  "/api/review/draw",
-  "/api/review/queue",
-  "/api/review/rounds",
-  "/api/stats/streak",
+/**
+ * Every call the phone makes, directly or through `packages/client`. A freeze keeps only these,
+ * so a web-only endpoint can change freely; add a call here when the phone starts making it.
+ */
+const phoneOperations = [
+  "GET /api/me",
+  "PATCH /api/me",
+  "GET /api/decks",
+  "GET /api/decks/{id}/cards",
+  "GET /api/decks/{id}/sections",
+  "GET /api/review/draw",
+  "GET /api/review/queue",
+  "GET /api/review/rounds",
+  "POST /api/review/today",
+  "POST /api/review/grade",
+  "POST /api/review/undo",
+  "GET /api/stats/streak",
+  "GET /api/settings",
+  "PATCH /api/settings",
+  "PUT /api/settings/timezone/device",
+  "POST /api/cards",
+  "POST /api/cards/{id}/archive",
+  "PUT /api/cards/{id}/image",
+  "GET /api/cards/{id}/image/{imageId}",
+];
+
+// The phone also calls Better Auth under /api/auth, /api/avatar and POST /api/feedback, which
+// the document hides, so no freeze guards them.
+
+/** The phone's reads a seeded learner can make, with its deck as `{id}`. */
+const phoneReads = phoneOperations
+  .filter((operation) => operation.startsWith("GET ") && !/\{(?!id\})/.test(operation))
+  .map((operation) => operation.slice("GET ".length));
+
+/**
+ * Fields the phone reads whose values stay a fixed list on purpose. Every other fixed list in its
+ * responses carries `x-lymi-open`, so a field that lands here needs a reason.
+ */
+const closedOnPurpose = [
+  // The scheduler has exactly four grades.
+  "GET /api/review/draw 200 .log[].rating",
+  // A literal `true` acknowledgement.
+  "POST /api/cards/{id}/archive 200 .ok",
+  "POST /api/review/grade 200 .ok",
+  "POST /api/review/undo 200 .ok",
+  // Capture says where an added card went, so a new outcome needs a version gate first.
+  "POST /api/cards 200 .status",
+  "POST /api/cards 201 .status",
 ];
 
 let app: TestApp;
 let learner: { session: Session; deckId: string };
+let document: unknown;
 let current: Contract;
 
 beforeAll(async () => {
   app = await testApp();
   // Signing up first lets Better Auth seed its rows once, before any other request.
   learner = await seededLearner();
-  current = contractOf(await (await app.fetch("/api/openapi.json", {})).json());
+  document = await (await app.fetch("/api/openapi.json", {})).json();
+  current = contractOf(document);
 }, 60_000);
 
 // `pnpm --filter @lymi/mobile contract:freeze` runs this when a release is cut.
 it.runIf(process.env.FREEZE_PHONE_CONTRACT === "1")(
   "freezes the API this release is built against",
   () => {
-    writeFileSync(join(contracts, `${appVersion()}.json`), `${JSON.stringify(current, null, 1)}\n`);
+    const release = contractOf(document, phoneOperations);
+    writeFileSync(join(contracts, `${appVersion()}.json`), `${JSON.stringify(release, null, 1)}\n`);
   },
 );
+
+it("leaves open every fixed list the phone reads, except those closed on purpose", () => {
+  expect(closedChoices(contractOf(document, phoneOperations))).toEqual(closedOnPurpose.sort());
+});
 
 describe.each(frozen)("the phone release $version", ({ contract }) => {
   it("declares no breaking change", () => {

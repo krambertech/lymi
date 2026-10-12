@@ -3,6 +3,12 @@ import { z } from "zod";
 /** Timestamps are ISO 8601 strings in JSON. Shared by every response that carries one. */
 export const Timestamp = z.iso.datetime().meta({ description: "ISO 8601 timestamp" });
 
+/**
+ * Marks a response field that may gain a value or a branch: every supported phone release shows
+ * an unknown one safely. Leave it off a field only on purpose. ADR 0032.
+ */
+export const OPEN = { "x-lymi-open": true } as const;
+
 export const OkOut = z.object({ ok: z.literal(true) }).meta({ id: "Ok" });
 
 export const ErrorOut = z

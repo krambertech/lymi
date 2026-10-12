@@ -1,7 +1,8 @@
 import { z } from "zod";
-import { Timestamp } from "./common";
+import { OPEN, Timestamp } from "./common";
 
 export const SectionStatusOut = z.enum(["open", "ready", "locked"]).meta({
+  ...OPEN,
   description:
     "For the caller. open: its cards are reviewed. ready: the next section, which Start opens. locked: waits, though a card the caller already started stays in review.",
 });

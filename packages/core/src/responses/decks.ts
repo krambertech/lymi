@@ -7,11 +7,11 @@ import {
   ReviewMode,
   SectionProgression,
 } from "../types";
-import { Timestamp } from "./common";
+import { OPEN, Timestamp } from "./common";
 
 /** Whose deck it is, what the caller may do in it, and whether its owner published it. */
 const Membership = {
-  role: MemberRole.meta({ description: "The caller's role in the deck" }),
+  role: MemberRole.meta({ ...OPEN, description: "The caller's role in the deck" }),
   owner: z
     .object({
       id: z.string(),
@@ -48,7 +48,7 @@ export const DeckOut = z
     name: z.string(),
     description: z.string().nullable(),
     defaultLanguage: z.string().nullable().meta({ description: "Prefills language on new cards" }),
-    directions: Directions.meta({ description: "Legacy form of `reviewModes`" }),
+    directions: Directions.meta({ ...OPEN, description: "Legacy form of `reviewModes`" }),
     reviewModes: z
       .array(ReviewMode)
       .meta({ description: "How cards that follow the deck are asked" }),
@@ -78,7 +78,7 @@ export const DeckSummaryOut = z
     name: z.string(),
     description: z.string().nullable(),
     defaultLanguage: z.string().nullable(),
-    directions: Directions.meta({ description: "Legacy form of `reviewModes`" }),
+    directions: Directions.meta({ ...OPEN, description: "Legacy form of `reviewModes`" }),
     reviewModes: z.array(ReviewMode),
     position: z.number().int(),
     seriesId: SeriesId,

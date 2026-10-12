@@ -215,15 +215,17 @@ The phone has no component tests. React Native has no working Vitest setup, so t
 
 ### The contract check
 
-Each phone release freezes the API it was built against: Promote writes the Worker's OpenAPI document, without its prose, to `apps/mobile/contract/<version>.json`. `phone-contract.test.ts` then checks the current Worker against every file in that folder in two ways. `breakingChanges` in `scripts/api-compat.mjs` compares the schemas, and the test calls the phone's reads as a seeded learner and validates each response against the frozen schema, which catches a route whose answer has drifted from its own description. Both run in the `unit` project, so every pull request and every push to `main` runs them.
+Each phone release freezes the API it was built against: Promote writes the operations the phone calls, listed in `phoneOperations` in `phone-contract.test.ts`, with the schemas they reach and without prose, to `apps/mobile/contract/<version>.json`. An endpoint only the web calls, such as imports, exports or API keys, can change freely; add a call to the list when the phone starts making it, before its release is frozen. `phone-contract.test.ts` then checks the current Worker against every file in that folder in two ways. `breakingChanges` in `scripts/api-compat.mjs` compares the schemas, and the test calls the phone's reads as a seeded learner and validates each response against the frozen schema, which catches a route whose answer has drifted from its own description. Both run in the `unit` project, so every pull request and every push to `main` runs them.
 
 A response may gain fields and the API may gain endpoints. The check fails when a frozen release would lose something it reads, when a request it sends would be refused, or when a response field gains an enum value or a union branch the release has never seen. When the check fails on a web-first feature, choose one of these:
 
 1. Leave the new value out of responses to older clients: the route asks `clientSupports(c, { ios: "<first release that shows it>" })` from `apps/web/src/server/phone-clients.ts`, which reads the version the app sends in `x-lymi-client`. A platform left out has no release that shows it yet.
-2. If the phone already shows an unknown value safely, mark the field with `.meta({ "x-lymi-open": true })` in `packages/core` and freeze a release that carries the mark.
+2. If the phone already shows an unknown value safely, mark the field with `.meta(OPEN)` from `packages/core/src/responses/common.ts` and freeze a release that carries the mark. On a schema with an `id`, put the mark in its definition, since a field's own `.meta` is lost behind the reference.
 3. To remove something, raise the minimum version first and delete the frozen releases below it in the same pull request.
 
 The minimum version is `PHONE_MINIMUM_VERSION_IOS` in `apps/web/wrangler.jsonc`, and `PHONE_UPDATE_URL_IOS` is where Update Lymi sends the learner. Raising it needs a Worker deploy and no app build: every request from an older release then gets 426, and the app shows only Update Lymi, keeping its unsent grades and writes for the updated release.
+
+Every fixed list in a phone response is open, except the few in `closedOnPurpose` with their reasons, and the test fails on a new closed one so each is decided when it appears. The shared client leaves a review mode it cannot ask out of the draw and the queue, and every other open field the phone reads falls back to a known state; `phone-client.test.ts` feeds unknown values through those readers.
 
 Freeze by hand, for example to record the baseline after a change to the check itself:
 

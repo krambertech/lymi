@@ -132,6 +132,8 @@ export function SourceChip({
 }) {
   const { i18n } = useLingui();
   const m = SOURCE[source];
+  // A source a newer Worker added has no chip in this release: the field is open. ADR 0032.
+  if (!m) return null;
   const label = i18n._(SOURCE_LABEL[field ?? "field"][source]);
   return (
     <Chip tone={m.tone} size="sm" icon={m.icon} accessibilityLabel={label}>

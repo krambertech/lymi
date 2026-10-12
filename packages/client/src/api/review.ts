@@ -1,14 +1,14 @@
-import type {
-  Direction,
-  DrawOut,
-  GradeInput,
-  GradeOut,
-  Rating,
-  ReviewDayProgress,
+import {
+  type Direction,
+  type DrawOut,
+  type GradeInput,
+  type GradeOut,
+  type Rating,
+  type ReviewDayProgress,
   ReviewMode,
-  Round,
-  RoundsOut,
-  UndoOut,
+  type Round,
+  type RoundsOut,
+  type UndoOut,
 } from "@lymi/core";
 import type { Card } from "./cards";
 import { deviceTimezone, request } from "./request";
@@ -52,19 +52,32 @@ export type Draw = Omit<DrawOut, "cards"> & {
   cards: (Omit<DrawOut["cards"][number], "card"> & { card: Card })[];
 };
 
+/**
+ * Whether this release can ask a mode. `ReviewMode` is open, so one the web added later is left
+ * out of the review rather than shown as a mode it is not. ADR 0032.
+ */
+const askable = (mode: unknown) => ReviewMode.safeParse(mode).success;
+
 export const reviewApi = {
-  queue: (scope?: ReviewScope, round?: Round) => {
+  queue: async (scope?: ReviewScope, round?: Round) => {
     const params = new URLSearchParams(scopeParams(scope));
     if (round) params.set("round", round);
     const search = params.toString();
-    return request<Queue>(`/api/review/queue${search ? `?${search}` : ""}`);
+    const queue = await request<Queue>(`/api/review/queue${search ? `?${search}` : ""}`);
+    return { ...queue, items: queue.items.filter((item) => askable(item.mode)) };
   },
   rounds: () => request<RoundsOut>(`/api/review/rounds?tz=${encodeURIComponent(deviceTimezone())}`),
   /** What the review draws from; `tz` only matters until the review zone is known. */
-  draw: (scope?: ReviewScope) =>
-    request<Draw>(
+  draw: async (scope?: ReviewScope) => {
+    const draw = await request<Draw>(
       `/api/review/draw?${new URLSearchParams({ tz: deviceTimezone(), ...scopeParams(scope) })}`,
-    ),
+    );
+    // The log keeps every grade, so today's attempts still count one in a mode left out.
+    const cards = draw.cards
+      .map((entry) => ({ ...entry, modes: entry.modes.filter((m) => askable(m.mode)) }))
+      .filter((entry) => entry.modes.length > 0);
+    return { ...draw, cards };
+  },
   /** Settle today: confirms a nothing-due day, or an exhausted one. Send from a visible page. */
   checkToday: () =>
     request<ReviewDayProgress>("/api/review/today", {

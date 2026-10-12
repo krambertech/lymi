@@ -17,6 +17,7 @@
     "better-auth": "^1.7.7",
     "expo": "~57.0.27",
     "expo-asset": "~57.0.19",
+    "expo-audio": "~57.0.5",
     "expo-blur": "~57.0.3",
     "expo-constants": "~57.0.21",
     "expo-crypto": "~57.0.3",

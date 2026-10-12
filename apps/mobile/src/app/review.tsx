@@ -77,6 +77,7 @@ import {
 import { CardNotes } from "../review/card-notes";
 import { endHaptics } from "../review/end-haptics";
 import { modeLabel } from "../review/modes";
+import { PronounceButton, type Pronunciation, usePronunciation } from "../review/pronounce";
 import { Cover, usePullToEnd } from "../review/pull-to-end";
 import { countReveal, RevealHint, useRevealHint } from "../review/reveal-hint";
 import { markUndoHintSeen, UndoHint, undoHintSeen } from "../review/undo-hint";
@@ -281,6 +282,7 @@ function Run({
   const current =
     !leg || paused ? null : leg.kind === "draw" ? (atStop ? null : drawn) : (listLeft[0] ?? null);
   const recallTimes = useRecallClock(current ? `${keyOf(current)}:${done}` : null, revealed);
+  const pronounce = usePronunciation(current?.card ?? null);
 
   // A review starts with one firm tap as its first card arrives.
   useEffect(() => {
@@ -660,6 +662,7 @@ function Run({
                 }}
                 onGrade={onGrade}
                 onUndo={lastGraded ? undo : undefined}
+                pronounce={pronounce}
               />
             )}
           </CardStack>
@@ -735,6 +738,7 @@ function Turn({
   onReveal,
   onGrade,
   onUndo,
+  pronounce,
 }: {
   /** On the top step, how the card moves; the step underneath stays still. */
   top?: TopCard;
@@ -747,9 +751,11 @@ function Turn({
   onReveal?: () => void;
   onGrade?: (r: Rating) => void;
   onUndo?: (() => void) | undefined;
+  pronounce?: Pronunciation | null;
 }) {
   const card = (
     <CardPlate
+      pronounce={pronounce ?? null}
       item={item}
       deck={deck}
       forgotten={forgotten}
@@ -839,6 +845,7 @@ function Picture({ card, maxHeight = 280 }: { card: QueueItem["card"]; maxHeight
  * the plate, so the grades never move.
  */
 function CardPlate({
+  pronounce,
   item: { card, fsrsState, mode },
   deck,
   forgotten,
@@ -847,6 +854,8 @@ function CardPlate({
   onReveal,
   onUndo,
 }: {
+  /** The pronunciation on the top card; none underneath. */
+  pronounce: Pronunciation | null;
   item: QueueItem;
   deck: CardDeck;
   forgotten: boolean;
@@ -946,32 +955,38 @@ function CardPlate({
                 <Text className="text-md text-muted">{t`This card’s picture was removed.`}</Text>
               )
             ) : (
-              <Text
-                className="text-text"
-                style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
-                // The word is already the largest text on the card; grown, a long one would break mid-word.
-                maxFontSizeMultiplier={1}
-              >
-                {cue}
-              </Text>
+              <View className="flex-row items-center gap-3">
+                <Text
+                  className="shrink text-text"
+                  style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
+                  // The word is already the largest text on the card; grown, a long one would break mid-word.
+                  maxFontSizeMultiplier={1}
+                >
+                  {cue}
+                </Text>
+                {/* The term can be heard as soon as it is the question. */}
+                {pronounce && mode.cue === "term" && <PronounceButton pronounce={pronounce} />}
+              </View>
             )}
           </Animated.View>
           {revealed && (
             <View className="gap-4 pt-5">
               <Wick still={still} />
-              <Animated.View entering={arrive()}>
+              <Animated.View entering={arrive()} className="flex-row items-center gap-3">
                 <Text
-                  className={picture ? "text-2xl font-medium text-text" : "text-xl text-text"}
+                  className={`shrink ${picture ? "text-2xl font-medium text-text" : "text-xl text-text"}`}
                   style={back === noMeaning ? { color: p.muted } : undefined}
                 >
                   {back}
                 </Text>
+                {pronounce && mode.target === "term" && <PronounceButton pronounce={pronounce} />}
               </Animated.View>
               {picture && (
-                <Animated.View entering={arrive()}>
-                  <Text className="text-lg text-text-2">
+                <Animated.View entering={arrive()} className="flex-row items-center gap-3">
+                  <Text className="shrink text-lg text-text-2">
                     {mode.target === "term" ? card.meaning : card.term}
                   </Text>
+                  {pronounce && mode.target !== "term" && <PronounceButton pronounce={pronounce} />}
                 </Animated.View>
               )}
               {card.pronunciation && (mode.target === "term" || picture) && (

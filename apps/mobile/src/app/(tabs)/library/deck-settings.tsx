@@ -291,12 +291,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
               onPress={() => edit("description")}
             />
             {languageSelect(<RowFace icon="meaning" label={t`Language`} value={language} />)}
-            <Row
-              icon="modes"
-              label={t`Modes`}
-              value={way?.label}
-              onPress={() => setAsking(true)}
-            />
+            <Row icon="modes" label={t`Modes`} value={way?.label} onPress={() => setAsking(true)} />
           </Rows>
           <Group title={t`AI`}>
             <Rows>

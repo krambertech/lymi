@@ -534,6 +534,9 @@ msgstr "Choose photo"
 msgid "Citizenship"
 msgstr "Citizenship"
 
+msgid "Clear search"
+msgstr "Clear search"
+
 msgid "Clear the picture"
 msgstr "Clear the picture"
 
@@ -850,6 +853,9 @@ msgstr "Example from lesson"
 msgid "Explore"
 msgstr "Explore"
 
+msgid "Explore needs a connection"
+msgstr "Explore needs a connection"
+
 msgid "Export"
 msgstr "Export"
 
@@ -1085,6 +1091,9 @@ msgctxt "language"
 msgid "Italian"
 msgstr "Italian"
 
+msgid "Its decks may have been withdrawn. Every other shelf is still in Explore."
+msgstr "Its decks may have been withdrawn. Every other shelf is still in Explore."
+
 msgctxt "language"
 msgid "Japanese"
 msgstr "Japanese"
@@ -1190,6 +1199,9 @@ msgstr "Lymi also gets the screen you are on, the app version, your phone and yo
 
 msgid "Lymi is free to use."
 msgstr "Lymi is free to use."
+
+msgid "Lymi is writing the first decks. Until then, make your own in Library."
+msgstr "Lymi is writing the first decks. Until then, make your own in Library."
 
 msgid "Made a change"
 msgstr "Made a change"
@@ -1320,8 +1332,8 @@ msgstr "No cards yet."
 msgid "No cards you keep forgetting"
 msgstr "No cards you keep forgetting"
 
-msgid "No decks match “{query}”. Try a word from a card, or a language."
-msgstr "No decks match “{query}”. Try a word from a card, or a language."
+msgid "No decks match “{query}”"
+msgstr "No decks match “{query}”"
 
 msgid "No decks of your own yet. Only decks you create can go in a series."
 msgstr "No decks of your own yet. Only decks you create can go in a series."
@@ -1384,6 +1396,9 @@ msgstr "Nothing left in this deck"
 msgid "Nothing matches “{query}”."
 msgstr "Nothing matches “{query}”."
 
+msgid "Nothing published yet"
+msgstr "Nothing published yet"
+
 msgid "Nothing scheduled."
 msgstr "Nothing scheduled."
 
@@ -1405,8 +1420,14 @@ msgstr "Open {name}"
 msgid "Open Archived on the web"
 msgstr "Open Archived on the web"
 
+msgid "Open Explore"
+msgstr "Open Explore"
+
 msgid "Open in Library"
 msgstr "Open in Library"
+
+msgid "Open Library"
+msgstr "Open Library"
 
 msgid "Open on the web"
 msgstr "Open on the web"
@@ -1876,8 +1897,8 @@ msgstr "This card’s picture was removed."
 msgid "This series is no longer here."
 msgstr "This series is no longer here."
 
-msgid "This shelf has no decks now."
-msgstr "This shelf has no decks now."
+msgid "This shelf has no decks now"
+msgstr "This shelf has no decks now"
 
 msgid "This version of the app is out of date. Update it to keep reviewing."
 msgstr "This version of the app is out of date. Update it to keep reviewing."
@@ -1938,6 +1959,9 @@ msgstr "Travel"
 
 msgid "Try a memory hook"
 msgstr "Try a memory hook"
+
+msgid "Try a word from a card, or a language."
+msgstr "Try a word from a card, or a language."
 
 msgid "Try again"
 msgstr "Try again"
@@ -2069,6 +2093,9 @@ msgstr "Your cards and your streak, on every device."
 
 msgid "Your data"
 msgstr "Your data"
+
+msgid "Your decks and reviews still work offline."
+msgstr "Your decks and reviews still work offline."
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Your grades are saved. Check your connection and try again."

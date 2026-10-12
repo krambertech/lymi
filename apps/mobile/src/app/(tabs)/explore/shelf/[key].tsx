@@ -8,6 +8,7 @@ import { shelfAddressName, useCatalogue, useShelfLabel } from "../../../../explo
 import { ShelfGrid } from "../../../../explore/layouts";
 import { CatalogueFailed, CatalogueLoading } from "../../../../explore/states";
 import { usePoolColour } from "../../../../explore/tray";
+import { EmptyState } from "../../../../ui/empty-state";
 import { Press, Text } from "../../../../ui/primitives";
 import { BarButton, Screen } from "../../../../ui/screen";
 
@@ -54,7 +55,12 @@ export default function ExploreShelf() {
       ) : catalogue.loading ? (
         <CatalogueLoading />
       ) : !shelf ? (
-        <Text className="text-base text-muted">{t`This shelf has no decks now.`}</Text>
+        <EmptyState
+          kind="start"
+          title={t`This shelf has no decks now`}
+          body={t`Its decks may have been withdrawn. Every other shelf is still in Explore.`}
+          action={{ label: t`Open Explore`, onPress: () => router.navigate("/explore") }}
+        />
       ) : (
         <>
           <ShelfGrid decks={shelf.decks} added={catalogue.added} />

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { useCatalogue, useShelfLabel } from "../../../explore/catalogue";
 import { ShelfGrid, ShelfRows } from "../../../explore/layouts";
-import { CatalogueFailed, CatalogueLoading } from "../../../explore/states";
+import { CatalogueEmpty, CatalogueFailed, CatalogueLoading } from "../../../explore/states";
 import { Press, Text } from "../../../ui/primitives";
 import { BarGroup, Screen } from "../../../ui/screen";
 import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
@@ -60,6 +60,8 @@ export default function Explore() {
           <FilterLine shelf={shelf} label={label(shelf)} onClear={() => setFilter(undefined)} />
           <ShelfGrid decks={shelf.decks} added={catalogue.added} />
         </View>
+      ) : catalogue.shelves.length === 0 ? (
+        <CatalogueEmpty onLibrary={() => router.navigate("/library")} />
       ) : (
         <ShelfRows shelves={catalogue.shelves} added={catalogue.added} />
       )}

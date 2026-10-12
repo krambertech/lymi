@@ -20,14 +20,14 @@ Better Auth's Expo plugin keeps the session cookie in SecureStore, and `sessionH
 
 ## Design choices
 
-The proof of concept compared options side by side and kept one of each: the glass pill (opaque before iOS 26), the title in the top bar, the lit room on Today, Onest everywhere and plate grades. [The proposal](../../docs/proposals/native-mobile-app.md#design-language) records them.
+The proof of concept compared options side by side and kept one of each: the title in the top bar, the lit room on Today, Onest everywhere and plate grades. [The proposal](../../docs/proposals/native-mobile-app.md#design-language) records them. The tabs are iOS's own tab bar and capture sits in the top bar ([ADR 0034](../../docs/adr/0034-the-phone-uses-the-system-tab-bar-and-captures-from-the-top-bar.md)).
 
 ## What is shared with the web
 
 - `@lymi/core` unchanged: the review draws each next card with core's `draw` (ADR 0019), and today's count turns at the learner's midnight by the review zone.
 - `@lymi/client`: screens read hooks in `src/data/queries.ts`, which spread the web's query options. Grades and card writes go through the shared outboxes, kept in MMKV so they survive a quit and replay in order (ADR 0023). `src/data/client.ts` configures the client, and `src/data/sync.ts` replays the outboxes at sign-in, on reconnect and on return to the front, as the web's root does.
 - `@lymi/design`: colours, radii, the lantern's drawing, the flame's and the seven lights' rules, and motion presets. `src/global.css` imports its Uniwind theme; the phone keeps its own type ramp there under the shared step names, because iOS reads at 17 pt. `src/theme/motion.ts` converts the shared springs and curves for Reanimated.
-- Lucide icons, rendered by `lucide-react-native`.
+- Lucide icons, rendered by `lucide-react-native`. The system tab bar takes images, so `pnpm tab-icons` draws its icons into `assets/tabs` (it needs `rsvg-convert`).
 
 ## Interface text
 

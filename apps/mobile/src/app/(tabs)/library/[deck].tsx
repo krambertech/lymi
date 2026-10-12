@@ -12,6 +12,7 @@ import { type Palette, usePalette } from "../../../theme/palette";
 import type { IconName } from "../../../ui/icons";
 import { Button, Icon, Plate, SectionTitle, Text } from "../../../ui/primitives";
 import { Screen } from "../../../ui/screen";
+import { DECK_ACCESSORY } from "../../../ui/tab-bar";
 
 const STATE: Record<Standing, { label: string; icon: IconName; tint: keyof Palette }> = {
   new: { label: "New", icon: "new", tint: "state-new" },
@@ -33,7 +34,8 @@ export default function Deck() {
 
   return (
     <Screen title={deck?.name ?? "Deck"} back={{ label: "Library", to: "/library" }}>
-      {due > 0 && (
+      {/* From iOS 26 the deck's review rides in the tab bar's accessory instead. */}
+      {!DECK_ACCESSORY && due > 0 && (
         <Button
           label={`Review ${due} due`}
           variant="primary"

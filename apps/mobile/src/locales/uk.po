@@ -72,6 +72,9 @@ msgstr "{due, plural, one {картка до повторення в колод�
 msgid "{due, plural, one {card due today} other {cards due today}}"
 msgstr "{due, plural, one {картка до повторення сьогодні} few {картки до повторення сьогодні} many {карток до повторення сьогодні} other {картки до повторення сьогодні}}"
 
+msgid "{due, plural, one {card to review} other {cards to review}}"
+msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
+
 msgid "{label}: {chosen}"
 msgstr "{label}: {chosen}"
 
@@ -285,6 +288,12 @@ msgstr "Твій приклад"
 msgid "Example from lesson"
 msgstr "Приклад з уроку"
 
+msgid "Explore"
+msgstr "Каталог"
+
+msgid "Explore is coming to the phone"
+msgstr "Каталог скоро буде на телефоні"
+
 msgid "Fill in the rest with AI"
 msgstr "Доповнити решту з AI"
 
@@ -450,6 +459,9 @@ msgstr "Часто забуваються"
 msgid "Only the deck’s owner can change this."
 msgstr "Змінювати це може лише власник колоди."
 
+msgid "Open Explore on the web"
+msgstr "Відкрити каталог у вебверсії"
+
 msgid "Password"
 msgstr "Пароль"
 
@@ -497,6 +509,9 @@ msgstr "Новий пароль"
 
 msgid "Review"
 msgstr "Повторення"
+
+msgid "Review {due, plural, one {# card} other {# cards}}"
+msgstr "Повторити {due, plural, one {# картку} few {# картки} many {# карток} other {# картки}}"
 
 #. placeholder {0}: days.length
 msgid "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}"
@@ -623,6 +638,9 @@ msgstr "Спробувати ще раз"
 
 msgid "Undo"
 msgstr "Скасувати дію"
+
+msgid "Until then, find ready decks to add on the web."
+msgstr "А поки готові колоди можна знайти й додати у вебверсії."
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Використай щонайменше {MIN_PASSWORD_LENGTH} символів."

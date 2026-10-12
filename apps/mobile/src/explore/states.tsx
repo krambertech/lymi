@@ -21,12 +21,22 @@ export function CatalogueLoading() {
  * The catalogue could not be read, which is never the same as nothing matching. Offline it says
  * Explore needs a connection, since that is no failure; otherwise that the read failed.
  */
-export function CatalogueFailed({ onRetry, busy }: { onRetry: () => void; busy?: boolean }) {
+export function CatalogueFailed({
+  onRetry,
+  busy,
+  fill,
+}: {
+  onRetry: () => void;
+  busy?: boolean;
+  /** Fills the room it is given, as search above the keyboard. */
+  fill?: boolean;
+}) {
   const { t } = useLingui();
   const online = useSyncExternalStore(onlineManager.subscribe, isOnline, isOnline);
   const offline = !online;
   return offline ? (
     <EmptyState
+      fill={fill}
       kind="offline"
       title={t`Explore needs a connection`}
       body={t`Your decks and reviews still work offline.`}
@@ -34,6 +44,7 @@ export function CatalogueFailed({ onRetry, busy }: { onRetry: () => void; busy?:
     />
   ) : (
     <EmptyState
+      fill={fill}
       kind="failed"
       title={t`Couldn’t load Explore`}
       body={t`Check your connection and try again.`}

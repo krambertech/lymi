@@ -41,12 +41,13 @@ export default function ExploreSearch() {
         <ScrollView
           className="flex-1"
           contentContainerClassName="gap-7 px-5 pb-6"
-          contentContainerStyle={{ paddingTop: insets.top + 16 }}
+          // Grows to the room above the keyboard, so an empty state centres there and never under it.
+          contentContainerStyle={{ paddingTop: insets.top + 16, flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="interactive"
         >
           {query && catalogue.failed ? (
-            <CatalogueFailed onRetry={catalogue.retry} busy={catalogue.retrying} />
+            <CatalogueFailed fill onRetry={catalogue.retry} busy={catalogue.retrying} />
           ) : query && catalogue.loading ? (
             <CatalogueLoading />
           ) : null}
@@ -56,6 +57,7 @@ export default function ExploreSearch() {
             hits.length === 0 &&
             shelves.length === 0 && (
               <EmptyState
+                fill
                 kind="noMatch"
                 title={t`No decks match “${query}”`}
                 body={t`Try a word from a card, or a language.`}

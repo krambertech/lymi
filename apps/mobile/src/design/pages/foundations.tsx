@@ -221,6 +221,7 @@ const ICON_SET: IconName[] = [
   "email",
   "signOut",
   "play",
+  "pointer",
   "widgets",
   "sun",
   "moon",

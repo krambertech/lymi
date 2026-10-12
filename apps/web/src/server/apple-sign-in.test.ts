@@ -207,6 +207,8 @@ describe("signing in with Apple from the phone app", () => {
       // A replayed token: the request carries no nonce, or the token was minted without one.
       { token: appleToken({ sub: "refused", email }), nonce: undefined },
       { token: appleToken({ sub: "refused", email, nonce: undefined }) },
+      // The claim copied off a stolen token, rather than the raw value only the phone knows.
+      { token: appleToken({ sub: "refused", email }), nonce: sha256(NONCE) },
     ]) {
       const response = await signInWithApple(idToken);
       expect(response.status).toBe(401);

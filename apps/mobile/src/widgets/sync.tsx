@@ -1,24 +1,14 @@
-import { drawableLeft } from "@lymi/client/review-day";
-import { type DrawData, drawState, type LocalGrade } from "@lymi/client/review-draw";
-import type { StreakOut } from "@lymi/core";
-import { lanternFor, lightLevel, lightReference } from "@lymi/design";
+import { lightLevel, lightReference } from "@lymi/design";
 import { Asset } from "expo-asset";
 import { File } from "expo-file-system";
 import { widgetsDirectory } from "expo-widgets";
 import { useEffect, useState } from "react";
 import { dueToday } from "../data/due";
-import {
-  streakToday,
-  useDay,
-  useDecks,
-  useDraw,
-  useGrades,
-  useKeptSince,
-  useStreak,
-} from "../data/queries";
+import { useDay, useDecks, useDraw, useKeptSince } from "../data/queries";
 import { weekLetters } from "../ui/days";
 import { WIDGET_COLOURS } from "./colours";
 import LockWidget from "./lock-widget";
+import { nextDay, type Snapshot } from "./next-day";
 import TodayWidget, { type Lanterns } from "./today-widget";
 import WeekWidget from "./week-widget";
 
@@ -51,18 +41,6 @@ async function shareImages(): Promise<Images> {
   return out;
 }
 
-interface Snapshot {
-  due: number;
-  streak: number;
-  reviewed: number;
-  goal: number;
-  left: number;
-  out: boolean;
-  signedIn: boolean;
-  /** Each day's step of the seven lights, oldest first. */
-  week: number[];
-}
-
 function send(name: string, update: () => void) {
   try {
     update();
@@ -71,7 +49,6 @@ function send(name: string, update: () => void) {
   }
 }
 
-/** What each widget is given for one snapshot. */
 function widgetProps(s: Snapshot, images: Images) {
   const { flame, ...lanterns } = images;
   return {
@@ -104,7 +81,7 @@ function sendSnapshot(s: Snapshot, images: Images) {
 }
 
 /** Now, then the next day from its first moment, so the widgets roll over without the app. */
-function sendTimeline(now: Snapshot, next: Next, images: Images) {
+function sendTimeline(now: Snapshot, next: { at: Date; snapshot: Snapshot }, images: Images) {
   const a = widgetProps(now, images);
   const b = widgetProps(next.snapshot, images);
   const at = new Date();
@@ -126,44 +103,6 @@ function sendTimeline(now: Snapshot, next: Next, images: Images) {
       { date: next.at, props: b.week },
     ]),
   );
-}
-
-interface Next {
-  at: Date;
-  snapshot: Snapshot;
-}
-
-/**
- * The widgets as the learner's next day opens: nothing reviewed yet, the week moved on a day, and
- * what the draw holds then, which is at least what is left today. The app sends this ahead, since
- * a widget cannot fetch.
- */
-export function nextDay(
-  draw: DrawData,
-  grades: readonly LocalGrade[],
-  summary: StreakOut,
-  days: readonly number[],
-): Next | undefined {
-  const at = new Date(draw.day.end);
-  if (!(at.getTime() > Date.now())) return undefined;
-  const state = drawState(draw, grades, at, undefined);
-  const rolled = streakToday(summary, state);
-  const goal = rolled.today.goal;
-  const week = [...days.slice(1), 0];
-  const reference = lightReference(week);
-  return {
-    at,
-    snapshot: {
-      due: drawableLeft(draw, state, undefined),
-      streak: rolled.current,
-      reviewed: 0,
-      goal,
-      left: goal,
-      out: lanternFor(rolled).out,
-      signedIn: true,
-      week: week.map((n) => lightLevel(n, reference, goal, false)),
-    },
-  };
 }
 
 /** The images an earlier signed-in run already copied into the app group. */
@@ -199,12 +138,11 @@ export function clearWidgets() {
 
 /** Pushes today's numbers to the widgets whenever they change. The real app does this after each sync. */
 export function WidgetSync() {
-  const { streak, reviewsToday, goal, week, dayDone, out, left } = useDay();
+  const { streak, reviewsToday, goal, week, dayDone, out, left, summary } = useDay();
   const decks = useDecks();
   const due = dueToday(decks.data ?? [], left, !!useKeptSince(decks));
-  const draw = useDraw().data;
-  const grades = useGrades();
-  const summary = useStreak().data;
+  // The draw knows when the learner's day ends.
+  const end = useDraw().data?.day.end;
   const [images, setImages] = useState<Images>({});
 
   useEffect(() => {
@@ -231,12 +169,12 @@ export function WidgetSync() {
     };
     // A review grades every few seconds; the widget only needs where the day settled.
     const timer = setTimeout(() => {
-      const next = draw && summary ? nextDay(draw, grades, summary, days) : undefined;
+      const next = summary && end ? nextDay(now, summary, days, new Date(end)) : undefined;
       if (next) sendTimeline(now, next, images);
       else sendSnapshot(now, images);
     }, 1500);
     return () => clearTimeout(timer);
-  }, [images, due, streak, reviewsToday, goal, weekKey, dayDone, out, draw, grades, summary]);
+  }, [images, due, streak, reviewsToday, goal, weekKey, dayDone, out, summary, end]);
 
   return null;
 }

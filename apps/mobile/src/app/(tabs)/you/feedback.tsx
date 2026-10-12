@@ -100,7 +100,7 @@ export default function Feedback() {
               options={[
                 { value: "bug", label: t`Bug` },
                 { value: "idea", label: t`Idea` },
-                { value: "other", label: t`Something else` },
+                { value: "other", label: t`Other` },
               ]}
             />
           </View>

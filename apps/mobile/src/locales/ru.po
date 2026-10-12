@@ -549,6 +549,9 @@ msgstr "Открыть обзор в веб-версии"
 msgid "Open Settings on the web"
 msgstr "Открыть настройки в веб-версии"
 
+msgid "Other"
+msgstr "Другое"
+
 msgid "Password"
 msgstr "Пароль"
 
@@ -677,9 +680,6 @@ msgstr "Вход не завершён. Попробуй снова."
 #. placeholder {0}: user.email
 msgid "Signed in as {0}"
 msgstr "Аккаунт: {0}"
-
-msgid "Something else"
-msgstr "Другое"
 
 msgid "Source"
 msgstr "Источник"

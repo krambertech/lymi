@@ -1,6 +1,7 @@
 import { DatePicker, Host } from "@expo/ui/swift-ui";
 import { datePickerStyle, labelsHidden } from "@expo/ui/swift-ui/modifiers";
 import { useLingui } from "@lingui/react/macro";
+import { getCalendars } from "expo-localization";
 import { useState } from "react";
 import { View } from "react-native";
 import { DEVICE_KEYS, deviceStore } from "../data/kept";
@@ -30,8 +31,14 @@ export function useReminder() {
   const { i18n } = useLingui();
   return {
     time,
-    /** The time in the learner's own clock, 12- or 24-hour. */
-    label: time ? i18n.date(toDate(time), { timeStyle: "short" }) : null,
+    /** In the app's language, on the phone's own 12- or 24-hour clock, as the wheel shows it. */
+    label: time
+      ? i18n.date(toDate(time), {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: !getCalendars()[0]?.uses24hourClock,
+        })
+      : null,
     set: (next: string | null) => {
       if (next) deviceStore.set(DEVICE_KEYS.reminder, next);
       else deviceStore.remove(DEVICE_KEYS.reminder);

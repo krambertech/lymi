@@ -3,11 +3,14 @@ import { Stack } from "expo-router";
 import { usePalette } from "../../../theme/palette";
 import { useStackOptions } from "../../../ui/screen";
 
+export const unstable_settings = { initialRouteName: "index" };
+
 /** You's pages push from the side; feedback is a task with an end, so it rises as a sheet. phone.md. */
 export default function TabStack() {
   const p = usePalette();
   return (
     <Stack screenOptions={useStackOptions()}>
+      <Stack.Screen name="index" />
       <Stack.Screen
         name="feedback"
         options={{

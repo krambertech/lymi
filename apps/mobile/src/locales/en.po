@@ -549,6 +549,9 @@ msgstr "Open Insights on the web"
 msgid "Open Settings on the web"
 msgstr "Open Settings on the web"
 
+msgid "Other"
+msgstr "Other"
+
 msgid "Password"
 msgstr "Password"
 
@@ -677,9 +680,6 @@ msgstr "Sign-in didn’t finish. Try again."
 #. placeholder {0}: user.email
 msgid "Signed in as {0}"
 msgstr "Signed in as {0}"
-
-msgid "Something else"
-msgstr "Something else"
 
 msgid "Source"
 msgstr "Source"

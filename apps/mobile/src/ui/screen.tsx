@@ -290,24 +290,22 @@ function TabActions() {
           <View className="h-10 flex-row items-center gap-1.5 px-2">{streakInner}</View>
         )}
       </Press>
+      {/* Add a word rises as a sheet from below, as every task with an end does. phone.md. */}
       <Link href="/capture" asChild>
-        {/* The amber glass grows into Add a word and shrinks back into it, iOS's zoom. */}
-        <Link.AppleZoom>
-          <Press accessibilityRole="button" accessibilityLabel={t`Add a card`}>
-            <GlassSurface
-              tint="amber"
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 20,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Icon name="plus" size={20} colour={p["amber-ink"]} strokeWidth={2.25} />
-            </GlassSurface>
-          </Press>
-        </Link.AppleZoom>
+        <Press accessibilityRole="button" accessibilityLabel={t`Add a card`}>
+          <GlassSurface
+            tint="amber"
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Icon name="plus" size={20} colour={p["amber-ink"]} strokeWidth={2.25} />
+          </GlassSurface>
+        </Press>
       </Link>
     </View>
   );

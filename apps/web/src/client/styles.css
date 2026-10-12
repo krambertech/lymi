@@ -1,6 +1,8 @@
 @import "tailwindcss";
 /* Colours, type steps, radii, curves and stacking, shared with the site and the phone. */
 @import "@lymi/design/tokens.css";
+/* The deck tray, shared with the site. */
+@import "@lymi/design/tray.css";
 /* Feature styles, one file each; they load first, so an equal-specificity rule below them wins. */
 @import "./styles/lantern.css";
 @import "./styles/streak.css";

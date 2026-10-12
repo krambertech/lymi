@@ -62,7 +62,8 @@ The sheet stays for the next card: a line under the fields says where the last o
 - Grades are four plates under the card, 80 pt tall and nearly square, and the card shrinks to make room.
 - X is a plain icon button with a 44 pt target and no glass disc, because leaving is rare.
 - Pulling the top bar down follows the finger and, past a third of the screen, ends the review on the end screen, as X does. Today shows behind it as it moves.
-- A swipe from the start edge brings the last graded card back, revealed and waiting for a grade, and removes that grade. It goes back one card. The pointing hand shows it once, on a learner's second card ever; VoiceOver offers it as an action on the card.
+- The cards are a stack, where the web keeps one plate whose words change ([motion.md](motion.md#review)). The next card slides in over the one just graded from the end edge, turned a little and straightening as it lands, while the graded card and its grades wait underneath. Under Reduce Motion the next card fades in.
+- A swipe from the start edge drags the top card off the same way and uncovers the last graded card, revealed with its grades and waiting for a grade, and removes that grade. It goes back one card. The pointing hand shows it once, on a learner's second card ever; VoiceOver offers it as an action on the card.
 - After a grade the flame breathes and sparks from the hood, as on the web.
 - At the end the lantern's light reaches the edges of the screen. Review forgotten leads with the Forgot mark, as on the web.
 

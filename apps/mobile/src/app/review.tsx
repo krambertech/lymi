@@ -532,7 +532,7 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
     width: withTiming(`${share * 100}%`, { duration: 300, easing: EASE }),
   }));
   return (
-    <View className="h-12 flex-row items-center gap-3 px-4">
+    <View className="h-12 flex-row items-center gap-3 ps-4 pe-1">
       <Lantern size={48} progress={progress} out={out} fed={fed} />
       <View
         className="h-1.5 flex-1 overflow-hidden rounded-full bg-plate-2"
@@ -549,7 +549,10 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
         {done}/{total}
       </Text>
       {/* Plain, because leaving is rare; pulling the bar down does the same. phone.md "Review". */}
-      <IconButton icon="close" label={t`End review`} haptic={false} onPress={onClose} />
+      {/* Its 44 pt target reaches past the glyph, so the glyph lines up with the card's edge. */}
+      <View style={{ marginStart: -14 }}>
+        <IconButton icon="close" label={t`End review`} haptic={false} onPress={onClose} />
+      </View>
     </View>
   );
 }
@@ -783,7 +786,7 @@ function GradeStrip({
             className="h-20 items-center justify-center gap-1.5 rounded-xl border border-edge bg-plate"
             style={dark ? LIFT : undefined}
           >
-            <Icon name={g.icon} size={24} colour={p[g.tint]} />
+            <Icon name={g.icon} size={20} colour={p[g.tint]} />
             <Text maxFontSizeMultiplier={1.3} className="text-base font-medium text-text-2">
               {g.label}
             </Text>

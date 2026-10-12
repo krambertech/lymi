@@ -192,9 +192,6 @@ msgstr "Cancel"
 msgid "Change daily goal"
 msgstr "Change daily goal"
 
-msgid "Change photo"
-msgstr "Change photo"
-
 msgid "Changing the goal needs a connection."
 msgstr "Changing the goal needs a connection."
 
@@ -433,9 +430,6 @@ msgstr "Keen"
 
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
-
-msgid "Keep your name under 80 characters."
-msgstr "Keep your name under 80 characters."
 
 msgid "Known"
 msgstr "Known"
@@ -832,9 +826,6 @@ msgstr "Where you met it, such as a lesson"
 msgid "Write what you want to tell Lymi."
 msgstr "Write what you want to tell Lymi."
 
-msgid "Write your name."
-msgstr "Write your name."
-
 msgid "Yesterday was a rest day"
 msgstr "Yesterday was a rest day"
 
@@ -861,6 +852,9 @@ msgstr "Your data"
 
 msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
+
+msgid "Your name"
+msgstr "Your name"
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Your photo changed on another device. Try again."

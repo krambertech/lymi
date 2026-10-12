@@ -259,7 +259,14 @@ app.patch(
     errors: [400],
   }),
   body(NameInput, "name"),
-  async (c) => c.json(await renameLearner(ctxOf(c), c.req.valid("json").name)),
+  async (c) => {
+    const me = await renameLearner(ctxOf(c), c.req.valid("json").name);
+    // Sessions keep a copy of the user in KV, so they are rewritten or the old name comes back.
+    const { internalAdapter } = await c.get("auth").$context;
+    const user = await internalAdapter.findUserById(me.id);
+    if (user) await internalAdapter.refreshUserSessions(user);
+    return c.json(me);
+  },
 );
 
 // A member's states catch up to their decks before anything that reads progress. ADR 0022.

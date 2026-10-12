@@ -192,9 +192,6 @@ msgstr "Скасувати"
 msgid "Change daily goal"
 msgstr "Змінити денну мету"
 
-msgid "Change photo"
-msgstr "Змінити фото"
-
 msgid "Changing the goal needs a connection."
 msgstr "Щоб змінити мету, потрібне з’єднання."
 
@@ -433,9 +430,6 @@ msgstr "Завзято"
 
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Повідомлення має бути коротшим за {FEEDBACK_MESSAGE_MAX} символів."
-
-msgid "Keep your name under 80 characters."
-msgstr "Ім’я має бути коротшим за 80 символів."
 
 msgid "Known"
 msgstr "Засвоєна"
@@ -832,9 +826,6 @@ msgstr "Звідки це, наприклад урок"
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, що хочеш розповісти Lymi."
 
-msgid "Write your name."
-msgstr "Напиши своє ім’я."
-
 msgid "Yesterday was a rest day"
 msgstr "Учора був день відпочинку"
 
@@ -861,6 +852,9 @@ msgstr "Твої дані"
 
 msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Твоє повідомлення збережено. Спробуй ще раз або напиши на <0>hello@lymi.app</0>."
+
+msgid "Your name"
+msgstr "Твоє ім’я"
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Фото змінилося на іншому пристрої. Спробуй ще раз."

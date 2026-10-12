@@ -51,9 +51,15 @@ export function asLastGood(state: DehydratedState): DehydratedState {
 /**
  * Fetches, while online, what every deck's screen and review need and the cache does not hold
  * yet, so a deck first opened offline still has its cards. One at a time, so it never competes
- * with what the learner is doing.
+ * with what the learner is doing. Given series, each series' draw too, for a client that reviews
+ * a series from one row.
  */
-export async function warmCache(qc: QueryClient, deckIds: readonly string[], signal?: AbortSignal) {
+export async function warmCache(
+  qc: QueryClient,
+  deckIds: readonly string[],
+  signal?: AbortSignal,
+  seriesIds: readonly string[] = [],
+) {
   const fetch = <T extends { queryKey: readonly unknown[] }>(
     query: T,
     run: () => Promise<void>,
@@ -65,6 +71,9 @@ export async function warmCache(qc: QueryClient, deckIds: readonly string[], sig
       fetch(sectionsQuery(deck), () => qc.prefetchQuery(sectionsQuery(deck))),
       fetch(drawQuery({ deck }), () => qc.prefetchQuery(drawQuery({ deck }))),
     ]),
+    ...seriesIds.map((series) =>
+      fetch(drawQuery({ series }), () => qc.prefetchQuery(drawQuery({ series }))),
+    ),
   ];
   for (const { key, run } of wanted) {
     if (signal?.aborted || !online()) return;
@@ -79,13 +88,14 @@ export async function warmCache(qc: QueryClient, deckIds: readonly string[], sig
  */
 export function cacheWarmer(qc: QueryClient) {
   let ids: readonly string[] = [];
+  let series: readonly string[] = [];
   let active: AbortController | null = null;
   let again = false;
   let pass: Promise<void> = Promise.resolve();
   const start = () => {
     const controller = new AbortController();
     active = controller;
-    pass = warmCache(qc, ids, controller.signal).finally(() => {
+    pass = warmCache(qc, ids, controller.signal, series).finally(() => {
       if (active !== controller) return;
       active = null;
       if (again) {
@@ -95,9 +105,10 @@ export function cacheWarmer(qc: QueryClient) {
     });
   };
   return {
-    /** Starts a pass, with new deck ids if given; resolves when the current pass ends. */
-    run(deckIds?: readonly string[]): Promise<void> {
+    /** Starts a pass, with new deck and series ids if given; resolves when the current pass ends. */
+    run(deckIds?: readonly string[], seriesIds?: readonly string[]): Promise<void> {
       if (deckIds) ids = deckIds;
+      if (seriesIds) series = seriesIds;
       if (active) again = true;
       else start();
       return pass;

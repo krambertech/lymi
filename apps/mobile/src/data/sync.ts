@@ -7,6 +7,7 @@ import { addNetworkStateListener } from "expo-network";
 import { useEffect, useMemo } from "react";
 import { Alert, AppState } from "react-native";
 import { claimCache } from "./cache";
+import { followDueCounts } from "./forecast";
 import { useDecks, useDraw, useSeriesList } from "./queries";
 
 /** What a new day or a replayed grade moves, refetched together. */
@@ -53,6 +54,8 @@ export function Sync({ learnerId }: { learnerId: string }) {
       network.remove();
     };
   }, [learnerId, qc]);
+
+  useEffect(() => followDueCounts(qc), [qc]);
 
   // Every deck's cards, sections and draw are fetched once while online, so each opens offline,
   // and each series' draw, since Today reviews a series from one row; a pass cut short by the

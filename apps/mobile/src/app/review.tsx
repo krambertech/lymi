@@ -1576,6 +1576,7 @@ function Completion({
               <SevenLights
                 // Finished early, the lights take their final heights at once rather than replaying.
                 key={settled ? "settled" : "playing"}
+                dates={lights.dates}
                 days={lights.days}
                 satisfied={lights.satisfied}
                 rest={lights.rest}

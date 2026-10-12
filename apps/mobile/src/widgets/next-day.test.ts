@@ -1,5 +1,6 @@
 import type { StreakOut } from "@lymi/core";
 import { describe, expect, it } from "vitest";
+import { lastSevenDays, weekLetters } from "../ui/days";
 import { nextDay, type Snapshot } from "./next-day";
 
 const summary = (current: number, attempts: number): StreakOut => ({
@@ -21,6 +22,7 @@ const now = (due: number, streak: number, reviewed: number): Snapshot => ({
   out: false,
   signedIn: true,
   week: [1, 1, 1, 1, 1, 1, 0],
+  dates: lastSevenDays("2026-10-12"),
 });
 
 const midnight = new Date(Date.now() + 3_600_000);
@@ -55,6 +57,14 @@ describe("nextDay", () => {
     expect(next?.snapshot).toMatchObject({ reviewed: 0, goal: 20, left: 20 });
     expect(next?.snapshot.week).toHaveLength(7);
     expect(next?.snapshot.week.at(-1)).toBe(0);
+  });
+
+  it("names tomorrow's weekdays from the review day, not today's", () => {
+    // Monday 12 October's week ends on Monday; the next day's ends on Tuesday.
+    const next = nextDay(now(5, 3, 12), summary(3, 12), days, midnight);
+    expect(next?.snapshot.dates).toEqual(lastSevenDays("2026-10-13"));
+    expect(weekLetters(next?.snapshot.dates ?? []).at(-1)).toBe(weekLetters(["2026-10-13"])[0]);
+    expect(weekLetters(next?.snapshot.dates ?? [])).not.toEqual(weekLetters(now(5, 3, 12).dates));
   });
 
   it("leaves the lantern out with no run", () => {

@@ -303,6 +303,7 @@ function StreakPlate({ summary }: { summary: StreakOut }) {
           </Text>
         </View>
         <SevenLights
+          dates={lights.dates}
           days={lights.days}
           goal={goal}
           todayDone={dayDone}

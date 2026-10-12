@@ -7,7 +7,7 @@ import { widgetsDirectory } from "expo-widgets";
 import { useEffect, useState } from "react";
 import { dueToday } from "../data/due";
 import { useDay, useDecks, useDraw, useKeptSince } from "../data/queries";
-import { weekLetters } from "../ui/days";
+import { deviceDate, lastSevenDays, weekLetters } from "../ui/days";
 import { WIDGET_COLOURS } from "./colours";
 import LockWidget from "./lock-widget";
 import { nextDay, type Snapshot } from "./next-day";
@@ -68,7 +68,7 @@ function widgetProps(s: Snapshot, images: Images) {
       left: s.left,
       signedIn: s.signedIn,
       week: s.week,
-      letters: weekLetters(s.week.length),
+      letters: weekLetters(s.dates),
       flame: flame ?? "",
       colours: WIDGET_COLOURS,
     },
@@ -133,6 +133,8 @@ export function clearWidgets() {
       out: true,
       signedIn: false,
       week: [0, 0, 0, 0, 0, 0, 0],
+      // No learner, so no review day: the phone's own week names the unlit glasses.
+      dates: lastSevenDays(deviceDate()),
     },
     sharedImages(),
   );
@@ -140,12 +142,12 @@ export function clearWidgets() {
 
 /** Pushes today's numbers to the widgets whenever they change. The real app does this after each sync. */
 export function WidgetSync() {
-  const { streak, reviewsToday, goal, week, dayDone, out, left, summary } = useDay();
+  const { streak, reviewsToday, goal, week, lights, dayDone, out, left, summary } = useDay();
   const decks = useDecks();
   const due = dueToday(decks.data ?? [], left, !!useKeptSince(decks));
   // The draw knows when the learner's day ends.
   const end = useDraw().data?.day.end;
-  // Tomorrow's new arrivals, as the reminders read them; an hour old is close enough.
+  // Tomorrow's new arrivals, as the reminders read them; Sync refetches it when due dates move.
   const forecast = useQuery({ ...insightsQuery(30), staleTime: 60 * 60_000 }).data?.forecast;
   // Only a forecast that starts today knows which day is tomorrow.
   const tomorrow =
@@ -159,6 +161,7 @@ export function WidgetSync() {
   }, []);
 
   const weekKey = week.join(",");
+  const datesKey = lights.dates.join(",");
   useEffect(() => {
     const days = weekKey.split(",").map(Number);
     const reference = lightReference(days);
@@ -175,6 +178,7 @@ export function WidgetSync() {
       out,
       signedIn: true,
       week: steps,
+      dates: datesKey.split(","),
     };
     // A review grades every few seconds; the widget only needs where the day settled.
     const timer = setTimeout(() => {
@@ -184,7 +188,20 @@ export function WidgetSync() {
       else sendSnapshot(now, images);
     }, 1500);
     return () => clearTimeout(timer);
-  }, [images, due, streak, reviewsToday, goal, weekKey, dayDone, out, summary, end, tomorrow]);
+  }, [
+    images,
+    due,
+    streak,
+    reviewsToday,
+    goal,
+    weekKey,
+    datesKey,
+    dayDone,
+    out,
+    summary,
+    end,
+    tomorrow,
+  ]);
 
   return null;
 }

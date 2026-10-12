@@ -108,12 +108,15 @@ export function Screen({
       const w = Math.min(box.w * dock, screen - 2 * 96);
       const x = (screen - w) / 2;
       return {
-        opacity: interpolate(
-          y.value,
-          [headerHeight - 80, headerHeight - 30],
-          [0, 1],
-          Extrapolation.CLAMP,
-        ),
+        // Until the header is measured the bar's title stays hidden, so it never flashes in.
+        opacity: !headerHeight
+          ? 0
+          : interpolate(
+              y.value,
+              [headerHeight - 80, headerHeight - 30],
+              [0, 1],
+              Extrapolation.CLAMP,
+            ),
         transformOrigin: rtl ? "right top" : "left top",
         transform: [{ translateX: rtl ? -x : x }, { translateY: dockY }, { scale: dock }],
       };
@@ -141,7 +144,7 @@ export function Screen({
         [0, 1],
         Extrapolation.CLAMP,
       );
-      return { opacity: k, transform: [{ scale: 0.7 + 0.3 * k }] };
+      return { opacity: headerHeight ? k : 0, transform: [{ scale: 0.7 + 0.3 * k }] };
     }
     return {
       transform: [{ scale: interpolate(y.value, [0, TITLE_GONE], [1, 0.92], Extrapolation.CLAMP) }],

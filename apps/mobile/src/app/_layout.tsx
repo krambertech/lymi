@@ -65,11 +65,6 @@ function Root() {
   // A 426 from any request: this release is too old for the API, so nothing else can work.
   const update = useUpdateRequired();
   useEffect(() => setExceptionLearner(learnerId), [learnerId]);
-  // Sign-out and a session the Worker no longer accepts both land here; the widgets outlive the app.
-  const signedOut = !session.isPending && !learnerId;
-  useEffect(() => {
-    if (signedOut) clearWidgets();
-  }, [signedOut]);
   // A cold start mounts this once; a return from the background does not, so the splash never replays.
   const [kindling, setKindling] = useState(true);
   const replays = useReplays();
@@ -89,11 +84,14 @@ function Root() {
     setKindling(false);
   }, []);
   useGiveUp(kindling, lands !== undefined, giveUp);
-  // Signed out, or a session that lapsed: whoever signs in next starts with nothing of this learner's.
+  // Signed out, or a session that lapsed: whoever signs in next starts with nothing of this learner's,
+  // and the widgets, which outlive the app, stop showing them.
   const qc = useQueryClient();
   const signedOut = !session.isPending && !signedIn;
   useEffect(() => {
-    if (signedOut) forgetLearner(qc);
+    if (!signedOut) return;
+    forgetLearner(qc);
+    clearWidgets();
   }, [signedOut, qc]);
   const base = dark ? DarkTheme : DefaultTheme;
   // The navigation theme carries the room, so native chrome never flashes white between tabs.

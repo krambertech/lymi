@@ -46,6 +46,7 @@ interface Snapshot {
   goal: number;
   left: number;
   out: boolean;
+  signedIn: boolean;
   /** Each day's step of the seven lights, oldest first. */
   week: number[];
 }
@@ -77,6 +78,7 @@ function sendSnapshot(s: Snapshot, images: Images) {
       streak: s.streak,
       due: s.due,
       left: s.left,
+      signedIn: s.signedIn,
       week: s.week,
       letters: weekLetters(s.week.length),
       flame: flame ?? "",
@@ -102,7 +104,16 @@ function sharedImages(): Images {
  */
 export function clearWidgets() {
   sendSnapshot(
-    { due: 0, streak: 0, reviewed: 0, goal: 0, left: 0, out: true, week: [0, 0, 0, 0, 0, 0, 0] },
+    {
+      due: 0,
+      streak: 0,
+      reviewed: 0,
+      goal: 0,
+      left: 0,
+      out: true,
+      signedIn: false,
+      week: [0, 0, 0, 0, 0, 0, 0],
+    },
     sharedImages(),
   );
 }
@@ -128,7 +139,10 @@ export function WidgetSync() {
     // A review grades every few seconds; the widget only needs where the day settled.
     const timer = setTimeout(
       () =>
-        sendSnapshot({ due, streak, reviewed: reviewsToday, goal, left, out, week: steps }, images),
+        sendSnapshot(
+          { due, streak, reviewed: reviewsToday, goal, left, out, signedIn: true, week: steps },
+          images,
+        ),
       1500,
     );
     return () => clearTimeout(timer);

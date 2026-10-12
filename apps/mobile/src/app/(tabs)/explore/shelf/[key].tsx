@@ -6,6 +6,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { View } from "react-native";
 import { shelfAddressName, useCatalogue, useShelfLabel } from "../../../../explore/catalogue";
 import { ShelfGrid } from "../../../../explore/layouts";
+import { CatalogueFailed, CatalogueLoading } from "../../../../explore/states";
 import { usePoolColour } from "../../../../explore/tray";
 import { Press, Text } from "../../../../ui/primitives";
 import { BarButton, Screen } from "../../../../ui/screen";
@@ -48,7 +49,13 @@ export default function ExploreShelf() {
         />
       }
     >
-      {shelf && (
+      {catalogue.failed ? (
+        <CatalogueFailed onRetry={catalogue.retry} busy={catalogue.retrying} />
+      ) : catalogue.loading ? (
+        <CatalogueLoading />
+      ) : !shelf ? (
+        <Text className="text-base text-muted">{t`This shelf has no decks now.`}</Text>
+      ) : (
         <>
           <ShelfGrid decks={shelf.decks} added={catalogue.added} />
           <OtherShelves shelf={shelf} shelves={catalogue.shelves} />

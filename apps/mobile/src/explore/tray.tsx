@@ -1,48 +1,24 @@
-import { modeOf } from "@lymi/core";
+import { modeOf, REVIEW_MODE_KEYS } from "@lymi/core";
 import { type PublicDeckSummary, trayHue } from "@lymi/core/catalog";
+import { hues } from "@lymi/design";
 import { Image, View } from "react-native";
 import { API_URL } from "../auth/client";
 import { usePalette, useRoom } from "../theme/palette";
 import { Text } from "../ui/primitives";
 
-/**
- * The eight tray hues as sRGB, from `packages/design/tray.css`: oklch(0.958 0.042 h) by day and
- * oklch(0.3 0.065 h) at night, so a deck arrives at the same colour as on the web.
- */
-const TRAY = {
-  light: ["#ffe7e3", "#f2f4d4", "#defae3", "#d2fbfa", "#d7f6ff", "#ebefff", "#fee9ff", "#ffe6f5"],
-  dark: ["#491f1d", "#303000", "#11371b", "#003738", "#003249", "#28294e", "#3c2242", "#451f32"],
-} as const;
-/** The card at night sits lighter than its tray, dark enough that muted text keeps 4.5:1. */
-const NIGHT_CARD = "#3a342f";
+type Surface = keyof Omit<typeof hues, "nightCard">;
 
-export function useTrayColour(slug: string): string {
-  const room = TRAY[useRoom()];
-  return room[trayHue(slug)] ?? room[0];
+/** A deck's or shelf's hue as one surface wears it, generated from `@lymi/design/tray.css`. */
+function useHue(surface: Surface, key: string): string {
+  const room = hues[surface][useRoom()];
+  return room[trayHue(key)] ?? room[0];
 }
 
-/** A deck's page wears its hue a step quieter, oklch(0.958 0.034 h) and oklch(0.19 0.03 h). */
-const COVER = {
-  light: ["#ffe9e6", "#f2f4da", "#e2f8e5", "#d8f9f8", "#dcf6ff", "#ecefff", "#fceaff", "#ffe8f4"],
-  dark: ["#200e0d", "#151505", "#09180c", "#021818", "#05161f", "#111221", "#1a0f1c", "#1e0e16"],
-} as const;
-
-/** A shelf's page lays its hue as a pool of light, oklch(0.955 0.05 h) and oklch(0.23 0.045 h). */
-const POOL = {
-  light: ["#ffe4df", "#f2f4cd", "#d9fadf", "#cafbfa", "#d1f6ff", "#e9edff", "#ffe6ff", "#ffe3f5"],
-  dark: ["#2f1412", "#1e1f03", "#0b2311", "#002323", "#03202f", "#191a32", "#26152a", "#2c1320"],
-} as const;
-
+export const useTrayColour = (slug: string) => useHue("tray", slug);
+/** A deck's page wears its hue a step quieter than its tray. */
+export const useCoverColour = (slug: string) => useHue("cover", slug);
 /** A shelf's colour follows its address, as on lymi.app, so a shelf looks the same in both. */
-export function usePoolColour(name: string): string {
-  const room = POOL[useRoom()];
-  return room[trayHue(name)] ?? room[0];
-}
-
-export function useCoverColour(slug: string): string {
-  const room = COVER[useRoom()];
-  return room[trayHue(slug)] ?? room[0];
-}
+export const usePoolColour = (name: string) => useHue("pool", name);
 
 /** A long word would break mid-letter at the full size, and a long cue would run past three lines. */
 function cueStep(text: string): number {
@@ -56,7 +32,9 @@ export type TrayCard = NonNullable<PublicDeckSummary["card"]>;
 /** The card turned over as a tray draws it: what its mode asks above the rule, the answer under it. */
 export function CardFace({ card, cw }: { card: TrayCard; cw: number }) {
   const p = usePalette();
-  const { cue, target } = modeOf(card.mode);
+  // The mode list is open, so a mode added after this release previews as term then meaning.
+  const known = (REVIEW_MODE_KEYS as readonly string[]).includes(card.mode);
+  const { cue, target } = modeOf(known ? card.mode : "term_to_meaning");
   const picture = cue === "image" ? card.image : undefined;
   const cueText = cue === "meaning" ? card.meaning : card.term;
   const step = cueStep(cueText);
@@ -153,7 +131,7 @@ export function DeckTray({ deck, cw, flush = false }: TrayProps) {
   const dark = useRoom() === "dark";
   const tray = useTrayColour(deck.slug);
   const ch = cw * 1.12;
-  const face = dark ? NIGHT_CARD : p.plate;
+  const face = dark ? hues.nightCard : p.plate;
   const sheet = {
     position: "absolute",
     top: 0,

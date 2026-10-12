@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { useCatalogue, useShelfLabel } from "../../../explore/catalogue";
 import { ShelfGrid, ShelfRows } from "../../../explore/layouts";
-import { Button, Press, Text } from "../../../ui/primitives";
+import { CatalogueFailed, CatalogueLoading } from "../../../explore/states";
+import { Press, Text } from "../../../ui/primitives";
 import { BarGroup, Screen } from "../../../ui/screen";
 import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
-import { Skeleton } from "../../../ui/skeleton";
 
 /**
  * Explore: every deck Lymi publishes, a shelf per language and then per subject, each a row that
@@ -52,15 +52,9 @@ export default function Explore() {
       }
     >
       {catalogue.failed ? (
-        <View className="items-start gap-3">
-          <Text className="text-md text-text">{t`Couldn’t load Explore`}</Text>
-          <Button label={t`Try again`} size="sm" onPress={catalogue.retry} />
-        </View>
+        <CatalogueFailed onRetry={catalogue.retry} busy={catalogue.retrying} />
       ) : catalogue.loading ? (
-        <View className="gap-3">
-          <Skeleton width={160} height={28} />
-          <Skeleton height={144} />
-        </View>
+        <CatalogueLoading />
       ) : shelf ? (
         <View className="gap-4">
           <FilterLine shelf={shelf} label={label(shelf)} onClear={() => setFilter(undefined)} />

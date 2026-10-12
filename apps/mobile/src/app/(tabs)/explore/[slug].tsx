@@ -8,7 +8,7 @@ import { useState } from "react";
 import { ActivityIndicator, Image, ScrollView, useWindowDimensions, View } from "react-native";
 import Animated, { ZoomIn } from "react-native-reanimated";
 import { API_URL } from "../../../auth/client";
-import { useAddDeck, useAddFailure } from "../../../explore/catalogue";
+import { useAddDeck, useAddFailure, useTagLabel } from "../../../explore/catalogue";
 import { DeckHand, handOf } from "../../../explore/deck-hand";
 import { DeckTile } from "../../../explore/layouts";
 import { useCoverColour } from "../../../explore/tray";
@@ -31,6 +31,8 @@ export default function ExploreDeck() {
   const ground = useCoverColour(slug);
   const back = { label: t`Explore`, to: "/explore" as const };
 
+  // A failed refresh keeps the page already on screen; only a page never read shows the error.
+  if (query.data) return <DeckPage data={query.data} ground={ground} back={back} />;
   if (query.isError) {
     return (
       <Screen title={name ?? t`Deck`} back={back}>
@@ -44,19 +46,16 @@ export default function ExploreDeck() {
       </Screen>
     );
   }
-  if (!query.data) {
-    return (
-      <Screen
-        title={name ?? ""}
-        back={back}
-        ground={{ colour: ground, shape: "fade" }}
-        header={<HeaderSkeleton />}
-      >
-        <Skeleton height={160} />
-      </Screen>
-    );
-  }
-  return <DeckPage data={query.data} ground={ground} back={back} />;
+  return (
+    <Screen
+      title={name ?? ""}
+      back={back}
+      ground={{ colour: ground, shape: "fade" }}
+      header={<HeaderSkeleton />}
+    >
+      <Skeleton height={160} />
+    </Screen>
+  );
 }
 
 function HeaderSkeleton() {
@@ -110,6 +109,7 @@ function DeckPage({
           {deck.name}
         </Text>
         <Text className="text-center text-md text-text-2">{deck.summary}</Text>
+        <DeckTags tags={deck.tags} />
       </View>
       <View className="self-stretch">
         {deckId ? (
@@ -194,6 +194,36 @@ function DeckPage({
 
       {related.length > 0 && <MoreLikeThis related={related} />}
     </Screen>
+  );
+}
+
+/** What the deck is for, as plain chips in the ground's own hue; they lead nowhere yet. */
+function DeckTags({ tags }: { tags: string[] }) {
+  const { t } = useLingui();
+  const p = usePalette();
+  const label = useTagLabel();
+  const named = tags.flatMap((tag) => {
+    const text = label(tag);
+    return text ? [{ tag, text }] : [];
+  });
+  if (named.length === 0) return null;
+  return (
+    <View
+      className="flex-row flex-wrap justify-center gap-1.5 pt-1"
+      accessibilityRole="list"
+      accessibilityLabel={t`Tags`}
+    >
+      {named.map(({ tag, text }) => (
+        <View
+          key={tag}
+          className="min-h-7 justify-center rounded-full px-2.5"
+          // Ink at a low opacity darkens the ground by day and lightens it at night, keeping its hue.
+          style={{ backgroundColor: `${p.text}12` }}
+        >
+          <Text className="text-sm font-medium text-text-2">{text}</Text>
+        </View>
+      ))}
+    </View>
   );
 }
 

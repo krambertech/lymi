@@ -4,8 +4,9 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useMemo } from "react";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { searchDecks, searchShelves, useCatalogue, useShelfLabel } from "../explore/catalogue";
+import { useCatalogue, useCatalogueSearch, useShelfLabel } from "../explore/catalogue";
 import { DeckList, ShelfList } from "../explore/layouts";
+import { CatalogueFailed, CatalogueLoading } from "../explore/states";
 import { KeyboardRoom } from "../ui/keyboard";
 import { SectionTitle, Text } from "../ui/primitives";
 import { SearchBar, useSearchText } from "../ui/search-bar";
@@ -25,14 +26,7 @@ export default function ExploreSearch() {
   const { q } = useLocalSearchParams<{ q?: string }>();
   const { text, setText } = useSearchText(q);
   const query = text.trim();
-  const hits = useMemo(
-    () => searchDecks(catalogue.shelves, query, label),
-    [catalogue.shelves, query, label],
-  );
-  const shelves = useMemo(
-    () => searchShelves(catalogue.shelves, query, label),
-    [catalogue.shelves, query, label],
-  );
+  const { shelves, decks: hits } = useCatalogueSearch(catalogue.shelves, query);
   const shelfOf = useMemo(() => {
     const at = new Map<string, string>();
     for (const shelf of catalogue.shelves)
@@ -50,11 +44,20 @@ export default function ExploreSearch() {
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="interactive"
         >
-          {query && hits.length === 0 && shelves.length === 0 && (
-            <Text className="px-1 text-base text-muted">
-              {t`No decks match “${query}”. Try a word from a card, or a language.`}
-            </Text>
-          )}
+          {query && catalogue.failed ? (
+            <CatalogueFailed onRetry={catalogue.retry} busy={catalogue.retrying} />
+          ) : query && catalogue.loading ? (
+            <CatalogueLoading />
+          ) : null}
+          {query &&
+            !catalogue.loading &&
+            !catalogue.failed &&
+            hits.length === 0 &&
+            shelves.length === 0 && (
+              <Text className="px-1 text-base text-muted">
+                {t`No decks match “${query}”. Try a word from a card, or a language.`}
+              </Text>
+            )}
           {shelves.length > 0 && (
             <View>
               <SectionTitle>{t`Shelves`}</SectionTitle>

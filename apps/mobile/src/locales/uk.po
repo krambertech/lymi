@@ -327,6 +327,9 @@ msgstr "«{term}» додано. Картка збережена на цьому
 msgid "Added {count, plural, one {# card} other {# cards}} to {deck}"
 msgstr "Додано {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} до колоди «{deck}»"
 
+msgid "Adding a deck needs a connection. Connect and try again."
+msgstr "Щоб додати колоду, потрібне з’єднання. Підключися й спробуй ще раз."
+
 msgid "Ahead"
 msgstr "Попереду"
 
@@ -365,6 +368,10 @@ msgstr "Усі"
 
 msgid "All shelves"
 msgstr "Усі полиці"
+
+msgctxt "deck tag"
+msgid "Alphabet"
+msgstr "Алфавіт"
 
 msgid "Also on your list"
 msgstr "Ще для повторення"
@@ -455,6 +462,10 @@ msgstr "через API"
 msgid "by you"
 msgstr "тобою"
 
+msgctxt "deck tag"
+msgid "Canadian citizenship test"
+msgstr "Тест на громадянство Канади"
+
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -478,6 +489,10 @@ msgstr "Картки з вівторкових уроків Марко."
 
 msgid "Cards outside a section"
 msgstr "Картки без розділу"
+
+msgctxt "deck tag"
+msgid "CCSE Spanish nationality test"
+msgstr "Іспит CCSE на громадянство Іспанії"
 
 msgid "Change daily goal"
 msgstr "Змінити денну мету"
@@ -551,6 +566,14 @@ msgstr "Продовжити"
 
 msgid "Continue with Google"
 msgstr "Продовжити з Google"
+
+msgctxt "deck tag"
+msgid "Conversation"
+msgstr "Розмовна мова"
+
+msgctxt "deck tag"
+msgid "Core vocabulary"
+msgstr "Базова лексика"
 
 msgid "Couldn’t add the deck. Check your connection and try again."
 msgstr "Не вдалося додати колоду. Перевір з’єднання й повтори спробу."
@@ -647,6 +670,10 @@ msgctxt "language"
 msgid "Czech"
 msgstr "Чеська"
 
+msgctxt "deck tag"
+msgid "Czech citizenship test"
+msgstr "Іспит на громадянство Чехії"
+
 msgid "Daily goal"
 msgstr "Денна мета"
 
@@ -710,6 +737,10 @@ msgstr "Деталі"
 
 msgid "Dismiss"
 msgstr "Закрити"
+
+msgctxt "deck tag"
+msgid "DMV written test"
+msgstr "Теоретичний іспит DMV"
 
 msgid "Don’t use “Lymi” in your password."
 msgstr "Не використовуй «Lymi» в паролі."
@@ -863,6 +894,10 @@ msgstr "Фінська"
 msgid "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
 msgstr "Для подорожі, перших уроків або словників Goethe від A1 до B1."
 
+msgctxt "deck tag"
+msgid "For beginners"
+msgstr "Для початківців"
+
 msgid "For reading kana, a first trip, and JLPT N5 and N4 vocabulary."
 msgstr "Щоб читати кану, вирушити в першу подорож і вивчити лексику JLPT N5 та N4."
 
@@ -913,11 +948,19 @@ msgstr "Назви колоду."
 msgid "Give the series a name."
 msgstr "Дай серії назву."
 
+msgctxt "deck tag"
+msgid "Goethe-Zertifikat A1"
+msgstr "Goethe-Zertifikat A1"
+
 msgid "Good"
 msgstr "Добре"
 
 msgid "Graded Forgot today"
 msgstr "Сьогодні з оцінкою «Не пам’ятаю»"
+
+msgctxt "deck tag"
+msgid "Grammar"
+msgstr "Граматика"
 
 msgid "Grammar, usage, anything else"
 msgstr "Граматика, вживання, будь-що інше"
@@ -966,6 +1009,10 @@ msgstr "Скільки повторень на день зберігає лік 
 
 msgid "How your memory is doing"
 msgstr "Як справи з твоєю пам’яттю"
+
+msgctxt "deck tag"
+msgid "HSK 1"
+msgstr "HSK 1"
 
 msgctxt "language"
 msgid "Hungarian"
@@ -1042,6 +1089,10 @@ msgctxt "language"
 msgid "Japanese"
 msgstr "Японська"
 
+msgctxt "deck tag"
+msgid "JLPT N5"
+msgstr "JLPT N5"
+
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Завзято"
@@ -1100,6 +1151,10 @@ msgstr "Вийти з колоди"
 
 msgid "Leave it empty and the AI fills it in"
 msgstr "Залиш порожнім, і AI доповнить"
+
+msgctxt "deck tag"
+msgid "Leben in Deutschland test"
+msgstr "Тест Leben in Deutschland"
 
 msgid "Lesson"
 msgstr "Урок"
@@ -1821,6 +1876,9 @@ msgstr "Зображення цієї картки прибрано."
 msgid "This series is no longer here."
 msgstr "Цієї серії вже немає."
 
+msgid "This shelf has no decks now."
+msgstr "На цій полиці зараз немає колод."
+
 msgid "This version of the app is out of date. Update it to keep reviewing."
 msgstr "Ця версія застосунку застаріла. Онови її, щоб і далі повторювати картки."
 
@@ -1870,6 +1928,14 @@ msgstr "Забагато спроб. Спробуй трохи згодом."
 msgid "Too many tries with this code. Send a new one."
 msgstr "Забагато спроб із цим кодом. Надішли новий."
 
+msgctxt "deck tag"
+msgid "TOPIK I"
+msgstr "TOPIK I"
+
+msgctxt "deck tag"
+msgid "Travel"
+msgstr "Подорожі"
+
 msgid "Try a memory hook"
 msgstr "Спробуй зачіпку"
 
@@ -1910,6 +1976,10 @@ msgstr "Онови Lymi"
 
 msgid "Uploading"
 msgstr "Завантаження"
+
+msgctxt "deck tag"
+msgid "US civics test"
+msgstr "Тест на громадянство США"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Використай щонайменше {MIN_PASSWORD_LENGTH} символів."

@@ -327,6 +327,9 @@ msgstr "«{term}» добавлено. Карточка сохранена на 
 msgid "Added {count, plural, one {# card} other {# cards}} to {deck}"
 msgstr "{count, plural, one {Добавлена # карточка} few {Добавлено # карточки} many {Добавлено # карточек} other {Добавлено # карточки}} в колоду «{deck}»"
 
+msgid "Adding a deck needs a connection. Connect and try again."
+msgstr "Чтобы добавить колоду, нужно соединение. Подключись и попробуй ещё раз."
+
 msgid "Ahead"
 msgstr "Впереди"
 
@@ -365,6 +368,10 @@ msgstr "Все"
 
 msgid "All shelves"
 msgstr "Все полки"
+
+msgctxt "deck tag"
+msgid "Alphabet"
+msgstr "Алфавит"
 
 msgid "Also on your list"
 msgstr "Ещё для повторения"
@@ -455,6 +462,10 @@ msgstr "через API"
 msgid "by you"
 msgstr "тобой"
 
+msgctxt "deck tag"
+msgid "Canadian citizenship test"
+msgstr "Тест на гражданство Канады"
+
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -478,6 +489,10 @@ msgstr "Карточки с уроков Марко по вторникам."
 
 msgid "Cards outside a section"
 msgstr "Карточки без раздела"
+
+msgctxt "deck tag"
+msgid "CCSE Spanish nationality test"
+msgstr "Экзамен CCSE на гражданство Испании"
 
 msgid "Change daily goal"
 msgstr "Изменить дневную цель"
@@ -551,6 +566,14 @@ msgstr "Продолжить"
 
 msgid "Continue with Google"
 msgstr "Продолжить с Google"
+
+msgctxt "deck tag"
+msgid "Conversation"
+msgstr "Разговорная речь"
+
+msgctxt "deck tag"
+msgid "Core vocabulary"
+msgstr "Базовая лексика"
 
 msgid "Couldn’t add the deck. Check your connection and try again."
 msgstr "Не удалось добавить колоду. Проверь соединение и попробуй снова."
@@ -647,6 +670,10 @@ msgctxt "language"
 msgid "Czech"
 msgstr "Чешский"
 
+msgctxt "deck tag"
+msgid "Czech citizenship test"
+msgstr "Экзамен на гражданство Чехии"
+
 msgid "Daily goal"
 msgstr "Дневная цель"
 
@@ -710,6 +737,10 @@ msgstr "Подробности"
 
 msgid "Dismiss"
 msgstr "Закрыть"
+
+msgctxt "deck tag"
+msgid "DMV written test"
+msgstr "Теоретический экзамен DMV"
 
 msgid "Don’t use “Lymi” in your password."
 msgstr "Не используй «Lymi» в пароле."
@@ -863,6 +894,10 @@ msgstr "Финский"
 msgid "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
 msgstr "Для поездки, первых уроков или словарей Goethe от A1 до B1."
 
+msgctxt "deck tag"
+msgid "For beginners"
+msgstr "Для начинающих"
+
 msgid "For reading kana, a first trip, and JLPT N5 and N4 vocabulary."
 msgstr "Чтобы читать кану, отправиться в первую поездку и выучить лексику JLPT N5 и N4."
 
@@ -913,11 +948,19 @@ msgstr "Назови колоду."
 msgid "Give the series a name."
 msgstr "Дай серии название."
 
+msgctxt "deck tag"
+msgid "Goethe-Zertifikat A1"
+msgstr "Goethe-Zertifikat A1"
+
 msgid "Good"
 msgstr "Хорошо"
 
 msgid "Graded Forgot today"
 msgstr "Сегодня с оценкой «Не помню»"
+
+msgctxt "deck tag"
+msgid "Grammar"
+msgstr "Грамматика"
 
 msgid "Grammar, usage, anything else"
 msgstr "Грамматика, употребление, что угодно ещё"
@@ -966,6 +1009,10 @@ msgstr "Сколько повторений в день сохраняет сч�
 
 msgid "How your memory is doing"
 msgstr "Как дела с твоей памятью"
+
+msgctxt "deck tag"
+msgid "HSK 1"
+msgstr "HSK 1"
 
 msgctxt "language"
 msgid "Hungarian"
@@ -1042,6 +1089,10 @@ msgctxt "language"
 msgid "Japanese"
 msgstr "Японский"
 
+msgctxt "deck tag"
+msgid "JLPT N5"
+msgstr "JLPT N5"
+
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Усердно"
@@ -1100,6 +1151,10 @@ msgstr "Выйти из колоды"
 
 msgid "Leave it empty and the AI fills it in"
 msgstr "Оставь пустым, и AI дополнит"
+
+msgctxt "deck tag"
+msgid "Leben in Deutschland test"
+msgstr "Тест Leben in Deutschland"
 
 msgid "Lesson"
 msgstr "Урок"
@@ -1821,6 +1876,9 @@ msgstr "Изображение этой карточки убрано."
 msgid "This series is no longer here."
 msgstr "Этой серии больше нет."
 
+msgid "This shelf has no decks now."
+msgstr "На этой полке сейчас нет колод."
+
 msgid "This version of the app is out of date. Update it to keep reviewing."
 msgstr "Эта версия приложения устарела. Обнови её, чтобы продолжать повторять карточки."
 
@@ -1870,6 +1928,14 @@ msgstr "Слишком много попыток. Попробуй чуть по
 msgid "Too many tries with this code. Send a new one."
 msgstr "Слишком много попыток с этим кодом. Отправь новый."
 
+msgctxt "deck tag"
+msgid "TOPIK I"
+msgstr "TOPIK I"
+
+msgctxt "deck tag"
+msgid "Travel"
+msgstr "Путешествия"
+
 msgid "Try a memory hook"
 msgstr "Попробуй зацепку"
 
@@ -1910,6 +1976,10 @@ msgstr "Обнови Lymi"
 
 msgid "Uploading"
 msgstr "Загрузка"
+
+msgctxt "deck tag"
+msgid "US civics test"
+msgstr "Тест на гражданство США"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Используй не меньше {MIN_PASSWORD_LENGTH} символов."

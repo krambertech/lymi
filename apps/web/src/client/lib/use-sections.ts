@@ -1,10 +1,10 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import type { DeckRow } from "@lymi/client/deck-list";
 import type { SectionArchiveInput } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "../components/ui/toast";
 import { api, errorMessage, type Section, type Sections } from "./api";
-import type { DeckRow } from "./deck-list";
 import { deckCardsQuery, sectionsQuery } from "./queries";
 
 /**

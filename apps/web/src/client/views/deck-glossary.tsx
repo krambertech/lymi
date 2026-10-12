@@ -15,6 +15,14 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { Trans, useLingui } from "@lingui/react/macro";
+import {
+  type DeckGroup,
+  type DeckRow,
+  type DeckSort,
+  dueBucket,
+  rowState,
+  splitForms,
+} from "@lymi/client/deck-list";
 import { clsx } from "clsx";
 import {
   Check,
@@ -48,14 +56,6 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import type { Section, Sections } from "../lib/api";
-import {
-  type DeckGroup,
-  type DeckRow,
-  type DeckSort,
-  dueBucket,
-  rowState,
-  splitForms,
-} from "../lib/deck-list";
 
 const DAY = 86_400_000;
 

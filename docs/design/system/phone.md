@@ -84,6 +84,14 @@ A cold start lights the lantern. The launch screen is the unlit lantern in the m
 
 When the Worker no longer serves the installed release, the whole app becomes one screen: the lantern, Update Lymi, a line saying unsent reviews and cards are kept when there are any, and one amber Update that opens TestFlight or the App Store. It has no close and no way back, because every request would be refused. It is a route guarded ahead of every other, so an open review closes under it and a widget or notification link lands on it. ADR 0032 owns when it shows.
 
+## Offline
+
+The phone keeps its query cache in MMKV for 30 days, as long as an unused session lasts, and fetches every deck's cards, sections and draw once while online, as the web does ([ADR 0023](../../adr/0023-offline-writes-queue-on-the-device-and-replay-in-order.md)). A cold launch with no connection opens Today, Library and each deck as of the last sync, and a review runs on the kept draw. The cache is versioned by the shapes the screens read rather than by the app's version, so an update fetched online never empties the next launch offline.
+
+While a screen shows what was kept, one muted line with a cloud at its top says so and since when: "You’re offline. Showing your cards as of 14:05." It is not an error and asks nothing. Today counts what is due from the kept draw and this phone's grades, because the decks' counts miss everything since the last sync. With nothing kept yet, Today says it couldn't load and offers to try again. Coming back online says nothing: queued grades and writes send, the screens refresh, and the line goes.
+
+Signing out asks first when grades or changes made offline have not landed, as the web does, then forgets this learner's cache, outboxes and Add a word's choices; the theme and the reminder stay with the phone.
+
 ## Haptics
 
 A haptic answers a touch or marks the goal. These are all of them:

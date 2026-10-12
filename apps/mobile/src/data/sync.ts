@@ -1,11 +1,12 @@
 import { api } from "@lymi/client/api";
+import { warmCache } from "@lymi/client/cache";
 import { retireGrades } from "@lymi/client/grades";
 import { claimWrites, flushWrites, onNotice } from "@lymi/client/writes";
 import { useQueryClient } from "@tanstack/react-query";
 import { addNetworkStateListener } from "expo-network";
 import { useEffect } from "react";
 import { Alert, AppState } from "react-native";
-import { useDraw } from "./queries";
+import { useDecks, useDraw } from "./queries";
 
 /** What a new day or a replayed grade moves, refetched together. */
 const DAY_KEYS = [["decks"], ["rounds"], ["streak"], ["queue"]];
@@ -50,6 +51,17 @@ export function Sync({ learnerId }: { learnerId: string }) {
       network.remove();
     };
   }, [learnerId, qc]);
+
+  // Every deck's cards, sections and draw are fetched once while online, so each opens offline.
+  // Keyed on the ids, not the list, so a review moving a count does not start it again.
+  const deckIds = useDecks()
+    .data?.map((deck) => deck.id)
+    .join(" ");
+  useEffect(() => {
+    if (!deckIds) return;
+    const idle = setTimeout(() => void warmCache(qc, deckIds.split(" ")), 2000);
+    return () => clearTimeout(idle);
+  }, [deckIds, qc]);
 
   // A write made offline that the server would not take is said once, naming what it was.
   useEffect(

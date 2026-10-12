@@ -1,7 +1,8 @@
 import "../global.css";
 import { I18nProvider } from "@lingui/react";
 import { useUpdateRequired } from "@lymi/client/update-required";
-import { QueryClientProvider } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { registerDevMenuItems } from "expo-dev-menu";
 import { isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { DarkTheme, DefaultTheme, router, Stack, ThemeProvider, usePathname } from "expo-router";
@@ -12,6 +13,7 @@ import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { useSession } from "../auth/client";
+import { forgetLearner, persistOptions } from "../data/cache";
 import { queryClient } from "../data/client";
 import { Sync } from "../data/sync";
 import { i18n } from "../i18n";
@@ -42,13 +44,14 @@ if (__DEV__) {
 export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <QueryClientProvider client={queryClient}>
+      {/* Today, Library and each deck open as of the last sync, even with no connection. */}
+      <PersistQueryClientProvider client={queryClient} persistOptions={persistOptions}>
         <I18nProvider i18n={i18n}>
           <KeyboardProvider>
             <Root />
           </KeyboardProvider>
         </I18nProvider>
-      </QueryClientProvider>
+      </PersistQueryClientProvider>
     </GestureHandlerRootView>
   );
 }
@@ -81,6 +84,12 @@ function Root() {
     setKindling(false);
   }, []);
   useGiveUp(kindling, lands !== undefined, giveUp);
+  // Signed out, or a session that lapsed: whoever signs in next starts with nothing of this learner's.
+  const qc = useQueryClient();
+  const signedOut = !session.isPending && !signedIn;
+  useEffect(() => {
+    if (signedOut) forgetLearner(qc);
+  }, [signedOut, qc]);
   const base = dark ? DarkTheme : DefaultTheme;
   // The navigation theme carries the room, so native chrome never flashes white between tabs.
   const theme = {

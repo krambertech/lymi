@@ -6,6 +6,7 @@ import { Pressable, View, type ViewStyle } from "react-native";
 import { languageName } from "../../../data/languages";
 import { standing, useDeckCards, useDecks } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
+import { OfflineNote } from "../../../ui/offline-note";
 import { Plate, RowArrow, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
@@ -17,9 +18,11 @@ import { Screen } from "../../../ui/screen";
 export default function Library() {
   const { t } = useLingui();
   const router = useRouter();
-  const decks = useDecks().data ?? [];
+  const query = useDecks();
+  const decks = query.data ?? [];
   return (
     <Screen title="Library" kind="tab">
+      <OfflineNote query={query} />
       <View className="gap-3">
         {decks.map((d) => (
           <DeckRow key={d.id} deck={d} />

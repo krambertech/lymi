@@ -5,6 +5,9 @@ import { createMMKV } from "react-native-mmkv";
 /** The grade and write outboxes, by the keys `@lymi/client` gives them. */
 export const outboxStore = createMMKV({ id: "lymi-outboxes" });
 
+/** The query cache as of the last sync, so a cold launch offline opens on it. ADR 0023. */
+export const cacheStore = createMMKV({ id: "lymi-cache" });
+
 /** The app language chosen on this phone, until the account's setting arrives. */
 export const languageStore = createMMKV({ id: "lymi-language" });
 export const LANGUAGE_KEY = "language";

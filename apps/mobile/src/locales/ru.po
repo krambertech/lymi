@@ -149,6 +149,9 @@ msgstr "{name} больше не в колоде «{deck}»"
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "Запомнено: {passed}, забыто: {failed}"
 
+msgid "{queued, plural, one {# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades and changes made offline are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
+msgstr "{queued, plural, one {# оценка или изменение, сделанное офлайн, ещё не дошло до Lymi. Выйди, когда снова будешь онлайн, чтобы его сохранить.} few {# оценки и изменения, сделанные офлайн, ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы их сохранить.} many {# оценок и изменений, сделанных офлайн, ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы их сохранить.} other {# оценки и изменения, сделанные офлайн, ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы их сохранить.}}"
+
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {день подряд} few {дня подряд} many {дней подряд} other {дня подряд}}"
 
@@ -1073,8 +1076,14 @@ msgstr "Войти через почту"
 msgid "Sign out"
 msgstr "Выйти"
 
+msgid "Sign out and lose them"
+msgstr "Выйти и потерять их"
+
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Вход не завершён. Попробуй снова."
+
+msgid "Some offline work hasn’t synced"
+msgstr "Не всё сделанное офлайн синхронизировано"
 
 msgid "Someone"
 msgstr "Кто-то"
@@ -1084,6 +1093,9 @@ msgstr "Источник"
 
 msgid "Start with a deck"
 msgstr "Начни с колоды"
+
+msgid "Stay signed in"
+msgstr "Остаться в приложении"
 
 msgctxt "daily goal"
 msgid "Steady"
@@ -1291,6 +1303,9 @@ msgstr "На сегодня всё"
 
 msgid "You’re done for today."
 msgstr "На сегодня всё."
+
+msgid "You’re offline. Showing your cards as of {when}."
+msgstr "Ты офлайн. Здесь твои карточки по состоянию на {when}."
 
 msgid "Your cards and your streak, on every device."
 msgstr "Твои карточки и счёт дней подряд на любом устройстве."

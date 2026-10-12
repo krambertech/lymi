@@ -14,11 +14,6 @@ msgstr "«{term}» уже є в колоді {deckName}"
 msgid "{0, plural, one {card due} other {cards due}}"
 msgstr "{0, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
-#. placeholder {0}: d.due
-#. placeholder {1}: d.decks
-msgid "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck} other {# decks}}"
-msgstr "{0, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}} у {1, plural, one {# колоді} few {# колодах} many {# колодах} other {# колодах}}"
-
 msgid "{current, plural, one {Your #-day streak carries on.} other {Your #-day streak carries on.}}"
 msgstr "{current, plural, one {# день поспіль, і лік триває.} few {# дні поспіль, і лік триває.} many {# днів поспіль, і лік триває.} other {# дня поспіль, і лік триває.}}"
 

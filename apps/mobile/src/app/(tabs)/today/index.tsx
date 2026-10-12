@@ -1,6 +1,5 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { groupDecks } from "@lymi/client/library-groups";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS, type StreakOut } from "@lymi/core";
 import * as Haptics from "expo-haptics";
 import { type Href, useIsFocused, useRouter } from "expo-router";
@@ -9,7 +8,7 @@ import { View, type ViewStyle } from "react-native";
 import { Flame } from "../../../brand/flame";
 import { Lantern } from "../../../brand/lantern";
 import { REST_DISMISSED_KEY, todayStore } from "../../../data/kept";
-import { useDay, useDecks, useRounds, useSeries, useStreak } from "../../../data/queries";
+import { useDay, useDecks, useRounds, useStreak } from "../../../data/queries";
 import { clear, usePalette, useRoom } from "../../../theme/palette";
 import {
   Button,
@@ -34,7 +33,6 @@ import { Skeleton } from "../../../ui/skeleton";
 export default function Today() {
   const { t } = useLingui();
   const decks = useDecks();
-  const series = useSeries();
   const streak = useStreak();
   const rounds = useRounds();
   const day = useDay();
@@ -80,9 +78,7 @@ export default function Today() {
         )}
       </View>
       {!loading && !nothingYet && rounds.data && <Rounds rounds={rounds.data} />}
-      {!loading && decks.data && decks.data.length > 1 && (
-        <DecksToReview decks={decks.data} series={series.data} />
-      )}
+      {!loading && decks.data && decks.data.length > 1 && <DecksToReview decks={decks.data} />}
     </Screen>
   );
 }
@@ -406,44 +402,13 @@ function RowPlus() {
 }
 
 /**
- * The decks with something due, shown once there are two or more decks. A series is what the
- * learner chose to review together, so it is one row and its decks get none.
+ * The decks with something due, shown once there are two or more decks. A series stays as its
+ * decks until the review can take one (#577); then it is one row, as on the web.
  */
-function DecksToReview({
-  decks,
-  series,
-}: {
-  decks: Deck[];
-  series: ReturnType<typeof useSeries>["data"];
-}) {
+function DecksToReview({ decks }: { decks: Deck[] }) {
   const { t } = useLingui();
   const router = useRouter();
-  const groups = groupDecks(decks, series);
-  const rows = [
-    ...groups.loose
-      .filter((d) => d.due > 0)
-      .map((d) => ({
-        key: d.id,
-        name: d.name,
-        due: d.due,
-        decks: 0,
-        href: `/review?deck=${d.id}`,
-      })),
-    ...groups.series.flatMap(({ series: s, decks: inSeries }) => {
-      const due = inSeries.reduce((n, d) => n + d.due, 0);
-      return due > 0
-        ? [
-            {
-              key: s.id,
-              name: s.name,
-              due,
-              decks: inSeries.filter((d) => d.due > 0).length,
-              href: `/review?series=${s.id}`,
-            },
-          ]
-        : [];
-    }),
-  ];
+  const rows = decks.filter((d) => d.due > 0);
   if (rows.length === 0) return null;
   return (
     <View>
@@ -463,15 +428,12 @@ function DecksToReview({
       </SectionTitle>
       <Plate className="overflow-hidden">
         {rows.map((d, i) => {
-          const line =
-            d.decks > 0
-              ? t`${plural(d.due, { one: "card due", other: "cards due" })} in ${plural(d.decks, { one: "# deck", other: "# decks" })}`
-              : plural(d.due, { one: "card due", other: "cards due" });
+          const line = plural(d.due, { one: "card due", other: "cards due" });
           return (
             <Press
-              key={d.key}
+              key={d.id}
               scale={0.99}
-              onPress={() => startReview(router, d.href as Href)}
+              onPress={() => startReview(router, `/review?deck=${d.id}`)}
               accessibilityRole="link"
               accessibilityLabel={`${d.name}. ${d.due} ${line}`}
             >

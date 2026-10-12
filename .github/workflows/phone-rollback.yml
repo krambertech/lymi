@@ -1,0 +1,45 @@
+name: Phone rollback
+
+# Undoes the newest update on a branch: a partial rollout is reverted, otherwise the update before
+# it on the same runtime comes back, or the binary's own bundle when there is none. Installs pick
+# it up on their next launch. docs/phone-release.md.
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Which installs to roll back
+        required: true
+        default: production
+        type: choice
+        options: [production, beta]
+      group:
+        description: An update group ID to bring back instead (optional)
+        required: false
+        type: string
+
+concurrency:
+  group: phone-${{ inputs.branch == 'beta' && 'beta' || 'production' }}
+  cancel-in-progress: false
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check EAS is set up
+        id: eas
+        run: |
+          node scripts/phone-release.mjs ready
+          grep -q '^ready=true' "$GITHUB_OUTPUT" || { echo "::error::EAS is not set up yet."; exit 1; }
+
+      - name: Roll back
+        env:
+          BRANCH: ${{ inputs.branch }}
+          GROUP: ${{ inputs.group }}
+        run: node scripts/phone-release.mjs rollback "$BRANCH" ${GROUP:+"$GROUP"}

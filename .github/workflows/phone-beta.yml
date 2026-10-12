@@ -1,0 +1,137 @@
+name: Phone beta
+
+# Every green merge to main that changes the phone reaches TestFlight installs: an over-the-air
+# update on the `beta` branch, and a `beta` build uploaded to TestFlight when the native
+# fingerprint has no build yet. ADR 0032; docs/phone-release.md has the setup.
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+# One release at a time; a newer merge waits, and replaces any older one still waiting.
+concurrency:
+  group: phone-beta
+  cancel-in-progress: false
+
+env:
+  POSTHOG_CLI: "@posthog/cli@0.18.10"
+  POSTHOG_CLI_HOST: https://eu.posthog.com
+  POSTHOG_CLI_PROJECT_ID: "292417"
+
+jobs:
+  beta:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 0
+
+      - name: Check EAS is set up
+        id: eas
+        run: node scripts/phone-release.mjs ready
+
+      - uses: pnpm/action-setup@v4
+        if: steps.eas.outputs.ready == 'true'
+
+      - uses: actions/setup-node@v5
+        if: steps.eas.outputs.ready == 'true'
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        if: steps.eas.outputs.ready == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Find the update installs have now
+        id: latest
+        if: steps.eas.outputs.ready == 'true'
+        run: node scripts/phone-release.mjs latest beta
+
+      # Pull request titles are the squash commits' subjects, so they are TestFlight's What to Test.
+      - name: Decide what to release
+        id: plan
+        if: steps.eas.outputs.ready == 'true'
+        env:
+          LAST: ${{ steps.latest.outputs.commit }}
+          MANUAL: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          paths=(apps/mobile packages/core packages/client packages/design package.json pnpm-lock.yaml
+            pnpm-workspace.yaml .pnpmfile.cjs ':!apps/mobile/contract' ':!apps/mobile/e2e' ':!**/*.md'
+            ':!**/*.test.ts')
+          if [ -n "$LAST" ] && git cat-file -e "$LAST^{commit}" 2>/dev/null; then
+            if [ "$LAST" != "$(git rev-parse HEAD)" ] && git merge-base --is-ancestor HEAD "$LAST"; then
+              echo "::notice title=Phone beta::A newer commit is already on beta."
+              echo "release=false" >> "$GITHUB_OUTPUT"; exit 0
+            fi
+            if [ "$MANUAL" != "true" ] && git diff --quiet "$LAST" HEAD -- "${paths[@]}"; then
+              echo "::notice title=Phone beta::Nothing the phone ships changed since the last beta update."
+              echo "release=false" >> "$GITHUB_OUTPUT"; exit 0
+            fi
+            range="$LAST..HEAD"
+          else
+            range="HEAD~1..HEAD"
+          fi
+          notes=$(git log --format='- %s' "$range" -- "${paths[@]}" | head -20)
+          {
+            echo "release=true"
+            echo "message=$(git log -1 --format=%s)"
+            echo "what_to_test<<EOF"
+            echo "${notes:-- $(git log -1 --format=%s)}"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Resolve the runtime version
+        id: runtime
+        if: steps.plan.outputs.release == 'true'
+        run: node scripts/phone-release.mjs runtime
+
+      - name: Look for a beta build of this runtime
+        id: build
+        if: steps.plan.outputs.release == 'true'
+        run: node scripts/phone-release.mjs has-build beta "${{ steps.runtime.outputs.runtime }}"
+
+      # A new binary embeds this commit, and the update lets earlier ones on the same runtime catch up.
+      - name: Build and send to TestFlight
+        if: steps.plan.outputs.release == 'true' && steps.build.outputs.build == 'false'
+        working-directory: apps/mobile
+        env:
+          WHAT_TO_TEST: ${{ steps.plan.outputs.what_to_test }}
+        run: >-
+          npx --yes eas-cli@24.13.0 build --profile beta --platform ios --auto-submit --no-wait
+          --non-interactive --what-to-test "$WHAT_TO_TEST"
+
+      - name: Publish the update to beta
+        if: steps.plan.outputs.release == 'true'
+        working-directory: apps/mobile
+        env:
+          MESSAGE: ${{ steps.plan.outputs.message }}
+        run: >-
+          npx --yes eas-cli@24.13.0 update --branch beta --platform ios --environment preview
+          --message "$MESSAGE" --non-interactive
+
+      # Hermes stack traces are unreadable without them; uploads match frames by the bundle's chunk ID.
+      - name: Upload the update's source maps to PostHog
+        if: steps.plan.outputs.release == 'true'
+        working-directory: apps/mobile
+        env:
+          POSTHOG_CLI_API_KEY: ${{ secrets.POSTHOG_CLI_API_KEY }}
+        run: |
+          if [ -z "$POSTHOG_CLI_API_KEY" ]; then
+            echo "::warning title=Phone source maps::POSTHOG_CLI_API_KEY is not set, so this update's errors stay unreadable."
+            exit 0
+          fi
+          npx --yes "$POSTHOG_CLI" --host "$POSTHOG_CLI_HOST" hermes upload --directory dist \
+            --release-name "$(node -p 'require("./app.json").expo.ios.bundleIdentifier')" \
+            --release-version "$(node -p 'require("./app.json").expo.version')"

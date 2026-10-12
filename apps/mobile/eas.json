@@ -1,0 +1,35 @@
+{
+  "cli": {
+    "version": ">= 24.13.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "base": {
+      "node": "22.22.3",
+      "pnpm": "10.16.1",
+      "ios": {
+        "image": "latest"
+      }
+    },
+    "beta": {
+      "extends": "base",
+      "channel": "beta",
+      "environment": "preview",
+      "autoIncrement": true
+    },
+    "production": {
+      "extends": "base",
+      "channel": "production",
+      "environment": "production",
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "beta": {
+      "ios": {}
+    },
+    "production": {
+      "ios": {}
+    }
+  }
+}

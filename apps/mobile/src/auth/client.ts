@@ -5,6 +5,7 @@ import { emailOTPClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 import Constants from "expo-constants";
 import * as SecureStore from "expo-secure-store";
+import * as Updates from "expo-updates";
 import { useEffect, useState } from "react";
 import { Platform } from "react-native";
 
@@ -27,8 +28,8 @@ function cookiePrefixes(url: string): string[] {
 
 /**
  * This release: the version is the running bundle's, which an over-the-air update moves; the
- * build is the binary's. Without a version the Worker would take it for the oldest release, so
- * it is unknown. ADR 0032.
+ * build is the binary's, and the update is the bundle running on it. Without a version the
+ * Worker would take it for the oldest release, so it is unknown. ADR 0032.
  */
 export const PHONE_CLIENT: PhoneClient | undefined = (() => {
   const version = Constants.expoConfig?.version;
@@ -38,7 +39,7 @@ export const PHONE_CLIENT: PhoneClient | undefined = (() => {
       ? Constants.platform?.ios?.buildNumber
       : Constants.platform?.android?.versionCode?.toString();
   const platform = Platform.OS === "android" ? "android" : "ios";
-  return { platform, version, build: build ?? undefined };
+  return { platform, version, build: build ?? undefined, update: Updates.updateId ?? undefined };
 })();
 
 /** Names this release on every request, so the Worker can tell it to update. */

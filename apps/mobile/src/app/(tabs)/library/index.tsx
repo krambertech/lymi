@@ -308,7 +308,7 @@ function confirmDelete(
   );
 }
 
-/** A deck: its name, then whose it is, its language and size; the due count at the end. */
+/** A deck: its name, then its size, language and whose it is; the due count at the end. */
 function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
   const { t } = useLingui();
   const router = useRouter();
@@ -320,7 +320,8 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
   const kept = useQuery({ ...deckCardsQuery(d.id), enabled: false }).data;
   const next = useNextDue(kept);
   const back = d.due === 0 && d.total > 0 && next ? t`Next due ${next}` : null;
-  const line = [d.role === "owner" ? null : t`Shared by ${owner}`, language, size, back]
+  // Whose it is goes last, so a long publisher's name wraps on its own rather than splitting the size.
+  const line = [size, language, d.role === "owner" ? null : t`Shared by ${owner}`, back]
     .filter(Boolean)
     .join(" · ");
   const due = d.due > 0 ? d.due : undefined;

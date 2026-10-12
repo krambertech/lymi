@@ -124,7 +124,17 @@ export default function Deck() {
                         },
                       ],
                     ]
-                  : []),
+                  : [
+                      // A deck added from Explore or shared with the learner is left, not archived.
+                      [
+                        {
+                          label: t`Leave deck`,
+                          icon: "signOut" as const,
+                          destructive: true,
+                          onSelect: exits.leave,
+                        },
+                      ],
+                    ]),
               ]}
             />
           </View>

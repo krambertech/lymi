@@ -118,6 +118,36 @@ export function DayGrid({ days, today, firstDay, goal }: Props) {
   };
 
   const field = (CELL + GAP) * columns - GAP;
+  const chosenAt = daysBetween(from, chosen);
+  const ring = { col: Math.floor(chosenAt / 7), row: chosenAt % 7 };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the sentences follow the data and the locale, which these name.
+  const cells = useMemo(
+    () => (
+      <View className="flex-row" style={{ gap: GAP }}>
+        {Array.from({ length: columns }, (_, c) => (
+          <View key={addDays(from, c * 7)} style={{ gap: GAP }}>
+            {Array.from({ length: 7 }, (_, r) => {
+              const date = addDays(from, c * 7 + r);
+              return (
+                <Cell
+                  key={date}
+                  p={p}
+                  date={date}
+                  entry={byDate.get(date)}
+                  today={today}
+                  goal={goal}
+                  label={sentence(date)}
+                  onChoose={setChosen}
+                />
+              );
+            })}
+          </View>
+        ))}
+      </View>
+    ),
+    [byDate, from, columns, today, goal, p, i18n.locale],
+  );
 
   return (
     <View className="gap-3">
@@ -160,28 +190,21 @@ export function DayGrid({ days, today, firstDay, goal }: Props) {
                 </View>
               ))}
             </View>
-            <View className="flex-row" style={{ gap: GAP }}>
-              {Array.from({ length: columns }, (_, c) => (
-                <View key={addDays(from, c * 7)} style={{ gap: GAP }}>
-                  {Array.from({ length: 7 }, (_, r) => {
-                    const date = addDays(from, c * 7 + r);
-                    return (
-                      <Cell
-                        key={date}
-                        p={p}
-                        date={date}
-                        entry={byDate.get(date)}
-                        today={today}
-                        goal={goal}
-                        chosen={date === chosen}
-                        label={sentence(date)}
-                        onPress={() => setChosen(date)}
-                      />
-                    );
-                  })}
-                </View>
-              ))}
-            </View>
+            {cells}
+            {/* The chosen day's ring sits over the field, so a tap redraws one view, not a year of cells. */}
+            <View
+              pointerEvents="none"
+              style={{
+                position: "absolute",
+                left: ring.col * (CELL + GAP) - 3,
+                top: MONTH_ROW + GAP + ring.row * (CELL + GAP) - 3,
+                width: CELL + 6,
+                height: CELL + 6,
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: p["text-2"],
+              }}
+            />
           </View>
         </ScrollView>
       </View>
@@ -198,18 +221,16 @@ function Cell({
   entry,
   today,
   goal,
-  chosen,
   label,
-  onPress,
+  onChoose,
 }: {
   p: Palette;
   date: string;
   entry: Day | undefined;
   today: string;
   goal: number;
-  chosen: boolean;
   label: string;
-  onPress: () => void;
+  onChoose: (date: string) => void;
 }) {
   const future = date > today;
   const l = future ? 0 : level(entry, goal);
@@ -228,18 +249,13 @@ function Cell({
     borderColor: kept ? p.amber : future ? p["edge-2"] : l === 0 ? p.edge : "transparent",
   };
   return (
-    <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={label} hitSlop={2}>
-      <View
-        style={{
-          padding: 2,
-          margin: -3,
-          borderWidth: 1,
-          borderRadius: 10,
-          borderColor: chosen ? p["text-2"] : "transparent",
-        }}
-      >
-        <View style={box} />
-      </View>
+    <Pressable
+      onPress={() => onChoose(date)}
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      hitSlop={2}
+    >
+      <View style={box} />
     </Pressable>
   );
 }

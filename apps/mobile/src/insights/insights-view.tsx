@@ -270,24 +270,13 @@ function OftenForgotten({ leeches }: { leeches: InsightsOut["leeches"] }) {
             accessibilityRole="link"
           >
             <View
-              className={`min-h-[60px] flex-row items-center gap-3 ps-4 pe-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
+              className={`min-h-[52px] flex-row items-center gap-3 ps-4 pe-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
             >
-              <View className="flex-1 gap-0.5">
-                <Text className="text-md font-medium text-text" numberOfLines={2}>
-                  {c.term}
-                </Text>
-                {c.meaning && (
-                  <Text className="text-base text-muted" numberOfLines={2}>
-                    {c.meaning}
-                  </Text>
-                )}
-                <Text className="pt-0.5 text-sm text-faint">
-                  <Trans>
-                    {c.lapses} forgotten ·{" "}
-                    <Plural value={c.reviews} one="# review" other="# reviews" />
-                  </Trans>
-                </Text>
-              </View>
+              {/* The term and how often it slipped: the card in its deck holds the rest. */}
+              <Text className="flex-1 text-md text-text" numberOfLines={2}>
+                {c.term}
+              </Text>
+              <Text className="text-md text-muted">{t`${c.lapses} forgotten`}</Text>
               <RowArrow />
             </View>
           </Press>

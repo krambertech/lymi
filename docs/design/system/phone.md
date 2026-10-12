@@ -70,7 +70,7 @@ The sheet stays for the next card: a line under the fields says where the last o
 
 ## Insights
 
-Insights keeps the web's figures, lines and order ([insights.md](../insights.md)), and changes the grid of four plates, whose lines are too narrow to read at phone width. Recall keeps a plate of its own with its period switcher and chart. Consistency, Cards and Ahead are rows on one plate, each figure beside its number and its line under both: Cards draws its three states as one bar and Ahead its seven days as bars without labels. Day by day shows two months, swipes back through the year and opens on today; a tap on a day says what it held on the line under the field, which starts on today. Often forgotten closes the page, and each row opens its deck.
+Insights keeps the web's figures, lines and order ([insights.md](../insights.md)), and changes the grid of four plates, whose lines are too narrow to read at phone width. Recall keeps a plate of its own with its period switcher and chart. Consistency, Cards and Ahead are rows on one plate, each figure beside its number and its line under both: Cards draws its three states as one bar and Ahead its seven days as bars without labels. Day by day shows two months, swipes back through the year and opens on today; a tap on a day says what it held on the line under the field, which starts on today. Often forgotten closes the page: each row is the term and how often it was forgotten, and opens its deck.
 
 ## Update Lymi
 

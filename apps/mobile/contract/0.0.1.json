@@ -878,6 +878,68 @@
     ]
    }
   },
+  "/api/stats/insights": {
+   "get": {
+    "operationId": "getApiStatsInsights",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Insights"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "in": "query",
+      "name": "period",
+      "schema": {
+       "type": "integer",
+       "minimum": -9007199254740991,
+       "maximum": 9007199254740991
+      }
+     },
+     {
+      "in": "query",
+      "name": "tz",
+      "schema": {
+       "type": "string",
+       "maxLength": 64
+      }
+     }
+    ]
+   }
+  },
   "/api/settings": {
    "get": {
     "operationId": "getApiSettings",
@@ -3508,6 +3570,347 @@
      "learningLanguage",
      "createdAt",
      "updatedAt"
+    ]
+   },
+   "Insights": {
+    "type": "object",
+    "properties": {
+     "period": {
+      "anyOf": [
+       {
+        "type": "number",
+        "const": 30
+       },
+       {
+        "type": "number",
+        "const": 90
+       },
+       {
+        "type": "number",
+        "const": 0
+       }
+      ],
+      "x-lymi-open": true
+     },
+     "recall": {
+      "type": "object",
+      "properties": {
+       "passed": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "failed": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "rate": {
+        "type": [
+         "number",
+         "null"
+        ]
+       },
+       "series": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "at": {
+           "type": "string"
+          },
+          "passed": {
+           "type": "integer",
+           "minimum": -9007199254740991,
+           "maximum": 9007199254740991
+          },
+          "failed": {
+           "type": "integer",
+           "minimum": -9007199254740991,
+           "maximum": 9007199254740991
+          },
+          "rate": {
+           "type": "number"
+          }
+         },
+         "required": [
+          "at",
+          "passed",
+          "failed",
+          "rate"
+         ]
+        }
+       }
+      },
+      "required": [
+       "passed",
+       "failed",
+       "rate",
+       "series"
+      ]
+     },
+     "consistency": {
+      "type": "object",
+      "properties": {
+       "days": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "date": {
+           "type": "string"
+          },
+          "lit": {
+           "type": "boolean"
+          }
+         },
+         "required": [
+          "date",
+          "lit"
+         ]
+        }
+       },
+       "lit": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "longestRun": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "litAllTime": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "daysAllTime": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       }
+      },
+      "required": [
+       "days",
+       "lit",
+       "longestRun",
+       "litAllTime",
+       "daysAllTime"
+      ]
+     },
+     "activity": {
+      "type": "object",
+      "properties": {
+       "today": {
+        "type": "string"
+       },
+       "firstDay": {
+        "anyOf": [
+         {
+          "type": "string"
+         },
+         {
+          "type": "null"
+         }
+        ]
+       },
+       "goal": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "days": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "date": {
+           "type": "string"
+          },
+          "attempts": {
+           "type": "integer",
+           "minimum": -9007199254740991,
+           "maximum": 9007199254740991
+          },
+          "goal": {
+           "anyOf": [
+            {
+             "type": "integer",
+             "minimum": -9007199254740991,
+             "maximum": 9007199254740991
+            },
+            {
+             "type": "null"
+            }
+           ]
+          },
+          "satisfied": {
+           "type": "boolean"
+          },
+          "outcome": {
+           "anyOf": [
+            {
+             "type": "string",
+             "enum": [
+              "open",
+              "goal_met",
+              "exhausted",
+              "nothing_due"
+             ],
+             "x-lymi-open": true
+            },
+            {
+             "type": "null"
+            }
+           ]
+          }
+         },
+         "required": [
+          "date",
+          "attempts",
+          "goal",
+          "satisfied",
+          "outcome"
+         ]
+        }
+       }
+      },
+      "required": [
+       "today",
+       "firstDay",
+       "goal",
+       "days"
+      ]
+     },
+     "cards": {
+      "type": "object",
+      "properties": {
+       "total": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "new": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "learning": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "known": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       }
+      },
+      "required": [
+       "total",
+       "new",
+       "learning",
+       "known"
+      ]
+     },
+     "forecast": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "date": {
+         "type": "string"
+        },
+        "count": {
+         "type": "integer",
+         "minimum": -9007199254740991,
+         "maximum": 9007199254740991
+        }
+       },
+       "required": [
+        "date",
+        "count"
+       ]
+      }
+     },
+     "leeches": {
+      "type": "object",
+      "properties": {
+       "forgottenDays": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "recentDays": {
+        "type": "integer",
+        "minimum": -9007199254740991,
+        "maximum": 9007199254740991
+       },
+       "cards": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "id": {
+           "type": "string"
+          },
+          "deckId": {
+           "type": "string"
+          },
+          "term": {
+           "type": "string"
+          },
+          "meaning": {
+           "type": [
+            "string",
+            "null"
+           ]
+          },
+          "language": {
+           "type": [
+            "string",
+            "null"
+           ]
+          },
+          "lapses": {
+           "type": "integer",
+           "minimum": -9007199254740991,
+           "maximum": 9007199254740991
+          },
+          "reviews": {
+           "type": "integer",
+           "minimum": -9007199254740991,
+           "maximum": 9007199254740991
+          }
+         },
+         "required": [
+          "id",
+          "deckId",
+          "term",
+          "meaning",
+          "language",
+          "lapses",
+          "reviews"
+         ]
+        }
+       }
+      },
+      "required": [
+       "forgottenDays",
+       "recentDays",
+       "cards"
+      ]
+     }
+    },
+    "required": [
+     "period",
+     "recall",
+     "consistency",
+     "activity",
+     "cards",
+     "forecast",
+     "leeches"
     ]
    },
    "Streak": {

@@ -55,9 +55,8 @@ msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is 
 msgstr "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
 
 #. placeholder {0}: c.lapses
-#. placeholder {1}: c.reviews
-msgid "{0} forgotten · {1, plural, one {# review} other {# reviews}}"
-msgstr "{0} forgotten · {1, plural, one {# review} other {# reviews}}"
+msgid "{0} forgotten"
+msgstr "{0} forgotten"
 
 #. placeholder {0}: pct(cards.known / cards.total)
 msgid "{0} of your cards are known."

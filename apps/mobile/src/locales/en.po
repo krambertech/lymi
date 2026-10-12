@@ -868,6 +868,9 @@ msgstr "Estonian"
 msgid "Every card"
 msgstr "Every card"
 
+msgid "Every section is open, so any card can come up in review."
+msgstr "Every section is open, so any card can come up in review."
+
 msgid "Every shelf"
 msgstr "Every shelf"
 
@@ -2135,6 +2138,9 @@ msgstr "You can’t choose Easy after peeking at your hook."
 
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "You start with the first section. The next opens as you learn this one."
+
+msgid "You start with the first section. When you know most of it, you choose when to start the next."
+msgstr "You start with the first section. When you know most of it, you choose when to start the next."
 
 msgid "You wrote this"
 msgstr "You wrote this"

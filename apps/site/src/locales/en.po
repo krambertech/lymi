@@ -1210,6 +1210,9 @@ msgstr "Every question in the Instituto Cervantes manual, in Spanish as on the t
 msgid "Every question of the 2025 civics test with its accepted answers, and the words of the reading and writing test."
 msgstr "Every question of the 2025 civics test with its accepted answers, and the words of the reading and writing test."
 
+msgid "Every section is open, so any card can come up in review."
+msgstr "Every section is open, so any card can come up in review."
+
 msgid "Every sign by its picture and German name."
 msgstr "Every sign by its picture and German name."
 
@@ -3718,6 +3721,9 @@ msgstr "You own this deck"
 
 msgid "You start with <0>{first}</0>, and the next section opens as you learn the one before it."
 msgstr "You start with <0>{first}</0>, and the next section opens as you learn the one before it."
+
+msgid "You start with <0>{first}</0>. When you know most of a section, the next one is ready and you choose when to start it."
+msgstr "You start with <0>{first}</0>. When you know most of a section, the next one is ready and you choose when to start it."
 
 msgid "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
 msgstr "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."

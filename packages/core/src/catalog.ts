@@ -2,7 +2,13 @@
 import { z } from "zod";
 import { isImageMode } from "./modes";
 import { OPEN } from "./responses/common";
-import { PUBLICATION_CATEGORIES, PUBLICATION_SLUG, PublicationTag, ReviewModeKey } from "./types";
+import {
+  PUBLICATION_CATEGORIES,
+  PUBLICATION_SLUG,
+  PublicationTag,
+  ReviewModeKey,
+  SectionProgression,
+} from "./types";
 
 /** A card's picture on a public page: only one whose publisher described it is ever public. */
 const PublicImage = z.object({
@@ -42,6 +48,8 @@ export const PublicDeckOut = z.object({
   revision: z.number().int(),
   publishedAt: z.iso.datetime(),
   cardCount: z.number().int(),
+  /** How each learner's sections open, so a page describes the deck's own order. */
+  sectionProgression: SectionProgression,
   /** In deck order. A group with no name holds the cards outside any active section, last. */
   sections: z.array(
     z.object({

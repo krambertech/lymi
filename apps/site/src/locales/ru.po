@@ -1210,6 +1210,9 @@ msgstr "Все вопросы из пособия Instituto Cervantes — на �
 msgid "Every question of the 2025 civics test with its accepted answers, and the words of the reading and writing test."
 msgstr "Все вопросы теста по граждановедению 2025 года с принимаемыми ответами, а также слова для теста по чтению и письму."
 
+msgid "Every section is open, so any card can come up in review."
+msgstr "Все разделы открыты, так что любая карточка может появиться в повторении."
+
 msgid "Every sign by its picture and German name."
 msgstr "Каждый знак по изображению и немецкому названию."
 
@@ -3718,6 +3721,9 @@ msgstr "Твоя колода"
 
 msgid "You start with <0>{first}</0>, and the next section opens as you learn the one before it."
 msgstr "Начинаешь с раздела <0>{first}</0>, а следующий открывается, как только выучишь предыдущий."
+
+msgid "You start with <0>{first}</0>. When you know most of a section, the next one is ready and you choose when to start it."
+msgstr "Начинаешь с раздела <0>{first}</0>. Когда большая часть раздела выучена, следующий готов, и ты решаешь, когда его начать."
 
 msgid "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
 msgstr "Ассистент может читать твои колоды. Попроси его о разговоре со словами, которые ты учишь, и он будет поправлять тебя по ходу."

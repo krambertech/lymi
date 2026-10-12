@@ -131,6 +131,23 @@ function DeckHand({
   );
 }
 
+/** How the deck's sections open for a learner, in the deck's own setting. */
+function SectionOrder({ progression }: { progression: PublicDeckOut["sectionProgression"] }) {
+  switch (progression) {
+    case "open":
+      return <Trans>Every section is open, so any card can come up in review.</Trans>;
+    case "manual":
+      return (
+        <Trans>
+          You start with the first section. When you know most of it, you choose when to start the
+          next.
+        </Trans>
+      );
+    default:
+      return <Trans>You start with the first section. The next opens as you learn this one.</Trans>;
+  }
+}
+
 export function ExploreDeckView({
   data,
   failed,
@@ -329,7 +346,7 @@ export function ExploreDeckView({
               )}
             </ol>
             <p className="mt-3 text-sm text-muted">
-              <Trans>You start with the first section. The next opens as you learn this one.</Trans>
+              <SectionOrder progression={deck.sectionProgression} />
             </p>
           </section>
         )}

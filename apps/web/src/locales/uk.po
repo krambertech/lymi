@@ -4250,6 +4250,9 @@ msgstr "Цю людину вилучено з колоди, тож запрос�
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "Ти починаєш із першого розділу. Наступний відкриється, коли вивчиш цей."
 
+msgid "You start with the first section. When you know most of it, you choose when to start the next."
+msgstr "Ти починаєш із першого розділу. Коли засвоїш більшу його частину, ти вирішуєш, коли почати наступний."
+
 msgid "You study the same cards as {ownerName}, on your own schedule. Nobody else sees your reviews or progress."
 msgstr "Ти вчиш ті самі картки, що й {ownerName}, у своєму темпі. Твої повторення й прогрес більше ніхто не бачить."
 

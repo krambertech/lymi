@@ -868,6 +868,9 @@ msgstr "Эстонский"
 msgid "Every card"
 msgstr "Все карточки"
 
+msgid "Every section is open, so any card can come up in review."
+msgstr ""
+
 msgid "Every shelf"
 msgstr "Все полки"
 
@@ -2135,6 +2138,9 @@ msgstr "После того как заглянешь в зацепку, «Ле�
 
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "Ты начинаешь с первого раздела. Следующий откроется, когда выучишь этот."
+
+msgid "You start with the first section. When you know most of it, you choose when to start the next."
+msgstr ""
 
 msgid "You wrote this"
 msgstr "Это написано тобой"

@@ -40,6 +40,7 @@ const publication = (over: Partial<PublicationRow> = {}): PublicationRow => ({
   deckName: "Everyday Estonian",
   deckLanguage: "et",
   deckDirections: "recognition",
+  deckSectionProgression: "automatic",
   deckArchivedAt: null,
   ...over,
 });
@@ -86,6 +87,7 @@ describe("projectPublicDeck", () => {
     ]);
     expect(result.deck.cardCount).toBe(5);
     expect(result.deck.revision).toBe(3);
+    expect(result.deck.sectionProgression).toBe("automatic");
     expect(result.deck.reviewedAt).toBe("2026-09-01T00:00:00.000Z");
   });
 

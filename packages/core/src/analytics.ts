@@ -108,6 +108,10 @@ export const analyticsEvents = {
     state: z.enum(CARD_STATES).optional(),
     aid: ReviewAid.optional(),
   }),
+  review_undone: z.object({
+    mode: ReviewModeKey.optional(),
+    grade: z.number().int().min(1).max(4),
+  }),
   streak_ended: z.object({ streak_days: count }),
   rest_day_used: z.object({ streak_days: count }),
   hook_added: z.object({ source: z.enum(["lesson", "ai", "manual"]) }),
@@ -218,6 +222,7 @@ export const analyticsProducers = {
   signed_in: ["worker"],
   onboarding_finished: ["worker"],
   review_graded: ["worker"],
+  review_undone: ["worker"],
   streak_ended: ["worker"],
   rest_day_used: ["worker"],
   hook_added: ["worker"],

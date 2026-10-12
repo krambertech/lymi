@@ -11,7 +11,7 @@ export interface ReminderInput {
   left: number;
   /** Today already counts: the goal is met or nothing was left to review. */
   dayDone: boolean;
-  /** Cards that fall due on each day from today, as Insights forecasts them; today's first. */
+  /** Cards that fall due on each day from today, today's first; see `forecastFrom`. */
   forecast?: readonly number[] | undefined;
   /** Until when the learner put today's reminder off, from its In an hour action. */
   snoozedUntil?: Date | undefined;
@@ -60,6 +60,36 @@ export function planReminders({
     planned.push({ at: atTime(now, time, offset), due });
   }
   return planned;
+}
+
+/** Calendar arithmetic on a local YYYY-MM-DD, which no timezone can shift. */
+function addDays(date: string, days: number): string {
+  const [y = 0, m = 1, d = 1] = date.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d + days)).toISOString().slice(0, 10);
+}
+
+/**
+ * Insights' dated forecast as one count per day from the learner's `today`, or nothing when it
+ * does not start today: a forecast fetched on an earlier day still counts work since done, so the
+ * plan falls back to what today leaves rather than remind about it.
+ */
+export function forecastFrom(
+  buckets: readonly { date: string; count: number }[] | undefined,
+  today: string | undefined,
+): number[] | undefined {
+  if (!buckets || !today || buckets[0]?.date !== today) return undefined;
+  const byDate = new Map(buckets.map((b) => [b.date, b.count]));
+  return Array.from({ length: DAYS_AHEAD }, (_, i) => byDate.get(addDays(today, i)) ?? 0);
+}
+
+/**
+ * Grades the server has taken in, sent or taken back. Tomorrow's forecast only moves once one
+ * lands, so a grade still queued offline changes nothing until it does.
+ */
+export function landedGrades(
+  grades: readonly { sentAt?: number | undefined; undone?: boolean | undefined }[],
+): number {
+  return grades.filter((g) => g.sentAt !== undefined || g.undone).length;
 }
 
 /** Picks one of `count` lines by the day, so the wording changes from one day to the next. */

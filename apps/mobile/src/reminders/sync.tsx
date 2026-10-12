@@ -8,7 +8,7 @@ import { AppState } from "react-native";
 import { useMMKVString } from "react-native-mmkv";
 import { dueToday } from "../data/due";
 import { DEVICE_KEYS, deviceStore } from "../data/kept";
-import { useDay, useDecks, useKeptSince } from "../data/queries";
+import { useDay, useDecks, useGrades, useKeptSince } from "../data/queries";
 import {
   notificationPermission,
   opensReview,
@@ -16,10 +16,12 @@ import {
   schedule,
   snoozedUntil,
 } from "./notifications";
-import { planReminders } from "./plan";
+import { forecastFrom, landedGrades, planReminders } from "./plan";
 
 /** The forecast moves with grades and the day; an hour old is close enough for a week ahead. */
 const FORECAST_STALE_MS = 60 * 60 * 1000;
+/** A review grades every few seconds; the forecast only needs where it settled. */
+const GRADES_SETTLE_MS = 20_000;
 
 /**
  * Plans the week's reminders again whenever what they say could change: the time, a grade, the
@@ -29,7 +31,7 @@ export function ReminderSync() {
   const router = useRouter();
   const { i18n } = useLingui();
   const [time] = useMMKVString(DEVICE_KEYS.reminder, deviceStore);
-  const { left, dayDone } = useDay();
+  const { left, dayDone, summary } = useDay();
   const decks = useDecks();
   const kept = !!useKeptSince(decks);
   // The number Today and the widgets show, so the reminder never says another.
@@ -40,7 +42,15 @@ export function ReminderSync() {
     staleTime: FORECAST_STALE_MS,
     refetchOnMount: true,
   });
-  const forecast = insights.data?.forecast.map((d) => d.count).join(",");
+  const forecast = forecastFrom(insights.data?.forecast, summary?.today.date)?.join(",");
+  // A grade moves tomorrow's forecast once the server has it, so refresh after grading settles.
+  const landed = landedGrades(useGrades());
+  const refetch = insights.refetch;
+  useEffect(() => {
+    if (!time || landed === 0) return;
+    const timer = setTimeout(() => void refetch(), GRADES_SETTLE_MS);
+    return () => clearTimeout(timer);
+  }, [time, landed, refetch]);
   const [front, setFront] = useState(0);
 
   useEffect(() => {

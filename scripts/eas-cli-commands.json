@@ -1,0 +1,440 @@
+{
+  "version": "24.13.0",
+  "commands": {
+    "build:cancel": {
+      "args": ["BUILD_ID"],
+      "flags": {
+        "non-interactive": "boolean",
+        "platform": "option",
+        "profile": "option"
+      }
+    },
+    "build:configure": {
+      "args": [],
+      "flags": {
+        "platform": "option"
+      }
+    },
+    "build:delete": {
+      "args": ["BUILD_ID"],
+      "flags": {
+        "non-interactive": "boolean",
+        "platform": "option",
+        "profile": "option"
+      }
+    },
+    "build:dev": {
+      "args": [],
+      "flags": {
+        "platform": "option",
+        "profile": "option",
+        "skip-build-if-not-found": "boolean",
+        "skip-bundler": "boolean",
+        "simulator": "option"
+      }
+    },
+    "build:download": {
+      "args": [],
+      "flags": {
+        "build-id": "option",
+        "fingerprint": "option",
+        "platform": "option",
+        "dev-client": "boolean-or-no",
+        "all-artifacts": "boolean",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "build": {
+      "args": [],
+      "flags": {
+        "platform": "option",
+        "skip-credentials-check": "boolean",
+        "skip-project-configuration": "boolean",
+        "profile": "option",
+        "local": "boolean",
+        "output": "option",
+        "wait": "boolean-or-no",
+        "clear-cache": "boolean",
+        "auto-submit": "boolean",
+        "auto-submit-with-profile": "option",
+        "what-to-test": "option",
+        "resource-class": "option",
+        "message": "option",
+        "build-logger-level": "option",
+        "freeze-credentials": "boolean",
+        "refresh-ad-hoc-provisioning-profile": "boolean",
+        "verbose-logs": "boolean",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "build:inspect": {
+      "args": [],
+      "flags": {
+        "platform": "option",
+        "profile": "option",
+        "stage": "option",
+        "output": "option",
+        "force": "boolean",
+        "verbose": "boolean"
+      }
+    },
+    "build:internal": {
+      "args": [],
+      "flags": {
+        "platform": "option",
+        "profile": "option",
+        "auto-submit": "boolean",
+        "auto-submit-with-profile": "option",
+        "refresh-ad-hoc-provisioning-profile": "boolean"
+      }
+    },
+    "build:list": {
+      "args": [],
+      "flags": {
+        "platform": "option",
+        "status": "option",
+        "distribution": "option",
+        "channel": "option",
+        "app-version": "option",
+        "app-build-version": "option",
+        "sdk-version": "option",
+        "runtime-version": "option",
+        "app-identifier": "option",
+        "build-profile": "option",
+        "git-commit-hash": "option",
+        "fingerprint-hash": "option",
+        "offset": "option",
+        "limit": "option",
+        "json": "boolean",
+        "non-interactive": "boolean",
+        "simulator": "boolean"
+      }
+    },
+    "build:resign": {
+      "args": [],
+      "flags": {
+        "platform": "option",
+        "target-profile": "option",
+        "source-profile": "option",
+        "wait": "boolean-or-no",
+        "id": "option",
+        "offset": "option",
+        "limit": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "build:run": {
+      "args": [],
+      "flags": {
+        "latest": "boolean",
+        "url": "option",
+        "path": "option",
+        "id": "option",
+        "platform": "option",
+        "profile": "option",
+        "simulator": "option",
+        "offset": "option",
+        "limit": "option"
+      }
+    },
+    "build:view": {
+      "args": ["BUILD_ID"],
+      "flags": {
+        "json": "boolean"
+      }
+    },
+    "channel:create": {
+      "args": ["name"],
+      "flags": {
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "channel:delete": {
+      "args": ["name"],
+      "flags": {
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "channel:edit": {
+      "args": ["name"],
+      "flags": {
+        "branch": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "channel:insights": {
+      "args": [],
+      "flags": {
+        "channel": "option",
+        "runtime-version": "option",
+        "days": "option",
+        "start": "option",
+        "end": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "channel:list": {
+      "args": [],
+      "flags": {
+        "offset": "option",
+        "limit": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "channel:pause": {
+      "args": ["name"],
+      "flags": {
+        "branch": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "channel:protect": {
+      "args": ["name"],
+      "flags": {
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "channel:resume": {
+      "args": ["name"],
+      "flags": {
+        "branch": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "channel:rollout": {
+      "args": ["channel"],
+      "flags": {
+        "action": "option",
+        "percent": "option",
+        "outcome": "option",
+        "branch": "option",
+        "runtime-version": "option",
+        "private-key-path": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "channel:unprotect": {
+      "args": ["name"],
+      "flags": {
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "channel:view": {
+      "args": ["name"],
+      "flags": {
+        "json": "boolean",
+        "non-interactive": "boolean",
+        "offset": "option",
+        "limit": "option"
+      }
+    },
+    "update:configure": {
+      "args": [],
+      "flags": {
+        "platform": "option",
+        "environment": "option",
+        "non-interactive": "boolean"
+      }
+    },
+    "update:delete": {
+      "args": ["groupId"],
+      "flags": {
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "update:edit": {
+      "args": ["groupId"],
+      "flags": {
+        "rollout-percentage": "option",
+        "branch": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "update": {
+      "args": [],
+      "flags": {
+        "branch": "option",
+        "channel": "option",
+        "message": "option",
+        "input-dir": "option",
+        "skip-bundler": "boolean",
+        "clear-cache": "boolean",
+        "no-bytecode": "boolean",
+        "source-maps": "option",
+        "upload-source-maps": "boolean",
+        "emit-metadata": "boolean",
+        "rollout-percentage": "option",
+        "force-end-active-rollout": "boolean",
+        "platform": "option",
+        "auto": "boolean",
+        "private-key-path": "option",
+        "environment": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "update:insights": {
+      "args": ["groupId"],
+      "flags": {
+        "platform": "option",
+        "days": "option",
+        "start": "option",
+        "end": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "update:list": {
+      "args": [],
+      "flags": {
+        "branch": "option",
+        "all": "boolean",
+        "platform": "option",
+        "runtime-version": "option",
+        "offset": "option",
+        "limit": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "update:republish": {
+      "args": [],
+      "flags": {
+        "channel": "option",
+        "branch": "option",
+        "group": "option",
+        "destination-channel": "option",
+        "destination-branch": "option",
+        "message": "option",
+        "platform": "option",
+        "private-key-path": "option",
+        "rollout-percentage": "option",
+        "force-end-active-rollout": "boolean",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "update:revert-update-rollout": {
+      "args": [],
+      "flags": {
+        "channel": "option",
+        "branch": "option",
+        "group": "option",
+        "message": "option",
+        "private-key-path": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "update:roll-back-to-embedded": {
+      "args": [],
+      "flags": {
+        "branch": "option",
+        "channel": "option",
+        "runtime-version": "option",
+        "message": "option",
+        "platform": "option",
+        "private-key-path": "option",
+        "force-end-active-rollout": "boolean",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "update:rollback": {
+      "args": ["groupId"],
+      "flags": {
+        "message": "option",
+        "platform": "option",
+        "private-key-path": "option",
+        "force-end-active-rollout": "boolean",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "update:view": {
+      "args": ["groupId"],
+      "flags": {
+        "insights": "boolean",
+        "days": "option",
+        "start": "option",
+        "end": "option",
+        "json": "boolean"
+      }
+    },
+    "build:version:get": {
+      "args": [],
+      "flags": {
+        "platform": "option",
+        "profile": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "build:version:set": {
+      "args": [],
+      "flags": {
+        "platform": "option",
+        "profile": "option"
+      }
+    },
+    "build:version:sync": {
+      "args": [],
+      "flags": {
+        "platform": "option",
+        "profile": "option"
+      }
+    },
+    "update:embedded:delete": {
+      "args": ["id"],
+      "flags": {
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "update:embedded:list": {
+      "args": [],
+      "flags": {
+        "platform": "option",
+        "runtime-version": "option",
+        "channel": "option",
+        "limit": "option",
+        "after-cursor": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "update:embedded:upload": {
+      "args": [],
+      "flags": {
+        "platform": "option",
+        "bundle": "option",
+        "manifest": "option",
+        "channel": "option",
+        "build-id": "option",
+        "json": "boolean",
+        "non-interactive": "boolean"
+      }
+    },
+    "update:embedded:view": {
+      "args": ["id"],
+      "flags": {
+        "json": "boolean"
+      }
+    }
+  }
+}

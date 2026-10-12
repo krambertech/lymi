@@ -38,6 +38,9 @@ jobs:
           node scripts/phone-release.mjs ready
           grep -q '^ready=true' "$GITHUB_OUTPUT" || { echo "::error::EAS is not set up yet."; exit 1; }
 
+      - name: Create the beta and production channels a fresh project lacks
+        run: node scripts/phone-release.mjs channels
+
       - name: Roll back
         env:
           BRANCH: ${{ inputs.branch }}

@@ -55,7 +55,19 @@ export function appleIdTokenVerifier(bundleIdentifier: string) {
     idToken: { ...provider.idToken, jwks: (header: { kid?: string }) => appleKey(header.kid) },
   } as typeof provider;
   return (token: string, nonce?: string, ctx?: GenericEndpointContext): Promise<boolean> =>
-    nonce ? verifyProviderIdToken(checker, token, nonce, ctx) : Promise.resolve(false);
+    !nonce || echoesNonceClaim(token, nonce)
+      ? Promise.resolve(false)
+      : verifyProviderIdToken(checker, token, nonce, ctx);
+}
+
+/** Only the raw value whose hash Apple signed counts: the claim itself can be read off a stolen token. */
+function echoesNonceClaim(token: string, nonce: string): boolean {
+  try {
+    const payload = (token.split(".")[1] ?? "").replace(/-/g, "+").replace(/_/g, "/");
+    return (JSON.parse(atob(payload)) as { nonce?: unknown }).nonce === nonce;
+  } catch {
+    return true;
+  }
 }
 
 /** Forgets the cached keys; tests only. */

@@ -228,6 +228,8 @@ A response may gain fields and the API may gain endpoints. The check fails when 
 
 The minimum version is `PHONE_MINIMUM_VERSION_IOS` in `apps/web/wrangler.jsonc`, and `PHONE_UPDATE_URL_IOS` is where Update Lymi sends the learner. Raising it needs a Worker deploy and no app build: every request from an older release then gets 426, and the app shows only Update Lymi, keeping its unsent grades and writes for the updated release.
 
+A version is a JavaScript release, and an update can carry a new one, but a fresh install or a roll back to embedded first runs the version inside the App Store binary. Never raise the minimum past the version embedded in the current App Store binary, or new learners get 426 from a store that has nothing newer.
+
 Every fixed list in a phone response is open, except the few in `closedOnPurpose` with their reasons, and the test fails on a new closed one so each is decided when it appears. The shared client leaves a review mode it cannot ask out of the draw and the queue, and every other open field the phone reads falls back to a known state; `phone-client.test.ts` feeds unknown values through those readers.
 
 Freeze by hand, for example to record the baseline after a change to the check itself:

@@ -65,14 +65,17 @@ jobs:
       - name: Fingerprint the native build
         id: fingerprint
         working-directory: apps/mobile
-        run: echo "hash=$(pnpm --silent fingerprint | node -pe 'JSON.parse(require("fs").readFileSync(0)).hash')" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "hash=$(pnpm --silent fingerprint | node -pe 'JSON.parse(require("fs").readFileSync(0)).hash')" >> "$GITHUB_OUTPUT"
+          # The version is outside the fingerprint but baked into the build's app.config, which re-bundling keeps.
+          echo "version=$(node -p 'require("./app.json").expo.version')" >> "$GITHUB_OUTPUT"
 
       - name: Restore the Simulator build
         id: native
         uses: actions/cache/restore@v4
         with:
           path: apps/mobile/build/Lymi.app
-          key: phone-simulator-v2-${{ runner.os }}-xcode-26.6-${{ steps.fingerprint.outputs.hash }}
+          key: phone-simulator-v2-${{ runner.os }}-xcode-26.6-${{ steps.fingerprint.outputs.hash }}-${{ steps.fingerprint.outputs.version }}
 
       - name: Build the app for the Simulator
         if: steps.native.outputs.cache-hit != 'true'

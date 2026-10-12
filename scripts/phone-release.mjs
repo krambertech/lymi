@@ -81,18 +81,22 @@ export function promoteMessage(commit) {
   return `Promote ${commit.slice(0, 7)}`;
 }
 
-function defaultRunner(argv) {
+// Only JSON calls capture stdout; the rest print update IDs and links straight into the job log.
+function defaultRunner(argv, { capture }) {
   return execFileSync(argv[0], argv.slice(1), {
     cwd: APP,
     encoding: "utf8",
-    stdio: ["ignore", "pipe", "inherit"],
+    maxBuffer: 16 * 1024 * 1024,
+    stdio: ["ignore", capture ? "pipe" : "inherit", "inherit"],
   });
 }
 
 /** Every EAS call, with each command's own flags; tests swap the runner to check them. */
 export function createEas(runner = defaultRunner) {
-  const call = (args) => runner(["npx", "--yes", `eas-cli@${EAS_CLI_VERSION}`, ...args]);
-  const json = (args) => JSON.parse(call(args));
+  const run = (args, capture) =>
+    runner(["npx", "--yes", `eas-cli@${EAS_CLI_VERSION}`, ...args], { capture });
+  const call = (args) => run(args, false);
+  const json = (args) => JSON.parse(run(args, true));
   return {
     channels: () => json(["channel:list", "--limit", "50", "--json", "--non-interactive"]),
     createChannel: (name) => call(["channel:create", name, "--json", "--non-interactive"]),

@@ -119,6 +119,7 @@ function assertAccepted(argv) {
 /** A stub CLI that answers like a project with one partial production rollout. */
 function stubEas() {
   const calls = [];
+  const captured = new Set();
   const answers = {
     "channel:list": { currentPage: [{ name: "beta" }] },
     "update:list": {
@@ -138,11 +139,12 @@ function stubEas() {
     ],
     "build:list": [{ status: "FINISHED" }],
   };
-  const eas = createEas((argv) => {
+  const eas = createEas((argv, { capture }) => {
     calls.push(argv);
-    return JSON.stringify(answers[argv[3]] ?? {});
+    if (capture) captured.add(argv[3]);
+    return capture ? JSON.stringify(answers[argv[3]] ?? {}) : null;
   });
-  return { calls, eas };
+  return { calls, captured, eas };
 }
 
 test("records the pinned CLI's commands", () => {
@@ -167,6 +169,24 @@ test("sends only flags the pinned CLI accepts, for every call", () => {
   eas.rollBackToEmbedded("production", "r1", "Roll back production");
   assert.equal(calls.length, 13);
   for (const argv of calls) assertAccepted(argv);
+});
+
+test("captures only the output it parses, so the rest reaches the job log", () => {
+  const { captured, eas } = stubEas();
+  eas.channels();
+  eas.groups("beta");
+  eas.view("g1");
+  eas.builds("beta", "r1");
+  eas.createChannel("production");
+  eas.build("beta");
+  eas.publish("beta", "preview", "m");
+  eas.republish("g1", "production", "m", 10);
+  assert.deepEqual([...captured].sort(), [
+    "build:list",
+    "channel:list",
+    "update:list",
+    "update:view",
+  ]);
 });
 
 test("creates only the channels a fresh project is missing", () => {

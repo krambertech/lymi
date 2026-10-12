@@ -17,7 +17,7 @@ An installed app checks for an update on every launch without waiting for it, so
 
 The first run of any of them creates the `beta` and `production` channels and their branches when the project lacks them. Promote, rollout and production rollback share one `phone-production` lock, so they never change production at the same time.
 
-Each release version keeps its frozen contract in `apps/mobile/contract/<version>.json` until the minimum version passes it. Promote fails before publishing when the commit calls an API that differs from the contract already frozen for its version; raise `expo.version` in `app.json` and promote again. A version that has no contract yet gets one.
+Each release version keeps its frozen contract in `apps/mobile/contract/<version>.json` until the minimum version passes it. Promote fails before publishing when the commit calls an API that differs from the contract already frozen for its version; raise `expo.version` in `app.json`, merge it, let Phone beta publish it, then promote. A version that has no contract yet gets one.
 
 Every EAS call goes through `scripts/phone-release.mjs`, and its tests check each call's flags against `scripts/eas-cli-commands.json`, the pinned `eas-cli` version's own command list. After changing the pin, run `node scripts/phone-release.mjs manifest` to record the new list.
 

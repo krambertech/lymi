@@ -89,7 +89,7 @@ jobs:
           for ref in origin/main HEAD; do
             git cat-file -e "$ref:$file" 2>/dev/null || continue
             if ! git show "$ref:$file" | cmp -s - "$file"; then
-              echo "::error title=Phone contract::The API release $version calls differs from the one frozen on $ref. Raise expo.version in apps/mobile/app.json, which an update can carry, and promote again."
+              echo "::error title=Phone contract::The API release $version calls differs from the one frozen on $ref. Raise expo.version in apps/mobile/app.json, which an update can carry, merge it, let Phone beta publish it, then promote."
               exit 1
             fi
             new=false

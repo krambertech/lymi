@@ -1,5 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
+import type { StateKey } from "@lymi/client/deck-list";
 import { clsx } from "clsx";
 import {
   CircleCheck,
@@ -15,7 +16,8 @@ const CircleHalf = createLucideIcon("circle-half", [
   ["path", { d: "M12 18a6 6 0 0 0 0-12v12z", fill: "currentColor", key: "half" }],
 ]);
 
-export type StateKey = "new" | "learning" | "known";
+// One mapping from FSRS states for the web and the phone.
+export { type StateKey, stateKey } from "@lymi/client/deck-list";
 
 /**
  * Each card state's one colour and one icon, everywhere a state shows; docs/design/system/colour.md. `label`
@@ -53,13 +55,6 @@ export const stateMarks = {
     text: string;
   }
 >;
-
-/** FSRS 0 New, 1 Learning, 2 Review, 3 Relearning, as the three states a learner sees. */
-export function stateKey(state: number | null | undefined): StateKey {
-  if (state === 2) return "known";
-  if (state === 1 || state === 3) return "learning";
-  return "new";
-}
 
 /** A state's icon in its colour. `forgot` is the Forgot grade's mark, which is red wherever it shows. */
 export function StateIcon({

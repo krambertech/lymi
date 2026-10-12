@@ -10,7 +10,7 @@ The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the rev
 - Capture is an amber glass button at the end of every tab's top bar, beside the streak. A tap opens Add a word as a sheet from below. Explore has neither: its bar holds Filter and Search in one glass capsule, because finding a deck there is the job, and a word is caught from any other tab.
 - Library's bar holds what Library is for instead: search, then the amber plus, which grows into a small menu of Lymi's rows where it stands (Add a card, New deck, New series, Import decks) and shrinks back into the button. The streak stays on Today.
 - Search sits at the foot of the screen and rides on the keyboard, as iOS 26's own search does: a glass field and a round glass close, with a filter between them where the screen has one. The screen above it is empty until the first letters are typed. Every search on the phone uses `SearchBar`.
-- Inside a deck with cards due, the tab bar's accessory shows how many and a play button, as Podcasts shows what is playing; a tap starts the deck's review. Before iOS 26 the deck shows its Review button instead.
+- A deck opens on one summary plate, the count to review beside the deck's size, its cards' states as one bar with their counts under it, then a full-width Review. Once Review scrolls under the bar, the tab bar's accessory takes over, showing how many and a play button as Podcasts shows what is playing; scrolled back, it goes. Before iOS 26 there is no accessory, so the deck's own Review is the only one.
 
 ## How a screen arrives
 

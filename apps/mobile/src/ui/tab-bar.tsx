@@ -4,6 +4,7 @@ import * as Haptics from "expo-haptics";
 import { usePathname, useRouter } from "expo-router";
 import { NativeTabs } from "expo-router/unstable-native-tabs";
 import { Play } from "lucide-react-native";
+import { useSyncExternalStore } from "react";
 import { Platform, Pressable, View } from "react-native";
 import { useDecks } from "../data/queries";
 import { usePalette } from "../theme/palette";
@@ -13,16 +14,36 @@ import { Text } from "./primitives";
 export const DECK_ACCESSORY =
   Platform.OS === "ios" && Number.parseInt(String(Platform.Version), 10) >= 26;
 
+// Whether the open deck's own Review button has scrolled out of sight; the accessory waits for it.
+let reviewHidden = false;
+const listeners = new Set<() => void>();
+export function setDeckReviewHidden(hidden: boolean) {
+  if (hidden === reviewHidden) return;
+  reviewHidden = hidden;
+  for (const l of listeners) l();
+}
+function useDeckReviewHidden() {
+  return useSyncExternalStore(
+    (l) => {
+      listeners.add(l);
+      return () => listeners.delete(l);
+    },
+    () => reviewHidden,
+  );
+}
+
 /**
  * The phone's tabs are iOS's own tab bar, so the lens and the press are Apple's Liquid Glass, in
- * Onest with Lucide icons. Inside a deck with cards due, its review rides in the bar's accessory,
- * as Podcasts shows what is playing. phone.md "Navigation".
+ * Onest with Lucide icons. Inside a deck with cards due, once the deck's own Review button has
+ * scrolled away, its review rides in the bar's accessory, as Podcasts shows what is playing.
+ * phone.md "Navigation".
  */
 export function TabBar() {
   const p = usePalette();
   const { t } = useLingui();
   const deckId = usePathname().match(/^\/library\/([^/]+)$/)?.[1];
   const due = useDecks().data?.find((d) => d.id === deckId)?.due ?? 0;
+  const hidden = useDeckReviewHidden();
   const label = { fontFamily: "Onest", fontWeight: "500", fontSize: 10 } as const;
   return (
     <NativeTabs
@@ -31,7 +52,7 @@ export function TabBar() {
       tintColor={p.text}
       minimizeBehavior="onScrollDown"
     >
-      {DECK_ACCESSORY && deckId && due > 0 && (
+      {DECK_ACCESSORY && deckId && due > 0 && hidden && (
         <NativeTabs.BottomAccessory>
           <MiniPlayer deckId={deckId} due={due} />
         </NativeTabs.BottomAccessory>

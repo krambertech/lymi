@@ -49,6 +49,8 @@ interface Props {
   ground?: { colour: string; shape: "fade" | "pool" };
   /** The bar's actions arrive with the bar's title, as the header's own button scrolls away. */
   actionsArrive?: boolean;
+  /** Told once each time the page scrolls past this content offset, or back above it. */
+  past?: { y: number; onChange: (past: boolean) => void } | undefined;
   children: ReactNode;
 }
 
@@ -73,6 +75,7 @@ export function Screen({
   header,
   ground,
   actionsArrive = false,
+  past,
   children,
 }: Props) {
   const insets = useSafeAreaInsets();
@@ -84,6 +87,15 @@ export function Screen({
   const onScroll = useAnimatedScrollHandler((e) => {
     y.value = e.contentOffset.y;
   });
+  const pastY = past?.y ?? Number.POSITIVE_INFINITY;
+  const pastChange = (now: boolean) => past?.onChange(now);
+  useAnimatedReaction(
+    () => y.value > pastY,
+    (now, was) => {
+      if (was !== null && now !== was) runOnJS(pastChange)(now);
+    },
+    [pastY],
+  );
   useAnimatedReaction(
     () => y.value > TITLE_GONE / 2,
     (now, was) => {

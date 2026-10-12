@@ -15,8 +15,9 @@ import {
 import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
-import { useMemo, useState } from "react";
-import { Alert, View } from "react-native";
+import { useEffect, useMemo, useState } from "react";
+import { Alert, type TextStyle, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDeckExits } from "../../../data/decks";
 import { moveBack } from "../../../data/move-undo";
 import { useNextDue } from "../../../data/next-due";
@@ -34,7 +35,7 @@ import { BarButton, Screen } from "../../../ui/screen";
 import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { StateIcon, stateMarks } from "../../../ui/state-mark";
-import { DECK_ACCESSORY } from "../../../ui/tab-bar";
+import { setDeckReviewHidden } from "../../../ui/tab-bar";
 
 /**
  * A deck: what it wants today and how far along it is, then its words as a glossary, which Filter
@@ -66,6 +67,10 @@ export default function Deck() {
   const owner = deck?.role === "owner";
   const exits = useDeckExits(deck);
   const [moving, setMoving] = useState(false);
+  // Where Review ends on the page; past it, under the bar, the tab bar's accessory takes over.
+  const [reviewEnd, setReviewEnd] = useState<number | null>(null);
+  const insets = useSafeAreaInsets();
+  useEffect(() => () => setDeckReviewHidden(false), []);
   // The deck's name and counts come from the deck list, its words from its cards: either can fail.
   const cardsFailed = useLoadFailed(cards);
   const decksFailed = useLoadFailed(decks);
@@ -75,6 +80,11 @@ export default function Deck() {
     <Screen
       title={deck?.name ?? ""}
       back={{ label: t`Library`, to: "/library" }}
+      past={
+        reviewEnd === null
+          ? undefined
+          : { y: reviewEnd - insets.top - 56, onChange: setDeckReviewHidden }
+      }
       actions={
         // A deck that has gone has nothing to search or change.
         !gone && (
@@ -166,7 +176,13 @@ export default function Deck() {
         />
       ) : (
         <>
-          <Top deck={deck} rows={rows} />
+          <View
+            className="gap-3"
+            onLayout={(e) => setReviewEnd(e.nativeEvent.layout.y + e.nativeEvent.layout.height)}
+          >
+            <Top deck={deck} rows={rows} />
+            {deck.due > 0 && <ReviewButton deck={deck} />}
+          </View>
           <View className="gap-6">
             <Tools
               sections={sections}
@@ -205,67 +221,86 @@ function useCounts(rows: DeckRow[]) {
   }, [rows]);
 }
 
+/**
+ * What the deck asks for today and how far along it is: the count to review and the deck's size on
+ * one line, its cards' states as one bar with their counts under it, then Review. Once Review has
+ * scrolled away, the tab bar's accessory carries it. phone.md "Library".
+ */
 function Top({ deck, rows }: { deck: DeckData; rows: DeckRow[] }) {
   const { t, i18n } = useLingui();
-  const router = useRouter();
+  const p = usePalette();
   const counts = useCounts(rows);
   const next = useNextDue(rows);
   const due = deck.due;
-  const review = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    router.push(`/review?deck=${deck.id}` as Href);
-  };
   const line =
     due > 0 ? null : next ? t`Next card due ${next}.` : rows.length ? t`Nothing scheduled.` : null;
-  // From iOS 26 the deck's review rides in the tab bar's accessory instead. phone.md.
-  const button = !DECK_ACCESSORY && due > 0 && (
-    <Button label={t`Review`} variant="primary" size="lg" onPress={review} />
-  );
-  const dueText = plural(due, { one: "card to review now", other: "cards to review now" });
   const groupLabel = (k: keyof typeof counts) => i18n._(stateMarks[k].groupLabel);
-
+  const tabular: TextStyle = { fontVariant: ["tabular-nums"] };
   return (
-    <Plate className="flex-row overflow-hidden">
-      <View className="flex-1 justify-between gap-3 p-5">
-        <View className="gap-1">
+    <Plate className="gap-4 p-5">
+      <View className="flex-row items-baseline justify-between gap-3">
+        <View className="shrink flex-row items-baseline gap-2">
           <Text
-            className="text-5xl font-semibold text-text"
-            style={{ fontVariant: ["tabular-nums"], letterSpacing: -1.5 }}
+            className="text-4xl font-semibold text-text"
+            style={[tabular, { letterSpacing: -1 }]}
           >
             {due}
           </Text>
-          <Text className="text-base text-text-2">{dueText}</Text>
-          {line && <Text className="text-sm text-muted">{line}</Text>}
+          <Text className="shrink text-base text-text-2">{t`to review`}</Text>
         </View>
-        {button}
+        <Text className="text-base text-muted" style={tabular}>
+          {plural(rows.length, { one: "# card", other: "# cards" })}
+        </Text>
       </View>
-      <View className="w-px bg-edge" />
-      <View className="justify-center gap-3 px-5 py-5">
-        <View className="flex-row items-baseline gap-2 border-b border-edge pb-3">
-          <Text
-            className="text-lg font-semibold text-text"
-            style={{ fontVariant: ["tabular-nums"] }}
-          >
-            {rows.length}
-          </Text>
-          <Text className="text-base text-muted">
-            {plural(rows.length, { one: "card", other: "cards" })}
-          </Text>
+      <View className="gap-2.5">
+        <View
+          className="h-2.5 w-full flex-row overflow-hidden rounded-full bg-plate-2"
+          style={{ gap: 2 }}
+        >
+          {(["known", "learning", "new"] as const)
+            .filter((k) => counts[k] > 0)
+            .map((k) => (
+              <View
+                key={k}
+                style={{
+                  flexGrow: counts[k],
+                  flexBasis: 0,
+                  backgroundColor: p[stateMarks[k].tint],
+                }}
+              />
+            ))}
         </View>
-        {(["new", "learning", "known"] as const).map((k) => (
-          <View key={k} className="flex-row items-center gap-2">
-            <StateIcon state={k} size={16} />
-            <Text
-              className={`text-lg font-semibold ${counts[k] ? "text-text" : "text-muted"}`}
-              style={{ fontVariant: ["tabular-nums"] }}
-            >
-              {counts[k]}
-            </Text>
-            <Text className="text-base text-muted">{groupLabel(k)}</Text>
-          </View>
-        ))}
+        <View className="flex-row flex-wrap gap-x-4 gap-y-1">
+          {(["new", "learning", "known"] as const).map((k) => (
+            <View key={k} className="flex-row items-center gap-1.5">
+              <StateIcon state={k} size={14} />
+              <Text className="text-sm font-medium text-text" style={tabular}>
+                {i18n.number(counts[k])}
+              </Text>
+              <Text className="text-sm text-muted">{groupLabel(k)}</Text>
+            </View>
+          ))}
+        </View>
       </View>
+      {line && <Text className="text-sm text-muted">{line}</Text>}
     </Plate>
+  );
+}
+
+/** The deck's Review, under the summary; the page tells the tab bar once it has scrolled away. */
+function ReviewButton({ deck }: { deck: DeckData }) {
+  const { t } = useLingui();
+  const router = useRouter();
+  return (
+    <Button
+      label={t`Review`}
+      variant="primary"
+      size="lg"
+      onPress={() => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        router.push(`/review?deck=${deck.id}` as Href);
+      }}
+    />
   );
 }
 

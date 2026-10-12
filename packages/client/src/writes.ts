@@ -2,6 +2,7 @@ import type { CardInput, CardPatch, DeckInput, NewDeckInput } from "@lymi/core";
 import { newId, normaliseTerm } from "@lymi/core";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import { type AddCardOutcome, ApiError, api, type Card, type Deck, errorMessage } from "./api";
+import { waitsToSend } from "./api/request";
 import { clientConfig, type KeyValueStore } from "./config";
 import { flushOutbox as flushGrades } from "./grades";
 import { claimQueued, WRITE_PREFIX } from "./queued";
@@ -305,8 +306,8 @@ async function flushQueued(): Promise<Flushed> {
       }
     } catch (err) {
       const status = err instanceof ApiError ? err.status : -1;
-      // Offline, or a session that lapsed: nothing else can land until that changes.
-      if (status === 0 || status === 401) {
+      // Offline, a session that lapsed or a release too old: nothing else can land until that changes.
+      if (status === 0 || waitsToSend(status)) {
         result.stopped = true;
         if (status === 0) result.retryAt = Date.now() + STALL_RETRY;
         break;

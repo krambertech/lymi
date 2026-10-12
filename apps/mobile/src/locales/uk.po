@@ -769,6 +769,9 @@ msgstr "Цього вже немає. Онови сторінку, щоб поб
 msgid "Theme"
 msgstr "Тема"
 
+msgid "This version of the app is out of date. Update it to keep reviewing."
+msgstr "Ця версія застосунку застаріла. Онови її, щоб і далі повторювати картки."
+
 msgid "Time"
 msgstr "Час"
 
@@ -819,6 +822,12 @@ msgstr "А поки подивитися, як справи з твоєю пам
 
 msgid "Until then, see what changed in your Library on the web."
 msgstr "А поки подивитися, що змінилося в Бібліотеці, можна у вебверсії."
+
+msgid "Update"
+msgstr "Оновити"
+
+msgid "Update Lymi"
+msgstr "Онови Lymi"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Використай щонайменше {MIN_PASSWORD_LENGTH} символів."
@@ -876,3 +885,6 @@ msgstr "Твоє ім’я"
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Фото змінилося на іншому пристрої. Спробуй ще раз."
+
+msgid "Your unsent reviews and cards are saved on this phone. They send after the update."
+msgstr "Твої ненадіслані повторення й картки збережено на цьому телефоні. Вони надішлються після оновлення."

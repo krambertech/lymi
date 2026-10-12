@@ -17,7 +17,8 @@
     "./review-day": "./src/review-day.ts",
     "./daily-goal": "./src/daily-goal.ts",
     "./analytics": "./src/analytics.ts",
-    "./card-input": "./src/card-input.ts"
+    "./card-input": "./src/card-input.ts",
+    "./update-required": "./src/update-required.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",

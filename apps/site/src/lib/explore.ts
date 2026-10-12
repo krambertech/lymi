@@ -55,15 +55,3 @@ export function catalogEtag(parts: {
 }): string {
   return `W/"${parts.page ?? "explore"}-${parts.content}-${parts.locale}-${parts.version ?? "dev"}"`;
 }
-
-/**
- * Searchable text for one deck: its name, summary, the card on its tray, and the names of its shelf,
- * languages and tags. The locale is the reader's, so the haystack folds case exactly as the typed
- * query does.
- */
-export function searchText(deck: PublicDeckSummary, names: string[], locale: string): string {
-  return [deck.name, deck.summary, deck.card?.term, deck.card?.meaning, ...names]
-    .filter(Boolean)
-    .join(" ")
-    .toLocaleLowerCase(locale);
-}

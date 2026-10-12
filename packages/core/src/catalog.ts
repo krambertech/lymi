@@ -264,6 +264,43 @@ export function subjectOf(deck: { category: string | null }): string | null {
   return deck.category && SUBJECTS.includes(deck.category) ? deck.category : null;
 }
 
+/** How an app names what a deck is searched by, in the reader's language and in English. */
+export interface CatalogSearchNames {
+  language: (tag: string) => string | null;
+  englishLanguage: (tag: string) => string | null;
+  subject: (key: string) => string | null;
+  tag: (key: PublicationTag) => string | null;
+  englishTag: (key: PublicationTag) => string | null;
+}
+
+/**
+ * Everything a search on Explore matches, lower-cased: the name, summary and tray card, the
+ * languages the deck teaches and explains, its subject and its tags, the languages and tags in
+ * English too, so a reader may search in either. Both Explores search through here.
+ */
+export function catalogSearchText(
+  deck: PublicDeckSummary,
+  names: CatalogSearchNames,
+  locale: string,
+): string {
+  const languages = [taughtLanguage(deck), deck.meaningLanguage].flatMap((tag) =>
+    tag ? [names.language(tag), names.englishLanguage(tag)] : [],
+  );
+  const subject = subjectOf(deck);
+  return [
+    deck.name,
+    deck.summary,
+    deck.card?.term,
+    deck.card?.meaning,
+    ...languages,
+    subject ? names.subject(subject) : null,
+    ...deck.tags.flatMap((tag) => [names.tag(tag), names.englishTag(tag)]),
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLocaleLowerCase(locale);
+}
+
 /** A shelf per language, then a shelf per subject, then More decks. Each app writes the headings. */
 export interface Shelf {
   /** Unique on the page, and safe in an element id. */

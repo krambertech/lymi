@@ -1,18 +1,12 @@
 import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { type PublicDeckSummary, subjectOf, taughtLanguage } from "@lymi/core/catalog";
+import type { PublicationTag } from "@lymi/core";
+import { catalogSearchText, type PublicDeckSummary } from "@lymi/core/catalog";
 import { ChevronRight, Search } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { languageName } from "../../lib/deck-page";
 import { isExamShelf } from "../../lib/exams";
-import {
-  hasShelfPage,
-  type Shelf,
-  searchText,
-  shelfPath,
-  shelfRoute,
-  shelvesOf,
-} from "../../lib/explore";
+import { hasShelfPage, type Shelf, shelfPath, shelfRoute, shelvesOf } from "../../lib/explore";
 import { pageI18n } from "../../lib/i18n";
 import type { Locale } from "../../lib/routes";
 import { subjectLabel } from "../../lib/subjects";
@@ -103,24 +97,14 @@ function Catalog({ locale, decks }: Props) {
   const all = useMemo(() => shelvesOf(decks), [decks]);
   const haystacks = useMemo(() => {
     const english = pageI18n("en");
-    return new Map(
-      decks.map((deck) => [
-        deck.slug,
-        searchText(
-          deck,
-          [
-            ...[taughtLanguage(deck), deck.meaningLanguage].flatMap((tag) => {
-              const name = languageName(tag, i18n.locale);
-              const inEnglish = languageName(tag, "en");
-              return name ? (inEnglish && inEnglish !== name ? [name, inEnglish] : [name]) : [];
-            }),
-            ...[subjectLabel(i18n, subjectOf(deck))].filter((name) => name !== null),
-            ...deck.tags.flatMap((tag) => [tagLabel(i18n, tag), tagLabel(english, tag)]),
-          ],
-          i18n.locale,
-        ),
-      ]),
-    );
+    const names = {
+      language: (tag: string) => languageName(tag, i18n.locale),
+      englishLanguage: (tag: string) => languageName(tag, "en"),
+      subject: (key: string) => subjectLabel(i18n, key),
+      tag: (key: PublicationTag) => tagLabel(i18n, key),
+      englishTag: (key: PublicationTag) => tagLabel(english, key),
+    };
+    return new Map(decks.map((deck) => [deck.slug, catalogSearchText(deck, names, i18n.locale)]));
   }, [decks, i18n]);
 
   const terms = query.trim().toLocaleLowerCase(i18n.locale);

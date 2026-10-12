@@ -86,7 +86,7 @@ The bar is "could be mistaken for native." Every screen is checked on a real iPh
 
 ### Phone app: Expo React Native, sharing Lymi's packages
 
-`apps/mobile` is an Expo SDK 57 React Native app with Expo Router, Uniwind (Tailwind v4 class names shared with the web), Reanimated with Gesture Handler, Lucide and Onest, and Home Screen widgets through `expo-widgets`. It imports `packages/core` unchanged, and `packages/client` with its own origin, session headers and storage: `my.lymi.app`, Better Auth's cookie, and MMKV once it has real data. Its screens read query-shaped hooks that return the API's response types, answered by demo data until it signs in. Design values move into a shared package too. It lost to Capacitor around the existing React app, which keeps every screen a WebView. [ADR 0029](adr/0029-the-phone-app-is-expo-react-native-sharing-core.md) has the decision and [the proposal](proposals/native-mobile-app.md) the delivery outline.
+`apps/mobile` is an Expo SDK 57 React Native app with Expo Router, Uniwind (Tailwind v4 class names shared with the web), Reanimated with Gesture Handler, Lucide and Onest, and Home Screen widgets through `expo-widgets`. It imports `packages/core` unchanged, and `packages/client` with its own origin, session headers and storage: `my.lymi.app`, Better Auth's cookie, SecureStore for the session and MMKV for the query cache and outboxes. Its screens read the same query options as the web and render them with native components. Design values come from `packages/design`, which the web and the site import too. It lost to Capacitor around the existing React app, which keeps every screen a WebView. [ADR 0029](adr/0029-the-phone-app-is-expo-react-native-sharing-core.md) has the decision and [the proposal](proposals/native-mobile-app.md) the delivery outline.
 
 ### UI: Tailwind v4 + shadcn/ui on Base UI, tokens in packages/design
 
@@ -270,15 +270,18 @@ lymi/
     src/pages       Landing, Join, documentation, published decks, metadata and public files
     src/worker.ts   Health and legacy redirects, then Astro's handler
   apps/web          Product deployable: Vite React PWA client + Hono Worker
-    src/client      Routes, components, styles (Tailwind v4 tokens, source of DESIGN.md's colours)
+    src/client      Routes, components, styles
     src/server      Hono app, Better Auth, API and MCP routes, product asset fallback
     migrations      Drizzle-generated SQL for D1
+  apps/mobile       Expo React Native phone app
   packages/core     Drizzle schema, Zod types, ts-fsrs scheduling, ids
+  packages/client   API client, query options, outboxes and review draw for the web and the phone
+  packages/design   Tokens (tokens.css, source of DESIGN.md's colours), lantern geometry, flame, lights, motion
   design/           The identity board
   docs/             This file and the brief
 ```
 
-Each app owns one build artifact and Worker configuration so its custom domain and release lifecycle can change independently. `packages/core` is the stable domain layer both Workers and the phone app import. Brand SVGs and foundational styles are duplicated deliberately for now; a shared design or UI package waits until both clients need a stable common API.
+Each app owns one build artifact and Worker configuration so its custom domain and release lifecycle can change independently. `packages/core` is the stable domain layer both Workers and the phone app import. `packages/client` is what the web and phone clients share, and `packages/design` holds the values all three apps draw with. Components are not shared: each app renders its own from those values, so the phone keeps native navigation, sheets and type sizes ([ADR 0029](adr/0029-the-phone-app-is-expo-react-native-sharing-core.md)).
 
 Two workspace details worth knowing. `drizzle-orm` is a dependency of `packages/core` only and is re-exported as `@lymi/core/db`, because better-auth pulls in kysely and pnpm would otherwise build two copies of drizzle with incompatible types. And the Better Auth tables are generated, not hand-written: `pnpm --filter @lymi/web auth:schema` reads `src/server/auth-cli.ts` and writes `packages/core/src/schema/auth.ts`.
 

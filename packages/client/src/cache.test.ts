@@ -1,6 +1,6 @@
-import { onlineManager, QueryClient } from "@tanstack/react-query";
+import { dehydrate, onlineManager, QueryClient } from "@tanstack/react-query";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { shouldPersistQuery, warmCache } from "./cache";
+import { outboxDehydrateOptions, shouldPersistQuery, warmCache } from "./cache";
 import { deckCardsQuery } from "./queries";
 import { configureForTest } from "./test/configure";
 
@@ -52,5 +52,21 @@ describe("what the kept cache holds", () => {
         .filter(shouldPersistQuery)
         .map((q) => q.queryKey),
     ).toEqual([["decks"]]);
+  });
+});
+
+describe("what a client with outboxes keeps", () => {
+  it("leaves out a mutation paused offline, with what it would have sent", async () => {
+    onlineManager.setOnline(false);
+    const qc = client();
+    qc.setQueryData(["decks"], []);
+    void qc
+      .getMutationCache()
+      .build(qc, { mutationFn: async () => undefined })
+      .execute({ message: "private feedback" });
+    await vi.waitFor(() => expect(qc.getMutationCache().getAll()[0]?.state.isPaused).toBe(true));
+    const kept = dehydrate(qc, outboxDehydrateOptions);
+    expect(kept.mutations).toEqual([]);
+    expect(kept.queries.map((q) => q.queryKey)).toEqual([["decks"]]);
   });
 });

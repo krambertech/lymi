@@ -16,6 +16,15 @@ export function shouldPersistQuery(query: Query): boolean {
 }
 
 /**
+ * What a client that sends every offline write through the outboxes keeps: no mutation, because a
+ * paused one restored after a quit has no function to run and would only hold its variables.
+ */
+export const outboxDehydrateOptions = {
+  shouldDehydrateQuery: shouldPersistQuery,
+  shouldDehydrateMutation: () => false,
+};
+
+/**
  * Fetches, while online, what every deck's screen and review need and the cache does not hold
  * yet, so a deck first opened offline still has its cards. One at a time, so it never competes
  * with what the learner is doing.

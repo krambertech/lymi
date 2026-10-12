@@ -1093,6 +1093,9 @@ msgstr "No reviews yet. Each day you review adds a block."
 msgid "No section"
 msgstr "No section"
 
+msgid "None"
+msgstr "None"
+
 msgid "Not reviewed yet"
 msgstr "Not reviewed yet"
 
@@ -1329,6 +1332,10 @@ msgstr "Saved"
 
 msgid "Saving…"
 msgstr "Saving…"
+
+#. placeholder {0}: card.term
+msgid "Say {0}"
+msgstr "Say {0}"
 
 msgid "Schedule"
 msgstr "Schedule"

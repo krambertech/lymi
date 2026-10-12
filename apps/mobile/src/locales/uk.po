@@ -1093,6 +1093,9 @@ msgstr "Повторень поки немає. Кожен день із пов�
 msgid "No section"
 msgstr "Без розділу"
 
+msgid "None"
+msgstr "Немає"
+
 msgid "Not reviewed yet"
 msgstr "Ще не повторювались"
 
@@ -1329,6 +1332,10 @@ msgstr "Збережено"
 
 msgid "Saving…"
 msgstr "Збереження…"
+
+#. placeholder {0}: card.term
+msgid "Say {0}"
+msgstr "Сказати {0}"
 
 msgid "Schedule"
 msgstr "Розклад"

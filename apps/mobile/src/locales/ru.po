@@ -1093,6 +1093,9 @@ msgstr "Повторений пока нет. Каждый день с повт�
 msgid "No section"
 msgstr "Без раздела"
 
+msgid "None"
+msgstr "Нет"
+
 msgid "Not reviewed yet"
 msgstr "Ещё не повторялись"
 
@@ -1329,6 +1332,10 @@ msgstr "Сохранено"
 
 msgid "Saving…"
 msgstr "Сохранение…"
+
+#. placeholder {0}: card.term
+msgid "Say {0}"
+msgstr "Сказать {0}"
 
 msgid "Schedule"
 msgstr "Расписание"

@@ -3,6 +3,7 @@ import { msg, plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
 import { cardHistoryQuery } from "@lymi/client/queries";
+import { writes } from "@lymi/client/writes";
 import { deserializeState } from "@lymi/core";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
@@ -13,12 +14,14 @@ import { languageName } from "../../../../data/languages";
 import { useDeckCards, useDecks } from "../../../../data/queries";
 import { CardNotes } from "../../../../review/card-notes";
 import { modeLabel } from "../../../../review/modes";
+import { PronounceButton, usePronunciation } from "../../../../review/pronounce";
 import { usePalette } from "../../../../theme/palette";
 import { SourceChip, StateChip } from "../../../../ui/chip";
 import { GRADES, GradeMark } from "../../../../ui/grade";
 import { Icon, type IconName } from "../../../../ui/icons";
+import { DropdownMenu } from "../../../../ui/menu";
 import { Plate, Press, Text } from "../../../../ui/primitives";
-import { Screen } from "../../../../ui/screen";
+import { BarButton, Screen } from "../../../../ui/screen";
 import { Skeleton } from "../../../../ui/skeleton";
 
 const DAY = 86_400_000;
@@ -65,6 +68,7 @@ export default function CardPage() {
   const [older, setOlder] = useState(false);
   const now = new Date();
   const card = row?.card;
+  const pronounce = usePronunciation(card ?? null);
   if (!card) {
     return (
       <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>
@@ -139,42 +143,44 @@ export default function CardPage() {
   ].sort((a, b) => b.at.getTime() - a.at.getTime());
   const shown = older ? items : items.slice(0, HISTORY_ROWS);
 
-  // The term is the page's title, which travels into the bar as the page scrolls.
-  const pronunciation = card.pronunciation && (
-    <View className="-mt-4 flex-row items-center gap-2 px-1">
-      <Text className="text-md text-muted">{card.pronunciation}</Text>
-      {card.pronunciationSource === "ai" && <SourceChip source="ai" field="pronunciation" badge />}
-    </View>
-  );
-
-  const fields = (
-    <View className="gap-5">
+  // The card's fields and its details read the same way: a name over its value, a hairline between.
+  const fields = [
+    card.pronunciation && (
       <Field
-        label={t`Meaning`}
-        ai={card.meaning ? card.meaningSource === "ai" : false}
-        field="meaning"
+        key="pronunciation"
+        label={t`Pronunciation`}
+        ai={card.pronunciationSource === "ai"}
+        end={pronounce && <PronounceButton pronounce={pronounce} />}
       >
-        <Text className={`text-md ${card.meaning ? "text-text" : "text-muted"}`}>
-          {card.meaning || t`No meaning yet`}
-        </Text>
+        <Text className="text-md text-text">{card.pronunciation}</Text>
       </Field>
-      {card.example && (
-        <Field label={t`Example`} ai={card.exampleSource === "ai"} field="example">
-          <Text className="text-md text-text">{card.example}</Text>
-        </Field>
-      )}
-      {card.notes && (
-        <Field label={t`Notes`} ai={card.notesSource === "ai"}>
-          <CardNotes source={card.notes} className="text-md text-text" />
-        </Field>
-      )}
-      {card.hook && (
-        <Field label={t`Memory hook`} ai={card.hookSource === "ai"} field="hook">
-          <Text className="text-md text-text">{card.hook}</Text>
-        </Field>
-      )}
-    </View>
-  );
+    ),
+    <Field
+      key="meaning"
+      label={t`Meaning`}
+      ai={card.meaning ? card.meaningSource === "ai" : false}
+      field="meaning"
+    >
+      <Text className={`text-md ${card.meaning ? "text-text" : "text-muted"}`}>
+        {card.meaning || t`No meaning yet`}
+      </Text>
+    </Field>,
+    card.example && (
+      <Field key="example" label={t`Example`} ai={card.exampleSource === "ai"} field="example">
+        <Text className="text-md text-text">{card.example}</Text>
+      </Field>
+    ),
+    card.notes && (
+      <Field key="notes" label={t`Notes`} ai={card.notesSource === "ai"}>
+        <CardNotes source={card.notes} className="text-md text-text" />
+      </Field>
+    ),
+    card.hook && (
+      <Field key="hook" label={t`Memory hook`} ai={card.hookSource === "ai"} field="hook">
+        <Text className="text-md text-text">{card.hook}</Text>
+      </Field>
+    ),
+  ].filter(Boolean);
 
   const schedule =
     states.filter((s) => s.state !== 0).length === 0 ? (
@@ -218,9 +224,12 @@ export default function CardPage() {
     );
 
   const log = (
-    <View className="gap-3.5 px-5 py-4">
-      {shown.map((item) => (
-        <View key={item.key} className="flex-row gap-3">
+    <View>
+      {shown.map((item, i) => (
+        <View
+          key={item.key}
+          className={`flex-row gap-3 px-5 py-3.5 ${i > 0 ? "border-t border-edge" : ""}`}
+        >
           <View className="w-5 items-center pt-0.5">{item.mark}</View>
           <View className="flex-1 gap-0.5">
             <Text className={`text-md ${item.strong ? "font-medium text-text" : "text-text-2"}`}>
@@ -232,9 +241,13 @@ export default function CardPage() {
         </View>
       ))}
       {/* The history is read on its own, so offline it can be missing for a card that has one. */}
-      {!history && historyQuery.isPending && <Skeleton height={48} />}
+      {!history && historyQuery.isPending && (
+        <View className="px-5 py-4">
+          <Skeleton height={48} />
+        </View>
+      )}
       {!history && historyQuery.isError && (
-        <View className="flex-row items-center gap-3">
+        <View className="flex-row items-center gap-3 px-5 py-3">
           <Text className="flex-1 text-base text-muted">
             {t`Couldn’t load the history. Check your connection.`}
           </Text>
@@ -248,10 +261,14 @@ export default function CardPage() {
         </View>
       )}
       {history && items.length === 0 && (
-        <Text className="text-base text-muted">{t`No history yet.`}</Text>
+        <Text className="px-5 py-4 text-base text-muted">{t`No history yet.`}</Text>
       )}
       {items.length > HISTORY_ROWS && !older && (
-        <Press onPress={() => setOlder(true)} accessibilityRole="button" className="py-2">
+        <Press
+          onPress={() => setOlder(true)}
+          accessibilityRole="button"
+          className="border-t border-edge px-5 py-3"
+        >
           <Text className="text-base font-medium text-text-2">
             {plural(items.length - HISTORY_ROWS, {
               one: "Show # older entry",
@@ -273,25 +290,51 @@ export default function CardPage() {
   );
 
   return (
-    <Screen title={card.term} back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>
-      {pronunciation}
-      <Plate className="gap-5 p-5">
-        <Picture card={card} />
-        {fields}
+    <Screen
+      title={card.term}
+      back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}
+      actions={
+        <View className="flex-row items-center gap-2.5">
+          {pronounce && (
+            <BarButton icon="pronunciation" label={t`Say ${card.term}`} onPress={pronounce.play} />
+          )}
+          <DropdownMenu
+            title={card.term}
+            trigger={(open) => <BarButton icon="more" label={t`Card options`} onPress={open} />}
+            items={[
+              {
+                label: card.important ? t`Unmark important` : t`Mark important`,
+                icon: "important",
+                onSelect: () => void writes.setImportant(card, !card.important),
+              },
+            ]}
+          />
+        </View>
+      }
+    >
+      <Plate className="overflow-hidden">
+        {card.image && (
+          <View className="p-5 pb-1">
+            <Picture card={card} />
+          </View>
+        )}
+        {fields.map((f, i) => (
+          <View key={(f as { key: string }).key} className={i > 0 ? "border-t border-edge" : ""}>
+            {f}
+          </View>
+        ))}
       </Plate>
       {block(
         t`Details`,
         details.map((d, i) => (
-          <View
-            key={d.label}
-            className={`min-h-12 flex-row items-center gap-4 px-5 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
-          >
-            <Text className="w-24 text-base text-muted">{d.label}</Text>
-            {typeof d.value === "string" ? (
-              <Text className="flex-1 text-md text-text">{d.value}</Text>
-            ) : (
-              <View className="flex-1">{d.value}</View>
-            )}
+          <View key={d.label} className={i > 0 ? "border-t border-edge" : ""}>
+            <Field label={d.label}>
+              {typeof d.value === "string" ? (
+                <Text className="text-md text-text">{d.value}</Text>
+              ) : (
+                d.value
+              )}
+            </Field>
           </View>
         )),
       )}
@@ -303,22 +346,28 @@ export default function CardPage() {
 
 function Field({
   label,
-  ai,
+  ai = false,
   field,
+  end,
   children,
 }: {
   label: string;
-  ai: boolean;
-  field?: "meaning" | "example" | "hook";
+  ai?: boolean;
+  field?: "meaning" | "example" | "pronunciation" | "hook";
+  /** A control at the row's end, such as the pronunciation's play. */
+  end?: ReactNode;
   children: ReactNode;
 }) {
   return (
-    <View className="gap-1.5">
-      <View className="flex-row items-center gap-2">
-        <Text className="text-sm font-medium text-muted">{label}</Text>
-        {ai && <SourceChip source="ai" field={field} badge />}
+    <View className="min-h-14 flex-row items-center gap-3 px-5 py-3.5">
+      <View className="flex-1 gap-1">
+        <View className="flex-row items-center gap-2">
+          <Text className="text-sm font-medium text-muted">{label}</Text>
+          {ai && <SourceChip source="ai" field={field} badge />}
+        </View>
+        {children}
       </View>
-      {children}
+      {end}
     </View>
   );
 }

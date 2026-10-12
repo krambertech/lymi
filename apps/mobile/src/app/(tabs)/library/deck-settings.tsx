@@ -4,7 +4,7 @@ import { type DeckPatch, writes } from "@lymi/client/writes";
 import { DeckInput, type Directions, deckLimits, LANGUAGE_TAGS } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams } from "expo-router";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useRef, useState } from "react";
 import { TextInput, View } from "react-native";
 import { useDeckExits } from "../../../data/decks";
 import { languageName } from "../../../data/languages";
@@ -14,9 +14,11 @@ import { inputCap } from "../../../theme/type";
 import { Icon } from "../../../ui/icons";
 import { Select } from "../../../ui/menu";
 import { openWeb } from "../../../ui/on-the-web";
-import { Plate, Press, Text } from "../../../ui/primitives";
+import { Plate, Text } from "../../../ui/primitives";
 import { Row, RowFace, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
+import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
+import { Skeleton } from "../../../ui/skeleton";
 
 /**
  * Deck settings, as the web's: nothing has a Save button. A choice is made when it is made, and
@@ -26,8 +28,14 @@ import { Screen } from "../../../ui/screen";
 export default function DeckSettings() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const deck = useDecks().data?.find((d) => d.id === id);
+  const { t } = useLingui();
   // The fields start from the deck, so they wait for it rather than start empty and save that.
-  return deck ? <Settings deck={deck} /> : null;
+  if (deck) return <Settings deck={deck} />;
+  return (
+    <Screen title="" back={{ label: t`Deck`, to: `/library/${id}` as Href }}>
+      <Skeleton height={200} />
+    </Screen>
+  );
 }
 
 function Settings({ deck }: { deck: DeckSummary }) {
@@ -53,20 +61,33 @@ function Settings({ deck }: { deck: DeckSummary }) {
       setError(errorMessage(e));
     }
   };
+  // What each text field last saved, so a sheet closing after its done key does not save twice.
+  const kept = useRef({ name: deck.name, description: deck.description ?? null });
   const commitName = () => {
-    if (name.trim() === deck.name) return;
+    if (name.trim() === kept.current.name) return;
     const parsed = DeckInput.shape.name.safeParse(name);
     if (!parsed.success) {
       setError(name.trim() ? t`Keep the name under 80 characters.` : t`Give the deck a name.`);
       return;
     }
+    kept.current.name = parsed.data;
     void save({ name: parsed.data });
   };
   const commitDescription = () => {
     const next = description.trim() || null;
-    if (next !== (deck.description ?? null)) void save({ description: next });
+    if (next === kept.current.description) return;
+    kept.current.description = next;
+    void save({ description: next });
   };
   const { archive, leave } = useDeckExits(deck);
+  const [editing, setEditing] = useState<"name" | "description" | null>(null);
+  const [asking, setAsking] = useState(false);
+  // The keyboard's done key or a swipe keeps what was typed, as every row sheet does. phone.md.
+  const finishEditing = () => {
+    if (editing === "name") commitName();
+    if (editing === "description") commitDescription();
+    setEditing(null);
+  };
 
   const languages = [
     { value: "", label: t`No language` },
@@ -102,7 +123,8 @@ function Settings({ deck }: { deck: DeckSummary }) {
     <TextInput
       value={name}
       onChangeText={setName}
-      onEndEditing={commitName}
+      autoFocus
+      onSubmitEditing={finishEditing}
       maxLength={deckLimits.name ?? undefined}
       accessibilityLabel={t`Name`}
       returnKeyType="done"
@@ -116,7 +138,10 @@ function Settings({ deck }: { deck: DeckSummary }) {
     <TextInput
       value={description}
       onChangeText={setDescription}
-      onEndEditing={commitDescription}
+      autoFocus
+      submitBehavior="blurAndSubmit"
+      returnKeyType="done"
+      onSubmitEditing={finishEditing}
       maxLength={deckLimits.description ?? undefined}
       placeholder={t`Cards from Marco’s Tuesday lessons.`}
       placeholderTextColor={p.muted}
@@ -173,38 +198,54 @@ function Settings({ deck }: { deck: DeckSummary }) {
         </>
       ) : (
         <>
-          <Group title={t`Deck`}>
-            <Plate className="overflow-hidden">
-              <View className="px-4">{nameField}</View>
-              <View className="h-px bg-edge" />
-              <View className="px-4">{descriptionField}</View>
-            </Plate>
-          </Group>
+          {/* Each setting is a row that opens its own sheet over the page, never a sheet over a sheet. */}
           <Rows>
+            <Row icon="edit" label={t`Name`} value={deck.name} onPress={() => setEditing("name")} />
+            <Row
+              icon="notes"
+              label={t`Description`}
+              value={
+                !deck.description
+                  ? t`None`
+                  : deck.description.length > 24
+                    ? `${deck.description.slice(0, 23).trimEnd()}…`
+                    : deck.description
+              }
+              onPress={() => setEditing("description")}
+            />
             {languageSelect(<RowFace icon="meaning" label={t`Language`} value={language} />)}
+            <Row
+              icon="modes"
+              label={t`How cards are asked`}
+              value={way?.label}
+              onPress={() => setAsking(true)}
+            />
           </Rows>
-          <Group title={t`How cards are asked`}>
-            <Plate className="overflow-hidden">
-              {asked.map((a, i) => (
-                <Press
+          <Sheet
+            title={editing === "description" ? t`Description` : t`Name`}
+            open={editing !== null}
+            onOpenChange={(open) => !open && finishEditing()}
+          >
+            <View className="rounded-xl bg-glass-plate px-4">
+              {editing === "description" ? descriptionField : nameField}
+            </View>
+          </Sheet>
+          <Sheet title={t`How cards are asked`} open={asking} onOpenChange={setAsking}>
+            <SheetGroup>
+              {asked.map((a) => (
+                <SheetRow
                   key={a.value}
-                  scale={0.99}
-                  onPress={() => a.value !== deck.directions && void save({ directions: a.value })}
-                  accessibilityRole="radio"
-                  accessibilityState={{ checked: a.value === deck.directions }}
-                  className={`min-h-[60px] flex-row items-center gap-3 px-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
-                >
-                  <View className="flex-1 gap-0.5">
-                    <Text className="text-md text-text">{a.label}</Text>
-                    <Text className="text-sm text-muted">{a.line}</Text>
-                  </View>
-                  {a.value === deck.directions && (
-                    <Icon name="check" size={20} colour={p.text} strokeWidth={2.25} />
-                  )}
-                </Press>
+                  label={a.label}
+                  detail={a.line}
+                  chosen={a.value === deck.directions}
+                  onPress={() => {
+                    setAsking(false);
+                    if (a.value !== deck.directions) void save({ directions: a.value });
+                  }}
+                />
               ))}
-            </Plate>
-          </Group>
+            </SheetGroup>
+          </Sheet>
           <Rows>
             <Row
               icon="apps"

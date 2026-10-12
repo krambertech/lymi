@@ -18,6 +18,7 @@ import { ArrowUpDown, ListFilter } from "lucide-react-native";
 import { useMemo, useState } from "react";
 import { Alert, View } from "react-native";
 import { useDeckExits } from "../../../data/decks";
+import { moveBack } from "../../../data/move-undo";
 import { useNextDue } from "../../../data/next-due";
 import { useDeckCards, useDecks, useSections, useSeriesList } from "../../../data/queries";
 import { useMoveNotice, useSeriesActions } from "../../../data/series";
@@ -493,7 +494,7 @@ function MoveToSeries({
   const p = usePalette();
   const online = useOnline();
   const series = useSeriesList(open).data ?? [];
-  const { moveDeck } = useSeriesActions();
+  const { moveDeck, undoMove } = useSeriesActions();
   const notice = useMoveNotice();
   const deckName = deck.name;
   const move = (seriesId: string | null, then?: () => void) =>
@@ -509,9 +510,9 @@ function MoveToSeries({
     onOpenChange(false);
     if (seriesId === deck.seriesId) return;
     Haptics.selectionAsync();
-    const from = deck.seriesId;
+    const back = moveBack(deck.seriesId, series);
     const name = seriesId ? series.find((s) => s.id === seriesId)?.name : undefined;
-    move(seriesId, () => notice(deckName, name, () => move(from)));
+    move(seriesId, () => notice(deckName, name, () => undoMove(deck.id, back)));
   };
   return (
     <Sheet title={t`Move to series`} open={open} onOpenChange={onOpenChange}>

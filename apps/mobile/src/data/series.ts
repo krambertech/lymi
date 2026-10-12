@@ -4,6 +4,7 @@ import { seriesQuery } from "@lymi/client/queries";
 import type { SeriesDeleteInput } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Alert } from "react-native";
+import type { MoveBack } from "./move-undo";
 
 /**
  * The series writes Library makes, as the web's useSeriesActions. A series moves decks between
@@ -61,7 +62,13 @@ export function useSeriesActions() {
     onSettled: refresh,
   });
 
-  return { name, setDecks, move, remove, moveDeck };
+  /** Undo of a move: the old series' order back, or the deck moved back by id. */
+  const undoMove = (deckId: string, back: MoveBack) =>
+    back.kind === "order"
+      ? setDecks.mutate({ series: back.series, deckIds: back.deckIds })
+      : moveDeck.mutate({ deckId, seriesId: back.seriesId });
+
+  return { name, setDecks, move, remove, moveDeck, undoMove };
 }
 
 /**

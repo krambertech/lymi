@@ -6,6 +6,7 @@ import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { TextInput, View } from "react-native";
 import { FieldName } from "../capture/composer-field";
+import { moveBack } from "../data/move-undo";
 import { useDecks, useSeriesList } from "../data/queries";
 import { useMoveNotice, useSeriesActions } from "../data/series";
 import { useOnline } from "../streak/goal-picker";
@@ -49,7 +50,8 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
   const online = useOnline();
   const [name, setName] = useState(series?.name ?? "");
   const [error, setError] = useState<string | null>(null);
-  const { name: save, moveDeck } = useSeriesActions();
+  const { name: save, undoMove } = useSeriesActions();
+  const list = useSeriesList(true).data;
   const notice = useMoveNotice();
   const moving = useDecks().data?.find((d) => d.id === deck);
 
@@ -61,6 +63,8 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
       return;
     }
     setError(null);
+    // Taken before the save, while the deck's old series still holds it in its place.
+    const back = moving ? moveBack(moving.seriesId, list) : undefined;
     save.mutate(
       { series, name: parsed.data.name, deckIds: deck ? [deck] : undefined },
       {
@@ -72,10 +76,7 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
           }
           router.back();
           // One write made the series with the deck in it, so Undo moves the deck back alone.
-          if (moving)
-            notice(moving.name, saved.name, () =>
-              moveDeck.mutate({ deckId: moving.id, seriesId: moving.seriesId }),
-            );
+          if (moving && back) notice(moving.name, saved.name, () => undoMove(moving.id, back));
         },
         onError: (e) => setError(errorMessage(e)),
       },

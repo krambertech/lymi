@@ -3,7 +3,7 @@ import { useLingui } from "@lingui/react/macro";
 import { type DeckSummary, errorMessage, type Series } from "@lymi/client/api";
 import { groupDecks } from "@lymi/client/library-groups";
 import { deckCardsQuery } from "@lymi/client/queries";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
 import { type Href, Link, useRouter } from "expo-router";
 import { Alert, Pressable, View } from "react-native";
@@ -316,8 +316,8 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
   const size =
     d.total === 0 ? t`No cards yet` : plural(d.total, { one: "# card", other: "# cards" });
   const owner = d.owner.name;
-  // Read from the cards Sync keeps for each deck, without watching them: a row never fetches.
-  const kept = useQueryClient().getQueryData(deckCardsQuery(d.id).queryKey);
+  // Watches the cards Sync keeps for each deck, so it follows the warming; disabled, it never fetches.
+  const kept = useQuery({ ...deckCardsQuery(d.id), enabled: false }).data;
   const next = useNextDue(kept);
   const back = d.due === 0 && d.total > 0 && next ? t`Next due ${next}` : null;
   const line = [d.role === "owner" ? null : t`Shared by ${owner}`, language, size, back]

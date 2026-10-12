@@ -1,9 +1,53 @@
-import type { I18n, MessageDescriptor } from "@lingui/core";
+import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import type { LANGUAGE_TAGS } from "@lymi/core";
+import { i18n } from "../i18n";
 
-// Hermes has no Intl.DisplayNames, so the phone's catalog names core's offered languages.
-const NAMES: Record<(typeof LANGUAGE_TAGS)[number], MessageDescriptor> = {
+// Hermes has no Intl.DisplayNames, so the phone names languages itself: in English for addresses, and
+// through the catalogue for the learner.
+const NAMES: Record<(typeof LANGUAGE_TAGS)[number] | "ka", string> = {
+  ar: "Arabic",
+  bg: "Bulgarian",
+  cs: "Czech",
+  da: "Danish",
+  de: "German",
+  el: "Greek",
+  en: "English",
+  es: "Spanish",
+  et: "Estonian",
+  fa: "Persian",
+  fi: "Finnish",
+  fr: "French",
+  he: "Hebrew",
+  hi: "Hindi",
+  hr: "Croatian",
+  hu: "Hungarian",
+  id: "Indonesian",
+  it: "Italian",
+  ka: "Georgian",
+  ja: "Japanese",
+  ko: "Korean",
+  lt: "Lithuanian",
+  lv: "Latvian",
+  nl: "Dutch",
+  no: "Norwegian",
+  pl: "Polish",
+  pt: "Portuguese",
+  "pt-BR": "Brazilian Portuguese",
+  ro: "Romanian",
+  ru: "Russian",
+  sk: "Slovak",
+  sl: "Slovenian",
+  sr: "Serbian",
+  sv: "Swedish",
+  th: "Thai",
+  tr: "Turkish",
+  uk: "Ukrainian",
+  vi: "Vietnamese",
+  zh: "Chinese",
+};
+
+const LOCAL: Record<keyof typeof NAMES, MessageDescriptor> = {
   ar: msg({ message: "Arabic", context: "language" }),
   bg: msg({ message: "Bulgarian", context: "language" }),
   cs: msg({ message: "Czech", context: "language" }),
@@ -23,6 +67,7 @@ const NAMES: Record<(typeof LANGUAGE_TAGS)[number], MessageDescriptor> = {
   id: msg({ message: "Indonesian", context: "language" }),
   it: msg({ message: "Italian", context: "language" }),
   ja: msg({ message: "Japanese", context: "language" }),
+  ka: msg({ message: "Georgian", context: "language" }),
   ko: msg({ message: "Korean", context: "language" }),
   lt: msg({ message: "Lithuanian", context: "language" }),
   lv: msg({ message: "Latvian", context: "language" }),
@@ -44,8 +89,13 @@ const NAMES: Record<(typeof LANGUAGE_TAGS)[number], MessageDescriptor> = {
   zh: msg({ message: "Chinese", context: "language" }),
 };
 
-/** A language's name in the interface language, or its tag when it is one the learner typed in. */
-export function languageName(tag: string, i18n: I18n): string {
-  const name = NAMES[tag as keyof typeof NAMES];
+/** A language's name in the app's language, or its tag when it is one the learner typed in. */
+export function languageName(tag: string): string {
+  const name = LOCAL[tag as keyof typeof LOCAL];
   return name ? i18n._(name) : tag;
+}
+
+/** A language's English name, as lymi.app's addresses spell it. */
+export function englishLanguageName(tag: string): string {
+  return NAMES[tag as keyof typeof NAMES] ?? tag;
 }

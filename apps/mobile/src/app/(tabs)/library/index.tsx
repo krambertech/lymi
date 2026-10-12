@@ -34,13 +34,13 @@ export default function Library() {
 }
 
 function DeckRow({ deck: d }: { deck: DeckSummary }) {
-  const { i18n, t } = useLingui();
+  const { t } = useLingui();
   const router = useRouter();
   const p = usePalette();
   const cards = useDeckCards(d.id).data ?? [];
   const total = d.total;
   const known = cards.filter((c) => standing(c.state?.state) === "known").length;
-  const language = d.defaultLanguage ? languageName(d.defaultLanguage, i18n) : null;
+  const language = d.defaultLanguage ? languageName(d.defaultLanguage) : null;
   return (
     <Link href={`/library/${d.id}`} asChild>
       <Link.Trigger>

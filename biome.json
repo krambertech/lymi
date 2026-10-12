@@ -54,7 +54,49 @@
           "style": {
             "useFilenamingConvention": {
               "level": "error",
-              "options": { "filenameCases": ["kebab-case"] }
+              "options": {
+                "filenameCases": ["kebab-case"]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "packages/client/src/**",
+        "!packages/client/src/analytics.ts",
+        "!packages/client/src/analytics.test.ts"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "posthog-js": "Only the browser adapter in analytics.ts may load posthog-js; keep the rest of @lymi/client portable to the phone.",
+                  "./analytics": "analytics.ts is the browser adapter; the phone cannot load it."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["apps/mobile/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@lymi/client/analytics": "This is the browser's PostHog adapter; the phone sends through src/telemetry/posthog.ts.",
+                  "posthog-js": "The phone uses posthog-react-native through src/telemetry/posthog.ts."
+                }
+              }
             }
           }
         }

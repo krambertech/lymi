@@ -160,13 +160,22 @@ export function Select<T extends string>({
                 autoCorrect={false}
                 spellCheck={false}
                 clearButtonMode="while-editing"
+                returnKeyType="done"
+                onSubmitEditing={() => {
+                  const first = shown[0];
+                  if (first) menu.choose(() => first.value !== value && onChange(first.value));
+                }}
                 selectionColor={p.text}
                 className="flex-1 font-sans text-text"
                 style={{ fontSize: 17 }}
                 maxFontSizeMultiplier={inputCap(17)}
               />
             </View>
-            <ScrollView style={{ height: height * 0.55 }} keyboardShouldPersistTaps="handled">
+            <ScrollView
+              style={{ height: height * 0.55 }}
+              keyboardShouldPersistTaps="handled"
+              keyboardDismissMode="on-drag"
+            >
               {shown.length > 0 ? (
                 rows
               ) : (

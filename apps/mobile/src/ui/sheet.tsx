@@ -60,7 +60,11 @@ export function Sheet({ open, onOpenChange, onDismiss, title, children, more }: 
             // Fills the sheet rather than sizing to its rows, so its top shows when it peeks and the
             // rest scrolls once it is dragged up to the full screen.
             <RNHostView>
-              <ScrollView style={{ width }} contentContainerClassName="px-4 pt-7 pb-8">
+              <ScrollView
+                style={{ width }}
+                contentContainerClassName="px-4 pt-7 pb-8"
+                keyboardShouldPersistTaps="handled"
+              >
                 <View onLayout={(e) => setPeek(e.nativeEvent.layout.height + 56)}>{first}</View>
                 <View className="gap-3 pt-3">
                   <OnGlass>{more}</OnGlass>
@@ -73,6 +77,8 @@ export function Sheet({ open, onOpenChange, onDismiss, title, children, more }: 
               <ScrollView
                 style={{ width, maxHeight: height - insets.top - 16 }}
                 contentContainerClassName="px-4 pt-7 pb-4"
+                // A row or Save takes the first tap, even with the keyboard up.
+                keyboardShouldPersistTaps="handled"
               >
                 {first}
               </ScrollView>

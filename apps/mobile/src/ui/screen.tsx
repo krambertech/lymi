@@ -153,7 +153,7 @@ export function Screen({
       );
       return { opacity: headerHeight ? k : 0, transform: [{ scale: 0.7 + 0.3 * k }] };
     }
-    // The streak and capture keep their size: an 8% shrink read as a glitch, not as docking.
+    // A tab's streak and capture stay one size as the page scrolls.
     return { opacity: 1, transform: [{ scale: 1 }] };
   });
   // Nothing crosses what the lantern lights at rest; the band only gathers once content moves.

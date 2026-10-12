@@ -3,7 +3,7 @@ import { useLingui } from "@lingui/react/macro";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS, type StreakOut } from "@lymi/core";
 import * as Haptics from "expo-haptics";
 import { type Href, useIsFocused, useRouter } from "expo-router";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import { View, type ViewStyle } from "react-native";
 import { Flame } from "../../../brand/flame";
 import { Lantern } from "../../../brand/lantern";
@@ -302,7 +302,7 @@ type RoundsData = NonNullable<ReturnType<typeof useRounds>["data"]>;
 
 /**
  * Also on your list: the three rounds, always in this order, so none is ever left on its own. A
- * tile with cards opens its review; an empty one says so, and an empty New cards offers to add some.
+ * round with cards opens its review; an empty one says so, and an empty New cards offers to add some.
  */
 function Rounds({ rounds }: { rounds: RoundsData }) {
   const { t } = useLingui();
@@ -337,67 +337,114 @@ function Rounds({ rounds }: { rounds: RoundsData }) {
       href: "/review?round=slipping" as const,
     },
   ];
+  const items = rows.map((r, i) => {
+    const live = r.n > 0;
+    const adds = !live && r.href === "/review?round=new";
+    return (
+      <ListRow
+        key={r.href}
+        first={i === 0}
+        title={r.title}
+        mark={r.mark && <Icon name={r.mark} size={16} colour={r.tint} />}
+        line={live ? r.line : r.empty}
+        count={r.n}
+        end={live ? "open" : adds ? "add" : "none"}
+        onPress={
+          live
+            ? () => startReview(router, r.href)
+            : adds
+              ? () => router.push("/capture")
+              : undefined
+        }
+        hint={adds ? t`Add a card` : undefined}
+      />
+    );
+  });
   return (
     <View>
       <SectionTitle>{t`Also on your list`}</SectionTitle>
-      <View className="gap-3">
-        {rows.map((r) => {
-          const live = r.n > 0;
-          const adds = !live && r.href === "/review?round=new";
-          const face = (
-            <Plate className="flex-row items-center gap-4 px-5 py-4">
-              {/* One width for every count, so the three titles line up; a third digit shrinks to fit. */}
-              <Text
-                className={`w-14 text-3xl font-medium ${live ? "text-text" : "text-muted"}`}
-                style={{ fontVariant: ["tabular-nums"] }}
-                numberOfLines={1}
-                adjustsFontSizeToFit
-              >
-                {r.n}
-              </Text>
-              <View className="flex-1 gap-0.5">
-                <View className="flex-row items-center gap-1.5">
-                  {r.mark && <Icon name={r.mark} size={16} colour={r.tint} />}
-                  <Text className="text-md font-medium text-text">{r.title}</Text>
-                </View>
-                <Text className="text-base text-muted">{live ? r.line : r.empty}</Text>
-              </View>
-              {live ? <RowArrow /> : adds ? <RowPlus /> : null}
-            </Plate>
-          );
-          const label = `${r.n} ${r.title}. ${live ? r.line : r.empty}`;
-          if (!live && !adds) {
-            return (
-              <View key={r.href} accessible accessibilityLabel={label}>
-                {face}
-              </View>
-            );
-          }
-          return (
-            <Press
-              key={r.href}
-              scale={0.98}
-              onPress={() => (live ? startReview(router, r.href) : router.push("/capture"))}
-              accessibilityRole={live ? "link" : "button"}
-              accessibilityLabel={label}
-              accessibilityHint={live ? undefined : t`Add a card`}
-            >
-              {face}
-            </Press>
-          );
-        })}
-      </View>
+      <Plate className="overflow-hidden">{items}</Plate>
     </View>
   );
 }
 
-/** A plus in a circle: where an empty New cards tile offers to add some, as a row ends in an arrow. */
-function RowPlus() {
+/**
+ * One row of Today's lists: what it is on the start edge, how many at the end, then a chevron
+ * when it opens a review or a plus when it adds. A row that does nothing has neither.
+ */
+function ListRow({
+  first,
+  title,
+  mark,
+  line,
+  count,
+  end,
+  countLabel,
+  onPress,
+  hint,
+}: {
+  first: boolean;
+  title: string;
+  mark?: ReactNode;
+  /** Under the title; left out where the section already says what the count is. */
+  line?: string;
+  /** What VoiceOver reads for the count when no line says it. */
+  countLabel?: string;
+  count?: number;
+  end: "open" | "add" | "none";
+  onPress?: (() => void) | undefined;
+  hint?: string | undefined;
+}) {
   const p = usePalette();
-  return (
-    <View className="size-9 items-center justify-center rounded-full bg-plate-2">
-      <Icon name="plus" size={16} colour={p["text-2"]} />
+  const face = (
+    <View
+      className={`flex-row items-center gap-3 py-3.5 ps-5 pe-4 ${first ? "" : "border-t border-edge"}`}
+    >
+      <View className="flex-1 gap-0.5">
+        <View className="flex-row items-center gap-1.5">
+          {mark}
+          <Text className="shrink text-md font-medium text-text" numberOfLines={1}>
+            {title}
+          </Text>
+        </View>
+        {line && <Text className="text-base text-muted">{line}</Text>}
+      </View>
+      {count !== undefined && end !== "add" && (
+        <Text
+          className={`text-2xl font-medium ${count > 0 ? "text-text" : "text-muted"}`}
+          style={{ fontVariant: ["tabular-nums"] }}
+        >
+          {count}
+        </Text>
+      )}
+      {/* The slot stays on a row that does nothing, so every count ends on the same line. */}
+      {end === "open" ? (
+        <RowArrow />
+      ) : end === "add" ? (
+        <Icon name="plus" size={18} colour={p.muted} strokeWidth={2.5} />
+      ) : (
+        <View className="w-[18px]" />
+      )}
     </View>
+  );
+  const label = [title, countLabel ?? count, line].filter((part) => part !== undefined).join(". ");
+  if (!onPress) {
+    return (
+      <View accessible accessibilityLabel={label}>
+        {face}
+      </View>
+    );
+  }
+  return (
+    <Press
+      scale={0.99}
+      onPress={onPress}
+      accessibilityRole={end === "add" ? "button" : "link"}
+      accessibilityLabel={label}
+      accessibilityHint={hint}
+    >
+      {face}
+    </Press>
   );
 }
 
@@ -408,8 +455,20 @@ function RowPlus() {
 function DecksToReview({ decks }: { decks: Deck[] }) {
   const { t } = useLingui();
   const router = useRouter();
+  const p = usePalette();
   const rows = decks.filter((d) => d.due > 0);
   if (rows.length === 0) return null;
+  const items = rows.map((d, i) => (
+    <ListRow
+      key={d.id}
+      first={i === 0}
+      title={d.name}
+      count={d.due}
+      countLabel={plural(d.due, { one: "# card due", other: "# cards due" })}
+      end="open"
+      onPress={() => startReview(router, `/review?deck=${d.id}`)}
+    />
+  ));
   return (
     <View>
       <SectionTitle
@@ -421,46 +480,13 @@ function DecksToReview({ decks }: { decks: Deck[] }) {
             className="flex-row items-center gap-0.5 py-1"
           >
             <Text className="text-base font-medium text-text-2">{t`Library`}</Text>
+            <Icon name="forward" size={16} colour={p["text-2"]} strokeWidth={2.5} />
           </Press>
         }
       >
         {t`Decks to review`}
       </SectionTitle>
-      <Plate className="overflow-hidden">
-        {rows.map((d, i) => {
-          const line = plural(d.due, { one: "card due", other: "cards due" });
-          return (
-            <Press
-              key={d.id}
-              scale={0.99}
-              onPress={() => startReview(router, `/review?deck=${d.id}`)}
-              accessibilityRole="link"
-              accessibilityLabel={`${d.name}. ${d.due} ${line}`}
-            >
-              <View
-                className={`flex-row items-center gap-4 py-3.5 ps-5 pe-4 ${i > 0 ? "border-t border-edge" : ""}`}
-              >
-                {/* The count leads, as on the round tiles: it is what the row is for. */}
-                <View className="h-8 min-w-10 items-center justify-center rounded-full bg-amber-tint px-2.5">
-                  <Text
-                    className="text-base font-medium text-amber-tint-ink"
-                    style={{ fontVariant: ["tabular-nums"] }}
-                  >
-                    {d.due}
-                  </Text>
-                </View>
-                <View className="flex-1 gap-0.5">
-                  <Text className="text-md font-medium text-text" numberOfLines={1}>
-                    {d.name}
-                  </Text>
-                  <Text className="text-base text-muted">{line}</Text>
-                </View>
-                <RowArrow />
-              </View>
-            </Press>
-          );
-        })}
-      </Plate>
+      <Plate className="overflow-hidden">{items}</Plate>
     </View>
   );
 }

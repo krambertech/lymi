@@ -11,8 +11,8 @@ msgid "“{term}” is already in {deckName}"
 msgstr "“{term}” is already in {deckName}"
 
 #. placeholder {0}: d.due
-msgid "{0, plural, one {card due} other {cards due}}"
-msgstr "{0, plural, one {card due} other {cards due}}"
+msgid "{0, plural, one {# card due} other {# cards due}}"
+msgstr "{0, plural, one {# card due} other {# cards due}}"
 
 msgid "{current, plural, one {Your #-day streak carries on.} other {Your #-day streak carries on.}}"
 msgstr "{current, plural, one {Your #-day streak carries on.} other {Your #-day streak carries on.}}"

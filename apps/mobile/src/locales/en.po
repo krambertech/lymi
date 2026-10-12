@@ -1429,6 +1429,9 @@ msgstr "No history yet"
 msgid "No language"
 msgstr "No language"
 
+msgid "No matches"
+msgstr "No matches"
+
 msgid "No meaning yet"
 msgstr "No meaning yet"
 
@@ -1748,6 +1751,9 @@ msgstr "Science"
 
 msgid "Search"
 msgstr "Search"
+
+msgid "Search {label}"
+msgstr "Search {label}"
 
 msgid "Search decks"
 msgstr "Search decks"

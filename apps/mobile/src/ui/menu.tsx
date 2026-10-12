@@ -1,7 +1,8 @@
 import { useLingui } from "@lingui/react/macro";
 import { type ReactNode, useRef, useState } from "react";
-import { View } from "react-native";
+import { ScrollView, TextInput, useWindowDimensions, View } from "react-native";
 import { usePalette } from "../theme/palette";
+import { inputCap } from "../theme/type";
 import { Icon, type IconName } from "./icons";
 import { Press, Text } from "./primitives";
 import { Sheet, SheetGroup, SheetRow } from "./sheet";
@@ -92,7 +93,13 @@ interface SelectProps<T extends string> {
   onClosed?: () => void;
 }
 
-/** One of up to fifteen options, such as a deck, in a sheet titled with the field's name. forms.md. */
+/** Past this many fixed options, such as languages, the list is searched rather than scrolled. forms.md. */
+const SEARCHED_PAST = 15;
+
+/**
+ * One option in a sheet titled with the field's name. Up to fifteen, such as a deck, are a list;
+ * a longer fixed list is a Combobox, its search field first and the list one height as it filters.
+ */
 export function Select<T extends string>({
   trigger,
   label,
@@ -101,9 +108,32 @@ export function Select<T extends string>({
   onChange,
   onClosed,
 }: SelectProps<T>) {
-  const { t } = useLingui();
-  const menu = useMenuSheet(onClosed);
+  const { t, i18n } = useLingui();
+  const p = usePalette();
+  const { height } = useWindowDimensions();
+  const [query, setQuery] = useState("");
+  const menu = useMenuSheet(() => {
+    setQuery("");
+    onClosed?.();
+  });
   const chosen = options.find((o) => o.value === value)?.label ?? "";
+  const searched = options.length > SEARCHED_PAST;
+  const needle = query.trim().toLocaleLowerCase(i18n.locale);
+  const shown = needle
+    ? options.filter((o) => o.label.toLocaleLowerCase(i18n.locale).includes(needle))
+    : options;
+  const rows = (
+    <SheetGroup>
+      {shown.map((o) => (
+        <SheetRow
+          key={o.value}
+          label={o.label}
+          chosen={o.value === value}
+          onPress={() => menu.choose(() => o.value !== value && onChange(o.value))}
+        />
+      ))}
+    </SheetGroup>
+  );
   return (
     <>
       <Press
@@ -115,16 +145,38 @@ export function Select<T extends string>({
       </Press>
       {menu.sheet(
         label,
-        <SheetGroup>
-          {options.map((o) => (
-            <SheetRow
-              key={o.value}
-              label={o.label}
-              chosen={o.value === value}
-              onPress={() => menu.choose(() => o.value !== value && onChange(o.value))}
-            />
-          ))}
-        </SheetGroup>,
+        searched ? (
+          <>
+            <View className="h-11 flex-row items-center gap-2 rounded-xl bg-glass-plate px-3.5">
+              <Icon name="search" size={18} colour={p.muted} />
+              <TextInput
+                autoFocus
+                value={query}
+                onChangeText={setQuery}
+                placeholder={t`Search`}
+                placeholderTextColor={p.muted}
+                accessibilityLabel={t`Search ${label}`}
+                autoCapitalize="none"
+                autoCorrect={false}
+                spellCheck={false}
+                clearButtonMode="while-editing"
+                selectionColor={p.text}
+                className="flex-1 font-sans text-text"
+                style={{ fontSize: 17 }}
+                maxFontSizeMultiplier={inputCap(17)}
+              />
+            </View>
+            <ScrollView style={{ height: height * 0.55 }} keyboardShouldPersistTaps="handled">
+              {shown.length > 0 ? (
+                rows
+              ) : (
+                <Text className="px-4 py-3 text-md text-muted">{t`No matches`}</Text>
+              )}
+            </ScrollView>
+          </>
+        ) : (
+          rows
+        ),
       )}
     </>
   );

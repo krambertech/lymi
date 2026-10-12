@@ -3,6 +3,7 @@ import { presentationDetents, presentationDragIndicator } from "@expo/ui/swift-u
 import * as Haptics from "expo-haptics";
 import { Children, Fragment, type ReactNode, useState } from "react";
 import { Pressable, ScrollView, useWindowDimensions, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { usePalette, useRoom } from "../theme/palette";
 import { Icon, type IconName } from "./icons";
 import { Text } from "./primitives";
@@ -30,7 +31,8 @@ interface SheetProps {
 /** A glass sheet sized to what it holds, with Lymi's groups and rows inside. */
 export function Sheet({ open, onOpenChange, onDismiss, title, children, more }: SheetProps) {
   const room = useRoom();
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
   const [peek, setPeek] = useState<number | null>(null);
   const detents = more && peek ? [presentationDetents([{ height: peek }, "large"])] : [];
   const first = (
@@ -67,9 +69,13 @@ export function Sheet({ open, onOpenChange, onDismiss, title, children, more }: 
             </RNHostView>
           ) : (
             <RNHostView matchContents>
-              <View style={{ width }} className="px-4 pt-7 pb-4">
+              {/* A list taller than the screen, such as every language, scrolls inside the sheet. */}
+              <ScrollView
+                style={{ width, maxHeight: height - insets.top - 16 }}
+                contentContainerClassName="px-4 pt-7 pb-4"
+              >
                 {first}
-              </View>
+              </ScrollView>
             </RNHostView>
           )}
         </Group>

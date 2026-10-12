@@ -269,7 +269,7 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     const clean = path.replace(/^\/(uk|ru)(?=\/|$)/, "") || "/";
     if (/^\/explore\/[a-z0-9-]+$/.test(clean)) return path.slice(0, 200);
     if (
-      /^\/(?:docs(?:\/[a-z0-9-]+)*|languages(?:\/[a-z0-9-]+)?|ai-assistants|teachers|medicine|certifications|exams(?:\/[a-z0-9-]+)?|explore|privacy|terms|support|signup|learn(?:\/[a-z0-9-]+)?)?$/.test(
+      /^\/(?:docs(?:\/[a-z0-9-]+)*|languages(?:\/[a-z0-9-]+)?|ai-assistants|teachers|medicine|certifications|exams(?:\/[a-z0-9-]+)?|explore|changelog(?:\/[a-z0-9-]+)?|privacy|terms|support|signup|learn(?:\/[a-z0-9-]+)?)?$/.test(
         clean,
       )
     )

@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { GET } from "../pages/sitemap-pages.xml";
+import { changelogSlugs, changelogUpdatePath } from "./changelog-paths";
 import {
   englishOnlyPaths,
   isRuntimePage,
   type LocalizedPage,
   locales,
+  localizedContentPages,
   localizedPages,
   localizedPath,
   localizedRuntimePages,
@@ -29,11 +31,14 @@ const pages = (Object.keys(localizedPages) as LocalizedPage[]).filter(
 const translatedPaths = (locale: string) => pages.map((page) => bare(localizedPath(page, locale)));
 const translatedPrefix = new RegExp(`^/(${locales.filter((l) => l !== "en").join("|")})(/|$)`);
 const allRoutes = new Set(pageFiles.map(routeOf).filter((route) => route !== "/404"));
-const runtimePaths = new Set(
-  locales.flatMap((locale) =>
-    localizedRuntimePages.map((path) => (locale === "en" ? path : `/${locale}${path}`)),
-  ),
-);
+const inEveryLocale = (paths: readonly string[]) =>
+  new Set(
+    locales.flatMap((locale) =>
+      paths.map((path) => (locale === "en" ? path : `/${locale}${path}`)),
+    ),
+  );
+const runtimePaths = inEveryLocale(localizedRuntimePages);
+const contentPaths = inEveryLocale(localizedContentPages);
 /** Rendered per request: a `[param]` route, or a fixed path the runtime list names. */
 const isRuntime = (route: string) => route.includes("[") || runtimePaths.has(route);
 const routes = new Set([...allRoutes].filter((route) => !isRuntime(route)));
@@ -63,9 +68,13 @@ describe("public routes", () => {
   it("has every page rendered per request in every locale, and nothing else dynamic", () => {
     expect([...runtimePaths].filter((path) => !allRoutes.has(path))).toEqual([]);
     const undeclared = [...allRoutes].filter(
-      (route) => route.includes("[") && !runtimePaths.has(route),
+      (route) => route.includes("[") && !runtimePaths.has(route) && !contentPaths.has(route),
     );
     expect(undeclared).toEqual([]);
+  });
+
+  it("has every page built from content in every locale", () => {
+    expect([...contentPaths].filter((path) => !allRoutes.has(path))).toEqual([]);
   });
 
   it("lists every public page in the sitemap", async () => {
@@ -73,6 +82,9 @@ describe("public routes", () => {
     const listed = [...sitemap.matchAll(/<loc>https:\/\/lymi\.app(\/[^<]*)<\/loc>/g)].map((match) =>
       bare(match[1] ?? ""),
     );
-    expect(new Set(listed)).toEqual(routes);
+    const updates = locales.flatMap((locale) =>
+      changelogSlugs.map((slug) => changelogUpdatePath(slug, locale)),
+    );
+    expect(new Set(listed)).toEqual(new Set([...routes, ...updates]));
   });
 });

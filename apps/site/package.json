@@ -15,7 +15,8 @@
     "test": "vitest run --passWithNoTests",
     "cf-typegen": "wrangler types",
     "i18n:extract": "lingui extract --clean",
-    "hand:audio": "node scripts/hand-audio.mjs"
+    "hand:audio": "node scripts/hand-audio.mjs",
+    "changelog:screenshots": "node scripts/changelog-screenshots.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.3.4",
@@ -23,6 +24,7 @@
     "@fontsource/caveat": "5.3.0",
     "@lingui/core": "6.9.1",
     "@lingui/react": "6.9.1",
+    "@lymi/client": "workspace:*",
     "@lymi/core": "workspace:*",
     "@lymi/design": "workspace:*",
     "@resvg/resvg-wasm": "2.6.2",
@@ -31,8 +33,7 @@
     "lucide-react": "^1.55.0",
     "motion": "^14.1.0",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "@lymi/client": "workspace:*"
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
@@ -47,9 +48,11 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "astro": "^7.3.8",
+    "sharp": "0.35.5",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "vitest": "^5.0.3",
-    "wrangler": "^4.149.0"
+    "wrangler": "^4.149.0",
+    "yaml": "2.9.1"
   }
 }

@@ -345,3 +345,4 @@ Read the file for what you are building. Each is short enough to read whole.
 - [Activity](docs/design/activity.md)
 - [Explore](docs/design/explore.md)
 - [Welcome](docs/design/onboarding.md)
+- [The changelog](docs/design/changelog.md)

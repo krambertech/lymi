@@ -1,0 +1,99 @@
+---
+import { Rss } from "lucide-react";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { changelogDate, changelogUpdates } from "../../lib/changelog";
+import { changelogUpdatePath } from "../../lib/changelog-paths";
+import { pageI18n } from "../../lib/i18n";
+import { type Locale, localizedPath } from "../../lib/routes";
+import { buttonClass } from "../Button";
+import SiteHeader from "../islands/SiteHeader";
+import { ChangelogFooter } from "./ChangelogFooter";
+import ChangelogUpdate from "./ChangelogUpdate.astro";
+import {
+  CHANGELOG_BLURB,
+  CHANGELOG_FEED_TITLE,
+  CHANGELOG_HEADING,
+  CHANGELOG_LEDE,
+  CHANGELOG_RSS,
+  CHANGELOG_SKIP,
+  CHANGELOG_TITLE,
+} from "./changelog-copy";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const i18n = pageI18n(locale);
+const path = localizedPath("changelog", locale);
+const feedPath = `${path}/rss.xml`;
+const updates = await changelogUpdates(locale);
+---
+
+<BaseLayout
+  title={i18n._(CHANGELOG_TITLE)}
+  description={i18n._(CHANGELOG_BLURB)}
+  canonicalPath={path}
+  localizedPage="changelog"
+>
+  <link
+    slot="head"
+    rel="alternate"
+    type="application/rss+xml"
+    title={i18n._(CHANGELOG_FEED_TITLE)}
+    href={feedPath}
+  />
+  <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
+    <a
+      href="#updates"
+      class="sr-only rounded-sm bg-plate px-3 py-2 text-base text-text edge focus:not-sr-only focus:absolute focus:start-3 focus:top-3 focus:z-(--z-tooltip)"
+    >
+      {i18n._(CHANGELOG_SKIP)}
+    </a>
+    <header>
+      <SiteHeader client:load locale={locale} />
+    </header>
+
+    <main>
+      <div class="mx-auto max-w-[1040px] px-5 pt-14 pb-12 @2xl:px-10 @4xl:pt-20 @4xl:pb-16">
+        <h1 class="text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.25rem] @4xl:leading-[0.98]">
+          {i18n._(CHANGELOG_HEADING)}
+        </h1>
+        <p class="mt-5 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl">
+          {i18n._(CHANGELOG_LEDE)}
+        </p>
+        <a href={feedPath} class={buttonClass("ghost", "sm", "-ms-3 mt-6")}>
+          <Rss aria-hidden="true" data-icon="inline-start" />
+          {i18n._(CHANGELOG_RSS)}
+        </a>
+      </div>
+
+      <ol id="updates" class="mx-auto max-w-[1040px] px-5 @2xl:px-10">
+        {
+          updates.map((update) => (
+            <li
+              id={update.slug}
+              class="grid scroll-mt-4 gap-x-12 gap-y-3 border-t border-edge py-14 @4xl:grid-cols-[180px_minmax(0,1fr)] @4xl:py-20"
+            >
+              <div>
+                <a
+                  href={changelogUpdatePath(update.slug, locale)}
+                  class="rounded-xs text-sm text-muted hoverable:hover:text-text @4xl:sticky @4xl:top-8"
+                >
+                  <time datetime={update.date.toISOString().slice(0, 10)}>{changelogDate(update.date, locale)}</time>
+                </a>
+              </div>
+              <ChangelogUpdate update={update} locale={locale} href={changelogUpdatePath(update.slug, locale)} />
+            </li>
+          ))
+        }
+      </ol>
+    </main>
+
+    <script>
+      import { fitChangelogStages } from "../../lib/changelog-stage";
+      fitChangelogStages();
+    </script>
+    <ChangelogFooter locale={locale} />
+  </div>
+</BaseLayout>

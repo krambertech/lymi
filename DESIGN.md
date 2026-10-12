@@ -332,7 +332,7 @@ Read the file for what you are building. Each is short enough to read whole.
 | The lantern, the flame, the wordmark, the app icon | [brand.md](docs/design/system/brand.md) |
 | Words on the screen | [voice.md](docs/design/system/voice.md) |
 | The `/docs` site | [docs-site.md](docs/design/system/docs-site.md) |
-| The phone app: tabs, capture, how screens arrive, review gestures, haptics, widgets | [phone.md](docs/design/system/phone.md) |
+| The phone app: tabs, capture, how screens arrive, which sheet a task gets, review gestures, haptics, widgets | [phone.md](docs/design/system/phone.md) |
 
 ## Feature design
 

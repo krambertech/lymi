@@ -1502,17 +1502,11 @@ msgstr "Nothing scheduled."
 msgid "Notifications are off for Lymi. Turn them on in Settings to get the reminder."
 msgstr "Notifications are off for Lymi. Turn them on in Settings to get the reminder."
 
-msgid "Off"
-msgstr "Off"
-
 msgid "Often forgotten"
 msgstr "Often forgotten"
 
 msgid "OK"
 msgstr "OK"
-
-msgid "Only on days with cards due."
-msgstr "Only on days with cards due."
 
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."

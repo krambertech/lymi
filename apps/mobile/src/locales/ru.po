@@ -1502,17 +1502,11 @@ msgstr "Ничего не запланировано."
 msgid "Notifications are off for Lymi. Turn them on in Settings to get the reminder."
 msgstr ""
 
-msgid "Off"
-msgstr "Выключено"
-
 msgid "Often forgotten"
 msgstr "Часто забываются"
 
 msgid "OK"
 msgstr "OK"
-
-msgid "Only on days with cards due."
-msgstr "Только в дни, когда есть карточки к повторению."
 
 msgid "Only the deck’s owner can change this."
 msgstr "Менять это может только владелец колоды."

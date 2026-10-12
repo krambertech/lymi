@@ -1,4 +1,4 @@
-import { EASE_OUT, FLAME_MOTION, LANTERN_FLIGHT } from "@lymi/design";
+import { EASE_OUT, FLAME_MOTION, LANTERN_FLIGHT, type Spring } from "@lymi/design";
 import { Canvas, Circle, RadialGradient, Rect, vec } from "@shopify/react-native-skia";
 import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
@@ -58,6 +58,19 @@ const LANDED = 4;
 const CROSSFADE_MS = 240;
 
 const easeOut = curveFn(EASE_OUT);
+
+/**
+ * A spring scaled to finish exactly at `by` ms. A spring only nears 1, and a flight that stops a few
+ * percent short leaves the lantern beside the one it hands over to, so for a frame there are two.
+ */
+const settled = (ms: number, spring: Spring, by: number) => {
+  "worklet";
+  return Math.min(1, springAt(ms, spring) / springAt(by, spring));
+};
+const flight = (clock: number) => {
+  "worklet";
+  return settled(clock - SPLASH.travel, LANTERN_FLIGHT, SPLASH.end - SPLASH.travel);
+};
 const between = (t: number, [from, to]: readonly [number, number]) => {
   "worklet";
   return Math.min(1, Math.max(0, (t - from) / (to - from)));
@@ -160,14 +173,18 @@ export function Kindling({ lands, onShown, onDone }: Props) {
   // It catches to the brand flame and settles on the day's flame as the lantern lands.
   const flame = useDerivedValue(() => {
     if (reduce) return 0;
-    const caught = springAt(clock.value - SPLASH.light, FLAME_MOTION.catch);
-    const go = springAt(clock.value - SPLASH.travel, LANTERN_FLIGHT);
+    const caught = settled(
+      clock.value - SPLASH.light,
+      FLAME_MOTION.catch,
+      SPLASH.end - SPLASH.light,
+    );
+    const go = flight(clock.value);
     return caught * interpolate(go, [0, 1], [1, target.value.flame]);
   });
 
   const centre = useDerivedValue(() => {
     const t = clock.value;
-    const go = reduce ? 0 : springAt(t - SPLASH.travel, LANTERN_FLIGHT);
+    const go = reduce ? 0 : flight(t);
     const at = target.value;
     return {
       x: interpolate(go, [0, 1], [width / 2, at.x]),
@@ -202,7 +219,7 @@ export function Kindling({ lands, onShown, onDone }: Props) {
   const poolCentre = useDerivedValue(() => vec(centre.value.x, centre.value.y));
   const poolRadius = useDerivedValue(() => {
     const flood = easeOut(between(clock.value, SPLASH.flood));
-    const back = springAt(clock.value - SPLASH.travel, LANTERN_FLIGHT);
+    const back = flight(clock.value);
     const reach = interpolate(back, [0, 1], [FLOOD_REACH, POOL_REACH]);
     return centre.value.size * (0.4 + flood * reach);
   });

@@ -63,14 +63,16 @@ export function UndoHint() {
       pointerEvents="none"
       importantForAccessibility="no-hide-descendants"
       accessibilityElementsHidden
-      className="absolute inset-x-0 top-1/2 -mt-10 items-start gap-2 ps-2"
+      // Low on the card, clear of the word and above Tap to reveal.
+      className="absolute inset-x-0 bottom-24 items-start gap-2 ps-1"
     >
       <Animated.View style={hand}>
         <View className="size-11 items-center justify-center">
           <Icon name="pointer" size={26} colour={p.muted} strokeWidth={1.5} />
         </View>
       </Animated.View>
-      <View className="rounded-full bg-plate-2 px-3 py-1.5">
+      {/* The line sits inside the card while the hand starts at the screen's edge. */}
+      <View className="ms-8 rounded-full bg-plate-2 px-3 py-1.5">
         <Text className="text-sm font-medium text-text-2">
           {t`Swipe from the edge to take back a grade`}
         </Text>

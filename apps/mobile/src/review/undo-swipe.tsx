@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect, useRef } from "react";
-import { I18nManager, StyleSheet, useWindowDimensions, View } from "react-native";
+import { I18nManager, StyleSheet, useWindowDimensions } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   Easing,
@@ -94,7 +94,7 @@ export function UndoStack({
   }));
   return (
     <GestureDetector gesture={gesture}>
-      <View className="flex-1">
+      <Animated.View collapsable={false} style={{ flex: 1 }}>
         {kept.current && (
           <Animated.View
             pointerEvents="none"
@@ -108,7 +108,7 @@ export function UndoStack({
         <Animated.View className="flex-1 bg-canvas" style={top}>
           {children}
         </Animated.View>
-      </View>
+      </Animated.View>
     </GestureDetector>
   );
 }

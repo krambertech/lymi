@@ -324,7 +324,10 @@ function Run({
           onContinue={paused && current ? () => setPaused(false) : undefined}
         />
         <GestureDetector gesture={pull.gesture}>
-          <View className="absolute inset-x-0 top-0" style={{ height: insets.top + 64 }} />
+          <Animated.View
+            collapsable={false}
+            style={{ position: "absolute", top: 0, left: 0, right: 0, height: insets.top + 64 }}
+          />
         </GestureDetector>
       </Cover>
     );
@@ -414,11 +417,13 @@ function Run({
         style={{ paddingTop: insets.top + 4, paddingBottom: Math.max(insets.bottom, 12) }}
       >
         <GestureDetector gesture={pull.gesture}>
-          <Header
-            done={legDone}
-            total={total}
-            onClose={done > 0 ? () => setPaused(true) : onClose}
-          />
+          <Animated.View collapsable={false}>
+            <Header
+              done={legDone}
+              total={total}
+              onClose={done > 0 ? () => setPaused(true) : onClose}
+            />
+          </Animated.View>
         </GestureDetector>
         <UndoStack
           x={swipe.x}

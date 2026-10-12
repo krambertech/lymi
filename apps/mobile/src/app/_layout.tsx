@@ -16,8 +16,11 @@ import { queryClient } from "../data/client";
 import { Sync } from "../data/sync";
 import { i18n } from "../i18n";
 import { LanguageSync } from "../i18n/sync";
+import { startExceptionReporting } from "../telemetry/exceptions";
 import { usePalette } from "../theme/palette";
 import { WidgetSync } from "../widgets/sync";
+
+startExceptionReporting();
 
 // A link straight to a review, such as from a widget, still has the tabs under it.
 export const unstable_settings = { initialRouteName: "(tabs)" };

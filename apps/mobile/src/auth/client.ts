@@ -1,6 +1,6 @@
 import { expoClient } from "@better-auth/expo/client";
 import { requireUpdate } from "@lymi/client/update-required";
-import { CLIENT_HEADER, formatClientHeader, UpdateRequiredOut } from "@lymi/core";
+import { CLIENT_HEADER, formatClientHeader, type PhoneClient, UpdateRequiredOut } from "@lymi/core";
 import { emailOTPClient } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 import Constants from "expo-constants";
@@ -26,19 +26,24 @@ function cookiePrefixes(url: string): string[] {
 }
 
 /**
- * Names this release on every request, so the Worker can tell it to update. The version is the
- * running bundle's, which an over-the-air update moves; the build is the binary's. ADR 0032.
+ * This release: the version is the running bundle's, which an over-the-air update moves; the
+ * build is the binary's. Without a version the Worker would take it for the oldest release, so
+ * it is unknown. ADR 0032.
  */
-function clientHeaders(): Record<string, string> {
+export const PHONE_CLIENT: PhoneClient | undefined = (() => {
   const version = Constants.expoConfig?.version;
-  // Without a version the Worker would take this for the oldest release, so it sends nothing.
-  if (!version) return {};
+  if (!version) return undefined;
   const build =
     Platform.OS === "ios"
       ? Constants.platform?.ios?.buildNumber
       : Constants.platform?.android?.versionCode?.toString();
   const platform = Platform.OS === "android" ? "android" : "ios";
-  return { [CLIENT_HEADER]: formatClientHeader({ platform, version, build: build ?? undefined }) };
+  return { platform, version, build: build ?? undefined };
+})();
+
+/** Names this release on every request, so the Worker can tell it to update. */
+function clientHeaders(): Record<string, string> {
+  return PHONE_CLIENT ? { [CLIENT_HEADER]: formatClientHeader(PHONE_CLIENT) } : {};
 }
 
 const CLIENT_HEADERS = clientHeaders();

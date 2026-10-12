@@ -24,10 +24,11 @@ export default function Search() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   // A link can open search with its text already in, as `lymi://search?q=…`.
-  const { q } = useLocalSearchParams<{ q?: string }>();
+  // A deck's search opens with `?deck=` and looks only in that deck.
+  const { q, deck: deckId } = useLocalSearchParams<{ q?: string; deck?: string }>();
   const { text, setText, query } = useSearchText(q);
   const search = useInfiniteQuery({
-    ...cardSearchQuery(query),
+    ...cardSearchQuery(query, deckId),
     placeholderData: keepPreviousData,
   });
   const allDecks = useDecks().data ?? [];
@@ -36,9 +37,10 @@ export default function Search() {
   const total = search.data?.pages[0]?.total ?? null;
   const more = !!query && search.hasNextPage;
   const needle = query.toLocaleLowerCase(i18n.locale);
-  const decks = query
-    ? allDecks.filter((d) => d.name.toLocaleLowerCase(i18n.locale).includes(needle))
-    : [];
+  const decks =
+    query && !deckId
+      ? allDecks.filter((d) => d.name.toLocaleLowerCase(i18n.locale).includes(needle))
+      : [];
   const nothing = query && !search.isPending && !more && cards.length === 0 && decks.length === 0;
 
   return (
@@ -87,7 +89,7 @@ export default function Search() {
                     <Press
                       key={c.id}
                       scale={0.99}
-                      onPress={() => router.push(`/library/${c.deckId}` as Href)}
+                      onPress={() => router.push(`/library/card/${c.id}?deck=${c.deckId}` as Href)}
                       accessibilityRole="link"
                       accessibilityLabel={`${c.term}, ${meaning}, ${c.deckName}`}
                       className={`gap-0.5 py-3.5 ps-5 pe-4 ${i > 0 ? "border-t border-edge" : ""}`}
@@ -134,7 +136,7 @@ export default function Search() {
         <SearchBar
           value={text}
           onChange={setText}
-          placeholder={t`Search decks and cards`}
+          placeholder={deckId ? t`Search this deck` : t`Search decks and cards`}
           onCancel={() => router.back()}
         />
       </KeyboardRoom>

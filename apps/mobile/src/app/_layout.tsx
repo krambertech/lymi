@@ -180,6 +180,17 @@ function Root() {
               },
             }}
           />
+          <Stack.Screen
+            name="deck-settings"
+            options={{
+              presentation: "formSheet",
+              sheetAllowedDetents: [1],
+              sheetGrabberVisible: true,
+              contentStyle: {
+                backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
+              },
+            }}
+          />
           {/* Peeks at the run and today, and drags up for the month. phone.md. */}
           <Stack.Screen
             name="streak"

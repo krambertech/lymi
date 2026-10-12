@@ -41,6 +41,8 @@ export interface ExamSource {
   edition?: MessageDescriptor;
   /** An attribution the source's licence asks for. */
   licence?: MessageDescriptor;
+  /** Further documents of the same source, such as one word list per level. */
+  more?: readonly { title: string; url: string }[];
 }
 
 export interface ExamFact {
@@ -267,8 +269,18 @@ export const EXAMS: readonly Exam[] = [
     summary: msg`A deck for each level. 60% of the points to pass.`,
     decks: ["german-a1-vocabulary", "german-a2-vocabulary", "german-b1-vocabulary"],
     source: {
-      title: "Goethe-Institut: Wortlisten Goethe-Zertifikat A1, A2 und B1",
-      url: "https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_B1_Wortliste.pdf",
+      title: "Goethe-Institut: Start Deutsch 1 Wortliste (A1)",
+      url: "https://www.goethe.de/pro/relaunch/prf/de/A1_SD1_Wortliste_02.pdf",
+      more: [
+        {
+          title: "Goethe-Zertifikat A2 Wortliste",
+          url: "https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_A2_Wortliste.pdf",
+        },
+        {
+          title: "Goethe-Zertifikat B1 Wortliste",
+          url: "https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_B1_Wortliste.pdf",
+        },
+      ],
     },
     authority: "Goethe-Institut",
     facts: [

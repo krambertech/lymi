@@ -79,6 +79,20 @@ function SourceLine({ source, changed }: { source: ExamSource; changed: string |
             {title}
           </a>
         </Trans>
+        {source.more?.map((doc) => (
+          <span key={doc.url}>
+            <span aria-hidden="true" className="px-1.5 text-faint">
+              ·
+            </span>
+            <a
+              href={doc.url}
+              rel="noopener"
+              className="font-medium text-text-2 underline decoration-edge-2 underline-offset-2 hoverable:hover:text-text"
+            >
+              {doc.title}
+            </a>
+          </span>
+        ))}
         {source.edition && (
           <>
             <span aria-hidden="true" className="px-1.5 text-faint">

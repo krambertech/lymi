@@ -299,8 +299,8 @@ function Count({ value, still }: { value: number; still: boolean | null }) {
 }
 
 /**
- * An example deck's counts moving from the first day to the test, once it is on screen. Under
- * reduced motion it holds the last moment.
+ * An example deck's counts moving from the first day to the test, once, when it is on screen.
+ * Under reduced motion it starts at the last moment.
  */
 function ProgressDemo() {
   const { t, i18n } = useLingui();
@@ -311,9 +311,11 @@ function ProgressDemo() {
 
   useEffect(() => {
     if (still || !visible) return;
-    const timer = window.setInterval(() => setAt((n) => (n + 1) % STAGES.length), 2600);
-    return () => window.clearInterval(timer);
-  }, [still, visible]);
+    // Plays through once and holds the last moment, so nothing on the page moves for good.
+    if (at >= STAGES.length - 1) return;
+    const timer = window.setTimeout(() => setAt((n) => n + 1), 2600);
+    return () => window.clearTimeout(timer);
+  }, [still, visible, at]);
 
   const stage = STAGES[at] ?? STAGES[0];
   const fresh = TOTAL - stage.known - stage.learning;

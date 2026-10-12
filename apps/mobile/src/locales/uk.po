@@ -185,6 +185,9 @@ msgstr "{deckCount} · {cardCount}"
 msgid "{due, plural, one {# card due} other {# cards due}}"
 msgstr "{due, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
 
+msgid "{due, plural, one {# card to review} other {# cards to review}}"
+msgstr ""
+
 msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 msgstr "{due, plural, one {картка до повторення в колоді {deckName}} few {картки до повторення в колоді {deckName}} many {карток до повторення в колоді {deckName}} other {картки до повторення в колоді {deckName}}}"
 
@@ -267,6 +270,9 @@ msgstr "Підключений застосунок"
 
 msgid "A deck holds the words you learn together. Make one, or import decks on the web."
 msgstr "Колода тримає слова, які ти вчиш разом. Створи її або імпортуй колоди в вебверсії."
+
+msgid "A few minutes keeps them fresh."
+msgstr ""
 
 msgid "A new code is on its way to {address}."
 msgstr "Надсилаємо новий код на {address}."
@@ -1115,6 +1121,9 @@ msgstr "Імпортується"
 msgid "Importing from {source}"
 msgstr "Імпорт із {source}"
 
+msgid "In an hour"
+msgstr ""
+
 msgid "In Library"
 msgstr "У Бібліотеці"
 
@@ -1490,6 +1499,9 @@ msgstr "Ще нічого не опубліковано"
 msgid "Nothing scheduled."
 msgstr "Нічого не заплановано."
 
+msgid "Notifications are off for Lymi. Turn them on in Settings to get the reminder."
+msgstr ""
+
 msgid "Off"
 msgstr "Вимкнено"
 
@@ -1528,6 +1540,9 @@ msgstr "Відкрити Бібліотеку"
 
 msgid "Open on the web"
 msgstr "Відкрити у вебверсії"
+
+msgid "Open Settings"
+msgstr ""
 
 msgid "Open Settings on the web"
 msgstr "Відкрити налаштування у вебверсії"
@@ -1699,8 +1714,14 @@ msgstr "Повторити серію «{seriesName}», {due, plural, one {# к�
 msgid "Review done"
 msgstr "Повторення завершено"
 
+msgid "Review now"
+msgstr ""
+
 msgid "Review these decks together, in this order."
 msgstr "Повторюй ці колоди разом, у такому порядку."
+
+msgid "Review whenever you have a moment."
+msgstr ""
 
 msgid "Reviewed"
 msgstr "Повторено"
@@ -1990,6 +2011,9 @@ msgstr "Колода зникне з Бібліотеки, а її картки 
 
 msgid "Theme"
 msgstr "Тема"
+
+msgid "They’re ready when you are."
+msgstr ""
 
 msgid "This card isn’t in this deck"
 msgstr "Цієї картки немає в цій колоді"

@@ -19,7 +19,14 @@ import { Row, RowFace, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
 import { Avatar } from "../../../you/avatar";
 import { ProfileSheet, useProfile } from "../../../you/profile";
-import { ReminderSheet, useReminder } from "../../../you/reminder";
+import {
+  Blocked,
+  REMINDER_LAYOUT,
+  ReminderSheet,
+  ReminderSwitch,
+  TimeRow,
+  useReminder,
+} from "../../../you/reminder";
 
 /** The API reference, where publishing and deck reports are done with a key. ADR 0028. */
 const API_DOCS = "https://lymi.app/docs/api";
@@ -51,13 +58,30 @@ export default function You() {
 
       <InsightsPlate onPress={() => router.push("/you/insights")} />
 
+      {REMINDER_LAYOUT === "inline" && (
+        <View className="gap-2">
+          <SectionTitle>{t`Daily reminder`}</SectionTitle>
+          <Rows>
+            <ReminderSwitch reminder={reminder} />
+            {reminder.time && <TimeRow reminder={reminder} />}
+          </Rows>
+          {reminder.blocked ? (
+            <Blocked />
+          ) : (
+            <Text className="px-4 text-sm text-muted">{t`Only on days with cards due.`}</Text>
+          )}
+        </View>
+      )}
+
       <Rows>
-        <Row
-          icon="reminder"
-          label={t`Daily reminder`}
-          value={reminder.label ?? t`Off`}
-          onPress={() => setReminding(true)}
-        />
+        {REMINDER_LAYOUT !== "inline" && (
+          <Row
+            icon="reminder"
+            label={t`Daily reminder`}
+            value={reminder.label ?? t`Off`}
+            onPress={() => setReminding(true)}
+          />
+        )}
         <Select
           label={t`Theme`}
           value={theme}

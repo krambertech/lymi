@@ -7,6 +7,16 @@ import { ErrorTip } from "./error-tip";
 
 const tip = () => document.querySelector<HTMLElement>('[data-slot="popover-content"]');
 
+// Base UI removes the tip after its exit, which WebKit plays only as fast as a loaded runner renders frames.
+async function exitPlayed() {
+  const popup = tip();
+  if (!popup) return;
+  await expect.poll(() => !popup.isConnected || popup.hasAttribute("data-ending-style")).toBe(true);
+  for (let running = popup.getAnimations(); running.length; running = popup.getAnimations()) {
+    await Promise.allSettled(running.map((animation) => animation.finished));
+  }
+}
+
 function Harness() {
   const button = useRef<HTMLButtonElement>(null);
   const [error, setError] = useState<string | null>(null);
@@ -40,6 +50,7 @@ test("leaves at the next key, and its announcement goes with it", async () => {
   await expect.poll(() => tip()).not.toBeNull();
 
   await userEvent.keyboard("{Shift}");
+  await exitPlayed();
   await expect.poll(() => tip()).toBeNull();
   await expect.element(page.getByRole("alert")).toHaveTextContent("");
 });
@@ -78,6 +89,7 @@ test("a nudge shows the same message again after it has left", async () => {
   await userEvent.keyboard("{Enter}");
   await expect.poll(() => tip()).not.toBeNull();
   await userEvent.keyboard("{Shift}");
+  await exitPlayed();
   await expect.poll(() => tip()).toBeNull();
 
   await userEvent.keyboard("{Enter}");

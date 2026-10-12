@@ -198,6 +198,7 @@ function Review() {
   // Tied to the queue item, so a failure never carries onto the next card's button.
   const [audioError, setAudioError] = useState<{ item: string; message: string } | null>(null);
   const playingAudio = useRef<HTMLAudioElement | null>(null);
+  const loadedAudio = useRef<{ cardId: string; audio: HTMLAudioElement } | null>(null);
   const [animateNextCard, setAnimateNextCard] = useState(true);
   const [animateReveal, setAnimateReveal] = useState(true);
   // Where focus goes when the button holding it unmounts: the grades after a reveal, the next card after a grade.
@@ -594,23 +595,36 @@ function Review() {
   useEffect(() => {
     setAudioError(null);
     if (!currentCardId) stopAudio();
-    return stopAudio;
+    return () => {
+      stopAudio();
+      loadedAudio.current = null;
+    };
   }, [currentCardId, stopAudio]);
 
   const playAudio = useCallback(async () => {
     if (!current?.card.language || audioState === "loading") return;
     stopAudio();
     setAudioError(null);
-    setAudioState("loading");
-    const audio = new Audio(api.audioUrl(current.card.id));
+    const cardId = current.card.id;
+    // The response is no-store, so a replay rewinds the element that already holds it.
+    const loaded = loadedAudio.current?.cardId === cardId ? loadedAudio.current.audio : null;
+    const audio = loaded ?? new Audio(api.audioUrl(cardId));
+    if (loaded) audio.currentTime = 0;
+    else {
+      setAudioState("loading");
+      audio.addEventListener("ended", () => {
+        if (playingAudio.current === audio) stopAudio();
+      });
+    }
     playingAudio.current = audio;
-    audio.addEventListener("ended", () => {
-      if (playingAudio.current === audio) stopAudio();
-    });
     try {
       await audio.play();
-      if (playingAudio.current === audio) setAudioState("playing");
+      if (playingAudio.current === audio) {
+        loadedAudio.current = { cardId, audio };
+        setAudioState("playing");
+      }
     } catch {
+      if (loadedAudio.current?.audio === audio) loadedAudio.current = null;
       if (playingAudio.current === audio) {
         playingAudio.current = null;
         setAudioState("idle");

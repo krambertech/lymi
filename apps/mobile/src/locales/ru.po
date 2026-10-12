@@ -534,6 +534,9 @@ msgstr "Выбрать фото"
 msgid "Citizenship"
 msgstr "Гражданство"
 
+msgid "Clear search"
+msgstr "Очистить поиск"
+
 msgid "Clear the picture"
 msgstr "Убрать изображение"
 
@@ -850,6 +853,9 @@ msgstr "Пример с урока"
 msgid "Explore"
 msgstr "Каталог"
 
+msgid "Explore needs a connection"
+msgstr "Каталогу нужно соединение"
+
 msgid "Export"
 msgstr "Экспорт"
 
@@ -1085,6 +1091,9 @@ msgctxt "language"
 msgid "Italian"
 msgstr "Итальянский"
 
+msgid "Its decks may have been withdrawn. Every other shelf is still in Explore."
+msgstr "Возможно, её колоды сняли с публикации. Все остальные полки по-прежнему в каталоге."
+
 msgctxt "language"
 msgid "Japanese"
 msgstr "Японский"
@@ -1190,6 +1199,9 @@ msgstr "Lymi также получит экран, на котором ты се
 
 msgid "Lymi is free to use."
 msgstr "Lymi бесплатный."
+
+msgid "Lymi is writing the first decks. Until then, make your own in Library."
+msgstr "Lymi пишет первые колоды. А пока создай свою в Библиотеке."
 
 msgid "Made a change"
 msgstr "Внесено изменение"
@@ -1320,8 +1332,8 @@ msgstr "Карточек пока нет."
 msgid "No cards you keep forgetting"
 msgstr "Нет карточек, которые ты часто забываешь"
 
-msgid "No decks match “{query}”. Try a word from a card, or a language."
-msgstr "Ни одна колода не подходит под «{query}». Попробуй слово с карточки или название языка."
+msgid "No decks match “{query}”"
+msgstr "Ни одна колода не подходит под «{query}»"
 
 msgid "No decks of your own yet. Only decks you create can go in a series."
 msgstr "У тебя пока нет своих колод. В серию можно добавить только созданные тобой колоды."
@@ -1384,6 +1396,9 @@ msgstr "В этой колоде больше ничего"
 msgid "Nothing matches “{query}”."
 msgstr "Ничего не найдено по запросу «{query}»."
 
+msgid "Nothing published yet"
+msgstr "Пока ничего не опубликовано"
+
 msgid "Nothing scheduled."
 msgstr "Ничего не запланировано."
 
@@ -1405,8 +1420,14 @@ msgstr "Открыть «{name}»"
 msgid "Open Archived on the web"
 msgstr "Открыть архив в веб-версии"
 
+msgid "Open Explore"
+msgstr "Открыть каталог"
+
 msgid "Open in Library"
 msgstr "Открыть в Библиотеке"
+
+msgid "Open Library"
+msgstr "Открыть Библиотеку"
 
 msgid "Open on the web"
 msgstr "Открыть в веб-версии"
@@ -1876,8 +1897,8 @@ msgstr "Изображение этой карточки убрано."
 msgid "This series is no longer here."
 msgstr "Этой серии больше нет."
 
-msgid "This shelf has no decks now."
-msgstr "На этой полке сейчас нет колод."
+msgid "This shelf has no decks now"
+msgstr "На этой полке сейчас нет колод"
 
 msgid "This version of the app is out of date. Update it to keep reviewing."
 msgstr "Эта версия приложения устарела. Обнови её, чтобы продолжать повторять карточки."
@@ -1938,6 +1959,9 @@ msgstr "Путешествия"
 
 msgid "Try a memory hook"
 msgstr "Попробуй зацепку"
+
+msgid "Try a word from a card, or a language."
+msgstr "Попробуй слово с карточки или название языка."
 
 msgid "Try again"
 msgstr "Попробовать ещё раз"
@@ -2069,6 +2093,9 @@ msgstr "Твои карточки и счёт дней подряд на люб�
 
 msgid "Your data"
 msgstr "Твои данные"
+
+msgid "Your decks and reviews still work offline."
+msgstr "Твои колоды и повторения работают и без соединения."
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Твои оценки сохранены. Проверь соединение и попробуй снова."

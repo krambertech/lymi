@@ -534,6 +534,9 @@ msgstr "Вибрати фото"
 msgid "Citizenship"
 msgstr "Громадянство"
 
+msgid "Clear search"
+msgstr "Очистити пошук"
+
 msgid "Clear the picture"
 msgstr "Прибрати зображення"
 
@@ -850,6 +853,9 @@ msgstr "Приклад з уроку"
 msgid "Explore"
 msgstr "Каталог"
 
+msgid "Explore needs a connection"
+msgstr "Каталогу потрібне з’єднання"
+
 msgid "Export"
 msgstr "Експорт"
 
@@ -1085,6 +1091,9 @@ msgctxt "language"
 msgid "Italian"
 msgstr "Італійська"
 
+msgid "Its decks may have been withdrawn. Every other shelf is still in Explore."
+msgstr "Можливо, її колоди зняли з публікації. Усі інші полиці й далі в каталозі."
+
 msgctxt "language"
 msgid "Japanese"
 msgstr "Японська"
@@ -1190,6 +1199,9 @@ msgstr "Lymi також отримає екран, на якому ти зара
 
 msgid "Lymi is free to use."
 msgstr "Lymi безкоштовний."
+
+msgid "Lymi is writing the first decks. Until then, make your own in Library."
+msgstr "Lymi пише перші колоди. А поки що створи власну в Бібліотеці."
 
 msgid "Made a change"
 msgstr "Внесено зміну"
@@ -1320,8 +1332,8 @@ msgstr "Карток ще немає."
 msgid "No cards you keep forgetting"
 msgstr "Немає карток, які ти часто забуваєш"
 
-msgid "No decks match “{query}”. Try a word from a card, or a language."
-msgstr "Жодна колода не відповідає «{query}». Спробуй слово з картки або назву мови."
+msgid "No decks match “{query}”"
+msgstr "Жодна колода не відповідає «{query}»"
 
 msgid "No decks of your own yet. Only decks you create can go in a series."
 msgstr "Власних колод ще немає. У серію можна додати лише створені тобою колоди."
@@ -1384,6 +1396,9 @@ msgstr "У цій колоді більше нічого"
 msgid "Nothing matches “{query}”."
 msgstr "Нічого не знайдено за запитом «{query}»."
 
+msgid "Nothing published yet"
+msgstr "Ще нічого не опубліковано"
+
 msgid "Nothing scheduled."
 msgstr "Нічого не заплановано."
 
@@ -1405,8 +1420,14 @@ msgstr "Відкрити «{name}»"
 msgid "Open Archived on the web"
 msgstr "Відкрити архів у вебверсії"
 
+msgid "Open Explore"
+msgstr "Відкрити каталог"
+
 msgid "Open in Library"
 msgstr "Відкрити в Бібліотеці"
+
+msgid "Open Library"
+msgstr "Відкрити Бібліотеку"
 
 msgid "Open on the web"
 msgstr "Відкрити у вебверсії"
@@ -1876,8 +1897,8 @@ msgstr "Зображення цієї картки прибрано."
 msgid "This series is no longer here."
 msgstr "Цієї серії вже немає."
 
-msgid "This shelf has no decks now."
-msgstr "На цій полиці зараз немає колод."
+msgid "This shelf has no decks now"
+msgstr "На цій полиці зараз немає колод"
 
 msgid "This version of the app is out of date. Update it to keep reviewing."
 msgstr "Ця версія застосунку застаріла. Онови її, щоб і далі повторювати картки."
@@ -1938,6 +1959,9 @@ msgstr "Подорожі"
 
 msgid "Try a memory hook"
 msgstr "Спробуй зачіпку"
+
+msgid "Try a word from a card, or a language."
+msgstr "Спробуй слово з картки або назву мови."
 
 msgid "Try again"
 msgstr "Спробувати ще раз"
@@ -2069,6 +2093,9 @@ msgstr "Твої картки й лік днів поспіль на будь-я
 
 msgid "Your data"
 msgstr "Твої дані"
+
+msgid "Your decks and reviews still work offline."
+msgstr "Твої колоди й повторення працюють і без з’єднання."
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Твої оцінки збережено. Перевір з’єднання й повтори спробу."

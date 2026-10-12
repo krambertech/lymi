@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useCatalogue, useCatalogueSearch, useShelfLabel } from "../explore/catalogue";
 import { DeckList, ShelfList } from "../explore/layouts";
 import { CatalogueFailed, CatalogueLoading } from "../explore/states";
+import { EmptyState } from "../ui/empty-state";
 import { KeyboardRoom } from "../ui/keyboard";
 import { SectionTitle, Text } from "../ui/primitives";
 import { SearchBar, useSearchText } from "../ui/search-bar";
@@ -40,12 +41,13 @@ export default function ExploreSearch() {
         <ScrollView
           className="flex-1"
           contentContainerClassName="gap-7 px-5 pb-6"
-          contentContainerStyle={{ paddingTop: insets.top + 16 }}
+          // Grows to the room above the keyboard, so an empty state centres there and never under it.
+          contentContainerStyle={{ paddingTop: insets.top + 16, flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="interactive"
         >
           {query && catalogue.failed ? (
-            <CatalogueFailed onRetry={catalogue.retry} busy={catalogue.retrying} />
+            <CatalogueFailed fill onRetry={catalogue.retry} busy={catalogue.retrying} />
           ) : query && catalogue.loading ? (
             <CatalogueLoading />
           ) : null}
@@ -54,9 +56,13 @@ export default function ExploreSearch() {
             !catalogue.failed &&
             hits.length === 0 &&
             shelves.length === 0 && (
-              <Text className="px-1 text-base text-muted">
-                {t`No decks match “${query}”. Try a word from a card, or a language.`}
-              </Text>
+              <EmptyState
+                fill
+                kind="noMatch"
+                title={t`No decks match “${query}”`}
+                body={t`Try a word from a card, or a language.`}
+                action={{ label: t`Clear search`, onPress: () => setText("") }}
+              />
             )}
           {shelves.length > 0 && (
             <View>

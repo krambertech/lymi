@@ -28,6 +28,8 @@ export const cardSearchQuery = (query: string) =>
   queryOptions({
     queryKey: ["cards", "search", query],
     queryFn: () => api.searchCards(query),
+    // What was searched for and what came back stay off the device.
+    meta: { persist: false },
     staleTime: 30_000,
     enabled: query.length > 0,
   });

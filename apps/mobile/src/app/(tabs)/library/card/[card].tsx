@@ -151,14 +151,6 @@ export default function CardPage() {
   const asked = states.map((st) => i18n._(modeLabel(st.mode))).join(", ");
   // Facts about the card, each named, so nothing has to be guessed from a line of dots.
   const details: { label: string; value: ReactNode }[] = [
-    ...(card.important
-      ? [
-          {
-            label: t`Important`,
-            value: <Icon name="important" size={16} colour={p["amber-mark"]} />,
-          },
-        ]
-      : []),
     { label: t`Deck`, value: deck?.name ?? "" },
     ...(card.language ? [{ label: t`Language`, value: languageName(card.language) }] : []),
     ...(card.source ? [{ label: t`Source`, value: card.source }] : []),
@@ -375,6 +367,22 @@ export default function CardPage() {
             {card.term}
           </Text>
           {pronounce && <PronounceButton pronounce={pronounce} />}
+          {/* Important is set where it shows, and the star fills in place. */}
+          <Press
+            onPress={() => void writes.setImportant(card, !card.important)}
+            accessibilityRole="switch"
+            accessibilityLabel={t`Important`}
+            accessibilityState={{ checked: card.important }}
+            hitSlop={8}
+            className="size-8 items-center justify-center"
+          >
+            <Icon
+              name="important"
+              size={22}
+              colour={card.important ? p["amber-mark"] : p.muted}
+              filled={card.important}
+            />
+          </Press>
         </View>
       }
       actions={
@@ -386,11 +394,6 @@ export default function CardPage() {
               ...(editable
                 ? [{ label: t`Edit card`, icon: "edit" as const, onSelect: () => openCard("term") }]
                 : []),
-              {
-                label: card.important ? t`Unmark important` : t`Mark important`,
-                icon: "important",
-                onSelect: () => void writes.setImportant(card, !card.important),
-              },
               ...(owner
                 ? [
                     archived

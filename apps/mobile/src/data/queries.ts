@@ -29,7 +29,14 @@ import {
 import { writes } from "@lymi/client/writes";
 import { type CardInput, DEFAULT_DAILY_GOAL, type Round, type StreakOut } from "@lymi/core";
 import { lanternFor, streakFlameFor } from "@lymi/design";
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  onlineManager,
+  type UseQueryResult,
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { AppState } from "react-native";
 
@@ -51,6 +58,19 @@ export const useRoundQueue = (round: Round | undefined, scope: ReviewScope) =>
   useQuery({ ...queueQuery(scope, round), enabled: !!round });
 /** The learner's series, to name a series a review is scoped to. */
 export const useSeriesList = (enabled: boolean) => useQuery({ ...seriesQuery, enabled });
+
+const isOnline = () => onlineManager.isOnline();
+
+/**
+ * When a screen shows what was kept rather than what Lymi has now: offline, or a refresh that
+ * could not land. Undefined while what it shows is current.
+ */
+export function useKeptSince(query: UseQueryResult): Date | undefined {
+  const online = useSyncExternalStore(onlineManager.subscribe, isOnline, isOnline);
+  const kept =
+    query.data !== undefined && (!online || query.fetchStatus === "paused" || query.isError);
+  return kept ? new Date(query.dataUpdatedAt) : undefined;
+}
 
 const NO_GRADES: never[] = [];
 /** Today's grades from this device, queued or sent, the moment each is made. */

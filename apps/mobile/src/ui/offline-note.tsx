@@ -1,23 +1,10 @@
 import { useLingui } from "@lingui/react/macro";
-import { onlineManager, type UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
 import { getCalendars } from "expo-localization";
-import { useSyncExternalStore } from "react";
 import { View } from "react-native";
+import { useKeptSince } from "../data/queries";
 import { usePalette } from "../theme/palette";
 import { Icon, Text } from "./primitives";
-
-const isOnline = () => onlineManager.isOnline();
-
-/**
- * When a screen shows what was kept rather than what Lymi has now: offline, or a refresh that
- * could not land. Undefined while what it shows is current.
- */
-export function useKeptSince(query: UseQueryResult): Date | undefined {
-  const online = useSyncExternalStore(onlineManager.subscribe, isOnline, isOnline);
-  const kept =
-    query.data !== undefined && (!online || query.fetchStatus === "paused" || query.isError);
-  return kept ? new Date(query.dataUpdatedAt) : undefined;
-}
 
 /**
  * One quiet line at the top of a screen that is showing what was kept, saying since when. Being

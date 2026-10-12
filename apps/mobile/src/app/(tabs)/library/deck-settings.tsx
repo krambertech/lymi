@@ -273,7 +273,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
           </Group>
           <Rows>
             <RowFace icon="meaning" label={t`Language`} value={language} end="none" />
-            <RowFace icon="modes" label={t`Mode`} value={way?.label} end="none" />
+            <RowFace icon="modes" label={t`Modes`} value={way?.label} end="none" />
           </Rows>
           <Rows>
             <Row icon="signOut" label={t`Leave deck`} destructive end="none" onPress={leave} />
@@ -293,7 +293,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
             {languageSelect(<RowFace icon="meaning" label={t`Language`} value={language} />)}
             <Row
               icon="modes"
-              label={t`Mode`}
+              label={t`Modes`}
               value={way?.label}
               onPress={() => setAsking(true)}
             />

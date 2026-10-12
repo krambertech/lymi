@@ -1318,8 +1318,8 @@ msgstr "Memory hook: {text}"
 msgid "Message"
 msgstr "Message"
 
-msgid "Mode"
-msgstr "Mode"
+msgid "Modes"
+msgstr "Modes"
 
 msgid "More about this card"
 msgstr "More about this card"

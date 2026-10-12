@@ -15,13 +15,18 @@ const ERROR_TYPES = new Set([
   "WorkflowError",
 ]);
 
+const CHUNK_ID = /^[A-Za-z0-9-]{1,64}$/;
+
 function scriptFilename(value: unknown): string | undefined {
   if (typeof value !== "string") return;
-  const clean = value.split(/[?#]/)[0] ?? "";
+  // Hermes names a release bundle's frames `address at /…/main.jsbundle`.
+  const clean = value.replace(/^address at /, "").split(/[?#]/)[0] ?? "";
   if (/^https:\/\/my\.lymi\.app\/assets\/[A-Za-z0-9_.-]+\.m?js$/.test(clean)) return clean;
   const basename = clean.split("/").at(-1);
-  if (basename && /^[A-Za-z0-9_.-]+\.m?js$/.test(basename)) return basename;
+  if (basename && /^[A-Za-z0-9_.-]+\.(m?js|jsbundle|bundle|hbc)$/.test(basename)) return basename;
 }
+
+const PLATFORMS = new Set(["web:javascript", "node:javascript", "hermes"]);
 
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === "object" ? (value as Record<string, unknown>) : {};
@@ -54,8 +59,12 @@ export function exceptionProperties(properties: Record<string, unknown>): Record
             const frame = record(value);
             const filename = scriptFilename(frame.filename);
             return {
-              platform: frame.platform === "node:javascript" ? "node:javascript" : "web:javascript",
+              platform: PLATFORMS.has(frame.platform as string) ? frame.platform : "web:javascript",
               ...(filename ? { filename } : {}),
+              // The phone's uploaded source maps are found by the bundle's chunk ID.
+              ...(typeof frame.chunk_id === "string" && CHUNK_ID.test(frame.chunk_id)
+                ? { chunk_id: frame.chunk_id }
+                : {}),
               ...(typeof frame.function === "string" && SAFE_FRAME.test(frame.function)
                 ? { function: frame.function }
                 : {}),

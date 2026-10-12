@@ -16,7 +16,7 @@ import { queryClient } from "../data/client";
 import { Sync } from "../data/sync";
 import { i18n } from "../i18n";
 import { LanguageSync } from "../i18n/sync";
-import { startExceptionReporting } from "../telemetry/exceptions";
+import { setExceptionLearner, startExceptionReporting } from "../telemetry/exceptions";
 import { usePalette } from "../theme/palette";
 import { WidgetSync } from "../widgets/sync";
 
@@ -55,6 +55,7 @@ function Root() {
   const signedIn = Boolean(session.data);
   // A 426 from any request: this release is too old for the API, so nothing else can work.
   const update = useUpdateRequired();
+  useEffect(() => setExceptionLearner(learnerId), [learnerId]);
   useEffect(() => {
     if (!session.isPending || update) SplashScreen.hideAsync();
   }, [session.isPending, update]);

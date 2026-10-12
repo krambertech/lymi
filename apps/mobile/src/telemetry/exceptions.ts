@@ -1,5 +1,9 @@
 import { i18n } from "@lingui/core";
-import { ANALYTICS_SCHEMA_VERSION, AnalyticsLocale } from "@lymi/core/analytics";
+import {
+  ANALYTICS_SCHEMA_VERSION,
+  AnalyticsLocale,
+  INTERNAL_ACCOUNT_IDS,
+} from "@lymi/core/analytics";
 import { POSTHOG_PROXY_PATH } from "@lymi/core/posthog-proxy";
 import { exceptionProperties, POSTHOG_PROJECT_TOKEN } from "@lymi/core/telemetry";
 import Constants from "expo-constants";
@@ -40,6 +44,13 @@ const reportQueue: PostHogCustomStorage = {
   },
   setItem: (key, value) => new File(Paths.document, key).write(withoutIdentity(value)),
 };
+
+let internal = false;
+
+/** Marks reports from Lymi's own accounts, as the web marks their profiles, without sending who. */
+export function setExceptionLearner(id: string | undefined): void {
+  internal = id !== undefined && INTERNAL_ACCOUNT_IDS.has(id);
+}
 
 /**
  * Reports uncaught errors and unhandled promise rejections to PostHog Error Tracking, scrubbed
@@ -88,7 +99,9 @@ export function startExceptionReporting(): void {
             $app_version: PHONE_CLIENT?.version ?? null,
             $app_build: PHONE_CLIENT?.build ?? null,
             $app_namespace: Constants.expoConfig?.ios?.bundleIdentifier ?? null,
+            ...(internal ? { is_internal: true } : {}),
             $geoip_disable: true,
+            // Each launch has its own anonymous ID, so a profile would only count launches.
             $process_person_profile: false,
           },
         };

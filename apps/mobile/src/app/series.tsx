@@ -6,8 +6,8 @@ import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { TextInput, View } from "react-native";
 import { FieldName } from "../capture/composer-field";
-import { useSeriesList } from "../data/queries";
-import { useSeriesActions } from "../data/series";
+import { useDecks, useSeriesList } from "../data/queries";
+import { useMoveNotice, useSeriesActions } from "../data/series";
 import { useOnline } from "../streak/goal-picker";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
@@ -49,7 +49,9 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
   const online = useOnline();
   const [name, setName] = useState(series?.name ?? "");
   const [error, setError] = useState<string | null>(null);
-  const { name: save } = useSeriesActions();
+  const { name: save, moveDeck } = useSeriesActions();
+  const notice = useMoveNotice();
+  const moving = useDecks().data?.find((d) => d.id === deck);
 
   const submit = () => {
     if (save.isPending || !online) return;
@@ -63,8 +65,18 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
       { series, name: parsed.data.name, deckIds: deck ? [deck] : undefined },
       {
         // A new series goes straight on to its decks; a rename, or one made from a deck, is done.
-        onSuccess: (saved) =>
-          series || deck ? router.back() : router.replace(`/series-decks?id=${saved.id}` as Href),
+        onSuccess: (saved) => {
+          if (!series && !deck) {
+            router.replace(`/series-decks?id=${saved.id}` as Href);
+            return;
+          }
+          router.back();
+          // One write made the series with the deck in it, so Undo moves the deck back alone.
+          if (moving)
+            notice(moving.name, saved.name, () =>
+              moveDeck.mutate({ deckId: moving.id, seriesId: moving.seriesId }),
+            );
+        },
         onError: (e) => setError(errorMessage(e)),
       },
     );
@@ -77,9 +89,10 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
         <Text className="text-md font-medium text-text" accessibilityRole="header">
           {series ? t`Rename series` : t`New series`}
         </Text>
+        {/* From a deck, saving makes the series and moves the deck in one go, as the web's does. */}
         <GlassButton
-          icon={series ? "check" : "forward"}
-          label={series ? t`Save` : t`Next: choose decks`}
+          icon={series || deck ? "check" : "forward"}
+          label={series ? t`Save` : deck ? t`Create and move` : t`Next: choose decks`}
           primary
           busy={save.isPending}
           onPress={submit}
@@ -99,7 +112,7 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
           placeholderTextColor={p.muted}
           accessibilityLabel={t`Name`}
           accessibilityHint={error ?? undefined}
-          returnKeyType={series ? "done" : "next"}
+          returnKeyType={series || deck ? "done" : "next"}
           onSubmitEditing={submit}
           selectionColor={p.text}
           className="min-h-12 py-1.5 font-sans font-medium text-text"

@@ -20,7 +20,7 @@ import { Alert, View } from "react-native";
 import { useDeckExits } from "../../../data/decks";
 import { useNextDue } from "../../../data/next-due";
 import { useDeckCards, useDecks, useSections, useSeriesList } from "../../../data/queries";
-import { useSeriesActions } from "../../../data/series";
+import { useMoveNotice, useSeriesActions } from "../../../data/series";
 import { useOnline } from "../../../streak/goal-picker";
 import { usePalette } from "../../../theme/palette";
 import { EmptyState } from "../../../ui/empty-state";
@@ -494,16 +494,24 @@ function MoveToSeries({
   const online = useOnline();
   const series = useSeriesList(open).data ?? [];
   const { moveDeck } = useSeriesActions();
+  const notice = useMoveNotice();
   const deckName = deck.name;
+  const move = (seriesId: string | null, then?: () => void) =>
+    moveDeck.mutate(
+      { deckId: deck.id, seriesId },
+      {
+        onSuccess: then,
+        onError: (e) => Alert.alert(t`Couldn’t move the deck`, errorMessage(e)),
+      },
+    );
   const pick = (seriesId: string | null) => {
     if (!online) return;
     onOpenChange(false);
     if (seriesId === deck.seriesId) return;
     Haptics.selectionAsync();
-    moveDeck.mutate(
-      { deckId: deck.id, seriesId },
-      { onError: (e) => Alert.alert(t`Couldn’t move the deck`, errorMessage(e)) },
-    );
+    const from = deck.seriesId;
+    const name = seriesId ? series.find((s) => s.id === seriesId)?.name : undefined;
+    move(seriesId, () => notice(deckName, name, () => move(from)));
   };
   return (
     <Sheet title={t`Move to series`} open={open} onOpenChange={onOpenChange}>
@@ -516,17 +524,20 @@ function MoveToSeries({
           <Text className="flex-1 text-base text-muted">{t`Changing series needs a connection.`}</Text>
         </View>
       )}
-      <SheetGroup>
-        <SheetRow label={t`No series`} chosen={!deck.seriesId} onPress={() => pick(null)} />
-        {series.map((s) => (
-          <SheetRow
-            key={s.id}
-            label={s.name}
-            chosen={s.id === deck.seriesId}
-            onPress={() => pick(s.id)}
-          />
-        ))}
-      </SheetGroup>
+      {/* As the web's: the series first, then No series only for a deck that is in one. */}
+      {(series.length > 0 || deck.seriesId) && (
+        <SheetGroup>
+          {series.map((s) => (
+            <SheetRow
+              key={s.id}
+              label={s.name}
+              chosen={s.id === deck.seriesId}
+              onPress={() => pick(s.id)}
+            />
+          ))}
+          {deck.seriesId && <SheetRow label={t`No series`} onPress={() => pick(null)} />}
+        </SheetGroup>
+      )}
       <SheetGroup>
         <SheetRow
           label={t`New series`}

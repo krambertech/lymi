@@ -7,7 +7,7 @@ import { addNetworkStateListener } from "expo-network";
 import { useEffect, useMemo } from "react";
 import { Alert, AppState } from "react-native";
 import { claimCache } from "./cache";
-import { useDecks, useDraw } from "./queries";
+import { useDecks, useDraw, useSeriesList } from "./queries";
 
 /** What a new day or a replayed grade moves, refetched together. */
 const DAY_KEYS = [["decks"], ["rounds"], ["streak"], ["queue"]];
@@ -54,16 +54,23 @@ export function Sync({ learnerId }: { learnerId: string }) {
     };
   }, [learnerId, qc]);
 
-  // Every deck's cards, sections and draw are fetched once while online, so each opens offline; a
-  // pass cut short by the connection picks up on reconnect and on return to the front. Keyed on the
-  // ids, not the list, so a review moving a count does not start it again.
+  // Every deck's cards, sections and draw are fetched once while online, so each opens offline,
+  // and each series' draw, since Today reviews a series from one row; a pass cut short by the
+  // connection picks up on reconnect and on return to the front. Keyed on the ids, not the list,
+  // so a review moving a count does not start it again.
   const warmer = useMemo(() => cacheWarmer(qc), [qc]);
   const deckIds = useDecks()
     .data?.map((deck) => deck.id)
     .join(" ");
+  const seriesIds = useSeriesList(true)
+    .data?.map((s) => s.id)
+    .join(" ");
   useEffect(() => {
     if (!deckIds) return;
-    const idle = setTimeout(() => void warmer.run(deckIds.split(" ")), 2000);
+    const idle = setTimeout(
+      () => void warmer.run(deckIds.split(" "), seriesIds ? seriesIds.split(" ") : []),
+      2000,
+    );
     const reconnect = onlineManager.subscribe((online) => {
       if (online) void warmer.run();
     });
@@ -76,7 +83,7 @@ export function Sync({ learnerId }: { learnerId: string }) {
       front.remove();
       warmer.stop();
     };
-  }, [deckIds, warmer]);
+  }, [deckIds, seriesIds, warmer]);
 
   // A write made offline that the server would not take is said once, naming what it was.
   useEffect(

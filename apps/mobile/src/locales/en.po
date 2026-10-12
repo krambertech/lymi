@@ -695,6 +695,9 @@ msgstr "Create account"
 msgid "Create an account"
 msgstr "Create an account"
 
+msgid "Create and move"
+msgstr "Create and move"
+
 msgid "Create deck"
 msgstr "Create deck"
 
@@ -1327,6 +1330,9 @@ msgstr "Move to series"
 msgid "Move up"
 msgstr "Move up"
 
+msgid "Moved “{deckName}” to {seriesName}"
+msgstr "Moved “{deckName}” to {seriesName}"
+
 msgid "Moved to another deck"
 msgstr "Moved to another deck"
 
@@ -1470,6 +1476,9 @@ msgstr "Off"
 
 msgid "Often forgotten"
 msgstr "Often forgotten"
+
+msgid "OK"
+msgstr "OK"
 
 msgid "Only on days with cards due."
 msgstr "Only on days with cards due."
@@ -2029,6 +2038,9 @@ msgstr "Too many attempts. Try again later."
 
 msgid "Too many tries with this code. Send a new one."
 msgstr "Too many tries with this code. Send a new one."
+
+msgid "Took “{deckName}” out of its series"
+msgstr "Took “{deckName}” out of its series"
 
 msgctxt "deck tag"
 msgid "TOPIK I"

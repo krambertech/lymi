@@ -695,6 +695,9 @@ msgstr "Створити акаунт"
 msgid "Create an account"
 msgstr "Створити акаунт"
 
+msgid "Create and move"
+msgstr "Створити й перенести"
+
 msgid "Create deck"
 msgstr "Створити колоду"
 
@@ -881,7 +884,7 @@ msgid "Every card"
 msgstr "Усі картки"
 
 msgid "Every section is open, so any card can come up in review."
-msgstr ""
+msgstr "Усі розділи відкриті, тож будь-яка картка може з’явитися в повторенні."
 
 msgid "Every shelf"
 msgstr "Усі полиці"
@@ -1327,6 +1330,9 @@ msgstr "Перенести в серію"
 msgid "Move up"
 msgstr "Вище"
 
+msgid "Moved “{deckName}” to {seriesName}"
+msgstr "«{deckName}» перенесено в «{seriesName}»"
+
 msgid "Moved to another deck"
 msgstr "Перенесено в іншу колоду"
 
@@ -1470,6 +1476,9 @@ msgstr "Вимкнено"
 
 msgid "Often forgotten"
 msgstr "Часто забуваються"
+
+msgid "OK"
+msgstr "OK"
 
 msgid "Only on days with cards due."
 msgstr "Лише в дні, коли є картки до повторення."
@@ -2030,6 +2039,9 @@ msgstr "Забагато спроб. Спробуй трохи згодом."
 msgid "Too many tries with this code. Send a new one."
 msgstr "Забагато спроб із цим кодом. Надішли новий."
 
+msgid "Took “{deckName}” out of its series"
+msgstr "«{deckName}» вийнято з серії"
+
 msgctxt "deck tag"
 msgid "TOPIK I"
 msgstr "TOPIK I"
@@ -2161,7 +2173,7 @@ msgid "You start with the first section. The next opens as you learn this one."
 msgstr "Ти починаєш із першого розділу. Наступний відкриється, коли вивчиш цей."
 
 msgid "You start with the first section. When you know most of it, you choose when to start the next."
-msgstr ""
+msgstr "Ти починаєш із першого розділу. Коли засвоїш більшу його частину, ти вирішуєш, коли почати наступний."
 
 msgid "You wrote this"
 msgstr "Це написано тобою"

@@ -54,6 +54,7 @@ export default function Search() {
     <EmptyState
       kind={online ? "failed" : "offline"}
       size={decks.length > 0 ? "inline" : "page"}
+      fill={decks.length === 0}
       title={online ? t`Couldn’t search cards` : t`Searching cards needs a connection`}
       body={
         online
@@ -76,7 +77,8 @@ export default function Search() {
         <ScrollView
           className="flex-1"
           contentContainerClassName="gap-7 px-5 pb-6"
-          contentContainerStyle={{ paddingTop: insets.top + 16 }}
+          // Grows to the room above the keyboard, so an empty state centres there and never under it.
+          contentContainerStyle={{ paddingTop: insets.top + 16, flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="interactive"
         >
@@ -162,6 +164,7 @@ export default function Search() {
             ))}
           {nothing && (
             <EmptyState
+              fill
               kind="noMatch"
               title={deckId ? t`No cards match “${query}”` : t`No decks or cards match “${query}”`}
               body={t`Try another word, or part of one.`}

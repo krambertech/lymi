@@ -1,8 +1,9 @@
 const path = require("node:path");
-const { getDefaultConfig } = require("expo/metro-config");
+const { getPostHogExpoConfig } = require("posthog-react-native/metro");
 const { withUniwindConfig } = require("uniwind/metro");
 
-const config = getDefaultConfig(__dirname);
+// Expo's defaults plus a chunk ID in each bundle, which finds its uploaded source map in PostHog.
+const config = getPostHogExpoConfig(__dirname);
 
 // `.po` catalogs compile on import, as the web's do through Lingui's Vite plugin.
 config.transformer.babelTransformerPath = require.resolve("@lingui/metro-transformer/expo");

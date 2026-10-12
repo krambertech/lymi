@@ -4,8 +4,13 @@ name: Phone
 # Mondays; the phone's other checks run in CI's quality job. docs/testing.md has the plan.
 on:
   workflow_dispatch:
-  # Promote calls it, and a release waits for it to pass.
+  # Promote calls it on the commit it is about to release, and the release waits for it to pass.
   workflow_call:
+    inputs:
+      ref:
+        description: The commit to test
+        required: false
+        type: string
   schedule:
     # Monday 05:00 UTC, so drift nothing else caught shows before the week's release.
     - cron: "0 5 * * 1"
@@ -43,6 +48,8 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref || github.sha }}
 
       - uses: pnpm/action-setup@v4
 
@@ -99,6 +106,9 @@ jobs:
         run: |
           npx expo export:embed --platform ios --dev false --bytecode --entry-file node_modules/expo-router/entry.js \
             --bundle-output build/Lymi.app/main.jsbundle --assets-dest build/Lymi.app
+          # The journey tests this bundle, so the app must not fetch an over-the-air update instead.
+          /usr/libexec/PlistBuddy -c "Delete :EXUpdatesEnabled" build/Lymi.app/Expo.plist || true
+          /usr/libexec/PlistBuddy -c "Add :EXUpdatesEnabled bool false" build/Lymi.app/Expo.plist
           codesign --force --sign - --preserve-metadata=identifier,entitlements,flags build/Lymi.app
 
       - name: Start the local Worker

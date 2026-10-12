@@ -1,0 +1,160 @@
+name: Phone promote
+
+# The weekly release: the update TestFlight has been running passes the smoke journey, then reaches
+# 10% of App Store installs, and a `production` binary is built when its runtime has none. Phone
+# rollout widens it to everyone a day later. ADR 0032; docs/phone-release.md.
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: phone-promote
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    outputs:
+      ready: ${{ steps.eas.outputs.ready }}
+      group: ${{ steps.latest.outputs.group }}
+      runtime: ${{ steps.latest.outputs.runtime }}
+      commit: ${{ steps.latest.outputs.commit }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Check EAS is set up
+        id: eas
+        run: node scripts/phone-release.mjs ready
+
+      - name: Find the update TestFlight is running
+        id: latest
+        if: steps.eas.outputs.ready == 'true'
+        run: |
+          node scripts/phone-release.mjs latest beta
+          if ! grep -q '^group=.\+' "$GITHUB_OUTPUT"; then
+            echo "::error title=Phone promote::Nothing is published on beta yet."; exit 1
+          fi
+
+  smoke:
+    needs: plan
+    if: needs.plan.outputs.ready == 'true'
+    uses: ./.github/workflows/phone.yml
+    with:
+      ref: ${{ needs.plan.outputs.commit }}
+
+  promote:
+    needs: [plan, smoke]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      GROUP: ${{ needs.plan.outputs.group }}
+      RUNTIME: ${{ needs.plan.outputs.runtime }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.plan.outputs.commit }}
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # The same files TestFlight ran, so the source maps uploaded for beta already cover them.
+      - name: Republish the update to production at 10%
+        working-directory: apps/mobile
+        run: >-
+          npx --yes eas-cli@24.13.0 update:republish --group "$GROUP" --destination-branch production
+          --platform ios --rollout-percentage 10 --message "Promote $(git rev-parse --short HEAD)"
+          --non-interactive
+
+      - name: Look for a production build of this runtime
+        id: build
+        run: node scripts/phone-release.mjs has-build production "$RUNTIME"
+
+      # Uploaded to App Store Connect; submitting the version for review stays a person's call.
+      - name: Build for the App Store
+        if: steps.build.outputs.build == 'false'
+        working-directory: apps/mobile
+        run: >-
+          npx --yes eas-cli@24.13.0 build --profile production --platform ios --auto-submit --no-wait
+          --non-interactive
+
+  # The API this release calls is frozen, so every later Worker must keep serving it.
+  contract:
+    needs: [plan, promote]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      GH_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.plan.outputs.commit }}
+          # The push below authenticates with RELEASE_GITHUB_TOKEN, which a stored token would override.
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Freeze the contract
+        id: freeze
+        run: |
+          pnpm --filter @lymi/mobile contract:freeze
+          version=$(node -p 'require("./apps/mobile/app.json").expo.version')
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if git diff --quiet -- apps/mobile/contract && [ -z "$(git ls-files --others --exclude-standard apps/mobile/contract)" ]; then
+            echo "::notice title=Phone contract::The contract for $version is already frozen."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Keep the frozen contract
+        if: steps.freeze.outputs.changed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: phone-contract-${{ steps.freeze.outputs.version }}
+          path: apps/mobile/contract
+
+      # A pull request opened with the workflow's own token would never run CI, so it needs its own.
+      - name: Open a pull request that merges itself once green
+        if: steps.freeze.outputs.changed == 'true'
+        env:
+          VERSION: ${{ steps.freeze.outputs.version }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::warning title=Phone contract::RELEASE_GITHUB_TOKEN is not set; commit the phone-contract-$VERSION artifact from this run by hand."
+            exit 0
+          fi
+          branch="phone/contract-$VERSION-${GITHUB_RUN_ID}"
+          title="chore(mobile): freeze the phone API contract for $VERSION"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add apps/mobile/contract
+          git commit -m "$title"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/$branch"
+          url=$(gh pr create --base main --head "$branch" --title "$title" \
+            --body "Promote run ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} froze the API this release calls (ADR 0032).")
+          gh pr merge "$url" --auto --squash

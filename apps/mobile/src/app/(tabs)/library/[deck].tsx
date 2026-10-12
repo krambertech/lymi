@@ -87,7 +87,7 @@ export default function Deck() {
                 {
                   label: owner ? t`Deck settings` : t`About this deck`,
                   icon: "settings",
-                  onSelect: () => router.push(`/deck-settings?id=${id}` as Href),
+                  onSelect: () => router.push(`/library/deck-settings?id=${id}` as Href),
                 },
               ],
               ...(owner

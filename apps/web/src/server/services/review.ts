@@ -157,6 +157,13 @@ export async function reviewDraw(
     goal: settings.dailyGoal,
     attempts: log.length,
     total: drawableCount(cards, log, day, scope),
+    // Lets a client take an archived deck out of `total` without guessing what lies behind the front.
+    decks: Object.fromEntries(
+      (opts.deckId ? [opts.deckId] : [...new Set(cards.map((c) => c.deckId))]).map((deckId) => [
+        deckId,
+        drawableCount(cards, log, day, { deckId }),
+      ]),
+    ),
     cards: cards
       .filter((card) => include.has(card.cardId))
       .sort((a, b) => (position.get(a.cardId) ?? 0) - (position.get(b.cardId) ?? 0))

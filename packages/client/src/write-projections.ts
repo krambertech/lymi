@@ -270,12 +270,17 @@ function onArchivedCards(cards: CardHit[], w: Write, lookup: Lookup): CardHit[] 
 }
 
 type Reviewed = { card: Card };
-type Review = { total: number; cards?: Reviewed[]; items?: Reviewed[] };
+type Review = {
+  total: number;
+  cards?: Reviewed[];
+  items?: Reviewed[];
+  decks?: Record<string, number> | undefined;
+};
 
 /**
- * A draw or a round without an archived deck's cards. The fetch holds only the front of the order,
- * so a draw counting the deck also loses the deck's Library due count behind the front, capped by
- * what the draw itself counts there. A fetch without the deck's cards may already leave it out.
+ * A draw or a round without an archived deck's cards. A draw takes the deck's own count, from the
+ * same snapshot, out of its total, and a draw without one has left the deck out already. A draw
+ * cached before it carried those counts falls back to the deck's Library due count.
  */
 function withoutDeck<T extends Review>(
   scope: string,
@@ -292,6 +297,22 @@ function withoutDeck<T extends Review>(
   // A section lives in one deck, so a section draw holding the deck's cards goes with it.
   if (scope === `deck:${id}` || (scope.startsWith("section:") && removed > 0)) {
     return entries.length || data.total ? { ...data, [list]: [], total: 0 } : data;
+  }
+  if (list === "cards" && data.decks) {
+    const { [id]: own, ...decks } = data.decks;
+    if (own === undefined) return removed ? { ...data, cards: rest } : data;
+    const draw = data as unknown as DrawData;
+    const day = {
+      date: draw.day.date,
+      start: new Date(draw.day.start),
+      end: new Date(draw.day.end),
+    };
+    const left = drawableCount(
+      drawCards({ ...draw, cards: rest as DrawData["cards"] }),
+      drawLog(draw, [], day),
+      day,
+    );
+    return { ...data, cards: rest, decks, total: Math.max(left, data.total - own) };
   }
   const deck = lookup.deck(id);
   const inScope = scope === "all" || (!!deck?.seriesId && scope === `series:${deck.seriesId}`);
@@ -384,24 +405,29 @@ const isRestore = (w: Write, id: string) => w.kind === "deck.restore" && w.id ==
  * What a deck archive took out of each cached draw and round, so a restore puts it back at once.
  * A fetch while the restore waits knows only the server's, which still has the deck archived.
  */
-const parkedDecks = new Map<string, { key: QueryKey; entries: Reviewed[]; total: number }[]>();
+type Parked = { key: QueryKey; entries: Reviewed[]; total: number; own: number | undefined };
+const parkedDecks = new Map<string, Parked[]>();
 
-function taken(key: QueryKey, before: Review, after: Review) {
+function taken(key: QueryKey, id: string, before: Review, after: Review): Parked {
   const list = before.cards ? "cards" : "items";
   const kept = new Set(after[list]?.map((e) => e.card.id));
   const entries = (before[list] ?? []).filter((e) => !kept.has(e.card.id));
-  return { key, entries, total: before.total - after.total };
+  return { key, entries, total: before.total - after.total, own: before.decks?.[id] };
 }
 
 function unparkDeck(qc: QueryClient, id: string) {
-  for (const { key, entries, total } of parkedDecks.get(id) ?? []) {
+  for (const { key, entries, total, own } of parkedDecks.get(id) ?? []) {
     qc.setQueryData<Review>(key, (data) => {
       const list = data?.cards ? "cards" : "items";
       const current = data?.[list];
       if (!data || !current) return data;
       const present = new Set(current.map((e) => e.card.id));
       const back = entries.filter((e) => !present.has(e.card.id));
-      return { ...data, [list]: [...back, ...current], total: data.total + total };
+      const next = { ...data, [list]: [...back, ...current] };
+      // A draw that counts the deck again, fetched since, already has its count.
+      if (own === undefined || !data.decks) return { ...next, total: data.total + total };
+      if (id in data.decks) return next;
+      return { ...next, decks: { ...data.decks, [id]: own }, total: data.total + total };
     });
   }
   parkedDecks.delete(id);
@@ -418,7 +444,7 @@ export function showWrite(qc: QueryClient, w: Write) {
     const next = applyWrite(query.queryKey, query.state.data, w, lookup);
     if (next === query.state.data) continue;
     if (w.kind === "deck.archive" && (shape === "draw" || shape === "queue")) {
-      held.push(taken(query.queryKey, query.state.data as Review, next as Review));
+      held.push(taken(query.queryKey, w.id, query.state.data as Review, next as Review));
     }
     qc.setQueryData(query.queryKey, next);
   }

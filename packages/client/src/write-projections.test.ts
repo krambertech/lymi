@@ -273,6 +273,58 @@ describe("a deck archive in review", () => {
     expect(ids(rebased.cards)).toEqual(["b"]);
     expect(rebased.total).toBe(1);
   });
+  describe("with each deck's count in the draw", () => {
+    const counted = (cards: Draw["cards"], decks: Record<string, number>): Draw => ({
+      ...draw(
+        cards,
+        Object.values(decks).reduce((a, b) => a + b, 0),
+      ),
+      decks,
+    });
+    const archive: Write = { kind: "deck.archive", id: "it" };
+
+    it("takes the deck's count out of a refetch that still counts it, though none of its cards are in front", () => {
+      const qc = twoDecks();
+      const fetched = counted([entry("b", "et")], { it: 60, et: 100 });
+      const rebased = rebase(all, fetched, waiting(archive), cacheLookup(qc));
+      expect(rebased.total).toBe(100);
+      expect(rebased.decks).toEqual({ et: 100 });
+    });
+
+    it("leaves a refetch that no longer counts the deck as it is", () => {
+      const qc = twoDecks();
+      const landed = counted([entry("b", "et")], { et: 100 });
+      expect(rebase(all, landed, waiting(archive), cacheLookup(qc))).toBe(landed);
+    });
+
+    it("counts the archive once over the same draw", () => {
+      const qc = twoDecks();
+      const fetched = counted([entry("a", "it"), entry("b", "et")], { it: 60, et: 100 });
+      const once = rebase(all, fetched, waiting(archive), cacheLookup(qc));
+      expect(ids(once.cards)).toEqual(["b"]);
+      expect(once.total).toBe(100);
+      expect(rebase(all, once, waiting(archive), cacheLookup(qc))).toBe(once);
+    });
+
+    it("keeps the deck when its Undo waits after the archive", () => {
+      const qc = twoDecks();
+      const fetched = counted([entry("b", "et")], { it: 60, et: 100 });
+      const pending = waiting(archive, { kind: "deck.restore", id: "it" });
+      expect(rebase(all, fetched, pending, cacheLookup(qc))).toBe(fetched);
+    });
+
+    it("puts the deck's count back on Undo", () => {
+      const qc = twoDecks();
+      qc.setQueryData(all, counted([entry("a", "it"), entry("b", "et")], { it: 60, et: 100 }));
+      showWrite(qc, archive);
+      expect(qc.getQueryData<Draw>(all)?.total).toBe(100);
+      showWrite(qc, { kind: "deck.restore", id: "it" });
+      const data = qc.getQueryData<Draw>(all);
+      expect(data?.total).toBe(160);
+      expect(data?.decks).toEqual({ it: 60, et: 100 });
+      expect(ids(data?.cards)?.sort()).toEqual(["a", "b"]);
+    });
+  });
 });
 
 describe("a refetch while writes wait", () => {

@@ -83,6 +83,22 @@ describe("every count is the drawable set", () => {
     expect(await deckDue(ctx, deck.id)).toBe(12);
     expect(await deckDue(ctx, other.id)).toBe(6);
   });
+
+  it("counts each deck in a draw's total, even behind the front", async () => {
+    const { ctx, deck } = await setup(
+      Array.from({ length: 4 }, (_, i) => ({ term: `sõna ${i}`, meaning: `word ${i}` })),
+    );
+    const other = await createDeck(ctx, { name: "Other", defaultLanguage: "et" });
+    await addCards(
+      ctx,
+      Array.from({ length: 3 }, (_, i) => ({ deckId: other.id, term: `muu ${i}` })),
+    );
+    const draw = await reviewDraw(ctx, { limit: 1 });
+    expect(draw.cards).toHaveLength(1);
+    expect(draw).toMatchObject({ total: 7, decks: { [deck.id]: 4, [other.id]: 3 } });
+    const scoped = await reviewDraw(ctx, { deckId: other.id });
+    expect(scoped.decks).toEqual({ [other.id]: 3 });
+  });
 });
 
 describe("one direction per card per day", () => {

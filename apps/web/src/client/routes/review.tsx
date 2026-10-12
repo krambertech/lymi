@@ -198,7 +198,7 @@ function Review() {
   // Tied to the queue item, so a failure never carries onto the next card's button.
   const [audioError, setAudioError] = useState<{ item: string; message: string } | null>(null);
   const playingAudio = useRef<HTMLAudioElement | null>(null);
-  const loadedAudio = useRef<{ cardId: string; audio: HTMLAudioElement } | null>(null);
+  const loadedAudio = useRef<{ source: string; audio: HTMLAudioElement } | null>(null);
   const [animateNextCard, setAnimateNextCard] = useState(true);
   const [animateReveal, setAnimateReveal] = useState(true);
   // Where focus goes when the button holding it unmounts: the grades after a reveal, the next card after a grade.
@@ -605,10 +605,11 @@ function Review() {
     if (!current?.card.language || audioState === "loading") return;
     stopAudio();
     setAudioError(null);
-    const cardId = current.card.id;
-    // The response is no-store, so a replay rewinds the element that already holds it.
-    const loaded = loadedAudio.current?.cardId === cardId ? loadedAudio.current.audio : null;
-    const audio = loaded ?? new Audio(api.audioUrl(cardId));
+    const { id, language, term } = current.card;
+    // The response is no-store, so a replay rewinds the element that already holds it, until an edit changes what it says.
+    const source = `${id}\n${language}\n${term}`;
+    const loaded = loadedAudio.current?.source === source ? loadedAudio.current.audio : null;
+    const audio = loaded ?? new Audio(api.audioUrl(id));
     if (loaded) audio.currentTime = 0;
     else {
       setAudioState("loading");
@@ -620,7 +621,7 @@ function Review() {
     try {
       await audio.play();
       if (playingAudio.current === audio) {
-        loadedAudio.current = { cardId, audio };
+        loadedAudio.current = { source, audio };
         setAudioState("playing");
       }
     } catch {

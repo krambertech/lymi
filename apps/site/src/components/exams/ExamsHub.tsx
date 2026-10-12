@@ -18,8 +18,8 @@ import { SiteFooter } from "../landing/SiteFooter";
 import { SiteNav } from "../landing/SiteNav";
 import { ExamReview } from "./ExamReview";
 
-export const EXAMS_TITLE = msg`Citizenship and driving test prep with flashcards · Lymi`;
-export const EXAMS_BLURB = msg`Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, and driving theory. Questions in the exam’s language, with a translation alongside. Free.`;
+export const EXAMS_TITLE = msg`Citizenship, language and driving test prep with flashcards · Lymi`;
+export const EXAMS_BLURB = msg`Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free.`;
 export const EXAMS_HEADING = msg`Learn the questions once. Keep them until exam day.`;
 
 /** Explore's tray hues, skipping violet and amber, so each exam's tile keeps its own colour. */
@@ -150,9 +150,9 @@ function Hero({ exams }: { exams: readonly Exam[] }) {
         </h1>
         <p className="mt-6 max-w-[48ch] text-lg text-pretty text-text-2 @2xl:text-xl">
           <Trans>
-            Ready decks for citizenship and driving theory tests after a move. Each holds the exam’s
-            questions in its own language, with a translation alongside, and brings back the ones
-            you get wrong until they stick.
+            Ready decks for citizenship, language and driving theory tests after a move. Each holds
+            what the exam asks in its own language, with a translation alongside, and brings back
+            what you get wrong until it sticks.
           </Trans>
         </p>
         <div className="mt-8 flex flex-wrap gap-2">
@@ -186,6 +186,12 @@ function ExamPicker({ exams, counts }: { exams: readonly Exam[]; counts: Record<
         <ExamGroup
           group="citizenship"
           title={<Trans>Citizenship tests</Trans>}
+          exams={exams}
+          counts={counts}
+        />
+        <ExamGroup
+          group="language"
+          title={<Trans>Language exams</Trans>}
           exams={exams}
           counts={counts}
         />

@@ -121,7 +121,7 @@ export const EXAMS_QUESTIONS: Question[] = [
   {
     id: "official",
     question: msg`Are these the official questions?`,
-    answer: msg`For Germany, the US, Czechia and Spain, the decks follow the question list each exam publishes, named under the exam. Canada and the DMVs don’t publish their questions, so those decks are practice questions written from the official guide. Lymi isn’t affiliated with any exam authority and can’t promise a pass.`,
+    answer: msg`For Germany, the US, Czechia and Spain, the decks follow the question list each exam publishes, named under the exam. Canada and the DMVs don’t publish their questions, so those decks are practice questions written from the official guide, and the language exam decks teach the vocabulary of each level rather than an official list. Lymi isn’t affiliated with any exam authority and can’t promise a pass.`,
   },
   {
     id: "language",

@@ -13,7 +13,7 @@ export interface Exam {
   id: string;
   /** The exam page's address under `/exams`. */
   slug: string;
-  group: "citizenship" | "driving";
+  group: "citizenship" | "language" | "driving";
   name: MessageDescriptor;
   country: MessageDescriptor;
   /** The exam page's heading: the exam by its own name, then what the page offers. */

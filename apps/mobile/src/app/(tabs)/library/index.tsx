@@ -1,3 +1,4 @@
+import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { DeckSummary } from "@lymi/client/api";
 import * as Haptics from "expo-haptics";
@@ -19,7 +20,7 @@ export default function Library() {
   const router = useRouter();
   const decks = useDecks().data ?? [];
   return (
-    <Screen title="Library" kind="tab">
+    <Screen title={t`Library`} kind="tab">
       <View className="gap-3">
         {decks.map((d) => (
           <DeckRow key={d.id} deck={d} />
@@ -33,11 +34,13 @@ export default function Library() {
 }
 
 function DeckRow({ deck: d }: { deck: DeckSummary }) {
+  const { i18n, t } = useLingui();
   const router = useRouter();
   const p = usePalette();
   const cards = useDeckCards(d.id).data ?? [];
+  const total = d.total;
   const known = cards.filter((c) => standing(c.state?.state) === "known").length;
-  const language = d.defaultLanguage ? languageName(d.defaultLanguage) : null;
+  const language = d.defaultLanguage ? languageName(d.defaultLanguage, i18n) : null;
   return (
     <Link href={`/library/${d.id}`} asChild>
       <Link.Trigger>
@@ -50,7 +53,8 @@ function DeckRow({ deck: d }: { deck: DeckSummary }) {
               <View className="flex-1 gap-0.5">
                 <Text className="text-xl font-medium text-text">{d.name}</Text>
                 <Text className="text-base text-muted">
-                  {language ? `${language} · ${d.total} cards` : `${d.total} cards`}
+                  {language && `${language} · `}
+                  {plural(total, { one: "# card", other: "# cards" })}
                 </Text>
               </View>
               {d.due > 0 && (
@@ -66,24 +70,30 @@ function DeckRow({ deck: d }: { deck: DeckSummary }) {
             >
               <View
                 className="h-full rounded-full bg-state-known"
-                style={{ width: `${(known / Math.max(1, d.total)) * 100}%` }}
+                style={{ width: `${(known / Math.max(1, total)) * 100}%` }}
               />
             </View>
-            <Text className="text-base text-muted">{known} known</Text>
+            <Text className="text-base text-muted">
+              {plural(known, { one: "# known", other: "# known" })}
+            </Text>
           </Plate>
         </Pressable>
       </Link.Trigger>
       <Link.Preview />
       <Link.Menu>
         <Link.MenuAction
-          title="Review"
+          title={t`Review`}
           icon="play"
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             router.push(`/review?deck=${d.id}`);
           }}
         />
-        <Link.MenuAction title="Add a card" icon="plus" onPress={() => router.push("/capture")} />
+        <Link.MenuAction
+          title={t`Add a card`}
+          icon="plus"
+          onPress={() => router.push("/capture")}
+        />
       </Link.Menu>
     </Link>
   );

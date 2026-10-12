@@ -1,26 +1,17 @@
+import { plural } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { View } from "react-native";
-import {
-  type Standing,
-  standing,
-  useDeckCards,
-  useDecks,
-  useSections,
-} from "../../../data/queries";
-import { type Palette, usePalette } from "../../../theme/palette";
-import type { IconName } from "../../../ui/icons";
+import { standing, useDeckCards, useDecks, useSections } from "../../../data/queries";
+import { usePalette } from "../../../theme/palette";
 import { Button, Icon, Plate, SectionTitle, Text } from "../../../ui/primitives";
 import { Screen } from "../../../ui/screen";
+import { stateMarks } from "../../../ui/state-mark";
 import { DECK_ACCESSORY } from "../../../ui/tab-bar";
 
-const STATE: Record<Standing, { label: string; icon: IconName; tint: keyof Palette }> = {
-  new: { label: "New", icon: "new", tint: "state-new" },
-  learning: { label: "Learning", icon: "learning", tint: "state-learning" },
-  known: { label: "Known", icon: "known", tint: "state-known" },
-};
-
 export default function Deck() {
+  const { t } = useLingui();
   const { deck: id } = useLocalSearchParams<{ deck: string }>();
   const deck = useDecks().data?.find((d) => d.id === id);
   const mine = useDeckCards(id).data ?? [];
@@ -29,15 +20,15 @@ export default function Deck() {
   const p = usePalette();
   const due = deck?.due ?? 0;
   const section = (c: (typeof mine)[number]) =>
-    (c.card.sectionId && names.get(c.card.sectionId)) || "Unsorted";
+    (c.card.sectionId && names.get(c.card.sectionId)) || t`No section`;
   const sections = [...new Set(mine.map(section))];
 
   return (
-    <Screen title={deck?.name ?? "Deck"} back={{ label: "Library", to: "/library" }}>
+    <Screen title={deck?.name ?? t`Deck`} back={{ label: t`Library`, to: "/library" }}>
       {/* From iOS 26 the deck's review rides in the tab bar's accessory instead. */}
       {!DECK_ACCESSORY && due > 0 && (
         <Button
-          label={`Review ${due} due`}
+          label={plural(due, { one: "Review # due", other: "Review # due" })}
           variant="primary"
           size="xl"
           onPress={() => {
@@ -53,7 +44,7 @@ export default function Deck() {
             {mine
               .filter((c) => section(c) === s)
               .map(({ card: c, state }, i) => {
-                const st = STATE[standing(state?.state)];
+                const st = stateMarks[standing(state?.state)];
                 return (
                   <View
                     key={c.id}
@@ -62,12 +53,15 @@ export default function Deck() {
                     <View className="flex-1 gap-0.5">
                       <Text className="text-lg font-medium text-text">{c.term}</Text>
                       <Text className="text-base text-muted" numberOfLines={1}>
-                        {c.meaning || "No meaning yet"}
+                        {c.meaning || t`No meaning yet`}
                       </Text>
                     </View>
-                    <View className="flex-row items-center gap-1.5" accessibilityLabel={st.label}>
+                    <View
+                      className="flex-row items-center gap-1.5"
+                      accessibilityLabel={t(st.label)}
+                    >
                       <Icon name={st.icon} size={16} colour={p[st.tint]} />
-                      <Text className="text-base text-text-2">{st.label}</Text>
+                      <Text className="text-base text-text-2">{t(st.label)}</Text>
                     </View>
                   </View>
                 );

@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react";
 import { lightLevel, lightReference } from "@lymi/design";
 import { Asset } from "expo-asset";
 import { File } from "expo-file-system";
@@ -41,6 +42,8 @@ async function shareImages(): Promise<Images> {
 
 /** Pushes today's numbers to the widgets whenever they change. The real app does this after each sync. */
 export function WidgetSync() {
+  const { i18n } = useLingui();
+  const locale = i18n.locale;
   const { streak, reviewsToday, goal, week, dayDone, out } = useDay();
   const due = useDecks().data?.reduce((n, d) => n + d.due, 0) ?? 0;
   const [images, setImages] = useState<Images>({});
@@ -83,14 +86,14 @@ export function WidgetSync() {
           due,
           left,
           week: steps,
-          letters: weekLetters(steps.length),
+          letters: weekLetters(locale, steps.length),
           flame: flame ?? "",
           colours: WIDGET_COLOURS,
         }),
       );
     }, 1500);
     return () => clearTimeout(timer);
-  }, [images, due, streak, reviewsToday, goal, weekKey, dayDone, out]);
+  }, [images, due, streak, reviewsToday, goal, weekKey, dayDone, out, locale]);
 
   return null;
 }

@@ -22,6 +22,35 @@ describe("runtimeSitemap", () => {
     expect(german).not.toContain('hreflang="ru"');
   });
 
+  it("lists a guide page in every locale, dated by the newest of its own decks", () => {
+    const deck = (slug: string, updatedAt: string) => ({
+      slug,
+      updatedAt: new Date(updatedAt),
+      meaningLanguage: "en",
+      editions: [],
+    });
+    const xml = runtimeSitemap(
+      [
+        deck("leben-in-deutschland-test", "2026-09-01T00:00:00Z"),
+        deck("einbuergerungstest-berlin", "2026-09-20T00:00:00Z"),
+        deck("road-signs", "2026-10-01T00:00:00Z"),
+      ],
+      [],
+      [
+        {
+          path: (locale) => `${locale === "en" ? "" : `/${locale}`}/exams/einbuergerungstest`,
+          slugs: ["leben-in-deutschland-test", "einbuergerungstest-berlin"],
+        },
+      ],
+    );
+    const guide = entry(xml, "/ru/exams/einbuergerungstest");
+    expect(guide).toContain("<lastmod>2026-09-20T00:00:00.000Z</lastmod>");
+    expect(guide).toContain('hreflang="uk" href="https://lymi.app/uk/exams/einbuergerungstest"');
+    expect(guide).toContain(
+      'hreflang="x-default" href="https://lymi.app/exams/einbuergerungstest"',
+    );
+  });
+
   it("lists Explore in every locale, pointing at its alternates", () => {
     const xml = runtimeSitemap([]);
     expect(locs(xml)).toEqual([

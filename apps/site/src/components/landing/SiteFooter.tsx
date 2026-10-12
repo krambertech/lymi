@@ -45,6 +45,16 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
                 <Trans>Explore decks</Trans>
               </a>
             </li>
+            <li>
+              <a href="/docs/import-from-anki" className={linkClass}>
+                <Trans>Move from Anki</Trans>
+              </a>
+            </li>
+            <li>
+              <a href="/docs/import-from-mochi" className={linkClass}>
+                <Trans>Move from Mochi</Trans>
+              </a>
+            </li>
           </Group>
           <Group title={<Trans>Docs</Trans>}>
             <li>

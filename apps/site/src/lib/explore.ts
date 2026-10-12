@@ -38,8 +38,12 @@ function hash(text: string): number {
   return h >>> 0;
 }
 
-export function catalogContentHash(decks: readonly PublicDeckSummary[]): string {
-  return hash(JSON.stringify(decks)).toString(36);
+export function catalogContentHash(
+  decks: readonly PublicDeckSummary[],
+  /** Anything else the page shows, such as when each deck last changed. */
+  shown?: unknown,
+): string {
+  return hash(JSON.stringify(shown === undefined ? decks : [decks, shown])).toString(36);
 }
 
 export function catalogEtag(parts: {

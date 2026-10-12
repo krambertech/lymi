@@ -2,6 +2,7 @@ import { env } from "cloudflare:workers";
 import {
   hasShelfPage,
   listPublicCatalog,
+  listPublicDeckSlugs,
   type PublicDeckSummary,
   type Shelf,
   type ShelfKind,
@@ -13,6 +14,7 @@ import {
 import { drizzle } from "@lymi/core/db";
 import type { AstroGlobal } from "astro";
 import { DECK_CACHE_CONTROL, etagMatches } from "./deck-page";
+import { EXAM_DECKS, type ListedExam, listedExams } from "./exams";
 import { catalogContentHash, catalogEtag, shelfPath } from "./explore";
 import { type Locale, locales } from "./routes";
 
@@ -127,4 +129,53 @@ export async function shelfPagePaths(): Promise<Partial<Record<Locale, string>>[
     }
   });
   return [...byRoute.values()];
+}
+
+export interface ExamsPage {
+  locale: Locale;
+  exams: ListedExam[];
+  /** When each listed deck last changed, so a page can say how current its questions are. */
+  updated: Record<string, string>;
+}
+
+/**
+ * The exams this locale's catalogue covers, with their decks, for the exam hub and an exam's own
+ * page. Cached like Explore, and validated on the decks it shows.
+ */
+export async function resolveExamsPage(
+  astro: AstroGlobal,
+  locale: Locale,
+  page: string,
+): Promise<ExamsPage | Response> {
+  const db = drizzle(env.DB);
+  const [catalogue, slugs] = await Promise.all([
+    listPublicCatalog(db, locale),
+    listPublicDeckSlugs(db),
+  ]);
+  const exams = listedExams(catalogue);
+  const updated = Object.fromEntries(
+    slugs
+      .filter((deck) => EXAM_DECKS.includes(deck.slug))
+      .map((deck) => [deck.slug, deck.updatedAt.toISOString()]),
+  );
+  const headers = astro.response.headers;
+  headers.set("content-type", "text/html; charset=utf-8");
+  const etag = catalogEtag({
+    content: catalogContentHash(
+      exams.flatMap((exam) => exam.decks),
+      updated,
+    ),
+    locale,
+    version: env.CF_VERSION_METADATA?.id,
+    page,
+  });
+  headers.set("cache-control", DECK_CACHE_CONTROL);
+  headers.set("etag", etag);
+  if (etagMatches(astro.request.headers.get("if-none-match"), etag)) {
+    return new Response(null, {
+      status: 304,
+      headers: { "cache-control": DECK_CACHE_CONTROL, etag },
+    });
+  }
+  return { locale, exams, updated };
 }

@@ -5,6 +5,10 @@ export const localizedPages = {
   estonian: "/languages/estonian",
   assistants: "/ai-assistants",
   teachers: "/teachers",
+  medicine: "/medicine",
+  certifications: "/certifications",
+  exams: "/exams",
+  einbuergerungstest: "/exams/einbuergerungstest",
   privacy: "/privacy",
 } as const;
 export type LocalizedPage = keyof typeof localizedPages;
@@ -14,7 +18,15 @@ export const localizedRuntimePages = [
   "/explore",
   "/explore/[slug]",
   "/explore/[kind]/[name]",
+  "/exams",
+  "/exams/einbuergerungstest",
+  "/exams/[exam]",
 ] as const;
+
+/** A translated page rendered per request, which the deck sitemap lists rather than the build's. */
+export function isRuntimePage(page: LocalizedPage): boolean {
+  return (localizedRuntimePages as readonly string[]).includes(localizedPages[page]);
+}
 
 export const locales = ["en", "uk", "ru"] as const;
 export type Locale = (typeof locales)[number];

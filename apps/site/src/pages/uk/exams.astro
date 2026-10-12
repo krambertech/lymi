@@ -1,0 +1,11 @@
+---
+import ExamsPage from "../../components/exams/ExamsPage.astro";
+import { resolveExamsPage } from "../../lib/public-catalog";
+
+export const prerender = false;
+
+const page = await resolveExamsPage(Astro, "uk", "exams");
+if (page instanceof Response) return page;
+---
+
+<ExamsPage page={page} />

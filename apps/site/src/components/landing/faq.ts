@@ -110,3 +110,87 @@ export const TEACHERS_QUESTIONS: Question[] = [
     answer: msg`It’s made for tutors and small classes. There are no rosters, assignments or grades.`,
   },
 ];
+
+const OFFLINE: Question = {
+  id: "offline",
+  question: msg`Can I review offline?`,
+  answer: msg`Yes. Open Lymi once while you’re online, and after that you can review without a connection. Your answers are sent when you’re back online.`,
+};
+
+export const EXAMS_QUESTIONS: Question[] = [
+  {
+    id: "official",
+    question: msg`Are these the official questions?`,
+    answer: msg`For Germany, the US, Czechia and Spain, the decks follow the question list each exam publishes, named under the exam. Canada and the DMVs don’t publish their questions, so those decks are practice questions written from the official guide, and the language exam decks teach the vocabulary of each level rather than an official list. Lymi isn’t affiliated with any exam authority and can’t promise a pass.`,
+  },
+  {
+    id: "language",
+    question: msg`Which language are the translations in?`,
+    answer: msg`Questions and answers stay in the exam’s language. Each card adds a translation in English, Ukrainian or Russian: the language of the page you add the deck from.`,
+  },
+  OFFLINE,
+  ...COMMON,
+];
+
+export const EINBUERGERUNGSTEST_QUESTIONS: Question[] = [
+  {
+    id: "cost",
+    question: msg`Is it free?`,
+    answer: msg`Yes. Adding the decks and reviewing them is free.`,
+  },
+  {
+    id: "official",
+    question: msg`Is it the official question set?`,
+    answer: msg`The questions and answers are BAMF’s, from its catalogue of 7 May 2025, in German as they appear on the test. The translations and notes are Lymi’s. Lymi isn’t affiliated with BAMF and can’t promise a pass.`,
+  },
+  {
+    id: "state",
+    question: msg`Do I need my state’s deck?`,
+    answer: msg`Yes. Three of the 33 questions are about the state where you’re registered, so add its 10 questions as well as the 300 general ones.`,
+  },
+  {
+    id: "phone",
+    question: msg`Does it work on my phone?`,
+    answer: msg`Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both.`,
+  },
+  OFFLINE,
+];
+
+const AI_MARKED: Question = {
+  id: "ai",
+  question: msg`Does the AI write my cards?`,
+  answer: msg`Only when you ask your assistant to. Anything it writes on a card is marked AI, so you can always tell it from your own notes.`,
+};
+
+export const MEDICINE_QUESTIONS: Question[] = [
+  {
+    id: "anki",
+    question: msg`Can I bring my Anki decks?`,
+    answer: msg`Yes. An Anki package imports with its cards, tags, pictures and review history, so your schedule carries on where it stopped.`,
+    link: { href: "/docs/import-from-anki", label: msg`Moving from Anki` },
+  },
+  {
+    id: "pictures",
+    question: msg`Can a card have a picture?`,
+    answer: msg`Yes. A card can hold one picture, such as a diagram or a slide, and a review can ask from the picture instead of the words.`,
+  },
+  AI_MARKED,
+  OFFLINE,
+  ...COMMON,
+];
+
+export const CERTIFICATIONS_QUESTIONS: Question[] = [
+  {
+    id: "ready-decks",
+    question: msg`Is there a ready-made deck for my certification?`,
+    answer: msg`Not for most certifications yet. Your assistant can turn your study guide into a deck in a few minutes, and a deck from Anki or Mochi imports with its review history.`,
+  },
+  {
+    id: "material",
+    question: msg`Who can see the cards I make?`,
+    answer: msg`Only you, unless you share the deck. Cards made from your study material stay in your account.`,
+  },
+  AI_MARKED,
+  OFFLINE,
+  ...COMMON,
+];

@@ -8,7 +8,7 @@ import { signUpUrl } from "../../lib/origins";
 import { type LocalizedPage, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { Lockup } from "../Logo";
-import { isUseCasePage, MENU_USE_CASE_LINKS } from "./site-links";
+import { isUseCasePage, MENU_USE_CASE_LINKS, type UseCaseLink } from "./site-links";
 
 interface Props {
   openAppUrl: string;
@@ -19,6 +19,20 @@ interface Props {
 }
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
+
+function UseCaseMark({ link }: { link: UseCaseLink }) {
+  if (!link.icon) return null;
+  const Icon = link.icon;
+  return (
+    <span
+      aria-hidden="true"
+      data-hue={link.hue}
+      className="use-case-mark grid size-9 shrink-0 place-items-center rounded-md"
+    >
+      <Icon className="size-[1.125rem] text-text-2" strokeWidth={1.75} />
+    </span>
+  );
+}
 
 function UseCasesMenu({ current }: { current: LocalizedPage | undefined }) {
   const { i18n } = useLingui();
@@ -75,7 +89,7 @@ function UseCasesMenu({ current }: { current: LocalizedPage | undefined }) {
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1, transition: { duration: 0.14, ease: EASE_OUT } }}
             exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.1, ease: EASE_OUT } }}
-            className="absolute start-0 top-full z-(--z-dropdown) mt-1.5 w-76 origin-top-left rounded-lg bg-plate p-1.5 edge rtl:origin-top-right"
+            className="absolute start-0 top-full z-(--z-dropdown) mt-1.5 w-84 origin-top-left rounded-lg bg-plate p-1.5 edge rtl:origin-top-right"
           >
             <ul className="grid gap-0.5">
               {MENU_USE_CASE_LINKS.map((link) => (
@@ -83,12 +97,15 @@ function UseCasesMenu({ current }: { current: LocalizedPage | undefined }) {
                   <a
                     href={localizedPath(link.page, i18n.locale)}
                     aria-current={current === link.page ? "page" : undefined}
-                    className="grid gap-0.5 rounded-md px-3 py-2 transition-colors duration-150 hoverable:hover:bg-plate-2 aria-[current=page]:bg-plate-2"
+                    className="flex items-start gap-3 rounded-md px-2.5 py-2.5 transition-colors duration-150 hoverable:hover:bg-plate-2 aria-[current=page]:bg-plate-2"
                   >
-                    <span className="text-sm font-medium text-text">{i18n._(link.label)}</span>
-                    {link.blurb && (
-                      <span className="text-sm text-pretty text-muted">{i18n._(link.blurb)}</span>
-                    )}
+                    <UseCaseMark link={link} />
+                    <span className="grid gap-0.5">
+                      <span className="text-sm font-medium text-text">{i18n._(link.label)}</span>
+                      {link.blurb && (
+                        <span className="text-sm text-pretty text-muted">{i18n._(link.blurb)}</span>
+                      )}
+                    </span>
                   </a>
                 </li>
               ))}
@@ -180,8 +197,9 @@ function PhoneMenu({ openAppUrl, current, signUpHref }: PhoneMenuProps) {
                       onClick={close}
                       href={localizedPath(link.page, i18n.locale)}
                       aria-current={current === link.page ? "page" : undefined}
-                      className={clsx(rowClass, "text-xl font-medium")}
+                      className={clsx(rowClass, "gap-3 py-1.5 text-xl font-medium")}
                     >
+                      <UseCaseMark link={link} />
                       {i18n._(link.label)}
                     </a>
                   </li>

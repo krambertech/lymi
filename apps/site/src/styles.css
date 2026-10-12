@@ -1287,6 +1287,53 @@ html:has(.deck-cards[open]) {
   --tray-c: 0.065;
   --tray-card: oklch(0.33 0.012 60);
 }
+/* A deck shown at the size of a decision: Explore's tray, larger, its card running off the foot. */
+.deck-showcase-tray {
+  --cw: 200px;
+  height: calc(var(--cw) * 1.12 * 0.78 + 40px);
+  padding-top: 40px;
+  border-radius: 0;
+}
+@container (min-width: 772px) {
+  .deck-showcase-tray {
+    --cw: 236px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .deck-showcase:hover .deck-tray-card {
+    transform: translateY(-6px);
+  }
+  .deck-showcase:hover .deck-tray-paper[data-at="1"] {
+    transform: translate(17px, 2px) rotate(5deg);
+  }
+  .deck-showcase:hover .deck-tray-paper[data-at="2"] {
+    transform: translate(-16px, 6px) rotate(-6deg);
+  }
+}
+
+/* The sheets behind an exam question, so the card reads as the top of a deck. */
+.exam-review-paper {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  background: var(--plate);
+  box-shadow: 0 0 0 1px var(--edge);
+}
+.exam-review-paper[data-at="1"] {
+  transform: translate(8px, 6px) rotate(1.8deg);
+}
+.exam-review-paper[data-at="2"] {
+  transform: translate(-6px, 10px) rotate(-2.4deg);
+  opacity: 0.7;
+}
+
+/* A use case's mark in the menus, on the same tray as its landing tile. */
+.use-case-mark {
+  background: oklch(0.93 0.05 var(--tray-h, 235));
+}
+[data-theme="dark"] .use-case-mark {
+  background: oklch(0.34 0.065 var(--tray-h, 235));
+}
 .use-case-paper {
   position: absolute;
   inset: 0;
@@ -1417,49 +1464,57 @@ html:has(.deck-cards[open]) {
 .deck-tray[data-hue="0"],
 .deck-hero-tint[data-hue="0"],
 .shelf-hero[data-hue="0"],
-.use-case-tile[data-hue="0"] {
+.use-case-tile[data-hue="0"],
+.use-case-mark[data-hue="0"] {
   --tray-h: 25;
 }
 .deck-tray[data-hue="1"],
 .deck-hero-tint[data-hue="1"],
 .shelf-hero[data-hue="1"],
-.use-case-tile[data-hue="1"] {
+.use-case-tile[data-hue="1"],
+.use-case-mark[data-hue="1"] {
   --tray-h: 110;
 }
 .deck-tray[data-hue="2"],
 .deck-hero-tint[data-hue="2"],
 .shelf-hero[data-hue="2"],
-.use-case-tile[data-hue="2"] {
+.use-case-tile[data-hue="2"],
+.use-case-mark[data-hue="2"] {
   --tray-h: 150;
 }
 .deck-tray[data-hue="3"],
 .deck-hero-tint[data-hue="3"],
 .shelf-hero[data-hue="3"],
-.use-case-tile[data-hue="3"] {
+.use-case-tile[data-hue="3"],
+.use-case-mark[data-hue="3"] {
   --tray-h: 195;
 }
 .deck-tray[data-hue="4"],
 .deck-hero-tint[data-hue="4"],
 .shelf-hero[data-hue="4"],
-.use-case-tile[data-hue="4"] {
+.use-case-tile[data-hue="4"],
+.use-case-mark[data-hue="4"] {
   --tray-h: 235;
 }
 .deck-tray[data-hue="5"],
 .deck-hero-tint[data-hue="5"],
 .shelf-hero[data-hue="5"],
-.use-case-tile[data-hue="5"] {
+.use-case-tile[data-hue="5"],
+.use-case-mark[data-hue="5"] {
   --tray-h: 280;
 }
 .deck-tray[data-hue="6"],
 .deck-hero-tint[data-hue="6"],
 .shelf-hero[data-hue="6"],
-.use-case-tile[data-hue="6"] {
+.use-case-tile[data-hue="6"],
+.use-case-mark[data-hue="6"] {
   --tray-h: 320;
 }
 .deck-tray[data-hue="7"],
 .deck-hero-tint[data-hue="7"],
 .shelf-hero[data-hue="7"],
-.use-case-tile[data-hue="7"] {
+.use-case-tile[data-hue="7"],
+.use-case-mark[data-hue="7"] {
   --tray-h: 350;
 }
 

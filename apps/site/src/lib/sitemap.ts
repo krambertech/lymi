@@ -3,6 +3,7 @@ import { deckPath } from "./deck-page";
 import { explorePath } from "./explore";
 import {
   englishOnlyPaths,
+  isRuntimePage,
   type Locale,
   type LocalizedPage,
   locales,
@@ -61,9 +62,9 @@ function localized(
 /** The fixed pages from the build: the translated ones in every locale, then the English-only ones. */
 export function pagesSitemap(): string {
   return urlset([
-    ...(Object.keys(localizedPages) as LocalizedPage[]).flatMap((page) =>
-      localized((locale) => localizedPath(page, locale)),
-    ),
+    ...(Object.keys(localizedPages) as LocalizedPage[])
+      .filter((page) => !isRuntimePage(page))
+      .flatMap((page) => localized((locale) => localizedPath(page, locale))),
     ...englishOnlyPaths.map((path) => ({ path })),
   ]);
 }
@@ -78,6 +79,12 @@ interface SitemapDeck {
 /** A shelf's page, in the locales where its readers have enough decks for one. */
 export type SitemapShelf = Partial<Record<Locale, string>>;
 
+/** A translated page built from a fixed list of decks, which changed when the newest of them did. */
+export interface SitemapGuide {
+  path: (locale: Locale) => string;
+  slugs: readonly string[];
+}
+
 /**
  * The pages rendered per request: Explore in every locale, the shelves' own pages, then every
  * published deck in the locales whose Explore lists it. Explore changed when its newest deck did.
@@ -85,6 +92,7 @@ export type SitemapShelf = Partial<Record<Locale, string>>;
 export function runtimeSitemap(
   decks: readonly SitemapDeck[],
   shelves: readonly SitemapShelf[] = [],
+  guides: readonly SitemapGuide[] = [],
 ): string {
   const latest = decks.reduce<Date | undefined>(
     (max, deck) => (!max || deck.updatedAt > max ? deck.updatedAt : max),
@@ -95,6 +103,14 @@ export function runtimeSitemap(
     ...shelves.flatMap((paths) => {
       const listed = locales.filter((locale) => paths[locale]);
       return localized((locale) => paths[locale] ?? "", undefined, listed);
+    }),
+    ...guides.flatMap((guide) => {
+      const own = decks.filter((deck) => guide.slugs.includes(deck.slug));
+      const changed = own.reduce<Date | undefined>(
+        (max, deck) => (!max || deck.updatedAt > max ? deck.updatedAt : max),
+        undefined,
+      );
+      return localized(guide.path, changed);
     }),
     ...decks.flatMap((deck) =>
       localized(

@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { jsonForScript } from "../../lib/deck-page";
+import { pageI18n } from "../../lib/i18n";
+import type { ExamsPage } from "../../lib/public-catalog";
+import { localizedPath } from "../../lib/routes";
+import { exploreStructuredData, marketingPage } from "../../lib/structured-data";
+import ExamsHubPage from "../islands/ExamsHubPage";
+import { EXAMS_QUESTIONS } from "../landing/faq";
+import { EXAMS_BLURB, EXAMS_HEADING, EXAMS_TITLE } from "./ExamsHub";
+
+interface Props {
+  page: ExamsPage;
+}
+
+const { page } = Astro.props;
+const { locale, exams } = page;
+const i18n = pageI18n(locale);
+const title = i18n._(EXAMS_TITLE);
+const description = i18n._(EXAMS_BLURB);
+const path = localizedPath("exams", locale);
+const counts = Object.fromEntries(
+  exams.map(({ exam, decks }) => [exam.id, decks.reduce((sum, deck) => sum + deck.cardCount, 0)]),
+);
+// The hub lists each exam by its first deck; the exam's page lists the rest.
+const decks = exams.flatMap((each) => each.decks.slice(0, 1));
+const structuredData = [
+  ...marketingPage({ name: title, description, path, i18n, questions: EXAMS_QUESTIONS }),
+  exploreStructuredData(decks, locale, { name: i18n._(EXAMS_HEADING), description, path }),
+];
+---
+
+<BaseLayout title={title} description={description} canonicalPath={path} localizedPage="exams">
+  <script slot="head" is:inline type="application/ld+json" set:html={jsonForScript(structuredData)} />
+  <ExamsHubPage client:load locale={locale} counts={counts} />
+</BaseLayout>

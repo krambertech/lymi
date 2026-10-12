@@ -1,0 +1,13 @@
+---
+import ExamPage from "../../../components/exams/ExamPage.astro";
+import { EINBUERGERUNGSTEST, type Exam, examBySlug } from "../../../lib/exams";
+import { resolveExamsPage } from "../../../lib/public-catalog";
+
+export const prerender = false;
+
+const exam = examBySlug(EINBUERGERUNGSTEST) as Exam;
+const page = await resolveExamsPage(Astro, "ru", EINBUERGERUNGSTEST);
+if (page instanceof Response) return page;
+---
+
+<ExamPage page={page} exam={exam} />

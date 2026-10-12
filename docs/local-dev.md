@@ -79,6 +79,28 @@ pnpm local db:fresh               # rebuild the local D1 from the migrations
 
 `--as` defaults to `LYMI_PERSONA`, then `learner`. `--url` defaults to `LYMI_URL`, then `PRODUCT_URL` in `apps/web/.dev.vars`, then `http://localhost:5241`.
 
+## Run the phone app in a Simulator
+
+Every worktree installs one shared dev client instead of compiling its own. Start Metro on a free port and leave it running:
+
+```bash
+cd apps/mobile
+EXPO_PUBLIC_API_URL=http://localhost:5241 npx expo start --dev-client --port 8197
+```
+
+In a second terminal, install the client into your simulator and open it on that port:
+
+```bash
+cd apps/mobile
+pnpm dev-client "Lymi <issue>" 8197
+```
+
+`dev-client` creates the simulator if no device has that name, boots it, installs the app and opens it on `http://127.0.0.1:<port>`. It looks up the app in `~/Library/Caches/lymi/ios-dev-client` by the native fingerprint plus the Xcode build number, so a worktree whose native side matches one already built installs in seconds. Always pass the port. The client opened without a URL reconnects to the last server it saw, which may be another worktree's Metro.
+
+On a miss it runs `expo prebuild --platform ios --clean`, builds for the generic Simulator destination, stores the app and deletes `ios/build/dev-client`. If Xcode stalls at `CreateBuildDescription`, the Mac's pipe memory is used up: the command kills the build, names the processes holding the most pipes and retries. Quitting the top one fixes it. One native build runs at a time; a second worktree waits for the first and then uses its app. The cache keeps the four most recently used apps. `expo run:ios` reads and fills the same cache through `buildCacheProvider` in `app.json`.
+
+When you change native code over and over, add `--keep-build`: it skips the clean prebuild and keeps `ios/build/dev-client`, so the next build is incremental. If the app reports `Cannot find native module` or a missing TurboModule, the cached binary is older than its native code, for example after an environment variable changed native config, which the fingerprint does not see. Run the command again with `--rebuild` to replace it.
+
 ## Sign the phone app in
 
 `EXPO_PUBLIC_API_URL` points the phone app at a Worker, and it defaults to production. Start Metro against the local one, using the port the server printed:

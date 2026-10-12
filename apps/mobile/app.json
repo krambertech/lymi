@@ -25,6 +25,9 @@
       "typedRoutes": true,
       "tsconfigPaths": false
     },
+    "buildCacheProvider": {
+      "plugin": "./scripts/build-cache-provider.cjs"
+    },
     "plugins": [
       "expo-router",
       [

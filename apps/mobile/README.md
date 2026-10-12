@@ -9,10 +9,10 @@ You need Xcode 26.4 or later and an iOS 26 Simulator runtime (`xcodebuild -downl
 ```bash
 pnpm install
 cd apps/mobile
-LANG=en_US.UTF-8 npx expo run:ios
+npx expo start --dev-client --port 8197
 ```
 
-The first build takes several minutes; after that `npx expo start --dev-client` reloads JavaScript in place. CocoaPods fails with an encoding error unless `LANG` is UTF-8. A change to `app.json`, a config plugin or a native module needs `npx expo prebuild --clean` and a new build.
+In a second terminal, `pnpm dev-client "Lymi dev client" 8197` installs a cached dev client into that simulator and opens it on that Metro port. It builds one, in several minutes, only when no worktree has built this native fingerprint yet; a change to `app.json`, a config plugin or a native module changes the fingerprint. Metro then reloads JavaScript in place. [Local development](../../docs/local-dev.md#run-the-phone-app-in-a-simulator) has the details.
 
 ## Sign-in
 

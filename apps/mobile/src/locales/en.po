@@ -72,6 +72,9 @@ msgstr "{due, plural, one {card due in {deckName}} other {cards due in {deckName
 msgid "{due, plural, one {card due today} other {cards due today}}"
 msgstr "{due, plural, one {card due today} other {cards due today}}"
 
+msgid "{due, plural, one {card to review} other {cards to review}}"
+msgstr "{due, plural, one {card to review} other {cards to review}}"
+
 msgid "{label}: {chosen}"
 msgstr "{label}: {chosen}"
 
@@ -285,6 +288,12 @@ msgstr "Example by you"
 msgid "Example from lesson"
 msgstr "Example from lesson"
 
+msgid "Explore"
+msgstr "Explore"
+
+msgid "Explore is coming to the phone"
+msgstr "Explore is coming to the phone"
+
 msgid "Fill in the rest with AI"
 msgstr "Fill in the rest with AI"
 
@@ -450,6 +459,9 @@ msgstr "Often forgotten"
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."
 
+msgid "Open Explore on the web"
+msgstr "Open Explore on the web"
+
 msgid "Password"
 msgstr "Password"
 
@@ -497,6 +509,9 @@ msgstr "Reset your password"
 
 msgid "Review"
 msgstr "Review"
+
+msgid "Review {due, plural, one {# card} other {# cards}}"
+msgstr "Review {due, plural, one {# card} other {# cards}}"
 
 #. placeholder {0}: days.length
 msgid "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}"
@@ -623,6 +638,9 @@ msgstr "Try again"
 
 msgid "Undo"
 msgstr "Undo"
+
+msgid "Until then, find ready decks to add on the web."
+msgstr "Until then, find ready decks to add on the web."
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."

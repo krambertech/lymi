@@ -72,7 +72,8 @@
     "fingerprint": "fingerprint fingerprint:generate --platform ios",
     "contract:freeze": "FREEZE_PHONE_CONTRACT=1 pnpm --filter @lymi/web exec vitest run --project unit src/server/phone-contract.test.ts",
     "e2e": "bash e2e/run.sh",
-    "i18n:extract": "lingui extract --clean"
+    "i18n:extract": "lingui extract --clean",
+    "tab-icons": "node scripts/tab-icons.mjs"
   },
   "private": true,
   "license": "AGPL-3.0-only"

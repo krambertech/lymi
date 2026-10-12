@@ -4,9 +4,11 @@ The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the rev
 
 ## Navigation
 
-- The tabs are a bar in Liquid Glass, tinted toward the room and opaque before iOS 26. Every tab carries its label, an icon over the word, as iOS lays out its own tab bars. Each tab names itself in the top bar beside the streak; there is no large title row. Tapping the current tab returns its stack to the top. The bar is being built and tuned in #549.
+- The tabs are iOS's own tab bar, in Onest with Lucide icons: Today, Library, Explore and You, each an icon over its label. The chosen tab is ink on the system's lens; the rest take iOS's monochrome style. Tapping the current tab returns its stack to the top. Before iOS 26 it is the system's classic bar ([ADR 0034](../../adr/0034-the-phone-uses-the-system-tab-bar-and-captures-from-the-top-bar.md)).
+- Every screen's top bar is pinned, with its actions as glass buttons at its end. A tab's large title starts in the bar and shrinks to an inline title at its start as the page scrolls; a page's title travels from under the bar into its middle, and its named back folds into a round glass back. What scrolls beneath softens into the room, never at rest, so nothing crosses the lantern's light.
 - **You** gathers what is about the learner: Insights first as one plate that opens the full page, then the reminder time and the theme, then Activity, Settings, feedback and sign-out. Archived closes Library.
-- Capture is an amber-tinted glass circle at the end of the tab bar, the bar's height, in the thumb's reach. A tap opens Add a word.
+- Capture is an amber glass button at the end of every tab's top bar, beside the streak. A tap grows it into Add a word, and the sheet shrinks back into it.
+- Inside a deck with cards due, the tab bar's accessory shows how many and a play button, as Podcasts shows what is playing; a tap starts the deck's review. Before iOS 26 the deck shows its Review button instead.
 
 ## How a screen arrives
 
@@ -68,7 +70,7 @@ One sound, when the daily goal is reached. It follows the silent switch, and You
 
 ## Glass
 
-Liquid Glass suits Lymi: it is a material that holds light, and the lantern is a light. The phone uses it for chrome that floats over content, so the bar and the capture circle refract what scrolls beneath them and morph as the learner moves. Tinted amber, glass marks the one standing action, as plain amber marks a press on the web. Where else tinted glass carries Lymi's light is open, to try on a device rather than in mockups. What the learner reads, such as the review card, stays on opaque plates. Reduce Transparency, and iOS before 26, get the web's opaque surfaces. The web keeps its opaque pill.
+Liquid Glass suits Lymi: it is a material that holds light, and the lantern is a light. The phone uses it for chrome that floats over content: the tab bar, the top bar's buttons and sheets refract what scrolls beneath them and morph as the learner moves. Tinted amber, glass marks the one standing action, as plain amber marks a press on the web. Where else tinted glass carries Lymi's light is open, to try on a device rather than in mockups. What the learner reads, such as the review card, stays on opaque plates. Reduce Transparency, and iOS before 26, get the web's opaque surfaces. The web keeps its opaque pill.
 
 ## Light
 

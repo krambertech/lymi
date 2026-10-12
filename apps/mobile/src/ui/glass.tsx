@@ -1,6 +1,7 @@
-import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
+import { GlassView } from "expo-glass-effect";
 import type { ReactNode } from "react";
 import { View, type ViewStyle } from "react-native";
+import { useGlass } from "../theme/glass";
 import { usePalette, useRoom } from "../theme/palette";
 import { Icon, type IconName } from "./icons";
 import { Press, Text } from "./primitives";
@@ -16,10 +17,11 @@ const SIZE = 44;
  */
 export function useFrost() {
   const sheet = usePalette().sheet;
-  return isGlassEffectAPIAvailable() ? `${sheet}b3` : sheet;
+  return useGlass() ? `${sheet}b3` : sheet;
 }
 
-function Surface({
+/** Glass tinted toward the room or amber, opaque without glass; capture in the top bar uses it too. */
+export function GlassSurface({
   tint,
   style,
   children,
@@ -29,9 +31,10 @@ function Surface({
   children: ReactNode;
 }) {
   const p = usePalette();
+  const glass = useGlass();
   // Dark glass greys a translucent amber to brown, so at night it is the whole amber.
   const amber = useRoom() === "dark" ? p.amber : `${p.amber}d9`;
-  if (isGlassEffectAPIAvailable())
+  if (glass)
     return (
       <GlassView
         isInteractive
@@ -63,7 +66,7 @@ export function GlassButton({ icon, label, primary = false, onPress }: GlassButt
   const p = usePalette();
   return (
     <Press onPress={onPress} accessibilityRole="button" accessibilityLabel={label}>
-      <Surface
+      <GlassSurface
         tint={primary ? "amber" : "room"}
         style={{
           width: SIZE,
@@ -79,7 +82,7 @@ export function GlassButton({ icon, label, primary = false, onPress }: GlassButt
           colour={primary ? p["amber-ink"] : p.text}
           strokeWidth={primary ? 2.25 : 2}
         />
-      </Surface>
+      </GlassSurface>
     </Press>
   );
 }
@@ -88,7 +91,7 @@ export function GlassButton({ icon, label, primary = false, onPress }: GlassButt
 export function GlassPill({ icon, children }: { icon: IconName; children: string }) {
   const p = usePalette();
   return (
-    <Surface
+    <GlassSurface
       tint="room"
       style={{
         height: SIZE,
@@ -105,6 +108,6 @@ export function GlassPill({ icon, children }: { icon: IconName; children: string
         {children}
       </Text>
       <Icon name="down" size={16} colour={p.muted} />
-    </Surface>
+    </GlassSurface>
   );
 }

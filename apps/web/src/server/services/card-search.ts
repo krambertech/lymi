@@ -35,7 +35,7 @@ import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
 import { selectIn } from "./batch";
 import { type CardView, editionText, inEdition, presentCards } from "./card-view";
-import { foldForSearch, matchesSearch } from "./cards";
+import { foldForSearch, matchesSearch, searchKey } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
 import { memberOf } from "./members";
 import { askedSql } from "./modes";
@@ -103,7 +103,7 @@ export async function searchCards(
   const { db, userId } = ctx;
   const now = new Date();
   const limit = Math.min(Math.max(search.limit ?? 50, 1), SEARCH_LIMIT);
-  const needle = foldForSearch(search.query ?? "");
+  const needle = searchKey(search.query ?? "");
   const filter = withShorthands(search);
   const window: Window = {
     since: filter.reviews?.since ? resolveDateValue(filter.reviews.since, now) : null,

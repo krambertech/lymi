@@ -324,15 +324,30 @@ export function foldForSearch(text: string): string {
   return normaliseTerm(text);
 }
 
-/** True when the folded needle occurs in the term, meaning, example or the notes' words. */
+/**
+ * The free-text search key: the duplicate-key fold, then NFKC so full- and half-width forms
+ * meet, then katakana to hiragana so a kana query finds either script.
+ */
+export function searchKey(text: string): string {
+  return foldForSearch(text.normalize("NFKC")).replace(/[\u30a1-\u30f6]/g, (char) =>
+    String.fromCharCode(char.charCodeAt(0) - 0x60),
+  );
+}
+
+/** True when the needle, a `searchKey`, occurs in the term, reading, meaning, example or notes. */
 export function matchesSearch(
-  card: Pick<Card, "normalizedTerm" | "meaning" | "example" | "notes">,
+  card: Pick<Card, "normalizedTerm" | "pronunciation" | "meaning" | "example" | "notes">,
   needle: string,
 ): boolean {
-  if (card.normalizedTerm.includes(needle)) return true;
   const notes = card.notes && notesToText(card.notes);
-  for (const field of [card.meaning, card.example, notes]) {
-    if (field && foldForSearch(field).includes(needle)) return true;
+  for (const field of [
+    card.normalizedTerm,
+    card.pronunciation,
+    card.meaning,
+    card.example,
+    notes,
+  ]) {
+    if (field && searchKey(field).includes(needle)) return true;
   }
   return false;
 }

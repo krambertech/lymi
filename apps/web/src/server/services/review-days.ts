@@ -307,6 +307,11 @@ export async function undoReview(ctx: ServiceContext, reviewId: string): Promise
       throw new ServiceError("conflict", "Only the latest grade of a card can be undone.");
     }
     if (undo.undoneAt.getTime() === now.getTime()) {
+      track(ctx.analytics, {
+        name: "review_undone",
+        ...(review.review.mode ? { mode: review.review.mode } : {}),
+        grade: review.review.rating,
+      });
       await audit(ctx, {
         entity: "review",
         action: "undo_grade",

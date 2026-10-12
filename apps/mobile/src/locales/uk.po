@@ -228,6 +228,9 @@ msgstr "Підтвердити"
 msgid "Connected apps"
 msgstr "Підключені застосунки"
 
+msgid "Continue"
+msgstr "Продовжити"
+
 msgid "Continue with Google"
 msgstr "Продовжити з Google"
 
@@ -251,6 +254,9 @@ msgstr "Не вдалося зберегти ім’я. Перевір з’єд
 
 msgid "Couldn’t send your feedback"
 msgstr "Не вдалося надіслати повідомлення"
+
+msgid "Couldn’t take back your grade for “{term}”. It still counts."
+msgstr "Не вдалося скасувати оцінку для «{term}». Вона зараховується."
 
 msgid "Create a deck on the web first, then add cards here."
 msgstr "Спершу створи колоду у вебверсії, а тоді додавай картки тут."
@@ -317,6 +323,9 @@ msgstr "Змінити ім’я та фото"
 
 msgid "Email"
 msgstr "Пошта"
+
+msgid "End review"
+msgstr "Завершити повторення"
 
 msgid "Enter an email address, like you@example.com."
 msgstr "Введи адресу пошти, як-от you@example.com."
@@ -628,6 +637,9 @@ msgstr "Повторення"
 msgid "Review {due, plural, one {# card} other {# cards}}"
 msgstr "Повторити {due, plural, one {# картку} few {# картки} many {# карток} other {# картки}}"
 
+msgid "Review done"
+msgstr "Повторення завершено"
+
 #. placeholder {0}: days.length
 msgid "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}"
 msgstr "Дні з повтореннями: {lit} з останніх {0, plural, one {# дня} few {# днів} many {# днів} other {# дня}}"
@@ -712,11 +724,17 @@ msgstr "{current, plural, one {# день поспіль} few {# дні посп
 msgid "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Дні поспіль: {streak, plural, one {# день поспіль} few {# дні поспіль} many {# днів поспіль} other {# дня поспіль}}"
 
+msgid "Swipe from the edge to take back a grade"
+msgstr "Проведи від краю, щоб скасувати оцінку"
+
 msgid "System"
 msgstr "Системна"
 
 msgid "Take a photo"
 msgstr "Зробити фото"
+
+msgid "Take back the last grade"
+msgstr "Скасувати останню оцінку"
 
 msgid "Take photo"
 msgstr "Сфотографувати"

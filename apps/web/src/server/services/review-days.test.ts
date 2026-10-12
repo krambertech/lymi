@@ -1,6 +1,6 @@
 import { newId } from "@lymi/core";
 import { eq } from "@lymi/core/db";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { type Db, schema } from "../db";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
@@ -166,6 +166,24 @@ describe("undo", () => {
       .where(eq(schema.cardStates.cardId, b.id));
     expect(state).toMatchObject({ state: 0, lastReview: null });
     expect((await undoReview(ctx, last.reviewId)).attempts).toBe(1);
+  });
+
+  it("reports a grade taken back once, however often the undo is sent", async () => {
+    const { ctx, cards } = await setup(10, ["kaksteist"]);
+    const [a] = cards;
+    if (!a) throw new Error("no cards");
+    const capture = vi.fn();
+    const watched = { ...ctx, analytics: { capture, writeDataPoint: vi.fn() } };
+    const graded = await grade(watched, a.id, 2, later(1));
+    if (!graded.reviewId) throw new Error("no review id");
+
+    await undoReview(watched, graded.reviewId);
+    await undoReview(watched, graded.reviewId);
+
+    const undone = capture.mock.calls
+      .map(([event]) => event)
+      .filter((e) => e.name === "review_undone");
+    expect(undone).toEqual([{ name: "review_undone", mode: "term_to_meaning", grade: 2 }]);
   });
 
   it("leaves a newer grade alone when it lands between the check and the write", async () => {

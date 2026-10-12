@@ -22,9 +22,11 @@ import {
   Circle,
   createPicture,
   Group,
+  LinearGradient,
   Path,
   Picture,
   RadialGradient,
+  Rect,
   RoundedRect,
   Skia,
   vec,
@@ -34,7 +36,9 @@ import { View, type ViewStyle } from "react-native";
 import {
   Easing,
   interpolate,
+  SensorType,
   type SharedValue,
+  useAnimatedSensor,
   useDerivedValue,
   useSharedValue,
   withRepeat,
@@ -43,7 +47,7 @@ import {
   withTiming,
 } from "react-native-reanimated";
 import { ALWAYS, spring, springAt, useReduceMotion } from "../theme/motion";
-import { usePalette } from "../theme/palette";
+import { clear, usePalette } from "../theme/palette";
 
 const SPRING = {
   settle: spring(FLAME_MOTION.settle),
@@ -82,6 +86,8 @@ interface Props {
   fed?: number | undefined;
   flicker?: boolean | undefined;
   glow?: boolean | undefined;
+  /** The glass catches a highlight as the phone tilts: Today's big lantern only. phone.md "Light". */
+  tilt?: boolean | undefined;
   style?: ViewStyle | undefined;
 }
 
@@ -93,6 +99,7 @@ export function Lantern({
   fed = 0,
   flicker = true,
   glow = true,
+  tilt = false,
   style,
 }: Props) {
   const p = usePalette();
@@ -130,9 +137,10 @@ export function Lantern({
   }, [target, reduce, flame, breath]);
 
   useEffect(() => {
-    if (fed === lastFed.current) return;
+    // A grade taken back lowers the count without feeding the flame.
+    const grew = fed > lastFed.current;
     lastFed.current = fed;
-    if (reduce || out) return;
+    if (!grew || reduce || out) return;
     // Each breath starts from wherever the last one is, so close reviews flow into one.
     breath.value = withSequence(
       withSpring(FLAME_BREATH.feed, SPRING.breathIn),
@@ -253,6 +261,7 @@ export function Lantern({
               <Path path={CORE} color={p["flame-core"]} />
             </Group>
           </Group>
+          {tilt && !reduce && <Glint sheen={p["lit-sheen"]} />}
           {FRAME.map((s) =>
             s.path ? (
               <Group key={s.d}>
@@ -275,6 +284,49 @@ export function Lantern({
         <Picture picture={sparksPicture} />
       </Canvas>
     </View>
+  );
+}
+
+const GLASS_CLIP = Skia.RRectXY(
+  Skia.XYWHRect(LANTERN_GLASS.x, LANTERN_GLASS.y, LANTERN_GLASS.w, LANTERN_GLASS.h),
+  LANTERN_GLASS.r,
+  LANTERN_GLASS.r,
+);
+/** The share of gravity across the screen at which the highlight reaches the glass's edge, about 30°. */
+const FULL_TILT = 0.5;
+/** How far back a phone in the hand usually leans, as gravity's share into the screen. */
+const HELD = -0.6;
+
+/**
+ * A soft band of light across the glass that slides as the phone tilts, as iOS 26's glass catches
+ * the room. It follows gravity, so holding the phone still holds it still.
+ */
+function Glint({ sheen }: { sheen: string }) {
+  const gravity = useAnimatedSensor(SensorType.GRAVITY, { interval: "auto" });
+  const transform = useDerivedValue(() => {
+    const { x, y, z } = gravity.sensor.value;
+    const g = Math.hypot(x, y, z) || 1;
+    const along = Math.max(-1, Math.min(1, x / g / FULL_TILT));
+    const up = Math.max(-1, Math.min(1, (z / g - HELD) / FULL_TILT));
+    return [
+      { translateX: along * LANTERN_GLASS.w * 0.7 },
+      { translateY: up * LANTERN_GLASS.h * 0.25 },
+    ];
+  });
+  const { x, y, w, h } = LANTERN_GLASS;
+  return (
+    <Group clip={GLASS_CLIP}>
+      <Group transform={transform}>
+        <Rect x={x - w} y={y - h} width={w * 3} height={h * 3}>
+          <LinearGradient
+            start={vec(x, y)}
+            end={vec(x + w, y + h)}
+            colors={[clear(sheen), sheen, clear(sheen)]}
+            positions={[0.3, 0.5, 0.7]}
+          />
+        </Rect>
+      </Group>
+    </Group>
   );
 }
 

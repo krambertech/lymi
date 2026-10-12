@@ -198,6 +198,8 @@ interface IconButtonProps {
   /** A circle, for capture and the pronunciation button only. */
   round?: boolean;
   disabled?: boolean;
+  /** Off where a screen answers with its own haptics, as the review does. */
+  haptic?: boolean;
   onPress?: () => void;
   testID?: string;
 }
@@ -210,6 +212,7 @@ export function IconButton({
   size = "md",
   round = false,
   disabled = false,
+  haptic = true,
   onPress,
   testID,
 }: IconButtonProps) {
@@ -219,7 +222,7 @@ export function IconButton({
   return (
     <Press
       onPress={disabled ? undefined : onPress}
-      haptic={!disabled}
+      haptic={haptic && !disabled}
       hitSlop={slop}
       testID={testID}
       accessibilityRole="button"

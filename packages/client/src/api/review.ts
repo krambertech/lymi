@@ -8,6 +8,7 @@ import type {
   ReviewMode,
   Round,
   RoundsOut,
+  UndoOut,
 } from "@lymi/core";
 import type { Card } from "./cards";
 import { deviceTimezone, request } from "./request";
@@ -79,4 +80,7 @@ export const reviewApi = {
         timezone: body.timezone ?? deviceTimezone(),
       }),
     }),
+  /** Takes back the latest grade of a card's mode; an older one is 409. */
+  undoReview: (reviewId: string) =>
+    request<UndoOut>("/api/review/undo", { method: "POST", body: JSON.stringify({ reviewId }) }),
 };

@@ -1,8 +1,10 @@
-import { CHOICE_SLIDE } from "@lymi/design";
+import { CHOICE_SLIDE, endEmbers } from "@lymi/design";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import * as Haptics from "expo-haptics";
 import { type ReactNode, useState } from "react";
 import { View, type ViewStyle } from "react-native";
+import { playHaptics } from "../../../modules/lymi-haptics";
+import { endHaptics } from "../../review/end-haptics";
 import { type Palette, usePalette } from "../../theme/palette";
 import { GlassButton, GlassPill } from "../../ui/glass";
 import { Icon, type IconName } from "../../ui/icons";
@@ -221,6 +223,7 @@ const ICON_SET: IconName[] = [
   "email",
   "signOut",
   "play",
+  "pointer",
   "widgets",
   "sun",
   "moon",
@@ -435,11 +438,16 @@ const HAPTICS: [string, string, () => void][] = [
     "Soft impact, Forgot included",
     () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft),
   ],
-  ["Undo", "Selection", () => Haptics.selectionAsync()],
+  ["Undo, or crossing the line pulling to end", "Selection", () => Haptics.selectionAsync()],
   [
     "The daily goal",
     "Success",
     () => Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success),
+  ],
+  [
+    "The end of a review",
+    "A faint tick under each ember and a warm pulse as today's light fills, through Core Haptics",
+    () => void playHaptics(endHaptics(endEmbers(14), true, false)),
   ],
   [
     "Starting a review",

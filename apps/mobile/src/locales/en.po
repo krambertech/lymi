@@ -228,6 +228,9 @@ msgstr "Confirm"
 msgid "Connected apps"
 msgstr "Connected apps"
 
+msgid "Continue"
+msgstr "Continue"
+
 msgid "Continue with Google"
 msgstr "Continue with Google"
 
@@ -251,6 +254,9 @@ msgstr "Couldn’t save your name. Check your connection and try again."
 
 msgid "Couldn’t send your feedback"
 msgstr "Couldn’t send your feedback"
+
+msgid "Couldn’t take back your grade for “{term}”. It still counts."
+msgstr "Couldn’t take back your grade for “{term}”. It still counts."
 
 msgid "Create a deck on the web first, then add cards here."
 msgstr "Create a deck on the web first, then add cards here."
@@ -317,6 +323,9 @@ msgstr "Edit your name and photo"
 
 msgid "Email"
 msgstr "Email"
+
+msgid "End review"
+msgstr "End review"
 
 msgid "Enter an email address, like you@example.com."
 msgstr "Enter an email address, like you@example.com."
@@ -628,6 +637,9 @@ msgstr "Review"
 msgid "Review {due, plural, one {# card} other {# cards}}"
 msgstr "Review {due, plural, one {# card} other {# cards}}"
 
+msgid "Review done"
+msgstr "Review done"
+
 #. placeholder {0}: days.length
 msgid "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}"
 msgstr "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}"
@@ -712,11 +724,17 @@ msgstr "Streak: {current, plural, one {# day in a row} other {# days in a row}}"
 msgid "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
 
+msgid "Swipe from the edge to take back a grade"
+msgstr "Swipe from the edge to take back a grade"
+
 msgid "System"
 msgstr "System"
 
 msgid "Take a photo"
 msgstr "Take a photo"
+
+msgid "Take back the last grade"
+msgstr "Take back the last grade"
 
 msgid "Take photo"
 msgstr "Take photo"

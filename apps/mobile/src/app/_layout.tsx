@@ -82,12 +82,13 @@ function Root() {
         <Stack.Protected guard={signedIn}>
           <Stack.Screen name="index" />
           <Stack.Screen name="(tabs)" />
+          {/* Over Today rather than in place of it, so pulling the review's top bar down shows Today. */}
           <Stack.Screen
             name="review"
             options={{
-              presentation: "fullScreenModal",
+              presentation: "transparentModal",
               animation: "slide_from_bottom",
-              gestureEnabled: true,
+              contentStyle: { backgroundColor: "transparent" },
             }}
           />
           <Stack.Screen

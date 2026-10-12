@@ -6,6 +6,7 @@ const store = new Map<string, string>();
 configureForTest(store);
 
 const grade = vi.fn();
+const undoReview = vi.fn();
 vi.mock("./api", async () => {
   class ApiError extends Error {
     constructor(
@@ -17,7 +18,10 @@ vi.mock("./api", async () => {
   }
   return {
     ApiError,
-    api: { grade: (...a: unknown[]) => grade(...a) },
+    api: {
+      grade: (...a: unknown[]) => grade(...a),
+      undoReview: (...a: unknown[]) => undoReview(...a),
+    },
   };
 });
 
@@ -43,6 +47,7 @@ beforeEach(() => {
   store.clear();
   grades.resetGradeCache();
   grade.mockReset();
+  undoReview.mockReset();
 });
 
 describe("recording a grade", () => {
@@ -132,6 +137,68 @@ describe("recording a grade", () => {
     grades.resetGradeCache();
     expect(grades.gradeStore.snapshot()).toMatchObject([{ cardId: "a", mode: M }]);
     expect(grades.outboxSize()).toBe(1);
+  });
+});
+
+describe("taking a grade back", () => {
+  it("drops a queued grade before it is ever sent", async () => {
+    grade.mockRejectedValueOnce(offline());
+    const queued = g("a");
+    await grades.recordGrade(queued);
+    expect(await grades.undoGrade(queued)).toBe("undone");
+    expect(grades.gradeStore.snapshot()).toEqual([]);
+    expect(await grades.flushOutbox()).toBe(0);
+    expect(grade).toHaveBeenCalledTimes(1);
+    expect(undoReview).not.toHaveBeenCalled();
+  });
+
+  it("undoes a sent grade by the attempt the server named", async () => {
+    grade.mockResolvedValueOnce(accepted("rev-1"));
+    const sent = g("a");
+    await grades.recordGrade(sent);
+    undoReview.mockResolvedValueOnce({ ok: true });
+    expect(await grades.undoGrade(sent)).toBe("undone");
+    expect(undoReview).toHaveBeenCalledWith("rev-1");
+    expect(grades.gradeStore.snapshot()).toEqual([]);
+  });
+
+  it("waits for the connection to undo a sent grade, and the draw forgets it meanwhile", async () => {
+    grade.mockResolvedValueOnce(accepted("rev-1"));
+    const sent = g("a");
+    await grades.recordGrade(sent);
+    undoReview.mockRejectedValueOnce(offline());
+    expect(await grades.undoGrade(sent)).toBe("pending");
+    expect(grades.gradeStore.snapshot()).toMatchObject([{ cardId: "a", undone: true }]);
+    expect(grades.outboxSize()).toBe(1);
+
+    undoReview.mockResolvedValueOnce({ ok: true });
+    await grades.flushOutbox();
+    expect(undoReview).toHaveBeenCalledTimes(2);
+    expect(grades.gradeStore.snapshot()).toEqual([]);
+  });
+
+  it("undoes a grade taken back while it was still being sent", async () => {
+    let answer = (_: unknown) => {};
+    grade.mockReturnValueOnce(new Promise((resolve) => (answer = resolve)));
+    const sending = g("a");
+    const recorded = grades.recordGrade(sending);
+    await vi.waitFor(() => expect(grade).toHaveBeenCalled());
+    undoReview.mockResolvedValueOnce({ ok: true });
+    const undone = grades.undoGrade(sending);
+    answer(accepted("rev-1"));
+    await recorded;
+    expect(await undone).toBe("undone");
+    expect(undoReview).toHaveBeenCalledWith("rev-1");
+  });
+
+  it("lets the grade stand when the server refuses to undo it", async () => {
+    grade.mockResolvedValueOnce(accepted("rev-1"));
+    const sent = g("a");
+    await grades.recordGrade(sent);
+    undoReview.mockRejectedValueOnce(new ApiError(409, "not the latest"));
+    expect(await grades.undoGrade(sent)).toBe("kept");
+    expect(grades.gradeStore.snapshot()).toMatchObject([{ cardId: "a", reviewId: "rev-1" }]);
+    expect(grades.gradeStore.snapshot()[0]?.undone).toBeUndefined();
   });
 });
 

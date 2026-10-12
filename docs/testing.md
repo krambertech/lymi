@@ -208,7 +208,7 @@ The phone app is tested mostly below its screens, on Linux, and its one Simulato
 | Unit | Is the shared rule right: the draw, FSRS, the outboxes, the review day? | `packages/core`, `packages/client` | Milliseconds a file |
 | Typecheck | Does the phone's code still fit the shared types? | `pnpm typecheck`, which includes `apps/mobile` | Part of the quality job |
 | Unit | Do the phone's own plain-logic modules, such as its analytics queue and review legs, behave? | `apps/mobile/src/**/*.test.ts`, with `pnpm --filter @lymi/mobile test` | Seconds, in `pnpm test` |
-| Contract | Does the Worker still serve every phone release that is supported? | `apps/web/src/server/phone-contract.test.ts` | About 30 seconds |
+| Contract | Does the Worker still serve every phone release that is supported? | `apps/web/src/server/phone-contract.test.ts` and `phone-contract-unlisted.test.ts` | About 30 seconds |
 | Client against the Worker | Does the shared client, configured as the phone configures it, sign in, draw, grade and replay against the real Worker? | `apps/web/src/server/phone-client.test.ts` | Seconds |
 | Smoke journey | Does the Release build launch, sign in, keep its session, review and sync? | `apps/mobile/e2e`, on a Simulator | 8 minutes on a cached build, 27 on a cold one |
 
@@ -217,6 +217,8 @@ The phone's Vitest runs only modules that import nothing native, in Node, on eve
 ### The contract check
 
 Each phone release freezes the API it was built against: Promote writes the operations the phone calls, listed in `phoneOperations` in `phone-contract.test.ts`, with the schemas they reach and without prose, to `apps/mobile/contract/<version>.json`. An endpoint only the web calls, such as imports, exports or API keys, can change freely; add a call to the list when the phone starts making it, before its release is frozen. `phone-contract.test.ts` then checks the current Worker against every file in that folder in two ways. `breakingChanges` in `scripts/api-compat.mjs` compares the schemas, and the test calls the phone's reads as a seeded learner, sending that release's `x-lymi-client` header so a route gated by `clientSupports` answers as it would on the installed app, and validates each response against the frozen schema, which catches a route whose answer has drifted from its own description. Both run in the `unit` project, so every pull request and every push to `main` runs them.
+
+The phone also calls routes the OpenAPI document leaves out: Better Auth under `/api/auth`, the photo, pronunciation audio and feedback. No freeze can hold them, so `phone-contract-unlisted.test.ts` sends each one as every frozen release sends it and checks what that release reads back: the status, the response fields, the binary content type, and the Better Auth error codes `use-sign-in.ts` explains. When the phone starts calling another hidden route, add it there.
 
 A response may gain fields and the API may gain endpoints. The check fails when a frozen release would lose something it reads, when a request it sends would be refused, or when a response field gains an enum value or a union branch the release has never seen. When the check fails on a web-first feature, choose one of these:
 

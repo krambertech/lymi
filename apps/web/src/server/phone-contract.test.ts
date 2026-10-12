@@ -72,8 +72,8 @@ const phoneOperations = [
   "POST /api/add/{slug}",
 ];
 
-// The phone also calls Better Auth under /api/auth, /api/avatar, /api/audio and POST
-// /api/feedback, which the document hides, so no freeze guards them.
+// The phone's calls the document hides, Better Auth, the photo, audio and feedback, are guarded
+// by phone-contract-unlisted.test.ts instead.
 
 /** The phone's reads a seeded learner can make, with its deck as `{id}`. */
 const phoneReads = phoneOperations

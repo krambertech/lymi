@@ -110,7 +110,7 @@ function Root() {
     <ThemeProvider value={theme}>
       <StatusBar style="auto" />
       {!session.isPending && <LanguageSync signedIn={signedIn} />}
-      <Analytics learnerId={learnerId} />
+      <Analytics learnerId={signedOut ? null : learnerId} />
       {learnerId && !update && (
         <>
           <Sync learnerId={learnerId} />

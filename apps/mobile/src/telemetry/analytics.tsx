@@ -23,12 +23,19 @@ export function screenPath(pathname: string): string {
  * Tells PostHog who is signed in and whether their account allows analytics, then counts the
  * openings and screens the web counts as `app_opened` and `$pageview`. docs/analytics.md.
  */
-export function Analytics({ learnerId }: { learnerId: string | undefined }) {
+export function Analytics({ learnerId }: { learnerId: string | null | undefined }) {
   const settings = useQuery({ ...settingsQuery, enabled: !!learnerId });
   const consent = learnerId && settings.data ? settings.data.analyticsConsent !== false : undefined;
   useEffect(() => setTelemetryLearner(learnerId, consent), [learnerId, consent]);
 
   const [openedAt, setOpenedAt] = useState(() => Date.now());
+  // An opening belongs to one account, as on the web: whoever signs in after another opens anew.
+  const openedFor = useRef(learnerId);
+  useEffect(() => {
+    if (learnerId === undefined || learnerId === openedFor.current) return;
+    if (openedFor.current) setOpenedAt(Date.now());
+    openedFor.current = learnerId;
+  }, [learnerId]);
   useEffect(() => {
     let leftAt: number | undefined;
     const listener = AppState.addEventListener("change", (state) => {

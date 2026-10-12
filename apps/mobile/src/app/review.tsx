@@ -491,6 +491,8 @@ function Run({
   const progress = leg && state ? legProgress(leg, state.attempts, listCards, left) : null;
   useReviewSession({
     key: leg && mark ? `${leg.date}:${leg.kind}:${mark.attempts}` : null,
+    date: leg?.date ?? null,
+    before: mark?.attempts ?? 0,
     done: progress?.done ?? 0,
     count: progress?.total ?? 0,
     presenting: !!current,

@@ -13,6 +13,7 @@ import Constants from "expo-constants";
 import { File, Paths } from "expo-file-system";
 import PostHog, { type PostHogCustomStorage } from "posthog-react-native";
 import { API_URL, PHONE_CLIENT } from "../auth/client";
+import { withUsageQueue } from "./usage-queue";
 
 // Who sent an event and in which session never outlives the launch; only the queued events do.
 const LAUNCH_ONLY = [
@@ -52,15 +53,19 @@ const eventQueue: PostHogCustomStorage = {
 
 type PostHogEventProperties = NonNullable<Parameters<PostHog["capture"]>[1]>;
 
-let client: PostHog | undefined;
-let learner: string | undefined;
+// Unknown while the session loads, null once no one is signed in.
+let learner: string | null | undefined;
 // Unknown until the learner's settings are read; events wait for it as the web's do.
 let consent: boolean | undefined;
 let identified: string | undefined;
 
 const allowed = () => !!learner && consent === true;
+const sendable = () => (allowed() && identified === learner ? identified : undefined);
+
+const PhonePostHog = withUsageQueue(PostHog, sendable);
+let client: InstanceType<typeof PhonePostHog> | undefined;
 const uiLocale = () => AnalyticsLocale.catch("en").parse(i18n.locale);
-const internal = () => learner !== undefined && INTERNAL_ACCOUNT_IDS.has(learner);
+const internal = () => !!learner && INTERNAL_ACCOUNT_IDS.has(learner);
 
 /** What tells the phone apart in every event: its surface and release. */
 function release() {
@@ -84,7 +89,7 @@ function release() {
 export function startTelemetry(): void {
   if (__DEV__ || API_URL !== "https://my.lymi.app") return;
   try {
-    client = new PostHog(POSTHOG_PROJECT_TOKEN, {
+    client = new PhonePostHog(POSTHOG_PROJECT_TOKEN, {
       // Through the Worker, as the web sends, so PostHog's own geolocation never runs.
       host: `${API_URL}${POSTHOG_PROXY_PATH}`,
       // Queued events survive a crash or a launch offline; the identity is set again each launch.
@@ -158,10 +163,11 @@ export function startTelemetry(): void {
   }
 }
 
-/** Forgets the learner on this phone, so nothing later is joined to them. */
+/** Forgets the learner on this phone and drops their unsent usage, so nothing later is joined to them. */
 function forget(): void {
   identified = undefined;
   try {
+    client?.dropUsage();
     client?.reset();
   } catch {
     /* Monitoring is best effort. */
@@ -169,17 +175,24 @@ function forget(): void {
 }
 
 /**
- * Who is signed in, and whether their account allows analytics: `undefined` while the
- * settings are unread. A signed-in learner is identified by their opaque account ID, as on the web.
+ * Who is signed in, `null` once no one is, and whether their account allows analytics: `undefined`
+ * while the settings are unread, when usage is held rather than sent. A signed-in learner is
+ * identified by their opaque account ID, as on the web.
  */
-export function setTelemetryLearner(id: string | undefined, allows: boolean | undefined): void {
-  if ((identified && identified !== id) || (identified && allows === false)) forget();
+export function setTelemetryLearner(
+  id: string | null | undefined,
+  allows: boolean | undefined,
+): void {
+  if (id === undefined) return;
+  if (id === null || allows === false || (identified && identified !== id)) forget();
   learner = id;
   consent = id ? allows : undefined;
   if (!client || !allowed() || identified === learner || !learner) return;
   try {
     client.identify(learner);
     identified = learner;
+    // What was held for this account, from this launch or an earlier one, goes now.
+    void client.flush().catch(() => undefined);
   } catch {
     /* Monitoring is best effort. */
   }

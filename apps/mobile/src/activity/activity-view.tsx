@@ -246,6 +246,8 @@ interface RowProps {
   entry: ActivityEntry;
   time: string;
   first: boolean;
+  /** Opens the list's one sheet on this row's cards. */
+  onCards: (entry: ActivityEntry, meta: string) => void;
 }
 
 /**
@@ -253,11 +255,10 @@ interface RowProps {
  * cards in a sheet over the list; a file opens on the web, where files are handled (ADR 0030); a
  * deck opens in Library.
  */
-function ActivityRow({ entry, time, first }: RowProps) {
+function ActivityRow({ entry, time, first, onCards }: RowProps) {
   const p = usePalette();
   const router = useRouter();
   const caller = useCaller()(entry);
-  const [open, setOpen] = useState(false);
   // The people rows name the person in the sentence, so the line under it would say them twice.
   const named = entry.kind.startsWith("member_") && entry.kind !== "member_removed";
   const file = entry.import ?? entry.export;
@@ -271,7 +272,7 @@ function ActivityRow({ entry, time, first }: RowProps) {
       ? "/settings#export"
       : null;
   const press = hasCards
-    ? () => setOpen(true)
+    ? () => onCards(entry, meta)
     : onWeb
       ? () => openWeb(onWeb)
       : deck
@@ -309,7 +310,6 @@ function ActivityRow({ entry, time, first }: RowProps) {
       ) : (
         face
       )}
-      {hasCards && <CardsSheet entry={entry} meta={meta} open={open} onOpenChange={setOpen} />}
     </View>
   );
 }
@@ -327,7 +327,8 @@ function CardsSheet({
   open,
   onOpenChange,
 }: {
-  entry: ActivityEntry;
+  /** The row whose cards it shows; it stays while the sheet closes, so nothing empties mid-swipe. */
+  entry: ActivityEntry | null;
   /** Who and when, as the row says it. */
   meta: string;
   open: boolean;
@@ -336,7 +337,8 @@ function CardsSheet({
   const { t } = useLingui();
   const router = useRouter();
   const [going, setGoing] = useState<string | null>(null);
-  const deck = entry.deck && !entry.deck.archived ? entry.deck : null;
+  const deck = entry?.deck && !entry.deck.archived ? entry.deck : null;
+  const cards = entry?.cards ?? [];
   const rows = (cards: ActivityCard[]) =>
     cards.map((card) => (
       <CardRow
@@ -348,9 +350,9 @@ function CardsSheet({
         }}
       />
     ));
-  const rest = entry.cards.slice(PEEK);
+  const rest = cards.slice(PEEK);
   const name = deck?.name ?? "";
-  const more = deck && entry.count > entry.cards.length && (
+  const more = deck && entry && entry.count > cards.length && (
     <SheetGroup>
       <SheetRow
         icon="deck"
@@ -381,13 +383,15 @@ function CardsSheet({
         ) : undefined
       }
     >
-      <View className="gap-1 px-4 pb-1">
-        <Text className="text-lg font-medium text-text" accessibilityRole="header">
-          <Sentence entry={entry} />
-        </Text>
-        <Text className="text-sm text-muted">{meta}</Text>
-      </View>
-      <SheetGroup>{rows(entry.cards.slice(0, PEEK))}</SheetGroup>
+      {entry && (
+        <View className="gap-1 px-4 pb-1">
+          <Text className="text-lg font-medium text-text" accessibilityRole="header">
+            <Sentence entry={entry} />
+          </Text>
+          <Text className="text-sm text-muted">{meta}</Text>
+        </View>
+      )}
+      <SheetGroup>{rows(cards.slice(0, PEEK))}</SheetGroup>
       {rest.length === 0 && more}
     </Sheet>
   );
@@ -473,6 +477,9 @@ export function ActivityView({
   onMore,
 }: Props) {
   const { t, i18n } = useLingui();
+  // One sheet for the whole list, so a page of rows does not mount a sheet each.
+  const [chosen, setChosen] = useState<{ entry: ActivityEntry; meta: string } | null>(null);
+  const [open, setOpen] = useState(false);
   const p = usePalette();
   if (failed && !entries) {
     return (
@@ -540,12 +547,22 @@ export function ActivityView({
                 entry={entry}
                 time={time.format(new Date(entry.at))}
                 first={i === 0}
+                onCards={(entry, meta) => {
+                  setChosen({ entry, meta });
+                  setOpen(true);
+                }}
               />
             ))}
           </Plate>
         </View>
       ))}
       <Foot hasMore={hasMore} loading={loadingMore} failed={moreFailed} onMore={onMore} />
+      <CardsSheet
+        entry={chosen?.entry ?? null}
+        meta={chosen?.meta ?? ""}
+        open={open}
+        onOpenChange={setOpen}
+      />
     </>
   );
 }

@@ -37,6 +37,13 @@ interface Props {
   back?: { label: string; to: Href };
   /** Buttons pinned at the bar's end; on a tab they take the place of the streak and capture. */
   actions?: ReactNode;
+  /**
+   * A page's own header in place of its large title, such as a published deck's cards and name;
+   * the title then shows only in the bar, once the header has scrolled under it.
+   */
+  header?: ReactNode;
+  /** The colour the bar and the header sit on, such as a deck's tray hue. */
+  ground?: string;
   children: ReactNode;
 }
 
@@ -53,7 +60,7 @@ const INLINE_LARGE = 22 / 34;
  * and shrinks, a page's named back folds into a round glass back, and what scrolls beneath softens
  * into the room. phone.md "Navigation".
  */
-export function Screen({ title, kind = "page", back, actions, children }: Props) {
+export function Screen({ title, kind = "page", back, actions, header, ground, children }: Props) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { t } = useLingui();
@@ -77,8 +84,27 @@ export function Screen({ title, kind = "page", back, actions, children }: Props)
   const dock = kind === "tab" ? INLINE_LARGE : SMALL;
   const dockY = insets.top + (56 - box.h * dock) / 2;
   const travel = Math.max(restY - dockY, TITLE_GONE);
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const room = ground ?? p.canvas;
   const rtl = I18nManager.isRTL;
+  // A worklet copies what it closes over, so it reads a flag rather than the header's elements.
+  const hasHeader = !!header;
   const moving = useAnimatedStyle(() => {
+    if (hasHeader) {
+      // The header holds the name at rest; the bar's title arrives as the header leaves.
+      const w = Math.min(box.w * dock, screen - 2 * 96);
+      const x = (screen - w) / 2;
+      return {
+        opacity: interpolate(
+          y.value,
+          [headerHeight - 80, headerHeight - 30],
+          [0, 1],
+          Extrapolation.CLAMP,
+        ),
+        transformOrigin: rtl ? "right top" : "left top",
+        transform: [{ translateX: rtl ? -x : x }, { translateY: dockY }, { scale: dock }],
+      };
+    }
     const k = interpolate(y.value, [0, travel], [0, 1], Extrapolation.CLAMP);
     const w = Math.min(box.w * dock, screen - 2 * 96);
     // A page centres it between its back and its actions; a tab keeps it at the start, across
@@ -115,14 +141,34 @@ export function Screen({ title, kind = "page", back, actions, children }: Props)
         // The pinned bar already clears the status bar; iOS's own tab bar would add the inset again.
         contentInsetAdjustmentBehavior="never"
       >
-        {/* Holds the title's place in the page; the title itself travels in the bar above. */}
-        <View
-          className={kind === "tab" ? "-mt-14 h-14" : "-mt-1"}
-          style={kind === "page" ? { height: box.h } : undefined}
-          accessible
-          accessibilityRole="header"
-          accessibilityLabel={title}
-        />
+        {header ? (
+          <View
+            className="-mx-5 -mt-7 px-5 pb-7 pt-7"
+            style={
+              ground ? { backgroundColor: ground, marginTop: -bar, paddingTop: bar } : undefined
+            }
+            onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height - (ground ? bar : 0))}
+          >
+            {ground && (
+              // Pulling past the top shows the ground, not the room, so the header never comes unstuck.
+              <View
+                pointerEvents="none"
+                className="absolute inset-x-0 h-[1000px]"
+                style={{ top: -1000, backgroundColor: ground }}
+              />
+            )}
+            {header}
+          </View>
+        ) : (
+          /* Holds the title's place in the page; the title itself travels in the bar above. */
+          <View
+            className={kind === "tab" ? "-mt-14 h-14" : "-mt-1"}
+            style={kind === "page" ? { height: box.h } : undefined}
+            accessible
+            accessibilityRole="header"
+            accessibilityLabel={title}
+          />
+        )}
         {children}
       </Animated.ScrollView>
       <Animated.View
@@ -132,12 +178,12 @@ export function Screen({ title, kind = "page", back, actions, children }: Props)
           {
             height: bar + 20,
             // Solid under the bar, softening only below it, so nothing reads through the title.
-            experimental_backgroundImage: `linear-gradient(to bottom, ${p.canvas} ${Math.round((bar / (bar + 20)) * 100)}%, ${p.canvas}00)`,
+            experimental_backgroundImage: `linear-gradient(to bottom, ${room} ${Math.round((bar / (bar + 20)) * 100)}%, ${room}00)`,
           } as ViewStyle,
           band,
         ]}
       />
-      <StatusFade height={insets.top} />
+      <StatusFade height={insets.top} room={room} />
       <Animated.View
         pointerEvents="none"
         className="absolute start-0 top-0"
@@ -233,8 +279,7 @@ function Back({
 }
 
 /** Content scrolling up softens into the room under the status bar instead of hitting the clock. */
-function StatusFade({ height }: { height: number }) {
-  const p = usePalette();
+function StatusFade({ height, room }: { height: number; room: string }) {
   return (
     <View
       pointerEvents="none"
@@ -242,7 +287,7 @@ function StatusFade({ height }: { height: number }) {
       style={
         {
           height: height + 12,
-          experimental_backgroundImage: `linear-gradient(to bottom, ${p.canvas} 55%, ${p.canvas}00)`,
+          experimental_backgroundImage: `linear-gradient(to bottom, ${room} 55%, ${room}00)`,
         } as ViewStyle
       }
     />

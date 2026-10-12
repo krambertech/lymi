@@ -26,7 +26,12 @@ import {
   sections,
   userAvatars,
 } from "./schema/app";
-import { type Directions, publicationTags, type ReviewModeKey } from "./types";
+import {
+  type Directions,
+  publicationTags,
+  type ReviewModeKey,
+  type SectionProgression,
+} from "./types";
 
 // biome-ignore lint/suspicious/noExplicitAny: both Workers pass their own typed D1 database.
 type CatalogDb = BaseSQLiteDatabase<"async", any, any>;
@@ -50,6 +55,7 @@ export interface PublicationRow {
   deckName: string;
   deckLanguage: string | null;
   deckDirections: Directions;
+  deckSectionProgression: SectionProgression;
   deckArchivedAt: Date | null;
 }
 
@@ -192,6 +198,7 @@ export function projectPublicDeck(
     revision: publication.revision,
     publishedAt: publication.publishedAt.toISOString(),
     cardCount: cardRows.length,
+    sectionProgression: publication.deckSectionProgression,
     sections: [...groups.values()].filter((group) => group.cards.length > 0),
   });
   return { status: "published", deck };
@@ -246,6 +253,7 @@ export async function loadPublicDeck(
       deckName: decks.name,
       deckLanguage: decks.defaultLanguage,
       deckDirections: decks.directions,
+      deckSectionProgression: decks.sectionProgression,
       deckArchivedAt: decks.archivedAt,
       customKey: userAvatars.customKey,
       customVersion: userAvatars.customVersion,

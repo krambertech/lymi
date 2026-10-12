@@ -4250,6 +4250,9 @@ msgstr "You removed them from this deck, so you can’t invite them again."
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "You start with the first section. The next opens as you learn this one."
 
+msgid "You start with the first section. When you know most of it, you choose when to start the next."
+msgstr "You start with the first section. When you know most of it, you choose when to start the next."
+
 msgid "You study the same cards as {ownerName}, on your own schedule. Nobody else sees your reviews or progress."
 msgstr "You study the same cards as {ownerName}, on your own schedule. Nobody else sees your reviews or progress."
 

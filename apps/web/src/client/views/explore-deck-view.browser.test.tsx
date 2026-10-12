@@ -44,6 +44,7 @@ const data = (over: Partial<ExploreDeckOut> = {}): ExploreDeckOut => ({
     revision: 1,
     publishedAt: "2026-09-20T12:00:00.000Z",
     cardCount: 1,
+    sectionProgression: "automatic",
     sections: [
       { name: null, cards: [{ term: "billete", meaning: "ticket", modes: ["term_to_meaning"] }] },
     ],

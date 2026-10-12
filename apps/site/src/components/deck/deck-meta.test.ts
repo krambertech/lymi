@@ -20,6 +20,7 @@ const deck = (over: Partial<PublicDeckOut> = {}): PublicDeckOut => ({
   revision: 1,
   publishedAt: "2026-09-10T12:00:00.000Z",
   cardCount: 118,
+  sectionProgression: "automatic",
   sections: [],
   ...over,
 });

@@ -1,5 +1,6 @@
 import { I18nProvider } from "@lingui/react";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import type { SectionProgression } from "@lymi/core";
 import { clsx } from "clsx";
 import { ChevronLeft, ChevronRight, Square, Volume2 } from "lucide-react";
 import {
@@ -25,6 +26,7 @@ interface Props {
   cardCount: number;
   addUrl: string;
   inOrder: boolean;
+  progression: SectionProgression;
   steps: SectionStep[];
 }
 
@@ -149,10 +151,11 @@ function Sections(props: Omit<Props, "locale">) {
         </div>
         {inOrder && (
           <p className="mt-4 max-w-[62ch] text-md text-pretty text-text-2">
-            <Trans>
-              You start with <span lang={props.meaningLanguage}>{first}</span>, and the next section
-              opens as you learn the one before it.
-            </Trans>
+            <Progression
+              progression={props.progression}
+              first={first}
+              meaningLanguage={props.meaningLanguage}
+            />
           </p>
         )}
         {inOrder && <SectionList {...props} onOpen={open} />}
@@ -162,8 +165,43 @@ function Sections(props: Omit<Props, "locale">) {
   );
 }
 
+/** How the deck's sections open for a learner, in the deck's own setting. */
+function Progression({
+  progression,
+  first,
+  meaningLanguage,
+}: {
+  progression: SectionProgression;
+  first: string;
+  meaningLanguage: string;
+}) {
+  switch (progression) {
+    case "open":
+      return <Trans>Every section is open, so any card can come up in review.</Trans>;
+    case "manual":
+      return (
+        <Trans>
+          You start with <span lang={meaningLanguage}>{first}</span>. When you know most of it, you
+          choose when to start the next.
+        </Trans>
+      );
+    default:
+      return (
+        <Trans>
+          You start with <span lang={meaningLanguage}>{first}</span>, and the next section opens as
+          you learn the one before it.
+        </Trans>
+      );
+  }
+}
+
 /** The sections as a contents list in two columns, read down then across. */
-function SectionList({ steps, meaningLanguage, onOpen }: Omit<Props, "locale"> & { onOpen: Open }) {
+function SectionList({
+  steps,
+  meaningLanguage,
+  progression,
+  onOpen,
+}: Omit<Props, "locale"> & { onOpen: Open }) {
   const shown = steps.length > MAX_ROWS ? steps.slice(0, MAX_ROWS - 1) : steps;
   const rest = steps.slice(shown.length);
   const rows = Math.ceil((shown.length + (rest.length > 0 ? 1 : 0)) / 2);
@@ -173,7 +211,8 @@ function SectionList({ steps, meaningLanguage, onOpen }: Omit<Props, "locale"> &
       style={{ "--rows": `repeat(${rows}, auto)` } as CSSProperties}
     >
       {shown.map((step, index) => {
-        const start = index === 0;
+        // An open deck has no first section to start with.
+        const start = index === 0 && progression !== "open";
         const position = step.position;
         return (
           <li

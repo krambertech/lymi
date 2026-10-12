@@ -176,7 +176,11 @@ function DeckPage({
             ))}
           </Plate>
           <Text className="px-1 text-sm text-muted">
-            {t`You start with the first section. The next opens as you learn this one.`}
+            {deck.sectionProgression === "open"
+              ? t`Every section is open, so any card can come up in review.`
+              : deck.sectionProgression === "manual"
+                ? t`You start with the first section. When you know most of it, you choose when to start the next.`
+                : t`You start with the first section. The next opens as you learn this one.`}
           </Text>
         </View>
       )}

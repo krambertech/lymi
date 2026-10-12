@@ -100,7 +100,7 @@ export const analyticsEvents = {
   onboarding_finished: z.object({
     kind: z.enum(["language", "test", "subject", "other", "skipped", "joined"]),
   }),
-  signed_up: Attribution.extend({ method: z.enum(["google", "email"]) }),
+  signed_up: Attribution.extend({ method: z.enum(["google", "apple", "email"]) }),
   signed_in: z.object({}),
   review_graded: z.object({
     mode: ReviewModeKey,

@@ -47,6 +47,10 @@ export const API_KEY_WINDOW_MS = 60_000;
 /** The phone app's URL scheme. It is where Google sends the phone back, and its requests' origin. ADR 0029. */
 export const PHONE_APP_ORIGIN = "lymi://";
 
+/** Providers that prove the address they return, so their sign-in may claim an unconfirmed account. Issue 251. */
+const PROVING_PROVIDERS = ["google", "apple"] as const;
+type ProvingProvider = (typeof PROVING_PROVIDERS)[number];
+
 /** How long the code the phone app confirms a new account with works. */
 const CONFIRMATION_CODE_SECONDS = 15 * 60;
 
@@ -80,11 +84,11 @@ export function createAuth(
   // after this function returns, so the holder is always filled by the time one reads it.
   let self: Auth | undefined;
   /**
-   * Whether the account Google is about to claim had already proved its address. Read before
-   * the link, because linking sets `emailVerified` itself. `createAuth` is built per request,
-   * so this holds one request's answer.
+   * Whether the account Google or Apple is about to claim had already proved its address. Read
+   * before the link, because linking sets `emailVerified` itself. `createAuth` is built per
+   * request, so this holds one request's answer.
    */
-  let provenBeforeGoogle = false;
+  let provenBeforeProvider = false;
   /** A persona has no inbox, so nothing Lymi sends should ever be addressed to one. */
   const isPersona = (email: string) => dev && email.toLowerCase().endsWith(DEV_EMAIL_DOMAIN);
 
@@ -268,17 +272,17 @@ export function createAuth(
     },
     account: {
       accountLinking: {
-        // Google owns the address it returns, so it may claim a user that signed up with a
-        // password and never confirmed. The credential account is dropped on the way in, so
-        // an unconfirmed sign-up on someone else's address grants nothing. Issue 251.
-        trustedProviders: ["google"],
+        // Google and Apple own the address they return, so either may claim a user that signed
+        // up with a password and never confirmed. The credential account is dropped on the way
+        // in, so an unconfirmed sign-up on someone else's address grants nothing. Issue 251.
+        trustedProviders: [...PROVING_PROVIDERS],
         requireLocalEmailVerified: false,
       },
     },
     // Registered only when configured: an empty pair makes Better Auth warn on every request,
     // which buries anything else in a local server's log.
-    socialProviders:
-      env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET
+    socialProviders: {
+      ...(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET
         ? {
             google: {
               clientId: env.GOOGLE_CLIENT_ID,
@@ -287,7 +291,22 @@ export function createAuth(
               prompt: "select_account",
             },
           }
-        : {},
+        : {}),
+      ...(env.APPLE_APP_BUNDLE_IDENTIFIER
+        ? {
+            // The phone's native sheet only: it posts Apple's ID token, whose audience is the
+            // app's bundle identifier. The web's redirect would need a Services ID and key. Issue 528.
+            apple: {
+              clientId: env.APPLE_APP_BUNDLE_IDENTIFIER,
+              clientSecret: "",
+              appBundleIdentifier: env.APPLE_APP_BUNDLE_IDENTIFIER,
+              // Apple sends the name once, on the first sign-in, and a hidden address has none to borrow.
+              mapProfileToUser: (profile) =>
+                profile.name ? {} : { name: profile.email?.split("@")[0] ?? "" },
+            },
+          }
+        : {}),
+    },
     session: {
       expiresIn: 60 * 60 * 24 * 30,
       updateAge: 60 * 60 * 24,
@@ -307,14 +326,13 @@ export function createAuth(
           // Remember the browser that signed up, so confirming from it keeps its password.
           after: async (user, context) => {
             const headers = headersOf(context);
-            const google = isGoogleCallback(context);
             await trackProductEvent(
               env,
               user.id,
               {
                 name: "signed_up",
-                method: google ? "google" : "email",
-                ...(await firstTouchOf(google, headers)),
+                method: provingSignInOf(context) ?? "email",
+                ...(await firstTouchOf(isGoogleCallback(context), headers)),
               },
               waitUntil,
               analyticsContextFor(db, user.id, headers),
@@ -330,14 +348,14 @@ export function createAuth(
       },
       account: {
         create: {
-          // Read the account's state before Google's link changes it.
+          // Read the account's state before the provider's link changes it.
           before: async (account) => {
-            if (account.providerId !== "google") return;
+            if (!isProvingProvider(account.providerId)) return;
             const [row] = await db
               .select({ emailVerified: schema.user.emailVerified })
               .from(schema.user)
               .where(eq(schema.user.id, account.userId));
-            provenBeforeGoogle = Boolean(row?.emailVerified);
+            provenBeforeProvider = Boolean(row?.emailVerified);
           },
         },
       },
@@ -354,13 +372,14 @@ export function createAuth(
               waitUntil,
               analyticsContextFor(db, session.userId, headers),
             );
-            if (isGoogleCallback(context)) {
+            const provider = provingSignInOf(context);
+            if (provider) {
               // An unproved password was set by whoever typed the address first, who need not
-              // be its owner, so Google's proof retires it. A password the owner had already
+              // be its owner, so the provider's proof retires it. A password the owner had already
               // confirmed stays: taking it would leave them with one way in and no way back.
-              if (!provenBeforeGoogle) await retireUnprovedPassword(db, session.userId);
-              await syncGoogleAvatar(env, db, session.userId, waitUntil);
+              if (!provenBeforeProvider) await retireUnprovedPassword(db, session.userId, provider);
             }
+            if (provider === "google") await syncGoogleAvatar(env, db, session.userId, waitUntil);
             const admission = admissionFrom(env.PRODUCT_URL, headersOf(context));
             if (!admission) return;
             const ctx = {
@@ -447,7 +466,11 @@ async function dropCredentialAccount(db: Db, userId: string): Promise<void> {
 }
 
 /** Drop an unproved password and leave the reason in the Activity screen. */
-async function retireUnprovedPassword(db: Db, userId: string): Promise<void> {
+async function retireUnprovedPassword(
+  db: Db,
+  userId: string,
+  provider: ProvingProvider,
+): Promise<void> {
   if (!(await hasCredentialAccount(db, userId))) return;
   await dropCredentialAccount(db, userId);
   await audit(
@@ -456,7 +479,7 @@ async function retireUnprovedPassword(db: Db, userId: string): Promise<void> {
       entity: "account",
       action: "retire_unproved_password",
       id: userId,
-      details: { reason: "google_proved_the_address" },
+      details: { reason: `${provider}_proved_the_address` },
     },
   );
 }
@@ -472,6 +495,19 @@ async function firstTouchOf(google: boolean, headers: Headers | undefined) {
   } catch {
     return parseFirstTouch(undefined);
   }
+}
+
+function isProvingProvider(id: unknown): id is ProvingProvider {
+  return PROVING_PROVIDERS.includes(id as ProvingProvider);
+}
+
+/** The provider whose proof of the address this request signs in with: Google's callback, or an ID token the phone posts. */
+function provingSignInOf(context: GenericEndpointContext | null): ProvingProvider | null {
+  if (isGoogleCallback(context)) return "google";
+  const body = context?.body as { provider?: unknown; idToken?: unknown } | undefined;
+  if (context?.path === "/sign-in/social" && body?.idToken && isProvingProvider(body.provider))
+    return body.provider;
+  return null;
 }
 
 function isGoogleCallback(context: GenericEndpointContext | null): boolean {

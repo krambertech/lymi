@@ -825,6 +825,9 @@ msgstr "Эстонский A2 · по вторникам"
 msgid "Estonian for work"
 msgstr "Эстонский для работы"
 
+msgid "Estonian startup"
+msgstr "Эстонский стартап"
+
 msgid "euros"
 msgstr "евро"
 
@@ -1445,6 +1448,9 @@ msgstr "Собственный AI Lymi дополнит карточку зна�
 
 msgid "Made by Lymi"
 msgstr "От Lymi"
+
+msgid "Made by Ukrainians"
+msgstr "Сделано украинцами"
 
 msgid "Main navigation"
 msgstr "Основная навигация"

@@ -825,6 +825,9 @@ msgstr "Estonian A2 · Tuesdays"
 msgid "Estonian for work"
 msgstr "Estonian for work"
 
+msgid "Estonian startup"
+msgstr "Estonian startup"
+
 msgid "euros"
 msgstr "euros"
 
@@ -1445,6 +1448,9 @@ msgstr "Lymi’s own AI fills in the meaning, an example and how to say it. It m
 
 msgid "Made by Lymi"
 msgstr "Made by Lymi"
+
+msgid "Made by Ukrainians"
+msgstr "Made by Ukrainians"
 
 msgid "Main navigation"
 msgstr "Main navigation"

@@ -1,6 +1,7 @@
 ---
 import onestLatin from "@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url";
 import onestCyrillic from "@fontsource-variable/onest/files/onest-cyrillic-wght-normal.woff2?url";
+import { originScript } from "../lib/origin-badge";
 import { type Locale, type LocalizedPage, localizedPath } from "../lib/routes";
 import "../styles.css";
 
@@ -85,6 +86,7 @@ const locale = Astro.currentLocale ?? "en";
         });
       } catch (e) {}
     </script>
+    <script is:inline set:html={originScript(locale)} />
     <slot name="head" />
   </head>
   <body>

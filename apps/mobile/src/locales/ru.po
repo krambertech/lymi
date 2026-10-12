@@ -20,11 +20,23 @@ msgstr "{0, plural, one {{1} из # повторения} few {{2} из # пов
 msgid "{0, plural, one {# card due} other {# cards due}}"
 msgstr "{0, plural, one {# карточка к повторению} few {# карточки к повторению} many {# карточек к повторению} other {# карточки к повторению}}"
 
+#. placeholder {0}: screen.nudge.count
+msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
+msgstr "{0, plural, one {Ещё # карточка — и на сегодня всё} few {Ещё # карточки — и на сегодня всё} many {Ещё # карточек — и на сегодня всё} other {Ещё # карточки — и на сегодня всё}}"
+
+#. placeholder {0}: screen.nudge.count
+msgid "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
+msgstr "{0, plural, one {Ещё # повторение до дневной цели} few {Ещё # повторения до дневной цели} many {Ещё # повторений до дневной цели} other {Ещё # повторения до дневной цели}}"
+
 #. placeholder {0}: today.attempts
 #. placeholder {1}: today.goal
 #. placeholder {2}: today.goal
 msgid "{0, plural, one {# review, goal {1}} other {# reviews, goal {2}}}"
 msgstr "{0, plural, one {# повторение, цель {1}} few {# повторения, цель {1}} many {# повторений, цель {1}} other {# повторения, цель {2}}}"
+
+#. placeholder {0}: way.count
+msgid "{0, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
+msgstr "{0, plural, one {Повторить # забытую карточку} few {Повторить # забытые карточки} many {Повторить # забытых карточек} other {Повторить # забытой карточки}}"
 
 #. placeholder {0}: Number(draft) || 0
 msgid "{0, plural, one {review a day} other {reviews a day}}"
@@ -75,6 +87,9 @@ msgstr "{due, plural, one {карточка к повторению сегодн
 msgid "{due, plural, one {card to review} other {cards to review}}"
 msgstr "{due, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}}"
 
+msgid "{label}, next in {schedules}"
+msgstr "{label}, дальше через {schedules}"
+
 msgid "{label}: {chosen}"
 msgstr "{label}: {chosen}"
 
@@ -89,6 +104,12 @@ msgstr "{n, plural, one {# повторение} few {# повторения} ma
 
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {день подряд} few {дня подряд} many {дней подряд} other {дня подряд}}"
+
+msgid "{to, plural, one {# review today} other {# reviews today}}"
+msgstr "{to, plural, one {# повторение сегодня} few {# повторения сегодня} many {# повторений сегодня} other {# повторения сегодня}}"
+
+msgid "{to, plural, one {review today} other {reviews today}}"
+msgstr "{to, plural, one {повторение сегодня} few {повторения сегодня} many {повторений сегодня} other {повторения сегодня}}"
 
 msgid "A new code is on its way to {address}."
 msgstr "Отправляем новый код на {address}."
@@ -113,6 +134,9 @@ msgstr "Активность скоро появится на телефоне"
 
 msgid "Add a card"
 msgstr "Добавить карточку"
+
+msgid "Add cards"
+msgstr "Добавить карточки"
 
 msgid "Add cards from your last lesson, then review them here."
 msgstr "Добавь карточки с последнего урока, а потом повторяй их здесь."
@@ -222,6 +246,9 @@ msgstr "Закрыть"
 msgid "Code"
 msgstr "Код"
 
+msgid "Come back later, or add new cards."
+msgstr "Вернись позже или добавь новые карточки."
+
 msgid "Confirm"
 msgstr "Подтвердить"
 
@@ -237,8 +264,17 @@ msgstr "Продолжить с Google"
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Не удалось изменить фото. Проверь соединение и попробуй ещё раз."
 
+msgid "Couldn’t check for more cards"
+msgstr "Не удалось проверить, есть ли ещё карточки"
+
 msgid "Couldn’t load Today"
 msgstr "Не удалось загрузить экран «Сегодня»"
+
+msgid "Couldn’t load your cards"
+msgstr "Не удалось загрузить карточки"
+
+msgid "Couldn’t play the pronunciation. Try again in a moment."
+msgstr "Не удалось воспроизвести произношение. Попробуй ещё раз чуть позже."
 
 msgid "Couldn’t reach Lymi. Check your connection and try again."
 msgstr "Не удалось связаться с Lymi. Проверь соединение и попробуй снова."
@@ -248,6 +284,12 @@ msgstr "Не удалось связаться с сервисом входа. �
 
 msgid "Couldn’t save the goal. Try again."
 msgstr "Не удалось сохранить цель. Попробуй ещё раз."
+
+msgid "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
+msgstr "Не удалось сохранить оценку для «{term}». Этой карточки больше нет в твоих колодах."
+
+msgid "Couldn’t save your grade for “{term}”. You’ll see it again."
+msgstr "Не удалось сохранить оценку для «{term}». Эта карточка ещё вернётся."
 
 msgid "Couldn’t save your name. Check your connection and try again."
 msgstr "Не удалось сохранить имя. Проверь соединение и попробуй ещё раз."
@@ -275,6 +317,9 @@ msgstr "Своя"
 
 msgid "Daily goal"
 msgstr "Дневная цель"
+
+msgid "Daily goal reached"
+msgstr "Дневная цель достигнута"
 
 msgid "Daily goal reached."
 msgstr "Дневная цель достигнута."
@@ -529,6 +574,9 @@ msgstr "Карточек ещё нет"
 msgid "No cards you keep forgetting"
 msgstr "Нет карточек, которые ты часто забываешь"
 
+msgid "No meaning yet"
+msgstr "Значения пока нет"
+
 msgid "No section"
 msgstr "Без раздела"
 
@@ -546,6 +594,12 @@ msgstr "Сегодня нечего повторять, так что дни п�
 
 msgid "Nothing forgotten today"
 msgstr "Сегодня ничего не забыто"
+
+msgid "Nothing left in {scopeName}"
+msgstr "В «{scopeName}» больше ничего"
+
+msgid "Nothing left in this deck"
+msgstr "В этой колоде больше ничего"
 
 msgid "Off"
 msgstr "Выключено"
@@ -592,14 +646,24 @@ msgstr "Изображение → термин"
 msgid "Picture added"
 msgstr "Изображение добавлено"
 
+#. placeholder {0}: card.image?.description ?? ""
+msgid "Picture card: {0}. Tap to reveal"
+msgstr "Карточка с картинкой: {0}. Нажми, чтобы открыть"
+
 msgid "Pictures need a connection. Try again once you’re back online."
 msgstr "Для изображений нужно соединение. Попробуй ещё раз, когда снова будешь онлайн."
+
+msgid "Play pronunciation"
+msgstr "Воспроизвести произношение"
 
 msgid "Previous month"
 msgstr "Предыдущий месяц"
 
 msgid "Production"
 msgstr "Воспроизведение"
+
+msgid "Production card for {cue}. Tap to reveal"
+msgstr "Карточка на воспроизведение для {cue}. Нажми, чтобы открыть"
 
 msgid "Pronunciation"
 msgstr "Произношение"
@@ -619,14 +683,23 @@ msgstr "Достигни сегодняшней цели, чтобы не пре
 msgid "Reach today’s goal to start a streak."
 msgstr "Достигни сегодняшней цели, чтобы начать счёт дней подряд."
 
+msgid "Recall the answer, then tap the card"
+msgstr "Вспомни ответ, потом нажми на карточку"
+
 msgid "Recognition"
 msgstr "Распознавание"
+
+msgid "Recognition card for {cue}. Tap to reveal"
+msgstr "Карточка на распознавание для {cue}. Нажми, чтобы открыть"
 
 msgid "Remind me to review"
 msgstr "Напоминать о повторении"
 
 msgid "Remove photo"
 msgstr "Удалить фото"
+
+msgid "Replay pronunciation"
+msgstr "Воспроизвести произношение ещё раз"
 
 msgid "Reset your password"
 msgstr "Новый пароль"
@@ -650,6 +723,9 @@ msgstr "Дни с повторениями: {lit} из последних {0, pl
 
 msgid "Reviews a day"
 msgstr "Повторений в день"
+
+msgid "Round done"
+msgstr "Раунд завершён"
 
 msgid "Same as the deck"
 msgstr "Как в колоде"
@@ -769,6 +845,9 @@ msgstr "Этого уже нет. Обнови страницу, чтобы ув
 msgid "Theme"
 msgstr "Тема"
 
+msgid "This card’s picture was removed."
+msgstr "Изображение этой карточки убрано."
+
 msgid "Time"
 msgstr "Время"
 
@@ -859,6 +938,9 @@ msgstr "Можно отправлять не больше {FEEDBACK_DAILY_LIMIT}
 msgid "You wrote this"
 msgstr "Это написано тобой"
 
+msgid "You’re done for today"
+msgstr "На сегодня всё"
+
 msgid "You’re done for today."
 msgstr "На сегодня всё."
 
@@ -867,6 +949,9 @@ msgstr "Твои карточки и счёт дней подряд на люб�
 
 msgid "Your data"
 msgstr "Твои данные"
+
+msgid "Your grades are saved. Check your connection and try again."
+msgstr "Твои оценки сохранены. Проверь соединение и попробуй снова."
 
 msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Твоё сообщение сохранено. Попробуй ещё раз или напиши на <0>hello@lymi.app</0>."

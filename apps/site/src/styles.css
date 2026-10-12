@@ -827,6 +827,18 @@ html:has(.deck-cards[open]) {
   border-top: 1px solid var(--edge);
 }
 
+/* An update on the changelog: docs prose, with its smaller changes as a quieter list after a rule. */
+.changelog-prose h3 {
+  margin-block: 2.5rem 0.75rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--edge);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
+.changelog-prose h3 ~ ul {
+  font-size: var(--text-base);
+}
+
 /* Inline code. A well in the plate, never a border. */
 .doc-prose :not(pre) > code,
 .doc-code-inline {
@@ -1276,13 +1288,15 @@ html:has(.deck-cards[open]) {
 
 /* A landing use case in the same trays as Explore, so a subject reads as a deck on a shelf. The
    card runs off the tray's foot, which clips it, so the stack sits in the colour. */
-.use-case-tile {
+.use-case-tile,
+.changelog-figure {
   --tray-l: 0.958;
   --tray-c: 0.042;
   --bleed: 1.5rem;
   background: oklch(var(--tray-l) var(--tray-c) var(--tray-h, 235));
 }
-[data-theme="dark"] .use-case-tile {
+[data-theme="dark"] .use-case-tile,
+[data-theme="dark"] .changelog-figure {
   --tray-l: 0.3;
   --tray-c: 0.065;
   --tray-card: oklch(0.33 0.012 60);
@@ -1465,56 +1479,64 @@ html:has(.deck-cards[open]) {
 .deck-hero-tint[data-hue="0"],
 .shelf-hero[data-hue="0"],
 .use-case-tile[data-hue="0"],
-.use-case-mark[data-hue="0"] {
+.use-case-mark[data-hue="0"],
+.changelog-figure[data-hue="0"] {
   --tray-h: 25;
 }
 .deck-tray[data-hue="1"],
 .deck-hero-tint[data-hue="1"],
 .shelf-hero[data-hue="1"],
 .use-case-tile[data-hue="1"],
-.use-case-mark[data-hue="1"] {
+.use-case-mark[data-hue="1"],
+.changelog-figure[data-hue="1"] {
   --tray-h: 110;
 }
 .deck-tray[data-hue="2"],
 .deck-hero-tint[data-hue="2"],
 .shelf-hero[data-hue="2"],
 .use-case-tile[data-hue="2"],
-.use-case-mark[data-hue="2"] {
+.use-case-mark[data-hue="2"],
+.changelog-figure[data-hue="2"] {
   --tray-h: 150;
 }
 .deck-tray[data-hue="3"],
 .deck-hero-tint[data-hue="3"],
 .shelf-hero[data-hue="3"],
 .use-case-tile[data-hue="3"],
-.use-case-mark[data-hue="3"] {
+.use-case-mark[data-hue="3"],
+.changelog-figure[data-hue="3"] {
   --tray-h: 195;
 }
 .deck-tray[data-hue="4"],
 .deck-hero-tint[data-hue="4"],
 .shelf-hero[data-hue="4"],
 .use-case-tile[data-hue="4"],
-.use-case-mark[data-hue="4"] {
+.use-case-mark[data-hue="4"],
+.changelog-figure[data-hue="4"] {
   --tray-h: 235;
 }
 .deck-tray[data-hue="5"],
 .deck-hero-tint[data-hue="5"],
 .shelf-hero[data-hue="5"],
 .use-case-tile[data-hue="5"],
-.use-case-mark[data-hue="5"] {
+.use-case-mark[data-hue="5"],
+.changelog-figure[data-hue="5"] {
   --tray-h: 280;
 }
 .deck-tray[data-hue="6"],
 .deck-hero-tint[data-hue="6"],
 .shelf-hero[data-hue="6"],
 .use-case-tile[data-hue="6"],
-.use-case-mark[data-hue="6"] {
+.use-case-mark[data-hue="6"],
+.changelog-figure[data-hue="6"] {
   --tray-h: 320;
 }
 .deck-tray[data-hue="7"],
 .deck-hero-tint[data-hue="7"],
 .shelf-hero[data-hue="7"],
 .use-case-tile[data-hue="7"],
-.use-case-mark[data-hue="7"] {
+.use-case-mark[data-hue="7"],
+.changelog-figure[data-hue="7"] {
   --tray-h: 350;
 }
 
@@ -1735,4 +1757,63 @@ html:has(.deck-cards[open]) {
 [data-offscreen],
 [data-offscreen] * {
   animation-play-state: paused !important;
+}
+
+/* A changelog picture: one 16:10 tray for every update, so the list keeps one rhythm and a picture
+   can stand in a link preview. A figure is scaled to fit by `fitChangelogStages`; a screenshot is
+   placed by percentages, so it crops the same at every width. docs/design/changelog.md. */
+.changelog-frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+.changelog-stage {
+  position: absolute;
+  inset: 0;
+  padding: 7%;
+}
+/* Centred on its own box, so scaling it down keeps it in the middle of the tray. */
+.changelog-stage-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28.75rem;
+  translate: -50% -50%;
+}
+.changelog-frame img {
+  position: absolute;
+  max-width: none;
+  height: auto;
+  border-radius: var(--radius-xl);
+  outline: 1px solid var(--image-edge);
+  outline-offset: -1px;
+}
+/* A window starts in from the tray's top-start corner and runs off its end and foot. */
+.changelog-frame[data-frame="window"] img {
+  top: 9%;
+  inset-inline-start: 7%;
+  width: 125%;
+}
+/* A phone stands in the middle and is cut by the foot. */
+.changelog-frame[data-frame="phone"] img {
+  top: 8%;
+  left: 50%;
+  width: 34%;
+  translate: -50% 0;
+  border-radius: var(--radius-2xl);
+}
+/* A panel, one part of a screen, sits whole in the middle. */
+.changelog-frame[data-frame="panel"] img {
+  inset: 0;
+  width: auto;
+  max-width: 86%;
+  max-height: 86%;
+  margin: auto;
+}
+.changelog-frame img[data-theme-shot="dark"],
+[data-theme="dark"] .changelog-frame img[data-theme-shot="light"] {
+  display: none;
+}
+[data-theme="dark"] .changelog-frame img[data-theme-shot="dark"] {
+  display: block;
 }

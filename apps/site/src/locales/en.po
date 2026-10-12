@@ -16,6 +16,9 @@ msgstr ""
 msgid "“J’ai la flemme” is the whole excuse."
 msgstr "“J’ai la flemme” is the whole excuse."
 
+msgid "“Look at that VAT, MAma!”"
+msgstr "“Look at that VAT, MAma!”"
+
 msgid "“May it come easy”, said to someone at work"
 msgstr "“May it come easy”, said to someone at work"
 
@@ -299,6 +302,9 @@ msgstr "A full flashcard in seconds."
 msgid "A hobby"
 msgstr "A hobby"
 
+msgid "A language"
+msgstr "A language"
+
 msgid "A language class"
 msgstr "A language class"
 
@@ -355,6 +361,9 @@ msgstr "A score for one attempt"
 
 msgid "A standard for signing in once and passing that identity to other services"
 msgstr "A standard for signing in once and passing that identity to other services"
+
+msgid "A subject"
+msgstr "A subject"
 
 msgid "A thank-you to everyone who brought the food to the table."
 msgstr "A thank-you to everyone who brought the food to the table."
@@ -437,6 +446,9 @@ msgstr "Added 18 cards to Security+, each with the guide’s definition."
 msgid "Added 4 cards to your German deck."
 msgstr "Added 4 cards to your German deck."
 
+msgid "Added 6 cards to Estonian A2"
+msgstr "Added 6 cards to Estonian A2"
+
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 msgstr "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 
@@ -491,6 +503,9 @@ msgstr "All right. Lots of work."
 msgid "All shelves"
 msgstr "All shelves"
 
+msgid "All updates"
+msgstr "All updates"
+
 msgid "Allow"
 msgstr "Allow"
 
@@ -536,6 +551,9 @@ msgstr "and"
 
 msgid "And what am I due to review tonight?"
 msgstr "And what am I due to review tonight?"
+
+msgid "Anki package · ready for a day"
+msgstr "Anki package · ready for a day"
 
 msgid "Anna Kask, language school"
 msgstr "Anna Kask, language school"
@@ -770,6 +788,12 @@ msgstr "Certifications"
 msgid "CFA, ACCA and CPA terms, formulas and standards."
 msgstr "CFA, ACCA and CPA terms, formulas and standards."
 
+msgid "Changelog"
+msgstr "Changelog"
+
+msgid "Changelog · Lymi"
+msgstr "Changelog · Lymi"
+
 msgid "Changes and contact"
 msgstr "Changes and contact"
 
@@ -829,6 +853,9 @@ msgstr "Citizenship, language and driving tests, each with ready decks."
 
 msgid "City; town"
 msgstr "City; town"
+
+msgid "Claude · from your lesson notes"
+msgstr "Claude · from your lesson notes"
 
 msgid "Claude, Claude Code, ChatGPT, Codex and Gemini CLI. Other apps that support MCP can connect too."
 msgstr "Claude, Claude Code, ChatGPT, Codex and Gemini CLI. Other apps that support MCP can connect too."
@@ -958,6 +985,9 @@ msgstr "DAY 0"
 
 msgid "DAY 30"
 msgstr "DAY 30"
+
+msgid "days in a row"
+msgstr "days in a row"
 
 msgid "Dear; expensive"
 msgstr "Dear; expensive"
@@ -1237,6 +1267,9 @@ msgstr "Explore decks"
 msgid "Export any deck to Anki, with its pictures and review history."
 msgstr "Export any deck to Anki, with its pictures and review history."
 
+msgid "Exported your library"
+msgstr "Exported your library"
+
 msgid "Fado, Portugal’s mournful song, is built on it."
 msgstr "Fado, Portugal’s mournful song, is built on it."
 
@@ -1248,6 +1281,9 @@ msgstr "Feeling low; in a slump"
 
 msgid "Fill decks from the tools you already use."
 msgstr "Fill decks from the tools you already use."
+
+msgid "Filled in 6 cards in Estonian A2"
+msgstr "Filled in 6 cards in Estonian A2"
 
 msgid "Finance"
 msgstr "Finance"
@@ -1279,6 +1315,9 @@ msgstr "Flashcards for cloud, security, finance and project management certifica
 msgid "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
 msgstr "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
 
+msgid "Follow with RSS"
+msgstr "Follow with RSS"
+
 msgid "Food and drink"
 msgstr "Food and drink"
 
@@ -1291,6 +1330,9 @@ msgstr "For {0}"
 
 msgid "For a cashier, a builder, or a friend who is studying."
 msgstr "For a cashier, a builder, or a friend who is studying."
+
+msgid "For a test"
+msgstr "For a test"
 
 msgid "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
 msgstr "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
@@ -1921,6 +1963,9 @@ msgstr "Lymi · Flashcard app with spaced repetition"
 msgid "Lymi asks before it shows the answer. Trying to remember something makes it stick better than reading it again, as <0>Roediger and Karpicke found in 2006</0>."
 msgstr "Lymi asks before it shows the answer. Trying to remember something makes it stick better than reading it again, as <0>Roediger and Karpicke found in 2006</0>."
 
+msgid "Lymi changelog"
+msgstr "Lymi changelog"
+
 msgid "Lymi costs nothing. No trial, and no payment details to sign up."
 msgstr "Lymi costs nothing. No trial, and no payment details to sign up."
 
@@ -1980,6 +2025,12 @@ msgstr "Lymi uses an authentication cookie to keep you signed in. The public sit
 
 msgid "Lymi with AI assistants"
 msgstr "Lymi with AI assistants"
+
+msgid "Lymi works for anything you want to remember."
+msgstr "Lymi works for anything you want to remember."
+
+msgid "Lymi’s AI · meanings and examples"
+msgstr "Lymi’s AI · meanings and examples"
 
 msgid "Lymi’s own AI fills in the meaning, an example and how to say it. It marks what it wrote and never overwrites yours."
 msgstr "Lymi’s own AI fills in the meaning, an example and how to say it. It marks what it wrote and never overwrites yours."
@@ -2062,6 +2113,9 @@ msgstr "More like this"
 msgid "More than a translation."
 msgstr "More than a translation."
 
+msgid "More updates"
+msgstr "More updates"
+
 msgid "Most land plants have one."
 msgstr "Most land plants have one."
 
@@ -2129,11 +2183,17 @@ msgctxt "cards in this state"
 msgid "New"
 msgstr "New"
 
+msgid "New features and improvements in Lymi, the open-source flashcard app with spaced repetition."
+msgstr "New features and improvements in Lymi, the open-source flashcard app with spaced repetition."
+
 msgid "New York DMV written test"
 msgstr "New York DMV written test"
 
 msgid "New York DMV written test: the rules of the road"
 msgstr "New York DMV written test: the rules of the road"
+
+msgid "Newer"
+msgstr "Newer"
 
 msgid "Next card"
 msgstr "Next card"
@@ -2228,6 +2288,9 @@ msgstr "Often forgotten"
 
 msgid "Okay"
 msgstr "Okay"
+
+msgid "Older"
+msgstr "Older"
 
 msgid "Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day."
 msgstr "Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day."
@@ -2765,6 +2828,9 @@ msgstr "skills tested: reading, listening, writing and speaking"
 msgid "Skip to the document"
 msgstr "Skip to the document"
 
+msgid "Skip to the updates"
+msgstr "Skip to the updates"
+
 msgid "Slow or stop so others can pass without you forcing them to change speed or path."
 msgstr "Slow or stop so others can pass without you forcing them to change speed or path."
 
@@ -2779,6 +2845,9 @@ msgstr "So; well then"
 
 msgid "Sobre, over, plus mesa, table. It can outlast the meal."
 msgstr "Sobre, over, plus mesa, table. It can outlast the meal."
+
+msgid "Something else"
+msgstr "Something else"
 
 msgid "Sorry; excuse me"
 msgstr "Sorry; excuse me"
@@ -3206,6 +3275,9 @@ msgstr "to go"
 msgid "To go, please."
 msgstr "To go, please."
 
+msgid "to look, to watch"
+msgstr "to look, to watch"
+
 msgid "To meet"
 msgstr "To meet"
 
@@ -3235,6 +3307,9 @@ msgstr "To pull"
 
 msgid "To stop"
 msgstr "To stop"
+
+msgid "Today"
+msgstr "Today"
 
 msgid "Tonight"
 msgstr "Tonight"
@@ -3416,6 +3491,9 @@ msgstr "what"
 msgid "What an object’s shape tells you to do with it"
 msgstr "What an object’s shape tells you to do with it"
 
+msgid "What are you learning?"
+msgstr "What are you learning?"
+
 msgid "What comes across"
 msgstr "What comes across"
 
@@ -3448,6 +3526,9 @@ msgstr "What’s due tonight?"
 
 msgid "What’s inside"
 msgstr "What’s inside"
+
+msgid "What’s new in Lymi, and what got better."
+msgstr "What’s new in Lymi, and what got better."
 
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "When a measure becomes a target, it stops being a good measure"
@@ -3610,6 +3691,9 @@ msgstr "Yes. You can add a deck and learn it for free."
 
 msgid "yesterday"
 msgstr "yesterday"
+
+msgid "Yesterday was a rest day."
+msgstr "Yesterday was a rest day."
 
 msgid "you"
 msgstr "you"

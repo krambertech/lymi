@@ -1,4 +1,5 @@
 import { readableIn } from "@lymi/core/catalog";
+import { changelogSlugs, changelogUpdatePath } from "./changelog-paths";
 import { deckPath } from "./deck-page";
 import { explorePath } from "./explore";
 import {
@@ -59,12 +60,16 @@ function localized(
   return listed.map((locale) => ({ path: pathOf(locale), lastmod, alternates }));
 }
 
-/** The fixed pages from the build: the translated ones in every locale, then the English-only ones. */
+/**
+ * The pages from the build: the translated ones and each changelog update in every locale, then
+ * the English-only ones.
+ */
 export function pagesSitemap(): string {
   return urlset([
     ...(Object.keys(localizedPages) as LocalizedPage[])
       .filter((page) => !isRuntimePage(page))
       .flatMap((page) => localized((locale) => localizedPath(page, locale))),
+    ...changelogSlugs.flatMap((slug) => localized((locale) => changelogUpdatePath(slug, locale))),
     ...englishOnlyPaths.map((path) => ({ path })),
   ]);
 }

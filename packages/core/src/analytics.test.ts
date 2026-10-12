@@ -83,6 +83,8 @@ describe("analytics privacy contract", () => {
     expect(analyticsPath("/ru/exams/einbuergerungstest", "public")).toBe(
       "/ru/exams/einbuergerungstest",
     );
+    expect(analyticsPath("/uk/changelog/rest-days", "public")).toBe("/uk/changelog/rest-days");
+    expect(analyticsPath("/changelog/rss.xml", "public")).toBe("/other");
     expect(analyticsPath("/unknown/private", "public")).toBe("/other");
   });
   it("keeps only bounded campaign labels and the referrer hostname", () => {

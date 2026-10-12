@@ -1,0 +1,58 @@
+---
+import { render } from "astro:content";
+import type { ChangelogUpdate } from "../../lib/changelog";
+import type { Locale } from "../../lib/routes";
+import ChangelogFigure from "./ChangelogFigure";
+
+interface Props {
+  update: ChangelogUpdate;
+  locale: Locale;
+  /** On the list the title links to the update's own page, where it is the page's `h1`. */
+  href?: string | undefined;
+}
+
+const { update, locale, href } = Astro.props;
+const { entry, hue, screenshot } = update;
+const { Content } = await render(entry);
+const Heading = href ? "h2" : "h1";
+---
+
+<article class="min-w-0 max-w-[660px]">
+  <Heading class="text-3xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-4xl">
+    {href ? <a href={href} class="rounded-xs hoverable:hover:text-text-2">{entry.data.title}</a> : entry.data.title}
+  </Heading>
+  {
+    screenshot && entry.data.screenshot ? (
+      <div
+        class="changelog-figure changelog-frame mt-8 rounded-2xl"
+        data-frame={entry.data.screenshot.frame}
+        data-hue={hue}
+      >
+        {(["light", "dark"] as const).map((theme) => (
+          <img
+            src={screenshot[theme].src}
+            width={screenshot[theme].width / 2}
+            height={screenshot[theme].height / 2}
+            alt={entry.data.screenshot?.alt}
+            loading="lazy"
+            decoding="async"
+            data-theme-shot={theme}
+          />
+        ))}
+      </div>
+    ) : (
+      entry.data.figure && (
+        <div class="changelog-figure changelog-frame mt-8 rounded-2xl" data-frame="figure" data-hue={hue}>
+          <div class="changelog-stage">
+            <div class="changelog-stage-content">
+              <ChangelogFigure client:visible figure={entry.data.figure} locale={locale} />
+            </div>
+          </div>
+        </div>
+      )
+    )
+  }
+  <div class="doc-prose changelog-prose mt-8">
+    <Content />
+  </div>
+</article>

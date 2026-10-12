@@ -10,6 +10,7 @@ export const localizedPages = {
   exams: "/exams",
   einbuergerungstest: "/exams/einbuergerungstest",
   privacy: "/privacy",
+  changelog: "/changelog",
 } as const;
 export type LocalizedPage = keyof typeof localizedPages;
 
@@ -27,6 +28,9 @@ export const localizedRuntimePages = [
 export function isRuntimePage(page: LocalizedPage): boolean {
   return (localizedRuntimePages as readonly string[]).includes(localizedPages[page]);
 }
+
+/** Pages built from content, one per item in every locale; `sitemap-pages.xml` lists each. */
+export const localizedContentPages = ["/changelog/[slug]"] as const;
 
 export const locales = ["en", "uk", "ru"] as const;
 export type Locale = (typeof locales)[number];

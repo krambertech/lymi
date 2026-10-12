@@ -16,6 +16,9 @@ msgstr ""
 msgid "“J’ai la flemme” is the whole excuse."
 msgstr "«J’ai la flemme» — и никаких других объяснений."
 
+msgid "“Look at that VAT, MAma!”"
+msgstr "«Смотри, какая ВАТА, МАма!»"
+
 msgid "“May it come easy”, said to someone at work"
 msgstr "«Пусть будет легко» — говорят тому, кто работает"
 
@@ -299,6 +302,9 @@ msgstr "Готовая флеш-карточка за несколько сек�
 msgid "A hobby"
 msgstr "Хобби"
 
+msgid "A language"
+msgstr "Язык"
+
 msgid "A language class"
 msgstr "Языковая группа"
 
@@ -355,6 +361,9 @@ msgstr "Баллы за одну попытку"
 
 msgid "A standard for signing in once and passing that identity to other services"
 msgstr "Стандарт, позволяющий войти один раз и передать эту личность другим сервисам"
+
+msgid "A subject"
+msgstr "Тему"
 
 msgid "A thank-you to everyone who brought the food to the table."
 msgstr "Благодарность всем, чьими трудами еда оказалась на столе."
@@ -437,6 +446,9 @@ msgstr "Добавил 18 карточек в Security+, к каждой — о�
 msgid "Added 4 cards to your German deck."
 msgstr "Добавлено 4 карточки в колоду по немецкому."
 
+msgid "Added 6 cards to Estonian A2"
+msgstr "Добавлено 6 карточек в Estonian A2"
+
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 msgstr "Добавил 8 карточек в колоду «Испанский». Пропустил «ojalá»: такая карточка у тебя уже есть."
 
@@ -491,6 +503,9 @@ msgstr "Нормально. Много работы."
 msgid "All shelves"
 msgstr "Все полки"
 
+msgid "All updates"
+msgstr "Все обновления"
+
 msgid "Allow"
 msgstr "Разрешить"
 
@@ -536,6 +551,9 @@ msgstr "и"
 
 msgid "And what am I due to review tonight?"
 msgstr "А что мне повторить сегодня вечером?"
+
+msgid "Anki package · ready for a day"
+msgstr "Пакет Anki · доступен сутки"
 
 msgid "Anna Kask, language school"
 msgstr "Anna Kask, языковая школа"
@@ -770,6 +788,12 @@ msgstr "Сертификации"
 msgid "CFA, ACCA and CPA terms, formulas and standards."
 msgstr "Термины, формулы и стандарты CFA, ACCA и CPA."
 
+msgid "Changelog"
+msgstr "Что нового"
+
+msgid "Changelog · Lymi"
+msgstr "Что нового в Lymi"
+
 msgid "Changes and contact"
 msgstr "Изменения и контакты"
 
@@ -829,6 +853,9 @@ msgstr "Тесты на гражданство, языковые экзамен�
 
 msgid "City; town"
 msgstr "Город"
+
+msgid "Claude · from your lesson notes"
+msgstr "Claude · из твоих заметок с урока"
 
 msgid "Claude, Claude Code, ChatGPT, Codex and Gemini CLI. Other apps that support MCP can connect too."
 msgstr "Claude, Claude Code, ChatGPT, Codex и Gemini CLI. Подключиться могут и другие приложения с поддержкой MCP."
@@ -958,6 +985,9 @@ msgstr "ДЕНЬ 0"
 
 msgid "DAY 30"
 msgstr "ДЕНЬ 30"
+
+msgid "days in a row"
+msgstr "дней подряд"
 
 msgid "Dear; expensive"
 msgstr "Милый; дорогой"
@@ -1237,6 +1267,9 @@ msgstr "Посмотреть колоды"
 msgid "Export any deck to Anki, with its pictures and review history."
 msgstr "Экспортируй любую колоду в Anki вместе с картинками и историей повторений."
 
+msgid "Exported your library"
+msgstr "Библиотека экспортирована"
+
 msgid "Fado, Portugal’s mournful song, is built on it."
 msgstr "На этом чувстве держится фаду — печальная португальская песня."
 
@@ -1248,6 +1281,9 @@ msgstr "Плохое настроение; упадок сил"
 
 msgid "Fill decks from the tools you already use."
 msgstr "Наполняй колоды из инструментов, которыми уже пользуешься."
+
+msgid "Filled in 6 cards in Estonian A2"
+msgstr "Дополнено 6 карточек в Estonian A2"
 
 msgid "Finance"
 msgstr "Финансы"
@@ -1279,6 +1315,9 @@ msgstr "Карточки для сертификаций по облачным �
 msgid "Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free."
 msgstr "Карточки для теста на гражданство Германии (Einbürgerungstest), США, Канады, Чехии и Испании, лексики Goethe, HSK, JLPT и TOPIK, а также теории на права. На языке экзамена, с переводом рядом. Бесплатно."
 
+msgid "Follow with RSS"
+msgstr "Следить через RSS"
+
 msgid "Food and drink"
 msgstr "Еда и напитки"
 
@@ -1291,6 +1330,9 @@ msgstr "Для земли {0}"
 
 msgid "For a cashier, a builder, or a friend who is studying."
 msgstr "Так говорят кассиру, строителю или другу, который учится."
+
+msgid "For a test"
+msgstr "Для экзамена"
 
 msgid "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
 msgstr "Для поездки, первых уроков или словарей Goethe от A1 до B1."
@@ -1921,6 +1963,9 @@ msgstr "Lymi · Флеш-карточки с интервальным повто
 msgid "Lymi asks before it shows the answer. Trying to remember something makes it stick better than reading it again, as <0>Roediger and Karpicke found in 2006</0>."
 msgstr "Lymi сначала спрашивает, а потом показывает ответ. Попытка вспомнить закрепляет лучше, чем перечитывание, — это показали <0>Рёдигер и Карпике в 2006 году</0>."
 
+msgid "Lymi changelog"
+msgstr "Что нового в Lymi"
+
 msgid "Lymi costs nothing. No trial, and no payment details to sign up."
 msgstr "Lymi ничего не стоит. Ни пробного периода, ни платёжных данных для регистрации."
 
@@ -1980,6 +2025,12 @@ msgstr "Lymi использует файл cookie аутентификации, 
 
 msgid "Lymi with AI assistants"
 msgstr "Lymi с AI-ассистентами"
+
+msgid "Lymi works for anything you want to remember."
+msgstr "Lymi подходит для всего, что хочешь запомнить."
+
+msgid "Lymi’s AI · meanings and examples"
+msgstr "AI Lymi · значения и примеры"
 
 msgid "Lymi’s own AI fills in the meaning, an example and how to say it. It marks what it wrote and never overwrites yours."
 msgstr "Собственный AI Lymi дополнит карточку значением, примером и произношением. Написанное им помечено, а твой текст он никогда не перезаписывает."
@@ -2062,6 +2113,9 @@ msgstr "Похожие колоды"
 msgid "More than a translation."
 msgstr "Больше, чем перевод."
 
+msgid "More updates"
+msgstr "Другие обновления"
+
 msgid "Most land plants have one."
 msgstr "Она есть у большинства наземных растений."
 
@@ -2129,11 +2183,17 @@ msgctxt "cards in this state"
 msgid "New"
 msgstr "Новые"
 
+msgid "New features and improvements in Lymi, the open-source flashcard app with spaced repetition."
+msgstr "Новые возможности и улучшения Lymi — приложения с флеш-карточками и интервальными повторениями, с открытым кодом."
+
 msgid "New York DMV written test"
 msgstr "Письменный экзамен DMV в Нью-Йорке"
 
 msgid "New York DMV written test: the rules of the road"
 msgstr "Письменный экзамен DMV в Нью-Йорке: правила дорожного движения"
+
+msgid "Newer"
+msgstr "Новее"
 
 msgid "Next card"
 msgstr "Следующая карточка"
@@ -2228,6 +2288,9 @@ msgstr "Часто забываются"
 
 msgid "Okay"
 msgstr "Ладно"
+
+msgid "Older"
+msgstr "Раньше"
 
 msgid "Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day."
 msgstr "Как только колода попадает в твой Lymi, он возвращает каждую карточку прямо перед тем, как ты её забудешь, — несколько минут в день."
@@ -2765,6 +2828,9 @@ msgstr "навыка проверяют: чтение, аудирование, �
 msgid "Skip to the document"
 msgstr "Перейти к документу"
 
+msgid "Skip to the updates"
+msgstr "Перейти к обновлениям"
+
 msgid "Slow or stop so others can pass without you forcing them to change speed or path."
 msgstr "Притормози или остановись, чтобы другие проехали, не меняя из-за тебя скорость или направление."
 
@@ -2779,6 +2845,9 @@ msgstr "Итак; ну что ж"
 
 msgid "Sobre, over, plus mesa, table. It can outlast the meal."
 msgstr "Sobre — «над», mesa — «стол». Бывает, что она длится дольше самой еды."
+
+msgid "Something else"
+msgstr "Другое"
 
 msgid "Sorry; excuse me"
 msgstr "Прости; извините"
@@ -3206,6 +3275,9 @@ msgstr "с собой"
 msgid "To go, please."
 msgstr "С собой, пожалуйста."
 
+msgid "to look, to watch"
+msgstr "смотреть, наблюдать"
+
 msgid "To meet"
 msgstr "Встречаться"
 
@@ -3235,6 +3307,9 @@ msgstr "Тянуть"
 
 msgid "To stop"
 msgstr "Прекращать; останавливаться"
+
+msgid "Today"
+msgstr "Сегодня"
 
 msgid "Tonight"
 msgstr "Сегодня вечером"
@@ -3416,6 +3491,9 @@ msgstr "что"
 msgid "What an object’s shape tells you to do with it"
 msgstr "Как форма предмета подсказывает, что с ним делать"
 
+msgid "What are you learning?"
+msgstr "Что ты учишь?"
+
 msgid "What comes across"
 msgstr "Что перенесётся"
 
@@ -3448,6 +3526,9 @@ msgstr "Что на сегодняшний вечер?"
 
 msgid "What’s inside"
 msgstr "Что внутри"
+
+msgid "What’s new in Lymi, and what got better."
+msgstr "Новые возможности Lymi и то, что стало лучше."
 
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "Когда показатель становится целью, он перестаёт быть хорошим показателем"
@@ -3610,6 +3691,9 @@ msgstr "Да. Колоду можно добавить и учить беспл�
 
 msgid "yesterday"
 msgstr "вчера"
+
+msgid "Yesterday was a rest day."
+msgstr "Вчера был день отдыха."
 
 msgid "you"
 msgstr "ты"

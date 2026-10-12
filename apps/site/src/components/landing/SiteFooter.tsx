@@ -80,6 +80,11 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
               </a>
             </li>
             <li>
+              <a href={localizedPath("changelog", i18n.locale)} className={linkClass}>
+                <Trans>Changelog</Trans>
+              </a>
+            </li>
+            <li>
               <a href={SOURCE_CODE_URL} className={linkClass}>
                 <Trans>Source code</Trans>
               </a>

@@ -1,0 +1,12 @@
+---
+import ChangelogUpdatePage from "../../../components/changelog/ChangelogUpdatePage.astro";
+import { changelogSlugs } from "../../../lib/changelog-paths";
+
+export function getStaticPaths() {
+  return changelogSlugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+---
+
+<ChangelogUpdatePage locale="uk" slug={slug} />

@@ -82,6 +82,8 @@ export function Cover({
 }) {
   return (
     <Animated.View
+      // Today stays mounted under the cover, so VoiceOver keeps to the review.
+      accessibilityViewIsModal
       className="bg-canvas"
       style={[StyleSheet.absoluteFill, { overflow: "hidden", borderCurve: "continuous" }, style]}
     >

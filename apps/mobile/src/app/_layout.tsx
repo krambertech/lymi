@@ -70,9 +70,11 @@ function Root() {
   }, [replays]);
   const shown = useCallback(() => SplashScreen.hideAsync(), []);
   const done = useCallback(() => setKindling(false), []);
-  // The splash lands on the first screen's lantern; a link into anywhere else has none to land on.
+  // The splash lands on Today's lantern, or Welcome's when signed out, chosen from the session since the
+  // route can still read Welcome for a moment after it is read. A link into anywhere else has none.
   const path = usePathname();
-  const first = path === "/today" ? "today" : path === "/welcome" ? "welcome" : "elsewhere";
+  const landsOnFirst = !signedIn || ["/", "/today", "/welcome"].includes(path);
+  const first = !landsOnFirst ? "elsewhere" : signedIn ? "today" : "welcome";
   const lands = session.isPending && !update ? undefined : update ? "elsewhere" : first;
   const giveUp = useCallback(() => {
     void SplashScreen.hideAsync();

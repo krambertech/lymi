@@ -50,8 +50,9 @@ jobs:
     with:
       ref: ${{ needs.plan.outputs.commit }}
 
-  # Each release keeps its frozen API for as long as it is supported, so a release whose calls
-  # changed needs a new version before it ships, never a rewritten file.
+  # Each release keeps its frozen API on main, where every Worker change is checked against it,
+  # before any learner can run it; a release whose calls changed needs a new version, never a
+  # rewritten file.
   contract:
     needs: plan
     if: needs.plan.outputs.ready == 'true'
@@ -85,16 +86,14 @@ jobs:
           version=$(node -p 'require("./apps/mobile/app.json").expo.version')
           file="apps/mobile/contract/$version.json"
           echo "version=$version" >> "$GITHUB_OUTPUT"
-          new=true
-          for ref in origin/main HEAD; do
-            git cat-file -e "$ref:$file" 2>/dev/null || continue
-            if ! git show "$ref:$file" | cmp -s - "$file"; then
-              echo "::error title=Phone contract::The API release $version calls differs from the one frozen on $ref. Raise expo.version in apps/mobile/app.json, which an update can carry, merge it, let Phone beta publish it, then promote."
-              exit 1
-            fi
-            new=false
-          done
-          echo "new=$new" >> "$GITHUB_OUTPUT"
+          if ! git cat-file -e "origin/main:$file" 2>/dev/null; then
+            echo "new=true" >> "$GITHUB_OUTPUT"
+          elif git show "origin/main:$file" | cmp -s - "$file"; then
+            echo "new=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error title=Phone contract::The API release $version calls differs from the one frozen on main. Raise expo.version in apps/mobile/app.json, which an update can carry, merge it, let Phone beta publish it, then promote."
+            exit 1
+          fi
 
       - name: Keep the frozen contract
         if: steps.freeze.outputs.new == 'true'
@@ -103,8 +102,57 @@ jobs:
           name: phone-contract
           path: apps/mobile/contract/${{ steps.freeze.outputs.version }}.json
 
+  contract_pull_request:
+    needs: [plan, contract]
+    if: needs.contract.outputs.new == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    env:
+      GH_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
+      VERSION: ${{ needs.contract.outputs.version }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # The push below authenticates with RELEASE_GITHUB_TOKEN, which a stored token would override.
+          persist-credentials: false
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: phone-contract
+          path: apps/mobile/contract
+
+      # A pull request opened with the workflow's own token would never run CI, so it needs its own.
+      # Nothing is published this run: Promote goes ahead once the contract is on main.
+      - name: Open a pull request that merges itself once green, and stop
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error title=Phone contract::Release $VERSION has no frozen contract on main. RELEASE_GITHUB_TOKEN is not set, so commit the phone-contract artifact from this run, merge it, then promote again."
+            exit 1
+          fi
+          branch="phone/contract-$VERSION"
+          existing=$(gh pr list --head "$branch" --state open --json url --jq '.[0].url // ""')
+          if [ -n "$existing" ]; then
+            echo "::error title=Phone contract::Release $VERSION waits for its contract pull request $existing; promote again once it merges."
+            exit 1
+          fi
+          title="chore(mobile): freeze the phone API contract for $VERSION"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add "apps/mobile/contract/$VERSION.json"
+          git commit -m "$title"
+          git push --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/$branch"
+          url=$(gh pr create --base main --head "$branch" --title "$title" \
+            --body "Promote run ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} froze the API this release calls (ADR 0032).")
+          gh pr merge "$url" --auto --squash
+          echo "::error title=Phone contract::Release $VERSION has no frozen contract on main yet. $url merges itself once green; promote again then."
+          exit 1
+
   promote:
     needs: [plan, smoke, contract]
+    if: needs.contract.outputs.new == 'false'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     # Promote, rollout and rollback all change production, so they take turns.
@@ -147,43 +195,3 @@ jobs:
       - name: Build for the App Store
         if: steps.build.outputs.build == 'false'
         run: node scripts/phone-release.mjs build production
-
-  contract_pull_request:
-    needs: [plan, contract, promote]
-    if: needs.contract.outputs.new == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: read
-    env:
-      GH_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
-      VERSION: ${{ needs.contract.outputs.version }}
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          # The push below authenticates with RELEASE_GITHUB_TOKEN, which a stored token would override.
-          persist-credentials: false
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: phone-contract
-          path: apps/mobile/contract
-
-      # A pull request opened with the workflow's own token would never run CI, so it needs its own.
-      - name: Open a pull request that merges itself once green
-        run: |
-          if [ -z "$GH_TOKEN" ]; then
-            echo "::warning title=Phone contract::RELEASE_GITHUB_TOKEN is not set; commit the phone-contract artifact from this run by hand."
-            exit 0
-          fi
-          branch="phone/contract-$VERSION-${GITHUB_RUN_ID}"
-          title="chore(mobile): freeze the phone API contract for $VERSION"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git switch -c "$branch"
-          git add "apps/mobile/contract/$VERSION.json"
-          git commit -m "$title"
-          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/$branch"
-          url=$(gh pr create --base main --head "$branch" --title "$title" \
-            --body "Promote run ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} froze the API this release calls (ADR 0032).")
-          gh pr merge "$url" --auto --squash

@@ -96,7 +96,7 @@ export default function Profile() {
     <KeyboardRoom>
       <View className="flex-row items-center justify-between px-4 pt-5 pb-2">
         <GlassButton icon="close" label={t`Cancel`} onPress={() => router.back()} />
-        <GlassButton icon="check" label={t`Save`} primary onPress={save} />
+        <GlassButton icon="check" label={t`Save`} primary busy={rename.isPending} onPress={save} />
       </View>
       <ScrollView
         contentContainerClassName="gap-7 px-5 pt-2 pb-6"

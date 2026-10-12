@@ -161,7 +161,10 @@ export async function resolveExamsPage(
   const headers = astro.response.headers;
   headers.set("content-type", "text/html; charset=utf-8");
   const etag = catalogEtag({
-    content: catalogContentHash(exams.flatMap((exam) => exam.decks)),
+    content: catalogContentHash(
+      exams.flatMap((exam) => exam.decks),
+      updated,
+    ),
     locale,
     version: env.CF_VERSION_METADATA?.id,
     page,

@@ -1,6 +1,6 @@
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { describe, expect, it } from "vitest";
-import { explorePath } from "./explore";
+import { catalogContentHash, explorePath } from "./explore";
 import { trayHue, trayHues } from "./tray";
 
 const deck = (slug: string, category: string | null): PublicDeckSummary => ({
@@ -42,5 +42,15 @@ describe("trayHues", () => {
   it("agrees with the hue a deck's own page works out from its slug", () => {
     const decks = [deck("everyday-estonian", "languages"), deck("everyday-finnish", "languages")];
     expect(trayHues(decks)).toEqual(decks.map((d) => trayHue(d.slug)));
+  });
+});
+
+describe("catalogContentHash", () => {
+  it("changes when something else the page shows changes, with the same decks", () => {
+    const decks: PublicDeckSummary[] = [];
+    const before = catalogContentHash(decks, { "einbuergerungstest-berlin": "2026-09-01" });
+    const after = catalogContentHash(decks, { "einbuergerungstest-berlin": "2026-10-01" });
+    expect(before).not.toBe(after);
+    expect(catalogContentHash(decks)).toBe(catalogContentHash(decks));
   });
 });

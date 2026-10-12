@@ -247,6 +247,7 @@ function BarAdd({
   return (
     <Press
       onPress={added ? onOpen : busy ? undefined : onAdd}
+      drawn={40}
       accessibilityRole="button"
       accessibilityLabel={added ? t`Open in Library` : t`Add to Library`}
       accessibilityState={{ busy }}

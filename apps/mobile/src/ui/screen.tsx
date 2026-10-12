@@ -433,6 +433,7 @@ export function BarGroup({ items }: { items: BarGroupItem[] }) {
         <Press
           key={item.icon}
           onPress={item.onPress}
+          drawn={40}
           accessibilityRole="button"
           accessibilityLabel={item.label}
           accessibilityState={{ selected: item.on }}

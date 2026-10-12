@@ -69,13 +69,7 @@ import {
 import { endHaptics } from "../review/end-haptics";
 import { Cover, usePullToEnd } from "../review/pull-to-end";
 import { markUndoHintSeen, UndoHint, undoHintSeen } from "../review/undo-hint";
-import {
-  UndoArea,
-  UndoCards,
-  type UndoMotion,
-  useUndoMotion,
-  useUndoSwipe,
-} from "../review/undo-swipe";
+import { UndoArea, UndoCards, useUndoSwipe } from "../review/undo-swipe";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { type Palette, usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
@@ -285,7 +279,6 @@ function Run({
     });
   };
   const swipe = useUndoSwipe({ enabled: !!lastGraded && !ended, onUndo: undo });
-  const undoMotion = useUndoMotion();
 
   // A pinned card a refetch no longer holds, such as one archived meanwhile, gives way.
   const repin = !!state?.next && !staleDay && (!pinned || !pinnedItem);
@@ -450,11 +443,10 @@ function Run({
             swipe={{
               x: swipe.x,
               dir: swipe.dir,
-              motion: undoMotion,
-              turn: lastGraded?.grade.reviewedAt ?? null,
+              // A card brought back is already in place; only a new one slides in.
+              arrive: !returned && done > 0,
               under: lastGraded && (
                 <CardPlate
-                  turn={lastGraded.grade.reviewedAt}
                   item={lastGraded.item}
                   deckName={lastGraded.deckName}
                   forgotten={lastGraded.forgotten}
@@ -486,7 +478,7 @@ function Turn({
   onUndo,
   swipe,
 }: {
-  /** Which card this is at which point of the review; a new one fades its words in on the same plate. */
+  /** Which card this is at which point of the review; a new one slides in over the last. */
   turn: string;
   item: QueueItem;
   deckName: string | undefined;
@@ -501,8 +493,7 @@ function Turn({
   swipe: {
     x: SharedValue<number>;
     dir: number;
-    motion: UndoMotion;
-    turn: string | null;
+    arrive: boolean;
     under: ReactNode;
   };
 }) {
@@ -512,12 +503,11 @@ function Turn({
         <UndoCards
           x={swipe.x}
           dir={swipe.dir}
-          motion={swipe.motion}
-          turn={swipe.turn}
+          turn={turn}
+          arrive={swipe.arrive}
           under={swipe.under}
         >
           <CardPlate
-            turn={turn}
             item={item}
             deckName={deckName}
             forgotten={forgotten}
@@ -608,7 +598,6 @@ function Picture({ card }: { card: QueueItem["card"] }) {
  * by the mode the draw chose); a tap anywhere reveals what is asked for.
  */
 function CardPlate({
-  turn,
   item: { card, fsrsState, mode },
   deckName,
   forgotten,
@@ -617,7 +606,6 @@ function CardPlate({
   onReveal,
   onUndo,
 }: {
-  turn: string;
   item: QueueItem;
   deckName: string | undefined;
   forgotten: boolean;
@@ -643,7 +631,6 @@ function CardPlate({
   return (
     <Animated.View
       layout={reduce ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
-      entering={still ? undefined : FadeIn.duration(160).reduceMotion(ALWAYS)}
       className="flex-1"
     >
       <Pressable
@@ -660,12 +647,7 @@ function CardPlate({
         className="flex-1 overflow-hidden rounded-2xl border border-edge bg-plate"
         style={dark ? LIFT : undefined}
       >
-        {/* The plate stays from card to card; only what it asks changes. motion.md "Review". */}
-        <Animated.View
-          key={turn}
-          entering={still ? undefined : FadeIn.duration(160).reduceMotion(ALWAYS)}
-          className="flex-1"
-        >
+        <View className="flex-1">
           {/* At large text sizes the deck and the state stack rather than clip. */}
           <View className="flex-row flex-wrap items-center justify-between gap-2 px-6 pt-5">
             <View className="flex-row items-center gap-2">
@@ -745,7 +727,7 @@ function CardPlate({
               <Text className="text-base text-muted">Tap to reveal</Text>
             </Animated.View>
           )}
-        </Animated.View>
+        </View>
       </Pressable>
     </Animated.View>
   );

@@ -1,10 +1,9 @@
-import { type ReactNode, useEffect, useRef } from "react";
+import { type ReactNode, useEffect, useMemo, useRef } from "react";
 import { I18nManager, StyleSheet, useWindowDimensions } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { useMMKVString } from "react-native-mmkv";
 import Animated, {
   Easing,
-  interpolate,
+  Keyframe,
   type SharedValue,
   useAnimatedStyle,
   useSharedValue,
@@ -12,37 +11,18 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
-import { reviewStore, UNDO_MOTION_KEY } from "../data/kept";
-import { ALWAYS } from "../theme/motion";
+import { ALWAYS, CROSSFADE, useReduceMotion } from "../theme/motion";
 
 /** How far in from the start edge a swipe has to begin, as iOS's own back swipe. */
 const EDGE = 28;
 /** Past this share of the width, or on a flick, letting go takes the grade back. */
 const LANDS = 0.4;
 const BACK = { duration: 340, dampingRatio: 1, reduceMotion: ALWAYS };
-/** Below this a spring back has settled; a spring can rest a fraction of a point short of zero. */
-const MOVED = 0.5;
 /** How far a card turns while it is off its place, in degrees. */
 const TILT = 6;
-/** The card that is covered, or uncovered, sits back this far. */
-const RECEDE = 0.95;
-
-/**
- * Two ways the card can move while a pick is pending: the card on screen slides off toward the end
- * edge, uncovering the graded one under it, or the graded card slides back in over it from the start.
- */
-export type UndoMotion = "off" | "back";
-
-/** The motion the dev menu last chose; sliding off until one is picked. */
-export function useUndoMotion(): UndoMotion {
-  const [motion] = useMMKVString(UNDO_MOTION_KEY, reviewStore);
-  return motion === "back" ? "back" : "off";
-}
-
-export function toggleUndoMotion() {
-  const now = reviewStore.getString(UNDO_MOTION_KEY);
-  reviewStore.set(UNDO_MOTION_KEY, now === "back" ? "off" : "back");
-}
+/** A new card's arrival over the one just graded: quick, and slowing as it lands. */
+const ARRIVE_MS = 320;
+const ARRIVE_EASE = Easing.bezier(0.23, 1, 0.32, 1);
 
 /** A swipe from the start edge takes back the last grade. `onUndo` runs once the card has landed. */
 export function useUndoSwipe({ enabled, onUndo }: { enabled: boolean; onUndo: () => void }) {
@@ -88,26 +68,32 @@ export function UndoArea({
   );
 }
 
-/** The card on screen and the graded one, in the card's own place; only the cards move. */
+/**
+ * The cards are a stack: each graded card stays underneath, and the next slides in over it from the
+ * end edge, turned a little, straightening as it lands. Taking a grade back drags the top card off
+ * the same way and uncovers the graded one. Under reduced motion the next card fades in.
+ */
 export function UndoCards({
   x,
   dir,
-  motion,
   under,
   turn,
+  arrive,
   children,
 }: {
   x: SharedValue<number>;
   dir: number;
-  motion: UndoMotion;
-  /** The last graded card as it will come back, or nothing when there is none. */
+  /** The last graded card, underneath, or nothing when there is none. */
   under: ReactNode;
-  /** Changes with each grade and undo; the cards return to rest once the screen has. */
-  turn: string | null;
+  /** Which card is on top at which point of the review. */
+  turn: string;
+  /** Whether a new top card slides in: after a grade, not after taking one back. */
+  arrive: boolean;
   children: ReactNode;
 }) {
   const { width } = useWindowDimensions();
-  // The graded card stays until the cards are back at rest, so landing an undo never blinks.
+  const reduce = useReduceMotion();
+  // The graded card stays until the top one is back at rest, so landing an undo never blinks.
   const kept = useRef<ReactNode>(null);
   if (under) kept.current = under;
   const placed = useRef(turn);
@@ -117,49 +103,40 @@ export function UndoCards({
     x.value = 0;
   }, [turn, x]);
 
-  const current = useAnimatedStyle(() => {
-    const t = x.value / width;
-    return motion === "off"
-      ? { transform: [{ translateX: x.value * dir }, { rotate: `${dir * t * TILT}deg` }] }
-      : { transform: [{ scale: 1 - (1 - RECEDE) * t }], opacity: 1 - t * 0.4 };
-  });
-  const graded = useAnimatedStyle(() => {
-    const t = x.value / width;
-    return motion === "off"
-      ? {
-          opacity: x.value > MOVED ? interpolate(t, [0, 0.3], [0.6, 1], "clamp") : 0,
-          transform: [{ scale: RECEDE + (1 - RECEDE) * t }],
-        }
-      : {
-          opacity: x.value > MOVED ? 1 : 0,
-          // It comes in turned a little, as a card picked back up, and straightens as it lands.
-          transform: [
-            { translateX: -dir * (width - x.value) },
-            { rotate: `${-dir * (1 - t) * TILT}deg` },
-          ],
-        };
-  });
+  const slideIn = useMemo(
+    () =>
+      new Keyframe({
+        0: { transform: [{ translateX: dir * width }, { rotate: `${dir * TILT}deg` }] },
+        100: { transform: [{ translateX: 0 }, { rotate: "0deg" }], easing: ARRIVE_EASE },
+      })
+        .duration(ARRIVE_MS)
+        .reduceMotion(ALWAYS),
+    [dir, width],
+  );
 
-  const gradedLayer = kept.current && (
-    <Animated.View
-      key="graded"
-      pointerEvents="none"
-      importantForAccessibility="no-hide-descendants"
-      accessibilityElementsHidden
-      style={[StyleSheet.absoluteFill, graded]}
-    >
-      {kept.current}
-    </Animated.View>
-  );
-  const currentLayer = (
-    <Animated.View key="current" style={[{ flex: 1 }, current]}>
-      {children}
-    </Animated.View>
-  );
-  // Sliding off, the graded card waits underneath; sliding back, it comes in on top.
+  const top = useAnimatedStyle(() => ({
+    transform: [{ translateX: x.value * dir }, { rotate: `${(dir * x.value * TILT) / width}deg` }],
+  }));
+
   return (
     <Animated.View style={{ flex: 1 }}>
-      {motion === "off" ? [gradedLayer, currentLayer] : [currentLayer, gradedLayer]}
+      {kept.current && (
+        <Animated.View
+          pointerEvents="none"
+          importantForAccessibility="no-hide-descendants"
+          accessibilityElementsHidden
+          style={StyleSheet.absoluteFill}
+        >
+          {kept.current}
+        </Animated.View>
+      )}
+      <Animated.View
+        key={turn}
+        entering={arrive ? (reduce ? CROSSFADE : slideIn) : undefined}
+        style={{ flex: 1 }}
+      >
+        <Animated.View style={[{ flex: 1 }, top]}>{children}</Animated.View>
+      </Animated.View>
     </Animated.View>
   );
 }

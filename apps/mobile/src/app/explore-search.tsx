@@ -4,15 +4,16 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useMemo } from "react";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { searchDecks, useCatalogue, useShelfLabel } from "../explore/catalogue";
-import { DeckList } from "../explore/layouts";
+import { searchDecks, searchShelves, useCatalogue, useShelfLabel } from "../explore/catalogue";
+import { DeckList, ShelfList } from "../explore/layouts";
 import { KeyboardRoom } from "../ui/keyboard";
 import { SectionTitle, Text } from "../ui/primitives";
 import { SearchBar, useSearchText } from "../ui/search-bar";
 
 /**
  * Search Explore, from its bar. The field waits at the foot with the keyboard up and the screen
- * above it empty; the catalogue is already on the phone, so decks fill in as the words are typed.
+ * above it empty; the catalogue is already on the phone, so shelves whose name matches, then
+ * decks, fill in as the words are typed.
  */
 export default function ExploreSearch() {
   const { t } = useLingui();
@@ -26,6 +27,10 @@ export default function ExploreSearch() {
   const query = text.trim();
   const hits = useMemo(
     () => searchDecks(catalogue.shelves, query, label),
+    [catalogue.shelves, query, label],
+  );
+  const shelves = useMemo(
+    () => searchShelves(catalogue.shelves, query, label),
     [catalogue.shelves, query, label],
   );
   const shelfOf = useMemo(() => {
@@ -45,16 +50,23 @@ export default function ExploreSearch() {
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="interactive"
         >
-          {query && hits.length === 0 ? (
+          {query && hits.length === 0 && shelves.length === 0 && (
             <Text className="px-1 text-base text-muted">
               {t`No decks match “${query}”. Try a word from a card, or a language.`}
             </Text>
-          ) : hits.length > 0 ? (
+          )}
+          {shelves.length > 0 && (
+            <View>
+              <SectionTitle>{t`Shelves`}</SectionTitle>
+              <ShelfList shelves={shelves} />
+            </View>
+          )}
+          {hits.length > 0 && (
             <View>
               <SectionTitle>{t`Decks`}</SectionTitle>
               <DeckList decks={hits} added={catalogue.added} shelfOf={shelfOf} />
             </View>
-          ) : null}
+          )}
         </ScrollView>
         <SearchBar
           value={text}

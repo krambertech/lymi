@@ -22,12 +22,33 @@ const SUBJECT_LABELS: Record<string, MessageDescriptor> = {
 };
 const UNCATEGORISED_LABEL = msg`More decks`;
 
+/** Languages a published deck teaches that the phone's own list of offered languages leaves out. */
+const MORE_LANGUAGES: Record<string, string> = { ka: "Georgian" };
+
+function shelfLanguage(tag: string) {
+  return MORE_LANGUAGES[tag] ?? languageName(tag);
+}
+
 export function useShelfLabel() {
   const { i18n } = useLingui();
   return (shelf: Pick<Shelf, "key" | "language">) =>
     shelf.language
-      ? languageName(shelf.language)
+      ? shelfLanguage(shelf.language)
       : i18n._(SUBJECT_LABELS[shelf.key] ?? UNCATEGORISED_LABEL);
+}
+
+/**
+ * The shelf's name in its lymi.app address, such as "german". Core names a language through
+ * Intl.DisplayNames, which Hermes lacks, so the phone takes the English name from its own list.
+ */
+export function shelfAddressName(shelf: Pick<Shelf, "key" | "language">): string {
+  if (!shelf.language) return shelf.key;
+  return shelfLanguage(shelf.language)
+    .normalize("NFD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 /** Lower case with the accents gone, so "cafe" finds "Café" and "zurich" finds "Zürich". */
@@ -64,6 +85,16 @@ export function searchDecks(
     }
   }
   return [...named, ...rest];
+}
+
+/** The shelves whose name holds every word of the query, as "germ" finds German. */
+export function searchShelves(shelves: Shelf[], query: string, label: (shelf: Shelf) => string) {
+  const words = fold(query).split(/\s+/).filter(Boolean);
+  if (words.length === 0) return [];
+  return shelves.filter((shelf) => {
+    const name = fold(label(shelf));
+    return words.every((word) => name.includes(word));
+  });
 }
 
 // Prototype only: the production catalogue as lymi.app/explore showed it on 12 Oct 2026, so the

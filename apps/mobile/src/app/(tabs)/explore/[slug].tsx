@@ -5,13 +5,15 @@ import { type ExploreDeckOut, publisherAvatarPath } from "@lymi/core/catalog";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
-import { Image, ScrollView, useWindowDimensions, View } from "react-native";
+import { ActivityIndicator, Image, ScrollView, useWindowDimensions, View } from "react-native";
+import Animated, { ZoomIn } from "react-native-reanimated";
 import { API_URL } from "../../../auth/client";
 import { useAddDeck } from "../../../explore/catalogue";
 import { DeckHand, handOf } from "../../../explore/deck-hand";
 import { DeckTile } from "../../../explore/layouts";
 import { useCoverColour } from "../../../explore/tray";
 import { usePalette } from "../../../theme/palette";
+import { GlassSurface } from "../../../ui/glass";
 import { OnTheWeb } from "../../../ui/on-the-web";
 import { Button, Icon, Plate, Press, Text } from "../../../ui/primitives";
 import { Screen } from "../../../ui/screen";
@@ -44,7 +46,12 @@ export default function ExploreDeck() {
   }
   if (!query.data) {
     return (
-      <Screen title={name ?? ""} back={back} ground={ground} header={<HeaderSkeleton />}>
+      <Screen
+        title={name ?? ""}
+        back={back}
+        ground={{ colour: ground, shape: "fade" }}
+        header={<HeaderSkeleton />}
+      >
         <Skeleton height={160} />
       </Screen>
     );
@@ -107,7 +114,6 @@ function DeckPage({
           <Button
             label={t`Open in Library`}
             size="lg"
-            icon="forward"
             onPress={() => router.navigate(`/library/${deckId}`)}
           />
         ) : (
@@ -124,7 +130,21 @@ function DeckPage({
   );
 
   return (
-    <Screen title={deck.name} back={back} ground={ground} header={header}>
+    <Screen
+      title={deck.name}
+      back={back}
+      ground={{ colour: ground, shape: "fade" }}
+      header={header}
+      actionsArrive
+      actions={
+        <BarAdd
+          added={!!deckId}
+          busy={add.isPending}
+          onAdd={() => add.mutate({ slug: deck.slug, edition: deck.meaningLanguage })}
+          onOpen={() => deckId && router.navigate(`/library/${deckId}`)}
+        />
+      }
+    >
       {sections.length > 0 && (
         <View className="gap-3">
           <Text className="px-1 text-lg font-medium text-text" accessibilityRole="header">
@@ -167,6 +187,66 @@ function DeckPage({
 
       {related.length > 0 && <MoreLikeThis related={related} />}
     </Screen>
+  );
+}
+
+/**
+ * Add, carried into the bar once the header's button has scrolled away: a glass capsule whose plus
+ * turns into a check when the deck arrives, and then opens it in Library.
+ */
+function BarAdd({
+  added,
+  busy,
+  onAdd,
+  onOpen,
+}: {
+  added: boolean;
+  busy: boolean;
+  onAdd: () => void;
+  onOpen: () => void;
+}) {
+  const { t } = useLingui();
+  const p = usePalette();
+  return (
+    <Press
+      onPress={added ? onOpen : busy ? undefined : onAdd}
+      accessibilityRole="button"
+      accessibilityLabel={added ? t`Open in Library` : t`Add to Library`}
+      accessibilityState={{ busy }}
+    >
+      {/* A fresh glass for each state: iOS drops the effect when a live glass view changes shape. */}
+      <GlassSurface
+        key={added ? "added" : "add"}
+        tint="room"
+        style={{
+          height: 40,
+          minWidth: 40,
+          borderRadius: 20,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          paddingHorizontal: added ? 0 : 14,
+        }}
+      >
+        {busy ? (
+          <ActivityIndicator color={p.text} />
+        ) : added ? (
+          // Once the deck is in, the bar keeps only the check, so it never crowds the title.
+          <Animated.View key="added" entering={ZoomIn.springify().damping(12)}>
+            <Icon name="check" size={20} colour={p["state-known"]} strokeWidth={2.75} />
+          </Animated.View>
+        ) : (
+          <Animated.View
+            key="add"
+            entering={ZoomIn.springify().damping(14)}
+            className="flex-row items-center gap-1.5"
+          >
+            <Icon name="plus" size={18} colour={p.text} strokeWidth={2.5} />
+            <Text className="text-base font-medium text-text">{t`Add`}</Text>
+          </Animated.View>
+        )}
+      </GlassSurface>
+    </Press>
   );
 }
 

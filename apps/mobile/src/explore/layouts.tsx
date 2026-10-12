@@ -5,8 +5,8 @@ import { useRouter } from "expo-router";
 import { ScrollView, useWindowDimensions, View } from "react-native";
 import { usePalette } from "../theme/palette";
 import { Icon, Plate, Press, RowArrow, Text } from "../ui/primitives";
-import { useShelfLabel } from "./catalogue";
-import { DeckTray, useTrayColour } from "./tray";
+import { shelfAddressName, useShelfLabel } from "./catalogue";
+import { DeckTray, usePoolColour, useTrayColour } from "./tray";
 
 /** The page's own gutter, which a sideways row bleeds through to the screen's edges. */
 const GUTTER = 20;
@@ -225,6 +225,59 @@ export function DeckList({
             </Text>
             <Text className="text-sm text-muted" numberOfLines={1}>
               {added[deck.slug] ? t`${shelfOf(deck)} · In Library` : shelfOf(deck)}
+            </Text>
+          </View>
+          <RowArrow />
+        </Press>
+      ))}
+    </Plate>
+  );
+}
+
+export function useOpenShelf() {
+  const router = useRouter();
+  const label = useShelfLabel();
+  return (shelf: Shelf) =>
+    hasShelfPage(shelf)
+      ? router.push({
+          pathname: "/explore/shelf/[key]",
+          params: { key: shelf.key, name: label(shelf) },
+        })
+      : router.navigate({ pathname: "/explore", params: { shelf: shelf.key } });
+}
+
+function ShelfMark({ shelf }: { shelf: Shelf }) {
+  const p = usePalette();
+  return (
+    <View
+      className="size-12 items-center justify-center rounded-md"
+      style={{ backgroundColor: usePoolColour(shelfAddressName(shelf)) }}
+    >
+      <Icon name="section" size={20} colour={p["text-2"]} />
+    </View>
+  );
+}
+
+/** Shelves as one plate of rows, for search: the shelf's colour, its name and how many decks. */
+export function ShelfList({ shelves }: { shelves: Shelf[] }) {
+  const label = useShelfLabel();
+  const open = useOpenShelf();
+  return (
+    <Plate className="overflow-hidden">
+      {shelves.map((shelf, i) => (
+        <Press
+          key={shelf.key}
+          scale={0.99}
+          onPress={() => open(shelf)}
+          accessibilityRole="link"
+          accessibilityLabel={label(shelf)}
+          className={`flex-row items-center gap-3.5 py-3 ps-3 pe-4 ${i > 0 ? "border-t border-edge" : ""}`}
+        >
+          <ShelfMark shelf={shelf} />
+          <View className="flex-1 gap-0.5">
+            <Text className="text-md font-medium text-text">{label(shelf)}</Text>
+            <Text className="text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+              {plural(shelf.decks.length, { one: "# deck", other: "# decks" })}
             </Text>
           </View>
           <RowArrow />

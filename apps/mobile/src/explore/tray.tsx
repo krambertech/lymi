@@ -26,6 +26,18 @@ const COVER = {
   dark: ["#200e0d", "#151505", "#09180c", "#021818", "#05161f", "#111221", "#1a0f1c", "#1e0e16"],
 } as const;
 
+/** A shelf's page lays its hue as a pool of light, oklch(0.955 0.05 h) and oklch(0.23 0.045 h). */
+const POOL = {
+  light: ["#ffe4df", "#f2f4cd", "#d9fadf", "#cafbfa", "#d1f6ff", "#e9edff", "#ffe6ff", "#ffe3f5"],
+  dark: ["#2f1412", "#1e1f03", "#0b2311", "#002323", "#03202f", "#191a32", "#26152a", "#2c1320"],
+} as const;
+
+/** A shelf's colour follows its address, as on lymi.app, so a shelf looks the same in both. */
+export function usePoolColour(name: string): string {
+  const room = POOL[useRoom()];
+  return room[trayHue(name)] ?? room[0];
+}
+
 export function useCoverColour(slug: string): string {
   const room = COVER[useRoom()];
   return room[trayHue(slug)] ?? room[0];

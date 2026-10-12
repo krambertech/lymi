@@ -97,7 +97,7 @@ export function Sheet({ open, onOpenChange, onDismiss, title, children, more }: 
 export function SheetGroup({ children }: { children: ReactNode }) {
   const rows = Children.toArray(children).filter(Boolean);
   return (
-    <View className="overflow-hidden rounded-xl bg-glass-plate">
+    <View className="overflow-hidden rounded-xl border border-edge bg-glass-plate">
       {rows.map((row, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: rows are given in order and never reorder
         <Fragment key={i}>

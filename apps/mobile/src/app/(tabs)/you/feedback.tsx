@@ -12,7 +12,7 @@ import { useState } from "react";
 import { Linking, ScrollView, View } from "react-native";
 import { isAppLanguage } from "../../../i18n";
 import { usePalette } from "../../../theme/palette";
-import { Field, FieldError, FieldLabel, Textarea } from "../../../ui/field";
+import { Field, FieldDescription, FieldError, FieldLabel, Textarea } from "../../../ui/field";
 import { GlassButton } from "../../../ui/glass";
 import { KeyboardRoom } from "../../../ui/keyboard";
 import { Button, Icon, Text } from "../../../ui/primitives";
@@ -69,22 +69,21 @@ export default function Feedback() {
 
   return (
     <KeyboardRoom>
-      <View className="flex-row items-center justify-between px-4 pt-5 pb-2">
+      {/* The same header as every full sheet: close, the title centred, the one action. */}
+      <View className="flex-row items-center justify-between gap-3 px-4 pt-5 pb-2">
         <GlassButton icon="close" label={t`Cancel`} onPress={() => router.back()} />
+        <Text className="text-md font-medium text-text" accessibilityRole="header">
+          {t`Send feedback`}
+        </Text>
         <GlassButton icon="send" label={t`Send`} primary busy={send.isPending} onPress={submit} />
       </View>
       <ScrollView
         contentContainerClassName="gap-6 px-5 pt-2 pb-6"
         keyboardShouldPersistTaps="handled"
       >
-        <View className="gap-1.5">
-          <Text className="text-2xl font-medium text-text" accessibilityRole="header">
-            {t`Send feedback`}
-          </Text>
-          <Text className="text-base text-text-2">
-            <Trans>Tell Lymi what broke or what it should do. Replies come to your email.</Trans>
-          </Text>
-        </View>
+        <Text className="px-1 text-base text-text-2">
+          <Trans>Tell Lymi what broke or what it should do. Replies come to your email.</Trans>
+        </Text>
         <View className="gap-1.5">
           <Text className="px-1 text-sm font-medium text-text-2">
             <Trans>What this is about</Trans>
@@ -111,13 +110,11 @@ export default function Feedback() {
               setInvalid(null);
             }}
           />
+          <FieldDescription>
+            {t`Lymi also gets the screen you are on, the app version, your phone and your app language.`}
+          </FieldDescription>
           <FieldError>{invalid}</FieldError>
         </Field>
-        <Text className="px-1 text-sm text-muted">
-          <Trans>
-            Lymi also gets the screen you are on, the app version, your phone and your app language.
-          </Trans>
-        </Text>
         {send.isError && (
           <View
             className="gap-1 rounded-lg bg-danger-soft px-3.5 py-3"

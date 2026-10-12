@@ -252,6 +252,9 @@ msgstr "90 дней"
 msgid "A connected app"
 msgstr "Подключённое приложение"
 
+msgid "A deck holds the words you learn together. Make one, or import decks on the web."
+msgstr "Колода хранит слова, которые ты учишь вместе. Создай её или импортируй колоды в веб-версии."
+
 msgid "A new code is on its way to {address}."
 msgstr "Отправляем новый код на {address}."
 
@@ -305,6 +308,9 @@ msgstr "Добавь карточки из следующего урока"
 
 msgid "Add hook"
 msgstr "Добавить зацепку"
+
+msgid "Add the words you want to learn, and they show here."
+msgstr "Добавь слова, которые хочешь выучить, и они появятся здесь."
 
 msgid "Add to {deckName}"
 msgstr "Добавить в {deckName}"
@@ -422,8 +428,14 @@ msgstr "Не меньше {MIN_PASSWORD_LENGTH} символов."
 msgid "Back"
 msgstr "Назад"
 
+msgid "Back to Library"
+msgstr "В Библиотеку"
+
 msgid "Back to sign in"
 msgstr "Назад ко входу"
+
+msgid "Back to the deck"
+msgstr "К колоде"
 
 msgid "Both ways"
 msgstr "Оба способа"
@@ -489,6 +501,9 @@ msgstr "Карточки с уроков Марко по вторникам."
 
 msgid "Cards outside a section"
 msgstr "Карточки без раздела"
+
+msgid "Cards the owner adds show here."
+msgstr "Здесь появятся карточки, которые добавит владелец."
 
 msgctxt "deck tag"
 msgid "CCSE Spanish nationality test"
@@ -602,14 +617,23 @@ msgstr "Не удалось загрузить Обзор"
 msgid "Couldn’t load more."
 msgstr "Не удалось загрузить больше."
 
-msgid "Couldn’t load the history. Check your connection."
-msgstr "Не удалось загрузить историю. Проверь соединение."
+msgid "Couldn’t load this card"
+msgstr "Не удалось загрузить эту карточку"
+
+msgid "Couldn’t load this card’s history"
+msgstr "Не удалось загрузить историю этой карточки"
+
+msgid "Couldn’t load this deck"
+msgstr "Не удалось загрузить эту колоду"
 
 msgid "Couldn’t load Today"
 msgstr "Не удалось загрузить экран «Сегодня»"
 
 msgid "Couldn’t load your cards"
 msgstr "Не удалось загрузить карточки"
+
+msgid "Couldn’t load your Library"
+msgstr "Не удалось загрузить Библиотеку"
 
 msgid "Couldn’t open this deck"
 msgstr "Не удалось открыть эту колоду"
@@ -640,6 +664,9 @@ msgstr "Не удалось сохранить оценку для «{term}». �
 
 msgid "Couldn’t save your name. Check your connection and try again."
 msgstr "Не удалось сохранить имя. Проверь соединение и попробуй ещё раз."
+
+msgid "Couldn’t search cards"
+msgstr "Не удалось найти карточки"
 
 msgid "Couldn’t send your feedback"
 msgstr "Не удалось отправить сообщение"
@@ -707,6 +734,9 @@ msgstr "Дней с повторениями"
 
 msgid "Deck"
 msgstr "Колода"
+
+msgid "Deck names still match without one."
+msgstr "Названия колод ищутся и без него."
 
 msgid "Deck options"
 msgstr "Параметры колоды"
@@ -1087,6 +1117,12 @@ msgstr "Она загрузится, как только ты снова буд�
 msgid "It may have been withdrawn, or the connection dropped."
 msgstr "Возможно, её сняли с публикации или пропало соединение."
 
+msgid "It was archived or moved since you opened the deck."
+msgstr "Её архивировали или перенесли, пока колода была открыта."
+
+msgid "It was archived, or you left it."
+msgstr "Её архивировали, или ты больше не в ней."
+
 msgctxt "language"
 msgid "Italian"
 msgstr "Итальянский"
@@ -1320,14 +1356,14 @@ msgstr "Далее: выбрать колоды"
 msgid "No activity yet"
 msgstr "Активности пока нет"
 
-msgid "No cards match these filters."
-msgstr "Ни одна карточка не подходит под эти фильтры."
+msgid "No cards match “{query}”"
+msgstr "Нет карточек по запросу «{query}»"
+
+msgid "No cards match these filters"
+msgstr "Ни одна карточка не подходит под эти фильтры"
 
 msgid "No cards yet"
 msgstr "Карточек ещё нет"
-
-msgid "No cards yet."
-msgstr "Карточек пока нет."
 
 msgid "No cards you keep forgetting"
 msgstr "Нет карточек, которые ты часто забываешь"
@@ -1338,8 +1374,14 @@ msgstr "Ни одна колода не подходит под «{query}»"
 msgid "No decks of your own yet. Only decks you create can go in a series."
 msgstr "У тебя пока нет своих колод. В серию можно добавить только созданные тобой колоды."
 
-msgid "No history yet."
-msgstr "Истории пока нет."
+msgid "No decks or cards match “{query}”"
+msgstr "Ни одна колода или карточка не подходит под «{query}»"
+
+msgid "No decks yet"
+msgstr "Колод пока нет"
+
+msgid "No history yet"
+msgstr "Истории пока нет"
 
 msgid "No language"
 msgstr "Без языка"
@@ -1393,9 +1435,6 @@ msgstr "В «{scopeName}» больше ничего"
 msgid "Nothing left in this deck"
 msgstr "В этой колоде больше ничего"
 
-msgid "Nothing matches “{query}”."
-msgstr "Ничего не найдено по запросу «{query}»."
-
 msgid "Nothing published yet"
 msgstr "Пока ничего не опубликовано"
 
@@ -1425,6 +1464,9 @@ msgstr "Открыть каталог"
 
 msgid "Open in Library"
 msgstr "Открыть в Библиотеке"
+
+msgid "Open it once with a connection, and it stays on this phone."
+msgstr "Открой это один раз с соединением, и оно останется на телефоне."
 
 msgid "Open Library"
 msgstr "Открыть Библиотеку"
@@ -1664,8 +1706,8 @@ msgstr "Поиск колод и карточек"
 msgid "Search this deck"
 msgstr "Искать в этой колоде"
 
-msgid "Searching cards needs a connection. Check it and try again."
-msgstr "Для поиска карточек нужно соединение. Проверь его и попробуй снова."
+msgid "Searching cards needs a connection"
+msgstr "Для поиска карточек нужно соединение"
 
 msgid "Section"
 msgstr "Раздел"
@@ -1734,6 +1776,9 @@ msgstr "Полки"
 
 msgid "Show"
 msgstr "Показать"
+
+msgid "Show all"
+msgstr "Показать все"
 
 msgid "Show hook"
 msgstr "Показать зацепку"
@@ -1888,11 +1933,23 @@ msgstr "Колода исчезнет из Библиотеки, и её кар�
 msgid "Theme"
 msgstr "Тема"
 
-msgid "This card is no longer in this deck."
-msgstr "Этой карточки больше нет в этой колоде."
+msgid "This card isn’t in this deck"
+msgstr "Этой карточки нет в этой колоде"
+
+msgid "This card needs a connection"
+msgstr "Для этой карточки нужно соединение"
+
+msgid "This card’s history needs a connection"
+msgstr "Для истории этой карточки нужно соединение"
 
 msgid "This card’s picture was removed."
 msgstr "Изображение этой карточки убрано."
+
+msgid "This deck isn’t in your Library"
+msgstr "Этой колоды нет в Библиотеке"
+
+msgid "This deck needs a connection"
+msgstr "Для этой колоды нужно соединение"
 
 msgid "This series is no longer here."
 msgstr "Этой серии больше нет."
@@ -1965,6 +2022,9 @@ msgstr "Попробуй слово с карточки или название 
 
 msgid "Try again"
 msgstr "Попробовать ещё раз"
+
+msgid "Try another word, or part of one."
+msgstr "Попробуй другое слово или его часть."
 
 msgctxt "language"
 msgid "Turkish"
@@ -2099,6 +2159,9 @@ msgstr "Твои колоды и повторения работают и без
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Твои оценки сохранены. Проверь соединение и попробуй снова."
+
+msgid "Your Library needs a connection"
+msgstr "Для Библиотеки нужно соединение"
 
 msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Твоё сообщение сохранено. Попробуй ещё раз или напиши на <0>hello@lymi.app</0>."

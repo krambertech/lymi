@@ -252,6 +252,9 @@ msgstr "90 days"
 msgid "A connected app"
 msgstr "A connected app"
 
+msgid "A deck holds the words you learn together. Make one, or import decks on the web."
+msgstr "A deck holds the words you learn together. Make one, or import decks on the web."
+
 msgid "A new code is on its way to {address}."
 msgstr "A new code is on its way to {address}."
 
@@ -305,6 +308,9 @@ msgstr "Add cards from your next lesson"
 
 msgid "Add hook"
 msgstr "Add hook"
+
+msgid "Add the words you want to learn, and they show here."
+msgstr "Add the words you want to learn, and they show here."
 
 msgid "Add to {deckName}"
 msgstr "Add to {deckName}"
@@ -422,8 +428,14 @@ msgstr "At least {MIN_PASSWORD_LENGTH} characters."
 msgid "Back"
 msgstr "Back"
 
+msgid "Back to Library"
+msgstr "Back to Library"
+
 msgid "Back to sign in"
 msgstr "Back to sign in"
+
+msgid "Back to the deck"
+msgstr "Back to the deck"
 
 msgid "Both ways"
 msgstr "Both ways"
@@ -489,6 +501,9 @@ msgstr "Cards from Marco’s Tuesday lessons."
 
 msgid "Cards outside a section"
 msgstr "Cards outside a section"
+
+msgid "Cards the owner adds show here."
+msgstr "Cards the owner adds show here."
 
 msgctxt "deck tag"
 msgid "CCSE Spanish nationality test"
@@ -602,14 +617,23 @@ msgstr "Couldn’t load Insights"
 msgid "Couldn’t load more."
 msgstr "Couldn’t load more."
 
-msgid "Couldn’t load the history. Check your connection."
-msgstr "Couldn’t load the history. Check your connection."
+msgid "Couldn’t load this card"
+msgstr "Couldn’t load this card"
+
+msgid "Couldn’t load this card’s history"
+msgstr "Couldn’t load this card’s history"
+
+msgid "Couldn’t load this deck"
+msgstr "Couldn’t load this deck"
 
 msgid "Couldn’t load Today"
 msgstr "Couldn’t load Today"
 
 msgid "Couldn’t load your cards"
 msgstr "Couldn’t load your cards"
+
+msgid "Couldn’t load your Library"
+msgstr "Couldn’t load your Library"
 
 msgid "Couldn’t open this deck"
 msgstr "Couldn’t open this deck"
@@ -640,6 +664,9 @@ msgstr "Couldn’t save your grade for “{term}”. You’ll see it again."
 
 msgid "Couldn’t save your name. Check your connection and try again."
 msgstr "Couldn’t save your name. Check your connection and try again."
+
+msgid "Couldn’t search cards"
+msgstr "Couldn’t search cards"
 
 msgid "Couldn’t send your feedback"
 msgstr "Couldn’t send your feedback"
@@ -707,6 +734,9 @@ msgstr "Days reviewed"
 
 msgid "Deck"
 msgstr "Deck"
+
+msgid "Deck names still match without one."
+msgstr "Deck names still match without one."
 
 msgid "Deck options"
 msgstr "Deck options"
@@ -1087,6 +1117,12 @@ msgstr "It loads as soon as you’re back online."
 msgid "It may have been withdrawn, or the connection dropped."
 msgstr "It may have been withdrawn, or the connection dropped."
 
+msgid "It was archived or moved since you opened the deck."
+msgstr "It was archived or moved since you opened the deck."
+
+msgid "It was archived, or you left it."
+msgstr "It was archived, or you left it."
+
 msgctxt "language"
 msgid "Italian"
 msgstr "Italian"
@@ -1320,14 +1356,14 @@ msgstr "Next: choose decks"
 msgid "No activity yet"
 msgstr "No activity yet"
 
-msgid "No cards match these filters."
-msgstr "No cards match these filters."
+msgid "No cards match “{query}”"
+msgstr "No cards match “{query}”"
+
+msgid "No cards match these filters"
+msgstr "No cards match these filters"
 
 msgid "No cards yet"
 msgstr "No cards yet"
-
-msgid "No cards yet."
-msgstr "No cards yet."
 
 msgid "No cards you keep forgetting"
 msgstr "No cards you keep forgetting"
@@ -1338,8 +1374,14 @@ msgstr "No decks match “{query}”"
 msgid "No decks of your own yet. Only decks you create can go in a series."
 msgstr "No decks of your own yet. Only decks you create can go in a series."
 
-msgid "No history yet."
-msgstr "No history yet."
+msgid "No decks or cards match “{query}”"
+msgstr "No decks or cards match “{query}”"
+
+msgid "No decks yet"
+msgstr "No decks yet"
+
+msgid "No history yet"
+msgstr "No history yet"
 
 msgid "No language"
 msgstr "No language"
@@ -1393,9 +1435,6 @@ msgstr "Nothing left in {scopeName}"
 msgid "Nothing left in this deck"
 msgstr "Nothing left in this deck"
 
-msgid "Nothing matches “{query}”."
-msgstr "Nothing matches “{query}”."
-
 msgid "Nothing published yet"
 msgstr "Nothing published yet"
 
@@ -1425,6 +1464,9 @@ msgstr "Open Explore"
 
 msgid "Open in Library"
 msgstr "Open in Library"
+
+msgid "Open it once with a connection, and it stays on this phone."
+msgstr "Open it once with a connection, and it stays on this phone."
 
 msgid "Open Library"
 msgstr "Open Library"
@@ -1664,8 +1706,8 @@ msgstr "Search decks and cards"
 msgid "Search this deck"
 msgstr "Search this deck"
 
-msgid "Searching cards needs a connection. Check it and try again."
-msgstr "Searching cards needs a connection. Check it and try again."
+msgid "Searching cards needs a connection"
+msgstr "Searching cards needs a connection"
 
 msgid "Section"
 msgstr "Section"
@@ -1734,6 +1776,9 @@ msgstr "Shelves"
 
 msgid "Show"
 msgstr "Show"
+
+msgid "Show all"
+msgstr "Show all"
 
 msgid "Show hook"
 msgstr "Show hook"
@@ -1888,11 +1933,23 @@ msgstr "The deck leaves Library and its cards stop coming up in review. If you j
 msgid "Theme"
 msgstr "Theme"
 
-msgid "This card is no longer in this deck."
-msgstr "This card is no longer in this deck."
+msgid "This card isn’t in this deck"
+msgstr "This card isn’t in this deck"
+
+msgid "This card needs a connection"
+msgstr "This card needs a connection"
+
+msgid "This card’s history needs a connection"
+msgstr "This card’s history needs a connection"
 
 msgid "This card’s picture was removed."
 msgstr "This card’s picture was removed."
+
+msgid "This deck isn’t in your Library"
+msgstr "This deck isn’t in your Library"
+
+msgid "This deck needs a connection"
+msgstr "This deck needs a connection"
 
 msgid "This series is no longer here."
 msgstr "This series is no longer here."
@@ -1965,6 +2022,9 @@ msgstr "Try a word from a card, or a language."
 
 msgid "Try again"
 msgstr "Try again"
+
+msgid "Try another word, or part of one."
+msgstr "Try another word, or part of one."
 
 msgctxt "language"
 msgid "Turkish"
@@ -2099,6 +2159,9 @@ msgstr "Your decks and reviews still work offline."
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Your grades are saved. Check your connection and try again."
+
+msgid "Your Library needs a connection"
+msgstr "Your Library needs a connection"
 
 msgid "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."
 msgstr "Your message is still here. Try again, or write to <0>hello@lymi.app</0>."

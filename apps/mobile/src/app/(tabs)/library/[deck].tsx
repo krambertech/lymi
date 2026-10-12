@@ -19,7 +19,9 @@ import { View } from "react-native";
 import { useDeckExits } from "../../../data/decks";
 import { useDeckCards, useDecks, useSections } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
+import { EmptyState } from "../../../ui/empty-state";
 import { Icon } from "../../../ui/icons";
+import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
 import { DropdownMenu, Select } from "../../../ui/menu";
 import { OfflineNote } from "../../../ui/offline-note";
 import { Button, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
@@ -39,7 +41,9 @@ export default function Deck() {
   const { t, i18n } = useLingui();
   const router = useRouter();
   const { deck: id } = useLocalSearchParams<{ deck: string }>();
-  const deck = useDecks().data?.find((d) => d.id === id);
+  const decks = useDecks();
+  const deck = decks.data?.find((d) => d.id === id);
+  const gone = !!decks.data && !deck;
   const cards = useDeckCards(id);
   const rows: DeckRow[] = cards.data ?? [];
   const sections = useSections(id).data?.sections ?? [];
@@ -58,61 +62,95 @@ export default function Deck() {
   }, [rows, filters, sort, i18n.locale, sections]);
   const owner = deck?.role === "owner";
   const exits = useDeckExits(deck);
+  // The deck's name and counts come from the deck list, its words from its cards: either can fail.
+  const cardsFailed = useLoadFailed(cards);
+  const decksFailed = useLoadFailed(decks);
+  const addCard = () => router.push(`/capture?deck=${id}` as Href);
 
   return (
     <Screen
       title={deck?.name ?? ""}
       back={{ label: t`Library`, to: "/library" }}
       actions={
-        <View className="flex-row items-center gap-2.5">
-          <BarButton
-            icon="search"
-            label={t`Search this deck`}
-            onPress={() => router.push(`/search?deck=${id}` as Href)}
-          />
-          <DropdownMenu
-            title={deck?.name}
-            trigger={(open) => <BarButton icon="more" label={t`Deck options`} onPress={open} />}
-            items={[
-              [
+        // A deck that has gone has nothing to search or change.
+        !gone && (
+          <View className="flex-row items-center gap-2.5">
+            <BarButton
+              icon="search"
+              label={t`Search this deck`}
+              onPress={() => router.push(`/search?deck=${id}` as Href)}
+            />
+            <DropdownMenu
+              title={deck?.name}
+              trigger={(open) => <BarButton icon="more" label={t`Deck options`} onPress={open} />}
+              items={[
+                [
+                  ...(owner
+                    ? [
+                        {
+                          label: t`Add a card`,
+                          icon: "plus" as const,
+                          onSelect: addCard,
+                        },
+                      ]
+                    : []),
+                  {
+                    label: owner ? t`Deck settings` : t`About this deck`,
+                    icon: "settings",
+                    onSelect: () => router.push(`/library/deck-settings?id=${id}` as Href),
+                  },
+                ],
                 ...(owner
                   ? [
-                      {
-                        label: t`Add a card`,
-                        icon: "plus" as const,
-                        onSelect: () => router.push(`/capture?deck=${id}` as Href),
-                      },
+                      [
+                        {
+                          label: t`Archive deck`,
+                          icon: "archive" as const,
+                          destructive: true,
+                          onSelect: exits.archive,
+                        },
+                      ],
                     ]
                   : []),
-                {
-                  label: owner ? t`Deck settings` : t`About this deck`,
-                  icon: "settings",
-                  onSelect: () => router.push(`/library/deck-settings?id=${id}` as Href),
-                },
-              ],
-              ...(owner
-                ? [
-                    [
-                      {
-                        label: t`Archive deck`,
-                        icon: "archive" as const,
-                        destructive: true,
-                        onSelect: exits.archive,
-                      },
-                    ],
-                  ]
-                : []),
-            ]}
-          />
-        </View>
+              ]}
+            />
+          </View>
+        )
       }
     >
       <OfflineNote query={cards} />
-      {!deck || !cards.data ? (
+      {gone ? (
+        // Archived or left elsewhere since Library was opened.
+        <EmptyState
+          kind="noMatch"
+          icon="deck"
+          title={t`This deck isn’t in your Library`}
+          body={t`It was archived, or you left it.`}
+          action={{ label: t`Back to Library`, onPress: () => router.dismissTo("/library") }}
+        />
+      ) : cardsFailed || decksFailed ? (
+        <LoadFailed
+          query={decksFailed ? decks : cards}
+          failed={t`Couldn’t load this deck`}
+          offline={t`This deck needs a connection`}
+        />
+      ) : !deck || !cards.data ? (
         <View className="gap-3">
           <Skeleton height={120} />
           <Skeleton height={64} />
         </View>
+      ) : rows.length === 0 ? (
+        <EmptyState
+          kind="start"
+          icon="deck"
+          title={t`No cards yet`}
+          body={
+            owner
+              ? t`Add the words you want to learn, and they show here.`
+              : t`Cards the owner adds show here.`
+          }
+          action={owner ? { label: t`Add a card`, onPress: addCard } : undefined}
+        />
       ) : (
         <>
           <Top deck={deck} rows={rows} />
@@ -125,9 +163,14 @@ export default function Deck() {
               setSort={setSort}
             />
             {groups.length === 0 ? (
-              <Text className="px-1 text-base text-muted">
-                {rows.length === 0 ? t`No cards yet.` : t`No cards match these filters.`}
-              </Text>
+              <Plate>
+                <EmptyState
+                  kind="noMatch"
+                  size="inline"
+                  title={t`No cards match these filters`}
+                  action={{ label: t`Show all`, onPress: () => setFilters(noFilters) }}
+                />
+              </Plate>
             ) : (
               groups.map((g) => <Group key={g.key} group={g} />)
             )}

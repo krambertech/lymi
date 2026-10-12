@@ -17,6 +17,7 @@ msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 
 #. placeholder {0}: d.due
+#. placeholder {0}: r.due
 msgid "{0, plural, one {# card due} other {# cards due}}"
 msgstr "{0, plural, one {# card due} other {# cards due}}"
 
@@ -61,6 +62,11 @@ msgstr "{0, plural, one {# review, goal {1}} other {# reviews, goal {2}}}"
 #. placeholder {0}: sections.length
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# section} other {# sections}}"
+
+#. placeholder {0}: r.due
+#. placeholder {1}: r.decks
+msgid "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck} other {# decks}}"
+msgstr "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck} other {# decks}}"
 
 #. placeholder {0}: cards.total
 #. placeholder {0}: rows.length
@@ -1349,6 +1355,9 @@ msgstr "New to Lymi?"
 
 msgid "Next card due {next}."
 msgstr "Next card due {next}."
+
+msgid "Next due {next}"
+msgstr "Next due {next}"
 
 msgid "Next month"
 msgstr "Next month"

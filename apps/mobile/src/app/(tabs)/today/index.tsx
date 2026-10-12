@@ -1,5 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { groupDecks } from "@lymi/client/library-groups";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS, type StreakOut } from "@lymi/core";
 import { flameSize } from "@lymi/design";
 import * as Haptics from "expo-haptics";
@@ -10,7 +11,14 @@ import { Flame } from "../../../brand/flame";
 import { Lantern } from "../../../brand/lantern";
 import { dueToday } from "../../../data/due";
 import { REST_DISMISSED_KEY, todayStore } from "../../../data/kept";
-import { useDay, useDecks, useKeptSince, useRounds, useStreak } from "../../../data/queries";
+import {
+  useDay,
+  useDecks,
+  useKeptSince,
+  useRounds,
+  useSeriesList,
+  useStreak,
+} from "../../../data/queries";
 import { useLandingSpot } from "../../../splash/landing";
 import { clear, usePalette, useRoom } from "../../../theme/palette";
 import { ListRow } from "../../../ui/list-row";
@@ -152,8 +160,12 @@ function LitDue({
             onPress={() => startReview(router)}
           />
         ) : noDecks ? (
-          // A stub until the phone can make a deck (#584).
-          <Button label={t`New deck`} variant="primary" size="xl" disabled />
+          <Button
+            label={t`New deck`}
+            variant="primary"
+            size="xl"
+            onPress={() => router.push("/new-deck")}
+          />
         ) : (
           // Nothing due is not nothing to do: capture is the standing action.
           <Button
@@ -394,24 +406,55 @@ function Rounds({ rounds }: { rounds: RoundsData }) {
 }
 
 /**
- * The decks with something due, shown once there are two or more decks. A series stays as its
- * decks until the review can take one (#577); then it is one row, as on the web.
+ * The decks with something due, shown once there are two or more decks. A series is what the
+ * learner chose to review together, so it is one row and its decks get none, as on the web.
  */
 function DecksToReview({ decks }: { decks: Deck[] }) {
   const { t } = useLingui();
   const router = useRouter();
   const p = usePalette();
-  const rows = decks.filter((d) => d.due > 0);
+  const series = useSeriesList(true).data;
+  const groups = groupDecks(decks, series);
+  const rows = [
+    ...groups.loose
+      .filter((d) => d.due > 0)
+      .map((d) => ({
+        key: d.id,
+        name: d.name,
+        due: d.due,
+        decks: 0,
+        href: `/review?deck=${d.id}`,
+      })),
+    ...groups.series.flatMap(({ series: s, decks: inSeries }) => {
+      const due = inSeries.reduce((n, d) => n + d.due, 0);
+      return due > 0
+        ? [
+            {
+              key: s.id,
+              name: s.name,
+              due,
+              decks: inSeries.filter((d) => d.due > 0).length,
+              href: `/review?series=${s.id}`,
+            },
+          ]
+        : [];
+    }),
+  ];
   if (rows.length === 0) return null;
-  const items = rows.map((d, i) => (
+  const items = rows.map((r, i) => (
     <ListRow
-      key={d.id}
+      key={r.key}
       first={i === 0}
-      title={d.name}
-      count={d.due}
-      countLabel={plural(d.due, { one: "# card due", other: "# cards due" })}
+      title={r.name}
+      count={r.due}
+      line={
+        r.decks > 0
+          ? t`${plural(r.due, { one: "card due", other: "cards due" })} in ${plural(r.decks, { one: "# deck", other: "# decks" })}`
+          : undefined
+      }
+      countLabel={plural(r.due, { one: "# card due", other: "# cards due" })}
       end="open"
-      onPress={() => startReview(router, `/review?deck=${d.id}`)}
+      onPress={() => startReview(router, r.href as Href)}
     />
   ));
   return (

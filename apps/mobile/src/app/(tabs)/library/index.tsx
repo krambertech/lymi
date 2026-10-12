@@ -6,7 +6,8 @@ import * as Haptics from "expo-haptics";
 import { type Href, Link, useRouter } from "expo-router";
 import { Alert, Pressable, View } from "react-native";
 import { languageName } from "../../../data/languages";
-import { useArchivedDecks, useDecks, useSeriesList } from "../../../data/queries";
+import { useNextDue } from "../../../data/next-due";
+import { useArchivedDecks, useDeckCards, useDecks, useSeriesList } from "../../../data/queries";
 import { useSeriesActions } from "../../../data/series";
 import { useOnline } from "../../../streak/goal-picker";
 import { usePalette } from "../../../theme/palette";
@@ -313,7 +314,10 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
   const size =
     d.total === 0 ? t`No cards yet` : plural(d.total, { one: "# card", other: "# cards" });
   const owner = d.owner.name;
-  const line = [d.role === "owner" ? null : t`Shared by ${owner}`, language, size]
+  // Kept on the phone once read, as on the web, so a deck also opens offline after Library.
+  const next = useNextDue(useDeckCards(d.id).data);
+  const back = d.due === 0 && d.total > 0 && next ? t`Next due ${next}` : null;
+  const line = [d.role === "owner" ? null : t`Shared by ${owner}`, language, size, back]
     .filter(Boolean)
     .join(" · ");
   const due = d.due > 0 ? d.due : undefined;

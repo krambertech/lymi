@@ -17,6 +17,7 @@ msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} из # повторения} few {{2} из # повторений} many {{2} из # повторений} other {{2} из # повторения}}"
 
 #. placeholder {0}: d.due
+#. placeholder {0}: r.due
 msgid "{0, plural, one {# card due} other {# cards due}}"
 msgstr "{0, plural, one {# карточка к повторению} few {# карточки к повторению} many {# карточек к повторению} other {# карточки к повторению}}"
 
@@ -61,6 +62,11 @@ msgstr "{0, plural, one {# повторение, цель {1}} few {# повто
 #. placeholder {0}: sections.length
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# раздел} few {# раздела} many {# разделов} other {# раздела}}"
+
+#. placeholder {0}: r.due
+#. placeholder {1}: r.decks
+msgid "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck} other {# decks}}"
+msgstr "{0, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}} в {1, plural, one {# колоде} few {# колодах} many {# колодах} other {# колодах}}"
 
 #. placeholder {0}: cards.total
 #. placeholder {0}: rows.length
@@ -1349,6 +1355,9 @@ msgstr "Впервые в Lymi?"
 
 msgid "Next card due {next}."
 msgstr "Следующее повторение {next}."
+
+msgid "Next due {next}"
+msgstr "Следующее повторение {next}"
 
 msgid "Next month"
 msgstr "Следующий месяц"

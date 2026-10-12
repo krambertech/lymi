@@ -17,6 +17,7 @@ import { ArrowUpDown, ListFilter } from "lucide-react-native";
 import { useMemo, useState } from "react";
 import { View } from "react-native";
 import { useDeckExits } from "../../../data/decks";
+import { useNextDue } from "../../../data/next-due";
 import { useDeckCards, useDecks, useSections } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { EmptyState } from "../../../ui/empty-state";
@@ -30,8 +31,6 @@ import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { StateIcon, stateMarks } from "../../../ui/state-mark";
 import { DECK_ACCESSORY } from "../../../ui/tab-bar";
-
-const DAY = 86_400_000;
 
 /**
  * A deck: what it wants today and how far along it is, then its words as a glossary, which Filter
@@ -189,24 +188,6 @@ function useCounts(rows: DeckRow[]) {
     for (const r of rows) n[stateKey(r.state?.state)]++;
     return n;
   }, [rows]);
-}
-
-/** "tomorrow", "in 3 days": when the deck's next card comes back. Hermes has no RelativeTimeFormat. */
-function useNextDue(rows: DeckRow[]) {
-  const { t } = useLingui();
-  const now = Date.now();
-  let next = Number.POSITIVE_INFINITY;
-  for (const { state } of rows) {
-    const at = state ? new Date(state.due).getTime() : Number.NaN;
-    if (at > now && at < next) next = at;
-  }
-  if (!Number.isFinite(next)) return null;
-  const hours = Math.max(1, Math.round((next - now) / 3_600_000));
-  const days = Math.round((next - now) / DAY);
-  if (days < 1) return plural(hours, { one: "in # hour", other: "in # hours" });
-  if (days === 1) return t`tomorrow`;
-  if (days < 30) return plural(days, { one: "in # day", other: "in # days" });
-  return plural(Math.round(days / 30), { one: "in # month", other: "in # months" });
 }
 
 function Top({ deck, rows }: { deck: DeckData; rows: DeckRow[] }) {

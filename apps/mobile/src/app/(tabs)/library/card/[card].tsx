@@ -73,6 +73,7 @@ export default function CardPage() {
   const card = row?.card;
   const pronounce = usePronunciation(card ?? null);
   const failed = useLoadFailed(cards);
+  const historyFailed = useLoadFailed(historyQuery);
   if (!card) {
     return (
       <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>
@@ -259,22 +260,19 @@ export default function CardPage() {
         </View>
       ))}
       {/* The history is read on its own, so offline it can be missing for a card that has one. */}
-      {!history && historyQuery.isPending && (
-        <View className="px-5 py-4">
-          <Skeleton height={48} />
-        </View>
-      )}
-      {!history && historyQuery.isError && (
-        <EmptyState
-          kind="failed"
+      {historyFailed ? (
+        <LoadFailed
+          query={historyQuery}
           size="inline"
-          title={t`Couldn’t load this card’s history`}
-          action={{
-            label: t`Try again`,
-            onPress: () => void historyQuery.refetch(),
-            busy: historyQuery.isFetching,
-          }}
+          failed={t`Couldn’t load this card’s history`}
+          offline={t`This card’s history needs a connection`}
         />
+      ) : (
+        !history && (
+          <View className="px-5 py-4">
+            <Skeleton height={48} />
+          </View>
+        )
       )}
       {history && items.length === 0 && (
         <EmptyState kind="start" size="inline" icon="activity" title={t`No history yet`} />

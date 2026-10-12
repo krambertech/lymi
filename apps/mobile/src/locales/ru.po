@@ -1939,6 +1939,9 @@ msgstr "Этой карточки нет в этой колоде"
 msgid "This card needs a connection"
 msgstr "Для этой карточки нужно соединение"
 
+msgid "This card’s history needs a connection"
+msgstr "Для истории этой карточки нужно соединение"
+
 msgid "This card’s picture was removed."
 msgstr "Изображение этой карточки убрано."
 

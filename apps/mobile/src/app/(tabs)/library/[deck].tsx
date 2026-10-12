@@ -62,7 +62,9 @@ export default function Deck() {
   }, [rows, filters, sort, i18n.locale, sections]);
   const owner = deck?.role === "owner";
   const exits = useDeckExits(deck);
-  const failed = useLoadFailed(cards);
+  // The deck's name and counts come from the deck list, its words from its cards: either can fail.
+  const cardsFailed = useLoadFailed(cards);
+  const decksFailed = useLoadFailed(decks);
   const addCard = () => router.push(`/capture?deck=${id}` as Href);
 
   return (
@@ -126,9 +128,9 @@ export default function Deck() {
           body={t`It was archived, or you left it.`}
           action={{ label: t`Back to Library`, onPress: () => router.dismissTo("/library") }}
         />
-      ) : failed ? (
+      ) : cardsFailed || decksFailed ? (
         <LoadFailed
-          query={cards}
+          query={decksFailed ? decks : cards}
           failed={t`Couldn’t load this deck`}
           offline={t`This deck needs a connection`}
         />

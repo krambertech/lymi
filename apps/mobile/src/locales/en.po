@@ -1939,6 +1939,9 @@ msgstr "This card isn’t in this deck"
 msgid "This card needs a connection"
 msgstr "This card needs a connection"
 
+msgid "This card’s history needs a connection"
+msgstr "This card’s history needs a connection"
+
 msgid "This card’s picture was removed."
 msgstr "This card’s picture was removed."
 

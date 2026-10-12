@@ -21,7 +21,6 @@ import { Plate, Press, Text } from "../../../../ui/primitives";
 import { Screen } from "../../../../ui/screen";
 import { Skeleton } from "../../../../ui/skeleton";
 
-// Prototype switch for #580: whether the card reads as one page or as plates.
 const DAY = 86_400_000;
 const HISTORY_ROWS = 8;
 
@@ -59,7 +58,8 @@ export default function CardPage() {
   const p = usePalette();
   const { card: id, deck: deckId } = useLocalSearchParams<{ card: string; deck: string }>();
   const deck = useDecks().data?.find((d) => d.id === deckId);
-  const row = useDeckCards(deckId).data?.find((r) => r.card.id === id);
+  const cards = useDeckCards(deckId);
+  const row = cards.data?.find((r) => r.card.id === id);
   const history = useQuery(cardHistoryQuery(id)).data;
   const [older, setOlder] = useState(false);
   const now = new Date();
@@ -67,7 +67,12 @@ export default function CardPage() {
   if (!card) {
     return (
       <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>
-        <Skeleton height={120} />
+        {cards.data ? (
+          // Archived or moved elsewhere since the list was opened.
+          <Text className="px-1 text-base text-muted">{t`This card is no longer in this deck.`}</Text>
+        ) : (
+          <Skeleton height={120} />
+        )}
       </Screen>
     );
   }

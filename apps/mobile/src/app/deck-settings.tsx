@@ -1,5 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import { errorMessage } from "@lymi/client/api";
+import { api, type DeckSummary, errorMessage } from "@lymi/client/api";
 import { type DeckPatch, writes } from "@lymi/client/writes";
 import { DeckInput, type Directions, deckLimits, LANGUAGE_TAGS } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
@@ -25,19 +25,28 @@ import { OnGlass } from "../ui/surface";
  * on the web (ADR 0030). A member reads the same facts and can leave.
  */
 export default function DeckSettings() {
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const deck = useDecks().data?.find((d) => d.id === id);
+  // The fields start from the deck, so they wait for it rather than start empty and save that.
+  return deck ? <Settings deck={deck} /> : null;
+}
+
+function Settings({ deck }: { deck: DeckSummary }) {
   const { t } = useLingui();
   const router = useRouter();
   const qc = useQueryClient();
   const p = usePalette();
-  const { id } = useLocalSearchParams<{ id: string }>();
-  const deck = useDecks().data?.find((d) => d.id === id);
-  const example = useDeckCards(id).data?.find((r) => r.card.meaning)?.card;
-  const [name, setName] = useState(deck?.name ?? "");
-  const [description, setDescription] = useState(deck?.description ?? "");
+  const example = useDeckCards(deck.id).data?.find((r) => r.card.meaning)?.card;
+  const [name, setName] = useState(deck.name);
+  const [description, setDescription] = useState(deck.description ?? "");
   const [saved, setSaved] = useState<"saving" | "saved" | null>(null);
   const [error, setError] = useState<string | null>(null);
-  if (!deck) return null;
   const owner = deck.role === "owner";
+  // Archiving or leaving moves the deck out of the review draw and its series, as on the web.
+  const refresh = () =>
+    Promise.all(
+      [["decks"], ["series"], ["queue"]].map((queryKey) => qc.invalidateQueries({ queryKey })),
+    );
 
   const save = async (patch: DeckPatch) => {
     setSaved("saving");
@@ -74,13 +83,35 @@ export default function DeckSettings() {
           text: t`Archive deck`,
           style: "destructive",
           onPress: async () => {
-            await writes.archiveDeck(deck.id);
-            void qc.invalidateQueries({ queryKey: ["decks"] });
-            router.dismissTo("/library" as Href);
+            try {
+              await writes.archiveDeck(deck.id);
+              void refresh();
+              router.dismissTo("/library" as Href);
+            } catch (e) {
+              setError(errorMessage(e));
+            }
           },
         },
       ],
     );
+
+  const leave = () =>
+    Alert.alert(t`Leave “${deck.name}”?`, t`Your reviews are kept if you join it again.`, [
+      { text: t`Keep studying`, style: "cancel" },
+      {
+        text: t`Leave deck`,
+        style: "destructive",
+        onPress: async () => {
+          try {
+            await api.leaveDeck(deck.id);
+            void refresh();
+            router.dismissTo("/library" as Href);
+          } catch (e) {
+            setError(errorMessage(e));
+          }
+        },
+      },
+    ]);
 
   const languages = [
     { value: "", label: t`No language` },
@@ -191,6 +222,9 @@ export default function DeckSettings() {
                   value={way?.label}
                   end="none"
                 />
+              </Rows>
+              <Rows>
+                <Row icon="signOut" label={t`Leave deck`} destructive end="none" onPress={leave} />
               </Rows>
             </>
           ) : (

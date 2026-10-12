@@ -28,6 +28,10 @@ msgstr "{0, plural, one {Забыто # раз} few {Забыто # раза} ma
 msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
 msgstr "{0, plural, one {Ещё # карточка — и на сегодня всё} few {Ещё # карточки — и на сегодня всё} many {Ещё # карточек — и на сегодня всё} other {Ещё # карточки — и на сегодня всё}}"
 
+#. placeholder {0}: entry.count - entry.cards.length
+msgid "{0, plural, one {# more card} other {# more cards}}"
+msgstr "{0, plural, one {ещё # карточка} few {ещё # карточки} many {ещё # карточек} other {ещё # карточки}}"
+
 #. placeholder {0}: screen.nudge.count
 msgid "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
 msgstr "{0, plural, one {Ещё # повторение до дневной цели} few {Ещё # повторения до дневной цели} many {Ещё # повторений до дневной цели} other {Ещё # повторения до дневной цели}}"
@@ -136,6 +140,12 @@ msgstr "До сегодняшней цели: {left, plural, one {# повтор
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
+msgid "{name} joined {deck}"
+msgstr "{name} теперь в колоде «{deck}»"
+
+msgid "{name} left {deck}"
+msgstr "{name} больше не в колоде «{deck}»"
+
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "Запомнено: {passed}, забыто: {failed}"
 
@@ -162,6 +172,9 @@ msgstr "30 дней"
 msgid "90 days"
 msgstr "90 дней"
 
+msgid "A connected app"
+msgstr "Подключённое приложение"
+
 msgid "A new code is on its way to {address}."
 msgstr "Отправляем новый код на {address}."
 
@@ -186,8 +199,8 @@ msgstr "Слово или фраза"
 msgid "Activity"
 msgstr "Активность"
 
-msgid "Activity is coming to the phone"
-msgstr "Активность скоро появится на телефоне"
+msgid "Activity needs a connection"
+msgstr "Для активности нужно соединение"
 
 msgid "Add a card"
 msgstr "Добавить карточку"
@@ -221,6 +234,9 @@ msgstr "«{term}» добавлено без изображения. {reason}"
 
 msgid "Added “{term}”. It’s saved on this phone until Lymi can be reached."
 msgstr "«{term}» добавлено. Карточка сохранена на этом телефоне, пока Lymi снова не будет на связи."
+
+msgid "Added {count, plural, one {# card} other {# cards}} to {deck}"
+msgstr "{count, plural, one {Добавлена # карточка} few {Добавлено # карточки} many {Добавлено # карточек} other {Добавлено # карточки}} в колоду «{deck}»"
 
 msgid "Ahead"
 msgstr "Впереди"
@@ -267,8 +283,17 @@ msgstr "Ключи API"
 msgid "Archived"
 msgstr "Архив"
 
+msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "{count, plural, one {Заархивирована # карточка} few {Заархивировано # карточки} many {Заархивировано # карточек} other {Заархивировано # карточки}} в колоде «{deck}»"
+
 msgid "Archived is coming to the phone"
 msgstr "Архив скоро появится на телефоне"
+
+msgid "Archived the deck {deck}"
+msgstr "Заархивирована колода «{deck}»"
+
+msgid "Archived the section {name} in {deck}"
+msgstr "Заархивирован раздел «{name}» в колоде «{deck}»"
 
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Не меньше {MIN_PASSWORD_LENGTH} символов."
@@ -285,6 +310,12 @@ msgstr "Ошибка"
 msgid "Cancel"
 msgstr "Отмена"
 
+msgid "Cancelled"
+msgstr "Отменён"
+
+msgid "Cancelled the invitation to {name} for {deck}"
+msgstr "Приглашение для {name} в «{deck}» отменено"
+
 msgid "Card options"
 msgstr "Параметры карточки"
 
@@ -293,6 +324,9 @@ msgstr "Карточки"
 
 msgid "Change daily goal"
 msgstr "Изменить дневную цель"
+
+msgid "Changes from AI apps, imports, AI enrichment and shared decks show up here."
+msgstr "Здесь видны изменения от AI-приложений, импорта, дополнений AI и общих колод."
 
 msgid "Changing the goal needs a connection."
 msgstr "Чтобы изменить цель, нужно подключение."
@@ -348,8 +382,14 @@ msgstr "Не удалось изменить фото. Проверь соеди
 msgid "Couldn’t check for more cards"
 msgstr "Не удалось проверить, есть ли ещё карточки"
 
+msgid "Couldn’t load Activity"
+msgstr "Не удалось загрузить Активность"
+
 msgid "Couldn’t load Insights"
 msgstr "Не удалось загрузить Обзор"
+
+msgid "Couldn’t load more."
+msgstr "Не удалось загрузить больше."
 
 msgid "Couldn’t load Today"
 msgstr "Не удалось загрузить экран «Сегодня»"
@@ -435,6 +475,12 @@ msgstr "Колода"
 msgid "Decks to review"
 msgstr "Колоды к повторению"
 
+msgid "Deleted"
+msgstr "Удалён"
+
+msgid "Deleted the series {name}"
+msgstr "Удалена серия «{name}»"
+
 msgid "Describe what the picture shows without naming the term or the meaning."
 msgstr "Опиши, что на изображении, не называя термин или значение."
 
@@ -471,11 +517,26 @@ msgstr "Изменить зацепку"
 msgid "Edit your name and photo"
 msgstr "Изменить имя и фото"
 
+msgid "Edited {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "{count, plural, one {Изменена # карточка} few {Изменено # карточки} many {Изменено # карточек} other {Изменено # карточки}} в колоде «{deck}»"
+
+msgid "Edited the deck {deck}"
+msgstr "Изменена колода «{deck}»"
+
+msgid "Edited the section {name} in {deck}"
+msgstr "Изменён раздел «{name}» в колоде «{deck}»"
+
+msgid "Edited the series {name}"
+msgstr "Изменена серия «{name}»"
+
 msgid "Email"
 msgstr "Почта"
 
 msgid "End review"
 msgstr "Завершить повторение"
+
+msgid "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "{count, plural, one {Дополнена # карточка} few {Дополнено # карточки} many {Дополнено # карточек} other {Дополнено # карточки}} в колоде «{deck}»"
 
 msgid "Enter an email address, like you@example.com."
 msgstr "Введи адрес почты, например you@example.com."
@@ -503,6 +564,27 @@ msgstr "Каталог скоро появится на телефоне"
 
 msgid "Export"
 msgstr "Экспорт"
+
+msgid "Export of your cards"
+msgstr "Экспорт карточек"
+
+msgid "Exported {cards, plural, one {# card} other {# cards}}"
+msgstr "{cards, plural, one {Экспортирована # карточка} few {Экспортировано # карточки} many {Экспортировано # карточек} other {Экспортировано # карточки}}"
+
+msgid "Exported {cards, plural, one {# card} other {# cards}} as a Lymi file"
+msgstr "{cards, plural, one {Экспортирована # карточка} few {Экспортировано # карточки} many {Экспортировано # карточек} other {Экспортировано # карточки}} в файл Lymi"
+
+msgid "Exported {cards, plural, one {# card} other {# cards}} as an Anki package"
+msgstr "{cards, plural, one {Экспортирована # карточка} few {Экспортировано # карточки} many {Экспортировано # карточек} other {Экспортировано # карточки}} в пакет Anki"
+
+msgid "Exporting as a Lymi file"
+msgstr "Экспорт в файл Lymi"
+
+msgid "Exporting as an Anki package"
+msgstr "Экспорт в пакет Anki"
+
+msgid "Exporting your cards"
+msgstr "Экспорт карточек идёт"
 
 msgid "Feedback sent"
 msgstr "Обратная связь отправлена"
@@ -578,6 +660,21 @@ msgstr "Если у адреса {address} есть пароль Lymi, ссыл�
 msgid "Import"
 msgstr "Импорт"
 
+msgid "Import from {source}"
+msgstr "Импорт из {source}"
+
+msgid "Import of your cards"
+msgstr "Импорт карточек"
+
+msgid "Imported {added, plural, one {# card} other {# cards}} from {source}"
+msgstr "{added, plural, one {Импортирована # карточка} few {Импортировано # карточки} many {Импортировано # карточек} other {Импортировано # карточки}} из {source}"
+
+msgid "Importing"
+msgstr "Импортируется"
+
+msgid "Importing from {source}"
+msgstr "Импорт из {source}"
+
 msgid "Insights"
 msgstr "Обзор"
 
@@ -591,6 +688,12 @@ msgstr "Обзор: запоминание {recall}, повторения был
 msgctxt "daily goal"
 msgid "Intense"
 msgstr "Интенсивно"
+
+msgid "Invited {name} to {deck}"
+msgstr "{name} приглашён в «{deck}»"
+
+msgid "It loads as soon as you’re back online."
+msgstr "Она загрузится, как только ты снова будешь онлайн."
 
 msgctxt "daily goal"
 msgid "Keen"
@@ -632,11 +735,29 @@ msgstr "Легко"
 msgid "Longest streak"
 msgstr "Больше всего дней подряд"
 
+msgid "Lymi"
+msgstr "Lymi"
+
 msgid "Lymi also gets the screen you are on, the app version, your phone and your app language."
 msgstr "Lymi также получит экран, на котором ты сейчас, версию приложения, модель телефона и язык приложения."
 
 msgid "Lymi is free to use."
 msgstr "Lymi бесплатный."
+
+msgid "Made a change"
+msgstr "Внесено изменение"
+
+msgid "Made a change in {deck}"
+msgstr "Внесено изменение в «{deck}»"
+
+msgid "Made the deck {deck}"
+msgstr "Создана колода «{deck}»"
+
+msgid "Made the section {name} in {deck}"
+msgstr "Создан раздел «{name}» в колоде «{deck}»"
+
+msgid "Made the series {name}"
+msgstr "Создана серия «{name}»"
 
 msgid "Make one for each course or topic."
 msgstr "Создай колоду для каждого курса или темы."
@@ -687,6 +808,9 @@ msgstr "Впервые в Lymi?"
 
 msgid "Next month"
 msgstr "Следующий месяц"
+
+msgid "No activity yet"
+msgstr "Активности пока нет"
 
 msgid "No cards yet"
 msgstr "Карточек ещё нет"
@@ -742,8 +866,8 @@ msgstr "Только в дни, когда есть карточки к повт
 msgid "Only the deck’s owner can change this."
 msgstr "Менять это может только владелец колоды."
 
-msgid "Open Activity on the web"
-msgstr "Открыть активность в веб-версии"
+msgid "Open {name}"
+msgstr "Открыть «{name}»"
 
 msgid "Open Archived on the web"
 msgstr "Открыть архив в веб-версии"
@@ -812,6 +936,12 @@ msgstr "Достигни сегодняшней цели, чтобы не пре
 msgid "Reach today’s goal to start a streak."
 msgstr "Достигни сегодняшней цели, чтобы начать счёт дней подряд."
 
+msgid "Reading"
+msgstr "Чтение"
+
+msgid "Ready to import"
+msgstr "Готов к импорту"
+
 msgid "Recall"
 msgstr "Запоминание"
 
@@ -839,11 +969,26 @@ msgstr "Напоминать о повторении"
 msgid "Remove photo"
 msgstr "Удалить фото"
 
+msgid "Removed {name} from {deck}"
+msgstr "Доступ к колоде «{deck}» закрыт для {name}"
+
 msgid "Replay pronunciation"
 msgstr "Воспроизвести произношение ещё раз"
 
 msgid "Reset your password"
 msgstr "Новый пароль"
+
+msgid "Restored {count, plural, one {# card} other {# cards}} in {deck}"
+msgstr "{count, plural, one {Восстановлена # карточка} few {Восстановлено # карточки} many {Восстановлено # карточек} other {Восстановлено # карточки}} в колоде «{deck}»"
+
+msgid "Restored the deck {deck}"
+msgstr "Восстановлена колода «{deck}»"
+
+msgid "Restored the section {name} in {deck}"
+msgstr "Восстановлен раздел «{name}» в колоде «{deck}»"
+
+msgid "Restored the series {name}"
+msgstr "Восстановлена серия «{name}»"
 
 msgid "Review"
 msgstr "Повторение"
@@ -907,6 +1052,9 @@ msgstr "Настройки скоро появятся на телефоне"
 msgid "Show hook"
 msgstr "Показать зацепку"
 
+msgid "Show more"
+msgstr "Показать больше"
+
 msgid "Show password"
 msgstr "Показать пароль"
 
@@ -928,6 +1076,9 @@ msgstr "Выйти"
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Вход не завершён. Попробуй снова."
 
+msgid "Someone"
+msgstr "Кто-то"
+
 msgid "Source"
 msgstr "Источник"
 
@@ -937,6 +1088,9 @@ msgstr "Начни с колоды"
 msgctxt "daily goal"
 msgid "Steady"
 msgstr "Стабильно"
+
+msgid "Stopped"
+msgstr "Остановлен"
 
 msgid "Streak: {current, plural, one {# day in a row} other {# days in a row}}"
 msgstr "{current, plural, one {# день подряд} few {# дня подряд} many {# дней подряд} other {# дня подряд}}"
@@ -983,8 +1137,17 @@ msgstr "Эта почта и пароль не совпадают."
 msgid "That password is too easy to guess. Try another."
 msgstr "Этот пароль легко угадать. Попробуй другой."
 
+msgid "That’s everything."
+msgstr "Это всё."
+
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "Этого уже нет. Обнови страницу, чтобы увидеть изменения."
+
+msgid "The AI"
+msgstr "AI"
+
+msgid "The API"
+msgstr "API"
 
 msgid "Theme"
 msgstr "Тема"
@@ -1038,6 +1201,12 @@ msgstr "Попробуй зацепку"
 msgid "Try again"
 msgstr "Попробовать ещё раз"
 
+msgid "Turned off the join link for {deck}"
+msgstr "Ссылка для присоединения к «{deck}» выключена"
+
+msgid "Turned on the join link for {deck}"
+msgstr "Ссылка для присоединения к «{deck}» включена"
+
 msgid "Undo"
 msgstr "Отменить действие"
 
@@ -1053,14 +1222,14 @@ msgstr "А пока готовые колоды можно найти и доб�
 msgid "Until then, restore archived cards on the web."
 msgstr "А пока восстановить карточки из архива можно в веб-версии."
 
-msgid "Until then, see what changed in your Library on the web."
-msgstr "А пока посмотреть, что изменилось в Библиотеке, можно в веб-версии."
-
 msgid "Update"
 msgstr "Обновить"
 
 msgid "Update Lymi"
 msgstr "Обнови Lymi"
+
+msgid "Uploading"
+msgstr "Загрузка"
 
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Используй не меньше {MIN_PASSWORD_LENGTH} символов."
@@ -1092,6 +1261,12 @@ msgstr "Напиши зацепку."
 
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, что хочешь рассказать Lymi."
+
+msgid "Writing"
+msgstr "Записывается"
+
+msgid "Yesterday"
+msgstr "Вчера"
 
 msgid "Yesterday was a rest day"
 msgstr "Вчера был день отдыха"

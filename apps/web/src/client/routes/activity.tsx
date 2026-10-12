@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
+import { mergeActivity } from "@lymi/client/activity";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { mergeActivity } from "../lib/activity-list";
 import { useDocumentTitle } from "../lib/document-title";
 import { activityQuery } from "../lib/queries";
 import { ActivityView } from "../views/activity-view";

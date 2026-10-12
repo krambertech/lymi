@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { OPEN } from "./responses/common";
 import { Actor, FieldSource, Rating, ReviewModeKey } from "./types";
 
 /**
@@ -48,21 +49,21 @@ const Timestamp = z.iso.datetime().meta({ description: "ISO 8601 timestamp" });
 export const ExportOut = z
   .object({
     id: z.string(),
-    format: ExportFormat,
+    format: ExportFormat.meta(OPEN),
     deckId: z
       .string()
       .nullable()
       .meta({ description: "The deck exported, or null for the library" }),
     fileName: z.string().meta({ description: "The name the file downloads as" }),
-    status: ExportStatus,
-    failure: ExportFailure.nullable(),
+    status: ExportStatus.meta(OPEN),
+    failure: ExportFailure.nullable().meta(OPEN),
     byteSize: z.number().int().nullable().meta({ description: "The file's size once written" }),
     counts: ExportCounts.nullable(),
     downloadUrl: z
       .string()
       .nullable()
       .meta({ description: "Where the file downloads with the same session or key, while done" }),
-    createdBy: Actor,
+    createdBy: Actor.meta(OPEN),
     createdAt: Timestamp,
     finishedAt: Timestamp.nullable(),
     expiresAt: Timestamp.nullable().meta({ description: "When the file is deleted" }),

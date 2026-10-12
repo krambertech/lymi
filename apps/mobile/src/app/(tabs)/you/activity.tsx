@@ -1,18 +1,33 @@
 import { useLingui } from "@lingui/react/macro";
-import { OnTheWeb } from "../../../ui/on-the-web";
+import { mergeActivity } from "@lymi/client/activity";
+import { ActivityView } from "../../../activity/activity-view";
+import { useActivity } from "../../../data/queries";
+import { useOnline } from "../../../streak/goal-picker";
 import { Screen } from "../../../ui/screen";
 
-/** The phone's own Activity is #582; until then this page opens the web's. */
+/** What landed in the learner's decks from outside the app. activity.md. */
 export default function Activity() {
   const { t } = useLingui();
+  const query = useActivity();
+  const online = useOnline();
+  const pages = query.data?.pages;
+  const first = pages?.[0];
   return (
     <Screen title={t`Activity`} back={{ label: t`You`, to: "/you" }}>
-      <OnTheWeb
-        icon="activity"
-        title={t`Activity is coming to the phone`}
-        line={t`Until then, see what changed in your Library on the web.`}
-        action={t`Open Activity on the web`}
-        path="/activity"
+      <ActivityView
+        // A write cut in two by the end of a page is one row with its whole count.
+        entries={pages && mergeActivity(pages.flatMap((page) => page.entries))}
+        today={first?.today}
+        zone={first?.zone}
+        failed={query.isError}
+        // Activity is never kept on the phone, so with no connection there is nothing to show yet.
+        offline={!online && !pages}
+        retrying={query.isFetching && !query.isFetchingNextPage}
+        onRetry={() => void query.refetch()}
+        hasMore={query.hasNextPage}
+        loadingMore={query.isFetchingNextPage}
+        moreFailed={query.isFetchNextPageError}
+        onMore={() => void query.fetchNextPage()}
       />
     </Screen>
   );

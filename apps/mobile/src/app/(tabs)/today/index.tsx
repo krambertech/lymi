@@ -4,7 +4,7 @@ import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS, type StreakOut } from "@
 import { flameSize } from "@lymi/design";
 import * as Haptics from "expo-haptics";
 import { type Href, useIsFocused, useRouter } from "expo-router";
-import { type ReactNode, useState } from "react";
+import { useState } from "react";
 import { View, type ViewStyle } from "react-native";
 import { Flame } from "../../../brand/flame";
 import { Lantern } from "../../../brand/lantern";
@@ -12,17 +12,9 @@ import { REST_DISMISSED_KEY, todayStore } from "../../../data/kept";
 import { useDay, useDecks, useRounds, useStreak } from "../../../data/queries";
 import { useLandingSpot } from "../../../splash/landing";
 import { clear, usePalette, useRoom } from "../../../theme/palette";
+import { ListRow } from "../../../ui/list-row";
 import { OfflineNote, useKeptSince } from "../../../ui/offline-note";
-import {
-  Button,
-  Icon,
-  IconButton,
-  Plate,
-  Press,
-  RowArrow,
-  SectionTitle,
-  Text,
-} from "../../../ui/primitives";
+import { Button, Icon, IconButton, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
 import { RestGlyph } from "../../../ui/rest-glyph";
 import { Screen } from "../../../ui/screen";
 import { SevenLights } from "../../../ui/seven-lights";
@@ -397,86 +389,6 @@ function Rounds({ rounds }: { rounds: RoundsData }) {
       <SectionTitle>{t`Also on your list`}</SectionTitle>
       <Plate className="overflow-hidden">{items}</Plate>
     </View>
-  );
-}
-
-/**
- * One row of Today's lists: what it is on the start edge, how many at the end, then a chevron
- * when it opens a review or a plus when it adds. A row that does nothing has neither.
- */
-function ListRow({
-  first,
-  title,
-  mark,
-  line,
-  count,
-  end,
-  countLabel,
-  onPress,
-  hint,
-}: {
-  first: boolean;
-  title: string;
-  mark?: ReactNode;
-  /** Under the title; left out where the section already says what the count is. */
-  line?: string;
-  /** What VoiceOver reads for the count when no line says it. */
-  countLabel?: string;
-  count?: number;
-  end: "open" | "add" | "none";
-  onPress?: (() => void) | undefined;
-  hint?: string | undefined;
-}) {
-  const p = usePalette();
-  const face = (
-    <View
-      className={`flex-row items-center gap-3 py-3.5 ps-5 pe-4 ${first ? "" : "border-t border-edge"}`}
-    >
-      <View className="flex-1 gap-0.5">
-        <View className="flex-row items-center gap-1.5">
-          {mark}
-          <Text className="shrink text-md font-medium text-text" numberOfLines={1}>
-            {title}
-          </Text>
-        </View>
-        {line && <Text className="text-base text-muted">{line}</Text>}
-      </View>
-      {count !== undefined && end !== "add" && (
-        <Text
-          className={`text-2xl font-medium ${count > 0 ? "text-text" : "text-muted"}`}
-          style={{ fontVariant: ["tabular-nums"] }}
-        >
-          {count}
-        </Text>
-      )}
-      {/* The slot stays on a row that does nothing, so every count ends on the same line. */}
-      {end === "open" ? (
-        <RowArrow />
-      ) : end === "add" ? (
-        <Icon name="plus" size={18} colour={p.muted} strokeWidth={2.5} />
-      ) : (
-        <View className="w-[18px]" />
-      )}
-    </View>
-  );
-  const label = [title, countLabel ?? count, line].filter((part) => part !== undefined).join(". ");
-  if (!onPress) {
-    return (
-      <View accessible accessibilityLabel={label}>
-        {face}
-      </View>
-    );
-  }
-  return (
-    <Press
-      scale={0.99}
-      onPress={onPress}
-      accessibilityRole={end === "add" ? "button" : "link"}
-      accessibilityLabel={label}
-      accessibilityHint={hint}
-    >
-      {face}
-    </Press>
   );
 }
 

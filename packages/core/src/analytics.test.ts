@@ -32,6 +32,11 @@ describe("analytics privacy contract", () => {
       grade: 4,
     });
     expect(eventProperties("cards_added", { source: "private", count: -1 })).toBeNull();
+    expect(eventProperties("origin_badge_shown", { badge: "estonia" }, "browser")).toEqual({
+      badge: "estonia",
+    });
+    expect(eventProperties("origin_badge_shown", { badge: "estonia" }, "worker")).toBeNull();
+    expect(eventProperties("origin_badge_shown", { badge: "Europe/Tallinn" })).toBeNull();
   });
   it("bands a backlog and sends an AI call's size without its text", () => {
     expect([0, 1, 20, 21, 100, 101].map(backlogOf)).toEqual([

@@ -40,6 +40,7 @@ Page properties contain approved routes, with private dynamic IDs replaced by `:
 | `daily_goal_set` | Saved first choice or changed value: `value`, `is_change`; not an optimistic click or refetch. |
 | `reminder_prompt_shown`, `reminder_prompt_accepted` | A browser permission request from default permission, then its granted result. Permission acceptance is not proof the subscription saved; failures remain separate. |
 | `public_deck_viewed` | Cookieless browser view of a published slug, with active locale; separate from aggregate publisher request counts. |
+| `origin_badge_shown` | Cookieless browser, once per public page load whose hero shows the origin badge: `badge` (`ukraine`, `estonia`), chosen from the browser's languages, the page locale and its time zone. Compared with `$geoip_country_code`, it answers how often the browser's signal matches where the visitor is, and alongside `$pageview` how many visitors from each country see it. |
 | `add_to_lymi_clicked`, `deck_added` | Browser add intent, then server's new published membership. Existing membership is not another addition. |
 | `first_session_started` | First accepted non-import grade on a published deck, once per account/deck; includes public `deck_slug`. Imported history does not activate the learner. |
 | `review_session_finished`, `review_session_abandoned` | Browser review leg: `session_id`, first-session eligibility, net recall counts and fixed ending/reason. |

@@ -156,6 +156,7 @@ export const analyticsEvents = {
   reminder_prompt_accepted: z.object({}),
   public_deck_viewed: z.object({ deck_slug: slug, locale: AnalyticsLocale }),
   add_to_lymi_clicked: z.object({ deck_slug: slug }),
+  origin_badge_shown: z.object({ badge: z.enum(["ukraine", "estonia"]) }),
   deck_added: z.object({ deck_slug: slug }),
   deck_joined: z.object({}),
   mcp_tool: z.object({
@@ -238,6 +239,7 @@ export const analyticsProducers = {
   reminder_prompt_accepted: ["browser"],
   public_deck_viewed: ["browser"],
   add_to_lymi_clicked: ["browser"],
+  origin_badge_shown: ["browser"],
   deck_added: ["worker"],
   deck_joined: ["worker"],
   mcp_tool: ["worker"],

@@ -825,6 +825,9 @@ msgstr "Эстонский A2 · по вторникам"
 msgid "Estonian for work"
 msgstr "Эстонский для работы"
 
+msgid "Estonian startup"
+msgstr "Эстонский стартап"
+
 msgid "euros"
 msgstr "евро"
 
@@ -2398,6 +2401,9 @@ msgstr "Два евро десять центов."
 
 msgid "Type the term, and AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
 msgstr "Введи термин — AI добавит значение, пример и произношение. Твой текст он не меняет, а всё, что написал сам, помечает."
+
+msgid "Ukrainian-made"
+msgstr "Украинская разработка"
 
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Незавершённые дела удерживаются в памяти лучше завершённых"

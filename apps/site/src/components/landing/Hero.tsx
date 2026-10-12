@@ -4,6 +4,7 @@ import { signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { HandOfCards } from "./HandOfCards";
 import type { HandCard } from "./hand-cards";
+import { OriginBadge } from "./OriginBadge";
 
 interface Props {
   title: ReactNode;
@@ -21,10 +22,11 @@ export function Hero({ title, lede, cards, layout }: Props) {
           {title}
         </h1>
         <p className="mt-6 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl">{lede}</p>
-        <div className="mt-8">
+        <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3">
           <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
             <Trans>Get started</Trans>
           </a>
+          <OriginBadge />
         </div>
       </div>
 

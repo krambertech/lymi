@@ -22,6 +22,8 @@ const LANDS = 0.4;
 const BACK = { duration: 340, dampingRatio: 1, reduceMotion: ALWAYS };
 /** Below this a spring back has settled; a spring can rest a fraction of a point short of zero. */
 const MOVED = 0.5;
+/** How far a card turns while it is off its place, in degrees. */
+const TILT = 6;
 /** The card that is covered, or uncovered, sits back this far. */
 const RECEDE = 0.95;
 
@@ -118,7 +120,7 @@ export function UndoCards({
   const current = useAnimatedStyle(() => {
     const t = x.value / width;
     return motion === "off"
-      ? { transform: [{ translateX: x.value * dir }, { rotate: `${dir * t * 4}deg` }] }
+      ? { transform: [{ translateX: x.value * dir }, { rotate: `${dir * t * TILT}deg` }] }
       : { transform: [{ scale: 1 - (1 - RECEDE) * t }], opacity: 1 - t * 0.4 };
   });
   const graded = useAnimatedStyle(() => {
@@ -130,7 +132,11 @@ export function UndoCards({
         }
       : {
           opacity: x.value > MOVED ? 1 : 0,
-          transform: [{ translateX: -dir * (width - x.value) }],
+          // It comes in turned a little, as a card picked back up, and straightens as it lands.
+          transform: [
+            { translateX: -dir * (width - x.value) },
+            { rotate: `${-dir * (1 - t) * TILT}deg` },
+          ],
         };
   });
 

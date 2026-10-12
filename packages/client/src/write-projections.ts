@@ -274,10 +274,16 @@ type Review = { total: number; cards?: Reviewed[]; items?: Reviewed[] };
 
 /**
  * A draw or a round without an archived deck's cards. The fetch holds only the front of the order,
- * so a draw still holding the deck also loses the deck's Library due count behind the front,
- * capped by what the draw itself counts there; a draw already without the deck is left as it is.
+ * so a draw counting the deck also loses the deck's Library due count behind the front, capped by
+ * what the draw itself counts there. A fetch without the deck's cards may already leave it out.
  */
-function withoutDeck<T extends Review>(scope: string, data: T, id: string, lookup: Lookup): T {
+function withoutDeck<T extends Review>(
+  scope: string,
+  data: T,
+  id: string,
+  lookup: Lookup,
+  fetched: boolean,
+): T {
   const list = data.cards ? "cards" : "items";
   const entries = data[list];
   if (!entries) return data;
@@ -287,7 +293,9 @@ function withoutDeck<T extends Review>(scope: string, data: T, id: string, looku
   if (scope === `deck:${id}` || (scope.startsWith("section:") && removed > 0)) {
     return entries.length || data.total ? { ...data, [list]: [], total: 0 } : data;
   }
-  if (removed === 0) return data;
+  const deck = lookup.deck(id);
+  const inScope = scope === "all" || (!!deck?.seriesId && scope === `series:${deck.seriesId}`);
+  if (removed === 0 && (fetched || !inScope || list === "items")) return data;
   // A round's total counts only its own cards, which Library's due count says nothing about.
   if (list === "items") {
     return { ...data, items: rest, total: Math.max(0, data.total - removed) };
@@ -298,29 +306,42 @@ function withoutDeck<T extends Review>(scope: string, data: T, id: string, looku
   const all = drawableCount(drawCards(draw), log, day);
   const left = drawableCount(drawCards({ ...draw, cards: rest as DrawData["cards"] }), log, day);
   const front = all - left;
-  const behind = Math.min(
-    Math.max(0, data.total - all),
-    Math.max(0, (lookup.deck(id)?.due ?? 0) - front),
-  );
-  return { ...data, cards: rest, total: Math.max(left, data.total - front - behind) };
+  const behind = Math.min(Math.max(0, data.total - all), Math.max(0, (deck?.due ?? 0) - front));
+  const total = Math.max(left, data.total - front - behind);
+  return removed === 0 && total === data.total ? data : { ...data, cards: rest, total };
 }
 
-function onReview<T extends Review>(scope: string, data: T, w: Write, lookup: Lookup): T {
+function onReview<T extends Review>(
+  scope: string,
+  data: T,
+  w: Write,
+  lookup: Lookup,
+  fetched: boolean,
+): T {
   switch (w.kind) {
     case "deck.archive":
-      return withoutDeck(scope, data, w.id, lookup);
+      return withoutDeck(scope, data, w.id, lookup, fetched);
     default:
       return data;
   }
 }
 
-/** One write's effect on one query's data, or the data untouched when the write does not show there. */
-export function applyWrite<T>(key: QueryKey, data: T, w: Write, lookup: Lookup): T {
+/**
+ * One write's effect on one query's data, or the data untouched when the write does not show there.
+ * `fetched` data came from the server after the write was made, so it may already hold it.
+ */
+export function applyWrite<T>(
+  key: QueryKey,
+  data: T,
+  w: Write,
+  lookup: Lookup,
+  fetched = false,
+): T {
   const target = shapeOf(key);
   if (!target || !data || typeof data !== "object") return data;
   if (target.shape === "draw" || target.shape === "queue") {
     if (!("total" in data)) return data;
-    return onReview(String(key[1]), data as T & Review, w, lookup);
+    return onReview(String(key[1]), data as T & Review, w, lookup, fetched);
   }
   if (!Array.isArray(data)) return data;
   switch (target.shape) {
@@ -338,7 +359,7 @@ export function applyWrite<T>(key: QueryKey, data: T, w: Write, lookup: Lookup):
 /** Fetched data with every write still waiting laid over it, oldest first. */
 export function rebase<T>(key: QueryKey, data: T, pending: QueuedWrite[], lookup: Lookup): T {
   return replayed(key, pending).reduce(
-    (current, entry) => applyWrite(key, current, entry.write, lookup),
+    (current, entry) => applyWrite(key, current, entry.write, lookup, true),
     data,
   );
 }

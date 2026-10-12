@@ -212,6 +212,13 @@ describe("a deck archive in review", () => {
     return qc;
   };
 
+  it("takes a deck whose cards all sit behind the front out of the total", () => {
+    const qc = twoDecks();
+    qc.setQueryData(all, draw([entry("b", "et")], 150));
+    showWrite(qc, { kind: "deck.archive", id: "it" });
+    expect(qc.getQueryData<Draw>(all)?.total).toBe(90);
+  });
+
   it("leaves a fetched draw that already lacks the deck as it is", () => {
     const qc = twoDecks();
     const landed = draw([entry("b", "et")], 90);

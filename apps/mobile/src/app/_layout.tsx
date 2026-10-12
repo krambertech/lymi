@@ -23,7 +23,7 @@ import { Kindling } from "../splash/kindling";
 import { replaySplash, useReplays } from "../splash/replay";
 import { setExceptionLearner, startExceptionReporting } from "../telemetry/exceptions";
 import { usePalette } from "../theme/palette";
-import { WidgetSync } from "../widgets/sync";
+import { clearWidgets, WidgetSync } from "../widgets/sync";
 
 startExceptionReporting();
 
@@ -84,11 +84,14 @@ function Root() {
     setKindling(false);
   }, []);
   useGiveUp(kindling, lands !== undefined, giveUp);
-  // Signed out, or a session that lapsed: whoever signs in next starts with nothing of this learner's.
+  // Signed out, or a session that lapsed: whoever signs in next starts with nothing of this learner's,
+  // and the widgets, which outlive the app, stop showing them.
   const qc = useQueryClient();
   const signedOut = !session.isPending && !signedIn;
   useEffect(() => {
-    if (signedOut) forgetLearner(qc);
+    if (!signedOut) return;
+    forgetLearner(qc);
+    clearWidgets();
   }, [signedOut, qc]);
   const base = dark ? DarkTheme : DefaultTheme;
   // The navigation theme carries the room, so native chrome never flashes white between tabs.

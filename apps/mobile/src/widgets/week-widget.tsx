@@ -18,6 +18,8 @@ export interface WeekProps {
   due: number;
   /** Reviews still to go before today counts; 0 once it does. */
   left: number;
+  /** False when nobody is signed in, so the week says nothing about today. */
+  signedIn: boolean;
   /** Seven days, oldest first; each 0 to 3, the steps of the seven lights. */
   week: number[];
   /** Each day's narrow weekday, oldest first, so today's letter is right on every day. */
@@ -40,7 +42,8 @@ const WeekWidget = (props: WeekProps, env: WidgetEnvironment) => {
   const ids = ["d1", "d2", "d3", "d4", "d5", "d6", "d7"];
   const left = props.left ?? 0;
   const dueCount = props.due ?? 0;
-  const today = left === 0 ? "Today counts" : `${left} to today’s goal`;
+  // The gallery and a fresh install send nothing, which reads as signed out.
+  const today = !props.signedIn ? null : left === 0 ? "Today counts" : `${left} to today’s goal`;
   const due = dueCount === 1 ? "1 card due" : `${dueCount} cards due`;
 
   return (
@@ -100,7 +103,7 @@ const WeekWidget = (props: WeekProps, env: WidgetEnvironment) => {
         ))}
       </HStack>
       <Spacer />
-      <Text modifiers={[font({ size: 13 }), foregroundStyle(muted)]}>{today}</Text>
+      {today ? <Text modifiers={[font({ size: 13 }), foregroundStyle(muted)]}>{today}</Text> : null}
     </VStack>
   );
 };

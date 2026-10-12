@@ -39,6 +39,85 @@ async function shareImages(): Promise<Images> {
   return out;
 }
 
+interface Snapshot {
+  due: number;
+  streak: number;
+  reviewed: number;
+  goal: number;
+  left: number;
+  out: boolean;
+  signedIn: boolean;
+  /** Each day's step of the seven lights, oldest first. */
+  week: number[];
+}
+
+function send(name: string, update: () => void) {
+  try {
+    update();
+  } catch (e) {
+    console.warn(`widget ${name}`, e);
+  }
+}
+
+function sendSnapshot(s: Snapshot, images: Images) {
+  const { flame, ...lanterns } = images;
+  send("lock", () =>
+    LockWidget.updateSnapshot({ due: s.due, streak: s.streak, reviewed: s.reviewed, goal: s.goal }),
+  );
+  send("today", () =>
+    TodayWidget.updateSnapshot({
+      due: s.due,
+      streak: s.streak,
+      out: s.out,
+      lanterns: lanterns as Lanterns,
+      colours: WIDGET_COLOURS,
+    }),
+  );
+  send("week", () =>
+    WeekWidget.updateSnapshot({
+      streak: s.streak,
+      due: s.due,
+      left: s.left,
+      signedIn: s.signedIn,
+      week: s.week,
+      letters: weekLetters(s.week.length),
+      flame: flame ?? "",
+      colours: WIDGET_COLOURS,
+    }),
+  );
+}
+
+/** The images an earlier signed-in run already copied into the app group. */
+function sharedImages(): Images {
+  const out: Images = {};
+  if (!widgetsDirectory) return out;
+  for (const name of Object.keys(IMAGES) as (keyof Images)[]) {
+    const file = new File(widgetsDirectory, `${name}.png`);
+    if (file.exists) out[name] = file.uri;
+  }
+  return out;
+}
+
+/**
+ * Replaces the app group's snapshots with an unlit lantern and nothing due, so the widgets stop
+ * showing a learner who is no longer signed in on this phone.
+ */
+export function clearWidgets() {
+  sendSnapshot(
+    {
+      due: 0,
+      streak: 0,
+      reviewed: 0,
+      goal: 0,
+      left: 0,
+      out: true,
+      signedIn: false,
+      week: [0, 0, 0, 0, 0, 0, 0],
+    },
+    sharedImages(),
+  );
+}
+
 /** Pushes today's numbers to the widgets whenever they change. The real app does this after each sync. */
 export function WidgetSync() {
   const { streak, reviewsToday, goal, week, dayDone, out } = useDay();
@@ -57,38 +136,15 @@ export function WidgetSync() {
       lightLevel(n, reference, goal, i === days.length - 1 && dayDone),
     );
     const left = dayDone ? 0 : Math.max(0, goal - reviewsToday);
-    const { flame, ...lanterns } = images;
     // A review grades every few seconds; the widget only needs where the day settled.
-    const timer = setTimeout(() => {
-      const send = (name: string, update: () => void) => {
-        try {
-          update();
-        } catch (e) {
-          console.warn(`widget ${name}`, e);
-        }
-      };
-      send("lock", () => LockWidget.updateSnapshot({ due, streak, reviewed: reviewsToday, goal }));
-      send("today", () =>
-        TodayWidget.updateSnapshot({
-          due,
-          streak,
-          out,
-          lanterns: lanterns as Lanterns,
-          colours: WIDGET_COLOURS,
-        }),
-      );
-      send("week", () =>
-        WeekWidget.updateSnapshot({
-          streak,
-          due,
-          left,
-          week: steps,
-          letters: weekLetters(steps.length),
-          flame: flame ?? "",
-          colours: WIDGET_COLOURS,
-        }),
-      );
-    }, 1500);
+    const timer = setTimeout(
+      () =>
+        sendSnapshot(
+          { due, streak, reviewed: reviewsToday, goal, left, out, signedIn: true, week: steps },
+          images,
+        ),
+      1500,
+    );
     return () => clearTimeout(timer);
   }, [images, due, streak, reviewsToday, goal, weekKey, dayDone, out]);
 

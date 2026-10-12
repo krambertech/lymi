@@ -11,7 +11,6 @@ import Animated, {
   useFrameCallback,
   useSharedValue,
 } from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FullWindowOverlay } from "react-native-screens";
 import { Lantern } from "../brand/lantern";
 import { curveFn, springAt, useReduceMotion } from "../theme/motion";
@@ -77,8 +76,8 @@ const between = (t: number, [from, to]: readonly [number, number]) => {
 };
 
 interface Props {
-  /** The screen the splash lands on, once the session has been read. */
-  lands: Screen | undefined;
+  /** The first screen, once the session has been read: one with a lantern to land on, or elsewhere. */
+  lands: Screen | "elsewhere" | undefined;
   /** The first frame matches the launch screen, so it can go without a flash. */
   onShown: () => void;
   onDone: () => void;
@@ -93,7 +92,6 @@ export function Kindling({ lands, onShown, onDone }: Props) {
   const reduce = useReduceMotion();
   const p = usePalette();
   const { width, height } = useWindowDimensions();
-  const insets = useSafeAreaInsets();
   const measured = useSpot();
   // Welcome lays out while the session is read, so only the screen being landed on counts.
   const spot = measured && measured.screen === lands ? measured : null;
@@ -101,10 +99,9 @@ export function Kindling({ lands, onShown, onDone }: Props) {
   const clock = useSharedValue(0);
   const [landing, setLanding] = useState(false);
 
-  // A screen that never lays out a lantern still gets one: Today's spot under its large title.
   const x = spot?.x ?? width / 2;
-  const y = spot?.y ?? insets.top + 175;
-  const size = spot?.size ?? DRAWN;
+  const y = spot?.y ?? height / 2;
+  const size = spot?.size ?? LAUNCH_SIZE;
   const flameTo = spot?.flame ?? 1;
   const target = useSharedValue({ x, y, size, flame: flameTo });
   useEffect(() => {
@@ -129,6 +126,8 @@ export function Kindling({ lands, onShown, onDone }: Props) {
   const phase = useSharedValue(HOLDING);
   const armedAt = useSharedValue(0);
   const calm = useSharedValue(0);
+  // With no lantern to land on, such as a link into a review, the lit room fades where it is.
+  const stays = useSharedValue(false);
   useEffect(() => {
     holdAt.value = reduce ? 0 : SPLASH.hold;
     endAt.value = reduce ? CROSSFADE_MS : SPLASH.end;
@@ -136,12 +135,14 @@ export function Kindling({ lands, onShown, onDone }: Props) {
     // The screen underneath measures its lantern once it has mounted; one that never does is waited for briefly.
     const id = setTimeout(
       () => {
-        if (phase.value === HOLDING) phase.value = ARMED;
+        if (phase.value !== HOLDING) return;
+        stays.value = !spot;
+        phase.value = ARMED;
       },
       spot ? 0 : 500,
     );
     return () => clearTimeout(id);
-  }, [ready, reduce, holdAt, endAt, phase, spot]);
+  }, [ready, reduce, holdAt, endAt, phase, stays, spot]);
 
   // The clock counts frames rather than time, so when mounting the screen underneath stalls the main
   // thread the lantern pauses where it is instead of jumping. It leaves only once frames come on time.
@@ -178,13 +179,13 @@ export function Kindling({ lands, onShown, onDone }: Props) {
       FLAME_MOTION.catch,
       SPLASH.end - SPLASH.light,
     );
-    const go = flight(clock.value);
+    const go = stays.value ? 0 : flight(clock.value);
     return caught * interpolate(go, [0, 1], [1, target.value.flame]);
   });
 
   const centre = useDerivedValue(() => {
     const t = clock.value;
-    const go = reduce ? 0 : flight(t);
+    const go = reduce || stays.value ? 0 : flight(t);
     const at = target.value;
     return {
       x: interpolate(go, [0, 1], [width / 2, at.x]),
@@ -200,10 +201,12 @@ export function Kindling({ lands, onShown, onDone }: Props) {
   const room = useDerivedValue(() =>
     reduce ? 1 : 1 - easeOut(between(clock.value, SPLASH.reveal)),
   );
-  // Under Reduce Motion the whole launch screen crossfades, the one thing here that is a view's opacity.
-  const crossfade = useAnimatedStyle(() => ({
-    opacity: reduce ? 1 - clock.value / CROSSFADE_MS : 1,
-  }));
+  // Under Reduce Motion, or with nowhere to land, the whole launch screen fades: a view's opacity,
+  // since nothing travels for a held-back frame to show.
+  const crossfade = useAnimatedStyle(() => {
+    if (reduce) return { opacity: 1 - clock.value / CROSSFADE_MS };
+    return { opacity: stays.value ? 1 - easeOut(between(clock.value, SPLASH.reveal)) : 1 };
+  });
 
   // Once the flame is up, Skia has long since drawn, so the stand-in underneath goes.
   const [caught, setCaught] = useState(false);
@@ -219,7 +222,7 @@ export function Kindling({ lands, onShown, onDone }: Props) {
   const poolCentre = useDerivedValue(() => vec(centre.value.x, centre.value.y));
   const poolRadius = useDerivedValue(() => {
     const flood = easeOut(between(clock.value, SPLASH.flood));
-    const back = flight(clock.value);
+    const back = stays.value ? 0 : flight(clock.value);
     const reach = interpolate(back, [0, 1], [FLOOD_REACH, POOL_REACH]);
     return centre.value.size * (0.4 + flood * reach);
   });

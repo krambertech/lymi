@@ -78,7 +78,7 @@ Activity is the web's list ([activity.md](../activity.md)): day headings over pl
 
 ## Opening
 
-A cold start lights the lantern. The launch screen is the unlit lantern in the middle of the room's colour, in each room, drawn by `apps/mobile/scripts/splash-images.mjs` from the lantern data and the palette. As the app's code loads, the flame catches, its warm light floods the room, then the lantern rises to its place on Today, or on Welcome when signed out, while the flood draws back into that screen's pool. [motion.md](motion.md#opening-the-phone-app) has the timings. It never waits for data: the screen underneath shows its own loading state, and a return from the background shows nothing.
+A cold start lights the lantern. The launch screen is the unlit lantern in the middle of the room's colour, in each room, drawn by `apps/mobile/scripts/splash-images.mjs` from the lantern data and the palette. As the app's code loads, the flame catches, its warm light floods the room, then the lantern rises to its place on Today, or on Welcome when signed out, while the flood draws back into that screen's pool. Opened by a link into any other screen, the lit room fades where it is. [motion.md](motion.md#opening-the-phone-app) has the timings. It never waits for data: the screen underneath shows its own loading state, and a return from the background shows nothing.
 
 ## Update Lymi
 

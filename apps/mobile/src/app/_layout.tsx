@@ -4,7 +4,7 @@ import { useUpdateRequired } from "@lymi/client/update-required";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { registerDevMenuItems } from "expo-dev-menu";
 import { isGlassEffectAPIAvailable } from "expo-glass-effect";
-import { DarkTheme, DefaultTheme, router, Stack, ThemeProvider } from "expo-router";
+import { DarkTheme, DefaultTheme, router, Stack, ThemeProvider, usePathname } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useEffect, useState } from "react";
@@ -70,8 +70,10 @@ function Root() {
   }, [replays]);
   const shown = useCallback(() => SplashScreen.hideAsync(), []);
   const done = useCallback(() => setKindling(false), []);
-  const lands =
-    session.isPending && !update ? undefined : signedIn && !update ? "today" : "welcome";
+  // The splash lands on the first screen's lantern; a link into anywhere else has none to land on.
+  const path = usePathname();
+  const first = path === "/today" ? "today" : path === "/welcome" ? "welcome" : "elsewhere";
+  const lands = session.isPending && !update ? undefined : update ? "elsewhere" : first;
   const giveUp = useCallback(() => {
     void SplashScreen.hideAsync();
     setKindling(false);

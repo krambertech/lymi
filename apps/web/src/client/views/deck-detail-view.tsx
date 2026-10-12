@@ -851,6 +851,7 @@ export function DeckDetailView({
         owner && {
           onEdit: () => owner.onEditCard(shownWord.card),
           onEnrich: () => owner.onEnrichCard(shownWord.card),
+          enrichFields: deck.enrichFields,
           onArchive: () => {
             const near =
               openIndex >= 0 ? (ordered[openIndex + 1] ?? ordered[openIndex - 1]) : undefined;

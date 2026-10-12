@@ -4,6 +4,7 @@ import {
   Actor,
   Direction,
   Directions,
+  EnrichedFieldName,
   EnrichmentStatus,
   FieldSource,
   ReviewAid,
@@ -73,9 +74,14 @@ export const CardOut = z
     meaningSource: FieldSource.nullable(),
     exampleSource: FieldSource.nullable(),
     pronunciationSource: FieldSource.nullable(),
+    notesSource: FieldSource.nullable(),
     hookSource: FieldSource.nullable(),
     enrichmentStatus: EnrichmentStatus.nullable().meta({
       description: "Set while the AI is filling the card's empty fields, and null once it settles",
+    }),
+    enrichmentFields: z.array(EnrichedFieldName).nullable().meta({
+      description:
+        "The fields an outstanding enrichment may fill, so a screen holds space for those alone. Null when none is outstanding.",
     }),
     audioKey: z.string().nullable(),
     createdBy: Actor.meta({ description: "Who added the card" }),

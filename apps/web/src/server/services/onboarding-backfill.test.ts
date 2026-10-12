@@ -1,6 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import type { Db } from "../db";
-import { archiveDeck, createDeck } from "./decks";
 import { learner, testDb } from "./test-db";
 
 /** Migration 0043 puts every account that already had a deck past Welcome, so only an empty one meets it. */
@@ -22,12 +21,16 @@ describe("Welcome backfill", () => {
       .first<{ onboarded_at: number | null; daily_goal: number }>()) ?? null;
 
   it("marks accounts with a deck, archived or not, and leaves an empty one alone", async () => {
+    // Raw throughout, because the services read and write columns this migration predates.
+    const deck = (id: string, userId: string, archivedAt: number | null) =>
+      raw
+        .prepare("INSERT INTO decks (id, user_id, name, archived_at) VALUES (?, ?, ?, ?)")
+        .bind(id, userId, "Lessons", archivedAt)
+        .run();
     const archived = await learner(db, "archived-only", "Archived");
-    const deck = await createDeck(archived, { name: "Old lessons", defaultLanguage: "it" });
-    await archiveDeck(archived, deck.id);
+    await deck("deck-archived", archived.userId, Date.now());
     const chooser = await learner(db, "chose-goal", "Chooser");
-    await createDeck(chooser, { name: "Italian", defaultLanguage: "it" });
-    // Raw, because the settings service reads columns this migration has not added yet.
+    await deck("deck-active", chooser.userId, null);
     await raw
       .prepare("INSERT INTO user_settings (user_id, daily_goal) VALUES (?, 100)")
       .bind(chooser.userId)

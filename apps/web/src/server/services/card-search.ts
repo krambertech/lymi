@@ -164,7 +164,12 @@ export async function searchCards(
     const test = stringTest(filter.tags.some);
     if (test) checks.push((row) => row.tags.map(foldForSearch).some(test));
   }
-  for (const field of ["meaningSource", "exampleSource", "pronunciationSource"] as const) {
+  for (const field of [
+    "meaningSource",
+    "exampleSource",
+    "pronunciationSource",
+    "notesSource",
+  ] as const) {
     const comparator = filter[field];
     if (comparator) cardWhere.push(...idConditions(schema.cards[field], comparator));
   }

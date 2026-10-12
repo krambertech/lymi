@@ -1193,6 +1193,7 @@ function Review() {
               owned
                 ? {
                     onEdit: () => setEditing(current.card),
+                    enrichFields: currentDeck.enrichFields,
                     onEnrich: () =>
                       void api
                         .enrichCard(current.card.id)

@@ -175,6 +175,7 @@ export const CardFilter = z
     meaningSource: SourceComparator.optional(),
     exampleSource: SourceComparator.optional(),
     pronunciationSource: SourceComparator.optional(),
+    notesSource: SourceComparator.optional(),
     enrichmentStatus: EnrichmentComparator.optional().meta({
       description: "working while AI enrichment runs, failed if it did not finish, null otherwise",
     }),

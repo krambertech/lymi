@@ -671,6 +671,7 @@ export function ReviewCard({
   const aiWritten =
     card.meaningSource === "ai" ||
     (card.exampleSource === "ai" && !!card.example) ||
+    (card.notesSource === "ai" && !!card.notes) ||
     (card.pronunciationSource === "ai" && !!card.pronunciation);
   // Where the card sits: its section, or the source it came from when it has none. Sources written
   // before sections existed tend to restate the section, so the two never show together.

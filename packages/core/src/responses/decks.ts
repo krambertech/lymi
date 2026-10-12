@@ -1,5 +1,12 @@
 import { z } from "zod";
-import { Directions, MemberRole, ReviewMode, SectionProgression } from "../types";
+import {
+  DeckEnrichFields,
+  DeckEnrichInstructions,
+  Directions,
+  MemberRole,
+  ReviewMode,
+  SectionProgression,
+} from "../types";
 import { Timestamp } from "./common";
 
 /** Whose deck it is, what the caller may do in it, and whether its owner published it. */
@@ -18,6 +25,14 @@ const Membership = {
     .meta({ description: "Who owns the deck" }),
   published: z.boolean().meta({
     description: "True while the deck is published, which makes its owner its publisher",
+  }),
+};
+
+/** How the AI fills the deck's cards. The owner's alone: a member reads null instructions. */
+const Enrichment = {
+  enrichFields: DeckEnrichFields,
+  enrichInstructions: DeckEnrichInstructions.meta({
+    description: "The owner's instructions to the AI. Always null for a member.",
   }),
 };
 
@@ -40,6 +55,7 @@ export const DeckOut = z
     position: z.number().int(),
     seriesId: SeriesId,
     sectionProgression: SectionProgression,
+    ...Enrichment,
     meaningLanguage: z.string().nullable().meta({
       description:
         "The edition the caller reads this deck in, pinned when they added it. Null for its own words.",
@@ -67,6 +83,7 @@ export const DeckSummaryOut = z
     position: z.number().int(),
     seriesId: SeriesId,
     sectionProgression: SectionProgression,
+    ...Enrichment,
     meaningLanguage: z.string().nullable().meta({
       description:
         "The edition the caller reads this deck in, pinned when they added it. Null for its own words.",

@@ -163,7 +163,22 @@ export const analyticsEvents = {
     outcome: z.enum(["success", "error"]),
     duration_ms: z.number().nonnegative().max(3_600_000),
   }),
-  enrichment_finished: z.object({ outcome: z.enum(["enriched", "empty", "failed"]), count }),
+  enrichment_finished: z.object({
+    outcome: z.enum(["enriched", "empty", "failed"]),
+    count,
+    trigger: z.enum(["add", "card"]).optional(),
+    has_instructions: z.boolean().optional(),
+    samples: count.optional(),
+    skipped: count.optional(),
+    prompt_version: z.number().int().positive().max(1000).optional(),
+  }),
+  deck_enrichment_changed: z.object({
+    meaning: z.boolean(),
+    example: z.boolean(),
+    notes: z.boolean(),
+    pronunciation: z.boolean(),
+    has_instructions: z.boolean(),
+  }),
   // PostHog's LLM analytics shape, without $ai_input or $ai_output_choices: no prompt or reply leaves.
   $ai_generation: z.object({
     $ai_trace_id: z.uuid(),
@@ -229,6 +244,7 @@ export const analyticsProducers = {
   enrichment_finished: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
+  deck_enrichment_changed: ["worker"],
 } satisfies Record<AnalyticsName, readonly ("browser" | "worker")[]>;
 
 export function eventProperties(

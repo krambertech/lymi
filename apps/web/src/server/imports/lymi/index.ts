@@ -218,6 +218,7 @@ export const lymi: SourceAdapter<LymiNote> = {
           meaning: card.meaningSource,
           example: card.exampleSource,
           pronunciation: card.pronunciationSource ?? null,
+          notes: card.notesSource ?? null,
         },
         origin: card.source ?? undefined,
         pictureDescription: card.picture?.description ?? undefined,

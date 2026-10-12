@@ -1,5 +1,5 @@
 import type { MemberRole } from "@lymi/core";
-import { newId } from "@lymi/core";
+import { deckEnrichFields, newId } from "@lymi/core";
 import { activeAvatarVersion, publisherAvatarPath } from "@lymi/core/catalog";
 import { and, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
@@ -123,6 +123,8 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
     seriesId: row.seriesId,
     position: row.position,
     reviewModes: deckModes(row.deck.directions),
+    enrichFields: deckEnrichFields(deck.enrichFields, deck.defaultLanguage),
+    enrichInstructions: role === "owner" ? deck.enrichInstructions : null,
     role,
     owner: { id: row.deck.userId, name: row.ownerName, avatarUrl: publisher.avatarUrl },
     published: publisher.published,

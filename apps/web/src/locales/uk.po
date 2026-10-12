@@ -805,11 +805,17 @@ msgstr "Чернетка AI · Tab, щоб узяти"
 msgid "AI example"
 msgstr "Приклад від AI"
 
+msgid "AI fills them only when they help. It never changes your text."
+msgstr "AI заповнює їх, лише коли це корисно. Твій текст він не змінює."
+
 msgid "AI hook"
 msgstr "Зачіпка від AI"
 
 msgid "AI meaning"
 msgstr "Значення від AI"
+
+msgid "AI notes"
+msgstr "Нотатки від AI"
 
 msgid "AI pronunciation"
 msgstr "Вимова від AI"
@@ -1877,6 +1883,9 @@ msgstr "Повідомлення надіслано"
 msgid "Fewer fields"
 msgstr "Менше полів"
 
+msgid "Fields AI can fill"
+msgstr "Що може заповнити AI"
+
 #. placeholder {0}: noteTypeName(type, i18n)
 msgid "Fields of {0}"
 msgstr "Поля «{0}»"
@@ -2151,6 +2160,9 @@ msgstr "Огляд з’явиться після першого повторе�
 
 msgid "Install Lymi"
 msgstr "Встановити Lymi"
+
+msgid "Instructions"
+msgstr "Інструкції"
 
 msgctxt "daily goal"
 msgid "Intense"
@@ -2481,6 +2493,9 @@ msgstr "Нове значення: «{value}»"
 msgid "Meaning from lesson"
 msgstr "Значення з уроку"
 
+msgid "Medical French for nurses. Use the clinical meaning."
+msgstr "Медична французька для медсестер. Бери медичне значення."
+
 msgid "Memory hook"
 msgstr "Зачіпка"
 
@@ -2770,8 +2785,14 @@ msgstr "Ще не почато"
 msgid "Notes"
 msgstr "Нотатки"
 
+msgid "Notes by you"
+msgstr "Твої нотатки"
+
 msgid "Notes changed to “{value}”"
 msgstr "Нові нотатки: «{value}»"
+
+msgid "Notes from lesson"
+msgstr "Нотатки з уроку"
 
 msgid "Nothing archived"
 msgstr "Архів порожній"
@@ -2850,6 +2871,9 @@ msgstr "Приєднатися можуть лише ті, кого ти зап�
 
 msgid "Only the deck’s owner can change this."
 msgstr "Змінювати це може лише власник колоди."
+
+msgid "Only you see these."
+msgstr "Їх бачиш лише ти."
 
 msgid "Only your name is shared, never your progress."
 msgstr "Видно лише твоє ім’я, а прогрес — ні."

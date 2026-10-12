@@ -317,6 +317,7 @@ function fileCard(item: ScopeCard, picture: string | null): LymiFileCard {
     meaningSource: card.meaningSource,
     exampleSource: card.exampleSource,
     pronunciationSource: card.pronunciationSource,
+    notesSource: card.notesSource,
     hook: card.hook,
     hookSource: card.hookSource,
     reviewModes: card.directions ? effectiveModes(card.directions, card.reviewModeKeys) : null,

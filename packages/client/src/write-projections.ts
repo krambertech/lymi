@@ -1,5 +1,6 @@
 import {
   type CardPatch,
+  deckEnrichFields,
   directionsFromModes,
   modeKey,
   modeOf,
@@ -88,7 +89,9 @@ export function localCard(w: Extract<Write, { kind: "card.add" }>, lookup: Looku
     meaningSource: input.meaningSource ?? (input.meaning ? "manual" : null),
     exampleSource: input.exampleSource ?? (input.example ? "manual" : null),
     pronunciationSource: input.pronunciationSource ?? (input.pronunciation ? "manual" : null),
+    notesSource: input.notesSource ?? (input.notes ? "manual" : null),
     enrichmentStatus: null,
+    enrichmentFields: null,
     audioKey: null,
     createdBy: "user",
     archivedAt: null,
@@ -114,6 +117,8 @@ export function localDeck(w: Extract<Write, { kind: "deck.create" }>, lookup: Lo
     position: 0,
     seriesId: input.seriesId ?? null,
     sectionProgression: input.sectionProgression ?? "automatic",
+    enrichFields: deckEnrichFields(input.enrichFields, input.defaultLanguage),
+    enrichInstructions: input.enrichInstructions || null,
     reviewModes: modesFromDirections(directions).map(modeOf),
     total: 0,
     due: 0,
@@ -146,6 +151,12 @@ export function patchDeck(deck: DeckSummary, patch: DeckPatch): DeckSummary {
   if (patch.defaultLanguage !== undefined) next.defaultLanguage = patch.defaultLanguage;
   if (patch.sectionProgression !== undefined) next.sectionProgression = patch.sectionProgression;
   if (patch.seriesId !== undefined) next.seriesId = patch.seriesId;
+  if (patch.enrichFields !== undefined) {
+    next.enrichFields = deckEnrichFields(patch.enrichFields, next.defaultLanguage);
+  }
+  if (patch.enrichInstructions !== undefined) {
+    next.enrichInstructions = patch.enrichInstructions?.trim() || null;
+  }
   const directions =
     patch.directions ??
     (patch.reviewModes ? directionsFromModes(patch.reviewModes.map(modeKey)) : undefined);

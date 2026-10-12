@@ -59,6 +59,8 @@ erDiagram
     text import_id "nullable, the import that made it"
     text external_id "nullable, the source's key"
     int states_version "raised when members may lack a state"
+    json enrich_fields "nullable, fields the AI may fill; null follows the language's default"
+    text enrich_instructions "nullable, the owner's instructions to the AI"
   }
   sections {
     text id PK
@@ -94,7 +96,9 @@ erDiagram
     text meaning_source "lesson | ai | manual"
     text example_source "lesson | ai | manual"
     text pronunciation_source "lesson | ai | manual"
+    text notes_source "nullable lesson | ai | manual"
     text enrichment_status "nullable working | failed"
+    json enrichment_fields "nullable, what the outstanding run may fill"
     text audio_key "nullable R2 key"
     json review_modes "nullable mode keys, read only while directions is set"
     text image_version "nullable opaque token of the last picture write"

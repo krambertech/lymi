@@ -18,7 +18,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Section**: An optional, ordered part of one deck, such as one lesson. Every learner of the deck sees its sections; only the owner changes them. A card is in at most one section of its own deck, and a card without one works as it always has. The owner chooses how sections open for everyone studying the deck. By default each learner starts with the first, and the next opens automatically once every card of the current section has come up and 80% are Known. The owner can instead make it **ready** at that point, for the learner to **Start**, or open every section at once. **Start anyway** opens a later section early, with every section before it. A section never locks again, and a card the learner already started always stays in review. _Avoid_: Lesson (for the grouping), chapter, unit, module, level
 
-**Field source**: Where one field's text came from: the lesson, the AI, or the learner. Kept per field, on the meaning, the example, the pronunciation and the hook, so AI text is never mistaken for the lesson. "AI" is Lymi's own enrichment and nothing else: text a connected app or the API sends is the learner's whoever composed it, because Activity already names the app, and only the lesson may be claimed for it.
+**Field source**: Where one field's text came from: the lesson, the AI, or the learner. Kept per field, on the meaning, the example, the notes, the pronunciation and the hook, so AI text is never mistaken for the lesson. "AI" is Lymi's own enrichment and nothing else: text a connected app or the API sends is the learner's whoever composed it, because Activity already names the app, and only the lesson may be claimed for it.
 
 **AI badge**: The violet mark beside a field that says Lymi's enrichment wrote it. Only that is marked: the learner's own words and the lesson's are the ordinary case and carry nothing, which is what makes the badge carry. The text itself stays ordinary text, because the learner is meant to read the meaning, not the label. Editing a field the AI wrote makes it the learner's and the badge goes. _Avoid_: Tag, flag, chip (for this one), "AI-generated", disclaimer
 
@@ -28,7 +28,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Duplicate**: A card whose normalised term and language match an existing active card anywhere in the learner's decks. Adding one is skipped, never rejected, and the caller is told which card already exists.
 
-**Enrich**: The AI filling in missing fields on an existing card: meaning, example, pronunciation, language. It never overwrites a field that has text. The only AI work the server does; extraction from lesson material happens in the MCP client. _Avoid_: Prepare, generate, suggest
+**Enrich**: The AI filling in missing fields on an existing card. The deck lists which of meaning, example, notes and pronunciation it may fill, and the language is always filled; the AI fills only the ones that suit the card, following the deck's own cards and the owner's instructions for the AI. It never overwrites a field that has text. Extraction from lesson material happens in the MCP client. ADR 0033. _Avoid_: Prepare, generate, suggest
 
 ### Remembering
 

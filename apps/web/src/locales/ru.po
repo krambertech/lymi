@@ -805,11 +805,17 @@ msgstr "Черновик AI · Tab, чтобы взять"
 msgid "AI example"
 msgstr "Пример от AI"
 
+msgid "AI fills them only when they help. It never changes your text."
+msgstr "AI заполняет их, только когда это полезно. Твой текст он не меняет."
+
 msgid "AI hook"
 msgstr "Зацепка от AI"
 
 msgid "AI meaning"
 msgstr "Значение от AI"
+
+msgid "AI notes"
+msgstr "Заметки от AI"
 
 msgid "AI pronunciation"
 msgstr "Произношение от AI"
@@ -1877,6 +1883,9 @@ msgstr "Обратная связь отправлена"
 msgid "Fewer fields"
 msgstr "Меньше полей"
 
+msgid "Fields AI can fill"
+msgstr "Что может заполнить AI"
+
 #. placeholder {0}: noteTypeName(type, i18n)
 msgid "Fields of {0}"
 msgstr "Поля «{0}»"
@@ -2151,6 +2160,9 @@ msgstr "Обзор появится после первого повторени
 
 msgid "Install Lymi"
 msgstr "Установить Lymi"
+
+msgid "Instructions"
+msgstr "Инструкции"
 
 msgctxt "daily goal"
 msgid "Intense"
@@ -2481,6 +2493,9 @@ msgstr "Новое значение: «{value}»"
 msgid "Meaning from lesson"
 msgstr "Значение с урока"
 
+msgid "Medical French for nurses. Use the clinical meaning."
+msgstr "Медицинский французский для медсестёр. Бери медицинское значение."
+
 msgid "Memory hook"
 msgstr "Зацепка"
 
@@ -2770,8 +2785,14 @@ msgstr "Ещё не начато"
 msgid "Notes"
 msgstr "Заметки"
 
+msgid "Notes by you"
+msgstr "Твои заметки"
+
 msgid "Notes changed to “{value}”"
 msgstr "Новые заметки: «{value}»"
+
+msgid "Notes from lesson"
+msgstr "Заметки с урока"
 
 msgid "Nothing archived"
 msgstr "Архив пуст"
@@ -2850,6 +2871,9 @@ msgstr "Присоединиться могут только те, кого ты
 
 msgid "Only the deck’s owner can change this."
 msgstr "Менять это может только владелец колоды."
+
+msgid "Only you see these."
+msgstr "Их видишь только ты."
 
 msgid "Only your name is shared, never your progress."
 msgstr "Видно только твоё имя, а прогресс — нет."

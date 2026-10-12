@@ -118,6 +118,7 @@ export const LymiFileCard = z.object({
   exampleSource: FieldSource.nullable(),
   // Added after the first files were written, so an older zip that lacks it still imports.
   pronunciationSource: FieldSource.nullable().optional(),
+  notesSource: FieldSource.nullable().optional(),
   hook: z.string().nullable().optional(),
   hookSource: FieldSource.nullable().optional(),
   reviewModes: z.array(ReviewModeKey).nullable().meta({

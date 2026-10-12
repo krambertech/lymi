@@ -8,6 +8,7 @@ import {
   text,
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
+import type { DeckEnrichField, EnrichedField } from "../enrichment";
 import {
   EDITION_STATUSES,
   type EditionCardField,
@@ -94,6 +95,10 @@ export const decks = sqliteTable(
     ...revision,
     /** Rises when a card may need a state its members lack; a member behind it catches up. ADR 0022. */
     statesVersion: integer("states_version").notNull().default(0),
+    /** The fields the AI may fill. Null follows `defaultEnrichFields`, so a better default reaches untouched decks. */
+    enrichFields: text("enrich_fields", { mode: "json" }).$type<DeckEnrichField[]>(),
+    /** The owner's own words to the AI about this deck. Never shown to a member. */
+    enrichInstructions: text("enrich_instructions"),
   },
   (t) => [
     index("decks_user_idx").on(t.userId, t.archivedAt, t.position),
@@ -177,6 +182,7 @@ export const cards = sqliteTable(
     meaningSource: text("meaning_source", { enum: ["lesson", "ai", "manual"] }),
     exampleSource: text("example_source", { enum: ["lesson", "ai", "manual"] }),
     pronunciationSource: text("pronunciation_source", { enum: ["lesson", "ai", "manual"] }),
+    notesSource: text("notes_source", { enum: ["lesson", "ai", "manual"] }),
     /** A memory hook. Not an edition field, so writing one leaves `revision` and every edition alone. */
     hook: text("hook"),
     hookSource: text("hook_source", { enum: ["lesson", "ai", "manual"] }),
@@ -187,6 +193,8 @@ export const cards = sqliteTable(
     hookDraft: text("hook_draft"),
     /** Set while an enrichment job is outstanding, and cleared once it settles. */
     enrichmentStatus: text("enrichment_status", { enum: ["working", "failed"] }),
+    /** The fields the outstanding run may fill, so a screen holds space for those alone. */
+    enrichmentFields: text("enrichment_fields", { mode: "json" }).$type<EnrichedField[]>(),
     /** R2 key of generated pronunciation audio, if any. */
     audioKey: text("audio_key"),
     /** Who added the card. Activity filters on this without parsing the audit log. */

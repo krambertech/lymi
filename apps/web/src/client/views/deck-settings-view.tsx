@@ -1,5 +1,10 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { type Directions, deckLimits, type SectionProgression } from "@lymi/core";
+import {
+  type DeckEnrichField,
+  type Directions,
+  deckLimits,
+  type SectionProgression,
+} from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -17,6 +22,7 @@ import { Avatar } from "../components/avatar";
 import { Button, IconButton } from "../components/button";
 import { Chip } from "../components/chip";
 import { CopyField } from "../components/copy-field";
+import { DeckAiCard } from "../components/deck-ai-card";
 import {
   type DirectionExample,
   DirectionField,
@@ -51,6 +57,8 @@ export interface DeckSettingsPatch {
   defaultLanguage?: string | null;
   directions?: Directions;
   sectionProgression?: SectionProgression;
+  enrichFields?: DeckEnrichField[];
+  enrichInstructions?: string | null;
 }
 
 export interface DeckSettingsProps {
@@ -249,6 +257,10 @@ export function DeckSettingsView({
               example={example}
               total={deck.total}
             />
+          </SettingsGroup>
+
+          <SettingsGroup title={t`AI`}>
+            <DeckAiCard deck={deck} onSave={onSave} />
           </SettingsGroup>
 
           {sections && (

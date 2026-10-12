@@ -185,6 +185,9 @@ msgstr "{deckCount} · {cardCount}"
 msgid "{due, plural, one {# card due} other {# cards due}}"
 msgstr "{due, plural, one {# card due} other {# cards due}}"
 
+msgid "{due, plural, one {# card to review} other {# cards to review}}"
+msgstr "{due, plural, one {# card to review} other {# cards to review}}"
+
 msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 msgstr "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 
@@ -267,6 +270,9 @@ msgstr "A connected app"
 
 msgid "A deck holds the words you learn together. Make one, or import decks on the web."
 msgstr "A deck holds the words you learn together. Make one, or import decks on the web."
+
+msgid "A few minutes keeps them fresh."
+msgstr "A few minutes keeps them fresh."
 
 msgid "A new code is on its way to {address}."
 msgstr "A new code is on its way to {address}."
@@ -1124,6 +1130,9 @@ msgstr "Importing"
 msgid "Importing from {source}"
 msgstr "Importing from {source}"
 
+msgid "In an hour"
+msgstr "In an hour"
+
 msgid "In Library"
 msgstr "In Library"
 
@@ -1502,17 +1511,14 @@ msgstr "Nothing published yet"
 msgid "Nothing scheduled."
 msgstr "Nothing scheduled."
 
-msgid "Off"
-msgstr "Off"
+msgid "Notifications are off for Lymi. Turn them on in Settings to get the reminder."
+msgstr "Notifications are off for Lymi. Turn them on in Settings to get the reminder."
 
 msgid "Often forgotten"
 msgstr "Often forgotten"
 
 msgid "OK"
 msgstr "OK"
-
-msgid "Only on days with cards due."
-msgstr "Only on days with cards due."
 
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."
@@ -1540,6 +1546,9 @@ msgstr "Open Library"
 
 msgid "Open on the web"
 msgstr "Open on the web"
+
+msgid "Open Settings"
+msgstr "Open Settings"
 
 msgid "Open Settings on the web"
 msgstr "Open Settings on the web"
@@ -1711,8 +1720,14 @@ msgstr "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}
 msgid "Review done"
 msgstr "Review done"
 
+msgid "Review now"
+msgstr "Review now"
+
 msgid "Review these decks together, in this order."
 msgstr "Review these decks together, in this order."
+
+msgid "Review whenever you have a moment."
+msgstr "Review whenever you have a moment."
 
 msgid "Reviewed"
 msgstr "Reviewed"
@@ -2002,6 +2017,9 @@ msgstr "The deck leaves Library and its cards stop coming up in review. If you j
 
 msgid "Theme"
 msgstr "Theme"
+
+msgid "They’re ready when you are."
+msgstr "They’re ready when you are."
 
 msgid "This card isn’t in this deck"
 msgstr "This card isn’t in this deck"

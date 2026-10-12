@@ -20,9 +20,12 @@ export const CAPTURE_KEYS = { deck: "deck", enrich: "enrich" } as const;
 export const todayStore = createMMKV({ id: "lymi-today" });
 export const REST_DISMISSED_KEY = "rest-dismissed";
 
-/** This phone's own choices, which outlast a sign-out: the theme and the reminder time. */
+/**
+ * This phone's own choices, which outlast a sign-out: the theme and the reminder time. `snoozed` is
+ * when In an hour put today's reminder off to, and sign-out clears it.
+ */
 export const deviceStore = createMMKV({ id: "lymi-device" });
-export const DEVICE_KEYS = { theme: "theme", reminder: "reminder" } as const;
+export const DEVICE_KEYS = { theme: "theme", reminder: "reminder", snoozed: "snoozed" } as const;
 
 /** What the review has shown once on this phone, such as how to take back a grade. */
 export const reviewStore = createMMKV({ id: "lymi-review" });

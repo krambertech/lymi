@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { DeckSummary } from "@lymi/client/api";
 import { cardSearchQuery } from "@lymi/client/queries";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -26,14 +26,20 @@ export default function Search() {
   // A link can open search with its text already in, as `lymi://search?q=…`.
   const { q } = useLocalSearchParams<{ q?: string }>();
   const { text, setText, query } = useSearchText(q);
-  const search = useQuery({ ...cardSearchQuery(query), placeholderData: keepPreviousData });
+  const search = useInfiniteQuery({
+    ...cardSearchQuery(query),
+    placeholderData: keepPreviousData,
+  });
   const allDecks = useDecks().data ?? [];
-  const cards = query ? (search.data?.cards ?? []) : [];
+  const cards = query ? (search.data?.pages.flatMap((page) => page.cards) ?? []) : [];
+  // Only the first page knows the whole count, and only when the search is exact.
+  const total = search.data?.pages[0]?.total ?? null;
+  const more = !!query && search.hasNextPage;
   const needle = query.toLocaleLowerCase(i18n.locale);
   const decks = query
     ? allDecks.filter((d) => d.name.toLocaleLowerCase(i18n.locale).includes(needle))
     : [];
-  const nothing = query && !search.isPending && cards.length === 0 && decks.length === 0;
+  const nothing = query && !search.isPending && !more && cards.length === 0 && decks.length === 0;
 
   return (
     <View className="flex-1 bg-canvas">
@@ -66,10 +72,9 @@ export default function Search() {
               <SectionTitle
                 end={
                   <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
-                    {plural(search.data?.total ?? cards.length, {
-                      one: "# card",
-                      other: "# cards",
-                    })}
+                    {total === null && more
+                      ? t`More than ${cards.length}`
+                      : plural(total ?? cards.length, { one: "# card", other: "# cards" })}
                   </Text>
                 }
               >
@@ -103,6 +108,19 @@ export default function Search() {
                 })}
               </Plate>
             </View>
+          )}
+          {/* A page can come back short, or empty, with more after it, so more is offered by the cursor. */}
+          {more && (
+            <Press
+              onPress={() => void search.fetchNextPage()}
+              disabled={search.isFetchingNextPage}
+              accessibilityRole="button"
+              className="h-11 items-center justify-center self-center px-4"
+            >
+              <Text className="text-md font-medium text-text-2">
+                {search.isFetchingNextPage ? t`Loading…` : t`Show more`}
+              </Text>
+            </Press>
           )}
           {query && search.isError && !search.data && (
             <Text className="px-1 text-base text-muted">

@@ -182,6 +182,7 @@ describe("taking a grade back", () => {
     grade.mockReturnValueOnce(new Promise((resolve) => (answer = resolve)));
     const sending = g("a");
     const recorded = grades.recordGrade(sending);
+    await vi.waitFor(() => expect(grade).toHaveBeenCalled());
     undoReview.mockResolvedValueOnce({ ok: true });
     const undone = grades.undoGrade(sending);
     answer(accepted("rev-1"));

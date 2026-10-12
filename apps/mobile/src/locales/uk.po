@@ -7,6 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: uk\n"
 
+msgid "“{deckName}” is reviewed with the other decks in its series."
+msgstr "«{deckName}» повторюватиметься разом з іншими колодами серії."
+
 msgid "“{term}” is already in {deckName}"
 msgstr "«{term}» уже є в колоді {deckName}"
 
@@ -640,6 +643,9 @@ msgstr "Не вдалося завантажити картки"
 
 msgid "Couldn’t load your Library"
 msgstr "Не вдалося завантажити Бібліотеку"
+
+msgid "Couldn’t move the deck"
+msgstr "Не вдалося перемістити колоду"
 
 msgid "Couldn’t open this deck"
 msgstr "Не вдалося відкрити цю колоду"
@@ -1315,6 +1321,9 @@ msgstr "Перемістити «{deckName}» вище"
 msgid "Move down"
 msgstr "Нижче"
 
+msgid "Move to series"
+msgstr "Перенести в серію"
+
 msgid "Move up"
 msgstr "Вище"
 
@@ -1409,6 +1418,9 @@ msgstr "Повторень поки немає. Кожен день із пов�
 
 msgid "No section"
 msgstr "Без розділу"
+
+msgid "No series"
+msgstr "Без серії"
 
 msgid "None"
 msgstr "Немає"

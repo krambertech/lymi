@@ -15,8 +15,16 @@ export function useSeriesActions() {
     );
 
   const name = useMutation({
-    mutationFn: ({ series, name }: { series: Series | undefined; name: string }) =>
-      series ? api.renameSeries(series.id, name) : api.createSeries({ name }),
+    // A new series can take its first deck in the same write, so a failure never leaves it empty.
+    mutationFn: ({
+      series,
+      name,
+      deckIds,
+    }: {
+      series: Series | undefined;
+      name: string;
+      deckIds?: string[];
+    }) => (series ? api.renameSeries(series.id, name) : api.createSeries({ name, deckIds })),
     onSettled: refresh,
   });
 
@@ -44,5 +52,12 @@ export function useSeriesActions() {
     onSettled: refresh,
   });
 
-  return { name, setDecks, move, remove };
+  // A deck picks its series from the deck, as the web's Move to series does.
+  const moveDeck = useMutation({
+    mutationFn: ({ deckId, seriesId }: { deckId: string; seriesId: string | null }) =>
+      api.updateDeck(deckId, { seriesId }),
+    onSettled: refresh,
+  });
+
+  return { name, setDecks, move, remove, moveDeck };
 }

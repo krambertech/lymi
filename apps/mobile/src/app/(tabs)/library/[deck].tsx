@@ -1,5 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { errorMessage } from "@lymi/client/api";
 import {
   type DeckFilters,
   type DeckGroup,
@@ -15,10 +16,12 @@ import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
 import { useMemo, useState } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { useDeckExits } from "../../../data/decks";
 import { useNextDue } from "../../../data/next-due";
-import { useDeckCards, useDecks, useSections } from "../../../data/queries";
+import { useDeckCards, useDecks, useSections, useSeriesList } from "../../../data/queries";
+import { useSeriesActions } from "../../../data/series";
+import { useOnline } from "../../../streak/goal-picker";
 import { usePalette } from "../../../theme/palette";
 import { EmptyState } from "../../../ui/empty-state";
 import { Icon } from "../../../ui/icons";
@@ -61,6 +64,7 @@ export default function Deck() {
   }, [rows, filters, sort, i18n.locale, sections]);
   const owner = deck?.role === "owner";
   const exits = useDeckExits(deck);
+  const [moving, setMoving] = useState(false);
   // The deck's name and counts come from the deck list, its words from its cards: either can fail.
   const cardsFailed = useLoadFailed(cards);
   const decksFailed = useLoadFailed(decks);
@@ -90,6 +94,15 @@ export default function Deck() {
                           label: t`Add a card`,
                           icon: "plus" as const,
                           onSelect: addCard,
+                        },
+                      ]
+                    : []),
+                  ...(owner
+                    ? [
+                        {
+                          label: t`Move to series`,
+                          icon: "series" as const,
+                          onSelect: () => setMoving(true),
                         },
                       ]
                     : []),
@@ -176,6 +189,7 @@ export default function Deck() {
           </View>
         </>
       )}
+      {deck && owner && <MoveToSeries deck={deck} open={moving} onOpenChange={setMoving} />}
     </Screen>
   );
 }
@@ -458,5 +472,73 @@ function WordRow({ row, first }: { row: DeckRow; first: boolean }) {
         </Text>
       </View>
     </Press>
+  );
+}
+
+/**
+ * Move to series, as the web's: no series, one of the learner's, or a new one that starts with
+ * this deck. A deck reviews with the other decks in its series.
+ */
+function MoveToSeries({
+  deck,
+  open,
+  onOpenChange,
+}: {
+  deck: DeckData;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  const { t } = useLingui();
+  const router = useRouter();
+  const p = usePalette();
+  const online = useOnline();
+  const series = useSeriesList(open).data ?? [];
+  const { moveDeck } = useSeriesActions();
+  const deckName = deck.name;
+  const pick = (seriesId: string | null) => {
+    if (!online) return;
+    onOpenChange(false);
+    if (seriesId === deck.seriesId) return;
+    Haptics.selectionAsync();
+    moveDeck.mutate(
+      { deckId: deck.id, seriesId },
+      { onError: (e) => Alert.alert(t`Couldn’t move the deck`, errorMessage(e)) },
+    );
+  };
+  return (
+    <Sheet title={t`Move to series`} open={open} onOpenChange={onOpenChange}>
+      <Text className="px-1 text-base text-text-2">
+        {t`“${deckName}” is reviewed with the other decks in its series.`}
+      </Text>
+      {!online && (
+        <View className="flex-row items-center gap-1.5 px-1">
+          <Icon name="offline" size={14} colour={p.muted} />
+          <Text className="flex-1 text-base text-muted">{t`Changing series needs a connection.`}</Text>
+        </View>
+      )}
+      <SheetGroup>
+        <SheetRow label={t`No series`} chosen={!deck.seriesId} onPress={() => pick(null)} />
+        {series.map((s) => (
+          <SheetRow
+            key={s.id}
+            label={s.name}
+            chosen={s.id === deck.seriesId}
+            onPress={() => pick(s.id)}
+          />
+        ))}
+      </SheetGroup>
+      <SheetGroup>
+        <SheetRow
+          label={t`New series`}
+          icon="plus"
+          opens
+          onPress={() => {
+            if (!online) return;
+            onOpenChange(false);
+            router.push(`/series?deck=${deck.id}` as Href);
+          }}
+        />
+      </SheetGroup>
+    </Sheet>
   );
 }

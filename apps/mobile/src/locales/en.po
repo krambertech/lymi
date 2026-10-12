@@ -7,6 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+msgid "“{deckName}” is reviewed with the other decks in its series."
+msgstr "“{deckName}” is reviewed with the other decks in its series."
+
 msgid "“{term}” is already in {deckName}"
 msgstr "“{term}” is already in {deckName}"
 
@@ -640,6 +643,9 @@ msgstr "Couldn’t load your cards"
 
 msgid "Couldn’t load your Library"
 msgstr "Couldn’t load your Library"
+
+msgid "Couldn’t move the deck"
+msgstr "Couldn’t move the deck"
 
 msgid "Couldn’t open this deck"
 msgstr "Couldn’t open this deck"
@@ -1315,6 +1321,9 @@ msgstr "Move {deckName} up"
 msgid "Move down"
 msgstr "Move down"
 
+msgid "Move to series"
+msgstr "Move to series"
+
 msgid "Move up"
 msgstr "Move up"
 
@@ -1409,6 +1418,9 @@ msgstr "No reviews yet. Each day you review adds a block."
 
 msgid "No section"
 msgstr "No section"
+
+msgid "No series"
+msgstr "No series"
 
 msgid "None"
 msgstr "None"

@@ -22,12 +22,13 @@ import { OnGlass } from "../ui/surface";
 export default function SeriesName() {
   const { t } = useLingui();
   const router = useRouter();
-  const { id } = useLocalSearchParams<{ id?: string }>();
+  // `?deck=` is a deck's Move to series making a new one: the series starts with that deck.
+  const { id, deck } = useLocalSearchParams<{ id?: string; deck?: string }>();
   const form = seriesForm(id, useSeriesList(true).data);
   if (form.mode === "create" || form.mode === "rename") {
     const series = form.mode === "rename" ? form.series : undefined;
     // Keyed by the series, so the name starts from it once it has arrived and never from nothing.
-    return <NameForm key={series?.id ?? "new"} series={series} />;
+    return <NameForm key={series?.id ?? "new"} series={series} deck={series ? undefined : deck} />;
   }
   return (
     <OnGlass>
@@ -41,7 +42,7 @@ export default function SeriesName() {
   );
 }
 
-function NameForm({ series }: { series: Series | undefined }) {
+function NameForm({ series, deck }: { series: Series | undefined; deck?: string | undefined }) {
   const { t } = useLingui();
   const router = useRouter();
   const p = usePalette();
@@ -59,11 +60,11 @@ function NameForm({ series }: { series: Series | undefined }) {
     }
     setError(null);
     save.mutate(
-      { series, name: parsed.data.name },
+      { series, name: parsed.data.name, deckIds: deck ? [deck] : undefined },
       {
-        // A new series goes straight on to its decks; a rename is done.
+        // A new series goes straight on to its decks; a rename, or one made from a deck, is done.
         onSuccess: (saved) =>
-          series ? router.back() : router.replace(`/series-decks?id=${saved.id}` as Href),
+          series || deck ? router.back() : router.replace(`/series-decks?id=${saved.id}` as Href),
         onError: (e) => setError(errorMessage(e)),
       },
     );

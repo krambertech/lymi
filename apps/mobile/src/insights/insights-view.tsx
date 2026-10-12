@@ -276,7 +276,7 @@ function OftenForgotten({ leeches }: { leeches: InsightsOut["leeches"] }) {
               <Text className="flex-1 text-md text-text" numberOfLines={2}>
                 {c.term}
               </Text>
-              <Text className="text-md text-muted">{t`${c.lapses} forgotten`}</Text>
+              <Text className="text-md text-muted">{t`${plural(c.lapses, { one: "# forgotten", other: "# forgotten" })}`}</Text>
               <RowArrow />
             </View>
           </Press>

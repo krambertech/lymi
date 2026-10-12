@@ -20,6 +20,10 @@ msgstr "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgid "{0, plural, one {# card due} other {# cards due}}"
 msgstr "{0, plural, one {# card due} other {# cards due}}"
 
+#. placeholder {0}: c.lapses
+msgid "{0, plural, one {# forgotten} other {# forgotten}}"
+msgstr "{0, plural, one {# forgotten} other {# forgotten}}"
+
 #. placeholder {0}: screen.nudge.count
 msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
 msgstr "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
@@ -53,10 +57,6 @@ msgstr "{0, plural, one {review a day} other {reviews a day}}"
 #. placeholder {0}: busiest.count
 msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
 msgstr "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
-
-#. placeholder {0}: c.lapses
-msgid "{0} forgotten"
-msgstr "{0} forgotten"
 
 #. placeholder {0}: pct(cards.known / cards.total)
 msgid "{0} of your cards are known."

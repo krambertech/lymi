@@ -20,6 +20,10 @@ msgstr "{0, plural, one {{1} из # повторения} few {{2} из # пов
 msgid "{0, plural, one {# card due} other {# cards due}}"
 msgstr "{0, plural, one {# карточка к повторению} few {# карточки к повторению} many {# карточек к повторению} other {# карточки к повторению}}"
 
+#. placeholder {0}: c.lapses
+msgid "{0, plural, one {# forgotten} other {# forgotten}}"
+msgstr "{0, plural, one {Забыто # раз} few {Забыто # раза} many {Забыто # раз} other {Забыто # раза}}"
+
 #. placeholder {0}: screen.nudge.count
 msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
 msgstr "{0, plural, one {Ещё # карточка — и на сегодня всё} few {Ещё # карточки — и на сегодня всё} many {Ещё # карточек — и на сегодня всё} other {Ещё # карточки — и на сегодня всё}}"
@@ -53,10 +57,6 @@ msgstr "{0, plural, one {повторение в день} few {повторен
 #. placeholder {0}: busiest.count
 msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
 msgstr "{0, plural, one {Сегодня самый загруженный день: # карточка.} few {Сегодня самый загруженный день: # карточки.} many {Сегодня самый загруженный день: # карточек.} other {Сегодня самый загруженный день: # карточки.}}"
-
-#. placeholder {0}: c.lapses
-msgid "{0} forgotten"
-msgstr "{0} забыто"
 
 #. placeholder {0}: pct(cards.known / cards.total)
 msgid "{0} of your cards are known."

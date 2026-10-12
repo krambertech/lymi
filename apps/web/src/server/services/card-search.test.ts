@@ -103,6 +103,15 @@ describe("card search paging", () => {
     expect(listed.totals).toEqual([7, 7, 7]);
   });
 
+  it("finds a Japanese card by its reading in either kana script", async () => {
+    const ctx = await learner(db, "kana-search", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+    const [kanji] = await add(ctx, deck.id, [{ term: "漢字", pronunciation: "かんじ" }, "猫"]);
+
+    expect(await ids(ctx, { query: "かんじ" })).toEqual(new Set([kanji?.id]));
+    expect(await ids(ctx, { query: "カンジ" })).toEqual(new Set([kanji?.id]));
+  });
+
   it("pages a text search, with a total on the first page only", async () => {
     const ctx = await learner(db, "paging-2", "Kateryna");
     const deck = await createDeck(ctx, { name: "Estonian", defaultLanguage: "et" });

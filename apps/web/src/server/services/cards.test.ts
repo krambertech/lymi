@@ -12,6 +12,7 @@ import {
   matchesSearch,
   restoreCard,
   restoreCards,
+  searchKey,
   showCard,
   terseOutcome,
   updateCard,
@@ -24,6 +25,7 @@ import { learner, testDb } from "./test-db";
 
 const card = (fields: Partial<Parameters<typeof matchesSearch>[0]>) => ({
   normalizedTerm: "",
+  pronunciation: null,
   meaning: null,
   example: null,
   notes: null,
@@ -49,6 +51,21 @@ describe("matchesSearch", () => {
     expect(matchesSearch(card({ normalizedTerm: "sbrigarsi" }), foldForSearch("magari"))).toBe(
       false,
     );
+  });
+
+  it("matches the reading, so a kana query finds a kanji term", () => {
+    const kanji = card({ normalizedTerm: "漢字", pronunciation: "かんじ" });
+    expect(matchesSearch(kanji, searchKey("かんじ"))).toBe(true);
+    expect(matchesSearch(kanji, searchKey("カンジ"))).toBe(true);
+    expect(matchesSearch(kanji, searchKey("ｶﾝｼﾞ"))).toBe(true);
+    expect(matchesSearch(kanji, searchKey("ひらがな"))).toBe(false);
+  });
+
+  it("folds katakana to hiragana and full-width to plain on both sides", () => {
+    expect(searchKey("コーヒー")).toBe("こーひー");
+    expect(searchKey("ＡＢＣ")).toBe("abc");
+    expect(matchesSearch(card({ normalizedTerm: "コーヒー" }), searchKey("こーひ"))).toBe(true);
+    expect(matchesSearch(card({ meaning: "ねこ" }), searchKey("ネコ"))).toBe(true);
   });
 
   it("matches a note's words across its Markdown, never its syntax", () => {

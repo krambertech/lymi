@@ -42,8 +42,13 @@ interface Props {
    * the title then shows only in the bar, once the header has scrolled under it.
    */
   header?: ReactNode;
-  /** The colour the bar and the header sit on, such as a deck's tray hue. */
-  ground?: string;
+  /**
+   * A colour of the page's own under its header, such as a deck's hue: `fade` runs it up under the
+   * bar and lets it fade out below the header, `pool` lays it as a still pool of light behind it.
+   */
+  ground?: { colour: string; shape: "fade" | "pool" };
+  /** The bar's actions arrive with the bar's title, as the header's own button scrolls away. */
+  actionsArrive?: boolean;
   children: ReactNode;
 }
 
@@ -60,7 +65,16 @@ const INLINE_LARGE = 22 / 34;
  * and shrinks, a page's named back folds into a round glass back, and what scrolls beneath softens
  * into the room. phone.md "Navigation".
  */
-export function Screen({ title, kind = "page", back, actions, header, ground, children }: Props) {
+export function Screen({
+  title,
+  kind = "page",
+  back,
+  actions,
+  header,
+  ground,
+  actionsArrive = false,
+  children,
+}: Props) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { t } = useLingui();
@@ -85,7 +99,6 @@ export function Screen({ title, kind = "page", back, actions, header, ground, ch
   const dockY = insets.top + (56 - box.h * dock) / 2;
   const travel = Math.max(restY - dockY, TITLE_GONE);
   const [headerHeight, setHeaderHeight] = useState(0);
-  const room = ground ?? p.canvas;
   const rtl = I18nManager.isRTL;
   // A worklet copies what it closes over, so it reads a flag rather than the header's elements.
   const hasHeader = !!header;
@@ -120,9 +133,20 @@ export function Screen({ title, kind = "page", back, actions, header, ground, ch
       ],
     };
   });
-  const side = useAnimatedStyle(() => ({
-    transform: [{ scale: interpolate(y.value, [0, TITLE_GONE], [1, 0.92], Extrapolation.CLAMP) }],
-  }));
+  const side = useAnimatedStyle(() => {
+    if (actionsArrive) {
+      const k = interpolate(
+        y.value,
+        [headerHeight - 90, headerHeight - 40],
+        [0, 1],
+        Extrapolation.CLAMP,
+      );
+      return { opacity: k, transform: [{ scale: 0.7 + 0.3 * k }] };
+    }
+    return {
+      transform: [{ scale: interpolate(y.value, [0, TITLE_GONE], [1, 0.92], Extrapolation.CLAMP) }],
+    };
+  });
   // Nothing crosses what the lantern lights at rest; the band only gathers once content moves.
   const band = useAnimatedStyle(() => ({
     opacity: interpolate(y.value, [0, 24], [0, 1], Extrapolation.CLAMP),
@@ -143,20 +167,11 @@ export function Screen({ title, kind = "page", back, actions, header, ground, ch
       >
         {header ? (
           <View
-            className="-mx-5 -mt-7 px-5 pb-7 pt-7"
-            style={
-              ground ? { backgroundColor: ground, marginTop: -bar, paddingTop: bar } : undefined
-            }
-            onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height - (ground ? bar : 0))}
+            className="-mx-5 px-5 pb-7"
+            style={{ marginTop: -bar, paddingTop: bar + 8 }}
+            onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height - bar)}
           >
-            {ground && (
-              // Pulling past the top shows the ground, not the room, so the header never comes unstuck.
-              <View
-                pointerEvents="none"
-                className="absolute inset-x-0 h-[1000px]"
-                style={{ top: -1000, backgroundColor: ground }}
-              />
-            )}
+            {ground && <Ground {...ground} height={bar + headerHeight} />}
             {header}
           </View>
         ) : (
@@ -178,12 +193,19 @@ export function Screen({ title, kind = "page", back, actions, header, ground, ch
           {
             height: bar + 20,
             // Solid under the bar, softening only below it, so nothing reads through the title.
-            experimental_backgroundImage: `linear-gradient(to bottom, ${room} ${Math.round((bar / (bar + 20)) * 100)}%, ${room}00)`,
+            experimental_backgroundImage: `linear-gradient(to bottom, ${p.canvas} ${Math.round((bar / (bar + 20)) * 100)}%, ${p.canvas}00)`,
           } as ViewStyle,
           band,
         ]}
       />
-      <StatusFade height={insets.top} room={room} />
+      {/* Over a page's own ground the clock sits on the ground at rest; the room gathers on scroll. */}
+      <Animated.View
+        pointerEvents="none"
+        className="absolute inset-x-0 top-0"
+        style={ground ? band : undefined}
+      >
+        <StatusFade height={insets.top} />
+      </Animated.View>
       <Animated.View
         pointerEvents="none"
         className="absolute start-0 top-0"
@@ -278,8 +300,45 @@ function Back({
   );
 }
 
+/** How far a page's ground spreads past the bottom of its header before it has faded out. */
+const SPREAD = 220;
+/** Pulling past the top shows the ground, not the room, so the header never comes unstuck. */
+const OVERSCROLL = 800;
+
+/** A page's own colour behind its header, faded out rather than cut off. */
+function Ground({
+  colour,
+  shape,
+  height,
+}: {
+  colour: string;
+  shape: "fade" | "pool";
+  height: number;
+}) {
+  const total = (shape === "fade" ? OVERSCROLL : 0) + height + SPREAD;
+  const solid = Math.round(((total - SPREAD - height * 0.45) / total) * 100);
+  const image =
+    shape === "fade"
+      ? `linear-gradient(to bottom, ${colour} ${solid}%, ${colour}00 100%)`
+      : `radial-gradient(90% 60% at 30% 35%, ${colour}, ${colour}73 55%, ${colour}00 88%)`;
+  return (
+    <View
+      pointerEvents="none"
+      className="absolute inset-x-0"
+      style={
+        {
+          top: shape === "fade" ? -OVERSCROLL : 0,
+          height: total,
+          experimental_backgroundImage: image,
+        } as ViewStyle
+      }
+    />
+  );
+}
+
 /** Content scrolling up softens into the room under the status bar instead of hitting the clock. */
-function StatusFade({ height, room }: { height: number; room: string }) {
+function StatusFade({ height }: { height: number }) {
+  const p = usePalette();
   return (
     <View
       pointerEvents="none"
@@ -287,7 +346,7 @@ function StatusFade({ height, room }: { height: number; room: string }) {
       style={
         {
           height: height + 12,
-          experimental_backgroundImage: `linear-gradient(to bottom, ${room} 55%, ${room}00)`,
+          experimental_backgroundImage: `linear-gradient(to bottom, ${p.canvas} 55%, ${p.canvas}00)`,
         } as ViewStyle
       }
     />
@@ -362,7 +421,7 @@ export function BarGroup({ items }: { items: BarGroupItem[] }) {
           className="h-10 w-11 items-center justify-center"
         >
           <Icon name={item.icon} size={19} colour={p.text} strokeWidth={item.on ? 2.5 : 2} />
-          {item.on && <View className="absolute end-2.5 top-2 size-2 rounded-full bg-text" />}
+          {item.on && <View className="absolute end-2.5 top-2 size-2 rounded-full bg-amber" />}
         </Press>
       ))}
     </GlassSurface>

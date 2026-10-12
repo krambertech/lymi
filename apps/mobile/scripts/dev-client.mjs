@@ -125,19 +125,35 @@ async function xcodebuild(args, env) {
   }
 }
 
+// A failed probe skips one watchdog tick rather than killing the build.
 function stalledProbes(xcodebuildPid) {
-  const rows = execFileSync("ps", ["-A", "-o", "pid=,ppid=,etime=,command="], { encoding: "utf8" })
+  try {
+    const rows = ps(["-A", "-o", "pid=,ppid=,etime="]).map(([pid, ppid, etime]) => ({
+      pid,
+      ppid,
+      etime,
+    }));
+    const services = new Set(
+      rows.filter((row) => row.ppid === String(xcodebuildPid)).map((r) => r.pid),
+    );
+    const slow = rows.filter((row) => services.has(row.ppid) && minutes(row.etime) >= 1);
+    if (slow.length === 0) return false;
+    // Full command lines only for the few candidates: all of them together can exceed a megabyte.
+    return ps(["-o", "command=", "-p", slow.map((row) => row.pid).join(",")]).some((command) =>
+      command.join(" ").includes("clang -v -E -dM"),
+    );
+  } catch (error) {
+    console.warn(`! Skipped a stall check: ${error.message}`);
+    return false;
+  }
+}
+
+function ps(args) {
+  return execFileSync("ps", args, { encoding: "utf8", maxBuffer: 64 << 20 })
     .trim()
     .split("\n")
-    .map((line) => line.trim().split(/\s+/))
-    .map(([pid, ppid, etime, ...command]) => ({ pid, ppid, etime, command: command.join(" ") }));
-  const services = new Set(
-    rows.filter((row) => row.ppid === String(xcodebuildPid)).map((r) => r.pid),
-  );
-  return rows.some(
-    (row) =>
-      services.has(row.ppid) && row.command.includes("clang -v -E -dM") && minutes(row.etime) >= 1,
-  );
+    .filter(Boolean)
+    .map((line) => line.trim().split(/\s+/));
 }
 
 function minutes(etime) {

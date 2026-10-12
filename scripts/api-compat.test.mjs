@@ -134,6 +134,14 @@ test("a removed endpoint or success status breaks the client", () => {
   ]);
 });
 
+test("a success response that no longer declares its JSON body breaks the client", () => {
+  const next = documentWith();
+  delete next.paths["/api/review/grade"].post.responses[200].content;
+  assert.deepEqual(breakingChanges(documentWith(), next), [
+    "POST /api/review/grade: 200 no longer declares the JSON body the client reads",
+  ]);
+});
+
 test("a new review mode breaks a client that does not tolerate unknown modes", () => {
   const picture = {
     type: "object",
@@ -184,6 +192,15 @@ test("an old client's request must still be accepted", () => {
     "POST /api/review/grade body.rating: 2, 4 not among [1,3]",
     "POST /api/review/grade body.note: maxLength tightened to 100",
   ]);
+});
+
+test("an optional request body that becomes required breaks the client", () => {
+  const frozen = documentWith();
+  frozen.paths["/api/review/grade"].post.requestBody.required = false;
+  assert.deepEqual(breakingChanges(frozen, documentWith()), [
+    "POST /api/review/grade: now requires a body",
+  ]);
+  assert.deepEqual(breakingChanges(documentWith(), frozen), []);
 });
 
 test("a strict request schema refuses a field the old client still sends", () => {

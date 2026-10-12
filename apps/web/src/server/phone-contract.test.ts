@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { DeckOut } from "@lymi/core";
+import { AddCardsOut, CLIENT_HEADER, DeckOut, formatClientHeader } from "@lymi/core";
 import Ajv2020, { type AnySchema } from "ajv/dist/2020";
 import { beforeAll, describe, expect, it } from "vitest";
 import {
@@ -107,7 +107,7 @@ it("leaves open every fixed list the phone reads, except those closed on purpose
   expect(closedChoices(contractOf(document, phoneOperations))).toEqual(closedOnPurpose.sort());
 });
 
-describe.each(frozen)("the phone release $version", ({ contract }) => {
+describe.each(frozen)("the phone release $version", ({ version, contract }) => {
   it("declares no breaking change", () => {
     expect(breakingChanges(contract, current)).toEqual([]);
   });
@@ -125,7 +125,11 @@ describe.each(frozen)("the phone release $version", ({ contract }) => {
         | undefined;
       // A read this release never made is no part of its contract.
       if (!operation) continue;
-      const response = await app.fetch(path, { as: learner.session });
+      // The installed release names itself, so routes gated by `clientSupports` answer as it sees them.
+      const response = await app.fetch(path, {
+        as: learner.session,
+        headers: { [CLIENT_HEADER]: formatClientHeader({ platform: "ios", version }) },
+      });
       expect({ path, status: response.status }).toEqual({ path, status: 200 });
       const schema = operation.responses["200"]?.content?.["application/json"]?.schema;
       const validate = ajv.compile(tolerant(rebase(schema)));
@@ -138,7 +142,10 @@ describe.each(frozen)("the phone release $version", ({ contract }) => {
   }, 60_000);
 });
 
-/** A learner with a deck of due cards, so each read answers with rows rather than empty lists. */
+/**
+ * A learner with a deck of due cards in a series and one graded review, so each read answers with
+ * rows rather than empty lists.
+ */
 async function seededLearner(): Promise<{ session: Session; deckId: string }> {
   const session = await app.signUp("phone-contract");
   const deck = await app.fetch("/api/decks", {
@@ -151,6 +158,23 @@ async function seededLearner(): Promise<{ session: Session; deckId: string }> {
     as: session,
   });
   expect(cards.status).toBe(200);
+  const [first] = AddCardsOut.parse(await cards.json()).results;
+  if (first?.status !== "added") throw new Error("The seeded card was not added");
+  const series = await app.fetch("/api/series", {
+    ...json({ name: "Estonian", deckIds: [deckId] }),
+    as: session,
+  });
+  expect(series.status).toBe(201);
+  const grade = await app.fetch("/api/review/grade", {
+    ...json({
+      cardId: first.card.id,
+      mode: { cue: "term", target: "meaning" },
+      rating: 3,
+      timezone: "UTC",
+    }),
+    as: session,
+  });
+  expect(grade.status).toBe(200);
   return { session, deckId };
 }
 

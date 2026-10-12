@@ -1714,6 +1714,9 @@ msgstr "Due today"
 msgid "Each block is one day you reviewed."
 msgstr "Each block is one day you reviewed."
 
+msgid "Each card is asked both ways, each way on its own schedule."
+msgstr "Each card is asked both ways, each way on its own schedule."
+
 msgid "Each section opens once you know most of the one before it."
 msgstr "Each section opens once you know most of the one before it."
 
@@ -1794,9 +1797,6 @@ msgstr "Enter this code in the Lymi app to finish creating your account:"
 
 msgid "Every card"
 msgstr "Every card"
-
-msgid "Every card is asked twice."
-msgstr "Every card is asked twice."
 
 msgid "Every deck you own, archived ones included, with your schedule and review history. Decks shared with you aren’t included."
 msgstr "Every deck you own, archived ones included, with your schedule and review history. Decks shared with you aren’t included."

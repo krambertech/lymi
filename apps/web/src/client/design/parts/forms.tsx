@@ -721,7 +721,7 @@ export const forms: Group = {
                     <RadioCard
                       value="both"
                       title="Both ways"
-                      description="Every card is asked twice."
+                      description="Each card is asked both ways, each way on its own schedule."
                       disabled
                     />
                   </RadioGroup>

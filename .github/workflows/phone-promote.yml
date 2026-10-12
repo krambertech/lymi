@@ -115,6 +115,8 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
+          # The pull request carries the contract alone, whichever branch Promote ran from.
+          ref: main
           # The push below authenticates with RELEASE_GITHUB_TOKEN, which a stored token would override.
           persist-credentials: false
 
@@ -124,8 +126,9 @@ jobs:
           path: apps/mobile/contract
 
       # A pull request opened with the workflow's own token would never run CI, so it needs its own.
-      # Nothing is published this run: Promote goes ahead once the contract is on main.
-      - name: Open a pull request that merges itself once green, and stop
+      # Nothing is published this run; a person merges the pull request once CI checks the Worker
+      # against the contract, and the next Promote goes ahead.
+      - name: Open the contract's pull request, and stop
         run: |
           if [ -z "$GH_TOKEN" ]; then
             echo "::error title=Phone contract::Release $VERSION has no frozen contract on main. RELEASE_GITHUB_TOKEN is not set, so commit the phone-contract artifact from this run, merge it, then promote again."
@@ -146,8 +149,7 @@ jobs:
           git push --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:refs/heads/$branch"
           url=$(gh pr create --base main --head "$branch" --title "$title" \
             --body "Promote run ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} froze the API this release calls (ADR 0032).")
-          gh pr merge "$url" --auto --squash
-          echo "::error title=Phone contract::Release $VERSION has no frozen contract on main yet. $url merges itself once green; promote again then."
+          echo "::error title=Phone contract::Release $VERSION has no frozen contract on main yet. Merge $url once CI is green, then promote again."
           exit 1
 
   promote:

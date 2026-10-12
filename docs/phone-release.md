@@ -17,7 +17,7 @@ An installed app checks for an update on every launch without waiting for it, so
 
 The first run of any of them creates the `beta` and `production` channels and their branches when the project lacks them. Promote, rollout and production rollback share one `phone-production` lock, so they never change production at the same time.
 
-Each release version keeps its frozen contract in `apps/mobile/contract/<version>.json` until the minimum version passes it. Promote fails before publishing when the commit calls an API that differs from the contract already frozen for its version; raise `expo.version` in `app.json`, merge it, let Phone beta publish it, then promote. A version with no contract on `main` publishes nothing: Promote opens a pull request with its contract that merges itself once CI checks the Worker against it, and the next Promote goes ahead.
+Each release version keeps its frozen contract in `apps/mobile/contract/<version>.json` until the minimum version passes it. Promote fails before publishing when the commit calls an API that differs from the contract already frozen for its version; raise `expo.version` in `app.json`, merge it, let Phone beta publish it, then promote. A version with no contract on `main` publishes nothing: Promote opens a pull request with its contract; merge it once CI has checked the Worker against it, and the next Promote goes ahead.
 
 Every EAS call goes through `scripts/phone-release.mjs`. `node scripts/phone-release.mjs manifest` installs the pinned `eas-cli`, runs a sample of every call through that CLI's own parser, values included, and records its command list and the accepted calls in `scripts/eas-cli-commands.json`. The tests fail when a call differs from what the parser accepted, so run it after changing a call or the pin.
 
@@ -38,7 +38,7 @@ Do these once, in order. Steps 1 to 4 change `app.json` or `eas.json`, which are
 5. **Add the repository secrets** under Settings, Secrets and variables, Actions:
    - `EXPO_TOKEN`: an access token from expo.dev, Account settings, Access tokens. A robot user with the Developer role on the project is safer than a personal token.
    - `POSTHOG_CLI_API_KEY`: a PostHog personal API key with error tracking write access to project 292417. Without it, updates still ship and the workflow warns that their errors stay unreadable.
-   - `RELEASE_GITHUB_TOKEN`: a fine-grained token for this repository with read and write access to contents and pull requests, so Promote's contract pull request runs CI. Turn on Allow auto-merge in the repository settings too. Without the token, Promote stops on a new version and attaches its frozen contract to the run for a person to commit.
+   - `RELEASE_GITHUB_TOKEN`: a fine-grained token for this repository with read and write access to contents and pull requests, so Promote's contract pull request runs CI. Without the token, Promote stops on a new version and attaches its frozen contract to the run for a person to commit.
 6. **Run Phone beta by hand** from the Actions tab. It publishes the first beta update and starts the first build, which reaches TestFlight once Apple has processed it.
 
 The workflows need no EAS environment variables: `preview` serves beta and `production` serves the App Store, and the app reaches `https://my.lymi.app` by default.

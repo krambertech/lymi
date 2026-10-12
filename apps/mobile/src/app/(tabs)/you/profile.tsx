@@ -148,7 +148,6 @@ export default function Profile() {
                 : null)}
           </FieldError>
         </Field>
-        {me?.email && <Text className="px-1 text-base text-muted">{me.email}</Text>}
       </ScrollView>
     </KeyboardRoom>
   );

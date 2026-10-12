@@ -1,8 +1,6 @@
 import { env } from "cloudflare:workers";
 import {
   hasShelfPage,
-  listPublicCatalog,
-  listPublicDeckSlugs,
   type PublicDeckSummary,
   type Shelf,
   type ShelfKind,
@@ -11,6 +9,7 @@ import {
   shelfRoute,
   shelvesOf,
 } from "@lymi/core/catalog";
+import { listPublicCatalog, listPublicDeckSlugs } from "@lymi/core/catalog/server";
 import { drizzle } from "@lymi/core/db";
 import type { AstroGlobal } from "astro";
 import { DECK_CACHE_CONTROL, etagMatches } from "./deck-page";

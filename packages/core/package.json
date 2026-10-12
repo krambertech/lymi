@@ -10,6 +10,7 @@
     "./db": "./src/db.ts",
     "./notes": "./src/notes.ts",
     "./catalog": "./src/catalog.ts",
+    "./catalog/server": "./src/catalog-server.ts",
     "./publication-media": "./src/publication-media.ts",
     "./telemetry": "./src/telemetry.ts",
     "./posthog-proxy": "./src/posthog-proxy.ts",

@@ -1,5 +1,5 @@
 import { PublicationInput } from "@lymi/core";
-import { loadPublicDeck } from "@lymi/core/catalog";
+import { loadPublicDeck } from "@lymi/core/catalog/server";
 import { and, eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";

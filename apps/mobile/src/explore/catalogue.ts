@@ -1,12 +1,12 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { api } from "@lymi/client/api";
+import { ApiError, api } from "@lymi/client/api";
 import { exploreQuery } from "@lymi/client/queries";
 import { type PublicDeckSummary, type Shelf, shelvesOf } from "@lymi/core/catalog";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { languageName } from "../data/languages";
+import { englishLanguageName, languageName } from "../data/languages";
 
 /** A heading per subject, as the web's; each app extracts its own catalogue. */
 const SUBJECT_LABELS: Record<string, MessageDescriptor> = {
@@ -21,28 +21,21 @@ const SUBJECT_LABELS: Record<string, MessageDescriptor> = {
 };
 const UNCATEGORISED_LABEL = msg`More decks`;
 
-/** Languages a published deck teaches that the phone's own list of offered languages leaves out. */
-const MORE_LANGUAGES: Record<string, string> = { ka: "Georgian" };
-
-function shelfLanguage(tag: string) {
-  return MORE_LANGUAGES[tag] ?? languageName(tag);
-}
-
 export function useShelfLabel() {
   const { i18n } = useLingui();
   return (shelf: Pick<Shelf, "key" | "language">) =>
     shelf.language
-      ? shelfLanguage(shelf.language)
+      ? languageName(shelf.language)
       : i18n._(SUBJECT_LABELS[shelf.key] ?? UNCATEGORISED_LABEL);
 }
 
 /**
  * The shelf's name in its lymi.app address, such as "german". Core names a language through
- * Intl.DisplayNames, which Hermes lacks, so the phone takes the English name from its own list.
+ * Intl.DisplayNames, which Hermes lacks, so the phone spells it from its own English list.
  */
 export function shelfAddressName(shelf: Pick<Shelf, "key" | "language">): string {
   if (!shelf.language) return shelf.key;
-  return shelfLanguage(shelf.language)
+  return englishLanguageName(shelf.language)
     .normalize("NFD")
     .replace(/\p{M}/gu, "")
     .toLowerCase()
@@ -110,7 +103,10 @@ export function useCatalogue() {
   };
 }
 
-/** Adds a published deck in the edition its page showed; the edition is pinned on the membership. */
+/**
+ * Adds a published deck in the edition its page showed; the edition is pinned on the membership.
+ * As on the web, the cached queue goes so the next review draws the deck's cards too.
+ */
 export function useAddDeck(onAdded: (slug: string, deckId: string) => void) {
   const client = useQueryClient();
   return useMutation({
@@ -118,10 +114,23 @@ export function useAddDeck(onAdded: (slug: string, deckId: string) => void) {
       const out = await api.addPublishedDeck(slug, edition);
       return { slug, deckId: out.deckId };
     },
-    onSuccess: ({ slug, deckId }) => {
+    onSuccess: async ({ slug, deckId }) => {
       onAdded(slug, deckId);
-      client.invalidateQueries({ queryKey: exploreQuery.queryKey });
-      client.invalidateQueries({ queryKey: ["decks"] });
+      client.removeQueries({ queryKey: ["queue"] });
+      await Promise.all([
+        client.invalidateQueries({ queryKey: ["decks"] }),
+        client.invalidateQueries({ queryKey: exploreQuery.queryKey }),
+        client.invalidateQueries({ queryKey: ["rounds"] }),
+      ]);
     },
   });
+}
+
+/** Why an add failed, in the web's words. */
+export function useAddFailure() {
+  const { t } = useLingui();
+  return (error: unknown) =>
+    error instanceof ApiError && error.status === 404
+      ? t`Couldn’t add the deck. It’s no longer published.`
+      : t`Couldn’t add the deck. Check your connection and try again.`;
 }

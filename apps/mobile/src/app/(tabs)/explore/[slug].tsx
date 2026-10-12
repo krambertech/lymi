@@ -8,7 +8,7 @@ import { useState } from "react";
 import { ActivityIndicator, Image, ScrollView, useWindowDimensions, View } from "react-native";
 import Animated, { ZoomIn } from "react-native-reanimated";
 import { API_URL } from "../../../auth/client";
-import { useAddDeck } from "../../../explore/catalogue";
+import { useAddDeck, useAddFailure } from "../../../explore/catalogue";
 import { DeckHand, handOf } from "../../../explore/deck-hand";
 import { DeckTile } from "../../../explore/layouts";
 import { useCoverColour } from "../../../explore/tray";
@@ -85,6 +85,7 @@ function DeckPage({
   const { deck, related } = data;
   const [deckId, setDeckId] = useState(data.deckId);
   const add = useAddDeck((_slug, id) => setDeckId(id));
+  const failure = useAddFailure();
   const sections = deck.sections.filter((section) => section.name !== null);
   const hand = handOf(deck);
   const cards = plural(deck.cardCount, { one: "# card", other: "# cards" });
@@ -102,7 +103,10 @@ function DeckPage({
               : t`By ${deck.publisher} · ${cards}`}
           </Text>
         </View>
-        <Text className="text-center text-2xl font-medium tracking-tight text-text">
+        <Text
+          className="text-center text-2xl font-medium tracking-tight text-text"
+          accessibilityRole="header"
+        >
           {deck.name}
         </Text>
         <Text className="text-center text-md text-text-2">{deck.summary}</Text>
@@ -122,6 +126,11 @@ function DeckPage({
             loading={add.isPending}
             onPress={() => add.mutate({ slug: deck.slug, edition: deck.meaningLanguage })}
           />
+        )}
+        {add.isError && (
+          <Text className="pt-3 text-center text-base text-danger" accessibilityLiveRegion="polite">
+            {failure(add.error)}
+          </Text>
         )}
       </View>
     </View>

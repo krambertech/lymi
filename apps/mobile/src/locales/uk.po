@@ -378,6 +378,10 @@ msgstr "Будь-коли"
 msgid "API keys"
 msgstr "Ключі API"
 
+msgctxt "language"
+msgid "Arabic"
+msgstr "Арабська"
+
 msgid "Archive “{name}”?"
 msgstr "Архівувати «{name}»?"
 
@@ -417,8 +421,16 @@ msgstr "Назад до входу"
 msgid "Both ways"
 msgstr "Обидва способи"
 
+msgctxt "language"
+msgid "Brazilian Portuguese"
+msgstr "Бразильська португальська"
+
 msgid "Bug"
 msgstr "Помилка"
+
+msgctxt "language"
+msgid "Bulgarian"
+msgstr "Болгарська"
 
 #. placeholder {0}: deck.publisher
 msgid "By {0} · {cards}"
@@ -485,6 +497,10 @@ msgstr "Перевір з’єднання й повтори спробу."
 msgid "Check your inbox"
 msgstr "Перевір пошту"
 
+msgctxt "language"
+msgid "Chinese"
+msgstr "Китайська"
+
 msgid "Choose a whole number from 1 to 200."
 msgstr "Вибери ціле число від 1 до 200."
 
@@ -535,6 +551,12 @@ msgstr "Продовжити"
 
 msgid "Continue with Google"
 msgstr "Продовжити з Google"
+
+msgid "Couldn’t add the deck. Check your connection and try again."
+msgstr "Не вдалося додати колоду. Перевір з’єднання й повтори спробу."
+
+msgid "Couldn’t add the deck. It’s no longer published."
+msgstr "Не вдалося додати колоду. Її більше не опубліковано."
 
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Не вдалося змінити фото. Перевір з’єднання й спробуй ще раз."
@@ -614,8 +636,16 @@ msgstr "Створити колоду"
 msgid "Create your Lymi account"
 msgstr "Створи акаунт Lymi"
 
+msgctxt "language"
+msgid "Croatian"
+msgstr "Хорватська"
+
 msgid "Custom"
 msgstr "Своя"
+
+msgctxt "language"
+msgid "Czech"
+msgstr "Чеська"
 
 msgid "Daily goal"
 msgstr "Денна мета"
@@ -631,6 +661,10 @@ msgstr "Денну мету збережено."
 
 msgid "Daily reminder"
 msgstr "Щоденне нагадування"
+
+msgctxt "language"
+msgid "Danish"
+msgstr "Данська"
 
 msgid "Dark"
 msgstr "Темна"
@@ -704,6 +738,10 @@ msgstr "Повторити цього тижня"
 msgid "Due today"
 msgstr "Повторити сьогодні"
 
+msgctxt "language"
+msgid "Dutch"
+msgstr "Нідерландська"
+
 msgid "Each block is one day you reviewed."
 msgstr "Кожен блок — день із повтореннями."
 
@@ -740,6 +778,10 @@ msgstr "Пошта"
 msgid "End review"
 msgstr "Завершити повторення"
 
+msgctxt "language"
+msgid "English"
+msgstr "Англійська"
+
 msgid "Enriched"
 msgstr "Доповнено ШІ"
 
@@ -754,6 +796,10 @@ msgstr "Введи 6-значний код, який ми надіслали н�
 
 msgid "Enter the 6-digit code."
 msgstr "Введи 6-значний код."
+
+msgctxt "language"
+msgid "Estonian"
+msgstr "Естонська"
 
 msgid "Every card"
 msgstr "Усі картки"
@@ -810,6 +856,10 @@ msgstr "Фільтр"
 msgid "Filter · {0}"
 msgstr "Фільтр · {0}"
 
+msgctxt "language"
+msgid "Finnish"
+msgstr "Фінська"
+
 msgid "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
 msgstr "Для подорожі, перших уроків або словників Goethe від A1 до B1."
 
@@ -839,11 +889,23 @@ msgstr "Забуті в {SLIPPING_FORGOTTEN_DAYS} з останніх {SLIPPING_
 msgid "Forgotten today"
 msgstr "Забуті сьогодні"
 
+msgctxt "language"
+msgid "French"
+msgstr "Французька"
+
 msgid "From the lesson"
 msgstr "З уроку"
 
 msgid "Geography"
 msgstr "Географія"
+
+msgctxt "language"
+msgid "Georgian"
+msgstr "Грузинська"
+
+msgctxt "language"
+msgid "German"
+msgstr "Німецька"
 
 msgid "Give the deck a name."
 msgstr "Назви колоду."
@@ -860,14 +922,26 @@ msgstr "Сьогодні з оцінкою «Не пам’ятаю»"
 msgid "Grammar, usage, anything else"
 msgstr "Граматика, вживання, будь-що інше"
 
+msgctxt "language"
+msgid "Greek"
+msgstr "Грецька"
+
 msgid "Hard"
 msgstr "Важко"
 
 msgid "Have an account?"
 msgstr "Уже маєш акаунт?"
 
+msgctxt "language"
+msgid "Hebrew"
+msgstr "Іврит"
+
 msgid "Hide password"
 msgstr "Сховати пароль"
+
+msgctxt "language"
+msgid "Hindi"
+msgstr "Гінді"
 
 msgid "History"
 msgstr "Історія"
@@ -892,6 +966,10 @@ msgstr "Скільки повторень на день зберігає лік 
 
 msgid "How your memory is doing"
 msgstr "Як справи з твоєю пам’яттю"
+
+msgctxt "language"
+msgid "Hungarian"
+msgstr "Угорська"
 
 msgid "Idea"
 msgstr "Ідея"
@@ -929,6 +1007,10 @@ msgstr "Імпорт із {source}"
 msgid "In Library"
 msgstr "У Бібліотеці"
 
+msgctxt "language"
+msgid "Indonesian"
+msgstr "Індонезійська"
+
 msgid "Insights"
 msgstr "Огляд"
 
@@ -952,6 +1034,14 @@ msgstr "Вона завантажиться, щойно ти знову буде
 msgid "It may have been withdrawn, or the connection dropped."
 msgstr "Можливо, її зняли з публікації або зникло з’єднання."
 
+msgctxt "language"
+msgid "Italian"
+msgstr "Італійська"
+
+msgctxt "language"
+msgid "Japanese"
+msgstr "Японська"
+
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Завзято"
@@ -972,6 +1062,10 @@ msgctxt "cards in this state"
 msgid "Known"
 msgstr "Засвоєні"
 
+msgctxt "language"
+msgid "Korean"
+msgstr "Корейська"
+
 msgid "Language"
 msgstr "Мова"
 
@@ -983,6 +1077,10 @@ msgstr "Пізніше"
 
 msgid "Later today"
 msgstr "Пізніше сьогодні"
+
+msgctxt "language"
+msgid "Latvian"
+msgstr "Латиська"
 
 msgid "Learn Estonian"
 msgstr "Естонська з нуля"
@@ -1018,6 +1116,10 @@ msgstr "Світла"
 msgctxt "daily goal"
 msgid "Light"
 msgstr "Легко"
+
+msgctxt "language"
+msgid "Lithuanian"
+msgstr "Литовська"
 
 msgid "Loading…"
 msgstr "Завантаження…"
@@ -1190,6 +1292,10 @@ msgstr "Без розділу"
 msgid "None"
 msgstr "Немає"
 
+msgctxt "language"
+msgid "Norwegian"
+msgstr "Норвезька"
+
 msgid "Not reviewed yet"
 msgstr "Ще не повторювались"
 
@@ -1271,6 +1377,10 @@ msgstr "Підглянути зачіпку"
 msgid "People and sharing"
 msgstr "Люди й доступ"
 
+msgctxt "language"
+msgid "Persian"
+msgstr "Перська"
+
 msgid "Picture"
 msgstr "Зображення"
 
@@ -1295,6 +1405,14 @@ msgstr "Для зображень потрібне з’єднання. Спро
 
 msgid "Play pronunciation"
 msgstr "Відтворити вимову"
+
+msgctxt "language"
+msgid "Polish"
+msgstr "Польська"
+
+msgctxt "language"
+msgid "Portuguese"
+msgstr "Португальська"
 
 msgid "Previous month"
 msgstr "Попередній місяць"
@@ -1425,8 +1543,16 @@ msgstr "Дні з повтореннями: {lit} з останніх {0, plural
 msgid "Reviews a day"
 msgstr "Повторень на день"
 
+msgctxt "language"
+msgid "Romanian"
+msgstr "Румунська"
+
 msgid "Round done"
 msgstr "Раунд завершено"
+
+msgctxt "language"
+msgid "Russian"
+msgstr "Російська"
 
 msgid "Same as the deck"
 msgstr "Як у колоді"
@@ -1511,6 +1637,10 @@ msgstr "Надіслати посилання"
 msgid "Sent again"
 msgstr "Надіслали ще раз"
 
+msgctxt "language"
+msgid "Serbian"
+msgstr "Сербська"
+
 msgid "Settings"
 msgstr "Налаштування"
 
@@ -1562,6 +1692,14 @@ msgstr "Вийти і втратити їх"
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Вхід не завершено. Спробуй ще раз."
 
+msgctxt "language"
+msgid "Slovak"
+msgstr "Словацька"
+
+msgctxt "language"
+msgid "Slovenian"
+msgstr "Словенська"
+
 msgid "Some offline work hasn’t synced"
 msgstr "Не все зроблене офлайн синхронізовано"
 
@@ -1573,6 +1711,10 @@ msgstr "Сортування"
 
 msgid "Source"
 msgstr "Джерело"
+
+msgctxt "language"
+msgid "Spanish"
+msgstr "Іспанська"
 
 msgid "Start with a deck"
 msgstr "Почни з колоди"
@@ -1595,6 +1737,10 @@ msgstr "Дні поспіль: {streak, plural, one {# день поспіль} 
 
 msgid "Subjects"
 msgstr "Теми"
+
+msgctxt "language"
+msgid "Swedish"
+msgstr "Шведська"
 
 msgid "Swipe from the edge to take back a grade"
 msgstr "Проведи від краю, щоб скасувати оцінку"
@@ -1622,6 +1768,10 @@ msgstr "Розкажи Lymi, що зламалося або що варто до
 
 msgid "Term"
 msgstr "Термін"
+
+msgctxt "language"
+msgid "Thai"
+msgstr "Тайська"
 
 msgid "Thank you. Replies come to your email."
 msgstr "Дякуємо. Відповідь прийде на твою пошту."
@@ -1726,11 +1876,19 @@ msgstr "Спробуй зачіпку"
 msgid "Try again"
 msgstr "Спробувати ще раз"
 
+msgctxt "language"
+msgid "Turkish"
+msgstr "Турецька"
+
 msgid "Turned off the join link for {deck}"
 msgstr "Посилання для приєднання до «{deck}» вимкнено"
 
 msgid "Turned on the join link for {deck}"
 msgstr "Посилання для приєднання до «{deck}» увімкнено"
+
+msgctxt "language"
+msgid "Ukrainian"
+msgstr "Українська"
 
 msgid "Undo"
 msgstr "Скасувати дію"
@@ -1758,6 +1916,10 @@ msgstr "Використай щонайменше {MIN_PASSWORD_LENGTH} симв
 
 msgid "Use at most {MAX_PASSWORD_LENGTH} characters."
 msgstr "Використай не більше {MAX_PASSWORD_LENGTH} символів."
+
+msgctxt "language"
+msgid "Vietnamese"
+msgstr "Вʼєтнамська"
 
 msgid "Waiting to reach Lymi"
 msgstr "Чекає на з’єднання з Lymi"

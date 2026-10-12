@@ -378,6 +378,10 @@ msgstr "Any time"
 msgid "API keys"
 msgstr "API keys"
 
+msgctxt "language"
+msgid "Arabic"
+msgstr "Arabic"
+
 msgid "Archive “{name}”?"
 msgstr "Archive “{name}”?"
 
@@ -417,8 +421,16 @@ msgstr "Back to sign in"
 msgid "Both ways"
 msgstr "Both ways"
 
+msgctxt "language"
+msgid "Brazilian Portuguese"
+msgstr "Brazilian Portuguese"
+
 msgid "Bug"
 msgstr "Bug"
+
+msgctxt "language"
+msgid "Bulgarian"
+msgstr "Bulgarian"
 
 #. placeholder {0}: deck.publisher
 msgid "By {0} · {cards}"
@@ -485,6 +497,10 @@ msgstr "Check your connection and try again."
 msgid "Check your inbox"
 msgstr "Check your inbox"
 
+msgctxt "language"
+msgid "Chinese"
+msgstr "Chinese"
+
 msgid "Choose a whole number from 1 to 200."
 msgstr "Choose a whole number from 1 to 200."
 
@@ -535,6 +551,12 @@ msgstr "Continue"
 
 msgid "Continue with Google"
 msgstr "Continue with Google"
+
+msgid "Couldn’t add the deck. Check your connection and try again."
+msgstr "Couldn’t add the deck. Check your connection and try again."
+
+msgid "Couldn’t add the deck. It’s no longer published."
+msgstr "Couldn’t add the deck. It’s no longer published."
 
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Couldn’t change your photo. Check your connection and try again."
@@ -614,8 +636,16 @@ msgstr "Create deck"
 msgid "Create your Lymi account"
 msgstr "Create your Lymi account"
 
+msgctxt "language"
+msgid "Croatian"
+msgstr "Croatian"
+
 msgid "Custom"
 msgstr "Custom"
+
+msgctxt "language"
+msgid "Czech"
+msgstr "Czech"
 
 msgid "Daily goal"
 msgstr "Daily goal"
@@ -631,6 +661,10 @@ msgstr "Daily goal saved."
 
 msgid "Daily reminder"
 msgstr "Daily reminder"
+
+msgctxt "language"
+msgid "Danish"
+msgstr "Danish"
 
 msgid "Dark"
 msgstr "Dark"
@@ -704,6 +738,10 @@ msgstr "Due this week"
 msgid "Due today"
 msgstr "Due today"
 
+msgctxt "language"
+msgid "Dutch"
+msgstr "Dutch"
+
 msgid "Each block is one day you reviewed."
 msgstr "Each block is one day you reviewed."
 
@@ -740,6 +778,10 @@ msgstr "Email"
 msgid "End review"
 msgstr "End review"
 
+msgctxt "language"
+msgid "English"
+msgstr "English"
+
 msgid "Enriched"
 msgstr "Enriched"
 
@@ -754,6 +796,10 @@ msgstr "Enter the 6-digit code we sent to {email}."
 
 msgid "Enter the 6-digit code."
 msgstr "Enter the 6-digit code."
+
+msgctxt "language"
+msgid "Estonian"
+msgstr "Estonian"
 
 msgid "Every card"
 msgstr "Every card"
@@ -810,6 +856,10 @@ msgstr "Filter"
 msgid "Filter · {0}"
 msgstr "Filter · {0}"
 
+msgctxt "language"
+msgid "Finnish"
+msgstr "Finnish"
+
 msgid "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
 msgstr "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
 
@@ -839,11 +889,23 @@ msgstr "Forgotten on {SLIPPING_FORGOTTEN_DAYS} of the last {SLIPPING_RECENT_DAYS
 msgid "Forgotten today"
 msgstr "Forgotten today"
 
+msgctxt "language"
+msgid "French"
+msgstr "French"
+
 msgid "From the lesson"
 msgstr "From the lesson"
 
 msgid "Geography"
 msgstr "Geography"
+
+msgctxt "language"
+msgid "Georgian"
+msgstr "Georgian"
+
+msgctxt "language"
+msgid "German"
+msgstr "German"
 
 msgid "Give the deck a name."
 msgstr "Give the deck a name."
@@ -860,14 +922,26 @@ msgstr "Graded Forgot today"
 msgid "Grammar, usage, anything else"
 msgstr "Grammar, usage, anything else"
 
+msgctxt "language"
+msgid "Greek"
+msgstr "Greek"
+
 msgid "Hard"
 msgstr "Hard"
 
 msgid "Have an account?"
 msgstr "Have an account?"
 
+msgctxt "language"
+msgid "Hebrew"
+msgstr "Hebrew"
+
 msgid "Hide password"
 msgstr "Hide password"
+
+msgctxt "language"
+msgid "Hindi"
+msgstr "Hindi"
 
 msgid "History"
 msgstr "History"
@@ -892,6 +966,10 @@ msgstr "How many reviews a day keep your streak. Every grade counts, even Forgot
 
 msgid "How your memory is doing"
 msgstr "How your memory is doing"
+
+msgctxt "language"
+msgid "Hungarian"
+msgstr "Hungarian"
 
 msgid "Idea"
 msgstr "Idea"
@@ -929,6 +1007,10 @@ msgstr "Importing from {source}"
 msgid "In Library"
 msgstr "In Library"
 
+msgctxt "language"
+msgid "Indonesian"
+msgstr "Indonesian"
+
 msgid "Insights"
 msgstr "Insights"
 
@@ -952,6 +1034,14 @@ msgstr "It loads as soon as you’re back online."
 msgid "It may have been withdrawn, or the connection dropped."
 msgstr "It may have been withdrawn, or the connection dropped."
 
+msgctxt "language"
+msgid "Italian"
+msgstr "Italian"
+
+msgctxt "language"
+msgid "Japanese"
+msgstr "Japanese"
+
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Keen"
@@ -972,6 +1062,10 @@ msgctxt "cards in this state"
 msgid "Known"
 msgstr "Known"
 
+msgctxt "language"
+msgid "Korean"
+msgstr "Korean"
+
 msgid "Language"
 msgstr "Language"
 
@@ -983,6 +1077,10 @@ msgstr "Later"
 
 msgid "Later today"
 msgstr "Later today"
+
+msgctxt "language"
+msgid "Latvian"
+msgstr "Latvian"
 
 msgid "Learn Estonian"
 msgstr "Learn Estonian"
@@ -1018,6 +1116,10 @@ msgstr "Light"
 msgctxt "daily goal"
 msgid "Light"
 msgstr "Light"
+
+msgctxt "language"
+msgid "Lithuanian"
+msgstr "Lithuanian"
 
 msgid "Loading…"
 msgstr "Loading…"
@@ -1190,6 +1292,10 @@ msgstr "No section"
 msgid "None"
 msgstr "None"
 
+msgctxt "language"
+msgid "Norwegian"
+msgstr "Norwegian"
+
 msgid "Not reviewed yet"
 msgstr "Not reviewed yet"
 
@@ -1271,6 +1377,10 @@ msgstr "Peek at your hook"
 msgid "People and sharing"
 msgstr "People and sharing"
 
+msgctxt "language"
+msgid "Persian"
+msgstr "Persian"
+
 msgid "Picture"
 msgstr "Picture"
 
@@ -1295,6 +1405,14 @@ msgstr "Pictures need a connection. Try again once you’re back online."
 
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
+
+msgctxt "language"
+msgid "Polish"
+msgstr "Polish"
+
+msgctxt "language"
+msgid "Portuguese"
+msgstr "Portuguese"
 
 msgid "Previous month"
 msgstr "Previous month"
@@ -1425,8 +1543,16 @@ msgstr "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}, i
 msgid "Reviews a day"
 msgstr "Reviews a day"
 
+msgctxt "language"
+msgid "Romanian"
+msgstr "Romanian"
+
 msgid "Round done"
 msgstr "Round done"
+
+msgctxt "language"
+msgid "Russian"
+msgstr "Russian"
 
 msgid "Same as the deck"
 msgstr "Same as the deck"
@@ -1511,6 +1637,10 @@ msgstr "Send reset link"
 msgid "Sent again"
 msgstr "Sent again"
 
+msgctxt "language"
+msgid "Serbian"
+msgstr "Serbian"
+
 msgid "Settings"
 msgstr "Settings"
 
@@ -1562,6 +1692,14 @@ msgstr "Sign out and lose them"
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Sign-in didn’t finish. Try again."
 
+msgctxt "language"
+msgid "Slovak"
+msgstr "Slovak"
+
+msgctxt "language"
+msgid "Slovenian"
+msgstr "Slovenian"
+
 msgid "Some offline work hasn’t synced"
 msgstr "Some offline work hasn’t synced"
 
@@ -1573,6 +1711,10 @@ msgstr "Sort"
 
 msgid "Source"
 msgstr "Source"
+
+msgctxt "language"
+msgid "Spanish"
+msgstr "Spanish"
 
 msgid "Start with a deck"
 msgstr "Start with a deck"
@@ -1595,6 +1737,10 @@ msgstr "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
 
 msgid "Subjects"
 msgstr "Subjects"
+
+msgctxt "language"
+msgid "Swedish"
+msgstr "Swedish"
 
 msgid "Swipe from the edge to take back a grade"
 msgstr "Swipe from the edge to take back a grade"
@@ -1622,6 +1768,10 @@ msgstr "Tell Lymi what broke or what it should do. Replies come to your email."
 
 msgid "Term"
 msgstr "Term"
+
+msgctxt "language"
+msgid "Thai"
+msgstr "Thai"
 
 msgid "Thank you. Replies come to your email."
 msgstr "Thank you. Replies come to your email."
@@ -1726,11 +1876,19 @@ msgstr "Try a memory hook"
 msgid "Try again"
 msgstr "Try again"
 
+msgctxt "language"
+msgid "Turkish"
+msgstr "Turkish"
+
 msgid "Turned off the join link for {deck}"
 msgstr "Turned off the join link for {deck}"
 
 msgid "Turned on the join link for {deck}"
 msgstr "Turned on the join link for {deck}"
+
+msgctxt "language"
+msgid "Ukrainian"
+msgstr "Ukrainian"
 
 msgid "Undo"
 msgstr "Undo"
@@ -1758,6 +1916,10 @@ msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
 
 msgid "Use at most {MAX_PASSWORD_LENGTH} characters."
 msgstr "Use at most {MAX_PASSWORD_LENGTH} characters."
+
+msgctxt "language"
+msgid "Vietnamese"
+msgstr "Vietnamese"
 
 msgid "Waiting to reach Lymi"
 msgstr "Waiting to reach Lymi"

@@ -3,22 +3,20 @@ import { type DeckSummary, errorMessage } from "@lymi/client/api";
 import { type DeckPatch, writes } from "@lymi/client/writes";
 import { DeckInput, type Directions, deckLimits, LANGUAGE_TAGS } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { type Href, useLocalSearchParams } from "expo-router";
 import { type ReactNode, useState } from "react";
-import { ScrollView, TextInput, View } from "react-native";
-import { useDeckExits } from "../data/decks";
-import { languageName } from "../data/languages";
-import { useDeckCards, useDecks } from "../data/queries";
-import { usePalette } from "../theme/palette";
-import { inputCap } from "../theme/type";
-import { GlassButton } from "../ui/glass";
-import { Icon } from "../ui/icons";
-import { KeyboardRoom } from "../ui/keyboard";
-import { Select } from "../ui/menu";
-import { openWeb } from "../ui/on-the-web";
-import { Plate, Press, Text } from "../ui/primitives";
-import { Row, RowFace, Rows } from "../ui/row";
-import { OnGlass } from "../ui/surface";
+import { TextInput, View } from "react-native";
+import { useDeckExits } from "../../../data/decks";
+import { languageName } from "../../../data/languages";
+import { useDeckCards, useDecks } from "../../../data/queries";
+import { usePalette } from "../../../theme/palette";
+import { inputCap } from "../../../theme/type";
+import { Icon } from "../../../ui/icons";
+import { Select } from "../../../ui/menu";
+import { openWeb } from "../../../ui/on-the-web";
+import { Plate, Press, Text } from "../../../ui/primitives";
+import { Row, RowFace, Rows } from "../../../ui/row";
+import { Screen } from "../../../ui/screen";
 
 /**
  * Deck settings, as the web's: nothing has a Save button. A choice is made when it is made, and
@@ -34,7 +32,6 @@ export default function DeckSettings() {
 
 function Settings({ deck }: { deck: DeckSummary }) {
   const { t } = useLingui();
-  const router = useRouter();
   const qc = useQueryClient();
   const p = usePalette();
   const example = useDeckCards(deck.id).data?.find((r) => r.card.meaning)?.card;
@@ -142,111 +139,86 @@ function Settings({ deck }: { deck: DeckSummary }) {
   );
 
   return (
-    <KeyboardRoom>
-      <OnGlass>
-        <View className="flex-row items-center justify-between gap-3 px-4 pt-5 pb-2">
-          <GlassButton icon="close" label={t`Done`} onPress={() => router.back()} />
-          <View className="flex-1 items-center">
-            <Text className="text-md font-medium text-text" accessibilityRole="header">
-              {owner ? t`Deck settings` : t`About this deck`}
-            </Text>
-            <Text className="text-sm text-muted" accessibilityLiveRegion="polite">
-              {saved === "saving" ? t`Saving…` : saved === "saved" ? t`Saved` : " "}
-            </Text>
-          </View>
-          <View className="size-11" />
+    <Screen
+      title={owner ? t`Deck settings` : t`About this deck`}
+      back={{ label: deck.name, to: `/library/${deck.id}` as Href }}
+      actions={
+        <Text className="text-base text-muted" accessibilityLiveRegion="polite">
+          {saved === "saving" ? t`Saving…` : saved === "saved" ? t`Saved` : ""}
+        </Text>
+      }
+    >
+      {error && (
+        <View className="flex-row items-center gap-1.5 px-1" accessibilityLiveRegion="polite">
+          <Icon name="alert" size={14} colour={p.danger} />
+          <Text className="flex-1 text-base text-danger">{error}</Text>
         </View>
-        <ScrollView
-          className="flex-1"
-          contentContainerClassName="gap-6 px-5 pt-3 pb-10"
-          keyboardShouldPersistTaps="handled"
-        >
-          {error && (
-            <View className="flex-row items-center gap-1.5 px-1" accessibilityLiveRegion="polite">
-              <Icon name="alert" size={14} colour={p.danger} />
-              <Text className="flex-1 text-base text-danger">{error}</Text>
-            </View>
-          )}
-          {!owner ? (
-            <>
-              <Group title={t`Shared with you`}>
-                <Plate className="px-4 py-3.5">
-                  <Text className="text-md text-text">
-                    {t`${deck.owner.name} owns this deck and writes its cards.`}
-                  </Text>
-                </Plate>
-              </Group>
-              <Rows>
-                <RowFace icon="meaning" label={t`Language`} value={language} end="none" />
-                <RowFace
-                  icon="modes"
-                  label={t`How cards are asked`}
-                  value={way?.label}
-                  end="none"
-                />
-              </Rows>
-              <Rows>
-                <Row icon="signOut" label={t`Leave deck`} destructive end="none" onPress={leave} />
-              </Rows>
-            </>
-          ) : (
-            <>
-              <Group title={t`Deck`}>
-                <Plate className="overflow-hidden">
-                  <View className="px-4">{nameField}</View>
-                  <View className="h-px bg-edge" />
-                  <View className="px-4">{descriptionField}</View>
-                </Plate>
-              </Group>
-              <Rows>
-                {languageSelect(<RowFace icon="meaning" label={t`Language`} value={language} />)}
-              </Rows>
-              <Group title={t`How cards are asked`}>
-                <Plate className="overflow-hidden">
-                  {asked.map((a, i) => (
-                    <Press
-                      key={a.value}
-                      scale={0.99}
-                      onPress={() =>
-                        a.value !== deck.directions && void save({ directions: a.value })
-                      }
-                      accessibilityRole="radio"
-                      accessibilityState={{ checked: a.value === deck.directions }}
-                      className={`min-h-[60px] flex-row items-center gap-3 px-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
-                    >
-                      <View className="flex-1 gap-0.5">
-                        <Text className="text-md text-text">{a.label}</Text>
-                        <Text className="text-sm text-muted">{a.line}</Text>
-                      </View>
-                      {a.value === deck.directions && (
-                        <Icon name="check" size={20} colour={p.text} strokeWidth={2.25} />
-                      )}
-                    </Press>
-                  ))}
-                </Plate>
-              </Group>
-              <Rows>
-                <Row
-                  icon="apps"
-                  label={t`People and sharing`}
-                  end="web"
-                  onPress={() => openWeb(`/library/${deck.id}/settings`)}
-                />
-              </Rows>
-              <Rows>
-                <Row
-                  icon="archive"
-                  label={t`Archive deck`}
-                  destructive
-                  end="none"
-                  onPress={archive}
-                />
-              </Rows>
-            </>
-          )}
-        </ScrollView>
-      </OnGlass>
-    </KeyboardRoom>
+      )}
+      {!owner ? (
+        <>
+          <Group title={t`Shared with you`}>
+            <Plate className="px-4 py-3.5">
+              <Text className="text-md text-text">
+                {t`${deck.owner.name} owns this deck and writes its cards.`}
+              </Text>
+            </Plate>
+          </Group>
+          <Rows>
+            <RowFace icon="meaning" label={t`Language`} value={language} end="none" />
+            <RowFace icon="modes" label={t`How cards are asked`} value={way?.label} end="none" />
+          </Rows>
+          <Rows>
+            <Row icon="signOut" label={t`Leave deck`} destructive end="none" onPress={leave} />
+          </Rows>
+        </>
+      ) : (
+        <>
+          <Group title={t`Deck`}>
+            <Plate className="overflow-hidden">
+              <View className="px-4">{nameField}</View>
+              <View className="h-px bg-edge" />
+              <View className="px-4">{descriptionField}</View>
+            </Plate>
+          </Group>
+          <Rows>
+            {languageSelect(<RowFace icon="meaning" label={t`Language`} value={language} />)}
+          </Rows>
+          <Group title={t`How cards are asked`}>
+            <Plate className="overflow-hidden">
+              {asked.map((a, i) => (
+                <Press
+                  key={a.value}
+                  scale={0.99}
+                  onPress={() => a.value !== deck.directions && void save({ directions: a.value })}
+                  accessibilityRole="radio"
+                  accessibilityState={{ checked: a.value === deck.directions }}
+                  className={`min-h-[60px] flex-row items-center gap-3 px-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
+                >
+                  <View className="flex-1 gap-0.5">
+                    <Text className="text-md text-text">{a.label}</Text>
+                    <Text className="text-sm text-muted">{a.line}</Text>
+                  </View>
+                  {a.value === deck.directions && (
+                    <Icon name="check" size={20} colour={p.text} strokeWidth={2.25} />
+                  )}
+                </Press>
+              ))}
+            </Plate>
+          </Group>
+          <Rows>
+            <Row
+              icon="apps"
+              label={t`People and sharing`}
+              end="web"
+              onPress={() => openWeb(`/library/${deck.id}/settings`)}
+            />
+          </Rows>
+          <Rows>
+            <Row icon="archive" label={t`Archive deck`} destructive end="none" onPress={archive} />
+          </Rows>
+        </>
+      )}
+    </Screen>
   );
 }
 

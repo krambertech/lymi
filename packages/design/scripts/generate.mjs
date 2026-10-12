@@ -187,6 +187,14 @@ function literal(value, indent = "") {
   const inner = `${indent}  `;
   if (Array.isArray(value)) {
     if (value.every((v) => typeof v === "number")) return `[${value.join(", ")}]`;
+    // A nested list that fits on its line stays on it, as Biome prints it; 8 is "light: " and ",".
+    const line = `[${value.map((v) => JSON.stringify(v)).join(", ")}]`;
+    if (
+      indent &&
+      value.every((v) => typeof v === "string") &&
+      indent.length + line.length + 8 <= 100
+    )
+      return line;
     return `[\n${value.map((v) => `${inner}${literal(v, inner)},`).join("\n")}\n${indent}]`;
   }
   if (typeof value === "object") {

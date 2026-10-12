@@ -1429,6 +1429,9 @@ msgstr "Історії ще немає"
 msgid "No language"
 msgstr "Без мови"
 
+msgid "No matches"
+msgstr ""
+
 msgid "No meaning yet"
 msgstr "Значення поки немає"
 
@@ -1748,6 +1751,9 @@ msgstr "Наука"
 
 msgid "Search"
 msgstr "Пошук"
+
+msgid "Search {label}"
+msgstr ""
 
 msgid "Search decks"
 msgstr "Пошук колод"

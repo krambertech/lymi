@@ -153,9 +153,8 @@ export function Screen({
       );
       return { opacity: headerHeight ? k : 0, transform: [{ scale: 0.7 + 0.3 * k }] };
     }
-    return {
-      transform: [{ scale: interpolate(y.value, [0, TITLE_GONE], [1, 0.92], Extrapolation.CLAMP) }],
-    };
+    // A tab's streak and capture stay one size as the page scrolls.
+    return { opacity: 1, transform: [{ scale: 1 }] };
   });
   // Nothing crosses what the lantern lights at rest; the band only gathers once content moves.
   const band = useAnimatedStyle(() => ({

@@ -147,9 +147,11 @@ function Settings({ deck }: { deck: DeckSummary }) {
   const fieldsValue =
     filled.length === 0
       ? t`None`
-      : filled.length <= 2
-        ? filled.map((f) => fieldLabels[f]).join(", ")
-        : plural(filled.length, { one: "# field", other: "# fields" });
+      : filled.length === 1
+        ? fieldLabels[filled[0] as DeckEnrichField]
+        : filled.length === DECK_ENRICH_FIELDS.length
+          ? t`All`
+          : plural(filled.length, { one: "# field", other: "# fields" });
   const toggleField = (field: DeckEnrichField) =>
     void save({
       enrichFields: DECK_ENRICH_FIELDS.filter((f) =>
@@ -263,7 +265,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
             <Row
               icon="notes"
               label={t`Description`}
-              value={short(deck.description) ?? t`None`}
+              value={deck.description ?? t`None`}
               onPress={() => setEditing("description")}
             />
             {languageSelect(<RowFace icon="meaning" label={t`Language`} value={language} />)}
@@ -286,7 +288,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
               <Row
                 icon="lesson"
                 label={t`Instructions`}
-                value={short(deck.enrichInstructions) ?? t`None`}
+                value={deck.enrichInstructions ?? t`None`}
                 onPress={() => setEditing("instructions")}
               />
             </Rows>
@@ -364,12 +366,6 @@ function Settings({ deck }: { deck: DeckSummary }) {
       )}
     </Screen>
   );
-}
-
-/** A long text as a row's value: its start, cut at 24 characters. */
-function short(text: string | null | undefined) {
-  if (!text) return null;
-  return text.length > 24 ? `${text.slice(0, 23).trimEnd()}…` : text;
 }
 
 function Group({ title, children }: { title: string; children: ReactNode }) {

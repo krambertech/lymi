@@ -182,6 +182,9 @@ msgstr "135–145 mmol/L in adults"
 msgid "17."
 msgstr "17."
 
+msgid "180 points. 80 to pass N5, 90 to pass N4."
+msgstr "180 points. 80 to pass N5, 90 to pass N4."
+
 msgid "2 days"
 msgstr "2 days"
 
@@ -218,8 +221,14 @@ msgstr "33 questions, 17 to pass. 300 general questions and 10 for your state to
 msgid "4 days"
 msgstr "4 days"
 
+msgid "40 and 60 questions. 120 of 200 points to pass."
+msgstr "40 and 60 questions. 120 of 200 points to pass."
+
 msgid "500 feet in either direction"
 msgstr "500 feet in either direction"
+
+msgid "60% in reading, writing and listening, and 60% in speaking."
+msgstr "60% in reading, writing and listening, and 60% in speaking."
 
 msgid "80% to pass. Questions from the official handbook."
 msgstr "80% to pass. Questions from the official handbook."
@@ -256,6 +265,9 @@ msgstr "A connected assistant may read lesson material in the conversation where
 
 msgid "A course or lesson"
 msgstr "A course or lesson"
+
+msgid "A deck for each level. 60% of the points to pass."
+msgstr "A deck for each level. 60% of the points to pass."
 
 msgid "A deck in four sections. Greetings is done, Numbers and time is 82% known, so Food and drink opens next. Getting around stays locked."
 msgstr "A deck in four sections. Greetings is done, Numbers and time is 82% known, so Food and drink opens next. Getting around stays locked."
@@ -304,6 +316,9 @@ msgstr "A Lymi deck"
 
 msgid "A major chord with a minor seventh, built on the fifth note of the key"
 msgstr "A major chord with a minor seventh, built on the fifth note of the key"
+
+msgid "A new format applies from 11 April 2026. The level stays A2."
+msgstr "A new format applies from 11 April 2026. The level stays A2."
 
 msgid "A new language"
 msgstr "A new language"
@@ -579,6 +594,9 @@ msgstr "Ask your AI assistant to add a card while you chat. It shows up in Lymi,
 msgid "Asked whether you’d like to win the lottery: “Magari!”"
 msgstr "Asked whether you’d like to win the lottery: “Magari!”"
 
+msgid "At A2 you also need 45 of the written points and 15 of the oral ones. At B1 each module passes on its own."
+msgstr "At A2 you also need 45 of the written points and 15 of the oral ones. At B1 each module passes on its own."
+
 msgid "At the café"
 msgstr "At the café"
 
@@ -620,6 +638,9 @@ msgstr "Biology"
 
 msgid "Breadcrumb"
 msgstr "Breadcrumb"
+
+msgid "breakfast"
+msgstr "breakfast"
 
 msgid "Bridge, 橋, is also hashi. Only the pitch tells them apart."
 msgstr "Bridge, 橋, is also hashi. Only the pitch tells them apart."
@@ -761,6 +782,9 @@ msgstr "Chess"
 msgid "Chess · new"
 msgstr "Chess · new"
 
+msgid "Chinese"
+msgstr "Chinese"
+
 msgid "Choose a grade to move to the next card."
 msgstr "Choose a grade to move to the next card."
 
@@ -791,9 +815,6 @@ msgstr "Citizenship"
 msgid "Citizenship and driving tests"
 msgstr "Citizenship and driving tests"
 
-msgid "Citizenship and driving tests, with every question in a ready deck."
-msgstr "Citizenship and driving tests, with every question in a ready deck."
-
 msgid "Citizenship test flashcards"
 msgstr "Citizenship test flashcards"
 
@@ -802,6 +823,9 @@ msgstr "Citizenship tests"
 
 msgid "Citizenship, language and driving test prep with flashcards · Lymi"
 msgstr "Citizenship, language and driving test prep with flashcards · Lymi"
+
+msgid "Citizenship, language and driving tests, each with ready decks."
+msgstr "Citizenship, language and driving tests, each with ready decks."
 
 msgid "City; town"
 msgstr "City; town"
@@ -898,6 +922,15 @@ msgstr "Cosy and convivial; good company"
 msgid "Cramming fades. Spacing lasts."
 msgstr "Cramming fades. Spacing lasts."
 
+msgid "Czech"
+msgstr "Czech"
+
+msgid "Czech A2 for permanent residence"
+msgstr "Czech A2 for permanent residence"
+
+msgid "Czech A2 for permanent residence: the words you need"
+msgstr "Czech A2 for permanent residence: the words you need"
+
 msgid "Czech citizenship test"
 msgstr "Czech citizenship test"
 
@@ -935,6 +968,9 @@ msgstr "Decks"
 #. placeholder {0}: date(changed)
 msgid "Decks updated {0}"
 msgstr "Decks updated {0}"
+
+msgid "decks, one for each level"
+msgstr "decks, one for each level"
 
 msgid "Deep, laboured breathing in metabolic acidosis, as in diabetic ketoacidosis"
 msgstr "Deep, laboured breathing in metabolic acidosis, as in diabetic ketoacidosis"
@@ -1026,6 +1062,9 @@ msgstr "Each deck holds the exam’s published questions, or practice questions 
 
 msgid "Each deck opens on its own page with every card on it, so you can see what you would learn before you add it."
 msgstr "Each deck opens on its own page with every card on it, so you can see what you would learn before you add it."
+
+msgid "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
+msgstr "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
 
 msgid "Each question as New, Learning or Known"
 msgstr "Each question as New, Learning or Known"
@@ -1201,6 +1240,9 @@ msgstr "Export any deck to Anki, with its pictures and review history."
 msgid "Fado, Portugal’s mournful song, is built on it."
 msgstr "Fado, Portugal’s mournful song, is built on it."
 
+msgid "family"
+msgstr "family"
+
 msgid "Feeling low; in a slump"
 msgstr "Feeling low; in a slump"
 
@@ -1286,6 +1328,9 @@ msgstr "for you"
 
 msgid "Forgot"
 msgstr "Forgot"
+
+msgid "Format from 11 April 2026"
+msgstr "Format from 11 April 2026"
 
 msgid "Français · phrase"
 msgstr "Français · phrase"
@@ -1375,6 +1420,12 @@ msgctxt "deck tag"
 msgid "Goethe-Zertifikat A1"
 msgstr "Goethe-Zertifikat A1"
 
+msgid "Goethe-Zertifikat A1, A2 and B1"
+msgstr "Goethe-Zertifikat A1, A2 and B1"
+
+msgid "Goethe-Zertifikat A1, A2 and B1: the words for each level"
+msgstr "Goethe-Zertifikat A1, A2 and B1: the words for each level"
+
 msgid "good"
 msgstr "good"
 
@@ -1420,6 +1471,9 @@ msgstr "Have you eaten? A way to say hello"
 
 msgid "have; am"
 msgstr "have; am"
+
+msgid "health insurance company"
+msgstr "health insurance company"
 
 msgid "Hear this line"
 msgstr "Hear this line"
@@ -1511,6 +1565,12 @@ msgstr "How’s it going?"
 msgctxt "deck tag"
 msgid "HSK 1"
 msgstr "HSK 1"
+
+msgid "HSK 1 and HSK 2"
+msgstr "HSK 1 and HSK 2"
+
+msgid "HSK 1 and HSK 2: the words for each level"
+msgstr "HSK 1 and HSK 2: the words for each level"
 
 msgid "Hugs"
 msgstr "Hugs"
@@ -1669,6 +1729,12 @@ msgctxt "deck tag"
 msgid "JLPT N5"
 msgstr "JLPT N5"
 
+msgid "JLPT N5 and N4"
+msgstr "JLPT N5 and N4"
+
+msgid "JLPT N5 and N4: the words for each level"
+msgstr "JLPT N5 and N4: the words for each level"
+
 msgid "Join link"
 msgstr "Join link"
 
@@ -1753,6 +1819,9 @@ msgstr "Know where you stand."
 msgctxt "cards in this state"
 msgid "Known"
 msgstr "Known"
+
+msgid "Korean"
+msgstr "Korean"
 
 msgid "Lab values"
 msgstr "Lab values"
@@ -2133,6 +2202,24 @@ msgstr "noun"
 msgid "Numbers and time"
 msgstr "Numbers and time"
 
+msgid "of 200 points for level 1"
+msgstr "of 200 points for level 1"
+
+msgid "of 200 points for level 2"
+msgstr "of 200 points for level 2"
+
+msgid "of 200 points to pass either level"
+msgstr "of 200 points to pass either level"
+
+msgid "of 40 points to pass speaking"
+msgstr "of 40 points to pass speaking"
+
+msgid "of 70 points to pass reading, writing and listening"
+msgstr "of 70 points to pass reading, writing and listening"
+
+msgid "of the points to pass, at every level"
+msgstr "of the points to pass, at every level"
+
 msgid "Often called Iceland’s unofficial motto."
 msgstr "Often called Iceland’s unofficial motto."
 
@@ -2208,6 +2295,9 @@ msgstr "Page not found"
 msgid "Page not found · Lymi"
 msgstr "Page not found · Lymi"
 
+msgid "parts: reading, writing, listening and speaking"
+msgstr "parts: reading, writing, listening and speaking"
+
 msgid "Paying at the checkout"
 msgstr "Paying at the checkout"
 
@@ -2261,6 +2351,15 @@ msgstr "Please; here you go; you’re welcome"
 
 msgid "PMP and PRINCE2: processes, roles and the vocabulary."
 msgstr "PMP and PRINCE2: processes, roles and the vocabulary."
+
+msgid "points in all, at either level"
+msgstr "points in all, at either level"
+
+msgid "points to pass N4"
+msgstr "points to pass N4"
+
+msgid "points to pass N5"
+msgstr "points to pass N5"
 
 msgid "Poland"
 msgstr "Poland"
@@ -2335,6 +2434,12 @@ msgstr "questions an officer asks aloud"
 msgid "Questions and answers stay in the exam’s language. Each card adds a translation in English, Ukrainian or Russian: the language of the page you add the deck from."
 msgstr "Questions and answers stay in the exam’s language. Each card adds a translation in English, Ukrainian or Russian: the language of the page you add the deck from."
 
+msgid "questions at HSK 1, in listening and reading"
+msgstr "questions at HSK 1, in listening and reading"
+
+msgid "questions at HSK 2"
+msgstr "questions at HSK 2"
+
 msgid "Questions before you connect."
 msgstr "Questions before you connect."
 
@@ -2355,6 +2460,9 @@ msgstr "questions in the manual"
 
 msgid "questions in the official bank"
 msgstr "questions in the official bank"
+
+msgid "questions in TOPIK I: 30 listening and 40 reading"
+msgstr "questions in TOPIK I: 30 listening and 40 reading"
 
 msgid "Questions on every chapter of Discover Canada, the official study guide, with the answer and a short note on each."
 msgstr "Questions on every chapter of Discover Canada, the official study guide, with the answer and a short note on each."
@@ -2651,6 +2759,9 @@ msgstr "Signals"
 msgid "Sitting through a bad film because you paid for the ticket."
 msgstr "Sitting through a bad film because you paid for the ticket."
 
+msgid "skills tested: reading, listening, writing and speaking"
+msgstr "skills tested: reading, listening, writing and speaking"
+
 msgid "Skip to the document"
 msgstr "Skip to the document"
 
@@ -2855,6 +2966,9 @@ msgstr "Thanks! See you!"
 msgid "That chess term you just used, add it to my deck."
 msgstr "That chess term you just used, add it to my deck."
 
+msgid "The A1 and A2 vocabulary of the official reference description, from appointments to health insurance, with a translation beside each word."
+msgstr "The A1 and A2 vocabulary of the official reference description, from appointments to health insurance, with a translation beside each word."
+
 msgid "The A1, A2 and B1 decks are checked against the Goethe-Zertifikat word list for each level, but they aren’t official or complete lists."
 msgstr "The A1, A2 and B1 decks are checked against the Goethe-Zertifikat word list for each level, but they aren’t official or complete lists."
 
@@ -2875,6 +2989,18 @@ msgstr "the day before"
 
 msgid "The day before"
 msgstr "The day before"
+
+msgid "The decks follow the HSK 2.0 word lists and the 2025 syllabus, not one official list in full."
+msgstr "The decks follow the HSK 2.0 word lists and the 2025 syllabus, not one official list in full."
+
+msgid "The decks follow the National Institute of Korean Language’s word list for learners, not an official TOPIK list."
+msgstr "The decks follow the National Institute of Korean Language’s word list for learners, not an official TOPIK list."
+
+msgid "The decks follow the NPI ČR reference description for A1 and A2, not an official exam list."
+msgstr "The decks follow the NPI ČR reference description for A1 and A2, not an official exam list."
+
+msgid "The decks hold the most useful words of each level’s Goethe-Institut word list, not the whole list."
+msgstr "The decks hold the most useful words of each level’s Goethe-Institut word list, not the whole list."
 
 msgid "The DMV doesn’t publish its questions. These are practice questions written from the official handbook."
 msgstr "The DMV doesn’t publish its questions. These are practice questions written from the official handbook."
@@ -2915,6 +3041,9 @@ msgstr "The Hradec Králové and Pardubice regions."
 msgid "The JLPT has published no official word list since 2010, so the N5 and N4 decks follow their level from widely used study lists. Neither is an official list."
 msgstr "The JLPT has published no official word list since 2010, so the N5 and N4 decks follow their level from widely used study lists. Neither is an official list."
 
+msgid "The JLPT has published no official word list since 2010, so these decks follow the Japan Foundation’s course lists and widely used study lists."
+msgstr "The JLPT has published no official word list since 2010, so these decks follow the Japan Foundation’s course lists and widely used study lists."
+
 msgid "The knack of reading the room"
 msgstr "The knack of reading the room"
 
@@ -2932,6 +3061,9 @@ msgstr "The longest chain of dependent tasks; it sets the earliest finish date"
 
 msgid "The Lymi lantern and wordmark above the English line “Keep what you learn.”"
 msgstr "The Lymi lantern and wordmark above the English line “Keep what you learn.”"
+
+msgid "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
+msgstr "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
 
 msgid "The network of nerves that runs from the neck into the arm"
 msgstr "The network of nerves that runs from the neck into the arm"
@@ -2993,6 +3125,9 @@ msgstr "The steam in a sauna"
 msgid "The Vikings"
 msgstr "The Vikings"
 
+msgid "The vocabulary of the first two HSK levels, from the classic word lists and the 2025 syllabus, with a translation beside each word."
+msgstr "The vocabulary of the first two HSK levels, from the classic word lists and the 2025 syllabus, with a translation beside each word."
+
 msgid "The whiteboard"
 msgstr "The whiteboard"
 
@@ -3026,11 +3161,17 @@ msgstr "This deck is no longer published · Lymi"
 msgid "This deck is no longer published."
 msgstr "This deck is no longer published."
 
+msgid "This is the current HSK 2.0 format. The syllabus published in 2025 grows level 1 to 300 words and level 2 to 500."
+msgstr "This is the current HSK 2.0 format. The syllabus published in 2025 grows level 1 to 300 words and level 2 to 500."
+
 msgid "This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have."
 msgstr "This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have."
 
 msgid "Three: SAML, CVSS, and the difference between RTO and RPO."
 msgstr "Three: SAML, CVSS, and the difference between RTO and RPO."
+
+msgid "ticket"
+msgstr "ticket"
 
 msgid "To agree"
 msgstr "To agree"
@@ -3101,6 +3242,15 @@ msgstr "Tonight"
 msgctxt "deck tag"
 msgid "TOPIK I"
 msgstr "TOPIK I"
+
+msgid "TOPIK I and II"
+msgstr "TOPIK I and II"
+
+msgid "TOPIK I: 80 points for level 1, 140 for level 2."
+msgstr "TOPIK I: 80 points for level 1, 140 for level 2."
+
+msgid "TOPIK: the words for TOPIK I and the start of TOPIK II"
+msgstr "TOPIK: the words for TOPIK I and the start of TOPIK II"
 
 msgctxt "deck tag"
 msgid "Travel"
@@ -3220,6 +3370,12 @@ msgstr "Version of 5 January 2026"
 
 msgid "Version of 7 May 2025"
 msgstr "Version of 7 May 2025"
+
+msgid "Vocabulary for levels 1 and 2 of TOPIK I and for level 3 of TOPIK II, with a translation beside each word."
+msgstr "Vocabulary for levels 1 and 2 of TOPIK I and for level 3 of TOPIK II, with a translation beside each word."
+
+msgid "Vocabulary for the first two levels of the Japanese-Language Proficiency Test, with a translation beside each word."
+msgstr "Vocabulary for the first two levels of the Japanese-Language Proficiency Test, with a translation beside each word."
 
 msgid "Waiting for your notes"
 msgstr "Waiting for your notes"
@@ -3451,6 +3607,9 @@ msgstr "Yes. Whoever makes the cards shares the deck’s join link, and everyone
 
 msgid "Yes. You can add a deck and learn it for free."
 msgstr "Yes. You can add a deck and learn it for free."
+
+msgid "yesterday"
+msgstr "yesterday"
 
 msgid "you"
 msgstr "you"

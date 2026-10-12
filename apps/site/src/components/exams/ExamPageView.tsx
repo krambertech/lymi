@@ -137,13 +137,15 @@ function SampleCard({ exam }: { exam: Exam }) {
             ))}
           </ul>
         ) : (
-          <p lang={sample.language} className="mt-3 border-t border-edge pt-3 text-lg text-text">
-            {sample.answer}
-          </p>
+          sample.answer !== sample.question && (
+            <p lang={sample.language} className="mt-3 border-t border-edge pt-3 text-lg text-text">
+              {sample.answer}
+            </p>
+          )
         )}
         {translated && sample.translation && (
           <p className="mt-4 border-t border-edge pt-3 text-md text-pretty text-text-2">
-            {i18n._(sample.translation.question)}{" "}
+            {sample.translation.question && <>{i18n._(sample.translation.question)} </>}
             <span className="font-medium text-text">{i18n._(sample.translation.answer)}</span>
           </p>
         )}

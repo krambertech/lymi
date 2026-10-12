@@ -51,7 +51,7 @@ export const USE_CASE_LINKS: UseCaseLink[] = [
   {
     page: "exams",
     label: msg`Exam prep`,
-    blurb: msg`Citizenship and driving tests, with every question in a ready deck.`,
+    blurb: msg`Citizenship, language and driving tests, each with ready decks.`,
     icon: ClipboardCheck,
     hue: 3,
   },

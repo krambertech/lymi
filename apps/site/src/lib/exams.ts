@@ -54,8 +54,8 @@ export interface ExamSample {
   question: string;
   options?: readonly string[];
   answer: string;
-  /** The question and answer in the reader's language; absent when the exam is in English. */
-  translation?: { question: MessageDescriptor; answer: MessageDescriptor };
+  /** The question and answer in the reader's language; a word to learn has only its meaning. */
+  translation?: { question?: MessageDescriptor; answer: MessageDescriptor };
 }
 
 /** Germany's 16 states in the catalogue's order, each with its own deck of 10 questions. */
@@ -257,6 +257,152 @@ export const EXAMS: readonly Exam[] = [
     },
   },
   {
+    id: "goethe",
+    slug: "goethe-zertifikat",
+    group: "language",
+    name: msg`Goethe-Zertifikat A1, A2 and B1`,
+    country: msg`German`,
+    heading: msg`Goethe-Zertifikat A1, A2 and B1: the words for each level`,
+    lede: msg`The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each.`,
+    summary: msg`A deck for each level. 60% of the points to pass.`,
+    decks: ["german-a1-vocabulary", "german-a2-vocabulary", "german-b1-vocabulary"],
+    source: {
+      title: "Goethe-Institut: Wortlisten Goethe-Zertifikat A1, A2 und B1",
+      url: "https://www.goethe.de/pro/relaunch/prf/de/Goethe-Zertifikat_B1_Wortliste.pdf",
+    },
+    authority: "Goethe-Institut",
+    facts: [
+      { value: "60%", label: msg`of the points to pass, at every level` },
+      { value: "4", label: msg`skills tested: reading, listening, writing and speaking` },
+      { value: "3", label: msg`decks, one for each level` },
+    ],
+    factsNote: msg`At A2 you also need 45 of the written points and 15 of the oral ones. At B1 each module passes on its own.`,
+    note: msg`The decks hold the most useful words of each level’s Goethe-Institut word list, not the whole list.`,
+    sample: {
+      language: "de",
+      question: "das Frühstück",
+      answer: "das Frühstück",
+      translation: { answer: msg`breakfast` },
+    },
+  },
+  {
+    id: "hsk",
+    slug: "hsk",
+    group: "language",
+    name: msg`HSK 1 and HSK 2`,
+    country: msg`Chinese`,
+    heading: msg`HSK 1 and HSK 2: the words for each level`,
+    lede: msg`The vocabulary of the first two HSK levels, from the classic word lists and the 2025 syllabus, with a translation beside each word.`,
+    summary: msg`40 and 60 questions. 120 of 200 points to pass.`,
+    decks: ["chinese-hsk-1-vocabulary", "chinese-hsk-2-vocabulary"],
+    source: {
+      title: "Chinese Testing International: HSK",
+      url: "https://www.chinesetest.cn/HSK",
+    },
+    authority: "Chinese Testing International",
+    facts: [
+      { value: "40", label: msg`questions at HSK 1, in listening and reading` },
+      { value: "60", label: msg`questions at HSK 2` },
+      { value: "120", label: msg`of 200 points to pass either level` },
+    ],
+    factsNote: msg`This is the current HSK 2.0 format. The syllabus published in 2025 grows level 1 to 300 words and level 2 to 500.`,
+    note: msg`The decks follow the HSK 2.0 word lists and the 2025 syllabus, not one official list in full.`,
+    sample: {
+      language: "zh",
+      question: "昨天",
+      answer: "昨天",
+      translation: { answer: msg`yesterday` },
+    },
+  },
+  {
+    id: "jlpt",
+    slug: "jlpt",
+    group: "language",
+    name: msg`JLPT N5 and N4`,
+    country: msg`Japanese`,
+    heading: msg`JLPT N5 and N4: the words for each level`,
+    lede: msg`Vocabulary for the first two levels of the Japanese-Language Proficiency Test, with a translation beside each word.`,
+    summary: msg`180 points. 80 to pass N5, 90 to pass N4.`,
+    decks: ["japanese-n5-vocabulary-practice", "japanese-n4-vocabulary"],
+    source: {
+      title: "JLPT: Scoring and results",
+      url: "https://www.jlpt.jp/e/guideline/results.html",
+    },
+    authority: "the Japan Foundation",
+    facts: [
+      { value: "180", label: msg`points in all, at either level` },
+      { value: "80", label: msg`points to pass N5` },
+      { value: "90", label: msg`points to pass N4` },
+    ],
+    factsNote: msg`Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening.`,
+    note: msg`The JLPT has published no official word list since 2010, so these decks follow the Japan Foundation’s course lists and widely used study lists.`,
+    sample: {
+      language: "ja",
+      question: "家族",
+      answer: "家族",
+      translation: { answer: msg`family` },
+    },
+  },
+  {
+    id: "topik",
+    slug: "topik",
+    group: "language",
+    name: msg`TOPIK I and II`,
+    country: msg`Korean`,
+    heading: msg`TOPIK: the words for TOPIK I and the start of TOPIK II`,
+    lede: msg`Vocabulary for levels 1 and 2 of TOPIK I and for level 3 of TOPIK II, with a translation beside each word.`,
+    summary: msg`TOPIK I: 80 points for level 1, 140 for level 2.`,
+    decks: ["korean-topik-1-vocabulary", "korean-topik-2-vocabulary"],
+    source: {
+      title: "TOPIK: 시험 구성 및 등급 결정",
+      url: "https://www.topik.go.kr/HMENU0/HMENU00016.do",
+    },
+    authority: "NIIED",
+    facts: [
+      { value: "70", label: msg`questions in TOPIK I: 30 listening and 40 reading` },
+      { value: "100", label: msg`minutes to answer them` },
+      { value: "80", label: msg`of 200 points for level 1` },
+      { value: "140", label: msg`of 200 points for level 2` },
+    ],
+    note: msg`The decks follow the National Institute of Korean Language’s word list for learners, not an official TOPIK list.`,
+    sample: {
+      language: "ko",
+      question: "표",
+      answer: "표",
+      translation: { answer: msg`ticket` },
+    },
+  },
+  {
+    id: "czech-a2",
+    slug: "czech-a2-permanent-residence",
+    group: "language",
+    name: msg`Czech A2 for permanent residence`,
+    country: msg`Czech`,
+    heading: msg`Czech A2 for permanent residence: the words you need`,
+    lede: msg`The A1 and A2 vocabulary of the official reference description, from appointments to health insurance, with a translation beside each word.`,
+    summary: msg`60% in reading, writing and listening, and 60% in speaking.`,
+    decks: ["czech-a2-vocabulary", "czech-a1-vocabulary"],
+    source: {
+      title: "NPI ČR: Zkouška z českého jazyka pro trvalý pobyt (A2)",
+      url: "https://cestina-pro-cizince.cz/trvaly-pobyt/a2/informace-ke-zkousce/",
+      edition: msg`Format from 11 April 2026`,
+    },
+    authority: "NPI ČR",
+    facts: [
+      { value: "4", label: msg`parts: reading, writing, listening and speaking` },
+      { value: "42", label: msg`of 70 points to pass reading, writing and listening` },
+      { value: "24", label: msg`of 40 points to pass speaking` },
+    ],
+    factsNote: msg`A new format applies from 11 April 2026. The level stays A2.`,
+    note: msg`The decks follow the NPI ČR reference description for A1 and A2, not an official exam list.`,
+    sample: {
+      language: "cs",
+      question: "zdravotní pojišťovna",
+      answer: "zdravotní pojišťovna",
+      translation: { answer: msg`health insurance company` },
+    },
+  },
+  {
     id: "germany-driving",
     slug: "german-road-signs",
     group: "driving",
@@ -276,7 +422,7 @@ export const EXAMS: readonly Exam[] = [
       language: "de",
       question: "Fußgängerüberweg",
       answer: "Fußgängerüberweg",
-      translation: { question: msg`Pedestrian crossing`, answer: msg`Pedestrian crossing` },
+      translation: { answer: msg`Pedestrian crossing` },
     },
   },
   {
@@ -300,7 +446,7 @@ export const EXAMS: readonly Exam[] = [
       language: "pl",
       question: "droga dla pieszych",
       answer: "droga dla pieszych",
-      translation: { question: msg`Footpath`, answer: msg`Footpath` },
+      translation: { answer: msg`Footpath` },
     },
   },
   {

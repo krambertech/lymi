@@ -168,7 +168,7 @@ export function ExamReview({ exams }: Props) {
                     )}
                     {translated && sample.translation && (
                       <p className="mt-1 text-md text-pretty text-text-2">
-                        {i18n._(sample.translation.question)}{" "}
+                        {sample.translation.question && <>{i18n._(sample.translation.question)} </>}
                         <span className="font-medium text-text">
                           {i18n._(sample.translation.answer)}
                         </span>

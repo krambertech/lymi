@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS, type StreakOut } from "@lymi/core";
+import { flameSize } from "@lymi/design";
 import * as Haptics from "expo-haptics";
 import { type Href, useIsFocused, useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
@@ -9,6 +10,7 @@ import { Flame } from "../../../brand/flame";
 import { Lantern } from "../../../brand/lantern";
 import { REST_DISMISSED_KEY, todayStore } from "../../../data/kept";
 import { useDay, useDecks, useRounds, useStreak } from "../../../data/queries";
+import { useLandingSpot } from "../../../splash/landing";
 import { clear, usePalette, useRoom } from "../../../theme/palette";
 import {
   Button,
@@ -64,7 +66,9 @@ export default function Today() {
         )}
         {loading ? (
           <View className="items-center gap-5 pt-4">
-            <Skeleton width={150} height={150} />
+            <LanternSpot>
+              <Skeleton width={150} height={150} />
+            </LanternSpot>
             <Skeleton width={120} height={40} />
             <Skeleton height={64} />
           </View>
@@ -127,15 +131,16 @@ function LitDue({ decks, nothingYet }: { decks: Deck[]; nothingYet: boolean }) {
           } as ViewStyle
         }
       />
-      <Lantern
-        size={150}
-        progress={progress}
-        out={out}
-        fed={fed}
-        flicker={focused}
-        tilt={focused}
-        style={{ marginTop: 4 }}
-      />
+      <LanternSpot style={{ marginTop: 4 }} flame={flameSize(progress, out)}>
+        <Lantern
+          size={150}
+          progress={progress}
+          out={out}
+          fed={fed}
+          flicker={focused}
+          tilt={focused}
+        />
+      </LanternSpot>
       <DueHeading due={due} nothingYet={nothingYet} noDecks={noDecks} deckName={onlyDeck?.name} />
       <View className="self-stretch">
         {due > 0 ? (
@@ -158,6 +163,24 @@ function LitDue({ decks, nothingYet }: { decks: Deck[]; nothingYet: boolean }) {
           />
         )}
       </View>
+    </View>
+  );
+}
+
+/** Where the splash's lantern lands on a cold start. */
+function LanternSpot({
+  children,
+  style,
+  flame,
+}: {
+  children: ReactNode;
+  style?: ViewStyle;
+  flame?: number;
+}) {
+  const spot = useLandingSpot("today", 150, flame);
+  return (
+    <View ref={spot.ref} onLayout={spot.onLayout} style={[style, spot.style]}>
+      {children}
     </View>
   );
 }

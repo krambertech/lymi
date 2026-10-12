@@ -14,6 +14,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { Lantern } from "../brand/lantern";
+import { useLandingSpot } from "../splash/landing";
 import { useReduceMotion } from "../theme/motion";
 import { clear, usePalette } from "../theme/palette";
 import { Field, FieldDescription, FieldError, FieldLabel, Input, PasswordInput } from "../ui/field";
@@ -71,11 +72,15 @@ export function Pool({ className }: { className: string }) {
 export function Brand() {
   const { t } = useLingui();
   const arrive = useArrival();
+  const spot = useLandingSpot("welcome", 150);
   return (
     <View className="items-center gap-3">
-      <Animated.View entering={arrive(80)}>
-        <Lantern size={150} />
-      </Animated.View>
+      {/* Measured outside its rise, so the splash lands where the lantern settles. */}
+      <View ref={spot.ref} onLayout={spot.onLayout} style={spot.style}>
+        <Animated.View entering={arrive(80)}>
+          <Lantern size={150} />
+        </Animated.View>
+      </View>
       <Animated.View entering={arrive(160)} className="items-center gap-2">
         <Text
           className="text-4xl font-medium text-text"

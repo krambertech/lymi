@@ -111,6 +111,20 @@ A count that changes in front of the learner rolls digit by digit, like a depart
 
 A new account's first screen lights the lantern once: it catches from its ember, its pool blooms and a few embers lift, then the welcome rises in. It is an arrival, not a celebration, so it plays once and never on a return. [onboarding.md](../onboarding.md) has the timings.
 
+## Opening the phone app
+
+A cold start picks up the launch screen's unlit lantern and lights it, in about a second:
+
+| At | What happens |
+| --- | --- |
+| 40 ms | The flame catches from its ember on its 700 ms spring. |
+| 100 ms | Its warm light floods the room from the lantern over 460 ms and stays while the screen underneath mounts. |
+| 380 ms | Once that screen is ready, the lantern rises to its spot on the 600 ms flight spring, growing to its size there, and the flood draws back into the screen's own pool. The flame settles to the day's size on the way. |
+| 560 ms | The room fades over to the screen underneath, by 940 ms. |
+| 980 ms | The lantern underneath takes over in the same spot. |
+
+The clock counts drawn frames rather than time, so a stall while the app mounts pauses the lantern instead of making it jump, and the lantern leaves the middle only once frames come on time. Everything moves inside Skia, in a window of its own over the app, because Reanimated holds back view transforms while React commits and the native stack mounts its screens over their siblings.
+
 ## The auth connection
 
 The auth screens have one moving part, `Connection`. The app that asked and the lantern sit in matching tiles joined by a rail, dotted while the decision is open. When the grant lands the rail draws across in amber over 420 ms and the flame rises 300 ms in, so the two read as one movement. A refusal leaves the rail dotted and the flame goes out. Nothing else on those screens animates.
@@ -127,6 +141,7 @@ Every animation ships a reduced version. Under `prefers-reduced-motion`:
 - the list hover fades in on the row under the pointer instead of sliding;
 - a segmented plate fades in at its new option, a switch thumb takes its new place at once, and a radio dot and a tick fade in where they are;
 - the skeleton stops shimmering;
-- the auth rail is simply filled.
+- the auth rail is simply filled;
+- opening the phone app crossfades the launch screen into the first screen over 240 ms.
 
 The glow stays, because a glow is a state, not a movement.

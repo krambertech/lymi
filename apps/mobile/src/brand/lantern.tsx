@@ -32,7 +32,7 @@ import {
   vec,
 } from "@shopify/react-native-skia";
 import { useEffect, useRef } from "react";
-import { View, type ViewStyle } from "react-native";
+import { StyleSheet, View, type ViewStyle } from "react-native";
 import {
   Easing,
   interpolate,
@@ -89,6 +89,13 @@ interface Props {
   /** The glass catches a highlight as the phone tilts: Today's big lantern only. phone.md "Light". */
   tilt?: boolean | undefined;
   style?: ViewStyle | undefined;
+  /** Drives the flame's size from outside, on the UI thread, in place of `progress` and `out`: the splash's catch. */
+  flame?: SharedValue<number> | undefined;
+  /**
+   * Draws the lantern centred on (x, y) at `size` in a canvas that fills its parent, so it moves
+   * inside Skia rather than by a view transform, which Reanimated holds back while React commits.
+   */
+  place?: SharedValue<{ x: number; y: number; size: number }> | undefined;
 }
 
 /** The storm lantern, drawn with Skia so the flame, its halo and its sparks move on the UI thread. brand.md. */
@@ -101,11 +108,14 @@ export function Lantern({
   glow = true,
   tilt = false,
   style,
+  flame: driven,
+  place,
 }: Props) {
   const p = usePalette();
   const reduce = useReduceMotion();
   const target = flameSize(progress, out);
-  const flame = useSharedValue(target);
+  const own = useSharedValue(target);
+  const flame = driven ?? own;
   const breath = useSharedValue(0);
   const flick = useSharedValue(0);
   const sparks = [useSharedValue(-1), useSharedValue(-1), useSharedValue(-1)] as const;
@@ -113,6 +123,7 @@ export function Lantern({
   const bursts = useRef(0);
 
   useEffect(() => {
+    if (driven) return;
     // Under reduced motion the flame takes each new size at once.
     if (reduce) {
       flame.value = target;
@@ -134,7 +145,7 @@ export function Lantern({
         withSpring(FLAME_BREATH.rise, SPRING.breathIn),
         withSpring(0, SPRING.breathOut),
       );
-  }, [target, reduce, flame, breath]);
+  }, [target, reduce, flame, breath, driven]);
 
   useEffect(() => {
     // A grade taken back lowers the count without feeding the flame.
@@ -171,6 +182,15 @@ export function Lantern({
 
   const k = size / 120;
   const spill = Math.ceil(size * SPILL);
+  const drawn = useDerivedValue(() => {
+    if (!place) return [{ translateX: spill }, { translateY: spill }, { scale: k }];
+    const at = place.value;
+    return [
+      { translateX: at.x - at.size / 2 },
+      { translateY: at.y - at.size / 2 },
+      { scale: at.size / 120 },
+    ];
+  });
 
   // The web's keyframes, 0 → 30% → 55% → 80% → 100%; the flame grows from its own base.
   const flameTransform = useDerivedValue(() => {
@@ -210,17 +230,24 @@ export function Lantern({
   const sparksPicture = useSparks(sparks, k, spill, p.amber);
 
   return (
-    <View style={[{ width: size, height: size }, style]} pointerEvents="none">
+    <View
+      style={[place ? StyleSheet.absoluteFill : { width: size, height: size }, style]}
+      pointerEvents="none"
+    >
       <Canvas
-        style={{
-          position: "absolute",
-          left: -spill,
-          top: -spill,
-          width: size + spill * 2,
-          height: size + spill * 2,
-        }}
+        style={
+          place
+            ? StyleSheet.absoluteFill
+            : {
+                position: "absolute",
+                left: -spill,
+                top: -spill,
+                width: size + spill * 2,
+                height: size + spill * 2,
+              }
+        }
       >
-        <Group transform={[{ translateX: spill }, { translateY: spill }, { scale: k }]}>
+        <Group transform={drawn}>
           <Path
             path={BAIL}
             color={p.metal}

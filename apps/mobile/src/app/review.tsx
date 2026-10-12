@@ -273,9 +273,22 @@ function Run({
     gradedAt.current = -1;
     const term = last.item.card.term;
     void takeBack(last.grade).then((outcome) => {
-      if (outcome === "kept") {
-        Alert.alert(t`Couldn’t take back your grade for “${term}”. It still counts.`);
+      if (outcome !== "kept") return;
+      // The server kept the grade, so the review steps forward again unless a new grade came first.
+      undone.current.delete(last.grade.reviewedAt);
+      if (gradedAt.current === -1) {
+        if (last.listed) {
+          const key = keyOf(last.item);
+          setListCards((c) => ({ ...c, graded: withKey(c.graded, key) }));
+        }
+        setPinned(null);
+        setReturned(false);
+        setRevealed(false);
+        setNow(new Date());
+        setDone((n) => n + 1);
+        setLastGraded(last);
       }
+      Alert.alert(t`Couldn’t take back your grade for “${term}”. It still counts.`);
     });
   };
   const swipe = useUndoSwipe({ enabled: !!lastGraded && !ended, onUndo: undo });

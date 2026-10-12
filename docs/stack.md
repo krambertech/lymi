@@ -128,7 +128,7 @@ Later option: a Durable Object per user holding its own SQLite, which turns sync
 
 ### Auth: Better Auth on the Worker
 
-Better Auth runs on Workers, supports D1 natively as of 1.5, and does social login plus sessions, API keys for the public API, and an Expo plugin for the React Native app later. Two ways in: Continue with Google, and an email address with a password. The phone adds Sign in with Apple, which App Store guideline 4.8 requires beside Google: its native sheet posts Apple's ID token to `/sign-in/social`, and the provider is registered only once `APPLE_APP_BUNDLE_IDENTIFIER` is set. Sign-up is open to anyone: Lymi is in public beta, and no allowlist stands in front of either door.
+Better Auth runs on Workers, supports D1 natively as of 1.5, and does social login plus sessions, API keys for the public API, and an Expo plugin for the React Native app later. Two ways in: Continue with Google, and an email address with a password. The phone adds Sign in with Apple, which App Store guideline 4.8 requires beside Google: its native sheet posts Apple's ID token to `/sign-in/social` with the raw nonce whose hash it gave Apple, and a token without a matching nonce is refused. The provider is registered only once `APPLE_APP_BUNDLE_IDENTIFIER` is set. Sign-up is open to anyone: Lymi is in public beta, and no allowlist stands in front of either door.
 
 Known issue to watch: a reported bug where sessions expire after five minutes with D1 and KV. Test session refresh before relying on it.
 

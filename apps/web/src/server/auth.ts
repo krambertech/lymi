@@ -12,6 +12,7 @@ import { getOAuthState } from "better-auth/api";
 import { emailOTP } from "better-auth/plugins/email-otp";
 import { jwt } from "better-auth/plugins/jwt";
 import { cookiePrefix } from "../shared/cookies";
+import { appleIdTokenVerifier } from "./apple-id-token";
 import { fetchClientMetadataResource } from "./cimd-fetch";
 import type { Db } from "./db";
 import { schema } from "./db";
@@ -302,6 +303,7 @@ export function createAuth(
               clientId: env.APPLE_APP_BUNDLE_IDENTIFIER,
               clientSecret: "",
               appBundleIdentifier: env.APPLE_APP_BUNDLE_IDENTIFIER,
+              verifyIdToken: appleIdTokenVerifier(env.APPLE_APP_BUNDLE_IDENTIFIER),
               // Apple sends the name once, on the first sign-in, and a hidden address has none to borrow.
               mapProfileToUser: (profile) =>
                 profile.name ? {} : { name: profile.email?.split("@")[0] ?? "" },

@@ -1,6 +1,7 @@
 import { createHash, generateKeyPairSync, sign } from "node:crypto";
 import { and, eq } from "@lymi/core/db";
 import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
+import { forgetAppleKeys } from "./apple-id-token";
 import { schema } from "./db";
 import * as posthog from "./posthog";
 import { json, type TestApp, testApp } from "./test-app";
@@ -29,15 +30,20 @@ afterEach(() => {
 
 /** Apple, as far as verifying a token touches it: its published signing keys. */
 function stubAppleKeys() {
+  const fetches: string[] = [];
   vi.stubGlobal("fetch", async (input: RequestInfo | URL, init?: RequestInit) => {
     const url = new URL(input instanceof Request ? input.url : String(input));
     if (url.href !== "https://appleid.apple.com/auth/keys") return realFetch(input, init);
+    fetches.push(url.href);
     const jwk = keys.publicKey.export({ format: "jwk" });
     return Response.json({ keys: [{ ...jwk, kid: KID, alg: "RS256", use: "sig" }] });
   });
+  return fetches;
 }
 
 const sha256 = (value: string) => createHash("sha256").update(value).digest("hex");
+/** The phone hashes a fresh nonce into Apple's request and sends the raw value with the token. */
+const NONCE = "raw-nonce";
 
 function appleToken(claims: Record<string, unknown>, signWith = keys.privateKey): string {
   const now = Math.floor(Date.now() / 1000);
@@ -48,6 +54,7 @@ function appleToken(claims: Record<string, unknown>, signWith = keys.privateKey)
     iat: now,
     exp: now + 600,
     email_verified: "true",
+    nonce: sha256(NONCE),
     ...claims,
   })}`;
   return `${body}.${sign("RSA-SHA256", Buffer.from(body), signWith).toString("base64url")}`;
@@ -55,9 +62,10 @@ function appleToken(claims: Record<string, unknown>, signWith = keys.privateKey)
 
 /** The request the phone sends after the sheet: no Origin, the app's scheme in `expo-origin`. */
 function signInWithApple(idToken: Record<string, unknown>) {
+  const body = { provider: "apple", idToken: { nonce: NONCE, ...idToken } };
   return app.fetch(
     "/api/auth/sign-in/social",
-    json({ provider: "apple", idToken }, { headers: { "expo-origin": "lymi://" } }),
+    json(body, { headers: { "expo-origin": "lymi://" } }),
   );
 }
 
@@ -186,7 +194,7 @@ describe("signing in with Apple from the phone app", () => {
     expect(retired?.payload).toMatchObject({ reason: "apple_proved_the_address" });
   });
 
-  it("refuses a token Apple did not sign, made for another app, expired or for another nonce", async () => {
+  it("refuses a token Apple did not sign, for another app, expired, or without the nonce", async () => {
     stubAppleKeys();
     const email = "apple-refused@lymi.test";
     const now = Math.floor(Date.now() / 1000);
@@ -196,12 +204,27 @@ describe("signing in with Apple from the phone app", () => {
       { token: appleToken({ sub: "refused", email, iss: "https://accounts.google.com" }) },
       { token: appleToken({ sub: "refused", email, iat: now - 7200, exp: now - 3600 }) },
       { token: appleToken({ sub: "refused", email, nonce: sha256("one") }), nonce: "another" },
+      // A replayed token: the request carries no nonce, or the token was minted without one.
+      { token: appleToken({ sub: "refused", email }), nonce: undefined },
+      { token: appleToken({ sub: "refused", email, nonce: undefined }) },
     ]) {
       const response = await signInWithApple(idToken);
       expect(response.status).toBe(401);
       expect(cookieOf(response)).not.toContain("session_token=");
     }
     expect(await userWith(email)).toBeUndefined();
+  });
+
+  it("fetches Apple's signing keys once, not on every sign-in", async () => {
+    forgetAppleKeys();
+    const fetches = stubAppleKeys();
+    for (const sub of ["cached-1", "cached-2", "cached-3"]) {
+      const response = await signInWithApple({
+        token: appleToken({ sub, email: `${sub}@lymi.test` }),
+      });
+      expect(response.status).toBe(200);
+    }
+    expect(fetches).toHaveLength(1);
   });
 });
 

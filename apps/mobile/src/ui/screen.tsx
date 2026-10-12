@@ -136,6 +136,13 @@ export function Screen({
       ],
     };
   });
+  const [arrived, setArrived] = useState(false);
+  useAnimatedReaction(
+    () => headerHeight > 0 && y.value > headerHeight - 65,
+    (now, was) => {
+      if (now !== was) runOnJS(setArrived)(now);
+    },
+  );
   const side = useAnimatedStyle(() => {
     if (actionsArrive) {
       const k = interpolate(
@@ -242,7 +249,15 @@ export function Screen({
         ) : (
           <View />
         )}
-        <Animated.View style={side}>{trailing}</Animated.View>
+        <Animated.View
+          style={side}
+          // Actions that have not arrived yet are out of reach of a finger and of VoiceOver.
+          pointerEvents={actionsArrive && !arrived ? "none" : "auto"}
+          accessibilityElementsHidden={actionsArrive && !arrived}
+          importantForAccessibility={actionsArrive && !arrived ? "no-hide-descendants" : "auto"}
+        >
+          {trailing}
+        </Animated.View>
       </View>
     </View>
   );

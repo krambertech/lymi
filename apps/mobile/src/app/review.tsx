@@ -428,6 +428,7 @@ function Run({
           under={
             lastGraded && (
               <Turn
+                turn={lastGraded.grade.reviewedAt}
                 item={lastGraded.item}
                 deckName={lastGraded.deckName}
                 forgotten={lastGraded.forgotten}
@@ -438,8 +439,8 @@ function Run({
           }
         >
           <Turn
-            // A forgotten card can come straight back; keyed by position it arrives afresh.
-            key={`${keyOf(current)}:${done}`}
+            // A forgotten card can come straight back; by position it arrives afresh.
+            turn={`${keyOf(current)}:${done}`}
             item={current}
             deckName={deckName}
             forgotten={forgotten}
@@ -461,6 +462,7 @@ function Run({
 
 /** A card and, once it is revealed, its grades under it. */
 function Turn({
+  turn,
   item,
   deckName,
   forgotten,
@@ -470,6 +472,8 @@ function Turn({
   onGrade,
   onUndo,
 }: {
+  /** Which card this is at which point of the review; a new one fades its words in on the same plate. */
+  turn: string;
   item: QueueItem;
   deckName: string | undefined;
   forgotten: boolean;
@@ -484,6 +488,7 @@ function Turn({
     <>
       <View className="flex-1 px-4 pt-3">
         <CardPlate
+          turn={turn}
           item={item}
           deckName={deckName}
           forgotten={forgotten}
@@ -572,6 +577,7 @@ function Picture({ card }: { card: QueueItem["card"] }) {
  * by the mode the draw chose); a tap anywhere reveals what is asked for.
  */
 function CardPlate({
+  turn,
   item: { card, fsrsState, mode },
   deckName,
   forgotten,
@@ -580,6 +586,7 @@ function CardPlate({
   onReveal,
   onUndo,
 }: {
+  turn: string;
   item: QueueItem;
   deckName: string | undefined;
   forgotten: boolean;
@@ -622,85 +629,92 @@ function CardPlate({
         className="flex-1 overflow-hidden rounded-2xl border border-edge bg-plate"
         style={dark ? LIFT : undefined}
       >
-        {/* At large text sizes the deck and the state stack rather than clip. */}
-        <View className="flex-row flex-wrap items-center justify-between gap-2 px-6 pt-5">
-          <View className="flex-row items-center gap-2">
-            <Icon name="deck" size={18} colour={p.muted} />
-            <Text className="text-md text-text-2">{deckName}</Text>
-          </View>
-          <View className="min-h-9 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3.5 py-1">
-            <Icon
-              name={forgotten ? "forgot" : state.icon}
-              size={16}
-              colour={forgotten ? p["grade-forgot"] : p[state.tint]}
-            />
-            <Text className="text-base font-medium text-text-2">
-              {forgotten ? "Forgotten" : state.label}
-            </Text>
-          </View>
-        </View>
-
-        <View className="flex-1 justify-center px-6">
-          <Animated.View
-            layout={reduce ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
-          >
-            {cue === null ? (
-              <Picture card={card} />
-            ) : (
-              <Text
-                className="text-text"
-                style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
-                // The word is already the largest text on the card; grown, a long one would break mid-word.
-                maxFontSizeMultiplier={1}
-              >
-                {cue}
-              </Text>
-            )}
-          </Animated.View>
-          {revealed && (
-            <View className="gap-4 pt-5">
-              <Animated.View
-                entering={still ? undefined : reduce ? CROSSFADE : rule}
-                className="h-px bg-edge-2"
-                // The rule draws from the start edge, which is the right in a right-to-left language.
-                style={{ transformOrigin: I18nManager.isRTL ? "100% 50%" : "0% 50%" }}
-              />
-              <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(0)}>
-                <Text className="text-xl text-text">{answer}</Text>
-              </Animated.View>
-              {other && (
-                <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(1)}>
-                  <Text className="text-md text-text-2">{other}</Text>
-                </Animated.View>
-              )}
-              {card.example && (
-                <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(2)}>
-                  <Text className="text-md text-text-2">{card.example}</Text>
-                </Animated.View>
-              )}
-              {section && (
-                <Animated.View
-                  entering={still ? undefined : reduce ? CROSSFADE : rise(3)}
-                  className="flex-row"
-                >
-                  <View className="min-h-8 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3 py-1">
-                    <Icon name="section" size={15} colour={p.muted} />
-                    <Text className="text-base text-text-2">{section}</Text>
-                  </View>
-                </Animated.View>
-              )}
+        {/* The plate stays from card to card; only what it asks changes. motion.md "Review". */}
+        <Animated.View
+          key={turn}
+          entering={still ? undefined : FadeIn.duration(160).reduceMotion(ALWAYS)}
+          className="flex-1"
+        >
+          {/* At large text sizes the deck and the state stack rather than clip. */}
+          <View className="flex-row flex-wrap items-center justify-between gap-2 px-6 pt-5">
+            <View className="flex-row items-center gap-2">
+              <Icon name="deck" size={18} colour={p.muted} />
+              <Text className="text-md text-text-2">{deckName}</Text>
             </View>
-          )}
-        </View>
+            <View className="min-h-9 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3.5 py-1">
+              <Icon
+                name={forgotten ? "forgot" : state.icon}
+                size={16}
+                colour={forgotten ? p["grade-forgot"] : p[state.tint]}
+              />
+              <Text className="text-base font-medium text-text-2">
+                {forgotten ? "Forgotten" : state.label}
+              </Text>
+            </View>
+          </View>
 
-        {!revealed && (
-          <Animated.View
-            entering={FadeIn.delay(900).duration(400).reduceMotion(ALWAYS)}
-            className="items-center pb-6"
-          >
-            <Text className="text-base text-muted">Tap to reveal</Text>
-          </Animated.View>
-        )}
+          <View className="flex-1 justify-center px-6">
+            <Animated.View
+              layout={reduce ? undefined : LinearTransition.duration(GLIDE).easing(EASE)}
+            >
+              {cue === null ? (
+                <Picture card={card} />
+              ) : (
+                <Text
+                  className="text-text"
+                  style={{ fontSize: 46, lineHeight: 58, fontWeight: "500", letterSpacing: -1.2 }}
+                  // The word is already the largest text on the card; grown, a long one would break mid-word.
+                  maxFontSizeMultiplier={1}
+                >
+                  {cue}
+                </Text>
+              )}
+            </Animated.View>
+            {revealed && (
+              <View className="gap-4 pt-5">
+                <Animated.View
+                  entering={still ? undefined : reduce ? CROSSFADE : rule}
+                  className="h-px bg-edge-2"
+                  // The rule draws from the start edge, which is the right in a right-to-left language.
+                  style={{ transformOrigin: I18nManager.isRTL ? "100% 50%" : "0% 50%" }}
+                />
+                <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(0)}>
+                  <Text className="text-xl text-text">{answer}</Text>
+                </Animated.View>
+                {other && (
+                  <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(1)}>
+                    <Text className="text-md text-text-2">{other}</Text>
+                  </Animated.View>
+                )}
+                {card.example && (
+                  <Animated.View entering={still ? undefined : reduce ? CROSSFADE : rise(2)}>
+                    <Text className="text-md text-text-2">{card.example}</Text>
+                  </Animated.View>
+                )}
+                {section && (
+                  <Animated.View
+                    entering={still ? undefined : reduce ? CROSSFADE : rise(3)}
+                    className="flex-row"
+                  >
+                    <View className="min-h-8 flex-row items-center gap-1.5 rounded-full bg-plate-2 px-3 py-1">
+                      <Icon name="section" size={15} colour={p.muted} />
+                      <Text className="text-base text-text-2">{section}</Text>
+                    </View>
+                  </Animated.View>
+                )}
+              </View>
+            )}
+          </View>
+
+          {!revealed && (
+            <Animated.View
+              entering={FadeIn.delay(900).duration(400).reduceMotion(ALWAYS)}
+              className="items-center pb-6"
+            >
+              <Text className="text-base text-muted">Tap to reveal</Text>
+            </Animated.View>
+          )}
+        </Animated.View>
       </Pressable>
     </Animated.View>
   );

@@ -361,6 +361,9 @@ msgstr "AI draft"
 msgid "AI example"
 msgstr "AI example"
 
+msgid "AI fills"
+msgstr "AI fills"
+
 msgid "AI fills in"
 msgstr "AI fills in"
 
@@ -1320,6 +1323,9 @@ msgstr "Memory hook: {text}"
 
 msgid "Message"
 msgstr "Message"
+
+msgid "Modes"
+msgstr "Modes"
 
 msgid "More about this card"
 msgstr "More about this card"

@@ -361,6 +361,9 @@ msgstr "Чернетка AI"
 msgid "AI example"
 msgstr "Приклад від AI"
 
+msgid "AI fills"
+msgstr "AI заповнює"
+
 msgid "AI fills in"
 msgstr "AI доповнить"
 
@@ -1320,6 +1323,9 @@ msgstr "Зачіпка: {text}"
 
 msgid "Message"
 msgstr "Повідомлення"
+
+msgid "Modes"
+msgstr "Режими"
 
 msgid "More about this card"
 msgstr "Більше про картку"

@@ -361,6 +361,9 @@ msgstr "Черновик AI"
 msgid "AI example"
 msgstr "Пример от AI"
 
+msgid "AI fills"
+msgstr "AI заполняет"
+
 msgid "AI fills in"
 msgstr "AI дополнит"
 
@@ -1320,6 +1323,9 @@ msgstr "Зацепка: {text}"
 
 msgid "Message"
 msgstr "Сообщение"
+
+msgid "Modes"
+msgstr "Режимы"
 
 msgid "More about this card"
 msgstr "Больше о карточке"

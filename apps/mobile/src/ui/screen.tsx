@@ -37,6 +37,18 @@ interface Props {
   back?: { label: string; to: Href };
   /** Buttons pinned at the bar's end; on a tab they take the place of the streak and capture. */
   actions?: ReactNode;
+  /**
+   * A page's own header in place of its large title, such as a published deck's cards and name;
+   * the title then shows only in the bar, once the header has scrolled under it.
+   */
+  header?: ReactNode;
+  /**
+   * A colour of the page's own under its header, such as a deck's hue: `fade` runs it up under the
+   * bar and lets it fade out below the header, `pool` lays it as a still pool of light behind it.
+   */
+  ground?: { colour: string; shape: "fade" | "pool" };
+  /** The bar's actions arrive with the bar's title, as the header's own button scrolls away. */
+  actionsArrive?: boolean;
   children: ReactNode;
 }
 
@@ -53,7 +65,16 @@ const INLINE_LARGE = 22 / 34;
  * and shrinks, a page's named back folds into a round glass back, and what scrolls beneath softens
  * into the room. phone.md "Navigation".
  */
-export function Screen({ title, kind = "page", back, actions, children }: Props) {
+export function Screen({
+  title,
+  kind = "page",
+  back,
+  actions,
+  header,
+  ground,
+  actionsArrive = false,
+  children,
+}: Props) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { t } = useLingui();
@@ -77,8 +98,29 @@ export function Screen({ title, kind = "page", back, actions, children }: Props)
   const dock = kind === "tab" ? INLINE_LARGE : SMALL;
   const dockY = insets.top + (56 - box.h * dock) / 2;
   const travel = Math.max(restY - dockY, TITLE_GONE);
+  const [headerHeight, setHeaderHeight] = useState(0);
   const rtl = I18nManager.isRTL;
+  // A worklet copies what it closes over, so it reads a flag rather than the header's elements.
+  const hasHeader = !!header;
   const moving = useAnimatedStyle(() => {
+    if (hasHeader) {
+      // The header holds the name at rest; the bar's title arrives as the header leaves.
+      const w = Math.min(box.w * dock, screen - 2 * 96);
+      const x = (screen - w) / 2;
+      return {
+        // Until the header is measured the bar's title stays hidden, so it never flashes in.
+        opacity: !headerHeight
+          ? 0
+          : interpolate(
+              y.value,
+              [headerHeight - 80, headerHeight - 30],
+              [0, 1],
+              Extrapolation.CLAMP,
+            ),
+        transformOrigin: rtl ? "right top" : "left top",
+        transform: [{ translateX: rtl ? -x : x }, { translateY: dockY }, { scale: dock }],
+      };
+    }
     const k = interpolate(y.value, [0, travel], [0, 1], Extrapolation.CLAMP);
     const w = Math.min(box.w * dock, screen - 2 * 96);
     // A page centres it between its back and its actions; a tab keeps it at the start, across
@@ -94,9 +136,27 @@ export function Screen({ title, kind = "page", back, actions, children }: Props)
       ],
     };
   });
-  const side = useAnimatedStyle(() => ({
-    transform: [{ scale: interpolate(y.value, [0, TITLE_GONE], [1, 0.92], Extrapolation.CLAMP) }],
-  }));
+  const [arrived, setArrived] = useState(false);
+  useAnimatedReaction(
+    () => headerHeight > 0 && y.value > headerHeight - 65,
+    (now, was) => {
+      if (now !== was) runOnJS(setArrived)(now);
+    },
+  );
+  const side = useAnimatedStyle(() => {
+    if (actionsArrive) {
+      const k = interpolate(
+        y.value,
+        [headerHeight - 90, headerHeight - 40],
+        [0, 1],
+        Extrapolation.CLAMP,
+      );
+      return { opacity: headerHeight ? k : 0, transform: [{ scale: 0.7 + 0.3 * k }] };
+    }
+    return {
+      transform: [{ scale: interpolate(y.value, [0, TITLE_GONE], [1, 0.92], Extrapolation.CLAMP) }],
+    };
+  });
   // Nothing crosses what the lantern lights at rest; the band only gathers once content moves.
   const band = useAnimatedStyle(() => ({
     opacity: interpolate(y.value, [0, 24], [0, 1], Extrapolation.CLAMP),
@@ -115,14 +175,25 @@ export function Screen({ title, kind = "page", back, actions, children }: Props)
         // The pinned bar already clears the status bar; iOS's own tab bar would add the inset again.
         contentInsetAdjustmentBehavior="never"
       >
-        {/* Holds the title's place in the page; the title itself travels in the bar above. */}
-        <View
-          className={kind === "tab" ? "-mt-14 h-14" : "-mt-1"}
-          style={kind === "page" ? { height: box.h } : undefined}
-          accessible
-          accessibilityRole="header"
-          accessibilityLabel={title}
-        />
+        {header ? (
+          <View
+            className="-mx-5 px-5 pb-7"
+            style={{ marginTop: -bar, paddingTop: bar + 8 }}
+            onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height - bar)}
+          >
+            {ground && <Ground {...ground} height={bar + headerHeight} />}
+            {header}
+          </View>
+        ) : (
+          /* Holds the title's place in the page; the title itself travels in the bar above. */
+          <View
+            className={kind === "tab" ? "-mt-14 h-14" : "-mt-1"}
+            style={kind === "page" ? { height: box.h } : undefined}
+            accessible
+            accessibilityRole="header"
+            accessibilityLabel={title}
+          />
+        )}
         {children}
       </Animated.ScrollView>
       <Animated.View
@@ -137,7 +208,14 @@ export function Screen({ title, kind = "page", back, actions, children }: Props)
           band,
         ]}
       />
-      <StatusFade height={insets.top} />
+      {/* Over a page's own ground the clock sits on the ground at rest; the room gathers on scroll. */}
+      <Animated.View
+        pointerEvents="none"
+        className="absolute inset-x-0 top-0"
+        style={ground ? band : undefined}
+      >
+        <StatusFade height={insets.top} />
+      </Animated.View>
       <Animated.View
         pointerEvents="none"
         className="absolute start-0 top-0"
@@ -171,7 +249,15 @@ export function Screen({ title, kind = "page", back, actions, children }: Props)
         ) : (
           <View />
         )}
-        <Animated.View style={side}>{trailing}</Animated.View>
+        <Animated.View
+          style={side}
+          // Actions that have not arrived yet are out of reach of a finger and of VoiceOver.
+          pointerEvents={actionsArrive && !arrived ? "none" : "auto"}
+          accessibilityElementsHidden={actionsArrive && !arrived}
+          importantForAccessibility={actionsArrive && !arrived ? "no-hide-descendants" : "auto"}
+        >
+          {trailing}
+        </Animated.View>
       </View>
     </View>
   );
@@ -232,6 +318,42 @@ function Back({
   );
 }
 
+/** How far a page's ground spreads past the bottom of its header before it has faded out. */
+const SPREAD = 220;
+/** Pulling past the top shows the ground, not the room, so the header never comes unstuck. */
+const OVERSCROLL = 800;
+
+/** A page's own colour behind its header, faded out rather than cut off. */
+function Ground({
+  colour,
+  shape,
+  height,
+}: {
+  colour: string;
+  shape: "fade" | "pool";
+  height: number;
+}) {
+  const total = (shape === "fade" ? OVERSCROLL : 0) + height + SPREAD;
+  const solid = Math.round(((total - SPREAD - height * 0.45) / total) * 100);
+  const image =
+    shape === "fade"
+      ? `linear-gradient(to bottom, ${colour} ${solid}%, ${colour}00 100%)`
+      : `radial-gradient(90% 60% at 30% 35%, ${colour}, ${colour}73 55%, ${colour}00 88%)`;
+  return (
+    <View
+      pointerEvents="none"
+      className="absolute inset-x-0"
+      style={
+        {
+          top: shape === "fade" ? -OVERSCROLL : 0,
+          height: total,
+          experimental_backgroundImage: image,
+        } as ViewStyle
+      }
+    />
+  );
+}
+
 /** Content scrolling up softens into the room under the status bar instead of hitting the clock. */
 function StatusFade({ height }: { height: number }) {
   const p = usePalette();
@@ -284,6 +406,44 @@ export function BarButton({
         />
       </GlassSurface>
     </Press>
+  );
+}
+
+/** One of a bar group's buttons; `on` marks one that is narrowing the page, as a chosen filter. */
+export interface BarGroupItem {
+  icon: IconName;
+  /** What pressing does, for VoiceOver. */
+  label: string;
+  on?: boolean;
+  onPress: () => void;
+}
+
+/**
+ * Related bar buttons share one glass capsule, as iOS groups a toolbar's items, so Explore's filter
+ * and search read as one control.
+ */
+export function BarGroup({ items }: { items: BarGroupItem[] }) {
+  const p = usePalette();
+  return (
+    <GlassSurface
+      tint="room"
+      style={{ height: 40, borderRadius: 20, flexDirection: "row", paddingHorizontal: 2 }}
+    >
+      {items.map((item) => (
+        <Press
+          key={item.icon}
+          onPress={item.onPress}
+          drawn={40}
+          accessibilityRole="button"
+          accessibilityLabel={item.label}
+          accessibilityState={{ selected: item.on }}
+          className="h-10 w-11 items-center justify-center"
+        >
+          <Icon name={item.icon} size={19} colour={p.text} strokeWidth={item.on ? 2.5 : 2} />
+          {item.on && <View className="absolute end-2.5 top-2 size-2 rounded-full bg-amber" />}
+        </Press>
+      ))}
+    </GlassSurface>
   );
 }
 

@@ -42,6 +42,7 @@ import {
   Lightbulb,
   Link,
   Link2Off,
+  ListFilter,
   Lock,
   LogOut,
   Mail,
@@ -183,6 +184,7 @@ const ICONS = {
   moveUp: ArrowUp,
   moveDown: ArrowDown,
   delete: Trash2,
+  filter: ListFilter,
 } as const;
 
 export type IconName = keyof typeof ICONS;

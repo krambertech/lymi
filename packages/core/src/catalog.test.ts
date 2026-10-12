@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
+  catalogSearchText,
   isPublicDeckSlug,
   type PublicDeckSummary,
   previewMode,
@@ -348,6 +349,50 @@ describe("taughtLanguage", () => {
     expect(taughtLanguage({ category: null, language: "es" })).toBe("es");
     expect(taughtLanguage({ category: "science", language: "en" })).toBeNull();
     expect(taughtLanguage({ category: "geography", language: null })).toBeNull();
+  });
+});
+
+describe("catalogSearchText", () => {
+  const deck: PublicDeckSummary = {
+    slug: "everyday-estonian",
+    name: "Everyday Estonian",
+    summary: "Words for your first weeks.",
+    category: "languages",
+    tags: ["beginner"],
+    language: "et",
+    meaningLanguage: "uk",
+    cardCount: 3,
+    sectionCount: 1,
+    card: { term: "tere", meaning: "привіт", section: null, mode: "term_to_meaning" },
+  };
+  const names = {
+    language: (tag: string) => ({ et: "Естонська", uk: "Українська" })[tag] ?? null,
+    englishLanguage: (tag: string) => ({ et: "Estonian", uk: "Ukrainian" })[tag] ?? null,
+    subject: () => "Наука",
+    tag: () => "Для початківців",
+    englishTag: () => "For beginners",
+  };
+
+  it("matches the languages and tags in the reader's language and in English", () => {
+    const text = catalogSearchText(deck, names, "uk");
+    for (const word of [
+      "естонська",
+      "estonian",
+      "українська",
+      "ukrainian",
+      "для початківців",
+      "for beginners",
+      "tere",
+      "привіт",
+    ]) {
+      expect(text).toContain(word);
+    }
+  });
+
+  it("names a subject deck's subject rather than the language its terms are in", () => {
+    const text = catalogSearchText({ ...deck, category: "science", tags: [] }, names, "uk");
+    expect(text).toContain("наука");
+    expect(text).not.toContain("естонська");
   });
 });
 

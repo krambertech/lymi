@@ -63,7 +63,6 @@ export const add = new Hono<AppEnv>();
 add.post(
   "/:slug",
   describe({
-    hide: true,
     learnerOnly: true,
     summary: "Add a published deck to Library",
     ok: { schema: JoinOut, description: "The deck, now in Library" },

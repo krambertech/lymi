@@ -67,6 +67,9 @@ const phoneOperations = [
   "PUT /api/cards/{id}/important",
   "PUT /api/cards/{id}/image",
   "GET /api/cards/{id}/image/{imageId}",
+  "GET /api/explore",
+  "GET /api/explore/{slug}",
+  "POST /api/add/{slug}",
 ];
 
 // The phone also calls Better Auth under /api/auth, /api/avatar, /api/audio and POST

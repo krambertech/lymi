@@ -21,10 +21,15 @@ msgid "{0, plural, one {# card due} other {# cards due}}"
 msgstr "{0, plural, one {# card due} other {# cards due}}"
 
 #. placeholder {0}: d.total
+#. placeholder {0}: deck.cardCount
 #. placeholder {0}: g.rows.length
-#. placeholder {0}: total ?? cards.length
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# card} other {# cards}}"
+
+#. placeholder {0}: s.decks.length
+#. placeholder {0}: shelf.decks.length
+msgid "{0, plural, one {# deck} other {# decks}}"
+msgstr "{0, plural, one {# deck} other {# decks}}"
 
 #. placeholder {0}: decks.length
 msgid "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
@@ -51,6 +56,11 @@ msgstr "{0, plural, one {# more review to your daily goal} other {# more reviews
 #. placeholder {2}: today.goal
 msgid "{0, plural, one {# review, goal {1}} other {# reviews, goal {2}}}"
 msgstr "{0, plural, one {# review, goal {1}} other {# reviews, goal {2}}}"
+
+#. placeholder {0}: deck.sectionCount
+#. placeholder {0}: sections.length
+msgid "{0, plural, one {# section} other {# sections}}"
+msgstr "{0, plural, one {# section} other {# sections}}"
 
 #. placeholder {0}: cards.total
 #. placeholder {0}: rows.length
@@ -85,6 +95,10 @@ msgstr "{0, plural, one {Show # older entry} other {Show # older entries}}"
 msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
 msgstr "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
 
+#. placeholder {0}: shelfOf(deck)
+msgid "{0} · In Library"
+msgstr "{0} · In Library"
+
 #. placeholder {0}: pct(cards.known / cards.total)
 msgid "{0} of your cards are known."
 msgstr "{0} of your cards are known."
@@ -97,6 +111,12 @@ msgstr "{0} owns this deck and writes its cards."
 #. placeholder {1}: recall.failed
 msgid "{0} remembered, {1} forgotten."
 msgstr "{0} remembered, {1} forgotten."
+
+msgid "{cards, plural, one {# card} other {# cards}}"
+msgstr "{cards, plural, one {# card} other {# cards}}"
+
+msgid "{cards} · {sections}"
+msgstr "{cards} · {sections}"
 
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# review} other {# reviews}}"
@@ -145,6 +165,9 @@ msgstr "{days, plural, one {in # day} other {in # days}}"
 
 msgid "{days, plural, one {In # day} other {In # days}}"
 msgstr "{days, plural, one {In # day} other {In # days}}"
+
+msgid "{deckCount} · {cardCount}"
+msgstr "{deckCount} · {cardCount}"
 
 msgid "{due, plural, one {# card due} other {# cards due}}"
 msgstr "{due, plural, one {# card due} other {# cards due}}"
@@ -286,6 +309,9 @@ msgstr "Add hook"
 msgid "Add to {deckName}"
 msgstr "Add to {deckName}"
 
+msgid "Add to Library"
+msgstr "Add to Library"
+
 msgid "Added “{term}”"
 msgstr "Added “{term}”"
 
@@ -300,6 +326,9 @@ msgstr "Added “{term}”. It’s saved on this phone until Lymi can be reached
 
 msgid "Added {count, plural, one {# card} other {# cards}} to {deck}"
 msgstr "Added {count, plural, one {# card} other {# cards}} to {deck}"
+
+msgid "Adding a deck needs a connection. Connect and try again."
+msgstr "Adding a deck needs a connection. Connect and try again."
 
 msgid "Ahead"
 msgstr "Ahead"
@@ -337,6 +366,13 @@ msgstr "AI wrote this"
 msgid "All"
 msgstr "All"
 
+msgid "All shelves"
+msgstr "All shelves"
+
+msgctxt "deck tag"
+msgid "Alphabet"
+msgstr "Alphabet"
+
 msgid "Also on your list"
 msgstr "Also on your list"
 
@@ -348,6 +384,10 @@ msgstr "Any time"
 
 msgid "API keys"
 msgstr "API keys"
+
+msgctxt "language"
+msgid "Arabic"
+msgstr "Arabic"
 
 msgid "Archive “{name}”?"
 msgstr "Archive “{name}”?"
@@ -370,6 +410,9 @@ msgstr "Archived the deck {deck}"
 msgid "Archived the section {name} in {deck}"
 msgstr "Archived the section {name} in {deck}"
 
+msgid "Arts"
+msgstr "Arts"
+
 msgid "Asked"
 msgstr "Asked"
 
@@ -385,8 +428,24 @@ msgstr "Back to sign in"
 msgid "Both ways"
 msgstr "Both ways"
 
+msgctxt "language"
+msgid "Brazilian Portuguese"
+msgstr "Brazilian Portuguese"
+
 msgid "Bug"
 msgstr "Bug"
+
+msgctxt "language"
+msgid "Bulgarian"
+msgstr "Bulgarian"
+
+#. placeholder {0}: deck.publisher
+msgid "By {0} · {cards}"
+msgstr "By {0} · {cards}"
+
+#. placeholder {0}: deck.publisher
+msgid "By {0} · {cards} · {sectionCount}"
+msgstr "By {0} · {cards} · {sectionCount}"
 
 msgid "by a connected app"
 msgstr "by a connected app"
@@ -402,6 +461,10 @@ msgstr "by the API"
 
 msgid "by you"
 msgstr "by you"
+
+msgctxt "deck tag"
+msgid "Canadian citizenship test"
+msgstr "Canadian citizenship test"
 
 msgid "Cancel"
 msgstr "Cancel"
@@ -424,6 +487,13 @@ msgstr "Cards"
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Cards from Marco’s Tuesday lessons."
 
+msgid "Cards outside a section"
+msgstr "Cards outside a section"
+
+msgctxt "deck tag"
+msgid "CCSE Spanish nationality test"
+msgstr "CCSE Spanish nationality test"
+
 msgid "Change daily goal"
 msgstr "Change daily goal"
 
@@ -442,6 +512,10 @@ msgstr "Check your connection and try again."
 msgid "Check your inbox"
 msgstr "Check your inbox"
 
+msgctxt "language"
+msgid "Chinese"
+msgstr "Chinese"
+
 msgid "Choose a whole number from 1 to 200."
 msgstr "Choose a whole number from 1 to 200."
 
@@ -456,6 +530,9 @@ msgstr "Choose from photos"
 
 msgid "Choose photo"
 msgstr "Choose photo"
+
+msgid "Citizenship"
+msgstr "Citizenship"
 
 msgid "Clear the picture"
 msgstr "Clear the picture"
@@ -490,6 +567,20 @@ msgstr "Continue"
 msgid "Continue with Google"
 msgstr "Continue with Google"
 
+msgctxt "deck tag"
+msgid "Conversation"
+msgstr "Conversation"
+
+msgctxt "deck tag"
+msgid "Core vocabulary"
+msgstr "Core vocabulary"
+
+msgid "Couldn’t add the deck. Check your connection and try again."
+msgstr "Couldn’t add the deck. Check your connection and try again."
+
+msgid "Couldn’t add the deck. It’s no longer published."
+msgstr "Couldn’t add the deck. It’s no longer published."
+
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Couldn’t change your photo. Check your connection and try again."
 
@@ -498,6 +589,9 @@ msgstr "Couldn’t check for more cards"
 
 msgid "Couldn’t load Activity"
 msgstr "Couldn’t load Activity"
+
+msgid "Couldn’t load Explore"
+msgstr "Couldn’t load Explore"
 
 msgid "Couldn’t load Insights"
 msgstr "Couldn’t load Insights"
@@ -513,6 +607,9 @@ msgstr "Couldn’t load Today"
 
 msgid "Couldn’t load your cards"
 msgstr "Couldn’t load your cards"
+
+msgid "Couldn’t open this deck"
+msgstr "Couldn’t open this deck"
 
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Couldn’t play the pronunciation. Try again in a moment."
@@ -562,8 +659,20 @@ msgstr "Create deck"
 msgid "Create your Lymi account"
 msgstr "Create your Lymi account"
 
+msgctxt "language"
+msgid "Croatian"
+msgstr "Croatian"
+
 msgid "Custom"
 msgstr "Custom"
+
+msgctxt "language"
+msgid "Czech"
+msgstr "Czech"
+
+msgctxt "deck tag"
+msgid "Czech citizenship test"
+msgstr "Czech citizenship test"
 
 msgid "Daily goal"
 msgstr "Daily goal"
@@ -579,6 +688,10 @@ msgstr "Daily goal saved."
 
 msgid "Daily reminder"
 msgstr "Daily reminder"
+
+msgctxt "language"
+msgid "Danish"
+msgstr "Danish"
 
 msgid "Dark"
 msgstr "Dark"
@@ -625,6 +738,10 @@ msgstr "Details"
 msgid "Dismiss"
 msgstr "Dismiss"
 
+msgctxt "deck tag"
+msgid "DMV written test"
+msgstr "DMV written test"
+
 msgid "Don’t use “Lymi” in your password."
 msgstr "Don’t use “Lymi” in your password."
 
@@ -637,6 +754,9 @@ msgstr "Done"
 msgid "Drafting a hook…"
 msgstr "Drafting a hook…"
 
+msgid "Driving"
+msgstr "Driving"
+
 msgid "Due now"
 msgstr "Due now"
 
@@ -648,6 +768,10 @@ msgstr "Due this week"
 
 msgid "Due today"
 msgstr "Due today"
+
+msgctxt "language"
+msgid "Dutch"
+msgstr "Dutch"
 
 msgid "Each block is one day you reviewed."
 msgstr "Each block is one day you reviewed."
@@ -685,6 +809,10 @@ msgstr "Email"
 msgid "End review"
 msgstr "End review"
 
+msgctxt "language"
+msgid "English"
+msgstr "English"
+
 msgid "Enriched"
 msgstr "Enriched"
 
@@ -700,6 +828,16 @@ msgstr "Enter the 6-digit code we sent to {email}."
 msgid "Enter the 6-digit code."
 msgstr "Enter the 6-digit code."
 
+msgctxt "language"
+msgid "Estonian"
+msgstr "Estonian"
+
+msgid "Every card"
+msgstr "Every card"
+
+msgid "Every shelf"
+msgstr "Every shelf"
+
 msgid "Example"
 msgstr "Example"
 
@@ -711,9 +849,6 @@ msgstr "Example from lesson"
 
 msgid "Explore"
 msgstr "Explore"
-
-msgid "Explore is coming to the phone"
-msgstr "Explore is coming to the phone"
 
 msgid "Export"
 msgstr "Export"
@@ -752,6 +887,23 @@ msgstr "Filter"
 msgid "Filter · {0}"
 msgstr "Filter · {0}"
 
+msgctxt "language"
+msgid "Finnish"
+msgstr "Finnish"
+
+msgid "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
+msgstr "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
+
+msgctxt "deck tag"
+msgid "For beginners"
+msgstr "For beginners"
+
+msgid "For reading kana, a first trip, and JLPT N5 and N4 vocabulary."
+msgstr "For reading kana, a first trip, and JLPT N5 and N4 vocabulary."
+
+msgid "For the German, US, Spanish, Czech and Canadian citizenship tests, with the answers and a short note on each."
+msgstr "For the German, US, Spanish, Czech and Canadian citizenship tests, with the answers and a short note on each."
+
 msgid "Forgot"
 msgstr "Forgot"
 
@@ -772,8 +924,23 @@ msgstr "Forgotten on {SLIPPING_FORGOTTEN_DAYS} of the last {SLIPPING_RECENT_DAYS
 msgid "Forgotten today"
 msgstr "Forgotten today"
 
+msgctxt "language"
+msgid "French"
+msgstr "French"
+
 msgid "From the lesson"
 msgstr "From the lesson"
+
+msgid "Geography"
+msgstr "Geography"
+
+msgctxt "language"
+msgid "Georgian"
+msgstr "Georgian"
+
+msgctxt "language"
+msgid "German"
+msgstr "German"
 
 msgid "Give the deck a name."
 msgstr "Give the deck a name."
@@ -781,14 +948,26 @@ msgstr "Give the deck a name."
 msgid "Give the series a name."
 msgstr "Give the series a name."
 
+msgctxt "deck tag"
+msgid "Goethe-Zertifikat A1"
+msgstr "Goethe-Zertifikat A1"
+
 msgid "Good"
 msgstr "Good"
 
 msgid "Graded Forgot today"
 msgstr "Graded Forgot today"
 
+msgctxt "deck tag"
+msgid "Grammar"
+msgstr "Grammar"
+
 msgid "Grammar, usage, anything else"
 msgstr "Grammar, usage, anything else"
+
+msgctxt "language"
+msgid "Greek"
+msgstr "Greek"
 
 msgid "Hard"
 msgstr "Hard"
@@ -796,8 +975,16 @@ msgstr "Hard"
 msgid "Have an account?"
 msgstr "Have an account?"
 
+msgctxt "language"
+msgid "Hebrew"
+msgstr "Hebrew"
+
 msgid "Hide password"
 msgstr "Hide password"
+
+msgctxt "language"
+msgid "Hindi"
+msgstr "Hindi"
 
 msgid "History"
 msgstr "History"
@@ -822,6 +1009,14 @@ msgstr "How many reviews a day keep your streak. Every grade counts, even Forgot
 
 msgid "How your memory is doing"
 msgstr "How your memory is doing"
+
+msgctxt "deck tag"
+msgid "HSK 1"
+msgstr "HSK 1"
+
+msgctxt "language"
+msgid "Hungarian"
+msgstr "Hungarian"
 
 msgid "Idea"
 msgstr "Idea"
@@ -856,6 +1051,13 @@ msgstr "Importing"
 msgid "Importing from {source}"
 msgstr "Importing from {source}"
 
+msgid "In Library"
+msgstr "In Library"
+
+msgctxt "language"
+msgid "Indonesian"
+msgstr "Indonesian"
+
 msgid "Insights"
 msgstr "Insights"
 
@@ -875,6 +1077,21 @@ msgstr "Invited {name} to {deck}"
 
 msgid "It loads as soon as you’re back online."
 msgstr "It loads as soon as you’re back online."
+
+msgid "It may have been withdrawn, or the connection dropped."
+msgstr "It may have been withdrawn, or the connection dropped."
+
+msgctxt "language"
+msgid "Italian"
+msgstr "Italian"
+
+msgctxt "language"
+msgid "Japanese"
+msgstr "Japanese"
+
+msgctxt "deck tag"
+msgid "JLPT N5"
+msgstr "JLPT N5"
 
 msgctxt "daily goal"
 msgid "Keen"
@@ -896,14 +1113,25 @@ msgctxt "cards in this state"
 msgid "Known"
 msgstr "Known"
 
+msgctxt "language"
+msgid "Korean"
+msgstr "Korean"
+
 msgid "Language"
 msgstr "Language"
+
+msgid "Languages"
+msgstr "Languages"
 
 msgid "Later"
 msgstr "Later"
 
 msgid "Later today"
 msgstr "Later today"
+
+msgctxt "language"
+msgid "Latvian"
+msgstr "Latvian"
 
 msgid "Learn Estonian"
 msgstr "Learn Estonian"
@@ -924,6 +1152,10 @@ msgstr "Leave deck"
 msgid "Leave it empty and the AI fills it in"
 msgstr "Leave it empty and the AI fills it in"
 
+msgctxt "deck tag"
+msgid "Leben in Deutschland test"
+msgstr "Leben in Deutschland test"
+
 msgid "Lesson"
 msgstr "Lesson"
 
@@ -939,6 +1171,10 @@ msgstr "Light"
 msgctxt "daily goal"
 msgid "Light"
 msgstr "Light"
+
+msgctxt "language"
+msgid "Lithuanian"
+msgstr "Lithuanian"
 
 msgid "Loading…"
 msgstr "Loading…"
@@ -1000,6 +1236,15 @@ msgstr "Message"
 msgid "More about this card"
 msgstr "More about this card"
 
+msgid "More decks"
+msgstr "More decks"
+
+msgid "More languages"
+msgstr "More languages"
+
+msgid "More like this"
+msgstr "More like this"
+
 #. placeholder {0}: cards.length
 msgid "More than {0}"
 msgstr "More than {0}"
@@ -1028,6 +1273,9 @@ msgstr "Name"
 msgctxt "person"
 msgid "Name"
 msgstr "Name"
+
+msgid "Nature"
+msgstr "Nature"
 
 msgid "New"
 msgstr "New"
@@ -1072,6 +1320,9 @@ msgstr "No cards yet."
 msgid "No cards you keep forgetting"
 msgstr "No cards you keep forgetting"
 
+msgid "No decks match “{query}”. Try a word from a card, or a language."
+msgstr "No decks match “{query}”. Try a word from a card, or a language."
+
 msgid "No decks of your own yet. Only decks you create can go in a series."
 msgstr "No decks of your own yet. Only decks you create can go in a series."
 
@@ -1095,6 +1346,10 @@ msgstr "No section"
 
 msgid "None"
 msgstr "None"
+
+msgctxt "language"
+msgid "Norwegian"
+msgstr "Norwegian"
 
 msgid "Not reviewed yet"
 msgstr "Not reviewed yet"
@@ -1150,8 +1405,11 @@ msgstr "Open {name}"
 msgid "Open Archived on the web"
 msgstr "Open Archived on the web"
 
-msgid "Open Explore on the web"
-msgstr "Open Explore on the web"
+msgid "Open in Library"
+msgstr "Open in Library"
+
+msgid "Open on the web"
+msgstr "Open on the web"
 
 msgid "Open Settings on the web"
 msgstr "Open Settings on the web"
@@ -1162,6 +1420,9 @@ msgstr "Options for {seriesName}"
 msgid "Other"
 msgstr "Other"
 
+msgid "Other subjects"
+msgstr "Other subjects"
+
 msgid "Password"
 msgstr "Password"
 
@@ -1170,6 +1431,10 @@ msgstr "Peek at your hook"
 
 msgid "People and sharing"
 msgstr "People and sharing"
+
+msgctxt "language"
+msgid "Persian"
+msgstr "Persian"
 
 msgid "Picture"
 msgstr "Picture"
@@ -1195,6 +1460,14 @@ msgstr "Pictures need a connection. Try again once you’re back online."
 
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
+
+msgctxt "language"
+msgid "Polish"
+msgstr "Polish"
+
+msgctxt "language"
+msgid "Portuguese"
+msgstr "Portuguese"
 
 msgid "Previous month"
 msgstr "Previous month"
@@ -1228,6 +1501,13 @@ msgstr "Reading"
 
 msgid "Ready to import"
 msgstr "Ready to import"
+
+msgctxt "subject shelf"
+msgid "Ready-made {name} decks, written by a person and checked card by card."
+msgstr "Ready-made {name} decks, written by a person and checked card by card."
+
+msgid "Ready-made decks for learning {name}, written by a person and checked card by card."
+msgstr "Ready-made decks for learning {name}, written by a person and checked card by card."
 
 msgid "Recall"
 msgstr "Recall"
@@ -1318,8 +1598,16 @@ msgstr "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}, i
 msgid "Reviews a day"
 msgstr "Reviews a day"
 
+msgctxt "language"
+msgid "Romanian"
+msgstr "Romanian"
+
 msgid "Round done"
 msgstr "Round done"
+
+msgctxt "language"
+msgid "Russian"
+msgstr "Russian"
 
 msgid "Same as the deck"
 msgstr "Same as the deck"
@@ -1340,8 +1628,14 @@ msgstr "Say {0}"
 msgid "Schedule"
 msgstr "Schedule"
 
+msgid "Science"
+msgstr "Science"
+
 msgid "Search"
 msgstr "Search"
+
+msgid "Search decks"
+msgstr "Search decks"
 
 msgid "Search decks and cards"
 msgstr "Search decks and cards"
@@ -1364,6 +1658,12 @@ msgstr "See “{0}”, recall {1}"
 #. placeholder {1}: example.meaning
 msgid "See {0}, recall “{1}”"
 msgstr "See {0}, recall “{1}”"
+
+msgid "See all"
+msgstr "See all"
+
+msgid "See all {label} decks"
+msgstr "See all {label} decks"
 
 msgid "See the meaning, recall the term"
 msgstr "See the meaning, recall the term"
@@ -1392,6 +1692,10 @@ msgstr "Send reset link"
 msgid "Sent again"
 msgstr "Sent again"
 
+msgctxt "language"
+msgid "Serbian"
+msgstr "Serbian"
+
 msgid "Settings"
 msgstr "Settings"
 
@@ -1404,11 +1708,20 @@ msgstr "Shared by {owner}"
 msgid "Shared with you"
 msgstr "Shared with you"
 
+msgid "Shelves"
+msgstr "Shelves"
+
+msgid "Show"
+msgstr "Show"
+
 msgid "Show hook"
 msgstr "Show hook"
 
 msgid "Show more"
 msgstr "Show more"
+
+msgid "Show one shelf"
+msgstr "Show one shelf"
 
 msgid "Show password"
 msgstr "Show password"
@@ -1434,6 +1747,14 @@ msgstr "Sign out and lose them"
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Sign-in didn’t finish. Try again."
 
+msgctxt "language"
+msgid "Slovak"
+msgstr "Slovak"
+
+msgctxt "language"
+msgid "Slovenian"
+msgstr "Slovenian"
+
 msgid "Some offline work hasn’t synced"
 msgstr "Some offline work hasn’t synced"
 
@@ -1445,6 +1766,10 @@ msgstr "Sort"
 
 msgid "Source"
 msgstr "Source"
+
+msgctxt "language"
+msgid "Spanish"
+msgstr "Spanish"
 
 msgid "Start with a deck"
 msgstr "Start with a deck"
@@ -1465,6 +1790,13 @@ msgstr "Streak: {current, plural, one {# day in a row} other {# days in a row}}"
 msgid "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
 msgstr "Streak: {streak, plural, one {# day in a row} other {# days in a row}}"
 
+msgid "Subjects"
+msgstr "Subjects"
+
+msgctxt "language"
+msgid "Swedish"
+msgstr "Swedish"
+
 msgid "Swipe from the edge to take back a grade"
 msgstr "Swipe from the edge to take back a grade"
 
@@ -1483,11 +1815,18 @@ msgstr "Take back the last grade"
 msgid "Take photo"
 msgstr "Take photo"
 
+msgid "Technology"
+msgstr "Technology"
+
 msgid "Tell Lymi what broke or what it should do. Replies come to your email."
 msgstr "Tell Lymi what broke or what it should do. Replies come to your email."
 
 msgid "Term"
 msgstr "Term"
+
+msgctxt "language"
+msgid "Thai"
+msgstr "Thai"
 
 msgid "Thank you. Replies come to your email."
 msgstr "Thank you. Replies come to your email."
@@ -1536,6 +1875,9 @@ msgstr "This card’s picture was removed."
 
 msgid "This series is no longer here."
 msgstr "This series is no longer here."
+
+msgid "This shelf has no decks now."
+msgstr "This shelf has no decks now."
 
 msgid "This version of the app is out of date. Update it to keep reviewing."
 msgstr "This version of the app is out of date. Update it to keep reviewing."
@@ -1586,17 +1928,33 @@ msgstr "Too many attempts. Try again later."
 msgid "Too many tries with this code. Send a new one."
 msgstr "Too many tries with this code. Send a new one."
 
+msgctxt "deck tag"
+msgid "TOPIK I"
+msgstr "TOPIK I"
+
+msgctxt "deck tag"
+msgid "Travel"
+msgstr "Travel"
+
 msgid "Try a memory hook"
 msgstr "Try a memory hook"
 
 msgid "Try again"
 msgstr "Try again"
 
+msgctxt "language"
+msgid "Turkish"
+msgstr "Turkish"
+
 msgid "Turned off the join link for {deck}"
 msgstr "Turned off the join link for {deck}"
 
 msgid "Turned on the join link for {deck}"
 msgstr "Turned on the join link for {deck}"
+
+msgctxt "language"
+msgid "Ukrainian"
+msgstr "Ukrainian"
 
 msgid "Undo"
 msgstr "Undo"
@@ -1606,9 +1964,6 @@ msgstr "Unmark important"
 
 msgid "Until then, change your settings on the web."
 msgstr "Until then, change your settings on the web."
-
-msgid "Until then, find ready decks to add on the web."
-msgstr "Until then, find ready decks to add on the web."
 
 msgid "Until then, restore archived cards on the web."
 msgstr "Until then, restore archived cards on the web."
@@ -1622,11 +1977,19 @@ msgstr "Update Lymi"
 msgid "Uploading"
 msgstr "Uploading"
 
+msgctxt "deck tag"
+msgid "US civics test"
+msgstr "US civics test"
+
 msgid "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
 
 msgid "Use at most {MAX_PASSWORD_LENGTH} characters."
 msgstr "Use at most {MAX_PASSWORD_LENGTH} characters."
+
+msgctxt "language"
+msgid "Vietnamese"
+msgstr "Vietnamese"
 
 msgid "Waiting to reach Lymi"
 msgstr "Waiting to reach Lymi"
@@ -1647,11 +2010,17 @@ msgstr "What it means"
 msgid "What this is about"
 msgstr "What this is about"
 
+msgid "What you learn, in order"
+msgstr "What you learn, in order"
+
 msgid "When it’s back"
 msgstr "When it’s back"
 
 msgid "Where you met it, such as a lesson"
 msgstr "Where you met it, such as a lesson"
+
+msgid "Work and study"
+msgstr "Work and study"
 
 msgid "Write a hook."
 msgstr "Write a hook."
@@ -1679,6 +2048,9 @@ msgstr "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 
 msgid "You can’t choose Easy after peeking at your hook."
 msgstr "You can’t choose Easy after peeking at your hook."
+
+msgid "You start with the first section. The next opens as you learn this one."
+msgstr "You start with the first section. The next opens as you learn this one."
 
 msgid "You wrote this"
 msgstr "You wrote this"

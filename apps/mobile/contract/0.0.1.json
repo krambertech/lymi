@@ -3045,6 +3045,654 @@
      }
     ]
    }
+  },
+  "/api/explore": {
+   "get": {
+    "operationId": "getApiExplore",
+    "security": [
+     {
+      "session": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "decks": {
+           "type": "array",
+           "items": {
+            "type": "object",
+            "properties": {
+             "slug": {
+              "type": "string"
+             },
+             "name": {
+              "type": "string"
+             },
+             "category": {
+              "type": [
+               "string",
+               "null"
+              ]
+             },
+             "language": {
+              "type": [
+               "string",
+               "null"
+              ]
+             },
+             "meaningLanguage": {
+              "type": "string"
+             },
+             "cardCount": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+             },
+             "sectionCount": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+             },
+             "card": {
+              "anyOf": [
+               {
+                "type": "object",
+                "properties": {
+                 "term": {
+                  "type": "string"
+                 },
+                 "meaning": {
+                  "type": "string"
+                 },
+                 "section": {
+                  "type": [
+                   "string",
+                   "null"
+                  ]
+                 },
+                 "mode": {
+                  "type": "string",
+                  "enum": [
+                   "term_to_meaning",
+                   "meaning_to_term",
+                   "image_to_term",
+                   "image_to_meaning"
+                  ],
+                  "x-lymi-open": true
+                 },
+                 "image": {
+                  "type": "object",
+                  "properties": {
+                   "cardId": {
+                    "type": "string"
+                   },
+                   "width": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                   },
+                   "height": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                   }
+                  },
+                  "required": [
+                   "cardId",
+                   "description",
+                   "width",
+                   "height"
+                  ]
+                 }
+                },
+                "required": [
+                 "term",
+                 "meaning",
+                 "section",
+                 "mode"
+                ]
+               },
+               {
+                "type": "null"
+               }
+              ]
+             }
+            },
+            "required": [
+             "slug",
+             "name",
+             "summary",
+             "category",
+             "tags",
+             "language",
+             "meaningLanguage",
+             "cardCount",
+             "sectionCount",
+             "card"
+            ]
+           }
+          },
+          "added": {
+           "type": "object",
+           "propertyNames": {
+            "type": "string"
+           },
+           "additionalProperties": {
+            "type": "string"
+           }
+          }
+         },
+         "required": [
+          "decks",
+          "added"
+         ]
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/explore/{slug}": {
+   "get": {
+    "operationId": "getApiExploreBySlug",
+    "security": [
+     {
+      "session": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "deck": {
+           "type": "object",
+           "properties": {
+            "slug": {
+             "type": "string"
+            },
+            "name": {
+             "type": "string"
+            },
+            "category": {
+             "type": [
+              "string",
+              "null"
+             ]
+            },
+            "language": {
+             "type": [
+              "string",
+              "null"
+             ]
+            },
+            "meaningLanguage": {
+             "type": "string"
+            },
+            "originalMeaningLanguage": {
+             "type": "string"
+            },
+            "editions": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            },
+            "publisher": {
+             "type": "string"
+            },
+            "publisherAvatar": {
+             "type": [
+              "string",
+              "null"
+             ]
+            },
+            "sources": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "title": {
+                "type": "string"
+               },
+               "url": {
+                "type": "string"
+               }
+              },
+              "required": [
+               "title"
+              ]
+             }
+            },
+            "reviewedAt": {
+             "anyOf": [
+              {
+               "type": "string",
+               "format": "date-time",
+               "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+              },
+              {
+               "type": "null"
+              }
+             ]
+            },
+            "revision": {
+             "type": "integer",
+             "minimum": -9007199254740991,
+             "maximum": 9007199254740991
+            },
+            "publishedAt": {
+             "type": "string",
+             "format": "date-time",
+             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+            },
+            "cardCount": {
+             "type": "integer",
+             "minimum": -9007199254740991,
+             "maximum": 9007199254740991
+            },
+            "sections": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "name": {
+                "type": [
+                 "string",
+                 "null"
+                ]
+               },
+               "cards": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "term": {
+                   "type": "string"
+                  },
+                  "meaning": {
+                   "type": [
+                    "string",
+                    "null"
+                   ]
+                  },
+                  "modes": {
+                   "minItems": 1,
+                   "type": "array",
+                   "items": {
+                    "type": "string",
+                    "enum": [
+                     "term_to_meaning",
+                     "meaning_to_term",
+                     "image_to_term",
+                     "image_to_meaning"
+                    ],
+                    "x-lymi-open": true
+                   }
+                  },
+                  "image": {
+                   "type": "object",
+                   "properties": {
+                    "cardId": {
+                     "type": "string"
+                    },
+                    "width": {
+                     "type": "integer",
+                     "minimum": -9007199254740991,
+                     "maximum": 9007199254740991
+                    },
+                    "height": {
+                     "type": "integer",
+                     "minimum": -9007199254740991,
+                     "maximum": 9007199254740991
+                    }
+                   },
+                   "required": [
+                    "cardId",
+                    "description",
+                    "width",
+                    "height"
+                   ]
+                  },
+                  "audio": {
+                   "type": "object",
+                   "properties": {
+                    "cardId": {
+                     "type": "string"
+                    }
+                   },
+                   "required": [
+                    "cardId"
+                   ]
+                  }
+                 },
+                 "required": [
+                  "term",
+                  "meaning",
+                  "modes"
+                 ]
+                }
+               }
+              },
+              "required": [
+               "name",
+               "cards"
+              ]
+             }
+            }
+           },
+           "required": [
+            "slug",
+            "name",
+            "summary",
+            "category",
+            "tags",
+            "language",
+            "meaningLanguage",
+            "originalMeaningLanguage",
+            "editions",
+            "publisher",
+            "publisherAvatar",
+            "sources",
+            "reviewedAt",
+            "revision",
+            "publishedAt",
+            "cardCount",
+            "sections"
+           ]
+          },
+          "deckId": {
+           "type": [
+            "string",
+            "null"
+           ]
+          },
+          "related": {
+           "type": "array",
+           "items": {
+            "type": "object",
+            "properties": {
+             "slug": {
+              "type": "string"
+             },
+             "name": {
+              "type": "string"
+             },
+             "category": {
+              "type": [
+               "string",
+               "null"
+              ]
+             },
+             "language": {
+              "type": [
+               "string",
+               "null"
+              ]
+             },
+             "meaningLanguage": {
+              "type": "string"
+             },
+             "cardCount": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+             },
+             "sectionCount": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+             },
+             "card": {
+              "anyOf": [
+               {
+                "type": "object",
+                "properties": {
+                 "term": {
+                  "type": "string"
+                 },
+                 "meaning": {
+                  "type": "string"
+                 },
+                 "section": {
+                  "type": [
+                   "string",
+                   "null"
+                  ]
+                 },
+                 "mode": {
+                  "type": "string",
+                  "enum": [
+                   "term_to_meaning",
+                   "meaning_to_term",
+                   "image_to_term",
+                   "image_to_meaning"
+                  ],
+                  "x-lymi-open": true
+                 },
+                 "image": {
+                  "type": "object",
+                  "properties": {
+                   "cardId": {
+                    "type": "string"
+                   },
+                   "width": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                   },
+                   "height": {
+                    "type": "integer",
+                    "minimum": -9007199254740991,
+                    "maximum": 9007199254740991
+                   }
+                  },
+                  "required": [
+                   "cardId",
+                   "description",
+                   "width",
+                   "height"
+                  ]
+                 }
+                },
+                "required": [
+                 "term",
+                 "meaning",
+                 "section",
+                 "mode"
+                ]
+               },
+               {
+                "type": "null"
+               }
+              ]
+             }
+            },
+            "required": [
+             "slug",
+             "name",
+             "summary",
+             "category",
+             "tags",
+             "language",
+             "meaningLanguage",
+             "cardCount",
+             "sectionCount",
+             "card"
+            ]
+           }
+          }
+         },
+         "required": [
+          "deck",
+          "deckId",
+          "related"
+         ]
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "slug",
+      "required": true
+     }
+    ]
+   }
+  },
+  "/api/add/{slug}": {
+   "post": {
+    "operationId": "postApiAddBySlug",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Join"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "session": []
+     }
+    ],
+    "parameters": [
+     {
+      "$ref": "#/components/parameters/AddQuery"
+     },
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "slug",
+      "required": true
+     }
+    ]
+   }
   }
  },
  "components": {
@@ -4169,6 +4817,28 @@
      "archivedAt",
      "createdAt",
      "updatedAt"
+    ]
+   },
+   "Join": {
+    "type": "object",
+    "properties": {
+     "deckId": {
+      "type": "string"
+     },
+     "role": {
+      "type": "string",
+      "enum": [
+       "owner",
+       "editor",
+       "contributor",
+       "learner"
+      ],
+      "x-lymi-open": true
+     }
+    },
+    "required": [
+     "deckId",
+     "role"
     ]
    },
    "CardSearchPage": {

@@ -1,6 +1,7 @@
 // Portable: the phone imports this, so database reads stay in catalog-server.ts.
 import { z } from "zod";
 import { isImageMode } from "./modes";
+import { OPEN } from "./responses/common";
 import { PUBLICATION_CATEGORIES, PUBLICATION_SLUG, PublicationTag, ReviewModeKey } from "./types";
 
 /** A card's picture on a public page: only one whose publisher described it is ever public. */
@@ -50,7 +51,7 @@ export const PublicDeckOut = z.object({
           term: z.string(),
           meaning: z.string().nullable(),
           /** The modes a learner is asked this card in, so a preview asks it the same way. */
-          modes: z.array(ReviewModeKey).min(1),
+          modes: z.array(ReviewModeKey.meta(OPEN)).min(1),
           image: PublicImage.optional(),
           audio: z.object({ cardId: z.string() }).optional(),
         }),
@@ -127,7 +128,7 @@ export const PublicDeckSummary = z.object({
       meaning: z.string(),
       section: z.string().nullable(),
       /** The mode the tray shows it in, as the deck page's preview would. */
-      mode: ReviewModeKey,
+      mode: ReviewModeKey.meta(OPEN),
       image: PublicImage.optional(),
     })
     .nullable(),
@@ -261,6 +262,43 @@ export function taughtLanguage(deck: {
 /** The subject a published deck sits under, or null for a language deck or one with no shelf. */
 export function subjectOf(deck: { category: string | null }): string | null {
   return deck.category && SUBJECTS.includes(deck.category) ? deck.category : null;
+}
+
+/** How an app names what a deck is searched by, in the reader's language and in English. */
+export interface CatalogSearchNames {
+  language: (tag: string) => string | null;
+  englishLanguage: (tag: string) => string | null;
+  subject: (key: string) => string | null;
+  tag: (key: PublicationTag) => string | null;
+  englishTag: (key: PublicationTag) => string | null;
+}
+
+/**
+ * Everything a search on Explore matches, lower-cased: the name, summary and tray card, the
+ * languages the deck teaches and explains, its subject and its tags, the languages and tags in
+ * English too, so a reader may search in either. Both Explores search through here.
+ */
+export function catalogSearchText(
+  deck: PublicDeckSummary,
+  names: CatalogSearchNames,
+  locale: string,
+): string {
+  const languages = [taughtLanguage(deck), deck.meaningLanguage].flatMap((tag) =>
+    tag ? [names.language(tag), names.englishLanguage(tag)] : [],
+  );
+  const subject = subjectOf(deck);
+  return [
+    deck.name,
+    deck.summary,
+    deck.card?.term,
+    deck.card?.meaning,
+    ...languages,
+    subject ? names.subject(subject) : null,
+    ...deck.tags.flatMap((tag) => [names.tag(tag), names.englishTag(tag)]),
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLocaleLowerCase(locale);
 }
 
 /** A shelf per language, then a shelf per subject, then More decks. Each app writes the headings. */

@@ -46,9 +46,6 @@ export function ReminderSync() {
   const zone = useDraw().data?.day.zone ?? deviceTimezone();
   const forecastByDay = forecastFrom(insights.data?.forecast, reviewDay);
   const forecast = forecastByDay && JSON.stringify([...forecastByDay]);
-  // Past the review day's midnight the forecast no longer starts today; until the shared refresh
-  // brings today's, offline or failing included, the reminders already planned from it stay.
-  const stale = !!insights.data && !!reviewDay && !forecastByDay;
   const [front, setFront] = useState(0);
 
   useEffect(() => {
@@ -65,7 +62,7 @@ export function ReminderSync() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: a return to the front and the language replan too.
   useEffect(() => {
-    if (!replans(!!time, due, stale)) return;
+    if (!replans(!!time, due)) return;
     // A review grades every few seconds; the plan only needs where the day settled.
     let live = true;
     const timer = setTimeout(async () => {
@@ -88,7 +85,7 @@ export function ReminderSync() {
       live = false;
       clearTimeout(timer);
     };
-  }, [time, due, dayDone, forecast, zone, stale, front, i18n.locale]);
+  }, [time, due, dayDone, forecast, zone, front, i18n.locale]);
 
   // A cold start opens on "/", which redirects to Today; a review opened before that is replaced.
   const path = usePathname();

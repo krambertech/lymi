@@ -79,25 +79,22 @@ export function planReminders({
 }
 
 /**
- * Insights' forecast by review date, or nothing when it does not start on the learner's `today`:
- * a forecast fetched on an earlier day still counts work since done, so the plan falls back to
- * what today leaves rather than remind about it.
+ * Insights' forecast by review date, as long as it starts on or before the learner's `today`. The
+ * plan reads only the days after today, by date, so one fetched on an earlier day still places
+ * tomorrow's cards right while today's count comes from the live draw.
  */
 export function forecastFrom(
   buckets: readonly { date: string; count: number }[] | undefined,
   today: string | undefined,
 ): Map<string, number> | undefined {
-  if (!buckets || !today || buckets[0]?.date !== today) return undefined;
+  const first = buckets?.[0]?.date;
+  if (!buckets || !today || !first || first > today) return undefined;
   return new Map(buckets.map((b) => [b.date, b.count]));
 }
 
-/**
- * Whether to plan again now. Turning the reminder off always clears it; otherwise the plan waits
- * for today's count and keeps the reminders it has while the forecast is from an earlier day, so a
- * refresh that is offline or fails never leaves fewer than were planned.
- */
-export function replans(on: boolean, due: number | undefined, staleForecast: boolean): boolean {
-  return !on || (due !== undefined && !staleForecast);
+/** Whether to plan again now: turning the reminder off always clears it; on, it waits for today's count. */
+export function replans(on: boolean, due: number | undefined): boolean {
+  return !on || due !== undefined;
 }
 
 /** Picks one of `count` lines by the day, so the wording changes from one day to the next. */

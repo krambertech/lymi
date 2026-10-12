@@ -138,22 +138,18 @@ describe("forecastFrom", () => {
     );
   });
 
-  it("drops a forecast fetched on an earlier day", () => {
-    const yesterday = [
-      { date: "2026-10-11", count: 9 },
-      { date: "2026-10-12", count: 5 },
-    ];
-    expect(forecastFrom(yesterday, today)).toBeUndefined();
+  it("drops a forecast that starts after today", () => {
+    expect(forecastFrom([{ date: "2026-10-13", count: 5 }], today)).toBeUndefined();
   });
 
   it("drops a forecast until the learner's day is known", () => {
     expect(forecastFrom([{ date: today, count: 1 }], undefined)).toBeUndefined();
   });
 
-  it("plans no phantom reminder from yesterday's forecast", () => {
+  it("plans later days from yesterday's forecast by date, and today from the live count", () => {
     const yesterday = [
       { date: "2026-10-11", count: 9 },
-      { date: "2026-10-12", count: 0 },
+      { date: "2026-10-12", count: 4 },
       { date: "2026-10-13", count: 7 },
     ];
     const plan = planReminders({
@@ -164,24 +160,21 @@ describe("forecastFrom", () => {
       dayDone: true,
       forecast: forecastFrom(yesterday, today),
     });
-    expect(plan).toEqual([]);
+    expect(plan[0]).toEqual({ at: at("2026-10-13T19:00:00"), due: 7 });
+    expect(plan[1]).toEqual({ at: at("2026-10-14T19:00:00"), due: 7 });
   });
 });
 
 describe("replans", () => {
-  it("keeps the planned reminders while the forecast is from an earlier day", () => {
-    expect(replans(true, 0, true)).toBe(false);
-  });
-
   it("waits for today's count", () => {
-    expect(replans(true, undefined, false)).toBe(false);
+    expect(replans(true, undefined)).toBe(false);
   });
 
-  it("plans once the count and a forecast dated today are in", () => {
-    expect(replans(true, 0, false)).toBe(true);
+  it("plans once today's count is in", () => {
+    expect(replans(true, 0)).toBe(true);
   });
 
   it("always clears when the reminder is turned off", () => {
-    expect(replans(false, undefined, true)).toBe(true);
+    expect(replans(false, undefined)).toBe(true);
   });
 });

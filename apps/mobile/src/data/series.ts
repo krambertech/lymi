@@ -1,7 +1,9 @@
+import { useLingui } from "@lingui/react/macro";
 import { api, type Series } from "@lymi/client/api";
 import { seriesQuery } from "@lymi/client/queries";
 import type { SeriesDeleteInput } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Alert } from "react-native";
 
 /**
  * The series writes Library makes, as the web's useSeriesActions. A series moves decks between
@@ -15,8 +17,16 @@ export function useSeriesActions() {
     );
 
   const name = useMutation({
-    mutationFn: ({ series, name }: { series: Series | undefined; name: string }) =>
-      series ? api.renameSeries(series.id, name) : api.createSeries({ name }),
+    // A new series can take its first deck in the same write, so a failure never leaves it empty.
+    mutationFn: ({
+      series,
+      name,
+      deckIds,
+    }: {
+      series: Series | undefined;
+      name: string;
+      deckIds?: string[];
+    }) => (series ? api.renameSeries(series.id, name) : api.createSeries({ name, deckIds })),
     onSettled: refresh,
   });
 
@@ -44,5 +54,31 @@ export function useSeriesActions() {
     onSettled: refresh,
   });
 
-  return { name, setDecks, move, remove };
+  // A deck picks its series from the deck, as the web's Move to series does.
+  const moveDeck = useMutation({
+    mutationFn: ({ deckId, seriesId }: { deckId: string; seriesId: string | null }) =>
+      api.updateDeck(deckId, { seriesId }),
+    onSettled: refresh,
+  });
+
+  return { name, setDecks, move, remove, moveDeck };
+}
+
+/**
+ * Says where a moved deck went, with Undo, as the web's toast does. `seriesName` is undefined
+ * when the deck left its series.
+ */
+export function useMoveNotice() {
+  const { t } = useLingui();
+  return (deckName: string, seriesName: string | undefined, undo: () => void) =>
+    Alert.alert(
+      seriesName !== undefined
+        ? t`Moved “${deckName}” to ${seriesName}`
+        : t`Took “${deckName}” out of its series`,
+      undefined,
+      [
+        { text: t`Undo`, onPress: undo },
+        { text: t`OK`, style: "cancel" },
+      ],
+    );
 }

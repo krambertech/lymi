@@ -6,8 +6,8 @@ import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { TextInput, View } from "react-native";
 import { FieldName } from "../capture/composer-field";
-import { useSeriesList } from "../data/queries";
-import { useSeriesActions } from "../data/series";
+import { useDecks, useSeriesList } from "../data/queries";
+import { useMoveNotice, useSeriesActions } from "../data/series";
 import { useOnline } from "../streak/goal-picker";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
@@ -22,12 +22,13 @@ import { OnGlass } from "../ui/surface";
 export default function SeriesName() {
   const { t } = useLingui();
   const router = useRouter();
-  const { id } = useLocalSearchParams<{ id?: string }>();
+  // `?deck=` is a deck's Move to series making a new one: the series starts with that deck.
+  const { id, deck } = useLocalSearchParams<{ id?: string; deck?: string }>();
   const form = seriesForm(id, useSeriesList(true).data);
   if (form.mode === "create" || form.mode === "rename") {
     const series = form.mode === "rename" ? form.series : undefined;
     // Keyed by the series, so the name starts from it once it has arrived and never from nothing.
-    return <NameForm key={series?.id ?? "new"} series={series} />;
+    return <NameForm key={series?.id ?? "new"} series={series} deck={series ? undefined : deck} />;
   }
   return (
     <OnGlass>
@@ -41,14 +42,16 @@ export default function SeriesName() {
   );
 }
 
-function NameForm({ series }: { series: Series | undefined }) {
+function NameForm({ series, deck }: { series: Series | undefined; deck?: string | undefined }) {
   const { t } = useLingui();
   const router = useRouter();
   const p = usePalette();
   const online = useOnline();
   const [name, setName] = useState(series?.name ?? "");
   const [error, setError] = useState<string | null>(null);
-  const { name: save } = useSeriesActions();
+  const { name: save, moveDeck } = useSeriesActions();
+  const notice = useMoveNotice();
+  const moving = useDecks().data?.find((d) => d.id === deck);
 
   const submit = () => {
     if (save.isPending || !online) return;
@@ -59,11 +62,21 @@ function NameForm({ series }: { series: Series | undefined }) {
     }
     setError(null);
     save.mutate(
-      { series, name: parsed.data.name },
+      { series, name: parsed.data.name, deckIds: deck ? [deck] : undefined },
       {
-        // A new series goes straight on to its decks; a rename is done.
-        onSuccess: (saved) =>
-          series ? router.back() : router.replace(`/series-decks?id=${saved.id}` as Href),
+        // A new series goes straight on to its decks; a rename, or one made from a deck, is done.
+        onSuccess: (saved) => {
+          if (!series && !deck) {
+            router.replace(`/series-decks?id=${saved.id}` as Href);
+            return;
+          }
+          router.back();
+          // One write made the series with the deck in it, so Undo moves the deck back alone.
+          if (moving)
+            notice(moving.name, saved.name, () =>
+              moveDeck.mutate({ deckId: moving.id, seriesId: moving.seriesId }),
+            );
+        },
         onError: (e) => setError(errorMessage(e)),
       },
     );
@@ -76,9 +89,10 @@ function NameForm({ series }: { series: Series | undefined }) {
         <Text className="text-md font-medium text-text" accessibilityRole="header">
           {series ? t`Rename series` : t`New series`}
         </Text>
+        {/* From a deck, saving makes the series and moves the deck in one go, as the web's does. */}
         <GlassButton
-          icon={series ? "check" : "forward"}
-          label={series ? t`Save` : t`Next: choose decks`}
+          icon={series || deck ? "check" : "forward"}
+          label={series ? t`Save` : deck ? t`Create and move` : t`Next: choose decks`}
           primary
           busy={save.isPending}
           onPress={submit}
@@ -98,7 +112,7 @@ function NameForm({ series }: { series: Series | undefined }) {
           placeholderTextColor={p.muted}
           accessibilityLabel={t`Name`}
           accessibilityHint={error ?? undefined}
-          returnKeyType={series ? "done" : "next"}
+          returnKeyType={series || deck ? "done" : "next"}
           onSubmitEditing={submit}
           selectionColor={p.text}
           className="min-h-12 py-1.5 font-sans font-medium text-text"

@@ -7,6 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
+msgid "“{deckName}” is reviewed with the other decks in its series."
+msgstr "«{deckName}» повторяется вместе с другими колодами серии."
+
 msgid "“{term}” is already in {deckName}"
 msgstr "«{term}» уже есть в колоде {deckName}"
 
@@ -17,6 +20,7 @@ msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} из # повторения} few {{2} из # повторений} many {{2} из # повторений} other {{2} из # повторения}}"
 
 #. placeholder {0}: d.due
+#. placeholder {0}: r.due
 msgid "{0, plural, one {# card due} other {# cards due}}"
 msgstr "{0, plural, one {# карточка к повторению} few {# карточки к повторению} many {# карточек к повторению} other {# карточки к повторению}}"
 
@@ -65,6 +69,11 @@ msgstr "{0, plural, one {# повторение, цель {1}} few {# повто
 #. placeholder {0}: sections.length
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# раздел} few {# раздела} many {# разделов} other {# раздела}}"
+
+#. placeholder {0}: r.due
+#. placeholder {1}: r.decks
+msgid "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck} other {# decks}}"
+msgstr "{0, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}} в {1, plural, one {# колоде} few {# колодах} many {# колодах} other {# колодах}}"
 
 #. placeholder {0}: cards.total
 #. placeholder {0}: rows.length
@@ -642,6 +651,9 @@ msgstr "Не удалось загрузить карточки"
 msgid "Couldn’t load your Library"
 msgstr "Не удалось загрузить Библиотеку"
 
+msgid "Couldn’t move the deck"
+msgstr "Не удалось переместить колоду"
+
 msgid "Couldn’t open this deck"
 msgstr "Не удалось открыть эту колоду"
 
@@ -689,6 +701,9 @@ msgstr "Создать аккаунт"
 
 msgid "Create an account"
 msgstr "Создать аккаунт"
+
+msgid "Create and move"
+msgstr "Создать и перенести"
 
 msgid "Create deck"
 msgstr "Создать колоду"
@@ -876,7 +891,7 @@ msgid "Every card"
 msgstr "Все карточки"
 
 msgid "Every section is open, so any card can come up in review."
-msgstr ""
+msgstr "Все разделы открыты, так что любая карточка может появиться в повторении."
 
 msgid "Every shelf"
 msgstr "Все полки"
@@ -1325,8 +1340,14 @@ msgstr "Переместить «{deckName}» выше"
 msgid "Move down"
 msgstr "Ниже"
 
+msgid "Move to series"
+msgstr "Перенести в серию"
+
 msgid "Move up"
 msgstr "Выше"
+
+msgid "Moved “{deckName}” to {seriesName}"
+msgstr "«{deckName}» перенесена в «{seriesName}»"
 
 msgid "Moved to another deck"
 msgstr "Перенесено в другую колоду"
@@ -1365,6 +1386,9 @@ msgstr "Впервые в Lymi?"
 
 msgid "Next card due {next}."
 msgstr "Следующее повторение {next}."
+
+msgid "Next due {next}"
+msgstr "Следующее повторение {next}"
 
 msgid "Next month"
 msgstr "Следующий месяц"
@@ -1417,6 +1441,9 @@ msgstr "Повторений пока нет. Каждый день с повт�
 msgid "No section"
 msgstr "Без раздела"
 
+msgid "No series"
+msgstr "Без серии"
+
 msgid "None"
 msgstr "Нет"
 
@@ -1465,6 +1492,9 @@ msgstr "Выключено"
 
 msgid "Often forgotten"
 msgstr "Часто забываются"
+
+msgid "OK"
+msgstr "OK"
 
 msgid "Only on days with cards due."
 msgstr "Только в дни, когда есть карточки к повторению."
@@ -2028,6 +2058,9 @@ msgstr "Слишком много попыток. Попробуй чуть по
 msgid "Too many tries with this code. Send a new one."
 msgstr "Слишком много попыток с этим кодом. Отправь новый."
 
+msgid "Took “{deckName}” out of its series"
+msgstr "«{deckName}» убрана из серии"
+
 msgctxt "deck tag"
 msgid "TOPIK I"
 msgstr "TOPIK I"
@@ -2159,7 +2192,7 @@ msgid "You start with the first section. The next opens as you learn this one."
 msgstr "Ты начинаешь с первого раздела. Следующий откроется, когда выучишь этот."
 
 msgid "You start with the first section. When you know most of it, you choose when to start the next."
-msgstr ""
+msgstr "Ты начинаешь с первого раздела. Когда выучишь большую его часть, ты решаешь, когда начать следующий."
 
 msgid "You wrote this"
 msgstr "Это написано тобой"

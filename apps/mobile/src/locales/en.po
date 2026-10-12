@@ -7,6 +7,9 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+msgid "“{deckName}” is reviewed with the other decks in its series."
+msgstr "“{deckName}” is reviewed with the other decks in its series."
+
 msgid "“{term}” is already in {deckName}"
 msgstr "“{term}” is already in {deckName}"
 
@@ -17,6 +20,7 @@ msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 
 #. placeholder {0}: d.due
+#. placeholder {0}: r.due
 msgid "{0, plural, one {# card due} other {# cards due}}"
 msgstr "{0, plural, one {# card due} other {# cards due}}"
 
@@ -65,6 +69,11 @@ msgstr "{0, plural, one {# review, goal {1}} other {# reviews, goal {2}}}"
 #. placeholder {0}: sections.length
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# section} other {# sections}}"
+
+#. placeholder {0}: r.due
+#. placeholder {1}: r.decks
+msgid "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck} other {# decks}}"
+msgstr "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck} other {# decks}}"
 
 #. placeholder {0}: cards.total
 #. placeholder {0}: rows.length
@@ -642,6 +651,9 @@ msgstr "Couldn’t load your cards"
 msgid "Couldn’t load your Library"
 msgstr "Couldn’t load your Library"
 
+msgid "Couldn’t move the deck"
+msgstr "Couldn’t move the deck"
+
 msgid "Couldn’t open this deck"
 msgstr "Couldn’t open this deck"
 
@@ -689,6 +701,9 @@ msgstr "Create account"
 
 msgid "Create an account"
 msgstr "Create an account"
+
+msgid "Create and move"
+msgstr "Create and move"
 
 msgid "Create deck"
 msgstr "Create deck"
@@ -1325,8 +1340,14 @@ msgstr "Move {deckName} up"
 msgid "Move down"
 msgstr "Move down"
 
+msgid "Move to series"
+msgstr "Move to series"
+
 msgid "Move up"
 msgstr "Move up"
+
+msgid "Moved “{deckName}” to {seriesName}"
+msgstr "Moved “{deckName}” to {seriesName}"
 
 msgid "Moved to another deck"
 msgstr "Moved to another deck"
@@ -1365,6 +1386,9 @@ msgstr "New to Lymi?"
 
 msgid "Next card due {next}."
 msgstr "Next card due {next}."
+
+msgid "Next due {next}"
+msgstr "Next due {next}"
 
 msgid "Next month"
 msgstr "Next month"
@@ -1417,6 +1441,9 @@ msgstr "No reviews yet. Each day you review adds a block."
 msgid "No section"
 msgstr "No section"
 
+msgid "No series"
+msgstr "No series"
+
 msgid "None"
 msgstr "None"
 
@@ -1465,6 +1492,9 @@ msgstr "Off"
 
 msgid "Often forgotten"
 msgstr "Often forgotten"
+
+msgid "OK"
+msgstr "OK"
 
 msgid "Only on days with cards due."
 msgstr "Only on days with cards due."
@@ -2027,6 +2057,9 @@ msgstr "Too many attempts. Try again later."
 
 msgid "Too many tries with this code. Send a new one."
 msgstr "Too many tries with this code. Send a new one."
+
+msgid "Took “{deckName}” out of its series"
+msgstr "Took “{deckName}” out of its series"
 
 msgctxt "deck tag"
 msgid "TOPIK I"

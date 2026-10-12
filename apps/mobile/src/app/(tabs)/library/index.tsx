@@ -2,10 +2,13 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type DeckSummary, errorMessage, type Series } from "@lymi/client/api";
 import { groupDecks } from "@lymi/client/library-groups";
+import { deckCardsQuery } from "@lymi/client/queries";
+import { useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
 import { type Href, Link, useRouter } from "expo-router";
 import { Alert, Pressable, View } from "react-native";
 import { languageName } from "../../../data/languages";
+import { useNextDue } from "../../../data/next-due";
 import { useArchivedDecks, useDecks, useSeriesList } from "../../../data/queries";
 import { useSeriesActions } from "../../../data/series";
 import { useOnline } from "../../../streak/goal-picker";
@@ -313,7 +316,11 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
   const size =
     d.total === 0 ? t`No cards yet` : plural(d.total, { one: "# card", other: "# cards" });
   const owner = d.owner.name;
-  const line = [d.role === "owner" ? null : t`Shared by ${owner}`, language, size]
+  // Read from the cards Sync keeps for each deck, without watching them: a row never fetches.
+  const kept = useQueryClient().getQueryData(deckCardsQuery(d.id).queryKey);
+  const next = useNextDue(kept);
+  const back = d.due === 0 && d.total > 0 && next ? t`Next due ${next}` : null;
+  const line = [d.role === "owner" ? null : t`Shared by ${owner}`, language, size, back]
     .filter(Boolean)
     .join(" · ");
   const due = d.due > 0 ? d.due : undefined;

@@ -158,7 +158,7 @@ function ShelfPicker({
       title={t`Show`}
       more={
         <>
-          <Text className="px-4 pb-1 pt-2 text-sm font-medium text-muted">{t`Languages`}</Text>
+          <GroupHeading>{t`Languages`}</GroupHeading>
           <SheetGroup>{languages.map(row)}</SheetGroup>
         </>
       }
@@ -166,8 +166,17 @@ function ShelfPicker({
       <SheetGroup>
         <SheetRow label={t`Every shelf`} chosen={!current} onPress={() => onChoose(null)} />
       </SheetGroup>
-      <Text className="px-4 pb-1 pt-2 text-sm font-medium text-muted">{t`Subjects`}</Text>
+      <GroupHeading>{t`Subjects`}</GroupHeading>
       <SheetGroup>{subjects.map(row)}</SheetGroup>
     </Sheet>
+  );
+}
+
+/** A group's name in the sheet, at reading size so it sorts the list rather than footnoting it. */
+function GroupHeading({ children }: { children: string }) {
+  return (
+    <Text className="px-4 pb-2 pt-4 text-md font-semibold text-text" accessibilityRole="header">
+      {children}
+    </Text>
   );
 }

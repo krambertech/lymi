@@ -651,6 +651,12 @@ msgstr "Не удалось загрузить карточки"
 msgid "Couldn’t load your Library"
 msgstr "Не удалось загрузить Библиотеку"
 
+msgid "Couldn’t load your series"
+msgstr "Не удалось загрузить серии"
+
+msgid "Couldn’t load your series. Try again"
+msgstr "Не удалось загрузить серии. Попробовать ещё раз"
+
 msgid "Couldn’t move the deck"
 msgstr "Не удалось переместить колоду"
 
@@ -1430,7 +1436,7 @@ msgid "No language"
 msgstr "Без языка"
 
 msgid "No matches"
-msgstr ""
+msgstr "Ничего не найдено"
 
 msgid "No meaning yet"
 msgstr "Значения пока нет"
@@ -1753,7 +1759,7 @@ msgid "Search"
 msgstr "Поиск"
 
 msgid "Search {label}"
-msgstr ""
+msgstr "Поиск: {label}"
 
 msgid "Search decks"
 msgstr "Поиск колод"

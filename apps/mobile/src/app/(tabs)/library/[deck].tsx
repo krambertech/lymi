@@ -493,7 +493,10 @@ function MoveToSeries({
   const router = useRouter();
   const p = usePalette();
   const online = useOnline();
-  const series = useSeriesList(open).data ?? [];
+  const query = useSeriesList(open);
+  const series = query.data ?? [];
+  // Undo puts the deck back in its place, so a move waits for the series that holds it now.
+  const back = moveBack(deck.seriesId, query.data);
   const { moveDeck, undoMove } = useSeriesActions();
   const notice = useMoveNotice();
   const deckName = deck.name;
@@ -506,11 +509,10 @@ function MoveToSeries({
       },
     );
   const pick = (seriesId: string | null) => {
-    if (!online) return;
+    if (!online || !back) return;
     onOpenChange(false);
     if (seriesId === deck.seriesId) return;
     Haptics.selectionAsync();
-    const back = moveBack(deck.seriesId, series);
     const name = seriesId ? series.find((s) => s.id === seriesId)?.name : undefined;
     move(seriesId, () => notice(deckName, name, () => undoMove(deck.id, back)));
   };
@@ -525,8 +527,21 @@ function MoveToSeries({
           <Text className="flex-1 text-base text-muted">{t`Changing series needs a connection.`}</Text>
         </View>
       )}
+      {!back &&
+        (query.isPending || query.isFetching ? (
+          <Skeleton height={104} />
+        ) : (
+          <SheetGroup>
+            <EmptyState
+              kind="failed"
+              size="inline"
+              title={t`Couldn’t load your series`}
+              action={{ label: t`Try again`, onPress: () => void query.refetch() }}
+            />
+          </SheetGroup>
+        ))}
       {/* As the web's: the series first, then No series only for a deck that is in one. */}
-      {(series.length > 0 || deck.seriesId) && (
+      {back && (series.length > 0 || deck.seriesId) && (
         <SheetGroup>
           {series.map((s) => (
             <SheetRow
@@ -539,18 +554,20 @@ function MoveToSeries({
           {deck.seriesId && <SheetRow label={t`No series`} onPress={() => pick(null)} />}
         </SheetGroup>
       )}
-      <SheetGroup>
-        <SheetRow
-          label={t`New series`}
-          icon="plus"
-          opens
-          onPress={() => {
-            if (!online) return;
-            onOpenChange(false);
-            router.push(`/series?deck=${deck.id}` as Href);
-          }}
-        />
-      </SheetGroup>
+      {back && (
+        <SheetGroup>
+          <SheetRow
+            label={t`New series`}
+            icon="plus"
+            opens
+            onPress={() => {
+              if (!online) return;
+              onOpenChange(false);
+              router.push(`/series?deck=${deck.id}` as Href);
+            }}
+          />
+        </SheetGroup>
+      )}
     </Sheet>
   );
 }

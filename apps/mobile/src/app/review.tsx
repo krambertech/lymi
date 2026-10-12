@@ -546,7 +546,8 @@ function Run({
   const lastToday = state.log
     .filter((e) => e.cardId === card.id && e.mode === modeKey(current.mode))
     .pop();
-  const cardDeck = decks?.find((d) => d.id === card.deckId);
+  const deckRow = decks?.find((d) => d.id === card.deckId);
+  const cardDeck = deckRow && { name: deckRow.name, language: deckRow.defaultLanguage ?? null };
   const forgotten = round === "forgotten" || leg.kind === "forgotten" || lastToday?.rating === 1;
 
   const onGrade = (rating: Rating) => {

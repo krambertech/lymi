@@ -35,12 +35,13 @@ export function Wick({ still }: { still: boolean }) {
     cooled.value = withDelay(DRAW_MS, withTiming(1, { duration: COOL_MS, reduceMotion: ALWAYS }));
   }, [quiet, drawn, cooled]);
   const amber = p.amber;
+  const gone = clear(amber);
   const edge = p["edge-2"];
   const style = useAnimatedStyle(
     (): ViewStyle => ({
       transform: [{ scaleX: drawn.value }],
       backgroundColor: interpolateColor(cooled.value, [0, 1], [amber, edge]),
-      boxShadow: `0 0 6px ${interpolateColor(cooled.value, [0, 1], [amber, clear(amber)])}`,
+      boxShadow: `0 0 6px ${interpolateColor(cooled.value, [0, 1], [amber, gone])}`,
     }),
   );
   return (

@@ -10,4 +10,6 @@ const MODE_LABELS: Record<ReviewModeKey, MessageDescriptor> = {
   image_to_meaning: msg`Picture → meaning`,
 };
 
-export const modeLabel = (mode: ReviewMode) => MODE_LABELS[modeKey(mode)];
+/** A mode a newer Worker added still gets a name, rather than nothing, in a release that predates it. ADR 0032. */
+export const modeLabel = (mode: ReviewMode): MessageDescriptor =>
+  MODE_LABELS[modeKey(mode)] ?? msg`Another way`;

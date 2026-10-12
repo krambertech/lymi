@@ -1714,6 +1714,9 @@ msgstr "Повторить сегодня"
 msgid "Each block is one day you reviewed."
 msgstr "Каждый блок — день с повторениями."
 
+msgid "Each card is asked both ways, each way on its own schedule."
+msgstr "Каждую карточку спрашивают в обе стороны, каждую сторону по своему расписанию."
+
 msgid "Each section opens once you know most of the one before it."
 msgstr "Каждый раздел открывается, как только выучена большая часть предыдущего."
 
@@ -1794,9 +1797,6 @@ msgstr "Введи этот код в приложении Lymi, чтобы за
 
 msgid "Every card"
 msgstr "Все карточки"
-
-msgid "Every card is asked twice."
-msgstr "Каждая карточка задаётся дважды."
 
 msgid "Every deck you own, archived ones included, with your schedule and review history. Decks shared with you aren’t included."
 msgstr "Все твои колоды, включая архивные, с твоим расписанием и историей повторений. Колоды, которыми с тобой поделились, не включаются."

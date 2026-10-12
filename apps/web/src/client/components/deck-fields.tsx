@@ -175,7 +175,7 @@ export const DIRECTIONS: DirectionOption[] = [
     value: "both",
     label: msg`Both ways`,
     short: msg`Both`,
-    blurb: msg`Every card is asked twice.`,
+    blurb: msg`Each card is asked both ways, each way on its own schedule.`,
   },
 ];
 

@@ -224,8 +224,11 @@ export const ReviewOut = z
     stabilityAfter: z.number(),
     difficultyAfter: z.number(),
     reviewedAt: Timestamp,
-    source: z.enum(["web", "api", "mcp"]),
-    aid: ReviewAid.nullable().meta({ description: "What the learner used before the reveal" }),
+    source: z.enum(["web", "api", "mcp"]).meta(OPEN),
+    aid: ReviewAid.nullable().meta({
+      ...OPEN,
+      description: "What the learner used before the reveal",
+    }),
   })
   .meta({ id: "Review" });
 export type ReviewOut = z.infer<typeof ReviewOut>;
@@ -234,7 +237,7 @@ export type ReviewOut = z.infer<typeof ReviewOut>;
 export const CardEventOut = z
   .object({
     id: z.string(),
-    actor: Actor,
+    actor: Actor.meta(OPEN),
     action: z.string().meta({ description: "create, update, archive or restore" }),
     at: Timestamp,
     payload: z.unknown().nullable().meta({ description: "What the write sent, if anything" }),

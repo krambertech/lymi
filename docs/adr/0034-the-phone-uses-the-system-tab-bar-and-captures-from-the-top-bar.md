@@ -20,7 +20,8 @@ Issue #549 asked for a tab bar and capture button that feel like iOS 26 glass ra
 
 ## Consequences
 
-- Capture is out of the thumb's natural reach. One tap still opens Add a word from every tab, and the planned Control Center control and Action button shortcut (phone.md, "Outside the app") give it back the reach.
+- Capture is out of the thumb's natural reach. One tap still opens Add a word from every tab but Explore, and the planned Control Center control and Action button shortcut (phone.md, "Outside the app") give it back the reach.
+- Explore's bar carries Filter and Search instead of the streak and capture, because finding a deck is that tab's job.
 - Each screen's top bar is pinned with its actions as glass buttons, as iOS keeps its own: the large title travels into it as the page scrolls, and a page's named back folds into iOS's round glass back.
 - Inside a deck with cards due, the tab bar's accessory shows how many and starts the review. Before iOS 26 there is no accessory, so the deck keeps its Review button.
 - Tab icons are template PNGs drawn from Lucide by `pnpm tab-icons`, because the system bar takes images, not SVG.

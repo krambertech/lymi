@@ -16,8 +16,11 @@ import { queryClient } from "../data/client";
 import { Sync } from "../data/sync";
 import { i18n } from "../i18n";
 import { LanguageSync } from "../i18n/sync";
+import { setExceptionLearner, startExceptionReporting } from "../telemetry/exceptions";
 import { usePalette } from "../theme/palette";
 import { WidgetSync } from "../widgets/sync";
+
+startExceptionReporting();
 
 // A link straight to a review, such as from a widget, still has the tabs under it.
 export const unstable_settings = { initialRouteName: "(tabs)" };
@@ -52,6 +55,7 @@ function Root() {
   const signedIn = Boolean(session.data);
   // A 426 from any request: this release is too old for the API, so nothing else can work.
   const update = useUpdateRequired();
+  useEffect(() => setExceptionLearner(learnerId), [learnerId]);
   useEffect(() => {
     if (!session.isPending || update) SplashScreen.hideAsync();
   }, [session.isPending, update]);

@@ -50,3 +50,48 @@ it("retains compiled stack locations while discarding private error context", ()
   });
   expect(JSON.stringify(sanitized)).not.toContain("private");
 });
+
+it("keeps a Hermes frame's bundle name and chunk ID for the phone's source maps", () => {
+  const sanitized = exceptionProperties({
+    $exception_list: [
+      {
+        type: "Error",
+        value: "private card",
+        stacktrace: {
+          frames: [
+            {
+              platform: "hermes",
+              filename:
+                "address at /private/var/containers/Bundle/Application/private/Lymi.app/main.jsbundle",
+              function: "saveCard",
+              lineno: 1,
+              colno: 40213,
+              chunk_id: "0b5f6a1e-9d2c-4f7b-8e1a-3c4d5e6f7a8b",
+            },
+            { platform: "hermes", chunk_id: "private id with spaces" },
+          ],
+        },
+      },
+    ],
+  });
+  expect(sanitized).toMatchObject({
+    $exception_list: [
+      {
+        stacktrace: {
+          frames: [
+            {
+              platform: "hermes",
+              filename: "main.jsbundle",
+              function: "saveCard",
+              lineno: 1,
+              colno: 40213,
+              chunk_id: "0b5f6a1e-9d2c-4f7b-8e1a-3c4d5e6f7a8b",
+            },
+            { platform: "hermes" },
+          ],
+        },
+      },
+    ],
+  });
+  expect(JSON.stringify(sanitized)).not.toContain("private");
+});

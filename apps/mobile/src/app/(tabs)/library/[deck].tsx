@@ -43,6 +43,7 @@ export default function Deck() {
   const { deck: id } = useLocalSearchParams<{ deck: string }>();
   const decks = useDecks();
   const deck = decks.data?.find((d) => d.id === id);
+  const gone = !!decks.data && !deck;
   const cards = useDeckCards(id);
   const rows: DeckRow[] = cards.data ?? [];
   const sections = useSections(id).data?.sections ?? [];
@@ -69,51 +70,54 @@ export default function Deck() {
       title={deck?.name ?? ""}
       back={{ label: t`Library`, to: "/library" }}
       actions={
-        <View className="flex-row items-center gap-2.5">
-          <BarButton
-            icon="search"
-            label={t`Search this deck`}
-            onPress={() => router.push(`/search?deck=${id}` as Href)}
-          />
-          <DropdownMenu
-            title={deck?.name}
-            trigger={(open) => <BarButton icon="more" label={t`Deck options`} onPress={open} />}
-            items={[
-              [
+        // A deck that has gone has nothing to search or change.
+        !gone && (
+          <View className="flex-row items-center gap-2.5">
+            <BarButton
+              icon="search"
+              label={t`Search this deck`}
+              onPress={() => router.push(`/search?deck=${id}` as Href)}
+            />
+            <DropdownMenu
+              title={deck?.name}
+              trigger={(open) => <BarButton icon="more" label={t`Deck options`} onPress={open} />}
+              items={[
+                [
+                  ...(owner
+                    ? [
+                        {
+                          label: t`Add a card`,
+                          icon: "plus" as const,
+                          onSelect: addCard,
+                        },
+                      ]
+                    : []),
+                  {
+                    label: owner ? t`Deck settings` : t`About this deck`,
+                    icon: "settings",
+                    onSelect: () => router.push(`/library/deck-settings?id=${id}` as Href),
+                  },
+                ],
                 ...(owner
                   ? [
-                      {
-                        label: t`Add a card`,
-                        icon: "plus" as const,
-                        onSelect: addCard,
-                      },
+                      [
+                        {
+                          label: t`Archive deck`,
+                          icon: "archive" as const,
+                          destructive: true,
+                          onSelect: exits.archive,
+                        },
+                      ],
                     ]
                   : []),
-                {
-                  label: owner ? t`Deck settings` : t`About this deck`,
-                  icon: "settings",
-                  onSelect: () => router.push(`/library/deck-settings?id=${id}` as Href),
-                },
-              ],
-              ...(owner
-                ? [
-                    [
-                      {
-                        label: t`Archive deck`,
-                        icon: "archive" as const,
-                        destructive: true,
-                        onSelect: exits.archive,
-                      },
-                    ],
-                  ]
-                : []),
-            ]}
-          />
-        </View>
+              ]}
+            />
+          </View>
+        )
       }
     >
       <OfflineNote query={cards} />
-      {decks.data && !deck ? (
+      {gone ? (
         // Archived or left elsewhere since Library was opened.
         <EmptyState
           kind="noMatch"

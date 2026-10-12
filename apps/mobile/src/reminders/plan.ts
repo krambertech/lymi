@@ -110,6 +110,15 @@ export function gradeRevision(
     .join(" ");
 }
 
+/**
+ * Whether to plan again now. Turning the reminder off always clears it; otherwise the plan waits
+ * for today's count and keeps the reminders it has while the forecast is from an earlier day, so a
+ * refresh that is offline or fails never leaves fewer than were planned.
+ */
+export function replans(on: boolean, due: number | undefined, staleForecast: boolean): boolean {
+  return !on || (due !== undefined && !staleForecast);
+}
+
 /** Picks one of `count` lines by the day, so the wording changes from one day to the next. */
 export function lineFor(at: Date, count: number): number {
   const day = Math.floor(

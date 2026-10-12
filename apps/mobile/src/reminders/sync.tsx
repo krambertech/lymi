@@ -17,7 +17,7 @@ import {
   schedule,
   snoozedUntil,
 } from "./notifications";
-import { forecastFrom, gradeRevision, planReminders } from "./plan";
+import { forecastFrom, gradeRevision, planReminders, replans } from "./plan";
 
 /** The forecast moves with grades and the day; an hour old is close enough for a week ahead. */
 const FORECAST_STALE_MS = 60 * 60 * 1000;
@@ -41,16 +41,16 @@ export function ReminderSync() {
     ...insightsQuery(30),
     enabled: !!time,
     staleTime: FORECAST_STALE_MS,
-    refetchOnMount: true,
+    // A restart can land before the refresh a grade waits for, so each launch asks again.
+    refetchOnMount: "always",
   });
   const reviewDay = summary?.today.date;
   const zone = useDraw().data?.day.zone ?? deviceTimezone();
   const forecastByDay = forecastFrom(insights.data?.forecast, reviewDay);
   const forecast = forecastByDay && JSON.stringify([...forecastByDay]);
-  // Past the review day's midnight the forecast no longer starts today, so fetch today's; while it
-  // is on its way, the reminders already planned from the last one stay.
+  // Past the review day's midnight the forecast no longer starts today, so fetch today's; until one
+  // arrives, offline or failing included, the reminders already planned from the last one stay.
   const stale = !!insights.data && !!reviewDay && !forecastByDay;
-  const replacing = stale && insights.fetchStatus === "fetching";
   const refetch = insights.refetch;
   useEffect(() => {
     if (time && stale) void refetch();
@@ -82,7 +82,7 @@ export function ReminderSync() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: a return to the front and the language replan too.
   useEffect(() => {
-    if (time && (due === undefined || replacing)) return;
+    if (!replans(!!time, due, stale)) return;
     // A review grades every few seconds; the plan only needs where the day settled.
     let live = true;
     const timer = setTimeout(async () => {
@@ -105,7 +105,7 @@ export function ReminderSync() {
       live = false;
       clearTimeout(timer);
     };
-  }, [time, due, dayDone, forecast, zone, replacing, front, i18n.locale]);
+  }, [time, due, dayDone, forecast, zone, stale, front, i18n.locale]);
 
   // A cold start opens on "/", which redirects to Today; a review opened before that is replaced.
   const path = usePathname();

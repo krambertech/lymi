@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DAYS_AHEAD, forecastFrom, gradeRevision, lineFor, planReminders } from "./plan";
+import { DAYS_AHEAD, forecastFrom, gradeRevision, lineFor, planReminders, replans } from "./plan";
 
 // The phone's clock in these cases; Node applies a TZ set at run time.
 process.env.TZ = "Europe/Tallinn";
@@ -188,5 +188,23 @@ describe("gradeRevision", () => {
     const before = gradeRevision([{ ...graded, sentAt: 1 }]);
     expect(gradeRevision([{ ...graded, sentAt: 1, undone: true }])).not.toBe(before);
     expect(gradeRevision([])).not.toBe(before);
+  });
+});
+
+describe("replans", () => {
+  it("keeps the planned reminders while the forecast is from an earlier day", () => {
+    expect(replans(true, 0, true)).toBe(false);
+  });
+
+  it("waits for today's count", () => {
+    expect(replans(true, undefined, false)).toBe(false);
+  });
+
+  it("plans once the count and a forecast dated today are in", () => {
+    expect(replans(true, 0, false)).toBe(true);
+  });
+
+  it("always clears when the reminder is turned off", () => {
+    expect(replans(false, undefined, true)).toBe(true);
   });
 });

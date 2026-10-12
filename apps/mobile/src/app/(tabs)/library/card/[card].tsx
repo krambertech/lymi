@@ -212,7 +212,6 @@ export default function CardPage() {
         key="pronunciation"
         label={t`Pronunciation`}
         ai={card.pronunciationSource === "ai"}
-        end={pronounce && <PronounceButton pronounce={pronounce} />}
         onPress={edit("pronunciation")}
       >
         <Text className="text-md text-text">{card.pronunciation}</Text>
@@ -366,11 +365,20 @@ export default function CardPage() {
     <Screen
       title={card.term}
       back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}
+      // The term wraps here rather than cut off in one line, and is heard from beside it.
+      header={
+        <View className="flex-row items-center gap-3">
+          <Text
+            className="shrink text-3xl font-medium tracking-tight text-text"
+            accessibilityRole="header"
+          >
+            {card.term}
+          </Text>
+          {pronounce && <PronounceButton pronounce={pronounce} />}
+        </View>
+      }
       actions={
         <View className="flex-row items-center gap-2.5">
-          {pronounce && (
-            <BarButton icon="pronunciation" label={t`Say ${card.term}`} onPress={pronounce.play} />
-          )}
           <DropdownMenu
             title={card.term}
             trigger={(open) => <BarButton icon="more" label={t`Card options`} onPress={open} />}

@@ -1795,10 +1795,6 @@ msgstr "Saved"
 msgid "Saving…"
 msgstr "Saving…"
 
-#. placeholder {0}: card.term
-msgid "Say {0}"
-msgstr "Say {0}"
-
 msgid "Schedule"
 msgstr "Schedule"
 

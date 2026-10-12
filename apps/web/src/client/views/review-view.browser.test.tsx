@@ -105,6 +105,25 @@ test("a revealed card names its section in place of its source", async () => {
   expect(card.textContent).not.toContain("Lesson 14");
 });
 
+test("a pronunciation that loads quickly dims the button and shows no spinner", async () => {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <ReviewCard
+        item={item({ language: "et" })}
+        revealed={false}
+        onReveal={noop}
+        onPlayAudio={noop}
+        audioState="loading"
+      />
+    </I18nProvider>,
+  );
+
+  const button = page.getByRole("button", { name: "Play pronunciation" });
+  await expect.element(button).toHaveAttribute("aria-disabled", "true");
+  expect(button.element().querySelector(".animate-spin")).toBeNull();
+  await expect.poll(() => button.element().querySelector(".animate-spin")).not.toBeNull();
+});
+
 test("a relearning card under review says Forgotten", async () => {
   await render(
     <I18nProvider i18n={i18n}>

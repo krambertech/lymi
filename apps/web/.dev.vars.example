@@ -39,3 +39,5 @@ OPENAI_SPEECH_VOICE=marin
 AI_GATEWAY_TOKEN=
 # Only while an OpenAI plugin submission is verifying the domain.
 OPENAI_APPS_CHALLENGE=
+# The phone app's `TEAMID.bundle`, so join and add links open it. Empty turns universal links off.
+APPLE_APP_ID=

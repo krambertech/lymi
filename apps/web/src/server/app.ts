@@ -3,6 +3,7 @@ import { CLIENT_HEADER, MeOut, NameInput, parseClientHeader } from "@lymi/core";
 import { POSTHOG_PROXY_PATH, proxyPostHog } from "@lymi/core/posthog-proxy";
 import { Hono } from "hono";
 import { routePath } from "hono/route";
+import { appSiteAssociation } from "./app-site-association";
 import { type Auth, createAuth, type SessionUser } from "./auth";
 import { limitCredentialRequests } from "./auth-rate-limit";
 import { createDb, type Db } from "./db";
@@ -92,6 +93,13 @@ app.get("/.well-known/openai-apps-challenge", describe({ hide: true }), (c) => {
   const token = c.env.OPENAI_APPS_CHALLENGE?.trim();
   if (!token) return c.text("Not found", 404);
   return c.text(token, 200, { "cache-control": "no-store" });
+});
+
+// iOS reads which links open the phone app here: a deck's join link and Add to Lymi.
+app.get("/.well-known/apple-app-site-association", describe({ hide: true }), (c) => {
+  const appID = c.env.APPLE_APP_ID?.trim();
+  if (!appID) return c.text("Not found", 404);
+  return c.json(appSiteAssociation(appID), 200, { "cache-control": "public, max-age=3600" });
 });
 
 // Analytics from this origin reach PostHog through here, carrying Cloudflare's country.

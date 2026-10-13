@@ -26,7 +26,7 @@ msgstr "{0, plural, one {# картка до повторення} few {# кар
 
 #. placeholder {0}: d.total
 #. placeholder {0}: deck.cardCount
-#. placeholder {0}: g.rows.length
+#. placeholder {0}: deck.total
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
@@ -124,6 +124,10 @@ msgstr "{0} — власник цієї колоди й пише її картк
 msgid "{0} remembered, {1} forgotten."
 msgstr "Запам’ятано: {0}, забуто: {1}."
 
+#. placeholder {0}: deck.owner.name
+msgid "{0} shared a deck"
+msgstr ""
+
 msgid "{cards, plural, one {# card} other {# cards}}"
 msgstr "{cards, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
@@ -210,6 +214,9 @@ msgstr "{label}, далі через {schedules}"
 
 msgid "{label}: {chosen}"
 msgstr "{label}: {chosen}"
+
+msgid "{language} · {cards}"
+msgstr ""
 
 msgid "{lapses, plural, one {forgotten once} other {forgotten # times}}"
 msgstr "{lapses, plural, one {забуто # раз} few {забуто # рази} many {забуто # разів} other {забуто # рази}}"
@@ -409,6 +416,12 @@ msgstr ""
 msgid "Any time"
 msgstr "Будь-коли"
 
+msgid "Anyone can add this deck from its public page."
+msgstr ""
+
+msgid "Anyone with this link can join and review these cards."
+msgstr ""
+
 msgid "API keys"
 msgstr "Ключі API"
 
@@ -454,6 +467,9 @@ msgstr ""
 
 msgid "Arts"
 msgstr "Мистецтво"
+
+msgid "Ask the person who shared it for a new link."
+msgstr ""
 
 msgid "Asked"
 msgstr "Режими"
@@ -560,6 +576,12 @@ msgstr "Щоб змінювати серії, потрібне з’єднанн
 msgid "Changing the goal needs a connection."
 msgstr "Щоб змінити мету, потрібне з’єднання."
 
+msgid "Check that the whole link was copied, or ask for a new one."
+msgstr ""
+
+msgid "Check that the whole link was copied."
+msgstr ""
+
 msgid "Check your connection and try again."
 msgstr "Перевір з’єднання й повтори спробу."
 
@@ -651,6 +673,9 @@ msgstr "Не вдалося змінити фото. Перевір з’єдн�
 msgid "Couldn’t check for more cards"
 msgstr "Не вдалося перевірити, чи є ще картки"
 
+msgid "Couldn’t join the deck. Check your connection and try again."
+msgstr ""
+
 msgid "Couldn’t load Activity"
 msgstr "Не вдалося завантажити Активність"
 
@@ -698,6 +723,9 @@ msgstr "Не вдалося перемістити колоду"
 
 msgid "Couldn’t open this deck"
 msgstr "Не вдалося відкрити цю колоду"
+
+msgid "Couldn’t open this link"
+msgstr ""
 
 msgid "Couldn’t play the pronunciation. Try again in a moment."
 msgstr "Не вдалося відтворити вимову. Спробуй ще раз за мить."
@@ -1053,6 +1081,10 @@ msgctxt "language"
 msgid "French"
 msgstr "Французька"
 
+#. placeholder {0}: deck.owner.name
+msgid "From {0}"
+msgstr ""
+
 msgid "From the lesson"
 msgstr "З уроку"
 
@@ -1072,6 +1104,9 @@ msgstr "Назви колоду."
 
 msgid "Give the series a name."
 msgstr "Дай серії назву."
+
+msgid "Go to Today"
+msgstr ""
 
 msgctxt "deck tag"
 msgid "Goethe-Zertifikat A1"
@@ -1229,6 +1264,15 @@ msgstr "Японська"
 msgctxt "deck tag"
 msgid "JLPT N5"
 msgstr "JLPT N5"
+
+msgid "Join"
+msgstr ""
+
+msgid "Join a deck"
+msgstr ""
+
+msgid "Joining a deck needs a connection. Connect and try again."
+msgstr ""
 
 msgctxt "daily goal"
 msgid "Keen"
@@ -1514,6 +1558,15 @@ msgstr "Без розділу"
 msgid "No series"
 msgstr "Без серії"
 
+msgid "Nobody can add it while it is archived."
+msgstr ""
+
+msgid "Nobody can join it while it is archived."
+msgstr ""
+
+msgid "Nobody new can add it."
+msgstr ""
+
 msgid "None"
 msgstr "Немає"
 
@@ -1575,8 +1628,14 @@ msgstr "Змінювати це може лише власник колоди."
 msgid "Only you see these."
 msgstr "Їх бачиш лише ти."
 
+msgid "Only your name is shared, never your progress."
+msgstr ""
+
 msgid "Open {name}"
 msgstr "Відкрити «{name}»"
+
+msgid "Open deck"
+msgstr ""
 
 msgid "Open Explore"
 msgstr "Відкрити каталог"
@@ -1775,6 +1834,9 @@ msgstr "Повторення завершено"
 msgid "Review now"
 msgstr ""
 
+msgid "Review on your own schedule. New cards appear as they are added."
+msgstr ""
+
 msgid "Review these decks together, in this order."
 msgstr "Повторюй ці колоди разом, у такому порядку."
 
@@ -1901,6 +1963,9 @@ msgstr "Налаштування скоро будуть на телефоні"
 msgid "Shared by {owner}"
 msgstr "Від {owner}"
 
+msgid "Shared deck"
+msgstr ""
+
 msgid "Shared with you"
 msgstr "Поділилися з тобою"
 
@@ -1928,8 +1993,14 @@ msgstr "Показати пароль"
 msgid "Sign in"
 msgstr "Увійти"
 
+msgid "Sign in to add"
+msgstr ""
+
 msgid "Sign in to continue."
 msgstr "Увійди, щоб продовжити."
+
+msgid "Sign in to join"
+msgstr ""
 
 msgid "Sign in to Lymi"
 msgstr "Увійти в Lymi"
@@ -2069,6 +2140,9 @@ msgstr "Колода зникне з Бібліотеки, а її картки 
 msgid "Theme"
 msgstr "Тема"
 
+msgid "There is no deck at this address"
+msgstr ""
+
 msgid "They’re ready when you are."
 msgstr ""
 
@@ -2084,11 +2158,35 @@ msgstr "Для історії цієї картки потрібне з’єдн
 msgid "This card’s picture was removed."
 msgstr "Зображення цієї картки прибрано."
 
+msgid "This deck is already in Library."
+msgstr ""
+
+msgid "This deck is archived"
+msgstr ""
+
+msgid "This deck is no longer published"
+msgstr ""
+
+msgid "This deck is no longer published."
+msgstr ""
+
 msgid "This deck isn’t in your Library"
 msgstr "Цієї колоди немає в Бібліотеці"
 
 msgid "This deck needs a connection"
 msgstr "Для цієї колоди потрібне з’єднання"
+
+msgid "This invitation was sent to {invited}. Sign in with that address to join."
+msgstr ""
+
+msgid "This join link does not work"
+msgstr ""
+
+msgid "This join link is turned off"
+msgstr ""
+
+msgid "This join link stopped working. Ask the owner for a new one."
+msgstr ""
 
 msgid "This series is no longer here."
 msgstr "Цієї серії вже немає."
@@ -2272,17 +2370,35 @@ msgstr "Учора був день відпочинку. Досягни сьог
 msgid "You"
 msgstr "Ти"
 
+msgid "You are already in this deck."
+msgstr ""
+
+msgid "You are still in the deck."
+msgstr ""
+
 msgid "You can send {FEEDBACK_DAILY_LIMIT} messages a day. Try again tomorrow."
 msgstr "На день можна надіслати {FEEDBACK_DAILY_LIMIT} повідомлень. Спробуй завтра."
 
 msgid "You can’t choose Easy after peeking at your hook."
 msgstr "Після того як підглянеш зачіпку, «Легко» вибрати не можна."
 
+msgid "You cannot add this deck."
+msgstr ""
+
+msgid "You cannot join this deck through this link."
+msgstr ""
+
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "Ти починаєш із першого розділу. Наступний відкриється, коли вивчиш цей."
 
 msgid "You start with the first section. When you know most of it, you choose when to start the next."
 msgstr "Ти починаєш із першого розділу. Коли засвоїш більшу його частину, ти вирішуєш, коли почати наступний."
+
+msgid "You were removed from this deck, so this link cannot add you back. Your reviews are kept."
+msgstr ""
+
+msgid "You were removed from this deck, so you cannot add it again. Your reviews are kept."
+msgstr ""
 
 msgid "You wrote this"
 msgstr "Це написано тобою"
@@ -2301,6 +2417,9 @@ msgstr "Твої картки й лік днів поспіль на будь-я
 
 msgid "Your data"
 msgstr "Твої дані"
+
+msgid "Your deck"
+msgstr ""
 
 msgid "Your decks and reviews still work offline."
 msgstr "Твої колоди й повторення працюють і без з’єднання."

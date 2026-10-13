@@ -2,7 +2,7 @@
 appId: app.lymi
 ---
 - extendedWaitUntil:
-    visible: "This is the developer menu.*|Dev sign-in as learner|Library"
+    visible: "This is the developer menu.*|Toggle performance monitor|Dev sign-in as learner|Library"
     timeout: 180000
 # The dev client introduces its developer menu the first time a URL opens it, then leaves the menu open.
 - runFlow:

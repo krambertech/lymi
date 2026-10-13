@@ -27,9 +27,9 @@ You need Xcode with an iOS 26 runtime, Maestro, and Java 17 or later (the runner
 node .agents/skills/verify-phone/scripts/stack.mjs start
 ```
 
-It writes `apps/web/.dev.vars` from the example when there is none, migrates the local D1, starts this worktree's Worker on 5241 or the next free port and Metro on 8197 or the next free port, with `EXPO_PUBLIC_API_URL` pointing Metro at that Worker. It then creates the **Lymi verify** Simulator if it does not exist, boots it by its UDID, and runs `pnpm dev-client` to install the shared cached dev client ([local development](../../../docs/local-dev.md#run-the-phone-app-in-a-simulator)). Only a change to native code builds; otherwise the install takes seconds, though it waits while another worktree's native build holds the lock. Ports, UDID and process groups go to `apps/mobile/.expo/verify-phone.json`, and the logs beside it.
+It writes `apps/web/.dev.vars` from the example when there is none, migrates the local D1, starts this worktree's Worker on 5241 or the next free port and Metro on 8197 or the next free port, with `EXPO_PUBLIC_API_URL` pointing Metro at that Worker. It then creates this worktree's own Simulator, **Lymi verify** followed by a short hash of the worktree's path, if it does not exist, boots it by its UDID, and runs `pnpm dev-client` to install the shared cached dev client ([local development](../../../docs/local-dev.md#run-the-phone-app-in-a-simulator)). Only a change to native code builds; otherwise the install takes seconds, though it waits while another worktree's native build holds the lock. Ports, UDID and process groups go to `apps/mobile/.expo/verify-phone.json`, and the logs beside it.
 
-Never drive another session's Simulator, Metro or Worker, and never address a Simulator as `booted`: every command here takes the UDID.
+Never drive another worktree's Simulator, Metro or Worker, and never address a Simulator as `booted`: every command here takes the UDID.
 
 ## Doctor
 
@@ -37,7 +37,7 @@ Never drive another session's Simulator, Metro or Worker, and never address a Si
 node .agents/skills/verify-phone/scripts/doctor.mjs --persona learner
 ```
 
-One read-only check that the stack is worth driving. The Worker must answer `/api/health` as `lymi-product` and the process on its port must run from this worktree's `apps/web`; Metro must report itself running from this worktree's `apps/mobile`; the Simulator with the recorded UDID must be **Lymi verify**, booted, with `app.lymi` installed. With `--persona`, `/api/dev/state` must report that persona. The runner calls the doctor with its own session after resetting the persona and stops before driving when any check fails.
+One read-only check that the stack is worth driving. The Worker must answer `/api/health` as `lymi-product` and the process on its port must run from this worktree's `apps/web`; Metro must report itself running from this worktree's `apps/mobile`; the Simulator with the recorded UDID must be this worktree's **Lymi verify** Simulator, booted, with `app.lymi` installed. With `--persona`, `/api/dev/state` must report that persona. The runner calls the doctor with its own session after resetting the persona and stops before driving when any check fails.
 
 ## Drive
 
@@ -61,4 +61,4 @@ Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-phone-<sha>/` whe
 node .agents/skills/verify-phone/scripts/stack.mjs stop
 ```
 
-It ends only the Worker and Metro process groups `start` recorded and shuts **Lymi verify** down, since a booted Simulator holds about 2 GB. Stop as soon as you stop looking at the app: when the pull request waits on CI or review, and when you are done. Keep the evidence. A failing flow is a finding to report or fix, never a reason to delete its files.
+It ends only the Worker and Metro process groups `start` recorded and shuts this worktree's Simulator down, since a booted Simulator holds about 2 GB. Stop as soon as you stop looking at the app: when the pull request waits on CI or review, and when you are done. Keep the evidence. A failing flow is a finding to report or fix, never a reason to delete its files.

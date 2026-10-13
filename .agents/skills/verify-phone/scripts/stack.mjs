@@ -3,7 +3,7 @@
 // Start the phone stack for a verification run, or stop the one this script started and nothing else.
 
 import { execFileSync, spawn } from "node:child_process";
-import { randomBytes } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import { existsSync, mkdirSync, openSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { connect, createServer } from "node:net";
 import { dirname, resolve } from "node:path";
@@ -14,7 +14,8 @@ const web = resolve(root, "apps/web");
 const mobile = resolve(root, "apps/mobile");
 export const record = resolve(mobile, ".expo/verify-phone.json");
 const logs = resolve(mobile, ".expo");
-export const SIMULATOR = "Lymi verify";
+// One Simulator per worktree, named by a hash of its path because many worktrees share a folder name.
+export const SIMULATOR = `Lymi verify ${createHash("sha1").update(root).digest("hex").slice(0, 6)}`;
 
 const HELP = `Usage: node .agents/skills/verify-phone/scripts/stack.mjs <start|stop|status>
 

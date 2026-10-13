@@ -16,6 +16,7 @@ import { NavLink } from "../components/nav-link";
 import { Go } from "../components/next-steps";
 import { ReadyDecks } from "../components/ready-decks";
 import { RestDayBanner } from "../components/rest-day-banner";
+import { RollingNumber } from "../components/rolling-number";
 import { Skeleton } from "../components/skeleton";
 import { StartGuide } from "../components/start-guide";
 import { StateIcon } from "../components/state-mark";
@@ -310,7 +311,7 @@ function DueHeading({
   return (
     <h2 className="grid gap-1.5">
       <span className="text-5xl font-medium leading-none tracking-[-0.03em] tabular-nums">
-        {due}
+        <RollingNumber value={due} />
       </span>
       <span className="text-md text-text-2">
         {deckName ? (

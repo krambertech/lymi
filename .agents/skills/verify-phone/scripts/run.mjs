@@ -3,15 +3,7 @@
 // Drive features from the phone map on the stack stack.mjs started and keep the evidence. See ../SKILL.md.
 
 import { execFileSync, spawnSync } from "node:child_process";
-import {
-  existsSync,
-  mkdirSync,
-  readdirSync,
-  readFileSync,
-  renameSync,
-  statSync,
-  writeFileSync,
-} from "node:fs";
+import { existsSync, mkdirSync, readdirSync, renameSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -65,7 +57,6 @@ const evidenceRoot =
   (existsSync("/mnt/project-files")
     ? "/mnt/project-files/evidence"
     : join(tmpdir(), "lymi-evidence"));
-const metroLog = resolve(root, "apps/mobile/.expo/verify-phone-metro.log");
 const maestroEnv = {
   ...process.env,
   JAVA_HOME: process.env.JAVA_HOME ?? "/opt/homebrew/opt/openjdk",
@@ -124,14 +115,19 @@ function runFlow(args) {
   };
 }
 
-/** Red-box errors and warnings Metro printed while the flow ran. */
+/** Errors Metro and the app logged while the flow ran, from Stim's timeline for this worktree. */
 function metroProblems(from) {
-  if (!existsSync(metroLog)) return [];
-  return readFileSync(metroLog, "utf8")
-    .slice(from)
+  const out = execFileSync(
+    "pnpm",
+    ["exec", "stim", "logs", "--source", "metro", "client", "--level", "error", "--json"],
+    { cwd: resolve(root, "apps/mobile"), encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] },
+  );
+  return out
     .split("\n")
-    .filter((line) => /\b(ERROR|Error:|Uncaught)\b/.test(line))
-    .map((line) => `Metro: ${line.trim()}`);
+    .filter(Boolean)
+    .map((line) => JSON.parse(line))
+    .filter((record) => record.ts >= from)
+    .map((record) => `${record.src === "client" ? "App" : "Metro"}: ${record.msg}`);
 }
 
 async function driveFeature(name) {
@@ -157,7 +153,7 @@ async function driveFeature(name) {
     if (report(result.checks)) {
       const before = await api("/api/dev/state");
       writeFileSync(join(dir, "00-before.state.json"), `${JSON.stringify(before, null, 2)}\n`);
-      const logFrom = existsSync(metroLog) ? statSync(metroLog).size : 0;
+      const logFrom = Date.now();
       openApp();
 
       // The flow asserts what the screen should show from the stored state it is given.

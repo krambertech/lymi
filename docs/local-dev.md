@@ -81,36 +81,49 @@ pnpm local db:fresh               # rebuild the local D1 from the migrations
 
 ## Run the phone app in a Simulator
 
-Every worktree installs one shared dev client instead of compiling its own. Start Metro on a free port and leave it running:
+[Stim](https://stim.appandflow.com) gives each worktree its own Simulator, Metro port and Worker port, and stops all of them with one command. Every worktree installs one shared dev client instead of compiling its own. Run the commands from `apps/mobile`.
+
+Reserve this worktree's Worker port, then start the Worker on it in its own terminal:
 
 ```bash
-cd apps/mobile
-EXPO_PUBLIC_API_URL=http://localhost:5241 npx expo start --dev-client --port 8197
+pnpm exec stim ports get api
 ```
-
-In a second terminal, install the client into your simulator and open it on that port:
 
 ```bash
-cd apps/mobile
-pnpm dev-client "Lymi <issue>" 8197
+pnpm --filter @lymi/web dev --port <api port> --strictPort
 ```
 
-`dev-client` creates the simulator if no device has that name, boots it, installs the app and opens it on `http://127.0.0.1:<port>`. It looks up the app in `~/Library/Caches/lymi/ios-dev-client` by the native fingerprint plus the Xcode build number, so a worktree whose native side matches one already built installs in seconds. Always pass the port. The client opened without a URL reconnects to the last server it saw, which may be another worktree's Metro.
+Start Metro pointed at that Worker, then install and open the app:
 
-On a miss it runs `expo prebuild --platform ios --clean`, builds for the generic Simulator destination, stores the app and deletes `ios/build/dev-client`. If Xcode stalls at `CreateBuildDescription`, the Mac's pipe memory is used up: the command kills the build, names the processes holding the most pipes and retries. Quitting the top one fixes it. One native build runs at a time; a second worktree waits for the first and then uses its app. The cache keeps the four most recently used apps. `expo run:ios` reads and fills the same cache through `buildCacheProvider` in `app.json`.
+```bash
+EXPO_PUBLIC_API_URL=http://localhost:<api port> pnpm exec stim start
+```
 
-When you change native code over and over, add `--keep-build`: it skips the clean prebuild and keeps `ios/build/dev-client`, so the next build is incremental. If the app reports `Cannot find native module` or a missing TurboModule, the cached binary is older than its native code, for example after an environment variable changed native config, which the fingerprint does not see. Run the command again with `--rebuild` to replace it.
+```bash
+pnpm exec stim ios
+```
+
+`stim ios` creates this worktree's Simulator, named `stim-<worktree>-mobile`, boots it, installs the app and opens it on this worktree's Metro. It asks `buildCacheProvider` in `app.json` for the app, which looks it up in `~/Library/Caches/lymi/ios-dev-client` by the native fingerprint plus the Xcode build number. A worktree whose native side matches one already built installs in seconds. On a miss Stim builds once, stores the app in that cache and lets a second worktree with the same miss wait for it. The cache keeps the four most recently used apps.
+
+**Stop the stack whenever you stop looking at the app**, because a booted Simulator holds about 2 GB:
+
+```bash
+pnpm exec stim stop
+```
+
+```bash
+pnpm exec stim ports stop api
+```
+
+`stim stop` shuts the Simulator down and stops Metro. `stim ports stop api` stops the Worker. Metro keeps the environment it started with, so to point the app at another Worker, run `stim stop` before `stim start`. `stim status` lists every worktree's stack, and `stim gc` lists what Stim can reclaim from worktrees that are gone.
+
+If the app reports `Cannot find native module` or a missing TurboModule, the cached binary is older than its native code, for example after an environment variable changed native config, which the fingerprint does not see. Run `stim ios --no-build-cache` to replace it.
+
+If a native build stalls at `CreateBuildDescription`, the Mac's pipe memory is used up. Stop it and run `pnpm dev-client "Lymi <issue>" <metro port>` once instead: it kills a stalled build, names the processes holding the most pipes and retries, then stores the app in the same cache. Quitting the top process fixes it. When you change native code over and over, `pnpm dev-client` with `--keep-build` skips the clean prebuild, so the next build is incremental.
 
 ## Sign the phone app in
 
-`EXPO_PUBLIC_API_URL` points the phone app at a Worker, and it defaults to production. Start Metro against the local one, using the port the server printed:
-
-```bash
-cd apps/mobile
-EXPO_PUBLIC_API_URL=http://localhost:5241 npx expo start --dev-client
-```
-
-The Simulator reaches the Mac at `localhost`. In a development build the sign-in screen offers **Dev sign-in as learner**, which calls `POST /api/dev/sign-in?as=learner` and keeps the cookie it returns, so no password is typed. A new account made in the app is confirmed with a 6-digit code instead of a link; `POST /api/dev/outbox` with the address returns the email that carries it. Google needs `GOOGLE_CLIENT_ID` and a callback registered for the local port, so try it against a deployed Worker.
+`EXPO_PUBLIC_API_URL` points the phone app at a Worker, and it defaults to production, so always set it on `stim start`. The Simulator reaches the Mac at `localhost`. In a development build the sign-in screen offers **Dev sign-in as learner**, which calls `POST /api/dev/sign-in?as=learner` and keeps the cookie it returns, so no password is typed. A new account made in the app is confirmed with a 6-digit code instead of a link; `POST /api/dev/outbox` with the address returns the email that carries it. Google needs `GOOGLE_CLIENT_ID` and a callback registered for the local port, so try it against a deployed Worker.
 
 ## Call the routes directly
 

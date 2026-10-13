@@ -9,10 +9,11 @@ You need Xcode 26.4 or later and an iOS 26 Simulator runtime (`xcodebuild -downl
 ```bash
 pnpm install
 cd apps/mobile
-npx expo start --dev-client --port 8197
+pnpm exec stim start
+pnpm exec stim ios
 ```
 
-In a second terminal, `pnpm dev-client "Lymi dev client" 8197` installs a cached dev client into that simulator and opens it on that Metro port. It builds one, in several minutes, only when no worktree has built this native fingerprint yet; a change to `app.json`, a config plugin or a native module changes the fingerprint. Metro then reloads JavaScript in place. [Local development](../../docs/local-dev.md#run-the-phone-app-in-a-simulator) has the details.
+[Stim](https://stim.appandflow.com) starts Metro, creates this worktree's own Simulator, installs a cached dev client and opens it on that Metro. It builds one, in several minutes, only when no worktree has built this native fingerprint yet; a change to `app.json`, a config plugin or a native module changes the fingerprint. Metro then reloads JavaScript in place. `pnpm exec stim stop` shuts it all down. [Local development](../../docs/local-dev.md#run-the-phone-app-in-a-simulator) has the details, including a local Worker.
 
 ## Sign-in
 

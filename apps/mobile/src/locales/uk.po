@@ -752,8 +752,8 @@ msgstr ""
 msgid "Couldn’t load your series. Try again"
 msgstr ""
 
-msgid "Couldn’t move the deck"
-msgstr "Не вдалося перемістити колоду"
+msgid "Couldn’t move “{deckName}”."
+msgstr ""
 
 msgid "Couldn’t open this deck"
 msgstr "Не вдалося відкрити цю колоду"
@@ -1685,9 +1685,6 @@ msgstr ""
 
 msgid "Often forgotten"
 msgstr "Часто забуваються"
-
-msgid "OK"
-msgstr "OK"
 
 msgid "One after another, automatically"
 msgstr ""

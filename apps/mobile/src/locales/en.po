@@ -752,8 +752,8 @@ msgstr "Couldn’t load your series"
 msgid "Couldn’t load your series. Try again"
 msgstr "Couldn’t load your series. Try again"
 
-msgid "Couldn’t move the deck"
-msgstr "Couldn’t move the deck"
+msgid "Couldn’t move “{deckName}”."
+msgstr "Couldn’t move “{deckName}”."
 
 msgid "Couldn’t open this deck"
 msgstr "Couldn’t open this deck"
@@ -1685,9 +1685,6 @@ msgstr "Notifications are off for Lymi. Turn them on in Settings to get the remi
 
 msgid "Often forgotten"
 msgstr "Often forgotten"
-
-msgid "OK"
-msgstr "OK"
 
 msgid "One after another, automatically"
 msgstr "One after another, automatically"

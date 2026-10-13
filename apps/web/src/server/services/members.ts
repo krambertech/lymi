@@ -304,6 +304,7 @@ function spendNamedInvitations(db: Db, deckId: string, userId: string, now: Date
         eq(schema.deckInvitations.kind, "named"),
         isNull(schema.deckInvitations.revokedAt),
         isNull(schema.deckInvitations.acceptedAt),
+        // biome-ignore lint/plugin: Better Auth stores emails lower-cased, so ASCII-only folding loses nothing here.
         sql`${schema.deckInvitations.email} = (select lower(${schema.user.email}) from ${schema.user} where ${schema.user.id} = ${userId})`,
       ),
     );

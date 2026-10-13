@@ -161,6 +161,7 @@ export function createAuth(
           const [user] = await db
             .select({ id: schema.user.id })
             .from(schema.user)
+            // biome-ignore lint/plugin: Better Auth stores emails lower-cased, so ASCII-only folding loses nothing here.
             .where(sql`lower(${schema.user.email}) = ${email.toLowerCase()}`);
           if (!user) return;
           await sendAccountEmail({ db, userId: user.id, actor: "user" }, env, {

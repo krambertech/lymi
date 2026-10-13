@@ -467,6 +467,7 @@ export async function addressEmailLanguage(
     .select({ appLanguage: schema.userSettings.appLanguage })
     .from(schema.user)
     .innerJoin(schema.userSettings, eq(schema.userSettings.userId, schema.user.id))
+    // biome-ignore lint/plugin: Better Auth stores emails lower-cased, so ASCII-only folding loses nothing here.
     .where(sql`lower(${schema.user.email}) = ${email.toLowerCase()}`);
   return row?.appLanguage ? emailLanguage(row.appLanguage) : null;
 }

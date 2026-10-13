@@ -65,6 +65,20 @@ export function validateMigrationHistory({ files, manifest, baseline }) {
   }
 }
 
+// Merged before the check; scripts/backfill-normalized-term.ts repaired what its lower() missed.
+const ASCII_FOLDING_ALLOWED = new Set(["0002_normalized_term.sql"]);
+
+/** SQLite's lower() folds ASCII only, so a migration must not use it to normalise learner text. */
+export function asciiOnlyFolding(files) {
+  const found = [];
+  for (const [name, content] of files) {
+    if (ASCII_FOLDING_ALLOWED.has(name)) continue;
+    const sql = content.toString().replace(/--[^\n]*/g, "");
+    if (/\blower\s*\(\s*(?!hex\s*\()/i.test(sql)) found.push(name);
+  }
+  return found;
+}
+
 function baselineManifest(baseSha) {
   if (!baseSha) return undefined;
   const listing = spawnSync(
@@ -116,5 +130,11 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     manifest,
     baseline: baselineManifest(process.env.BASE_SHA),
   });
+  const folding = asciiOnlyFolding(files);
+  if (folding.length > 0) {
+    throw new Error(
+      `${folding.join(", ")} calls lower(), which folds ASCII only on D1, so Дієслова and дієслова stay different. Fold in JavaScript with toLocaleLowerCase() and write the result from a backfill script instead.`,
+    );
+  }
   process.stdout.write(`Migration history verified: ${files.size} immutable migration(s).\n`);
 }

@@ -11,6 +11,7 @@ const HELP = `Usage: node .agents/skills/verify/scripts/doctor.mjs [options]
 
   --url <origin>       Instance to check (default: http://localhost:5241)
   --sha <commit>       Commit it should serve (default: HEAD of this worktree)
+  --version <id>       Worker version an app preview should serve, from its app preview job
   --persona <id>       Persona /api/dev/state should report (default: learner)
   --session <file>     Playwright storage state holding the instance's cookies
 `;
@@ -48,19 +49,22 @@ function listenerDirectory(port) {
   return null;
 }
 
-async function checkCommit(url, health, sha) {
+async function checkCommit(url, health, sha, version) {
   const tag = health.version?.tag ?? null;
-  if (tag === sha) return { ok: true, detail: `serves ${sha.slice(0, 8)}` };
-  if (tag) {
-    // A pull-request build is tagged with GitHub's merge of the head into main, not the head.
-    git(["fetch", "--quiet", "origin", tag]);
-    const parents = git(["rev-list", "--parents", "-n", "1", tag])?.split(" ").slice(1) ?? [];
-    if (parents.includes(sha)) {
-      return { ok: true, detail: `serves ${tag.slice(0, 8)}, the merge of ${sha.slice(0, 8)}` };
-    }
-    return { ok: false, detail: `serves ${tag.slice(0, 8)}, expected ${sha.slice(0, 8)}` };
+  if (version) {
+    // An app preview carries no commit tag; its Worker version names the build of one commit.
+    return health.version?.id === version
+      ? { ok: true, detail: `serves version ${version.slice(0, 8)}, built from ${sha.slice(0, 8)}` }
+      : { ok: false, detail: `serves version ${health.version?.id}, expected ${version}` };
   }
-  if (!isLoopback(url)) return { ok: false, detail: "the deployment carries no commit tag" };
+  if (tag) {
+    return tag === sha
+      ? { ok: true, detail: `serves ${sha.slice(0, 8)}` }
+      : { ok: false, detail: `serves ${tag.slice(0, 8)}, expected ${sha.slice(0, 8)}` };
+  }
+  if (!isLoopback(url)) {
+    return { ok: false, detail: "no commit tag; pass --version from its app preview job" };
+  }
   // A local server has no tag; it serves whatever worktree it was started in.
   const port = new URL(url).port || "80";
   const dir = listenerDirectory(port);
@@ -100,7 +104,7 @@ async function checkPersona(url, persona, cookie) {
 }
 
 /** Every check, in order; the instance is worth driving only when all pass. */
-export async function doctor({ url, sha, persona, cookie }) {
+export async function doctor({ url, sha, version, persona, cookie }) {
   const checks = [];
   let health;
   try {
@@ -110,7 +114,7 @@ export async function doctor({ url, sha, persona, cookie }) {
   const healthy = health?.ok === true && health.name === "lymi-product";
   checks.push({ name: "health", ok: healthy, detail: healthy ? url : `${url} is not Lymi` });
   if (!healthy) return checks;
-  checks.push({ name: "commit", ...(await checkCommit(url, health, sha)) });
+  checks.push({ name: "commit", ...(await checkCommit(url, health, sha, version)) });
   checks.push({ name: "persona", ...(await checkPersona(url, persona, cookie)) });
   return checks;
 }
@@ -128,6 +132,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     options: {
       url: { type: "string", default: "http://localhost:5241" },
       sha: { type: "string" },
+      version: { type: "string" },
       persona: { type: "string", default: "learner" },
       session: { type: "string" },
       help: { type: "boolean", short: "h" },
@@ -140,6 +145,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     const checks = await doctor({
       url,
       sha: values.sha ?? git(["rev-parse", "HEAD"]),
+      version: values.version,
       persona: values.persona,
       cookie: cookieFor(url, values.session),
     });

@@ -18,7 +18,7 @@ The goal is to supervise the initial automated pipeline until the PR is review-r
 
 ## Finish
 
-Report **review-ready** only when required checks pass, the branch is mergeable, and no blocking automated feedback remains. Include the PR URL, head commit, checks, and any non-blocking feedback or residual uncertainty.
+Report **review-ready** only when required checks pass, the branch is mergeable, and no blocking automated feedback remains. Review-ready is not mergeable: a product change also needs a live verdict of PASS or PASS+NOTES against its head SHA ([verify](../../verify/SKILL.md#review-a-pull-request)), and a push that changes the patch needs a new one. Include the PR URL, head commit, checks, and any non-blocking feedback or residual uncertainty.
 
 Report **blocked** with the exact failing state and the decision, permission, or external change needed. If the runtime cannot continue observing a pending check, say so explicitly rather than calling the PR ready.
 

@@ -21,7 +21,9 @@ const isDigit = (char: string | undefined) => !!char && /\p{Nd}/u.test(char);
 export function RollingNumber({ value, animate = true, className }: Props) {
   const { i18n } = useLingui();
   // The site has no MotionConfig, so the system setting is read directly too.
-  const reduce = useReducedMotionConfig() || !!useReducedMotion();
+  const configured = useReducedMotionConfig();
+  const system = useReducedMotion();
+  const reduce = configured || !!system;
   const [last, setLast] = useState(value);
   const [roll, setRoll] = useState<{ from: string; up: boolean } | null>(null);
   if (last !== value) {

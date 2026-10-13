@@ -671,6 +671,9 @@ msgstr "Созвучное слово или то, что можно предс�
 msgid "A subject"
 msgstr "Тему"
 
+msgid "A subject or exam"
+msgstr ""
+
 msgid "A–Z"
 msgstr "А–Я"
 
@@ -819,6 +822,9 @@ msgstr "Заметки от AI"
 
 msgid "AI pronunciation"
 msgstr "Произношение от AI"
+
+msgid "AI writes this deck’s cards to suit it. Only you see it."
+msgstr ""
 
 msgid "AI wrote part of this card"
 msgstr "Часть этой карточки написал AI"
@@ -1255,6 +1261,9 @@ msgstr "Выбери, чем станет каждое поле новой ка�
 
 msgid "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 msgstr "Выбери, чем каждое поле Mochi станет в карточке Lymi. Одно поле — это термин."
+
+msgid "Choose what the deck is for."
+msgstr ""
 
 msgid "Choose your {app} file"
 msgstr "Выбор файла {app}"
@@ -3682,6 +3691,9 @@ msgstr "Новый термин: «{value}»"
 msgid "Terms"
 msgstr "Условия"
 
+msgid "Terms with short explanations, like for a citizenship test."
+msgstr ""
+
 msgid "Terms, meanings and due dates in a .csv file, without pictures or review history."
 msgstr "Термины, значения и даты повторения в файле .csv, без изображений и истории повторений."
 
@@ -4129,6 +4141,9 @@ msgstr "Что будет с колодами"
 
 msgid "What is Lymi?"
 msgstr "Что такое Lymi?"
+
+msgid "What it’s for"
+msgstr ""
 
 msgid "What the picture shows, without the answer. Picture review needs it."
 msgstr "Что на изображении, без ответа. Без описания повторение по изображению не начнётся."

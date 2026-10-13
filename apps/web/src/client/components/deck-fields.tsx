@@ -1,7 +1,7 @@
 import { i18n as globalI18n, type MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { type Directions, LANGUAGE_TAGS } from "@lymi/core";
+import { type DeckPurpose, type Directions, LANGUAGE_TAGS } from "@lymi/core";
 import { useId, useState } from "react";
 import { RadioCard } from "./radio-card";
 import { Segmented } from "./segmented";
@@ -262,5 +262,64 @@ export function DirectionCompact({
       />
       <p className="text-sm text-muted">{current && i18n._(current.blurb)}</p>
     </div>
+  );
+}
+
+interface PurposeOption {
+  value: DeckPurpose;
+  label: MessageDescriptor;
+  blurb: MessageDescriptor;
+}
+
+export const PURPOSES: PurposeOption[] = [
+  {
+    value: "language",
+    label: msg`A language`,
+    blurb: msg`Words and phrases in a language you’re learning.`,
+  },
+  {
+    value: "subject",
+    label: msg`A subject or exam`,
+    blurb: msg`Terms with short explanations, like for a citizenship test.`,
+  },
+  {
+    value: "other",
+    label: msg`Something else`,
+    blurb: msg`Your own material, whatever it is.`,
+  },
+];
+
+interface PurposeProps {
+  value: DeckPurpose | null;
+  onChange: (value: DeckPurpose) => void;
+  error?: string | undefined;
+  description?: string | undefined;
+}
+
+/** What the deck is for, which decides what AI fills on its cards until the owner chooses. */
+export function PurposeField({ value, onChange, error, description }: PurposeProps) {
+  const { t, i18n } = useLingui();
+  const labelId = useId();
+  return (
+    <Field>
+      <FieldLabel id={labelId}>{t`What it’s for`}</FieldLabel>
+      <RadioGroup<DeckPurpose | null>
+        aria-labelledby={labelId}
+        // Null, not undefined, so the group stays controlled before anything is chosen.
+        value={value}
+        onValueChange={(next) => next && onChange(next)}
+      >
+        {PURPOSES.map((o) => (
+          <RadioCard
+            key={o.value}
+            value={o.value}
+            title={i18n._(o.label)}
+            description={i18n._(o.blurb)}
+          />
+        ))}
+      </RadioGroup>
+      {description && <FieldDescription>{description}</FieldDescription>}
+      <FieldError>{error}</FieldError>
+    </Field>
   );
 }

@@ -671,6 +671,9 @@ msgstr "A sound-alike, or something to picture"
 msgid "A subject"
 msgstr "A subject"
 
+msgid "A subject or exam"
+msgstr "A subject or exam"
+
 msgid "A–Z"
 msgstr "A–Z"
 
@@ -819,6 +822,9 @@ msgstr "AI notes"
 
 msgid "AI pronunciation"
 msgstr "AI pronunciation"
+
+msgid "AI writes this deck’s cards to suit it. Only you see it."
+msgstr "AI writes this deck’s cards to suit it. Only you see it."
 
 msgid "AI wrote part of this card"
 msgstr "AI wrote part of this card"
@@ -1255,6 +1261,9 @@ msgstr "Choose what each field becomes on the new card. One field is the term."
 
 msgid "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 msgstr "Choose what each Mochi field becomes on a Lymi card. One field is the term."
+
+msgid "Choose what the deck is for."
+msgstr "Choose what the deck is for."
 
 msgid "Choose your {app} file"
 msgstr "Choose your {app} file"
@@ -3682,6 +3691,9 @@ msgstr "Term changed to “{value}”"
 msgid "Terms"
 msgstr "Terms"
 
+msgid "Terms with short explanations, like for a citizenship test."
+msgstr "Terms with short explanations, like for a citizenship test."
+
 msgid "Terms, meanings and due dates in a .csv file, without pictures or review history."
 msgstr "Terms, meanings and due dates in a .csv file, without pictures or review history."
 
@@ -4129,6 +4141,9 @@ msgstr "What happens to its decks"
 
 msgid "What is Lymi?"
 msgstr "What is Lymi?"
+
+msgid "What it’s for"
+msgstr "What it’s for"
 
 msgid "What the picture shows, without the answer. Picture review needs it."
 msgstr "What the picture shows, without the answer. Picture review needs it."

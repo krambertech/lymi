@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import {
   type DeckEnrichField,
+  type DeckPurpose,
   type Directions,
   deckLimits,
   type SectionProgression,
@@ -29,6 +30,7 @@ import {
   directionLabel,
   LanguageField,
   languageName,
+  PurposeField,
 } from "../components/deck-fields";
 import { InlineError } from "../components/inline-error";
 import { Screen } from "../components/layout/screen";
@@ -57,6 +59,7 @@ export interface DeckSettingsPatch {
   defaultLanguage?: string | null;
   directions?: Directions;
   sectionProgression?: SectionProgression;
+  purpose?: DeckPurpose;
   enrichFields?: DeckEnrichField[];
   enrichInstructions?: string | null;
 }
@@ -243,6 +246,11 @@ export function DeckSettingsView({
               />
               <FieldDescription>{t`What’s in this deck. Members see it too.`}</FieldDescription>
             </Field>
+            <PurposeField
+              value={deck.purpose}
+              onChange={(purpose) => onSave({ purpose })}
+              description={t`AI writes this deck’s cards to suit it. Only you see it.`}
+            />
             <LanguageField
               value={deck.defaultLanguage}
               onChange={(defaultLanguage) => onSave({ defaultLanguage })}

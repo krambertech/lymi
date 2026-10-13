@@ -1,15 +1,23 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
-import { DeckInput, type Directions, deckLimits } from "@lymi/core";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  DeckInput,
+  type DeckPurpose,
+  type Directions,
+  deckLimits,
+  LanguageTag,
+  type LearningKind,
+} from "@lymi/core";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { cn } from "cn";
 import { useRef, useState } from "react";
 import { errorMessage } from "../lib/api";
 import { useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
+import { decksQuery, settingsQuery } from "../lib/queries";
 import { Button } from "./button";
-import { DirectionCompact, LanguageField } from "./deck-fields";
+import { DirectionCompact, LanguageField, PurposeField } from "./deck-fields";
 import { InlineError } from "./inline-error";
 import { useStaticNav } from "./nav-link";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
@@ -22,15 +30,29 @@ interface Props {
   onOpenChange: (open: boolean) => void;
 }
 
+/** Welcome's answer as a deck purpose: a test is a subject, and a typed language name is no tag. */
+function seedFrom(kind: LearningKind | null, language: string | null): NewDeckSeed | undefined {
+  if (!kind) return undefined;
+  if (kind !== "language") return { purpose: kind === "other" ? "other" : "subject" };
+  const tag = LanguageTag.safeParse(language);
+  return { purpose: "language", language: tag.success ? tag.data : null };
+}
+
 /**
- * A deck is a name and two settings, so it is one sheet rather than a wizard: the name is the
- * field that matters and the rest already has an answer. Creating it lands the learner in the
- * empty deck, which is where the words go next.
+ * A deck is a name, what it is for, and how it is asked, so it is one sheet rather than a wizard.
+ * Creating it lands the learner in the empty deck, which is where the words go next.
  */
 export function NewDeckSheet({ open, onOpenChange }: Props) {
   const { t } = useLingui();
   const qc = useQueryClient();
   const navigate = useNavigate();
+  const settings = useQuery({ ...settingsQuery, enabled: open });
+  const decks = useQuery({ ...decksQuery, enabled: open });
+  // Welcome already asked what the learner is learning, so their first deck of their own starts there.
+  const first = decks.isSuccess && !decks.data.some((d) => d.role === "owner");
+  const seed = first
+    ? seedFrom(settings.data?.learningKind ?? null, settings.data?.learningLanguage ?? null)
+    : undefined;
   const create = useMutation({
     mutationFn: (input: DeckInput) => writes.createDeck(input),
     onSuccess: ({ id, queued }) => {
@@ -45,7 +67,8 @@ export function NewDeckSheet({ open, onOpenChange }: Props) {
       <DialogContent>
         <DialogTitle>{t`New deck`}</DialogTitle>
         <NewDeckForm
-          key={open ? "open" : "closed"}
+          key={`${open}:${seed?.purpose ?? ""}`}
+          seed={seed}
           pending={create.isPending}
           error={create.isError ? errorMessage(create.error) : undefined}
           onCancel={() => onOpenChange(false)}
@@ -56,7 +79,14 @@ export function NewDeckSheet({ open, onOpenChange }: Props) {
   );
 }
 
+/** What the form starts with: Welcome's answer, for the learner's first deck. */
+export interface NewDeckSeed {
+  purpose: DeckPurpose;
+  language?: string | null | undefined;
+}
+
 export interface NewDeckFormProps {
+  seed?: NewDeckSeed | undefined;
   pending?: boolean | undefined;
   error?: string | undefined;
   onCancel: () => void;
@@ -64,12 +94,13 @@ export interface NewDeckFormProps {
 }
 
 /** The sheet's body, on its own so it can be shown without the sheet around it. */
-export function NewDeckForm({ pending, error, onCancel, onSubmit }: NewDeckFormProps) {
+export function NewDeckForm({ seed, pending, error, onCancel, onSubmit }: NewDeckFormProps) {
   const { t } = useLingui();
   const st = !!useStaticNav();
   const desktop = useDesktop();
   const [name, setName] = useState("");
-  const [language, setLanguage] = useState<string | null>(null);
+  const [purpose, setPurpose] = useState<DeckPurpose | null>(seed?.purpose ?? null);
+  const [language, setLanguage] = useState<string | null>(seed?.language ?? null);
   const [directions, setDirections] = useState<Directions>("recognition");
   const [invalid, setInvalid] = useState<FieldErrors>({});
   const formRef = useRef<HTMLFormElement>(null);
@@ -83,19 +114,37 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit }: NewDeckFormP
         e.preventDefault();
         if (pending) return;
         // The same schema the route parses with, so the field cannot disagree with the API.
-        const parsed = DeckInput.safeParse({ name, defaultLanguage: language, directions });
-        if (!parsed.success) {
+        const parsed = DeckInput.safeParse({
+          name,
+          purpose: purpose ?? undefined,
+          // Only a language deck asks for a language, so another keeps none it was given before.
+          defaultLanguage: purpose === "language" ? language : null,
+          directions,
+        });
+        // The app asks what every deck is for, and a language deck which language, though the API need not.
+        const missing: FieldErrors = {
+          ...(purpose ? {} : { purpose: t`Choose what the deck is for.` }),
+          ...(purpose === "language" && !language
+            ? { defaultLanguage: t`Choose the language you’re learning.` }
+            : {}),
+        };
+        if (!parsed.success || Object.keys(missing).length > 0) {
           // The sentences mirror the schema's: an empty name fails the minimum, a typed one the
           // maximum; a tag the picker accepted can only be too long.
-          setInvalid(
-            fieldErrors(parsed.error, {
-              name: name.trim() ? t`Keep the name under 80 characters.` : t`Give the deck a name.`,
-              defaultLanguage:
-                language && language.length > 12
-                  ? t`Keep the language tag under 12 characters.`
-                  : t`Use a language tag like ca, pt-BR or zh-Hant.`,
-            }),
-          );
+          setInvalid({
+            ...missing,
+            ...(parsed.success
+              ? {}
+              : fieldErrors(parsed.error, {
+                  name: name.trim()
+                    ? t`Keep the name under 80 characters.`
+                    : t`Give the deck a name.`,
+                  defaultLanguage:
+                    language && language.length > 12
+                      ? t`Keep the language tag under 12 characters.`
+                      : t`Use a language tag like ca, pt-BR or zh-Hant.`,
+                })),
+          });
           focusFirstInvalid(formRef.current);
           return;
         }
@@ -120,14 +169,24 @@ export function NewDeckForm({ pending, error, onCancel, onSubmit }: NewDeckFormP
         />
         <FieldError>{invalid.name}</FieldError>
       </Field>
-      <LanguageField
-        value={language}
+      <PurposeField
+        value={purpose}
         onChange={(next) => {
-          setLanguage(next);
-          setInvalid(({ defaultLanguage: _, ...rest }) => rest);
+          setPurpose(next);
+          setInvalid(({ purpose: _, ...rest }) => rest);
         }}
-        error={invalid.defaultLanguage}
+        error={invalid.purpose}
       />
+      {purpose === "language" && (
+        <LanguageField
+          value={language}
+          onChange={(next) => {
+            setLanguage(next);
+            setInvalid(({ defaultLanguage: _, ...rest }) => rest);
+          }}
+          error={invalid.defaultLanguage}
+        />
+      )}
       <DirectionCompact value={directions} onChange={setDirections} />
       <div
         className={cn(

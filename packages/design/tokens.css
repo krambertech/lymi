@@ -54,8 +54,6 @@
   --key-sheen: oklch(1 0.03 90 / 0.16);
   --key-edge: oklch(1 0.03 90 / 0.4);
   --key-rim: oklch(from var(--amber) calc(l - 0.06) c h / 0.35);
-  --grain-opacity: 0.1;
-  --grain-blend: multiply;
   --edge: oklch(0.2 0.03 60 / 0.1);
   --edge-2: oklch(0.2 0.03 60 / 0.2);
   /* A photo's edge is untinted, because a warm line reads as grime on the picture. */
@@ -140,8 +138,6 @@
   /* At night a bright lip on the amber reads as a ridge, so it is half as strong. */
   --key-edge: oklch(1 0.03 90 / 0.22);
   --key-rim: oklch(from var(--amber) calc(l - 0.06) c h / 0.35);
-  --grain-opacity: 0.12;
-  --grain-blend: screen;
   --edge: oklch(1 0 0 / 0.07);
   --edge-2: oklch(1 0 0 / 0.13);
   --image-edge: oklch(1 0 0 / 0.1);

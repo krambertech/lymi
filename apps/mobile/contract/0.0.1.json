@@ -6824,6 +6824,7 @@
       "enum": [
        "anki",
        "mochi",
+       "noji",
        "lymi"
       ],
       "x-lymi-open": true

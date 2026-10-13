@@ -46,6 +46,24 @@ Cloudflare Workers Builds owns deployment after merge. A green build is not proo
 
 **Client data.** TanStack Query owns every read and cache. The service worker precaches the shell only; API responses go through Query so offline reviews have one path. `packages/client/src/api`, `packages/client/src/queries` and `packages/core/src/responses` hold one module per resource behind a barrel: add a card method to `api/cards.ts`, not to the barrel. Web callers keep importing `@/lib/api` and `@/lib/queries`, which re-export the package.
 
+## Enforced rules
+
+Each rule below fails a check instead of waiting for review, and the check's message names the fix.
+
+| Rule | Check |
+| --- | --- |
+| Web motion honours both the learner's setting and `/design`'s switch: call `useReduceMotion()`, never `useReducedMotion` or `useReducedMotionConfig` from `motion/react` directly | Biome `noRestrictedImports` in `biome.json` |
+| The phone never calls `Intl.ListFormat`, which Hermes lacks; use `formatList()` from `apps/mobile/src/i18n/list.ts` | `biome-plugins/no-intl-list-format.grit` |
+| Every phone scroll view sets `keyboardShouldPersistTaps`, so a tap with the keyboard up reaches its button | `biome-plugins/scroll-view-persist-taps.grit` |
+| A change to the phone's frozen responses records a `CACHE_SHAPE` decision | `pnpm check:cache-shape` |
+| Server SQL and new migrations never case-fold with `lower()`, which is ASCII-only on D1 | `biome-plugins/no-sql-lower.grit` and `pnpm check:migrations` |
+| New lines use Lymi tokens and logical directions: no raw hex, stock Tailwind colour, `ml-`/`text-left`, `margin-left` or `marginLeft` | `pnpm check:styling` |
+| Token values match `packages/design/tokens.css` everywhere they are copied | `pnpm check:design` |
+| Files under `apps/web/src/client` are kebab-case | Biome `useFilenamingConvention` |
+| Every learner-facing string is extracted | `pnpm i18n:check` |
+| Applied migrations never change | `pnpm check:migrations` |
+| Pull request titles follow `type(scope): summary` within 72 characters | `scripts/check-pr-title.mjs` in CI |
+
 ## Concise writing
 
 Write for the next decision, not as a record of the work session. State each outcome, constraint, reason, and piece of evidence once. Delete any sentence that does not change what the reader should understand or do.

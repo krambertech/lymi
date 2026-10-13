@@ -220,12 +220,7 @@
 }
 /* The plate the lantern stands on: its light pools from the lantern's side. */
 @utility lamplit {
-  background-image: radial-gradient(
-    138% 106% at 14% 24%,
-    var(--pool),
-    color-mix(in oklab, var(--pool) 70%, transparent) 30%,
-    transparent 70%
-  );
+  background-image: radial-gradient(165% 128% at 14% 24%, var(--pool), transparent 64%);
   @media (prefers-reduced-transparency: reduce) {
     background-image: none;
   }

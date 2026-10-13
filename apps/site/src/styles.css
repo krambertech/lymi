@@ -498,7 +498,7 @@
 /* The closing invitation: the lantern lit over its own pool of light, the page's one glow. The
    wick catches when the section first comes into view and the pool opens behind it. */
 .signup-plate {
-  --reach: 25rem;
+  --reach: 30rem;
   position: relative;
   isolation: isolate;
   overflow: hidden;

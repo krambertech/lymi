@@ -471,7 +471,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Create a deck",
       description:
-        "Make a new deck. Give it a default language so cards added without one inherit it. Check list_decks first: a deck for this language or lesson may exist. Needs write.",
+        "Make a new deck. Give it a default language so cards added without one inherit it, and a purpose when it is for a subject or exam rather than a language. Check list_decks first: a deck for this language or lesson may exist. Needs write.",
       inputSchema: DeckInput,
       outputSchema: DeckOut,
       ...writeTool({ idempotent: false }),
@@ -488,7 +488,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Edit a deck",
       description:
-        "Rename a deck, change its description, default language or review modes, or move it into or out of a series with seriesId. Send only what changes. Needs write.",
+        "Rename a deck, change its description, default language, purpose or review modes, or move it into or out of a series with seriesId. Send only what changes. Needs write.",
       inputSchema: z.object({ deckId: z.string().min(1) }).extend(DeckInput.partial().shape),
       outputSchema: DeckOut,
       ...writeTool({ idempotent: false, overwrites: true }),

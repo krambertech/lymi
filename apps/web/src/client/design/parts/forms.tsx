@@ -1,8 +1,9 @@
-import { Plus, Search, ZoomIn, ZoomOut } from "lucide-react";
+import type { Directions } from "@lymi/core";
+import { ClipboardCheck, Languages, Plus, Search, Shapes, ZoomIn, ZoomOut } from "lucide-react";
 import { useState } from "react";
 import { Button, IconButton } from "../../components/button";
 import { CopyField } from "../../components/copy-field";
-import { LanguageField } from "../../components/deck-fields";
+import { DirectionSelect, LanguageField } from "../../components/deck-fields";
 import { RadioCard } from "../../components/radio-card";
 import { Segmented } from "../../components/segmented";
 import { Checkbox } from "../../components/ui/checkbox";
@@ -60,12 +61,23 @@ export const forms: Group = {
             },
             {
               label: "With a description",
-              note: "One sentence on how the field works, read after the label.",
+              note: "One sentence that helps fill the box sits under the control, where an error takes its place.",
               render: () => (
                 <Field className={box}>
                   <FieldLabel>Name</FieldLabel>
                   <Input placeholder="Backup script on the laptop" />
                   <FieldDescription>So you know which key to revoke later.</FieldDescription>
+                </Field>
+              ),
+            },
+            {
+              label: "Description under the label",
+              note: "A description that explains the question sits flush under the label, read before answering. One that helps fill the box, such as a format or a limit, stays under the control.",
+              render: () => (
+                <Field className={box}>
+                  <FieldLabel>Language</FieldLabel>
+                  <FieldDescription>New cards in this deck get this language.</FieldDescription>
+                  <Input defaultValue="Italian" />
                 </Field>
               ),
             },
@@ -695,6 +707,7 @@ export const forms: Group = {
       Demo: function RadioGroupDemo() {
         const [direction, setDirection] = useState("recognition");
         const [sort, setSort] = useState("due");
+        const [purpose, setPurpose] = useState("language");
         return (
           <Variants
             items={[
@@ -723,6 +736,37 @@ export const forms: Group = {
                       title="Both ways"
                       description="Each card is asked both ways, each way on its own schedule."
                       disabled
+                    />
+                  </RadioGroup>
+                ),
+              },
+              {
+                label: "Rows with icons",
+                note: "When the options are kinds of thing, such as a deck's purpose, each row leads with an icon; every row in the group has one, or none does. One group of rows per form, for the question the form is about.",
+                render: () => (
+                  <RadioGroup
+                    aria-label="What it’s for"
+                    value={purpose}
+                    onValueChange={setPurpose}
+                    className={box}
+                  >
+                    <RadioCard
+                      value="language"
+                      icon={<Languages />}
+                      title="A language"
+                      description="Words and phrases in a language you’re learning."
+                    />
+                    <RadioCard
+                      value="subject"
+                      icon={<ClipboardCheck />}
+                      title="A subject or exam"
+                      description="Terms with short explanations, like for a citizenship test."
+                    />
+                    <RadioCard
+                      value="other"
+                      icon={<Shapes />}
+                      title="Something else"
+                      description="Your own material, whatever it is."
                     />
                   </RadioGroup>
                 ),
@@ -856,6 +900,7 @@ export const select: Group = {
         const [deck, setDeck] = useState<string | null>("d1");
         const [empty, setEmpty] = useState<string | null>(null);
         const [missing, setMissing] = useState<string | null>(null);
+        const [mode, setMode] = useState<Directions>("recognition");
         return (
           <Variants
             items={[
@@ -867,6 +912,15 @@ export const select: Group = {
                     <FieldLabel>Deck</FieldLabel>
                     <DeckSelect value={deck} onChange={setDeck} />
                   </Field>
+                ),
+              },
+              {
+                label: "With captions",
+                note: "Each row carries a sentence when the options need one and the form already spends its rows on another question, as Review mode does in New deck. The list takes the box's width so a caption wraps, and the chosen row's caption is the field's description. DirectionSelect, in components/deck-fields.tsx.",
+                render: () => (
+                  <div className={box}>
+                    <DirectionSelect value={mode} onChange={setMode} />
+                  </div>
                 ),
               },
               {

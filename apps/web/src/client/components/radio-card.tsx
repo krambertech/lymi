@@ -7,6 +7,8 @@ interface Props extends Omit<ComponentProps<"label">, "title"> {
   /** The choice's name; with `description`, the usual two-line row. Use `children` for any other content. */
   title?: ReactNode;
   description?: ReactNode;
+  /** A glyph between the dot and the title, for choices told apart at a glance. */
+  icon?: ReactNode;
   /** `bare` draws no edge of its own, for a row inside a container that carries one. */
   variant?: "card" | "bare" | undefined;
   disabled?: boolean | undefined;
@@ -20,6 +22,7 @@ export function RadioCard({
   value,
   title,
   description,
+  icon,
   variant = "card",
   disabled,
   className,
@@ -51,6 +54,14 @@ export function RadioCard({
         // The dot sits on the title's first line.
         className={cn("focus-visible:outline-none data-disabled:opacity-100", titled && "mt-0.5")}
       />
+      {icon && (
+        <span
+          aria-hidden="true"
+          className="shrink-0 text-text-2 [&_svg]:size-5 [&_svg]:stroke-[1.6]"
+        >
+          {icon}
+        </span>
+      )}
       {titled && (
         <span className="grid gap-0.5">
           <span id={`${id}-title`} className="text-base font-medium text-text">

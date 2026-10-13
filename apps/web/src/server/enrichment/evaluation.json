@@ -432,6 +432,7 @@
       "id": "subject-en",
       "name": "Cell biology",
       "language": null,
+      "purpose": "subject",
       "meaningLanguage": "en",
       "fields": ["meaning", "example"],
       "samples": [],
@@ -445,6 +446,65 @@
           "id": "bio-02",
           "term": "osmosis",
           "expect": { "meaning": { "includes": ["water"] }, "example": "empty" }
+        }
+      ]
+    },
+    {
+      "id": "exam-en",
+      "name": "US citizenship test",
+      "language": null,
+      "purpose": "subject",
+      "meaningLanguage": "en",
+      "samples": [],
+      "cases": [
+        {
+          "id": "exam-01",
+          "term": "Bill of Rights",
+          "expect": {
+            "meaning": { "includes": ["amendments"] },
+            "example": "empty",
+            "notes": "empty"
+          }
+        },
+        {
+          "id": "exam-02",
+          "term": "Electoral College",
+          "expect": {
+            "meaning": { "includes": ["president"] },
+            "example": "empty",
+            "notes": "empty"
+          }
+        }
+      ]
+    },
+    {
+      "id": "exam-de-uk",
+      "name": "Einbürgerungstest",
+      "description": "Питання тесту на громадянство Німеччини",
+      "language": "de",
+      "purpose": "subject",
+      "meaningLanguage": "uk",
+      "samples": [],
+      "cases": [
+        {
+          "id": "exam-de-01",
+          "term": "der Bundestag",
+          "expect": {
+            "meaning": "filled",
+            "example": "empty",
+            "notes": "empty",
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "exam-de-02",
+          "term": "das Grundgesetz",
+          "expect": {
+            "meaning": { "includes": ["конституц"] },
+            "example": "empty",
+            "notes": "empty",
+            "pronunciation": "empty"
+          }
         }
       ]
     },

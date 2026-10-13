@@ -655,6 +655,10 @@ msgstr "Ключ ніколи не ставить оцінок за повтор
 msgid "A language"
 msgstr "Мову"
 
+msgctxt "deck purpose"
+msgid "A language"
+msgstr "Мова"
+
 msgid "A link to a picture online."
 msgstr "Посилання на зображення в мережі."
 
@@ -678,6 +682,9 @@ msgstr "Співзвучне слово або те, що можна уявит�
 
 msgid "A subject"
 msgstr "Тему"
+
+msgid "A subject or exam"
+msgstr "Предмет або іспит"
 
 msgid "A–Z"
 msgstr "А–Я"
@@ -813,8 +820,14 @@ msgstr "Чернетка AI · Tab, щоб узяти"
 msgid "AI example"
 msgstr "Приклад від AI"
 
+msgid "AI fills the deck’s cards to suit it."
+msgstr "AI заповнює картки колоди з огляду на це."
+
 msgid "AI fills them only when they help. It never changes your text."
 msgstr "AI заповнює їх, лише коли це корисно. Твій текст він не змінює."
+
+msgid "AI fills this deck’s cards to suit it. Only you see it."
+msgstr "AI заповнює картки цієї колоди з огляду на це. Це бачиш лише ти."
 
 msgid "AI hook"
 msgstr "Зачіпка від AI"
@@ -1036,9 +1049,6 @@ msgstr "Назад до днів поспіль"
 
 msgid "Backup script on the laptop"
 msgstr "Скрипт резервної копії на ноутбуці"
-
-msgid "Both"
-msgstr "Обидва"
 
 msgid "Both of the above, one card at a time."
 msgstr "Обидва варіанти, по одній картці за раз."
@@ -1278,6 +1288,9 @@ msgstr "Вибери, чим кожне поле Mochi стане в картц�
 
 msgid "Choose what each side of a Noji card becomes on a Lymi card. One side is the term."
 msgstr "Вибери, чим кожен бік картки Noji стане в картці Lymi. Один бік — це термін."
+
+msgid "Choose what the deck is for."
+msgstr "Обери, для чого ця колода."
 
 msgid "Choose your {app} file"
 msgstr "Вибір файлу {app}"
@@ -3308,6 +3321,9 @@ msgstr "Повторити забуті"
 msgid "Review in Lymi"
 msgstr "Повторювати в Lymi"
 
+msgid "Review mode"
+msgstr "Режим повторення"
+
 msgid "Review new"
 msgstr "Повторити нові"
 
@@ -3722,6 +3738,9 @@ msgstr "Новий термін: «{value}»"
 
 msgid "Terms"
 msgstr "Умови"
+
+msgid "Terms with short explanations, like for a citizenship test."
+msgstr "Терміни з короткими поясненнями, як для іспиту на громадянство."
 
 msgid "Terms, meanings and due dates in a .csv file, without pictures or review history."
 msgstr "Терміни, значення й дати повторення у файлі .csv, без зображень та історії повторень."
@@ -4176,6 +4195,9 @@ msgstr "Що буде з колодами"
 
 msgid "What is Lymi?"
 msgstr "Що таке Lymi?"
+
+msgid "What it’s for"
+msgstr "Для чого вона"
 
 msgid "What the picture shows, without the answer. Picture review needs it."
 msgstr "Що на зображенні, без відповіді. Без опису повторення за зображенням не почнеться."

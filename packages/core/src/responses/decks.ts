@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
   DeckEnrichFields,
   DeckEnrichInstructions,
+  DeckPurpose,
   Directions,
   MemberRole,
   ReviewMode,
@@ -28,8 +29,12 @@ const Membership = {
   }),
 };
 
-/** How the AI fills the deck's cards. The owner's alone: a member reads null instructions. */
+/** How the AI fills the deck's cards. The owner's alone: a member reads null purpose and instructions. */
 const Enrichment = {
+  purpose: DeckPurpose.nullable().meta({
+    description:
+      "What the deck is for, inferred from its language until the owner chooses. Always null for a member.",
+  }),
   enrichFields: DeckEnrichFields,
   enrichInstructions: DeckEnrichInstructions.meta({
     description: "The owner's instructions to the AI. Always null for a member.",

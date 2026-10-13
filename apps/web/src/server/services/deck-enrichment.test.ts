@@ -32,6 +32,53 @@ describe("a deck's enrichment settings", () => {
     ]);
   });
 
+  it("start from the purpose, which an existing deck infers from its language", async () => {
+    const language = await createDeck(owner, { name: "Deutsch", defaultLanguage: "de" });
+    expect(language.purpose).toBe("language");
+    expect((await createDeck(owner, { name: "Misc" })).purpose).toBe("other");
+
+    const subject = await createDeck(owner, {
+      name: "Anatomie",
+      defaultLanguage: "de",
+      purpose: "subject",
+    });
+    expect(subject).toMatchObject({ purpose: "subject", enrichFields: ["meaning"] });
+    const moved = await updateDeck(owner, language.id, { purpose: "subject" });
+    expect(moved).toMatchObject({ purpose: "subject", enrichFields: ["meaning"] });
+
+    await join(member, subject.id);
+    expect((await getDeck(member, subject.id)).purpose).toBeNull();
+    const listed = (await listDecks(member)).find((row) => row.id === subject.id);
+    expect(listed).toMatchObject({ purpose: null, enrichFields: ["meaning"] });
+  });
+
+  it("keep the fields an owner chose when the purpose changes", async () => {
+    const deck = await createDeck(owner, {
+      name: "Eesti",
+      defaultLanguage: "et",
+      enrichFields: ["meaning", "example"],
+    });
+    const after = await updateDeck(owner, deck.id, { purpose: "other" });
+    expect(after.enrichFields).toEqual(["meaning", "example"]);
+  });
+
+  it("record a chosen purpose as its category, once per change", async () => {
+    const capture = vi.fn();
+    const ctx = { ...owner, analytics: { capture, writeDataPoint: vi.fn() } };
+    const deck = await createDeck(ctx, { name: "Biology exam", purpose: "subject" });
+    await updateDeck(ctx, deck.id, { purpose: "subject" });
+    await updateDeck(ctx, deck.id, { purpose: "other" });
+    const inferred = await createDeck(ctx, { name: "Deutsch", defaultLanguage: "de" });
+    await updateDeck(ctx, inferred.id, { purpose: "language" });
+    const set = capture.mock.calls
+      .map(([event]) => event)
+      .filter((event) => event.name === "deck_purpose_set");
+    expect(set).toEqual([
+      { name: "deck_purpose_set", purpose: "subject", created: true, channel: "app" },
+      { name: "deck_purpose_set", purpose: "other", created: false, channel: "app" },
+    ]);
+  });
+
   it("keep the instructions the owner's, and blank instructions none", async () => {
     const deck = await createDeck(owner, {
       name: "Français médical",

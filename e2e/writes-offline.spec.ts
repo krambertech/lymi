@@ -35,6 +35,7 @@ test("a deck and card made offline survive a reload and reach the server", async
     await page.getByRole("menuitem", { name: "New deck", exact: true }).click();
     const newDeck = sheet(page, "New deck");
     await newDeck.getByRole("textbox", { name: "Name", exact: true }).fill(deckName);
+    await newDeck.getByRole("radio", { name: /Something else/ }).click();
     await newDeck.getByRole("button", { name: "Create deck", exact: true }).click();
     await expect(page).toHaveURL(/\/library\/[^/]+$/);
     await expect(page.getByRole("heading", { name: deckName, exact: true })).toBeVisible();

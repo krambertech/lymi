@@ -1,10 +1,10 @@
 import { i18n as globalI18n, type MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { type Directions, LANGUAGE_TAGS } from "@lymi/core";
-import { useId, useState } from "react";
+import { type DeckPurpose, type Directions, LANGUAGE_TAGS } from "@lymi/core";
+import { ClipboardCheck, Languages, Shapes } from "lucide-react";
+import { type ReactNode, useId, useState } from "react";
 import { RadioCard } from "./radio-card";
-import { Segmented } from "./segmented";
 import {
   Combobox,
   ComboboxContent,
@@ -19,6 +19,7 @@ import {
 } from "./ui/combobox";
 import { Field, FieldDescription, FieldError, FieldLabel } from "./ui/field";
 import { RadioGroup } from "./ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 /**
  * The two settings a deck carries besides its name, shared by the create sheet and the deck
@@ -75,6 +76,8 @@ interface LanguageProps {
   label?: string | undefined;
   /** Null leaves the field without one. */
   description?: string | null | undefined;
+  /** Puts the description under the label rather than under the control. */
+  descriptionFirst?: boolean | undefined;
   error?: string | undefined;
 }
 
@@ -83,7 +86,14 @@ interface LanguageProps {
  * because the tag tells Portuguese from Brazilian Portuguese and it is what the API stores. A valid
  * tag the list does not hold is still reachable: typed in full, it becomes the last row.
  */
-export function LanguageField({ value, onChange, label, description, error }: LanguageProps) {
+export function LanguageField({
+  value,
+  onChange,
+  label,
+  description,
+  descriptionFirst,
+  error,
+}: LanguageProps) {
   const { t, i18n } = useLingui();
   const [query, setQuery] = useState("");
   const { contains } = useComboboxFilter({ locale: i18n.locale });
@@ -107,9 +117,15 @@ export function LanguageField({ value, onChange, label, description, error }: La
   const shown = custom ? [...matches, custom] : matches;
 
   const fieldLabel = label ?? t`Language`;
+  const hint = description !== null && (
+    <FieldDescription>
+      {description ?? t`New cards in this deck get this language.`}
+    </FieldDescription>
+  );
   return (
     <Field>
       <FieldLabel>{fieldLabel}</FieldLabel>
+      {descriptionFirst && hint}
       <Combobox<LanguageOption>
         items={custom ? [none, ...known, custom] : [none, ...known]}
         filteredItems={shown}
@@ -141,11 +157,7 @@ export function LanguageField({ value, onChange, label, description, error }: La
           </ComboboxList>
         </ComboboxContent>
       </Combobox>
-      {description !== null && (
-        <FieldDescription>
-          {description ?? t`New cards in this deck get this language.`}
-        </FieldDescription>
-      )}
+      {!descriptionFirst && hint}
       <FieldError>{error}</FieldError>
     </Field>
   );
@@ -154,7 +166,6 @@ export function LanguageField({ value, onChange, label, description, error }: La
 interface DirectionOption {
   value: Directions;
   label: MessageDescriptor;
-  short: MessageDescriptor;
   blurb: MessageDescriptor;
 }
 
@@ -162,19 +173,16 @@ export const DIRECTIONS: DirectionOption[] = [
   {
     value: "recognition",
     label: msg`Recognition`,
-    short: msg`Recognition`,
     blurb: msg`See the term, recall what it means.`,
   },
   {
     value: "production",
     label: msg`Production`,
-    short: msg`Production`,
     blurb: msg`See the meaning, recall the term.`,
   },
   {
     value: "both",
     label: msg`Both ways`,
-    short: msg`Both`,
     blurb: msg`Each card is asked both ways, each way on its own schedule.`,
   },
 ];
@@ -236,11 +244,84 @@ export function DirectionField({ value, onChange, example, total, disabled }: Di
   );
 }
 
+interface PurposeOption {
+  value: DeckPurpose;
+  icon: ReactNode;
+  label: MessageDescriptor;
+  blurb: MessageDescriptor;
+}
+
+export const PURPOSES: PurposeOption[] = [
+  {
+    value: "language",
+    icon: <Languages />,
+    label: msg({ message: "A language", context: "deck purpose" }),
+    blurb: msg`Words and phrases in a language you’re learning.`,
+  },
+  {
+    value: "subject",
+    icon: <ClipboardCheck />,
+    label: msg`A subject or exam`,
+    blurb: msg`Terms with short explanations, like for a citizenship test.`,
+  },
+  {
+    value: "other",
+    icon: <Shapes />,
+    label: msg`Something else`,
+    blurb: msg`Your own material, whatever it is.`,
+  },
+];
+
+interface PurposeProps {
+  value: DeckPurpose | null;
+  onChange: (value: DeckPurpose) => void;
+  error?: string | undefined;
+  description?: string | undefined;
+  descriptionFirst?: boolean | undefined;
+}
+
+/** What the deck is for, which decides what AI fills on its cards until the owner chooses. */
+export function PurposeField({
+  value,
+  onChange,
+  error,
+  description,
+  descriptionFirst,
+}: PurposeProps) {
+  const { t, i18n } = useLingui();
+  const labelId = useId();
+  const hint = description && <FieldDescription>{description}</FieldDescription>;
+  return (
+    <Field>
+      <FieldLabel id={labelId}>{t`What it’s for`}</FieldLabel>
+      {descriptionFirst && hint}
+      <RadioGroup<DeckPurpose | null>
+        aria-labelledby={labelId}
+        // Null, not undefined, so the group stays controlled before anything is chosen.
+        value={value}
+        onValueChange={(next) => next && onChange(next)}
+      >
+        {PURPOSES.map((o) => (
+          <RadioCard
+            key={o.value}
+            value={o.value}
+            icon={o.icon}
+            title={i18n._(o.label)}
+            description={i18n._(o.blurb)}
+          />
+        ))}
+      </RadioGroup>
+      {!descriptionFirst && hint}
+      <FieldError>{error}</FieldError>
+    </Field>
+  );
+}
+
 /**
- * The same choice where there is no room to explain it: three segments and one line that
- * changes with them. Used while creating a deck, where the name is the thing being decided.
+ * The deck's review mode as a select, where a sheet has no room for a card per choice. Each row and
+ * the line under the label say what the learner will be shown.
  */
-export function DirectionCompact({
+export function DirectionSelect({
   value,
   onChange,
 }: {
@@ -250,17 +331,26 @@ export function DirectionCompact({
   const { t, i18n } = useLingui();
   const current = DIRECTIONS.find((o) => o.value === value);
   return (
-    <div className="grid gap-1.5">
-      <span className="text-sm font-medium text-text-2">
-        <Trans>How cards are asked</Trans>
-      </span>
-      <Segmented
+    <Field>
+      <FieldLabel>{t`Review mode`}</FieldLabel>
+      {current && <FieldDescription>{i18n._(current.blurb)}</FieldDescription>}
+      <Select
         value={value}
-        onValueChange={onChange}
-        label={t`How cards are asked`}
-        options={DIRECTIONS.map((o) => ({ value: o.value, label: i18n._(o.short) }))}
-      />
-      <p className="text-sm text-muted">{current && i18n._(current.blurb)}</p>
-    </div>
+        onValueChange={(next) => next && onChange(next as Directions)}
+        items={DIRECTIONS.map((o) => ({ value: o.value, label: i18n._(o.label) }))}
+      >
+        <SelectTrigger>
+          <SelectValue />
+        </SelectTrigger>
+        {/* The box's width, so the captions wrap rather than widen the list past the sheet. */}
+        <SelectContent className="w-(--anchor-width)">
+          {DIRECTIONS.map((o) => (
+            <SelectItem key={o.value} value={o.value} description={i18n._(o.blurb)}>
+              {i18n._(o.label)}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </Field>
   );
 }

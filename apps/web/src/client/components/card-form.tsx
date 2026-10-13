@@ -665,6 +665,7 @@ export function CardForm(props: CardFormProps) {
       >
         {t`Memory hook`}
       </FieldLabel>
+      <FieldDescription>{t`A short phrase that helps you remember it.`}</FieldDescription>
       {/* Two lines, so a long hook can be read on a phone. */}
       <Textarea
         ref={hookRef}
@@ -692,7 +693,6 @@ export function CardForm(props: CardFormProps) {
           clear("hook");
         }}
       />
-      <FieldDescription>{t`A short phrase that helps you remember it.`}</FieldDescription>
       <FieldError>{invalid.hook}</FieldError>
     </Field>
   );

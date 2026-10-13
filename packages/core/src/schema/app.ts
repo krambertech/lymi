@@ -8,7 +8,7 @@ import {
   text,
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
-import type { DeckEnrichField, EnrichedField } from "../enrichment";
+import { DECK_PURPOSES, type DeckEnrichField, type EnrichedField } from "../enrichment";
 import {
   EDITION_STATUSES,
   type EditionCardField,
@@ -95,6 +95,8 @@ export const decks = sqliteTable(
     ...revision,
     /** Rises when a card may need a state its members lack; a member behind it catches up. ADR 0022. */
     statesVersion: integer("states_version").notNull().default(0),
+    /** What the deck is for. Null until the owner says, and read through `deckPurpose`. */
+    purpose: text("purpose", { enum: DECK_PURPOSES }),
     /** The fields the AI may fill. Null follows `defaultEnrichFields`, so a better default reaches untouched decks. */
     enrichFields: text("enrich_fields", { mode: "json" }).$type<DeckEnrichField[]>(),
     /** The owner's own words to the AI about this deck. Never shown to a member. */

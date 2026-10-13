@@ -10,7 +10,7 @@
  * file outside the repository and pass it with `--cards`.
  */
 import { readFileSync, writeFileSync } from "node:fs";
-import { deckEnrichFields, fieldsToFill } from "@lymi/core";
+import { type DeckPurpose, deckEnrichFields, deckPurpose, fieldsToFill } from "@lymi/core";
 import { createTextProvider, type TextProvider } from "../ai";
 import { CARDS_PER_CALL, chunked } from "../services/enrichment";
 import { type CaseExpectations, type CheckResult, checkCard, tally } from "./checks";
@@ -40,6 +40,7 @@ type FixtureDeck = {
   name: string;
   description?: string;
   language: string | null;
+  purpose?: DeckPurpose;
   meaningLanguage: string;
   fields?: string[];
   instructions?: string;
@@ -72,7 +73,10 @@ function stored(deck: FixtureDeck, item: FixtureCase) {
 }
 
 function mayFillOf(deck: FixtureDeck, item: FixtureCase) {
-  return fieldsToFill(stored(deck, item), deckEnrichFields(deck.fields ?? null, deck.language));
+  return fieldsToFill(
+    stored(deck, item),
+    deckEnrichFields(deck.fields ?? null, deck.language, deck.purpose),
+  );
 }
 
 /** The requests the service would make for a deck: one per wave of cards, all with the same deck. */
@@ -82,6 +86,7 @@ function requests(deck: FixtureDeck): { input: string; cases: string[] }[] {
     name: deck.name,
     description: deck.description ?? null,
     language: deck.language,
+    purpose: deck.purpose ?? null,
     instructions: deck.instructions ?? null,
     samples: deck.samples,
   });
@@ -131,7 +136,7 @@ function score(decks: FixtureDeck[], calls: Call[]) {
         {
           term: item.term,
           mayFill: mayFillOf(deck, item),
-          language: deck.language !== null,
+          language: deckPurpose(deck.purpose, deck.language) === "language",
           expect: item.expect,
         },
         reply,

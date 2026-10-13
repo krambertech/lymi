@@ -1,4 +1,4 @@
-import type { DeckEnrichField, DeckInput, MemberRole, ReviewMode } from "@lymi/core";
+import type { DeckEnrichField, DeckInput, DeckPurpose, MemberRole, ReviewMode } from "@lymi/core";
 import type { Deck as DeckRow } from "@lymi/core/schema";
 import { request } from "./request";
 
@@ -17,6 +17,8 @@ export type DeckSummary = Pick<
   | "sectionProgression"
 > & {
   reviewModes: ReviewMode[];
+  /** What the deck is for, inferred from its language until the owner chooses. Null for a member. */
+  purpose: DeckPurpose | null;
   /** What the AI may fill on the deck's cards, with the default already applied. */
   enrichFields: DeckEnrichField[];
   /** The owner's instructions to the AI. Null for a member. */

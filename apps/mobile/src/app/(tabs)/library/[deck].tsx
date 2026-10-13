@@ -696,16 +696,16 @@ function MoveToSeries({
     move(seriesId, () => notice(deck.id, deckName, name, () => undoMove(deck.id, back)));
   };
   return (
-    <Sheet title={t`Move to series`} open={open} onOpenChange={onOpenChange}>
-      <Text className="px-1 text-base text-text-2">
-        {t`“${deckName}” is reviewed with the other decks in its series.`}
-      </Text>
-      {!online && (
-        <View className="flex-row items-center gap-1.5 px-1">
-          <Icon name="offline" size={14} colour={p.muted} />
-          <Text className="flex-1 text-base text-muted">{t`Changing series needs a connection.`}</Text>
-        </View>
-      )}
+    <Sheet
+      title={t`Move to series`}
+      description={
+        online
+          ? t`“${deckName}” is reviewed with the other decks in its series.`
+          : t`Changing series needs a connection.`
+      }
+      open={open}
+      onOpenChange={onOpenChange}
+    >
       {!back &&
         (query.isPending || query.isFetching ? (
           <Skeleton height={104} />

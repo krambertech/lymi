@@ -72,6 +72,11 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
   return (
     <Sheet
       title={t`Daily goal`}
+      description={
+        connected
+          ? t`How many reviews a day keep your streak. Every grade counts, even Forgot.`
+          : t`Changing the goal needs a connection.`
+      }
       open={open}
       onOpenChange={onOpenChange}
       onDismiss={() => {
@@ -79,11 +84,6 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
         chosen.current = null;
       }}
     >
-      <Text className="-mt-1 px-4 text-base text-text-2">
-        {connected
-          ? t`How many reviews a day keep your streak. Every grade counts, even Forgot.`
-          : t`Changing the goal needs a connection.`}
-      </Text>
       <View
         pointerEvents={connected ? "auto" : "none"}
         className={connected ? "" : "opacity-45"}

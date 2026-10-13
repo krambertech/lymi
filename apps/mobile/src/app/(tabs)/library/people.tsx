@@ -22,7 +22,7 @@ import { Icon } from "../../../ui/icons";
 import { DropdownMenu } from "../../../ui/menu";
 import { Button, IconButton, Plate, Press, Text } from "../../../ui/primitives";
 import { Screen } from "../../../ui/screen";
-import { Sheet } from "../../../ui/sheet";
+import { Sheet, SheetError } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 
 /**
@@ -440,10 +440,13 @@ function InviteSheet({
   };
   const shown = refused ?? error;
   return (
-    <Sheet title={t`Invite by email`} open={open} onOpenChange={(next) => !next && onClose()}>
-      <Text className="px-1 text-base text-text-2">
-        {t`They get an email with a link only they can use. They can study the deck but not change it.`}
-      </Text>
+    <Sheet
+      title={t`Invite by email`}
+      description={t`They get an email with a link only they can use. They can study the deck but not change it.`}
+      save={{ label: t`Send invitation`, onPress: submit, busy, disabled: !email.trim() }}
+      open={open}
+      onOpenChange={(next) => !next && onClose()}
+    >
       <View className="rounded-xl bg-glass-plate px-4">
         <TextInput
           value={email}
@@ -469,14 +472,7 @@ function InviteSheet({
           maxFontSizeMultiplier={inputCap(17)}
         />
       </View>
-      {shown && <Text className="px-1 text-base text-danger">{shown}</Text>}
-      <Button
-        label={t`Send invitation`}
-        variant="primary"
-        size="lg"
-        loading={busy}
-        onPress={submit}
-      />
+      {shown && <SheetError>{shown}</SheetError>}
     </Sheet>
   );
 }

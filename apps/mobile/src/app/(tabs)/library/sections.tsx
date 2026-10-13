@@ -16,7 +16,7 @@ import { DropdownMenu } from "../../../ui/menu";
 import { Button, IconButton, Plate, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
-import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
+import { Sheet, SheetError, SheetGroup, SheetNote, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { toast } from "../../../ui/toast-host";
 
@@ -293,17 +293,17 @@ export default function DeckSections() {
             />
           ))}
         </SheetGroup>
-        <Text className="px-1 text-sm text-muted">
-          {t`Anyone studying the deck can start a later section early.`}
-        </Text>
+        <SheetNote>{t`Anyone studying the deck can start a later section early.`}</SheetNote>
       </Sheet>
 
-      <Sheet title={t`Archived sections`} open={showArchived} onOpenChange={setShowArchived}>
-        <Text className="px-1 text-base text-text-2">
-          {t`Restore brings a section back in its place, with the cards archived alongside it.`}
-        </Text>
+      <Sheet
+        title={t`Archived sections`}
+        description={t`Restore brings a section back in its place, with the cards archived alongside it.`}
+        open={showArchived}
+        onOpenChange={setShowArchived}
+      >
         {/* In the sheet, since a toast would sit under it. */}
-        {restore.isError && <SpokenError>{errorMessage(restore.error)}</SpokenError>}
+        {restore.isError && <SheetError>{errorMessage(restore.error)}</SheetError>}
         <View className="overflow-hidden rounded-xl bg-glass-plate">
           {(archived.data?.sections ?? []).map((s, at) => (
             <View
@@ -333,18 +333,6 @@ export default function DeckSections() {
         </View>
       </Sheet>
     </Screen>
-  );
-}
-
-/** An error in a sheet, read out as it appears: iOS ignores accessibilityLiveRegion. */
-function SpokenError({ children }: { children: string }) {
-  useEffect(() => {
-    AccessibilityInfo.announceForAccessibility(children);
-  }, [children]);
-  return (
-    <Text className="px-1 text-base text-danger" accessibilityLiveRegion="polite">
-      {children}
-    </Text>
   );
 }
 
@@ -385,14 +373,16 @@ function NameSheet({
   return (
     <Sheet
       title={renaming ? t`Rename section` : t`New section`}
+      description={renaming ? undefined : t`It goes at the end. Move cards into it from the deck.`}
+      save={{
+        label: renaming ? t`Save` : t`Create section`,
+        onPress: submit,
+        busy,
+        disabled: !name.trim(),
+      }}
       open={target !== null}
       onOpenChange={(open) => !open && onClose()}
     >
-      {!renaming && (
-        <Text className="px-1 text-base text-text-2">
-          {t`It goes at the end. Move cards into it from the deck.`}
-        </Text>
-      )}
       <View className="rounded-xl bg-glass-plate px-4">
         <TextInput
           value={name}
@@ -414,14 +404,7 @@ function NameSheet({
           maxFontSizeMultiplier={inputCap(17)}
         />
       </View>
-      {invalid && <SpokenError>{invalid}</SpokenError>}
-      <Button
-        label={renaming ? t`Save` : t`Create section`}
-        variant="primary"
-        size="lg"
-        loading={busy}
-        onPress={submit}
-      />
+      {invalid && <SheetError>{invalid}</SheetError>}
     </Sheet>
   );
 }

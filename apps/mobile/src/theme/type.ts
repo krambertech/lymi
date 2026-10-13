@@ -102,3 +102,11 @@ export function fitType(size: number, fontScale: number, limit = Infinity): Type
 export function inputCap(size: number): number {
   return size <= 17 ? 1.5 : 1.3;
 }
+
+/** A multi-line field's text: iOS pins it to the top, so even padding centres one line in a 44 pt box. */
+export const MULTILINE = {
+  fontSize: 17,
+  lineHeight: 22,
+  paddingTop: 11,
+  paddingBottom: 11,
+} as const;

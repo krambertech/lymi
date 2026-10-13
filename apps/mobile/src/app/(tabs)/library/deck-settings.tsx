@@ -19,7 +19,7 @@ import { openDraft } from "../../../data/draft";
 import { languageName } from "../../../data/languages";
 import { useDeckCards, useDecks, useSections } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
-import { inputCap } from "../../../theme/type";
+import { inputCap, MULTILINE } from "../../../theme/type";
 import { Icon } from "../../../ui/icons";
 import { Select } from "../../../ui/menu";
 import { Plate, Text } from "../../../ui/primitives";
@@ -104,11 +104,17 @@ function Settings({ deck }: { deck: DeckSummary }) {
   const [editing, setEditing] = useState<"name" | "description" | "instructions" | null>(null);
   const [asking, setAsking] = useState(false);
   const [choosingFields, setChoosingFields] = useState(false);
-  // The keyboard's done key or a swipe keeps what was typed, as every row sheet does. phone.md.
+  // ✓ or the keyboard's done key saves; close or a swipe leaves the deck as it was. phone.md "Sheets".
   const finishEditing = () => {
     if (editing === "name") commitName();
     if (editing === "description") commitDescription();
     if (editing === "instructions") commitInstructions();
+    setEditing(null);
+  };
+  const cancelEditing = () => {
+    if (editing === "name") setName(kept.current.name);
+    if (editing === "description") setDescription(kept.current.description ?? "");
+    if (editing === "instructions") setInstructions(kept.current.instructions ?? "");
     setEditing(null);
   };
   // A sheet opens on the deck as it is now, so a change made on the web since is never saved over.
@@ -213,8 +219,8 @@ function Settings({ deck }: { deck: DeckSummary }) {
       accessibilityLabel={t`Description`}
       multiline
       selectionColor={p.text}
-      className="min-h-11 py-2 font-sans text-text"
-      style={{ fontSize: 17 }}
+      className="min-h-11 font-sans text-text"
+      style={MULTILINE}
       maxFontSizeMultiplier={inputCap(17)}
     />
   );
@@ -232,8 +238,8 @@ function Settings({ deck }: { deck: DeckSummary }) {
       accessibilityLabel={t`Instructions`}
       multiline
       selectionColor={p.text}
-      className="min-h-11 py-2 font-sans text-text"
-      style={{ fontSize: 17 }}
+      className="min-h-48 font-sans text-text"
+      style={MULTILINE}
       maxFontSizeMultiplier={inputCap(17)}
     />
   );
@@ -318,8 +324,10 @@ function Settings({ deck }: { deck: DeckSummary }) {
                   ? t`Instructions`
                   : t`Name`
             }
+            description={editing === "instructions" ? t`Only you see these.` : undefined}
+            save={{ label: t`Save`, onPress: finishEditing }}
             open={editing !== null}
-            onOpenChange={(open) => !open && finishEditing()}
+            onOpenChange={(open) => !open && cancelEditing()}
           >
             <View className="rounded-xl bg-glass-plate px-4">
               {editing === "description"
@@ -328,18 +336,13 @@ function Settings({ deck }: { deck: DeckSummary }) {
                   ? instructionsField
                   : nameField}
             </View>
-            {editing === "instructions" && (
-              <Text className="px-1 text-base text-text-2">{t`Only you see these.`}</Text>
-            )}
           </Sheet>
           <Sheet
             title={t`Fields AI can fill`}
             open={choosingFields}
             onOpenChange={setChoosingFields}
+            description={t`AI fills them only when they help. It never changes your text.`}
           >
-            <Text className="px-1 text-base text-text-2">
-              {t`AI fills them only when they help. It never changes your text.`}
-            </Text>
             <SheetGroup>
               {DECK_ENRICH_FIELDS.map((field) => (
                 <SheetRow

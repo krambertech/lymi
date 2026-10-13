@@ -10,6 +10,8 @@ const ACCESSIBILITY_SIZES = 28 / 17;
 /** Rows that belong together on one plate, split by full-width hairlines. */
 export function Rows({ children }: { children: ReactNode }) {
   const rows = Children.toArray(children).filter(Boolean);
+  // With every row hidden, an empty plate would draw as a stray line.
+  if (rows.length === 0) return null;
   return (
     <Plate className="overflow-hidden">
       {rows.map((row, i) => (

@@ -3,22 +3,21 @@ import { api, errorMessage } from "@lymi/client/api";
 import { addInput, clearSent } from "@lymi/client/card-input";
 import { decksQuery, roundsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { cardLimits, modeKey, type ReviewModeKey } from "@lymi/core";
+import { modeKey, type ReviewModeKey } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { AccessibilityInfo, ScrollView, TextInput, View } from "react-native";
-import { ComposerField, FieldName } from "../capture/composer-field";
-import { FieldSheet } from "../capture/field-sheet";
+import { AccessibilityInfo, ScrollView, type TextInput, View } from "react-native";
+import { AddFieldChips, CardFields, useFormFields } from "../capture/card-fields";
+import { EMPTY_FORM, type FormValues } from "../capture/form";
 import { LastAdd } from "../capture/last-add";
-import { EXTRAS, type Extra, type Outcome, type Picture, UNDO_FOR } from "../capture/model";
+import { type Outcome, type Picture, UNDO_FOR } from "../capture/model";
 import { isTextMode, MODE_LABELS, ModesSheet } from "../capture/modes-sheet";
 import { PictureSheet } from "../capture/picture-sheet";
 import { CAPTURE_KEYS, captureStore } from "../data/kept";
 import { useDecks, useSections } from "../data/queries";
 import { usePalette } from "../theme/palette";
-import { inputCap } from "../theme/type";
 import { FieldChip, FieldChipFace, FieldChipRow } from "../ui/field-chip";
 import { GlassButton, GlassPill } from "../ui/glass";
 import { KeyboardRoom } from "../ui/keyboard";
@@ -27,17 +26,8 @@ import { Icon, Text } from "../ui/primitives";
 import { OnGlass } from "../ui/surface";
 
 /** Everything typed into the composer, the term to the source. */
-type Draft = Record<"term" | "meaning" | "notes" | Extra, string>;
-
-const EMPTY: Draft = {
-  term: "",
-  meaning: "",
-  notes: "",
-  example: "",
-  pronunciation: "",
-  hook: "",
-  source: "",
-};
+type Draft = FormValues;
+const EMPTY = EMPTY_FORM;
 
 /** Uploads a picture to a card that exists; resolves with why it failed, or nothing. */
 function uploadPicture(cardId: string, picture: Picture) {
@@ -76,7 +66,7 @@ export default function Capture() {
   const [enrich, setEnrich] = useState(() => captureStore.getBoolean(CAPTURE_KEYS.enrich) ?? true);
   const [draft, setDraft] = useState<Draft>(EMPTY);
   const write = (key: keyof Draft) => (value: string) => setDraft((d) => ({ ...d, [key]: value }));
-  const [editing, setEditing] = useState<Extra | null>(null);
+  const fields = useFormFields(draft);
   const [picture, setPicture] = useState<Picture | null>(null);
   const [picturing, setPicturing] = useState(false);
   const sections = useSections(deck?.id).data?.sections ?? [];
@@ -90,7 +80,6 @@ export default function Capture() {
   const [undoable, setUndoable] = useState(false);
   const [pending, setPending] = useState(false);
   const termRef = useRef<TextInput>(null);
-  const meaningRef = useRef<TextInput>(null);
 
   // Each add starts its own five seconds, so a second add keeps its Undo for the full time.
   useEffect(() => {
@@ -136,6 +125,7 @@ export default function Capture() {
       const term = outcome.card.term;
       // Clear what was sent; anything typed since stays, and so does the lesson it came from.
       setDraft((d) => clearSent(d, sent, ["source"]));
+      fields.settle();
       setModes((m) => (m === modes ? null : m));
       setPicture((x) => (x === picture ? null : x));
       termRef.current?.focus();
@@ -232,69 +222,40 @@ export default function Capture() {
               contentContainerClassName="gap-3 px-5 pt-4 pb-4"
               keyboardShouldPersistTaps="always"
             >
-              <View>
-                <FieldName>{t`Term`}</FieldName>
-                <TextInput
-                  ref={termRef}
-                  autoFocus
-                  value={draft.term}
-                  maxLength={cardLimits.term ?? undefined}
-                  onChangeText={(v) => {
-                    write("term")(v);
-                    if (error) setError(null);
-                  }}
-                  placeholder={t`A word or phrase`}
-                  placeholderTextColor={p.muted}
-                  accessibilityLabel={t`Term`}
-                  accessibilityHint={error ?? undefined}
-                  // The term is in the language being learned, which the phone's dictionary gets wrong.
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  spellCheck={false}
-                  multiline
-                  submitBehavior="submit"
-                  returnKeyType="next"
-                  onSubmitEditing={() => meaningRef.current?.focus()}
-                  selectionColor={p.text}
-                  className="min-h-12 py-1.5 font-sans font-medium text-text"
-                  style={{ fontSize: 28, letterSpacing: -0.56 }}
-                  maxFontSizeMultiplier={inputCap(28)}
-                />
-              </View>
-              <ComposerField
-                ref={meaningRef}
-                value={draft.meaning}
-                onChange={write("meaning")}
-                label={t`Meaning`}
-                placeholder={enrich ? t`Leave it empty and the AI fills it in` : t`What it means`}
-                limit={cardLimits.meaning}
-                onNext={() => void add()}
+              <CardFields
+                values={draft}
+                onChange={(field, value) => {
+                  write(field)(value);
+                  if (field === "term" && error) setError(null);
+                }}
+                shown={fields.shown}
+                adding={fields.adding}
+                termRef={termRef}
+                submitFrom="meaning"
+                onSubmit={() => void add()}
+                placeholder={{
+                  meaning: enrich ? t`Leave it empty and the AI fills it in` : t`What it means`,
+                }}
+                footer={
+                  error ? (
+                    <View
+                      className="flex-row items-center gap-1.5 pt-2"
+                      accessibilityLiveRegion="polite"
+                    >
+                      <Icon name="alert" size={14} colour={p.danger} />
+                      <Text className="flex-1 text-base text-danger">{error}</Text>
+                    </View>
+                  ) : (
+                    last && (
+                      <LastAdd
+                        last={last}
+                        onUndo={undoable ? undo : undefined}
+                        onRetry={last.kind === "added" && last.picture ? retryPicture : undefined}
+                      />
+                    )
+                  )
+                }
               />
-              <ComposerField
-                value={draft.notes}
-                onChange={write("notes")}
-                label={t`Notes`}
-                placeholder={t`Grammar, usage, anything else`}
-                limit={cardLimits.notes}
-                newline
-              />
-              {error ? (
-                <View
-                  className="flex-row items-center gap-1.5 pt-2"
-                  accessibilityLiveRegion="polite"
-                >
-                  <Icon name="alert" size={14} colour={p.danger} />
-                  <Text className="flex-1 text-base text-danger">{error}</Text>
-                </View>
-              ) : (
-                last && (
-                  <LastAdd
-                    last={last}
-                    onUndo={undoable ? undo : undefined}
-                    onRetry={last.kind === "added" && last.picture ? retryPicture : undefined}
-                  />
-                )
-              )}
             </ScrollView>
 
             <View className="px-4 pt-1 pb-2">
@@ -312,21 +273,7 @@ export default function Capture() {
                 >
                   {enrich ? t`AI fills in` : t`AI off`}
                 </FieldChip>
-                {EXTRAS.map((field) => {
-                  const label = i18n._(field.label);
-                  const value = draft[field.key].trim();
-                  return (
-                    <FieldChip
-                      key={field.key}
-                      icon={field.icon}
-                      on={!!value}
-                      accessibilityLabel={value ? t`${label}: ${value}` : label}
-                      onPress={() => setEditing(field.key)}
-                    >
-                      {value || label}
-                    </FieldChip>
-                  );
-                })}
+                <AddFieldChips missing={fields.missing} onAdd={fields.add} />
                 {sections.length > 0 && (
                   <Select
                     label={t`Section`}
@@ -375,13 +322,6 @@ export default function Capture() {
               value={picture}
               onChange={setPicture}
               onClose={() => setPicturing(false)}
-              onClosed={() => termRef.current?.focus()}
-            />
-            <FieldSheet
-              field={EXTRAS.find((f) => f.key === editing)}
-              value={editing ? draft[editing] : ""}
-              onChange={(v) => editing && write(editing)(v)}
-              onClose={() => setEditing(null)}
               onClosed={() => termRef.current?.focus()}
             />
           </>

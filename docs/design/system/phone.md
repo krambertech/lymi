@@ -50,22 +50,26 @@ Every sheet rises from below and swipes away. What the task holds decides its ki
 
 | Kind | For | Built with | Surface | Fills |
 | --- | --- | --- | --- | --- |
-| Row sheet | A choice or a small edit over the screen: a menu, a `Select`, one of Add a word's fields, the daily goal, the reminder time, the learner's name and photo | `Sheet`, inside the screen | iOS's glass, untinted, at the height of what it holds | On-glass |
+| Row sheet | A choice or a small edit over the screen: a menu, a `Select`, the daily goal, the reminder time, the learner's name and photo | `Sheet`, inside the screen | iOS's glass, untinted, at the height of what it holds | On-glass |
 | Peek sheet | A screen to glance at that drags up for more: the streak | A route presented as `formSheet`, with detents | `useFrost`, the sheet colour at 50%, while it peeks; iOS makes it opaque at full height | On-glass |
-| Full sheet | A form with long text or several fields, keyboard up: Add a word, feedback | A route presented as `formSheet` at full height | Opaque, the sheet colour | The room's own, since on-glass fills vanish against an opaque sheet |
+| Full sheet | A form with long text or several fields, keyboard up: Add a word, Edit card, feedback | A route presented as `formSheet` at full height | Opaque, the sheet colour | The room's own, since on-glass fills vanish against an opaque sheet |
 
 - Reach for a row sheet first. A small edit belongs in one even when it has a text field: the field is a `bg-glass-plate` box with no label over it, and the keyboard's done key or a swipe keeps the value, with no Save button.
 - A row sheet never opens a sheet, the camera or the photo library over itself. A row that needs one closes the sheet and acts once it has gone.
 - A peek sheet and a full sheet carry their controls as glass in the top corners; a row sheet has none.
 - Whatever fails after a row sheet has gone says so on the screen under it, beside what it changed.
 
-## Add a word
+## Add a word and Edit card
 
-Add a word composes a card the way Linear composes an issue: a Liquid Glass sheet with close, the deck and Add as glass in its top corners, then the term, large with the keyboard already up, the meaning and the notes. Each is its name in small text over a line with no box, so a filled line still says what it holds and the empty one says what goes in it; all wrap as they fill. Return in the term goes to the meaning, Return in the meaning adds, and Return in the notes starts a new line.
+Adding and editing a card share one form. Add a word composes a card the way Linear composes an issue: a Liquid Glass sheet with close, the deck and Add as glass in its top corners, then the term, large with the keyboard already up, and the meaning. Each field is its name in small text over a line with no box, so a filled line still says what it holds and the empty one says what goes in it; all wrap as they fill. Return in the term goes to the meaning, Return in the meaning adds, and Return in the notes starts a new line.
 
-The card's other fields are chips over the keyboard, after the AI's fill: example, pronunciation, memory hook, source, the section when the deck has any, the picture, and how it's asked. A chip adds nothing to the form. A text field's chip opens that one field in a sheet with the keyboard up, as the web's FieldChip opens a drawer; the keyboard's done key or a swipe closes it, and the chip then shows what it holds. The section is a choice list, and how it's asked is the deck's modes or the text modes ticked here; unticking the last one goes back to the deck's. The picture is taken or chosen in its sheet with a description that does not name the answer, and uploads once the card exists; one chosen offline is dropped with a line that says so. Tags wait for their own phone control. Autocorrect is off wherever the text is in the language being learned: the term, the example and the pronunciation.
+The card's other text fields, pronunciation, example, notes, memory hook and source, show only once they hold something. While empty, each is a chip over the keyboard, after the AI's fill, and a tap adds that field to the form in its place with the keyboard on it, so a learner who never uses a field never sees it. The section when the deck has any, the picture and how it's asked are chips too, but choices rather than text, so each opens its own sheet. The section is a choice list, and how it's asked is the deck's modes or the text modes ticked here; unticking the last one goes back to the deck's. The picture is taken or chosen in its sheet with a description that does not name the answer, and uploads once the card exists; one chosen offline is dropped with a line that says so. Tags wait for their own phone control. Autocorrect is off wherever the text is in the language being learned: the term, the example and the pronunciation.
 
 The sheet stays for the next card: a line under the fields says where the last one went, with Undo for five seconds, or which deck already has it. A duplicate keeps the form with the term selected, as on the web. The deck, the AI choice, the picture until it is added, and the source carry over.
+
+Edit card is the same form over a card that exists, with close and an amber ✓ in place of Add; ✓ or Return in the last field saves, and close or a swipe down leaves the card as it was. It opens from ⋯ on the card page and from the card's menu in a review, and a tap on any field of the card page opens it with the keyboard on that field. A field the AI wrote keeps the AI's mark until it is changed, and is the learner's once saved. Only a deck's owner sees Edit card; a member reads the card.
+
+Archive is in the same ⋯ and the same menu. On the card page the card stays on screen with a line that says it is archived and Restore; in a review it leaves at once, and a line under the header offers Undo for five seconds. Archived, the last row of Library, lists archived decks and cards with Restore, and a restored row keeps its place with Undo until the page is left.
 
 ## Review
 
@@ -74,7 +78,7 @@ The sheet stays for the next card: a line under the fields says where the last o
 - Pulling the top bar down follows the finger and, past a third of the screen, ends the review on the end screen, as X does. Today shows behind it as it moves.
 - The cards are a stack, where the web keeps one plate whose words change ([motion.md](motion.md#review)). The next card slides in over the one just graded from the end edge, turned a little and straightening as it lands, while the graded card and its grades wait underneath. Under Reduce Motion the next card fades in.
 - A swipe from the start edge drags the top card off the same way and uncovers the last graded card, revealed with its grades and waiting for a grade, and removes that grade. It goes back one card. The pointing hand shows it once, on a learner's second card ever; VoiceOver offers it as an action on the card.
-- A tap on a revealed card opens its menu as a sheet of rows. A hook is written in a sheet with the keyboard up, as Add a word's fields are, rather than in place under the word, which the keyboard would cover; the keyboard's done key saves it, with no button repeating that, and on an empty field keeps the AI's draft, which is its placeholder; a swipe down discards it. Pressing Easy after a peek says why in a tip over the grades.
+- A tap on a revealed card opens its menu as a sheet of rows. A hook is written in a sheet with the keyboard up rather than in place under the word, which the keyboard would cover; the keyboard's done key saves it, with no button repeating that, and on an empty field keeps the AI's draft, which is its placeholder; a swipe down discards it. Pressing Easy after a peek says why in a tip over the grades.
 - After a grade the flame breathes and sparks from the hood, as on the web.
 - At the end the lantern's light reaches the edges of the screen. Review forgotten leads with the Forgot mark, as on the web.
 

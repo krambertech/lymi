@@ -91,6 +91,16 @@ describe("submitting a write", () => {
     expect(w.writeStore.snapshot()).toMatchObject([{ write: { kind: "card.add" } }]);
   });
 
+  it("refetches review data when the server refuses a card write shown in it", async () => {
+    const { QueryClient } = await import("@tanstack/react-query");
+    const qc = new QueryClient();
+    qc.setQueryData(["queue", "all", "draw"], { total: 1, cards: [] });
+    w.bindWriteCache(qc);
+    answers.push(fail(400));
+    await expect(w.writes.archiveCard("a")).rejects.toMatchObject({ status: 400 });
+    expect(qc.getQueryState(["queue", "all", "draw"])?.isInvalidated).toBe(true);
+  });
+
   it("throws a refusal, as the plain request would", async () => {
     answers.push(fail(400));
     await expect(w.submit(add("a"), "a")).rejects.toMatchObject({ status: 400 });

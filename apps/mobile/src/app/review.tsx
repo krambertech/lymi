@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { apiUrl, type QueueItem, type ReviewScope } from "@lymi/client/api";
+import { apiUrl, type Card, type QueueItem, type ReviewScope } from "@lymi/client/api";
 import { gradeStore } from "@lymi/client/grades";
 import { hookDraftQuery } from "@lymi/client/queries";
 import { useRecallClock } from "@lymi/client/recall-clock";
@@ -69,6 +69,7 @@ import { useSessionHeaders } from "../auth/client";
 import { EndEmbers, LightPool } from "../brand/ending";
 import { Flame } from "../brand/flame";
 import { Lantern } from "../brand/lantern";
+import { holdCard, onCardEdited } from "../card/edited";
 import {
   useDay,
   useDecks,
@@ -95,6 +96,7 @@ import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "..
 import { usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
 import { AiCardChip, Chip, StateChip } from "../ui/chip";
+import { GlassSurface } from "../ui/glass";
 import { GRADES } from "../ui/grade";
 import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
@@ -107,8 +109,11 @@ const GLIDE = REVEAL_GLIDE.duration * 1000;
 const LOOKAHEAD = 3;
 /** Local grades a fetch can fall behind by before the draw data is refreshed. */
 const REFRESH_AFTER = 20;
+const ARCHIVE_UNDO_FOR = 5000;
 
 type Pinned = { cardId: string; mode: string };
+/** A card archived from its menu, offered back for a few seconds. */
+type Gone = { card: Card; key: string; mode: string };
 /** A stretch of review: the draw, which may stop at the goal, or a round's fixed list. ADR 0021. */
 type Leg =
   | { kind: "draw"; date: string; from: number; until: number | null }
@@ -230,8 +235,17 @@ function Run({
   const seriesList = useSeriesList(!!series);
   const scopeSections = useSections(section ? deck : undefined);
   const insets = useSafeAreaInsets();
+  // Cards archived from this review, gone from it at once rather than when the draw is fetched again.
+  const [archived, setArchived] = useState<ReadonlySet<string>>(() => new Set());
+  // Cards edited in this review, shown corrected at once; the review goes on with them.
+  const [edits, setEdits] = useState<ReadonlyMap<string, Card>>(() => new Map());
   // A cached draw can predate the last grade, so the first card waits for this mount's fetch.
-  const data = draw.isFetchedAfterMount || draw.fetchStatus !== "fetching" ? draw.data : undefined;
+  const settled = draw.isFetchedAfterMount || draw.fetchStatus !== "fetching";
+  const data = useMemo(() => {
+    const fetched = settled ? draw.data : undefined;
+    if (!fetched || archived.size === 0) return fetched;
+    return { ...fetched, cards: fetched.cards.filter((c) => !archived.has(c.card.id)) };
+  }, [settled, draw.data, archived]);
   const listData =
     list.isFetchedAfterMount || list.fetchStatus !== "fetching" ? list.data : undefined;
   const { state, grades, setNow } = useDrawState(scope, data, LOOKAHEAD);
@@ -261,6 +275,8 @@ function Run({
   const [locked, setLocked] = useState({ key: "", presses: 0 });
   const [menuOpen, setMenuOpen] = useState(false);
   const [hookOpen, setHookOpen] = useState(false);
+  // The card just archived from its menu, offered back for a few seconds.
+  const [gone, setGone] = useState<Gone | null>(null);
   // What the menu chose, run once its sheet has gone, so nothing moves under it.
   const chosen = useRef<(() => void) | null>(null);
   // Hooks and marks set in this review, shown at once rather than when the draw is fetched again.
@@ -271,6 +287,21 @@ function Run({
   const undone = useRef(new Set<string>());
   const started = useRef(false);
 
+  // Edit card saves over the review; the review goes on with the corrected card.
+  useEffect(
+    () =>
+      onCardEdited((written) => {
+        setEdits((m) => new Map(m).set(written.id, written));
+        // The corrected card carries its hook, so an earlier hook saved here no longer stands in.
+        setHooks((m) => {
+          if (!m.has(written.id)) return m;
+          const next = new Map(m);
+          next.delete(written.id);
+          return next;
+        });
+      }),
+    [],
+  );
   // Leaving refreshes what this review, or another device meanwhile, moved under it.
   useEffect(
     () => () => {
@@ -541,6 +572,31 @@ function Run({
       });
   };
 
+  // Undo for a card archived from its menu, offered over the next card or the end screen.
+  const bringBack = ({ card: back, key }: Gone) => {
+    setArchived((s) => {
+      const next = new Set(s);
+      next.delete(back.id);
+      return next;
+    });
+    setListCards((c) => ({ ...c, dropped: withoutKey(c.dropped, key) }));
+    setGone(null);
+  };
+  const undoArchive = async () => {
+    if (!gone) return;
+    const { card: back, mode } = gone;
+    Haptics.selectionAsync();
+    setGone(null);
+    try {
+      await writes.restoreCard(back.id);
+      bringBack(gone);
+      // It comes back to the top, where it was, rather than wherever the draw would put it.
+      setPinned({ cardId: back.id, mode });
+      setRevealed(false);
+    } catch (e) {
+      Alert.alert(t`Couldn’t restore “${back.term}”.`, e instanceof Error ? e.message : undefined);
+    }
+  };
   // Nothing loaded and the fetch failed: say so, rather than wait on a blank screen.
   const failed =
     (!data && draw.isError && !draw.isFetching) ||
@@ -562,6 +618,13 @@ function Run({
     return (
       <Cover style={pull.style}>
         <ReviewSkeleton />
+        {gone && (
+          <ArchivedLine
+            term={gone.card.term}
+            onUndo={() => void undoArchive()}
+            onDone={() => setGone(null)}
+          />
+        )}
       </Cover>
     );
   }
@@ -596,11 +659,20 @@ function Run({
             style={{ position: "absolute", top: 0, left: 0, right: 0, height: insets.top + 64 }}
           />
         </GestureDetector>
+        {gone && (
+          <ArchivedLine
+            term={gone.card.term}
+            onUndo={() => void undoArchive()}
+            onDone={() => setGone(null)}
+          />
+        )}
       </Cover>
     );
   }
   if (!current || !data || !state) return null;
-  const { card } = current;
+  const edited = edits.get(current.card.id);
+  const item = edited ? { ...current, card: edited } : current;
+  const { card } = item;
 
   const { done: legDone, total } = legProgress(leg, state.attempts, listCards, left);
   const lastToday = state.log
@@ -644,6 +716,22 @@ function Run({
     } catch (e) {
       setMarks((m) => new Map(m).set(card.id, !value));
       Alert.alert(t`Couldn’t save that.`, e instanceof Error ? e.message : undefined);
+    }
+  };
+  /** Takes the card out of this review at once; the line that says so offers it back. */
+  const archive = async () => {
+    const key = keyOf(current);
+    setArchived((s) => new Set(s).add(card.id));
+    if (leg.kind !== "draw") setListCards((c) => ({ ...c, dropped: withKey(c.dropped, key) }));
+    setPinned(null);
+    setRevealed(false);
+    const held: Gone = { card, key, mode: modeKey(current.mode) };
+    setGone(held);
+    try {
+      await writes.archiveCard(card.id);
+    } catch (e) {
+      bringBack(held);
+      Alert.alert(t`Couldn’t archive “${card.term}”.`, e instanceof Error ? e.message : undefined);
     }
   };
   const openMenu = () => {
@@ -768,7 +856,7 @@ function Run({
             {(top) => (
               <Turn
                 top={top}
-                item={current}
+                item={item}
                 deck={cardDeck}
                 forgotten={forgotten}
                 hook={hook}
@@ -823,6 +911,23 @@ function Run({
               }}
             />
           )}
+          {owned && (
+            <SheetRow
+              icon="edit"
+              label={t`Edit card`}
+              opens
+              onPress={() => {
+                chosen.current = () => {
+                  holdCard(card);
+                  router.push({
+                    pathname: "/edit-card",
+                    params: { card: card.id, deck: card.deckId },
+                  });
+                };
+                setMenuOpen(false);
+              }}
+            />
+          )}
           <SheetRow
             icon="important"
             label={important ? t`Unmark important` : t`Mark important`}
@@ -832,13 +937,40 @@ function Run({
             }}
           />
         </SheetGroup>
+        {owned && (
+          <SheetGroup>
+            <SheetRow
+              icon="archive"
+              label={t`Archive card`}
+              destructive
+              onPress={() => {
+                chosen.current = () => void archive();
+                setMenuOpen(false);
+              }}
+            />
+          </SheetGroup>
+        )}
       </Sheet>
+      {gone && (
+        <ArchivedLine
+          term={gone.card.term}
+          onUndo={() => void undoArchive()}
+          onDone={() => setGone(null)}
+        />
+      )}
       <HookSheet
         card={{ ...card, hook: hook?.text ?? null, hookSource: hook?.source ?? null }}
         open={hookOpen}
         onClose={() => setHookOpen(false)}
         onSaved={(saved) => {
           setHooks((m) => new Map(m).set(card.id, saved));
+          // A card corrected in Edit card earlier keeps this hook too, so both say the same.
+          setEdits((m) => {
+            const edited = m.get(card.id);
+            return edited
+              ? new Map(m).set(card.id, { ...edited, hook: saved.text, hookSource: saved.source })
+              : m;
+          });
           setHookOpen(false);
           // Written after the reveal, it shows at once where Show hook would have put it.
           if (revealed) setAidState({ key: showing, peeked, shown: true });
@@ -1759,3 +1891,49 @@ const styles = StyleSheet.create({
   count: { fontSize: COUNT_SIZE, lineHeight: COUNT_SIZE * 1.2, fontVariant: ["tabular-nums"] },
   figures: { fontVariant: ["tabular-nums"] },
 });
+
+/** Says a card left the review for Archived, with Undo, for a few seconds under the header. */
+function ArchivedLine({
+  term,
+  onUndo,
+  onDone,
+}: {
+  term: string;
+  onUndo: () => void;
+  onDone: () => void;
+}) {
+  const { t } = useLingui();
+  const p = usePalette();
+  const insets = useSafeAreaInsets();
+  // biome-ignore lint/correctness/useExhaustiveDependencies: one timer per card archived.
+  useEffect(() => {
+    const timer = setTimeout(onDone, ARCHIVE_UNDO_FOR);
+    return () => clearTimeout(timer);
+  }, [term]);
+  return (
+    <View
+      pointerEvents="box-none"
+      className="absolute inset-x-0 items-center px-4"
+      style={{ top: insets.top + 60 }}
+    >
+      <GlassSurface
+        tint="room"
+        style={{ borderRadius: 22, flexDirection: "row", alignItems: "center", gap: 10 }}
+      >
+        <View className="flex-row items-center gap-2 ps-4">
+          <Icon name="archive" size={16} colour={p["text-2"]} />
+          <Text className="shrink text-base text-text" numberOfLines={1}>
+            {t`Archived “${term}”`}
+          </Text>
+        </View>
+        <Press
+          onPress={onUndo}
+          accessibilityRole="button"
+          className="h-11 justify-center pe-4 ps-1"
+        >
+          <Text className="text-base font-medium text-text">{t`Undo`}</Text>
+        </Press>
+      </GlassSurface>
+    </View>
+  );
+}

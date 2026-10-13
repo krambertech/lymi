@@ -8,6 +8,7 @@ import {
 } from "@lymi/client/grades";
 import {
   activityQuery,
+  archivedCardPagesQuery,
   archivedDecksQuery,
   deckCardsQuery,
   decksQuery,
@@ -45,6 +46,7 @@ import { addDays, lastSevenDays } from "../ui/days";
 
 export const useDecks = () => useQuery(decksQuery);
 export const useArchivedDecks = () => useQuery(archivedDecksQuery);
+export const useArchivedCards = () => useInfiniteQuery(archivedCardPagesQuery);
 export const useDeckCards = (deckId: string) => useQuery(deckCardsQuery(deckId));
 export const useSections = (deckId: string | undefined) =>
   useQuery({ ...sectionsQuery(deckId ?? ""), enabled: !!deckId });

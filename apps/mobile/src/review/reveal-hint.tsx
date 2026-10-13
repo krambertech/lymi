@@ -17,8 +17,8 @@ import { usePalette } from "../theme/palette";
 import { Icon, Text } from "../ui/primitives";
 
 const REVEALS_KEY = "reveals";
-/** A learner's first cards show how to reveal after a second; after that, only an idle card does. */
-const LEARNING_REVEALS = 3;
+/** A learner's first card shows how to reveal after a second; after that, only an idle card does. */
+const LEARNING_REVEALS = 1;
 const SOON_MS = 1000;
 const IDLE_MS = 60_000;
 
@@ -41,9 +41,10 @@ export function useRevealHint(card: string | null, revealed: boolean) {
 
 /**
  * The pointing hand at the card's foot taps three times and rests with a line saying how to reveal.
- * Under reduced motion it appears without tapping.
+ * Under reduced motion it appears without tapping. It floats over the card's foot, so the cue never
+ * moves when it comes and goes; `lifted` keeps it clear of Peek at your hook.
  */
-export function RevealHint() {
+export function RevealHint({ lifted = false }: { lifted?: boolean }) {
   const { t } = useLingui();
   const p = usePalette();
   const reduce = useReduceMotion();
@@ -75,7 +76,8 @@ export function RevealHint() {
       pointerEvents="none"
       importantForAccessibility="no-hide-descendants"
       accessibilityElementsHidden
-      className="items-center gap-1 px-5 pb-5"
+      className="absolute inset-x-0 items-center gap-1 px-5 pb-5"
+      style={{ bottom: lifted ? 64 : 0 }}
     >
       <Animated.View style={hand}>
         <View className="size-11 items-center justify-center">

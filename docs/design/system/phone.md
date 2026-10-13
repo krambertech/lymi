@@ -57,6 +57,8 @@ Every sheet rises from below and swipes away. What the task holds decides its ki
 - Reach for a row sheet first. A small edit belongs in one even when it has a text field: the field is a `bg-glass-plate` box with no label over it, and the keyboard's done key or a swipe keeps the value, with no Save button.
 - A row sheet never opens a sheet, the camera or the photo library over itself. A row that needs one closes the sheet and acts once it has gone.
 - A peek sheet and a full sheet carry their controls as glass in the top corners; a row sheet has none.
+- A full sheet's header is one row: close at the start, its name centred at `text-md`, the one action at the end. Nothing under it repeats the name as a large title; a line saying what the sheet is for comes first in the content.
+- A row sheet's groups fill with `glass-group`, a faint ink tint in the light room and the glass plate's white at night, with no border, so they still read when iOS turns the sheet opaque at full height.
 - Whatever fails after a row sheet has gone says so on the screen under it, beside what it changed.
 
 ## Add a word and Edit card

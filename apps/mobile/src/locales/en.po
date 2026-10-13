@@ -1165,9 +1165,6 @@ msgstr "Import from {source}"
 msgid "Import of your cards"
 msgstr "Import of your cards"
 
-msgid "Important"
-msgstr "Important"
-
 msgid "Important mark removed"
 msgstr "Important mark removed"
 

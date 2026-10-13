@@ -1165,9 +1165,6 @@ msgstr "Импорт из {source}"
 msgid "Import of your cards"
 msgstr "Импорт карточек"
 
-msgid "Important"
-msgstr "Важная"
-
 msgid "Important mark removed"
 msgstr "Отметка «важная» снята"
 

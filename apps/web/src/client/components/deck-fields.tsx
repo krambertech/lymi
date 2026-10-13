@@ -2,7 +2,8 @@ import { i18n as globalI18n, type MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type DeckPurpose, type Directions, LANGUAGE_TAGS } from "@lymi/core";
-import { useId, useState } from "react";
+import { ClipboardCheck, Languages, Shapes } from "lucide-react";
+import { type ReactNode, useId, useState } from "react";
 import { RadioCard } from "./radio-card";
 import { Segmented } from "./segmented";
 import {
@@ -267,24 +268,32 @@ export function DirectionCompact({
 
 interface PurposeOption {
   value: DeckPurpose;
+  icon: ReactNode;
   label: MessageDescriptor;
+  short: MessageDescriptor;
   blurb: MessageDescriptor;
 }
 
 export const PURPOSES: PurposeOption[] = [
   {
     value: "language",
+    icon: <Languages />,
     label: msg({ message: "A language", context: "deck purpose" }),
+    short: msg({ message: "Language", context: "deck purpose" }),
     blurb: msg`Words and phrases in a language you’re learning.`,
   },
   {
     value: "subject",
+    icon: <ClipboardCheck />,
     label: msg`A subject or exam`,
+    short: msg({ message: "Subject", context: "deck purpose" }),
     blurb: msg`Terms with short explanations, like for a citizenship test.`,
   },
   {
     value: "other",
+    icon: <Shapes />,
     label: msg`Something else`,
+    short: msg({ message: "Other", context: "deck purpose" }),
     blurb: msg`Your own material, whatever it is.`,
   },
 ];
@@ -313,12 +322,50 @@ export function PurposeField({ value, onChange, error, description }: PurposePro
           <RadioCard
             key={o.value}
             value={o.value}
+            icon={o.icon}
             title={i18n._(o.label)}
             description={i18n._(o.blurb)}
           />
         ))}
       </RadioGroup>
       {description && <FieldDescription>{description}</FieldDescription>}
+      <FieldError>{error}</FieldError>
+    </Field>
+  );
+}
+
+/** The same choice as `PurposeField` where there is no room for cards, as `DirectionCompact` is. */
+export function PurposeCompact({ value, onChange, error }: PurposeProps) {
+  const { t, i18n } = useLingui();
+  const current = PURPOSES.find((o) => o.value === value);
+  return (
+    <Field>
+      <span className="text-sm font-medium text-text-2">
+        <Trans>What it’s for</Trans>
+      </span>
+      <Segmented<DeckPurpose>
+        value={value}
+        onValueChange={onChange}
+        label={t`What it’s for`}
+        options={PURPOSES.map((o) => ({
+          value: o.value,
+          label: (
+            <span className="flex items-center gap-1.5 [&_svg]:size-4 [&_svg]:stroke-[1.6]">
+              <span aria-hidden="true">{o.icon}</span>
+              {i18n._(o.short)}
+            </span>
+          ),
+        }))}
+      />
+      {current ? (
+        <p className="text-sm text-muted">{i18n._(current.blurb)}</p>
+      ) : (
+        !error && (
+          <p className="text-sm text-muted">
+            <Trans>AI fills the deck’s cards to suit it.</Trans>
+          </p>
+        )
+      )}
       <FieldError>{error}</FieldError>
     </Field>
   );

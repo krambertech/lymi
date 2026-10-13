@@ -812,6 +812,9 @@ msgstr "AI draft · Tab keeps it"
 msgid "AI example"
 msgstr "AI example"
 
+msgid "AI fills the deck’s cards to suit it."
+msgstr "AI fills the deck’s cards to suit it."
+
 msgid "AI fills them only when they help. It never changes your text."
 msgstr "AI fills them only when they help. It never changes your text."
 
@@ -2313,6 +2316,10 @@ msgstr "Known"
 msgid "Language"
 msgstr "Language"
 
+msgctxt "deck purpose"
+msgid "Language"
+msgstr "Language"
+
 #. placeholder {0}: languageName(next, i18n.locale)
 msgid "Language changed to {0}"
 msgstr "Language changed to {0}"
@@ -2941,6 +2948,10 @@ msgstr "Options for {seriesName}"
 msgctxt "Between two ways to sign in"
 msgid "or"
 msgstr "or"
+
+msgctxt "deck purpose"
+msgid "Other"
+msgstr "Other"
 
 msgid "Other subjects"
 msgstr "Other subjects"
@@ -3658,6 +3669,10 @@ msgstr "Strong"
 
 msgid "Stuck? Read the guide"
 msgstr "Stuck? Read the guide"
+
+msgctxt "deck purpose"
+msgid "Subject"
+msgstr "Subject"
 
 msgid "Subjects"
 msgstr "Subjects"

@@ -17,7 +17,7 @@ import { useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { decksQuery, settingsQuery } from "../lib/queries";
 import { Button } from "./button";
-import { DirectionCompact, LanguageField, PurposeField } from "./deck-fields";
+import { DirectionCompact, LanguageField, PurposeCompact } from "./deck-fields";
 import { InlineError } from "./inline-error";
 import { useStaticNav } from "./nav-link";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
@@ -169,7 +169,7 @@ export function NewDeckForm({ seed, pending, error, onCancel, onSubmit }: NewDec
         />
         <FieldError>{invalid.name}</FieldError>
       </Field>
-      <PurposeField
+      <PurposeCompact
         value={purpose}
         onChange={(next) => {
           setPurpose(next);

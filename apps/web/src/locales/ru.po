@@ -812,6 +812,9 @@ msgstr "Черновик AI · Tab, чтобы взять"
 msgid "AI example"
 msgstr "Пример от AI"
 
+msgid "AI fills the deck’s cards to suit it."
+msgstr "AI заполняет карточки колоды с учётом этого."
+
 msgid "AI fills them only when they help. It never changes your text."
 msgstr "AI заполняет их, только когда это полезно. Твой текст он не меняет."
 
@@ -2313,6 +2316,10 @@ msgstr "Выученные"
 msgid "Language"
 msgstr "Язык"
 
+msgctxt "deck purpose"
+msgid "Language"
+msgstr "Язык"
+
 #. placeholder {0}: languageName(next, i18n.locale)
 msgid "Language changed to {0}"
 msgstr "Новый язык: {0}"
@@ -2941,6 +2948,10 @@ msgstr "Параметры «{seriesName}»"
 msgctxt "Between two ways to sign in"
 msgid "or"
 msgstr "или"
+
+msgctxt "deck purpose"
+msgid "Other"
+msgstr "Другое"
 
 msgid "Other subjects"
 msgstr "Другие темы"
@@ -3658,6 +3669,10 @@ msgstr "Надёжный"
 
 msgid "Stuck? Read the guide"
 msgstr "Что-то не получается? Прочитай руководство"
+
+msgctxt "deck purpose"
+msgid "Subject"
+msgstr "Предмет"
 
 msgid "Subjects"
 msgstr "Темы"

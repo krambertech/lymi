@@ -7,9 +7,21 @@ declare module "vitest/browser" {
   }
 }
 
-/** The suite runs with reduced motion; a test of the motion itself lifts it until the test ends. */
-export async function withMotion() {
-  await commands.emulateReducedMotion("no-preference");
+// Motion reads the setting once per mount from its own change listener, so wait for the event.
+async function emulate(reducedMotion: "reduce" | "no-preference") {
+  const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (query.matches === (reducedMotion === "reduce")) return;
+  const changed = new Promise((resolve) =>
+    query.addEventListener("change", resolve, { once: true }),
+  );
+  await commands.emulateReducedMotion(reducedMotion);
+  await changed;
+  await new Promise((resolve) => setTimeout(resolve, 0));
 }
 
-afterEach(() => commands.emulateReducedMotion("reduce"));
+/** The suite runs with reduced motion; a test of the motion itself lifts it until the test ends. */
+export async function withMotion() {
+  await emulate("no-preference");
+}
+
+afterEach(() => emulate("reduce"));

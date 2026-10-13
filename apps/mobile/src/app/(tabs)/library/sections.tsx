@@ -7,7 +7,7 @@ import { SectionInput, type SectionProgression, sectionLimits } from "@lymi/core
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { TextInput, View } from "react-native";
+import { AccessibilityInfo, TextInput, View } from "react-native";
 import { useDecks, useSections } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { inputCap } from "../../../theme/type";
@@ -303,11 +303,7 @@ export default function DeckSections() {
           {t`Restore brings a section back in its place, with the cards archived alongside it.`}
         </Text>
         {/* In the sheet, since a toast would sit under it. */}
-        {restore.isError && (
-          <Text className="px-1 text-base text-danger" accessibilityLiveRegion="polite">
-            {errorMessage(restore.error)}
-          </Text>
-        )}
+        {restore.isError && <SpokenError>{errorMessage(restore.error)}</SpokenError>}
         <View className="overflow-hidden rounded-xl bg-glass-plate">
           {(archived.data?.sections ?? []).map((s, at) => (
             <View
@@ -337,6 +333,18 @@ export default function DeckSections() {
         </View>
       </Sheet>
     </Screen>
+  );
+}
+
+/** An error in a sheet, read out as it appears: iOS ignores accessibilityLiveRegion. */
+function SpokenError({ children }: { children: string }) {
+  useEffect(() => {
+    AccessibilityInfo.announceForAccessibility(children);
+  }, [children]);
+  return (
+    <Text className="px-1 text-base text-danger" accessibilityLiveRegion="polite">
+      {children}
+    </Text>
   );
 }
 
@@ -406,7 +414,7 @@ function NameSheet({
           maxFontSizeMultiplier={inputCap(17)}
         />
       </View>
-      {invalid && <Text className="px-1 text-base text-danger">{invalid}</Text>}
+      {invalid && <SpokenError>{invalid}</SpokenError>}
       <Button
         label={renaming ? t`Save` : t`Create section`}
         variant="primary"

@@ -76,6 +76,15 @@ function executablePath() {
   return existsSync(fallback) ? fallback : undefined;
 }
 
+/** A preview link carries its key in the query, so no URL written to the evidence keeps one. */
+function redact(text) {
+  return String(text).replace(/(https?:\/\/[^\s?#"'`]+)\?[^\s#"'`)]*/g, "$1");
+}
+
+function failure(error) {
+  return redact(stripVTControlCharacters(error.message)).split("\n").slice(0, 6).join("\n");
+}
+
 function slug(text) {
   return text
     .toLowerCase()
@@ -94,14 +103,16 @@ async function driveFeature(browser, name) {
   const context = await browser.newContext({ ...viewport, baseURL: base, reducedMotion: "reduce" });
   const page = await context.newPage();
   const problems = [];
-  page.on("pageerror", (error) => problems.push(`page error: ${error.message}`));
+  page.on("pageerror", (error) => problems.push(redact(`page error: ${error.message}`)));
   page.on("console", (m) => {
     if (m.type() !== "error") return;
-    // Drop the query so a preview link's key never lands in the evidence.
-    const at = m.location().url?.split("?")[0];
-    problems.push(at ? `console: ${m.text()} (${at})` : `console: ${m.text()}`);
+    const at = m.location().url;
+    problems.push(redact(at ? `console: ${m.text()} (${at})` : `console: ${m.text()}`));
   });
-  page.on("response", (r) => r.status() >= 500 && problems.push(`HTTP ${r.status()} ${r.url()}`));
+  page.on(
+    "response",
+    (r) => r.status() >= 500 && problems.push(redact(`HTTP ${r.status()} ${r.url()}`)),
+  );
 
   const api = async (path) => {
     const response = await page.request.get(`${base}${path}`);
@@ -119,7 +130,7 @@ async function driveFeature(browser, name) {
       record.stored = (await run()) ?? null;
     } catch (error) {
       record.ok = false;
-      record.error = stripVTControlCharacters(error.message).split("\n").slice(0, 6).join("\n");
+      record.error = failure(error);
     }
     await page.screenshot({ path: join(dir, `${prefix}.png`) }).catch(() => {});
     const aria = await page
@@ -151,7 +162,7 @@ async function driveFeature(browser, name) {
     await feature.default({ page, base, step, api, expect });
   } catch (error) {
     if (!error.recorded)
-      steps.push({ action: "set up", ok: false, error: error.message, files: [] });
+      steps.push({ action: "set up", ok: false, error: failure(error), files: [] });
   } finally {
     await context.close();
   }

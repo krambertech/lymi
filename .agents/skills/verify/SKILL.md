@@ -16,6 +16,8 @@ A change is verified when the feature it touches has been driven in a running pr
 | Review | [review.md](features/review.md) |
 | Add a card | [add-card.md](features/add-card.md) |
 | Library and the deck page | [deck-page.md](features/deck-page.md) |
+| Create a deck | [new-deck.md](features/new-deck.md) |
+| Deck settings | [deck-settings.md](features/deck-settings.md) |
 | Import from Anki | [import.md](features/import.md) |
 | Offline writes | [offline-writes.md](features/offline-writes.md) |
 
@@ -60,4 +62,4 @@ An independent reviewer gives every product pull request a live verdict before i
 3. Drive them on the preview, `run.mjs <features> --url <preview origin> --entry <preview link> --version <id> --sha <head> --pr <n>`, and on `main` in a local worktree with `server.mjs start`, so a failure the pull request did not cause shows up on both.
 4. Post the verdict on the pull request against the head SHA: **PASS** when every step passed on the preview with no unexpected console error or 5xx, **PASS+NOTES** when it passed but the run surfaced something worth a look, such as a console error or a difference from `main`, and **FAIL** when a step failed on the preview and passed on `main`. A step that fails on both is a finding about `main`, reported separately. Name the features, the evidence folder and, for anything but PASS, the failing step and its error.
 
-A push that changes the patch voids the verdict; a merge of `main` that leaves the diff the same keeps it. The preview link carries a key, so keep it out of comments and evidence. The preview's personas are reset by each run, so never drive a preview while someone is trying it by hand. Phone pull requests get a run on the Mac or a verdict saying they were not driven.
+A push that changes the patch voids the verdict; a merge of `main` that leaves the diff the same keeps it. The preview link carries a key: the runner drops query strings from every URL it writes, and nothing else should paste the link into a comment. A cloud session needs network access to `workers.dev` to reach a preview. The preview's personas are reset by each run, so never drive a preview while someone is trying it by hand. Phone pull requests get a run on the Mac or a verdict saying they were not driven.

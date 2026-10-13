@@ -141,6 +141,10 @@
       }
     },
     {
+      "includes": ["apps/mobile/**", "!apps/mobile/src/i18n/list.ts"],
+      "plugins": ["./biome-plugins/no-intl-list-format.grit"]
+    },
+    {
       "includes": ["apps/mobile/**"],
       "linter": {
         "rules": {

@@ -1,0 +1,3 @@
+`Intl.ListFormat` as $list where {
+  register_diagnostic(span=$list, message="Hermes has no Intl.ListFormat, so this throws on the phone. Use formatList() from src/i18n/list.ts, which falls back to a comma list.")
+}

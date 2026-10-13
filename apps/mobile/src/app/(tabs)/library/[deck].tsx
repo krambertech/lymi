@@ -23,6 +23,7 @@ import { moveBack } from "../../../data/move-undo";
 import { useNextDue } from "../../../data/next-due";
 import { useDeckCards, useDecks, useSections, useSeriesList } from "../../../data/queries";
 import { useMoveNotice, useSeriesActions } from "../../../data/series";
+import { formatList } from "../../../i18n/list";
 import { useOnline } from "../../../streak/goal-picker";
 import { usePalette } from "../../../theme/palette";
 import { EmptyState } from "../../../ui/empty-state";
@@ -337,11 +338,7 @@ function Tools({
   // Filter lists what can be filtered by; each opens its values in the same sheet.
   const [level, setLevel] = useState<"state" | "due" | "section" | null>(null);
   const levelName = { state: t`State`, due: t`Due`, section: t`Section` };
-  // Hermes may not ship Intl.ListFormat, so a plain comma list stands in for it.
-  const list = (items: string[]) =>
-    typeof Intl.ListFormat === "function"
-      ? new Intl.ListFormat(i18n.locale, { type: "conjunction", style: "narrow" }).format(items)
-      : items.join(", ");
+  const list = (items: string[]) => formatList(items, i18n.locale);
   const sortName: Record<DeckSort, string> = {
     section: t`Section`,
     due: t`When it’s back`,

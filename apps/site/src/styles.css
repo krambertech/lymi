@@ -3,6 +3,7 @@
 @import "@lymi/design/tokens.css";
 /* The deck tray, shared with the product. */
 @import "@lymi/design/tray.css";
+@import "@lymi/design/wick.css";
 
 /*
  * Onest from @fontsource-variable/onest; a browser fetches a script's file only when the page

@@ -1,6 +1,7 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { MotionConfig } from "motion/react";
 import { useState } from "react";
 import { expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
@@ -45,6 +46,23 @@ test("a revealed card shows its source, not its tags, and marks only what the AI
   expect(card.textContent).not.toContain("verbs");
   expect(card.textContent).not.toContain("from lesson");
   expect(card.textContent).not.toContain("by you");
+});
+
+test.each([
+  { how: "a pointer reveal", animateReveal: true, reduce: false, lit: true },
+  { how: "a keyboard reveal", animateReveal: false, reduce: false, lit: false },
+  { how: "reduced motion", animateReveal: true, reduce: true, lit: false },
+])("after $how the wick is lit: $lit", async ({ animateReveal, reduce, lit }) => {
+  await render(
+    <MotionConfig reducedMotion={reduce ? "always" : "never"}>
+      <I18nProvider i18n={i18n}>
+        <ReviewCard item={queueItem} revealed animateReveal={animateReveal} onReveal={noop} />
+      </I18nProvider>
+    </MotionConfig>,
+  );
+
+  const card = page.getByRole("region", { name: /Recognition card/ }).element();
+  expect(card.querySelector(".wick")?.hasAttribute("data-lit")).toBe(lit);
 });
 
 test("several AI-written fields share one AI chip", async () => {

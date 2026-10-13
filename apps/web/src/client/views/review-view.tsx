@@ -11,6 +11,8 @@ import {
   lanternFor,
   REVEAL_GLIDE,
   streakFlameFor,
+  WICK,
+  WICK_STYLE,
 } from "@lymi/design";
 import { clsx } from "clsx";
 import {
@@ -27,6 +29,7 @@ import {
 import {
   AnimatePresence,
   animate as animateValue,
+  type MotionStyle,
   motion,
   useAnimate,
   useIsPresent,
@@ -371,7 +374,7 @@ const answerGroup: Variants = {
 };
 const answerRule: Variants = {
   hidden: { scaleX: 0 },
-  shown: { scaleX: 1, transition: { duration: 0.36, ease: EASE_OUT } },
+  shown: { scaleX: 1, transition: WICK.draw },
 };
 // Blur settles to `none` rather than `blur(0)`, which Safari rasterises soft.
 const answerLine: Variants = {
@@ -754,7 +757,9 @@ export function ReviewCard({
         <motion.div
           variants={answerRule}
           aria-hidden="true"
-          className="h-px bg-edge ltr:origin-left rtl:origin-right"
+          className="wick"
+          data-lit={!measure && animateReveal && !reduce ? "" : undefined}
+          style={WICK_STYLE as MotionStyle}
         />
         <div className="grid grid-cols-[minmax(0,1fr)] gap-3">
           {mode.target === "term" ? (

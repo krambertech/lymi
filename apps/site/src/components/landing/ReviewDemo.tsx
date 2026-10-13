@@ -1,6 +1,7 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { WICK, WICK_STYLE } from "@lymi/design";
 import { clsx } from "clsx";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, type MotionStyle, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { SAMPLE_CARDS, type SampleCard } from "./cards";
 
@@ -26,6 +27,7 @@ export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
   const still = useReducedMotion();
   const [index, setIndex] = useState(0);
   const [revealedFor, setRevealedFor] = useState(-1);
+  const [revealedByKey, setRevealedByKey] = useState(false);
   const [answered, setAnswered] = useState<number | null>(null);
   const grades = [
     { name: t`Forgot`, when: t`10 min`, announcement: t`Back in 10 minutes.` },
@@ -37,6 +39,7 @@ export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
   const card = deck[index % deck.length];
   const chosen = answered === null ? null : grades[answered];
   const revealed = revealedFor === index;
+  const lit = !still && !revealedByKey;
 
   const answer = (n: number) => {
     if (!revealed || answered !== null) return;
@@ -100,8 +103,17 @@ export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
                     transition={still ? { duration: 0 } : { duration: 0.44 }}
-                    className="mt-3 border-t border-edge pt-3"
+                    className="mt-3"
                   >
+                    <motion.div
+                      aria-hidden="true"
+                      className="wick mb-3"
+                      data-lit={lit ? "" : undefined}
+                      initial={lit ? { scaleX: 0 } : false}
+                      animate={{ scaleX: 1 }}
+                      transition={WICK.draw}
+                      style={WICK_STYLE as MotionStyle}
+                    />
                     <p className="text-lg text-text-2">{i18n._(card.meaning)}</p>
                     {card.example && (
                       <p className="mt-2 text-xs text-muted italic">{card.example}</p>
@@ -115,7 +127,10 @@ export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={still ? { duration: 0 } : { duration: 0.2 }}
-                    onClick={() => setRevealedFor(index)}
+                    onClick={(e) => {
+                      setRevealedFor(index);
+                      setRevealedByKey(e.detail === 0);
+                    }}
                     className="mt-5 w-full rounded-sm border border-edge-2 border-dashed py-2.5 text-sm text-muted transition-colors hoverable:hover:border-amber hoverable:hover:text-text-2"
                   >
                     <Trans>Show the meaning</Trans>

@@ -3,6 +3,7 @@
 @import "@lymi/design/tokens.css";
 /* The deck tray, shared with the site. */
 @import "@lymi/design/tray.css";
+@import "@lymi/design/wick.css";
 /* Feature styles, one file each; they load first, so an equal-specificity rule below them wins. */
 @import "./styles/lantern.css";
 @import "./styles/streak.css";

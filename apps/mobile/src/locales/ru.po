@@ -239,6 +239,9 @@ msgstr "{name} больше не в колоде «{deck}»"
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "Запомнено: {passed}, забыто: {failed}"
 
+msgid "{PENDING_INVITATION_LIMIT, plural, one {You already have # pending invitation. Cancel it, or wait for them to join.} other {You already have # pending invitations. Cancel one, or wait for someone to join.}}"
+msgstr ""
+
 msgid "{queued, plural, one {# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades and changes made offline are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# оценка или изменение, сделанное офлайн, ещё не дошло до Lymi. Выйди, когда снова будешь онлайн, чтобы его сохранить.} few {# оценки и изменения, сделанные офлайн, ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы их сохранить.} many {# оценок и изменений, сделанных офлайн, ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы их сохранить.} other {# оценки и изменения, сделанные офлайн, ещё не дошли до Lymi. Выйди, когда снова будешь онлайн, чтобы их сохранить.}}"
 
@@ -416,6 +419,9 @@ msgstr "Алфавит"
 msgid "Also on your list"
 msgstr "Ещё для повторения"
 
+msgid "anna@example.com"
+msgstr ""
+
 msgid "Another way"
 msgstr "Другой способ"
 
@@ -426,6 +432,12 @@ msgid "Any time"
 msgstr "В любое время"
 
 msgid "Anyone can add this deck from its public page."
+msgstr ""
+
+msgid "Anyone with the link"
+msgstr ""
+
+msgid "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
 msgstr ""
 
 msgid "Anyone with this link can join and review these cards."
@@ -544,6 +556,12 @@ msgstr "Тест на гражданство Канады"
 
 msgid "Cancel"
 msgstr "Отмена"
+
+msgid "Cancel invitation"
+msgstr ""
+
+msgid "Cancel the invitation to {email}?"
+msgstr ""
 
 msgid "Cancelled"
 msgstr "Отменён"
@@ -676,6 +694,9 @@ msgstr ""
 msgid "Couldn’t archive the card."
 msgstr ""
 
+msgid "Couldn’t cancel the invitation. Try again."
+msgstr ""
+
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Не удалось изменить фото. Проверь соединение и попробуй ещё раз."
 
@@ -702,6 +723,9 @@ msgstr "Не удалось загрузить Обзор"
 
 msgid "Couldn’t load more."
 msgstr "Не удалось загрузить больше."
+
+msgid "Couldn’t load the join link. Try again."
+msgstr ""
 
 msgid "Couldn’t load this card"
 msgstr "Не удалось загрузить эту карточку"
@@ -745,6 +769,9 @@ msgstr "Не удалось связаться с Lymi. Проверь соед�
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Не удалось связаться с сервисом входа. Проверь соединение и попробуй снова."
 
+msgid "Couldn’t remove them. Try again."
+msgstr ""
+
 #. placeholder {0}: back.term
 msgid "Couldn’t restore “{0}”."
 msgstr ""
@@ -776,11 +803,20 @@ msgstr "Не удалось сохранить имя. Проверь соеди
 msgid "Couldn’t search cards"
 msgstr "Не удалось найти карточки"
 
+msgid "Couldn’t send the invitation. Too many went out recently, so try again later."
+msgstr ""
+
 msgid "Couldn’t send your feedback"
 msgstr "Не удалось отправить сообщение"
 
 msgid "Couldn’t take back your grade for “{term}”. It still counts."
 msgstr "Не удалось отменить оценку для «{term}». Она засчитана."
+
+msgid "Couldn’t turn off the join link. Try again."
+msgstr ""
+
+msgid "Couldn’t turn on the join link. Try again."
+msgstr ""
 
 msgid "Create a deck on the web first, then add cards here."
 msgstr "Сначала создай колоду в веб-версии, а потом добавляй карточки здесь."
@@ -959,6 +995,9 @@ msgstr "Изменена серия «{name}»"
 msgid "Email"
 msgstr "Почта"
 
+msgid "Email address"
+msgstr ""
+
 msgid "End review"
 msgstr "Завершить повторение"
 
@@ -972,8 +1011,14 @@ msgstr "Дополнено ИИ"
 msgid "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "{count, plural, one {Дополнена # карточка} few {Дополнено # карточки} many {Дополнено # карточек} other {Дополнено # карточки}} в колоде «{deck}»"
 
+msgid "Enter a full email address, like anna@example.com."
+msgstr ""
+
 msgid "Enter an email address, like you@example.com."
 msgstr "Введи адрес почты, например you@example.com."
+
+msgid "Enter an email address."
+msgstr ""
 
 msgid "Enter the 6-digit code we sent to {email}."
 msgstr "Введи 6-значный код, который мы отправили на {email}."
@@ -993,6 +1038,9 @@ msgstr "Все разделы открыты, так что любая карт�
 
 msgid "Every shelf"
 msgstr "Все полки"
+
+msgid "Everyone studying this deck. You see whether they joined, not their reviews."
+msgstr ""
 
 msgid "Example"
 msgstr "Пример"
@@ -1244,6 +1292,16 @@ msgctxt "daily goal"
 msgid "Intense"
 msgstr "Интенсивно"
 
+msgid "Invite"
+msgstr ""
+
+msgid "Invite by email"
+msgstr ""
+
+#. placeholder {0}: dayMonth(new Date(invitation.invitedAt))
+msgid "invited {0}"
+msgstr ""
+
 msgid "Invited {name} to {deck}"
 msgstr "{name} приглашён в «{deck}»"
 
@@ -1280,12 +1338,25 @@ msgstr ""
 msgid "Join a deck"
 msgstr ""
 
+#. placeholder {0}: dayMonth(joined)
+msgid "joined {0}"
+msgstr ""
+
 msgid "Joining a deck needs a connection. Connect and try again."
 msgstr ""
 
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Усердно"
+
+msgid "Keep invitation"
+msgstr ""
+
+msgid "Keep member"
+msgstr ""
+
+msgid "Keep sharing"
+msgstr ""
 
 msgid "Keep studying"
 msgstr "Продолжить учить"
@@ -1589,6 +1660,9 @@ msgctxt "language"
 msgid "Norwegian"
 msgstr "Норвежский"
 
+msgid "Not joined yet"
+msgstr ""
+
 msgid "Not reviewed yet"
 msgstr "Ещё не повторялись"
 
@@ -1637,6 +1711,9 @@ msgstr "Часто забываются"
 msgid "OK"
 msgstr "OK"
 
+msgid "Only people you invite can join. Current members stay."
+msgstr ""
+
 msgid "Only the deck’s owner can change this."
 msgstr "Менять это может только владелец колоды."
 
@@ -1673,6 +1750,12 @@ msgstr ""
 msgid "Open Settings on the web"
 msgstr "Открыть настройки в веб-версии"
 
+msgid "Options for {email}"
+msgstr ""
+
+msgid "Options for {name}"
+msgstr ""
+
 msgid "Options for {seriesName}"
 msgstr "Параметры «{seriesName}»"
 
@@ -1682,11 +1765,17 @@ msgstr "Другое"
 msgid "Other subjects"
 msgstr "Другие темы"
 
+msgid "Owner"
+msgstr ""
+
 msgid "Password"
 msgstr "Пароль"
 
 msgid "Peek at your hook"
 msgstr "Заглянуть в зацепку"
+
+msgid "People"
+msgstr ""
 
 msgid "People and sharing"
 msgstr "Люди и доступ"
@@ -1730,6 +1819,9 @@ msgstr "Португальский"
 
 msgid "Previous month"
 msgstr "Предыдущий месяц"
+
+msgid "Private"
+msgstr ""
 
 msgid "Production"
 msgstr "Воспроизведение"
@@ -1795,8 +1887,17 @@ msgstr "Карточка на распознавание для {cue}. Нажм�
 msgid "Remind me to review"
 msgstr "Напоминать о повторении"
 
+msgid "Remove {name}?"
+msgstr ""
+
 msgid "Remove filter: {name}"
 msgstr "Убрать фильтр: {name}"
+
+msgid "Remove from deck"
+msgstr ""
+
+msgid "Remove member"
+msgstr ""
 
 msgid "Remove photo"
 msgstr "Удалить фото"
@@ -1965,6 +2066,9 @@ msgstr "Отправить новый код"
 msgid "Send feedback"
 msgstr "Обратная связь"
 
+msgid "Send invitation"
+msgstr ""
+
 msgid "Send reset link"
 msgstr "Отправить ссылку"
 
@@ -1980,6 +2084,9 @@ msgstr "Настройки"
 
 msgid "Settings is coming to the phone"
 msgstr "Настройки скоро появятся на телефоне"
+
+msgid "Share link"
+msgstr ""
 
 msgid "Shared by {owner}"
 msgstr "От {owner}"
@@ -2161,10 +2268,28 @@ msgstr "API"
 msgid "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 msgstr "Колода исчезнет из Библиотеки, и её карточки перестанут появляться в повторениях. Если присоединишься снова, твои повторения сохранятся."
 
+msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
+msgstr ""
+
+msgid "Their invitation link stops working. You can invite them again any time."
+msgstr ""
+
 msgid "Theme"
 msgstr "Тема"
 
 msgid "There is no deck at this address"
+msgstr ""
+
+msgid "They already have a pending invitation."
+msgstr ""
+
+msgid "They get an email with a link only they can use. They can study the deck but not change it."
+msgstr ""
+
+msgid "They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept."
+msgstr ""
+
+msgid "They’re already in this deck."
 msgstr ""
 
 msgid "They’re ready when you are."
@@ -2183,6 +2308,9 @@ msgid "This card’s picture was removed."
 msgstr "Изображение этой карточки убрано."
 
 msgid "This deck is already in Library."
+msgstr ""
+
+msgid "This deck is already yours."
 msgstr ""
 
 msgid "This deck is archived"
@@ -2297,6 +2425,12 @@ msgctxt "language"
 msgid "Turkish"
 msgstr "Турецкий"
 
+msgid "Turn off link"
+msgstr ""
+
+msgid "Turn off the join link?"
+msgstr ""
+
 msgid "Turned off the join link for {deck}"
 msgstr "Ссылка для присоединения к «{deck}» выключена"
 
@@ -2373,6 +2507,9 @@ msgstr "Когда вернётся"
 msgid "Where you met it, such as a lesson"
 msgstr "Откуда это, например урок"
 
+msgid "Who can join"
+msgstr ""
+
 msgid "Work and study"
 msgstr "Работа и учёба"
 
@@ -2413,6 +2550,9 @@ msgid "You cannot add this deck."
 msgstr ""
 
 msgid "You cannot join this deck through this link."
+msgstr ""
+
+msgid "You removed them from this deck, so you can’t invite them again."
 msgstr ""
 
 msgid "You start with the first section. The next opens as you learn this one."

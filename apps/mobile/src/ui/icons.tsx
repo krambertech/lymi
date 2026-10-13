@@ -61,6 +61,7 @@ import {
   Search,
   SearchX,
   Settings,
+  Share,
   Sparkle,
   Star,
   Sun,
@@ -187,6 +188,7 @@ const ICONS = {
   moveDown: ArrowDown,
   delete: Trash2,
   filter: ListFilter,
+  share: Share,
 } as const;
 
 export type IconName = keyof typeof ICONS;

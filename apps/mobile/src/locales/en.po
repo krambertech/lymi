@@ -239,6 +239,9 @@ msgstr "{name} left {deck}"
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "{passed} remembered, {failed} forgotten"
 
+msgid "{PENDING_INVITATION_LIMIT, plural, one {You already have # pending invitation. Cancel it, or wait for them to join.} other {You already have # pending invitations. Cancel one, or wait for someone to join.}}"
+msgstr "{PENDING_INVITATION_LIMIT, plural, one {You already have # pending invitation. Cancel it, or wait for them to join.} other {You already have # pending invitations. Cancel one, or wait for someone to join.}}"
+
 msgid "{queued, plural, one {# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades and changes made offline are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades and changes made offline are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 
@@ -416,6 +419,9 @@ msgstr "Alphabet"
 msgid "Also on your list"
 msgstr "Also on your list"
 
+msgid "anna@example.com"
+msgstr "anna@example.com"
+
 msgid "Another way"
 msgstr "Another way"
 
@@ -427,6 +433,12 @@ msgstr "Any time"
 
 msgid "Anyone can add this deck from its public page."
 msgstr "Anyone can add this deck from its public page."
+
+msgid "Anyone with the link"
+msgstr "Anyone with the link"
+
+msgid "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
+msgstr "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
 
 msgid "Anyone with this link can join and review these cards."
 msgstr "Anyone with this link can join and review these cards."
@@ -544,6 +556,12 @@ msgstr "Canadian citizenship test"
 
 msgid "Cancel"
 msgstr "Cancel"
+
+msgid "Cancel invitation"
+msgstr "Cancel invitation"
+
+msgid "Cancel the invitation to {email}?"
+msgstr "Cancel the invitation to {email}?"
 
 msgid "Cancelled"
 msgstr "Cancelled"
@@ -676,6 +694,9 @@ msgstr "Couldn’t archive “{0}”."
 msgid "Couldn’t archive the card."
 msgstr "Couldn’t archive the card."
 
+msgid "Couldn’t cancel the invitation. Try again."
+msgstr "Couldn’t cancel the invitation. Try again."
+
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Couldn’t change your photo. Check your connection and try again."
 
@@ -702,6 +723,9 @@ msgstr "Couldn’t load Insights"
 
 msgid "Couldn’t load more."
 msgstr "Couldn’t load more."
+
+msgid "Couldn’t load the join link. Try again."
+msgstr "Couldn’t load the join link. Try again."
 
 msgid "Couldn’t load this card"
 msgstr "Couldn’t load this card"
@@ -745,6 +769,9 @@ msgstr "Couldn’t reach Lymi. Check your connection and try again."
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Couldn’t reach the sign-in service. Check your connection and try again."
 
+msgid "Couldn’t remove them. Try again."
+msgstr "Couldn’t remove them. Try again."
+
 #. placeholder {0}: back.term
 msgid "Couldn’t restore “{0}”."
 msgstr "Couldn’t restore “{0}”."
@@ -776,11 +803,20 @@ msgstr "Couldn’t save your name. Check your connection and try again."
 msgid "Couldn’t search cards"
 msgstr "Couldn’t search cards"
 
+msgid "Couldn’t send the invitation. Too many went out recently, so try again later."
+msgstr "Couldn’t send the invitation. Too many went out recently, so try again later."
+
 msgid "Couldn’t send your feedback"
 msgstr "Couldn’t send your feedback"
 
 msgid "Couldn’t take back your grade for “{term}”. It still counts."
 msgstr "Couldn’t take back your grade for “{term}”. It still counts."
+
+msgid "Couldn’t turn off the join link. Try again."
+msgstr "Couldn’t turn off the join link. Try again."
+
+msgid "Couldn’t turn on the join link. Try again."
+msgstr "Couldn’t turn on the join link. Try again."
 
 msgid "Create a deck on the web first, then add cards here."
 msgstr "Create a deck on the web first, then add cards here."
@@ -959,6 +995,9 @@ msgstr "Edited the series {name}"
 msgid "Email"
 msgstr "Email"
 
+msgid "Email address"
+msgstr "Email address"
+
 msgid "End review"
 msgstr "End review"
 
@@ -972,8 +1011,14 @@ msgstr "Enriched"
 msgid "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
 
+msgid "Enter a full email address, like anna@example.com."
+msgstr "Enter a full email address, like anna@example.com."
+
 msgid "Enter an email address, like you@example.com."
 msgstr "Enter an email address, like you@example.com."
+
+msgid "Enter an email address."
+msgstr "Enter an email address."
 
 msgid "Enter the 6-digit code we sent to {email}."
 msgstr "Enter the 6-digit code we sent to {email}."
@@ -993,6 +1038,9 @@ msgstr "Every section is open, so any card can come up in review."
 
 msgid "Every shelf"
 msgstr "Every shelf"
+
+msgid "Everyone studying this deck. You see whether they joined, not their reviews."
+msgstr "Everyone studying this deck. You see whether they joined, not their reviews."
 
 msgid "Example"
 msgstr "Example"
@@ -1244,6 +1292,16 @@ msgctxt "daily goal"
 msgid "Intense"
 msgstr "Intense"
 
+msgid "Invite"
+msgstr "Invite"
+
+msgid "Invite by email"
+msgstr "Invite by email"
+
+#. placeholder {0}: dayMonth(new Date(invitation.invitedAt))
+msgid "invited {0}"
+msgstr "invited {0}"
+
 msgid "Invited {name} to {deck}"
 msgstr "Invited {name} to {deck}"
 
@@ -1280,12 +1338,25 @@ msgstr "Join"
 msgid "Join a deck"
 msgstr "Join a deck"
 
+#. placeholder {0}: dayMonth(joined)
+msgid "joined {0}"
+msgstr "joined {0}"
+
 msgid "Joining a deck needs a connection. Connect and try again."
 msgstr "Joining a deck needs a connection. Connect and try again."
 
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Keen"
+
+msgid "Keep invitation"
+msgstr "Keep invitation"
+
+msgid "Keep member"
+msgstr "Keep member"
+
+msgid "Keep sharing"
+msgstr "Keep sharing"
 
 msgid "Keep studying"
 msgstr "Keep studying"
@@ -1589,6 +1660,9 @@ msgctxt "language"
 msgid "Norwegian"
 msgstr "Norwegian"
 
+msgid "Not joined yet"
+msgstr "Not joined yet"
+
 msgid "Not reviewed yet"
 msgstr "Not reviewed yet"
 
@@ -1637,6 +1711,9 @@ msgstr "Often forgotten"
 msgid "OK"
 msgstr "OK"
 
+msgid "Only people you invite can join. Current members stay."
+msgstr "Only people you invite can join. Current members stay."
+
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."
 
@@ -1673,6 +1750,12 @@ msgstr "Open Settings"
 msgid "Open Settings on the web"
 msgstr "Open Settings on the web"
 
+msgid "Options for {email}"
+msgstr "Options for {email}"
+
+msgid "Options for {name}"
+msgstr "Options for {name}"
+
 msgid "Options for {seriesName}"
 msgstr "Options for {seriesName}"
 
@@ -1682,11 +1765,17 @@ msgstr "Other"
 msgid "Other subjects"
 msgstr "Other subjects"
 
+msgid "Owner"
+msgstr "Owner"
+
 msgid "Password"
 msgstr "Password"
 
 msgid "Peek at your hook"
 msgstr "Peek at your hook"
+
+msgid "People"
+msgstr "People"
 
 msgid "People and sharing"
 msgstr "People and sharing"
@@ -1730,6 +1819,9 @@ msgstr "Portuguese"
 
 msgid "Previous month"
 msgstr "Previous month"
+
+msgid "Private"
+msgstr "Private"
 
 msgid "Production"
 msgstr "Production"
@@ -1795,8 +1887,17 @@ msgstr "Recognition card for {cue}. Tap to reveal"
 msgid "Remind me to review"
 msgstr "Remind me to review"
 
+msgid "Remove {name}?"
+msgstr "Remove {name}?"
+
 msgid "Remove filter: {name}"
 msgstr "Remove filter: {name}"
+
+msgid "Remove from deck"
+msgstr "Remove from deck"
+
+msgid "Remove member"
+msgstr "Remove member"
 
 msgid "Remove photo"
 msgstr "Remove photo"
@@ -1965,6 +2066,9 @@ msgstr "Send a new code"
 msgid "Send feedback"
 msgstr "Send feedback"
 
+msgid "Send invitation"
+msgstr "Send invitation"
+
 msgid "Send reset link"
 msgstr "Send reset link"
 
@@ -1980,6 +2084,9 @@ msgstr "Settings"
 
 msgid "Settings is coming to the phone"
 msgstr "Settings is coming to the phone"
+
+msgid "Share link"
+msgstr "Share link"
 
 msgid "Shared by {owner}"
 msgstr "Shared by {owner}"
@@ -2161,11 +2268,29 @@ msgstr "The API"
 msgid "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 msgstr "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 
+msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
+msgstr "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
+
+msgid "Their invitation link stops working. You can invite them again any time."
+msgstr "Their invitation link stops working. You can invite them again any time."
+
 msgid "Theme"
 msgstr "Theme"
 
 msgid "There is no deck at this address"
 msgstr "There is no deck at this address"
+
+msgid "They already have a pending invitation."
+msgstr "They already have a pending invitation."
+
+msgid "They get an email with a link only they can use. They can study the deck but not change it."
+msgstr "They get an email with a link only they can use. They can study the deck but not change it."
+
+msgid "They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept."
+msgstr "They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept."
+
+msgid "They’re already in this deck."
+msgstr "They’re already in this deck."
 
 msgid "They’re ready when you are."
 msgstr "They’re ready when you are."
@@ -2184,6 +2309,9 @@ msgstr "This card’s picture was removed."
 
 msgid "This deck is already in Library."
 msgstr "This deck is already in Library."
+
+msgid "This deck is already yours."
+msgstr "This deck is already yours."
 
 msgid "This deck is archived"
 msgstr "This deck is archived"
@@ -2297,6 +2425,12 @@ msgctxt "language"
 msgid "Turkish"
 msgstr "Turkish"
 
+msgid "Turn off link"
+msgstr "Turn off link"
+
+msgid "Turn off the join link?"
+msgstr "Turn off the join link?"
+
 msgid "Turned off the join link for {deck}"
 msgstr "Turned off the join link for {deck}"
 
@@ -2373,6 +2507,9 @@ msgstr "When it’s back"
 msgid "Where you met it, such as a lesson"
 msgstr "Where you met it, such as a lesson"
 
+msgid "Who can join"
+msgstr "Who can join"
+
 msgid "Work and study"
 msgstr "Work and study"
 
@@ -2414,6 +2551,9 @@ msgstr "You cannot add this deck."
 
 msgid "You cannot join this deck through this link."
 msgstr "You cannot join this deck through this link."
+
+msgid "You removed them from this deck, so you can’t invite them again."
+msgstr "You removed them from this deck, so you can’t invite them again."
 
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "You start with the first section. The next opens as you learn this one."

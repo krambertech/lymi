@@ -21,7 +21,7 @@ export const MemberOut = z
   .object({
     userId: z.string(),
     name: z.string(),
-    role: MemberRole,
+    role: MemberRole.meta(OPEN),
     joinedAt: Timestamp.meta({ description: "When they joined, or last rejoined" }),
   })
   .meta({ id: "Member" });

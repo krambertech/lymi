@@ -71,7 +71,7 @@ function optionsFor(locale: string): LanguageOption[] {
 const TAG_RE = /^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$/;
 
 /** A hint under its label reads as part of it, so it sits closer than the control does. */
-const HINT_FIRST = "-mt-1";
+const HINT_FIRST = "-mt-1.5";
 
 interface LanguageProps {
   value: string | null;

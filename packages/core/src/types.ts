@@ -1,6 +1,11 @@
 import { Rating as FsrsRating } from "ts-fsrs";
 import { z } from "zod";
-import { DECK_ENRICH_FIELDS, ENRICH_INSTRUCTIONS_MAX, ENRICHED_FIELDS } from "./enrichment";
+import {
+  DECK_ENRICH_FIELDS,
+  DECK_PURPOSES,
+  ENRICH_INSTRUCTIONS_MAX,
+  ENRICHED_FIELDS,
+} from "./enrichment";
 import { OPEN } from "./responses/common";
 
 /** Which way the card is asked. Recognition: see the term, recall the meaning. Production: the reverse. */
@@ -41,9 +46,18 @@ export const DeckEnrichFields = z
   .meta({
     id: "DeckEnrichFields",
     description:
-      "The empty fields AI may fill on the deck's cards, on an add in the app, an add sent with enrich true, or Enrich on one card. It fills those that suit each card, following the deck's own cards. The language is always filled. Until the owner chooses, the deck follows its language's default: meaning alone without a language, meaning and example for most languages, plus notes or pronunciation for some (ADR 0033).",
+      "The empty fields AI may fill on the deck's cards, on an add in the app, an add sent with enrich true, or Enrich on one card. It fills those that suit each card, following the deck's own cards. The language is always filled. Until the owner chooses, the deck follows its purpose and language: meaning alone for a subject, other or language-less deck, meaning and example for most languages, plus notes or pronunciation for some (ADR 0033).",
   });
 export type DeckEnrichFields = z.infer<typeof DeckEnrichFields>;
+
+/** What a deck is for, which picks its starting enrichment fields and tells the AI how to write. */
+export const DeckPurpose = z.enum(DECK_PURPOSES).meta({
+  ...OPEN,
+  id: "DeckPurpose",
+  description:
+    "What the deck is for: language, a language being learned; subject, a subject or exam; other, anything else. Until the owner chooses enrichFields, it picks them: a language's preset, or the meaning alone. Left out on a create, a deck with a language is a language deck and any other is other.",
+});
+export type DeckPurpose = z.infer<typeof DeckPurpose>;
 
 /** The deck owner's own words to the AI about the deck. Null clears them. */
 export const DeckEnrichInstructions = z
@@ -181,6 +195,7 @@ export const DeckInput = z.object({
       "One of the owner's active series; the deck goes last in it. Null takes the deck out of its series.",
   }),
   sectionProgression: SectionProgression.optional(),
+  purpose: DeckPurpose.optional(),
   enrichFields: DeckEnrichFields.optional(),
   enrichInstructions: DeckEnrichInstructions.optional(),
 });

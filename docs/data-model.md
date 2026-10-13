@@ -59,7 +59,8 @@ erDiagram
     text import_id "nullable, the import that made it"
     text external_id "nullable, the source's key"
     int states_version "raised when members may lack a state"
-    json enrich_fields "nullable, fields the AI may fill; null follows the language's default"
+    text purpose "nullable language | subject | other; null is language with a language, else other"
+    json enrich_fields "nullable, fields the AI may fill; null follows the purpose and language's default"
     text enrich_instructions "nullable, the owner's instructions to the AI"
   }
   sections {

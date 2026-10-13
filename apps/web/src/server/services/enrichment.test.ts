@@ -3,6 +3,7 @@ import {
   CardPatch,
   DECK_ENRICH_FIELDS,
   deckEnrichFields,
+  deckPurpose,
   defaultEnrichFields,
   emptyFields,
   fieldsToFill,
@@ -65,6 +66,23 @@ describe("deck enrichment fields", () => {
     expect(deckEnrichFields(null, "et")).toEqual(["meaning", "example", "notes"]);
     expect(deckEnrichFields(["notes", "meaning"], "it")).toEqual(["meaning", "notes"]);
     expect(deckEnrichFields([], "it")).toEqual([]);
+  });
+
+  it("starts a subject or other deck from the meaning alone, whatever its language", () => {
+    expect(defaultEnrichFields("de", "subject")).toEqual(["meaning"]);
+    expect(defaultEnrichFields("ja", "other")).toEqual(["meaning"]);
+    expect(defaultEnrichFields("et", "language")).toEqual(["meaning", "example", "notes"]);
+    expect(deckEnrichFields(null, "de", "subject")).toEqual(["meaning"]);
+    expect(deckEnrichFields(["meaning", "example"], "de", "subject")).toEqual([
+      "meaning",
+      "example",
+    ]);
+  });
+
+  it("reads a deck whose owner never said as a language deck when it has a language", () => {
+    expect(deckPurpose(null, "et")).toBe("language");
+    expect(deckPurpose(null, null)).toBe("other");
+    expect(deckPurpose("subject", "et")).toBe("subject");
   });
 
   it("fills the unset fields the deck allows, and the language", () => {
@@ -523,6 +541,23 @@ describe("enrichment that follows the deck", () => {
       CardInput.parse({ deckId: chosen.id, term: "venire", notes: "*vengo, venuto*" }),
     );
     expect(done.enrichmentStatus).toBeNull();
+  });
+
+  it("fills only the meaning of a subject deck and tells the model it is one", async () => {
+    const ctx = await learner(db, "deck-fields-subject", "Kateryna");
+    const deck = await createDeck(ctx, {
+      name: "Anatomie",
+      defaultLanguage: "de",
+      purpose: "subject",
+    });
+    const card = await added(ctx, CardInput.parse({ deckId: deck.id, term: "die Leber" }));
+    expect(card.enrichmentFields).toEqual(["meaning"]);
+
+    const provider = fakeProvider({ cards: [] });
+    await enrichCards({ ...ctx, actor: "ai" }, [card.id], provider);
+    const input = JSON.parse(provider.asked[0]?.input ?? "{}");
+    expect(input.decks).toEqual([expect.objectContaining({ id: deck.id, purpose: "subject" })]);
+    expect(input.cards).toEqual([expect.objectContaining({ id: card.id, mayFill: ["meaning"] })]);
   });
 
   it("shows the model the deck, its guide, its instructions and the learner's own cards", async () => {

@@ -62,10 +62,24 @@ describe("deckBrief", () => {
         name: "Cell biology",
         description: "  ",
         language: null,
+        purpose: null,
         instructions: "",
         samples: [],
       }),
     ).toEqual({ id: "d1", name: "Cell biology", purpose: "other", samples: [] });
+  });
+
+  it("sends the purpose the owner chose over the one the language implies", () => {
+    const brief = deckBrief({
+      id: "d1",
+      name: "Anatomie",
+      description: null,
+      language: "de",
+      purpose: "subject",
+      instructions: null,
+      samples: [],
+    });
+    expect(brief.purpose).toBe("subject");
   });
 
   it("carries the language guide and the owner's instructions for a language deck", () => {
@@ -74,6 +88,7 @@ describe("deckBrief", () => {
       name: "Eesti",
       description: null,
       language: "et",
+      purpose: null,
       instructions: " Meanings in one word. ",
       samples: [],
     });

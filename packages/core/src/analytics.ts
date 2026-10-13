@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { DECK_PURPOSES } from "./enrichment";
 import { ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
@@ -184,6 +185,11 @@ export const analyticsEvents = {
     pronunciation: z.boolean(),
     has_instructions: z.boolean(),
   }),
+  deck_purpose_set: z.object({
+    purpose: z.enum(DECK_PURPOSES),
+    created: z.boolean(),
+    channel: z.enum(["app", "api", "mcp"]),
+  }),
   // PostHog's LLM analytics shape, without $ai_input or $ai_output_choices: no prompt or reply leaves.
   $ai_generation: z.object({
     $ai_trace_id: z.uuid(),
@@ -253,6 +259,7 @@ export const analyticsProducers = {
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   deck_enrichment_changed: ["worker"],
+  deck_purpose_set: ["worker"],
 } satisfies Record<AnalyticsName, readonly AnalyticsProducer[]>;
 
 export function eventProperties(

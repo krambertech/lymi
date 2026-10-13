@@ -1,6 +1,7 @@
 import {
   type CardPatch,
   deckEnrichFields,
+  deckPurpose,
   directionsFromModes,
   drawableCount,
   modeKey,
@@ -142,7 +143,8 @@ export function localDeck(w: Extract<Write, { kind: "deck.create" }>, lookup: Lo
     position: 0,
     seriesId: input.seriesId ?? null,
     sectionProgression: input.sectionProgression ?? "automatic",
-    enrichFields: deckEnrichFields(input.enrichFields, input.defaultLanguage),
+    purpose: deckPurpose(input.purpose, input.defaultLanguage),
+    enrichFields: deckEnrichFields(input.enrichFields, input.defaultLanguage, input.purpose),
     enrichInstructions: input.enrichInstructions || null,
     reviewModes: modesFromDirections(directions).map(modeOf),
     total: 0,
@@ -176,6 +178,7 @@ export function patchDeck(deck: DeckSummary, patch: DeckPatch): DeckSummary {
   if (patch.defaultLanguage !== undefined) next.defaultLanguage = patch.defaultLanguage;
   if (patch.sectionProgression !== undefined) next.sectionProgression = patch.sectionProgression;
   if (patch.seriesId !== undefined) next.seriesId = patch.seriesId;
+  if (patch.purpose !== undefined) next.purpose = patch.purpose;
   if (patch.enrichFields !== undefined) {
     next.enrichFields = deckEnrichFields(patch.enrichFields, next.defaultLanguage);
   }

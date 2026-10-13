@@ -191,6 +191,10 @@
     {
       "name": "0047_curious_paibok.sql",
       "sha256": "8342bc0adcb9b8e1bf85f952b5a551041d3d009ba821098e80d6f5b7f928cc51"
+    },
+    {
+      "name": "0048_lucky_blackheart.sql",
+      "sha256": "e530b7fec51233c8a3807ebed6e2f304ec81390e125760a942e69c47a94755ea"
     }
   ]
 }

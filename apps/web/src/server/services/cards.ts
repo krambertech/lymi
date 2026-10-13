@@ -132,6 +132,7 @@ export async function addCards(
         name: schema.decks.name,
         defaultLanguage: schema.decks.defaultLanguage,
         directions: schema.decks.directions,
+        purpose: schema.decks.purpose,
         enrichFields: schema.decks.enrichFields,
       })
       .from(schema.decks)
@@ -245,7 +246,10 @@ export async function addCards(
       updatedAt: now,
       revision: 1,
     };
-    const filling = fieldsToFill(card, deckEnrichFields(deck.enrichFields, deck.defaultLanguage));
+    const filling = fieldsToFill(
+      card,
+      deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose),
+    );
     if (enrichment && wantsEnrichment(input, actor) && filling.length > 0) {
       card.enrichmentStatus = "working";
       card.enrichmentFields = filling;
@@ -524,10 +528,14 @@ export async function requestEnrichment(
   const card = await ownedCard(ctx, id);
   if (card.archivedAt) throw new ServiceError("invalid", "An archived card cannot be enriched");
   const [deck] = await db
-    .select({ enrichFields: schema.decks.enrichFields, language: schema.decks.defaultLanguage })
+    .select({
+      enrichFields: schema.decks.enrichFields,
+      language: schema.decks.defaultLanguage,
+      purpose: schema.decks.purpose,
+    })
     .from(schema.decks)
     .where(eq(schema.decks.id, card.deckId));
-  const fields = deckEnrichFields(deck?.enrichFields, deck?.language);
+  const fields = deckEnrichFields(deck?.enrichFields, deck?.language, deck?.purpose);
   if (!needsEnrichment(card, fields)) {
     throw new ServiceError("invalid", "This card has nothing left for the AI to fill in");
   }

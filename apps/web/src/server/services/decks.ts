@@ -1,5 +1,5 @@
-import type { DeckEnrichField, DeckInput, NewDeckInput } from "@lymi/core";
-import { deckEnrichFields, newId } from "@lymi/core";
+import type { DeckEnrichField, DeckInput, DeckPurpose, NewDeckInput } from "@lymi/core";
+import { deckEnrichFields, deckPurpose, newId } from "@lymi/core";
 import { and, asc, desc, eq, isNotNull, isNull, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import { track } from "./analytics";
@@ -27,6 +27,8 @@ import { bumped } from "./revisions";
 import { activeSeries, deckOrder, effectiveSeriesId, nextDeckPosition } from "./series-access";
 import { getSettings } from "./settings";
 
+const CHANNEL = { user: "app", api: "api", mcp: "mcp" } as const;
+
 /** Whether a state is asked now; a mode turned off keeps its states uncounted (ADR 0007, ADR 0014). */
 export const asked = sql.raw(askedSql());
 
@@ -52,6 +54,7 @@ export async function listDecks(
       position: deckOrder(userId),
       seriesId: effectiveSeriesId(userId),
       sectionProgression: schema.decks.sectionProgression,
+      purpose: schema.decks.purpose,
       enrichFields: schema.decks.enrichFields,
       enrichInstructions: schema.decks.enrichInstructions,
       total: sql<number>`(select count(*) from cards where cards.deck_id = decks.id and cards.archived_at is null)`,
@@ -122,7 +125,8 @@ export async function listDecks(
         name: editionName ?? deck.name,
         description: editionDescription ?? deck.description,
         reviewModes: deckModes(deck.directions),
-        enrichFields: deckEnrichFields(deck.enrichFields, deck.defaultLanguage),
+        purpose: owner ? deckPurpose(deck.purpose, deck.defaultLanguage) : null,
+        enrichFields: deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose),
         enrichInstructions: owner ? deck.enrichInstructions : null,
         // Cards, not direction states: the same count the queue reports as its total.
         due: due.get(deck.id) ?? 0,
@@ -158,6 +162,7 @@ export async function createDeck(ctx: ServiceContext, { id: chosen, ...input }: 
     defaultLanguage: input.defaultLanguage ?? null,
     directions: resolveDeckDirections(input) ?? "recognition",
     sectionProgression: input.sectionProgression ?? "automatic",
+    purpose: input.purpose ?? null,
     ...(input.enrichFields ? { enrichFields: input.enrichFields } : {}),
     ...(input.enrichInstructions?.trim()
       ? { enrichInstructions: input.enrichInstructions.trim() }
@@ -167,10 +172,11 @@ export async function createDeck(ctx: ServiceContext, { id: chosen, ...input }: 
     ...(seriesId ? { position: await nextDeckPosition(ctx, seriesId) } : {}),
   });
   await audit(ctx, { entity: "deck", action: "create", id, details: input });
+  if (input.purpose) trackPurpose(ctx, input.purpose, true);
   if (input.enrichFields !== undefined || input.enrichInstructions?.trim()) {
     trackEnrichmentChoice(
       ctx,
-      deckEnrichFields(input.enrichFields, input.defaultLanguage),
+      deckEnrichFields(input.enrichFields, input.defaultLanguage, input.purpose),
       input.enrichInstructions,
     );
   }
@@ -237,6 +243,7 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
       name: schema.decks.name,
       description: schema.decks.description,
       defaultLanguage: schema.decks.defaultLanguage,
+      purpose: schema.decks.purpose,
       enrichFields: schema.decks.enrichFields,
       enrichInstructions: schema.decks.enrichInstructions,
     })
@@ -273,10 +280,11 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
     if (first) await db.batch([first, ...rest]);
   }
   await audit(ctx, { entity: "deck", action: "update", id, details: patch });
-  // One language for both sides, so a new language moving the default is not the owner's choice.
+  if (patch.purpose && patch.purpose !== stored?.purpose) trackPurpose(ctx, patch.purpose, false);
+  // One language and purpose for both sides, so a default that moves with them is not the owner's choice.
   const language = stored?.defaultLanguage;
   const before = {
-    fields: deckEnrichFields(stored?.enrichFields, language),
+    fields: deckEnrichFields(stored?.enrichFields, language, stored?.purpose),
     instructions: stored?.enrichInstructions ?? null,
   };
   const after = {
@@ -288,6 +296,12 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
     trackEnrichmentChoice(ctx, after.fields, after.instructions);
   }
   return getDeck(ctx, id);
+}
+
+/** The purpose an owner gave a deck, as its fixed category, never the deck's text. */
+function trackPurpose(ctx: ServiceContext, purpose: DeckPurpose, created: boolean) {
+  const channel = CHANNEL[ctx.actor as keyof typeof CHANNEL];
+  if (channel) track(ctx.analytics, { name: "deck_purpose_set", purpose, created, channel });
 }
 
 /** What a deck now asks the AI for, as flags: never the instructions themselves. */

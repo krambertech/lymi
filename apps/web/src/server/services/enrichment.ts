@@ -104,7 +104,13 @@ export function enrichmentWrite(
 
 type DeckRow = Pick<
   typeof schema.decks.$inferSelect,
-  "id" | "name" | "description" | "defaultLanguage" | "enrichFields" | "enrichInstructions"
+  | "id"
+  | "name"
+  | "description"
+  | "defaultLanguage"
+  | "purpose"
+  | "enrichFields"
+  | "enrichInstructions"
 >;
 
 /** The text of one sample field: the learner's or the lesson's, "" for none, missing when the AI wrote it. */
@@ -119,7 +125,7 @@ function sampleText(card: Card, field: TextField): string | undefined {
  * fields the deck lets the AI fill are shown, because the rest will not be written anyway.
  */
 async function samplesFor(db: Db, deck: DeckRow, exclude: readonly string[]): Promise<Sample[]> {
-  const fields = deckEnrichFields(deck.enrichFields, deck.defaultLanguage);
+  const fields = deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose);
   const rows = await db
     .select()
     .from(schema.cards)
@@ -184,7 +190,7 @@ function landed(after: Card | undefined, write: EnrichmentWrite): EnrichedField[
  * A card queued before runs recorded their fields follows its deck.
  */
 function mayFill(card: Card, deck: DeckRow | undefined): EnrichedField[] {
-  const fields = deckEnrichFields(deck?.enrichFields, deck?.defaultLanguage);
+  const fields = deckEnrichFields(deck?.enrichFields, deck?.defaultLanguage, deck?.purpose);
   const unset = new Set(unsetFields(card));
   return (card.enrichmentFields ?? fieldsToFill(card, fields)).filter((field) => unset.has(field));
 }
@@ -213,6 +219,7 @@ export async function enrichCards(
         name: schema.decks.name,
         description: schema.decks.description,
         defaultLanguage: schema.decks.defaultLanguage,
+        purpose: schema.decks.purpose,
         enrichFields: schema.decks.enrichFields,
         enrichInstructions: schema.decks.enrichInstructions,
       })
@@ -232,6 +239,7 @@ export async function enrichCards(
           name: deck.name,
           description: deck.description,
           language: deck.defaultLanguage,
+          purpose: deck.purpose,
           instructions: deck.enrichInstructions,
           samples: await samplesFor(db, deck, cardIds),
         }),

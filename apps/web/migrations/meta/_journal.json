@@ -337,6 +337,13 @@
       "when": 1791762774626,
       "tag": "0047_curious_paibok",
       "breakpoints": true
+    },
+    {
+      "idx": 48,
+      "version": "6",
+      "when": 1791880312089,
+      "tag": "0048_lucky_blackheart",
+      "breakpoints": true
     }
   ]
 }

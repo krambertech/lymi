@@ -18,13 +18,25 @@ const FORM_LANGUAGES = new Set(["et", "fi", "de", "nl", "sv"]);
 /** Languages whose spelling does not show how a word is said or stressed, so pronunciation starts on. */
 const READING_LANGUAGES = new Set(["zh", "ja", "ko", "ru", "uk"]);
 
-/**
- * What the AI may fill on a deck whose owner never chose, by the deck's language. A deck without
- * one may not be about a language at all, so it gets the meaning alone.
- */
-export function defaultEnrichFields(language: string | null | undefined): DeckEnrichField[] {
+/** What a deck is for: a language, a subject or exam, or something else. */
+export const DECK_PURPOSES = ["language", "subject", "other"] as const;
+type DeckPurpose = (typeof DECK_PURPOSES)[number];
+
+/** A deck's stored purpose, or for a deck whose owner never said, a language deck when it has a language. */
+export function deckPurpose(
+  stored: DeckPurpose | null | undefined,
+  language: string | null | undefined,
+): DeckPurpose {
+  return stored ?? (language ? "language" : "other");
+}
+
+/** What the AI may fill on a deck whose owner never chose, by the deck's purpose and language. */
+export function defaultEnrichFields(
+  language: string | null | undefined,
+  purpose?: DeckPurpose | null,
+): DeckEnrichField[] {
   const primary = language?.split("-")[0]?.toLowerCase();
-  if (!primary) return ["meaning"];
+  if (!primary || deckPurpose(purpose, language) !== "language") return ["meaning"];
   return [
     "meaning",
     "example",
@@ -36,12 +48,13 @@ export function defaultEnrichFields(language: string | null | undefined): DeckEn
 /** How long a deck's instructions to the AI may be. */
 export const ENRICH_INSTRUCTIONS_MAX = 1000;
 
-/** A deck's stored choice, or its language's default when the owner never made one. */
+/** A deck's stored choice, or its purpose and language's default when the owner never made one. */
 export function deckEnrichFields(
   stored: readonly string[] | null | undefined,
   language: string | null | undefined,
+  purpose?: DeckPurpose | null,
 ): DeckEnrichField[] {
-  if (!stored) return defaultEnrichFields(language);
+  if (!stored) return defaultEnrichFields(language, purpose);
   return DECK_ENRICH_FIELDS.filter((field) => stored.includes(field));
 }
 

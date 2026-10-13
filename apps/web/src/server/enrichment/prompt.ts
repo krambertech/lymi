@@ -1,9 +1,9 @@
-import { CARD_LIMITS, type EnrichedField } from "@lymi/core";
+import { CARD_LIMITS, type DeckPurpose, deckPurpose, type EnrichedField } from "@lymi/core";
 import { z } from "zod";
 import { languageGuide } from "./languages";
 
 /** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const ENRICHMENT_PROMPT_VERSION = 1;
+export const ENRICHMENT_PROMPT_VERSION = 2;
 
 /** `LanguageTag`'s own ceiling, so an over-long tag is dropped before it reaches the parse. */
 export const LANGUAGE_MAX = 12;
@@ -16,7 +16,7 @@ The learner sees the term, tries to remember the answer, then turns the card to 
 ## Input
 A JSON object:
 - meaningLanguage: the learner's language.
-- decks: the decks the cards belong to. Each has a name, description, language and purpose ("language" if the deck teaches a language, "other" for anything else). It may also have:
+- decks: the decks the cards belong to. Each has a name, description, language and purpose: "language" if the deck teaches a language, "subject" if it is for a subject or an exam, "other" for anything else. It may also have:
   - guide: how to write cards in this language, field by field.
   - samples: up to five cards from this deck, written by the learner or a lesson. "" means the card leaves that field empty.
   - instructions: what the deck's owner wants from you.
@@ -42,7 +42,7 @@ The instructions can change what you write and how. They can't change mayFill, t
 meaning: the answer the learner tries to remember. Plain text, in meaningLanguage.
 - Word or phrase: a translation of one to three words, not a definition. If the term has two or three common meanings, separate them with "; ".
 - Sentence: a natural translation.
-- Concept, or a term already in meaningLanguage: a short explanation, under 12 words.
+- Concept, a term already in meaningLanguage, or any card in a subject deck: a short explanation, under 12 words.
 - No quotation marks. No full stop after a short translation. Don't repeat the term.
 
 example: the term used in a sentence. Plain text, in the term's language.
@@ -83,9 +83,9 @@ Why: a sentence gets a translation and no example. The notes give the forms of i
 {"meaning": "bench; bank", "example": "Wir sitzen auf der Bank im Park.", "notes": "- plural: *die Bänke* (bench), *die Banken* (bank)", "pronunciation": null, "language": null}
 Why: the word has two common meanings, and each has a different plural.
 
-5. Deck "Cell biology", purpose other, meaningLanguage en. Card "mitochondrion", mayFill: meaning, example, language.
+5. Deck "Cell biology", purpose subject, meaningLanguage en. Card "mitochondrion", mayFill: meaning, language.
 {"meaning": "the organelle that makes most of a cell's energy", "example": null, "notes": null, "pronunciation": null, "language": "en"}
-Why: a concept gets a short explanation. An example sentence wouldn't help.
+Why: a subject deck's meaning is a short explanation, not a translation.
 
 ## Reply
 Return one entry for each card, with its id and all five fields. Use null for any field you don't fill.`;
@@ -101,7 +101,7 @@ export type DeckBrief = {
   name: string;
   description?: string;
   language?: string;
-  purpose: "language" | "other";
+  purpose: DeckPurpose;
   guide?: string;
   instructions?: string;
   samples: Sample[];
@@ -128,6 +128,7 @@ export function deckBrief(deck: {
   name: string;
   description: string | null;
   language: string | null;
+  purpose: DeckPurpose | null;
   instructions: string | null;
   samples: Sample[];
 }): DeckBrief {
@@ -137,7 +138,7 @@ export function deckBrief(deck: {
     name: deck.name,
     ...(deck.description?.trim() ? { description: deck.description.trim() } : {}),
     ...(deck.language ? { language: deck.language } : {}),
-    purpose: deck.language ? "language" : "other",
+    purpose: deckPurpose(deck.purpose, deck.language),
     ...(guide ? { guide } : {}),
     ...(deck.instructions?.trim() ? { instructions: deck.instructions.trim() } : {}),
     samples: deck.samples,

@@ -35,10 +35,6 @@ msgstr "{0, plural, one {# card} other {# cards}}"
 msgid "{0, plural, one {# deck} other {# decks}}"
 msgstr "{0, plural, one {# deck} other {# decks}}"
 
-#. placeholder {0}: deck.length - (index % deck.length)
-msgid "{0, plural, one {# due} other {# due}}"
-msgstr "{0, plural, one {# due} other {# due}}"
-
 #. placeholder {0}: rest.length
 msgid "{0, plural, one {# more section} other {# more sections}}"
 msgstr "{0, plural, one {# more section} other {# more sections}}"
@@ -149,6 +145,9 @@ msgstr "{title} · Lymi"
 
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# turned} other {# turned}}"
+
+msgid "<0/> {left, plural, one {due} other {due}}"
+msgstr "<0/> {left, plural, one {due} other {due}}"
 
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer

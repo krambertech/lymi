@@ -2,6 +2,7 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { RollingNumber } from "../RollingNumber";
 import { SAMPLE_CARDS, type SampleCard } from "./cards";
 
 /**
@@ -37,6 +38,7 @@ export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
   const card = deck[index % deck.length];
   const chosen = answered === null ? null : grades[answered];
   const revealed = revealedFor === index;
+  const left = deck.length - (index % deck.length);
 
   const answer = (n: number) => {
     if (!revealed || answered !== null) return;
@@ -65,7 +67,10 @@ export function ReviewDemo({ cards: deck = DEFAULT_DECK }: Props) {
           <Trans>Tonight</Trans>
         </span>
         <span className="tabular-nums">
-          <Plural value={deck.length - (index % deck.length)} one="# due" other="# due" />
+          <Trans>
+            <RollingNumber value={left} animate={!still} />{" "}
+            <Plural value={left} one="due" other="due" />
+          </Trans>
         </span>
       </div>
 

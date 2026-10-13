@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import type { ReactNode, Ref } from "react";
+import { useFieldControl } from "./ui/field";
 import { smallControlHeight } from "./ui/input";
 import { ToggleGroup, ToggleGroupIndicator, ToggleGroupItem } from "./ui/toggle-group";
 
@@ -41,6 +42,8 @@ export function Segmented<T extends string>({
   ref,
   className,
 }: Props<T>) {
+  // In a Field, the first option carries its error, so a failed submit can move focus there.
+  const { "aria-invalid": invalid, "aria-describedby": describedBy } = useFieldControl({});
   return (
     <ToggleGroup<T>
       ref={ref}
@@ -62,10 +65,11 @@ export function Segmented<T extends string>({
       )}
     >
       <ToggleGroupIndicator className="edge inset-y-[3px] rounded-[11px] bg-chosen" />
-      {options.map((o) => (
+      {options.map((o, index) => (
         <ToggleGroupItem<T>
           key={o.value}
           value={o.value}
+          {...(index === 0 ? { "aria-invalid": invalid, "aria-describedby": describedBy } : {})}
           disabled={o.disabled}
           className={clsx(
             "rounded-[11px] px-3",

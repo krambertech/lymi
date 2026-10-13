@@ -29,6 +29,10 @@ describe.each([
     await userEvent.type(page.getByRole("textbox", { name: "Name" }), "Biology exam");
     await page.getByRole("button", { name: "Create deck" }).click();
     await expect.element(page.getByText("Choose what the deck is for.")).toBeVisible();
+    // The caret goes to the choice, which carries the error for a screen reader.
+    const language = page.getByRole("button", { name: "Language", exact: true });
+    await expect.element(language).toHaveFocus();
+    await expect.element(language).toHaveAttribute("aria-invalid", "true");
     expect(onSubmit).not.toHaveBeenCalled();
 
     await page.getByRole("button", { name: "Subject", exact: true }).click();

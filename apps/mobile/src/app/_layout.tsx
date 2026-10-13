@@ -27,6 +27,7 @@ import { replaySplash, useReplays } from "../splash/replay";
 import { Analytics } from "../telemetry/analytics";
 import { startTelemetry } from "../telemetry/posthog";
 import { usePalette } from "../theme/palette";
+import { ToastHost } from "../ui/toast-host";
 import { clearWidgets, WidgetSync } from "../widgets/sync";
 
 startTelemetry();
@@ -232,6 +233,7 @@ function Root() {
         {/* The design system is for development builds; release builds redirect it home. */}
         {__DEV__ && <Stack.Screen name="design" />}
       </Stack>
+      {signedIn && !update && <ToastHost />}
       {kindling && (
         <SplashGuard key={replays} onFail={giveUp}>
           <Kindling lands={lands} onShown={shown} onDone={done} />

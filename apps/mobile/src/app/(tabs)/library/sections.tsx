@@ -104,6 +104,8 @@ export default function DeckSections() {
   });
 
   const move = (section: Section, by: -1 | 1) => {
+    // One reorder at a time, so the server never receives two orders that cross.
+    if (reorder.isPending) return;
     const ids = sections.map((s) => s.id);
     const at = ids.indexOf(section.id);
     const to = at + by;
@@ -198,7 +200,7 @@ export default function DeckSections() {
                         icon: "edit",
                         onSelect: () => setNaming({ section }),
                       },
-                      ...(at > 0
+                      ...(at > 0 && !reorder.isPending
                         ? [
                             {
                               label: t`Move up`,
@@ -207,7 +209,7 @@ export default function DeckSections() {
                             },
                           ]
                         : []),
-                      ...(at < sections.length - 1
+                      ...(at < sections.length - 1 && !reorder.isPending
                         ? [
                             {
                               label: t`Move down`,

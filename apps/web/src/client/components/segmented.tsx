@@ -10,7 +10,8 @@ interface Option<T extends string> {
 }
 
 interface Props<T extends string> {
-  value: T;
+  /** Null leaves every option unchosen until the first press, for a choice with no default. */
+  value: T | null;
   onValueChange: (v: T) => void;
   options: Option<T>[];
   /** Accessible name for the group. */
@@ -47,7 +48,7 @@ export function Segmented<T extends string>({
       name={name}
       disabled={disabled}
       onBlur={onBlur}
-      value={[value]}
+      value={value === null ? [] : [value]}
       // One option is always chosen: pressing the chosen one again leaves it chosen.
       onValueChange={(next) => {
         const chosen = next[0];

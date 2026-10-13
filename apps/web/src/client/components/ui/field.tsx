@@ -280,7 +280,7 @@ function FieldDescription({ className, id, ...props }: React.ComponentProps<"p">
       data-slot="field-description"
       className={cn(
         // Under its label in a vertical field it reads as part of the label, so it sits closer than the control does.
-        "[[data-orientation=vertical]>[data-slot=field-label]+&]:-mt-1.5 [[data-orientation=vertical]>[data-slot=field-label-row]+&]:-mt-1.5",
+        "[[data-orientation=vertical]>[data-slot=field-label]:not(.sr-only)+&]:-mt-1.5 [[data-orientation=vertical]>[data-slot=field-label-row]+&]:-mt-1.5",
         "text-sm text-muted [&>a]:underline [&>a]:underline-offset-4 hoverable:[&>a:hover]:text-text",
         className,
       )}

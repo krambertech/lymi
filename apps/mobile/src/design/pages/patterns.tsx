@@ -207,13 +207,13 @@ export function Sheets() {
             },
             {
               label: "Short form, glass below full height",
-              note: "Fits on one screen and is done in seconds: Add a word, Edit card, New deck, New series. Glass while it sits below full height; at full height iOS draws it opaque. Opens the real New deck.",
+              note: "Fits on one screen and is done in seconds: Add a word, Edit card, New deck, New series. Glass while it sits below full height; at full height iOS draws it opaque. Opens the real Add a word.",
               render: () => (
                 <Row>
                   <Button
-                    label="Open New deck"
+                    label="Open Add a word"
                     variant="secondary"
-                    onPress={() => router.push("/new-deck")}
+                    onPress={() => router.push("/capture")}
                   />
                 </Row>
               ),
@@ -465,7 +465,7 @@ export function AfterAction() {
       </Sub>
       <Sub
         title="Toast"
-        note="Smoked glass above the tab bar, or above the grades in a review. One line, one action, ten seconds with an action and five without; a swipe sends it away."
+        note="Smoked glass above the tab bar, or above the grades in a review. One sentence on up to two lines, one action, ten seconds with an action and five without; a swipe sends it away."
         source="src/ui/toast.tsx"
       >
         <Variants
@@ -478,10 +478,10 @@ export function AfterAction() {
             },
             {
               label: "A failure",
-              note: "Named for what failed, with an action that retries when retrying can help. A longer title wraps to a second line.",
+              note: "Named for what failed, with an action that retries when retrying can help. A longer title wraps to a second line and stops there.",
               render: () => (
                 <Toast
-                  title="Couldn’t move “Verbi”. Check the connection."
+                  title="Couldn’t move “Verbi”."
                   error
                   action={{ label: "Try again", onPress: () => undefined }}
                 />

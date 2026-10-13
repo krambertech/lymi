@@ -140,7 +140,8 @@ export function Screen({
           ? 0
           : interpolate(
               y.value,
-              [headerHeight - 80, headerHeight - 30],
+              // A short header, such as a card's term, still starts with the bar's title hidden.
+              [Math.max(headerHeight - 80, 0), Math.max(headerHeight - 30, 10)],
               [0, 1],
               Extrapolation.CLAMP,
             ),
@@ -441,6 +442,8 @@ export interface BarGroupItem {
   /** What pressing does, for VoiceOver. */
   label: string;
   on?: boolean;
+  /** Drawn filled in this colour, as a set Important star is. */
+  fill?: string;
   onPress: () => void;
 }
 
@@ -465,7 +468,13 @@ export function BarGroup({ items }: { items: BarGroupItem[] }) {
           accessibilityState={{ selected: item.on }}
           className="h-10 w-11 items-center justify-center"
         >
-          <Icon name={item.icon} size={19} colour={p.text} strokeWidth={item.on ? 2.5 : 2} />
+          <Icon
+            name={item.icon}
+            size={19}
+            colour={item.fill ?? p.text}
+            filled={!!item.fill}
+            strokeWidth={item.on ? 2.5 : 2}
+          />
           {item.on && <View className="absolute end-2.5 top-2 size-2 rounded-full bg-amber" />}
         </Press>
       ))}

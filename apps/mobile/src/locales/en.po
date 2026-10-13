@@ -1161,9 +1161,6 @@ msgstr "Import from {source}"
 msgid "Import of your cards"
 msgstr "Import of your cards"
 
-msgid "Important"
-msgstr "Important"
-
 msgid "Important mark removed"
 msgstr "Important mark removed"
 
@@ -1820,10 +1817,6 @@ msgstr "Saved"
 
 msgid "Saving…"
 msgstr "Saving…"
-
-#. placeholder {0}: card.term
-msgid "Say {0}"
-msgstr "Say {0}"
 
 msgid "Schedule"
 msgstr "Schedule"

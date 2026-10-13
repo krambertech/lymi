@@ -10,23 +10,21 @@ import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
 import { Alert, Image, View } from "react-native";
 import { useSessionHeaders } from "../../../../auth/client";
-import { FORM_FIELD } from "../../../../capture/card-fields";
 import type { FormField } from "../../../../capture/form";
 import { languageName } from "../../../../data/languages";
 import { useDeckCards, useDecks } from "../../../../data/queries";
 import { CardNotes } from "../../../../review/card-notes";
 import { modeLabel } from "../../../../review/modes";
-import { PronounceButton, usePronunciation } from "../../../../review/pronounce";
+import { usePronunciation } from "../../../../review/pronounce";
 import { usePalette } from "../../../../theme/palette";
 import { SourceChip, StateChip } from "../../../../ui/chip";
 import { EmptyState } from "../../../../ui/empty-state";
-import { FieldChip, FieldChipRow } from "../../../../ui/field-chip";
 import { GRADES, GradeMark } from "../../../../ui/grade";
 import { Icon, type IconName } from "../../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
 import { DropdownMenu } from "../../../../ui/menu";
 import { Plate, Press, Text } from "../../../../ui/primitives";
-import { BarButton, Screen } from "../../../../ui/screen";
+import { BarButton, BarGroup, Screen } from "../../../../ui/screen";
 import { Skeleton } from "../../../../ui/skeleton";
 
 const DAY = 86_400_000;
@@ -151,14 +149,6 @@ export default function CardPage() {
   const asked = states.map((st) => i18n._(modeLabel(st.mode))).join(", ");
   // Facts about the card, each named, so nothing has to be guessed from a line of dots.
   const details: { label: string; value: ReactNode }[] = [
-    ...(card.important
-      ? [
-          {
-            label: t`Important`,
-            value: <Icon name="important" size={16} colour={p["amber-mark"]} />,
-          },
-        ]
-      : []),
     { label: t`Deck`, value: deck?.name ?? "" },
     ...(card.language ? [{ label: t`Language`, value: languageName(card.language) }] : []),
     ...(card.source ? [{ label: t`Source`, value: card.source }] : []),
@@ -212,7 +202,6 @@ export default function CardPage() {
         key="pronunciation"
         label={t`Pronunciation`}
         ai={card.pronunciationSource === "ai"}
-        end={pronounce && <PronounceButton pronounce={pronounce} />}
         onPress={edit("pronunciation")}
       >
         <Text className="text-md text-text">{card.pronunciation}</Text>
@@ -257,8 +246,6 @@ export default function CardPage() {
       </Field>
     ),
   ].filter(Boolean);
-
-  const missing = (["pronunciation", "example", "notes", "hook"] as const).filter((f) => !card[f]);
 
   const schedule =
     states.filter((s) => s.state !== 0).length === 0 ? (
@@ -366,33 +353,73 @@ export default function CardPage() {
     <Screen
       title={card.term}
       back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}
+      // The term wraps here rather than cut off in one line, and is heard from beside it.
+      header={
+        <Text className="text-3xl font-medium tracking-tight text-text" accessibilityRole="header">
+          {card.term}
+        </Text>
+      }
       actions={
         <View className="flex-row items-center gap-2.5">
-          {pronounce && (
-            <BarButton icon="pronunciation" label={t`Say ${card.term}`} onPress={pronounce.play} />
-          )}
           <DropdownMenu
             title={card.term}
-            trigger={(open) => <BarButton icon="more" label={t`Card options`} onPress={open} />}
+            trigger={(open) =>
+              // A set star joins ⋯ in one capsule and unmarks with a tap; unset, it is only in the menu.
+              card.important ? (
+                <BarGroup
+                  items={[
+                    {
+                      icon: "important",
+                      label: t`Unmark important`,
+                      fill: p["amber-mark"],
+                      onPress: () => void writes.setImportant(card, false),
+                    },
+                    { icon: "more", label: t`Card options`, onPress: open },
+                  ]}
+                />
+              ) : (
+                <BarButton icon="more" label={t`Card options`} onPress={open} />
+              )
+            }
             items={[
-              ...(editable
-                ? [{ label: t`Edit card`, icon: "edit" as const, onSelect: () => openCard("term") }]
-                : []),
-              {
-                label: card.important ? t`Unmark important` : t`Mark important`,
-                icon: "important",
-                onSelect: () => void writes.setImportant(card, !card.important),
-              },
+              [
+                ...(pronounce
+                  ? [
+                      {
+                        label: t`Play pronunciation`,
+                        icon: "pronunciation" as const,
+                        onSelect: pronounce.play,
+                      },
+                    ]
+                  : []),
+                ...(editable
+                  ? [
+                      {
+                        label: t`Edit card`,
+                        icon: "edit" as const,
+                        onSelect: () => openCard("term"),
+                      },
+                    ]
+                  : []),
+                {
+                  label: card.important ? t`Unmark important` : t`Mark important`,
+                  icon: "important" as const,
+                  onSelect: () => void writes.setImportant(card, !card.important),
+                },
+              ],
+              // Archive sits apart, so it is never pressed for its neighbour.
               ...(owner
                 ? [
-                    archived
-                      ? { label: t`Restore card`, icon: "restore" as const, onSelect: restore }
-                      : {
-                          label: t`Archive card`,
-                          icon: "archive" as const,
-                          destructive: true,
-                          onSelect: () => void archive(),
-                        },
+                    [
+                      archived
+                        ? { label: t`Restore card`, icon: "restore" as const, onSelect: restore }
+                        : {
+                            label: t`Archive card`,
+                            icon: "archive" as const,
+                            destructive: true,
+                            onSelect: () => void archive(),
+                          },
+                    ],
                   ]
                 : []),
             ]}
@@ -427,15 +454,6 @@ export default function CardPage() {
           </View>
         ))}
       </Plate>
-      {editable && missing.length > 0 && (
-        <FieldChipRow label={t`Add to this card`}>
-          {missing.map((f) => (
-            <FieldChip key={f} icon={FORM_FIELD[f].icon} onPress={() => openCard(f)}>
-              {i18n._(FORM_FIELD[f].label)}
-            </FieldChip>
-          ))}
-        </FieldChipRow>
-      )}
       {block(
         t`Details`,
         details.map((d, i) => (

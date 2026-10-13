@@ -1161,9 +1161,6 @@ msgstr "Імпорт із {source}"
 msgid "Import of your cards"
 msgstr "Імпорт карток"
 
-msgid "Important"
-msgstr "Важлива"
-
 msgid "Important mark removed"
 msgstr "Позначку «важлива» знято"
 
@@ -1820,10 +1817,6 @@ msgstr "Збережено"
 
 msgid "Saving…"
 msgstr "Збереження…"
-
-#. placeholder {0}: card.term
-msgid "Say {0}"
-msgstr "Сказати {0}"
 
 msgid "Schedule"
 msgstr "Розклад"

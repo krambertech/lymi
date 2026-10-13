@@ -379,8 +379,9 @@ test("Show hook cannot be pressed until it has arrived, so a doubled reveal tap 
   expect(arriving).toBeInstanceOf(HTMLElement);
   expect(arriving?.classList.contains("pointer-events-none")).toBe(true);
   await expect.poll(() => document.querySelector("[data-aid]")?.closest("[inert]")).toBeNull();
-  await expect.element(page.getByRole("button", { name: /Show hook/ })).toBeVisible();
   expect(onShow).not.toHaveBeenCalled();
+  await page.getByRole("button", { name: /Show hook/ }).click();
+  expect(onShow).toHaveBeenCalledTimes(1);
 });
 
 test("a card without a hook has no peek control, and none after the reveal", async () => {

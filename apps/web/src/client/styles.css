@@ -220,7 +220,7 @@
 }
 /* The plate the lantern stands on: its light pools from the lantern's side. */
 @utility lamplit {
-  background-image: radial-gradient(110% 85% at 14% 24%, var(--pool), transparent 64%);
+  background-image: radial-gradient(165% 128% at 14% 24%, var(--pool), transparent 64%);
   @media (prefers-reduced-transparency: reduce) {
     background-image: none;
   }

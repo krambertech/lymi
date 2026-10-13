@@ -43,7 +43,7 @@ export function LanternLight({
         <div
           aria-hidden="true"
           className={clsx(
-            "light-pool pointer-events-none absolute -inset-[85%] -z-10 rounded-full",
+            "light-pool pointer-events-none absolute -inset-[152%] -z-10 rounded-full",
             dim && "opacity-50",
           )}
           style={{ "--at": `${poolAt}ms` } as CSSProperties}

@@ -112,7 +112,7 @@ export const COMPONENTS: DesignPage[] = [
     slug: "after-an-action",
     title: "After an action",
     summary: "Undo in a toast, questions, offline",
-    lede: "What can be undone happens at once and offers Undo in a toast; a question comes only before what cannot. The web’s rule in iOS’s shape.",
+    lede: "How the phone answers once the learner has done something: a toast, iOS’s own question, or a row that waits for a connection.",
     doc: "phone.md",
     Page: AfterAction,
   },

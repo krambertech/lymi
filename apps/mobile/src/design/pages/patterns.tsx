@@ -206,8 +206,8 @@ export function Sheets() {
               ),
             },
             {
-              label: "Short form, glass",
-              note: "Fits on one screen and is done in seconds: Add a word, Edit card, New deck, New series. Opens the real New deck.",
+              label: "Short form, glass below full height",
+              note: "Fits on one screen and is done in seconds: Add a word, Edit card, New deck, New series. Glass while it sits below full height; at full height iOS draws it opaque. Opens the real New deck.",
               render: () => (
                 <Row>
                   <Button
@@ -220,16 +220,8 @@ export function Sheets() {
             },
             {
               label: "Long form, opaque",
-              note: "Scrolls or holds long text: feedback, Choose decks. Opens the real Send feedback.",
-              render: () => (
-                <Row>
-                  <Button
-                    label="Open Send feedback"
-                    variant="secondary"
-                    onPress={() => router.push("/you/feedback")}
-                  />
-                </Row>
-              ),
+              note: "Scrolls or holds long text: Send feedback in You, Choose decks in a series. Opaque at any height, with the room’s fills.",
+              render: () => null,
             },
           ]}
         />
@@ -481,18 +473,15 @@ export function AfterAction() {
             {
               label: "After an action",
               render: () => (
-                <Toast
-                  title="Moved “Verbi” to Italiano A2"
-                  action={{ label: "Undo", onPress: () => undefined }}
-                />
+                <Toast title="Moved “Verbi”" action={{ label: "Undo", onPress: () => undefined }} />
               ),
             },
             {
               label: "A failure",
-              note: "Named for what failed, with an action that retries when retrying can help.",
+              note: "Named for what failed, with an action that retries when retrying can help. A longer title wraps to a second line.",
               render: () => (
                 <Toast
-                  title="Couldn’t move “Verbi”."
+                  title="Couldn’t move “Verbi”. Check the connection."
                   error
                   action={{ label: "Try again", onPress: () => undefined }}
                 />
@@ -505,17 +494,17 @@ export function AfterAction() {
             {
               label: "Live",
               note: archived
-                ? "“Verbi” is archived. Undo brings it back."
-                : "Archive the deck; the toast stays ten seconds.",
+                ? "“Verbi” is archived. Undo brings it back for ten seconds; Restore resets the demo after."
+                : "Archive the deck; the toast stays ten seconds. In the app it rises above the tab bar.",
               render: () => (
                 <View className="gap-3">
                   <Row>
                     <Button
-                      label={archived ? "Archived" : "Archive “Verbi”"}
-                      variant="danger"
+                      label={archived ? "Restore “Verbi”" : "Archive “Verbi”"}
+                      variant={archived ? "secondary" : "danger"}
                       onPress={() => {
-                        setArchived(true);
-                        setShown("Archived “Verbi”");
+                        setArchived(!archived);
+                        setShown(archived ? null : "Archived “Verbi”");
                       }}
                     />
                   </Row>

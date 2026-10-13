@@ -144,10 +144,16 @@ export function SheetRow({
   onPress,
 }: SheetRowProps) {
   const p = usePalette();
-  const ink = destructive ? p.danger : p.text;
+  const ink = disabled ? p.muted : destructive ? p.danger : p.text;
   const mark =
     chosen === undefined
-      ? icon && <Icon name={icon} size={20} colour={destructive ? p.danger : p["text-2"]} />
+      ? icon && (
+          <Icon
+            name={icon}
+            size={20}
+            colour={disabled ? p.faint : destructive ? p.danger : p["text-2"]}
+          />
+        )
       : chosen && <Icon name="check" size={20} colour={p.text} strokeWidth={2.25} />;
   return (
     <Pressable
@@ -158,7 +164,7 @@ export function SheetRow({
       accessibilityRole={chosen === undefined ? "menuitem" : multiple ? "checkbox" : "radio"}
       accessibilityState={chosen === undefined ? { disabled } : { checked: chosen, disabled }}
       disabled={disabled}
-      className={`min-h-[52px] flex-row items-center gap-3 ps-4 pe-3.5 ${disabled ? "opacity-45" : ""}`}
+      className="min-h-[52px] flex-row items-center gap-3 ps-4 pe-3.5"
       style={({ pressed }) => (pressed || active ? { backgroundColor: p.hover } : null)}
     >
       <View className="w-5 items-center">{mark}</View>

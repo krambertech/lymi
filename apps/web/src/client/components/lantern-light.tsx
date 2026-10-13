@@ -1,6 +1,12 @@
 import type { EndEmber } from "@lymi/design";
 import { clsx } from "clsx";
-import type { CSSProperties, ReactNode } from "react";
+import {
+  type CSSProperties,
+  type ReactNode,
+  type RefObject,
+  useLayoutEffect,
+  useState,
+} from "react";
 
 /** When the last ember of a burst has gone, from the burst's start. */
 export const embersEnd = (embers: EndEmber[]) => Math.max(0, ...embers.map((e) => e.at + e.dur));
@@ -67,5 +73,50 @@ export function LanternLight({
         </div>
       )}
     </>
+  );
+}
+
+interface RoomProps {
+  /** The lantern's place, measured untransformed so the light never follows it in flight. */
+  anchor: RefObject<HTMLElement | null>;
+  poolAt?: number | undefined;
+  dim?: boolean | undefined;
+  /** The sequence was finished early, so the light is simply on. */
+  skip?: boolean | undefined;
+}
+
+/**
+ * The lantern's light reaching the edges of the window, centred on the lantern. It sits behind
+ * the nearest isolated ancestor's content, so that ancestor must not paint a background. motion.md "The end of a review".
+ */
+export function RoomLight({ anchor, poolAt = 0, dim = false, skip = false }: RoomProps) {
+  const [at, setAt] = useState<{ x: number; y: number } | null>(null);
+  useLayoutEffect(() => {
+    let frame = 0;
+    const place = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const box = anchor.current?.getBoundingClientRect();
+        if (box) setAt({ x: box.left + box.width / 2, y: box.top + box.height / 2 });
+      });
+    };
+    place();
+    window.addEventListener("resize", place);
+    // Captured, because the page scrolls inside the shell's `main`, not the window.
+    window.addEventListener("scroll", place, { capture: true, passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", place);
+      window.removeEventListener("scroll", place, { capture: true });
+    };
+  }, [anchor]);
+  if (!at) return null;
+  return (
+    <div
+      aria-hidden="true"
+      data-skip={skip || undefined}
+      className={clsx("room-light pointer-events-none fixed inset-0 -z-10", dim && "opacity-50")}
+      style={{ "--x": `${at.x}px`, "--y": `${at.y}px`, "--at": `${poolAt}ms` } as CSSProperties}
+    />
   );
 }

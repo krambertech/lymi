@@ -60,7 +60,7 @@ import {
 } from "../components/hook-offer";
 import { Kbd } from "../components/kbd";
 import { Lantern } from "../components/lantern";
-import { embersEnd, LanternLight } from "../components/lantern-light";
+import { embersEnd, LanternLight, RoomLight } from "../components/lantern-light";
 import { Progress } from "../components/progress";
 import {
   type AidStep,
@@ -1394,6 +1394,7 @@ export function ReviewComplete({
   const heading = useRef<HTMLHeadingElement>(null);
   const [landed, setLanded] = useState(reduce);
   const [skipped, setSkipped] = useState(false);
+  const lanternPlace = useRef<HTMLDivElement>(null);
   const instant = reduce || skipped;
 
   const counted = screen.heading !== "nothing_due";
@@ -1450,31 +1451,36 @@ export function ReviewComplete({
   return (
     <section
       aria-labelledby={headingId}
-      className={clsx("flex flex-1 flex-col", skipped && "seq-skip")}
+      className={clsx("isolate flex flex-1 flex-col", skipped && "seq-skip")}
     >
       {/* No scroll box of its own: the page scrolls, so the lantern’s light is never cut off at a box edge. */}
       <div className="m-auto flex w-full max-w-sm flex-col items-center py-4 text-center @3xl:py-8">
-        <motion.div
-          {...(reduce ? {} : { layoutId: LANTERN_LAYOUT })}
-          transition={LANTERN_FLIGHT}
-          className={clsx("relative isolate mb-1 size-32 @3xl:size-44", reduce && "enter-fade")}
-        >
-          <LanternLight
-            lit={lit}
-            dim={!embers.length}
-            poolAt={AT.pool}
-            embers={embers}
-            embersAt={AT.embers}
+        {lit && (
+          <RoomLight anchor={lanternPlace} poolAt={AT.pool} dim={!embers.length} skip={skipped} />
+        )}
+        <div ref={lanternPlace} className="mb-1 size-32 @3xl:size-44">
+          <motion.div
+            {...(reduce ? {} : { layoutId: LANTERN_LAYOUT })}
+            transition={LANTERN_FLIGHT}
+            className={clsx("relative isolate size-full", reduce && "enter-fade")}
           >
-            <Lantern
-              className="size-full"
-              {...lanternFor(streak)}
-              from={lanternFrom}
-              flicker
-              glow
-            />
-          </LanternLight>
-        </motion.div>
+            <LanternLight
+              lit={lit}
+              dim={!embers.length}
+              poolAt={AT.pool}
+              embers={embers}
+              embersAt={AT.embers}
+            >
+              <Lantern
+                className="size-full"
+                {...lanternFor(streak)}
+                from={lanternFrom}
+                flicker
+                glow
+              />
+            </LanternLight>
+          </motion.div>
+        </div>
 
         <h2
           ref={heading}

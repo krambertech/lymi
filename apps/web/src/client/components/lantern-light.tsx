@@ -102,11 +102,12 @@ export function RoomLight({ anchor, poolAt = 0, dim = false, skip = false }: Roo
     };
     place();
     window.addEventListener("resize", place);
-    window.addEventListener("scroll", place, { passive: true });
+    // Captured, because the page scrolls inside the shell's `main`, not the window.
+    window.addEventListener("scroll", place, { capture: true, passive: true });
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", place);
-      window.removeEventListener("scroll", place);
+      window.removeEventListener("scroll", place, { capture: true });
     };
   }, [anchor]);
   if (!at) return null;

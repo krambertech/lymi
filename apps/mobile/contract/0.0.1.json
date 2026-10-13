@@ -267,6 +267,9 @@
          "sectionProgression": {
           "$ref": "#/components/schemas/SectionProgression"
          },
+         "purpose": {
+          "$ref": "#/components/schemas/DeckPurpose"
+         },
          "enrichFields": {
           "$ref": "#/components/schemas/DeckEnrichFields"
          },
@@ -2379,6 +2382,9 @@
          "sectionProgression": {
           "$ref": "#/components/schemas/SectionProgression"
          },
+         "purpose": {
+          "$ref": "#/components/schemas/DeckPurpose"
+         },
          "enrichFields": {
           "$ref": "#/components/schemas/DeckEnrichFields"
          },
@@ -4445,6 +4451,16 @@
      "sectionProgression": {
       "$ref": "#/components/schemas/SectionProgression"
      },
+     "purpose": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/DeckPurpose"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
      "enrichFields": {
       "$ref": "#/components/schemas/DeckEnrichFields"
      },
@@ -4533,6 +4549,7 @@
      "position",
      "seriesId",
      "sectionProgression",
+     "purpose",
      "enrichFields",
      "enrichInstructions",
      "meaningLanguage",
@@ -4626,6 +4643,15 @@
     ],
     "x-lymi-open": true
    },
+   "DeckPurpose": {
+    "type": "string",
+    "enum": [
+     "language",
+     "subject",
+     "other"
+    ],
+    "x-lymi-open": true
+   },
    "DeckEnrichFields": {
     "maxItems": 4,
     "type": "array",
@@ -4686,6 +4712,16 @@
      },
      "sectionProgression": {
       "$ref": "#/components/schemas/SectionProgression"
+     },
+     "purpose": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/DeckPurpose"
+       },
+       {
+        "type": "null"
+       }
+      ]
      },
      "enrichFields": {
       "$ref": "#/components/schemas/DeckEnrichFields"
@@ -4782,6 +4818,7 @@
      "position",
      "seriesId",
      "sectionProgression",
+     "purpose",
      "enrichFields",
      "enrichInstructions",
      "meaningLanguage",

@@ -22,6 +22,10 @@ msgstr "«{term}» уже є в колоді {deckName}"
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} з # повторення} few {{2} з # повторень} many {{2} з # повторень} other {{2} з # повторення}}"
 
+#. placeholder {0}: s.archivedCards
+msgid "{0, plural, one {# card comes back with it} other {# cards come back with it}}"
+msgstr ""
+
 #. placeholder {0}: d.due
 #. placeholder {0}: r.due
 msgid "{0, plural, one {# card due} other {# cards due}}"
@@ -242,6 +246,9 @@ msgstr "{queued, plural, one {# оцінка чи зміна, зроблена �
 msgid "{reps, plural, one {# review} other {# reviews}}"
 msgstr "{reps, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
 
+msgid "{sectionCount, plural, one {# section} other {# sections}}"
+msgstr ""
+
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
 
@@ -403,6 +410,9 @@ msgstr "Це написав AI"
 msgid "All"
 msgstr "Усі"
 
+msgid "All at once"
+msgstr ""
+
 msgid "All shelves"
 msgstr "Усі полиці"
 
@@ -425,6 +435,9 @@ msgstr "Будь-коли"
 msgid "Anyone can add this deck from its public page."
 msgstr ""
 
+msgid "Anyone studying the deck can start a later section early."
+msgstr ""
+
 msgid "Anyone with this link can join and review these cards."
 msgstr ""
 
@@ -434,6 +447,9 @@ msgstr "Ключі API"
 msgctxt "language"
 msgid "Arabic"
 msgstr "Арабська"
+
+msgid "Archive"
+msgstr ""
 
 msgid "Archive card"
 msgstr ""
@@ -445,6 +461,9 @@ msgid "Archived"
 msgstr "Архів"
 
 msgid "Archived “{name}”"
+msgstr ""
+
+msgid "Archived “{sectionName}”"
 msgstr ""
 
 msgid "Archived “{term}”"
@@ -460,6 +479,9 @@ msgid "Archived decks and cards wait here, out of your reviews, until you restor
 msgstr ""
 
 msgid "Archived decks need a connection"
+msgstr ""
+
+msgid "Archived sections"
 msgstr ""
 
 msgid "Archived the deck {deck}"
@@ -482,6 +504,9 @@ msgstr "Режими"
 
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Щонайменше {MIN_PASSWORD_LENGTH} символів."
+
+msgid "Automatically"
+msgstr ""
 
 msgid "Back"
 msgstr "Назад"
@@ -800,6 +825,9 @@ msgstr "Створити й перенести"
 msgid "Create deck"
 msgstr "Створити колоду"
 
+msgid "Create section"
+msgstr ""
+
 msgid "Create your Lymi account"
 msgstr "Створи акаунт Lymi"
 
@@ -928,6 +956,9 @@ msgstr "Кожен блок — день із повтореннями."
 
 msgid "Each card is asked both ways, each way on its own schedule."
 msgstr "Кожну картку питають в обидва боки, кожен бік за своїм розкладом."
+
+msgid "Each section opens once you know most of the one before it."
+msgstr ""
 
 msgid "Easy"
 msgstr "Легко"
@@ -1114,6 +1145,9 @@ msgstr "Німецька"
 msgid "Give the deck a name."
 msgstr "Назви колоду."
 
+msgid "Give the section a name."
+msgstr ""
+
 msgid "Give the series a name."
 msgstr "Дай серії назву."
 
@@ -1178,6 +1212,9 @@ msgstr "Як питати"
 
 msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
 msgstr "Скільки повторень на день зберігає лік днів поспіль. Рахується кожна оцінка, навіть «Не пам’ятаю»."
+
+msgid "How sections open"
+msgstr ""
 
 msgid "How your memory is doing"
 msgstr "Як справи з твоєю пам’яттю"
@@ -1249,6 +1286,9 @@ msgstr "Інтенсивно"
 
 msgid "Invited {name} to {deck}"
 msgstr "{name} запрошено до «{deck}»"
+
+msgid "It goes at the end. Move cards into it from the deck."
+msgstr ""
 
 msgid "It loads as soon as you’re back online."
 msgstr "Вона завантажиться, щойно ти знову будеш онлайн."
@@ -1411,6 +1451,9 @@ msgstr "Створено серію «{name}»"
 msgid "Make one for each course or topic."
 msgstr "Створи колоду для кожного курсу чи теми."
 
+msgid "Make one per lesson, then move cards into it from the deck."
+msgstr ""
+
 msgid "Mark important"
 msgstr "Позначити важливою"
 
@@ -1507,6 +1550,9 @@ msgstr "Нові картки"
 msgid "New deck"
 msgstr "Нова колода"
 
+msgid "New section"
+msgstr ""
+
 msgid "New series"
 msgstr "Нова серія"
 
@@ -1572,6 +1618,9 @@ msgstr "Повторень поки немає. Кожен день із пов�
 
 msgid "No section"
 msgstr "Без розділу"
+
+msgid "No sections yet"
+msgstr ""
 
 msgid "No series"
 msgstr "Без серії"
@@ -1640,6 +1689,12 @@ msgstr "Часто забуваються"
 msgid "OK"
 msgstr "OK"
 
+msgid "One after another, automatically"
+msgstr ""
+
+msgid "One after another, when you start them"
+msgstr ""
+
 msgid "Only the deck’s owner can change this."
 msgstr "Змінювати це може лише власник колоди."
 
@@ -1676,6 +1731,9 @@ msgstr ""
 msgid "Open Settings on the web"
 msgstr "Відкрити налаштування у вебверсії"
 
+msgid "Options for {sectionName}"
+msgstr ""
+
 msgid "Options for {seriesName}"
 msgstr "Параметри «{seriesName}»"
 
@@ -1684,6 +1742,9 @@ msgstr "Інше"
 
 msgid "Other subjects"
 msgstr "Інші теми"
+
+msgid "Parts of this deck, such as one per lesson. Everyone studying it sees them in this order."
+msgstr ""
 
 msgid "Password"
 msgstr "Пароль"
@@ -1807,6 +1868,12 @@ msgstr "Видалити фото"
 msgid "Removed {name} from {deck}"
 msgstr "{name} вилучено з колоди «{deck}»"
 
+msgid "Rename"
+msgstr ""
+
+msgid "Rename section"
+msgstr ""
+
 msgid "Rename series"
 msgstr "Перейменувати серію"
 
@@ -1820,6 +1887,9 @@ msgid "Restore"
 msgstr ""
 
 msgid "Restore {title}"
+msgstr ""
+
+msgid "Restore brings a section back in its place, with the cards archived alongside it."
 msgstr ""
 
 msgid "Restore card"
@@ -1927,6 +1997,9 @@ msgstr "Для пошуку карток потрібне з’єднання"
 
 msgid "Section"
 msgstr "Розділ"
+
+msgid "Sections"
+msgstr ""
 
 #. placeholder {0}: example.meaning
 #. placeholder {1}: example.term
@@ -2161,6 +2234,9 @@ msgstr "AI"
 msgid "The API"
 msgstr "API"
 
+msgid "The cards you kept move back into it"
+msgstr ""
+
 msgid "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 msgstr "Колода зникне з Бібліотеки, а її картки перестануть з’являтися в повтореннях. Якщо приєднаєшся знову, твої повторення будуть на місці."
 
@@ -2372,6 +2448,12 @@ msgstr "Що вивчаєш, по порядку"
 
 msgid "When it’s back"
 msgstr "Коли повернеться"
+
+msgid "When most of a section is known, the next one is ready and you choose when to start it."
+msgstr ""
+
+msgid "When started"
+msgstr ""
 
 msgid "Where you met it, such as a lesson"
 msgstr "Звідки це, наприклад урок"

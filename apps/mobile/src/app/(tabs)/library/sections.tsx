@@ -12,13 +12,13 @@ import { useDecks, useSections } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { inputCap } from "../../../theme/type";
 import { EmptyState } from "../../../ui/empty-state";
-import { Icon } from "../../../ui/icons";
 import { DropdownMenu } from "../../../ui/menu";
 import { Button, IconButton, Plate, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
 import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
+import { toast } from "../../../ui/toast-host";
 
 /**
  * A deck's sections, for its owner, as the web's deck settings arrange them: in order, moved with
@@ -32,12 +32,9 @@ export default function DeckSections() {
   const query = useSections(id);
   const sections = query.data?.sections ?? [];
   const qc = useQueryClient();
-  const p = usePalette();
   const [naming, setNaming] = useState<{ section?: Section } | null>(null);
-  const [archiving, setArchiving] = useState<Section | null>(null);
   const [showArchived, setShowArchived] = useState(false);
   const [choosingOrder, setChoosingOrder] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const archived = useQuery({ ...archivedSectionsQuery(id), enabled: !!id });
   const archivedCount = archived.data?.sections.length ?? 0;
   // Restoring the last archived section leaves nothing to show, so its sheet goes too.
@@ -51,11 +48,9 @@ export default function DeckSections() {
         qc.invalidateQueries({ queryKey: [key] }),
       ),
     );
-  const handlers = {
-    onMutate: () => setError(null),
-    onError: (e: unknown) => setError(errorMessage(e)),
-    onSettled: refresh,
-  };
+  // What went wrong shows as a toast, as archiving a deck's does (#702).
+  const failed = (e: unknown) => toast.add({ error: true, title: errorMessage(e) });
+  const handlers = { onError: failed, onSettled: refresh };
   const create = useMutation({
     mutationFn: (name: string) => api.createSection(id, { name }),
     ...handlers,
@@ -70,7 +65,6 @@ export default function DeckSections() {
   const reorder = useMutation({
     mutationFn: (ids: string[]) => api.reorderSections(id, ids),
     onMutate: async (ids) => {
-      setError(null);
       await qc.cancelQueries({ queryKey: sectionsKey, exact: true });
       const before = qc.getQueryData<Sections>(sectionsKey);
       if (before) {
@@ -84,17 +78,27 @@ export default function DeckSections() {
     },
     onError: (e, _ids, undo) => {
       undo?.();
-      setError(errorMessage(e));
+      failed(e);
     },
     onSettled: refresh,
   });
-  const archive = useMutation({
-    mutationFn: ({ section, cards }: { section: Section; cards: "archive" | "keep" }) =>
-      api.archiveSection(section.id, { cards }),
-    ...handlers,
-  });
   const restore = useMutation({
     mutationFn: (section: Section) => api.restoreSection(section.id),
+    onSuccess: (_r, section) => toast.close(`archive-section-${section.id}`),
+    ...handlers,
+  });
+  // Archiving happens at once and offers Undo, as a deck's does; its cards stay in the deck without
+  // a section, and Restore, from Undo or Archived sections, moves them back.
+  const archive = useMutation({
+    mutationFn: (section: Section) => api.archiveSection(section.id, { cards: "keep" }),
+    onSuccess: (_r, section) => {
+      const sectionName = section.name;
+      toast.add({
+        id: `archive-section-${section.id}`,
+        title: t`Archived “${sectionName}”`,
+        action: { label: t`Undo`, onPress: () => restore.mutate(section) },
+      });
+    },
     ...handlers,
   });
   const progression = useMutation({
@@ -113,8 +117,6 @@ export default function DeckSections() {
     [ids[at], ids[to]] = [ids[to] as string, ids[at] as string];
     reorder.mutate(ids);
   };
-  const askArchive = (section: Section) =>
-    section.total > 0 ? setArchiving(section) : archive.mutate({ section, cards: "keep" });
 
   const orders: { value: SectionProgression; label: string; short: string; line: string }[] = [
     {
@@ -155,12 +157,6 @@ export default function DeckSections() {
       <Text className="px-1 text-base text-text-2">
         {t`Parts of this deck, such as one per lesson. Everyone studying it sees them in this order.`}
       </Text>
-      {error && (
-        <View className="flex-row items-center gap-1.5 px-1" accessibilityLiveRegion="polite">
-          <Icon name="alert" size={14} colour={p.danger} />
-          <Text className="flex-1 text-base text-danger">{error}</Text>
-        </View>
-      )}
       {sections.length === 0 ? (
         <Plate>
           <EmptyState
@@ -224,7 +220,7 @@ export default function DeckSections() {
                         label: t`Archive`,
                         icon: "archive",
                         destructive: true,
-                        onSelect: () => askArchive(section),
+                        onSelect: () => archive.mutate(section),
                       },
                     ],
                   ]}
@@ -272,47 +268,6 @@ export default function DeckSections() {
           setNaming(null);
         }}
       />
-
-      <Sheet
-        title={archiving ? t`Archive “${archiving.name}”?` : undefined}
-        open={archiving !== null}
-        onOpenChange={(open) => !open && setArchiving(null)}
-      >
-        <Text className="px-1 text-base text-text-2">
-          {t`Nothing is deleted. Restore it from Archived sections.`}
-        </Text>
-        {archiving && (
-          <SheetGroup>
-            <SheetRow
-              label={plural(archiving.total, { one: "Keep the card", other: "Keep the cards" })}
-              detail={plural(archiving.total, {
-                one: "It stays in the deck without a section, and keeps coming up in review.",
-                other: "They stay in the deck without a section, and keep coming up in review.",
-              })}
-              onPress={() => {
-                archive.mutate({ section: archiving, cards: "keep" });
-                setArchiving(null);
-              }}
-            />
-            <SheetRow
-              label={plural(archiving.total, {
-                one: "Archive its card too",
-                other: "Archive its # cards too",
-              })}
-              detail={plural(archiving.total, {
-                one: "It leaves the deck and stops coming up in review until you restore the section.",
-                other:
-                  "They leave the deck and stop coming up in review until you restore the section.",
-              })}
-              destructive
-              onPress={() => {
-                archive.mutate({ section: archiving, cards: "archive" });
-                setArchiving(null);
-              }}
-            />
-          </SheetGroup>
-        )}
-      </Sheet>
 
       <Sheet title={t`How sections open`} open={choosingOrder} onOpenChange={setChoosingOrder}>
         <SheetGroup>

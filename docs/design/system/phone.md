@@ -10,7 +10,7 @@ The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the rev
 - Capture is an amber glass button at the end of every tab's top bar, beside the streak. A tap opens Add a word as a sheet from below. Explore has neither: its bar holds Filter and Search in one glass capsule, because finding a deck there is the job, and a word is caught from any other tab.
 - Library's bar holds what Library is for instead: search, then the amber plus, which grows into a small menu of Lymi's rows where it stands (Add a card, New deck, New series, Import decks) and shrinks back into the button. The streak stays on Today.
 - Search sits at the foot of the screen and rides on the keyboard, as iOS 26's own search does: a glass field and a round glass close, with a filter between them where the screen has one. The screen above it is empty until the first letters are typed. Every search on the phone uses `SearchBar`.
-- Inside a deck with cards due, the tab bar's accessory shows how many and a play button, as Podcasts shows what is playing; a tap starts the deck's review. Before iOS 26 the deck shows its Review button instead.
+- A deck opens on one summary plate, the count to review beside the deck's size, its cards' states as one bar with their counts under it, then a full-width Review. Once Review scrolls under the bar, the tab bar's accessory takes over, showing how many and a play button as Podcasts shows what is playing; scrolled back, it goes. Before iOS 26 there is no accessory, so the deck's own Review is the only one.
 
 ## How a screen arrives
 
@@ -52,11 +52,11 @@ Every sheet rises from below and swipes away. What the task holds decides its ki
 | --- | --- | --- | --- | --- |
 | Row sheet | A choice or a small edit over the screen: a menu, a `Select`, the daily goal, the reminder time, the learner's name and photo | `Sheet`, inside the screen | iOS's glass, untinted, at the height of what it holds | On-glass |
 | Peek sheet | A screen to glance at that drags up for more: the streak | A route presented as `formSheet`, with detents | `useFrost`, the sheet colour at 50%, while it peeks; iOS makes it opaque at full height | On-glass |
-| Full sheet | A form with long text or several fields, keyboard up: Add a word, Edit card, feedback | A route presented as `formSheet` at full height | Opaque, the sheet colour | The room's own, since on-glass fills vanish against an opaque sheet |
+| Full sheet | A form with long text or several fields, keyboard up: Add a word, Edit card, New deck, feedback | A route presented as `formSheet` at full height | Opaque, the sheet colour | The room's own, since on-glass fills vanish against an opaque sheet |
 
 - Reach for a row sheet first. A small edit belongs in one even when it has a text field: the field is a `bg-glass-plate` box with no label over it, and the keyboard's done key or a swipe keeps the value, with no Save button.
 - A sheet of choices that grows past one screen lists what can be chosen as rows, each showing its current value and opening its options in the same sheet, under one header whose back chevron returns; the deck's Filter is the first.
-- A row sheet never opens a sheet, the camera or the photo library over itself. A row that needs one closes the sheet and acts once it has gone.
+- A row sheet never opens a sheet, the camera or the photo library over itself. A row that needs one closes the sheet and acts once it has gone. A full sheet may open a row sheet over itself, which stacks on it; a part-height sheet cannot, because iOS hides it under the new one.
 - A peek sheet and a full sheet carry their controls as glass in the top corners; a row sheet has none.
 - A full sheet's header is one row: close at the start, its name centred at `text-md`, the one action at the end. Nothing under it repeats the name as a large title; a line saying what the sheet is for comes first in the content.
 - A row sheet's groups fill with `glass-group`, a faint ink tint in the light room and the glass plate's white at night, with no border, so they still read when iOS turns the sheet opaque at full height.
@@ -81,7 +81,7 @@ Archive is in the same ⋯ and the same menu. On the card page the card stays on
 - Pulling the top bar down follows the finger and, past a third of the screen, ends the review on the end screen, as X does. Today shows behind it as it moves.
 - The cards are a stack, where the web keeps one plate whose words change ([motion.md](motion.md#review)). The next card slides in over the one just graded from the end edge, turned a little and straightening as it lands, while the graded card and its grades wait underneath. Under Reduce Motion the next card fades in.
 - A swipe from the start edge drags the top card off the same way and uncovers the last graded card, revealed with its grades and waiting for a grade, and removes that grade. It goes back one card. The pointing hand shows it once, on a learner's second card ever; VoiceOver offers it as an action on the card.
-- A tap on a revealed card opens its menu as a sheet of rows. A hook is written in a sheet with the keyboard up rather than in place under the word, which the keyboard would cover; the keyboard's done key saves it, with no button repeating that, and on an empty field keeps the AI's draft, which is its placeholder; a swipe down discards it. Pressing Easy after a peek says why in a tip over the grades.
+- Holding a revealed card opens its menu as a sheet of rows; a tap does nothing, so the menu never opens by accident. A hook is written in a sheet with the keyboard up rather than in place under the word, which the keyboard would cover; the keyboard's done key saves it, with no button repeating that, and on an empty field keeps the AI's draft, which is its placeholder; a swipe down discards it. Pressing Easy after a peek says why in a tip over the grades.
 - After a grade the flame breathes and sparks from the hood, as on the web.
 - At the end the lantern's light reaches the edges of the screen. Review forgotten leads with the Forgot mark, as on the web.
 

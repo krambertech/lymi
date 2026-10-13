@@ -67,7 +67,7 @@ Reveal is the one choreographed moment of a card, built with Motion.
 
 1. Before reveal there is no grade strip and the card takes the room. An unrevealed card is the word alone.
 2. On reveal the word glides up to make room over 340 ms, and the strip opens over the same 340 ms while the card shrinks, so the glide and the shrink read as one movement.
-3. The rule draws across from the start edge over 360 ms as a line of the lantern's light, in `amber` with its glow, then cools to `edge-2` over the next 700 ms. This is the wick. Under reduced motion the rule appears as a hairline.
+3. The rule draws across from the start edge over 360 ms as a line of the lantern's light, in `amber` with its glow, then cools to `edge-2` over the next 700 ms. This is the wick. On the phone it draws in `edge-2` from the start, with no amber. Under reduced motion the rule appears as a hairline.
 4. The meaning, example and sources rise 10 px out of a 4 px blur over 260 ms, 50 ms apart.
 5. The four grade controls rise 10 px over 220 ms, 35 ms apart, starting 80 ms after the strip begins to open.
 
@@ -81,7 +81,7 @@ After a reveal without a peek, Show hook arrives in the hook's place with the an
 
 Undo taking a hook away fades its lines where they stood over 140 ms while the cue and the answer glide back; after a key it goes at once. Whether the cue and the answer glide is decided at each change, never once per card, so a reveal from the keyboard on one card never stills the glide on the next.
 
-The pointing hand at the card's foot taps three times and rests with a line under it saying how to reveal. It appears in two cases only: after a second on each of a learner's first three cards, and after a minute on any card with no press, key or scroll. On a card with a hook it rests higher for the whole card, clear of Peek at your hook, and after a peek its line says to tap the card when you have it.
+The pointing hand at the card's foot taps three times and rests with a line under it saying how to reveal. It appears in two cases only: after a second on each of a learner's first three cards (on the phone, only the first card), and after a minute on any card with no press, key or scroll. On the phone it floats over the card's foot, so the cue never moves when it appears. On a card with a hook it rests higher for the whole card, clear of Peek at your hook, and after a peek its line says to tap the card when you have it.
 
 A pronunciation that fails to play turns its button red, shakes it once over 400 ms, and says why in a tip over the button that leaves after four seconds or at the next tap. Nothing is added under the card, so the layout never moves for an error.
 

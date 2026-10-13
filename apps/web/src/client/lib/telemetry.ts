@@ -8,6 +8,7 @@ import {
   visitFirstTouch,
 } from "@lymi/client/analytics";
 import { FIRST_TOUCH_HEADER } from "@lymi/core/analytics";
+import { isStaleChunkError, reloadOntoCurrentBuild } from "./stale-build";
 
 export { captureAnalytics, capturePageview };
 
@@ -30,7 +31,10 @@ export function initTelemetry(): void {
       !import.meta.env.DEV &&
       !import.meta.env.LYMI_APP_PREVIEW &&
       location.origin === "https://my.lymi.app",
+    release: import.meta.env.LYMI_RELEASE || undefined,
   });
+  // Vite still rethrows the failed import, which the router or the handlers below then see.
+  window.addEventListener("vite:preloadError", () => reloadOntoCurrentBuild());
   window.addEventListener("error", (event) => {
     if (event.error) reportClientException(event.error);
   });
@@ -38,4 +42,9 @@ export function initTelemetry(): void {
 }
 export const setTelemetryLearner = setAnalyticsLearner;
 export const setTelemetryOpening = setAnalyticsOpening;
-export const reportClientException = reportBrowserException;
+
+/** A chunk an older build named is recovered by a reload, so only a second failure is reported. */
+export function reportClientException(error: unknown): void {
+  if (isStaleChunkError(error) && reloadOntoCurrentBuild()) return;
+  reportBrowserException(error);
+}

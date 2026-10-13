@@ -176,9 +176,10 @@ function Root() {
             name="new-deck"
             options={{
               presentation: "formSheet",
-              sheetAllowedDetents: "fitToContents",
+              // A full sheet, so its Language and How cards are asked sheets stack over it; iOS hides a
+              // part-height sheet under a new one. phone.md "Sheets".
+              sheetAllowedDetents: [1],
               sheetGrabberVisible: true,
-              // Its keyboard is up, so it is opaque like a full sheet. phone.md "Sheets".
               contentStyle: { backgroundColor: p.sheet },
             }}
           />

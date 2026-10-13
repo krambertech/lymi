@@ -407,6 +407,9 @@ msgstr "Also on your list"
 msgid "Another way"
 msgstr "Another way"
 
+msgid "Any"
+msgstr "Any"
+
 msgid "Any time"
 msgstr "Any time"
 
@@ -464,6 +467,9 @@ msgstr "At least {MIN_PASSWORD_LENGTH} characters."
 
 msgid "Back"
 msgstr "Back"
+
+msgid "Back to Filter"
+msgstr "Back to Filter"
 
 msgid "Back to Library"
 msgstr "Back to Library"
@@ -861,6 +867,9 @@ msgstr "Drafting a hook…"
 
 msgid "Driving"
 msgstr "Driving"
+
+msgid "Due"
+msgstr "Due"
 
 msgid "Due now"
 msgstr "Due now"
@@ -1974,6 +1983,9 @@ msgstr "Spanish"
 
 msgid "Start with a deck"
 msgstr "Start with a deck"
+
+msgid "State"
+msgstr "State"
 
 msgid "Stay signed in"
 msgstr "Stay signed in"

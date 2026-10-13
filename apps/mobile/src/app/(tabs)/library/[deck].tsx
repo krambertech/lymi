@@ -16,7 +16,7 @@ import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
 import { useMemo, useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert, Pressable, View } from "react-native";
 import { useDeckExits } from "../../../data/decks";
 import { moveBack } from "../../../data/move-undo";
 import { useNextDue } from "../../../data/next-due";
@@ -280,8 +280,9 @@ function Top({ deck, rows }: { deck: DeckData; rows: DeckRow[] }) {
 }
 
 /**
- * Filter and Sort over the list, as the web's: Filter is one sheet of choices that stays open while
- * choosing, each active filter a chip that removes it. Both reset when the learner leaves the deck.
+ * Filter and Sort over the list: Filter is one sheet that lists what can be filtered by, each
+ * opening its values in place and staying open while choosing, each active filter a chip that
+ * removes it. Both reset when the learner leaves the deck.
  */
 function Tools({
   sections,
@@ -299,6 +300,14 @@ function Tools({
   const { t, i18n } = useLingui();
   const p = usePalette();
   const [choosing, setChoosing] = useState(false);
+  // Filter lists what can be filtered by; each opens its values in the same sheet.
+  const [level, setLevel] = useState<"state" | "due" | "section" | null>(null);
+  const levelName = { state: t`State`, due: t`Due`, section: t`Section` };
+  // Hermes may not ship Intl.ListFormat, so a plain comma list stands in for it.
+  const list = (items: string[]) =>
+    typeof Intl.ListFormat === "function"
+      ? new Intl.ListFormat(i18n.locale, { type: "conjunction", style: "narrow" }).format(items)
+      : items.join(", ");
   const sortName: Record<DeckSort, string> = {
     section: t`Section`,
     due: t`When it’s back`,
@@ -378,29 +387,77 @@ function Tools({
           );
         })}
       </View>
-      <Sheet title={t`Filter`} open={choosing} onOpenChange={setChoosing}>
-        <SheetGroup>
-          {(["new", "learning", "known"] as const).map((s) => (
+      <Sheet open={choosing} onOpenChange={setChoosing} onDismiss={() => setLevel(null)}>
+        {/* One header for both levels, so the title never moves as a level opens. Inside a
+            native sheet only React Native's own Pressable takes a tap, as SheetRow's does. */}
+        <Pressable
+          disabled={!level}
+          onPress={() => setLevel(null)}
+          accessibilityRole={level ? "button" : "header"}
+          accessibilityLabel={level ? t`Back to Filter` : t`Filter`}
+          className="self-start ps-4 pe-3"
+        >
+          {/* The chevron sits in the inset, so the title starts at the same place at both levels. */}
+          {level && (
+            <View className="absolute start-0 top-0 h-7 justify-center">
+              <Icon name="back" size={16} colour={p["text-2"]} />
+            </View>
+          )}
+          <Text className="text-lg font-medium text-text">
+            {level ? levelName[level] : t`Filter`}
+          </Text>
+        </Pressable>
+        {level === null ? (
+          <SheetGroup>
             <SheetRow
-              key={s}
-              label={i18n._(stateMarks[s].groupLabel)}
-              chosen={filters.states.includes(s)}
-              multiple
-              onPress={() => setFilters({ ...filters, states: toggle(filters.states, s) })}
+              label={levelName.state}
+              detail={
+                filters.states.length
+                  ? list(filters.states.map((s) => i18n._(stateMarks[s].groupLabel)))
+                  : t`Any`
+              }
+              opens
+              onPress={() => setLevel("state")}
             />
-          ))}
-        </SheetGroup>
-        <SheetGroup>
-          {([null, "today", "week"] as const).map((d) => (
             <SheetRow
-              key={d ?? "any"}
-              label={d ? dueName[d] : t`Any time`}
-              chosen={filters.due === d}
-              onPress={() => setFilters({ ...filters, due: d })}
+              label={levelName.due}
+              detail={filters.due ? dueName[filters.due] : t`Any time`}
+              opens
+              onPress={() => setLevel("due")}
             />
-          ))}
-        </SheetGroup>
-        {sections.length > 0 && (
+            {sections.length > 0 && (
+              <SheetRow
+                label={levelName.section}
+                detail={filters.sections.length ? list(filters.sections.map(sectionName)) : t`Any`}
+                opens
+                onPress={() => setLevel("section")}
+              />
+            )}
+          </SheetGroup>
+        ) : level === "state" ? (
+          <SheetGroup>
+            {(["new", "learning", "known"] as const).map((s) => (
+              <SheetRow
+                key={s}
+                label={i18n._(stateMarks[s].groupLabel)}
+                chosen={filters.states.includes(s)}
+                multiple
+                onPress={() => setFilters({ ...filters, states: toggle(filters.states, s) })}
+              />
+            ))}
+          </SheetGroup>
+        ) : level === "due" ? (
+          <SheetGroup>
+            {([null, "today", "week"] as const).map((d) => (
+              <SheetRow
+                key={d ?? "any"}
+                label={d ? dueName[d] : t`Any time`}
+                chosen={filters.due === d}
+                onPress={() => setFilters({ ...filters, due: d })}
+              />
+            ))}
+          </SheetGroup>
+        ) : (
           <SheetGroup>
             {[...sections.map((s) => s.id), ""].map((sid) => (
               <SheetRow

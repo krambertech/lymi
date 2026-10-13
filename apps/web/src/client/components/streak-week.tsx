@@ -1,6 +1,7 @@
 import { Plural } from "@lingui/react/macro";
 import type { StreakOut } from "@lymi/core";
 import { clsx } from "clsx";
+import { RollingNumber } from "./rolling-number";
 import { SevenLights } from "./seven-lights";
 import { addDays } from "./streak-calendar";
 
@@ -64,7 +65,7 @@ export function StreakWeek({
             large ? "text-lg @md:text-2xl" : "text-lg",
           )}
         >
-          {summary.current}
+          <RollingNumber value={summary.current} />
         </span>
         <span className="whitespace-nowrap text-sm text-muted @md:mt-1 @md:text-xs">
           <Plural value={summary.current} one="day in a row" other="days in a row" />

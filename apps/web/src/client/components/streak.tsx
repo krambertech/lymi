@@ -4,12 +4,13 @@ import type { StreakOut } from "@lymi/core";
 import { streakFlameFor } from "@lymi/design";
 import { clsx } from "clsx";
 import { CalendarCheck, Check, type LucideIcon, Pencil, Trophy } from "lucide-react";
-import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { IconButton } from "./button";
 import { Flame } from "./flame";
 import { GoalPicker } from "./goal-picker";
 import { InlineError } from "./inline-error";
 import { PlaceBar } from "./layout/place-bar";
+import { RollingNumber } from "./rolling-number";
 import { SevenLights } from "./seven-lights";
 import { Skeleton } from "./skeleton";
 import { addDays, StreakCalendar } from "./streak-calendar";
@@ -41,11 +42,6 @@ export type StreakFace = PillProps["variant"] | "card";
 function PillFace({ summary, variant }: PillProps) {
   const flame = summary ? streakFlameFor(summary) : "lit";
   const current = summary?.current ?? 0;
-  const mounted = useRef(false);
-  useEffect(() => {
-    mounted.current = true;
-  }, []);
-  const ticked = mounted.current;
   const rail = variant === "rail";
   return (
     <>
@@ -54,11 +50,7 @@ function PillFace({ summary, variant }: PillProps) {
         state={flame}
         flicker={flame === "full"}
       />
-      <span className="relative overflow-hidden tabular-nums">
-        <span key={current} className={clsx("block", ticked && "streak-tick")}>
-          {current}
-        </span>
-      </span>
+      <RollingNumber value={current} />
     </>
   );
 }
@@ -110,7 +102,7 @@ function CardFace({ summary, status }: { summary: StreakSummary; status: string 
       <span className="grid gap-2">
         <span className="flex items-center gap-2.5">
           <Flame className="h-7 w-[22px]" state={flame} flicker={flame === "full"} />
-          <span className="text-3xl font-medium leading-none tabular-nums">{current}</span>
+          <RollingNumber value={current} className="text-3xl font-medium leading-none" />
           <span className="text-md font-medium text-text-2">
             <Plural value={current} one="day in a row" other="days in a row" />
           </span>
@@ -156,7 +148,9 @@ function Figure({ icon: Icon, value, label }: { icon: LucideIcon; value: number;
         <Icon className="size-3.5 shrink-0" aria-hidden="true" />
         {label}
       </dt>
-      <dd className="text-md font-medium tabular-nums text-text">{value}</dd>
+      <dd className="text-md font-medium text-text">
+        <RollingNumber value={value} />
+      </dd>
     </div>
   );
 }
@@ -288,9 +282,10 @@ export function StreakPanel({
         <h2 id={titleId} tabIndex={-1} className="flex items-center gap-3 text-text outline-none">
           <Flame className="h-11 w-[35px] shrink-0" state={flame} flicker={flame === "full"} />
           <span className="flex items-baseline gap-2.5">
-            <span className="text-5xl font-semibold leading-none tracking-tight tabular-nums">
-              {current}
-            </span>
+            <RollingNumber
+              value={current}
+              className="text-5xl font-semibold leading-none tracking-tight"
+            />
             <span className="text-lg font-medium text-text-2">
               <Plural value={current} one="day in a row" other="days in a row" />
             </span>

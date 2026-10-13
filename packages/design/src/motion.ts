@@ -40,6 +40,9 @@ export const FLAME_MOTION = {
 /** The lantern's flight to the middle of the screen at the end of a review. */
 export const LANTERN_FLIGHT = spring(0.6);
 
+/** Each digit of a number that changes in view settles on this, with a trace of overshoot. */
+export const DIGIT_ROLL = { type: "spring", visualDuration: 0.36, bounce: 0.18 } as const;
+
 /** On reveal the cue glides up while the grade strip opens, as one movement. */
 export const REVEAL_GLIDE = { duration: 0.34, ease: EASE_OUT } as const satisfies Timed;
 

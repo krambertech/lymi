@@ -35,10 +35,6 @@ msgstr "{0, plural, one {# картка} few {# картки} many {# карто
 msgid "{0, plural, one {# deck} other {# decks}}"
 msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}}"
 
-#. placeholder {0}: deck.length - (index % deck.length)
-msgid "{0, plural, one {# due} other {# due}}"
-msgstr "{0, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
-
 #. placeholder {0}: rest.length
 msgid "{0, plural, one {# more section} other {# more sections}}"
 msgstr "{0, plural, one {Ще # розділ} few {Ще # розділи} many {Ще # розділів} other {Ще # розділу}}"
@@ -149,6 +145,9 @@ msgstr "{title} · Lymi"
 
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# картку перевернуто} few {# картки перевернуто} many {# карток перевернуто} other {# картки перевернуто}}"
+
+msgid "<0/> {left, plural, one {due} other {due}}"
+msgstr "<0/> {left, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer

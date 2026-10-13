@@ -68,6 +68,7 @@ import {
   RecallAidShow,
   RecallAidShown,
 } from "../components/recall-aid";
+import { RollingNumber } from "../components/rolling-number";
 import { SevenLights } from "../components/seven-lights";
 import { Skeleton } from "../components/skeleton";
 import { StateIcon } from "../components/state-mark";
@@ -159,7 +160,7 @@ export function ReviewHeader({
           <span className="shrink-0 text-sm font-medium tabular-nums text-text-2">
             {/* The slash is read aloud as a fraction, so a screen reader gets the sentence instead. */}
             <span aria-hidden="true">
-              <RollingCount value={done} animate={animateCount} />/{size}
+              <RollingNumber value={done} animate={animateCount} />/{size}
             </span>
             <span className="sr-only">
               <Trans>
@@ -179,38 +180,6 @@ export function ReviewHeader({
         <X />
       </IconButton>
     </header>
-  );
-}
-
-const COUNT_ROLL = {
-  below: { y: "80%", opacity: 0 },
-  shown: { y: 0, opacity: 1 },
-  leave: (animate: boolean) =>
-    animate
-      ? { y: "-80%", opacity: 0, transition: { duration: 0.14, ease: EASE_OUT } }
-      : { opacity: 0, transition: { duration: 0 } },
-};
-
-/** The count rolls up when a card lands, so the change is seen rather than noticed later. */
-function RollingCount({ value, animate }: { value: number; animate: boolean }) {
-  return (
-    <span className="relative inline-grid overflow-hidden align-bottom">
-      {/* `custom` reaches the leaving digit, whose own props are from before this change. */}
-      <AnimatePresence initial={false} mode="popLayout" custom={animate}>
-        <motion.span
-          key={value}
-          className="inline-block"
-          custom={animate}
-          variants={COUNT_ROLL}
-          initial={animate ? "below" : false}
-          animate="shown"
-          exit="leave"
-          transition={{ duration: 0.22, ease: EASE_OUT }}
-        >
-          {value}
-        </motion.span>
-      </AnimatePresence>
-    </span>
   );
 }
 

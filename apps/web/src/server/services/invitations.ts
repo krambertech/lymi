@@ -251,6 +251,7 @@ export async function inviteByEmail(
     .select({ removedAt: schema.deckMembers.removedAt, removedBy: schema.deckMembers.removedBy })
     .from(schema.deckMembers)
     .innerJoin(schema.user, eq(schema.user.id, schema.deckMembers.userId))
+    // biome-ignore lint/plugin: Better Auth stores emails lower-cased, so ASCII-only folding loses nothing here.
     .where(and(eq(schema.deckMembers.deckId, deckId), sql`lower(${schema.user.email}) = ${email}`));
   if (membership && !membership.removedAt) {
     throw refused("conflict", "They are already studying this deck", "member");

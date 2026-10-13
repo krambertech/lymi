@@ -6,6 +6,7 @@ import { DatabaseSync } from "node:sqlite";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import {
+  asciiOnlyFolding,
   createMigrationManifest,
   updateMigrationManifest,
   validateMigrationHistory,
@@ -116,4 +117,16 @@ test("automatic manifest updates freeze merged migrations but may refresh branch
       files: new Map([["0000_example.sql", Buffer.from("DROP TABLE example;")]]),
     }),
   );
+});
+
+test("rejects lower() on learner text in a migration and allows it on hex ids", () => {
+  const files = new Map([
+    ["0048_tags.sql", Buffer.from("UPDATE tags SET normalized_name = lower(trim(name));")],
+    ["0049_ids.sql", Buffer.from("SELECT lower(hex(randomblob(10)));\n-- lower() in a comment")],
+    [
+      "0002_normalized_term.sql",
+      Buffer.from("UPDATE cards SET normalized_term = lower(trim(term));"),
+    ],
+  ]);
+  assert.deepEqual(asciiOnlyFolding(files), ["0048_tags.sql"]);
 });

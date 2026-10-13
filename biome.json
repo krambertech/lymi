@@ -149,6 +149,10 @@
       "plugins": ["./biome-plugins/scroll-view-persist-taps.grit"]
     },
     {
+      "includes": ["apps/web/src/server/**", "packages/core/src/**"],
+      "plugins": ["./biome-plugins/no-sql-lower.grit"]
+    },
+    {
       "includes": ["apps/mobile/**"],
       "linter": {
         "rules": {

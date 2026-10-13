@@ -132,6 +132,11 @@ function Root() {
         <Stack.Protected guard={!update && !signedIn}>
           <Stack.Screen name="(auth)" options={{ animation: "fade" }} />
         </Stack.Protected>
+        {/* A shared deck's link opens signed in or out; signed out, it signs in and comes back. */}
+        <Stack.Protected guard={!update}>
+          <Stack.Screen name="join/[token]" />
+          <Stack.Screen name="add/[slug]" />
+        </Stack.Protected>
         <Stack.Protected guard={!update && signedIn}>
           <Stack.Screen name="index" />
           <Stack.Screen name="(tabs)" />

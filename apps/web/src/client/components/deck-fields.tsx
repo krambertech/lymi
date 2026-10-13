@@ -70,6 +70,9 @@ function optionsFor(locale: string): LanguageOption[] {
 /** Loose BCP 47, the same shape the API accepts. */
 const TAG_RE = /^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$/;
 
+/** A hint under its label reads as part of it, so it sits closer than the control does. */
+const HINT_FIRST = "-mt-1";
+
 interface LanguageProps {
   value: string | null;
   onChange: (value: string | null) => void;
@@ -290,7 +293,11 @@ export function PurposeField({
 }: PurposeProps) {
   const { t, i18n } = useLingui();
   const labelId = useId();
-  const hint = description && <FieldDescription>{description}</FieldDescription>;
+  const hint = description && (
+    <FieldDescription className={descriptionFirst ? HINT_FIRST : undefined}>
+      {description}
+    </FieldDescription>
+  );
   return (
     <Field>
       <FieldLabel id={labelId}>{t`What it’s for`}</FieldLabel>
@@ -333,7 +340,9 @@ export function DirectionSelect({
   return (
     <Field>
       <FieldLabel>{t`Review mode`}</FieldLabel>
-      {current && <FieldDescription>{i18n._(current.blurb)}</FieldDescription>}
+      {current && (
+        <FieldDescription className={HINT_FIRST}>{i18n._(current.blurb)}</FieldDescription>
+      )}
       <Select
         value={value}
         onValueChange={(next) => next && onChange(next as Directions)}

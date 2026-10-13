@@ -108,7 +108,7 @@ export function NewDeckForm({ seed, pending, error, onCancel, onSubmit }: NewDec
   return (
     <form
       ref={formRef}
-      className="grid gap-4"
+      className="grid gap-6"
       noValidate
       onSubmit={(e) => {
         e.preventDefault();

@@ -23,7 +23,7 @@ import { toast } from "../../../ui/toast-host";
 /**
  * A deck's sections, for its owner, as the web's deck settings arrange them: in order, moved with
  * Move up and Move down rather than dragged, since the order is what every learner opens them in.
- * New, rename, archive with a choice for its cards, restore, and how sections open.
+ * New, rename, archive with Undo, restore, and how sections open.
  */
 export default function DeckSections() {
   const { t } = useLingui();
@@ -86,7 +86,7 @@ export default function DeckSections() {
   const restore = useMutation({
     mutationFn: (section: Section) => api.restoreSection(section.id),
     onSuccess: (_r, section) => toast.close(`archive-section-${section.id}`),
-    ...handlers,
+    onSettled: refresh,
   });
   // Archiving happens at once and offers Undo, as a deck's does; its cards stay in the deck without
   // a section, and Restore, from Undo or Archived sections, moves them back.
@@ -97,7 +97,15 @@ export default function DeckSections() {
       toast.add({
         id: `archive-section-${section.id}`,
         title: t`Archived “${sectionName}”`,
-        action: { label: t`Undo`, onPress: () => restore.mutate(section) },
+        // Not the page's restore mutation: Undo can be pressed after the learner has left the page.
+        action: {
+          label: t`Undo`,
+          onPress: () =>
+            void api
+              .restoreSection(section.id)
+              .then(refresh)
+              .catch((e) => failed(e)),
+        },
       });
     },
     ...handlers,
@@ -294,6 +302,12 @@ export default function DeckSections() {
         <Text className="px-1 text-base text-text-2">
           {t`Restore brings a section back in its place, with the cards archived alongside it.`}
         </Text>
+        {/* In the sheet, since a toast would sit under it. */}
+        {restore.isError && (
+          <Text className="px-1 text-base text-danger" accessibilityLiveRegion="polite">
+            {errorMessage(restore.error)}
+          </Text>
+        )}
         <View className="overflow-hidden rounded-xl bg-glass-plate">
           {(archived.data?.sections ?? []).map((s, at) => (
             <View

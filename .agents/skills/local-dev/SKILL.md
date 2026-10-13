@@ -29,4 +29,4 @@ Use the developer panel when the state is one only its Simulate actions reach. P
 
 After any change, read the console and the network log before a screenshot. Seeding is deterministic: the same persona gives the same decks, cards and grades every time, so a count that differs from `docs/local-dev.md` is a bug, not noise.
 
-To prove a feature works rather than look at it, use the [verify skill](../verify/SKILL.md): it drives the feature map's recipes against this server, checks the stored state, and keeps the evidence.
+To prove a feature works rather than look at it, use the [verify skill](../verify/SKILL.md): it drives the feature map's recipes against this server, checks the stored state, and keeps the evidence. For the phone app, use [verify-phone](../verify-phone/SKILL.md).

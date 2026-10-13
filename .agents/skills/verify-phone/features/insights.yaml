@@ -1,0 +1,16 @@
+# Insights: reached from the You tab, its recall and card totals match the stored ones.
+appId: app.lymi
+name: Insights
+---
+- runFlow: _open.yaml
+- tapOn: "You"
+- tapOn: "Insights.*"
+- extendedWaitUntil:
+    visible: "RECALL"
+    timeout: 20000
+- assertVisible: "${PASSED} remembered, ${FAILED} forgotten."
+- takeScreenshot: 01-recall
+- scrollUntilVisible:
+    element: "${CARDS} cards"
+- assertVisible: ".*due this week"
+- takeScreenshot: 02-cards-and-ahead

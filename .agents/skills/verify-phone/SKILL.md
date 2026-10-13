@@ -1,0 +1,64 @@
+---
+name: verify-phone
+description: Prove a change to the iPhone app works by driving it in a Simulator as a learner and keeping the evidence. Use before calling a phone change done, when reviewing a phone pull request, or when asked whether a feature works in the real app. Skip changes with no phone effect; the web product has its own verify skill.
+---
+
+# Verify the phone app
+
+A change is verified when the feature it touches has been driven in the running app, by its visible text and accessibility labels, and the stored state agrees with the screen. Typechecks, the phone's unit and contract tests and green CI are not this proof, and neither is reading the code. It is the phone's counterpart of [`verify`](../verify/SKILL.md): the same feature map, doctor and evidence, with Maestro in place of Playwright and a Simulator in place of a browser.
+
+## Pick the features
+
+[`features/`](features) has one entry per learner-facing feature: what it is, how a learner reaches it, how to drive it, the end state that proves it, and its gotchas. Each entry has a Maestro flow, `<feature>.yaml`, and a `<feature>.mjs` that gives the flow the values it should see and reads the stored state afterwards. Drive every entry the diff can reach. When the diff touches a feature with no entry, write its entry, flow and check in the same pull request.
+
+| Feature | Entry |
+| --- | --- |
+| Today | [today.md](features/today.md) |
+| Review | [review.md](features/review.md) |
+| Add a card | [add-card.md](features/add-card.md) |
+| Library and the deck page | [library.md](features/library.md) |
+| Insights | [insights.md](features/insights.md) |
+
+## Launch
+
+You need Xcode with an iOS 26 runtime, Maestro, and Java 17 or later (the runner sets `JAVA_HOME` to Homebrew's `openjdk` when it is unset). Run with the Node in `.nvmrc` and `LANG=en_US.UTF-8`.
+
+```bash
+node .agents/skills/verify-phone/scripts/stack.mjs start
+```
+
+It writes `apps/web/.dev.vars` from the example when there is none, migrates the local D1, starts this worktree's Worker on 5241 or the next free port and Metro on 8197 or the next free port, with `EXPO_PUBLIC_API_URL` pointing Metro at that Worker. It then creates the **Lymi verify** Simulator if it does not exist, boots it by its UDID, and runs `pnpm dev-client` to install the shared cached dev client ([local development](../../../docs/local-dev.md#run-the-phone-app-in-a-simulator)). Only a change to native code builds; otherwise the install takes seconds, though it waits while another worktree's native build holds the lock. Ports, UDID and process groups go to `apps/mobile/.expo/verify-phone.json`, and the logs beside it.
+
+Never drive another session's Simulator, Metro or Worker, and never address a Simulator as `booted`: every command here takes the UDID.
+
+## Doctor
+
+```bash
+node .agents/skills/verify-phone/scripts/doctor.mjs --persona learner
+```
+
+One read-only check that the stack is worth driving. The Worker must answer `/api/health` as `lymi-product` and the process on its port must run from this worktree's `apps/web`; Metro must report itself running from this worktree's `apps/mobile`; the Simulator with the recorded UDID must be **Lymi verify**, booted, with `app.lymi` installed. With `--persona`, `/api/dev/state` must report that persona. The runner calls the doctor with its own session after resetting the persona and stops before driving when any check fails.
+
+## Drive
+
+```bash
+node .agents/skills/verify-phone/scripts/run.mjs review add-card --pr <n>
+```
+
+For each feature the runner resets the persona with `POST /api/dev/sign-in?as=<persona>&reset=1`, so it starts from the persona's own data whatever ran before, and runs the doctor. It turns off the dev client's developer-menu introduction and floating button, which cover the top bar's controls, relaunches the app on this worktree's Metro, since a dev client opened without a URL reconnects to the last Metro it saw, and runs the flow. Every flow starts with [`_open.yaml`](features/_open.yaml), which waits for the bundle, closes the developer menu if it still shows, and signs in by **Dev sign-in as learner** when the app is signed out, so no password is typed. When Maestro's driver loses the app mid-snapshot without a command failing, which happens on a loaded Mac, the runner runs the flow once more and says so in `maestro.log`. The flow receives the values it asserts, such as the due count, from the feature's `env()`, then the feature's `check()` polls the stored state until it agrees or 20 seconds pass. Personas are in [Become a persona](../../../docs/local-dev.md#become-a-persona).
+
+Find controls by the text and accessibility labels a VoiceOver user hears, never by position; `maestro --device <udid> hierarchy` prints what the app exposes. The one exception is written down in its entry's gotchas with the reason.
+
+## Evidence
+
+Every flow keeps a screenshot at each `takeScreenshot`, numbered in order, plus the persona's state before (`00-before.state.json`), and after it the screen (`99-end.png`), Maestro's view hierarchy (`99-end.hierarchy.json`) and the stored state the check read (`99-end.state.json`). `maestro.log` holds every command, and Maestro's own debug folder holds its per-command screenshots when a command fails. `verdict.md` beside them lists the doctor's result, the values the flow was given, each command as Maestro reported it, the stored-state check, and every error Metro logged while the flow ran. A run with Metro errors is not a clean pass even when the flow passed; say what they were.
+
+Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-phone-<sha>/` when the project folder exists, else to the temp directory, so it outlives the worktree and the Simulator. Name the folder in the pull request and attach the screenshots a reviewer needs. Persona data is local and seeded, so the files carry no private content; never drive a real account to produce them.
+
+## Cleanup
+
+```bash
+node .agents/skills/verify-phone/scripts/stack.mjs stop
+```
+
+It ends only the Worker and Metro process groups `start` recorded and shuts **Lymi verify** down, since a booted Simulator holds about 2 GB. Stop as soon as you stop looking at the app: when the pull request waits on CI or review, and when you are done. Keep the evidence. A failing flow is a finding to report or fix, never a reason to delete its files.

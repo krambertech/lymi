@@ -1,0 +1,36 @@
+# Review: start from Today, grade one card Good and one Forgot, end early, and see the forgotten card on Today.
+appId: app.lymi
+name: Review
+---
+- runFlow: _open.yaml
+- tapOn: "Today"
+- tapOn: "^Review$"
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 30000
+- assertVisible: "0/${DUE}"
+- takeScreenshot: 01-cue
+# The card's centre can be its pronunciation button, so reveal by tapping low on the card.
+- tapOn:
+    point: "50%,80%"
+- assertVisible: "^Good.*"
+- takeScreenshot: 02-revealed
+- tapOn: "^Good.*"
+- assertVisible: "1/${DUE}"
+- assertVisible: ".*Tap to reveal"
+- tapOn:
+    point: "50%,80%"
+- tapOn: "^Forgot.*"
+- assertVisible: "2/.*"
+- tapOn: "End review"
+- extendedWaitUntil:
+    visible: "Review done"
+    timeout: 20000
+# The phone keeps today's count with the review on the device, so a persona reset leaves it as it was.
+- assertVisible: "\\d+ reviews today"
+- takeScreenshot: 03-review-done
+- tapOn: "^Done$"
+- scrollUntilVisible:
+    element: "Also on your list"
+- assertVisible: "Forgotten today. 1.*"
+- takeScreenshot: 04-forgotten-on-today

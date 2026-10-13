@@ -1,0 +1,28 @@
+# Library and the deck page: the deck list, the first deck's page, and one of its cards.
+appId: app.lymi
+name: Library
+---
+- runFlow: _open.yaml
+- tapOn: "Library"
+- extendedWaitUntil:
+    visible: "New deck"
+    timeout: 20000
+- assertVisible: "Archived.*"
+- takeScreenshot: 01-library
+# Deck rows sit inside expo-router's Link.Trigger, which hides them from XCUITest; the first row is tapped by position.
+- tapOn:
+    point: "50%,24%"
+- extendedWaitUntil:
+    visible: "${CARDS} cards"
+    timeout: 20000
+- assertVisible: "${DECK}"
+- assertVisible: "Search this deck"
+- takeScreenshot: 02-deck
+- scrollUntilVisible:
+    element: "${TERM}, .*"
+- tapOn: "${TERM}, .*"
+- extendedWaitUntil:
+    visible: "Details"
+    timeout: 20000
+- assertVisible: "Meaning, ${MEANING}"
+- takeScreenshot: 03-card

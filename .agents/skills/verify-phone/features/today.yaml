@@ -1,0 +1,16 @@
+# Today: the due count, the streak and the decks to review, as the learner opens the app.
+appId: app.lymi
+name: Today
+---
+- runFlow: _open.yaml
+- tapOn: "Today"
+- extendedWaitUntil:
+    visible: "${DUE} cards? due today"
+    timeout: 20000
+- assertVisible: "Streak: ${STREAK} days? in a row.*"
+- assertVisible: "Decks to review"
+- takeScreenshot: 01-today
+- scrollUntilVisible:
+    element: "Also on your list"
+- assertVisible: "Forgotten today. 0.*"
+- takeScreenshot: 02-also-on-your-list

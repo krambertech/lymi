@@ -8,6 +8,7 @@ import { DEVICE_KEYS, deviceStore } from "../data/kept";
 import { askPermission, notificationPermission, type Permission } from "../reminders/notifications";
 import { useRoom } from "../theme/palette";
 import { Button, Text } from "../ui/primitives";
+import { RowFace } from "../ui/row";
 import { Switch } from "../ui/switch";
 
 /** Where the reminder starts when it is first turned on, as on the web. */
@@ -63,16 +64,17 @@ type Reminder = ReturnType<typeof useReminder>;
 export function ReminderSwitch({ reminder }: { reminder: Reminder }) {
   const { t } = useLingui();
   return (
-    <View className="min-h-[52px] flex-row items-center gap-3 ps-4 pe-3.5">
-      <Text className="flex-1 text-md text-text" accessible={false}>
-        {t`Remind me to review`}
-      </Text>
-      <Switch
-        checked={!!reminder.time}
-        onCheckedChange={(on) => void reminder.turn(on)}
-        accessibilityLabel={t`Remind me to review`}
-      />
-    </View>
+    <RowFace
+      icon="reminder"
+      label={t`Remind me to review`}
+      control={
+        <Switch
+          checked={!!reminder.time}
+          onCheckedChange={(on) => void reminder.turn(on)}
+          accessibilityLabel={t`Remind me to review`}
+        />
+      }
+    />
   );
 }
 
@@ -82,20 +84,21 @@ export function TimeRow({ reminder }: { reminder: Reminder }) {
   const room = useRoom();
   if (!reminder.time) return null;
   return (
-    <View className="min-h-[52px] flex-row items-center gap-3 ps-4 pe-3">
-      <Text className="flex-1 text-md text-text" accessible={false}>
-        {t`Time`}
-      </Text>
-      <Host colorScheme={room} matchContents>
-        <DatePicker
-          title={t`Time`}
-          selection={toDate(reminder.time)}
-          displayedComponents={["hourAndMinute"]}
-          onDateChange={(d) => reminder.set(toTime(d))}
-          modifiers={[datePickerStyle("compact"), labelsHidden()]}
-        />
-      </Host>
-    </View>
+    <RowFace
+      icon="time"
+      label={t`Time`}
+      control={
+        <Host colorScheme={room} matchContents>
+          <DatePicker
+            title={t`Time`}
+            selection={toDate(reminder.time)}
+            displayedComponents={["hourAndMinute"]}
+            onDateChange={(d) => reminder.set(toTime(d))}
+            modifiers={[datePickerStyle("compact"), labelsHidden()]}
+          />
+        </Host>
+      }
+    />
   );
 }
 

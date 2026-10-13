@@ -1,0 +1,5 @@
+`$value` where {
+  $value <: or { JsStringLiteralExpression(), JsxString(), JsTemplateElement() },
+  $value <: r".*\b(?:text-end|text-start)\b.*",
+  register_diagnostic(span=$value, message="React Native ignores text-end and text-start, so the text stays at the start. Use style={TEXT_END} from src/theme/type.ts, or align the parent with items-end.")
+}

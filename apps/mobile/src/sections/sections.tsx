@@ -299,7 +299,7 @@ const PIE = 2 * Math.PI * PIE_R;
 
 /** How much of a section the learner knows, as a ring that fills clockwise and closes with a check. */
 export function SectionRing({ known, total }: { known: number; total: number }) {
-  const { t, i18n } = useLingui();
+  const { i18n } = useLingui();
   const p = usePalette();
   const share = total > 0 ? Math.min(1, known / total) : 0;
   const done = total > 0 && known >= total;

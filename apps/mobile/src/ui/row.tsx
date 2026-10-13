@@ -36,11 +36,20 @@ interface RowFaceProps {
    * app for the web, nothing when it acts in place.
    */
   end?: "open" | "web" | "none";
+  /** A control that acts in place at the row's end, such as a switch or a time; it takes the chevron's place. */
+  control?: ReactNode;
   destructive?: boolean;
 }
 
 /** What a row shows, for a control that brings its own press, such as a Select. */
-export function RowFace({ label, icon, value, end = "open", destructive = false }: RowFaceProps) {
+export function RowFace({
+  label,
+  icon,
+  value,
+  end = "open",
+  control,
+  destructive = false,
+}: RowFaceProps) {
   const p = usePalette();
   // At the accessibility sizes the value moves under the label, as iOS Settings does, so neither breaks mid-word.
   const stacked = useWindowDimensions().fontScale >= ACCESSIBILITY_SIZES;
@@ -74,7 +83,9 @@ export function RowFace({ label, icon, value, end = "open", destructive = false 
           {now}
         </>
       )}
-      {end === "open" ? (
+      {control ? (
+        control
+      ) : end === "open" ? (
         <RowArrow />
       ) : end === "web" ? (
         <Icon name="web" size={18} colour={p.muted} strokeWidth={2.25} />

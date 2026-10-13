@@ -5,6 +5,7 @@ import { useState } from "react";
 import { type TextStyle, View, type ViewStyle } from "react-native";
 import Svg, { Circle, Line, Path } from "react-native-svg";
 import { clear, usePalette } from "../theme/palette";
+import { TEXT_END } from "../theme/type";
 import { Text } from "../ui/primitives";
 import { StateIcon, stateMarks } from "../ui/state-mark";
 
@@ -269,7 +270,7 @@ export function CardStates({ cards }: { cards: InsightsOut["cards"] }) {
               }}
             />
           </View>
-          <Text className="w-10 text-end text-sm font-medium text-text" style={TABULAR}>
+          <Text className="w-10 text-sm font-medium text-text" style={[TABULAR, TEXT_END]}>
             {i18n.number(cards[k])}
           </Text>
         </View>

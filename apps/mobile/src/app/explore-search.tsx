@@ -9,7 +9,7 @@ import { DeckList, ShelfList } from "../explore/layouts";
 import { CatalogueFailed, CatalogueLoading } from "../explore/states";
 import { EmptyState } from "../ui/empty-state";
 import { KeyboardRoom } from "../ui/keyboard";
-import { SectionTitle, Text } from "../ui/primitives";
+import { SectionTitle, } from "../ui/primitives";
 import { SearchBar, useSearchText } from "../ui/search-bar";
 
 /**

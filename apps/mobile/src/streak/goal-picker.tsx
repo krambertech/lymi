@@ -6,7 +6,7 @@ import { onlineManager } from "@tanstack/react-query";
 import { useRef, useState, useSyncExternalStore } from "react";
 import { TextInput, View } from "react-native";
 import { usePalette } from "../theme/palette";
-import { inputCap } from "../theme/type";
+import { inputCap, TEXT_END } from "../theme/type";
 import { FieldError } from "../ui/field";
 import { Button, Text } from "../ui/primitives";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
@@ -158,8 +158,8 @@ function CustomGoal({
         accessibilityLabel={t`Reviews a day`}
         placeholderTextColor={p.muted}
         selectionColor={p.text}
-        className={`h-9 w-16 rounded-sm border bg-glass-plate px-2.5 text-end font-sans text-text ${error ? "border-danger" : "border-edge-2"}`}
-        style={{ fontSize: 17, fontVariant: ["tabular-nums"] }}
+        className={`h-9 w-16 rounded-sm border bg-glass-plate px-2.5 font-sans text-text ${error ? "border-danger" : "border-edge-2"}`}
+        style={[{ fontSize: 17, fontVariant: ["tabular-nums"] }, TEXT_END]}
         maxFontSizeMultiplier={inputCap(17)}
       />
       <Text className="flex-1 text-md text-text-2">

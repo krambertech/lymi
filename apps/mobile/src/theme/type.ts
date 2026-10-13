@@ -1,4 +1,4 @@
-import type { TextProps } from "react-native";
+import { I18nManager, type TextProps } from "react-native";
 
 type Ramp = NonNullable<TextProps["dynamicTypeRamp"]>;
 
@@ -110,3 +110,6 @@ export const MULTILINE = {
   paddingTop: 11,
   paddingBottom: 11,
 } as const;
+
+/** Text set to the end of its box. React Native ignores `text-end`, so the side follows the layout direction here. */
+export const TEXT_END = { textAlign: I18nManager.isRTL ? "left" : "right" } as const;

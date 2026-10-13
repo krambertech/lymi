@@ -7,7 +7,7 @@ import { SectionInput, type SectionProgression, sectionLimits } from "@lymi/core
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { AccessibilityInfo, TextInput, View } from "react-native";
+import { TextInput, View } from "react-native";
 import { useDecks, useSections } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { inputCap } from "../../../theme/type";

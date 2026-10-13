@@ -94,7 +94,7 @@ import { Wick } from "../review/wick";
 import { useReviewSession } from "../telemetry/review-session";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
-import { fitType } from "../theme/type";
+import { fitType, TEXT_END } from "../theme/type";
 import { AiCardChip, Chip, StateChip } from "../ui/chip";
 import { GlassSurface } from "../ui/glass";
 import { GRADES } from "../ui/grade";
@@ -1156,8 +1156,8 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
       <Text
         // The count shares a 48 pt bar with the lantern and the progress, so it grows least.
         maxFontSizeMultiplier={1.3}
-        className="min-w-12 text-end text-base text-text-2"
-        style={{ fontVariant: ["tabular-nums"] }}
+        className="min-w-12 text-base text-text-2"
+        style={[{ fontVariant: ["tabular-nums"] }, TEXT_END]}
       >
         {done}/{total}
       </Text>

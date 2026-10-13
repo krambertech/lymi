@@ -12,6 +12,8 @@ Two deployables: `apps/site` is the Astro public site plus its narrow health-and
 
 Start the product with the `lymi` entry in `.claude/launch.json` (port 5241, or a free port when another worktree holds it). To get a signed-in session, navigate the browser to `/api/dev/sign-in?as=learner`; never type a password. Personas, the developer panel (backtick key), `pnpm local`, and the `/api/dev` routes are in [`docs/local-dev.md`](docs/local-dev.md). If migrations fail against the local D1, `pnpm local db:fresh` rebuilds it.
 
+To prove a product change works, drive the features it touches with [the verify skill](.agents/skills/verify/SKILL.md): its feature map says how to reach and drive each one and what end state proves it, and its runner keeps the evidence for the pull request.
+
 ## Before you push
 
 **Instrumentation is part of done.** For each behavior change, state the product question it should answer and add or reuse an event at its owning interaction or committed outcome. Document the event meaning, allowed properties and producer; preserve existing chart contracts, exclude private content, and verify failure and duplicate paths. Record instrumentation and its validation in the pull request. If the change needs no event, explain why.

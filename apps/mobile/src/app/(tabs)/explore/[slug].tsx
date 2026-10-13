@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { exploreDeckQuery } from "@lymi/client/queries";
 import { type ExploreDeckOut, publisherAvatarPath } from "@lymi/core/catalog";
+import { ARRIVE } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ import { useAddDeck, useAddFailure, useTagLabel } from "../../../explore/catalog
 import { DeckHand, handOf } from "../../../explore/deck-hand";
 import { DeckTile } from "../../../explore/layouts";
 import { useCoverColour } from "../../../explore/tray";
+import { springIn } from "../../../theme/motion";
 import { usePalette } from "../../../theme/palette";
 import { GlassSurface } from "../../../ui/glass";
 import { OnTheWeb } from "../../../ui/on-the-web";
@@ -289,13 +291,13 @@ function BarAdd({
           <ActivityIndicator color={p.text} />
         ) : added ? (
           // Once the deck is in, the bar keeps only the check, so it never crowds the title.
-          <Animated.View key="added" entering={ZoomIn.springify().damping(12)}>
+          <Animated.View key="added" entering={springIn(new ZoomIn(), ARRIVE)}>
             <Icon name="check" size={20} colour={p["state-known"]} strokeWidth={2.75} />
           </Animated.View>
         ) : (
           <Animated.View
             key="add"
-            entering={ZoomIn.springify().damping(14)}
+            entering={springIn(new ZoomIn(), ARRIVE)}
             className="flex-row items-center gap-1.5"
           >
             <Icon name="plus" size={18} colour={p.text} strokeWidth={2.5} />

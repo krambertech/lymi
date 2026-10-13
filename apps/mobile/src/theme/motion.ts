@@ -9,6 +9,21 @@ export function spring(s: Spring) {
   return { duration: seconds * 1000, dampingRatio: 1 - s.bounce, reduceMotion: ReduceMotion.Never };
 }
 
+interface SpringBuilder {
+  springify(duration?: number): this;
+  dampingRatio(ratio: number): this;
+  reduceMotion(reduce: ReduceMotion): this;
+}
+
+/**
+ * A layout animation, such as `new FadeInDown()`, on a shared spring. Setting one physics value alone
+ * leaves Reanimated 4's heavy defaults beside it, which is how a toast once overshot the screen.
+ */
+export function springIn<T extends SpringBuilder>(builder: T, s: Spring): T {
+  const { duration, dampingRatio } = spring(s);
+  return builder.springify(duration).dampingRatio(dampingRatio).reduceMotion(ReduceMotion.Never);
+}
+
 /** A shared curve as a Reanimated easing. */
 export function curve([x1, y1, x2, y2]: Curve) {
   return Easing.bezier(x1, y1, x2, y2);

@@ -1,7 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { api, errorMessage, type Section } from "@lymi/client/api";
-import { archivedSectionsQuery } from "@lymi/client/queries";
+import { api, errorMessage, type Section, type Sections } from "@lymi/client/api";
+import { archivedSectionsQuery, sectionsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
 import { SectionInput, type SectionProgression, sectionLimits } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -65,9 +65,28 @@ export default function DeckSections() {
       api.renameSection(section.id, name),
     ...handlers,
   });
+  const sectionsKey = sectionsQuery(id).queryKey;
+  // The new order lands in the cache at once, so a second Move builds on it rather than the old one.
   const reorder = useMutation({
     mutationFn: (ids: string[]) => api.reorderSections(id, ids),
-    ...handlers,
+    onMutate: async (ids) => {
+      setError(null);
+      await qc.cancelQueries({ queryKey: sectionsKey, exact: true });
+      const before = qc.getQueryData<Sections>(sectionsKey);
+      if (before) {
+        const byId = new Map(before.sections.map((s) => [s.id, s]));
+        qc.setQueryData<Sections>(sectionsKey, {
+          ...before,
+          sections: ids.flatMap((sid) => byId.get(sid) ?? []),
+        });
+      }
+      return () => qc.setQueryData(sectionsKey, before);
+    },
+    onError: (e, _ids, undo) => {
+      undo?.();
+      setError(errorMessage(e));
+    },
+    onSettled: refresh,
   });
   const archive = useMutation({
     mutationFn: ({ section, cards }: { section: Section; cards: "archive" | "keep" }) =>

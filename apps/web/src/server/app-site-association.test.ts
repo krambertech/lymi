@@ -9,7 +9,7 @@ describe("the apple-app-site-association file", () => {
   });
 
   it("opens join and add links in the phone app", async () => {
-    const app = await testApp({ env: { APPLE_APP_ID: "TEAM123456.app.lymi.poc" } });
+    const app = await testApp({ env: { APPLE_APP_ID: "TEAM123456.app.lymi" } });
     const response = await app.fetch("/.well-known/apple-app-site-association");
     expect(response.status).toBe(200);
     expect(response.headers.get("content-type")).toContain("application/json");
@@ -17,7 +17,7 @@ describe("the apple-app-site-association file", () => {
       applinks: {
         details: [
           {
-            appIDs: ["TEAM123456.app.lymi.poc"],
+            appIDs: ["TEAM123456.app.lymi"],
             components: [{ "/": "/join/*" }, { "/": "/add/*" }],
           },
         ],

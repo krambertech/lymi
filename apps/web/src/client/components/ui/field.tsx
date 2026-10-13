@@ -279,6 +279,8 @@ function FieldDescription({ className, id, ...props }: React.ComponentProps<"p">
       id={ownId}
       data-slot="field-description"
       className={cn(
+        // Under its label it reads as part of the label, so it sits closer than the control does.
+        "[[data-slot=field-label]+&]:-mt-1.5 [[data-slot=field-label-row]+&]:-mt-1.5",
         "text-sm text-muted [&>a]:underline [&>a]:underline-offset-4 hoverable:[&>a:hover]:text-text",
         className,
       )}

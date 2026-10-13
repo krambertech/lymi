@@ -14,7 +14,7 @@ import {
 import type { ActivityCard, ActivityEntry } from "@lymi/client/api";
 import { useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { usePalette } from "../theme/palette";
 import { Chip } from "../ui/chip";
 import type { IconName } from "../ui/icons";
@@ -644,9 +644,14 @@ function Foot({
         </Text>
       )}
       {hasMore ? (
-        <View className="self-stretch">
-          <Button label={failed ? t`Try again` : t`Show more`} onPress={onMore} loading={loading} />
-        </View>
+        // More loads as the end comes near; a button only when that failed.
+        failed ? (
+          <View className="self-stretch">
+            <Button label={t`Try again`} onPress={onMore} loading={loading} />
+          </View>
+        ) : (
+          <ActivityIndicator accessibilityLabel={t`Loading more`} />
+        )
       ) : (
         <Text className="text-base text-muted" accessibilityLiveRegion="polite">
           {t`That’s everything.`}

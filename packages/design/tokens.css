@@ -35,6 +35,8 @@
   --glass-veil: oklch(0.2 0.03 60 / 0.06);
   /* On Liquid Glass a fill lets the glass through and takes its colour, as iOS's own grouped rows do. */
   --glass-plate: oklch(1 0 0 / 0.72);
+  /* A sheet's row group: a faint ink tint, since a white fill vanishes when iOS turns the sheet opaque. */
+  --glass-group: oklch(0.2 0.03 60 / 0.05);
   --glass-chosen: oklch(1 0 0);
   /* The web's slight glass: the plate, nearly opaque over a blur, with a sheen along the top. */
   --glass-fill: oklch(1 0 0 / 0.86);
@@ -125,6 +127,7 @@
   --veil: oklch(1 0 0 / 0.04);
   --glass-veil: oklch(1 0 0 / 0.12);
   --glass-plate: oklch(1 0 0 / 0.08);
+  --glass-group: oklch(1 0 0 / 0.08);
   --glass-chosen: oklch(1 0 0 / 0.16);
   --glass-fill: oklch(0.24 0.01 64 / 0.86);
   --glass-sheen: oklch(1 0 0 / 0.07);
@@ -199,6 +202,7 @@
   --color-rail: var(--rail);
   --color-sheet: var(--sheet);
   --color-glass-plate: var(--glass-plate);
+  --color-glass-group: var(--glass-group);
   --color-glass-chosen: var(--glass-chosen);
   --color-plate: var(--plate);
   --color-plate-2: var(--plate-2);

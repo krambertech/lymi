@@ -86,6 +86,7 @@ function UseCasesMenu({ current }: { current: LocalizedPage | undefined }) {
         {open && (
           <motion.div
             id={panelId}
+            data-use-cases-panel
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1, transition: { duration: 0.14, ease: EASE_OUT } }}
             exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.1, ease: EASE_OUT } }}

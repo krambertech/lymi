@@ -1,6 +1,8 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { exploreDeckQuery } from "@lymi/client/queries";
 import { hasShelfPage, type PublicDeckSummary, type Shelf } from "@lymi/core/catalog";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import { ScrollView, useWindowDimensions, View } from "react-native";
 import { usePalette } from "../theme/palette";
@@ -38,6 +40,12 @@ export function useOpenDeck() {
     router.push({ pathname: "/explore/[slug]", params: { slug: deck.slug, name: deck.name } });
 }
 
+/** Starts reading a deck's page as the finger lands, so it is often there by the time it opens. */
+export function useWarmDeck() {
+  const qc = useQueryClient();
+  return (slug: string) => void qc.prefetchQuery(exploreDeckQuery(slug));
+}
+
 /** A deck as a shelf shows it: its card in a tray, its name, and its counts. */
 export function DeckTile({
   deck,
@@ -49,9 +57,11 @@ export function DeckTile({
   added: boolean;
 }) {
   const open = useOpenDeck();
+  const warm = useWarmDeck();
   return (
     <Press
       scale={0.98}
+      onPressIn={() => warm(deck.slug)}
       onPress={() => open(deck)}
       accessibilityRole="link"
       accessibilityLabel={deck.name}
@@ -190,12 +200,14 @@ export function DeckList({
 }) {
   const { t } = useLingui();
   const open = useOpenDeck();
+  const warm = useWarmDeck();
   return (
     <Plate className="overflow-hidden">
       {decks.map((deck, i) => (
         <Press
           key={deck.slug}
           scale={0.99}
+          onPressIn={() => warm(deck.slug)}
           onPress={() => open(deck)}
           accessibilityRole="link"
           accessibilityLabel={deck.name}

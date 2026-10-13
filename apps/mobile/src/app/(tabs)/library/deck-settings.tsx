@@ -15,6 +15,7 @@ import { type Href, useLocalSearchParams } from "expo-router";
 import { type ReactNode, useRef, useState } from "react";
 import { TextInput, View } from "react-native";
 import { useDeckExits } from "../../../data/decks";
+import { openDraft } from "../../../data/draft";
 import { languageName } from "../../../data/languages";
 import { useDeckCards, useDecks } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
@@ -108,6 +109,27 @@ function Settings({ deck }: { deck: DeckSummary }) {
     if (editing === "description") commitDescription();
     if (editing === "instructions") commitInstructions();
     setEditing(null);
+  };
+  // A sheet opens on the deck as it is now, so a change made on the web since is never saved over.
+  const edit = (field: "name" | "description" | "instructions") => {
+    if (field === "name") {
+      const next = openDraft(name, kept.current.name, deck.name);
+      setName(next.draft);
+      kept.current.name = next.saved ?? deck.name;
+    } else if (field === "description") {
+      const next = openDraft(description, kept.current.description, deck.description ?? null);
+      setDescription(next.draft);
+      kept.current.description = next.saved;
+    } else {
+      const next = openDraft(
+        instructions,
+        kept.current.instructions,
+        deck.enrichInstructions ?? null,
+      );
+      setInstructions(next.draft);
+      kept.current.instructions = next.saved;
+    }
+    setEditing(field);
   };
 
   const languages = [
@@ -251,7 +273,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
           </Group>
           <Rows>
             <RowFace icon="meaning" label={t`Language`} value={language} end="none" />
-            <RowFace icon="modes" label={t`How cards are asked`} value={way?.label} end="none" />
+            <RowFace icon="modes" label={t`Modes`} value={way?.label} end="none" />
           </Rows>
           <Rows>
             <Row icon="signOut" label={t`Leave deck`} destructive end="none" onPress={leave} />
@@ -261,26 +283,21 @@ function Settings({ deck }: { deck: DeckSummary }) {
         <>
           {/* Each setting is a row that opens its own sheet over the page, never a sheet over a sheet. */}
           <Rows>
-            <Row icon="edit" label={t`Name`} value={deck.name} onPress={() => setEditing("name")} />
+            <Row icon="edit" label={t`Name`} value={deck.name} onPress={() => edit("name")} />
             <Row
               icon="notes"
               label={t`Description`}
               value={deck.description ?? t`None`}
-              onPress={() => setEditing("description")}
+              onPress={() => edit("description")}
             />
             {languageSelect(<RowFace icon="meaning" label={t`Language`} value={language} />)}
-            <Row
-              icon="modes"
-              label={t`How cards are asked`}
-              value={way?.label}
-              onPress={() => setAsking(true)}
-            />
+            <Row icon="modes" label={t`Modes`} value={way?.label} onPress={() => setAsking(true)} />
           </Rows>
           <Group title={t`AI`}>
             <Rows>
               <Row
                 icon="ai"
-                label={t`Fields AI can fill`}
+                label={t`AI fills`}
                 value={fieldsValue}
                 onPress={() => setChoosingFields(true)}
               />
@@ -288,7 +305,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
                 icon="lesson"
                 label={t`Instructions`}
                 value={deck.enrichInstructions ?? t`None`}
-                onPress={() => setEditing("instructions")}
+                onPress={() => edit("instructions")}
               />
             </Rows>
           </Group>

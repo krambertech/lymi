@@ -4,7 +4,7 @@ import { ApiError, api, refusalDetail } from "@lymi/client/api";
 import { addPreviewQuery, exploreQuery, joinPreviewQuery } from "@lymi/client/queries";
 import type { JoinPreviewOut } from "@lymi/core";
 import { onlineManager, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { type Href, useRouter } from "expo-router";
+import { type Href, Redirect, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { useSession } from "../auth/client";
@@ -158,6 +158,15 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
       onOpen={open}
     />
   );
+}
+
+/**
+ * Signing in or out lands on the first screen open to the new session, which can be this one with
+ * no link, so it passes the learner on to where they were going.
+ */
+export function LinkGone() {
+  const signedIn = Boolean(useSession().data);
+  return <Redirect href={signedIn ? "/today" : "/welcome"} />;
 }
 
 function LoadingHeader() {

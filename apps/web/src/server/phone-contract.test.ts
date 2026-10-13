@@ -41,6 +41,7 @@ const phoneOperations = [
   "PATCH /api/sections/{id}",
   "POST /api/sections/{id}/archive",
   "POST /api/sections/{id}/restore",
+  "POST /api/sections/{id}/start",
   "GET /api/review/draw",
   "GET /api/review/queue",
   "GET /api/review/rounds",

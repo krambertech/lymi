@@ -2553,3 +2553,74 @@ msgstr "Your photo changed on another device. Try again."
 
 msgid "Your unsent reviews and cards are saved on this phone. They send after the update."
 msgstr "Your unsent reviews and cards are saved on this phone. They send after the update."
+
+#. placeholder {0}: opening.length
+msgid "{0, plural, one {Start section} other {Start # sections}}"
+msgstr "{0, plural, one {Start section} other {Start # sections}}"
+
+#. placeholder {0}: current.notStarted
+msgid "{0, plural, one {The next section opens once the last card of this section comes up in review.} other {The next section opens once the last # cards of this section come up in review.}}"
+msgstr "{0, plural, one {The next section opens once the last card of this section comes up in review.} other {The next section opens once the last # cards of this section come up in review.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
+msgstr "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {You know {known} of # card in {currentName}, the last section.} other {You know {known} of # cards in {currentName}, the last section.}}"
+msgstr "{0, plural, one {You know {known} of # card in {currentName}, the last section.} other {You know {known} of # cards in {currentName}, the last section.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
+msgstr "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
+
+msgid "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
+msgstr "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
+
+msgid "{count, plural, one {{sectionName}, # card} other {{sectionName}, # cards}}"
+msgstr "{count, plural, one {{sectionName}, # card} other {{sectionName}, # cards}}"
+
+msgid "{count, plural, one {{sectionName}, not open yet, # card} other {{sectionName}, not open yet, # cards}}"
+msgstr "{count, plural, one {{sectionName}, not open yet, # card} other {{sectionName}, not open yet, # cards}}"
+
+msgid "{count, plural, one {It leaves Library and stops coming up in review. Restore it from Archived.} other {They leave Library and stop coming up in review. Restore them from Archived.}}"
+msgstr "{count, plural, one {It leaves Library and stops coming up in review. Restore it from Archived.} other {They leave Library and stop coming up in review. Restore them from Archived.}}"
+
+msgid "{nextName} is ready"
+msgstr "{nextName} is ready"
+
+msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
+msgstr "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
+
+msgid "{sectionName} is ready. Start it to review its cards."
+msgstr "{sectionName} is ready. Start it to review its cards."
+
+msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
+msgstr "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
+
+msgid "Archive “{name}”?"
+msgstr "Archive “{name}”?"
+
+msgid "Couldn’t start the section"
+msgstr "Couldn’t start the section"
+
+msgid "Every section is open"
+msgstr "Every section is open"
+
+msgid "Review this section"
+msgstr "Review this section"
+
+msgid "Start {nextName}"
+msgstr "Start {nextName}"
+
+msgid "Start {sectionName}"
+msgstr "Start {sectionName}"
+
+msgid "Start {sectionName} early?"
+msgstr "Start {sectionName} early?"
+
+msgid "Start anyway"
+msgstr "Start anyway"
+
+msgid "You are here"
+msgstr "You are here"

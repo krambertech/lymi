@@ -196,12 +196,17 @@ export function Icon({
   size = 20,
   colour,
   strokeWidth = 2,
+  filled = false,
 }: {
   name: IconName;
   size?: number;
   colour: string;
   strokeWidth?: number;
+  /** Filled in its own colour, as a set important star is. */
+  filled?: boolean;
 }) {
   const Glyph = ICONS[name];
-  return <Glyph size={size} color={colour} strokeWidth={strokeWidth} />;
+  return (
+    <Glyph size={size} color={colour} strokeWidth={strokeWidth} fill={filled ? colour : "none"} />
+  );
 }

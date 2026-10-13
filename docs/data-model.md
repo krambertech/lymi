@@ -126,7 +126,7 @@ erDiagram
   imports {
     text id PK
     text user_id FK
-    text source "anki | mochi"
+    text source "anki | mochi | noji | lymi"
     text file_name "private, never logged"
     int byte_size
     text status "uploading | inspecting | ready | importing | done | failed | cancelled"

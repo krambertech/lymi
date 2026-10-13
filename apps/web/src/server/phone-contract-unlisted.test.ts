@@ -12,7 +12,8 @@ import { json, type Session, type TestApp, testApp } from "./test-app";
 
 /**
  * The phone's calls the OpenAPI document leaves out, so no freeze in apps/mobile/contract guards
- * them: Better Auth under /api/auth, the photo, pronunciation audio and feedback. Each test sends
+ * them: Better Auth under /api/auth, the photo, pronunciation audio, feedback, join links and the
+ * add preview. Each test sends
  * what an installed release sends and checks what that release reads back, so a change here is a
  * phone break that needs a version gate first. ADR 0032.
  */
@@ -182,6 +183,70 @@ describe.each(releases)("the phone release %s", (version) => {
       expect(response.status).toBe(200);
       const { url } = (await response.json()) as { url: string };
       expect(new URL(url).hostname).toBe("accounts.google.com");
+    });
+  });
+
+  describe("a shared deck's link", () => {
+    /** The fields the release reads from a preview; `apps/mobile/src/sharing/join-screen.tsx`. */
+    function previewOf(body: unknown) {
+      expect(body).toMatchObject({
+        status: expect.any(String),
+        viewer: expect.any(String),
+        deckId: expect.toBeOneOf([expect.any(String), null]),
+      });
+      return body as { status: string; viewer: string; deckId: string | null; deck: unknown };
+    }
+
+    it("previews a join link signed out and signed in, and joins", async () => {
+      const owner = await app.signUp(handle("link-owner"));
+      const classmate = await app.signUp(handle("link-classmate"));
+      const deck = await app.fetch("/api/decks", {
+        ...json({ name: "Lesson 4", defaultLanguage: "et" }),
+        as: owner,
+      });
+      const deckId = DeckOut.parse(await deck.json()).id;
+      await app.fetch("/api/cards/batch", {
+        ...json({ cards: [{ deckId, term: "tere", meaning: "hello" }] }),
+        as: owner,
+      });
+      const on = await app.fetch(`/api/decks/${deckId}/join-link`, { method: "POST", as: owner });
+      const { link } = (await on.json()) as { link: { url: string } };
+      const token = link.url.split("/").pop() ?? "";
+
+      const signedOut = previewOf(
+        await (await app.fetch(`/api/join/${token}`, fromPhone())).json(),
+      );
+      expect(signedOut).toMatchObject({ status: "live", viewer: "signed-out", deckId: null });
+      expect(signedOut.deck).toMatchObject({
+        name: "Lesson 4",
+        total: 1,
+        owner: { name: expect.any(String) },
+        language: "et",
+        samples: [{ term: "tere", meaning: "hello" }],
+      });
+
+      const visitor = await app.fetch(`/api/join/${token}`, fromPhone({ as: classmate }));
+      expect(previewOf(await visitor.json())).toMatchObject({ viewer: "visitor" });
+
+      const joined = await app.fetch(
+        `/api/join/${token}`,
+        fromPhone({ method: "POST", as: classmate }),
+      );
+      expect(joined.status).toBe(200);
+      expect(await joined.json()).toMatchObject({ deckId });
+
+      const member = await app.fetch(`/api/join/${token}`, fromPhone({ as: classmate }));
+      expect(previewOf(await member.json())).toMatchObject({ viewer: "member", deckId });
+    });
+
+    it("previews an address no deck is published at", async () => {
+      const response = await app.fetch("/api/add/no-such-deck", fromPhone());
+      expect(response.status).toBe(200);
+      expect(previewOf(await response.json())).toMatchObject({
+        status: "invalid",
+        viewer: "signed-out",
+        deckId: null,
+      });
     });
   });
 

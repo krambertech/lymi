@@ -1,8 +1,9 @@
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
 import { CHOICE_DRAW, CHOICE_FADE, CHOICE_LEAVE, CHOICE_POP, INSTANT } from "@lymi/design";
 import { cn } from "cn";
-import { motion, useAnimate, useReducedMotionConfig } from "motion/react";
+import { motion, useAnimate } from "motion/react";
 import * as React from "react";
+import { useReduceMotion } from "../../lib/use-reduce-motion";
 import { useField, useFieldControl } from "./field";
 
 // shadcn's Checkbox; the indicator draws the box and stays mounted so the tick can leave as well as arrive.
@@ -41,7 +42,7 @@ function Checkbox({ className, disabled, ...props }: CheckboxPrimitive.Root.Prop
 }
 
 function CheckboxBox({ checked, indeterminate }: { checked: boolean; indeterminate: boolean }) {
-  const reduce = useReducedMotionConfig() ?? false;
+  const reduce = useReduceMotion();
   const on = checked || indeterminate;
   const [scope, animate] = useAnimate<HTMLSpanElement>();
   const previous = React.useRef(on);

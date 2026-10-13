@@ -132,7 +132,7 @@ export function Surfaces() {
 
       <Sub
         title="Lit and set in"
-        note="A track or an unlit pane is well, set into its plate. What fills it is lit: light along its top and, at night, the flame's faint glow. The primary button carries key-light. The lantern's plate on Today is lamplit, its light pooling from the lantern's side with a fine grain."
+        note="A track or an unlit pane is well, set into its plate. What fills it is lit: light along its top and, at night, the flame's faint glow. The primary button carries key-light. The lantern's plate on Today is lamplit, its light pooling from the lantern's side."
       >
         <Pair>
           {() => (

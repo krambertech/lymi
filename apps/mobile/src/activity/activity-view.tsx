@@ -44,7 +44,12 @@ const MARK_ICONS: Record<ActivityMark, IconName> = {
   link_off: "linkOff",
 };
 
-const SOURCE_NAMES: Record<string, string> = { anki: "Anki", mochi: "Mochi", lymi: "Lymi" };
+const SOURCE_NAMES: Record<string, string> = {
+  anki: "Anki",
+  mochi: "Mochi",
+  noji: "Noji",
+  lymi: "Lymi",
+};
 
 /** The row's sentence. It never names the caller, which the line under it does. */
 function Sentence({ entry }: { entry: ActivityEntry }) {

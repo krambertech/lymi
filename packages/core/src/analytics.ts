@@ -21,6 +21,7 @@ const slug = z
 const source = z.enum([
   "anki",
   "mochi",
+  "noji",
   "lymi",
   "csv",
   "quizlet",
@@ -146,13 +147,13 @@ export const analyticsEvents = {
   import_started: z.object({
     source,
     card_count: count,
-    adapter: z.enum(["anki", "mochi", "lymi", "unknown"]),
+    adapter: z.enum(["anki", "mochi", "noji", "lymi", "unknown"]),
     outcome: z.literal("started"),
   }),
   import_finished: z.object({
     source,
     card_count: count,
-    adapter: z.enum(["anki", "mochi", "lymi", "unknown"]),
+    adapter: z.enum(["anki", "mochi", "noji", "lymi", "unknown"]),
     outcome: z.enum(["done", "failed"]),
   }),
   import_failed: z.object({ source, card_count: count }),

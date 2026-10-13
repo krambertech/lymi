@@ -51,6 +51,8 @@ export interface Bindings
   APP_PREVIEW_KEY?: string;
   /** The token OpenAI's plugin submission portal issues for domain verification. */
   OPENAI_APPS_CHALLENGE?: string;
+  /** The phone app's Team ID and bundle, `TEAMID.app.lymi`; universal links are off without it. */
+  APPLE_APP_ID?: string;
 }
 
 /** Preview-only capabilities fail closed unless both the build flag and isolated hostname agree. */

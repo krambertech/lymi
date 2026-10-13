@@ -1,6 +1,6 @@
 # Imports and exports
 
-Import starts from the Import group at the end of Settings, one plate with a row per app Lymi reads; `/import` redirects there. Each app has its own page, `/import/anki` and `/import/mochi`, with that app's file, export steps and guide, because the steps differ and a later source adds a row rather than another menu item. From then on every screen names the app the file came from.
+Import starts from the Import group at the end of Settings, one plate with a row per app Lymi reads; `/import` redirects there. Each app has its own page, such as `/import/anki`, `/import/mochi` and `/import/noji`, with that app's file, export steps and guide, because the steps differ and a later source adds a row rather than another menu item. From then on every screen names the app the file came from.
 
 An import is one screen whose body follows the import's state: choose a file, the file on its way, the preview, the cards being written, and the end. The address holds the import, so leaving and coming back finds it where it was, and Activity lists every import and opens the same screen.
 

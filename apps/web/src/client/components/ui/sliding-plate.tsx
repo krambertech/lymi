@@ -1,7 +1,8 @@
 import { CHOICE_FADE, CHOICE_SLIDE } from "@lymi/design";
 import { cn } from "cn";
-import { animate, motion, useMotionValue, useReducedMotionConfig } from "motion/react";
+import { animate, motion, useMotionValue } from "motion/react";
 import * as React from "react";
+import { useReduceMotion } from "../../lib/use-reduce-motion";
 
 interface SlidingPlateProps {
   /** Selector for the chosen item among the plate's siblings. */
@@ -23,7 +24,7 @@ export function SlidingPlate({
   className,
 }: SlidingPlateProps) {
   const ref = React.useRef<HTMLSpanElement>(null);
-  const reduce = useReducedMotionConfig() ?? false;
+  const reduce = useReduceMotion();
   const reduceRef = React.useRef(reduce);
   reduceRef.current = reduce;
   const x = useMotionValue(0);

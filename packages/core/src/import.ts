@@ -3,7 +3,7 @@ import { OPEN } from "./responses/common";
 import { type FieldSource, LanguageTag, type Rating, ReviewModeKey } from "./types";
 
 /** Where an import's file came from. Each source is one adapter on the server. */
-export const ImportSource = z.enum(["anki", "mochi", "lymi"]);
+export const ImportSource = z.enum(["anki", "mochi", "noji", "lymi"]);
 export type ImportSource = z.infer<typeof ImportSource>;
 
 /**
@@ -374,11 +374,12 @@ export function fieldsFromRoles(
 }
 
 /** The file names an import accepts: Anki's packages, Mochi's export and Lymi's own zip. */
-export const IMPORT_FILE_NAME = /\.(apkg|colpkg|mochi|zip)$/i;
+export const IMPORT_FILE_NAME = /\.(apkg|colpkg|mochi|ofc|zip)$/i;
 
 /** The source a file name suggests before the file is read; inspection decides. */
 export function sourceOfFileName(fileName: string): ImportSource {
   if (/\.mochi$/i.test(fileName)) return "mochi";
+  if (/\.ofc$/i.test(fileName)) return "noji";
   return /\.zip$/i.test(fileName) ? "lymi" : "anki";
 }
 
@@ -396,7 +397,7 @@ export const ImportStartInput = z.object({
     .max(255)
     .regex(
       IMPORT_FILE_NAME,
-      "Choose the .apkg, .colpkg, .mochi or .zip file Anki, Mochi or Lymi exports.",
+      "Choose the .apkg, .colpkg, .mochi, .ofc or .zip file Anki, Mochi, Noji or Lymi exports.",
     ),
   byteSize: z
     .number()

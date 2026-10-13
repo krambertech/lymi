@@ -5,7 +5,7 @@ import { useEffect } from "react";
 // would be lost at the door. It is held here and opened once the learner is in.
 
 /** The places a link may open after sign-in; anything else, such as the auth screens, is let go. */
-const PLACES = /^\/(review|capture|library|today|explore|you|search|streak)(?=[/?#]|$)/;
+const PLACES = /^\/(review|capture|library|today|explore|you|search|streak|join|add)(?=[/?#]|$)/;
 
 let last: { path: string; at: number } | null = null;
 let atDoor = false;
@@ -15,6 +15,8 @@ let held: { path: string; at: number } | null = null;
 const KEEP_MS = 60 * 60_000;
 
 function routePath(url: string): string {
+  // A universal link names the site before the route; the app's own scheme names none.
+  if (/^https?:\/\//i.test(url)) return url.replace(/^https?:\/\/[^/?#]*/i, "") || "/";
   return url.replace(/^[a-z][a-z0-9+.-]*:\/\//i, "/").replace(/^\/{2,}/, "/");
 }
 

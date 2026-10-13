@@ -18,6 +18,8 @@ import { queryClient } from "../data/client";
 import { Sync } from "../data/sync";
 import { i18n } from "../i18n";
 import { LanguageSync } from "../i18n/sync";
+import { cancelReminders, listenForLater } from "../reminders/notifications";
+import { ReminderSync } from "../reminders/sync";
 import { SplashGuard, useGiveUp } from "../splash/guard";
 import { Kindling } from "../splash/kindling";
 import { replaySplash, useReplays } from "../splash/replay";
@@ -27,6 +29,9 @@ import { usePalette } from "../theme/palette";
 import { clearWidgets, WidgetSync } from "../widgets/sync";
 
 startTelemetry();
+
+// A reminder's In an hour wakes the app without a screen, so it is answered before any renders.
+listenForLater();
 
 // A link straight to a review, such as from a widget, still has the tabs under it.
 export const unstable_settings = { initialRouteName: "(tabs)" };
@@ -92,6 +97,7 @@ function Root() {
     if (!signedOut) return;
     forgetLearner(qc);
     clearWidgets();
+    void cancelReminders();
   }, [signedOut, qc]);
   const base = dark ? DarkTheme : DefaultTheme;
   // The navigation theme carries the room, so native chrome never flashes white between tabs.
@@ -115,6 +121,7 @@ function Root() {
         <>
           <Sync learnerId={learnerId} />
           <WidgetSync />
+          <ReminderSync />
         </>
       )}
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: p.canvas } }}>

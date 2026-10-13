@@ -55,8 +55,11 @@ Every sheet rises from below and swipes away. What the task holds decides its ki
 | Full sheet | A form with long text or several fields, keyboard up: Add a word, Edit card, feedback | A route presented as `formSheet` at full height | Opaque, the sheet colour | The room's own, since on-glass fills vanish against an opaque sheet |
 
 - Reach for a row sheet first. A small edit belongs in one even when it has a text field: the field is a `bg-glass-plate` box with no label over it, and the keyboard's done key or a swipe keeps the value, with no Save button.
+- A sheet of choices that grows past one screen lists what can be chosen as rows, each showing its current value and opening its options in the same sheet, under one header whose back chevron returns; the deck's Filter is the first.
 - A row sheet never opens a sheet, the camera or the photo library over itself. A row that needs one closes the sheet and acts once it has gone.
 - A peek sheet and a full sheet carry their controls as glass in the top corners; a row sheet has none.
+- A full sheet's header is one row: close at the start, its name centred at `text-md`, the one action at the end. Nothing under it repeats the name as a large title; a line saying what the sheet is for comes first in the content.
+- A row sheet's groups fill with `glass-group`, a faint ink tint in the light room and the glass plate's white at night, with no border, so they still read when iOS turns the sheet opaque at full height.
 - Whatever fails after a row sheet has gone says so on the screen under it, beside what it changed.
 
 ## Add a word and Edit card
@@ -88,7 +91,7 @@ Insights keeps the web's figures, lines and order ([insights.md](../insights.md)
 
 ## Activity
 
-Activity is the web's list ([activity.md](../activity.md)): day headings over plates of rows, and Show more at the foot. A row that wrote cards opens them in a sheet over the list rather than in place, so the day keeps its shape; it peeks at the first six and drags up for the rest. A card or a deck opens its deck in Library. An import or an export opens on the web with an arrow out, because files are handled there ([ADR 0030](../../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)). A kind of row a newer server sends reads as a change to its deck, and a file's stage or format it does not know is named neutrally, never as finished or as a Lymi file. Activity is not kept on the phone, so opened with no connection it says it needs one.
+Activity is the web's list ([activity.md](../activity.md)): day headings over plates of rows. On the phone the next page loads as the end of the list comes near, with a spinner at the foot and Try again only when it failed, and the last row waits for the next page while it may continue there, so no count above the foot grows. A row that wrote cards opens them in a sheet over the list rather than in place, so the day keeps its shape; it peeks at the first six and drags up for the rest. A card or a deck opens its deck in Library. An import or an export opens on the web with an arrow out, because files are handled there ([ADR 0030](../../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)). A kind of row a newer server sends reads as a change to its deck, and a file's stage or format it does not know is named neutrally, never as finished or as a Lymi file. Activity is not kept on the phone, so opened with no connection it says it needs one.
 
 ## Opening
 

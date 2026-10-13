@@ -185,6 +185,9 @@ msgstr "{deckCount} · {cardCount}"
 msgid "{due, plural, one {# card due} other {# cards due}}"
 msgstr "{due, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
 
+msgid "{due, plural, one {# card to review} other {# cards to review}}"
+msgstr ""
+
 msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 msgstr "{due, plural, one {картка до повторення в колоді {deckName}} few {картки до повторення в колоді {deckName}} many {карток до повторення в колоді {deckName}} other {картки до повторення в колоді {deckName}}}"
 
@@ -264,6 +267,9 @@ msgstr "Підключений застосунок"
 
 msgid "A deck holds the words you learn together. Make one, or import decks on the web."
 msgstr "Колода тримає слова, які ти вчиш разом. Створи її або імпортуй колоди в вебверсії."
+
+msgid "A few minutes keeps them fresh."
+msgstr ""
 
 msgid "A new code is on its way to {address}."
 msgstr "Надсилаємо новий код на {address}."
@@ -358,6 +364,9 @@ msgstr "Чернетка AI"
 msgid "AI example"
 msgstr "Приклад від AI"
 
+msgid "AI fills"
+msgstr "AI заповнює"
+
 msgid "AI fills in"
 msgstr "AI доповнить"
 
@@ -397,6 +406,9 @@ msgstr "Ще для повторення"
 
 msgid "Another way"
 msgstr "Інший спосіб"
+
+msgid "Any"
+msgstr ""
 
 msgid "Any time"
 msgstr "Будь-коли"
@@ -455,6 +467,9 @@ msgstr "Щонайменше {MIN_PASSWORD_LENGTH} символів."
 
 msgid "Back"
 msgstr "Назад"
+
+msgid "Back to Filter"
+msgstr ""
 
 msgid "Back to Library"
 msgstr "До Бібліотеки"
@@ -853,6 +868,9 @@ msgstr "Готуємо зачіпку…"
 msgid "Driving"
 msgstr "Водіння"
 
+msgid "Due"
+msgstr ""
+
 msgid "Due now"
 msgstr "Час повторити"
 
@@ -1162,6 +1180,9 @@ msgstr "Імпортується"
 msgid "Importing from {source}"
 msgstr "Імпорт із {source}"
 
+msgid "In an hour"
+msgstr ""
+
 msgid "In Library"
 msgstr "У Бібліотеці"
 
@@ -1299,6 +1320,9 @@ msgctxt "language"
 msgid "Lithuanian"
 msgstr "Литовська"
 
+msgid "Loading more"
+msgstr ""
+
 msgid "Loading…"
 msgstr "Завантаження…"
 
@@ -1361,6 +1385,9 @@ msgstr "Зачіпка: {text}"
 
 msgid "Message"
 msgstr "Повідомлення"
+
+msgid "Modes"
+msgstr "Режими"
 
 msgid "More about this card"
 msgstr "Більше про картку"
@@ -1540,17 +1567,14 @@ msgstr "Ще нічого не опубліковано"
 msgid "Nothing scheduled."
 msgstr "Нічого не заплановано."
 
-msgid "Off"
-msgstr "Вимкнено"
+msgid "Notifications are off for Lymi. Turn them on in Settings to get the reminder."
+msgstr ""
 
 msgid "Often forgotten"
 msgstr "Часто забуваються"
 
 msgid "OK"
 msgstr "OK"
-
-msgid "Only on days with cards due."
-msgstr "Лише в дні, коли є картки до повторення."
 
 msgid "Only the deck’s owner can change this."
 msgstr "Змінювати це може лише власник колоди."
@@ -1564,9 +1588,6 @@ msgstr "Відкрити «{name}»"
 msgid "Open Explore"
 msgstr "Відкрити каталог"
 
-msgid "Open in Library"
-msgstr "Відкрити в Бібліотеці"
-
 msgid "Open it once with a connection, and it stays on this phone."
 msgstr "Відкрий це раз зі з’єднанням, і воно залишиться на телефоні."
 
@@ -1575,6 +1596,9 @@ msgstr "Відкрити Бібліотеку"
 
 msgid "Open on the web"
 msgstr "Відкрити у вебверсії"
+
+msgid "Open Settings"
+msgstr ""
 
 msgid "Open Settings on the web"
 msgstr "Відкрити налаштування у вебверсії"
@@ -1755,8 +1779,14 @@ msgstr "Повторити серію «{seriesName}», {due, plural, one {# к�
 msgid "Review done"
 msgstr "Повторення завершено"
 
+msgid "Review now"
+msgstr ""
+
 msgid "Review these decks together, in this order."
 msgstr "Повторюй ці колоди разом, у такому порядку."
+
+msgid "Review whenever you have a moment."
+msgstr ""
 
 msgid "Reviewed"
 msgstr "Повторено"
@@ -1950,6 +1980,9 @@ msgstr "Іспанська"
 msgid "Start with a deck"
 msgstr "Почни з колоди"
 
+msgid "State"
+msgstr ""
+
 msgid "Stay signed in"
 msgstr "Залишитися в застосунку"
 
@@ -2042,6 +2075,9 @@ msgstr "Колода зникне з Бібліотеки, а її картки 
 
 msgid "Theme"
 msgstr "Тема"
+
+msgid "They’re ready when you are."
+msgstr ""
 
 msgid "This card isn’t in this deck"
 msgstr "Цієї картки немає в цій колоді"

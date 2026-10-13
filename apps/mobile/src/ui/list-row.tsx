@@ -16,8 +16,8 @@ export interface ListRowFaceProps {
 
 /**
  * One row of a list of places, as Today and Library draw them: what it is on the start edge, how
- * many at the end, then a chevron when it opens or a plus when it adds. A row that does nothing has
- * neither, and keeps the slot so every count ends on the same line.
+ * many at the end, then a chevron when it opens; a row that adds shows a round plus where its count
+ * would be. A row with no chevron keeps the slot so every count ends on the same line.
  */
 export function ListRowFace({ first, title, mark, line, count, end }: ListRowFaceProps) {
   const p = usePalette();
@@ -42,13 +42,13 @@ export function ListRowFace({ first, title, mark, line, count, end }: ListRowFac
           {count}
         </Text>
       )}
-      {end === "open" ? (
-        <RowArrow />
-      ) : end === "add" ? (
-        <Icon name="plus" size={18} colour={p.muted} strokeWidth={2.5} />
-      ) : (
-        <View className="w-[18px]" />
+      {end === "add" && (
+        // In the count column, round, so it lines up with the counts above and below it.
+        <View className="size-8 items-center justify-center rounded-full bg-plate-2">
+          <Icon name="plus" size={16} colour={p["text-2"]} strokeWidth={2.5} />
+        </View>
       )}
+      {end === "open" ? <RowArrow /> : <View className="w-[18px]" />}
     </View>
   );
 }

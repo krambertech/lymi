@@ -3,11 +3,16 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 let stale: typeof import("./stale-build");
 let reload: ReturnType<typeof vi.fn>;
 let stored: Map<string, string>;
+let listeners: Map<string, () => void>;
 
 beforeEach(async () => {
   vi.resetModules();
   reload = vi.fn();
   stored = new Map();
+  listeners = new Map();
+  vi.stubGlobal("window", {
+    addEventListener: (type: string, listener: () => void) => listeners.set(type, listener),
+  });
   vi.stubGlobal("location", { reload });
   vi.stubGlobal("sessionStorage", {
     getItem: (key: string) => stored.get(key) ?? null,
@@ -49,4 +54,14 @@ it("does not reload when the tab cannot remember that it tried", () => {
   });
   expect(stale.reloadOntoCurrentBuild()).toBe(false);
   expect(reload).not.toHaveBeenCalled();
+});
+
+it("does not pull the learner back to a page they are leaving", () => {
+  listeners.get("beforeunload")?.();
+  expect(stale.reloadOntoCurrentBuild()).toBe(true);
+  expect(reload).not.toHaveBeenCalled();
+
+  listeners.get("pageshow")?.();
+  expect(stale.reloadOntoCurrentBuild()).toBe(true);
+  expect(reload).toHaveBeenCalledTimes(1);
 });

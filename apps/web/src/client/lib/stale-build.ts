@@ -1,5 +1,19 @@
 const RELOADED = "lymi:stale-build-reload";
 let reloading = false;
+let leaving = false;
+
+// Leaving the page aborts its in-flight imports, which Safari reports in the stale-chunk words.
+if (typeof window !== "undefined") {
+  window.addEventListener("beforeunload", () => {
+    leaving = true;
+  });
+  window.addEventListener("pagehide", () => {
+    leaving = true;
+  });
+  window.addEventListener("pageshow", () => {
+    leaving = false;
+  });
+}
 
 // A deploy replaces the hashed chunks, so a page from an older build can fail to load one.
 const CHUNK_FAILURE =
@@ -11,7 +25,7 @@ export function isStaleChunkError(error: unknown): boolean {
 
 /** Reload onto the current deploy at most once per build; false when this build already tried. */
 export function reloadOntoCurrentBuild(): boolean {
-  if (reloading) return true;
+  if (reloading || leaving) return true;
   const build = String(import.meta.env.LYMI_BUILD ?? "dev");
   try {
     if (sessionStorage.getItem(RELOADED) === build) return false;

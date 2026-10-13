@@ -31,9 +31,15 @@ Controls size by the **viewport**, not the container. A phone is a phone whateve
 
 ## A form row is a Field
 
-Put `FieldLabel` above the control, then `FieldDescription` and `FieldError` under it. The parts wire themselves, so never write an `id` or `aria-describedby` by hand.
+Put `FieldLabel` above the control and `FieldError` under it. The parts wire themselves, so never write an `id` or `aria-describedby` by hand.
 
-A sheet that makes something, such as New deck, puts each `FieldDescription` directly under its label instead, because the learner reads it before answering; it sits flush under the label and the control follows. Settings screens and edit forms keep it under the control, where it explains a value already chosen. One form never mixes the two.
+Where the description goes follows its job, not the screen:
+
+- **It explains the question**, what a choice means or what it affects, so it sits flush under the label and is read before answering: "New cards in this deck get this language."
+- **It helps fill the box**, a format, a limit, how to type, or who sees what is written, so it sits under the control where the error replaces it: "At least 8 characters."
+- **It describes one option** of a switch, checkbox or radio row, so it sits under that option's own label inside the row.
+
+A field has at most one description; when it seems to need two, the label or the options carry one.
 
 ```tsx
 // Correct, from new-deck-sheet.tsx

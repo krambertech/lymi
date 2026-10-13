@@ -61,7 +61,7 @@ export const forms: Group = {
             },
             {
               label: "With a description",
-              note: "One sentence on how the field works, read after the label.",
+              note: "One sentence that helps fill the box sits under the control, where an error takes its place.",
               render: () => (
                 <Field className={box}>
                   <FieldLabel>Name</FieldLabel>
@@ -72,12 +72,12 @@ export const forms: Group = {
             },
             {
               label: "Description under the label",
-              note: "In a sheet that makes something, such as New deck, the description sits flush under its label because it is read before answering. Settings and edit forms keep it under the control. One form never mixes the two.",
+              note: "A description that explains the question sits flush under the label, read before answering. One that helps fill the box, such as a format or a limit, stays under the control.",
               render: () => (
                 <Field className={box}>
-                  <FieldLabel>Name</FieldLabel>
-                  <FieldDescription>So you know which key to revoke later.</FieldDescription>
-                  <Input placeholder="Backup script on the laptop" />
+                  <FieldLabel>Language</FieldLabel>
+                  <FieldDescription>New cards in this deck get this language.</FieldDescription>
+                  <Input defaultValue="Italian" />
                 </Field>
               ),
             },

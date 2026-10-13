@@ -250,11 +250,13 @@ export function DeckSettingsView({
               value={deck.purpose}
               onChange={(purpose) => onSave({ purpose })}
               description={t`AI fills this deck’s cards to suit it. Only you see it.`}
+              descriptionFirst
             />
             <LanguageField
               value={deck.defaultLanguage}
               onChange={(defaultLanguage) => onSave({ defaultLanguage })}
               description={t`The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language.`}
+              descriptionFirst
             />
           </SettingsGroup>
 

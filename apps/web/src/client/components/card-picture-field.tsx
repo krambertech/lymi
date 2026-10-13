@@ -281,14 +281,14 @@ export function CardPictureField({
       </div>
       <Field>
         <FieldLabel aside={t`Optional`}>{t`Description`}</FieldLabel>
+        <FieldDescription>
+          <Trans>What the picture shows, without the answer. Picture review needs it.</Trans>
+        </FieldDescription>
         <Input
           value={description}
           autoComplete="off"
           onChange={(e) => onDescriptionChange(e.target.value)}
         />
-        <FieldDescription>
-          <Trans>What the picture shows, without the answer. Picture review needs it.</Trans>
-        </FieldDescription>
         <FieldError>{descriptionError}</FieldError>
       </Field>
     </div>

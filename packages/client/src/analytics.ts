@@ -31,6 +31,7 @@ let openingSent = false;
 let opening: AnalyticsProperties<"app_opened"> | undefined;
 let publicDeckSent = false;
 let pageSource: Omit<Attribution, "first_landing_page"> | undefined;
+let release: string | undefined;
 
 /** Where this page load's visit began, for the sign-up request to carry to the server. */
 export function visitFirstTouch(on: "public" | "product" = surface): Attribution | undefined {
@@ -112,9 +113,13 @@ export function initAnalytics(options: {
   token?: string | undefined;
   surface: "public" | "product";
   enabled: boolean;
+  /** The commit the running bundle was built from, so an error can be matched to its deploy. */
+  release?: string | undefined;
 }): void {
   if (initialized || !options.enabled || !/^phc_[A-Za-z0-9]+$/.test(options.token ?? "")) return;
   surface = options.surface;
+  release =
+    options.release && /^[0-9a-f]{7,40}$/.test(options.release) ? options.release : undefined;
   const touch = visitFirstTouch();
   if (touch) {
     const { first_landing_page: _, ...source } = touch;
@@ -155,6 +160,8 @@ export function initAnalytics(options: {
             distinct_id:
               surface === "product" && learner && allowed() ? posthog.get_distinct_id() : "browser",
             surface,
+            route: analyticsPath(location.pathname, surface),
+            ...(release ? { release } : {}),
             ui_locale,
             schema_version: ANALYTICS_SCHEMA_VERSION,
             $geoip_disable: true,

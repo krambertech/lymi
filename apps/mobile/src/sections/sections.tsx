@@ -221,7 +221,12 @@ export function SectionHeading({
           className={`text-lg font-medium ${locked ? "text-text-2" : "text-text"}`}
           accessibilityRole="header"
           accessibilityLabel={
-            locked ? t`${sectionName}, not open yet, ${count}` : `${sectionName}, ${count}`
+            locked
+              ? plural(count, {
+                  one: `${sectionName}, not open yet, # card`,
+                  other: `${sectionName}, not open yet, # cards`,
+                })
+              : plural(count, { one: `${sectionName}, # card`, other: `${sectionName}, # cards` })
           }
         >
           {sectionName}
@@ -303,7 +308,10 @@ export function SectionRing({ known, total }: { known: number; total: number }) 
   return (
     <View
       accessible
-      accessibilityLabel={t`You know ${knownN} of ${plural(total, { one: "# card", other: "# cards" })}`}
+      accessibilityLabel={plural(total, {
+        one: `You know ${knownN} of # card`,
+        other: `You know ${knownN} of # cards`,
+      })}
     >
       <Svg width={16} height={16} viewBox="0 0 16 16">
         {done ? (

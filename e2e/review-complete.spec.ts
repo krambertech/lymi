@@ -230,6 +230,8 @@ test("a review left open past midnight gives way to the new day's goal", async (
 
 /** Grade the card on screen by keyboard and wait for the header to read `after`. */
 async function gradeWithKey(page: Page, key: "1" | "3", after: string) {
+  // Past midnight a graded card can linger revealed while today's draw loads, and keys pressed on it are dropped.
+  await expect(page.getByRole("button", { name: /^Good/ })).toBeHidden();
   await expect(page.getByLabel(/ card for /)).toBeVisible();
   await page.keyboard.press("Space");
   await expect(page.getByRole("button", { name: /^Good/ })).toBeVisible();

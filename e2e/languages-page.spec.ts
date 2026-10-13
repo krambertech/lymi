@@ -1,5 +1,5 @@
 import { e2eSiteUrl } from "./ports.mjs";
-import { expect, test } from "./test";
+import { expect, test, waitForIslands } from "./test";
 
 const publicSite = e2eSiteUrl;
 
@@ -21,6 +21,7 @@ test("a language learner can reach the languages pages and turn notes and cards 
   });
 
   await test.step("a photo of the notes turns into cards, skipping the one already kept", async () => {
+    await waitForIslands(page);
     await page.getByRole("button", { name: "Take a photo", exact: true }).click();
     await expect(page.getByText("3 cards added")).toBeVisible();
     await expect(page.getByText("Already in your deck, so it’s skipped")).toBeVisible();

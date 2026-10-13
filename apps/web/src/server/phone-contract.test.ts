@@ -36,6 +36,7 @@ const phoneOperations = [
   "GET /api/decks",
   "GET /api/decks/{id}/cards",
   "GET /api/decks/{id}/sections",
+  "POST /api/sections/{id}/start",
   "GET /api/review/draw",
   "GET /api/review/queue",
   "GET /api/review/rounds",

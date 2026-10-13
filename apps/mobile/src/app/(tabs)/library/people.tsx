@@ -13,7 +13,7 @@ import { type InviteRefusal, PENDING_INVITATION_LIMIT } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams } from "expo-router";
 import { type ReactNode, useState } from "react";
-import { Alert, Share, TextInput, View } from "react-native";
+import { Alert, Platform, Share, TextInput, View } from "react-native";
 import { useDecks } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { inputCap } from "../../../theme/type";
@@ -286,7 +286,12 @@ export default function People() {
                       label={t`Share link`}
                       icon="share"
                       onPress={() =>
-                        void Share.share({ url: link.url, message: link.url, title: deck?.name })
+                        // iOS shows both a url and a message, so the link would appear twice.
+                        void Share.share(
+                          Platform.OS === "ios"
+                            ? { url: link.url, title: deck?.name }
+                            : { message: link.url, title: deck?.name },
+                        )
                       }
                     />
                     <Button
@@ -340,7 +345,7 @@ function PersonRow({
         className={`size-9 items-center justify-center rounded-full ${pending ? "border border-dashed border-edge-2" : "bg-plate-2"}`}
       >
         <Text className={`text-sm font-medium ${pending ? "text-faint" : "text-text-2"}`}>
-          {name.trim().charAt(0).toUpperCase()}
+          {initial(name)}
         </Text>
       </View>
       <View className="flex-1">
@@ -356,6 +361,11 @@ function PersonRow({
       {end}
     </View>
   );
+}
+
+/** The first character, by code point, so an emoji or an accented letter is not cut in half. */
+function initial(name: string) {
+  return (Array.from(name.trim())[0] ?? "").toUpperCase();
 }
 
 function Choice({

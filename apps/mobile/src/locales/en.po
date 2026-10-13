@@ -2624,3 +2624,143 @@ msgstr "Start anyway"
 
 msgid "You are here"
 msgstr "You are here"
+
+msgid "{PENDING_INVITATION_LIMIT, plural, one {You already have # pending invitation. Cancel it, or wait for them to join.} other {You already have # pending invitations. Cancel one, or wait for someone to join.}}"
+msgstr "{PENDING_INVITATION_LIMIT, plural, one {You already have # pending invitation. Cancel it, or wait for them to join.} other {You already have # pending invitations. Cancel one, or wait for someone to join.}}"
+
+msgid "anna@example.com"
+msgstr "anna@example.com"
+
+msgid "Anyone with the link"
+msgstr "Anyone with the link"
+
+msgid "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
+msgstr "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
+
+msgid "Cancel invitation"
+msgstr "Cancel invitation"
+
+msgid "Cancel the invitation to {email}?"
+msgstr "Cancel the invitation to {email}?"
+
+msgid "Couldn’t cancel the invitation. Try again."
+msgstr "Couldn’t cancel the invitation. Try again."
+
+msgid "Couldn’t load the join link. Try again."
+msgstr "Couldn’t load the join link. Try again."
+
+msgid "Couldn’t remove them. Try again."
+msgstr "Couldn’t remove them. Try again."
+
+msgid "Couldn’t send the invitation. Too many went out recently, so try again later."
+msgstr "Couldn’t send the invitation. Too many went out recently, so try again later."
+
+msgid "Couldn’t turn off the join link. Try again."
+msgstr "Couldn’t turn off the join link. Try again."
+
+msgid "Couldn’t turn on the join link. Try again."
+msgstr "Couldn’t turn on the join link. Try again."
+
+msgid "Email address"
+msgstr "Email address"
+
+msgid "Enter a full email address, like anna@example.com."
+msgstr "Enter a full email address, like anna@example.com."
+
+msgid "Enter an email address."
+msgstr "Enter an email address."
+
+msgid "Everyone studying this deck. You see whether they joined, not their reviews."
+msgstr "Everyone studying this deck. You see whether they joined, not their reviews."
+
+msgid "Invite"
+msgstr "Invite"
+
+msgid "Invite by email"
+msgstr "Invite by email"
+
+#. placeholder {0}: dayMonth(new Date(invitation.invitedAt))
+msgid "invited {0}"
+msgstr "invited {0}"
+
+#. placeholder {0}: dayMonth(joined)
+msgid "joined {0}"
+msgstr "joined {0}"
+
+msgid "Keep invitation"
+msgstr "Keep invitation"
+
+msgid "Keep member"
+msgstr "Keep member"
+
+msgid "Keep sharing"
+msgstr "Keep sharing"
+
+msgid "Not joined yet"
+msgstr "Not joined yet"
+
+msgid "Only people you invite can join. Current members stay."
+msgstr "Only people you invite can join. Current members stay."
+
+msgid "Options for {email}"
+msgstr "Options for {email}"
+
+msgid "Options for {name}"
+msgstr "Options for {name}"
+
+msgid "Owner"
+msgstr "Owner"
+
+msgid "People"
+msgstr "People"
+
+msgid "Private"
+msgstr "Private"
+
+msgid "Remove {name}?"
+msgstr "Remove {name}?"
+
+msgid "Remove from deck"
+msgstr "Remove from deck"
+
+msgid "Remove member"
+msgstr "Remove member"
+
+msgid "Send invitation"
+msgstr "Send invitation"
+
+msgid "Share link"
+msgstr "Share link"
+
+msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
+msgstr "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
+
+msgid "Their invitation link stops working. You can invite them again any time."
+msgstr "Their invitation link stops working. You can invite them again any time."
+
+msgid "They already have a pending invitation."
+msgstr "They already have a pending invitation."
+
+msgid "They get an email with a link only they can use. They can study the deck but not change it."
+msgstr "They get an email with a link only they can use. They can study the deck but not change it."
+
+msgid "They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept."
+msgstr "They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept."
+
+msgid "They’re already in this deck."
+msgstr "They’re already in this deck."
+
+msgid "This deck is already yours."
+msgstr "This deck is already yours."
+
+msgid "Turn off link"
+msgstr "Turn off link"
+
+msgid "Turn off the join link?"
+msgstr "Turn off the join link?"
+
+msgid "Who can join"
+msgstr "Who can join"
+
+msgid "You removed them from this deck, so you can’t invite them again."
+msgstr "You removed them from this deck, so you can’t invite them again."

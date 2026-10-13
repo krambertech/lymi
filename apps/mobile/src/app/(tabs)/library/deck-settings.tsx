@@ -22,7 +22,6 @@ import { usePalette } from "../../../theme/palette";
 import { inputCap } from "../../../theme/type";
 import { Icon } from "../../../ui/icons";
 import { Select } from "../../../ui/menu";
-import { openWeb } from "../../../ui/on-the-web";
 import { Plate, Text } from "../../../ui/primitives";
 import { Row, RowFace, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
@@ -31,8 +30,8 @@ import { Skeleton } from "../../../ui/skeleton";
 
 /**
  * Deck settings, as the web's: nothing has a Save button. A choice is made when it is made, and
- * the name and description commit when the field is left. People, invitations and publishing stay
- * on the web (ADR 0030). A member reads the same facts and can leave.
+ * the name and description commit when the field is left. Publishing stays on the web (ADR
+ * 0030). A member reads the same facts and can leave.
  */
 export default function DeckSettings() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -385,8 +384,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
             <Row
               icon="apps"
               label={t`People and sharing`}
-              end="web"
-              onPress={() => openWeb(`/library/${deck.id}/settings`)}
+              onPress={() => router.push(`/library/people?id=${deck.id}` as Href)}
             />
           </Rows>
           <Rows>

@@ -2,10 +2,22 @@ const RELOADED = "lymi:stale-build-reload";
 let reloading = false;
 let leaving = false;
 
+const ACTING = ["pointerdown", "keydown"];
+
+function stay() {
+  leaving = false;
+  for (const type of ACTING) window.removeEventListener(type, stay, { capture: true });
+}
+
 // Leaving the page aborts its in-flight imports, which Safari reports in the stale-chunk words.
 if (typeof window !== "undefined") {
-  window.addEventListener("beforeunload", () => {
+  window.addEventListener("beforeunload", (event) => {
     leaving = true;
+    // A page that asked first may be kept, and the learner acting on it again shows it was.
+    setTimeout(() => {
+      if (!event.defaultPrevented) return;
+      for (const type of ACTING) window.addEventListener(type, stay, { capture: true });
+    });
   });
   window.addEventListener("pagehide", () => {
     leaving = true;

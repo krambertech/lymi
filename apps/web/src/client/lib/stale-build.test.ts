@@ -3,7 +3,7 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 let stale: typeof import("./stale-build");
 let reload: ReturnType<typeof vi.fn>;
 let stored: Map<string, string>;
-let listeners: Map<string, () => void>;
+let listeners: Map<string, (event?: unknown) => void>;
 
 beforeEach(async () => {
   vi.resetModules();
@@ -12,6 +12,7 @@ beforeEach(async () => {
   listeners = new Map();
   vi.stubGlobal("window", {
     addEventListener: (type: string, listener: () => void) => listeners.set(type, listener),
+    removeEventListener: (type: string) => listeners.delete(type),
   });
   vi.stubGlobal("location", { reload });
   vi.stubGlobal("sessionStorage", {
@@ -20,7 +21,10 @@ beforeEach(async () => {
   });
   stale = await import("./stale-build");
 });
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.useRealTimers();
+  vi.unstubAllGlobals();
+});
 
 it("recognises a chunk an older build named, in each browser's words", () => {
   for (const message of [
@@ -57,11 +61,24 @@ it("does not reload when the tab cannot remember that it tried", () => {
 });
 
 it("does not pull the learner back to a page they are leaving", () => {
-  listeners.get("beforeunload")?.();
+  listeners.get("beforeunload")?.({ defaultPrevented: false });
   expect(stale.reloadOntoCurrentBuild()).toBe(true);
   expect(reload).not.toHaveBeenCalled();
 
   listeners.get("pageshow")?.();
+  expect(stale.reloadOntoCurrentBuild()).toBe(true);
+  expect(reload).toHaveBeenCalledTimes(1);
+});
+
+it("recovers again once the learner stays on a page that asked before leaving", () => {
+  vi.useFakeTimers();
+  listeners.get("beforeunload")?.({ defaultPrevented: true });
+  vi.runAllTimers();
+  expect(stale.reloadOntoCurrentBuild()).toBe(true);
+  expect(reload).not.toHaveBeenCalled();
+
+  listeners.get("pointerdown")?.();
+  expect(listeners.has("keydown")).toBe(false);
   expect(stale.reloadOntoCurrentBuild()).toBe(true);
   expect(reload).toHaveBeenCalledTimes(1);
 });

@@ -79,7 +79,8 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
           }
           router.back();
           // One write made the series with the deck in it, so Undo moves the deck back alone.
-          if (moving && back) notice(moving.name, saved.name, () => undoMove(moving.id, back));
+          if (moving && back)
+            notice(moving.id, moving.name, saved.name, () => undoMove(moving.id, back));
         },
         onError: (e) => setError(errorMessage(e)),
       },

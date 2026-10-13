@@ -1,6 +1,5 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { errorMessage } from "@lymi/client/api";
 import {
   type DeckFilters,
   type DeckGroup,
@@ -16,7 +15,7 @@ import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Alert, Pressable, type TextStyle, View } from "react-native";
+import { Pressable, type TextStyle, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDeckExits } from "../../../data/decks";
 import { moveBack } from "../../../data/move-undo";
@@ -37,6 +36,7 @@ import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { StateIcon, stateMarks } from "../../../ui/state-mark";
 import { setDeckReviewHidden } from "../../../ui/tab-bar";
+import { toast } from "../../../ui/toast-host";
 
 /**
  * A deck: what it wants today and how far along it is, then its words as a glossary, which Filter
@@ -603,7 +603,13 @@ function MoveToSeries({
       { deckId: deck.id, seriesId },
       {
         onSuccess: then,
-        onError: (e) => Alert.alert(t`Couldn’t move the deck`, errorMessage(e)),
+        onError: () =>
+          toast.add({
+            id: `move-deck-${deck.id}`,
+            error: true,
+            title: t`Couldn’t move “${deckName}”.`,
+            action: { label: t`Try again`, onPress: () => move(seriesId, then) },
+          }),
       },
     );
   const pick = (seriesId: string | null) => {
@@ -612,7 +618,7 @@ function MoveToSeries({
     if (seriesId === deck.seriesId) return;
     Haptics.selectionAsync();
     const name = seriesId ? series.find((s) => s.id === seriesId)?.name : undefined;
-    move(seriesId, () => notice(deckName, name, () => undoMove(deck.id, back)));
+    move(seriesId, () => notice(deck.id, deckName, name, () => undoMove(deck.id, back)));
   };
   return (
     <Sheet title={t`Move to series`} open={open} onOpenChange={onOpenChange}>

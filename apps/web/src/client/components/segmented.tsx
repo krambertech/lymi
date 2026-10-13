@@ -1,6 +1,5 @@
 import { clsx } from "clsx";
 import type { ReactNode, Ref } from "react";
-import { useFieldControl } from "./ui/field";
 import { smallControlHeight } from "./ui/input";
 import { ToggleGroup, ToggleGroupIndicator, ToggleGroupItem } from "./ui/toggle-group";
 
@@ -11,8 +10,7 @@ interface Option<T extends string> {
 }
 
 interface Props<T extends string> {
-  /** Null leaves every option unchosen until the first press, for a choice with no default. */
-  value: T | null;
+  value: T;
   onValueChange: (v: T) => void;
   options: Option<T>[];
   /** Accessible name for the group. */
@@ -42,8 +40,6 @@ export function Segmented<T extends string>({
   ref,
   className,
 }: Props<T>) {
-  // In a Field, the first option carries its error, so a failed submit can move focus there.
-  const { "aria-invalid": invalid, "aria-describedby": describedBy } = useFieldControl({});
   return (
     <ToggleGroup<T>
       ref={ref}
@@ -51,7 +47,7 @@ export function Segmented<T extends string>({
       name={name}
       disabled={disabled}
       onBlur={onBlur}
-      value={value === null ? [] : [value]}
+      value={[value]}
       // One option is always chosen: pressing the chosen one again leaves it chosen.
       onValueChange={(next) => {
         const chosen = next[0];
@@ -65,11 +61,10 @@ export function Segmented<T extends string>({
       )}
     >
       <ToggleGroupIndicator className="edge inset-y-[3px] rounded-[11px] bg-chosen" />
-      {options.map((o, index) => (
+      {options.map((o) => (
         <ToggleGroupItem<T>
           key={o.value}
           value={o.value}
-          {...(index === 0 ? { "aria-invalid": invalid, "aria-describedby": describedBy } : {})}
           disabled={o.disabled}
           className={clsx(
             "rounded-[11px] px-3",

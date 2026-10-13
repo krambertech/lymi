@@ -430,13 +430,27 @@ interface ItemProps extends Omit<React.HTMLAttributes<HTMLElement>, "id" | "chil
   value: Value;
   disabled?: boolean | undefined;
   children: React.ReactNode;
+  /** A line under the name, for options that each need a sentence; the row grows to hold it. */
+  description?: React.ReactNode;
+}
+
+/** Two lines and a taller row when an option carries a description. */
+const describedRow = "h-auto items-start py-2 md:h-auto [&>[aria-hidden]]:mt-1";
+
+function Described({ name, description }: { name: React.ReactNode; description: React.ReactNode }) {
+  return (
+    <>
+      {name}
+      <span className="block text-sm whitespace-normal text-muted">{description}</span>
+    </>
+  );
 }
 
 /** The check leads, in a slot every row keeps, so choosing one moves nothing. */
 function SelectItem(props: ItemProps) {
   const { shape } = useSelect("SelectItem");
   if (shape === "touch") return <DrawerListItem {...props} />;
-  const { ref, value, disabled, className, children, ...rest } = props;
+  const { ref, value, disabled, className, children, description, ...rest } = props;
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
@@ -445,19 +459,36 @@ function SelectItem(props: ItemProps) {
       ref={ref as React.Ref<HTMLDivElement> | undefined}
       value={value}
       disabled={disabled}
-      className={cn(choiceRowClassName, className)}
+      className={cn(choiceRowClassName, description !== undefined && describedRow, className)}
     >
       <span className="flex size-4 shrink-0 items-center justify-center" aria-hidden="true">
         <SelectPrimitive.ItemIndicator>
           <Check className="size-4" />
         </SelectPrimitive.ItemIndicator>
       </span>
-      <SelectPrimitive.ItemText className="flex-1 truncate">{children}</SelectPrimitive.ItemText>
+      {description === undefined ? (
+        <SelectPrimitive.ItemText className="flex-1 truncate">{children}</SelectPrimitive.ItemText>
+      ) : (
+        <span className="flex-1">
+          <Described
+            name={<SelectPrimitive.ItemText className="block">{children}</SelectPrimitive.ItemText>}
+            description={description}
+          />
+        </span>
+      )}
     </SelectPrimitive.Item>
   );
 }
 
-function DrawerListItem({ ref, value, disabled, className, children, ...props }: ItemProps) {
+function DrawerListItem({
+  ref,
+  value,
+  disabled,
+  className,
+  children,
+  description,
+  ...props
+}: ItemProps) {
   const { value: current, setValue, setOpen } = useSelect("SelectItem");
   const selected = current === value;
   return useRender({
@@ -482,13 +513,27 @@ function DrawerListItem({ ref, value, disabled, className, children, ...props }:
       "data-slot": "select-item",
       "data-selected": selected ? "" : undefined,
       "data-disabled": disabled ? "" : undefined,
-      className: cn(choiceRowClassName, touchRowClassName, className),
+      className: cn(
+        choiceRowClassName,
+        touchRowClassName,
+        description !== undefined && describedRow,
+        className,
+      ),
       children: (
         <>
           <span className="flex size-4 shrink-0 items-center justify-center" aria-hidden="true">
             {selected && <Check className="size-4" />}
           </span>
-          <span className="flex-1 truncate">{children}</span>
+          {description === undefined ? (
+            <span className="flex-1 truncate">{children}</span>
+          ) : (
+            <span className="flex-1">
+              <Described
+                name={<span className="block">{children}</span>}
+                description={description}
+              />
+            </span>
+          )}
         </>
       ),
     },

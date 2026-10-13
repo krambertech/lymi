@@ -177,6 +177,7 @@ export function NewDeckForm({ seed, pending, error, onCancel, onSubmit }: NewDec
         }}
         error={invalid.purpose}
         description={t`AI fills the deck’s cards to suit it.`}
+        descriptionFirst
       />
       {purpose === "language" && (
         <LanguageField
@@ -186,6 +187,7 @@ export function NewDeckForm({ seed, pending, error, onCancel, onSubmit }: NewDec
             setInvalid(({ defaultLanguage: _, ...rest }) => rest);
           }}
           error={invalid.defaultLanguage}
+          descriptionFirst
         />
       )}
       <DirectionSelect value={directions} onChange={setDirections} />

@@ -76,6 +76,8 @@ interface LanguageProps {
   label?: string | undefined;
   /** Null leaves the field without one. */
   description?: string | null | undefined;
+  /** Puts the description under the label rather than under the control. */
+  descriptionFirst?: boolean | undefined;
   error?: string | undefined;
 }
 
@@ -84,7 +86,14 @@ interface LanguageProps {
  * because the tag tells Portuguese from Brazilian Portuguese and it is what the API stores. A valid
  * tag the list does not hold is still reachable: typed in full, it becomes the last row.
  */
-export function LanguageField({ value, onChange, label, description, error }: LanguageProps) {
+export function LanguageField({
+  value,
+  onChange,
+  label,
+  description,
+  descriptionFirst,
+  error,
+}: LanguageProps) {
   const { t, i18n } = useLingui();
   const [query, setQuery] = useState("");
   const { contains } = useComboboxFilter({ locale: i18n.locale });
@@ -108,9 +117,15 @@ export function LanguageField({ value, onChange, label, description, error }: La
   const shown = custom ? [...matches, custom] : matches;
 
   const fieldLabel = label ?? t`Language`;
+  const hint = description !== null && (
+    <FieldDescription>
+      {description ?? t`New cards in this deck get this language.`}
+    </FieldDescription>
+  );
   return (
     <Field>
       <FieldLabel>{fieldLabel}</FieldLabel>
+      {descriptionFirst && hint}
       <Combobox<LanguageOption>
         items={custom ? [none, ...known, custom] : [none, ...known]}
         filteredItems={shown}
@@ -142,11 +157,7 @@ export function LanguageField({ value, onChange, label, description, error }: La
           </ComboboxList>
         </ComboboxContent>
       </Combobox>
-      {description !== null && (
-        <FieldDescription>
-          {description ?? t`New cards in this deck get this language.`}
-        </FieldDescription>
-      )}
+      {!descriptionFirst && hint}
       <FieldError>{error}</FieldError>
     </Field>
   );
@@ -266,15 +277,24 @@ interface PurposeProps {
   onChange: (value: DeckPurpose) => void;
   error?: string | undefined;
   description?: string | undefined;
+  descriptionFirst?: boolean | undefined;
 }
 
 /** What the deck is for, which decides what AI fills on its cards until the owner chooses. */
-export function PurposeField({ value, onChange, error, description }: PurposeProps) {
+export function PurposeField({
+  value,
+  onChange,
+  error,
+  description,
+  descriptionFirst,
+}: PurposeProps) {
   const { t, i18n } = useLingui();
   const labelId = useId();
+  const hint = description && <FieldDescription>{description}</FieldDescription>;
   return (
     <Field>
       <FieldLabel id={labelId}>{t`What it’s for`}</FieldLabel>
+      {descriptionFirst && hint}
       <RadioGroup<DeckPurpose | null>
         aria-labelledby={labelId}
         // Null, not undefined, so the group stays controlled before anything is chosen.
@@ -291,7 +311,7 @@ export function PurposeField({ value, onChange, error, description }: PurposePro
           />
         ))}
       </RadioGroup>
-      {description && <FieldDescription>{description}</FieldDescription>}
+      {!descriptionFirst && hint}
       <FieldError>{error}</FieldError>
     </Field>
   );
@@ -299,7 +319,7 @@ export function PurposeField({ value, onChange, error, description }: PurposePro
 
 /**
  * The deck's review mode as a select, where a sheet has no room for a card per choice. Each row and
- * the line under the box say what the learner will be shown.
+ * the line under the label say what the learner will be shown.
  */
 export function DirectionSelect({
   value,
@@ -313,6 +333,7 @@ export function DirectionSelect({
   return (
     <Field>
       <FieldLabel>{t`Review mode`}</FieldLabel>
+      {current && <FieldDescription>{i18n._(current.blurb)}</FieldDescription>}
       <Select
         value={value}
         onValueChange={(next) => next && onChange(next as Directions)}
@@ -321,7 +342,8 @@ export function DirectionSelect({
         <SelectTrigger>
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
+        {/* The box's width, so the captions wrap rather than widen the list past the sheet. */}
+        <SelectContent className="w-(--anchor-width)">
           {DIRECTIONS.map((o) => (
             <SelectItem key={o.value} value={o.value} description={i18n._(o.blurb)}>
               {i18n._(o.label)}
@@ -329,7 +351,6 @@ export function DirectionSelect({
           ))}
         </SelectContent>
       </Select>
-      {current && <FieldDescription>{i18n._(current.blurb)}</FieldDescription>}
     </Field>
   );
 }

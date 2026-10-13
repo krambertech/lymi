@@ -1,0 +1,26 @@
+# Every flow starts here: wait for this worktree's bundle, sign in by the dev door when signed out, and land on Today.
+appId: app.lymi
+---
+- extendedWaitUntil:
+    visible: "This is the developer menu.*|Toggle performance monitor|Dev sign-in as learner|Library"
+    timeout: 180000
+# The dev client introduces its developer menu the first time a URL opens it, then leaves the menu open.
+- runFlow:
+    when:
+      visible: "This is the developer menu.*"
+    commands:
+      - tapOn: "Continue"
+- runFlow:
+    when:
+      visible: "Toggle performance monitor"
+    commands:
+      - tapOn: "Close"
+- runFlow:
+    when:
+      visible: "Dev sign-in as learner"
+    commands:
+      - tapOn: "Dev sign-in as learner"
+# The tab bar is iOS's own, so its labels are the landmark that the app is signed in.
+- extendedWaitUntil:
+    visible: "Library"
+    timeout: 60000

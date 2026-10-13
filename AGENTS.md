@@ -12,7 +12,7 @@ Two deployables: `apps/site` is the Astro public site plus its narrow health-and
 
 Start the product with the `lymi` entry in `.claude/launch.json` (port 5241, or a free port when another worktree holds it). To get a signed-in session, navigate the browser to `/api/dev/sign-in?as=learner`; never type a password. Personas, the developer panel (backtick key), `pnpm local`, and the `/api/dev` routes are in [`docs/local-dev.md`](docs/local-dev.md). If migrations fail against the local D1, `pnpm local db:fresh` rebuilds it.
 
-To prove a product change works, drive the features it touches with [the verify skill](.agents/skills/verify/SKILL.md): its feature map says how to reach and drive each one and what end state proves it, and its runner keeps the evidence for the pull request.
+To prove a product change works, drive the features it touches with [the verify skill](.agents/skills/verify/SKILL.md): its feature map says how to reach and drive each one and what end state proves it, and its runner keeps the evidence for the pull request. For the iPhone app, [the verify-phone skill](.agents/skills/verify-phone/SKILL.md) does the same in its own Simulator with Maestro.
 
 ## Before you push
 

@@ -1,6 +1,6 @@
 ---
 name: verify
-description: Prove a change to the web product works by driving the running app as a learner and keeping the evidence. Use before calling a product change done, when reviewing a pull request on its app preview, or when asked whether a feature works in the real app. Skip changes with no product effect; the phone app is not covered here.
+description: Prove a change to the web product works by driving the running app as a learner and keeping the evidence. Use before calling a product change done, when reviewing a pull request on its app preview, or when asked whether a feature works in the real app. Skip changes with no product effect; the phone app has its own verify-phone skill.
 ---
 
 # Verify the web product

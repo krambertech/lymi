@@ -28,7 +28,7 @@ import {
   Tag,
   TextQuote,
 } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { Card, DeckSummary } from "../lib/api";
 import { useObjectUrl } from "../lib/avatar";
@@ -36,6 +36,7 @@ import { modShortcut, useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { lastDeckId } from "../lib/last-deck";
 import { sectionsQuery } from "../lib/queries";
+import { useReduceMotion } from "../lib/use-reduce-motion";
 import { Button } from "./button";
 import { acceptsPictureFile, CardPictureField, type PictureDraft } from "./card-picture-field";
 import { LanguageField, languageName } from "./deck-fields";
@@ -224,7 +225,7 @@ export function CardForm(props: CardFormProps) {
         )),
   );
   const moreId = useId();
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReduceMotion();
   const [notice, setNotice] = useState<Notice | null>(null);
   const [failure, setFailure] = useState<string | null>(null);
   const [invalid, setInvalid] = useState<FieldErrors>({});

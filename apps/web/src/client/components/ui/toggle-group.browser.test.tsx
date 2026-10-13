@@ -3,6 +3,7 @@ import { useState } from "react";
 import { expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { withMotion } from "../../test/motion";
 import { offsetOnceChosen, plateOffset } from "../../test/plate";
 import { Segmented } from "../segmented";
 import { ToggleGroup, ToggleGroupItem } from "./toggle-group";
@@ -175,6 +176,7 @@ test("a disabled group submits nothing, as a disabled native control would", asy
 });
 
 test("after a keyboard choice, a change made from outside the group still glides", async () => {
+  await withMotion();
   function Harness() {
     const [value, setValue] = useState("light");
     return (

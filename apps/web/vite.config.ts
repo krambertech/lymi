@@ -8,7 +8,7 @@ import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 import { configDefaults, type TestProjectConfiguration } from "vitest/config";
-import type { BrowserInstanceOption } from "vitest/node";
+import type { BrowserCommand, BrowserInstanceOption } from "vitest/node";
 import { e2eProductUrl, e2eSiteUrl } from "../../e2e/ports.mjs";
 import { e2ePublisherEmails } from "../../e2e/settings.mjs";
 import { mcpApp } from "./mcp-app.build.ts";
@@ -39,6 +39,14 @@ function selectInstances(instances: BrowserInstanceOption[]): BrowserInstanceOpt
     (instance) => instance.name !== undefined && requestedInstances.includes(instance.name),
   );
 }
+
+// A test that proves motion itself lifts the suite's reduced-motion default, then restores it.
+const emulateReducedMotion: BrowserCommand<["reduce" | "no-preference"]> = async (
+  context,
+  reducedMotion,
+) => {
+  await context.page.emulateMedia({ reducedMotion });
+};
 
 export default defineConfig({
   define: {
@@ -212,6 +220,7 @@ export default defineConfig({
               // A part that is still moving is not clickable, and `forced-states` rewrites the
               // motion queries into `data-motion`, so the specimens still prove both. docs/testing.md.
               provider: playwright({ contextOptions: { reducedMotion: "reduce" } }),
+              commands: { emulateReducedMotion },
               instances: selectInstances([
                 {
                   name: "desktop",

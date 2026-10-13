@@ -1,8 +1,9 @@
 import { Switch as SwitchPrimitive } from "@base-ui/react/switch";
 import { CHOICE_SLIDE, INSTANT } from "@lymi/design";
 import { cn } from "cn";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import * as React from "react";
+import { useReduceMotion } from "../../lib/use-reduce-motion";
 import { useField, useFieldControl } from "./field";
 
 // shadcn's Switch: on or off, taking effect the moment it changes.
@@ -62,7 +63,7 @@ function Switch({ className, disabled, onPointerDown, ...props }: SwitchPrimitiv
 }
 
 function SwitchThumb({ checked, held }: { checked: boolean; held: boolean }) {
-  const reduce = useReducedMotion() ?? false;
+  const reduce = useReduceMotion();
   const stretch = held && !reduce ? STRETCH : 0;
   const x = checked ? TRAVEL - stretch : 0;
   return (

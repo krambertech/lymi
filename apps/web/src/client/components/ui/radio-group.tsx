@@ -2,8 +2,9 @@ import { Radio as RadioPrimitive } from "@base-ui/react/radio";
 import { RadioGroup as RadioGroupPrimitive } from "@base-ui/react/radio-group";
 import { CHOICE_FADE, CHOICE_LEAVE, CHOICE_POP } from "@lymi/design";
 import { cn } from "cn";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { focusChosen, fromItem } from "../../lib/choice-focus";
+import { useReduceMotion } from "../../lib/use-reduce-motion";
 import { FieldItems, useField, useFieldControl } from "./field";
 
 // shadcn's Radio Group; selection is the ring and an ink dot, because amber stays on the flame.
@@ -83,7 +84,7 @@ function RadioGroupItem({ className, disabled, ...props }: RadioPrimitive.Root.P
 }
 
 function RadioDot({ checked }: { checked: boolean }) {
-  const reduce = useReducedMotion() ?? false;
+  const reduce = useReduceMotion();
   return (
     <motion.span
       aria-hidden="true"

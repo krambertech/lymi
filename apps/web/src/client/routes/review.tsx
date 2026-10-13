@@ -27,7 +27,7 @@ import { lanternFor } from "@lymi/design";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import {
   useCallback,
   useEffect,
@@ -65,6 +65,7 @@ import { recordReveal, useRevealHint } from "../lib/reveal-hint";
 import { itemKey } from "../lib/review-modes";
 import { shortQuote } from "../lib/short-quote";
 import { captureAnalytics } from "../lib/telemetry";
+import { useReduceMotion } from "../lib/use-reduce-motion";
 import { useWordHistory } from "../lib/use-word-history";
 import {
   GradeBar,
@@ -173,7 +174,7 @@ function Review() {
   const qc = useQueryClient();
   const navigate = useNavigate();
   const add = useAddCard();
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   // The draw also feeds the header's count, so it loads in a round too.
   const draw = useQuery(drawQuery(scope));
   // A round from Today is a fixed list rather than a draw, walked in order.

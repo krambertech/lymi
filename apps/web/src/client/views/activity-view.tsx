@@ -26,7 +26,7 @@ import {
   UserMinus,
   UserPlus,
 } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { Button } from "../components/button";
 import { Chip } from "../components/chip";
@@ -37,6 +37,7 @@ import { Screen } from "../components/layout/screen";
 import { Go } from "../components/next-steps";
 import { Skeleton } from "../components/skeleton";
 import type { ActivityCard, ActivityEntry, Export, Import } from "../lib/api";
+import { useReduceMotion } from "../lib/use-reduce-motion";
 
 /** The verb of a row, which is what its mark says. The sentence says what the verb was done to. */
 const MARK_ICONS: Record<ActivityMark, LucideIcon> = {
@@ -289,7 +290,7 @@ const ROW =
 function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
   const { t } = useLingui();
   const caller = useCaller()(entry);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReduceMotion();
   const [open, setOpen] = useState(false);
   const cardsId = useId();
   const Icon = MARK_ICONS[activityMark(entry.kind)];

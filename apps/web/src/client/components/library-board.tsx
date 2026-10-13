@@ -27,9 +27,9 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { useReducedMotion } from "motion/react";
 import { type ReactNode, useMemo, useRef, useState } from "react";
 import type { DeckSummary, Series } from "../lib/api";
+import { useReduceMotion } from "../lib/use-reduce-motion";
 
 /** The id of the decks without a series, which is never a series id. */
 export const LOOSE = "loose";
@@ -77,7 +77,7 @@ export function LibraryBoard({
   onRemoveFromSeries,
 }: LibraryBoardProps) {
   const { t } = useLingui();
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   const movable = !!onSetSeriesDecks && !!onRemoveFromSeries;
   const instructions = "library-drag-instructions";
 

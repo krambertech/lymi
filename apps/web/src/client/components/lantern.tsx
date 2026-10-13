@@ -10,15 +10,10 @@ import {
   VENT,
 } from "@lymi/design";
 import { clsx } from "clsx";
-import {
-  interpolate,
-  type MotionStyle,
-  motion,
-  useReducedMotion,
-  useTransform,
-} from "motion/react";
+import { interpolate, type MotionStyle, motion, useTransform } from "motion/react";
 import { type CSSProperties, type RefObject, useEffect, useRef, useState } from "react";
 import { useFlame } from "../lib/use-flame";
+import { useReduceMotion } from "../lib/use-reduce-motion";
 import { draw, FLAME_PARTS } from "./lantern-geometry";
 
 function startSize(from: Props["from"], target: number) {
@@ -140,7 +135,7 @@ function usePauseOffscreen(ref: RefObject<Element | null>, looping: boolean) {
  * flame was fed; the spark says so at a glance.
  */
 function Sparks({ fed, out }: { fed: number; out: boolean }) {
-  const reduce = useReducedMotion() ?? false;
+  const reduce = useReduceMotion();
   const [bursts, setBursts] = useState<number[]>([]);
   const lastFed = useRef(fed);
   const nextId = useRef(0);

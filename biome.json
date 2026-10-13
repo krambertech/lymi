@@ -97,7 +97,31 @@
       }
     },
     {
-      "includes": ["apps/web/**", "apps/site/**"],
+      "includes": [
+        "apps/web/src/client/**",
+        "!apps/web/src/client/lib/use-reduce-motion.ts",
+        "!**/*.test.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "motion/react": {
+                    "importNames": ["useReducedMotion", "useReducedMotionConfig"],
+                    "message": "Use useReduceMotion() from lib/use-reduce-motion.ts: the app has no MotionConfig provider, so useReducedMotionConfig() alone ignores the learner's setting, and useReducedMotion() alone ignores /design's reduced-motion switch."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["apps/site/**"],
       "linter": {
         "rules": {
           "style": {
@@ -107,7 +131,7 @@
                 "paths": {
                   "motion/react": {
                     "importNames": ["useReducedMotionConfig"],
-                    "message": "Use useReducedMotion() instead: the web has no MotionConfig provider, so useReducedMotionConfig() returns false even when the learner asks for reduced motion."
+                    "message": "Use useReducedMotion() instead: most of the site has no MotionConfig provider, so useReducedMotionConfig() returns false even when the reader asks for reduced motion."
                   }
                 }
               }

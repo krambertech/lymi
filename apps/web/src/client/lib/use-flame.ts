@@ -4,10 +4,10 @@ import {
   animate,
   useMotionTemplate,
   useMotionValue,
-  useReducedMotion,
   useTransform,
 } from "motion/react";
 import { useEffect, useRef } from "react";
+import { useReduceMotion } from "./use-reduce-motion";
 
 /** Below this size the flame has faded into the ember, so growing from it is a catch. */
 const VISIBLE = 0.3;
@@ -29,7 +29,7 @@ export function useFlame({
   fed?: number | undefined;
   out?: boolean | undefined;
 }) {
-  const reduce = useReducedMotion() ?? false;
+  const reduce = useReduceMotion();
   const size = useMotionValue(initial);
   const breath = useMotionValue(0);
   const lastFed = useRef(fed);

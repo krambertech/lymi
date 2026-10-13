@@ -57,7 +57,7 @@ Each rule below fails a check instead of waiting for review, and the check's mes
 | Every phone scroll view sets `keyboardShouldPersistTaps`, so a tap with the keyboard up reaches its button | `biome-plugins/scroll-view-persist-taps.grit` |
 | A change to the phone's frozen responses records a `CACHE_SHAPE` decision | `pnpm check:cache-shape` |
 | Server SQL and new migrations never case-fold with `lower()`, which is ASCII-only on D1 | `biome-plugins/no-sql-lower.grit` and `pnpm check:migrations` |
-| New lines use Lymi tokens and logical directions: no raw hex, stock Tailwind colour, `ml-`/`text-left` or `marginLeft` | `pnpm check:styling` |
+| New lines use Lymi tokens and logical directions: no raw hex, stock Tailwind colour, `ml-`/`text-left`, `margin-left` or `marginLeft` | `pnpm check:styling` |
 | Token values match `packages/design/tokens.css` everywhere they are copied | `pnpm check:design` |
 | Files under `apps/web/src/client` are kebab-case | Biome `useFilenamingConvention` |
 | Every learner-facing string is extracted | `pnpm i18n:check` |

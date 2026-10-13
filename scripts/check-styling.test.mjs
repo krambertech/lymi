@@ -69,3 +69,29 @@ test("skips tests and generated files", () => {
   );
   assert.deepEqual(check(diff), []);
 });
+
+test("reads an in-page link as a link, not a colour", () => {
+  assert.deepEqual(problemsIn("apps/web/src/client/x.tsx", '<a href="#add">'), []);
+  assert.deepEqual(problemsIn("apps/web/src/client/x.tsx", 'if (location.hash === "#face")'), []);
+  assert.match(problemsIn("apps/web/src/client/x.tsx", 'color: "#fff"')[0], /#fff/);
+});
+
+test("names the logical property for physical CSS and phone offsets", () => {
+  assert.deepEqual(problemsIn("apps/site/src/x.css", "  margin-left: 4px;"), [
+    "physical margin-left: use margin-inline-start",
+  ]);
+  assert.deepEqual(problemsIn("apps/site/src/x.astro", "  border-right-color: x;"), [
+    "physical border-right-color: use border-inline-end-color",
+  ]);
+  assert.deepEqual(problemsIn("apps/site/src/x.css", "  right: 0;"), [
+    "physical right: use inset-inline-end",
+  ]);
+});
+
+test("leaves centring, logical properties and a left that means remaining alone", () => {
+  assert.deepEqual(problemsIn("apps/site/src/x.css", "  left: 50%;"), []);
+  assert.deepEqual(problemsIn("apps/site/src/x.css", "  inset-inline-start: 0;"), []);
+  assert.deepEqual(problemsIn("apps/mobile/src/data/due.ts", "  left: number | undefined,"), []);
+  assert.deepEqual(problemsIn("apps/site/src/x.astro", "const { left: remaining } = props;"), []);
+  assert.deepEqual(problemsIn("apps/web/src/client/x.tsx", "  left: 0,"), []);
+});

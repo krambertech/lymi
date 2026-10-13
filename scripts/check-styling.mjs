@@ -42,6 +42,7 @@ const LOGICAL = {
   "float-left": "float-start",
   "float-right": "float-end",
 };
+// Native left and right offsets stay unchecked, since `left` also names what remains in a session.
 const NATIVE = {
   marginLeft: "marginStart",
   marginRight: "marginEnd",
@@ -49,6 +50,16 @@ const NATIVE = {
   paddingRight: "paddingEnd",
   borderLeftWidth: "borderStartWidth",
   borderRightWidth: "borderEndWidth",
+};
+const CSS = {
+  "margin-left": "margin-inline-start",
+  "margin-right": "margin-inline-end",
+  "padding-left": "padding-inline-start",
+  "padding-right": "padding-inline-end",
+  "border-left": "border-inline-start",
+  "border-right": "border-inline-end",
+  left: "inset-inline-start",
+  right: "inset-inline-end",
 };
 
 const prefixes = Object.keys(LOGICAL)
@@ -66,11 +77,21 @@ const physicalClass = new RegExp(
 const stockColour = new RegExp(String.raw`${classStart}(?:${UTILITY})-(?:${STOCK})-\d{2,3}\b`, "g");
 const rawHex = /(?<=["'`[]|:\s*)#(?:[0-9a-f]{8}|[0-9a-f]{6}|[0-9a-f]{3,4})\b/gi;
 const nativeProp = new RegExp(String.raw`\b(${Object.keys(NATIVE).join("|")})\s*:`, "g");
+// `left: 50%` centres rather than leans.
+const centred = /^\s*["'`]?-?50%/;
+const cssProp = new RegExp(
+  String.raw`(?<![\w-])(${Object.keys(CSS).join("|")})(?:-(?:width|color|style))?\s*:(?!:)`,
+  "g",
+);
+const cssText = /\.(css|astro)$/;
+// An in-page link such as href="#add" is spelled in hex letters too.
+const anchor = /(?:href|to|hash|id)\s*(?:={1,3}|:)\s*["'`]?$/;
 
 /** Every problem on one added line, each naming its fix. */
 export function problemsIn(file, line) {
   const problems = [];
-  for (const [hex] of line.matchAll(rawHex)) {
+  for (const { 0: hex, index } of line.matchAll(rawHex)) {
+    if (anchor.test(line.slice(0, index))) continue;
     problems.push(
       `raw colour ${hex}: use a Lymi token such as bg-plate or text-text-2; dark mode is its own palette, not an inversion`,
     );
@@ -87,6 +108,15 @@ export function problemsIn(file, line) {
   if (file.startsWith("apps/mobile/")) {
     for (const [, prop] of line.matchAll(nativeProp)) {
       problems.push(`physical ${prop}: use ${NATIVE[prop]}`);
+    }
+  }
+  if (cssText.test(file)) {
+    for (const { 0: found, 1: prop, index } of line.matchAll(cssProp)) {
+      if (!prop.includes("-") && !file.endsWith(".css")) continue;
+      if (centred.test(line.slice(index + found.length))) continue;
+      problems.push(
+        `physical ${found.replace(/\s*:$/, "")}: use ${found.replace(prop, CSS[prop]).replace(/\s*:$/, "")}`,
+      );
     }
   }
   return problems;

@@ -289,11 +289,12 @@ cards.post(
     tags: ["Cards"],
     summary: "Choose a deck for a term",
     description:
-      "Which of the caller's own decks a term belongs in, by the language it is written in, for a term shared from another app before it is added. " +
+      "Learner only. Which of the caller's own decks a term belongs in, by the language it is written in, for a term shared from another app before it is added. " +
       "Several decks in that language give the one added to last. Null when the decks teach one language between them, or when the language can't be told; " +
       "the caller then keeps its own choice. Nothing is written.",
     ok: { schema: DeckChoiceOut, description: "The deck, or null" },
     errors: [400],
+    learnerOnly: true,
   }),
   body(DeckChoiceInput, "term"),
   async (c) => {

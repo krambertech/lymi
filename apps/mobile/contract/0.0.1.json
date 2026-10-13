@@ -2589,6 +2589,11 @@
       }
      }
     },
+    "security": [
+     {
+      "session": []
+     }
+    ],
     "requestBody": {
      "required": true,
      "content": {

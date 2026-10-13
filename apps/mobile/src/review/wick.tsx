@@ -1,4 +1,4 @@
-import { EASE_OUT } from "@lymi/design";
+import { WICK } from "@lymi/design";
 import { useEffect } from "react";
 import { I18nManager, type ViewStyle } from "react-native";
 import Animated, {
@@ -11,8 +11,7 @@ import Animated, {
 import { ALWAYS, curve, useReduceMotion } from "../theme/motion";
 import { clear, usePalette } from "../theme/palette";
 
-const DRAW_MS = 360;
-const COOL_MS = 700;
+const DRAW_MS = WICK.draw.duration * 1000;
 
 /**
  * The rule over the answer is the wick: it draws across from the start edge as a line of the
@@ -29,10 +28,17 @@ export function Wick({ still }: { still: boolean }) {
     if (quiet) return;
     drawn.value = withTiming(1, {
       duration: DRAW_MS,
-      easing: curve(EASE_OUT),
+      easing: curve(WICK.draw.ease),
       reduceMotion: ALWAYS,
     });
-    cooled.value = withDelay(DRAW_MS, withTiming(1, { duration: COOL_MS, reduceMotion: ALWAYS }));
+    cooled.value = withDelay(
+      WICK.cool.delay * 1000,
+      withTiming(1, {
+        duration: WICK.cool.duration * 1000,
+        easing: curve(WICK.cool.ease),
+        reduceMotion: ALWAYS,
+      }),
+    );
   }, [quiet, drawn, cooled]);
   const amber = p.amber;
   const gone = clear(amber);

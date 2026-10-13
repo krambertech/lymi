@@ -378,8 +378,8 @@ test("Show hook cannot be pressed until it has arrived, so a doubled reveal tap 
   const arriving = document.querySelector("[data-aid]")?.closest("[inert]");
   expect(arriving).toBeInstanceOf(HTMLElement);
   expect(arriving?.classList.contains("pointer-events-none")).toBe(true);
+  await expect.poll(() => document.querySelector("[data-aid]")?.closest("[inert]")).toBeNull();
   await expect.element(page.getByRole("button", { name: /Show hook/ })).toBeVisible();
-  expect(document.querySelector("[data-aid]")?.closest("[inert]")).toBeNull();
   expect(onShow).not.toHaveBeenCalled();
 });
 

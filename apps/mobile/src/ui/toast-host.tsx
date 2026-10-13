@@ -15,7 +15,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useReduceMotion } from "../theme/motion";
-import { DECK_ACCESSORY } from "./tab-bar";
+import { useDeckAccessoryShown } from "./tab-bar";
 import { Toast } from "./toast";
 
 // The web's timings: long enough to reach Undo with VoiceOver or a switch. phone.md "After an action".
@@ -24,7 +24,6 @@ const TIMEOUT = 5_000;
 // iOS 26's floating tab bar, which a toast clears and matches in width on a tab's screens.
 const TAB_BAR = 64;
 const TABS = /^\/(today|library|explore|you)(\/|$)/;
-const DECK_PAGE = /^\/library\/[^/]+$/;
 const ACCESSORY = 56;
 
 interface ToastOptions {
@@ -85,8 +84,8 @@ export function ToastHost() {
   useEffect(() => clearToasts, []);
   const insets = useSafeAreaInsets();
   const path = usePathname();
-  // A deck's screen can carry the tab bar's review accessory over the bar.
-  const accessory = DECK_ACCESSORY && DECK_PAGE.test(path) ? ACCESSORY : 0;
+  // Clears the deck's review accessory only while the bar shows it, not on every Library page.
+  const accessory = useDeckAccessoryShown() ? ACCESSORY : 0;
   const bottom = insets.bottom + (TABS.test(path) ? TAB_BAR + accessory : 0) + 12;
   // The web shows three, the older two peeking behind the newest.
   const visible = shown.slice(-3);

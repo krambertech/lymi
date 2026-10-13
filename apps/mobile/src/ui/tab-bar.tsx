@@ -37,6 +37,14 @@ function useDeckReviewHidden(deckId: string | undefined) {
   return !!deckId && hiddenDecks.has(deckId);
 }
 
+/** Whether the bar carries a deck's review accessory now, so what floats above the bar clears it. */
+export function useDeckAccessoryShown() {
+  const deckId = usePathname().match(/^\/library\/([^/]+)$/)?.[1];
+  const due = useDecks().data?.find((d) => d.id === deckId)?.due ?? 0;
+  const hidden = useDeckReviewHidden(deckId);
+  return DECK_ACCESSORY && !!deckId && due > 0 && hidden;
+}
+
 /**
  * The phone's tabs are iOS's own tab bar, so the lens and the press are Apple's Liquid Glass, in
  * Onest with Lucide icons. Inside a deck with cards due, once the deck's own Review button has
@@ -48,7 +56,7 @@ export function TabBar() {
   const { t } = useLingui();
   const deckId = usePathname().match(/^\/library\/([^/]+)$/)?.[1];
   const due = useDecks().data?.find((d) => d.id === deckId)?.due ?? 0;
-  const hidden = useDeckReviewHidden(deckId);
+  const accessory = useDeckAccessoryShown();
   const label = { fontFamily: "Onest", fontWeight: "500", fontSize: 10 } as const;
   return (
     <NativeTabs
@@ -57,7 +65,7 @@ export function TabBar() {
       tintColor={p.text}
       minimizeBehavior="onScrollDown"
     >
-      {DECK_ACCESSORY && deckId && due > 0 && hidden && (
+      {accessory && deckId && (
         <NativeTabs.BottomAccessory>
           <MiniPlayer deckId={deckId} due={due} />
         </NativeTabs.BottomAccessory>

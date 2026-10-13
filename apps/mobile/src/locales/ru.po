@@ -185,6 +185,9 @@ msgstr "{deckCount} · {cardCount}"
 msgid "{due, plural, one {# card due} other {# cards due}}"
 msgstr "{due, plural, one {# карточка к повторению} few {# карточки к повторению} many {# карточек к повторению} other {# карточки к повторению}}"
 
+msgid "{due, plural, one {# card to review} other {# cards to review}}"
+msgstr ""
+
 msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 msgstr "{due, plural, one {карточка к повторению в колоде {deckName}} few {карточки к повторению в колоде {deckName}} many {карточек к повторению в колоде {deckName}} other {карточки к повторению в колоде {deckName}}}"
 
@@ -264,6 +267,9 @@ msgstr "Подключённое приложение"
 
 msgid "A deck holds the words you learn together. Make one, or import decks on the web."
 msgstr "Колода хранит слова, которые ты учишь вместе. Создай её или импортируй колоды в веб-версии."
+
+msgid "A few minutes keeps them fresh."
+msgstr ""
 
 msgid "A new code is on its way to {address}."
 msgstr "Отправляем новый код на {address}."
@@ -358,6 +364,9 @@ msgstr "Черновик AI"
 msgid "AI example"
 msgstr "Пример от AI"
 
+msgid "AI fills"
+msgstr "AI заполняет"
+
 msgid "AI fills in"
 msgstr "AI дополнит"
 
@@ -397,6 +406,9 @@ msgstr "Ещё для повторения"
 
 msgid "Another way"
 msgstr "Другой способ"
+
+msgid "Any"
+msgstr ""
 
 msgid "Any time"
 msgstr "В любое время"
@@ -455,6 +467,9 @@ msgstr "Не меньше {MIN_PASSWORD_LENGTH} символов."
 
 msgid "Back"
 msgstr "Назад"
+
+msgid "Back to Filter"
+msgstr ""
 
 msgid "Back to Library"
 msgstr "В Библиотеку"
@@ -853,6 +868,9 @@ msgstr "Готовим зацепку…"
 msgid "Driving"
 msgstr "Вождение"
 
+msgid "Due"
+msgstr ""
+
 msgid "Due now"
 msgstr "Пора повторить"
 
@@ -1162,6 +1180,9 @@ msgstr "Импортируется"
 msgid "Importing from {source}"
 msgstr "Импорт из {source}"
 
+msgid "In an hour"
+msgstr ""
+
 msgid "In Library"
 msgstr "В Библиотеке"
 
@@ -1299,6 +1320,9 @@ msgctxt "language"
 msgid "Lithuanian"
 msgstr "Литовский"
 
+msgid "Loading more"
+msgstr ""
+
 msgid "Loading…"
 msgstr "Загрузка…"
 
@@ -1361,6 +1385,9 @@ msgstr "Зацепка: {text}"
 
 msgid "Message"
 msgstr "Сообщение"
+
+msgid "Modes"
+msgstr "Режимы"
 
 msgid "More about this card"
 msgstr "Больше о карточке"
@@ -1540,17 +1567,14 @@ msgstr "Пока ничего не опубликовано"
 msgid "Nothing scheduled."
 msgstr "Ничего не запланировано."
 
-msgid "Off"
-msgstr "Выключено"
+msgid "Notifications are off for Lymi. Turn them on in Settings to get the reminder."
+msgstr ""
 
 msgid "Often forgotten"
 msgstr "Часто забываются"
 
 msgid "OK"
 msgstr "OK"
-
-msgid "Only on days with cards due."
-msgstr "Только в дни, когда есть карточки к повторению."
 
 msgid "Only the deck’s owner can change this."
 msgstr "Менять это может только владелец колоды."
@@ -1564,9 +1588,6 @@ msgstr "Открыть «{name}»"
 msgid "Open Explore"
 msgstr "Открыть каталог"
 
-msgid "Open in Library"
-msgstr "Открыть в Библиотеке"
-
 msgid "Open it once with a connection, and it stays on this phone."
 msgstr "Открой это один раз с соединением, и оно останется на телефоне."
 
@@ -1575,6 +1596,9 @@ msgstr "Открыть Библиотеку"
 
 msgid "Open on the web"
 msgstr "Открыть в веб-версии"
+
+msgid "Open Settings"
+msgstr ""
 
 msgid "Open Settings on the web"
 msgstr "Открыть настройки в веб-версии"
@@ -1755,8 +1779,14 @@ msgstr "Повторить серию «{seriesName}», {due, plural, one {# к�
 msgid "Review done"
 msgstr "Повторение завершено"
 
+msgid "Review now"
+msgstr ""
+
 msgid "Review these decks together, in this order."
 msgstr "Повторяй эти колоды вместе, в этом порядке."
+
+msgid "Review whenever you have a moment."
+msgstr ""
 
 msgid "Reviewed"
 msgstr "Повторено"
@@ -1954,6 +1984,9 @@ msgstr "Испанский"
 msgid "Start with a deck"
 msgstr "Начни с колоды"
 
+msgid "State"
+msgstr ""
+
 msgid "Stay signed in"
 msgstr "Остаться в приложении"
 
@@ -2046,6 +2079,9 @@ msgstr "Колода исчезнет из Библиотеки, и её кар�
 
 msgid "Theme"
 msgstr "Тема"
+
+msgid "They’re ready when you are."
+msgstr ""
 
 msgid "This card isn’t in this deck"
 msgstr "Этой карточки нет в этой колоде"

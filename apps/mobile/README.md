@@ -40,3 +40,7 @@ React Native Skia draws the lantern (`src/brand/lantern.tsx`) and the end of a r
 ## Widgets
 
 `src/widgets` holds two Home Screen widgets, **Lantern** (small and medium) and **Week** (medium), and a Lock Screen widget, written with `expo-widgets` and `@expo/ui`. Widget layouts are compiled into the native build, so a change to one needs `npx expo run:ios` again. The app pushes today's numbers and the rooms' colours to them through the shared app group whenever they change. On the Simulator, touch and hold the Home Screen, choose **Edit**, then **Add Widget**, and search for Lymi.
+
+## Reminders
+
+The daily reminder is a local notification, so it needs no push service and no push entitlement; `plugins/no-push-entitlement.cjs` takes away the one `expo-notifications` adds, because a free Apple team cannot sign it. The time stays on the phone, as the web keeps one per browser. `src/reminders` plans a week ahead from today's draw and Insights' forecast, skips a day that counts or has nothing due, and plans again after each grade and on each return to the front. iOS asks for permission when the learner first turns the reminder on. Sign-out cancels everything scheduled. On the Simulator, `xcrun simctl push <udid> app.lymi.poc <file>` with `"category": "review-reminder"` in its `aps` shows a reminder with its actions at once.

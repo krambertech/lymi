@@ -25,6 +25,7 @@
       --color-veil: #20130809;
       --color-glass-veil: #2013080f;
       --color-glass-plate: #ffffffb8;
+      --color-glass-group: #2013080d;
       --color-glass-chosen: #ffffff;
       --color-glass-fill: #ffffffdb;
       --color-glass-sheen: #ffffffe6;
@@ -89,6 +90,7 @@
       --color-veil: #ffffff0a;
       --color-glass-veil: #ffffff1f;
       --color-glass-plate: #ffffff14;
+      --color-glass-group: #ffffff14;
       --color-glass-chosen: #ffffff29;
       --color-glass-fill: #231e1adb;
       --color-glass-sheen: #ffffff12;

@@ -4,7 +4,7 @@ import { exploreDeckQuery } from "@lymi/client/queries";
 import { type ExploreDeckOut, publisherAvatarPath } from "@lymi/core/catalog";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ActivityIndicator, Image, ScrollView, useWindowDimensions, View } from "react-native";
 import Animated, { ZoomIn } from "react-native-reanimated";
 import { API_URL } from "../../../auth/client";
@@ -28,6 +28,7 @@ export default function ExploreDeck() {
   const { t } = useLingui();
   const { slug, name } = useLocalSearchParams<{ slug: string; name?: string }>();
   const query = useQuery(exploreDeckQuery(slug));
+  const slow = useSlow(!query.data && !query.isError);
   const ground = useCoverColour(slug);
   const back = { label: t`Explore`, to: "/explore" as const };
 
@@ -51,11 +52,22 @@ export default function ExploreDeck() {
       title={name ?? ""}
       back={back}
       ground={{ colour: ground, shape: "fade" }}
-      header={<HeaderSkeleton />}
+      header={slow ? <HeaderSkeleton /> : <View style={{ height: 1 }} />}
     >
-      <Skeleton height={160} />
+      {slow && <Skeleton height={160} />}
     </Screen>
   );
+}
+
+/** A page read in a moment opens straight onto itself; only a slow one shows its skeleton. */
+function useSlow(loading: boolean, after = 400) {
+  const [slow, setSlow] = useState(false);
+  useEffect(() => {
+    if (!loading) return setSlow(false);
+    const timer = setTimeout(() => setSlow(true), after);
+    return () => clearTimeout(timer);
+  }, [loading, after]);
+  return slow;
 }
 
 function HeaderSkeleton() {
@@ -113,9 +125,12 @@ function DeckPage({
       </View>
       <View className="self-stretch">
         {deckId ? (
+          // Added, the button settles in place: it says the deck is in, and still opens it.
           <Button
-            label={t`Open in Library`}
+            label={t`In Library`}
             size="lg"
+            variant="ghost"
+            icon="check"
             onPress={() => router.navigate(`/library/${deckId}`)}
           />
         ) : (
@@ -253,7 +268,7 @@ function BarAdd({
       onPress={added ? onOpen : busy ? undefined : onAdd}
       drawn={40}
       accessibilityRole="button"
-      accessibilityLabel={added ? t`Open in Library` : t`Add to Library`}
+      accessibilityLabel={added ? t`In Library` : t`Add to Library`}
       accessibilityState={{ busy }}
     >
       {/* A fresh glass for each state: iOS drops the effect when a live glass view changes shape. */}

@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef } from "react";
 import { Pressable } from "react-native";
 import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
 import { spring, useReduceMotion } from "../theme/motion";
+import { useRoom } from "../theme/palette";
 import { FieldContext } from "./field";
 
 const SLIDE = spring(CHOICE_SLIDE);
@@ -24,6 +25,8 @@ interface Props {
 export function Switch({ checked, onCheckedChange, accessibilityLabel, disabled = false }: Props) {
   const field = useContext(FieldContext);
   const reduce = useReduceMotion();
+  // At night a plate knob on a plate track all but vanishes, so the knob off is the muted ink.
+  const dark = useRoom() === "dark";
   const off = disabled || field?.disabled;
   const toggle = () => {
     Haptics.selectionAsync();
@@ -50,7 +53,7 @@ export function Switch({ checked, onCheckedChange, accessibilityLabel, disabled 
       className={`h-[30px] w-[50px] justify-center rounded-full p-[3px] ${checked ? "bg-amber" : "border border-edge-2 bg-plate-2"} ${off && !field ? "opacity-45" : ""}`}
     >
       <Animated.View
-        className={`size-6 rounded-full ${checked ? "bg-amber-ink" : "border border-edge-2 bg-plate"}`}
+        className={`size-6 rounded-full ${checked ? "bg-amber-ink" : dark ? "bg-muted" : "border border-edge-2 bg-plate"}`}
         style={[thumb, checked ? null : { marginStart: -1 }]}
       />
     </Pressable>

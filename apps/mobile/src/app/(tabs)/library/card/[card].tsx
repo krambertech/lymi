@@ -5,11 +5,13 @@ import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
 import { deserializeState } from "@lymi/core";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
-import { Image, View } from "react-native";
+import { Alert, Image, View } from "react-native";
 import { useSessionHeaders } from "../../../../auth/client";
+import { FORM_FIELD } from "../../../../capture/card-fields";
+import type { FormField } from "../../../../capture/form";
 import { languageName } from "../../../../data/languages";
 import { useDeckCards, useDecks } from "../../../../data/queries";
 import { CardNotes } from "../../../../review/card-notes";
@@ -18,6 +20,7 @@ import { PronounceButton, usePronunciation } from "../../../../review/pronounce"
 import { usePalette } from "../../../../theme/palette";
 import { SourceChip, StateChip } from "../../../../ui/chip";
 import { EmptyState } from "../../../../ui/empty-state";
+import { FieldChip, FieldChipRow } from "../../../../ui/field-chip";
 import { GRADES, GradeMark } from "../../../../ui/grade";
 import { Icon, type IconName } from "../../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
@@ -56,25 +59,65 @@ const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDat
 
 /**
  * A card, to read: the word and where it stands, its picture, its fields, then when each mode is
- * back and every review and change. Nothing here is edited in place; editing arrives with #581.
+ * back and every review and change. A tap on a field edits it in a sheet; ⋯ edits the term and
+ * archives or restores the card.
  */
 export default function CardPage() {
   const { t, i18n } = useLingui();
   const p = usePalette();
+  const qc = useQueryClient();
   const router = useRouter();
   const { card: id, deck: deckId } = useLocalSearchParams<{ card: string; deck: string }>();
   const deck = useDecks().data?.find((d) => d.id === deckId);
   const cards = useDeckCards(deckId);
-  const row = cards.data?.find((r) => r.card.id === id);
+  const listed = cards.data?.find((r) => r.card.id === id);
+  // A card archived here stays on its page, so Restore is one tap away while the list drops it;
+  // restored, it stays until the list holds it again, which offline is not until the next sync.
+  const [held, setHeld] = useState<typeof listed>(undefined);
+  const [archived, setArchived] = useState(false);
+  const row = listed ?? held;
   const historyQuery = useQuery(cardHistoryQuery(id));
   const history = historyQuery.data;
   const [older, setOlder] = useState(false);
   const now = new Date();
   const card = row?.card;
+  // Only the deck's owner changes its cards; a member reads them. #581.
+  const owner = deck?.role === "owner";
+  const editable = owner && !archived;
+  // Every edit opens the whole card in one sheet, at the field tapped.
+  const openCard = (field: FormField) =>
+    router.push({ pathname: "/edit-card", params: { card: id, deck: deckId, field } });
+  const edit = (field: FormField) => (editable ? () => openCard(field) : undefined);
   const pronounce = usePronunciation(card ?? null);
+  // An archive or a restore moves the card between every list that counts it, so all refetch.
+  const refresh = () => {
+    for (const key of [["decks"], ["cards"], ["queue"]]) {
+      void qc.invalidateQueries({ queryKey: key });
+    }
+  };
+  const archive = async () => {
+    setHeld(row);
+    setArchived(true);
+    try {
+      await writes.archiveCard(id);
+      refresh();
+    } catch (e) {
+      setArchived(false);
+      Alert.alert(t`Couldn’t archive the card.`, e instanceof Error ? e.message : undefined);
+    }
+  };
+  const restore = async () => {
+    try {
+      await writes.restoreCard(id);
+      setArchived(false);
+      refresh();
+    } catch (e) {
+      Alert.alert(t`Couldn’t restore the card.`, e instanceof Error ? e.message : undefined);
+    }
+  };
   const failed = useLoadFailed(cards);
   const historyFailed = useLoadFailed(historyQuery);
-  if (!card) {
+  if (!card || !row) {
     return (
       <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>
         {cards.data ? (
@@ -170,6 +213,7 @@ export default function CardPage() {
         label={t`Pronunciation`}
         ai={card.pronunciationSource === "ai"}
         end={pronounce && <PronounceButton pronounce={pronounce} />}
+        onPress={edit("pronunciation")}
       >
         <Text className="text-md text-text">{card.pronunciation}</Text>
       </Field>
@@ -179,27 +223,42 @@ export default function CardPage() {
       label={t`Meaning`}
       ai={card.meaning ? card.meaningSource === "ai" : false}
       field="meaning"
+      onPress={edit("meaning")}
     >
       <Text className={`text-md ${card.meaning ? "text-text" : "text-muted"}`}>
         {card.meaning || t`No meaning yet`}
       </Text>
     </Field>,
     card.example && (
-      <Field key="example" label={t`Example`} ai={card.exampleSource === "ai"} field="example">
+      <Field
+        key="example"
+        label={t`Example`}
+        ai={card.exampleSource === "ai"}
+        field="example"
+        onPress={edit("example")}
+      >
         <Text className="text-md text-text">{card.example}</Text>
       </Field>
     ),
     card.notes && (
-      <Field key="notes" label={t`Notes`} ai={card.notesSource === "ai"}>
+      <Field key="notes" label={t`Notes`} ai={card.notesSource === "ai"} onPress={edit("notes")}>
         <CardNotes source={card.notes} className="text-md text-text" />
       </Field>
     ),
     card.hook && (
-      <Field key="hook" label={t`Memory hook`} ai={card.hookSource === "ai"} field="hook">
+      <Field
+        key="hook"
+        label={t`Memory hook`}
+        ai={card.hookSource === "ai"}
+        field="hook"
+        onPress={edit("hook")}
+      >
         <Text className="text-md text-text">{card.hook}</Text>
       </Field>
     ),
   ].filter(Boolean);
+
+  const missing = (["pronunciation", "example", "notes", "hook"] as const).filter((f) => !card[f]);
 
   const schedule =
     states.filter((s) => s.state !== 0).length === 0 ? (
@@ -316,16 +375,46 @@ export default function CardPage() {
             title={card.term}
             trigger={(open) => <BarButton icon="more" label={t`Card options`} onPress={open} />}
             items={[
+              ...(editable
+                ? [{ label: t`Edit card`, icon: "edit" as const, onSelect: () => openCard("term") }]
+                : []),
               {
                 label: card.important ? t`Unmark important` : t`Mark important`,
                 icon: "important",
                 onSelect: () => void writes.setImportant(card, !card.important),
               },
+              ...(owner
+                ? [
+                    archived
+                      ? { label: t`Restore card`, icon: "restore" as const, onSelect: restore }
+                      : {
+                          label: t`Archive card`,
+                          icon: "archive" as const,
+                          destructive: true,
+                          onSelect: () => void archive(),
+                        },
+                  ]
+                : []),
             ]}
           />
         </View>
       }
     >
+      {archived && (
+        <View className="flex-row items-center gap-3 ps-1">
+          <Icon name="archive" size={16} colour={p.muted} />
+          <Text className="flex-1 text-base text-text-2">
+            {t`Archived. It’s out of your reviews until you restore it.`}
+          </Text>
+          <Press
+            onPress={() => void restore()}
+            accessibilityRole="button"
+            className="h-11 justify-center px-2"
+          >
+            <Text className="text-base font-medium text-text">{t`Restore`}</Text>
+          </Press>
+        </View>
+      )}
       <Plate className="overflow-hidden">
         {card.image && (
           <View className="p-5 pb-1">
@@ -338,6 +427,15 @@ export default function CardPage() {
           </View>
         ))}
       </Plate>
+      {editable && missing.length > 0 && (
+        <FieldChipRow label={t`Add to this card`}>
+          {missing.map((f) => (
+            <FieldChip key={f} icon={FORM_FIELD[f].icon} onPress={() => openCard(f)}>
+              {i18n._(FORM_FIELD[f].label)}
+            </FieldChip>
+          ))}
+        </FieldChipRow>
+      )}
       {block(
         t`Details`,
         details.map((d, i) => (
@@ -363,6 +461,7 @@ function Field({
   ai = false,
   field,
   end,
+  onPress,
   children,
 }: {
   label: string;
@@ -370,17 +469,34 @@ function Field({
   field?: "meaning" | "example" | "pronunciation" | "hook";
   /** A control at the row's end, such as the pronunciation's play. */
   end?: ReactNode;
+  /** Opens the field to edit; left out where the learner may not change it. */
+  onPress?: (() => void) | undefined;
   children: ReactNode;
 }) {
+  const { t } = useLingui();
+  const body = (
+    <View className="flex-1 gap-1">
+      <View className="flex-row items-center gap-2">
+        <Text className="text-sm font-medium text-muted">{label}</Text>
+        {ai && <SourceChip source="ai" field={field} badge />}
+      </View>
+      {children}
+    </View>
+  );
   return (
     <View className="min-h-14 flex-row items-center gap-3 px-5 py-3.5">
-      <View className="flex-1 gap-1">
-        <View className="flex-row items-center gap-2">
-          <Text className="text-sm font-medium text-muted">{label}</Text>
-          {ai && <SourceChip source="ai" field={field} badge />}
-        </View>
-        {children}
-      </View>
+      {onPress ? (
+        <Press
+          onPress={onPress}
+          accessibilityRole="button"
+          accessibilityHint={t`Edit`}
+          className="flex-1 flex-row"
+        >
+          {body}
+        </Press>
+      ) : (
+        body
+      )}
       {end}
     </View>
   );

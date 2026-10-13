@@ -19,7 +19,7 @@ import { Row, RowFace, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
 import { Avatar } from "../../../you/avatar";
 import { ProfileSheet, useProfile } from "../../../you/profile";
-import { ReminderSheet, useReminder } from "../../../you/reminder";
+import { Blocked, ReminderSwitch, TimeRow, useReminder } from "../../../you/reminder";
 
 /** The API reference, where publishing and deck reports are done with a key. ADR 0028. */
 const API_DOCS = "https://lymi.app/docs/api";
@@ -34,7 +34,6 @@ export default function You() {
   const router = useRouter();
   const [theme, setTheme] = useState<ThemeChoice>(savedTheme);
   const reminder = useReminder();
-  const [reminding, setReminding] = useState(false);
   const profile = useProfile();
   const [editing, setEditing] = useState(false);
   // Publishing and its reports are done with an API key by the few accounts Lymi lets publish.
@@ -51,13 +50,16 @@ export default function You() {
 
       <InsightsPlate onPress={() => router.push("/you/insights")} />
 
+      <View className="gap-2">
+        <SectionTitle>{t`Daily reminder`}</SectionTitle>
+        <Rows>
+          <ReminderSwitch reminder={reminder} />
+          {reminder.time && <TimeRow reminder={reminder} />}
+        </Rows>
+        {reminder.blocked && <Blocked />}
+      </View>
+
       <Rows>
-        <Row
-          icon="reminder"
-          label={t`Daily reminder`}
-          value={reminder.label ?? t`Off`}
-          onPress={() => setReminding(true)}
-        />
         <Select
           label={t`Theme`}
           value={theme}
@@ -125,7 +127,6 @@ export default function You() {
       <SignOut />
 
       <ProfileSheet open={editing} onOpenChange={setEditing} profile={profile} />
-      <ReminderSheet open={reminding} onOpenChange={setReminding} reminder={reminder} />
     </Screen>
   );
 }

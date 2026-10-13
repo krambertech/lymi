@@ -88,8 +88,8 @@ export default function Today() {
           !nothingYet && day.summary && <StreakPlate summary={day.summary} />
         )}
       </View>
-      {!loading && !nothingYet && rounds.data && <Rounds rounds={rounds.data} />}
       {!loading && decks.data && decks.data.length > 1 && <DecksToReview decks={decks.data} />}
+      {!loading && !nothingYet && rounds.data && <Rounds rounds={rounds.data} />}
     </Screen>
   );
 }

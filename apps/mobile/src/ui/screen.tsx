@@ -49,11 +49,15 @@ interface Props {
   ground?: { colour: string; shape: "fade" | "pool" };
   /** The bar's actions arrive with the bar's title, as the header's own button scrolls away. */
   actionsArrive?: boolean;
+  /** Called as the end of a long page comes near, so a list loads on as it is read. */
+  onEndReached?: () => void;
   /** Told once each time the page scrolls past this content offset, or back above it. */
   past?: { y: number; onChange: (past: boolean) => void } | undefined;
   children: ReactNode;
 }
 
+/** How close to the end of a page, in points, a list starts loading what comes next. */
+const END_NEAR = 600;
 /** How far the page scrolls before the bar is compact: the large title's line has gone under it. */
 const TITLE_GONE = 44;
 /** A page's title docked in the bar, centred at text-md against the large title's text-3xl. */
@@ -75,6 +79,7 @@ export function Screen({
   header,
   ground,
   actionsArrive = false,
+  onEndReached,
   past,
   children,
 }: Props) {
@@ -84,8 +89,16 @@ export function Screen({
   const p = usePalette();
   const y = useSharedValue(0);
   const [compact, setCompact] = useState(false);
+  const hasEnd = !!onEndReached;
+  const endJS = () => onEndReached?.();
   const onScroll = useAnimatedScrollHandler((e) => {
     y.value = e.contentOffset.y;
+    if (
+      hasEnd &&
+      e.contentSize.height - e.layoutMeasurement.height - e.contentOffset.y < END_NEAR
+    ) {
+      runOnJS(endJS)();
+    }
   });
   const pastY = past?.y ?? Number.POSITIVE_INFINITY;
   const pastChange = past?.onChange;

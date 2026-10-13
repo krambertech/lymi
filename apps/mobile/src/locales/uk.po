@@ -184,6 +184,9 @@ msgstr "{deckCount} · {cardCount}"
 msgid "{due, plural, one {# card due} other {# cards due}}"
 msgstr "{due, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
 
+msgid "{due, plural, one {# card to review} other {# cards to review}}"
+msgstr ""
+
 msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 msgstr "{due, plural, one {картка до повторення в колоді {deckName}} few {картки до повторення в колоді {deckName}} many {карток до повторення в колоді {deckName}} other {картки до повторення в колоді {deckName}}}"
 
@@ -207,9 +210,6 @@ msgstr "{label}, далі через {schedules}"
 
 msgid "{label}: {chosen}"
 msgstr "{label}: {chosen}"
-
-msgid "{label}: {value}"
-msgstr "{label}: {value}"
 
 msgid "{lapses, plural, one {forgotten once} other {forgotten # times}}"
 msgstr "{lapses, plural, one {забуто # раз} few {забуто # рази} many {забуто # разів} other {забуто # рази}}"
@@ -264,6 +264,9 @@ msgstr "Підключений застосунок"
 msgid "A deck holds the words you learn together. Make one, or import decks on the web."
 msgstr "Колода тримає слова, які ти вчиш разом. Створи її або імпортуй колоди в вебверсії."
 
+msgid "A few minutes keeps them fresh."
+msgstr ""
+
 msgid "A new code is on its way to {address}."
 msgstr "Надсилаємо новий код на {address}."
 
@@ -275,9 +278,6 @@ msgstr "Речення, де воно трапляється"
 
 msgid "A short phrase that helps you remember it"
 msgstr "Коротка фраза, що допоможе запам’ятати"
-
-msgid "A short phrase that helps you remember it."
-msgstr "Коротка фраза, що допоможе запам’ятати."
 
 msgid "A sound-alike, or something to picture"
 msgstr "Співзвучне слово або те, що можна уявити"
@@ -327,6 +327,9 @@ msgstr "Додати до {deckName}"
 msgid "Add to Library"
 msgstr "Додати до Бібліотеки"
 
+msgid "Add to this card"
+msgstr ""
+
 msgid "Added “{term}”"
 msgstr "Додано «{term}»"
 
@@ -356,6 +359,9 @@ msgstr "Чернетка AI"
 
 msgid "AI example"
 msgstr "Приклад від AI"
+
+msgid "AI fills"
+msgstr "AI заповнює"
 
 msgid "AI fills in"
 msgstr "AI доповнить"
@@ -397,6 +403,9 @@ msgstr "Ще для повторення"
 msgid "Another way"
 msgstr "Інший спосіб"
 
+msgid "Any"
+msgstr ""
+
 msgid "Any time"
 msgstr "Будь-коли"
 
@@ -410,23 +419,38 @@ msgstr "Арабська"
 msgid "Archive “{name}”?"
 msgstr "Архівувати «{name}»?"
 
+msgid "Archive card"
+msgstr ""
+
 msgid "Archive deck"
 msgstr "Архівувати колоду"
 
 msgid "Archived"
 msgstr "Архів"
 
+msgid "Archived “{term}”"
+msgstr ""
+
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Заархівовано {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у колоді «{deck}»"
 
-msgid "Archived is coming to the phone"
-msgstr "Архів скоро буде на телефоні"
+msgid "Archived cards need a connection"
+msgstr ""
+
+msgid "Archived decks and cards wait here, out of your reviews, until you restore them."
+msgstr ""
+
+msgid "Archived decks need a connection"
+msgstr ""
 
 msgid "Archived the deck {deck}"
 msgstr "Заархівовано колоду «{deck}»"
 
 msgid "Archived the section {name} in {deck}"
 msgstr "Заархівовано розділ «{name}» у колоді «{deck}»"
+
+msgid "Archived. It’s out of your reviews until you restore it."
+msgstr ""
 
 msgid "Arts"
 msgstr "Мистецтво"
@@ -439,6 +463,9 @@ msgstr "Щонайменше {MIN_PASSWORD_LENGTH} символів."
 
 msgid "Back"
 msgstr "Назад"
+
+msgid "Back to Filter"
+msgstr ""
 
 msgid "Back to Library"
 msgstr "До Бібліотеки"
@@ -611,6 +638,13 @@ msgstr "Не вдалося додати колоду. Перевір з’єд�
 msgid "Couldn’t add the deck. It’s no longer published."
 msgstr "Не вдалося додати колоду. Її більше не опубліковано."
 
+#. placeholder {0}: card.term
+msgid "Couldn’t archive “{0}”."
+msgstr ""
+
+msgid "Couldn’t archive the card."
+msgstr ""
+
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Не вдалося змінити фото. Перевір з’єднання й спробуй ще раз."
 
@@ -619,6 +653,12 @@ msgstr "Не вдалося перевірити, чи є ще картки"
 
 msgid "Couldn’t load Activity"
 msgstr "Не вдалося завантажити Активність"
+
+msgid "Couldn’t load archived cards"
+msgstr ""
+
+msgid "Couldn’t load archived decks"
+msgstr ""
 
 msgid "Couldn’t load Explore"
 msgstr "Не вдалося завантажити Каталог"
@@ -668,8 +708,18 @@ msgstr "Не вдалося зв’язатися з Lymi. Перевір з’�
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Не вдалося зв’язатися із сервісом входу. Перевір з’єднання й повтори спробу."
 
+#. placeholder {0}: back.term
+msgid "Couldn’t restore “{0}”."
+msgstr ""
+
+msgid "Couldn’t restore the card."
+msgstr ""
+
 msgid "Couldn’t save that."
 msgstr "Не вдалося зберегти."
+
+msgid "Couldn’t save the card."
+msgstr ""
 
 msgid "Couldn’t save the goal. Try again."
 msgstr "Не вдалося зберегти мету. Спробуй ще раз."
@@ -814,6 +864,9 @@ msgstr "Готуємо зачіпку…"
 msgid "Driving"
 msgstr "Водіння"
 
+msgid "Due"
+msgstr ""
+
 msgid "Due now"
 msgstr "Час повторити"
 
@@ -838,6 +891,12 @@ msgstr "Кожну картку питають в обидва боки, кож�
 
 msgid "Easy"
 msgstr "Легко"
+
+msgid "Edit"
+msgstr ""
+
+msgid "Edit card"
+msgstr ""
 
 msgid "Edit hook"
 msgstr "Змінити зачіпку"
@@ -1117,6 +1176,9 @@ msgstr "Імпортується"
 msgid "Importing from {source}"
 msgstr "Імпорт із {source}"
 
+msgid "In an hour"
+msgstr ""
+
 msgid "In Library"
 msgstr "У Бібліотеці"
 
@@ -1254,6 +1316,9 @@ msgctxt "language"
 msgid "Lithuanian"
 msgstr "Литовська"
 
+msgid "Loading more"
+msgstr ""
+
 msgid "Loading…"
 msgstr "Завантаження…"
 
@@ -1316,6 +1381,9 @@ msgstr "Зачіпка: {text}"
 
 msgid "Message"
 msgstr "Повідомлення"
+
+msgid "Modes"
+msgstr "Режими"
 
 msgid "More about this card"
 msgstr "Більше про картку"
@@ -1468,6 +1536,9 @@ msgstr "Ще не почато"
 msgid "Notes"
 msgstr "Нотатки"
 
+msgid "Nothing archived"
+msgstr ""
+
 msgid "Nothing due"
 msgstr "Нічого повторювати"
 
@@ -1492,17 +1563,14 @@ msgstr "Ще нічого не опубліковано"
 msgid "Nothing scheduled."
 msgstr "Нічого не заплановано."
 
-msgid "Off"
-msgstr "Вимкнено"
+msgid "Notifications are off for Lymi. Turn them on in Settings to get the reminder."
+msgstr ""
 
 msgid "Often forgotten"
 msgstr "Часто забуваються"
 
 msgid "OK"
 msgstr "OK"
-
-msgid "Only on days with cards due."
-msgstr "Лише в дні, коли є картки до повторення."
 
 msgid "Only the deck’s owner can change this."
 msgstr "Змінювати це може лише власник колоди."
@@ -1513,14 +1581,8 @@ msgstr "Їх бачиш лише ти."
 msgid "Open {name}"
 msgstr "Відкрити «{name}»"
 
-msgid "Open Archived on the web"
-msgstr "Відкрити архів у вебверсії"
-
 msgid "Open Explore"
 msgstr "Відкрити каталог"
-
-msgid "Open in Library"
-msgstr "Відкрити в Бібліотеці"
 
 msgid "Open it once with a connection, and it stays on this phone."
 msgstr "Відкрий це раз зі з’єднанням, і воно залишиться на телефоні."
@@ -1530,6 +1592,9 @@ msgstr "Відкрити Бібліотеку"
 
 msgid "Open on the web"
 msgstr "Відкрити у вебверсії"
+
+msgid "Open Settings"
+msgstr ""
 
 msgid "Open Settings on the web"
 msgstr "Відкрити налаштування у вебверсії"
@@ -1674,6 +1739,15 @@ msgstr "Відтворити вимову ще раз"
 msgid "Reset your password"
 msgstr "Новий пароль"
 
+msgid "Restore"
+msgstr ""
+
+msgid "Restore {title}"
+msgstr ""
+
+msgid "Restore card"
+msgstr ""
+
 msgid "Restored"
 msgstr "Відновлено"
 
@@ -1701,8 +1775,14 @@ msgstr "Повторити серію «{seriesName}», {due, plural, one {# к�
 msgid "Review done"
 msgstr "Повторення завершено"
 
+msgid "Review now"
+msgstr ""
+
 msgid "Review these decks together, in this order."
 msgstr "Повторюй ці колоди разом, у такому порядку."
+
+msgid "Review whenever you have a moment."
+msgstr ""
 
 msgid "Reviewed"
 msgstr "Повторено"
@@ -1900,6 +1980,9 @@ msgstr "Іспанська"
 msgid "Start with a deck"
 msgstr "Почни з колоди"
 
+msgid "State"
+msgstr ""
+
 msgid "Stay signed in"
 msgstr "Залишитися в застосунку"
 
@@ -1992,6 +2075,9 @@ msgstr "Колода зникне з Бібліотеки, а її картки 
 
 msgid "Theme"
 msgstr "Тема"
+
+msgid "They’re ready when you are."
+msgstr ""
 
 msgid "This card isn’t in this deck"
 msgstr "Цієї картки немає в цій колоді"
@@ -2109,14 +2195,14 @@ msgstr "Українська"
 msgid "Undo"
 msgstr "Скасувати дію"
 
+msgid "Undo restoring {title}"
+msgstr ""
+
 msgid "Unmark important"
 msgstr "Зняти позначку «важлива»"
 
 msgid "Until then, change your settings on the web."
 msgstr "А поки змінити налаштування можна у вебверсії."
-
-msgid "Until then, restore archived cards on the web."
-msgstr "А поки відновити картки з архіву можна у вебверсії."
 
 msgid "Update"
 msgstr "Оновити"

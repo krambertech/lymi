@@ -85,7 +85,8 @@ function slug(text) {
 async function driveFeature(browser, name) {
   const feature = await import(join(featuresDir, `${name}.mjs`));
   const persona = feature.persona ?? "learner";
-  const dir = join(root, owner, `${name}-${where}-${sha.slice(0, 8)}`);
+  const width = values.phone ? "-phone" : "";
+  const dir = join(root, owner, `${name}-${where}${width}-${sha.slice(0, 8)}`);
   mkdirSync(dir, { recursive: true });
 
   const context = await browser.newContext({ ...viewport, baseURL: base, reducedMotion: "reduce" });
@@ -134,6 +135,8 @@ async function driveFeature(browser, name) {
     if (values.entry) await page.goto(values.entry);
     const signIn = `/api/dev/sign-in?as=${persona}&reset=1&returnTo=${encodeURIComponent(feature.start ?? "/today")}`;
     await page.goto(`${base}${signIn}`);
+    // The first load after a cold start waits for Vite to bundle the dependencies.
+    await page.getByRole("main").first().waitFor({ timeout: 90_000 });
     const cookie = (await context.cookies(base)).map((c) => `${c.name}=${c.value}`).join("; ");
     checks = await doctor({ url: base, sha, persona, cookie });
     if (!report(checks)) throw new Error("the doctor found this instance not worth driving");

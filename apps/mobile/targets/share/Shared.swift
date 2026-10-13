@@ -22,7 +22,8 @@ struct ShareState: Decodable {
   static func read() -> ShareState? {
     let query: [String: Any] = [
       kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: "lymi-share",
+      // expo-secure-store names the service after the key chain service and the item's authentication.
+      kSecAttrService as String: "lymi-share:no-auth",
       kSecAttrAccount as String: Data("state".utf8),
       kSecAttrAccessGroup as String: appGroup,
       kSecReturnData as String: true,

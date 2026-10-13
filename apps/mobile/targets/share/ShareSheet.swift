@@ -214,15 +214,16 @@ struct ShareSheet: View {
           .accessibilityValue(deck.name)
       }
       Spacer(minLength: 0)
-      GlassCircle(label: s["add", deck: model.deck?.name ?? ""], primary: true, action: submit) {
-        if model.pending {
-          ProgressView().tint(Color("amberInk"))
-        } else {
-          LucideIcon(icon: .plus, size: 20, weight: 2.25).foregroundStyle(Color("amberInk"))
+      if model.unavailable == nil {
+        GlassCircle(label: s["add", deck: model.deck?.name ?? ""], primary: true, action: submit) {
+          if model.pending {
+            ProgressView().tint(Color("amberInk"))
+          } else {
+            LucideIcon(icon: .plus, size: 20, weight: 2.25).foregroundStyle(Color("amberInk"))
+          }
         }
+        .disabled(!model.canAdd)
       }
-      .disabled(!model.canAdd)
-      .opacity(model.unavailable != nil ? 0.4 : 1)
     }
     .padding(.horizontal, 16)
     .padding(.top, 20)

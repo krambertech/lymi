@@ -482,6 +482,7 @@ export function AfterAction() {
               render: () => (
                 <Toast
                   title="Couldn’t move “Verbi”."
+                  announce={false}
                   error
                   action={{ label: "Try again", onPress: () => undefined }}
                 />
@@ -489,7 +490,7 @@ export function AfterAction() {
             },
             {
               label: "Without an action",
-              render: () => <Toast title="Saved on this phone" />,
+              render: () => <Toast title="Saved on this phone" announce={false} />,
             },
             {
               label: "Live",

@@ -1,0 +1,14 @@
+or {
+  JsxOpeningElement(name=$name, attributes=$attrs),
+  JsxSelfClosingElement(name=$name, attributes=$attrs)
+} where {
+  $name <: or {
+    `ScrollView`,
+    `FlatList`,
+    `SectionList`,
+    `Animated.ScrollView`,
+    `Animated.FlatList`
+  },
+  not $attrs <: contains `keyboardShouldPersistTaps`,
+  register_diagnostic(span=$name, message="Set keyboardShouldPersistTaps to handled on this scroll view: without it, the first tap while the keyboard is up only dismisses the keyboard and the button never fires.")
+}

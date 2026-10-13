@@ -166,6 +166,7 @@ export function DayGrid({ days, today, firstDay, goal }: Props) {
           ))}
         </View>
         <ScrollView
+          keyboardShouldPersistTaps="handled"
           ref={scroller}
           horizontal
           showsHorizontalScrollIndicator={false}

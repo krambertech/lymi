@@ -146,6 +146,10 @@
     },
     {
       "includes": ["apps/mobile/**"],
+      "plugins": ["./biome-plugins/scroll-view-persist-taps.grit"]
+    },
+    {
+      "includes": ["apps/mobile/**"],
       "linter": {
         "rules": {
           "style": {

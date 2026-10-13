@@ -43,6 +43,9 @@ function selectInstances(instances: BrowserInstanceOption[]): BrowserInstanceOpt
 export default defineConfig({
   define: {
     __QUERY_CACHE_BUSTER__: JSON.stringify(buildId),
+    "import.meta.env.LYMI_BUILD": JSON.stringify(buildId),
+    // Workers Builds sets it for the build and tags the deployed version with it (`deploy:ci`).
+    "import.meta.env.LYMI_RELEASE": JSON.stringify(process.env.WORKERS_CI_COMMIT_SHA ?? ""),
     "import.meta.env.LYMI_APP_PREVIEW": JSON.stringify(isAppPreview),
   },
   plugins: [

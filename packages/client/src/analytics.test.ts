@@ -142,6 +142,22 @@ it("stops when the account turns analytics off and keeps errors anonymous", asyn
   });
 });
 
+it("tags an error with its route pattern and the release that threw it", async () => {
+  await load("https://my.lymi.app/explore/private-deck?token=secret");
+  analytics.initAnalytics({
+    token: "phc_test",
+    surface: "product",
+    enabled: true,
+    release: "0123456789abcdef0123456789abcdef01234567",
+  });
+  analytics.reportBrowserException(new TypeError("private"));
+  expect(sdk.sent.at(-1)?.properties).toMatchObject({
+    route: "/explore/:item",
+    release: "0123456789abcdef0123456789abcdef01234567",
+  });
+  expect(JSON.stringify(sdk.sent.at(-1))).not.toContain("private-deck");
+});
+
 it("counts a signed-out visitor anonymously and joins them to the account they create", async () => {
   await load("https://my.lymi.app/login?mode=sign-up&lp=%2Fteachers&ref=www.google.com");
   analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });

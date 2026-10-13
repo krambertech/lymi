@@ -20,7 +20,7 @@ import { Toast } from "./toast";
 // The web's timings: long enough to reach Undo with VoiceOver or a switch. phone.md "After an action".
 const ACTION_TIMEOUT = 10_000;
 const TIMEOUT = 5_000;
-// iOS 26's floating tab bar, which a toast clears on a tab's screens.
+// iOS 26's floating tab bar, which a toast clears and matches in width on a tab's screens.
 const TAB_BAR = 64;
 const TABS = /^\/(today|library|explore|you)(\/|$)/;
 
@@ -86,7 +86,7 @@ export function ToastHost() {
   // The web shows three, the older two peeking behind the newest.
   const visible = shown.slice(-3);
   return (
-    <View pointerEvents="box-none" className="absolute inset-x-4" style={{ bottom }}>
+    <View pointerEvents="box-none" className="absolute inset-x-6" style={{ bottom }}>
       {visible.map((item, i) => (
         <Slot key={item.key} item={item} depth={visible.length - 1 - i} />
       ))}

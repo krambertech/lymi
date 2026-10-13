@@ -132,6 +132,7 @@ export function ShelfRows({ shelves, added }: ShelvesProps) {
         <View key={shelf.key} className="gap-3">
           <ShelfHeader shelf={shelf} />
           <ScrollView
+            keyboardShouldPersistTaps="handled"
             horizontal
             showsHorizontalScrollIndicator={false}
             decelerationRate="fast"

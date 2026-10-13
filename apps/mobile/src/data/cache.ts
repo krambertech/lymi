@@ -19,6 +19,7 @@ export const CACHE_MAX_AGE = 1000 * 60 * 60 * 24 * 30;
 /**
  * Bump when a screen starts reading a response field a cache from an earlier release may lack. It
  * is not the app's version, because an update fetched online would then empty the next launch offline.
+ * `pnpm check:cache-shape` fails until this decision is recorded for every change to the frozen responses.
  */
 const CACHE_SHAPE = "1";
 

@@ -238,6 +238,8 @@ Freeze by hand, for example to record the baseline after a change to the check i
 pnpm --filter @lymi/mobile contract:freeze
 ```
 
+A freeze that changes a successful response also asks whether the phone's kept query cache is still readable. `pnpm check:cache-shape`, part of `pnpm check`, fails until `CACHE_SHAPE` in `apps/mobile/src/data/cache.ts` is bumped, when a screen now reads a field an earlier cache may lack, or the unchanged shape is confirmed; either way, `node scripts/check-cache-shape.mjs --write` records the decision in `apps/mobile/src/data/cache-shape.json`.
+
 ### The smoke journey
 
 `apps/mobile/e2e/flows/sign-in-and-review.yaml` is one Maestro flow: it signs in with the email form, opens a review, grades three cards Good and ends the review. `apps/mobile/e2e/run.sh` seeds the `learner` persona on a local Worker first and checks afterwards that the three grades reached it, because the screen moves on before the grade outbox sends. It drives the same Release build a learner installs, with `EXPO_PUBLIC_API_URL` pointing at the local Worker, and finds controls by their visible text and accessibility labels.

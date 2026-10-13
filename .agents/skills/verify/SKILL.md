@@ -31,7 +31,7 @@ Each recipe signs in through `/api/dev/sign-in?as=<persona>&reset=1`, so it star
 node .agents/skills/verify/scripts/doctor.mjs --url http://localhost:5241 --persona learner
 ```
 
-One read-only check that the instance is worth driving. `/api/health` must name `lymi-product`. Its version tag must be this worktree's `HEAD`, or GitHub's merge of `HEAD` into `main`, which is what a pull request's app preview is tagged with; a local server carries no tag, so the doctor instead finds the process listening on the port and requires it to run from this worktree. `/api/dev/state` must report the expected persona; the runner calls the doctor with its own session after signing in and stops before driving when any check fails. Run alone, the doctor reads the persona only with `--session`, a Playwright storage state, and otherwise checks health and commit, which is enough to tell whether a failing recipe met the wrong server.
+One read-only check that the instance is worth driving. `/api/health` must name `lymi-product` and serve the commit under test. A local server carries no version tag, so the doctor finds the process listening on the port and requires it to run from this worktree at `--sha`, which defaults to `HEAD`. A pull request's app preview carries no tag either: pass `--version` with the Worker version its app preview job uploaded for the head commit, and the doctor requires `/api/health` to report that version. `/api/dev/state` must report the expected persona; the runner calls the doctor with its own session after signing in and stops before driving when any check fails. Run alone, the doctor reads the persona only with `--session`, a Playwright storage state, and otherwise checks health and commit, which is enough to tell whether a failing recipe met the wrong server.
 
 ## Drive
 
@@ -39,7 +39,7 @@ One read-only check that the instance is worth driving. `/api/health` must name 
 node .agents/skills/verify/scripts/run.mjs review add-card --pr <n>
 ```
 
-The runner opens Chromium at 1280 px with a pointer, or at 393 px with touch under `--phone`, with reduced motion. For each feature it signs in, runs the doctor, then the feature's recipe in `features/<feature>.mjs`, which drives by role and accessible name, never by CSS or test id. Add `--url` for another origin, and for a pull request's app preview add `--entry` with the preview link from the pull request's deployment, which the runner opens first for the preview cookie. A recipe's `step(action, run)` takes one learner action and its check; write a new one the same way and keep each step to what a learner does.
+The runner opens Chromium at 1280 px with a pointer, or at 393 px with touch under `--phone`, with reduced motion. For each feature it signs in, runs the doctor, then the feature's recipe in `features/<feature>.mjs`, which drives by role and accessible name, never by CSS or test id. Add `--url` for another origin; a pull request's app preview also takes `--entry`, its preview link, which the runner opens first for the preview cookie, and `--version`. A recipe's `step(action, run)` takes one learner action and its check; write a new one the same way and keep each step to what a learner does.
 
 ## Evidence
 
@@ -50,3 +50,14 @@ Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-<where>[-phone]-<
 ## Cleanup
 
 The runner closes the browser it opened. Stop the server with `node .agents/skills/verify/scripts/server.mjs stop`, which ends only the process group `start` recorded; a server another worktree or the launch configuration started stays up. Keep the evidence. A failing step is a finding to report or fix, never a reason to delete its files.
+
+## Review a pull request
+
+An independent reviewer gives every product pull request a live verdict before it merges. Green CI is not a verdict, and neither is a run by the author.
+
+1. Pick the map entries for every feature the diff can reach. A pull request that changes no product behavior gets no live verdict and says so.
+2. Read the head commit's app preview from its CI run: the **app preview** job logs the preview link (`APP_PREVIEW_ENTRY_URL`, also the `app-preview` deployment's link) and the Worker version (`PREVIEW_VERSION_ID`). A job from an older commit is the wrong build; wait for the head's.
+3. Drive them on the preview, `run.mjs <features> --url <preview origin> --entry <preview link> --version <id> --sha <head> --pr <n>`, and on `main` in a local worktree with `server.mjs start`, so a failure the pull request did not cause shows up on both.
+4. Post the verdict on the pull request against the head SHA: **PASS** when every step passed on the preview with no unexpected console error or 5xx, **PASS+NOTES** when it passed but the run surfaced something worth a look, such as a console error or a difference from `main`, and **FAIL** when a step failed on the preview and passed on `main`. A step that fails on both is a finding about `main`, reported separately. Name the features, the evidence folder and, for anything but PASS, the failing step and its error.
+
+A push that changes the patch voids the verdict; a merge of `main` that leaves the diff the same keeps it. The preview link carries a key, so keep it out of comments and evidence. The preview's personas are reset by each run, so never drive a preview while someone is trying it by hand. Phone pull requests get a run on the Mac or a verdict saying they were not driven.

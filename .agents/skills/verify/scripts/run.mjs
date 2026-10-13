@@ -23,6 +23,7 @@ Features: ${features.join(", ")}
   --url <origin>     Instance to drive (default: http://localhost:5241)
   --entry <link>     A pull request's app preview link, opened first for its cookie
   --sha <commit>     Commit the instance should serve (default: HEAD of this worktree)
+  --version <id>     Worker version an app preview should serve, from its app preview job
   --pr <n>           Pull request the evidence belongs to (default: the branch name)
   --out <dir>        Evidence root (default: /mnt/project-files/evidence, else the temp dir)
   --phone            Drive at 393 px with touch instead of 1280 px with a pointer
@@ -35,6 +36,7 @@ const { values, positionals } = parseArgs({
     url: { type: "string", default: "http://localhost:5241" },
     entry: { type: "string" },
     sha: { type: "string" },
+    version: { type: "string" },
     pr: { type: "string" },
     out: { type: "string" },
     phone: { type: "boolean", default: false },
@@ -93,7 +95,12 @@ async function driveFeature(browser, name) {
   const page = await context.newPage();
   const problems = [];
   page.on("pageerror", (error) => problems.push(`page error: ${error.message}`));
-  page.on("console", (m) => m.type() === "error" && problems.push(`console: ${m.text()}`));
+  page.on("console", (m) => {
+    if (m.type() !== "error") return;
+    // Drop the query so a preview link's key never lands in the evidence.
+    const at = m.location().url?.split("?")[0];
+    problems.push(at ? `console: ${m.text()} (${at})` : `console: ${m.text()}`);
+  });
   page.on("response", (r) => r.status() >= 500 && problems.push(`HTTP ${r.status()} ${r.url()}`));
 
   const api = async (path) => {
@@ -132,13 +139,14 @@ async function driveFeature(browser, name) {
 
   let checks = [];
   try {
-    if (values.entry) await page.goto(values.entry);
+    // Take the preview cookie without following the link into Today, whose requests the reset below would strand.
+    if (values.entry) await page.request.get(values.entry, { maxRedirects: 0 });
     const signIn = `/api/dev/sign-in?as=${persona}&reset=1&returnTo=${encodeURIComponent(feature.start ?? "/today")}`;
     await page.goto(`${base}${signIn}`);
     // The first load after a cold start waits for Vite to bundle the dependencies.
     await page.getByRole("main").first().waitFor({ timeout: 90_000 });
     const cookie = (await context.cookies(base)).map((c) => `${c.name}=${c.value}`).join("; ");
-    checks = await doctor({ url: base, sha, persona, cookie });
+    checks = await doctor({ url: base, sha, version: values.version, persona, cookie });
     if (!report(checks)) throw new Error("the doctor found this instance not worth driving");
     await feature.default({ page, base, step, api, expect });
   } catch (error) {

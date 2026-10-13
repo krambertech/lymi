@@ -22,6 +22,7 @@ Continue only when the intended PR diff is isolated and understood.
 
 - Review the complete diff against the request and repository invariants. Remove scope creep, debug remnants, and accidental generated changes.
 - Run `pnpm verify:changed` plus any focused, E2E, visual, migration, or integration verification required by the change. Fix failures before opening the PR.
+- For a product change, drive every feature the diff reaches with the [verify skill](../verify/SKILL.md) and name its evidence folder under Verification. This is the author's run; the live verdict comes later from an independent reviewer on the app preview.
 - Derive a Conventional Commit title from the actual change and the Git workflow.
 - Write the body to the pull-request-description rules in `AGENTS.md`: copy [the template](../../../.github/pull_request_template.md) to a temporary file, fill it, and remove every guidance comment and unused optional section.
 - For any rendered UI change, capture and attach screenshots with [`references/screenshots.md`](references/screenshots.md). A screenshot visible only in the agent conversation is not attached.

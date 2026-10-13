@@ -140,9 +140,6 @@ msgstr "{cards} · {sections}"
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# review} other {# reviews}}"
 
-msgid "{count, plural, one {It leaves Library and stops coming up in review. Restore it from Archived.} other {They leave Library and stop coming up in review. Restore them from Archived.}}"
-msgstr "{count, plural, one {It leaves Library and stops coming up in review. Restore it from Archived.} other {They leave Library and stop coming up in review. Restore them from Archived.}}"
-
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {day in a row} other {days in a row}}"
 
@@ -438,9 +435,6 @@ msgctxt "language"
 msgid "Arabic"
 msgstr "Arabic"
 
-msgid "Archive “{name}”?"
-msgstr "Archive “{name}”?"
-
 msgid "Archive card"
 msgstr "Archive card"
 
@@ -449,6 +443,9 @@ msgstr "Archive deck"
 
 msgid "Archived"
 msgstr "Archived"
+
+msgid "Archived “{name}”"
+msgstr "Archived “{name}”"
 
 msgid "Archived “{term}”"
 msgstr "Archived “{term}”"
@@ -673,6 +670,9 @@ msgstr "Couldn’t add the deck. It’s no longer published."
 msgid "Couldn’t archive “{0}”."
 msgstr "Couldn’t archive “{0}”."
 
+msgid "Couldn’t archive “{name}”."
+msgstr "Couldn’t archive “{name}”."
+
 msgid "Couldn’t archive the card."
 msgstr "Couldn’t archive the card."
 
@@ -748,6 +748,9 @@ msgstr "Couldn’t reach the sign-in service. Check your connection and try agai
 #. placeholder {0}: back.term
 msgid "Couldn’t restore “{0}”."
 msgstr "Couldn’t restore “{0}”."
+
+msgid "Couldn’t restore “{name}”."
+msgstr "Couldn’t restore “{name}”."
 
 msgid "Couldn’t restore the card."
 msgstr "Couldn’t restore the card."

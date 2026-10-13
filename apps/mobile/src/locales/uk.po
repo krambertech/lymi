@@ -140,9 +140,6 @@ msgstr "{cards} · {sections}"
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
 
-msgid "{count, plural, one {It leaves Library and stops coming up in review. Restore it from Archived.} other {They leave Library and stop coming up in review. Restore them from Archived.}}"
-msgstr "{count, plural, one {Вона зникне з Бібліотеки й повторень. Відновити її можна в Архіві.} few {Вони зникнуть з Бібліотеки й повторень. Відновити їх можна в Архіві.} many {Вони зникнуть з Бібліотеки й повторень. Відновити їх можна в Архіві.} other {Вони зникнуть з Бібліотеки й повторень. Відновити їх можна в Архіві.}}"
-
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
 
@@ -438,9 +435,6 @@ msgctxt "language"
 msgid "Arabic"
 msgstr "Арабська"
 
-msgid "Archive “{name}”?"
-msgstr "Архівувати «{name}»?"
-
 msgid "Archive card"
 msgstr ""
 
@@ -449,6 +443,9 @@ msgstr "Архівувати колоду"
 
 msgid "Archived"
 msgstr "Архів"
+
+msgid "Archived “{name}”"
+msgstr ""
 
 msgid "Archived “{term}”"
 msgstr ""
@@ -673,6 +670,9 @@ msgstr "Не вдалося додати колоду. Її більше не о
 msgid "Couldn’t archive “{0}”."
 msgstr ""
 
+msgid "Couldn’t archive “{name}”."
+msgstr ""
+
 msgid "Couldn’t archive the card."
 msgstr ""
 
@@ -747,6 +747,9 @@ msgstr "Не вдалося зв’язатися із сервісом вход
 
 #. placeholder {0}: back.term
 msgid "Couldn’t restore “{0}”."
+msgstr ""
+
+msgid "Couldn’t restore “{name}”."
 msgstr ""
 
 msgid "Couldn’t restore the card."

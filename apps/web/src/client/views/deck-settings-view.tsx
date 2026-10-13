@@ -249,7 +249,7 @@ export function DeckSettingsView({
             <PurposeField
               value={deck.purpose}
               onChange={(purpose) => onSave({ purpose })}
-              description={t`AI writes this deck’s cards to suit it. Only you see it.`}
+              description={t`AI fills this deck’s cards to suit it. Only you see it.`}
             />
             <LanguageField
               value={deck.defaultLanguage}

@@ -647,6 +647,10 @@ msgstr "Ключ никогда не ставит оценок за повтор
 msgid "A language"
 msgstr "Язык"
 
+msgctxt "deck purpose"
+msgid "A language"
+msgstr "Язык"
+
 msgid "A link to a picture online."
 msgstr "Ссылка на изображение в сети."
 
@@ -672,7 +676,7 @@ msgid "A subject"
 msgstr "Тему"
 
 msgid "A subject or exam"
-msgstr ""
+msgstr "Предмет или экзамен"
 
 msgid "A–Z"
 msgstr "А–Я"
@@ -811,6 +815,9 @@ msgstr "Пример от AI"
 msgid "AI fills them only when they help. It never changes your text."
 msgstr "AI заполняет их, только когда это полезно. Твой текст он не меняет."
 
+msgid "AI fills this deck’s cards to suit it. Only you see it."
+msgstr "AI заполняет карточки этой колоды с учётом этого. Это видишь только ты."
+
 msgid "AI hook"
 msgstr "Зацепка от AI"
 
@@ -822,9 +829,6 @@ msgstr "Заметки от AI"
 
 msgid "AI pronunciation"
 msgstr "Произношение от AI"
-
-msgid "AI writes this deck’s cards to suit it. Only you see it."
-msgstr ""
 
 msgid "AI wrote part of this card"
 msgstr "Часть этой карточки написал AI"
@@ -1263,7 +1267,7 @@ msgid "Choose what each Mochi field becomes on a Lymi card. One field is the ter
 msgstr "Выбери, чем каждое поле Mochi станет в карточке Lymi. Одно поле — это термин."
 
 msgid "Choose what the deck is for."
-msgstr ""
+msgstr "Выбери, для чего эта колода."
 
 msgid "Choose your {app} file"
 msgstr "Выбор файла {app}"
@@ -3692,7 +3696,7 @@ msgid "Terms"
 msgstr "Условия"
 
 msgid "Terms with short explanations, like for a citizenship test."
-msgstr ""
+msgstr "Термины с короткими пояснениями, как для экзамена на гражданство."
 
 msgid "Terms, meanings and due dates in a .csv file, without pictures or review history."
 msgstr "Термины, значения и даты повторения в файле .csv, без изображений и истории повторений."
@@ -4143,7 +4147,7 @@ msgid "What is Lymi?"
 msgstr "Что такое Lymi?"
 
 msgid "What it’s for"
-msgstr ""
+msgstr "Для чего она"
 
 msgid "What the picture shows, without the answer. Picture review needs it."
 msgstr "Что на изображении, без ответа. Без описания повторение по изображению не начнётся."

@@ -274,7 +274,7 @@ interface PurposeOption {
 export const PURPOSES: PurposeOption[] = [
   {
     value: "language",
-    label: msg`A language`,
+    label: msg({ message: "A language", context: "deck purpose" }),
     blurb: msg`Words and phrases in a language you’re learning.`,
   },
   {

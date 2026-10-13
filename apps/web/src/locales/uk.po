@@ -647,6 +647,10 @@ msgstr "Ключ ніколи не ставить оцінок за повтор
 msgid "A language"
 msgstr "Мову"
 
+msgctxt "deck purpose"
+msgid "A language"
+msgstr "Мова"
+
 msgid "A link to a picture online."
 msgstr "Посилання на зображення в мережі."
 
@@ -672,7 +676,7 @@ msgid "A subject"
 msgstr "Тему"
 
 msgid "A subject or exam"
-msgstr ""
+msgstr "Предмет або іспит"
 
 msgid "A–Z"
 msgstr "А–Я"
@@ -811,6 +815,9 @@ msgstr "Приклад від AI"
 msgid "AI fills them only when they help. It never changes your text."
 msgstr "AI заповнює їх, лише коли це корисно. Твій текст він не змінює."
 
+msgid "AI fills this deck’s cards to suit it. Only you see it."
+msgstr "AI заповнює картки цієї колоди з огляду на це. Це бачиш лише ти."
+
 msgid "AI hook"
 msgstr "Зачіпка від AI"
 
@@ -822,9 +829,6 @@ msgstr "Нотатки від AI"
 
 msgid "AI pronunciation"
 msgstr "Вимова від AI"
-
-msgid "AI writes this deck’s cards to suit it. Only you see it."
-msgstr ""
 
 msgid "AI wrote part of this card"
 msgstr "Частину цієї картки написав AI"
@@ -1263,7 +1267,7 @@ msgid "Choose what each Mochi field becomes on a Lymi card. One field is the ter
 msgstr "Вибери, чим кожне поле Mochi стане в картці Lymi. Одне поле — це термін."
 
 msgid "Choose what the deck is for."
-msgstr ""
+msgstr "Обери, для чого ця колода."
 
 msgid "Choose your {app} file"
 msgstr "Вибір файлу {app}"
@@ -3692,7 +3696,7 @@ msgid "Terms"
 msgstr "Умови"
 
 msgid "Terms with short explanations, like for a citizenship test."
-msgstr ""
+msgstr "Терміни з короткими поясненнями, як для іспиту на громадянство."
 
 msgid "Terms, meanings and due dates in a .csv file, without pictures or review history."
 msgstr "Терміни, значення й дати повторення у файлі .csv, без зображень та історії повторень."
@@ -4143,7 +4147,7 @@ msgid "What is Lymi?"
 msgstr "Що таке Lymi?"
 
 msgid "What it’s for"
-msgstr ""
+msgstr "Для чого вона"
 
 msgid "What the picture shows, without the answer. Picture review needs it."
 msgstr "Що на зображенні, без відповіді. Без опису повторення за зображенням не почнеться."

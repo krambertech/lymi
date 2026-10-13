@@ -647,6 +647,10 @@ msgstr "A key never grades reviews."
 msgid "A language"
 msgstr "A language"
 
+msgctxt "deck purpose"
+msgid "A language"
+msgstr "A language"
+
 msgid "A link to a picture online."
 msgstr "A link to a picture online."
 
@@ -811,6 +815,9 @@ msgstr "AI example"
 msgid "AI fills them only when they help. It never changes your text."
 msgstr "AI fills them only when they help. It never changes your text."
 
+msgid "AI fills this deck’s cards to suit it. Only you see it."
+msgstr "AI fills this deck’s cards to suit it. Only you see it."
+
 msgid "AI hook"
 msgstr "AI hook"
 
@@ -822,9 +829,6 @@ msgstr "AI notes"
 
 msgid "AI pronunciation"
 msgstr "AI pronunciation"
-
-msgid "AI writes this deck’s cards to suit it. Only you see it."
-msgstr "AI writes this deck’s cards to suit it. Only you see it."
 
 msgid "AI wrote part of this card"
 msgstr "AI wrote part of this card"

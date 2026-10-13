@@ -18,6 +18,7 @@ beforeEach(async () => {
   vi.stubGlobal("sessionStorage", {
     getItem: (key: string) => stored.get(key) ?? null,
     setItem: (key: string, value: string) => stored.set(key, value),
+    removeItem: (key: string) => stored.delete(key),
   });
   stale = await import("./stale-build");
 });
@@ -81,4 +82,34 @@ it("recovers again once the learner stays on a page that asked before leaving", 
   expect(listeners.has("keydown")).toBe(false);
   expect(stale.reloadOntoCurrentBuild()).toBe(true);
   expect(reload).toHaveBeenCalledTimes(1);
+});
+
+const ROUTER_RELOADED = "tanstack_router_reload:Importing a module script failed.";
+
+it("keeps the router from reloading a page being left, and lets it again on return", () => {
+  listeners.get("beforeunload")?.({ defaultPrevented: false });
+  expect(stored.has(ROUTER_RELOADED)).toBe(true);
+
+  listeners.get("pageshow")?.();
+  expect(stored.has(ROUTER_RELOADED)).toBe(false);
+});
+
+it("leaves the router's own record of a reload alone", async () => {
+  stored.set(ROUTER_RELOADED, "1");
+  listeners.get("beforeunload")?.({ defaultPrevented: false });
+  listeners.get("pageshow")?.();
+  expect(stored.get(ROUTER_RELOADED)).toBe("1");
+
+  vi.resetModules();
+  stale = await import("./stale-build");
+  expect(stored.get(ROUTER_RELOADED)).toBe("1");
+});
+
+it("clears a hold the previous page left when it unloaded", async () => {
+  listeners.get("pagehide")?.();
+  expect(stored.has(ROUTER_RELOADED)).toBe(true);
+
+  vi.resetModules();
+  stale = await import("./stale-build");
+  expect(stored.has(ROUTER_RELOADED)).toBe(false);
 });

@@ -3,7 +3,12 @@ import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
-import { createRouter, RouterProvider } from "@tanstack/react-router";
+import {
+  createRouter,
+  ErrorComponent,
+  type ErrorComponentProps,
+  RouterProvider,
+} from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { bootstrapLanguage } from "./lib/i18n";
@@ -11,6 +16,7 @@ import "./lib/pwa-install";
 import { shouldPersistQuery } from "@lymi/client/cache";
 import { bindWriteCache } from "@lymi/client/writes";
 import { queryPersister } from "./lib/query-persister";
+import { isLeavingPage, isStaleChunkError } from "./lib/stale-build";
 import { reportClientException } from "./lib/telemetry";
 import { routeTree } from "./routeTree.gen";
 
@@ -51,12 +57,19 @@ void navigator.storage?.persist?.().catch(() => false);
 /** Stamped by Vite at build time. See `define` in vite.config.ts. */
 declare const __QUERY_CACHE_BUSTER__: string;
 
+// A chunk the navigation itself aborted needs no error on the page being left.
+function RouteError(props: ErrorComponentProps) {
+  if (isLeavingPage() && isStaleChunkError(props.error)) return null;
+  return <ErrorComponent {...props} />;
+}
+
 const router = createRouter({
   routeTree,
   context: { queryClient },
   defaultPreload: "intent",
   scrollRestoration: true,
   defaultOnCatch: reportClientException,
+  defaultErrorComponent: RouteError,
 });
 
 declare module "@tanstack/react-router" {

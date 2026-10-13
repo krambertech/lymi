@@ -34,6 +34,8 @@ E2E_PORT=4183 pnpm test:e2e:chromium
 
 Specs import `test` and `expect` from `e2e/test.ts`, not from `@playwright/test`. Its `test` sets `--seq-filter: none` in every page, so the end of a review rises and fades without its blur: on a CI runner with no GPU, WebKit stalls while the end screen animates that blur on several parts at once. The motion, its timing and tap-to-finish stay under test.
 
+A site page's controls are static HTML until their Astro island hydrates, and a click before then is lost. A journey calls `waitForIslands(page)` from `e2e/test.ts` before its first click on a site control.
+
 Every page runs under `prefers-reduced-motion: reduce`, the product's own quieter twin, and an assertion gets fifteen seconds on CI rather than Playwright's five. Both are measured rather than assumed: on 2026-09-16 the same commit failed 10 Chromium tests in 20.3 minutes under reduced motion and 24 in 27.4 at full motion, and the suite that takes 7.7 minutes on a developer's machine takes three times that on a runner with no GPU, which is the same reason `timeout` already doubles there. A journey that needs full motion sets `test.use({ reducedMotion: "no-preference" })` and says why.
 
 Analytics never initialize on loopback origins, so journeys need no analytics fixture; secondary browser windows still open through `newTestContext`. The SDK payload test intercepts `/ingest` in the browser, so the Worker never forwards to the production project.

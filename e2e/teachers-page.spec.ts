@@ -1,5 +1,5 @@
 import { e2eSiteUrl } from "./ports.mjs";
-import { expect, test } from "./test";
+import { expect, test, waitForIslands } from "./test";
 
 const publicSite = e2eSiteUrl;
 
@@ -21,6 +21,7 @@ test("a teacher can reach the teachers page, try the join link and see what is r
   });
 
   await test.step("turning the join link off says nobody new can join", async () => {
+    await waitForIslands(page);
     await page.getByRole("switch", { name: "Join link" }).click();
     await expect(page.getByText("The link is off. Nobody new can join.")).toBeVisible();
   });

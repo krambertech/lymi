@@ -3,6 +3,7 @@ import {
   type BrowserContext,
   type BrowserContextOptions,
   test as base,
+  expect,
   type Page,
 } from "@playwright/test";
 
@@ -19,6 +20,11 @@ export const test = base.extend({
     await use(context);
   },
 });
+
+/** A site page's React islands are hydrated: a click before then reaches static HTML and is lost. */
+export async function waitForIslands(page: Page): Promise<void> {
+  await expect(page.locator("astro-island[ssr]")).toHaveCount(0);
+}
 
 export async function newTestContext(
   browser: Browser,

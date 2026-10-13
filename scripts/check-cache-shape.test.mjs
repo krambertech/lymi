@@ -58,6 +58,7 @@ test("changed responses fail until CACHE_SHAPE is bumped or the decision recorde
   const lock = { cacheShape: "1", responses: "aaa" };
   assert.match(verdict(lock, { cacheShape: "1", responses: "bbb" }), /bump CACHE_SHAPE/);
   assert.match(verdict(lock, { cacheShape: "2", responses: "bbb" }), /--write/);
+  assert.match(verdict(lock, { cacheShape: "2", responses: "aaa" }), /--write/);
   assert.equal(verdict(lock, { cacheShape: "1", responses: "aaa" }), null);
 });
 

@@ -1,12 +1,15 @@
-import { useState } from "react";
-import { View } from "react-native";
+import { useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import { Alert, TextInput, View } from "react-native";
 import { Flame } from "../../brand/flame";
 import { usePalette } from "../../theme/palette";
+import { inputCap } from "../../theme/type";
 import { GlassButton, GlassPill } from "../../ui/glass";
 import { Icon } from "../../ui/icons";
 import { DropdownMenu, Select } from "../../ui/menu";
 import { Button, IconButton, Text } from "../../ui/primitives";
 import { Sheet, SheetGroup, SheetRow } from "../../ui/sheet";
+import { Toast } from "../../ui/toast";
 import { Row, Sub, Variants } from "../frame";
 
 // How the phone's screens are put together and how they arrive. phone.md "How a screen arrives".
@@ -148,12 +151,97 @@ export function Pages() {
 }
 
 export function Sheets() {
+  const router = useRouter();
+  const p = usePalette();
   const [menuLast, setMenuLast] = useState("nothing yet");
   const [deck, setDeck] = useState("lezione");
   const [streakOpen, setStreakOpen] = useState(false);
+  const [renaming, setRenaming] = useState(false);
+  const [deckTitle, setDeckTitle] = useState("Verbi");
+  const [draft, setDraft] = useState(deckTitle);
   const deckName = DECKS.find((d) => d.value === deck)?.label ?? "";
+  const keep = () => {
+    setDeckTitle(draft.trim() || deckTitle);
+    setRenaming(false);
+  };
   return (
     <>
+      <Sub
+        title="Which sheet"
+        note="What the task holds decides the kind, and the kind decides its glass. Glass wherever the task is quick; opaque where the learner reads or types at length."
+        source="docs/design/system/phone.md"
+      >
+        <Variants
+          items={[
+            {
+              label: "Row sheet, glass",
+              note: "A choice or a one-field edit over the screen: a menu, a Select, a deck’s name. Rename the deck below; done or a swipe keeps what was typed.",
+              render: () => (
+                <Row>
+                  <Button
+                    label={`Rename “${deckTitle}”`}
+                    variant="secondary"
+                    onPress={() => {
+                      setDraft(deckTitle);
+                      setRenaming(true);
+                    }}
+                  />
+                  <Sheet title="Name" open={renaming} onOpenChange={(open) => !open && keep()}>
+                    <View className="rounded-xl bg-glass-plate px-4">
+                      <TextInput
+                        value={draft}
+                        onChangeText={setDraft}
+                        autoFocus
+                        onSubmitEditing={keep}
+                        accessibilityLabel="Name"
+                        returnKeyType="done"
+                        selectionColor={p.text}
+                        className="min-h-11 py-2 font-sans text-text"
+                        style={{ fontSize: 17 }}
+                        maxFontSizeMultiplier={inputCap(17)}
+                      />
+                    </View>
+                  </Sheet>
+                </Row>
+              ),
+            },
+            {
+              label: "Short form, glass below full height",
+              note: "Fits on one screen and is done in seconds: Add a word, Edit card, New deck, New series. Glass while it sits below full height; at full height iOS draws it opaque. Opens the real Add a word.",
+              render: () => (
+                <Row>
+                  <Button
+                    label="Open Add a word"
+                    variant="secondary"
+                    onPress={() => router.push("/capture")}
+                  />
+                </Row>
+              ),
+            },
+            {
+              label: "Long form, opaque",
+              note: "Scrolls or holds long text: Send feedback in You, Choose decks in a series. Opaque at any height, with the room’s fills.",
+              render: () => null,
+            },
+          ]}
+        />
+        <Rules
+          items={[
+            [
+              "With glass off",
+              "Under Reduce Transparency or before iOS 26, every glass sheet is the opaque sheet colour and its groups take the room’s fills. Turn on Settings › Accessibility › Display › Reduce Transparency to see these three that way.",
+            ],
+            [
+              "A form",
+              "Labelled lines with no box, the one action amber at the end of the header. Close or a swipe leaves without saving; once something is typed, a swipe asks first.",
+            ],
+            [
+              "Choices",
+              "One of a list runs once the sheet has gone. Several of a list save with each tap and the sheet stays open.",
+            ],
+          ]}
+        />
+      </Sub>
       <Sub
         title="What a sheet is"
         note="iOS presents every sheet, so it is Liquid Glass, follows the finger and swipes away; what is inside is Lymi’s. Before iOS 26 the same sheet is opaque."
@@ -184,7 +272,11 @@ export function Sheets() {
           ]}
         />
       </Sub>
-      <Sub title="Menu" note="A list of actions from a button, in groups." source="src/ui/menu.tsx">
+      <Sub
+        title="Menu"
+        note="A list of actions from a button, most used first. A removal sits last, in a red group of its own. The same thing has the same rows wherever its menu opens."
+        source="src/ui/menu.tsx"
+      >
         <Variants
           items={[
             {
@@ -328,6 +420,161 @@ export function Sheets() {
                   <GlassPill icon="deck">Verbi</GlassPill>
                   <GlassButton icon="plus" label="Add" primary />
                 </View>
+              ),
+            },
+          ]}
+        />
+      </Sub>
+    </>
+  );
+}
+
+/** The toast as the learner meets it: it rises over the screen for ten seconds, then goes. */
+function LiveToast({ title, onUndo }: { title: string | null; onUndo: () => void }) {
+  if (!title) return null;
+  return <Toast title={title} action={{ label: "Undo", onPress: onUndo }} />;
+}
+
+export function AfterAction() {
+  const [shown, setShown] = useState<string | null>(null);
+  const [archived, setArchived] = useState(false);
+  useEffect(() => {
+    if (!shown) return;
+    const gone = setTimeout(() => setShown(null), 10_000);
+    return () => clearTimeout(gone);
+  }, [shown]);
+  return (
+    <>
+      <Sub
+        title="Undo, not a question"
+        note="What can be undone happens at once and offers Undo. A question comes only before what cannot be undone, as on the web."
+        source="docs/design/system/phone.md"
+      >
+        <Rules
+          items={[
+            [
+              "Acts at once, with Undo",
+              "Archive a card or a deck, move a deck between series, restore from Archived.",
+            ],
+            [
+              "Asks first",
+              "Leave a shared deck, delete a series, sign out with work not yet sent. The safe button names what stays; the destructive one is last.",
+            ],
+          ]}
+        />
+      </Sub>
+      <Sub
+        title="Toast"
+        note="Smoked glass above the tab bar, or above the grades in a review. One sentence on up to two lines, one action, ten seconds with an action and five without; a swipe sends it away."
+        source="src/ui/toast.tsx"
+      >
+        <Variants
+          items={[
+            {
+              label: "After an action",
+              render: () => (
+                <Toast
+                  title="Moved “Verbi”"
+                  announce={false}
+                  action={{ label: "Undo", onPress: () => undefined }}
+                />
+              ),
+            },
+            {
+              label: "A failure",
+              note: "Named for what failed, with an action that retries when retrying can help. A longer title wraps to a second line and stops there.",
+              render: () => (
+                <Toast
+                  title="Couldn’t move “Verbi”."
+                  announce={false}
+                  error
+                  action={{ label: "Try again", onPress: () => undefined }}
+                />
+              ),
+            },
+            {
+              label: "Without an action",
+              render: () => <Toast title="Saved on this phone" announce={false} />,
+            },
+            {
+              label: "Live",
+              note: archived
+                ? "“Verbi” is archived. Undo brings it back for ten seconds; Restore resets the demo after."
+                : "Archive the deck; the toast stays ten seconds. In the app it rises above the tab bar.",
+              render: () => (
+                <View className="gap-3">
+                  <Row>
+                    <Button
+                      label={archived ? "Restore “Verbi”" : "Archive “Verbi”"}
+                      variant={archived ? "secondary" : "danger"}
+                      onPress={() => {
+                        setArchived(!archived);
+                        setShown(archived ? null : "Archived “Verbi”");
+                      }}
+                    />
+                  </Row>
+                  <LiveToast
+                    title={shown}
+                    onUndo={() => {
+                      setArchived(false);
+                      setShown(null);
+                    }}
+                  />
+                </View>
+              ),
+            },
+          ]}
+        />
+      </Sub>
+      <Sub title="A question" note="iOS’s own alert, kept for what cannot be undone.">
+        <Variants
+          items={[
+            {
+              label: "Leave a shared deck",
+              render: () => (
+                <Row>
+                  <Button
+                    label="Leave “Lezione 12”"
+                    variant="secondary"
+                    onPress={() =>
+                      Alert.alert(
+                        "Leave Lezione 12?",
+                        "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there.",
+                        [
+                          { text: "Keep studying", style: "cancel" },
+                          { text: "Leave deck", style: "destructive" },
+                        ],
+                      )
+                    }
+                  />
+                </Row>
+              ),
+            },
+          ]}
+        />
+      </Sub>
+      <Sub
+        title="In place"
+        note="Where the screen itself is the answer, it changes there instead: Explore’s Add settles into In Library, an archived card’s page offers Restore, and Add a word keeps its line under the fields for the next card."
+      />
+      <Sub
+        title="Offline"
+        note="A write that queues says once that it is saved on this phone. A row that needs a connection is dimmed with Needs a connection as its detail, before it is tapped."
+      >
+        <Variants
+          items={[
+            {
+              label: "Needs a connection",
+              render: () => (
+                <SheetGroup>
+                  <SheetRow
+                    label="Move to series"
+                    icon="move"
+                    detail="Needs a connection"
+                    disabled
+                    onPress={() => undefined}
+                  />
+                </SheetGroup>
               ),
             },
           ]}

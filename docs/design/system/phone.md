@@ -17,12 +17,12 @@ The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the rev
 | Motion | For | Leaves by |
 | --- | --- | --- |
 | Push from the side | A page to read or work in: a deck, a card, a series, Insights, Activity, Settings, a deck in Explore | The named back, or a swipe from the start edge |
-| Sheet from below | A task with an end: Add a word, New deck, Edit card, a choice list such as the daily goal, the card menu in a review, the reminder time, the streak | A swipe down, with detents where the task grows |
+| Sheet from below | A task with an end: Add a word, New deck, Edit card, a choice list such as the daily goal, the card menu in a review, the streak | A swipe down, with detents where the task grows |
 | Cover from below | A mode that takes the screen: a review, Welcome and sign-in | X, or pulling the top bar down |
 
 This is [overlays.md](overlays.md)'s rule in iOS's own navigation: from the side means back, from below means swipe down.
 
-The streak is the one place that differs from the web, where touch shows it as a page from the end edge ([streak.md](../streak.md)). On the phone it peeks at the run and today and drags up for the month, so glancing at it never leaves the screen under it. Its daily goal is a choice list in a sheet of its own over it: a preset is saved once the sheet has gone, a number of one's own on Save, and with no connection the list says it needs one.
+The streak is the one place that differs from the web, where touch shows it as a page from the end edge ([streak.md](../streak.md)). On the phone it peeks at the run and today and drags up for the month, so glancing at it never leaves the screen under it. Its daily goal is a choice list in a sheet of its own over it: a preset is saved once the sheet has gone, a number of one's own on the done key above the number pad, and with no connection the list says it needs one.
 
 ## Components
 
@@ -50,17 +50,35 @@ Every sheet rises from below and swipes away. What the task holds decides its ki
 
 | Kind | For | Built with | Surface | Fills |
 | --- | --- | --- | --- | --- |
-| Row sheet | A choice or a small edit over the screen: a menu, a `Select`, the daily goal, the reminder time, the learner's name and photo | `Sheet`, inside the screen | iOS's glass, untinted, at the height of what it holds | On-glass |
-| Peek sheet | A screen to glance at that drags up for more: the streak | A route presented as `formSheet`, with detents | `useFrost`, the sheet colour at 50%, while it peeks; iOS makes it opaque at full height | On-glass |
-| Full sheet | A form with long text or several fields, keyboard up: Add a word, Edit card, New deck, feedback | A route presented as `formSheet` at full height | Opaque, the sheet colour | The room's own, since on-glass fills vanish against an opaque sheet |
+| Row sheet | A choice or a one-field edit over the screen: a menu, a `Select`, the daily goal, a deck's name, the learner's name and photo, the hook | `Sheet`, inside the screen | iOS's glass, untinted, at the height of what it holds | On-glass |
+| Peek sheet | A screen to glance at that drags up for more: the streak, the cards an Activity row wrote | `Sheet` with `more`, or a route presented as `formSheet` with detents | Glass while it peeks; iOS makes it opaque at full height | On-glass |
+| Short form | A form that fits on one screen and is done in seconds: Add a word, Edit card, New deck, New series | A route presented as `formSheet`, as tall as its fields | Glass below full height; iOS makes it opaque at full height | On-glass, reading on either |
+| Long form | A form that scrolls or holds long text: feedback, Choose decks | A route presented as `formSheet` at full height | Opaque, the sheet colour | The room's own, since on-glass fills vanish against an opaque sheet |
 
-- Reach for a row sheet first. A small edit belongs in one even when it has a text field: the field is a `bg-glass-plate` box with no label over it, and the keyboard's done key or a swipe keeps the value, with no Save button.
+- Glass wherever the task is quick; opaque where the learner reads or types at length. A form that grows several sections or a long text field becomes a long form. iOS draws any sheet opaque at full height, so a short form stays glass only while it opens below full height.
+- With glass off, under Reduce Transparency or before iOS 26, every glass sheet is the opaque sheet colour and its groups take the room's fills, so no kind turns into white on white. Each kind is checked in that state before it ships.
+- Reach for a row sheet first. A one-field edit belongs in one: the field is a `bg-glass-plate` box with no label over it, since the sheet's title names it, 44 pt for one line and growing with its text. The keyboard's done key or a swipe keeps the value, with no Save button; clearing the field is how to take it back. A number pad has no done key, so it carries one on a bar above the keys.
+- A form keeps its fields as labelled lines with no box ([Add a word](#add-a-word-and-edit-card)); only a card's term is set large. Its one action is amber at the end of the header, and close or a swipe leaves without saving. Once something is typed, a swipe asks before it throws the draft away.
+- One of a list runs once the sheet has gone, everywhere. Several of a list save with each tap and the sheet stays open.
 - A sheet of choices that grows past one screen lists what can be chosen as rows, each showing its current value and opening its options in the same sheet, under one header whose back chevron returns; the deck's Filter is the first.
-- A row sheet never opens a sheet, the camera or the photo library over itself. A row that needs one closes the sheet and acts once it has gone. A full sheet may open a row sheet over itself, which stacks on it; a part-height sheet cannot, because iOS hides it under the new one.
-- A peek sheet and a full sheet carry their controls as glass in the top corners; a row sheet has none.
-- A full sheet's header is one row: close at the start, its name centred at `text-md`, the one action at the end. Nothing under it repeats the name as a large title; a line saying what the sheet is for comes first in the content.
+- A row sheet never opens a sheet, the camera or the photo library over itself, and never moves to another screen while it is open. A row that needs one closes the sheet and acts once it has gone. A form may open a row sheet over itself, which stacks on it; a part-height sheet cannot, because iOS hides it under the new one.
+- Every row sheet has a title, start-aligned in line with its rows. A peek sheet and a form carry their controls as glass in the top corners; a row sheet has none.
+- A form's header is one shared row: close at the start, named Cancel when leaving discards something and Close when it does not; its name centred at `text-md`, or a pill for what it works in, such as Add a word's deck; the one action at the end. Nothing under it repeats the name as a large title; a line saying what the sheet is for comes first in the content.
 - A row sheet's groups fill with `glass-group`, a faint ink tint in the light room and the glass plate's white at night, with no border, so they still read when iOS turns the sheet opaque at full height.
-- Whatever fails after a row sheet has gone says so on the screen under it, beside what it changed.
+
+## After an action
+
+The phone keeps the web's rule ([overlays.md](overlays.md)): what can be undone happens at once and offers Undo, and a question comes only before what cannot. Archiving a card or a deck, moving a deck between series and restoring from Archived never ask. Leaving a shared deck and deleting a series ask in iOS's alert, the safe button named for what stays and the destructive one last.
+
+- What just happened shows in a toast: a pill of smoked glass, the text colour at 90% or more over a blur so Undo keeps 4.5:1 over any screen, above the tab bar, or above the grades in a review. It holds one sentence on at most two lines, at most one action in amber, usually Undo, and an icon. It stays ten seconds with an action and five without, as the web's does (`ACTION_TIMEOUT` in its `toast.tsx`), holds while touched, swipes away down or to the side, and stacks as the web's does. At night it is a light pill on the dark room. VoiceOver announces it as it appears, with `AccessibilityInfo.announceForAccessibility` since iOS has no live regions.
+- A toast follows the learner off the screen the action closed, so archiving a deck lands on Library with its Undo.
+- Where the screen itself is the answer, it changes in place instead: Explore's Add settles into In Library, an archived card's page says so with Restore, and Archived keeps a restored row with Undo. Add a word keeps its line under the fields, because the sheet stays for the next card.
+- An error is a toast with a red icon, named for what failed ("Couldn’t move “Verbi”."), and its action retries when retrying can help. A field that will not take its value says so under the field. iOS's alert is kept for a question the learner must answer, such as signing out with work not yet sent.
+- A write that queues offline says once that it is saved on this phone, where Saved would show. A row that needs a connection is dimmed with Needs a connection as its detail before it is tapped: the label and icon fade, and the detail keeps its contrast.
+
+## Menus
+
+Every menu is `DropdownMenu`, a row sheet. Its rows run from the most to the least used, and a removal (Archive, Leave, Delete, Remove photo) sits last in a red group of its own. The same thing has the same rows in the same order wherever its menu opens, and the same job has one label everywhere: a setting row may shorten it, as Modes does, and the sheet it opens keeps the full name. A row that opens another sheet ends in a chevron; one that acts, or opens a form, does not. Library's plus is the one menu that grows from its button rather than rising as a sheet.
 
 ## Add a word and Edit card
 
@@ -72,7 +90,7 @@ The sheet stays for the next card: a line under the fields says where the last o
 
 Edit card is the same form over a card that exists, with close and an amber ✓ in place of Add; ✓ or Return in the last field saves, and close or a swipe down leaves the card as it was. It opens from ⋯ on the card page and from the card's menu in a review, and a tap on any field of the card page opens it with the keyboard on that field. A field the AI wrote keeps the AI's mark until it is changed, and is the learner's once saved. Only a deck's owner sees Edit card; a member reads the card.
 
-Archive is in the same ⋯ and the same menu. On the card page the card stays on screen with a line that says it is archived and Restore; in a review it leaves at once, and a line under the header offers Undo for five seconds. Archived, the last row of Library, lists archived decks and cards with Restore, and a restored row keeps its place with Undo until the page is left.
+Archive is in the same ⋯ and the same menu. On the card page the card stays on screen with a line that says it is archived and Restore; in a review it leaves at once, with Undo in a toast over the grades. Archived, the last row of Library, lists archived decks and cards with Restore, and a restored row keeps its place with Undo until the page is left.
 
 ## Review
 
@@ -81,7 +99,7 @@ Archive is in the same ⋯ and the same menu. On the card page the card stays on
 - Pulling the top bar down follows the finger and, past a third of the screen, ends the review on the end screen, as X does. Today shows behind it as it moves.
 - The cards are a stack, where the web keeps one plate whose words change ([motion.md](motion.md#review)). The next card slides in over the one just graded from the end edge, turned a little and straightening as it lands, while the graded card and its grades wait underneath. Under Reduce Motion the next card fades in.
 - A swipe from the start edge drags the top card off the same way and uncovers the last graded card, revealed with its grades and waiting for a grade, and removes that grade. It goes back one card. The pointing hand shows it once, on a learner's second card ever; VoiceOver offers it as an action on the card.
-- Holding a revealed card opens its menu as a sheet of rows; a tap does nothing, so the menu never opens by accident. A hook is written in a sheet with the keyboard up rather than in place under the word, which the keyboard would cover; the keyboard's done key saves it, with no button repeating that, and on an empty field keeps the AI's draft, which is its placeholder; a swipe down discards it. Pressing Easy after a peek says why in a tip over the grades.
+- Holding a revealed card opens its menu as a sheet of rows; a tap does nothing, so the menu never opens by accident. A hook is written in a sheet with the keyboard up rather than in place under the word, which the keyboard would cover; the keyboard's done key saves it, with no button repeating that, and on an empty field keeps the AI's draft, which is its placeholder. A swipe down keeps what was typed, as every one-field sheet does. Pressing Easy after a peek says why in a tip over the grades.
 - After a grade the flame breathes and sparks from the hood, as on the web.
 - At the end the lantern's light reaches the edges of the screen. Review forgotten leads with the Forgot mark, as on the web.
 

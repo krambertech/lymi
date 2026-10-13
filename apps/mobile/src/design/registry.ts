@@ -2,7 +2,7 @@ import type { ComponentType } from "react";
 import { Actions, Choices, Feedback, Forms, Labels } from "./pages/components";
 import { EmptyStates } from "./pages/empty";
 import { Colour, HapticsPage, Icons, Motion, Surfaces, Type } from "./pages/foundations";
-import { Pages, Sheets } from "./pages/patterns";
+import { AfterAction, Pages, Sheets } from "./pages/patterns";
 
 export interface DesignPage {
   slug: string;
@@ -103,10 +103,18 @@ export const COMPONENTS: DesignPage[] = [
   {
     slug: "sheets",
     title: "Sheets and menus",
-    summary: "Glass sheets, menus, choices, drag up for more",
+    summary: "Which sheet, glass or opaque, menus, choices",
     lede: "What comes and goes rises from the bottom edge, where the thumb is. iOS draws the glass sheet; Lymi draws everything on it.",
     doc: "phone.md",
     Page: Sheets,
+  },
+  {
+    slug: "after-an-action",
+    title: "After an action",
+    summary: "Undo in a toast, questions, offline",
+    lede: "How the phone answers once the learner has done something: a toast, iOS’s own question, or a row that waits for a connection.",
+    doc: "phone.md",
+    Page: AfterAction,
   },
   {
     slug: "labels",

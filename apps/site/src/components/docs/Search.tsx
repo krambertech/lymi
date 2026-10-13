@@ -75,6 +75,18 @@ const TERMS: Record<string, string[]> = {
     "attachments",
     "reverse",
   ],
+  "/docs/import-from-noji": [
+    "noji",
+    "ankipro",
+    "ofc",
+    "export",
+    "import",
+    "migrate",
+    "move",
+    "switch",
+    "cloze",
+    "progress",
+  ],
   "/docs/export": [
     "export",
     "download",

@@ -20,6 +20,7 @@ import { anki } from "../imports/anki";
 import { ImportFileError, type RandomAccess, r2Source } from "../imports/files";
 import { lymi } from "../imports/lymi";
 import { mochi } from "../imports/mochi";
+import { noji } from "../imports/noji";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
 import type { CardImageStorage } from "./card-images";
@@ -39,7 +40,7 @@ import {
 export { archiveImport, ownedImport, restoreImport } from "./import-writer";
 
 /** Every source Lymi can import, tried in order. */
-const ADAPTERS = [anki, mochi, lymi] as SourceAdapter<unknown>[];
+const ADAPTERS = [anki, mochi, noji, lymi] as SourceAdapter<unknown>[];
 
 /** Notes per stored chunk: one chunk is one Workflow step and one D1 batch. */
 export const NOTES_PER_CHUNK = 500;

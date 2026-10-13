@@ -11,6 +11,7 @@ export type DocPath =
   | "/docs/cards"
   | "/docs/import-from-anki"
   | "/docs/import-from-mochi"
+  | "/docs/import-from-noji"
   | "/docs/export"
   | "/docs/scheduling"
   | "/docs/recipes"
@@ -111,6 +112,13 @@ export const PAGES: DocPage[] = [
     nav: "Import from Mochi",
     title: "Import from Mochi",
     blurb: "Bring your Mochi decks across with their pictures, tags and review history.",
+    section: "Guides",
+  },
+  {
+    to: "/docs/import-from-noji",
+    nav: "Import from Noji",
+    title: "Import from Noji",
+    blurb: "Bring your Noji decks across with their sub-decks, pictures and learning progress.",
     section: "Guides",
   },
   {

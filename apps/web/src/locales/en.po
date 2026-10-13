@@ -73,6 +73,10 @@ msgstr "{0, plural, one {# card has text that’s too long, so part of it moves 
 msgid "{0, plural, one {# card is already in your decks, so it’s skipped.} other {# cards are already in your decks, so they’re skipped.}}"
 msgstr "{0, plural, one {# card is already in your decks, so it’s skipped.} other {# cards are already in your decks, so they’re skipped.}}"
 
+#. placeholder {0}: preview.unsupported + preview.skipped
+msgid "{0, plural, one {# card is image occlusion or has no term, so it’s skipped.} other {# cards are image occlusion or have no term, so they’re skipped.}}"
+msgstr "{0, plural, one {# card is image occlusion or has no term, so it’s skipped.} other {# cards are image occlusion or have no term, so they’re skipped.}}"
+
 #. placeholder {0}: counts.duplicates
 msgid "{0, plural, one {# card was already in your decks and was skipped.} other {# cards were already in your decks and were skipped.}}"
 msgstr "{0, plural, one {# card was already in your decks and was skipped.} other {# cards were already in your decks and were skipped.}}"
@@ -84,6 +88,10 @@ msgstr "{0, plural, one {# card was in an earlier import. Only its empty fields 
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# card you archived in Mochi arrives archived.} other {# cards you archived in Mochi arrive archived.}}"
 msgstr "{0, plural, one {# card you archived in Mochi arrives archived.} other {# cards you archived in Mochi arrive archived.}}"
+
+#. placeholder {0}: preview.archived
+msgid "{0, plural, one {# card you froze in Noji arrives archived.} other {# cards you froze in Noji arrive archived.}}"
+msgstr "{0, plural, one {# card you froze in Noji arrives archived.} other {# cards you froze in Noji arrive archived.}}"
 
 #. placeholder {0}: deck.cards
 msgid "{0, plural, one {# card, known} other {# cards, all known}}"
@@ -857,6 +865,12 @@ msgstr "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
 msgid "An .apkg or .colpkg file, up to 1 GB. You can also drop it here."
 msgstr "An .apkg or .colpkg file, up to 1 GB. You can also drop it here."
 
+msgid "An .ofc file from Noji"
+msgstr "An .ofc file from Noji"
+
+msgid "An .ofc file, up to 1 GB. You can also drop it here."
+msgstr "An .ofc file, up to 1 GB. You can also drop it here."
+
 msgid "An app"
 msgstr "An app"
 
@@ -1128,6 +1142,9 @@ msgstr "Cards from this deck"
 msgid "Cards keep the due dates they had in {app}."
 msgstr "Cards keep the due dates they had in {app}."
 
+msgid "Cards keep the due dates they had in Noji."
+msgstr "Cards keep the due dates they had in Noji."
+
 msgid "Cards outside a section"
 msgstr "Cards outside a section"
 
@@ -1191,6 +1208,9 @@ msgstr "Choose <0>Anki Deck Package</0>, and tick <1>Include Scheduling Informat
 
 msgid "Choose <0>Lymi file</0>, then download it when it’s ready."
 msgstr "Choose <0>Lymi file</0>, then download it when it’s ready."
+
+msgid "Choose <0>OFC</0> and turn on learning progress, then enter your email."
+msgstr "Choose <0>OFC</0> and turn on learning progress, then enter your email."
 
 msgid "Choose 00, 15, 30 or 45 minutes."
 msgstr "Choose 00, 15, 30 or 45 minutes."
@@ -1256,6 +1276,9 @@ msgstr "Choose what each field becomes on the new card. One field is the term."
 msgid "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 msgstr "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 
+msgid "Choose what each side of a Noji card becomes on a Lymi card. One side is the term."
+msgstr "Choose what each side of a Noji card becomes on a Lymi card. One side is the term."
+
 msgid "Choose your {app} file"
 msgstr "Choose your {app} file"
 
@@ -1279,6 +1302,9 @@ msgstr "Clear the picture"
 
 msgid "Close"
 msgstr "Close"
+
+msgid "Cloze"
+msgstr "Cloze"
 
 msgid "Come back later, or add new cards."
 msgstr "Come back later, or add new cards."
@@ -1666,6 +1692,9 @@ msgstr "Download"
 msgid "Download {0}"
 msgstr "Download {0}"
 
+msgid "Download the file from Noji’s email within 24 hours, then choose it here."
+msgstr "Download the file from Noji’s email within 24 hours, then choose it here."
+
 msgid "Drafting a hook…"
 msgstr "Drafting a hook…"
 
@@ -1854,6 +1883,9 @@ msgstr "Export one deck at a time instead of the whole library."
 
 msgid "Export one deck at a time, or export again without media."
 msgstr "Export one deck at a time, or export again without media."
+
+msgid "Export the deck again from Noji in OFC format, then choose that file."
+msgstr "Export the deck again from Noji in OFC format, then choose that file."
 
 msgid "Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package."
 msgstr "Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package."
@@ -2113,6 +2145,9 @@ msgstr "Import from Anki or Mochi"
 msgid "Import your decks with their pictures, tags and review history. Cards keep their due dates, and {app} is unchanged."
 msgstr "Import your decks with their pictures, tags and review history. Cards keep their due dates, and {app} is unchanged."
 
+msgid "Import your decks with their sub-decks, pictures and learning progress. Cards keep their due dates, and Noji is unchanged."
+msgstr "Import your decks with their sub-decks, pictures and learning progress. Cards keep their due dates, and Noji is unchanged."
+
 msgid "Important"
 msgstr "Important"
 
@@ -2142,6 +2177,12 @@ msgstr "In Mochi, export one deck at a time instead of everything."
 
 msgid "In Mochi, open a deck, open its <0>…</0> menu and choose <1>Export deck</1>."
 msgstr "In Mochi, open a deck, open its <0>…</0> menu and choose <1>Export deck</1>."
+
+msgid "In Noji, export one sub-deck at a time instead of the whole deck."
+msgstr "In Noji, export one sub-deck at a time instead of the whole deck."
+
+msgid "In Noji, open a deck you made, open its <0>Settings</0> and choose <1>Export deck</1>. Its sub-decks come too."
+msgstr "In Noji, open a deck you made, open its <0>Settings</0> and choose <1>Export deck</1>. Its sub-decks come too."
 
 msgid "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
 msgstr "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
@@ -3854,6 +3895,9 @@ msgstr "This deck is not published"
 msgid "This file expired after a day. Export again to get a new one."
 msgstr "This file expired after a day. Export again to get a new one."
 
+msgid "This file has no learning progress, so every card starts as new. To keep your progress, export again with learning progress turned on."
+msgstr "This file has no learning progress, so every card starts as new. To keep your progress, export again with learning progress turned on."
+
 msgid "This file has no review history, so every card starts as new."
 msgstr "This file has no review history, so every card starts as new."
 
@@ -3895,6 +3939,9 @@ msgstr "This isn’t a .zip file. Choose the file you exported from Lymi."
 
 msgid "This isn’t an .apkg or .colpkg file. Choose the file you exported from Anki."
 msgstr "This isn’t an .apkg or .colpkg file. Choose the file you exported from Anki."
+
+msgid "This isn’t an .ofc file. Choose the file you exported from Noji."
+msgstr "This isn’t an .ofc file. Choose the file you exported from Noji."
 
 msgid "This join link does not work"
 msgstr "This join link does not work"

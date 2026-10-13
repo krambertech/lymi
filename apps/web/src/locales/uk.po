@@ -73,6 +73,10 @@ msgstr "{0, plural, one {У # картці задовгий текст, тож �
 msgid "{0, plural, one {# card is already in your decks, so it’s skipped.} other {# cards are already in your decks, so they’re skipped.}}"
 msgstr "{0, plural, one {# картка вже є у твоїх колодах, тож її пропущено.} few {# картки вже є у твоїх колодах, тож їх пропущено.} many {# карток уже є у твоїх колодах, тож їх пропущено.} other {# картки вже є у твоїх колодах, тож їх пропущено.}}"
 
+#. placeholder {0}: preview.unsupported + preview.skipped
+msgid "{0, plural, one {# card is image occlusion or has no term, so it’s skipped.} other {# cards are image occlusion or have no term, so they’re skipped.}}"
+msgstr "{0, plural, one {# картка має тип image occlusion або не має терміна, тож її пропущено.} few {# картки мають тип image occlusion або не мають терміна, тож їх пропущено.} many {# карток мають тип image occlusion або не мають терміна, тож їх пропущено.} other {# картки мають тип image occlusion або не мають терміна, тож їх пропущено.}}"
+
 #. placeholder {0}: counts.duplicates
 msgid "{0, plural, one {# card was already in your decks and was skipped.} other {# cards were already in your decks and were skipped.}}"
 msgstr "{0, plural, one {# картка вже була у твоїх колодах, її пропущено.} few {# картки вже були у твоїх колодах, їх пропущено.} many {# карток уже були у твоїх колодах, їх пропущено.} other {# картки вже були у твоїх колодах, їх пропущено.}}"
@@ -84,6 +88,10 @@ msgstr "{0, plural, one {# картка вже була в попередньо�
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# card you archived in Mochi arrives archived.} other {# cards you archived in Mochi arrive archived.}}"
 msgstr "{0, plural, one {# картка з архіву Mochi прийде в архів.} few {# картки з архіву Mochi прийдуть в архів.} many {# карток з архіву Mochi прийдуть в архів.} other {# картки з архіву Mochi прийдуть в архів.}}"
+
+#. placeholder {0}: preview.archived
+msgid "{0, plural, one {# card you froze in Noji arrives archived.} other {# cards you froze in Noji arrive archived.}}"
+msgstr "{0, plural, one {# заморожена в Noji картка прийде в архів.} few {# заморожені в Noji картки прийдуть в архів.} many {# заморожених у Noji карток прийдуть в архів.} other {# замороженої в Noji картки прийдуть в архів.}}"
 
 #. placeholder {0}: deck.cards
 msgid "{0, plural, one {# card, known} other {# cards, all known}}"
@@ -857,6 +865,12 @@ msgstr "Файл .apkg або .colpkg з Anki, AnkiDroid чи AnkiMobile"
 msgid "An .apkg or .colpkg file, up to 1 GB. You can also drop it here."
 msgstr "Файл .apkg або .colpkg, до 1 ГБ. Можна також перетягнути його сюди."
 
+msgid "An .ofc file from Noji"
+msgstr "Файл .ofc з Noji"
+
+msgid "An .ofc file, up to 1 GB. You can also drop it here."
+msgstr "Файл .ofc, до 1 ГБ. Можна також перетягнути його сюди."
+
 msgid "An app"
 msgstr "Застосунок"
 
@@ -1128,6 +1142,9 @@ msgstr "Картки з цієї колоди"
 msgid "Cards keep the due dates they had in {app}."
 msgstr "Картки збережуть дати повторення, які мали в {app}."
 
+msgid "Cards keep the due dates they had in Noji."
+msgstr "Картки збережуть дати повторення, які мали в Noji."
+
 msgid "Cards outside a section"
 msgstr "Картки поза розділами"
 
@@ -1191,6 +1208,9 @@ msgstr "Вибери <0>Anki Deck Package</0> і познач <1>Include Schedul
 
 msgid "Choose <0>Lymi file</0>, then download it when it’s ready."
 msgstr "Вибери <0>Файл Lymi</0>, а коли він буде готовий, завантаж його."
+
+msgid "Choose <0>OFC</0> and turn on learning progress, then enter your email."
+msgstr "Вибери <0>OFC</0>, увімкни прогрес навчання і введи свою пошту."
 
 msgid "Choose 00, 15, 30 or 45 minutes."
 msgstr "Вибери 00, 15, 30 або 45 хвилин."
@@ -1256,6 +1276,9 @@ msgstr "Вибери, чим стане кожне поле нової карт�
 msgid "Choose what each Mochi field becomes on a Lymi card. One field is the term."
 msgstr "Вибери, чим кожне поле Mochi стане в картці Lymi. Одне поле — це термін."
 
+msgid "Choose what each side of a Noji card becomes on a Lymi card. One side is the term."
+msgstr "Вибери, чим кожен бік картки Noji стане в картці Lymi. Один бік — це термін."
+
 msgid "Choose your {app} file"
 msgstr "Вибір файлу {app}"
 
@@ -1279,6 +1302,9 @@ msgstr "Прибрати зображення"
 
 msgid "Close"
 msgstr "Закрити"
+
+msgid "Cloze"
+msgstr "Пропуск у реченні"
 
 msgid "Come back later, or add new cards."
 msgstr "Повернися пізніше або додай нові картки."
@@ -1666,6 +1692,9 @@ msgstr "Завантажити"
 msgid "Download {0}"
 msgstr "Завантажити {0}"
 
+msgid "Download the file from Noji’s email within 24 hours, then choose it here."
+msgstr "Завантаж файл з листа від Noji протягом 24 годин і вибери його тут."
+
 msgid "Drafting a hook…"
 msgstr "Готуємо зачіпку…"
 
@@ -1854,6 +1883,9 @@ msgstr "Експортуй колоди по одній, а не всю бібл
 
 msgid "Export one deck at a time, or export again without media."
 msgstr "Експортуй колоди по одній або ще раз без медіа."
+
+msgid "Export the deck again from Noji in OFC format, then choose that file."
+msgstr "Експортуй колоду ще раз з Noji у форматі OFC і вибери цей файл."
 
 msgid "Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package."
 msgstr "Експортуй усю бібліотеку (зображення, розклад, історію повторень) як файл Lymi або пакет Anki."
@@ -2113,6 +2145,9 @@ msgstr "Імпорт з Anki або Mochi"
 msgid "Import your decks with their pictures, tags and review history. Cards keep their due dates, and {app} is unchanged."
 msgstr "Імпортуй колоди із зображеннями, тегами й історією повторень. Картки збережуть дати повторення, а в {app} нічого не зміниться."
 
+msgid "Import your decks with their sub-decks, pictures and learning progress. Cards keep their due dates, and Noji is unchanged."
+msgstr "Імпортуй колоди разом з підколодами, зображеннями й прогресом навчання. Картки збережуть дати повторення, а в Noji нічого не зміниться."
+
 msgid "Important"
 msgstr "Важлива"
 
@@ -2142,6 +2177,12 @@ msgstr "У Mochi експортуй колоди по одній, а не все
 
 msgid "In Mochi, open a deck, open its <0>…</0> menu and choose <1>Export deck</1>."
 msgstr "У Mochi відкрий колоду, відкрий її меню <0>…</0> і вибери <1>Export deck</1>."
+
+msgid "In Noji, export one sub-deck at a time instead of the whole deck."
+msgstr "У Noji експортуй підколоди по одній, а не всю колоду одразу."
+
+msgid "In Noji, open a deck you made, open its <0>Settings</0> and choose <1>Export deck</1>. Its sub-decks come too."
+msgstr "У Noji відкрий створену тобою колоду, відкрий її <0>Settings</0> і вибери <1>Export deck</1>. Підколоди теж потраплять у файл."
 
 msgid "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
 msgstr "В іншому акаунті відкрий меню колоди й вибери <0>Експортувати</0> або вибери <1>Експортувати бібліотеку</1> в Налаштуваннях."
@@ -3854,6 +3895,9 @@ msgstr "Ця колода не опублікована"
 msgid "This file expired after a day. Export again to get a new one."
 msgstr "Термін дії файлу минув через день. Експортуй ще раз, щоб отримати новий."
 
+msgid "This file has no learning progress, so every card starts as new. To keep your progress, export again with learning progress turned on."
+msgstr "У цьому файлі немає прогресу навчання, тож кожна картка почнеться як нова. Щоб зберегти прогрес, експортуй ще раз з увімкненим прогресом навчання."
+
 msgid "This file has no review history, so every card starts as new."
 msgstr "У цьому файлі немає історії повторень, тож кожна картка почнеться як нова."
 
@@ -3895,6 +3939,9 @@ msgstr "Це не файл .zip. Вибери файл, експортовани
 
 msgid "This isn’t an .apkg or .colpkg file. Choose the file you exported from Anki."
 msgstr "Це не файл .apkg чи .colpkg. Вибери файл, експортований з Anki."
+
+msgid "This isn’t an .ofc file. Choose the file you exported from Noji."
+msgstr "Це не файл .ofc. Вибери файл, експортований з Noji."
 
 msgid "This join link does not work"
 msgstr "Це посилання для приєднання не працює"

@@ -756,7 +756,7 @@ export const imports = sqliteTable(
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    source: text("source", { enum: ["anki", "mochi", "lymi"] }).notNull(),
+    source: text("source", { enum: ["anki", "mochi", "noji", "lymi"] }).notNull(),
     /** The learner's file name. Private: never logged, audited or put in an error. */
     fileName: text("file_name").notNull(),
     byteSize: integer("byte_size").notNull(),

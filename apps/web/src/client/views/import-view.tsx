@@ -42,11 +42,13 @@ import type { UploadState } from "../lib/import-uploads";
 const ACCEPT: Record<ImportSource, string> = {
   anki: ".apkg,.colpkg",
   mochi: ".mochi",
+  noji: ".ofc",
   lymi: ".zip",
 };
 const FILE_NAME: Record<ImportSource, RegExp> = {
   anki: /\.(apkg|colpkg)$/i,
   mochi: /\.mochi$/i,
+  noji: /\.ofc$/i,
   lymi: /\.zip$/i,
 };
 
@@ -96,9 +98,11 @@ export function ImportStartView({
     const problem = !FILE_NAME[source].test(file.name)
       ? source === "mochi"
         ? t`This isn’t a .mochi file. Choose the file you exported from Mochi.`
-        : source === "lymi"
-          ? t`This isn’t a .zip file. Choose the file you exported from Lymi.`
-          : t`This isn’t an .apkg or .colpkg file. Choose the file you exported from Anki.`
+        : source === "noji"
+          ? t`This isn’t an .ofc file. Choose the file you exported from Noji.`
+          : source === "lymi"
+            ? t`This isn’t a .zip file. Choose the file you exported from Lymi.`
+            : t`This isn’t an .apkg or .colpkg file. Choose the file you exported from Anki.`
       : file.size > MAX_IMPORT_BYTES
         ? t`This file is larger than 1 GB. Export one deck at a time.`
         : file.size === 0
@@ -116,6 +120,11 @@ export function ImportStartView({
           <Trans>
             Import decks from another Lymi account, with their pictures, tags and review history.
             Cards keep their due dates.
+          </Trans>
+        ) : source === "noji" ? (
+          <Trans>
+            Import your decks with their sub-decks, pictures and learning progress. Cards keep their
+            due dates, and Noji is unchanged.
           </Trans>
         ) : (
           <Trans>
@@ -155,6 +164,8 @@ export function ImportStartView({
           <p id={hintId} className="text-base text-muted">
             {source === "mochi" ? (
               <Trans>A .mochi file, up to 1 GB. You can also drop it here.</Trans>
+            ) : source === "noji" ? (
+              <Trans>An .ofc file, up to 1 GB. You can also drop it here.</Trans>
             ) : source === "lymi" ? (
               <Trans>A .zip file, up to 1 GB. You can also drop it here.</Trans>
             ) : (
@@ -194,19 +205,17 @@ export function ImportStartView({
           <Trans>Exporting from {app}</Trans>
         </h2>
         <ol className="grid gap-3 text-base text-text-2">
-          {(source === "mochi" ? MOCHI_STEPS : source === "lymi" ? LYMI_STEPS : ANKI_STEPS).map(
-            (step, i) => (
-              <li key={step.id} className="grid grid-cols-[26px_1fr] gap-3">
-                <span
-                  aria-hidden="true"
-                  className="edge grid size-[26px] place-items-center rounded-full bg-plate-2 text-xs font-semibold text-text tabular-nums"
-                >
-                  {i + 1}
-                </span>
-                <span className="pt-0.5 text-pretty">{step.node}</span>
-              </li>
-            ),
-          )}
+          {STEPS[source].map((step, i) => (
+            <li key={step.id} className="grid grid-cols-[26px_1fr] gap-3">
+              <span
+                aria-hidden="true"
+                className="edge grid size-[26px] place-items-center rounded-full bg-plate-2 text-xs font-semibold text-text tabular-nums"
+              >
+                {i + 1}
+              </span>
+              <span className="pt-0.5 text-pretty">{step.node}</span>
+            </li>
+          ))}
         </ol>
         <a
           href={guideUrl}
@@ -294,6 +303,39 @@ const LYMI_STEPS = [
     node: <Trans>Sign back in to this account and choose that file, without unzipping it.</Trans>,
   },
 ];
+
+const NOJI_STEPS = [
+  {
+    id: "deck",
+    node: (
+      <Trans>
+        In Noji, open a deck you made, open its{" "}
+        <strong className="font-medium text-text">Settings</strong> and choose{" "}
+        <strong className="font-medium text-text">Export deck</strong>. Its sub-decks come too.
+      </Trans>
+    ),
+  },
+  {
+    id: "format",
+    node: (
+      <Trans>
+        Choose <strong className="font-medium text-text">OFC</strong> and turn on learning progress,
+        then enter your email.
+      </Trans>
+    ),
+  },
+  {
+    id: "save",
+    node: <Trans>Download the file from Noji’s email within 24 hours, then choose it here.</Trans>,
+  },
+];
+
+const STEPS: Record<ImportSource, { id: string; node: ReactNode }[]> = {
+  anki: ANKI_STEPS,
+  mochi: MOCHI_STEPS,
+  noji: NOJI_STEPS,
+  lymi: LYMI_STEPS,
+};
 
 /** Uploading, reading, importing: a file on its way, with what the learner may do meanwhile. */
 export function ImportWorkingView({
@@ -553,7 +595,20 @@ function ImportLines({
           })}
         </Line>
       )}
-      {preview.reviews > 0 ? (
+      {item.source === "noji" ? (
+        known > 0 ? (
+          <Line tone="good">
+            <Trans>Cards keep the due dates they had in Noji.</Trans>
+          </Line>
+        ) : (
+          <Line tone="skip">
+            <Trans>
+              This file has no learning progress, so every card starts as new. To keep your
+              progress, export again with learning progress turned on.
+            </Trans>
+          </Line>
+        )
+      ) : preview.reviews > 0 ? (
         <>
           <Line tone="good">
             <Trans>Cards keep the due dates they had in {app}.</Trans>
@@ -634,10 +689,15 @@ function ImportLines({
                   one: "# card you archived in Mochi arrives archived.",
                   other: "# cards you archived in Mochi arrive archived.",
                 })
-              : plural(preview.archived, {
-                  one: "# suspended card arrives archived.",
-                  other: "# suspended cards arrive archived.",
-                })}
+              : item.source === "noji"
+                ? plural(preview.archived, {
+                    one: "# card you froze in Noji arrives archived.",
+                    other: "# cards you froze in Noji arrive archived.",
+                  })
+                : plural(preview.archived, {
+                    one: "# suspended card arrives archived.",
+                    other: "# suspended cards arrive archived.",
+                  })}
         </Line>
       )}
       {preview.shortened > 0 && (
@@ -666,15 +726,20 @@ function ImportLines({
       )}
       {preview.unsupported + preview.skipped > 0 && (
         <Line tone="skip">
-          {item.source !== "anki"
-            ? plural(preview.skipped, {
-                one: "# card has no term, so it’s skipped.",
-                other: "# cards have no term, so they’re skipped.",
+          {item.source === "noji"
+            ? plural(preview.unsupported + preview.skipped, {
+                one: "# card is image occlusion or has no term, so it’s skipped.",
+                other: "# cards are image occlusion or have no term, so they’re skipped.",
               })
-            : plural(preview.unsupported + preview.skipped, {
-                one: "# note is image occlusion or has no term, so it’s skipped.",
-                other: "# notes are image occlusion or have no term, so they’re skipped.",
-              })}
+            : item.source !== "anki"
+              ? plural(preview.skipped, {
+                  one: "# card has no term, so it’s skipped.",
+                  other: "# cards have no term, so they’re skipped.",
+                })
+              : plural(preview.unsupported + preview.skipped, {
+                  one: "# note is image occlusion or has no term, so it’s skipped.",
+                  other: "# notes are image occlusion or have no term, so they’re skipped.",
+                })}
         </Line>
       )}
     </ul>
@@ -859,10 +924,18 @@ export function ImportPreviewView({
                   })
             }
           />
-          <div className="edge grid grid-cols-3 rounded-xl bg-plate">
+          {/* Noji exports where each card stands, never its past reviews, so there are none to count. */}
+          <div
+            className={clsx(
+              "edge grid rounded-xl bg-plate",
+              item.source === "noji" ? "grid-cols-2" : "grid-cols-3",
+            )}
+          >
             <Figure value={preview?.added} label={t`cards`} loading={previewLoading} />
             <Figure value={preview?.known} label={t`known`} loading={previewLoading} />
-            <Figure value={preview?.reviews} label={t`past reviews`} loading={previewLoading} />
+            {item.source !== "noji" && (
+              <Figure value={preview?.reviews} label={t`past reviews`} loading={previewLoading} />
+            )}
           </div>
           {previewError && (
             <p className="text-sm" role="alert">

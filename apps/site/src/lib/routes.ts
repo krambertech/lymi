@@ -45,6 +45,7 @@ export const englishOnlyPaths = [
   "/docs/cards",
   "/docs/import-from-anki",
   "/docs/import-from-mochi",
+  "/docs/import-from-noji",
   "/docs/export",
   "/docs/scheduling",
   "/docs/mcp",

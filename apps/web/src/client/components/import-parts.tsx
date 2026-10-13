@@ -37,16 +37,18 @@ export const ROLE_LABELS: Record<FieldRole, MessageDescriptor> = {
 export const SOURCE_NAMES: Record<ImportSource, string> = {
   anki: "Anki",
   mochi: "Mochi",
+  noji: "Noji",
   lymi: "Lymi",
 };
 
-/** The kinds of Mochi card with no template, named here because the server sends a key. */
+/** The kinds of Mochi and Noji card with no template, named here because the server sends a key. */
 const MOCHI_KINDS: Record<string, MessageDescriptor> = {
   "content:two": msg`Front and back`,
   "content:one": msg`One side only`,
+  "noji:cloze": msg`Cloze`,
 };
 
-/** A kind of card as the learner knows it: the source's own name, or Lymi's for Mochi's plain cards. */
+/** A kind of card as the learner knows it: the source's own name, or Lymi's for plain cards. */
 export function noteTypeName(type: NoteType, i18n: { _: (m: MessageDescriptor) => string }) {
   const kind = MOCHI_KINDS[type.key];
   return kind ? i18n._(kind) : type.name;
@@ -61,6 +63,12 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
         return {
           title: msg`Couldn’t read this file`,
           body: msg`Choose the .zip file Lymi exports as a Lymi file, without unzipping it.`,
+        };
+      }
+      if (source === "noji") {
+        return {
+          title: msg`Couldn’t read this file`,
+          body: msg`Export the deck again from Noji in OFC format, then choose that file.`,
         };
       }
       return source === "mochi"
@@ -83,9 +91,11 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
         body:
           source === "mochi"
             ? msg`In Mochi, export one deck at a time instead of everything.`
-            : source === "lymi"
-              ? msg`Export one deck at a time instead of the whole library.`
-              : msg`Export one deck at a time, or export again without media.`,
+            : source === "noji"
+              ? msg`In Noji, export one sub-deck at a time instead of the whole deck.`
+              : source === "lymi"
+                ? msg`Export one deck at a time instead of the whole library.`
+                : msg`Export one deck at a time, or export again without media.`,
       };
     case "upload_incomplete":
       return {
@@ -231,6 +241,10 @@ export function FieldsDialog({
           {source === "mochi" ? (
             <Trans>
               Choose what each Mochi field becomes on a Lymi card. One field is the term.
+            </Trans>
+          ) : source === "noji" ? (
+            <Trans>
+              Choose what each side of a Noji card becomes on a Lymi card. One side is the term.
             </Trans>
           ) : source === "lymi" ? (
             <Trans>Choose what each field becomes on the new card. One field is the term.</Trans>
@@ -392,6 +406,7 @@ export function ImportSources({
   const sources: { source: ImportSource; detail: string }[] = [
     { source: "anki", detail: t`An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile` },
     { source: "mochi", detail: t`A .mochi file from Mochi` },
+    { source: "noji", detail: t`An .ofc file from Noji` },
     { source: "lymi", detail: t`A Lymi file from another Lymi account` },
   ];
   return (

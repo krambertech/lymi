@@ -1,0 +1,38 @@
+/* The wick (motion.md "Review"), shared by the site and the product: a hairline that, while `data-lit`, starts as the lantern's light and cools, on WICK_STYLE's timings. */
+.wick {
+  --wick-glow: var(--glow);
+  height: 1px;
+  background: var(--edge-2);
+  transform-origin: left;
+}
+
+[dir="rtl"] .wick {
+  transform-origin: right;
+}
+
+.wick[data-lit] {
+  animation: wick-cool var(--wick-cool) var(--wick-cool-ease) var(--wick-cool-delay) both;
+}
+
+@keyframes wick-cool {
+  from {
+    background: var(--amber);
+    box-shadow: 0 0 6px var(--wick-glow);
+  }
+  to {
+    background: var(--edge-2);
+    box-shadow: 0 0 6px transparent;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .wick {
+    --wick-glow: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wick[data-lit] {
+    animation: none;
+  }
+}

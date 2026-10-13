@@ -43,6 +43,22 @@ export const LANTERN_FLIGHT = spring(0.6);
 /** On reveal the cue glides up while the grade strip opens, as one movement. */
 export const REVEAL_GLIDE = { duration: 0.34, ease: EASE_OUT } as const satisfies Timed;
 
+/** The rule over a revealed answer draws as a line of the lantern's light, then cools to a hairline. */
+export const WICK = {
+  draw: { duration: 0.36, ease: EASE_OUT },
+  // Quadratic ease-in-out, the curve the phone's wick first cooled on.
+  cool: { duration: 0.7, ease: [0.455, 0.03, 0.515, 0.955], delay: 0.36 },
+} as const satisfies Record<string, Timed>;
+
+const ms = (seconds: number) => `${Math.round(seconds * 1000)}ms`;
+
+/** The wick's cooling as the custom properties `@lymi/design/wick.css` reads, for a web element's style. */
+export const WICK_STYLE = {
+  "--wick-cool": ms(WICK.cool.duration),
+  "--wick-cool-delay": ms(WICK.cool.delay),
+  "--wick-cool-ease": `cubic-bezier(${WICK.cool.ease.join(", ")})`,
+} as const;
+
 // One set of springs for checkbox, radio, switch and the chosen plate of a segmented control or pill.
 
 export const CHOICE_POP = { type: "spring", duration: 0.32, bounce: 0.3 } as const;

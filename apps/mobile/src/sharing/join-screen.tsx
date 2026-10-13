@@ -18,11 +18,12 @@ import type { IconName } from "../ui/icons";
 import { Button, Icon, Text } from "../ui/primitives";
 import { Screen } from "../ui/screen";
 import { Skeleton } from "../ui/skeleton";
+import { promiseJoin, takeJoin } from "./join-intent";
 
 /** A join link someone shared, or "Add to Lymi" on a published deck's public page. */
 export type Arrival =
-  | { kind: "link"; token: string; resume: boolean }
-  | { kind: "publication"; slug: string; edition: string | undefined; resume: boolean };
+  | { kind: "link"; token: string }
+  | { kind: "publication"; slug: string; edition: string | undefined };
 
 class Offline extends Error {}
 
@@ -93,18 +94,22 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
     },
   });
 
+  const key = published ? `add:${arrival.slug}` : `link:${arrival.token}`;
   // Back from sign-in for this link: join at once, as the web does, rather than ask twice.
   const resumed = useRef(false);
   useEffect(() => {
-    if (!arrival.resume || resumed.current || preview.data?.viewer !== "visitor") return;
+    const viewer = preview.data?.viewer;
+    if (resumed.current || !viewer || viewer === "signed-out") return;
     resumed.current = true;
-    join.mutate();
-  }, [arrival.resume, preview.data?.viewer, join]);
+    // Taken whoever signed in, so a promise never waits for a later visit to the same link.
+    if (takeJoin(key) && viewer === "visitor") join.mutate();
+  }, [key, preview.data?.viewer, join]);
 
   const signIn = () => {
     const path = published
-      ? `/add/${encodeURIComponent(arrival.slug)}?${new URLSearchParams({ continue: "1", ...(edition && { edition }) })}`
-      : `/join/${encodeURIComponent(arrival.token)}?continue=1`;
+      ? `/add/${encodeURIComponent(arrival.slug)}${edition ? `?${new URLSearchParams({ edition })}` : ""}`
+      : `/join/${encodeURIComponent(arrival.token)}`;
+    promiseJoin(key);
     // Held at the door, so the link opens again once the learner is in.
     noteLink(path);
     router.replace("/welcome");

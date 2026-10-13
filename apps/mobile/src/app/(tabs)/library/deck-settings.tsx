@@ -11,13 +11,13 @@ import {
   LANGUAGE_TAGS,
 } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
-import { type Href, useLocalSearchParams } from "expo-router";
+import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useRef, useState } from "react";
 import { TextInput, View } from "react-native";
 import { useDeckExits } from "../../../data/decks";
 import { openDraft } from "../../../data/draft";
 import { languageName } from "../../../data/languages";
-import { useDeckCards, useDecks } from "../../../data/queries";
+import { useDeckCards, useDecks, useSections } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { inputCap } from "../../../theme/type";
 import { Icon } from "../../../ui/icons";
@@ -58,6 +58,8 @@ function Settings({ deck }: { deck: DeckSummary }) {
   const [saved, setSaved] = useState<"saving" | "saved" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const owner = deck.role === "owner";
+  const router = useRouter();
+  const sectionCount = useSections(owner ? deck.id : undefined).data?.sections.length ?? 0;
 
   const save = async (patch: DeckPatch) => {
     setSaved("saving");
@@ -367,6 +369,18 @@ function Settings({ deck }: { deck: DeckSummary }) {
               ))}
             </SheetGroup>
           </Sheet>
+          <Rows>
+            <Row
+              icon="section"
+              label={t`Sections`}
+              value={
+                sectionCount > 0
+                  ? plural(sectionCount, { one: "# section", other: "# sections" })
+                  : t`None`
+              }
+              onPress={() => router.push(`/library/sections?id=${deck.id}` as Href)}
+            />
+          </Rows>
           <Rows>
             <Row
               icon="apps"

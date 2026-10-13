@@ -291,6 +291,17 @@ export const AddCardOutcomeOut = z
   .meta({ id: "AddCardOutcome" });
 export type AddCardOutcomeOut = z.infer<typeof AddCardOutcomeOut>;
 
+export const DeckChoiceOut = z
+  .object({
+    deckId: z.string().nullable().meta({
+      description:
+        "The caller's deck in the term's language, the one added to last; null to keep the current choice",
+    }),
+    language: z.string().nullable().meta({ description: "The term's language, when it was told" }),
+  })
+  .meta({ id: "DeckChoice" });
+export type DeckChoiceOut = z.infer<typeof DeckChoiceOut>;
+
 export const AddCardsOut = z
   .object({ results: z.array(AddCardOutcomeOut) })
   .meta({ id: "AddCardsResult" });

@@ -78,16 +78,20 @@ export const FORM_FIELD: Record<
 };
 
 /**
- * Which fields a card form shows: the term and the meaning, every field holding something, and any
- * a chip added. A field once shown stays until `settle`, even emptied to be rewritten, so it never
- * vanishes from under the keyboard.
+ * Which fields a card form shows: the term and the meaning, then every field holding something and
+ * any a chip added, in the order they came, so a tapped chip's field appears last, where the eye is.
+ * A field once shown stays until `settle`, even emptied to be rewritten, so it never vanishes from
+ * under the keyboard.
  */
 export function useFormFields(values: FormValues, first?: FormField) {
   const [added, setAdded] = useState<ReadonlySet<FormField>>(() => new Set(first ? [first] : []));
   const [adding, setAdding] = useState<FormField | null>(null);
-  const seen = useRef(new Set<FormField>());
-  for (const f of FORM_FIELDS) if (values[f].trim()) seen.current.add(f);
-  const shown = FORM_FIELDS.filter((f) => CORE.includes(f) || seen.current.has(f) || added.has(f));
+  const order = useRef<FormField[]>(first && !CORE.includes(first) ? [first] : []);
+  for (const f of FORM_FIELDS) {
+    if (!CORE.includes(f) && values[f].trim() && !order.current.includes(f)) order.current.push(f);
+  }
+  for (const f of added) if (!CORE.includes(f) && !order.current.includes(f)) order.current.push(f);
+  const shown = [...CORE, ...order.current];
   const missing = FORM_FIELDS.filter((f) => !shown.includes(f));
   return {
     shown,
@@ -99,7 +103,7 @@ export function useFormFields(values: FormValues, first?: FormField) {
     },
     /** Forgets the fields added and left empty, as after a card is added. */
     settle: () => {
-      seen.current = new Set();
+      order.current = [];
       setAdded(new Set());
       setAdding(null);
     },

@@ -19,3 +19,4 @@ One Anki package brought into Lymi: the learner picks the decks to keep, confirm
 - The file holds 10 cards; the learner already has one of them, so the last screen says 9, and its suspended card arrives archived, so 8 are active.
 - Parsing runs in the import Workflow; allow 30 seconds for the deck choice and 60 for the import to finish.
 - The site's local server and the product writing to one D1 can fail with `SQLITE_BUSY`; stop the site server before importing.
+- Settings asks `/api/push/config`, which answers 503 on a local server without `VAPID_PUBLIC_KEY`; that error is expected locally and a finding on a preview.

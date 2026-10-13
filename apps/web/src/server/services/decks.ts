@@ -280,7 +280,10 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
     if (first) await db.batch([first, ...rest]);
   }
   await audit(ctx, { entity: "deck", action: "update", id, details: patch });
-  if (patch.purpose && patch.purpose !== stored?.purpose) trackPurpose(ctx, patch.purpose, false);
+  // Against the effective purpose, so confirming the one a language implied is no change.
+  if (patch.purpose && patch.purpose !== deckPurpose(stored?.purpose, stored?.defaultLanguage)) {
+    trackPurpose(ctx, patch.purpose, false);
+  }
   // One language and purpose for both sides, so a default that moves with them is not the owner's choice.
   const language = stored?.defaultLanguage;
   const before = {

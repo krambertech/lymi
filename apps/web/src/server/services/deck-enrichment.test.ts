@@ -68,7 +68,8 @@ describe("a deck's enrichment settings", () => {
     const deck = await createDeck(ctx, { name: "Biology exam", purpose: "subject" });
     await updateDeck(ctx, deck.id, { purpose: "subject" });
     await updateDeck(ctx, deck.id, { purpose: "other" });
-    await createDeck(ctx, { name: "No purpose" });
+    const inferred = await createDeck(ctx, { name: "Deutsch", defaultLanguage: "de" });
+    await updateDeck(ctx, inferred.id, { purpose: "language" });
     const set = capture.mock.calls
       .map(([event]) => event)
       .filter((event) => event.name === "deck_purpose_set");

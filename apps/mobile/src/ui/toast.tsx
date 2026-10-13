@@ -1,6 +1,7 @@
 import { palette } from "@lymi/design";
 import { GlassView } from "expo-glass-effect";
-import { StyleSheet, View, type ViewStyle } from "react-native";
+import { useEffect } from "react";
+import { AccessibilityInfo, StyleSheet, View, type ViewStyle } from "react-native";
 import { useGlass } from "../theme/glass";
 import { usePalette, useRoom } from "../theme/palette";
 import { Icon } from "./icons";
@@ -28,6 +29,11 @@ interface ToastProps {
 export function Toast({ title, error = false, action }: ToastProps) {
   const p = usePalette();
   const glass = useGlass();
+  // iOS ignores accessibilityLiveRegion, so VoiceOver hears the toast through an announcement.
+  const spoken = action ? `${title} ${action.label}` : title;
+  useEffect(() => {
+    AccessibilityInfo.announceForAccessibility(spoken);
+  }, [spoken]);
   // The pill is the other room's colour, so its red is the other room's too.
   const room = useRoom();
   const red = palette[room === "dark" ? "light" : "dark"].danger;

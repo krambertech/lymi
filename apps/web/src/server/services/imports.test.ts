@@ -52,7 +52,7 @@ const fixture = (name: string) =>
   new Uint8Array(
     readFileSync(
       new URL(
-        `../imports/${name.endsWith(".mochi") ? "mochi" : "anki"}/fixtures/${name}`,
+        `../imports/${name.endsWith(".mochi") ? "mochi" : name.endsWith(".ofc") ? "noji" : "anki"}/fixtures/${name}`,
         import.meta.url,
       ),
     ),
@@ -196,6 +196,39 @@ describe("importing a Mochi export", () => {
     expect(await cardsOf(ctx)).toHaveLength(12);
 
     await archiveImport(ctx, first.id);
+    expect((await cardsOf(ctx)).filter((c) => c.archivedAt === null)).toHaveLength(0);
+  });
+});
+
+describe("importing a Noji export", () => {
+  it("keeps Noji's due dates without inventing a history, and adds nothing twice", async () => {
+    const ctx = await fresh();
+    const before = await streak(ctx);
+    const { id, preview, result } = await runImport(ctx, "export.ofc");
+    expect(preview).toMatchObject({ added: 8, archived: 1, reviews: 0, pictures: 2 });
+    expect(preview.decks.map((d) => [d.name, d.cards])).toEqual([
+      ["Spanish", 7],
+      ["Spanish / Verbs", 1],
+    ]);
+    expect(result).toMatchObject({ source: "noji", status: "done", failure: null });
+    expect(result.counts).toMatchObject({ added: 8, reviews: 0, pictures: 2, decks: 2 });
+
+    const gato = await card(ctx, "el gato");
+    expect(gato).toMatchObject({ meaning: "the cat", importId: id, externalId: "noji:9001" });
+    expect(await reviewsOf(gato.id)).toEqual([]);
+    const [state] = await statesOf(gato.id);
+    expect(state?.due.getTime()).toBe(CREATED + 30 * DAY);
+    expect((await card(ctx, "el libro")).archivedAt).not.toBeNull();
+
+    const after = await streak(ctx);
+    expect(after.today).toEqual(before.today);
+    expect(after.current).toBe(before.current);
+
+    const second = await runImport(ctx, "export.ofc");
+    expect(second.preview).toMatchObject({ added: 0, existing: 8, duplicates: 0 });
+    expect(await cardsOf(ctx)).toHaveLength(8);
+
+    await archiveImport(ctx, id);
     expect((await cardsOf(ctx)).filter((c) => c.archivedAt === null)).toHaveLength(0);
   });
 });

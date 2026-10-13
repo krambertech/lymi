@@ -189,6 +189,34 @@ export async function readZipEntry(
   return out;
 }
 
+/**
+ * A zip inside a zip as a file of its own: read in place when stored, held in memory when
+ * compressed and no larger than `limit`, otherwise null.
+ */
+export async function zipEntrySource(
+  file: RandomAccess,
+  entry: ZipEntry,
+  limit: number,
+): Promise<RandomAccess | null> {
+  if (entry.method === 0) {
+    const header = await file.read(entry.offset, 30);
+    if (u32(header, 0) !== 0x04034b50) throw damaged("entry");
+    const start = entry.offset + 30 + u16(header, 26) + u16(header, 28);
+    if (start + entry.size > file.size) throw damaged("entry");
+    const within = (offset: number, length: number) => {
+      if (offset < 0 || offset + length > entry.size) throw damaged("layout");
+      return start + offset;
+    };
+    return {
+      size: entry.size,
+      read: (offset, length) => file.read(within(offset, length), length),
+      stream: (offset, length) => file.stream(within(offset, length), length),
+    };
+  }
+  if (entry.size > limit) return null;
+  return bytesSource(await readZipEntry(file, entry, limit));
+}
+
 /** A stream's chunks, read without relying on the stream being async iterable. */
 async function* chunks(stream: ReadableStream<Uint8Array>) {
   const reader = stream.getReader();

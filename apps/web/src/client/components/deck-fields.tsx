@@ -121,7 +121,7 @@ export function LanguageField({
 
   const fieldLabel = label ?? t`Language`;
   const hint = description !== null && (
-    <FieldDescription>
+    <FieldDescription className={descriptionFirst ? HINT_FIRST : undefined}>
       {description ?? t`New cards in this deck get this language.`}
     </FieldDescription>
   );

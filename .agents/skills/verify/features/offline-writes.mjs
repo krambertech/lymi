@@ -1,3 +1,5 @@
+import { createDeck } from "./new-deck.mjs";
+
 export const title = "Offline writes";
 export const start = "/library";
 
@@ -16,12 +18,7 @@ export default async function drive({ page, step, api, expect }) {
     await page.route(WRITES, (route) =>
       route.request().method() === "GET" ? route.fallback() : route.abort("internetdisconnected"),
     );
-    await page.getByRole("button", { name: "Add", exact: true }).filter({ visible: true }).click();
-    await page.getByRole("menuitem", { name: "New deck", exact: true }).click();
-    const sheet = page.getByRole("dialog", { name: "New deck" });
-    await sheet.getByRole("textbox", { name: "Name", exact: true }).fill(deckName);
-    await sheet.getByRole("button", { name: "Create deck", exact: true }).click();
-    await expect(page.getByRole("heading", { level: 1, name: deckName })).toBeVisible();
+    await createDeck(page, expect, deckName);
     await page.keyboard.press("n");
     const add = page.getByRole("dialog", { name: "Add a card" });
     await add.getByRole("textbox", { name: "Term", exact: true }).fill(term);

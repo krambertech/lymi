@@ -10,6 +10,9 @@ msgstr ""
 msgid "“{deckName}” is reviewed with the other decks in its series."
 msgstr "«{deckName}» повторяется вместе с другими колодами серии."
 
+msgid "“{term}” is already in {deck}"
+msgstr ""
+
 msgid "“{term}” is already in {deckName}"
 msgstr "«{term}» уже есть в колоде {deckName}"
 
@@ -328,6 +331,9 @@ msgstr "Добавить зацепку"
 msgid "Add the words you want to learn, and they show here."
 msgstr "Добавь слова, которые хочешь выучить, и они появятся здесь."
 
+msgid "Add to {deck}"
+msgstr ""
+
 msgid "Add to {deckName}"
 msgstr "Добавить в {deckName}"
 
@@ -339,6 +345,9 @@ msgstr ""
 
 msgid "Added “{term}”"
 msgstr "Добавлено «{term}»"
+
+msgid "Added “{term}” to {deck}"
+msgstr ""
 
 msgid "Added “{term}” to {deckName}"
 msgstr "«{term}» добавлено в колоду {deckName}"
@@ -1372,6 +1381,9 @@ msgstr "Lymi"
 msgid "Lymi also gets the screen you are on, the app version, your phone and your app language."
 msgstr "Lymi также получит экран, на котором ты сейчас, версию приложения, модель телефона и язык приложения."
 
+msgid "Lymi can’t be reached. Check your connection and try again."
+msgstr ""
+
 msgid "Lymi is free to use."
 msgstr "Lymi бесплатный."
 
@@ -1459,6 +1471,9 @@ msgstr "Выше"
 
 msgid "Moved “{deckName}” to {seriesName}"
 msgstr "«{deckName}» перенесена в «{seriesName}»"
+
+msgid "Moved to {deck}, the deck for this language"
+msgstr ""
 
 msgid "Moved to another deck"
 msgstr "Перенесено в другую колоду"
@@ -1645,6 +1660,9 @@ msgstr "Открой это один раз с соединением, и оно
 
 msgid "Open Library"
 msgstr "Открыть Библиотеку"
+
+msgid "Open Lymi and sign in to add words from other apps."
+msgstr ""
 
 msgid "Open on the web"
 msgstr "Открыть в веб-версии"
@@ -1935,6 +1953,9 @@ msgstr "Видишь термин, вспоминаешь значение"
 msgid "See the term, recall what it means."
 msgstr "Увидеть термин и вспомнить его значение."
 
+msgid "Select a word or phrase, then share it to Lymi."
+msgstr ""
+
 msgid "Send"
 msgstr "Отправить"
 
@@ -2115,6 +2136,9 @@ msgstr "Не получилось"
 
 msgid "That didn’t go through. Reload and try again."
 msgstr "Не получилось. Обнови страницу и попробуй снова."
+
+msgid "That didn’t work. Try again."
+msgstr ""
 
 msgid "That email and password don’t match."
 msgstr "Эта почта и пароль не совпадают."
@@ -2300,6 +2324,9 @@ msgstr "Обновить"
 
 msgid "Update Lymi"
 msgstr "Обнови Lymi"
+
+msgid "Update Lymi to add words from other apps."
+msgstr ""
 
 msgid "Uploading"
 msgstr "Загрузка"

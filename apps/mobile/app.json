@@ -117,7 +117,8 @@
           "enableBackgroundPlayback": false
         }
       ],
-      "expo-notifications"
+      "expo-notifications",
+      "@bacons/apple-targets"
     ]
   }
 }

@@ -20,6 +20,7 @@ import { i18n } from "../i18n";
 import { LanguageSync } from "../i18n/sync";
 import { cancelReminders, listenForLater } from "../reminders/notifications";
 import { ReminderSync } from "../reminders/sync";
+import { ShareSync } from "../share/sync";
 import { SplashGuard, useGiveUp } from "../splash/guard";
 import { Kindling } from "../splash/kindling";
 import { replaySplash, useReplays } from "../splash/replay";
@@ -116,6 +117,7 @@ function Root() {
     <ThemeProvider value={theme}>
       <StatusBar style="auto" />
       {!session.isPending && <LanguageSync signedIn={signedIn} />}
+      {!session.isPending && !update && <ShareSync signedIn={signedIn} />}
       <Analytics learnerId={signedOut ? null : learnerId} />
       {learnerId && !update && (
         <>

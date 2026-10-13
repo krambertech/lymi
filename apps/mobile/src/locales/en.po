@@ -10,6 +10,9 @@ msgstr ""
 msgid "“{deckName}” is reviewed with the other decks in its series."
 msgstr "“{deckName}” is reviewed with the other decks in its series."
 
+msgid "“{term}” is already in {deck}"
+msgstr "“{term}” is already in {deck}"
+
 msgid "“{term}” is already in {deckName}"
 msgstr "“{term}” is already in {deckName}"
 
@@ -328,6 +331,9 @@ msgstr "Add hook"
 msgid "Add the words you want to learn, and they show here."
 msgstr "Add the words you want to learn, and they show here."
 
+msgid "Add to {deck}"
+msgstr "Add to {deck}"
+
 msgid "Add to {deckName}"
 msgstr "Add to {deckName}"
 
@@ -339,6 +345,9 @@ msgstr "Add to this card"
 
 msgid "Added “{term}”"
 msgstr "Added “{term}”"
+
+msgid "Added “{term}” to {deck}"
+msgstr "Added “{term}” to {deck}"
 
 msgid "Added “{term}” to {deckName}"
 msgstr "Added “{term}” to {deckName}"
@@ -1372,6 +1381,9 @@ msgstr "Lymi"
 msgid "Lymi also gets the screen you are on, the app version, your phone and your app language."
 msgstr "Lymi also gets the screen you are on, the app version, your phone and your app language."
 
+msgid "Lymi can’t be reached. Check your connection and try again."
+msgstr "Lymi can’t be reached. Check your connection and try again."
+
 msgid "Lymi is free to use."
 msgstr "Lymi is free to use."
 
@@ -1459,6 +1471,9 @@ msgstr "Move up"
 
 msgid "Moved “{deckName}” to {seriesName}"
 msgstr "Moved “{deckName}” to {seriesName}"
+
+msgid "Moved to {deck}, the deck for this language"
+msgstr "Moved to {deck}, the deck for this language"
 
 msgid "Moved to another deck"
 msgstr "Moved to another deck"
@@ -1645,6 +1660,9 @@ msgstr "Open it once with a connection, and it stays on this phone."
 
 msgid "Open Library"
 msgstr "Open Library"
+
+msgid "Open Lymi and sign in to add words from other apps."
+msgstr "Open Lymi and sign in to add words from other apps."
 
 msgid "Open on the web"
 msgstr "Open on the web"
@@ -1935,6 +1953,9 @@ msgstr "See the term, recall what it means"
 msgid "See the term, recall what it means."
 msgstr "See the term, recall what it means."
 
+msgid "Select a word or phrase, then share it to Lymi."
+msgstr "Select a word or phrase, then share it to Lymi."
+
 msgid "Send"
 msgstr "Send"
 
@@ -2115,6 +2136,9 @@ msgstr "That didn’t go through"
 
 msgid "That didn’t go through. Reload and try again."
 msgstr "That didn’t go through. Reload and try again."
+
+msgid "That didn’t work. Try again."
+msgstr "That didn’t work. Try again."
 
 msgid "That email and password don’t match."
 msgstr "That email and password don’t match."
@@ -2300,6 +2324,9 @@ msgstr "Update"
 
 msgid "Update Lymi"
 msgstr "Update Lymi"
+
+msgid "Update Lymi to add words from other apps."
+msgstr "Update Lymi to add words from other apps."
 
 msgid "Uploading"
 msgstr "Uploading"

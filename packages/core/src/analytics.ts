@@ -189,7 +189,7 @@ export const analyticsEvents = {
   $ai_generation: z.object({
     $ai_trace_id: z.uuid(),
     $ai_session_id: z.null(),
-    $ai_span_name: z.enum(["enrich", "hook", "import_languages"]),
+    $ai_span_name: z.enum(["enrich", "hook", "import_languages", "deck_choice"]),
     $ai_provider: z.literal("openai"),
     $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),
     $ai_input_tokens: tokens,

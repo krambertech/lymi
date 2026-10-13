@@ -13,6 +13,8 @@ import {
   CardSearchOut,
   CardSearchQuery,
   CardsInput,
+  DeckChoiceInput,
+  DeckChoiceOut,
   EditCardsOut,
   HookDraftOut,
   OkOut,
@@ -32,6 +34,7 @@ import {
   archiveCards,
   assertPublisher,
   cardHistory,
+  chooseDeck,
   enrichmentQueue,
   hookDraftFor,
   isPublisherEmail,
@@ -278,6 +281,27 @@ cards.post(
     errors: [400, 404, 503],
   }),
   async (c) => c.json(await requestEnrichment(ctxOf(c), c.req.param("id"), enrichmentQueue(c.env))),
+);
+
+cards.post(
+  "/deck-choice",
+  describe({
+    tags: ["Cards"],
+    summary: "Choose a deck for a term",
+    description:
+      "Learner only. Which of the caller's own decks a term belongs in, by the language it is written in, for a term shared from another app before it is added. " +
+      "Several decks in that language give the one added to last. Null when the decks teach one language between them, or when the language can't be told; " +
+      "the caller then keeps its own choice. Nothing is written.",
+    ok: { schema: DeckChoiceOut, description: "The deck, or null" },
+    errors: [400],
+    learnerOnly: true,
+  }),
+  body(DeckChoiceInput, "term"),
+  async (c) => {
+    const ctx = ctxOf(c);
+    const provider = createTextProvider(c.env, textCallReporter(ctx.analytics, "deck_choice"));
+    return c.json(await chooseDeck(ctx, c.req.valid("json"), provider));
+  },
 );
 
 cards.post(

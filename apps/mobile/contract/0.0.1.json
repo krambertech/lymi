@@ -2539,6 +2539,87 @@
     }
    }
   },
+  "/api/cards/deck-choice": {
+   "post": {
+    "operationId": "postApiCardsDeckChoice",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DeckChoice"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "session": []
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "term": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+         },
+         "source": {
+          "type": "string",
+          "maxLength": 200
+         }
+        },
+        "required": [
+         "term"
+        ]
+       }
+      }
+     }
+    }
+   }
+  },
   "/api/cards/{id}": {
    "patch": {
     "operationId": "patchApiCardsById",
@@ -5681,6 +5762,27 @@
      "important"
     ]
    },
+   "DeckChoice": {
+    "type": "object",
+    "properties": {
+     "deckId": {
+      "type": [
+       "string",
+       "null"
+      ]
+     },
+     "language": {
+      "type": [
+       "string",
+       "null"
+      ]
+     }
+    },
+    "required": [
+     "deckId",
+     "language"
+    ]
+   },
    "HookDraft": {
     "type": "object",
     "properties": {
@@ -6722,6 +6824,7 @@
       "enum": [
        "anki",
        "mochi",
+       "noji",
        "lymi"
       ],
       "x-lymi-open": true

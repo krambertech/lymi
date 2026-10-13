@@ -599,6 +599,17 @@ export const CardInput = z.object({
 });
 export type CardInput = z.infer<typeof CardInput>;
 
+export const DeckChoiceInput = z.object({
+  term: z.string().trim().min(1, "Type the term.").max(CARD_LIMITS.term),
+  source: z
+    .string()
+    .trim()
+    .max(CARD_LIMITS.source)
+    .optional()
+    .meta({ description: "Where the term was found, such as a page's title" }),
+});
+export type DeckChoiceInput = z.infer<typeof DeckChoiceInput>;
+
 /**
  * How long each of a card's text fields may be, read off `CardInput` itself. A form caps and counts
  * from here, so the limit a learner sees can never drift from the one the route refuses.

@@ -92,6 +92,24 @@
     transform: scale(0.35);
   }
 }
+/* The same light reaching the window's edges: faint, and fading out only at the farthest corner. */
+.room-light {
+  background: radial-gradient(
+    circle farthest-corner at var(--x) var(--y),
+    color-mix(in oklab, var(--glow) var(--room, 34%), transparent),
+    color-mix(in oklab, var(--glow) calc(var(--room, 34%) * 0.4), transparent) 45%,
+    transparent
+  );
+  animation: room-bloom 1600ms var(--ease-out) var(--at, 0ms) both;
+  @media (prefers-reduced-transparency: reduce) {
+    display: none;
+  }
+}
+@keyframes room-bloom {
+  from {
+    opacity: 0;
+  }
+}
 .light-pool-breath {
   animation: pool-breath 2.6s ease-in-out infinite;
 }
@@ -132,7 +150,8 @@
     transform: translate(var(--x), var(--y)) scale(0.3);
   }
 }
-.seq-skip :is(.seq, .seq-count, .light-on, .light-pool, .ember) {
+.seq-skip :is(.seq, .seq-count, .light-on, .light-pool, .ember),
+.room-light[data-skip] {
   animation-delay: 0ms;
   animation-duration: 1ms;
 }
@@ -192,6 +211,7 @@
   .seq-count,
   .light-on,
   .light-pool,
+  .room-light,
   .spinner-enter {
     animation: enter-fade 150ms both;
   }

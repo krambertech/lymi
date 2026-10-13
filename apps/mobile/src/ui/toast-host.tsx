@@ -1,5 +1,5 @@
 import { usePathname } from "expo-router";
-import { useEffect, useRef, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
@@ -15,6 +15,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useReduceMotion } from "../theme/motion";
+import { DECK_ACCESSORY } from "./tab-bar";
 import { Toast } from "./toast";
 
 // The web's timings: long enough to reach Undo with VoiceOver or a switch. phone.md "After an action".
@@ -23,6 +24,8 @@ const TIMEOUT = 5_000;
 // iOS 26's floating tab bar, which a toast clears and matches in width on a tab's screens.
 const TAB_BAR = 64;
 const TABS = /^\/(today|library|explore|you)(\/|$)/;
+const DECK_PAGE = /^\/library\/[^/]+$/;
+const ACCESSORY = 56;
 
 interface ToastOptions {
   /** A toast with the same id replaces it, as the web's does. */
@@ -81,8 +84,10 @@ export function ToastHost() {
   const shown = useToasts();
   useEffect(() => clearToasts, []);
   const insets = useSafeAreaInsets();
-  const onTab = TABS.test(usePathname());
-  const bottom = insets.bottom + (onTab ? TAB_BAR : 0) + 12;
+  const path = usePathname();
+  // A deck's screen can carry the tab bar's review accessory over the bar.
+  const accessory = DECK_ACCESSORY && DECK_PAGE.test(path) ? ACCESSORY : 0;
+  const bottom = insets.bottom + (TABS.test(path) ? TAB_BAR + accessory : 0) + 12;
   // The web shows three, the older two peeking behind the newest.
   const visible = shown.slice(-3);
   return (
@@ -96,6 +101,8 @@ export function ToastHost() {
 
 function Slot({ item, depth }: { item: Item; depth: number }) {
   const reduce = useReduceMotion();
+  // Announced once as it arrives, never again when a newer one closes over it.
+  const [announce] = useState(depth === 0);
   const held = useRef(false);
   const x = useSharedValue(0);
   const y = useSharedValue(0);
@@ -157,7 +164,7 @@ function Slot({ item, depth }: { item: Item; depth: number }) {
         <Toast
           title={item.title}
           error={item.error}
-          announce={depth === 0}
+          announce={announce}
           action={
             item.action && {
               label: item.action.label,

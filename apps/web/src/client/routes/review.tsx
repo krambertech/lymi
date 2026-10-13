@@ -1110,7 +1110,8 @@ function Review() {
               focusOnMount={focusReveal}
               onReveal={() => {
                 recordReveal();
-                setAnimateReveal(true);
+                // Enter on the focused reveal button is a keyboard reveal too, so it stays still like Space.
+                setAnimateReveal(!lastInputWasKey());
                 setFocusGrades(document.activeElement instanceof HTMLButtonElement);
                 setRevealed(true);
               }}

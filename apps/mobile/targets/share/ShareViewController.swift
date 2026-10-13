@@ -55,7 +55,7 @@ final class ShareViewController: UIViewController {
     let line = text.split(whereSeparator: \.isWhitespace).joined(separator: " ")
     if let url = URL(string: line), url.scheme?.hasPrefix("http") == true { return "" }
     // The server counts UTF-16 units, as JavaScript does, so an emoji costs two.
-    var cut = line
+    var cut = String(line.prefix(limit))
     while cut.utf16.count > limit { cut.removeLast() }
     return cut
   }

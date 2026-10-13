@@ -125,9 +125,12 @@ function DeckPage({
       </View>
       <View className="self-stretch">
         {deckId ? (
+          // Added, the button settles in place: it says the deck is in, and still opens it.
           <Button
-            label={t`Open in Library`}
+            label={t`In Library`}
             size="lg"
+            variant="ghost"
+            icon="check"
             onPress={() => router.navigate(`/library/${deckId}`)}
           />
         ) : (
@@ -265,7 +268,7 @@ function BarAdd({
       onPress={added ? onOpen : busy ? undefined : onAdd}
       drawn={40}
       accessibilityRole="button"
-      accessibilityLabel={added ? t`Open in Library` : t`Add to Library`}
+      accessibilityLabel={added ? t`In Library` : t`Add to Library`}
       accessibilityState={{ busy }}
     >
       {/* A fresh glass for each state: iOS drops the effect when a live glass view changes shape. */}

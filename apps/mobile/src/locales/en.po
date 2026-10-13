@@ -1579,9 +1579,6 @@ msgstr "Open {name}"
 msgid "Open Explore"
 msgstr "Open Explore"
 
-msgid "Open in Library"
-msgstr "Open in Library"
-
 msgid "Open it once with a connection, and it stays on this phone."
 msgstr "Open it once with a connection, and it stays on this phone."
 

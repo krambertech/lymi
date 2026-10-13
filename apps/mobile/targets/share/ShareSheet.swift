@@ -179,6 +179,13 @@ struct ShareSheet: View {
     .sheet(isPresented: $picking) { deckSheet }
     .sensoryFeedback(.success, trigger: addedTick)
     .task { await model.chooseByLanguage() }
+    .onChange(of: model.term) {
+      // A line about the last term no longer holds once it changes.
+      switch model.line {
+      case .skipped, .problem: model.line = nil
+      default: break
+      }
+    }
     .onChange(of: model.moved) { _, moved in
       guard moved else { return }
       glow = true
@@ -193,7 +200,7 @@ struct ShareSheet: View {
     Task {
       if await model.add() {
         addedTick += 1
-        try? await Task.sleep(for: .seconds(0.9))
+        try? await Task.sleep(for: .seconds(1.2))
         close()
       }
     }
@@ -241,7 +248,6 @@ struct ShareSheet: View {
     }
     .padding(.horizontal, 16)
     .frame(height: 44)
-    .frame(maxWidth: 220)
     .glass(Capsule(), tint: glow ? Color("amberSoft") : nil)
     .overlay {
       Capsule().strokeBorder(Color("amber"), lineWidth: 1.5).opacity(glow ? 1 : 0)

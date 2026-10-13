@@ -27,7 +27,7 @@ import { replaySplash, useReplays } from "../splash/replay";
 import { Analytics } from "../telemetry/analytics";
 import { startTelemetry } from "../telemetry/posthog";
 import { usePalette } from "../theme/palette";
-import { ToastHost } from "../ui/toast-host";
+import { clearToasts, ToastHost } from "../ui/toast-host";
 import { clearWidgets, WidgetSync } from "../widgets/sync";
 
 startTelemetry();
@@ -98,6 +98,7 @@ function Root() {
   useEffect(() => {
     if (!signedOut) return;
     forgetLearner(qc);
+    clearToasts();
     clearWidgets();
     void cancelReminders();
   }, [signedOut, qc]);

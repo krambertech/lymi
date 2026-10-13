@@ -60,6 +60,12 @@ export const toast = {
   },
 };
 
+/** Drops every toast, so an Undo never outlives the learner it belongs to. */
+export function clearToasts() {
+  items = [];
+  emit();
+}
+
 function useToasts() {
   return useSyncExternalStore(
     (l) => {
@@ -73,6 +79,7 @@ function useToasts() {
 /** Where toasts show: over every screen, above the tab bar on a tab's screens. Mounted once, in the root. */
 export function ToastHost() {
   const shown = useToasts();
+  useEffect(() => clearToasts, []);
   const insets = useSafeAreaInsets();
   const onTab = TABS.test(usePathname());
   const bottom = insets.bottom + (onTab ? TAB_BAR : 0) + 12;

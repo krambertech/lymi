@@ -1244,6 +1244,10 @@ function CardPlate({
     (s) => s.id === card.sectionId,
   )?.name;
   const picture = mode.cue === "image";
+  const reveal = () => {
+    countReveal();
+    onReveal?.();
+  };
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
@@ -1275,14 +1279,9 @@ function CardPlate({
     <Animated.View layout={glide} className="flex-1">
       <Pressable
         // Revealed, a tap does nothing and a hold opens the card's menu, so it never opens by accident.
-        onPress={
-          revealed
-            ? undefined
-            : () => {
-                countReveal();
-                onReveal?.();
-              }
-        }
+        onPress={revealed ? undefined : reveal}
+        // VoiceOver's double-tap would otherwise land on the card's centre, which can be the pronounce button.
+        onAccessibilityTap={revealed || !onReveal ? undefined : reveal}
         onLongPress={
           revealed && onMenu
             ? () => {

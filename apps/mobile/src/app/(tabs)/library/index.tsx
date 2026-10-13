@@ -325,37 +325,48 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
     .filter(Boolean)
     .join(" · ");
   const due = d.due > 0 ? d.due : undefined;
+  const href = `/library/${d.id}` as const;
+  const review = () => router.push(`/review?deck=${d.id}`);
+  const add = () => router.push("/capture");
   return (
-    <Link href={`/library/${d.id}`} asChild>
-      <Link.Trigger>
-        <Pressable
-          accessibilityRole="link"
-          accessibilityLabel={listRowLabel(
-            d.name,
-            due && plural(due, { one: "# card due", other: "# cards due" }),
-            line,
-          )}
-          style={({ pressed }) => ({ transform: [{ scale: pressed ? 0.99 : 1 }] })}
-        >
-          <ListRowFace first={first} title={d.name} line={line} count={due} end="open" />
-        </Pressable>
-      </Link.Trigger>
-      <Link.Preview />
-      <Link.Menu>
-        <Link.MenuAction
-          title={t`Review`}
-          icon="play"
-          onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-            router.push(`/review?deck=${d.id}`);
-          }}
-        />
-        <Link.MenuAction
-          title={t`Add a card`}
-          icon="plus"
-          onPress={() => router.push("/capture")}
-        />
-      </Link.Menu>
-    </Link>
+    // The native preview view hides its child from VoiceOver, so the row is announced and activated from here.
+    <View
+      accessible
+      accessibilityRole="link"
+      accessibilityLabel={listRowLabel(
+        d.name,
+        due && plural(due, { one: "# card due", other: "# cards due" }),
+        line,
+      )}
+      onAccessibilityTap={() => router.navigate(href)}
+      accessibilityActions={[
+        { name: "review", label: t`Review` },
+        { name: "add", label: t`Add a card` },
+      ]}
+      onAccessibilityAction={(e) => {
+        if (e.nativeEvent.actionName === "review") review();
+        if (e.nativeEvent.actionName === "add") add();
+      }}
+    >
+      <Link href={href} asChild>
+        <Link.Trigger>
+          <Pressable style={({ pressed }) => ({ transform: [{ scale: pressed ? 0.99 : 1 }] })}>
+            <ListRowFace first={first} title={d.name} line={line} count={due} end="open" />
+          </Pressable>
+        </Link.Trigger>
+        <Link.Preview />
+        <Link.Menu>
+          <Link.MenuAction
+            title={t`Review`}
+            icon="play"
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+              review();
+            }}
+          />
+          <Link.MenuAction title={t`Add a card`} icon="plus" onPress={add} />
+        </Link.Menu>
+      </Link>
+    </View>
   );
 }

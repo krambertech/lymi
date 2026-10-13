@@ -1,6 +1,6 @@
 # The phone's smoke journey: sign in with a password, grade three cards, end the review.
 # run.sh seeds the learner persona first and checks afterwards that the grades reached the Worker.
-appId: app.lymi.poc
+appId: app.lymi
 name: Sign in and review
 ---
 - launchApp:

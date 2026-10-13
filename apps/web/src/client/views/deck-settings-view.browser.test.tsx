@@ -43,6 +43,14 @@ test("saves a field the owner turns on at once", async () => {
   expect(onSave).toHaveBeenCalledWith({ enrichFields: ["meaning", "example", "notes"] });
 });
 
+test("saves the purpose the owner picks", async () => {
+  const onSave = vi.fn();
+  await renderSettings(deck(), onSave);
+  await expect.element(page.getByRole("radio", { name: /A language/ })).toBeChecked();
+  await page.getByRole("radio", { name: /A subject or exam/ }).click();
+  expect(onSave).toHaveBeenCalledWith({ purpose: "subject" });
+});
+
 test("saves the instructions when the field is left, and blank as none", async () => {
   const onSave = vi.fn();
   await renderSettings(deck(), onSave);

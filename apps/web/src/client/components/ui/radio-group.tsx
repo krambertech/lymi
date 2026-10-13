@@ -2,7 +2,7 @@ import { Radio as RadioPrimitive } from "@base-ui/react/radio";
 import { RadioGroup as RadioGroupPrimitive } from "@base-ui/react/radio-group";
 import { CHOICE_FADE, CHOICE_LEAVE, CHOICE_POP } from "@lymi/design";
 import { cn } from "cn";
-import { motion, useReducedMotionConfig } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { focusChosen, fromItem } from "../../lib/choice-focus";
 import { FieldItems, useField, useFieldControl } from "./field";
 
@@ -83,7 +83,7 @@ function RadioGroupItem({ className, disabled, ...props }: RadioPrimitive.Root.P
 }
 
 function RadioDot({ checked }: { checked: boolean }) {
-  const reduce = useReducedMotionConfig() ?? false;
+  const reduce = useReducedMotion() ?? false;
   return (
     <motion.span
       aria-hidden="true"

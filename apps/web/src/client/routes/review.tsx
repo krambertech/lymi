@@ -27,7 +27,7 @@ import { lanternFor } from "@lymi/design";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotionConfig } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   useCallback,
   useEffect,
@@ -173,7 +173,7 @@ function Review() {
   const qc = useQueryClient();
   const navigate = useNavigate();
   const add = useAddCard();
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   // The draw also feeds the header's count, so it loads in a round too.
   const draw = useQuery(drawQuery(scope));
   // A round from Today is a fixed list rather than a draw, walked in order.

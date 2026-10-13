@@ -5,7 +5,7 @@ import type { FieldSource, ReviewAid } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
 import { clsx } from "clsx";
 import { Anchor, type LucideIcon } from "lucide-react";
-import { motion, useReducedMotionConfig } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { type MouseEvent, useState } from "react";
 import type { Card } from "../lib/api";
 import { Button } from "./button";
@@ -94,7 +94,7 @@ interface ShowProps {
  */
 export function RecallAidShow({ steps, animate, onShow }: ShowProps) {
   const { i18n } = useLingui();
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   const [ready, setReady] = useState(!animate);
   const step = steps[0];
   if (!step) return null;
@@ -136,7 +136,7 @@ interface ShownProps {
  * a 4 px rise. Under reduced motion it only fades in.
  */
 export function RecallAidShown({ steps, taken, animate }: ShownProps) {
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   const arrive = !animate
     ? false
     : reduce

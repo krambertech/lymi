@@ -2,7 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { EASE_OUT } from "@lymi/design";
 import { cn } from "cn";
 import { Anchor, ChevronRight } from "lucide-react";
-import { motion, useReducedMotionConfig } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useState } from "react";
 
 /** The panel's box, shared by the live offer and the hidden copy that measures its room. */
@@ -55,7 +55,7 @@ export interface HookOfferProps {
  * focused until it can be seen.
  */
 export function HookOffer({ delay, animate, parked, onOpen, onShown }: HookOfferProps) {
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   const [ready, setReady] = useState(false);
   const travel = animate && !reduce;
   const idle = !ready || parked;

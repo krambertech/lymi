@@ -31,7 +31,7 @@ import {
   useAnimate,
   useIsPresent,
   useMotionValue,
-  useReducedMotionConfig,
+  useReducedMotion,
   useTransform,
   type Variants,
 } from "motion/react";
@@ -119,7 +119,7 @@ export function ReviewHeader({
   onClose,
 }: ReviewHeaderProps) {
   const { t } = useLingui();
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   const done = round ? round.done : attempts;
   const size = round ? round.size : goal;
   return (
@@ -248,7 +248,7 @@ function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
   const { t, i18n } = useLingui();
   const button = useRef<HTMLButtonElement>(null);
   const [scope, animate] = useAnimate<HTMLSpanElement>();
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   const shaken = useRef(error);
   const slow = useSlowLoad(state === "loading") && state === "loading";
 
@@ -298,7 +298,7 @@ function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
  * decision.
  */
 function TapHint({ lifted, aided }: { lifted: boolean; aided: boolean }) {
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   return (
     <motion.div
       aria-hidden="true"
@@ -553,7 +553,7 @@ export function ReviewCard({
   className,
 }: ReviewCardProps) {
   const { t, i18n } = useLingui();
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   const { card, mode } = item;
   const picture = mode.cue === "image" ? card.image : null;
   const noMeaning = t`No meaning yet`;
@@ -1135,7 +1135,7 @@ const gradeRise: Variants = {
  */
 function OpeningStrip({ animate: wanted, children }: { animate: boolean; children: ReactNode }) {
   // Height is not a transform, so MotionConfig's reduced motion does not stop it; this does.
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   const animate = wanted && !reduce;
   const [opened, setOpened] = useState(!animate);
   // A closing strip is only a picture of the grades: nothing in it can be pressed, focused or read out.
@@ -1420,7 +1420,7 @@ export function ReviewComplete({
   focusOnMount = false,
 }: ReviewCompleteProps) {
   const { t } = useLingui();
-  const reduce = !!useReducedMotionConfig();
+  const reduce = !!useReducedMotion();
   const headingId = useId();
   const heading = useRef<HTMLHeadingElement>(null);
   const [landed, setLanded] = useState(reduce);

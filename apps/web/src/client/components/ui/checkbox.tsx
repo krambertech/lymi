@@ -1,7 +1,7 @@
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
 import { CHOICE_DRAW, CHOICE_FADE, CHOICE_LEAVE, CHOICE_POP, INSTANT } from "@lymi/design";
 import { cn } from "cn";
-import { motion, useAnimate, useReducedMotionConfig } from "motion/react";
+import { motion, useAnimate, useReducedMotion } from "motion/react";
 import * as React from "react";
 import { useField, useFieldControl } from "./field";
 
@@ -41,7 +41,7 @@ function Checkbox({ className, disabled, ...props }: CheckboxPrimitive.Root.Prop
 }
 
 function CheckboxBox({ checked, indeterminate }: { checked: boolean; indeterminate: boolean }) {
-  const reduce = useReducedMotionConfig() ?? false;
+  const reduce = useReducedMotion() ?? false;
   const on = checked || indeterminate;
   const [scope, animate] = useAnimate<HTMLSpanElement>();
   const previous = React.useRef(on);

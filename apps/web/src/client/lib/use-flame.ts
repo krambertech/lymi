@@ -4,7 +4,7 @@ import {
   animate,
   useMotionTemplate,
   useMotionValue,
-  useReducedMotionConfig,
+  useReducedMotion,
   useTransform,
 } from "motion/react";
 import { useEffect, useRef } from "react";
@@ -29,7 +29,7 @@ export function useFlame({
   fed?: number | undefined;
   out?: boolean | undefined;
 }) {
-  const reduce = useReducedMotionConfig() ?? false;
+  const reduce = useReducedMotion() ?? false;
   const size = useMotionValue(initial);
   const breath = useMotionValue(0);
   const lastFed = useRef(fed);

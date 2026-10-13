@@ -97,6 +97,26 @@
       }
     },
     {
+      "includes": ["apps/web/**", "apps/site/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "motion/react": {
+                    "importNames": ["useReducedMotionConfig"],
+                    "message": "Use useReducedMotion() instead: the web has no MotionConfig provider, so useReducedMotionConfig() returns false even when the learner asks for reduced motion."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
       "includes": ["apps/mobile/**"],
       "linter": {
         "rules": {

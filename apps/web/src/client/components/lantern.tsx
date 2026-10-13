@@ -14,7 +14,7 @@ import {
   interpolate,
   type MotionStyle,
   motion,
-  useReducedMotionConfig,
+  useReducedMotion,
   useTransform,
 } from "motion/react";
 import { type CSSProperties, type RefObject, useEffect, useRef, useState } from "react";
@@ -140,7 +140,7 @@ function usePauseOffscreen(ref: RefObject<Element | null>, looping: boolean) {
  * flame was fed; the spark says so at a glance.
  */
 function Sparks({ fed, out }: { fed: number; out: boolean }) {
-  const reduce = useReducedMotionConfig() ?? false;
+  const reduce = useReducedMotion() ?? false;
   const [bursts, setBursts] = useState<number[]>([]);
   const lastFed = useRef(fed);
   const nextId = useRef(0);

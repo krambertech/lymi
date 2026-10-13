@@ -26,7 +26,7 @@ import {
   AnimatePresence,
   motion,
   type Transition,
-  useReducedMotionConfig,
+  useReducedMotion,
   type Variants,
 } from "motion/react";
 import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from "react";
@@ -176,7 +176,7 @@ export function WelcomeView({
   error,
 }: Props) {
   const { t, i18n } = useLingui();
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   const shortcut = joined !== undefined;
   // The shortcut is two short screens with its deck on the URL, so a reload has nothing to restore.
   const [saved] = useState(() => (shortcut ? null : readProgress()));
@@ -617,7 +617,7 @@ const HELLO = { pool: 180, embers: 520, heading: 420, lede: 520, body: 700 } as 
  * room, then what comes next. A deck the learner arrived with leads, so they see it made it.
  */
 function Hello({ joined }: { joined: JoinedDeck | undefined }) {
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   const [embers] = useState(() => (reduce ? [] : endEmbers(9)));
   return (
     <div className="mx-auto grid w-full max-w-md justify-items-center pt-2 text-center">
@@ -655,7 +655,7 @@ const HOW_STEP_MS = 650;
  * from step to step and each number lights as the light reaches it; then it rests.
  */
 function HowItWorks({ startAt }: { startAt: number }) {
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   const [reached, setReached] = useState(reduce ? 3 : 0);
   useEffect(() => {
     if (reduce) return;
@@ -792,7 +792,7 @@ function ChoiceGroup({
 }
 
 function Tick() {
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   const pop: Transition = reduce ? { duration: 0 } : CHOICE_POP;
   return (
     <motion.span
@@ -976,7 +976,7 @@ function LanguagePicker({
   item: Variants;
 }) {
   const { t, i18n } = useLingui();
-  const reduce = useReducedMotionConfig();
+  const reduce = useReducedMotion();
   const pills = languages.slice(0, PILLS);
   const [other, setOther] = useState(value !== null && !pills.includes(value));
   const [typed, setTyped] = useState(value !== null && !pills.includes(value) ? name(value) : "");

@@ -23,7 +23,7 @@ A change is verified when the feature it touches has been driven in a running pr
 
 ## Launch
 
-On the desktop app, start the `lymi` launch configuration with the Browser pane and use the port it reports. Anywhere else, such as a cloud session, run `node .agents/skills/verify/scripts/server.mjs start`: from a fresh clone after `pnpm install` it writes `apps/web/.dev.vars` from the example when there is none, migrates the local D1 (rebuilding it with `pnpm local db:fresh` when a migration fails), starts the product on 5241 or the next free port, and prints the origin once `/api/health` answers. The first page after a cold start waits while Vite bundles the dependencies; the runner allows it 90 seconds.
+On the desktop app, start the `lymi` launch configuration with the Browser pane and use the port it reports. Anywhere else, such as a cloud session, run `node .agents/skills/verify/scripts/server.mjs start`: from a fresh clone after `pnpm install` it writes `apps/web/.dev.vars` from the example when there is none, migrates the local D1 (rebuilding it with `pnpm local db:fresh` when a migration fails), starts the product on 5241 or the next free port, and prints the origin once `/api/health` answers. The first page after a cold start waits while Vite bundles the dependencies, and each route compiles on its first visit; the runner allows the first page 90 seconds and every later action and assertion 15.
 
 Each recipe signs in through `/api/dev/sign-in?as=<persona>&reset=1`, so it starts from the persona's own data whatever ran before. Personas are in [Become a persona](../../../docs/local-dev.md#become-a-persona).
 

@@ -81,6 +81,8 @@ function redact(text) {
   return String(text).replace(/(https?:\/\/[^\s?#"'`]+)\?[^\s#"'`)]*/g, "$1");
 }
 
+const patient = expect.configure({ timeout: 15_000 });
+
 function failure(error) {
   return redact(stripVTControlCharacters(error.message)).split("\n").slice(0, 6).join("\n");
 }
@@ -101,6 +103,8 @@ async function driveFeature(browser, name) {
   mkdirSync(dir, { recursive: true });
 
   const context = await browser.newContext({ ...viewport, baseURL: base, reducedMotion: "reduce" });
+  // A dev server compiles each route on first visit, so waits allow for a cold start.
+  context.setDefaultTimeout(15_000);
   const page = await context.newPage();
   const problems = [];
   page.on("pageerror", (error) => problems.push(redact(`page error: ${error.message}`)));
@@ -159,7 +163,7 @@ async function driveFeature(browser, name) {
     const cookie = (await context.cookies(base)).map((c) => `${c.name}=${c.value}`).join("; ");
     checks = await doctor({ url: base, sha, version: values.version, persona, cookie });
     if (!report(checks)) throw new Error("the doctor found this instance not worth driving");
-    await feature.default({ page, base, step, api, expect });
+    await feature.default({ page, base, step, api, expect: patient });
   } catch (error) {
     if (!error.recorded)
       steps.push({ action: "set up", ok: false, error: failure(error), files: [] });

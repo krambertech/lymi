@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { errorMessage } from "@lymi/client/api";
+import { errorMessage, type Section } from "@lymi/client/api";
 import {
   type DeckFilters,
   type DeckGroup,
@@ -15,7 +15,7 @@ import {
 import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { Alert, Pressable, type TextStyle, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDeckExits } from "../../../data/decks";
@@ -24,6 +24,12 @@ import { useNextDue } from "../../../data/next-due";
 import { useDeckCards, useDecks, useSections, useSeriesList } from "../../../data/queries";
 import { useMoveNotice, useSeriesActions } from "../../../data/series";
 import { formatList } from "../../../i18n/list";
+import {
+  ReadyNote,
+  SectionHeading,
+  SectionProgress,
+  useStartSection,
+} from "../../../sections/sections";
 import { useOnline } from "../../../streak/goal-picker";
 import { usePalette } from "../../../theme/palette";
 import { EmptyState } from "../../../ui/empty-state";
@@ -51,7 +57,8 @@ export default function Deck() {
   const gone = !!decks.data && !deck;
   const cards = useDeckCards(id);
   const rows: DeckRow[] = cards.data ?? [];
-  const sections = useSections(id).data?.sections ?? [];
+  const sectionsQuery = useSections(id);
+  const sections = sectionsQuery.data?.sections ?? [];
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
   const [chosenSort, setSort] = useState<DeckSort | null>(null);
   const sort = chosenSort ?? (sections.length ? "section" : "added");
@@ -66,6 +73,10 @@ export default function Deck() {
     );
   }, [rows, filters, sort, i18n.locale, sections]);
   const owner = deck?.role === "owner";
+  // A deck that opens every section at once has no "where you are" to show.
+  const progress =
+    deck?.sectionProgression === "open" ? null : (sectionsQuery.data?.progress ?? null);
+  const sectionStart = useStartSection(id, sections);
   const exits = useDeckExits(deck);
   const [moving, setMoving] = useState(false);
   // Where Review ends on the page; past it, under the bar, the tab bar's accessory takes over.
@@ -190,7 +201,21 @@ export default function Deck() {
             className="gap-3"
             onLayout={(e) => setReviewEnd(e.nativeEvent.layout.y + e.nativeEvent.layout.height)}
           >
-            <Top deck={deck} rows={rows} />
+            <Top
+              deck={deck}
+              rows={rows}
+              section={
+                progress && (
+                  <SectionProgress
+                    sections={sections}
+                    progress={progress}
+                    due={deck.due}
+                    starting={sectionStart.starting}
+                    onStart={sectionStart.start}
+                  />
+                )
+              }
+            />
             {deck.due > 0 && <ReviewButton deck={deck} />}
           </View>
           <View className="gap-6">
@@ -211,7 +236,16 @@ export default function Deck() {
                 />
               </Plate>
             ) : (
-              groups.map((g) => <Group key={g.key} group={g} />)
+              groups.map((g) => (
+                <Group
+                  key={g.key}
+                  group={g}
+                  deckId={id}
+                  hereId={progress?.currentId ?? null}
+                  starting={sectionStart.starting}
+                  onStart={sectionStart.start}
+                />
+              ))
             )}
           </View>
         </>
@@ -236,7 +270,16 @@ function useCounts(rows: DeckRow[]) {
  * one line, its cards' states as one bar with their counts under it, then Review. Once Review has
  * scrolled away, the tab bar's accessory carries it. phone.md "Library".
  */
-function Top({ deck, rows }: { deck: DeckData; rows: DeckRow[] }) {
+function Top({
+  deck,
+  rows,
+  section,
+}: {
+  deck: DeckData;
+  rows: DeckRow[];
+  /** Where the learner is in a deck whose sections open in order. */
+  section?: ReactNode;
+}) {
   const { t, i18n } = useLingui();
   const p = usePalette();
   const counts = useCounts(rows);
@@ -293,6 +336,7 @@ function Top({ deck, rows }: { deck: DeckData; rows: DeckRow[] }) {
         </View>
       </View>
       {line && <Text className="text-sm text-muted">{line}</Text>}
+      {section}
     </Plate>
   );
 }
@@ -507,7 +551,20 @@ function Tools({
 }
 
 /** One heading and its words: a section, when it's back, or the day the words arrived. */
-function Group({ group: g }: { group: DeckGroup }) {
+function Group({
+  group: g,
+  deckId,
+  hereId,
+  starting,
+  onStart,
+}: {
+  group: DeckGroup;
+  deckId: string;
+  /** The section the learner is on, for You are here. */
+  hereId: string | null;
+  starting: string | undefined;
+  onStart: (section: Section) => void;
+}) {
   const { t, i18n } = useLingui();
   const title =
     g.kind === "section"
@@ -517,20 +574,37 @@ function Group({ group: g }: { group: DeckGroup }) {
         : g.kind === "day"
           ? i18n.date(g.day, { weekday: "long", day: "numeric", month: "long" })
           : null;
+  const section = g.kind === "section" ? g.section : null;
   return (
     <View>
-      {title && (
-        <SectionTitle
-          end={
-            <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
-              {plural(g.rows.length, { one: "# card", other: "# cards" })}
-            </Text>
-          }
-        >
-          {title}
-        </SectionTitle>
+      {section?.status === "ready" && (
+        <ReadyNote section={section} starting={starting === section.id} onStart={onStart} />
       )}
-      <Plate className="overflow-hidden">
+      {section ? (
+        <SectionHeading
+          deckId={deckId}
+          section={section}
+          count={g.rows.length}
+          here={section.id === hereId}
+          starting={starting === section.id}
+          onStart={onStart}
+        />
+      ) : (
+        title && (
+          <SectionTitle
+            end={
+              <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+                {plural(g.rows.length, { one: "# card", other: "# cards" })}
+              </Text>
+            }
+          >
+            {title}
+          </SectionTitle>
+        )
+      )}
+      <Plate
+        className={`overflow-hidden ${section && section.status !== "open" ? "opacity-70" : ""}`}
+      >
         {g.rows.map((row, i) => (
           <WordRow key={row.card.id} row={row} first={i === 0} />
         ))}

@@ -106,9 +106,29 @@ msgstr "{0, plural, one {review a day} other {reviews a day}}"
 msgid "{0, plural, one {Show # older entry} other {Show # older entries}}"
 msgstr "{0, plural, one {Show # older entry} other {Show # older entries}}"
 
+#. placeholder {0}: opening.length
+msgid "{0, plural, one {Start section} other {Start # sections}}"
+msgstr "{0, plural, one {Start section} other {Start # sections}}"
+
+#. placeholder {0}: current.notStarted
+msgid "{0, plural, one {The next section opens once the last card of this section comes up in review.} other {The next section opens once the last # cards of this section come up in review.}}"
+msgstr "{0, plural, one {The next section opens once the last card of this section comes up in review.} other {The next section opens once the last # cards of this section come up in review.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
+msgstr "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
+
 #. placeholder {0}: busiest.count
 msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
 msgstr "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {You know {known} of # card in {currentName}, the last section.} other {You know {known} of # cards in {currentName}, the last section.}}"
+msgstr "{0, plural, one {You know {known} of # card in {currentName}, the last section.} other {You know {known} of # cards in {currentName}, the last section.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
+msgstr "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
 
 #. placeholder {0}: shelfOf(deck)
 msgid "{0} · In Library"
@@ -130,6 +150,9 @@ msgstr "{0} remembered, {1} forgotten."
 #. placeholder {0}: deck.owner.name
 msgid "{0} shared a deck"
 msgstr "{0} shared a deck"
+
+msgid "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
+msgstr "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
 
 msgid "{cards, plural, one {# card} other {# cards}}"
 msgstr "{cards, plural, one {# card} other {# cards}}"
@@ -236,6 +259,12 @@ msgstr "{name} joined {deck}"
 msgid "{name} left {deck}"
 msgstr "{name} left {deck}"
 
+msgid "{nextName} is ready"
+msgstr "{nextName} is ready"
+
+msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
+msgstr "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
+
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "{passed} remembered, {failed} forgotten"
 
@@ -244,6 +273,12 @@ msgstr "{queued, plural, one {# grade or change made offline is still waiting to
 
 msgid "{reps, plural, one {# review} other {# reviews}}"
 msgstr "{reps, plural, one {# review} other {# reviews}}"
+
+msgid "{sectionName} is ready. Start it to review its cards."
+msgstr "{sectionName} is ready. Start it to review its cards."
+
+msgid "{sectionName}, not open yet, {count}"
+msgstr "{sectionName}, not open yet, {count}"
 
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {day in a row} other {days in a row}}"
@@ -779,6 +814,9 @@ msgstr "Couldn’t search cards"
 msgid "Couldn’t send your feedback"
 msgstr "Couldn’t send your feedback"
 
+msgid "Couldn’t start the section"
+msgstr "Couldn’t start the section"
+
 msgid "Couldn’t take back your grade for “{term}”. It still counts."
 msgstr "Couldn’t take back your grade for “{term}”. It still counts."
 
@@ -987,6 +1025,9 @@ msgstr "Estonian"
 
 msgid "Every card"
 msgstr "Every card"
+
+msgid "Every section is open"
+msgstr "Every section is open"
 
 msgid "Every section is open, so any card can come up in review."
 msgstr "Every section is open, so any card can come up in review."
@@ -1673,6 +1714,9 @@ msgstr "Open Settings"
 msgid "Open Settings on the web"
 msgstr "Open Settings on the web"
 
+msgid "Options for {sectionName}"
+msgstr "Options for {sectionName}"
+
 msgid "Options for {seriesName}"
 msgstr "Options for {seriesName}"
 
@@ -1857,6 +1901,9 @@ msgstr "Review on your own schedule. New cards appear as they are added."
 
 msgid "Review these decks together, in this order."
 msgstr "Review these decks together, in this order."
+
+msgid "Review this section"
+msgstr "Review this section"
 
 msgid "Review whenever you have a moment."
 msgstr "Review whenever you have a moment."
@@ -2061,6 +2108,18 @@ msgstr "Source"
 msgctxt "language"
 msgid "Spanish"
 msgstr "Spanish"
+
+msgid "Start {nextName}"
+msgstr "Start {nextName}"
+
+msgid "Start {sectionName}"
+msgstr "Start {sectionName}"
+
+msgid "Start {sectionName} early?"
+msgstr "Start {sectionName} early?"
+
+msgid "Start anyway"
+msgstr "Start anyway"
 
 msgid "Start with a deck"
 msgstr "Start with a deck"
@@ -2400,6 +2459,9 @@ msgstr "You"
 msgid "You are already in this deck."
 msgstr "You are already in this deck."
 
+msgid "You are here"
+msgstr "You are here"
+
 msgid "You are still in the deck."
 msgstr "You are still in the deck."
 
@@ -2414,6 +2476,9 @@ msgstr "You cannot add this deck."
 
 msgid "You cannot join this deck through this link."
 msgstr "You cannot join this deck through this link."
+
+msgid "You know {knownN} of {total, plural, one {# card} other {# cards}}"
+msgstr "You know {knownN} of {total, plural, one {# card} other {# cards}}"
 
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "You start with the first section. The next opens as you learn this one."

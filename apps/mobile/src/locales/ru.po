@@ -106,9 +106,29 @@ msgstr "{0, plural, one {повторение в день} few {повторен
 msgid "{0, plural, one {Show # older entry} other {Show # older entries}}"
 msgstr "{0, plural, one {Показать ещё # старую запись} few {Показать ещё # старые записи} many {Показать ещё # старых записей} other {Показать ещё # записи}}"
 
+#. placeholder {0}: opening.length
+msgid "{0, plural, one {Start section} other {Start # sections}}"
+msgstr ""
+
+#. placeholder {0}: current.notStarted
+msgid "{0, plural, one {The next section opens once the last card of this section comes up in review.} other {The next section opens once the last # cards of this section come up in review.}}"
+msgstr ""
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
+msgstr ""
+
 #. placeholder {0}: busiest.count
 msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
 msgstr "{0, plural, one {Сегодня самый загруженный день: # карточка.} few {Сегодня самый загруженный день: # карточки.} many {Сегодня самый загруженный день: # карточек.} other {Сегодня самый загруженный день: # карточки.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {You know {known} of # card in {currentName}, the last section.} other {You know {known} of # cards in {currentName}, the last section.}}"
+msgstr ""
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
+msgstr ""
 
 #. placeholder {0}: shelfOf(deck)
 msgid "{0} · In Library"
@@ -129,6 +149,9 @@ msgstr "Запомнено: {0}, забыто: {1}."
 
 #. placeholder {0}: deck.owner.name
 msgid "{0} shared a deck"
+msgstr ""
+
+msgid "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
 msgstr ""
 
 msgid "{cards, plural, one {# card} other {# cards}}"
@@ -236,6 +259,12 @@ msgstr "{name} теперь в колоде «{deck}»"
 msgid "{name} left {deck}"
 msgstr "{name} больше не в колоде «{deck}»"
 
+msgid "{nextName} is ready"
+msgstr ""
+
+msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
+msgstr ""
+
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "Запомнено: {passed}, забыто: {failed}"
 
@@ -244,6 +273,12 @@ msgstr "{queued, plural, one {# оценка или изменение, сдел
 
 msgid "{reps, plural, one {# review} other {# reviews}}"
 msgstr "{reps, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
+
+msgid "{sectionName} is ready. Start it to review its cards."
+msgstr ""
+
+msgid "{sectionName}, not open yet, {count}"
+msgstr ""
 
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {день подряд} few {дня подряд} many {дней подряд} other {дня подряд}}"
@@ -779,6 +814,9 @@ msgstr "Не удалось найти карточки"
 msgid "Couldn’t send your feedback"
 msgstr "Не удалось отправить сообщение"
 
+msgid "Couldn’t start the section"
+msgstr ""
+
 msgid "Couldn’t take back your grade for “{term}”. It still counts."
 msgstr "Не удалось отменить оценку для «{term}». Она засчитана."
 
@@ -987,6 +1025,9 @@ msgstr "Эстонский"
 
 msgid "Every card"
 msgstr "Все карточки"
+
+msgid "Every section is open"
+msgstr ""
 
 msgid "Every section is open, so any card can come up in review."
 msgstr "Все разделы открыты, так что любая карточка может появиться в повторении."
@@ -1673,6 +1714,9 @@ msgstr ""
 msgid "Open Settings on the web"
 msgstr "Открыть настройки в веб-версии"
 
+msgid "Options for {sectionName}"
+msgstr ""
+
 msgid "Options for {seriesName}"
 msgstr "Параметры «{seriesName}»"
 
@@ -1857,6 +1901,9 @@ msgstr ""
 
 msgid "Review these decks together, in this order."
 msgstr "Повторяй эти колоды вместе, в этом порядке."
+
+msgid "Review this section"
+msgstr ""
 
 msgid "Review whenever you have a moment."
 msgstr ""
@@ -2061,6 +2108,18 @@ msgstr "Источник"
 msgctxt "language"
 msgid "Spanish"
 msgstr "Испанский"
+
+msgid "Start {nextName}"
+msgstr ""
+
+msgid "Start {sectionName}"
+msgstr ""
+
+msgid "Start {sectionName} early?"
+msgstr ""
+
+msgid "Start anyway"
+msgstr ""
 
 msgid "Start with a deck"
 msgstr "Начни с колоды"
@@ -2400,6 +2459,9 @@ msgstr "Ты"
 msgid "You are already in this deck."
 msgstr ""
 
+msgid "You are here"
+msgstr ""
+
 msgid "You are still in the deck."
 msgstr ""
 
@@ -2413,6 +2475,9 @@ msgid "You cannot add this deck."
 msgstr ""
 
 msgid "You cannot join this deck through this link."
+msgstr ""
+
+msgid "You know {knownN} of {total, plural, one {# card} other {# cards}}"
 msgstr ""
 
 msgid "You start with the first section. The next opens as you learn this one."

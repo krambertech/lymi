@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { DIGIT_ROLL } from "@lymi/design";
 import { clsx } from "clsx";
-import { motion, useReducedMotion, useReducedMotionConfig } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 
 interface Props {
@@ -20,10 +20,7 @@ const isDigit = (char: string | undefined) => !!char && /\p{Nd}/u.test(char);
  */
 export function RollingNumber({ value, animate = true, className }: Props) {
   const { i18n } = useLingui();
-  // The site has no MotionConfig, so the system setting is read directly too.
-  const configured = useReducedMotionConfig();
-  const system = useReducedMotion();
-  const reduce = configured || !!system;
+  const reduce = !!useReducedMotion();
   const [last, setLast] = useState(value);
   const [roll, setRoll] = useState<{ from: string; up: boolean } | null>(null);
   if (last !== value) {

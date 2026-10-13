@@ -14,7 +14,9 @@ What is the learner giving?
  ├── Several of a fixed set → a Checkbox per option, each in a horizontal Field (ReviewModesField)
  └── One of a fixed set of options
       ├── 2–4 short views of the same thing (Theme, a chart's range) → Segmented
-      ├── 2–5 choices that each need a sentence → RadioGroup of RadioCard
+      ├── 2–5 choices that each need a sentence
+      │    ├── The question the form is about → RadioGroup of RadioCard
+      │    └── A secondary question in the same sheet → Select with a caption per row
       ├── Up to 15 options, or the learner's own list (decks, sections) → Select
       └── A fixed list longer than 15 that is searched by name (languages) → Combobox
 ```
@@ -30,6 +32,8 @@ Controls size by the **viewport**, not the container. A phone is a phone whateve
 ## A form row is a Field
 
 Put `FieldLabel` above the control, then `FieldDescription` and `FieldError` under it. The parts wire themselves, so never write an `id` or `aria-describedby` by hand.
+
+A sheet that makes something, such as New deck, puts each `FieldDescription` directly under its label instead, because the learner reads it before answering; it sits flush under the label and the control follows. Settings screens and edit forms keep it under the control, where it explains a value already chosen. One form never mixes the two.
 
 ```tsx
 // Correct, from new-deck-sheet.tsx
@@ -75,6 +79,8 @@ Both are the same box as every other control when closed.
 
 `Combobox` is a Select you search, and takes the machine's shape the same way: a panel under the box on a desktop, or above it when there is more room, and a drawer titled with the field's name on touch. The search field leads and takes focus, and the list keeps one height in the drawer while it filters, so the drawer does not jump with each letter. The names filter as you type, the first match is highlighted so Enter takes it, and a letter typed on the closed box opens it with that letter searched.
 
+A row may carry a caption, `SelectItem`'s `description`, when each option needs a sentence and a sheet already spends its cards on another question: New deck asks its purpose with cards and its review mode with a captioned Select. The panel then takes the box's width (`w-(--anchor-width)`) so a caption wraps rather than widening the list past the sheet, and the chosen row's caption is the field's description.
+
 Anything a list accepts beyond its rows, such as a language tag it has never heard of, belongs to the product field that holds it (`LanguageField`), not to the primitive.
 
 ## Choice controls
@@ -85,6 +91,7 @@ Anything a list accepts beyond its rows, such as a language tag it has never hea
 - A radio group is named by its legend or `aria-label`, and each item takes its name from its own Field or, in a `RadioCard`, from the row's title, or from its children when a row carries its own content.
 - A radio group and a toggle group are each one Tab stop. In a radio group the arrows move the choice, as on any platform; in a toggle group they move focus and Space or Enter chooses. The arrows skip a disabled option, which is still read out with the rest.
 - The hit area reaches 44 px through a pseudo-element, so a 20 px box never moves the row around it.
+- One group of `RadioCard`s per form, for the question the form is about. A card leads with an `icon` when the options are kinds of thing, such as a deck's purpose; every card in the group has one, or none does.
 - Checked is amber on a checkbox and a switch, and ink on a radio, where selection is the ring and the dot.
 
 ## Sheets

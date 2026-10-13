@@ -17,14 +17,14 @@
       "fallbackToCacheTimeout": 0
     },
     "ios": {
-      "bundleIdentifier": "app.lymi.poc",
+      "bundleIdentifier": "app.lymi",
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
       }
     },
     "android": {
-      "package": "app.lymi.poc",
+      "package": "app.lymi",
       "adaptiveIcon": {
         "backgroundColor": "#130d09",
         "foregroundImage": "./assets/android-icon-foreground.png",

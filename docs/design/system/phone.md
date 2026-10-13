@@ -134,6 +134,7 @@ Liquid Glass suits Lymi: it is a material that holds light, and the lantern is a
 
 - **Widget:** one widget, two sizes. Small is the lantern with what is due; medium is the Week, the run and seven glasses with the due count. Both open a review. In a tinted or clear Home Screen the lantern has its own one-colour drawing.
 - **Lock Screen:** a ring for today's goal around the due count, and a line with the count, the goal and the run.
+- **Share to Lymi:** Lymi in the share sheet for selected text, from Safari, Notes or a transcript. It is Add a word inside the share sheet, with the term filled in, the page's title as the source, the meaning left for the AI, and close, the deck and Add in the top corners; Add closes it after a moment on the line that says where the card went. It opens on the deck it added to last, then moves to the learner's deck in the term's language with a short amber glow and a line that says so; a deck chosen by hand stays. A term already in the decks keeps the sheet open with the line saying which deck has it. Signed out, it says to sign in to Lymi first ([ADR 0035](../../adr/0035-share-to-lymi-is-a-swiftui-extension-on-the-apps-session.md)).
 - **Controls:** Add a word and Review, for Control Center, the Lock Screen and the Action button.
 - **Reminder:** one ordinary notification at the learner's time, only while the day is open and something is due. It says how many cards are due and offers Review now and In an hour. It never mentions the streak, because PRODUCT.md rules out streak pressure.
 - No Live Activity for now.

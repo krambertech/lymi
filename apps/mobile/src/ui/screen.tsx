@@ -51,6 +51,8 @@ interface Props {
   actionsArrive?: boolean;
   /** Called as the end of a long page comes near, so a list loads on as it is read. */
   onEndReached?: () => void;
+  /** Told once each time the page scrolls past this content offset, or back above it. */
+  past?: { y: number; onChange: (past: boolean) => void } | undefined;
   children: ReactNode;
 }
 
@@ -78,6 +80,7 @@ export function Screen({
   ground,
   actionsArrive = false,
   onEndReached,
+  past,
   children,
 }: Props) {
   const insets = useSafeAreaInsets();
@@ -97,6 +100,17 @@ export function Screen({
       runOnJS(endJS)();
     }
   });
+  const pastY = past?.y ?? Number.POSITIVE_INFINITY;
+  const pastChange = past?.onChange;
+  const tellPast = (now: boolean) => pastChange?.(now);
+  useAnimatedReaction(
+    () => y.value > pastY,
+    // The first value is reported too, so a page already scrolled says so when the point moves.
+    (now, was) => {
+      if (now !== was) runOnJS(tellPast)(now);
+    },
+    [pastY, pastChange],
+  );
   useAnimatedReaction(
     () => y.value > TITLE_GONE / 2,
     (now, was) => {

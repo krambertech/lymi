@@ -473,7 +473,11 @@ export function AfterAction() {
             {
               label: "After an action",
               render: () => (
-                <Toast title="Moved “Verbi”" action={{ label: "Undo", onPress: () => undefined }} />
+                <Toast
+                  title="Moved “Verbi”"
+                  announce={false}
+                  action={{ label: "Undo", onPress: () => undefined }}
+                />
               ),
             },
             {

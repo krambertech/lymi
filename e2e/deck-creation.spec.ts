@@ -48,7 +48,7 @@ async function openNewDeck(page: Page) {
 async function createDeck(page: Page, name: string) {
   const dialog = await openNewDeck(page);
   await dialog.getByRole("textbox", { name: "Name", exact: true }).fill(name);
-  await dialog.getByRole("button", { name: "Other", exact: true }).click();
+  await dialog.getByRole("radio", { name: /Something else/ }).click();
   await dialog.getByRole("button", { name: "Create deck", exact: true }).click();
   await expect(page).toHaveURL(/\/library\/[^/]+$/);
   await expect(page.getByRole("heading", { name: name.trim(), exact: true })).toBeVisible();
@@ -94,7 +94,7 @@ test.describe("deck and card creation", () => {
     dialog = await openNewDeck(page);
     const emptyInput = dialog.getByRole("textbox", { name: "Name", exact: true });
     await expect(emptyInput).toHaveValue("");
-    await dialog.getByRole("button", { name: "Other", exact: true }).click();
+    await dialog.getByRole("radio", { name: /Something else/ }).click();
     await emptyInput.fill("   ");
     await emptyInput.press("Enter");
     await expect(dialog.getByRole("alert")).toHaveText("Give the deck a name.");

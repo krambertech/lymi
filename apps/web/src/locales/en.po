@@ -1036,9 +1036,6 @@ msgstr "Back to streak"
 msgid "Backup script on the laptop"
 msgstr "Backup script on the laptop"
 
-msgid "Both"
-msgstr "Both"
-
 msgid "Both of the above, one card at a time."
 msgstr "Both of the above, one card at a time."
 
@@ -2316,10 +2313,6 @@ msgstr "Known"
 msgid "Language"
 msgstr "Language"
 
-msgctxt "deck purpose"
-msgid "Language"
-msgstr "Language"
-
 #. placeholder {0}: languageName(next, i18n.locale)
 msgid "Language changed to {0}"
 msgstr "Language changed to {0}"
@@ -2949,10 +2942,6 @@ msgctxt "Between two ways to sign in"
 msgid "or"
 msgstr "or"
 
-msgctxt "deck purpose"
-msgid "Other"
-msgstr "Other"
-
 msgid "Other subjects"
 msgstr "Other subjects"
 
@@ -3290,6 +3279,9 @@ msgstr "Review forgotten"
 
 msgid "Review in Lymi"
 msgstr "Review in Lymi"
+
+msgid "Review mode"
+msgstr "Review mode"
 
 msgid "Review new"
 msgstr "Review new"
@@ -3669,10 +3661,6 @@ msgstr "Strong"
 
 msgid "Stuck? Read the guide"
 msgstr "Stuck? Read the guide"
-
-msgctxt "deck purpose"
-msgid "Subject"
-msgstr "Subject"
 
 msgid "Subjects"
 msgstr "Subjects"

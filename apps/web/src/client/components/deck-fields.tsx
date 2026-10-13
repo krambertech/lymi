@@ -5,7 +5,6 @@ import { type DeckPurpose, type Directions, LANGUAGE_TAGS } from "@lymi/core";
 import { ClipboardCheck, Languages, Shapes } from "lucide-react";
 import { type ReactNode, useId, useState } from "react";
 import { RadioCard } from "./radio-card";
-import { Segmented } from "./segmented";
 import {
   Combobox,
   ComboboxContent,
@@ -20,6 +19,7 @@ import {
 } from "./ui/combobox";
 import { Field, FieldDescription, FieldError, FieldLabel } from "./ui/field";
 import { RadioGroup } from "./ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 /**
  * The two settings a deck carries besides its name, shared by the create sheet and the deck
@@ -155,7 +155,6 @@ export function LanguageField({ value, onChange, label, description, error }: La
 interface DirectionOption {
   value: Directions;
   label: MessageDescriptor;
-  short: MessageDescriptor;
   blurb: MessageDescriptor;
 }
 
@@ -163,19 +162,16 @@ export const DIRECTIONS: DirectionOption[] = [
   {
     value: "recognition",
     label: msg`Recognition`,
-    short: msg`Recognition`,
     blurb: msg`See the term, recall what it means.`,
   },
   {
     value: "production",
     label: msg`Production`,
-    short: msg`Production`,
     blurb: msg`See the meaning, recall the term.`,
   },
   {
     value: "both",
     label: msg`Both ways`,
-    short: msg`Both`,
     blurb: msg`Each card is asked both ways, each way on its own schedule.`,
   },
 ];
@@ -237,40 +233,10 @@ export function DirectionField({ value, onChange, example, total, disabled }: Di
   );
 }
 
-/**
- * The same choice where there is no room to explain it: three segments and one line that
- * changes with them. Used while creating a deck, where the name is the thing being decided.
- */
-export function DirectionCompact({
-  value,
-  onChange,
-}: {
-  value: Directions;
-  onChange: (value: Directions) => void;
-}) {
-  const { t, i18n } = useLingui();
-  const current = DIRECTIONS.find((o) => o.value === value);
-  return (
-    <div className="grid gap-1.5">
-      <span className="text-sm font-medium text-text-2">
-        <Trans>How cards are asked</Trans>
-      </span>
-      <Segmented
-        value={value}
-        onValueChange={onChange}
-        label={t`How cards are asked`}
-        options={DIRECTIONS.map((o) => ({ value: o.value, label: i18n._(o.short) }))}
-      />
-      <p className="text-sm text-muted">{current && i18n._(current.blurb)}</p>
-    </div>
-  );
-}
-
 interface PurposeOption {
   value: DeckPurpose;
   icon: ReactNode;
   label: MessageDescriptor;
-  short: MessageDescriptor;
   blurb: MessageDescriptor;
 }
 
@@ -279,21 +245,18 @@ export const PURPOSES: PurposeOption[] = [
     value: "language",
     icon: <Languages />,
     label: msg({ message: "A language", context: "deck purpose" }),
-    short: msg({ message: "Language", context: "deck purpose" }),
     blurb: msg`Words and phrases in a language you’re learning.`,
   },
   {
     value: "subject",
     icon: <ClipboardCheck />,
     label: msg`A subject or exam`,
-    short: msg({ message: "Subject", context: "deck purpose" }),
     blurb: msg`Terms with short explanations, like for a citizenship test.`,
   },
   {
     value: "other",
     icon: <Shapes />,
     label: msg`Something else`,
-    short: msg({ message: "Other", context: "deck purpose" }),
     blurb: msg`Your own material, whatever it is.`,
   },
 ];
@@ -334,39 +297,39 @@ export function PurposeField({ value, onChange, error, description }: PurposePro
   );
 }
 
-/** The same choice as `PurposeField` where there is no room for cards, as `DirectionCompact` is. */
-export function PurposeCompact({ value, onChange, error }: PurposeProps) {
+/**
+ * The deck's review mode as a select, where a sheet has no room for a card per choice. Each row and
+ * the line under the box say what the learner will be shown.
+ */
+export function DirectionSelect({
+  value,
+  onChange,
+}: {
+  value: Directions;
+  onChange: (value: Directions) => void;
+}) {
   const { t, i18n } = useLingui();
-  const current = PURPOSES.find((o) => o.value === value);
+  const current = DIRECTIONS.find((o) => o.value === value);
   return (
     <Field>
-      <span className="text-sm font-medium text-text-2">
-        <Trans>What it’s for</Trans>
-      </span>
-      <Segmented<DeckPurpose>
+      <FieldLabel>{t`Review mode`}</FieldLabel>
+      <Select
         value={value}
-        onValueChange={onChange}
-        label={t`What it’s for`}
-        options={PURPOSES.map((o) => ({
-          value: o.value,
-          label: (
-            <span className="flex items-center gap-1.5 [&_svg]:size-4 [&_svg]:stroke-[1.6]">
-              <span aria-hidden="true">{o.icon}</span>
-              {i18n._(o.short)}
-            </span>
-          ),
-        }))}
-      />
-      {current ? (
-        <p className="text-sm text-muted">{i18n._(current.blurb)}</p>
-      ) : (
-        !error && (
-          <p className="text-sm text-muted">
-            <Trans>AI fills the deck’s cards to suit it.</Trans>
-          </p>
-        )
-      )}
-      <FieldError>{error}</FieldError>
+        onValueChange={(next) => next && onChange(next as Directions)}
+        items={DIRECTIONS.map((o) => ({ value: o.value, label: i18n._(o.label) }))}
+      >
+        <SelectTrigger>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {DIRECTIONS.map((o) => (
+            <SelectItem key={o.value} value={o.value} description={i18n._(o.blurb)}>
+              {i18n._(o.label)}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      {current && <FieldDescription>{i18n._(current.blurb)}</FieldDescription>}
     </Field>
   );
 }

@@ -1036,9 +1036,6 @@ msgstr "Назад до днів поспіль"
 msgid "Backup script on the laptop"
 msgstr "Скрипт резервної копії на ноутбуці"
 
-msgid "Both"
-msgstr "Обидва"
-
 msgid "Both of the above, one card at a time."
 msgstr "Обидва варіанти, по одній картці за раз."
 
@@ -2316,10 +2313,6 @@ msgstr "Засвоєні"
 msgid "Language"
 msgstr "Мова"
 
-msgctxt "deck purpose"
-msgid "Language"
-msgstr "Мова"
-
 #. placeholder {0}: languageName(next, i18n.locale)
 msgid "Language changed to {0}"
 msgstr "Нова мова: {0}"
@@ -2949,10 +2942,6 @@ msgctxt "Between two ways to sign in"
 msgid "or"
 msgstr "або"
 
-msgctxt "deck purpose"
-msgid "Other"
-msgstr "Інше"
-
 msgid "Other subjects"
 msgstr "Інші теми"
 
@@ -3290,6 +3279,9 @@ msgstr "Повторити забуті"
 
 msgid "Review in Lymi"
 msgstr "Повторювати в Lymi"
+
+msgid "Review mode"
+msgstr "Режим повторення"
 
 msgid "Review new"
 msgstr "Повторити нові"
@@ -3669,10 +3661,6 @@ msgstr "Надійний"
 
 msgid "Stuck? Read the guide"
 msgstr "Щось не виходить? Прочитай посібник"
-
-msgctxt "deck purpose"
-msgid "Subject"
-msgstr "Предмет"
 
 msgid "Subjects"
 msgstr "Теми"

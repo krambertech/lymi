@@ -29,13 +29,12 @@ describe.each([
     await userEvent.type(page.getByRole("textbox", { name: "Name" }), "Biology exam");
     await page.getByRole("button", { name: "Create deck" }).click();
     await expect.element(page.getByText("Choose what the deck is for.")).toBeVisible();
-    // The caret goes to the choice, which carries the error for a screen reader.
-    const language = page.getByRole("button", { name: "Language", exact: true });
-    await expect.element(language).toHaveFocus();
-    await expect.element(language).toHaveAttribute("aria-invalid", "true");
+    await expect
+      .element(page.getByRole("radiogroup", { name: "What it’s for" }))
+      .toHaveAttribute("aria-invalid", "true");
     expect(onSubmit).not.toHaveBeenCalled();
 
-    await page.getByRole("button", { name: "Subject", exact: true }).click();
+    await page.getByRole("radio", { name: /A subject or exam/ }).click();
     await expect.element(page.getByText("Choose what the deck is for.")).not.toBeInTheDocument();
     // Only a language deck asks which language.
     await expect.element(page.getByText("No language")).not.toBeInTheDocument();
@@ -49,7 +48,7 @@ describe.each([
     await page.viewport(width, 900);
     const onSubmit = await renderForm();
     await userEvent.type(page.getByRole("textbox", { name: "Name" }), "Lezione 15");
-    await page.getByRole("button", { name: "Language", exact: true }).click();
+    await page.getByRole("radio", { name: /A language/ }).click();
     await page.getByRole("button", { name: "Create deck" }).click();
     await expect.element(page.getByText("Choose the language you’re learning.")).toBeVisible();
     expect(onSubmit).not.toHaveBeenCalled();
@@ -58,9 +57,7 @@ describe.each([
 
 test("starts from Welcome's answer", async () => {
   const onSubmit = await renderForm({ seed: { purpose: "language", language: "it" } });
-  await expect
-    .element(page.getByRole("button", { name: "Language", exact: true }))
-    .toHaveAttribute("aria-pressed", "true");
+  await expect.element(page.getByRole("radio", { name: /A language/ })).toBeChecked();
   await userEvent.type(page.getByRole("textbox", { name: "Name" }), "Lezione 15");
   await page.getByRole("button", { name: "Create deck" }).click();
   expect(onSubmit).toHaveBeenCalledWith(

@@ -17,7 +17,7 @@ import { useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { decksQuery, settingsQuery } from "../lib/queries";
 import { Button } from "./button";
-import { DirectionCompact, LanguageField, PurposeCompact } from "./deck-fields";
+import { DirectionSelect, LanguageField, PurposeField } from "./deck-fields";
 import { InlineError } from "./inline-error";
 import { useStaticNav } from "./nav-link";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
@@ -169,13 +169,14 @@ export function NewDeckForm({ seed, pending, error, onCancel, onSubmit }: NewDec
         />
         <FieldError>{invalid.name}</FieldError>
       </Field>
-      <PurposeCompact
+      <PurposeField
         value={purpose}
         onChange={(next) => {
           setPurpose(next);
           setInvalid(({ purpose: _, ...rest }) => rest);
         }}
         error={invalid.purpose}
+        description={t`AI fills the deck’s cards to suit it.`}
       />
       {purpose === "language" && (
         <LanguageField
@@ -187,7 +188,7 @@ export function NewDeckForm({ seed, pending, error, onCancel, onSubmit }: NewDec
           error={invalid.defaultLanguage}
         />
       )}
-      <DirectionCompact value={directions} onChange={setDirections} />
+      <DirectionSelect value={directions} onChange={setDirections} />
       <div
         className={cn(
           "flex items-center gap-2 pt-1",

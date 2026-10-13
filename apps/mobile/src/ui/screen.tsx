@@ -194,6 +194,7 @@ export function Screen({
   return (
     <View className="flex-1 bg-canvas">
       <Animated.ScrollView
+        keyboardShouldPersistTaps="handled"
         className="flex-1"
         contentContainerClassName="px-5 gap-7"
         contentContainerStyle={{ paddingTop: bar, paddingBottom: insets.bottom + 110 }}

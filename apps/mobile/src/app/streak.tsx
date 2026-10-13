@@ -28,7 +28,11 @@ export default function Streak() {
   const frost = useFrost();
   return (
     <OnGlass>
-      <ScrollView style={{ backgroundColor: frost }} contentContainerClassName="px-5 pt-8 pb-12">
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        style={{ backgroundColor: frost }}
+        contentContainerClassName="px-5 pt-8 pb-12"
+      >
         {summary ? (
           <StreakPanel summary={summary} flame={flame} />
         ) : (

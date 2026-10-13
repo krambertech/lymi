@@ -1329,6 +1329,7 @@ function CardPlate({
         </View>
 
         <ScrollView
+          keyboardShouldPersistTaps="handled"
           className="flex-1"
           contentContainerClassName="grow justify-center px-5 py-4"
           // Unrevealed, the whole plate is the button, so nothing scrolls under the finger.
@@ -1671,6 +1672,7 @@ function Completion({
     >
       {/* It scrolls only when the reader's text size outgrows the screen; the light is never clipped at its edge. */}
       <ScrollView
+        keyboardShouldPersistTaps="handled"
         style={styles.unclipped}
         contentContainerStyle={{
           flexGrow: 1,

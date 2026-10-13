@@ -357,6 +357,7 @@ function MoreLikeThis({ related }: { related: Data["related"] }) {
         {t`More like this`}
       </Text>
       <ScrollView
+        keyboardShouldPersistTaps="handled"
         horizontal
         showsHorizontalScrollIndicator={false}
         style={{ marginHorizontal: -20 }}

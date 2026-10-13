@@ -82,7 +82,11 @@ export default function SeriesDecks() {
             onPress={done}
           />
         </View>
-        <ScrollView className="flex-1" contentContainerClassName="gap-3 px-5 pt-3 pb-10">
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          className="flex-1"
+          contentContainerClassName="gap-3 px-5 pt-3 pb-10"
+        >
           <Text className="px-1 text-base text-text-2">
             {decks.length === 0
               ? t`No decks of your own yet. Only decks you create can go in a series.`

@@ -267,6 +267,9 @@
          "sectionProgression": {
           "$ref": "#/components/schemas/SectionProgression"
          },
+         "purpose": {
+          "$ref": "#/components/schemas/DeckPurpose"
+         },
          "enrichFields": {
           "$ref": "#/components/schemas/DeckEnrichFields"
          },
@@ -400,6 +403,452 @@
        "type": "string"
       }
      },
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   },
+   "post": {
+    "operationId": "postApiDecksByIdSections",
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Section"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+         },
+         "cardIds": {
+          "maxItems": 500,
+          "type": "array",
+          "items": {
+           "type": "string",
+           "minLength": 1
+          }
+         }
+        },
+        "required": [
+         "name"
+        ]
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   }
+  },
+  "/api/decks/{id}/sections/order": {
+   "put": {
+    "operationId": "putApiDecksByIdSectionsOrder",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Sections"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "409": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "sectionIds": {
+          "maxItems": 500,
+          "type": "array",
+          "items": {
+           "type": "string",
+           "minLength": 1
+          }
+         }
+        },
+        "required": [
+         "sectionIds"
+        ]
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   }
+  },
+  "/api/sections/{id}": {
+   "patch": {
+    "operationId": "patchApiSectionsById",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Section"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+         }
+        },
+        "required": [
+         "name"
+        ]
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   }
+  },
+  "/api/sections/{id}/archive": {
+   "post": {
+    "operationId": "postApiSectionsByIdArchive",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "cards": {
+          "type": "string",
+          "enum": [
+           "archive",
+           "keep"
+          ]
+         }
+        },
+        "required": [
+         "cards"
+        ]
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   }
+  },
+  "/api/sections/{id}/restore": {
+   "post": {
+    "operationId": "postApiSectionsByIdRestore",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "parameters": [
      {
       "schema": {
        "type": "string"
@@ -1932,6 +2381,9 @@
          },
          "sectionProgression": {
           "$ref": "#/components/schemas/SectionProgression"
+         },
+         "purpose": {
+          "$ref": "#/components/schemas/DeckPurpose"
          },
          "enrichFields": {
           "$ref": "#/components/schemas/DeckEnrichFields"
@@ -3999,6 +4451,16 @@
      "sectionProgression": {
       "$ref": "#/components/schemas/SectionProgression"
      },
+     "purpose": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/DeckPurpose"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
      "enrichFields": {
       "$ref": "#/components/schemas/DeckEnrichFields"
      },
@@ -4087,6 +4549,7 @@
      "position",
      "seriesId",
      "sectionProgression",
+     "purpose",
      "enrichFields",
      "enrichInstructions",
      "meaningLanguage",
@@ -4180,6 +4643,15 @@
     ],
     "x-lymi-open": true
    },
+   "DeckPurpose": {
+    "type": "string",
+    "enum": [
+     "language",
+     "subject",
+     "other"
+    ],
+    "x-lymi-open": true
+   },
    "DeckEnrichFields": {
     "maxItems": 4,
     "type": "array",
@@ -4240,6 +4712,16 @@
      },
      "sectionProgression": {
       "$ref": "#/components/schemas/SectionProgression"
+     },
+     "purpose": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/DeckPurpose"
+       },
+       {
+        "type": "null"
+       }
+      ]
      },
      "enrichFields": {
       "$ref": "#/components/schemas/DeckEnrichFields"
@@ -4336,6 +4818,7 @@
      "position",
      "seriesId",
      "sectionProgression",
+     "purpose",
      "enrichFields",
      "enrichInstructions",
      "meaningLanguage",

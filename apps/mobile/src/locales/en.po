@@ -22,6 +22,10 @@ msgstr "“{term}” is already in {deckName}"
 msgid "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 msgstr "{0, plural, one {{1} of # review} other {{2} of # reviews}}"
 
+#. placeholder {0}: s.archivedCards
+msgid "{0, plural, one {# card comes back with it} other {# cards come back with it}}"
+msgstr "{0, plural, one {# card comes back with it} other {# cards come back with it}}"
+
 #. placeholder {0}: d.due
 #. placeholder {0}: r.due
 msgid "{0, plural, one {# card due} other {# cards due}}"
@@ -242,6 +246,9 @@ msgstr "{queued, plural, one {# grade or change made offline is still waiting to
 msgid "{reps, plural, one {# review} other {# reviews}}"
 msgstr "{reps, plural, one {# review} other {# reviews}}"
 
+msgid "{sectionCount, plural, one {# section} other {# sections}}"
+msgstr "{sectionCount, plural, one {# section} other {# sections}}"
+
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {day in a row} other {days in a row}}"
 
@@ -403,6 +410,9 @@ msgstr "AI wrote this"
 msgid "All"
 msgstr "All"
 
+msgid "All at once"
+msgstr "All at once"
+
 msgid "All shelves"
 msgstr "All shelves"
 
@@ -425,6 +435,9 @@ msgstr "Any time"
 msgid "Anyone can add this deck from its public page."
 msgstr "Anyone can add this deck from its public page."
 
+msgid "Anyone studying the deck can start a later section early."
+msgstr "Anyone studying the deck can start a later section early."
+
 msgid "Anyone with this link can join and review these cards."
 msgstr "Anyone with this link can join and review these cards."
 
@@ -434,6 +447,9 @@ msgstr "API keys"
 msgctxt "language"
 msgid "Arabic"
 msgstr "Arabic"
+
+msgid "Archive"
+msgstr "Archive"
 
 msgid "Archive card"
 msgstr "Archive card"
@@ -446,6 +462,9 @@ msgstr "Archived"
 
 msgid "Archived “{name}”"
 msgstr "Archived “{name}”"
+
+msgid "Archived “{sectionName}”"
+msgstr "Archived “{sectionName}”"
 
 msgid "Archived “{term}”"
 msgstr "Archived “{term}”"
@@ -461,6 +480,9 @@ msgstr "Archived decks and cards wait here, out of your reviews, until you resto
 
 msgid "Archived decks need a connection"
 msgstr "Archived decks need a connection"
+
+msgid "Archived sections"
+msgstr "Archived sections"
 
 msgid "Archived the deck {deck}"
 msgstr "Archived the deck {deck}"
@@ -482,6 +504,9 @@ msgstr "Asked"
 
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "At least {MIN_PASSWORD_LENGTH} characters."
+
+msgid "Automatically"
+msgstr "Automatically"
 
 msgid "Back"
 msgstr "Back"
@@ -800,6 +825,9 @@ msgstr "Create and move"
 msgid "Create deck"
 msgstr "Create deck"
 
+msgid "Create section"
+msgstr "Create section"
+
 msgid "Create your Lymi account"
 msgstr "Create your Lymi account"
 
@@ -928,6 +956,9 @@ msgstr "Each block is one day you reviewed."
 
 msgid "Each card is asked both ways, each way on its own schedule."
 msgstr "Each card is asked both ways, each way on its own schedule."
+
+msgid "Each section opens once you know most of the one before it."
+msgstr "Each section opens once you know most of the one before it."
 
 msgid "Easy"
 msgstr "Easy"
@@ -1114,6 +1145,9 @@ msgstr "German"
 msgid "Give the deck a name."
 msgstr "Give the deck a name."
 
+msgid "Give the section a name."
+msgstr "Give the section a name."
+
 msgid "Give the series a name."
 msgstr "Give the series a name."
 
@@ -1178,6 +1212,9 @@ msgstr "How it’s asked"
 
 msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
 msgstr "How many reviews a day keep your streak. Every grade counts, even Forgot."
+
+msgid "How sections open"
+msgstr "How sections open"
 
 msgid "How your memory is doing"
 msgstr "How your memory is doing"
@@ -1249,6 +1286,9 @@ msgstr "Intense"
 
 msgid "Invited {name} to {deck}"
 msgstr "Invited {name} to {deck}"
+
+msgid "It goes at the end. Move cards into it from the deck."
+msgstr "It goes at the end. Move cards into it from the deck."
 
 msgid "It loads as soon as you’re back online."
 msgstr "It loads as soon as you’re back online."
@@ -1411,6 +1451,9 @@ msgstr "Made the series {name}"
 msgid "Make one for each course or topic."
 msgstr "Make one for each course or topic."
 
+msgid "Make one per lesson, then move cards into it from the deck."
+msgstr "Make one per lesson, then move cards into it from the deck."
+
 msgid "Mark important"
 msgstr "Mark important"
 
@@ -1507,6 +1550,9 @@ msgstr "New cards"
 msgid "New deck"
 msgstr "New deck"
 
+msgid "New section"
+msgstr "New section"
+
 msgid "New series"
 msgstr "New series"
 
@@ -1572,6 +1618,9 @@ msgstr "No reviews yet. Each day you review adds a block."
 
 msgid "No section"
 msgstr "No section"
+
+msgid "No sections yet"
+msgstr "No sections yet"
 
 msgid "No series"
 msgstr "No series"
@@ -1640,6 +1689,12 @@ msgstr "Often forgotten"
 msgid "OK"
 msgstr "OK"
 
+msgid "One after another, automatically"
+msgstr "One after another, automatically"
+
+msgid "One after another, when you start them"
+msgstr "One after another, when you start them"
+
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."
 
@@ -1676,6 +1731,9 @@ msgstr "Open Settings"
 msgid "Open Settings on the web"
 msgstr "Open Settings on the web"
 
+msgid "Options for {sectionName}"
+msgstr "Options for {sectionName}"
+
 msgid "Options for {seriesName}"
 msgstr "Options for {seriesName}"
 
@@ -1684,6 +1742,9 @@ msgstr "Other"
 
 msgid "Other subjects"
 msgstr "Other subjects"
+
+msgid "Parts of this deck, such as one per lesson. Everyone studying it sees them in this order."
+msgstr "Parts of this deck, such as one per lesson. Everyone studying it sees them in this order."
 
 msgid "Password"
 msgstr "Password"
@@ -1807,6 +1868,12 @@ msgstr "Remove photo"
 msgid "Removed {name} from {deck}"
 msgstr "Removed {name} from {deck}"
 
+msgid "Rename"
+msgstr "Rename"
+
+msgid "Rename section"
+msgstr "Rename section"
+
 msgid "Rename series"
 msgstr "Rename series"
 
@@ -1821,6 +1888,9 @@ msgstr "Restore"
 
 msgid "Restore {title}"
 msgstr "Restore {title}"
+
+msgid "Restore brings a section back in its place, with the cards archived alongside it."
+msgstr "Restore brings a section back in its place, with the cards archived alongside it."
 
 msgid "Restore card"
 msgstr "Restore card"
@@ -1927,6 +1997,9 @@ msgstr "Searching cards needs a connection"
 
 msgid "Section"
 msgstr "Section"
+
+msgid "Sections"
+msgstr "Sections"
 
 #. placeholder {0}: example.meaning
 #. placeholder {1}: example.term
@@ -2161,6 +2234,9 @@ msgstr "The AI"
 msgid "The API"
 msgstr "The API"
 
+msgid "The cards you kept move back into it"
+msgstr "The cards you kept move back into it"
+
 msgid "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 msgstr "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 
@@ -2372,6 +2448,12 @@ msgstr "What you learn, in order"
 
 msgid "When it’s back"
 msgstr "When it’s back"
+
+msgid "When most of a section is known, the next one is ready and you choose when to start it."
+msgstr "When most of a section is known, the next one is ready and you choose when to start it."
+
+msgid "When started"
+msgstr "When started"
 
 msgid "Where you met it, such as a lesson"
 msgstr "Where you met it, such as a lesson"

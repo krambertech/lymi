@@ -1311,6 +1311,9 @@ msgctxt "language"
 msgid "Lithuanian"
 msgstr "Литовский"
 
+msgid "Loading more"
+msgstr ""
+
 msgid "Loading…"
 msgstr "Загрузка…"
 

@@ -1,11 +1,12 @@
-import { MotionConfig } from "motion/react";
 import { expect, test } from "vitest";
 import { render } from "vitest-browser-react";
+import { withMotion } from "../test/motion";
 import { Lantern } from "./lantern";
 
 const sparks = (root: Element) => root.querySelectorAll(".lantern-sparks path").length;
 
 test("every grade throws a spark that clears itself", async () => {
+  await withMotion();
   const view = await render(<Lantern progress={0.2} fed={0} />);
   const root = view.container;
   expect(sparks(root)).toBe(0);
@@ -21,15 +22,7 @@ test("every grade throws a spark that clears itself", async () => {
 });
 
 test("no spark plays under reduced motion", async () => {
-  const view = await render(
-    <MotionConfig reducedMotion="always">
-      <Lantern progress={0.2} fed={0} />
-    </MotionConfig>,
-  );
-  await view.rerender(
-    <MotionConfig reducedMotion="always">
-      <Lantern progress={0.22} fed={1} />
-    </MotionConfig>,
-  );
+  const view = await render(<Lantern progress={0.2} fed={0} />);
+  await view.rerender(<Lantern progress={0.22} fed={1} />);
   expect(sparks(view.container)).toBe(0);
 });

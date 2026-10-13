@@ -2,6 +2,7 @@ import { useState } from "react";
 import { expect, test } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { withMotion } from "../../test/motion";
 import { offsetOnceChosen, plateOffset } from "../../test/plate";
 import { SlidingPlate } from "./sliding-plate";
 
@@ -39,6 +40,7 @@ function Tabs() {
 const plate = () => document.querySelector('[data-slot="plate"]') as HTMLElement;
 
 test("the plate glides to a tab chosen by pointer, even when the choice lands late", async () => {
+  await withMotion();
   await render(<Tabs />);
   const library = page.getByRole("link", { name: "Library" });
   const landed = offsetOnceChosen(plate, library.element(), "aria-current", "page");

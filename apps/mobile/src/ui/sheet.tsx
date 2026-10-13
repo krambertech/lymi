@@ -125,6 +125,8 @@ interface SheetRowProps {
   opens?: boolean | undefined;
   /** The match Return takes in a searched list, lit as a pressed row is. */
   active?: boolean | undefined;
+  /** Needs what the phone lacks now, such as a connection; the detail says what. */
+  disabled?: boolean | undefined;
   onPress: () => void;
 }
 
@@ -138,6 +140,7 @@ export function SheetRow({
   multiple = false,
   opens = false,
   active = false,
+  disabled = false,
   onPress,
 }: SheetRowProps) {
   const p = usePalette();
@@ -153,8 +156,9 @@ export function SheetRow({
         onPress();
       }}
       accessibilityRole={chosen === undefined ? "menuitem" : multiple ? "checkbox" : "radio"}
-      accessibilityState={chosen === undefined ? undefined : { checked: chosen }}
-      className="min-h-[52px] flex-row items-center gap-3 ps-4 pe-3.5"
+      accessibilityState={chosen === undefined ? { disabled } : { checked: chosen, disabled }}
+      disabled={disabled}
+      className={`min-h-[52px] flex-row items-center gap-3 ps-4 pe-3.5 ${disabled ? "opacity-45" : ""}`}
       style={({ pressed }) => (pressed || active ? { backgroundColor: p.hover } : null)}
     >
       <View className="w-5 items-center">{mark}</View>

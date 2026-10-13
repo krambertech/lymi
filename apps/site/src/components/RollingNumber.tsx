@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { DIGIT_ROLL } from "@lymi/design";
 import { clsx } from "clsx";
-import { AnimatePresence, motion, useReducedMotionConfig } from "motion/react";
+import { motion, useReducedMotion, useReducedMotionConfig } from "motion/react";
 import { useState } from "react";
 
 interface Props {
@@ -11,55 +11,79 @@ interface Props {
   className?: string | undefined;
 }
 
-interface Roll {
-  up: boolean;
-  moving: boolean;
-}
-
-const DIGIT = {
-  enter: ({ up }: Roll) => ({ y: up ? "100%" : "-100%" }),
-  shown: { y: 0 },
-  // `custom` reaches the leaving digit, whose own props are from before this change.
-  leave: ({ up, moving }: Roll) =>
-    moving ? { y: up ? "-100%" : "100%" } : { opacity: 0, transition: { duration: 0 } },
-};
+const isDigit = (char: string | undefined) => !!char && /\p{Nd}/u.test(char);
 
 /**
  * A count that rolls digit by digit when it changes in view, like a departure board; a digit that
- * does not change stays still. motion.md "Numbers"; the product draws its counts with the same one.
+ * does not change stays still. At rest it is plain text, so it reads as one number. motion.md
+ * "Numbers"; the product draws its counts with the same one.
  */
 export function RollingNumber({ value, animate = true, className }: Props) {
   const { i18n } = useLingui();
-  const reduce = useReducedMotionConfig();
+  // The site has no MotionConfig, so the system setting is read directly too.
+  const reduce = useReducedMotionConfig() || !!useReducedMotion();
   const [last, setLast] = useState(value);
-  const [up, setUp] = useState(true);
+  const [roll, setRoll] = useState<{ from: string; up: boolean } | null>(null);
   if (last !== value) {
     setLast(value);
-    setUp(value > last);
+    setRoll(animate && !reduce ? { from: i18n.number(last), up: value > last } : null);
   }
-  const roll: Roll = { up, moving: animate && !reduce };
-  const chars = [...i18n.number(value)];
+  const text = i18n.number(value);
+  if (!roll) return <span className={clsx("tabular-nums", className)}>{text}</span>;
+
+  const now = [...text];
+  const before = [...roll.from];
+  const places = Math.max(now.length, before.length);
+  const shift = roll.up ? "100%" : "-100%";
+  const away = roll.up ? "-100%" : "100%";
+  let settles = true;
   return (
-    <span className={clsx("inline-flex tabular-nums", className)}>
-      {chars.map((char, i) => {
-        // Keyed from the end, so the ones stay the ones when the number gains a digit.
-        const place = chars.length - i;
+    <span className={clsx("relative inline-flex tabular-nums", className)}>
+      <span className="sr-only">{text}</span>
+      {Array.from({ length: places }, (_, i) => {
+        // Counted from the end, so the ones stay the ones when the number gains a digit.
+        const place = places - i;
+        const to = now[now.length - place];
+        const from = before[before.length - place];
+        if (to === from || !(isDigit(to) || isDigit(from))) {
+          return (
+            <span key={place} aria-hidden="true">
+              {to}
+            </span>
+          );
+        }
+        // One column says when the roll is over; they all settle on the same spring.
+        const finishes = settles;
+        settles = false;
+        const done = () => setRoll(null);
         return (
-          <span key={place} className="relative inline-grid overflow-hidden [&>*]:[grid-area:1/1]">
-            <AnimatePresence initial={false} custom={roll}>
+          <span
+            key={`${place}-${value}`}
+            aria-hidden="true"
+            className="relative inline-grid overflow-hidden [&>*]:[grid-area:1/1]"
+          >
+            {from !== undefined && (
               <motion.span
-                key={char}
                 className="inline-block"
-                custom={roll}
-                variants={DIGIT}
-                initial={roll.moving ? "enter" : false}
-                animate="shown"
-                exit="leave"
+                initial={{ y: 0 }}
+                animate={{ y: away }}
                 transition={DIGIT_ROLL}
+                {...(finishes && to === undefined ? { onAnimationComplete: done } : {})}
               >
-                {char}
+                {from}
               </motion.span>
-            </AnimatePresence>
+            )}
+            {to !== undefined && (
+              <motion.span
+                className="inline-block"
+                initial={{ y: shift }}
+                animate={{ y: 0 }}
+                transition={DIGIT_ROLL}
+                {...(finishes ? { onAnimationComplete: done } : {})}
+              >
+                {to}
+              </motion.span>
+            )}
           </span>
         );
       })}

@@ -17,18 +17,17 @@ const shown = (reduce: boolean, value: number) => (
   </MotionConfig>
 );
 
-test("a digit that does not change stays the same element", async () => {
+test("only the digits that change roll, and the number is plain text once they settle", async () => {
   const { rerender, getByTestId } = await render(shown(false, 41));
-  const digits = () => getByTestId("count").element().querySelectorAll(".inline-block");
-  const tens = digits()[0];
+  const count = getByTestId("count").element();
   await rerender(shown(false, 42));
-  expect(digits()[0]).toBe(tens);
-  expect(tens?.textContent).toBe("4");
+  expect(count.querySelectorAll(".inline-grid")).toHaveLength(1);
+  await expect.poll(() => count.querySelector(".inline-grid"), { timeout: 3000 }).toBeNull();
+  expect(count.textContent).toBe("42");
 });
 
 test("under reduced motion the new number shows at once", async () => {
   const { rerender, getByTestId } = await render(shown(true, 9));
   await rerender(shown(true, 10));
-  // Short of a spring's run, so only a number that did not roll passes.
-  await expect.poll(() => getByTestId("count").element().textContent, { timeout: 150 }).toBe("10");
+  expect(getByTestId("count").element().textContent).toBe("10");
 });

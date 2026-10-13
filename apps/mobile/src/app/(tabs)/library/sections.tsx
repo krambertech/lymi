@@ -53,12 +53,13 @@ export default function DeckSections() {
   const handlers = { onError: failed, onSettled: refresh };
   const create = useMutation({
     mutationFn: (name: string) => api.createSection(id, { name }),
-    ...handlers,
+    // Its sheet says what failed, under the field.
+    onSettled: refresh,
   });
   const rename = useMutation({
     mutationFn: ({ section, name }: { section: Section; name: string }) =>
       api.renameSection(section.id, name),
-    ...handlers,
+    onSettled: refresh,
   });
   const sectionsKey = sectionsQuery(id).queryKey;
   // The new order lands in the cache at once, so a second Move builds on it rather than the old one.
@@ -355,7 +356,8 @@ function NameSheet({
       setInvalid(t`Give the section a name.`);
       return;
     }
-    void onSubmit(parsed.data).catch(() => {});
+    // Under the field, since a toast would sit under this sheet.
+    void onSubmit(parsed.data).catch((e) => setInvalid(errorMessage(e)));
   };
   const renaming = !!target?.section;
   return (

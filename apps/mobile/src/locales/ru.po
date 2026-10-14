@@ -1318,6 +1318,9 @@ msgstr "Назови раздел."
 msgid "Give the series a name."
 msgstr "Дай серии название."
 
+msgid "Go to Lymi"
+msgstr ""
+
 msgid "Go to Today"
 msgstr "Открыть «Сегодня»"
 

@@ -390,7 +390,7 @@ function DeadLink({
           ? { label: t`Open deck`, onPress: () => onOpen(deckId) }
           : signedIn
             ? { label: t`Go to Today`, onPress: () => router.replace("/today") }
-            : undefined
+            : { label: t`Go to Lymi`, onPress: () => router.replace("/welcome") }
       }
     />
   );

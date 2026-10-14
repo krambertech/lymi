@@ -3,7 +3,7 @@ import { CLIENT_HEADER, MeOut, NameInput, parseClientHeader } from "@lymi/core";
 import { POSTHOG_PROXY_PATH, proxyPostHog } from "@lymi/core/posthog-proxy";
 import { Hono } from "hono";
 import { routePath } from "hono/route";
-import { appSiteAssociation } from "./app-site-association";
+import { appSiteAssociation, assetLinks } from "./app-site-association";
 import { type Auth, createAuth, type SessionUser } from "./auth";
 import { limitCredentialRequests } from "./auth-rate-limit";
 import { createDb, type Db } from "./db";
@@ -100,6 +100,13 @@ app.get("/.well-known/apple-app-site-association", describe({ hide: true }), (c)
   const appID = c.env.APPLE_APP_ID?.trim();
   if (!appID) return c.text("Not found", 404);
   return c.json(appSiteAssociation(appID), 200, { "cache-control": "public, max-age=3600" });
+});
+
+// Android reads which apps may open this host's links here; the paths are in the app's manifest.
+app.get("/.well-known/assetlinks.json", describe({ hide: true }), (c) => {
+  const fingerprints = c.env.ANDROID_CERT_FINGERPRINTS?.trim();
+  if (!fingerprints) return c.text("Not found", 404);
+  return c.json(assetLinks(fingerprints), 200, { "cache-control": "public, max-age=3600" });
 });
 
 // Analytics from this origin reach PostHog through here, carrying Cloudflare's country.

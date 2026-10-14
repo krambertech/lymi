@@ -1,5 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { keyed } from "@lymi/client/keyed";
 import { exploreDeckQuery } from "@lymi/client/queries";
 import { type ExploreDeckOut, publisherAvatarPath } from "@lymi/core/catalog";
 import { ARRIVE } from "@lymi/design";
@@ -180,9 +181,9 @@ function DeckPage({
             {t`What you learn, in order`}
           </Text>
           <Plate className="overflow-hidden">
-            {sections.map((section, at) => (
+            {keyed(sections, (section) => section.name ?? "").map(({ item: section, key }, at) => (
               <View
-                key={section.name}
+                key={key}
                 className={`min-h-[52px] flex-row items-center gap-3 px-4 py-3 ${at > 0 ? "border-t border-edge" : ""}`}
               >
                 <Text className="w-5 text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
@@ -212,9 +213,11 @@ function DeckPage({
           {t`Every card`}
         </Text>
         <View className="gap-2">
-          {deck.sections.map((section) => (
-            <SectionCards key={section.name ?? "loose"} section={section} />
-          ))}
+          {keyed(deck.sections, (section) => section.name ?? "loose").map(
+            ({ item: section, key }) => (
+              <SectionCards key={key} section={section} />
+            ),
+          )}
         </View>
       </View>
 
@@ -340,12 +343,8 @@ function SectionCards({ section }: { section: Data["deck"]["sections"][number] }
         </View>
       </Press>
       {open &&
-        section.cards.map((card, at) => (
-          <View
-            // biome-ignore lint/suspicious/noArrayIndexKey: the deck's order, and a term can repeat.
-            key={at}
-            className="gap-0.5 border-t border-edge px-4 py-2.5"
-          >
+        keyed(section.cards, (card) => card.term).map(({ item: card, key }) => (
+          <View key={key} className="gap-0.5 border-t border-edge px-4 py-2.5">
             <Text className="text-md text-text">{card.term}</Text>
             {card.meaning && <Text className="text-base text-text-2">{card.meaning}</Text>}
           </View>

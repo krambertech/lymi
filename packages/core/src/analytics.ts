@@ -310,6 +310,7 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     "/capture",
     "/streak",
     "/feedback",
+    "/share",
   ];
   const base = routes.find((route) => path === route || path.startsWith(`${route}/`));
   return base ? (path === base ? base : `${base}/:item`) : "/other";

@@ -9,7 +9,7 @@ import { ShelfGrid, ShelfRows } from "../../../explore/layouts";
 import { CatalogueEmpty, CatalogueFailed, CatalogueLoading } from "../../../explore/states";
 import { Press, Text } from "../../../ui/primitives";
 import { BarGroup, Screen } from "../../../ui/screen";
-import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
+import { Sheet, SheetGroup, SheetHeading, SheetRow } from "../../../ui/sheet";
 
 /**
  * Explore: every deck Lymi publishes, a shelf per language and then per subject, each a row that
@@ -154,7 +154,7 @@ function ShelfPicker({
       title={t`Show`}
       more={
         <>
-          <GroupHeading>{t`Languages`}</GroupHeading>
+          <SheetHeading>{t`Languages`}</SheetHeading>
           <SheetGroup>{languages.map(row)}</SheetGroup>
         </>
       }
@@ -162,17 +162,8 @@ function ShelfPicker({
       <SheetGroup>
         <SheetRow label={t`Every shelf`} chosen={!current} onPress={() => onChoose(null)} />
       </SheetGroup>
-      <GroupHeading>{t`Subjects`}</GroupHeading>
+      <SheetHeading>{t`Subjects`}</SheetHeading>
       <SheetGroup>{subjects.map(row)}</SheetGroup>
     </Sheet>
-  );
-}
-
-/** A group's name in the sheet, at reading size so it sorts the list rather than footnoting it. */
-function GroupHeading({ children }: { children: string }) {
-  return (
-    <Text className="px-4 pb-2 pt-4 text-md font-semibold text-text" accessibilityRole="header">
-      {children}
-    </Text>
   );
 }

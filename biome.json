@@ -149,6 +149,17 @@
       "plugins": ["./biome-plugins/scroll-view-persist-taps.grit"]
     },
     {
+      "includes": ["apps/mobile/src/app/**"],
+      "plugins": ["./biome-plugins/form-header.grit"]
+    },
+    {
+      "includes": ["apps/mobile/**", "!apps/mobile/src/theme/motion.ts"],
+      "plugins": [
+        "./biome-plugins/spring-presets.grit",
+        "./biome-plugins/no-logical-text-align.grit"
+      ]
+    },
+    {
       "includes": ["apps/web/src/server/**", "packages/core/src/**"],
       "plugins": ["./biome-plugins/no-sql-lower.grit"]
     },
@@ -162,7 +173,11 @@
               "options": {
                 "paths": {
                   "@lymi/client/analytics": "This is the browser's PostHog adapter; the phone sends through src/telemetry/posthog.ts.",
-                  "posthog-js": "The phone uses posthog-react-native through src/telemetry/posthog.ts."
+                  "posthog-js": "The phone uses posthog-react-native through src/telemetry/posthog.ts.",
+                  "@expo/ui/swift-ui": {
+                    "importNames": ["BottomSheet"],
+                    "message": "Use Sheet from src/ui/sheet.tsx: it owns the title, description, save header and the inset every sheet shares."
+                  }
                 }
               }
             }

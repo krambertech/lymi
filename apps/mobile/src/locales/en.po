@@ -102,17 +102,33 @@ msgstr "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretc
 msgid "{0, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
 msgstr "{0, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
 
-#. placeholder {0}: Number(draft) || 0
-msgid "{0, plural, one {review a day} other {reviews a day}}"
-msgstr "{0, plural, one {review a day} other {reviews a day}}"
-
 #. placeholder {0}: items.length - HISTORY_ROWS
 msgid "{0, plural, one {Show # older entry} other {Show # older entries}}"
 msgstr "{0, plural, one {Show # older entry} other {Show # older entries}}"
 
+#. placeholder {0}: opening.length
+msgid "{0, plural, one {Start section} other {Start # sections}}"
+msgstr "{0, plural, one {Start section} other {Start # sections}}"
+
+#. placeholder {0}: current.notStarted
+msgid "{0, plural, one {The next section opens once the last card of this section comes up in review.} other {The next section opens once the last # cards of this section come up in review.}}"
+msgstr "{0, plural, one {The next section opens once the last card of this section comes up in review.} other {The next section opens once the last # cards of this section come up in review.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
+msgstr "{0, plural, one {The next section opens when you know {needed} of # card.} other {The next section opens when you know {needed} of # cards.}}"
+
 #. placeholder {0}: busiest.count
 msgid "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
 msgstr "{0, plural, one {Today is the busiest day, with # card.} other {Today is the busiest day, with # cards.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {You know {known} of # card in {currentName}, the last section.} other {You know {known} of # cards in {currentName}, the last section.}}"
+msgstr "{0, plural, one {You know {known} of # card in {currentName}, the last section.} other {You know {known} of # cards in {currentName}, the last section.}}"
+
+#. placeholder {0}: current.total
+msgid "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
+msgstr "{0, plural, one {You know {known} of # card in {currentName}.} other {You know {known} of # cards in {currentName}.}}"
 
 #. placeholder {0}: shelfOf(deck)
 msgid "{0} · In Library"
@@ -135,14 +151,29 @@ msgstr "{0} remembered, {1} forgotten."
 msgid "{0} shared a deck"
 msgstr "{0} shared a deck"
 
+msgid "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
+msgstr "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
+
 msgid "{cards, plural, one {# card} other {# cards}}"
 msgstr "{cards, plural, one {# card} other {# cards}}"
 
 msgid "{cards} · {sections}"
 msgstr "{cards} · {sections}"
 
+msgid "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
+msgstr "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
+
+msgid "{count, plural, one {{sectionName}, # card} other {{sectionName}, # cards}}"
+msgstr "{count, plural, one {{sectionName}, # card} other {{sectionName}, # cards}}"
+
+msgid "{count, plural, one {{sectionName}, not open yet, # card} other {{sectionName}, not open yet, # cards}}"
+msgstr "{count, plural, one {{sectionName}, not open yet, # card} other {{sectionName}, not open yet, # cards}}"
+
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# review} other {# reviews}}"
+
+msgid "{count, plural, one {Move # card to} other {Move # cards to}}"
+msgstr "{count, plural, one {Move # card to} other {Move # cards to}}"
 
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {day in a row} other {days in a row}}"
@@ -207,6 +238,9 @@ msgstr "{due, plural, one {card to review} other {cards to review}}"
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 
+msgid "{hiddenSections, plural, one {Show # more} other {Show # more}}"
+msgstr "{hiddenSections, plural, one {Show # more} other {Show # more}}"
+
 msgid "{hours, plural, one {in # hour} other {in # hours}}"
 msgstr "{hours, plural, one {in # hour} other {in # hours}}"
 
@@ -237,8 +271,23 @@ msgstr "{name} joined {deck}"
 msgid "{name} left {deck}"
 msgstr "{name} left {deck}"
 
+msgid "{nextName} is ready"
+msgstr "{nextName} is ready"
+
+msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
+msgstr "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
+
+msgid "{own, plural, one {# review a day} other {# reviews a day}}"
+msgstr "{own, plural, one {# review a day} other {# reviews a day}}"
+
+msgid "{own, plural, one {review a day} other {reviews a day}}"
+msgstr "{own, plural, one {review a day} other {reviews a day}}"
+
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "{passed} remembered, {failed} forgotten"
+
+msgid "{PENDING_INVITATION_LIMIT, plural, one {You already have # pending invitation. Cancel it, or wait for them to join.} other {You already have # pending invitations. Cancel one, or wait for someone to join.}}"
+msgstr "{PENDING_INVITATION_LIMIT, plural, one {You already have # pending invitation. Cancel it, or wait for them to join.} other {You already have # pending invitations. Cancel one, or wait for someone to join.}}"
 
 msgid "{queued, plural, one {# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades and changes made offline are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
 msgstr "{queued, plural, one {# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it.} other {# grades and changes made offline are still waiting to reach Lymi. Sign out once you’re back online to keep them.}}"
@@ -249,6 +298,9 @@ msgstr "{reps, plural, one {# review} other {# reviews}}"
 msgid "{sectionCount, plural, one {# section} other {# sections}}"
 msgstr "{sectionCount, plural, one {# section} other {# sections}}"
 
+msgid "{sectionName} is ready. Start it to review its cards."
+msgstr "{sectionName} is ready. Start it to review its cards."
+
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {day in a row} other {days in a row}}"
 
@@ -257,6 +309,18 @@ msgstr "{to, plural, one {# review today} other {# reviews today}}"
 
 msgid "{to, plural, one {review today} other {reviews today}}"
 msgstr "{to, plural, one {review today} other {reviews today}}"
+
+msgid "{total, plural, one {{shown} of # card} other {{shown} of # cards}}"
+msgstr "{total, plural, one {{shown} of # card} other {{shown} of # cards}}"
+
+msgid "{total, plural, one {# card} other {# cards}}"
+msgstr "{total, plural, one {# card} other {# cards}}"
+
+msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
+msgstr "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
+
+msgid "{waiting, plural, one {# invitation is waiting. Cancel it to invite someone else.} other {# invitations are waiting. Cancel one to invite someone else.}}"
+msgstr "{waiting, plural, one {# invitation is waiting. Cancel it to invite someone else.} other {# invitations are waiting. Cancel one to invite someone else.}}"
 
 #. placeholder {0}: busiest.count
 msgid "{weekday} is the busiest day, with {0, plural, one {# card} other {# cards}}."
@@ -281,6 +345,10 @@ msgstr "A deck holds the words you learn together. Make one, or import decks on 
 msgid "A few minutes keeps them fresh."
 msgstr "A few minutes keeps them fresh."
 
+msgctxt "deck purpose"
+msgid "A language"
+msgstr "A language"
+
 msgid "A new code is on its way to {address}."
 msgstr "A new code is on its way to {address}."
 
@@ -295,6 +363,9 @@ msgstr "A short phrase that helps you remember it"
 
 msgid "A sound-alike, or something to picture"
 msgstr "A sound-alike, or something to picture"
+
+msgid "A subject or exam"
+msgstr "A subject or exam"
 
 msgid "A word or phrase"
 msgstr "A word or phrase"
@@ -426,9 +497,6 @@ msgstr "Also on your list"
 msgid "Another way"
 msgstr "Another way"
 
-msgid "Any"
-msgstr "Any"
-
 msgid "Any time"
 msgstr "Any time"
 
@@ -437,6 +505,12 @@ msgstr "Anyone can add this deck from its public page."
 
 msgid "Anyone studying the deck can start a later section early."
 msgstr "Anyone studying the deck can start a later section early."
+
+msgid "Anyone who opens it can join"
+msgstr "Anyone who opens it can join"
+
+msgid "Anyone with the link"
+msgstr "Anyone with the link"
 
 msgid "Anyone with this link can join and review these cards."
 msgstr "Anyone with this link can join and review these cards."
@@ -493,9 +567,6 @@ msgstr "Archived the deck {deck}"
 msgid "Archived the section {name} in {deck}"
 msgstr "Archived the section {name} in {deck}"
 
-msgid "Archived. It’s out of your reviews until you restore it."
-msgstr "Archived. It’s out of your reviews until you restore it."
-
 msgid "Arts"
 msgstr "Arts"
 
@@ -513,9 +584,6 @@ msgstr "Automatically"
 
 msgid "Back"
 msgstr "Back"
-
-msgid "Back to Filter"
-msgstr "Back to Filter"
 
 msgid "Back to Library"
 msgstr "Back to Library"
@@ -569,6 +637,12 @@ msgstr "Canadian citizenship test"
 
 msgid "Cancel"
 msgstr "Cancel"
+
+msgid "Cancel invitation"
+msgstr "Cancel invitation"
+
+msgid "Cancel the invitation to {email}?"
+msgstr "Cancel the invitation to {email}?"
 
 msgid "Cancelled"
 msgstr "Cancelled"
@@ -626,8 +700,8 @@ msgctxt "language"
 msgid "Chinese"
 msgstr "Chinese"
 
-msgid "Choose a whole number from 1 to 200."
-msgstr "Choose a whole number from 1 to 200."
+msgid "Choose"
+msgstr "Choose"
 
 msgid "Choose another"
 msgstr "Choose another"
@@ -641,8 +715,14 @@ msgstr "Choose from photos"
 msgid "Choose photo"
 msgstr "Choose photo"
 
+msgid "Choose what the deck is for."
+msgstr "Choose what the deck is for."
+
 msgid "Citizenship"
 msgstr "Citizenship"
+
+msgid "Clear"
+msgstr "Clear"
 
 msgid "Clear search"
 msgstr "Clear search"
@@ -652,9 +732,6 @@ msgstr "Clear the picture"
 
 msgid "Close"
 msgstr "Close"
-
-msgid "Close menu"
-msgstr "Close menu"
 
 msgid "Close search"
 msgstr "Close search"
@@ -684,6 +761,12 @@ msgctxt "deck tag"
 msgid "Conversation"
 msgstr "Conversation"
 
+msgid "Copied"
+msgstr "Copied"
+
+msgid "Copy link"
+msgstr "Copy link"
+
 msgctxt "deck tag"
 msgid "Core vocabulary"
 msgstr "Core vocabulary"
@@ -701,8 +784,11 @@ msgstr "Couldn’t archive “{0}”."
 msgid "Couldn’t archive “{name}”."
 msgstr "Couldn’t archive “{name}”."
 
-msgid "Couldn’t archive the card."
-msgstr "Couldn’t archive the card."
+msgid "Couldn’t archive “{term}”."
+msgstr "Couldn’t archive “{term}”."
+
+msgid "Couldn’t cancel the invitation. Try again."
+msgstr "Couldn’t cancel the invitation. Try again."
 
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Couldn’t change your photo. Check your connection and try again."
@@ -731,6 +817,9 @@ msgstr "Couldn’t load Insights"
 msgid "Couldn’t load more."
 msgstr "Couldn’t load more."
 
+msgid "Couldn’t load the join link"
+msgstr "Couldn’t load the join link"
+
 msgid "Couldn’t load this card"
 msgstr "Couldn’t load this card"
 
@@ -742,6 +831,9 @@ msgstr "Couldn’t load this deck"
 
 msgid "Couldn’t load Today"
 msgstr "Couldn’t load Today"
+
+msgid "Couldn’t load who’s in this deck"
+msgstr "Couldn’t load who’s in this deck"
 
 msgid "Couldn’t load your cards"
 msgstr "Couldn’t load your cards"
@@ -755,8 +847,14 @@ msgstr "Couldn’t load your series"
 msgid "Couldn’t load your series. Try again"
 msgstr "Couldn’t load your series. Try again"
 
-msgid "Couldn’t move the deck"
-msgstr "Couldn’t move the deck"
+msgid "Couldn’t move “{deckName}”."
+msgstr "Couldn’t move “{deckName}”."
+
+msgid "Couldn’t move “{term}”."
+msgstr "Couldn’t move “{term}”."
+
+msgid "Couldn’t move {count, plural, one {# card} other {# cards}}."
+msgstr "Couldn’t move {count, plural, one {# card} other {# cards}}."
 
 msgid "Couldn’t open this deck"
 msgstr "Couldn’t open this deck"
@@ -773,15 +871,15 @@ msgstr "Couldn’t reach Lymi. Check your connection and try again."
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Couldn’t reach the sign-in service. Check your connection and try again."
 
+msgid "Couldn’t remove them. Try again."
+msgstr "Couldn’t remove them. Try again."
+
 #. placeholder {0}: back.term
 msgid "Couldn’t restore “{0}”."
 msgstr "Couldn’t restore “{0}”."
 
 msgid "Couldn’t restore “{name}”."
 msgstr "Couldn’t restore “{name}”."
-
-msgid "Couldn’t restore the card."
-msgstr "Couldn’t restore the card."
 
 msgid "Couldn’t save that."
 msgstr "Couldn’t save that."
@@ -810,11 +908,23 @@ msgstr "Couldn’t save your name. Check your connection and try again."
 msgid "Couldn’t search cards"
 msgstr "Couldn’t search cards"
 
+msgid "Couldn’t send the invitation. Too many went out recently, so try again later."
+msgstr "Couldn’t send the invitation. Too many went out recently, so try again later."
+
 msgid "Couldn’t send your feedback"
 msgstr "Couldn’t send your feedback"
 
+msgid "Couldn’t start the section"
+msgstr "Couldn’t start the section"
+
 msgid "Couldn’t take back your grade for “{term}”. It still counts."
 msgstr "Couldn’t take back your grade for “{term}”. It still counts."
+
+msgid "Couldn’t turn off the join link. Try again."
+msgstr "Couldn’t turn off the join link. Try again."
+
+msgid "Couldn’t turn on the join link. Try again."
+msgstr "Couldn’t turn on the join link. Try again."
 
 msgid "Create a deck on the web first, then add cards here."
 msgstr "Create a deck on the web first, then add cards here."
@@ -841,9 +951,6 @@ msgctxt "language"
 msgid "Croatian"
 msgstr "Croatian"
 
-msgid "Custom"
-msgstr "Custom"
-
 msgctxt "language"
 msgid "Czech"
 msgstr "Czech"
@@ -863,9 +970,6 @@ msgstr "Daily goal reached."
 
 msgid "Daily goal saved."
 msgstr "Daily goal saved."
-
-msgid "Daily reminder"
-msgstr "Daily reminder"
 
 msgctxt "language"
 msgid "Danish"
@@ -999,6 +1103,9 @@ msgstr "Edited the series {name}"
 msgid "Email"
 msgstr "Email"
 
+msgid "Email address"
+msgstr "Email address"
+
 msgid "End review"
 msgstr "End review"
 
@@ -1012,8 +1119,14 @@ msgstr "Enriched"
 msgid "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Enriched {count, plural, one {# card} other {# cards}} in {deck}"
 
+msgid "Enter a full email address, like anna@example.com."
+msgstr "Enter a full email address, like anna@example.com."
+
 msgid "Enter an email address, like you@example.com."
 msgstr "Enter an email address, like you@example.com."
+
+msgid "Enter an email address."
+msgstr "Enter an email address."
 
 msgid "Enter the 6-digit code we sent to {email}."
 msgstr "Enter the 6-digit code we sent to {email}."
@@ -1027,6 +1140,9 @@ msgstr "Estonian"
 
 msgid "Every card"
 msgstr "Every card"
+
+msgid "Every section is open"
+msgstr "Every section is open"
 
 msgid "Every section is open, so any card can come up in review."
 msgstr "Every section is open, so any card can come up in review."
@@ -1076,6 +1192,9 @@ msgstr "Exporting your cards"
 msgid "Feedback sent"
 msgstr "Feedback sent"
 
+msgid "Fewer"
+msgstr "Fewer"
+
 msgid "Fields AI can fill"
 msgstr "Fields AI can fill"
 
@@ -1085,7 +1204,7 @@ msgstr "Fill in the rest with AI"
 msgid "Filter"
 msgstr "Filter"
 
-#. placeholder {0}: chips.length
+#. placeholder {0}: i18n.number(chips.length)
 msgid "Filter · {0}"
 msgstr "Filter · {0}"
 
@@ -1290,8 +1409,17 @@ msgctxt "daily goal"
 msgid "Intense"
 msgstr "Intense"
 
+msgid "Invitation sent to {email}."
+msgstr "Invitation sent to {email}."
+
+msgid "Invite"
+msgstr "Invite"
+
 msgid "Invited {name} to {deck}"
 msgstr "Invited {name} to {deck}"
+
+msgid "Inviting needs a connection."
+msgstr "Inviting needs a connection."
 
 msgid "It goes at the end. Move cards into it from the deck."
 msgstr "It goes at the end. Move cards into it from the deck."
@@ -1329,12 +1457,24 @@ msgstr "Join"
 msgid "Join a deck"
 msgstr "Join a deck"
 
+msgid "Joined {joined}"
+msgstr "Joined {joined}"
+
 msgid "Joining a deck needs a connection. Connect and try again."
 msgstr "Joining a deck needs a connection. Connect and try again."
 
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Keen"
+
+msgid "Keep invitation"
+msgstr "Keep invitation"
+
+msgid "Keep link"
+msgstr "Keep link"
+
+msgid "Keep member"
+msgstr "Keep member"
 
 msgid "Keep studying"
 msgstr "Keep studying"
@@ -1490,6 +1630,9 @@ msgstr "Message"
 msgid "Modes"
 msgstr "Modes"
 
+msgid "More"
+msgstr "More"
+
 msgid "More about this card"
 msgstr "More about this card"
 
@@ -1506,6 +1649,9 @@ msgstr "More like this"
 msgid "More than {0}"
 msgstr "More than {0}"
 
+msgid "Move “{term}” to"
+msgstr "Move “{term}” to"
+
 msgid "Move {deckName} down"
 msgstr "Move {deckName} down"
 
@@ -1515,14 +1661,26 @@ msgstr "Move {deckName} up"
 msgid "Move down"
 msgstr "Move down"
 
+msgid "Move to section…"
+msgstr "Move to section…"
+
 msgid "Move to series"
 msgstr "Move to series"
 
 msgid "Move up"
 msgstr "Move up"
 
+msgid "Move…"
+msgstr "Move…"
+
 msgid "Moved “{deckName}” to {seriesName}"
 msgstr "Moved “{deckName}” to {seriesName}"
+
+msgid "Moved “{term}” to {sectionName}"
+msgstr "Moved “{term}” to {sectionName}"
+
+msgid "Moved {count, plural, one {# card} other {# cards}} to {sectionName}"
+msgstr "Moved {count, plural, one {# card} other {# cards}} to {sectionName}"
 
 msgid "Moved to {deck}, the deck for this language"
 msgstr "Moved to {deck}, the deck for this language"
@@ -1533,6 +1691,12 @@ msgstr "Moved to another deck"
 msgid "Moves from {elsewhere}"
 msgstr "Moves from {elsewhere}"
 
+msgid "Moving a card keeps its progress."
+msgstr "Moving a card keeps its progress."
+
+msgid "Moving cards needs a connection."
+msgstr "Moving cards needs a connection."
+
 msgid "Name"
 msgstr "Name"
 
@@ -1542,6 +1706,9 @@ msgstr "Name"
 
 msgid "Nature"
 msgstr "Nature"
+
+msgid "Needs a connection"
+msgstr "Needs a connection"
 
 msgid "New"
 msgstr "New"
@@ -1567,9 +1734,6 @@ msgstr "New to Lymi?"
 
 msgid "Next card due {next}."
 msgstr "Next card due {next}."
-
-msgid "Next due {next}"
-msgstr "Next due {next}"
 
 msgid "Next month"
 msgstr "Next month"
@@ -1647,11 +1811,17 @@ msgctxt "language"
 msgid "Norwegian"
 msgstr "Norwegian"
 
+msgid "Not joined yet · invited {invited}"
+msgstr "Not joined yet · invited {invited}"
+
 msgid "Not reviewed yet"
 msgstr "Not reviewed yet"
 
 msgid "Not reviewed yet. It comes up in your next review."
 msgstr "Not reviewed yet. It comes up in your next review."
+
+msgid "Not set"
+msgstr "Not set"
 
 msgid "Not started"
 msgstr "Not started"
@@ -1692,14 +1862,14 @@ msgstr "Notifications are off for Lymi. Turn them on in Settings to get the remi
 msgid "Often forgotten"
 msgstr "Often forgotten"
 
-msgid "OK"
-msgstr "OK"
-
 msgid "One after another, automatically"
 msgstr "One after another, automatically"
 
 msgid "One after another, when you start them"
 msgstr "One after another, when you start them"
+
+msgid "Only people you invite"
+msgstr "Only people you invite"
 
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."
@@ -1734,6 +1904,12 @@ msgstr "Open on the web"
 msgid "Open Settings"
 msgstr "Open Settings"
 
+msgid "Options for {email}"
+msgstr "Options for {email}"
+
+msgid "Options for {name}"
+msgstr "Options for {name}"
+
 msgid "Options for {sectionName}"
 msgstr "Options for {sectionName}"
 
@@ -1746,6 +1922,9 @@ msgstr "Other"
 msgid "Other subjects"
 msgstr "Other subjects"
 
+msgid "Owner"
+msgstr "Owner"
+
 msgid "Parts of this deck, such as one per lesson. Everyone studying it sees them in this order."
 msgstr "Parts of this deck, such as one per lesson. Everyone studying it sees them in this order."
 
@@ -1755,8 +1934,8 @@ msgstr "Password"
 msgid "Peek at your hook"
 msgstr "Peek at your hook"
 
-msgid "People and sharing"
-msgstr "People and sharing"
+msgid "People"
+msgstr "People"
 
 msgctxt "language"
 msgid "Persian"
@@ -1797,6 +1976,9 @@ msgstr "Portuguese"
 
 msgid "Previous month"
 msgstr "Previous month"
+
+msgid "Private"
+msgstr "Private"
 
 msgid "Production"
 msgstr "Production"
@@ -1862,8 +2044,17 @@ msgstr "Recognition card for {cue}. Tap to reveal"
 msgid "Remind me to review"
 msgstr "Remind me to review"
 
+msgid "Remove {name}?"
+msgstr "Remove {name}?"
+
 msgid "Remove filter: {name}"
 msgstr "Remove filter: {name}"
+
+msgid "Remove from deck"
+msgstr "Remove from deck"
+
+msgid "Remove member"
+msgstr "Remove member"
 
 msgid "Remove photo"
 msgstr "Remove photo"
@@ -1883,6 +2074,9 @@ msgstr "Rename series"
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
 
+msgid "Reset"
+msgstr "Reset"
+
 msgid "Reset your password"
 msgstr "Reset your password"
 
@@ -1894,9 +2088,6 @@ msgstr "Restore {title}"
 
 msgid "Restore brings a section back in its place, with the cards archived alongside it."
 msgstr "Restore brings a section back in its place, with the cards archived alongside it."
-
-msgid "Restore card"
-msgstr "Restore card"
 
 msgid "Restored"
 msgstr "Restored"
@@ -1934,6 +2125,9 @@ msgstr "Review on your own schedule. New cards appear as they are added."
 msgid "Review these decks together, in this order."
 msgstr "Review these decks together, in this order."
 
+msgid "Review this section"
+msgstr "Review this section"
+
 msgid "Review whenever you have a moment."
 msgstr "Review whenever you have a moment."
 
@@ -1947,9 +2141,6 @@ msgstr "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}"
 #. placeholder {0}: days.length
 msgid "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}, including a rest day"
 msgstr "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}, including a rest day"
-
-msgid "Reviews a day"
-msgstr "Reviews a day"
 
 msgctxt "language"
 msgid "Romanian"
@@ -2001,6 +2192,9 @@ msgstr "Searching cards needs a connection"
 msgid "Section"
 msgstr "Section"
 
+msgid "Section {number}: {name}, {cards}"
+msgstr "Section {number}: {name}, {cards}"
+
 msgid "Sections"
 msgstr "Sections"
 
@@ -2035,6 +2229,15 @@ msgstr "See the term, recall what it means."
 msgid "Select a word or phrase, then share it to Lymi."
 msgstr "Select a word or phrase, then share it to Lymi."
 
+msgid "Select all"
+msgstr "Select all"
+
+msgid "Select cards"
+msgstr "Select cards"
+
+msgid "Selected cards"
+msgstr "Selected cards"
+
 msgid "Send"
 msgstr "Send"
 
@@ -2053,6 +2256,15 @@ msgstr "Sent again"
 msgctxt "language"
 msgid "Serbian"
 msgstr "Serbian"
+
+msgid "Series"
+msgstr "Series"
+
+msgid "Share"
+msgstr "Share"
+
+msgid "Share deck"
+msgstr "Share deck"
 
 msgid "Shared by {owner}"
 msgstr "Shared by {owner}"
@@ -2125,6 +2337,9 @@ msgstr "Some offline work hasn’t synced"
 msgid "Someone"
 msgstr "Someone"
 
+msgid "Something else"
+msgstr "Something else"
+
 msgid "Sort"
 msgstr "Sort"
 
@@ -2134,6 +2349,18 @@ msgstr "Source"
 msgctxt "language"
 msgid "Spanish"
 msgstr "Spanish"
+
+msgid "Start {nextName}"
+msgstr "Start {nextName}"
+
+msgid "Start {sectionName}"
+msgstr "Start {sectionName}"
+
+msgid "Start {sectionName} early?"
+msgstr "Start {sectionName} early?"
+
+msgid "Start anyway"
+msgstr "Start anyway"
 
 msgid "Start with a deck"
 msgstr "Start with a deck"
@@ -2147,6 +2374,9 @@ msgstr "Stay signed in"
 msgctxt "daily goal"
 msgid "Steady"
 msgstr "Steady"
+
+msgid "Stop selecting"
+msgstr "Stop selecting"
 
 msgid "Stopped"
 msgstr "Stopped"
@@ -2190,6 +2420,9 @@ msgstr "Tell Lymi what broke or what it should do. Replies come to your email."
 
 msgid "Term"
 msgstr "Term"
+
+msgid "Terms with short explanations, like for a citizenship test."
+msgstr "Terms with short explanations, like for a citizenship test."
 
 msgctxt "language"
 msgid "Thai"
@@ -2237,11 +2470,32 @@ msgstr "The cards you kept move back into it"
 msgid "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 msgstr "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 
+msgid "The join link needs a connection"
+msgstr "The join link needs a connection"
+
+msgid "The link stops working for good. People who joined stay."
+msgstr "The link stops working for good. People who joined stay."
+
+msgid "Their invitation link stops working. You can invite them again any time."
+msgstr "Their invitation link stops working. You can invite them again any time."
+
 msgid "Theme"
 msgstr "Theme"
 
 msgid "There is no deck at this address"
 msgstr "There is no deck at this address"
+
+msgid "They already have a pending invitation."
+msgstr "They already have a pending invitation."
+
+msgid "They get an email with a link only they can use."
+msgstr "They get an email with a link only they can use."
+
+msgid "They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept."
+msgstr "They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept."
+
+msgid "They’re already in this deck."
+msgstr "They’re already in this deck."
 
 msgid "They’re ready when you are."
 msgstr "They’re ready when you are."
@@ -2260,6 +2514,9 @@ msgstr "This card’s picture was removed."
 
 msgid "This deck is already in Library."
 msgstr "This deck is already in Library."
+
+msgid "This deck is already yours."
+msgstr "This deck is already yours."
 
 msgid "This deck is archived"
 msgstr "This deck is archived"
@@ -2349,6 +2606,12 @@ msgstr "Too many tries with this code. Send a new one."
 msgid "Took “{deckName}” out of its series"
 msgstr "Took “{deckName}” out of its series"
 
+msgid "Took “{term}” out of its section"
+msgstr "Took “{term}” out of its section"
+
+msgid "Took {count, plural, one {# card} other {# cards}} out of their sections"
+msgstr "Took {count, plural, one {# card} other {# cards}} out of their sections"
+
 msgctxt "deck tag"
 msgid "TOPIK I"
 msgstr "TOPIK I"
@@ -2372,6 +2635,12 @@ msgstr "Try another word, or part of one."
 msgctxt "language"
 msgid "Turkish"
 msgstr "Turkish"
+
+msgid "Turn off link"
+msgstr "Turn off link"
+
+msgid "Turn off the join link?"
+msgstr "Turn off the join link?"
 
 msgid "Turned off the join link for {deck}"
 msgstr "Turned off the join link for {deck}"
@@ -2434,6 +2703,9 @@ msgstr "Welcome back."
 msgid "What it means"
 msgstr "What it means"
 
+msgid "What it’s for"
+msgstr "What it’s for"
+
 msgid "What this is about"
 msgstr "What this is about"
 
@@ -2451,6 +2723,15 @@ msgstr "When started"
 
 msgid "Where you met it, such as a lesson"
 msgstr "Where you met it, such as a lesson"
+
+msgid "Who can join"
+msgstr "Who can join"
+
+msgid "Who’s in this deck needs a connection"
+msgstr "Who’s in this deck needs a connection"
+
+msgid "Words and phrases in a language you’re learning."
+msgstr "Words and phrases in a language you’re learning."
 
 msgid "Work and study"
 msgstr "Work and study"
@@ -2479,6 +2760,9 @@ msgstr "You"
 msgid "You are already in this deck."
 msgstr "You are already in this deck."
 
+msgid "You are here"
+msgstr "You are here"
+
 msgid "You are still in the deck."
 msgstr "You are still in the deck."
 
@@ -2493,6 +2777,12 @@ msgstr "You cannot add this deck."
 
 msgid "You cannot join this deck through this link."
 msgstr "You cannot join this deck through this link."
+
+msgid "You removed them from this deck, so you can’t invite them again."
+msgstr "You removed them from this deck, so you can’t invite them again."
+
+msgid "You see who joined, not their reviews."
+msgstr "You see who joined, not their reviews."
 
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "You start with the first section. The next opens as you learn this one."
@@ -2541,6 +2831,15 @@ msgstr "Your message is still here. Try again, or write to <0>hello@lymi.app</0>
 
 msgid "Your name"
 msgstr "Your name"
+
+msgid "Your own"
+msgstr "Your own"
+
+msgid "Your own goal"
+msgstr "Your own goal"
+
+msgid "Your own material, whatever it is."
+msgstr "Your own material, whatever it is."
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Your photo changed on another device. Try again."

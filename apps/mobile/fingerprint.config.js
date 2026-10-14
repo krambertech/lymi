@@ -5,6 +5,10 @@ const { DEFAULT_SOURCE_SKIPS, SourceSkips } = require("expo/fingerprint");
 module.exports = {
   sourceSkips: DEFAULT_SOURCE_SKIPS | SourceSkips.ExpoConfigVersions,
   // Share to Lymi's Swift is native code; the fonts and colours prebuild copies into it are not sources.
-  extraSources: [{ type: "dir", filePath: "targets", reasons: ["appleTargets"] }],
+  // The menus' symbols are copied into the asset catalog at prebuild, so a changed icon needs a build.
+  extraSources: [
+    { type: "dir", filePath: "targets", reasons: ["appleTargets"] },
+    { type: "dir", filePath: "assets/symbols", reasons: ["menuSymbols"] },
+  ],
   ignorePaths: ["targets/*/fonts/**", "targets/*/Assets.xcassets/**"],
 };

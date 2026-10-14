@@ -26,7 +26,7 @@
     "test:e2e": "playwright test",
     "test:e2e:chromium": "playwright test --project=chromium",
     "test:e2e:ui": "playwright test --ui",
-    "check": "biome check . && pnpm check:design && pnpm check:cache-shape && pnpm check:styling",
+    "check": "biome check . && pnpm check:design && pnpm check:cache-shape && pnpm check:styling && pnpm --filter @lymi/mobile symbols:check",
     "check:cache-shape": "node scripts/check-cache-shape.mjs",
     "check:styling": "node scripts/check-styling.mjs",
     "check:design": "node scripts/check-design-docs.mjs",

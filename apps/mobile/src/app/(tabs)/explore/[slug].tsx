@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { exploreDeckQuery } from "@lymi/client/queries";
 import { type ExploreDeckOut, publisherAvatarPath } from "@lymi/core/catalog";
+import { ARRIVE } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ import { useAddDeck, useAddFailure, useTagLabel } from "../../../explore/catalog
 import { DeckHand, handOf } from "../../../explore/deck-hand";
 import { DeckTile } from "../../../explore/layouts";
 import { useCoverColour } from "../../../explore/tray";
+import { CROSSFADE, springIn, useReduceMotion } from "../../../theme/motion";
 import { usePalette } from "../../../theme/palette";
 import { GlassSurface } from "../../../ui/glass";
 import { OnTheWeb } from "../../../ui/on-the-web";
@@ -102,10 +104,13 @@ function DeckPage({
   const cards = plural(deck.cardCount, { one: "# card", other: "# cards" });
   const sectionCount = plural(sections.length, { one: "# section", other: "# sections" });
 
+  // Where the name ends in the header, so the bar's title arrives as the name goes under the bar.
+  const [block, setBlock] = useState(0);
+  const [nameEnd, setNameEnd] = useState<number | undefined>(undefined);
   const header = (
     <View className="items-center gap-5">
       {hand.length > 0 && <DeckHand cards={hand} gathered={!!deckId} ground={ground} />}
-      <View className="items-center gap-2.5">
+      <View className="items-center gap-2.5" onLayout={(e) => setBlock(e.nativeEvent.layout.y)}>
         <View className="flex-row items-center gap-2">
           <PublisherMark slug={deck.slug} name={deck.publisher} avatar={deck.publisherAvatar} />
           <Text className="text-sm text-text-2" style={{ fontVariant: ["tabular-nums"] }}>
@@ -117,6 +122,7 @@ function DeckPage({
         <Text
           className="text-center text-2xl font-medium tracking-tight text-text"
           accessibilityRole="header"
+          onLayout={(e) => setNameEnd(e.nativeEvent.layout.y + e.nativeEvent.layout.height)}
         >
           {deck.name}
         </Text>
@@ -157,6 +163,7 @@ function DeckPage({
       back={back}
       ground={{ colour: ground, shape: "fade" }}
       header={header}
+      titleAt={nameEnd === undefined ? undefined : block + nameEnd}
       actionsArrive
       actions={
         <BarAdd
@@ -261,6 +268,7 @@ function BarAdd({
   onAdd: () => void;
   onOpen: () => void;
 }) {
+  const reduce = useReduceMotion();
   const { t } = useLingui();
   const p = usePalette();
   return (
@@ -289,13 +297,13 @@ function BarAdd({
           <ActivityIndicator color={p.text} />
         ) : added ? (
           // Once the deck is in, the bar keeps only the check, so it never crowds the title.
-          <Animated.View key="added" entering={ZoomIn.springify().damping(12)}>
+          <Animated.View key="added" entering={reduce ? CROSSFADE : springIn(new ZoomIn(), ARRIVE)}>
             <Icon name="check" size={20} colour={p["state-known"]} strokeWidth={2.75} />
           </Animated.View>
         ) : (
           <Animated.View
             key="add"
-            entering={ZoomIn.springify().damping(14)}
+            entering={reduce ? CROSSFADE : springIn(new ZoomIn(), ARRIVE)}
             className="flex-row items-center gap-1.5"
           >
             <Icon name="plus" size={18} colour={p.text} strokeWidth={2.5} />

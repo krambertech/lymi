@@ -1,20 +1,21 @@
+import { ARRIVE, SNAP_BACK } from "@lymi/design";
 import { usePathname } from "expo-router";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   FadeIn,
+  FadeInDown,
   FadeOut,
+  FadeOutDown,
   runOnJS,
-  SlideInDown,
-  SlideOutDown,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useReduceMotion } from "../theme/motion";
+import { spring, springIn, useReduceMotion } from "../theme/motion";
 import { useDeckAccessoryShown } from "./tab-bar";
 import { Toast } from "./toast";
 
@@ -23,6 +24,7 @@ const ACTION_TIMEOUT = 10_000;
 const TIMEOUT = 5_000;
 // iOS 26's floating tab bar, which a toast clears and matches in width on a tab's screens.
 const TAB_BAR = 64;
+const BACK = spring(SNAP_BACK);
 const TABS = /^\/(today|library|explore|you)(\/|$)/;
 const ACCESSORY = 56;
 
@@ -137,8 +139,8 @@ function Slot({ item, depth }: { item: Item; depth: number }) {
         x.value = withTiming(Math.abs(e.translationX) > 80 ? Math.sign(e.translationX) * 500 : 0);
         y.value = withTiming(e.translationY > 40 ? 200 : 0, undefined, () => runOnJS(close)());
       } else {
-        x.value = withSpring(0);
-        y.value = withSpring(0);
+        x.value = withSpring(0, BACK);
+        y.value = withSpring(0, BACK);
       }
     })
     .onFinalize(() => runOnJS(release)());
@@ -152,8 +154,9 @@ function Slot({ item, depth }: { item: Item; depth: number }) {
   return (
     <GestureDetector gesture={swipe}>
       <Animated.View
-        entering={reduce ? FadeIn.duration(150) : SlideInDown.springify().damping(18)}
-        exiting={reduce ? FadeOut.duration(150) : SlideOutDown.duration(250)}
+        // A short rise from just below where it rests, not a flight from the screen's edge.
+        entering={reduce ? FadeIn.duration(150) : springIn(new FadeInDown(), ARRIVE)}
+        exiting={reduce ? FadeOut.duration(150) : FadeOutDown.duration(200)}
         pointerEvents={depth === 0 ? "auto" : "none"}
         importantForAccessibility={depth === 0 ? "auto" : "no-hide-descendants"}
         accessibilityElementsHidden={depth > 0}

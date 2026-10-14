@@ -1,11 +1,13 @@
 import { useLingui } from "@lingui/react/macro";
-import Animated from "react-native-reanimated";
-import { CROSSFADE } from "../theme/motion";
+import Animated, { FadeOut } from "react-native-reanimated";
+import { ALWAYS, CROSSFADE } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { Button, Icon, Text } from "../ui/primitives";
 import type { Outcome } from "./model";
 
-/** The last add, under the fields: where it went, or where the card already is. */
+const FADE_AWAY = FadeOut.duration(150).reduceMotion(ALWAYS);
+
+/** The last add, over the chips: where it went, or where the card already is. */
 export function LastAdd({
   last,
   onUndo,
@@ -31,7 +33,8 @@ export function LastAdd({
   return (
     <Animated.View
       entering={CROSSFADE}
-      className="min-h-8 flex-row items-center gap-2 pt-2"
+      exiting={FADE_AWAY}
+      className="min-h-8 flex-row items-center gap-2 pb-1"
       accessibilityLiveRegion="polite"
     >
       <Icon

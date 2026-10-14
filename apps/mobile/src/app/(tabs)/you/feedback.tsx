@@ -13,7 +13,7 @@ import { Linking, ScrollView, View } from "react-native";
 import { isAppLanguage } from "../../../i18n";
 import { usePalette } from "../../../theme/palette";
 import { Field, FieldDescription, FieldError, FieldLabel, Textarea } from "../../../ui/field";
-import { GlassButton } from "../../../ui/glass";
+import { FormHeader } from "../../../ui/form-header";
 import { KeyboardRoom } from "../../../ui/keyboard";
 import { Button, Icon, Text } from "../../../ui/primitives";
 import { Segmented } from "../../../ui/segmented";
@@ -69,14 +69,11 @@ export default function Feedback() {
 
   return (
     <KeyboardRoom>
-      {/* The same header as every full sheet: close, the title centred, the one action. */}
-      <View className="flex-row items-center justify-between gap-3 px-4 pt-5 pb-2">
-        <GlassButton icon="close" label={t`Cancel`} onPress={() => router.back()} />
-        <Text className="text-md font-medium text-text" accessibilityRole="header">
-          {t`Send feedback`}
-        </Text>
-        <GlassButton icon="send" label={t`Send`} primary busy={send.isPending} onPress={submit} />
-      </View>
+      <FormHeader
+        close={{ label: t`Cancel`, onPress: () => router.back() }}
+        title={t`Send feedback`}
+        action={{ icon: "send", label: t`Send`, busy: send.isPending, onPress: submit }}
+      />
       <ScrollView
         contentContainerClassName="gap-6 px-5 pt-2 pb-6"
         keyboardShouldPersistTaps="handled"

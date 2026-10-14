@@ -19,7 +19,8 @@ import { CAPTURE_KEYS, captureStore } from "../data/kept";
 import { useDecks, useSections } from "../data/queries";
 import { usePalette } from "../theme/palette";
 import { FieldChip, FieldChipFace, FieldChipRow } from "../ui/field-chip";
-import { GlassButton, GlassPill } from "../ui/glass";
+import { FormHeader } from "../ui/form-header";
+import { GlassPill } from "../ui/glass";
 import { KeyboardRoom } from "../ui/keyboard";
 import { Select } from "../ui/menu";
 import { Icon, Text } from "../ui/primitives";
@@ -80,6 +81,11 @@ export default function Capture() {
   const [undoable, setUndoable] = useState(false);
   const [pending, setPending] = useState(false);
   const termRef = useRef<TextInput>(null);
+  // Once the next term is being typed, the line about the last add has done its job.
+  const [movedOn, setMovedOn] = useState<Outcome | null>(null);
+  const moved = last !== null && movedOn === last;
+  // A sheet's dismissal is still running when it reports closed; focus a frame later or iOS keeps the keyboard down.
+  const focusTerm = () => requestAnimationFrame(() => termRef.current?.focus());
 
   // Each add starts its own five seconds, so a second add keeps its Undo for the full time.
   useEffect(() => {
@@ -190,30 +196,32 @@ export default function Capture() {
   return (
     <KeyboardRoom>
       <OnGlass>
-        <View className="flex-row items-center justify-between gap-3 px-4 pt-5 pb-2">
-          <GlassButton icon="close" label={t`Done`} onPress={() => router.back()} />
-          {deck && (
-            <Select
-              label={t`Deck`}
-              value={deck.id}
-              options={decks.map((d) => ({ value: d.id, label: d.name }))}
-              onChange={(id) => {
-                setDeck(id);
-                setSectionId(null);
-                setModes(null);
-                captureStore.set(CAPTURE_KEYS.deck, id);
-              }}
-              trigger={<GlassPill icon="deck">{deck.name}</GlassPill>}
-              onClosed={() => termRef.current?.focus()}
-            />
-          )}
-          <GlassButton
-            icon="plus"
-            label={t`Add to ${deckName}`}
-            primary
-            onPress={() => void add()}
-          />
-        </View>
+        <FormHeader
+          close={{ label: t`Done`, onPress: () => router.back() }}
+          middle={
+            deck && (
+              <Select
+                label={t`Deck`}
+                value={deck.id}
+                options={decks.map((d) => ({ value: d.id, label: d.name }))}
+                onChange={(id) => {
+                  setDeck(id);
+                  setSectionId(null);
+                  setModes(null);
+                  captureStore.set(CAPTURE_KEYS.deck, id);
+                }}
+                trigger={<GlassPill icon="deck">{deck.name}</GlassPill>}
+                onClosed={focusTerm}
+              />
+            )
+          }
+          action={{
+            icon: "plus",
+            label: t`Add to ${deckName}`,
+            disabled: !draft.term.trim(),
+            onPress: () => void add(),
+          }}
+        />
 
         {decksQuery_.isPending ? null : deck ? (
           <>
@@ -227,6 +235,7 @@ export default function Capture() {
                 onChange={(field, value) => {
                   write(field)(value);
                   if (field === "term" && error) setError(null);
+                  if (field === "term") setMovedOn(last);
                 }}
                 shown={fields.shown}
                 adding={fields.adding}
@@ -237,7 +246,7 @@ export default function Capture() {
                   meaning: enrich ? t`Leave it empty and the AI fills it in` : t`What it means`,
                 }}
                 footer={
-                  error ? (
+                  error && (
                     <View
                       className="flex-row items-center gap-1.5 pt-2"
                       accessibilityLiveRegion="polite"
@@ -245,20 +254,20 @@ export default function Capture() {
                       <Icon name="alert" size={14} colour={p.danger} />
                       <Text className="flex-1 text-base text-danger">{error}</Text>
                     </View>
-                  ) : (
-                    last && (
-                      <LastAdd
-                        last={last}
-                        onUndo={undoable ? undo : undefined}
-                        onRetry={last.kind === "added" && last.picture ? retryPicture : undefined}
-                      />
-                    )
                   )
                 }
               />
             </ScrollView>
 
             <View className="px-4 pt-1 pb-2">
+              {/* Pinned over the chips, by the keyboard, rather than wherever the fields end. */}
+              {last && !error && !moved && (
+                <LastAdd
+                  last={last}
+                  onUndo={undoable ? undo : undefined}
+                  onRetry={last.kind === "added" && last.picture ? retryPicture : undefined}
+                />
+              )}
               <FieldChipRow label={t`More about this card`}>
                 <FieldChip
                   icon="ai"
@@ -283,7 +292,7 @@ export default function Capture() {
                       ...sections.map((s) => ({ value: s.id, label: s.name })),
                     ]}
                     onChange={(id) => setSectionId(id || null)}
-                    onClosed={() => termRef.current?.focus()}
+                    onClosed={focusTerm}
                     trigger={
                       <FieldChipFace icon="section" on={!!section} opens>
                         {section?.name ?? t`Section`}
@@ -315,14 +324,14 @@ export default function Capture() {
               deckModes={deckModes}
               onChange={setModes}
               onClose={() => setAsking(false)}
-              onClosed={() => termRef.current?.focus()}
+              onClosed={focusTerm}
             />
             <PictureSheet
               open={picturing}
               value={picture}
               onChange={setPicture}
               onClose={() => setPicturing(false)}
-              onClosed={() => termRef.current?.focus()}
+              onClosed={focusTerm}
             />
           </>
         ) : (

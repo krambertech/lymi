@@ -2,25 +2,21 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type DeckSummary, errorMessage, type Series } from "@lymi/client/api";
 import { groupDecks } from "@lymi/client/library-groups";
-import { deckCardsQuery } from "@lymi/client/queries";
-import { useQuery } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
 import { type Href, Link, useRouter } from "expo-router";
 import { Alert, Pressable, View } from "react-native";
 import { languageName } from "../../../data/languages";
-import { useNextDue } from "../../../data/next-due";
 import { useArchivedDecks, useDecks, useSeriesList } from "../../../data/queries";
 import { useSeriesActions } from "../../../data/series";
 import { useOnline } from "../../../streak/goal-picker";
 import { usePalette } from "../../../theme/palette";
+import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
 import { ListRow, ListRowFace, listRowLabel } from "../../../ui/list-row";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
-import { DropdownMenu } from "../../../ui/menu";
-import { MorphMenu } from "../../../ui/morph-menu";
 import { OfflineNote } from "../../../ui/offline-note";
 import { openWeb } from "../../../ui/on-the-web";
-import { Icon, IconButton, Plate, Press, Text } from "../../../ui/primitives";
+import { Icon, Plate, Press, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { BarButton, Screen } from "../../../ui/screen";
 import { Skeleton } from "../../../ui/skeleton";
@@ -50,8 +46,10 @@ export default function Library() {
       actions={
         <>
           <BarButton icon="search" label={t`Search`} onPress={() => router.push("/search")} />
-          <MorphMenu
+          <ActionMenu
             label={t`Add`}
+            symbol="plus"
+            look="primary"
             items={[
               { label: t`Add a card`, icon: "plus", onSelect: () => router.push("/capture") },
               { label: t`New deck`, icon: "deck", onSelect: newDeck },
@@ -213,11 +211,10 @@ function SeriesMenu({
   const needsConnection = (then: () => void) => () =>
     online ? then() : Alert.alert(t`Changing series needs a connection.`);
   return (
-    <DropdownMenu
-      title={seriesName}
-      trigger={(open) => (
-        <IconButton icon="more" label={t`Options for ${seriesName}`} size="sm" onPress={open} />
-      )}
+    <ActionMenu
+      label={t`Options for ${seriesName}`}
+      symbol="ellipsis"
+      look="row"
       items={[
         [
           {
@@ -316,15 +313,12 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
   const size =
     d.total === 0 ? t`No cards yet` : plural(d.total, { one: "# card", other: "# cards" });
   const owner = d.owner.name;
-  // Watches the cards Sync keeps for each deck, so it follows the warming; disabled, it never fetches.
-  const kept = useQuery({ ...deckCardsQuery(d.id), enabled: false }).data;
-  const next = useNextDue(kept);
-  const back = d.due === 0 && d.total > 0 && next ? t`Next due ${next}` : null;
   // Whose it is goes last, so a long publisher's name wraps on its own rather than splitting the size.
-  const line = [size, language, d.role === "owner" ? null : t`Shared by ${owner}`, back]
+  const line = [size, language, d.role === "owner" ? null : t`Shared by ${owner}`]
     .filter(Boolean)
     .join(" · ");
-  const due = d.due > 0 ? d.due : undefined;
+  // A deck with cards always shows its count, a quiet 0 when none are due, so every row ends alike.
+  const due = d.total > 0 ? d.due : undefined;
   const href = `/library/${d.id}` as const;
   const review = () => router.push(`/review?deck=${d.id}`);
   const add = () => router.push("/capture");
@@ -335,7 +329,11 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
       accessibilityRole="link"
       accessibilityLabel={listRowLabel(
         d.name,
-        due && plural(due, { one: "# card due", other: "# cards due" }),
+        due === undefined
+          ? undefined
+          : due > 0
+            ? plural(due, { one: "# card due", other: "# cards due" })
+            : t`Nothing due`,
         line,
       )}
       onAccessibilityTap={() => router.navigate(href)}

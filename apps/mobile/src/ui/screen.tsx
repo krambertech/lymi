@@ -47,8 +47,15 @@ interface Props {
    * bar and lets it fade out below the header, `pool` lays it as a still pool of light behind it.
    */
   ground?: { colour: string; shape: "fade" | "pool" };
+  /**
+   * Where the page's name ends inside `header`, from its top. The bar's title then arrives as that
+   * name slides under the bar, rather than once the whole header has gone.
+   */
+  titleAt?: number;
   /** The bar's actions arrive with the bar's title, as the header's own button scrolls away. */
   actionsArrive?: boolean;
+  /** A sentence under a page's large title that says what the page is for, held close to the title. */
+  description?: string;
   /** Called as the end of a long page comes near, so a list loads on as it is read. */
   onEndReached?: () => void;
   /** Told once each time the page scrolls past this content offset, or back above it. */
@@ -78,7 +85,9 @@ export function Screen({
   actions,
   header,
   ground,
+  titleAt,
   actionsArrive = false,
+  description,
   onEndReached,
   past,
   children,
@@ -129,6 +138,8 @@ export function Screen({
   const rtl = I18nManager.isRTL;
   // A worklet copies what it closes over, so it reads a flag rather than the header's elements.
   const hasHeader = !!header;
+  // The header's content starts 8 pt below the bar, so its name is under the bar 8 pt sooner.
+  const named = titleAt === undefined ? undefined : titleAt + 8;
   const moving = useAnimatedStyle(() => {
     if (hasHeader) {
       // The header holds the name at rest; the bar's title arrives as the header leaves.
@@ -141,7 +152,9 @@ export function Screen({
           : interpolate(
               y.value,
               // A short header, such as a card's term, still starts with the bar's title hidden.
-              [Math.max(headerHeight - 80, 0), Math.max(headerHeight - 30, 10)],
+              named !== undefined
+                ? [Math.max(named - 40, 0), Math.max(named, 10)]
+                : [Math.max(headerHeight - 80, 0), Math.max(headerHeight - 30, 10)],
               [0, 1],
               Extrapolation.CLAMP,
             ),
@@ -189,6 +202,8 @@ export function Screen({
     opacity: interpolate(y.value, [0, 24], [0, 1], Extrapolation.CLAMP),
   }));
   const bar = insets.top + 56;
+  // Over a page's own colour the bar takes that colour, so it never lays a grey band across it.
+  const roof = ground?.colour ?? p.canvas;
   const trailing = kind === "tab" ? <TabActions own={actions} /> : actions;
 
   return (
@@ -222,6 +237,8 @@ export function Screen({
             accessibilityLabel={title}
           />
         )}
+        {/* Pulled up from the page's 28 pt gap to 8 pt, so it reads as the title's own line. */}
+        {description && <Text className="-mt-5 text-base text-text-2">{description}</Text>}
         {children}
       </Animated.ScrollView>
       <Animated.View
@@ -231,7 +248,7 @@ export function Screen({
           {
             height: bar + 20,
             // Solid under the bar, softening only below it, so nothing reads through the title.
-            experimental_backgroundImage: `linear-gradient(to bottom, ${p.canvas} ${Math.round((bar / (bar + 20)) * 100)}%, ${p.canvas}00)`,
+            experimental_backgroundImage: `linear-gradient(to bottom, ${roof} ${Math.round((bar / (bar + 20)) * 100)}%, ${roof}00)`,
           } as ViewStyle,
           band,
         ]}
@@ -242,7 +259,7 @@ export function Screen({
         className="absolute inset-x-0 top-0"
         style={ground ? band : undefined}
       >
-        <StatusFade height={insets.top} />
+        <StatusFade height={insets.top} colour={roof} />
       </Animated.View>
       <Animated.View
         pointerEvents="none"
@@ -264,7 +281,7 @@ export function Screen({
       </Animated.View>
       <View
         pointerEvents="box-none"
-        className="absolute inset-x-0 top-0 h-14 flex-row items-center justify-between px-5"
+        className="absolute inset-x-0 top-0 h-14 flex-row items-center justify-between gap-3 px-5"
         style={{ marginTop: insets.top }}
       >
         {kind === "page" ? (
@@ -278,6 +295,7 @@ export function Screen({
           <View />
         )}
         <Animated.View
+          className="shrink-0"
           style={side}
           // Actions that have not arrived yet are out of reach of a finger and of VoiceOver.
           pointerEvents={actionsArrive && !arrived ? "none" : "auto"}
@@ -305,14 +323,25 @@ function Back({
 }) {
   const p = usePalette();
   const glass = useGlass();
-  const [width, setWidth] = useState(0);
+  const { width: screen, fontScale } = useWindowDimensions();
+  // A long name stops short of the bar's actions, so they are never pushed off the screen.
+  const widest = Math.round(screen * 0.42);
+  // Measured again when the name or the text size changes, so it is never clipped to a stale width.
+  const measuring = `${label}:${fontScale}`;
+  const [measured, setMeasured] = useState({ for: "", width: 0 });
+  const width = measured.for === measuring ? measured.width : 0;
   const name = useAnimatedStyle(() => {
     const k = interpolate(y.value, [8, TITLE_GONE], [0, 1], Extrapolation.CLAMP);
     return { opacity: 1 - k, width: width ? width * (1 - k) : undefined };
   });
   const chevron = <Icon name="back" size={20} colour={p.text} />;
   return (
-    <Press onPress={onPress} accessibilityRole="link" accessibilityLabel={label} className="-ms-2">
+    <Press
+      onPress={onPress}
+      accessibilityRole="link"
+      accessibilityLabel={label}
+      className="-ms-2 shrink"
+    >
       <View className="h-11 flex-row items-center">
         {glass ? (
           <GlassView
@@ -335,8 +364,10 @@ function Back({
           <Text
             className="text-md font-medium text-text-2"
             numberOfLines={1}
-            ellipsizeMode="clip"
-            onLayout={(e) => width || setWidth(e.nativeEvent.layout.width)}
+            style={{ maxWidth: widest }}
+            onLayout={(e) => {
+              if (!width) setMeasured({ for: measuring, width: e.nativeEvent.layout.width });
+            }}
           >
             {label}
           </Text>
@@ -383,8 +414,7 @@ function Ground({
 }
 
 /** Content scrolling up softens into the room under the status bar instead of hitting the clock. */
-function StatusFade({ height }: { height: number }) {
-  const p = usePalette();
+function StatusFade({ height, colour }: { height: number; colour: string }) {
   return (
     <View
       pointerEvents="none"
@@ -392,7 +422,7 @@ function StatusFade({ height }: { height: number }) {
       style={
         {
           height: height + 12,
-          experimental_backgroundImage: `linear-gradient(to bottom, ${p.canvas} 55%, ${p.canvas}00)`,
+          experimental_backgroundImage: `linear-gradient(to bottom, ${colour} 55%, ${colour}00)`,
         } as ViewStyle
       }
     />
@@ -404,6 +434,7 @@ export function BarButton({
   icon,
   label,
   amber = false,
+  fill,
   onPress,
 }: {
   icon: IconName;
@@ -411,6 +442,8 @@ export function BarButton({
   label: string;
   /** The tab's standing action. */
   amber?: boolean;
+  /** A mark that is set, such as a card's star, drawn filled in this colour. */
+  fill?: string;
   onPress?: () => void;
 }) {
   const p = usePalette();
@@ -429,9 +462,35 @@ export function BarButton({
         <Icon
           name={icon}
           size={amber ? 20 : 19}
-          colour={amber ? p["amber-ink"] : p.text}
+          colour={fill ?? (amber ? p["amber-ink"] : p.text)}
+          filled={!!fill}
           strokeWidth={amber ? 2.25 : 2}
         />
+      </GlassSurface>
+    </Press>
+  );
+}
+
+/** A word in the bar, such as Edit and Done, as glass of the icon buttons' height. */
+export function BarText({
+  label,
+  strong = false,
+  onPress,
+}: {
+  label: string;
+  /** Done, which ends a mode: set heavier, as iOS sets it. */
+  strong?: boolean;
+  onPress: () => void;
+}) {
+  return (
+    <Press onPress={onPress} accessibilityRole="button">
+      <GlassSurface
+        tint="room"
+        style={{ height: 40, borderRadius: 20, paddingHorizontal: 16, justifyContent: "center" }}
+      >
+        <Text className={`text-md text-text ${strong ? "font-semibold" : "font-medium"}`}>
+          {label}
+        </Text>
       </GlassSurface>
     </Press>
   );

@@ -6,6 +6,7 @@ import {
   DECK_ENRICH_FIELDS,
   type DeckEnrichField,
   DeckInput,
+  type DeckPurpose,
   type Directions,
   deckLimits,
   LANGUAGE_TAGS,
@@ -17,12 +18,12 @@ import { TextInput, View } from "react-native";
 import { useDeckExits } from "../../../data/decks";
 import { openDraft } from "../../../data/draft";
 import { languageName } from "../../../data/languages";
+import { usePurposes } from "../../../data/purposes";
 import { useDeckCards, useDecks, useSections } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
-import { inputCap } from "../../../theme/type";
+import { inputCap, MULTILINE } from "../../../theme/type";
 import { Icon } from "../../../ui/icons";
 import { Select } from "../../../ui/menu";
-import { openWeb } from "../../../ui/on-the-web";
 import { Plate, Text } from "../../../ui/primitives";
 import { Row, RowFace, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
@@ -30,9 +31,8 @@ import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 
 /**
- * Deck settings, as the web's: nothing has a Save button. A choice is made when it is made, and
- * the name and description commit when the field is left. People, invitations and publishing stay
- * on the web (ADR 0030). A member reads the same facts and can leave.
+ * Deck settings, as the web's: a choice is made when it is made, and a text field saves with its
+ * sheet's ✓. Publishing stays on the web (ADR 0030). A member reads the same facts and can leave.
  */
 export default function DeckSettings() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -102,14 +102,21 @@ function Settings({ deck }: { deck: DeckSummary }) {
     void save({ enrichInstructions: next });
   };
   const { archive, leave } = useDeckExits(deck);
+  const purposes = usePurposes();
   const [editing, setEditing] = useState<"name" | "description" | "instructions" | null>(null);
   const [asking, setAsking] = useState(false);
   const [choosingFields, setChoosingFields] = useState(false);
-  // The keyboard's done key or a swipe keeps what was typed, as every row sheet does. phone.md.
+  // ✓ or the keyboard's done key saves; close or a swipe leaves the deck as it was. phone.md "Sheets".
   const finishEditing = () => {
     if (editing === "name") commitName();
     if (editing === "description") commitDescription();
     if (editing === "instructions") commitInstructions();
+    setEditing(null);
+  };
+  const cancelEditing = () => {
+    if (editing === "name") setName(kept.current.name);
+    if (editing === "description") setDescription(kept.current.description ?? "");
+    if (editing === "instructions") setInstructions(kept.current.instructions ?? "");
     setEditing(null);
   };
   // A sheet opens on the deck as it is now, so a change made on the web since is never saved over.
@@ -214,8 +221,8 @@ function Settings({ deck }: { deck: DeckSummary }) {
       accessibilityLabel={t`Description`}
       multiline
       selectionColor={p.text}
-      className="min-h-11 py-2 font-sans text-text"
-      style={{ fontSize: 17 }}
+      className="min-h-11 font-sans text-text"
+      style={MULTILINE}
       maxFontSizeMultiplier={inputCap(17)}
     />
   );
@@ -233,8 +240,8 @@ function Settings({ deck }: { deck: DeckSummary }) {
       accessibilityLabel={t`Instructions`}
       multiline
       selectionColor={p.text}
-      className="min-h-11 py-2 font-sans text-text"
-      style={{ fontSize: 17 }}
+      className="min-h-48 font-sans text-text"
+      style={MULTILINE}
       maxFontSizeMultiplier={inputCap(17)}
     />
   );
@@ -292,6 +299,19 @@ function Settings({ deck }: { deck: DeckSummary }) {
               value={deck.description ?? t`None`}
               onPress={() => edit("description")}
             />
+            <Select
+              label={t`What it’s for`}
+              value={deck.purpose ?? ("" as DeckPurpose)}
+              options={purposes}
+              onChange={(purpose) => void save({ purpose })}
+              trigger={
+                <RowFace
+                  icon="deck"
+                  label={t`What it’s for`}
+                  value={purposes.find((o) => o.value === deck.purpose)?.label ?? t`Not set`}
+                />
+              }
+            />
             {languageSelect(<RowFace icon="meaning" label={t`Language`} value={language} />)}
             <Row icon="modes" label={t`Modes`} value={way?.label} onPress={() => setAsking(true)} />
           </Rows>
@@ -319,8 +339,10 @@ function Settings({ deck }: { deck: DeckSummary }) {
                   ? t`Instructions`
                   : t`Name`
             }
+            description={editing === "instructions" ? t`Only you see these.` : undefined}
+            save={{ label: t`Save`, onPress: finishEditing }}
             open={editing !== null}
-            onOpenChange={(open) => !open && finishEditing()}
+            onOpenChange={(open) => !open && cancelEditing()}
           >
             <View className="rounded-xl bg-glass-plate px-4">
               {editing === "description"
@@ -329,18 +351,13 @@ function Settings({ deck }: { deck: DeckSummary }) {
                   ? instructionsField
                   : nameField}
             </View>
-            {editing === "instructions" && (
-              <Text className="px-1 text-base text-text-2">{t`Only you see these.`}</Text>
-            )}
           </Sheet>
           <Sheet
             title={t`Fields AI can fill`}
             open={choosingFields}
             onOpenChange={setChoosingFields}
+            description={t`AI fills them only when they help. It never changes your text.`}
           >
-            <Text className="px-1 text-base text-text-2">
-              {t`AI fills them only when they help. It never changes your text.`}
-            </Text>
             <SheetGroup>
               {DECK_ENRICH_FIELDS.map((field) => (
                 <SheetRow
@@ -383,10 +400,9 @@ function Settings({ deck }: { deck: DeckSummary }) {
           </Rows>
           <Rows>
             <Row
-              icon="apps"
-              label={t`People and sharing`}
-              end="web"
-              onPress={() => openWeb(`/library/${deck.id}/settings`)}
+              icon="share"
+              label={t`Share deck`}
+              onPress={() => router.push(`/share?id=${deck.id}` as Href)}
             />
           </Rows>
           <Rows>

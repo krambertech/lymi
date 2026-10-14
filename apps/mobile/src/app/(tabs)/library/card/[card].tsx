@@ -1,31 +1,38 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
+import { apiUrl, type CardEvent, type CardState, errorMessage } from "@lymi/client/api";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
 import { deserializeState } from "@lymi/core";
+import { ARRIVE } from "@lymi/design";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
-import { type ReactNode, useState } from "react";
-import { Alert, Image, View } from "react-native";
+import { type ReactNode, useEffect, useState } from "react";
+import { Image, View } from "react-native";
+import Animated, { FadeOut, LinearTransition, ZoomIn } from "react-native-reanimated";
 import { useSessionHeaders } from "../../../../auth/client";
 import type { FormField } from "../../../../capture/form";
 import { languageName } from "../../../../data/languages";
 import { useDeckCards, useDecks } from "../../../../data/queries";
+import { useMoveToSection } from "../../../../deck/move-to-section";
 import { CardNotes } from "../../../../review/card-notes";
 import { modeLabel } from "../../../../review/modes";
 import { usePronunciation } from "../../../../review/pronounce";
+import { ALWAYS, CROSSFADE, springIn, useReduceMotion } from "../../../../theme/motion";
 import { usePalette } from "../../../../theme/palette";
+import { TEXT_END } from "../../../../theme/type";
+import { ActionMenu } from "../../../../ui/action-menu";
 import { SourceChip, StateChip } from "../../../../ui/chip";
 import { EmptyState } from "../../../../ui/empty-state";
 import { GRADES, GradeMark } from "../../../../ui/grade";
 import { Icon, type IconName } from "../../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
-import { DropdownMenu } from "../../../../ui/menu";
 import { Plate, Press, Text } from "../../../../ui/primitives";
-import { BarButton, BarGroup, Screen } from "../../../../ui/screen";
+import { useAccessibilitySizes } from "../../../../ui/row";
+import { BarButton, Screen } from "../../../../ui/screen";
 import { Skeleton } from "../../../../ui/skeleton";
+import { toast } from "../../../../ui/toast-host";
 
 const DAY = 86_400_000;
 const HISTORY_ROWS = 8;
@@ -60,20 +67,21 @@ const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDat
  * back and every review and change. A tap on a field edits it in a sheet; ⋯ edits the term and
  * archives or restores the card.
  */
+/** Past this many characters a term may not fit the large title's one line. */
+const LONG_TERM = 18;
+
 export default function CardPage() {
   const { t, i18n } = useLingui();
   const p = usePalette();
+  const reduce = useReduceMotion();
+  const stackDetails = useAccessibilitySizes();
   const qc = useQueryClient();
   const router = useRouter();
   const { card: id, deck: deckId } = useLocalSearchParams<{ card: string; deck: string }>();
   const deck = useDecks().data?.find((d) => d.id === deckId);
   const cards = useDeckCards(deckId);
   const listed = cards.data?.find((r) => r.card.id === id);
-  // A card archived here stays on its page, so Restore is one tap away while the list drops it;
-  // restored, it stays until the list holds it again, which offline is not until the next sync.
-  const [held, setHeld] = useState<typeof listed>(undefined);
-  const [archived, setArchived] = useState(false);
-  const row = listed ?? held;
+  const row = listed;
   const historyQuery = useQuery(cardHistoryQuery(id));
   const history = historyQuery.data;
   const [older, setOlder] = useState(false);
@@ -81,38 +89,47 @@ export default function CardPage() {
   const card = row?.card;
   // Only the deck's owner changes its cards; a member reads them. #581.
   const owner = deck?.role === "owner";
-  const editable = owner && !archived;
+  const editable = owner;
   // Every edit opens the whole card in one sheet, at the field tapped.
   const openCard = (field: FormField) =>
     router.push({ pathname: "/edit-card", params: { card: id, deck: deckId, field } });
   const edit = (field: FormField) => (editable ? () => openCard(field) : undefined);
   const pronounce = usePronunciation(card ?? null);
+  const moveToSection = useMoveToSection(deckId);
   // An archive or a restore moves the card between every list that counts it, so all refetch.
   const refresh = () => {
     for (const key of [["decks"], ["cards"], ["queue"]]) {
       void qc.invalidateQueries({ queryKey: key });
     }
   };
-  const archive = async () => {
-    setHeld(row);
-    setArchived(true);
+  // Archiving leaves for the deck with Undo in a toast, as archiving a deck and a card in review do.
+  const archive = async (term: string) => {
+    // Back to the deck first, so a slow write never pops a screen the learner has moved to.
+    router.back();
     try {
       await writes.archiveCard(id);
       refresh();
-    } catch (e) {
-      setArchived(false);
-      Alert.alert(t`Couldn’t archive the card.`, e instanceof Error ? e.message : undefined);
+      toast.add({
+        id: `archive-card-${id}`,
+        title: t`Archived “${term}”`,
+        action: {
+          label: t`Undo`,
+          onPress: () =>
+            void writes
+              .restoreCard(id)
+              .then(refresh)
+              .catch((e) => toast.add({ error: true, title: errorMessage(e) })),
+        },
+      });
+    } catch {
+      toast.add({ error: true, title: t`Couldn’t archive “${term}”.` });
     }
   };
-  const restore = async () => {
-    try {
-      await writes.restoreCard(id);
-      setArchived(false);
-      refresh();
-    } catch (e) {
-      Alert.alert(t`Couldn’t restore the card.`, e instanceof Error ? e.message : undefined);
-    }
-  };
+  // Play sits in the menu, with no button on the page to show why it failed, so a toast says.
+  const playError = pronounce?.error;
+  useEffect(() => {
+    if (playError) toast.add({ error: true, title: playError });
+  }, [playError]);
   const failed = useLoadFailed(cards);
   const historyFailed = useLoadFailed(historyQuery);
   if (!card || !row) {
@@ -353,95 +370,93 @@ export default function CardPage() {
     <Screen
       title={card.term}
       back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}
-      // The term wraps here rather than cut off in one line, and is heard from beside it.
+      // A short term travels into the bar as every page title does; a phrase too long for one line
+      // wraps in its own header instead, and the bar's title fades in as it leaves.
       header={
-        <Text className="text-3xl font-medium tracking-tight text-text" accessibilityRole="header">
-          {card.term}
-        </Text>
+        card.term.length > LONG_TERM ? (
+          <Text
+            className="text-3xl font-medium tracking-tight text-text"
+            accessibilityRole="header"
+          >
+            {card.term}
+          </Text>
+        ) : undefined
       }
       actions={
         <View className="flex-row items-center gap-2.5">
-          <DropdownMenu
-            title={card.term}
-            trigger={(open) =>
-              // A set star joins ⋯ in one capsule and unmarks with a tap; unset, it is only in the menu.
-              card.important ? (
-                <BarGroup
-                  items={[
-                    {
-                      icon: "important",
-                      label: t`Unmark important`,
-                      fill: p["amber-mark"],
-                      onPress: () => void writes.setImportant(card, false),
-                    },
-                    { icon: "more", label: t`Card options`, onPress: open },
-                  ]}
-                />
-              ) : (
-                <BarButton icon="more" label={t`Card options`} onPress={open} />
-              )
-            }
-            items={[
-              [
-                ...(pronounce
+          {/* A set star stands beside ⋯ and unmarks with a tap; unset, it is only in the menu. */}
+          {card.important && (
+            <Animated.View
+              entering={reduce ? CROSSFADE : springIn(new ZoomIn(), ARRIVE)}
+              exiting={FadeOut.duration(150).reduceMotion(ALWAYS)}
+            >
+              <BarButton
+                icon="important"
+                label={t`Unmark important`}
+                fill={p["amber-mark"]}
+                onPress={() => void writes.setImportant(card, false)}
+              />
+            </Animated.View>
+          )}
+          <Animated.View layout={reduce ? undefined : LinearTransition.duration(220)}>
+            <ActionMenu
+              label={t`Card options`}
+              symbol="ellipsis"
+              items={[
+                [
+                  ...(pronounce
+                    ? [
+                        {
+                          label: t`Play pronunciation`,
+                          icon: "pronunciation" as const,
+                          onSelect: pronounce.play,
+                        },
+                      ]
+                    : []),
+                  ...(editable
+                    ? [
+                        {
+                          label: t`Edit card`,
+                          icon: "edit" as const,
+                          onSelect: () => openCard("term"),
+                        },
+                      ]
+                    : []),
+                  {
+                    label: card.important ? t`Unmark important` : t`Mark important`,
+                    icon: "important" as const,
+                    onSelect: () => void writes.setImportant(card, !card.important),
+                  },
+                  ...(owner && moveToSection.canMove
+                    ? [
+                        {
+                          label: t`Move to section…`,
+                          icon: "move" as const,
+                          onSelect: () => moveToSection.open([card.id]),
+                        },
+                      ]
+                    : []),
+                ],
+                // Archive sits apart, so it is never pressed for its neighbour.
+                ...(owner
                   ? [
-                      {
-                        label: t`Play pronunciation`,
-                        icon: "pronunciation" as const,
-                        onSelect: pronounce.play,
-                      },
+                      [
+                        {
+                          label: t`Archive card`,
+                          icon: "archive" as const,
+                          destructive: true,
+                          onSelect: () => void archive(card.term),
+                        },
+                      ],
                     ]
                   : []),
-                ...(editable
-                  ? [
-                      {
-                        label: t`Edit card`,
-                        icon: "edit" as const,
-                        onSelect: () => openCard("term"),
-                      },
-                    ]
-                  : []),
-                {
-                  label: card.important ? t`Unmark important` : t`Mark important`,
-                  icon: "important" as const,
-                  onSelect: () => void writes.setImportant(card, !card.important),
-                },
-              ],
-              // Archive sits apart, so it is never pressed for its neighbour.
-              ...(owner
-                ? [
-                    [
-                      archived
-                        ? { label: t`Restore card`, icon: "restore" as const, onSelect: restore }
-                        : {
-                            label: t`Archive card`,
-                            icon: "archive" as const,
-                            destructive: true,
-                            onSelect: () => void archive(),
-                          },
-                    ],
-                  ]
-                : []),
-            ]}
-          />
+              ]}
+            />
+          </Animated.View>
+          {owner && moveToSection.sheet}
         </View>
       }
     >
-      {archived && (
-        <View className="flex-row items-center gap-3 ps-1">
-          <Icon name="archive" size={16} colour={p.muted} />
-          <Text className="flex-1 text-base text-text-2">
-            {t`Archived. It’s out of your reviews until you restore it.`}
-          </Text>
-          <Press
-            onPress={() => void restore()}
-            accessibilityRole="button"
-            className="h-11 justify-center px-2"
-          >
-            <Text className="text-base font-medium text-text">{t`Restore`}</Text>
-          </Press>
-        </View>
-      )}
       <Plate className="overflow-hidden">
         {card.image && (
           <View className="p-5 pb-1">
@@ -456,15 +471,26 @@ export default function CardPage() {
       </Plate>
       {block(
         t`Details`,
+        // Facts about the card, not part of it: the label and its value on one line, as Settings lays them.
         details.map((d, i) => (
-          <View key={d.label} className={i > 0 ? "border-t border-edge" : ""}>
-            <Field label={d.label}>
+          <View
+            key={d.label}
+            className={`min-h-[48px] px-5 py-3 ${stackDetails ? "gap-1" : "flex-row items-center gap-4"} ${i > 0 ? "border-t border-edge" : ""}`}
+          >
+            <Text className="text-md text-text-2">{d.label}</Text>
+            <View className={stackDetails ? "items-start" : "flex-1 items-end"}>
               {typeof d.value === "string" ? (
-                <Text className="text-md text-text">{d.value}</Text>
+                <Text
+                  className="text-md text-text"
+                  numberOfLines={2}
+                  style={stackDetails ? undefined : TEXT_END}
+                >
+                  {d.value}
+                </Text>
               ) : (
                 d.value
               )}
-            </Field>
+            </View>
           </View>
         )),
       )}

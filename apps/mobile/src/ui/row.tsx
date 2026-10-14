@@ -7,9 +7,16 @@ import { Plate, Press, RowArrow, Text } from "./primitives";
 /** Body text at the first accessibility size, 28 pt, over its 17 pt default. */
 const ACCESSIBILITY_SIZES = 28 / 17;
 
+/** Whether text is at an accessibility size, where a label and its value stack rather than share a line. */
+export function useAccessibilitySizes() {
+  return useWindowDimensions().fontScale >= ACCESSIBILITY_SIZES;
+}
+
 /** Rows that belong together on one plate, split by full-width hairlines. */
 export function Rows({ children }: { children: ReactNode }) {
   const rows = Children.toArray(children).filter(Boolean);
+  // With every row hidden, an empty plate would draw as a stray line.
+  if (rows.length === 0) return null;
   return (
     <Plate className="overflow-hidden">
       {rows.map((row, i) => (
@@ -34,16 +41,34 @@ interface RowFaceProps {
    * app for the web, nothing when it acts in place.
    */
   end?: "open" | "web" | "none";
+  /** The value on its own line under the label, for a value too long to sit beside it. */
+  stacked?: boolean;
+  /** A control that acts in place at the row's end, such as a switch or a time; it takes the chevron's place. */
+  control?: ReactNode;
   destructive?: boolean;
 }
 
 /** What a row shows, for a control that brings its own press, such as a Select. */
-export function RowFace({ label, icon, value, end = "open", destructive = false }: RowFaceProps) {
+export function RowFace({
+  label,
+  icon,
+  value,
+  end = "open",
+  stacked: under = false,
+  control,
+  destructive = false,
+}: RowFaceProps) {
   const p = usePalette();
   // At the accessibility sizes the value moves under the label, as iOS Settings does, so neither breaks mid-word.
-  const stacked = useWindowDimensions().fontScale >= ACCESSIBILITY_SIZES;
+  const large = useAccessibilitySizes();
+  const stacked = under || large;
+  // A control names itself for VoiceOver, so the label beside it is not read a second time.
   const name = (
-    <Text className="text-md" style={{ color: destructive ? p.danger : p.text }}>
+    <Text
+      className="text-md"
+      style={{ color: destructive ? p.danger : p.text }}
+      accessible={!control}
+    >
       {label}
     </Text>
   );
@@ -72,7 +97,9 @@ export function RowFace({ label, icon, value, end = "open", destructive = false 
           {now}
         </>
       )}
-      {end === "open" ? (
+      {control ? (
+        control
+      ) : end === "open" ? (
         <RowArrow />
       ) : end === "web" ? (
         <Icon name="web" size={18} colour={p.muted} strokeWidth={2.25} />

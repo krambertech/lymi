@@ -1,0 +1,10 @@
+or {
+  `$_.damping($_)`,
+  `$_.stiffness($_)`,
+  `$_.mass($_)`,
+  `$_.springify()`,
+  `$_.springify($_)`,
+  `withSpring($_, $config)` where { $config <: JsObjectExpression() }
+} as $call where {
+  register_diagnostic(span=$call, message="Take the spring from @lymi/design: withSpring(value, spring(PRESET)) or springIn(new Builder(), PRESET) from src/theme/motion.ts. A single physics value keeps Reanimated 4's heavy defaults beside it and overshoots.")
+}

@@ -60,6 +60,8 @@ interface GlassButtonProps {
   primary?: boolean;
   /** Its work is under way: a spinner in place of the icon, and no second press. */
   busy?: boolean;
+  /** Nothing to act on yet, such as Add with no term: the amber goes and the press does nothing. */
+  disabled?: boolean;
   onPress?: () => void;
 }
 
@@ -69,20 +71,22 @@ export function GlassButton({
   label,
   primary = false,
   busy = false,
+  disabled = false,
   onPress,
 }: GlassButtonProps) {
   const p = usePalette();
-  const ink = primary ? p["amber-ink"] : p.text;
+  const lit = primary && !disabled;
+  const ink = disabled ? p.muted : lit ? p["amber-ink"] : p.text;
   return (
     <Press
       onPress={onPress}
-      disabled={busy}
+      disabled={busy || disabled}
       accessibilityRole="button"
       accessibilityLabel={label}
-      accessibilityState={{ busy }}
+      accessibilityState={{ busy, disabled }}
     >
       <GlassSurface
-        tint={primary ? "amber" : "room"}
+        tint={lit ? "amber" : "room"}
         style={{
           width: SIZE,
           height: SIZE,
@@ -94,7 +98,7 @@ export function GlassButton({
         {busy ? (
           <ActivityIndicator size="small" color={ink} />
         ) : (
-          <Icon name={icon} size={20} colour={ink} strokeWidth={primary ? 2.25 : 2} />
+          <Icon name={icon} size={20} colour={ink} strokeWidth={lit ? 2.25 : 2} />
         )}
       </GlassSurface>
     </Press>

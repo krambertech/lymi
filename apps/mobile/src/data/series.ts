@@ -3,7 +3,7 @@ import { api, type Series } from "@lymi/client/api";
 import { seriesQuery } from "@lymi/client/queries";
 import type { SeriesDeleteInput } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Alert } from "react-native";
+import { toast } from "../ui/toast-host";
 import type { MoveBack } from "./move-undo";
 
 /**
@@ -77,15 +77,13 @@ export function useSeriesActions() {
  */
 export function useMoveNotice() {
   const { t } = useLingui();
-  return (deckName: string, seriesName: string | undefined, undo: () => void) =>
-    Alert.alert(
-      seriesName !== undefined
-        ? t`Moved “${deckName}” to ${seriesName}`
-        : t`Took “${deckName}” out of its series`,
-      undefined,
-      [
-        { text: t`Undo`, onPress: undo },
-        { text: t`OK`, style: "cancel" },
-      ],
-    );
+  return (deckId: string, deckName: string, seriesName: string | undefined, undo: () => void) =>
+    toast.add({
+      id: `move-deck-${deckId}`,
+      title:
+        seriesName !== undefined
+          ? t`Moved “${deckName}” to ${seriesName}`
+          : t`Took “${deckName}” out of its series`,
+      action: { label: t`Undo`, onPress: undo },
+    });
 }

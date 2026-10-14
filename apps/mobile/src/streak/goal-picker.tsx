@@ -4,11 +4,10 @@ import { useLingui } from "@lingui/react/macro";
 import { DAILY_GOAL_PRESETS, DailyGoal } from "@lymi/core";
 import { onlineManager } from "@tanstack/react-query";
 import { useRef, useState, useSyncExternalStore } from "react";
-import { TextInput, View } from "react-native";
+import { View } from "react-native";
 import { usePalette } from "../theme/palette";
-import { inputCap } from "../theme/type";
-import { FieldError } from "../ui/field";
-import { Button, Text } from "../ui/primitives";
+import { Icon } from "../ui/icons";
+import { IconButton, Text } from "../ui/primitives";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 
 const GOAL_NAMES: Record<(typeof DAILY_GOAL_PRESETS)[number], MessageDescriptor> = {
@@ -26,6 +25,11 @@ const subscribe = (listener: () => void) => onlineManager.subscribe(listener);
 /** Whether a goal can be saved now: it is saved, never queued. */
 export const useOnline = () => useSyncExternalStore(subscribe, online);
 
+/** The stepper moves a goal of one's own in fives, within the goal's bounds. */
+const STEP = 5;
+const MIN = 1;
+const MAX = 200;
+
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -36,42 +40,46 @@ interface Props {
 
 /**
  * How many reviews keep the streak each day, as a choice list over the streak: four presets and a
- * number of your own. A preset is chosen once the sheet has gone; the number on Done. The one
- * place the goal changes. streak.md, CONTEXT.md "Daily goal".
+ * number of one's own on a stepper, so no keyboard rises. A choice saves once the sheet has gone.
+ * The one place the goal changes. streak.md, CONTEXT.md "Daily goal".
  */
 export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
   const { t, i18n } = useLingui();
+  const p = usePalette();
   const connected = useOnline();
   const [custom, setCustom] = useState(!isPreset(value));
-  const [draft, setDraft] = useState(isPreset(value) ? "" : String(value));
-  const [error, setError] = useState<string | null>(null);
+  const [own, setOwn] = useState(value);
   const chosen = useRef<number | null>(null);
-  const input = useRef<TextInput>(null);
-  // Each opening starts from the saved goal, so a Custom left unsaved or a change made on the web never lingers.
+  // Each opening starts from the saved goal, so a change made on the web never lingers.
   const [shown, setShown] = useState(open);
   if (open !== shown) {
     setShown(open);
     if (open) {
       setCustom(!isPreset(value));
-      setDraft(isPreset(value) ? "" : String(value));
-      setError(null);
+      setOwn(value);
+      chosen.current = null;
     }
   }
-
-  const close = (goal: number | null) => {
-    chosen.current = goal;
-    onOpenChange(false);
-  };
-  const commit = () => {
-    const parsed = DailyGoal.safeParse(draft.trim() === "" ? Number.NaN : Number(draft));
-    if (!parsed.success) return setError(t`Choose a whole number from 1 to 200.`);
-    setError(null);
-    close(parsed.data);
+  const step = (by: 1 | -1) => {
+    const base = custom ? own : value;
+    // Onto the next five, so 7 steps to 10 and 5 rather than 12 and 2.
+    const next =
+      by > 0 ? Math.floor(base / STEP) * STEP + STEP : Math.ceil(base / STEP) * STEP - STEP;
+    const goal = DailyGoal.safeParse(Math.min(MAX, Math.max(MIN, next)));
+    if (!goal.success) return;
+    setCustom(true);
+    setOwn(goal.data);
+    chosen.current = goal.data;
   };
 
   return (
     <Sheet
       title={t`Daily goal`}
+      description={
+        connected
+          ? t`How many reviews a day keep your streak. Every grade counts, even Forgot.`
+          : t`Changing the goal needs a connection.`
+      }
       open={open}
       onOpenChange={onOpenChange}
       onDismiss={() => {
@@ -79,11 +87,6 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
         chosen.current = null;
       }}
     >
-      <Text className="-mt-1 px-4 text-base text-text-2">
-        {connected
-          ? t`How many reviews a day keep your streak. Every grade counts, even Forgot.`
-          : t`Changing the goal needs a connection.`}
-      </Text>
       <View
         pointerEvents={connected ? "auto" : "none"}
         className={connected ? "" : "opacity-45"}
@@ -97,75 +100,47 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
               detail={plural(n, { one: "# review", other: "# reviews" })}
               chosen={!custom && value === n}
               onPress={() => {
-                setCustom(false);
-                setError(null);
-                close(n);
+                chosen.current = n;
+                onOpenChange(false);
               }}
             />
           ))}
-          <SheetRow
-            label={t`Custom`}
-            chosen={custom}
-            onPress={() => {
-              setCustom(true);
-              if (draft === "") setDraft(String(value));
-              requestAnimationFrame(() => input.current?.focus());
+          <View
+            className="min-h-[52px] flex-row items-center gap-3 ps-4 pe-2"
+            // One adjustable element: a swipe up or down steps, as iOS's own steppers do.
+            accessible
+            accessibilityRole="adjustable"
+            accessibilityLabel={t`Your own goal`}
+            accessibilityValue={{
+              text: plural(own, { one: "# review a day", other: "# reviews a day" }),
             }}
-          />
-          {custom && (
-            <CustomGoal
-              ref={input}
-              draft={draft}
-              error={!!error}
-              onDraft={setDraft}
-              onDone={commit}
-            />
-          )}
+            accessibilityActions={[{ name: "increment" }, { name: "decrement" }]}
+            onAccessibilityAction={(e) => step(e.nativeEvent.actionName === "increment" ? 1 : -1)}
+          >
+            <View className="w-5 items-center">
+              {custom && <Icon name="check" size={20} colour={p.text} strokeWidth={2.25} />}
+            </View>
+            <View className="flex-1 gap-0.5 py-2.5">
+              <Text className={`text-md text-text ${custom ? "font-medium" : ""}`}>
+                {t`Your own`}
+              </Text>
+              <Text className="text-sm text-muted">
+                {plural(own, { one: "review a day", other: "reviews a day" })}
+              </Text>
+            </View>
+            <View className="flex-row items-center gap-1" accessibilityElementsHidden>
+              <IconButton icon="minus" label={t`Fewer`} size="sm" onPress={() => step(-1)} />
+              <Text
+                className="min-w-10 text-center text-lg font-medium text-text"
+                style={{ fontVariant: ["tabular-nums"] }}
+              >
+                {i18n.number(own)}
+              </Text>
+              <IconButton icon="plus" label={t`More`} size="sm" onPress={() => step(1)} />
+            </View>
+          </View>
         </SheetGroup>
       </View>
-      <FieldError>{error}</FieldError>
     </Sheet>
-  );
-}
-
-/** The number of one's own, under Custom: whole reviews from 1 to 200. The number pad has no Return, so it has Save. */
-function CustomGoal({
-  ref,
-  draft,
-  error,
-  onDraft,
-  onDone,
-}: {
-  ref: React.Ref<TextInput>;
-  draft: string;
-  error: boolean;
-  onDraft: (draft: string) => void;
-  onDone: () => void;
-}) {
-  const { t } = useLingui();
-  const p = usePalette();
-  return (
-    <View className="min-h-[52px] flex-row items-center gap-3 ps-12 pe-3.5">
-      <TextInput
-        ref={ref}
-        value={draft}
-        onChangeText={onDraft}
-        onSubmitEditing={onDone}
-        keyboardType="number-pad"
-        returnKeyType="done"
-        maxLength={3}
-        selectTextOnFocus
-        accessibilityLabel={t`Reviews a day`}
-        placeholderTextColor={p.muted}
-        selectionColor={p.text}
-        className={`h-9 w-16 rounded-sm border bg-glass-plate px-2.5 text-end font-sans text-text ${error ? "border-danger" : "border-edge-2"}`}
-        style={{ fontSize: 17, fontVariant: ["tabular-nums"] }}
-        maxFontSizeMultiplier={inputCap(17)}
-      />
-      <Text className="flex-1 text-md text-text-2">
-        {plural(Number(draft) || 0, { one: "review a day", other: "reviews a day" })}
-      </Text>
-      <Button label={t`Save`} variant="primary" size="sm" onPress={onDone} />
-    </View>
   );
 }

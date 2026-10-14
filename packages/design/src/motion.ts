@@ -37,6 +37,12 @@ export const FLAME_MOTION = {
   spark: spring(0.62),
 } as const;
 
+/** Something that arrives in place, such as a toast or an added mark: settled in 400 ms, a trace of overshoot. */
+export const ARRIVE = spring(0.4, 0.1);
+
+/** Whatever a drag let go of returning to rest, such as a card or a toast not pulled far enough. */
+export const SNAP_BACK = spring(0.36);
+
 /** The lantern's flight to the middle of the screen at the end of a review. */
 export const LANTERN_FLIGHT = spring(0.6);
 

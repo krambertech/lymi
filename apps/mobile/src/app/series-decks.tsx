@@ -10,7 +10,7 @@ import { useDecks, useSeriesList } from "../data/queries";
 import { useSeriesActions } from "../data/series";
 import { useOnline } from "../streak/goal-picker";
 import { usePalette } from "../theme/palette";
-import { GlassButton } from "../ui/glass";
+import { FormHeader } from "../ui/form-header";
 import { KeyboardRoom } from "../ui/keyboard";
 import { Icon, IconButton, Press, Text } from "../ui/primitives";
 import { OnGlass } from "../ui/surface";
@@ -62,26 +62,12 @@ export default function SeriesDecks() {
   return (
     <KeyboardRoom>
       <OnGlass>
-        <View className="flex-row items-center justify-between gap-3 px-4 pt-5 pb-2">
-          <GlassButton icon="close" label={t`Cancel`} onPress={() => router.back()} />
-          <View className="flex-1 items-center">
-            <Text className="text-md font-medium text-text" accessibilityRole="header">
-              {t`Choose decks`}
-            </Text>
-            {series && (
-              <Text className="text-sm text-muted" numberOfLines={1}>
-                {series.name}
-              </Text>
-            )}
-          </View>
-          <GlassButton
-            icon="check"
-            label={t`Save`}
-            primary
-            busy={setDecks.isPending}
-            onPress={done}
-          />
-        </View>
+        <FormHeader
+          close={{ label: t`Cancel`, onPress: () => router.back() }}
+          title={t`Choose decks`}
+          subtitle={series?.name}
+          action={{ icon: "check", label: t`Save`, busy: setDecks.isPending, onPress: done }}
+        />
         <ScrollView
           keyboardShouldPersistTaps="handled"
           className="flex-1"

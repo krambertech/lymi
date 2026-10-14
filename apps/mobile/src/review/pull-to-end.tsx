@@ -1,3 +1,4 @@
+import { SNAP_BACK } from "@lymi/design";
 import * as Haptics from "expo-haptics";
 import type { ReactNode } from "react";
 import { StyleSheet, useWindowDimensions, type ViewStyle } from "react-native";
@@ -12,13 +13,13 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
-import { ALWAYS } from "../theme/motion";
+import { ALWAYS, spring } from "../theme/motion";
 
 /** Past this share of the screen, letting go ends. phone.md "Review". */
 const LINE = 1 / 3;
 /** The corners the screen takes on as it comes away, toward the iPhone's own. */
 const CORNER = 44;
-const BACK = { duration: 380, dampingRatio: 1, reduceMotion: ALWAYS };
+const BACK = spring(SNAP_BACK);
 
 /**
  * The review's cover follows a finger pulling its top bar down, with Today behind it. Past a third of

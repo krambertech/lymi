@@ -1,3 +1,4 @@
+import { SNAP_BACK } from "@lymi/design";
 import { type ReactNode, useEffect, useMemo, useRef } from "react";
 import { I18nManager, StyleSheet, useWindowDimensions, View, type ViewStyle } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -12,13 +13,13 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
-import { ALWAYS, CROSSFADE, useReduceMotion } from "../theme/motion";
+import { ALWAYS, CROSSFADE, spring, useReduceMotion } from "../theme/motion";
 
 /** How far in from the start edge a swipe has to begin, as iOS's own back swipe. */
 const EDGE = 28;
 /** Past this share of the width, or on a flick, letting go takes the grade back. */
 const LANDS = 0.4;
-const BACK = { duration: 340, dampingRatio: 1, reduceMotion: ALWAYS };
+const BACK = spring(SNAP_BACK);
 /** How far a card turns while it is off its place, in degrees. */
 const TILT = 6;
 /** A new card's arrival over the one just graded: quick, and slowing as it lands. */

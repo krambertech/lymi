@@ -79,6 +79,8 @@
     "android": "expo run:android",
     "prebuild": "expo prebuild --clean",
     "typecheck": "tsc --noEmit",
+    "symbols": "node scripts/symbols.mjs",
+    "symbols:check": "node scripts/symbols.mjs --check",
     "test": "vitest run",
     "fingerprint": "fingerprint fingerprint:generate --platform ios",
     "contract:freeze": "FREEZE_PHONE_CONTRACT=1 pnpm --filter @lymi/web exec vitest run --project unit src/server/phone-contract.test.ts",

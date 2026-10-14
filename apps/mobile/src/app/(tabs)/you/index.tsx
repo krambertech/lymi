@@ -53,7 +53,6 @@ export default function You() {
       <InsightsPlate onPress={() => router.push("/you/insights")} />
 
       <View className="gap-2">
-        <SectionTitle>{t`Daily reminder`}</SectionTitle>
         <Rows>
           <ReminderSwitch reminder={reminder} />
           {reminder.time && <TimeRow reminder={reminder} />}

@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { errorMessage } from "@lymi/client/api";
+import type { Section } from "@lymi/client/api";
 import {
   type DeckFilters,
   type DeckGroup,
@@ -15,28 +15,38 @@ import {
 import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { Alert, Pressable, type TextStyle, View } from "react-native";
+import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { type TextStyle, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDeckExits } from "../../../data/decks";
 import { moveBack } from "../../../data/move-undo";
 import { useNextDue } from "../../../data/next-due";
 import { useDeckCards, useDecks, useSections, useSeriesList } from "../../../data/queries";
 import { useMoveNotice, useSeriesActions } from "../../../data/series";
-import { formatList } from "../../../i18n/list";
+import { useMoveToSection } from "../../../deck/move-to-section";
+import { SelectBox, SelectionToolbar } from "../../../deck/selection";
+import {
+  ReadyNote,
+  SectionHeading,
+  SectionProgress,
+  useStartSection,
+} from "../../../sections/sections";
 import { useOnline } from "../../../streak/goal-picker";
 import { usePalette } from "../../../theme/palette";
+import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
 import { Icon } from "../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
-import { DropdownMenu, Select } from "../../../ui/menu";
+import { Select } from "../../../ui/menu";
 import { OfflineNote } from "../../../ui/offline-note";
 import { Button, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
 import { BarButton, Screen } from "../../../ui/screen";
-import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
+import { Segmented } from "../../../ui/segmented";
+import { Sheet, SheetGroup, SheetHeading, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { StateIcon, stateMarks } from "../../../ui/state-mark";
 import { setDeckReviewHidden } from "../../../ui/tab-bar";
+import { toast } from "../../../ui/toast-host";
 
 /**
  * A deck: what it wants today and how far along it is, then its words as a glossary, which Filter
@@ -51,7 +61,8 @@ export default function Deck() {
   const gone = !!decks.data && !deck;
   const cards = useDeckCards(id);
   const rows: DeckRow[] = cards.data ?? [];
-  const sections = useSections(id).data?.sections ?? [];
+  const sectionsQuery = useSections(id);
+  const sections = sectionsQuery.data?.sections ?? [];
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
   const [chosenSort, setSort] = useState<DeckSort | null>(null);
   const sort = chosenSort ?? (sections.length ? "section" : "added");
@@ -66,8 +77,27 @@ export default function Deck() {
     );
   }, [rows, filters, sort, i18n.locale, sections]);
   const owner = deck?.role === "owner";
+  // A deck that opens every section at once has no "where you are" to show.
+  const progress =
+    deck?.sectionProgression === "open" ? null : (sectionsQuery.data?.progress ?? null);
+  const sectionStart = useStartSection(id, sections);
   const exits = useDeckExits(deck);
   const [moving, setMoving] = useState(false);
+  // The cards chosen with Select cards, or null when the list is not choosing.
+  const [selected, setSelected] = useState<ReadonlySet<string> | null>(null);
+  const moveToSection = useMoveToSection(id);
+  const selection = owner && selected ? selected : null;
+  const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
+  const toggleSelected = useCallback(
+    (cardId: string) =>
+      setSelected((prev) => {
+        if (!prev) return prev;
+        const next = new Set(prev);
+        if (!next.delete(cardId)) next.add(cardId);
+        return next;
+      }),
+    [],
+  );
   // Where Review ends on the page; past it, under the bar, the tab bar's accessory takes over.
   const [reviewEnd, setReviewEnd] = useState<number | null>(null);
   const insets = useSafeAreaInsets();
@@ -94,9 +124,10 @@ export default function Deck() {
               label={t`Search this deck`}
               onPress={() => router.push(`/search?deck=${id}` as Href)}
             />
-            <DropdownMenu
-              title={deck?.name}
-              trigger={(open) => <BarButton icon="more" label={t`Deck options`} onPress={open} />}
+            <ActionMenu
+              label={t`Deck options`}
+              symbol="ellipsis"
+              look="bar"
               items={[
                 [
                   ...(owner
@@ -111,9 +142,24 @@ export default function Deck() {
                   ...(owner
                     ? [
                         {
+                          label: t`Share deck`,
+                          icon: "share" as const,
+                          onSelect: () => router.push(`/share?id=${id}` as Href),
+                        },
+                        {
                           label: t`Move to series`,
                           icon: "series" as const,
                           onSelect: () => setMoving(true),
+                        },
+                      ]
+                    : []),
+                  // Moving cards needs a section to move them to.
+                  ...(owner && moveToSection.canMove && rows.length > 0 && !selection
+                    ? [
+                        {
+                          label: t`Select cards`,
+                          icon: "check" as const,
+                          onSelect: () => setSelected(new Set()),
                         },
                       ]
                     : []),
@@ -190,17 +236,44 @@ export default function Deck() {
             className="gap-3"
             onLayout={(e) => setReviewEnd(e.nativeEvent.layout.y + e.nativeEvent.layout.height)}
           >
-            <Top deck={deck} rows={rows} />
+            <Top
+              deck={deck}
+              rows={rows}
+              section={
+                progress && (
+                  <SectionProgress
+                    sections={sections}
+                    progress={progress}
+                    due={deck.due}
+                    starting={sectionStart.starting}
+                    onStart={sectionStart.start}
+                  />
+                )
+              }
+            />
             {deck.due > 0 && <ReviewButton deck={deck} />}
           </View>
           <View className="gap-6">
-            <Tools
-              sections={sections}
-              filters={filters}
-              setFilters={setFilters}
-              sort={sort}
-              setSort={setSort}
-            />
+            {selection ? (
+              <SelectionToolbar
+                count={selection.size}
+                total={ordered.length}
+                onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
+                onClear={() => setSelected(new Set())}
+                onMove={() => moveToSection.open([...selection], () => setSelected(null))}
+                onDone={() => setSelected(null)}
+              />
+            ) : (
+              <Tools
+                sections={sections}
+                filters={filters}
+                setFilters={setFilters}
+                count={(f) => filterRows(rows, f, "", Date.now(), sections).length}
+                total={rows.length}
+                sort={sort}
+                setSort={setSort}
+              />
+            )}
             {groups.length === 0 ? (
               <Plate>
                 <EmptyState
@@ -211,12 +284,23 @@ export default function Deck() {
                 />
               </Plate>
             ) : (
-              groups.map((g) => <Group key={g.key} group={g} />)
+              groups.map((g) => (
+                <Group
+                  key={g.key}
+                  group={g}
+                  deckId={id}
+                  hereId={progress?.currentId ?? null}
+                  starting={sectionStart.starting}
+                  onStart={sectionStart.start}
+                  selection={selection ? { ids: selection, onToggle: toggleSelected } : undefined}
+                />
+              ))
             )}
           </View>
         </>
       )}
       {deck && owner && <MoveToSeries deck={deck} open={moving} onOpenChange={setMoving} />}
+      {owner && moveToSection.sheet}
     </Screen>
   );
 }
@@ -236,7 +320,16 @@ function useCounts(rows: DeckRow[]) {
  * one line, its cards' states as one bar with their counts under it, then Review. Once Review has
  * scrolled away, the tab bar's accessory carries it. phone.md "Library".
  */
-function Top({ deck, rows }: { deck: DeckData; rows: DeckRow[] }) {
+function Top({
+  deck,
+  rows,
+  section,
+}: {
+  deck: DeckData;
+  rows: DeckRow[];
+  /** Where the learner is in a deck whose sections open in order. */
+  section?: ReactNode;
+}) {
   const { t, i18n } = useLingui();
   const p = usePalette();
   const counts = useCounts(rows);
@@ -293,6 +386,7 @@ function Top({ deck, rows }: { deck: DeckData; rows: DeckRow[] }) {
         </View>
       </View>
       {line && <Text className="text-sm text-muted">{line}</Text>}
+      {section}
     </Plate>
   );
 }
@@ -315,30 +409,33 @@ function ReviewButton({ deck }: { deck: DeckData }) {
 }
 
 /**
- * Filter and Sort over the list: Filter is one sheet that lists what can be filtered by, each
- * opening its values in place and staying open while choosing, each active filter a chip that
- * removes it. Both reset when the learner leaves the deck.
+ * Filter and Sort over the list. Filter is one sheet with every filter on it: each tap saves to a
+ * draft and the count under the title answers it, and the list changes once, as the sheet goes.
+ * Each active filter is a chip that removes it. Both reset when the learner leaves the deck.
  */
 function Tools({
   sections,
   filters,
   setFilters,
+  count,
+  total,
   sort,
   setSort,
 }: {
   sections: { id: string; name: string }[];
   filters: DeckFilters;
   setFilters: (f: DeckFilters) => void;
+  /** How many of the deck's cards a set of filters keeps. */
+  count: (f: DeckFilters) => number;
+  total: number;
   sort: DeckSort;
   setSort: (s: DeckSort) => void;
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
   const [choosing, setChoosing] = useState(false);
-  // Filter lists what can be filtered by; each opens its values in the same sheet.
-  const [level, setLevel] = useState<"state" | "due" | "section" | null>(null);
-  const levelName = { state: t`State`, due: t`Due`, section: t`Section` };
-  const list = (items: string[]) => formatList(items, i18n.locale);
+  const [draft, setDraft] = useState<DeckFilters>(filters);
+  const [allSections, setAllSections] = useState(false);
   const sortName: Record<DeckSort, string> = {
     section: t`Section`,
     due: t`When it’s back`,
@@ -371,11 +468,26 @@ function Tools({
       remove: () => setFilters({ ...filters, sections: toggle(filters.sections, sid) }),
     })),
   ];
+  const open = () => {
+    setDraft(filters);
+    setAllSections(false);
+    setChoosing(true);
+  };
+  const drafted = draft.states.length > 0 || draft.due !== null || draft.sections.length > 0;
+  const kept = count(draft);
+  const shown = i18n.number(kept);
+  const counted = drafted
+    ? plural(total, { one: `${shown} of # card`, other: `${shown} of # cards` })
+    : plural(total, { one: "# card", other: "# cards" });
+  const sectionIds = [...sections.map((s) => s.id), ""];
+  // Past five a long list of lessons would push everything under the fold.
+  const visibleSections = allSections ? sectionIds : sectionIds.slice(0, 5);
+  const hiddenSections = sectionIds.length - visibleSections.length;
   const pill = (icon: "filter" | "sort", label: string, on = false) => {
     const Glyph = icon === "filter" ? ListFilter : ArrowUpDown;
     return (
       <View
-        className={`h-9 flex-row items-center gap-1.5 rounded-full border bg-plate px-3.5 ${on ? "border-text" : "border-edge"}`}
+        className={`min-h-9 flex-row items-center gap-1.5 rounded-full border bg-plate px-3.5 py-1.5 ${on ? "border-text" : "border-edge"}`}
       >
         <Glyph size={15} color={p["text-2"]} strokeWidth={2} />
         <Text className="text-base font-medium text-text">{label}</Text>
@@ -388,12 +500,12 @@ function Tools({
   return (
     <View className="gap-2.5">
       <View className="flex-row flex-wrap items-center gap-2">
-        <Press
-          onPress={() => setChoosing(true)}
-          accessibilityRole="button"
-          accessibilityLabel={t`Filter`}
-        >
-          {pill("filter", chips.length ? t`Filter · ${chips.length}` : t`Filter`, chips.length > 0)}
+        <Press onPress={open} accessibilityRole="button" accessibilityLabel={t`Filter`}>
+          {pill(
+            "filter",
+            chips.length ? t`Filter · ${i18n.number(chips.length)}` : t`Filter`,
+            chips.length > 0,
+          )}
         </Press>
         <Select
           label={t`Sort`}
@@ -410,96 +522,83 @@ function Tools({
               onPress={c.remove}
               accessibilityRole="button"
               accessibilityLabel={t`Remove filter: ${name}`}
-              className="h-9 flex-row items-center gap-1.5 rounded-full bg-plate-2 ps-3 pe-2.5"
+              // Grows with the text and stops at the row's width, so a long section name ends in an ellipsis.
+              className="min-h-9 max-w-full flex-row items-center gap-1.5 rounded-full bg-plate-2 py-1.5 ps-3 pe-2.5"
             >
-              <Text className="text-base font-medium text-text-2">{name}</Text>
+              <Text className="shrink text-base font-medium text-text-2" numberOfLines={1}>
+                {name}
+              </Text>
               <Icon name="close" size={14} colour={p.muted} />
             </Press>
           );
         })}
       </View>
-      <Sheet open={choosing} onOpenChange={setChoosing} onDismiss={() => setLevel(null)}>
-        {/* One header for both levels, so the title never moves as a level opens. Inside a
-            native sheet only React Native's own Pressable takes a tap, as SheetRow's does. */}
-        <Pressable
-          disabled={!level}
-          onPress={() => setLevel(null)}
-          accessibilityRole={level ? "button" : "header"}
-          accessibilityLabel={level ? t`Back to Filter` : t`Filter`}
-          className="self-start ps-4 pe-3"
-        >
-          {/* The chevron sits in the inset, so the title starts at the same place at both levels. */}
-          {level && (
-            <View className="absolute start-0 top-0 h-7 justify-center">
-              <Icon name="back" size={16} colour={p["text-2"]} />
-            </View>
-          )}
-          <Text className="text-lg font-medium text-text">
-            {level ? levelName[level] : t`Filter`}
-          </Text>
-        </Pressable>
-        {level === null ? (
-          <SheetGroup>
+      <Sheet
+        title={t`Filter`}
+        description={counted}
+        aside={
+          drafted && (
+            <Press
+              onPress={() => setDraft(noFilters)}
+              accessibilityRole="button"
+              className="h-11 justify-center px-2"
+            >
+              <Text className="text-md font-medium text-text">{t`Reset`}</Text>
+            </Press>
+          )
+        }
+        open={choosing}
+        onOpenChange={setChoosing}
+        onDismiss={() => {
+          if (JSON.stringify(draft) !== JSON.stringify(filters)) setFilters(draft);
+        }}
+      >
+        <SheetHeading>{t`State`}</SheetHeading>
+        <SheetGroup>
+          {(["new", "learning", "known"] as const).map((s) => (
             <SheetRow
-              label={levelName.state}
-              detail={
-                filters.states.length
-                  ? list(filters.states.map((s) => i18n._(stateMarks[s].groupLabel)))
-                  : t`Any`
-              }
-              opens
-              onPress={() => setLevel("state")}
+              key={s}
+              label={i18n._(stateMarks[s].groupLabel)}
+              value={i18n.number(count({ ...draft, states: [s] }))}
+              chosen={draft.states.includes(s)}
+              multiple
+              onPress={() => setDraft({ ...draft, states: toggle(draft.states, s) })}
             />
-            <SheetRow
-              label={levelName.due}
-              detail={filters.due ? dueName[filters.due] : t`Any time`}
-              opens
-              onPress={() => setLevel("due")}
-            />
-            {sections.length > 0 && (
-              <SheetRow
-                label={levelName.section}
-                detail={filters.sections.length ? list(filters.sections.map(sectionName)) : t`Any`}
-                opens
-                onPress={() => setLevel("section")}
-              />
-            )}
-          </SheetGroup>
-        ) : level === "state" ? (
-          <SheetGroup>
-            {(["new", "learning", "known"] as const).map((s) => (
-              <SheetRow
-                key={s}
-                label={i18n._(stateMarks[s].groupLabel)}
-                chosen={filters.states.includes(s)}
-                multiple
-                onPress={() => setFilters({ ...filters, states: toggle(filters.states, s) })}
-              />
-            ))}
-          </SheetGroup>
-        ) : level === "due" ? (
-          <SheetGroup>
-            {([null, "today", "week"] as const).map((d) => (
-              <SheetRow
-                key={d ?? "any"}
-                label={d ? dueName[d] : t`Any time`}
-                chosen={filters.due === d}
-                onPress={() => setFilters({ ...filters, due: d })}
-              />
-            ))}
-          </SheetGroup>
-        ) : (
-          <SheetGroup>
-            {[...sections.map((s) => s.id), ""].map((sid) => (
-              <SheetRow
-                key={sid || "none"}
-                label={sectionName(sid)}
-                chosen={filters.sections.includes(sid)}
-                multiple
-                onPress={() => setFilters({ ...filters, sections: toggle(filters.sections, sid) })}
-              />
-            ))}
-          </SheetGroup>
+          ))}
+        </SheetGroup>
+        <SheetHeading>{t`Due`}</SheetHeading>
+        <Segmented
+          label={t`Due`}
+          value={draft.due ?? "any"}
+          options={[
+            { value: "any", label: t`Any time` },
+            { value: "today", label: t`Today` },
+            { value: "week", label: t`This week` },
+          ]}
+          onChange={(v) => setDraft({ ...draft, due: v === "any" ? null : v })}
+        />
+        {sections.length > 0 && (
+          <>
+            <SheetHeading>{t`Section`}</SheetHeading>
+            <SheetGroup>
+              {visibleSections.map((sid) => (
+                <SheetRow
+                  key={sid || "none"}
+                  label={sectionName(sid)}
+                  value={i18n.number(count({ ...draft, sections: [sid] }))}
+                  chosen={draft.sections.includes(sid)}
+                  multiple
+                  onPress={() => setDraft({ ...draft, sections: toggle(draft.sections, sid) })}
+                />
+              ))}
+              {hiddenSections > 0 && (
+                <SheetRow
+                  label={plural(hiddenSections, { one: "Show # more", other: "Show # more" })}
+                  onPress={() => setAllSections(true)}
+                />
+              )}
+            </SheetGroup>
+          </>
         )}
       </Sheet>
     </View>
@@ -507,7 +606,23 @@ function Tools({
 }
 
 /** One heading and its words: a section, when it's back, or the day the words arrived. */
-function Group({ group: g }: { group: DeckGroup }) {
+function Group({
+  group: g,
+  deckId,
+  hereId,
+  starting,
+  onStart,
+  selection,
+}: {
+  group: DeckGroup;
+  deckId: string;
+  /** The section the learner is on, for You are here. */
+  hereId: string | null;
+  starting: string | undefined;
+  onStart: (section: Section) => void;
+  /** Set while the list is choosing cards. */
+  selection?: { ids: ReadonlySet<string>; onToggle: (cardId: string) => void } | undefined;
+}) {
   const { t, i18n } = useLingui();
   const title =
     g.kind === "section"
@@ -517,22 +632,45 @@ function Group({ group: g }: { group: DeckGroup }) {
         : g.kind === "day"
           ? i18n.date(g.day, { weekday: "long", day: "numeric", month: "long" })
           : null;
+  const section = g.kind === "section" ? g.section : null;
   return (
     <View>
-      {title && (
-        <SectionTitle
-          end={
-            <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
-              {plural(g.rows.length, { one: "# card", other: "# cards" })}
-            </Text>
-          }
-        >
-          {title}
-        </SectionTitle>
+      {section?.status === "ready" && (
+        <ReadyNote section={section} starting={starting === section.id} onStart={onStart} />
       )}
-      <Plate className="overflow-hidden">
+      {section ? (
+        <SectionHeading
+          deckId={deckId}
+          section={section}
+          count={g.rows.length}
+          here={section.id === hereId}
+          starting={starting === section.id}
+          onStart={onStart}
+        />
+      ) : (
+        title && (
+          <SectionTitle
+            end={
+              <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+                {plural(g.rows.length, { one: "# card", other: "# cards" })}
+              </Text>
+            }
+          >
+            {title}
+          </SectionTitle>
+        )
+      )}
+      <Plate
+        className={`overflow-hidden ${section && section.status !== "open" ? "opacity-70" : ""}`}
+      >
         {g.rows.map((row, i) => (
-          <WordRow key={row.card.id} row={row} first={i === 0} />
+          <WordRow
+            key={row.card.id}
+            row={row}
+            first={i === 0}
+            selected={selection?.ids.has(row.card.id)}
+            onToggle={selection?.onToggle}
+          />
         ))}
       </Plate>
     </View>
@@ -541,24 +679,43 @@ function Group({ group: g }: { group: DeckGroup }) {
 
 /**
  * A word as a glossary reads it: the state's mark, the term with its forms quieter, and the meaning
- * under it, at most three lines of term and two of meaning. The open card shows the rest.
+ * under it, at most three lines of term and two of meaning. The open card shows the rest. While the
+ * list is choosing cards, the mark is a checkbox and a tap chooses rather than opens.
  */
-function WordRow({ row, first }: { row: DeckRow; first: boolean }) {
+function WordRow({
+  row,
+  first,
+  selected,
+  onToggle,
+}: {
+  row: DeckRow;
+  first: boolean;
+  /** Undefined unless the list is choosing cards. */
+  selected?: boolean | undefined;
+  onToggle?: ((cardId: string) => void) | undefined;
+}) {
   const { t, i18n } = useLingui();
   const p = usePalette();
   const router = useRouter();
   const state = stateKey(row.state?.state);
   const { word, forms } = splitForms(row.card.term);
+  const selecting = selected !== undefined;
   return (
     <Press
       scale={0.99}
-      onPress={() => router.push(`/library/card/${row.card.id}?deck=${row.card.deckId}` as Href)}
-      accessibilityRole="link"
+      onPress={() =>
+        selecting
+          ? onToggle?.(row.card.id)
+          : router.push(`/library/card/${row.card.id}?deck=${row.card.deckId}` as Href)
+      }
+      accessibilityRole={selecting ? "checkbox" : "link"}
+      accessibilityState={selecting ? { checked: selected } : undefined}
       accessibilityLabel={`${row.card.term}, ${row.card.meaning ?? ""}, ${i18n._(stateMarks[state].label)}`}
       className={`flex-row gap-3 py-3.5 ps-4 pe-5 ${first ? "" : "border-t border-edge"}`}
+      style={selected ? { backgroundColor: p.hover } : undefined}
     >
       <View className="pt-[5px]">
-        <StateIcon state={state} size={15} />
+        {selecting ? <SelectBox checked={selected} /> : <StateIcon state={state} size={15} />}
       </View>
       <View className="flex-1 gap-0.5">
         <Text className="text-md font-medium text-text" numberOfLines={3}>
@@ -589,7 +746,6 @@ function MoveToSeries({
 }) {
   const { t } = useLingui();
   const router = useRouter();
-  const p = usePalette();
   const online = useOnline();
   const query = useSeriesList(open);
   const series = query.data ?? [];
@@ -603,7 +759,13 @@ function MoveToSeries({
       { deckId: deck.id, seriesId },
       {
         onSuccess: then,
-        onError: (e) => Alert.alert(t`Couldn’t move the deck`, errorMessage(e)),
+        onError: () =>
+          toast.add({
+            id: `move-deck-${deck.id}`,
+            error: true,
+            title: t`Couldn’t move “${deckName}”.`,
+            action: { label: t`Try again`, onPress: () => move(seriesId, then) },
+          }),
       },
     );
   const pick = (seriesId: string | null) => {
@@ -612,19 +774,19 @@ function MoveToSeries({
     if (seriesId === deck.seriesId) return;
     Haptics.selectionAsync();
     const name = seriesId ? series.find((s) => s.id === seriesId)?.name : undefined;
-    move(seriesId, () => notice(deckName, name, () => undoMove(deck.id, back)));
+    move(seriesId, () => notice(deck.id, deckName, name, () => undoMove(deck.id, back)));
   };
   return (
-    <Sheet title={t`Move to series`} open={open} onOpenChange={onOpenChange}>
-      <Text className="px-1 text-base text-text-2">
-        {t`“${deckName}” is reviewed with the other decks in its series.`}
-      </Text>
-      {!online && (
-        <View className="flex-row items-center gap-1.5 px-1">
-          <Icon name="offline" size={14} colour={p.muted} />
-          <Text className="flex-1 text-base text-muted">{t`Changing series needs a connection.`}</Text>
-        </View>
-      )}
+    <Sheet
+      title={t`Move to series`}
+      description={
+        online
+          ? t`“${deckName}” is reviewed with the other decks in its series.`
+          : t`Changing series needs a connection.`
+      }
+      open={open}
+      onOpenChange={onOpenChange}
+    >
       {!back &&
         (query.isPending || query.isFetching ? (
           <Skeleton height={104} />

@@ -94,7 +94,7 @@ import { Wick } from "../review/wick";
 import { useReviewSession } from "../telemetry/review-session";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
-import { fitType } from "../theme/type";
+import { fitType, TEXT_END } from "../theme/type";
 import { AiCardChip, Chip, StateChip } from "../ui/chip";
 import { GlassSurface } from "../ui/glass";
 import { GRADES } from "../ui/grade";
@@ -1156,8 +1156,8 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
       <Text
         // The count shares a 48 pt bar with the lantern and the progress, so it grows least.
         maxFontSizeMultiplier={1.3}
-        className="min-w-12 text-end text-base text-text-2"
-        style={{ fontVariant: ["tabular-nums"] }}
+        className="min-w-12 text-base text-text-2"
+        style={[{ fontVariant: ["tabular-nums"] }, TEXT_END]}
       >
         {done}/{total}
       </Text>
@@ -1346,7 +1346,7 @@ function CardPlate({
               <View className="flex-row items-center gap-3">
                 <Text
                   className="shrink text-text"
-                  style={{ fontSize: 38, lineHeight: 48, fontWeight: "500", letterSpacing: -0.9 }}
+                  style={{ ...cueSize(cue), fontWeight: "500" }}
                   // The word is already the largest text on the card; grown, a long one would break mid-word.
                   maxFontSizeMultiplier={1}
                 >
@@ -1956,4 +1956,11 @@ function ArchivedLine({
       </GlassSurface>
     </View>
   );
+}
+
+/** A long question, such as a meaning asked for its term, steps down so it fits before the reveal, when the card cannot scroll. */
+function cueSize(cue: string) {
+  if (cue.length > 90) return { fontSize: 22, lineHeight: 29, letterSpacing: -0.3 };
+  if (cue.length > 36) return { fontSize: 28, lineHeight: 36, letterSpacing: -0.6 };
+  return { fontSize: 38, lineHeight: 48, letterSpacing: -0.9 };
 }

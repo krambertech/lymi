@@ -2,7 +2,8 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type GoalStatus, useDailyGoal } from "@lymi/client/daily-goal";
 import type { StreakOut } from "@lymi/core";
-import { useMemo, useState } from "react";
+import { useNavigation } from "expo-router";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ScrollView, View, type ViewStyle } from "react-native";
 import { Flame } from "../brand/flame";
 import { useDay } from "../data/queries";
@@ -23,6 +24,9 @@ const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
  * against the goal with the longest run and the days reviewed, then the month a drag further up.
  * The goal is changed only from here, in a sheet of its own. streak.md, phone.md.
  */
+/** Long enough for the streak sheet to reach full height before the goal's sheet rises over it. */
+const RISE_MS = 320;
+
 export default function Streak() {
   const { summary, flame } = useDay();
   const frost = useFrost();
@@ -57,6 +61,25 @@ function StreakPanel({
   const goal = useDailyGoal();
   const connected = useOnline();
   const [choosing, setChoosing] = useState(false);
+  const navigation = useNavigation();
+  // iOS pushes a part-height sheet away when another opens over it, so the streak rises to full
+  // height first and the goal's sheet stacks visibly on top. phone.md "Sheets".
+  const rising = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (rising.current) clearTimeout(rising.current);
+    },
+    [],
+  );
+  const openGoal = () => {
+    navigation.setOptions({ sheetAllowedDetents: [1] });
+    rising.current = setTimeout(() => setChoosing(true), RISE_MS);
+  };
+  // Closed, the streak may peek again.
+  const closeGoal = (open: boolean) => {
+    setChoosing(open);
+    if (!open) navigation.setOptions({ sheetAllowedDetents: [0.62, 1] });
+  };
   const { current, today } = summary;
   const done = satisfied(today.outcome);
   const byDate = useMemo(() => new Map(summary.days.map((d) => [d.date, d])), [summary.days]);
@@ -137,11 +160,7 @@ function StreakPanel({
                     })}
               </Text>
             </View>
-            <IconButton
-              icon="edit"
-              label={t`Change daily goal`}
-              onPress={() => setChoosing(true)}
-            />
+            <IconButton icon="edit" label={t`Change daily goal`} onPress={openGoal} />
           </View>
           <View className="pe-3">
             <GoalTrack today={today} label={t`Today’s goal`} />
@@ -155,6 +174,12 @@ function StreakPanel({
       </Plate>
 
       <GoalLine connected={connected} status={goal.status} />
+      <GoalSheet
+        open={choosing}
+        onOpenChange={closeGoal}
+        value={summary.goal}
+        onChange={goal.change}
+      />
 
       <Plate className="px-3 pt-2 pb-3">
         <StreakCalendar
@@ -165,12 +190,6 @@ function StreakPanel({
           rest={rest}
         />
       </Plate>
-      <GoalSheet
-        open={choosing}
-        onOpenChange={setChoosing}
-        value={summary.goal}
-        onChange={goal.change}
-      />
     </View>
   );
 }

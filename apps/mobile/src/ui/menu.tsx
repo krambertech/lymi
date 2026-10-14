@@ -7,8 +7,8 @@ import { Icon, type IconName } from "./icons";
 import { Press, Text } from "./primitives";
 import { Sheet, SheetGroup, SheetRow } from "./sheet";
 
-// A menu rises from the bottom edge as a sheet, as the web's does on touch: iOS's glass, Lymi's
-// rows. overlays.md "Menus"; phone.md "Sheets".
+// A choice rises from the bottom edge as a sheet: iOS's glass, Lymi's rows. Commands from a button are
+// iOS's own menu, in action-menu.tsx. phone.md "Menus" and "Sheets".
 
 export interface MenuItem {
   label: string;
@@ -19,8 +19,13 @@ export interface MenuItem {
 }
 
 /** Opens a sheet; a choice runs once the sheet has gone, so nothing moves under it. */
-function useMenuSheet(onClosed?: () => void) {
-  const [open, setOpen] = useState(false);
+function useMenuSheet(
+  onClosed?: () => void,
+  controlled?: { open: boolean; onOpenChange: (open: boolean) => void },
+) {
+  const [own, setOwn] = useState(false);
+  const open = controlled?.open ?? own;
+  const setOpen = controlled?.onOpenChange ?? setOwn;
   const chosen = useRef<(() => void) | null>(null);
   return {
     show: () => setOpen(true),
@@ -45,52 +50,20 @@ function useMenuSheet(onClosed?: () => void) {
   };
 }
 
-interface DropdownMenuProps {
-  /** Lymi's own control; call `open` from its press. */
-  trigger: (open: () => void) => ReactNode;
-  /** Over the rows; a card's term, say. Left out, the sheet has no title. */
-  title?: string;
-  /** Rows, or groups of rows, each group its own plate. */
-  items: MenuItem[] | MenuItem[][];
-}
-
-/** A list of actions from a button. */
-export function DropdownMenu({ trigger, title, items }: DropdownMenuProps) {
-  const menu = useMenuSheet();
-  const groups = (Array.isArray(items[0]) ? items : [items]) as MenuItem[][];
-  return (
-    <>
-      {trigger(menu.show)}
-      {menu.sheet(
-        title,
-        groups.map((group) => (
-          <SheetGroup key={group.map((i) => i.label).join()}>
-            {group.map((item) => (
-              <SheetRow
-                key={item.label}
-                label={item.label}
-                icon={item.icon}
-                destructive={item.destructive}
-                onPress={() => menu.choose(item.onSelect)}
-              />
-            ))}
-          </SheetGroup>
-        )),
-      )}
-    </>
-  );
-}
-
 interface SelectProps<T extends string> {
   /** Lymi's own box or chip, showing what is chosen; pressing it opens the list. */
   trigger: ReactNode;
   /** The field's name: the sheet's title, and read with the choice. */
   label: string;
   value: T;
-  options: { value: T; label: string }[];
+  /** `detail` is a line under the option that says what choosing it means. */
+  options: { value: T; label: string; detail?: string }[];
   onChange: (value: T) => void;
   /** After the sheet has gone, chosen or not; a composer puts the cursor back. */
   onClosed?: () => void;
+  /** To open the list from elsewhere, such as right after a choice that needs it: pass both. */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 /** Past this many fixed options, such as languages, the list is searched rather than scrolled. forms.md. */
@@ -107,15 +80,20 @@ export function Select<T extends string>({
   options,
   onChange,
   onClosed,
+  open,
+  onOpenChange,
 }: SelectProps<T>) {
   const { t, i18n } = useLingui();
   const p = usePalette();
   const { height } = useWindowDimensions();
   const [query, setQuery] = useState("");
-  const menu = useMenuSheet(() => {
-    setQuery("");
-    onClosed?.();
-  });
+  const menu = useMenuSheet(
+    () => {
+      setQuery("");
+      onClosed?.();
+    },
+    open !== undefined && onOpenChange ? { open, onOpenChange } : undefined,
+  );
   const chosen = options.find((o) => o.value === value)?.label ?? "";
   const searched = options.length > SEARCHED_PAST;
   const needle = query.trim().toLocaleLowerCase(i18n.locale);
@@ -128,6 +106,7 @@ export function Select<T extends string>({
         <SheetRow
           key={o.value}
           label={o.label}
+          detail={o.detail}
           chosen={o.value === value}
           active={!!needle && i === 0}
           onPress={() => menu.choose(() => o.value !== value && onChange(o.value))}

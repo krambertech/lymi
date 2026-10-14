@@ -1,8 +1,8 @@
 name: Phone beta
 
-# Every green merge to main that changes the phone reaches TestFlight installs: an over-the-air
-# update on the `beta` branch, and a `beta` build uploaded to TestFlight when the native
-# fingerprint has no build yet. ADR 0032; docs/phone-release.md has the setup.
+# Every green merge to main that changes the phone reaches TestFlight installs as an over-the-air
+# update on the `beta` branch. A `beta` build for a new native fingerprint waits for a manual run,
+# so several native changes share one of the free tier's builds. ADR 0032; docs/phone-release.md.
 on:
   workflow_run:
     workflows: [CI]
@@ -100,8 +100,16 @@ jobs:
 
       # A new binary embeds this commit, and the update lets earlier ones on the same runtime catch up.
       - name: Build and send to TestFlight
-        if: steps.plan.outputs.release == 'true' && steps.build.outputs.build == 'false'
+        if: >-
+          steps.plan.outputs.release == 'true' && steps.build.outputs.build == 'false' &&
+          github.event_name == 'workflow_dispatch'
         run: node scripts/phone-release.mjs build beta
+
+      - name: Leave the build for a manual run
+        if: >-
+          steps.plan.outputs.release == 'true' && steps.build.outputs.build == 'false' &&
+          github.event_name != 'workflow_dispatch'
+        run: echo "::notice title=Phone beta::This commit changes native code, so TestFlight installs skip its update until a build. Run Phone beta by hand to build."
 
       - name: Publish the update to beta
         if: steps.plan.outputs.release == 'true'

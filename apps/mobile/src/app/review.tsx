@@ -1165,26 +1165,15 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
       >
         <Animated.View className="h-full rounded-full bg-text-2" style={fill} />
       </View>
-      {/* Held at the width of a finished count, so the bar never shortens as a digit is gained. */}
-      <View className="ms-1">
-        <Text
-          maxFontSizeMultiplier={1.3}
-          className="text-base opacity-0"
-          style={{ fontVariant: ["tabular-nums"] }}
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
-        >
-          {total}/{total}
-        </Text>
-        <Text
-          // The count shares a 48 pt bar with the lantern and the progress, so it grows least.
-          maxFontSizeMultiplier={1.3}
-          className="absolute end-0 text-base text-text-2"
-          style={{ fontVariant: ["tabular-nums"] }}
-        >
-          {done}/{total}
-        </Text>
-      </View>
+      {/* Sized to its own figures, so the gap after the bar never holds digits not yet reached. */}
+      <Text
+        // The count shares a 48 pt bar with the lantern and the progress, so it grows least.
+        maxFontSizeMultiplier={1.3}
+        className="ms-1 text-base text-text-2"
+        style={{ fontVariant: ["tabular-nums"] }}
+      >
+        {done}/{total}
+      </Text>
       {/* Plain, because leaving is rare; its 44 pt target overlaps the gap so the glyph sits as far from the count as the count from the bar. phone.md "Review". */}
       <View style={{ marginStart: -16 }}>
         <IconButton icon="close" label={t`End review`} haptic={false} onPress={onClose} />

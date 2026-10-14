@@ -13,11 +13,13 @@
       "policy": "fingerprint"
     },
     "updates": {
+      "url": "https://u.expo.dev/20b8c48a-6073-4365-8356-f9430336b0de",
       "checkAutomatically": "ON_LOAD",
       "fallbackToCacheTimeout": 0
     },
     "ios": {
       "bundleIdentifier": "app.lymi",
+      "appleTeamId": "C8CWG8CD76",
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
@@ -120,6 +122,12 @@
       ],
       "expo-notifications",
       "@bacons/apple-targets"
-    ]
+    ],
+    "owner": "krambertech",
+    "extra": {
+      "eas": {
+        "projectId": "20b8c48a-6073-4365-8356-f9430336b0de"
+      }
+    }
   }
 }

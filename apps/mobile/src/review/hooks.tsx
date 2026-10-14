@@ -148,8 +148,8 @@ export function HookOffer({ still, onOpen }: { still: boolean; onOpen: () => voi
 
 /**
  * The card's memory hook, written in a sheet with the keyboard up, as the card's other fields are.
- * The keyboard's done key saves, as no button repeats it; on an empty field it keeps the AI's draft,
- * which is the placeholder, as the web's touch editor does. A swipe down lets go.
+ * ✓ and the keyboard's done key save; on an empty field they keep the AI's draft, which is the
+ * placeholder, as the web's touch editor does. Close and a swipe down let go.
  */
 export function HookSheet({
   card,
@@ -211,29 +211,28 @@ export function HookSheet({
       onOpenChange={(o) => !o && onClose()}
       // Named as it opened, so a saved first hook never retitles the sheet on its way out.
       title={shown?.hook ? t`Edit hook` : t`Add hook`}
+      save={{ label: t`Save`, onPress: () => void save(), busy: pending }}
     >
-      <View className="gap-3">
-        <View className="rounded-xl bg-glass-plate px-4">
-          <TextInput
-            autoFocus
-            value={text}
-            maxLength={CARD_LIMITS.hook}
-            onChangeText={setText}
-            placeholder={drafted ?? t`A sound-alike, or something to picture`}
-            placeholderTextColor={p.muted}
-            accessibilityLabel={t`Memory hook`}
-            multiline
-            submitBehavior="blurAndSubmit"
-            returnKeyType="done"
-            onSubmitEditing={() => void save()}
-            selectionColor={p.text}
-            className="min-h-24 py-3 font-sans text-text"
-            style={{ fontSize: 17, textAlignVertical: "top" }}
-            maxFontSizeMultiplier={inputCap(17)}
-          />
-        </View>
-        {/* Its room is kept, so the sheet never changes height as the draft arrives. */}
-        <View className="min-h-5 flex-row items-center gap-1.5 ps-4">
+      <View className="rounded-xl bg-glass-plate px-4 pb-3">
+        <TextInput
+          autoFocus
+          value={text}
+          maxLength={CARD_LIMITS.hook}
+          onChangeText={setText}
+          placeholder={drafted ?? t`A sound-alike, or something to picture`}
+          placeholderTextColor={p.muted}
+          accessibilityLabel={t`Memory hook`}
+          multiline
+          submitBehavior="blurAndSubmit"
+          returnKeyType="done"
+          onSubmitEditing={() => void save()}
+          selectionColor={p.text}
+          className="min-h-16 pt-3 pb-1 font-sans text-text"
+          style={{ fontSize: 17, textAlignVertical: "top" }}
+          maxFontSizeMultiplier={inputCap(17)}
+        />
+        {/* Inside the field and its room kept, so the sheet never changes height as the draft arrives. */}
+        <View className="min-h-5 flex-row items-center gap-1.5">
           {empty && drafted ? (
             <>
               <Icon name="ai" size={14} colour={p.muted} />

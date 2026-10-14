@@ -28,7 +28,7 @@ import { GRADES, GradeMark } from "../../../../ui/grade";
 import { Icon, type IconName } from "../../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
 import { Plate, Press, Text } from "../../../../ui/primitives";
-import { BarGroup, Screen } from "../../../../ui/screen";
+import { BarButton, Screen } from "../../../../ui/screen";
 import { Skeleton } from "../../../../ui/skeleton";
 import { toast } from "../../../../ui/toast-host";
 
@@ -385,15 +385,11 @@ export default function CardPage() {
               entering={reduce ? CROSSFADE : springIn(new ZoomIn(), ARRIVE)}
               exiting={FadeOut.duration(150).reduceMotion(ALWAYS)}
             >
-              <BarGroup
-                items={[
-                  {
-                    icon: "important",
-                    label: t`Unmark important`,
-                    fill: p["amber-mark"],
-                    onPress: () => void writes.setImportant(card, false),
-                  },
-                ]}
+              <BarButton
+                icon="important"
+                label={t`Unmark important`}
+                fill={p["amber-mark"]}
+                onPress={() => void writes.setImportant(card, false)}
               />
             </Animated.View>
           )}

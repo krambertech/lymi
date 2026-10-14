@@ -420,6 +420,7 @@ export function BarButton({
   icon,
   label,
   amber = false,
+  fill,
   onPress,
 }: {
   icon: IconName;
@@ -427,6 +428,8 @@ export function BarButton({
   label: string;
   /** The tab's standing action. */
   amber?: boolean;
+  /** A mark that is set, such as a card's star, drawn filled in this colour. */
+  fill?: string;
   onPress?: () => void;
 }) {
   const p = usePalette();
@@ -445,7 +448,8 @@ export function BarButton({
         <Icon
           name={icon}
           size={amber ? 20 : 19}
-          colour={amber ? p["amber-ink"] : p.text}
+          colour={fill ?? (amber ? p["amber-ink"] : p.text)}
+          filled={!!fill}
           strokeWidth={amber ? 2.25 : 2}
         />
       </GlassSurface>

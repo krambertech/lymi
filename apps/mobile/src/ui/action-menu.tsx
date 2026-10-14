@@ -17,6 +17,7 @@ type Symbol = NonNullable<ComponentProps<typeof Button>["systemImage"]>;
 /** iOS draws its own menus, so each Lucide icon a menu row uses has its SF Symbol here. */
 const SYMBOLS: Partial<Record<IconName, Symbol>> = {
   plus: "plus",
+  share: "square.and.arrow.up",
   deck: "rectangle.stack",
   series: "square.stack.3d.up",
   import: "square.and.arrow.down",
@@ -96,14 +97,15 @@ export function ActionMenu({
         ]}
       >
         {groups.map((group) => (
-          // The amber tints the button only; rows keep iOS's own ink, red when destructive.
-          <Section key={group.map((i) => i.label).join()} modifiers={[tint(p.text)]}>
+          <Section key={group.map((i) => i.label).join()}>
             {group.map((item) => (
               <Button
                 key={item.label}
                 label={item.label}
                 systemImage={item.icon ? SYMBOLS[item.icon] : undefined}
                 role={item.destructive ? "destructive" : "default"}
+                // Ink on ordinary rows, so the plus's amber stays on the button; iOS draws a removal red.
+                modifiers={item.destructive ? undefined : [tint(p.text)]}
                 onPress={item.onSelect}
               />
             ))}

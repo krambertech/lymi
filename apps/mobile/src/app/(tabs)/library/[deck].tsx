@@ -107,13 +107,6 @@ export default function Deck() {
               label={t`Search this deck`}
               onPress={() => router.push(`/search?deck=${id}` as Href)}
             />
-            {owner && (
-              <BarButton
-                icon="share"
-                label={t`Share deck`}
-                onPress={() => router.push(`/share?id=${id}` as Href)}
-              />
-            )}
             <ActionMenu
               label={t`Deck options`}
               symbol="ellipsis"
@@ -131,6 +124,11 @@ export default function Deck() {
                     : []),
                   ...(owner
                     ? [
+                        {
+                          label: t`Share deck`,
+                          icon: "share" as const,
+                          onSelect: () => router.push(`/share?id=${id}` as Href),
+                        },
                         {
                           label: t`Move to series`,
                           icon: "series" as const,

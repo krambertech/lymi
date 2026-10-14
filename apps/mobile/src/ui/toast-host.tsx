@@ -1,5 +1,4 @@
 import { ARRIVE, SNAP_BACK } from "@lymi/design";
-import { usePathname } from "expo-router";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -14,19 +13,15 @@ import Animated, {
   withSpring,
   withTiming,
 } from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { spring, springIn, useReduceMotion } from "../theme/motion";
-import { useDeckAccessoryShown } from "./tab-bar";
+import { useFloatingBarHeight } from "./floating-bar";
+import { useAboveTabBar } from "./tab-bar";
 import { Toast } from "./toast";
 
 // The web's timings: long enough to reach Undo with VoiceOver or a switch. phone.md "After an action".
 const ACTION_TIMEOUT = 10_000;
 const TIMEOUT = 5_000;
-// iOS 26's floating tab bar, which a toast clears and matches in width on a tab's screens.
-const TAB_BAR = 64;
 const BACK = spring(SNAP_BACK);
-const TABS = /^\/(today|library|explore|you)(\/|$)/;
-const ACCESSORY = 56;
 
 interface ToastOptions {
   /** A toast with the same id replaces it, as the web's does. */
@@ -84,11 +79,8 @@ function useToasts() {
 export function ToastHost() {
   const shown = useToasts();
   useEffect(() => clearToasts, []);
-  const insets = useSafeAreaInsets();
-  const path = usePathname();
-  // Clears the deck's review accessory only while the bar shows it, not on every Library page.
-  const accessory = useDeckAccessoryShown() ? ACCESSORY : 0;
-  const bottom = insets.bottom + (TABS.test(path) ? TAB_BAR + accessory : 0) + 12;
+  // A floating bar, such as the selection's, keeps its place and the toast rises over it.
+  const bottom = useAboveTabBar() + useFloatingBarHeight() + 12;
   // The web shows three, the older two peeking behind the newest.
   const visible = shown.slice(-3);
   return (

@@ -60,13 +60,17 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
       chosen.current = null;
     }
   }
+  // Read through a ref, so a held − or + steps from where the last press left it.
+  const current = useRef(value);
+  current.current = custom ? own : value;
   const step = (by: 1 | -1) => {
-    const base = custom ? own : value;
+    const base = current.current;
     // Onto the next five, so 7 steps to 10 and 5 rather than 12 and 2.
     const next =
       by > 0 ? Math.floor(base / STEP) * STEP + STEP : Math.ceil(base / STEP) * STEP - STEP;
     const goal = DailyGoal.safeParse(Math.min(MAX, Math.max(MIN, next)));
     if (!goal.success) return;
+    current.current = goal.data;
     setCustom(true);
     setOwn(goal.data);
     chosen.current = goal.data;
@@ -129,14 +133,28 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
               </Text>
             </View>
             <View className="flex-row items-center gap-1" accessibilityElementsHidden>
-              <IconButton icon="minus" label={t`Fewer`} size="sm" onPress={() => step(-1)} />
+              <IconButton
+                icon="minus"
+                label={t`Fewer`}
+                size="sm"
+                repeat
+                disabled={own <= MIN}
+                onPress={() => step(-1)}
+              />
               <Text
                 className="min-w-10 text-center text-lg font-medium text-text"
                 style={{ fontVariant: ["tabular-nums"] }}
               >
                 {i18n.number(own)}
               </Text>
-              <IconButton icon="plus" label={t`More`} size="sm" onPress={() => step(1)} />
+              <IconButton
+                icon="plus"
+                label={t`More`}
+                size="sm"
+                repeat
+                disabled={own >= MAX}
+                onPress={() => step(1)}
+              />
             </View>
           </View>
         </SheetGroup>

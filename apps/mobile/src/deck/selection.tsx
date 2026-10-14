@@ -3,7 +3,10 @@ import { useLingui } from "@lingui/react/macro";
 import { useEffect } from "react";
 import { AccessibilityInfo, View } from "react-native";
 import { usePalette } from "../theme/palette";
+import { ActionMenu } from "../ui/action-menu";
+import { GlassSurface } from "../ui/glass";
 import { Icon } from "../ui/icons";
+import type { MenuItem } from "../ui/menu";
 import { Button, IconButton, Text } from "../ui/primitives";
 
 /** Stands in for a row's state mark while choosing cards, at the same 15 pt, so the list never moves. */
@@ -27,15 +30,16 @@ export function SelectBox({ checked }: { checked: boolean }) {
 }
 
 /**
- * Where Filter and Sort are while choosing cards: ✕ to stop, the count, Select all or Clear, and
- * Move to section…, shortened to Move… as the web's is on a narrow list. library-decks-and-cards.md.
+ * Floats above the tab bar while choosing cards, as Photos and Mail pin theirs: ✕ to stop, the
+ * count, Select all or Clear, and what can be done to the chosen cards in iOS's own menu, so a new
+ * action, such as tags, is one more row. library-decks-and-cards.md.
  */
 export function SelectionToolbar({
   count,
   total,
   onAll,
   onClear,
-  onMove,
+  actions,
   onDone,
 }: {
   count: number;
@@ -43,7 +47,7 @@ export function SelectionToolbar({
   total: number;
   onAll: () => void;
   onClear: () => void;
-  onMove: () => void;
+  actions: MenuItem[] | MenuItem[][];
   onDone: () => void;
 }) {
   const { t } = useLingui();
@@ -54,32 +58,46 @@ export function SelectionToolbar({
     AccessibilityInfo.announceForAccessibility(counted);
   }, [counted]);
   return (
-    <View
-      accessibilityRole="toolbar"
-      accessibilityLabel={t`Selected cards`}
-      className="h-11 flex-row items-center gap-1 rounded-lg border border-edge-2 bg-plate ps-1 pe-1.5"
+    <GlassSurface
+      tint="room"
+      style={{
+        minHeight: 56,
+        borderRadius: 28,
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 4,
+        paddingStart: 6,
+        paddingEnd: 8,
+        paddingVertical: 6,
+      }}
     >
-      <IconButton icon="close" size="sm" label={t`Stop selecting`} onPress={onDone} />
-      <Text
-        className="flex-1 ps-1 text-base font-medium text-text"
-        style={{ fontVariant: ["tabular-nums"] }}
-        numberOfLines={1}
+      <View
+        accessibilityRole="toolbar"
+        accessibilityLabel={t`Selected cards`}
+        className="flex-1 flex-row items-center gap-1"
       >
-        {counted}
-      </Text>
-      <Button
-        size="sm"
-        variant="ghost"
-        label={all ? t`Clear` : t`Select all`}
-        onPress={all ? onClear : onAll}
-      />
-      <Button
-        size="sm"
-        variant="primary"
-        label={t`Move…`}
-        disabled={count === 0}
-        onPress={onMove}
-      />
-    </View>
+        <IconButton icon="close" size="sm" label={t`Stop selecting`} onPress={onDone} />
+        <Text
+          className="flex-1 ps-1 text-base font-medium text-text"
+          style={{ fontVariant: ["tabular-nums"] }}
+          numberOfLines={1}
+        >
+          {counted}
+        </Text>
+        <Button
+          size="sm"
+          variant="ghost"
+          label={all ? t`Clear` : t`Select all`}
+          onPress={all ? onClear : onAll}
+        />
+        <ActionMenu
+          label={t`Actions for the selected cards`}
+          symbol="ellipsis"
+          look="primary"
+          items={actions}
+          disabled={count === 0}
+        />
+      </View>
+    </GlassSurface>
   );
 }

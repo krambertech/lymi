@@ -102,9 +102,7 @@ function ShelfHeader({
         {title}
       </Text>
       <Text className="text-lg text-text-2">{lede}</Text>
-      <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
-        {t`${deckCount} · ${cardCount}`}
-      </Text>
+      <Text className="text-base text-muted">{t`${deckCount} · ${cardCount}`}</Text>
     </View>
   );
 }

@@ -280,7 +280,7 @@ function LiveLink({
         >
           {deck.name}
         </Text>
-        <Text className="text-center text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+        <Text className="text-center text-sm text-muted">
           {language ? t`${language} · ${cards}` : cards}
         </Text>
       </View>

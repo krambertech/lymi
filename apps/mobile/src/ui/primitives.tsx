@@ -1,6 +1,6 @@
 import { shadows } from "@lymi/design";
 import * as Haptics from "expo-haptics";
-import { createContext, type ReactNode, useContext } from "react";
+import { createContext, type ReactNode, useContext, useEffect, useRef } from "react";
 import {
   ActivityIndicator,
   Pressable,
@@ -74,6 +74,7 @@ export function Press({
   scale = 0.97,
   haptic = true,
   onPressIn,
+  onPressOut,
   onPress,
   style,
   drawn,
@@ -93,8 +94,9 @@ export function Press({
         if (!reduce) s.value = withTiming(scale, { duration: 150 });
         onPressIn?.(e);
       }}
-      onPressOut={() => {
+      onPressOut={(e) => {
         s.value = withTiming(1, { duration: 150 });
+        onPressOut?.(e);
       }}
       onPress={(e) => {
         if (haptic) Haptics.selectionAsync();
@@ -209,9 +211,14 @@ interface IconButtonProps {
   disabled?: boolean;
   /** Off where a screen answers with its own haptics, as the review does. */
   haptic?: boolean;
+  /** Held down, it presses again and again, as a stepper's − and + do. */
+  repeat?: boolean;
   onPress?: () => void;
   testID?: string;
 }
+
+/** How often a held stepper button presses again. */
+const REPEAT_MS = 90;
 
 /** One icon whose meaning carries alone. Ghost by default; every size reaches a 44 pt target. */
 export function IconButton({
@@ -222,15 +229,34 @@ export function IconButton({
   round = false,
   disabled = false,
   haptic = true,
+  repeat = false,
   onPress,
   testID,
 }: IconButtonProps) {
   const p = usePalette();
   const { box, ink } = look(variant, p);
   const slop = size === "sm" ? 6 : 0;
+  const held = useRef<ReturnType<typeof setInterval>>(undefined);
+  const release = () => clearInterval(held.current);
+  useEffect(() => () => clearInterval(held.current), []);
+  useEffect(() => {
+    if (disabled) clearInterval(held.current);
+  }, [disabled]);
   return (
     <Press
       onPress={disabled ? undefined : onPress}
+      onLongPress={
+        repeat && !disabled
+          ? () => {
+              held.current = setInterval(() => {
+                Haptics.selectionAsync();
+                onPress?.();
+              }, REPEAT_MS);
+            }
+          : undefined
+      }
+      delayLongPress={350}
+      onPressOut={repeat ? release : undefined}
       haptic={haptic && !disabled}
       hitSlop={slop}
       testID={testID}

@@ -12,17 +12,20 @@ import {
   splitForms,
   stateKey,
 } from "@lymi/client/deck-list";
+import { ARRIVE } from "@lymi/design";
 import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
-import { type TextStyle, View } from "react-native";
+import { View } from "react-native";
+import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDeckExits } from "../../../data/decks";
 import { moveBack } from "../../../data/move-undo";
 import { useNextDue } from "../../../data/next-due";
 import { useDeckCards, useDecks, useSections, useSeriesList } from "../../../data/queries";
 import { useMoveNotice, useSeriesActions } from "../../../data/series";
+import { useCardBatch, useMoveToDeck } from "../../../deck/card-batch";
 import { useMoveToSection } from "../../../deck/move-to-section";
 import { SelectBox, SelectionToolbar } from "../../../deck/selection";
 import {
@@ -32,9 +35,11 @@ import {
   useStartSection,
 } from "../../../sections/sections";
 import { useOnline } from "../../../streak/goal-picker";
+import { springIn, useReduceMotion } from "../../../theme/motion";
 import { usePalette } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
+import { useFloatingBar } from "../../../ui/floating-bar";
 import { Icon } from "../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
 import { Select } from "../../../ui/menu";
@@ -86,8 +91,62 @@ export default function Deck() {
   // The cards chosen with Select cards, or null when the list is not choosing.
   const [selected, setSelected] = useState<ReadonlySet<string> | null>(null);
   const moveToSection = useMoveToSection(id);
+  const moveToDeck = useMoveToDeck(id);
+  const batch = useCardBatch(id);
+  const reduce = useReduceMotion();
   const selection = owner && selected ? selected : null;
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
+  const done = () => setSelected(null);
+  useFloatingBar(
+    selection && (
+      <Animated.View
+        // It slides rather than fades: glass that starts transparent never draws its effect.
+        entering={reduce ? undefined : springIn(new SlideInDown(), ARRIVE)}
+        exiting={reduce ? undefined : SlideOutDown.duration(200)}
+      >
+        <SelectionToolbar
+          count={selection.size}
+          total={ordered.length}
+          onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
+          onClear={() => setSelected(new Set())}
+          onDone={done}
+          actions={[
+            [
+              ...(moveToSection.canMove
+                ? [
+                    {
+                      label: t`Move to section`,
+                      icon: "section" as const,
+                      onSelect: () => moveToSection.open([...selection], done),
+                    },
+                  ]
+                : []),
+              ...(moveToDeck.canMove
+                ? [
+                    {
+                      label: t`Move to deck`,
+                      icon: "deck" as const,
+                      onSelect: () => moveToDeck.open([...selection], done),
+                    },
+                  ]
+                : []),
+            ],
+            [
+              {
+                label: t`Archive`,
+                icon: "archive",
+                destructive: true,
+                onSelect: () => {
+                  done();
+                  void batch.archive([...selection]);
+                },
+              },
+            ],
+          ]}
+        />
+      </Animated.View>
+    ),
+  );
   const toggleSelected = useCallback(
     (cardId: string) =>
       setSelected((prev) => {
@@ -111,6 +170,7 @@ export default function Deck() {
   return (
     <Screen
       title={deck?.name ?? ""}
+      onRefresh={() => Promise.all([decks.refetch(), cards.refetch(), sectionsQuery.refetch()])}
       back={{ label: t`Library`, to: "/library" }}
       past={
         reviewEnd === null ? undefined : { y: reviewEnd - insets.top - 56, onChange: onReviewPast }
@@ -153,8 +213,7 @@ export default function Deck() {
                         },
                       ]
                     : []),
-                  // Moving cards needs a section to move them to.
-                  ...(owner && moveToSection.canMove && rows.length > 0 && !selection
+                  ...(owner && rows.length > 0 && !selection
                     ? [
                         {
                           label: t`Select cards`,
@@ -254,16 +313,13 @@ export default function Deck() {
             {deck.due > 0 && <ReviewButton deck={deck} />}
           </View>
           <View className="gap-6">
-            {selection ? (
-              <SelectionToolbar
-                count={selection.size}
-                total={ordered.length}
-                onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
-                onClear={() => setSelected(new Set())}
-                onMove={() => moveToSection.open([...selection], () => setSelected(null))}
-                onDone={() => setSelected(null)}
-              />
-            ) : (
+            {/* Dimmed while choosing, so what is chosen never changes under the filter. */}
+            <View
+              pointerEvents={selection ? "none" : "auto"}
+              style={selection ? { opacity: 0.4 } : undefined}
+              importantForAccessibility={selection ? "no-hide-descendants" : "auto"}
+              accessibilityElementsHidden={!!selection}
+            >
               <Tools
                 sections={sections}
                 filters={filters}
@@ -273,7 +329,7 @@ export default function Deck() {
                 sort={sort}
                 setSort={setSort}
               />
-            )}
+            </View>
             {groups.length === 0 ? (
               <Plate>
                 <EmptyState
@@ -301,6 +357,9 @@ export default function Deck() {
       )}
       {deck && owner && <MoveToSeries deck={deck} open={moving} onOpenChange={setMoving} />}
       {owner && moveToSection.sheet}
+      {owner && moveToDeck.sheet}
+      {/* The last cards scroll clear of the pinned toolbar. */}
+      {selection && <View className="h-16" />}
     </Screen>
   );
 }
@@ -338,20 +397,16 @@ function Top({
   const line =
     due > 0 ? null : next ? t`Next card due ${next}.` : rows.length ? t`Nothing scheduled.` : null;
   const groupLabel = (k: keyof typeof counts) => i18n._(stateMarks[k].groupLabel);
-  const tabular: TextStyle = { fontVariant: ["tabular-nums"] };
   return (
     <Plate className="gap-4 p-5">
       <View className="flex-row items-baseline justify-between gap-3">
         <View className="shrink flex-row items-baseline gap-2">
-          <Text
-            className="text-4xl font-semibold text-text"
-            style={[tabular, { letterSpacing: -1 }]}
-          >
+          <Text className="text-4xl font-semibold text-text" style={{ letterSpacing: -1 }}>
             {due}
           </Text>
           <Text className="shrink text-base text-text-2">{t`to review`}</Text>
         </View>
-        <Text className="text-base text-muted" style={tabular}>
+        <Text className="text-base text-muted">
           {plural(rows.length, { one: "# card", other: "# cards" })}
         </Text>
       </View>
@@ -377,9 +432,7 @@ function Top({
           {(["new", "learning", "known"] as const).map((k) => (
             <View key={k} className="flex-row items-center gap-1.5">
               <StateIcon state={k} size={14} />
-              <Text className="text-sm font-medium text-text" style={tabular}>
-                {i18n.number(counts[k])}
-              </Text>
+              <Text className="text-sm font-medium text-text">{i18n.number(counts[k])}</Text>
               <Text className="text-sm text-muted">{groupLabel(k)}</Text>
             </View>
           ))}
@@ -651,7 +704,7 @@ function Group({
         title && (
           <SectionTitle
             end={
-              <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+              <Text className="text-base text-muted">
                 {plural(g.rows.length, { one: "# card", other: "# cards" })}
               </Text>
             }

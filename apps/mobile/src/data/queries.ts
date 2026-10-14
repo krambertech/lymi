@@ -41,6 +41,7 @@ import {
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { AppState } from "react-native";
 import { addDays, lastSevenDays } from "../ui/days";
+import { withoutDropped } from "./dropped";
 
 // Each screen reads one resource under the web's query key, so a grade refreshes only what it moves.
 
@@ -102,8 +103,14 @@ export function useNow(dayEnd: Date | undefined) {
 }
 
 /** The draw's state now, with this device's grades in it; `lookahead` cards after the next are listed too. */
-export function useDrawState(scope: ReviewScope, data: DrawData | undefined, lookahead = 0) {
-  const grades = useGrades();
+export function useDrawState(
+  scope: ReviewScope,
+  data: DrawData | undefined,
+  lookahead = 0,
+  fetchedAt?: number,
+) {
+  const all = useGrades();
+  const grades = useMemo(() => withoutDropped(all, data, fetchedAt), [all, data, fetchedAt]);
   const [now, setNow] = useNow(data ? new Date(data.day.end) : undefined);
   const state: DrawState | undefined = useMemo(
     () => (data ? drawState(data, grades, now, scope.deck, lookahead) : undefined),
@@ -136,8 +143,9 @@ export function streakToday(summary: StreakOut, state: DrawState): StreakOut {
 /** Today against the goal, as the lantern, the flame and the seven lights read it. */
 export function useDay() {
   const streak = useStreak().data;
-  const draw = useDraw().data;
-  const { state } = useDrawState({}, draw);
+  const drawn = useDraw();
+  const draw = drawn.data;
+  const { state } = useDrawState({}, draw, 0, drawn.dataUpdatedAt || undefined);
   const left = useMemo(
     () => (draw && state ? drawableLeft(draw, state, undefined) : undefined),
     [draw, state],

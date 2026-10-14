@@ -67,8 +67,6 @@ const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDat
  * back and every review and change. A tap on a field edits it in a sheet; ⋯ edits the term and
  * archives or restores the card.
  */
-/** Past this many characters a term may not fit the large title's one line. */
-const LONG_TERM = 18;
 
 export default function CardPage() {
   const { t, i18n } = useLingui();
@@ -292,7 +290,7 @@ export default function CardPage() {
                 <Text className="text-md text-text">
                   {st.state === 0 ? t`Not started` : when(new Date(st.due))}
                 </Text>
-                <Text className="text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+                <Text className="text-sm text-muted">
                   {plural(reps, { one: "# review", other: "# reviews" })}
                   {lapses > 0
                     ? ` · ${plural(lapses, { one: "forgotten once", other: "forgotten # times" })}`
@@ -370,18 +368,6 @@ export default function CardPage() {
     <Screen
       title={card.term}
       back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}
-      // A short term travels into the bar as every page title does; a phrase too long for one line
-      // wraps in its own header instead, and the bar's title fades in as it leaves.
-      header={
-        card.term.length > LONG_TERM ? (
-          <Text
-            className="text-3xl font-medium tracking-tight text-text"
-            accessibilityRole="header"
-          >
-            {card.term}
-          </Text>
-        ) : undefined
-      }
       actions={
         <View className="flex-row items-center gap-2.5">
           {/* A set star stands beside ⋯ and unmarks with a tap; unset, it is only in the menu. */}

@@ -85,6 +85,7 @@ describe("analytics privacy contract", () => {
   it("keeps public slugs and replaces private route identifiers", () => {
     expect(analyticsPath("/library/private-deck", "product")).toBe("/library/:item");
     expect(analyticsPath("/share", "product")).toBe("/share");
+    expect(analyticsPath("/series-order", "product")).toBe("/series-order");
     expect(analyticsPath("/reset-password/token", "product")).toBe("/other");
     expect(analyticsPath("/you", "product")).toBe("/you");
     expect(analyticsPath("/uk/explore/eesti-a1", "public")).toBe("/uk/explore/eesti-a1");

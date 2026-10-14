@@ -27,6 +27,7 @@ import { replaySplash, useReplays } from "../splash/replay";
 import { Analytics } from "../telemetry/analytics";
 import { startTelemetry } from "../telemetry/posthog";
 import { usePalette } from "../theme/palette";
+import { FloatingBarHost } from "../ui/floating-bar";
 import { clearToasts, ToastHost } from "../ui/toast-host";
 import { clearWidgets, WidgetSync } from "../widgets/sync";
 
@@ -212,6 +213,16 @@ function Root() {
               },
             }}
           />
+          <Stack.Screen
+            name="series-order"
+            options={{
+              presentation: "formSheet",
+              sheetAllowedDetents: "fitToContents",
+              // A row dragged down would otherwise close the sheet; Close is the way out.
+              gestureEnabled: false,
+              contentStyle: { backgroundColor: p.sheet },
+            }}
+          />
           {/* Peeks at the run and today, and drags up for the month. phone.md. */}
           {/* Over everything, tab bar included, since its field sits where the tab bar does. */}
           <Stack.Screen
@@ -246,6 +257,7 @@ function Root() {
         {/* The design system is for development builds; release builds redirect it home. */}
         {__DEV__ && <Stack.Screen name="design" />}
       </Stack>
+      {signedIn && !update && <FloatingBarHost />}
       {signedIn && !update && <ToastHost />}
       {kindling && (
         <SplashGuard key={replays} onFail={giveUp}>

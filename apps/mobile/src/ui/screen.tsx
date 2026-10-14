@@ -3,7 +3,13 @@ import { useLingui } from "@lingui/react/macro";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { type Href, useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
-import { I18nManager, useWindowDimensions, View, type ViewStyle } from "react-native";
+import {
+  I18nManager,
+  RefreshControl,
+  useWindowDimensions,
+  View,
+  type ViewStyle,
+} from "react-native";
 import Animated, {
   Extrapolation,
   interpolate,
@@ -58,6 +64,8 @@ interface Props {
   description?: string;
   /** Called as the end of a long page comes near, so a list loads on as it is read. */
   onEndReached?: () => void;
+  /** Pulling the page down calls this and shows iOS's spinner until it settles, as Mail refreshes. */
+  onRefresh?: () => Promise<unknown>;
   /** Told once each time the page scrolls past this content offset, or back above it. */
   past?: { y: number; onChange: (past: boolean) => void } | undefined;
   children: ReactNode;
@@ -83,12 +91,13 @@ export function Screen({
   kind = "page",
   back,
   actions,
-  header,
+  header: own,
   ground,
   titleAt,
   actionsArrive = false,
   description,
   onEndReached,
+  onRefresh,
   past,
   children,
 }: Props) {
@@ -130,6 +139,15 @@ export function Screen({
   // stays there.
   const { width: screen } = useWindowDimensions();
   const [box, setBox] = useState({ w: 0, h: 0 });
+  // A page title too long for one line wraps in the page, and the bar's title fades in as it leaves.
+  const [wraps, setWraps] = useState(false);
+  const header =
+    own ??
+    (wraps ? (
+      <Text className="text-3xl font-medium tracking-tight text-text" accessibilityRole="header">
+        {title}
+      </Text>
+    ) : undefined);
   const restY = kind === "tab" ? insets.top + (56 - box.h) / 2 : insets.top + 52;
   const dock = kind === "tab" ? INLINE_LARGE : SMALL;
   const dockY = insets.top + (56 - box.h * dock) / 2;
@@ -205,6 +223,13 @@ export function Screen({
   // Over a page's own colour the bar takes that colour, so it never lays a grey band across it.
   const roof = ground?.colour ?? p.canvas;
   const trailing = kind === "tab" ? <TabActions own={actions} /> : actions;
+  const [refreshing, setRefreshing] = useState(false);
+  const refresh = onRefresh
+    ? () => {
+        setRefreshing(true);
+        onRefresh().finally(() => setRefreshing(false));
+      }
+    : undefined;
 
   return (
     <View className="flex-1 bg-canvas">
@@ -217,6 +242,16 @@ export function Screen({
         scrollEventThrottle={16}
         // The pinned bar already clears the status bar; iOS's own tab bar would add the inset again.
         contentInsetAdjustmentBehavior="never"
+        refreshControl={
+          refresh && (
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={refresh}
+              tintColor={p.muted}
+              progressViewOffset={bar}
+            />
+          )
+        }
       >
         {header ? (
           <View
@@ -236,6 +271,17 @@ export function Screen({
             accessibilityRole="header"
             accessibilityLabel={title}
           />
+        )}
+        {kind === "page" && !own && (
+          <Text
+            className="absolute text-3xl font-medium tracking-tight opacity-0"
+            style={{ width: screen - 40 }}
+            importantForAccessibility="no-hide-descendants"
+            accessibilityElementsHidden
+            onTextLayout={(e) => setWraps(e.nativeEvent.lines.length > 1)}
+          >
+            {title}
+          </Text>
         )}
         {/* Pulled up from the page's 28 pt gap to 8 pt, so it reads as the title's own line. */}
         {description && <Text className="-mt-5 text-base text-text-2">{description}</Text>}

@@ -37,6 +37,7 @@ msgstr "{0, plural, one {# картка до повторення} few {# кар
 msgid "{0, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
+#. placeholder {0}: s.deckIds.length
 #. placeholder {0}: s.decks.length
 #. placeholder {0}: shelf.decks.length
 msgid "{0, plural, one {# deck} other {# decks}}"
@@ -169,6 +170,9 @@ msgstr "{count, plural, one {{sectionName}, # картка} few {{sectionName}, 
 msgid "{count, plural, one {{sectionName}, not open yet, # card} other {{sectionName}, not open yet, # cards}}"
 msgstr "{count, plural, one {{sectionName}, ще не відкритий, # картка} few {{sectionName}, ще не відкритий, # картки} many {{sectionName}, ще не відкритий, # карток} other {{sectionName}, ще не відкритий, # картки}}"
 
+msgid "{count, plural, one {# card} other {# cards}}"
+msgstr "{count, plural, one {# картку} few {# картки} many {# карток} other {# картки}}"
+
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
 
@@ -247,8 +251,9 @@ msgstr "{hours, plural, one {через # годину} few {через # год
 msgid "{label}, locked"
 msgstr "{label}, заблоковано"
 
-msgid "{label}, next in {schedules}"
-msgstr "{label}, далі через {schedules}"
+#. placeholder {0}: spokenInterval(back)
+msgid "{label}, next in {0}"
+msgstr "{label}, далі через {0}"
 
 msgid "{label}: {chosen}"
 msgstr "{label}: {chosen}"
@@ -301,6 +306,10 @@ msgstr "{sectionCount, plural, one {# розділ} few {# розділи} many 
 msgid "{sectionName} is ready. Start it to review its cards."
 msgstr "Можна починати {sectionName}. Почни розділ, щоб повторювати його картки."
 
+#. placeholder {0}: s.deckIds.length
+msgid "{seriesName}, {0, plural, one {# deck} other {# decks}}"
+msgstr "{seriesName}, {0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}}"
+
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
 
@@ -319,6 +328,21 @@ msgstr "{total, plural, one {# картка} few {# картки} many {# кар
 msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
 msgstr "{total, plural, one {Засвоєно {knownN} з # картки} few {Засвоєно {knownN} з # карток} many {Засвоєно {knownN} з # карток} other {Засвоєно {knownN} з # картки}}"
 
+msgid "{value, plural, one {# day} other {# days}}"
+msgstr "{value, plural, one {# день} few {# дні} many {# днів} other {# дня}}"
+
+msgid "{value, plural, one {# hour} other {# hours}}"
+msgstr "{value, plural, one {# годину} few {# години} many {# годин} other {# години}}"
+
+msgid "{value, plural, one {# minute} other {# minutes}}"
+msgstr "{value, plural, one {# хвилину} few {# хвилини} many {# хвилин} other {# хвилини}}"
+
+msgid "{value, plural, one {# month} other {# months}}"
+msgstr "{value, plural, one {# місяць} few {# місяці} many {# місяців} other {# місяця}}"
+
+msgid "{value, plural, one {# year} other {# years}}"
+msgstr "{value, plural, one {# рік} few {# роки} many {# років} other {# року}}"
+
 msgid "{waiting, plural, one {# invitation is waiting. Cancel it to invite someone else.} other {# invitations are waiting. Cancel one to invite someone else.}}"
 msgstr "{waiting, plural, one {# запрошення чекає на відповідь. Скасуй його, щоб запросити когось іншого.} few {# запрошення чекають на відповідь. Скасуй одне, щоб запросити когось іншого.} many {# запрошень чекають на відповідь. Скасуй одне, щоб запросити когось іншого.} other {# запрошення чекають на відповідь. Скасуй одне, щоб запросити когось іншого.}}"
 
@@ -335,6 +359,9 @@ msgstr "30 днів"
 
 msgid "90 days"
 msgstr "90 днів"
+
+msgid "A card keeps its progress and leaves its section."
+msgstr "Картка зберігає прогрес і виходить зі свого розділу."
 
 msgid "A connected app"
 msgstr "Підключений застосунок"
@@ -375,6 +402,9 @@ msgstr "А–Я"
 
 msgid "About this deck"
 msgstr "Про колоду"
+
+msgid "Actions for the selected cards"
+msgstr "Дії з вибраними картками"
 
 msgid "Activity"
 msgstr "Активність"
@@ -545,6 +575,10 @@ msgstr "Заархівовано «{sectionName}»"
 
 msgid "Archived “{term}”"
 msgstr "Заархівовано «{term}»"
+
+#. placeholder {0}: cards(done.length)
+msgid "Archived {0}"
+msgstr "Заархівовано {0}"
 
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Заархівовано {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у колоді «{deck}»"
@@ -787,6 +821,10 @@ msgstr "Не вдалося архівувати «{name}»."
 msgid "Couldn’t archive “{term}”."
 msgstr "Не вдалося архівувати «{term}»."
 
+#. placeholder {0}: cards(cardIds.length)
+msgid "Couldn’t archive {0}."
+msgstr "Не вдалося архівувати {0}."
+
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Не вдалося скасувати запрошення. Спробуй ще раз."
 
@@ -852,6 +890,10 @@ msgstr "Не вдалося перемістити «{deckName}»."
 
 msgid "Couldn’t move “{term}”."
 msgstr "Не вдалося перемістити «{term}»."
+
+#. placeholder {0}: cards(cardIds.length)
+msgid "Couldn’t move {0}."
+msgstr "Не вдалося перемістити {0}."
 
 msgid "Couldn’t move {count, plural, one {# card} other {# cards}}."
 msgstr "Не вдалося перемістити {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}}."
@@ -1038,6 +1080,9 @@ msgstr "Готово"
 
 msgid "Drafting a hook…"
 msgstr "Готуємо зачіпку…"
+
+msgid "Drag a series by its handle. Library shows them in this order."
+msgstr "Перетягніть серію за ручку. У Бібліотеці серії стоять у цьому порядку."
 
 msgid "Driving"
 msgstr "Водіння"
@@ -1661,6 +1706,12 @@ msgstr "Перемістити «{deckName}» вище"
 msgid "Move down"
 msgstr "Нижче"
 
+msgid "Move to deck"
+msgstr "Перемістити в колоду"
+
+msgid "Move to section"
+msgstr "Перемістити в розділ"
+
 msgid "Move to section…"
 msgstr "Перемістити в розділ…"
 
@@ -1670,14 +1721,15 @@ msgstr "Перенести в серію"
 msgid "Move up"
 msgstr "Вище"
 
-msgid "Move…"
-msgstr "Перемістити…"
-
 msgid "Moved “{deckName}” to {seriesName}"
 msgstr "«{deckName}» перенесено в «{seriesName}»"
 
 msgid "Moved “{term}” to {sectionName}"
 msgstr "Картку «{term}» переміщено в «{sectionName}»"
+
+#. placeholder {0}: cards(done.length)
+msgid "Moved {0} to {deckName}"
+msgstr "Переміщено {0} в «{deckName}»"
 
 msgid "Moved {count, plural, one {# card} other {# cards}} to {sectionName}"
 msgstr "Переміщено {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} в «{sectionName}»"
@@ -2071,6 +2123,9 @@ msgstr "Перейменувати розділ"
 msgid "Rename series"
 msgstr "Перейменувати серію"
 
+msgid "Reorder series"
+msgstr "Змінити порядок серій"
+
 msgid "Replay pronunciation"
 msgstr "Відтворити вимову ще раз"
 
@@ -2259,6 +2314,9 @@ msgstr "Сербська"
 
 msgid "Series"
 msgstr "Серія"
+
+msgid "Series order"
+msgstr "Порядок серій"
 
 msgid "Share"
 msgstr "Поділитися"

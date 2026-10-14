@@ -700,6 +700,9 @@ msgctxt "language"
 msgid "Chinese"
 msgstr "Китайский"
 
+msgid "Choose"
+msgstr ""
+
 msgid "Choose another"
 msgstr "Выбрать другое"
 
@@ -711,9 +714,6 @@ msgstr "Выбрать из фото"
 
 msgid "Choose photo"
 msgstr "Выбрать фото"
-
-msgid "Choose the language"
-msgstr ""
 
 msgid "Choose what the deck is for."
 msgstr ""

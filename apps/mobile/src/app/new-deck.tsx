@@ -12,26 +12,24 @@ import { useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
 import { type Href, useRouter } from "expo-router";
 import { type ReactNode, useRef, useState } from "react";
-import { TextInput, View } from "react-native";
+import { Pressable, ScrollView, TextInput, View } from "react-native";
 import { FieldName } from "../capture/composer-field";
 import { languageName } from "../data/languages";
 import { usePurposes } from "../data/purposes";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
-import { FieldChip, FieldChipFace } from "../ui/field-chip";
 import { GlassButton } from "../ui/glass";
 import type { IconName } from "../ui/icons";
 import { Select } from "../ui/menu";
-import { Icon, Text } from "../ui/primitives";
+import { Icon, Plate, RowArrow, Text } from "../ui/primitives";
+import { RowFace, Rows } from "../ui/row";
 import { OnGlass } from "../ui/surface";
 
-// Prototype switch for #580: how the deck's two settings sit under its name.
-const _LAYOUT = "rows" as "composer" | "form" | "rows";
-
 /**
- * New deck: a name and two settings that already have an answer, so a sheet and not a wizard.
- * The name takes the large field with the keyboard up; creating lands in the empty deck, where
- * the words go next. library-decks-and-cards.md.
+ * New deck: a short form, not a row of chips, since every field matters. The name takes the large
+ * field with the keyboard up and Return lowers it; what the deck is for is three cards to read and
+ * choose, a language deck's language sits inside its card, and how cards are asked is one quiet
+ * row with its default. Creating lands in the empty deck. library-decks-and-cards.md.
  */
 export default function NewDeck() {
   const { t } = useLingui();
@@ -47,12 +45,9 @@ export default function NewDeck() {
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const nameRef = useRef<TextInput>(null);
-  const languages = [
-    { value: "", label: t`No language` },
-    ...LANGUAGE_TAGS.map((tag) => ({ value: tag, label: languageName(tag) })).sort((a, b) =>
-      a.label.localeCompare(b.label),
-    ),
-  ];
+  const languages = LANGUAGE_TAGS.map((tag) => ({ value: tag, label: languageName(tag) })).sort(
+    (a, b) => a.label.localeCompare(b.label),
+  );
   const asked: { value: Directions; label: string }[] = [
     { value: "recognition", label: t`Recognition` },
     { value: "production", label: t`Production` },
@@ -66,7 +61,6 @@ export default function NewDeck() {
     subject: "lesson",
     other: "notes",
   };
-  const languageLabel = language ? languageName(language) : t`No language`;
 
   const create = async () => {
     if (pending) return;
@@ -141,7 +135,11 @@ export default function NewDeck() {
           onPress={() => void create()}
         />
       </View>
-      <View className="gap-4 px-5 pt-3 pb-5">
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+        contentContainerClassName="gap-6 px-5 pt-3 pb-10"
+      >
         <View>
           <FieldName>{t`Name`}</FieldName>
           <TextInput
@@ -157,8 +155,9 @@ export default function NewDeck() {
             placeholderTextColor={p.muted}
             accessibilityLabel={t`Name`}
             accessibilityHint={error ?? undefined}
-            returnKeyType="done"
-            onSubmitEditing={() => void create()}
+            // Return lowers the keyboard, so the choices under the name are all in view.
+            returnKeyType="next"
+            submitBehavior="blurAndSubmit"
             selectionColor={p.text}
             className="min-h-12 py-1.5 font-sans font-medium text-text"
             style={{ fontSize: 28, letterSpacing: -0.56 }}
@@ -172,51 +171,71 @@ export default function NewDeck() {
           )}
         </View>
 
-        {/* What it's for is required, so its three answers show at once rather than behind a chip. */}
-        <View
-          className="gap-2"
-          accessibilityRole="radiogroup"
-          accessibilityLabel={t`What it’s for`}
-        >
+        <View className="gap-2.5">
           <FieldName>{t`What it’s for`}</FieldName>
-          <View className="flex-row flex-wrap gap-2">
-            {purposes.map((o) => (
-              <FieldChip
-                key={o.value}
-                icon={purposeIcon[o.value]}
-                on={purpose === o.value}
-                checked={purpose === o.value}
-                accessibilityLabel={`${o.label}. ${o.detail}`}
-                onPress={() => {
-                  setPurpose(o.value);
-                  if (error) setError(null);
-                  if (o.value === "language" && !language) setChoosingLanguage(true);
-                }}
-              >
-                {o.label}
-              </FieldChip>
-            ))}
-          </View>
+          <Plate className="overflow-hidden" accessibilityRole="radiogroup">
+            {purposes.map((o, i) => {
+              const chosen = purpose === o.value;
+              return (
+                <View key={o.value} className={i > 0 ? "border-t border-edge" : ""}>
+                  <Pressable
+                    onPress={() => {
+                      Haptics.selectionAsync();
+                      setPurpose(o.value);
+                      if (error) setError(null);
+                      if (o.value === "language" && !language) setChoosingLanguage(true);
+                    }}
+                    accessibilityRole="radio"
+                    accessibilityState={{ checked: chosen }}
+                    accessibilityLabel={`${o.label}. ${o.detail}`}
+                    className="flex-row items-start gap-3 px-4 py-3.5"
+                    style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
+                  >
+                    <View className="pt-0.5">
+                      <Icon name={purposeIcon[o.value]} size={20} colour={p["text-2"]} />
+                    </View>
+                    <View className="flex-1 gap-0.5">
+                      <Text className="text-md font-medium text-text">{o.label}</Text>
+                      <Text className="text-base text-text-2">{o.detail}</Text>
+                    </View>
+                    <Radio on={chosen} />
+                  </Pressable>
+                  {/* The language is part of this answer, so it sits inside its card. */}
+                  {chosen &&
+                    o.value === "language" &&
+                    languageSelect(
+                      <View className="mx-4 mb-3.5 ms-12 flex-row items-center gap-3 rounded-lg bg-plate-2 py-3 ps-3.5 pe-2.5">
+                        <Text className="flex-1 text-md text-text">{t`Language`}</Text>
+                        <Text
+                          className={`text-md ${language ? "text-text-2" : "font-medium text-amber-text"}`}
+                          numberOfLines={1}
+                        >
+                          {language ? languageName(language) : t`Choose`}
+                        </Text>
+                        <RowArrow />
+                      </View>,
+                    )}
+                </View>
+              );
+            })}
+          </Plate>
         </View>
 
-        <View
-          className="flex-row flex-wrap gap-2"
-          accessibilityRole="toolbar"
-          accessibilityLabel={t`Deck settings`}
-        >
-          {purpose === "language" &&
-            languageSelect(
-              <FieldChipFace icon="meaning" on={!!language} opens>
-                {language ? languageLabel : t`Choose the language`}
-              </FieldChipFace>,
-            )}
-          {askedSelect(
-            <FieldChipFace icon="modes" on opens>
-              {way?.label ?? ""}
-            </FieldChipFace>,
-          )}
-        </View>
-      </View>
+        <Rows>
+          {askedSelect(<RowFace icon="modes" label={t`How cards are asked`} value={way?.label} />)}
+        </Rows>
+      </ScrollView>
     </OnGlass>
+  );
+}
+
+/** A radio's mark: an empty ring, or a ring around a dot once chosen. */
+function Radio({ on }: { on: boolean }) {
+  return (
+    <View
+      className={`mt-0.5 size-[22px] items-center justify-center rounded-full border-2 ${on ? "border-text" : "border-edge-2"}`}
+    >
+      {on && <View className="size-2.5 rounded-full bg-text" />}
+    </View>
   );
 }

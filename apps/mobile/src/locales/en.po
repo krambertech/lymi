@@ -1781,6 +1781,9 @@ msgstr "Not reviewed yet"
 msgid "Not reviewed yet. It comes up in your next review."
 msgstr "Not reviewed yet. It comes up in your next review."
 
+msgid "Not set"
+msgstr "Not set"
+
 msgid "Not started"
 msgstr "Not started"
 

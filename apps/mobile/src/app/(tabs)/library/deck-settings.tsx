@@ -6,6 +6,7 @@ import {
   DECK_ENRICH_FIELDS,
   type DeckEnrichField,
   DeckInput,
+  type DeckPurpose,
   type Directions,
   deckLimits,
   LANGUAGE_TAGS,
@@ -17,6 +18,7 @@ import { TextInput, View } from "react-native";
 import { useDeckExits } from "../../../data/decks";
 import { openDraft } from "../../../data/draft";
 import { languageName } from "../../../data/languages";
+import { usePurposes } from "../../../data/purposes";
 import { useDeckCards, useDecks, useSections } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { inputCap, MULTILINE } from "../../../theme/type";
@@ -101,6 +103,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
     void save({ enrichInstructions: next });
   };
   const { archive, leave } = useDeckExits(deck);
+  const purposes = usePurposes();
   const [editing, setEditing] = useState<"name" | "description" | "instructions" | null>(null);
   const [asking, setAsking] = useState(false);
   const [choosingFields, setChoosingFields] = useState(false);
@@ -296,6 +299,19 @@ function Settings({ deck }: { deck: DeckSummary }) {
               label={t`Description`}
               value={deck.description ?? t`None`}
               onPress={() => edit("description")}
+            />
+            <Select
+              label={t`What it’s for`}
+              value={deck.purpose ?? ("" as DeckPurpose)}
+              options={purposes}
+              onChange={(purpose) => void save({ purpose })}
+              trigger={
+                <RowFace
+                  icon="deck"
+                  label={t`What it’s for`}
+                  value={purposes.find((o) => o.value === deck.purpose)?.label ?? t`Not set`}
+                />
+              }
             />
             {languageSelect(<RowFace icon="meaning" label={t`Language`} value={language} />)}
             <Row icon="modes" label={t`Modes`} value={way?.label} onPress={() => setAsking(true)} />

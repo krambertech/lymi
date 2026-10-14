@@ -15,6 +15,7 @@ import { type ReactNode, useRef, useState } from "react";
 import { TextInput, View } from "react-native";
 import { FieldName } from "../capture/composer-field";
 import { languageName } from "../data/languages";
+import { usePurposes } from "../data/purposes";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { FieldChipFace } from "../ui/field-chip";
@@ -55,20 +56,7 @@ export default function NewDeck() {
     { value: "both", label: t`Both ways` },
   ];
   const way = asked.find((a) => a.value === directions) ?? asked[0];
-  // The web's three answers and their lines, so a deck made on either reads the same. deck-fields.tsx.
-  const purposes: { value: DeckPurpose; label: string; detail: string }[] = [
-    {
-      value: "language",
-      label: t({ message: "A language", context: "deck purpose" }),
-      detail: t`Words and phrases in a language you’re learning.`,
-    },
-    {
-      value: "subject",
-      label: t`A subject or exam`,
-      detail: t`Terms with short explanations, like for a citizenship test.`,
-    },
-    { value: "other", label: t`Something else`, detail: t`Your own material, whatever it is.` },
-  ];
+  const purposes = usePurposes();
   const purposeLabel = purposes.find((o) => o.value === purpose)?.label ?? t`What it’s for`;
   const languageLabel = language ? languageName(language) : t`No language`;
 

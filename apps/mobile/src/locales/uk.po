@@ -1781,6 +1781,9 @@ msgstr "Ще не повторювались"
 msgid "Not reviewed yet. It comes up in your next review."
 msgstr "Ще не повторювалася. З’явиться в наступному повторенні."
 
+msgid "Not set"
+msgstr ""
+
 msgid "Not started"
 msgstr "Ще не почато"
 

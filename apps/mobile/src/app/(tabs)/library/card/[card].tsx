@@ -369,7 +369,10 @@ export default function CardPage() {
       // wraps in its own header instead, and the bar's title fades in as it leaves.
       header={
         card.term.length > LONG_TERM ? (
-          <Text className="text-3xl font-medium tracking-tight text-text" accessibilityRole="header">
+          <Text
+            className="text-3xl font-medium tracking-tight text-text"
+            accessibilityRole="header"
+          >
             {card.term}
           </Text>
         ) : undefined

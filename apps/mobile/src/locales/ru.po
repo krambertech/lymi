@@ -1781,6 +1781,9 @@ msgstr "Ещё не повторялись"
 msgid "Not reviewed yet. It comes up in your next review."
 msgstr "Ещё не повторялась. Появится в следующем повторении."
 
+msgid "Not set"
+msgstr ""
+
 msgid "Not started"
 msgstr "Ещё не начато"
 

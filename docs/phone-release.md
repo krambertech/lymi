@@ -10,7 +10,7 @@ An installed app checks for an update on every launch without waiting for it, so
 
 | Workflow | When | What it does |
 | --- | --- | --- |
-| Phone beta | Each green CI run on `main`, or by hand | When the phone or a shared package changed since the last beta update, publishes an update to the `beta` branch, and starts a `beta` build that goes to TestFlight when no build has this runtime yet. TestFlight's What to Test lists the merged pull request titles. |
+| Phone beta | Each green CI run on `main`, or by hand | When the phone or a shared package changed since the last beta update, publishes an update to the `beta` branch, and starts a `beta` build that goes to TestFlight when no build has this runtime yet. The build carries no What to Test notes, which EAS Submit accepts only on the Enterprise plan. |
 | Phone promote | By hand, once a week | Runs the Phone smoke journey on the commit behind the latest beta update and freezes that commit's API contract, and stops if either fails or the contract is not on `main` yet. Then checks that beta still has that update and no production rollout is running, republishes it to `production` for 10% of installs, and starts a `production` build uploaded to App Store Connect when no build has this runtime yet. |
 | Phone rollout | Every six hours, or by hand | Widens a `production` rollout that is at least a day old to every install. |
 | Phone rollback | By hand | Reverts the newest update on `production` or `beta`: a partial rollout is reverted, otherwise the previous update on the same runtime is republished, or the binary's own bundle when there is none. A group ID input republishes that update instead. |

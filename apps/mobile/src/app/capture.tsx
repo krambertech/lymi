@@ -8,16 +8,15 @@ import { useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { AccessibilityInfo, Keyboard, ScrollView, type TextInput, View } from "react-native";
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { Keyboard, ScrollView, type TextInput, View } from "react-native";
+import { useSharedValue, withTiming } from "react-native-reanimated";
 import { CardFields, FORM_FIELD, useFormFields } from "../capture/card-fields";
 import { CHIPS_RETURN, ChipIn } from "../capture/chip-in";
 import { type ChipKey, markChipUsed, useRecentFirst } from "../capture/chip-order";
 import { CHOICE_TITLES, CHOICES, type ChoiceKind } from "../capture/choice-sheets";
 import { ChoicesProvider, useChoices } from "../capture/choices";
 import { EMPTY_FORM, type FormValues } from "../capture/form";
-import { LastAdd } from "../capture/last-add";
-import { type Outcome, type Picture, UNDO_FOR } from "../capture/model";
+import type { Picture } from "../capture/model";
 import { MODE_LABELS } from "../capture/modes";
 import { useReveal } from "../capture/reveal";
 import { CAPTURE_KEYS, captureStore } from "../data/kept";
@@ -31,10 +30,14 @@ import { KeyboardRoom } from "../ui/keyboard";
 import { Icon, Press, Text } from "../ui/primitives";
 import { Sheet } from "../ui/sheet";
 import { OnGlass } from "../ui/surface";
+import { ToastHost, toast } from "../ui/toast-host";
 
 /** The chips' clock runs straight; each chip eases its own rise. */
 const CHIPS_BACK = { duration: CHIPS_RETURN, ease: "linear" } as const;
 const SETTLE = { duration: 0.25, ease: "linear" } as const;
+
+/** Add a word's own toasts, which show over its chips since the app's sit under the sheet. */
+const TOASTS = "capture";
 
 /** Everything typed into the composer, the term to the source. */
 type Draft = FormValues;
@@ -87,20 +90,14 @@ function Composer() {
   const section = sections.find((s) => s.id === sectionId);
   const sectionSaid = said(t`Section`, section?.name ?? t`No section`);
   const [error, setError] = useState<string | null>(null);
-  const [last, setLast] = useState<Outcome | null>(null);
-  const [undoable, setUndoable] = useState(false);
   const [pending, setPending] = useState(false);
   const termRef = useRef<TextInput>(null);
-  // Once the next term is being typed, the line about the last add has done its job.
-  const [movedOn, setMovedOn] = useState<Outcome | null>(null);
-  const moved = last !== null && movedOn === last;
   // The open choice, and the one its sheet holds, which stays while the sheet goes.
   const [choice, setChoice] = useState<ChoiceKind | null>(null);
   const [held, setHeld] = useState<ChoiceKind | null>(null);
   // While a choice is open the form keeps the keyboard's room, so the chips hold still and fade.
   const hold = useSharedValue(0);
   const chips = useSharedValue(1);
-  const chipsLine = useAnimatedStyle(() => ({ opacity: chips.value }));
   const choosing = useRef(false);
   choosing.current = choice !== null;
   useEffect(() => {
@@ -126,13 +123,6 @@ function Composer() {
     chips.value = withTiming(1, timed(CHIPS_BACK));
     termRef.current?.focus();
   };
-
-  // Each add starts its own five seconds, so a second add keeps its Undo for the full time.
-  useEffect(() => {
-    if (!undoable || last?.kind !== "added") return;
-    const timer = setTimeout(() => setUndoable(false), UNDO_FOR);
-    return () => clearTimeout(timer);
-  }, [undoable, last]);
 
   const add = async () => {
     const text = draft.term.trim();
@@ -160,9 +150,7 @@ function Composer() {
       Haptics.selectionAsync();
       if (outcome.status === "skipped") {
         const { term, deckName } = { term: outcome.existing.term, deckName: outcome.deckName };
-        setLast({ kind: "skipped", term, deckName });
-        setUndoable(false);
-        AccessibilityInfo.announceForAccessibility(t`“${term}” is already in ${deckName}`);
+        say(t`“${term}” is already in ${deckName}`);
         // The form stays, with the term selected, so it can be changed or cleared, as on the web.
         termRef.current?.focus();
         termRef.current?.setSelection(0, text.length);
@@ -175,25 +163,17 @@ function Composer() {
       setModes((m) => (m === modes ? null : m));
       setPicture((x) => (x === picture ? null : x));
       termRef.current?.focus();
-      // A picture goes to the card once the card is on the server. Until it gets there, the line
-      // under the fields holds it with Try again, so it is never lost.
-      const pictureError = !picture
-        ? undefined
-        : queued
-          ? t`Pictures need a connection. Try again once you’re back online.`
-          : await uploadPicture(outcome.card.id, picture);
-      setLast({
-        kind: "added",
-        id: outcome.card.id,
-        term,
-        deckName: deck.name,
-        queued,
-        pictureError,
-        ...(pictureError && picture ? { picture } : {}),
-      });
-      setUndoable(true);
+      // A picture goes to the card once the card is on the server; until then its toast holds it.
+      const missed = picture && (queued || (await uploadPicture(outcome.card.id, picture)));
+      if (picture && missed) offerPicture(outcome.card.id, term, picture);
+      else
+        say(
+          queued
+            ? t`Added “${term}”. It’s saved on this phone until Lymi can be reached.`
+            : t`Added “${term}” to ${deckName}`,
+          { label: t`Undo`, onPress: () => undo(outcome.card.id) },
+        );
       captureStore.set(CAPTURE_KEYS.deck, deck.id);
-      AccessibilityInfo.announceForAccessibility(t`Added “${term}”`);
       void qc.invalidateQueries({ queryKey: [...decksQuery.queryKey] });
       void qc.invalidateQueries({ queryKey: [...roundsQuery.queryKey] });
     } catch (e) {
@@ -203,35 +183,35 @@ function Composer() {
     }
   };
 
-  const undo = () => {
-    if (last?.kind !== "added") return;
+  // One toast at a time: each add replaces the last one's.
+  const say = (title: string, action?: { label: string; onPress: () => void }, error = false) =>
+    toast.add({ id: TOASTS, scope: TOASTS, title, error, ...(action ? { action } : {}) });
+
+  const undo = (id: string) => {
     Haptics.selectionAsync();
-    setUndoable(false);
-    setLast(null);
     writes
-      .archiveCard(last.id)
+      .archiveCard(id)
       .then(() => {
         void qc.invalidateQueries({ queryKey: [...decksQuery.queryKey] });
         void qc.invalidateQueries({ queryKey: [...roundsQuery.queryKey] });
       })
-      .catch((e: unknown) => {
-        setLast(last);
-        setError(errorMessage(e));
-      });
+      .catch((e: unknown) => setError(errorMessage(e)));
     termRef.current?.focus();
   };
 
-  const retryPicture = async () => {
-    if (last?.kind !== "added" || !last.picture) return;
-    const held = last;
-    const pictureError = await uploadPicture(held.id, held.picture as Picture);
-    setLast((l) =>
-      l?.kind === "added" && l.id === held.id
-        ? { ...l, pictureError, picture: pictureError ? l.picture : undefined }
-        : l,
+  // A picture that did not reach its card waits on the toast's Try again.
+  const offerPicture = (id: string, term: string, held: Picture) =>
+    say(
+      t`Added “${term}” without its picture`,
+      {
+        label: t`Try again`,
+        onPress: async () => {
+          if (await uploadPicture(id, held)) offerPicture(id, term, held);
+          else void qc.invalidateQueries({ queryKey: [...decksQuery.queryKey] });
+        },
+      },
+      true,
     );
-    if (!pictureError) void qc.invalidateQueries({ queryKey: [...decksQuery.queryKey] });
-  };
 
   const Choice = held && CHOICES[held];
   return (
@@ -273,7 +253,6 @@ function Composer() {
                   onChange={(field, value) => {
                     write(field)(value);
                     if (field === "term" && error) setError(null);
-                    if (field === "term") setMovedOn(last);
                   }}
                   shown={fields.shown}
                   adding={fields.adding}
@@ -298,16 +277,10 @@ function Composer() {
               </ScrollView>
 
               <View className="px-4 pt-1 pb-2">
-                {/* Pinned over the chips, by the keyboard, rather than wherever the fields end. */}
-                {last && !error && !moved && (
-                  <Animated.View style={chipsLine}>
-                    <LastAdd
-                      last={last}
-                      onUndo={undoable ? undo : undefined}
-                      onRetry={last.kind === "added" && last.picture ? retryPicture : undefined}
-                    />
-                  </Animated.View>
-                )}
+                {/* Toasts rise over the chips, by the keyboard, inside the sheet. */}
+                <View pointerEvents="box-none" className="absolute inset-x-0 bottom-full">
+                  <ToastHost scope={TOASTS} bottom={10} />
+                </View>
                 <FieldChipRow label={t`More about this card`}>
                   <ChipIn index={0} shown={chips}>
                     <FieldChip
@@ -348,7 +321,6 @@ function Composer() {
                               <FieldChip
                                 key="section"
                                 icon="section"
-                                on={!!section}
                                 opens
                                 accessibilityLabel={sectionSaid}
                                 onPress={() => {
@@ -368,14 +340,14 @@ function Composer() {
                         <FieldChip
                           key="picture"
                           icon="picture"
-                          on={!!picture}
-                          accessibilityLabel={t`Picture`}
+                          picture={picture?.uri}
+                          accessibilityLabel={picture ? t`Picture added` : t`Picture`}
                           onPress={() => {
                             markChipUsed("picture");
                             open("picture");
                           }}
                         >
-                          {picture ? t`Picture added` : t`Picture`}
+                          {t`Picture`}
                         </FieldChip>
                       ),
                     },
@@ -385,7 +357,6 @@ function Composer() {
                         <FieldChip
                           key="modes"
                           icon="modes"
-                          on={!!modes}
                           accessibilityLabel={t`How it’s asked`}
                           onPress={() => {
                             markChipUsed("modes");

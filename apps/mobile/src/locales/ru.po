@@ -448,17 +448,14 @@ msgstr "Добавить в Библиотеку"
 msgid "Add to this card"
 msgstr "Добавить в карточку"
 
-msgid "Added “{term}”"
-msgstr "Добавлено «{term}»"
-
 msgid "Added “{term}” to {deck}"
 msgstr "«{term}» добавлено в колоду {deck}"
 
 msgid "Added “{term}” to {deckName}"
 msgstr "«{term}» добавлено в колоду {deckName}"
 
-msgid "Added “{term}” without its picture. {reason}"
-msgstr "«{term}» добавлено без изображения. {reason}"
+msgid "Added “{term}” without its picture"
+msgstr "«{term}» добавлено без изображения"
 
 msgid "Added “{term}”. It’s saved on this phone until Lymi can be reached."
 msgstr "«{term}» добавлено. Карточка сохранена на этом телефоне, пока Lymi снова не будет на связи."
@@ -2011,9 +2008,6 @@ msgstr "Карточка с картинкой: {0}. Нажми, чтобы от
 
 msgid "Picture changed"
 msgstr "Картинка изменена"
-
-msgid "Pictures need a connection. Try again once you’re back online."
-msgstr "Для изображений нужно соединение. Попробуй ещё раз, когда снова будешь онлайн."
 
 msgid "Play pronunciation"
 msgstr "Воспроизвести произношение"

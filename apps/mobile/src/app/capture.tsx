@@ -7,7 +7,7 @@ import { CHIPS_LEAVE } from "@lymi/design";
 import { useQueryClient } from "@tanstack/react-query";
 import { File } from "expo-file-system";
 import * as Haptics from "expo-haptics";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { Keyboard, ScrollView, type TextInput, View } from "react-native";
 import { useSharedValue, withTiming } from "react-native-reanimated";
@@ -83,7 +83,9 @@ function Composer() {
   const said = (label: string, chosen: string) => t`${label}: ${chosen}`;
   const deckSaid = said(t`Deck`, deckName);
   const [enrich, setEnrich] = useState(() => captureStore.getBoolean(CAPTURE_KEYS.enrich) ?? true);
-  const [draft, setDraft] = useState<Draft>(EMPTY);
+  // Siri and Shortcuts can name the term: `lymi://capture?term=gelato`.
+  const { term: named } = useLocalSearchParams<{ term?: string }>();
+  const [draft, setDraft] = useState<Draft>(() => ({ ...EMPTY, term: named?.trim() ?? "" }));
   const write = (key: keyof Draft) => (value: string) => setDraft((d) => ({ ...d, [key]: value }));
   const fields = useFormFields(draft);
   const form = useReveal();

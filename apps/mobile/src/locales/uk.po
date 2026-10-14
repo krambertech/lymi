@@ -227,8 +227,23 @@ msgstr "{deckCount} · {cardCount}"
 msgid "{due, plural, one {# card due} other {# cards due}}"
 msgstr "{due, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
 
+msgid "{due, plural, one {# card is due. {reviewed} of {goal} reviewed today.} other {# cards are due. {reviewed} of {goal} reviewed today.}}"
+msgstr ""
+
+msgid "{due, plural, one {# card is due. Today’s goal is met.} other {# cards are due. Today’s goal is met.}}"
+msgstr ""
+
+msgid "{due, plural, one {# card is due.} other {# cards are due.}}"
+msgstr ""
+
 msgid "{due, plural, one {# card to review} other {# cards to review}}"
 msgstr "{due, plural, one {# картка для повторення} few {# картки для повторення} many {# карток для повторення} other {# картки для повторення}}"
+
+msgid "{due, plural, one {# due · {reviewed}/{goal}} other {# due · {reviewed}/{goal}}}"
+msgstr ""
+
+msgid "{due, plural, one {# due} other {# due}}"
+msgstr ""
 
 msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 msgstr "{due, plural, one {картка до повторення в колоді {deckName}} few {картки до повторення в колоді {deckName}} many {карток до повторення в колоді {deckName}} other {картки до повторення в колоді {deckName}}}"
@@ -417,6 +432,9 @@ msgstr "Додати"
 
 msgid "Add a card"
 msgstr "Додати картку"
+
+msgid "Add a word"
+msgstr ""
 
 msgid "Add cards"
 msgstr "Додати картки"
@@ -1321,6 +1339,9 @@ msgstr "Дай серії назву."
 msgid "Go to Today"
 msgstr "Відкрити «Сьогодні»"
 
+msgid "Goal met"
+msgstr ""
+
 msgctxt "deck tag"
 msgid "Goethe-Zertifikat A1"
 msgstr "Goethe-Zertifikat A1"
@@ -1893,6 +1914,12 @@ msgstr "Сьогодні нічого повторювати, тож дні по
 msgid "Nothing forgotten today"
 msgstr "Сьогодні нічого не забуто"
 
+msgid "Nothing is due, and today’s goal is met."
+msgstr ""
+
+msgid "Nothing is due."
+msgstr ""
+
 msgid "Nothing left in {scopeName}"
 msgstr "У «{scopeName}» більше нічого"
 
@@ -1946,6 +1973,9 @@ msgstr "Відкрити Бібліотеку"
 
 msgid "Open Lymi and sign in to add words from other apps."
 msgstr "Відкрий Lymi й увійди, щоб додавати слова з інших застосунків."
+
+msgid "Open Lymi and sign in to see what’s due."
+msgstr ""
 
 msgid "Open on the web"
 msgstr "Відкрити у вебверсії"

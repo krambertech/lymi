@@ -1,9 +1,10 @@
 import { decksQuery, settingsQuery } from "@lymi/client/queries";
 import { analyticsPath, backlogOf } from "@lymi/core/analytics";
 import { useQuery } from "@tanstack/react-query";
-import { usePathname } from "expo-router";
+import { useGlobalSearchParams, usePathname } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { AppState } from "react-native";
+import { type EntryOpened, entryOf } from "../entry/links";
 import { captureEvent, setTelemetryLearner } from "./posthog";
 
 /** Back from the background after this long is another opening, as a reload would be on the web. */
@@ -21,7 +22,8 @@ export function screenPath(pathname: string): string {
 
 /**
  * Tells PostHog who is signed in and whether their account allows analytics, then counts the
- * openings and screens the web counts as `app_opened` and `$pageview`. docs/analytics.md.
+ * openings and screens the web counts as `app_opened` and `$pageview`, and which of iOS's entry
+ * points opened a screen as `entry_opened`. docs/analytics.md.
  */
 export function Analytics({ learnerId }: { learnerId: string | null | undefined }) {
   const settings = useQuery({ ...settingsQuery, enabled: !!learnerId });
@@ -72,6 +74,21 @@ export function Analytics({ learnerId }: { learnerId: string | null | undefined 
   useEffect(() => {
     if (!learnerId) lastScreen.current = undefined;
   }, [learnerId]);
+
+  // A link held through sign-in reaches its screen afterwards, so the entry waits for consent.
+  const from = useGlobalSearchParams().from;
+  const [entry, setEntry] = useState<EntryOpened>();
+  const lastEntry = useRef<string | undefined>(undefined);
+  useEffect(() => {
+    const opened = entryOf(pathname, from);
+    const key = opened && `${pathname}?${from}`;
+    if (key === lastEntry.current) return;
+    lastEntry.current = key;
+    if (opened) setEntry(opened);
+  }, [pathname, from]);
+  useEffect(() => {
+    if (consent === true && entry && captureEvent("entry_opened", entry)) setEntry(undefined);
+  }, [consent, entry]);
 
   return null;
 }

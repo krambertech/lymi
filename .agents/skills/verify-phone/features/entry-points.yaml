@@ -1,0 +1,25 @@
+# Entry points: open the links the controls, intents and quick actions open, and land on each screen.
+appId: app.lymi
+name: Entry points
+---
+- runFlow: _open.yaml
+- openLink: "lymi://capture?term=${TERM}&from=shortcut"
+- extendedWaitUntil:
+    visible: "Add to .*"
+    timeout: 20000
+# A fresh Simulator teaches the slide-to-type keyboard once.
+- tapOn:
+    text: "Continue"
+    optional: true
+- assertVisible: "${TERM}"
+- takeScreenshot: 01-add-a-word
+- openLink: "lymi://review?from=control"
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 30000
+- takeScreenshot: 02-review
+- openLink: "lymi://search?from=quick_action"
+- extendedWaitUntil:
+    visible: "Search.*"
+    timeout: 20000
+- takeScreenshot: 03-search

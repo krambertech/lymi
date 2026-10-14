@@ -24,6 +24,9 @@ export function PictureChoices({ value, onChange }: PictureChoicesProps) {
       mediaTypes: ["images"],
       quality: 0.8,
       allowsEditing: true,
+      // A JPEG rather than HEIC, which the server cannot read.
+      preferredAssetRepresentationMode:
+        ImagePicker.UIImagePickerPreferredAssetRepresentationMode.Compatible,
     };
     if (from === "camera") {
       const allowed = await ImagePicker.requestCameraPermissionsAsync();

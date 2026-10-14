@@ -5,6 +5,7 @@ import { decksQuery, roundsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
 import { CHIPS_LEAVE } from "@lymi/design";
 import { useQueryClient } from "@tanstack/react-query";
+import { File } from "expo-file-system";
 import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
@@ -48,7 +49,8 @@ function uploadPicture(cardId: string, picture: Picture) {
   return api
     .uploadCardImage(
       cardId,
-      { uri: picture.uri, name: picture.name, type: picture.type },
+      // Expo's fetch sends a file it can read the bytes of; it cannot send React Native's `{ uri }`.
+      new File(picture.uri),
       null,
       picture.description.trim() || undefined,
     )

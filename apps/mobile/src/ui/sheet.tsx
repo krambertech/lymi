@@ -25,7 +25,7 @@ import {
   View,
   type ViewStyle,
 } from "react-native";
-import { useKeyboardState } from "react-native-keyboard-controller";
+import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import Animated, {
   Extrapolation,
   interpolate,
@@ -97,8 +97,11 @@ export function Sheet({
   const p = usePalette();
   const { width, height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
-  // A field in the sheet brings the keyboard up under it, which leaves the sheet less room.
-  const keyboard = useKeyboardState((k) => (k.isVisible ? k.height : 0));
+  // iOS lifts the sheet over a keyboard its field brings up, so the sheet gives up that room frame by
+  // frame as the keyboard rises; whatever no longer fits scrolls.
+  const { height: keyboard } = useReanimatedKeyboardAnimation();
+  const tallest = height - insets.top - 16;
+  const fits = useAnimatedStyle(() => ({ maxHeight: tallest + keyboard.value }));
   const [peek, setPeek] = useState<number | null>(null);
   const inset = ROW_INSET;
   const detents = more && peek ? [presentationDetents([{ height: peek }, "large"])] : [];
@@ -198,7 +201,7 @@ export function Sheet({
               {/* A list taller than the screen, such as every language, scrolls inside the sheet. */}
               <View>
                 <Animated.ScrollView
-                  style={{ width, maxHeight: height - insets.top - 16 - keyboard }}
+                  style={[{ width }, fits]}
                   contentContainerClassName={`px-4 pb-4 ${top}`}
                   // A row or Save takes the first tap, even with the keyboard up.
                   keyboardShouldPersistTaps="handled"

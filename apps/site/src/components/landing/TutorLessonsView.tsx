@@ -1,3 +1,4 @@
+import "@fontsource/caveat/500.css";
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
@@ -215,7 +216,10 @@ const MATERIALS: Material[] = [
 ];
 
 /** The lesson the hand of cards came from: the top card's term is lit where Marta said it. */
-function LessonChat({ front }: { front: string | undefined }) {
+/** The hero's words in the order Marta says them. */
+const HERO_IDS = ["madrugar", "embarazada", "me-pones-un-cafe", "ojala"];
+
+function LessonChat({ mark }: { mark: (i: number, text: ReactNode) => ReactNode }) {
   return (
     <div className="flex flex-col gap-2 rounded-2xl bg-plate p-4 edge">
       <p className="mb-1 flex items-center gap-2 text-xs text-muted">
@@ -224,19 +228,11 @@ function LessonChat({ front }: { front: string | undefined }) {
         </span>
         <Trans>Marta · Spanish lesson</Trans>
       </p>
-      <Bubble from="tutor">
-        Mañana tienes que <Pick on={front === "madrugar"}>madrugar</Pick>.
-      </Bubble>
+      <Bubble from="tutor">Mañana tienes que {mark(0, "madrugar")}.</Bubble>
       <Bubble from="you">Uf, estoy muy embarazada…</Bubble>
-      <Bubble from="tutor">
-        ¡Cuidado! <Pick on={front === "embarazada"}>Embarazada</Pick> no es «embarrassed».
-      </Bubble>
-      <Bubble from="tutor">
-        En el bar: «<Pick on={front === "me-pones-un-cafe"}>¿Me pones un café?</Pick>»
-      </Bubble>
-      <Bubble from="tutor">
-        <Pick on={front === "ojala"}>Ojalá</Pick> nos vemos el viernes.
-      </Bubble>
+      <Bubble from="tutor">¡Cuidado! {mark(1, "Embarazada")} no es «embarrassed».</Bubble>
+      <Bubble from="tutor">En el bar: «{mark(2, "¿Me pones un café?")}»</Bubble>
+      <Bubble from="tutor">{mark(3, "Ojalá")} nos vemos el viernes.</Bubble>
     </div>
   );
 }
@@ -244,6 +240,9 @@ function LessonChat({ front }: { front: string | undefined }) {
 /** For the learner who books lessons with a tutor and loses the words between them. */
 export function TutorLessonsView() {
   const openAppUrl = openLymiUrl();
+  const heroCards = HERO_IDS.map(
+    (id) => SPANISH.hand.find((card) => card.id === id) as LearningLanguage["hand"][number],
+  );
 
   return (
     <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
@@ -257,8 +256,10 @@ export function TutorLessonsView() {
               Lymi keeps every new word and brings it back right before you’d forget it.
             </Trans>
           }
-          cards={SPANISH.hand}
-          behind={(front) => <LessonChat front={front} />}
+          cards={heroCards}
+          behind={(front) => (
+            <LessonChat mark={(i, text) => <Pick on={front === HERO_IDS[i]}>{text}</Pick>} />
+          )}
         />
       </header>
 

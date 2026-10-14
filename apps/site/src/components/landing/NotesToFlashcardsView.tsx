@@ -1,6 +1,8 @@
+import "@fontsource/caveat/500.css";
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import type { ReactNode } from "react";
 import { openLymiUrl } from "../../lib/origins";
 import { Added, AssistantChat, Attachment } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
@@ -10,6 +12,7 @@ import { FeatureSection, SectionTitle } from "./FeatureSection";
 import { NOTES_TO_FLASHCARDS_QUESTIONS } from "./faq";
 import { GuideSteps } from "./GuideSteps";
 import { Hero } from "./Hero";
+import { HeroLiftOff, type HeroWord } from "./HeroScenes";
 import type { HandCard } from "./hand-cards";
 import { type Material, MaterialToCards, Pick } from "./MaterialToCards";
 import { Questions } from "./Questions";
@@ -241,7 +244,7 @@ const MATERIALS: Material[] = [
 ];
 
 /** The revision page the hand of cards came from, the top card's term lit where it was written. */
-function RevisionNotes({ front }: { front: string | undefined }) {
+function RevisionNotes({ mark }: { mark: (i: number, text: ReactNode) => ReactNode }) {
   const { i18n } = useLingui();
   return (
     <div className="notes-hand rounded-md bg-plate px-6 pt-5 pb-7 edge">
@@ -249,10 +252,8 @@ function RevisionNotes({ front }: { front: string | undefined }) {
         <Trans>Exam revision</Trans>
       </p>
       <ul className="mt-3 flex flex-col gap-2 text-2xl leading-tight text-text">
-        {HAND.map((card) => (
-          <li key={card.id}>
-            <Pick on={front === card.id}>{i18n._(card.term)}</Pick>
-          </li>
+        {HAND.map((card, i) => (
+          <li key={card.id}>{mark(i, i18n._(card.term))}</li>
         ))}
       </ul>
     </div>
@@ -263,9 +264,15 @@ function RevisionNotes({ front }: { front: string | undefined }) {
 export function NotesToFlashcardsView() {
   const { t, i18n } = useLingui();
   const openAppUrl = openLymiUrl();
-  const hand = HAND.map((card) => ({ ...card, term: i18n._(card.term) }));
   const osmosis = { ...OSMOSIS, term: i18n._(OSMOSIS.term) };
   const review = REVIEW.map((card) => ({ ...card, term: i18n._(card.term) }));
+  // Every study card names its subject and meaning as messages.
+  const words: HeroWord[] = HAND.map((card) => ({
+    id: card.id,
+    term: i18n._(card.term),
+    label: i18n._(card.source as MessageDescriptor),
+    meaning: i18n._(card.meaning as MessageDescriptor),
+  }));
 
   return (
     <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
@@ -279,8 +286,13 @@ export function NotesToFlashcardsView() {
               terms land in Lymi as cards, and each one comes back right before you’d forget it.
             </Trans>
           }
-          cards={hand}
-          behind={(front) => <RevisionNotes front={front} />}
+          visual={
+            <HeroLiftOff
+              words={words}
+              chip="notes-hand text-2xl leading-tight"
+              material={(mark) => <RevisionNotes mark={mark} />}
+            />
+          }
         />
       </header>
 

@@ -13,10 +13,12 @@ interface Props {
   layout?: "fan" | "stack" | undefined;
   /** What the cards came from, drawn behind the hand and told which card is on top. */
   behind?: ((front: string | undefined) => ReactNode) | undefined;
+  /** A scene of its own in place of the hand of cards. */
+  visual?: ReactNode;
 }
 
 /** The headline, one action, and a hand of cards to turn over. */
-export function Hero({ title, lede, cards, layout, behind }: Props) {
+export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
   const [front, setFront] = useState<string>();
   return (
     <div className="mx-auto grid max-w-[1120px] items-center gap-8 px-5 pt-12 pb-16 @2xl:px-10 @4xl:pt-14 @5xl:min-h-[700px] @5xl:grid-cols-[minmax(0,1fr)_minmax(0,460px)] @5xl:gap-14 @6xl:grid-cols-[minmax(0,1fr)_minmax(0,540px)]">
@@ -33,21 +35,22 @@ export function Hero({ title, lede, cards, layout, behind }: Props) {
         </div>
       </div>
 
-      {behind ? (
-        <div className="relative">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute start-0 top-0 w-[64%] max-w-[330px] -rotate-3"
-          >
-            {behind(front)}
+      {visual ??
+        (behind ? (
+          <div className="relative">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute start-0 top-0 w-[64%] max-w-[330px] -rotate-3"
+            >
+              {behind(front)}
+            </div>
+            <div className="relative ms-auto w-[64%] pt-24">
+              <HandOfCards cards={cards} layout="stack" onFront={setFront} />
+            </div>
           </div>
-          <div className="relative ms-auto w-[64%] pt-24">
-            <HandOfCards cards={cards} layout="stack" onFront={setFront} />
-          </div>
-        </div>
-      ) : (
-        <HandOfCards cards={cards} layout={layout} />
-      )}
+        ) : (
+          <HandOfCards cards={cards} layout={layout} />
+        ))}
     </div>
   );
 }

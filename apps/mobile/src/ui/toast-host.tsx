@@ -14,6 +14,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { spring, springIn, useReduceMotion } from "../theme/motion";
+import { useFloatingBarHeight } from "./floating-bar";
 import { useAboveTabBar } from "./tab-bar";
 import { Toast } from "./toast";
 
@@ -78,7 +79,8 @@ function useToasts() {
 export function ToastHost() {
   const shown = useToasts();
   useEffect(() => clearToasts, []);
-  const bottom = useAboveTabBar() + 12;
+  // A floating bar, such as the selection's, keeps its place and the toast rises over it.
+  const bottom = useAboveTabBar() + useFloatingBarHeight() + 12;
   // The web shows three, the older two peeking behind the newest.
   const visible = shown.slice(-3);
   return (

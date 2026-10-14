@@ -82,8 +82,8 @@ export function ActionMenu({
               <Button
                 key={item.label}
                 role={item.destructive ? "destructive" : "default"}
-                // Ink on ordinary rows, so the plus's amber stays on the button; iOS draws a removal red.
-                modifiers={item.destructive ? undefined : [tint(p.text)]}
+                // Ink on ordinary rows and red on a removal, so an amber button's tint stays on the button.
+                modifiers={[tint(item.destructive ? p.danger : p.text)]}
                 onPress={item.onSelect}
               >
                 <Label

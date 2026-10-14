@@ -170,6 +170,9 @@ msgstr "{count, plural, one {{sectionName}, # картка} few {{sectionName}, 
 msgid "{count, plural, one {{sectionName}, not open yet, # card} other {{sectionName}, not open yet, # cards}}"
 msgstr "{count, plural, one {{sectionName}, ще не відкритий, # картка} few {{sectionName}, ще не відкритий, # картки} many {{sectionName}, ще не відкритий, # карток} other {{sectionName}, ще не відкритий, # картки}}"
 
+msgid "{count, plural, one {# card} other {# cards}}"
+msgstr "{count, plural, one {# картку} few {# картки} many {# карток} other {# картки}}"
+
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
 
@@ -357,6 +360,9 @@ msgstr "30 днів"
 msgid "90 days"
 msgstr "90 днів"
 
+msgid "A card keeps its progress and leaves its section."
+msgstr "Картка зберігає прогрес і виходить зі свого розділу."
+
 msgid "A connected app"
 msgstr "Підключений застосунок"
 
@@ -396,6 +402,9 @@ msgstr "А–Я"
 
 msgid "About this deck"
 msgstr "Про колоду"
+
+msgid "Actions for the selected cards"
+msgstr "Дії з вибраними картками"
 
 msgid "Activity"
 msgstr "Активність"
@@ -566,6 +575,10 @@ msgstr "Заархівовано «{sectionName}»"
 
 msgid "Archived “{term}”"
 msgstr "Заархівовано «{term}»"
+
+#. placeholder {0}: cards(done.length)
+msgid "Archived {0}"
+msgstr "Заархівовано {0}"
 
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Заархівовано {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у колоді «{deck}»"
@@ -808,6 +821,10 @@ msgstr "Не вдалося архівувати «{name}»."
 msgid "Couldn’t archive “{term}”."
 msgstr "Не вдалося архівувати «{term}»."
 
+#. placeholder {0}: cards(cardIds.length)
+msgid "Couldn’t archive {0}."
+msgstr "Не вдалося архівувати {0}."
+
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Не вдалося скасувати запрошення. Спробуй ще раз."
 
@@ -873,6 +890,10 @@ msgstr "Не вдалося перемістити «{deckName}»."
 
 msgid "Couldn’t move “{term}”."
 msgstr "Не вдалося перемістити «{term}»."
+
+#. placeholder {0}: cards(cardIds.length)
+msgid "Couldn’t move {0}."
+msgstr "Не вдалося перемістити {0}."
 
 msgid "Couldn’t move {count, plural, one {# card} other {# cards}}."
 msgstr "Не вдалося перемістити {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}}."
@@ -1685,6 +1706,12 @@ msgstr "Перемістити «{deckName}» вище"
 msgid "Move down"
 msgstr "Нижче"
 
+msgid "Move to deck"
+msgstr "Перемістити в колоду"
+
+msgid "Move to section"
+msgstr "Перемістити в розділ"
+
 msgid "Move to section…"
 msgstr "Перемістити в розділ…"
 
@@ -1694,14 +1721,15 @@ msgstr "Перенести в серію"
 msgid "Move up"
 msgstr "Вище"
 
-msgid "Move…"
-msgstr "Перемістити…"
-
 msgid "Moved “{deckName}” to {seriesName}"
 msgstr "«{deckName}» перенесено в «{seriesName}»"
 
 msgid "Moved “{term}” to {sectionName}"
 msgstr "Картку «{term}» переміщено в «{sectionName}»"
+
+#. placeholder {0}: cards(done.length)
+msgid "Moved {0} to {deckName}"
+msgstr "Переміщено {0} в «{deckName}»"
 
 msgid "Moved {count, plural, one {# card} other {# cards}} to {sectionName}"
 msgstr "Переміщено {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} в «{sectionName}»"

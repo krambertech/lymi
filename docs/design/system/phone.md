@@ -37,6 +37,7 @@ The phone's components are in `apps/mobile/src/ui` under the web's names, and fo
 - Tabular figures are for a figure on its own that changes in place or lines up in a column, such as a due count. A number inside a phrase, such as "21 cards", keeps Onest's own figures, or a 1 sits apart from its neighbours.
 - React Native ignores `text-end` and `text-start`, so end-aligned text takes `TEXT_END` from `theme/type.ts`, and Biome refuses the classes.
 - An order that is dragged uses `DragList` from `ui/drag-list.tsx`: a grip at each row's end lifts it, the rest make room, and it saves as it drops. Every row also offers Move up and Move down to VoiceOver. Sections in Edit and Series order use it.
+- A bar that floats above the tab bar, such as the selection toolbar, goes through `useFloatingBar`: the root draws it, since only the root knows where the screen ends, it leaves when its screen loses focus, and a toast rises above it. It slides in rather than fading, because glass that starts transparent never draws its effect.
 - A stepper's − and + repeat while held (`IconButton`'s `repeat`) and dim at the bounds.
 - A page's intro sentence is `Screen`'s `description`, held 8 pt under the large title. A page whose header holds its name passes `titleAt`, so the bar's title arrives as the name goes under the bar, and a page with its own `ground` colours its bar with it.
 

@@ -3,8 +3,10 @@ import { useLingui } from "@lingui/react/macro";
 import { useEffect } from "react";
 import { AccessibilityInfo, View } from "react-native";
 import { usePalette } from "../theme/palette";
+import { ActionMenu } from "../ui/action-menu";
 import { GlassSurface } from "../ui/glass";
 import { Icon } from "../ui/icons";
+import type { MenuItem } from "../ui/menu";
 import { Button, IconButton, Text } from "../ui/primitives";
 
 /** Stands in for a row's state mark while choosing cards, at the same 15 pt, so the list never moves. */
@@ -28,15 +30,16 @@ export function SelectBox({ checked }: { checked: boolean }) {
 }
 
 /**
- * Pinned above the tab bar while choosing cards, as Photos and Mail pin theirs: ✕ to stop, the
- * count, Select all or Clear, and Move to section…, shortened to Move…. library-decks-and-cards.md.
+ * Floats above the tab bar while choosing cards, as Photos and Mail pin theirs: ✕ to stop, the
+ * count, Select all or Clear, and what can be done to the chosen cards in iOS's own menu, so a new
+ * action, such as tags, is one more row. library-decks-and-cards.md.
  */
 export function SelectionToolbar({
   count,
   total,
   onAll,
   onClear,
-  onMove,
+  actions,
   onDone,
 }: {
   count: number;
@@ -44,7 +47,7 @@ export function SelectionToolbar({
   total: number;
   onAll: () => void;
   onClear: () => void;
-  onMove: () => void;
+  actions: MenuItem[] | MenuItem[][];
   onDone: () => void;
 }) {
   const { t } = useLingui();
@@ -87,12 +90,12 @@ export function SelectionToolbar({
           label={all ? t`Clear` : t`Select all`}
           onPress={all ? onClear : onAll}
         />
-        <Button
-          size="sm"
-          variant="primary"
-          label={t`Move…`}
+        <ActionMenu
+          label={t`Actions for the selected cards`}
+          symbol="ellipsis"
+          look="primary"
+          items={actions}
           disabled={count === 0}
-          onPress={onMove}
         />
       </View>
     </GlassSurface>

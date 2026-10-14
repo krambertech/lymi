@@ -46,8 +46,9 @@ export function useDeckAccessoryShown() {
   return DECK_ACCESSORY && !!deckId && due > 0 && hidden;
 }
 
-// iOS 26's floating tab bar and the accessory a deck's review rides in.
-const TAB_BAR = 64;
+// The room iOS keeps for its tab bar over the home indicator's inset, which the floating bar sits in,
+// and the accessory a deck's review rides in.
+const TAB_BAR = 49;
 const ACCESSORY = 56;
 const TABS = /^\/(today|library|explore|you)(\/|$)/;
 

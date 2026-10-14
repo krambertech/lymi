@@ -331,6 +331,7 @@ export const ArchiveCardOutcomeOut = z
 export const ArchiveCardsOut = z
   .object({ results: z.array(ArchiveCardOutcomeOut) })
   .meta({ id: "ArchiveCardsResult" });
+export type ArchiveCardsOut = z.infer<typeof ArchiveCardsOut>;
 
 /** A card write reduced to the card's id and what happened to it. */
 export const TerseCardOutcomeOut = z
@@ -355,3 +356,4 @@ export type TerseCardOutcomeOut = z.infer<typeof TerseCardOutcomeOut>;
 export const TerseCardsOut = z
   .object({ results: z.array(TerseCardOutcomeOut) })
   .meta({ id: "TerseCardsResult" });
+export type TerseCardsOut = z.infer<typeof TerseCardsOut>;

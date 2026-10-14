@@ -1,4 +1,6 @@
 import type {
+  ArchiveCardsOut,
+  CardEditInput,
   CardImageImportInput,
   CardImageOut,
   CardImagePatch,
@@ -7,6 +9,7 @@ import type {
   Direction,
   HookDraftOut,
   ReviewMode,
+  TerseCardsOut,
 } from "@lymi/core";
 import type {
   Card as CardRow,
@@ -124,6 +127,22 @@ export const cardsApi = {
     request<{ ok: true }>(`/api/cards/${id}/archive`, { method: "POST" }),
   restoreCard: (id: string) =>
     request<{ ok: true }>(`/api/cards/${id}/restore`, { method: "POST" }),
+  /** Up to 200 cards at once; each succeeds or fails on its own. */
+  archiveCards: (cardIds: string[]) =>
+    request<ArchiveCardsOut>("/api/cards/archive", {
+      method: "POST",
+      body: JSON.stringify({ cardIds }),
+    }),
+  restoreCards: (cardIds: string[]) =>
+    request<ArchiveCardsOut>("/api/cards/restore", {
+      method: "POST",
+      body: JSON.stringify({ cardIds }),
+    }),
+  editCards: (cards: CardEditInput[]) =>
+    request<TerseCardsOut>("/api/cards/batch?response=terse", {
+      method: "PATCH",
+      body: JSON.stringify({ cards }),
+    }),
   setCardImportant: (id: string, important: boolean) =>
     request<Card>(`/api/cards/${id}/important`, {
       method: "PUT",

@@ -170,6 +170,9 @@ msgstr "{count, plural, one {{sectionName}, # card} other {{sectionName}, # card
 msgid "{count, plural, one {{sectionName}, not open yet, # card} other {{sectionName}, not open yet, # cards}}"
 msgstr "{count, plural, one {{sectionName}, not open yet, # card} other {{sectionName}, not open yet, # cards}}"
 
+msgid "{count, plural, one {# card} other {# cards}}"
+msgstr "{count, plural, one {# card} other {# cards}}"
+
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# review} other {# reviews}}"
 
@@ -357,6 +360,9 @@ msgstr "30 days"
 msgid "90 days"
 msgstr "90 days"
 
+msgid "A card keeps its progress and leaves its section."
+msgstr "A card keeps its progress and leaves its section."
+
 msgid "A connected app"
 msgstr "A connected app"
 
@@ -396,6 +402,9 @@ msgstr "A–Z"
 
 msgid "About this deck"
 msgstr "About this deck"
+
+msgid "Actions for the selected cards"
+msgstr "Actions for the selected cards"
 
 msgid "Activity"
 msgstr "Activity"
@@ -566,6 +575,10 @@ msgstr "Archived “{sectionName}”"
 
 msgid "Archived “{term}”"
 msgstr "Archived “{term}”"
+
+#. placeholder {0}: cards(done.length)
+msgid "Archived {0}"
+msgstr "Archived {0}"
 
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Archived {count, plural, one {# card} other {# cards}} in {deck}"
@@ -808,6 +821,10 @@ msgstr "Couldn’t archive “{name}”."
 msgid "Couldn’t archive “{term}”."
 msgstr "Couldn’t archive “{term}”."
 
+#. placeholder {0}: cards(cardIds.length)
+msgid "Couldn’t archive {0}."
+msgstr "Couldn’t archive {0}."
+
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Couldn’t cancel the invitation. Try again."
 
@@ -873,6 +890,10 @@ msgstr "Couldn’t move “{deckName}”."
 
 msgid "Couldn’t move “{term}”."
 msgstr "Couldn’t move “{term}”."
+
+#. placeholder {0}: cards(cardIds.length)
+msgid "Couldn’t move {0}."
+msgstr "Couldn’t move {0}."
 
 msgid "Couldn’t move {count, plural, one {# card} other {# cards}}."
 msgstr "Couldn’t move {count, plural, one {# card} other {# cards}}."
@@ -1685,6 +1706,12 @@ msgstr "Move {deckName} up"
 msgid "Move down"
 msgstr "Move down"
 
+msgid "Move to deck"
+msgstr "Move to deck"
+
+msgid "Move to section"
+msgstr "Move to section"
+
 msgid "Move to section…"
 msgstr "Move to section…"
 
@@ -1694,14 +1721,15 @@ msgstr "Move to series"
 msgid "Move up"
 msgstr "Move up"
 
-msgid "Move…"
-msgstr "Move…"
-
 msgid "Moved “{deckName}” to {seriesName}"
 msgstr "Moved “{deckName}” to {seriesName}"
 
 msgid "Moved “{term}” to {sectionName}"
 msgstr "Moved “{term}” to {sectionName}"
+
+#. placeholder {0}: cards(done.length)
+msgid "Moved {0} to {deckName}"
+msgstr "Moved {0} to {deckName}"
 
 msgid "Moved {count, plural, one {# card} other {# cards}} to {sectionName}"
 msgstr "Moved {count, plural, one {# card} other {# cards}} to {sectionName}"

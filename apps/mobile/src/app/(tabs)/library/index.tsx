@@ -310,7 +310,7 @@ function confirmDelete(
 
 /** A deck: its name, then its size, language and whose it is; the due count at the end. */
 function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const router = useRouter();
   const language = d.defaultLanguage ? languageName(d.defaultLanguage) : null;
   const size =
@@ -319,9 +319,13 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
   // Watches the cards Sync keeps for each deck, so it follows the warming; disabled, it never fetches.
   const kept = useQuery({ ...deckCardsQuery(d.id), enabled: false }).data;
   const next = useNextDue(kept);
-  const back = d.due === 0 && d.total > 0 && next ? t`Next due ${next}` : null;
+  // With nothing due, when cards come back sits where the count would, so the row keeps two lines.
+  const back =
+    d.due === 0 && d.total > 0 && next
+      ? next.charAt(0).toLocaleUpperCase(i18n.locale) + next.slice(1)
+      : undefined;
   // Whose it is goes last, so a long publisher's name wraps on its own rather than splitting the size.
-  const line = [size, language, d.role === "owner" ? null : t`Shared by ${owner}`, back]
+  const line = [size, language, d.role === "owner" ? null : t`Shared by ${owner}`]
     .filter(Boolean)
     .join(" · ");
   const due = d.due > 0 ? d.due : undefined;
@@ -335,7 +339,9 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
       accessibilityRole="link"
       accessibilityLabel={listRowLabel(
         d.name,
-        due && plural(due, { one: "# card due", other: "# cards due" }),
+        due
+          ? plural(due, { one: "# card due", other: "# cards due" })
+          : next ? t`Next due ${next}` : undefined,
         line,
       )}
       onAccessibilityTap={() => router.navigate(href)}
@@ -351,7 +357,14 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
       <Link href={href} asChild>
         <Link.Trigger>
           <Pressable style={({ pressed }) => ({ transform: [{ scale: pressed ? 0.99 : 1 }] })}>
-            <ListRowFace first={first} title={d.name} line={line} count={due} end="open" />
+            <ListRowFace
+              first={first}
+              title={d.name}
+              line={line}
+              count={due}
+              aside={back}
+              end="open"
+            />
           </Pressable>
         </Link.Trigger>
         <Link.Preview />

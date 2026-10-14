@@ -11,6 +11,8 @@ export interface ListRowFaceProps {
   /** Under the title; left out where the section already says what the count is. */
   line?: string | undefined;
   count?: number | undefined;
+  /** In the count's place when there is none, such as when a deck is next due: quiet, one line. */
+  aside?: string | undefined;
   end: "open" | "add" | "none";
 }
 
@@ -19,7 +21,7 @@ export interface ListRowFaceProps {
  * many at the end, then a chevron when it opens; a row that adds shows a round plus where its count
  * would be. A row with no chevron keeps the slot so every count ends on the same line.
  */
-export function ListRowFace({ first, title, mark, line, count, end }: ListRowFaceProps) {
+export function ListRowFace({ first, title, mark, line, count, aside, end }: ListRowFaceProps) {
   const p = usePalette();
   return (
     <View
@@ -40,6 +42,11 @@ export function ListRowFace({ first, title, mark, line, count, end }: ListRowFac
           style={{ fontVariant: ["tabular-nums"] }}
         >
           {count}
+        </Text>
+      )}
+      {count === undefined && aside && end !== "add" && (
+        <Text className="text-base text-muted" numberOfLines={1}>
+          {aside}
         </Text>
       )}
       {end === "add" && (

@@ -518,6 +518,9 @@ msgstr "Любой, у кого есть эта ссылка, может при�
 msgid "API keys"
 msgstr "Ключи API"
 
+msgid "App language, and the language AI uses for meanings."
+msgstr "Язык приложения и язык, на котором AI пишет значения."
+
 msgctxt "language"
 msgid "Arabic"
 msgstr "Арабский"
@@ -889,6 +892,9 @@ msgstr "Не удалось сохранить цель. Попробуй ещё
 
 msgid "Couldn’t save the hook."
 msgstr "Не удалось сохранить зацепку."
+
+msgid "Couldn’t save the language. Check your connection and try again."
+msgstr "Не удалось сохранить язык. Проверь соединение и попробуй снова."
 
 msgid "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
 msgstr "Не удалось сохранить оценку для «{term}». Этой карточки больше нет в твоих колодах."
@@ -1898,9 +1904,6 @@ msgstr "Открыть в веб-версии"
 msgid "Open Settings"
 msgstr "Открыть Настройки"
 
-msgid "Open Settings on the web"
-msgstr "Открыть настройки в веб-версии"
-
 msgid "Options for {email}"
 msgstr "Действия для {email}"
 
@@ -2256,12 +2259,6 @@ msgstr "Сербский"
 
 msgid "Series"
 msgstr "Серия"
-
-msgid "Settings"
-msgstr "Настройки"
-
-msgid "Settings is coming to the phone"
-msgstr "Настройки скоро появятся на телефоне"
 
 msgid "Share"
 msgstr "Поделиться"
@@ -2663,9 +2660,6 @@ msgstr "Отменить восстановление {title}"
 
 msgid "Unmark important"
 msgstr "Снять отметку «важная»"
-
-msgid "Until then, change your settings on the web."
-msgstr "А пока изменить настройки можно в веб-версии."
 
 msgid "Update"
 msgstr "Обновить"

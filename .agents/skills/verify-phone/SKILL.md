@@ -18,6 +18,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Add a card | [add-card.md](features/add-card.md) |
 | Library and the deck page | [library.md](features/library.md) |
 | Insights | [insights.md](features/insights.md) |
+| Language | [language.md](features/language.md) |
 
 ## Launch
 
@@ -27,7 +28,7 @@ You need Xcode with an iOS 26 runtime, Maestro, and Java 17 or later (the runner
 node .agents/skills/verify-phone/scripts/stack.mjs start
 ```
 
-It writes `apps/web/.dev.vars` from the example when there is none, migrates the local D1, starts this worktree's Worker on 5241 or the next free port and Metro on 8197 or the next free port, with `EXPO_PUBLIC_API_URL` pointing Metro at that Worker. It then creates this worktree's own Simulator, **Lymi verify** followed by a short hash of the worktree's path, if it does not exist, boots it by its UDID, and runs `pnpm dev-client` to install the shared cached dev client ([local development](../../../docs/local-dev.md#run-the-phone-app-in-a-simulator)). Only a change to native code builds; otherwise the install takes seconds, though it waits while another worktree's native build holds the lock. Ports, UDID and process groups go to `apps/mobile/.expo/verify-phone.json`, and the logs beside it.
+It writes `apps/web/.dev.vars` from the example when there is none, migrates the local D1, and starts this worktree's Worker on the port `stim ports get api` reserves for it. It then runs [Stim](https://stim.appandflow.com): `stim start` starts Metro with `EXPO_PUBLIC_API_URL` pointing at that Worker, and `stim ios` creates this worktree's own Simulator, `stim-<worktree>-mobile`, boots it and installs the shared cached dev client ([local development](../../../docs/local-dev.md#run-the-phone-app-in-a-simulator)). Only a change to native code builds; otherwise the install takes seconds, though it waits while another worktree's native build of the same fingerprint runs. The Worker's port and process group, Metro's port and the Simulator's UDID go to `apps/mobile/.expo/verify-phone.json`, and the Worker's log beside it.
 
 Never drive another worktree's Simulator, Metro or Worker, and never address a Simulator as `booted`: every command here takes the UDID.
 
@@ -37,7 +38,7 @@ Never drive another worktree's Simulator, Metro or Worker, and never address a S
 node .agents/skills/verify-phone/scripts/doctor.mjs --persona learner
 ```
 
-One read-only check that the stack is worth driving. The Worker must answer `/api/health` as `lymi-product` and the process on its port must run from this worktree's `apps/web`; Metro must report itself running from this worktree's `apps/mobile`; the Simulator with the recorded UDID must be this worktree's **Lymi verify** Simulator, booted, with `app.lymi` installed. With `--persona`, `/api/dev/state` must report that persona. The runner calls the doctor with its own session after resetting the persona and stops before driving when any check fails.
+One read-only check that the stack is worth driving. The Worker must answer `/api/health` as `lymi-product` and the process on its port must run from this worktree's `apps/web`; Metro must report itself running from this worktree's `apps/mobile`; the Simulator with the recorded UDID must have the name `start` recorded, be booted, with `app.lymi` installed. With `--persona`, `/api/dev/state` must report that persona. The runner calls the doctor with its own session after resetting the persona and stops before driving when any check fails.
 
 ## Drive
 
@@ -51,7 +52,7 @@ Find controls by the text and accessibility labels a VoiceOver user hears, never
 
 ## Evidence
 
-Every flow keeps a screenshot at each `takeScreenshot`, numbered in order, plus the persona's state before (`00-before.state.json`), and after it the screen (`99-end.png`), Maestro's view hierarchy (`99-end.hierarchy.json`) and the stored state the check read (`99-end.state.json`). `maestro.log` holds every command, and Maestro's own debug folder holds its per-command screenshots when a command fails. `verdict.md` beside them lists the doctor's result, the values the flow was given, each command as Maestro reported it, the stored-state check, and every error Metro logged while the flow ran. A run with Metro errors is not a clean pass even when the flow passed; say what they were.
+Every flow keeps a screenshot at each `takeScreenshot`, numbered in order, plus the persona's state before (`00-before.state.json`), and after it the screen (`99-end.png`), Maestro's view hierarchy (`99-end.hierarchy.json`) and the stored state the check read (`99-end.state.json`). `maestro.log` holds every command, and Maestro's own debug folder holds its per-command screenshots when a command fails. `verdict.md` beside them lists the doctor's result, the values the flow was given, each command as Maestro reported it, the stored-state check, and every error Metro or the app logged while the flow ran, read from Stim's log timeline for this worktree. A run with Metro errors is not a clean pass even when the flow passed; say what they were.
 
 Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-phone-<sha>/` when the project folder exists, else to the temp directory, so it outlives the worktree and the Simulator. Name the folder in the pull request and attach the screenshots a reviewer needs. Persona data is local and seeded, so the files carry no private content; never drive a real account to produce them.
 
@@ -61,4 +62,4 @@ Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-phone-<sha>/` whe
 node .agents/skills/verify-phone/scripts/stack.mjs stop
 ```
 
-It ends only the Worker and Metro process groups `start` recorded and shuts this worktree's Simulator down, since a booted Simulator holds about 2 GB. Stop as soon as you stop looking at the app: when the pull request waits on CI or review, and when you are done. Keep the evidence. A failing flow is a finding to report or fix, never a reason to delete its files.
+It ends the Worker process group `start` recorded, then runs `stim stop`, which stops this worktree's Metro and shuts its Simulator down, since a booted Simulator holds about 2 GB. Stop as soon as you stop looking at the app: when the pull request waits on CI or review, and when you are done. Keep the evidence. A failing flow is a finding to report or fix, never a reason to delete its files.

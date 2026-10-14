@@ -37,7 +37,9 @@ function Welcome() {
   const { deck } = Route.useSearch();
   const qc = useQueryClient();
   const add = useAddCard();
-  const settings = useQuery(settingsQuery);
+  // The persisted cache can predate finishing Welcome, so this mount asks the server again.
+  const [mountedAt] = useState(Date.now);
+  const settings = useQuery({ ...settingsQuery, refetchOnMount: "always" });
   const explore = useQuery(exploreQuery);
   const decks = useQuery({ ...decksQuery, enabled: deck !== undefined });
   const joined = deck ? decks.data?.find((d) => d.id === deck) : undefined;
@@ -131,6 +133,9 @@ function Welcome() {
   if (settings.data?.onboardedAt && !save.isPending && !save.isSuccess) {
     return <Navigate to="/today" replace />;
   }
+  // The questions wait for that answer, timed because a restored copy keeps its old update count.
+  const answered = settings.dataUpdatedAt >= mountedAt || settings.isError;
+  if (!answered && settings.fetchStatus !== "paused") return null;
   // The view picks its questions once, so it waits for the deck; one no longer in Library gets them all.
   if (deck && !joined && (decks.isPending || decks.isFetching)) return null;
   return (

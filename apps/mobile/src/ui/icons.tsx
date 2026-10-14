@@ -175,6 +175,7 @@ const ICONS = {
   grip: GripVertical,
   remove: CircleMinus,
   theme: SunMoon,
+  language: Languages,
   import: Import,
   export: Download,
   keys: KeyRound,

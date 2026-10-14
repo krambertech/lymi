@@ -1,5 +1,5 @@
 import { createAccountThroughDevForm, startAsTestLearner } from "./auth";
-import { expect, newTestContext, type TestInfo, test } from "./test";
+import { expect, newTestContext, persistedCache, type TestInfo, test } from "./test";
 
 /** An email on no allowlist and not a local persona, so only the published deck can admit it. */
 function stranger(testInfo: TestInfo, who: string) {
@@ -68,6 +68,8 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
     await expect(visitor).toHaveURL(new RegExp(`/welcome\\?deck=${deckId}$`));
     await expect(visitor.getByRole("heading", { name: "Welcome to Lymi" })).toBeVisible();
     await expect(visitor.getByRole("heading", { name: deckName, exact: true })).toBeVisible();
+    // Kept before the goal is saved, so a quick return to Welcome below can restore this copy.
+    await expect.poll(() => persistedCache(visitor)).toContain('"onboardedAt":null');
     await visitor.getByRole("button", { name: "Continue", exact: true }).click();
     await expect(visitor.getByRole("heading", { name: "How much time a day?" })).toBeVisible();
     await visitor.getByRole("radio", { name: /Light/ }).click();

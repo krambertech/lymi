@@ -510,6 +510,9 @@ msgstr "Arabic"
 msgid "Archive"
 msgstr "Archive"
 
+msgid "Archive {name}"
+msgstr "Archive {name}"
+
 msgid "Archive card"
 msgstr "Archive card"
 
@@ -1005,6 +1008,9 @@ msgstr "Done"
 
 msgid "Drafting a hook…"
 msgstr "Drafting a hook…"
+
+msgid "Drag to reorder"
+msgstr "Drag to reorder"
 
 msgid "Driving"
 msgstr "Driving"
@@ -2012,6 +2018,9 @@ msgstr "Removed {name} from {deck}"
 
 msgid "Rename"
 msgstr "Rename"
+
+msgid "Rename {name}"
+msgstr "Rename {name}"
 
 msgid "Rename section"
 msgstr "Rename section"

@@ -510,6 +510,9 @@ msgstr "Арабська"
 msgid "Archive"
 msgstr ""
 
+msgid "Archive {name}"
+msgstr ""
+
 msgid "Archive card"
 msgstr ""
 
@@ -1005,6 +1008,9 @@ msgstr "Готово"
 
 msgid "Drafting a hook…"
 msgstr "Готуємо зачіпку…"
+
+msgid "Drag to reorder"
+msgstr ""
 
 msgid "Driving"
 msgstr "Водіння"
@@ -2011,6 +2017,9 @@ msgid "Removed {name} from {deck}"
 msgstr "{name} вилучено з колоди «{deck}»"
 
 msgid "Rename"
+msgstr ""
+
+msgid "Rename {name}"
 msgstr ""
 
 msgid "Rename section"

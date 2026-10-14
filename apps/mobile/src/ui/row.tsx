@@ -36,6 +36,8 @@ interface RowFaceProps {
    * app for the web, nothing when it acts in place.
    */
   end?: "open" | "web" | "none";
+  /** The value on its own line under the label, for a value too long to sit beside it. */
+  stacked?: boolean;
   /** A control that acts in place at the row's end, such as a switch or a time; it takes the chevron's place. */
   control?: ReactNode;
   destructive?: boolean;
@@ -47,12 +49,14 @@ export function RowFace({
   icon,
   value,
   end = "open",
+  stacked: under = false,
   control,
   destructive = false,
 }: RowFaceProps) {
   const p = usePalette();
   // At the accessibility sizes the value moves under the label, as iOS Settings does, so neither breaks mid-word.
-  const stacked = useWindowDimensions().fontScale >= ACCESSIBILITY_SIZES;
+  const large = useWindowDimensions().fontScale >= ACCESSIBILITY_SIZES;
+  const stacked = under || large;
   const name = (
     <Text className="text-md" style={{ color: destructive ? p.danger : p.text }}>
       {label}

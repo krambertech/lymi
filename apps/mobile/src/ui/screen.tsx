@@ -49,6 +49,8 @@ interface Props {
   ground?: { colour: string; shape: "fade" | "pool" };
   /** The bar's actions arrive with the bar's title, as the header's own button scrolls away. */
   actionsArrive?: boolean;
+  /** A sentence under a page's large title that says what the page is for, held close to the title. */
+  description?: string;
   /** Called as the end of a long page comes near, so a list loads on as it is read. */
   onEndReached?: () => void;
   /** Told once each time the page scrolls past this content offset, or back above it. */
@@ -79,6 +81,7 @@ export function Screen({
   header,
   ground,
   actionsArrive = false,
+  description,
   onEndReached,
   past,
   children,
@@ -222,6 +225,8 @@ export function Screen({
             accessibilityLabel={title}
           />
         )}
+        {/* Pulled up from the page's 28 pt gap to 8 pt, so it reads as the title's own line. */}
+        {description && <Text className="-mt-5 text-base text-text-2">{description}</Text>}
         {children}
       </Animated.ScrollView>
       <Animated.View
@@ -432,6 +437,31 @@ export function BarButton({
           colour={amber ? p["amber-ink"] : p.text}
           strokeWidth={amber ? 2.25 : 2}
         />
+      </GlassSurface>
+    </Press>
+  );
+}
+
+/** A word in the bar, such as Edit and Done, as glass of the icon buttons' height. */
+export function BarText({
+  label,
+  strong = false,
+  onPress,
+}: {
+  label: string;
+  /** Done, which ends a mode: set heavier, as iOS sets it. */
+  strong?: boolean;
+  onPress: () => void;
+}) {
+  return (
+    <Press onPress={onPress} accessibilityRole="button">
+      <GlassSurface
+        tint="room"
+        style={{ height: 40, borderRadius: 20, paddingHorizontal: 16, justifyContent: "center" }}
+      >
+        <Text className={`text-md text-text ${strong ? "font-semibold" : "font-medium"}`}>
+          {label}
+        </Text>
       </GlassSurface>
     </Press>
   );

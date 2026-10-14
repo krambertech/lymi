@@ -9,21 +9,21 @@ import { type Href, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { TextInput, View } from "react-native";
 import { useDecks, useSections } from "../../../data/queries";
+import { SectionPath } from "../../../sections/section-path";
 import { usePalette } from "../../../theme/palette";
 import { inputCap } from "../../../theme/type";
-import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
 import { Button, Plate, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
-import { Screen } from "../../../ui/screen";
+import { BarText, Screen } from "../../../ui/screen";
 import { Sheet, SheetError, SheetGroup, SheetNote, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { toast } from "../../../ui/toast-host";
 
 /**
- * A deck's sections, for its owner, as the web's deck settings arrange them: in order, moved with
- * Move up and Move down rather than dragged, since the order is what every learner opens them in.
- * New, rename, archive with Undo, restore, and how sections open.
+ * A deck's sections, for its owner, drawn as the path every learner walks. Edit in the bar shows
+ * handles to drag, so the order never changes by a stray drag; at rest a row swipes open on Rename
+ * and Archive. New section is the path's next stop. Archive has Undo; how sections open sits below.
  */
 export default function DeckSections() {
   const { t } = useLingui();
@@ -35,6 +35,7 @@ export default function DeckSections() {
   const [naming, setNaming] = useState<{ section?: Section } | null>(null);
   const [showArchived, setShowArchived] = useState(false);
   const [choosingOrder, setChoosingOrder] = useState(false);
+  const [editing, setEditing] = useState(false);
   const archived = useQuery({ ...archivedSectionsQuery(id), enabled: !!id });
   const archivedCount = archived.data?.sections.length ?? 0;
   // Restoring the last archived section leaves nothing to show, so its sheet goes too.
@@ -116,17 +117,6 @@ export default function DeckSections() {
     ...handlers,
   });
 
-  const move = (section: Section, by: -1 | 1) => {
-    // One reorder at a time, so the server never receives two orders that cross.
-    if (reorder.isPending) return;
-    const ids = sections.map((s) => s.id);
-    const at = ids.indexOf(section.id);
-    const to = at + by;
-    if (to < 0 || to >= ids.length) return;
-    [ids[at], ids[to]] = [ids[to] as string, ids[at] as string];
-    reorder.mutate(ids);
-  };
-
   const orders: { value: SectionProgression; label: string; short: string; line: string }[] = [
     {
       value: "automatic",
@@ -162,10 +152,20 @@ export default function DeckSections() {
   }
 
   return (
-    <Screen title={t`Sections`} back={back}>
-      <Text className="px-1 text-base text-text-2">
-        {t`Parts of this deck, such as one per lesson. Everyone studying it sees them in this order.`}
-      </Text>
+    <Screen
+      title={t`Sections`}
+      back={back}
+      description={t`Parts of this deck, such as one per lesson. Everyone studying it sees them in this order.`}
+      actions={
+        sections.length > 1 && (
+          <BarText
+            label={editing ? t`Done` : t`Edit`}
+            strong={editing}
+            onPress={() => setEditing(!editing)}
+          />
+        )
+      }
+    >
       {sections.length === 0 ? (
         <Plate>
           <EmptyState
@@ -174,80 +174,30 @@ export default function DeckSections() {
             icon="section"
             title={t`No sections yet`}
             body={t`Make one per lesson, then move cards into it from the deck.`}
+            action={{ label: t`New section`, onPress: () => setNaming({}) }}
           />
         </Plate>
       ) : (
-        <Plate className="overflow-hidden">
-          {sections.map((section, at) => {
-            const sectionName = section.name;
-            return (
-              <View
-                key={section.id}
-                className={`min-h-14 flex-row items-center gap-3 py-2 pe-1.5 ps-4 ${at > 0 ? "border-t border-edge" : ""}`}
-              >
-                <Text className="w-5 text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
-                  {at + 1}
-                </Text>
-                <View className="flex-1">
-                  <Text className="text-md font-medium text-text" numberOfLines={2}>
-                    {sectionName}
-                  </Text>
-                  <Text className="text-sm text-muted">
-                    {plural(section.total, { one: "# card", other: "# cards" })}
-                  </Text>
-                </View>
-                <ActionMenu
-                  items={[
-                    [
-                      {
-                        label: t`Rename`,
-                        icon: "edit",
-                        onSelect: () => setNaming({ section }),
-                      },
-                      ...(at > 0 && !reorder.isPending
-                        ? [
-                            {
-                              label: t`Move up`,
-                              icon: "moveUp" as const,
-                              onSelect: () => move(section, -1),
-                            },
-                          ]
-                        : []),
-                      ...(at < sections.length - 1 && !reorder.isPending
-                        ? [
-                            {
-                              label: t`Move down`,
-                              icon: "moveDown" as const,
-                              onSelect: () => move(section, 1),
-                            },
-                          ]
-                        : []),
-                    ],
-                    [
-                      {
-                        label: t`Archive`,
-                        icon: "archive",
-                        destructive: true,
-                        onSelect: () => archive.mutate(section),
-                      },
-                    ],
-                  ]}
-                  label={t`Options for ${sectionName}`}
-                  symbol="ellipsis"
-                  look="row"
-                />
-              </View>
-            );
-          })}
-        </Plate>
+        <SectionPath
+          sections={sections}
+          editing={editing && sections.length > 1}
+          inOrder={deck?.sectionProgression !== "open"}
+          onNew={() => setNaming({})}
+          onRename={(section) => setNaming({ section })}
+          onArchive={(section) => archive.mutate(section)}
+          onReorder={(ids) => {
+            // One reorder at a time, so the server never receives two orders that cross.
+            if (!reorder.isPending) reorder.mutate(ids);
+          }}
+        />
       )}
-      <Button label={t`New section`} icon="plus" onPress={() => setNaming({})} />
       <Rows>
         {sections.length > 0 && (
           <Row
             icon="section"
             label={t`How sections open`}
-            value={order?.short}
+            value={order?.label}
+            stacked
             onPress={() => setChoosingOrder(true)}
           />
         )}

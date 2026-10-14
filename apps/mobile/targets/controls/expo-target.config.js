@@ -1,6 +1,6 @@
 // Add a word and Review as controls for Control Center, the Lock Screen and the Action button
 // (#546). `_shared` holds the intents, which the app compiles too, since a control's intent
-// runs in the app; Siri, Shortcuts and Spotlight find them there.
+// runs in the app; Siri, Shortcuts and Spotlight's compile only there (LYMI_CONTROLS).
 const path = require("node:path");
 
 const TOKENS = path.join(__dirname, "../../../../packages/design/src/tokens.gen.ts");

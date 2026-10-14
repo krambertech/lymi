@@ -1,78 +1,43 @@
 import AppIntents
 import Foundation
 
-// Each intent opens the app on a link, so a learner who is signed out lands on sign-in and then
-// continues. The controls run their own, hidden from Shortcuts, so analytics can tell them apart.
+#if !LYMI_CONTROLS
+  import UIKit
+#endif
 
-@available(iOS 18.0, *)
-struct AddWordIntent: AppIntent {
-  static let title: LocalizedStringResource = "Add a word"
-  static let description = IntentDescription(
-    "Opens Add a word in Lymi, with the term filled in when you give one.")
-  static let openAppWhenRun = true
+// The controls' intents, which the app compiles too because a control's intent runs in the app.
+// They are hidden from Shortcuts, so analytics can tell a control from Siri and Shortcuts.
 
-  @Parameter(title: "Term")
-  var term: String?
-
-  static var parameterSummary: some ParameterSummary {
-    Summary("Add \(\.$term) to Lymi")
-  }
-
-  init() {}
-
-  @MainActor
-  func perform() async throws -> some IntentResult & OpensIntent {
-    .result(opensIntent: OpenURLIntent(EntryLink.url("capture", from: "shortcut", term: term)))
-  }
+/// Opens one of the app's own links from inside it, so a learner who is signed out lands on sign-in
+/// and then continues. An intent that opens the app runs there, even
+/// a control's; `OpenURLIntent` cannot open the app's own scheme.
+@MainActor
+func openInApp(_ url: URL) async {
+  #if !LYMI_CONTROLS
+    await UIApplication.shared.open(url)
+  #endif
 }
 
-@available(iOS 18.0, *)
-struct ReviewIntent: AppIntent {
-  static let title: LocalizedStringResource = "Review"
-  static let description = IntentDescription("Opens a review in Lymi.")
-  static let openAppWhenRun = true
-
-  @MainActor
-  func perform() async throws -> some IntentResult & OpensIntent {
-    .result(opensIntent: OpenURLIntent(EntryLink.url("review", from: "shortcut")))
-  }
-}
-
-/// Answers from what the app last wrote, without opening it.
-@available(iOS 18.0, *)
-struct CardsDueIntent: AppIntent {
-  static let title: LocalizedStringResource = "Cards due"
-  static let description = IntentDescription(
-    "Says how many cards are due and how today’s goal stands, without opening Lymi.")
-
-  func perform() async throws -> some IntentResult & ReturnsValue<Int> & ProvidesDialog {
-    guard let line = ControlsState.read()?.line else {
-      return .result(value: 0, dialog: "Open Lymi to see what’s due.")
-    }
-    return .result(value: line.due, dialog: "\(line.spoken)")
-  }
-}
-
-@available(iOS 18.0, *)
 struct AddWordControlIntent: AppIntent {
   static let title: LocalizedStringResource = "Add a word"
   static let isDiscoverable = false
   static let openAppWhenRun = true
 
   @MainActor
-  func perform() async throws -> some IntentResult & OpensIntent {
-    .result(opensIntent: OpenURLIntent(EntryLink.url("capture", from: "control")))
+  func perform() async throws -> some IntentResult {
+    await openInApp(EntryLink.url("capture", from: "control"))
+    return .result()
   }
 }
 
-@available(iOS 18.0, *)
 struct ReviewControlIntent: AppIntent {
   static let title: LocalizedStringResource = "Review"
   static let isDiscoverable = false
   static let openAppWhenRun = true
 
   @MainActor
-  func perform() async throws -> some IntentResult & OpensIntent {
-    .result(opensIntent: OpenURLIntent(EntryLink.url("review", from: "control")))
+  func perform() async throws -> some IntentResult {
+    await openInApp(EntryLink.url("review", from: "control"))
+    return .result()
   }
 }

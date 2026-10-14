@@ -17,4 +17,5 @@ Add a word opens with the term filled in and the keyboard up, Review opens on th
 ## Gotchas
 
 - The controls, the intents and the quick actions themselves need a hand in the Simulator: add a control from Control Center's edit mode, run an intent from the Shortcuts app, and long-press the icon on the Home Screen. Siri does not run in the Simulator.
+- App Shortcuts fail with "Unable to run App Shortcut" on every iOS 26.5 Simulator, Apple's own sample included; run them on an iOS 18 Simulator or a device. The controls run there fine.
 - A control's value is what the app last wrote to the app group, so it changes only after the app has synced since the review.

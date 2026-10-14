@@ -23,6 +23,8 @@ import { moveBack } from "../../../data/move-undo";
 import { useNextDue } from "../../../data/next-due";
 import { useDeckCards, useDecks, useSections, useSeriesList } from "../../../data/queries";
 import { useMoveNotice, useSeriesActions } from "../../../data/series";
+import { useMoveToSection } from "../../../deck/move-to-section";
+import { SelectBox, SelectionToolbar } from "../../../deck/selection";
 import {
   ReadyNote,
   SectionHeading,
@@ -81,6 +83,21 @@ export default function Deck() {
   const sectionStart = useStartSection(id, sections);
   const exits = useDeckExits(deck);
   const [moving, setMoving] = useState(false);
+  // The cards chosen with Select cards, or null when the list is not choosing.
+  const [selected, setSelected] = useState<ReadonlySet<string> | null>(null);
+  const moveToSection = useMoveToSection(id);
+  const selection = owner && selected ? selected : null;
+  const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
+  const toggleSelected = useCallback(
+    (cardId: string) =>
+      setSelected((prev) => {
+        if (!prev) return prev;
+        const next = new Set(prev);
+        if (!next.delete(cardId)) next.add(cardId);
+        return next;
+      }),
+    [],
+  );
   // Where Review ends on the page; past it, under the bar, the tab bar's accessory takes over.
   const [reviewEnd, setReviewEnd] = useState<number | null>(null);
   const insets = useSafeAreaInsets();
@@ -133,6 +150,16 @@ export default function Deck() {
                           label: t`Move to series`,
                           icon: "series" as const,
                           onSelect: () => setMoving(true),
+                        },
+                      ]
+                    : []),
+                  // Moving cards needs a section to move them to.
+                  ...(owner && moveToSection.canMove && rows.length > 0 && !selection
+                    ? [
+                        {
+                          label: t`Select cards`,
+                          icon: "check" as const,
+                          onSelect: () => setSelected(new Set()),
                         },
                       ]
                     : []),
@@ -227,15 +254,26 @@ export default function Deck() {
             {deck.due > 0 && <ReviewButton deck={deck} />}
           </View>
           <View className="gap-6">
-            <Tools
-              sections={sections}
-              filters={filters}
-              setFilters={setFilters}
-              count={(f) => filterRows(rows, f, "", Date.now(), sections).length}
-              total={rows.length}
-              sort={sort}
-              setSort={setSort}
-            />
+            {selection ? (
+              <SelectionToolbar
+                count={selection.size}
+                total={ordered.length}
+                onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
+                onClear={() => setSelected(new Set())}
+                onMove={() => moveToSection.open([...selection], () => setSelected(null))}
+                onDone={() => setSelected(null)}
+              />
+            ) : (
+              <Tools
+                sections={sections}
+                filters={filters}
+                setFilters={setFilters}
+                count={(f) => filterRows(rows, f, "", Date.now(), sections).length}
+                total={rows.length}
+                sort={sort}
+                setSort={setSort}
+              />
+            )}
             {groups.length === 0 ? (
               <Plate>
                 <EmptyState
@@ -254,6 +292,7 @@ export default function Deck() {
                   hereId={progress?.currentId ?? null}
                   starting={sectionStart.starting}
                   onStart={sectionStart.start}
+                  selection={selection ? { ids: selection, onToggle: toggleSelected } : undefined}
                 />
               ))
             )}
@@ -261,6 +300,7 @@ export default function Deck() {
         </>
       )}
       {deck && owner && <MoveToSeries deck={deck} open={moving} onOpenChange={setMoving} />}
+      {owner && moveToSection.sheet}
     </Screen>
   );
 }
@@ -565,6 +605,7 @@ function Group({
   hereId,
   starting,
   onStart,
+  selection,
 }: {
   group: DeckGroup;
   deckId: string;
@@ -572,6 +613,8 @@ function Group({
   hereId: string | null;
   starting: string | undefined;
   onStart: (section: Section) => void;
+  /** Set while the list is choosing cards. */
+  selection?: { ids: ReadonlySet<string>; onToggle: (cardId: string) => void } | undefined;
 }) {
   const { t, i18n } = useLingui();
   const title =
@@ -614,7 +657,13 @@ function Group({
         className={`overflow-hidden ${section && section.status !== "open" ? "opacity-70" : ""}`}
       >
         {g.rows.map((row, i) => (
-          <WordRow key={row.card.id} row={row} first={i === 0} />
+          <WordRow
+            key={row.card.id}
+            row={row}
+            first={i === 0}
+            selected={selection?.ids.has(row.card.id)}
+            onToggle={selection?.onToggle}
+          />
         ))}
       </Plate>
     </View>
@@ -623,24 +672,43 @@ function Group({
 
 /**
  * A word as a glossary reads it: the state's mark, the term with its forms quieter, and the meaning
- * under it, at most three lines of term and two of meaning. The open card shows the rest.
+ * under it, at most three lines of term and two of meaning. The open card shows the rest. While the
+ * list is choosing cards, the mark is a checkbox and a tap chooses rather than opens.
  */
-function WordRow({ row, first }: { row: DeckRow; first: boolean }) {
+function WordRow({
+  row,
+  first,
+  selected,
+  onToggle,
+}: {
+  row: DeckRow;
+  first: boolean;
+  /** Undefined unless the list is choosing cards. */
+  selected?: boolean | undefined;
+  onToggle?: ((cardId: string) => void) | undefined;
+}) {
   const { t, i18n } = useLingui();
   const p = usePalette();
   const router = useRouter();
   const state = stateKey(row.state?.state);
   const { word, forms } = splitForms(row.card.term);
+  const selecting = selected !== undefined;
   return (
     <Press
       scale={0.99}
-      onPress={() => router.push(`/library/card/${row.card.id}?deck=${row.card.deckId}` as Href)}
-      accessibilityRole="link"
+      onPress={() =>
+        selecting
+          ? onToggle?.(row.card.id)
+          : router.push(`/library/card/${row.card.id}?deck=${row.card.deckId}` as Href)
+      }
+      accessibilityRole={selecting ? "checkbox" : "link"}
+      accessibilityState={selecting ? { checked: selected } : undefined}
       accessibilityLabel={`${row.card.term}, ${row.card.meaning ?? ""}, ${i18n._(stateMarks[state].label)}`}
       className={`flex-row gap-3 py-3.5 ps-4 pe-5 ${first ? "" : "border-t border-edge"}`}
+      style={selected ? { backgroundColor: p.hover } : undefined}
     >
       <View className="pt-[5px]">
-        <StateIcon state={state} size={15} />
+        {selecting ? <SelectBox checked={selected} /> : <StateIcon state={state} size={15} />}
       </View>
       <View className="flex-1 gap-0.5">
         <Text className="text-md font-medium text-text" numberOfLines={3}>

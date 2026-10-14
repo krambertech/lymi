@@ -160,6 +160,9 @@ msgstr "{cards, plural, one {# карточка} few {# карточки} many {
 msgid "{cards} · {sections}"
 msgstr "{cards} · {sections}"
 
+msgid "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
+msgstr "{count, plural, =0 {Выбрать карточки} one {Выбрано: #} few {Выбрано: #} many {Выбрано: #} other {Выбрано: #}}"
+
 msgid "{count, plural, one {{sectionName}, # card} other {{sectionName}, # cards}}"
 msgstr ""
 
@@ -168,6 +171,9 @@ msgstr ""
 
 msgid "{count, plural, one {# review} other {# reviews}}"
 msgstr "{count, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
+
+msgid "{count, plural, one {Move # card to} other {Move # cards to}}"
+msgstr "{count, plural, one {Переместить # карточку в} few {Переместить # карточки в} many {Переместить # карточек в} other {Переместить # карточки в}}"
 
 msgid "{current, plural, one {day in a row} other {days in a row}}"
 msgstr "{current, plural, one {день подряд} few {дня подряд} many {дней подряд} other {дня подряд}}"
@@ -706,6 +712,9 @@ msgstr "Выбрать из фото"
 msgid "Choose photo"
 msgstr "Выбрать фото"
 
+msgid "Choose the language"
+msgstr ""
+
 msgid "Choose the language you’re learning."
 msgstr ""
 
@@ -714,6 +723,9 @@ msgstr ""
 
 msgid "Citizenship"
 msgstr "Гражданство"
+
+msgid "Clear"
+msgstr "Сбросить"
 
 msgid "Clear search"
 msgstr "Очистить поиск"
@@ -841,6 +853,12 @@ msgstr ""
 msgid "Couldn’t move “{deckName}”."
 msgstr ""
 
+msgid "Couldn’t move “{term}”."
+msgstr "Не удалось переместить «{term}»."
+
+msgid "Couldn’t move {count, plural, one {# card} other {# cards}}."
+msgstr "Не удалось переместить {count, plural, one {# карточку} few {# карточки} many {# карточек} other {# карточки}}."
+
 msgid "Couldn’t open this deck"
 msgstr "Не удалось открыть эту колоду"
 
@@ -940,6 +958,9 @@ msgstr "Чешский"
 msgctxt "deck tag"
 msgid "Czech citizenship test"
 msgstr "Экзамен на гражданство Чехии"
+
+msgid "Daily goal"
+msgstr ""
 
 msgid "Daily goal reached"
 msgstr "Дневная цель достигнута"
@@ -1317,6 +1338,9 @@ msgstr "Как это звучит"
 msgid "How it’s asked"
 msgstr "Как спрашивать"
 
+msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
+msgstr ""
+
 msgid "How sections open"
 msgstr ""
 
@@ -1628,6 +1652,9 @@ msgstr "Похожие колоды"
 msgid "More than {0}"
 msgstr "Больше {0}"
 
+msgid "Move “{term}” to"
+msgstr "Переместить «{term}» в"
+
 msgid "Move {deckName} down"
 msgstr "Переместить «{deckName}» ниже"
 
@@ -1637,14 +1664,26 @@ msgstr "Переместить «{deckName}» выше"
 msgid "Move down"
 msgstr "Ниже"
 
+msgid "Move to section…"
+msgstr "Переместить в раздел…"
+
 msgid "Move to series"
 msgstr "Перенести в серию"
 
 msgid "Move up"
 msgstr "Выше"
 
+msgid "Move…"
+msgstr "Переместить…"
+
 msgid "Moved “{deckName}” to {seriesName}"
 msgstr "«{deckName}» перенесена в «{seriesName}»"
+
+msgid "Moved “{term}” to {sectionName}"
+msgstr "Карточка «{term}» перемещена в «{sectionName}»"
+
+msgid "Moved {count, plural, one {# card} other {# cards}} to {sectionName}"
+msgstr "В «{sectionName}» {count, plural, one {перемещена # карточка} few {перемещены # карточки} many {перемещено # карточек} other {перемещено # карточки}}"
 
 msgid "Moved to {deck}, the deck for this language"
 msgstr ""
@@ -1654,6 +1693,12 @@ msgstr "Перенесено в другую колоду"
 
 msgid "Moves from {elsewhere}"
 msgstr "Перейдёт из серии «{elsewhere}»"
+
+msgid "Moving a card keeps its progress."
+msgstr "При перемещении прогресс карточки сохраняется."
+
+msgid "Moving cards needs a connection."
+msgstr "Чтобы перемещать карточки, нужно подключение."
 
 msgid "Name"
 msgstr "Имя"
@@ -2196,6 +2241,15 @@ msgstr "Увидеть термин и вспомнить его значени�
 msgid "Select a word or phrase, then share it to Lymi."
 msgstr ""
 
+msgid "Select all"
+msgstr "Выбрать все"
+
+msgid "Select cards"
+msgstr "Выбрать карточки"
+
+msgid "Selected cards"
+msgstr "Выбранные карточки"
+
 msgid "Send"
 msgstr "Отправить"
 
@@ -2335,6 +2389,9 @@ msgstr "Остаться в приложении"
 msgctxt "daily goal"
 msgid "Steady"
 msgstr "Стабильно"
+
+msgid "Stop selecting"
+msgstr "Завершить выбор"
 
 msgid "Stopped"
 msgstr "Остановлен"
@@ -2563,6 +2620,12 @@ msgstr "Слишком много попыток с этим кодом. Отп�
 
 msgid "Took “{deckName}” out of its series"
 msgstr "«{deckName}» убрана из серии"
+
+msgid "Took “{term}” out of its section"
+msgstr "Карточка «{term}» убрана из раздела"
+
+msgid "Took {count, plural, one {# card} other {# cards}} out of their sections"
+msgstr "{count, plural, one {# карточка убрана из раздела} few {# карточки убраны из разделов} many {# карточек убрано из разделов} other {# карточки убрано из разделов}}"
 
 msgctxt "deck tag"
 msgid "TOPIK I"

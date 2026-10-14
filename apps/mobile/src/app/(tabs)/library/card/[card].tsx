@@ -15,6 +15,7 @@ import { useSessionHeaders } from "../../../../auth/client";
 import type { FormField } from "../../../../capture/form";
 import { languageName } from "../../../../data/languages";
 import { useDeckCards, useDecks } from "../../../../data/queries";
+import { useMoveToSection } from "../../../../deck/move-to-section";
 import { CardNotes } from "../../../../review/card-notes";
 import { modeLabel } from "../../../../review/modes";
 import { usePronunciation } from "../../../../review/pronounce";
@@ -92,6 +93,7 @@ export default function CardPage() {
     router.push({ pathname: "/edit-card", params: { card: id, deck: deckId, field } });
   const edit = (field: FormField) => (editable ? () => openCard(field) : undefined);
   const pronounce = usePronunciation(card ?? null);
+  const moveToSection = useMoveToSection(deckId);
   // An archive or a restore moves the card between every list that counts it, so all refetch.
   const refresh = () => {
     for (const key of [["decks"], ["cards"], ["queue"]]) {
@@ -422,6 +424,15 @@ export default function CardPage() {
                     icon: "important" as const,
                     onSelect: () => void writes.setImportant(card, !card.important),
                   },
+                  ...(owner && moveToSection.canMove
+                    ? [
+                        {
+                          label: t`Move to section…`,
+                          icon: "move" as const,
+                          onSelect: () => moveToSection.open([card.id]),
+                        },
+                      ]
+                    : []),
                 ],
                 // Archive sits apart, so it is never pressed for its neighbour.
                 ...(owner
@@ -439,6 +450,7 @@ export default function CardPage() {
               ]}
             />
           </Animated.View>
+          {owner && moveToSection.sheet}
         </View>
       }
     >

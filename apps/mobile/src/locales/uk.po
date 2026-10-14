@@ -525,9 +525,6 @@ msgstr "Арабська"
 msgid "Archive"
 msgstr ""
 
-msgid "Archive {name}"
-msgstr ""
-
 msgid "Archive card"
 msgstr ""
 
@@ -784,7 +781,7 @@ msgstr ""
 msgid "Couldn’t archive “{name}”."
 msgstr ""
 
-msgid "Couldn’t archive the card."
+msgid "Couldn’t archive “{term}”."
 msgstr ""
 
 msgid "Couldn’t cancel the invitation. Try again."
@@ -1035,9 +1032,6 @@ msgstr "Готово"
 
 msgid "Drafting a hook…"
 msgstr "Готуємо зачіпку…"
-
-msgid "Drag to reorder"
-msgstr ""
 
 msgid "Driving"
 msgstr "Водіння"
@@ -1735,9 +1729,6 @@ msgstr "Уперше в Lymi?"
 msgid "Next card due {next}."
 msgstr "Наступне повторення {next}."
 
-msgid "Next due {next}"
-msgstr "Наступне повторення {next}"
-
 msgid "Next month"
 msgstr "Наступний місяць"
 
@@ -1943,9 +1934,6 @@ msgstr "Підглянути зачіпку"
 msgid "People"
 msgstr ""
 
-msgid "People and sharing"
-msgstr "Люди й доступ"
-
 msgctxt "language"
 msgid "Persian"
 msgstr "Перська"
@@ -2072,9 +2060,6 @@ msgid "Removed {name} from {deck}"
 msgstr "{name} вилучено з колоди «{deck}»"
 
 msgid "Rename"
-msgstr ""
-
-msgid "Rename {name}"
 msgstr ""
 
 msgid "Rename section"
@@ -2204,6 +2189,9 @@ msgstr "Для пошуку карток потрібне з’єднання"
 msgid "Section"
 msgstr "Розділ"
 
+msgid "Section {number}: {name}, {cards}"
+msgstr ""
+
 msgid "Sections"
 msgstr ""
 
@@ -2265,6 +2253,9 @@ msgstr "Надіслали ще раз"
 msgctxt "language"
 msgid "Serbian"
 msgstr "Сербська"
+
+msgid "Series"
+msgstr ""
 
 msgid "Settings"
 msgstr "Налаштування"

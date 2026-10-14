@@ -739,7 +739,6 @@ function MoveToSeries({
 }) {
   const { t } = useLingui();
   const router = useRouter();
-  const _p = usePalette();
   const online = useOnline();
   const query = useSeriesList(open);
   const series = query.data ?? [];

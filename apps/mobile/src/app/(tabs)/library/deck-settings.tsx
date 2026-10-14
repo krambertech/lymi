@@ -31,9 +31,8 @@ import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 
 /**
- * Deck settings, as the web's: nothing has a Save button. A choice is made when it is made, and
- * the name and description commit when the field is left. Publishing stays on the web (ADR
- * 0030). A member reads the same facts and can leave.
+ * Deck settings, as the web's: a choice is made when it is made, and a text field saves with its
+ * sheet's ✓. Publishing stays on the web (ADR 0030). A member reads the same facts and can leave.
  */
 export default function DeckSettings() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -401,8 +400,8 @@ function Settings({ deck }: { deck: DeckSummary }) {
           </Rows>
           <Rows>
             <Row
-              icon="apps"
-              label={t`People and sharing`}
+              icon="share"
+              label={t`Share deck`}
               onPress={() => router.push(`/share?id=${deck.id}` as Href)}
             />
           </Rows>

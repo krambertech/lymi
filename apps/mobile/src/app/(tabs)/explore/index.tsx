@@ -167,5 +167,3 @@ function ShelfPicker({
     </Sheet>
   );
 }
-
-/** A group's name in the sheet, at reading size so it sorts the list rather than footnoting it. */

@@ -1,12 +1,11 @@
 import { useLingui } from "@lingui/react/macro";
 import Animated, { FadeOut } from "react-native-reanimated";
 import { ALWAYS, CROSSFADE } from "../theme/motion";
-
-const FADE_AWAY = FadeOut.duration(150).reduceMotion(ALWAYS);
-
 import { usePalette } from "../theme/palette";
 import { Button, Icon, Text } from "../ui/primitives";
 import type { Outcome } from "./model";
+
+const FADE_AWAY = FadeOut.duration(150).reduceMotion(ALWAYS);
 
 /** The last add, over the chips: where it went, or where the card already is. */
 export function LastAdd({

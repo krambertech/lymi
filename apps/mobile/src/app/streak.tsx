@@ -3,7 +3,7 @@ import { useLingui } from "@lingui/react/macro";
 import { type GoalStatus, useDailyGoal } from "@lymi/client/daily-goal";
 import type { StreakOut } from "@lymi/core";
 import { useNavigation } from "expo-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ScrollView, View, type ViewStyle } from "react-native";
 import { Flame } from "../brand/flame";
 import { useDay } from "../data/queries";
@@ -64,9 +64,21 @@ function StreakPanel({
   const navigation = useNavigation();
   // iOS pushes a part-height sheet away when another opens over it, so the streak rises to full
   // height first and the goal's sheet stacks visibly on top. phone.md "Sheets".
+  const rising = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (rising.current) clearTimeout(rising.current);
+    },
+    [],
+  );
   const openGoal = () => {
     navigation.setOptions({ sheetAllowedDetents: [1] });
-    setTimeout(() => setChoosing(true), RISE_MS);
+    rising.current = setTimeout(() => setChoosing(true), RISE_MS);
+  };
+  // Closed, the streak may peek again.
+  const closeGoal = (open: boolean) => {
+    setChoosing(open);
+    if (!open) navigation.setOptions({ sheetAllowedDetents: [0.62, 1] });
   };
   const { current, today } = summary;
   const done = satisfied(today.outcome);
@@ -164,7 +176,7 @@ function StreakPanel({
       <GoalLine connected={connected} status={goal.status} />
       <GoalSheet
         open={choosing}
-        onOpenChange={setChoosing}
+        onOpenChange={closeGoal}
         value={summary.goal}
         onChange={goal.change}
       />

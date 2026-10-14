@@ -12,7 +12,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
 import { type Href, useRouter } from "expo-router";
 import { type ReactNode, useRef, useState } from "react";
-import { Pressable, ScrollView, TextInput, View } from "react-native";
+import { AccessibilityInfo, Pressable, ScrollView, TextInput, View } from "react-native";
 import { FieldName } from "../capture/composer-field";
 import { languageName } from "../data/languages";
 import { usePurposes } from "../data/purposes";
@@ -43,6 +43,8 @@ export default function NewDeck() {
   const [choosingLanguage, setChoosingLanguage] = useState(false);
   const [directions, setDirections] = useState<Directions>("recognition");
   const [error, setError] = useState<string | null>(null);
+  // What the deck is for is asked apart from the name, so its error sits under its cards.
+  const [purposeError, setPurposeError] = useState(false);
   const [pending, setPending] = useState(false);
   const nameRef = useRef<TextInput>(null);
   const languages = LANGUAGE_TAGS.map((tag) => ({ value: tag, label: languageName(tag) })).sort(
@@ -77,7 +79,11 @@ export default function NewDeck() {
       return;
     }
     // The app asks what every deck is for, and a language deck which language, though the API need not.
-    if (!purpose) return setError(t`Choose what the deck is for.`);
+    if (!purpose) {
+      setPurposeError(true);
+      AccessibilityInfo.announceForAccessibility(t`Choose what the deck is for.`);
+      return;
+    }
     // What is still missing opens rather than only being named, so ✓ never leads nowhere.
     if (purpose === "language" && !language) return setChoosingLanguage(true);
     setPending(true);
@@ -179,12 +185,13 @@ export default function NewDeck() {
                     onPress={() => {
                       Haptics.selectionAsync();
                       setPurpose(o.value);
-                      if (error) setError(null);
+                      setPurposeError(false);
                       if (o.value === "language" && !language) setChoosingLanguage(true);
                     }}
                     accessibilityRole="radio"
                     accessibilityState={{ checked: chosen }}
-                    accessibilityLabel={`${o.label}. ${o.detail}`}
+                    accessibilityLabel={o.label}
+                    accessibilityHint={o.detail}
                     className="flex-row items-start gap-3 px-4 py-3.5"
                     style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
                   >
@@ -216,6 +223,12 @@ export default function NewDeck() {
               );
             })}
           </Plate>
+          {purposeError && (
+            <View className="flex-row items-center gap-1.5 px-1">
+              <Icon name="alert" size={14} colour={p.danger} />
+              <Text className="flex-1 text-base text-danger">{t`Choose what the deck is for.`}</Text>
+            </View>
+          )}
         </View>
 
         <Rows>

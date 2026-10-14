@@ -525,9 +525,6 @@ msgstr "Arabic"
 msgid "Archive"
 msgstr "Archive"
 
-msgid "Archive {name}"
-msgstr "Archive {name}"
-
 msgid "Archive card"
 msgstr "Archive card"
 
@@ -784,8 +781,8 @@ msgstr "Couldn’t archive “{0}”."
 msgid "Couldn’t archive “{name}”."
 msgstr "Couldn’t archive “{name}”."
 
-msgid "Couldn’t archive the card."
-msgstr "Couldn’t archive the card."
+msgid "Couldn’t archive “{term}”."
+msgstr "Couldn’t archive “{term}”."
 
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Couldn’t cancel the invitation. Try again."
@@ -1035,9 +1032,6 @@ msgstr "Done"
 
 msgid "Drafting a hook…"
 msgstr "Drafting a hook…"
-
-msgid "Drag to reorder"
-msgstr "Drag to reorder"
 
 msgid "Driving"
 msgstr "Driving"
@@ -1735,9 +1729,6 @@ msgstr "New to Lymi?"
 msgid "Next card due {next}."
 msgstr "Next card due {next}."
 
-msgid "Next due {next}"
-msgstr "Next due {next}"
-
 msgid "Next month"
 msgstr "Next month"
 
@@ -1943,9 +1934,6 @@ msgstr "Peek at your hook"
 msgid "People"
 msgstr "People"
 
-msgid "People and sharing"
-msgstr "People and sharing"
-
 msgctxt "language"
 msgid "Persian"
 msgstr "Persian"
@@ -2074,9 +2062,6 @@ msgstr "Removed {name} from {deck}"
 msgid "Rename"
 msgstr "Rename"
 
-msgid "Rename {name}"
-msgstr "Rename {name}"
-
 msgid "Rename section"
 msgstr "Rename section"
 
@@ -2204,6 +2189,9 @@ msgstr "Searching cards needs a connection"
 msgid "Section"
 msgstr "Section"
 
+msgid "Section {number}: {name}, {cards}"
+msgstr "Section {number}: {name}, {cards}"
+
 msgid "Sections"
 msgstr "Sections"
 
@@ -2265,6 +2253,9 @@ msgstr "Sent again"
 msgctxt "language"
 msgid "Serbian"
 msgstr "Serbian"
+
+msgid "Series"
+msgstr "Series"
 
 msgid "Settings"
 msgstr "Settings"

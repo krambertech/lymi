@@ -57,8 +57,13 @@ export function RowFace({
   // At the accessibility sizes the value moves under the label, as iOS Settings does, so neither breaks mid-word.
   const large = useWindowDimensions().fontScale >= ACCESSIBILITY_SIZES;
   const stacked = under || large;
+  // A control names itself for VoiceOver, so the label beside it is not read a second time.
   const name = (
-    <Text className="text-md" style={{ color: destructive ? p.danger : p.text }}>
+    <Text
+      className="text-md"
+      style={{ color: destructive ? p.danger : p.text }}
+      accessible={!control}
+    >
       {label}
     </Text>
   );

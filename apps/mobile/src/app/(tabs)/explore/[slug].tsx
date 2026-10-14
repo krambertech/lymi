@@ -13,7 +13,7 @@ import { useAddDeck, useAddFailure, useTagLabel } from "../../../explore/catalog
 import { DeckHand, handOf } from "../../../explore/deck-hand";
 import { DeckTile } from "../../../explore/layouts";
 import { useCoverColour } from "../../../explore/tray";
-import { springIn } from "../../../theme/motion";
+import { CROSSFADE, springIn, useReduceMotion } from "../../../theme/motion";
 import { usePalette } from "../../../theme/palette";
 import { GlassSurface } from "../../../ui/glass";
 import { OnTheWeb } from "../../../ui/on-the-web";
@@ -268,6 +268,7 @@ function BarAdd({
   onAdd: () => void;
   onOpen: () => void;
 }) {
+  const reduce = useReduceMotion();
   const { t } = useLingui();
   const p = usePalette();
   return (
@@ -296,13 +297,13 @@ function BarAdd({
           <ActivityIndicator color={p.text} />
         ) : added ? (
           // Once the deck is in, the bar keeps only the check, so it never crowds the title.
-          <Animated.View key="added" entering={springIn(new ZoomIn(), ARRIVE)}>
+          <Animated.View key="added" entering={reduce ? CROSSFADE : springIn(new ZoomIn(), ARRIVE)}>
             <Icon name="check" size={20} colour={p["state-known"]} strokeWidth={2.75} />
           </Animated.View>
         ) : (
           <Animated.View
             key="add"
-            entering={springIn(new ZoomIn(), ARRIVE)}
+            entering={reduce ? CROSSFADE : springIn(new ZoomIn(), ARRIVE)}
             className="flex-row items-center gap-1.5"
           >
             <Icon name="plus" size={18} colour={p.text} strokeWidth={2.5} />

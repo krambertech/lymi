@@ -1,3 +1,4 @@
+// biome-ignore lint/style/noRestrictedImports: this is the one place the raw sheet is wrapped.
 import { BottomSheet, Group, Host, RNHostView } from "@expo/ui/swift-ui";
 import { presentationDetents, presentationDragIndicator } from "@expo/ui/swift-ui/modifiers";
 import { useLingui } from "@lingui/react/macro";

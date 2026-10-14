@@ -9,7 +9,7 @@ import { ARRIVE } from "@lymi/design";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useEffect, useState } from "react";
-import { Alert, Image, View } from "react-native";
+import { Image, View } from "react-native";
 import Animated, { FadeOut, LinearTransition, ZoomIn } from "react-native-reanimated";
 import { useSessionHeaders } from "../../../../auth/client";
 import type { FormField } from "../../../../capture/form";
@@ -102,10 +102,11 @@ export default function CardPage() {
   };
   // Archiving leaves for the deck with Undo in a toast, as archiving a deck and a card in review do.
   const archive = async (term: string) => {
+    // Back to the deck first, so a slow write never pops a screen the learner has moved to.
+    router.back();
     try {
       await writes.archiveCard(id);
       refresh();
-      router.back();
       toast.add({
         id: `archive-card-${id}`,
         title: t`Archived “${term}”`,
@@ -118,8 +119,8 @@ export default function CardPage() {
               .catch((e) => toast.add({ error: true, title: errorMessage(e) })),
         },
       });
-    } catch (e) {
-      Alert.alert(t`Couldn’t archive the card.`, e instanceof Error ? e.message : undefined);
+    } catch {
+      toast.add({ error: true, title: t`Couldn’t archive “${term}”.` });
     }
   };
   // Play sits in the menu, with no button on the page to show why it failed, so a toast says.

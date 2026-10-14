@@ -2,13 +2,10 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type DeckSummary, errorMessage, type Series } from "@lymi/client/api";
 import { groupDecks } from "@lymi/client/library-groups";
-import { deckCardsQuery } from "@lymi/client/queries";
-import { useQuery } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
 import { type Href, Link, useRouter } from "expo-router";
 import { Alert, Pressable, View } from "react-native";
 import { languageName } from "../../../data/languages";
-import { useNextDue } from "../../../data/next-due";
 import { useArchivedDecks, useDecks, useSeriesList } from "../../../data/queries";
 import { useSeriesActions } from "../../../data/series";
 import { useOnline } from "../../../streak/goal-picker";
@@ -316,9 +313,6 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
   const size =
     d.total === 0 ? t`No cards yet` : plural(d.total, { one: "# card", other: "# cards" });
   const owner = d.owner.name;
-  // Watches the cards Sync keeps for each deck, so it follows the warming; disabled, it never fetches.
-  const kept = useQuery({ ...deckCardsQuery(d.id), enabled: false }).data;
-  const next = useNextDue(kept);
   // Whose it is goes last, so a long publisher's name wraps on its own rather than splitting the size.
   const line = [size, language, d.role === "owner" ? null : t`Shared by ${owner}`]
     .filter(Boolean)
@@ -335,11 +329,11 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
       accessibilityRole="link"
       accessibilityLabel={listRowLabel(
         d.name,
-        due
-          ? plural(due, { one: "# card due", other: "# cards due" })
-          : next
-            ? t`Next due ${next}`
-            : undefined,
+        due === undefined
+          ? undefined
+          : due > 0
+            ? plural(due, { one: "# card due", other: "# cards due" })
+            : t`Nothing due`,
         line,
       )}
       onAccessibilityTap={() => router.navigate(href)}

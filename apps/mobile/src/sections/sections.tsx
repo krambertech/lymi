@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { api, errorMessage, type Section, type Sections } from "@lymi/client/api";
+import { api, type Section, type Sections } from "@lymi/client/api";
 import { sectionsQuery } from "@lymi/client/queries";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { type Href, useRouter } from "expo-router";
@@ -11,6 +11,7 @@ import { ActionMenu } from "../ui/action-menu";
 import { Icon } from "../ui/icons";
 import type { MenuItem } from "../ui/menu";
 import { Button, Text } from "../ui/primitives";
+import { toast } from "../ui/toast-host";
 
 /**
  * Starting a section, as the web's deck page does: one with locked sections before it asks first,
@@ -22,7 +23,7 @@ export function useStartSection(deckId: string, sections: readonly Section[]) {
   const start = useMutation({
     mutationFn: (section: Section) => api.startSection(section.id),
     onSuccess: (next) => qc.setQueryData<Sections>(sectionsQuery(deckId).queryKey, next),
-    onError: (error) => Alert.alert(t`Couldn’t start the section`, errorMessage(error)),
+    onError: () => toast.add({ error: true, title: t`Couldn’t start the section` }),
     onSettled: () =>
       Promise.all(
         ["decks", "series", "queue", "rounds"].map((key) =>

@@ -33,7 +33,7 @@ export default function SeriesName() {
   }
   return (
     <OnGlass>
-      <FormHeader close={{ label: t`Close`, onPress: () => router.back() }} />
+      <FormHeader close={{ label: t`Close`, onPress: () => router.back() }} title={t`Series`} />
       {form.mode === "missing" && (
         <Text className="px-5 pt-3 pb-6 text-base text-muted">{t`This series is no longer here.`}</Text>
       )}

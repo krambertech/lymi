@@ -184,10 +184,6 @@
           }
         }
       }
-    },
-    {
-      "includes": ["apps/mobile/src/ui/sheet.tsx"],
-      "linter": { "rules": { "style": { "noRestrictedImports": "off" } } }
     }
   ],
   "javascript": {

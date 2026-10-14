@@ -107,6 +107,8 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
           ))}
           <View
             className="min-h-[52px] flex-row items-center gap-3 ps-4 pe-2"
+            // One adjustable element: a swipe up or down steps, as iOS's own steppers do.
+            accessible
             accessibilityRole="adjustable"
             accessibilityLabel={t`Your own goal`}
             accessibilityValue={{
@@ -126,10 +128,7 @@ export function GoalSheet({ open, onOpenChange, value, onChange }: Props) {
                 {plural(own, { one: "review a day", other: "reviews a day" })}
               </Text>
             </View>
-            <View
-              className="flex-row items-center gap-1"
-              importantForAccessibility="no-hide-descendants"
-            >
+            <View className="flex-row items-center gap-1" accessibilityElementsHidden>
               <IconButton icon="minus" label={t`Fewer`} size="sm" onPress={() => step(-1)} />
               <Text
                 className="min-w-10 text-center text-lg font-medium text-text"

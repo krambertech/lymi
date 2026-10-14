@@ -10,8 +10,6 @@ import {
   type ReactNode,
   useContext,
   useEffect,
-  useLayoutEffect,
-  useMemo,
   useState,
 } from "react";
 import { AccessibilityInfo, Pressable, ScrollView, useWindowDimensions, View } from "react-native";
@@ -25,12 +23,11 @@ import { OnGlass } from "./surface";
 // A sheet that rises over the screen, presented by iOS so it is Liquid Glass, follows the finger
 // and swipes away; what is inside is Lymi's. phone.md "Sheets".
 
-/** A row's start inset, and where its label starts when the row keeps a slot for an icon or a check. */
+/**
+ * Where a sheet's own text starts: 16 pt in from a plate's edge, where a row's icon or check starts,
+ * as iOS sets a grouped list's headers. One line for the title, the description, headings and notes.
+ */
 const ROW_INSET = 16;
-const MARKED_INSET = ROW_INSET + 20 + 12;
-
-/** Whether any group in the sheet keeps the mark slot, so the title and description line up with the labels. */
-const SheetMarks = createContext<((marked: boolean) => () => void) | null>(null);
 /** Whether this group's rows keep the slot: only when one of them shows an icon or a check. */
 const GroupMarked = createContext(true);
 /** Where the sheet's own text starts: the title, the description and every note. */
@@ -78,16 +75,7 @@ export function Sheet({
   const { width, height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const [peek, setPeek] = useState<number | null>(null);
-  const [marked, setMarked] = useState(0);
-  const report = useMemo(
-    () => (on: boolean) => {
-      if (!on) return () => {};
-      setMarked((n) => n + 1);
-      return () => setMarked((n) => n - 1);
-    },
-    [],
-  );
-  const inset = save || marked === 0 ? ROW_INSET : MARKED_INSET;
+  const inset = ROW_INSET;
   const detents = more && peek ? [presentationDetents([{ height: peek }, "large"])] : [];
   const heading = save ? (
     <View className="flex-row items-center gap-3 pb-3">
@@ -122,19 +110,17 @@ export function Sheet({
     )
   );
   const first = (
-    <SheetMarks.Provider value={report}>
-      <SheetInset.Provider value={inset}>
-        <OnGlass>
-          {heading}
-          {description && (
-            <Text className="pb-3 text-base text-text-2" style={{ paddingStart: inset }}>
-              {description}
-            </Text>
-          )}
-          <View className="gap-3">{children}</View>
-        </OnGlass>
-      </SheetInset.Provider>
-    </SheetMarks.Provider>
+    <SheetInset.Provider value={inset}>
+      <OnGlass>
+        {heading}
+        {description && (
+          <Text className="pb-3 text-base text-text-2" style={{ paddingStart: inset }}>
+            {description}
+          </Text>
+        )}
+        <View className="gap-3">{children}</View>
+      </OnGlass>
+    </SheetInset.Provider>
   );
   const top = save ? "pt-4" : "pt-7";
   return (
@@ -237,9 +223,6 @@ const isMarked = (row: ReactNode) =>
 export function SheetGroup({ children }: { children: ReactNode }) {
   const rows = Children.toArray(children).filter(Boolean);
   const marked = rows.some(isMarked);
-  const report = useContext(SheetMarks);
-  // Before paint, so the title never draws at one inset and moves to another.
-  useLayoutEffect(() => report?.(marked), [report, marked]);
   return (
     <GroupMarked.Provider value={marked}>
       <View className="overflow-hidden rounded-xl bg-glass-group">

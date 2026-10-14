@@ -125,8 +125,20 @@ function readProgress(): Progress | null {
   }
 }
 
+// Back revisits a step, so each step is reported once per page load until Welcome ends.
+const viewedSteps = new Set<Step>();
+const finishedSteps = new Set<Step>();
+
+export function finishWelcomeStep(step: Step, skipped: boolean) {
+  if (finishedSteps.has(step)) return;
+  if (captureAnalytics("welcome_step_finished", { step_name: step, skipped }))
+    finishedSteps.add(step);
+}
+
 /** Called once Welcome is finished or skipped, so a later visit in this tab starts clean. */
 export function clearWelcomeProgress() {
+  viewedSteps.clear();
+  finishedSteps.clear();
   try {
     sessionStorage.removeItem(PROGRESS_KEY);
   } catch {
@@ -191,14 +203,13 @@ export function WelcomeView({
   }, [shortcut, trail, kind, language, goal]);
 
   const step = trail.at(-1) ?? "kind";
-  const seenStep = useRef<Step | null>(null);
   useEffect(() => {
     const viewed = () => {
       if (
-        seenStep.current !== step &&
+        !viewedSteps.has(step) &&
         captureAnalytics("welcome_step_viewed", { step_name: step, skipped: false })
       )
-        seenStep.current = step;
+        viewedSteps.add(step);
     };
     viewed();
     window.addEventListener(ANALYTICS_READY, viewed);
@@ -230,7 +241,7 @@ export function WelcomeView({
       setDir(-1);
       setTrail((t) => (t.length > 1 ? t.slice(0, -1) : t));
     } else {
-      captureAnalytics("welcome_step_finished", { step_name: step, skipped: false });
+      finishWelcomeStep(step, false);
       setDir(1);
       setTrail((t) => [...t, to]);
     }

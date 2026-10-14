@@ -9,13 +9,25 @@ import { messages } from "../../locales/en.po";
 import { ShellChrome } from "../components/layout/shell-chrome";
 import { StaticNavProvider } from "../components/nav-link";
 import { designChrome } from "../design/chrome";
-import { type JoinedDeck, type WelcomeAnswers, WelcomeView } from "./welcome-view";
+import { captureAnalytics } from "../lib/telemetry";
+import {
+  clearWelcomeProgress,
+  type JoinedDeck,
+  type WelcomeAnswers,
+  WelcomeView,
+} from "./welcome-view";
+
+vi.mock("../lib/telemetry", () => ({ captureAnalytics: vi.fn(() => true) }));
 
 i18n.load("en", messages);
 i18n.activate("en");
 
 // Welcome keeps its answers in the tab across a reload; each test starts as a new tab would.
-beforeEach(() => sessionStorage.clear());
+beforeEach(() => {
+  sessionStorage.clear();
+  clearWelcomeProgress();
+  vi.mocked(captureAnalytics).mockClear();
+});
 
 const deck = (slug: string, category: string, language: string | null): PublicDeckSummary => ({
   slug,
@@ -140,6 +152,27 @@ test("something else skips the language and leads with the learner's own materia
     dailyGoal: 10,
     start: { kind: "own", own: "type" },
   });
+});
+
+test("going back and on again reports each step once", async () => {
+  await renderWelcome(() => {});
+  await begin();
+  await page.getByRole("radio", { name: /Something else/ }).click();
+  await next();
+  await expect.element(page.getByRole("heading", { name: "How much time a day?" })).toBeVisible();
+  await page.getByRole("button", { name: "Back" }).click();
+  await page.getByRole("button", { name: "Back" }).click();
+  await next();
+  await next();
+  await expect.element(page.getByRole("heading", { name: "How much time a day?" })).toBeVisible();
+
+  const reported = (name: string) =>
+    vi
+      .mocked(captureAnalytics)
+      .mock.calls.filter(([event]) => event === name)
+      .map(([, properties]) => (properties as { step_name: string }).step_name);
+  expect(reported("welcome_step_viewed")).toEqual(["hello", "kind", "goal"]);
+  expect(reported("welcome_step_finished")).toEqual(["hello", "kind"]);
 });
 
 test("skip leaves at any question", async () => {

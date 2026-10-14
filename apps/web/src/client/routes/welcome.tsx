@@ -13,6 +13,7 @@ import { captureAnalytics } from "../lib/telemetry";
 import { useAddPublishedDeck } from "../lib/use-add-published-deck";
 import {
   clearWelcomeProgress,
+  finishWelcomeStep,
   type Step,
   type WelcomeAnswers,
   WelcomeView,
@@ -88,7 +89,7 @@ function Welcome() {
               ? "typed"
               : "import",
     });
-    captureAnalytics("welcome_step_finished", { step_name: "start", skipped: false });
+    finishWelcomeStep("start", false);
     clearWelcomeProgress();
     if (start.kind === "deck") return navigate({ to: "/review", replace: true });
     if (start.own === "import") return navigate({ to: "/settings", hash: "import", replace: true });
@@ -104,7 +105,7 @@ function Welcome() {
       setError(t`Couldn’t save your daily goal. Check your connection and try again.`);
       return;
     }
-    captureAnalytics("welcome_step_finished", { step_name: "goal", skipped: false });
+    finishWelcomeStep("goal", false);
     clearWelcomeProgress();
     // A deck shared before its owner added a card has nothing to review yet, so its page says so.
     if (deck.total === 0) {
@@ -121,7 +122,7 @@ function Welcome() {
       setError(t`Couldn’t skip for now. Check your connection and try again.`);
       return;
     }
-    captureAnalytics("welcome_step_finished", { step_name: step, skipped: true });
+    finishWelcomeStep(step, true);
     clearWelcomeProgress();
     // Their deck's page, not Today's guide, which is about making a deck of their own.
     if (joined)

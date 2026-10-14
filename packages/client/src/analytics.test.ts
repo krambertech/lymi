@@ -235,6 +235,14 @@ it("counts public visitors cookielessly with where they came from and never iden
   expect(cookieWrites).toEqual([]);
 });
 
+it("marks the first page view of a visit with no referrer as direct", async () => {
+  await load("https://lymi.app/", "");
+  analytics.initAnalytics({ token: "phc_test", surface: "public", enabled: true });
+  analytics.capturePageview("/explore");
+  const pageviews = sdk.sent.filter((e) => e.event === "$pageview");
+  expect(pageviews.map((e) => e.properties.$referring_domain)).toEqual(["$direct", undefined]);
+});
+
 it("does not initialize in development or previews", async () => {
   await load("https://lymi.app/");
   analytics.initAnalytics({ token: "phc_test", surface: "public", enabled: false });

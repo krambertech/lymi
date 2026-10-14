@@ -51,7 +51,8 @@ interface SelectProps<T extends string> {
   /** The field's name: the sheet's title, and read with the choice. */
   label: string;
   value: T;
-  options: { value: T; label: string }[];
+  /** `detail` is a line under the option that says what choosing it means. */
+  options: { value: T; label: string; detail?: string }[];
   onChange: (value: T) => void;
   /** After the sheet has gone, chosen or not; a composer puts the cursor back. */
   onClosed?: () => void;
@@ -92,6 +93,7 @@ export function Select<T extends string>({
         <SheetRow
           key={o.value}
           label={o.label}
+          detail={o.detail}
           chosen={o.value === value}
           active={!!needle && i === 0}
           onPress={() => menu.choose(() => o.value !== value && onChange(o.value))}

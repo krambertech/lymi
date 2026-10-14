@@ -218,6 +218,18 @@ function Root() {
             name="explore-search"
             options={{ presentation: "fullScreenModal", animation: "fade" }}
           />
+          {/* Opens on inviting and the join link, and drags up for everyone in the deck. */}
+          <Stack.Screen
+            name="share"
+            options={{
+              presentation: "formSheet",
+              sheetAllowedDetents: [0.62, 1],
+              sheetGrabberVisible: true,
+              contentStyle: {
+                backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
+              },
+            }}
+          />
           <Stack.Screen
             name="streak"
             options={{

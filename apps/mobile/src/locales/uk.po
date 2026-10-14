@@ -339,6 +339,10 @@ msgstr "Колода тримає слова, які ти вчиш разом. �
 msgid "A few minutes keeps them fresh."
 msgstr ""
 
+msgctxt "deck purpose"
+msgid "A language"
+msgstr ""
+
 msgid "A new code is on its way to {address}."
 msgstr "Надсилаємо новий код на {address}."
 
@@ -353,6 +357,9 @@ msgstr "Коротка фраза, що допоможе запам’ятати
 
 msgid "A sound-alike, or something to picture"
 msgstr "Співзвучне слово або те, що можна уявити"
+
+msgid "A subject or exam"
+msgstr ""
 
 msgid "A word or phrase"
 msgstr "Слово чи фраза"
@@ -701,6 +708,12 @@ msgstr "Вибрати з фото"
 
 msgid "Choose photo"
 msgstr "Вибрати фото"
+
+msgid "Choose the language you’re learning."
+msgstr ""
+
+msgid "Choose what the deck is for."
+msgstr ""
 
 msgid "Citizenship"
 msgstr "Громадянство"
@@ -2291,6 +2304,9 @@ msgstr "Не все зроблене офлайн синхронізовано"
 msgid "Someone"
 msgstr "Хтось"
 
+msgid "Something else"
+msgstr ""
+
 msgid "Sort"
 msgstr "Сортування"
 
@@ -2368,6 +2384,9 @@ msgstr "Розкажи Lymi, що зламалося або що варто до
 
 msgid "Term"
 msgstr "Термін"
+
+msgid "Terms with short explanations, like for a citizenship test."
+msgstr ""
 
 msgctxt "language"
 msgid "Thai"
@@ -2645,6 +2664,9 @@ msgstr "З поверненням."
 msgid "What it means"
 msgstr "Що це означає"
 
+msgid "What it’s for"
+msgstr ""
+
 msgid "What this is about"
 msgstr "Про що це"
 
@@ -2667,6 +2689,9 @@ msgid "Who can join"
 msgstr ""
 
 msgid "Who’s in this deck needs a connection"
+msgstr ""
+
+msgid "Words and phrases in a language you’re learning."
 msgstr ""
 
 msgid "Work and study"
@@ -2772,6 +2797,9 @@ msgid "Your own"
 msgstr ""
 
 msgid "Your own goal"
+msgstr ""
+
+msgid "Your own material, whatever it is."
 msgstr ""
 
 msgid "Your photo changed on another device. Try again."

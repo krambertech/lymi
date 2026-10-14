@@ -387,7 +387,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
             <Row
               icon="apps"
               label={t`People and sharing`}
-              onPress={() => router.push(`/library/people?id=${deck.id}` as Href)}
+              onPress={() => router.push(`/share?id=${deck.id}` as Href)}
             />
           </Rows>
           <Rows>

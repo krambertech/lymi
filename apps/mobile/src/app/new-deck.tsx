@@ -1,7 +1,13 @@
 import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@lymi/client/api";
 import { writes } from "@lymi/client/writes";
-import { DeckInput, type Directions, deckLimits, LANGUAGE_TAGS } from "@lymi/core";
+import {
+  DeckInput,
+  type DeckPurpose,
+  type Directions,
+  deckLimits,
+  LANGUAGE_TAGS,
+} from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
 import { type Href, useRouter } from "expo-router";
@@ -31,6 +37,7 @@ export default function NewDeck() {
   const qc = useQueryClient();
   const p = usePalette();
   const [name, setName] = useState("");
+  const [purpose, setPurpose] = useState<DeckPurpose | null>(null);
   const [language, setLanguage] = useState("");
   const [directions, setDirections] = useState<Directions>("recognition");
   const [error, setError] = useState<string | null>(null);
@@ -48,15 +55,41 @@ export default function NewDeck() {
     { value: "both", label: t`Both ways` },
   ];
   const way = asked.find((a) => a.value === directions) ?? asked[0];
+  // The web's three answers and their lines, so a deck made on either reads the same. deck-fields.tsx.
+  const purposes: { value: DeckPurpose; label: string; detail: string }[] = [
+    {
+      value: "language",
+      label: t({ message: "A language", context: "deck purpose" }),
+      detail: t`Words and phrases in a language you’re learning.`,
+    },
+    {
+      value: "subject",
+      label: t`A subject or exam`,
+      detail: t`Terms with short explanations, like for a citizenship test.`,
+    },
+    { value: "other", label: t`Something else`, detail: t`Your own material, whatever it is.` },
+  ];
+  const purposeLabel = purposes.find((o) => o.value === purpose)?.label ?? t`What it’s for`;
   const languageLabel = language ? languageName(language) : t`No language`;
 
   const create = async () => {
     if (pending) return;
-    const parsed = DeckInput.safeParse({ name, defaultLanguage: language || null, directions });
+    const parsed = DeckInput.safeParse({
+      name,
+      purpose: purpose ?? undefined,
+      // Only a language deck asks for a language, so another keeps none.
+      defaultLanguage: purpose === "language" ? language || null : null,
+      directions,
+    });
     if (!parsed.success) {
       setError(name.trim() ? t`Keep the name under 80 characters.` : t`Give the deck a name.`);
       nameRef.current?.focus();
       return;
+    }
+    // The app asks what every deck is for, and a language deck which language, though the API need not.
+    if (!purpose) return setError(t`Choose what the deck is for.`);
+    if (purpose === "language" && !language) {
+      return setError(t`Choose the language you’re learning.`);
     }
     setPending(true);
     setError(null);
@@ -82,6 +115,18 @@ export default function NewDeck() {
       trigger={trigger}
     />
   );
+  const purposeSelect = (trigger: ReactNode) => (
+    <Select
+      label={t`What it’s for`}
+      value={purpose ?? ("" as DeckPurpose)}
+      options={purposes}
+      onChange={(next) => {
+        setPurpose(next);
+        if (error) setError(null);
+      }}
+      trigger={trigger}
+    />
+  );
   const askedSelect = (trigger: ReactNode) => (
     <Select
       label={t`How cards are asked`}
@@ -103,6 +148,7 @@ export default function NewDeck() {
           icon="check"
           label={t`Create deck`}
           primary
+          disabled={!name.trim()}
           busy={pending}
           onPress={() => void create()}
         />
@@ -143,11 +189,17 @@ export default function NewDeck() {
           accessibilityRole="toolbar"
           accessibilityLabel={t`Deck settings`}
         >
-          {languageSelect(
-            <FieldChipFace icon="meaning" on={!!language} opens>
-              {languageLabel}
+          {purposeSelect(
+            <FieldChipFace icon="deck" on={!!purpose} opens>
+              {purposeLabel}
             </FieldChipFace>,
           )}
+          {purpose === "language" &&
+            languageSelect(
+              <FieldChipFace icon="meaning" on={!!language} opens>
+                {language ? languageLabel : t`Language`}
+              </FieldChipFace>,
+            )}
           {askedSelect(
             <FieldChipFace icon="modes" on opens>
               {way?.label ?? ""}

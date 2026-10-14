@@ -339,6 +339,10 @@ msgstr "A deck holds the words you learn together. Make one, or import decks on 
 msgid "A few minutes keeps them fresh."
 msgstr "A few minutes keeps them fresh."
 
+msgctxt "deck purpose"
+msgid "A language"
+msgstr "A language"
+
 msgid "A new code is on its way to {address}."
 msgstr "A new code is on its way to {address}."
 
@@ -353,6 +357,9 @@ msgstr "A short phrase that helps you remember it"
 
 msgid "A sound-alike, or something to picture"
 msgstr "A sound-alike, or something to picture"
+
+msgid "A subject or exam"
+msgstr "A subject or exam"
 
 msgid "A word or phrase"
 msgstr "A word or phrase"
@@ -701,6 +708,12 @@ msgstr "Choose from photos"
 
 msgid "Choose photo"
 msgstr "Choose photo"
+
+msgid "Choose the language you’re learning."
+msgstr "Choose the language you’re learning."
+
+msgid "Choose what the deck is for."
+msgstr "Choose what the deck is for."
 
 msgid "Citizenship"
 msgstr "Citizenship"
@@ -2291,6 +2304,9 @@ msgstr "Some offline work hasn’t synced"
 msgid "Someone"
 msgstr "Someone"
 
+msgid "Something else"
+msgstr "Something else"
+
 msgid "Sort"
 msgstr "Sort"
 
@@ -2368,6 +2384,9 @@ msgstr "Tell Lymi what broke or what it should do. Replies come to your email."
 
 msgid "Term"
 msgstr "Term"
+
+msgid "Terms with short explanations, like for a citizenship test."
+msgstr "Terms with short explanations, like for a citizenship test."
 
 msgctxt "language"
 msgid "Thai"
@@ -2645,6 +2664,9 @@ msgstr "Welcome back."
 msgid "What it means"
 msgstr "What it means"
 
+msgid "What it’s for"
+msgstr "What it’s for"
+
 msgid "What this is about"
 msgstr "What this is about"
 
@@ -2668,6 +2690,9 @@ msgstr "Who can join"
 
 msgid "Who’s in this deck needs a connection"
 msgstr "Who’s in this deck needs a connection"
+
+msgid "Words and phrases in a language you’re learning."
+msgstr "Words and phrases in a language you’re learning."
 
 msgid "Work and study"
 msgstr "Work and study"
@@ -2773,6 +2798,9 @@ msgstr "Your own"
 
 msgid "Your own goal"
 msgstr "Your own goal"
+
+msgid "Your own material, whatever it is."
+msgstr "Your own material, whatever it is."
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Your photo changed on another device. Try again."

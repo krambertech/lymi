@@ -91,6 +91,8 @@ describe("analytics privacy contract", () => {
     expect(analyticsPath("/uk/explore/eesti-a1", "public")).toBe("/uk/explore/eesti-a1");
     expect(analyticsPath("/uk/medicine", "public")).toBe("/uk/medicine");
     expect(analyticsPath("/certifications", "public")).toBe("/certifications");
+    expect(analyticsPath("/tutor-lessons", "public")).toBe("/tutor-lessons");
+    expect(analyticsPath("/notes-to-flashcards", "public")).toBe("/notes-to-flashcards");
     expect(analyticsPath("/ru/exams/einbuergerungstest", "public")).toBe(
       "/ru/exams/einbuergerungstest",
     );

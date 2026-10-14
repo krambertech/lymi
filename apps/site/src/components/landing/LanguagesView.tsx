@@ -88,12 +88,29 @@ function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
           <div className="mt-6">
             <AssistantMarks compact />
           </div>
+          <div className="mt-5">
+            <TutorLessonsLink />
+          </div>
         </div>
         <div className="mt-12">
           <NotesToCards notebooks={notebooks} />
         </div>
       </div>
     </section>
+  );
+}
+
+/** Leads a learner with a tutor to the step-by-step page for after a lesson. */
+function TutorLessonsLink() {
+  const { i18n } = useLingui();
+  return (
+    <a
+      href={localizedPath("tutorLessons", i18n.locale)}
+      className="inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 hoverable:hover:text-text"
+    >
+      <Trans>Step by step, after a tutor lesson</Trans>
+      <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
+    </a>
   );
 }
 

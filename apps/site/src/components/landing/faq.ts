@@ -194,3 +194,44 @@ export const CERTIFICATIONS_QUESTIONS: Question[] = [
   OFFLINE,
   ...COMMON,
 ];
+
+const VIA_ASSISTANT_PLANS: Question = {
+  id: "which-assistant",
+  question: msg`Which assistants can add cards?`,
+  answer: msg`Claude, ChatGPT, Gemini, Cursor and Grok can connect to Lymi. In ChatGPT, adding cards needs developer mode, and OpenAI allows write actions only on Business, Enterprise and Education plans.`,
+  link: { href: "/docs/mcp", label: msg`Connecting an assistant` },
+};
+
+export const TUTOR_LESSONS_QUESTIONS: Question[] = [
+  {
+    id: "tutor-sites",
+    question: msg`Does Lymi connect to italki or Preply?`,
+    answer: msg`No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo, and your assistant turns them into cards.`,
+  },
+  {
+    id: "tutor-share",
+    question: msg`Can my tutor add cards for me?`,
+    answer: msg`Yes. Your tutor can make a deck and send you its join link. Every card they add after a lesson reaches you, and you keep your own schedule.`,
+  },
+  VIA_ASSISTANT_PLANS,
+  AI_MARKED,
+  OFFLINE,
+  ...COMMON,
+];
+
+export const NOTES_TO_FLASHCARDS_QUESTIONS: Question[] = [
+  {
+    id: "upload",
+    question: msg`Can I upload a PDF to Lymi directly?`,
+    answer: msg`Not yet. Lymi has no PDF or photo upload of its own. Your assistant reads the file and adds the cards, and you can add terms by hand with New card.`,
+  },
+  {
+    id: "material",
+    question: msg`Who can see the cards I make?`,
+    answer: msg`Only you, unless you share the deck. Cards made from your notes stay in your account.`,
+  },
+  VIA_ASSISTANT_PLANS,
+  AI_MARKED,
+  OFFLINE,
+  ...COMMON,
+];

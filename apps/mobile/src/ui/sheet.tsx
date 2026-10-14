@@ -160,7 +160,7 @@ export function Sheet({
   });
   const scrolled = offset;
   const left = useDerivedValue(() => whole.value - shown.value - offset.value);
-  const edge = room === "dark" ? p.sheet : p.plate;
+  const edge = room === "dark" ? p["sheet-raised"] : p.plate;
   return (
     <Host colorScheme={room} style={{ position: "absolute", width: 0, height: 0 }}>
       <BottomSheet
@@ -175,7 +175,7 @@ export function Sheet({
           modifiers={[
             presentationDragIndicator("visible"),
             // iOS's dark glass is a cool grey; at night the sheet takes the room's own warm colour.
-            ...(room === "dark" ? [presentationBackground(p.sheet)] : []),
+            ...(room === "dark" ? [presentationBackground(p["sheet-raised"])] : []),
             ...detents,
           ]}
         >

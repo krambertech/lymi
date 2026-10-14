@@ -236,6 +236,9 @@ msgstr "{due, plural, one {картка до повторення} few {карт
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Запам’ятовування пораховано лише за # повторенням, тож перші кілька тижнів воно може сильно коливатися.} few {Запам’ятовування пораховано лише за # повтореннями, тож перші кілька тижнів воно може сильно коливатися.} many {Запам’ятовування пораховано лише за # повтореннями, тож перші кілька тижнів воно може сильно коливатися.} other {Запам’ятовування пораховано лише за # повторення, тож перші кілька тижнів воно може сильно коливатися.}}"
 
+msgid "{hiddenSections, plural, one {Show # more} other {Show # more}}"
+msgstr ""
+
 msgid "{hours, plural, one {in # hour} other {in # hours}}"
 msgstr "{hours, plural, one {через # годину} few {через # години} many {через # годин} other {через # години}}"
 
@@ -298,6 +301,12 @@ msgstr "{to, plural, one {# повторення сьогодні} few {# пов
 
 msgid "{to, plural, one {review today} other {reviews today}}"
 msgstr "{to, plural, one {повторення сьогодні} few {повторення сьогодні} many {повторень сьогодні} other {повторення сьогодні}}"
+
+msgid "{total, plural, one {{shown} of # card} other {{shown} of # cards}}"
+msgstr ""
+
+msgid "{total, plural, one {# card} other {# cards}}"
+msgstr ""
 
 msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
 msgstr ""
@@ -473,9 +482,6 @@ msgstr ""
 msgid "Another way"
 msgstr "Інший спосіб"
 
-msgid "Any"
-msgstr ""
-
 msgid "Any time"
 msgstr "Будь-коли"
 
@@ -563,9 +569,6 @@ msgstr ""
 
 msgid "Back"
 msgstr "Назад"
-
-msgid "Back to Filter"
-msgstr ""
 
 msgid "Back to Library"
 msgstr "До Бібліотеки"
@@ -2018,6 +2021,9 @@ msgstr "Перейменувати серію"
 
 msgid "Replay pronunciation"
 msgstr "Відтворити вимову ще раз"
+
+msgid "Reset"
+msgstr ""
 
 msgid "Reset your password"
 msgstr "Новий пароль"

@@ -45,6 +45,8 @@ interface SheetProps {
   title?: string;
   /** One or two sentences under the title, on the same line as the title and the rows' labels. */
   description?: ReactNode;
+  /** A quiet action at the title's end, such as Reset. */
+  aside?: ReactNode;
   /**
    * A sheet that saves: close at the start and an amber ✓ at the end, the title between them, as
    * every form has. Close and a swipe leave without saving.
@@ -66,6 +68,7 @@ export function Sheet({
   onDismiss,
   title,
   description,
+  aside,
   save,
   children,
   more,
@@ -107,13 +110,15 @@ export function Sheet({
     </View>
   ) : (
     title && (
-      <Text
-        className={`text-lg font-medium text-text ${description ? "pb-1.5" : "pb-3"}`}
+      <View
+        className={`flex-row items-center gap-3 ${description ? "pb-1.5" : "pb-3"}`}
         style={{ paddingStart: inset }}
-        accessibilityRole="header"
       >
-        {title}
-      </Text>
+        <Text className="flex-1 text-lg font-medium text-text" accessibilityRole="header">
+          {title}
+        </Text>
+        {aside}
+      </View>
     )
   );
   const first = (
@@ -154,7 +159,9 @@ export function Sheet({
               >
                 <View onLayout={(e) => setPeek(e.nativeEvent.layout.height + 56)}>{first}</View>
                 <View className="gap-3 pt-3">
-                  <OnGlass>{more}</OnGlass>
+                  <SheetInset.Provider value={inset}>
+                    <OnGlass>{more}</OnGlass>
+                  </SheetInset.Provider>
                 </View>
               </ScrollView>
             </RNHostView>
@@ -174,6 +181,20 @@ export function Sheet({
         </Group>
       </BottomSheet>
     </Host>
+  );
+}
+
+/** A name over a group, on the sheet's text line. */
+export function SheetHeading({ children }: { children: string }) {
+  const inset = useContext(SheetInset);
+  return (
+    <Text
+      className="-mb-1 pt-2 text-md font-semibold text-text"
+      style={{ paddingStart: inset }}
+      accessibilityRole="header"
+    >
+      {children}
+    </Text>
   );
 }
 
@@ -242,6 +263,8 @@ interface SheetRowProps {
   detail?: string | undefined;
   /** Archive, Remove or Leave: red. */
   destructive?: boolean | undefined;
+  /** A short figure at the row's end, such as how many cards a filter keeps. */
+  value?: string | undefined;
   /** In a choice list: whether this is the current one, marked with a check. */
   chosen?: boolean | undefined;
   /** One of several that can be chosen together: a checkbox rather than a radio. */
@@ -260,6 +283,7 @@ export function SheetRow({
   label,
   icon,
   detail,
+  value,
   destructive = false,
   chosen,
   multiple = false,
@@ -304,6 +328,11 @@ export function SheetRow({
         </Text>
         {detail && <Text className="text-sm text-muted">{detail}</Text>}
       </View>
+      {value !== undefined && (
+        <Text className="text-md text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+          {value}
+        </Text>
+      )}
       {opens && <Icon name="forward" size={18} colour={p.muted} />}
     </Pressable>
   );

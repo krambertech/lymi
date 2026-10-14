@@ -236,6 +236,9 @@ msgstr "{due, plural, one {card to review} other {cards to review}}"
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 
+msgid "{hiddenSections, plural, one {Show # more} other {Show # more}}"
+msgstr "{hiddenSections, plural, one {Show # more} other {Show # more}}"
+
 msgid "{hours, plural, one {in # hour} other {in # hours}}"
 msgstr "{hours, plural, one {in # hour} other {in # hours}}"
 
@@ -298,6 +301,12 @@ msgstr "{to, plural, one {# review today} other {# reviews today}}"
 
 msgid "{to, plural, one {review today} other {reviews today}}"
 msgstr "{to, plural, one {review today} other {reviews today}}"
+
+msgid "{total, plural, one {{shown} of # card} other {{shown} of # cards}}"
+msgstr "{total, plural, one {{shown} of # card} other {{shown} of # cards}}"
+
+msgid "{total, plural, one {# card} other {# cards}}"
+msgstr "{total, plural, one {# card} other {# cards}}"
 
 msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
 msgstr "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
@@ -473,9 +482,6 @@ msgstr "anna@example.com"
 msgid "Another way"
 msgstr "Another way"
 
-msgid "Any"
-msgstr "Any"
-
 msgid "Any time"
 msgstr "Any time"
 
@@ -563,9 +569,6 @@ msgstr "Automatically"
 
 msgid "Back"
 msgstr "Back"
-
-msgid "Back to Filter"
-msgstr "Back to Filter"
 
 msgid "Back to Library"
 msgstr "Back to Library"
@@ -2018,6 +2021,9 @@ msgstr "Rename series"
 
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
+
+msgid "Reset"
+msgstr "Reset"
 
 msgid "Reset your password"
 msgstr "Reset your password"

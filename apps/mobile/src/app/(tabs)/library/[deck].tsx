@@ -16,14 +16,13 @@ import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
-import { Pressable, type TextStyle, View } from "react-native";
+import { type TextStyle, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDeckExits } from "../../../data/decks";
 import { moveBack } from "../../../data/move-undo";
 import { useNextDue } from "../../../data/next-due";
 import { useDeckCards, useDecks, useSections, useSeriesList } from "../../../data/queries";
 import { useMoveNotice, useSeriesActions } from "../../../data/series";
-import { formatList } from "../../../i18n/list";
 import {
   ReadyNote,
   SectionHeading,
@@ -40,7 +39,8 @@ import { Select } from "../../../ui/menu";
 import { OfflineNote } from "../../../ui/offline-note";
 import { Button, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
 import { BarButton, Screen } from "../../../ui/screen";
-import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
+import { Segmented } from "../../../ui/segmented";
+import { Sheet, SheetGroup, SheetHeading, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { StateIcon, stateMarks } from "../../../ui/state-mark";
 import { setDeckReviewHidden } from "../../../ui/tab-bar";
@@ -226,6 +226,8 @@ export default function Deck() {
               sections={sections}
               filters={filters}
               setFilters={setFilters}
+              count={(f) => filterRows(rows, f, "", Date.now(), sections).length}
+              total={rows.length}
               sort={sort}
               setSort={setSort}
             />
@@ -362,30 +364,33 @@ function ReviewButton({ deck }: { deck: DeckData }) {
 }
 
 /**
- * Filter and Sort over the list: Filter is one sheet that lists what can be filtered by, each
- * opening its values in place and staying open while choosing, each active filter a chip that
- * removes it. Both reset when the learner leaves the deck.
+ * Filter and Sort over the list. Filter is one sheet with every filter on it: each tap saves to a
+ * draft and the count under the title answers it, and the list changes once, as the sheet goes.
+ * Each active filter is a chip that removes it. Both reset when the learner leaves the deck.
  */
 function Tools({
   sections,
   filters,
   setFilters,
+  count,
+  total,
   sort,
   setSort,
 }: {
   sections: { id: string; name: string }[];
   filters: DeckFilters;
   setFilters: (f: DeckFilters) => void;
+  /** How many of the deck's cards a set of filters keeps. */
+  count: (f: DeckFilters) => number;
+  total: number;
   sort: DeckSort;
   setSort: (s: DeckSort) => void;
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
   const [choosing, setChoosing] = useState(false);
-  // Filter lists what can be filtered by; each opens its values in the same sheet.
-  const [level, setLevel] = useState<"state" | "due" | "section" | null>(null);
-  const levelName = { state: t`State`, due: t`Due`, section: t`Section` };
-  const list = (items: string[]) => formatList(items, i18n.locale);
+  const [draft, setDraft] = useState<DeckFilters>(filters);
+  const [allSections, setAllSections] = useState(false);
   const sortName: Record<DeckSort, string> = {
     section: t`Section`,
     due: t`When it’s back`,
@@ -418,6 +423,21 @@ function Tools({
       remove: () => setFilters({ ...filters, sections: toggle(filters.sections, sid) }),
     })),
   ];
+  const open = () => {
+    setDraft(filters);
+    setAllSections(false);
+    setChoosing(true);
+  };
+  const drafted = draft.states.length > 0 || draft.due !== null || draft.sections.length > 0;
+  const kept = count(draft);
+  const shown = i18n.number(kept);
+  const counted = drafted
+    ? plural(total, { one: `${shown} of # card`, other: `${shown} of # cards` })
+    : plural(total, { one: "# card", other: "# cards" });
+  const sectionIds = [...sections.map((s) => s.id), ""];
+  // Past five a long list of lessons would push everything under the fold.
+  const visibleSections = allSections ? sectionIds : sectionIds.slice(0, 5);
+  const hiddenSections = sectionIds.length - visibleSections.length;
   const pill = (icon: "filter" | "sort", label: string, on = false) => {
     const Glyph = icon === "filter" ? ListFilter : ArrowUpDown;
     return (
@@ -435,11 +455,7 @@ function Tools({
   return (
     <View className="gap-2.5">
       <View className="flex-row flex-wrap items-center gap-2">
-        <Press
-          onPress={() => setChoosing(true)}
-          accessibilityRole="button"
-          accessibilityLabel={t`Filter`}
-        >
+        <Press onPress={open} accessibilityRole="button" accessibilityLabel={t`Filter`}>
           {pill("filter", chips.length ? t`Filter · ${chips.length}` : t`Filter`, chips.length > 0)}
         </Press>
         <Select
@@ -465,88 +481,72 @@ function Tools({
           );
         })}
       </View>
-      <Sheet open={choosing} onOpenChange={setChoosing} onDismiss={() => setLevel(null)}>
-        {/* One header for both levels, so the title never moves as a level opens. Inside a
-            native sheet only React Native's own Pressable takes a tap, as SheetRow's does. */}
-        <Pressable
-          disabled={!level}
-          onPress={() => setLevel(null)}
-          accessibilityRole={level ? "button" : "header"}
-          accessibilityLabel={level ? t`Back to Filter` : t`Filter`}
-          className="self-start ps-4 pe-3"
-        >
-          {/* The chevron sits in the inset, so the title starts at the same place at both levels. */}
-          {level && (
-            <View className="absolute start-0 top-0 h-7 justify-center">
-              <Icon name="back" size={16} colour={p["text-2"]} />
-            </View>
-          )}
-          <Text className="text-lg font-medium text-text">
-            {level ? levelName[level] : t`Filter`}
-          </Text>
-        </Pressable>
-        {level === null ? (
-          <SheetGroup>
+      <Sheet
+        title={t`Filter`}
+        description={counted}
+        aside={
+          drafted && (
+            <Press
+              onPress={() => setDraft(noFilters)}
+              accessibilityRole="button"
+              className="h-11 justify-center px-2"
+            >
+              <Text className="text-md font-medium text-text">{t`Reset`}</Text>
+            </Press>
+          )
+        }
+        open={choosing}
+        onOpenChange={setChoosing}
+        onDismiss={() => {
+          if (JSON.stringify(draft) !== JSON.stringify(filters)) setFilters(draft);
+        }}
+      >
+        <SheetHeading>{t`State`}</SheetHeading>
+        <SheetGroup>
+          {(["new", "learning", "known"] as const).map((s) => (
             <SheetRow
-              label={levelName.state}
-              detail={
-                filters.states.length
-                  ? list(filters.states.map((s) => i18n._(stateMarks[s].groupLabel)))
-                  : t`Any`
-              }
-              opens
-              onPress={() => setLevel("state")}
+              key={s}
+              label={i18n._(stateMarks[s].groupLabel)}
+              value={i18n.number(count({ ...draft, states: [s] }))}
+              chosen={draft.states.includes(s)}
+              multiple
+              onPress={() => setDraft({ ...draft, states: toggle(draft.states, s) })}
             />
-            <SheetRow
-              label={levelName.due}
-              detail={filters.due ? dueName[filters.due] : t`Any time`}
-              opens
-              onPress={() => setLevel("due")}
-            />
-            {sections.length > 0 && (
-              <SheetRow
-                label={levelName.section}
-                detail={filters.sections.length ? list(filters.sections.map(sectionName)) : t`Any`}
-                opens
-                onPress={() => setLevel("section")}
-              />
-            )}
-          </SheetGroup>
-        ) : level === "state" ? (
-          <SheetGroup>
-            {(["new", "learning", "known"] as const).map((s) => (
-              <SheetRow
-                key={s}
-                label={i18n._(stateMarks[s].groupLabel)}
-                chosen={filters.states.includes(s)}
-                multiple
-                onPress={() => setFilters({ ...filters, states: toggle(filters.states, s) })}
-              />
-            ))}
-          </SheetGroup>
-        ) : level === "due" ? (
-          <SheetGroup>
-            {([null, "today", "week"] as const).map((d) => (
-              <SheetRow
-                key={d ?? "any"}
-                label={d ? dueName[d] : t`Any time`}
-                chosen={filters.due === d}
-                onPress={() => setFilters({ ...filters, due: d })}
-              />
-            ))}
-          </SheetGroup>
-        ) : (
-          <SheetGroup>
-            {[...sections.map((s) => s.id), ""].map((sid) => (
-              <SheetRow
-                key={sid || "none"}
-                label={sectionName(sid)}
-                chosen={filters.sections.includes(sid)}
-                multiple
-                onPress={() => setFilters({ ...filters, sections: toggle(filters.sections, sid) })}
-              />
-            ))}
-          </SheetGroup>
+          ))}
+        </SheetGroup>
+        <SheetHeading>{t`Due`}</SheetHeading>
+        <Segmented
+          label={t`Due`}
+          value={draft.due ?? "any"}
+          options={[
+            { value: "any", label: t`Any time` },
+            { value: "today", label: t`Today` },
+            { value: "week", label: t`This week` },
+          ]}
+          onChange={(v) => setDraft({ ...draft, due: v === "any" ? null : v })}
+        />
+        {sections.length > 0 && (
+          <>
+            <SheetHeading>{t`Section`}</SheetHeading>
+            <SheetGroup>
+              {visibleSections.map((sid) => (
+                <SheetRow
+                  key={sid || "none"}
+                  label={sectionName(sid)}
+                  value={i18n.number(count({ ...draft, sections: [sid] }))}
+                  chosen={draft.sections.includes(sid)}
+                  multiple
+                  onPress={() => setDraft({ ...draft, sections: toggle(draft.sections, sid) })}
+                />
+              ))}
+              {hiddenSections > 0 && (
+                <SheetRow
+                  label={plural(hiddenSections, { one: "Show # more", other: "Show # more" })}
+                  onPress={() => setAllSections(true)}
+                />
+              )}
+            </SheetGroup>
+          </>
         )}
       </Sheet>
     </View>

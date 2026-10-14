@@ -236,6 +236,9 @@ msgstr "{due, plural, one {карточка к повторению} few {кар
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Показатель запоминания основан всего на # повторении, поэтому первые несколько недель он может сильно колебаться.} few {Показатель запоминания основан всего на # повторениях, поэтому первые несколько недель он может сильно колебаться.} many {Показатель запоминания основан всего на # повторениях, поэтому первые несколько недель он может сильно колебаться.} other {Показатель запоминания основан всего на # повторения, поэтому первые несколько недель он может сильно колебаться.}}"
 
+msgid "{hiddenSections, plural, one {Show # more} other {Show # more}}"
+msgstr ""
+
 msgid "{hours, plural, one {in # hour} other {in # hours}}"
 msgstr "{hours, plural, one {через # час} few {через # часа} many {через # часов} other {через # часа}}"
 
@@ -298,6 +301,12 @@ msgstr "{to, plural, one {# повторение сегодня} few {# повт
 
 msgid "{to, plural, one {review today} other {reviews today}}"
 msgstr "{to, plural, one {повторение сегодня} few {повторения сегодня} many {повторений сегодня} other {повторения сегодня}}"
+
+msgid "{total, plural, one {{shown} of # card} other {{shown} of # cards}}"
+msgstr ""
+
+msgid "{total, plural, one {# card} other {# cards}}"
+msgstr ""
 
 msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
 msgstr ""
@@ -473,9 +482,6 @@ msgstr ""
 msgid "Another way"
 msgstr "Другой способ"
 
-msgid "Any"
-msgstr ""
-
 msgid "Any time"
 msgstr "В любое время"
 
@@ -563,9 +569,6 @@ msgstr ""
 
 msgid "Back"
 msgstr "Назад"
-
-msgid "Back to Filter"
-msgstr ""
 
 msgid "Back to Library"
 msgstr "В Библиотеку"
@@ -2018,6 +2021,9 @@ msgstr "Переименовать серию"
 
 msgid "Replay pronunciation"
 msgstr "Воспроизвести произношение ещё раз"
+
+msgid "Reset"
+msgstr ""
 
 msgid "Reset your password"
 msgstr "Новый пароль"

@@ -7,9 +7,10 @@ import { type Href, useRouter } from "expo-router";
 import { Alert, View } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import { usePalette } from "../theme/palette";
+import { ActionMenu } from "../ui/action-menu";
 import { Icon } from "../ui/icons";
-import { DropdownMenu, type MenuItem } from "../ui/menu";
-import { Button, IconButton, Text } from "../ui/primitives";
+import type { MenuItem } from "../ui/menu";
+import { Button, Text } from "../ui/primitives";
 
 /**
  * Starting a section, as the web's deck page does: one with locked sections before it asks first,
@@ -248,18 +249,12 @@ export function SectionHeading({
         )}
       </View>
       {items.length > 0 && (
-        <DropdownMenu
-          title={sectionName}
+        <ActionMenu
           items={items}
-          trigger={(open) => (
-            <IconButton
-              icon="more"
-              size="sm"
-              label={t`Options for ${sectionName}`}
-              disabled={starting}
-              onPress={open}
-            />
-          )}
+          label={t`Options for ${sectionName}`}
+          symbol="ellipsis"
+          look="row"
+          disabled={starting}
         />
       )}
     </View>

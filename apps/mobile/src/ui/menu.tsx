@@ -7,8 +7,8 @@ import { Icon, type IconName } from "./icons";
 import { Press, Text } from "./primitives";
 import { Sheet, SheetGroup, SheetRow } from "./sheet";
 
-// A menu rises from the bottom edge as a sheet, as the web's does on touch: iOS's glass, Lymi's
-// rows. overlays.md "Menus"; phone.md "Sheets".
+// A choice rises from the bottom edge as a sheet: iOS's glass, Lymi's rows. Commands from a button are
+// iOS's own menu, in action-menu.tsx. phone.md "Menus" and "Sheets".
 
 export interface MenuItem {
   label: string;
@@ -43,42 +43,6 @@ function useMenuSheet(onClosed?: () => void) {
       </Sheet>
     ),
   };
-}
-
-interface DropdownMenuProps {
-  /** Lymi's own control; call `open` from its press. */
-  trigger: (open: () => void) => ReactNode;
-  /** Over the rows; a card's term, say. Left out, the sheet has no title. */
-  title?: string;
-  /** Rows, or groups of rows, each group its own plate. */
-  items: MenuItem[] | MenuItem[][];
-}
-
-/** A list of actions from a button. */
-export function DropdownMenu({ trigger, title, items }: DropdownMenuProps) {
-  const menu = useMenuSheet();
-  const groups = (Array.isArray(items[0]) ? items : [items]) as MenuItem[][];
-  return (
-    <>
-      {trigger(menu.show)}
-      {menu.sheet(
-        title,
-        groups.map((group) => (
-          <SheetGroup key={group.map((i) => i.label).join()}>
-            {group.map((item) => (
-              <SheetRow
-                key={item.label}
-                label={item.label}
-                icon={item.icon}
-                destructive={item.destructive}
-                onPress={() => menu.choose(item.onSelect)}
-              />
-            ))}
-          </SheetGroup>
-        )),
-      )}
-    </>
-  );
 }
 
 interface SelectProps<T extends string> {

@@ -11,9 +11,9 @@ import { TextInput, View } from "react-native";
 import { useDecks, useSections } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { inputCap } from "../../../theme/type";
+import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
-import { DropdownMenu } from "../../../ui/menu";
-import { Button, IconButton, Plate, Text } from "../../../ui/primitives";
+import { Button, Plate, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
 import { Sheet, SheetError, SheetGroup, SheetNote, SheetRow } from "../../../ui/sheet";
@@ -196,8 +196,7 @@ export default function DeckSections() {
                     {plural(section.total, { one: "# card", other: "# cards" })}
                   </Text>
                 </View>
-                <DropdownMenu
-                  title={sectionName}
+                <ActionMenu
                   items={[
                     [
                       {
@@ -233,14 +232,9 @@ export default function DeckSections() {
                       },
                     ],
                   ]}
-                  trigger={(open) => (
-                    <IconButton
-                      icon="more"
-                      size="sm"
-                      label={t`Options for ${sectionName}`}
-                      onPress={open}
-                    />
-                  )}
+                  label={t`Options for ${sectionName}`}
+                  symbol="ellipsis"
+                  look="row"
                 />
               </View>
             );

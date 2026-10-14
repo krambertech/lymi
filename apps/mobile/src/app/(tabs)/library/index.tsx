@@ -13,14 +13,13 @@ import { useArchivedDecks, useDecks, useSeriesList } from "../../../data/queries
 import { useSeriesActions } from "../../../data/series";
 import { useOnline } from "../../../streak/goal-picker";
 import { usePalette } from "../../../theme/palette";
+import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
 import { ListRow, ListRowFace, listRowLabel } from "../../../ui/list-row";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
-import { DropdownMenu } from "../../../ui/menu";
-import { MorphMenu } from "../../../ui/morph-menu";
 import { OfflineNote } from "../../../ui/offline-note";
 import { openWeb } from "../../../ui/on-the-web";
-import { Icon, IconButton, Plate, Press, Text } from "../../../ui/primitives";
+import { Icon, Plate, Press, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { BarButton, Screen } from "../../../ui/screen";
 import { Skeleton } from "../../../ui/skeleton";
@@ -50,8 +49,10 @@ export default function Library() {
       actions={
         <>
           <BarButton icon="search" label={t`Search`} onPress={() => router.push("/search")} />
-          <MorphMenu
+          <ActionMenu
             label={t`Add`}
+            symbol="plus"
+            look="primary"
             items={[
               { label: t`Add a card`, icon: "plus", onSelect: () => router.push("/capture") },
               { label: t`New deck`, icon: "deck", onSelect: newDeck },
@@ -213,11 +214,10 @@ function SeriesMenu({
   const needsConnection = (then: () => void) => () =>
     online ? then() : Alert.alert(t`Changing series needs a connection.`);
   return (
-    <DropdownMenu
-      title={seriesName}
-      trigger={(open) => (
-        <IconButton icon="more" label={t`Options for ${seriesName}`} size="sm" onPress={open} />
-      )}
+    <ActionMenu
+      label={t`Options for ${seriesName}`}
+      symbol="ellipsis"
+      look="row"
       items={[
         [
           {

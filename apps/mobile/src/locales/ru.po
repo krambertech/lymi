@@ -709,9 +709,6 @@ msgstr "Убрать изображение"
 msgid "Close"
 msgstr "Закрыть"
 
-msgid "Close menu"
-msgstr "Закрыть меню"
-
 msgid "Close search"
 msgstr "Закрыть поиск"
 
@@ -937,9 +934,6 @@ msgstr "Дневная цель достигнута."
 
 msgid "Daily goal saved."
 msgstr "Дневная цель сохранена."
-
-msgid "Daily reminder"
-msgstr "Ежедневное напоминание"
 
 msgctxt "language"
 msgid "Danish"

@@ -4,9 +4,10 @@ import { Alert, TextInput, View } from "react-native";
 import { Flame } from "../../brand/flame";
 import { usePalette } from "../../theme/palette";
 import { inputCap } from "../../theme/type";
+import { ActionMenu } from "../../ui/action-menu";
 import { GlassButton, GlassPill } from "../../ui/glass";
 import { Icon } from "../../ui/icons";
-import { DropdownMenu, Select } from "../../ui/menu";
+import { Select } from "../../ui/menu";
 import { Button, IconButton, Text } from "../../ui/primitives";
 import { Sheet, SheetGroup, SheetRow } from "../../ui/sheet";
 import { Toast } from "../../ui/toast";
@@ -274,26 +275,19 @@ export function Sheets() {
       </Sub>
       <Sub
         title="Menu"
-        note="A list of actions from a button, most used first. A removal sits last, in a red group of its own. The same thing has the same rows wherever its menu opens."
-        source="src/ui/menu.tsx"
+        note="Commands from a button, in iOS's own menu: it grows out of the button, a drag through it picks. Most used first; a removal sits last, in a red group of its own. A choice that needs a second line, a long list or a search is a sheet instead."
+        source="src/ui/action-menu.tsx"
       >
         <Variants
           items={[
             {
-              label: "From an icon button",
+              label: "From a bar button",
               note: `Tap it. Last chosen: ${menuLast}.`,
               render: () => (
                 <Row>
-                  <DropdownMenu
-                    title="hämarik"
-                    trigger={(open) => (
-                      <IconButton
-                        icon="more"
-                        label="Card options"
-                        variant="secondary"
-                        onPress={open}
-                      />
-                    )}
+                  <ActionMenu
+                    label="Card options"
+                    symbol="ellipsis"
                     items={[
                       [
                         { label: "Edit card", icon: "edit", onSelect: () => setMenuLast("Edit") },
@@ -307,6 +301,23 @@ export function Sheets() {
                           onSelect: () => setMenuLast("Archive"),
                         },
                       ],
+                    ]}
+                  />
+                  <ActionMenu
+                    label="Add"
+                    symbol="plus"
+                    look="primary"
+                    items={[
+                      { label: "Add a card", icon: "plus", onSelect: () => setMenuLast("Add") },
+                      { label: "New deck", icon: "deck", onSelect: () => setMenuLast("Deck") },
+                    ]}
+                  />
+                  <ActionMenu
+                    label="Section options"
+                    symbol="ellipsis"
+                    look="row"
+                    items={[
+                      { label: "Rename", icon: "edit", onSelect: () => setMenuLast("Rename") },
                     ]}
                   />
                 </Row>

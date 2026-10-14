@@ -5,10 +5,12 @@ import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
 import { deserializeState } from "@lymi/core";
+import { ARRIVE } from "@lymi/design";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
 import { Alert, Image, View } from "react-native";
+import Animated, { FadeOut, LinearTransition, ZoomIn } from "react-native-reanimated";
 import { useSessionHeaders } from "../../../../auth/client";
 import type { FormField } from "../../../../capture/form";
 import { languageName } from "../../../../data/languages";
@@ -16,15 +18,16 @@ import { useDeckCards, useDecks } from "../../../../data/queries";
 import { CardNotes } from "../../../../review/card-notes";
 import { modeLabel } from "../../../../review/modes";
 import { usePronunciation } from "../../../../review/pronounce";
+import { ALWAYS, CROSSFADE, springIn, useReduceMotion } from "../../../../theme/motion";
 import { usePalette } from "../../../../theme/palette";
+import { ActionMenu } from "../../../../ui/action-menu";
 import { SourceChip, StateChip } from "../../../../ui/chip";
 import { EmptyState } from "../../../../ui/empty-state";
 import { GRADES, GradeMark } from "../../../../ui/grade";
 import { Icon, type IconName } from "../../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
-import { DropdownMenu } from "../../../../ui/menu";
 import { Plate, Press, Text } from "../../../../ui/primitives";
-import { BarButton, BarGroup, Screen } from "../../../../ui/screen";
+import { BarGroup, Screen } from "../../../../ui/screen";
 import { Skeleton } from "../../../../ui/skeleton";
 
 const DAY = 86_400_000;
@@ -63,6 +66,7 @@ const startOfDay = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDat
 export default function CardPage() {
   const { t, i18n } = useLingui();
   const p = usePalette();
+  const reduce = useReduceMotion();
   const qc = useQueryClient();
   const router = useRouter();
   const { card: id, deck: deckId } = useLocalSearchParams<{ card: string; deck: string }>();
@@ -361,69 +365,72 @@ export default function CardPage() {
       }
       actions={
         <View className="flex-row items-center gap-2.5">
-          <DropdownMenu
-            title={card.term}
-            trigger={(open) =>
-              // A set star joins ⋯ in one capsule and unmarks with a tap; unset, it is only in the menu.
-              card.important ? (
-                <BarGroup
-                  items={[
-                    {
-                      icon: "important",
-                      label: t`Unmark important`,
-                      fill: p["amber-mark"],
-                      onPress: () => void writes.setImportant(card, false),
-                    },
-                    { icon: "more", label: t`Card options`, onPress: open },
-                  ]}
-                />
-              ) : (
-                <BarButton icon="more" label={t`Card options`} onPress={open} />
-              )
-            }
-            items={[
-              [
-                ...(pronounce
+          {/* A set star stands beside ⋯ and unmarks with a tap; unset, it is only in the menu. */}
+          {card.important && (
+            <Animated.View
+              entering={reduce ? CROSSFADE : springIn(new ZoomIn(), ARRIVE)}
+              exiting={FadeOut.duration(150).reduceMotion(ALWAYS)}
+            >
+              <BarGroup
+                items={[
+                  {
+                    icon: "important",
+                    label: t`Unmark important`,
+                    fill: p["amber-mark"],
+                    onPress: () => void writes.setImportant(card, false),
+                  },
+                ]}
+              />
+            </Animated.View>
+          )}
+          <Animated.View layout={reduce ? undefined : LinearTransition.duration(220)}>
+            <ActionMenu
+              label={t`Card options`}
+              symbol="ellipsis"
+              items={[
+                [
+                  ...(pronounce
+                    ? [
+                        {
+                          label: t`Play pronunciation`,
+                          icon: "pronunciation" as const,
+                          onSelect: pronounce.play,
+                        },
+                      ]
+                    : []),
+                  ...(editable
+                    ? [
+                        {
+                          label: t`Edit card`,
+                          icon: "edit" as const,
+                          onSelect: () => openCard("term"),
+                        },
+                      ]
+                    : []),
+                  {
+                    label: card.important ? t`Unmark important` : t`Mark important`,
+                    icon: "important" as const,
+                    onSelect: () => void writes.setImportant(card, !card.important),
+                  },
+                ],
+                // Archive sits apart, so it is never pressed for its neighbour.
+                ...(owner
                   ? [
-                      {
-                        label: t`Play pronunciation`,
-                        icon: "pronunciation" as const,
-                        onSelect: pronounce.play,
-                      },
+                      [
+                        archived
+                          ? { label: t`Restore card`, icon: "restore" as const, onSelect: restore }
+                          : {
+                              label: t`Archive card`,
+                              icon: "archive" as const,
+                              destructive: true,
+                              onSelect: () => void archive(),
+                            },
+                      ],
                     ]
                   : []),
-                ...(editable
-                  ? [
-                      {
-                        label: t`Edit card`,
-                        icon: "edit" as const,
-                        onSelect: () => openCard("term"),
-                      },
-                    ]
-                  : []),
-                {
-                  label: card.important ? t`Unmark important` : t`Mark important`,
-                  icon: "important" as const,
-                  onSelect: () => void writes.setImportant(card, !card.important),
-                },
-              ],
-              // Archive sits apart, so it is never pressed for its neighbour.
-              ...(owner
-                ? [
-                    [
-                      archived
-                        ? { label: t`Restore card`, icon: "restore" as const, onSelect: restore }
-                        : {
-                            label: t`Archive card`,
-                            icon: "archive" as const,
-                            destructive: true,
-                            onSelect: () => void archive(),
-                          },
-                    ],
-                  ]
-                : []),
-            ]}
-          />
+              ]}
+            />
+          </Animated.View>
         </View>
       }
     >

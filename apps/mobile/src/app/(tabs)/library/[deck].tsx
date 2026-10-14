@@ -32,10 +32,11 @@ import {
 } from "../../../sections/sections";
 import { useOnline } from "../../../streak/goal-picker";
 import { usePalette } from "../../../theme/palette";
+import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
 import { Icon } from "../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
-import { DropdownMenu, Select } from "../../../ui/menu";
+import { Select } from "../../../ui/menu";
 import { OfflineNote } from "../../../ui/offline-note";
 import { Button, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
 import { BarButton, Screen } from "../../../ui/screen";
@@ -106,9 +107,10 @@ export default function Deck() {
               label={t`Search this deck`}
               onPress={() => router.push(`/search?deck=${id}` as Href)}
             />
-            <DropdownMenu
-              title={deck?.name}
-              trigger={(open) => <BarButton icon="more" label={t`Deck options`} onPress={open} />}
+            <ActionMenu
+              label={t`Deck options`}
+              symbol="ellipsis"
+              look="bar"
               items={[
                 [
                   ...(owner

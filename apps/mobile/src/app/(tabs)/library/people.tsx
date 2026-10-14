@@ -17,10 +17,10 @@ import { Alert, Platform, Share, TextInput, View } from "react-native";
 import { useDecks } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { inputCap } from "../../../theme/type";
+import { ActionMenu } from "../../../ui/action-menu";
 import { Chip } from "../../../ui/chip";
 import { Icon } from "../../../ui/icons";
-import { DropdownMenu } from "../../../ui/menu";
-import { Button, IconButton, Plate, Press, Text } from "../../../ui/primitives";
+import { Button, Plate, Press, Text } from "../../../ui/primitives";
 import { Screen } from "../../../ui/screen";
 import { Sheet, SheetError } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
@@ -178,8 +178,7 @@ export default function People() {
                 name={name}
                 line={t`joined ${dayMonth(joined)}`}
                 end={
-                  <DropdownMenu
-                    title={name}
+                  <ActionMenu
                     items={[
                       {
                         label: t`Remove from deck`,
@@ -188,15 +187,10 @@ export default function People() {
                         onSelect: () => askRemove(member),
                       },
                     ]}
-                    trigger={(open) => (
-                      <IconButton
-                        icon="more"
-                        size="sm"
-                        label={t`Options for ${name}`}
-                        disabled={remove.isPending && remove.variables?.userId === member.userId}
-                        onPress={open}
-                      />
-                    )}
+                    label={t`Options for ${name}`}
+                    symbol="ellipsis"
+                    look="row"
+                    disabled={remove.isPending && remove.variables?.userId === member.userId}
                   />
                 }
               />
@@ -213,8 +207,7 @@ export default function People() {
                 end={
                   <View className="flex-row items-center gap-1">
                     <Chip size="sm">{t`Not joined yet`}</Chip>
-                    <DropdownMenu
-                      title={email}
+                    <ActionMenu
                       items={[
                         {
                           label: t`Cancel invitation`,
@@ -223,17 +216,12 @@ export default function People() {
                           onSelect: () => askCancel(invitation),
                         },
                       ]}
-                      trigger={(open) => (
-                        <IconButton
-                          icon="more"
-                          size="sm"
-                          label={t`Options for ${email}`}
-                          disabled={
-                            cancelInvite.isPending && cancelInvite.variables?.id === invitation.id
-                          }
-                          onPress={open}
-                        />
-                      )}
+                      label={t`Options for ${email}`}
+                      symbol="ellipsis"
+                      look="row"
+                      disabled={
+                        cancelInvite.isPending && cancelInvite.variables?.id === invitation.id
+                      }
                     />
                   </View>
                 }

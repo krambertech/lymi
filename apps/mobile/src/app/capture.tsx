@@ -3,28 +3,53 @@ import { api, errorMessage } from "@lymi/client/api";
 import { addInput, clearSent } from "@lymi/client/card-input";
 import { decksQuery, roundsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { modeKey, type ReviewModeKey } from "@lymi/core";
+import { SWAP_IN, SWAP_OUT } from "@lymi/design";
 import { useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { AccessibilityInfo, ScrollView, type TextInput, View } from "react-native";
-import { AddFieldChips, CardFields, useFormFields } from "../capture/card-fields";
+import {
+  AccessibilityInfo,
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  type TextInput,
+  View,
+} from "react-native";
+import Animated, {
+  FadeIn,
+  FadeOut,
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withTiming,
+} from "react-native-reanimated";
+import { CardFields, FORM_FIELD, useFormFields } from "../capture/card-fields";
+import { type ChipKey, markChipUsed, useRecentFirst } from "../capture/chip-order";
+import { ChoicesProvider, useChoices } from "../capture/choices";
 import { EMPTY_FORM, type FormValues } from "../capture/form";
 import { LastAdd } from "../capture/last-add";
 import { type Outcome, type Picture, UNDO_FOR } from "../capture/model";
-import { isTextMode, MODE_LABELS, ModesSheet } from "../capture/modes-sheet";
-import { PictureSheet } from "../capture/picture-sheet";
+import { MODE_LABELS } from "../capture/modes";
+import { CHOICE_PAGES, type ChoiceKind } from "../capture/pages";
+import { useReveal } from "../capture/reveal";
 import { CAPTURE_KEYS, captureStore } from "../data/kept";
 import { useDecks, useSections } from "../data/queries";
+import { timed } from "../theme/motion";
 import { usePalette } from "../theme/palette";
-import { FieldChip, FieldChipFace, FieldChipRow } from "../ui/field-chip";
+import { FieldChip, FieldChipRow } from "../ui/field-chip";
 import { FormHeader } from "../ui/form-header";
 import { GlassPill } from "../ui/glass";
 import { KeyboardRoom } from "../ui/keyboard";
-import { Select } from "../ui/menu";
-import { Icon, Text } from "../ui/primitives";
+import { Icon, Press, Text } from "../ui/primitives";
 import { OnGlass } from "../ui/surface";
+
+// A choice swaps for the card inside the sheet, out and then in, so the two never show together.
+const PAGE_OUT = FadeOut.duration(timed(SWAP_OUT).duration).easing(timed(SWAP_OUT).easing);
+const PAGE_IN = FadeIn.duration(timed(SWAP_IN).duration)
+  .delay((SWAP_IN.delay ?? 0) * 1000)
+  .easing(timed(SWAP_IN).easing);
+const BACK_AFTER = ((SWAP_IN.delay ?? 0) + SWAP_IN.duration) * 1000;
 
 /** Everything typed into the composer, the term to the source. */
 type Draft = FormValues;
@@ -45,37 +70,37 @@ function uploadPicture(cardId: string, picture: Picture) {
     );
 }
 
-/**
- * Add a word, as Linear composes on a phone: the term and the meaning, and the card's other fields
- * as chips over the keyboard. A chip opens its one field in a sheet and then shows what it holds,
- * as the web's FieldChip does. Return in the meaning adds; the sheet stays for the next card,
- * keeping the deck, the AI choice and the source.
- */
+/** Add a word: the term and the meaning, the rest as chips; a choice swaps in for the card. phone.md. */
 export default function Capture() {
+  return (
+    <ChoicesProvider>
+      <Composer />
+    </ChoicesProvider>
+  );
+}
+
+function Composer() {
   const { t, i18n } = useLingui();
   const router = useRouter();
   const qc = useQueryClient();
   const p = usePalette();
-  const params = useLocalSearchParams<{ deck?: string }>();
   const decksQuery_ = useDecks();
   const decks = decksQuery_.data ?? [];
-  const [chosen, setDeck] = useState(
-    () => params.deck ?? captureStore.getString(CAPTURE_KEYS.deck) ?? null,
-  );
-  const deck = decks.find((d) => d.id === chosen) ?? decks[0];
+  const { deckId, sectionId, picture, setPicture, modes, setModes } = useChoices();
+  const deck = decks.find((d) => d.id === deckId) ?? decks[0];
   const deckName = deck?.name ?? "";
+  // Read as a Select's trigger is, so the deck pill and the section chip share that message.
+  const said = (label: string, chosen: string) => t`${label}: ${chosen}`;
+  const deckSaid = said(t`Deck`, deckName);
   const [enrich, setEnrich] = useState(() => captureStore.getBoolean(CAPTURE_KEYS.enrich) ?? true);
   const [draft, setDraft] = useState<Draft>(EMPTY);
   const write = (key: keyof Draft) => (value: string) => setDraft((d) => ({ ...d, [key]: value }));
   const fields = useFormFields(draft);
-  const [picture, setPicture] = useState<Picture | null>(null);
-  const [picturing, setPicturing] = useState(false);
+  const form = useReveal();
+  const recentFirst = useRecentFirst();
   const sections = useSections(deck?.id).data?.sections ?? [];
-  const [sectionId, setSectionId] = useState<string | null>(null);
   const section = sections.find((s) => s.id === sectionId);
-  const [modes, setModes] = useState<ReviewModeKey[] | null>(null);
-  const [asking, setAsking] = useState(false);
-  const deckModes = (deck?.reviewModes ?? []).map(modeKey).filter(isTextMode);
+  const sectionSaid = said(t`Section`, section?.name ?? t`No section`);
   const [error, setError] = useState<string | null>(null);
   const [last, setLast] = useState<Outcome | null>(null);
   const [undoable, setUndoable] = useState(false);
@@ -84,8 +109,27 @@ export default function Capture() {
   // Once the next term is being typed, the line about the last add has done its job.
   const [movedOn, setMovedOn] = useState<Outcome | null>(null);
   const moved = last !== null && movedOn === last;
-  // A sheet's dismissal is still running when it reports closed; focus a frame later or iOS keeps the keyboard down.
-  const focusTerm = () => requestAnimationFrame(() => termRef.current?.focus());
+  const [page, setPage] = useState<ChoiceKind | null>(null);
+  const shown = useSharedValue(1);
+  const cardStyle = useAnimatedStyle(() => ({ opacity: shown.value }));
+  useEffect(() => {
+    shown.value = page
+      ? withTiming(0, timed(SWAP_OUT))
+      : withDelay((SWAP_IN.delay ?? 0) * 1000, withTiming(1, timed(SWAP_IN)));
+  }, [page, shown]);
+  const returning = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => clearTimeout(returning.current ?? undefined), []);
+
+  // The keyboard leaves with the card and comes back once the card is fully back.
+  const open = (kind: ChoiceKind) => {
+    clearTimeout(returning.current ?? undefined);
+    Keyboard.dismiss();
+    setPage(kind);
+  };
+  const back = () => {
+    setPage(null);
+    returning.current = setTimeout(() => termRef.current?.focus(), BACK_AFTER);
+  };
 
   // Each add starts its own five seconds, so a second add keeps its Undo for the full time.
   useEffect(() => {
@@ -193,156 +237,198 @@ export default function Capture() {
     if (!pictureError) void qc.invalidateQueries({ queryKey: [...decksQuery.queryKey] });
   };
 
+  const Page = page && CHOICE_PAGES[page];
   return (
-    <KeyboardRoom>
-      <OnGlass>
-        <FormHeader
-          close={{ label: t`Done`, onPress: () => router.back() }}
-          middle={
-            deck && (
-              <Select
-                label={t`Deck`}
-                value={deck.id}
-                options={decks.map((d) => ({ value: d.id, label: d.name }))}
-                onChange={(id) => {
-                  setDeck(id);
-                  setSectionId(null);
-                  setModes(null);
-                  captureStore.set(CAPTURE_KEYS.deck, id);
-                }}
-                trigger={<GlassPill icon="deck">{deck.name}</GlassPill>}
-                onClosed={focusTerm}
-              />
-            )
-          }
-          action={{
-            icon: "plus",
-            label: t`Add to ${deckName}`,
-            disabled: !draft.term.trim(),
-            onPress: () => void add(),
-          }}
-        />
+    <View className="flex-1">
+      {/* The card stays mounted under its page, so it comes back as it was left. */}
+      <Animated.View
+        style={[StyleSheet.absoluteFill, cardStyle]}
+        pointerEvents={page ? "none" : "auto"}
+        accessibilityElementsHidden={!!page}
+      >
+        <KeyboardRoom>
+          <OnGlass>
+            <FormHeader
+              close={{ label: t`Done`, onPress: () => router.back() }}
+              middle={
+                deck && (
+                  <Press
+                    onPress={() => open("deck")}
+                    accessibilityRole="button"
+                    accessibilityLabel={deckSaid}
+                  >
+                    <GlassPill icon="deck">{deck.name}</GlassPill>
+                  </Press>
+                )
+              }
+              action={{
+                icon: "plus",
+                label: t`Add to ${deckName}`,
+                disabled: !draft.term.trim(),
+                onPress: () => void add(),
+              }}
+            />
 
-        {decksQuery_.isPending ? null : deck ? (
-          <>
-            <ScrollView
-              className="flex-1"
-              contentContainerClassName="gap-3 px-5 pt-4 pb-4"
-              keyboardShouldPersistTaps="always"
-            >
-              <CardFields
-                values={draft}
-                onChange={(field, value) => {
-                  write(field)(value);
-                  if (field === "term" && error) setError(null);
-                  if (field === "term") setMovedOn(last);
-                }}
-                shown={fields.shown}
-                adding={fields.adding}
-                termRef={termRef}
-                submitFrom="meaning"
-                onSubmit={() => void add()}
-                placeholder={{
-                  meaning: enrich ? t`Leave it empty and the AI fills it in` : t`What it means`,
-                }}
-                footer={
-                  error && (
-                    <View
-                      className="flex-row items-center gap-1.5 pt-2"
-                      accessibilityLiveRegion="polite"
-                    >
-                      <Icon name="alert" size={14} colour={p.danger} />
-                      <Text className="flex-1 text-base text-danger">{error}</Text>
-                    </View>
-                  )
-                }
-              />
-            </ScrollView>
-
-            <View className="px-4 pt-1 pb-2">
-              {/* Pinned over the chips, by the keyboard, rather than wherever the fields end. */}
-              {last && !error && !moved && (
-                <LastAdd
-                  last={last}
-                  onUndo={undoable ? undo : undefined}
-                  onRetry={last.kind === "added" && last.picture ? retryPicture : undefined}
-                />
-              )}
-              <FieldChipRow label={t`More about this card`}>
-                <FieldChip
-                  icon="ai"
-                  tone="ai"
-                  on={enrich}
-                  checked={enrich}
-                  accessibilityLabel={t`Fill in the rest with AI`}
-                  onPress={() => {
-                    setEnrich(!enrich);
-                    captureStore.set(CAPTURE_KEYS.enrich, !enrich);
-                  }}
+            {decksQuery_.isPending ? null : deck ? (
+              <>
+                <ScrollView
+                  {...form.scroll}
+                  className="flex-1"
+                  contentContainerClassName="gap-3 px-5 pt-4 pb-4"
+                  keyboardShouldPersistTaps="always"
                 >
-                  {enrich ? t`AI fills in` : t`AI off`}
-                </FieldChip>
-                <AddFieldChips missing={fields.missing} onAdd={fields.add} />
-                {sections.length > 0 && (
-                  <Select
-                    label={t`Section`}
-                    value={sectionId ?? ""}
-                    options={[
-                      { value: "", label: t`No section` },
-                      ...sections.map((s) => ({ value: s.id, label: s.name })),
-                    ]}
-                    onChange={(id) => setSectionId(id || null)}
-                    onClosed={focusTerm}
-                    trigger={
-                      <FieldChipFace icon="section" on={!!section} opens>
-                        {section?.name ?? t`Section`}
-                      </FieldChipFace>
+                  <CardFields
+                    reveal={form.reveal}
+                    values={draft}
+                    onChange={(field, value) => {
+                      write(field)(value);
+                      if (field === "term" && error) setError(null);
+                      if (field === "term") setMovedOn(last);
+                    }}
+                    shown={fields.shown}
+                    adding={fields.adding}
+                    termRef={termRef}
+                    submitFrom="meaning"
+                    onSubmit={() => void add()}
+                    placeholder={{
+                      meaning: enrich ? t`Leave it empty and the AI fills it in` : t`What it means`,
+                    }}
+                    footer={
+                      error && (
+                        <View
+                          className="flex-row items-center gap-1.5 pt-2"
+                          accessibilityLiveRegion="polite"
+                        >
+                          <Icon name="alert" size={14} colour={p.danger} />
+                          <Text className="flex-1 text-base text-danger">{error}</Text>
+                        </View>
+                      )
                     }
                   />
-                )}
-                <FieldChip
-                  icon="picture"
-                  on={!!picture}
-                  accessibilityLabel={t`Picture`}
-                  onPress={() => setPicturing(true)}
-                >
-                  {picture ? t`Picture added` : t`Picture`}
-                </FieldChip>
-                <FieldChip
-                  icon="modes"
-                  on={!!modes}
-                  accessibilityLabel={t`How it’s asked`}
-                  onPress={() => setAsking(true)}
-                >
-                  {modes ? modes.map((m) => i18n._(MODE_LABELS[m])).join(" · ") : t`How it’s asked`}
-                </FieldChip>
-              </FieldChipRow>
-            </View>
-            <ModesSheet
-              open={asking}
-              value={modes}
-              deckModes={deckModes}
-              onChange={setModes}
-              onClose={() => setAsking(false)}
-              onClosed={focusTerm}
-            />
-            <PictureSheet
-              open={picturing}
-              value={picture}
-              onChange={setPicture}
-              onClose={() => setPicturing(false)}
-              onClosed={focusTerm}
-            />
-          </>
-        ) : (
-          <View className="flex-row items-start gap-2 px-5 pt-4">
-            <Icon name="alert" size={16} colour={p.muted} />
-            <Text className="flex-1 text-base text-muted">
-              {t`Create a deck on the web first, then add cards here.`}
-            </Text>
-          </View>
-        )}
-      </OnGlass>
-    </KeyboardRoom>
+                </ScrollView>
+
+                <View className="px-4 pt-1 pb-2">
+                  {/* Pinned over the chips, by the keyboard, rather than wherever the fields end. */}
+                  {last && !error && !moved && (
+                    <LastAdd
+                      last={last}
+                      onUndo={undoable ? undo : undefined}
+                      onRetry={last.kind === "added" && last.picture ? retryPicture : undefined}
+                    />
+                  )}
+                  <FieldChipRow label={t`More about this card`}>
+                    <FieldChip
+                      icon="ai"
+                      tone="ai"
+                      on={enrich}
+                      checked={enrich}
+                      accessibilityLabel={t`Fill in the rest with AI`}
+                      onPress={() => {
+                        setEnrich(!enrich);
+                        captureStore.set(CAPTURE_KEYS.enrich, !enrich);
+                      }}
+                    >
+                      {enrich ? t`AI fills in` : t`AI off`}
+                    </FieldChip>
+                    {recentFirst([
+                      ...fields.missing.map((f) => ({
+                        key: f as ChipKey,
+                        chip: (
+                          <FieldChip
+                            key={f}
+                            icon={FORM_FIELD[f].icon}
+                            onPress={() => {
+                              markChipUsed(f);
+                              fields.add(f);
+                            }}
+                          >
+                            {i18n._(FORM_FIELD[f].label)}
+                          </FieldChip>
+                        ),
+                      })),
+                      ...(sections.length > 0
+                        ? [
+                            {
+                              key: "section" as const,
+                              chip: (
+                                <FieldChip
+                                  key="section"
+                                  icon="section"
+                                  on={!!section}
+                                  opens
+                                  accessibilityLabel={sectionSaid}
+                                  onPress={() => {
+                                    markChipUsed("section");
+                                    open("section");
+                                  }}
+                                >
+                                  {section?.name ?? t`Section`}
+                                </FieldChip>
+                              ),
+                            },
+                          ]
+                        : []),
+                      {
+                        key: "picture" as const,
+                        chip: (
+                          <FieldChip
+                            key="picture"
+                            icon="picture"
+                            on={!!picture}
+                            accessibilityLabel={t`Picture`}
+                            onPress={() => {
+                              markChipUsed("picture");
+                              open("picture");
+                            }}
+                          >
+                            {picture ? t`Picture added` : t`Picture`}
+                          </FieldChip>
+                        ),
+                      },
+                      {
+                        key: "modes" as const,
+                        chip: (
+                          <FieldChip
+                            key="modes"
+                            icon="modes"
+                            on={!!modes}
+                            accessibilityLabel={t`How it’s asked`}
+                            onPress={() => {
+                              markChipUsed("modes");
+                              open("modes");
+                            }}
+                          >
+                            {modes
+                              ? modes.map((m) => i18n._(MODE_LABELS[m])).join(" · ")
+                              : t`How it’s asked`}
+                          </FieldChip>
+                        ),
+                      },
+                    ]).map((c) => c.chip)}
+                  </FieldChipRow>
+                </View>
+              </>
+            ) : (
+              <View className="flex-row items-start gap-2 px-5 pt-4">
+                <Icon name="alert" size={16} colour={p.muted} />
+                <Text className="flex-1 text-base text-muted">
+                  {t`Create a deck on the web first, then add cards here.`}
+                </Text>
+              </View>
+            )}
+          </OnGlass>
+        </KeyboardRoom>
+      </Animated.View>
+      {Page && (
+        <Animated.View
+          key={page}
+          style={StyleSheet.absoluteFill}
+          entering={PAGE_IN}
+          exiting={PAGE_OUT}
+        >
+          <Page onBack={back} />
+        </Animated.View>
+      )}
+    </View>
   );
 }

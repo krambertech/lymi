@@ -2,18 +2,33 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { cardLimits } from "@lymi/core";
+import { PLATE_ARRIVE, PLATE_RISE } from "@lymi/design";
 import { type ReactNode, type RefObject, useEffect, useRef, useState } from "react";
 import { TextInput, View } from "react-native";
+import Animated, { Keyframe, LinearTransition } from "react-native-reanimated";
+import { ALWAYS, CROSSFADE, timed, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { FieldChip } from "../ui/field-chip";
 import type { IconName } from "../ui/icons";
 import { Icon } from "../ui/primitives";
+import { markChipUsed, useRecentFirst } from "./chip-order";
 import { FieldName } from "./composer-field";
 import { FORM_FIELDS, type FormField, type FormValues } from "./form";
 
 /** Always on the form; the rest show once they hold something or a chip adds them. */
 const CORE: readonly FormField[] = ["term", "meaning"];
+
+// A field a chip adds arrives as a plate does, once the fields after it have made room. motion.md.
+const { duration, easing } = timed(PLATE_ARRIVE);
+const ARRIVE = new Keyframe({
+  0: { opacity: 0, transform: [{ translateY: PLATE_RISE }] },
+  100: { opacity: 1, transform: [{ translateY: 0 }], easing },
+})
+  .duration(duration)
+  .delay(duration / 2)
+  .reduceMotion(ALWAYS);
+const MAKE_ROOM = LinearTransition.duration(duration).easing(easing).reduceMotion(ALWAYS);
 
 export const FORM_FIELD: Record<
   FormField,
@@ -127,6 +142,7 @@ export function CardFields({
   placeholder,
   ai,
   footer,
+  reveal,
 }: {
   values: FormValues;
   onChange: (field: FormField, value: string) => void;
@@ -145,10 +161,15 @@ export function CardFields({
   ai?: (field: FormField) => boolean;
   /** Under the fields: an error, or what the last add did. */
   footer?: ReactNode;
+  /** Brings the field being added or typed in into view within the form's scroll. */
+  reveal?: (y: number, height: number) => void;
 }) {
   const { i18n } = useLingui();
   const p = usePalette();
   const refs = useRef<Partial<Record<FormField, TextInput | null>>>({});
+  const reduce = useReduceMotion();
+  // The field being typed in, so the form keeps it in view as it grows; a chip's field takes focus too.
+  const [typing, setTyping] = useState<FormField | null>(null);
   useEffect(() => {
     if (adding) refs.current[adding]?.focus();
   }, [adding]);
@@ -161,7 +182,16 @@ export function CardFields({
         const submits = f === submitFrom || !next;
         const term = f === "term";
         return (
-          <View key={f}>
+          <Animated.View
+            key={f}
+            entering={f === adding ? (reduce ? CROSSFADE : ARRIVE) : undefined}
+            layout={reduce ? undefined : MAKE_ROOM}
+            // Fires as it grows with each new line too, so the line being typed stays above the keyboard.
+            onLayout={(e) => {
+              if (f === (typing ?? adding ?? focus))
+                reveal?.(e.nativeEvent.layout.y, e.nativeEvent.layout.height);
+            }}
+          >
             <View className="flex-row items-center gap-1.5">
               <FieldName>{label}</FieldName>
               {ai?.(f) && <Icon name="ai" size={12} colour={p.ai} />}
@@ -185,6 +215,7 @@ export function CardFields({
               multiline
               submitBehavior={f === "notes" ? "newline" : "submit"}
               returnKeyType={f === "notes" ? "default" : submits ? "done" : "next"}
+              onFocus={() => setTyping(f)}
               onSubmitEditing={
                 f === "notes"
                   ? undefined
@@ -199,10 +230,10 @@ export function CardFields({
               style={term ? { fontSize: 28, letterSpacing: -0.56 } : { fontSize: 17 }}
               maxFontSizeMultiplier={inputCap(term ? 28 : 17)}
             />
-          </View>
+          </Animated.View>
         );
       })}
-      {footer}
+      {footer && <Animated.View layout={reduce ? undefined : MAKE_ROOM}>{footer}</Animated.View>}
     </>
   );
 }
@@ -216,10 +247,18 @@ export function AddFieldChips({
   onAdd: (field: FormField) => void;
 }) {
   const { i18n } = useLingui();
+  const recentFirst = useRecentFirst();
   return (
     <>
-      {missing.map((f) => (
-        <FieldChip key={f} icon={FORM_FIELD[f].icon} onPress={() => onAdd(f)}>
+      {recentFirst(missing.map((f) => ({ key: f }))).map(({ key: f }) => (
+        <FieldChip
+          key={f}
+          icon={FORM_FIELD[f].icon}
+          onPress={() => {
+            markChipUsed(f);
+            onAdd(f);
+          }}
+        >
           {i18n._(FORM_FIELD[f].label)}
         </FieldChip>
       ))}

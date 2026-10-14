@@ -1,4 +1,4 @@
-import type { Curve, Spring } from "@lymi/design";
+import type { Curve, Spring, Timed } from "@lymi/design";
 import { useSyncExternalStore } from "react";
 import { AccessibilityInfo } from "react-native";
 import { Easing, FadeIn, ReduceMotion } from "react-native-reanimated";
@@ -22,6 +22,15 @@ interface SpringBuilder {
 export function springIn<T extends SpringBuilder>(builder: T, s: Spring): T {
   const { duration, dampingRatio } = spring(s);
   return builder.springify(duration).dampingRatio(dampingRatio).reduceMotion(ReduceMotion.Never);
+}
+
+/** A shared timing as `withTiming` takes it, in milliseconds. */
+export function timed(t: Timed) {
+  return {
+    duration: t.duration * 1000,
+    easing: t.ease === "linear" ? Easing.linear : curve(t.ease),
+    reduceMotion: ReduceMotion.Never,
+  };
 }
 
 /** A shared curve as a Reanimated easing. */

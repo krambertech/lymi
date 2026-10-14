@@ -2,7 +2,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type ReviewModeKey, TEXT_MODES } from "@lymi/core";
-import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
+import { SheetGroup, SheetRow } from "../ui/sheet";
 
 // The labels repeat the web's review-modes.ts because each app has its own catalog (ADR 0012).
 /** What each text mode is called, as on the web (ADR 0014). Picture modes wait for a picture. */
@@ -17,25 +17,14 @@ export function isTextMode(key: ReviewModeKey) {
   return (TEXT_MODES as readonly ReviewModeKey[]).includes(key);
 }
 
-/**
- * How the card is asked: as its deck asks, or in the modes ticked here, at least one. The phone adds
- * no picture, so only the two text modes are offered. ADR 0014.
- */
-export function ModesSheet({
-  open,
-  value,
-  deckModes,
-  onChange,
-  onClose,
-  onClosed,
-}: {
-  open: boolean;
+interface ModesChoicesProps {
   value: ReviewModeKey[] | null;
   deckModes: ReviewModeKey[];
   onChange: (value: ReviewModeKey[] | null) => void;
-  onClose: () => void;
-  onClosed: () => void;
-}) {
+}
+
+/** How the card is asked: the deck's modes, or text modes ticked for this card alone, at least one. ADR 0014. */
+export function ModesChoices({ value, deckModes, onChange }: ModesChoicesProps) {
   const { t, i18n } = useLingui();
   const chosen = value ?? [];
   const toggle = (key: ReviewModeKey) => {
@@ -44,12 +33,7 @@ export function ModesSheet({
     onChange(next.length === 0 ? null : TEXT_MODES.filter((k) => next.includes(k)));
   };
   return (
-    <Sheet
-      open={open}
-      onOpenChange={(o) => !o && onClose()}
-      onDismiss={onClosed}
-      title={t`How it’s asked`}
-    >
+    <>
       <SheetGroup>
         <SheetRow
           label={t`Same as the deck`}
@@ -74,6 +58,6 @@ export function ModesSheet({
           />
         ))}
       </SheetGroup>
-    </Sheet>
+    </>
   );
 }

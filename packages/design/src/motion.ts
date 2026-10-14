@@ -66,3 +66,11 @@ export const CHOICE_LEAVE = { duration: 0.1, ease: EASE_OUT } as const satisfies
 export const CHOICE_FADE = { duration: 0.15, ease: "linear" } as const satisfies Timed;
 
 export const INSTANT = { duration: 0 } as const;
+
+/** A card or plate arriving in place, such as a field a chip adds: a 6 px rise. */
+export const PLATE_ARRIVE = { duration: 0.2, ease: EASE_OUT } as const satisfies Timed;
+export const PLATE_RISE = 6;
+
+/** A sheet's content swapping for a choice and back: out, then in, so the two never show together. */
+export const SWAP_OUT = { duration: 0.12, ease: EASE_OUT } as const satisfies Timed;
+export const SWAP_IN = { duration: 0.18, ease: EASE_OUT, delay: 0.09 } as const satisfies Timed;

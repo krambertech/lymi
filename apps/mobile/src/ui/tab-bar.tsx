@@ -27,7 +27,16 @@ export function setDeckReviewHidden(deckId: string, hidden: boolean) {
   version++;
   for (const l of listeners) l();
 }
-function useDeckReviewHidden(deckId: string | undefined) {
+// The decks whose list is choosing cards: their selection bar owns the space, so no review rides there.
+const selectingDecks = new Set<string>();
+export function setDeckSelecting(deckId: string, selecting: boolean) {
+  if (selectingDecks.has(deckId) === selecting) return;
+  if (selecting) selectingDecks.add(deckId);
+  else selectingDecks.delete(deckId);
+  version++;
+  for (const l of listeners) l();
+}
+function useDeckReviewRides(deckId: string | undefined) {
   useSyncExternalStore(
     (l) => {
       listeners.add(l);
@@ -35,15 +44,15 @@ function useDeckReviewHidden(deckId: string | undefined) {
     },
     () => version,
   );
-  return !!deckId && hiddenDecks.has(deckId);
+  return !!deckId && hiddenDecks.has(deckId) && !selectingDecks.has(deckId);
 }
 
 /** Whether the bar carries a deck's review accessory now, so what floats above the bar clears it. */
 export function useDeckAccessoryShown() {
   const deckId = usePathname().match(/^\/library\/([^/]+)$/)?.[1];
   const due = useDecks().data?.find((d) => d.id === deckId)?.due ?? 0;
-  const hidden = useDeckReviewHidden(deckId);
-  return DECK_ACCESSORY && !!deckId && due > 0 && hidden;
+  const rides = useDeckReviewRides(deckId);
+  return DECK_ACCESSORY && !!deckId && due > 0 && rides;
 }
 
 // The room iOS keeps for its tab bar over the home indicator's inset, which the floating bar sits in,

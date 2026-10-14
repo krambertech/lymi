@@ -4,26 +4,19 @@ import * as ImagePicker from "expo-image-picker";
 import { Image, TextInput, View } from "react-native";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
-import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
+import { SheetGroup, SheetRow } from "../ui/sheet";
 import type { Picture } from "./model";
 
-/**
- * The card's picture: taken or chosen, then described without naming the answer, which is what a
- * screen reader says and what review shows if it cannot load. It is uploaded after the card is added.
- */
-export function PictureSheet({
-  open,
-  value,
-  onChange,
-  onClose,
-  onClosed,
-}: {
-  open: boolean;
+interface PictureChoicesProps {
   value: Picture | null;
   onChange: (value: Picture | null) => void;
-  onClose: () => void;
-  onClosed: () => void;
-}) {
+}
+
+/**
+ * The card's picture, taken or chosen, then described without naming the answer, which is what a
+ * screen reader says and what review shows if it cannot load. It is uploaded after the card is added.
+ */
+export function PictureChoices({ value, onChange }: PictureChoicesProps) {
   const { t } = useLingui();
   const p = usePalette();
   const pick = async (from: "camera" | "library") => {
@@ -50,12 +43,7 @@ export function PictureSheet({
     });
   };
   return (
-    <Sheet
-      open={open}
-      onOpenChange={(o) => !o && onClose()}
-      onDismiss={onClosed}
-      title={t`Picture`}
-    >
+    <>
       {value && (
         <View className="gap-3">
           <Image
@@ -64,7 +52,7 @@ export function PictureSheet({
             resizeMode="cover"
             accessibilityIgnoresInvertColors
           />
-          <View className="rounded-xl bg-glass-plate px-4">
+          <View className="rounded-xl bg-glass-group px-4">
             <TextInput
               value={value.description}
               maxLength={imageLimits.description ?? undefined}
@@ -101,6 +89,6 @@ export function PictureSheet({
           />
         </SheetGroup>
       )}
-    </Sheet>
+    </>
   );
 }

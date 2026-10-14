@@ -11,6 +11,7 @@ Motion conveys state. Every movement answers something the learner did or shows 
 | Tooltip | 120 ms in, 80 out | `ease-out` |
 | Menu on a desktop | 140 ms in, 100 out | `ease-out` |
 | Dialog | 200 ms in, 140 out | `ease-out` |
+| A sheet's content swapping for a choice and back | 120 ms out, then 180 ms in | `ease-out` |
 | Drawer | 450 ms in, up to 320 out | `ease-drawer` |
 | Segmented and pill plate | about 340 ms | spring, a trace of overshoot |
 | Toast | 500 ms | shadcn's ease-out-expo |

@@ -306,7 +306,7 @@ export function SheetRow({
         <Text
           className={`text-md ${chosen ? "font-medium" : ""}`}
           style={{ color: ink }}
-          numberOfLines={1}
+          numberOfLines={2}
         >
           {label}
         </Text>

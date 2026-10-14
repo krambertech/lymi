@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { insightsQuery } from "@lymi/client/queries";
 import { lightLevel, lightReference } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
@@ -51,7 +52,7 @@ function send(name: string, update: () => void) {
   }
 }
 
-function widgetProps(s: Snapshot, images: Images) {
+function widgetProps(s: Snapshot, images: Images, locale?: string) {
   const { flame, ...lanterns } = images;
   return {
     lock: { due: s.due, streak: s.streak, reviewed: s.reviewed, goal: s.goal },
@@ -68,24 +69,29 @@ function widgetProps(s: Snapshot, images: Images) {
       left: s.left,
       signedIn: s.signedIn,
       week: s.week,
-      letters: weekLetters(s.dates),
+      letters: weekLetters(s.dates, locale),
       flame: flame ?? "",
       colours: WIDGET_COLOURS,
     },
   };
 }
 
-function sendSnapshot(s: Snapshot, images: Images) {
-  const props = widgetProps(s, images);
+function sendSnapshot(s: Snapshot, images: Images, locale?: string) {
+  const props = widgetProps(s, images, locale);
   send("lock", () => LockWidget.updateSnapshot(props.lock));
   send("today", () => TodayWidget.updateSnapshot(props.today));
   send("week", () => WeekWidget.updateSnapshot(props.week));
 }
 
 /** Now, then the next day from its first moment, so the widgets roll over without the app. */
-function sendTimeline(now: Snapshot, next: { at: Date; snapshot: Snapshot }, images: Images) {
-  const a = widgetProps(now, images);
-  const b = widgetProps(next.snapshot, images);
+function sendTimeline(
+  now: Snapshot,
+  next: { at: Date; snapshot: Snapshot },
+  images: Images,
+  locale: string,
+) {
+  const a = widgetProps(now, images, locale);
+  const b = widgetProps(next.snapshot, images, locale);
   const at = new Date();
   send("lock", () =>
     LockWidget.updateTimeline([
@@ -142,6 +148,7 @@ export function clearWidgets() {
 
 /** Pushes today's numbers to the widgets whenever they change. The real app does this after each sync. */
 export function WidgetSync() {
+  const { i18n } = useLingui();
   const { streak, reviewsToday, goal, week, lights, dayDone, out, left, summary } = useDay();
   const decks = useDecks();
   const due = dueToday(decks.data ?? [], left, !!useKeptSince(decks));
@@ -184,11 +191,12 @@ export function WidgetSync() {
     const timer = setTimeout(() => {
       const next =
         summary && end ? nextDay(now, summary, days, new Date(end), tomorrow) : undefined;
-      if (next) sendTimeline(now, next, images);
-      else sendSnapshot(now, images);
+      if (next) sendTimeline(now, next, images, i18n.locale);
+      else sendSnapshot(now, images, i18n.locale);
     }, 1500);
     return () => clearTimeout(timer);
   }, [
+    i18n.locale,
     images,
     due,
     streak,

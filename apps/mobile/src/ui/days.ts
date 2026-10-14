@@ -1,14 +1,13 @@
-const NARROW = new Intl.DateTimeFormat(undefined, { weekday: "narrow", timeZone: "UTC" });
-
 /** Calendar arithmetic on a review-local YYYY-MM-DD, which no timezone can shift. */
 export function addDays(date: string, days: number): string {
   const [y = 0, m = 1, d = 1] = date.split("-").map(Number);
   return new Date(Date.UTC(y, m - 1, d + days)).toISOString().slice(0, 10);
 }
 
-/** The narrow weekday of each review-local YYYY-MM-DD, so it is the account's day, not the phone's; an unknown date is blank. */
-export function weekLetters(dates: readonly string[]): string[] {
-  return dates.map((date) => (date ? NARROW.format(new Date(`${date}T00:00:00Z`)) : ""));
+/** The narrow weekday of each review-local YYYY-MM-DD in the app's language, so it is the account's day, not the phone's; an unknown date is blank. */
+export function weekLetters(dates: readonly string[], locale?: string): string[] {
+  const narrow = new Intl.DateTimeFormat(locale, { weekday: "narrow", timeZone: "UTC" });
+  return dates.map((date) => (date ? narrow.format(new Date(`${date}T00:00:00Z`)) : ""));
 }
 
 /** The seven days ending `today`, oldest first; blank while today is unknown. */

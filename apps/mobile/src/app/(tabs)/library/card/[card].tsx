@@ -29,6 +29,7 @@ import { GRADES, GradeMark } from "../../../../ui/grade";
 import { Icon, type IconName } from "../../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
 import { Plate, Press, Text } from "../../../../ui/primitives";
+import { useAccessibilitySizes } from "../../../../ui/row";
 import { BarButton, Screen } from "../../../../ui/screen";
 import { Skeleton } from "../../../../ui/skeleton";
 import { toast } from "../../../../ui/toast-host";
@@ -73,6 +74,7 @@ export default function CardPage() {
   const { t, i18n } = useLingui();
   const p = usePalette();
   const reduce = useReduceMotion();
+  const stackDetails = useAccessibilitySizes();
   const qc = useQueryClient();
   const router = useRouter();
   const { card: id, deck: deckId } = useLocalSearchParams<{ card: string; deck: string }>();
@@ -473,12 +475,16 @@ export default function CardPage() {
         details.map((d, i) => (
           <View
             key={d.label}
-            className={`min-h-[48px] flex-row items-center gap-4 px-5 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
+            className={`min-h-[48px] px-5 py-3 ${stackDetails ? "gap-1" : "flex-row items-center gap-4"} ${i > 0 ? "border-t border-edge" : ""}`}
           >
             <Text className="text-md text-text-2">{d.label}</Text>
-            <View className="flex-1 items-end">
+            <View className={stackDetails ? "items-start" : "flex-1 items-end"}>
               {typeof d.value === "string" ? (
-                <Text className="text-md text-text" numberOfLines={2} style={TEXT_END}>
+                <Text
+                  className="text-md text-text"
+                  numberOfLines={2}
+                  style={stackDetails ? undefined : TEXT_END}
+                >
                   {d.value}
                 </Text>
               ) : (

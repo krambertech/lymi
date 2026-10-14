@@ -1346,7 +1346,7 @@ function CardPlate({
               <View className="flex-row items-center gap-3">
                 <Text
                   className="shrink text-text"
-                  style={{ fontSize: 38, lineHeight: 48, fontWeight: "500", letterSpacing: -0.9 }}
+                  style={{ ...cueSize(cue), fontWeight: "500" }}
                   // The word is already the largest text on the card; grown, a long one would break mid-word.
                   maxFontSizeMultiplier={1}
                 >
@@ -1956,4 +1956,11 @@ function ArchivedLine({
       </GlassSurface>
     </View>
   );
+}
+
+/** A long question, such as a meaning asked for its term, steps down so it fits before the reveal, when the card cannot scroll. */
+function cueSize(cue: string) {
+  if (cue.length > 90) return { fontSize: 22, lineHeight: 29, letterSpacing: -0.3 };
+  if (cue.length > 36) return { fontSize: 28, lineHeight: 36, letterSpacing: -0.6 };
+  return { fontSize: 38, lineHeight: 48, letterSpacing: -0.9 };
 }

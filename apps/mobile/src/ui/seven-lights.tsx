@@ -47,11 +47,11 @@ export function SevenLights({
   /** At the end of a review the lights switch on one after another, from this many ms. */
   sequence?: number;
 }) {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const p = usePalette();
   const lg = size === "lg";
   const today = days.length - 1;
-  const letters = weekLetters(dates);
+  const letters = weekLetters(dates, i18n.locale);
   const reference = lightReference(days);
   const lit = daysReviewed(days, days.length);
   // Rest is named, never counted. PRODUCT.md.

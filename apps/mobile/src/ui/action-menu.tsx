@@ -52,7 +52,9 @@ export function ActionMenu({
   const bar = look !== "row";
   const glyph = look === "primary" ? p["amber-ink"] : look === "row" ? p.muted : p.text;
   return (
-    <Host colorScheme={room} matchContents>
+    // A fixed box that React Native lays out: a self-measuring host keeps a stale place when the
+    // list around it moves, and its button drifts off its row.
+    <Host colorScheme={room} style={{ width: bar ? 40 : 32, height: bar ? 40 : 32 }}>
       <Menu
         label={
           <Image

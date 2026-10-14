@@ -7,6 +7,11 @@ import { Plate, Press, RowArrow, Text } from "./primitives";
 /** Body text at the first accessibility size, 28 pt, over its 17 pt default. */
 const ACCESSIBILITY_SIZES = 28 / 17;
 
+/** Whether text is at an accessibility size, where a label and its value stack rather than share a line. */
+export function useAccessibilitySizes() {
+  return useWindowDimensions().fontScale >= ACCESSIBILITY_SIZES;
+}
+
 /** Rows that belong together on one plate, split by full-width hairlines. */
 export function Rows({ children }: { children: ReactNode }) {
   const rows = Children.toArray(children).filter(Boolean);
@@ -55,7 +60,7 @@ export function RowFace({
 }: RowFaceProps) {
   const p = usePalette();
   // At the accessibility sizes the value moves under the label, as iOS Settings does, so neither breaks mid-word.
-  const large = useWindowDimensions().fontScale >= ACCESSIBILITY_SIZES;
+  const large = useAccessibilitySizes();
   const stacked = under || large;
   // A control names itself for VoiceOver, so the label beside it is not read a second time.
   const name = (

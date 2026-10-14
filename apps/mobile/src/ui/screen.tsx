@@ -281,7 +281,7 @@ export function Screen({
       </Animated.View>
       <View
         pointerEvents="box-none"
-        className="absolute inset-x-0 top-0 h-14 flex-row items-center justify-between px-5"
+        className="absolute inset-x-0 top-0 h-14 flex-row items-center justify-between gap-3 px-5"
         style={{ marginTop: insets.top }}
       >
         {kind === "page" ? (
@@ -295,6 +295,7 @@ export function Screen({
           <View />
         )}
         <Animated.View
+          className="shrink-0"
           style={side}
           // Actions that have not arrived yet are out of reach of a finger and of VoiceOver.
           pointerEvents={actionsArrive && !arrived ? "none" : "auto"}
@@ -322,14 +323,25 @@ function Back({
 }) {
   const p = usePalette();
   const glass = useGlass();
-  const [width, setWidth] = useState(0);
+  const { width: screen, fontScale } = useWindowDimensions();
+  // A long name stops short of the bar's actions, so they are never pushed off the screen.
+  const widest = Math.round(screen * 0.42);
+  // Measured again when the name or the text size changes, so it is never clipped to a stale width.
+  const measuring = `${label}:${fontScale}`;
+  const [measured, setMeasured] = useState({ for: "", width: 0 });
+  const width = measured.for === measuring ? measured.width : 0;
   const name = useAnimatedStyle(() => {
     const k = interpolate(y.value, [8, TITLE_GONE], [0, 1], Extrapolation.CLAMP);
     return { opacity: 1 - k, width: width ? width * (1 - k) : undefined };
   });
   const chevron = <Icon name="back" size={20} colour={p.text} />;
   return (
-    <Press onPress={onPress} accessibilityRole="link" accessibilityLabel={label} className="-ms-2">
+    <Press
+      onPress={onPress}
+      accessibilityRole="link"
+      accessibilityLabel={label}
+      className="-ms-2 shrink"
+    >
       <View className="h-11 flex-row items-center">
         {glass ? (
           <GlassView
@@ -352,8 +364,10 @@ function Back({
           <Text
             className="text-md font-medium text-text-2"
             numberOfLines={1}
-            ellipsizeMode="clip"
-            onLayout={(e) => width || setWidth(e.nativeEvent.layout.width)}
+            style={{ maxWidth: widest }}
+            onLayout={(e) => {
+              if (!width) setMeasured({ for: measuring, width: e.nativeEvent.layout.width });
+            }}
           >
             {label}
           </Text>

@@ -487,7 +487,7 @@ function Tools({
     const Glyph = icon === "filter" ? ListFilter : ArrowUpDown;
     return (
       <View
-        className={`h-9 flex-row items-center gap-1.5 rounded-full border bg-plate px-3.5 ${on ? "border-text" : "border-edge"}`}
+        className={`min-h-9 flex-row items-center gap-1.5 rounded-full border bg-plate px-3.5 py-1.5 ${on ? "border-text" : "border-edge"}`}
       >
         <Glyph size={15} color={p["text-2"]} strokeWidth={2} />
         <Text className="text-base font-medium text-text">{label}</Text>
@@ -501,7 +501,11 @@ function Tools({
     <View className="gap-2.5">
       <View className="flex-row flex-wrap items-center gap-2">
         <Press onPress={open} accessibilityRole="button" accessibilityLabel={t`Filter`}>
-          {pill("filter", chips.length ? t`Filter · ${chips.length}` : t`Filter`, chips.length > 0)}
+          {pill(
+            "filter",
+            chips.length ? t`Filter · ${i18n.number(chips.length)}` : t`Filter`,
+            chips.length > 0,
+          )}
         </Press>
         <Select
           label={t`Sort`}
@@ -518,9 +522,12 @@ function Tools({
               onPress={c.remove}
               accessibilityRole="button"
               accessibilityLabel={t`Remove filter: ${name}`}
-              className="h-9 flex-row items-center gap-1.5 rounded-full bg-plate-2 ps-3 pe-2.5"
+              // Grows with the text and stops at the row's width, so a long section name ends in an ellipsis.
+              className="min-h-9 max-w-full flex-row items-center gap-1.5 rounded-full bg-plate-2 py-1.5 ps-3 pe-2.5"
             >
-              <Text className="text-base font-medium text-text-2">{name}</Text>
+              <Text className="shrink text-base font-medium text-text-2" numberOfLines={1}>
+                {name}
+              </Text>
               <Icon name="close" size={14} colour={p.muted} />
             </Press>
           );

@@ -260,7 +260,7 @@ export default function ShareDeck() {
                 accessibilityRole="button"
                 accessibilityLabel={t`Invite`}
                 accessibilityState={{ disabled: !online, busy: invite.isPending }}
-                className={`h-10 min-w-[76px] items-center justify-center rounded-xl px-4 ${ready ? "bg-amber" : "bg-plate-2"}`}
+                className={`min-h-10 min-w-[76px] py-2 items-center justify-center rounded-xl px-4 ${ready ? "bg-amber" : "bg-plate-2"}`}
               >
                 {invite.isPending ? (
                   <ActivityIndicator size="small" color={p.muted} />
@@ -320,7 +320,7 @@ export default function ShareDeck() {
               <View className="gap-2.5 pt-3 pb-3.5 ps-4 pe-3.5">
                 {link ? (
                   <>
-                    <View className="h-11 flex-row items-center gap-2 rounded-xl bg-glass-plate px-3">
+                    <View className="min-h-11 flex-row items-center gap-2 rounded-xl bg-glass-plate px-3 py-2">
                       <Icon name="linkOn" size={16} colour={p.muted} />
                       <Text className="flex-1 text-md text-text" numberOfLines={1} selectable>
                         {link.url}
@@ -465,7 +465,7 @@ function LinkButton({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={label}
-      className="h-11 flex-1 flex-row items-center justify-center gap-2 rounded-[14px] bg-glass-plate px-3"
+      className="min-h-11 flex-1 flex-row items-center justify-center gap-2 rounded-[14px] bg-glass-plate px-3 py-2"
     >
       <Icon name={icon} size={18} colour={p.text} />
       <Text className="text-md font-medium text-text" numberOfLines={1}>

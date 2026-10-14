@@ -134,7 +134,7 @@ export function createEas(runner = defaultRunner) {
         "--json",
         "--non-interactive",
       ]),
-    build: (profile, whatToTest) =>
+    build: (profile) =>
       call([
         "build",
         "--profile",
@@ -143,7 +143,6 @@ export function createEas(runner = defaultRunner) {
         "ios",
         "--auto-submit",
         "--no-wait",
-        ...(whatToTest ? ["--what-to-test", whatToTest] : []),
         "--non-interactive",
       ]),
     publish: (branch, environment, message) =>
@@ -207,7 +206,7 @@ export function sampleCalls(eas) {
   eas.groups("beta");
   eas.view("g1");
   eas.builds("beta", "r1");
-  eas.build("beta", "- feat(mobile): add reminders");
+  eas.build("beta");
   eas.build("production");
   eas.publish("beta", "preview", "feat(mobile): add reminders");
   eas.republish("g1", "production", "Promote abc1234", 10);
@@ -274,8 +273,8 @@ export function createCommands(eas = createEas()) {
       return { build: hasLiveBuild(eas.builds(profile, runtime)) };
     },
 
-    build(profile, whatToTest) {
-      eas.build(profile, whatToTest);
+    build(profile) {
+      eas.build(profile);
     },
 
     publish(branch, environment, message) {

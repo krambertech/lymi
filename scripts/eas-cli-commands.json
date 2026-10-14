@@ -473,8 +473,6 @@
       "ios",
       "--auto-submit",
       "--no-wait",
-      "--what-to-test",
-      "- feat(mobile): add reminders",
       "--non-interactive"
     ],
     [

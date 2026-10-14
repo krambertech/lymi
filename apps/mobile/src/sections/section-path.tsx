@@ -4,7 +4,7 @@ import type { Section } from "@lymi/client/api";
 import { SNAP_BACK } from "@lymi/design";
 import * as Haptics from "expo-haptics";
 import { type ReactNode, useEffect } from "react";
-import { View } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Animated, {
@@ -24,10 +24,17 @@ import { Plate, Press, Text } from "../ui/primitives";
 // stop a new learner waits for, and New section as the next stop. Edit turns it into a sorting
 // table. docs/design/library-decks-and-cards.md "Sections".
 
-/** Every row is one height, so a dragged row's slot is its offset divided by this. */
-const ROW = 64;
 const NODE = 32;
 const SETTLE = spring(SNAP_BACK);
+
+/**
+ * Every row is one height, so a dragged row's slot is its offset divided by it; the height grows
+ * with the text size, so a name and its count never clip.
+ */
+function useRow() {
+  const { fontScale } = useWindowDimensions();
+  return Math.round(24 + 40 * Math.min(fontScale, 2.2));
+}
 
 interface Props {
   sections: Section[];
@@ -40,6 +47,8 @@ interface Props {
   onArchive: (section: Section) => void;
   /** The whole order after a drag or a VoiceOver move. */
   onReorder: (ids: string[]) => void;
+  /** An order is still being saved, so the handles wait rather than send a second that crosses it. */
+  busy?: boolean;
 }
 
 export function SectionPath({
@@ -50,38 +59,42 @@ export function SectionPath({
   onRename,
   onArchive,
   onReorder,
+  busy = false,
 }: Props) {
   const ids = sections.map((s) => s.id);
   const move = (id: string, by: -1 | 1) => {
     const at = ids.indexOf(id);
     const to = at + by;
-    if (to < 0 || to >= ids.length) return;
+    if (busy || to < 0 || to >= ids.length) return;
     const next = [...ids];
     [next[at], next[to]] = [next[to] as string, next[at] as string];
     onReorder(next);
   };
   const line = inOrder && !editing;
+  const stop = (section: Section, at: number, handle?: ReactNode) => (
+    <Stop
+      section={section}
+      at={at}
+      locked={!editing && inOrder && at > 0}
+      line={line}
+      editing={editing}
+      handle={handle}
+      onRename={() => onRename(section)}
+      onArchive={() => onArchive(section)}
+      onMove={(by) => move(section.id, by)}
+      last={at === sections.length - 1}
+    />
+  );
   return (
     <Plate className="overflow-hidden">
       {editing ? (
         <DragList
           sections={sections}
+          busy={busy}
           onDrop={(order) => {
             if (order.join() !== ids.join()) onReorder(order);
           }}
-          render={(section, at, handle) => (
-            <Stop
-              section={section}
-              at={at}
-              locked={false}
-              editing
-              handle={handle}
-              onRename={() => onRename(section)}
-              onArchive={() => onArchive(section)}
-              onMove={(by) => move(section.id, by)}
-              last={at === sections.length - 1}
-            />
-          )}
+          render={stop}
         />
       ) : (
         <View>
@@ -91,17 +104,7 @@ export function SectionPath({
               onRename={() => onRename(section)}
               onArchive={() => onArchive(section)}
             >
-              <Stop
-                section={section}
-                at={at}
-                locked={inOrder && at > 0}
-                line={line}
-                editing={false}
-                onRename={() => onRename(section)}
-                onArchive={() => onArchive(section)}
-                onMove={(by) => move(section.id, by)}
-                last={false}
-              />
+              {stop(section, at)}
             </SwipeStop>
           ))}
           <NewStop onPress={onNew} line={line && sections.length > 0} />
@@ -116,7 +119,7 @@ function Stop({
   section,
   at,
   locked,
-  line = false,
+  line,
   editing,
   handle,
   onRename,
@@ -128,7 +131,7 @@ function Stop({
   at: number;
   locked: boolean;
   /** The path's line runs through this stop, down to the next. */
-  line?: boolean;
+  line: boolean;
   editing: boolean;
   handle?: ReactNode;
   onRename: () => void;
@@ -138,32 +141,34 @@ function Stop({
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
+  const row = useRow();
   const name = section.name;
+  const number = i18n.number(at + 1);
   const cards = plural(section.total, { one: "# card", other: "# cards" });
+  // One element for VoiceOver in either mode: its swipe, archive, rename and moves are its actions.
   return (
     <View
       className={`flex-row items-center gap-3 bg-plate px-4 ${!editing && at > 0 ? "border-t border-edge" : ""}`}
-      style={{ height: ROW }}
-      accessible={!editing}
-      accessibilityLabel={`${i18n.number(at + 1)}. ${name}, ${cards}`}
-      accessibilityActions={
-        editing
-          ? [
-              ...(at > 0 ? [{ name: "up", label: t`Move up` }] : []),
-              ...(!last ? [{ name: "down", label: t`Move down` }] : []),
-            ]
-          : undefined
-      }
-      onAccessibilityAction={(e) => onMove(e.nativeEvent.actionName === "up" ? -1 : 1)}
+      style={{ height: row }}
+      accessible
+      accessibilityLabel={t`Section ${number}: ${name}, ${cards}`}
+      accessibilityActions={[
+        ...(editing && at > 0 ? [{ name: "up", label: t`Move up` }] : []),
+        ...(editing && !last ? [{ name: "down", label: t`Move down` }] : []),
+        { name: "rename", label: t`Rename` },
+        { name: "archive", label: t`Archive` },
+      ]}
+      onAccessibilityAction={(e) => {
+        const action = e.nativeEvent.actionName;
+        if (action === "up") onMove(-1);
+        if (action === "down") onMove(1);
+        if (action === "rename") onRename();
+        if (action === "archive") onArchive();
+      }}
     >
-      {line && <Segment top={at === 0 ? ROW / 2 : 0} bottom={0} />}
+      {line && <Segment top={at === 0 ? row / 2 : 0} bottom={0} />}
       {editing && (
-        <Press
-          onPress={onArchive}
-          drawn={22}
-          accessibilityRole="button"
-          accessibilityLabel={t`Archive ${name}`}
-        >
+        <Press onPress={onArchive} drawn={22}>
           <Icon name="remove" size={22} colour={p.danger} strokeWidth={2.25} />
         </Press>
       )}
@@ -175,7 +180,7 @@ function Stop({
           className="text-base font-medium text-text-2"
           style={{ fontVariant: ["tabular-nums"] }}
         >
-          {i18n.number(at + 1)}
+          {number}
         </Text>
         {locked && (
           <View className="absolute -end-1.5 -bottom-1 h-[17px] w-[17px] items-center justify-center rounded-full border border-edge bg-plate">
@@ -189,13 +194,13 @@ function Stop({
         haptic={editing}
         scale={1}
         className="flex-1"
-        accessibilityRole={editing ? "button" : undefined}
-        accessibilityLabel={editing ? t`Rename ${name}` : undefined}
       >
         <Text className="text-md font-medium text-text" numberOfLines={1}>
           {name}
         </Text>
-        <Text className="text-sm text-muted">{cards}</Text>
+        <Text className="text-sm text-muted" numberOfLines={1}>
+          {cards}
+        </Text>
       </Press>
       {handle}
     </View>
@@ -261,15 +266,16 @@ function SwipeStop({
 function NewStop({ onPress, line }: { onPress: () => void; line: boolean }) {
   const { t } = useLingui();
   const p = usePalette();
+  const row = useRow();
   return (
     <Press
       onPress={onPress}
       scale={0.99}
       accessibilityRole="button"
       className="flex-row items-center gap-3 border-t border-edge bg-plate px-4"
-      style={{ height: ROW }}
+      style={{ height: row }}
     >
-      {line && <Segment top={0} bottom={ROW / 2} />}
+      {line && <Segment top={0} bottom={row / 2} />}
       <View
         className="items-center justify-center rounded-full border-[1.5px] border-dashed border-edge-2 bg-plate"
         style={{ width: NODE, height: NODE }}
@@ -291,13 +297,16 @@ function Segment({ top, bottom }: { top: number; bottom: number }) {
 /** Rows that a handle drags into a new order; the rest make room as it passes. */
 function DragList({
   sections,
+  busy,
   onDrop,
   render,
 }: {
   sections: Section[];
+  busy: boolean;
   onDrop: (ids: string[]) => void;
   render: (section: Section, at: number, handle: ReactNode) => ReactNode;
 }) {
+  const row = useRow();
   const positions = useSharedValue<Record<string, number>>({});
   const key = sections.map((s) => s.id).join();
   useEffect(() => {
@@ -306,13 +315,15 @@ function DragList({
   const drop = (at: Record<string, number>) =>
     onDrop(Object.keys(at).sort((a, b) => (at[a] ?? 0) - (at[b] ?? 0)));
   return (
-    <View style={{ height: sections.length * ROW }}>
+    <View style={{ height: sections.length * row }}>
       {sections.map((section, i) => (
         <DragRow
           key={section.id}
           id={section.id}
           start={i}
           count={sections.length}
+          row={row}
+          busy={busy}
           positions={positions}
           onDrop={drop}
           render={(handle) => render(section, i, handle)}
@@ -326,6 +337,8 @@ function DragRow({
   id,
   start,
   count,
+  row,
+  busy,
   positions,
   onDrop,
   render,
@@ -333,45 +346,53 @@ function DragRow({
   id: string;
   start: number;
   count: number;
+  row: number;
+  busy: boolean;
   positions: SharedValue<Record<string, number>>;
   onDrop: (at: Record<string, number>) => void;
   render: (handle: ReactNode) => ReactNode;
 }) {
-  const { t } = useLingui();
   const p = usePalette();
-  const y = useSharedValue(start * ROW);
+  const y = useSharedValue(start * row);
   const from = useSharedValue(0);
   const lifted = useSharedValue(false);
   // Another row's drag moves this one to its new slot.
   useAnimatedReaction(
     () => positions.value[id],
     (now, was) => {
-      if (now !== undefined && now !== was && !lifted.value)
-        y.value = withSpring(now * ROW, SETTLE);
+      if (now !== undefined && now !== was && !lifted.value) {
+        y.value = withSpring(now * row, SETTLE);
+      }
     },
   );
   const pick = () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
   const pass = () => Haptics.selectionAsync();
   const pan = Gesture.Pan()
+    .enabled(!busy)
     .onStart(() => {
       lifted.value = true;
       from.value = y.value;
       runOnJS(pick)();
     })
     .onUpdate((e) => {
-      y.value = Math.min(Math.max(from.value + e.translationY, 0), (count - 1) * ROW);
+      y.value = Math.min(Math.max(from.value + e.translationY, 0), (count - 1) * row);
       const was = positions.value[id] ?? 0;
-      const to = Math.round(y.value / ROW);
+      const to = Math.round(y.value / row);
       if (to === was) return;
+      // Inserted, not swapped: every row between the old slot and the new one shifts by one.
       const next = { ...positions.value };
-      for (const key of Object.keys(next)) if (next[key] === to) next[key] = was;
+      for (const key of Object.keys(next)) {
+        const at = next[key] ?? 0;
+        if (to > was && at > was && at <= to) next[key] = at - 1;
+        if (to < was && at >= to && at < was) next[key] = at + 1;
+      }
       next[id] = to;
       positions.value = next;
       runOnJS(pass)();
     })
     .onFinalize(() => {
       lifted.value = false;
-      y.value = withSpring((positions.value[id] ?? 0) * ROW, SETTLE);
+      y.value = withSpring((positions.value[id] ?? 0) * row, SETTLE);
       runOnJS(onDrop)(positions.value);
     });
   const style = useAnimatedStyle(() => ({
@@ -385,7 +406,7 @@ function DragRow({
       className="absolute inset-x-0 top-0 border-edge"
       style={[
         {
-          height: ROW,
+          height: row,
           shadowColor: p.text,
           shadowRadius: 14,
           shadowOffset: { width: 0, height: 8 },
@@ -395,12 +416,8 @@ function DragRow({
     >
       {render(
         <GestureDetector gesture={pan}>
-          <View
-            className="h-11 w-11 items-center justify-center"
-            accessible
-            accessibilityLabel={t`Drag to reorder`}
-          >
-            <Icon name="grip" size={22} colour={p.faint} />
+          <View className="h-11 w-11 items-center justify-center">
+            <Icon name="grip" size={22} colour={busy ? p.edge : p.faint} />
           </View>
         </GestureDetector>,
       )}

@@ -26,7 +26,7 @@ import { toast } from "../../../ui/toast-host";
  * and Archive. New section is the path's next stop. Archive has Undo; how sections open sits below.
  */
 export default function DeckSections() {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const { id } = useLocalSearchParams<{ id: string }>();
   const deck = useDecks().data?.find((d) => d.id === id);
   const query = useSections(id);
@@ -185,10 +185,9 @@ export default function DeckSections() {
           onNew={() => setNaming({})}
           onRename={(section) => setNaming({ section })}
           onArchive={(section) => archive.mutate(section)}
-          onReorder={(ids) => {
-            // One reorder at a time, so the server never receives two orders that cross.
-            if (!reorder.isPending) reorder.mutate(ids);
-          }}
+          onReorder={(ids) => reorder.mutate(ids)}
+          // One order at a time, so the server never receives two that cross.
+          busy={reorder.isPending}
         />
       )}
       <Rows>
@@ -205,7 +204,7 @@ export default function DeckSections() {
           <Row
             icon="restore"
             label={t`Archived sections`}
-            value={String(archivedCount)}
+            value={i18n.number(archivedCount)}
             onPress={() => setShowArchived(true)}
           />
         )}

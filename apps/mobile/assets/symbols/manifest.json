@@ -61,6 +61,7 @@
   "grip": "grip-vertical.mjs",
   "remove": "circle-minus.mjs",
   "theme": "sun-moon.mjs",
+  "language": "languages.mjs",
   "import": "import.mjs",
   "export": "download.mjs",
   "keys": "key-round.mjs",

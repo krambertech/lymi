@@ -18,8 +18,9 @@ import { languageName } from "../data/languages";
 import { usePurposes } from "../data/purposes";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
-import { FieldChipFace } from "../ui/field-chip";
+import { FieldChip, FieldChipFace } from "../ui/field-chip";
 import { GlassButton } from "../ui/glass";
+import type { IconName } from "../ui/icons";
 import { Select } from "../ui/menu";
 import { Icon, Text } from "../ui/primitives";
 import { OnGlass } from "../ui/surface";
@@ -57,7 +58,13 @@ export default function NewDeck() {
   ];
   const way = asked.find((a) => a.value === directions) ?? asked[0];
   const purposes = usePurposes();
-  const purposeLabel = purposes.find((o) => o.value === purpose)?.label ?? t`What it’s for`;
+  // Everything required is set: the ✓ stays dim until then, so it never answers with an error.
+  const ready = !!name.trim() && !!purpose && (purpose !== "language" || !!language);
+  const purposeIcon: Record<DeckPurpose, IconName> = {
+    language: "meaning",
+    subject: "lesson",
+    other: "notes",
+  };
   const languageLabel = language ? languageName(language) : t`No language`;
 
   const create = async () => {
@@ -99,17 +106,8 @@ export default function NewDeck() {
       label={t`Language`}
       value={language}
       options={languages}
-      onChange={setLanguage}
-      trigger={trigger}
-    />
-  );
-  const purposeSelect = (trigger: ReactNode) => (
-    <Select
-      label={t`What it’s for`}
-      value={purpose ?? ("" as DeckPurpose)}
-      options={purposes}
       onChange={(next) => {
-        setPurpose(next);
+        setLanguage(next);
         if (error) setError(null);
       }}
       trigger={trigger}
@@ -136,7 +134,7 @@ export default function NewDeck() {
           icon="check"
           label={t`Create deck`}
           primary
-          disabled={!name.trim()}
+          disabled={!ready}
           busy={pending}
           onPress={() => void create()}
         />
@@ -172,20 +170,41 @@ export default function NewDeck() {
           )}
         </View>
 
+        {/* What it's for is required, so its three answers show at once rather than behind a chip. */}
+        <View
+          className="gap-2"
+          accessibilityRole="radiogroup"
+          accessibilityLabel={t`What it’s for`}
+        >
+          <FieldName>{t`What it’s for`}</FieldName>
+          <View className="flex-row flex-wrap gap-2">
+            {purposes.map((o) => (
+              <FieldChip
+                key={o.value}
+                icon={purposeIcon[o.value]}
+                on={purpose === o.value}
+                checked={purpose === o.value}
+                accessibilityLabel={`${o.label}. ${o.detail}`}
+                onPress={() => {
+                  setPurpose(o.value);
+                  if (error) setError(null);
+                }}
+              >
+                {o.label}
+              </FieldChip>
+            ))}
+          </View>
+        </View>
+
         <View
           className="flex-row flex-wrap gap-2"
           accessibilityRole="toolbar"
           accessibilityLabel={t`Deck settings`}
         >
-          {purposeSelect(
-            <FieldChipFace icon="deck" on={!!purpose} opens>
-              {purposeLabel}
-            </FieldChipFace>,
-          )}
           {purpose === "language" &&
             languageSelect(
               <FieldChipFace icon="meaning" on={!!language} opens>
-                {language ? languageLabel : t`Language`}
+                {language ? languageLabel : t`Choose the language`}
               </FieldChipFace>,
             )}
           {askedSelect(

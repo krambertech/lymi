@@ -31,6 +31,8 @@ let openingSent = false;
 let opening: AnalyticsProperties<"app_opened"> | undefined;
 let publicDeckSent = false;
 let pageSource: Omit<Attribution, "first_landing_page"> | undefined;
+let entryPending = true;
+let directEntry = false;
 let release: string | undefined;
 
 /** Where this page load's visit began, for the sign-up request to carry to the server. */
@@ -201,7 +203,12 @@ export function initAnalytics(options: {
             ? {
                 $pathname: properties.pathname,
                 $current_url: `${location.origin}${properties.pathname}`,
-                ...(properties.referrer ? { $referring_domain: properties.referrer } : {}),
+                // PostHog's channel type reads an empty referrer as Unknown, so a direct visit says so.
+                ...(properties.referrer
+                  ? { $referring_domain: properties.referrer }
+                  : directEntry
+                    ? { $referring_domain: "$direct" }
+                    : {}),
               }
             : {}),
           // PostHog hashes a cookieless visitor from the day, address, host and browser, then drops them.
@@ -292,7 +299,10 @@ export function capturePageview(pathname: string): void {
   lastPage = pathname;
   const source = pageSource;
   pageSource = undefined;
+  directEntry = entryPending && !source?.referrer;
+  entryPending = false;
   captureAnalytics("$pageview", { pathname: analyticsPath(pathname, surface), ...source });
+  directEntry = false;
 }
 
 export function reportBrowserException(error: unknown): void {

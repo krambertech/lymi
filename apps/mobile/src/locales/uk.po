@@ -444,6 +444,9 @@ msgstr ""
 msgid "API keys"
 msgstr "Ключі API"
 
+msgid "App language, and the language AI uses for meanings."
+msgstr "Мова застосунку й мова, якою AI пише значення."
+
 msgctxt "language"
 msgid "Arabic"
 msgstr "Арабська"
@@ -791,6 +794,9 @@ msgstr "Не вдалося зберегти мету. Спробуй ще ра�
 
 msgid "Couldn’t save the hook."
 msgstr "Не вдалося зберегти зачіпку."
+
+msgid "Couldn’t save the language. Check your connection and try again."
+msgstr "Не вдалося зберегти мову. Перевір з’єднання й повтори спробу."
 
 msgid "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
 msgstr "Не вдалося зберегти оцінку для «{term}». Цієї картки більше немає у твоїх колодах."
@@ -1728,9 +1734,6 @@ msgstr "Відкрити у вебверсії"
 msgid "Open Settings"
 msgstr ""
 
-msgid "Open Settings on the web"
-msgstr "Відкрити налаштування у вебверсії"
-
 msgid "Options for {sectionName}"
 msgstr ""
 
@@ -2050,12 +2053,6 @@ msgstr "Надіслали ще раз"
 msgctxt "language"
 msgid "Serbian"
 msgstr "Сербська"
-
-msgid "Settings"
-msgstr "Налаштування"
-
-msgid "Settings is coming to the phone"
-msgstr "Налаштування скоро будуть на телефоні"
 
 msgid "Shared by {owner}"
 msgstr "Від {owner}"
@@ -2394,9 +2391,6 @@ msgstr ""
 
 msgid "Unmark important"
 msgstr "Зняти позначку «важлива»"
-
-msgid "Until then, change your settings on the web."
-msgstr "А поки змінити налаштування можна у вебверсії."
 
 msgid "Update"
 msgstr "Оновити"

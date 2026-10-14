@@ -161,6 +161,7 @@ const ICONS = {
   feedback: MessageSquare,
   reminder: Bell,
   theme: SunMoon,
+  language: Languages,
   import: Import,
   export: Download,
   keys: KeyRound,

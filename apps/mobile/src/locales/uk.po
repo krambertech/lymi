@@ -1204,7 +1204,7 @@ msgstr "Доповнити решту з AI"
 msgid "Filter"
 msgstr "Фільтр"
 
-#. placeholder {0}: chips.length
+#. placeholder {0}: i18n.number(chips.length)
 msgid "Filter · {0}"
 msgstr "Фільтр · {0}"
 

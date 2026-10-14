@@ -221,7 +221,7 @@ const HERO_IDS = ["madrugar", "embarazada", "me-pones-un-cafe", "ojala"];
 
 function LessonChat({ mark }: { mark: (i: number, text: ReactNode) => ReactNode }) {
   return (
-    <div className="flex flex-col gap-2 rounded-2xl bg-plate p-4 edge">
+    <div className="flex flex-col gap-2 rounded-2xl bg-plate p-4 pb-16 edge">
       <p className="mb-1 flex items-center gap-2 text-xs text-muted">
         <span className="grid size-6 place-items-center rounded-full bg-amber-soft text-2xs font-medium text-amber-text">
           M

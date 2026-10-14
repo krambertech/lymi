@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/react/macro";
+import { clsx } from "clsx";
 import { type ReactNode, useState } from "react";
 import { signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
@@ -21,7 +22,15 @@ interface Props {
 export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
   const [front, setFront] = useState<string>();
   return (
-    <div className="mx-auto grid max-w-[1120px] items-center gap-8 px-5 pt-12 pb-16 @2xl:px-10 @4xl:pt-14 @5xl:min-h-[700px] @5xl:grid-cols-[minmax(0,1fr)_minmax(0,460px)] @5xl:gap-14 @6xl:grid-cols-[minmax(0,1fr)_minmax(0,540px)]">
+    <div
+      className={clsx(
+        "mx-auto grid max-w-[1120px] items-center gap-8 px-5 pt-12 pb-16 @2xl:px-10 @4xl:pt-14 @5xl:min-h-[700px] @5xl:gap-14",
+        // A scene holds its own ground, so it needs less room than the fan and leaves more to the title.
+        visual || behind
+          ? "@5xl:grid-cols-[minmax(0,1fr)_minmax(0,420px)] @6xl:grid-cols-[minmax(0,1fr)_minmax(0,470px)]"
+          : "@5xl:grid-cols-[minmax(0,1fr)_minmax(0,460px)] @6xl:grid-cols-[minmax(0,1fr)_minmax(0,540px)]",
+      )}
+    >
       <div className="min-w-0 max-w-[540px]">
         <OriginBadge />
         <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.25rem] @4xl:leading-[0.98]">
@@ -37,15 +46,18 @@ export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
 
       {visual ??
         (behind ? (
-          <div className="relative">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute start-0 top-0 w-[64%] max-w-[330px] -rotate-3"
-            >
-              {behind(front)}
-            </div>
-            <div className="relative ms-auto w-[64%] pt-24">
-              <HandOfCards cards={cards} layout="stack" onFront={setFront} />
+          // The same ground and overlap as a scene, with the hand of cards over what it came from.
+          <div className="w-full max-w-[520px] rounded-[1.75rem] bg-plate-2 p-5 @2xl:p-7">
+            <div className="grid grid-cols-12 grid-rows-[auto_7rem_auto]">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none col-span-9 col-start-1 row-span-2 row-start-1"
+              >
+                {behind(front)}
+              </div>
+              <div className="relative col-span-8 col-start-5 row-span-2 row-start-2">
+                <HandOfCards cards={cards} layout="stack" onFront={setFront} />
+              </div>
             </div>
           </div>
         ) : (

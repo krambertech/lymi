@@ -247,7 +247,8 @@ const MATERIALS: Material[] = [
 function RevisionNotes({ mark }: { mark: (i: number, text: ReactNode) => ReactNode }) {
   const { i18n } = useLingui();
   return (
-    <div className="notes-hand rounded-md bg-plate px-6 pt-5 pb-7 edge">
+    // Blank paper at the foot, where the card stack sits over the page.
+    <div className="notes-hand rounded-md bg-plate px-6 pt-5 pb-24 edge">
       <p className="text-2xl text-muted">
         <Trans>Exam revision</Trans>
       </p>

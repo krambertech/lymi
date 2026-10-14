@@ -1,0 +1,41 @@
+---
+import NotesToFlashcardsPage from "../../components/islands/NotesToFlashcardsPage";
+import { NOTES_TO_FLASHCARDS_BLURB, NOTES_TO_FLASHCARDS_TITLE } from "../../components/landing/NotesToFlashcardsView";
+import { SHARE_IMAGE_ALT } from "../../components/landing/LandingView";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { pageI18n } from "../../lib/i18n";
+import { localizedPath } from "../../lib/routes";
+import { marketingPage } from "../../lib/structured-data";
+import { NOTES_TO_FLASHCARDS_QUESTIONS } from "../../components/landing/faq";
+
+const locale = Astro.currentLocale ?? "ru";
+const i18n = pageI18n(locale);
+const title = i18n._(NOTES_TO_FLASHCARDS_TITLE);
+const description = i18n._(NOTES_TO_FLASHCARDS_BLURB);
+const shareImageAlt = i18n._(SHARE_IMAGE_ALT);
+const path = localizedPath("notesToFlashcards", locale);
+
+const structuredData = marketingPage({
+  name: title,
+  description,
+  path,
+  i18n,
+  questions: NOTES_TO_FLASHCARDS_QUESTIONS,
+});
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={path}
+  localizedPage="notesToFlashcards"
+  shareImageAlt={shareImageAlt}
+>
+  <script
+    slot="head"
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(structuredData).replaceAll("<", "\\u003c")}
+  />
+  <NotesToFlashcardsPage client:load locale={locale} />
+</BaseLayout>

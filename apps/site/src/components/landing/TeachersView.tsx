@@ -120,9 +120,9 @@ export function TeachersView() {
           title={<Trans>Fill decks from the tools you already use.</Trans>}
           body={
             <Trans>
-              Send a lesson plan to Claude or ChatGPT and it adds the cards for you. Lymi also has a
-              public API, so you can bring in a list from a spreadsheet, add cards from your course
-              platform, or show what’s due on your class site.
+              Send a lesson plan to Claude, ChatGPT or Grok and it adds the cards for you. Lymi also
+              has a public API, so you can bring in a list from a spreadsheet, add cards from your
+              course platform, or show what’s due on your class site.
             </Trans>
           }
           after={

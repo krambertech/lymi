@@ -88,12 +88,29 @@ function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
           <div className="mt-6">
             <AssistantMarks compact />
           </div>
+          <div className="mt-5">
+            <TutorLessonsLink />
+          </div>
         </div>
         <div className="mt-12">
           <NotesToCards notebooks={notebooks} />
         </div>
       </div>
     </section>
+  );
+}
+
+/** Leads a learner with a tutor to the step-by-step page for after a lesson. */
+function TutorLessonsLink() {
+  const { i18n } = useLingui();
+  return (
+    <a
+      href={localizedPath("tutorLessons", i18n.locale)}
+      className="inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 hoverable:hover:text-text"
+    >
+      <Trans>Step by step, after a tutor lesson</Trans>
+      <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
+    </a>
   );
 }
 
@@ -217,9 +234,9 @@ function LanguagePage(props: PageProps) {
           title={<Trans>Bring your favourite AI along.</Trans>}
           body={
             <Trans>
-              Connect Claude, ChatGPT or Gemini to Lymi once. Then paste a transcript and ask for
-              the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building
-              something of your own? The same things work through the public API.
+              Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Then paste a transcript and ask
+              for the new words, ask what’s waiting tonight, or tidy a deck in plain language.
+              Building something of your own? The same things work through the public API.
             </Trans>
           }
           after={<AssistantMarksWithMore />}

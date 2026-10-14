@@ -160,9 +160,9 @@ export function MedicineView() {
           title={<Trans>Turn tonight’s lecture into cards.</Trans>}
           body={
             <Trans>
-              Send your lecture notes or slides to Claude, ChatGPT or Gemini and it adds the cards,
-              each with what the lecture said. When Lymi’s AI fills in a meaning, it marks what it
-              wrote, so it’s never mistaken for your notes.
+              Send your lecture notes or slides to Claude, ChatGPT, Gemini or Grok and it adds the
+              cards, each with what the lecture said. When Lymi’s AI fills in a meaning, it marks
+              what it wrote, so it’s never mistaken for your notes.
             </Trans>
           }
         >

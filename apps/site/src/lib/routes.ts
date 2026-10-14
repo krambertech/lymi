@@ -7,6 +7,8 @@ export const localizedPages = {
   teachers: "/teachers",
   medicine: "/medicine",
   certifications: "/certifications",
+  tutorLessons: "/tutor-lessons",
+  notesToFlashcards: "/notes-to-flashcards",
   exams: "/exams",
   einbuergerungstest: "/exams/einbuergerungstest",
   privacy: "/privacy",

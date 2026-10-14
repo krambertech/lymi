@@ -320,6 +320,8 @@ interface Props {
   dealt?: readonly HandCard[] | undefined;
   /** Deal each card once; after the last, this takes the hand's place and can deal them again. */
   finale?: ((again: () => void, turned: readonly HandCard[]) => ReactNode) | undefined;
+  /** Told the top card's id whenever it changes, so a page can point at where the card came from. */
+  onFront?: ((id: string | undefined) => void) | undefined;
 }
 
 /**
@@ -327,7 +329,13 @@ interface Props {
  * teaches the one move Lymi is built on, looking at a term before its meaning, and shows how
  * much a card can hold. The deal plays once per session; after that the hand is simply there.
  */
-export function HandOfCards({ cards = HAND_CARDS, layout = "fan", dealt: given, finale }: Props) {
+export function HandOfCards({
+  cards = HAND_CARDS,
+  layout = "fan",
+  dealt: given,
+  finale,
+  onFront,
+}: Props) {
   const { t, i18n } = useLingui();
   const [hand, setHand] = useState<Dealt[]>(() =>
     (given ?? []).map((card, key) => ({ key, card })),
@@ -501,6 +509,9 @@ export function HandOfCards({ cards = HAND_CARDS, layout = "fan", dealt: given, 
     const heading = finale_.current?.querySelector<HTMLElement>("h1, h2, h3, h4");
     (heading ?? finale_.current)?.focus({ preventScroll: true });
   }, [phase]);
+
+  const frontId = phase === "dealing" ? undefined : hand[0]?.card.id;
+  useEffect(() => onFront?.(frontId), [frontId, onFront]);
 
   const press = phase === "back" ? next : reveal;
   const behind = hand.length - 1;

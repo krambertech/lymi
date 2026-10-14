@@ -1,8 +1,10 @@
 import { Trans } from "@lingui/react/macro";
-import type { ReactNode } from "react";
+import { clsx } from "clsx";
+import { type ReactNode, useState } from "react";
 import { signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { HandOfCards } from "./HandOfCards";
+import { HeroGround } from "./HeroScenes";
 import type { HandCard } from "./hand-cards";
 import { OriginBadge } from "./OriginBadge";
 
@@ -11,12 +13,25 @@ interface Props {
   lede: ReactNode;
   cards?: readonly HandCard[] | undefined;
   layout?: "fan" | "stack" | undefined;
+  /** What the cards came from, drawn behind the hand and told which card is on top. */
+  behind?: ((front: string | undefined) => ReactNode) | undefined;
+  /** A scene of its own in place of the hand of cards. */
+  visual?: ReactNode;
 }
 
 /** The headline, one action, and a hand of cards to turn over. */
-export function Hero({ title, lede, cards, layout }: Props) {
+export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
+  const [front, setFront] = useState<string>();
   return (
-    <div className="mx-auto grid max-w-[1120px] items-center gap-8 px-5 pt-12 pb-16 @2xl:px-10 @4xl:min-h-[700px] @4xl:grid-cols-[minmax(0,1fr)_minmax(0,540px)] @4xl:gap-14 @4xl:pt-14">
+    <div
+      className={clsx(
+        "mx-auto grid max-w-[1120px] items-center gap-8 px-5 pt-12 pb-16 @2xl:px-10 @4xl:pt-14 @5xl:min-h-[700px] @5xl:gap-14",
+        // A scene holds its own ground, so it needs less room than the fan and leaves more to the title.
+        visual || behind
+          ? "@5xl:grid-cols-[minmax(0,1fr)_minmax(0,420px)] @6xl:grid-cols-[minmax(0,1fr)_minmax(0,470px)]"
+          : "@5xl:grid-cols-[minmax(0,1fr)_minmax(0,460px)] @6xl:grid-cols-[minmax(0,1fr)_minmax(0,540px)]",
+      )}
+    >
       <div className="min-w-0 max-w-[540px]">
         <OriginBadge />
         <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.25rem] @4xl:leading-[0.98]">
@@ -30,7 +45,16 @@ export function Hero({ title, lede, cards, layout }: Props) {
         </div>
       </div>
 
-      <HandOfCards cards={cards} layout={layout} />
+      {visual ??
+        (behind ? (
+          <HeroGround material={behind(front)}>
+            <div className="relative col-span-8 col-start-5 row-span-2 row-start-2">
+              <HandOfCards cards={cards} layout="stack" onFront={setFront} />
+            </div>
+          </HeroGround>
+        ) : (
+          <HandOfCards cards={cards} layout={layout} />
+        ))}
     </div>
   );
 }

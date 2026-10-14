@@ -1,3 +1,4 @@
+import { useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 export const EASE = [0.22, 1, 0.36, 1] as const;
@@ -40,4 +41,15 @@ export function usePlayback<Beat extends string>(
   return {
     at: (beat: Beat) => !!still || reached >= beats[beat],
   };
+}
+
+/**
+ * Reduced motion, read only after hydration: the prerendered HTML is always the moving version, so a
+ * still first render would mismatch it and React would leave the stale attributes in place.
+ */
+export function useStill(): boolean {
+  const reduce = useReducedMotion();
+  const [still, setStill] = useState(false);
+  useEffect(() => setStill(Boolean(reduce)), [reduce]);
+  return still;
 }

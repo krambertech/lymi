@@ -45,6 +45,8 @@ export function llmsTxt(): string {
     `- [Teachers](${SITE}/teachers): one deck shared with a class, in sections.`,
     `- [Medical students](${SITE}/medicine): anatomy, pharmacology and lab values, with Anki decks imported.`,
     `- [Certifications](${SITE}/certifications): turning a study guide into cards for a professional exam.`,
+    `- [Tutor lessons](${SITE}/tutor-lessons): turning the chat, notes or a notebook photo from a lesson with a tutor into cards, step by step.`,
+    `- [Notes and PDFs to flashcards](${SITE}/notes-to-flashcards): turning class notes, PDFs and photos of notes into cards with an assistant, step by step.`,
     `- [Exam prep](${SITE}/exams): ready decks for citizenship and driving tests, with a page per exam giving its format, decks and source.`,
     `- [Estonian](${SITE}/languages/estonian): keeping the Estonian from classes, letters and conversations.`,
     `- [Documentation](${SITE}/docs): guides, the MCP setup, the API reference and the import guides.`,

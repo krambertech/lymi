@@ -21,6 +21,7 @@ export type AssistantName =
   | "Claude Code"
   | "Codex"
   | "Gemini"
+  | "Grok"
   | "Other apps";
 
 type Assistant = {
@@ -34,7 +35,7 @@ type Assistant = {
 
 /**
  * Each assistant links to its guide under /docs/mcp. Claude, Claude Code and MCP paths are
- * from simple-icons (CC0); OpenAI, Codex and Gemini from lobe-icons (MIT).
+ * from simple-icons (CC0); OpenAI, Codex, Gemini and Grok from lobe-icons (MIT).
  */
 const ASSISTANTS: readonly Assistant[] = [
   {
@@ -101,6 +102,11 @@ const ASSISTANTS: readonly Assistant[] = [
     path: "M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z",
   },
   {
+    name: "Grok",
+    guide: "/docs/mcp/grok",
+    path: "M9.27 15.29l7.978-5.897c.391-.29.95-.177 1.137.272.98 2.369.542 5.215-1.41 7.169-1.951 1.954-4.667 2.382-7.149 1.406l-2.711 1.257c3.889 2.661 8.611 2.003 11.562-.953 2.341-2.344 3.066-5.539 2.388-8.42l.006.007c-.983-4.232.242-5.924 2.75-9.383.06-.082.12-.164.179-.248l-3.301 3.305v-.01L9.267 15.292M7.623 16.723c-2.792-2.67-2.31-6.801.071-9.184 1.761-1.763 4.647-2.483 7.166-1.425l2.705-1.25a7.808 7.808 0 00-1.829-1A8.975 8.975 0 005.984 5.83c-2.533 2.536-3.33 6.436-1.962 9.764 1.022 2.487-.653 4.246-2.34 6.022-.599.63-1.199 1.259-1.682 1.925l7.62-6.815",
+  },
+  {
     name: "Other apps",
     label: msg`Other apps`,
     guide: "/docs/mcp",
@@ -158,7 +164,11 @@ export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
   const { t, i18n } = useLingui();
   if (compact) {
     return (
-      <ul aria-label={t`Connect an assistant`} className="flex flex-wrap justify-center gap-2">
+      // Four to a row, so seven marks wrap four and three instead of leaving one alone.
+      <ul
+        aria-label={t`Connect an assistant`}
+        className="grid grid-cols-[repeat(4,2.75rem)] justify-center gap-2"
+      >
         {ASSISTANTS.map((assistant) => {
           const name = assistant.label ? i18n._(assistant.label) : assistant.name;
           return (

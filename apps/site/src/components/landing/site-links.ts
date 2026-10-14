@@ -37,7 +37,7 @@ export const USE_CASE_LINKS: UseCaseLink[] = [
   {
     page: "assistants",
     label: msg`AI assistants`,
-    blurb: msg`Send your notes to Claude, ChatGPT or Gemini and get cards.`,
+    blurb: msg`Send your notes to Claude, ChatGPT, Gemini or Grok and get cards.`,
     icon: MessagesSquare,
     hue: 2,
   },
@@ -70,6 +70,8 @@ export const USE_CASE_LINKS: UseCaseLink[] = [
     icon: BadgeCheck,
     hue: 1,
   },
+  { page: "tutorLessons", label: msg`Tutor lessons`, footerOnly: true },
+  { page: "notesToFlashcards", label: msg`Notes and PDFs`, footerOnly: true },
 ];
 
 export const MENU_USE_CASE_LINKS = USE_CASE_LINKS.filter((link) => !link.footerOnly);

@@ -14,7 +14,7 @@ test("someone with an AI assistant can reach the assistants page and see how to 
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: "Make cards with Claude, ChatGPT, Gemini, Codex or anything",
+        name: "Make cards with Claude, ChatGPT, Gemini, Grok, Codex or anything",
       }),
     ).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
@@ -39,7 +39,7 @@ test("someone with an AI assistant can reach the assistants page and see how to 
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: "Создавай карточки с Claude, ChatGPT, Gemini, Codex или своим кодом",
+        name: "Создавай карточки с Claude, ChatGPT, Gemini, Grok, Codex или своим кодом",
       }),
     ).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(

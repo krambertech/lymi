@@ -1636,3 +1636,28 @@ html:has(.deck-cards[open]) {
 [data-theme="dark"] .changelog-frame img[data-theme-shot="dark"] {
   display: block;
 }
+
+/* What a vertical page's hero scene stands on: a warm pool with no edge, so the material and its
+   cards read as one moment rather than boxes floating on the page. */
+.hero-ground {
+  position: relative;
+  isolation: isolate;
+}
+.hero-ground::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -20% -24%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--glow) 55%, transparent),
+    color-mix(in oklab, var(--glow) 22%, transparent) 50%,
+    transparent
+  );
+  pointer-events: none;
+}
+@media (prefers-reduced-transparency: reduce) {
+  .hero-ground::before {
+    display: none;
+  }
+}

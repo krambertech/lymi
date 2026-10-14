@@ -215,15 +215,22 @@ const MATERIALS: Material[] = [
   },
 ];
 
-/** The lesson the hand of cards came from: the top card's term is lit where Marta said it. */
 /** The hero's words in the order Marta says them. */
 const HERO_IDS = ["madrugar", "embarazada", "me-pones-un-cafe", "ojala"];
+const HERO_CARDS = HERO_IDS.map(
+  (id) => SPANISH.hand.find((card) => card.id === id) as LearningLanguage["hand"][number],
+);
+
+/** The lesson the hand of cards came from: the top card's term is lit where Marta said it. */
 
 function LessonChat({ mark }: { mark: (i: number, text: ReactNode) => ReactNode }) {
   return (
     <div className="flex flex-col gap-2 rounded-2xl bg-plate p-4 pb-16 edge">
       <p className="mb-1 flex items-center gap-2 text-xs text-muted">
-        <span className="grid size-6 place-items-center rounded-full bg-amber-soft text-2xs font-medium text-amber-text">
+        <span
+          aria-hidden="true"
+          className="grid size-6 place-items-center rounded-full bg-amber-soft text-2xs font-medium text-amber-text"
+        >
           M
         </span>
         <Trans>Marta · Spanish lesson</Trans>
@@ -240,9 +247,6 @@ function LessonChat({ mark }: { mark: (i: number, text: ReactNode) => ReactNode 
 /** For the learner who books lessons with a tutor and loses the words between them. */
 export function TutorLessonsView() {
   const openAppUrl = openLymiUrl();
-  const heroCards = HERO_IDS.map(
-    (id) => SPANISH.hand.find((card) => card.id === id) as LearningLanguage["hand"][number],
-  );
 
   return (
     <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
@@ -256,7 +260,7 @@ export function TutorLessonsView() {
               Lymi keeps every new word and brings it back right before you’d forget it.
             </Trans>
           }
-          cards={heroCards}
+          cards={HERO_CARDS}
           behind={(front) => (
             <LessonChat mark={(i, text) => <Pick on={front === HERO_IDS[i]}>{text}</Pick>} />
           )}
@@ -301,7 +305,7 @@ export function TutorLessonsView() {
               title: <Trans>Connect your AI assistant</Trans>,
               body: (
                 <Trans>
-                  Add Lymi to Claude, ChatGPT, Grok or another assistant.{" "}
+                  Add Lymi to Claude, Grok or another assistant.{" "}
                   <a
                     href="#connect"
                     className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
@@ -401,7 +405,7 @@ export function TutorLessonsView() {
                 from: "them",
                 body: (
                   <Trans>
-                    The three you missed most this week: “echar de menos”, “aprovechar” and “soler”.
+                    The three you missed most this week: “ojalá”, “madrugar” and “tener ganas de”.
                   </Trans>
                 ),
               },

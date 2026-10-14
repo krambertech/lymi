@@ -1,7 +1,7 @@
-import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useInView } from "motion/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Pick } from "./MaterialToCards";
-import { EASE } from "./playback";
+import { EASE, useStill } from "./playback";
 
 /** A word as the hero's card shows it, already in the page's language. */
 export interface HeroWord {
@@ -79,8 +79,8 @@ function WordCard({
 
 /**
  * The material, and beside it the card stack its words become. Each beat lights a word, which
- * lifts off as a small outlined card and grows into the top card. Reduced motion shows the last
- * word lit and on the card.
+ * lifts off as a small outlined card and grows into the top card, once through. Reduced motion
+ * shows the last word lit and on the card.
  */
 export function HeroLiftOff({
   words,
@@ -92,7 +92,7 @@ export function HeroLiftOff({
   /** Type for the word as it lifts off, so it leaves the material looking as it was written. */
   chip?: string;
 }) {
-  const still = useReducedMotion();
+  const still = useStill();
   const frame = useRef<HTMLDivElement>(null);
   const card = useRef<HTMLDivElement>(null);
   const term = useRef<HTMLElement | null>(null);
@@ -110,16 +110,13 @@ export function HeroLiftOff({
     scale: number;
   } | null>(null);
 
+  // One pass through the words, then it rests on the last, so nothing keeps moving beside the text.
+  const done = step >= words.length - 1;
   useEffect(() => {
-    if (still || !inView) return;
-    const tick = () => setStep((s) => (s + 1) % words.length);
-    const first = window.setTimeout(tick, 500);
-    const every = window.setInterval(tick, CYCLE_MS);
-    return () => {
-      window.clearTimeout(first);
-      window.clearInterval(every);
-    };
-  }, [inView, still, words.length]);
+    if (still || !inView || done) return;
+    const next = window.setTimeout(() => setStep((s) => s + 1), step < 0 ? 500 : CYCLE_MS);
+    return () => window.clearTimeout(next);
+  }, [inView, still, done, step]);
 
   useEffect(() => {
     if (step < 0) return;
@@ -195,7 +192,7 @@ export function HeroLiftOff({
                 <WordCard
                   word={shown}
                   termRef={(el) => {
-                    term.current = el;
+                    if (el) term.current = el;
                   }}
                 />
               </motion.div>

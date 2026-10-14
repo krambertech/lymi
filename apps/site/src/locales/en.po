@@ -448,8 +448,8 @@ msgstr "Add both decks"
 msgid "Add it to your assistant"
 msgstr "Add it to your assistant"
 
-msgid "Add Lymi to Claude, ChatGPT, Grok or another assistant. <0>It takes three steps</0>."
-msgstr "Add Lymi to Claude, ChatGPT, Grok or another assistant. <0>It takes three steps</0>."
+msgid "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</0>."
+msgstr "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</0>."
 
 msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
 msgstr "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
@@ -3478,8 +3478,8 @@ msgstr "The steam in a sauna"
 msgid "The Thirty Years’ War"
 msgstr "The Thirty Years’ War"
 
-msgid "The three you missed most this week: “echar de menos”, “aprovechar” and “soler”."
-msgstr "The three you missed most this week: “echar de menos”, “aprovechar” and “soler”."
+msgid "The three you missed most this week: “ojalá”, “madrugar” and “tener ganas de”."
+msgstr "The three you missed most this week: “ojalá”, “madrugar” and “tener ganas de”."
 
 msgid "The Vikings"
 msgstr "The Vikings"
@@ -3526,8 +3526,8 @@ msgstr "This is the current HSK 2.0 format. The syllabus published in 2025 grows
 msgid "This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have."
 msgstr "This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have."
 
-msgid "Three you’ve missed twice: osmosis, active transport and ATP."
-msgstr "Three you’ve missed twice: osmosis, active transport and ATP."
+msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
+msgstr "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
 
 msgid "Three: SAML, CVSS, and the difference between RTO and RPO."
 msgstr "Three: SAML, CVSS, and the difference between RTO and RPO."

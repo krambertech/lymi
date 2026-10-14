@@ -13,7 +13,6 @@ import { NOTES_TO_FLASHCARDS_QUESTIONS } from "./faq";
 import { GuideSteps } from "./GuideSteps";
 import { Hero } from "./Hero";
 import { HeroLiftOff, type HeroWord } from "./HeroScenes";
-import type { HandCard } from "./hand-cards";
 import { type Material, MaterialToCards, Pick } from "./MaterialToCards";
 import { Questions } from "./Questions";
 import { ReviewDemo } from "./ReviewDemo";
@@ -25,46 +24,46 @@ import { SiteNav } from "./SiteNav";
 export const NOTES_TO_FLASHCARDS_TITLE = msg`Turn notes and PDFs into flashcards · Lymi`;
 export const NOTES_TO_FLASHCARDS_BLURB = msg`Send class notes, a PDF or a photo of your notebook to your AI assistant, and it adds the key terms to Lymi as flashcards with spaced repetition. Free.`;
 
-/** A study term is written in the page's language, so its term is a message too. */
-type StudyCard = Omit<HandCard, "term"> & { term: MessageDescriptor };
+/** A study term is written in the page's language, so every field is a message. */
+interface StudyWord {
+  id: string;
+  source: MessageDescriptor;
+  term: MessageDescriptor;
+  meaning: MessageDescriptor;
+}
 type StudySample = Omit<SampleCard, "term"> & { term: MessageDescriptor };
 
-/** Terms a page of school or university notes really holds, in their usual definitions. No clip plays. */
-const HAND: StudyCard[] = [
+/** Terms a page of school or university notes really holds, in their usual definitions. */
+const HAND: StudyWord[] = [
   {
     id: "osmosis",
     source: msg`Biology`,
     term: msg`osmosis`,
     meaning: msg`Water moving through a membrane toward the side with more dissolved substance`,
-    audio: null,
   },
   {
     id: "opportunity-cost",
     source: msg`Economics`,
     term: msg`opportunity cost`,
     meaning: msg`What you give up by choosing one option over the next best one`,
-    audio: null,
   },
   {
     id: "habeas-corpus",
     source: msg`Law`,
     term: msg`habeas corpus`,
     meaning: msg`The right to have a court decide whether someone is lawfully detained`,
-    audio: null,
   },
   {
     id: "mitochondria",
     source: msg`Biology`,
     term: msg`mitochondrion`,
     meaning: msg`The part of a cell that releases energy from food`,
-    audio: null,
   },
   {
     id: "treaty-of-westphalia",
     source: msg`History`,
     term: msg`Peace of Westphalia`,
     meaning: msg`The 1648 treaties that ended the Thirty Years’ War`,
-    audio: null,
   },
 ];
 
@@ -267,12 +266,11 @@ export function NotesToFlashcardsView() {
   const openAppUrl = openLymiUrl();
   const osmosis = { ...OSMOSIS, term: i18n._(OSMOSIS.term) };
   const review = REVIEW.map((card) => ({ ...card, term: i18n._(card.term) }));
-  // Every study card names its subject and meaning as messages.
   const words: HeroWord[] = HAND.map((card) => ({
     id: card.id,
     term: i18n._(card.term),
-    label: i18n._(card.source as MessageDescriptor),
-    meaning: i18n._(card.meaning as MessageDescriptor),
+    label: i18n._(card.source),
+    meaning: i18n._(card.meaning),
   }));
 
   return (
@@ -329,7 +327,7 @@ export function NotesToFlashcardsView() {
               title: <Trans>Connect your AI assistant</Trans>,
               body: (
                 <Trans>
-                  Add Lymi to Claude, ChatGPT, Grok or another assistant.{" "}
+                  Add Lymi to Claude, Grok or another assistant.{" "}
                   <a
                     href="#connect"
                     className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
@@ -431,7 +429,9 @@ export function NotesToFlashcardsView() {
               },
               {
                 from: "them",
-                body: <Trans>Three you’ve missed twice: osmosis, active transport and ATP.</Trans>,
+                body: (
+                  <Trans>Three you’ve missed twice: diffusion, mitochondrion and ribosome.</Trans>
+                ),
               },
             ]}
           />

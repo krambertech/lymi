@@ -448,8 +448,8 @@ msgstr "Добавь обе колоды"
 msgid "Add it to your assistant"
 msgstr "Добавь его в своего ассистента"
 
-msgid "Add Lymi to Claude, ChatGPT, Grok or another assistant. <0>It takes three steps</0>."
-msgstr "Добавь Lymi в Claude, ChatGPT, Grok или другого ассистента. <0>Это три шага</0>."
+msgid "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</0>."
+msgstr "Добавь Lymi в Claude, Grok или другого ассистента. <0>Это три шага</0>."
 
 msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
 msgstr "Добавь колоду и учи её бесплатно — Lymi возвращает каждую карточку прямо перед тем, как ты её забудешь."
@@ -467,7 +467,7 @@ msgid "Added"
 msgstr "Добавлено"
 
 msgid "Added 14 cards to Biology, with the slides’ definitions. I skipped “diffusion”, which you already have."
-msgstr "Добавил 14 карточек в «Биологию» с определениями со слайдов. Пропустил «diffusion», она у тебя уже есть."
+msgstr "Добавил 14 карточек в «Биологию» с определениями со слайдов. Пропустил «диффузию», она у тебя уже есть."
 
 msgid "Added 14 cards to Pharmacology, each with its mechanism from your notes."
 msgstr "Добавил 14 карточек в «Фармакологию», к каждой — механизм действия из твоих заметок."
@@ -3478,8 +3478,8 @@ msgstr "Пар в сауне"
 msgid "The Thirty Years’ War"
 msgstr "Тридцатилетняя война"
 
-msgid "The three you missed most this week: “echar de menos”, “aprovechar” and “soler”."
-msgstr "Три, которые ты чаще всего забывал на этой неделе: «echar de menos», «aprovechar» и «soler»."
+msgid "The three you missed most this week: “ojalá”, “madrugar” and “tener ganas de”."
+msgstr "Три, которые на этой неделе чаще всего не вспоминались: «ojalá», «madrugar» и «tener ganas de»."
 
 msgid "The Vikings"
 msgstr "Викинги"
@@ -3526,8 +3526,8 @@ msgstr "Это действующий формат HSK 2.0. Программа, 
 msgid "This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have."
 msgstr "Эта политика объясняет, какие данные получает Lymi, зачем их использует, кто помогает предоставлять сервис и какой выбор есть у тебя."
 
-msgid "Three you’ve missed twice: osmosis, active transport and ATP."
-msgstr "Три, которые ты дважды забыл: osmosis, active transport и ATP."
+msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
+msgstr "Вот три, которые дважды не вспомнились: диффузия, митохондрия и рибосома."
 
 msgid "Three: SAML, CVSS, and the difference between RTO and RPO."
 msgstr "Три: SAML, CVSS и разницу между RTO и RPO."

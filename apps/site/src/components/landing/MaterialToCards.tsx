@@ -2,9 +2,9 @@ import type { MessageDescriptor } from "@lingui/core";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Check, Copy } from "lucide-react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useInView } from "motion/react";
 import { type ReactNode, useMemo, useRef, useState } from "react";
-import { EASE, usePlayback } from "./playback";
+import { EASE, usePlayback, useStill } from "./playback";
 
 /** One beat per term: it lights in the material, then its card lands in the deck. */
 const STEP_MS = 900;
@@ -79,7 +79,7 @@ function Row({ card, lang }: { card: MaterialCard; lang: string | undefined }) {
 /** One material read into cards; keyed by material, so switching starts the reading over. */
 function Reading({ material, inView }: { material: Material; inView: boolean }) {
   const { i18n } = useLingui();
-  const still = useReducedMotion();
+  const still = useStill();
   const beats = useMemo(() => {
     const entries: [string, number][] = material.cards.flatMap((_, i) => [
       [`lit${i}`, START_MS + i * STEP_MS],
@@ -104,7 +104,7 @@ function Reading({ material, inView }: { material: Material; inView: boolean }) 
           <p className="text-lg font-medium tracking-[-0.02em] text-text">
             {i18n._(material.deck)}
           </p>
-          <p className="shrink-0 text-xs text-muted tabular-nums" aria-live="polite">
+          <p className="shrink-0 text-xs text-muted tabular-nums">
             {done ? (
               <Plural value={added} one="# card added" other="# cards added" />
             ) : (

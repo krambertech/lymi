@@ -448,8 +448,8 @@ msgstr "Додай обидві колоди"
 msgid "Add it to your assistant"
 msgstr "Додай її до свого асистента"
 
-msgid "Add Lymi to Claude, ChatGPT, Grok or another assistant. <0>It takes three steps</0>."
-msgstr "Додай Lymi до Claude, ChatGPT, Grok чи іншого асистента. <0>Це три кроки</0>."
+msgid "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</0>."
+msgstr "Додай Lymi до Claude, Grok чи іншого асистента. <0>Це три кроки</0>."
 
 msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
 msgstr "Додай колоду й вчи її безкоштовно — Lymi повертає кожну картку саме перед тим, як ти її забудеш."
@@ -467,7 +467,7 @@ msgid "Added"
 msgstr "Додано"
 
 msgid "Added 14 cards to Biology, with the slides’ definitions. I skipped “diffusion”, which you already have."
-msgstr "Додав 14 карток у «Біологію» з визначеннями зі слайдів. Пропустив «diffusion», бо вона в тебе вже є."
+msgstr "Додав 14 карток у «Біологію» з визначеннями зі слайдів. Пропустив «дифузію», бо вона в тебе вже є."
 
 msgid "Added 14 cards to Pharmacology, each with its mechanism from your notes."
 msgstr "Додав 14 карток у «Фармакологію», до кожної — механізм дії з твоїх нотаток."
@@ -3478,8 +3478,8 @@ msgstr "Пара в сауні"
 msgid "The Thirty Years’ War"
 msgstr "Тридцятилітня війна"
 
-msgid "The three you missed most this week: “echar de menos”, “aprovechar” and “soler”."
-msgstr "Три, які ти найчастіше забував цього тижня: «echar de menos», «aprovechar» і «soler»."
+msgid "The three you missed most this week: “ojalá”, “madrugar” and “tener ganas de”."
+msgstr "Три, які цього тижня не згадувалися найчастіше: «ojalá», «madrugar» і «tener ganas de»."
 
 msgid "The Vikings"
 msgstr "Вікінги"
@@ -3526,8 +3526,8 @@ msgstr "Це чинний формат HSK 2.0. Програма, опублік
 msgid "This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have."
 msgstr "Ця політика пояснює, які дані отримує Lymi, навіщо їх використовує, хто допомагає надавати сервіс і який вибір маєш ти."
 
-msgid "Three you’ve missed twice: osmosis, active transport and ATP."
-msgstr "Три, які ти двічі забув: osmosis, active transport і ATP."
+msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
+msgstr "Ось три, що двічі не згадалися: дифузія, мітохондрія і рибосома."
 
 msgid "Three: SAML, CVSS, and the difference between RTO and RPO."
 msgstr "Три: SAML, CVSS і різницю між RTO та RPO."

@@ -164,7 +164,11 @@ export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
   const { t, i18n } = useLingui();
   if (compact) {
     return (
-      <ul aria-label={t`Connect an assistant`} className="flex flex-wrap justify-center gap-2">
+      // Four to a row, so seven marks wrap four and three instead of leaving one alone.
+      <ul
+        aria-label={t`Connect an assistant`}
+        className="grid grid-cols-[repeat(4,2.75rem)] justify-center gap-2"
+      >
         {ASSISTANTS.map((assistant) => {
           const name = assistant.label ? i18n._(assistant.label) : assistant.name;
           return (

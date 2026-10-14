@@ -257,7 +257,7 @@ function SwipeStop({
   );
 }
 
-/** The next stop on the path: the one standing action of the page, in amber. */
+/** The next stop on the path, as dashed as a stop not made yet; the label reads as Library's New deck. */
 function NewStop({ onPress, line }: { onPress: () => void; line: boolean }) {
   const { t } = useLingui();
   const p = usePalette();
@@ -271,12 +271,12 @@ function NewStop({ onPress, line }: { onPress: () => void; line: boolean }) {
     >
       {line && <Segment top={0} bottom={ROW / 2} />}
       <View
-        className="items-center justify-center rounded-full bg-amber"
+        className="items-center justify-center rounded-full border-[1.5px] border-dashed border-edge-2 bg-plate"
         style={{ width: NODE, height: NODE }}
       >
-        <Icon name="plus" size={18} colour={p["amber-ink"]} strokeWidth={2.5} />
+        <Icon name="plus" size={16} colour={p.text} strokeWidth={2.25} />
       </View>
-      <Text className="text-md font-semibold text-text">{t`New section`}</Text>
+      <Text className="text-md font-medium text-text">{t`New section`}</Text>
     </Press>
   );
 }

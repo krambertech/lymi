@@ -58,6 +58,9 @@ const fileOf = (component) => files.get(imported.get(component) ?? component);
 
 const symbolName = (name) => `lymi.${name}`;
 
+/** Lucide's 24-unit box, trimmed by this on each side, spans a little more than the text's cap height, as Apple's symbols do. */
+const INSETS = "1.5,1.5,1.5,1.5";
+
 const attrs = (props) =>
   Object.entries(props)
     .filter(([key]) => key !== "key")
@@ -111,7 +114,17 @@ for (const { name, component } of icons) {
   const set = join(out, `${symbolName(name)}.symbolset`);
   mkdirSync(set);
   const file = `${symbolName(name)}.svg`;
-  execFileSync("swiftdraw", [input, "--format", "sfsymbol", "--output", join(set, file)]);
+  // One inset for every icon keeps Lucide's sizes relative to each other; "auto" would scale each
+  // glyph to fill the guides, so a plus would come out as large as a circle.
+  execFileSync("swiftdraw", [
+    input,
+    "--format",
+    "sfsymbol",
+    "--insets",
+    INSETS,
+    "--output",
+    join(set, file),
+  ]);
   writeFileSync(
     join(set, "Contents.json"),
     `${JSON.stringify({ info: { author: "xcode", version: 1 }, symbols: [{ filename: file, idiom: "universal" }] }, null, 2)}\n`,

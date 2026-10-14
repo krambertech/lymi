@@ -41,6 +41,8 @@ export default function NewDeck() {
   const [name, setName] = useState("");
   const [purpose, setPurpose] = useState<DeckPurpose | null>(null);
   const [language, setLanguage] = useState("");
+  // A language deck needs its language, so choosing A language opens the list at once.
+  const [choosingLanguage, setChoosingLanguage] = useState(false);
   const [directions, setDirections] = useState<Directions>("recognition");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
@@ -58,8 +60,7 @@ export default function NewDeck() {
   ];
   const way = asked.find((a) => a.value === directions) ?? asked[0];
   const purposes = usePurposes();
-  // Everything required is set: the ✓ stays dim until then, so it never answers with an error.
-  const ready = !!name.trim() && !!purpose && (purpose !== "language" || !!language);
+
   const purposeIcon: Record<DeckPurpose, IconName> = {
     language: "meaning",
     subject: "lesson",
@@ -83,9 +84,8 @@ export default function NewDeck() {
     }
     // The app asks what every deck is for, and a language deck which language, though the API need not.
     if (!purpose) return setError(t`Choose what the deck is for.`);
-    if (purpose === "language" && !language) {
-      return setError(t`Choose the language you’re learning.`);
-    }
+    // What is still missing opens rather than only being named, so ✓ never leads nowhere.
+    if (purpose === "language" && !language) return setChoosingLanguage(true);
     setPending(true);
     setError(null);
     try {
@@ -110,6 +110,8 @@ export default function NewDeck() {
         setLanguage(next);
         if (error) setError(null);
       }}
+      open={choosingLanguage}
+      onOpenChange={setChoosingLanguage}
       trigger={trigger}
     />
   );
@@ -134,7 +136,7 @@ export default function NewDeck() {
           icon="check"
           label={t`Create deck`}
           primary
-          disabled={!ready}
+          disabled={!name.trim()}
           busy={pending}
           onPress={() => void create()}
         />
@@ -188,6 +190,7 @@ export default function NewDeck() {
                 onPress={() => {
                   setPurpose(o.value);
                   if (error) setError(null);
+                  if (o.value === "language" && !language) setChoosingLanguage(true);
                 }}
               >
                 {o.label}

@@ -715,9 +715,6 @@ msgstr "Выбрать фото"
 msgid "Choose the language"
 msgstr ""
 
-msgid "Choose the language you’re learning."
-msgstr ""
-
 msgid "Choose what the deck is for."
 msgstr ""
 

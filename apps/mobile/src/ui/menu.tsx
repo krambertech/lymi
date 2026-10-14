@@ -19,8 +19,13 @@ export interface MenuItem {
 }
 
 /** Opens a sheet; a choice runs once the sheet has gone, so nothing moves under it. */
-function useMenuSheet(onClosed?: () => void) {
-  const [open, setOpen] = useState(false);
+function useMenuSheet(
+  onClosed?: () => void,
+  controlled?: { open: boolean; onOpenChange: (open: boolean) => void },
+) {
+  const [own, setOwn] = useState(false);
+  const open = controlled?.open ?? own;
+  const setOpen = controlled?.onOpenChange ?? setOwn;
   const chosen = useRef<(() => void) | null>(null);
   return {
     show: () => setOpen(true),
@@ -56,6 +61,9 @@ interface SelectProps<T extends string> {
   onChange: (value: T) => void;
   /** After the sheet has gone, chosen or not; a composer puts the cursor back. */
   onClosed?: () => void;
+  /** To open the list from elsewhere, such as right after a choice that needs it: pass both. */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 /** Past this many fixed options, such as languages, the list is searched rather than scrolled. forms.md. */
@@ -72,15 +80,20 @@ export function Select<T extends string>({
   options,
   onChange,
   onClosed,
+  open,
+  onOpenChange,
 }: SelectProps<T>) {
   const { t, i18n } = useLingui();
   const p = usePalette();
   const { height } = useWindowDimensions();
   const [query, setQuery] = useState("");
-  const menu = useMenuSheet(() => {
-    setQuery("");
-    onClosed?.();
-  });
+  const menu = useMenuSheet(
+    () => {
+      setQuery("");
+      onClosed?.();
+    },
+    open !== undefined && onOpenChange ? { open, onOpenChange } : undefined,
+  );
   const chosen = options.find((o) => o.value === value)?.label ?? "";
   const searched = options.length > SEARCHED_PAST;
   const needle = query.trim().toLocaleLowerCase(i18n.locale);

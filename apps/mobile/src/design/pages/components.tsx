@@ -383,7 +383,7 @@ export function Choices() {
       </Sub>
       <Sub
         title="Field chip"
-        note="One optional field or setting of a card: its icon and label while empty, its value once set. A row of them scrolls sideways and fades at the edge with more."
+        note="One optional field or setting of a card: its icon and label while empty, its value once set, looking the same either way; a picture shows small in place of the icon. A row of them scrolls sideways and fades at the edge with more."
         source="src/ui/field-chip.tsx"
       >
         <Variants

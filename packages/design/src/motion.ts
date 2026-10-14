@@ -71,6 +71,11 @@ export const INSTANT = { duration: 0 } as const;
 export const PLATE_ARRIVE = { duration: 0.2, ease: EASE_OUT } as const satisfies Timed;
 export const PLATE_RISE = 6;
 
-/** A sheet's content swapping for a choice and back: out, then in, so the two never show together. */
-export const SWAP_OUT = { duration: 0.12, ease: EASE_OUT } as const satisfies Timed;
-export const SWAP_IN = { duration: 0.18, ease: EASE_OUT, delay: 0.09 } as const satisfies Timed;
+/**
+ * A row of chips under a sheet that opens over them: they sink and fade together as it rises, then
+ * return one after another as it goes, each rising into place a little after the one before.
+ */
+export const CHIPS_LEAVE = { duration: 0.16, ease: "linear" } as const satisfies Timed;
+export const CHIP_RETURN = { duration: 0.22, ease: EASE_OUT } as const satisfies Timed;
+export const CHIP_STAGGER = 0.03;
+export const CHIP_RISE = 8;

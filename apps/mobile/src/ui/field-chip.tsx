@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { ScrollView, View } from "react-native";
+import { Image, ScrollView, View } from "react-native";
 import { type Palette, usePalette } from "../theme/palette";
 import { Icon, type IconName } from "./icons";
 import { Press, Text } from "./primitives";
@@ -8,8 +8,10 @@ import { useOnGlass } from "./surface";
 interface FaceProps {
   icon: IconName;
   children: string;
-  /** Holds a value, or is switched on: ink text and a stronger edge. A pill, as the glass around it is round. */
+  /** Switched on; only the AI's chip shows it, in the AI's colour. A chip holding a value looks as any other. */
   on?: boolean;
+  /** A picture the chip holds, shown small in place of its icon. */
+  picture?: string | undefined;
   /** Ends in a chevron, for a chip that opens a list. */
   opens?: boolean;
   /** The AI's colour, for the chip that says the AI will fill the card in. */
@@ -23,21 +25,29 @@ export function FieldChipFace({
   on = false,
   opens = false,
   tone = "default",
+  picture,
 }: FaceProps) {
   const p = usePalette();
   const glass = useOnGlass();
-  const ink: keyof Palette = tone === "ai" && on ? "ai" : on ? "text" : "text-2";
-  const box =
-    tone === "ai" && on
-      ? "bg-ai-soft border-transparent"
-      : on
-        ? `${glass ? "bg-glass-chosen" : "bg-plate"} border-edge-2`
-        : `${glass ? "bg-glass-plate" : "bg-plate-2"} border-edge`;
+  const lit = tone === "ai" && on;
+  const ink: keyof Palette = lit ? "ai" : "text-2";
+  const box = lit
+    ? "bg-ai-soft border-transparent"
+    : `${glass ? "bg-glass-plate" : "bg-plate-2"} border-edge`;
   return (
     <View
       className={`min-h-9 max-w-56 flex-row items-center gap-1.5 rounded-full border ps-3 pe-3.5 ${box}`}
     >
-      <Icon name={icon} size={16} colour={on ? p[ink] : p.muted} />
+      {picture ? (
+        <Image
+          source={{ uri: picture }}
+          className="size-5 rounded-md"
+          resizeMode="cover"
+          accessibilityIgnoresInvertColors
+        />
+      ) : (
+        <Icon name={icon} size={16} colour={lit ? p[ink] : p.muted} />
+      )}
       <Text
         className="shrink text-sm font-medium"
         style={{ color: p[ink] }}

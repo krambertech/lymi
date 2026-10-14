@@ -26,7 +26,7 @@ interface Choices {
 
 const ChoicesContext = createContext<Choices | null>(null);
 
-/** What Add a word's choice pages set, shared by the card and the page swapped in for it. */
+/** What Add a word's choices set, shared by the card and the sheet each opens over it. */
 export function ChoicesProvider({ children }: { children: ReactNode }) {
   const params = useLocalSearchParams<{ deck?: string }>();
   const [deckId, setDeckId] = useState(

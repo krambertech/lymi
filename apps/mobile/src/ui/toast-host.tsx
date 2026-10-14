@@ -29,11 +29,14 @@ interface ToastOptions {
   title: string;
   error?: boolean;
   action?: { label: string; onPress: () => void };
+  /** A screen iOS presents over the root, such as Add a word, hosts its own toasts under this name. */
+  scope?: string;
 }
 
 interface Item extends Required<Pick<ToastOptions, "id" | "title">> {
   error: boolean;
   action: ToastOptions["action"];
+  scope: string | undefined;
   key: number;
 }
 
@@ -46,10 +49,13 @@ const emit = () => {
 
 /** What just happened, from anywhere, with at most one action; the newest is in front. */
 export const toast = {
-  add({ id, title, error = false, action }: ToastOptions) {
+  add({ id, title, error = false, action, scope }: ToastOptions) {
     const key = next++;
     const itemId = id ?? `toast-${key}`;
-    items = [...items.filter((i) => i.id !== itemId), { id: itemId, title, error, action, key }];
+    items = [
+      ...items.filter((i) => i.id !== itemId),
+      { id: itemId, title, error, action, scope, key },
+    ];
     emit();
     return itemId;
   },
@@ -59,9 +65,9 @@ export const toast = {
   },
 };
 
-/** Drops every toast, so an Undo never outlives the learner it belongs to. */
-export function clearToasts() {
-  items = [];
+/** Drops every toast, so an Undo never outlives the learner it belongs to; or only a scope's. */
+export function clearToasts(scope?: string) {
+  items = scope === undefined ? [] : items.filter((i) => i.scope !== scope);
   emit();
 }
 
@@ -75,14 +81,18 @@ function useToasts() {
   );
 }
 
-/** Where toasts show: over every screen, above the tab bar on a tab's screens. Mounted once, in the root. */
-export function ToastHost() {
+/**
+ * Where toasts show: over every screen, above the tab bar on a tab's screens, mounted once in the
+ * root. A screen iOS presents over the root mounts its own for its `scope`, at the `bottom` it sets.
+ */
+export function ToastHost({ scope, bottom: at }: { scope?: string; bottom?: number }) {
   const shown = useToasts();
-  useEffect(() => clearToasts, []);
+  useEffect(() => () => clearToasts(scope), [scope]);
   // A floating bar, such as the selection's, keeps its place and the toast rises over it.
-  const bottom = useAboveTabBar() + useFloatingBarHeight() + 12;
+  const above = useAboveTabBar() + useFloatingBarHeight() + 12;
+  const bottom = at ?? above;
   // The web shows three, the older two peeking behind the newest.
-  const visible = shown.slice(-3);
+  const visible = shown.filter((i) => i.scope === scope).slice(-3);
   return (
     <View pointerEvents="box-none" className="absolute inset-x-6" style={{ bottom }}>
       {visible.map((item, i) => (

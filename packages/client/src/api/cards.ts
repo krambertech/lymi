@@ -50,18 +50,6 @@ export type AddCardOutcome =
   | { status: "added"; card: Card }
   | { status: "skipped"; term: string; existing: Card; deckName: string };
 
-/** A file on the phone, as React Native's FormData takes one. */
-export type NativeFile = { uri: string; name: string; type: string };
-
-function isNativeFile(file: Blob | NativeFile): file is NativeFile {
-  return typeof (file as NativeFile).uri === "string";
-}
-
-/** React Native's FormData takes `{ uri, name, type }` where the DOM's types expect a Blob. */
-function formFile(file: Blob | NativeFile): Blob {
-  return isNativeFile(file) ? (file as unknown as Blob) : file;
-}
-
 /** One page of a search, newest first. `total` is null when it is not known exactly. */
 export type CardSearchPage = { cards: CardHit[]; nextCursor: string | null; total: number | null };
 export type CardSearch = { query: string; deckId?: string; cursor?: string; limit?: number };
@@ -99,17 +87,12 @@ export const cardsApi = {
   audioUrl: (cardId: string) => apiUrl(`/api/audio/${encodeURIComponent(cardId)}`),
   /**
    * `version` is the card's `imageVersion` as last read; null expects a card with no picture yet.
-   * The phone passes a file as React Native's `{ uri, name, type }`, which its FormData uploads.
+   * The phone passes an Expo `File`, whose bytes Expo's fetch can read, not React Native's `{ uri }`.
    */
-  uploadCardImage: (
-    id: string,
-    file: Blob | NativeFile,
-    version: string | null,
-    description?: string,
-  ) => {
+  uploadCardImage: (id: string, file: Blob, version: string | null, description?: string) => {
     const form = new FormData();
     // `append`, not `set`: React Native's FormData has no `set`, and each name is sent once.
-    form.append("file", formFile(file));
+    form.append("file", file);
     form.append("version", version ?? "");
     if (description) form.append("description", description);
     return request<Card>(`/api/cards/${id}/image`, { method: "PUT", body: form });

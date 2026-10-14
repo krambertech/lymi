@@ -448,17 +448,14 @@ msgstr "Add to Library"
 msgid "Add to this card"
 msgstr "Add to this card"
 
-msgid "Added “{term}”"
-msgstr "Added “{term}”"
-
 msgid "Added “{term}” to {deck}"
 msgstr "Added “{term}” to {deck}"
 
 msgid "Added “{term}” to {deckName}"
 msgstr "Added “{term}” to {deckName}"
 
-msgid "Added “{term}” without its picture. {reason}"
-msgstr "Added “{term}” without its picture. {reason}"
+msgid "Added “{term}” without its picture"
+msgstr "Added “{term}” without its picture"
 
 msgid "Added “{term}”. It’s saved on this phone until Lymi can be reached."
 msgstr "Added “{term}”. It’s saved on this phone until Lymi can be reached."
@@ -2011,9 +2008,6 @@ msgstr "Picture card: {0}. Tap to reveal"
 
 msgid "Picture changed"
 msgstr "Picture changed"
-
-msgid "Pictures need a connection. Try again once you’re back online."
-msgstr "Pictures need a connection. Try again once you’re back online."
 
 msgid "Play pronunciation"
 msgstr "Play pronunciation"

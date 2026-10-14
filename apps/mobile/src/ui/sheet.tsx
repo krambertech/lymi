@@ -17,9 +17,26 @@ import {
   useEffect,
   useState,
 } from "react";
-import { AccessibilityInfo, Pressable, ScrollView, useWindowDimensions, View } from "react-native";
+import {
+  AccessibilityInfo,
+  Pressable,
+  ScrollView,
+  useWindowDimensions,
+  View,
+  type ViewStyle,
+} from "react-native";
+import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
+import Animated, {
+  Extrapolation,
+  interpolate,
+  type SharedValue,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+} from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { usePalette, useRoom } from "../theme/palette";
+import { clear, usePalette, useRoom } from "../theme/palette";
 import { GlassButton } from "./glass";
 import { Icon, type IconName } from "./icons";
 import { Text } from "./primitives";
@@ -80,6 +97,11 @@ export function Sheet({
   const p = usePalette();
   const { width, height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
+  // iOS lifts the sheet over a keyboard its field brings up, so the sheet gives up that room frame by
+  // frame as the keyboard rises; whatever no longer fits scrolls.
+  const { height: keyboard } = useReanimatedKeyboardAnimation();
+  const tallest = height - insets.top - 16;
+  const fits = useAnimatedStyle(() => ({ maxHeight: tallest + keyboard.value }));
   const [peek, setPeek] = useState<number | null>(null);
   const inset = ROW_INSET;
   const detents = more && peek ? [presentationDetents([{ height: peek }, "large"])] : [];
@@ -129,6 +151,16 @@ export function Sheet({
     </SheetInset.Provider>
   );
   const top = save ? "pt-4" : "pt-7";
+  // Only a sheet with more to scroll softens its edges, and only on the side where more is.
+  const offset = useSharedValue(0);
+  const shown = useSharedValue(0);
+  const whole = useSharedValue(0);
+  const onScroll = useAnimatedScrollHandler((e) => {
+    offset.value = e.contentOffset.y;
+  });
+  const scrolled = offset;
+  const left = useDerivedValue(() => whole.value - shown.value - offset.value);
+  const edge = room === "dark" ? p.sheet : p.plate;
   return (
     <Host colorScheme={room} style={{ position: "absolute", width: 0, height: 0 }}>
       <BottomSheet
@@ -167,19 +199,63 @@ export function Sheet({
           ) : (
             <RNHostView matchContents>
               {/* A list taller than the screen, such as every language, scrolls inside the sheet. */}
-              <ScrollView
-                style={{ width, maxHeight: height - insets.top - 16 }}
-                contentContainerClassName={`px-4 pb-4 ${top}`}
-                // A row or Save takes the first tap, even with the keyboard up.
-                keyboardShouldPersistTaps="handled"
-              >
-                {first}
-              </ScrollView>
+              <View>
+                <Animated.ScrollView
+                  style={[{ width }, fits]}
+                  contentContainerClassName={`px-4 pb-4 ${top}`}
+                  // A row or Save takes the first tap, even with the keyboard up.
+                  keyboardShouldPersistTaps="handled"
+                  onScroll={onScroll}
+                  scrollEventThrottle={16}
+                  onLayout={(e) => {
+                    shown.value = e.nativeEvent.layout.height;
+                  }}
+                  onContentSizeChange={(_, h) => {
+                    whole.value = h;
+                  }}
+                >
+                  {first}
+                </Animated.ScrollView>
+                {/* At full height iOS turns the glass opaque, white by day and the room's sheet at night. */}
+                <ScrollEdge side="top" colour={edge} before={scrolled} />
+                <ScrollEdge side="bottom" colour={edge} before={left} />
+              </View>
             </RNHostView>
           )}
         </Group>
       </BottomSheet>
     </Host>
+  );
+}
+
+const EDGE = 24;
+
+/** A soft edge over a sheet's scroll, shown as `before` (the content past that edge) grows. */
+function ScrollEdge({
+  side,
+  colour,
+  before,
+}: {
+  side: "top" | "bottom";
+  colour: string;
+  before: SharedValue<number>;
+}) {
+  const style = useAnimatedStyle(() => ({
+    opacity: interpolate(before.value, [0, EDGE], [0, 1], Extrapolation.CLAMP),
+  }));
+  const to = side === "top" ? "bottom" : "top";
+  return (
+    <Animated.View
+      pointerEvents="none"
+      className={`absolute inset-x-0 ${side === "top" ? "top-0" : "bottom-0"}`}
+      style={[
+        {
+          height: EDGE,
+          experimental_backgroundImage: `linear-gradient(to ${to}, ${colour}, ${clear(colour)})`,
+        } as ViewStyle,
+        style,
+      ]}
+    />
   );
 }
 

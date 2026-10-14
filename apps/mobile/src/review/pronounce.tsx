@@ -3,7 +3,7 @@ import { api } from "@lymi/client/api";
 import { canSpeakTerm } from "@lymi/core";
 import { requireOptionalNativeModule } from "expo";
 import { useEffect, useRef, useState } from "react";
-import { AccessibilityInfo, ActivityIndicator, View } from "react-native";
+import { AccessibilityInfo, View } from "react-native";
 import Animated, {
   cancelAnimation,
   FadeIn,
@@ -16,7 +16,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSessionHeaders } from "../auth/client";
 import { ALWAYS, useReduceMotion } from "../theme/motion";
-import { usePalette } from "../theme/palette";
 import { IconButton, Text } from "../ui/primitives";
 
 /** Long enough for speech the server makes on first ask; past it, the play counts as failed. */
@@ -118,7 +117,6 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
   const shake = useSharedValue(0);
   const [tip, setTip] = useState<string | null>(null);
   const { error, state, play } = pronounce;
-  const p = usePalette();
 
   useEffect(() => {
     if (!error) return;
@@ -133,7 +131,7 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
     return () => clearTimeout(timer);
   }, [error, reduce, shake]);
   const style = useAnimatedStyle(() => ({ transform: [{ translateX: shake.value }] }));
-  // Loading dims the speaker and a slow load adds a spinner, as the web's does; playing breathes.
+  // A slow load turns a loader in the speaker's place, as the web's does; playing breathes.
   const glow = useSharedValue(1);
   const [slow, setSlow] = useState(false);
   useEffect(() => {
@@ -158,7 +156,7 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
         ALWAYS,
       );
     } else {
-      glow.value = state === "loading" ? 0.5 : 1;
+      glow.value = 1;
     }
   }, [state, reduce, glow]);
   const dim = useAnimatedStyle(() => ({ opacity: glow.value }));
@@ -184,17 +182,13 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
             variant={error ? "danger" : "secondary"}
             size="sm"
             round
+            busy={slow}
             onPress={() => {
               setTip(null);
               play();
             }}
           />
         </Animated.View>
-        {slow && (
-          <View pointerEvents="none" className="absolute inset-0 items-center justify-center">
-            <ActivityIndicator size="small" color={p.muted} />
-          </View>
-        )}
       </Animated.View>
     </View>
   );

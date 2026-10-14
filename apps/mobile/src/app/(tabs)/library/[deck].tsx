@@ -50,7 +50,7 @@ import { Segmented } from "../../../ui/segmented";
 import { Sheet, SheetGroup, SheetHeading, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { StateIcon, stateMarks } from "../../../ui/state-mark";
-import { setDeckReviewHidden } from "../../../ui/tab-bar";
+import { setDeckReviewHidden, setDeckSelecting } from "../../../ui/tab-bar";
 import { toast } from "../../../ui/toast-host";
 
 /**
@@ -97,6 +97,11 @@ export default function Deck() {
   const selection = owner && selected ? selected : null;
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
   const done = () => setSelected(null);
+  const choosing = !!selection;
+  useEffect(() => {
+    setDeckSelecting(id, choosing);
+    return () => setDeckSelecting(id, false);
+  }, [id, choosing]);
   useFloatingBar(
     selection && (
       <Animated.View

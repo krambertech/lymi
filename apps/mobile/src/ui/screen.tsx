@@ -79,6 +79,10 @@ const TITLE_GONE = 44;
 const SMALL = 17 / 34;
 /** A tab's title stays at the start, larger, as iOS's inline large title does: text-xl. */
 const INLINE_LARGE = 22 / 34;
+/** What a title in the bar leaves on each side: a back, or two round actions and their gap. */
+const BAR_SIDE = 120;
+/** A title travelling into the bar may run wider, since it shrinks as it goes. */
+const TRAVEL_SIDE = 96;
 
 /**
  * Every screen is built with Screen, as on the web: the chrome tells you how to leave. The bar is
@@ -161,7 +165,7 @@ export function Screen({
   const moving = useAnimatedStyle(() => {
     if (hasHeader) {
       // The header holds the name at rest; the bar's title arrives as the header leaves.
-      const w = Math.min(box.w * dock, screen - 2 * 96);
+      const w = Math.min(box.w * dock, screen - 2 * BAR_SIDE);
       const x = (screen - w) / 2;
       return {
         // Until the header is measured the bar's title stays hidden, so it never flashes in.
@@ -181,7 +185,7 @@ export function Screen({
       };
     }
     const k = interpolate(y.value, [0, travel], [0, 1], Extrapolation.CLAMP);
-    const w = Math.min(box.w * dock, screen - 2 * 96);
+    const w = Math.min(box.w * dock, screen - 2 * TRAVEL_SIDE);
     // A page centres it between its back and its actions; a tab keeps it at the start, across
     // from the streak and capture, so the bar does not lean to one side.
     const x = kind === "tab" ? 20 : 20 + ((screen - w) / 2 - 20) * k;
@@ -310,7 +314,8 @@ export function Screen({
       <Animated.View
         pointerEvents="none"
         className="absolute start-0 top-0"
-        style={[{ maxWidth: screen - 40 }, moving]}
+        // With a header the name shows only in the bar, so it shortens to clear the bar's buttons.
+        style={[{ maxWidth: hasHeader ? (screen - 2 * BAR_SIDE) / dock : screen - 40 }, moving]}
         importantForAccessibility="no-hide-descendants"
         accessibilityElementsHidden
       >

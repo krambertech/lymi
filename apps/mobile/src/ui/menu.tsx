@@ -67,7 +67,61 @@ interface SelectProps<T extends string> {
 }
 
 /** Past this many fixed options, such as languages, the list is searched rather than scrolled. forms.md. */
-const SEARCHED_PAST = 15;
+export const SEARCHED_PAST = 15;
+
+/** Filters a list by its labels as the learner types, in the interface's locale. */
+export function useSearched<T extends { label: string }>(options: T[]) {
+  const { i18n } = useLingui();
+  const [query, setQuery] = useState("");
+  const needle = query.trim().toLocaleLowerCase(i18n.locale);
+  const shown = needle
+    ? options.filter((o) => o.label.toLocaleLowerCase(i18n.locale).includes(needle))
+    : options;
+  return { query, setQuery, searching: !!needle, shown };
+}
+
+/** A searched list's field; `group` fills it on a sheet iOS has made opaque, where `plate` vanishes. */
+export function SearchField({
+  label,
+  query,
+  onChange,
+  onSubmit,
+  fill = "plate",
+}: {
+  label: string;
+  query: string;
+  onChange: (query: string) => void;
+  onSubmit: () => void;
+  fill?: "plate" | "group";
+}) {
+  const { t } = useLingui();
+  const p = usePalette();
+  return (
+    <View
+      className={`h-11 flex-row items-center gap-2 rounded-xl px-3.5 ${fill === "group" ? "bg-glass-group" : "bg-glass-plate"}`}
+    >
+      <Icon name="search" size={18} colour={p.muted} />
+      <TextInput
+        autoFocus
+        value={query}
+        onChangeText={onChange}
+        placeholder={t`Search`}
+        placeholderTextColor={p.muted}
+        accessibilityLabel={t`Search ${label}`}
+        autoCapitalize="none"
+        autoCorrect={false}
+        spellCheck={false}
+        clearButtonMode="while-editing"
+        returnKeyType="done"
+        onSubmitEditing={onSubmit}
+        selectionColor={p.text}
+        className="flex-1 font-sans text-text"
+        style={{ fontSize: 17 }}
+        maxFontSizeMultiplier={inputCap(17)}
+      />
+    </View>
+  );
+}
 
 /**
  * One option in a sheet titled with the field's name. Up to fifteen, such as a deck, are a list;
@@ -83,10 +137,9 @@ export function Select<T extends string>({
   open,
   onOpenChange,
 }: SelectProps<T>) {
-  const { t, i18n } = useLingui();
-  const p = usePalette();
+  const { t } = useLingui();
   const { height } = useWindowDimensions();
-  const [query, setQuery] = useState("");
+  const { query, setQuery, searching, shown } = useSearched(options);
   const menu = useMenuSheet(
     () => {
       setQuery("");
@@ -96,10 +149,6 @@ export function Select<T extends string>({
   );
   const chosen = options.find((o) => o.value === value)?.label ?? "";
   const searched = options.length > SEARCHED_PAST;
-  const needle = query.trim().toLocaleLowerCase(i18n.locale);
-  const shown = needle
-    ? options.filter((o) => o.label.toLocaleLowerCase(i18n.locale).includes(needle))
-    : options;
   const rows = (
     <SheetGroup>
       {shown.map((o, i) => (
@@ -108,7 +157,7 @@ export function Select<T extends string>({
           label={o.label}
           detail={o.detail}
           chosen={o.value === value}
-          active={!!needle && i === 0}
+          active={searching && i === 0}
           onPress={() => menu.choose(() => o.value !== value && onChange(o.value))}
         />
       ))}
@@ -127,30 +176,15 @@ export function Select<T extends string>({
         label,
         searched ? (
           <>
-            <View className="h-11 flex-row items-center gap-2 rounded-xl bg-glass-plate px-3.5">
-              <Icon name="search" size={18} colour={p.muted} />
-              <TextInput
-                autoFocus
-                value={query}
-                onChangeText={setQuery}
-                placeholder={t`Search`}
-                placeholderTextColor={p.muted}
-                accessibilityLabel={t`Search ${label}`}
-                autoCapitalize="none"
-                autoCorrect={false}
-                spellCheck={false}
-                clearButtonMode="while-editing"
-                returnKeyType="done"
-                onSubmitEditing={() => {
-                  const first = shown[0];
-                  if (first) menu.choose(() => first.value !== value && onChange(first.value));
-                }}
-                selectionColor={p.text}
-                className="flex-1 font-sans text-text"
-                style={{ fontSize: 17 }}
-                maxFontSizeMultiplier={inputCap(17)}
-              />
-            </View>
+            <SearchField
+              label={label}
+              query={query}
+              onChange={setQuery}
+              onSubmit={() => {
+                const first = shown[0];
+                if (first) menu.choose(() => first.value !== value && onChange(first.value));
+              }}
+            />
             <ScrollView
               style={{ height: height * 0.55 }}
               keyboardShouldPersistTaps="handled"

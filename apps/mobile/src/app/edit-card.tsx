@@ -12,6 +12,7 @@ import {
   type FormValues,
   formValues,
 } from "../capture/form";
+import { useReveal } from "../capture/reveal";
 import { cardEdited, heldCard } from "../card/edited";
 import { useDeckCards, useDecks } from "../data/queries";
 import { FieldChipRow } from "../ui/field-chip";
@@ -41,6 +42,7 @@ export default function EditCard() {
   const live = card ? formValues(card) : EMPTY_FORM;
   const values = { ...live, ...typed };
   const fields = useFormFields(values, focus);
+  const form = useReveal();
   const [saving, setSaving] = useState(false);
   if (!card) return null;
 
@@ -73,11 +75,13 @@ export default function EditCard() {
           action={{ icon: "check", label: t`Save`, busy: saving, onPress: () => void save() }}
         />
         <ScrollView
+          {...form.scroll}
           className="flex-1"
           contentContainerClassName="gap-3 px-5 pt-4 pb-4"
           keyboardShouldPersistTaps="always"
         >
           <CardFields
+            reveal={form.reveal}
             values={values}
             onChange={(f, v) => setTyped((d) => ({ ...d, [f]: v }))}
             shown={fields.shown}

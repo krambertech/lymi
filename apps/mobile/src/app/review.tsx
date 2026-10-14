@@ -83,6 +83,7 @@ import {
 } from "../data/queries";
 import { spokenInterval } from "../i18n/interval";
 import { CardNotes } from "../review/card-notes";
+import { CardLine, FIT_STEPS, typeAt, useFitStep } from "../review/card-type";
 import { endHaptics } from "../review/end-haptics";
 import { HookLine, HookOffer, HookSheet, PeekButton, ShowHookButton } from "../review/hooks";
 import { modeLabel } from "../review/modes";
@@ -95,7 +96,7 @@ import { Wick } from "../review/wick";
 import { useReviewSession } from "../telemetry/review-session";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
-import { fitType, TEXT_END } from "../theme/type";
+import { fitType } from "../theme/type";
 import { AiCardChip, Chip, StateChip } from "../ui/chip";
 import { GlassSurface } from "../ui/glass";
 import { GRADES } from "../ui/grade";
@@ -1152,23 +1153,38 @@ function Header({ done, total, onClose }: { done: number; total: number; onClose
   }));
   return (
     <View className="h-12 flex-row items-center gap-3 ps-4 pe-1">
-      <Lantern size={36} progress={progress} out={out} fed={fed} />
+      {/* The web's 44, pulled out so its glass lines up with the card's edge under it. */}
+      <View style={{ marginStart: -11, marginEnd: -8 }}>
+        <Lantern size={44} progress={progress} out={out} fed={fed} />
+      </View>
       <View
         className="h-1.5 flex-1 overflow-hidden rounded-full bg-plate-2"
         style={{ boxShadow: `inset 0 0 0 1px ${p.edge}` } as ViewStyle}
       >
         <Animated.View className="h-full rounded-full bg-text-2" style={fill} />
       </View>
-      <Text
-        // The count shares a 48 pt bar with the lantern and the progress, so it grows least.
-        maxFontSizeMultiplier={1.3}
-        className="min-w-12 text-base text-text-2"
-        style={[{ fontVariant: ["tabular-nums"] }, TEXT_END]}
-      >
-        {done}/{total}
-      </Text>
-      {/* Plain, because leaving is rare; its 44 pt target overlaps the gap so the glyph sits by the count. phone.md "Review". */}
-      <View style={{ marginStart: -14 }}>
+      {/* Held at the width of a finished count, so the bar never shortens as a digit is gained. */}
+      <View className="ms-1">
+        <Text
+          maxFontSizeMultiplier={1.3}
+          className="text-base opacity-0"
+          style={{ fontVariant: ["tabular-nums"] }}
+          accessibilityElementsHidden
+          importantForAccessibility="no-hide-descendants"
+        >
+          {total}/{total}
+        </Text>
+        <Text
+          // The count shares a 48 pt bar with the lantern and the progress, so it grows least.
+          maxFontSizeMultiplier={1.3}
+          className="absolute end-0 text-base text-text-2"
+          style={{ fontVariant: ["tabular-nums"] }}
+        >
+          {done}/{total}
+        </Text>
+      </View>
+      {/* Plain, because leaving is rare; its 44 pt target overlaps the gap so the glyph sits as far from the count as the count from the bar. phone.md "Review". */}
+      <View style={{ marginStart: -16 }}>
         <IconButton icon="close" label={t`End review`} haptic={false} onPress={onClose} />
       </View>
     </View>
@@ -1280,6 +1296,15 @@ function CardPlate({
       ? { icon: "source" as const, name: card.source }
       : null;
   const canPeek = !revealed && !!hook && !hookShown && !!onPeek;
+  const fit = useFitStep(revealed, GRADE_ROOM);
+  const stackHeader = fontScale > 1.3;
+  const target = mode.target === "term" ? "term" : "meaning";
+  const room = {
+    line: cueLine,
+    longest: Math.max(...cue.split(/\s+/).map((word) => word.length)),
+    fontScale,
+  };
+  const type = typeAt(fit.step, target, room);
   let line = 0;
   const arrive = () => (still ? undefined : reduce ? CROSSFADE : rise(line++));
   const glide = reduce || still ? undefined : LinearTransition.duration(GLIDE).easing(EASE);
@@ -1325,11 +1350,13 @@ function CardPlate({
         className="flex-1 overflow-hidden rounded-2xl border border-edge bg-plate"
         style={dark ? LIFT : undefined}
       >
-        {/* At large text sizes the deck and the state stack rather than clip. */}
-        <View className="flex-row flex-wrap items-center justify-between gap-2 px-5 pt-4">
-          <View className="min-w-0 shrink flex-row items-center gap-2">
-            <Icon name="deck" size={16} colour={p.muted} />
-            <Text className="shrink text-base text-text-2" numberOfLines={1}>
+        {/* A long deck name shortens beside the state; at large text sizes the two stack rather than clip. */}
+        <View
+          className={`flex-row items-center justify-between gap-2 px-5 pt-4 ${stackHeader ? "flex-wrap" : ""}`}
+        >
+          <View className="min-w-0 shrink flex-row items-center gap-1.5">
+            <Icon name="deck" size={14} colour={p.muted} />
+            <Text className="shrink text-sm font-medium text-text-2" numberOfLines={1}>
               {[deck?.name, ...tail].filter(Boolean).join(" · ")}
             </Text>
           </View>
@@ -1340,6 +1367,7 @@ function CardPlate({
           keyboardShouldPersistTaps="handled"
           className="flex-1"
           contentContainerClassName="grow justify-center px-5 py-4"
+          onLayout={fit.onRoom}
           // Unrevealed, the whole plate is the button, so nothing scrolls under the finger.
           scrollEnabled={revealed}
           showsVerticalScrollIndicator={false}
@@ -1352,18 +1380,17 @@ function CardPlate({
                 <Text className="text-md text-muted">{t`This card’s picture was removed.`}</Text>
               )
             ) : (
-              <View className="flex-row items-center gap-3">
-                <Text
-                  className="shrink text-text"
-                  style={{ ...cueSize(cue, fontScale, cueLine), fontWeight: "500" }}
-                  // cueSize grows it with the text size itself, within what the line can hold.
-                  maxFontSizeMultiplier={1}
-                >
-                  {cue}
-                </Text>
-                {/* The term can be heard as soon as it is the question. */}
-                {pronounce && mode.cue === "term" && <PronounceButton pronounce={pronounce} />}
-              </View>
+              <CardLine
+                style={type.cue}
+                // The term can be heard as soon as it is the question.
+                after={
+                  pronounce && mode.cue === "term" ? (
+                    <PronounceButton pronounce={pronounce} />
+                  ) : undefined
+                }
+              >
+                {cue}
+              </CardLine>
             )}
             {/* The hook has one place, under the cue, before the reveal and after it. */}
             {hook && hookShown ? (
@@ -1377,63 +1404,125 @@ function CardPlate({
             ) : null}
           </Animated.View>
           {revealed && (
-            <View className="gap-3 pt-4">
+            <View className="gap-5 pt-5">
               <Wick still={still} />
-              <Animated.View entering={arrive()} className="flex-row items-center gap-3">
-                <Text
-                  className={`shrink ${picture ? "text-2xl font-medium text-text" : "text-xl text-text"}`}
-                  style={back === noMeaning ? { color: p.muted } : undefined}
-                  // Below the question at every text size, which grows to 1.4×.
-                  maxFontSizeMultiplier={1.6}
-                >
-                  {back}
-                </Text>
-                {pronounce && mode.target === "term" && <PronounceButton pronounce={pronounce} />}
-              </Animated.View>
-              {picture && (
-                <Animated.View entering={arrive()} className="flex-row items-center gap-3">
-                  <Text className="shrink text-lg text-text-2">
-                    {mode.target === "term" ? card.meaning : card.term}
-                  </Text>
-                  {pronounce && mode.target !== "term" && <PronounceButton pronounce={pronounce} />}
-                </Animated.View>
-              )}
-              {card.pronunciation && (mode.target === "term" || picture) && (
+              <View className="gap-3">
                 <Animated.View entering={arrive()}>
-                  <Text className="text-md text-muted">{card.pronunciation}</Text>
-                </Animated.View>
-              )}
-              {!picture && card.image && (
-                <Animated.View entering={arrive()} style={{ maxWidth: 220 }}>
-                  <Picture card={card} maxHeight={120} />
-                </Animated.View>
-              )}
-              {card.example && (
-                <Animated.View entering={arrive()}>
-                  <Text className="text-md text-text-2">{card.example}</Text>
-                </Animated.View>
-              )}
-              {card.notes && (
-                <Animated.View entering={arrive()}>
-                  <CardNotes source={card.notes} className="text-base text-muted" />
-                </Animated.View>
-              )}
-              {(place || aiWritten) && (
-                <Animated.View
-                  entering={arrive()}
-                  className="flex-row flex-wrap items-center gap-1.5"
-                >
-                  {place && (
-                    <Chip size="sm" icon={place.icon}>
-                      {place.name}
-                    </Chip>
+                  {picture ? (
+                    <View className="flex-row items-center gap-3">
+                      <Text
+                        className="shrink text-2xl font-medium text-text"
+                        style={back === noMeaning ? { color: p.muted } : undefined}
+                      >
+                        {back}
+                      </Text>
+                      {pronounce && mode.target === "term" && (
+                        <PronounceButton pronounce={pronounce} />
+                      )}
+                    </View>
+                  ) : (
+                    <CardLine
+                      style={type.answer}
+                      grows
+                      muted={back === noMeaning ? p.muted : undefined}
+                      after={
+                        pronounce && mode.target === "term" ? (
+                          <PronounceButton pronounce={pronounce} />
+                        ) : undefined
+                      }
+                    >
+                      {back}
+                    </CardLine>
                   )}
-                  {aiWritten && <AiCardChip />}
                 </Animated.View>
-              )}
+                {picture && (
+                  <Animated.View entering={arrive()} className="flex-row items-center gap-3">
+                    <Text className="shrink text-lg text-text-2">
+                      {mode.target === "term" ? card.meaning : card.term}
+                    </Text>
+                    {pronounce && mode.target !== "term" && (
+                      <PronounceButton pronounce={pronounce} />
+                    )}
+                  </Animated.View>
+                )}
+                {card.pronunciation && (mode.target === "term" || picture) && (
+                  <Animated.View entering={arrive()}>
+                    <Text className="text-md text-muted">{card.pronunciation}</Text>
+                  </Animated.View>
+                )}
+                {!picture && card.image && (
+                  <Animated.View entering={arrive()} style={{ maxWidth: 220 }}>
+                    <Picture card={card} maxHeight={120} />
+                  </Animated.View>
+                )}
+                {card.example && (
+                  <Animated.View entering={arrive()}>
+                    <Text className="text-md text-text-2">{card.example}</Text>
+                  </Animated.View>
+                )}
+                {card.notes && (
+                  <Animated.View entering={arrive()}>
+                    <CardNotes source={card.notes} className="text-base text-muted" />
+                  </Animated.View>
+                )}
+                {(place || aiWritten) && (
+                  <Animated.View
+                    entering={arrive()}
+                    className="mt-1 flex-row flex-wrap items-center gap-1.5"
+                  >
+                    {place && (
+                      <Chip size="sm" icon={place.icon}>
+                        {place.name}
+                      </Chip>
+                    )}
+                    {aiWritten && <AiCardChip />}
+                  </Animated.View>
+                )}
+              </View>
             </View>
           )}
         </ScrollView>
+
+        {/* The cue and the target at each step, unseen, to choose the largest that fits. */}
+        {!picture && (
+          <View
+            pointerEvents="none"
+            className="absolute inset-x-0 top-0 opacity-0"
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+          >
+            {FIT_STEPS.map((step) => {
+              const at = typeAt(step, target, room);
+              const speaker = pronounce ? <View style={{ width: 32, height: 16 }} /> : undefined;
+              return (
+                <View
+                  key={step}
+                  onLayout={fit.onMeasured(step)}
+                  className="absolute inset-x-5 top-0 py-4"
+                >
+                  <CardLine style={at.cue} after={mode.cue === "term" ? speaker : undefined}>
+                    {cue}
+                  </CardLine>
+                  {hook && hookShown && (
+                    <View className="pt-3">
+                      <HookLine text={hook.text} source={hook.source} still />
+                    </View>
+                  )}
+                  <View className="gap-5 pt-5">
+                    <View className="h-px" />
+                    <CardLine
+                      style={at.answer}
+                      grows
+                      after={mode.target === "term" ? speaker : undefined}
+                    >
+                      {back}
+                    </CardLine>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+        )}
 
         {!revealed && hint && <RevealHint lifted={canPeek} />}
         {canPeek && onPeek && <PeekButton onPeek={onPeek} />}
@@ -1458,6 +1547,9 @@ const gradeIn = (i: number) =>
  * Four grades under the card, 80 pt tall and nearly square, in the thumb's reach. Same tap, same
  * weight, whichever is chosen. phone.md "Review".
  */
+/** What the grade strip takes from the card at the reveal: its 80 pt plates under a 12 pt gap. */
+const GRADE_ROOM = 92;
+
 function GradeStrip({
   still = false,
   next,
@@ -1970,22 +2062,4 @@ function ArchivedLine({
       </GlassSurface>
     </View>
   );
-}
-
-/**
- * The question's type. A long one, such as a meaning asked for its term, steps down so it fits
- * before the reveal, when the card cannot scroll; it never grows so large its longest word must
- * break; and it grows with the text size up to 1.4×, so the answer stays below it.
- */
-function cueSize(cue: string, fontScale: number, line: number) {
-  const base = cue.length > 90 ? 22 : cue.length > 36 ? 28 : 38;
-  const longest = Math.max(1, ...cue.split(/\s+/).map((word) => word.length));
-  // Onest's letters average a little over half their size across.
-  const fits = line / (longest * 0.58);
-  const fontSize = Math.round(Math.max(20, Math.min(base * Math.min(fontScale, 1.4), fits)));
-  return {
-    fontSize,
-    lineHeight: Math.round(fontSize * 1.26),
-    letterSpacing: -fontSize * 0.024,
-  };
 }

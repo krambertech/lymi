@@ -1,6 +1,6 @@
 import { shadows } from "@lymi/design";
 import * as Haptics from "expo-haptics";
-import { createContext, type ReactNode, useContext, useEffect, useRef } from "react";
+import { createContext, type ReactNode, type Ref, useContext, useEffect, useRef } from "react";
 import {
   ActivityIndicator,
   Pressable,
@@ -13,9 +13,16 @@ import {
   type ViewProps,
   type ViewStyle,
 } from "react-native";
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, {
+  cancelAnimation,
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from "react-native-reanimated";
 import { useResolveClassNames } from "uniwind";
-import { useReduceMotion } from "../theme/motion";
+import { ALWAYS, useReduceMotion } from "../theme/motion";
 import { clear, type Palette, usePalette, useRoom } from "../theme/palette";
 import { fitType } from "../theme/type";
 import { Icon, type IconName } from "./icons";
@@ -36,7 +43,7 @@ export function Text({
   style,
   maxFontSizeMultiplier,
   ...props
-}: TextProps & { className?: string }) {
+}: TextProps & { className?: string; ref?: Ref<RNText> }) {
   const step = useResolveClassNames(className?.match(STEP)?.[1] ?? "");
   const { fontScale } = useWindowDimensions();
   const size = StyleSheet.flatten(style)?.fontSize ?? step.fontSize ?? 17;
@@ -213,6 +220,8 @@ interface IconButtonProps {
   haptic?: boolean;
   /** Held down, it presses again and again, as a stepper's − and + do. */
   repeat?: boolean;
+  /** Its work is slow in coming: a turning loader takes the icon's place, as on the web. */
+  busy?: boolean;
   onPress?: () => void;
   testID?: string;
 }
@@ -230,6 +239,7 @@ export function IconButton({
   disabled = false,
   haptic = true,
   repeat = false,
+  busy = false,
   onPress,
   testID,
 }: IconButtonProps) {
@@ -262,18 +272,40 @@ export function IconButton({
       testID={testID}
       accessibilityRole="button"
       accessibilityLabel={label}
-      accessibilityState={{ disabled }}
+      accessibilityState={{ disabled, busy }}
       className={`items-center justify-center ${box} ${ICON_BOX[size]} ${round ? "rounded-full" : "rounded-md"} ${disabled ? "opacity-45" : ""}`}
       style={variant === "primary" ? keyLight(p) : undefined}
     >
-      <Icon
-        name={icon}
-        size={ICON_GLYPH[size]}
-        colour={ink}
-        strokeWidth={variant === "primary" ? 2.25 : 2}
-      />
+      {busy ? (
+        <Turning>
+          <Icon name="loading" size={ICON_GLYPH[size]} colour={ink} />
+        </Turning>
+      ) : (
+        <Icon
+          name={icon}
+          size={ICON_GLYPH[size]}
+          colour={ink}
+          strokeWidth={variant === "primary" ? 2.25 : 2}
+        />
+      )}
     </Press>
   );
+}
+
+/** Turns what it holds once a second, as the web's spinner does; under Reduce Motion it holds still. */
+function Turning({ children }: { children: ReactNode }) {
+  const reduce = useReduceMotion();
+  const turn = useSharedValue(0);
+  useEffect(() => {
+    if (reduce) return;
+    turn.value = withRepeat(
+      withTiming(360, { duration: 1000, easing: Easing.linear, reduceMotion: ALWAYS }),
+      -1,
+    );
+    return () => cancelAnimation(turn);
+  }, [turn, reduce]);
+  const style = useAnimatedStyle(() => ({ transform: [{ rotate: `${turn.value}deg` }] }));
+  return <Animated.View style={style}>{children}</Animated.View>;
 }
 
 /** The one button to press: a soft fall of light along its top. surfaces.md "key-light". */

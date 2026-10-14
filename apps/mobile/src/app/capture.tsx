@@ -111,6 +111,9 @@ function Composer() {
   }, [hold]);
 
   const open = (kind: ChoiceKind) => {
+    // A second tap lands while the keyboard is already leaving, and would drop the held room.
+    if (choosing.current) return;
+    choosing.current = true;
     hold.value = Keyboard.isVisible() ? (Keyboard.metrics()?.height ?? 0) : 0;
     chips.value = withTiming(0, timed(CHIPS_LEAVE));
     Keyboard.dismiss();

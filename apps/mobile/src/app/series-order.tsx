@@ -2,7 +2,8 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@lymi/client/api";
 import { useRouter } from "expo-router";
-import { Alert, ScrollView, View } from "react-native";
+import { Alert, ScrollView, useWindowDimensions, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSeriesList } from "../data/queries";
 import { useSeriesActions } from "../data/series";
 import { useOnline } from "../streak/goal-picker";
@@ -22,6 +23,8 @@ export default function SeriesOrder() {
   const { order } = useSeriesActions();
   const online = useOnline();
   const ids = list.map((s) => s.id);
+  const { height } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
   const save = (next: string[]) => {
     if (next.join() === ids.join()) return;
     // A series write has no place on screen to say it failed, so iOS says it.
@@ -41,6 +44,8 @@ export default function SeriesOrder() {
       />
       <ScrollView
         keyboardShouldPersistTaps="handled"
+        // Sized to its rows, so the sheet fits them, and scrolls past the screen.
+        style={{ maxHeight: height - insets.top - 120 }}
         contentContainerClassName="gap-3 px-5 pt-3 pb-10"
       >
         <Text className="text-base text-text-2">

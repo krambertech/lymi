@@ -103,7 +103,7 @@ function FilterLine({
         <Text className="text-xl font-medium text-text" accessibilityRole="header">
           {label}
         </Text>
-        <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+        <Text className="text-base text-muted">
           {plural(shelf.decks.length, { one: "# deck", other: "# decks" })}
         </Text>
       </View>

@@ -290,7 +290,7 @@ export default function CardPage() {
                 <Text className="text-md text-text">
                   {st.state === 0 ? t`Not started` : when(new Date(st.due))}
                 </Text>
-                <Text className="text-sm text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+                <Text className="text-sm text-muted">
                   {plural(reps, { one: "# review", other: "# reviews" })}
                   {lapses > 0
                     ? ` · ${plural(lapses, { one: "forgotten once", other: "forgotten # times" })}`

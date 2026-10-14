@@ -34,6 +34,7 @@ The phone's components are in `apps/mobile/src/ui` under the web's names, and fo
 - Chips come in `sm` and `md`, and a state chip is one size wherever it shows, Forgotten included; the AI badge is the `sm` chip. A due count has one size. The web's `xs` chip, `lg` chip, `lg` due count and `xs` icon button have no phone use yet.
 - `Switch` is drawn by Lymi, amber when on, so it sits in a form beside the other controls.
 - Every spring comes from `@lymi/design`: `withSpring(value, spring(PRESET))`, or `springIn(new Builder(), PRESET)` for a layout animation. A single physics value such as `.damping(18)` keeps Reanimated 4's heavy defaults beside it and overshoots, so Biome refuses it.
+- Tabular figures are for a figure on its own that changes in place or lines up in a column, such as a due count. A number inside a phrase, such as "21 cards", keeps Onest's own figures, or a 1 sits apart from its neighbours.
 - React Native ignores `text-end` and `text-start`, so end-aligned text takes `TEXT_END` from `theme/type.ts`, and Biome refuses the classes.
 - An order that is dragged uses `DragList` from `ui/drag-list.tsx`: a grip at each row's end lifts it, the rest make room, and it saves as it drops. Every row also offers Move up and Move down to VoiceOver. Sections in Edit and Series order use it.
 - A stepper's − and + repeat while held (`IconButton`'s `repeat`) and dim at the bounds.

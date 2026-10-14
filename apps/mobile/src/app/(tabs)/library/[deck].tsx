@@ -17,7 +17,7 @@ import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
-import { type TextStyle, View } from "react-native";
+import { View } from "react-native";
 import Animated, { FadeInDown, FadeOut } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDeckExits } from "../../../data/decks";
@@ -314,8 +314,8 @@ export default function Deck() {
         <Animated.View
           entering={reduce ? CROSSFADE : springIn(new FadeInDown(), ARRIVE)}
           exiting={FadeOut.duration(150).reduceMotion(ALWAYS)}
-          className="absolute inset-x-4"
-          style={{ bottom: aboveTabBar + 8 }}
+          className="absolute"
+          style={{ start: 16, end: 16, bottom: aboveTabBar + 8 }}
         >
           <SelectionToolbar
             count={selection.size}
@@ -364,20 +364,16 @@ function Top({
   const line =
     due > 0 ? null : next ? t`Next card due ${next}.` : rows.length ? t`Nothing scheduled.` : null;
   const groupLabel = (k: keyof typeof counts) => i18n._(stateMarks[k].groupLabel);
-  const tabular: TextStyle = { fontVariant: ["tabular-nums"] };
   return (
     <Plate className="gap-4 p-5">
       <View className="flex-row items-baseline justify-between gap-3">
         <View className="shrink flex-row items-baseline gap-2">
-          <Text
-            className="text-4xl font-semibold text-text"
-            style={[tabular, { letterSpacing: -1 }]}
-          >
+          <Text className="text-4xl font-semibold text-text" style={{ letterSpacing: -1 }}>
             {due}
           </Text>
           <Text className="shrink text-base text-text-2">{t`to review`}</Text>
         </View>
-        <Text className="text-base text-muted" style={tabular}>
+        <Text className="text-base text-muted">
           {plural(rows.length, { one: "# card", other: "# cards" })}
         </Text>
       </View>
@@ -403,9 +399,7 @@ function Top({
           {(["new", "learning", "known"] as const).map((k) => (
             <View key={k} className="flex-row items-center gap-1.5">
               <StateIcon state={k} size={14} />
-              <Text className="text-sm font-medium text-text" style={tabular}>
-                {i18n.number(counts[k])}
-              </Text>
+              <Text className="text-sm font-medium text-text">{i18n.number(counts[k])}</Text>
               <Text className="text-sm text-muted">{groupLabel(k)}</Text>
             </View>
           ))}
@@ -677,7 +671,7 @@ function Group({
         title && (
           <SectionTitle
             end={
-              <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+              <Text className="text-base text-muted">
                 {plural(g.rows.length, { one: "# card", other: "# cards" })}
               </Text>
             }

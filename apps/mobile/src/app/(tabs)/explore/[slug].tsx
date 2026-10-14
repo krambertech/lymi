@@ -113,7 +113,7 @@ function DeckPage({
       <View className="items-center gap-2.5" onLayout={(e) => setBlock(e.nativeEvent.layout.y)}>
         <View className="flex-row items-center gap-2">
           <PublisherMark slug={deck.slug} name={deck.publisher} avatar={deck.publisherAvatar} />
-          <Text className="text-sm text-text-2" style={{ fontVariant: ["tabular-nums"] }}>
+          <Text className="text-sm text-text-2">
             {sections.length > 0
               ? t`By ${deck.publisher} · ${cards} · ${sectionCount}`
               : t`By ${deck.publisher} · ${cards}`}

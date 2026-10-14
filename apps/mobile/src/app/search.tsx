@@ -102,7 +102,7 @@ export default function Search() {
             <View>
               <SectionTitle
                 end={
-                  <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+                  <Text className="text-base text-muted">
                     {total === null && more
                       ? t`More than ${cards.length}`
                       : plural(total ?? cards.length, { one: "# card", other: "# cards" })}

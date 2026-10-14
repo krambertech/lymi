@@ -150,7 +150,7 @@ function SeriesGroup({
           >
             {seriesName}
           </Text>
-          <Text className="text-base text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+          <Text className="text-base text-muted">
             {t`${plural(decks.length, { one: "# deck", other: "# decks" })} · ${plural(cards, { one: "# card", other: "# cards" })}`}
           </Text>
         </View>

@@ -216,11 +216,10 @@ function Root() {
             name="series-order"
             options={{
               presentation: "formSheet",
-              sheetAllowedDetents: [1],
-              sheetGrabberVisible: true,
-              contentStyle: {
-                backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
-              },
+              sheetAllowedDetents: "fitToContents",
+              // A row dragged down would otherwise close the sheet; Close is the way out.
+              gestureEnabled: false,
+              contentStyle: { backgroundColor: p.sheet },
             }}
           />
           {/* Peeks at the run and today, and drags up for the month. phone.md. */}

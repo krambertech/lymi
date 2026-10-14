@@ -1,4 +1,4 @@
-import { Button, Host, Image, Menu, Section } from "@expo/ui/swift-ui";
+import { Button, Host, Image, Label, Menu, Section } from "@expo/ui/swift-ui";
 import {
   accessibilityLabel,
   buttonBorderShape,
@@ -7,44 +7,21 @@ import {
   frame,
   tint,
 } from "@expo/ui/swift-ui/modifiers";
-import type { ComponentProps } from "react";
 import { usePalette, useRoom } from "../theme/palette";
 import type { IconName } from "./icons";
 import type { MenuItem } from "./menu";
 
-type Symbol = NonNullable<ComponentProps<typeof Button>["systemImage"]>;
+/** The two buttons a menu grows from, as their icons in the registry. */
+const TRIGGERS = { ellipsis: "more", plus: "plus" } as const satisfies Record<string, IconName>;
 
-/** iOS draws its own menus, so each Lucide icon a menu row uses has its SF Symbol here. */
-const SYMBOLS: Partial<Record<IconName, Symbol>> = {
-  plus: "plus",
-  share: "square.and.arrow.up",
-  deck: "rectangle.stack",
-  series: "square.stack.3d.up",
-  import: "square.and.arrow.down",
-  edit: "pencil",
-  archive: "archivebox",
-  restore: "arrow.uturn.backward",
-  move: "folder",
-  moveUp: "arrow.up",
-  moveDown: "arrow.down",
-  important: "star",
-  pronunciation: "speaker.wave.2",
-  hook: "lightbulb",
-  settings: "gearshape",
-  section: "list.number",
-  signOut: "rectangle.portrait.and.arrow.right",
-  uninvite: "person.crop.circle.badge.xmark",
-  play: "play",
-  unlock: "lock.open",
-  search: "magnifyingglass",
-  notes: "note.text",
-};
+/** Lymi's icon as the custom symbol scripts/symbols.mjs made from it; Learning, drawn by hand, has none. */
+const symbolOf = (icon: IconName) => (icon === "learning" ? undefined : `lymi.${icon}`);
 
 interface ActionMenuProps {
   /** What the button does, for VoiceOver: "Card options", "Add". */
   label: string;
-  /** The button's SF Symbol: `ellipsis` for ⋯, `plus` for add. */
-  symbol: Symbol;
+  /** The button: `ellipsis` for ⋯, `plus` for add. */
+  symbol: keyof typeof TRIGGERS;
   /**
    * `bar` is a 44 pt glass button for a screen's top bar; `primary` is the bar's amber one; `row` is
    * a bare glyph at the end of a list row.
@@ -78,7 +55,7 @@ export function ActionMenu({
       <Menu
         label={
           <Image
-            systemName={symbol}
+            assetName={symbolOf(TRIGGERS[symbol])}
             size={bar ? 18 : 16}
             color={glyph}
             modifiers={[frame({ width: bar ? 24 : 32, height: bar ? 24 : 32 })]}
@@ -101,13 +78,16 @@ export function ActionMenu({
             {group.map((item) => (
               <Button
                 key={item.label}
-                label={item.label}
-                systemImage={item.icon ? SYMBOLS[item.icon] : undefined}
                 role={item.destructive ? "destructive" : "default"}
                 // Ink on ordinary rows, so the plus's amber stays on the button; iOS draws a removal red.
                 modifiers={item.destructive ? undefined : [tint(p.text)]}
                 onPress={item.onSelect}
-              />
+              >
+                <Label
+                  title={item.label}
+                  icon={item.icon && <Image assetName={symbolOf(item.icon)} />}
+                />
+              </Button>
             ))}
           </Section>
         ))}

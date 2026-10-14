@@ -41,6 +41,7 @@
     },
     "plugins": [
       "./plugins/no-push-entitlement.cjs",
+      "./plugins/with-symbols.cjs",
       "expo-router",
       [
         "expo-splash-screen",

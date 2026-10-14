@@ -154,17 +154,35 @@ msgstr "<0/> {left, plural, one {due} other {due}}"
 msgid "<0>{0}</0>: <1>{1}</1>"
 msgstr "<0>{0}</0>: <1>{1}</1>"
 
+msgid "<0>Active transport</0> moves substances against the gradient."
+msgstr "<0>Active transport</0> moves substances against the gradient."
+
 msgid "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, aggregate usage metrics, operational logs and transactional email delivery."
 msgstr "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, aggregate usage metrics, operational logs and transactional email delivery."
+
+msgid "<0>Diffusion</0>: particles move from high to low concentration."
+msgstr "<0>Diffusion</0>: particles move from high to low concentration."
 
 msgid "<0>Google</0> provides Google sign-in and may provide speech generation when configured as the fallback provider."
 msgstr "<0>Google</0> provides Google sign-in and may provide speech generation when configured as the fallback provider."
 
+msgid "<0>marginal cost</0> <1>= cost of 1 more</1>"
+msgstr "<0>marginal cost</0> <1>= cost of 1 more</1>"
+
 msgid "<0>OpenAI</0> may provide speech generation. A configured Cloudflare AI Gateway may relay that request."
 msgstr "<0>OpenAI</0> may provide speech generation. A configured Cloudflare AI Gateway may relay that request."
 
+msgid "<0>opportunity cost</0> <1>= what you give up</1>"
+msgstr "<0>opportunity cost</0> <1>= what you give up</1>"
+
+msgid "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
+msgstr "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
+
 msgid "<0>PostHog</0> provides product analytics and error tracking in its EU cloud. It receives the limited product and error data described above."
 msgstr "<0>PostHog</0> provides product analytics and error tracking in its EU cloud. It receives the limited product and error data described above."
+
+msgid "<0>price elasticity</0> ?"
+msgstr "<0>price elasticity</0> ?"
 
 msgid "<0>Your browser’s push service</0> receives an encrypted reminder when you enable notifications."
 msgstr "<0>Your browser’s push service</0> receives an encrypted reminder when you enable notifications."
@@ -277,9 +295,6 @@ msgstr "A deck in four sections. Greetings is done, Numbers and time is 82% know
 msgid "A deck, not a quiz."
 msgstr "A deck, not a quiz."
 
-msgid "A definition taken from your notes stays as written, and anything the assistant wrote is marked AI. Terms you already have are skipped. Edit or archive any card."
-msgstr "A definition taken from your notes stays as written, and anything the assistant wrote is marked AI. Terms you already have are skipped. Edit or archive any card."
-
 msgid "A false friend. Embarrassed is avergonzado."
 msgstr "A false friend. Embarrassed is avergonzado."
 
@@ -331,23 +346,20 @@ msgstr "A new format applies from 11 April 2026. The level stays A2."
 msgid "A new language"
 msgstr "A new language"
 
-msgid "A page of lesson notes, as cards."
-msgstr "A page of lesson notes, as cards."
-
 msgid "A page that isn’t where the link says it is"
 msgstr "A page that isn’t where the link says it is"
 
 msgid "A partnership between fungi and plant roots, trading water for sugar"
 msgstr "A partnership between fungi and plant roots, trading water for sugar"
 
-msgid "A photo of a notebook page, a whiteboard or a printed handout."
-msgstr "A photo of a notebook page, a whiteboard or a printed handout."
-
 msgid "A photo of German lesson notes goes to an assistant with “Make cards from this.” It uses Lymi and adds four cards: das Mädchen, aufhören, Feierabend and Schnapsidee."
 msgstr "A photo of German lesson notes goes to an assistant with “Make cards from this.” It uses Lymi and adds four cards: das Mädchen, aufhören, Feierabend and Schnapsidee."
 
 msgid "A photo of the board, your tutor’s message, a lesson transcript, the book on your nightstand. Your assistant picks out what’s worth keeping and adds it to Lymi."
 msgstr "A photo of the board, your tutor’s message, a lesson transcript, the book on your nightstand. Your assistant picks out what’s worth keeping and adds it to Lymi."
+
+msgid "A photo of your notebook"
+msgstr "A photo of your notebook"
 
 msgid "A pile of unread books"
 msgstr "A pile of unread books"
@@ -369,6 +381,9 @@ msgstr "A score for one attempt"
 
 msgid "A standard for signing in once and passing that identity to other services"
 msgstr "A standard for signing in once and passing that identity to other services"
+
+msgid "A state’s full authority over its own territory"
+msgstr "A state’s full authority over its own territory"
 
 msgid "A subject"
 msgstr "A subject"
@@ -412,6 +427,9 @@ msgstr "Account-wide access, export, correction and deletion are not self-servic
 msgid "Accounting"
 msgstr "Accounting"
 
+msgid "active transport"
+msgstr "active transport"
+
 msgid "Actually; really"
 msgstr "Actually; really"
 
@@ -430,11 +448,8 @@ msgstr "Add both decks"
 msgid "Add it to your assistant"
 msgstr "Add it to your assistant"
 
-msgid "Add Lymi to Claude, ChatGPT, Gemini, Cursor or Grok. The steps are further down this page, and you only do them once."
-msgstr "Add Lymi to Claude, ChatGPT, Gemini, Cursor or Grok. The steps are further down this page, and you only do them once."
-
-msgid "Add Lymi to Claude, ChatGPT, Gemini, Cursor or Grok. The steps are further down this page."
-msgstr "Add Lymi to Claude, ChatGPT, Gemini, Cursor or Grok. The steps are further down this page."
+msgid "Add Lymi to Claude, ChatGPT or another assistant. <0>It takes three steps</0>."
+msgstr "Add Lymi to Claude, ChatGPT or another assistant. <0>It takes three steps</0>."
 
 msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
 msgstr "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
@@ -599,9 +614,6 @@ msgstr "anything"
 msgid "Anything you pick up and want to remember."
 msgstr "Anything you pick up and want to remember."
 
-msgid "Anything your assistant writes is marked AI on the card, so you can check it and fix it in Lymi."
-msgstr "Anything your assistant writes is marked AI on the card, so you can check it and fix it in Lymi."
-
 msgid "Anyway; long story short"
 msgstr "Anyway; long story short"
 
@@ -650,6 +662,9 @@ msgstr "At the café"
 msgid "At the shop"
 msgstr "At the shop"
 
+msgid "ATP"
+msgstr "ATP"
+
 msgid "Attach the PDF or the photo, or paste the text, in a chat with your assistant."
 msgstr "Attach the PDF or the photo, or paste the text, in a chat with your assistant."
 
@@ -682,6 +697,9 @@ msgstr "Back to Lymi"
 
 msgid "Before the test"
 msgstr "Before the test"
+
+msgid "Began in 1618 with the <0>Defenestration of Prague</0>."
+msgstr "Began in 1618 with the <0>Defenestration of Prague</0>."
 
 msgid "Between lessons, a few minutes a day."
 msgstr "Between lessons, a few minutes a day."
@@ -823,6 +841,9 @@ msgstr "CCSE Spanish nationality test"
 msgid "CCSE Spanish nationality test: all 300 questions"
 msgstr "CCSE Spanish nationality test: all 300 questions"
 
+msgid "cell-transport.pdf · page 12 of 30"
+msgstr "cell-transport.pdf · page 12 of 30"
+
 msgid "cents"
 msgstr "cents"
 
@@ -904,11 +925,11 @@ msgstr "City; town"
 msgid "Claude · from your lesson notes"
 msgstr "Claude · from your lesson notes"
 
-msgid "Claude, ChatGPT, Gemini, Cursor and Grok can connect to Lymi. In ChatGPT, adding cards needs developer mode, and OpenAI allows write actions only on Business, Enterprise and Education plans."
-msgstr "Claude, ChatGPT, Gemini, Cursor and Grok can connect to Lymi. In ChatGPT, adding cards needs developer mode, and OpenAI allows write actions only on Business, Enterprise and Education plans."
-
 msgid "Claude, Claude Code, ChatGPT, Codex, Gemini CLI, Cursor and Grok. Other apps that support MCP can connect too."
 msgstr "Claude, Claude Code, ChatGPT, Codex, Gemini CLI, Cursor and Grok. Other apps that support MCP can connect too."
+
+msgid "Claude, Claude Code, Codex, Gemini CLI, Cursor and Grok can add cards. ChatGPT connects in developer mode, and OpenAI lets it add cards only on Business, Enterprise and Education plans."
+msgstr "Claude, Claude Code, Codex, Gemini CLI, Cursor and Grok can add cards. ChatGPT connects in developer mode, and OpenAI lets it add cards only on Business, Enterprise and Education plans."
 
 msgid "Click to turn it over"
 msgstr "Click to turn it over"
@@ -1070,6 +1091,9 @@ msgstr "Deep, laboured breathing in metabolic acidosis, as in diabetic ketoacido
 msgid "Deep, lasting affection"
 msgstr "Deep, lasting affection"
 
+msgid "Defenestration of Prague"
+msgstr "Defenestration of Prague"
+
 msgid "Depending on the activity and applicable law, we process data to perform our agreement with you, with your consent, for legitimate interests such as security, service reliability and understanding how Lymi is used, or to meet a legal obligation. You can object to product analytics by emailing us, and withdraw optional consent, such as reminders, at any time."
 msgstr "Depending on the activity and applicable law, we process data to perform our agreement with you, with your consent, for legitimate interests such as security, service reliability and understanding how Lymi is used, or to meet a legal obligation. You can object to product analytics by emailing us, and withdraw optional consent, such as reminders, at any time."
 
@@ -1087,6 +1111,9 @@ msgstr "Deutsch · verb"
 
 msgid "Deutsch · word"
 msgstr "Deutsch · word"
+
+msgid "diffusion"
+msgstr "diffusion"
 
 msgctxt "deck tag"
 msgid "DMV written test"
@@ -1170,11 +1197,17 @@ msgstr "Each question as New, Learning or Known"
 msgid "Each question comes back right before you’d forget it, and the ones you get wrong come back sooner."
 msgstr "Each question comes back right before you’d forget it, and the ones you get wrong come back sooner."
 
+msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
+msgstr "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
+
 msgid "Earlier shelves"
 msgstr "Earlier shelves"
 
 msgid "Easy"
 msgstr "Easy"
+
+msgid "Econ · week 3"
+msgstr "Econ · week 3"
 
 msgid "Economics"
 msgstr "Economics"
@@ -1208,6 +1241,9 @@ msgstr "Einbürgerungstest and Leben in Deutschland: every question in English"
 
 msgid "Einbürgerungstest and Leben in Deutschland: questions and answers in English · Lymi"
 msgstr "Einbürgerungstest and Leben in Deutschland: questions and answers in English · Lymi"
+
+msgid "Ended in 1648 by the <0>Peace of Westphalia</0>."
+msgstr "Ended in 1648 by the <0>Peace of Westphalia</0>."
 
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "English has no õ. Say “o” without rounding your lips."
@@ -1373,6 +1409,9 @@ msgstr "Finns often name it as part of the national character."
 
 msgid "First day"
 msgstr "First day"
+
+msgid "Fix it on the card in Lymi. What your assistant writes counts as yours, so look over new cards after it adds them."
+msgstr "Fix it on the card in Lymi. What your assistant writes counts as yours, so look over new cards after it adds them."
 
 msgid "Flashcard decks, ready to learn"
 msgstr "Flashcard decks, ready to learn"
@@ -1579,8 +1618,8 @@ msgstr "Grammar"
 msgid "Greetings"
 msgstr "Greetings"
 
-msgid "Handwritten notes"
-msgstr "Handwritten notes"
+msgid "habeas corpus"
+msgstr "habeas corpus"
 
 msgid "Hang in there!"
 msgstr "Hang in there!"
@@ -1642,6 +1681,9 @@ msgstr "Hi! What can I get you?"
 msgid "History"
 msgstr "History"
 
+msgid "History notes"
+msgstr "History notes"
+
 msgid "how"
 msgstr "how"
 
@@ -1674,6 +1716,9 @@ msgstr "How many autonomous communities does Spain have?"
 
 msgid "How much a bond’s price moves when interest rates change"
 msgstr "How much a bond’s price moves when interest rates change"
+
+msgid "How much demand changes when the price changes"
+msgstr "How much demand changes when the price changes"
 
 msgid "How sections work"
 msgstr "How sections work"
@@ -1810,6 +1855,9 @@ msgstr "It helps. Read Japanese Kana teaches hiragana and katakana, and the othe
 
 msgid "It joins your daily review straight away. There is nothing to build."
 msgstr "It joins your daily review straight away. There is nothing to build."
+
+msgid "It needs energy from <0>ATP</0>."
+msgstr "It needs energy from <0>ATP</0>."
 
 msgid "It schedules every card with spaced repetition and brings it back right before you’d forget it."
 msgstr "It schedules every card with spaced repetition and brings it back right before you’d forget it."
@@ -2007,8 +2055,8 @@ msgctxt "deck tag"
 msgid "Leben in Deutschland test"
 msgstr "Leben in Deutschland test"
 
-msgid "Lecture slides, a reading or a chapter, exported as a PDF."
-msgstr "Lecture slides, a reading or a chapter, exported as a PDF."
+msgid "Lecture 4 · Cell transport"
+msgstr "Lecture 4 · Cell transport"
 
 msgid "Lesson"
 msgstr "Lesson"
@@ -2064,11 +2112,11 @@ msgstr "Lymi changelog"
 msgid "Lymi costs nothing. No trial, and no payment details to sign up."
 msgstr "Lymi costs nothing. No trial, and no payment details to sign up."
 
-msgid "Lymi doesn’t connect to tutoring sites and doesn’t read files itself: your assistant reads the chat, notes or photo and adds the cards. Without an assistant, you can add each word in Lymi with New card, and AI fills in the meaning."
-msgstr "Lymi doesn’t connect to tutoring sites and doesn’t read files itself: your assistant reads the chat, notes or photo and adds the cards. Without an assistant, you can add each word in Lymi with New card, and AI fills in the meaning."
+msgid "Lymi doesn’t connect to tutoring sites or read photos itself: your assistant does the reading. Without an assistant, add each word with Add a card, and AI fills in the meaning."
+msgstr "Lymi doesn’t connect to tutoring sites or read photos itself: your assistant does the reading. Without an assistant, add each word with Add a card, and AI fills in the meaning."
 
-msgid "Lymi doesn’t read PDFs or photos itself: your assistant reads the file and adds the cards. Without an assistant, you can add each term in Lymi with New card, and AI fills in the meaning. A diagram can go on a card as its picture."
-msgstr "Lymi doesn’t read PDFs or photos itself: your assistant reads the file and adds the cards. Without an assistant, you can add each term in Lymi with New card, and AI fills in the meaning. A diagram can go on a card as its picture."
+msgid "Lymi doesn’t read PDFs or photos itself: your assistant does the reading. Without an assistant, add each term with Add a card, and AI fills in the meaning. A diagram can go on a card as its picture."
+msgstr "Lymi doesn’t read PDFs or photos itself: your assistant does the reading. Without an assistant, add each term with Add a card, and AI fills in the meaning. A diagram can go on a card as its picture."
 
 msgid "Lymi for certification prep · Flashcards with spaced repetition"
 msgstr "Lymi for certification prep · Flashcards with spaced repetition"
@@ -2133,6 +2181,9 @@ msgstr "Lymi works for anything you want to remember."
 msgid "Lymi’s AI · meanings and examples"
 msgstr "Lymi’s AI · meanings and examples"
 
+msgid "Lymi’s AI fills in what you leave empty, like a meaning or an example, and marks each field it wrote as AI. Text your assistant writes on a card counts as yours, so check it."
+msgstr "Lymi’s AI fills in what you leave empty, like a meaning or an example, and marks each field it wrote as AI. Text your assistant writes on a card counts as yours, so check it."
+
 msgid "Lymi’s own AI fills in the meaning, an example and how to say it. It marks what it wrote and never overwrites yours."
 msgstr "Lymi’s own AI fills in the meaning, an example and how to say it. It marks what it wrote and never overwrites yours."
 
@@ -2163,11 +2214,17 @@ msgstr "Make cards with Claude, ChatGPT, Gemini, Codex or anything"
 msgid "Make flashcards in ChatGPT, Claude or Gemini."
 msgstr "Make flashcards in ChatGPT, Claude or Gemini."
 
+msgid "marginal cost"
+msgstr "marginal cost"
+
 msgid "Mark a card important and it comes up four times as often, while its schedule stays the same. The cards you keep forgetting gather in Often forgotten, a round of their own."
 msgstr "Mark a card important and it comes up four times as often, while its schedule stays the same. The cards you keep forgetting gather in Often forgotten, a round of their own."
 
 msgid "Mark what’s high-yield."
 msgstr "Mark what’s high-yield."
+
+msgid "Marta · Spanish lesson"
+msgstr "Marta · Spanish lesson"
 
 msgid "may I…?"
 msgstr "may I…?"
@@ -2202,6 +2259,9 @@ msgstr "Microbiology"
 msgid "minutes to answer them"
 msgstr "minutes to answer them"
 
+msgid "mitochondrion"
+msgstr "mitochondrion"
+
 msgid "More decks"
 msgstr "More decks"
 
@@ -2225,6 +2285,9 @@ msgstr "Move from Anki"
 
 msgid "Move from Mochi"
 msgstr "Move from Mochi"
+
+msgid "Moving a substance against its concentration gradient, using energy"
+msgstr "Moving a substance against its concentration gradient, using energy"
 
 msgid "Moving from Anki"
 msgstr "Moving from Anki"
@@ -2283,6 +2346,9 @@ msgstr "New"
 msgctxt "cards in this state"
 msgid "New"
 msgstr "New"
+
+msgid "New cards land here."
+msgstr "New cards land here."
 
 msgid "New features and improvements in Lymi, the open-source flashcard app with spaced repetition."
 msgstr "New features and improvements in Lymi, the open-source flashcard app with spaced repetition."
@@ -2351,17 +2417,14 @@ msgstr "Not for most certifications yet. Your assistant can turn your study guid
 msgid "Not marked important"
 msgstr "Not marked important"
 
-msgid "Not yet. Lymi has no PDF or photo upload of its own. Your assistant reads the file and adds the cards, and you can add terms by hand with New card."
-msgstr "Not yet. Lymi has no PDF or photo upload of its own. Your assistant reads the file and adds the cards, and you can add terms by hand with New card."
+msgid "Not yet. Lymi has no PDF or photo upload of its own. Your assistant reads the file and adds the cards, and you can add terms by hand with Add a card."
+msgstr "Not yet. Lymi has no PDF or photo upload of its own. Your assistant reads the file and adds the cards, and you can add terms by hand with Add a card."
 
 msgid "Notes"
 msgstr "Notes"
 
 msgid "Notes and PDFs"
 msgstr "Notes and PDFs"
-
-msgid "Notes from Notion, Google Docs or a notes app, pasted as text."
-msgstr "Notes from Notion, Google Docs or a notes app, pasted as text."
 
 msgid "Nothing here by that name."
 msgstr "Nothing here by that name."
@@ -2411,8 +2474,8 @@ msgstr "Once a deck is in your Lymi, it brings each card back right before you�
 msgid "one"
 msgstr "one"
 
-msgid "One card at a time, graded in a tap, even offline. Every card says its word aloud. Words you know wait longer, and the ones you miss come back sooner."
-msgstr "One card at a time, graded in a tap, even offline. Every card says its word aloud. Words you know wait longer, and the ones you miss come back sooner."
+msgid "One card at a time, graded in a tap, even offline. Words you know wait longer, and the ones you miss come back sooner."
+msgstr "One card at a time, graded in a tap, even offline. Words you know wait longer, and the ones you miss come back sooner."
 
 msgid "One card at a time, graded in a tap, on your phone or your laptop, even offline. The terms you know wait longer, and the ones you miss come back sooner."
 msgstr "One card at a time, graded in a tap, on your phone or your laptop, even offline. The terms you know wait longer, and the ones you miss come back sooner."
@@ -2425,9 +2488,6 @@ msgstr "One lecture, one message."
 
 msgid "One word for asking, handing something over and answering thanks."
 msgstr "One word for asking, handing something over and answering thanks."
-
-msgid "Only when you ask your assistant to. Anything it writes on a card is marked AI, so you can always tell it from your own notes."
-msgstr "Only when you ask your assistant to. Anything it writes on a card is marked AI, so you can always tell it from your own notes."
 
 msgid "Only you, unless you share the deck. Cards made from your notes stay in your account."
 msgstr "Only you, unless you share the deck. Cards made from your notes stay in your account."
@@ -2453,6 +2513,9 @@ msgstr "Open Today on your phone or laptop. Lymi schedules each card with spaced
 msgid "Open Today on your phone or laptop. Lymi shows each word again right before you’d forget it, so the next lesson starts where the last one ended."
 msgstr "Open Today on your phone or laptop. Lymi shows each word again right before you’d forget it, so the next lesson starts where the last one ended."
 
+msgid "opportunity cost"
+msgstr "opportunity cost"
+
 msgid "or"
 msgstr "or"
 
@@ -2464,6 +2527,9 @@ msgstr "Ordering a coffee to go"
 
 msgid "Organisms, stains and what they cause."
 msgstr "Organisms, stains and what they cause."
+
+msgid "osmosis"
+msgstr "osmosis"
 
 msgid "Other apps"
 msgstr "Other apps"
@@ -2498,8 +2564,8 @@ msgstr "Paste the text or attach the photo and ask: “Add the new words to my S
 msgid "Paying at the checkout"
 msgstr "Paying at the checkout"
 
-msgid "PDFs and slides"
-msgstr "PDFs and slides"
+msgid "Peace of Westphalia"
+msgstr "Peace of Westphalia"
 
 msgid "Pedestrian crossing"
 msgstr "Pedestrian crossing"
@@ -2549,9 +2615,6 @@ msgstr "Please; here you go"
 msgid "Please; here you go; you’re welcome"
 msgstr "Please; here you go; you’re welcome"
 
-msgid "Plural: mitochondria."
-msgstr "Plural: mitochondria."
-
 msgid "PMP and PRINCE2: processes, roles and the vocabulary."
 msgstr "PMP and PRINCE2: processes, roles and the vocabulary."
 
@@ -2593,6 +2656,9 @@ msgstr "Prefer the explanation that needs the fewest assumptions"
 
 msgid "Pregnant"
 msgstr "Pregnant"
+
+msgid "price elasticity"
+msgstr "price elasticity"
 
 msgid "Privacy"
 msgstr "Privacy"
@@ -2708,6 +2774,9 @@ msgstr "Read your German deck"
 
 msgid "Reading your notes…"
 msgstr "Reading your notes…"
+
+msgid "Reading…"
+msgstr "Reading…"
 
 msgid "Ready decks for citizenship, language and driving theory tests after a move. Each holds what the exam asks in its own language, with a translation alongside, and brings back what you get wrong until it sticks."
 msgstr "Ready decks for citizenship, language and driving theory tests after a move. Each holds what the exam asks in its own language, with a translation alongside, and brings back what you get wrong until it sticks."
@@ -2896,8 +2965,8 @@ msgstr "Send a chapter to Claude, ChatGPT or Gemini and ask for the key terms. E
 msgid "Send a lesson plan to Claude or ChatGPT and it adds the cards for you. Lymi also has a public API, so you can bring in a list from a spreadsheet, add cards from your course platform, or show what’s due on your class site."
 msgstr "Send a lesson plan to Claude or ChatGPT and it adds the cards for you. Lymi also has a public API, so you can bring in a list from a spreadsheet, add cards from your course platform, or show what’s due on your class site."
 
-msgid "Send a PDF, a photo of your notebook or a page of typed notes to your AI assistant. The key terms land in Lymi as cards, and each one comes back right before you’d forget it."
-msgstr "Send a PDF, a photo of your notebook or a page of typed notes to your AI assistant. The key terms land in Lymi as cards, and each one comes back right before you’d forget it."
+msgid "Send a PDF, a photo of your notebook or typed notes to your AI assistant. The key terms land in Lymi as cards, and each one comes back right before you’d forget it."
+msgstr "Send a PDF, a photo of your notebook or typed notes to your AI assistant. The key terms land in Lymi as cards, and each one comes back right before you’d forget it."
 
 msgid "Send class notes, a PDF or a photo of your notebook to your AI assistant, and it adds the key terms to Lymi as flashcards with spaced repetition. Free."
 msgstr "Send class notes, a PDF or a photo of your notebook to your AI assistant, and it adds the key terms to Lymi as flashcards with spaced repetition. Free."
@@ -2914,8 +2983,8 @@ msgstr "Send it to your assistant"
 msgid "Send it your notes"
 msgstr "Send it your notes"
 
-msgid "Send notes, slides or a photo to your assistant and get cards."
-msgstr "Send notes, slides or a photo to your assistant and get cards."
+msgid "Send the lesson chat or a photo of your notebook to your AI assistant. Lymi keeps every new word and brings it back right before you’d forget it."
+msgstr "Send the lesson chat or a photo of your notebook to your AI assistant. Lymi keeps every new word and brings it back right before you’d forget it."
 
 msgid "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back right before you’d forget."
 msgstr "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back right before you’d forget."
@@ -2989,6 +3058,9 @@ msgstr "Skip to the document"
 msgid "Skip to the updates"
 msgstr "Skip to the updates"
 
+msgid "Slides or a PDF"
+msgstr "Slides or a PDF"
+
 msgid "Slow or stop so others can pass without you forcing them to change speed or path."
 msgstr "Slow or stop so others can pass without you forcing them to change speed or path."
 
@@ -3021,6 +3093,9 @@ msgstr "Source code"
 
 msgid "Sources"
 msgstr "Sources"
+
+msgid "sovereignty"
+msgstr "sovereignty"
 
 msgid "Soviet Russia recognised Estonia’s independence"
 msgstr "Soviet Russia recognised Estonia’s independence"
@@ -3199,6 +3274,9 @@ msgstr "Thanks! See you!"
 msgid "That chess term you just used, add it to my deck."
 msgstr "That chess term you just used, add it to my deck."
 
+msgid "The 1618 revolt in Prague that started the Thirty Years’ War"
+msgstr "The 1618 revolt in Prague that started the Thirty Years’ War"
+
 msgid "The 1648 treaties that ended the Thirty Years’ War"
 msgstr "The 1648 treaties that ended the Thirty Years’ War"
 
@@ -3219,6 +3297,9 @@ msgstr "The cards from this page will land here."
 
 msgid "The code is public on GitHub, so anyone can see how Lymi works."
 msgstr "The code is public on GitHub, so anyone can see how Lymi works."
+
+msgid "The cost of making one more unit"
+msgstr "The cost of making one more unit"
 
 msgid "the day before"
 msgstr "the day before"
@@ -3289,6 +3370,9 @@ msgstr "The knack of reading the room"
 msgid "The Leben in Deutschland test at the end of an integration course uses the same questions. There, 15 correct answers earn the certificate; for citizenship you need 17."
 msgstr "The Leben in Deutschland test at the end of an integration course uses the same questions. There, 15 correct answers earn the certificate; for citizenship you need 17."
 
+msgid "The lesson chat"
+msgstr "The lesson chat"
+
 msgid "The link is off. Nobody new can join."
 msgstr "The link is off. Nobody new can join."
 
@@ -3301,14 +3385,20 @@ msgstr "The longest chain of dependent tasks; it sets the earliest finish date"
 msgid "The Lymi lantern and wordmark above the English line “Keep what you learn.”"
 msgstr "The Lymi lantern and wordmark above the English line “Keep what you learn.”"
 
+msgid "The molecule a cell uses to store and carry energy"
+msgstr "The molecule a cell uses to store and carry energy"
+
 msgid "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
 msgstr "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
 
 msgid "The network of nerves that runs from the neck into the arm"
 msgstr "The network of nerves that runs from the neck into the arm"
 
-msgid "The new cards are in your deck. A meaning from your notes stays as written, and anything the assistant wrote is marked AI. Words you already have are skipped. Edit or archive any card."
-msgstr "The new cards are in your deck. A meaning from your notes stays as written, and anything the assistant wrote is marked AI. Words you already have are skipped. Edit or archive any card."
+msgid "The new cards are in your deck, and terms you already have are skipped. Fix or archive any card."
+msgstr "The new cards are in your deck, and terms you already have are skipped. Fix or archive any card."
+
+msgid "The new cards are in your deck, and words you already have are skipped. Fix or archive any card."
+msgstr "The new cards are in your deck, and words you already have are skipped. Fix or archive any card."
 
 msgid "The next section opens at 80% known"
 msgstr "The next section opens at 80% known"
@@ -3330,9 +3420,6 @@ msgstr "The phrase from Tuesday’s class, the word on a letter from the tax off
 
 msgid "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back right before you’d forget."
 msgstr "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back right before you’d forget."
-
-msgid "The phrases your tutor typed in the chat and the corrections in your notebook. Send them to your assistant after the lesson, and Lymi brings each one back right before you’d forget it, ready for the next lesson."
-msgstr "The phrases your tutor typed in the chat and the corrections in your notebook. Send them to your assistant after the lesson, and Lymi brings each one back right before you’d forget it, ready for the next lesson."
 
 msgid "The player would pass, if chess allowed it."
 msgstr "The player would pass, if chess allowed it."
@@ -3372,6 +3459,9 @@ msgstr "The same word for someone you love and a price you’d rather not pay."
 
 msgid "The steam in a sauna"
 msgstr "The steam in a sauna"
+
+msgid "The Thirty Years’ War"
+msgstr "The Thirty Years’ War"
 
 msgid "The three you missed most this week: “echar de menos”, “aprovechar” and “soler”."
 msgstr "The three you missed most this week: “echar de menos”, “aprovechar” and “soler”."
@@ -3451,6 +3541,12 @@ msgstr "To book; to reserve"
 msgid "To buy"
 msgstr "To buy"
 
+msgid "to feel like"
+msgstr "to feel like"
+
+msgid "To feel like doing something"
+msgstr "To feel like doing something"
+
 msgid "To feel like; to look forward to"
 msgstr "To feel like; to look forward to"
 
@@ -3477,6 +3573,9 @@ msgstr "To meet legal obligations and protect the rights and safety of Lymi and 
 
 msgid "To meet up"
 msgstr "To meet up"
+
+msgid "To meet up with someone"
+msgstr "To meet up with someone"
 
 msgid "To meet up; to arrange to meet"
 msgstr "To meet up; to arrange to meet"
@@ -3572,9 +3671,6 @@ msgstr "Turn the card back"
 
 msgid "Turn the card over"
 msgstr "Turn the card over"
-
-msgid "Turn the words from each lesson with your tutor into cards."
-msgstr "Turn the words from each lesson with your tutor into cards."
 
 msgid "Turn tonight’s lecture into cards."
 msgstr "Turn tonight’s lecture into cards."
@@ -3727,6 +3823,9 @@ msgstr "What if I already use Anki?"
 msgid "What if it gets something wrong?"
 msgstr "What if it gets something wrong?"
 
+msgid "What the lesson leaves, as cards."
+msgstr "What the lesson leaves, as cards."
+
 msgid "What the test looks like"
 msgstr "What the test looks like"
 
@@ -3741,6 +3840,9 @@ msgstr "What you give up by choosing one option over the next best one"
 
 msgid "What you need to know for a class or an exam."
 msgstr "What you need to know for a class or an exam."
+
+msgid "What you send"
+msgstr "What you send"
 
 msgid "What’s due tonight?"
 msgstr "What’s due tonight?"
@@ -3964,11 +4066,14 @@ msgstr "Your assistant can also tell you what’s due before the next lesson, or
 msgid "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
 msgstr "Your assistant can read your decks. Ask it for a conversation that uses the words you’re learning, and it corrects you as you go."
 
+msgid "Your assistant picks out the new words, keeps the meanings from the lesson and skips the ones already in your deck."
+msgstr "Your assistant picks out the new words, keeps the meanings from the lesson and skips the ones already in your deck."
+
+msgid "Your assistant picks out the terms, keeps the definitions from your notes and skips the ones already in your deck."
+msgstr "Your assistant picks out the terms, keeps the definitions from your notes and skips the ones already in your deck."
+
 msgid "Your assistant reads the file, picks out the terms and adds them in one go. Later it can tell you which ones you keep missing."
 msgstr "Your assistant reads the file, picks out the terms and adds them in one go. Later it can tell you which ones you keep missing."
-
-msgid "Your assistant reads the handwriting, keeps the meanings you wrote down, fills in the ones you didn’t and leaves out words already in your deck."
-msgstr "Your assistant reads the handwriting, keeps the meanings you wrote down, fills in the ones you didn’t and leaves out words already in your deck."
 
 msgid "Your choices and rights"
 msgstr "Your choices and rights"

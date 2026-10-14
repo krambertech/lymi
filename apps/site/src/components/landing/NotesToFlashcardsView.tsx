@@ -1,126 +1,252 @@
+import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import { Trans } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { openLymiUrl } from "../../lib/origins";
 import { Added, AssistantChat } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
 import { ConnectSteps } from "./ConnectSteps";
 import type { SampleCard } from "./cards";
-import { FeatureSection } from "./FeatureSection";
+import { FeatureSection, SectionTitle } from "./FeatureSection";
 import { NOTES_TO_FLASHCARDS_QUESTIONS } from "./faq";
 import { GuideSteps } from "./GuideSteps";
 import { Hero } from "./Hero";
 import type { HandCard } from "./hand-cards";
+import { type Material, MaterialToCards, Pick } from "./MaterialToCards";
 import { Questions } from "./Questions";
 import { ReviewDemo } from "./ReviewDemo";
 import { RightMoment } from "./RightMoment";
 import { SignUpSection } from "./SignUpSection";
 import { SiteFooter } from "./SiteFooter";
 import { SiteNav } from "./SiteNav";
-import { type UseCase, UseCases } from "./UseCases";
 
 export const NOTES_TO_FLASHCARDS_TITLE = msg`Turn notes and PDFs into flashcards · Lymi`;
 export const NOTES_TO_FLASHCARDS_BLURB = msg`Send class notes, a PDF or a photo of your notebook to your AI assistant, and it adds the key terms to Lymi as flashcards with spaced repetition. Free.`;
 
+/** A study term is written in the page's language, so its term is a message too. */
+type StudyCard = Omit<HandCard, "term"> & { term: MessageDescriptor };
+type StudySample = Omit<SampleCard, "term"> & { term: MessageDescriptor };
+
 /** Terms a page of school or university notes really holds, in their usual definitions. No clip plays. */
-const HAND: HandCard[] = [
+const HAND: StudyCard[] = [
   {
     id: "osmosis",
     source: msg`Biology`,
-    term: "osmosis",
+    term: msg`osmosis`,
     meaning: msg`Water moving through a membrane toward the side with more dissolved substance`,
     audio: null,
   },
   {
     id: "opportunity-cost",
     source: msg`Economics`,
-    term: "opportunity cost",
+    term: msg`opportunity cost`,
     meaning: msg`What you give up by choosing one option over the next best one`,
     audio: null,
   },
   {
     id: "habeas-corpus",
     source: msg`Law`,
-    term: "habeas corpus",
+    term: msg`habeas corpus`,
     meaning: msg`The right to have a court decide whether someone is lawfully detained`,
     audio: null,
   },
   {
     id: "mitochondria",
     source: msg`Biology`,
-    term: "mitochondrion",
+    term: msg`mitochondrion`,
     meaning: msg`The part of a cell that releases energy from food`,
-    note: msg`Plural: mitochondria.`,
     audio: null,
   },
   {
     id: "treaty-of-westphalia",
     source: msg`History`,
-    term: "Peace of Westphalia",
+    term: msg`Peace of Westphalia`,
     meaning: msg`The 1648 treaties that ended the Thirty Years’ War`,
     audio: null,
   },
 ];
 
-const OSMOSIS: SampleCard = {
+const OSMOSIS: StudySample = {
   label: msg`Biology · new`,
-  term: "osmosis",
+  term: msg`osmosis`,
   meaning: msg`Water moving through a membrane toward the side with more dissolved substance`,
 };
 
-const REVIEW: SampleCard[] = [
+const REVIEW: StudySample[] = [
   {
     label: msg`Biology`,
-    term: "diffusion",
+    term: msg`diffusion`,
     meaning: msg`Particles spreading from where there are more of them to where there are fewer`,
   },
   {
     label: msg`Economics`,
-    term: "opportunity cost",
+    term: msg`opportunity cost`,
     meaning: msg`What you give up by choosing one option over the next best one`,
   },
   {
     label: msg`History`,
-    term: "Peace of Westphalia",
+    term: msg`Peace of Westphalia`,
     meaning: msg`The 1648 treaties that ended the Thirty Years’ War`,
   },
   {
     label: msg`Law`,
-    term: "habeas corpus",
+    term: msg`habeas corpus`,
     meaning: msg`The right to have a court decide whether someone is lawfully detained`,
+  },
+];
+
+/** A lecture's slides, a page of handwritten notes and typed notes, each read into its deck. */
+const MATERIALS: Material[] = [
+  {
+    id: "slides",
+    name: msg`Slides or a PDF`,
+    deck: msg`Biology`,
+    cards: [
+      {
+        term: msg`diffusion`,
+        meaning: msg`Particles spreading from where there are more of them to where there are fewer`,
+        duplicate: true,
+      },
+      {
+        term: msg`osmosis`,
+        meaning: msg`Water moving through a membrane toward the side with more dissolved substance`,
+      },
+      {
+        term: msg`active transport`,
+        meaning: msg`Moving a substance against its concentration gradient, using energy`,
+      },
+      { term: msg`ATP`, meaning: msg`The molecule a cell uses to store and carry energy` },
+    ],
+    render: (lit) => (
+      <figure className="m-0 w-full max-w-[440px] -rotate-1">
+        <div className="rounded-md bg-plate p-6 edge @2xl:p-7">
+          <p className="text-xs text-muted">
+            <Trans>Lecture 4 · Cell transport</Trans>
+          </p>
+          <ul className="mt-4 flex flex-col gap-2.5 text-sm text-pretty text-text @2xl:text-md">
+            <li>
+              <Trans>
+                <Pick on={lit(0)}>Diffusion</Pick>: particles move from high to low concentration.
+              </Trans>
+            </li>
+            <li>
+              <Trans>
+                <Pick on={lit(1)}>Osmosis</Pick>: water crosses a membrane toward more dissolved
+                substance.
+              </Trans>
+            </li>
+            <li>
+              <Trans>
+                <Pick on={lit(2)}>Active transport</Pick> moves substances against the gradient.
+              </Trans>
+            </li>
+            <li>
+              <Trans>
+                It needs energy from <Pick on={lit(3)}>ATP</Pick>.
+              </Trans>
+            </li>
+          </ul>
+        </div>
+        <figcaption className="mt-3 text-center text-xs text-muted tabular-nums">
+          <Trans>cell-transport.pdf · page 12 of 30</Trans>
+        </figcaption>
+      </figure>
+    ),
+  },
+  {
+    id: "notebook",
+    name: msg`A photo of your notebook`,
+    deck: msg`Economics`,
+    cards: [
+      {
+        term: msg`opportunity cost`,
+        meaning: msg`What you give up by choosing one option over the next best one`,
+      },
+      { term: msg`marginal cost`, meaning: msg`The cost of making one more unit` },
+      {
+        term: msg`price elasticity`,
+        meaning: msg`How much demand changes when the price changes`,
+      },
+    ],
+    render: (lit) => (
+      <div className="notes-hand w-full max-w-[420px] rotate-[1.2deg] rounded-md bg-plate px-7 pt-6 pb-8 edge">
+        <p className="text-2xl text-muted">
+          <Trans>Econ · week 3</Trans>
+        </p>
+        <ul className="mt-4 flex flex-col gap-3 text-2xl leading-tight text-text @2xl:text-[1.625rem]">
+          <li>
+            <Trans>
+              <Pick on={lit(0)}>opportunity cost</Pick>{" "}
+              <span className="text-text-2">= what you give up</span>
+            </Trans>
+          </li>
+          <li>
+            <Trans>
+              <Pick on={lit(1)}>marginal cost</Pick>{" "}
+              <span className="text-text-2">= cost of 1 more</span>
+            </Trans>
+          </li>
+          <li>
+            <Trans>
+              <Pick on={lit(2)}>price elasticity</Pick> ?
+            </Trans>
+          </li>
+        </ul>
+      </div>
+    ),
+  },
+  {
+    id: "typed",
+    name: msg`Typed notes`,
+    deck: msg`History`,
+    cards: [
+      {
+        term: msg`Defenestration of Prague`,
+        meaning: msg`The 1618 revolt in Prague that started the Thirty Years’ War`,
+      },
+      {
+        term: msg`Peace of Westphalia`,
+        meaning: msg`The 1648 treaties that ended the Thirty Years’ War`,
+      },
+      { term: msg`sovereignty`, meaning: msg`A state’s full authority over its own territory` },
+    ],
+    render: (lit) => (
+      <div className="w-full max-w-[440px] rotate-1 rounded-md bg-plate px-6 pt-5 pb-7 edge">
+        <p className="text-xs text-muted">
+          <Trans>History notes</Trans>
+        </p>
+        <p className="mt-3 text-xl font-medium tracking-[-0.02em] text-text">
+          <Trans>The Thirty Years’ War</Trans>
+        </p>
+        <ul className="mt-3 flex list-disc flex-col gap-2 ps-5 text-sm text-pretty text-text-2 @2xl:text-md">
+          <li>
+            <Trans>
+              Began in 1618 with the <Pick on={lit(0)}>Defenestration of Prague</Pick>.
+            </Trans>
+          </li>
+          <li>
+            <Trans>
+              Ended in 1648 by the <Pick on={lit(1)}>Peace of Westphalia</Pick>.
+            </Trans>
+          </li>
+          <li>
+            <Trans>
+              Each state now ruled its own land: the start of modern{" "}
+              <Pick on={lit(2)}>sovereignty</Pick>.
+            </Trans>
+          </li>
+        </ul>
+      </div>
+    ),
   },
 ];
 
 /** For the student with a folder of notes and slides and a test coming. */
 export function NotesToFlashcardsView() {
+  const { i18n } = useLingui();
   const openAppUrl = openLymiUrl();
-  const sources: UseCase[] = [
-    {
-      id: "handwritten",
-      title: <Trans>Handwritten notes</Trans>,
-      body: <Trans>A photo of a notebook page, a whiteboard or a printed handout.</Trans>,
-      card: OSMOSIS,
-    },
-    {
-      id: "pdf",
-      title: <Trans>PDFs and slides</Trans>,
-      body: <Trans>Lecture slides, a reading or a chapter, exported as a PDF.</Trans>,
-      card: {
-        label: msg`Economics`,
-        term: "opportunity cost",
-        meaning: msg`What you give up by choosing one option over the next best one`,
-      },
-    },
-    {
-      id: "typed",
-      title: <Trans>Typed notes</Trans>,
-      body: <Trans>Notes from Notion, Google Docs or a notes app, pasted as text.</Trans>,
-      card: {
-        label: msg`History`,
-        term: "Peace of Westphalia",
-        meaning: msg`The 1648 treaties that ended the Thirty Years’ War`,
-      },
-    },
-  ];
+  const hand = HAND.map((card) => ({ ...card, term: i18n._(card.term) }));
+  const osmosis = { ...OSMOSIS, term: i18n._(OSMOSIS.term) };
+  const review = REVIEW.map((card) => ({ ...card, term: i18n._(card.term) }));
 
   return (
     <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
@@ -130,17 +256,36 @@ export function NotesToFlashcardsView() {
           title={<Trans>Turn your notes into flashcards.</Trans>}
           lede={
             <Trans>
-              Send a PDF, a photo of your notebook or a page of typed notes to your AI assistant.
-              The key terms land in Lymi as cards, and each one comes back right before you’d forget
-              it.
+              Send a PDF, a photo of your notebook or typed notes to your AI assistant. The key
+              terms land in Lymi as cards, and each one comes back right before you’d forget it.
             </Trans>
           }
-          cards={HAND}
+          cards={hand}
         />
       </header>
 
       <main>
-        <UseCases title={<Trans>Whatever your notes are in.</Trans>} items={sources} />
+        <section
+          aria-labelledby="material-title"
+          className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
+        >
+          <div className="mx-auto max-w-[1040px]">
+            <div id="material-title">
+              <SectionTitle>
+                <Trans>Whatever your notes are in.</Trans>
+              </SectionTitle>
+            </div>
+            <p className="mt-5 max-w-[52ch] text-md text-pretty text-text-2">
+              <Trans>
+                Your assistant picks out the terms, keeps the definitions from your notes and skips
+                the ones already in your deck.
+              </Trans>
+            </p>
+            <div className="mt-12">
+              <MaterialToCards materials={MATERIALS} />
+            </div>
+          </div>
+        </section>
 
         <GuideSteps
           id="guide"
@@ -151,8 +296,14 @@ export function NotesToFlashcardsView() {
               title: <Trans>Connect your assistant once</Trans>,
               body: (
                 <Trans>
-                  Add Lymi to Claude, ChatGPT, Gemini, Cursor or Grok. The steps are further down
-                  this page.
+                  Add Lymi to Claude, ChatGPT or another assistant.{" "}
+                  <a
+                    href="#connect"
+                    className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+                  >
+                    It takes three steps
+                  </a>
+                  .
                 </Trans>
               ),
             },
@@ -181,8 +332,8 @@ export function NotesToFlashcardsView() {
               title: <Trans>Check the cards in Lymi</Trans>,
               body: (
                 <Trans>
-                  A definition taken from your notes stays as written, and anything the assistant
-                  wrote is marked AI. Terms you already have are skipped. Edit or archive any card.
+                  The new cards are in your deck, and terms you already have are skipped. Fix or
+                  archive any card.
                 </Trans>
               ),
             },
@@ -199,9 +350,9 @@ export function NotesToFlashcardsView() {
           ]}
           note={
             <Trans>
-              Lymi doesn’t read PDFs or photos itself: your assistant reads the file and adds the
-              cards. Without an assistant, you can add each term in Lymi with New card, and AI fills
-              in the meaning. A diagram can go on a card as its picture.
+              Lymi doesn’t read PDFs or photos itself: your assistant does the reading. Without an
+              assistant, add each term with Add a card, and AI fills in the meaning. A diagram can
+              go on a card as its picture.
             </Trans>
           }
         />
@@ -230,7 +381,7 @@ export function NotesToFlashcardsView() {
               {
                 from: "them",
                 body: (
-                  <Added card={OSMOSIS}>
+                  <Added card={osmosis}>
                     <Trans>
                       Added 14 cards to Biology, with the slides’ definitions. I skipped
                       “diffusion”, which you already have.
@@ -260,7 +411,7 @@ export function NotesToFlashcardsView() {
             </Trans>
           }
         >
-          <ReviewDemo cards={REVIEW} />
+          <ReviewDemo cards={review} />
         </FeatureSection>
 
         <RightMoment

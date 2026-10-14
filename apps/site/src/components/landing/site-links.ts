@@ -3,8 +3,6 @@ import { msg } from "@lingui/core/macro";
 import {
   BadgeCheck,
   ClipboardCheck,
-  FileText,
-  GraduationCap,
   Languages,
   type LucideIcon,
   MessagesSquare,
@@ -72,20 +70,8 @@ export const USE_CASE_LINKS: UseCaseLink[] = [
     icon: BadgeCheck,
     hue: 1,
   },
-  {
-    page: "tutorLessons",
-    label: msg`Tutor lessons`,
-    blurb: msg`Turn the words from each lesson with your tutor into cards.`,
-    icon: GraduationCap,
-    hue: 4,
-  },
-  {
-    page: "notesToFlashcards",
-    label: msg`Notes and PDFs`,
-    blurb: msg`Send notes, slides or a photo to your assistant and get cards.`,
-    icon: FileText,
-    hue: 2,
-  },
+  { page: "tutorLessons", label: msg`Tutor lessons`, footerOnly: true },
+  { page: "notesToFlashcards", label: msg`Notes and PDFs`, footerOnly: true },
 ];
 
 export const MENU_USE_CASE_LINKS = USE_CASE_LINKS.filter((link) => !link.footerOnly);

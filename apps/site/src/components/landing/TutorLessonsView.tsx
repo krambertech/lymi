@@ -1,16 +1,17 @@
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
+import type { ReactNode } from "react";
 import { openLymiUrl } from "../../lib/origins";
 import { Added, AssistantChat } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
 import { ConnectSteps } from "./ConnectSteps";
 import type { SampleCard } from "./cards";
-import { FeatureSection } from "./FeatureSection";
+import { FeatureSection, SectionTitle } from "./FeatureSection";
 import { TUTOR_LESSONS_QUESTIONS } from "./faq";
 import { GuideSteps } from "./GuideSteps";
 import { Hero } from "./Hero";
 import { LEARNING_LANGUAGES, type LearningLanguage } from "./language-cards";
-import { NotesToCards } from "./NotesToCards";
+import { type Material, MaterialToCards, Pick } from "./MaterialToCards";
 import { Questions } from "./Questions";
 import { ReviewDemo } from "./ReviewDemo";
 import { SignUpSection } from "./SignUpSection";
@@ -63,6 +64,109 @@ const REVIEW: SampleCard[] = [
   },
 ];
 
+function Bubble({ from, children }: { from: "tutor" | "you"; children: ReactNode }) {
+  return from === "tutor" ? (
+    <p
+      lang="es"
+      className="max-w-[88%] rounded-2xl rounded-ss-sm bg-plate-2 px-3.5 py-2 text-sm text-text"
+    >
+      {children}
+    </p>
+  ) : (
+    <p
+      lang="es"
+      className="max-w-[80%] self-end rounded-2xl rounded-se-sm bg-amber-soft px-3.5 py-2 text-sm text-text"
+    >
+      {children}
+    </p>
+  );
+}
+
+/** What a Spanish lesson leaves behind: the tutor's chat, and the learner's own notebook page. */
+const MATERIALS: Material[] = [
+  {
+    id: "chat",
+    name: msg`The lesson chat`,
+    deck: msg`Spanish`,
+    lang: "es",
+    cards: [
+      { term: "echar de menos", meaning: msg`To miss someone or something` },
+      { term: "aprovechar", meaning: msg`To make the most of something` },
+      { term: "soler", meaning: msg`To usually do something` },
+      { term: "ojalá", meaning: msg`I hope so; if only`, duplicate: true },
+    ],
+    render: (lit) => (
+      <div className="flex w-full max-w-[400px] -rotate-1 flex-col gap-2 rounded-2xl bg-plate p-4 edge">
+        <p className="mb-1 flex items-center gap-2 text-xs text-muted">
+          <span
+            aria-hidden="true"
+            className="grid size-6 place-items-center rounded-full bg-amber-soft text-2xs font-medium text-amber-text"
+          >
+            M
+          </span>
+          <Trans>Marta · Spanish lesson</Trans>
+        </p>
+        <Bubble from="tutor">
+          Se dice «<Pick on={lit(0)}>echar de menos</Pick>», no «perder».
+        </Bubble>
+        <Bubble from="you">Echo de menos a mi familia.</Bubble>
+        <Bubble from="tutor">
+          ¡Eso es! Y el finde, <Pick on={lit(1)}>aprovecha</Pick> el sol.
+        </Bubble>
+        <Bubble from="tutor">
+          <Pick on={lit(2)}>Suelo</Pick> + infinitivo: «Suelo desayunar a las ocho».
+        </Bubble>
+        <Bubble from="tutor">
+          Para el viernes, repasa <Pick on={lit(3)}>ojalá</Pick>.
+        </Bubble>
+      </div>
+    ),
+  },
+  {
+    id: "notebook",
+    name: msg`A photo of your notebook`,
+    deck: msg`Spanish`,
+    lang: "es",
+    cards: [
+      { term: "me da igual", meaning: msg`I don’t mind` },
+      { term: "tener ganas de", meaning: msg`To feel like doing something` },
+      { term: "quedar con alguien", meaning: msg`To meet up with someone` },
+      { term: "madrugar", meaning: msg`To get up early`, duplicate: true },
+    ],
+    render: (lit) => (
+      <div className="notes-hand w-full max-w-[400px] rotate-[1.2deg] rounded-md bg-plate px-7 pt-6 pb-8 edge">
+        <p lang="es" className="text-2xl text-muted">
+          Clase 12 · martes
+        </p>
+        <ul className="mt-4 flex flex-col gap-3 text-2xl leading-tight text-text @2xl:text-[1.625rem]">
+          <li>
+            <Pick on={lit(0)}>
+              <span lang="es">me da igual</span>
+            </Pick>{" "}
+            <span className="text-text-2">
+              = <Trans>I don’t mind</Trans>
+            </span>
+          </li>
+          <li>
+            <Pick on={lit(1)}>
+              <span lang="es">tener ganas de</span>
+            </Pick>{" "}
+            <span className="text-text-2">
+              = <Trans>to feel like</Trans>
+            </span>
+          </li>
+          <li lang="es">
+            <Pick on={lit(2)}>quedar con alguien</Pick>
+          </li>
+          <li lang="es">
+            <Pick on={lit(3)}>madrugar</Pick>
+          </li>
+        </ul>
+      </div>
+    ),
+  },
+];
+
 /** For the learner who books lessons with a tutor and loses the words between them. */
 export function TutorLessonsView() {
   const openAppUrl = openLymiUrl();
@@ -75,9 +179,8 @@ export function TutorLessonsView() {
           title={<Trans>Keep every word from your tutor lessons.</Trans>}
           lede={
             <Trans>
-              The phrases your tutor typed in the chat and the corrections in your notebook. Send
-              them to your assistant after the lesson, and Lymi brings each one back right before
-              you’d forget it, ready for the next lesson.
+              Send the lesson chat or a photo of your notebook to your AI assistant. Lymi keeps
+              every new word and brings it back right before you’d forget it.
             </Trans>
           }
           cards={[...SPANISH.hand, ...GERMAN.hand]}
@@ -85,6 +188,28 @@ export function TutorLessonsView() {
       </header>
 
       <main>
+        <section
+          aria-labelledby="material-title"
+          className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
+        >
+          <div className="mx-auto max-w-[1040px]">
+            <div id="material-title">
+              <SectionTitle>
+                <Trans>What the lesson leaves, as cards.</Trans>
+              </SectionTitle>
+            </div>
+            <p className="mt-5 max-w-[52ch] text-md text-pretty text-text-2">
+              <Trans>
+                Your assistant picks out the new words, keeps the meanings from the lesson and skips
+                the ones already in your deck.
+              </Trans>
+            </p>
+            <div className="mt-12">
+              <MaterialToCards materials={MATERIALS} />
+            </div>
+          </div>
+        </section>
+
         <GuideSteps
           id="guide"
           title={<Trans>After the lesson, in five minutes.</Trans>}
@@ -100,8 +225,14 @@ export function TutorLessonsView() {
               title: <Trans>Connect your assistant once</Trans>,
               body: (
                 <Trans>
-                  Add Lymi to Claude, ChatGPT, Gemini, Cursor or Grok. The steps are further down
-                  this page, and you only do them once.
+                  Add Lymi to Claude, ChatGPT or another assistant.{" "}
+                  <a
+                    href="#connect"
+                    className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+                  >
+                    It takes three steps
+                  </a>
+                  .
                 </Trans>
               ),
             },
@@ -130,9 +261,8 @@ export function TutorLessonsView() {
               title: <Trans>Check the cards in Lymi</Trans>,
               body: (
                 <Trans>
-                  The new cards are in your deck. A meaning from your notes stays as written, and
-                  anything the assistant wrote is marked AI. Words you already have are skipped.
-                  Edit or archive any card.
+                  The new cards are in your deck, and words you already have are skipped. Fix or
+                  archive any card.
                 </Trans>
               ),
             },
@@ -149,37 +279,12 @@ export function TutorLessonsView() {
           ]}
           note={
             <Trans>
-              Lymi doesn’t connect to tutoring sites and doesn’t read files itself: your assistant
-              reads the chat, notes or photo and adds the cards. Without an assistant, you can add
-              each word in Lymi with New card, and AI fills in the meaning.
+              Lymi doesn’t connect to tutoring sites or read photos itself: your assistant does the
+              reading. Without an assistant, add each word with Add a card, and AI fills in the
+              meaning.
             </Trans>
           }
         />
-
-        <section
-          aria-labelledby="notebook-title"
-          className="border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
-        >
-          <div className="mx-auto max-w-[1040px]">
-            <div className="mx-auto max-w-[640px] text-center">
-              <h2
-                id="notebook-title"
-                className="text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl"
-              >
-                <Trans>A page of lesson notes, as cards.</Trans>
-              </h2>
-              <p className="mx-auto mt-5 max-w-[50ch] text-md text-pretty text-text-2">
-                <Trans>
-                  Your assistant reads the handwriting, keeps the meanings you wrote down, fills in
-                  the ones you didn’t and leaves out words already in your deck.
-                </Trans>
-              </p>
-            </div>
-            <div className="mt-12">
-              <NotesToCards notebooks={[GERMAN, SPANISH]} />
-            </div>
-          </div>
-        </section>
 
         <FeatureSection
           tinted
@@ -230,8 +335,8 @@ export function TutorLessonsView() {
           title={<Trans>Between lessons, a few minutes a day.</Trans>}
           body={
             <Trans>
-              One card at a time, graded in a tap, even offline. Every card says its word aloud.
-              Words you know wait longer, and the ones you miss come back sooner.
+              One card at a time, graded in a tap, even offline. Words you know wait longer, and the
+              ones you miss come back sooner.
             </Trans>
           }
         >

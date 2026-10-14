@@ -3,7 +3,7 @@ import { useLingui } from "@lingui/react/macro";
 import { type DeckSummary, errorMessage, type Series } from "@lymi/client/api";
 import { groupDecks } from "@lymi/client/library-groups";
 import * as Haptics from "expo-haptics";
-import { type Href, Link, useRouter } from "expo-router";
+import { type Href, Link, Icon as MenuIcon, Label as MenuLabel, useRouter } from "expo-router";
 import { Alert, Pressable, View } from "react-native";
 import { languageName } from "../../../data/languages";
 import { useArchivedDecks, useDecks, useSeriesList } from "../../../data/queries";
@@ -324,16 +324,22 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
           </Pressable>
         </Link.Trigger>
         <Link.Preview />
+        {/* Lymi's own symbols from the asset catalog, tinted as iOS tints its own. */}
         <Link.Menu>
           <Link.MenuAction
-            title={t`Review`}
-            icon="play"
+            imageRenderingMode="template"
             onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
               review();
             }}
-          />
-          <Link.MenuAction title={t`Add a card`} icon="plus" onPress={add} />
+          >
+            <MenuLabel>{t`Review`}</MenuLabel>
+            <MenuIcon xcasset="lymi.play" />
+          </Link.MenuAction>
+          <Link.MenuAction imageRenderingMode="template" onPress={add}>
+            <MenuLabel>{t`Add a card`}</MenuLabel>
+            <MenuIcon xcasset="lymi.plus" />
+          </Link.MenuAction>
         </Link.Menu>
       </Link>
     </View>

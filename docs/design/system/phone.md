@@ -75,6 +75,7 @@ Every sheet rises from below and swipes away. What the task holds decides its ki
 - Every row sheet has a title on the sheet's text line. A peek sheet and a form carry their controls as glass in the top corners; a row sheet has none unless it saves.
 - A form's header is one shared row: close at the start, named Cancel when leaving discards something and Close when it does not; its name centred at `text-md`, or a pill for what it works in, such as Add a word's deck; the one action at the end. Nothing under it repeats the name as a large title; a line saying what the sheet is for comes first in the content.
 - A field or search box on a sheet iOS has made opaque at full height fills with `glass-group`, as Add a word's deck search and picture description do, since `glass-plate` vanishes there.
+- A row sheet grows with what it holds up to the room left on screen, the keyboard's height taken off while it is up, and past that it scrolls. Where more of it is out of sight, the edge softens into the sheet, as the top bar softens a page.
 - A row sheet's groups fill with `glass-group`, a faint ink tint in the light room and the glass plate's white at night, with no border, so they still read when iOS turns the sheet opaque at full height.
 
 ## After an action

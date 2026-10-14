@@ -561,9 +561,6 @@ msgstr "Archived the deck {deck}"
 msgid "Archived the section {name} in {deck}"
 msgstr "Archived the section {name} in {deck}"
 
-msgid "Archived. It’s out of your reviews until you restore it."
-msgstr "Archived. It’s out of your reviews until you restore it."
-
 msgid "Arts"
 msgstr "Arts"
 
@@ -868,9 +865,6 @@ msgstr "Couldn’t restore “{0}”."
 
 msgid "Couldn’t restore “{name}”."
 msgstr "Couldn’t restore “{name}”."
-
-msgid "Couldn’t restore the card."
-msgstr "Couldn’t restore the card."
 
 msgid "Couldn’t save that."
 msgstr "Couldn’t save that."
@@ -2061,9 +2055,6 @@ msgstr "Restore {title}"
 
 msgid "Restore brings a section back in its place, with the cards archived alongside it."
 msgstr "Restore brings a section back in its place, with the cards archived alongside it."
-
-msgid "Restore card"
-msgstr "Restore card"
 
 msgid "Restored"
 msgstr "Restored"

@@ -561,9 +561,6 @@ msgstr "Заархівовано колоду «{deck}»"
 msgid "Archived the section {name} in {deck}"
 msgstr "Заархівовано розділ «{name}» у колоді «{deck}»"
 
-msgid "Archived. It’s out of your reviews until you restore it."
-msgstr ""
-
 msgid "Arts"
 msgstr "Мистецтво"
 
@@ -867,9 +864,6 @@ msgid "Couldn’t restore “{0}”."
 msgstr ""
 
 msgid "Couldn’t restore “{name}”."
-msgstr ""
-
-msgid "Couldn’t restore the card."
 msgstr ""
 
 msgid "Couldn’t save that."
@@ -2060,9 +2054,6 @@ msgid "Restore {title}"
 msgstr ""
 
 msgid "Restore brings a section back in its place, with the cards archived alongside it."
-msgstr ""
-
-msgid "Restore card"
 msgstr ""
 
 msgid "Restored"

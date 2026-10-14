@@ -2,14 +2,13 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type GoalStatus, useDailyGoal } from "@lymi/client/daily-goal";
 import type { StreakOut } from "@lymi/core";
+import { useNavigation } from "expo-router";
 import { useMemo, useState } from "react";
 import { ScrollView, View, type ViewStyle } from "react-native";
-import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { Flame } from "../brand/flame";
 import { useDay } from "../data/queries";
 import { addDays, StreakCalendar } from "../streak/calendar";
-import { GoalEditor, useOnline } from "../streak/goal-picker";
-import { ALWAYS, CROSSFADE, useReduceMotion } from "../theme/motion";
+import { GoalSheet, useOnline } from "../streak/goal-picker";
 import { usePalette } from "../theme/palette";
 import { useFrost } from "../ui/glass";
 import type { IconName } from "../ui/icons";
@@ -23,8 +22,11 @@ const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
 /**
  * The streak, as a sheet over whatever opened it: the run with one plain line about today, today
  * against the goal with the longest run and the days reviewed, then the month a drag further up.
- * The goal is changed only from here, in place under it. streak.md, phone.md.
+ * The goal is changed only from here, in a sheet of its own. streak.md, phone.md.
  */
+/** Long enough for the streak sheet to reach full height before the goal's sheet rises over it. */
+const RISE_MS = 320;
+
 export default function Streak() {
   const { summary, flame } = useDay();
   const frost = useFrost();
@@ -58,8 +60,14 @@ function StreakPanel({
   const { t } = useLingui();
   const goal = useDailyGoal();
   const connected = useOnline();
-  const reduce = useReduceMotion();
   const [choosing, setChoosing] = useState(false);
+  const navigation = useNavigation();
+  // iOS pushes a part-height sheet away when another opens over it, so the streak rises to full
+  // height first and the goal's sheet stacks visibly on top. phone.md "Sheets".
+  const openGoal = () => {
+    navigation.setOptions({ sheetAllowedDetents: [1] });
+    setTimeout(() => setChoosing(true), RISE_MS);
+  };
   const { current, today } = summary;
   const done = satisfied(today.outcome);
   const byDate = useMemo(() => new Map(summary.days.map((d) => [d.date, d])), [summary.days]);
@@ -140,25 +148,12 @@ function StreakPanel({
                     })}
               </Text>
             </View>
-            <IconButton
-              icon={choosing ? "check" : "edit"}
-              label={choosing ? t`Done` : t`Change daily goal`}
-              onPress={() => setChoosing(!choosing)}
-            />
+            <IconButton icon="edit" label={t`Change daily goal`} onPress={openGoal} />
           </View>
           <View className="pe-3">
             <GoalTrack today={today} label={t`Today’s goal`} />
           </View>
         </View>
-        {/* The presets open in place under the goal, so nothing stacks over this sheet. */}
-        {choosing && (
-          <Animated.View
-            entering={reduce ? CROSSFADE : FadeIn.duration(200).reduceMotion(ALWAYS)}
-            exiting={FadeOut.duration(150).reduceMotion(ALWAYS)}
-          >
-            <GoalEditor value={summary.goal} onChange={goal.change} />
-          </Animated.View>
-        )}
         <View className="flex-row border-t border-edge">
           <Figure icon="longest" value={summary.longest} label={t`Longest streak`} />
           <View className="w-px bg-edge" />
@@ -167,6 +162,12 @@ function StreakPanel({
       </Plate>
 
       <GoalLine connected={connected} status={goal.status} />
+      <GoalSheet
+        open={choosing}
+        onOpenChange={setChoosing}
+        value={summary.goal}
+        onChange={goal.change}
+      />
 
       <Plate className="px-3 pt-2 pb-3">
         <StreakCalendar

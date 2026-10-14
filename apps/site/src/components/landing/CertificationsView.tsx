@@ -157,8 +157,8 @@ export function CertificationsView() {
           title={<Trans>Turn a study guide into cards.</Trans>}
           body={
             <Trans>
-              Send a chapter to Claude, ChatGPT or Gemini and ask for the key terms. Each one lands
-              in your deck with the guide’s definition, ready for tonight’s review.
+              Send a chapter to Claude, ChatGPT, Gemini or Grok and ask for the key terms. Each one
+              lands in your deck with the guide’s definition, ready for tonight’s review.
             </Trans>
           }
           after={<AssistantMarksWithMore />}

@@ -448,8 +448,8 @@ msgstr "Добавь обе колоды"
 msgid "Add it to your assistant"
 msgstr "Добавь его в своего ассистента"
 
-msgid "Add Lymi to Claude, ChatGPT or another assistant. <0>It takes three steps</0>."
-msgstr "Добавь Lymi в Claude, ChatGPT или другого ассистента. <0>Это три шага</0>."
+msgid "Add Lymi to Claude, ChatGPT, Grok or another assistant. <0>It takes three steps</0>."
+msgstr "Добавь Lymi в Claude, ChatGPT, Grok или другого ассистента. <0>Это три шага</0>."
 
 msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
 msgstr "Добавь колоду и учи её бесплатно — Lymi возвращает каждую карточку прямо перед тем, как ты её забудешь."
@@ -498,9 +498,6 @@ msgstr "прилагательное"
 
 msgid "After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, which brings each one back before you forget. Free."
 msgstr "После урока на italki, Preply или с частным репетитором отправь чат, заметки или фото тетради своему AI-ассистенту. Он добавит новые слова в Lymi, а Lymi вернёт каждое, прежде чем ты его забудешь. Бесплатно."
-
-msgid "After the lesson, in five minutes."
-msgstr "После урока, за пять минут."
 
 msgid "After today’s lesson"
 msgstr "После сегодняшнего урока"
@@ -644,8 +641,11 @@ msgstr "С изменениями от 19 февраля 2026 года"
 msgid "As amended on 30 January 2026"
 msgstr "С изменениями от 30 января 2026 года"
 
-msgid "Ask in your own words."
-msgstr "Спрашивай своими словами."
+msgid "Ask for cards"
+msgstr "Попроси карточки"
+
+msgid "Ask what to review."
+msgstr "Спроси, что повторить."
 
 msgid "Ask your AI assistant to add a card while you chat. It shows up in Lymi, ready to review."
 msgstr "Попроси AI-ассистента добавить карточку прямо в разговоре. Она появится в Lymi, готовая к повторению."
@@ -700,9 +700,6 @@ msgstr "Перед тестом"
 
 msgid "Began in 1618 with the <0>Defenestration of Prague</0>."
 msgstr "Началась в 1618 году с <0>Пражской дефенестрации</0>."
-
-msgid "Between lessons, a few minutes a day."
-msgstr "Между уроками, несколько минут в день."
 
 msgid "Biology"
 msgstr "Биология"
@@ -841,6 +838,9 @@ msgstr "Экзамен CCSE на гражданство Испании"
 msgid "CCSE Spanish nationality test: all 300 questions"
 msgstr "Экзамен CCSE на гражданство Испании: все 300 вопросов"
 
+msgid "cell-transport.pdf"
+msgstr "transport-kletki.pdf"
+
 msgid "cell-transport.pdf · page 12 of 30"
 msgstr "transport-kletki.pdf · страница 12 из 30"
 
@@ -955,9 +955,6 @@ msgstr "кофе"
 msgid "Colleagues say it in the corridor, in emails and at the end of the day."
 msgstr "Коллеги говорят это в коридоре, в письмах и в конце дня."
 
-msgid "Collect what the lesson left you"
-msgstr "Собери то, что осталось после урока"
-
 msgid "Come on; let’s go"
 msgstr "Давай; пошли"
 
@@ -970,14 +967,14 @@ msgstr "Поздравляю"
 msgid "Connect an assistant"
 msgstr "Подключить ассистента"
 
-msgid "Connect Claude, ChatGPT or Gemini to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
-msgstr "Подключи Claude, ChatGPT или Gemini к Lymi один раз. Потом вставь расшифровку урока и попроси выписать новые слова, спроси, что ждёт сегодня, или наведи порядок в колоде обычными словами. Делаешь что-то своё? Всё это работает и через публичный API."
+msgid "Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
+msgstr "Подключи Claude, ChatGPT, Gemini или Grok к Lymi один раз. Потом вставь расшифровку урока и попроси выписать новые слова, спроси, что ждёт сегодня, или наведи порядок в колоде обычными словами. Делаешь что-то своё? Всё это работает и через публичный API."
 
 msgid "Connect in three steps."
 msgstr "Подключи за три шага."
 
-msgid "Connect your assistant once"
-msgstr "Подключи ассистента один раз"
+msgid "Connect your AI assistant"
+msgstr "Подключи AI-ассистента"
 
 msgid "Connect your own tools."
 msgstr "Подключай свои инструменты."
@@ -1010,8 +1007,11 @@ msgstr "Скопируй адрес Lymi"
 msgid "Copy the address"
 msgstr "Скопировать адрес"
 
-msgid "Copy the lesson chat, export your shared notes, or take a photo of your notebook or your tutor’s whiteboard."
-msgstr "Скопируй чат урока, экспортируй общие заметки или сфотографируй тетрадь или доску репетитора."
+msgid "Copy the chat or take a photo"
+msgstr "Скопируй чат или сфотографируй"
+
+msgid "Copy the lesson chat or transcript, export your shared notes, or take a photo of your notebook or your tutor’s whiteboard."
+msgstr "Скопируй чат урока или транскрипт, экспортируй общие заметки или сфотографируй тетрадь или доску репетитора."
 
 msgctxt "deck tag"
 msgid "Core vocabulary"
@@ -1353,6 +1353,9 @@ msgstr "Подготовка к экзаменам: все колоды и ис�
 msgid "Exam preparation"
 msgstr "Подготовка к экзаменам"
 
+msgid "Exam revision"
+msgstr "Подготовка к экзамену"
+
 msgid "Example"
 msgstr "Пример"
 
@@ -1513,9 +1516,6 @@ msgstr "От арабского law šāʼ Allāh — «если Бог захо
 
 msgid "From G. K. Chesterton’s 1929 book The Thing."
 msgstr "Из книги Г. К. Честертона «The Thing» 1929 года."
-
-msgid "From notes to cards, step by step."
-msgstr "От заметок к карточкам, шаг за шагом."
 
 msgid "From now until your test date"
 msgstr "С сегодняшнего дня до даты теста"
@@ -1810,6 +1810,9 @@ msgstr "наличными"
 
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "Во многих реальных наборах данных около 30% чисел начинаются с 1"
+
+msgid "In the end"
+msgstr "В итоге"
 
 msgid "In the order you learn them, one section at a time."
 msgstr "В том порядке, в котором ты их учишь: раздел за разделом."
@@ -2205,11 +2208,11 @@ msgstr "Сделай из этого карточки."
 msgid "Make cards with"
 msgstr "Создавай карточки с"
 
-msgid "Make cards with Claude, ChatGPT or Gemini · Lymi"
-msgstr "Создавай карточки с Claude, ChatGPT или Gemini · Lymi"
+msgid "Make cards with Claude, ChatGPT, Gemini or Grok · Lymi"
+msgstr "Создавай карточки с Claude, ChatGPT, Gemini или Grok · Lymi"
 
-msgid "Make cards with Claude, ChatGPT, Gemini, Codex or anything"
-msgstr "Создавай карточки с Claude, ChatGPT, Gemini, Codex или своим кодом"
+msgid "Make cards with Claude, ChatGPT, Gemini, Grok, Codex or anything"
+msgstr "Создавай карточки с Claude, ChatGPT, Gemini, Grok, Codex или своим кодом"
 
 msgid "Make flashcards in ChatGPT, Claude or Gemini."
 msgstr "Создавай флеш-карточки в ChatGPT, Claude или Gemini."
@@ -2483,9 +2486,6 @@ msgstr "Одна карточка за раз, оценка одним каса�
 msgid "One deck for your whole class."
 msgstr "Одна колода для всей группы."
 
-msgid "One lecture, one message."
-msgstr "Одна лекция, одно сообщение."
-
 msgid "One word for asking, handing something over and answering thanks."
 msgstr "Одно слово, чтобы попросить, что-то подать и ответить на благодарность."
 
@@ -2563,6 +2563,9 @@ msgstr "Вставь текст или прикрепи фото и попрос
 
 msgid "Paying at the checkout"
 msgstr "Оплата на кассе"
+
+msgid "PDF · 30 pages"
+msgstr "PDF · 30 страниц"
 
 msgid "Peace of Westphalia"
 msgstr "Вестфальский мир"
@@ -2842,6 +2845,9 @@ msgstr "Доход или расход, которые записываются,
 msgid "Review a few minutes a day"
 msgstr "Повторяй несколько минут в день"
 
+msgid "Review a few minutes a day."
+msgstr "Повторяй несколько минут в день."
+
 msgid "Review history is append-only while the account exists so the schedule and learning record stay honest. Undo creates a separate record rather than rewriting the original review."
 msgstr "Пока существует аккаунт, история повторений только дополняется, чтобы расписание и запись обучения оставались точными. Отмена создаёт отдельную запись, а не переписывает исходное повторение."
 
@@ -2898,9 +2904,6 @@ msgstr "Сохрани слово, термин или идею как флеш-
 
 msgid "Say it"
 msgstr "Произношение"
-
-msgid "Say what you want as cards"
-msgstr "Скажи, что сделать карточками"
 
 msgid "Say yes in Lymi"
 msgstr "Дай согласие в Lymi"
@@ -2959,20 +2962,23 @@ msgstr "До встречи"
 msgid "see you; literally, we see"
 msgstr "увидимся; дословно — «видим»"
 
-msgid "Send a chapter to Claude, ChatGPT or Gemini and ask for the key terms. Each one lands in your deck with the guide’s definition, ready for tonight’s review."
-msgstr "Отправь главу Claude, ChatGPT или Gemini и попроси ключевые термины. Каждый попадёт в твою колоду с определением из пособия, готовый к вечернему повторению."
+msgid "Send a chapter to Claude, ChatGPT, Gemini or Grok and ask for the key terms. Each one lands in your deck with the guide’s definition, ready for tonight’s review."
+msgstr "Отправь главу Claude, ChatGPT, Gemini или Grok и попроси ключевые термины. Каждый попадёт в твою колоду с определением из пособия, готовый к вечернему повторению."
 
-msgid "Send a lesson plan to Claude or ChatGPT and it adds the cards for you. Lymi also has a public API, so you can bring in a list from a spreadsheet, add cards from your course platform, or show what’s due on your class site."
-msgstr "Отправь план урока в Claude или ChatGPT, и ассистент добавит карточки за тебя. У Lymi также есть открытый API: можно перенести список из таблицы, добавлять карточки со своей учебной платформы или показывать на сайте группы, что пора повторить."
+msgid "Send a lesson plan to Claude, ChatGPT or Grok and it adds the cards for you. Lymi also has a public API, so you can bring in a list from a spreadsheet, add cards from your course platform, or show what’s due on your class site."
+msgstr "Отправь план урока в Claude, ChatGPT или Grok, и ассистент добавит карточки за тебя. У Lymi также есть открытый API: можно перенести список из таблицы, добавлять карточки со своей учебной платформы или показывать на сайте группы, что пора повторить."
 
 msgid "Send a PDF, a photo of your notebook or typed notes to your AI assistant. The key terms land in Lymi as cards, and each one comes back right before you’d forget it."
 msgstr "Отправь AI-ассистенту PDF, фото тетради или конспект из ноутбука. Ключевые термины станут карточками в Lymi, и каждая вернётся как раз перед тем, как ты её забудешь."
 
+msgid "Send a whole lecture at once."
+msgstr "Отправь всю лекцию сразу."
+
 msgid "Send class notes, a PDF or a photo of your notebook to your AI assistant, and it adds the key terms to Lymi as flashcards with spaced repetition. Free."
 msgstr "Отправь конспекты, PDF или фото тетради своему AI-ассистенту, и он добавит ключевые термины в Lymi как карточки с интервальным повторением. Бесплатно."
 
-msgid "Send Claude, ChatGPT or Gemini a photo of your notes. The cards land in Lymi, which brings each one back right before you’d forget."
-msgstr "Отправь фото заметок в Claude, ChatGPT или Gemini. Карточки появятся в Lymi, и Lymi вернёт каждую как раз перед тем, как ты её забудешь."
+msgid "Send Claude, ChatGPT, Gemini or Grok a photo of your notes. The cards land in Lymi, which brings each one back right before you’d forget."
+msgstr "Отправь фото заметок в Claude, ChatGPT, Gemini или Grok. Карточки появятся в Lymi, и Lymi вернёт каждую как раз перед тем, как ты её забудешь."
 
 msgid "Send it anything."
 msgstr "Отправляй ассистенту что угодно."
@@ -2980,20 +2986,20 @@ msgstr "Отправляй ассистенту что угодно."
 msgid "Send it to your assistant"
 msgstr "Отправь ассистенту"
 
-msgid "Send it your notes"
-msgstr "Отправь ему заметки"
-
-msgid "Send the lesson chat or a photo of your notebook to your AI assistant. Lymi keeps every new word and brings it back right before you’d forget it."
-msgstr "Отправь AI-ассистенту чат урока или фото тетради. Lymi сохранит каждое новое слово и вернёт его как раз тогда, когда ты почти его забудешь."
+msgid "Send the lesson chat, a transcript or a photo of your notebook to your AI assistant. Lymi keeps every new word and brings it back right before you’d forget it."
+msgstr "Отправь AI-ассистенту чат урока, транскрипт или фото тетради. Lymi сохранит каждое новое слово и вернёт его как раз тогда, когда ты почти его забудешь."
 
 msgid "Send your assistant a photo of your notes. It adds the cards to Lymi, and Lymi brings each one back right before you’d forget."
 msgstr "Отправь ассистенту фото заметок. Он добавит карточки в Lymi, а Lymi вернёт каждую как раз перед тем, как ты её забудешь."
 
-msgid "Send your lecture notes or slides to Claude, ChatGPT or Gemini and it adds the cards, each with what the lecture said. When Lymi’s AI fills in a meaning, it marks what it wrote, so it’s never mistaken for your notes."
-msgstr "Отправь конспект или слайды лекции Claude, ChatGPT или Gemini, и ассистент добавит карточки — каждую с тем, что было на лекции. Когда AI в Lymi дополняет значение, он отмечает написанное, так что его не спутать с твоими заметками."
+msgid "Send your lecture notes or slides to Claude, ChatGPT, Gemini or Grok and it adds the cards, each with what the lecture said. When Lymi’s AI fills in a meaning, it marks what it wrote, so it’s never mistaken for your notes."
+msgstr "Отправь конспект или слайды лекции Claude, ChatGPT, Gemini или Grok, и ассистент добавит карточки — каждую с тем, что было на лекции. Когда AI в Lymi дополняет значение, он отмечает написанное, так что его не спутать с твоими заметками."
 
-msgid "Send your notes to Claude, ChatGPT or Gemini and get cards."
-msgstr "Отправь заметки в Claude, ChatGPT или Gemini — и получи карточки."
+msgid "Send your notes"
+msgstr "Отправь заметки"
+
+msgid "Send your notes to Claude, ChatGPT, Gemini or Grok and get cards."
+msgstr "Отправь заметки в Claude, ChatGPT, Gemini или Grok — и получи карточки."
 
 msgid "Service data"
 msgstr "Сервисные данные"
@@ -3060,6 +3066,9 @@ msgstr "Перейти к обновлениям"
 
 msgid "Slides or a PDF"
 msgstr "Слайды или PDF"
+
+msgid "Slides, photos or typed notes."
+msgstr "Слайды, фото или конспект из ноутбука."
 
 msgid "Slow or stop so others can pass without you forcing them to change speed or path."
 msgstr "Притормози или остановись, чтобы другие проехали, не меняя из-за тебя скорость или направление."
@@ -3252,6 +3261,12 @@ msgstr "Условия"
 
 msgid "Terms from a new job or project."
 msgstr "Термины с новой работы или проекта."
+
+msgid "Test yourself, then check."
+msgstr "Сначала вспомни, потом проверь."
+
+msgid "Text · 2 pages"
+msgstr "Текст · 2 страницы"
 
 msgid "thank you"
 msgstr "спасибо"
@@ -3529,6 +3544,12 @@ msgstr "Чтобы отвечать на обращения в поддержк�
 msgid "To authenticate requests, enforce permissions, prevent abuse and investigate failures."
 msgstr "Чтобы аутентифицировать запросы, контролировать права доступа, предотвращать злоупотребления и расследовать сбои."
 
+msgid "To be in a hurry"
+msgstr "Спешить"
+
+msgid "To be needed"
+msgstr "Быть нужным"
+
 msgid "To belong; to be heard"
 msgstr "Принадлежать; быть слышным"
 
@@ -3620,6 +3641,9 @@ msgstr "TOPIK I: 80 баллов для уровня 1, 140 — для уров�
 msgid "TOPIK: the words for TOPIK I and the start of TOPIK II"
 msgstr "TOPIK: лексика для TOPIK I и начала TOPIK II"
 
+msgid "Transcript · Spanish lesson"
+msgstr "Транскрипт · урок испанского"
+
 msgctxt "deck tag"
 msgid "Travel"
 msgstr "Путешествия"
@@ -3674,6 +3698,9 @@ msgstr "Перевернуть карточку"
 
 msgid "Turn tonight’s lecture into cards."
 msgstr "Преврати сегодняшнюю лекцию в карточки."
+
+msgid "Turn your lesson into cards."
+msgstr "Преврати урок в карточки."
 
 msgid "Turn your notes into cards."
 msgstr "Сделай из заметок карточки."
@@ -3823,9 +3850,6 @@ msgstr "А если я уже пользуюсь Anki?"
 msgid "What if it gets something wrong?"
 msgstr "А если он ошибётся?"
 
-msgid "What the lesson leaves, as cards."
-msgstr "Всё с урока становится карточками."
-
 msgid "What the test looks like"
 msgstr "Как устроен тест"
 
@@ -3852,9 +3876,6 @@ msgstr "Что внутри"
 
 msgid "What’s new in Lymi, and what got better."
 msgstr "Новые возможности Lymi и то, что стало лучше."
-
-msgid "Whatever your notes are in."
-msgstr "В каком бы виде ни были твои заметки."
 
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "Когда показатель становится целью, он перестаёт быть хорошим показателем"

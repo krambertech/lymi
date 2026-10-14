@@ -37,7 +37,7 @@ export const USE_CASE_LINKS: UseCaseLink[] = [
   {
     page: "assistants",
     label: msg`AI assistants`,
-    blurb: msg`Send your notes to Claude, ChatGPT or Gemini and get cards.`,
+    blurb: msg`Send your notes to Claude, ChatGPT, Gemini or Grok and get cards.`,
     icon: MessagesSquare,
     hue: 2,
   },

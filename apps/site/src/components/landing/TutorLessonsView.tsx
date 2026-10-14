@@ -2,7 +2,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { openLymiUrl } from "../../lib/origins";
-import { Added, AssistantChat } from "./AssistantChat";
+import { Added, AssistantChat, Attachment } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
 import { ConnectSteps } from "./ConnectSteps";
 import type { SampleCard } from "./cards";
@@ -24,7 +24,6 @@ export const TUTOR_LESSONS_BLURB = msg`After a lesson on italki, Preply or with 
 const byId = (id: LearningLanguage["id"]) =>
   LEARNING_LANGUAGES.find((l) => l.id === id) as LearningLanguage;
 const SPANISH = byId("es");
-const GERMAN = byId("de");
 
 const ADDED: SampleCard = {
   label: msg`Español · new`,
@@ -123,6 +122,54 @@ const MATERIALS: Material[] = [
     ),
   },
   {
+    id: "transcript",
+    name: msg`A lesson transcript`,
+    deck: msg`Spanish`,
+    lang: "es",
+    cards: [
+      { term: "tener prisa", meaning: msg`To be in a hurry` },
+      { term: "hacer falta", meaning: msg`To be needed` },
+      { term: "al final", meaning: msg`In the end` },
+      { term: "madrugar", meaning: msg`To get up early`, duplicate: true },
+    ],
+    render: (lit) => (
+      <div className="w-full max-w-[420px] rotate-1 rounded-md bg-plate px-5 pt-4 pb-5 edge">
+        <p className="text-xs text-muted">
+          <Trans>Transcript · Spanish lesson</Trans>
+        </p>
+        <dl className="mt-3 grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-2.5 text-sm">
+          <dt className="text-muted tabular-nums">14:02</dt>
+          <dd lang="es" className="text-text">
+            <span className="font-medium">Marta</span> Si no tienes tiempo: «
+            <Pick on={lit(0)}>tengo prisa</Pick>».
+          </dd>
+          <dt className="text-muted tabular-nums">14:03</dt>
+          <dd className="text-text-2">
+            <span className="font-medium text-text">
+              <Trans>You</Trans>
+            </span>{" "}
+            <span lang="es">¿Y si necesito algo?</span>
+          </dd>
+          <dt className="text-muted tabular-nums">14:03</dt>
+          <dd lang="es" className="text-text">
+            <span className="font-medium">Marta</span> Entonces: «Me{" "}
+            <Pick on={lit(1)}>hace falta</Pick> un café».
+          </dd>
+          <dt className="text-muted tabular-nums">14:05</dt>
+          <dd lang="es" className="text-text">
+            <span className="font-medium">Marta</span> «<Pick on={lit(2)}>Al final</Pick> llegué
+            tarde».
+          </dd>
+          <dt className="text-muted tabular-nums">14:06</dt>
+          <dd lang="es" className="text-text">
+            <span className="font-medium">Marta</span> Mañana tienes que{" "}
+            <Pick on={lit(3)}>madrugar</Pick>.
+          </dd>
+        </dl>
+      </div>
+    ),
+  },
+  {
     id: "notebook",
     name: msg`A photo of your notebook`,
     deck: msg`Spanish`,
@@ -167,6 +214,33 @@ const MATERIALS: Material[] = [
   },
 ];
 
+/** The lesson the hand of cards came from: the top card's term is lit where Marta said it. */
+function LessonChat({ front }: { front: string | undefined }) {
+  return (
+    <div className="flex flex-col gap-2 rounded-2xl bg-plate p-4 edge">
+      <p className="mb-1 flex items-center gap-2 text-xs text-muted">
+        <span className="grid size-6 place-items-center rounded-full bg-amber-soft text-2xs font-medium text-amber-text">
+          M
+        </span>
+        <Trans>Marta · Spanish lesson</Trans>
+      </p>
+      <Bubble from="tutor">
+        Mañana tienes que <Pick on={front === "madrugar"}>madrugar</Pick>.
+      </Bubble>
+      <Bubble from="you">Uf, estoy muy embarazada…</Bubble>
+      <Bubble from="tutor">
+        ¡Cuidado! <Pick on={front === "embarazada"}>Embarazada</Pick> no es «embarrassed».
+      </Bubble>
+      <Bubble from="tutor">
+        En el bar: «<Pick on={front === "me-pones-un-cafe"}>¿Me pones un café?</Pick>»
+      </Bubble>
+      <Bubble from="tutor">
+        <Pick on={front === "ojala"}>Ojalá</Pick> nos vemos el viernes.
+      </Bubble>
+    </div>
+  );
+}
+
 /** For the learner who books lessons with a tutor and loses the words between them. */
 export function TutorLessonsView() {
   const openAppUrl = openLymiUrl();
@@ -179,11 +253,12 @@ export function TutorLessonsView() {
           title={<Trans>Keep every word from your tutor lessons.</Trans>}
           lede={
             <Trans>
-              Send the lesson chat or a photo of your notebook to your AI assistant. Lymi keeps
-              every new word and brings it back right before you’d forget it.
+              Send the lesson chat, a transcript or a photo of your notebook to your AI assistant.
+              Lymi keeps every new word and brings it back right before you’d forget it.
             </Trans>
           }
-          cards={[...SPANISH.hand, ...GERMAN.hand]}
+          cards={SPANISH.hand}
+          behind={(front) => <LessonChat front={front} />}
         />
       </header>
 
@@ -195,7 +270,7 @@ export function TutorLessonsView() {
           <div className="mx-auto max-w-[1040px]">
             <div id="material-title">
               <SectionTitle>
-                <Trans>What the lesson leaves, as cards.</Trans>
+                <Trans>Turn your lesson into cards.</Trans>
               </SectionTitle>
             </div>
             <p className="mt-5 max-w-[52ch] text-md text-pretty text-text-2">
@@ -212,7 +287,7 @@ export function TutorLessonsView() {
 
         <GuideSteps
           id="guide"
-          title={<Trans>After the lesson, in five minutes.</Trans>}
+          title={<Trans>How it works</Trans>}
           lede={
             <Trans>
               It works the same for a lesson on italki, on Preply or with a tutor you meet in
@@ -222,10 +297,10 @@ export function TutorLessonsView() {
           steps={[
             {
               id: "connect",
-              title: <Trans>Connect your assistant once</Trans>,
+              title: <Trans>Connect your AI assistant</Trans>,
               body: (
                 <Trans>
-                  Add Lymi to Claude, ChatGPT or another assistant.{" "}
+                  Add Lymi to Claude, ChatGPT, Grok or another assistant.{" "}
                   <a
                     href="#connect"
                     className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
@@ -238,11 +313,11 @@ export function TutorLessonsView() {
             },
             {
               id: "collect",
-              title: <Trans>Collect what the lesson left you</Trans>,
+              title: <Trans>Copy the chat or take a photo</Trans>,
               body: (
                 <Trans>
-                  Copy the lesson chat, export your shared notes, or take a photo of your notebook
-                  or your tutor’s whiteboard.
+                  Copy the lesson chat or transcript, export your shared notes, or take a photo of
+                  your notebook or your tutor’s whiteboard.
                 </Trans>
               ),
             },
@@ -288,7 +363,7 @@ export function TutorLessonsView() {
 
         <FeatureSection
           tinted
-          title={<Trans>Ask in your own words.</Trans>}
+          title={<Trans>Ask what to review.</Trans>}
           body={
             <Trans>
               Your assistant can also tell you what’s due before the next lesson, or which words you
@@ -302,9 +377,12 @@ export function TutorLessonsView() {
               {
                 from: "you",
                 body: (
-                  <Trans>
-                    Here’s the chat from today’s lesson with Marta. Add the new phrases.
-                  </Trans>
+                  <>
+                    <Attachment name="lesson-with-marta.txt" kind={<Trans>Text · 2 pages</Trans>} />
+                    <Trans>
+                      Here’s the chat from today’s lesson with Marta. Add the new phrases.
+                    </Trans>
+                  </>
                 ),
               },
               {
@@ -332,7 +410,7 @@ export function TutorLessonsView() {
 
         <FeatureSection
           demoFirst
-          title={<Trans>Between lessons, a few minutes a day.</Trans>}
+          title={<Trans>Review a few minutes a day.</Trans>}
           body={
             <Trans>
               One card at a time, graded in a tap, even offline. Words you know wait longer, and the

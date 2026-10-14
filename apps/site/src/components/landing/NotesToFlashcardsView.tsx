@@ -2,7 +2,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { openLymiUrl } from "../../lib/origins";
-import { Added, AssistantChat } from "./AssistantChat";
+import { Added, AssistantChat, Attachment } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
 import { ConnectSteps } from "./ConnectSteps";
 import type { SampleCard } from "./cards";
@@ -240,9 +240,28 @@ const MATERIALS: Material[] = [
   },
 ];
 
+/** The revision page the hand of cards came from, the top card's term lit where it was written. */
+function RevisionNotes({ front }: { front: string | undefined }) {
+  const { i18n } = useLingui();
+  return (
+    <div className="notes-hand rounded-md bg-plate px-6 pt-5 pb-7 edge">
+      <p className="text-2xl text-muted">
+        <Trans>Exam revision</Trans>
+      </p>
+      <ul className="mt-3 flex flex-col gap-2 text-2xl leading-tight text-text">
+        {HAND.map((card) => (
+          <li key={card.id}>
+            <Pick on={front === card.id}>{i18n._(card.term)}</Pick>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 /** For the student with a folder of notes and slides and a test coming. */
 export function NotesToFlashcardsView() {
-  const { i18n } = useLingui();
+  const { t, i18n } = useLingui();
   const openAppUrl = openLymiUrl();
   const hand = HAND.map((card) => ({ ...card, term: i18n._(card.term) }));
   const osmosis = { ...OSMOSIS, term: i18n._(OSMOSIS.term) };
@@ -261,6 +280,7 @@ export function NotesToFlashcardsView() {
             </Trans>
           }
           cards={hand}
+          behind={(front) => <RevisionNotes front={front} />}
         />
       </header>
 
@@ -272,7 +292,7 @@ export function NotesToFlashcardsView() {
           <div className="mx-auto max-w-[1040px]">
             <div id="material-title">
               <SectionTitle>
-                <Trans>Whatever your notes are in.</Trans>
+                <Trans>Slides, photos or typed notes.</Trans>
               </SectionTitle>
             </div>
             <p className="mt-5 max-w-[52ch] text-md text-pretty text-text-2">
@@ -289,14 +309,14 @@ export function NotesToFlashcardsView() {
 
         <GuideSteps
           id="guide"
-          title={<Trans>From notes to cards, step by step.</Trans>}
+          title={<Trans>How it works</Trans>}
           steps={[
             {
               id: "connect",
-              title: <Trans>Connect your assistant once</Trans>,
+              title: <Trans>Connect your AI assistant</Trans>,
               body: (
                 <Trans>
-                  Add Lymi to Claude, ChatGPT or another assistant.{" "}
+                  Add Lymi to Claude, ChatGPT, Grok or another assistant.{" "}
                   <a
                     href="#connect"
                     className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
@@ -309,7 +329,7 @@ export function NotesToFlashcardsView() {
             },
             {
               id: "send",
-              title: <Trans>Send it your notes</Trans>,
+              title: <Trans>Send your notes</Trans>,
               body: (
                 <Trans>
                   Attach the PDF or the photo, or paste the text, in a chat with your assistant.
@@ -318,7 +338,7 @@ export function NotesToFlashcardsView() {
             },
             {
               id: "ask",
-              title: <Trans>Say what you want as cards</Trans>,
+              title: <Trans>Ask for cards</Trans>,
               body: (
                 <Trans>
                   For example: “Add the key terms from this lecture to my Biology deck in Lymi, with
@@ -359,7 +379,7 @@ export function NotesToFlashcardsView() {
 
         <FeatureSection
           tinted
-          title={<Trans>One lecture, one message.</Trans>}
+          title={<Trans>Send a whole lecture at once.</Trans>}
           body={
             <Trans>
               Your assistant reads the file, picks out the terms and adds them in one go. Later it
@@ -373,9 +393,12 @@ export function NotesToFlashcardsView() {
               {
                 from: "you",
                 body: (
-                  <Trans>
-                    Here are the slides from today’s lecture on cells. Add the key terms.
-                  </Trans>
+                  <>
+                    <Attachment name={t`cell-transport.pdf`} kind={<Trans>PDF · 30 pages</Trans>} />
+                    <Trans>
+                      Here are the slides from today’s lecture on cells. Add the key terms.
+                    </Trans>
+                  </>
                 ),
               },
               {
@@ -403,7 +426,7 @@ export function NotesToFlashcardsView() {
 
         <FeatureSection
           demoFirst
-          title={<Trans>Recall first. Reveal second.</Trans>}
+          title={<Trans>Test yourself, then check.</Trans>}
           body={
             <Trans>
               Try to recall the definition before Lymi shows it, then grade how well you remembered.

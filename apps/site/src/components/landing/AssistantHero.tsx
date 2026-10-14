@@ -17,6 +17,7 @@ const WITH: { id: string; name: ReactNode; mark: ReactNode }[] = [
   { id: "claude", name: "Claude", mark: <AssistantMark name="Claude" /> },
   { id: "chatgpt", name: "ChatGPT", mark: <AssistantMark name="ChatGPT" /> },
   { id: "gemini", name: "Gemini", mark: <AssistantMark name="Gemini" /> },
+  { id: "grok", name: "Grok", mark: <AssistantMark name="Grok" /> },
   { id: "codex", name: "Codex", mark: <AssistantMark name="Codex" /> },
   {
     id: "anything",
@@ -42,7 +43,7 @@ function Headline() {
   return (
     <h1
       ref={ref}
-      aria-label={t`Make cards with Claude, ChatGPT, Gemini, Codex or anything`}
+      aria-label={t`Make cards with Claude, ChatGPT, Gemini, Grok, Codex or anything`}
       className="text-5xl font-medium tracking-[-0.038em] text-text @4xl:text-[4.25rem]"
     >
       <span aria-hidden="true" className="block leading-[1.05]">

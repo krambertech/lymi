@@ -234,9 +234,9 @@ function LanguagePage(props: PageProps) {
           title={<Trans>Bring your favourite AI along.</Trans>}
           body={
             <Trans>
-              Connect Claude, ChatGPT or Gemini to Lymi once. Then paste a transcript and ask for
-              the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building
-              something of your own? The same things work through the public API.
+              Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Then paste a transcript and ask
+              for the new words, ask what’s waiting tonight, or tidy a deck in plain language.
+              Building something of your own? The same things work through the public API.
             </Trans>
           }
           after={<AssistantMarksWithMore />}

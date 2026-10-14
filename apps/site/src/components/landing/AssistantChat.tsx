@@ -1,7 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { Check } from "lucide-react";
+import { Check, FileText, Image } from "lucide-react";
 import type { ReactNode } from "react";
 import type { SampleCard } from "./cards";
 
@@ -34,6 +34,29 @@ export function Added({ children, card }: AddedProps) {
         <span className="mt-0.5 block text-xs text-text-2">{i18n._(card.meaning)}</span>
       </span>
     </>
+  );
+}
+
+interface AttachmentProps {
+  name: string;
+  /** What kind of file it is, said as the chat app would. */
+  kind: ReactNode;
+  photo?: boolean;
+}
+
+/** A file sent with the learner's message, shown the way a chat app shows an attachment. */
+export function Attachment({ name, kind, photo }: AttachmentProps) {
+  const Icon = photo ? Image : FileText;
+  return (
+    <span className="mb-2 flex items-center gap-2.5 rounded-sm bg-plate py-2 ps-2 pe-3 edge">
+      <span className="grid size-8 shrink-0 place-items-center rounded-xs bg-amber-soft text-amber-text">
+        <Icon aria-hidden="true" className="size-4" />
+      </span>
+      <span className="min-w-0">
+        <span className="block truncate text-xs font-medium text-text">{name}</span>
+        <span className="block text-2xs text-muted">{kind}</span>
+      </span>
+    </span>
   );
 }
 

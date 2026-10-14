@@ -1,0 +1,25 @@
+# Series: delete a series from Library, keep its decks, and see the series go.
+appId: app.lymi
+name: Series
+---
+- runFlow: _open.yaml
+- tapOn: "Library"
+- extendedWaitUntil:
+    visible: "${SERIES}"
+    timeout: 20000
+- takeScreenshot: 01-library
+- tapOn: "Options for ${SERIES}"
+- tapOn: "Delete series"
+# iOS's own alert asks first, since a series write has no Undo.
+- extendedWaitUntil:
+    visible: "Delete “${SERIES}”\\?"
+    timeout: 10000
+- assertVisible: "The series is deleted for good. Its decks can stay in Library or be archived with it."
+- assertVisible: "Archive the decks"
+- takeScreenshot: 02-confirm
+- tapOn: "Keep the decks"
+- extendedWaitUntil:
+    notVisible: "${SERIES}"
+    timeout: 20000
+- assertVisible: "New deck"
+- takeScreenshot: 03-deleted

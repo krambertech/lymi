@@ -75,7 +75,8 @@ function Composer() {
   const qc = useQueryClient();
   const p = usePalette();
   const decksQuery_ = useDecks();
-  const decks = decksQuery_.data ?? [];
+  // A card can only be added to a deck the learner owns, as on the web.
+  const decks = (decksQuery_.data ?? []).filter((d) => d.role === "owner");
   const { deckId, sectionId, picture, setPicture, modes, setModes } = useChoices();
   const deck = decks.find((d) => d.id === deckId) ?? decks[0];
   const deckName = deck?.name ?? "";

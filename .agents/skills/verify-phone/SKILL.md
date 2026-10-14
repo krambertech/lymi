@@ -17,6 +17,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Review | [review.md](features/review.md) |
 | Add a card | [add-card.md](features/add-card.md) |
 | Library and the deck page | [library.md](features/library.md) |
+| Series | [series.md](features/series.md) |
 | Insights | [insights.md](features/insights.md) |
 | Language | [language.md](features/language.md) |
 

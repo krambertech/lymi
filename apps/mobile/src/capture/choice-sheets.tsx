@@ -30,7 +30,7 @@ interface ChoiceProps {
 function DeckChoice({ onChosen }: ChoiceProps) {
   const { t } = useLingui();
   const { deckId, chooseDeck } = useChoices();
-  const decks = useDecks().data ?? [];
+  const decks = (useDecks().data ?? []).filter((d) => d.role === "owner");
   const current = decks.find((d) => d.id === deckId) ?? decks[0];
   const { query, setQuery, searching, shown } = useSearched(
     decks.map((d) => ({ value: d.id, label: d.name })),

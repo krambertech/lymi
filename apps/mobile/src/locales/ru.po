@@ -10,6 +10,9 @@ msgstr ""
 msgid "“{deckName}” is reviewed with the other decks in its series."
 msgstr "«{deckName}» повторяется вместе с другими колодами серии."
 
+msgid "“{label}” was already in {deckName}, so the copy added offline was left out."
+msgstr "«{label}» уже есть в «{deckName}», поэтому копия, добавленная офлайн, не сохранена."
+
 msgid "“{term}” is already in {deck}"
 msgstr "«{term}» уже есть в колоде {deck}"
 
@@ -363,6 +366,12 @@ msgstr "90 дней"
 msgid "A card keeps its progress and leaves its section."
 msgstr "Карточка сохраняет прогресс и выходит из своего раздела."
 
+msgid "A change made offline couldn’t be saved. {reason}"
+msgstr "Не удалось сохранить изменение, сделанное офлайн. {reason}"
+
+msgid "A change to “{label}” made offline couldn’t be saved. {reason}"
+msgstr "Не удалось сохранить изменение в «{label}», сделанное офлайн. {reason}"
+
 msgid "A connected app"
 msgstr "Подключённое приложение"
 
@@ -560,6 +569,9 @@ msgstr "Архивировать карточку"
 
 msgid "Archive deck"
 msgstr "Архивировать колоду"
+
+msgid "Archive the decks"
+msgstr "Архивировать колоды"
 
 msgid "Archived"
 msgstr "Архив"
@@ -1041,6 +1053,12 @@ msgstr "Колоды"
 msgid "Decks to review"
 msgstr "Колоды к повторению"
 
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Delete “{seriesName}”?"
+msgstr "Удалить «{seriesName}»?"
+
 msgid "Delete series"
 msgstr "Удалить серию"
 
@@ -1520,6 +1538,9 @@ msgstr "Оставить участника"
 
 msgid "Keep studying"
 msgstr "Продолжить учить"
+
+msgid "Keep the decks"
+msgstr "Оставить колоды"
 
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Сообщение должно быть короче {FEEDBACK_MESSAGE_MAX} символов."
@@ -2527,6 +2548,12 @@ msgstr "Ссылке для присоединения нужно соедине
 
 msgid "The link stops working for good. People who joined stay."
 msgstr "Ссылка перестанет работать навсегда. Те, кто присоединился, останутся."
+
+msgid "The series is deleted for good."
+msgstr "Серия будет удалена навсегда."
+
+msgid "The series is deleted for good. Its decks can stay in Library or be archived with it."
+msgstr "Серия будет удалена навсегда. Её колоды могут остаться в Библиотеке или уйти в архив вместе с ней."
 
 msgid "Their invitation link stops working. You can invite them again any time."
 msgstr "Ссылка из приглашения перестанет работать. Ты можешь пригласить снова в любой момент."

@@ -121,7 +121,11 @@ export default function NewDeck() {
 
   return (
     <OnGlass>
-      <View className="flex-row items-center justify-between gap-3 px-4 pt-5 pb-2">
+      {/* A form sheet lays out a header and one scroll view; the header must not be flattened away. */}
+      <View
+        collapsable={false}
+        className="flex-row items-center justify-between gap-3 px-4 pt-5 pb-2"
+      >
         <GlassButton icon="close" label={t`Cancel`} onPress={() => router.back()} />
         <Text className="text-md font-medium text-text" accessibilityRole="header">
           {t`New deck`}
@@ -222,7 +226,7 @@ export default function NewDeck() {
         </View>
 
         <Rows>
-          {askedSelect(<RowFace icon="modes" label={t`How cards are asked`} value={way?.label} />)}
+          {askedSelect(<RowFace icon="modes" label={t`How cards are asked`} value={way?.label} stacked />)}
         </Rows>
       </ScrollView>
     </OnGlass>

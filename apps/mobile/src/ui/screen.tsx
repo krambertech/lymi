@@ -47,6 +47,11 @@ interface Props {
    * bar and lets it fade out below the header, `pool` lays it as a still pool of light behind it.
    */
   ground?: { colour: string; shape: "fade" | "pool" };
+  /**
+   * Where the page's name ends inside `header`, from its top. The bar's title then arrives as that
+   * name slides under the bar, rather than once the whole header has gone.
+   */
+  titleAt?: number;
   /** The bar's actions arrive with the bar's title, as the header's own button scrolls away. */
   actionsArrive?: boolean;
   /** A sentence under a page's large title that says what the page is for, held close to the title. */
@@ -80,6 +85,7 @@ export function Screen({
   actions,
   header,
   ground,
+  titleAt,
   actionsArrive = false,
   description,
   onEndReached,
@@ -132,6 +138,8 @@ export function Screen({
   const rtl = I18nManager.isRTL;
   // A worklet copies what it closes over, so it reads a flag rather than the header's elements.
   const hasHeader = !!header;
+  // The header's content starts 8 pt below the bar, so its name is under the bar 8 pt sooner.
+  const named = titleAt === undefined ? undefined : titleAt + 8;
   const moving = useAnimatedStyle(() => {
     if (hasHeader) {
       // The header holds the name at rest; the bar's title arrives as the header leaves.
@@ -144,7 +152,9 @@ export function Screen({
           : interpolate(
               y.value,
               // A short header, such as a card's term, still starts with the bar's title hidden.
-              [Math.max(headerHeight - 80, 0), Math.max(headerHeight - 30, 10)],
+              named !== undefined
+                ? [Math.max(named - 40, 0), Math.max(named, 10)]
+                : [Math.max(headerHeight - 80, 0), Math.max(headerHeight - 30, 10)],
               [0, 1],
               Extrapolation.CLAMP,
             ),
@@ -192,6 +202,8 @@ export function Screen({
     opacity: interpolate(y.value, [0, 24], [0, 1], Extrapolation.CLAMP),
   }));
   const bar = insets.top + 56;
+  // Over a page's own colour the bar takes that colour, so it never lays a grey band across it.
+  const roof = ground?.colour ?? p.canvas;
   const trailing = kind === "tab" ? <TabActions own={actions} /> : actions;
 
   return (
@@ -236,7 +248,7 @@ export function Screen({
           {
             height: bar + 20,
             // Solid under the bar, softening only below it, so nothing reads through the title.
-            experimental_backgroundImage: `linear-gradient(to bottom, ${p.canvas} ${Math.round((bar / (bar + 20)) * 100)}%, ${p.canvas}00)`,
+            experimental_backgroundImage: `linear-gradient(to bottom, ${roof} ${Math.round((bar / (bar + 20)) * 100)}%, ${roof}00)`,
           } as ViewStyle,
           band,
         ]}
@@ -247,7 +259,7 @@ export function Screen({
         className="absolute inset-x-0 top-0"
         style={ground ? band : undefined}
       >
-        <StatusFade height={insets.top} />
+        <StatusFade height={insets.top} colour={roof} />
       </Animated.View>
       <Animated.View
         pointerEvents="none"
@@ -388,8 +400,7 @@ function Ground({
 }
 
 /** Content scrolling up softens into the room under the status bar instead of hitting the clock. */
-function StatusFade({ height }: { height: number }) {
-  const p = usePalette();
+function StatusFade({ height, colour }: { height: number; colour: string }) {
   return (
     <View
       pointerEvents="none"
@@ -397,7 +408,7 @@ function StatusFade({ height }: { height: number }) {
       style={
         {
           height: height + 12,
-          experimental_backgroundImage: `linear-gradient(to bottom, ${p.canvas} 55%, ${p.canvas}00)`,
+          experimental_backgroundImage: `linear-gradient(to bottom, ${colour} 55%, ${colour}00)`,
         } as ViewStyle
       }
     />

@@ -6,7 +6,7 @@ import { execFileSync } from "node:child_process";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
-import { readRecord, root, SIMULATOR, xcrun } from "./stack.mjs";
+import { readRecord, root, xcrun } from "./stack.mjs";
 
 export const BUNDLE_ID = "app.lymi";
 
@@ -65,20 +65,20 @@ async function checkMetro(port) {
   return servedFromHere(port, "apps/mobile");
 }
 
-function checkSimulator(udid) {
+function checkSimulator(udid, simulator) {
   const list = JSON.parse(xcrun(["simctl", "list", "devices", "--json"]));
   const device = Object.values(list.devices)
     .flat()
     .find((d) => d.udid === udid);
   if (!device) return { ok: false, detail: `no Simulator ${udid}` };
-  if (device.name !== SIMULATOR || device.state !== "Booted")
-    return { ok: false, detail: `${device.name} is ${device.state}, expected ${SIMULATOR} booted` };
+  if (device.name !== simulator || device.state !== "Booted")
+    return { ok: false, detail: `${device.name} is ${device.state}, expected ${simulator} booted` };
   try {
     xcrun(["simctl", "get_app_container", udid, BUNDLE_ID]);
   } catch {
-    return { ok: false, detail: `${SIMULATOR} has no ${BUNDLE_ID}; run stack.mjs start again` };
+    return { ok: false, detail: `${simulator} has no ${BUNDLE_ID}; run stack.mjs start again` };
   }
-  return { ok: true, detail: `${SIMULATOR} (${udid}) booted with ${BUNDLE_ID}` };
+  return { ok: true, detail: `${simulator} (${udid}) booted with ${BUNDLE_ID}` };
 }
 
 /** Vite closes idle kept-alive sockets, so a call can meet a closed one (EPIPE); another attempt opens a fresh one. */
@@ -130,7 +130,7 @@ export async function doctor({ persona, cookie } = {}) {
   const checks = [
     { name: "worker", ...(await checkWorker(stack.worker)) },
     { name: "metro", ...(await checkMetro(stack.metroPort)) },
-    { name: "phone", ...checkSimulator(stack.udid) },
+    { name: "phone", ...checkSimulator(stack.udid, stack.simulator) },
   ];
   if (persona && checks[0].ok) {
     const session = cookie ?? (await signIn(stack.worker, persona));

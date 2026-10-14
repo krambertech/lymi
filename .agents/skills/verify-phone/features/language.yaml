@@ -1,0 +1,23 @@
+# Language: chosen on the You tab, the interface switches at once and the account's setting follows.
+appId: app.lymi
+name: Language
+---
+- runFlow: _open.yaml
+- tapOn: "You"
+- scrollUntilVisible:
+    element: "Language: English"
+- takeScreenshot: 01-english
+- tapOn: "Language: English"
+- tapOn: "Українська"
+- extendedWaitUntil:
+    visible: "Мова: Українська"
+    timeout: 10000
+- assertVisible: "Мова застосунку й мова, якою AI пише значення."
+- takeScreenshot: 02-ukrainian
+- tapOn: "Мова: Українська"
+- tapOn: "English"
+- extendedWaitUntil:
+    visible: "Language: English"
+    timeout: 10000
+- assertVisible: "App language, and the language AI uses for meanings."
+- takeScreenshot: 03-english-again

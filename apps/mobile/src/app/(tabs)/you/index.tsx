@@ -18,6 +18,7 @@ import { Icon, Plate, Press, RowArrow, SectionTitle, Text } from "../../../ui/pr
 import { Row, RowFace, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
 import { Avatar } from "../../../you/avatar";
+import { LanguageNote, LanguageRow, useAppLanguage } from "../../../you/language";
 import { ProfileSheet, useProfile } from "../../../you/profile";
 import { Blocked, ReminderSwitch, TimeRow, useReminder } from "../../../you/reminder";
 
@@ -25,15 +26,16 @@ import { Blocked, ReminderSwitch, TimeRow, useReminder } from "../../../you/remi
 const API_DOCS = "https://lymi.app/docs/api";
 
 /**
- * Everything about the learner: Insights first, then this phone's reminder and theme, the places
- * behind You, the setup jobs that stay on the web, feedback and sign-out. phone.md "Navigation",
- * ADR 0030.
+ * Everything about the learner, and every setting: Insights first, then this phone's reminder, the
+ * account's language, this phone's theme, Activity, the setup jobs that stay on the web, feedback
+ * and sign-out. phone.md "Navigation", ADR 0030.
  */
 export default function You() {
   const { t } = useLingui();
   const router = useRouter();
   const [theme, setTheme] = useState<ThemeChoice>(savedTheme);
   const reminder = useReminder();
+  const language = useAppLanguage();
   const profile = useProfile();
   const [editing, setEditing] = useState(false);
   // Publishing and its reports are done with an API key by the few accounts Lymi lets publish.
@@ -59,28 +61,31 @@ export default function You() {
         {reminder.blocked && <Blocked />}
       </View>
 
-      <Rows>
-        <Select
-          label={t`Theme`}
-          value={theme}
-          options={themes}
-          onChange={(choice) => {
-            setTheme(choice);
-            chooseTheme(choice);
-          }}
-          trigger={
-            <RowFace
-              icon="theme"
-              label={t`Theme`}
-              value={themes.find((o) => o.value === theme)?.label}
-            />
-          }
-        />
-      </Rows>
+      <View className="gap-2">
+        <Rows>
+          <LanguageRow language={language} />
+          <Select
+            label={t`Theme`}
+            value={theme}
+            options={themes}
+            onChange={(choice) => {
+              setTheme(choice);
+              chooseTheme(choice);
+            }}
+            trigger={
+              <RowFace
+                icon="theme"
+                label={t`Theme`}
+                value={themes.find((o) => o.value === theme)?.label}
+              />
+            }
+          />
+        </Rows>
+        <LanguageNote language={language} />
+      </View>
 
       <Rows>
         <Row icon="activity" label={t`Activity`} onPress={() => router.push("/you/activity")} />
-        <Row icon="settings" label={t`Settings`} onPress={() => router.push("/you/settings")} />
       </Rows>
 
       <View>

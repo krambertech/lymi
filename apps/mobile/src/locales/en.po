@@ -444,6 +444,9 @@ msgstr "Anyone with this link can join and review these cards."
 msgid "API keys"
 msgstr "API keys"
 
+msgid "App language, and the language AI uses for meanings."
+msgstr "App language, and the language AI uses for meanings."
+
 msgctxt "language"
 msgid "Arabic"
 msgstr "Arabic"
@@ -791,6 +794,9 @@ msgstr "Couldn’t save the goal. Try again."
 
 msgid "Couldn’t save the hook."
 msgstr "Couldn’t save the hook."
+
+msgid "Couldn’t save the language. Check your connection and try again."
+msgstr "Couldn’t save the language. Check your connection and try again."
 
 msgid "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
 msgstr "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
@@ -1728,9 +1734,6 @@ msgstr "Open on the web"
 msgid "Open Settings"
 msgstr "Open Settings"
 
-msgid "Open Settings on the web"
-msgstr "Open Settings on the web"
-
 msgid "Options for {sectionName}"
 msgstr "Options for {sectionName}"
 
@@ -2050,12 +2053,6 @@ msgstr "Sent again"
 msgctxt "language"
 msgid "Serbian"
 msgstr "Serbian"
-
-msgid "Settings"
-msgstr "Settings"
-
-msgid "Settings is coming to the phone"
-msgstr "Settings is coming to the phone"
 
 msgid "Shared by {owner}"
 msgstr "Shared by {owner}"
@@ -2394,9 +2391,6 @@ msgstr "Undo restoring {title}"
 
 msgid "Unmark important"
 msgstr "Unmark important"
-
-msgid "Until then, change your settings on the web."
-msgstr "Until then, change your settings on the web."
 
 msgid "Update"
 msgstr "Update"

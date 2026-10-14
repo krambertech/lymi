@@ -4,6 +4,7 @@ import { type ReactNode, useState } from "react";
 import { signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { HandOfCards } from "./HandOfCards";
+import { HeroGround } from "./HeroScenes";
 import type { HandCard } from "./hand-cards";
 import { OriginBadge } from "./OriginBadge";
 
@@ -46,20 +47,11 @@ export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
 
       {visual ??
         (behind ? (
-          // The same ground and overlap as a scene, with the hand of cards over what it came from.
-          <div className="w-full max-w-[520px] rounded-[1.75rem] bg-plate-2 p-5 @2xl:p-7">
-            <div className="grid grid-cols-12 grid-rows-[auto_7rem_auto]">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none col-span-9 col-start-1 row-span-2 row-start-1"
-              >
-                {behind(front)}
-              </div>
-              <div className="relative col-span-8 col-start-5 row-span-2 row-start-2">
-                <HandOfCards cards={cards} layout="stack" onFront={setFront} />
-              </div>
+          <HeroGround material={behind(front)}>
+            <div className="relative col-span-8 col-start-5 row-span-2 row-start-2">
+              <HandOfCards cards={cards} layout="stack" onFront={setFront} />
             </div>
-          </div>
+          </HeroGround>
         ) : (
           <HandOfCards cards={cards} layout={layout} />
         ))}

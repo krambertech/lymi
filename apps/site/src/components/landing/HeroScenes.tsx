@@ -16,6 +16,31 @@ export interface HeroWord {
 /** Draws the material, wrapping word `i` with `mark` wherever it appears. */
 export type MarkedMaterial = (mark: (i: number, text: ReactNode) => ReactNode) => ReactNode;
 
+/**
+ * The material and its cards on one edgeless ground, the card overlapping the material's foot by a
+ * fixed row so the pair holds together at every width. The material tilts a little, as paper does.
+ */
+export function HeroGround({
+  material,
+  children,
+  frameRef,
+}: {
+  material: ReactNode;
+  children: ReactNode;
+  frameRef?: React.Ref<HTMLDivElement>;
+}) {
+  return (
+    <div className="hero-ground w-full max-w-[500px] py-4">
+      <div ref={frameRef} className="relative grid grid-cols-12 grid-rows-[auto_6rem_auto]">
+        <div className="relative col-span-9 col-start-1 row-span-2 row-start-1 -rotate-2">
+          {material}
+        </div>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 /** One word per beat: it lights, lifts off as a small card, and grows into the top card. */
 const CYCLE_MS = 3400;
 const LIGHT_MS = 550;
@@ -129,127 +154,123 @@ export function HeroLiftOff({
   const flying = flight ? words[flight.i] : undefined;
 
   return (
-    // A ground for the scene, so the page and the card sit on one surface instead of floating.
-    <div className="w-full max-w-[520px] rounded-[1.75rem] bg-plate-2 p-5 @2xl:p-7">
-      {/* The card starts on the overlap row, so however tall the material runs, it sits over the
-          material's lower corner by the same amount at every width. */}
-      <div ref={frame} className="relative grid grid-cols-12 grid-rows-[auto_4.5rem_auto]">
-        <div className="col-span-9 col-start-1 row-span-2 row-start-1">
-          {material((i, text) => (
-            <span
-              ref={(el) => {
-                marks.current[i] = el;
-              }}
-              className="inline-block"
-            >
-              <Pick on={lit === i}>{text}</Pick>
-            </span>
-          ))}
-        </div>
-
-        <div className="relative col-span-8 col-start-5 row-span-2 row-start-2 mb-3">
-          <div
-            aria-hidden="true"
-            className="absolute inset-x-3 top-3 -bottom-3 rounded-2xl bg-plate edge"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute inset-x-1.5 top-1.5 -bottom-1.5 rounded-2xl bg-plate edge"
-          />
-          <div ref={card} className="relative grid min-h-[220px] rounded-2xl bg-plate edge">
-            {/* Every word laid out unseen in the same cell, so the card is as tall as its longest
+    <HeroGround
+      frameRef={frame}
+      material={material((i, text) => (
+        <span
+          ref={(el) => {
+            marks.current[i] = el;
+          }}
+          className="inline-block"
+        >
+          <Pick on={lit === i}>{text}</Pick>
+        </span>
+      ))}
+    >
+      <div className="relative col-span-8 col-start-5 row-span-2 row-start-2 mb-3">
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-3 top-3 -bottom-3 rounded-2xl bg-plate edge"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-1.5 top-1.5 -bottom-1.5 rounded-2xl bg-plate edge"
+        />
+        <div ref={card} className="relative grid min-h-[220px] rounded-2xl bg-plate edge">
+          {/* Every word laid out unseen in the same cell, so the card is as tall as its longest
                 word at this width and never changes size as words land. */}
-            {words.map((word) => (
-              <div key={word.id} aria-hidden="true" className="invisible col-start-1 row-start-1">
-                <WordCard word={word} />
-              </div>
-            ))}
-            <AnimatePresence initial={false}>
-              {shown && (
-                <motion.div
-                  key={shown.id}
-                  className="col-start-1 row-start-1"
-                  initial={false}
-                  exit={{ opacity: 0, transition: { duration: 0 } }}
-                >
-                  <WordCard
-                    word={shown}
-                    termRef={(el) => {
-                      term.current = el;
-                    }}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          {words.map((word) => (
+            <div key={word.id} aria-hidden="true" className="invisible col-start-1 row-start-1">
+              <WordCard word={word} />
+            </div>
+          ))}
+          <AnimatePresence initial={false}>
+            {shown && (
+              <motion.div
+                key={shown.id}
+                className="col-start-1 row-start-1"
+                initial={false}
+                exit={{ opacity: 0, transition: { duration: 0 } }}
+              >
+                <WordCard
+                  word={shown}
+                  termRef={(el) => {
+                    term.current = el;
+                  }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
+      </div>
 
-        <AnimatePresence>
-          {flight && flying && (
-            <motion.div
-              key={flight.key}
-              aria-hidden="true"
-              className="pointer-events-none absolute start-0 top-0 overflow-hidden bg-plate edge"
-              initial={{
-                x: flight.from.x,
-                y: flight.from.y,
-                width: flight.from.w,
-                height: flight.from.h,
-                borderRadius: 4,
-              }}
-              animate={{
-                x: flight.to.x,
-                y: flight.to.y,
-                width: flight.to.w,
-                height: flight.to.h,
-                borderRadius: 16,
-              }}
-              exit={{ opacity: 0, transition: { duration: 0.22, ease: "easeOut" } }}
-              // Across fast and down slow, so the word arcs onto the stack instead of sliding.
+      <AnimatePresence>
+        {flight && flying && (
+          <motion.div
+            key={flight.key}
+            aria-hidden="true"
+            className="pointer-events-none absolute start-0 top-0 overflow-hidden bg-plate edge"
+            initial={{
+              x: flight.from.x,
+              y: flight.from.y,
+              width: flight.from.w,
+              height: flight.from.h,
+              borderRadius: 4,
+              rotate: -2,
+            }}
+            animate={{
+              x: flight.to.x,
+              y: flight.to.y,
+              width: flight.to.w,
+              height: flight.to.h,
+              borderRadius: 16,
+              rotate: 0,
+            }}
+            exit={{ opacity: 0, transition: { duration: 0.22, ease: "easeOut" } }}
+            // Across fast and down slow, so the word arcs onto the stack instead of sliding.
+            transition={{
+              duration: GROW_S,
+              ease: EASE,
+              y: { duration: GROW_S, ease: [0.55, 0, 0.3, 1] },
+            }}
+          >
+            {/* The highlight it lifted off with, fading as it becomes a card. */}
+            <motion.span
+              className="absolute inset-0 bg-amber-soft"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 0 }}
+              transition={{ duration: GROW_S * 0.8, ease: "easeOut" }}
+            />
+            {/* The word as written, handing over to the card's own type halfway. */}
+            <motion.span
+              lang={flying.lang}
+              className={`absolute start-0 top-0 px-0.5 whitespace-nowrap text-text ${chip}`}
+              initial={{ x: 0, y: 0, opacity: 1 }}
+              animate={{ x: flight.termAt.x, y: flight.termAt.y, opacity: 0 }}
               transition={{
                 duration: GROW_S,
                 ease: EASE,
-                y: { duration: GROW_S, ease: [0.55, 0, 0.3, 1] },
+                opacity: { delay: GROW_S * 0.3, duration: GROW_S * 0.25 },
               }}
             >
-              {/* The highlight it lifted off with, fading as it becomes a card. */}
-              <motion.span
-                className="absolute inset-0 bg-amber-soft"
-                initial={{ opacity: 1 }}
-                animate={{ opacity: 0 }}
-                transition={{ duration: GROW_S * 0.8, ease: "easeOut" }}
-              />
-              {/* The word as written, handing over to the card's own type halfway. */}
-              <motion.span
-                lang={flying.lang}
-                className={`absolute start-0 top-0 px-0.5 whitespace-nowrap text-text ${chip}`}
-                initial={{ x: 0, y: 0, opacity: 1 }}
-                animate={{ x: flight.termAt.x, y: flight.termAt.y, opacity: 0 }}
-                transition={{
-                  duration: GROW_S,
-                  ease: EASE,
-                  opacity: { delay: GROW_S * 0.3, duration: GROW_S * 0.25 },
-                }}
-              >
-                {flying.term}
-              </motion.span>
-              <motion.span
-                lang={flying.lang}
-                className={`absolute start-0 top-0 origin-top-left whitespace-nowrap rtl:origin-top-right ${TERM}`}
-                initial={{ x: 0, y: 0, scale: flight.scale, opacity: 0 }}
-                animate={{ x: flight.termAt.x, y: flight.termAt.y, scale: 1, opacity: 1 }}
-                transition={{
-                  duration: GROW_S,
-                  ease: EASE,
-                  opacity: { delay: GROW_S * 0.3, duration: GROW_S * 0.3 },
-                }}
-              >
-                {flying.term}
-              </motion.span>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </div>
+              {flying.term}
+            </motion.span>
+            <motion.span
+              lang={flying.lang}
+              className={`absolute start-0 top-0 origin-top-left whitespace-nowrap rtl:origin-top-right ${TERM}`}
+              initial={{ x: 0, y: 0, scale: flight.scale, opacity: 0 }}
+              animate={{ x: flight.termAt.x, y: flight.termAt.y, scale: 1, opacity: 1 }}
+              transition={{
+                duration: GROW_S,
+                ease: EASE,
+                opacity: { delay: GROW_S * 0.3, duration: GROW_S * 0.3 },
+              }}
+            >
+              {flying.term}
+            </motion.span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </HeroGround>
   );
 }

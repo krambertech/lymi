@@ -8,6 +8,7 @@ import { existsSync, mkdirSync, openSync, readFileSync, rmSync, writeFileSync } 
 import { createServer } from "node:net";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { stripVTControlCharacters } from "node:util";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const web = resolve(root, "apps/web");
@@ -20,20 +21,26 @@ const HELP = `Usage: node .agents/skills/verify/scripts/server.mjs <start|stop>
   stop    Stop the server start launched, by the process group it recorded.
 `;
 
-function free(port) {
+function freeOn(port, host) {
   return new Promise((done) => {
     const probe = createServer()
-      .once("error", () => done(false))
+      // A machine without IPv6 cannot bind ::1, so nothing else can hold the port there either.
+      .once("error", (error) => done(["EADDRNOTAVAIL", "EAFNOSUPPORT"].includes(error.code)))
       .once("listening", () => probe.close(() => done(true)))
-      .listen(port, "127.0.0.1");
+      .listen(port, host);
   });
 }
 
-function devVars() {
+// Vite's `localhost` can resolve to ::1 alone, so a port held there is still taken.
+async function free(port) {
+  return (await freeOn(port, "127.0.0.1")) && (await freeOn(port, "::1"));
+}
+
+function devVars(port) {
   const file = resolve(web, ".dev.vars");
   if (existsSync(file)) return;
   const text = readFileSync(resolve(web, ".dev.vars.example"), "utf8")
-    .replace(/^(PUBLIC_SITE_URL|PRODUCT_URL)=.*$/gm, "$1=http://localhost:5241")
+    .replace(/^(PUBLIC_SITE_URL|PRODUCT_URL)=.*$/gm, `$1=http://localhost:${port}`)
     .replace(/^BETTER_AUTH_SECRET=.*$/m, `BETTER_AUTH_SECRET=${randomBytes(24).toString("hex")}`);
   writeFileSync(file, text);
   process.stdout.write("Wrote apps/web/.dev.vars from the example.\n");
@@ -55,28 +62,43 @@ async function start() {
     process.stdout.write(`Already started: ${url}. Stop it first.\n`);
     return;
   }
-  devVars();
   migrate();
   let port = 5241;
   while (!(await free(port))) port += 1;
+  devVars(port);
   const url = `http://localhost:${port}`;
   mkdirSync(dirname(record), { recursive: true });
-  const log = openSync(resolve(web, ".wrangler/verify-server.log"), "w");
+  const logFile = resolve(web, ".wrangler/verify-server.log");
+  const log = openSync(logFile, "w");
   const child = spawn(
     "pnpm",
     ["--filter", "@lymi/web", "dev", "--port", String(port), "--strictPort"],
     { cwd: root, detached: true, stdio: ["ignore", log, log] },
   );
+  let exited = null;
+  child.once("exit", (code, signal) => {
+    exited = signal ?? `code ${code}`;
+  });
   child.unref();
   writeFileSync(record, `${JSON.stringify({ pid: child.pid, url })}\n`);
+  const bound = new RegExp(`Local:\\s+\\S+:${port}/`);
   for (let i = 0; i < 120; i += 1) {
-    try {
-      const health = await fetch(`${url}/api/health`).then((r) => r.json());
-      if (health.name === "lymi-product") {
-        process.stdout.write(`${url}\n`);
-        return;
-      }
-    } catch {}
+    // Until Vite reports binding the port, or once it is gone, whatever answers is someone else's.
+    const output = stripVTControlCharacters(readFileSync(logFile, "utf8"));
+    if (exited) {
+      rmSync(record);
+      const tail = output.trim().split("\n").slice(-20).join("\n");
+      throw new Error(`The server exited (${exited}) before ${url} was healthy:\n${tail}`);
+    }
+    if (bound.test(output)) {
+      try {
+        const health = await fetch(`${url}/api/health`).then((r) => r.json());
+        if (health.name === "lymi-product") {
+          process.stdout.write(`${url}\n`);
+          return;
+        }
+      } catch {}
+    }
     await new Promise((r) => setTimeout(r, 1_000));
   }
   throw new Error(`No answer from ${url}; see apps/web/.wrangler/verify-server.log`);

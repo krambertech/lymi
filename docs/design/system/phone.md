@@ -1,6 +1,6 @@
 # The phone app
 
-The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the reveal, the end of a review and the moments in [motion.md](motion.md) from `packages/design`, and keeps the web's component names, Onest and Lucide. This file lists only where the phone differs, each time because touch or iOS gives it a better way. Lymi draws its persistent chrome and every row and icon; Apple draws the sheets they sit in, the share sheet, alerts, the keyboard and permission prompts ([ADR 0029](../../adr/0029-the-phone-app-is-expo-react-native-sharing-core.md)). iOS's pull-down menus brought SF Symbols and a morph that did not match Lymi, so a menu is a sheet of Lymi's rows instead. Which jobs the phone leads is in [PRODUCT.md](../../../PRODUCT.md#surfaces).
+The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the reveal, the end of a review and the moments in [motion.md](motion.md) from `packages/design`, and keeps the web's component names, Onest and Lucide. This file lists only where the phone differs, each time because touch or iOS gives it a better way. Lymi draws its persistent chrome and every row and icon; Apple draws the sheets they sit in, the share sheet, alerts, the keyboard and permission prompts ([ADR 0029](../../adr/0029-the-phone-app-is-expo-react-native-sharing-core.md)). Apple also draws the command menus that grow out of a button, with Lymi's Lucide icons made into custom symbols ([Menus](#menus)). Which jobs the phone leads is in [PRODUCT.md](../../../PRODUCT.md#surfaces).
 
 ## Navigation
 
@@ -8,7 +8,7 @@ The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the rev
 - Every screen's top bar is pinned, with its actions as glass buttons at its end. A tab's large title starts in the bar and shrinks to an inline title at its start as the page scrolls; a page's title travels from under the bar into its middle, and its named back folds into a round glass back. What scrolls beneath softens into the room, never at rest, so nothing crosses the lantern's light.
 - **You** gathers what is about the learner: their photo, name and email at the top, where a tap opens a sheet of Lymi's rows, as a Select does, to rename and to take, choose or remove the photo; Insights as one plate that opens the full page, carrying the month's recall and the thirty-day strip once there is a review; then the reminder time and the theme, then Activity, Settings, feedback and sign-out. The theme and the reminder time belong to the phone, as the web keeps them per browser. Between Settings and feedback, **Your data** holds the setup jobs that stay on the web ([ADR 0030](../../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)) as rows that end in an arrow out and open the web; publishing and deck reports, done with an API key, show only to an account with a published deck. A place the phone does not have yet pushes a page that says so and opens the web's. Archived closes Library.
 - Capture is an amber glass button at the end of every tab's top bar, beside the streak. A tap opens Add a word as a sheet from below. Explore has neither: its bar holds Filter and Search in one glass capsule, because finding a deck there is the job, and a word is caught from any other tab.
-- Library's bar holds what Library is for instead: search, then the amber plus, which grows into a small menu of Lymi's rows where it stands (Add a card, New deck, New series, Import decks) and shrinks back into the button. The streak stays on Today.
+- Library's bar holds what Library is for instead: search, then the amber plus, iOS's own menu growing out of it (Add a card, New deck, New series, Import decks). The streak stays on Today.
 - Search sits at the foot of the screen and rides on the keyboard, as iOS 26's own search does: a glass field and a round glass close, with a filter between them where the screen has one. The screen above it is empty until the first letters are typed. Every search on the phone uses `SearchBar`.
 - A deck opens on one summary plate, the count to review beside the deck's size, its cards' states as one bar with their counts under it, then a full-width Review. Once Review scrolls under the bar, the tab bar's accessory takes over, showing how many and a play button as Podcasts shows what is playing; scrolled back, it goes. Before iOS 26 there is no accessory, so the deck's own Review is the only one.
 
@@ -22,7 +22,7 @@ The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the rev
 
 This is [overlays.md](overlays.md)'s rule in iOS's own navigation: from the side means back, from below means swipe down.
 
-The streak is the one place that differs from the web, where touch shows it as a page from the end edge ([streak.md](../streak.md)). On the phone it peeks at the run and today and drags up for the month, so glancing at it never leaves the screen under it. Its daily goal is a choice list in a sheet of its own over it: a preset is saved once the sheet has gone, a number of one's own on the done key above the number pad, and with no connection the list says it needs one.
+The streak is the one place that differs from the web, where touch shows it as a page from the end edge ([streak.md](../streak.md)). On the phone it peeks at the run and today and drags up for the month, so glancing at it never leaves the screen under it. Its daily goal is a choice list in a sheet of its own over it: the streak first rises to full height so the goal's sheet stacks visibly on top, and peeks again once it closes. A preset is saved once the sheet has gone, a number of one's own steps on its row's − and +, and with no connection the list says it needs one.
 
 ## Components
 
@@ -84,7 +84,7 @@ The phone keeps the web's rule ([overlays.md](overlays.md)): what can be undone 
 
 ## Menus
 
-Commands from a button are iOS's own menu, `ActionMenu`: it grows out of its button in Liquid Glass, a drag through it picks, and VoiceOver reads it as a menu. The bar's ⋯ and Library's plus are `bar` and `primary` glass buttons; a list row's ⋯ is a bare `row` glyph. Its rows run from the most to the least used, and a removal (Archive, Leave, Remove) sits last in a group of its own, which iOS draws red. The same thing has the same rows in the same order wherever its menu opens, and the same job has one label everywhere. Each row's Lucide icon maps to an SF Symbol in `action-menu.tsx`, since iOS draws the menu; a new icon needs its symbol there. A menu has no title when the thing it acts on stays in view.
+Commands from a button are iOS's own menu, `ActionMenu`: it grows out of its button in Liquid Glass, a drag through it picks, and VoiceOver reads it as a menu. The bar's ⋯ and Library's plus are `bar` and `primary` glass buttons; a list row's ⋯ is a bare `row` glyph. Its rows run from the most to the least used, and a removal (Archive, Leave, Remove) sits last in a group of its own, which iOS draws red. The same thing has the same rows in the same order wherever its menu opens, and the same job has one label everywhere. iOS draws the menu, so each Lucide icon in `ui/icons.tsx` is also a custom SF Symbol: `pnpm --filter @lymi/mobile symbols` (with SwiftDraw installed) writes them to `assets/symbols`, a config plugin copies them into the app at prebuild, and `pnpm check` fails when an icon has no symbol or a symbol no icon. A new icon therefore needs that command and a native build. Library's long-press context menu still uses Apple's own symbols. A menu has no title when the thing it acts on stays in view.
 
 A sheet takes over from the menu when a choice needs a second line, a long or searched list, or editing; when the trigger is the content itself, as a revealed card in review is; or when it is a filter. A list row also opens iOS's context menu on a long press, as Library's deck rows do.
 
@@ -147,6 +147,7 @@ A haptic answers a touch or marks the goal. These are all of them:
 | The daily goal | Success |
 | The end of a review | A faint tick under each ember and one warm pulse as today's light fills, through Core Haptics |
 | Starting a review | Medium impact |
+| Choosing a row in a sheet, or a New deck purpose | Selection |
 | Picking up a row to drag, such as a section in Edit | Medium impact |
 | A dragged row passing a slot | Selection |
 

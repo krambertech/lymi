@@ -102,10 +102,6 @@ msgstr "{0, plural, one {Больше всего дней подряд: #.} few 
 msgid "{0, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
 msgstr "{0, plural, one {Повторить # забытую карточку} few {Повторить # забытые карточки} many {Повторить # забытых карточек} other {Повторить # забытой карточки}}"
 
-#. placeholder {0}: Number(draft) || 0
-msgid "{0, plural, one {review a day} other {reviews a day}}"
-msgstr "{0, plural, one {повторение в день} few {повторения в день} many {повторений в день} other {повторения в день}}"
-
 #. placeholder {0}: items.length - HISTORY_ROWS
 msgid "{0, plural, one {Show # older entry} other {Show # older entries}}"
 msgstr "{0, plural, one {Показать ещё # старую запись} few {Показать ещё # старые записи} many {Показать ещё # старых записей} other {Показать ещё # записи}}"
@@ -275,6 +271,12 @@ msgstr ""
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr ""
 
+msgid "{own, plural, one {# review a day} other {# reviews a day}}"
+msgstr ""
+
+msgid "{own, plural, one {review a day} other {reviews a day}}"
+msgstr ""
+
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "Запомнено: {passed}, забыто: {failed}"
 
@@ -309,6 +311,9 @@ msgid "{total, plural, one {# card} other {# cards}}"
 msgstr ""
 
 msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
+msgstr ""
+
+msgid "{waiting, plural, one {# invitation is waiting. Cancel it to invite someone else.} other {# invitations are waiting. Cancel one to invite someone else.}}"
 msgstr ""
 
 #. placeholder {0}: busiest.count
@@ -476,9 +481,6 @@ msgstr "Алфавит"
 msgid "Also on your list"
 msgstr "Ещё для повторения"
 
-msgid "anna@example.com"
-msgstr ""
-
 msgid "Another way"
 msgstr "Другой способ"
 
@@ -491,10 +493,10 @@ msgstr ""
 msgid "Anyone studying the deck can start a later section early."
 msgstr ""
 
-msgid "Anyone with the link"
+msgid "Anyone who opens it can join"
 msgstr ""
 
-msgid "Anyone with the link can join and review your cards on their own schedule. They cannot change the cards, and you do not see their progress."
+msgid "Anyone with the link"
 msgstr ""
 
 msgid "Anyone with this link can join and review these cards."
@@ -688,9 +690,6 @@ msgctxt "language"
 msgid "Chinese"
 msgstr "Китайский"
 
-msgid "Choose a whole number from 1 to 200."
-msgstr "Выбери целое число от 1 до 200."
-
 msgid "Choose another"
 msgstr "Выбрать другое"
 
@@ -743,6 +742,12 @@ msgctxt "deck tag"
 msgid "Conversation"
 msgstr "Разговорная речь"
 
+msgid "Copied"
+msgstr ""
+
+msgid "Copy link"
+msgstr ""
+
 msgctxt "deck tag"
 msgid "Core vocabulary"
 msgstr "Базовая лексика"
@@ -793,7 +798,7 @@ msgstr "Не удалось загрузить Обзор"
 msgid "Couldn’t load more."
 msgstr "Не удалось загрузить больше."
 
-msgid "Couldn’t load the join link. Try again."
+msgid "Couldn’t load the join link"
 msgstr ""
 
 msgid "Couldn’t load this card"
@@ -807,6 +812,9 @@ msgstr "Не удалось загрузить эту колоду"
 
 msgid "Couldn’t load Today"
 msgstr "Не удалось загрузить экран «Сегодня»"
+
+msgid "Couldn’t load who’s in this deck"
+msgstr ""
 
 msgid "Couldn’t load your cards"
 msgstr "Не удалось загрузить карточки"
@@ -918,9 +926,6 @@ msgctxt "language"
 msgid "Croatian"
 msgstr "Хорватский"
 
-msgid "Custom"
-msgstr "Своя"
-
 msgctxt "language"
 msgid "Czech"
 msgstr "Чешский"
@@ -928,9 +933,6 @@ msgstr "Чешский"
 msgctxt "deck tag"
 msgid "Czech citizenship test"
 msgstr "Экзамен на гражданство Чехии"
-
-msgid "Daily goal"
-msgstr "Дневная цель"
 
 msgid "Daily goal reached"
 msgstr "Дневная цель достигнута"
@@ -1123,9 +1125,6 @@ msgstr "Все разделы открыты, так что любая карт�
 msgid "Every shelf"
 msgstr "Все полки"
 
-msgid "Everyone studying this deck. You see whether they joined, not their reviews."
-msgstr ""
-
 msgid "Example"
 msgstr "Пример"
 
@@ -1167,6 +1166,9 @@ msgstr "Экспорт карточек идёт"
 
 msgid "Feedback sent"
 msgstr "Обратная связь отправлена"
+
+msgid "Fewer"
+msgstr ""
 
 msgid "Fields AI can fill"
 msgstr "Что может заполнить AI"
@@ -1308,9 +1310,6 @@ msgstr "Как это звучит"
 msgid "How it’s asked"
 msgstr "Как спрашивать"
 
-msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
-msgstr "Сколько повторений в день сохраняет счёт дней подряд. Считается каждая оценка, даже «Не помню»."
-
 msgid "How sections open"
 msgstr ""
 
@@ -1382,18 +1381,17 @@ msgctxt "daily goal"
 msgid "Intense"
 msgstr "Интенсивно"
 
+msgid "Invitation sent to {email}."
+msgstr ""
+
 msgid "Invite"
-msgstr ""
-
-msgid "Invite by email"
-msgstr ""
-
-#. placeholder {0}: dayMonth(new Date(invitation.invitedAt))
-msgid "invited {0}"
 msgstr ""
 
 msgid "Invited {name} to {deck}"
 msgstr "{name} приглашён в «{deck}»"
+
+msgid "Inviting needs a connection."
+msgstr ""
 
 msgid "It goes at the end. Move cards into it from the deck."
 msgstr ""
@@ -1431,8 +1429,7 @@ msgstr ""
 msgid "Join a deck"
 msgstr ""
 
-#. placeholder {0}: dayMonth(joined)
-msgid "joined {0}"
+msgid "Joined {joined}"
 msgstr ""
 
 msgid "Joining a deck needs a connection. Connect and try again."
@@ -1445,10 +1442,10 @@ msgstr "Усердно"
 msgid "Keep invitation"
 msgstr ""
 
-msgid "Keep member"
+msgid "Keep link"
 msgstr ""
 
-msgid "Keep sharing"
+msgid "Keep member"
 msgstr ""
 
 msgid "Keep studying"
@@ -1605,6 +1602,9 @@ msgstr "Сообщение"
 msgid "Modes"
 msgstr "Режимы"
 
+msgid "More"
+msgstr ""
+
 msgid "More about this card"
 msgstr "Больше о карточке"
 
@@ -1657,6 +1657,9 @@ msgstr "Имя"
 
 msgid "Nature"
 msgstr "Природа"
+
+msgid "Needs a connection"
+msgstr ""
 
 msgid "New"
 msgstr "Новая"
@@ -1762,7 +1765,7 @@ msgctxt "language"
 msgid "Norwegian"
 msgstr "Норвежский"
 
-msgid "Not joined yet"
+msgid "Not joined yet · invited {invited}"
 msgstr ""
 
 msgid "Not reviewed yet"
@@ -1816,7 +1819,7 @@ msgstr ""
 msgid "One after another, when you start them"
 msgstr ""
 
-msgid "Only people you invite can join. Current members stay."
+msgid "Only people you invite"
 msgstr ""
 
 msgid "Only the deck’s owner can change this."
@@ -2102,9 +2105,6 @@ msgstr "Дни с повторениями: {lit} из последних {0, pl
 msgid "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}, including a rest day"
 msgstr "Дни с повторениями: {lit} из последних {0, plural, one {# дня} few {# дней} many {# дней} other {# дня}}, с днём отдыха"
 
-msgid "Reviews a day"
-msgstr "Повторений в день"
-
 msgctxt "language"
 msgid "Romanian"
 msgstr "Румынский"
@@ -2198,9 +2198,6 @@ msgstr "Отправить новый код"
 msgid "Send feedback"
 msgstr "Обратная связь"
 
-msgid "Send invitation"
-msgstr ""
-
 msgid "Send reset link"
 msgstr "Отправить ссылку"
 
@@ -2217,7 +2214,10 @@ msgstr "Настройки"
 msgid "Settings is coming to the phone"
 msgstr "Настройки скоро появятся на телефоне"
 
-msgid "Share link"
+msgid "Share"
+msgstr ""
+
+msgid "Share deck"
 msgstr ""
 
 msgid "Shared by {owner}"
@@ -2415,7 +2415,10 @@ msgstr ""
 msgid "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 msgstr "Колода исчезнет из Библиотеки, и её карточки перестанут появляться в повторениях. Если присоединишься снова, твои повторения сохранятся."
 
-msgid "The link stops working for good. People who joined stay in the deck, and sharing again makes a new link."
+msgid "The join link needs a connection"
+msgstr ""
+
+msgid "The link stops working for good. People who joined stay."
 msgstr ""
 
 msgid "Their invitation link stops working. You can invite them again any time."
@@ -2430,7 +2433,7 @@ msgstr ""
 msgid "They already have a pending invitation."
 msgstr ""
 
-msgid "They get an email with a link only they can use. They can study the deck but not change it."
+msgid "They get an email with a link only they can use."
 msgstr ""
 
 msgid "They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept."
@@ -2663,6 +2666,9 @@ msgstr "Откуда это, например урок"
 msgid "Who can join"
 msgstr ""
 
+msgid "Who’s in this deck needs a connection"
+msgstr ""
+
 msgid "Work and study"
 msgstr "Работа и учёба"
 
@@ -2709,6 +2715,9 @@ msgid "You cannot join this deck through this link."
 msgstr ""
 
 msgid "You removed them from this deck, so you can’t invite them again."
+msgstr ""
+
+msgid "You see who joined, not their reviews."
 msgstr ""
 
 msgid "You start with the first section. The next opens as you learn this one."
@@ -2758,6 +2767,12 @@ msgstr "Твоё сообщение сохранено. Попробуй ещё 
 
 msgid "Your name"
 msgstr "Твоё имя"
+
+msgid "Your own"
+msgstr ""
+
+msgid "Your own goal"
+msgstr ""
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Фото изменилось на другом устройстве. Попробуй ещё раз."

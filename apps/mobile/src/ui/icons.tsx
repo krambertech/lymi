@@ -26,6 +26,7 @@ import {
   Clock,
   CloudOff,
   Compass,
+  Copy,
   Download,
   Ellipsis,
   Eye,
@@ -53,6 +54,7 @@ import {
   MapPin,
   Megaphone,
   MessageSquare,
+  Minus,
   Moon,
   NotebookPen,
   Pencil,
@@ -116,6 +118,7 @@ const ICONS = {
   deck: BookMarked,
   section: Library,
   plus: Plus,
+  minus: Minus,
   close: X,
   back: ChevronLeft,
   forward: ChevronRight,
@@ -199,6 +202,7 @@ const ICONS = {
   delete: Trash2,
   filter: ListFilter,
   share: Share,
+  copy: Copy,
 } as const;
 
 export type IconName = keyof typeof ICONS;

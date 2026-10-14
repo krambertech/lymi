@@ -4,10 +4,12 @@ import { type GoalStatus, useDailyGoal } from "@lymi/client/daily-goal";
 import type { StreakOut } from "@lymi/core";
 import { useMemo, useState } from "react";
 import { ScrollView, View, type ViewStyle } from "react-native";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { Flame } from "../brand/flame";
 import { useDay } from "../data/queries";
 import { addDays, StreakCalendar } from "../streak/calendar";
-import { GoalSheet, useOnline } from "../streak/goal-picker";
+import { GoalEditor, useOnline } from "../streak/goal-picker";
+import { ALWAYS, CROSSFADE, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { useFrost } from "../ui/glass";
 import type { IconName } from "../ui/icons";
@@ -21,7 +23,7 @@ const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
 /**
  * The streak, as a sheet over whatever opened it: the run with one plain line about today, today
  * against the goal with the longest run and the days reviewed, then the month a drag further up.
- * The goal is changed only from here, in a sheet of its own. streak.md, phone.md.
+ * The goal is changed only from here, in place under it. streak.md, phone.md.
  */
 export default function Streak() {
   const { summary, flame } = useDay();
@@ -56,6 +58,7 @@ function StreakPanel({
   const { t } = useLingui();
   const goal = useDailyGoal();
   const connected = useOnline();
+  const reduce = useReduceMotion();
   const [choosing, setChoosing] = useState(false);
   const { current, today } = summary;
   const done = satisfied(today.outcome);
@@ -138,15 +141,24 @@ function StreakPanel({
               </Text>
             </View>
             <IconButton
-              icon="edit"
-              label={t`Change daily goal`}
-              onPress={() => setChoosing(true)}
+              icon={choosing ? "check" : "edit"}
+              label={choosing ? t`Done` : t`Change daily goal`}
+              onPress={() => setChoosing(!choosing)}
             />
           </View>
           <View className="pe-3">
             <GoalTrack today={today} label={t`Today’s goal`} />
           </View>
         </View>
+        {/* The presets open in place under the goal, so nothing stacks over this sheet. */}
+        {choosing && (
+          <Animated.View
+            entering={reduce ? CROSSFADE : FadeIn.duration(200).reduceMotion(ALWAYS)}
+            exiting={FadeOut.duration(150).reduceMotion(ALWAYS)}
+          >
+            <GoalEditor value={summary.goal} onChange={goal.change} />
+          </Animated.View>
+        )}
         <View className="flex-row border-t border-edge">
           <Figure icon="longest" value={summary.longest} label={t`Longest streak`} />
           <View className="w-px bg-edge" />
@@ -165,12 +177,6 @@ function StreakPanel({
           rest={rest}
         />
       </Plate>
-      <GoalSheet
-        open={choosing}
-        onOpenChange={setChoosing}
-        value={summary.goal}
-        onChange={goal.change}
-      />
     </View>
   );
 }

@@ -31,7 +31,8 @@ export default function Library() {
   const router = useRouter();
   const query = useDecks();
   const decks = query.data ?? [];
-  const series = useSeriesList(true).data;
+  const seriesList = useSeriesList(true);
+  const series = seriesList.data;
   const archived = useArchivedDecks().data?.length ?? 0;
   const groups = groupDecks(decks, series);
   const p = usePalette();
@@ -43,6 +44,7 @@ export default function Library() {
     <Screen
       title={t`Library`}
       kind="tab"
+      onRefresh={() => Promise.all([query.refetch(), seriesList.refetch()])}
       actions={
         <>
           <BarButton icon="search" label={t`Search`} onPress={() => router.push("/search")} />
@@ -94,14 +96,8 @@ export default function Library() {
               onPress={newDeck}
             />
           </Plate>
-          {groups.series.map(({ series: s, decks: inSeries }, i) => (
-            <SeriesGroup
-              key={s.id}
-              series={s}
-              decks={inSeries}
-              index={i}
-              count={groups.series.length}
-            />
+          {groups.series.map(({ series: s, decks: inSeries }) => (
+            <SeriesGroup key={s.id} series={s} decks={inSeries} count={groups.series.length} />
           ))}
         </>
       )}
@@ -126,12 +122,10 @@ export default function Library() {
 function SeriesGroup({
   series: s,
   decks,
-  index,
   count,
 }: {
   series: Series;
   decks: DeckSummary[];
-  index: number;
   count: number;
 }) {
   const { t } = useLingui();
@@ -178,7 +172,7 @@ function SeriesGroup({
             </Text>
           </Press>
         )}
-        <SeriesMenu series={s} decks={decks.length} index={index} count={count} />
+        <SeriesMenu series={s} decks={decks.length} count={count} />
       </View>
       <Plate className="overflow-hidden">
         {decks.map((d, i) => (
@@ -189,17 +183,7 @@ function SeriesGroup({
   );
 }
 
-function SeriesMenu({
-  series: s,
-  decks,
-  index,
-  count,
-}: {
-  series: Series;
-  decks: number;
-  index: number;
-  count: number;
-}) {
+function SeriesMenu({ series: s, decks, count }: { series: Series; decks: number; count: number }) {
   const { t } = useLingui();
   const router = useRouter();
   const actions = useSeriesActions();
@@ -227,25 +211,12 @@ function SeriesMenu({
             icon: "edit",
             onSelect: () => router.push(`/series?id=${s.id}` as Href),
           },
-          ...(index > 0
+          ...(count > 1
             ? [
                 {
-                  label: t`Move up`,
-                  icon: "moveUp" as const,
-                  onSelect: needsConnection(() =>
-                    actions.move.mutate({ series: s, by: -1 }, { onError: failed }),
-                  ),
-                },
-              ]
-            : []),
-          ...(index < count - 1
-            ? [
-                {
-                  label: t`Move down`,
-                  icon: "moveDown" as const,
-                  onSelect: needsConnection(() =>
-                    actions.move.mutate({ series: s, by: 1 }, { onError: failed }),
-                  ),
+                  label: t`Reorder series`,
+                  icon: "grip" as const,
+                  onSelect: needsConnection(() => router.push("/series-order")),
                 },
               ]
             : []),

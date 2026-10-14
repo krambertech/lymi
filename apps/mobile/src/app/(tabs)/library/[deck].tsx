@@ -12,11 +12,13 @@ import {
   splitForms,
   stateKey,
 } from "@lymi/client/deck-list";
+import { ARRIVE } from "@lymi/design";
 import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { type TextStyle, View } from "react-native";
+import Animated, { FadeInDown, FadeOut } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDeckExits } from "../../../data/decks";
 import { moveBack } from "../../../data/move-undo";
@@ -32,6 +34,7 @@ import {
   useStartSection,
 } from "../../../sections/sections";
 import { useOnline } from "../../../streak/goal-picker";
+import { ALWAYS, CROSSFADE, springIn, useReduceMotion } from "../../../theme/motion";
 import { usePalette } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
@@ -45,7 +48,7 @@ import { Segmented } from "../../../ui/segmented";
 import { Sheet, SheetGroup, SheetHeading, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { StateIcon, stateMarks } from "../../../ui/state-mark";
-import { setDeckReviewHidden } from "../../../ui/tab-bar";
+import { setDeckReviewHidden, useAboveTabBar } from "../../../ui/tab-bar";
 import { toast } from "../../../ui/toast-host";
 
 /**
@@ -86,6 +89,7 @@ export default function Deck() {
   // The cards chosen with Select cards, or null when the list is not choosing.
   const [selected, setSelected] = useState<ReadonlySet<string> | null>(null);
   const moveToSection = useMoveToSection(id);
+  const reduce = useReduceMotion();
   const selection = owner && selected ? selected : null;
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
   const toggleSelected = useCallback(
@@ -101,6 +105,7 @@ export default function Deck() {
   // Where Review ends on the page; past it, under the bar, the tab bar's accessory takes over.
   const [reviewEnd, setReviewEnd] = useState<number | null>(null);
   const insets = useSafeAreaInsets();
+  const aboveTabBar = useAboveTabBar();
   const onReviewPast = useCallback((hidden: boolean) => setDeckReviewHidden(id, hidden), [id]);
   useEffect(() => () => setDeckReviewHidden(id, false), [id]);
   // The deck's name and counts come from the deck list, its words from its cards: either can fail.
@@ -109,199 +114,220 @@ export default function Deck() {
   const addCard = () => router.push(`/capture?deck=${id}` as Href);
 
   return (
-    <Screen
-      title={deck?.name ?? ""}
-      back={{ label: t`Library`, to: "/library" }}
-      past={
-        reviewEnd === null ? undefined : { y: reviewEnd - insets.top - 56, onChange: onReviewPast }
-      }
-      actions={
-        // A deck that has gone has nothing to search or change.
-        !gone && (
-          <View className="flex-row items-center gap-2.5">
-            <BarButton
-              icon="search"
-              label={t`Search this deck`}
-              onPress={() => router.push(`/search?deck=${id}` as Href)}
-            />
-            <ActionMenu
-              label={t`Deck options`}
-              symbol="ellipsis"
-              look="bar"
-              items={[
-                [
+    <View className="flex-1">
+      <Screen
+        title={deck?.name ?? ""}
+        onRefresh={() => Promise.all([decks.refetch(), cards.refetch(), sectionsQuery.refetch()])}
+        back={{ label: t`Library`, to: "/library" }}
+        past={
+          reviewEnd === null
+            ? undefined
+            : { y: reviewEnd - insets.top - 56, onChange: onReviewPast }
+        }
+        actions={
+          // A deck that has gone has nothing to search or change.
+          !gone && (
+            <View className="flex-row items-center gap-2.5">
+              <BarButton
+                icon="search"
+                label={t`Search this deck`}
+                onPress={() => router.push(`/search?deck=${id}` as Href)}
+              />
+              <ActionMenu
+                label={t`Deck options`}
+                symbol="ellipsis"
+                look="bar"
+                items={[
+                  [
+                    ...(owner
+                      ? [
+                          {
+                            label: t`Add a card`,
+                            icon: "plus" as const,
+                            onSelect: addCard,
+                          },
+                        ]
+                      : []),
+                    ...(owner
+                      ? [
+                          {
+                            label: t`Share deck`,
+                            icon: "share" as const,
+                            onSelect: () => router.push(`/share?id=${id}` as Href),
+                          },
+                          {
+                            label: t`Move to series`,
+                            icon: "series" as const,
+                            onSelect: () => setMoving(true),
+                          },
+                        ]
+                      : []),
+                    // Moving cards needs a section to move them to.
+                    ...(owner && moveToSection.canMove && rows.length > 0 && !selection
+                      ? [
+                          {
+                            label: t`Select cards`,
+                            icon: "check" as const,
+                            onSelect: () => setSelected(new Set()),
+                          },
+                        ]
+                      : []),
+                    {
+                      label: owner ? t`Deck settings` : t`About this deck`,
+                      icon: "settings",
+                      onSelect: () => router.push(`/library/deck-settings?id=${id}` as Href),
+                    },
+                  ],
                   ...(owner
                     ? [
-                        {
-                          label: t`Add a card`,
-                          icon: "plus" as const,
-                          onSelect: addCard,
-                        },
+                        [
+                          {
+                            label: t`Archive deck`,
+                            icon: "archive" as const,
+                            destructive: true,
+                            onSelect: exits.archive,
+                          },
+                        ],
                       ]
-                    : []),
-                  ...(owner
-                    ? [
-                        {
-                          label: t`Share deck`,
-                          icon: "share" as const,
-                          onSelect: () => router.push(`/share?id=${id}` as Href),
-                        },
-                        {
-                          label: t`Move to series`,
-                          icon: "series" as const,
-                          onSelect: () => setMoving(true),
-                        },
-                      ]
-                    : []),
-                  // Moving cards needs a section to move them to.
-                  ...(owner && moveToSection.canMove && rows.length > 0 && !selection
-                    ? [
-                        {
-                          label: t`Select cards`,
-                          icon: "check" as const,
-                          onSelect: () => setSelected(new Set()),
-                        },
-                      ]
-                    : []),
-                  {
-                    label: owner ? t`Deck settings` : t`About this deck`,
-                    icon: "settings",
-                    onSelect: () => router.push(`/library/deck-settings?id=${id}` as Href),
-                  },
-                ],
-                ...(owner
-                  ? [
-                      [
-                        {
-                          label: t`Archive deck`,
-                          icon: "archive" as const,
-                          destructive: true,
-                          onSelect: exits.archive,
-                        },
-                      ],
-                    ]
-                  : [
-                      // A deck added from Explore or shared with the learner is left, not archived.
-                      [
-                        {
-                          label: t`Leave deck`,
-                          icon: "signOut" as const,
-                          destructive: true,
-                          onSelect: exits.leave,
-                        },
-                      ],
-                    ]),
-              ]}
-            />
+                    : [
+                        // A deck added from Explore or shared with the learner is left, not archived.
+                        [
+                          {
+                            label: t`Leave deck`,
+                            icon: "signOut" as const,
+                            destructive: true,
+                            onSelect: exits.leave,
+                          },
+                        ],
+                      ]),
+                ]}
+              />
+            </View>
+          )
+        }
+      >
+        <OfflineNote query={cards} />
+        {gone ? (
+          // Archived or left elsewhere since Library was opened.
+          <EmptyState
+            kind="noMatch"
+            icon="deck"
+            title={t`This deck isn’t in your Library`}
+            body={t`It was archived, or you left it.`}
+            action={{ label: t`Back to Library`, onPress: () => router.dismissTo("/library") }}
+          />
+        ) : cardsFailed || decksFailed ? (
+          <LoadFailed
+            query={decksFailed ? decks : cards}
+            failed={t`Couldn’t load this deck`}
+            offline={t`This deck needs a connection`}
+          />
+        ) : !deck || !cards.data ? (
+          <View className="gap-3">
+            <Skeleton height={120} />
+            <Skeleton height={64} />
           </View>
-        )
-      }
-    >
-      <OfflineNote query={cards} />
-      {gone ? (
-        // Archived or left elsewhere since Library was opened.
-        <EmptyState
-          kind="noMatch"
-          icon="deck"
-          title={t`This deck isn’t in your Library`}
-          body={t`It was archived, or you left it.`}
-          action={{ label: t`Back to Library`, onPress: () => router.dismissTo("/library") }}
-        />
-      ) : cardsFailed || decksFailed ? (
-        <LoadFailed
-          query={decksFailed ? decks : cards}
-          failed={t`Couldn’t load this deck`}
-          offline={t`This deck needs a connection`}
-        />
-      ) : !deck || !cards.data ? (
-        <View className="gap-3">
-          <Skeleton height={120} />
-          <Skeleton height={64} />
-        </View>
-      ) : rows.length === 0 ? (
-        <EmptyState
-          kind="start"
-          icon="deck"
-          title={t`No cards yet`}
-          body={
-            owner
-              ? t`Add the words you want to learn, and they show here.`
-              : t`Cards the owner adds show here.`
-          }
-          action={owner ? { label: t`Add a card`, onPress: addCard } : undefined}
-        />
-      ) : (
-        <>
-          <View
-            className="gap-3"
-            onLayout={(e) => setReviewEnd(e.nativeEvent.layout.y + e.nativeEvent.layout.height)}
-          >
-            <Top
-              deck={deck}
-              rows={rows}
-              section={
-                progress && (
-                  <SectionProgress
-                    sections={sections}
-                    progress={progress}
-                    due={deck.due}
+        ) : rows.length === 0 ? (
+          <EmptyState
+            kind="start"
+            icon="deck"
+            title={t`No cards yet`}
+            body={
+              owner
+                ? t`Add the words you want to learn, and they show here.`
+                : t`Cards the owner adds show here.`
+            }
+            action={owner ? { label: t`Add a card`, onPress: addCard } : undefined}
+          />
+        ) : (
+          <>
+            <View
+              className="gap-3"
+              onLayout={(e) => setReviewEnd(e.nativeEvent.layout.y + e.nativeEvent.layout.height)}
+            >
+              <Top
+                deck={deck}
+                rows={rows}
+                section={
+                  progress && (
+                    <SectionProgress
+                      sections={sections}
+                      progress={progress}
+                      due={deck.due}
+                      starting={sectionStart.starting}
+                      onStart={sectionStart.start}
+                    />
+                  )
+                }
+              />
+              {deck.due > 0 && <ReviewButton deck={deck} />}
+            </View>
+            <View className="gap-6">
+              {/* Dimmed while choosing, so what is chosen never changes under the filter. */}
+              <View
+                pointerEvents={selection ? "none" : "auto"}
+                style={selection ? { opacity: 0.4 } : undefined}
+                importantForAccessibility={selection ? "no-hide-descendants" : "auto"}
+                accessibilityElementsHidden={!!selection}
+              >
+                <Tools
+                  sections={sections}
+                  filters={filters}
+                  setFilters={setFilters}
+                  count={(f) => filterRows(rows, f, "", Date.now(), sections).length}
+                  total={rows.length}
+                  sort={sort}
+                  setSort={setSort}
+                />
+              </View>
+              {groups.length === 0 ? (
+                <Plate>
+                  <EmptyState
+                    kind="noMatch"
+                    size="inline"
+                    title={t`No cards match these filters`}
+                    action={{ label: t`Show all`, onPress: () => setFilters(noFilters) }}
+                  />
+                </Plate>
+              ) : (
+                groups.map((g) => (
+                  <Group
+                    key={g.key}
+                    group={g}
+                    deckId={id}
+                    hereId={progress?.currentId ?? null}
                     starting={sectionStart.starting}
                     onStart={sectionStart.start}
+                    selection={selection ? { ids: selection, onToggle: toggleSelected } : undefined}
                   />
-                )
-              }
-            />
-            {deck.due > 0 && <ReviewButton deck={deck} />}
-          </View>
-          <View className="gap-6">
-            {selection ? (
-              <SelectionToolbar
-                count={selection.size}
-                total={ordered.length}
-                onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
-                onClear={() => setSelected(new Set())}
-                onMove={() => moveToSection.open([...selection], () => setSelected(null))}
-                onDone={() => setSelected(null)}
-              />
-            ) : (
-              <Tools
-                sections={sections}
-                filters={filters}
-                setFilters={setFilters}
-                count={(f) => filterRows(rows, f, "", Date.now(), sections).length}
-                total={rows.length}
-                sort={sort}
-                setSort={setSort}
-              />
-            )}
-            {groups.length === 0 ? (
-              <Plate>
-                <EmptyState
-                  kind="noMatch"
-                  size="inline"
-                  title={t`No cards match these filters`}
-                  action={{ label: t`Show all`, onPress: () => setFilters(noFilters) }}
-                />
-              </Plate>
-            ) : (
-              groups.map((g) => (
-                <Group
-                  key={g.key}
-                  group={g}
-                  deckId={id}
-                  hereId={progress?.currentId ?? null}
-                  starting={sectionStart.starting}
-                  onStart={sectionStart.start}
-                  selection={selection ? { ids: selection, onToggle: toggleSelected } : undefined}
-                />
-              ))
-            )}
-          </View>
-        </>
+                ))
+              )}
+            </View>
+          </>
+        )}
+        {deck && owner && <MoveToSeries deck={deck} open={moving} onOpenChange={setMoving} />}
+        {owner && moveToSection.sheet}
+        {/* The last cards scroll clear of the pinned toolbar. */}
+        {selection && <View className="h-16" />}
+      </Screen>
+      {selection && (
+        <Animated.View
+          entering={reduce ? CROSSFADE : springIn(new FadeInDown(), ARRIVE)}
+          exiting={FadeOut.duration(150).reduceMotion(ALWAYS)}
+          className="absolute inset-x-4"
+          style={{ bottom: aboveTabBar + 8 }}
+        >
+          <SelectionToolbar
+            count={selection.size}
+            total={ordered.length}
+            onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
+            onClear={() => setSelected(new Set())}
+            onMove={() => moveToSection.open([...selection], () => setSelected(null))}
+            onDone={() => setSelected(null)}
+          />
+        </Animated.View>
       )}
-      {deck && owner && <MoveToSeries deck={deck} open={moving} onOpenChange={setMoving} />}
-      {owner && moveToSection.sheet}
-    </Screen>
+    </View>
   );
 }
 

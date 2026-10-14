@@ -6,6 +6,7 @@ import { NativeTabs } from "expo-router/unstable-native-tabs";
 import { Play } from "lucide-react-native";
 import { useSyncExternalStore } from "react";
 import { Platform, Pressable, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDecks } from "../data/queries";
 import { usePalette } from "../theme/palette";
 import { Text } from "./primitives";
@@ -43,6 +44,19 @@ export function useDeckAccessoryShown() {
   const due = useDecks().data?.find((d) => d.id === deckId)?.due ?? 0;
   const hidden = useDeckReviewHidden(deckId);
   return DECK_ACCESSORY && !!deckId && due > 0 && hidden;
+}
+
+// iOS 26's floating tab bar and the accessory a deck's review rides in.
+const TAB_BAR = 64;
+const ACCESSORY = 56;
+const TABS = /^\/(today|library|explore|you)(\/|$)/;
+
+/** How far above the screen's bottom something floating sits to clear the tab bar and its accessory. */
+export function useAboveTabBar() {
+  const insets = useSafeAreaInsets();
+  const onTab = TABS.test(usePathname());
+  const accessory = useDeckAccessoryShown() ? ACCESSORY : 0;
+  return insets.bottom + (onTab ? TAB_BAR + accessory : 0);
 }
 
 /**

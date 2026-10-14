@@ -212,6 +212,17 @@ function Root() {
               },
             }}
           />
+          <Stack.Screen
+            name="series-order"
+            options={{
+              presentation: "formSheet",
+              sheetAllowedDetents: [1],
+              sheetGrabberVisible: true,
+              contentStyle: {
+                backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
+              },
+            }}
+          />
           {/* Peeks at the run and today, and drags up for the month. phone.md. */}
           {/* Over everything, tab bar included, since its field sits where the tab bar does. */}
           <Stack.Screen

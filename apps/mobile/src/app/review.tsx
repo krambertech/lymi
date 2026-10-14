@@ -81,6 +81,7 @@ import {
   useSeriesList,
   useUndoGrade,
 } from "../data/queries";
+import { spokenInterval } from "../i18n/interval";
 import { CardNotes } from "../review/card-notes";
 import { endHaptics } from "../review/end-haptics";
 import { HookLine, HookOffer, HookSheet, PeekButton, ShowHookButton } from "../review/hooks";
@@ -248,7 +249,12 @@ function Run({
   }, [settled, draw.data, archived]);
   const listData =
     list.isFetchedAfterMount || list.fetchStatus !== "fetching" ? list.data : undefined;
-  const { state, grades, setNow } = useDrawState(scope, data, LOOKAHEAD);
+  const { state, grades, setNow } = useDrawState(
+    scope,
+    data,
+    LOOKAHEAD,
+    draw.dataUpdatedAt || undefined,
+  );
   // The card on screen stays put while a refetch lands; only a grade moves it.
   const [pinned, setPinned] = useState<Pinned | null>(null);
   const [chosenLeg, setLeg] = useState<Leg | null>(null);
@@ -1251,6 +1257,9 @@ function CardPlate({
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
+  const { width: screenWidth, fontScale } = useWindowDimensions();
+  // The page's and the card's 20 pt sides, and the speaker beside a term.
+  const cueLine = screenWidth - 80 - (pronounce && mode.cue === "term" ? 56 : 0);
   const languageCode =
     card.language && card.language.toLowerCase() !== deck?.language?.toLowerCase()
       ? card.language.toUpperCase()
@@ -1346,8 +1355,8 @@ function CardPlate({
               <View className="flex-row items-center gap-3">
                 <Text
                   className="shrink text-text"
-                  style={{ ...cueSize(cue), fontWeight: "500" }}
-                  // The word is already the largest text on the card; grown, a long one would break mid-word.
+                  style={{ ...cueSize(cue, fontScale, cueLine), fontWeight: "500" }}
+                  // cueSize grows it with the text size itself, within what the line can hold.
                   maxFontSizeMultiplier={1}
                 >
                   {cue}
@@ -1374,6 +1383,8 @@ function CardPlate({
                 <Text
                   className={`shrink ${picture ? "text-2xl font-medium text-text" : "text-xl text-text"}`}
                   style={back === noMeaning ? { color: p.muted } : undefined}
+                  // Below the question at every text size, which grows to 1.4×.
+                  maxFontSizeMultiplier={1.6}
                 >
                   {back}
                 </Text>
@@ -1498,9 +1509,6 @@ function GradeStrip({
       {GRADES.map((g, i) => {
         const label = i18n._(g.label);
         const back = next ? interval(new Date(), new Date(next[g.rating])) : null;
-        const schedules = back
-          ? i18n.number(back.value, { style: "unit", unit: back.unit, unitDisplay: "narrow" })
-          : null;
         const lock = easyLocked && g.rating === 4;
         return (
           <Animated.View
@@ -1514,7 +1522,11 @@ function GradeStrip({
               onPress={() => onGrade?.(g.rating)}
               accessibilityRole="button"
               accessibilityLabel={
-                lock ? t`${label}, locked` : schedules ? t`${label}, next in ${schedules}` : label
+                lock
+                  ? t`${label}, locked`
+                  : back
+                    ? t`${label}, next in ${spokenInterval(back)}`
+                    : label
               }
               accessibilityHint={lock ? why : undefined}
               accessibilityState={lock ? { disabled: true } : undefined}
@@ -1693,9 +1705,11 @@ function Completion({
           </Flight>
           <View className="items-center gap-2">
             <Animated.View style={heading$}>
+              {/* A long deck name stops at three lines, so the count and Done stay in view. */}
               <Text
                 className="text-center text-2xl font-medium text-text"
                 accessibilityRole="header"
+                numberOfLines={3}
               >
                 {heading}
               </Text>
@@ -1958,9 +1972,20 @@ function ArchivedLine({
   );
 }
 
-/** A long question, such as a meaning asked for its term, steps down so it fits before the reveal, when the card cannot scroll. */
-function cueSize(cue: string) {
-  if (cue.length > 90) return { fontSize: 22, lineHeight: 29, letterSpacing: -0.3 };
-  if (cue.length > 36) return { fontSize: 28, lineHeight: 36, letterSpacing: -0.6 };
-  return { fontSize: 38, lineHeight: 48, letterSpacing: -0.9 };
+/**
+ * The question's type. A long one, such as a meaning asked for its term, steps down so it fits
+ * before the reveal, when the card cannot scroll; it never grows so large its longest word must
+ * break; and it grows with the text size up to 1.4×, so the answer stays below it.
+ */
+function cueSize(cue: string, fontScale: number, line: number) {
+  const base = cue.length > 90 ? 22 : cue.length > 36 ? 28 : 38;
+  const longest = Math.max(1, ...cue.split(/\s+/).map((word) => word.length));
+  // Onest's letters average a little over half their size across.
+  const fits = line / (longest * 0.58);
+  const fontSize = Math.round(Math.max(20, Math.min(base * Math.min(fontScale, 1.4), fits)));
+  return {
+    fontSize,
+    lineHeight: Math.round(fontSize * 1.26),
+    letterSpacing: -fontSize * 0.024,
+  };
 }

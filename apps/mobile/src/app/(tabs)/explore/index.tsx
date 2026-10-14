@@ -33,6 +33,7 @@ export default function Explore() {
     <Screen
       title={t`Explore`}
       kind="tab"
+      onRefresh={catalogue.retry}
       actions={
         <BarGroup
           items={[

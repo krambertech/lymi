@@ -37,15 +37,24 @@ export function useSeriesActions() {
     onSettled: refresh,
   });
 
-  const move = useMutation({
-    mutationFn: ({ series, by }: { series: Series; by: -1 | 1 }) => {
-      const ids = (qc.getQueryData<Series[]>(seriesQuery.queryKey) ?? []).map((s) => s.id);
-      const from = ids.indexOf(series.id);
-      ids.splice(from, 1);
-      ids.splice(from + by, 0, series.id);
-      return api.reorderSeries(ids);
+  // The new order shows at once, as a drag drops it, and goes back if the write fails.
+  const order = useMutation({
+    mutationFn: (ids: string[]) => api.reorderSeries(ids),
+    onMutate: async (ids) => {
+      await qc.cancelQueries({ queryKey: seriesQuery.queryKey });
+      const before = qc.getQueryData<Series[]>(seriesQuery.queryKey);
+      if (before) {
+        qc.setQueryData(
+          seriesQuery.queryKey,
+          ids.flatMap((id) => before.find((s) => s.id === id) ?? []),
+        );
+      }
+      return { before };
     },
-    onSuccess: (order) => qc.setQueryData(seriesQuery.queryKey, order),
+    onError: (_error, _ids, context) => {
+      if (context?.before) qc.setQueryData(seriesQuery.queryKey, context.before);
+    },
+    onSuccess: (saved) => qc.setQueryData(seriesQuery.queryKey, saved),
     onSettled: refresh,
   });
 
@@ -68,7 +77,7 @@ export function useSeriesActions() {
       ? setDecks.mutate({ series: back.series, deckIds: back.deckIds })
       : moveDeck.mutate({ deckId, seriesId: back.seriesId });
 
-  return { name, setDecks, move, remove, moveDeck, undoMove };
+  return { name, setDecks, order, remove, moveDeck, undoMove };
 }
 
 /**

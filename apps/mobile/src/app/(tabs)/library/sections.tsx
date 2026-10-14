@@ -155,6 +155,7 @@ export default function DeckSections() {
     <Screen
       title={t`Sections`}
       back={back}
+      onRefresh={() => Promise.all([query.refetch(), archived.refetch()])}
       description={t`Parts of this deck, such as one per lesson. Everyone studying it sees them in this order.`}
       actions={
         sections.length > 1 && (

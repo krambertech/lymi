@@ -92,6 +92,11 @@ export default function CardPage() {
   const openCard = (field: FormField) =>
     router.push({ pathname: "/edit-card", params: { card: id, deck: deckId, field } });
   const edit = (field: FormField) => (editable ? () => openCard(field) : undefined);
+  // Asked and Tags open the form on that choice's sheet.
+  const choose = (choice: "modes" | "tags") =>
+    editable
+      ? () => router.push({ pathname: "/edit-card", params: { card: id, deck: deckId, choice } })
+      : undefined;
   const pronounce = usePronunciation(card ?? null);
   const moveToSection = useMoveToSection(deckId);
   // An archive or a restore moves the card between every list that counts it, so all refetch.
@@ -163,12 +168,14 @@ export default function CardPage() {
       : [];
   const asked = states.map((st) => i18n._(modeLabel(st.mode))).join(", ");
   // Facts about the card, each named, so nothing has to be guessed from a line of dots.
-  const details: { label: string; value: ReactNode }[] = [
+  const details: { label: string; value: ReactNode; onPress?: (() => void) | undefined }[] = [
     { label: t`Deck`, value: deck?.name ?? "" },
     ...(card.language ? [{ label: t`Language`, value: languageName(card.language) }] : []),
     ...(card.source ? [{ label: t`Source`, value: card.source }] : []),
-    ...(asked ? [{ label: t`Asked`, value: asked }] : []),
-    ...(card.tags.length ? [{ label: t`Tags`, value: card.tags.join(", ") }] : []),
+    ...(asked ? [{ label: t`Asked`, value: asked, onPress: choose("modes") }] : []),
+    ...(card.tags.length
+      ? [{ label: t`Tags`, value: card.tags.join(", "), onPress: choose("tags") }]
+      : []),
   ];
 
   const when = (due: Date) => {
@@ -458,27 +465,43 @@ export default function CardPage() {
       {block(
         t`Details`,
         // Facts about the card, not part of it: the label and its value on one line, as Settings lays them.
-        details.map((d, i) => (
-          <View
-            key={d.label}
-            className={`min-h-[48px] px-5 py-3 ${stackDetails ? "gap-1" : "flex-row items-center gap-4"} ${i > 0 ? "border-t border-edge" : ""}`}
-          >
-            <Text className="text-md text-text-2">{d.label}</Text>
-            <View className={stackDetails ? "items-start" : "flex-1 items-end"}>
-              {typeof d.value === "string" ? (
-                <Text
-                  className="text-md text-text"
-                  numberOfLines={2}
-                  style={stackDetails ? undefined : TEXT_END}
-                >
-                  {d.value}
-                </Text>
-              ) : (
-                d.value
-              )}
+        details.map((d, i) => {
+          const row = `min-h-[48px] px-5 py-3 ${stackDetails ? "gap-1" : "flex-row items-center gap-4"} ${i > 0 ? "border-t border-edge" : ""}`;
+          const body = (
+            <>
+              <Text className="text-md text-text-2">{d.label}</Text>
+              <View className={stackDetails ? "items-start" : "flex-1 items-end"}>
+                {typeof d.value === "string" ? (
+                  <Text
+                    className="text-md text-text"
+                    numberOfLines={2}
+                    style={stackDetails ? undefined : TEXT_END}
+                  >
+                    {d.value}
+                  </Text>
+                ) : (
+                  d.value
+                )}
+              </View>
+            </>
+          );
+          // A detail the learner can change opens Edit card on it, as a tap on a field does.
+          return d.onPress ? (
+            <Press
+              key={d.label}
+              onPress={d.onPress}
+              accessibilityRole="button"
+              accessibilityHint={t`Edit`}
+              className={row}
+            >
+              {body}
+            </Press>
+          ) : (
+            <View key={d.label} className={row}>
+              {body}
             </View>
-          </View>
-        )),
+          );
+        }),
       )}
       {block(t`Schedule`, schedule)}
       {block(t`History`, log)}

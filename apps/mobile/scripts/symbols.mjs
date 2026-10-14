@@ -59,7 +59,7 @@ const fileOf = (component) => files.get(imported.get(component) ?? component);
 const symbolName = (name) => `lymi.${name}`;
 
 /** Lucide's 24-unit box, trimmed by this on each side, spans a little more than the text's cap height, as Apple's symbols do. */
-const INSETS = "1.5,1.5,1.5,1.5";
+const INSETS = "2.5,2.5,2.5,2.5";
 
 const attrs = (props) =>
   Object.entries(props)

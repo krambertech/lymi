@@ -19,7 +19,8 @@ import { CAPTURE_KEYS, captureStore } from "../data/kept";
 import { useDecks, useSections } from "../data/queries";
 import { usePalette } from "../theme/palette";
 import { FieldChip, FieldChipFace, FieldChipRow } from "../ui/field-chip";
-import { GlassButton, GlassPill } from "../ui/glass";
+import { FormHeader } from "../ui/form-header";
+import { GlassPill } from "../ui/glass";
 import { KeyboardRoom } from "../ui/keyboard";
 import { Select } from "../ui/menu";
 import { Icon, Text } from "../ui/primitives";
@@ -195,31 +196,32 @@ export default function Capture() {
   return (
     <KeyboardRoom>
       <OnGlass>
-        <View className="flex-row items-center justify-between gap-3 px-4 pt-5 pb-2">
-          <GlassButton icon="close" label={t`Done`} onPress={() => router.back()} />
-          {deck && (
-            <Select
-              label={t`Deck`}
-              value={deck.id}
-              options={decks.map((d) => ({ value: d.id, label: d.name }))}
-              onChange={(id) => {
-                setDeck(id);
-                setSectionId(null);
-                setModes(null);
-                captureStore.set(CAPTURE_KEYS.deck, id);
-              }}
-              trigger={<GlassPill icon="deck">{deck.name}</GlassPill>}
-              onClosed={focusTerm}
-            />
-          )}
-          <GlassButton
-            icon="plus"
-            label={t`Add to ${deckName}`}
-            primary
-            disabled={!draft.term.trim()}
-            onPress={() => void add()}
-          />
-        </View>
+        <FormHeader
+          close={{ label: t`Done`, onPress: () => router.back() }}
+          middle={
+            deck && (
+              <Select
+                label={t`Deck`}
+                value={deck.id}
+                options={decks.map((d) => ({ value: d.id, label: d.name }))}
+                onChange={(id) => {
+                  setDeck(id);
+                  setSectionId(null);
+                  setModes(null);
+                  captureStore.set(CAPTURE_KEYS.deck, id);
+                }}
+                trigger={<GlassPill icon="deck">{deck.name}</GlassPill>}
+                onClosed={focusTerm}
+              />
+            )
+          }
+          action={{
+            icon: "plus",
+            label: t`Add to ${deckName}`,
+            disabled: !draft.term.trim(),
+            onPress: () => void add(),
+          }}
+        />
 
         {decksQuery_.isPending ? null : deck ? (
           <>

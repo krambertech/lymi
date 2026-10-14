@@ -18,7 +18,7 @@ import { languageName } from "../data/languages";
 import { usePurposes } from "../data/purposes";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
-import { GlassButton } from "../ui/glass";
+import { FormHeader } from "../ui/form-header";
 import type { IconName } from "../ui/icons";
 import { Select } from "../ui/menu";
 import { Icon, Plate, RowArrow, Text } from "../ui/primitives";
@@ -121,24 +121,17 @@ export default function NewDeck() {
 
   return (
     <OnGlass>
-      {/* A form sheet lays out a header and one scroll view; the header must not be flattened away. */}
-      <View
-        collapsable={false}
-        className="flex-row items-center justify-between gap-3 px-4 pt-5 pb-2"
-      >
-        <GlassButton icon="close" label={t`Cancel`} onPress={() => router.back()} />
-        <Text className="text-md font-medium text-text" accessibilityRole="header">
-          {t`New deck`}
-        </Text>
-        <GlassButton
-          icon="check"
-          label={t`Create deck`}
-          primary
-          disabled={!name.trim()}
-          busy={pending}
-          onPress={() => void create()}
-        />
-      </View>
+      <FormHeader
+        close={{ label: t`Cancel`, onPress: () => router.back() }}
+        title={t`New deck`}
+        action={{
+          icon: "check",
+          label: t`Create deck`,
+          disabled: !name.trim(),
+          busy: pending,
+          onPress: () => void create(),
+        }}
+      />
       <ScrollView
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
@@ -226,7 +219,9 @@ export default function NewDeck() {
         </View>
 
         <Rows>
-          {askedSelect(<RowFace icon="modes" label={t`How cards are asked`} value={way?.label} stacked />)}
+          {askedSelect(
+            <RowFace icon="modes" label={t`How cards are asked`} value={way?.label} stacked />,
+          )}
         </Rows>
       </ScrollView>
     </OnGlass>

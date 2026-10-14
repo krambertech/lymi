@@ -12,7 +12,7 @@ import { useMoveNotice, useSeriesActions } from "../data/series";
 import { useOnline } from "../streak/goal-picker";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
-import { GlassButton } from "../ui/glass";
+import { FormHeader } from "../ui/form-header";
 import { Icon, Press, Text } from "../ui/primitives";
 import { OnGlass } from "../ui/surface";
 
@@ -33,12 +33,10 @@ export default function SeriesName() {
   }
   return (
     <OnGlass>
-      <View className="flex-row items-center gap-3 px-4 pt-5 pb-6">
-        <GlassButton icon="close" label={t`Cancel`} onPress={() => router.back()} />
-        {form.mode === "missing" && (
-          <Text className="flex-1 text-base text-muted">{t`This series is no longer here.`}</Text>
-        )}
-      </View>
+      <FormHeader close={{ label: t`Close`, onPress: () => router.back() }} />
+      {form.mode === "missing" && (
+        <Text className="px-5 pt-3 pb-6 text-base text-muted">{t`This series is no longer here.`}</Text>
+      )}
     </OnGlass>
   );
 }
@@ -89,20 +87,17 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
 
   return (
     <OnGlass>
-      <View className="flex-row items-center justify-between gap-3 px-4 pt-5 pb-2">
-        <GlassButton icon="close" label={t`Cancel`} onPress={() => router.back()} />
-        <Text className="text-md font-medium text-text" accessibilityRole="header">
-          {series ? t`Rename series` : t`New series`}
-        </Text>
-        {/* From a deck, saving makes the series and moves the deck in one go, as the web's does. */}
-        <GlassButton
-          icon={series || deck ? "check" : "forward"}
-          label={series ? t`Save` : deck ? t`Create and move` : t`Next: choose decks`}
-          primary
-          busy={save.isPending || (waiting && !stuck)}
-          onPress={submit}
-        />
-      </View>
+      {/* From a deck, saving makes the series and moves the deck in one go, as the web's does. */}
+      <FormHeader
+        close={{ label: t`Cancel`, onPress: () => router.back() }}
+        title={series ? t`Rename series` : t`New series`}
+        action={{
+          icon: series || deck ? "check" : "forward",
+          label: series ? t`Save` : deck ? t`Create and move` : t`Next: choose decks`,
+          busy: save.isPending || (waiting && !stuck),
+          onPress: submit,
+        }}
+      />
       <View className="px-5 pt-3 pb-6">
         <FieldName>{t`Name`}</FieldName>
         <TextInput

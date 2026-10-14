@@ -149,6 +149,10 @@
       "plugins": ["./biome-plugins/scroll-view-persist-taps.grit"]
     },
     {
+      "includes": ["apps/mobile/src/app/**"],
+      "plugins": ["./biome-plugins/form-header.grit"]
+    },
+    {
       "includes": ["apps/mobile/**", "!apps/mobile/src/theme/motion.ts"],
       "plugins": [
         "./biome-plugins/spring-presets.grit",

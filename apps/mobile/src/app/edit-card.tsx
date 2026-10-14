@@ -15,7 +15,8 @@ import {
 import { cardEdited, heldCard } from "../card/edited";
 import { useDeckCards, useDecks } from "../data/queries";
 import { FieldChipRow } from "../ui/field-chip";
-import { GlassButton, GlassPill } from "../ui/glass";
+import { FormHeader } from "../ui/form-header";
+import { GlassPill } from "../ui/glass";
 import { KeyboardRoom } from "../ui/keyboard";
 import { OnGlass } from "../ui/surface";
 
@@ -66,17 +67,11 @@ export default function EditCard() {
   return (
     <KeyboardRoom>
       <OnGlass>
-        <View className="flex-row items-center justify-between gap-3 px-4 pt-5 pb-2">
-          <GlassButton icon="close" label={t`Cancel`} onPress={() => router.back()} />
-          {deck && <GlassPill icon="deck">{deck.name}</GlassPill>}
-          <GlassButton
-            icon="check"
-            label={t`Save`}
-            primary
-            busy={saving}
-            onPress={() => void save()}
-          />
-        </View>
+        <FormHeader
+          close={{ label: t`Cancel`, onPress: () => router.back() }}
+          middle={deck && <GlassPill icon="deck">{deck.name}</GlassPill>}
+          action={{ icon: "check", label: t`Save`, busy: saving, onPress: () => void save() }}
+        />
         <ScrollView
           className="flex-1"
           contentContainerClassName="gap-3 px-5 pt-4 pb-4"

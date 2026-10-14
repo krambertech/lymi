@@ -31,7 +31,8 @@ import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { ActionMenu } from "../ui/action-menu";
 import { Chip } from "../ui/chip";
-import { GlassButton, useFrost } from "../ui/glass";
+import { FormHeader } from "../ui/form-header";
+import { useFrost } from "../ui/glass";
 import { Icon, type IconName } from "../ui/icons";
 import { LoadFailed, useLoadFailed } from "../ui/load-failed";
 import { Press, Text } from "../ui/primitives";
@@ -207,22 +208,11 @@ export default function ShareDeck() {
 
   return (
     <OnGlass>
-      {/* A form sheet lays out a header and one scroll view; the header must not be flattened away. */}
-      <View
-        collapsable={false}
-        className="flex-row items-center gap-3 px-4 pt-5 pb-2"
+      <FormHeader
+        close={{ label: t`Close`, onPress: () => router.back() }}
+        title={t`Share deck`}
         style={{ backgroundColor: frost }}
-      >
-        <GlassButton icon="close" label={t`Close`} onPress={() => router.back()} />
-        <Text
-          className="flex-1 text-center text-md font-medium text-text"
-          accessibilityRole="header"
-          numberOfLines={1}
-        >
-          {t`Share deck`}
-        </Text>
-        <View className="size-11" />
-      </View>
+      />
       <ScrollView
         keyboardShouldPersistTaps="handled"
         style={{ backgroundColor: frost }}

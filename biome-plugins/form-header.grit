@@ -1,0 +1,4 @@
+`<GlassButton $attrs />` where {
+  $attrs <: contains `icon="close"`,
+  register_diagnostic(span=$attrs, message="A form sheet's header is FormHeader from src/ui/form-header.tsx: it keeps the header above the sheet's scroll view, which a hand-built row lets iOS cover.")
+}

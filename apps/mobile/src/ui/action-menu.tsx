@@ -7,6 +7,7 @@ import {
   frame,
   tint,
 } from "@expo/ui/swift-ui/modifiers";
+import SYMBOLS from "../../assets/symbols/manifest.json";
 import { usePalette, useRoom } from "../theme/palette";
 import type { IconName } from "./icons";
 import type { MenuItem } from "./menu";
@@ -14,8 +15,8 @@ import type { MenuItem } from "./menu";
 /** The two buttons a menu grows from, as their icons in the registry. */
 const TRIGGERS = { ellipsis: "more", plus: "plus" } as const satisfies Record<string, IconName>;
 
-/** Lymi's icon as the custom symbol scripts/symbols.mjs made from it; Learning, drawn by hand, has none. */
-const symbolOf = (icon: IconName) => (icon === "learning" ? undefined : `lymi.${icon}`);
+/** Lymi's icon as the custom symbol scripts/symbols.mjs made from it; one drawn by hand has none. */
+const symbolOf = (icon: IconName) => (icon in SYMBOLS ? `lymi.${icon}` : undefined);
 
 interface ActionMenuProps {
   /** What the button does, for VoiceOver: "Card options", "Add". */

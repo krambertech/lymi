@@ -1,0 +1,39 @@
+# Share deck: People above Who can join, the join link on and off, and a join link that never existed.
+appId: app.lymi
+name: Share deck
+---
+- runFlow: _open.yaml
+- openLink: "lymi://share?id=${DECK_ID}"
+- extendedWaitUntil:
+    visible: "Owner"
+    timeout: 20000
+- assertVisible:
+    text: "Who can join"
+    below: "People"
+- takeScreenshot: 01-people-first
+- tapOn: "Anyone with the link, .*"
+# Share deck opens at its peek, so the link and its buttons are below the fold.
+- scrollUntilVisible:
+    element: "Turn off link"
+    timeout: 20000
+- assertVisible: "Copy link"
+- takeScreenshot: 02-link-on
+- tapOn: "Turn off link"
+- extendedWaitUntil:
+    visible: "Turn off the join link?"
+    timeout: 10000
+- takeScreenshot: 03-turn-off-alert
+# The alert's button and the sheet's share a label; only the alert's sits above Copy link.
+- tapOn:
+    text: "Turn off link"
+    above: "Copy link"
+- extendedWaitUntil:
+    notVisible: "Copy link"
+    timeout: 20000
+- takeScreenshot: 04-link-off
+- openLink: "lymi://join/${DEAD_TOKEN}"
+- extendedWaitUntil:
+    visible: "This join link does not work"
+    timeout: 20000
+- assertVisible: "Go to Today"
+- takeScreenshot: 05-dead-link

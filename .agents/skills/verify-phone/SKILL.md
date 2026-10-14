@@ -19,6 +19,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Library and the deck page | [library.md](features/library.md) |
 | Insights | [insights.md](features/insights.md) |
 | Language | [language.md](features/language.md) |
+| Share deck and join links | [sharing.md](features/sharing.md) |
 
 ## Launch
 

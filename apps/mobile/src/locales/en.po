@@ -475,6 +475,9 @@ msgstr "Add to {deckName}"
 msgid "Add to Library"
 msgstr "Add to Library"
 
+msgid "Added “{name}” to Library"
+msgstr "Added “{name}” to Library"
+
 msgid "Added “{term}” to {deck}"
 msgstr "Added “{term}” to {deck}"
 
@@ -1766,6 +1769,9 @@ msgstr "Move down"
 msgid "Move to deck"
 msgstr "Move to deck"
 
+msgid "Move to deck…"
+msgstr "Move to deck…"
+
 msgid "Move to section"
 msgstr "Move to section"
 
@@ -1995,6 +2001,9 @@ msgstr "Only you see these."
 msgid "Only your name is shared, never your progress."
 msgstr "Only your name is shared, never your progress."
 
+msgid "Open"
+msgstr "Open"
+
 msgid "Open {name}"
 msgstr "Open {name}"
 
@@ -2003,6 +2012,9 @@ msgstr "Open deck"
 
 msgid "Open Explore"
 msgstr "Open Explore"
+
+msgid "Open in Library"
+msgstr "Open in Library"
 
 msgid "Open it once with a connection, and it stays on this phone."
 msgstr "Open it once with a connection, and it stays on this phone."
@@ -2188,6 +2200,9 @@ msgstr "Rename section"
 
 msgid "Rename series"
 msgstr "Rename series"
+
+msgid "Reorder sections"
+msgstr "Reorder sections"
 
 msgid "Reorder series"
 msgstr "Reorder series"
@@ -2434,6 +2449,9 @@ msgstr "Show all"
 
 msgid "Show hook"
 msgstr "Show hook"
+
+msgid "Show in Library"
+msgstr "Show in Library"
 
 msgid "Show more"
 msgstr "Show more"

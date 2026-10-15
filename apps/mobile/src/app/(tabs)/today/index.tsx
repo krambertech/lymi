@@ -21,10 +21,11 @@ import {
 } from "../../../data/queries";
 import { useLandingSpot } from "../../../splash/landing";
 import { clear, usePalette, useRoom } from "../../../theme/palette";
-import { ListRow } from "../../../ui/list-row";
+import { ListRow, ListRowFace, listRowLabel } from "../../../ui/list-row";
 import { OfflineNote } from "../../../ui/offline-note";
 import { Button, Icon, IconButton, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
 import { RestGlyph } from "../../../ui/rest-glyph";
+import { RowMenu } from "../../../ui/row-menu";
 import { Screen } from "../../../ui/screen";
 import { SevenLights } from "../../../ui/seven-lights";
 import { Skeleton } from "../../../ui/skeleton";
@@ -424,7 +425,8 @@ function DecksToReview({ decks }: { decks: Deck[] }) {
         name: d.name,
         due: d.due,
         decks: 0,
-        href: `/review?deck=${d.id}`,
+        review: `/review?deck=${d.id}`,
+        deck: d,
       })),
     ...groups.series.flatMap(({ series: s, decks: inSeries }) => {
       const due = inSeries.reduce((n, d) => n + d.due, 0);
@@ -435,29 +437,71 @@ function DecksToReview({ decks }: { decks: Deck[] }) {
               name: s.name,
               due,
               decks: inSeries.filter((d) => d.due > 0).length,
-              href: `/review?series=${s.id}`,
+              review: `/review?series=${s.id}`,
+              deck: null,
             },
           ]
         : [];
     }),
   ];
   if (rows.length === 0) return null;
-  const items = rows.map((r, i) => (
-    <ListRow
-      key={r.key}
-      first={i === 0}
-      title={r.name}
-      count={r.due}
-      line={
-        r.decks > 0
-          ? t`${plural(r.due, { one: "card due", other: "cards due" })} in ${plural(r.decks, { one: "# deck", other: "# decks" })}`
-          : undefined
-      }
-      countLabel={plural(r.due, { one: "# card due", other: "# cards due" })}
-      end="open"
-      onPress={() => startReview(router, r.href as Href)}
-    />
-  ));
+  const items = rows.map((r, i) => {
+    const line =
+      r.decks > 0
+        ? t`${plural(r.due, { one: "card due", other: "cards due" })} in ${plural(r.decks, { one: "# deck", other: "# decks" })}`
+        : undefined;
+    const review = () => startReview(router, r.review as Href);
+    const deck = r.deck;
+    // A deck peeks at its page and opens it; a series lives in Library, among its decks.
+    const href = (deck ? `/library/${deck.id}` : "/library") as Href;
+    return (
+      <RowMenu
+        key={r.key}
+        surface={deck ? "today_row" : "series_row"}
+        href={href}
+        onPress={review}
+        kind="button"
+        label={listRowLabel(
+          r.name,
+          plural(r.due, { one: "# card due", other: "# cards due" }),
+          line,
+        )}
+        preview={deck ? "page" : undefined}
+        items={[
+          [
+            { id: "review", label: t`Review`, icon: "play", onSelect: review },
+            ...(deck?.role === "owner"
+              ? [
+                  {
+                    id: "add_card" as const,
+                    label: t`Add a card`,
+                    icon: "plus" as const,
+                    onSelect: () => router.push(`/capture?deck=${deck.id}` as Href),
+                  },
+                ]
+              : []),
+            deck
+              ? {
+                  id: "open",
+                  label: t`Open deck`,
+                  icon: "deck",
+                  onSelect: () => router.push(href),
+                }
+              : {
+                  id: "open",
+                  label: t`Show in Library`,
+                  icon: "library",
+                  onSelect: () => router.navigate(href),
+                },
+          ],
+        ]}
+      >
+        <View className="bg-plate">
+          <ListRowFace first={i === 0} title={r.name} count={r.due} line={line} end="open" />
+        </View>
+      </RowMenu>
+    );
+  });
   return (
     <View>
       <SectionTitle

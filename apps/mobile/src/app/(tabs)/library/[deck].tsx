@@ -20,6 +20,8 @@ import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react
 import { View } from "react-native";
 import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useCardMenu } from "../../../card/card-menu";
+import { CardPeek, peekHeight, usePeekSize } from "../../../card/card-peek";
 import { useDeckExits } from "../../../data/decks";
 import { moveBack } from "../../../data/move-undo";
 import { useNextDue } from "../../../data/next-due";
@@ -45,6 +47,7 @@ import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
 import { Select } from "../../../ui/menu";
 import { OfflineNote } from "../../../ui/offline-note";
 import { Button, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
+import { RowMenu, type RowMenuItem } from "../../../ui/row-menu";
 import { BarButton, Screen } from "../../../ui/screen";
 import { Segmented } from "../../../ui/segmented";
 import { Sheet, SheetGroup, SheetHeading, SheetRow } from "../../../ui/sheet";
@@ -93,6 +96,11 @@ export default function Deck() {
   const moveToSection = useMoveToSection(id);
   const moveToDeck = useMoveToDeck(id);
   const batch = useCardBatch(id);
+  const cardMenu = useCardMenu({
+    owner: () => owner,
+    moveToSection: moveToSection.canMove ? (c) => () => moveToSection.open([c.id]) : undefined,
+    moveToDeck: moveToDeck.canMove ? (c) => () => moveToDeck.open([c.id]) : undefined,
+  });
   const reduce = useReduceMotion();
   const selection = owner && selected ? selected : null;
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
@@ -354,6 +362,10 @@ export default function Deck() {
                   starting={sectionStart.starting}
                   onStart={sectionStart.start}
                   selection={selection ? { ids: selection, onToggle: toggleSelected } : undefined}
+                  menu={cardMenu}
+                  deckName={deck.name}
+                  owner={owner}
+                  several={sections.length > 1}
                 />
               ))
             )}
@@ -671,6 +683,10 @@ function Group({
   starting,
   onStart,
   selection,
+  menu,
+  deckName,
+  owner,
+  several,
 }: {
   group: DeckGroup;
   deckId: string;
@@ -680,6 +696,10 @@ function Group({
   onStart: (section: Section) => void;
   /** Set while the list is choosing cards. */
   selection?: { ids: ReadonlySet<string>; onToggle: (cardId: string) => void } | undefined;
+  menu: (card: DeckRow["card"]) => RowMenuItem[][];
+  deckName: string;
+  owner: boolean;
+  several: boolean;
 }) {
   const { t, i18n } = useLingui();
   const title =
@@ -704,6 +724,8 @@ function Group({
           here={section.id === hereId}
           starting={starting === section.id}
           onStart={onStart}
+          owner={owner}
+          several={several}
         />
       ) : (
         title && (
@@ -728,6 +750,8 @@ function Group({
             first={i === 0}
             selected={selection?.ids.has(row.card.id)}
             onToggle={selection?.onToggle}
+            menu={menu}
+            deckName={deckName}
           />
         ))}
       </Plate>
@@ -745,32 +769,28 @@ function WordRow({
   first,
   selected,
   onToggle,
+  menu,
+  deckName,
 }: {
   row: DeckRow;
   first: boolean;
   /** Undefined unless the list is choosing cards. */
   selected?: boolean | undefined;
   onToggle?: ((cardId: string) => void) | undefined;
+  menu: (card: DeckRow["card"]) => RowMenuItem[][];
+  deckName: string;
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
-  const router = useRouter();
+  const peek = usePeekSize();
   const state = stateKey(row.state?.state);
   const { word, forms } = splitForms(row.card.term);
   const selecting = selected !== undefined;
-  return (
-    <Press
-      scale={0.99}
-      onPress={() =>
-        selecting
-          ? onToggle?.(row.card.id)
-          : router.push(`/library/card/${row.card.id}?deck=${row.card.deckId}` as Href)
-      }
-      accessibilityRole={selecting ? "checkbox" : "link"}
-      accessibilityState={selecting ? { checked: selected } : undefined}
-      accessibilityLabel={`${row.card.term}, ${row.card.meaning ?? ""}, ${i18n._(stateMarks[state].label)}`}
+  const label = `${row.card.term}, ${row.card.meaning ?? ""}, ${i18n._(stateMarks[state].label)}`;
+  const face = (
+    <View
       className={`flex-row gap-3 py-3.5 ps-4 pe-5 ${first ? "" : "border-t border-edge"}`}
-      style={selected ? { backgroundColor: p.hover } : undefined}
+      style={selected ? { backgroundColor: p.hover } : { backgroundColor: p.plate }}
     >
       <View className="pt-[5px]">
         {selecting ? <SelectBox checked={selected} /> : <StateIcon state={state} size={15} />}
@@ -785,7 +805,35 @@ function WordRow({
           {row.card.meaning || t`No meaning yet`}
         </Text>
       </View>
-    </Press>
+    </View>
+  );
+  if (selecting) {
+    return (
+      <Press
+        scale={0.99}
+        onPress={() => onToggle?.(row.card.id)}
+        accessibilityRole="checkbox"
+        accessibilityState={{ checked: selected }}
+        accessibilityLabel={label}
+      >
+        {face}
+      </Press>
+    );
+  }
+  return (
+    <RowMenu
+      surface="card_row"
+      href={`/library/card/${row.card.id}?deck=${row.card.deckId}` as Href}
+      label={label}
+      items={menu(row.card)}
+      preview={{
+        node: <CardPeek card={row.card} state={row.state} deckName={deckName} />,
+        width: peek.width,
+        height: peekHeight(row.card, peek.width, peek.scale),
+      }}
+    >
+      {face}
+    </RowMenu>
   );
 }
 

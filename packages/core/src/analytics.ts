@@ -11,6 +11,35 @@ export const INTERNAL_ACCOUNT_IDS = new Set([
 export { ANALYTICS_CONSENT_VERSION } from "./types";
 /** Carries the visit's first touch with a sign-up request, since no cookie does. */
 export const FIRST_TOUCH_HEADER = "x-lymi-first-touch";
+/** The phone's lists whose rows open a context menu on a long press. */
+export const CONTEXT_MENU_SURFACES = [
+  "card_row",
+  "deck_row",
+  "today_row",
+  "section_heading",
+  "explore_deck",
+  "series_row",
+  "archived_row",
+] as const;
+export type ContextMenuSurface = (typeof CONTEXT_MENU_SURFACES)[number];
+/** What a context menu row does, as a fixed name rather than its label. */
+export const CONTEXT_MENU_ACTIONS = [
+  "open",
+  "review",
+  "add_card",
+  "play",
+  "important",
+  "edit",
+  "move_section",
+  "move_deck",
+  "archive",
+  "start_section",
+  "rename_section",
+  "reorder_sections",
+  "add_to_library",
+  "restore",
+] as const;
+export type ContextMenuAction = (typeof CONTEXT_MENU_ACTIONS)[number];
 export const AnalyticsLocale = z.enum(["en", "uk", "ru"]);
 const session = { session_id: z.uuid() };
 const count = z.number().int().nonnegative().max(1_000_000);
@@ -163,6 +192,10 @@ export const analyticsEvents = {
   public_deck_viewed: z.object({ deck_slug: slug, locale: AnalyticsLocale }),
   add_to_lymi_clicked: z.object({ deck_slug: slug }),
   origin_badge_shown: z.object({ badge: z.enum(["ukraine", "estonia"]) }),
+  context_menu_action: z.object({
+    menu: z.enum(CONTEXT_MENU_SURFACES),
+    action: z.enum(CONTEXT_MENU_ACTIONS),
+  }),
   deck_added: z.object({ deck_slug: slug }),
   deck_joined: z.object({}),
   mcp_tool: z.object({
@@ -257,6 +290,7 @@ export const analyticsProducers = {
   public_deck_viewed: ["browser"],
   add_to_lymi_clicked: ["browser"],
   origin_badge_shown: ["browser"],
+  context_menu_action: ["phone"],
   deck_added: ["worker"],
   deck_joined: ["worker"],
   mcp_tool: ["worker"],

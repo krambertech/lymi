@@ -3,11 +3,13 @@ import { useLingui } from "@lingui/react/macro";
 import { exploreDeckQuery } from "@lymi/client/queries";
 import { hasShelfPage, type PublicDeckSummary, type Shelf } from "@lymi/core/catalog";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
+import { type Href, useRouter } from "expo-router";
 import { ScrollView, useWindowDimensions, View } from "react-native";
 import { usePalette } from "../theme/palette";
 import { Icon, Plate, Press, RowArrow, Text } from "../ui/primitives";
-import { shelfAddressName, useShelfLabel } from "./catalogue";
+import { RowMenu, type RowMenuItem } from "../ui/row-menu";
+import { toast } from "../ui/toast-host";
+import { shelfAddressName, useAddDeck, useAddFailure, useShelfLabel } from "./catalogue";
 import { DeckTray, usePoolColour, useTrayColour } from "./tray";
 
 /** The page's own gutter, which a sideways row bleeds through to the screen's edges. */
@@ -34,10 +36,56 @@ export function DeckMeta({ deck, added }: { deck: PublicDeckSummary; added: bool
   );
 }
 
+const deckHref = (deck: Pick<PublicDeckSummary, "slug" | "name">) =>
+  ({ pathname: "/explore/[slug]", params: { slug: deck.slug, name: deck.name } }) as const;
+
 export function useOpenDeck() {
   const router = useRouter();
-  return (deck: Pick<PublicDeckSummary, "slug" | "name">) =>
-    router.push({ pathname: "/explore/[slug]", params: { slug: deck.slug, name: deck.name } });
+  return (deck: Pick<PublicDeckSummary, "slug" | "name">) => router.push(deckHref(deck));
+}
+
+/**
+ * A deck's long-press menu in Explore: its page peeks, and the menu adds it to Library, or opens
+ * it there once it is in. Adding needs a connection, and says so when there is none.
+ */
+function useDeckMenu() {
+  const { t } = useLingui();
+  const router = useRouter();
+  const failure = useAddFailure();
+  const add = useAddDeck(() => undefined);
+  return (deck: PublicDeckSummary, deckId: string | undefined): RowMenuItem[] => {
+    const name = deck.name;
+    const openInLibrary = (id: string) => router.navigate(`/library/${id}` as Href);
+    return deckId
+      ? [
+          {
+            id: "open",
+            label: t`Open in Library`,
+            icon: "library",
+            onSelect: () => openInLibrary(deckId),
+          },
+        ]
+      : [
+          {
+            id: "add_to_library",
+            label: t`Add to Library`,
+            icon: "plus",
+            onSelect: () =>
+              add.mutate(
+                { slug: deck.slug, edition: deck.meaningLanguage },
+                {
+                  onSuccess: ({ deckId: id }) =>
+                    toast.add({
+                      id: `add-deck-${deck.slug}`,
+                      title: t`Added “${name}” to Library`,
+                      action: { label: t`Open`, onPress: () => openInLibrary(id) },
+                    }),
+                  onError: (e) => toast.add({ error: true, title: failure(e) }),
+                },
+              ),
+          },
+        ];
+  };
 }
 
 /** Starts reading a deck's page as the finger lands, so it is often there by the time it opens. */
@@ -51,31 +99,37 @@ export function DeckTile({
   deck,
   width,
   added,
+  deckId,
 }: {
   deck: PublicDeckSummary;
   width: number;
   added: boolean;
+  /** The learner's copy, once it is in Library. */
+  deckId?: string | undefined;
 }) {
-  const open = useOpenDeck();
   const warm = useWarmDeck();
+  const menu = useDeckMenu();
   return (
-    <Press
-      scale={0.98}
-      onPressIn={() => warm(deck.slug)}
-      onPress={() => open(deck)}
-      accessibilityRole="link"
-      accessibilityLabel={deck.name}
-      style={{ width }}
-      className="gap-2.5"
-    >
-      <DeckTray deck={deck} cw={width * 0.7} />
-      <View className="gap-0.5 px-0.5">
-        <Text className="text-md font-medium leading-snug text-text" numberOfLines={2}>
-          {deck.name}
-        </Text>
-        <DeckMeta deck={deck} added={added} />
-      </View>
-    </Press>
+    <View style={{ width }}>
+      <RowMenu
+        surface="explore_deck"
+        href={deckHref(deck)}
+        onPressIn={() => warm(deck.slug)}
+        label={deck.name}
+        preview="page"
+        items={menu(deck, deckId)}
+      >
+        <View className="gap-2.5 bg-canvas">
+          <DeckTray deck={deck} cw={width * 0.7} />
+          <View className="gap-0.5 px-0.5">
+            <Text className="text-md font-medium leading-snug text-text" numberOfLines={2}>
+              {deck.name}
+            </Text>
+            <DeckMeta deck={deck} added={added} />
+          </View>
+        </View>
+      </RowMenu>
+    </View>
   );
 }
 
@@ -142,7 +196,13 @@ export function ShelfRows({ shelves, added }: ShelvesProps) {
             contentContainerStyle={{ paddingHorizontal: GUTTER, gap: 12 }}
           >
             {shelf.decks.slice(0, 10).map((deck) => (
-              <DeckTile key={deck.slug} deck={deck} width={tile} added={!!added[deck.slug]} />
+              <DeckTile
+                key={deck.slug}
+                deck={deck}
+                width={tile}
+                added={!!added[deck.slug]}
+                deckId={added[deck.slug]}
+              />
             ))}
           </ScrollView>
         </View>
@@ -164,7 +224,13 @@ export function ShelfGrid({
   return (
     <View className="flex-row flex-wrap" style={{ gap: 12, rowGap: 24 }}>
       {decks.map((deck) => (
-        <DeckTile key={deck.slug} deck={deck} width={tile} added={!!added[deck.slug]} />
+        <DeckTile
+          key={deck.slug}
+          deck={deck}
+          width={tile}
+          added={!!added[deck.slug]}
+          deckId={added[deck.slug]}
+        />
       ))}
     </View>
   );
@@ -200,31 +266,35 @@ export function DeckList({
   shelfOf: (deck: PublicDeckSummary) => string;
 }) {
   const { t } = useLingui();
-  const open = useOpenDeck();
   const warm = useWarmDeck();
+  const menu = useDeckMenu();
   return (
     <Plate className="overflow-hidden">
       {decks.map((deck, i) => (
-        <Press
+        <RowMenu
           key={deck.slug}
-          scale={0.99}
+          surface="explore_deck"
+          href={deckHref(deck)}
           onPressIn={() => warm(deck.slug)}
-          onPress={() => open(deck)}
-          accessibilityRole="link"
-          accessibilityLabel={deck.name}
-          className={`flex-row items-center gap-3.5 py-3 ps-3 pe-4 ${i > 0 ? "border-t border-edge" : ""}`}
+          label={deck.name}
+          preview="page"
+          items={menu(deck, added[deck.slug])}
         >
-          <TrayMark slug={deck.slug} />
-          <View className="flex-1 gap-0.5">
-            <Text className="text-md font-medium text-text" numberOfLines={2}>
-              {deck.name}
-            </Text>
-            <Text className="text-sm text-muted" numberOfLines={1}>
-              {added[deck.slug] ? t`${shelfOf(deck)} · In Library` : shelfOf(deck)}
-            </Text>
+          <View
+            className={`flex-row items-center gap-3.5 bg-plate py-3 ps-3 pe-4 ${i > 0 ? "border-t border-edge" : ""}`}
+          >
+            <TrayMark slug={deck.slug} />
+            <View className="flex-1 gap-0.5">
+              <Text className="text-md font-medium text-text" numberOfLines={2}>
+                {deck.name}
+              </Text>
+              <Text className="text-sm text-muted" numberOfLines={1}>
+                {added[deck.slug] ? t`${shelfOf(deck)} · In Library` : shelfOf(deck)}
+              </Text>
+            </View>
+            <RowArrow />
           </View>
-          <RowArrow />
-        </Press>
+        </RowMenu>
       ))}
     </Plate>
   );

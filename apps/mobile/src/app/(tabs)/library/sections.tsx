@@ -27,7 +27,9 @@ import { toast } from "../../../ui/toast-host";
  */
 export default function DeckSections() {
   const { t, i18n } = useLingui();
-  const { id } = useLocalSearchParams<{ id: string }>();
+  // A section heading's menu opens the page renaming one section, or in Edit to reorder them.
+  const params = useLocalSearchParams<{ id: string; rename?: string; edit?: string }>();
+  const { id } = params;
   const deck = useDecks().data?.find((d) => d.id === id);
   const query = useSections(id);
   const sections = query.data?.sections ?? [];
@@ -35,7 +37,14 @@ export default function DeckSections() {
   const [naming, setNaming] = useState<{ section?: Section } | null>(null);
   const [showArchived, setShowArchived] = useState(false);
   const [choosingOrder, setChoosingOrder] = useState(false);
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState(params.edit === "1");
+  const [asked, setAsked] = useState(params.rename);
+  useEffect(() => {
+    const section = asked ? sections.find((s) => s.id === asked) : undefined;
+    if (!section) return;
+    setAsked(undefined);
+    setNaming({ section });
+  }, [asked, sections]);
   const archived = useQuery({ ...archivedSectionsQuery(id), enabled: !!id });
   const archivedCount = archived.data?.sections.length ?? 0;
   // Restoring the last archived section leaves nothing to show, so its sheet goes too.

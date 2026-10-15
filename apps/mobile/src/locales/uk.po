@@ -475,6 +475,9 @@ msgstr "Додати до {deckName}"
 msgid "Add to Library"
 msgstr "Додати до Бібліотеки"
 
+msgid "Added “{name}” to Library"
+msgstr ""
+
 msgid "Added “{term}” to {deck}"
 msgstr "«{term}» додано до колоди {deck}"
 
@@ -1766,6 +1769,9 @@ msgstr "Нижче"
 msgid "Move to deck"
 msgstr "Перемістити в колоду"
 
+msgid "Move to deck…"
+msgstr ""
+
 msgid "Move to section"
 msgstr "Перемістити в розділ"
 
@@ -1995,6 +2001,9 @@ msgstr "Їх бачиш лише ти."
 msgid "Only your name is shared, never your progress."
 msgstr "Видно лише твоє ім’я, а прогрес — ні."
 
+msgid "Open"
+msgstr ""
+
 msgid "Open {name}"
 msgstr "Відкрити «{name}»"
 
@@ -2003,6 +2012,9 @@ msgstr "Відкрити колоду"
 
 msgid "Open Explore"
 msgstr "Відкрити каталог"
+
+msgid "Open in Library"
+msgstr ""
 
 msgid "Open it once with a connection, and it stays on this phone."
 msgstr "Відкрий це раз зі з’єднанням, і воно залишиться на телефоні."
@@ -2188,6 +2200,9 @@ msgstr "Перейменувати розділ"
 
 msgid "Rename series"
 msgstr "Перейменувати серію"
+
+msgid "Reorder sections"
+msgstr ""
 
 msgid "Reorder series"
 msgstr "Змінити порядок серій"
@@ -2434,6 +2449,9 @@ msgstr "Показати всі"
 
 msgid "Show hook"
 msgstr "Показати зачіпку"
+
+msgid "Show in Library"
+msgstr ""
 
 msgid "Show more"
 msgstr "Показати більше"

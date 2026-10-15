@@ -264,7 +264,8 @@ export function Screen({
         {header ? (
           <View
             className="-mx-5 px-5 pb-7"
-            style={{ marginTop: -bar, paddingTop: bar + 8 }}
+            // A preview has no bar to clear, so its header starts near the top, as a page's title does.
+            style={{ marginTop: -bar, paddingTop: preview ? 12 : bar + 8 }}
             onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height - bar)}
           >
             {ground && <Ground {...ground} height={bar + headerHeight} />}

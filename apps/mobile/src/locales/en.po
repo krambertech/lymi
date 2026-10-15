@@ -1345,6 +1345,9 @@ msgstr "Give the section a name."
 msgid "Give the series a name."
 msgstr "Give the series a name."
 
+msgid "Go to Lymi"
+msgstr "Go to Lymi"
+
 msgid "Go to Today"
 msgstr "Go to Today"
 

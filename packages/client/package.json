@@ -23,7 +23,8 @@
     "./library-groups": "./src/library-groups.ts",
     "./deck-list": "./src/deck-list.ts",
     "./update-required": "./src/update-required.ts",
-    "./cache": "./src/cache.ts"
+    "./cache": "./src/cache.ts",
+    "./keyed": "./src/keyed.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",

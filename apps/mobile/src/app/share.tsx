@@ -48,9 +48,9 @@ const clipboard = TurboModuleRegistry.get<TurboModule & { setString(content: str
 const WHOLE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
- * Share deck, the owner's one place for sharing: invite by email first, then who can join with the
- * join link under it, then everyone studying the deck with who has not joined yet. Invitations work
- * whichever is chosen.
+ * Share deck, the owner's one place for sharing: People first, the invite field over everyone
+ * studying the deck and who has not joined yet, then who else can join with the join link under it.
+ * Invitations work whichever is chosen.
  */
 export default function ShareDeck() {
   const { t, i18n } = useLingui();
@@ -218,6 +218,7 @@ export default function ShareDeck() {
         style={{ backgroundColor: frost }}
         contentContainerClassName="gap-3 px-4 pt-2 pb-12"
       >
+        <SheetHeading>{t`People`}</SheetHeading>
         {full ? (
           <Text className="px-4 text-base text-text-2">
             {plural(waiting, {
@@ -288,79 +289,6 @@ export default function ShareDeck() {
           </View>
         )}
 
-        <SheetHeading>{t`Who can join`}</SheetHeading>
-        {linkFailed ? (
-          <SheetGroup>
-            <LoadFailed
-              query={joinLink}
-              failed={t`Couldn’t load the join link`}
-              offline={t`The join link needs a connection`}
-              size="inline"
-            />
-          </SheetGroup>
-        ) : !joinLink.data ? (
-          <Skeleton height={104} />
-        ) : (
-          <SheetGroup>
-            <SheetRow
-              label={t`Private`}
-              detail={online ? t`Only people you invite` : t`Needs a connection`}
-              chosen={!shared}
-              disabled={!online}
-              onPress={() => shared && !turnOff.isPending && askTurnOff()}
-            />
-            <SheetRow
-              label={t`Anyone with the link`}
-              detail={online ? t`Anyone who opens it can join` : t`Needs a connection`}
-              chosen={shared}
-              disabled={!online}
-              onPress={() => !shared && turnOn.mutate()}
-            />
-            {shared && (
-              <View className="gap-2.5 pt-3 pb-3.5 ps-4 pe-3.5">
-                {link ? (
-                  <>
-                    <View className="min-h-11 flex-row items-center gap-2 rounded-xl bg-glass-plate px-3 py-2">
-                      <Icon name="linkOn" size={16} colour={p.muted} />
-                      <Text className="flex-1 text-md text-text" numberOfLines={1} selectable>
-                        {link.url}
-                      </Text>
-                    </View>
-                    <View className="flex-row gap-2">
-                      {clipboard && (
-                        <LinkButton
-                          icon={copied ? "check" : "copy"}
-                          label={copied ? t`Copied` : t`Copy link`}
-                          onPress={() => {
-                            clipboard.setString(link.url);
-                            setCopied(true);
-                            AccessibilityInfo.announceForAccessibility(t`Copied`);
-                          }}
-                        />
-                      )}
-                      <LinkButton
-                        icon="share"
-                        label={t`Share`}
-                        onPress={() =>
-                          // iOS shows both a url and a message, so the link would appear twice.
-                          void Share.share(
-                            Platform.OS === "ios"
-                              ? { url: link.url, title: deck?.name }
-                              : { message: link.url, title: deck?.name },
-                          )
-                        }
-                      />
-                    </View>
-                  </>
-                ) : (
-                  <Skeleton height={44} />
-                )}
-              </View>
-            )}
-          </SheetGroup>
-        )}
-
-        <SheetHeading>{t`People`}</SheetHeading>
         {membersFailed || invitationsFailed ? (
           <SheetGroup>
             <LoadFailed
@@ -444,6 +372,91 @@ export default function ShareDeck() {
             </SheetGroup>
             <SheetNote>{t`You see who joined, not their reviews.`}</SheetNote>
           </>
+        )}
+        <SheetHeading>{t`Who can join`}</SheetHeading>
+        {linkFailed ? (
+          <SheetGroup>
+            <LoadFailed
+              query={joinLink}
+              failed={t`Couldn’t load the join link`}
+              offline={t`The join link needs a connection`}
+              size="inline"
+            />
+          </SheetGroup>
+        ) : !joinLink.data ? (
+          <Skeleton height={104} />
+        ) : (
+          <SheetGroup>
+            <SheetRow
+              label={t`Private`}
+              detail={online ? t`Only people you invite` : t`Needs a connection`}
+              chosen={!shared}
+              disabled={!online}
+              onPress={() => shared && !turnOff.isPending && askTurnOff()}
+            />
+            <SheetRow
+              label={t`Anyone with the link`}
+              detail={online ? t`Anyone who opens it can join` : t`Needs a connection`}
+              chosen={shared}
+              disabled={!online}
+              onPress={() => !shared && turnOn.mutate()}
+            />
+            {shared && (
+              <View className="gap-2.5 pt-3 pb-3.5 ps-4 pe-3.5">
+                {link ? (
+                  <>
+                    <View className="min-h-11 flex-row items-center gap-2 rounded-xl bg-glass-plate px-3 py-2">
+                      <Icon name="linkOn" size={16} colour={p.muted} />
+                      <Text className="flex-1 text-md text-text" numberOfLines={1} selectable>
+                        {link.url}
+                      </Text>
+                    </View>
+                    <View className="flex-row gap-2">
+                      {clipboard && (
+                        <LinkButton
+                          icon={copied ? "check" : "copy"}
+                          label={copied ? t`Copied` : t`Copy link`}
+                          onPress={() => {
+                            clipboard.setString(link.url);
+                            setCopied(true);
+                            AccessibilityInfo.announceForAccessibility(t`Copied`);
+                          }}
+                        />
+                      )}
+                      <LinkButton
+                        icon="share"
+                        label={t`Share`}
+                        onPress={() =>
+                          // iOS shows both a url and a message, so the link would appear twice.
+                          void Share.share(
+                            Platform.OS === "ios"
+                              ? { url: link.url, title: deck?.name }
+                              : { message: link.url, title: deck?.name },
+                          )
+                        }
+                      />
+                    </View>
+                    <Press
+                      onPress={askTurnOff}
+                      disabled={!online || turnOff.isPending}
+                      accessibilityRole="button"
+                      accessibilityLabel={t`Turn off link`}
+                      accessibilityState={{
+                        disabled: !online || turnOff.isPending,
+                        busy: turnOff.isPending,
+                      }}
+                      className={`min-h-11 flex-row items-center justify-center gap-2 px-3 ${online && !turnOff.isPending ? "" : "opacity-45"}`}
+                    >
+                      <Icon name="linkOff" size={18} colour={p.danger} />
+                      <Text className="text-md font-medium text-danger">{t`Turn off link`}</Text>
+                    </Press>
+                  </>
+                ) : (
+                  <Skeleton height={44} />
+                )}
+              </View>
+            )}
+          </SheetGroup>
         )}
       </ScrollView>
     </OnGlass>

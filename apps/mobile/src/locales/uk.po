@@ -1345,6 +1345,9 @@ msgstr "Назви розділ."
 msgid "Give the series a name."
 msgstr "Дай серії назву."
 
+msgid "Go to Lymi"
+msgstr "Відкрити Lymi"
+
 msgid "Go to Today"
 msgstr "Відкрити «Сьогодні»"
 

@@ -32,7 +32,18 @@
         "foregroundImage": "./assets/android-icon-foreground.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": true
+      "predictiveBackGestureEnabled": true,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            { "scheme": "https", "host": "my.lymi.app", "pathPrefix": "/join/" },
+            { "scheme": "https", "host": "my.lymi.app", "pathPrefix": "/add/" }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "experiments": {
       "typedRoutes": true,
@@ -43,6 +54,7 @@
     },
     "plugins": [
       "./plugins/no-push-entitlement.cjs",
+      "./plugins/app-links.cjs",
       "./plugins/with-symbols.cjs",
       "expo-router",
       [

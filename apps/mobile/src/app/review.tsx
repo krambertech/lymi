@@ -90,7 +90,6 @@ import { modeLabel } from "../review/modes";
 import { PronounceButton, type Pronunciation, usePronunciation } from "../review/pronounce";
 import { Cover, usePullToEnd } from "../review/pull-to-end";
 import { countReveal, RevealHint, useRevealHint } from "../review/reveal-hint";
-import { markUndoHintSeen, UndoHint, undoHintSeen } from "../review/undo-hint";
 import { CardStack, type TopCard, UndoArea, useUndoSwipe } from "../review/undo-swipe";
 import { Wick } from "../review/wick";
 import { useReviewSession } from "../telemetry/review-session";
@@ -272,7 +271,6 @@ function Run({
   const [lastGraded, setLastGraded] = useState<Graded | null>(null);
   // A card a swipe brought back arrives revealed, with nothing left to play.
   const [returned, setReturned] = useState(false);
-  const [hint, setHint] = useState(false);
   // How far into the card's hook the learner went, held for the card on screen: a peek before the
   // reveal is help with recall, and a look after it is not.
   const [aidState, setAidState] = useState({ key: "", peeked: false, shown: false });
@@ -373,18 +371,6 @@ function Run({
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
   }, [current]);
 
-  // The first card with a grade before it shows how to take that grade back, once on this phone.
-  useEffect(() => {
-    if (!lastGraded || undoHintSeen()) return;
-    markUndoHintSeen();
-    setHint(true);
-  }, [lastGraded]);
-  useEffect(() => {
-    if (!hint) return;
-    const timer = setTimeout(() => setHint(false), 6000);
-    return () => clearTimeout(timer);
-  }, [hint]);
-
   const ended = paused || (!!leg && !current);
   // Leaving partway ends on the end screen, as the web does, unless nothing was added since the last one.
   const added = !!state && !!mark && state.attempts > mark.attempts;
@@ -398,7 +384,6 @@ function Run({
     Haptics.selectionAsync();
     undone.current.add(last.grade.reviewedAt);
     setLastGraded(null);
-    setHint(false);
     if (last.listed) {
       const key = keyOf(last.item);
       setListCards((c) => ({ ...c, graded: withoutKey(c.graded, key) }));
@@ -789,7 +774,6 @@ function Run({
       hook: hookShown ? hook : null,
     });
     setReturned(false);
-    setHint(false);
     setSending((n) => n + 1);
     setRevealed(false);
     setNow(new Date());
@@ -896,7 +880,6 @@ function Run({
               />
             )}
           </CardStack>
-          {hint && !revealed && <UndoHint />}
         </UndoArea>
       </View>
       {/* The card's menu, after the reveal: a tap on the card, never a primary action of review. */}

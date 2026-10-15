@@ -559,6 +559,9 @@ export const CARD_LIMITS = {
   hook: 200,
 } as const;
 
+/** How many tags a card may carry, and how long each may be. */
+export const TAG_LIMITS = { count: 20, length: 40 } as const;
+
 export const CardInput = z.object({
   id: ClientId.optional(),
   deckId: z.string().min(1, "Choose a deck."),
@@ -590,7 +593,7 @@ export const CardInput = z.object({
         "A short association in the meaning language, such as a sound-alike word or a picture in the mind, that leads back to the answer without giving any of it away. Review shows it under the cue: the learner can peek at it before the reveal, which rules out Easy, or show it after.",
     }),
   language: LanguageTag.nullable().optional(),
-  tags: z.array(z.string().trim().min(1).max(40)).max(20).optional(),
+  tags: z.array(z.string().trim().min(1).max(TAG_LIMITS.length)).max(TAG_LIMITS.count).optional(),
   source: z.string().trim().max(CARD_LIMITS.source).optional(),
   directions: Directions.nullable()
     .optional()

@@ -7,11 +7,12 @@ import { SEARCHED_PAST, SearchField, useSearched } from "../ui/menu";
 import { Text } from "../ui/primitives";
 import { SheetGroup, SheetRow } from "../ui/sheet";
 import { useChoices } from "./choices";
-import { isTextMode, ModesChoices } from "./modes";
+import { ModesChoices } from "./modes";
 import { PictureChoices } from "./picture";
+import { TagsChoices } from "./tags";
 
 /** One of Add a word's choices, each opened from its chip as a sheet over the card. */
-export type ChoiceKind = "deck" | "section" | "picture" | "modes";
+export type ChoiceKind = "deck" | "section" | "picture" | "modes" | "tags";
 
 /** Each choice's name, the title of its sheet. */
 export const CHOICE_TITLES: Record<ChoiceKind, MessageDescriptor> = {
@@ -19,11 +20,14 @@ export const CHOICE_TITLES: Record<ChoiceKind, MessageDescriptor> = {
   section: msg`Section`,
   picture: msg`Picture`,
   modes: msg`How it’s asked`,
+  tags: msg`Tags`,
 };
 
 interface ChoiceProps {
   /** Once one of a list is chosen, which closes the sheet. */
   onChosen?: () => void;
+  /** The card as typed so far, which the modes read and the picture's description must not name. */
+  card: { term: string; meaning: string };
 }
 
 /** The decks to add to, searched past fifteen as Select's are; a tap chooses one and closes the sheet. */
@@ -97,18 +101,36 @@ function SectionChoice({ onChosen }: ChoiceProps) {
 }
 
 /** How the card is asked; several can be ticked, so the sheet stays until it is swiped away. */
-function ModesChoice() {
-  const { deckId, modes, setModes } = useChoices();
+function ModesChoice({ card }: ChoiceProps) {
+  const { deckId, modes, setModes, picture } = useChoices();
   const decks = useDecks().data ?? [];
   const deck = decks.find((d) => d.id === deckId) ?? decks[0];
-  const deckModes = (deck?.reviewModes ?? []).map(modeKey).filter(isTextMode);
-  return <ModesChoices value={modes} deckModes={deckModes} onChange={setModes} />;
+  return (
+    <ModesChoices
+      value={modes}
+      deckModes={(deck?.reviewModes ?? []).map(modeKey)}
+      onChange={setModes}
+      term={card.term}
+      meaning={card.meaning}
+      picture={!picture ? "none" : picture.description.trim() ? "described" : "undescribed"}
+    />
+  );
 }
 
 /** The card's picture, taken or chosen and described. */
-function PictureChoice() {
+function PictureChoice({ card }: ChoiceProps) {
   const { picture, setPicture } = useChoices();
-  return <PictureChoices value={picture} onChange={setPicture} />;
+  return <PictureChoices value={picture} onChange={setPicture} card={card} />;
+}
+
+/** The card's tags, which stay for the next card. */
+function TagsChoice({ onChosen }: ChoiceProps) {
+  const { deckId, tags, setTags } = useChoices();
+  const decks = useDecks().data ?? [];
+  const deck = decks.find((d) => d.id === deckId) ?? decks[0];
+  return (
+    <TagsChoices value={tags} onChange={setTags} deckId={deck?.id} onDone={() => onChosen?.()} />
+  );
 }
 
 /** What each choice's sheet holds, by the chip that opens it. */
@@ -117,4 +139,5 @@ export const CHOICES: Record<ChoiceKind, (props: ChoiceProps) => React.JSX.Eleme
   section: SectionChoice,
   picture: PictureChoice,
   modes: ModesChoice,
+  tags: TagsChoice,
 };

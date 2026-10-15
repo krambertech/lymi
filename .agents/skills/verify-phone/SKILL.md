@@ -16,6 +16,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Today | [today.md](features/today.md) |
 | Review | [review.md](features/review.md) |
 | Add a card | [add-card.md](features/add-card.md) |
+| Card choices: tags, picture modes, picture description | [card-choices.md](features/card-choices.md) |
 | Library and the deck page | [library.md](features/library.md) |
 | Series | [series.md](features/series.md) |
 | Insights | [insights.md](features/insights.md) |

@@ -213,6 +213,10 @@ export const analyticsEvents = {
     important: z.boolean(),
     channel: z.enum(["app", "api", "mcp"]),
   }),
+  entry_opened: z.object({
+    entry: z.enum(["control", "shortcut", "quick_action", "widget"]),
+    place: z.enum(["add", "review", "search"]),
+  }),
 } as const;
 export type AnalyticsName = keyof typeof analyticsEvents;
 export type AnalyticsProperties<N extends AnalyticsName> = z.infer<(typeof analyticsEvents)[N]>;
@@ -261,6 +265,7 @@ export const analyticsProducers = {
   card_importance_set: ["worker"],
   deck_enrichment_changed: ["worker"],
   deck_purpose_set: ["worker"],
+  entry_opened: ["phone"],
 } satisfies Record<AnalyticsName, readonly AnalyticsProducer[]>;
 
 export function eventProperties(

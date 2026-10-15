@@ -45,3 +45,4 @@ yarn-error.*
 # Share to Lymi copies Onest from node_modules at prebuild
 /targets/share/fonts
 /targets/share/Assets.xcassets
+/targets/controls/Assets.xcassets

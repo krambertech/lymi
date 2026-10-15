@@ -19,3 +19,7 @@ packageExtensions:
       "@babel/core": ^7.29.7
       "@babel/generator": ^7.29.0
       "@babel/traverse": ^7.29.0
+
+# apple-targets 5.0.0 takes expo-widgets' extension for its own target; the patch matches by name only.
+patchedDependencies:
+  "@bacons/apple-targets@5.0.0": patches/@bacons__apple-targets@5.0.0.patch

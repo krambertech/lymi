@@ -6,8 +6,8 @@ import { writes } from "@lymi/client/writes";
 import { useQueryClient } from "@tanstack/react-query";
 import { File } from "expo-file-system";
 import * as Haptics from "expo-haptics";
-import { useRouter } from "expo-router";
-import { useRef, useState } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect, useRef, useState } from "react";
 import { ScrollView, type TextInput, View } from "react-native";
 import { CardFields, FORM_FIELD, useFormFields } from "../capture/card-fields";
 import { ChipIn } from "../capture/chip-in";
@@ -81,7 +81,17 @@ function Composer() {
   const deckSaid = said(t`Deck`, deckName);
   const list = formatList(tags, i18n.locale);
   const [enrich, setEnrich] = useState(() => captureStore.getBoolean(CAPTURE_KEYS.enrich) ?? true);
-  const [draft, setDraft] = useState<Draft>(EMPTY);
+  // Siri and Shortcuts can name the term: `lymi://capture?term=gelato`.
+  const { term: named } = useLocalSearchParams<{ term?: string }>();
+  const [draft, setDraft] = useState<Draft>(() => ({ ...EMPTY, term: named?.trim() ?? "" }));
+  // A shortcut run while this screen is open changes its params rather than opening another.
+  const lastNamed = useRef(named);
+  useEffect(() => {
+    if (named === lastNamed.current) return;
+    lastNamed.current = named;
+    const term = named?.trim();
+    if (term) setDraft((d) => ({ ...d, term }));
+  }, [named]);
   const write = (key: keyof Draft) => (value: string) => setDraft((d) => ({ ...d, [key]: value }));
   const fields = useFormFields(draft);
   const form = useReveal();

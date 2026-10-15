@@ -46,6 +46,9 @@ import { withoutDropped } from "./dropped";
 // Each screen reads one resource under the web's query key, so a grade refreshes only what it moves.
 
 export const useDecks = () => useQuery(decksQuery);
+/** The decks a card can be added to: only an owner adds cards, as on the web. */
+export const useOwnedDecks = () =>
+  useQuery({ ...decksQuery, select: (decks) => decks.filter((d) => d.role === "owner") });
 export const useArchivedDecks = () => useQuery(archivedDecksQuery);
 export const useArchivedCards = () => useInfiniteQuery(archivedCardPagesQuery);
 export const useDeckCards = (deckId: string) => useQuery(deckCardsQuery(deckId));

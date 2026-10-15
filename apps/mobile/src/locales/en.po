@@ -10,6 +10,9 @@ msgstr ""
 msgid "“{deckName}” is reviewed with the other decks in its series."
 msgstr "“{deckName}” is reviewed with the other decks in its series."
 
+msgid "“{label}” was already in {deckName}, so the copy added offline was left out."
+msgstr "“{label}” was already in {deckName}, so the copy added offline was left out."
+
 msgid "“{term}” is already in {deck}"
 msgstr "“{term}” is already in {deck}"
 
@@ -378,6 +381,12 @@ msgstr "90 days"
 msgid "A card keeps its progress and leaves its section."
 msgstr "A card keeps its progress and leaves its section."
 
+msgid "A change made offline couldn’t be saved. {reason}"
+msgstr "A change made offline couldn’t be saved. {reason}"
+
+msgid "A change to “{label}” made offline couldn’t be saved. {reason}"
+msgstr "A change to “{label}” made offline couldn’t be saved. {reason}"
+
 msgid "A connected app"
 msgstr "A connected app"
 
@@ -579,6 +588,9 @@ msgstr "Archive card"
 msgid "Archive deck"
 msgstr "Archive deck"
 
+msgid "Archive the decks"
+msgstr "Archive the decks"
+
 msgid "Archived"
 msgstr "Archived"
 
@@ -716,6 +728,9 @@ msgstr "Cards"
 
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Cards from Marco’s Tuesday lessons."
+
+msgid "Cards go in a deck you own. Create one first."
+msgstr "Cards go in a deck you own. Create one first."
 
 msgid "Cards outside a section"
 msgstr "Cards outside a section"
@@ -1067,6 +1082,12 @@ msgstr "Decks"
 
 msgid "Decks to review"
 msgstr "Decks to review"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Delete “{seriesName}”?"
+msgstr "Delete “{seriesName}”?"
 
 msgid "Delete series"
 msgstr "Delete series"
@@ -1556,6 +1577,9 @@ msgstr "Keep member"
 
 msgid "Keep studying"
 msgstr "Keep studying"
+
+msgid "Keep the decks"
+msgstr "Keep the decks"
 
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
@@ -2605,6 +2629,12 @@ msgstr "The join link needs a connection"
 
 msgid "The link stops working for good. People who joined stay."
 msgstr "The link stops working for good. People who joined stay."
+
+msgid "The series is deleted for good."
+msgstr "The series is deleted for good."
+
+msgid "The series is deleted for good. Its decks can stay in Library or be archived with it."
+msgstr "The series is deleted for good. Its decks can stay in Library or be archived with it."
 
 msgid "Their invitation link stops working. You can invite them again any time."
 msgstr "Their invitation link stops working. You can invite them again any time."

@@ -13,6 +13,14 @@ name: Add a card
     text: "Continue"
     optional: true
 - assertVisible: "Deck: ${DECK}"
+# The deck choice lists only decks the learner owns, so the joined deck is not there.
+- tapOn: "Deck: ${DECK}"
+- extendedWaitUntil:
+    visible: "${DECK}"
+    timeout: 10000
+- assertNotVisible: "${SHARED}"
+- takeScreenshot: 00-decks
+- tapOn: "${DECK}"
 # Capture remembers the AI switch, so turn it off only when it is on.
 - runFlow:
     when:

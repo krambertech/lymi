@@ -831,6 +831,9 @@ msgstr "Не удалось архивировать {0}."
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Не удалось отменить приглашение. Попробуй ещё раз."
 
+msgid "Couldn’t change the picture."
+msgstr ""
+
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Не удалось изменить фото. Проверь соединение и попробуй ещё раз."
 
@@ -2287,6 +2290,9 @@ msgstr "Все колоды: {label}"
 msgid "See the meaning, recall {word}"
 msgstr ""
 
+msgid "See the meaning, recall the term"
+msgstr ""
+
 msgid "See the meaning, recall the term."
 msgstr "Увидеть значение и вспомнить термин."
 
@@ -2297,6 +2303,12 @@ msgid "See the picture, recall {word}"
 msgstr ""
 
 msgid "See the picture, recall the meaning"
+msgstr ""
+
+msgid "See the picture, recall the term"
+msgstr ""
+
+msgid "See the term, recall what it means"
 msgstr ""
 
 msgid "See the term, recall what it means."
@@ -2560,9 +2572,6 @@ msgstr "Ссылке для присоединения нужно соедине
 
 msgid "The link stops working for good. People who joined stay."
 msgstr "Ссылка перестанет работать навсегда. Те, кто присоединился, останутся."
-
-msgid "the term"
-msgstr ""
 
 msgid "Their invitation link stops working. You can invite them again any time."
 msgstr "Ссылка из приглашения перестанет работать. Ты можешь пригласить снова в любой момент."

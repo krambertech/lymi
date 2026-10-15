@@ -831,6 +831,9 @@ msgstr "Couldn’t archive {0}."
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Couldn’t cancel the invitation. Try again."
 
+msgid "Couldn’t change the picture."
+msgstr "Couldn’t change the picture."
+
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Couldn’t change your photo. Check your connection and try again."
 
@@ -2287,6 +2290,9 @@ msgstr "See all {label} decks"
 msgid "See the meaning, recall {word}"
 msgstr "See the meaning, recall {word}"
 
+msgid "See the meaning, recall the term"
+msgstr "See the meaning, recall the term"
+
 msgid "See the meaning, recall the term."
 msgstr "See the meaning, recall the term."
 
@@ -2298,6 +2304,12 @@ msgstr "See the picture, recall {word}"
 
 msgid "See the picture, recall the meaning"
 msgstr "See the picture, recall the meaning"
+
+msgid "See the picture, recall the term"
+msgstr "See the picture, recall the term"
+
+msgid "See the term, recall what it means"
+msgstr "See the term, recall what it means"
 
 msgid "See the term, recall what it means."
 msgstr "See the term, recall what it means."
@@ -2560,9 +2572,6 @@ msgstr "The join link needs a connection"
 
 msgid "The link stops working for good. People who joined stay."
 msgstr "The link stops working for good. People who joined stay."
-
-msgid "the term"
-msgstr "the term"
 
 msgid "Their invitation link stops working. You can invite them again any time."
 msgstr "Their invitation link stops working. You can invite them again any time."

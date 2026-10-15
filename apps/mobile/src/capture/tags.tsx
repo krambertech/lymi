@@ -45,11 +45,16 @@ export function TagsBox({
   const setDraft = onDraft ?? setOwn;
   const full = value.length >= TAG_LIMITS.count;
   const type = (text: string) => {
-    // A pasted "streets, signs" is two tags; what follows the last comma is still being typed.
+    // A pasted "streets, signs" is two tags, so the cap is per tag here rather than a maxLength that cuts the paste.
     const cut = text.lastIndexOf(",");
-    if (cut === -1) return setDraft(text);
+    if (cut === -1) return setDraft(text.slice(0, TAG_LIMITS.length));
     onChange(addTags(value, text.slice(0, cut)));
-    setDraft(text.slice(cut + 1).trimStart());
+    setDraft(
+      text
+        .slice(cut + 1)
+        .trimStart()
+        .slice(0, TAG_LIMITS.length),
+    );
   };
   return (
     <View className="flex-row flex-wrap items-center gap-1.5">
@@ -74,7 +79,6 @@ export function TagsBox({
         onChangeText={type}
         autoFocus={autoFocus}
         editable={!full}
-        maxLength={TAG_LIMITS.length}
         placeholder={
           full ? t`That’s the most tags a card can have` : value.length ? "" : t`Add a tag`
         }

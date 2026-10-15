@@ -139,13 +139,13 @@ export default function EditCard() {
       return;
     }
     setSaving(true);
+    let written: Card | null = null;
     try {
-      let written = card;
       if (Object.keys(changes).length > 0) {
         written = (await writes.updateCard(card, changes)).card;
         cardEdited(written);
       }
-      const pictured = await savePicture(written, picture);
+      const pictured = await savePicture(written ?? card, picture);
       if (pictured) {
         cardEdited(pictured);
         void qc.invalidateQueries({ queryKey: ["decks"] });
@@ -154,7 +154,11 @@ export default function EditCard() {
       router.back();
     } catch (e) {
       setSaving(false);
-      Alert.alert(t`Couldn’t save the card.`, errorMessage(e));
+      // The text may be saved, or queued offline, before the picture fails, so the alert names only what failed.
+      Alert.alert(
+        written ? t`Couldn’t change the picture.` : t`Couldn’t save the card.`,
+        errorMessage(e),
+      );
     }
   };
   // Marked until changed, as a field the learner rewrites becomes theirs.
@@ -264,7 +268,7 @@ export default function EditCard() {
           />
         )}
         {held === "tags" && (
-          <TagsChoices value={shownTags} onChange={setTags} deckId={deck?.id} onDone={close} />
+          <TagsChoices value={shownTags} onChange={setTags} deckId={params.deck} onDone={close} />
         )}
       </Sheet>
     </View>

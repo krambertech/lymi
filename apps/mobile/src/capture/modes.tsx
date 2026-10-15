@@ -33,14 +33,20 @@ export function ModesChoices({
 }: ModesChoicesProps) {
   const { t, i18n } = useLingui();
   const chosen = value ?? [];
-  const word = term.trim() || t`the term`;
+  const word = term.trim();
   const answer = meaning.trim();
+  // Each variant is a whole message, so a translation never slots a phrase into another sentence.
   const blurb = (key: ReviewModeKey): string => {
-    if (key === "term_to_meaning")
+    if (key === "term_to_meaning") {
+      if (!word) return t`See the term, recall what it means`;
       return answer ? t`See ${word}, recall “${answer}”` : t`See ${word}, recall what it means`;
-    if (key === "meaning_to_term")
+    }
+    if (key === "meaning_to_term") {
+      if (!word) return t`See the meaning, recall the term`;
       return answer ? t`See “${answer}”, recall ${word}` : t`See the meaning, recall ${word}`;
-    if (key === "image_to_term") return t`See the picture, recall ${word}`;
+    }
+    if (key === "image_to_term")
+      return word ? t`See the picture, recall ${word}` : t`See the picture, recall the term`;
     return answer ? t`See the picture, recall “${answer}”` : t`See the picture, recall the meaning`;
   };
   const waiting =

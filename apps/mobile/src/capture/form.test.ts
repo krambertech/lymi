@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { EMPTY_FORM, editPatch } from "./form";
+import { choicesPatch, EMPTY_FORM, editPatch, pictureWrite } from "./form";
 
 const opened = { ...EMPTY_FORM, term: "sbrigarsi", meaning: "", notes: "" };
 
@@ -30,5 +30,33 @@ describe("saving Edit card", () => {
     expect(editPatch({ ...opened, meaning: "to hurry up" }, { meaning: "to hurry up " })).toEqual(
       {},
     );
+  });
+});
+
+describe("Edit card's choices", () => {
+  const card = { reviewModes: null, tags: ["noun"], image: null };
+
+  it("sends modes and tags only once chosen and changed", () => {
+    expect(choicesPatch(card, undefined, undefined)).toEqual({});
+    expect(choicesPatch(card, null, ["noun"])).toEqual({});
+    expect(choicesPatch(card, ["image_to_term"], ["noun", "city"])).toEqual({
+      tags: ["noun", "city"],
+      reviewModes: [{ cue: "image", target: "term" }],
+    });
+  });
+
+  it("archives, uploads or redescribes the picture as the form left it", () => {
+    const kept = { uri: "/img", name: "", type: "", description: "a sign", kept: true };
+    const pictured = { image: { description: "a sign" } } as Parameters<typeof pictureWrite>[0];
+    expect(pictureWrite(card, undefined)).toBeNull();
+    expect(pictureWrite(card, null)).toBeNull();
+    expect(pictureWrite(pictured, null)).toEqual({ kind: "archive" });
+    expect(pictureWrite(pictured, kept)).toBeNull();
+    expect(pictureWrite(pictured, { ...kept, description: " " })).toEqual({
+      kind: "describe",
+      description: null,
+    });
+    const fresh = { uri: "file:///a.jpg", name: "a.jpg", type: "image/jpeg", description: "" };
+    expect(pictureWrite(pictured, fresh)).toEqual({ kind: "upload", picture: fresh });
   });
 });

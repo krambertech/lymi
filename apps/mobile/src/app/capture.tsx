@@ -3,26 +3,27 @@ import { api, errorMessage } from "@lymi/client/api";
 import { addInput, clearSent } from "@lymi/client/card-input";
 import { decksQuery, roundsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { CHIPS_LEAVE } from "@lymi/design";
 import { useQueryClient } from "@tanstack/react-query";
 import { File } from "expo-file-system";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useEffect, useRef, useState } from "react";
-import { Keyboard, ScrollView, type TextInput, View } from "react-native";
-import { useSharedValue, withTiming } from "react-native-reanimated";
+import { useRef, useState } from "react";
+import { ScrollView, type TextInput, View } from "react-native";
 import { CardFields, FORM_FIELD, useFormFields } from "../capture/card-fields";
-import { CHIPS_RETURN, ChipIn } from "../capture/chip-in";
+import { ChipIn } from "../capture/chip-in";
 import { type ChipKey, markChipUsed, useRecentFirst } from "../capture/chip-order";
+import { useChoiceSheet } from "../capture/choice-sheet";
 import { CHOICE_TITLES, CHOICES, type ChoiceKind } from "../capture/choice-sheets";
 import { ChoicesProvider, useChoices } from "../capture/choices";
 import { EMPTY_FORM, type FormValues } from "../capture/form";
 import type { Picture } from "../capture/model";
 import { MODE_LABELS } from "../capture/modes";
+import { describesAnswer } from "../capture/picture";
 import { useReveal } from "../capture/reveal";
+import { tagsSummary } from "../capture/tags";
 import { CAPTURE_KEYS, captureStore } from "../data/kept";
 import { useDecks, useSections } from "../data/queries";
-import { timed } from "../theme/motion";
+import { formatList } from "../i18n/list";
 import { usePalette } from "../theme/palette";
 import { FieldChip, FieldChipRow } from "../ui/field-chip";
 import { FormHeader } from "../ui/form-header";
@@ -32,10 +33,6 @@ import { Icon, Press, Text } from "../ui/primitives";
 import { Sheet } from "../ui/sheet";
 import { OnGlass } from "../ui/surface";
 import { ToastHost, toast } from "../ui/toast-host";
-
-/** The chips' clock runs straight; each chip eases its own rise. */
-const CHIPS_BACK = { duration: CHIPS_RETURN, ease: "linear" } as const;
-const SETTLE = { duration: 0.25, ease: "linear" } as const;
 
 /** Add a word's own toasts, which show over its chips since the app's sit under the sheet. */
 const TOASTS = "capture";
@@ -76,12 +73,13 @@ function Composer() {
   const p = usePalette();
   const decksQuery_ = useDecks();
   const decks = decksQuery_.data ?? [];
-  const { deckId, sectionId, picture, setPicture, modes, setModes } = useChoices();
+  const { deckId, sectionId, picture, setPicture, modes, setModes, tags } = useChoices();
   const deck = decks.find((d) => d.id === deckId) ?? decks[0];
   const deckName = deck?.name ?? "";
   // Read as a Select's trigger is, so the deck pill and the section chip share that message.
   const said = (label: string, chosen: string) => t`${label}: ${chosen}`;
   const deckSaid = said(t`Deck`, deckName);
+  const list = formatList(tags, i18n.locale);
   const [enrich, setEnrich] = useState(() => captureStore.getBoolean(CAPTURE_KEYS.enrich) ?? true);
   // Siri and Shortcuts can name the term: `lymi://capture?term=gelato`.
   const { term: named } = useLocalSearchParams<{ term?: string }>();
@@ -96,37 +94,10 @@ function Composer() {
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const termRef = useRef<TextInput>(null);
-  // The open choice, and the one its sheet holds, which stays while the sheet goes.
-  const [choice, setChoice] = useState<ChoiceKind | null>(null);
-  const [held, setHeld] = useState<ChoiceKind | null>(null);
-  // While a choice is open the form keeps the keyboard's room, so the chips hold still and fade.
-  const hold = useSharedValue(0);
-  const chips = useSharedValue(1);
-  const choosing = useRef(false);
-  choosing.current = choice !== null;
-  useEffect(() => {
-    const shown = Keyboard.addListener("keyboardDidShow", () => {
-      if (!choosing.current) hold.value = withTiming(0, timed(SETTLE));
-    });
-    return () => shown.remove();
-  }, [hold]);
-
-  const open = (kind: ChoiceKind) => {
-    // A second tap lands while the keyboard is already leaving, and would drop the held room.
-    if (choosing.current) return;
-    choosing.current = true;
-    hold.value = Keyboard.isVisible() ? (Keyboard.metrics()?.height ?? 0) : 0;
-    chips.value = withTiming(0, timed(CHIPS_LEAVE));
-    Keyboard.dismiss();
-    setHeld(kind);
-    setChoice(kind);
-  };
-  const close = () => setChoice(null);
-  // Once the sheet has gone, the keyboard comes back on the term and the chips return over it.
-  const closed = () => {
-    chips.value = withTiming(1, timed(CHIPS_BACK));
-    termRef.current?.focus();
-  };
+  // Once a choice's sheet has gone, the keyboard comes back on the term.
+  const { held, hold, chips, open, close, sheet } = useChoiceSheet<ChoiceKind>(() =>
+    termRef.current?.focus(),
+  );
 
   const add = async () => {
     const text = draft.term.trim();
@@ -136,6 +107,11 @@ function Composer() {
       return;
     }
     if (!deck || pending) return;
+    // The server refuses a description that names the answer, so it is fixed before the card exists.
+    if (describesAnswer({ term: text, meaning: draft.meaning.trim() }, picture)) {
+      open("picture");
+      return;
+    }
     const sent = Object.fromEntries(
       Object.entries(draft).map(([key, value]) => [key, value.trim()]),
     ) as Draft;
@@ -148,6 +124,7 @@ function Composer() {
           ...sent,
           sectionId: section?.id ?? null,
           reviewModes: modes,
+          tags,
         }),
         enrich,
       });
@@ -356,6 +333,22 @@ function Composer() {
                       ),
                     },
                     {
+                      key: "tags" as const,
+                      chip: (
+                        <FieldChip
+                          key="tags"
+                          icon="tags"
+                          accessibilityLabel={tags.length ? t`Tags: ${list}` : t`Tags`}
+                          onPress={() => {
+                            markChipUsed("tags");
+                            open("tags");
+                          }}
+                        >
+                          {tagsSummary(tags) ?? t`Tags`}
+                        </FieldChip>
+                      ),
+                    },
+                    {
                       key: "modes" as const,
                       chip: (
                         <FieldChip
@@ -392,13 +385,8 @@ function Composer() {
         </OnGlass>
       </KeyboardRoom>
       {/* Filled from its first frame, since iOS sizes the sheet to what it holds as it rises. */}
-      <Sheet
-        open={choice !== null}
-        onOpenChange={(open) => !open && close()}
-        onDismiss={closed}
-        title={held ? i18n._(CHOICE_TITLES[held]) : ""}
-      >
-        {Choice && <Choice onChosen={close} />}
+      <Sheet {...sheet} title={held ? i18n._(CHOICE_TITLES[held]) : ""}>
+        {Choice && <Choice onChosen={close} card={{ term: draft.term, meaning: draft.meaning }} />}
       </Sheet>
     </View>
   );

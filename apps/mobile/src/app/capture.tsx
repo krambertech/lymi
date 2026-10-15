@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { File } from "expo-file-system";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ScrollView, type TextInput, View } from "react-native";
 import { CardFields, FORM_FIELD, useFormFields } from "../capture/card-fields";
 import { ChipIn } from "../capture/chip-in";

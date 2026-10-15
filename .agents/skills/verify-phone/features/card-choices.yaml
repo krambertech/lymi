@@ -1,0 +1,153 @@
+# Card choices: tags, picture modes and the picture's description on Add a word, then tags on Edit card.
+appId: app.lymi
+name: Card choices
+---
+- runFlow: _open.yaml
+- tapOn: "Today"
+- tapOn: "Add a card"
+- extendedWaitUntil:
+    visible: "Add to .*"
+    timeout: 20000
+- tapOn:
+    text: "Continue"
+    optional: true
+- assertVisible: "Deck: ${DECK}"
+- runFlow:
+    when:
+      visible: "Meaning Leave it empty.*"
+    commands:
+      - tapOn: "Fill in the rest with AI"
+- tapOn: "Term.*"
+- inputText: "${TERM}"
+- tapOn: "Meaning.*"
+- inputText: "${MEANING}"
+# The chips run most recently used first, so a choice may sit past the screen's edge; the row
+# rides over the keyboard until the first sheet, and at the foot once a sheet has closed.
+- runFlow:
+    when:
+      notVisible: "Tags"
+    commands:
+      - swipe:
+          start: 85%, 58%
+          end: 5%, 58%
+- runFlow:
+    when:
+      notVisible: "Tags"
+    commands:
+      - swipe:
+          start: 85%, 58%
+          end: 5%, 58%
+- tapOn: "Tags"
+- inputText: "${TAG_ONE}"
+- pressKey: Enter
+- inputText: "${TAG_TWO}"
+- pressKey: Enter
+- assertVisible: "Remove the tag ${TAG_TWO}"
+- takeScreenshot: 01-tags
+- swipe:
+    start: 50%, 30%
+    end: 50%, 95%
+- waitForAnimationToEnd
+- runFlow:
+    file: _chip.yaml
+    env:
+      CHIP: "How it’s asked"
+- tapOn: "How it’s asked"
+# Without a picture, only the two text modes are offered.
+- assertVisible: "Production.*"
+- assertNotVisible: "Picture → term.*"
+- takeScreenshot: 02-modes-without-picture
+- swipe:
+    start: 50%, 30%
+    end: 50%, 95%
+- waitForAnimationToEnd
+- runFlow:
+    file: _chip.yaml
+    env:
+      CHIP: "Picture"
+- tapOn: "Picture"
+- tapOn: "Choose from photos"
+# iOS's photo picker is its own process: the first photo is tapped by position, then its crop is kept.
+- extendedWaitUntil:
+    visible: "Photos"
+    timeout: 20000
+- tapOn:
+    point: "16%,43%"
+- tapOn: "Choose"
+- extendedWaitUntil:
+    visible: "Clear the picture"
+    timeout: 20000
+- tapOn: "Description.*"
+- inputText: "${BAD_DESCRIPTION}"
+- assertVisible: "Describe what the picture shows without naming the term or the meaning."
+- takeScreenshot: 03-description-names-the-answer
+- swipe:
+    start: 50%, 30%
+    end: 50%, 95%
+- waitForAnimationToEnd
+# Add refuses to send it and reopens the picture's sheet.
+- tapOn: "Add to ${DECK}"
+- extendedWaitUntil:
+    visible: "Clear the picture"
+    timeout: 20000
+- tapOn: "Description.*"
+- eraseText: 60
+- inputText: "${DESCRIPTION}"
+- assertNotVisible: "Describe what the picture shows without naming the term or the meaning."
+- swipe:
+    start: 50%, 30%
+    end: 50%, 95%
+- waitForAnimationToEnd
+- runFlow:
+    file: _chip.yaml
+    env:
+      CHIP: "How it’s asked"
+- tapOn: "How it’s asked"
+- tapOn: "Picture → term.*"
+- takeScreenshot: 04-modes-with-picture
+- swipe:
+    start: 50%, 30%
+    end: 50%, 95%
+- waitForAnimationToEnd
+- tapOn: "Add to ${DECK}"
+- extendedWaitUntil:
+    visible: "Added “${TERM}” to ${DECK}"
+    timeout: 30000
+# Tags stay for the next card.
+- runFlow:
+    file: _chip.yaml
+    env:
+      CHIP: "Tags: ${TAG_ONE}.*"
+- assertVisible: "Tags: ${TAG_ONE}.*"
+- takeScreenshot: 05-added
+- tapOn: "^Done$"
+# Edit card from the card page: Tags opens the form on the tags' sheet.
+- tapOn: "Library"
+- extendedWaitUntil:
+    visible: "New deck"
+    timeout: 20000
+# Deck rows sit inside expo-router's Link.Trigger, which hides them from XCUITest; the first row is tapped by position.
+- tapOn:
+    point: "50%,24%"
+- scrollUntilVisible:
+    element: "${TERM}, .*"
+- tapOn: "${TERM}, .*"
+- extendedWaitUntil:
+    visible: "Details"
+    timeout: 20000
+- scrollUntilVisible:
+    element: "Tags.*"
+- tapOn: "Tags.*${TAG_TWO}.*"
+- extendedWaitUntil:
+    visible: "Remove the tag ${TAG_TWO}"
+    timeout: 20000
+- tapOn: "Remove the tag ${TAG_TWO}"
+- takeScreenshot: 06-edit-tags
+- swipe:
+    start: 50%, 30%
+    end: 50%, 95%
+- waitForAnimationToEnd
+- tapOn: "Save"
+- extendedWaitUntil:
+    visible: "Details"
+    timeout: 20000

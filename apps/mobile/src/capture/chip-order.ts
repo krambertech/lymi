@@ -3,7 +3,7 @@ import { captureStore } from "../data/kept";
 import type { FormField } from "./form";
 
 /** A chip over the keyboard that adds a field or opens a choice. */
-export type ChipKey = FormField | "section" | "picture" | "modes";
+export type ChipKey = FormField | "section" | "picture" | "modes" | "tags";
 
 const USED_KEY = "chips-used";
 

@@ -1,5 +1,6 @@
 import type { Card } from "@lymi/client/api";
-import type { CardPatch } from "@lymi/core";
+import { type CardPatch, modeKey, modeOf, type ReviewModeKey } from "@lymi/core";
+import type { Picture } from "./model";
 
 /** A card's text fields in the order Add a word and Edit card show them. */
 export const FORM_FIELDS = [
@@ -59,4 +60,39 @@ export function editPatch(card: FormValues, typed: Partial<FormValues>): CardPat
     out = { ...out, ...fieldPatch(f, value) };
   }
   return out;
+}
+
+const same = (a: readonly string[] | null, b: readonly string[] | null) =>
+  a === b || (!!a && !!b && a.length === b.length && a.every((v, i) => v === b[i]));
+
+/** The card's modes and tags as a patch, each only when chosen in the form and changed. */
+export function choicesPatch(
+  card: Pick<Card, "reviewModes" | "tags">,
+  modes: ReviewModeKey[] | null | undefined,
+  tags: string[] | undefined,
+): CardPatch {
+  const out: CardPatch = {};
+  if (tags !== undefined && !same(tags, card.tags)) out.tags = tags;
+  if (modes !== undefined && !same(modes, card.reviewModes?.map(modeKey) ?? null))
+    out.reviewModes = modes?.map(modeOf) ?? null;
+  return out;
+}
+
+/** What saving the form does to the card's picture; `undefined` is a picture left alone. */
+export type PictureWrite =
+  | { kind: "upload"; picture: Picture }
+  | { kind: "describe"; description: string | null }
+  | { kind: "archive" }
+  | null;
+
+export function pictureWrite(
+  card: Pick<Card, "image">,
+  picture: Picture | null | undefined,
+): PictureWrite {
+  if (picture === undefined) return null;
+  if (picture === null) return card.image ? { kind: "archive" } : null;
+  if (!picture.kept) return { kind: "upload", picture };
+  const description = picture.description.trim();
+  if (description === (card.image?.description ?? "")) return null;
+  return { kind: "describe", description: description || null };
 }

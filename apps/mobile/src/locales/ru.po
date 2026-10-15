@@ -418,6 +418,9 @@ msgstr "Добавить"
 msgid "Add a card"
 msgstr "Добавить карточку"
 
+msgid "Add a tag"
+msgstr ""
+
 msgid "Add cards"
 msgstr "Добавить карточки"
 
@@ -444,9 +447,6 @@ msgstr "Добавить в {deckName}"
 
 msgid "Add to Library"
 msgstr "Добавить в Библиотеку"
-
-msgid "Add to this card"
-msgstr "Добавить в карточку"
 
 msgid "Added “{term}” to {deck}"
 msgstr "«{term}» добавлено в колоду {deck}"
@@ -606,6 +606,12 @@ msgstr "Попроси новую ссылку у того, кто ей поде
 
 msgid "Asked"
 msgstr "Режимы"
+
+msgid "Asked once the card has a picture."
+msgstr ""
+
+msgid "Asked once the picture has a description."
+msgstr ""
 
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Не меньше {MIN_PASSWORD_LENGTH} символов."
@@ -824,6 +830,9 @@ msgstr "Не удалось архивировать {0}."
 
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Не удалось отменить приглашение. Попробуй ещё раз."
+
+msgid "Couldn’t change the picture."
+msgstr ""
 
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Не удалось изменить фото. Проверь соединение и попробуй ещё раз."
@@ -1429,6 +1438,9 @@ msgstr "Через час"
 
 msgid "In Library"
 msgstr "В Библиотеке"
+
+msgid "In this deck"
+msgstr ""
 
 msgctxt "language"
 msgid "Indonesian"
@@ -2105,6 +2117,9 @@ msgstr "Исключить участника"
 msgid "Remove photo"
 msgstr "Удалить фото"
 
+msgid "Remove the tag {tag}"
+msgstr ""
+
 msgid "Removed {name} from {deck}"
 msgstr "Доступ к колоде «{deck}» закрыт для {name}"
 
@@ -2252,10 +2267,19 @@ msgstr "Разделы"
 msgid "See “{0}”, recall {1}"
 msgstr "Видишь «{0}», вспоминаешь {1}"
 
+msgid "See “{answer}”, recall {word}"
+msgstr ""
+
 #. placeholder {0}: example.term
 #. placeholder {1}: example.meaning
 msgid "See {0}, recall “{1}”"
 msgstr "Видишь {0}, вспоминаешь «{1}»"
+
+msgid "See {word}, recall “{answer}”"
+msgstr ""
+
+msgid "See {word}, recall what it means"
+msgstr ""
 
 msgid "See all"
 msgstr "Все"
@@ -2263,14 +2287,29 @@ msgstr "Все"
 msgid "See all {label} decks"
 msgstr "Все колоды: {label}"
 
+msgid "See the meaning, recall {word}"
+msgstr ""
+
 msgid "See the meaning, recall the term"
-msgstr "Видишь значение, вспоминаешь термин"
+msgstr ""
 
 msgid "See the meaning, recall the term."
 msgstr "Увидеть значение и вспомнить термин."
 
+msgid "See the picture, recall “{answer}”"
+msgstr ""
+
+msgid "See the picture, recall {word}"
+msgstr ""
+
+msgid "See the picture, recall the meaning"
+msgstr ""
+
+msgid "See the picture, recall the term"
+msgstr ""
+
 msgid "See the term, recall what it means"
-msgstr "Видишь термин, вспоминаешь значение"
+msgstr ""
 
 msgid "See the term, recall what it means."
 msgstr "Увидеть термин и вспомнить его значение."
@@ -2455,6 +2494,9 @@ msgstr "Системная"
 msgid "Tags"
 msgstr "Теги"
 
+msgid "Tags: {list}"
+msgstr ""
+
 msgid "Take a photo"
 msgstr "Сделать фото"
 
@@ -2509,6 +2551,9 @@ msgstr "Это всё."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "Этого уже нет. Обнови страницу, чтобы увидеть изменения."
+
+msgid "That’s the most tags a card can have"
+msgstr ""
 
 msgid "The AI"
 msgstr "AI"

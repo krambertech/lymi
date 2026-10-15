@@ -1,24 +1,35 @@
 import { useLingui } from "@lingui/react/macro";
-import { imageLimits } from "@lymi/core";
+import { imageLimits, revealsAnswer } from "@lymi/core";
 import * as ImagePicker from "expo-image-picker";
 import { Image, TextInput, View } from "react-native";
+import { useSessionHeaders } from "../auth/client";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
-import { SheetGroup, SheetRow } from "../ui/sheet";
+import { SheetError, SheetGroup, SheetRow } from "../ui/sheet";
 import type { Picture } from "./model";
 
 interface PictureChoicesProps {
   value: Picture | null;
   onChange: (value: Picture | null) => void;
+  /** The card the picture is for, whose term and meaning the description must not name. */
+  card: { term: string; meaning: string };
+}
+
+/** Whether a picture's description gives the answer away, which the server refuses. ADR 0014. */
+export function describesAnswer(card: { term: string; meaning: string }, picture: Picture | null) {
+  const description = picture?.description.trim();
+  return !!description && revealsAnswer(card, description);
 }
 
 /**
  * The card's picture, taken or chosen, then described without naming the answer, which is what a
  * screen reader says and what review shows if it cannot load. It is uploaded after the card is added.
  */
-export function PictureChoices({ value, onChange }: PictureChoicesProps) {
+export function PictureChoices({ value, onChange, card }: PictureChoicesProps) {
   const { t } = useLingui();
   const p = usePalette();
+  // The card's own picture is read from the server, which needs the session.
+  const headers = useSessionHeaders();
   const pick = async (from: "camera" | "library") => {
     const options: ImagePicker.ImagePickerOptions = {
       mediaTypes: ["images"],
@@ -49,12 +60,17 @@ export function PictureChoices({ value, onChange }: PictureChoicesProps) {
     <>
       {value && (
         <View className="gap-3">
-          <Image
-            source={{ uri: value.uri }}
-            className="h-44 w-full rounded-xl"
-            resizeMode="cover"
-            accessibilityIgnoresInvertColors
-          />
+          {/* Asked for only with the session, since an image that failed once is not asked for again. */}
+          {value.kept && !headers ? (
+            <View className="h-44 w-full rounded-xl bg-glass-group" />
+          ) : (
+            <Image
+              source={{ uri: value.uri, ...(value.kept && headers ? { headers } : {}) }}
+              className="h-44 w-full rounded-xl"
+              resizeMode={value.kept ? "contain" : "cover"}
+              accessibilityIgnoresInvertColors
+            />
+          )}
           <View className="rounded-xl bg-glass-group px-4">
             <TextInput
               value={value.description}
@@ -72,6 +88,9 @@ export function PictureChoices({ value, onChange }: PictureChoicesProps) {
               maxFontSizeMultiplier={inputCap(17)}
             />
           </View>
+          {describesAnswer(card, value) && (
+            <SheetError>{t`Describe what the picture shows without naming the term or the meaning.`}</SheetError>
+          )}
         </View>
       )}
       <SheetGroup>

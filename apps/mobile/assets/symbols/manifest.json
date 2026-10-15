@@ -28,6 +28,7 @@
   "source": "library.mjs",
   "notes": "notebook-pen.mjs",
   "hook": "anchor.mjs",
+  "tags": "tag.mjs",
   "lock": "lock.mjs",
   "unlock": "lock-open.mjs",
   "here": "map-pin.mjs",

@@ -1,0 +1,19 @@
+# Brings ${CHIP} into view in the chip row at the foot of a card form, scrolling either way.
+appId: app.lymi
+---
+- repeat:
+    times: 3
+    while:
+      notVisible: "${CHIP}"
+    commands:
+      - swipe:
+          start: 85%, 92%
+          end: 5%, 92%
+- repeat:
+    times: 3
+    while:
+      notVisible: "${CHIP}"
+    commands:
+      - swipe:
+          start: 15%, 92%
+          end: 95%, 92%

@@ -9,6 +9,17 @@ export function dayOutcome(attempts: number, goal: number): DayOutcome {
   return attempts > 0 ? "exhausted" : "nothing_due";
 }
 
+/**
+ * Today's outcome as a status line reads it. A day confirmed as nothing due keeps protecting the
+ * streak, but once cards are due, such as a deck added after the first visit, it reads as open.
+ */
+export function shownOutcome(
+  outcome: StreakOut["today"]["outcome"],
+  due: number,
+): StreakOut["today"]["outcome"] {
+  return outcome === "nothing_due" && due > 0 ? "open" : outcome;
+}
+
 const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
   outcome === "goal_met" || outcome === "exhausted";
 

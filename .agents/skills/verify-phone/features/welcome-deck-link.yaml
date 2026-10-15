@@ -5,10 +5,10 @@ name: Welcome from a published deck's link
 - runFlow: _signed-out.yaml
 - openLink: "${LINK}"
 - extendedWaitUntil:
-    visible: "Sign in to add"
+    visible: "Add to Library"
     timeout: 20000
 - takeScreenshot: 01-link
-- tapOn: "Sign in to add"
+- tapOn: "Add to Library"
 - extendedWaitUntil:
     visible: "Dev sign-up as new"
     timeout: 20000

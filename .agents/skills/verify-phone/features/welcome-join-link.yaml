@@ -5,10 +5,10 @@ name: Welcome from a join link
 - runFlow: _signed-out.yaml
 - openLink: "${LINK}"
 - extendedWaitUntil:
-    visible: "Sign in to join"
+    visible: "^Join$"
     timeout: 20000
 - takeScreenshot: 01-link
-- tapOn: "Sign in to join"
+- tapOn: "^Join$"
 - extendedWaitUntil:
     visible: "Dev sign-up as new"
     timeout: 20000

@@ -1,6 +1,8 @@
+import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import type { DeckSummary } from "@lymi/client/api";
 import * as Haptics from "expo-haptics";
-import { useRouter } from "expo-router";
+import { type Href, useRouter } from "expo-router";
 import { View } from "react-native";
 import { Lantern } from "../brand/lantern";
 import { usePalette } from "../theme/palette";
@@ -30,17 +32,29 @@ const CURRENT_DROP = 14;
 /** text-base's line, which a later step's title centres on its number with. */
 const LINE = 21;
 
+type GuideDeck = Pick<DeckSummary, "id" | "name" | "role" | "total">;
+
 /**
  * Today before the first review: three steps on one line that the flame lights down to the step the
- * learner is on, which is the one plate and holds its action. Each step is done by the learner's own
- * data. The web's `StartGuide`, drawn as a path. docs/design/onboarding.md.
+ * learner is on, which is the one plate and holds its action. A step is done only by the learner's
+ * own decks and cards, so a deck someone shared ticks nothing; a learner whose only cards are shared
+ * gets that deck's review instead of the steps. The web's `StartGuide`, drawn as a path.
+ * docs/design/onboarding.md.
  */
-export function StartGuide({ decks, cards }: { decks: number; cards: number }) {
+export function StartGuide({ decks }: { decks: GuideDeck[] }) {
+  const owned = decks.filter((d) => d.role === "owner");
+  const shared = decks.find((d) => d.role !== "owner" && d.total > 0);
+  const ownCards = owned.reduce((n, d) => n + d.total, 0);
+  const current = owned.length === 0 ? 0 : ownCards === 0 ? 1 : 2;
+  useGuideSteps(owned.length === 0 && shared ? 2 : current);
+  if (owned.length === 0 && shared) return <SharedReady deck={shared} />;
+  return <Steps current={current} />;
+}
+
+function Steps({ current }: { current: number }) {
   const { t } = useLingui();
   const router = useRouter();
   const p = usePalette();
-  const current = decks === 0 ? 0 : cards === 0 ? 1 : 2;
-  useGuideSteps(current);
   const steps: Step[] = [
     {
       key: "deck",
@@ -140,6 +154,42 @@ export function StartGuide({ decks, cards }: { decks: number; cards: number }) {
           </View>
         );
       })}
+    </View>
+  );
+}
+
+/** The learner's only cards are in a deck someone shared, so the one thing to do is review it. */
+function SharedReady({ deck }: { deck: GuideDeck }) {
+  const { t } = useLingui();
+  const router = useRouter();
+  return (
+    <View className="gap-5">
+      <View className="flex-row items-start gap-3">
+        <View style={{ width: RAIL, height: HEAD }} className="items-center justify-center">
+          <Lantern size={LANTERN} />
+        </View>
+        <View className="flex-1 gap-0.5">
+          <Text className="text-2xl font-medium text-text" accessibilityRole="header">
+            {t`Your deck is ready`}
+          </Text>
+          <Text className="text-base text-text-2">{t`Insights fill in from your first review.`}</Text>
+        </View>
+      </View>
+      <Plate className="gap-2 p-4">
+        <Text className="text-md font-medium text-text">{deck.name}</Text>
+        <Text className="text-base text-text-2" style={{ fontVariant: ["tabular-nums"] }}>
+          {plural(deck.total, { one: "# card", other: "# cards" })}
+        </Text>
+        <Button
+          label={t`Review`}
+          variant="primary"
+          size="lg"
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            router.push(`/review?deck=${deck.id}` as Href);
+          }}
+        />
+      </Plate>
     </View>
   );
 }

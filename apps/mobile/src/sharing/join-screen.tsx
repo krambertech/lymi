@@ -24,7 +24,7 @@ import type { IconName } from "../ui/icons";
 import { Button, Icon, Text } from "../ui/primitives";
 import { Screen } from "../ui/screen";
 import { Skeleton } from "../ui/skeleton";
-import { promiseJoin, takeJoin } from "./join-intent";
+import { isPromised, promiseJoin, takeJoin } from "./join-intent";
 
 /** A join link someone shared, or "Add to Lymi" on a published deck's public page. */
 export type Arrival =
@@ -118,6 +118,9 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
   });
 
   const key = published ? `add:${arrival.slug}` : `link:${arrival.token}`;
+  // Back from sign-up for this link, the deck was already shown: it joins behind a loading state
+  // rather than appearing a second time.
+  const [resuming] = useState(() => isPromised(key));
   // Back from sign-in for this link: join at once, as the web does, rather than ask twice.
   const resumed = useRef(false);
   useEffect(() => {
@@ -158,7 +161,10 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
       </Screen>
     );
   }
-  if (!preview.data) {
+  const viewer = preview.data?.viewer;
+  const joining =
+    resuming && !failed && (!viewer || viewer === "visitor" || viewer === "signed-out");
+  if (!preview.data || joining) {
     return (
       <Screen title="" back={back} header={<LoadingHeader />}>
         <View />
@@ -273,10 +279,12 @@ function LiveLink({
   const action = deckId ? (
     <Button label={t`Open deck`} variant="primary" size="lg" onPress={() => onOpen(deckId)} />
   ) : viewer === "signed-out" ? (
+    // Signing up and signing in both start here, so the button names the outcome, not the door.
     <Button
-      label={published ? t`Sign in to add` : t`Sign in to join`}
+      label={published ? t`Add to Library` : t`Join`}
       variant="primary"
       size="lg"
+      icon={published ? "plus" : "joined"}
       onPress={onSignIn}
     />
   ) : viewer === "visitor" ? (

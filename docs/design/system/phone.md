@@ -18,7 +18,8 @@ The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the rev
 | --- | --- | --- |
 | Push from the side | A page to read or work in: a deck, a card, a series, Insights, Activity, a deck in Explore | The named back, or a swipe from the start edge |
 | Sheet from below | A task with an end: Add a word, New deck, Edit card, a choice list such as the daily goal, the card menu in a review, the streak | A swipe down, with detents where the task grows |
-| Cover from below | A mode that takes the screen: a review, Welcome and sign-in | X, or pulling the top bar down |
+| Cover from below | A mode that takes the screen: a review | X, or pulling the top bar down |
+| Fade in place | A mode that replaces the screen: Welcome and sign-in | Finishing, or Skip for now |
 
 This is [overlays.md](overlays.md)'s rule in iOS's own navigation: from the side means back, from below means swipe down.
 
@@ -132,7 +133,7 @@ Activity is the web's list ([activity.md](../activity.md)): day headings over pl
 
 ## Welcome
 
-Welcome is the web's questions as full-screen steps under a cover ([onboarding.md](../onboarding.md#on-the-phone)): one question to a screen with its answers as whole plates, the progress bar under the bar, and Continue as the `xl` button at the foot, where the thumb is. Until the first review, Today draws the getting started guide as a path from the lantern, with the current step as its one plate, then the Ready-made decks banner and the offer to connect an AI assistant.
+Welcome is the web's questions as full-screen steps that fade in over Today ([onboarding.md](../onboarding.md#on-the-phone)): one question to a screen with its answers as whole plates, the progress bar under the bar, and Continue as the `xl` button at the foot, where the thumb is. Until the first review, Today draws the getting started guide as a path from the lantern, with the current step as its one plate, then the Ready-made decks banner and the offer to connect an AI assistant.
 
 ## Opening
 

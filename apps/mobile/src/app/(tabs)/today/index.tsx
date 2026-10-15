@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { groupDecks } from "@lymi/client/library-groups";
 import { exploreQuery, settingsQuery } from "@lymi/client/queries";
+import { shownOutcome } from "@lymi/client/review-day";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS, type StreakOut } from "@lymi/core";
 import { flameSize } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
@@ -63,7 +64,7 @@ export default function Today() {
   // Only the guide offers ready-made decks, so nobody past it pays for the catalogue read.
   const explore = useQuery({ ...exploreQuery, enabled: guiding });
   const ready = explore.data?.decks.filter((deck) => !explore.data.added[deck.slug]);
-  useWelcome(guiding, decks);
+  const welcoming = useWelcome(guiding, decks, !!streak.data);
 
   if (failed) {
     return (
@@ -78,10 +79,17 @@ export default function Today() {
       </Screen>
     );
   }
+  // While Today decides whether Welcome opens, the room stays empty rather than flashing a skeleton.
+  if (welcoming)
+    return (
+      <Screen title={t`Today`} kind="tab">
+        {null}
+      </Screen>
+    );
   if (guiding && decks.data) {
     return (
       <Screen title={t`Today`} kind="tab">
-        <StartGuide decks={decks.data.length} cards={total} />
+        <StartGuide decks={decks.data} />
         {/* Only under the guide: a learner past their first review has their own work to get on with. */}
         {ready && ready.length > 0 && <ReadyDecks decks={ready} />}
         <BringYourOwn />
@@ -125,7 +133,11 @@ export default function Today() {
  * failed or waits offline shows Today. A link held through sign-in, such as a join link, opens over
  * Today first, so Welcome waits until Today is in front. docs/design/onboarding.md.
  */
-function useWelcome(guiding: boolean, decks: ReturnType<typeof useDecks>) {
+function useWelcome(
+  guiding: boolean,
+  decks: ReturnType<typeof useDecks>,
+  streakRead: boolean,
+): boolean {
   const router = useRouter();
   const focused = useIsFocused();
   const settings = useQuery(settingsQuery);
@@ -150,6 +162,13 @@ function useWelcome(guiding: boolean, decks: ReturnType<typeof useDecks>) {
     opened.current = true;
     router.push("/onboarding");
   }, [candidate, confirmed, focused, router]);
+  // Holding until the reads say whether Welcome opens, and while it opens.
+  return (
+    unwelcomed &&
+    reading &&
+    (decks.data?.length ?? 0) === 0 &&
+    (!confirmed || !streakRead || candidate)
+  );
 }
 
 function startReview(router: ReturnType<typeof useRouter>, href: Href = "/review") {
@@ -313,9 +332,9 @@ function DueHeading({
 }
 
 /** One line on where today stands against the streak: what is left, or that the day counts. */
-function useTodayStatus(today: StreakOut["today"]): string {
+function useTodayStatus(today: StreakOut["today"], due: number): string {
   const { t } = useLingui();
-  switch (today.outcome) {
+  switch (shownOutcome(today.outcome, due)) {
     case "goal_met":
       return t`Daily goal reached.`;
     case "exhausted":
@@ -332,9 +351,9 @@ function useTodayStatus(today: StreakOut["today"]): string {
 /** The run, one plain line on today, and the week. The whole plate opens the streak. */
 function StreakPlate({ summary }: { summary: StreakOut }) {
   const { t } = useLingui();
-  const { streak, goal, dayDone, flame, lights } = useDay();
+  const { streak, goal, dayDone, flame, lights, left } = useDay();
   const router = useRouter();
-  const status = useTodayStatus(summary.today);
+  const status = useTodayStatus(summary.today, left ?? 0);
   return (
     <Press
       scale={0.98}

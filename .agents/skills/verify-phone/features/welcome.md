@@ -4,13 +4,13 @@
 
 ## Reach
 
-Signed in with no decks, no reviews and no `onboarded_at`, Today opens Welcome as a cover. A deck's `lymi://add/<slug>` or a join link's `lymi://join/<token>`, opened signed out, asks to sign in, then joins and opens the deck's welcome.
+Signed in with no decks, no reviews and no `onboarded_at`, Today opens Welcome as a cover. A deck's `lymi://add/<slug>` or a join link's `lymi://join/<token>`, opened signed out, offers Add to Library or Join, which signs up or in, then joins behind a loading state and opens the deck's welcome.
 
 ## Drive
 
 - [`welcome.yaml`](welcome.yaml): **Dev sign-up as new**, then A language, Finnish, Keen, Everyday Finnish, **Add and review**, and one Good.
-- [`welcome-deck-link.yaml`](welcome-deck-link.yaml): `lymi://add/everyday-estonian`, **Sign in to add**, **Dev sign-up as new**, then the deck's welcome, the goal and **Start review**.
-- [`welcome-join-link.yaml`](welcome-join-link.yaml): the learner persona's join link, **Sign in to join**, and the same.
+- [`welcome-deck-link.yaml`](welcome-deck-link.yaml): `lymi://add/everyday-estonian`, **Add to Library**, **Dev sign-up as new**, then the deck's welcome, the goal and **Start review**.
+- [`welcome-join-link.yaml`](welcome-join-link.yaml): the learner persona's join link, **Join**, and the same.
 
 ## End state
 

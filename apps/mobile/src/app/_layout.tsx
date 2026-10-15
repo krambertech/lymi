@@ -179,10 +179,11 @@ function Root() {
               },
             }}
           />
-          {/* Welcome takes the screen as a cover, over Today, and leaves only by finishing or Skip. */}
+          {/* Welcome takes the screen over Today and fades in and out in place, as sign-in does, so
+              nothing slides across Today; it leaves only by finishing or Skip. */}
           <Stack.Screen
             name="onboarding"
-            options={{ presentation: "fullScreenModal", gestureEnabled: false }}
+            options={{ presentation: "fullScreenModal", animation: "fade", gestureEnabled: false }}
           />
           {/* Over everything, tab bar included, since its field sits where the tab bar does. */}
           <Stack.Screen

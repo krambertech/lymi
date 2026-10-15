@@ -2647,14 +2647,8 @@ msgstr "Показать пароль"
 msgid "Sign in"
 msgstr "Войти"
 
-msgid "Sign in to add"
-msgstr "Войди, чтобы добавить"
-
 msgid "Sign in to continue."
 msgstr "Войди, чтобы продолжить."
-
-msgid "Sign in to join"
-msgstr "Войди, чтобы присоединиться"
 
 msgid "Sign in to Lymi"
 msgstr "Войти в Lymi"
@@ -3206,6 +3200,9 @@ msgstr "Твои данные"
 
 msgid "Your deck"
 msgstr "Твоя колода"
+
+msgid "Your deck is ready"
+msgstr ""
 
 msgid "Your deck is ready. Choose your daily goal, then review your first cards."
 msgstr ""

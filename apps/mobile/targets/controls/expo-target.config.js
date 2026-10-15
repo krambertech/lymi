@@ -22,10 +22,11 @@ module.exports = (config) => ({
   deploymentTarget: "18.0",
   frameworks: ["SwiftUI", "WidgetKit", "AppIntents"],
   colors: { amber: amber() },
-  // A control draws only an SF Symbol, so it uses the app's own, written by scripts/symbols.mjs.
+  // A control draws only an SF Symbol; scripts/symbols.mjs draws these two from the lantern.
   images: {
-    "lymi.plus": "../../assets/symbols/lymi.plus.symbolset/lymi.plus.svg",
-    "lymi.play": "../../assets/symbols/lymi.play.symbolset/lymi.play.svg",
+    "lymi.controlAdd": "../../assets/symbols/lymi.controlAdd.symbolset/lymi.controlAdd.svg",
+    "lymi.controlReview":
+      "../../assets/symbols/lymi.controlReview.symbolset/lymi.controlReview.svg",
   },
   entitlements: {
     "com.apple.security.application-groups": [`group.${config.ios.bundleIdentifier}`],

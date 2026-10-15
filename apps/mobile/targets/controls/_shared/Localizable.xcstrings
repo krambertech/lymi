@@ -1,0 +1,39 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "Add ${term} to Lymi": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+    },
+    "Add a word": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+    },
+    "Cards due": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+    },
+    "Open Lymi to see what’s due.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+    },
+    "Opens Add a word in Lymi, with the term filled in when you give one.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+    },
+    "Opens Add a word in Lymi.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+    },
+    "Opens a review in Lymi and shows what’s due.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+    },
+    "Opens a review in Lymi.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+    },
+    "Review": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+    },
+    "Says how many cards are due and how today’s goal stands, without opening Lymi.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+    },
+    "Term": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+    }
+  },
+  "version": "1.0"
+}

@@ -31,7 +31,7 @@ const LockWidget = (props: LockProps, env: WidgetEnvironment) => {
     return (
       <Gauge
         value={progress}
-        modifiers={[gaugeStyle("circularCapacity"), clear, widgetURL("lymi://review")]}
+        modifiers={[gaugeStyle("circularCapacity"), clear, widgetURL("lymi://review?from=widget")]}
         currentValueLabel={
           <VStack spacing={0}>
             <Image systemName="flame.fill" size={12} />
@@ -49,7 +49,11 @@ const LockWidget = (props: LockProps, env: WidgetEnvironment) => {
   }
 
   return (
-    <VStack alignment="leading" spacing={2} modifiers={[clear, widgetURL("lymi://review")]}>
+    <VStack
+      alignment="leading"
+      spacing={2}
+      modifiers={[clear, widgetURL("lymi://review?from=widget")]}
+    >
       <HStack spacing={4}>
         <Image systemName="flame.fill" size={13} />
         <Text

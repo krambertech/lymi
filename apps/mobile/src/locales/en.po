@@ -227,8 +227,23 @@ msgstr "{deckCount} · {cardCount}"
 msgid "{due, plural, one {# card due} other {# cards due}}"
 msgstr "{due, plural, one {# card due} other {# cards due}}"
 
+msgid "{due, plural, one {# card is due. {reviewed} of {goal} reviewed today.} other {# cards are due. {reviewed} of {goal} reviewed today.}}"
+msgstr "{due, plural, one {# card is due. {reviewed} of {goal} reviewed today.} other {# cards are due. {reviewed} of {goal} reviewed today.}}"
+
+msgid "{due, plural, one {# card is due. Today’s goal is met.} other {# cards are due. Today’s goal is met.}}"
+msgstr "{due, plural, one {# card is due. Today’s goal is met.} other {# cards are due. Today’s goal is met.}}"
+
+msgid "{due, plural, one {# card is due.} other {# cards are due.}}"
+msgstr "{due, plural, one {# card is due.} other {# cards are due.}}"
+
 msgid "{due, plural, one {# card to review} other {# cards to review}}"
 msgstr "{due, plural, one {# card to review} other {# cards to review}}"
+
+msgid "{due, plural, one {# due · {reviewed}/{goal}} other {# due · {reviewed}/{goal}}}"
+msgstr "{due, plural, one {# due · {reviewed}/{goal}} other {# due · {reviewed}/{goal}}}"
+
+msgid "{due, plural, one {# due} other {# due}}"
+msgstr "{due, plural, one {# due} other {# due}}"
 
 msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 msgstr "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
@@ -418,6 +433,12 @@ msgstr "Add"
 msgid "Add a card"
 msgstr "Add a card"
 
+msgid "Add a tag"
+msgstr "Add a tag"
+
+msgid "Add a word"
+msgstr "Add a word"
+
 msgid "Add cards"
 msgstr "Add cards"
 
@@ -444,9 +465,6 @@ msgstr "Add to {deckName}"
 
 msgid "Add to Library"
 msgstr "Add to Library"
-
-msgid "Add to this card"
-msgstr "Add to this card"
 
 msgid "Added “{term}” to {deck}"
 msgstr "Added “{term}” to {deck}"
@@ -606,6 +624,12 @@ msgstr "Ask the person who shared it for a new link."
 
 msgid "Asked"
 msgstr "Asked"
+
+msgid "Asked once the card has a picture."
+msgstr "Asked once the card has a picture."
+
+msgid "Asked once the picture has a description."
+msgstr "Asked once the picture has a description."
 
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "At least {MIN_PASSWORD_LENGTH} characters."
@@ -824,6 +848,9 @@ msgstr "Couldn’t archive {0}."
 
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Couldn’t cancel the invitation. Try again."
+
+msgid "Couldn’t change the picture."
+msgstr "Couldn’t change the picture."
 
 msgid "Couldn’t change your photo. Check your connection and try again."
 msgstr "Couldn’t change your photo. Check your connection and try again."
@@ -1324,6 +1351,9 @@ msgstr "Go to Lymi"
 msgid "Go to Today"
 msgstr "Go to Today"
 
+msgid "Goal met"
+msgstr "Goal met"
+
 msgctxt "deck tag"
 msgid "Goethe-Zertifikat A1"
 msgstr "Goethe-Zertifikat A1"
@@ -1432,6 +1462,9 @@ msgstr "In an hour"
 
 msgid "In Library"
 msgstr "In Library"
+
+msgid "In this deck"
+msgstr "In this deck"
 
 msgctxt "language"
 msgid "Indonesian"
@@ -1896,6 +1929,12 @@ msgstr "Nothing due today, so your streak is safe."
 msgid "Nothing forgotten today"
 msgstr "Nothing forgotten today"
 
+msgid "Nothing is due, and today’s goal is met."
+msgstr "Nothing is due, and today’s goal is met."
+
+msgid "Nothing is due."
+msgstr "Nothing is due."
+
 msgid "Nothing left in {scopeName}"
 msgstr "Nothing left in {scopeName}"
 
@@ -1949,6 +1988,9 @@ msgstr "Open Library"
 
 msgid "Open Lymi and sign in to add words from other apps."
 msgstr "Open Lymi and sign in to add words from other apps."
+
+msgid "Open Lymi and sign in to see what’s due."
+msgstr "Open Lymi and sign in to see what’s due."
 
 msgid "Open on the web"
 msgstr "Open on the web"
@@ -2108,6 +2150,9 @@ msgstr "Remove member"
 msgid "Remove photo"
 msgstr "Remove photo"
 
+msgid "Remove the tag {tag}"
+msgstr "Remove the tag {tag}"
+
 msgid "Removed {name} from {deck}"
 msgstr "Removed {name} from {deck}"
 
@@ -2255,10 +2300,19 @@ msgstr "Sections"
 msgid "See “{0}”, recall {1}"
 msgstr "See “{0}”, recall {1}"
 
+msgid "See “{answer}”, recall {word}"
+msgstr "See “{answer}”, recall {word}"
+
 #. placeholder {0}: example.term
 #. placeholder {1}: example.meaning
 msgid "See {0}, recall “{1}”"
 msgstr "See {0}, recall “{1}”"
+
+msgid "See {word}, recall “{answer}”"
+msgstr "See {word}, recall “{answer}”"
+
+msgid "See {word}, recall what it means"
+msgstr "See {word}, recall what it means"
 
 msgid "See all"
 msgstr "See all"
@@ -2266,11 +2320,26 @@ msgstr "See all"
 msgid "See all {label} decks"
 msgstr "See all {label} decks"
 
+msgid "See the meaning, recall {word}"
+msgstr "See the meaning, recall {word}"
+
 msgid "See the meaning, recall the term"
 msgstr "See the meaning, recall the term"
 
 msgid "See the meaning, recall the term."
 msgstr "See the meaning, recall the term."
+
+msgid "See the picture, recall “{answer}”"
+msgstr "See the picture, recall “{answer}”"
+
+msgid "See the picture, recall {word}"
+msgstr "See the picture, recall {word}"
+
+msgid "See the picture, recall the meaning"
+msgstr "See the picture, recall the meaning"
+
+msgid "See the picture, recall the term"
+msgstr "See the picture, recall the term"
 
 msgid "See the term, recall what it means"
 msgstr "See the term, recall what it means"
@@ -2458,6 +2527,9 @@ msgstr "System"
 msgid "Tags"
 msgstr "Tags"
 
+msgid "Tags: {list}"
+msgstr "Tags: {list}"
+
 msgid "Take a photo"
 msgstr "Take a photo"
 
@@ -2512,6 +2584,9 @@ msgstr "That’s everything."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "That’s no longer here. Reload to see what changed."
+
+msgid "That’s the most tags a card can have"
+msgstr "That’s the most tags a card can have"
 
 msgid "The AI"
 msgstr "The AI"

@@ -133,6 +133,7 @@
         }
       ],
       "expo-notifications",
+      "./plugins/with-controls-flag.cjs",
       "@bacons/apple-targets"
     ],
     "owner": "krambertech",

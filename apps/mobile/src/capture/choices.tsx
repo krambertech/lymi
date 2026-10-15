@@ -22,6 +22,8 @@ interface Choices {
   setPicture: Dispatch<SetStateAction<Picture | null>>;
   modes: ReviewModeKey[] | null;
   setModes: Dispatch<SetStateAction<ReviewModeKey[] | null>>;
+  tags: string[];
+  setTags: Dispatch<SetStateAction<string[]>>;
 }
 
 const ChoicesContext = createContext<Choices | null>(null);
@@ -35,6 +37,8 @@ export function ChoicesProvider({ children }: { children: ReactNode }) {
   const [sectionId, setSectionId] = useState<string | null>(null);
   const [picture, setPicture] = useState<Picture | null>(null);
   const [modes, setModes] = useState<ReviewModeKey[] | null>(null);
+  // A lesson's cards share their tags, so tags stay from one card to the next, as on the web.
+  const [tags, setTags] = useState<string[]>([]);
   const chooseDeck = useCallback((id: string) => {
     setDeckId(id);
     // A section and modes belong to a deck, so a new deck starts without them.
@@ -43,8 +47,19 @@ export function ChoicesProvider({ children }: { children: ReactNode }) {
     captureStore.set(CAPTURE_KEYS.deck, id);
   }, []);
   const value = useMemo(
-    () => ({ deckId, chooseDeck, sectionId, setSectionId, picture, setPicture, modes, setModes }),
-    [deckId, chooseDeck, sectionId, picture, modes],
+    () => ({
+      deckId,
+      chooseDeck,
+      sectionId,
+      setSectionId,
+      picture,
+      setPicture,
+      modes,
+      setModes,
+      tags,
+      setTags,
+    }),
+    [deckId, chooseDeck, sectionId, picture, modes, tags],
   );
   return <ChoicesContext.Provider value={value}>{children}</ChoicesContext.Provider>;
 }

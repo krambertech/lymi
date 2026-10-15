@@ -65,7 +65,7 @@ const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
         spacing={18}
         modifiers={[
           containerBackground(backdrop({ x: 0.22, y: 0.5 }, 150), "widget"),
-          widgetURL("lymi://review"),
+          widgetURL("lymi://review?from=widget"),
         ]}
       >
         {lantern ? (
@@ -97,7 +97,7 @@ const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
       spacing={4}
       modifiers={[
         containerBackground(backdrop({ x: 0.5, y: 0.38 }, 96), "widget"),
-        widgetURL("lymi://review"),
+        widgetURL("lymi://review?from=widget"),
       ]}
     >
       {lantern ? (

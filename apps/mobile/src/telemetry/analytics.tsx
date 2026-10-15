@@ -1,9 +1,10 @@
 import { decksQuery, settingsQuery } from "@lymi/client/queries";
 import { analyticsPath, backlogOf } from "@lymi/core/analytics";
 import { useQuery } from "@tanstack/react-query";
-import { usePathname } from "expo-router";
+import { useGlobalSearchParams, usePathname, useRootNavigationState } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { AppState } from "react-native";
+import { type EntryOpened, entryOf } from "../entry/links";
 import { captureEvent, setTelemetryLearner } from "./posthog";
 
 /** Back from the background after this long is another opening, as a reload would be on the web. */
@@ -21,7 +22,8 @@ export function screenPath(pathname: string): string {
 
 /**
  * Tells PostHog who is signed in and whether their account allows analytics, then counts the
- * openings and screens the web counts as `app_opened` and `$pageview`. docs/analytics.md.
+ * openings and screens the web counts as `app_opened` and `$pageview`, and which of iOS's entry
+ * points opened a screen as `entry_opened`. docs/analytics.md.
  */
 export function Analytics({ learnerId }: { learnerId: string | null | undefined }) {
   const settings = useQuery({ ...settingsQuery, enabled: !!learnerId });
@@ -73,5 +75,32 @@ export function Analytics({ learnerId }: { learnerId: string | null | undefined 
     if (!learnerId) lastScreen.current = undefined;
   }, [learnerId]);
 
+  // A link held through sign-in reaches its screen afterwards, so the entry waits for consent.
+  // Each screen counts once, so coming back to it from another screen sends nothing.
+  const from = useGlobalSearchParams().from;
+  const screen = focusedKey(useRootNavigationState());
+  const [entry, setEntry] = useState<EntryOpened>();
+  const counted = useRef(new Set<string>());
+  useEffect(() => {
+    const opened = entryOf(pathname, from);
+    if (!opened || !screen || counted.current.has(screen)) return;
+    counted.current.add(screen);
+    setEntry(opened);
+  }, [pathname, from, screen]);
+  useEffect(() => {
+    if (consent === true && entry && captureEvent("entry_opened", entry)) setEntry(undefined);
+  }, [consent, entry]);
+
   return null;
+}
+
+interface NavState {
+  index?: number;
+  routes: { key?: string; state?: unknown }[];
+}
+
+/** The key of the screen in front, which stays the same when the learner comes back to it. */
+function focusedKey(state: NavState | undefined): string | undefined {
+  const route = state?.routes[state.index ?? state.routes.length - 1];
+  return route && (focusedKey(route.state as NavState | undefined) ?? route.key);
 }

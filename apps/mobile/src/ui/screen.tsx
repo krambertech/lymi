@@ -1,7 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
-import { type Href, useRouter } from "expo-router";
+import { type Href, useIsPreview, useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
 import {
   I18nManager,
@@ -106,6 +106,10 @@ export function Screen({
   children,
 }: Props) {
   const insets = useSafeAreaInsets();
+  // A long-press preview has no status bar to clear and nothing in it can be tapped, so it has no bar row.
+  const preview = useIsPreview();
+  const top = preview ? 0 : insets.top;
+  const row = preview ? 24 : 56;
   const router = useRouter();
   const { t } = useLingui();
   const p = usePalette();
@@ -152,9 +156,9 @@ export function Screen({
         {title}
       </Text>
     ) : undefined);
-  const restY = kind === "tab" ? insets.top + (56 - box.h) / 2 : insets.top + 52;
+  const restY = kind === "tab" ? top + (row - box.h) / 2 : top + row - 4;
   const dock = kind === "tab" ? INLINE_LARGE : SMALL;
-  const dockY = insets.top + (56 - box.h * dock) / 2;
+  const dockY = top + (row - box.h * dock) / 2;
   const travel = Math.max(restY - dockY, TITLE_GONE);
   const [headerHeight, setHeaderHeight] = useState(0);
   const rtl = I18nManager.isRTL;
@@ -223,7 +227,7 @@ export function Screen({
   const band = useAnimatedStyle(() => ({
     opacity: interpolate(y.value, [0, 24], [0, 1], Extrapolation.CLAMP),
   }));
-  const bar = insets.top + 56;
+  const bar = top + row;
   // Over a page's own colour the bar takes that colour, so it never lays a grey band across it.
   const roof = ground?.colour ?? p.canvas;
   const trailing = kind === "tab" ? <TabActions own={actions} /> : actions;
@@ -309,7 +313,7 @@ export function Screen({
         className="absolute inset-x-0 top-0"
         style={ground ? band : undefined}
       >
-        <StatusFade height={insets.top} colour={roof} />
+        <StatusFade height={top} colour={roof} />
       </Animated.View>
       <Animated.View
         pointerEvents="none"
@@ -330,32 +334,34 @@ export function Screen({
           {title}
         </Text>
       </Animated.View>
-      <View
-        pointerEvents="box-none"
-        className="absolute inset-x-0 top-0 h-14 flex-row items-center justify-between gap-3 px-5"
-        style={{ marginTop: insets.top }}
-      >
-        {kind === "page" ? (
-          <Back
-            label={back?.label ?? t`Back`}
-            compact={compact}
-            y={y}
-            onPress={() => (back ? router.dismissTo(back.to) : router.back())}
-          />
-        ) : (
-          <View />
-        )}
-        <Animated.View
-          className="shrink-0"
-          style={side}
-          // Actions that have not arrived yet are out of reach of a finger and of VoiceOver.
-          pointerEvents={actionsArrive && !arrived ? "none" : "auto"}
-          accessibilityElementsHidden={actionsArrive && !arrived}
-          importantForAccessibility={actionsArrive && !arrived ? "no-hide-descendants" : "auto"}
+      {!preview && (
+        <View
+          pointerEvents="box-none"
+          className="absolute inset-x-0 top-0 h-14 flex-row items-center justify-between gap-3 px-5"
+          style={{ marginTop: insets.top }}
         >
-          {trailing}
-        </Animated.View>
-      </View>
+          {kind === "page" ? (
+            <Back
+              label={back?.label ?? t`Back`}
+              compact={compact}
+              y={y}
+              onPress={() => (back ? router.dismissTo(back.to) : router.back())}
+            />
+          ) : (
+            <View />
+          )}
+          <Animated.View
+            className="shrink-0"
+            style={side}
+            // Actions that have not arrived yet are out of reach of a finger and of VoiceOver.
+            pointerEvents={actionsArrive && !arrived ? "none" : "auto"}
+            accessibilityElementsHidden={actionsArrive && !arrived}
+            importantForAccessibility={actionsArrive && !arrived ? "no-hide-descendants" : "auto"}
+          >
+            {trailing}
+          </Animated.View>
+        </View>
+      )}
     </View>
   );
 }

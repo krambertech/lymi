@@ -16,6 +16,7 @@ import { useSession } from "../auth/client";
 import { forgetLearner, persistOptions } from "../data/cache";
 import { queryClient } from "../data/client";
 import { Sync } from "../data/sync";
+import { QuickActionsSync } from "../entry/quick-actions";
 import { i18n } from "../i18n";
 import { LanguageSync } from "../i18n/sync";
 import { cancelReminders, listenForLater } from "../reminders/notifications";
@@ -122,6 +123,7 @@ function Root() {
       {!session.isPending && <LanguageSync signedIn={signedIn} />}
       {!session.isPending && !update && <ShareSync signedIn={signedIn} />}
       <Analytics learnerId={signedOut ? null : learnerId} />
+      <QuickActionsSync />
       {learnerId && !update && (
         <>
           <Sync learnerId={learnerId} />

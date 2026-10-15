@@ -16,10 +16,12 @@ A change is verified when the feature it touches has been driven in the running 
 | Today | [today.md](features/today.md) |
 | Review | [review.md](features/review.md) |
 | Add a card | [add-card.md](features/add-card.md) |
+| Card choices: tags, picture modes, picture description | [card-choices.md](features/card-choices.md) |
 | Library and the deck page | [library.md](features/library.md) |
 | Insights | [insights.md](features/insights.md) |
 | Language | [language.md](features/language.md) |
 | Share deck and join links | [sharing.md](features/sharing.md) |
+| Entry points: controls, intents, quick actions | [entry-points.md](features/entry-points.md) |
 
 ## Launch
 

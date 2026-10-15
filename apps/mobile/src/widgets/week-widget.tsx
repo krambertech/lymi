@@ -50,7 +50,7 @@ const WeekWidget = (props: WeekProps, env: WidgetEnvironment) => {
     <VStack
       alignment="leading"
       spacing={0}
-      modifiers={[containerBackground(canvas, "widget"), widgetURL("lymi://review")]}
+      modifiers={[containerBackground(canvas, "widget"), widgetURL("lymi://review?from=widget")]}
     >
       <HStack spacing={6} alignment="center">
         {props.flame ? (

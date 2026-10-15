@@ -2560,9 +2560,6 @@ msgctxt "language"
 msgid "Swedish"
 msgstr "Swedish"
 
-msgid "Swipe from the edge to take back a grade"
-msgstr "Swipe from the edge to take back a grade"
-
 msgid "System"
 msgstr "System"
 

@@ -1,11 +1,13 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { groupDecks } from "@lymi/client/library-groups";
+import { exploreQuery, settingsQuery } from "@lymi/client/queries";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS, type StreakOut } from "@lymi/core";
 import { flameSize } from "@lymi/design";
+import { useQuery } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
 import { type Href, useIsFocused, useRouter } from "expo-router";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { View, type ViewStyle } from "react-native";
 import { Flame } from "../../../brand/flame";
 import { Lantern } from "../../../brand/lantern";
@@ -29,6 +31,8 @@ import { RowMenu } from "../../../ui/row-menu";
 import { Screen } from "../../../ui/screen";
 import { SevenLights } from "../../../ui/seven-lights";
 import { Skeleton } from "../../../ui/skeleton";
+import { ReadyDecks } from "../../../welcome/ready-decks";
+import { BringYourOwn, StartGuide } from "../../../welcome/start-guide";
 
 /**
  * Today, as the web's: the lit room with what is due, the streak, the rounds that can be reviewed
@@ -50,6 +54,16 @@ export default function Today() {
   const loading = (!decks.data || !streak.data) && !failed;
   const nothingYet = !loading && total === 0;
   const kept = !!useKeptSince(decks);
+  // Until the first review, Today is the getting started guide.
+  const guiding =
+    !!decks.data &&
+    !!streak.data &&
+    streak.data.reviewedDays === 0 &&
+    streak.data.today.attempts === 0;
+  // Only the guide offers ready-made decks, so nobody past it pays for the catalogue read.
+  const explore = useQuery({ ...exploreQuery, enabled: guiding });
+  const ready = explore.data?.decks.filter((deck) => !explore.data.added[deck.slug]);
+  useWelcome(guiding, decks);
 
   if (failed) {
     return (
@@ -61,6 +75,16 @@ export default function Today() {
             void streak.refetch();
           }}
         />
+      </Screen>
+    );
+  }
+  if (guiding && decks.data) {
+    return (
+      <Screen title={t`Today`} kind="tab">
+        <StartGuide decks={decks.data.length} cards={total} />
+        {/* Only under the guide: a learner past their first review has their own work to get on with. */}
+        {ready && ready.length > 0 && <ReadyDecks decks={ready} />}
+        <BringYourOwn />
       </Screen>
     );
   }
@@ -93,6 +117,39 @@ export default function Today() {
       {!loading && !nothingYet && rounds.data && <Rounds rounds={rounds.data} />}
     </Screen>
   );
+}
+
+/**
+ * An account with nothing in it that has not got set up starts at Welcome, once; finishing it on the
+ * web holds here. The cache can predate that, so it waits for this visit's reads, and a read that
+ * failed or waits offline shows Today. A link held through sign-in, such as a join link, opens over
+ * Today first, so Welcome waits until Today is in front. docs/design/onboarding.md.
+ */
+function useWelcome(guiding: boolean, decks: ReturnType<typeof useDecks>) {
+  const router = useRouter();
+  const focused = useIsFocused();
+  const settings = useQuery(settingsQuery);
+  const unwelcomed = settings.data ? settings.data.onboardedAt === null : settings.isPending;
+  const reading =
+    !settings.isError &&
+    !decks.isError &&
+    settings.fetchStatus !== "paused" &&
+    decks.fetchStatus !== "paused";
+  const candidate = unwelcomed && decks.data?.length === 0 && guiding && reading;
+  const confirmed = settings.isFetchedAfterMount && decks.isFetchedAfterMount;
+  const { refetch: refetchSettings } = settings;
+  const { refetch: refetchDecks } = decks;
+  useEffect(() => {
+    if (!candidate) return;
+    void refetchSettings();
+    void refetchDecks();
+  }, [candidate, refetchSettings, refetchDecks]);
+  const opened = useRef(false);
+  useEffect(() => {
+    if (!candidate || !confirmed || !focused || opened.current) return;
+    opened.current = true;
+    router.push("/onboarding");
+  }, [candidate, confirmed, focused, router]);
 }
 
 function startReview(router: ReturnType<typeof useRouter>, href: Href = "/review") {

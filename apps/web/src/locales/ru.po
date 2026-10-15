@@ -689,7 +689,7 @@ msgstr "Предмет или экзамен"
 msgid "A–Z"
 msgstr "А–Я"
 
-#. placeholder {0}: MINUTES[n]
+#. placeholder {0}: GOAL_MINUTES[n]
 msgid "About {0, plural, one {# minute} other {# minutes}}, {n, plural, one {# review} other {# reviews}}"
 msgstr "Около {0, plural, one {# минуты} few {# минут} many {# минут} other {# минуты}}, {n, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
@@ -1058,9 +1058,6 @@ msgstr "Оба способа"
 
 msgid "Bring what you’re learning, or start with a ready-made deck."
 msgstr "Добавь то, что учишь, или начни с готовой колоды."
-
-msgid "Bring your decks and their review history."
-msgstr "Перенеси свои колоды вместе с историей повторений."
 
 msgid "Bring your own"
 msgstr "Свои материалы"
@@ -1637,8 +1634,8 @@ msgstr "колоды"
 msgid "Decks"
 msgstr "Колоды"
 
-msgid "Decks from Anki or Mochi, with their review history."
-msgstr "Колоды из Anki или Mochi вместе с историей повторений."
+msgid "Decks from Anki, Mochi or Noji, with their review history."
+msgstr "Колоды из Anki, Mochi или Noji вместе с историей повторений."
 
 msgid "Decks from Lymi. Add one to study it in your language."
 msgstr "Колоды от Lymi. Добавь одну — учи её на своём языке."
@@ -1987,6 +1984,9 @@ msgstr "Формат"
 msgid "From {0}"
 msgstr "От {0}"
 
+msgid "From Anki, Mochi or Noji, with their review history."
+msgstr "Из Anki, Mochi или Noji вместе с историей повторений."
+
 msgid "From the lesson"
 msgstr "С урока"
 
@@ -2151,9 +2151,6 @@ msgstr "Импортируй колоды из другого аккаунта L
 
 msgid "Import from {app}"
 msgstr "Импорт из {app}"
-
-msgid "Import from Anki or Mochi"
-msgstr "Импорт из Anki или Mochi"
 
 msgid "Import your decks with their pictures, tags and review history. Cards keep their due dates, and {app} is unchanged."
 msgstr "Импортируй колоды с изображениями, тегами и историей повторений. Карточки сохранят даты повторения, а в {app} ничего не изменится."

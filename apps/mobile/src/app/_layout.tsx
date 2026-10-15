@@ -179,6 +179,11 @@ function Root() {
               },
             }}
           />
+          {/* Welcome takes the screen as a cover, over Today, and leaves only by finishing or Skip. */}
+          <Stack.Screen
+            name="onboarding"
+            options={{ presentation: "fullScreenModal", gestureEnabled: false }}
+          />
           {/* Over everything, tab bar included, since its field sits where the tab bar does. */}
           <Stack.Screen
             name="search"

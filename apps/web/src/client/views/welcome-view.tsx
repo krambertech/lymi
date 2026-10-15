@@ -2,12 +2,21 @@ import { Radio as RadioPrimitive } from "@base-ui/react/radio";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { ANALYTICS_READY } from "@lymi/client/analytics";
 import {
+  catalogLanguages,
+  GOAL_MINUTES,
+  LANGUAGE_PILLS,
+  type Own,
+  startDecks,
+  type WelcomeStep,
+  welcomePath,
+} from "@lymi/client/welcome";
+import {
   DAILY_GOAL_PRESETS,
   LANGUAGE_TAGS,
   type LearningKind,
   STARTING_DAILY_GOAL,
 } from "@lymi/core";
-import { type PublicDeckSummary, shelvesOf, subjectOf, taughtLanguage } from "@lymi/core/catalog";
+import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { CHOICE_POP, endEmbers } from "@lymi/design";
 import { clsx } from "clsx";
 import {
@@ -41,8 +50,7 @@ import { captureAnalytics } from "../lib/telemetry";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { BackButton } from "./shell";
 
-/** How a learner without decks gets started: bring their own, or add a ready-made deck. */
-export type Own = "import" | "assistant" | "type";
+export type { Own };
 export type WelcomeStart = { kind: "deck"; deck: PublicDeckSummary } | { kind: "own"; own: Own };
 
 /** A deck an invitation or a public page added while signing up. */
@@ -74,37 +82,9 @@ interface Props {
   error?: string | null | undefined;
 }
 
-export type Step = "hello" | "kind" | "language" | "goal" | "start";
+export type Step = WelcomeStep;
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-
-/** Twelve languages as pills; the rest of the catalogue's languages sit behind Another language. */
-const PILLS = 12;
-/** A start step shows at most four decks: two rows of two. */
-const START_DECKS = 4;
-/** Shelves a test deck sits on; every other subject is a subject. */
-const TEST_CATEGORIES = ["citizenship", "driving"];
-
-// Minutes are a rough guide: about twenty seconds a review, rounded to a figure that reads as one.
-const MINUTES: Record<(typeof DAILY_GOAL_PRESETS)[number], number> = {
-  10: 3,
-  25: 8,
-  50: 15,
-  100: 30,
-};
-
-function decksFor(
-  catalog: PublicDeckSummary[],
-  kind: LearningKind | null,
-  language: string | null,
-) {
-  if (kind === "language") return catalog.filter((d) => taughtLanguage(d) === language);
-  if (kind === "test") return catalog.filter((d) => TEST_CATEGORIES.includes(d.category ?? ""));
-  if (kind === "subject") {
-    return catalog.filter((d) => subjectOf(d) && !TEST_CATEGORIES.includes(d.category ?? ""));
-  }
-  return [];
-}
 
 interface Progress {
   trail: Step[];
@@ -152,20 +132,6 @@ function writeProgress(progress: Progress) {
   } catch {
     // Private windows and blocked storage simply start again after a reload.
   }
-}
-
-/** One deck from each of the first shelves, so a learner with nothing matched sees the range. */
-function sampler(catalog: PublicDeckSummary[]) {
-  return shelvesOf(catalog)
-    .flatMap((shelf) => shelf.decks.slice(0, 1))
-    .slice(0, START_DECKS);
-}
-
-/** Languages with decks, most decks first, leaving out the language meanings are written in. */
-function catalogLanguages(catalog: PublicDeckSummary[], meaningLanguage: string) {
-  return shelvesOf(catalog).flatMap((shelf) =>
-    shelf.language && shelf.language !== meaningLanguage ? [shelf.language] : [],
-  );
 }
 
 /**
@@ -222,13 +188,10 @@ export function WelcomeView({
     document.querySelector("main")?.scrollTo({ top: 0 });
   }, [step]);
   // The learner's own path: the language question joins it only after A language.
-  const path: Step[] =
-    kind === "language" ? ["kind", "language", "goal", "start"] : ["kind", "goal", "start"];
+  const path = welcomePath(kind);
   const position = path.indexOf(step) + 1;
   const languages = catalogLanguages(catalog ?? [], meaningLanguage);
-  const matched = decksFor(catalog ?? [], kind, language).slice(0, START_DECKS);
-  const ownFirst = matched.length === 0;
-  const decks = ownFirst ? sampler(catalog ?? []) : matched;
+  const { decks, ownFirst } = startDecks(catalog ?? [], kind, language);
   const name = (tag: string) =>
     (LANGUAGE_TAGS as readonly string[]).includes(tag) || languages.includes(tag)
       ? languageName(tag, i18n.locale)
@@ -382,8 +345,8 @@ export function WelcomeView({
           <OwnRow
             value="import"
             icon={<Download />}
-            title={<Trans>Import from Anki or Mochi</Trans>}
-            detail={<Trans>Bring your decks and their review history.</Trans>}
+            title={<Trans>Import decks</Trans>}
+            detail={<Trans>From Anki, Mochi or Noji, with their review history.</Trans>}
           />
           <OwnRow
             value="assistant"
@@ -540,7 +503,7 @@ export function WelcomeView({
                       }
                       detail={
                         <Trans>
-                          About <Plural value={MINUTES[n]} one="# minute" other="# minutes" />,{" "}
+                          About <Plural value={GOAL_MINUTES[n]} one="# minute" other="# minutes" />,{" "}
                           <Plural value={n} one="# review" other="# reviews" />
                         </Trans>
                       }
@@ -983,7 +946,7 @@ function LanguagePicker({
 }) {
   const { t, i18n } = useLingui();
   const reduce = useReduceMotion();
-  const pills = languages.slice(0, PILLS);
+  const pills = languages.slice(0, LANGUAGE_PILLS);
   const [other, setOther] = useState(value !== null && !pills.includes(value));
   const [typed, setTyped] = useState(value !== null && !pills.includes(value) ? name(value) : "");
   const open: Transition = reduce ? { duration: 0 } : { duration: 0.24, ease: EASE };
@@ -1046,7 +1009,7 @@ function LanguagePicker({
                 <Suggestions
                   query={typed}
                   value={value}
-                  rest={languages.slice(PILLS)}
+                  rest={languages.slice(LANGUAGE_PILLS)}
                   pills={pills}
                   name={name}
                   onPick={(tag) => {

@@ -1,0 +1,45 @@
+# Welcome: a new account answers each question, adds a ready-made deck and grades its first card.
+appId: app.lymi
+name: Welcome
+---
+- runFlow: _signed-out.yaml
+- tapOn: "Dev sign-up as new"
+- extendedWaitUntil:
+    visible: "Welcome to Lymi"
+    timeout: 30000
+- assertVisible: "How it works"
+- takeScreenshot: 01-welcome
+- tapOn: "Continue"
+- tapOn: "A language.*"
+- takeScreenshot: 02-kind
+- tapOn: "Continue"
+- extendedWaitUntil:
+    visible: "Which language?"
+    timeout: 10000
+- tapOn: "${LANGUAGE}"
+- takeScreenshot: 03-language
+- tapOn: "Continue"
+- extendedWaitUntil:
+    visible: "How much time a day?"
+    timeout: 10000
+- assertVisible: "Steady.*"
+- tapOn: "Keen.*"
+- takeScreenshot: 04-goal
+- tapOn: "Continue"
+- extendedWaitUntil:
+    visible: "How do you want to start?"
+    timeout: 10000
+- assertVisible: "Ready-made decks in ${LANGUAGE}"
+- tapOn: "${DECK}.*"
+- takeScreenshot: 05-start
+- tapOn: "Add and review"
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 30000
+- takeScreenshot: 06-first-review
+# The card's centre can be its pronunciation button, so reveal by tapping low on the card.
+- tapOn:
+    point: "50%,80%"
+- tapOn: "^Good.*"
+- assertVisible: "1/.*"
+- takeScreenshot: 07-graded

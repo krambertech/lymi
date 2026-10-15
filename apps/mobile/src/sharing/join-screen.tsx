@@ -1,7 +1,13 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { ApiError, api, refusalDetail } from "@lymi/client/api";
-import { addPreviewQuery, exploreQuery, joinPreviewQuery } from "@lymi/client/queries";
+import {
+  addPreviewQuery,
+  exploreQuery,
+  joinPreviewQuery,
+  settingsQuery,
+  streakQuery,
+} from "@lymi/client/queries";
 import type { JoinPreviewOut } from "@lymi/core";
 import { onlineManager, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, Redirect, useRouter } from "expo-router";
@@ -72,6 +78,22 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
 
   const open = (deckId: string) => router.replace(`/library/${deckId}` as Href);
 
+  // An account that joins before it has got set up or reviewed is welcomed with this deck and asked
+  // only its daily goal, as the web's door does. docs/design/onboarding.md.
+  const awaitsWelcome = async () => {
+    try {
+      const [settings, streak] = await Promise.all([
+        qc.fetchQuery({ ...settingsQuery, staleTime: 0 }),
+        qc.fetchQuery({ ...streakQuery, staleTime: 0 }),
+      ]);
+      return (
+        settings.onboardedAt === null && streak.reviewedDays === 0 && streak.today.attempts === 0
+      );
+    } catch {
+      return false;
+    }
+  };
+
   const join = useMutation({
     networkMode: "always",
     mutationFn: async () => {
@@ -86,7 +108,8 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
         qc.invalidateQueries({ queryKey: ["rounds"] }),
         published && qc.invalidateQueries({ queryKey: exploreQuery.queryKey }),
       ]);
-      open(deckId);
+      if (await awaitsWelcome()) router.replace(`/onboarding?deck=${deckId}` as Href);
+      else open(deckId);
     },
     onError: (err) => {
       setFailed(describe(err));

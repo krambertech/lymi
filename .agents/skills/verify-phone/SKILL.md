@@ -25,6 +25,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Section heading menu | [section-menu.md](features/section-menu.md) |
 | Share deck and join links | [sharing.md](features/sharing.md) |
 | Entry points: controls, intents, quick actions | [entry-points.md](features/entry-points.md) |
+| Welcome, and arriving from a deck link or a join link | [welcome.md](features/welcome.md) |
 
 ## Launch
 

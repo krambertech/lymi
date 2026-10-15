@@ -265,7 +265,7 @@ export function LibraryView({
                 <NextStep
                   icon={<FileUp />}
                   title={<Trans>Import decks</Trans>}
-                  detail={<Trans>Decks from Anki or Mochi, with their review history.</Trans>}
+                  detail={<Trans>Decks from Anki, Mochi or Noji, with their review history.</Trans>}
                   onClick={() => {
                     captureAnalytics("empty_state_option_picked", { option: "import" });
                     onImport?.();

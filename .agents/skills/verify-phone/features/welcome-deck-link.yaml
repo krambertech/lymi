@@ -1,0 +1,32 @@
+# Welcome from a published deck's link: signed out, the link signs up, joins, and Welcome asks only the daily goal.
+appId: app.lymi
+name: Welcome from a published deck's link
+---
+- runFlow: _signed-out.yaml
+- openLink: "${LINK}"
+- extendedWaitUntil:
+    visible: "Sign in to add"
+    timeout: 20000
+- takeScreenshot: 01-link
+- tapOn: "Sign in to add"
+- extendedWaitUntil:
+    visible: "Dev sign-up as new"
+    timeout: 20000
+- tapOn: "Dev sign-up as new"
+- extendedWaitUntil:
+    visible: "Your deck is ready.*"
+    timeout: 30000
+- assertVisible: ".*${DECK}.*"
+- assertVisible: "In Library"
+- takeScreenshot: 02-welcome-with-deck
+- tapOn: "Continue"
+- extendedWaitUntil:
+    visible: "How much time a day?"
+    timeout: 10000
+- assertNotVisible: "What are you learning?"
+- takeScreenshot: 03-goal
+- tapOn: "Start review"
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 30000
+- takeScreenshot: 04-first-review

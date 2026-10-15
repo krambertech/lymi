@@ -441,13 +441,14 @@ export default function ShareDeck() {
                       disabled={!online || turnOff.isPending}
                       accessibilityRole="button"
                       accessibilityLabel={t`Turn off link`}
-                      accessibilityState={{ disabled: !online, busy: turnOff.isPending }}
-                      className={`min-h-11 flex-row items-center justify-center gap-2 px-3 ${online ? "" : "opacity-45"}`}
+                      accessibilityState={{
+                        disabled: !online || turnOff.isPending,
+                        busy: turnOff.isPending,
+                      }}
+                      className={`min-h-11 flex-row items-center justify-center gap-2 px-3 ${online && !turnOff.isPending ? "" : "opacity-45"}`}
                     >
                       <Icon name="linkOff" size={18} colour={p.danger} />
-                      <Text className="text-md font-medium" style={{ color: p.danger }}>
-                        {t`Turn off link`}
-                      </Text>
+                      <Text className="text-md font-medium text-danger">{t`Turn off link`}</Text>
                     </Press>
                   </>
                 ) : (

@@ -8,7 +8,7 @@ import { type Href, Redirect, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { useSession } from "../auth/client";
-import { noteLink } from "../auth/held-link";
+import { letGoOfLink, noteLink } from "../auth/held-link";
 import { languageName } from "../data/languages";
 import { DeckHand } from "../explore/deck-hand";
 import { type TrayCard, useCoverColour } from "../explore/tray";
@@ -390,7 +390,14 @@ function DeadLink({
           ? { label: t`Open deck`, onPress: () => onOpen(deckId) }
           : signedIn
             ? { label: t`Go to Today`, onPress: () => router.replace("/today") }
-            : { label: t`Go to Lymi`, onPress: () => router.replace("/welcome") }
+            : {
+                label: t`Go to Lymi`,
+                onPress: () => {
+                  // Otherwise the door holds this link and reopens it after sign-in.
+                  letGoOfLink();
+                  router.replace("/welcome");
+                },
+              }
       }
     />
   );

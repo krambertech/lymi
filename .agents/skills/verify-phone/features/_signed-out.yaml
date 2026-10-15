@@ -2,7 +2,7 @@
 appId: app.lymi
 ---
 - extendedWaitUntil:
-    visible: "This is the developer menu.*|Toggle performance monitor|Dev sign-up as new|Library|Skip for now"
+    visible: "This is the developer menu.*|Toggle performance monitor|Dev sign-up as new|Library|Skip for now|End review"
     timeout: 180000
 - runFlow:
     when:
@@ -14,7 +14,20 @@ appId: app.lymi
       visible: "Toggle performance monitor"
     commands:
       - tapOn: "Close"
-# Welcome covers the tabs, so it is skipped before signing out.
+# A review and Welcome cover the tabs, so they are left before signing out.
+- runFlow:
+    when:
+      visible: "End review"
+    commands:
+      - tapOn: "End review"
+      - extendedWaitUntil:
+          visible: "^Done$|Library"
+          timeout: 20000
+      - runFlow:
+          when:
+            visible: "^Done$"
+          commands:
+            - tapOn: "^Done$"
 - runFlow:
     when:
       visible: "Skip for now"

@@ -19,5 +19,6 @@ Signed in with no decks, no reviews and no `onboarded_at`, Today opens Welcome a
 ## Gotchas
 
 - The flows sign out first through [`_signed-out.yaml`](_signed-out.yaml), skipping a Welcome left open, because **Dev sign-up as new** is only on the signed-out door. It signs up the `fresh` persona with `reset=1`, so it always starts empty.
+- Each flow ends signed out, because `_open.yaml` keeps whoever is signed in and the next feature's persona would otherwise be this new account; `99-end.png` is therefore the door.
 - `env()` signs in the `publisher` persona once, which seeds the published decks Explore and the add link need.
 - The Ready-made decks banner and the assistant offer show on Today only until the first review; Skip for now from Welcome reaches them.

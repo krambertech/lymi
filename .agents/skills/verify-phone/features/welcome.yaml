@@ -43,3 +43,5 @@ name: Welcome
 - tapOn: "^Good.*"
 - assertVisible: "1/.*"
 - takeScreenshot: 07-graded
+# Signed out again, so a learner persona's flow after this one signs in as that persona.
+- runFlow: _signed-out.yaml

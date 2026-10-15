@@ -30,3 +30,5 @@ name: Welcome from a join link
     visible: ".*Tap to reveal"
     timeout: 30000
 - takeScreenshot: 04-first-review
+# Signed out again, so a learner persona's flow after this one signs in as that persona.
+- runFlow: _signed-out.yaml

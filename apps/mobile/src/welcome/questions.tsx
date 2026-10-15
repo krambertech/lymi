@@ -48,10 +48,10 @@ export function Arrive({ children }: { children: ReactNode }) {
 
 export function QuestionHeading({ title, lede }: { title: string; lede: string }) {
   return (
-    <View className="gap-2 pb-6">
+    <View className="gap-2 pb-5">
       <Text
-        className="text-3xl font-medium text-text"
-        style={{ letterSpacing: -0.6 }}
+        className="text-2xl font-medium text-text"
+        style={{ letterSpacing: -0.4 }}
         accessibilityRole="header"
       >
         {title}
@@ -72,8 +72,8 @@ export function Hello({ joined }: { joined: JoinedDeck | undefined }) {
       <Lantern size={120} />
       <View className="items-center gap-2">
         <Text
-          className="text-center text-4xl font-medium text-text"
-          style={{ letterSpacing: -1 }}
+          className="text-center text-3xl font-medium text-text"
+          style={{ letterSpacing: -0.6 }}
           accessibilityRole="header"
         >
           {t`Welcome to Lymi`}
@@ -85,7 +85,7 @@ export function Hello({ joined }: { joined: JoinedDeck | undefined }) {
         </Text>
       </View>
       <View className="self-stretch">
-        {joined ? <JoinedPlate deck={joined} /> : <HowItWorks startAt={900} />}
+        {joined ? <JoinedPlate deck={joined} /> : <HowItWorks />}
       </View>
     </View>
   );

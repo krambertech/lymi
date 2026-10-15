@@ -24,6 +24,7 @@ import type { IconName } from "../ui/icons";
 import { Button, Icon, Text } from "../ui/primitives";
 import { Screen } from "../ui/screen";
 import { Skeleton } from "../ui/skeleton";
+import { welcomeWith } from "../welcome/gate";
 import { isPromised, promiseJoin, takeJoin } from "./join-intent";
 
 /** A join link someone shared, or "Add to Lymi" on a published deck's public page. */
@@ -108,8 +109,11 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
         qc.invalidateQueries({ queryKey: ["rounds"] }),
         published && qc.invalidateQueries({ queryKey: exploreQuery.queryKey }),
       ]);
-      if (await awaitsWelcome()) router.replace(`/onboarding?deck=${deckId}` as Href);
-      else open(deckId);
+      if (await awaitsWelcome()) {
+        // Welcome becomes the signed-in screen with this deck; it is opened once the root has it.
+        welcomeWith(deckId);
+        requestAnimationFrame(() => router.replace("/onboarding"));
+      } else open(deckId);
     },
     onError: (err) => {
       setFailed(describe(err));

@@ -4,7 +4,7 @@
 
 ## Reach
 
-Signed in with no decks, no reviews and no `onboarded_at`, Today opens Welcome as a cover. A deck's `lymi://add/<slug>` or a join link's `lymi://join/<token>`, opened signed out, offers Add to Library or Join, which signs up or in, then joins behind a loading state and opens the deck's welcome.
+Signed in with no decks and no `onboarded_at`, the app opens Welcome straight after sign-in, in place of Today. A deck's `lymi://add/<slug>` or a join link's `lymi://join/<token>`, opened signed out, offers Add to Library or Join, which signs up or in, then joins behind a loading state and opens the deck's welcome.
 
 ## Drive
 

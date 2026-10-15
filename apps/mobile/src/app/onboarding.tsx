@@ -4,7 +4,7 @@ import { decksQuery, exploreQuery, settingsQuery } from "@lymi/client/queries";
 import { catalogLanguages, startDecks, welcomePath } from "@lymi/client/welcome";
 import { type LearningKind, type OnboardingInput, STARTING_DAILY_GOAL } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { type Href, useLocalSearchParams, useRouter } from "expo-router";
+import type { Href } from "expo-router";
 import { openBrowserAsync } from "expo-web-browser";
 import { useEffect, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
@@ -15,6 +15,7 @@ import { openWeb } from "../ui/on-the-web";
 import { Button, Text } from "../ui/primitives";
 import { BarButton, BarText } from "../ui/screen";
 import { CONNECT_DOCS } from "../welcome/assistant-offer";
+import { setAfterWelcome, useWelcomeDeck, welcomeWith } from "../welcome/gate";
 import {
   Arrive,
   GoalChoices,
@@ -33,16 +34,16 @@ const SKIP: OnboardingInput = { learningKind: null, learningLanguage: null, dail
 
 /**
  * Welcome: what the learner is learning, a daily goal and a way to start, one full-screen question at
- * a time, then the first review. A learner who arrived with a deck is asked only the goal. Shown once,
- * over Today, to an account with nothing in it; finishing or skipping on either app holds on both.
+ * a time, then the first review. A learner who arrived with a deck is asked only the goal. The root
+ * shows it once, in place of Today, to an account with nothing in it (`welcome/gate.ts`), and
+ * finishing or skipping saves `onboarded_at`, which holds on both apps and brings Today back.
  * docs/design/onboarding.md.
  */
 export default function Onboarding() {
   const { t } = useLingui();
-  const router = useRouter();
   const insets = useSafeAreaInsets();
   const qc = useQueryClient();
-  const { deck: deckId } = useLocalSearchParams<{ deck?: string }>();
+  const deckId = useWelcomeDeck();
   const settings = useQuery(settingsQuery);
   const explore = useQuery(exploreQuery);
   const decks = useQuery({ ...decksQuery, enabled: !!deckId });
@@ -87,11 +88,16 @@ export default function Onboarding() {
     setTrail((s) => [...s, to]);
   };
 
-  // Welcome leaves the way it came, as a cover going down, and Today is under it.
-  const leave = (then?: Href) => {
-    endWelcome();
-    router.back();
-    if (then) router.push(then);
+  // Saving `onboarded_at` is what ends Welcome: the root brings Today back, and Today opens `then`.
+  const saveAndLeave = async (input: OnboardingInput, then?: Href) => {
+    setAfterWelcome(then ?? null);
+    try {
+      await save.mutateAsync(input);
+    } catch (e) {
+      setAfterWelcome(null);
+      throw e;
+    }
+    welcomeWith(null);
   };
 
   const finish = async (answers: WelcomeStart) => {
@@ -106,11 +112,14 @@ export default function Onboarding() {
         });
       }
       saving = true;
-      await save.mutateAsync({
-        learningKind: kind,
-        learningLanguage: kind === "language" ? language : null,
-        dailyGoal: goal,
-      });
+      await saveAndLeave(
+        {
+          learningKind: kind,
+          learningLanguage: kind === "language" ? language : null,
+          dailyGoal: goal,
+        },
+        answers.kind === "deck" ? "/review" : answers.own === "type" ? "/new-deck" : undefined,
+      );
     } catch (e) {
       setError(
         saving
@@ -119,6 +128,7 @@ export default function Onboarding() {
       );
       return;
     }
+    // Counted once saved; the events outlive this screen, which saving has just closed.
     trackGuide(
       answers.kind === "deck"
         ? "explore"
@@ -129,39 +139,41 @@ export default function Onboarding() {
             : "import",
     );
     finishStep("start", false);
-    if (answers.kind === "deck") return leave("/review");
-    if (answers.own === "type") return leave("/new-deck");
-    leave();
+    endWelcome();
     // The web's own pages, over Today with its guide.
-    if (answers.own === "import") void openWeb("/import");
-    else void openBrowserAsync(CONNECT_DOCS);
+    if (answers.kind === "own" && answers.own === "import") void openWeb("/import");
+    else if (answers.kind === "own" && answers.own === "assistant")
+      void openBrowserAsync(CONNECT_DOCS);
   };
 
   const startJoined = async () => {
     if (!joined) return;
     setError(null);
     try {
-      await save.mutateAsync({ ...SKIP, dailyGoal: goal });
+      // A deck shared before its owner added a card has nothing to review yet, so its page says so.
+      await saveAndLeave(
+        { ...SKIP, dailyGoal: goal },
+        (joined.total === 0 ? `/library/${joined.id}` : `/review?deck=${joined.id}`) as Href,
+      );
     } catch {
       setError(t`Couldn’t save your daily goal. Check your connection and try again.`);
       return;
     }
     finishStep("goal", false);
-    // A deck shared before its owner added a card has nothing to review yet, so its page says so.
-    leave((joined.total === 0 ? `/library/${joined.id}` : `/review?deck=${joined.id}`) as Href);
+    endWelcome();
   };
 
   const skip = async () => {
     setError(null);
     try {
-      await save.mutateAsync(SKIP);
+      // Their deck's page, not Today's guide, which is about making a deck of their own.
+      await saveAndLeave(SKIP, joined ? (`/library/${joined.id}` as Href) : undefined);
     } catch {
       setError(t`Couldn’t skip for now. Check your connection and try again.`);
       return;
     }
     finishStep(step, true);
-    // Their deck's page, not Today's guide, which is about making a deck of their own.
-    leave(joined ? (`/library/${joined.id}` as Href) : undefined);
+    endWelcome();
   };
 
   const next = () => {
@@ -179,11 +191,6 @@ export default function Onboarding() {
     void finish(start);
   };
 
-  // A learner set up on the web, or in another launch, never sees Welcome again.
-  const done = !!settings.data?.onboardedAt && !save.isPending && !save.isSuccess;
-  useEffect(() => {
-    if (done) router.back();
-  }, [done, router]);
   // The questions wait for the deck the learner arrived with; one no longer in Library gets them all.
   if (deckId && !joined && decks.isPending) return <View className="flex-1 bg-canvas" />;
 

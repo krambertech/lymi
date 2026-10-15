@@ -1,15 +1,8 @@
 import { useLingui } from "@lingui/react/macro";
 import { CHOICE_POP } from "@lymi/design";
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
 import { View } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withDelay,
-  withTiming,
-  ZoomIn,
-} from "react-native-reanimated";
+import Animated, { ZoomIn } from "react-native-reanimated";
 import { springIn, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import type { IconName } from "../ui/icons";
@@ -73,23 +66,12 @@ export function ChoiceTile({
   );
 }
 
-const HOW_STEP_MS = 650;
-
 /**
- * Review in three steps down one line. Once the plate has risen the flame's light runs down the line,
- * lighting each number as it reaches it, then rests with all three lit. onboarding.md "Motion".
+ * Review in three steps down one line, all lit from the start: lit one by one, they flashed on the
+ * phone rather than read as a sequence. onboarding.md "On the phone".
  */
-export function HowItWorks({ startAt }: { startAt: number }) {
+export function HowItWorks() {
   const { t } = useLingui();
-  const reduce = useReduceMotion();
-  const [reached, setReached] = useState(reduce ? 3 : 0);
-  useEffect(() => {
-    if (reduce) return;
-    const timers = [0, 1, 2].map((i) =>
-      setTimeout(() => setReached(i + 1), startAt + i * HOW_STEP_MS),
-    );
-    return () => timers.forEach(clearTimeout);
-  }, [reduce, startAt]);
   const steps = [
     t`See a card and recall the answer.`,
     t`Say how well you knew it.`,
@@ -102,7 +84,7 @@ export function HowItWorks({ startAt }: { startAt: number }) {
       </Text>
       <View className="gap-5">
         {steps.map((line, i) => (
-          <HowStep key={line} n={i + 1} lit={reached > i} last={i === steps.length - 1}>
+          <HowStep key={line} n={i + 1} last={i === steps.length - 1}>
             {line}
           </HowStep>
         ))}
@@ -111,31 +93,12 @@ export function HowItWorks({ startAt }: { startAt: number }) {
   );
 }
 
-function HowStep({
-  n,
-  lit,
-  last,
-  children,
-}: {
-  n: number;
-  lit: boolean;
-  last: boolean;
-  children: string;
-}) {
+function HowStep({ n, last, children }: { n: number; last: boolean; children: string }) {
   const p = usePalette();
-  const reduce = useReduceMotion();
-  const fill = useSharedValue(lit ? 1 : 0);
-  useEffect(() => {
-    fill.value = reduce
-      ? lit
-        ? 1
-        : 0
-      : withDelay(120, withTiming(lit ? 1 : 0, { duration: HOW_STEP_MS * 0.8 }));
-  }, [lit, reduce, fill]);
-  const line = useAnimatedStyle(() => ({ transform: [{ scaleY: fill.value }] }));
   return (
     <View className="flex-row items-start gap-3">
       {!last && (
+        // Plain styles, since Uniwind's `absolute` class drops inline insets.
         <View
           style={{
             position: "absolute",
@@ -143,30 +106,24 @@ function HowStep({
             top: 28,
             bottom: -16,
             width: 2,
-            overflow: "hidden",
-            backgroundColor: p["plate-2"],
+            borderRadius: 1,
+            backgroundColor: p.amber,
           }}
           accessibilityElementsHidden
-        >
-          <Animated.View
-            style={[{ flex: 1, backgroundColor: p.amber, transformOrigin: "top" }, line]}
-          />
-        </View>
+        />
       )}
       <View
-        className={`size-6 items-center justify-center rounded-full ${lit ? "bg-amber" : "bg-plate-2"}`}
+        className="size-6 items-center justify-center rounded-full bg-amber"
         accessibilityElementsHidden
       >
         <Text
           className="text-xs font-medium"
-          style={{ color: lit ? p["amber-ink"] : p.muted, fontVariant: ["tabular-nums"] }}
+          style={{ color: p["amber-ink"], fontVariant: ["tabular-nums"] }}
         >
           {n}
         </Text>
       </View>
-      <Text className={`flex-1 pt-0.5 text-base ${lit ? "text-text" : "text-muted"}`}>
-        {children}
-      </Text>
+      <Text className="flex-1 pt-0.5 text-base text-text">{children}</Text>
     </View>
   );
 }

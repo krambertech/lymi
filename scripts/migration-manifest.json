@@ -195,6 +195,10 @@
     {
       "name": "0048_lucky_blackheart.sql",
       "sha256": "e530b7fec51233c8a3807ebed6e2f304ec81390e125760a942e69c47a94755ea"
+    },
+    {
+      "name": "0049_card_tags.sql",
+      "sha256": "439fae9630cc2b54b9d136ead816ef7089768c1a496d88b611c34085bb0c75ae"
     }
   ]
 }

@@ -36,3 +36,4 @@ export * from "./series-access";
 export * from "./settings";
 export * from "./slipping";
 export * from "./stats";
+export * from "./tags";

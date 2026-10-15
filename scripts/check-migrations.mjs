@@ -65,8 +65,8 @@ export function validateMigrationHistory({ files, manifest, baseline }) {
   }
 }
 
-// Merged before the check; scripts/backfill-normalized-term.ts repaired what its lower() missed.
-const ASCII_FOLDING_ALLOWED = new Set(["0002_normalized_term.sql"]);
+// Each is followed by a backfill that refolds with JavaScript: backfill-normalized-term.ts and backfill-tag-keys.ts.
+const ASCII_FOLDING_ALLOWED = new Set(["0002_normalized_term.sql", "0049_card_tags.sql"]);
 
 /** SQLite's lower() folds ASCII only, so a migration must not use it to normalise learner text. */
 export function asciiOnlyFolding(files) {

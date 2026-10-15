@@ -2625,7 +2625,7 @@ msgid "That’s no longer here. Reload to see what changed."
 msgstr "Этого уже нет. Обнови страницу, чтобы увидеть изменения."
 
 msgid "That’s the most tags a card can have"
-msgstr ""
+msgstr "Больше тегов на карточке быть не может"
 
 msgid "The AI"
 msgstr "AI"

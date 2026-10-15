@@ -35,7 +35,8 @@ import { useObjectUrl } from "../lib/avatar";
 import { modShortcut, useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { lastDeckId } from "../lib/last-deck";
-import { sectionsQuery } from "../lib/queries";
+import { sectionsQuery, tagsQuery } from "../lib/queries";
+import { captureAnalytics } from "../lib/telemetry";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { Button } from "./button";
 import { acceptsPictureFile, CardPictureField, type PictureDraft } from "./card-picture-field";
@@ -273,6 +274,7 @@ export function CardForm(props: CardFormProps) {
     ...sectionsQuery(deck),
     enabled: !st && !!deck && current?.role === "owner",
   }).data?.sections;
+  const tagsInUse = useQuery({ ...tagsQuery, enabled: !st }).data;
   const deckLanguage = current?.defaultLanguage ?? null;
   const language = chosenLanguage ? chosenLanguage.value : deckLanguage;
   const deckModes = (current?.reviewModes ?? []).map(modeKey);
@@ -729,6 +731,8 @@ export function CardForm(props: CardFormProps) {
       </FieldLabel>
       <TagsInput
         value={tags}
+        suggestions={tagsInUse}
+        onTagAdded={(via, inUse) => captureAnalytics("tag_added", { via, in_use: inUse })}
         onValueChange={(next) => {
           setTags(next);
           clear("tags");

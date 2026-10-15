@@ -34,7 +34,7 @@ import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
 import { selectIn } from "./batch";
-import { type CardView, editionText, inEdition, presentCards } from "./card-view";
+import { type CardView, editionText, presentCards, seenIn } from "./card-view";
 import { foldForSearch, matchesSearch, searchKey } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
 import { memberOf } from "./members";
@@ -381,7 +381,7 @@ export async function searchCards(
   // Text matches the edition the learner reads the deck in, the words on their screen.
   const editions = await editionText(db, userId, read);
   const found = read.filter((row) => {
-    const seen = inEdition(row, editions.get(row.id));
+    const seen = seenIn(row, editions);
     return checks.every((check) => check(seen)) && (!needle || matchesSearch(seen, needle));
   });
   const hits = found.slice(0, limit);

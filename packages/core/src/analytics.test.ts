@@ -45,6 +45,11 @@ describe("analytics privacy contract", () => {
     ).toBeNull();
     expect(eventProperties("origin_badge_shown", { badge: "estonia" }, "phone")).toBeNull();
     expect(eventProperties("origin_badge_shown", { badge: "Europe/Tallinn" })).toBeNull();
+    // A tag's name is the learner's own text, so only how it was added leaves the browser.
+    expect(
+      eventProperties("tag_added", { via: "suggestion", in_use: true, name: "food" }, "browser"),
+    ).toEqual({ via: "suggestion", in_use: true });
+    expect(eventProperties("tag_added", { via: "typed", in_use: false }, "worker")).toBeNull();
   });
   it("bands a backlog and sends an AI call's size without its text", () => {
     expect([0, 1, 20, 21, 100, 101].map(backlogOf)).toEqual([

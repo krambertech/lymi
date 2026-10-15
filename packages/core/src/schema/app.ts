@@ -176,6 +176,7 @@ export const cards = sqliteTable(
     example: text("example"),
     notes: text("notes"),
     language: text("language"),
+    /** The names of the card's `card_tags`, in order, written in the same batch. */
     tags: text("tags", { mode: "json" }).$type<string[]>().notNull().default(sql`'[]'`),
     /** Where it came from, free text: "Lesson 14", "Il Gattopardo ch. 2", "chat with Marco". */
     source: text("source"),
@@ -225,6 +226,39 @@ export const cards = sqliteTable(
     index("cards_user_term_idx").on(t.userId, t.term),
     index("cards_user_lang_norm_idx").on(t.userId, t.language, t.normalizedTerm),
   ],
+);
+
+/**
+ * A card owner's tag. The same name is one tag across every deck the owner has, matched by
+ * `tagKey(name)`, so "Verbs" joins "verbs" and "Дієслова" joins "дієслова". `cards.tags` mirrors a card's tag names.
+ */
+export const tags = sqliteTable(
+  "tags",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    normalizedName: text("normalized_name").notNull(),
+    ...timestamps,
+  },
+  (t) => [uniqueIndex("tags_user_name_idx").on(t.userId, t.normalizedName)],
+);
+
+/** Which tags a card carries, in the card's order. */
+export const cardTags = sqliteTable(
+  "card_tags",
+  {
+    cardId: text("card_id")
+      .notNull()
+      .references(() => cards.id, { onDelete: "cascade" }),
+    tagId: text("tag_id")
+      .notNull()
+      .references(() => tags.id, { onDelete: "cascade" }),
+    position: integer("position").notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.cardId, t.tagId] }), index("card_tags_tag_idx").on(t.tagId)],
 );
 
 /** Per-learner settings. One row per user, created on first read. */
@@ -872,6 +906,7 @@ export type Deck = typeof decks.$inferSelect;
 export type Section = typeof sections.$inferSelect;
 export type SectionStart = typeof sectionStarts.$inferSelect;
 export type Card = typeof cards.$inferSelect;
+export type Tag = typeof tags.$inferSelect;
 export type DeckMember = typeof deckMembers.$inferSelect;
 export type DeckInvitation = typeof deckInvitations.$inferSelect;
 export type DeckPublication = typeof deckPublications.$inferSelect;

@@ -95,6 +95,11 @@ export function mountOpenApi(app: Hono<AppEnv>) {
               "One term and what the learner knows about it. Adding a term that already exists is skipped, never rejected.",
           },
           {
+            name: "Tags",
+            description:
+              "Labels on cards that find and review them across decks. A card's tags are part of the card, and the same name is one tag in every deck you study.",
+          },
+          {
             name: "Review",
             description:
               "What is due, and what it would be scheduled to. Grading is the learner's alone.",

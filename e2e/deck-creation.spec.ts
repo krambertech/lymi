@@ -224,22 +224,25 @@ test.describe("deck and card creation", () => {
     // A desktop unfolds the rest under More fields; a phone opens each one from its chip, in a drawer.
     const phone = testInfo.project.name === "webkit";
     if (!phone) await dialog.getByRole("button", { name: "More fields", exact: true }).click();
+    // Tags suggests the ones in use, so its field is a combobox.
+    const role = (field: string) => (field === "Tags" ? "combobox" : "textbox");
     const fill = async (field: string, value: string) => {
       if (!phone) {
-        await dialog.getByRole("textbox", { name: field, exact: true }).fill(value);
+        await dialog.getByRole(role(field), { name: field, exact: true }).fill(value);
         return;
       }
       await dialog.getByRole("button", { name: field, exact: true }).click();
       const panel = page.getByRole("dialog", { name: field, exact: true });
-      await panel.getByRole("textbox", { name: field, exact: true }).fill(value);
+      await panel.getByRole(role(field), { name: field, exact: true }).fill(value);
       if (field === "Tags")
-        await panel.getByRole("textbox", { name: field, exact: true }).press("Enter");
+        await panel.getByRole("combobox", { name: field, exact: true }).press("Enter");
       await panel.getByRole("button", { name: "Done", exact: true }).click();
     };
     await fill("Example", "Scendo alla fermata.");
     await fill("Source", "Lesson 14");
     await fill("Tags", "streets");
-    if (!phone) await dialog.getByRole("textbox", { name: "Tags", exact: true }).press("Enter");
+    // A new name opens the list with its Create row, and an open combobox hides the rest of the dialog from the accessibility tree, as the ARIA pattern does.
+    if (!phone) await page.getByRole("combobox", { name: "Tags", exact: true }).press("Enter");
     if (phone) {
       await expect(
         dialog.getByRole("button", { name: "Source: Lesson 14", exact: true }),

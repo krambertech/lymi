@@ -21,8 +21,6 @@
   --rail: oklch(0.955 0.006 80);
   /* What rises over the room: a sheet. By day the room itself, as the scrim behind it sets it apart. */
   --sheet: var(--canvas);
-  /* A sheet that rises part way over a screen; by day iOS's glass draws it. */
-  --sheet-raised: var(--sheet);
   --plate: oklch(1 0 0);
   --plate-2: oklch(0.955 0.006 80);
   --hover: oklch(0.94 0.007 80);
@@ -118,8 +116,6 @@
   --rail: oklch(0.195 0.009 62);
   /* At night a scrim cannot darken the dark, so what rises is lighter than the room, as iOS's own sheets are. */
   --sheet: oklch(0.205 0.009 62);
-  /* iOS dims the screen behind a part-height sheet to about half, so the sheet sits above plate-2 or it meets the card it covers. */
-  --sheet-raised: oklch(0.285 0.011 66);
   --plate: oklch(0.24 0.01 64);
   --plate-2: oklch(0.275 0.011 66);
   --hover: oklch(0.295 0.011 66);

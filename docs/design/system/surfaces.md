@@ -36,7 +36,7 @@ The light room is noon: nothing casts a shadow, so depth is tone and one hairlin
 | Level | What | By day | At night |
 | --- | --- | --- | --- |
 | Room | `bg-canvas` | the page | the page |
-| Sheet | Liquid Glass on iOS 26; `bg-sheet` before it | the room, set apart by the scrim behind it | a step lighter than the room, since a scrim cannot darken the dark; a part-height sheet is `sheet-raised`, above `plate-2`, because iOS dims the screen under it to about half and a darker sheet meets the card it covers |
+| Sheet | Liquid Glass on iOS 26; `bg-sheet` before it | the room, set apart by the scrim behind it | a step lighter than the room, since a scrim cannot darken the dark |
 | Plate | `edge bg-plate` | white with a hairline | lifted: `--lift`, a soft shadow under the hairline |
 | Well | `well`, a track or an unlit pane | set into its plate | set into its plate, a step lighter so it still reads |
 | Chosen | `bg-chosen`, in a `plate-2` track | white | a lifted warm grey, above its track |

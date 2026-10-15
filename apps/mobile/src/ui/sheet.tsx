@@ -1,10 +1,6 @@
 // biome-ignore lint/style/noRestrictedImports: this is the one place the raw sheet is wrapped.
 import { BottomSheet, Group, Host, RNHostView } from "@expo/ui/swift-ui";
-import {
-  presentationBackground,
-  presentationDetents,
-  presentationDragIndicator,
-} from "@expo/ui/swift-ui/modifiers";
+import { presentationDetents, presentationDragIndicator } from "@expo/ui/swift-ui/modifiers";
 import { useLingui } from "@lingui/react/macro";
 import * as Haptics from "expo-haptics";
 import {
@@ -160,7 +156,7 @@ export function Sheet({
   });
   const scrolled = offset;
   const left = useDerivedValue(() => whole.value - shown.value - offset.value);
-  const edge = room === "dark" ? p["sheet-raised"] : p.plate;
+  const edge = room === "dark" ? p.sheet : p.plate;
   return (
     <Host colorScheme={room} style={{ position: "absolute", width: 0, height: 0 }}>
       <BottomSheet
@@ -171,14 +167,7 @@ export function Sheet({
         }}
         fitToContents={!more}
       >
-        <Group
-          modifiers={[
-            presentationDragIndicator("visible"),
-            // iOS's dark glass is a cool grey; at night the sheet takes the room's own warm colour.
-            ...(room === "dark" ? [presentationBackground(p["sheet-raised"])] : []),
-            ...detents,
-          ]}
-        >
+        <Group modifiers={[presentationDragIndicator("visible"), ...detents]}>
           {more ? (
             // Fills the sheet rather than sizing to its rows, so its top shows when it peeks and the
             // rest scrolls once it is dragged up to the full screen.

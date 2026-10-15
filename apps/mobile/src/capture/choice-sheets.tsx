@@ -2,7 +2,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { modeKey } from "@lymi/core";
-import { useDecks, useSections } from "../data/queries";
+import { useDecks, useOwnedDecks, useSections } from "../data/queries";
 import { SEARCHED_PAST, SearchField, useSearched } from "../ui/menu";
 import { Text } from "../ui/primitives";
 import { SheetGroup, SheetRow } from "../ui/sheet";
@@ -34,7 +34,7 @@ interface ChoiceProps {
 function DeckChoice({ onChosen }: ChoiceProps) {
   const { t } = useLingui();
   const { deckId, chooseDeck } = useChoices();
-  const decks = useDecks().data ?? [];
+  const decks = useOwnedDecks().data ?? [];
   const current = decks.find((d) => d.id === deckId) ?? decks[0];
   const { query, setQuery, searching, shown } = useSearched(
     decks.map((d) => ({ value: d.id, label: d.name })),

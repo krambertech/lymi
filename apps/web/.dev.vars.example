@@ -41,3 +41,5 @@ AI_GATEWAY_TOKEN=
 OPENAI_APPS_CHALLENGE=
 # The phone app's `TEAMID.bundle`, so join and add links open it. Empty turns universal links off.
 APPLE_APP_ID=
+# Comma-separated SHA-256 fingerprints of the Android app's signing certificates. Empty turns app links off.
+ANDROID_CERT_FINGERPRINTS=

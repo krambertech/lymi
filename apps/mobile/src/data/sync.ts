@@ -1,3 +1,4 @@
+import { useLingui } from "@lingui/react/macro";
 import { api } from "@lymi/client/api";
 import { cacheWarmer } from "@lymi/client/cache";
 import { retireGrades } from "@lymi/client/grades";
@@ -20,6 +21,7 @@ const DAY_KEYS = [["decks"], ["rounds"], ["streak"], ["queue"]];
  */
 export function Sync({ learnerId }: { learnerId: string }) {
   const qc = useQueryClient();
+  const { t } = useLingui();
 
   useEffect(() => {
     claimCache(learnerId, qc);
@@ -93,17 +95,23 @@ export function Sync({ learnerId }: { learnerId: string }) {
     () =>
       onNotice((notice) => {
         const label = notice.label;
-        Alert.alert(
-          notice.reason === "skipped"
-            ? `“${label}” was already in ${notice.deckName}, so the copy added offline was left out.`
-            : label
-              ? `A change to “${label}” made offline couldn’t be saved. ${notice.message}`
-              : `A change made offline couldn’t be saved. ${notice.message}`,
-        );
+        if (notice.reason === "skipped") {
+          const deckName = notice.deckName;
+          Alert.alert(
+            t`“${label}” was already in ${deckName}, so the copy added offline was left out.`,
+          );
+        } else {
+          const reason = notice.message;
+          Alert.alert(
+            label
+              ? t`A change to “${label}” made offline couldn’t be saved. ${reason}`
+              : t`A change made offline couldn’t be saved. ${reason}`,
+          );
+        }
         void qc.invalidateQueries({ queryKey: ["decks"] });
         void qc.invalidateQueries({ queryKey: ["cards"] });
       }),
-    [qc],
+    [qc, t],
   );
 
   const day = useDraw().data?.day;

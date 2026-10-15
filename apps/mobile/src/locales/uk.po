@@ -10,6 +10,9 @@ msgstr ""
 msgid "“{deckName}” is reviewed with the other decks in its series."
 msgstr "«{deckName}» повторюватиметься разом з іншими колодами серії."
 
+msgid "“{label}” was already in {deckName}, so the copy added offline was left out."
+msgstr "«{label}» уже є в «{deckName}», тож копію, додану офлайн, не збережено."
+
 msgid "“{term}” is already in {deck}"
 msgstr "«{term}» уже є в колоді {deck}"
 
@@ -378,6 +381,12 @@ msgstr "90 днів"
 msgid "A card keeps its progress and leaves its section."
 msgstr "Картка зберігає прогрес і виходить зі свого розділу."
 
+msgid "A change made offline couldn’t be saved. {reason}"
+msgstr "Не вдалося зберегти зміну, зроблену офлайн. {reason}"
+
+msgid "A change to “{label}” made offline couldn’t be saved. {reason}"
+msgstr "Не вдалося зберегти зміну в «{label}», зроблену офлайн. {reason}"
+
 msgid "A connected app"
 msgstr "Підключений застосунок"
 
@@ -582,6 +591,9 @@ msgstr "Архівувати картку"
 msgid "Archive deck"
 msgstr "Архівувати колоду"
 
+msgid "Archive the decks"
+msgstr "Архівувати колоди"
+
 msgid "Archived"
 msgstr "Архів"
 
@@ -719,6 +731,9 @@ msgstr "Картки"
 
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Картки з вівторкових уроків Марко."
+
+msgid "Cards go in a deck you own. Create one first."
+msgstr "Картки додаються лише до твоїх колод. Спершу створи колоду."
 
 msgid "Cards outside a section"
 msgstr "Картки без розділу"
@@ -1071,6 +1086,12 @@ msgstr "Колоди"
 msgid "Decks to review"
 msgstr "Колоди до повторення"
 
+msgid "Delete"
+msgstr "Видалити"
+
+msgid "Delete “{seriesName}”?"
+msgstr "Видалити «{seriesName}»?"
+
 msgid "Delete series"
 msgstr "Видалити серію"
 
@@ -1348,6 +1369,9 @@ msgstr "Назви розділ."
 msgid "Give the series a name."
 msgstr "Дай серії назву."
 
+msgid "Go to Lymi"
+msgstr "Відкрити Lymi"
+
 msgid "Go to Today"
 msgstr "Відкрити «Сьогодні»"
 
@@ -1556,6 +1580,9 @@ msgstr "Залишити учасника"
 
 msgid "Keep studying"
 msgstr "Продовжити вчити"
+
+msgid "Keep the decks"
+msgstr "Залишити колоди"
 
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Повідомлення має бути коротшим за {FEEDBACK_MESSAGE_MAX} символів."
@@ -2620,6 +2647,12 @@ msgstr "Посиланню для приєднання потрібне з’є�
 
 msgid "The link stops working for good. People who joined stay."
 msgstr "Посилання перестане працювати назавжди. Ті, хто приєднався, залишаться."
+
+msgid "The series is deleted for good."
+msgstr "Серію буде видалено назавжди."
+
+msgid "The series is deleted for good. Its decks can stay in Library or be archived with it."
+msgstr "Серію буде видалено назавжди. Її колоди можуть залишитися в Бібліотеці або піти в архів разом із нею."
 
 msgid "Their invitation link stops working. You can invite them again any time."
 msgstr "Посилання із запрошення перестане працювати. Ти можеш запросити знову будь-коли."

@@ -53,6 +53,8 @@ export interface Bindings
   OPENAI_APPS_CHALLENGE?: string;
   /** The phone app's Team ID and bundle, `TEAMID.app.lymi`; universal links are off without it. */
   APPLE_APP_ID?: string;
+  /** Comma-separated SHA-256 fingerprints of the Android app's signing certificates; app links are off without them. */
+  ANDROID_CERT_FINGERPRINTS?: string;
 }
 
 /** Preview-only capabilities fail closed unless both the build flag and isolated hostname agree. */

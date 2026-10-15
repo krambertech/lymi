@@ -195,6 +195,29 @@ function SeriesMenu({ series: s, decks, count }: { series: Series; decks: number
   // Series writes go straight to the Worker, so offline the menu says so instead of waiting.
   const needsConnection = (then: () => void) => () =>
     online ? then() : Alert.alert(t`Changing series needs a connection.`);
+  const remove = (choice: "archive" | "keep") =>
+    actions.remove.mutate({ series: s, decks: choice }, { onError: failed });
+  // Deleting a series is the one series write with no Undo, so iOS asks first, and the learner
+  // chooses whether its decks stay in Library or are archived with it.
+  const confirmDelete = () => {
+    const cancel = { text: t`Cancel`, style: "cancel" as const };
+    if (decks === 0) {
+      Alert.alert(t`Delete “${seriesName}”?`, t`The series is deleted for good.`, [
+        cancel,
+        { text: t`Delete`, style: "destructive", onPress: () => remove("keep") },
+      ]);
+      return;
+    }
+    Alert.alert(
+      t`Delete “${seriesName}”?`,
+      t`The series is deleted for good. Its decks can stay in Library or be archived with it.`,
+      [
+        { text: t`Keep the decks`, onPress: () => remove("keep") },
+        { text: t`Archive the decks`, style: "destructive", onPress: () => remove("archive") },
+        cancel,
+      ],
+    );
+  };
   return (
     <ActionMenu
       label={t`Options for ${seriesName}`}
@@ -227,53 +250,11 @@ function SeriesMenu({ series: s, decks, count }: { series: Series; decks: number
             label: t`Delete series`,
             icon: "delete",
             destructive: true,
-            onSelect: needsConnection(() =>
-              confirmDelete(t, s, decks, (input) =>
-                actions.remove.mutate(input, { onError: failed }),
-              ),
-            ),
+            onSelect: needsConnection(confirmDelete),
           },
         ],
       ]}
     />
-  );
-}
-
-/**
- * Deleting a series is the one series write with no Undo, so iOS asks first, and the learner
- * chooses whether its decks stay in Library or are archived with it.
- */
-function confirmDelete(
-  t: ReturnType<typeof useLingui>["t"],
-  s: Series,
-  decks: number,
-  remove: (input: { series: Series; decks: "archive" | "keep" }) => void,
-) {
-  const name = s.name;
-  const cancel = { text: t`Cancel`, style: "cancel" as const };
-  if (decks === 0) {
-    Alert.alert(t`Delete “${name}”?`, t`The series is deleted for good.`, [
-      cancel,
-      {
-        text: t`Delete`,
-        style: "destructive",
-        onPress: () => remove({ series: s, decks: "keep" }),
-      },
-    ]);
-    return;
-  }
-  Alert.alert(
-    t`Delete “${name}”?`,
-    t`The series is deleted for good. Its decks can stay in Library or be archived with it.`,
-    [
-      { text: t`Keep the decks`, onPress: () => remove({ series: s, decks: "keep" }) },
-      {
-        text: t`Archive the decks`,
-        style: "destructive",
-        onPress: () => remove({ series: s, decks: "archive" }),
-      },
-      cancel,
-    ],
   );
 }
 

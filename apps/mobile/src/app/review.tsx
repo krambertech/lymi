@@ -31,7 +31,7 @@ import {
 } from "@lymi/design";
 import { useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
   AccessibilityInfo,
@@ -648,6 +648,8 @@ function Run({
       </Cover>
     );
   }
+  // After a deck's review, new cards go to that deck when the learner owns it.
+  const addTo = deck && decks?.find((d) => d.id === deck)?.role === "owner" ? deck : undefined;
   if (result && mark && state) {
     return (
       <Cover style={pull.style}>
@@ -658,7 +660,7 @@ function Run({
           scopeName={scopeName}
           onOffer={onOffer}
           onClose={onClose}
-          onAddCards={() => router.push("/capture")}
+          onAddCards={() => router.push(addTo ? (`/capture?deck=${addTo}` as Href) : "/capture")}
         />
         <GestureDetector gesture={pull.gesture}>
           <Animated.View

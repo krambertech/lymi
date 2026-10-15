@@ -15,7 +15,11 @@ struct AddWordControl: ControlWidget {
   var body: some ControlWidgetConfiguration {
     StaticControlConfiguration(kind: "app.lymi.controls.add") {
       ControlWidgetButton(action: AddWordControlIntent()) {
-        Label(ControlsState.read()?.add ?? String(localized: "Add a word"), image: "lymi.plus")
+        Label {
+          Text(ControlsState.read()?.add ?? String(localized: "Add a word"))
+        } icon: {
+          Image("lymi.controlAdd").symbolRenderingMode(.hierarchical)
+        }
       }
       .tint(Color("amber"))
     }
@@ -33,7 +37,7 @@ struct ReviewControl: ControlWidget {
           Text(value.title)
           if !value.value.isEmpty { Text(value.value) }
         } icon: {
-          Image("lymi.play")
+          Image("lymi.controlReview").symbolRenderingMode(.hierarchical)
         }
       }
       .tint(Color("amber"))

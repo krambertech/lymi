@@ -1,7 +1,7 @@
 import { decksQuery, settingsQuery } from "@lymi/client/queries";
 import { analyticsPath, backlogOf } from "@lymi/core/analytics";
 import { useQuery } from "@tanstack/react-query";
-import { useGlobalSearchParams, usePathname } from "expo-router";
+import { useGlobalSearchParams, usePathname, useRootNavigationState } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { AppState } from "react-native";
 import { type EntryOpened, entryOf } from "../entry/links";
@@ -76,19 +76,31 @@ export function Analytics({ learnerId }: { learnerId: string | null | undefined 
   }, [learnerId]);
 
   // A link held through sign-in reaches its screen afterwards, so the entry waits for consent.
+  // Keyed by the screen itself, so coming back to it from Edit card counts nothing.
   const from = useGlobalSearchParams().from;
+  const screen = focusedKey(useRootNavigationState());
   const [entry, setEntry] = useState<EntryOpened>();
   const lastEntry = useRef<string | undefined>(undefined);
   useEffect(() => {
     const opened = entryOf(pathname, from);
-    const key = opened && `${pathname}?${from}`;
-    if (key === lastEntry.current) return;
-    lastEntry.current = key;
-    if (opened) setEntry(opened);
-  }, [pathname, from]);
+    if (!opened || screen === lastEntry.current) return;
+    lastEntry.current = screen;
+    setEntry(opened);
+  }, [pathname, from, screen]);
   useEffect(() => {
     if (consent === true && entry && captureEvent("entry_opened", entry)) setEntry(undefined);
   }, [consent, entry]);
 
   return null;
+}
+
+interface NavState {
+  index?: number;
+  routes: { key?: string; state?: unknown }[];
+}
+
+/** The key of the screen in front, which stays the same when the learner comes back to it. */
+function focusedKey(state: NavState | undefined): string | undefined {
+  const route = state?.routes[state.index ?? state.routes.length - 1];
+  return route && (focusedKey(route.state as NavState | undefined) ?? route.key);
 }

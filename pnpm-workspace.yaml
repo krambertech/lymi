@@ -2,21 +2,24 @@ packages:
   - apps/*
   - packages/*
 
+# Skia's postinstall copies its prebuilt iOS frameworks out of their npm package; CocoaPods needs them.
 onlyBuiltDependencies:
-  - '@shopify/react-native-skia'
+  - "@shopify/react-native-skia"
 
+# Expo's Babel preset and the worklets plugin import Babel 7 without declaring it; the web apps run Babel 8.
 packageExtensions:
   babel-preset-expo:
     dependencies:
-      '@babel/core': ^7.29.7
-      '@babel/generator': ^7.29.0
-      '@babel/traverse': ^7.29.0
-      '@babel/types': ^7.29.0
+      "@babel/core": ^7.29.7
+      "@babel/generator": ^7.29.0
+      "@babel/traverse": ^7.29.0
+      "@babel/types": ^7.29.0
   react-native-worklets:
     dependencies:
-      '@babel/core': ^7.29.7
-      '@babel/generator': ^7.29.0
-      '@babel/traverse': ^7.29.0
+      "@babel/core": ^7.29.7
+      "@babel/generator": ^7.29.0
+      "@babel/traverse": ^7.29.0
 
+# apple-targets 5.0.0 takes expo-widgets' extension for its own target; the patch matches by name only.
 patchedDependencies:
-  '@bacons/apple-targets@5.0.0': patches/@bacons__apple-targets@5.0.0.patch
+  "@bacons/apple-targets@5.0.0": patches/@bacons__apple-targets@5.0.0.patch

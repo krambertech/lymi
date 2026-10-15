@@ -38,9 +38,12 @@ export function QuickActionsSync() {
     ]).catch((e: unknown) => console.warn("quick actions", e));
   }, [t]);
 
-  useQuickActionCallback((action) => {
-    const href = action.params?.href;
-    if (typeof href === "string") void Linking.openURL(href);
-  });
+  // A stable callback: the hook replays the launching action whenever its callback changes.
+  useQuickActionCallback(openAction);
   return null;
+}
+
+function openAction(action: QuickActions.Action) {
+  const href = action.params?.href;
+  if (typeof href === "string") void Linking.openURL(href);
 }

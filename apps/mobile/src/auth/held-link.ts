@@ -27,6 +27,12 @@ export function noteLink(url: string) {
   if (atDoor) held = last;
 }
 
+/** Drops the link that opened the app, for a screen that has already answered it, such as a dead join link. */
+export function letGoOfLink() {
+  last = null;
+  held = null;
+}
+
 /**
  * Mounted with the signed-out screens: a link that brought the app here a moment ago, or one that
  * arrives while they show, is held for after sign-in.

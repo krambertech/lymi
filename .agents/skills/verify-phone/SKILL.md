@@ -22,6 +22,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Language | [language.md](features/language.md) |
 | Long-press menus | [row-menus.md](features/row-menus.md) |
 | Section heading menu | [section-menu.md](features/section-menu.md) |
+| Entry points: controls, intents, quick actions | [entry-points.md](features/entry-points.md) |
 
 ## Launch
 

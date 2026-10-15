@@ -8,6 +8,7 @@ import { widgetsDirectory } from "expo-widgets";
 import { useEffect, useState } from "react";
 import { dueToday } from "../data/due";
 import { useDay, useDecks, useDraw, useKeptSince } from "../data/queries";
+import { sendControls } from "../entry/controls";
 import { deviceDate, lastSevenDays, weekLetters } from "../ui/days";
 import { WIDGET_COLOURS } from "./colours";
 import LockWidget from "./lock-widget";
@@ -81,6 +82,7 @@ function sendSnapshot(s: Snapshot, images: Images, locale?: string) {
   send("lock", () => LockWidget.updateSnapshot(props.lock));
   send("today", () => TodayWidget.updateSnapshot(props.today));
   send("week", () => WeekWidget.updateSnapshot(props.week));
+  sendControls(s);
 }
 
 /** Now, then the next day from its first moment, so the widgets roll over without the app. */
@@ -111,6 +113,7 @@ function sendTimeline(
       { date: next.at, props: b.week },
     ]),
   );
+  sendControls(now, next);
 }
 
 /** The images an earlier signed-in run already copied into the app group. */
@@ -146,7 +149,7 @@ export function clearWidgets() {
   );
 }
 
-/** Pushes today's numbers to the widgets whenever they change. The real app does this after each sync. */
+/** Pushes today's numbers to the widgets and controls whenever they change, as each review and sync does. */
 export function WidgetSync() {
   const { i18n } = useLingui();
   const { streak, reviewsToday, goal, week, lights, dayDone, out, left, summary } = useDay();

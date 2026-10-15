@@ -227,8 +227,23 @@ msgstr "{deckCount} · {cardCount}"
 msgid "{due, plural, one {# card due} other {# cards due}}"
 msgstr "{due, plural, one {# card due} other {# cards due}}"
 
+msgid "{due, plural, one {# card is due. {reviewed} of {goal} reviewed today.} other {# cards are due. {reviewed} of {goal} reviewed today.}}"
+msgstr "{due, plural, one {# card is due. {reviewed} of {goal} reviewed today.} other {# cards are due. {reviewed} of {goal} reviewed today.}}"
+
+msgid "{due, plural, one {# card is due. Today’s goal is met.} other {# cards are due. Today’s goal is met.}}"
+msgstr "{due, plural, one {# card is due. Today’s goal is met.} other {# cards are due. Today’s goal is met.}}"
+
+msgid "{due, plural, one {# card is due.} other {# cards are due.}}"
+msgstr "{due, plural, one {# card is due.} other {# cards are due.}}"
+
 msgid "{due, plural, one {# card to review} other {# cards to review}}"
 msgstr "{due, plural, one {# card to review} other {# cards to review}}"
+
+msgid "{due, plural, one {# due · {reviewed}/{goal}} other {# due · {reviewed}/{goal}}}"
+msgstr "{due, plural, one {# due · {reviewed}/{goal}} other {# due · {reviewed}/{goal}}}"
+
+msgid "{due, plural, one {# due} other {# due}}"
+msgstr "{due, plural, one {# due} other {# due}}"
 
 msgid "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
 msgstr "{due, plural, one {card due in {deckName}} other {cards due in {deckName}}}"
@@ -420,6 +435,9 @@ msgstr "Add a card"
 
 msgid "Add a tag"
 msgstr "Add a tag"
+
+msgid "Add a word"
+msgstr "Add a word"
 
 msgid "Add cards"
 msgstr "Add cards"
@@ -1333,6 +1351,9 @@ msgstr "Give the series a name."
 msgid "Go to Today"
 msgstr "Go to Today"
 
+msgid "Goal met"
+msgstr "Goal met"
+
 msgctxt "deck tag"
 msgid "Goethe-Zertifikat A1"
 msgstr "Goethe-Zertifikat A1"
@@ -1911,6 +1932,12 @@ msgstr "Nothing due today, so your streak is safe."
 msgid "Nothing forgotten today"
 msgstr "Nothing forgotten today"
 
+msgid "Nothing is due, and today’s goal is met."
+msgstr "Nothing is due, and today’s goal is met."
+
+msgid "Nothing is due."
+msgstr "Nothing is due."
+
 msgid "Nothing left in {scopeName}"
 msgstr "Nothing left in {scopeName}"
 
@@ -1970,6 +1997,9 @@ msgstr "Open Library"
 
 msgid "Open Lymi and sign in to add words from other apps."
 msgstr "Open Lymi and sign in to add words from other apps."
+
+msgid "Open Lymi and sign in to see what’s due."
+msgstr "Open Lymi and sign in to see what’s due."
 
 msgid "Open on the web"
 msgstr "Open on the web"

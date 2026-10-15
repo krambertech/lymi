@@ -3,6 +3,7 @@ import { deckEnrichFields, deckPurpose, newId } from "@lymi/core";
 import { activeAvatarVersion, publisherAvatarPath } from "@lymi/core/catalog";
 import { and, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
+import { FORMER_OWNER_ID } from "./account-deletion";
 import { track } from "./analytics";
 import { audit, auditStatementWhen } from "./audit";
 import { runBatch } from "./batch";
@@ -30,7 +31,7 @@ export function memberOf(userId: string) {
 /** Who owns a deck and what the caller may do in it, as every deck response carries it. */
 export interface Membership {
   role: MemberRole;
-  owner: { id: string; name: string; avatarUrl: string | null };
+  owner: { id: string; name: string; avatarUrl: string | null; former: boolean };
   published: boolean;
 }
 
@@ -127,7 +128,12 @@ export async function deckAccess({ db, userId }: ServiceContext, deckId: string)
     enrichFields: deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose),
     enrichInstructions: role === "owner" ? deck.enrichInstructions : null,
     role,
-    owner: { id: row.deck.userId, name: row.ownerName, avatarUrl: publisher.avatarUrl },
+    owner: {
+      id: row.deck.userId,
+      name: row.ownerName,
+      avatarUrl: publisher.avatarUrl,
+      former: row.deck.userId === FORMER_OWNER_ID,
+    },
     published: publisher.published,
   };
 }

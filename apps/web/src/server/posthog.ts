@@ -153,3 +153,31 @@ export async function reportServerException(
     // An unavailable monitoring service cannot change the product response.
   }
 }
+
+/**
+ * Erases a deleted account's PostHog person and its events. Needs a personal key with person
+ * write scope; without one the person stays, keyed only by the id that no longer exists.
+ */
+export async function erasePostHogPerson(
+  env: Pick<Bindings, "POSTHOG_PERSONAL_API_KEY" | "POSTHOG_PROJECT_ID">,
+  userId: string,
+  fetcher: typeof fetch = fetch,
+): Promise<boolean> {
+  if (!env.POSTHOG_PERSONAL_API_KEY || !env.POSTHOG_PROJECT_ID) return false;
+  try {
+    const response = await fetcher(
+      `${POSTHOG_HOST.replace(".i.", ".")}/api/projects/${encodeURIComponent(env.POSTHOG_PROJECT_ID)}/persons/bulk_delete/`,
+      {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${env.POSTHOG_PERSONAL_API_KEY}`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ distinct_ids: [userId], delete_events: true }),
+      },
+    );
+    return response.ok;
+  } catch {
+    return false;
+  }
+}

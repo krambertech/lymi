@@ -84,6 +84,14 @@ function Composer() {
   // Siri and Shortcuts can name the term: `lymi://capture?term=gelato`.
   const { term: named } = useLocalSearchParams<{ term?: string }>();
   const [draft, setDraft] = useState<Draft>(() => ({ ...EMPTY, term: named?.trim() ?? "" }));
+  // A shortcut run while this screen is open changes its params rather than opening another.
+  const lastNamed = useRef(named);
+  useEffect(() => {
+    if (named === lastNamed.current) return;
+    lastNamed.current = named;
+    const term = named?.trim();
+    if (term) setDraft((d) => ({ ...d, term }));
+  }, [named]);
   const write = (key: keyof Draft) => (value: string) => setDraft((d) => ({ ...d, [key]: value }));
   const fields = useFormFields(draft);
   const form = useReveal();

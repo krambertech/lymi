@@ -76,15 +76,15 @@ export function Analytics({ learnerId }: { learnerId: string | null | undefined 
   }, [learnerId]);
 
   // A link held through sign-in reaches its screen afterwards, so the entry waits for consent.
-  // Keyed by the screen itself, so coming back to it from Edit card counts nothing.
+  // Each screen counts once, so coming back to it from another screen sends nothing.
   const from = useGlobalSearchParams().from;
   const screen = focusedKey(useRootNavigationState());
   const [entry, setEntry] = useState<EntryOpened>();
-  const lastEntry = useRef<string | undefined>(undefined);
+  const counted = useRef(new Set<string>());
   useEffect(() => {
     const opened = entryOf(pathname, from);
-    if (!opened || screen === lastEntry.current) return;
-    lastEntry.current = screen;
+    if (!opened || !screen || counted.current.has(screen)) return;
+    counted.current.add(screen);
     setEntry(opened);
   }, [pathname, from, screen]);
   useEffect(() => {

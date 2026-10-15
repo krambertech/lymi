@@ -705,6 +705,9 @@ msgstr "Cards"
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Cards from Marco’s Tuesday lessons."
 
+msgid "Cards go in a deck you own. Create one first."
+msgstr "Cards go in a deck you own. Create one first."
+
 msgid "Cards outside a section"
 msgstr "Cards outside a section"
 

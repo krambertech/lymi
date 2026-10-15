@@ -705,6 +705,9 @@ msgstr "Картки"
 msgid "Cards from Marco’s Tuesday lessons."
 msgstr "Картки з вівторкових уроків Марко."
 
+msgid "Cards go in a deck you own. Create one first."
+msgstr "Картки додаються лише до твоїх колод. Спершу створи колоду."
+
 msgid "Cards outside a section"
 msgstr "Картки без розділу"
 

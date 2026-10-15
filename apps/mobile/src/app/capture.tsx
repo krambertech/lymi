@@ -21,14 +21,14 @@ import type { Picture } from "../capture/model";
 import { MODE_LABELS } from "../capture/modes";
 import { useReveal } from "../capture/reveal";
 import { CAPTURE_KEYS, captureStore } from "../data/kept";
-import { useDecks, useSections } from "../data/queries";
+import { useOwnedDecks, useSections } from "../data/queries";
 import { timed } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { FieldChip, FieldChipRow } from "../ui/field-chip";
 import { FormHeader } from "../ui/form-header";
 import { GlassPill } from "../ui/glass";
 import { KeyboardRoom } from "../ui/keyboard";
-import { Icon, Press, Text } from "../ui/primitives";
+import { Button, Icon, Press, Text } from "../ui/primitives";
 import { Sheet } from "../ui/sheet";
 import { OnGlass } from "../ui/surface";
 import { ToastHost, toast } from "../ui/toast-host";
@@ -74,9 +74,8 @@ function Composer() {
   const router = useRouter();
   const qc = useQueryClient();
   const p = usePalette();
-  const decksQuery_ = useDecks();
-  // A card can only be added to a deck the learner owns, as on the web.
-  const decks = (decksQuery_.data ?? []).filter((d) => d.role === "owner");
+  const decksQuery_ = useOwnedDecks();
+  const decks = decksQuery_.data ?? [];
   const { deckId, sectionId, picture, setPicture, modes, setModes } = useChoices();
   const deck = decks.find((d) => d.id === deckId) ?? decks[0];
   const deckName = deck?.name ?? "";
@@ -381,11 +380,14 @@ function Composer() {
               </View>
             </>
           ) : (
-            <View className="flex-row items-start gap-2 px-5 pt-4">
-              <Icon name="alert" size={16} colour={p.muted} />
-              <Text className="flex-1 text-base text-muted">
-                {t`Create a deck on the web first, then add cards here.`}
-              </Text>
+            <View className="items-start gap-4 px-5 pt-4">
+              <View className="flex-row items-start gap-2">
+                <Icon name="alert" size={16} colour={p.muted} />
+                <Text className="flex-1 text-base text-muted">
+                  {t`Cards go in a deck you own. Create one first.`}
+                </Text>
+              </View>
+              <Button label={t`New deck`} icon="deck" onPress={() => router.replace("/new-deck")} />
             </View>
           )}
         </OnGlass>

@@ -1,0 +1,23 @@
+# A section heading's long-press menu, for the deck's owner.
+appId: app.lymi
+name: Section heading menu
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/${DECK_ID}
+- extendedWaitUntil:
+    visible: "Search this deck"
+    timeout: 20000
+- scrollUntilVisible:
+    element: "${SECTION}, .*"
+    centerElement: true
+- longPressOn: "${SECTION}, .*"
+- extendedWaitUntil:
+    visible: "Rename section"
+    timeout: 10000
+- assertVisible: "Reorder sections"
+- takeScreenshot: 01-heading-menu
+- tapOn: "Reorder sections"
+- extendedWaitUntil:
+    visible: "Done"
+    timeout: 20000
+- takeScreenshot: 02-sections-edit

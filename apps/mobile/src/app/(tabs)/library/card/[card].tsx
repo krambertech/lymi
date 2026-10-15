@@ -1,18 +1,19 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { apiUrl, type CardEvent, type CardState, errorMessage } from "@lymi/client/api";
+import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
 import { deserializeState } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useEffect, useState } from "react";
 import { Image, View } from "react-native";
 import Animated, { FadeOut, LinearTransition, ZoomIn } from "react-native-reanimated";
 import { useSessionHeaders } from "../../../../auth/client";
 import type { FormField } from "../../../../capture/form";
+import { useArchiveCard } from "../../../../card/card-menu";
 import { languageName } from "../../../../data/languages";
 import { useDeckCards, useDecks } from "../../../../data/queries";
 import { useMoveToSection } from "../../../../deck/move-to-section";
@@ -73,7 +74,6 @@ export default function CardPage() {
   const p = usePalette();
   const reduce = useReduceMotion();
   const stackDetails = useAccessibilitySizes();
-  const qc = useQueryClient();
   const router = useRouter();
   const { card: id, deck: deckId } = useLocalSearchParams<{ card: string; deck: string }>();
   const deck = useDecks().data?.find((d) => d.id === deckId);
@@ -99,34 +99,11 @@ export default function CardPage() {
       : undefined;
   const pronounce = usePronunciation(card ?? null);
   const moveToSection = useMoveToSection(deckId);
-  // An archive or a restore moves the card between every list that counts it, so all refetch.
-  const refresh = () => {
-    for (const key of [["decks"], ["cards"], ["queue"]]) {
-      void qc.invalidateQueries({ queryKey: key });
-    }
-  };
-  // Archiving leaves for the deck with Undo in a toast, as archiving a deck and a card in review do.
-  const archive = async (term: string) => {
-    // Back to the deck first, so a slow write never pops a screen the learner has moved to.
+  const archiveCard = useArchiveCard();
+  // Back to the deck first, so a slow write never pops a screen the learner has moved to.
+  const archive = (c: { id: string; term: string }) => {
     router.back();
-    try {
-      await writes.archiveCard(id);
-      refresh();
-      toast.add({
-        id: `archive-card-${id}`,
-        title: t`Archived “${term}”`,
-        action: {
-          label: t`Undo`,
-          onPress: () =>
-            void writes
-              .restoreCard(id)
-              .then(refresh)
-              .catch((e) => toast.add({ error: true, title: errorMessage(e) })),
-        },
-      });
-    } catch {
-      toast.add({ error: true, title: t`Couldn’t archive “${term}”.` });
-    }
+    void archiveCard(c);
   };
   // Play sits in the menu, with no button on the page to show why it failed, so a toast says.
   const playError = pronounce?.error;
@@ -438,7 +415,7 @@ export default function CardPage() {
                           label: t`Archive card`,
                           icon: "archive" as const,
                           destructive: true,
-                          onSelect: () => void archive(card.term),
+                          onSelect: () => archive(card),
                         },
                       ],
                     ]

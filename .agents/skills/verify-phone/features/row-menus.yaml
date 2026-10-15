@@ -1,0 +1,83 @@
+# Long-press menus on Today, a deck's page and Explore.
+appId: app.lymi
+name: Long-press menus
+---
+- runFlow: _open.yaml
+- tapOn: "Today"
+# Library's deck rows read the same, so Today must be on screen before its row is held.
+- scrollUntilVisible:
+    element: "Decks to review"
+    timeout: 30000
+# Any deck row on Today: its label ends at the count, where Library's goes on with the deck's size.
+# Which deck the phone lists can lag a persona reset, so the card steps open their deck by link.
+# Centred, or the row can sit under the floating tab bar and the press lands on Library's tab.
+- scrollUntilVisible:
+    element: "^[^.]+\\. \\d+ cards? due$"
+    centerElement: true
+- longPressOn: "^[^.]+\\. \\d+ cards? due$"
+- extendedWaitUntil:
+    visible: "Open deck"
+    timeout: 10000
+- assertVisible: "Review"
+- assertVisible: "Add a card"
+- takeScreenshot: 01-today-menu
+- tapOn: "Open deck"
+- extendedWaitUntil:
+    visible: "Search this deck"
+    timeout: 20000
+- openLink: lymi://library/${DECK_ID}
+- extendedWaitUntil:
+    visible: "${DECK_NAME}"
+    timeout: 20000
+- scrollUntilVisible:
+    element: "${STAR_TERM}, .*"
+    centerElement: true
+- longPressOn: "${STAR_TERM}, .*"
+- extendedWaitUntil:
+    visible: "Mark important"
+    timeout: 10000
+- assertVisible: "Edit card"
+- assertVisible: "Archive card"
+- takeScreenshot: 02-card-menu
+- tapOn: "Mark important"
+- scrollUntilVisible:
+    element: "${ARCHIVE_TERM}, .*"
+    centerElement: true
+- longPressOn: "${ARCHIVE_TERM}, .*"
+- extendedWaitUntil:
+    visible: "Archive card"
+    timeout: 10000
+- tapOn: "Archive card"
+- extendedWaitUntil:
+    visible: "Archived “${ARCHIVE_TERM}”"
+    timeout: 10000
+- takeScreenshot: 03-archived
+- tapOn: "Undo"
+- tapOn: "Explore"
+- extendedWaitUntil:
+    visible: "${EXPLORE_DECK}"
+    timeout: 30000
+- longPressOn: "${EXPLORE_DECK}"
+- extendedWaitUntil:
+    visible: "Add to Library"
+    timeout: 10000
+- takeScreenshot: 04-explore-menu
+# The peek is the deck's page, which has its own Add to Library above the menu's.
+- tapOn:
+    text: "Add to Library"
+    index: 1
+- extendedWaitUntil:
+    visible: "Added “${EXPLORE_DECK}” to Library"
+    timeout: 20000
+- takeScreenshot: 05-added
+- openLink: lymi://search?q=${ARCHIVE_TERM}
+- extendedWaitUntil:
+    visible: "${ARCHIVE_TERM}, .*"
+    timeout: 20000
+- longPressOn: "${ARCHIVE_TERM}, .*"
+- extendedWaitUntil:
+    visible: "Mark important"
+    timeout: 10000
+- assertVisible: "Archive card"
+- takeScreenshot: 06-search-menu
+- tapOn: "Mark important"

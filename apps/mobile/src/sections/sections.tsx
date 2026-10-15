@@ -11,6 +11,7 @@ import { ActionMenu } from "../ui/action-menu";
 import { Icon } from "../ui/icons";
 import type { MenuItem } from "../ui/menu";
 import { Button, Text } from "../ui/primitives";
+import { RowMenu, type RowMenuItem } from "../ui/row-menu";
 import { toast } from "../ui/toast-host";
 
 /**
@@ -178,6 +179,8 @@ export function SectionHeading({
   here,
   starting,
   onStart,
+  owner,
+  several,
 }: {
   deckId: string;
   section: Section;
@@ -185,6 +188,10 @@ export function SectionHeading({
   here: boolean;
   starting: boolean;
   onStart: (section: Section) => void;
+  /** The deck's owner also renames and reorders its sections. */
+  owner: boolean;
+  /** More than one section, so there is an order to change. */
+  several: boolean;
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
@@ -193,24 +200,55 @@ export function SectionHeading({
   // A card started early in a section that is not open is still in review, so it counts here too.
   const reviewable = section.due > 0;
   const sectionName = section.name;
-  const items: MenuItem[][] = [
-    ...(section.status === "locked"
-      ? [[{ label: t`Start anyway`, icon: "unlock" as const, onSelect: () => onStart(section) }]]
-      : []),
-    ...(reviewable
-      ? [
-          [
+  const sectionsPage = `/library/sections?id=${deckId}`;
+  // The ⋯ and a long press offer the same rows.
+  const rows: (MenuItem & Pick<RowMenuItem, "id" | "icon">)[][] = [
+    [
+      ...(section.status === "locked"
+        ? [
             {
+              id: "start_section" as const,
+              label: t`Start anyway`,
+              icon: "unlock" as const,
+              onSelect: () => onStart(section),
+            },
+          ]
+        : []),
+      ...(reviewable
+        ? [
+            {
+              id: "review" as const,
               label: t`Review this section`,
               icon: "play" as const,
               onSelect: () => router.push(`/review?deck=${deckId}&section=${section.id}` as Href),
             },
-          ],
+          ]
+        : []),
+    ],
+    owner
+      ? [
+          {
+            id: "rename_section" as const,
+            label: t`Rename section`,
+            icon: "edit" as const,
+            onSelect: () => router.push(`${sectionsPage}&rename=${section.id}` as Href),
+          },
+          ...(several
+            ? [
+                {
+                  id: "reorder_sections" as const,
+                  label: t`Reorder sections`,
+                  icon: "grip" as const,
+                  onSelect: () => router.push(`${sectionsPage}&edit=1` as Href),
+                },
+              ]
+            : []),
         ]
-      : []),
-  ];
-  return (
-    <View className="flex-row items-start gap-2.5 px-1 pb-3 pt-2">
+      : [],
+  ].filter((group) => group.length > 0);
+  const items: MenuItem[][] = rows;
+  const heading = (
+    <View className="flex-row items-start gap-2.5 bg-canvas px-1 pb-3 pt-2">
       <View className="h-7 justify-center">
         {locked ? (
           <Icon name="lock" size={16} colour={p.muted} />
@@ -259,6 +297,24 @@ export function SectionHeading({
         />
       )}
     </View>
+  );
+  if (items.length === 0) return heading;
+  const headingLabel = locked
+    ? plural(count, {
+        one: `${sectionName}, not open yet, # card`,
+        other: `${sectionName}, not open yet, # cards`,
+      })
+    : plural(count, { one: `${sectionName}, # card`, other: `${sectionName}, # cards` });
+  return (
+    <RowMenu
+      surface="section_heading"
+      href={`/library/${deckId}` as Href}
+      kind="heading"
+      label={here ? `${headingLabel}, ${t`You are here`}` : headingLabel}
+      items={rows}
+    >
+      {heading}
+    </RowMenu>
   );
 }
 

@@ -6,6 +6,8 @@ import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useCardMenu, useMovesAcrossDecks } from "../card/card-menu";
+import { CardPeek, peekHeight, usePeekSize } from "../card/card-peek";
 import { languageName } from "../data/languages";
 import { useDecks } from "../data/queries";
 import { useOnline } from "../streak/goal-picker";
@@ -14,6 +16,7 @@ import { KeyboardRoom } from "../ui/keyboard";
 import { ListRow } from "../ui/list-row";
 import { useLoadFailed } from "../ui/load-failed";
 import { Plate, Press, SectionTitle, Text } from "../ui/primitives";
+import { RowMenu } from "../ui/row-menu";
 import { SearchBar, useSearchText } from "../ui/search-bar";
 import { Skeleton } from "../ui/skeleton";
 
@@ -44,6 +47,9 @@ export default function Search() {
     query && !deckId
       ? allDecks.filter((d) => d.name.toLocaleLowerCase(i18n.locale).includes(needle))
       : [];
+  const moves = useMovesAcrossDecks(cards.map((c) => c.deckId));
+  const cardMenu = useCardMenu(moves);
+  const peek = usePeekSize();
   const unread = useLoadFailed(search);
   const failed = !!query && unread;
   const nothing =
@@ -115,26 +121,34 @@ export default function Search() {
                 {cards.map((c, i) => {
                   const meaning = c.meaning || t`No meaning yet`;
                   return (
-                    <Press
+                    <RowMenu
                       key={c.id}
-                      scale={0.99}
-                      onPress={() => router.push(`/library/card/${c.id}?deck=${c.deckId}` as Href)}
-                      accessibilityRole="link"
-                      accessibilityLabel={`${c.term}, ${meaning}, ${c.deckName}`}
-                      className={`gap-0.5 py-3.5 ps-5 pe-4 ${i > 0 ? "border-t border-edge" : ""}`}
+                      surface="card_row"
+                      href={`/library/card/${c.id}?deck=${c.deckId}` as Href}
+                      label={`${c.term}, ${meaning}, ${c.deckName}`}
+                      items={cardMenu(c)}
+                      preview={{
+                        node: <CardPeek card={c} deckName={c.deckName} />,
+                        width: peek.width,
+                        height: peekHeight(c, peek.width, peek.scale),
+                      }}
                     >
-                      <View className="flex-row items-baseline gap-3">
-                        <Text className="flex-1 text-md font-medium text-text" numberOfLines={2}>
-                          {c.term}
-                        </Text>
-                        <Text className="max-w-[40%] text-sm text-muted" numberOfLines={1}>
-                          {c.deckName}
+                      <View
+                        className={`gap-0.5 bg-plate py-3.5 ps-5 pe-4 ${i > 0 ? "border-t border-edge" : ""}`}
+                      >
+                        <View className="flex-row items-baseline gap-3">
+                          <Text className="flex-1 text-md font-medium text-text" numberOfLines={2}>
+                            {c.term}
+                          </Text>
+                          <Text className="max-w-[40%] text-sm text-muted" numberOfLines={1}>
+                            {c.deckName}
+                          </Text>
+                        </View>
+                        <Text className="text-base text-text-2" numberOfLines={2}>
+                          {meaning}
                         </Text>
                       </View>
-                      <Text className="text-base text-text-2" numberOfLines={2}>
-                        {meaning}
-                      </Text>
-                    </Press>
+                    </RowMenu>
                   );
                 })}
               </Plate>
@@ -172,6 +186,7 @@ export default function Search() {
             />
           )}
         </ScrollView>
+        {moves.sheet}
         <SearchBar
           value={text}
           onChange={setText}

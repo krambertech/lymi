@@ -3,8 +3,8 @@ import { useLingui } from "@lingui/react/macro";
 import { type DeckSummary, errorMessage, type Series } from "@lymi/client/api";
 import { groupDecks } from "@lymi/client/library-groups";
 import * as Haptics from "expo-haptics";
-import { type Href, Link, Icon as MenuIcon, Label as MenuLabel, useRouter } from "expo-router";
-import { Alert, Pressable, View } from "react-native";
+import { type Href, useRouter } from "expo-router";
+import { Alert, View } from "react-native";
 import { languageName } from "../../../data/languages";
 import { useArchivedDecks, useDecks, useSeriesList } from "../../../data/queries";
 import { useSeriesActions } from "../../../data/series";
@@ -18,6 +18,7 @@ import { OfflineNote } from "../../../ui/offline-note";
 import { openWeb } from "../../../ui/on-the-web";
 import { Icon, Plate, Press, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
+import { RowMenu } from "../../../ui/row-menu";
 import { BarButton, Screen } from "../../../ui/screen";
 import { Skeleton } from "../../../ui/skeleton";
 
@@ -291,14 +292,15 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
   // A deck with cards always shows its count, a quiet 0 when none are due, so every row ends alike.
   const due = d.total > 0 ? d.due : undefined;
   const href = `/library/${d.id}` as const;
-  const review = () => router.push(`/review?deck=${d.id}`);
-  const add = () => router.push("/capture");
+  const review = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    router.push(`/review?deck=${d.id}`);
+  };
   return (
-    // The native preview view hides its child from VoiceOver, so the row is announced and activated from here.
-    <View
-      accessible
-      accessibilityRole="link"
-      accessibilityLabel={listRowLabel(
+    <RowMenu
+      surface="deck_row"
+      href={href}
+      label={listRowLabel(
         d.name,
         due === undefined
           ? undefined
@@ -307,41 +309,23 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
             : t`Nothing due`,
         line,
       )}
-      onAccessibilityTap={() => router.navigate(href)}
-      accessibilityActions={[
-        { name: "review", label: t`Review` },
-        { name: "add", label: t`Add a card` },
+      preview="page"
+      items={[
+        { id: "review", label: t`Review`, icon: "play", onSelect: review },
+        // A card can only be added to a deck the learner owns.
+        ...(d.role === "owner"
+          ? [
+              {
+                id: "add_card" as const,
+                label: t`Add a card`,
+                icon: "plus" as const,
+                onSelect: () => router.push(`/capture?deck=${d.id}` as Href),
+              },
+            ]
+          : []),
       ]}
-      onAccessibilityAction={(e) => {
-        if (e.nativeEvent.actionName === "review") review();
-        if (e.nativeEvent.actionName === "add") add();
-      }}
     >
-      <Link href={href} asChild>
-        <Link.Trigger>
-          <Pressable style={({ pressed }) => ({ transform: [{ scale: pressed ? 0.99 : 1 }] })}>
-            <ListRowFace first={first} title={d.name} line={line} count={due} end="open" />
-          </Pressable>
-        </Link.Trigger>
-        <Link.Preview />
-        {/* Lymi's own symbols from the asset catalog, tinted as iOS tints its own. */}
-        <Link.Menu>
-          <Link.MenuAction
-            imageRenderingMode="template"
-            onPress={() => {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-              review();
-            }}
-          >
-            <MenuLabel>{t`Review`}</MenuLabel>
-            <MenuIcon xcasset="lymi.play" />
-          </Link.MenuAction>
-          <Link.MenuAction imageRenderingMode="template" onPress={add}>
-            <MenuLabel>{t`Add a card`}</MenuLabel>
-            <MenuIcon xcasset="lymi.plus" />
-          </Link.MenuAction>
-        </Link.Menu>
-      </Link>
-    </View>
+      <ListRowFace first={first} title={d.name} line={line} count={due} end="open" />
+    </RowMenu>
   );
 }

@@ -60,7 +60,7 @@ const now = new Date("2026-09-12T10:00:00.000Z");
 
 const owned = {
   role: "owner" as const,
-  owner: { id: "user-1", name: "Kateryna", avatarUrl: null },
+  owner: { id: "user-1", name: "Kateryna", avatarUrl: null, former: false },
   published: false,
 };
 

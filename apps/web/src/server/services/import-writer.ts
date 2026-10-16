@@ -27,6 +27,7 @@ import { selectIn } from "./batch";
 import { type CardImageStorage, uploadCardImage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { stateStatementsForCards } from "./modes";
+import { syncTagStatements } from "./tags";
 
 /**
  * The one writer every source shares. It maps imported cards onto decks, cards, states,
@@ -650,6 +651,19 @@ export async function writeChunk<Note>(
       );
     }
   }
+  const tagged = [...cardRows, ...existingRows].filter(
+    (c) => (c as { tags: string }).tags !== "[]",
+  ) as { id: string; tags: string }[];
+  // Idempotent, so a chunk the guard refuses only rewrites what is already there.
+  if (tagged.length > 0)
+    statements.push(
+      ...syncTagStatements(
+        db,
+        tagged.map((c) => c.id),
+        tagged.flatMap((c) => JSON.parse(c.tags) as string[]),
+        now,
+      ),
+    );
   statements.push(
     sql`update imports set written = ${chunk + 1}, counts = ${JSON.stringify(counts)}, updated_at = ${now.getTime()}
       where id = ${row.id} and written = ${chunk}`,

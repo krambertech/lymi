@@ -344,6 +344,27 @@
       "when": 1791880312089,
       "tag": "0048_lucky_blackheart",
       "breakpoints": true
+    },
+    {
+      "idx": 49,
+      "version": "6",
+      "when": 1791922793214,
+      "tag": "0049_card_tags",
+      "breakpoints": true
+    },
+    {
+      "idx": 50,
+      "version": "6",
+      "when": 1792135321976,
+      "tag": "0050_numerous_gwen_stacy",
+      "breakpoints": true
+    },
+    {
+      "idx": 51,
+      "version": "6",
+      "when": 1792135330725,
+      "tag": "0051_seed_former_owner",
+      "breakpoints": true
     }
   ]
 }

@@ -1,0 +1,35 @@
+# Delete account: the page counts what goes, the emailed code confirms, and the phone signs out.
+appId: app.lymi
+name: Delete account
+---
+- runFlow: _open.yaml
+- tapOn: "You"
+- scrollUntilVisible:
+    element: "Delete account"
+    centerElement: true
+- takeScreenshot: 01-row
+- tapOn: "Delete account"
+- extendedWaitUntil:
+    visible: "What goes"
+    timeout: 30000
+- takeScreenshot: 02-page
+- scrollUntilVisible:
+    element: "Send code"
+    centerElement: true
+- tapOn: "Send code"
+- extendedWaitUntil:
+    visible: "Code from the email"
+    timeout: 30000
+- runScript:
+    file: delete-account.js
+    env:
+      WORKER: ${WORKER}
+      EMAIL: ${EMAIL}
+- inputText: ${output.code}
+- takeScreenshot: 03-code
+- tapOn:
+    id: "delete-account"
+- extendedWaitUntil:
+    visible: "Dev sign-in as learner"
+    timeout: 30000
+- takeScreenshot: 04-signed-out

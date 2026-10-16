@@ -21,14 +21,23 @@ export type { Deck, DeckSummary } from "./decks";
 export type { Export } from "./exports";
 export type { Import, ImportPreview } from "./imports";
 export type { ApiKeyCreated, ApiKeySummary } from "./keys";
+export type { LessonEvent, LessonQuestion, LessonRead, LessonTerm } from "./lessons";
 export type { PushSubscriptionStatus } from "./push";
-export { ApiError, apiUrl, deviceTimezone, errorMessage, refusalDetail } from "./request";
+export {
+  ApiError,
+  apiUrl,
+  deviceTimezone,
+  errorMessage,
+  refusalCode,
+  refusalDetail,
+} from "./request";
 export type { Draw, Queue, QueueItem, ReviewScope } from "./review";
 export { scopeKey } from "./review";
 export type { Section, Sections } from "./sections";
 export type { Series } from "./series";
 export type { Settings } from "./settings";
 export type { Invitation, Member } from "./sharing";
+export type { Tag } from "./tags";
 
 import { accountApi } from "./account";
 import { activityApi } from "./activity";
@@ -40,6 +49,7 @@ import { exportsApi } from "./exports";
 import { feedbackApi } from "./feedback";
 import { importsApi } from "./imports";
 import { keysApi } from "./keys";
+import { lessonsApi } from "./lessons";
 import { pushApi } from "./push";
 import { reviewApi } from "./review";
 import { sectionsApi } from "./sections";
@@ -47,6 +57,7 @@ import { seriesApi } from "./series";
 import { settingsApi } from "./settings";
 import { sharingApi } from "./sharing";
 import { statsApi } from "./stats";
+import { tagsApi } from "./tags";
 
 export const api = {
   ...accountApi,
@@ -59,6 +70,7 @@ export const api = {
   ...feedbackApi,
   ...importsApi,
   ...keysApi,
+  ...lessonsApi,
   ...pushApi,
   ...reviewApi,
   ...sectionsApi,
@@ -66,4 +78,5 @@ export const api = {
   ...settingsApi,
   ...sharingApi,
   ...statsApi,
+  ...tagsApi,
 };

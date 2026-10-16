@@ -45,6 +45,11 @@ describe("analytics privacy contract", () => {
     ).toBeNull();
     expect(eventProperties("origin_badge_shown", { badge: "estonia" }, "phone")).toBeNull();
     expect(eventProperties("origin_badge_shown", { badge: "Europe/Tallinn" })).toBeNull();
+    // A tag's name is the learner's own text, so only how it was added leaves the browser.
+    expect(
+      eventProperties("tag_added", { via: "suggestion", in_use: true, name: "food" }, "browser"),
+    ).toEqual({ via: "suggestion", in_use: true });
+    expect(eventProperties("tag_added", { via: "typed", in_use: false }, "worker")).toBeNull();
   });
   it("bands a backlog and sends an AI call's size without its text", () => {
     expect([0, 1, 20, 21, 100, 101].map(backlogOf)).toEqual([
@@ -78,6 +83,12 @@ describe("analytics privacy contract", () => {
     expect(cost?.input).toBeCloseTo(0.055);
     expect(cost?.output).toBeCloseTo(0.1);
     expect(textCallCost("unpriced-model", { input: 10, output: 10 })).toBeUndefined();
+    const short = textCallCost("claude-haiku-5-5", { input: 100_000, output: 10_000 });
+    expect(short?.input).toBeCloseTo(0.01);
+    expect(short?.output).toBeCloseTo(0.005);
+    const long = textCallCost("claude-haiku-5-5", { input: 200_000, output: 10_000 });
+    expect(long?.input).toBeCloseTo(0.1);
+    expect(long?.output).toBeCloseTo(0.025);
     expect(
       eventProperties("cards_archived", { origin: "ai_mcp", count: 3, ai_written: 2, term: "x" }),
     ).toEqual({ origin: "ai_mcp", count: 3, ai_written: 2 });

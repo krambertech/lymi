@@ -292,6 +292,7 @@ export function LibraryView({
               total={d.total}
               next={next?.[d.id]}
               owner={d.role === "owner" ? null : d.owner.name}
+              ownerLeft={d.role !== "owner" && d.owner.former === true}
               published={d.published}
               publisherPhoto={d.owner.avatarUrl}
               aria-describedby={describedBy}

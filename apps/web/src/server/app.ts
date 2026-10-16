@@ -19,6 +19,7 @@ import { requireStrongPassword } from "./password-rules";
 import { requireSupportedPhone } from "./phone-clients";
 import { openPreview, requirePreviewAccess } from "./preview-access";
 import { authenticate } from "./principal";
+import { account } from "./routes/account";
 import { activity } from "./routes/activity";
 import { add, addOpen } from "./routes/add";
 import { audio } from "./routes/audio";
@@ -34,6 +35,7 @@ import { images } from "./routes/images";
 import { imports } from "./routes/imports";
 import { join, joinOpen } from "./routes/join";
 import { keys } from "./routes/keys";
+import { lessonReads } from "./routes/lessons";
 import { publicMedia } from "./routes/public-media";
 import { push } from "./routes/push";
 import { reports } from "./routes/reports";
@@ -42,6 +44,7 @@ import { deckSections, sections } from "./routes/sections";
 import { series } from "./routes/series";
 import { settings } from "./routes/settings";
 import { stats } from "./routes/stats";
+import { tags } from "./routes/tags";
 import { renameLearner } from "./services/account";
 import { recordRequest } from "./services/analytics";
 import { catchUpStates } from "./services/modes";
@@ -292,6 +295,8 @@ app.patch(
   },
 );
 
+app.route("/api/me", account);
+
 // A member's states catch up to their decks before anything that reads progress. ADR 0022.
 for (const path of [
   "decks",
@@ -314,6 +319,7 @@ app.route("/api/decks", decks);
 app.route("/api/email", email);
 app.route("/api/series", series);
 app.route("/api/decks", deckSections);
+app.route("/api/lesson-reads", lessonReads);
 app.route("/api/sections", sections);
 app.route("/api/join", join);
 app.route("/api/add", add);
@@ -322,6 +328,7 @@ app.route("/api/cards", images);
 app.route("/api/review", review);
 app.route("/api/settings", settings);
 app.route("/api/stats", stats);
+app.route("/api/tags", tags);
 app.route("/api/reports", reports);
 app.route("/api/keys", keys);
 app.route("/api/connected-apps", connectedApps);

@@ -14,3 +14,10 @@ export const avatarQuery = queryOptions({
   queryFn: api.avatar,
   staleTime: 0,
 });
+
+/** What deleting the account would take. Always fresh, since a deck may have gained a member. */
+export const deletionQuery = queryOptions({
+  queryKey: ["me", "deletion"],
+  queryFn: api.deletion,
+  staleTime: 0,
+});

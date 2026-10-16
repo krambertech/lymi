@@ -1,0 +1,172 @@
+import { CARD_LIMITS } from "@lymi/core";
+import { z } from "zod";
+
+/** The rules come from docs/card-writing.md; change both together. */
+export const INSTRUCTIONS = `You turn one language lesson into a pick list: the terms worth a card in the learner's deck. The learner ticks the terms they want, so list every candidate and let them choose.
+
+Read
+- Read every page in the order given. A lesson mixes printed text, the learner's handwriting, transcripts and pasted notes.
+- Copy every form letter for letter as the material writes it, with every diacritic. Never rebuild or normalise a form: when the lesson lists a verb with a 3rd-person form (algab, meeldib), the card keeps that form even if the deck's other cards end differently. A handwritten correction replaces the printed form it corrects.
+- "seen" is the exact line you read the term from. "heading" is the lesson or section heading the term sits under, as printed. A page with no heading of its own continues the heading of the page before it; "" only when the material has none.
+
+Choose, in this order
+1. What the lesson marks: glossed, bold, highlighted, underlined, circled, drilled, or written by hand in a margin with a meaning nearby. Set "handwritten" for a term written by hand.
+2. Words the lesson teaches by listing or explaining them.
+3. Page furniture is never a term: headings, row numbers, transcriptions into another script, mnemonic columns, exercise instructions, page numbers.
+List a term even when the deck seems to have it; Lymi checks the learner's decks itself.
+
+Write each term as one card: one term, one sense
+- "deck" comes first: the id of the learner's deck this lesson belongs to, by the language it teaches and then its topic. Every term follows that deck's shape and meaning language.
+- "term" is the citation form in the deck's shape. Copy the shape of the deck's cards: when they join several forms with " · ", give the forms the lesson prints, joined the same way. An inflected form, an imperative or a request formula built on a listed word belongs to that word's card.
+- "kind" is "word" for one lexical item, "phrase" for a fixed multi-word expression the lesson teaches as a unit.
+- "meaning" is one translation, one to three words, in the deck's meaning language. Use the lesson's own gloss, cut to the sense the lesson teaches, and set "meaningFromLesson". With no gloss in the lesson, write the usual translation and clear "meaningFromLesson".
+- When that meaning also fits another common word, add a short cue in parentheses so only this term fits it: "думать (размышлять)".
+
+Questions
+Ask only what the material leaves open and the learner can answer in one tap, and only when the answer changes which terms stay ticked. Questions are about what the learner marked, which pages or exercises count, and which lesson a term belongs to; grammar categories are always kept. Ask only about what the material shows: a question about marks, highlighting or handwriting needs a photo or PDF that has them, and pasted text has none. Write each question as one plain sentence of at most 12 words, addressed to the learner as "you", and each option in at most 5 words. Each option lists the ids of the terms it drops; "default" is the index of the option most learners want. Typical questions: the learner marked some words, keep only those? Some pages are exercises, include their words?`;
+
+/** Fewer questions for less material, so a paragraph never stops to ask. */
+export function questionLimit(pages: number, words: number): number {
+  const size = pages + Math.ceil(words / 1500);
+  if (size <= 0) return 0;
+  if (words < 300 && pages === 0) return 0;
+  return size <= 1 ? 2 : Math.min(5, 2 + Math.floor(size / 3));
+}
+
+export type DeckCandidate = {
+  id: string;
+  name: string;
+  description: string | null;
+  language: string | null;
+  examples: { term: string; meaning: string | null }[];
+};
+
+const english = (tag: string | null) => {
+  if (!tag) return null;
+  try {
+    return new Intl.DisplayNames(["en"], { type: "language" }).of(tag) ?? tag;
+  } catch {
+    return tag;
+  }
+};
+
+/** The learner's decks as the model sees them. Their own cards decide the shape and the meaning language. */
+export function decksBrief(
+  decks: DeckCandidate[],
+  options: { fixed: boolean; hint: string | undefined; meaningLanguage: string; limit: number },
+): string {
+  const lines = [
+    options.fixed
+      ? "The learner chose this deck:"
+      : "The learner's decks. Choose the one this lesson belongs to:",
+  ];
+  for (const deck of decks) {
+    lines.push(
+      `\nDeck ${deck.id}: ${deck.name}${deck.description ? ` (${deck.description})` : ""}, teaching ${english(deck.language) ?? "a language its cards show"}`,
+    );
+    for (const card of deck.examples) lines.push(`  ${card.term} — ${card.meaning ?? ""}`);
+  }
+  lines.push(
+    `\nMeaning language: the language a deck's cards use for meanings; for a deck with no cards, ${english(options.meaningLanguage)}.`,
+  );
+  if (options.hint && !options.fixed)
+    lines.push(`When two decks fit equally, choose ${options.hint}.`);
+  lines.push(`Ask at most ${options.limit} questions.`);
+  return lines.join("\n");
+}
+
+/** The reply's shape, with the deck limited to the learner's own. */
+export function replySchema(deckIds: string[]) {
+  return {
+    ...REPLY_SCHEMA,
+    required: ["deck", ...REPLY_SCHEMA.required],
+    properties: { deck: { type: "string", enum: deckIds }, ...REPLY_SCHEMA.properties },
+  };
+}
+
+export const REPLY_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: ["terms", "questions"],
+  properties: {
+    terms: {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: [
+          "id",
+          "term",
+          "kind",
+          "meaning",
+          "meaningFromLesson",
+          "handwritten",
+          "heading",
+          "seen",
+        ],
+        properties: {
+          id: { type: "string", description: "t1, t2, … in list order" },
+          term: { type: "string" },
+          kind: { type: "string", enum: ["word", "phrase"] },
+          meaning: { type: "string" },
+          meaningFromLesson: { type: "boolean" },
+          handwritten: { type: "boolean" },
+          heading: { type: "string" },
+          seen: { type: "string" },
+        },
+      },
+    },
+    questions: {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["question", "options", "default"],
+        properties: {
+          question: { type: "string" },
+          options: {
+            type: "array",
+            items: {
+              type: "object",
+              additionalProperties: false,
+              required: ["label", "drop"],
+              properties: {
+                label: { type: "string" },
+                drop: { type: "array", items: { type: "string" } },
+              },
+            },
+          },
+          default: { type: "integer" },
+        },
+      },
+    },
+  },
+} as const;
+
+/** A reply the model sent. Anything past the card limits is cut rather than refused. */
+export const Reply = z.object({
+  deck: z.string(),
+  terms: z.array(
+    z.object({
+      id: z.string(),
+      term: z.string().trim().min(1).max(CARD_LIMITS.term),
+      kind: z.enum(["word", "phrase"]),
+      meaning: z.string().trim().max(CARD_LIMITS.meaning),
+      meaningFromLesson: z.boolean(),
+      handwritten: z.boolean(),
+      heading: z.string().trim().max(200),
+      seen: z.string().trim().max(500),
+    }),
+  ),
+  questions: z.array(
+    z.object({
+      question: z.string().trim().min(1).max(300),
+      options: z
+        .array(z.object({ label: z.string().trim().min(1).max(120), drop: z.array(z.string()) }))
+        .min(2)
+        .max(4),
+      default: z.number().int().min(0),
+    }),
+  ),
+});
+export type Reply = z.infer<typeof Reply>;

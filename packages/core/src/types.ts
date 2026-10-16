@@ -593,7 +593,14 @@ export const CardInput = z.object({
         "A short association in the meaning language, such as a sound-alike word or a picture in the mind, that leads back to the answer without giving any of it away. Review shows it under the cue: the learner can peek at it before the reveal, which rules out Easy, or show it after.",
     }),
   language: LanguageTag.nullable().optional(),
-  tags: z.array(z.string().trim().min(1).max(TAG_LIMITS.length)).max(TAG_LIMITS.count).optional(),
+  tags: z
+    .array(z.string().trim().min(1).max(TAG_LIMITS.length))
+    .max(TAG_LIMITS.count)
+    .optional()
+    .meta({
+      description:
+        "Replaces the card's tags. A name you already use, in any case, is saved in your spelling, and the same name twice is kept once.",
+    }),
   source: z.string().trim().max(CARD_LIMITS.source).optional(),
   directions: Directions.nullable()
     .optional()
@@ -641,6 +648,19 @@ export const cardLimits = {
   source: CardInput.shape.source.unwrap().maxLength,
   hook: CardInput.shape.hook.unwrap().maxLength,
 } satisfies Record<string, number | null>;
+
+/** A learner's own answer to a Smart add question, checked against the terms on the list. */
+export const LessonAnswerInput = z.object({
+  question: z.string().trim().min(1).max(300),
+  answer: z.string().trim().min(1).max(300),
+  terms: z
+    .array(
+      z.object({ id: z.string().max(40), term: z.string().max(500), gloss: z.string().max(2000) }),
+    )
+    .min(1)
+    .max(200),
+});
+export type LessonAnswerInput = z.infer<typeof LessonAnswerInput>;
 
 /** A batch add. A lesson is 20 to 40 terms; one call, not one per term. */
 export const CardsInput = z.object({
@@ -860,6 +880,26 @@ export const NameInput = z.object({
   name: z.string().trim().min(1, "Write your name.").max(80, "Keep your name under 80 characters."),
 });
 export type NameInput = z.infer<typeof NameInput>;
+
+/** Proof that the learner means to delete their account: the emailed code, or a fresh Sign in with Apple. */
+export const AccountDeletionInput = z.union([
+  z.object({
+    code: z
+      .string()
+      .trim()
+      .regex(/^\d{6}$/, "Enter the 6-digit code from the email."),
+  }),
+  z.object({
+    apple: z.object({
+      idToken: z.string().min(1),
+      /** The raw nonce the phone hashed into the Apple request. */
+      nonce: z.string().min(1),
+      /** Apple's one-use code, which the server trades for a token to revoke. */
+      authorizationCode: z.string().min(1).optional(),
+    }),
+  }),
+]);
+export type AccountDeletionInput = z.infer<typeof AccountDeletionInput>;
 
 export const SettingsPatch = z.object({
   /** The language of the interface and reminders. Meanings follow it. */

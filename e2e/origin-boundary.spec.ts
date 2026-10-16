@@ -10,16 +10,16 @@ test("the public surface has no install contract while the product keeps its PWA
   await expect(page.locator("html")).toHaveAttribute("data-lymi-surface", "public");
   await expect(page.locator('link[rel="manifest"]')).toHaveCount(0);
   await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
-  await expect(page.getByRole("link", { name: "Open Lymi", exact: true }).first()).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "Sign in", exact: true }).first()).toHaveAttribute(
     "href",
-    `${e2eProductUrl}/?mode=sign-up`,
+    `${e2eProductUrl}/`,
   );
   await expect(page.getByRole("link", { name: "Privacy", exact: true })).toHaveAttribute(
     "href",
     "/privacy",
   );
 
-  // Signed out, Open Lymi lands on sign-up rather than sign-in, #450.
+  // Signed out, the site's /signup lands on sign-up rather than sign-in, #450.
   await page.goto(`${e2eProductUrl}/?mode=sign-up`);
   await expect(page).toHaveURL(/\/login\?mode=sign-up$/);
 

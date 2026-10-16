@@ -2,8 +2,8 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { AppLanguage, ImportSource } from "@lymi/core";
-import { Download } from "lucide-react";
-import type { ReactNode } from "react";
+import { Download, Trash2 } from "lucide-react";
+import type { ReactElement, ReactNode } from "react";
 import { AccountGroup } from "../components/account-section";
 import { Button } from "../components/button";
 import { ImportSources } from "../components/import-parts";
@@ -33,6 +33,8 @@ export interface SettingsProps {
   importLink: (source: ImportSource, className: string, children: ReactNode) => ReactNode;
   /** Opens the sheet that exports the whole library. */
   onExportLibrary?: (() => void) | undefined;
+  /** A link to the page that deletes the account, drawn as its button. */
+  deleteAccountLink?: ReactElement | undefined;
 }
 
 /** Each language in its own name, so a learner can find theirs whatever is active. */
@@ -63,6 +65,7 @@ export function SettingsView({
   children,
   importLink,
   onExportLibrary,
+  deleteAccountLink,
 }: SettingsProps) {
   const { t, i18n } = useLingui();
   return (
@@ -137,6 +140,19 @@ export function SettingsView({
       >
         <ImportSources sourceLink={importLink} />
       </SettingsGroup>
+
+      {deleteAccountLink && (
+        <SettingsGroup
+          id="delete-account"
+          title={t`Delete account`}
+          description={t`Erase your account and everything in it, for good. Decks other people study stay for them.`}
+        >
+          <Button variant="danger" className="justify-self-start" render={deleteAccountLink}>
+            <Trash2 data-icon="inline-start" aria-hidden="true" />
+            <Trans>Delete account</Trans>
+          </Button>
+        </SettingsGroup>
+      )}
     </Screen>
   );
 }

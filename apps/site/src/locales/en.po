@@ -445,11 +445,14 @@ msgstr "Add {title}"
 msgid "Add both decks"
 msgstr "Add both decks"
 
+msgid "Add cards yourself"
+msgstr "Add cards yourself"
+
 msgid "Add it to your assistant"
 msgstr "Add it to your assistant"
 
-msgid "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</0>."
-msgstr "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</0>."
+msgid "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</0>. No assistant? <1>Start another way</1>."
+msgstr "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</0>. No assistant? <1>Start another way</1>."
 
 msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
 msgstr "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
@@ -724,6 +727,9 @@ msgstr "Bring your Anki decks."
 
 msgid "Bring your assistant to Lymi."
 msgstr "Bring your assistant to Lymi."
+
+msgid "Bring your decks across with their review history."
+msgstr "Bring your decks across with their review history."
 
 msgid "Bring your existing decks."
 msgstr "Bring your existing decks."
@@ -1796,6 +1802,9 @@ msgstr "Import"
 msgid "Import an Anki package with its cards, tags, pictures and review history. Years of reviews carry on where they stopped, so nothing you already know starts over."
 msgstr "Import an Anki package with its cards, tags, pictures and review history. Years of reviews carry on where they stopped, so nothing you already know starts over."
 
+msgid "Import from Anki"
+msgstr "Import from Anki"
+
 msgid "Import your flashcards from Anki or Mochi. Decks, pictures and review history come too, so nothing you’ve learned starts over."
 msgstr "Import your flashcards from Anki or Mochi. Decks, pictures and review history come too, so nothing you’ve learned starts over."
 
@@ -2115,11 +2124,11 @@ msgstr "Lymi changelog"
 msgid "Lymi costs nothing. No trial, and no payment details to sign up."
 msgstr "Lymi costs nothing. No trial, and no payment details to sign up."
 
-msgid "Lymi doesn’t connect to tutoring sites or read photos itself: your assistant does the reading. Without an assistant, add each word with Add a card, and AI fills in the meaning."
-msgstr "Lymi doesn’t connect to tutoring sites or read photos itself: your assistant does the reading. Without an assistant, add each word with Add a card, and AI fills in the meaning."
+msgid "Lymi doesn’t connect to tutoring sites or read photos itself: your assistant does the reading."
+msgstr "Lymi doesn’t connect to tutoring sites or read photos itself: your assistant does the reading."
 
-msgid "Lymi doesn’t read PDFs or photos itself: your assistant does the reading. Without an assistant, add each term with Add a card, and AI fills in the meaning. A diagram can go on a card as its picture."
-msgstr "Lymi doesn’t read PDFs or photos itself: your assistant does the reading. Without an assistant, add each term with Add a card, and AI fills in the meaning. A diagram can go on a card as its picture."
+msgid "Lymi doesn’t read PDFs or photos itself: your assistant does the reading. A diagram can go on a card as its picture."
+msgstr "Lymi doesn’t read PDFs or photos itself: your assistant does the reading. A diagram can go on a card as its picture."
 
 msgid "Lymi for certification prep · Flashcards with spaced repetition"
 msgstr "Lymi for certification prep · Flashcards with spaced repetition"
@@ -2377,6 +2386,9 @@ msgstr "Nice to meet you; thanks in advance"
 
 msgid "No"
 msgstr "No"
+
+msgid "No assistant?"
+msgstr "No assistant?"
 
 msgid "No chat? Type the word."
 msgstr "No chat? Type the word."
@@ -3043,11 +3055,14 @@ msgstr "sight (to see)"
 msgid "Sign drawings from Wikimedia Commons: public domain, and C-18 and C-19 by Harry-C under CC BY 3.0."
 msgstr "Sign drawings from Wikimedia Commons: public domain, and C-18 and C-19 by Harry-C under CC BY 3.0."
 
+msgid "Sign in"
+msgstr "Sign in"
+
 msgid "Sign in and let it add cards. Then send it your notes."
 msgstr "Sign in and let it add cards. Then send it your notes."
 
-msgid "Sign in with Google and it joins your Library, free."
-msgstr "Sign in with Google and it joins your Library, free."
+msgid "Sign in with Google or an email address, and it joins your Library, free."
+msgstr "Sign in with Google or an email address, and it joins your Library, free."
 
 msgid "Signals"
 msgstr "Signals"
@@ -3725,6 +3740,9 @@ msgstr "two"
 
 msgid "Two euros ten."
 msgstr "Two euros ten."
+
+msgid "Type each term, and AI fills in the meaning."
+msgstr "Type each term, and AI fills in the meaning."
 
 msgid "Type the term, and AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
 msgstr "Type the term, and AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."

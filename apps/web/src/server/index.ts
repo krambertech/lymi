@@ -2,6 +2,7 @@ import { handleFetch } from "./app";
 import { createDb } from "./db";
 import type { Bindings } from "./env";
 import { dispatchReviewReminders } from "./push-delivery";
+import { dropUnstudiedFormerDecks } from "./services/account-deletion";
 import { expireExports } from "./services/exports";
 import { expireImports } from "./services/imports";
 
@@ -23,6 +24,7 @@ export default {
     executionCtx.waitUntil(
       expireExports(createDb(env.DB), env.EXPORTS, new Date(controller.scheduledTime)),
     );
+    executionCtx.waitUntil(dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
   },
 } satisfies ExportedHandler<Bindings>;
 

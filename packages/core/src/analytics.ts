@@ -98,9 +98,18 @@ export function backlogOf(due: number): Backlog {
 /** Added to a reminder's link so the app it opens can say a reminder brought the learner. */
 export const REMINDER_ENTRY = { key: "lymi_entry", value: "reminder" } as const;
 
-/** USD per million tokens, from OpenAI's price list, so a call's cost never waits on PostHog's table. */
-const TEXT_PRICES: Record<string, { input: number; cachedInput: number; output: number }> = {
+type TextPrice = { input: number; cachedInput: number; output: number };
+
+/** USD per million tokens, from the vendors' price lists, so a call's cost never waits on PostHog's table. */
+const TEXT_PRICES: Record<string, TextPrice & { longPrompt?: TextPrice & { above: number } }> = {
   "gpt-6-luna": { input: 0.1, cachedInput: 0.01, output: 0.5 },
+  // Anthropic prices a Haiku 5.5 prompt over 100,000 tokens, cache reads included, at five times.
+  "claude-haiku-5-5": {
+    input: 0.1,
+    cachedInput: 0.01,
+    output: 0.5,
+    longPrompt: { above: 100_000, input: 0.5, cachedInput: 0.05, output: 2.5 },
+  },
 };
 
 /** A text call's cost in USD, or nothing for a model without a known price. */
@@ -108,8 +117,10 @@ export function textCallCost(
   model: string,
   tokens: { input: number; cached?: number | undefined; output: number },
 ): { input: number; output: number } | undefined {
-  const price = TEXT_PRICES[model];
-  if (!price) return;
+  const listed = TEXT_PRICES[model];
+  if (!listed) return;
+  const price =
+    listed.longPrompt && tokens.input > listed.longPrompt.above ? listed.longPrompt : listed;
   const cached = Math.min(tokens.cached ?? 0, tokens.input);
   return {
     input: ((tokens.input - cached) * price.input + cached * price.cachedInput) / 1e6,
@@ -224,12 +235,21 @@ export const analyticsEvents = {
     created: z.boolean(),
     channel: z.enum(["app", "api", "mcp"]),
   }),
+  lesson_read: z.object({
+    pages: count,
+    pasted: z.boolean(),
+    deck: z.enum(["fixed", "guessed"]),
+    terms: count,
+    ticked: count,
+    existing: count,
+    questions: count,
+  }),
   // PostHog's LLM analytics shape, without $ai_input or $ai_output_choices: no prompt or reply leaves.
   $ai_generation: z.object({
     $ai_trace_id: z.uuid(),
     $ai_session_id: z.null(),
-    $ai_span_name: z.enum(["enrich", "hook", "import_languages", "deck_choice"]),
-    $ai_provider: z.literal("openai"),
+    $ai_span_name: z.enum(["enrich", "hook", "import_languages", "deck_choice", "lesson_read"]),
+    $ai_provider: z.enum(["openai", "anthropic"]),
     $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),
     $ai_input_tokens: tokens,
     $ai_output_tokens: tokens,
@@ -249,6 +269,15 @@ export const analyticsEvents = {
   entry_opened: z.object({
     entry: z.enum(["control", "shortcut", "quick_action", "widget"]),
     place: z.enum(["add", "review", "search"]),
+  }),
+  tag_added: z.object({
+    via: z.enum(["suggestion", "typed"]),
+    in_use: z.boolean(),
+  }),
+  account_deleted: z.object({
+    client: z.enum(["web", "phone"]),
+    confirmed_with: z.enum(["email", "apple"]),
+    kept_decks: count,
   }),
 } as const;
 export type AnalyticsName = keyof typeof analyticsEvents;
@@ -295,11 +324,14 @@ export const analyticsProducers = {
   deck_joined: ["worker"],
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
+  lesson_read: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
+  tag_added: ["browser"],
   deck_enrichment_changed: ["worker"],
   deck_purpose_set: ["worker"],
   entry_opened: ["phone"],
+  account_deleted: ["worker"],
 } satisfies Record<AnalyticsName, readonly AnalyticsProducer[]>;
 
 export function eventProperties(

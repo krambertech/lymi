@@ -13,6 +13,13 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 # The iPhone app's bundle identifier, which Apple's ID tokens name as their audience.
 APPLE_APP_BUNDLE_IDENTIFIER=
+# A Sign in with Apple key (team id, key id, the .p8 file's PEM), so deleting an account revokes its Apple grant.
+APPLE_TEAM_ID=
+APPLE_KEY_ID=
+APPLE_PRIVATE_KEY=
+# A PostHog personal API key with person write scope and the project id, so deleting an account erases its person.
+POSTHOG_PERSONAL_API_KEY=
+POSTHOG_PROJECT_ID=
 # Full service-account JSON for the dedicated Google Cloud Text-to-Speech project.
 # Gemini voices also need the account to hold roles/aiplatform.user.
 GOOGLE_CLOUD_TTS_CREDENTIALS=
@@ -43,3 +50,10 @@ OPENAI_APPS_CHALLENGE=
 APPLE_APP_ID=
 # Comma-separated SHA-256 fingerprints of the Android app's signing certificates. Empty turns app links off.
 ANDROID_CERT_FINGERPRINTS=
+# Reads lesson photos, PDFs and text into a pick list. Operators only until a paid plan exists.
+ANTHROPIC_API_KEY=
+# Needed when the key belongs to the organisation rather than one workspace.
+ANTHROPIC_WORKSPACE_ID=
+ANTHROPIC_LESSON_MODEL=claude-haiku-5-5
+# AI_GATEWAY_ID and ANTHROPIC_BASE_URL come from wrangler.jsonc; lesson reads use the gateway
+# only when AI_GATEWAY_TOKEN is set.

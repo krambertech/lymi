@@ -276,7 +276,9 @@ function Settings({ deck }: { deck: DeckSummary }) {
           <Group title={t`Shared with you`}>
             <Plate className="px-4 py-3.5">
               <Text className="text-md text-text">
-                {t`${deck.owner.name} owns this deck and writes its cards.`}
+                {deck.owner.former
+                  ? t`Its owner left Lymi, so nobody can change this deck.`
+                  : t`${deck.owner.name} owns this deck and writes its cards.`}
               </Text>
             </Plate>
           </Group>

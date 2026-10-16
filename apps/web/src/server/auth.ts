@@ -500,7 +500,7 @@ async function retireUnprovedPassword(
 export type Auth = ReturnType<typeof createAuth>;
 export type SessionUser = NonNullable<Awaited<ReturnType<Auth["api"]["getSession"]>>>["user"];
 
-/** Where the visit began: the sign-up form sends it, and Google's round trip keeps it in OAuth state. */
+/** Redirect sign-ins keep first-touch attribution in OAuth state. */
 async function firstTouchOf(redirect: boolean, headers: Headers | undefined) {
   if (!redirect) return parseFirstTouch(headers?.get(FIRST_TOUCH_HEADER));
   try {
@@ -514,7 +514,7 @@ function isProvingProvider(id: unknown): id is ProvingProvider {
   return PROVING_PROVIDERS.includes(id as ProvingProvider);
 }
 
-/** The provider whose proof of the address this request signs in with: Google's callback, or an ID token the phone posts. */
+/** The provider proving the address in a web callback or a native ID token. */
 function provingSignInOf(context: GenericEndpointContext | null): ProvingProvider | null {
   const callback = callbackProvider(context);
   if (callback) return callback;

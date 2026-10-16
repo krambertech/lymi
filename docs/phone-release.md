@@ -58,6 +58,8 @@ For Error Tracking acceptance, test both bundles on a real TestFlight install un
 
 Enable Sign in with Apple on the `app.lymi` App ID as a primary App ID. Register the Services ID `app.lymi.web`, associate it with that primary App ID, and configure domain `my.lymi.app` with return URL `https://my.lymi.app/api/auth/callback/apple`. Apple requires HTTPS and does not accept localhost return URLs.
 
+Register `notifications@lymi.app` as an email source in Sign in with Apple for Email Communication, with SPF or DKIM passing, so account emails reach learners who choose Hide My Email.
+
 Create a Sign in with Apple key for that primary App ID and keep the downloaded `.p8` outside Git. Set the product Worker’s `APPLE_APP_BUNDLE_IDENTIFIER=app.lymi`, `APPLE_CLIENT_ID=app.lymi.web`, `APPLE_TEAM_ID`, `APPLE_KEY_ID`, and `APPLE_PRIVATE_KEY` as encrypted secrets. The private key is the full PKCS #8 PEM. Keep these secrets out of previews, logs, and pull requests. The Worker signs its own short-lived client secrets, so no static JWT needs periodic replacement.
 
 The native module and `ios.usesAppleSignIn` entitlement require a new signed binary; an over-the-air update cannot add them. Rebuild provisioning profiles with the capability, then verify a fresh sign-in, Hide My Email, cancellation, repeat sign-in after relaunch, and account deletion on a physical iPhone. The Simulator does not prove Apple account authentication or grant revocation. On the web, verify the HTTPS callback, the original return destination, and sign-in to the same account used by the phone.

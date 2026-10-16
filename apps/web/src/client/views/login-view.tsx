@@ -238,8 +238,6 @@ export function LoginView({
 
               <Button
                 type="submit"
-                // Google is the panel's one primary wherever it appears, so the form submits
-                // beside it rather than against it. Resetting a password has no Google button.
                 variant="primary"
                 size="lg"
                 loading={pending === "form"}

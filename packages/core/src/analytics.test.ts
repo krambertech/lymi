@@ -78,6 +78,12 @@ describe("analytics privacy contract", () => {
     expect(cost?.input).toBeCloseTo(0.055);
     expect(cost?.output).toBeCloseTo(0.1);
     expect(textCallCost("unpriced-model", { input: 10, output: 10 })).toBeUndefined();
+    const short = textCallCost("claude-haiku-5-5", { input: 100_000, output: 10_000 });
+    expect(short?.input).toBeCloseTo(0.01);
+    expect(short?.output).toBeCloseTo(0.005);
+    const long = textCallCost("claude-haiku-5-5", { input: 200_000, output: 10_000 });
+    expect(long?.input).toBeCloseTo(0.1);
+    expect(long?.output).toBeCloseTo(0.025);
     expect(
       eventProperties("cards_archived", { origin: "ai_mcp", count: 3, ai_written: 2, term: "x" }),
     ).toEqual({ origin: "ai_mcp", count: 3, ai_written: 2 });

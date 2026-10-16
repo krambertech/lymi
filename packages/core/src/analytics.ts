@@ -98,10 +98,18 @@ export function backlogOf(due: number): Backlog {
 /** Added to a reminder's link so the app it opens can say a reminder brought the learner. */
 export const REMINDER_ENTRY = { key: "lymi_entry", value: "reminder" } as const;
 
+type TextPrice = { input: number; cachedInput: number; output: number };
+
 /** USD per million tokens, from the vendors' price lists, so a call's cost never waits on PostHog's table. */
-const TEXT_PRICES: Record<string, { input: number; cachedInput: number; output: number }> = {
+const TEXT_PRICES: Record<string, TextPrice & { longPrompt?: TextPrice & { above: number } }> = {
   "gpt-6-luna": { input: 0.1, cachedInput: 0.01, output: 0.5 },
-  "claude-haiku-5-5": { input: 0.1, cachedInput: 0.01, output: 0.5 },
+  // Anthropic prices a Haiku 5.5 prompt over 100,000 tokens, cache reads included, at five times.
+  "claude-haiku-5-5": {
+    input: 0.1,
+    cachedInput: 0.01,
+    output: 0.5,
+    longPrompt: { above: 100_000, input: 0.5, cachedInput: 0.05, output: 2.5 },
+  },
 };
 
 /** A text call's cost in USD, or nothing for a model without a known price. */
@@ -109,8 +117,10 @@ export function textCallCost(
   model: string,
   tokens: { input: number; cached?: number | undefined; output: number },
 ): { input: number; output: number } | undefined {
-  const price = TEXT_PRICES[model];
-  if (!price) return;
+  const listed = TEXT_PRICES[model];
+  if (!listed) return;
+  const price =
+    listed.longPrompt && tokens.input > listed.longPrompt.above ? listed.longPrompt : listed;
   const cached = Math.min(tokens.cached ?? 0, tokens.input);
   return {
     input: ((tokens.input - cached) * price.input + cached * price.cachedInput) / 1e6,

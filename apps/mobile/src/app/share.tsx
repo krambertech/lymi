@@ -401,7 +401,12 @@ export default function ShareDeck() {
                   <>
                     <View className="min-h-11 flex-row items-center gap-2 rounded-xl bg-glass-plate px-3 py-2">
                       <Icon name="linkOn" size={16} colour={p.muted} />
-                      <Text className="flex-1 text-md text-text" numberOfLines={1} selectable>
+                      {/* Android clips a selectable line rather than ending it in an ellipsis; Copy link is beside it. */}
+                      <Text
+                        className="flex-1 text-md text-text"
+                        numberOfLines={1}
+                        selectable={Platform.OS === "ios"}
+                      >
                         {link.url}
                       </Text>
                     </View>

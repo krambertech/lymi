@@ -7,6 +7,7 @@ import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { Icon, Press, Text } from "../ui/primitives";
 import { SheetGroup, SheetHeading, SheetRow } from "../ui/sheet";
+import { useSheetFocus } from "../ui/sheet-focus";
 import { useOnGlass } from "../ui/surface";
 import { addTags } from "./tag-list";
 
@@ -44,6 +45,7 @@ export function TagsBox({
   const draft = held ?? own;
   const setDraft = onDraft ?? setOwn;
   const full = value.length >= TAG_LIMITS.count;
+  const focus = useSheetFocus({ on: !!autoFocus, ref: inputRef });
   const type = (text: string) => {
     // A pasted "streets, signs" is two tags, so the cap is per tag here rather than a maxLength that cuts the paste.
     const cut = text.lastIndexOf(",");
@@ -74,10 +76,9 @@ export function TagsBox({
         </Press>
       ))}
       <TextInput
-        ref={inputRef}
+        {...focus}
         value={draft}
         onChangeText={type}
-        autoFocus={autoFocus}
         editable={!full}
         placeholder={
           full ? t`That’s the most tags a card can have` : value.length ? "" : t`Add a tag`

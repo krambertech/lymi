@@ -11,10 +11,10 @@ import Animated, {
   useFrameCallback,
   useSharedValue,
 } from "react-native-reanimated";
-import { FullWindowOverlay } from "react-native-screens";
-import { Lantern } from "../brand/lantern";
+import { CANVAS_PAINTS_LATE, Lantern } from "../brand/lantern";
 import { curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
+import { Overlay } from "../ui/overlay";
 import { type Screen, setFlying, useSpot } from "./landing";
 import { LanternStill } from "./still";
 
@@ -201,6 +201,8 @@ export function Kindling({ lands, onShown, onDone }: Props) {
   const room = useDerivedValue(() =>
     reduce ? 1 : 1 - easeOut(between(clock.value, SPLASH.reveal)),
   );
+  // The room again as a view, for Android, where the canvas paints a few frames late.
+  const backing = useAnimatedStyle(() => ({ opacity: room.value }));
   // Under Reduce Motion, or with nowhere to land, the whole launch screen fades: a view's opacity,
   // since nothing travels for a held-back frame to show.
   const crossfade = useAnimatedStyle(() => {
@@ -233,9 +235,9 @@ export function Kindling({ lands, onShown, onDone }: Props) {
     return flood * (1 - gone);
   });
 
-  // A window of its own, because the native stack mounts the screen underneath over its siblings.
+  // Over everything, because the native stack mounts the screen underneath over its siblings.
   return (
-    <FullWindowOverlay>
+    <Overlay>
       <Animated.View
         style={[StyleSheet.absoluteFill, crossfade]}
         pointerEvents={landing ? "none" : "auto"}
@@ -246,7 +248,12 @@ export function Kindling({ lands, onShown, onDone }: Props) {
         accessibilityElementsHidden
         importantForAccessibility="no-hide-descendants"
       >
-        <Canvas style={StyleSheet.absoluteFill}>
+        {CANVAS_PAINTS_LATE && (
+          <Animated.View
+            style={[StyleSheet.absoluteFill, { backgroundColor: p.canvas }, backing]}
+          />
+        )}
+        <Canvas style={StyleSheet.absoluteFill} androidWarmup>
           <Rect x={0} y={0} width={width} height={height} color={p.canvas} opacity={room} />
           <Circle c={poolCentre} r={poolRadius} opacity={poolOpacity}>
             <RadialGradient
@@ -269,7 +276,7 @@ export function Kindling({ lands, onShown, onDone }: Props) {
         )}
         <Lantern size={DRAWN} flame={flame} place={place} />
       </Animated.View>
-    </FullWindowOverlay>
+    </Overlay>
   );
 }
 

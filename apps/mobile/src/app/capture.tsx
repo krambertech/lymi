@@ -5,7 +5,6 @@ import { decksQuery, roundsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
 import { useQueryClient } from "@tanstack/react-query";
 import { File } from "expo-file-system";
-import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { ScrollView, type TextInput, View } from "react-native";
@@ -24,6 +23,7 @@ import { tagsSummary } from "../capture/tags";
 import { CAPTURE_KEYS, captureStore } from "../data/kept";
 import { useOwnedDecks, useSections } from "../data/queries";
 import { formatList } from "../i18n/list";
+import { haptics } from "../theme/haptics";
 import { usePalette } from "../theme/palette";
 import { FieldChip, FieldChipRow } from "../ui/field-chip";
 import { FormHeader } from "../ui/form-header";
@@ -136,7 +136,7 @@ function Composer() {
         }),
         enrich,
       });
-      Haptics.selectionAsync();
+      haptics.added();
       if (outcome.status === "skipped") {
         const { term, deckName } = { term: outcome.existing.term, deckName: outcome.deckName };
         say(t`“${term}” is already in ${deckName}`);
@@ -177,7 +177,7 @@ function Composer() {
     toast.add({ id: TOASTS, scope: TOASTS, title, error, ...(action ? { action } : {}) });
 
   const undo = (id: string) => {
-    Haptics.selectionAsync();
+    haptics.tick();
     writes
       .archiveCard(id)
       .then(() => {

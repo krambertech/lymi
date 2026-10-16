@@ -14,9 +14,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
 import { ALWAYS, CROSSFADE, spring, useReduceMotion } from "../theme/motion";
+import { edgeSwipeSlop } from "../ui/edge-swipe";
 
-/** How far in from the start edge a swipe has to begin, as iOS's own back swipe. */
-const EDGE = 28;
 /** Past this share of the width, or on a flick, letting go takes the grade back. */
 const LANDS = 0.4;
 const BACK = spring(SNAP_BACK);
@@ -26,14 +25,14 @@ const TILT = 6;
 const ARRIVE_MS = 320;
 const ARRIVE_EASE = Easing.bezier(0.23, 1, 0.32, 1);
 
-/** A swipe from the start edge takes back the last grade. `onUndo` runs once the card has landed. */
+/** A swipe from the start edge (anywhere on the card on Android) takes back the last grade. `onUndo` runs once the card has landed. */
 export function useUndoSwipe({ enabled, onUndo }: { enabled: boolean; onUndo: () => void }) {
   const { width } = useWindowDimensions();
   const x = useSharedValue(0);
   const dir = I18nManager.isRTL ? -1 : 1;
   const gesture = Gesture.Pan()
     .enabled(enabled)
-    .hitSlop(I18nManager.isRTL ? { right: 0, width: EDGE } : { left: 0, width: EDGE })
+    .hitSlop(edgeSwipeSlop())
     .activeOffsetX(dir * 10)
     .failOffsetY([-20, 20])
     .onUpdate((e) => {

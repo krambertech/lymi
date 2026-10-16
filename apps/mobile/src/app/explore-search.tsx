@@ -8,7 +8,7 @@ import { useCatalogue, useCatalogueSearch, useShelfLabel } from "../explore/cata
 import { DeckList, ShelfList } from "../explore/layouts";
 import { CatalogueFailed, CatalogueLoading } from "../explore/states";
 import { EmptyState } from "../ui/empty-state";
-import { KeyboardRoom } from "../ui/keyboard";
+import { DISMISS_ON_DRAG, KeyboardRoom } from "../ui/keyboard";
 import { SectionTitle } from "../ui/primitives";
 import { SearchBar, useSearchText } from "../ui/search-bar";
 
@@ -44,7 +44,7 @@ export default function ExploreSearch() {
           // Grows to the room above the keyboard, so an empty state centres there and never under it.
           contentContainerStyle={{ paddingTop: insets.top + 16, flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
-          keyboardDismissMode="interactive"
+          keyboardDismissMode={DISMISS_ON_DRAG}
         >
           {query && catalogue.failed ? (
             <CatalogueFailed fill onRetry={catalogue.retry} busy={catalogue.retrying} />

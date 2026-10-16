@@ -27,8 +27,11 @@ import { Kindling } from "../splash/kindling";
 import { replaySplash, useReplays } from "../splash/replay";
 import { Analytics } from "../telemetry/analytics";
 import { startTelemetry } from "../telemetry/posthog";
-import { usePalette } from "../theme/palette";
+import { usePalette, useRoom } from "../theme/palette";
+import { MenuHost } from "../ui/action-menu";
+import { BlurRoot } from "../ui/blur-root";
 import { FloatingBarHost } from "../ui/floating-bar";
+import { FULL_SHEET, SHEET_STACK } from "../ui/stack";
 import { clearToasts, ToastHost } from "../ui/toast-host";
 import { useWelcoming } from "../welcome/gate";
 import { clearWidgets, WidgetSync } from "../widgets/sync";
@@ -70,6 +73,7 @@ export default function RootLayout() {
 function Root() {
   const dark = useColorScheme() === "dark";
   const p = usePalette();
+  const room = useRoom();
   const session = useSession();
   const learnerId = session.data?.user.id;
   const signedIn = Boolean(session.data);
@@ -129,7 +133,8 @@ function Root() {
   };
   return (
     <ThemeProvider value={theme}>
-      <StatusBar style="auto" />
+      {/* The room, not the phone's setting: a learner who chose a room keeps legible status icons. */}
+      <StatusBar style={room === "dark" ? "light" : "dark"} />
       {!session.isPending && <LanguageSync signedIn={signedIn} />}
       {!session.isPending && !update && <ShareSync signedIn={signedIn} />}
       <Analytics learnerId={signedOut ? null : learnerId} />
@@ -141,141 +146,154 @@ function Root() {
           <ReminderSync />
         </>
       )}
-      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: p.canvas } }}>
-        {/* First, so a link opened while it shows lands on it rather than on a refused screen. */}
-        <Stack.Protected guard={!!update}>
-          <Stack.Screen name="update" options={{ animation: "fade", gestureEnabled: false }} />
-        </Stack.Protected>
-        <Stack.Protected guard={!update && !entered}>
-          <Stack.Screen name="(auth)" options={{ animation: "fade" }} />
-        </Stack.Protected>
-        {/* Welcome is the only signed-in screen until it is done, and the first one a new account
+      {/* The open menu floats over the screens and blurs them, and not itself. */}
+      <BlurRoot over={<MenuHost />}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: { backgroundColor: p.canvas },
+            ...SHEET_STACK.screenOptions,
+          }}
+          screenLayout={SHEET_STACK.screenLayout}
+        >
+          {/* First, so a link opened while it shows lands on it rather than on a refused screen. */}
+          <Stack.Protected guard={!!update}>
+            <Stack.Screen name="update" options={{ animation: "fade", gestureEnabled: false }} />
+          </Stack.Protected>
+          <Stack.Protected guard={!update && !entered}>
+            <Stack.Screen name="(auth)" options={{ animation: "fade" }} />
+          </Stack.Protected>
+          {/* Welcome is the only signed-in screen until it is done, and the first one a new account
             lands on, so it comes before the deck links; it fades in place, as sign-in does. */}
-        <Stack.Protected guard={!update && entered && !!welcoming}>
-          <Stack.Screen name="onboarding" options={{ animation: "fade", gestureEnabled: false }} />
-        </Stack.Protected>
-        {/* A shared deck's link opens signed in or out; signed out, it signs in and comes back. */}
-        <Stack.Protected guard={!update}>
-          <Stack.Screen name="join/[token]" />
-          <Stack.Screen name="add/[slug]" />
-        </Stack.Protected>
-        <Stack.Protected guard={!update && entered && !welcoming}>
-          <Stack.Screen name="index" />
-          <Stack.Screen name="(tabs)" />
-          {/* Over Today rather than in place of it, so pulling the review's top bar down shows Today. */}
-          <Stack.Screen
-            name="review"
-            options={{
-              presentation: "transparentModal",
-              animation: "slide_from_bottom",
-              contentStyle: { backgroundColor: "transparent" },
-            }}
-          />
-          <Stack.Screen
-            name="capture"
-            options={{
-              presentation: "formSheet",
-              sheetAllowedDetents: [1],
-              sheetGrabberVisible: true,
-              // Clear, so iOS 26 draws the glass under the screen's own fill; before 26, the sheet colour.
-              contentStyle: {
-                backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
-              },
-            }}
-          />
-          <Stack.Screen
-            name="edit-card"
-            options={{
-              presentation: "formSheet",
-              sheetAllowedDetents: [1],
-              sheetGrabberVisible: true,
-              contentStyle: {
-                backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
-              },
-            }}
-          />
-          {/* Over everything, tab bar included, since its field sits where the tab bar does. */}
-          <Stack.Screen
-            name="search"
-            options={{ presentation: "fullScreenModal", animation: "fade" }}
-          />
-          <Stack.Screen
-            name="new-deck"
-            options={{
-              presentation: "formSheet",
-              // A full sheet, so its Language and How cards are asked sheets stack over it; iOS hides a
-              // part-height sheet under a new one. phone.md "Sheets".
-              sheetAllowedDetents: [1],
-              sheetGrabberVisible: true,
-              contentStyle: { backgroundColor: p.sheet },
-            }}
-          />
-          <Stack.Screen
-            name="series"
-            options={{
-              presentation: "formSheet",
-              sheetAllowedDetents: "fitToContents",
-              sheetGrabberVisible: true,
-              contentStyle: { backgroundColor: p.sheet },
-            }}
-          />
-          <Stack.Screen
-            name="series-decks"
-            options={{
-              presentation: "formSheet",
-              sheetAllowedDetents: [1],
-              sheetGrabberVisible: true,
-              contentStyle: {
-                backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
-              },
-            }}
-          />
-          <Stack.Screen
-            name="series-order"
-            options={{
-              presentation: "formSheet",
-              sheetAllowedDetents: "fitToContents",
-              // A row dragged down would otherwise close the sheet; Close is the way out.
-              gestureEnabled: false,
-              contentStyle: { backgroundColor: p.sheet },
-            }}
-          />
-          {/* Peeks at the run and today, and drags up for the month. phone.md. */}
-          {/* Over everything, tab bar included, since its field sits where the tab bar does. */}
-          <Stack.Screen
-            name="explore-search"
-            options={{ presentation: "fullScreenModal", animation: "fade" }}
-          />
-          {/* Opens on inviting and the join link, and drags up for everyone in the deck. */}
-          <Stack.Screen
-            name="share"
-            options={{
-              presentation: "formSheet",
-              sheetAllowedDetents: [0.62, 1],
-              sheetGrabberVisible: true,
-              contentStyle: {
-                backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
-              },
-            }}
-          />
-          <Stack.Screen
-            name="streak"
-            options={{
-              presentation: "formSheet",
-              sheetAllowedDetents: [0.62, 1],
-              sheetGrabberVisible: true,
-              sheetCornerRadius: 30,
-              contentStyle: {
-                backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
-              },
-            }}
-          />
-        </Stack.Protected>
-        {/* The design system is for development builds; release builds redirect it home. */}
-        {__DEV__ && <Stack.Screen name="design" />}
-      </Stack>
-      {signedIn && !update && <FloatingBarHost />}
-      {signedIn && !update && <ToastHost />}
+          <Stack.Protected guard={!update && entered && !!welcoming}>
+            <Stack.Screen
+              name="onboarding"
+              options={{ animation: "fade", gestureEnabled: false }}
+            />
+          </Stack.Protected>
+          {/* A shared deck's link opens signed in or out; signed out, it signs in and comes back. */}
+          <Stack.Protected guard={!update}>
+            <Stack.Screen name="join/[token]" />
+            <Stack.Screen name="add/[slug]" />
+          </Stack.Protected>
+          <Stack.Protected guard={!update && entered && !welcoming}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="(tabs)" />
+            {/* Over Today rather than in place of it, so pulling the review's top bar down shows Today. */}
+            <Stack.Screen
+              name="review"
+              options={{
+                presentation: "transparentModal",
+                animation: "slide_from_bottom",
+                contentStyle: { backgroundColor: "transparent" },
+              }}
+            />
+            <Stack.Screen
+              name="capture"
+              options={{
+                presentation: "formSheet",
+                ...FULL_SHEET,
+                sheetGrabberVisible: true,
+                // Clear, so iOS 26 draws the glass under the screen's own fill; before 26, the sheet colour.
+                contentStyle: {
+                  backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
+                },
+              }}
+            />
+            <Stack.Screen
+              name="edit-card"
+              options={{
+                presentation: "formSheet",
+                ...FULL_SHEET,
+                sheetGrabberVisible: true,
+                contentStyle: {
+                  backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
+                },
+              }}
+            />
+            {/* Over everything, tab bar included, since its field sits where the tab bar does. */}
+            <Stack.Screen
+              name="search"
+              options={{ presentation: "fullScreenModal", animation: "fade" }}
+            />
+            <Stack.Screen
+              name="new-deck"
+              options={{
+                presentation: "formSheet",
+                // A full sheet, so its Language and How cards are asked sheets stack over it; iOS hides a
+                // part-height sheet under a new one. phone.md "Sheets".
+                ...FULL_SHEET,
+                sheetGrabberVisible: true,
+                contentStyle: { backgroundColor: p.sheet },
+              }}
+            />
+            <Stack.Screen
+              name="series"
+              options={{
+                presentation: "formSheet",
+                sheetAllowedDetents: "fitToContents",
+                sheetGrabberVisible: true,
+                contentStyle: { backgroundColor: p.sheet },
+              }}
+            />
+            <Stack.Screen
+              name="series-decks"
+              options={{
+                presentation: "formSheet",
+                ...FULL_SHEET,
+                sheetGrabberVisible: true,
+                contentStyle: {
+                  backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
+                },
+              }}
+            />
+            <Stack.Screen
+              name="series-order"
+              options={{
+                presentation: "formSheet",
+                sheetAllowedDetents: "fitToContents",
+                // A row dragged down would otherwise close the sheet; Close is the way out.
+                gestureEnabled: false,
+                contentStyle: { backgroundColor: p.sheet },
+              }}
+            />
+            {/* Peeks at the run and today, and drags up for the month. phone.md. */}
+            {/* Over everything, tab bar included, since its field sits where the tab bar does. */}
+            <Stack.Screen
+              name="explore-search"
+              options={{ presentation: "fullScreenModal", animation: "fade" }}
+            />
+            {/* Opens on inviting and the join link, and drags up for everyone in the deck. */}
+            <Stack.Screen
+              name="share"
+              options={{
+                presentation: "formSheet",
+                sheetAllowedDetents: [0.62, 1],
+                sheetGrabberVisible: true,
+                contentStyle: {
+                  backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
+                },
+              }}
+            />
+            <Stack.Screen
+              name="streak"
+              options={{
+                presentation: "formSheet",
+                sheetAllowedDetents: [0.62, 1],
+                sheetGrabberVisible: true,
+                sheetCornerRadius: 30,
+                contentStyle: {
+                  backgroundColor: isGlassEffectAPIAvailable() ? "transparent" : p.sheet,
+                },
+              }}
+            />
+          </Stack.Protected>
+          {/* The design system is for development builds; release builds redirect it home. */}
+          {__DEV__ && <Stack.Screen name="design" />}
+        </Stack>
+        {signedIn && !update && <FloatingBarHost />}
+        {signedIn && !update && <ToastHost />}
+      </BlurRoot>
       {kindling && (
         <SplashGuard key={replays} onFail={giveUp}>
           <Kindling lands={lands} onShown={shown} onDone={done} />

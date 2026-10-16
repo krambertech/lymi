@@ -7,6 +7,7 @@ import { decisionModel, termsAgainstAnswer } from "../lessons/keep";
 import type { LessonMaterial } from "../lessons/reader";
 import { createLessonReader } from "../lessons/reader";
 import {
+  assertCanCheckAnswers,
   assertCanReadLessons,
   type LessonEvent,
   lessonAccess,
@@ -130,6 +131,7 @@ lessonReads.post(
   }),
   body(LessonAnswerInput, "answer"),
   async (c) => {
+    await assertCanCheckAnswers(ctxOf(c), operatorEmails(c.env));
     const { question, answer, terms } = c.req.valid("json");
     return c.json({
       drop: await termsAgainstAnswer(decisionModel(c.env), question, answer, terms),

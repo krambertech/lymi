@@ -228,6 +228,19 @@ describe("the daily limit", () => {
     expect(events).toEqual([{ name: "lesson_read_limited" }]);
   });
 
+  it("lets only one of two reads started together take the last one", async () => {
+    const ctx = await learner(db, "lesson-race", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const deps = { reader: oneTerm(deck.id), ai: undefined, operators: new Set<string>() };
+    for (let i = 0; i < 4; i++) await readLesson(ctx, material, deps);
+    const both = await Promise.allSettled([
+      readLesson(ctx, material, deps),
+      readLesson(ctx, material, deps),
+    ]);
+    expect(both.map((r) => r.status).sort()).toEqual(["fulfilled", "rejected"]);
+    expect((await lessonAccess(ctx, deps.operators)).daily?.used).toBe(5);
+  });
+
   it("does not count a read that failed", async () => {
     const ctx = await learner(db, "lesson-failed", "Kateryna");
     await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });

@@ -57,3 +57,29 @@ describe("POST /api/lesson-reads", () => {
     expect(await response.json()).toMatchObject({ error: expect.stringContaining("3 PDFs") });
   });
 });
+
+describe("POST /api/lesson-reads/answers", () => {
+  const check = (as: Session) =>
+    app.fetch("/api/lesson-reads/answers", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        question: "Only the verbs?",
+        answer: "only verbs",
+        terms: [{ id: "t1", term: "jooma", gloss: "to drink" }],
+      }),
+      as,
+    });
+
+  it("checks an answer only after a recent read", async () => {
+    const reader = await app.signUp("lesson-answerer");
+    const refused = await check(reader);
+    expect(refused.status).toBe(403);
+    expect(await refused.json()).toMatchObject({ code: "no_recent_read" });
+
+    await app.db
+      .insert(schema.lessonReads)
+      .values({ id: newId(), userId: reader.userId, localDate: "2026-01-01" });
+    expect((await check(reader)).status).toBe(200);
+  });
+});

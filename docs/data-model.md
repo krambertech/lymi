@@ -386,7 +386,7 @@ A note a learner sends from the learner menu is stored before it is emailed, so 
 
 ### Smart add reads
 
-`lesson_reads` holds one row per Smart add read and nothing from the lesson: its learner-local date carries the beta's limit of 5 reads a day (`LESSON_READS_PER_DAY`). The row is written just before the model starts, after every other refusal, and deleted when the read fails, so a lesson Lymi couldn't read doesn't count. Operators have no limit.
+`lesson_reads` holds one row per Smart add read and nothing from the lesson: its learner-local date carries the beta's limit of 5 reads a day (`LESSON_READS_PER_DAY`). The row is written just before the model starts, after every other refusal, and deleted when the read fails, so a lesson Lymi couldn't read doesn't count. The insert carries its own count, so two reads started together can't both take the last one. Checking a learner's own answer to a read's question needs a read in the last two hours and adds nothing to the count. Operators have no limit.
 
 ### Tags and source
 

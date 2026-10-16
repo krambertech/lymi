@@ -1,7 +1,7 @@
 import type { LessonAccessOut, LessonEventOut, LessonReadOut } from "@lymi/core";
 import { dayWindow, LESSON_READS_PER_DAY, newId, normaliseTerm } from "@lymi/core";
 import { textCallCost } from "@lymi/core/analytics";
-import { and, count, desc, eq, isNull } from "@lymi/core/db";
+import { and, count, desc, eq, gt, isNull, sql } from "@lymi/core/db";
 import type { z } from "zod";
 import { schema } from "../db";
 import { type DecisionModel, KEEP_THRESHOLD, keepScore } from "../lessons/keep";
@@ -68,6 +68,38 @@ export async function lessonAccess(
   };
 }
 
+/** How long after a read its questions may still be checked against the learner's own answer. */
+const ANSWER_WINDOW_MS = 2 * 60 * 60 * 1000;
+
+/**
+ * Checking a learner's own answer runs Workers AI per term, so it is open only to an operator or
+ * to a learner whose last counted read is recent; it adds nothing to the daily count.
+ */
+export async function assertCanCheckAnswers(
+  ctx: ServiceContext,
+  operators: Set<string>,
+): Promise<void> {
+  if (await isOperator(ctx, operators)) return;
+  const [recent] = await ctx.db
+    .select({ id: schema.lessonReads.id })
+    .from(schema.lessonReads)
+    .where(
+      and(
+        eq(schema.lessonReads.userId, ctx.userId),
+        gt(schema.lessonReads.createdAt, new Date(Date.now() - ANSWER_WINDOW_MS)),
+      ),
+    )
+    .limit(1);
+  if (!recent) {
+    throw new ServiceError(
+      "forbidden",
+      "Read a lesson first; its answers can be checked for two hours.",
+      undefined,
+      "no_recent_read",
+    );
+  }
+}
+
 function limitReached(ctx: ServiceContext): never {
   track(ctx.analytics, { name: "lesson_read_limited" });
   throw new ServiceError(
@@ -78,16 +110,24 @@ function limitReached(ctx: ServiceContext): never {
   );
 }
 
-/** Counts a read against today's limit just before the model starts; the release undoes it. */
+/**
+ * Counts a read against today's limit just before the model starts; the release undoes it. The
+ * insert carries its own count, so two reads started together cannot both take the last one.
+ */
 async function claimRead(
   ctx: ServiceContext,
   operators: Set<string>,
 ): Promise<() => Promise<void>> {
   if (await isOperator(ctx, operators)) return async () => {};
   const day = await readDay(ctx);
-  if ((await readsOn(ctx, day.date)) >= LESSON_READS_PER_DAY) limitReached(ctx);
   const id = newId();
-  await ctx.db.insert(schema.lessonReads).values({ id, userId: ctx.userId, localDate: day.date });
+  const result = await ctx.db.run(sql`
+    insert into lesson_reads (id, user_id, local_date)
+    select ${id}, ${ctx.userId}, ${day.date}
+    where (
+      select count(*) from lesson_reads where user_id = ${ctx.userId} and local_date = ${day.date}
+    ) < ${LESSON_READS_PER_DAY}`);
+  if ((result as D1Result).meta.changes !== 1) limitReached(ctx);
   return async () => {
     await ctx.db.delete(schema.lessonReads).where(eq(schema.lessonReads.id, id));
   };

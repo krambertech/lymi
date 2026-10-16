@@ -2478,6 +2478,9 @@ msgstr "Після видалення акаунта Lymi нічого не зб
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Мову кожної колоди взято з {app}, її назви або карток. Вона потрібна, щоб знаходити картки, які в тебе вже є, і читати терміни вголос."
 
+msgid "Lymi was closed before the text arrived. Paste the set again to start over."
+msgstr "Lymi закрили, поки текст ще надсилався. Встав набір ще раз, щоб почати спочатку."
+
 msgid "Lymi works for anything you want to remember."
 msgstr "Lymi підходить для всього, що хочеш запам’ятати."
 
@@ -2923,6 +2926,9 @@ msgstr "Вставити"
 
 msgid "Paste a set you made in Quizlet. Terms and definitions come across; pictures, audio and progress don’t, so every card starts as new."
 msgstr "Встав набір, який ти створив у Quizlet. Терміни й визначення перенесуться. Зображення, аудіо та прогрес не переносяться, тож кожна картка почнеться як нова."
+
+msgid "Paste it again"
+msgstr "Вставити ще раз"
 
 msgid "Peek at your hook"
 msgstr "Підглянути зачіпку"

@@ -35,11 +35,7 @@ const rowChoice = (sep: string): RowChoice =>
 const PREVIEW_ROWS = 5;
 const NEW_DECK = "new";
 
-/**
- * A Quizlet set by paste, or by a .txt of the same text. The separators are detected and can be
- * changed; the first rows show as they will arrive, with what is skipped. The text goes up as one
- * small file through the same upload as every import, then the shared preview. imports.md.
- */
+/** A Quizlet set by paste or .txt, read with the server's own parser and sent as one small file. imports.md. */
 export function QuizletStart() {
   const { t } = useLingui();
   const qc = useQueryClient();
@@ -50,10 +46,10 @@ export function QuizletStart() {
   const [setName, setSetName] = useState("");
   const [deck, setDeck] = useState<string>(NEW_DECK);
   const [refused, setRefused] = useState<string | null>(null);
-  const bytes = useMemo(() => new TextEncoder().encode(text).byteLength, [text]);
-  const tooBig = bytes > MAX_TEXT_IMPORT_BYTES;
-
   const typed = useDeferredValue(text);
+  // Counted from the deferred text, so a long paste is not encoded again on every keystroke.
+  const bytes = useMemo(() => new TextEncoder().encode(typed).byteLength, [typed]);
+  const tooBig = bytes > MAX_TEXT_IMPORT_BYTES;
   const detected = useMemo(() => (typed.trim() ? detectSeparators(typed) : null), [typed]);
   const separators = chosen ?? detected ?? { field: "\t", row: "\n" };
   const parsed = useMemo(

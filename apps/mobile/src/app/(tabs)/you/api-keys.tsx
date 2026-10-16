@@ -25,11 +25,7 @@ import { DocRow } from "../../../you/doc-row";
 
 const DOCS = "https://lymi.app/docs";
 
-/**
- * Personal API keys for scripts and curl, as the web's Settings has them: the list, a sheet to
- * make one, the key shown once right after, and revoking, which is final, asked in iOS's alert.
- * ADR 0036.
- */
+/** Personal API keys for scripts, as the web's Settings has them. phone.md "Navigation", ADR 0036. */
 export default function ApiKeys() {
   const { t } = useLingui();
   const qc = useQueryClient();

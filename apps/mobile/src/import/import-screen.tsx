@@ -34,11 +34,7 @@ import {
   uploadSource,
 } from "./sources";
 
-/**
- * One import, whose body follows its state: the file on its way, the preview, the cards being
- * written, and the end. The address holds the import, so Activity opens the same screen and
- * leaving and coming back finds it where it was. docs/design/imports.md.
- */
+/** One import from its upload to its end, at the import's own address so Activity reopens it. imports.md. */
 export function ImportScreen({ id }: { id: string }) {
   const { t } = useLingui();
   const qc = useQueryClient();
@@ -120,7 +116,9 @@ export function ImportScreen({ id }: { id: string }) {
   }
 
   const app = SOURCE_NAMES[item.source] ?? item.source;
-  const restart = () => router.replace(`/import/${item.source}` as Href);
+  // A source a newer server added has no page here yet, so it starts over from the list.
+  const restart = () =>
+    router.replace((item.source in SOURCE_NAMES ? `/import/${item.source}` : "/import") as Href);
 
   switch (item.status) {
     case "uploading":
@@ -133,6 +131,7 @@ export function ImportScreen({ id }: { id: string }) {
           onRetry={() => retryUpload(id, qc)}
           onResume={(source) => resumeUpload(item, source, qc)}
           onCancel={() => cancel.mutate()}
+          onStartOver={() => cancel.mutate(undefined, { onSuccess: restart })}
           cancelling={cancel.isPending}
         />
       );
@@ -186,6 +185,7 @@ function Working({
   onRetry,
   onResume,
   onCancel,
+  onStartOver,
   cancelling,
 }: {
   item: Import;
@@ -193,12 +193,37 @@ function Working({
   onRetry: () => void;
   onResume: (source: ReturnType<typeof uploadSource>) => void;
   onCancel: () => void;
+  /** Cancels this import and opens its app's page, for a file that cannot be chosen again. */
+  onStartOver: () => void;
   cancelling: boolean;
 }) {
   const { t } = useLingui();
   const [refused, setRefused] = useState<string | null>(null);
   const app = SOURCE_NAMES[item.source] ?? item.source;
   const description = t`${item.fileName} · ${fileSize(item.byteSize)}`;
+
+  // Quizlet's file was the pasted text, which went with the app, so it starts over with a new paste.
+  if (item.status === "uploading" && !upload && item.source === "quizlet") {
+    return (
+      <ImportShell title={t`Import from ${app}`} description={description}>
+        <Plate className="gap-3 p-5">
+          <Text className="text-lg font-medium text-text" accessibilityRole="header">
+            {t`The upload stopped partway`}
+          </Text>
+          <Text className="text-base text-text-2">
+            {t`Lymi was closed before the text arrived. Paste the set again to start over.`}
+          </Text>
+          <Button
+            label={t`Paste it again`}
+            variant="primary"
+            size="lg"
+            loading={cancelling}
+            onPress={onStartOver}
+          />
+        </Plate>
+      </ImportShell>
+    );
+  }
 
   // The app was closed mid-upload, so the file it was reading is gone: the same file sends the rest.
   if (item.status === "uploading" && !upload) {

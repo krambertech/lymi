@@ -2478,6 +2478,9 @@ msgstr "Lymi keeps nothing once the account is gone."
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 
+msgid "Lymi was closed before the text arrived. Paste the set again to start over."
+msgstr "Lymi was closed before the text arrived. Paste the set again to start over."
+
 msgid "Lymi works for anything you want to remember."
 msgstr "Lymi works for anything you want to remember."
 
@@ -2923,6 +2926,9 @@ msgstr "Paste"
 
 msgid "Paste a set you made in Quizlet. Terms and definitions come across; pictures, audio and progress don’t, so every card starts as new."
 msgstr "Paste a set you made in Quizlet. Terms and definitions come across; pictures, audio and progress don’t, so every card starts as new."
+
+msgid "Paste it again"
+msgstr "Paste it again"
 
 msgid "Peek at your hook"
 msgstr "Peek at your hook"

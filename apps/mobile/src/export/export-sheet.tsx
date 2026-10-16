@@ -44,11 +44,7 @@ async function download(item: Export): Promise<string> {
   return saved.uri;
 }
 
-/**
- * Taking a deck or the library out. A tap on a format starts it, the server writes the file while
- * the sheet waits, and the sheet ends in Save or share, which hands the file to iOS's share sheet
- * once this one has gone: Save to Files, AirDrop, or straight into Anki. imports.md "Export".
- */
+/** Taking a deck or the library out, ending in iOS's share sheet once this sheet has gone. imports.md. */
 export function ExportSheet({
   open,
   onOpenChange,
@@ -97,9 +93,10 @@ export function ExportSheet({
       setExportId(started.id);
     },
   });
+  // Back to where the sheet opened: an existing export, such as Activity's, or the formats.
   const reset = () => {
-    setExportId(null);
-    setSlow(false);
+    setExportId(initial?.id ?? null);
+    setSlow(!!initial);
     setChoice(null);
     setShareError(null);
     start.reset();
@@ -127,7 +124,13 @@ export function ExportSheet({
       toShare.current = await download(ready);
       close();
     } catch {
-      setShareError(t`Couldn’t download the file. Check your connection and try again.`);
+      // A file past its day is gone for good, so retrying is no help: the export is read again.
+      const fresh = await item.refetch().catch(() => null);
+      setShareError(
+        fresh?.data?.status === "expired"
+          ? null
+          : t`Couldn’t download the file. Check your connection and try again.`,
+      );
     } finally {
       setFetching(false);
     }
@@ -246,7 +249,15 @@ export function ExportSheet({
               : t`Couldn’t write the file. Try again.`}
         </SheetError>
         {current.failure !== "too_large" && (
-          <Button label={t`Try again`} icon="reset" onPress={reset} />
+          <Button
+            label={t`Try again`}
+            icon="reset"
+            onPress={() => {
+              reset();
+              setExportId(null);
+              setSlow(false);
+            }}
+          />
         )}
       </View>
     );

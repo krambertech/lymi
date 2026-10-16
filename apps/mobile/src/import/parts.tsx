@@ -35,10 +35,7 @@ export function Question({ title, lede }: { title: string; lede?: string | undef
   );
 }
 
-/**
- * A step's answers at its foot, where the thumb is: the buttons the full width, a note under them,
- * and Back last, never above the question. imports.md.
- */
+/** A step's answers at its foot, full width, with Back last and never above the question. imports.md. */
 export function StepActions({
   onBack,
   note,
@@ -148,10 +145,7 @@ export function Sweep({ label }: { label: string }) {
   );
 }
 
-/**
- * One imported card as it will arrive: the term large, the rule, then everything under it, in the
- * order the card page shows a card. It is the learner's check that the fields are read right.
- */
+/** One imported card drawn as the card page draws it, so the learner checks the fields are read right. */
 export function SampleCard({ sample, loading }: { sample: Sample | undefined; loading: boolean }) {
   const { t } = useLingui();
   const p = usePalette();

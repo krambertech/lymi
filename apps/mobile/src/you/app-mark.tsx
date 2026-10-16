@@ -4,10 +4,7 @@ import Svg, { Path } from "react-native-svg";
 import { usePalette } from "../theme/palette";
 import { Icon, Text } from "../ui/primitives";
 
-/**
- * A connected app's tile, as the web draws it: a recognised mark in its own colour, else the
- * first letter of the host, else a plug. The client's own logo is never drawn. connected-apps.md.
- */
+/** A connected app's tile, as the web draws it, never with the client's own logo. connected-apps.md. */
 export function AppMark({ app, size = 40 }: { app: AppIdentity; size?: number }) {
   const p = usePalette();
   return (

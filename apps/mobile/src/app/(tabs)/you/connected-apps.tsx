@@ -21,11 +21,7 @@ import { DocRow } from "../../../you/doc-row";
 const SITE = "https://lymi.app";
 const site = (path: string) => `${SITE}${path}`;
 
-/**
- * The other half of the consent screen, as the web's Settings has it: each app the learner let in,
- * what it may do and the host that identifies it, and the way to cut it off, asked first in iOS's
- * alert. connected-apps.md, ADR 0036.
- */
+/** The apps the learner let in, and the way to cut one off. connected-apps.md, ADR 0036. */
 export default function ConnectedApps() {
   const { t } = useLingui();
   const qc = useQueryClient();

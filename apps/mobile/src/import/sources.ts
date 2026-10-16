@@ -162,10 +162,7 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
   }
 }
 
-/**
- * How to get the file out of each app, one step a line. The web's steps, with the last one saying
- * where the file goes on a phone. Quizlet's start has its own steps beside the paste box.
- */
+/** How to get the file out of each app, the web's steps ending with saving it to Files. */
 export const STEPS: Record<Exclude<ImportSource, "quizlet">, MessageDescriptor[]> = {
   anki: [
     msg`In Anki, open the deck’s menu and choose Export. On a computer, choose File, then Export.`,

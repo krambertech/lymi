@@ -150,12 +150,7 @@ export type ListedApp = {
   borrowed: boolean;
 };
 
-/**
- * A connected app as Settings lists it. The consent screen titles an unrecognised app by its host,
- * because that is where an app is let in on the strength of its name; once let in, the learner
- * needs to recognise it, so the list leads with the name it gave and says Unverified beside its
- * host, in the danger colour when the name borrows a known app's. connected-apps.md.
- */
+/** A connected app as Settings lists it, led by its own name and marked when unverified. connected-apps.md. */
 export function listedApp(app: AppIdentity): ListedApp {
   const title = app.recognised ? app.name : (app.claimed ?? app.host);
   return {

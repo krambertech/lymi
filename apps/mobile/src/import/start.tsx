@@ -55,11 +55,7 @@ export function ImportSources() {
   );
 }
 
-/**
- * One app's import page: how to get the file out of that app, then the file. The steps come first
- * and the button last, where the thumb is, since on a phone the file is usually exported just
- * before it is chosen.
- */
+/** One app's import page: its export steps first, then Choose file at the thumb. imports.md. */
 export function ImportStart({ source }: { source: Exclude<ImportSource, "quizlet"> }) {
   const { t, i18n } = useLingui();
   const qc = useQueryClient();

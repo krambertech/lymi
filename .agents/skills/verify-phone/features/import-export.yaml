@@ -17,14 +17,23 @@ name: Import and export
     timeout: 20000
 - tapOn: "Your set’s text.*"
 - inputText: "${SET}"
-- hideKeyboard
+# The keyboard can already be gone by now, and hiding it again fails.
+- runFlow:
+    when:
+      visible: "space"
+    commands:
+      - hideKeyboard
 - scrollUntilVisible:
     element: "3 cards"
 - scrollUntilVisible:
     element: "Set name"
 - tapOn: "Set name"
 - inputText: "${DECK}"
-- hideKeyboard
+- runFlow:
+    when:
+      visible: "space"
+    commands:
+      - hideKeyboard
 - takeScreenshot: 02-pasted
 - scrollUntilVisible:
     element: "Continue with 3 cards"
@@ -83,3 +92,24 @@ name: Import and export
     visible: ".*\\.apkg.*|Save to Files"
     timeout: 30000
 - takeScreenshot: 10-share
+# Opened from Activity, the export comes back as its file each time, not as the format list.
+- swipe:
+    direction: DOWN
+- tapOn: "Activity"
+- extendedWaitUntil:
+    visible: "Exported .* as an Anki package.*"
+    timeout: 20000
+- tapOn: "Exported .* as an Anki package.*"
+- extendedWaitUntil:
+    visible: "Save or share"
+    timeout: 20000
+# From the sheet's grabber, since a swipe that starts on a button presses it.
+- swipe:
+    start: "50%, 71%"
+    end: "50%, 99%"
+- tapOn: "Exported .* as an Anki package.*"
+- extendedWaitUntil:
+    visible: "Save or share"
+    timeout: 20000
+- assertNotVisible: "Anki package"
+- takeScreenshot: 11-activity-again

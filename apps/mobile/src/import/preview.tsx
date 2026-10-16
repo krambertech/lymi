@@ -69,12 +69,7 @@ function useNoteTypeName() {
   };
 }
 
-/**
- * The preview, one question per screen: which decks, what language when the cards didn't say,
- * whether each kind of card looks right, then what the import brings with the button that starts
- * it. A step with nothing to ask is skipped, and each change asks the server to count again.
- * docs/design/imports.md.
- */
+/** The preview, one question per screen in the web's order, recounted by the server on each change. imports.md. */
 export function ImportPreviewScreen({
   item,
   onCancel,

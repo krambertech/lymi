@@ -12,6 +12,7 @@ import {
   namesCaller,
 } from "@lymi/client/activity";
 import type { ActivityCard, ActivityEntry } from "@lymi/client/api";
+import { SOURCE_NAMES } from "@lymi/client/imports";
 import { type Href, useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
@@ -42,13 +43,6 @@ const MARK_ICONS: Record<ActivityMark, IconName> = {
   invitation_cancelled: "uninvite",
   link_on: "linkOn",
   link_off: "linkOff",
-};
-
-const SOURCE_NAMES: Record<string, string> = {
-  anki: "Anki",
-  mochi: "Mochi",
-  noji: "Noji",
-  lymi: "Lymi",
 };
 
 /** The row's sentence. It never names the caller, which the line under it does. */
@@ -212,7 +206,8 @@ function ExportSentence({ entry }: { entry: ActivityEntry }) {
 /** An import says it brought cards in only when it did; a stage this release doesn't know says neither. */
 function ImportSentence({ entry }: { entry: ActivityEntry }) {
   const item = entry.import;
-  const source = item ? (SOURCE_NAMES[item.source] ?? item.source) : "";
+  // A source a newer server adds is named as the server sends it.
+  const source = item ? ((SOURCE_NAMES as Record<string, string>)[item.source] ?? item.source) : "";
   if (!item) return <Trans>Import of your cards</Trans>;
   const added = item.counts?.added ?? 0;
   switch (importOutcome(item)) {

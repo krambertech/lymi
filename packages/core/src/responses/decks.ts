@@ -22,6 +22,10 @@ const Membership = {
        * deliberate act that makes a photo public, so a deck shared by link carries none.
        */
       avatarUrl: z.string().nullable().default(null),
+      former: z.boolean().default(false).meta({
+        description:
+          "True once the owner deleted their account: the deck stays for its members and nobody can change it",
+      }),
     })
     .meta({ description: "Who owns the deck" }),
   published: z.boolean().meta({

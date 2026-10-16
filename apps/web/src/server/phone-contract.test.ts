@@ -33,6 +33,9 @@ const frozen = readdirSync(contracts)
 const phoneOperations = [
   "GET /api/me",
   "PATCH /api/me",
+  "GET /api/me/deletion",
+  "POST /api/me/deletion/code",
+  "DELETE /api/me",
   "GET /api/decks",
   "GET /api/decks/{id}/cards",
   "GET /api/decks/{id}/sections",
@@ -111,6 +114,7 @@ const closedOnPurpose = [
   "DELETE /api/decks/{id}/invitations/{invitationId} 200 .ok",
   "DELETE /api/decks/{id}/join-link 200 .ok",
   "DELETE /api/decks/{id}/members/{memberId} 200 .ok",
+  "DELETE /api/me 200 .ok",
   "POST /api/decks/{id}/archive 200 .ok",
   "POST /api/decks/{id}/leave 200 .ok",
   "POST /api/decks/{id}/restore 200 .ok",

@@ -360,6 +360,9 @@ msgstr "Загружено {0}% файла. Выбери тот же файл, �
 msgid "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
 msgstr "{added, plural, one {До остановки импорта добавлена # карточка.} few {До остановки импорта добавлены # карточки.} many {До остановки импорта добавлено # карточек.} other {До остановки импорта добавлено # карточки.}}"
 
+msgid "{after} of {total}"
+msgstr "{after} из {total}"
+
 msgid "{appName} is connected"
 msgstr "Приложение {appName} подключено"
 
@@ -518,6 +521,9 @@ msgstr "{field} становится"
 msgid "{filled, plural, one {# filled} other {# filled}}"
 msgstr "{filled, plural, one {заполнено: #} few {заполнено: #} many {заполнено: #} other {заполнено: #}}"
 
+msgid "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+msgstr "{full, plural, one {На # карточке} few {На # карточках} many {На # карточках} other {На # карточках}} уже было 20 тегов, поэтому тег туда не добавлен."
+
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Показатель запоминания основан всего на # повторении, поэтому первые несколько недель он может сильно колебаться.} few {Показатель запоминания основан всего на # повторениях, поэтому первые несколько недель он может сильно колебаться.} many {Показатель запоминания основан всего на # повторениях, поэтому первые несколько недель он может сильно колебаться.} other {Показатель запоминания основан всего на # повторения, поэтому первые несколько недель он может сильно колебаться.}}"
 
@@ -592,6 +598,9 @@ msgstr "{total, plural, one {# карточка} few {# карточки} many {
 
 msgid "{total, plural, one {# card} other {# cards}}. Add the deck to review them on your own schedule."
 msgstr "{total, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. Добавь колоду, чтобы повторять их в своём темпе."
+
+msgid "{total, plural, one {Tags for # card} other {Tags for # cards}}"
+msgstr "{total, plural, one {Теги для # карточки} few {Теги для # карточек} many {Теги для # карточек} other {Теги для # карточки}}"
 
 #. placeholder {0}: 30
 #. placeholder {0}: consistency.days.length
@@ -1180,6 +1189,9 @@ msgstr "Изменить языки"
 msgid "Change photo"
 msgstr "Изменить фото"
 
+msgid "Changed the tags on {count, plural, one {# card} other {# cards}}"
+msgstr "{count, plural, one {Теги изменены на # карточке} few {Теги изменены на # карточках} many {Теги изменены на # карточках} other {Теги изменены на # карточки}}"
+
 msgid "Changes appear right away and are listed in Activity. You can edit or archive any card."
 msgstr "Изменения появляются сразу и видны в Активности. Любую карточку можно отредактировать или архивировать."
 
@@ -1405,6 +1417,9 @@ msgstr "Не удалось добавить колоду. Она больше �
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Не удалось отменить приглашение. Попробуй ещё раз."
 
+msgid "Couldn’t change the tags on {failed} of {sent} cards. Try again."
+msgstr "Не удалось изменить теги на {failed} из {sent} карточек. Попробуйте ещё раз."
+
 msgid "Couldn’t check for more cards"
 msgstr "Не удалось проверить, есть ли ещё карточки"
 
@@ -1554,6 +1569,9 @@ msgstr "Страны, звёзды, птицы или что угодно ещё
 
 msgid "Create “{created}”"
 msgstr "Создать «{created}»"
+
+msgid "Create “{typed}”"
+msgstr "Создать «{typed}»"
 
 msgid "Create a deck to add this card to."
 msgstr "Создай колоду, чтобы добавить в неё эту карточку."
@@ -1943,6 +1961,9 @@ msgstr "Фильтр"
 
 msgid "Find a language"
 msgstr "Найди язык"
+
+msgid "Find or create a tag"
+msgstr "Найдите или создайте тег"
 
 msgid "For a test"
 msgstr "Для экзамена"
@@ -2808,6 +2829,9 @@ msgstr "Без раздела"
 
 msgid "No series"
 msgstr "Без серии"
+
+msgid "No tags yet. Type one to create it."
+msgstr "Тегов пока нет. Введите название, чтобы создать тег."
 
 msgid "Nobody can add it while it is archived."
 msgstr "Пока колода в архиве, её никто не может добавить."
@@ -3715,8 +3739,14 @@ msgstr "Поддержка"
 msgid "System"
 msgstr "Системная"
 
+msgid "Tag: {tagName}"
+msgstr "Тег: {tagName}"
+
 msgid "Tags"
 msgstr "Теги"
+
+msgid "Tags…"
+msgstr "Теги…"
 
 msgid "Take photo"
 msgstr "Сфотографировать"
@@ -3991,6 +4021,9 @@ msgstr "Этот тест подтверждает, что Lymi может от�
 
 msgid "This week"
 msgstr "На этой неделе"
+
+msgid "Tick a tag to put it on every card, or untick it to take it off."
+msgstr "Отметьте тег, чтобы добавить его на все карточки, или снимите отметку, чтобы убрать."
 
 msgid "Time"
 msgstr "Время"

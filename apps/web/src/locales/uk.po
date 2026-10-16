@@ -360,6 +360,9 @@ msgstr "Завантажено {0}% файлу. Вибери той самий �
 msgid "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
 msgstr "{added, plural, one {До зупинки імпорту додано # картку.} few {До зупинки імпорту додано # картки.} many {До зупинки імпорту додано # карток.} other {До зупинки імпорту додано # картки.}}"
 
+msgid "{after} of {total}"
+msgstr "{after} з {total}"
+
 msgid "{appName} is connected"
 msgstr "Застосунок {appName} підключено"
 
@@ -518,6 +521,9 @@ msgstr "{field} стає"
 msgid "{filled, plural, one {# filled} other {# filled}}"
 msgstr "{filled, plural, one {заповнено: #} few {заповнено: #} many {заповнено: #} other {заповнено: #}}"
 
+msgid "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+msgstr "{full, plural, one {На # картці} few {На # картках} many {На # картках} other {На # картках}} вже було 20 тегів, тож тег туди не додано."
+
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Запам’ятовування пораховано лише за # повторенням, тож перші кілька тижнів воно може сильно коливатися.} few {Запам’ятовування пораховано лише за # повтореннями, тож перші кілька тижнів воно може сильно коливатися.} many {Запам’ятовування пораховано лише за # повтореннями, тож перші кілька тижнів воно може сильно коливатися.} other {Запам’ятовування пораховано лише за # повторення, тож перші кілька тижнів воно може сильно коливатися.}}"
 
@@ -592,6 +598,9 @@ msgstr "{total, plural, one {# картка} few {# картки} many {# кар
 
 msgid "{total, plural, one {# card} other {# cards}}. Add the deck to review them on your own schedule."
 msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}. Додай колоду, щоб повторювати їх у своєму темпі."
+
+msgid "{total, plural, one {Tags for # card} other {Tags for # cards}}"
+msgstr "{total, plural, one {Теги для # картки} few {Теги для # карток} many {Теги для # карток} other {Теги для # картки}}"
 
 #. placeholder {0}: 30
 #. placeholder {0}: consistency.days.length
@@ -1180,6 +1189,9 @@ msgstr "Змінити мови"
 msgid "Change photo"
 msgstr "Змінити фото"
 
+msgid "Changed the tags on {count, plural, one {# card} other {# cards}}"
+msgstr "{count, plural, one {Теги змінено на # картці} few {Теги змінено на # картках} many {Теги змінено на # картках} other {Теги змінено на # картки}}"
+
 msgid "Changes appear right away and are listed in Activity. You can edit or archive any card."
 msgstr "Зміни з’являються одразу й потрапляють в Активність. Будь-яку картку можна редагувати або архівувати."
 
@@ -1405,6 +1417,9 @@ msgstr "Не вдалося додати колоду. Її більше не о
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Не вдалося скасувати запрошення. Спробуй ще раз."
 
+msgid "Couldn’t change the tags on {failed} of {sent} cards. Try again."
+msgstr "Не вдалося змінити теги на {failed} з {sent} карток. Спробуйте ще раз."
+
 msgid "Couldn’t check for more cards"
 msgstr "Не вдалося перевірити, чи є ще картки"
 
@@ -1554,6 +1569,9 @@ msgstr "Країни, зорі, птахи чи будь-що інше з наз
 
 msgid "Create “{created}”"
 msgstr "Створити «{created}»"
+
+msgid "Create “{typed}”"
+msgstr "Створити «{typed}»"
 
 msgid "Create a deck to add this card to."
 msgstr "Створи колоду, щоб додати в неї цю картку."
@@ -1943,6 +1961,9 @@ msgstr "Фільтр"
 
 msgid "Find a language"
 msgstr "Знайди мову"
+
+msgid "Find or create a tag"
+msgstr "Знайдіть або створіть тег"
 
 msgid "For a test"
 msgstr "Для іспиту"
@@ -2808,6 +2829,9 @@ msgstr "Без розділу"
 
 msgid "No series"
 msgstr "Без серії"
+
+msgid "No tags yet. Type one to create it."
+msgstr "Тегів ще немає. Введіть назву, щоб створити тег."
 
 msgid "Nobody can add it while it is archived."
 msgstr "Поки колода в архіві, її ніхто не може додати."
@@ -3715,8 +3739,14 @@ msgstr "Підтримка"
 msgid "System"
 msgstr "Системна"
 
+msgid "Tag: {tagName}"
+msgstr "Тег: {tagName}"
+
 msgid "Tags"
 msgstr "Теги"
+
+msgid "Tags…"
+msgstr "Теги…"
 
 msgid "Take photo"
 msgstr "Сфотографувати"
@@ -3991,6 +4021,9 @@ msgstr "Цей тест підтверджує, що Lymi може надсил�
 
 msgid "This week"
 msgstr "Цього тижня"
+
+msgid "Tick a tag to put it on every card, or untick it to take it off."
+msgstr "Позначте тег, щоб додати його на всі картки, або зніміть позначку, щоб прибрати."
 
 msgid "Time"
 msgstr "Час"

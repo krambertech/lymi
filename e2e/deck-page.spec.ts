@@ -13,9 +13,10 @@ async function addCard(
   term: string,
   meaning: string,
   sectionId: string,
+  tags: string[] = [],
 ) {
   const res = await page.request.post("/api/cards", {
-    data: { deckId, term, meaning, sectionId, language: "et" },
+    data: { deckId, term, meaning, sectionId, language: "et", tags },
   });
   expect(res.ok()).toBeTruthy();
 }
@@ -41,8 +42,8 @@ test("a learner can filter, sort and open the words in a deck", async ({
     const deckId = ((await res.json()) as { id: string }).id;
     const lesson4 = await addSection(page, deckId, "Lesson 4");
     const lesson5 = await addSection(page, deckId, "Lesson 5");
-    await addCard(page, deckId, "leib · leiva · leiba", "bread", lesson4);
-    await addCard(page, deckId, "piim", "milk", lesson4);
+    await addCard(page, deckId, "leib · leiva · leiba", "bread", lesson4, ["food"]);
+    await addCard(page, deckId, "piim", "milk", lesson4, ["food"]);
     await addCard(page, deckId, "õppima · õppida · õpin", "to study", lesson5);
     await page.goto(`/library/${deckId}`);
 
@@ -60,6 +61,33 @@ test("a learner can filter, sort and open the words in a deck", async ({
     await expect(row("õppima")).toHaveCount(0);
     await page.getByRole("button", { name: "Remove filter: Lesson 4", exact: true }).click();
     await expect(row("õppima")).toBeVisible();
+  });
+
+  await test.step("narrow the list by a tag", async () => {
+    await page.getByRole("button", { name: "Filter", exact: true }).click();
+    await page.getByRole("menuitemcheckbox", { name: "food 2", exact: true }).click();
+    await page.keyboard.press("Escape");
+
+    await expect(row("piim")).toBeVisible();
+    await expect(row("õppima")).toHaveCount(0);
+    await page.getByRole("button", { name: "Remove filter: Tag: food", exact: true }).click();
+    await expect(row("õppima")).toBeVisible();
+  });
+
+  await test.step("put a tag on chosen cards at once", async () => {
+    await page.getByRole("button", { name: "Deck options", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Select cards", exact: true }).click();
+    await row("õppima").click();
+    await page.getByRole("button", { name: "Tags…", exact: true }).click();
+    const dialog = page.getByRole("dialog", { name: "Tags for 1 card" });
+    await dialog.getByRole("checkbox", { name: "food", exact: true }).click();
+    await dialog.getByRole("button", { name: "Save", exact: true }).click();
+    await expect(page.getByText("Changed the tags on 1 card", { exact: true })).toBeVisible();
+
+    await page.reload();
+    await page.getByRole("button", { name: "Filter", exact: true }).click();
+    await expect(page.getByRole("menuitemcheckbox", { name: "food 3", exact: true })).toBeVisible();
+    await page.keyboard.press("Escape");
   });
 
   await test.step("say so when no word matches, and clear back to the deck", async () => {

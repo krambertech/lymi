@@ -254,6 +254,12 @@ export const analyticsEvents = {
     via: z.enum(["suggestion", "typed"]),
     in_use: z.boolean(),
   }),
+  deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
+  cards_tagged: z.object({
+    cards: Backlog,
+    added: z.number().int().min(0),
+    removed: z.number().int().min(0),
+  }),
 } as const;
 export type AnalyticsName = keyof typeof analyticsEvents;
 export type AnalyticsProperties<N extends AnalyticsName> = z.infer<(typeof analyticsEvents)[N]>;
@@ -302,6 +308,8 @@ export const analyticsProducers = {
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser"],
+  deck_filter_added: ["browser"],
+  cards_tagged: ["browser"],
   deck_enrichment_changed: ["worker"],
   deck_purpose_set: ["worker"],
   entry_opened: ["phone"],

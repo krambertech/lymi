@@ -50,6 +50,16 @@ describe("analytics privacy contract", () => {
       eventProperties("tag_added", { via: "suggestion", in_use: true, name: "food" }, "browser"),
     ).toEqual({ via: "suggestion", in_use: true });
     expect(eventProperties("tag_added", { via: "typed", in_use: false }, "worker")).toBeNull();
+    expect(
+      eventProperties(
+        "cards_tagged",
+        { cards: "1-20", added: 1, removed: 0, tags: ["food"] },
+        "browser",
+      ),
+    ).toEqual({ cards: "1-20", added: 1, removed: 0 });
+    expect(eventProperties("deck_filter_added", { kind: "tag", name: "food" }, "browser")).toEqual({
+      kind: "tag",
+    });
   });
   it("bands a backlog and sends an AI call's size without its text", () => {
     expect([0, 1, 20, 21, 100, 101].map(backlogOf)).toEqual([

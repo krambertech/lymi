@@ -86,16 +86,25 @@ export type PreparedLesson = {
 /** How many of the learner's decks the model chooses among, most recently changed first. */
 const DECK_CHOICES = 12;
 
+/** Refuses a read before any upload is processed, so a refused account costs nothing. */
+export async function assertCanReadLessons(
+  ctx: ServiceContext,
+  deps: Pick<LessonDeps, "reader" | "operators">,
+): Promise<LessonReader> {
+  if (!(await lessonAccess(ctx, deps.operators))) {
+    throw new ServiceError("forbidden", "Reading lessons is not available on this account yet.");
+  }
+  if (!deps.reader) throw new ServiceError("unavailable", "Reading lessons is not configured.");
+  return deps.reader;
+}
+
 export async function prepareLesson(
   ctx: ServiceContext,
   material: LessonMaterial,
   deps: LessonDeps,
   choice: { deckId?: string | undefined; hint?: string | undefined } = {},
 ): Promise<PreparedLesson> {
-  if (!(await lessonAccess(ctx, deps.operators))) {
-    throw new ServiceError("forbidden", "Reading lessons is not available on this account yet.");
-  }
-  if (!deps.reader) throw new ServiceError("unavailable", "Reading lessons is not configured.");
+  const reader = await assertCanReadLessons(ctx, deps);
   const { db, userId } = ctx;
 
   const ownDecks = await db
@@ -147,7 +156,7 @@ export async function prepareLesson(
   const pages = material.images.length + material.pdfs.reduce((sum, pdf) => sum + pdfPages(pdf), 0);
   const words = material.text.trim() ? material.text.trim().split(/\s+/).length : 0;
   return {
-    reader: deps.reader,
+    reader,
     pages,
     brief: `${decksBrief(decks, {
       fixed: !!fixed,

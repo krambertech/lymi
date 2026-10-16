@@ -7,6 +7,7 @@ import { decisionModel, termsAgainstAnswer } from "../lessons/keep";
 import type { LessonMaterial } from "../lessons/reader";
 import { createLessonReader } from "../lessons/reader";
 import {
+  assertCanReadLessons,
   type LessonEvent,
   lessonAccess,
   prepareLesson,
@@ -24,6 +25,8 @@ export const lessonReads = new Hono<AppEnv>();
 /** A page wider than this costs more to read and reads no better. */
 const PAGE_SIDE = 1536;
 const MAX_PAGES = 10;
+const MAX_PDFS = 3;
+/** All PDFs together, so the request to the reader stays under Anthropic's 32 MB once encoded. */
 const MAX_PDF_BYTES = 20_000_000;
 const MAX_TEXT = 100_000;
 const MAX_BODY = 60_000_000;
@@ -51,11 +54,18 @@ lessonReads.post(
     errors: [400, 404, 503],
   }),
   async (c) => {
+    const deps = {
+      reader: createLessonReader(c.env),
+      ai: decisionModel(c.env),
+      operators: operatorEmails(c.env),
+    };
+    await assertCanReadLessons(ctxOf(c), deps);
     const declared = Number(c.req.header("content-length") ?? Number.NaN);
     if (!Number.isFinite(declared) || declared > MAX_BODY) {
-      throw new ServiceError("invalid", "Send at most 10 pages and one PDF under 20 MB.");
+      throw new ServiceError("invalid", "Send at most 10 photos and 3 PDFs under 20 MB in all.");
     }
     const form = await c.req.formData();
+    let pdfBytes = 0;
     const material: LessonMaterial = { images: [], pdfs: [], text: "" };
     const text = form.get("text");
     if (typeof text === "string") material.text = text.slice(0, MAX_TEXT);
@@ -63,8 +73,9 @@ lessonReads.post(
       if (!(file instanceof File)) continue;
       const bytes = new Uint8Array(await file.arrayBuffer());
       if (isPdf(bytes)) {
-        if (bytes.byteLength > MAX_PDF_BYTES)
-          throw new ServiceError("invalid", "Send a PDF under 20 MB.");
+        pdfBytes += bytes.byteLength;
+        if (material.pdfs.length >= MAX_PDFS || pdfBytes > MAX_PDF_BYTES)
+          throw new ServiceError("invalid", "Send at most 3 PDFs under 20 MB in all.");
         material.pdfs.push(bytes);
         continue;
       }
@@ -76,11 +87,6 @@ lessonReads.post(
     if (!material.text.trim() && material.images.length === 0 && material.pdfs.length === 0) {
       throw new ServiceError("invalid", "Paste the lesson or add a photo or PDF of it.");
     }
-    const deps = {
-      reader: createLessonReader(c.env),
-      ai: decisionModel(c.env),
-      operators: operatorEmails(c.env),
-    };
     // Refusals happen here, before the stream opens, so they arrive as ordinary errors.
     const deckId = form.get("deckId");
     const hint = form.get("hint");

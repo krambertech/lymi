@@ -28,7 +28,7 @@ export type TextRequest = {
 
 /** One model call's size and time, for cost; it never carries the prompt or the reply. */
 export type TextCall = {
-  provider: "openai";
+  provider: "openai" | "anthropic";
   model: string;
   inputTokens: number;
   outputTokens: number;

@@ -2,7 +2,8 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import type { Db } from "../db";
 import type { DecisionModel } from "../lessons/keep";
 import { questionLimit } from "../lessons/prompt";
-import type { LessonMaterial, LessonReader } from "../lessons/reader";
+import { type LessonMaterial, type LessonReader, LessonReaderError } from "../lessons/reader";
+import type { AnalyticsEvent } from "./analytics";
 import { addCards } from "./cards";
 import { createDeck } from "./decks";
 import { readLesson } from "./lessons";
@@ -133,6 +134,75 @@ describe("readLesson", () => {
       operators: new Set(["lesson-offline@lymi.test"]),
     });
     expect(read.terms[0]).toMatchObject({ keep: null, ticked: true });
+  });
+});
+
+describe("reporting a read", () => {
+  it("reports the read's outcome and cost, and a failed call as an error", async () => {
+    const who = await learner(db, "lesson-counted", "Kateryna");
+    const events: AnalyticsEvent[] = [];
+    const ctx = {
+      ...who,
+      analytics: { writeDataPoint: () => {}, capture: (e: AnalyticsEvent) => events.push(e) },
+    };
+    const operators = new Set(["lesson-counted@lymi.test"]);
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    await addCards(ctx, [
+      { deckId: deck.id, term: "küsima", meaning: "спрашивать", enrich: false },
+    ]);
+    events.length = 0;
+
+    await readLesson(ctx, material, {
+      reader: fakeReader({
+        deck: deck.id,
+        terms: [term("t1", "jooma · juua · joon"), term("t2", "küsima")],
+        questions: [
+          {
+            question: "Marked only?",
+            options: [
+              { label: "All", drop: [] },
+              { label: "Marked", drop: ["t1"] },
+            ],
+            default: 0,
+          },
+        ],
+      }),
+      ai: undefined,
+      operators,
+    });
+    expect(events).toContainEqual({
+      name: "lesson_read",
+      pages: 0,
+      pasted: true,
+      deck: "guessed",
+      terms: 2,
+      ticked: 1,
+      existing: 1,
+      questions: 1,
+    });
+    expect(events).toContainEqual(
+      expect.objectContaining({
+        name: "$ai_generation",
+        $ai_span_name: "lesson_read",
+        $ai_provider: "anthropic",
+        $ai_input_tokens: 1000,
+        $ai_output_tokens: 200,
+        $ai_is_error: false,
+      }),
+    );
+
+    events.length = 0;
+    const failing: LessonReader = {
+      model: "claude-haiku-5-5",
+      async stream() {
+        throw new LessonReaderError("overloaded", { status: 529 });
+      },
+    };
+    await expect(
+      readLesson(ctx, material, { reader: failing, ai: undefined, operators }),
+    ).rejects.toThrow();
+    expect(events.map((e) => e.name)).toEqual(["$ai_generation"]);
+    expect(events[0]).toMatchObject({ $ai_is_error: true, $ai_http_status: 529 });
   });
 });
 

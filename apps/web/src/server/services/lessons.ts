@@ -1,5 +1,6 @@
 import type { LessonEventOut, LessonReadOut } from "@lymi/core";
 import { normaliseTerm } from "@lymi/core";
+import { textCallCost } from "@lymi/core/analytics";
 import { and, desc, eq, isNull } from "@lymi/core/db";
 import type { z } from "zod";
 import { schema } from "../db";
@@ -11,8 +12,14 @@ import {
   Reply,
   replySchema,
 } from "../lessons/prompt";
-import { type LessonMaterial, type LessonReader, PRICES } from "../lessons/reader";
+import {
+  type LessonMaterial,
+  type LessonReader,
+  LessonReaderError,
+  type LessonUsage,
+} from "../lessons/reader";
 import { TermsStream } from "../lessons/terms-stream";
+import { type AnalyticsWriter, textCallReporter, track } from "./analytics";
 import type { ServiceContext } from "./context";
 import { notFound, ServiceError } from "./context";
 import { getSettings } from "./settings";
@@ -72,6 +79,8 @@ export type PreparedLesson = {
   deckRule: string;
   byKey: Map<string, Owned>;
   byHead: Map<string, Owned>;
+  analytics: AnalyticsWriter | undefined;
+  pasted: boolean;
 };
 
 /** How many of the learner's decks the model chooses among, most recently changed first. */
@@ -154,6 +163,8 @@ export async function prepareLesson(
       "One card per term; inflected forms, imperatives and request formulas belong to their word's card",
     byKey: new Map(owned.map((c) => [c.key, c])),
     byHead: new Map(owned.map((c) => [headForm(c.key), c])),
+    analytics: ctx.analytics,
+    pasted: words > 0,
   };
 }
 
@@ -170,6 +181,8 @@ export async function streamLesson(
   const stream = new TermsStream();
   const seen = new Set<string>();
   const ids = new Set<string>();
+  let ticked = 0;
+  let existing = 0;
   // Each term waits for its own score and for the term before it, so the list keeps the page's order.
   let queue = Promise.resolve();
 
@@ -207,6 +220,8 @@ export async function streamLesson(
         formOf: match(head),
       };
       ids.add(t.id);
+      if (term.ticked) ticked++;
+      if (exact || head) existing++;
       emit({ type: "term", term });
     });
   };
@@ -223,12 +238,36 @@ export async function streamLesson(
   };
   if (lesson.fixed) announce(lesson.fixed);
 
-  const usage = await lesson.reader.stream(material, lesson.brief, lesson.schema, (text) => {
-    if (!deck) {
-      const chosen = /"deck"\s*:\s*"([^"]+)"/.exec(stream.all + text)?.[1];
-      if (chosen && lesson.decks.has(chosen)) announce(chosen);
-    }
-    for (const raw of stream.push(text)) take(raw);
+  const report = textCallReporter(lesson.analytics, "lesson_read");
+  const started = Date.now();
+  let usage: LessonUsage;
+  try {
+    usage = await lesson.reader.stream(material, lesson.brief, lesson.schema, (text) => {
+      if (!deck) {
+        const chosen = /"deck"\s*:\s*"([^"]+)"/.exec(stream.all + text)?.[1];
+        if (chosen && lesson.decks.has(chosen)) announce(chosen);
+      }
+      for (const raw of stream.push(text)) take(raw);
+    });
+  } catch (error) {
+    report({
+      provider: "anthropic",
+      model: lesson.reader.model,
+      inputTokens: 0,
+      outputTokens: 0,
+      latencyMs: Date.now() - started,
+      error: true,
+      status: error instanceof LessonReaderError ? error.status : undefined,
+    });
+    throw error;
+  }
+  report({
+    provider: "anthropic",
+    model: usage.model,
+    inputTokens: usage.inputTokens,
+    outputTokens: usage.outputTokens,
+    latencyMs: usage.ms,
+    error: false,
   });
   if (!deck) announce(lesson.fallback);
   await queue;
@@ -243,9 +282,10 @@ export async function streamLesson(
   if (!reply && ids.size === 0)
     throw new ServiceError("unavailable", "The lesson could not be read. Try again.");
 
+  const questions = (reply?.questions ?? []).slice(0, 5);
   emit({
     type: "questions",
-    questions: (reply?.questions ?? []).slice(0, 5).map((q, i) => ({
+    questions: questions.map((q, i) => ({
       id: `q${i + 1}`,
       question: q.question,
       options: q.options.map((o) => ({ label: o.label, drop: o.drop.filter((id) => ids.has(id)) })),
@@ -253,7 +293,17 @@ export async function streamLesson(
     })),
   });
 
-  const price = PRICES[usage.model] ?? { input: 0, output: 0 };
+  const cost = textCallCost(usage.model, { input: usage.inputTokens, output: usage.outputTokens });
+  track(lesson.analytics, {
+    name: "lesson_read",
+    pages: lesson.pages,
+    pasted: lesson.pasted,
+    deck: lesson.fixed ? "fixed" : "guessed",
+    terms: ids.size,
+    ticked,
+    existing,
+    questions: questions.length,
+  });
   emit({
     type: "done",
     pages: lesson.pages,
@@ -261,7 +311,7 @@ export async function streamLesson(
       model: usage.model,
       inputTokens: usage.inputTokens,
       outputTokens: usage.outputTokens,
-      costUsd: (usage.inputTokens * price.input + usage.outputTokens * price.output) / 1e6,
+      costUsd: cost ? cost.input + cost.output : 0,
       ms: usage.ms,
     },
   });

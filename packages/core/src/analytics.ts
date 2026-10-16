@@ -98,9 +98,10 @@ export function backlogOf(due: number): Backlog {
 /** Added to a reminder's link so the app it opens can say a reminder brought the learner. */
 export const REMINDER_ENTRY = { key: "lymi_entry", value: "reminder" } as const;
 
-/** USD per million tokens, from OpenAI's price list, so a call's cost never waits on PostHog's table. */
+/** USD per million tokens, from the vendors' price lists, so a call's cost never waits on PostHog's table. */
 const TEXT_PRICES: Record<string, { input: number; cachedInput: number; output: number }> = {
   "gpt-6-luna": { input: 0.1, cachedInput: 0.01, output: 0.5 },
+  "claude-haiku-5-5": { input: 0.1, cachedInput: 0.01, output: 0.5 },
 };
 
 /** A text call's cost in USD, or nothing for a model without a known price. */
@@ -224,12 +225,21 @@ export const analyticsEvents = {
     created: z.boolean(),
     channel: z.enum(["app", "api", "mcp"]),
   }),
+  lesson_read: z.object({
+    pages: count,
+    pasted: z.boolean(),
+    deck: z.enum(["fixed", "guessed"]),
+    terms: count,
+    ticked: count,
+    existing: count,
+    questions: count,
+  }),
   // PostHog's LLM analytics shape, without $ai_input or $ai_output_choices: no prompt or reply leaves.
   $ai_generation: z.object({
     $ai_trace_id: z.uuid(),
     $ai_session_id: z.null(),
-    $ai_span_name: z.enum(["enrich", "hook", "import_languages", "deck_choice"]),
-    $ai_provider: z.literal("openai"),
+    $ai_span_name: z.enum(["enrich", "hook", "import_languages", "deck_choice", "lesson_read"]),
+    $ai_provider: z.enum(["openai", "anthropic"]),
     $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),
     $ai_input_tokens: tokens,
     $ai_output_tokens: tokens,
@@ -295,6 +305,7 @@ export const analyticsProducers = {
   deck_joined: ["worker"],
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
+  lesson_read: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   deck_enrichment_changed: ["worker"],

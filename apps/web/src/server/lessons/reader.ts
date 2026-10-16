@@ -34,19 +34,16 @@ export interface LessonReader {
 }
 
 export class LessonReaderError extends Error {
-  constructor(message: string, options?: ErrorOptions) {
+  constructor(message: string, options?: ErrorOptions & { status?: number }) {
     super(message, options);
     this.name = "LessonReaderError";
+    this.status = options?.status;
   }
+  readonly status: number | undefined;
 }
 
 /** Haiku 5.5 at low effort read the owner's lessons best in the October 2026 bake-off. */
 const DEFAULT_MODEL = "claude-haiku-5-5";
-
-/** Per million tokens, for the cost each run records. */
-export const PRICES: Record<string, { input: number; output: number }> = {
-  "claude-haiku-5-5": { input: 0.1, output: 0.5 },
-};
 
 export function createLessonReader(
   env: LessonReaderBindings,
@@ -102,6 +99,7 @@ export function createLessonReader(
         const detail = await response.text().catch(() => "");
         throw new LessonReaderError(
           `The lesson reader failed (${response.status}) ${detail.slice(0, 200)}`,
+          { status: response.status },
         );
       }
 

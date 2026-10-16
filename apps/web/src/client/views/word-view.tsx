@@ -840,13 +840,17 @@ export function WordView({
                 {item.kind === "review" ? (
                   <GradeMark rating={item.review.rating} className="row-span-2 self-start" />
                 ) : (
-                  <Mark icon={eventIcon[item.event.kind]} className="row-span-2 self-start" />
+                  <Mark
+                    icon={eventIcon[item.event.kind]}
+                    iconClass="text-text-2"
+                    className="row-span-2 self-start"
+                  />
                 )}
                 <p className="min-w-0 break-words text-base">
                   {item.kind === "review" ? (
                     <span className="font-medium">{gradeLabel(item.review.rating)}</span>
                   ) : (
-                    <span className="text-text-2">{item.event.text}</span>
+                    <span>{item.event.text}</span>
                   )}
                 </p>
                 <span className="whitespace-nowrap text-sm text-muted">{dayLabel(item.at)}</span>

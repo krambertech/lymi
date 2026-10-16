@@ -95,3 +95,27 @@ it("keeps a Hermes frame's bundle name and chunk ID for the phone's source maps"
   });
   expect(JSON.stringify(sanitized)).not.toContain("private");
 });
+
+it("keeps a runtime's network or chunk failure message without the address it names", () => {
+  const sanitize = (value: string) =>
+    exceptionProperties({ $exception_list: [{ type: "TypeError", value }] }).$exception_list as {
+      value: string;
+    }[];
+  const values = [
+    "Load failed",
+    "Failed to fetch (my.lymi.app)",
+    "Failed to fetch dynamically imported module: https://my.lymi.app/assets/private.js",
+    "Importing a module script failed.",
+    "Load failed because of a private card",
+    "Failed to fetchprivate",
+  ].map(sanitize);
+  expect(values.map((list) => list[0]?.value)).toEqual([
+    "Load failed",
+    "Failed to fetch",
+    "Failed to fetch dynamically imported module",
+    "Importing a module script failed.",
+    "Unexpected error",
+    "Unexpected error",
+  ]);
+  expect(JSON.stringify(values)).not.toContain("private");
+});

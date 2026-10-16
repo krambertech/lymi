@@ -15,6 +15,26 @@ const ERROR_TYPES = new Set([
   "WorkflowError",
 ]);
 
+// Runtime-written messages that name a network or chunk failure, kept without the address they name.
+const KNOWN_MESSAGES: [RegExp, string][] = [
+  [/^Load failed$/, "Load failed"],
+  [/^Failed to fetch(?: \([^)]*\))?$/, "Failed to fetch"],
+  [
+    /^NetworkError when attempting to fetch resource\.$/,
+    "NetworkError when attempting to fetch resource.",
+  ],
+  [/^Network request failed$/, "Network request failed"],
+  [/^Importing a module script failed\.$/, "Importing a module script failed."],
+  [/^Failed to fetch dynamically imported module: /, "Failed to fetch dynamically imported module"],
+  [/^error loading dynamically imported module: /, "error loading dynamically imported module"],
+  [/^Unable to preload CSS for /, "Unable to preload CSS"],
+];
+
+function knownMessage(value: unknown): string {
+  if (typeof value !== "string") return "Unexpected error";
+  return KNOWN_MESSAGES.find(([pattern]) => pattern.test(value))?.[1] ?? "Unexpected error";
+}
+
 const CHUNK_ID = /^[A-Za-z0-9-]{1,64}$/;
 
 function scriptFilename(value: unknown): string | undefined {
@@ -46,7 +66,7 @@ export function exceptionProperties(properties: Record<string, unknown>): Record
           typeof exception.type === "string" && ERROR_TYPES.has(exception.type)
             ? exception.type
             : "Error",
-        value: "Unexpected error",
+        value: knownMessage(exception.value),
         mechanism: {
           type: "generic",
           handled: record(exception.mechanism).handled === true,

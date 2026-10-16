@@ -2,13 +2,13 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type DeckSummary, errorMessage, type Series } from "@lymi/client/api";
 import { groupDecks } from "@lymi/client/library-groups";
-import * as Haptics from "expo-haptics";
 import { type Href, useRouter } from "expo-router";
 import { Alert, View } from "react-native";
 import { languageName } from "../../../data/languages";
 import { useArchivedDecks, useDecks, useSeriesList } from "../../../data/queries";
 import { useSeriesActions } from "../../../data/series";
 import { useOnline } from "../../../streak/goal-picker";
+import { haptics } from "../../../theme/haptics";
 import { usePalette } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
@@ -135,7 +135,7 @@ function SeriesGroup({
   const cards = decks.reduce((n, d) => n + d.total, 0);
   const due = decks.reduce((n, d) => n + d.due, 0);
   const review = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    haptics.start();
     router.push(`/review?series=${s.id}`);
   };
   const seriesName = s.name;
@@ -274,7 +274,7 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
   const due = d.total > 0 ? d.due : undefined;
   const href = `/library/${d.id}` as const;
   const review = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    haptics.start();
     router.push(`/review?deck=${d.id}`);
   };
   return (

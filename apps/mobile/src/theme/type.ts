@@ -1,4 +1,4 @@
-import { I18nManager, type TextProps } from "react-native";
+import { I18nManager, Platform, type TextProps } from "react-native";
 
 type Ramp = NonNullable<TextProps["dynamicTypeRamp"]>;
 
@@ -113,3 +113,9 @@ export const MULTILINE = {
 
 /** Text set to the end of its box. React Native ignores `text-end`, so the side follows the layout direction here. */
 export const TEXT_END = { textAlign: I18nManager.isRTL ? "left" : "right" } as const;
+
+/**
+ * How far an inline view's centre is lifted on a line, in em, so a button after a word sits on its
+ * letters: Android stands inline views lower on the line than iOS does, so it lifts them less.
+ */
+export const INLINE_LIFT = Platform.OS === "android" ? 0.32 : 0.43;

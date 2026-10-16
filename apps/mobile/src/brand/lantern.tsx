@@ -30,7 +30,7 @@ import {
   vec,
 } from "@shopify/react-native-skia";
 import { useEffect, useRef } from "react";
-import { StyleSheet, View, type ViewStyle } from "react-native";
+import { Platform, StyleSheet, View, type ViewStyle } from "react-native";
 import {
   Easing,
   interpolate,
@@ -56,6 +56,11 @@ const SPRING = {
 
 /** The flicker's loop, which the halo breathes on too. */
 export const FLICKER_MS = 2600;
+/**
+ * Android paints a Skia canvas's first frame some frames after its views, so what must cover the
+ * screen from the first frame, such as the splash's room, is drawn by a view underneath there too.
+ */
+export const CANVAS_PAINTS_LATE = Platform.OS === "android";
 /** Long enough for a set's last ember to leave and fade. */
 const SPARK_MS = 1000;
 /** The canvas spills past the box by this share of it, so the halo and the sparks are never cut. */
@@ -228,6 +233,9 @@ export function Lantern({
       pointerEvents="none"
     >
       <Canvas
+        // Android draws a canvas's first frame only after a delay otherwise, which leaves the splash
+        // and the lantern it lands on blank for a moment.
+        androidWarmup
         style={
           place
             ? StyleSheet.absoluteFill

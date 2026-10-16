@@ -26,6 +26,20 @@ jobs:
         id: eas
         run: node scripts/phone-release.mjs ready
 
+      # eas-cli evaluates app.json, whose config plugins need the app's dependencies.
+      - uses: pnpm/action-setup@v4
+        if: steps.eas.outputs.ready == 'true'
+
+      - uses: actions/setup-node@v5
+        if: steps.eas.outputs.ready == 'true'
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        if: steps.eas.outputs.ready == 'true'
+        run: pnpm install --frozen-lockfile
+
       - name: Create the beta and production channels a fresh project lacks
         if: steps.eas.outputs.ready == 'true'
         run: node scripts/phone-release.mjs channels

@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { BookMarked, PenLine, Plus } from "lucide-react";
+import { BookMarked, PenLine, Plus, Sparkles } from "lucide-react";
 import { IconButton } from "./button";
 import {
   DropdownMenu,
@@ -17,12 +17,15 @@ import {
 export function AddMenu({
   onAddCard,
   onCreateDeck,
+  onSmartAdd,
   size = "md",
   align = "start",
   variant = "primary",
 }: {
   onAddCard: () => void;
   onCreateDeck?: (() => void) | undefined;
+  /** Reading a lesson into cards; absent while the account cannot use it. */
+  onSmartAdd?: (() => void) | undefined;
   size?: "sm" | "md" | undefined;
   align?: "start" | "end" | undefined;
   variant?: "primary" | "secondary" | undefined;
@@ -47,6 +50,12 @@ export function AddMenu({
           <BookMarked aria-hidden="true" />
           <Trans>New deck</Trans>
         </DropdownMenuItem>
+        {onSmartAdd && (
+          <DropdownMenuItem onClick={onSmartAdd}>
+            <Sparkles aria-hidden="true" />
+            <Trans>Smart add</Trans>
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

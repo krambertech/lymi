@@ -19,11 +19,13 @@ import {
   ListFilter,
   LogOut,
   MoreHorizontal,
+  PenLine,
   Plug,
   Plus,
   Search,
   Settings2,
   Signpost,
+  Sparkles,
   SquareCheck,
   X,
 } from "lucide-react";
@@ -133,6 +135,8 @@ export interface DeckDetailProps {
 /** What the owner does to the deck and its cards; the route holds the sheets and dialogs. */
 export interface DeckOwnerActions {
   onAddCard: () => void;
+  /** Reading a lesson into cards; absent while the account cannot use it. */
+  onSmartAdd?: (() => void) | undefined;
   onArchiveCard: (id: string) => void;
   onEditCard: (card: DeckRow["card"]) => void;
   /** Asks the AI to fill a card's empty fields. */
@@ -870,11 +874,33 @@ export function DeckDetailView({
     />
   );
 
-  const addButton = owner && (
-    <IconButton label={t`Add card`} onClick={owner.onAddCard}>
-      <Plus />
-    </IconButton>
-  );
+  const addButton =
+    owner &&
+    (owner.onSmartAdd ? (
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <IconButton label={t`Add`}>
+              <Plus />
+            </IconButton>
+          }
+        />
+        <DropdownMenuContent aria-label={t`Add`} align="end">
+          <DropdownMenuItem onClick={owner.onAddCard}>
+            <PenLine />
+            <Trans>New card</Trans>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={owner.onSmartAdd}>
+            <Sparkles />
+            <Trans>Smart add</Trans>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    ) : (
+      <IconButton label={t`Add card`} onClick={owner.onAddCard}>
+        <Plus />
+      </IconButton>
+    ));
 
   const deckMenu = (
     <DropdownMenu>

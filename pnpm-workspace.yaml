@@ -23,3 +23,5 @@ packageExtensions:
 # apple-targets 5.0.0 takes expo-widgets' extension for its own target; the patch matches by name only.
 patchedDependencies:
   "@bacons/apple-targets@5.0.0": patches/@bacons__apple-targets@5.0.0.patch
+  # @expo/ui 57.0.25 snaps a fitted sheet to each new height; the patch glides it through UIKit.
+  "@expo/ui@57.0.25": patches/@expo__ui@57.0.25.patch

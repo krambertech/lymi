@@ -559,6 +559,9 @@ msgstr "{full, plural, one {# card} other {# cards}} already had 20 tags, so a t
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 
+msgid "{hours, plural, one {You can add more lessons in # hour.} other {You can add more lessons in # hours.}}"
+msgstr "{hours, plural, one {You can add more lessons in # hour.} other {You can add more lessons in # hours.}}"
+
 msgid "{known, plural, one {# card you know in {app} comes in as Known, so it doesn’t start over.} other {# cards you know in {app} come in as Known, so they don’t start over.}}"
 msgstr "{known, plural, one {# card you know in {app} comes in as Known, so it doesn’t start over.} other {# cards you know in {app} come in as Known, so they don’t start over.}}"
 
@@ -574,14 +577,17 @@ msgstr "{label}, next in {schedules}"
 msgid "{left, plural, one {# character left} other {# characters left}}"
 msgstr "{left, plural, one {# character left} other {# characters left}}"
 
-msgid "{left, plural, one {# of {limit} lessons left today} other {# of {limit} lessons left today}}"
-msgstr "{left, plural, one {# of {limit} lessons left today} other {# of {limit} lessons left today}}"
-
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
 
 msgid "{limit, plural, one {Smart add is in beta, so it reads up to # lesson a day.} other {Smart add is in beta, so it reads up to # lessons a day.}} A lesson it couldn’t read doesn’t count, and the count starts again at midnight."
 msgstr "{limit, plural, one {Smart add is in beta, so it reads up to # lesson a day.} other {Smart add is in beta, so it reads up to # lessons a day.}} A lesson it couldn’t read doesn’t count, and the count starts again at midnight."
+
+msgid "{limit, plural, one {You’ve used today’s # lesson} other {You’ve used today’s # lessons}}"
+msgstr "{limit, plural, one {You’ve used today’s # lesson} other {You’ve used today’s # lessons}}"
+
+msgid "{minutes, plural, one {You can add more lessons in # minute.} other {You can add more lessons in # minutes.}}"
+msgstr "{minutes, plural, one {You can add more lessons in # minute.} other {You can add more lessons in # minutes.}}"
 
 msgid "{months, plural, one {# month} other {# months}}"
 msgstr "{months, plural, one {# month} other {# months}}"
@@ -3020,9 +3026,6 @@ msgstr "No language"
 
 msgid "No language by that name. Type its tag to use it anyway."
 msgstr "No language by that name. Type its tag to use it anyway."
-
-msgid "No lessons left today. More after midnight."
-msgstr "No lessons left today. More after midnight."
 
 msgid "No meaning"
 msgstr "No meaning"

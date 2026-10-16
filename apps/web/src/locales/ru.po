@@ -559,6 +559,9 @@ msgstr "{full, plural, one {На # карточке} few {На # карточк�
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Показатель запоминания основан всего на # повторении, поэтому первые несколько недель он может сильно колебаться.} few {Показатель запоминания основан всего на # повторениях, поэтому первые несколько недель он может сильно колебаться.} many {Показатель запоминания основан всего на # повторениях, поэтому первые несколько недель он может сильно колебаться.} other {Показатель запоминания основан всего на # повторения, поэтому первые несколько недель он может сильно колебаться.}}"
 
+msgid "{hours, plural, one {You can add more lessons in # hour.} other {You can add more lessons in # hours.}}"
+msgstr "{hours, plural, one {Новые уроки можно добавить через # час.} few {Новые уроки можно добавить через # часа.} many {Новые уроки можно добавить через # часов.} other {Новые уроки можно добавить через # часа.}}"
+
 msgid "{known, plural, one {# card you know in {app} comes in as Known, so it doesn’t start over.} other {# cards you know in {app} come in as Known, so they don’t start over.}}"
 msgstr "{known, plural, one {# карточка, которую ты знаешь в {app}, сразу будет выученной и не начнётся с нуля.} few {# карточки, которые ты знаешь в {app}, сразу будут выученными и не начнутся с нуля.} many {# карточек, которые ты знаешь в {app}, сразу будут выученными и не начнутся с нуля.} other {# карточки, которые ты знаешь в {app}, сразу будут выученными и не начнутся с нуля.}}"
 
@@ -574,14 +577,17 @@ msgstr "{label}, дальше через {schedules}"
 msgid "{left, plural, one {# character left} other {# characters left}}"
 msgstr "{left, plural, one {остался # символ} few {осталось # символа} many {осталось # символов} other {осталось # символа}}"
 
-msgid "{left, plural, one {# of {limit} lessons left today} other {# of {limit} lessons left today}}"
-msgstr "{left, plural, one {Сегодня остался # урок из {limit}} few {Сегодня осталось # урока из {limit}} many {Сегодня осталось # уроков из {limit}} other {Сегодня осталось # урока из {limit}}}"
-
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "До сегодняшней цели: {left, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
 msgid "{limit, plural, one {Smart add is in beta, so it reads up to # lesson a day.} other {Smart add is in beta, so it reads up to # lessons a day.}} A lesson it couldn’t read doesn’t count, and the count starts again at midnight."
 msgstr "{limit, plural, one {Умное добавление в бета-версии, поэтому читает до # урока в день.} few {Умное добавление в бета-версии, поэтому читает до # уроков в день.} many {Умное добавление в бета-версии, поэтому читает до # уроков в день.} other {Умное добавление в бета-версии, поэтому читает до # урока в день.}} Урок, который не удалось прочитать, не считается, а счёт начинается заново в полночь."
+
+msgid "{limit, plural, one {You’ve used today’s # lesson} other {You’ve used today’s # lessons}}"
+msgstr "{limit, plural, one {На сегодня использован # урок} few {На сегодня использованы все # урока} many {На сегодня использованы все # уроков} other {На сегодня использовано # урока}}"
+
+msgid "{minutes, plural, one {You can add more lessons in # minute.} other {You can add more lessons in # minutes.}}"
+msgstr "{minutes, plural, one {Новые уроки можно добавить через # минуту.} few {Новые уроки можно добавить через # минуты.} many {Новые уроки можно добавить через # минут.} other {Новые уроки можно добавить через # минуты.}}"
 
 msgid "{months, plural, one {# month} other {# months}}"
 msgstr "{months, plural, one {# месяц} few {# месяца} many {# месяцев} other {# месяца}}"
@@ -3020,9 +3026,6 @@ msgstr "Без языка"
 
 msgid "No language by that name. Type its tag to use it anyway."
 msgstr "Языка с таким названием нет. Введи его тег, чтобы всё равно использовать."
-
-msgid "No lessons left today. More after midnight."
-msgstr "Лимит уроков на сегодня исчерпан. Снова можно после полуночи."
 
 msgid "No meaning"
 msgstr "Без значения"

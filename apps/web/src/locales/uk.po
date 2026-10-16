@@ -737,7 +737,7 @@ msgid "A sound-alike, or something to picture"
 msgstr "Співзвучне слово або те, що можна уявити"
 
 msgid "A subject"
-msgstr "Тему"
+msgstr "Тема"
 
 msgid "A subject or exam"
 msgstr "Предмет або іспит"

@@ -29,9 +29,7 @@ import { Overlay } from "./overlay";
 import { Press, Text } from "./primitives";
 import { BarButton } from "./screen";
 
-// Android's counterpart of action-menu.tsx: Lymi draws the menu itself, as the web's dropdown, since
-// Material's own takes neither Onest nor Lucide. It grows out of the corner nearest its button, in
-// the overlay over every screen, frosted over them as the web's glass is. phone.md "Menus".
+// Android's counterpart of action-menu.tsx, drawn by Lymi as the web's frosted dropdown since Material's takes neither Onest nor Lucide; phone.md "Menus".
 
 const TRIGGERS = { ellipsis: "more", plus: "plus" } as const satisfies Record<string, IconName>;
 /** The web's menu: at least 12rem wide, with the screen's 16 pt kept clear around it. */
@@ -52,12 +50,18 @@ interface ActionMenuProps {
 }
 
 type Anchor = { x: number; y: number; w: number; h: number };
-type Open = { at: Anchor; items: MenuItem[] | MenuItem[][]; onClosed: () => void };
+type Open = {
+  owner: object;
+  at: Anchor;
+  items: MenuItem[] | MenuItem[][];
+  onClosed: () => void;
+};
 
 // The one open menu, drawn by MenuHost at the root, so it sits over every screen in their window.
 let open: Open | null = null;
 const listeners = new Set<() => void>();
 const setOpen = (next: Open | null) => {
+  if (open && open.owner !== next?.owner) open.onClosed();
   open = next;
   for (const l of listeners) l();
 };
@@ -76,14 +80,20 @@ export function ActionMenu({
   const p = usePalette();
   const anchor = useRef<View>(null);
   const [expanded, setExpanded] = useState(false);
+  const owner = useRef({}).current;
   const icon = TRIGGERS[symbol];
   const show = () =>
     anchor.current?.measureInWindow((x, y, w, h) => {
       setExpanded(true);
-      setOpen({ at: { x, y, w, h }, items, onClosed: () => setExpanded(false) });
+      setOpen({ owner, at: { x, y, w, h }, items, onClosed: () => setExpanded(false) });
     });
-  // A menu whose button goes, with its screen, goes too.
-  useEffect(() => () => setOpen(null), []);
+  // A menu whose button goes, with its screen, goes too; another button's stays.
+  useEffect(
+    () => () => {
+      if (open?.owner === owner) setOpen(null);
+    },
+    [owner],
+  );
   return (
     <>
       <View ref={anchor} collapsable={false}>
@@ -119,14 +129,7 @@ export function MenuHost() {
   if (!menu) return null;
   return (
     <Overlay>
-      <Popover
-        at={menu.at}
-        items={menu.items}
-        onClose={() => {
-          setOpen(null);
-          menu.onClosed();
-        }}
-      />
+      <Popover at={menu.at} items={menu.items} onClose={() => setOpen(null)} />
     </Overlay>
   );
 }
@@ -152,7 +155,11 @@ function Popover({
     opacity: shown.value,
     transform: [{ scale: reduce ? 1 : 0.94 + 0.06 * shown.value }],
   }));
+  // One close runs once, however many taps or Backs ask for it during the fade.
+  const leaving = useRef(false);
   const leave = (then?: () => void) => {
+    if (leaving.current) return;
+    leaving.current = true;
     const gone = () => {
       onClose();
       then?.();

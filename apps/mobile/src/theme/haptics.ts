@@ -1,9 +1,7 @@
 import * as Haptics from "expo-haptics";
 import { Platform } from "react-native";
 
-// Every haptic in the app, by the moment it marks rather than by how it feels: docs/design/system/phone.md
-// "Haptics" lists them. iOS plays its taps; Android plays its own constants, which follow the phone's
-// haptics setting, and leaves ordinary presses still, as Material's controls do.
+// Every haptic by the moment it marks, iOS's taps and Android's own constants, as phone.md "Haptics" lists them.
 
 const android = Platform.OS === "android";
 const quiet = () => undefined;

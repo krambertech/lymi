@@ -12,19 +12,20 @@ import { Grabber } from "./grabber";
 import type { SheetFrameProps } from "./sheet-frame";
 import { afterWindowFocus } from "./window-focus";
 
-/**
- * Android's sheet: Material's modal bottom sheet in the room's colours, which swipes, scrim-taps and
- * Back away. It is mounted only while shown, and closing from the app slides it down before it goes.
- */
+/** Android's sheet: Material's modal bottom sheet in the room's colours, mounted only while shown and slid away before it goes. */
 export function SheetFrame({ open, onOpenChange, onDismiss, expands, children }: SheetFrameProps) {
   const p = usePalette();
   const room = useRoom();
   const { width } = useWindowDimensions();
   const ref = useRef<ModalBottomSheetRef>(null);
   const [shown, setShown] = useState(open);
+  // A new sheet each time it reopens while still sliding away, since a hidden sheet does not rise again.
+  const [mount, setMount] = useState(0);
   // A slide the app started and a swipe can both end the sheet; only the first one counts.
   const live = useRef(open);
   const left = useRef(false);
+  const closing = useRef(0);
+  const sliding = useRef(false);
   const gone = () => {
     if (!live.current) return;
     live.current = false;
@@ -33,10 +34,20 @@ export function SheetFrame({ open, onOpenChange, onDismiss, expands, children }:
   };
   // biome-ignore lint/correctness/useExhaustiveDependencies: only a change of `open` moves the sheet.
   useEffect(() => {
+    const id = ++closing.current;
     if (!open) {
-      if (live.current) void ref.current?.hide().then(gone);
+      if (!live.current) return;
+      const finish = () => {
+        sliding.current = false;
+        if (closing.current === id) gone();
+      };
+      const sheet = ref.current;
+      sliding.current = !!sheet;
+      if (sheet) void sheet.hide().then(finish, finish);
+      else finish();
       return;
     }
+    if (sliding.current) setMount((m) => m + 1);
     live.current = true;
     setShown(true);
   }, [open]);
@@ -52,6 +63,7 @@ export function SheetFrame({ open, onOpenChange, onDismiss, expands, children }:
   return (
     <Host colorScheme={room} style={{ position: "absolute", width }} pointerEvents="none">
       <ModalBottomSheet
+        key={mount}
         ref={ref}
         onDismissRequest={() => {
           onOpenChange(false);
@@ -59,7 +71,7 @@ export function SheetFrame({ open, onOpenChange, onDismiss, expands, children }:
         }}
         skipPartiallyExpanded={!expands}
         containerColor={p.sheet}
-        scrimColor="rgba(0,0,0,0.4)"
+        scrimColor={p.scrim}
         // Material's handle takes its own 48 dp row above the sheet's padding; Lymi's floats over it, as iOS's does.
         showDragHandle={false}
       >

@@ -134,7 +134,7 @@ function DragRow({
     transform: [{ translateY: y.value }, { scale: withSpring(lifted.value ? 1.03 : 1, SETTLE) }],
     zIndex: lifted.value ? 1 : 0,
     ...(android
-      ? { boxShadow: lifted.value ? lift : "0 0 #0000" }
+      ? { boxShadow: lifted.value ? lift : "0 0 0 transparent" }
       : { shadowOpacity: withSpring(lifted.value ? 0.18 : 0, SETTLE) }),
     borderTopWidth: (positions.value[id] ?? 0) > 0 && !lifted.value ? 1 : 0,
   }));

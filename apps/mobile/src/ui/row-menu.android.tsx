@@ -1,16 +1,13 @@
 import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
 import { Pressable, View } from "react-native";
-import { captureEvent } from "../telemetry/posthog";
 import { haptics } from "../theme/haptics";
-import type { RowMenuAction, RowMenuItem, RowMenuProps, RowMenuSurface } from "./row-menu";
+import type { RowMenuItem, RowMenuProps } from "./row-menu";
+import { trackRowMenu } from "./row-menu-track";
 import { Sheet, SheetGroup, SheetRow } from "./sheet";
 
 export type { RowMenuAction, RowMenuItem, RowMenuSurface } from "./row-menu";
-
-export function trackRowMenu(surface: RowMenuSurface, action: RowMenuAction) {
-  captureEvent("context_menu_action", { menu: surface, action });
-}
+export { trackRowMenu };
 
 /**
  * Android's counterpart of row-menu.tsx: expo-router's link menu and preview are iOS-only, so a long

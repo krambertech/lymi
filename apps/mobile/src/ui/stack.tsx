@@ -32,11 +32,7 @@ interface Props {
   children: ReactElement;
 }
 
-/**
- * Lays out Android's form sheets, as the root Stack's screen layout there: a sheet over the status
- * bar starts its content below it, and Android draws no grabber, so Lymi draws iOS's. The Stack calls
- * it as a function, so it holds no hooks.
- */
+/** Android's form sheets, below the status bar and with iOS's grabber, as the Stack's screen layout, which it calls as a function, so no hooks. */
 function AndroidSheetLayout({ options, children }: Props) {
   if (options.presentation !== "formSheet") return children;
   const grabber = !!options.sheetGrabberVisible;

@@ -5,9 +5,11 @@ interface AddCard {
   openCard: (deckId?: string, opts?: { sectionId?: string | undefined }) => void;
   /** Open the new-deck field. */
   openDeck: () => void;
-  close: (expected?: "card" | "deck") => void;
-  /** What is open: nothing, the capture sheet, or the new-deck field. */
-  open: "card" | "deck" | null;
+  /** Open Smart add, optionally for one deck. */
+  openSmart: (deckId?: string) => void;
+  close: (expected?: "card" | "deck" | "smart") => void;
+  /** What is open: nothing, the capture sheet, the new-deck field, or Smart add. */
+  open: "card" | "deck" | "smart" | null;
   deckId: string | undefined;
   /** The section the capture sheet was opened for, from a section's menu. */
   sectionId: string | undefined;
@@ -20,7 +22,7 @@ const Ctx = createContext<AddCard | null>(null);
  * plus all open the same sheet, so the shell owns it rather than each route.
  */
 export function AddCardProvider({ children }: { children: ReactNode }) {
-  const [open, setOpen] = useState<"card" | "deck" | null>(null);
+  const [open, setOpen] = useState<"card" | "deck" | "smart" | null>(null);
   const [deckId, setDeckId] = useState<string | undefined>(undefined);
   const [sectionId, setSectionId] = useState<string | undefined>(undefined);
 
@@ -38,6 +40,11 @@ export function AddCardProvider({ children }: { children: ReactNode }) {
         setDeckId(undefined);
         setSectionId(undefined);
         setOpen("deck");
+      },
+      openSmart: (id) => {
+        setDeckId(id);
+        setSectionId(undefined);
+        setOpen("smart");
       },
       close: (expected) =>
         setOpen((current) => (expected && current !== expected ? current : null)),

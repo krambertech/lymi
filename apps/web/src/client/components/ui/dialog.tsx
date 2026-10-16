@@ -137,6 +137,11 @@ interface ContentProps extends React.ComponentProps<"div"> {
   size?: keyof typeof sizes | undefined;
   /** Dresses the desktop shape, such as a width between the sizes. The drawer ignores it. */
   className?: string | undefined;
+  /**
+   * What scrolls in the centred dialog: all of it, or only a `DialogBody` between a header and
+   * actions that stay in view. The drawer and the end sheet always scroll as one.
+   */
+  scroll?: "whole" | "body" | undefined;
   /** Where focus lands on opening, when the first control is not the safe one. */
   initialFocus?: DialogPrimitive.Popup.Props["initialFocus"];
   /** Where focus lands on closing, when the control that opened it is gone. */
@@ -148,6 +153,7 @@ function DialogContent({
   className,
   placement = "center",
   size = "sm",
+  scroll = "whole",
   children,
   ...props
 }: ContentProps) {
@@ -222,12 +228,33 @@ function DialogContent({
           sizes[size],
           // The card's 6 px rise over 200 ms, leaving in 140.
           "edge-2 fixed inset-0 z-(--z-sheet) m-auto grid h-fit max-h-[85dvh] scroll-pb-24 gap-4 overflow-y-auto overscroll-contain rounded-xl bg-plate p-5 text-text outline-none transition-[opacity,translate,scale] duration-200 ease-(--ease-out) data-starting-style:translate-y-1.5 data-starting-style:scale-99 data-starting-style:opacity-0 data-ending-style:translate-y-1.5 data-ending-style:scale-99 data-ending-style:opacity-0 data-ending-style:duration-140 motion-reduce:data-starting-style:translate-y-0 motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:translate-y-0 motion-reduce:data-ending-style:scale-100",
+          // The frame holds still and only the body scrolls, so the title and the actions stay in view.
+          scroll === "body" && "flex flex-col gap-0 overflow-hidden p-0",
           className,
         )}
       >
         <PlaceShapeContext.Provider value="dialog">{children}</PlaceShapeContext.Provider>
       </DialogPrimitive.Popup>
     </DialogPrimitive.Portal>
+  );
+}
+
+/**
+ * The part of a `scroll="body"` dialog that scrolls, between what stays above and below it. Pad what
+ * sits around it with `px-5`. On touch the whole place scrolls, so it is an ordinary block.
+ */
+function DialogBody({ className, ...props }: React.ComponentProps<"div">) {
+  const shape = React.useContext(PlaceShapeContext);
+  return (
+    <div
+      data-slot="dialog-body"
+      className={cn(
+        "min-h-0 flex-1",
+        shape === "dialog" && "overflow-y-auto overscroll-contain px-5 pb-5 [scrollbar-width:thin]",
+        className,
+      )}
+      {...props}
+    />
   );
 }
 
@@ -288,6 +315,7 @@ function DialogDescription({ className, ...props }: DialogPrimitive.Description.
 
 export {
   Dialog,
+  DialogBody,
   DialogClose,
   DialogContent,
   DialogDescription,

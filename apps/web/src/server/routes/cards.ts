@@ -146,19 +146,26 @@ cards.post(
   describe({
     tags: ["Cards"],
     summary: "Add many cards",
-    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. \`publisherOverlap=true\` is accepted for compatibility: it is a publisher's default, and anyone else gets 403. ${DUPLICATE_RULE} ${ENRICH_RULE} ${TERSE}`,
+    description: `Needs the write scope. Up to 200 cards, across any decks, in one call. Outcomes come back in the same order. \`publisherOverlap=true\` is accepted for compatibility: it is a publisher's default, and anyone else gets 403. \`from=lesson\` is the app's Smart add and only labels analytics. ${DUPLICATE_RULE} ${ENRICH_RULE} ${TERSE}`,
     ok: { schema: z.union([AddCardsOut, TerseCardsOut]), description: "One outcome per card sent" },
     errors: [400, 404],
   }),
-  query(ResponseShapeQuery.extend({ publisherOverlap: z.literal("true").optional() }), "query"),
+  query(
+    ResponseShapeQuery.extend({
+      publisherOverlap: z.literal("true").optional(),
+      from: z.literal("lesson").optional(),
+    }),
+    "query",
+  ),
   body(CardsInput, "cards"),
   async (c) => {
     const ctx = ctxOf(c);
-    const { response, publisherOverlap } = c.req.valid("query");
+    const { response, publisherOverlap, from } = c.req.valid("query");
     const publishers = publisherEmails(c.env);
     if (publisherOverlap) await assertPublisher(ctx, publishers);
     const outcomes = await addCards(ctx, c.req.valid("json").cards, enrichmentQueue(c.env), {
       allowCrossDeckDuplicates: isPublisherEmail(publishers, c.get("user").email),
+      fromLesson: from === "lesson",
     });
     const terse = response === "terse";
     return c.json({ results: terse ? outcomes.map(terseOutcome) : outcomes });

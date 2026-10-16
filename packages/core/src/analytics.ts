@@ -56,6 +56,7 @@ const source = z.enum([
   "quizlet",
   "ai_mcp",
   "typed",
+  "lesson",
   "api",
   "unknown",
 ]);

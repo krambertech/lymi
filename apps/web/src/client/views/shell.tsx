@@ -62,6 +62,7 @@ interface SidebarProps {
   email?: string | undefined;
   onAdd: () => void;
   onCreateDeck?: (() => void) | undefined;
+  onSmartAdd?: (() => void) | undefined;
   onSearch?: (() => void) | undefined;
   onSignOut?: (() => void | Promise<void>) | undefined;
   signingOut?: boolean | undefined;
@@ -87,6 +88,7 @@ export function Sidebar({
   email,
   onAdd,
   onCreateDeck,
+  onSmartAdd,
   onSearch,
   onSignOut,
   signingOut,
@@ -122,7 +124,13 @@ export function Sidebar({
             <Search />
           </IconButton>
         )}
-        <AddMenu onAddCard={onAdd} onCreateDeck={onCreateDeck} size="sm" align="end" />
+        <AddMenu
+          onAddCard={onAdd}
+          onCreateDeck={onCreateDeck}
+          onSmartAdd={onSmartAdd}
+          size="sm"
+          align="end"
+        />
       </div>
 
       {/* Only the places scroll, so capture and the learner stay in reach however many decks there are. */}

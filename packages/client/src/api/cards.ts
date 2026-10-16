@@ -76,8 +76,8 @@ export const cardsApi = {
   addCard: (body: CardInput) =>
     request<AddCardOutcome>("/api/cards", { method: "POST", body: JSON.stringify(body) }),
   /** Many cards in one write; each is added or skipped on its own. */
-  addCards: (body: CardsInput) =>
-    request<{ results: AddCardOutcome[] }>("/api/cards/batch", {
+  addCards: (body: CardsInput, from?: "lesson") =>
+    request<{ results: AddCardOutcome[] }>(`/api/cards/batch${from ? `?from=${from}` : ""}`, {
       method: "POST",
       body: JSON.stringify(body),
     }),

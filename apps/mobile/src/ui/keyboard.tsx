@@ -1,6 +1,9 @@
-import type { ReactNode } from "react";
-import type { ViewStyle } from "react-native";
-import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
+import type { ComponentProps, ReactNode } from "react";
+import { Platform, ScrollView, type ViewStyle } from "react-native";
+import {
+  KeyboardAwareScrollView,
+  useReanimatedKeyboardAnimation,
+} from "react-native-keyboard-controller";
 import Animated, { type SharedValue, useAnimatedStyle } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -30,5 +33,28 @@ export function KeyboardRoom({
     <Animated.View className={`flex-1 ${className ?? ""}`} style={[style, room]}>
       {children}
     </Animated.View>
+  );
+}
+
+/** How a list under a search field lets the keyboard go: iOS follows the finger, Android drops it on a drag. */
+export const DISMISS_ON_DRAG = Platform.OS === "ios" ? "interactive" : "on-drag";
+
+/**
+ * A scrolling form that keeps its focused field and the action under it above the keyboard: iOS
+ * insets the scroll itself, while Android's edge-to-edge window needs it done for it.
+ */
+export function KeyboardScroll(props: ComponentProps<typeof ScrollView>) {
+  if (Platform.OS === "android") {
+    return (
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps="handled"
+        bottomOffset={24}
+        mode="layout"
+        {...props}
+      />
+    );
+  }
+  return (
+    <ScrollView keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets {...props} />
   );
 }

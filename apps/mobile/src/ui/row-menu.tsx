@@ -3,8 +3,10 @@ import { type Href, Icon, Label, Link, useRouter } from "expo-router";
 import type { ReactNode } from "react";
 import { type GestureResponderEvent, Pressable, View } from "react-native";
 import SYMBOLS from "../../assets/symbols/manifest.json";
-import { captureEvent } from "../telemetry/posthog";
 import type { IconName } from "./icons";
+import { trackRowMenu } from "./row-menu-track";
+
+export { trackRowMenu };
 
 export type RowMenuSurface = ContextMenuSurface;
 export type RowMenuAction = ContextMenuAction;
@@ -18,7 +20,7 @@ export interface RowMenuItem {
   onSelect: () => void;
 }
 
-interface RowMenuProps {
+export interface RowMenuProps {
   surface: RowMenuSurface;
   /** Where a tap goes, and the page the preview shows when `preview` is `page`. */
   href: Href;
@@ -35,11 +37,6 @@ interface RowMenuProps {
   /** `page` lifts the page `href` opens; a node is drawn instead; none lifts the row itself. */
   preview?: "page" | { node: ReactNode; width?: number; height?: number };
   children: ReactNode;
-}
-
-/** Records a long-press menu row taken, with where and which; never the row's content. */
-export function trackRowMenu(surface: RowMenuSurface, action: RowMenuAction) {
-  captureEvent("context_menu_action", { menu: surface, action });
 }
 
 /**

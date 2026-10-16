@@ -30,7 +30,6 @@ import {
   REVEAL_GLIDE,
 } from "@lymi/design";
 import { useQueryClient } from "@tanstack/react-query";
-import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -93,6 +92,7 @@ import { countReveal, RevealHint, useRevealHint } from "../review/reveal-hint";
 import { CardStack, type TopCard, UndoArea, useUndoSwipe } from "../review/undo-swipe";
 import { Wick } from "../review/wick";
 import { useReviewSession } from "../telemetry/review-session";
+import { haptics } from "../theme/haptics";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
@@ -103,6 +103,7 @@ import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { Skeleton } from "../ui/skeleton";
+import { useSystemBack } from "../ui/system-back";
 
 const EASE = curve(EASE_OUT);
 const GLIDE = REVEAL_GLIDE.duration * 1000;
@@ -368,7 +369,7 @@ function Run({
   useEffect(() => {
     if (!current || started.current) return;
     started.current = true;
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    haptics.start();
   }, [current]);
 
   const ended = paused || (!!leg && !current);
@@ -376,12 +377,18 @@ function Run({
   const added = !!state && !!mark && state.attempts > mark.attempts;
   const leave = () => (added ? setPaused(true) : onClose());
   const pull = usePullToEnd({ onEnd: ended || !added ? onClose : leave, away: ended || !added });
+  // Android's Back leaves as ✕ does, so a review left partway still ends on its summary.
+  useSystemBack(() => {
+    if (ended || !added) onClose();
+    else leave();
+    return true;
+  });
 
   /** One step back: the last graded card returns revealed, and its grade leaves the day. */
   const undo = () => {
     const last = lastGraded;
     if (!last) return;
-    Haptics.selectionAsync();
+    haptics.tick();
     undone.current.add(last.grade.reviewedAt);
     setLastGraded(null);
     if (last.listed) {
@@ -577,7 +584,7 @@ function Run({
   const undoArchive = async () => {
     if (!gone) return;
     const { card: back, mode } = gone;
-    Haptics.selectionAsync();
+    haptics.tick();
     setGone(null);
     try {
       await writes.restoreCard(back.id);
@@ -737,14 +744,14 @@ function Run({
   const onGrade = (rating: Rating) => {
     // Easy means recall without help, so after a peek it only says why, and grades nothing.
     if (!gradeAllowed(rating, peeked ? "hook" : undefined)) {
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+      haptics.warning();
       setLocked((l) => ({ key: showing, presses: l.key === showing ? l.presses + 1 : 1 }));
       return;
     }
     if (gradedAt.current === done) return;
     gradedAt.current = done;
     // Every grade is the same small tap: Forgot feeds the flame exactly as Easy does.
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+    haptics.grade();
     const item = current;
     const key = keyOf(item);
     const repeat = state.log.some(
@@ -779,8 +786,7 @@ function Run({
     setNow(new Date());
     setPinned(null);
     setDone((n) => n + 1);
-    if (reviewsToday + 1 === goal)
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    if (reviewsToday + 1 === goal) haptics.success();
 
     void recorded
       .then((outcome) => {
@@ -857,12 +863,12 @@ function Run({
                 revealed={revealed}
                 still={returned}
                 onReveal={() => {
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  haptics.reveal();
                   revealedAt.current = performance.now();
                   setRevealed(true);
                 }}
                 onPeek={() => {
-                  Haptics.selectionAsync();
+                  haptics.tick();
                   setAidState({ key: showing, peeked: true, shown: false });
                 }}
                 onShowHook={() => setAidState({ key: showing, peeked: false, shown: true })}
@@ -1293,7 +1299,7 @@ function CardPlate({
         onLongPress={
           revealed && onMenu
             ? () => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                haptics.reveal();
                 onMenu();
               }
             : undefined

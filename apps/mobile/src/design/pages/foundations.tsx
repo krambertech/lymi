@@ -1,19 +1,17 @@
 import { CHOICE_SLIDE, endEmbers } from "@lymi/design";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
-import * as Haptics from "expo-haptics";
 import { type ReactNode, useState } from "react";
-import { View, type ViewStyle } from "react-native";
+import { Platform, View, type ViewStyle } from "react-native";
 import { playHaptics } from "../../../modules/lymi-haptics";
 import { endHaptics } from "../../review/end-haptics";
+import { haptics } from "../../theme/haptics";
 import { type Palette, usePalette } from "../../theme/palette";
 import { GlassButton, GlassPill } from "../../ui/glass";
 import { Icon, type IconName } from "../../ui/icons";
 import { Button, Plate, Text } from "../../ui/primitives";
 import { Segmented } from "../../ui/segmented";
 import { OnGlass } from "../../ui/surface";
-import { Row, Sub, Variants } from "../frame";
-
-const MONO = { fontFamily: "Menlo", letterSpacing: 0 } as const;
+import { MONO, Row, Sub, Variants } from "../frame";
 
 function Swatch({ token, note }: { token: keyof Palette; note: string }) {
   const p = usePalette();
@@ -388,7 +386,11 @@ export function Surfaces() {
         <Variants
           items={[
             {
-              label: glass ? "Glass over the room" : "Opaque here: this iOS has no Liquid Glass",
+              label: glass
+                ? "Glass over the room"
+                : Platform.OS === "ios"
+                  ? "Opaque here: this iOS has no Liquid Glass"
+                  : "Opaque here: Android has no Liquid Glass",
               render: () => (
                 <Backdrop>
                   <View className="flex-row items-center justify-between">
@@ -431,29 +433,17 @@ export function Surfaces() {
 }
 
 const HAPTICS: [string, string, () => void][] = [
-  ["A press", "Selection, from Press, on every button and row", () => Haptics.selectionAsync()],
-  ["Reveal", "Light impact", () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)],
-  [
-    "A grade",
-    "Soft impact, Forgot included",
-    () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft),
-  ],
-  ["Undo, or crossing the line pulling to end", "Selection", () => Haptics.selectionAsync()],
-  [
-    "The daily goal",
-    "Success",
-    () => Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success),
-  ],
+  ["A press", "Selection, from Press, on every button and row", haptics.press],
+  ["Reveal", "Light impact", haptics.reveal],
+  ["A grade", "Soft impact, Forgot included", haptics.grade],
+  ["Undo, or crossing the line pulling to end", "Selection", haptics.tick],
+  ["The daily goal", "Success", haptics.success],
   [
     "The end of a review",
     "A faint tick under each ember and a warm pulse as today's light fills, through Core Haptics",
     () => void playHaptics(endHaptics(endEmbers(14), true, false)),
   ],
-  [
-    "Starting a review",
-    "Medium impact",
-    () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium),
-  ],
+  ["Starting a review", "Medium impact", haptics.start],
 ];
 
 export function Motion() {

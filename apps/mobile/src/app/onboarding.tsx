@@ -14,6 +14,7 @@ import { useAddDeck, useAddFailure } from "../explore/catalogue";
 import { openWeb } from "../ui/on-the-web";
 import { Button, Text } from "../ui/primitives";
 import { BarButton, BarText } from "../ui/screen";
+import { useSystemBack } from "../ui/system-back";
 import { CONNECT_DOCS } from "../welcome/assistant-offer";
 import { setAfterWelcome, useWelcomeDeck, welcomeWith } from "../welcome/gate";
 import {
@@ -85,6 +86,12 @@ export default function Onboarding() {
     finishStep(step, false);
     setTrail((s) => [...s, to]);
   };
+  // Android's Back steps back through the questions, as the bar's back does, and never past Welcome.
+  useSystemBack(() => {
+    if (trail.length < 2) return false;
+    move(null);
+    return true;
+  });
 
   // Saving `onboarded_at` is what ends Welcome: the root brings Today back, and Today opens `then`.
   const saveAndLeave = async (input: OnboardingInput, then?: Href) => {

@@ -12,7 +12,7 @@ import { languageName } from "../data/languages";
 import { useDecks } from "../data/queries";
 import { useOnline } from "../streak/goal-picker";
 import { EmptyState } from "../ui/empty-state";
-import { KeyboardRoom } from "../ui/keyboard";
+import { DISMISS_ON_DRAG, KeyboardRoom } from "../ui/keyboard";
 import { ListRow } from "../ui/list-row";
 import { useLoadFailed } from "../ui/load-failed";
 import { Plate, Press, SectionTitle, Text } from "../ui/primitives";
@@ -86,7 +86,7 @@ export default function Search() {
           // Grows to the room above the keyboard, so an empty state centres there and never under it.
           contentContainerStyle={{ paddingTop: insets.top + 16, flexGrow: 1 }}
           keyboardShouldPersistTaps="handled"
-          keyboardDismissMode="interactive"
+          keyboardDismissMode={DISMISS_ON_DRAG}
         >
           {decks.length > 0 && (
             <View>

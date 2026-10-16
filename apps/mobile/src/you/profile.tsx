@@ -5,10 +5,10 @@ import { NameInput } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as ImagePicker from "expo-image-picker";
 import { useRef, useState } from "react";
-import { TextInput, View } from "react-native";
+import { View } from "react-native";
 import { useSession } from "../auth/client";
 import { usePalette } from "../theme/palette";
-import { inputCap } from "../theme/type";
+import { Input } from "../ui/field";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { Avatar } from "./avatar";
 
@@ -120,25 +120,18 @@ export function ProfileSheet({ open, onOpenChange, profile }: Props) {
       <View className="items-center pb-1">
         <Avatar name={draft || profile.name} size={80} />
       </View>
-      <View className="rounded-xl bg-glass-plate px-4">
-        <TextInput
-          value={draft}
-          onChangeText={setDraft}
-          placeholder={t`Your name`}
-          placeholderTextColor={p.muted}
-          accessibilityLabel={t({ message: "Name", context: "person" })}
-          autoCapitalize="words"
-          autoComplete="name"
-          textContentType="name"
-          maxLength={80}
-          returnKeyType="done"
-          onSubmitEditing={() => close()}
-          selectionColor={p.text}
-          className="min-h-12 py-3 font-sans text-text"
-          style={{ fontSize: 17 }}
-          maxFontSizeMultiplier={inputCap(17)}
-        />
-      </View>
+      <Input
+        value={draft}
+        onChangeText={setDraft}
+        placeholder={t`Your name`}
+        accessibilityLabel={t({ message: "Name", context: "person" })}
+        autoCapitalize="words"
+        autoComplete="name"
+        textContentType="name"
+        maxLength={80}
+        returnKeyType="done"
+        onSubmitEditing={() => close()}
+      />
       <SheetGroup>
         <SheetRow
           icon="camera"

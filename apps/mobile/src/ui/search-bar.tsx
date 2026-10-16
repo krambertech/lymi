@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { type ReactNode, useEffect, useState } from "react";
-import { TextInput, View } from "react-native";
+import { Platform, Pressable, TextInput, View } from "react-native";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { GlassButton, GlassSurface } from "./glass";
@@ -18,6 +18,24 @@ export function useSearchText(initial = "") {
     return () => clearTimeout(timer);
   }, [text]);
   return { text, setText, query };
+}
+
+/** Android's stand-in for iOS's `clearButtonMode`, which it lacks: an ✕ at the field's end while it holds text. */
+export function ClearText({ value, onClear }: { value: string; onClear: () => void }) {
+  const { t } = useLingui();
+  const p = usePalette();
+  if (Platform.OS !== "android" || !value) return null;
+  return (
+    <Pressable
+      onPress={onClear}
+      accessibilityRole="button"
+      accessibilityLabel={t`Clear search`}
+      hitSlop={8}
+      className="size-7 items-center justify-center"
+    >
+      <Icon name="close" size={18} colour={p.muted} />
+    </Pressable>
+  );
 }
 
 /**
@@ -76,6 +94,7 @@ export function SearchBar({
           style={{ fontSize: 17 }}
           maxFontSizeMultiplier={inputCap(17)}
         />
+        <ClearText value={value} onClear={() => onChange("")} />
       </GlassSurface>
       {after}
       <GlassButton icon="close" label={t`Close search`} onPress={onCancel} />

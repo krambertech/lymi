@@ -203,6 +203,12 @@ describe("reporting a read", () => {
     ).rejects.toThrow();
     expect(events.map((e) => e.name)).toEqual(["$ai_generation"]);
     expect(events[0]).toMatchObject({ $ai_is_error: true, $ai_http_status: 529 });
+
+    events.length = 0;
+    await addCards(ctx, [{ deckId: deck.id, term: "jooma", enrich: false }], null, {
+      fromLesson: true,
+    });
+    expect(events).toContainEqual({ name: "cards_added", source: "lesson", count: 1 });
   });
 });
 

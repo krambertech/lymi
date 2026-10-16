@@ -74,7 +74,11 @@ type ServerCardEdit = Omit<CardEditInput, keyof Sources | Cleared> &
   };
 
 /** A publisher's curated decks each stand alone, so its terms repeat across decks but not within one. ADR 0004. */
-export type AddCardsOptions = { allowCrossDeckDuplicates?: boolean };
+export type AddCardsOptions = {
+  allowCrossDeckDuplicates?: boolean;
+  /** Smart add's pick list, so `cards_added` tells its cards from typed ones. */
+  fromLesson?: boolean;
+};
 
 /** Only the learner in the app enriches unless asked; an integration opts in per card. */
 function wantsEnrichment(input: ServerCardInput, actor: Actor): boolean {
@@ -290,7 +294,14 @@ export async function addCards(
     track(ctx.analytics, {
       name: "cards_added",
       count: groups.length,
-      source: actor === "mcp" ? "ai_mcp" : actor === "api" ? "api" : "typed",
+      source:
+        actor === "mcp"
+          ? "ai_mcp"
+          : actor === "api"
+            ? "api"
+            : options.fromLesson
+              ? "lesson"
+              : "typed",
     });
   // The add stands whatever the queue does; a refused run leaves its cards saying so.
   if (

@@ -9,6 +9,7 @@ export interface ShellChromeValue {
   docsUrl: string;
   onAddCard: () => void;
   onCreateDeck?: (() => void) | undefined;
+  onSmartAdd?: (() => void) | undefined;
   onSignOut?: (() => void | Promise<void>) | undefined;
   signingOut?: boolean | undefined;
   /** A row beside Docs in the learner menu, such as Connect AI assistant. */
@@ -31,7 +32,12 @@ export function TabActions() {
   return (
     <>
       {chrome.streak}
-      <AddMenu onAddCard={chrome.onAddCard} onCreateDeck={chrome.onCreateDeck} align="end" />
+      <AddMenu
+        onAddCard={chrome.onAddCard}
+        onCreateDeck={chrome.onCreateDeck}
+        onSmartAdd={chrome.onSmartAdd}
+        align="end"
+      />
       <LearnerMenu
         variant="phone"
         name={chrome.name}

@@ -6,7 +6,9 @@ description: |
 
 # Translate Lymi's catalogs
 
-English component text is the source. `pnpm i18n:extract` updates the Lingui catalogs in `apps/web` and `apps/site`; translations live in the Ukrainian and Russian `.po` files. See [ADR 0012](../../../docs/adr/0012-interface-text-is-english-source-translated-by-lingui.md).
+English component text is the source. `pnpm i18n:extract` updates the Lingui catalogs in `apps/web`, `apps/site` and `apps/mobile`; translations live in the Ukrainian and Russian `.po` files. See [ADR 0012](../../../docs/adr/0012-interface-text-is-english-source-translated-by-lingui.md).
+
+The phone's native extensions are not in Lingui: fill `uk` and `ru` in `apps/mobile/targets/controls/_shared/Localizable.xcstrings`, and keep `uk.lproj` and `ru.lproj` beside `en.lproj/AppShortcuts.strings` with the same keys. These ship only in a new build.
 
 ## Workflow
 

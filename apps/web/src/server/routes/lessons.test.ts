@@ -1,0 +1,48 @@
+import { beforeAll, describe, expect, it } from "vitest";
+import { type Session, type TestApp, testApp } from "../test-app";
+
+/** Refusals at /api/lesson-reads. What a read finds is `services/lessons.test.ts`. */
+let app: TestApp;
+let operator: Session;
+let stranger: Session;
+const resized: number[] = [];
+
+const pdf = () => new File([new TextEncoder().encode("%PDF-1.4 /Type /Page")], "lesson.pdf");
+const photo = () => new File([new Uint8Array([0xff, 0xd8, 0xff])], "page.jpg");
+
+function upload(files: File[], as: Session) {
+  const form = new FormData();
+  for (const file of files) form.append("file", file);
+  return app.fetch("/api/lesson-reads", { method: "POST", body: form, as });
+}
+
+beforeAll(async () => {
+  app = await testApp({
+    operators: ["lesson-operator@lymi.local"],
+    env: {
+      ANTHROPIC_API_KEY: "key",
+      IMAGES: {
+        input() {
+          resized.push(1);
+          throw new Error("A refused read must not reach image processing");
+        },
+      } as unknown as ImagesBinding,
+    },
+  });
+  operator = await app.signUp("lesson-operator");
+  stranger = await app.signUp("lesson-stranger");
+}, 60_000);
+
+describe("POST /api/lesson-reads", () => {
+  it("refuses an account without access before touching its photos", async () => {
+    const response = await upload([photo(), photo()], stranger);
+    expect(response.status).toBe(403);
+    expect(resized).toEqual([]);
+  });
+
+  it("refuses a fourth PDF", async () => {
+    const response = await upload([pdf(), pdf(), pdf(), pdf()], operator);
+    expect(response.status).toBe(400);
+    expect(await response.json()).toMatchObject({ error: expect.stringContaining("3 PDFs") });
+  });
+});

@@ -53,6 +53,8 @@ async function boot(before?: string): Promise<MigratingTestDb> {
     // No `.env` files. Wrangler still reads `.dev.vars` on its own; nothing here uses it.
     envFiles: [],
     persist: false,
+    // Workers AI is remote only; tests never call it, and connecting to it doubles every boot.
+    remoteBindings: false,
   });
   const migrate = async (file: string) => {
     for (const statement of statementsIn(file)) await proxy.env.DB.prepare(statement).run();

@@ -78,7 +78,8 @@ test("a learner can filter, sort and open the words in a deck", async ({
     await page.getByRole("button", { name: "Deck options", exact: true }).click();
     await page.getByRole("menuitem", { name: "Select cards", exact: true }).click();
     await row("õppima").click();
-    await page.getByRole("button", { name: "Tags…", exact: true }).click();
+    await page.getByRole("button", { name: "Actions", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Tags…", exact: true }).click();
     const dialog = page.getByRole("dialog", { name: "Tags for 1 card" });
     await dialog.getByRole("checkbox", { name: "food", exact: true }).click();
     await dialog.getByRole("button", { name: "Save", exact: true }).click();

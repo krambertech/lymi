@@ -95,6 +95,8 @@ export interface DrawOptions {
   sectionId?: string | undefined;
   /** Also load slipping cards whatever their due, for the slipping round. */
   slipping?: boolean | undefined;
+  /** Load every asked state whatever its due, for reviewing cards the learner chose. */
+  everyState?: boolean | undefined;
 }
 
 interface ModeRow {
@@ -164,11 +166,13 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
     isNull(schema.cards.archivedAt),
     isNull(schema.decks.archivedAt),
     asked,
-    or(
-      lt(schema.cardStates.due, day.end),
-      gte(schema.cardStates.lastReview, day.start),
-      opts.slipping ? isNotNull(slip.id) : undefined,
-    ),
+    opts.everyState
+      ? undefined
+      : or(
+          lt(schema.cardStates.due, day.end),
+          gte(schema.cardStates.lastReview, day.start),
+          opts.slipping ? isNotNull(slip.id) : undefined,
+        ),
     opts.deckId ? eq(schema.cards.deckId, opts.deckId) : undefined,
     opts.seriesId ? inSeries(userId, opts.seriesId) : undefined,
     opts.sectionId ? eq(schema.cards.sectionId, opts.sectionId) : undefined,

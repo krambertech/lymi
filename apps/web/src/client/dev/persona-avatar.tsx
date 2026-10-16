@@ -124,6 +124,27 @@ const LOOKS: Record<string, Look> = {
       </>
     ),
   },
+  // Two years of daily study: a bun held up with a pencil.
+  heavy: {
+    bg: "var(--av-bg-night)",
+    skin: "var(--av-skin-3)",
+    shirt: "var(--av-shirt-orange)",
+    front: (
+      <>
+        <circle cx={20} cy={7.4} r={3.4} fill="var(--av-hair-dark)" />
+        <path
+          d="M15.2 4.6l9.8 5.6"
+          stroke="var(--av-yellow)"
+          strokeWidth={1.3}
+          strokeLinecap="round"
+        />
+        <path
+          d="M12.2 17.8C12.4 12 15.8 9.4 20 9.4s7.6 2.6 7.8 8.4c-2.4-2.6-4.9-3.9-7.8-3.9s-5.4 1.3-7.8 3.9z"
+          fill="var(--av-hair-dark)"
+        />
+      </>
+    ),
+  },
   // Ukrainian interface: a flower wreath and an embroidered collar.
   polyglot: {
     bg: "var(--av-bg-violet)",

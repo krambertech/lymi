@@ -559,6 +559,9 @@ msgstr "{due, plural, one {картка до повторення сьогодн
 msgid "{due, plural, one {card to review now} other {cards to review now}}"
 msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
+msgid "{due, plural, one {Review # due} other {Review # due}}"
+msgstr "{due, plural, one {Повтори # на сьогодні} few {Повтори # на сьогодні} many {Повтори # на сьогодні} other {Повтори # на сьогодні}}"
+
 msgid "{field} becomes"
 msgstr "{field} стає"
 
@@ -648,6 +651,9 @@ msgstr "{queued, plural, one {# оцінка чи зміна, зроблена �
 
 msgid "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
 msgstr "{restNotes, plural, one {Ще # запис рідшого виду буде імпортовано як є.} few {Ще # записи рідших видів буде імпортовано як є.} many {Ще # записів рідших видів буде імпортовано як є.} other {Ще # запису рідших видів буде імпортовано як є.}}"
+
+msgid "{reviewable, plural, =0 {Nothing to review} one {Review all #} other {Review all #}}"
+msgstr "{reviewable, plural, =0 {Нічого повторювати} one {Повтори всі #} few {Повтори всі #} many {Повтори всі #} other {Повтори всі #}}"
 
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
@@ -790,6 +796,9 @@ msgstr "Доступ"
 
 msgid "Account"
 msgstr "Акаунт"
+
+msgid "Actions"
+msgstr "Дії"
 
 msgid "Activity"
 msgstr "Активність"
@@ -2921,9 +2930,6 @@ msgstr "Перемістити до…"
 msgid "Move up"
 msgstr "Вище"
 
-msgid "Move…"
-msgstr "Перемістити…"
-
 msgid "Moved “{deckName}” to {seriesName}"
 msgstr "«{deckName}» перенесено в «{seriesName}»"
 
@@ -3614,6 +3620,9 @@ msgstr "Прибрати {name}"
 msgid "Remove {name}?"
 msgstr "Вилучити {name}?"
 
+msgid "Remove a filter above, or show every card in this deck."
+msgstr "Прибери фільтр вище або покажи всі картки цієї колоди."
+
 msgid "Remove filter: {label}"
 msgstr "Прибрати фільтр: {label}"
 
@@ -3711,6 +3720,12 @@ msgstr "Відкрий картку, коли згадаєш"
 
 msgid "Review"
 msgstr "Повторення"
+
+msgid "Review {limit} of {due} due"
+msgstr "Повтори {limit} з {due} на сьогодні"
+
+msgid "Review {limit} of {reviewable}"
+msgstr "Повтори {limit} з {reviewable}"
 
 msgid "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}"
 msgstr "Повторити серію «{seriesName}», {due, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"

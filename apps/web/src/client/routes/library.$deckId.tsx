@@ -255,6 +255,8 @@ function DeckPage() {
   return (
     <>
       <DeckDetailView
+        // Filters, search and sort belong to the visit, so another deck starts without them.
+        key={deckId}
         deck={deck}
         failure={failure}
         onRetry={retry}
@@ -320,6 +322,7 @@ function DeckPage() {
         onReviewSection={(section) =>
           navigate({ to: "/review", search: { deck: deckId, section: section.id } })
         }
+        onReviewCards={(cards) => navigate({ to: "/review", search: { deck: deckId, cards } })}
         startSectionPending={sectionActions.start.isPending}
         connectUrl={publicSiteUrl("/docs/mcp")}
         connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}

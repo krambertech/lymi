@@ -53,7 +53,8 @@ export function Phone({
     <div
       data-theme={theme}
       className={clsx(
-        "@container/shell edge-2 relative mx-auto flex h-[800px] w-full max-w-[390px] flex-col overflow-hidden rounded-[44px] bg-canvas text-text",
+        // Paint containment holds fixed children too, so the end of a review lights this screen, not the page.
+        "@container/shell edge-2 relative mx-auto flex h-[800px] w-full max-w-[390px] flex-col overflow-hidden rounded-[44px] bg-canvas text-text contain-paint",
         className,
       )}
     >

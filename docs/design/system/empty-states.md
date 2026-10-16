@@ -54,14 +54,16 @@ A screen whose layout is worth previewing shows its real components at zero. Ins
 `EmptySection`, `NoResults` and `ErrorState` live in `components/empty-state.tsx`.
 
 - `EmptySection` is an empty group inside a screen: an icon in a `plate-2` circle, a short title, one line of why, and the action that fills it.
-- `NoResults` is one line under the controls that caused it. It names the query or the filter and offers Clear search or Show all.
+- `NoResults` takes the list's place under the controls that caused it, so the way back sits beside its cause. It has the start panel's dashed `edge-2` outline, because it is temporary, an outline icon of what narrowed the list (search or the filter) in a `plate-2` circle, a title naming the query or the filter, one line of what to do, and Clear search or Show all.
 - `ErrorState` is a screen that failed to load: centred, with the alert icon on `danger-soft`, never the lantern, because a calm lit lantern cannot say that something failed. The title says what failed, the line says the fix, and Try again retries.
 
 ```tsx
 // Correct, from deck-detail-view.tsx
 <NoResults
+  icon={query ? <SearchX /> : <ListFilter />}
   title={query ? t`No cards match “${query}”` : t`No cards match these filters`}
-  action={<Button size="sm" onClick={clearAll}>{query ? <Trans>Clear search</Trans> : <Trans>Show all</Trans>}</Button>}
+  detail={query ? <Trans>Search looks at the term and the meaning.</Trans> : <Trans>Remove a filter above, or show every card in this deck.</Trans>}
+  action={<Button onClick={clearAll}>{query ? <Trans>Clear search</Trans> : <Trans>Show all</Trans>}</Button>}
 />
 ```
 

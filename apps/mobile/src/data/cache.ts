@@ -1,4 +1,4 @@
-import { asLastGood, outboxDehydrateOptions } from "@lymi/client/cache";
+import { outboxDehydrateOptions } from "@lymi/client/cache";
 import type { QueryClient } from "@tanstack/react-query";
 import type {
   PersistedClient,
@@ -8,8 +8,8 @@ import type {
 import { AppState } from "react-native";
 import { API_URL } from "../auth/client";
 import { cacheStore, captureStore, todayStore } from "./kept";
+import { queryStore } from "./query-store";
 
-const KEY = "queries";
 /** At most one write a second, as the web's. */
 const THROTTLE = 1000;
 
@@ -25,6 +25,7 @@ const CACHE_SHAPE = "1";
 
 let pending: PersistedClient | null = null;
 let timer: ReturnType<typeof setTimeout> | undefined;
+const stored = queryStore(cacheStore);
 
 function write() {
   clearTimeout(timer);
@@ -32,11 +33,10 @@ function write() {
   const next = pending;
   pending = null;
   // A cache that cannot be kept is fetched again next time; nothing is lost.
-  if (next) {
-    try {
-      cacheStore.set(KEY, JSON.stringify({ ...next, clientState: asLastGood(next.clientState) }));
-    } catch {}
-  }
+  if (!next) return;
+  try {
+    stored.write(next);
+  } catch {}
 }
 
 // The app can be closed from the background without warning, so the last second is written there.
@@ -50,10 +50,8 @@ const persister: Persister = {
     timer ??= setTimeout(write, THROTTLE);
   },
   restoreClient() {
-    const raw = cacheStore.getString(KEY);
-    if (!raw) return undefined;
     try {
-      return JSON.parse(raw) as PersistedClient;
+      return stored.restore();
     } catch {
       return undefined;
     }
@@ -87,7 +85,7 @@ function forgetCache() {
   clearTimeout(timer);
   timer = undefined;
   pending = null;
-  cacheStore.remove(KEY);
+  stored.forget();
 }
 
 /**

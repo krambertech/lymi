@@ -22,6 +22,7 @@ export type E2EAccount =
   | "review-round-below"
   | "review-round-crosses"
   | "review-deck-out"
+  | "review-chosen"
   | "word-detail"
   | "activity"
   | "language"

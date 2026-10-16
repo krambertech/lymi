@@ -59,9 +59,11 @@ export type Draw = Omit<DrawOut, "cards"> & {
 const askable = (mode: unknown) => ReviewMode.safeParse(mode).success;
 
 export const reviewApi = {
-  queue: async (scope?: ReviewScope, round?: Round) => {
+  /** A round from Today, cards chosen in one deck, or the day's order. */
+  queue: async (scope?: ReviewScope, round?: Round, cards?: readonly string[]) => {
     const params = new URLSearchParams(scopeParams(scope));
     if (round) params.set("round", round);
+    if (cards) params.set("cards", cards.join(","));
     const search = params.toString();
     const queue = await request<Queue>(`/api/review/queue${search ? `?${search}` : ""}`);
     return { ...queue, items: queue.items.filter((item) => askable(item.mode)) };

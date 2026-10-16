@@ -1,6 +1,6 @@
-import type { ProductAnalyticsEvent } from "./analytics";
+import type { ProductAnalyticsEvent, ReviewScopeKind } from "./analytics";
 
-type Snapshot = { cardsDone: number; cardCount: number; first: boolean };
+type Snapshot = { cardsDone: number; cardCount: number; first: boolean; scope?: ReviewScopeKind };
 export class ReviewSessionTracker {
   private completedFirst = false;
   private active: { id: string; key: string; baseline: number; snapshot: Snapshot } | null = null;
@@ -39,6 +39,7 @@ export class ReviewSessionTracker {
     this.send({
       name: "review_session_finished",
       session_id: active.id,
+      ...(active.snapshot.scope ? { scope: active.snapshot.scope } : {}),
       card_count: cards,
       is_first_session: active.snapshot.first,
       ending,
@@ -52,6 +53,7 @@ export class ReviewSessionTracker {
     this.send({
       name: "review_session_abandoned",
       session_id: active.id,
+      ...(active.snapshot.scope ? { scope: active.snapshot.scope } : {}),
       cards_done: Math.max(0, active.snapshot.cardsDone - active.baseline),
       card_count: active.snapshot.cardCount,
       is_first_session: active.snapshot.first,

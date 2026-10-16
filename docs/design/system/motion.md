@@ -28,6 +28,8 @@ className="transition-all duration-300 ease-in"
 
 Name the properties a transition animates; never `transition-all`. Prefer `transform`, `opacity`, colours and `filter`. Animate height only with Motion's `height: "auto"`, for something that opens in place and pushes the content under it: the grade strip, a card form's extra fields, an Activity entry. A bar that fills, such as section progress, may animate its width.
 
+On the phone, a sheet that changes height while it is open glides to the new height on iOS's own sheet spring, so a ticked tag, an error line under a field or the streak rising to full height before its goal's sheet never makes it jump. It opens at its height without a glide, and a row sheet follows a moving keyboard frame by frame instead. The patches that do this are described in [phone.md](phone.md#sheets).
+
 ## Press
 
 Press scales over 150 ms. Nothing moves up on press.
@@ -142,6 +144,7 @@ Every animation ships a reduced version. Under `prefers-reduced-motion`:
 - the wick's rule appears as a hairline, and a rolling number shows its new value at once;
 - the pointing hand appears without tapping;
 - the speaker's waves hold still while a pronunciation plays;
+- a phone sheet takes its new height at once;
 - the list hover fades in on the row under the pointer instead of sliding;
 - a segmented plate fades in at its new option, a switch thumb takes its new place at once, and a radio dot and a tick fade in where they are;
 - the skeleton stops shimmering;

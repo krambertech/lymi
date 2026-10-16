@@ -1,3 +1,4 @@
+import { createSpeechProviders } from "./ai";
 import { handleFetch } from "./app";
 import { createDb } from "./db";
 import type { Bindings } from "./env";
@@ -5,6 +6,7 @@ import { dispatchReviewReminders } from "./push-delivery";
 import { dropUnstudiedFormerDecks } from "./services/account-deletion";
 import { expireExports } from "./services/exports";
 import { expireImports } from "./services/imports";
+import { voicePublishedDecks } from "./services/published-audio";
 
 export type { AppEnv } from "./app";
 
@@ -25,6 +27,13 @@ export default {
       expireExports(createDb(env.DB), env.EXPORTS, new Date(controller.scheduledTime)),
     );
     executionCtx.waitUntil(dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
+    // Published decks get their pronunciation ahead of a first play, a batch per run. #759.
+    executionCtx.waitUntil(
+      voicePublishedDecks(createDb(env.DB), {
+        bucket: env.AUDIO,
+        providers: (language) => createSpeechProviders(env, language),
+      }),
+    );
   },
 } satisfies ExportedHandler<Bindings>;
 

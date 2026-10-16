@@ -19,6 +19,7 @@ import {
 } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
+import { createSpeechProviders } from "../ai";
 import { publisherEmails } from "../env";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
@@ -46,6 +47,7 @@ import {
   turnOffJoinLink,
   turnOnJoinLink,
   updateDeck,
+  voicePublishedDecks,
   withdrawDeck,
   withdrawEdition,
 } from "../services";
@@ -333,13 +335,23 @@ decks.put(
     errors: [400, 404, 409],
   }),
   body(PublicationInput, "publication"),
-  async (c) =>
-    c.json(
-      publicationOut(
-        c.env.PRODUCT_URL,
-        await publishDeck(ctxOf(c), c.req.param("id"), c.req.valid("json"), publisherEmails(c.env)),
-      ),
-    ),
+  async (c) => {
+    const ctx = ctxOf(c);
+    const deckId = c.req.param("id");
+    const publication = await publishDeck(ctx, deckId, c.req.valid("json"), publisherEmails(c.env));
+    // Start voicing the deck now; the cron finishes whatever one request cannot. #759.
+    c.executionCtx.waitUntil(
+      voicePublishedDecks(
+        ctx.db,
+        {
+          bucket: c.env.AUDIO,
+          providers: (language) => createSpeechProviders(c.env, language),
+        },
+        { deckId },
+      ).catch(() => undefined),
+    );
+    return c.json(publicationOut(c.env.PRODUCT_URL, publication));
+  },
 );
 
 decks.delete(

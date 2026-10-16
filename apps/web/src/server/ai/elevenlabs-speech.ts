@@ -1,10 +1,11 @@
+import { type AiGatewayBindings, providerEndpoint } from "./gateway";
 import type { Fetch, SpeechProvider } from "./types";
 
 export type ElevenLabsSpeechBindings = {
   ELEVENLABS_API_KEY?: string | undefined;
   ELEVENLABS_SPEECH_MODEL?: string | undefined;
   ELEVENLABS_SPEECH_VOICES?: string | undefined;
-};
+} & AiGatewayBindings;
 
 export class ElevenLabsSpeechError extends Error {
   constructor(
@@ -33,14 +34,15 @@ export function createElevenLabsSpeechProvider(
     async speech(input) {
       const key = env.ELEVENLABS_API_KEY?.trim();
       if (!key) throw new ElevenLabsSpeechError("ElevenLabs speech is not configured");
+      const endpoint = providerEndpoint(env, "elevenlabs");
       let response: Response;
       try {
         // An ambiguous timeout may already be billed, so generation has no automatic retry.
         response = await request(
-          `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(voice)}?output_format=mp3_44100_128`,
+          `${endpoint.base}/v1/text-to-speech/${encodeURIComponent(voice)}?output_format=mp3_44100_128`,
           {
             method: "POST",
-            headers: { "xi-api-key": key, "Content-Type": "application/json" },
+            headers: { "xi-api-key": key, "Content-Type": "application/json", ...endpoint.headers },
             body: JSON.stringify({
               text: input.text,
               model_id: model,

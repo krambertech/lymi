@@ -189,11 +189,11 @@ async function main() {
   if (from) {
     calls = JSON.parse(readFileSync(from, "utf8")) as Call[];
   } else {
-    const { OPENAI_API_KEY, OPENAI_BASE_URL, OPENAI_TEXT_MODEL, AI_GATEWAY_TOKEN } = process.env;
+    const { OPENAI_API_KEY, OPENAI_TEXT_MODEL, AI_GATEWAY_URL, AI_GATEWAY_TOKEN } = process.env;
     const provider = createTextProvider({
       OPENAI_API_KEY,
-      OPENAI_BASE_URL,
       OPENAI_TEXT_MODEL,
+      AI_GATEWAY_URL,
       AI_GATEWAY_TOKEN,
     });
     if (!provider) throw new Error("Set OPENAI_API_KEY to run the evaluation");

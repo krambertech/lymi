@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { type AiGatewayBindings, providerEndpoint } from "./gateway";
 import { pronunciationPrompt } from "./google-gemini";
 import type { Fetch, SpeechProvider } from "./types";
 
@@ -9,7 +10,7 @@ export type GeminiApiSpeechBindings = {
   GEMINI_API_KEY?: string | undefined;
   GEMINI_SPEECH_MODEL?: string | undefined;
   GEMINI_SPEECH_VOICE?: string | undefined;
-};
+} & AiGatewayBindings;
 
 export class GeminiApiSpeechError extends Error {
   constructor(
@@ -54,13 +55,18 @@ export function createGeminiApiSpeechProvider(
     async speech(input) {
       const key = env.GEMINI_API_KEY?.trim();
       if (!key) throw new GeminiApiSpeechError("Gemini API speech is not configured");
+      const endpoint = providerEndpoint(env, "google-ai-studio");
       let response: Response;
       try {
         response = await request(
-          `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
+          `${endpoint.base}/v1beta/models/${encodeURIComponent(model)}:generateContent`,
           {
             method: "POST",
-            headers: { "x-goog-api-key": key, "Content-Type": "application/json" },
+            headers: {
+              "x-goog-api-key": key,
+              "Content-Type": "application/json",
+              ...endpoint.headers,
+            },
             body: JSON.stringify({
               contents: [
                 { parts: [{ text: `${pronunciationPrompt(locale)}\n\nText: ${input.text}` }] },

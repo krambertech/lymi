@@ -1,5 +1,6 @@
 import { type ReactNode, useState } from "react";
-import { type LayoutChangeEvent, type TextStyle, View } from "react-native";
+import { type LayoutChangeEvent, type TextStyle, useWindowDimensions, View } from "react-native";
+import { fitType } from "../theme/type";
 import { Text } from "../ui/primitives";
 
 // The review card's type on the phone's ramp, which steps down at most twice to fit. phone.md "Review".
@@ -21,6 +22,8 @@ type LineStyle = TextStyle & { fontSize: number };
 
 /** Keeps the speaker on the same line as the last word. */
 const WORD_JOINER = String.fromCharCode(0x2060);
+/** iOS cuts an inline view off at its text's edge, and the 32 pt speaker stands taller than a 20 pt line. */
+const SPEAKER_ROOM = 8;
 
 /** What the cue must fit: the card's line, its longest word, and the reader's text size. */
 interface CueRoom {
@@ -77,12 +80,20 @@ export function CardLine({
   muted?: string;
   children: string;
 }) {
+  const { fontScale } = useWindowDimensions();
+  // The cue is sized for the text size already; the answer grows, short of the cue.
+  const limit = grows ? ANSWER_GROWS : 1;
+  const drawn = fitType(style.fontSize, fontScale, limit).drawn;
   return (
     <Text
       className="text-text"
-      style={[style, muted ? { color: muted } : null]}
-      // The cue is sized for the text size already; the answer grows, short of the cue.
-      maxFontSizeMultiplier={grows ? ANSWER_GROWS : 1}
+      style={[
+        style,
+        // Room the speaker can stand in past the line, given back so the card's layout never moves.
+        after ? { paddingVertical: SPEAKER_ROOM, marginVertical: -SPEAKER_ROOM } : null,
+        muted ? { color: muted } : null,
+      ]}
+      maxFontSizeMultiplier={limit}
     >
       {children}
       {after ? (
@@ -93,8 +104,8 @@ export function CardLine({
               // Room for the button's own -8 pt margins, so the text does not clip it.
               paddingVertical: 8,
               paddingStart: 12,
-              // An inline view stands on the baseline; this centres the 32 pt button on the line.
-              transform: [{ translateY: Math.round(16 - style.fontSize * 0.43) }],
+              // An inline view stands on the baseline; this centres the 32 pt button on the line as drawn.
+              transform: [{ translateY: Math.round(16 - drawn * 0.43) }],
             }}
           >
             {after}

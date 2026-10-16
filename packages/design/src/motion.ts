@@ -67,6 +67,13 @@ export const CHOICE_FADE = { duration: 0.15, ease: "linear" } as const satisfies
 
 export const INSTANT = { duration: 0 } as const;
 
+/** A pronunciation playing: its speaker's waves light one after the other, outward, on this loop. */
+export const SPEAKER_WAVES = {
+  loop: { duration: 0.9, ease: "linear" },
+  start: { duration: 0.2, ease: EASE_OUT },
+  settle: { duration: 0.14, ease: EASE_OUT },
+} as const satisfies Record<string, Timed>;
+
 /** A card or plate arriving in place, such as a field a chip adds: a 6 px rise. */
 export const PLATE_ARRIVE = { duration: 0.2, ease: EASE_OUT } as const satisfies Timed;
 export const PLATE_RISE = 6;

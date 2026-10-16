@@ -60,7 +60,9 @@ test("a learner reviews the started cards chosen from a tag", async ({ page }, t
   });
 
   await test.step("Review takes them once each, due first, and ends as a round", async () => {
-    await page.getByRole("button", { name: "Review 2", exact: true }).click();
+    await page.getByRole("button", { name: "Actions", exact: true }).click();
+    await expect(page.getByRole("menuitem", { name: "Review 1 due", exact: true })).toBeVisible();
+    await page.getByRole("menuitem", { name: "Review all 2", exact: true }).click();
     await expect(page).toHaveURL(/\/review\?deck=.*cards=/);
     for (const term of ["la bolletta", "il cassetto"]) {
       await expect(page.getByLabel(/ card for /)).toHaveAttribute("aria-label", new RegExp(term));

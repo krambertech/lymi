@@ -52,13 +52,17 @@ export default async function drive({ page, step, api, expect }) {
   await step("Selecting a tag's cards offers to review the started ones", async () => {
     const rowsApi = await api(`/api/decks/${deck.id}/cards`);
     const tagged = rowsApi.filter((r) => r.card.tags.some((t) => t.toLowerCase() === "money"));
-    const dayStart = new Date().setHours(0, 0, 0, 0);
-    const reviewable = tagged.filter(
+    const now = new Date();
+    const dayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const dayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).getTime();
+    const waiting = tagged.filter(
       (r) =>
         r.state &&
         r.state.state !== 0 &&
         !(r.state.lastReview && new Date(r.state.lastReview).getTime() >= dayStart),
-    ).length;
+    );
+    const reviewable = waiting.length;
+    const due = waiting.filter((r) => new Date(r.state.due).getTime() < dayEnd).length;
     await page.keyboard.press("Escape");
     await page.getByRole("button", { name: "Filter", exact: true }).click();
     await page.getByRole("menuitemcheckbox", { name: /^money\b/ }).click();
@@ -68,14 +72,17 @@ export default async function drive({ page, step, api, expect }) {
     await page.getByRole("menuitem", { name: "Select cards", exact: true }).click();
     await page.getByRole("button", { name: "Select all", exact: true }).click();
     await expect(page.getByText(`${tagged.length} selected`, { exact: true })).toBeVisible();
-    await expect(
-      page.getByRole("button", {
-        name: reviewable ? `Review ${reviewable}` : "Review",
-        exact: true,
-      }),
-    ).toBeVisible();
+    await page.getByRole("button", { name: "Actions", exact: true }).click();
+    if (due > 0) {
+      await expect(page.getByRole("menuitem", { name: `Review ${due} due` })).toBeVisible();
+    }
+    if (due === 0 || reviewable > due) {
+      const all = reviewable ? `Review all ${reviewable}` : "Nothing to review";
+      await expect(page.getByRole("menuitem", { name: all, exact: true })).toBeVisible();
+    }
+    await page.keyboard.press("Escape");
     await page.getByRole("button", { name: "Stop selecting", exact: true }).click();
-    return { tag: "money", cards: tagged.length, reviewable };
+    return { tag: "money", cards: tagged.length, reviewable, due };
   });
 
   await step("A search with no match says so in the list's place, and clears", async () => {
@@ -112,7 +119,11 @@ export default async function drive({ page, step, api, expect }) {
     await page.getByRole("button", { name: "Deck options", exact: true }).click();
     await page.getByRole("menuitem", { name: "Select cards", exact: true }).click();
     await page.getByRole("button", { name: "Select all", exact: true }).click();
-    await page.getByRole("button", { name: /^Review \d+$/ }).click();
+    await page.getByRole("button", { name: "Actions", exact: true }).click();
+    await page
+      .getByRole("menuitem", { name: /^Review (all \d+|\d+ due)$/ })
+      .first()
+      .click();
     await expect(page).toHaveURL(/\/review\?deck=.*cards=/);
     await expect(page.getByLabel(/ card for /)).toBeVisible();
     const cards = new URL(page.url()).searchParams.get("cards") ?? "";

@@ -14,17 +14,17 @@ import { clsx } from "clsx";
 import {
   Archive,
   ArrowUpDown,
+  ChevronDown,
   Download,
   KeyRound,
   Layers,
-  ListChecks,
   ListFilter,
-  ListX,
   LogOut,
   MoreHorizontal,
   PenLine,
   Plug,
   Plus,
+  RotateCcw,
   Search,
   SearchX,
   Settings2,
@@ -657,6 +657,7 @@ function SelectionToolbar({
   count,
   total,
   reviewable,
+  due,
   onAll,
   onClear,
   onReview,
@@ -668,9 +669,11 @@ function SelectionToolbar({
   total: number;
   /** Chosen cards a review takes: started, and not reviewed today. */
   reviewable: number;
+  /** Of those, the ones due before the day ends. */
+  due: number;
   onAll: () => void;
   onClear: () => void;
-  onReview?: (() => void) | undefined;
+  onReview?: ((kind: "due" | "all") => void) | undefined;
   /** The owner's: a member reads the deck, so only Review is theirs. */
   onTags?: (() => void) | undefined;
   onMove?: (() => void) | undefined;
@@ -692,71 +695,58 @@ function SelectionToolbar({
       >
         <Plural value={count} _0="Select cards" one="# selected" other="# selected" />
       </p>
-      {/* A narrow list keeps the count and Review readable, so Select all is its icon there. */}
-      <IconButton
-        size="sm"
-        label={all ? t`Clear` : t`Select all`}
-        className="@sm/tools:hidden"
-        onClick={all ? onClear : onAll}
-      >
-        {all ? <ListX /> : <ListChecks />}
-      </IconButton>
-      <span className="hidden @sm/tools:contents">
-        <Button size="sm" variant="ghost" onClick={all ? onClear : onAll}>
-          {all ? <Trans>Clear</Trans> : <Trans>Select all</Trans>}
-        </Button>
-      </span>
-      {onReview && (
-        <Button
-          size="sm"
-          variant={onMove ? "ghost" : "secondary"}
-          aria-disabled={reviewable === 0}
-          onClick={() => reviewable > 0 && onReview()}
-        >
-          <Plural value={reviewable} _0="Review" one="Review #" other="Review #" />
-        </Button>
-      )}
-      {onTags && (
-        <>
-          {/* A narrow list keeps the count and Move readable, so Tags is its icon there. */}
-          <IconButton
-            size="sm"
-            label={t`Tags…`}
-            className="@md/tools:hidden"
-            aria-disabled={count === 0}
-            onClick={() => count > 0 && onTags()}
-          >
-            <Tags />
-          </IconButton>
-          {/* The wrapper hides it, since Button's own display would win over a plain hidden. */}
-          <span className="hidden @md/tools:contents">
-            <Button
-              size="sm"
-              variant="ghost"
-              aria-disabled={count === 0}
-              onClick={() => count > 0 && onTags()}
-            >
-              <Trans>Tags…</Trans>
+      <Button size="sm" variant="ghost" onClick={all ? onClear : onAll}>
+        {all ? <Trans>Clear</Trans> : <Trans>Select all</Trans>}
+      </Button>
+      {/* One menu of what can be done to the chosen cards, as the phone's toolbar has. */}
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          disabled={count === 0}
+          render={
+            <Button size="sm" variant="primary">
+              <Trans>Actions</Trans>
+              <ChevronDown data-icon="inline-end" aria-hidden="true" />
             </Button>
-          </span>
-        </>
-      )}
-      {onMove && (
-        <Button
-          size="sm"
-          variant="primary"
-          aria-disabled={count === 0}
-          aria-label={t`Move to section…`}
-          onClick={() => count > 0 && onMove()}
-        >
-          <span className="@md/tools:hidden">
-            <Trans>Move…</Trans>
-          </span>
-          <span className="hidden @md/tools:inline">
-            <Trans>Move to section…</Trans>
-          </span>
-        </Button>
-      )}
+          }
+        />
+        <DropdownMenuContent aria-label={t`Actions`} align="end">
+          {onReview && (
+            <DropdownMenuGroup>
+              {/* Due first, since clearing today's work is why most learners narrow the list. */}
+              {due > 0 && (
+                <DropdownMenuItem onClick={() => onReview("due")}>
+                  <RotateCcw />
+                  <Plural value={due} one="Review # due" other="Review # due" />
+                </DropdownMenuItem>
+              )}
+              {(due === 0 || reviewable > due) && (
+                <DropdownMenuItem disabled={reviewable === 0} onClick={() => onReview("all")}>
+                  <RotateCcw />
+                  <Plural
+                    value={reviewable}
+                    _0="Nothing to review"
+                    one="Review all #"
+                    other="Review all #"
+                  />
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuGroup>
+          )}
+          {onReview && (onTags || onMove) && <DropdownMenuSeparator />}
+          {onTags && (
+            <DropdownMenuItem onClick={onTags}>
+              <Tags />
+              <Trans>Tags…</Trans>
+            </DropdownMenuItem>
+          )}
+          {onMove && (
+            <DropdownMenuItem onClick={onMove}>
+              <Signpost />
+              <Trans>Move to section…</Trans>
+            </DropdownMenuItem>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </section>
   );
 }
@@ -885,7 +875,9 @@ export function DeckDetailView({
   // What Review takes from the selection: started cards not reviewed today, as the server counts them.
   const reviewable = useMemo(() => {
     if (!selected || !cards) return [];
-    const dayStart = new Date().setHours(0, 0, 0, 0);
+    const today = new Date();
+    const dayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+    const dayEnd = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1).getTime();
     return cards
       .filter(
         (row) =>
@@ -893,7 +885,7 @@ export function DeckDetailView({
           rowState(row) !== "new" &&
           !(row.state?.lastReview && new Date(row.state.lastReview).getTime() >= dayStart),
       )
-      .map((row) => row.card.id);
+      .map((row) => ({ id: row.card.id, due: new Date(row.state?.due ?? 0).getTime() < dayEnd }));
   }, [selected, cards]);
   const stopSelecting = useCallback(() => {
     setSelected(null);
@@ -1284,9 +1276,16 @@ export function DeckDetailView({
                 count={selected.size}
                 total={ordered.length}
                 reviewable={reviewable.length}
+                due={reviewable.filter((r) => r.due).length}
                 onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
                 onClear={() => setSelected(new Set())}
-                onReview={onReviewCards && (() => onReviewCards(reviewable))}
+                onReview={
+                  onReviewCards &&
+                  ((kind) =>
+                    onReviewCards(
+                      reviewable.filter((r) => kind === "all" || r.due).map((r) => r.id),
+                    ))
+                }
                 onTags={owner && (() => owner.onTagCards([...selected], stopSelecting))}
                 onMove={owner && (() => owner.sections.onPickSection([...selected], stopSelecting))}
                 onDone={stopSelecting}

@@ -1417,8 +1417,8 @@ msgstr "Не удалось добавить колоду. Она больше �
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Не удалось отменить приглашение. Попробуй ещё раз."
 
-msgid "Couldn’t change the tags on {failed} of {sent} cards. Try again."
-msgstr "Не удалось изменить теги на {failed} из {sent} карточек. Попробуйте ещё раз."
+msgid "Couldn’t change the tags on {unsaved} of {sent} cards. Try again."
+msgstr "Не удалось изменить теги на {unsaved} из {sent} карточек. Попробуй ещё раз."
 
 msgid "Couldn’t check for more cards"
 msgstr "Не удалось проверить, есть ли ещё карточки"
@@ -1966,7 +1966,7 @@ msgid "Find a language"
 msgstr "Найди язык"
 
 msgid "Find or create a tag"
-msgstr "Найдите или создайте тег"
+msgstr "Найди или создай тег"
 
 msgid "For a test"
 msgstr "Для экзамена"
@@ -2837,7 +2837,7 @@ msgid "No series"
 msgstr "Без серии"
 
 msgid "No tags yet. Type one to create it."
-msgstr "Тегов пока нет. Введите название, чтобы создать тег."
+msgstr "Тегов пока нет. Введи название, чтобы создать тег."
 
 msgid "Nobody can add it while it is archived."
 msgstr "Пока колода в архиве, её никто не может добавить."
@@ -4032,7 +4032,7 @@ msgid "This week"
 msgstr "На этой неделе"
 
 msgid "Tick a tag to put it on every card, or untick it to take it off."
-msgstr "Отметьте тег, чтобы добавить его на все карточки, или снимите отметку, чтобы убрать."
+msgstr "Отметь тег, чтобы добавить его на все карточки, или сними отметку, чтобы убрать."
 
 msgid "Time"
 msgstr "Время"

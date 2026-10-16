@@ -152,6 +152,10 @@ msgstr "{0, plural, one {# часто забывается.} few {# часто �
 msgid "{0, plural, one {# past review was imported.} other {# past reviews were imported.}}"
 msgstr "{0, plural, one {Импортировано # прошлое повторение.} few {Импортировано # прошлых повторения.} many {Импортировано # прошлых повторений.} other {Импортировано # прошлого повторения.}}"
 
+#. placeholder {0}: deck.members
+msgid "{0, plural, one {# person} other {# people}}"
+msgstr "{0, plural, one {# человек} few {# человека} many {# человек} other {# человека}}"
+
 #. placeholder {0}: counts.picturesSkipped
 msgid "{0, plural, one {# picture couldn’t be read and was skipped.} other {# pictures couldn’t be read and were skipped.}}"
 msgstr "{0, plural, one {# изображение не удалось прочитать, оно пропущено.} few {# изображения не удалось прочитать, они пропущены.} many {# изображений не удалось прочитать, они пропущены.} other {# изображения не удалось прочитать, они пропущены.}}"
@@ -634,6 +638,9 @@ msgstr "Не удалось сохранить изменение в «{label}»
 msgid "A citizenship test, a driving test or another exam."
 msgstr "Экзамен на гражданство, на права или другой."
 
+msgid "A code is already on its way. Wait a minute before asking for another."
+msgstr "Код уже в пути. Подожди минуту, прежде чем просить новый."
+
 msgid "a connected app"
 msgstr "подключённое приложение"
 
@@ -983,6 +990,9 @@ msgstr "Архивировано «{sectionName}» вместе с карточ�
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "{count, plural, one {Заархивирована # карточка} few {Заархивировано # карточки} many {Заархивировано # карточек} other {Заархивировано # карточки}} в колоде «{deck}»"
 
+msgid "Archived decks and cards go too, with your settings, photo, connected apps and API keys. You leave every deck you joined, and every device is signed out."
+msgstr "Архивированные колоды и карточки тоже удалятся, вместе с настройками, фото, подключёнными приложениями и ключами API. Ты покинешь колоды других людей, которые изучаешь, и выйдешь из аккаунта на всех устройствах."
+
 msgid "Archived sections"
 msgstr "Архивные разделы"
 
@@ -1319,8 +1329,14 @@ msgstr "Закрыть"
 msgid "Cloze"
 msgstr "Пропуск в предложении"
 
+msgid "Code from the email"
+msgstr "Код из письма"
+
 msgid "Come back later, or add new cards."
 msgstr "Вернись позже или добавь новые карточки."
+
+msgid "Confirm it’s you"
+msgstr "Подтверди, что это ты"
 
 msgid "Confirm your address to finish creating your Lymi account:"
 msgstr "Подтверди адрес, чтобы закончить создание аккаунта Lymi:"
@@ -1414,6 +1430,9 @@ msgstr "Не удалось проверить это устройство. Об
 msgid "Couldn’t connect to Lymi. Try again in a moment."
 msgstr "Не удалось подключиться к Lymi. Попробуй ещё раз через минуту."
 
+msgid "Couldn’t delete your account. Check your connection and try again."
+msgstr "Не удалось удалить аккаунт. Проверь соединение и попробуй снова."
+
 msgid "Couldn’t enrich “{term}”. Check your connection and try again."
 msgstr "Не удалось дополнить «{term}». Проверь соединение и попробуй снова."
 
@@ -1477,6 +1496,9 @@ msgstr "Не удалось загрузить полку"
 msgid "Couldn’t load Today"
 msgstr "Не удалось загрузить экран «Сегодня»"
 
+msgid "Couldn’t load what your account holds"
+msgstr "Не удалось загрузить данные аккаунта"
+
 msgid "Couldn’t load your cards"
 msgstr "Не удалось загрузить карточки"
 
@@ -1527,6 +1549,9 @@ msgstr "Не удалось сохранить оценку для «{term}». �
 
 msgid "Couldn’t save. Try again."
 msgstr "Не удалось сохранить. Попробуй ещё раз."
+
+msgid "Couldn’t send the code. Check your connection and try again."
+msgstr "Не удалось отправить код. Проверь соединение и попробуй снова."
 
 msgid "Couldn’t send the invitation. Too many went out recently, so try again later."
 msgstr "Не удалось отправить приглашение. Слишком много приглашений за короткое время, попробуй позже."
@@ -1652,6 +1677,9 @@ msgstr "Колоды к повторению"
 msgid "Delete “{seriesName}”?"
 msgstr "Удалить «{seriesName}»?"
 
+msgid "Delete account"
+msgstr "Удалить аккаунт"
+
 msgid "Delete series"
 msgstr "Удалить серию"
 
@@ -1666,6 +1694,9 @@ msgstr "«{seriesName}» удалена, колоды в Архиве"
 
 msgid "Deleted the series {name}"
 msgstr "Удалена серия «{name}»"
+
+msgid "Deleting your account erases it for good. Nothing can bring it back."
+msgstr "Удаление стирает аккаунт навсегда. Восстановить его не получится."
 
 msgid "Deny"
 msgstr "Отклонить"
@@ -1837,11 +1868,17 @@ msgstr "Введи адрес почты, например you@example.com."
 msgid "Enter an email address."
 msgstr "Введи адрес электронной почты."
 
+msgid "Enter the 6-digit code from the email."
+msgstr "Введи 6-значный код из письма."
+
 msgid "Enter this code in Lymi to delete your account and everything in it:"
 msgstr "Введи этот код в Lymi, чтобы удалить аккаунт и всё, что в нём есть:"
 
 msgid "Enter this code in the Lymi app to finish creating your account:"
 msgstr "Введи этот код в приложении Lymi, чтобы закончить создание аккаунта:"
+
+msgid "Erase your account and everything in it, for good. Decks other people study stay for them."
+msgstr "Стереть аккаунт и всё, что в нём, навсегда. Колоды, которые изучают другие люди, останутся у них."
 
 msgid "Every card"
 msgstr "Все карточки"
@@ -1905,6 +1942,9 @@ msgstr "Экспортируй колоды по одной или ещё раз
 
 msgid "Export the deck again from Noji in OFC format, then choose that file."
 msgstr "Экспортируй колоду ещё раз из Noji в формате OFC и выбери этот файл."
+
+msgid "Export your library first if you might want your cards later. Lymi keeps nothing once the account is gone."
+msgstr "Сначала экспортируй библиотеку, если карточки могут пригодиться позже. После удаления аккаунта Lymi ничего не хранит."
 
 msgid "Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package."
 msgstr "Экспортируй всю библиотеку (изображения, расписание, историю повторений) как файл Lymi или пакет Anki."
@@ -1988,6 +2028,9 @@ msgstr "Забытые сегодня"
 
 msgid "Format"
 msgstr "Формат"
+
+msgid "Former owner"
+msgstr "Бывший владелец"
 
 #. placeholder {0}: deck.owner.name
 msgid "From {0}"
@@ -2270,6 +2313,12 @@ msgstr "Его карточки и созданные им колоды скры
 msgid "Its decks may have been withdrawn. Every deck Lymi publishes is on Explore."
 msgstr "Возможно, её колоды сняли с публикации. Все колоды, которые публикует Lymi, есть в каталоге."
 
+msgid "Its owner left Lymi"
+msgstr "Владелец колоды удалил аккаунт"
+
+msgid "Its owner left Lymi, so no cards will be added."
+msgstr "Владелец колоды удалил аккаунт, так что новых карточек не будет."
+
 msgctxt "deck tag"
 msgid "JLPT N5"
 msgstr "JLPT N5"
@@ -2295,6 +2344,9 @@ msgstr "JPEG, PNG, WebP или статичный GIF, до 10 МБ."
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Усердно"
+
+msgid "Keep a copy"
+msgstr "Сохрани копию"
 
 msgid "Keep invitation"
 msgstr "Оставить приглашение"
@@ -2422,6 +2474,9 @@ msgstr "Тест Leben in Deutschland"
 
 msgid "Left “{deckName}”"
 msgstr "Колода «{deckName}» больше не в Библиотеке"
+
+msgid "Left Lymi, so nobody can change this deck"
+msgstr "Аккаунт удалён, так что колоду никто не изменит"
 
 msgid "Lesson"
 msgstr "Урок"
@@ -2992,6 +3047,9 @@ msgctxt "Between two ways to sign in"
 msgid "or"
 msgstr "или"
 
+msgid "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
+msgstr "Другие люди изучают то, что опубликовал этот аккаунт, поэтому здесь его удалить нельзя. Напиши на <0>hello@lymi.app</0>, чтобы удалить его."
+
 msgid "Other subjects"
 msgstr "Другие темы"
 
@@ -3039,6 +3097,9 @@ msgstr "Заглянуть в зацепку"
 
 msgid "People"
 msgstr "Люди"
+
+msgid "People study these decks, so they stay until the last of them leaves. Nobody can change them after you go."
+msgstr "Эти колоды изучают другие люди, поэтому они останутся, пока из них не выйдет последний. После твоего удаления их никто не сможет изменить."
 
 msgid "People who added it keep studying it, but nobody new can add it."
 msgstr "Кто уже добавил колоду, продолжает её учить, но новые люди добавить её не могут."
@@ -3509,8 +3570,14 @@ msgstr "Отправить"
 msgid "Send a lesson from Claude or ChatGPT"
 msgstr "Отправь урок из Claude или ChatGPT"
 
+msgid "Send a new code"
+msgstr "Отправить новый код"
+
 msgid "Send a new link"
 msgstr "Отправить новую ссылку"
+
+msgid "Send code"
+msgstr "Отправить код"
 
 msgid "Send feedback"
 msgstr "Обратная связь"
@@ -3526,6 +3593,9 @@ msgstr "Отправить ссылку"
 
 msgid "Sent again"
 msgstr "Отправили ещё раз"
+
+msgid "Sent to {sentTo}. It works for 15 minutes."
+msgstr "Отправлено на {sentTo}. Код действует 15 минут."
 
 msgid "Series"
 msgstr "Серия"
@@ -3763,6 +3833,9 @@ msgstr "Тестовое письмо от Lymi"
 msgid "Thank you. Replies come to your email."
 msgstr "Спасибо. Ответ придёт на твою почту."
 
+msgid "That code isn’t right. Check the email and try again."
+msgstr "Код неверный. Проверь письмо и попробуй ещё раз."
+
 msgid "That didn’t go through. Reload and try again."
 msgstr "Не получилось. Обнови страницу и попробуй снова."
 
@@ -3833,6 +3906,9 @@ msgstr "Код действует 15 минут. Если это не ты со�
 msgid "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 msgstr "Колода исчезнет из Библиотеки, и её карточки перестанут появляться в повторениях. Если присоединишься снова, твои повторения сохранятся."
 
+msgid "The deck leaves Library and its cards stop coming up in review. Its owner left Lymi, so you can’t join it again."
+msgstr "Колода исчезнет из Библиотеки, а её карточки перестанут появляться в повторениях. Владелец удалил аккаунт, так что присоединиться снова не получится."
+
 msgid "The deck leaves Library and its cards stop coming up in review. Restore brings it back."
 msgstr "Колода исчезнет из Библиотеки, и её карточки перестанут появляться в повторениях. «Восстановить» вернёт её."
 
@@ -3899,11 +3975,17 @@ msgstr "Человек потеряет доступ к колоде и не с�
 msgid "They’re already in this deck."
 msgstr "Этот человек уже в колоде."
 
+msgid "This account publishes decks"
+msgstr "Этот аккаунт публикует колоды"
+
 msgid "This browser can’t show reminders."
 msgstr "Этот браузер не показывает напоминания."
 
 msgid "This card’s picture was removed."
 msgstr "Изображение этой карточки убрано."
+
+msgid "This code has expired. Send a new one."
+msgstr "Срок действия кода истёк. Отправь новый."
 
 msgid "This deck is already in Library."
 msgstr "Эта колода уже есть в Библиотеке."
@@ -4176,6 +4258,9 @@ msgstr "Видимость"
 msgid "We signed out your other devices."
 msgstr "Мы вышли из аккаунта на других устройствах."
 
+msgid "We’ll email you a 6-digit code. The account is deleted only once you enter it."
+msgstr "Мы отправим тебе 6-значный код. Аккаунт удалится, только когда ты его введёшь."
+
 msgid "We’ll email you a link to set a new one."
 msgstr "Отправим на почту ссылку, чтобы задать новый."
 
@@ -4202,6 +4287,9 @@ msgstr "Добро пожаловать в Lymi"
 msgid "What are you learning?"
 msgstr "Что ты учишь?"
 
+msgid "What goes"
+msgstr "Что удалится"
+
 msgid "What happens to its cards"
 msgstr "Что будет с его карточками"
 
@@ -4213,6 +4301,9 @@ msgstr "Что такое Lymi?"
 
 msgid "What it’s for"
 msgstr "Для чего она"
+
+msgid "What stays for others"
+msgstr "Что останется другим"
 
 msgid "What the picture shows, without the answer. Picture review needs it."
 msgstr "Что на изображении, без ответа. Без описания повторение по изображению не начнётся."
@@ -4325,11 +4416,17 @@ msgstr "Через эту ссылку нельзя присоединиться
 msgid "You don’t need to do anything."
 msgstr "Ничего делать не нужно."
 
+msgid "You keep studying these cards on your own schedule. Nobody else sees your reviews or progress."
+msgstr "Ты по-прежнему изучаешь эти карточки по своему расписанию. Никто другой не видит твоих повторений и прогресса."
+
 msgid "You know {knownN} of {total, plural, one {# card} other {# cards}}"
 msgstr "Выучено {knownN} из {total, plural, one {# карточки} few {# карточек} many {# карточек} other {# карточки}}"
 
 msgid "You removed them from this deck, so you can’t invite them again."
 msgstr "Этот человек исключён из колоды, поэтому пригласить его снова нельзя."
+
+msgid "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."
+msgstr "Ты входишь через Apple, поэтому после удаления аккаунта убери Lymi из раздела «Вход с Apple» в настройках аккаунта Apple."
 
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "Ты начинаешь с первого раздела. Следующий откроется, когда выучишь этот."
@@ -4358,6 +4455,9 @@ msgstr "На сегодня всё"
 msgid "You’re done for today."
 msgstr "На сегодня всё."
 
+msgid "You’ve asked for several codes today. Try again tomorrow."
+msgstr "Сегодня уже отправлено несколько кодов. Попробуй завтра."
+
 msgid "Your code to delete your Lymi account"
 msgstr "Твой код для удаления аккаунта Lymi"
 
@@ -4375,6 +4475,9 @@ msgstr "Твои оценки сохранены. Проверь соедине�
 
 msgid "Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi."
 msgstr "Твой аккаунт Lymi и всё, что в нём было, удалены, как ты и просил. Больше писем от Lymi не будет."
+
+msgid "Your Lymi account is deleted"
+msgstr "Твой аккаунт Lymi удалён"
 
 msgid "Your Lymi account signs in with Google"
 msgstr "Твой аккаунт Lymi входит через Google"

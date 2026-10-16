@@ -16,7 +16,7 @@ import { ARRIVE } from "@lymi/design";
 import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
-import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { View } from "react-native";
 import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -38,7 +38,7 @@ import {
 } from "../../../sections/sections";
 import { useOnline } from "../../../streak/goal-picker";
 import { springIn, useReduceMotion } from "../../../theme/motion";
-import { usePalette } from "../../../theme/palette";
+import { usePalette, useRoom } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
 import { useFloatingBar } from "../../../ui/floating-bar";
@@ -46,7 +46,7 @@ import { Icon } from "../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
 import { Select } from "../../../ui/menu";
 import { OfflineNote } from "../../../ui/offline-note";
-import { Button, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
+import { Button, LIFT, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
 import { RowMenu, type RowMenuItem } from "../../../ui/row-menu";
 import { BarButton, Screen } from "../../../ui/screen";
 import { Segmented } from "../../../ui/segmented";
@@ -55,6 +55,15 @@ import { Skeleton } from "../../../ui/skeleton";
 import { StateIcon, stateMarks } from "../../../ui/state-mark";
 import { setDeckReviewHidden, setDeckSelecting } from "../../../ui/tab-bar";
 import { toast } from "../../../ui/toast-host";
+
+/** Stable empties, so a deck without sections or cards does not regroup its list on every render. */
+const NO_ROWS: DeckRow[] = [];
+const NO_SECTIONS: Section[] = [];
+
+/** The list a deck draws: each group's heading, then its words one row at a time. */
+type Item =
+  | { kind: "heading"; key: string; group: DeckGroup }
+  | { kind: "row"; key: string; row: DeckRow; first: boolean; last: boolean; dim: boolean };
 
 /**
  * A deck: what it wants today and how far along it is, then its words as a glossary, which Filter
@@ -68,9 +77,9 @@ export default function Deck() {
   const deck = decks.data?.find((d) => d.id === id);
   const gone = !!decks.data && !deck;
   const cards = useDeckCards(id);
-  const rows: DeckRow[] = cards.data ?? [];
+  const rows = cards.data ?? NO_ROWS;
   const sectionsQuery = useSections(id);
-  const sections = sectionsQuery.data?.sections ?? [];
+  const sections = sectionsQuery.data?.sections ?? NO_SECTIONS;
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
   const [chosenSort, setSort] = useState<DeckSort | null>(null);
   const sort = chosenSort ?? (sections.length ? "section" : "added");
@@ -101,9 +110,35 @@ export default function Deck() {
     moveToSection: moveToSection.canMove ? (c) => () => moveToSection.open([c.id]) : undefined,
     moveToDeck: moveToDeck.canMove ? (c) => () => moveToDeck.open([c.id]) : undefined,
   });
+  // Rows keep one menu function, so a render of the page redraws only rows whose card changed.
+  const latestMenu = useRef(cardMenu);
+  latestMenu.current = cardMenu;
+  const menu = useCallback((card: DeckRow["card"]) => latestMenu.current(card), []);
+  const menuShape = `${owner} ${moveToSection.canMove} ${moveToDeck.canMove}`;
+  const lift = useRoom() === "dark";
   const reduce = useReduceMotion();
   const selection = owner && selected ? selected : null;
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
+  const items = useMemo(
+    () =>
+      groups.flatMap((group): Item[] => {
+        const dim = group.kind === "section" && !!group.section && group.section.status !== "open";
+        return [
+          { kind: "heading", key: `h:${group.key}`, group },
+          ...group.rows.map(
+            (row, i): Item => ({
+              kind: "row",
+              key: row.card.id,
+              row,
+              first: i === 0,
+              last: i === group.rows.length - 1,
+              dim,
+            }),
+          ),
+        ];
+      }),
+    [groups],
+  );
   const done = () => setSelected(null);
   const choosing = !!selection;
   useEffect(() => {
@@ -179,12 +214,49 @@ export default function Deck() {
   const cardsFailed = useLoadFailed(cards);
   const decksFailed = useLoadFailed(decks);
   const addCard = () => router.push(`/capture?deck=${id}` as Href);
+  // The words draw as a list only once the page has a deck with cards to show.
+  const listed = !gone && !cardsFailed && !decksFailed && !!deck && rows.length > 0;
 
   return (
     <Screen
       title={deck?.name ?? ""}
       onRefresh={() => Promise.all([decks.refetch(), cards.refetch(), sectionsQuery.refetch()])}
       back={{ label: t`Library`, to: "/library" }}
+      list={
+        listed && deck
+          ? {
+              data: items,
+              keyExtractor: (item) => item.key,
+              extraData: `${selection?.size ?? -1} ${menuShape} ${lift} ${progress?.currentId} ${sectionStart.starting}`,
+              renderItem: ({ item }) =>
+                item.kind === "heading" ? (
+                  <Heading
+                    group={item.group}
+                    deckId={id}
+                    hereId={progress?.currentId ?? null}
+                    starting={sectionStart.starting}
+                    onStart={sectionStart.start}
+                    owner={owner}
+                    several={sections.length > 1}
+                  />
+                ) : (
+                  <Slice first={item.first} last={item.last} dim={item.dim} lift={lift}>
+                    <WordRow
+                      row={item.row}
+                      first={item.first}
+                      selected={selection ? selection.has(item.row.card.id) : undefined}
+                      onToggle={selection ? toggleSelected : undefined}
+                      menu={menu}
+                      menuShape={menuShape}
+                      deckName={deck.name}
+                    />
+                  </Slice>
+                ),
+              // The last cards scroll clear of the pinned toolbar.
+              footer: selection && <View className="h-16" />,
+            }
+          : undefined
+      }
       past={
         reviewEnd === null ? undefined : { y: reviewEnd - insets.top - 56, onChange: onReviewPast }
       }
@@ -343,7 +415,7 @@ export default function Deck() {
                 setSort={setSort}
               />
             </View>
-            {groups.length === 0 ? (
+            {groups.length === 0 && (
               <Plate>
                 <EmptyState
                   kind="noMatch"
@@ -352,22 +424,6 @@ export default function Deck() {
                   action={{ label: t`Show all`, onPress: () => setFilters(noFilters) }}
                 />
               </Plate>
-            ) : (
-              groups.map((g) => (
-                <Group
-                  key={g.key}
-                  group={g}
-                  deckId={id}
-                  hereId={progress?.currentId ?? null}
-                  starting={sectionStart.starting}
-                  onStart={sectionStart.start}
-                  selection={selection ? { ids: selection, onToggle: toggleSelected } : undefined}
-                  menu={cardMenu}
-                  deckName={deck.name}
-                  owner={owner}
-                  several={sections.length > 1}
-                />
-              ))
             )}
           </View>
         </>
@@ -375,8 +431,6 @@ export default function Deck() {
       {deck && owner && <MoveToSeries deck={deck} open={moving} onOpenChange={setMoving} />}
       {owner && moveToSection.sheet}
       {owner && moveToDeck.sheet}
-      {/* The last cards scroll clear of the pinned toolbar. */}
-      {selection && <View className="h-16" />}
     </Screen>
   );
 }
@@ -675,16 +729,13 @@ function Tools({
   );
 }
 
-/** One heading and its words: a section, when it's back, or the day the words arrived. */
-function Group({
+/** A group's heading over its words: a section, when it's back, or the day the words arrived. */
+function Heading({
   group: g,
   deckId,
   hereId,
   starting,
   onStart,
-  selection,
-  menu,
-  deckName,
   owner,
   several,
 }: {
@@ -694,10 +745,6 @@ function Group({
   hereId: string | null;
   starting: string | undefined;
   onStart: (section: Section) => void;
-  /** Set while the list is choosing cards. */
-  selection?: { ids: ReadonlySet<string>; onToggle: (cardId: string) => void } | undefined;
-  menu: (card: DeckRow["card"]) => RowMenuItem[][];
-  deckName: string;
   owner: boolean;
   several: boolean;
 }) {
@@ -712,7 +759,7 @@ function Group({
           : null;
   const section = g.kind === "section" ? g.section : null;
   return (
-    <View>
+    <View className="pt-6">
       {section?.status === "ready" && (
         <ReadyNote section={section} starting={starting === section.id} onStart={onStart} />
       )}
@@ -740,21 +787,30 @@ function Group({
           </SectionTitle>
         )
       )}
-      <Plate
-        className={`overflow-hidden ${section && section.status !== "open" ? "opacity-70" : ""}`}
-      >
-        {g.rows.map((row, i) => (
-          <WordRow
-            key={row.card.id}
-            row={row}
-            first={i === 0}
-            selected={selection?.ids.has(row.card.id)}
-            onToggle={selection?.onToggle}
-            menu={menu}
-            deckName={deckName}
-          />
-        ))}
-      </Plate>
+    </View>
+  );
+}
+
+/** One row's share of its group's plate, so a group of thousands draws only the rows in view. */
+function Slice({
+  first,
+  last,
+  dim,
+  lift,
+  children,
+}: {
+  first: boolean;
+  last: boolean;
+  dim: boolean;
+  lift: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <View
+      className={`overflow-hidden border-x border-edge bg-plate ${first ? "rounded-t-xl border-t" : ""} ${last ? "rounded-b-xl border-b" : ""}`}
+      style={[lift ? LIFT : null, dim ? { opacity: 0.7 } : null]}
+    >
+      {children}
     </View>
   );
 }
@@ -764,7 +820,7 @@ function Group({
  * under it, at most three lines of term and two of meaning. The open card shows the rest. While the
  * list is choosing cards, the mark is a checkbox and a tap chooses rather than opens.
  */
-function WordRow({
+const WordRow = memo(function WordRow({
   row,
   first,
   selected,
@@ -778,6 +834,8 @@ function WordRow({
   selected?: boolean | undefined;
   onToggle?: ((cardId: string) => void) | undefined;
   menu: (card: DeckRow["card"]) => RowMenuItem[][];
+  /** Changes when what the menu offers does, since `menu` itself stays the same function. */
+  menuShape: string;
   deckName: string;
 }) {
   const { t, i18n } = useLingui();
@@ -835,7 +893,7 @@ function WordRow({
       {face}
     </RowMenu>
   );
-}
+});
 
 /**
  * Move to series, as the web's: no series, one of the learner's, or a new one that starts with

@@ -56,6 +56,7 @@
       "plugin": "./scripts/build-cache-provider.cjs"
     },
     "plugins": [
+      "./plugins/with-scene-delegate.cjs",
       "./plugins/no-push-entitlement.cjs",
       "./plugins/app-links.cjs",
       "./plugins/with-symbols.cjs",

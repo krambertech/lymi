@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { type Href, useIsPreview, useRouter } from "expo-router";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import {
   I18nManager,
   RefreshControl,
@@ -16,6 +16,7 @@ import Animated, {
   runOnJS,
   type SharedValue,
   useAnimatedReaction,
+  useAnimatedRef,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
@@ -68,6 +69,8 @@ interface Props {
   onRefresh?: () => Promise<unknown>;
   /** Told once each time the page scrolls past this content offset, or back above it. */
   past?: { y: number; onChange: (past: boolean) => void } | undefined;
+  /** A page of steps, such as an import's questions, starts each one at the top: change it per step. */
+  scrollKey?: string | number;
   children: ReactNode;
 }
 
@@ -103,6 +106,7 @@ export function Screen({
   onEndReached,
   onRefresh,
   past,
+  scrollKey,
   children,
 }: Props) {
   const insets = useSafeAreaInsets();
@@ -114,6 +118,11 @@ export function Screen({
   const { t } = useLingui();
   const p = usePalette();
   const y = useSharedValue(0);
+  const scroller = useAnimatedRef<Animated.ScrollView>();
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the key is the trigger.
+  useEffect(() => {
+    if (scrollKey !== undefined) scroller.current?.scrollTo({ y: 0, animated: false });
+  }, [scrollKey]);
   const [compact, setCompact] = useState(false);
   const hasEnd = !!onEndReached;
   const endJS = () => onEndReached?.();
@@ -242,6 +251,7 @@ export function Screen({
   return (
     <View className="flex-1 bg-canvas">
       <Animated.ScrollView
+        ref={scroller}
         keyboardShouldPersistTaps="handled"
         className="flex-1"
         contentContainerClassName="px-5 gap-7"

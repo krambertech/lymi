@@ -90,14 +90,27 @@ const phoneOperations = [
   "GET /api/explore",
   "GET /api/explore/{slug}",
   "POST /api/add/{slug}",
+  "POST /api/imports",
+  "GET /api/imports/{id}",
+  "PUT /api/imports/{id}/parts/{part}",
+  "POST /api/imports/{id}/complete",
+  "POST /api/imports/{id}/preview",
+  "POST /api/imports/{id}/confirm",
+  "POST /api/imports/{id}/cancel",
+  "POST /api/imports/{id}/archive",
+  "POST /api/imports/{id}/restore",
+  "POST /api/exports",
+  "GET /api/exports/{id}",
+  "GET /api/exports/{id}/file",
 ];
 
 // The phone's calls the document hides, Better Auth, the photo, audio, feedback, and join links and
 // the add preview, are guarded by phone-contract-unlisted.test.ts instead.
 
-/** The phone's reads a seeded learner can make, with its deck as `{id}`. */
+/** The phone's reads a seeded learner can make, with its deck as `{id}`; a file's reads need a file. */
 const phoneReads = phoneOperations
   .filter((operation) => operation.startsWith("GET ") && !/\{(?!id\})/.test(operation))
+  .filter((operation) => !/^GET \/api\/(imports|exports)\//.test(operation))
   .map((operation) => operation.slice("GET ".length));
 
 /**

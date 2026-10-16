@@ -11,7 +11,7 @@ import {
   type ReviewMode,
 } from "@lymi/core";
 import { and, eq } from "@lymi/core/db";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { type Db, schema } from "../db";
 import { anki } from "../imports/anki";
 import { bytesSource, openZip, readZipEntry } from "../imports/files";
@@ -446,11 +446,21 @@ describe("exporting the library as a Lymi zip", () => {
 
   it("writes one deck, and a second request while it is written returns the same export", async () => {
     const { owner, italian } = await shared();
-    const first = await startExport(owner, { format: "lymi", deckId: italian.id }, async () => {});
-    const again = await startExport(owner, { format: "lymi", deckId: italian.id }, async () => {
+    const capture = vi.fn();
+    const tracked = { ...owner, analytics: { capture, writeDataPoint: vi.fn() } };
+    const first = await startExport(
+      tracked,
+      { format: "lymi", deckId: italian.id },
+      async () => {},
+    );
+    const again = await startExport(tracked, { format: "lymi", deckId: italian.id }, async () => {
       throw new Error("no second run");
     });
     expect(again.id).toBe(first.id);
+    // The same export asked for twice was started once.
+    expect(capture.mock.calls).toEqual([
+      [{ name: "export_started", format: "lymi", scope: "deck" }],
+    ]);
     await failExport(db, first.id, "internal", env.EXPORTS);
 
     const { view, bytes } = await runExport(owner, { format: "lymi", deckId: italian.id });

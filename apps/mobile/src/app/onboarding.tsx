@@ -11,7 +11,6 @@ import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Pool } from "../auth/door-parts";
 import { useAddDeck, useAddFailure } from "../explore/catalogue";
-import { openWeb } from "../ui/on-the-web";
 import { Button, Text } from "../ui/primitives";
 import { BarButton, BarText } from "../ui/screen";
 import { CONNECT_DOCS } from "../welcome/assistant-offer";
@@ -116,7 +115,13 @@ export default function Onboarding() {
           learningLanguage: kind === "language" ? language : null,
           dailyGoal: goal,
         },
-        answers.kind === "deck" ? "/review" : answers.own === "type" ? "/new-deck" : undefined,
+        answers.kind === "deck"
+          ? "/review"
+          : answers.own === "type"
+            ? "/new-deck"
+            : answers.own === "import"
+              ? "/import"
+              : undefined,
       );
     } catch (e) {
       setError(
@@ -138,10 +143,8 @@ export default function Onboarding() {
     );
     finishStep("start", false);
     endWelcome();
-    // The web's own pages, over Today with its guide.
-    if (answers.kind === "own" && answers.own === "import") void openWeb("/import");
-    else if (answers.kind === "own" && answers.own === "assistant")
-      void openBrowserAsync(CONNECT_DOCS);
+    // The assistant's guide is on the web, over Today with its guide.
+    if (answers.kind === "own" && answers.own === "assistant") void openBrowserAsync(CONNECT_DOCS);
   };
 
   const startJoined = async () => {

@@ -198,6 +198,10 @@ export const analyticsEvents = {
     outcome: z.enum(["done", "failed"]),
   }),
   import_failed: z.object({ source, card_count: count }),
+  export_started: z.object({
+    format: z.enum(["lymi", "anki"]),
+    scope: z.enum(["deck", "library"]),
+  }),
   daily_goal_set: z.object({ value: z.number().int().min(1).max(200), is_change: z.boolean() }),
   reminder_prompt_shown: z.object({}),
   reminder_prompt_accepted: z.object({}),
@@ -326,6 +330,7 @@ export const analyticsProducers = {
   import_started: ["worker"],
   import_finished: ["worker"],
   import_failed: ["worker"],
+  export_started: ["worker"],
   daily_goal_set: ["worker"],
   reminder_prompt_shown: ["browser"],
   reminder_prompt_accepted: ["browser"],

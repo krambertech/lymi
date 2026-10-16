@@ -30,6 +30,7 @@ import { useMoveNotice, useSeriesActions } from "../../../data/series";
 import { useCardBatch, useMoveToDeck } from "../../../deck/card-batch";
 import { useMoveToSection } from "../../../deck/move-to-section";
 import { SelectBox, SelectionToolbar } from "../../../deck/selection";
+import { ExportSheet } from "../../../export/export-sheet";
 import {
   ReadyNote,
   SectionHeading,
@@ -91,6 +92,7 @@ export default function Deck() {
   const sectionStart = useStartSection(id, sections);
   const exits = useDeckExits(deck);
   const [moving, setMoving] = useState(false);
+  const [exporting, setExporting] = useState(false);
   // The cards chosen with Select cards, or null when the list is not choosing.
   const [selected, setSelected] = useState<ReadonlySet<string> | null>(null);
   const moveToSection = useMoveToSection(id);
@@ -223,6 +225,11 @@ export default function Deck() {
                           label: t`Move to series`,
                           icon: "series" as const,
                           onSelect: () => setMoving(true),
+                        },
+                        {
+                          label: t`Export deck`,
+                          icon: "export" as const,
+                          onSelect: () => setExporting(true),
                         },
                       ]
                     : []),
@@ -373,6 +380,18 @@ export default function Deck() {
         </>
       )}
       {deck && owner && <MoveToSeries deck={deck} open={moving} onOpenChange={setMoving} />}
+      {deck && owner && (
+        <ExportSheet
+          open={exporting}
+          onOpenChange={setExporting}
+          scope={{
+            kind: "deck",
+            deckId: deck.id,
+            deckName: deck.name,
+            rows: cards.data,
+          }}
+        />
+      )}
       {owner && moveToSection.sheet}
       {owner && moveToDeck.sheet}
       {/* The last cards scroll clear of the pinned toolbar. */}

@@ -12,13 +12,13 @@ import {
   namesCaller,
 } from "@lymi/client/activity";
 import type { ActivityCard, ActivityEntry } from "@lymi/client/api";
-import { useRouter } from "expo-router";
+import { type Href, useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
+import { ExportSheet } from "../export/export-sheet";
 import { usePalette } from "../theme/palette";
 import { Chip } from "../ui/chip";
 import type { IconName } from "../ui/icons";
-import { openWeb } from "../ui/on-the-web";
 import { Button, Icon, Plate, Press, RowArrow, Text } from "../ui/primitives";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { Skeleton } from "../ui/skeleton";
@@ -293,14 +293,16 @@ interface RowProps {
   first: boolean;
   /** Opens the list's one sheet on this row's cards. */
   onCards: (entry: ActivityEntry, meta: string) => void;
+  /** Opens the list's export sheet on this row's file. */
+  onExport: (entry: ActivityEntry) => void;
 }
 
 /**
  * One row: the verb's mark, the sentence, and who and when under it. Rows that wrote cards open the
- * cards in a sheet over the list; a file opens on the web, where files are handled (ADR 0030); a
- * deck opens in Library.
+ * cards in a sheet over the list; an import opens its page and an export its sheet, as on the web;
+ * a deck opens in Library.
  */
-function ActivityRow({ entry, time, first, onCards }: RowProps) {
+function ActivityRow({ entry, time, first, onCards, onExport }: RowProps) {
   const p = usePalette();
   const router = useRouter();
   const caller = useCaller()(entry);
@@ -310,18 +312,16 @@ function ActivityRow({ entry, time, first, onCards }: RowProps) {
     .join(" · ");
   const hasCards = entry.cards.length > 0;
   const deck = entry.deck && !entry.deck.archived ? entry.deck : null;
-  const onWeb = entry.import
-    ? `/import/${entry.import.id}`
-    : entry.export
-      ? "/settings#export"
-      : null;
+  const importId = entry.import?.id;
   const press = hasCards
     ? () => onCards(entry, meta)
-    : onWeb
-      ? () => openWeb(onWeb)
-      : deck
-        ? () => router.push(`/library/${deck.id}`)
-        : undefined;
+    : importId
+      ? () => router.push(`/import/${importId}` as Href)
+      : entry.export
+        ? () => onExport(entry)
+        : deck
+          ? () => router.push(`/library/${deck.id}`)
+          : undefined;
 
   const face = (
     <View className="min-h-[72px] flex-row items-center gap-3 py-3 ps-4 pe-4">
@@ -337,18 +337,18 @@ function ActivityRow({ entry, time, first, onCards }: RowProps) {
           {meta}
         </Text>
       </View>
-      {onWeb && !hasCards ? (
-        <Icon name="web" size={18} colour={p.muted} strokeWidth={2.25} />
-      ) : press ? (
-        <RowArrow />
-      ) : null}
+      {press ? <RowArrow /> : null}
     </View>
   );
 
   return (
     <View className={first ? undefined : "border-t border-edge"}>
       {press ? (
-        <Press scale={0.99} onPress={press} accessibilityRole={hasCards ? "button" : "link"}>
+        <Press
+          scale={0.99}
+          onPress={press}
+          accessibilityRole={hasCards || entry.export ? "button" : "link"}
+        >
           {face}
         </Press>
       ) : (
@@ -527,6 +527,8 @@ export function ActivityView({
   // One sheet for the whole list, so a page of rows does not mount a sheet each.
   const [chosen, setChosen] = useState<{ entry: ActivityEntry; meta: string } | null>(null);
   const [open, setOpen] = useState(false);
+  const [file, setFile] = useState<ActivityEntry | null>(null);
+  const [exportOpen, setExportOpen] = useState(false);
   const p = usePalette();
   if (offline) {
     return (
@@ -613,6 +615,10 @@ export function ActivityView({
                   setChosen({ entry, meta });
                   setOpen(true);
                 }}
+                onExport={(entry) => {
+                  setFile(entry);
+                  setExportOpen(true);
+                }}
               />
             ))}
           </Plate>
@@ -625,6 +631,19 @@ export function ActivityView({
         open={open}
         onOpenChange={setOpen}
       />
+      {file?.export && (
+        <ExportSheet
+          key={file.group}
+          open={exportOpen}
+          onOpenChange={setExportOpen}
+          initial={file.export}
+          scope={
+            file.deck && file.export.deckId
+              ? { kind: "deck", deckId: file.export.deckId, deckName: file.deck.name }
+              : { kind: "library" }
+          }
+        />
+      )}
     </>
   );
 }

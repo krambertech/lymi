@@ -1,5 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { splitNoteTypes } from "@lymi/client/imports";
 import { type ImportSource, MAX_IMPORT_BYTES } from "@lymi/core";
 import { clsx } from "clsx";
 import {
@@ -36,7 +37,6 @@ import { Skeleton } from "../components/skeleton";
 import { Checkbox } from "../components/ui/checkbox";
 import { Field, FieldLabel } from "../components/ui/field";
 import type { Import, ImportPreview } from "../lib/api";
-import { splitNoteTypes } from "../lib/import-note-types";
 import type { UploadState } from "../lib/import-uploads";
 
 const ACCEPT: Record<ImportSource, string> = {

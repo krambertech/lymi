@@ -1,6 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { SOURCE_NAMES } from "@lymi/client/imports";
 import type { FieldRole, ImportFailure, ImportSource } from "@lymi/core";
 import { clsx } from "clsx";
 import { Image as ImageIcon } from "lucide-react";
@@ -33,14 +34,7 @@ export const ROLE_LABELS: Record<FieldRole, MessageDescriptor> = {
   skip: msg`Leave out`,
 };
 
-/** The apps an import comes from, by the names they go by everywhere. */
-export const SOURCE_NAMES: Record<ImportSource, string> = {
-  anki: "Anki",
-  mochi: "Mochi",
-  noji: "Noji",
-  lymi: "Lymi",
-  quizlet: "Quizlet",
-};
+export { SOURCE_NAMES } from "@lymi/client/imports";
 
 /** The kinds of Mochi and Noji card with no template, named here because the server sends a key. */
 const MOCHI_KINDS: Record<string, MessageDescriptor> = {

@@ -3,6 +3,8 @@ status: accepted
 date: 2026-10-11
 ---
 
+Import and export have since moved to the phone ([ADR 0036](0036-import-and-export-run-on-the-phone.md)); the other three setup jobs stay on the web.
+
 # The phone leads the daily jobs and setup stays on the web
 
 Every learning feature reaches both the web app and the phone app, and the phone is built first for the daily jobs: reviewing, glancing at what is due, and catching a word. Five setup jobs stay on the web, and the phone shows each as a row that opens it there: import, export, API keys and connected apps, publishing, and deck reports. This narrows the parity rule in [ADR 0029](0029-the-phone-app-is-expo-react-native-sharing-core.md), which asked for every feature on both apps.

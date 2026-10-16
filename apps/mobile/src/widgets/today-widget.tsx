@@ -9,6 +9,7 @@ import {
   widgetURL,
 } from "@expo/ui/swift-ui/modifiers";
 import { createWidget, type WidgetEnvironment } from "expo-widgets";
+import type { WidgetText } from "../i18n/widgets";
 import type { WidgetColours } from "./colours";
 
 type Paint = Parameters<typeof foregroundStyle>[0];
@@ -21,8 +22,7 @@ export interface Lanterns {
 }
 
 export interface TodayProps {
-  due: number;
-  streak: number;
+  text: WidgetText;
   /** No streak and no review yet today: the lantern is out. */
   out: boolean;
   /** file:// paths in the shared app group, one lantern per room and state. */
@@ -51,13 +51,11 @@ const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
           endRadius,
         }
       : { type: "material", material: "regular" };
-  const due = props.due ?? 0;
-  const streak = props.streak ?? 0;
+  const text = props.text;
   const lanterns = props.lanterns;
   const lit = dark ? lanterns?.dark : lanterns?.light;
   const out = dark ? lanterns?.darkOut : lanterns?.lightOut;
   const lantern = (props.out ? out : lit) ?? "";
-  const line = due === 1 ? "card due" : "cards due";
 
   if (env.widgetFamily === "systemMedium") {
     return (
@@ -79,12 +77,14 @@ const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
               foregroundStyle(ink),
             ]}
           >
-            {String(due)}
+            {text?.dueCount ?? "0"}
           </Text>
-          <Text modifiers={[font({ size: 16 }), foregroundStyle(muted)]}>{line}</Text>
+          <Text modifiers={[font({ size: 16 }), foregroundStyle(muted)]}>
+            {text?.dueLabel ?? ""}
+          </Text>
           <Spacer />
           <Text modifiers={[font({ size: 14, weight: "medium" }), foregroundStyle(muted)]}>
-            {`${streak} days in a row`}
+            {text?.streakLine ?? ""}
           </Text>
         </VStack>
         <Spacer />
@@ -111,9 +111,9 @@ const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
             foregroundStyle(ink),
           ]}
         >
-          {String(due)}
+          {text?.dueCount ?? "0"}
         </Text>
-        <Text modifiers={[font({ size: 15 }), foregroundStyle(muted)]}>due</Text>
+        <Text modifiers={[font({ size: 15 }), foregroundStyle(muted)]}>{text?.dueShort ?? ""}</Text>
       </HStack>
     </VStack>
   );

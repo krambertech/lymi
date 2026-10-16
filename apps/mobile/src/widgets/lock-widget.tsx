@@ -8,9 +8,10 @@ import {
 } from "@expo/ui/swift-ui/modifiers";
 import { createWidget, type WidgetEnvironment } from "expo-widgets";
 
+import type { WidgetText } from "../i18n/widgets";
+
 export interface LockProps {
-  due: number;
-  streak: number;
+  text: WidgetText;
   reviewed: number;
   goal: number;
 }
@@ -19,11 +20,9 @@ export interface LockProps {
 const LockWidget = (props: LockProps, env: WidgetEnvironment) => {
   "widget";
   // The gallery and a fresh install render the widget before the app has sent anything.
-  const dueCount = props.due ?? 0;
-  const streak = props.streak ?? 0;
+  const text = props.text;
   const goal = props.goal ?? 0;
   const progress = goal > 0 ? Math.min(1, (props.reviewed ?? 0) / goal) : 0;
-  const due = dueCount === 1 ? "1 card due" : `${dueCount} cards due`;
   // WidgetKit asks every widget for a container background; the Lock Screen draws its own.
   const clear = containerBackground("#00000000", "widget");
 
@@ -36,7 +35,7 @@ const LockWidget = (props: LockProps, env: WidgetEnvironment) => {
           <VStack spacing={0}>
             <Image systemName="flame.fill" size={12} />
             <Text modifiers={[font({ size: 17, weight: "semibold" }), monospacedDigit()]}>
-              {String(dueCount)}
+              {text?.dueCount ?? "0"}
             </Text>
           </VStack>
         }
@@ -45,7 +44,7 @@ const LockWidget = (props: LockProps, env: WidgetEnvironment) => {
   }
 
   if (env.widgetFamily === "accessoryInline") {
-    return <Text modifiers={[clear]}>{`${due} · ${streak} days`}</Text>;
+    return <Text modifiers={[clear]}>{text?.inline ?? ""}</Text>;
   }
 
   return (
@@ -56,11 +55,9 @@ const LockWidget = (props: LockProps, env: WidgetEnvironment) => {
     >
       <HStack spacing={4}>
         <Image systemName="flame.fill" size={13} />
-        <Text
-          modifiers={[font({ size: 15, weight: "semibold" })]}
-        >{`${streak} days in a row`}</Text>
+        <Text modifiers={[font({ size: 15, weight: "semibold" })]}>{text?.streakLine ?? ""}</Text>
       </HStack>
-      <Text modifiers={[font({ size: 15 })]}>{due}</Text>
+      <Text modifiers={[font({ size: 15 })]}>{text?.dueLine ?? ""}</Text>
       <Gauge value={progress} modifiers={[gaugeStyle("linearCapacity")]} />
     </VStack>
   );

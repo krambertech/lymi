@@ -9,6 +9,7 @@ import { type LocalGrade, reviewItem, stateBefore } from "@lymi/client/review-dr
 import { type EndScreen, forgottenRound, type Offer, reviewEnd } from "@lymi/client/review-end";
 import { writes } from "@lymi/client/writes";
 import {
+  CHOSEN_LIMIT,
   countedRating,
   type Drawn,
   drawKey,
@@ -186,12 +187,17 @@ export default function Review() {
     series?: string;
     section?: string;
     round?: string;
+    /** Cards chosen on a deck page, comma-separated. */
+    cards?: string;
   }>();
   const round = ROUNDS.find((r) => r === params.round);
   const deck = params.deck || undefined;
   // One scope at a time, as on the web: a deck wins over a series, and a section needs its deck.
   const series = deck ? undefined : params.series || undefined;
   const section = deck ? params.section || undefined : undefined;
+  // Trimmed rather than dropped, so a long list never widens into the whole deck's review.
+  const chosen = deck && !round && !section ? params.cards?.split(",").filter(Boolean) : undefined;
+  const cards = chosen?.length ? chosen.slice(0, CHOSEN_LIMIT) : undefined;
   const router = useRouter();
 
   // Opened from a widget, the review is the only screen, so leaving goes to Today.
@@ -200,9 +206,10 @@ export default function Review() {
   // A review of another scope or round starts over, so nothing from this one carries into it.
   return (
     <Run
-      key={`${deck ?? ""}:${series ?? ""}:${section ?? ""}:${round ?? ""}`}
+      key={`${deck ?? ""}:${series ?? ""}:${section ?? ""}:${round ?? ""}:${cards?.join(",") ?? ""}`}
       scope={{ deck, series, section }}
       round={round}
+      cards={cards}
       onClose={leave}
     />
   );
@@ -210,15 +217,18 @@ export default function Review() {
 
 /**
  * One review. The draw picks each next card on the device from the fetched draw and this device's
- * grades, as the web's does (ADR 0019); a round from Today walks the server's list in order.
+ * grades, as the web's does (ADR 0019); a round from Today, or cards chosen on a deck page, walks
+ * the server's list in order.
  */
 function Run({
   scope: given,
   round,
+  cards,
   onClose,
 }: {
   scope: ReviewScope;
   round: Round | undefined;
+  cards: string[] | undefined;
   onClose: () => void;
 }) {
   const qc = useQueryClient();
@@ -227,7 +237,8 @@ function Run({
   const scope = useMemo(() => ({ deck, series, section }), [deck, series, section]);
   const scoped = !!deck || !!series;
   const draw = useDraw(scope);
-  const list = useRoundQueue(round, scope);
+  const listed = !!round || !!cards;
+  const list = useRoundQueue(round, scope, cards);
   const { reviewsToday, goal, dayDone } = useDay();
   const grade = useGrade();
   const takeBack = useUndoGrade();
@@ -322,12 +333,12 @@ function Run({
   const leg = chosenLeg && state && chosenLeg.date === state.day.date ? chosenLeg : null;
   // The draw stops at the goal only for the whole day below it; deck reviews and rounds run to their end.
   useEffect(() => {
-    if (leg || !data || !state || (round && !listData)) return;
+    if (leg || !data || !state || (listed && !listData)) return;
     setListCards(NO_LIST_CARDS);
     const date = state.day.date;
     setMark({ attempts: state.attempts, satisfied: state.attempts >= data.goal || dayDone });
     setLeg(
-      round && listData
+      listed && listData
         ? { kind: "list", date, size: listData.total }
         : {
             kind: "draw",
@@ -336,7 +347,7 @@ function Run({
             until: !scoped && state.attempts < data.goal ? data.goal : null,
           },
     );
-  }, [leg, data, state, round, listData, scoped, dayDone]);
+  }, [leg, data, state, listed, listData, scoped, dayDone]);
 
   const pinnedItem = data && state && pinned ? reviewItem(data, state.log, pinned) : null;
   // Past midnight, yesterday's data does not know yesterday's grades moved the schedule, so a new card waits for today's.
@@ -522,6 +533,20 @@ function Run({
   useReviewSession({
     key: leg && mark ? `${leg.date}:${leg.kind}:${mark.attempts}` : null,
     date: leg?.date ?? null,
+    scope:
+      leg?.kind === "forgotten"
+        ? "round"
+        : leg?.kind === "list"
+          ? cards
+            ? "chosen"
+            : "round"
+          : section
+            ? "section"
+            : deck
+              ? "deck"
+              : series
+                ? "series"
+                : "day",
     before: mark?.attempts ?? 0,
     done: progress?.done ?? 0,
     count: progress?.total ?? 0,
@@ -599,14 +624,14 @@ function Run({
   // Nothing loaded and the fetch failed: say so, rather than wait on a blank screen.
   const failed =
     (!data && draw.isError && !draw.isFetching) ||
-    (!!round && !listData && list.isError && !list.isFetching);
+    (listed && !listData && list.isError && !list.isFetching);
   if (failed) {
     return (
       <Cover style={pull.style}>
         <ReviewError
           title={t`Couldn’t load your cards`}
           body={t`Check your connection and try again.`}
-          onRetry={() => void (round ? list.refetch() : draw.refetch())}
+          onRetry={() => void (listed ? list.refetch() : draw.refetch())}
           action={t`Back`}
           onAction={onClose}
         />

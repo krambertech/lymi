@@ -30,11 +30,14 @@ const ChoicesContext = createContext<Choices | null>(null);
 
 /** What Add a word's choices set, shared by the card and the sheet each opens over it. */
 export function ChoicesProvider({ children }: { children: ReactNode }) {
-  const params = useLocalSearchParams<{ deck?: string }>();
+  const params = useLocalSearchParams<{ deck?: string; section?: string }>();
   const [deckId, setDeckId] = useState(
     () => params.deck ?? captureStore.getString(CAPTURE_KEYS.deck) ?? null,
   );
-  const [sectionId, setSectionId] = useState<string | null>(null);
+  // Add card here opens on its section, which belongs to the deck it came with.
+  const [sectionId, setSectionId] = useState<string | null>(() =>
+    params.deck ? (params.section ?? null) : null,
+  );
   const [picture, setPicture] = useState<Picture | null>(null);
   const [modes, setModes] = useState<ReviewModeKey[] | null>(null);
   // A lesson's cards share their tags, so tags stay from one card to the next, as on the web.

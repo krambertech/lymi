@@ -5,6 +5,7 @@ import {
   CardOut,
   DeckOut,
   EditCardsOut,
+  ImportantCardsOut,
   TerseCardsOut,
 } from "@lymi/core";
 import { beforeAll, describe, expect, it } from "vitest";
@@ -168,6 +169,41 @@ describe("the important mark", () => {
     expect((await put({ important: false }, { "x-api-key": key })).status).toBe(403);
     const read = await app.fetch(`/api/cards/${cardId}`, { headers: { "x-api-key": key } });
     expect(CardOut.parse(await read.json()).important).toBe(true);
+  });
+});
+
+describe("many important marks", () => {
+  it("sets each card's mark and refuses a repeated card, a read key and an empty list", async () => {
+    const [first, second] = await ids(["nondimeno", "altresì"]);
+    const post = (body: unknown, headers: Record<string, string> = {}) =>
+      app.fetch("/api/cards/important", {
+        ...json(body, { headers }),
+        ...(headers["x-api-key"] ? {} : { as: learner }),
+      });
+
+    const marked = await post({
+      cards: [
+        { cardId: first, important: true },
+        { cardId: second, important: false },
+      ],
+    });
+    expect(marked.status).toBe(200);
+    expect(ImportantCardsOut.parse(await marked.json()).results).toEqual([
+      { id: first, status: "updated", important: true },
+      { id: second, status: "updated", important: false },
+    ]);
+    const read = await app.fetch(`/api/cards/${first}`, { as: learner });
+    expect(CardOut.parse(await read.json()).important).toBe(true);
+
+    const twice = { cardId: first, important: false };
+    expect((await post({ cards: [twice, twice] })).status).toBe(400);
+    expect((await post({ cards: [] })).status).toBe(400);
+    const madeKey = await app.fetch("/api/keys", {
+      ...json({ name: "Reader", scope: "read" }),
+      as: learner,
+    });
+    const key = ApiKeyCreatedOut.parse(await madeKey.json()).key;
+    expect((await post({ cards: [twice] }, { "x-api-key": key })).status).toBe(403);
   });
 });
 

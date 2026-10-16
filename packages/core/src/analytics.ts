@@ -41,7 +41,7 @@ export const CONTEXT_MENU_ACTIONS = [
 ] as const;
 export type ContextMenuAction = (typeof CONTEXT_MENU_ACTIONS)[number];
 export const AnalyticsLocale = z.enum(["en", "uk", "ru"]);
-/** What a review leg was opened for; the phone sends none yet. */
+/** What a review leg was opened for. */
 export const REVIEW_SCOPES = ["day", "deck", "series", "section", "round", "chosen"] as const;
 export type ReviewScopeKind = (typeof REVIEW_SCOPES)[number];
 const session = { session_id: z.uuid(), scope: z.enum(REVIEW_SCOPES).optional() };
@@ -269,6 +269,7 @@ export const analyticsEvents = {
   card_importance_set: z.object({
     important: z.boolean(),
     channel: z.enum(["app", "api", "mcp"]),
+    count: count.optional(),
   }),
   entry_opened: z.object({
     entry: z.enum(["control", "shortcut", "quick_action", "widget"]),
@@ -279,6 +280,7 @@ export const analyticsEvents = {
     in_use: z.boolean(),
   }),
   deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
+  section_go_to: z.object({}),
   deck_tag_changed: z.object({
     action: z.enum(["rename", "merge", "archive", "restore"]),
     channel: z.enum(["app", "api", "mcp"]),
@@ -345,6 +347,7 @@ export const analyticsProducers = {
   card_importance_set: ["worker"],
   tag_added: ["browser"],
   deck_filter_added: ["browser"],
+  section_go_to: ["phone"],
   deck_tag_changed: ["worker"],
   cards_tagged: ["browser"],
   deck_enrichment_changed: ["worker"],

@@ -27,8 +27,9 @@ Every flashcard failure comes from two people writing tags on the same card. In 
 - **The same name is the same tag across decks.** Reviewing "food" covers every card tagged "food" in every deck the learner studies, their own and joined ones alike.
 - **Published decks name tags in the learner's edition.** A publisher's tag gets a localization per edition, like a section name ([ADR 0015](../adr/0015-published-decks-use-pinned-localized-editions.md)), so a Ukrainian-edition "їжа" joins the learner's own "їжа", not "food". Tag names count toward an edition being complete, so a published edition never shows a mix, and renaming a tag makes its localizations stale like any edited field. Until tag localizations exist, a non-original edition shows no publisher tags.
 - **Typing suggests existing tags**, so near-duplicates stop multiplying.
-- **Review a tag is a round.** It sits beside New cards and Forgotten today and draws from every deck. It takes the cards with that tag the learner has already started, due ones first, under the usual round rules in `CONTEXT.md`. Unseen cards stay with New cards, so a tag never opens a section early.
-- **A Tags screen in Settings manages the learner's tags.** It lists each tag on their own cards with its card count. Renaming one to a name already in use merges the two, and archiving takes the tag off every card until it is restored. A joined deck's tags appear in filters and rounds, not here.
+- **Reviewing by tag comes from filtering, not a round.** On 16 October 2026 Kateryna replaced the planned Review a tag round on Today: a learner filters a deck by tag and reviews what the filter shows, as a section can be reviewed. It comes after tags themselves, and Today gains no tag round.
+- **Each deck manages its tags from its settings.** A Tags group in deck settings opens the deck's Tags page: each tag on the deck's cards with its count and a menu of Rename, Merge into and Archive, then archived tags with Restore. Every change stays in that deck (16 October 2026): renaming onto a name in use merges the two there, and archiving takes the tag off that deck's cards until restored. A change of case alone respells the tag everywhere, since one name is one tag. A joined deck's tags appear in its filter, not on any Tags page.
+- **Tags go on many cards at once.** Select cards on the deck page offers Tags…, which puts a tag on, or takes it off, every chosen card.
 - **Tags are plain chips with no colour.** Colour already marks the one action, the AI badge and "You are here"; more would compete with the term ([`PRODUCT.md`](../../PRODUCT.md), "The words are the content").
 - **The API keeps its shape.** A card's `tags` stays a list of names. Storage moves to a table, because renaming, archiving and restoring a tag across every card need one.
 
@@ -45,9 +46,9 @@ Every flashcard failure comes from two people writing tags on the same card. In 
 
 ## Delivery
 
-1. **Find and review by tag on the web.** Tags move to a table, typing suggests existing ones, the deck page filters by tag, and Review a tag runs across decks, joined ones included. Non-original editions hide publisher tags until slice 3.
-2. **The Tags screen.** Rename, merge, archive and restore.
-3. **Published tags per edition.** Publishers translate tag names, and each edition shows them once translated.
-4. **The phone.** Each slice gets a linked phone issue once it is verified on the web ([ADR 0030](../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)).
+1. **Tags on the web.** Tags move to a table and typing suggests existing ones (#677); the deck page filters by tag and Select cards tags many at once (#735); each deck's Tags page renames, merges, archives and restores (#737). Non-original editions hide publisher tags until slice 3.
+2. **Review what a filter shows.** A filtered deck page reviews its started cards, due ones first.
+3. **Published tags per edition.** Publishers translate tag names, and each edition shows them once translated. Deferred until the catalog's decks carry tags readers want.
+4. **The phone.** Tags arrive with a rework of the phone deck page's filtering ([ADR 0030](../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)); until then the phone edits a card's tags and the server keeps the learner's spelling.
 
 Each slice measures whether learners find and review by tag. A tag's name never reaches analytics.

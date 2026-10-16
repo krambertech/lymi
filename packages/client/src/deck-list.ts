@@ -1,3 +1,4 @@
+import { TAG_LIMITS, tagKey } from "@lymi/core";
 import type { Card, CardState, Section } from "./api";
 
 /** How the learner reads an FSRS state: Review is Known, and Relearning is Learning again. */
@@ -21,9 +22,11 @@ export interface DeckFilters {
   due: "today" | "week" | null;
   /** Section ids; "" is a card with no section. */
   sections: string[];
+  /** Tag keys, from `tagKey`; a card carrying any of them matches. */
+  tags: string[];
 }
 
-export const noFilters: DeckFilters = { states: [], due: null, sections: [] };
+export const noFilters: DeckFilters = { states: [], due: null, sections: [], tags: [] };
 
 export type DeckGroup =
   | { kind: "all"; key: string; rows: DeckRow[] }
@@ -57,7 +60,9 @@ export function dueBucket(row: DeckRow, now: number): DueBucket {
 }
 
 export function activeFilterCount(filters: DeckFilters): number {
-  return filters.states.length + (filters.due ? 1 : 0) + filters.sections.length;
+  return (
+    filters.states.length + (filters.due ? 1 : 0) + filters.sections.length + filters.tags.length
+  );
 }
 
 /** The section a card sorts under: its own when that section is listed, otherwise none. */
@@ -82,6 +87,8 @@ export function filterRows(
       return false;
     if (filters.states.length && !filters.states.includes(rowState(row))) return false;
     if (filters.sections.length && !filters.sections.includes(sectionOf(row, sections)))
+      return false;
+    if (filters.tags.length && !row.card.tags.some((tag) => filters.tags.includes(tagKey(tag))))
       return false;
     if (filters.due) {
       if (rowState(row) === "new" || !(dueAt(row) < limit)) return false;
@@ -159,6 +166,45 @@ export function groupRows(
     groups.push({ kind: "section", key: "section:", section: null, rows: loose });
   }
   return groups;
+}
+
+/** The tags on these cards, most used first, each under its key with the spelling seen first. */
+export function deckTags(rows: readonly DeckRow[]): { key: string; name: string; cards: number }[] {
+  const byKey = new Map<string, { key: string; name: string; cards: number }>();
+  for (const row of rows)
+    for (const name of row.card.tags) {
+      const key = tagKey(name);
+      const seen = byKey.get(key);
+      if (seen) seen.cards += 1;
+      else byKey.set(key, { key, name, cards: 1 });
+    }
+  return [...byKey.values()].sort((a, b) => b.cards - a.cards || a.name.localeCompare(b.name));
+}
+
+/**
+ * A card's tags with some taken off and some put on, matched by key. An added tag goes last, and
+ * one past the twenty a card holds is left off; `full` says so.
+ */
+export function retag(
+  tags: readonly string[],
+  add: readonly string[],
+  remove: readonly string[],
+): { tags: string[]; full: boolean } {
+  const gone = new Set(remove.map(tagKey));
+  const next = tags.filter((tag) => !gone.has(tagKey(tag)));
+  const keys = new Set(next.map(tagKey));
+  let full = false;
+  for (const tag of add) {
+    const key = tagKey(tag);
+    if (keys.has(key) || gone.has(key)) continue;
+    if (next.length >= TAG_LIMITS.count) {
+      full = true;
+      continue;
+    }
+    keys.add(key);
+    next.push(tag);
+  }
+  return { tags: next, full };
 }
 
 /** A term that lists its forms, "õppima · õppida · õpin", as the word and the forms after it. */

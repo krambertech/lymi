@@ -5,9 +5,9 @@ const languageNames = new Intl.DisplayNames(["en"], { type: "language" });
 
 export type OpenAiSpeechBindings = {
   OPENAI_API_KEY?: string | undefined;
-  OPENAI_BASE_URL?: string | undefined;
   OPENAI_SPEECH_MODEL?: string | undefined;
   OPENAI_SPEECH_VOICE?: string | undefined;
+  AI_GATEWAY_URL?: string | undefined;
   AI_GATEWAY_TOKEN?: string | undefined;
 };
 
@@ -39,12 +39,15 @@ export function createOpenAiSpeechProvider(
     async speech(input) {
       const apiKey = env.OPENAI_API_KEY?.trim();
       if (!apiKey) throw new OpenAiSpeechError("OpenAI speech is not configured");
-      const baseUrl = (env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/$/, "");
+      // providerEndpoint() in gateway.ts, inlined: the site's script cannot import a module here.
+      const token = env.AI_GATEWAY_TOKEN?.trim();
+      const gateway = env.AI_GATEWAY_URL?.trim().replace(/\/$/, "");
+      const baseUrl = token && gateway ? `${gateway}/openai` : "https://api.openai.com/v1";
       const headers: Record<string, string> = {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       };
-      if (env.AI_GATEWAY_TOKEN) headers["cf-aig-authorization"] = `Bearer ${env.AI_GATEWAY_TOKEN}`;
+      if (token && gateway) headers["cf-aig-authorization"] = `Bearer ${token}`;
       const response = await fetchWithRetry(request, `${baseUrl}/audio/speech`, {
         method: "POST",
         headers,

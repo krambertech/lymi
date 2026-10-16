@@ -447,6 +447,8 @@ type CardWrite = {
   states: boolean;
   /** The tags the write set, which then move into `card_tags` after it. */
   tags?: readonly string[] | undefined;
+  /** Tags the write archives from the card rather than drops. */
+  archiveTags?: readonly string[] | undefined;
   /** What product analytics reports once the write lands. */
   reports?: AnalyticsEvent | undefined;
 };
@@ -512,6 +514,7 @@ function batchOf(db: Db, writes: CardWrite[], now: Date): Statement[] {
           tagged.map((write) => write.id),
           tagged.flatMap((write) => write.tags ?? []),
           now,
+          tagged.flatMap((write) => write.archiveTags ?? []),
         )
       : []),
   ];
@@ -677,6 +680,8 @@ export type EditCardOutcome = { id: string; status: "updated"; card: CardView } 
 export async function updateCards(
   ctx: ServiceContext,
   edits: CardEditInput[],
+  /** Tags the edits take off that are archived rather than dropped, for Restore. */
+  options: { archiveTags?: readonly string[] } = {},
 ): Promise<EditCardOutcome[]> {
   const { db, userId } = ctx;
   if (edits.length === 0) return [];
@@ -684,7 +689,9 @@ export async function updateCards(
   const now = new Date();
   const writes: CardWrite[] = [];
   const refusals = edits.map((edit) =>
-    refusalOf(edit.cardId, () => writes.push(editWrite(ctx, lookups, edit, now))),
+    refusalOf(edit.cardId, () =>
+      writes.push({ ...editWrite(ctx, lookups, edit, now), archiveTags: options.archiveTags }),
+    ),
   );
   const failed = await runCardWrites(db, writes, now);
   reportWrites(ctx, writes, failed);

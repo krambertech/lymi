@@ -12,6 +12,9 @@ import {
   CardSearchPaging,
   CardSectionInput,
   DeckInput,
+  DeckTagRef,
+  DeckTagRename,
+  DeckTagsOut,
   Directions,
   EnrichmentStatus,
   FieldSource,
@@ -43,6 +46,7 @@ import {
   archiveCardImage,
   archiveCards,
   archiveDeck,
+  archiveDeckTag,
   archiveSection,
   type CardReviewStats,
   type CardView,
@@ -60,9 +64,11 @@ import {
   isPublisher,
   listDeckCards,
   listDecks,
+  listDeckTags,
   listSections,
   listSeries,
   type ReviewRecord,
+  renameDeckTag,
   renameSection,
   renameSeries,
   reorderSections,
@@ -72,6 +78,7 @@ import {
   restoreCardImage,
   restoreCards,
   restoreDeck,
+  restoreDeckTag,
   restoreSection,
   reviewRounds,
   ServiceError,
@@ -697,6 +704,70 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       run("reorder_sections", async () => {
         requireWrite(principal);
         return sectionsResult(await reorderSections(ctx, deckId, { sectionIds }));
+      }),
+  );
+
+  server.registerTool(
+    "list_deck_tags",
+    {
+      title: "List a deck's tags",
+      description:
+        "The tags on a deck's active cards, with how many carry each, and the tags archived from it. Only the deck's owner can. To put tags on cards, send update_cards with each card's tags.",
+      inputSchema: z.object({ deckId: z.string().min(1) }),
+      outputSchema: DeckTagsOut,
+      ...readTool,
+    },
+    ({ deckId }) => run("list_deck_tags", async () => result(await listDeckTags(ctx, deckId))),
+  );
+
+  server.registerTool(
+    "rename_tag",
+    {
+      title: "Rename or merge a deck's tag",
+      description:
+        "Rename a tag on one deck's cards; other decks keep it. A name the learner already uses merges the two. A change of case alone respells the tag in every deck. Needs write.",
+      inputSchema: z.object({ deckId: z.string().min(1) }).extend(DeckTagRename.shape),
+      outputSchema: DeckTagsOut,
+      ...writeTool({ idempotent: false, overwrites: true }),
+    },
+    ({ deckId, from, to }) =>
+      run("rename_tag", async () => {
+        requireWrite(principal);
+        return result(await renameDeckTag(ctx, deckId, { from, to }));
+      }),
+  );
+
+  server.registerTool(
+    "archive_tag",
+    {
+      title: "Archive a deck's tag",
+      description:
+        "Take a tag off every card of one deck; other decks keep it. restore_tag puts it back on the same cards. Needs write.",
+      inputSchema: z.object({ deckId: z.string().min(1) }).extend(DeckTagRef.shape),
+      outputSchema: DeckTagsOut,
+      ...writeTool({ idempotent: false }),
+    },
+    ({ deckId, name }) =>
+      run("archive_tag", async () => {
+        requireWrite(principal);
+        return result(await archiveDeckTag(ctx, deckId, { name }));
+      }),
+  );
+
+  server.registerTool(
+    "restore_tag",
+    {
+      title: "Restore a deck's archived tag",
+      description:
+        "Put an archived tag back on the cards of the deck it came off, in its place. A card that has twenty tags since stays without it. Needs write.",
+      inputSchema: z.object({ deckId: z.string().min(1) }).extend(DeckTagRef.shape),
+      outputSchema: DeckTagsOut,
+      ...writeTool({ idempotent: false }),
+    },
+    ({ deckId, name }) =>
+      run("restore_tag", async () => {
+        requireWrite(principal);
+        return result(await restoreDeckTag(ctx, deckId, { name }));
       }),
   );
 

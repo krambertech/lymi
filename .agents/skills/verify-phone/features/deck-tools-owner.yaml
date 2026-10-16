@@ -1,0 +1,68 @@
+# A deck with sections, as its owner: Go to, a waiting card's lock, Add card here, and Mark important on a selection.
+appId: app.lymi
+name: Deck tools, owner
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/${DECK_ID}
+- extendedWaitUntil:
+    visible: "Search this deck"
+    timeout: 20000
+# Sorted otherwise, Go to puts the list back in section order and scrolls to where the learner is.
+- tapOn: "Sort: Section"
+- tapOn: "Recently added"
+- assertVisible: "Sort: Recently added"
+- tapOn: "Go to .*"
+- extendedWaitUntil:
+    visible: ".*, \\d+ cards, You are here"
+    timeout: 10000
+- takeScreenshot: 01-go-to
+- scrollUntilVisible:
+    element: "${WAITING}, a tram, Not in review yet"
+    centerElement: true
+- takeScreenshot: 02-waiting-lock
+- scrollUntilVisible:
+    element: "${LOCKED}, not open yet, .*"
+    direction: UP
+    centerElement: true
+- longPressOn: "${LOCKED}, not open yet, .*"
+- extendedWaitUntil:
+    visible: "Add card here"
+    timeout: 10000
+- takeScreenshot: 03-heading-menu
+- tapOn: "Add card here"
+- extendedWaitUntil:
+    visible: "Add to .*"
+    timeout: 20000
+- tapOn:
+    text: "Continue"
+    optional: true
+# The chip row sits over the keyboard here, so it is swiped where it is rather than with _chip.yaml.
+- repeat:
+    times: 3
+    while:
+      notVisible: "Section: ${LOCKED}"
+    commands:
+      - swipe:
+          start: 85%, 62%
+          end: 5%, 62%
+- assertVisible: "Section: ${LOCKED}"
+- takeScreenshot: 04-capture-section
+- tapOn: "^Done$"
+- extendedWaitUntil:
+    visible: "Deck options"
+    timeout: 10000
+- tapOn: "Deck options"
+- tapOn: "Select cards"
+- tapOn: "Select all"
+- tapOn: "Actions for the selected cards"
+- extendedWaitUntil:
+    visible: "Mark important"
+    timeout: 10000
+- assertVisible: "Move to section"
+- assertVisible: "Archive"
+- takeScreenshot: 05-owner-actions
+- tapOn: "Mark important"
+- extendedWaitUntil:
+    visible: "Marked .* cards important"
+    timeout: 20000
+- takeScreenshot: 06-marked

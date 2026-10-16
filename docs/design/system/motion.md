@@ -86,6 +86,8 @@ The pointing hand at the card's foot taps three times and rests with a line unde
 
 A pronunciation that fails to play turns its button red, shakes it once over 400 ms, and says why in a tip over the button that leaves after four seconds or at the next tap. Nothing is added under the card, so the layout never moves for an error.
 
+On the phone, while a pronunciation plays, its speaker's two waves light one after the other, outward, on a 900 ms loop, as iOS's own speaker does, and settle back whole over 140 ms when it stops (`SPEAKER_WAVES`). The web's speaker holds still.
+
 Easy locked after a peek does not move, shake or change when pressed. A tap, a click or its key opens the same tip over it with the reason, which leaves after four seconds or at the next tap; hover names the reason in a tooltip, which stands aside while the tip shows.
 
 ## The end of a review
@@ -139,6 +141,7 @@ Every animation ships a reduced version. Under `prefers-reduced-motion`:
 - the flame holds still and takes each new size at once, with no breath and no spark;
 - the wick's rule appears as a hairline, and a rolling number shows its new value at once;
 - the pointing hand appears without tapping;
+- the speaker's waves hold still while a pronunciation plays;
 - the list hover fades in on the row under the pointer instead of sliding;
 - a segmented plate fades in at its new option, a switch thumb takes its new place at once, and a radio dot and a tick fade in where they are;
 - the skeleton stops shimmering;

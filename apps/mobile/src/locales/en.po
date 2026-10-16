@@ -1548,6 +1548,12 @@ msgstr "Italian"
 msgid "Its decks may have been withdrawn. Every other shelf is still in Explore."
 msgstr "Its decks may have been withdrawn. Every other shelf is still in Explore."
 
+msgid "Its owner left Lymi"
+msgstr "Its owner left Lymi"
+
+msgid "Its owner left Lymi, so nobody can change this deck."
+msgstr "Its owner left Lymi, so nobody can change this deck."
+
 msgctxt "language"
 msgid "Japanese"
 msgstr "Japanese"

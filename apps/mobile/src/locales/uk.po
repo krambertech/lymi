@@ -1548,6 +1548,12 @@ msgstr "Італійська"
 msgid "Its decks may have been withdrawn. Every other shelf is still in Explore."
 msgstr "Можливо, її колоди зняли з публікації. Усі інші полиці й далі в каталозі."
 
+msgid "Its owner left Lymi"
+msgstr "Власник колоди видалив акаунт"
+
+msgid "Its owner left Lymi, so nobody can change this deck."
+msgstr "Власник колоди видалив акаунт, тож її ніхто не змінить."
+
 msgctxt "language"
 msgid "Japanese"
 msgstr "Японська"

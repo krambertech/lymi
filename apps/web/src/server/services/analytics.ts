@@ -28,7 +28,9 @@ export function track(dataset: AnalyticsWriter | undefined, event: AnalyticsEven
             ? event.outcome
             : event.name === "onboarding_finished"
               ? event.kind
-              : "";
+              : event.name === "account_deleted"
+                ? `${event.client}:${event.confirmed_with}`
+                : "";
   const value =
     event.name === "card_added" || event.name === "enrichment_finished"
       ? event.count

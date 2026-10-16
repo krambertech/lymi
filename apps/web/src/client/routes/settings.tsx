@@ -60,6 +60,7 @@ function SettingsRoute() {
       languageError={language.isError}
       account={<AccountSection name={me.data?.name} email={me.data?.email} />}
       onExportLibrary={() => setExporting(true)}
+      deleteAccountLink={<Link to="/settings/delete-account" />}
       importLink={(source, className, children) => (
         <Link to={`/import/${source}`} className={className}>
           {children}

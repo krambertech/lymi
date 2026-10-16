@@ -334,6 +334,13 @@ export function NotesToFlashcardsView() {
                   >
                     It takes three steps
                   </a>
+                  . No assistant?{" "}
+                  <a
+                    href="#guide-without"
+                    className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+                  >
+                    Start another way
+                  </a>
                   .
                 </Trans>
               ),
@@ -381,11 +388,11 @@ export function NotesToFlashcardsView() {
           ]}
           note={
             <Trans>
-              Lymi doesn’t read PDFs or photos itself: your assistant does the reading. Without an
-              assistant, add each term with Add a card, and AI fills in the meaning. A diagram can
-              go on a card as its picture.
+              Lymi doesn’t read PDFs or photos itself: your assistant does the reading. A diagram
+              can go on a card as its picture.
             </Trans>
           }
+          withoutAssistant
         />
 
         <FeatureSection

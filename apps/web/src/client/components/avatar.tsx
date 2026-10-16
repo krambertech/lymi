@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import { UserX } from "lucide-react";
 import { type ComponentProps, useState } from "react";
 
 interface Props extends Omit<ComponentProps<"span">, "children"> {
@@ -41,6 +42,19 @@ export function Avatar({ name, src, pending, size = 32, className, style, ...res
       ) : pending ? null : (
         (name?.trim()[0] ?? "?").toUpperCase()
       )}
+    </span>
+  );
+}
+
+/** Where an owner's photo would be, on a deck kept for its members after the owner left Lymi. */
+export function FormerOwnerMark({ size = 32 }: { size?: number | undefined }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="grid shrink-0 place-items-center rounded-full bg-plate-2 text-muted edge"
+      style={{ width: size, height: size }}
+    >
+      <UserX style={{ width: Math.round(size * 0.55), height: Math.round(size * 0.55) }} />
     </span>
   );
 }

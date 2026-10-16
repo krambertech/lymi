@@ -70,6 +70,10 @@ msgstr "{0, plural, one {ще # картка} few {ще # картки} many {щ
 msgid "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
 msgstr "{0, plural, one {Ще # повторення до денної мети} few {Ще # повторення до денної мети} many {Ще # повторень до денної мети} other {Ще # повторення до денної мети}}"
 
+#. placeholder {0}: deck.members
+msgid "{0, plural, one {# person} other {# people}}"
+msgstr "{0, plural, one {# людина} few {# людини} many {# людей} other {# людини}}"
+
 #. placeholder {0}: today.attempts
 #. placeholder {1}: today.goal
 #. placeholder {2}: today.goal
@@ -812,11 +816,20 @@ msgstr "Закрити пошук"
 msgid "Code"
 msgstr "Код"
 
+msgid "Code from the email"
+msgstr "Код з листа"
+
 msgid "Come back later, or add new cards."
 msgstr "Повернися пізніше або додай нові картки."
 
 msgid "Confirm"
 msgstr "Підтвердити"
+
+msgid "Confirm it’s you"
+msgstr "Підтверди, що це ти"
+
+msgid "Connect to the internet to delete your account."
+msgstr "Підключися до інтернету, щоб видалити акаунт."
 
 msgid "Connected apps"
 msgstr "Підключені застосунки"
@@ -876,6 +889,9 @@ msgstr "Не вдалося змінити фото. Перевір з’єдн�
 msgid "Couldn’t check for more cards"
 msgstr "Не вдалося перевірити, чи є ще картки"
 
+msgid "Couldn’t delete your account. Check your connection and try again."
+msgstr "Не вдалося видалити акаунт. Перевір з’єднання й повтори спробу."
+
 msgid "Couldn’t join the deck. Check your connection and try again."
 msgstr "Не вдалося приєднатися до колоди. Перевір з’єднання й повтори спробу."
 
@@ -911,6 +927,9 @@ msgstr "Не вдалося завантажити цю колоду"
 
 msgid "Couldn’t load Today"
 msgstr "Не вдалося завантажити екран «Сьогодні»"
+
+msgid "Couldn’t load what your account holds"
+msgstr "Не вдалося завантажити дані акаунта"
 
 msgid "Couldn’t load who’s in this deck"
 msgstr "Не вдалося завантажити людей у цій колоді"
@@ -991,6 +1010,9 @@ msgstr "Не вдалося зберегти ім’я. Перевір з’єд
 
 msgid "Couldn’t search cards"
 msgstr "Не вдалося знайти картки"
+
+msgid "Couldn’t send the code. Check your connection and try again."
+msgstr "Не вдалося надіслати код. Перевір з’єднання й повтори спробу."
 
 msgid "Couldn’t send the invitation. Too many went out recently, so try again later."
 msgstr "Не вдалося надіслати запрошення. Забагато запрошень за короткий час, тож спробуй пізніше."
@@ -1092,6 +1114,9 @@ msgstr "Видалити"
 msgid "Delete “{seriesName}”?"
 msgstr "Видалити «{seriesName}»?"
 
+msgid "Delete account"
+msgstr "Видалити акаунт"
+
 msgid "Delete series"
 msgstr "Видалити серію"
 
@@ -1100,6 +1125,9 @@ msgstr "Видалено"
 
 msgid "Deleted the series {name}"
 msgstr "Видалено серію «{name}»"
+
+msgid "Deleting your account erases it for good. Archived decks and cards go too, with your settings, photo, connected apps and API keys. You leave every deck you joined, and every device is signed out."
+msgstr "Видалення стирає акаунт назавжди. Архівовані колоди й картки теж буде видалено, разом із налаштуваннями, фото, підключеними застосунками та ключами API. Ти покинеш колоди інших людей, які вивчаєш, і вийдеш з акаунта на всіх пристроях."
 
 msgid "Describe what the picture shows without naming the term or the meaning."
 msgstr "Опиши, що на зображенні, не називаючи терміна чи значення."
@@ -1221,11 +1249,17 @@ msgstr "Введи адресу пошти, як-от you@example.com."
 msgid "Enter an email address."
 msgstr "Введи електронну адресу."
 
+msgid "Enter the 6-digit code from the email."
+msgstr "Введи 6-значний код з листа."
+
 msgid "Enter the 6-digit code we sent to {email}."
 msgstr "Введи 6-значний код, який ми надіслали на {email}."
 
 msgid "Enter the 6-digit code."
 msgstr "Введи 6-значний код."
+
+msgid "Enter the code"
+msgstr "Введи код"
 
 msgctxt "language"
 msgid "Estonian"
@@ -1260,6 +1294,9 @@ msgstr "Каталогу потрібне з’єднання"
 
 msgid "Export"
 msgstr "Експорт"
+
+msgid "Export library"
+msgstr "Експортувати бібліотеку"
 
 msgid "Export of your cards"
 msgstr "Експорт карток"
@@ -1538,12 +1575,21 @@ msgstr "Її архівували або перенесли, поки колод
 msgid "It was archived, or you left it."
 msgstr "Її архівували, або ти більше не в ній."
 
+msgid "It works for 15 minutes."
+msgstr "Код дійсний 15 хвилин."
+
 msgctxt "language"
 msgid "Italian"
 msgstr "Італійська"
 
 msgid "Its decks may have been withdrawn. Every other shelf is still in Explore."
 msgstr "Можливо, її колоди зняли з публікації. Усі інші полиці й далі в каталозі."
+
+msgid "Its owner left Lymi"
+msgstr "Власник колоди видалив акаунт"
+
+msgid "Its owner left Lymi, so nobody can change this deck."
+msgstr "Власник колоди видалив акаунт, тож її ніхто не змінить."
 
 msgctxt "language"
 msgid "Japanese"
@@ -1568,6 +1614,9 @@ msgstr "Щоб приєднатися до колоди, потрібне з’�
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Завзято"
+
+msgid "Keep a copy"
+msgstr "Збережи копію"
 
 msgid "Keep invitation"
 msgstr "Залишити запрошення"
@@ -1683,6 +1732,9 @@ msgstr "Lymi безкоштовний."
 
 msgid "Lymi is writing the first decks. Until then, make your own in Library."
 msgstr "Lymi пише перші колоди. А поки що створи власну в Бібліотеці."
+
+msgid "Lymi keeps nothing once the account is gone."
+msgstr "Після видалення акаунта Lymi нічого не зберігає."
 
 msgid "Made a change"
 msgstr "Внесено зміну"
@@ -2049,6 +2101,9 @@ msgstr "Параметри «{seriesName}»"
 msgid "Other"
 msgstr "Інше"
 
+msgid "Other people study what this account published, so it can’t be deleted here. Write to hello@lymi.app to delete it."
+msgstr "Інші люди вивчають те, що опублікував цей акаунт, тож тут його не можна видалити. Напиши на hello@lymi.app, щоб видалити його."
+
 msgid "Other subjects"
 msgstr "Інші теми"
 
@@ -2066,6 +2121,9 @@ msgstr "Підглянути зачіпку"
 
 msgid "People"
 msgstr "Люди"
+
+msgid "People study these decks, so they stay until the last of them leaves. Nobody can change them after you go."
+msgstr "Ці колоди вивчають інші люди, тож вони залишаться, доки з них не вийде останній. Після видалення твого акаунта їх ніхто не зможе змінити."
 
 msgctxt "language"
 msgid "Persian"
@@ -2278,6 +2336,9 @@ msgstr "Дні з повтореннями: {lit} з останніх {0, plural
 msgid "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}, including a rest day"
 msgstr "Дні з повтореннями: {lit} з останніх {0, plural, one {# дня} few {# днів} many {# днів} other {# дня}}, з днем відпочинку"
 
+msgid "Reviews"
+msgstr "Повторення"
+
 msgctxt "language"
 msgid "Romanian"
 msgstr "Румунська"
@@ -2404,6 +2465,9 @@ msgstr "Надіслати"
 msgid "Send a new code"
 msgstr "Надіслати новий код"
 
+msgid "Send code"
+msgstr "Надіслати код"
+
 msgid "Send feedback"
 msgstr "Зворотний зв’язок"
 
@@ -2412,6 +2476,9 @@ msgstr "Надіслати посилання"
 
 msgid "Sent again"
 msgstr "Надіслали ще раз"
+
+msgid "Sent to {address}. It works for 15 minutes."
+msgstr "Надіслано на {address}. Код дійсний 15 хвилин."
 
 msgctxt "language"
 msgid "Serbian"
@@ -2603,6 +2670,9 @@ msgstr "Код не збігається. Перевір лист і спроб�
 msgid "That code has expired. Send a new one."
 msgstr "Цей код уже не діє. Надішли новий."
 
+msgid "That code isn’t right. Check the email and try again."
+msgstr "Код неправильний. Перевір лист і спробуй ще раз."
+
 msgid "That didn’t go through"
 msgstr "Не вдалося"
 
@@ -2625,7 +2695,10 @@ msgid "That’s no longer here. Reload to see what changed."
 msgstr "Цього вже немає. Онови сторінку, щоб побачити зміни."
 
 msgid "That’s the most tags a card can have"
-msgstr ""
+msgstr "Більше тегів на картці бути не може"
+
+msgid "The account is deleted for good once you press Delete account."
+msgstr "Акаунт буде видалено назавжди, щойно ти натиснеш «Видалити акаунт»."
 
 msgid "The AI"
 msgstr "AI"
@@ -2686,6 +2759,9 @@ msgstr "Для історії цієї картки потрібне з’єдн
 
 msgid "This card’s picture was removed."
 msgstr "Зображення цієї картки прибрано."
+
+msgid "This code has expired. Send a new one."
+msgstr "Термін дії коду минув. Надішли новий."
 
 msgid "This deck is already in Library."
 msgstr "Ця колода вже є в Бібліотеці."
@@ -2865,6 +2941,9 @@ msgstr "Вʼєтнамська"
 msgid "Waiting to reach Lymi"
 msgstr "Чекає на з’єднання з Lymi"
 
+msgid "We’ll email you a 6-digit code. The account is deleted only once you enter it."
+msgstr "Ми надішлемо тобі 6-значний код. Акаунт буде видалено, лише коли ти його введеш."
+
 msgid "We’ll email you a link to set a new one."
 msgstr "Надішлемо на пошту посилання, щоб задати новий."
 
@@ -2875,11 +2954,17 @@ msgstr "тиждень від {0}"
 msgid "Welcome back."
 msgstr "З поверненням."
 
+msgid "What goes"
+msgstr "Що буде видалено"
+
 msgid "What it means"
 msgstr "Що це означає"
 
 msgid "What it’s for"
 msgstr "Для чого вона"
+
+msgid "What stays for others"
+msgstr "Що залишиться іншим"
 
 msgid "What this is about"
 msgstr "Про що це"
@@ -2913,6 +2998,9 @@ msgstr "Робота й навчання"
 
 msgid "Write a hook."
 msgstr "Напиши зачіпку."
+
+msgid "Write to Lymi"
+msgstr "Написати в Lymi"
 
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, що хочеш розповісти Lymi."
@@ -2959,6 +3047,9 @@ msgstr "Цю людину вилучено з колоди, тож запрос�
 msgid "You see who joined, not their reviews."
 msgstr "Ти бачиш, хто приєднався, але не їхні повторення."
 
+msgid "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."
+msgstr "Ти входиш через Apple, тож після видалення акаунта прибери Lymi з розділу «Вхід з Apple» у налаштуваннях облікового запису Apple."
+
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "Ти починаєш із першого розділу. Наступний відкриється, коли вивчиш цей."
 
@@ -2982,6 +3073,9 @@ msgstr "На сьогодні все."
 
 msgid "You’re offline. Showing your cards as of {when}."
 msgstr "Ти офлайн. Тут твої картки станом на {when}."
+
+msgid "You’ve asked for several codes today. Try again tomorrow."
+msgstr "Сьогодні вже надіслано кілька кодів. Спробуй завтра."
 
 msgid "Your cards and your streak, on every device."
 msgstr "Твої картки й лік днів поспіль на будь-якому пристрої."

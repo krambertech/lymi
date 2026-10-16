@@ -20,3 +20,4 @@ export * from "./series";
 export * from "./settings";
 export * from "./sharing";
 export * from "./stats";
+export * from "./tags";

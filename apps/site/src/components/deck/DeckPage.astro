@@ -54,7 +54,7 @@ const share = deck ? deckShareText(i18n, deck) : null;
       <div class="@container min-h-dvh overflow-x-clip bg-canvas text-text">
         <header class="deck-hero-tint over-tint" data-hue={trayHue(slug)}>
           <PublicNav client:load locale={locale} />
-          <DeckHero deck={page.deck} locale={locale} spread={spreadCards(page.deck)} />
+          <DeckHero deck={page.deck} locale={locale} spread={spreadCards(page.deck)} canTry={stack.length > 0} />
         </header>
         <main>
           {path && (
@@ -75,14 +75,16 @@ const share = deck ? deckShareText(i18n, deck) : null;
             <div class="mx-auto grid max-w-[1040px] items-center gap-12 @4xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] @4xl:gap-20">
               <DeckHowItWorks locale={locale} cue={recallCue(stack)} />
               {stack.length > 0 && (
-                <DeckStack
-                  client:load
-                  locale={locale}
-                  cards={stack}
-                  termLanguage={page.deck.language}
-                  total={page.deck.cardCount}
-                  addUrl={addUrl(slug, edition)}
-                />
+                <div id="try" class="min-w-0 scroll-mt-6">
+                  <DeckStack
+                    client:load
+                    locale={locale}
+                    cards={stack}
+                    termLanguage={page.deck.language}
+                    total={page.deck.cardCount}
+                    addUrl={addUrl(slug, edition)}
+                  />
+                </div>
               )}
             </div>
           </section>

@@ -29,6 +29,13 @@ export interface Bindings
   GOOGLE_CLIENT_SECRET: string;
   /** The iPhone app's bundle identifier; Sign in with Apple is unavailable until it is set. */
   APPLE_APP_BUNDLE_IDENTIFIER?: string;
+  /** A Sign in with Apple key, so a deleted account's Apple grant is revoked. All three or none. */
+  APPLE_TEAM_ID?: string;
+  APPLE_KEY_ID?: string;
+  APPLE_PRIVATE_KEY?: string;
+  /** A personal key with person write scope and its project, so a deleted account leaves PostHog. */
+  POSTHOG_PERSONAL_API_KEY?: string;
+  POSTHOG_PROJECT_ID?: string;
   /** Full service-account JSON, stored as one encrypted Worker secret. */
   GOOGLE_CLOUD_TTS_CREDENTIALS?: string;
   GEMINI_API_KEY?: string;

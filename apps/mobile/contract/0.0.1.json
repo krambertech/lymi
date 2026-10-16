@@ -107,6 +107,236 @@
       }
      }
     }
+   },
+   "delete": {
+    "operationId": "deleteApiMe",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "409": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "session": []
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "anyOf": [
+         {
+          "type": "object",
+          "properties": {
+           "code": {
+            "type": "string",
+            "pattern": "^\\d{6}$"
+           }
+          },
+          "required": [
+           "code"
+          ]
+         },
+         {
+          "type": "object",
+          "properties": {
+           "apple": {
+            "type": "object",
+            "properties": {
+             "idToken": {
+              "type": "string",
+              "minLength": 1
+             },
+             "nonce": {
+              "type": "string",
+              "minLength": 1
+             },
+             "authorizationCode": {
+              "type": "string",
+              "minLength": 1
+             }
+            },
+            "required": [
+             "idToken",
+             "nonce"
+            ]
+           }
+          },
+          "required": [
+           "apple"
+          ]
+         }
+        ]
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/me/deletion": {
+   "get": {
+    "operationId": "getApiMeDeletion",
+    "security": [
+     {
+      "session": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AccountDeletion"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/me/deletion/code": {
+   "post": {
+    "operationId": "postApiMeDeletionCode",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DeletionCode"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "409": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "503": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "session": []
+     }
+    ]
    }
   },
   "/api/decks": {
@@ -5074,6 +5304,91 @@
      "email"
     ]
    },
+   "AccountDeletion": {
+    "type": "object",
+    "properties": {
+     "blocked": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "publisher"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "x-lymi-open": true
+     },
+     "confirmWith": {
+      "type": "string",
+      "enum": [
+       "email",
+       "apple"
+      ],
+      "x-lymi-open": true
+     },
+     "decks": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "cards": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "reviews": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     },
+     "sharedDecks": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "id": {
+         "type": "string"
+        },
+        "name": {
+         "type": "string"
+        },
+        "members": {
+         "type": "integer",
+         "minimum": -9007199254740991,
+         "maximum": 9007199254740991
+        }
+       },
+       "required": [
+        "id",
+        "name",
+        "members"
+       ]
+      }
+     }
+    },
+    "required": [
+     "blocked",
+     "confirmWith",
+     "decks",
+     "cards",
+     "reviews",
+     "sharedDecks"
+    ]
+   },
+   "DeletionCode": {
+    "type": "object",
+    "properties": {
+     "sentTo": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "sentTo"
+    ]
+   },
    "DeckSummary": {
     "type": "object",
     "properties": {
@@ -5195,6 +5510,10 @@
          "string",
          "null"
         ]
+       },
+       "former": {
+        "default": false,
+        "type": "boolean"
        }
       },
       "required": [
@@ -5463,6 +5782,10 @@
          "string",
          "null"
         ]
+       },
+       "former": {
+        "default": false,
+        "type": "boolean"
        }
       },
       "required": [

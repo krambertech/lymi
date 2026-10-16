@@ -58,6 +58,7 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
     await expect(visitor.getByRole("heading", { name: deckName, exact: true })).toBeVisible();
     await expect(visitor.getByText("From Lymi")).toBeVisible();
     await expect(visitor.getByRole("button", { name: "Add with Google" })).toBeVisible();
+    await expect(visitor.getByRole("button", { name: "Add with email" })).toBeVisible();
 
     await visitor.getByRole("button", { name: "Dev sign-in", exact: true }).click();
     await expect(visitor).toHaveURL(/\/login\?dev=1/);

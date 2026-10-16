@@ -1,4 +1,5 @@
 export * from "./account";
+export * from "./account-deletion";
 export * from "./activity";
 export * from "./audio";
 export * from "./avatars";
@@ -37,3 +38,4 @@ export * from "./series-access";
 export * from "./settings";
 export * from "./slipping";
 export * from "./stats";
+export * from "./tags";

@@ -267,9 +267,9 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
     d.total === 0 ? t`No cards yet` : plural(d.total, { one: "# card", other: "# cards" });
   const owner = d.owner.name;
   // Whose it is goes last, so a long publisher's name wraps on its own rather than splitting the size.
-  const line = [size, language, d.role === "owner" ? null : t`Shared by ${owner}`]
-    .filter(Boolean)
-    .join(" · ");
+  const whose =
+    d.role === "owner" ? null : d.owner.former ? t`Its owner left Lymi` : t`Shared by ${owner}`;
+  const line = [size, language, whose].filter(Boolean).join(" · ");
   // A deck with cards always shows its count, a quiet 0 when none are due, so every row ends alike.
   const due = d.total > 0 ? d.due : undefined;
   const href = `/library/${d.id}` as const;

@@ -29,8 +29,11 @@ export type DeckSummary = Pick<
   archivedAt: string | null;
   /** The learner's role in the deck and who owns it. Only the owner writes. ADR 0011. */
   role: MemberRole;
-  /** `avatarUrl` is the publisher's photo, which only a published deck has. */
-  owner: { id: string; name: string; avatarUrl: string | null };
+  /**
+   * `avatarUrl` is the publisher's photo, which only a published deck has. `former` marks a deck
+   * kept for its members after its owner deleted their account; a cache from before it lacks it.
+   */
+  owner: { id: string; name: string; avatarUrl: string | null; former?: boolean };
   /** True while the deck is published, which makes its owner its publisher. */
   published: boolean;
 };

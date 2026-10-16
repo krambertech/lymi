@@ -89,6 +89,8 @@ A row may carry a caption, `SelectItem`'s `description`, when each option needs 
 
 Anything a list accepts beyond its rows, such as a language tag it has never heard of, belongs to the product field that holds it (`LanguageField`), not to the primitive.
 
+`TagsInput` is the same box holding its tags as chips, with the text field after them. Enter or a comma adds what was typed, and Backspace on an empty field takes the last tag back. While a name is typed, the learner's tags in use that contain it unfold under the box as Combobox rows do, those starting with it first, at most six, each with its card count on the end; after them, below a divider, a + Create row adds the name as typed whenever it is not a tag in use already. On a touch screen, where the field sits in a drawer over the keyboard, the rows follow the box in place instead. Nothing is highlighted until an arrow key moves into the list, so Enter keeps adding exactly what was typed; a press or Enter on a tag row adds that tag in its own spelling.
+
 ## Choice controls
 
 `Checkbox`, `Switch`, `RadioGroup` and `ToggleGroup` are Base UI parts that submit with a native form under their `name`. `Segmented` is `ToggleGroup`'s look in the product: the track, the plate and the heights.

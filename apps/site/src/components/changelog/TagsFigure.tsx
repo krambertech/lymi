@@ -19,10 +19,7 @@ export function TagsFigure() {
     { name: t`travel`, cards: 9 },
   ];
   return (
-    <div
-      aria-hidden="true"
-      className="mx-auto grid w-fit grid-cols-[auto_12rem] items-start gap-3"
-    >
+    <div aria-hidden="true" className="mx-auto grid w-fit grid-cols-[auto_12rem] items-start gap-3">
       <div className="grid justify-items-start">
         <span className="inline-flex h-9 items-center gap-2 rounded-md bg-hover px-3 text-sm font-medium text-text edge">
           <ListFilter className="size-4" />

@@ -32,7 +32,7 @@ pnpm exec playwright install chromium webkit
 E2E_PORT=4183 pnpm test:e2e:chromium
 ```
 
-Specs import `test` and `expect` from `e2e/test.ts`, not from `@playwright/test`. Its `test` sets `--seq-filter: none` in every page, so the end of a review rises and fades without its blur: on a CI runner with no GPU, WebKit stalls while the end screen animates that blur on several parts at once. The motion, its timing and tap-to-finish stay under test.
+Specs import `test` and `expect` from `e2e/test.ts`, not from `@playwright/test`. Its `test` sets `--seq-filter: none` in every page, so the end of a review rises and fades without its blur: on a CI runner with no GPU, WebKit stalls while the end screen animates that blur on several parts at once. The motion, its timing and tap-to-finish stay under test. It also hides the developer tools' edge tab, which learners never see and which covers a row's options button at the edge of a phone screen; the login page's Dev sign-in form is separate and stays.
 
 A site page's controls are static HTML until their Astro island hydrates, and a click before then is lost. A journey calls `waitForIslands(page)` from `e2e/test.ts` before its first click on a site control.
 

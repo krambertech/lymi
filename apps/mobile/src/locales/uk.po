@@ -200,6 +200,14 @@ msgstr "{0, plural, one {картка до повторення} few {картк
 msgid "{0, plural, one {card} other {cards}}"
 msgstr "{0, plural, one {картка} few {картки} many {карток} other {картки}}"
 
+#. placeholder {0}: cardIds.length
+msgid "{0, plural, one {Couldn’t mark # card important.} other {Couldn’t mark # cards important.}}"
+msgstr "{0, plural, one {Не вдалося позначити # картку важливою.} few {Не вдалося позначити # картки важливими.} many {Не вдалося позначити # карток важливими.} other {Не вдалося позначити # картки важливими.}}"
+
+#. placeholder {0}: cardIds.length
+msgid "{0, plural, one {Couldn’t remove the important mark from # card.} other {Couldn’t remove the important mark from # cards.}}"
+msgstr "{0, plural, one {Не вдалося зняти позначку «важлива» з # картки.} few {Не вдалося зняти позначку «важлива» з # карток.} many {Не вдалося зняти позначку «важлива» з # карток.} other {Не вдалося зняти позначку «важлива» з # картки.}}"
+
 #. placeholder {0}: data?.added ?? 0
 msgid "{0, plural, one {Import # card} other {Import # cards}}"
 msgstr "{0, plural, one {Імпортувати # картку} few {Імпортувати # картки} many {Імпортувати # карток} other {Імпортувати # картки}}"
@@ -220,6 +228,10 @@ msgstr "{0, plural, one {Через # місяць} few {Через # місяц
 msgid "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretch: # days in a row.}}"
 msgstr "{0, plural, one {Найбільше днів поспіль: #.} few {Найбільше днів поспіль: #.} many {Найбільше днів поспіль: #.} other {Найбільше днів поспіль: #.}}"
 
+#. placeholder {0}: done.length
+msgid "{0, plural, one {Marked # card important} other {Marked # cards important}}"
+msgstr "{0, plural, one {# картку позначено важливою} few {# картки позначено важливими} many {# карток позначено важливими} other {# картки позначено важливими}}"
+
 #. placeholder {0}: data?.added ?? 0
 msgid "{0, plural, one {Ready to import # card} other {Ready to import # cards}}"
 msgstr "{0, plural, one {Готово до імпорту: # картка} few {Готово до імпорту: # картки} many {Готово до імпорту: # карток} other {Готово до імпорту: # картки}}"
@@ -227,6 +239,10 @@ msgstr "{0, plural, one {Готово до імпорту: # картка} few {
 #. placeholder {0}: data.existing
 msgid "{0, plural, one {Ready to update # card} other {Ready to update # cards}}"
 msgstr "{0, plural, one {Готово до оновлення: # картка} few {Готово до оновлення: # картки} many {Готово до оновлення: # карток} other {Готово до оновлення: # картки}}"
+
+#. placeholder {0}: done.length
+msgid "{0, plural, one {Removed the important mark from # card} other {Removed the important mark from # cards}}"
+msgstr "{0, plural, one {Знято позначку «важлива» з # картки} few {Знято позначку «важлива» з # карток} many {Знято позначку «важлива» з # карток} other {Знято позначку «важлива» з # картки}}"
 
 #. placeholder {0}: way.count
 msgid "{0, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
@@ -471,6 +487,9 @@ msgstr "{due, plural, one {картка до повторення сьогодн
 msgid "{due, plural, one {card to review} other {cards to review}}"
 msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
+msgid "{dueChosen, plural, one {Review # due} other {Review # due}}"
+msgstr "{dueChosen, plural, one {Повтори # на сьогодні} few {Повтори # на сьогодні} many {Повтори # на сьогодні} other {Повтори # на сьогодні}}"
+
 msgid "{field} becomes"
 msgstr "{field} стає"
 
@@ -549,6 +568,9 @@ msgstr "{reps, plural, one {# повторення} few {# повторення}
 
 msgid "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
 msgstr "{restNotes, plural, one {Ще # запис рідшого виду буде імпортовано як є.} few {Ще # записи рідших видів буде імпортовано як є.} many {Ще # записів рідших видів буде імпортовано як є.} other {Ще # запису рідших видів буде імпортовано як є.}}"
+
+msgid "{reviewAll, plural, one {Review all #} other {Review all #}}"
+msgstr "{reviewAll, plural, one {Повтори всі #} few {Повтори всі #} many {Повтори всі #} other {Повтори всі #}}"
 
 msgid "{sectionCount, plural, one {# section} other {# sections}}"
 msgstr "{sectionCount, plural, one {# розділ} few {# розділи} many {# розділів} other {# розділу}}"
@@ -718,6 +740,9 @@ msgstr "Додати слово"
 
 msgid "Add and review"
 msgstr "Додати й повторити"
+
+msgid "Add card here"
+msgstr "Додати картку сюди"
 
 msgid "Add cards"
 msgstr "Додати картки"
@@ -2022,11 +2047,17 @@ msgstr "Назви розділ."
 msgid "Give the series a name."
 msgstr "Дай серії назву."
 
+msgid "Go to {currentName}"
+msgstr "Перейти до «{currentName}»"
+
 msgid "Go to import"
 msgstr "До імпорту"
 
 msgid "Go to Lymi"
 msgstr "Відкрити Lymi"
+
+msgid "Go to section"
+msgstr "Перейти до розділу"
 
 msgid "Go to Today"
 msgstr "Відкрити «Сьогодні»"
@@ -2514,6 +2545,10 @@ msgstr "Створи розділ для кожного уроку, а тоді 
 msgid "Mark important"
 msgstr "Позначити важливою"
 
+msgctxt "chosen cards"
+msgid "Mark important"
+msgstr "Позначити важливими"
+
 msgid "Marked important"
 msgstr "Позначено як важливу"
 
@@ -2758,6 +2793,9 @@ msgstr "Немає"
 msgctxt "language"
 msgid "Norwegian"
 msgstr "Норвезька"
+
+msgid "Not in review yet"
+msgstr "Ще не в повтореннях"
 
 msgid "Not joined yet · invited {invited}"
 msgstr "Ще не в колоді · запрошення від {invited}"
@@ -3157,6 +3195,12 @@ msgstr "Повторення"
 
 msgid "Review {due, plural, one {# card} other {# cards}}"
 msgstr "Повторити {due, plural, one {# картку} few {# картки} many {# карток} other {# картки}}"
+
+msgid "Review {limit} of {dueChosen} due"
+msgstr "Повтори {limit} з {dueChosen} на сьогодні"
+
+msgid "Review {limit} of {reviewAll}"
+msgstr "Повтори {limit} з {reviewAll}"
 
 msgid "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}"
 msgstr "Повторити серію «{seriesName}», {due, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
@@ -3928,6 +3972,10 @@ msgstr "Скасувати цей імпорт"
 
 msgid "Unmark important"
 msgstr "Зняти позначку «важлива»"
+
+msgctxt "chosen cards"
+msgid "Unmark important"
+msgstr "Зняти позначку «важливі»"
 
 msgid "Untitled key"
 msgstr "Ключ без назви"

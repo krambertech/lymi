@@ -1,0 +1,59 @@
+# A joined deck with sections, as a member: Go to, then a selection's Review and Mark important, with Undo.
+appId: app.lymi
+name: Deck tools, member
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/${DECK_ID}
+- extendedWaitUntil:
+    visible: "Search this deck"
+    timeout: 20000
+- tapOn: "Go to .*"
+- extendedWaitUntil:
+    visible: ".*, \\d+ cards, You are here"
+    timeout: 10000
+- takeScreenshot: 01-go-to
+- tapOn: "Deck options"
+- assertVisible: "Leave deck"
+- tapOn: "Select cards"
+- tapOn: "Select all"
+- tapOn: "Actions for the selected cards"
+- extendedWaitUntil:
+    visible: "Review ${DUE} due"
+    timeout: 10000
+- assertVisible: "Review all ${ALL}"
+- assertVisible: "Mark important"
+- assertNotVisible: "Archive"
+- assertNotVisible: "Move to section"
+- takeScreenshot: 02-member-actions
+- tapOn: "Mark important"
+- extendedWaitUntil:
+    visible: "Marked .* cards important"
+    timeout: 20000
+- takeScreenshot: 03-marked
+- tapOn: "Undo"
+- extendedWaitUntil:
+    notVisible: "Marked .* cards important"
+    timeout: 10000
+- tapOn: "Deck options"
+- tapOn: "Select cards"
+- tapOn: "Select all"
+- tapOn: "Actions for the selected cards"
+- extendedWaitUntil:
+    visible: "Review ${DUE} due"
+    timeout: 10000
+- tapOn: "Review ${DUE} due"
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 30000
+- assertVisible: "0/${DUE}"
+- takeScreenshot: 04-review-chosen
+- repeat:
+    times: ${DUE}
+    commands:
+      - tapOn:
+          point: "50%,80%"
+      - tapOn: "^Good.*"
+- extendedWaitUntil:
+    visible: "Round done"
+    timeout: 20000
+- takeScreenshot: 05-round-done

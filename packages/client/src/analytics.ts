@@ -164,6 +164,9 @@ export function initAnalytics(options: {
             surface,
             route: analyticsPath(location.pathname, surface),
             ...(release ? { release } : {}),
+            ...(CAUGHT_BY.has(event.properties.caught_by)
+              ? { caught_by: event.properties.caught_by }
+              : {}),
             ui_locale,
             schema_version: ANALYTICS_SCHEMA_VERSION,
             $geoip_disable: true,
@@ -305,10 +308,14 @@ export function capturePageview(pathname: string): void {
   directEntry = false;
 }
 
-export function reportBrowserException(error: unknown): void {
+/** Which handler caught a browser error, so a report without a stack still says where it surfaced. */
+export type CaughtBy = "window" | "rejection" | "router" | "react";
+const CAUGHT_BY = new Set<unknown>(["window", "rejection", "router", "react"] satisfies CaughtBy[]);
+
+export function reportBrowserException(error: unknown, caughtBy?: CaughtBy): void {
   if (!initialized) return;
   try {
-    posthog.captureException(error);
+    posthog.captureException(error, caughtBy ? { caught_by: caughtBy } : undefined);
   } catch {
     /* Monitoring must not recursively report SDK failures. */
   }

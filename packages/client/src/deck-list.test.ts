@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Card, CardState, Section } from "./api";
 import {
+  chosenReview,
   type DeckRow,
   deckTags,
   dueBucket,
@@ -221,5 +222,26 @@ describe("splitForms", () => {
       forms: null,
     });
     expect(splitForms(" · x")).toEqual({ word: " · x", forms: null });
+  });
+});
+
+describe("chosenReview", () => {
+  it("takes started cards not reviewed today, soonest due first", () => {
+    const reviewed = row("reviewed", { state: 2, due: 3 });
+    (reviewed.state as { lastReview: Date }).lastReview = new Date(now - 60_000);
+    const rows = [
+      row("later", { state: 2, due: 5 }),
+      row("new", {}),
+      row("overdue", { state: 1, due: -2 }),
+      reviewed,
+      row("tonight", { state: 2, due: 0.4 }),
+      row("unchosen", { state: 2, due: -1 }),
+    ];
+    const chosen = new Set(["later", "new", "overdue", "reviewed", "tonight"]);
+    expect(chosenReview(rows, chosen, now)).toEqual([
+      { id: "overdue", due: true },
+      { id: "tonight", due: true },
+      { id: "later", due: false },
+    ]);
   });
 });

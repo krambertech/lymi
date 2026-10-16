@@ -1,5 +1,5 @@
 import { captureAnalytics, initAnalytics, visitFirstTouch } from "@lymi/client/analytics";
-import { carryFirstTouch } from "@lymi/core/analytics";
+import { carryFirstTouch, withoutCarriedFirstTouch } from "@lymi/core/analytics";
 import { POSTHOG_PROJECT_TOKEN } from "@lymi/core/telemetry";
 import { productUrl } from "./origins";
 
@@ -13,6 +13,9 @@ export function startAnalytics(): void {
     surface: "public",
     enabled: import.meta.env.PROD && location.origin === "https://lymi.app",
   });
+  // The analytics module read the carried source when it loaded; the visible address drops it.
+  const clean = withoutCarriedFirstTouch(location.href);
+  if (clean) history.replaceState(history.state, "", clean);
   const product = new URL(productUrl()).origin;
   const follow = (event: MouseEvent) => {
     const link = event.target instanceof Element ? event.target.closest("a[href]") : null;

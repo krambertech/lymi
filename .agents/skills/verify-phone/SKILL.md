@@ -24,6 +24,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Delete account | [delete-account.md](features/delete-account.md) |
 | Long-press menus | [row-menus.md](features/row-menus.md) |
 | Section heading menu | [section-menu.md](features/section-menu.md) |
+| Deck tools: selection, Go to, waiting cards, Add card here | [deck-tools.md](features/deck-tools.md) |
 | Share deck and join links | [sharing.md](features/sharing.md) |
 | Entry points: controls, intents, quick actions | [entry-points.md](features/entry-points.md) |
 | Welcome, and arriving from a deck link or a join link | [welcome.md](features/welcome.md) |

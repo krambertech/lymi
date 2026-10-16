@@ -68,7 +68,7 @@ const router = createRouter({
   context: { queryClient },
   defaultPreload: "intent",
   scrollRestoration: true,
-  defaultOnCatch: reportClientException,
+  defaultOnCatch: (error) => reportClientException(error, "router"),
   defaultErrorComponent: RouteError,
 });
 
@@ -82,7 +82,7 @@ declare module "@tanstack/react-router" {
 export function mountApp(root: HTMLElement) {
   createRoot(root, {
     onCaughtError: (error, info) => {
-      reportClientException(error);
+      reportClientException(error, "react");
       console.error(error, info.componentStack);
     },
   }).render(

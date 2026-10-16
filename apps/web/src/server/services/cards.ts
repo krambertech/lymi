@@ -419,7 +419,7 @@ function assertOwner({ userId }: ServiceContext, card: Card) {
 }
 
 /** The listed cards the learner can see, by id, in one query per slice of ids. */
-async function visibleCards({ db, userId }: ServiceContext, ids: readonly string[]) {
+export async function visibleCards({ db, userId }: ServiceContext, ids: readonly string[]) {
   const rows = await selectIn([...new Set(ids)], (slice) =>
     db
       .select({ card: schema.cards })
@@ -439,7 +439,7 @@ export type CardWriteError = {
 };
 
 /** Runs one card's checks; a refusal becomes that card's outcome instead of failing the others. */
-function refusalOf(id: string, check: () => void): CardWriteError | null {
+export function refusalOf(id: string, check: () => void): CardWriteError | null {
   try {
     check();
     return null;
@@ -551,7 +551,7 @@ async function runCardWrites(db: Db, writes: CardWrite[], now: Date): Promise<Se
   return failed;
 }
 
-function writeFailed(id: string): CardWriteError {
+export function writeFailed(id: string): CardWriteError {
   return {
     id,
     status: "error",

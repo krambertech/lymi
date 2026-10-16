@@ -1,6 +1,7 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import {
   activeFilterCount,
+  chosenReview,
   type DeckFilters,
   type DeckRow,
   type DeckSort,
@@ -862,24 +863,10 @@ export function DeckDetailView({
     });
   }, []);
   // What Review takes from the selection: started cards not reviewed today, as the server counts them.
-  const reviewable = useMemo(() => {
-    if (!selected || !cards) return [];
-    const today = new Date();
-    const dayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
-    const dayEnd = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1).getTime();
-    return cards
-      .filter(
-        (row) =>
-          selected.has(row.card.id) &&
-          rowState(row) !== "new" &&
-          !(row.state?.lastReview && new Date(row.state.lastReview).getTime() >= dayStart),
-      )
-      .map((row) => {
-        const at = new Date(row.state?.due ?? 0).getTime();
-        return { id: row.card.id, at, due: at < dayEnd };
-      })
-      .sort((a, b) => a.at - b.at);
-  }, [selected, cards]);
+  const reviewable = useMemo(
+    () => (selected && cards ? chosenReview(cards, selected, Date.now()) : []),
+    [selected, cards],
+  );
   const stopSelecting = useCallback(() => {
     setSelected(null);
     anchor.current = null;

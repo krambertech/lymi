@@ -137,7 +137,8 @@ test("a learner can filter, sort and open the words in a deck", async ({
     await page.getByRole("menuitemradio", { name: "A–Z", exact: true }).click();
 
     await expect(page.getByRole("button", { name: "Sort: A–Z", exact: true })).toBeVisible();
-    await expect(page.getByRole("heading", { level: 2 })).toHaveCount(0);
+    // A toast's title is a heading too, and the rename's may still be up.
+    await expect(page.getByRole("main").getByRole("heading", { level: 2 })).toHaveCount(0);
   });
 
   if (isMobile) {

@@ -53,7 +53,9 @@ const sdk = vi.hoisted(() => {
       id = next;
       capture("$identify", { $anon_distinct_id: anonymous, $set: props });
     }),
-    captureException: vi.fn(() => capture("$exception", { $exception_list: [] })),
+    captureException: vi.fn((_error: unknown, properties: Record<string, unknown> = {}) =>
+      capture("$exception", { $exception_list: [], ...properties }),
+    ),
   };
 });
 vi.mock("posthog-js/no-external", () => ({ default: sdk }));
@@ -156,6 +158,15 @@ it("tags an error with its route pattern and the release that threw it", async (
     release: "0123456789abcdef0123456789abcdef01234567",
   });
   expect(JSON.stringify(sdk.sent.at(-1))).not.toContain("private-deck");
+});
+
+it("names the handler that caught an error and drops any other label", async () => {
+  await load("https://my.lymi.app/review");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.reportBrowserException(new TypeError("private"), "rejection");
+  expect(sdk.sent.at(-1)?.properties).toMatchObject({ caught_by: "rejection" });
+  sdk.captureException(new TypeError("private"), { caught_by: "private label" });
+  expect(sdk.sent.at(-1)?.properties).not.toHaveProperty("caught_by");
 });
 
 it("counts a signed-out visitor anonymously and joins them to the account they create", async () => {

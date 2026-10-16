@@ -1,8 +1,8 @@
 import { CHOICE_SLIDE } from "@lymi/design";
-import * as Haptics from "expo-haptics";
 import { useContext, useEffect, useRef } from "react";
 import { Pressable } from "react-native";
 import Animated, { useAnimatedStyle, withSpring } from "react-native-reanimated";
+import { haptics } from "../theme/haptics";
 import { spring, useReduceMotion } from "../theme/motion";
 import { useRoom } from "../theme/palette";
 import { FieldContext } from "./field";
@@ -29,7 +29,7 @@ export function Switch({ checked, onCheckedChange, accessibilityLabel, disabled 
   const dark = useRoom() === "dark";
   const off = disabled || field?.disabled;
   const toggle = () => {
-    Haptics.selectionAsync();
+    haptics.toggle(!checked);
     onCheckedChange(!checked);
   };
   const setPress = field?.setPress;

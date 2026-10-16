@@ -1,6 +1,6 @@
 import { type ReactNode, useState } from "react";
 import { type LayoutChangeEvent, type TextStyle, useWindowDimensions, View } from "react-native";
-import { fitType } from "../theme/type";
+import { fitType, INLINE_LIFT } from "../theme/type";
 import { Text } from "../ui/primitives";
 
 // The review card's type on the phone's ramp, which steps down at most twice to fit. phone.md "Review".
@@ -105,7 +105,7 @@ export function CardLine({
               paddingVertical: 8,
               paddingStart: 12,
               // An inline view stands on the baseline; this centres the 32 pt button on the line as drawn.
-              transform: [{ translateY: Math.round(16 - drawn * 0.43) }],
+              transform: [{ translateY: Math.round(16 - drawn * INLINE_LIFT) }],
             }}
           >
             {after}

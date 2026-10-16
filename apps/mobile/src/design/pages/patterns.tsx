@@ -11,11 +11,9 @@ import { Select } from "../../ui/menu";
 import { Button, IconButton, Text } from "../../ui/primitives";
 import { Sheet, SheetGroup, SheetRow } from "../../ui/sheet";
 import { Toast } from "../../ui/toast";
-import { Row, Sub, Variants } from "../frame";
+import { MONO, Row, Sub, Variants } from "../frame";
 
 // How the phone's screens are put together and how they arrive. phone.md "How a screen arrives".
-
-const MONO = { fontFamily: "Menlo", letterSpacing: 0 } as const;
 
 const DECKS = [
   { value: "lezione", label: "Lezione 12" },

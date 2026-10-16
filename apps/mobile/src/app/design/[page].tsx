@@ -1,5 +1,6 @@
 import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
+import { MONO } from "../../design/frame";
 import { PAGES } from "../../design/registry";
 import { Text } from "../../ui/primitives";
 import { Screen } from "../../ui/screen";
@@ -18,7 +19,7 @@ export default function DesignPageScreen() {
     <Screen title={page.title} back={{ label: "Design system", to: "/design" }}>
       <View className="-mt-4 gap-2">
         <Text className="text-md text-text-2">{page.lede}</Text>
-        <Text className="text-xs text-muted" style={{ fontFamily: "Menlo", letterSpacing: 0 }}>
+        <Text className="text-xs text-muted" style={MONO}>
           docs/design/system/{page.doc}
         </Text>
       </View>

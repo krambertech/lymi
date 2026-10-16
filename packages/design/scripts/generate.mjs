@@ -150,7 +150,7 @@ export function paletteFrom(css) {
 /** Box shadows with every colour in hex, which React Native's boxShadow reads. */
 function shadows(css) {
   const { light, dark } = rooms(css);
-  const names = ["lift", "well", "lit-glow"];
+  const names = ["lift", "well", "lit-glow", "glass-drop"];
   const colour = /oklch\([^()]*\)|var\(--[a-z0-9-]+\)/g;
   const room = (vars) =>
     Object.fromEntries(

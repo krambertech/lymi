@@ -98,3 +98,8 @@ export function ActionMenu({
     </Host>
   );
 }
+
+/** iOS draws its menu itself; the root's host is Android's. */
+export function MenuHost() {
+  return null;
+}

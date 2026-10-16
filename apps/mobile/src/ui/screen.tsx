@@ -2,10 +2,12 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { type Href, useIsPreview, useRouter } from "expo-router";
+import { ArrowLeft } from "lucide-react-native";
 import { Fragment, type ReactElement, type ReactNode, useState } from "react";
 import {
   I18nManager,
   type ListRenderItem,
+  Platform,
   RefreshControl,
   useWindowDimensions,
   View,
@@ -29,12 +31,6 @@ import { usePalette } from "../theme/palette";
 import { GlassSurface } from "./glass";
 import type { IconName } from "./icons";
 import { Icon, Press, Text } from "./primitives";
-
-/** Each tab's stack draws no header: every screen builds its own bar with Screen. */
-export function useStackOptions() {
-  const p = usePalette();
-  return { headerShown: false, contentStyle: { backgroundColor: p.canvas } };
-}
 
 /** A long list the page holds, drawn as it scrolls into view rather than all at once. */
 export interface ScreenList<T> {
@@ -93,6 +89,11 @@ const NO_SEPARATORS = {
   updateProps: () => {},
 };
 
+/**
+ * What a page leaves under its end on Android, where content stops above Material's tab bar rather
+ * than running under it as on iOS: room for the floating bar, so the last row scrolls clear of it.
+ */
+const END_ROOM = Platform.OS === "android" ? 64 : undefined;
 /** How close to the end of a page, in points, a list starts loading what comes next. */
 const END_NEAR = 600;
 /** How far the page scrolls before the bar is compact: the large title's line has gone under it. */
@@ -105,6 +106,13 @@ const INLINE_LARGE = 22 / 34;
 const BAR_SIDE = 120;
 /** A title travelling into the bar may run wider, since it shrinks as it goes. */
 const TRAVEL_SIDE = 96;
+/**
+ * Android's top bar: a page's back is a bare arrow, and its title docks at the start beside it rather
+ * than centred, as Material's top app bar does. phone.md "Navigation".
+ */
+const MATERIAL_BAR = Platform.OS === "android";
+/** Where a page's docked title starts on Android: after the 40 pt arrow and Material's 16 pt gap. */
+const DOCK_START = 64;
 
 /**
  * Every screen is built with Screen, as on the web: the chrome tells you how to leave. The bar is
@@ -189,39 +197,55 @@ export function Screen<T = never>({
   const hasHeader = !!header;
   // The header's content starts 8 pt below the bar, so its name is under the bar 8 pt sooner.
   const named = titleAt === undefined ? undefined : titleAt + 8;
+  const origin = rtl ? "right top" : "left top";
+  // Where the title rests is React's, so it shows from the first frame: Android can drop the first
+  // write of an animated style after mount, which left titles missing until the page scrolled.
+  const headerX = MATERIAL_BAR
+    ? DOCK_START
+    : (screen - Math.min(box.w * dock, screen - 2 * BAR_SIDE)) / 2;
+  const rest: ViewStyle = hasHeader
+    ? {
+        // Until the header is measured the bar's title stays hidden, so it never flashes in.
+        opacity: headerHeight ? 1 : 0,
+        transformOrigin: origin,
+        transform: [
+          { translateX: rtl ? -headerX : headerX },
+          { translateY: dockY },
+          { scale: dock },
+        ],
+      }
+    : {
+        opacity: box.w ? 1 : 0,
+        transform: [{ translateX: rtl ? -20 : 20 }, { translateY: restY }],
+      };
+  // What scrolling adds to the rest, which is nothing at the top of the page.
   const moving = useAnimatedStyle(() => {
     if (hasHeader) {
       // The header holds the name at rest; the bar's title arrives as the header leaves.
-      const w = Math.min(box.w * dock, screen - 2 * BAR_SIDE);
-      const x = (screen - w) / 2;
       return {
-        // Until the header is measured the bar's title stays hidden, so it never flashes in.
-        opacity: !headerHeight
-          ? 0
-          : interpolate(
-              y.value,
-              // A short header, such as a card's term, still starts with the bar's title hidden.
-              named !== undefined
-                ? [Math.max(named - 40, 0), Math.max(named, 10)]
-                : [Math.max(headerHeight - 80, 0), Math.max(headerHeight - 30, 10)],
-              [0, 1],
-              Extrapolation.CLAMP,
-            ),
-        transformOrigin: rtl ? "right top" : "left top",
-        transform: [{ translateX: rtl ? -x : x }, { translateY: dockY }, { scale: dock }],
+        opacity: interpolate(
+          y.value,
+          // A short header, such as a card's term, still starts with the bar's title hidden.
+          named !== undefined
+            ? [Math.max(named - 40, 0), Math.max(named, 10)]
+            : [Math.max(headerHeight - 80, 0), Math.max(headerHeight - 30, 10)],
+          [0, 1],
+          Extrapolation.CLAMP,
+        ),
+        transform: [{ translateX: 0 }, { translateY: 0 }, { scale: 1 }],
       };
     }
     const k = interpolate(y.value, [0, travel], [0, 1], Extrapolation.CLAMP);
     const w = Math.min(box.w * dock, screen - 2 * TRAVEL_SIDE);
     // A page centres it between its back and its actions; a tab keeps it at the start, across
     // from the streak and capture, so the bar does not lean to one side.
-    const x = kind === "tab" ? 20 : 20 + ((screen - w) / 2 - 20) * k;
+    const x = kind === "tab" ? 0 : ((MATERIAL_BAR ? DOCK_START : (screen - w) / 2) - 20) * k;
     return {
-      opacity: box.w ? 1 : 0,
-      transformOrigin: rtl ? "right top" : "left top",
+      opacity: 1,
+      transformOrigin: origin,
       transform: [
         { translateX: rtl ? -x : x },
-        { translateY: restY + (dockY - restY) * k },
+        { translateY: (dockY - restY) * k },
         { scale: 1 - (1 - dock) * k },
       ],
     };
@@ -264,7 +288,7 @@ export function Screen<T = never>({
 
   const scroll = {
     className: "flex-1",
-    contentContainerStyle: { paddingTop: bar, paddingBottom: insets.bottom + 110 },
+    contentContainerStyle: { paddingTop: bar, paddingBottom: END_ROOM ?? insets.bottom + 110 },
     onScroll,
     scrollEventThrottle: 16,
     // The pinned bar already clears the status bar; iOS's own tab bar would add the inset again.
@@ -375,25 +399,34 @@ export function Screen<T = never>({
       >
         <StatusFade height={top} colour={roof} />
       </Animated.View>
-      <Animated.View
+      <View
         pointerEvents="none"
         className="absolute start-0 top-0"
         // With a header the name shows only in the bar, so it shortens to clear the bar's buttons.
-        style={[{ maxWidth: hasHeader ? (screen - 2 * BAR_SIDE) / dock : screen - 40 }, moving]}
+        style={[
+          {
+            maxWidth: hasHeader
+              ? (MATERIAL_BAR ? screen - DOCK_START - BAR_SIDE : screen - 2 * BAR_SIDE) / dock
+              : screen - 40,
+          },
+          rest,
+        ]}
         importantForAccessibility="no-hide-descendants"
         accessibilityElementsHidden
       >
-        <Text
-          className="text-3xl font-medium tracking-tight text-text"
-          numberOfLines={1}
-          onLayout={(e) => {
-            const { width, height } = e.nativeEvent.layout;
-            if (width !== box.w || height !== box.h) setBox({ w: width, h: height });
-          }}
-        >
-          {title}
-        </Text>
-      </Animated.View>
+        <Animated.View style={moving}>
+          <Text
+            className="text-3xl font-medium tracking-tight text-text"
+            numberOfLines={1}
+            onLayout={(e) => {
+              const { width, height } = e.nativeEvent.layout;
+              if (width !== box.w || height !== box.h) setBox({ w: width, h: height });
+            }}
+          >
+            {title}
+          </Text>
+        </Animated.View>
+      </View>
       {!preview && (
         <View
           pointerEvents="box-none"
@@ -451,7 +484,23 @@ function Back({
     const k = interpolate(y.value, [8, TITLE_GONE], [0, 1], Extrapolation.CLAMP);
     return { opacity: 1 - k, width: width ? width * (1 - k) : undefined };
   });
-  const chevron = <Icon name="back" size={20} colour={p.text} />;
+  const chevron = MATERIAL_BAR ? (
+    <ArrowLeft size={24} color={p.text} strokeWidth={2} />
+  ) : (
+    <Icon name="back" size={20} colour={p.text} />
+  );
+  if (MATERIAL_BAR) {
+    return (
+      <Press
+        onPress={onPress}
+        accessibilityRole="button"
+        accessibilityLabel={label}
+        className="-ms-2"
+      >
+        <View className="size-11 items-center justify-center">{chevron}</View>
+      </Press>
+    );
+  }
   return (
     <Press
       onPress={onPress}

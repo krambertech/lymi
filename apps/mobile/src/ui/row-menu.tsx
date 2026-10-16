@@ -18,7 +18,7 @@ export interface RowMenuItem {
   onSelect: () => void;
 }
 
-interface RowMenuProps {
+export interface RowMenuProps {
   surface: RowMenuSurface;
   /** Where a tap goes, and the page the preview shows when `preview` is `page`. */
   href: Href;

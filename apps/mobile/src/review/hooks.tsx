@@ -14,6 +14,7 @@ import { inputCap } from "../theme/type";
 import { SourceChip } from "../ui/chip";
 import { Button, Icon, Text } from "../ui/primitives";
 import { Sheet } from "../ui/sheet";
+import { useSheetFocus } from "../ui/sheet-focus";
 
 const EASE = curve(EASE_OUT);
 /** The offer waits for the answer to settle, so it never arrives with it. */
@@ -169,6 +170,7 @@ export function HookSheet({
   const [shown, setShown] = useState(card);
   const [text, setText] = useState(card?.hook ?? "");
   const [pending, setPending] = useState(false);
+  const focus = useSheetFocus({ open });
   // biome-ignore lint/correctness/useExhaustiveDependencies: once per opening, not per render of the card.
   useEffect(() => {
     if (!open || !card) return;
@@ -215,7 +217,7 @@ export function HookSheet({
     >
       <View className="rounded-xl bg-glass-plate px-4 pb-3">
         <TextInput
-          autoFocus
+          {...focus}
           value={text}
           maxLength={CARD_LIMITS.hook}
           onChangeText={setText}

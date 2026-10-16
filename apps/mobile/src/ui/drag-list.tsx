@@ -1,7 +1,6 @@
 import { SNAP_BACK } from "@lymi/design";
-import * as Haptics from "expo-haptics";
 import { type ReactNode, useEffect } from "react";
-import { useWindowDimensions, View } from "react-native";
+import { Platform, useWindowDimensions, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   runOnJS,
@@ -11,11 +10,13 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
+import { haptics } from "../theme/haptics";
 import { spring } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { Icon } from "./icons";
 
 const SETTLE = spring(SNAP_BACK);
+const android = Platform.OS === "android";
 
 /**
  * Every row is one height, so a dragged row's slot is its offset divided by it; the height grows
@@ -97,8 +98,8 @@ function DragRow({
       }
     },
   );
-  const pick = () => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-  const pass = () => Haptics.selectionAsync();
+  const pick = () => haptics.pickUp();
+  const pass = () => haptics.tick();
   const pan = Gesture.Pan()
     .enabled(!busy)
     .onStart(() => {
@@ -127,10 +128,14 @@ function DragRow({
       y.value = withSpring((positions.value[id] ?? 0) * row, SETTLE);
       runOnJS(onDrop)(positions.value);
     });
+  // Android draws no iOS shadow props, so the lifted row takes the same shadow as a box shadow.
+  const lift = `0 8px 14px ${p.text}2e`;
   const style = useAnimatedStyle(() => ({
     transform: [{ translateY: y.value }, { scale: withSpring(lifted.value ? 1.03 : 1, SETTLE) }],
     zIndex: lifted.value ? 1 : 0,
-    shadowOpacity: withSpring(lifted.value ? 0.18 : 0, SETTLE),
+    ...(android
+      ? { boxShadow: lifted.value ? lift : "0 0 #0000" }
+      : { shadowOpacity: withSpring(lifted.value ? 0.18 : 0, SETTLE) }),
     borderTopWidth: (positions.value[id] ?? 0) > 0 && !lifted.value ? 1 : 0,
   }));
   return (

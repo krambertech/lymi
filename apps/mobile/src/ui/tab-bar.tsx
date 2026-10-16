@@ -1,6 +1,5 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import * as Haptics from "expo-haptics";
 import { usePathname, useRouter } from "expo-router";
 import { NativeTabs } from "expo-router/unstable-native-tabs";
 import { Play } from "lucide-react-native";
@@ -8,6 +7,7 @@ import { useSyncExternalStore } from "react";
 import { Platform, Pressable, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDecks } from "../data/queries";
+import { haptics } from "../theme/haptics";
 import { usePalette } from "../theme/palette";
 import { Text } from "./primitives";
 
@@ -55,9 +55,10 @@ export function useDeckAccessoryShown() {
   return DECK_ACCESSORY && !!deckId && due > 0 && rides;
 }
 
-// The room iOS keeps for its tab bar over the home indicator's inset, which the floating bar sits in,
-// and the accessory a deck's review rides in.
-const TAB_BAR = 49;
+const ANDROID = Platform.OS === "android";
+// The room iOS keeps for its tab bar over the home indicator's inset, and Material's 80 dp bar over the
+// navigation bar's, which the floating bar sits in, and the accessory a deck's review rides in.
+const TAB_BAR = ANDROID ? 80 : 49;
 const ACCESSORY = 56;
 const TABS = /^\/(today|library|explore|you)(\/|$)/;
 
@@ -81,13 +82,21 @@ export function TabBar() {
   const deckId = usePathname().match(/^\/library\/([^/]+)$/)?.[1];
   const due = useDecks().data?.find((d) => d.id === deckId)?.due ?? 0;
   const accessory = useDeckAccessoryShown();
-  const label = { fontFamily: "Onest", fontWeight: "500", fontSize: 10 } as const;
+  const label = { fontFamily: "Onest", fontWeight: "500", fontSize: ANDROID ? 12 : 10 } as const;
   return (
     <NativeTabs
       labelStyle={{ default: { ...label, color: p.muted }, selected: { ...label, color: p.text } }}
       iconColor={{ default: p.muted, selected: p.text }}
       tintColor={p.text}
       minimizeBehavior="onScrollDown"
+      // Material's bar, in the web rail's colours rather than the wallpaper's: its pill is the chip
+      // the rail puts under the current page.
+      {...(ANDROID && {
+        backgroundColor: p.rail,
+        indicatorColor: p["rail-chosen"],
+        rippleColor: p["glass-veil"],
+        labelVisibilityMode: "labeled",
+      })}
     >
       {accessory && deckId && (
         <NativeTabs.BottomAccessory>
@@ -121,7 +130,7 @@ function MiniPlayer({ deckId, due }: { deckId: string; due: number }) {
   const router = useRouter();
   const inline = NativeTabs.BottomAccessory.usePlacement() === "inline";
   const review = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    haptics.start();
     router.push(`/review?deck=${deckId}`);
   };
   return (

@@ -12,6 +12,7 @@ import {
 } from "@lymi/client/review-end";
 import { writes } from "@lymi/client/writes";
 import {
+  CHOSEN_LIMIT,
   canSpeakTerm,
   countedRating,
   type Drawn,
@@ -22,6 +23,7 @@ import {
   ROUNDS,
   type Round,
 } from "@lymi/core";
+import type { ReviewScopeKind } from "@lymi/core/analytics";
 import { ReviewSessionTracker } from "@lymi/core/analytics-review-session";
 import { lanternFor } from "@lymi/design";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -80,8 +82,20 @@ import { WordView } from "../views/word-view";
 export const Route = createFileRoute("/review")({
   validateSearch: (
     s: Record<string, unknown>,
-  ): { deck?: string; series?: string; section?: string; round?: Round; card?: string } => {
+  ): {
+    deck?: string;
+    series?: string;
+    section?: string;
+    round?: Round;
+    cards?: string[];
+    card?: string;
+  } => {
     const round = ROUNDS.find((r) => r === s.round);
+    // Trimmed rather than dropped, so a long list never widens into the whole deck's review.
+    const cards =
+      Array.isArray(s.cards) && s.cards.length > 0 && s.cards.every((id) => typeof id === "string")
+        ? (s.cards as string[]).slice(0, CHOSEN_LIMIT)
+        : undefined;
     return {
       ...(typeof s.deck === "string" ? { deck: s.deck } : {}),
       // A section belongs to its deck, whose sections name it.
@@ -91,6 +105,10 @@ export const Route = createFileRoute("/review")({
       // One scope at a time: a deck wins over a series.
       ...(typeof s.series === "string" && typeof s.deck !== "string" ? { series: s.series } : {}),
       ...(round ? { round } : {}),
+      // Cards chosen on a deck page, reviewed as a list of their own.
+      ...(cards && typeof s.deck === "string" && !round && typeof s.section !== "string"
+        ? { cards }
+        : {}),
       // The card open as a place, so the phone's back gesture closes it, as on the deck page.
       ...(typeof s.card === "string" ? { card: s.card } : {}),
     };
@@ -162,14 +180,15 @@ function leftInLeg<T>(items: readonly T[], cards: LegCards, key: (item: T) => st
 
 /** A review of another deck or series starts over, so nothing from this one carries into it. */
 function ReviewPage() {
-  const { deck, series, section } = Route.useSearch();
-  return <Review key={scopeKey({ deck, series, section })} />;
+  const { deck, series, section, cards } = Route.useSearch();
+  const key = scopeKey({ deck, series, section }) + (cards ? cards.join(",") : "");
+  return <Review key={key} />;
 }
 
 function Review() {
   const { t } = useLingui();
   useDocumentTitle(t`Review`);
-  const { deck, series, section, round, card: placeCardId } = Route.useSearch();
+  const { deck, series, section, round, cards, card: placeCardId } = Route.useSearch();
   const scope = useMemo(() => ({ deck, series, section }), [deck, series, section]);
   const qc = useQueryClient();
   const navigate = useNavigate();
@@ -177,8 +196,10 @@ function Review() {
   const reduce = useReduceMotion();
   // The draw also feeds the header's count, so it loads in a round too.
   const draw = useQuery(drawQuery(scope));
-  // A round from Today is a fixed list rather than a draw, walked in order.
-  const roundQueue = useQuery({ ...queueQuery(scope, round), enabled: !!round });
+  // A round from Today, or cards chosen on a deck page, is a fixed list rather than a draw, walked in order.
+  const listed = !!round || !!cards;
+  const listScope: ReviewScopeKind = cards ? "chosen" : "round";
+  const roundQueue = useQuery({ ...queueQuery(scope, round, cards), enabled: listed });
   const decks = useQuery(decksQuery);
   const seriesList = useQuery({ ...seriesQuery, enabled: !!series });
   const streak = useQuery(streakQuery);
@@ -255,7 +276,7 @@ function Review() {
   const scoped = !!deck || !!series;
   // The first leg is Today's round or the draw, which stops at the goal only for the whole day below it.
   useEffect(() => {
-    if (leg || !data || !state || !streakSettled || (round && !roundData)) return;
+    if (leg || !data || !state || !streakSettled || (listed && !roundData)) return;
     const { attempts } = state;
     setMark({
       attempts,
@@ -268,10 +289,10 @@ function Review() {
     setPaused(false);
     const base = { date: state.day.date, from: attempts };
     // The queue serves a round a page at a time, so the leg is sized by the round's total, not the first page.
-    if (round && roundData) setLeg({ ...base, kind: "today", size: roundData.total });
+    if (listed && roundData) setLeg({ ...base, kind: "today", size: roundData.total });
     else
       setLeg({ ...base, kind: "draw", until: !scoped && attempts < data.goal ? data.goal : null });
-  }, [round, roundData, leg, data, state, streakSettled, today, scoped]);
+  }, [listed, roundData, leg, data, state, streakSettled, today, scoped]);
 
   const drawLeg = leg?.kind === "draw" ? leg : null;
   const until = drawLeg?.until ?? null;
@@ -464,6 +485,18 @@ function Review() {
     const tracker = sessionTracker.current;
     if (!tracker || !leg || sessionFirst.current === null) return;
     const key = `${leg.date}:${leg.kind}:${leg.from}`;
+    const scope: ReviewScopeKind =
+      leg.kind === "forgotten"
+        ? "round"
+        : leg.kind === "today"
+          ? listScope
+          : section
+            ? "section"
+            : deck
+              ? "deck"
+              : series
+                ? "series"
+                : "day";
     if (current && !paused)
       tracker.update(key, {
         cardsDone: legDone,
@@ -472,11 +505,12 @@ function Review() {
             ? Math.min(legSize, leg.until - leg.from)
             : legSize,
         first: sessionFirst.current,
+        scope,
       });
     else if (stopped) {
       tracker.update(
         key,
-        { cardsDone: legDone, cardCount: legSize, first: sessionFirst.current },
+        { cardsDone: legDone, cardCount: legSize, first: sessionFirst.current, scope },
         false,
       );
       if (paused) tracker.abandon("left");
@@ -496,6 +530,10 @@ function Review() {
     drawLeg,
     streakSettled,
     streak.data,
+    listScope,
+    section,
+    deck,
+    series,
   ]);
   const sessionMount = useRef(0);
   useEffect(() => {
@@ -509,7 +547,7 @@ function Review() {
       });
     };
   }, []);
-  const failed = round ? roundQueue.isError && !roundQueue.data : draw.isError && !draw.data;
+  const failed = listed ? roundQueue.isError && !roundQueue.data : draw.isError && !draw.data;
 
   const counts = !!end?.satisfied;
   const attempts = state?.attempts;
@@ -573,8 +611,8 @@ function Review() {
     setLegCards(NO_LEG_CARDS);
     if (offer.kind === "forgotten") setLeg({ ...base, kind: "forgotten", items: forgottenItems });
     else setLeg({ ...base, kind: "draw", until: state.attempts < data.goal ? data.goal : null });
-    // Today's round is over, so a reload continues the day rather than walking it again.
-    if (round) {
+    // The round is over, so a reload continues the day rather than walking it again.
+    if (listed) {
       void navigate({
         to: "/review",
         search: {
@@ -1023,7 +1061,7 @@ function Review() {
 
       {failed && (
         <ReviewError
-          retry={() => (round ? roundQueue.refetch() : draw.refetch())}
+          retry={() => (listed ? roundQueue.refetch() : draw.refetch())}
           action={
             <Button variant="ghost" render={<Link to="/today" />}>
               <Trans>Back</Trans>

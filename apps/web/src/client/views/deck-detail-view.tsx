@@ -10,22 +10,24 @@ import {
   noFilters,
   rowState,
 } from "@lymi/client/deck-list";
+import { CHOSEN_LIMIT } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
   ArrowUpDown,
+  ChevronDown,
   Download,
   KeyRound,
   Layers,
-  ListChecks,
   ListFilter,
-  ListX,
   LogOut,
   MoreHorizontal,
   PenLine,
   Plug,
   Plus,
+  RotateCcw,
   Search,
+  SearchX,
   Settings2,
   Signpost,
   Sparkles,
@@ -128,6 +130,8 @@ export interface DeckDetailProps {
   onStartSection?: ((section: Section) => void) | undefined;
   /** Review one section's cards, from its heading's menu. */
   onReviewSection?: ((section: Section) => void) | undefined;
+  /** Review chosen cards, from the selection toolbar. */
+  onReviewCards?: ((cardIds: string[]) => void) | undefined;
   startSectionPending?: boolean | undefined;
   /** Why the deck is not on screen: gone for good, or the app could not reach it. */
   failure?: DeckFailure | undefined;
@@ -653,22 +657,32 @@ function ListTools({
 function SelectionToolbar({
   count,
   total,
+  reviewable,
+  due,
   onAll,
   onClear,
+  onReview,
   onTags,
   onMove,
   onDone,
 }: {
   count: number;
   total: number;
+  /** Chosen cards a review takes: started, and not reviewed today. */
+  reviewable: number;
+  /** Of those, the ones due before the day ends. */
+  due: number;
   onAll: () => void;
   onClear: () => void;
-  onTags: () => void;
-  onMove: () => void;
+  onReview?: ((kind: "due" | "all") => void) | undefined;
+  /** The owner's: a member reads the deck, so only Review is theirs. */
+  onTags?: (() => void) | undefined;
+  onMove?: (() => void) | undefined;
   onDone: () => void;
 }) {
   const { t } = useLingui();
   const all = count > 0 && count === total;
+  const limit = CHOSEN_LIMIT;
   return (
     <section
       aria-label={t`Selected cards`}
@@ -683,55 +697,70 @@ function SelectionToolbar({
       >
         <Plural value={count} _0="Select cards" one="# selected" other="# selected" />
       </p>
-      {/* The narrowest list keeps the count readable, so Select all is its icon there. */}
-      <IconButton
-        size="sm"
-        label={all ? t`Clear` : t`Select all`}
-        className="@xs/tools:hidden"
-        onClick={all ? onClear : onAll}
-      >
-        {all ? <ListX /> : <ListChecks />}
-      </IconButton>
-      <span className="hidden @xs/tools:contents">
-        <Button size="sm" variant="ghost" onClick={all ? onClear : onAll}>
-          {all ? <Trans>Clear</Trans> : <Trans>Select all</Trans>}
-        </Button>
-      </span>
-      {/* A narrow list keeps the count and Move readable, so Tags is its icon there. */}
-      <IconButton
-        size="sm"
-        label={t`Tags…`}
-        className="@md/tools:hidden"
-        aria-disabled={count === 0}
-        onClick={() => count > 0 && onTags()}
-      >
-        <Tags />
-      </IconButton>
-      {/* The wrapper hides it, since Button's own display would win over a plain hidden. */}
-      <span className="hidden @md/tools:contents">
-        <Button
-          size="sm"
-          variant="ghost"
-          aria-disabled={count === 0}
-          onClick={() => count > 0 && onTags()}
-        >
-          <Trans>Tags…</Trans>
-        </Button>
-      </span>
-      <Button
-        size="sm"
-        variant="primary"
-        aria-disabled={count === 0}
-        aria-label={t`Move to section…`}
-        onClick={() => count > 0 && onMove()}
-      >
-        <span className="@md/tools:hidden">
-          <Trans>Move…</Trans>
-        </span>
-        <span className="hidden @md/tools:inline">
-          <Trans>Move to section…</Trans>
-        </span>
+      <Button size="sm" variant="ghost" onClick={all ? onClear : onAll}>
+        {all ? <Trans>Clear</Trans> : <Trans>Select all</Trans>}
       </Button>
+      {/* One menu of what can be done to the chosen cards, as the phone's toolbar has. */}
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          disabled={count === 0}
+          render={
+            <Button size="sm" variant="primary">
+              <Trans>Actions</Trans>
+              <ChevronDown data-icon="inline-end" aria-hidden="true" />
+            </Button>
+          }
+        />
+        <DropdownMenuContent aria-label={t`Actions`} align="end">
+          {onReview && (
+            <DropdownMenuGroup>
+              {/* Due first, since clearing today's work is why most learners narrow the list. */}
+              {due > 0 && (
+                <DropdownMenuItem onClick={() => onReview("due")}>
+                  <RotateCcw />
+                  {due > limit ? (
+                    <Trans>
+                      Review {limit} of {due} due
+                    </Trans>
+                  ) : (
+                    <Plural value={due} one="Review # due" other="Review # due" />
+                  )}
+                </DropdownMenuItem>
+              )}
+              {(due === 0 || reviewable > due) && (
+                <DropdownMenuItem disabled={reviewable === 0} onClick={() => onReview("all")}>
+                  <RotateCcw />
+                  {reviewable > limit ? (
+                    <Trans>
+                      Review {limit} of {reviewable}
+                    </Trans>
+                  ) : (
+                    <Plural
+                      value={reviewable}
+                      _0="Nothing to review"
+                      one="Review all #"
+                      other="Review all #"
+                    />
+                  )}
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuGroup>
+          )}
+          {onReview && (onTags || onMove) && <DropdownMenuSeparator />}
+          {onTags && (
+            <DropdownMenuItem onClick={onTags}>
+              <Tags />
+              <Trans>Tags…</Trans>
+            </DropdownMenuItem>
+          )}
+          {onMove && (
+            <DropdownMenuItem onClick={onMove}>
+              <Signpost />
+              <Trans>Move to section…</Trans>
+            </DropdownMenuItem>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </section>
   );
 }
@@ -761,6 +790,7 @@ export function DeckDetailView({
   progress,
   onStartSection,
   onReviewSection,
+  onReviewCards,
   startSectionPending,
   failure,
   onRetry,
@@ -856,6 +886,25 @@ export function DeckDetailView({
       return next;
     });
   }, []);
+  // What Review takes from the selection: started cards not reviewed today, as the server counts them.
+  const reviewable = useMemo(() => {
+    if (!selected || !cards) return [];
+    const today = new Date();
+    const dayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+    const dayEnd = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1).getTime();
+    return cards
+      .filter(
+        (row) =>
+          selected.has(row.card.id) &&
+          rowState(row) !== "new" &&
+          !(row.state?.lastReview && new Date(row.state.lastReview).getTime() >= dayStart),
+      )
+      .map((row) => {
+        const at = new Date(row.state?.due ?? 0).getTime();
+        return { id: row.card.id, at, due: at < dayEnd };
+      })
+      .sort((a, b) => a.at - b.at);
+  }, [selected, cards]);
   const stopSelecting = useCallback(() => {
     setSelected(null);
     anchor.current = null;
@@ -1031,15 +1080,16 @@ export function DeckDetailView({
               <Signpost />
               <Trans>New section</Trans>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => setSelected(new Set())}
-              disabled={!cards?.length || !!selected}
-            >
-              <SquareCheck />
-              <Trans>Select cards</Trans>
-            </DropdownMenuItem>
           </>
         )}
+        {/* A member selects too, to review chosen cards; changing them stays the owner's. */}
+        <DropdownMenuItem
+          onClick={() => setSelected(new Set())}
+          disabled={!cards?.length || !!selected}
+        >
+          <SquareCheck />
+          <Trans>Select cards</Trans>
+        </DropdownMenuItem>
         {owner && (
           <DropdownMenuItem onClick={owner.onExport} disabled={!deck}>
             <Download />
@@ -1239,14 +1289,27 @@ export function DeckDetailView({
                 "sticky top-0 z-20 -mx-5 bg-canvas px-5 py-2 @3xl/shell:-mx-8 @3xl/shell:px-8",
             )}
           >
-            {selected && owner ? (
+            {selected ? (
               <SelectionToolbar
                 count={selected.size}
                 total={ordered.length}
+                reviewable={reviewable.length}
+                due={reviewable.filter((r) => r.due).length}
                 onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
                 onClear={() => setSelected(new Set())}
-                onTags={() => owner.onTagCards([...selected], stopSelecting)}
-                onMove={() => owner.sections.onPickSection([...selected], stopSelecting)}
+                onReview={
+                  onReviewCards &&
+                  ((kind) =>
+                    // One review takes at most CHOSEN_LIMIT, and the list is due first, so the cap keeps those.
+                    onReviewCards(
+                      reviewable
+                        .filter((r) => kind === "all" || r.due)
+                        .slice(0, CHOSEN_LIMIT)
+                        .map((r) => r.id),
+                    ))
+                }
+                onTags={owner && (() => owner.onTagCards([...selected], stopSelecting))}
+                onMove={owner && (() => owner.sections.onPickSection([...selected], stopSelecting))}
                 onDone={stopSelecting}
               />
             ) : (
@@ -1291,14 +1354,21 @@ export function DeckDetailView({
           </div>
         )}
 
-        {/* The search and the filter stay in view, so no match is a line, not a screen. */}
+        {/* The search and the filter stay in view above it, so the way back is beside its cause. */}
         {shown && shown.length === 0 && cards && cards.length > 0 && (
           <NoResults
+            icon={query ? <SearchX /> : <ListFilter />}
             title={query ? t`No cards match “${query}”` : t`No cards match these filters`}
-            detail={query ? <Trans>Search looks at the term and the meaning.</Trans> : undefined}
+            detail={
+              query ? (
+                <Trans>Search looks at the term and the meaning.</Trans>
+              ) : (
+                <Trans>Remove a filter above, or show every card in this deck.</Trans>
+              )
+            }
             action={
               filtered ? (
-                <Button size="sm" onClick={clearAll}>
+                <Button onClick={clearAll}>
                   {query ? <Trans>Clear search</Trans> : <Trans>Show all</Trans>}
                 </Button>
               ) : undefined

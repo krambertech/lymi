@@ -4,20 +4,22 @@ import { api, type ReviewScope, scopeKey } from "../api";
 import { flushOutbox } from "../grades";
 import { fresh } from "../writes";
 
-export const queueQuery = (scope: ReviewScope, round?: Round) =>
-  queryOptions({
-    queryKey: ["queue", scopeKey(scope), round ?? "order"],
+export const queueQuery = (scope: ReviewScope, round?: Round, cards?: readonly string[]) => {
+  const key = ["queue", scopeKey(scope), round ?? (cards ? `cards:${cards.join(",")}` : "order")];
+  return queryOptions({
+    queryKey: key,
     // The server chooses a round's cards, so grades still on their way land first.
     queryFn: () =>
-      fresh(["queue", scopeKey(scope), round ?? "order"], async () => {
+      fresh(key, async () => {
         await flushOutbox();
-        return api.queue(scope, round);
+        return api.queue(scope, round, cards);
       }),
     staleTime: 0,
     // A review keeps its initial order; a new mount still fetches a freshly shuffled queue.
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
+};
 /** What the review draws from, stamped with when the request began so an empty draw can be confirmed. */
 export const drawQuery = (scope: ReviewScope) =>
   queryOptions({

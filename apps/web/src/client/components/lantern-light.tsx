@@ -5,6 +5,7 @@ import {
   type ReactNode,
   type RefObject,
   useLayoutEffect,
+  useRef,
   useState,
 } from "react";
 
@@ -87,9 +88,12 @@ interface RoomProps {
 
 /**
  * The lantern's light reaching the edges of the window, centred on the lantern. It sits behind
- * the nearest isolated ancestor's content, so that ancestor must not paint a background. motion.md "The end of a review".
+ * the nearest isolated ancestor's content, so that ancestor must not paint a background. A frame
+ * that contains fixed children, such as the design page's phone, holds it instead of the window.
+ * motion.md "The end of a review".
  */
 export function RoomLight({ anchor, poolAt = 0, dim = false, skip = false }: RoomProps) {
+  const self = useRef<HTMLDivElement>(null);
   const [at, setAt] = useState<{ x: number; y: number } | null>(null);
   useLayoutEffect(() => {
     let frame = 0;
@@ -97,7 +101,15 @@ export function RoomLight({ anchor, poolAt = 0, dim = false, skip = false }: Roo
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         const box = anchor.current?.getBoundingClientRect();
-        if (box) setAt({ x: box.left + box.width / 2, y: box.top + box.height / 2 });
+        const own = self.current;
+        if (!box || !own) return;
+        // Measured from the light's own box, and unscaled, so a frame that holds it keeps it on the lantern.
+        const room = own.getBoundingClientRect();
+        const scale = room.width > 0 ? own.offsetWidth / room.width : 1;
+        setAt({
+          x: (box.left + box.width / 2 - room.left) * scale,
+          y: (box.top + box.height / 2 - room.top) * scale,
+        });
       });
     };
     place();
@@ -110,13 +122,22 @@ export function RoomLight({ anchor, poolAt = 0, dim = false, skip = false }: Roo
       window.removeEventListener("scroll", place, { capture: true });
     };
   }, [anchor]);
-  if (!at) return null;
   return (
     <div
+      ref={self}
       aria-hidden="true"
       data-skip={skip || undefined}
-      className={clsx("room-light pointer-events-none fixed inset-0 -z-10", dim && "opacity-50")}
-      style={{ "--x": `${at.x}px`, "--y": `${at.y}px`, "--at": `${poolAt}ms` } as CSSProperties}
+      className={clsx(
+        "room-light pointer-events-none fixed inset-0 -z-10",
+        dim && "opacity-50",
+        !at && "invisible",
+      )}
+      style={
+        {
+          "--at": `${poolAt}ms`,
+          ...(at ? { "--x": `${at.x}px`, "--y": `${at.y}px` } : {}),
+        } as CSSProperties
+      }
     />
   );
 }

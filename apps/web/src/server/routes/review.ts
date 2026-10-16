@@ -1,4 +1,5 @@
 import {
+  CHOSEN_LIMIT,
   DrawOut,
   GradeInput,
   GradeOut,
@@ -52,6 +53,14 @@ const QueueQuery = z.object({
     description:
       "Review one Today group instead of the day's draw: cards forgotten today, new cards, or cards that keep slipping. Each card comes once; a slipping card comes whether or not it is due.",
   }),
+  cards: z
+    .string()
+    .max(CHOSEN_LIMIT * 40)
+    .optional()
+    .transform((v) => (v ? v.split(",").filter(Boolean) : undefined))
+    .meta({
+      description: `Review cards chosen in one deck, as comma-separated ids, at most ${CHOSEN_LIMIT}. Needs \`deck\`, and no \`round\` or \`section\`. Each started card not yet reviewed today comes once, due ones first, whether or not it is due; new cards are left out.`,
+    }),
 });
 
 review.get(
@@ -66,7 +75,7 @@ review.get(
   }),
   query(QueueQuery, "query"),
   async (c) => {
-    const { deck, series, section, limit, round } = c.req.valid("query");
+    const { deck, series, section, limit, round, cards } = c.req.valid("query");
     return c.json(
       await reviewQueue(ctxOf(c), {
         deckId: deck,
@@ -74,6 +83,7 @@ review.get(
         sectionId: section,
         limit,
         round,
+        cardIds: cards,
       }),
     );
   },

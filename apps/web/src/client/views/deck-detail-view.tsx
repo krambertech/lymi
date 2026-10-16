@@ -17,7 +17,9 @@ import {
   Download,
   KeyRound,
   Layers,
+  ListChecks,
   ListFilter,
+  ListX,
   LogOut,
   MoreHorizontal,
   Plug,
@@ -665,9 +667,20 @@ function SelectionToolbar({
       >
         <Plural value={count} _0="Select cards" one="# selected" other="# selected" />
       </p>
-      <Button size="sm" variant="ghost" onClick={all ? onClear : onAll}>
-        {all ? <Trans>Clear</Trans> : <Trans>Select all</Trans>}
-      </Button>
+      {/* The narrowest list keeps the count readable, so Select all is its icon there. */}
+      <IconButton
+        size="sm"
+        label={all ? t`Clear` : t`Select all`}
+        className="@xs/tools:hidden"
+        onClick={all ? onClear : onAll}
+      >
+        {all ? <ListX /> : <ListChecks />}
+      </IconButton>
+      <span className="hidden @xs/tools:contents">
+        <Button size="sm" variant="ghost" onClick={all ? onClear : onAll}>
+          {all ? <Trans>Clear</Trans> : <Trans>Select all</Trans>}
+        </Button>
+      </span>
       {/* A narrow list keeps the count and Move readable, so Tags is its icon there. */}
       <IconButton
         size="sm"
@@ -678,15 +691,17 @@ function SelectionToolbar({
       >
         <Tags />
       </IconButton>
-      <Button
-        size="sm"
-        variant="ghost"
-        className="hidden @md/tools:inline-flex"
-        aria-disabled={count === 0}
-        onClick={() => count > 0 && onTags()}
-      >
-        <Trans>Tags…</Trans>
-      </Button>
+      {/* The wrapper hides it, since Button's own display would win over a plain hidden. */}
+      <span className="hidden @md/tools:contents">
+        <Button
+          size="sm"
+          variant="ghost"
+          aria-disabled={count === 0}
+          onClick={() => count > 0 && onTags()}
+        >
+          <Trans>Tags…</Trans>
+        </Button>
+      </span>
       <Button
         size="sm"
         variant="primary"

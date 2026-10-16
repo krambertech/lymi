@@ -46,7 +46,7 @@ account.post(
     tags: ["Account"],
     summary: "Email a code to delete the account",
     learnerOnly: true,
-    description: `${LEARNER_ONLY} Sends a six-digit code to the account's email, good for 15 minutes; a new one replaces the last. 409 \`code_sent\` within a minute of the last code, \`code_limit\` after five codes in a day; 409 \`publisher\` for an account that owns a published deck.`,
+    description: `${LEARNER_ONLY} Sends a six-digit code to the account's email, good for 15 minutes; a new one replaces the last. 409 \`code_sent\` within a minute of the last code, \`code_limit\` after five codes in a day; 409 \`publisher\` for an account that publishes decks.`,
     ok: { schema: DeletionCodeOut, description: "Where the code went" },
     errors: [409, 503],
   }),

@@ -4,10 +4,22 @@ import {
   type DeletionCodeOut,
   newId,
 } from "@lymi/core";
-import { and, count, eq, inArray, isNotNull, isNull, ne, notInArray } from "@lymi/core/db";
-import { schema } from "../db";
+import {
+  and,
+  count,
+  eq,
+  inArray,
+  isNotNull,
+  isNull,
+  ne,
+  notExists,
+  notInArray,
+  sql,
+} from "@lymi/core/db";
+import { type Db, schema } from "../db";
 import type { Bindings } from "../env";
-import { audit } from "./audit";
+import { auditStatement } from "./audit";
+import { runBatch } from "./batch";
 import { type ServiceContext, ServiceError } from "./context";
 import {
   accountEmailLanguage,
@@ -17,7 +29,7 @@ import {
 
 /**
  * The account that holds decks other people still study after their owner deleted theirs. It
- * cannot sign in, owns nothing else, and the clients name it "Former owner".
+ * cannot sign in, owns nothing else, and the clients name it "Former owner". A migration seeds it.
  */
 export const FORMER_OWNER_ID = "former-owner";
 
@@ -26,6 +38,8 @@ const CODE_ATTEMPTS = 5;
 const RESEND_SECONDS = 60;
 const CODES_PER_DAY = 5;
 const codeIdentifier = (userId: string) => `delete-account:${userId}`;
+const sendsKey = (userId: string, day: Date) =>
+  `delete-account-sends:${userId}:${day.toISOString().slice(0, 10)}`;
 
 async function sha256(value: string): Promise<string> {
   const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
@@ -58,14 +72,34 @@ function sharedDecks({ db, userId }: ServiceContext) {
     .groupBy(schema.decks.id);
 }
 
-async function ownsPublishedDeck({ db, userId }: ServiceContext): Promise<boolean> {
-  const [row] = await db
-    .select({ id: schema.deckPublications.id })
-    .from(schema.deckPublications)
-    .innerJoin(schema.decks, eq(schema.decks.id, schema.deckPublications.deckId))
-    .where(eq(schema.decks.userId, userId))
-    .limit(1);
-  return Boolean(row);
+/**
+ * An account that owns a published deck, published an edition or approved a localization. The
+ * first is guarded by migration 0028; the others are foreign keys without a delete rule.
+ */
+async function isPublisher({ db, userId }: ServiceContext): Promise<boolean> {
+  const approved = [
+    schema.seriesLocalizations,
+    schema.deckLocalizations,
+    schema.sectionLocalizations,
+    schema.cardLocalizations,
+  ].map((table) =>
+    db.select({ id: table.approvedBy }).from(table).where(eq(table.approvedBy, userId)).limit(1),
+  );
+  const found = await Promise.all([
+    db
+      .select({ id: schema.deckPublications.id })
+      .from(schema.deckPublications)
+      .innerJoin(schema.decks, eq(schema.decks.id, schema.deckPublications.deckId))
+      .where(eq(schema.decks.userId, userId))
+      .limit(1),
+    db
+      .select({ id: schema.deckEditions.id })
+      .from(schema.deckEditions)
+      .where(eq(schema.deckEditions.publishedBy, userId))
+      .limit(1),
+    ...approved,
+  ]);
+  return found.some((rows) => rows.length > 0);
 }
 
 async function hasApple({ db, userId }: ServiceContext): Promise<boolean> {
@@ -88,7 +122,7 @@ export async function deletionSummary(ctx: ServiceContext): Promise<AccountDelet
       .where(eq(schema.decks.userId, userId)),
     db.select({ n: count() }).from(schema.reviews).where(eq(schema.reviews.userId, userId)),
     sharedDecks(ctx),
-    ownsPublishedDeck(ctx),
+    isPublisher(ctx),
     hasApple(ctx),
   ]);
   return {
@@ -104,7 +138,7 @@ export async function deletionSummary(ctx: ServiceContext): Promise<AccountDelet
 function refusePublisher(): never {
   throw new ServiceError(
     "conflict",
-    "This account owns a published deck, so it can’t be deleted here. Write to hello@lymi.app.",
+    "This account publishes decks, so it can’t be deleted here. Write to hello@lymi.app.",
     undefined,
     "publisher",
   );
@@ -117,7 +151,7 @@ export async function sendDeletionCode(
   request: Request | undefined,
 ): Promise<DeletionCodeOut> {
   const { db, userId } = ctx;
-  if (await ownsPublishedDeck(ctx)) refusePublisher();
+  if (await isPublisher(ctx)) refusePublisher();
   const [account] = await db
     .select({ email: schema.user.email })
     .from(schema.user)
@@ -137,12 +171,11 @@ export async function sendDeletionCode(
       "code_sent",
     );
   }
-  const today = new Date().toISOString().slice(0, 10);
-  const sendsKey = `delete-account-sends:${userId}:${today}`;
+  const daySends = sendsKey(userId, new Date());
   const [sends] = await db
     .select({ id: schema.verification.id, value: schema.verification.value })
     .from(schema.verification)
-    .where(eq(schema.verification.identifier, sendsKey));
+    .where(eq(schema.verification.identifier, daySends));
   const sent = Number(sends?.value ?? 0);
   // Re-sending starts a fresh count of guesses, so the codes themselves are capped per day.
   if (sent >= CODES_PER_DAY) {
@@ -162,7 +195,7 @@ export async function sendDeletionCode(
           .where(eq(schema.verification.id, sends.id))
       : db.insert(schema.verification).values({
           id: newId(),
-          identifier: sendsKey,
+          identifier: daySends,
           value: "1",
           expiresAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
         }),
@@ -296,7 +329,7 @@ export async function deleteAccount(
   if (ctx.actor !== "user") {
     throw new ServiceError("forbidden", "Only the learner can delete their account, from the app.");
   }
-  if (await ownsPublishedDeck(ctx)) refusePublisher();
+  if (await isPublisher(ctx)) refusePublisher();
   const confirmedWith = "apple" in input ? "apple" : "email";
   if ("apple" in input) await checkApple(ctx, input.apple, deps.verifyApple);
   else await checkCode(ctx, input.code);
@@ -343,23 +376,54 @@ export async function deleteAccount(
     .from(schema.deckMembers)
     .innerJoin(schema.decks, eq(schema.decks.id, schema.deckMembers.deckId))
     .where(and(eq(schema.deckMembers.userId, userId), isNull(schema.deckMembers.removedAt)));
-  for (const { deckId, ownerId } of joined) {
-    await audit(
+  const leaves = joined.map(({ deckId, ownerId }) =>
+    auditStatement(
       { ...ctx, userId: ownerId },
       { entity: "deck", action: "leave", id: deckId, memberId: userId },
-    );
-  }
-
-  await deps.endSessions(userId);
+    ),
+  );
 
   const now = new Date();
-  await db.batch([
-    db
-      .insert(schema.user)
-      .values({ id: FORMER_OWNER_ID, name: "", email: "former-owner@lymi.invalid" })
-      .onConflictDoNothing(),
+  await runBatch(db, [
+    ...leaves,
     ...(kept.length > 0
       ? [
+          // Migration 0051 seeds it, which holds its address; this restores it if it went.
+          db
+            .insert(schema.user)
+            .values({ id: FORMER_OWNER_ID, name: "", email: "former-owner@lymi.invalid" })
+            .onConflictDoNothing(),
+          // The learner's tags cascade with them, so a kept card's tags move to the former
+          // owner's tag of the same name, which holds each name once.
+          db
+            .insert(schema.tags)
+            .select(
+              sql`select lower(hex(randomblob(10))), ${FORMER_OWNER_ID}, mine.name,
+                mine.normalized_name, ${now.getTime()}, ${now.getTime()}
+              from tags as mine
+              where mine.user_id = ${userId}
+                and mine.id in (select tag_id from card_tags where card_id in ${keptCards})`,
+            )
+            .onConflictDoNothing(),
+          db
+            .update(schema.cardTags)
+            .set({
+              tagId: sql`(select former.id from tags as former
+                join tags as mine on mine.normalized_name = former.normalized_name
+                where former.user_id = ${FORMER_OWNER_ID} and mine.id = card_tags.tag_id)`,
+            })
+            .where(
+              and(
+                inArray(schema.cardTags.cardId, keptCards),
+                inArray(
+                  schema.cardTags.tagId,
+                  db
+                    .select({ id: schema.tags.id })
+                    .from(schema.tags)
+                    .where(eq(schema.tags.userId, userId)),
+                ),
+              ),
+            ),
           // Nobody can change a kept deck, invite to it or join it again.
           db
             .update(schema.deckInvitations)
@@ -376,7 +440,7 @@ export async function deleteAccount(
             .where(inArray(schema.cardImages.cardId, keptCards)),
           db
             .update(schema.cards)
-            .set({ userId: FORMER_OWNER_ID, updatedAt: now })
+            .set({ userId: FORMER_OWNER_ID, hookDraft: null, updatedAt: now })
             .where(inArray(schema.cards.deckId, kept)),
           db
             .update(schema.decks)
@@ -401,9 +465,14 @@ export async function deleteAccount(
           isNull(schema.deckInvitations.acceptedAt),
         ),
       ),
-    db
-      .delete(schema.verification)
-      .where(eq(schema.verification.identifier, codeIdentifier(userId))),
+    db.delete(schema.verification).where(
+      // The day's code counter lives two days, so today's and yesterday's may both be there.
+      inArray(schema.verification.identifier, [
+        codeIdentifier(userId),
+        sendsKey(userId, now),
+        sendsKey(userId, new Date(now.getTime() - 24 * 60 * 60 * 1000)),
+      ]),
+    ),
     db.insert(schema.accountDeletions).values({
       id: userId,
       client: deps.client,
@@ -416,6 +485,8 @@ export async function deleteAccount(
     }),
     db.delete(schema.user).where(eq(schema.user.id, userId)),
   ]);
+  // After the batch, so a failed delete leaves the learner signed in; KV keeps its own list.
+  await deps.endSessions(userId);
 
   return {
     email: account.email,
@@ -429,4 +500,64 @@ export async function deleteAccount(
     imports,
     exports,
   };
+}
+
+/**
+ * Deletes kept decks whose last member has left, with their pictures, so what a deleted learner
+ * wrote lasts only while someone studies it. A deck whose pictures R2 refused waits for the next run.
+ */
+export async function dropUnstudiedFormerDecks(db: Db, images: R2Bucket): Promise<number> {
+  const decks = await db
+    .select({ id: schema.decks.id })
+    .from(schema.decks)
+    .where(
+      and(
+        eq(schema.decks.userId, FORMER_OWNER_ID),
+        notExists(
+          db
+            .select({ id: schema.deckMembers.id })
+            .from(schema.deckMembers)
+            .where(
+              and(
+                eq(schema.deckMembers.deckId, schema.decks.id),
+                isNull(schema.deckMembers.removedAt),
+              ),
+            ),
+        ),
+      ),
+    )
+    .limit(20);
+  let dropped = 0;
+  for (const { id } of decks) {
+    const pictures = await db
+      .select({ key: schema.cardImages.objectKey })
+      .from(schema.cardImages)
+      .innerJoin(schema.cards, eq(schema.cards.id, schema.cardImages.cardId))
+      .where(eq(schema.cards.deckId, id));
+    try {
+      for (let i = 0; i < pictures.length; i += 1000) {
+        await images.delete(pictures.slice(i, i + 1000).map((picture) => picture.key));
+      }
+    } catch {
+      continue;
+    }
+    await db.batch([
+      db.delete(schema.decks).where(eq(schema.decks.id, id)),
+      db
+        .delete(schema.tags)
+        .where(
+          and(
+            eq(schema.tags.userId, FORMER_OWNER_ID),
+            notExists(
+              db
+                .select({ id: schema.cardTags.tagId })
+                .from(schema.cardTags)
+                .where(eq(schema.cardTags.tagId, schema.tags.id)),
+            ),
+          ),
+        ),
+    ]);
+    dropped++;
+  }
+  return dropped;
 }

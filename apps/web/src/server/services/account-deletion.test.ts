@@ -1,3 +1,4 @@
+import { newId } from "@lymi/core";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
 import type { Bindings } from "../env";
@@ -5,6 +6,7 @@ import {
   type DeletionDeps,
   deleteAccount,
   deletionSummary,
+  dropUnstudiedFormerDecks,
   FORMER_OWNER_ID,
   sendDeletionCode,
 } from "./account-deletion";
@@ -13,7 +15,7 @@ import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
 import { clearLocalEmailOutbox, latestLocalEmail } from "./email";
 import { inviteByEmail } from "./invitations";
-import { join } from "./members";
+import { join, leave } from "./members";
 import { publishDeck } from "./publications";
 import { gradeCard } from "./review";
 import { learner, testDb } from "./test-db";
@@ -213,6 +215,7 @@ describe("deleting an account", () => {
     const kadri = await learner(db, "kadri", "Kadri");
     const peeter = await learner(db, "peeter", "Peeter");
     const { deck, card } = await deckWithCard(kadri, "maja", peeter);
+    await raw.prepare("update cards set hook_draft = 'a draft' where id = ?").bind(card.id).run();
 
     const code = await codeFor(kadri, "kadri@lymi.test");
     const leftovers = await deleteAccount(kadri, { code }, deps);
@@ -225,6 +228,8 @@ describe("deleting an account", () => {
       .first<{ user_id: string; series_id: string | null }>();
     expect(kept).toEqual({ user_id: FORMER_OWNER_ID, series_id: null });
     expect(await count("cards", "id", card.id)).toBe(1);
+    // The AI's draft was only ever the owner's.
+    expect(await count("cards", "hook_draft", "a draft")).toBe(0);
     expect(await count("card_states", "user_id", peeter.userId)).toBe(1);
     expect(await count("reviews", "user_id", peeter.userId)).toBe(1);
     // The owner's own schedule and reviews go with them.
@@ -252,6 +257,147 @@ describe("deleting an account", () => {
     expect((await deletionSummary(lymi)).blocked).toBe("publisher");
     await expect(sendDeletionCode(lymi, env, undefined)).rejects.toMatchObject({
       reason: "publisher",
+    });
+  });
+
+  it("refuses an account that approved a localization of someone else's deck", async () => {
+    const owner = await learner(db, "urmas", "Urmas");
+    const editor = await learner(db, "liis", "Liis");
+    const deck = await createDeck(owner, { name: "Sõnad", defaultLanguage: "et" });
+    await db.insert(schema.deckLocalizations).values({
+      id: newId(),
+      deckId: deck.id,
+      language: "uk",
+      provenance: "human",
+      status: "approved",
+      sourceRevision: 0,
+      approvedBy: editor.userId,
+    });
+
+    expect((await deletionSummary(editor)).blocked).toBe("publisher");
+    await expect(sendDeletionCode(editor, env, undefined)).rejects.toMatchObject({
+      reason: "publisher",
+    });
+  });
+
+  it("moves a kept card's tags to the former owner, one tag per name", async () => {
+    const reader = await learner(db, "anni", "Anni");
+    const kept: { deckId: string; cardId: string }[] = [];
+    for (const [handle, name] of [
+      ["tiit", "Tiit"],
+      ["siim", "Siim"],
+    ] as const) {
+      const owner = await learner(db, handle, name);
+      const deck = await createDeck(owner, { name: `Tags ${handle}`, defaultLanguage: "et" });
+      const [added] = await addCards(owner, [
+        { deckId: deck.id, term: `sõna-${handle}`, meaning: "word", tags: ["Verbs", handle] },
+      ]);
+      if (added?.status !== "added") throw new Error("card not added");
+      await join(reader, deck.id);
+      await deleteAccount(owner, { code: await codeFor(owner, `${handle}@lymi.test`) }, deps);
+      kept.push({ deckId: deck.id, cardId: added.card.id });
+    }
+
+    const tags = await raw
+      .prepare(
+        "select card_tags.card_id as card, tags.name as name from card_tags join tags on tags.id = card_tags.tag_id where tags.user_id = ? order by card_tags.card_id, card_tags.position",
+      )
+      .bind(FORMER_OWNER_ID)
+      .all<{ card: string; name: string }>();
+    for (const { cardId } of kept) {
+      expect(tags.results.filter((row) => row.card === cardId)).toHaveLength(2);
+    }
+    const verbs = await raw
+      .prepare("select count(*) as n from tags where user_id = ? and normalized_name = 'verbs'")
+      .bind(FORMER_OWNER_ID)
+      .first<{ n: number }>();
+    expect(verbs?.n).toBe(1);
+  });
+
+  it("drops a kept deck and its pictures once its last member leaves", async () => {
+    const owner = await learner(db, "maret", "Maret");
+    const member = await learner(db, "jaan", "Jaan");
+    const { deck, card } = await deckWithCard(owner, "puu", member);
+    await db.insert(schema.cardImages).values({
+      id: newId(),
+      cardId: card.id,
+      userId: owner.userId,
+      objectKey: `cards/${card.id}/picture`,
+      contentType: "image/webp",
+      width: 1,
+      height: 1,
+      byteSize: 1,
+      sourceKind: "upload",
+      createdBy: "user",
+    });
+    await deleteAccount(owner, { code: await codeFor(owner, "maret@lymi.test") }, deps);
+
+    const deleted: string[] = [];
+    const images = {
+      delete: async (keys: string | string[]) => {
+        deleted.push(...(Array.isArray(keys) ? keys : [keys]));
+      },
+    } as unknown as R2Bucket;
+    expect(await dropUnstudiedFormerDecks(db, images)).toBe(0);
+    expect(await count("decks", "id", deck.id)).toBe(1);
+
+    await leave(member, deck.id);
+    expect(await dropUnstudiedFormerDecks(db, images)).toBe(1);
+    expect(await count("decks", "id", deck.id)).toBe(0);
+    expect(await count("cards", "id", card.id)).toBe(0);
+    expect(deleted).toEqual([`cards/${card.id}/picture`]);
+  });
+
+  describe("with Sign in with Apple", () => {
+    const token = (sub: string) => `e30.${btoa(JSON.stringify({ sub })).replaceAll("=", "")}.sig`;
+    const apple = (verified: boolean): DeletionDeps => ({
+      ...deps,
+      verifyApple: async () => verified,
+    });
+
+    async function appleLearner(handle: string, sub: string) {
+      const ctx = await learner(db, handle, handle);
+      await db.insert(schema.account).values({
+        id: newId(),
+        accountId: sub,
+        providerId: "apple",
+        userId: ctx.userId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      return ctx;
+    }
+
+    it("asks the phone for Apple's sheet", async () => {
+      const ctx = await appleLearner("kaja", "apple-kaja");
+      expect((await deletionSummary(ctx)).confirmWith).toBe("apple");
+    });
+
+    it("refuses another Apple ID, an unverified token, or no Apple configuration", async () => {
+      const ctx = await appleLearner("rein", "apple-rein");
+      const input = { apple: { idToken: token("apple-someone-else"), nonce: "n" } };
+      await expect(deleteAccount(ctx, input, apple(true))).rejects.toMatchObject({
+        reason: "apple_mismatch",
+      });
+      const own = { apple: { idToken: token("apple-rein"), nonce: "n" } };
+      await expect(deleteAccount(ctx, own, apple(false))).rejects.toMatchObject({
+        reason: "apple_mismatch",
+      });
+      await expect(deleteAccount(ctx, own, deps)).rejects.toMatchObject({
+        reason: "apple_mismatch",
+      });
+      expect(await count("user", "id", ctx.userId)).toBe(1);
+    });
+
+    it("deletes with a fresh sign-in from the account's own Apple ID", async () => {
+      const ctx = await appleLearner("helen", "apple-helen");
+      const leftovers = await deleteAccount(
+        ctx,
+        { apple: { idToken: token("apple-helen"), nonce: "n" } },
+        apple(true),
+      );
+      expect(leftovers.confirmedWith).toBe("apple");
+      expect(await count("user", "id", ctx.userId)).toBe(0);
     });
   });
 });

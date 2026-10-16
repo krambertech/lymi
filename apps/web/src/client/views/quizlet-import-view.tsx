@@ -47,7 +47,6 @@ export function QuizletImportView({
   onContinue,
   pending,
   error,
-  guideUrl,
   back,
 }: {
   /** The learner's own decks, which the cards may join instead of a new deck. */
@@ -55,7 +54,6 @@ export function QuizletImportView({
   onContinue: (request: QuizletImportRequest) => void;
   pending?: boolean | undefined;
   error?: string | undefined;
-  guideUrl: string;
   back?: Back | undefined;
 }) {
   const { t } = useLingui();
@@ -369,12 +367,6 @@ export function QuizletImportView({
             <InlineError>{message}</InlineError>
           </p>
         )}
-        <a
-          href={guideUrl}
-          className="justify-self-start text-base font-medium text-text underline underline-offset-4"
-        >
-          <Trans>Stuck? Read the guide</Trans>
-        </a>
       </div>
     </ImportShell>
   );

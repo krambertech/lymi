@@ -4,7 +4,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { errorMessage } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
-import { importGuideUrl } from "../lib/import-guides";
 import { startUpload } from "../lib/import-uploads";
 import { decksQuery } from "../lib/queries";
 import { type QuizletImportRequest, QuizletImportView } from "../views/quizlet-import-view";
@@ -42,7 +41,6 @@ function QuizletImport() {
       onContinue={(request) => start.mutate(request)}
       pending={start.isPending}
       error={start.isError ? errorMessage(start.error) : undefined}
-      guideUrl={importGuideUrl("quizlet")}
       back={{ label: t`Settings`, to: "/settings", hash: "import" }}
     />
   );

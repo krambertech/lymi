@@ -86,7 +86,7 @@ export function ImportStartView({
   onFile: (file: File) => void;
   pending?: boolean | undefined;
   error?: string | undefined;
-  guideUrl: string;
+  guideUrl?: string | undefined;
   back?: Back | undefined;
 }) {
   const { t } = useLingui();
@@ -220,16 +220,18 @@ export function ImportStartView({
             </li>
           ))}
         </ol>
-        <a
-          href={guideUrl}
-          className="justify-self-start text-base font-medium text-text underline underline-offset-4"
-        >
-          {source !== "anki" ? (
-            <Trans>Stuck? Read the guide</Trans>
-          ) : (
-            <Trans>On a phone, or stuck? Read the guide</Trans>
-          )}
-        </a>
+        {guideUrl && (
+          <a
+            href={guideUrl}
+            className="justify-self-start text-base font-medium text-text underline underline-offset-4"
+          >
+            {source !== "anki" ? (
+              <Trans>Stuck? Read the guide</Trans>
+            ) : (
+              <Trans>On a phone, or stuck? Read the guide</Trans>
+            )}
+          </a>
+        )}
       </section>
     </ImportShell>
   );
@@ -1407,7 +1409,7 @@ export function ImportStoppedView({
 }: {
   item: Import;
   restart: ReactNode;
-  guideUrl: string;
+  guideUrl?: string | undefined;
   onArchive: () => void;
   archiving?: boolean | undefined;
   back?: Back | undefined;
@@ -1431,12 +1433,14 @@ export function ImportStoppedView({
           action={
             <>
               {restart}
-              <a
-                href={guideUrl}
-                className="inline-flex h-10 items-center px-3 text-base font-medium text-text underline underline-offset-4"
-              >
-                <Trans>Read the guide</Trans>
-              </a>
+              {guideUrl && (
+                <a
+                  href={guideUrl}
+                  className="inline-flex h-10 items-center px-3 text-base font-medium text-text underline underline-offset-4"
+                >
+                  <Trans>Read the guide</Trans>
+                </a>
+              )}
             </>
           }
         />

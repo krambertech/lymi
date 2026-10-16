@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { type Href, useIsPreview, useRouter } from "expo-router";
-import { type ReactElement, type ReactNode, useState } from "react";
+import { Fragment, type ReactElement, type ReactNode, useState } from "react";
 import {
   I18nManager,
   type ListRenderItem,
@@ -84,6 +84,14 @@ interface Props<T> {
   list?: ScreenList<T> | undefined;
   children: ReactNode;
 }
+
+/** A long-press preview shows a screen's height of a list, and sits inside the page it was raised from. */
+const PREVIEW_ROWS = 12;
+const NO_SEPARATORS = {
+  highlight: () => {},
+  unhighlight: () => {},
+  updateProps: () => {},
+};
 
 /** How close to the end of a page, in points, a list starts loading what comes next. */
 const END_NEAR = 600;
@@ -311,7 +319,7 @@ export function Screen<T = never>({
 
   return (
     <View className="flex-1 bg-canvas">
-      {list ? (
+      {list && !preview ? (
         <Animated.FlatList
           {...scroll}
           keyboardShouldPersistTaps="handled"
@@ -334,6 +342,17 @@ export function Screen<T = never>({
           contentContainerClassName="px-5 gap-7"
         >
           {content}
+          {/* A preview is drawn inside its page's own scroll view, where a list cannot nest. */}
+          {list && (
+            // Its rows meet the page's content as the list's own do, without the page's gap.
+            <View className="-mt-7">
+              {list.data.slice(0, PREVIEW_ROWS).map((item, index) => (
+                <Fragment key={list.keyExtractor(item)}>
+                  {list.renderItem({ item, index, separators: NO_SEPARATORS })}
+                </Fragment>
+              ))}
+            </View>
+          )}
         </Animated.ScrollView>
       )}
       <Animated.View

@@ -32,7 +32,7 @@ test("a learner pastes a Quizlet set and finds it in Library", async ({ page }, 
     ).toBeVisible();
     await expect(
       page.getByRole("link", { name: "Stuck? Read the guide", exact: true }),
-    ).toHaveAttribute("href", /\/docs\/import-from-quizlet$/);
+    ).toHaveCount(0);
   });
 
   await test.step("paste, check the preview and the skipped rows", async () => {

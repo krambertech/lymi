@@ -1,6 +1,6 @@
 # Import and export
 
-Import brings decks in from another app, one page per app, then one import screen that follows the import from its upload to its end; export writes a deck or the library to a file the learner saves or shares from iOS's share sheet ([ADR 0036](../../../../docs/adr/0036-import-and-export-run-on-the-phone.md), [imports.md](../../../../docs/design/imports.md)).
+Import brings decks in from another app, one page per app, then one import screen that follows the import from its upload to its end; export writes a deck or the library to a file the learner saves or shares from iOS's share sheet ([ADR 0036](../../../../docs/adr/0036-setup-runs-on-the-phone.md), [imports.md](../../../../docs/design/imports.md)).
 
 ## Reach
 

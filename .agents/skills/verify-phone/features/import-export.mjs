@@ -13,7 +13,9 @@ export async function check({ before, api, poll }) {
     const deck = decks.find((d) => d.name === "Maestro set");
     if (!deck || deck.total !== 3) throw new Error("No deck named Maestro set with 3 cards");
     const exports = await api("/api/exports");
-    const done = exports.find((e) => e.format === "anki" && e.deckId === null && e.status === "done");
+    const done = exports.find(
+      (e) => e.format === "anki" && e.deckId === null && e.status === "done",
+    );
     if (!done) throw new Error("No finished library export as an Anki package");
     return { counts, deck: { name: deck.name, total: deck.total }, export: done.fileName };
   });

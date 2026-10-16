@@ -508,6 +508,9 @@ msgstr "До сьогоднішньої мети: {left, plural, one {# повт
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# повторення} few {# повторення} many {# повторень} other {# повторення}}"
 
+msgid "{name} is ready. Copy it now. You won’t see it again."
+msgstr "{name} готовий. Скопіюй його зараз. Більше ти його не побачиш."
+
 msgid "{name} joined {deck}"
 msgstr "{name} тепер у колоді «{deck}»"
 
@@ -574,6 +577,9 @@ msgstr "{total, plural, one {# картка} few {# картки} many {# кар
 
 msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
 msgstr "{total, plural, one {Засвоєно {knownN} з # картки} few {Засвоєно {knownN} з # карток} many {Засвоєно {knownN} з # карток} other {Засвоєно {knownN} з # картки}}"
+
+msgid "{used} · created {created}"
+msgstr "{used} · створено {created}"
 
 msgid "{value, plural, one {# day} other {# days}}"
 msgstr "{value, plural, one {# день} few {# дні} many {# днів} other {# дня}}"
@@ -685,6 +691,9 @@ msgstr "Приблизно {minutes}, {reviews}"
 
 msgid "About this deck"
 msgstr "Про колоду"
+
+msgid "Access"
+msgstr "Доступ"
 
 msgid "Actions for the selected cards"
 msgstr "Дії з вибраними картками"
@@ -813,6 +822,9 @@ msgctxt "deck tag"
 msgid "Alphabet"
 msgstr "Алфавіт"
 
+msgid "Also adds, edits and archives them. A key never grades reviews."
+msgstr "Також додає, редагує й архівує їх. Ключ ніколи не ставить оцінок за повторення."
+
 msgid "Also on your list"
 msgstr "Ще для повторення"
 
@@ -827,6 +839,9 @@ msgstr "Файл .ofc з Noji"
 
 msgid "An .ofc file, up to 1 GB."
 msgstr "Файл .ofc, до 1 ГБ."
+
+msgid "An app"
+msgstr "Застосунок"
 
 msgid "Anki package"
 msgstr "Пакет Anki"
@@ -858,8 +873,14 @@ msgstr "Будь-хто з посиланням"
 msgid "Anyone with this link can join and review these cards."
 msgstr "Будь-хто з цим посиланням може приєднатися й повторювати ці картки."
 
+msgid "API key for {name}"
+msgstr "Ключ API для {name}"
+
 msgid "API keys"
 msgstr "Ключі API"
+
+msgid "API reference"
+msgstr "Довідник API"
 
 msgid "App language, and the language AI uses for meanings."
 msgstr "Мова застосунку й мова, якою AI пише значення."
@@ -968,6 +989,9 @@ msgstr "Назад до входу"
 msgid "Back to the deck"
 msgstr "До колоди"
 
+msgid "Backup script on the laptop"
+msgstr "Скрипт резервної копії на ноутбуці"
+
 msgid "Between rows"
 msgstr "Між рядками"
 
@@ -1025,6 +1049,10 @@ msgstr "через API"
 
 msgid "by you"
 msgstr "тобою"
+
+#. placeholder {0}: app.claimed
+msgid "calls itself “{0}”"
+msgstr "називає себе «{0}»"
 
 msgctxt "deck tag"
 msgid "Canadian citizenship test"
@@ -1252,6 +1280,9 @@ msgstr "Підключити {0}"
 msgid "Connect an app"
 msgstr "Підключити застосунок"
 
+msgid "Connect ChatGPT or Claude so it can turn your notes, PDFs or textbook into Lymi cards."
+msgstr "Підключи ChatGPT або Claude, щоб вони перетворювали твої нотатки, PDF чи підручник на картки Lymi."
+
 msgid "Connect it once, then send your notes as cards."
 msgstr "Підключи один раз і надсилай нотатки як картки."
 
@@ -1263,6 +1294,9 @@ msgstr "Підключися до інтернету, щоб побачити, �
 
 msgid "Connect your AI assistant"
 msgstr "Підключи свого AI-асистента"
+
+msgid "connected {connected}"
+msgstr "підключено {connected}"
 
 msgid "Connected apps"
 msgstr "Підключені застосунки"
@@ -1282,6 +1316,9 @@ msgstr "Розмовна мова"
 
 msgid "Copied"
 msgstr "Скопійовано"
+
+msgid "Copy key"
+msgstr "Скопіювати ключ"
 
 msgid "Copy link"
 msgstr "Копіювати посилання"
@@ -1390,6 +1427,12 @@ msgstr "Не вдалося завантажити людей у цій коло
 
 msgid "Couldn’t load your cards"
 msgstr "Не вдалося завантажити картки"
+
+msgid "Couldn’t load your connected apps"
+msgstr "Не вдалося завантажити підключені застосунки"
+
+msgid "Couldn’t load your keys"
+msgstr "Не вдалося завантажити ключі"
 
 msgid "Couldn’t load your Library"
 msgstr "Не вдалося завантажити Бібліотеку"
@@ -1522,6 +1565,9 @@ msgstr "Створити й перенести"
 msgid "Create deck"
 msgstr "Створити колоду"
 
+msgid "Create key"
+msgstr "Створити ключ"
+
 msgid "Create section"
 msgstr "Створити розділ"
 
@@ -1624,6 +1670,12 @@ msgstr "Опис"
 
 msgid "Details"
 msgstr "Деталі"
+
+msgid "Disconnect"
+msgstr "Відключити"
+
+msgid "Disconnect {name}?"
+msgstr "Відключити {name}?"
 
 msgid "Dismiss"
 msgstr "Закрити"
@@ -1887,8 +1939,14 @@ msgctxt "deck tag"
 msgid "For beginners"
 msgstr "Для початківців"
 
+msgid "For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute."
+msgstr "Наприклад, встав урок і попроси: «Зроби з цього естонські картки». Налаштування займає хвилину."
+
 msgid "For reading kana, a first trip, and JLPT N5 and N4 vocabulary."
 msgstr "Щоб читати кану, вирушити в першу подорож і вивчити лексику JLPT N5 та N4."
+
+msgid "For scripts and curl. For AI apps, use Connected apps instead."
+msgstr "Для скриптів і curl. Для AI-застосунків використовуй «Підключені застосунки»."
 
 msgid "For the German, US, Spanish, Czech and Canadian citizenship tests, with the answers and a short note on each."
 msgstr "Для тестів на громадянство Німеччини, США, Іспанії, Чехії та Канади, з відповідями й короткою приміткою до кожного питання."
@@ -2048,6 +2106,9 @@ msgstr "Скільки часу на день?"
 msgid "How sections open"
 msgstr "Як відкриваються розділи"
 
+msgid "How to connect"
+msgstr "Як підключити"
+
 msgid "How your memory is doing"
 msgstr "Як справи з твоєю пам’яттю"
 
@@ -2182,14 +2243,14 @@ msgstr "{name} запрошено до «{deck}»"
 msgid "Inviting needs a connection."
 msgstr "Щоб запрошувати, потрібне з’єднання."
 
+msgid "It can’t reach your decks from its next request. To use it again, connect it from the app."
+msgstr "З наступного запиту він не матиме доступу до твоїх колод. Щоб користуватися ним знову, підключи його із самого застосунку."
+
 msgid "It goes at the end. Move cards into it from the deck."
 msgstr "Він з’явиться в кінці. Перемісти в нього картки з колоди."
 
 msgid "It loads as soon as you’re back online."
 msgstr "Вона завантажиться, щойно ти знову будеш онлайн."
-
-msgid "It may have been withdrawn, or the connection dropped."
-msgstr "Можливо, її зняли з публікації або зникло з’єднання."
 
 msgid "It was archived or moved since you opened the deck."
 msgstr "Її архівували або перенесли, поки колода була відкрита."
@@ -2249,6 +2310,9 @@ msgstr "Збережи копію"
 msgid "Keep invitation"
 msgstr "Залишити запрошення"
 
+msgid "Keep key"
+msgstr "Залишити ключ"
+
 msgid "Keep link"
 msgstr "Залишити посилання"
 
@@ -2266,6 +2330,9 @@ msgstr "Залишити колоди"
 
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Повідомлення має бути коротшим за {FEEDBACK_MESSAGE_MAX} символів."
+
+msgid "Keep the name under 32 characters."
+msgstr "Назва має бути коротшою за 32 символи."
 
 msgid "Keep the name under 80 characters."
 msgstr "Назва має бути коротшою за 80 символів."
@@ -2338,6 +2405,9 @@ msgstr "Урок"
 msgid "Lesson 15"
 msgstr "Урок 15"
 
+msgid "Lets a script read or add to your decks."
+msgstr "Дає скрипту читати твої колоди й додавати в них."
+
 msgid "Library"
 msgstr "Бібліотека"
 
@@ -2347,6 +2417,9 @@ msgstr "Світла"
 msgctxt "daily goal"
 msgid "Light"
 msgstr "Легко"
+
+msgid "Lists and searches decks and cards. A key never grades reviews."
+msgstr "Переглядає списки та шукає колоди й картки. Ключ ніколи не ставить оцінок за повторення."
 
 msgctxt "language"
 msgid "Lithuanian"
@@ -2544,11 +2617,17 @@ msgctxt "person"
 msgid "Name"
 msgstr "Ім’я"
 
+msgid "Name the key, so you know which one to revoke later."
+msgstr "Назви ключ, щоб потім знати, який саме відкликати."
+
 msgid "Nature"
 msgstr "Природа"
 
 msgid "Needs a connection"
 msgstr "Потрібне з’єднання"
+
+msgid "never used"
+msgstr "ще не використовувався"
 
 msgid "New"
 msgstr "Нова"
@@ -2562,6 +2641,9 @@ msgstr "Нові картки"
 
 msgid "New deck"
 msgstr "Нова колода"
+
+msgid "New key"
+msgstr "Новий ключ"
 
 msgid "New line"
 msgstr "Новий рядок"
@@ -2586,6 +2668,9 @@ msgstr "Далі: вибрати колоди"
 
 msgid "No activity yet"
 msgstr "Активності ще немає"
+
+msgid "No apps connected"
+msgstr "Немає підключених застосунків"
 
 msgid "No card of this kind has a term."
 msgstr "Жодна картка цього виду не має терміна."
@@ -2616,6 +2701,9 @@ msgstr "Колод ще немає"
 
 msgid "No history yet"
 msgstr "Історії ще немає"
+
+msgid "No keys yet"
+msgstr "Ключів поки немає"
 
 msgid "No language"
 msgstr "Без мови"
@@ -2783,9 +2871,6 @@ msgstr "Відкрий Lymi й увійди, щоб побачити, що по�
 msgid "Open Noji’s email on this phone within 24 hours, save the file to Files, then choose it here."
 msgstr "Відкрий лист від Noji на цьому телефоні протягом 24 годин, збережи файл у Файли і вибери його тут."
 
-msgid "Open on the web"
-msgstr "Відкрити у вебверсії"
-
 msgid "Open Settings"
 msgstr "Відкрити Параметри"
 
@@ -2907,6 +2992,9 @@ msgstr "Вимова з уроку"
 msgid "Publishing and deck reports"
 msgstr "Публікація та звіти про колоди"
 
+msgid "Quickstart"
+msgstr "Швидкий старт"
+
 msgid "Quizlet import"
 msgstr "Імпорт з Quizlet"
 
@@ -2915,6 +3003,18 @@ msgstr "Досягни сьогоднішньої мети, щоб не пере
 
 msgid "Reach today’s goal to start a streak."
 msgstr "Досягни сьогоднішньої мети, щоб почати лік днів поспіль."
+
+msgid "Read"
+msgstr "Читання"
+
+msgid "Read and write"
+msgstr "Читання й запис"
+
+msgid "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews."
+msgstr "«Читання» переглядає колоди й картки. «Читання й запис» також додає, редагує й архівує їх. Ключ ніколи не ставить оцінок за повторення."
+
+msgid "Read lists decks and cards. Read and write also adds, edits and archives them. You choose access when the app signs in. To change it, disconnect and sign in again."
+msgstr "«Читання» переглядає колоди й картки. «Читання й запис» також додає, редагує й архівує їх. Доступ ти вибираєш, коли застосунок входить. Щоб змінити його, відключи застосунок і увійди знову."
 
 msgid "Read the guide"
 msgstr "Прочитати посібник"
@@ -3085,6 +3185,18 @@ msgstr "Дні з повтореннями: {lit} з останніх {0, plural
 msgid "Reviews"
 msgstr "Повторення"
 
+msgid "Revoke"
+msgstr "Відкликати"
+
+msgid "Revoke “{name}”?"
+msgstr "Відкликати «{name}»?"
+
+msgid "Revoke instead"
+msgstr "Натомість відкликати"
+
+msgid "Revoke key"
+msgstr "Відкликати ключ"
+
 msgctxt "language"
 msgid "Romanian"
 msgstr "Румунська"
@@ -3125,6 +3237,9 @@ msgstr "Розклад"
 
 msgid "Science"
 msgstr "Наука"
+
+msgid "Scripts using it stop working at once. This can’t be undone."
+msgstr "Скрипти з цим ключем одразу перестануть працювати. Скасувати це не можна."
 
 msgid "Search"
 msgstr "Пошук"
@@ -3343,6 +3458,9 @@ msgctxt "language"
 msgid "Slovenian"
 msgstr "Словенська"
 
+msgid "So you know which key to revoke later."
+msgstr "Щоб потім знати, який ключ відкликати."
+
 msgid "Some offline work hasn’t synced"
 msgstr "Не все зроблене офлайн синхронізовано"
 
@@ -3391,6 +3509,9 @@ msgstr "Почни з готової колоди"
 
 msgid "State"
 msgstr "Стан"
+
+msgid "Stay connected"
+msgstr "Залишити підключення"
 
 msgid "Stay signed in"
 msgstr "Залишитися в застосунку"
@@ -3800,6 +3921,9 @@ msgstr "Скасувати цей імпорт"
 msgid "Unmark important"
 msgstr "Зняти позначку «важлива»"
 
+msgid "Untitled key"
+msgstr "Ключ без назви"
+
 msgid "Update"
 msgstr "Оновити"
 
@@ -3827,6 +3951,21 @@ msgstr "Використати ці поля"
 
 msgid "Use these languages"
 msgstr "Використати ці мови"
+
+msgid "used {d} d ago"
+msgstr "використано {d} дн. тому"
+
+msgid "used {date}"
+msgstr "використано {date}"
+
+msgid "used {h} h ago"
+msgstr "використано {h} год тому"
+
+msgid "used {m} min ago"
+msgstr "використано {m} хв тому"
+
+msgid "used just now"
+msgstr "щойно використано"
 
 msgctxt "language"
 msgid "Vietnamese"
@@ -4014,6 +4153,9 @@ msgstr "Сьогодні вже надіслано кілька кодів. Сп
 msgid "Your cards and your streak, on every device."
 msgstr "Твої картки й лік днів поспіль на будь-якому пристрої."
 
+msgid "Your connected apps need a connection"
+msgstr "Для підключених застосунків потрібне з’єднання"
+
 msgid "Your data"
 msgstr "Твої дані"
 
@@ -4031,6 +4173,9 @@ msgstr "Твої колоди й повторення працюють і без
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Твої оцінки збережено. Перевір з’єднання й повтори спробу."
+
+msgid "Your keys need a connection"
+msgstr "Для ключів потрібне з’єднання"
 
 msgid "Your Library needs a connection"
 msgstr "Для Бібліотеки потрібне з’єднання"

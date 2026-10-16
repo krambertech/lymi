@@ -14,20 +14,16 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { type Href, useRouter } from "expo-router";
 import { useDeferredValue, useMemo, useState } from "react";
-import { type TurboModule, TurboModuleRegistry, View } from "react-native";
+import { View } from "react-native";
 import { useDecks } from "../data/queries";
 import { usePalette } from "../theme/palette";
+import { clipboard } from "../ui/clipboard";
 import { Field, FieldLabel, Input, Textarea } from "../ui/field";
 import { Select } from "../ui/menu";
 import { Button, Icon, Plate, Text } from "../ui/primitives";
 import { ImportShell } from "./shell";
 import { pickFile, refusal } from "./sources";
 import { Steps } from "./start";
-
-// React Native still ships its clipboard natively; importing `Clipboard` from it only adds a warning that it moved.
-const clipboard = TurboModuleRegistry.get<TurboModule & { getString(): Promise<string> }>(
-  "Clipboard",
-);
 
 type FieldChoice = "tab" | "comma" | "custom";
 type RowChoice = "newline" | "semicolon" | "custom";

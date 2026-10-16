@@ -1,9 +1,10 @@
 ---
-status: accepted
+status: superseded
+superseded_by: 0036
 date: 2026-10-11
 ---
 
-Import and export have since moved to the phone ([ADR 0036](0036-import-and-export-run-on-the-phone.md)); the other three setup jobs stay on the web.
+The setup jobs have since moved to the phone ([ADR 0036](0036-setup-runs-on-the-phone.md)); the rule that the phone leads the daily jobs stands.
 
 # The phone leads the daily jobs and setup stays on the web
 

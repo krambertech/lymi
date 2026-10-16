@@ -508,6 +508,9 @@ msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgid "{n, plural, one {# review} other {# reviews}}"
 msgstr "{n, plural, one {# review} other {# reviews}}"
 
+msgid "{name} is ready. Copy it now. You won’t see it again."
+msgstr "{name} is ready. Copy it now. You won’t see it again."
+
 msgid "{name} joined {deck}"
 msgstr "{name} joined {deck}"
 
@@ -574,6 +577,9 @@ msgstr "{total, plural, one {# card} other {# cards}}"
 
 msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
 msgstr "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
+
+msgid "{used} · created {created}"
+msgstr "{used} · created {created}"
 
 msgid "{value, plural, one {# day} other {# days}}"
 msgstr "{value, plural, one {# day} other {# days}}"
@@ -685,6 +691,9 @@ msgstr "About {minutes}, {reviews}"
 
 msgid "About this deck"
 msgstr "About this deck"
+
+msgid "Access"
+msgstr "Access"
 
 msgid "Actions for the selected cards"
 msgstr "Actions for the selected cards"
@@ -813,6 +822,9 @@ msgctxt "deck tag"
 msgid "Alphabet"
 msgstr "Alphabet"
 
+msgid "Also adds, edits and archives them. A key never grades reviews."
+msgstr "Also adds, edits and archives them. A key never grades reviews."
+
 msgid "Also on your list"
 msgstr "Also on your list"
 
@@ -827,6 +839,9 @@ msgstr "An .ofc file from Noji"
 
 msgid "An .ofc file, up to 1 GB."
 msgstr "An .ofc file, up to 1 GB."
+
+msgid "An app"
+msgstr "An app"
 
 msgid "Anki package"
 msgstr "Anki package"
@@ -858,8 +873,14 @@ msgstr "Anyone with the link"
 msgid "Anyone with this link can join and review these cards."
 msgstr "Anyone with this link can join and review these cards."
 
+msgid "API key for {name}"
+msgstr "API key for {name}"
+
 msgid "API keys"
 msgstr "API keys"
+
+msgid "API reference"
+msgstr "API reference"
 
 msgid "App language, and the language AI uses for meanings."
 msgstr "App language, and the language AI uses for meanings."
@@ -968,6 +989,9 @@ msgstr "Back to sign in"
 msgid "Back to the deck"
 msgstr "Back to the deck"
 
+msgid "Backup script on the laptop"
+msgstr "Backup script on the laptop"
+
 msgid "Between rows"
 msgstr "Between rows"
 
@@ -1025,6 +1049,10 @@ msgstr "by the API"
 
 msgid "by you"
 msgstr "by you"
+
+#. placeholder {0}: app.claimed
+msgid "calls itself “{0}”"
+msgstr "calls itself “{0}”"
 
 msgctxt "deck tag"
 msgid "Canadian citizenship test"
@@ -1252,6 +1280,9 @@ msgstr "Connect {0}"
 msgid "Connect an app"
 msgstr "Connect an app"
 
+msgid "Connect ChatGPT or Claude so it can turn your notes, PDFs or textbook into Lymi cards."
+msgstr "Connect ChatGPT or Claude so it can turn your notes, PDFs or textbook into Lymi cards."
+
 msgid "Connect it once, then send your notes as cards."
 msgstr "Connect it once, then send your notes as cards."
 
@@ -1263,6 +1294,9 @@ msgstr "Connect to the internet to see where it stands."
 
 msgid "Connect your AI assistant"
 msgstr "Connect your AI assistant"
+
+msgid "connected {connected}"
+msgstr "connected {connected}"
 
 msgid "Connected apps"
 msgstr "Connected apps"
@@ -1282,6 +1316,9 @@ msgstr "Conversation"
 
 msgid "Copied"
 msgstr "Copied"
+
+msgid "Copy key"
+msgstr "Copy key"
 
 msgid "Copy link"
 msgstr "Copy link"
@@ -1390,6 +1427,12 @@ msgstr "Couldn’t load who’s in this deck"
 
 msgid "Couldn’t load your cards"
 msgstr "Couldn’t load your cards"
+
+msgid "Couldn’t load your connected apps"
+msgstr "Couldn’t load your connected apps"
+
+msgid "Couldn’t load your keys"
+msgstr "Couldn’t load your keys"
 
 msgid "Couldn’t load your Library"
 msgstr "Couldn’t load your Library"
@@ -1522,6 +1565,9 @@ msgstr "Create and move"
 msgid "Create deck"
 msgstr "Create deck"
 
+msgid "Create key"
+msgstr "Create key"
+
 msgid "Create section"
 msgstr "Create section"
 
@@ -1624,6 +1670,12 @@ msgstr "Description"
 
 msgid "Details"
 msgstr "Details"
+
+msgid "Disconnect"
+msgstr "Disconnect"
+
+msgid "Disconnect {name}?"
+msgstr "Disconnect {name}?"
 
 msgid "Dismiss"
 msgstr "Dismiss"
@@ -1887,8 +1939,14 @@ msgctxt "deck tag"
 msgid "For beginners"
 msgstr "For beginners"
 
+msgid "For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute."
+msgstr "For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute."
+
 msgid "For reading kana, a first trip, and JLPT N5 and N4 vocabulary."
 msgstr "For reading kana, a first trip, and JLPT N5 and N4 vocabulary."
+
+msgid "For scripts and curl. For AI apps, use Connected apps instead."
+msgstr "For scripts and curl. For AI apps, use Connected apps instead."
 
 msgid "For the German, US, Spanish, Czech and Canadian citizenship tests, with the answers and a short note on each."
 msgstr "For the German, US, Spanish, Czech and Canadian citizenship tests, with the answers and a short note on each."
@@ -2048,6 +2106,9 @@ msgstr "How much time a day?"
 msgid "How sections open"
 msgstr "How sections open"
 
+msgid "How to connect"
+msgstr "How to connect"
+
 msgid "How your memory is doing"
 msgstr "How your memory is doing"
 
@@ -2182,14 +2243,14 @@ msgstr "Invited {name} to {deck}"
 msgid "Inviting needs a connection."
 msgstr "Inviting needs a connection."
 
+msgid "It can’t reach your decks from its next request. To use it again, connect it from the app."
+msgstr "It can’t reach your decks from its next request. To use it again, connect it from the app."
+
 msgid "It goes at the end. Move cards into it from the deck."
 msgstr "It goes at the end. Move cards into it from the deck."
 
 msgid "It loads as soon as you’re back online."
 msgstr "It loads as soon as you’re back online."
-
-msgid "It may have been withdrawn, or the connection dropped."
-msgstr "It may have been withdrawn, or the connection dropped."
 
 msgid "It was archived or moved since you opened the deck."
 msgstr "It was archived or moved since you opened the deck."
@@ -2249,6 +2310,9 @@ msgstr "Keep a copy"
 msgid "Keep invitation"
 msgstr "Keep invitation"
 
+msgid "Keep key"
+msgstr "Keep key"
+
 msgid "Keep link"
 msgstr "Keep link"
 
@@ -2266,6 +2330,9 @@ msgstr "Keep the decks"
 
 msgid "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 msgstr "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
+
+msgid "Keep the name under 32 characters."
+msgstr "Keep the name under 32 characters."
 
 msgid "Keep the name under 80 characters."
 msgstr "Keep the name under 80 characters."
@@ -2338,6 +2405,9 @@ msgstr "Lesson"
 msgid "Lesson 15"
 msgstr "Lesson 15"
 
+msgid "Lets a script read or add to your decks."
+msgstr "Lets a script read or add to your decks."
+
 msgid "Library"
 msgstr "Library"
 
@@ -2347,6 +2417,9 @@ msgstr "Light"
 msgctxt "daily goal"
 msgid "Light"
 msgstr "Light"
+
+msgid "Lists and searches decks and cards. A key never grades reviews."
+msgstr "Lists and searches decks and cards. A key never grades reviews."
 
 msgctxt "language"
 msgid "Lithuanian"
@@ -2544,11 +2617,17 @@ msgctxt "person"
 msgid "Name"
 msgstr "Name"
 
+msgid "Name the key, so you know which one to revoke later."
+msgstr "Name the key, so you know which one to revoke later."
+
 msgid "Nature"
 msgstr "Nature"
 
 msgid "Needs a connection"
 msgstr "Needs a connection"
+
+msgid "never used"
+msgstr "never used"
 
 msgid "New"
 msgstr "New"
@@ -2562,6 +2641,9 @@ msgstr "New cards"
 
 msgid "New deck"
 msgstr "New deck"
+
+msgid "New key"
+msgstr "New key"
 
 msgid "New line"
 msgstr "New line"
@@ -2586,6 +2668,9 @@ msgstr "Next: choose decks"
 
 msgid "No activity yet"
 msgstr "No activity yet"
+
+msgid "No apps connected"
+msgstr "No apps connected"
 
 msgid "No card of this kind has a term."
 msgstr "No card of this kind has a term."
@@ -2616,6 +2701,9 @@ msgstr "No decks yet"
 
 msgid "No history yet"
 msgstr "No history yet"
+
+msgid "No keys yet"
+msgstr "No keys yet"
 
 msgid "No language"
 msgstr "No language"
@@ -2783,9 +2871,6 @@ msgstr "Open Lymi and sign in to see what’s due."
 msgid "Open Noji’s email on this phone within 24 hours, save the file to Files, then choose it here."
 msgstr "Open Noji’s email on this phone within 24 hours, save the file to Files, then choose it here."
 
-msgid "Open on the web"
-msgstr "Open on the web"
-
 msgid "Open Settings"
 msgstr "Open Settings"
 
@@ -2907,6 +2992,9 @@ msgstr "Pronunciation from lesson"
 msgid "Publishing and deck reports"
 msgstr "Publishing and deck reports"
 
+msgid "Quickstart"
+msgstr "Quickstart"
+
 msgid "Quizlet import"
 msgstr "Quizlet import"
 
@@ -2915,6 +3003,18 @@ msgstr "Reach today’s goal to keep it going."
 
 msgid "Reach today’s goal to start a streak."
 msgstr "Reach today’s goal to start a streak."
+
+msgid "Read"
+msgstr "Read"
+
+msgid "Read and write"
+msgstr "Read and write"
+
+msgid "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews."
+msgstr "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews."
+
+msgid "Read lists decks and cards. Read and write also adds, edits and archives them. You choose access when the app signs in. To change it, disconnect and sign in again."
+msgstr "Read lists decks and cards. Read and write also adds, edits and archives them. You choose access when the app signs in. To change it, disconnect and sign in again."
 
 msgid "Read the guide"
 msgstr "Read the guide"
@@ -3085,6 +3185,18 @@ msgstr "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}, i
 msgid "Reviews"
 msgstr "Reviews"
 
+msgid "Revoke"
+msgstr "Revoke"
+
+msgid "Revoke “{name}”?"
+msgstr "Revoke “{name}”?"
+
+msgid "Revoke instead"
+msgstr "Revoke instead"
+
+msgid "Revoke key"
+msgstr "Revoke key"
+
 msgctxt "language"
 msgid "Romanian"
 msgstr "Romanian"
@@ -3125,6 +3237,9 @@ msgstr "Schedule"
 
 msgid "Science"
 msgstr "Science"
+
+msgid "Scripts using it stop working at once. This can’t be undone."
+msgstr "Scripts using it stop working at once. This can’t be undone."
 
 msgid "Search"
 msgstr "Search"
@@ -3343,6 +3458,9 @@ msgctxt "language"
 msgid "Slovenian"
 msgstr "Slovenian"
 
+msgid "So you know which key to revoke later."
+msgstr "So you know which key to revoke later."
+
 msgid "Some offline work hasn’t synced"
 msgstr "Some offline work hasn’t synced"
 
@@ -3391,6 +3509,9 @@ msgstr "Start with a ready-made deck"
 
 msgid "State"
 msgstr "State"
+
+msgid "Stay connected"
+msgstr "Stay connected"
 
 msgid "Stay signed in"
 msgstr "Stay signed in"
@@ -3800,6 +3921,9 @@ msgstr "Undo this import"
 msgid "Unmark important"
 msgstr "Unmark important"
 
+msgid "Untitled key"
+msgstr "Untitled key"
+
 msgid "Update"
 msgstr "Update"
 
@@ -3827,6 +3951,21 @@ msgstr "Use these fields"
 
 msgid "Use these languages"
 msgstr "Use these languages"
+
+msgid "used {d} d ago"
+msgstr "used {d} d ago"
+
+msgid "used {date}"
+msgstr "used {date}"
+
+msgid "used {h} h ago"
+msgstr "used {h} h ago"
+
+msgid "used {m} min ago"
+msgstr "used {m} min ago"
+
+msgid "used just now"
+msgstr "used just now"
 
 msgctxt "language"
 msgid "Vietnamese"
@@ -4014,6 +4153,9 @@ msgstr "You’ve asked for several codes today. Try again tomorrow."
 msgid "Your cards and your streak, on every device."
 msgstr "Your cards and your streak, on every device."
 
+msgid "Your connected apps need a connection"
+msgstr "Your connected apps need a connection"
+
 msgid "Your data"
 msgstr "Your data"
 
@@ -4031,6 +4173,9 @@ msgstr "Your decks and reviews still work offline."
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Your grades are saved. Check your connection and try again."
+
+msgid "Your keys need a connection"
+msgstr "Your keys need a connection"
 
 msgid "Your Library needs a connection"
 msgstr "Your Library needs a connection"

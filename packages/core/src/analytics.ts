@@ -405,6 +405,8 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     "/feedback",
     "/share",
     "/series-order",
+    "/api-keys",
+    "/connected-apps",
   ];
   const base = routes.find((route) => path === route || path.startsWith(`${route}/`));
   return base ? (path === base ? base : `${base}/:item`) : "/other";

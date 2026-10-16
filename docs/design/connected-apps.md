@@ -12,4 +12,4 @@ The ending is not optional. An MCP client's redirect is usually a custom scheme,
 
 Until the learner has connected one, the rail offers the setup guides and the learner menu has a Connect AI assistant row ([rail.md](system/rail.md#the-offer-to-connect-an-assistant)).
 
-A grant lasts until it is taken back, so Settings has Connected apps beside API keys, with the same row shape: name, what it may do, the host, and an inline confirm to cut it off.
+A grant lasts until it is taken back, so Settings has Connected apps beside API keys, with the same row shape: name, what it may do, the host, and an inline confirm to cut it off. On the phone both are pages under You with the same rows, and cutting an app off asks in iOS's alert.

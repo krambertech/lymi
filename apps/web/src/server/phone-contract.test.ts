@@ -102,6 +102,11 @@ const phoneOperations = [
   "POST /api/exports",
   "GET /api/exports/{id}",
   "GET /api/exports/{id}/file",
+  "GET /api/keys",
+  "POST /api/keys",
+  "DELETE /api/keys/{id}",
+  "GET /api/connected-apps",
+  "DELETE /api/connected-apps/{id}",
 ];
 
 // The phone's calls the document hides, Better Auth, the photo, audio, feedback, and join links and
@@ -135,6 +140,12 @@ const closedOnPurpose = [
   "POST /api/review/undo 200 .ok",
   "POST /api/sections/{id}/archive 200 .ok",
   "POST /api/sections/{id}/restore 200 .ok",
+  "DELETE /api/keys/{id} 200 .ok",
+  "DELETE /api/connected-apps/{id} 200 .ok",
+  // Access is read or read and write; another level is a security change that needs a version gate first.
+  "GET /api/keys 200 [].scope",
+  "POST /api/keys 201 .scope",
+  "GET /api/connected-apps 200 [].scope",
   // Capture says where an added card went, so a new outcome needs a version gate first.
   "POST /api/cards 200 .status",
   "POST /api/cards 201 .status",

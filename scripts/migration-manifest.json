@@ -207,6 +207,10 @@
     {
       "name": "0051_seed_former_owner.sql",
       "sha256": "9de39258e96580b1ad069bca62ba9e460c8120567c1972ad39516791a3ab609f"
+    },
+    {
+      "name": "0052_daffy_whizzer.sql",
+      "sha256": "35b43d17d77adfe7edca98fa396a3cd23135ea1383e8c51194bb0259440ea7a0"
     }
   ]
 }

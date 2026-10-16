@@ -25,6 +25,10 @@ msgstr "“{label}” was already in {deckName}, so the copy added offline was l
 msgid "“{term}” has nothing left to fill in."
 msgstr "“{term}” has nothing left to fill in."
 
+#. placeholder {0}: tags.count
+msgid "{0, plural, =0 {No tags yet} one {# tag} other {# tags}}"
+msgstr "{0, plural, =0 {No tags yet} one {# tag} other {# tags}}"
+
 #. placeholder {0}: counts?.decks ?? 0
 msgid "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
 msgstr "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
@@ -364,6 +368,9 @@ msgstr "{0}% of the file arrived. Choose the same file to send the rest."
 msgid "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
 msgstr "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
 
+msgid "{after} of {total}"
+msgstr "{after} of {total}"
+
 msgid "{appName} is connected"
 msgstr "{appName} is connected"
 
@@ -522,6 +529,9 @@ msgstr "{field} becomes"
 msgid "{filled, plural, one {# filled} other {# filled}}"
 msgstr "{filled, plural, one {# filled} other {# filled}}"
 
+msgid "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+msgstr "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 
@@ -596,6 +606,9 @@ msgstr "{total, plural, one {# card} other {# cards}} from {owner}. Join to revi
 
 msgid "{total, plural, one {# card} other {# cards}}. Add the deck to review them on your own schedule."
 msgstr "{total, plural, one {# card} other {# cards}}. Add the deck to review them on your own schedule."
+
+msgid "{total, plural, one {Tags for # card} other {Tags for # cards}}"
+msgstr "{total, plural, one {Tags for # card} other {Tags for # cards}}"
 
 #. placeholder {0}: 30
 #. placeholder {0}: consistency.days.length
@@ -990,6 +1003,10 @@ msgstr "Archived “{sectionName}”"
 msgid "Archived “{sectionName}” and its cards"
 msgstr "Archived “{sectionName}” and its cards"
 
+#. placeholder {0}: tag.cards
+msgid "Archived “{tagName}” from {0, plural, one {# card} other {# cards}}"
+msgstr "Archived “{tagName}” from {0, plural, one {# card} other {# cards}}"
+
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 
@@ -998,6 +1015,9 @@ msgstr "Archived decks and cards go too, with your settings, photo, connected ap
 
 msgid "Archived sections"
 msgstr "Archived sections"
+
+msgid "Archived tags"
+msgstr "Archived tags"
 
 msgid "Archived the deck {deck}"
 msgstr "Archived the deck {deck}"
@@ -1192,6 +1212,9 @@ msgstr "Change languages"
 
 msgid "Change photo"
 msgstr "Change photo"
+
+msgid "Changed the tags on {count, plural, one {# card} other {# cards}}"
+msgstr "Changed the tags on {count, plural, one {# card} other {# cards}}"
 
 msgid "Changes appear right away and are listed in Activity. You can edit or archive any card."
 msgstr "Changes appear right away and are listed in Activity. You can edit or archive any card."
@@ -1424,6 +1447,9 @@ msgstr "Couldn’t add the deck. It’s no longer published."
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Couldn’t cancel the invitation. Try again."
 
+msgid "Couldn’t change the tags on {unsaved} of {sent} cards. Try again."
+msgstr "Couldn’t change the tags on {unsaved} of {sent} cards. Try again."
+
 msgid "Couldn’t check for more cards"
 msgstr "Couldn’t check for more cards"
 
@@ -1474,6 +1500,9 @@ msgstr "Couldn’t load Library"
 
 msgid "Couldn’t load more."
 msgstr "Couldn’t load more."
+
+msgid "Couldn’t load tags"
+msgstr "Couldn’t load tags"
 
 msgid "Couldn’t load the deck"
 msgstr "Couldn’t load the deck"
@@ -1582,6 +1611,9 @@ msgstr "Countries, stars, birds or anything else with names."
 
 msgid "Create “{created}”"
 msgstr "Create “{created}”"
+
+msgid "Create “{typed}”"
+msgstr "Create “{typed}”"
 
 msgid "Create a deck to add this card to."
 msgstr "Create a deck to add this card to."
@@ -1990,6 +2022,12 @@ msgstr "Filter"
 msgid "Find a language"
 msgstr "Find a language"
 
+msgid "Find a tag"
+msgstr "Find a tag"
+
+msgid "Find or create a tag"
+msgstr "Find or create a tag"
+
 msgid "For a test"
 msgstr "For a test"
 
@@ -2065,6 +2103,9 @@ msgstr "Give the section a name."
 
 msgid "Give the series a name."
 msgstr "Give the series a name."
+
+msgid "Give the tag a name."
+msgstr "Give the tag a name."
 
 msgid "Go to {currentName}"
 msgstr "Go to {currentName}"
@@ -2255,6 +2296,9 @@ msgstr "In Noji, open a deck you made, open its <0>Settings</0> and choose <1>Ex
 msgid "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
 msgstr "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
 
+msgid "In use"
+msgstr "In use"
+
 msgid "Includes your schedule and review history. Exporting doesn’t change the deck."
 msgstr "Includes your schedule and review history. Exporting doesn’t change the deck."
 
@@ -2312,6 +2356,9 @@ msgstr "It wasn’t confirmed within three days, so Lymi deleted the file. Choos
 
 msgid "Its cards and the decks it made are hidden. Restore brings them back with their history."
 msgstr "Its cards and the decks it made are hidden. Restore brings them back with their history."
+
+msgid "Its cards take the other tag instead, here in this deck only."
+msgstr "Its cards take the other tag instead, here in this deck only."
 
 msgid "Its decks may have been withdrawn. Every deck Lymi publishes is on Explore."
 msgstr "Its decks may have been withdrawn. Every deck Lymi publishes is on Explore."
@@ -2590,6 +2637,9 @@ msgstr "Make a deck and add cards from your last lesson."
 msgid "Make one for each course or topic."
 msgstr "Make one for each course or topic."
 
+msgid "Manage"
+msgstr "Manage"
+
 msgid "Manage connected apps"
 msgstr "Manage connected apps"
 
@@ -2631,6 +2681,18 @@ msgstr "Memory hook:"
 
 msgid "Memory hook: {spokenAid}"
 msgstr "Memory hook: {spokenAid}"
+
+msgid "Merge"
+msgstr "Merge"
+
+msgid "Merge “{tagName}” into"
+msgstr "Merge “{tagName}” into"
+
+msgid "Merge into…"
+msgstr "Merge into…"
+
+msgid "Merged “{from}” into “{spelled}”"
+msgstr "Merged “{from}” into “{spelled}”"
 
 msgid "Message"
 msgstr "Message"
@@ -2876,6 +2938,15 @@ msgstr "No section"
 msgid "No series"
 msgstr "No series"
 
+msgid "No tag matches “{query}”."
+msgstr "No tag matches “{query}”."
+
+msgid "No tags yet"
+msgstr "No tags yet"
+
+msgid "No tags yet. Type one to create it."
+msgstr "No tags yet. Type one to create it."
+
 msgid "Nobody can add it while it is archived."
 msgstr "Nobody can add it while it is archived."
 
@@ -2996,6 +3067,9 @@ msgstr "Only people you invite can join. Current members stay."
 msgid "Only the deck’s owner can change this."
 msgstr "Only the deck’s owner can change this."
 
+msgid "Only this deck’s cards change. Other decks keep the tag as it is."
+msgstr "Only this deck’s cards change. Other decks keep the tag as it is."
+
 msgid "Only you see these."
 msgstr "Only you see these."
 
@@ -3040,6 +3114,7 @@ msgstr "Optional"
 
 #. placeholder {0}: invitation.email
 #. placeholder {0}: member.name
+#. placeholder {0}: tag.name
 msgid "Options for {0}"
 msgstr "Options for {0}"
 
@@ -3320,11 +3395,23 @@ msgstr "Removed {name} from {deck}"
 msgid "Rename"
 msgstr "Rename"
 
+msgid "Rename “{tagName}”"
+msgstr "Rename “{tagName}”"
+
 msgid "Rename {sectionName}"
 msgstr "Rename {sectionName}"
 
 msgid "Rename section"
 msgstr "Rename section"
+
+msgid "Rename, merge or archive the tags on this deck’s cards."
+msgstr "Rename, merge or archive the tags on this deck’s cards."
+
+msgid "Rename…"
+msgstr "Rename…"
+
+msgid "Renamed “{from}” to “{spelled}”"
+msgstr "Renamed “{from}” to “{spelled}”"
 
 msgid "Replace the picture"
 msgstr "Replace the picture"
@@ -3797,8 +3884,17 @@ msgstr "Support"
 msgid "System"
 msgstr "System"
 
+msgid "Tag: {tagName}"
+msgstr "Tag: {tagName}"
+
 msgid "Tags"
 msgstr "Tags"
+
+msgid "Tags you put on this deck’s cards show here, to rename, merge or archive."
+msgstr "Tags you put on this deck’s cards show here, to rename, merge or archive."
+
+msgid "Tags…"
+msgstr "Tags…"
 
 msgid "Take photo"
 msgstr "Take photo"
@@ -3954,6 +4050,9 @@ msgstr "the source"
 msgid "the tags"
 msgstr "the tags"
 
+msgid "The tags on this deck’s cards. Changes here stay in this deck."
+msgstr "The tags on this deck’s cards. Changes here stay in this deck."
+
 msgid "the term"
 msgstr "the term"
 
@@ -4088,6 +4187,9 @@ msgstr "This test confirms that Lymi can send account emails."
 
 msgid "This week"
 msgstr "This week"
+
+msgid "Tick a tag to put it on every card, or untick it to take it off."
+msgstr "Tick a tag to put it on every card, or untick it to take it off."
 
 msgid "Time"
 msgstr "Time"
@@ -4373,6 +4475,9 @@ msgstr "you"
 
 msgid "You"
 msgstr "You"
+
+msgid "You already have “{otherName}”, so the two merge into one tag on these cards."
+msgstr "You already have “{otherName}”, so the two merge into one tag on these cards."
 
 msgid "You already have a Lymi account"
 msgstr "You already have a Lymi account"

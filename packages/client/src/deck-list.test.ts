@@ -1,19 +1,36 @@
 import { describe, expect, it } from "vitest";
 import type { Card, CardState, Section } from "./api";
-import { type DeckRow, dueBucket, filterRows, groupRows, noFilters, splitForms } from "./deck-list";
+import {
+  type DeckRow,
+  deckTags,
+  dueBucket,
+  filterRows,
+  groupRows,
+  noFilters,
+  retag,
+  splitForms,
+} from "./deck-list";
 
 const day = 86_400_000;
 const now = new Date(2026, 8, 15, 10, 0).getTime();
 
 function row(
   id: string,
-  opts: { term?: string; section?: string | null; added?: number; state?: number; due?: number },
+  opts: {
+    term?: string;
+    section?: string | null;
+    added?: number;
+    state?: number;
+    due?: number;
+    tags?: string[];
+  },
 ): DeckRow {
   const card = {
     id,
     term: opts.term ?? id,
     meaning: `meaning of ${id}`,
     sectionId: opts.section ?? null,
+    tags: opts.tags ?? [],
     createdAt: new Date(now - (opts.added ?? 0) * day),
   } as unknown as Card;
   const state =
@@ -24,11 +41,11 @@ function row(
 }
 
 const rows = [
-  row("dueNow", { section: "s5", added: 1, state: 1, due: -0.1 }),
-  row("dueLaterToday", { section: "s5", added: 2, state: 2, due: 0.3 }),
+  row("dueNow", { section: "s5", added: 1, state: 1, due: -0.1, tags: ["food", "Verbs"] }),
+  row("dueLaterToday", { section: "s5", added: 2, state: 2, due: 0.3, tags: ["Дієслова"] }),
   row("dueInFive", { section: "s4", added: 9, state: 2, due: 5 }),
   row("dueInForty", { section: "s4", added: 10, state: 2, due: 40 }),
-  row("fresh", { section: null, added: 0, state: 0 }),
+  row("fresh", { section: null, added: 0, state: 0, tags: ["verbs"] }),
   row("unstarted", { section: "s5", added: 3 }),
 ];
 
@@ -79,6 +96,47 @@ describe("filterRows", () => {
       "dueLaterToday",
       "dueInFive",
     ]);
+  });
+});
+
+describe("tags", () => {
+  const ids = (list: DeckRow[]) => list.map((r) => r.card.id);
+
+  it("matches a card carrying any chosen tag, whatever its case", () => {
+    expect(ids(filterRows(rows, { ...noFilters, tags: ["verbs"] }, "", now))).toEqual([
+      "dueNow",
+      "fresh",
+    ]);
+    expect(ids(filterRows(rows, { ...noFilters, tags: ["дієслова", "food"] }, "", now))).toEqual([
+      "dueNow",
+      "dueLaterToday",
+    ]);
+    expect(
+      ids(filterRows(rows, { ...noFilters, tags: ["verbs"], states: ["new"] }, "", now)),
+    ).toEqual(["fresh"]);
+  });
+
+  it("lists a deck's tags most used first, one per key", () => {
+    expect(deckTags(rows)).toEqual([
+      { key: "verbs", name: "Verbs", cards: 2 },
+      { key: "food", name: "food", cards: 1 },
+      { key: "дієслова", name: "Дієслова", cards: 1 },
+    ]);
+  });
+});
+
+describe("retag", () => {
+  it("takes tags off and puts them on by key, keeping the order", () => {
+    expect(retag(["food", "Verbs", "travel"], ["verbs", "new"], ["FOOD"])).toEqual({
+      tags: ["Verbs", "travel", "new"],
+      full: false,
+    });
+  });
+
+  it("leaves a tag off a card that already holds twenty", () => {
+    const twenty = Array.from({ length: 20 }, (_, i) => `t${i}`);
+    expect(retag(twenty, ["one more"], [])).toEqual({ tags: twenty, full: true });
+    expect(retag(twenty, ["one more"], ["t0"]).tags.at(-1)).toBe("one more");
   });
 });
 

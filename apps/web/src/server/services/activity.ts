@@ -87,6 +87,8 @@ const SENTENCES: Sentences = {
     restore: "import",
   },
   export: { create: "export", complete: "export" },
+  // A rename that only changes case; every other tag change is a card edit and reads as one.
+  tag: { rename: null },
   review: { grade: null, undo_grade: null },
   account: {
     "onboarding.finish": null,

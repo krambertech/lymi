@@ -121,7 +121,11 @@ function Login() {
   const [needsConfirming, setNeedsConfirming] = useState(false);
   const issue = issueFor(error);
   useDocumentTitle(
-    mode === "sign-up" ? t`Create account` : mode === "forgot" ? t`Reset your password` : t`Sign in`,
+    mode === "sign-up"
+      ? t`Create account`
+      : mode === "forgot"
+        ? t`Reset your password`
+        : t`Sign in`,
   );
 
   // The client's own name, for an app we ship no mark for. Best-effort: the door still works

@@ -574,8 +574,14 @@ msgstr "{label}, next in {schedules}"
 msgid "{left, plural, one {# character left} other {# characters left}}"
 msgstr "{left, plural, one {# character left} other {# characters left}}"
 
+msgid "{left, plural, one {# of {limit} lessons left today} other {# of {limit} lessons left today}}"
+msgstr "{left, plural, one {# of {limit} lessons left today} other {# of {limit} lessons left today}}"
+
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
+
+msgid "{limit, plural, one {Smart add is in beta, so it reads up to # lesson a day.} other {Smart add is in beta, so it reads up to # lessons a day.}} A lesson it couldn’t read doesn’t count, and the count starts again at midnight."
+msgstr "{limit, plural, one {Smart add is in beta, so it reads up to # lesson a day.} other {Smart add is in beta, so it reads up to # lessons a day.}} A lesson it couldn’t read doesn’t count, and the count starts again at midnight."
 
 msgid "{months, plural, one {# month} other {# months}}"
 msgstr "{months, plural, one {# month} other {# months}}"
@@ -748,6 +754,9 @@ msgstr "A–Z"
 #. placeholder {0}: MINUTES[n]
 msgid "About {0, plural, one {# minute} other {# minutes}}, {n, plural, one {# review} other {# reviews}}"
 msgstr "About {0, plural, one {# minute} other {# minutes}}, {n, plural, one {# review} other {# reviews}}"
+
+msgid "About the daily limit"
+msgstr "About the daily limit"
 
 msgid "About this deck"
 msgstr "About this deck"
@@ -1144,6 +1153,9 @@ msgstr "Back to streak"
 
 msgid "Backup script on the laptop"
 msgstr "Backup script on the laptop"
+
+msgid "Beta"
+msgstr "Beta"
 
 msgid "Both of the above, one card at a time."
 msgstr "Both of the above, one card at a time."
@@ -3008,6 +3020,9 @@ msgstr "No language"
 
 msgid "No language by that name. Type its tag to use it anyway."
 msgstr "No language by that name. Type its tag to use it anyway."
+
+msgid "No lessons left today. More after midnight."
+msgstr "No lessons left today. More after midnight."
 
 msgid "No meaning"
 msgstr "No meaning"

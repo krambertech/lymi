@@ -1,8 +1,9 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { useQueryClient } from "@tanstack/react-query";
+import type { LessonAccessOut } from "@lymi/core";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { cn } from "cn";
-import { Camera, Check, ChevronRight, FileText, Images, Type, X } from "lucide-react";
+import { Camera, Check, ChevronRight, FileText, Images, Info, Type, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import {
@@ -11,16 +12,19 @@ import {
   errorMessage,
   type LessonQuestion,
   type LessonTerm,
+  refusalCode,
 } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
 import { useDesktop } from "../lib/device";
 import { Button, IconButton } from "./button";
+import { Chip } from "./chip";
 import { PlaceBar } from "./layout/place-bar";
 import { RadioCard } from "./radio-card";
 import { RollingCount, type ScanPage, ScanStage } from "./smart-add-scan";
 import { Checkbox } from "./ui/checkbox";
 import { Dialog, DialogBody, DialogContent, usePlaceShape } from "./ui/dialog";
 import { Field, FieldError, FieldLabel, FieldLegend, FieldSet } from "./ui/field";
+import { Popover, PopoverContent } from "./ui/popover";
 import { RadioGroup } from "./ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
@@ -80,6 +84,8 @@ export function SmartAddDialog({ open, onOpenChange, deckId, decks }: Props) {
 }
 
 const LAST_DECK = "lymi:smart-add-deck";
+const LESSON_ACCESS = ["lesson-reads", "access"];
+type Daily = NonNullable<LessonAccessOut["daily"]>;
 
 /** The deck Smart add last wrote to on this device, while it is still the learner's. */
 function lastDeck(decks: DeckSummary[]): string | undefined {
@@ -121,6 +127,14 @@ function SmartAdd({
   const [ownAnswers, setOwnAnswers] = useState<string[]>([]);
   const [ownDrops, setOwnDrops] = useState<Set<string>>(() => new Set());
   const stop = useRef<AbortController | null>(null);
+  // Read fresh each time Smart add opens: another tab or the phone may have read since.
+  const access = useQuery({
+    queryKey: LESSON_ACCESS,
+    queryFn: api.lessonAccess,
+    refetchOnMount: "always",
+  });
+  const daily = access.data?.daily ?? null;
+  const atLimit = daily !== null && daily.used >= daily.limit;
 
   useEffect(() => () => stop.current?.abort(), []);
 
@@ -147,6 +161,7 @@ function SmartAdd({
       setError(t`Add a photo or PDF of the lesson, or paste its text.`);
       return;
     }
+    if (atLimit) return;
     setError(undefined);
     setTerms([]);
     setOwnDrops(new Set());
@@ -181,6 +196,7 @@ function SmartAdd({
         controller.signal,
       );
       setFinished(true);
+      void qc.invalidateQueries({ queryKey: LESSON_ACCESS });
       // A beat on the finished scan, so the last words land before the screen moves on.
       setTimeout(() => {
         setStep(asked.length > 0 ? "questions" : "list");
@@ -188,7 +204,9 @@ function SmartAdd({
     } catch (failure) {
       if (controller.signal.aborted) return;
       setStep("input");
-      setError(errorMessage(failure));
+      void qc.invalidateQueries({ queryKey: LESSON_ACCESS });
+      // The footer says the limit is reached; an error line under it would only repeat it.
+      setError(refusalCode(failure) === "daily_limit" ? undefined : errorMessage(failure));
     }
   };
 
@@ -246,8 +264,11 @@ function SmartAdd({
   };
 
   const title = (
-    <h2 id={titleId} className="text-lg font-medium text-text">
+    <h2 id={titleId} className="flex items-center gap-2 text-lg font-medium text-text">
       <Trans>Smart add</Trans>
+      <Chip size="sm">
+        <Trans>Beta</Trans>
+      </Chip>
     </h2>
   );
 
@@ -279,6 +300,7 @@ function SmartAdd({
               }}
               error={error}
               onRead={start}
+              daily={daily}
             />
           )}
           {step === "reading" && (
@@ -377,8 +399,11 @@ function InputStep(props: {
   onTextChange: (text: string) => void;
   error: string | undefined;
   onRead: () => void;
+  /** Today's reads, or null for an account without a limit. */
+  daily: Daily | null;
 }) {
-  const { pages, onPagesChange, text } = props;
+  const { pages, onPagesChange, text, daily } = props;
+  const atLimit = daily !== null && daily.used >= daily.limit;
   const { t } = useLingui();
   const desktop = useDesktop();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -394,7 +419,7 @@ function InputStep(props: {
   const empty = pages.length === 0 && words === 0;
 
   take.current = (files) => {
-    if (!files?.length) return;
+    if (!files?.length || atLimit) return;
     const usable = [...files].filter(
       (f) => f.type.startsWith("image/") || f.type === "application/pdf",
     );
@@ -605,7 +630,8 @@ function InputStep(props: {
                 key={source.id}
                 type="button"
                 onClick={source.onClick}
-                className="flex items-center gap-3 px-4 py-3.5 text-start transition-colors first:rounded-t-xl last:rounded-b-xl hoverable:hover:bg-hover"
+                disabled={atLimit}
+                className="flex items-center gap-3 px-4 py-3.5 text-start transition-colors first:rounded-t-xl last:rounded-b-xl disabled:opacity-45 hoverable:enabled:hover:bg-hover"
               >
                 <span className="grid size-10 shrink-0 place-items-center rounded-full bg-plate text-text">
                   <source.icon className="size-5" aria-hidden="true" />
@@ -630,20 +656,54 @@ function InputStep(props: {
       </DialogBody>
       <ActionBar
         note={
-          empty
-            ? undefined
-            : words > 0 && pages.length > 0
-              ? t`${plural(pages.length, { one: "# file", other: "# files" })} and text`
-              : pages.length > 0
-                ? t`${plural(pages.length, { one: "# file", other: "# files" })} · up to ${MAX_FILES}`
-                : t`${plural(words, { one: "# word", other: "# words" })}`
+          daily ? (
+            <DailyNote daily={daily} />
+          ) : empty ? undefined : words > 0 && pages.length > 0 ? (
+            t`${plural(pages.length, { one: "# file", other: "# files" })} and text`
+          ) : pages.length > 0 ? (
+            t`${plural(pages.length, { one: "# file", other: "# files" })} · up to ${MAX_FILES}`
+          ) : (
+            t`${plural(words, { one: "# word", other: "# words" })}`
+          )
         }
       >
-        <Button variant="primary" onClick={props.onRead} disabled={empty}>
+        <Button variant="primary" onClick={props.onRead} disabled={empty || atLimit}>
           <Trans>Find terms</Trans>
         </Button>
       </ActionBar>
     </>
+  );
+}
+
+/** Lessons left today, with the limit and when it starts again a tap away. */
+function DailyNote({ daily }: { daily: Daily }) {
+  const { t } = useLingui();
+  const anchor = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false);
+  const { limit } = daily;
+  const left = Math.max(0, limit - daily.used);
+  return (
+    <span className="flex items-center gap-1">
+      <span className="text-pretty">
+        {left === 0
+          ? t`No lessons left today. More after midnight.`
+          : t`${plural(left, { one: `# of ${limit} lessons left today`, other: `# of ${limit} lessons left today` })}`}
+      </span>
+      <IconButton
+        ref={anchor}
+        size="sm"
+        label={t`About the daily limit`}
+        aria-expanded={open}
+        onClick={() => setOpen((shown) => !shown)}
+      >
+        <Info />
+      </IconButton>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverContent anchor={anchor} className="leading-snug">
+          {t`${plural(limit, { one: "Smart add is in beta, so it reads up to # lesson a day.", other: "Smart add is in beta, so it reads up to # lessons a day." })} A lesson it couldn’t read doesn’t count, and the count starts again at midnight.`}
+        </PopoverContent>
+      </Popover>
+    </span>
   );
 }
 

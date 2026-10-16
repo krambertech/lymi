@@ -45,8 +45,11 @@ export const lessonsApi = {
       throw new ApiError(0, config.messages.unreachable());
     }
     if (!res.ok || !res.body) {
-      const body = (await res.json().catch(() => null)) as { issues?: unknown } | null;
-      throw new ApiError(res.status, failureMessage(res.status, body), body?.issues);
+      const body = (await res.json().catch(() => null)) as {
+        issues?: unknown;
+        code?: string;
+      } | null;
+      throw new ApiError(res.status, failureMessage(res.status, body), body?.issues, body?.code);
     }
     const decoder = new TextDecoder();
     const reader = res.body.getReader();

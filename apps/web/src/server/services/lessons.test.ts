@@ -6,7 +6,7 @@ import { type LessonMaterial, type LessonReader, LessonReaderError } from "../le
 import type { AnalyticsEvent } from "./analytics";
 import { addCards } from "./cards";
 import { createDeck } from "./decks";
-import { readLesson } from "./lessons";
+import { lessonAccess, readLesson } from "./lessons";
 import { learner, testDb } from "./test-db";
 
 let db: Db;
@@ -57,18 +57,6 @@ const fakeAi = (scores: Record<string, number>): DecisionModel => ({
 });
 
 describe("readLesson", () => {
-  it("refuses an account that is not an operator", async () => {
-    const ctx = await learner(db, "lesson-stranger", "Stranger");
-    await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
-    await expect(
-      readLesson(ctx, material, {
-        reader: fakeReader({}),
-        ai: undefined,
-        operators: new Set(),
-      }),
-    ).rejects.toMatchObject({ code: "forbidden" });
-  });
-
   it("greys terms already owned, flags other forms, and keeps the lesson's meaning only", async () => {
     const ctx = await learner(db, "lesson-owner", "Kateryna");
     const operators = new Set(["lesson-owner@lymi.test"]);
@@ -209,6 +197,57 @@ describe("reporting a read", () => {
       fromLesson: true,
     });
     expect(events).toContainEqual({ name: "cards_added", source: "lesson", count: 1 });
+  });
+});
+
+describe("the daily limit", () => {
+  const oneTerm = (deckId: string) =>
+    fakeReader({ deck: deckId, terms: [term("t1", "jooma · juua · joon")], questions: [] });
+
+  it("lets a learner read 5 lessons a day, then refuses the next with its own code", async () => {
+    const who = await learner(db, "lesson-daily", "Kateryna");
+    const events: AnalyticsEvent[] = [];
+    const ctx = {
+      ...who,
+      analytics: { writeDataPoint: () => {}, capture: (e: AnalyticsEvent) => events.push(e) },
+    };
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const deps = { reader: oneTerm(deck.id), ai: undefined, operators: new Set<string>() };
+
+    expect((await lessonAccess(ctx, deps.operators)).daily).toMatchObject({ limit: 5, used: 0 });
+    for (let i = 0; i < 5; i++) await readLesson(ctx, material, deps);
+    const access = await lessonAccess(ctx, deps.operators);
+    expect(access).toMatchObject({ allowed: true, daily: { limit: 5, used: 5 } });
+    expect(new Date(access.daily?.resetsAt ?? 0).getTime()).toBeGreaterThan(Date.now());
+
+    events.length = 0;
+    await expect(readLesson(ctx, material, deps)).rejects.toMatchObject({
+      code: "conflict",
+      reason: "daily_limit",
+    });
+    expect(events).toEqual([{ name: "lesson_read_limited" }]);
+  });
+
+  it("does not count a read that failed", async () => {
+    const ctx = await learner(db, "lesson-failed", "Kateryna");
+    await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const failing: LessonReader = {
+      model: "claude-haiku-5-5",
+      async stream() {
+        throw new LessonReaderError("overloaded", { status: 529 });
+      },
+    };
+    const deps = { reader: failing, ai: undefined, operators: new Set<string>() };
+    await expect(readLesson(ctx, material, deps)).rejects.toThrow();
+    expect((await lessonAccess(ctx, deps.operators)).daily?.used).toBe(0);
+  });
+
+  it("gives operators no limit", async () => {
+    const ctx = await learner(db, "lesson-unlimited", "Kateryna");
+    expect(await lessonAccess(ctx, new Set(["lesson-unlimited@lymi.test"]))).toEqual({
+      allowed: true,
+      daily: null,
+    });
   });
 });
 

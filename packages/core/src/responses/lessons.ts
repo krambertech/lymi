@@ -51,7 +51,23 @@ export const LessonReadOut = z
   })
   .meta({ id: "LessonRead" });
 
-export const LessonAccessOut = z.object({ allowed: z.boolean() }).meta({ id: "LessonAccess" });
+/** Smart add reads a learner may start in one of their own days. A read that fails is not counted. */
+export const LESSON_READS_PER_DAY = 5;
+
+export const LessonAccessOut = z
+  .object({
+    allowed: z.boolean(),
+    /** Today's reads against the limit, or null for an account without one. */
+    daily: z
+      .object({
+        limit: z.number().int(),
+        used: z.number().int(),
+        /** The start of the learner's next day, when the count starts again. */
+        resetsAt: z.iso.datetime(),
+      })
+      .nullable(),
+  })
+  .meta({ id: "LessonAccess" });
 
 const LessonUsageOut = LessonReadOut.shape.usage;
 

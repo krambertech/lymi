@@ -33,6 +33,7 @@ erDiagram
   user ||--o{ imports : "brings in"
   user ||--o{ exports : "takes out"
   user ||--o{ feedback : "writes to Lymi"
+  user ||--o{ lesson_reads : "counts Smart add"
   imports ||--o{ cards : "added"
   imports ||--o{ decks : "made"
   user ||--o{ apikey : "personal keys"
@@ -382,6 +383,10 @@ An export reads the decks the learner can see, archived ones included, or one de
 ### Feedback
 
 A note a learner sends from the learner menu is stored before it is emailed, so a provider that is down loses nothing; the row keeps the delivery it ended with. It carries the screen, the app version, the browser and the app language, which the message repeats for whoever reads it. The learner-local date of each row carries the cap of 20 notes a day, and the audit row names the kind and the delivery only.
+
+### Smart add reads
+
+`lesson_reads` holds one row per Smart add read and nothing from the lesson: its learner-local date carries the beta's limit of 5 reads a day (`LESSON_READS_PER_DAY`). The row is written just before the model starts, after every other refusal, and deleted when the read fails, so a lesson Lymi couldn't read doesn't count. Operators have no limit.
 
 ### Tags and source
 

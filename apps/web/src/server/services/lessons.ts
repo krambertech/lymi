@@ -1,7 +1,7 @@
-import type { LessonEventOut, LessonReadOut } from "@lymi/core";
-import { normaliseTerm } from "@lymi/core";
+import type { LessonAccessOut, LessonEventOut, LessonReadOut } from "@lymi/core";
+import { dayWindow, LESSON_READS_PER_DAY, newId, normaliseTerm } from "@lymi/core";
 import { textCallCost } from "@lymi/core/analytics";
-import { and, desc, eq, isNull } from "@lymi/core/db";
+import { and, count, desc, eq, isNull } from "@lymi/core/db";
 import type { z } from "zod";
 import { schema } from "../db";
 import { type DecisionModel, KEEP_THRESHOLD, keepScore } from "../lessons/keep";
@@ -28,13 +28,69 @@ type LessonRead = z.infer<typeof LessonReadOut>;
 export type LessonEvent = z.infer<typeof LessonEventOut>;
 type LessonTerm = LessonRead["terms"][number];
 
-/** Reading lessons runs on Lymi's model, so it is open only to operators until a paid plan exists. */
-export async function lessonAccess(ctx: ServiceContext, operators: Set<string>): Promise<boolean> {
+async function isOperator(ctx: ServiceContext, operators: Set<string>): Promise<boolean> {
   const [user] = await ctx.db
     .select({ email: schema.user.email })
     .from(schema.user)
     .where(eq(schema.user.id, ctx.userId));
   return Boolean(user && operators.has(user.email.toLowerCase()));
+}
+
+/** The learner's own day, as the feedback cap and the daily goal count it. */
+async function readDay(ctx: ServiceContext) {
+  return dayWindow(new Date(), (await getSettings(ctx)).reviewTimezone ?? "UTC");
+}
+
+async function readsOn(ctx: ServiceContext, localDate: string): Promise<number> {
+  const [row] = await ctx.db
+    .select({ n: count() })
+    .from(schema.lessonReads)
+    .where(
+      and(eq(schema.lessonReads.userId, ctx.userId), eq(schema.lessonReads.localDate, localDate)),
+    );
+  return row?.n ?? 0;
+}
+
+/**
+ * Smart add is a beta every learner may use, up to `LESSON_READS_PER_DAY` reads in their own day,
+ * because each read runs on Lymi's model. Operators have no limit.
+ */
+export async function lessonAccess(
+  ctx: ServiceContext,
+  operators: Set<string>,
+): Promise<LessonAccessOut> {
+  if (await isOperator(ctx, operators)) return { allowed: true, daily: null };
+  const day = await readDay(ctx);
+  const used = Math.min(await readsOn(ctx, day.date), LESSON_READS_PER_DAY);
+  return {
+    allowed: true,
+    daily: { limit: LESSON_READS_PER_DAY, used, resetsAt: day.end.toISOString() },
+  };
+}
+
+function limitReached(ctx: ServiceContext): never {
+  track(ctx.analytics, { name: "lesson_read_limited" });
+  throw new ServiceError(
+    "conflict",
+    `Smart add reads up to ${LESSON_READS_PER_DAY} lessons a day. Try again tomorrow.`,
+    undefined,
+    "daily_limit",
+  );
+}
+
+/** Counts a read against today's limit just before the model starts; the release undoes it. */
+async function claimRead(
+  ctx: ServiceContext,
+  operators: Set<string>,
+): Promise<() => Promise<void>> {
+  if (await isOperator(ctx, operators)) return async () => {};
+  const day = await readDay(ctx);
+  if ((await readsOn(ctx, day.date)) >= LESSON_READS_PER_DAY) limitReached(ctx);
+  const id = newId();
+  await ctx.db.insert(schema.lessonReads).values({ id, userId: ctx.userId, localDate: day.date });
+  return async () => {
+    await ctx.db.delete(schema.lessonReads).where(eq(schema.lessonReads.id, id));
+  };
 }
 
 export type LessonDeps = {
@@ -81,6 +137,8 @@ export type PreparedLesson = {
   byHead: Map<string, Owned>;
   analytics: AnalyticsWriter | undefined;
   pasted: boolean;
+  /** Takes the read back off today's count, for a read that failed. */
+  release: () => Promise<void>;
 };
 
 /** How many of the learner's decks the model chooses among, most recently changed first. */
@@ -91,10 +149,9 @@ export async function assertCanReadLessons(
   ctx: ServiceContext,
   deps: Pick<LessonDeps, "reader" | "operators">,
 ): Promise<LessonReader> {
-  if (!(await lessonAccess(ctx, deps.operators))) {
-    throw new ServiceError("forbidden", "Reading lessons is not available on this account yet.");
-  }
   if (!deps.reader) throw new ServiceError("unavailable", "Reading lessons is not configured.");
+  const { daily } = await lessonAccess(ctx, deps.operators);
+  if (daily && daily.used >= daily.limit) limitReached(ctx);
   return deps.reader;
 }
 
@@ -155,7 +212,10 @@ export async function prepareLesson(
 
   const pages = material.images.length + material.pdfs.reduce((sum, pdf) => sum + pdfPages(pdf), 0);
   const words = material.text.trim() ? material.text.trim().split(/\s+/).length : 0;
+  // Last, so a read refused above never counts.
+  const release = await claimRead(ctx, deps.operators);
   return {
+    release,
     reader,
     pages,
     brief: `${decksBrief(decks, {
@@ -180,8 +240,23 @@ export async function prepareLesson(
 /**
  * Read the lesson and send each term the moment the model finishes writing it, then the questions,
  * then the cost. Nothing is stored: the learner adds what they keep through the ordinary add path.
+ * A read that fails is taken off the learner's daily count.
  */
 export async function streamLesson(
+  lesson: PreparedLesson,
+  material: LessonMaterial,
+  ai: DecisionModel,
+  emit: (event: LessonEvent) => void,
+): Promise<void> {
+  try {
+    await readInto(lesson, material, ai, emit);
+  } catch (error) {
+    await lesson.release();
+    throw error;
+  }
+}
+
+async function readInto(
   lesson: PreparedLesson,
   material: LessonMaterial,
   ai: DecisionModel,

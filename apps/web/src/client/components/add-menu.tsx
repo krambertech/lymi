@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { BookMarked, PenLine, Plus, Sparkles } from "lucide-react";
 import { IconButton } from "./button";
+import { Chip } from "./chip";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -54,6 +55,9 @@ export function AddMenu({
           <DropdownMenuItem onClick={onSmartAdd}>
             <Sparkles aria-hidden="true" />
             <Trans>Smart add</Trans>
+            <Chip size="sm" className="ms-auto">
+              <Trans>Beta</Trans>
+            </Chip>
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>

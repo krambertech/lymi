@@ -1002,3 +1002,23 @@ export const feedback = sqliteTable(
 );
 
 export type Feedback = typeof feedback.$inferSelect;
+
+/**
+ * One Smart add read, kept only to count a learner's reads per day: nothing from the lesson is
+ * stored. A read that fails deletes its row, so it does not count.
+ */
+export const lessonReads = sqliteTable(
+  "lesson_reads",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    /** The learner-local date the read started, which the daily limit counts. */
+    localDate: text("local_date").notNull(),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(unixepoch() * 1000)`),
+  },
+  (t) => [index("lesson_reads_user_day_idx").on(t.userId, t.localDate)],
+);

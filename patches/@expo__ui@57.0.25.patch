@@ -1,8 +1,8 @@
 diff --git a/ios/BottomSheetView.swift b/ios/BottomSheetView.swift
-index 29b1a3ad7a8dc653347899c514fc538f9f9433f3..4ca67e53d8ba5e975f9e51f0a70378522cb87f30 100644
+index 29b1a3ad7a8dc653347899c514fc538f9f9433f3..633aa43c71256e988b30db36185a2b85ae52f130 100644
 --- a/ios/BottomSheetView.swift
 +++ b/ios/BottomSheetView.swift
-@@ -58,16 +58,107 @@ private struct BottomSheetSizeReader<Content: View>: View {
+@@ -58,16 +58,106 @@ private struct BottomSheetSizeReader<Content: View>: View {
    }
  }
  
@@ -15,7 +15,7 @@ index 29b1a3ad7a8dc653347899c514fc538f9f9433f3..4ca67e53d8ba5e975f9e51f0a7037852
 +  }
 +  private(set) var latest: CGSize = .zero
 +  private var height: CGFloat = 0
-+  private var keyboardUntil = Date.distantPast
++  private var keyboardUntil: CFTimeInterval = 0
 +  private var observer: NSObjectProtocol?
 +
 +  init() {
@@ -23,7 +23,7 @@ index 29b1a3ad7a8dc653347899c514fc538f9f9433f3..4ca67e53d8ba5e975f9e51f0a7037852
 +      forName: UIResponder.keyboardWillChangeFrameNotification, object: nil, queue: .main
 +    ) { [weak self] note in
 +      let duration = note.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 0.25
-+      self?.keyboardUntil = Date().addingTimeInterval(duration + 0.1)
++      self?.keyboardUntil = CACurrentMediaTime() + duration + 0.1
 +    }
 +  }
 +
@@ -31,18 +31,18 @@ index 29b1a3ad7a8dc653347899c514fc538f9f9433f3..4ca67e53d8ba5e975f9e51f0a7037852
 +    if let observer { NotificationCenter.default.removeObserver(observer) }
 +  }
 +
-+  /// Applies the height through UIKit, or returns false while the sheet is not up yet.
 +  func resize(to size: CGSize) -> Bool {
 +    latest = size
 +    let newHeight = size.height
 +    guard let sheet, sheet.presentedViewController.viewIfLoaded?.window != nil else { return false }
-+    guard newHeight != height else { return true }
++    // A sheet on its way down keeps its height; the next presentation opens at `latest`.
++    guard newHeight != height, !sheet.presentedViewController.isBeingDismissed else { return true }
 +    height = newHeight
 +    let apply = {
 +      sheet.detents = [.custom(identifier: .init("expo.ui.fitted")) { _ in newHeight }]
 +      sheet.invalidateDetents()
 +    }
-+    if UIAccessibility.isReduceMotionEnabled || Date() < keyboardUntil {
++    if UIAccessibility.isReduceMotionEnabled || CACurrentMediaTime() < keyboardUntil {
 +      apply()
 +    } else {
 +      sheet.animateChanges(apply)
@@ -51,7 +51,6 @@ index 29b1a3ad7a8dc653347899c514fc538f9f9433f3..4ca67e53d8ba5e975f9e51f0a7037852
 +  }
 +}
 +
-+// Reaches the sheet's presentation controller from inside its content once it has appeared.
 +private struct SheetControllerReader: UIViewControllerRepresentable {
 +  let resizer: SheetResizer
 +
@@ -110,7 +109,7 @@ index 29b1a3ad7a8dc653347899c514fc538f9f9433f3..4ca67e53d8ba5e975f9e51f0a7037852
    @ViewBuilder
    private func contentChildren() -> some View {
      ForEach(props.children?.withoutSlot("anchor") ?? [], id: \.id) { child in
-@@ -84,7 +175,7 @@ struct BottomSheetView: ExpoSwiftUI.View {
+@@ -84,7 +174,7 @@ struct BottomSheetView: ExpoSwiftUI.View {
          onSizeChange: handleSizeChange
        )
        if #available(iOS 16.0, tvOS 16.0, *) {
@@ -119,7 +118,7 @@ index 29b1a3ad7a8dc653347899c514fc538f9f9433f3..4ca67e53d8ba5e975f9e51f0a7037852
        } else {
          content
        }
-@@ -105,6 +196,10 @@ struct BottomSheetView: ExpoSwiftUI.View {
+@@ -105,6 +195,10 @@ struct BottomSheetView: ExpoSwiftUI.View {
    var body: some View {
      anchor
        .sheet(isPresented: $isPresented, onDismiss: {

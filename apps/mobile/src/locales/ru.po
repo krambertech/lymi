@@ -1684,6 +1684,9 @@ msgctxt "deck tag"
 msgid "DMV written test"
 msgstr "Теоретический экзамен DMV"
 
+msgid "Docs"
+msgstr "Документация"
+
 msgid "Does this card look right?"
 msgstr "Карточка выглядит правильно?"
 
@@ -1822,6 +1825,9 @@ msgstr "Все твои колоды, включая архивные, с тво
 msgid "Every deck, archived ones included, with your schedule and review history."
 msgstr "Все колоды, включая архивные, с твоим расписанием и историей повторений."
 
+msgid "Every endpoint, with examples"
+msgstr "Все эндпоинты, с примерами"
+
 msgid "Every section is open"
 msgstr "Все разделы открыты"
 
@@ -1938,6 +1944,9 @@ msgstr "Для Anki, AnkiDroid и Mochi, с датами повторения, �
 msgctxt "deck tag"
 msgid "For beginners"
 msgstr "Для начинающих"
+
+msgid "For Claude, ChatGPT and Gemini"
+msgstr "Для Claude, ChatGPT и Gemini"
 
 msgid "For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute."
 msgstr "Например, вставь урок и попроси: «Сделай из этого эстонские карточки». Настройка займёт минуту."
@@ -3185,9 +3194,6 @@ msgstr "Дни с повторениями: {lit} из последних {0, pl
 msgid "Reviews"
 msgstr "Повторения"
 
-msgid "Revoke"
-msgstr "Отозвать"
-
 msgid "Revoke “{name}”?"
 msgstr "Отозвать «{name}»?"
 
@@ -4170,6 +4176,9 @@ msgstr "Твоя колода готова. Выбери дневную цель
 
 msgid "Your decks and reviews still work offline."
 msgstr "Твои колоды и повторения работают и без соединения."
+
+msgid "Your first request in a few minutes"
+msgstr "Первый запрос за несколько минут"
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Твои оценки сохранены. Проверь соединение и попробуй снова."

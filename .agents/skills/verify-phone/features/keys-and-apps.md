@@ -8,7 +8,7 @@
 
 ## Drive
 
-[`keys-and-apps.yaml`](keys-and-apps.yaml), as `learner`: open **API keys**, press **New key**, name it, create it, copy it and press **Done**, then revoke it from its row and confirm in the alert; go back and open **Connected apps**.
+[`keys-and-apps.yaml`](keys-and-apps.yaml), as `learner`: open **API keys**, press **New key**, name it, create it, copy it and press **Done**, then revoke it from its row's ⋯ and confirm in the alert; go back and open **Connected apps**.
 
 ## End state
 
@@ -17,5 +17,5 @@ The learner's keys are as they were before the flow, since the key it made was r
 ## Gotchas
 
 - The sheet's ✓ is a glass button named **Create key**, and the bar's plus is **New key**.
-- Revoking asks in iOS's alert, whose buttons are **Keep key** and **Revoke key**.
+- A row's ⋯ is named **Options for** the key or app, and holds **Revoke key** or **Disconnect**; revoking then asks in iOS's alert, whose buttons are **Keep key** and **Revoke key**, so the flow taps **Revoke key** twice.
 - A seeded learner has no connected apps, so Connected apps shows its empty state; disconnecting needs an app signed in through the consent screen first.

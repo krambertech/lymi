@@ -1684,6 +1684,9 @@ msgctxt "deck tag"
 msgid "DMV written test"
 msgstr "DMV written test"
 
+msgid "Docs"
+msgstr "Docs"
+
 msgid "Does this card look right?"
 msgstr "Does this card look right?"
 
@@ -1822,6 +1825,9 @@ msgstr "Every deck you own, archived ones included, with your schedule and revie
 msgid "Every deck, archived ones included, with your schedule and review history."
 msgstr "Every deck, archived ones included, with your schedule and review history."
 
+msgid "Every endpoint, with examples"
+msgstr "Every endpoint, with examples"
+
 msgid "Every section is open"
 msgstr "Every section is open"
 
@@ -1938,6 +1944,9 @@ msgstr "For Anki, AnkiDroid and Mochi, with due dates, review history and pictur
 msgctxt "deck tag"
 msgid "For beginners"
 msgstr "For beginners"
+
+msgid "For Claude, ChatGPT and Gemini"
+msgstr "For Claude, ChatGPT and Gemini"
 
 msgid "For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute."
 msgstr "For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute."
@@ -3185,9 +3194,6 @@ msgstr "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}, i
 msgid "Reviews"
 msgstr "Reviews"
 
-msgid "Revoke"
-msgstr "Revoke"
-
 msgid "Revoke “{name}”?"
 msgstr "Revoke “{name}”?"
 
@@ -4170,6 +4176,9 @@ msgstr "Your deck is ready. Choose your daily goal, then review your first cards
 
 msgid "Your decks and reviews still work offline."
 msgstr "Your decks and reviews still work offline."
+
+msgid "Your first request in a few minutes"
+msgstr "Your first request in a few minutes"
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Your grades are saved. Check your connection and try again."

@@ -5,21 +5,23 @@ import { type ApiKeySummary, api, errorMessage } from "@lymi/client/api";
 import { keysQuery } from "@lymi/client/queries";
 import { ApiKeyInput, apiKeyLimits, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { openBrowserAsync } from "expo-web-browser";
 import { useState } from "react";
 import { AccessibilityInfo, Alert, View } from "react-native";
 import { usePalette } from "../../../theme/palette";
+import { ActionMenu } from "../../../ui/action-menu";
 import { Chip } from "../../../ui/chip";
 import { clipboard } from "../../../ui/clipboard";
 import { EmptyState } from "../../../ui/empty-state";
 import { Input } from "../../../ui/field";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
-import { Button, Icon, Plate, Text } from "../../../ui/primitives";
+import { Button, Icon, Plate, SectionTitle, Text } from "../../../ui/primitives";
+import { Rows } from "../../../ui/row";
 import { BarButton, Screen } from "../../../ui/screen";
 import { Segmented } from "../../../ui/segmented";
 import { Sheet, SheetError, SheetHeading, SheetNote } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { toast } from "../../../ui/toast-host";
+import { DocRow } from "../../../you/doc-row";
 
 const DOCS = "https://lymi.app/docs";
 
@@ -114,26 +116,27 @@ export default function ApiKeys() {
         </Plate>
       )}
 
-      <View className="gap-2">
-        <Text className="px-1 text-base text-muted">
-          {t`Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews.`}
-        </Text>
-        <View className="flex-row flex-wrap">
-          <Button
+      <Text className="-mt-4 px-1 text-base text-muted">
+        {t`Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews.`}
+      </Text>
+
+      {/* A key is useless without the docs, so they are a section of their own rather than a footnote. */}
+      <View>
+        <SectionTitle>{t`Docs`}</SectionTitle>
+        <Rows>
+          <DocRow
+            icon="lesson"
             label={t`Quickstart`}
-            variant="ghost"
-            size="sm"
-            icon="web"
-            onPress={() => void openBrowserAsync(`${DOCS}/quickstart`)}
+            line={t`Your first request in a few minutes`}
+            url={`${DOCS}/quickstart`}
           />
-          <Button
+          <DocRow
+            icon="notes"
             label={t`API reference`}
-            variant="ghost"
-            size="sm"
-            icon="web"
-            onPress={() => void openBrowserAsync(`${DOCS}/api`)}
+            line={t`Every endpoint, with examples`}
+            url={`${DOCS}/api`}
           />
-        </View>
+        </Rows>
       </View>
 
       <NewKeySheet
@@ -168,7 +171,7 @@ function KeyRow({
   const created = shortDate(i18n, item.createdAt);
   return (
     <View
-      className={`min-h-[64px] flex-row items-center gap-3 py-3 ps-4 pe-2 ${first ? "" : "border-t border-edge"}`}
+      className={`min-h-[64px] flex-row items-center gap-3 py-3 ps-4 pe-3 ${first ? "" : "border-t border-edge"}`}
     >
       <View className="flex-1 gap-1">
         <View className="flex-row flex-wrap items-center gap-2">
@@ -182,7 +185,13 @@ function KeyRow({
           {t`${used} · created ${created}`}
         </Text>
       </View>
-      <Button label={t`Revoke`} variant="ghost" size="sm" loading={revoking} onPress={onRevoke} />
+      <ActionMenu
+        label={t`Options for ${name}`}
+        symbol="ellipsis"
+        look="row"
+        disabled={revoking}
+        items={[{ label: t`Revoke key`, icon: "remove", destructive: true, onSelect: onRevoke }]}
+      />
     </View>
   );
 }

@@ -13,7 +13,7 @@ name: API keys and connected apps
 - takeScreenshot: 01-keys
 - tapOn: "New key"
 - extendedWaitUntil:
-    visible: "Backup script on the laptop|Name"
+    visible: "So you know which key to revoke later."
     timeout: 10000
 - inputText: "${KEY}"
 - takeScreenshot: 02-new-key
@@ -29,11 +29,16 @@ name: API keys and connected apps
     visible: "${KEY}"
     timeout: 10000
 - takeScreenshot: 04-listed
-- tapOn: "Revoke"
+- tapOn: "Options for ${KEY}"
+- extendedWaitUntil:
+    visible: "Revoke key"
+    timeout: 10000
+- takeScreenshot: 05-menu
+- tapOn: "Revoke key"
 - extendedWaitUntil:
     visible: "Revoke “${KEY}”\\?"
     timeout: 10000
-- takeScreenshot: 05-alert
+- takeScreenshot: 06-alert
 - tapOn: "Revoke key"
 - extendedWaitUntil:
     notVisible: "${KEY}"
@@ -45,4 +50,4 @@ name: API keys and connected apps
 - extendedWaitUntil:
     visible: "Connect ChatGPT or Claude.*"
     timeout: 20000
-- takeScreenshot: 06-apps
+- takeScreenshot: 07-apps

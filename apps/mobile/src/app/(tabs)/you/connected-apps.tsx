@@ -5,14 +5,17 @@ import { connectedAppsQuery } from "@lymi/client/queries";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { openBrowserAsync } from "expo-web-browser";
 import { Alert, View } from "react-native";
+import { ActionMenu } from "../../../ui/action-menu";
 import { Chip } from "../../../ui/chip";
 import { EmptyState } from "../../../ui/empty-state";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
-import { Button, Plate, Text } from "../../../ui/primitives";
+import { Plate, SectionTitle, Text } from "../../../ui/primitives";
+import { Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
 import { Skeleton } from "../../../ui/skeleton";
 import { toast } from "../../../ui/toast-host";
 import { AppMark } from "../../../you/app-mark";
+import { DocRow } from "../../../you/doc-row";
 
 const SITE = "https://lymi.app";
 const site = (path: string) => `${SITE}${path}`;
@@ -80,19 +83,19 @@ export default function ConnectedApps() {
               />
             ))}
           </Plate>
-          <View className="gap-2">
-            <Text className="px-1 text-base text-muted">
-              {t`Read lists decks and cards. Read and write also adds, edits and archives them. You choose access when the app signs in. To change it, disconnect and sign in again.`}
-            </Text>
-            <View className="flex-row">
-              <Button
+          <Text className="-mt-4 px-1 text-base text-muted">
+            {t`Read lists decks and cards. Read and write also adds, edits and archives them. You choose access when the app signs in. To change it, disconnect and sign in again.`}
+          </Text>
+          <View>
+            <SectionTitle>{t`Docs`}</SectionTitle>
+            <Rows>
+              <DocRow
+                icon="lesson"
                 label={t`How to connect`}
-                variant="ghost"
-                size="sm"
-                icon="web"
-                onPress={() => void openBrowserAsync(site("/docs/mcp"))}
+                line={t`For Claude, ChatGPT and Gemini`}
+                url={site("/docs/mcp")}
               />
-            </View>
+            </Rows>
           </View>
         </>
       )}
@@ -127,7 +130,7 @@ function AppRow({
     .join(" · ");
   return (
     <View
-      className={`min-h-[68px] flex-row items-center gap-3 py-3 ps-4 pe-2 ${first ? "" : "border-t border-edge"}`}
+      className={`min-h-[68px] flex-row items-center gap-3 py-3 ps-4 pe-3 ${first ? "" : "border-t border-edge"}`}
     >
       <AppMark app={app} />
       <View className="flex-1 gap-1">
@@ -141,12 +144,19 @@ function AppRow({
           {line}
         </Text>
       </View>
-      <Button
-        label={t`Disconnect`}
-        variant="ghost"
-        size="sm"
-        loading={disconnecting}
-        onPress={() => onDisconnect(item.id, name)}
+      <ActionMenu
+        label={t`Options for ${name}`}
+        symbol="ellipsis"
+        look="row"
+        disabled={disconnecting}
+        items={[
+          {
+            label: t`Disconnect`,
+            icon: "linkOff",
+            destructive: true,
+            onSelect: () => onDisconnect(item.id, name),
+          },
+        ]}
       />
     </View>
   );

@@ -7,7 +7,7 @@ import { useRouter } from "expo-router";
 import { openBrowserAsync } from "expo-web-browser";
 import { useState } from "react";
 import { Alert, View } from "react-native";
-import { authClient } from "../../../auth/client";
+import { authClient, siteUrl } from "../../../auth/client";
 import { useDecks, useInsights } from "../../../data/queries";
 import { ExportSheet } from "../../../export/export-sheet";
 import { RunStrip } from "../../../insights/figures";
@@ -23,7 +23,7 @@ import { ProfileSheet, useProfile } from "../../../you/profile";
 import { Blocked, ReminderSwitch, TimeRow, useReminder } from "../../../you/reminder";
 
 /** The API reference, where publishing and deck reports are done with a key. ADR 0028. */
-const API_DOCS = "https://lymi.app/docs/api";
+const API_DOCS = siteUrl("/docs/api");
 
 /**
  * Everything about the learner, and every setting: Insights first, then this phone's reminder, the

@@ -228,7 +228,7 @@ function Working({
   // The app was closed mid-upload, so the file it was reading is gone: the same file sends the rest.
   if (item.status === "uploading" && !upload) {
     const again = async () => {
-      const picked = await pickFile();
+      const picked = await pickFile().catch(() => null);
       if (!picked) return;
       if (picked.size !== item.byteSize) {
         setRefused(t`That isn’t the same file. Choose ${item.fileName}.`);

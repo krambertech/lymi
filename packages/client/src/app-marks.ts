@@ -161,13 +161,20 @@ export function listedApp(app: AppIdentity): ListedApp {
   };
 }
 
-/** Whether a name an app gave contains a known app's name as a word, as "Claude Helper" does. */
+/** Whether an app's name holds a known app's: a longer one anywhere in its letters, a short one only as a word. */
 export function borrowsKnownName(name: string): boolean {
-  const words = name.toLowerCase();
-  return KNOWN_NAMES.some((known) =>
-    new RegExp(`(^|[^\\p{L}\\p{N}])${known}($|[^\\p{L}\\p{N}])`, "u").test(words),
-  );
+  const lower = name.toLowerCase();
+  const letters = lower.replace(/[^\p{L}\p{N}]/gu, "");
+  return KNOWN_NAMES.some((known) => {
+    const bare = known.replace(/[^\p{L}\p{N}]/gu, "");
+    return bare.length >= SHORT_NAME
+      ? letters.includes(bare)
+      : new RegExp(`(^|[^\\p{L}\\p{N}])${bare}($|[^\\p{L}\\p{N}])`, "u").test(lower);
+  });
 }
+
+/** Known names shorter than this, such as "zed", are common inside other words. */
+const SHORT_NAME = 4;
 
 const KNOWN_NAMES = [
   ...new Set([

@@ -48,7 +48,16 @@ describe("borrowsKnownName", () => {
     expect(borrowsKnownName("OpenAI tools")).toBe(true);
   });
 
-  it("ignores a known name inside another word", () => {
+  it("finds a longer known name inside another word or next to digits", () => {
+    expect(borrowsKnownName("Claude2")).toBe(true);
+    expect(borrowsKnownName("ClaudeCode")).toBe(true);
+    expect(borrowsKnownName("ChatGPT4o")).toBe(true);
+    expect(borrowsKnownName("MyClaude")).toBe(true);
+    expect(borrowsKnownName("Chat-GPT helper")).toBe(true);
+  });
+
+  it("finds a short known name only as a word", () => {
+    expect(borrowsKnownName("Zed notes")).toBe(true);
     expect(borrowsKnownName("Organized notes")).toBe(false);
     expect(borrowsKnownName("Notes Helper")).toBe(false);
   });

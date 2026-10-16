@@ -7,6 +7,7 @@ import { ApiKeyInput, apiKeyLimits, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { AccessibilityInfo, Alert, View } from "react-native";
+import { siteUrl } from "../../../auth/client";
 import { usePalette } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
 import { Chip } from "../../../ui/chip";
@@ -22,8 +23,6 @@ import { Sheet, SheetError, SheetHeading, SheetNote } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { toast } from "../../../ui/toast-host";
 import { DocRow } from "../../../you/doc-row";
-
-const DOCS = "https://lymi.app/docs";
 
 /** Personal API keys for scripts, as the web's Settings has them. phone.md "Navigation", ADR 0036. */
 export default function ApiKeys() {
@@ -124,13 +123,13 @@ export default function ApiKeys() {
             icon="lesson"
             label={t`Quickstart`}
             line={t`Your first request in a few minutes`}
-            url={`${DOCS}/quickstart`}
+            url={siteUrl("/docs/quickstart")}
           />
           <DocRow
             icon="notes"
             label={t`API reference`}
             line={t`Every endpoint, with examples`}
-            url={`${DOCS}/api`}
+            url={siteUrl("/docs/api")}
           />
         </Rows>
       </View>

@@ -5,6 +5,7 @@ import { connectedAppsQuery } from "@lymi/client/queries";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { openBrowserAsync } from "expo-web-browser";
 import { Alert, View } from "react-native";
+import { siteUrl } from "../../../auth/client";
 import { usePalette } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
 import { Chip } from "../../../ui/chip";
@@ -17,9 +18,6 @@ import { Skeleton } from "../../../ui/skeleton";
 import { toast } from "../../../ui/toast-host";
 import { AppMark } from "../../../you/app-mark";
 import { DocRow } from "../../../you/doc-row";
-
-const SITE = "https://lymi.app";
-const site = (path: string) => `${SITE}${path}`;
 
 /** The apps the learner let in, and the way to cut one off. connected-apps.md, ADR 0036. */
 export default function ConnectedApps() {
@@ -64,7 +62,7 @@ export default function ConnectedApps() {
           body={t`For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute.`}
           action={{
             label: t`How to connect`,
-            onPress: () => void openBrowserAsync(site("/docs/mcp")),
+            onPress: () => void openBrowserAsync(siteUrl("/docs/mcp")),
           }}
         />
       ) : (
@@ -90,7 +88,7 @@ export default function ConnectedApps() {
                 icon="lesson"
                 label={t`How to connect`}
                 line={t`For Claude, ChatGPT and Gemini`}
-                url={site("/docs/mcp")}
+                url={siteUrl("/docs/mcp")}
               />
             </Rows>
           </View>
@@ -114,7 +112,7 @@ function AppRow({
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
-  const app = identifyApp(item.clientId, item.name, site);
+  const app = identifyApp(item.clientId, item.name, siteUrl);
   const listed = listedApp(app);
   const name = listed.title ?? t`An app`;
   const connected = i18n.date(new Date(item.createdAt), { day: "numeric", month: "short" });

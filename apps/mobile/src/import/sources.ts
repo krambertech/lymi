@@ -5,17 +5,15 @@ import type { ImportFailure, ImportSource } from "@lymi/core";
 import { MAX_IMPORT_BYTES } from "@lymi/core";
 import { File } from "expo-file-system";
 import { openBrowserAsync } from "expo-web-browser";
+import { siteUrl } from "../auth/client";
 import { i18n } from "../i18n";
 
 export { SOURCE_NAMES };
 
-/** The public site, where each app's guide lives. */
-const SITE = "https://lymi.app";
-
 /** Opens an app's guide in the in-app browser; Quizlet has none yet. */
 export function openGuide(source: ImportSource) {
   const path = importGuidePath(source);
-  if (path) void openBrowserAsync(`${SITE}${path}`);
+  if (path) void openBrowserAsync(siteUrl(path));
 }
 
 export const hasGuide = (source: ImportSource) => importGuidePath(source) !== undefined;

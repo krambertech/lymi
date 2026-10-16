@@ -124,7 +124,7 @@ If a native build stalls at `CreateBuildDescription`, the Mac's pipe memory is u
 
 ## Sign the phone app in
 
-`EXPO_PUBLIC_API_URL` points the phone app at a Worker, and it defaults to production, so always set it on `stim start`. The Simulator reaches the Mac at `localhost`. In a development build, or any build pointed at a Worker on `localhost`, the sign-in screen offers **Dev sign-in as learner** and **Dev sign-in as heavy**, which call `POST /api/dev/sign-in?as=<persona>` and keep the cookie it returns, so no password is typed. A new account made in the app is confirmed with a 6-digit code instead of a link; `POST /api/dev/outbox` with the address returns the email that carries it. Google needs `GOOGLE_CLIENT_ID` and a callback registered for the local port, so try it against a deployed Worker.
+`EXPO_PUBLIC_API_URL` points the phone app at a Worker, and it defaults to production, so always set it on `stim start`. `EXPO_PUBLIC_SITE_URL` points its docs and guide links, and the addresses some connected apps sign in from, at a public site, and defaults to `https://lymi.app`. The Simulator reaches the Mac at `localhost`. In a development build, or any build pointed at a Worker on `localhost`, the sign-in screen offers **Dev sign-in as learner** and **Dev sign-in as heavy**, which call `POST /api/dev/sign-in?as=<persona>` and keep the cookie it returns, so no password is typed. A new account made in the app is confirmed with a 6-digit code instead of a link; `POST /api/dev/outbox` with the address returns the email that carries it. Google needs `GOOGLE_CLIENT_ID` and a callback registered for the local port, so try it against a deployed Worker.
 
 ## Profile the phone app
 

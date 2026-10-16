@@ -11,6 +11,17 @@ type Candidate = { id: string; term: string; meaning: string; kind: "word" | "ph
 /** Workers AI as the Worker sees it; absent in tests and wherever the binding is not configured. */
 export type DecisionModel = { run(model: string, input: unknown): Promise<unknown> } | undefined;
 
+/** Workers AI through the named AI Gateway, so its calls are logged beside the reader's. */
+export function decisionModel(env: { AI?: Ai; AI_GATEWAY_ID?: string | undefined }): DecisionModel {
+  const ai = env.AI;
+  if (!ai) return undefined;
+  const id = env.AI_GATEWAY_ID?.trim();
+  return {
+    run: (model, input) =>
+      ai.run(model as keyof AiModels, input as never, id ? { gateway: { id } } : {}),
+  };
+}
+
 /** How likely one term is worth its own card, or null when the model could not judge it. */
 export async function keepScore(
   ai: DecisionModel,

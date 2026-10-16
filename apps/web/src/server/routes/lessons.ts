@@ -3,7 +3,7 @@ import { Hono } from "hono";
 import { operatorEmails } from "../env";
 import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
-import { termsAgainstAnswer } from "../lessons/keep";
+import { decisionModel, termsAgainstAnswer } from "../lessons/keep";
 import type { LessonMaterial } from "../lessons/reader";
 import { createLessonReader } from "../lessons/reader";
 import {
@@ -78,7 +78,7 @@ lessonReads.post(
     }
     const deps = {
       reader: createLessonReader(c.env),
-      ai: c.env.AI,
+      ai: decisionModel(c.env),
       operators: operatorEmails(c.env),
     };
     // Refusals happen here, before the stream opens, so they arrive as ordinary errors.
@@ -128,6 +128,8 @@ lessonReads.post(
       throw new ServiceError("forbidden", "Reading lessons is not available on this account yet.");
     }
     const { question, answer, terms } = c.req.valid("json");
-    return c.json({ drop: await termsAgainstAnswer(c.env.AI, question, answer, terms) });
+    return c.json({
+      drop: await termsAgainstAnswer(decisionModel(c.env), question, answer, terms),
+    });
   },
 );

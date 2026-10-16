@@ -45,6 +45,10 @@ export interface Bindings
   /** An organisation-wide Anthropic key needs the workspace it bills to. */
   ANTHROPIC_WORKSPACE_ID?: string;
   ANTHROPIC_LESSON_MODEL?: string;
+  /** AI Gateway's Anthropic endpoint, ending in `/anthropic/v1`; empty calls Anthropic directly. */
+  ANTHROPIC_BASE_URL?: string;
+  /** The AI Gateway that Workers AI calls go through; empty calls Workers AI directly. */
+  AI_GATEWAY_ID?: string;
   /** Web Push is unavailable until all three VAPID values are configured as secrets. */
   VAPID_PUBLIC_KEY?: string;
   VAPID_PRIVATE_KEY?: string;

@@ -6,6 +6,9 @@ export type LessonReaderBindings = {
   /** An organisation-wide key needs the workspace it bills to. */
   ANTHROPIC_WORKSPACE_ID?: string | undefined;
   ANTHROPIC_LESSON_MODEL?: string | undefined;
+  /** AI Gateway's Anthropic endpoint, ending in `/anthropic/v1`; empty calls Anthropic directly. */
+  ANTHROPIC_BASE_URL?: string | undefined;
+  AI_GATEWAY_TOKEN?: string | undefined;
 };
 
 export type LessonMaterial = {
@@ -52,6 +55,7 @@ export function createLessonReader(
   const key = env.ANTHROPIC_API_KEY?.trim();
   if (!key) return null;
   const model = env.ANTHROPIC_LESSON_MODEL || DEFAULT_MODEL;
+  const baseUrl = (env.ANTHROPIC_BASE_URL || "https://api.anthropic.com/v1").replace(/\/$/, "");
   return {
     model,
     async stream(material, brief, schema, onText) {
@@ -63,6 +67,7 @@ export function createLessonReader(
       };
       if (env.ANTHROPIC_WORKSPACE_ID)
         headers["anthropic-workspace-id"] = env.ANTHROPIC_WORKSPACE_ID;
+      if (env.AI_GATEWAY_TOKEN) headers["cf-aig-authorization"] = `Bearer ${env.AI_GATEWAY_TOKEN}`;
       const content = [
         ...material.pdfs.map((bytes) => ({
           type: "document",
@@ -79,7 +84,7 @@ export function createLessonReader(
       ];
       let response: Response;
       try {
-        response = await request("https://api.anthropic.com/v1/messages", {
+        response = await request(`${baseUrl}/messages`, {
           method: "POST",
           headers,
           body: JSON.stringify({

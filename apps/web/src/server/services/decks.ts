@@ -2,6 +2,7 @@ import type { DeckEnrichField, DeckInput, DeckPurpose, NewDeckInput } from "@lym
 import { deckEnrichFields, deckPurpose, newId } from "@lymi/core";
 import { and, asc, desc, eq, isNotNull, isNull, sql } from "@lymi/core/db";
 import { schema } from "../db";
+import { FORMER_OWNER_ID } from "./account-deletion";
 import { track } from "./analytics";
 import { audit } from "./audit";
 import { type CardView, presentCards } from "./card-view";
@@ -131,7 +132,12 @@ export async function listDecks(
         // Cards, not direction states: the same count the queue reports as its total.
         due: due.get(deck.id) ?? 0,
         role: owner ? ("owner" as const) : (memberRole ?? ("learner" as const)),
-        owner: { id: ownerId, name: ownerName, avatarUrl: publisher.avatarUrl },
+        owner: {
+          id: ownerId,
+          name: ownerName,
+          avatarUrl: publisher.avatarUrl,
+          former: ownerId === FORMER_OWNER_ID,
+        },
         published: publisher.published,
       };
     },

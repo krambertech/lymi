@@ -19,7 +19,9 @@ export type TransactionalEmailKind =
   | "google-account"
   | "reset-google-account"
   | "deck-invitation"
-  | "feedback";
+  | "feedback"
+  | "delete-account-code"
+  | "account-deleted";
 export type TransactionalEmailLanguage = "en" | "uk" | "ru";
 
 /** What a learner wrote and the little Lymi knows about where they wrote it. */
@@ -208,6 +210,33 @@ function compose(
         ],
       };
     }
+    case "delete-account-code": {
+      if (!params.code) throw new Error("The delete-account-code email needs a code");
+      return {
+        subject: i18n._(msg`Your code to delete your Lymi account`),
+        blocks: [
+          hello,
+          i18n._(msg`Enter this code in Lymi to delete your account and everything in it:`),
+          params.code,
+          i18n._(
+            msg`The code works for 15 minutes. If you didn’t ask to delete your account, ignore this email and nothing will change.`,
+          ),
+          signature,
+        ],
+      };
+    }
+    case "account-deleted":
+      return {
+        subject: i18n._(msg`Your Lymi account was deleted`),
+        blocks: [
+          hello,
+          i18n._(
+            msg`Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi.`,
+          ),
+          i18n._(msg`If you didn’t do this, reply to this email and tell us what happened.`),
+          signature,
+        ],
+      };
     case "reset-password":
       return {
         subject: i18n._(msg`Reset your Lymi password`),
@@ -394,6 +423,8 @@ export async function sendTransactionalEmail(
     }
   }
 
+  // A deleted account has no row left to record the goodbye against.
+  if (input.kind === "account-deleted") return { delivery };
   await audit(ctx, {
     entity: "account",
     action: "send_transactional_email",

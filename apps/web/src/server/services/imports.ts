@@ -511,7 +511,7 @@ export async function finishImport(
     card_count: counts.added,
     outcome: "done",
   });
-  await deleteFiles(uploads, row);
+  await deleteImportFiles(uploads, row);
 }
 
 /** Stops an import with a reason and deletes its file. Cards a failed write already added stay. */
@@ -541,7 +541,7 @@ export async function failImport(
     outcome: "failed",
   });
   track(analytics, { name: "import_failed", source: row.source, card_count });
-  await deleteFiles(uploads, row);
+  await deleteImportFiles(uploads, row);
 }
 
 /** The learner's way out before anything is written. */
@@ -567,12 +567,15 @@ export async function cancelImport(ctx: ServiceContext, id: string, uploads: R2B
       ),
     auditStatement(ctx, { entity: "import", action: "cancel", id }),
   ]);
-  await deleteFiles(uploads, row);
+  await deleteImportFiles(uploads, row);
   return getImport(ctx, id);
 }
 
 /** Deletes the upload, any unfinished multipart upload and the stored note chunks. */
-async function deleteFiles(uploads: R2Bucket, row: Import) {
+export async function deleteImportFiles(
+  uploads: R2Bucket,
+  row: Pick<Import, "objectKey" | "uploadId">,
+) {
   if (!row.objectKey) return;
   try {
     if (row.uploadId)

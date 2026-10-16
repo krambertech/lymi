@@ -652,7 +652,7 @@ export async function failExport(db: Db, id: string, failure: ExportFailure, buc
   const [row] = await db.select().from(schema.exportFiles).where(eq(schema.exportFiles.id, id));
   if (row?.status !== "exporting") return;
   const now = new Date();
-  const deleted = await deleteFiles(bucket, row);
+  const deleted = await deleteExportFiles(bucket, row);
   await db
     .update(schema.exportFiles)
     .set({
@@ -677,7 +677,10 @@ async function deleteObjects(bucket: R2Bucket, prefix: string) {
 }
 
 /** Deletes an export's segments. False when R2 refused, so the caller keeps the key for the sweep. */
-async function deleteFiles(bucket: R2Bucket, row: Export): Promise<boolean> {
+export async function deleteExportFiles(
+  bucket: R2Bucket,
+  row: Pick<Export, "objectKey">,
+): Promise<boolean> {
   if (!row.objectKey) return true;
   try {
     await deleteObjects(bucket, `${row.objectKey}/`);
@@ -699,7 +702,7 @@ export async function expireExports(db: Db, bucket: R2Bucket, now = new Date()) 
     .limit(50);
   for (const row of expired) {
     // A row whose delete failed stays done and past its window, so the next sweep finds it again.
-    if (!(await deleteFiles(bucket, row))) continue;
+    if (!(await deleteExportFiles(bucket, row))) continue;
     await db
       .update(schema.exportFiles)
       .set({ status: "expired", objectKey: null, updatedAt: now })
@@ -723,7 +726,7 @@ export async function expireExports(db: Db, bucket: R2Bucket, now = new Date()) 
     .where(and(eq(schema.exportFiles.status, "failed"), isNotNull(schema.exportFiles.objectKey)))
     .limit(50);
   for (const row of left) {
-    if (!(await deleteFiles(bucket, row))) continue;
+    if (!(await deleteExportFiles(bucket, row))) continue;
     await db
       .update(schema.exportFiles)
       .set({ objectKey: null, updatedAt: now })

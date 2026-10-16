@@ -88,7 +88,9 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Archive**: Hiding a card or deck without destroying it. Restore undoes it. Everything a learner writes is archived rather than deleted, so this is the word for removing cards, decks and sections. _Avoid_: Delete, remove, trash
 
-**Delete**: Removing a series for good. A series is a grouping and holds no writing of its own, so nothing a learner made is lost and there is nothing to restore. The only delete the app has; never use the word for a card, deck or section.
+**Delete**: Removing a series for good. A series is a grouping and holds no writing of its own, so nothing a learner made is lost and there is nothing to restore. Besides **Delete account**, the only delete the app has; never use the word for a card, deck or section.
+
+**Delete account**: Ending the learner's Lymi account and erasing what it holds, for good: their decks, cards, reviews and settings. It is confirmed with a code sent to their email, or with Sign in with Apple, and nothing restores it. A deck other people study stays for them under its **former owner** until the last of them leaves, and nobody can change it again. An account that publishes decks cannot be deleted from the app. _Avoid_: Close, deactivate, remove, archive (for the account)
 
 ### Sharing
 

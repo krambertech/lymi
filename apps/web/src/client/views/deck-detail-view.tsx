@@ -10,6 +10,7 @@ import {
   noFilters,
   rowState,
 } from "@lymi/client/deck-list";
+import { CHOSEN_LIMIT } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -681,6 +682,7 @@ function SelectionToolbar({
 }) {
   const { t } = useLingui();
   const all = count > 0 && count === total;
+  const limit = CHOSEN_LIMIT;
   return (
     <section
       aria-label={t`Selected cards`}
@@ -716,18 +718,30 @@ function SelectionToolbar({
               {due > 0 && (
                 <DropdownMenuItem onClick={() => onReview("due")}>
                   <RotateCcw />
-                  <Plural value={due} one="Review # due" other="Review # due" />
+                  {due > limit ? (
+                    <Trans>
+                      Review {limit} of {due} due
+                    </Trans>
+                  ) : (
+                    <Plural value={due} one="Review # due" other="Review # due" />
+                  )}
                 </DropdownMenuItem>
               )}
               {(due === 0 || reviewable > due) && (
                 <DropdownMenuItem disabled={reviewable === 0} onClick={() => onReview("all")}>
                   <RotateCcw />
-                  <Plural
-                    value={reviewable}
-                    _0="Nothing to review"
-                    one="Review all #"
-                    other="Review all #"
-                  />
+                  {reviewable > limit ? (
+                    <Trans>
+                      Review {limit} of {reviewable}
+                    </Trans>
+                  ) : (
+                    <Plural
+                      value={reviewable}
+                      _0="Nothing to review"
+                      one="Review all #"
+                      other="Review all #"
+                    />
+                  )}
                 </DropdownMenuItem>
               )}
             </DropdownMenuGroup>
@@ -885,7 +899,11 @@ export function DeckDetailView({
           rowState(row) !== "new" &&
           !(row.state?.lastReview && new Date(row.state.lastReview).getTime() >= dayStart),
       )
-      .map((row) => ({ id: row.card.id, due: new Date(row.state?.due ?? 0).getTime() < dayEnd }));
+      .map((row) => {
+        const at = new Date(row.state?.due ?? 0).getTime();
+        return { id: row.card.id, at, due: at < dayEnd };
+      })
+      .sort((a, b) => a.at - b.at);
   }, [selected, cards]);
   const stopSelecting = useCallback(() => {
     setSelected(null);
@@ -1282,8 +1300,12 @@ export function DeckDetailView({
                 onReview={
                   onReviewCards &&
                   ((kind) =>
+                    // One review takes at most CHOSEN_LIMIT, and the list is due first, so the cap keeps those.
                     onReviewCards(
-                      reviewable.filter((r) => kind === "all" || r.due).map((r) => r.id),
+                      reviewable
+                        .filter((r) => kind === "all" || r.due)
+                        .slice(0, CHOSEN_LIMIT)
+                        .map((r) => r.id),
                     ))
                 }
                 onTags={owner && (() => owner.onTagCards([...selected], stopSelecting))}

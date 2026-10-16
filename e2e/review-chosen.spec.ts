@@ -73,4 +73,11 @@ test("a learner reviews the started cards chosen from a tag", async ({ page }, t
     }
     await expect(page.getByRole("heading", { level: 2, name: "Round done" })).toBeVisible();
   });
+
+  await test.step("a list past the limit is trimmed, never widened to the whole deck", async () => {
+    const tooMany = [ids["il treno"], ...Array.from({ length: 210 }, (_, i) => `missing-${i}`)];
+    await page.goto(`/review?deck=${deckId}&cards=${encodeURIComponent(JSON.stringify(tooMany))}`);
+    await expect(page.getByLabel(/ card for /)).toHaveAttribute("aria-label", /il treno/);
+    await expect(page.getByText("0 of 1", { exact: true })).toBeAttached();
+  });
 });

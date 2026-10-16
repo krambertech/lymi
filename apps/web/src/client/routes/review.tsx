@@ -91,11 +91,10 @@ export const Route = createFileRoute("/review")({
     card?: string;
   } => {
     const round = ROUNDS.find((r) => r === s.round);
+    // Trimmed rather than dropped, so a long list never widens into the whole deck's review.
     const cards =
-      Array.isArray(s.cards) &&
-      s.cards.length <= CHOSEN_LIMIT &&
-      s.cards.every((id) => typeof id === "string")
-        ? (s.cards as string[])
+      Array.isArray(s.cards) && s.cards.length > 0 && s.cards.every((id) => typeof id === "string")
+        ? (s.cards as string[]).slice(0, CHOSEN_LIMIT)
         : undefined;
     return {
       ...(typeof s.deck === "string" ? { deck: s.deck } : {}),

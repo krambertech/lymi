@@ -3725,6 +3725,12 @@ msgstr "Відкрий картку, коли згадаєш"
 msgid "Review"
 msgstr "Повторення"
 
+msgid "Review {limit} of {due} due"
+msgstr "Повтори {limit} з {due} на сьогодні"
+
+msgid "Review {limit} of {reviewable}"
+msgstr "Повтори {limit} з {reviewable}"
+
 msgid "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}"
 msgstr "Повторити серію «{seriesName}», {due, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
 

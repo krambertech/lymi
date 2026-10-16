@@ -3725,6 +3725,12 @@ msgstr "Reveal the card when you have it"
 msgid "Review"
 msgstr "Review"
 
+msgid "Review {limit} of {due} due"
+msgstr "Review {limit} of {due} due"
+
+msgid "Review {limit} of {reviewable}"
+msgstr "Review {limit} of {reviewable}"
+
 msgid "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}"
 msgstr "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}"
 

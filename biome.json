@@ -177,6 +177,10 @@
                   "@expo/ui/swift-ui": {
                     "importNames": ["BottomSheet"],
                     "message": "Use Sheet from src/ui/sheet.tsx: it owns the title, description, save header and the inset every sheet shares."
+                  },
+                  "@expo/ui/jetpack-compose": {
+                    "importNames": ["ModalBottomSheet"],
+                    "message": "Use Sheet from src/ui/sheet.tsx: it owns the title, description, save header and the inset every sheet shares."
                   }
                 }
               }

@@ -1,10 +1,10 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { DeckSummary } from "@lymi/client/api";
-import * as Haptics from "expo-haptics";
 import { type Href, useRouter } from "expo-router";
 import { View } from "react-native";
 import { Lantern } from "../brand/lantern";
+import { haptics } from "../theme/haptics";
 import { usePalette } from "../theme/palette";
 import { openWeb } from "../ui/on-the-web";
 import { Button, Icon, Plate, Text } from "../ui/primitives";
@@ -82,7 +82,7 @@ function Steps({ current }: { current: number }) {
       line: t`Insights fill in from your first review.`,
       action: t`Review`,
       onPress: () => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        haptics.start();
         router.push("/review");
       },
     },
@@ -185,7 +185,7 @@ function SharedReady({ deck }: { deck: GuideDeck }) {
           variant="primary"
           size="lg"
           onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            haptics.start();
             router.push(`/review?deck=${deck.id}` as Href);
           }}
         />

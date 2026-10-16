@@ -1,5 +1,4 @@
 import { SNAP_BACK } from "@lymi/design";
-import * as Haptics from "expo-haptics";
 import type { ReactNode } from "react";
 import { StyleSheet, useWindowDimensions, type ViewStyle } from "react-native";
 import { Gesture } from "react-native-gesture-handler";
@@ -13,6 +12,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
+import { haptics } from "../theme/haptics";
 import { ALWAYS, spring } from "../theme/motion";
 
 /** Past this share of the screen, letting go ends. phone.md "Review". */
@@ -31,7 +31,7 @@ export function usePullToEnd({ onEnd, away }: { onEnd: () => void; away: boolean
   const y = useSharedValue(0);
   const past = useSharedValue(false);
   const line = height * LINE;
-  const tick = () => Haptics.selectionAsync();
+  const tick = () => haptics.tick();
 
   const gesture = Gesture.Pan()
     .activeOffsetY(8)

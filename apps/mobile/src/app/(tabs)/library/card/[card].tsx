@@ -184,7 +184,7 @@ export default function CardPage() {
       return {
         key: `e-${e.id}`,
         at: new Date(e.at),
-        mark: <Icon name={icon} size={15} colour={p.muted} />,
+        mark: <Icon name={icon} size={15} colour={p["text-2"]} />,
         title: i18n._(text),
         // An actor a newer Worker added goes unnamed rather than raw. ADR 0032.
         line: ACTOR[e.actor] ? i18n._(ACTOR[e.actor] as MessageDescriptor) : "",
@@ -296,7 +296,7 @@ export default function CardPage() {
         >
           <View className="w-5 items-center pt-0.5">{item.mark}</View>
           <View className="flex-1 gap-0.5">
-            <Text className={`text-md ${item.strong ? "font-medium text-text" : "text-text-2"}`}>
+            <Text className={`text-md text-text ${item.strong ? "font-medium" : ""}`}>
               {item.title}
             </Text>
             <Text className="text-sm text-muted">{item.line}</Text>

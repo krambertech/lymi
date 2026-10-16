@@ -16,7 +16,6 @@ import {
 } from "@lymi/client/deck-list";
 import { CHOSEN_LIMIT } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
-import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -41,6 +40,7 @@ import {
 } from "../../../sections/sections";
 import { useOnline } from "../../../streak/goal-picker";
 import { captureEvent } from "../../../telemetry/posthog";
+import { haptics } from "../../../theme/haptics";
 import { springIn, useReduceMotion } from "../../../theme/motion";
 import { usePalette, useRoom } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
@@ -639,7 +639,7 @@ function ReviewButton({ deck }: { deck: DeckData }) {
       variant="primary"
       size="lg"
       onPress={() => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        haptics.start();
         router.push(`/review?deck=${deck.id}` as Href);
       }}
     />
@@ -1040,6 +1040,8 @@ function MoveToSeries({
   const { moveDeck, undoMove } = useSeriesActions();
   const notice = useMoveNotice();
   const deckName = deck.name;
+  // New series opens once this sheet has gone, as every sheet's choice does, so its name gets the keyboard.
+  const opening = useRef<Href | null>(null);
   const move = (seriesId: string | null, then?: () => void) =>
     moveDeck.mutate(
       { deckId: deck.id, seriesId },
@@ -1058,7 +1060,7 @@ function MoveToSeries({
     if (!online || !back) return;
     onOpenChange(false);
     if (seriesId === deck.seriesId) return;
-    Haptics.selectionAsync();
+    haptics.tick();
     const name = seriesId ? series.find((s) => s.id === seriesId)?.name : undefined;
     move(seriesId, () => notice(deck.id, deckName, name, () => undoMove(deck.id, back)));
   };
@@ -1072,6 +1074,11 @@ function MoveToSeries({
       }
       open={open}
       onOpenChange={onOpenChange}
+      onDismiss={() => {
+        const href = opening.current;
+        opening.current = null;
+        if (href) router.push(href);
+      }}
     >
       {!back &&
         (query.isPending || query.isFetching ? (
@@ -1109,7 +1116,7 @@ function MoveToSeries({
             onPress={() => {
               if (!online) return;
               onOpenChange(false);
-              router.push(`/series?deck=${deck.id}` as Href);
+              opening.current = `/series?deck=${deck.id}` as Href;
             }}
           />
         </SheetGroup>

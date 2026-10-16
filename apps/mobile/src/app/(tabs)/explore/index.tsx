@@ -34,22 +34,25 @@ export default function Explore() {
       title={t`Explore`}
       kind="tab"
       onRefresh={catalogue.retry}
+      // With nothing published there is nothing to search or filter, so the bar stays empty.
       actions={
-        <BarGroup
-          items={[
-            {
-              icon: "filter",
-              label: t`Show one shelf`,
-              on: !!shelf,
-              onPress: () => setChoosing(true),
-            },
-            {
-              icon: "search",
-              label: t`Search decks`,
-              onPress: () => router.push("/explore-search"),
-            },
-          ]}
-        />
+        catalogue.shelves.length > 0 && (
+          <BarGroup
+            items={[
+              {
+                icon: "filter",
+                label: t`Show one shelf`,
+                on: !!shelf,
+                onPress: () => setChoosing(true),
+              },
+              {
+                icon: "search",
+                label: t`Search decks`,
+                onPress: () => router.push("/explore-search"),
+              },
+            ]}
+          />
+        )
       }
     >
       {catalogue.failed ? (

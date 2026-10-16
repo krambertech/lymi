@@ -7,8 +7,8 @@ import {
   type PasswordProblem,
   passwordProblem,
 } from "@lymi/core";
-import * as Haptics from "expo-haptics";
 import { useState } from "react";
+import { haptics } from "../theme/haptics";
 import { API_URL, authClient } from "./client";
 
 /**
@@ -95,7 +95,7 @@ export function useSignIn() {
 
   function fail(set: () => void) {
     set();
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    haptics.error();
   }
 
   async function google() {

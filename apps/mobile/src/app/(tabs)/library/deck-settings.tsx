@@ -28,6 +28,7 @@ import { Plate, Text } from "../../../ui/primitives";
 import { Row, RowFace, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
 import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
+import { useSheetFocus } from "../../../ui/sheet-focus";
 import { Skeleton } from "../../../ui/skeleton";
 
 /**
@@ -192,11 +193,16 @@ function Settings({ deck }: { deck: DeckSummary }) {
   const language = deck.defaultLanguage ? languageName(deck.defaultLanguage) : t`No language`;
   const way = asked.find((a) => a.value === deck.directions) ?? asked[0];
 
+  const focus = {
+    name: useSheetFocus({ open: editing === "name" }),
+    description: useSheetFocus({ open: editing === "description" }),
+    instructions: useSheetFocus({ open: editing === "instructions" }),
+  };
   const nameField = (
     <TextInput
       value={name}
       onChangeText={setName}
-      autoFocus
+      {...focus.name}
       onSubmitEditing={finishEditing}
       maxLength={deckLimits.name ?? undefined}
       accessibilityLabel={t`Name`}
@@ -211,7 +217,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
     <TextInput
       value={description}
       onChangeText={setDescription}
-      autoFocus
+      {...focus.description}
       submitBehavior="blurAndSubmit"
       returnKeyType="done"
       onSubmitEditing={finishEditing}
@@ -230,7 +236,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
     <TextInput
       value={instructions}
       onChangeText={setInstructions}
-      autoFocus
+      {...focus.instructions}
       submitBehavior="blurAndSubmit"
       returnKeyType="done"
       onSubmitEditing={finishEditing}

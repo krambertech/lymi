@@ -6,7 +6,6 @@ import { shownOutcome } from "@lymi/client/review-day";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS, type StreakOut } from "@lymi/core";
 import { flameSize } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
-import * as Haptics from "expo-haptics";
 import { type Href, useIsFocused, useRouter } from "expo-router";
 import { type ReactNode, useEffect, useState } from "react";
 import { View, type ViewStyle } from "react-native";
@@ -23,6 +22,7 @@ import {
   useStreak,
 } from "../../../data/queries";
 import { useLandingSpot } from "../../../splash/landing";
+import { haptics } from "../../../theme/haptics";
 import { clear, usePalette, useRoom } from "../../../theme/palette";
 import { ListRow, ListRowFace, listRowLabel } from "../../../ui/list-row";
 import { OfflineNote } from "../../../ui/offline-note";
@@ -131,7 +131,7 @@ function useAfterWelcome() {
 }
 
 function startReview(router: ReturnType<typeof useRouter>, href: Href = "/review") {
-  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+  haptics.start();
   router.push(href);
 }
 

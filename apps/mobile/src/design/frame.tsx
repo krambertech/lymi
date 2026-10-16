@@ -1,5 +1,5 @@
 import { type ReactNode, useState } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { ScopedTheme } from "uniwind";
 import { type Room, useRoom } from "../theme/palette";
 import { IconButton, Text } from "../ui/primitives";
@@ -8,7 +8,11 @@ import { IconButton, Text } from "../ui/primitives";
 // that shows one component's states, each on a labelled row, in either room.
 
 /** Annotations are set in mono, so a note about a component never reads as part of it. */
-const MONO = { fontFamily: "Menlo", letterSpacing: 0 } as const;
+export const MONO = {
+  // Menlo is Apple's; Android's own monospace stands in for it.
+  fontFamily: Platform.OS === "ios" ? "Menlo" : "monospace",
+  letterSpacing: 0,
+} as const;
 
 /** One section of a page: a component, what it is for, and where it lives. */
 export function Sub({

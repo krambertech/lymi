@@ -120,7 +120,13 @@ function Login() {
   /** The learner already has an account, so the notice must not talk about creating one. */
   const [needsConfirming, setNeedsConfirming] = useState(false);
   const issue = issueFor(error);
-  useDocumentTitle(t`Sign in`);
+  useDocumentTitle(
+    mode === "sign-up"
+      ? t`Create account`
+      : mode === "forgot"
+        ? t`Reset your password`
+        : t`Sign in`,
+  );
 
   // The client's own name, for an app we ship no mark for. Best-effort: the door still works
   // from the client_id host alone, so a failure here is not shown.

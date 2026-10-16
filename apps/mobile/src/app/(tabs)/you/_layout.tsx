@@ -4,12 +4,21 @@ import { useStackOptions } from "../../../ui/screen";
 
 export const unstable_settings = { initialRouteName: "index" };
 
-/** Pages push from the side; feedback, a task with an end, rises as a sheet. phone.md. */
+/** Pages push from the side; feedback and the delete code, tasks with an end, rise as sheets. phone.md. */
 export default function TabStack() {
   const p = usePalette();
   return (
     <Stack screenOptions={useStackOptions()}>
       <Stack.Screen name="index" />
+      <Stack.Screen
+        name="delete-code"
+        options={{
+          presentation: "formSheet",
+          sheetAllowedDetents: [1],
+          sheetGrabberVisible: true,
+          contentStyle: { backgroundColor: p.sheet },
+        }}
+      />
       <Stack.Screen
         name="feedback"
         options={{

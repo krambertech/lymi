@@ -134,9 +134,8 @@ export default function You() {
         <Row
           icon="delete"
           label={t`Delete account`}
-          end="web"
           destructive
-          onPress={() => void deleteAccount()}
+          onPress={() => router.push("/you/delete-account")}
         />
       </Rows>
 
@@ -242,17 +241,6 @@ function InsightsPlate({ onPress }: { onPress: () => void }) {
       </Plate>
     </Press>
   );
-}
-
-/** The delete happens on the web for now; it ends every session, so the phone then signs itself out. */
-async function deleteAccount() {
-  await openWeb("/settings/delete-account");
-  const { data, error } = await authClient
-    .getSession()
-    .catch(() => ({ data: undefined, error: true }));
-  if (error || data) return;
-  await authClient.signOut().catch(() => undefined);
-  dropQueued();
 }
 
 function SignOut() {

@@ -1,6 +1,6 @@
 # Delete account
 
-Ending the account from the phone. For now the phone opens the web's delete page in the in-app browser, and signs itself out when the browser closes on a session the delete ended.
+Ending the account from the phone, as the web's page does: what goes and what stays, a link to the web's export, then an emailed code and the delete. The phone signs out after.
 
 ## Reach
 
@@ -8,7 +8,7 @@ The **You** tab, then the **Delete account** row, the last one, under **Sign out
 
 ## Drive
 
-[`delete-account.yaml`](delete-account.yaml), as `learner`: open **You**, tap **Delete account**, wait for the web page in the in-app browser, delete the account through the API with an emailed code ([`delete-account.js`](delete-account.js)), close the browser, and land on the signed-out start screen.
+[`delete-account.yaml`](delete-account.yaml), as `learner`: open **You**, tap **Delete account**, check the page counts what goes, tap **Send code**, type the code from the dev outbox ([`delete-account.js`](delete-account.js)), delete, and land on the signed-out start screen.
 
 ## End state
 
@@ -16,5 +16,6 @@ The **You** tab, then the **Delete account** row, the last one, under **Sign out
 
 ## Gotchas
 
-- The in-app browser keeps its own cookies, so the web page usually opens on its sign-in screen; the flow accepts either and deletes through the API instead of typing on the web.
+- The delete button shares its label with the page title, so the flow taps it by its `delete-account` test ID.
 - The account is gone after this feature; the next feature's persona reset creates it again.
+- The row is the last on You, so the scroll centres it first; left at the bottom edge, the floating tab bar takes the tap.

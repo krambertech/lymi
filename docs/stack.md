@@ -307,7 +307,7 @@ Persona accounts under `@lymi.local` are created already confirmed and send no c
 
 ## Decided
 
-- Sign-in: Google, plus an email address with a password (16 September 2026). Apple can be added when React Native arrives.
+- Sign-in: Apple, Google, and an email address with a password. Apple uses the native sheet on iPhone and an HTTPS redirect on the web.
 - Origins and deployments: `lymi-site` serves the public website and docs on `lymi.app`; `lymi` serves the product, auth, API, MCP and PWA on `my.lymi.app`.
 - Auth: Better Auth from the start, no Cloudflare Access interim.
 - AI: OpenAI `gpt-6-luna` at `high` reasoning effort for text enrichment, in a Cloudflare Workflow per add (28 September 2026). Gemini-TTS for speech, with a pinned locale, falling back to Chirp 3 HD and then OpenAI (14 September 2026).

@@ -81,7 +81,7 @@ pnpm run deploy:product # deploy the product Worker; user-owned production actio
 2. `wrangler d1 create lymi` and paste the `database_id` into `apps/web/wrangler.jsonc`
 3. `wrangler r2 bucket create lymi-audio` and `wrangler r2 bucket create lymi-private-images`, and enable Cloudflare Images for the Images binding
 4. `wrangler kv namespace create SESSIONS` and paste the id
-5. In Google Cloud, authorize `https://my.lymi.app` and the callback `https://my.lymi.app/api/auth/callback/google`
+5. In Google Cloud, authorize `https://my.lymi.app` and the callback `https://my.lymi.app/api/auth/callback/google`. Configure [Sign in with Apple](docs/phone-release.md#sign-in-with-apple) for the web and iPhone.
 6. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`, `AI_GATEWAY_TOKEN`
 7. Generate one VAPID key pair, then add `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, and `VAPID_SUBJECT` with `wrangler secret put`
 8. In Resend, verify `lymi.app`, add a webhook to `https://my.lymi.app/api/email/events` for bounced and complained events, then add `RESEND_API_KEY` and `RESEND_WEBHOOK_SECRET` with `wrangler secret put`; until the key exists, email goes through the Cloudflare binding

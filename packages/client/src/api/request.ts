@@ -69,7 +69,7 @@ function unreachable() {
  * The server's `error` is English and meant for integrations, so the learner sees the app's catalog
  * sentence instead; a 400 keeps the schema's own message, which is written for a person.
  */
-function failureMessage(status: number, body: { issues?: unknown } | null): string {
+export function failureMessage(status: number, body: { issues?: unknown } | null): string {
   if (status === 400) {
     const issue: unknown = Array.isArray(body?.issues) ? body.issues[0] : undefined;
     if (issue && typeof issue === "object" && "message" in issue) {

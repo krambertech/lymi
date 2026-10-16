@@ -642,6 +642,19 @@ export const cardLimits = {
   hook: CardInput.shape.hook.unwrap().maxLength,
 } satisfies Record<string, number | null>;
 
+/** A learner's own answer to a Smart add question, checked against the terms on the list. */
+export const LessonAnswerInput = z.object({
+  question: z.string().trim().min(1).max(300),
+  answer: z.string().trim().min(1).max(300),
+  terms: z
+    .array(
+      z.object({ id: z.string().max(40), term: z.string().max(500), gloss: z.string().max(2000) }),
+    )
+    .min(1)
+    .max(200),
+});
+export type LessonAnswerInput = z.infer<typeof LessonAnswerInput>;
+
 /** A batch add. A lesson is 20 to 40 terms; one call, not one per term. */
 export const CardsInput = z.object({
   cards: z

@@ -21,6 +21,7 @@ export * from "./hook-draft";
 export * from "./important";
 export * from "./imports";
 export * from "./invitations";
+export * from "./lessons";
 export * from "./members";
 export * from "./modes";
 export * from "./public-media";

@@ -8,11 +8,11 @@ Library holds every deck with its due and card counts. A deck's page lists its c
 
 ## Drive
 
-[`deck-page.mjs`](deck-page.mjs), as `learner` from Library: check the summary line and each deck's link, open **Lezione 12**, filter to **Due today** and remove the filter from its chip, open the first card, filter by the **money** tag and read the line under the filters, search for something that matches nothing, check that another deck opens without the filters, then filter to **Known** and press **Review all**.
+[`deck-page.mjs`](deck-page.mjs), as `learner` from Library: check the summary line and each deck's link, open **Lezione 12**, filter to **Due today** and remove the filter from its chip, open the first card, filter by the **money** tag and select all its cards, search for something that matches nothing, check that another deck opens without the filters, then filter to **Known**, select all and press **Review**.
 
 ## End state
 
-Library reads **3 decks · 43 cards**, matching the totals from `/api/decks`. The deck page lists as many cards as the deck's `total`, the Due today filter as many as its `due` (or **No cards match these filters** when that is 0), and removing the chip brings every card back. The opened card shows the term and meaning `/api/cards?deckId=<id>` stores for it. The money filter's line reads **N cards** and **N due today** (or **None due today**), counted from `/api/decks/<id>/cards` as started cards not reviewed today. The search shows **No cards match “zzz”** in the list's place, another deck opens with no filter chips, and Review all opens a review whose header counts 0 of the `total` of `/api/review/queue` for the same filter.
+Library reads **3 decks · 43 cards**, matching the totals from `/api/decks`. The deck page lists as many cards as the deck's `total`, the Due today filter as many as its `due` (or **No cards match these filters** when that is 0), and removing the chip brings every card back. The opened card shows the term and meaning `/api/cards?deckId=<id>` stores for it. Selecting the money filter's cards reads **N selected** and offers **Review N**, counting the started cards not reviewed today from `/api/decks/<id>/cards`. The search shows **No cards match “zzz”** in the list's place, another deck opens with no filter chips, and Review opens a review whose header counts 0 of the `total` of `/api/review/queue` for the same filter.
 
 ## Gotchas
 

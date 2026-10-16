@@ -1,5 +1,4 @@
 import {
-  type DeckFilterQuery,
   type Direction,
   type DrawOut,
   type GradeInput,
@@ -60,11 +59,11 @@ export type Draw = Omit<DrawOut, "cards"> & {
 const askable = (mode: unknown) => ReviewMode.safeParse(mode).success;
 
 export const reviewApi = {
-  /** A round from Today, the started cards a deck filter shows, or the day's order. */
-  queue: async (scope?: ReviewScope, round?: Round, filter?: DeckFilterQuery) => {
+  /** A round from Today, cards chosen in one deck, or the day's order. */
+  queue: async (scope?: ReviewScope, round?: Round, cards?: readonly string[]) => {
     const params = new URLSearchParams(scopeParams(scope));
     if (round) params.set("round", round);
-    if (filter) params.set("filter", JSON.stringify(filter));
+    if (cards) params.set("cards", cards.join(","));
     const search = params.toString();
     const queue = await request<Queue>(`/api/review/queue${search ? `?${search}` : ""}`);
     return { ...queue, items: queue.items.filter((item) => askable(item.mode)) };

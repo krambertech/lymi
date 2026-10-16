@@ -1,5 +1,5 @@
 import {
-  DeckFilterQuery,
+  CHOSEN_LIMIT,
   DrawOut,
   GradeInput,
   GradeOut,
@@ -23,7 +23,6 @@ import {
   reviewRounds,
   undoReview,
 } from "../services";
-import { ServiceError } from "../services/context";
 
 export const review = new Hono<AppEnv>();
 
@@ -54,25 +53,15 @@ const QueueQuery = z.object({
     description:
       "Review one Today group instead of the day's draw: cards forgotten today, new cards, or cards that keep slipping. Each card comes once; a slipping card comes whether or not it is due.",
   }),
-  filter: z.string().max(4000).optional().meta({
-    description:
-      'Review what a deck page\'s filters and search show, as JSON: `{"states":["known"],"due":"today","sections":["<id>"],"tags":["food"],"q":"bill"}`, where `""` in `sections` is a card with no section and `tags` are matched in any case. Needs `deck`, and no `round` or `section`. Each started card not yet reviewed today comes once, due ones first, whether or not it is due, up to 200.',
-  }),
+  cards: z
+    .string()
+    .max(CHOSEN_LIMIT * 40)
+    .optional()
+    .transform((v) => (v ? v.split(",").filter(Boolean) : undefined))
+    .meta({
+      description: `Review cards chosen in one deck, as comma-separated ids, at most ${CHOSEN_LIMIT}. Needs \`deck\`, and no \`round\` or \`section\`. Each started card not yet reviewed today comes once, due ones first, whether or not it is due; new cards are left out.`,
+    }),
 });
-
-/** A filter arrives as JSON in one query value, so it is checked like any other input. */
-function parseFilter(raw: string | undefined): DeckFilterQuery | undefined {
-  if (raw === undefined) return undefined;
-  let json: unknown;
-  try {
-    json = JSON.parse(raw);
-  } catch {
-    throw new ServiceError("invalid", "filter is not JSON");
-  }
-  const parsed = DeckFilterQuery.safeParse(json);
-  if (!parsed.success) throw new ServiceError("invalid", "filter is not a deck filter");
-  return parsed.data;
-}
 
 review.get(
   "/queue",
@@ -86,7 +75,7 @@ review.get(
   }),
   query(QueueQuery, "query"),
   async (c) => {
-    const { deck, series, section, limit, round, filter } = c.req.valid("query");
+    const { deck, series, section, limit, round, cards } = c.req.valid("query");
     return c.json(
       await reviewQueue(ctxOf(c), {
         deckId: deck,
@@ -94,7 +83,7 @@ review.get(
         sectionId: section,
         limit,
         round,
-        filter: parseFilter(filter),
+        cardIds: cards,
       }),
     );
   },

@@ -322,7 +322,7 @@ function DeckPage() {
         onReviewSection={(section) =>
           navigate({ to: "/review", search: { deck: deckId, section: section.id } })
         }
-        onReviewFilter={(filter) => navigate({ to: "/review", search: { deck: deckId, filter } })}
+        onReviewCards={(cards) => navigate({ to: "/review", search: { deck: deckId, cards } })}
         startSectionPending={sectionActions.start.isPending}
         connectUrl={publicSiteUrl("/docs/mcp")}
         connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}

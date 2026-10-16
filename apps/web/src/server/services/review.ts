@@ -1,19 +1,12 @@
-import type {
-  DeckFilterQuery,
-  Direction,
-  DrawLogEntry,
-  GradeInput,
-  ReviewModeKey,
-  Round,
-} from "@lymi/core";
+import type { Direction, DrawLogEntry, GradeInput, ReviewModeKey, Round } from "@lymi/core";
 import {
+  CHOSEN_LIMIT,
+  chosenOrder,
   countedRating,
   deserializeState,
   drawableCount,
   drawKey,
   drawOrder,
-  filterOrder,
-  filterRows,
   legacyDirection,
   missed,
   modeKey,
@@ -34,9 +27,8 @@ import { audit } from "./audit";
 import { presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { dateFormatter } from "./days";
-import { listDeckCards } from "./decks";
 import { cardsById, drawInputs } from "./draw";
-import { memberOf } from "./members";
+import { deckAccess, memberOf } from "./members";
 import {
   type DayProgress,
   openDay,
@@ -45,7 +37,7 @@ import {
   settleDay,
   streak as streakSummary,
 } from "./review-days";
-import { listSections, openReadySections, visibleSection } from "./sections";
+import { openReadySections, visibleSection } from "./sections";
 import { activeSeries } from "./series-access";
 import { getSettings } from "./settings";
 
@@ -62,20 +54,24 @@ export async function reviewQueue(
     sectionId?: string | undefined;
     limit?: number | undefined;
     round?: Round | undefined;
-    /** The deck page's filters and search: review the started cards it shows. */
-    filter?: DeckFilterQuery | undefined;
+    /** Cards the learner chose in one deck: review the started ones, due ones first. */
+    cardIds?: readonly string[] | undefined;
   } = {},
 ) {
-  const { round, deckId, seriesId, sectionId, filter } = opts;
-  if (filter && (!deckId || round || seriesId || sectionId)) {
-    throw new ServiceError("invalid", "A filter reviews one deck, without a round or section");
+  const { round, deckId, seriesId, sectionId, cardIds } = opts;
+  if (cardIds && (!deckId || round || seriesId || sectionId)) {
+    throw new ServiceError("invalid", "Chosen cards review one deck, without a round or section");
   }
-  // A filter's list is fetched once, so it comes whole up to the cap rather than a page at a time.
-  const limit = Math.min(opts.limit ?? (filter ? 200 : 50), 200);
+  if (cardIds && cardIds.length > CHOSEN_LIMIT) {
+    throw new ServiceError("invalid", `Choose at most ${CHOSEN_LIMIT} cards`);
+  }
+  // Chosen cards are fetched once, so they come whole up to the cap rather than a page at a time.
+  const limit = Math.min(opts.limit ?? (cardIds ? CHOSEN_LIMIT : 50), 200);
   const now = new Date();
   const zone = await reviewZone(ctx);
   if (seriesId) await activeSeries(ctx, seriesId);
   if (sectionId) await visibleSection(ctx, sectionId, deckId);
+  if (cardIds && deckId) await deckAccess(ctx, deckId);
   const { cards, log, day, states, slipping } = await drawInputs(ctx, {
     deckId,
     sectionId,
@@ -83,11 +79,11 @@ export async function reviewQueue(
     now,
     zone,
     slipping: round === "slipping",
-    everyState: !!filter,
+    everyState: !!cardIds,
   });
-  const shown = filter && deckId ? await filteredCards(ctx, deckId, filter, now, day.end) : null;
-  const order = shown
-    ? filterOrder(cards, log, shown)
+  const chosen = cardIds ? new Set(cardIds) : null;
+  const order = chosen
+    ? chosenOrder(cards, log, chosen)
     : round
       ? roundOrder(cards, log, day, { deckId, round, slipping })
       : drawOrder(cards, log, day, { deckId }, limit);
@@ -120,28 +116,12 @@ export async function reviewQueue(
     ];
   });
 
-  const total = shown
+  const total = chosen
     ? Math.min(order.length, limit)
     : round
       ? order.length
       : drawableCount(cards, log, day, { deckId });
   return { total, items };
-}
-
-/** The ids of the cards a deck page shows for these filters, as the learner's day stands. */
-async function filteredCards(
-  ctx: ServiceContext,
-  deckId: string,
-  filter: DeckFilterQuery,
-  now: Date,
-  dayEnd: Date,
-): Promise<Set<string>> {
-  const [rows, sections] = await Promise.all([
-    listDeckCards(ctx, deckId),
-    filter.sections.length ? listSections(ctx, deckId).then((r) => r.sections) : [],
-  ]);
-  const shown = filterRows(rows, filter, filter.q, now.getTime(), sections, dayEnd.getTime());
-  return new Set(shown.map((row) => row.card.id));
 }
 
 /** How many cards each Today round holds right now, across every deck. */

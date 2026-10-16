@@ -5,13 +5,11 @@ import {
   type DeckRow,
   type DeckSort,
   deckTags,
-  endOfDay,
   filterRows,
   groupRows,
   noFilters,
   rowState,
 } from "@lymi/client/deck-list";
-import type { DeckFilterQuery } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -54,7 +52,6 @@ import { CardPlace } from "../components/card-place";
 import { Chip } from "../components/chip";
 import { directionLabel, languageName } from "../components/deck-fields";
 import { ErrorState, NoResults } from "../components/empty-state";
-import { FilterReview } from "../components/filter-review";
 import { Screen, ScreenBar } from "../components/layout/screen";
 import { NavLink, useStaticNav } from "../components/nav-link";
 import { NextStep, NextSteps } from "../components/next-steps";
@@ -132,8 +129,8 @@ export interface DeckDetailProps {
   onStartSection?: ((section: Section) => void) | undefined;
   /** Review one section's cards, from its heading's menu. */
   onReviewSection?: ((section: Section) => void) | undefined;
-  /** Review the cards the list's filters and search show, from the line under them. */
-  onReviewFilter?: ((filter: DeckFilterQuery) => void) | undefined;
+  /** Review chosen cards, from the selection toolbar. */
+  onReviewCards?: ((cardIds: string[]) => void) | undefined;
   startSectionPending?: boolean | undefined;
   /** Why the deck is not on screen: gone for good, or the app could not reach it. */
   failure?: DeckFailure | undefined;
@@ -426,7 +423,6 @@ function ListTools({
   query,
   setQuery,
   searchRef,
-  review,
 }: {
   sections: Section[];
   /** The tags on the deck's cards, most used first. */
@@ -438,8 +434,6 @@ function ListTools({
   query: string;
   setQuery: (next: string) => void;
   searchRef: RefObject<HTMLInputElement | null>;
-  /** What the filters show and the ways to review it, at the end of the chips' row. */
-  review?: ReactNode;
 }) {
   const { t, i18n } = useLingui();
   const sectionName = (id: string) =>
@@ -639,7 +633,7 @@ function ListTools({
           />
         </div>
       </div>
-      {(chips.length > 0 || review) && (
+      {chips.length > 0 && (
         <div className="flex flex-wrap items-center gap-2">
           {chips.map((chip) => (
             <FilterChip key={chip.key} label={chip.label} onRemove={chip.remove} />
@@ -649,8 +643,6 @@ function ListTools({
               <Trans>Clear filters</Trans>
             </Button>
           )}
-          {/* The end of the filter's own row, so what it shows reads as the filter's; on a phone it takes a line of its own. */}
-          {review && <div className="ms-auto @max-3xl/shell:w-full">{review}</div>}
         </div>
       )}
     </div>
@@ -664,18 +656,24 @@ function ListTools({
 function SelectionToolbar({
   count,
   total,
+  reviewable,
   onAll,
   onClear,
+  onReview,
   onTags,
   onMove,
   onDone,
 }: {
   count: number;
   total: number;
+  /** Chosen cards a review takes: started, and not reviewed today. */
+  reviewable: number;
   onAll: () => void;
   onClear: () => void;
-  onTags: () => void;
-  onMove: () => void;
+  onReview?: (() => void) | undefined;
+  /** The owner's: a member reads the deck, so only Review is theirs. */
+  onTags?: (() => void) | undefined;
+  onMove?: (() => void) | undefined;
   onDone: () => void;
 }) {
   const { t } = useLingui();
@@ -694,55 +692,71 @@ function SelectionToolbar({
       >
         <Plural value={count} _0="Select cards" one="# selected" other="# selected" />
       </p>
-      {/* The narrowest list keeps the count readable, so Select all is its icon there. */}
+      {/* A narrow list keeps the count and Review readable, so Select all is its icon there. */}
       <IconButton
         size="sm"
         label={all ? t`Clear` : t`Select all`}
-        className="@xs/tools:hidden"
+        className="@sm/tools:hidden"
         onClick={all ? onClear : onAll}
       >
         {all ? <ListX /> : <ListChecks />}
       </IconButton>
-      <span className="hidden @xs/tools:contents">
+      <span className="hidden @sm/tools:contents">
         <Button size="sm" variant="ghost" onClick={all ? onClear : onAll}>
           {all ? <Trans>Clear</Trans> : <Trans>Select all</Trans>}
         </Button>
       </span>
-      {/* A narrow list keeps the count and Move readable, so Tags is its icon there. */}
-      <IconButton
-        size="sm"
-        label={t`Tags…`}
-        className="@md/tools:hidden"
-        aria-disabled={count === 0}
-        onClick={() => count > 0 && onTags()}
-      >
-        <Tags />
-      </IconButton>
-      {/* The wrapper hides it, since Button's own display would win over a plain hidden. */}
-      <span className="hidden @md/tools:contents">
+      {onReview && (
         <Button
           size="sm"
-          variant="ghost"
-          aria-disabled={count === 0}
-          onClick={() => count > 0 && onTags()}
+          variant={onMove ? "ghost" : "secondary"}
+          aria-disabled={reviewable === 0}
+          onClick={() => reviewable > 0 && onReview()}
         >
-          <Trans>Tags…</Trans>
+          <Plural value={reviewable} _0="Review" one="Review #" other="Review #" />
         </Button>
-      </span>
-      <Button
-        size="sm"
-        variant="primary"
-        aria-disabled={count === 0}
-        aria-label={t`Move to section…`}
-        onClick={() => count > 0 && onMove()}
-      >
-        <span className="@md/tools:hidden">
-          <Trans>Move…</Trans>
-        </span>
-        <span className="hidden @md/tools:inline">
-          <Trans>Move to section…</Trans>
-        </span>
-      </Button>
+      )}
+      {onTags && (
+        <>
+          {/* A narrow list keeps the count and Move readable, so Tags is its icon there. */}
+          <IconButton
+            size="sm"
+            label={t`Tags…`}
+            className="@md/tools:hidden"
+            aria-disabled={count === 0}
+            onClick={() => count > 0 && onTags()}
+          >
+            <Tags />
+          </IconButton>
+          {/* The wrapper hides it, since Button's own display would win over a plain hidden. */}
+          <span className="hidden @md/tools:contents">
+            <Button
+              size="sm"
+              variant="ghost"
+              aria-disabled={count === 0}
+              onClick={() => count > 0 && onTags()}
+            >
+              <Trans>Tags…</Trans>
+            </Button>
+          </span>
+        </>
+      )}
+      {onMove && (
+        <Button
+          size="sm"
+          variant="primary"
+          aria-disabled={count === 0}
+          aria-label={t`Move to section…`}
+          onClick={() => count > 0 && onMove()}
+        >
+          <span className="@md/tools:hidden">
+            <Trans>Move…</Trans>
+          </span>
+          <span className="hidden @md/tools:inline">
+            <Trans>Move to section…</Trans>
+          </span>
+        </Button>
+      )}
     </section>
   );
 }
@@ -772,7 +786,7 @@ export function DeckDetailView({
   progress,
   onStartSection,
   onReviewSection,
-  onReviewFilter,
+  onReviewCards,
   startSectionPending,
   failure,
   onRetry,
@@ -839,21 +853,6 @@ export function DeckDetailView({
     [cards, filters, q, now, sections],
   );
   const everything = q.trim() === "" && activeFilterCount(filters) === 0;
-  // What the filter's review line counts: started cards shown that today's review has not reached, as the server counts them.
-  const filterCounts = useMemo(() => {
-    if (everything || !shown) return null;
-    const dayStart = new Date(now).setHours(0, 0, 0, 0);
-    const dayEnd = endOfDay(now);
-    let started = 0;
-    let due = 0;
-    for (const row of shown) {
-      if (!row.state || rowState(row) === "new") continue;
-      if (row.state.lastReview && new Date(row.state.lastReview).getTime() >= dayStart) continue;
-      started++;
-      if (new Date(row.state.due).getTime() < dayEnd) due++;
-    }
-    return { shown: shown.length, started, due };
-  }, [everything, shown, now]);
   // The owner sees every section, empty ones too, so there is always somewhere to drop a card.
   const arranging = !!owner && sort === "section" && everything;
   const groups = useMemo(
@@ -883,6 +882,19 @@ export function DeckDetailView({
       return next;
     });
   }, []);
+  // What Review takes from the selection: started cards not reviewed today, as the server counts them.
+  const reviewable = useMemo(() => {
+    if (!selected || !cards) return [];
+    const dayStart = new Date().setHours(0, 0, 0, 0);
+    return cards
+      .filter(
+        (row) =>
+          selected.has(row.card.id) &&
+          rowState(row) !== "new" &&
+          !(row.state?.lastReview && new Date(row.state.lastReview).getTime() >= dayStart),
+      )
+      .map((row) => row.card.id);
+  }, [selected, cards]);
   const stopSelecting = useCallback(() => {
     setSelected(null);
     anchor.current = null;
@@ -1058,15 +1070,16 @@ export function DeckDetailView({
               <Signpost />
               <Trans>New section</Trans>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => setSelected(new Set())}
-              disabled={!cards?.length || !!selected}
-            >
-              <SquareCheck />
-              <Trans>Select cards</Trans>
-            </DropdownMenuItem>
           </>
         )}
+        {/* A member selects too, to review chosen cards; changing them stays the owner's. */}
+        <DropdownMenuItem
+          onClick={() => setSelected(new Set())}
+          disabled={!cards?.length || !!selected}
+        >
+          <SquareCheck />
+          <Trans>Select cards</Trans>
+        </DropdownMenuItem>
         {owner && (
           <DropdownMenuItem onClick={owner.onExport} disabled={!deck}>
             <Download />
@@ -1266,14 +1279,16 @@ export function DeckDetailView({
                 "sticky top-0 z-20 -mx-5 bg-canvas px-5 py-2 @3xl/shell:-mx-8 @3xl/shell:px-8",
             )}
           >
-            {selected && owner ? (
+            {selected ? (
               <SelectionToolbar
                 count={selected.size}
                 total={ordered.length}
+                reviewable={reviewable.length}
                 onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
                 onClear={() => setSelected(new Set())}
-                onTags={() => owner.onTagCards([...selected], stopSelecting)}
-                onMove={() => owner.sections.onPickSection([...selected], stopSelecting)}
+                onReview={onReviewCards && (() => onReviewCards(reviewable))}
+                onTags={owner && (() => owner.onTagCards([...selected], stopSelecting))}
+                onMove={owner && (() => owner.sections.onPickSection([...selected], stopSelecting))}
                 onDone={stopSelecting}
               />
             ) : (
@@ -1287,24 +1302,6 @@ export function DeckDetailView({
                 query={q}
                 setQuery={setQ}
                 searchRef={searchRef}
-                review={
-                  filterCounts &&
-                  onReviewFilter && (
-                    <FilterReview
-                      shown={filterCounts.shown}
-                      started={filterCounts.started}
-                      due={filterCounts.due}
-                      onReview={(kind) =>
-                        // The due ones are the same filter with Due today added.
-                        onReviewFilter({
-                          ...filters,
-                          ...(kind === "due" ? { due: "today" as const } : {}),
-                          q: q.trim(),
-                        })
-                      }
-                    />
-                  )
-                }
               />
             )}
           </div>

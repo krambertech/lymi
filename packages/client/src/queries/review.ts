@@ -1,22 +1,18 @@
-import type { DeckFilterQuery, Round } from "@lymi/core";
+import type { Round } from "@lymi/core";
 import { queryOptions } from "@tanstack/react-query";
 import { api, type ReviewScope, scopeKey } from "../api";
 import { flushOutbox } from "../grades";
 import { fresh } from "../writes";
 
-export const queueQuery = (scope: ReviewScope, round?: Round, filter?: DeckFilterQuery) => {
-  const key = [
-    "queue",
-    scopeKey(scope),
-    round ?? (filter ? `filter:${JSON.stringify(filter)}` : "order"),
-  ];
+export const queueQuery = (scope: ReviewScope, round?: Round, cards?: readonly string[]) => {
+  const key = ["queue", scopeKey(scope), round ?? (cards ? `cards:${cards.join(",")}` : "order")];
   return queryOptions({
     queryKey: key,
     // The server chooses a round's cards, so grades still on their way land first.
     queryFn: () =>
       fresh(key, async () => {
         await flushOutbox();
-        return api.queue(scope, round, filter);
+        return api.queue(scope, round, cards);
       }),
     staleTime: 0,
     // A review keeps its initial order; a new mount still fetches a freshly shuffled queue.

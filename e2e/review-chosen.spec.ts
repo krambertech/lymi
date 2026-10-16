@@ -4,11 +4,11 @@ import { expect, test } from "./test";
 const DAY = 86_400_000;
 
 /**
- * A filtered deck page reviews the started cards it shows from a row on Today's plate, due ones
- * first and the rest ahead of time, as a round of its own.
+ * Cards chosen on a deck page, here everything a tag shows, review as a round of their own: the
+ * started ones once each, due ones first and the rest ahead of time.
  */
-test("a learner reviews the started cards a tag shows", async ({ page }, testInfo) => {
-  await startAsTestLearner(page, testInfo, "filter-review", "/today");
+test("a learner reviews the started cards chosen from a tag", async ({ page }, testInfo) => {
+  await startAsTestLearner(page, testInfo, "review-chosen", "/today");
   const deck = await page.request.post("/api/decks", {
     data: { name: "Casa", defaultLanguage: "it" },
   });
@@ -48,19 +48,20 @@ test("a learner reviews the started cards a tag shows", async ({ page }, testInf
     expect(res.ok()).toBeTruthy();
   }
 
-  await test.step("the line under the filters counts the started cards and how many are due", async () => {
+  await test.step("selecting the tag's cards offers to review the started ones", async () => {
     await page.goto(`/library/${deckId}`);
     await page.getByRole("button", { name: "Filter", exact: true }).click();
     await page.getByRole("menuitemcheckbox", { name: "food 3", exact: true }).click();
     await page.keyboard.press("Escape");
-
-    await expect(page.getByText("3 cards", { exact: true })).toBeVisible();
-    await expect(page.getByText("1 due today", { exact: true })).toBeVisible();
+    await page.getByRole("button", { name: "Deck options", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Select cards", exact: true }).click();
+    await page.getByRole("button", { name: "Select all", exact: true }).click();
+    await expect(page.getByText("3 selected", { exact: true })).toBeVisible();
   });
 
-  await test.step("Review all takes them once each, due first, and ends as a round", async () => {
-    await page.getByRole("button", { name: "Review all", exact: true }).click();
-    await expect(page).toHaveURL(/\/review\?deck=.*filter=/);
+  await test.step("Review takes them once each, due first, and ends as a round", async () => {
+    await page.getByRole("button", { name: "Review 2", exact: true }).click();
+    await expect(page).toHaveURL(/\/review\?deck=.*cards=/);
     for (const term of ["la bolletta", "il cassetto"]) {
       await expect(page.getByLabel(/ card for /)).toHaveAttribute("aria-label", new RegExp(term));
       await page

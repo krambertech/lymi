@@ -559,9 +559,6 @@ msgstr "{due, plural, one {карточка к повторению сегодн
 msgid "{due, plural, one {card to review now} other {cards to review now}}"
 msgstr "{due, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}}"
 
-msgid "{due, plural, one {Review # due} other {Review # due}}"
-msgstr "{due, plural, one {Повтори # на сегодня} few {Повтори # на сегодня} many {Повтори # на сегодня} other {Повтори # на сегодня}}"
-
 msgid "{field} becomes"
 msgstr "{field} становится"
 
@@ -652,8 +649,8 @@ msgstr "{queued, plural, one {# оценка или изменение, сдел
 msgid "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
 msgstr "{restNotes, plural, one {Ещё # запись более редкого вида импортируется как есть.} few {Ещё # записи более редких видов импортируются как есть.} many {Ещё # записей более редких видов импортируются как есть.} other {Ещё # записи более редких видов импортируются как есть.}}"
 
-msgid "{shown, plural, one {# card} other {# cards}}"
-msgstr "{shown, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
+msgid "{reviewable, plural, =0 {Review} one {Review #} other {Review #}}"
+msgstr "{reviewable, plural, =0 {Повтори} one {Повтори #} few {Повтори #} many {Повтори #} other {Повтори #}}"
 
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
@@ -3136,9 +3133,6 @@ msgstr "Пока колода в архиве, к ней никто не мож�
 msgid "Nobody new can add it."
 msgstr "Новые люди уже не могут её добавить."
 
-msgid "None due today"
-msgstr "На сегодня ничего"
-
 msgid "Not available on this server yet."
 msgstr "На этом сервере пока недоступно."
 
@@ -3730,9 +3724,6 @@ msgstr "Повторение"
 
 msgid "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}"
 msgstr "Повторить серию «{seriesName}», {due, plural, one {# карточка к повторению} few {# карточки к повторению} many {# карточек к повторению} other {# карточки к повторению}}"
-
-msgid "Review all"
-msgstr "Повтори все"
 
 msgid "Review done"
 msgstr "Повторение завершено"

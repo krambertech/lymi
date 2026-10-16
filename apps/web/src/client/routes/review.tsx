@@ -12,9 +12,9 @@ import {
 } from "@lymi/client/review-end";
 import { writes } from "@lymi/client/writes";
 import {
+  CHOSEN_LIMIT,
   canSpeakTerm,
   countedRating,
-  DeckFilterQuery,
   type Drawn,
   drawKey,
   gradeAllowed,
@@ -87,11 +87,16 @@ export const Route = createFileRoute("/review")({
     series?: string;
     section?: string;
     round?: Round;
-    filter?: DeckFilterQuery;
+    cards?: string[];
     card?: string;
   } => {
     const round = ROUNDS.find((r) => r === s.round);
-    const filter = DeckFilterQuery.safeParse(s.filter);
+    const cards =
+      Array.isArray(s.cards) &&
+      s.cards.length <= CHOSEN_LIMIT &&
+      s.cards.every((id) => typeof id === "string")
+        ? (s.cards as string[])
+        : undefined;
     return {
       ...(typeof s.deck === "string" ? { deck: s.deck } : {}),
       // A section belongs to its deck, whose sections name it.
@@ -101,9 +106,9 @@ export const Route = createFileRoute("/review")({
       // One scope at a time: a deck wins over a series.
       ...(typeof s.series === "string" && typeof s.deck !== "string" ? { series: s.series } : {}),
       ...(round ? { round } : {}),
-      // What a deck page's filters showed, reviewed as a list of its own.
-      ...(filter.success && typeof s.deck === "string" && !round && typeof s.section !== "string"
-        ? { filter: filter.data }
+      // Cards chosen on a deck page, reviewed as a list of their own.
+      ...(cards && typeof s.deck === "string" && !round && typeof s.section !== "string"
+        ? { cards }
         : {}),
       // The card open as a place, so the phone's back gesture closes it, as on the deck page.
       ...(typeof s.card === "string" ? { card: s.card } : {}),
@@ -176,15 +181,15 @@ function leftInLeg<T>(items: readonly T[], cards: LegCards, key: (item: T) => st
 
 /** A review of another deck or series starts over, so nothing from this one carries into it. */
 function ReviewPage() {
-  const { deck, series, section, filter } = Route.useSearch();
-  const key = scopeKey({ deck, series, section }) + (filter ? JSON.stringify(filter) : "");
+  const { deck, series, section, cards } = Route.useSearch();
+  const key = scopeKey({ deck, series, section }) + (cards ? cards.join(",") : "");
   return <Review key={key} />;
 }
 
 function Review() {
   const { t } = useLingui();
   useDocumentTitle(t`Review`);
-  const { deck, series, section, round, filter, card: placeCardId } = Route.useSearch();
+  const { deck, series, section, round, cards, card: placeCardId } = Route.useSearch();
   const scope = useMemo(() => ({ deck, series, section }), [deck, series, section]);
   const qc = useQueryClient();
   const navigate = useNavigate();
@@ -192,14 +197,10 @@ function Review() {
   const reduce = useReduceMotion();
   // The draw also feeds the header's count, so it loads in a round too.
   const draw = useQuery(drawQuery(scope));
-  // A round from Today, or what a deck filter showed, is a fixed list rather than a draw, walked in order.
-  const listed = !!round || !!filter;
-  const listScope: ReviewScopeKind = !filter
-    ? "round"
-    : filter.due === "today"
-      ? "filter_due"
-      : "filter_all";
-  const roundQueue = useQuery({ ...queueQuery(scope, round, filter), enabled: listed });
+  // A round from Today, or cards chosen on a deck page, is a fixed list rather than a draw, walked in order.
+  const listed = !!round || !!cards;
+  const listScope: ReviewScopeKind = cards ? "chosen" : "round";
+  const roundQueue = useQuery({ ...queueQuery(scope, round, cards), enabled: listed });
   const decks = useQuery(decksQuery);
   const seriesList = useQuery({ ...seriesQuery, enabled: !!series });
   const streak = useQuery(streakQuery);

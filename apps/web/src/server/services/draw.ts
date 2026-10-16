@@ -95,7 +95,7 @@ export interface DrawOptions {
   sectionId?: string | undefined;
   /** Also load slipping cards whatever their due, for the slipping round. */
   slipping?: boolean | undefined;
-  /** Load every asked state whatever its due, for reviewing what a deck filter shows. */
+  /** Load every asked state whatever its due, for reviewing cards the learner chose. */
   everyState?: boolean | undefined;
 }
 

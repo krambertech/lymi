@@ -41,7 +41,18 @@ export const CONTEXT_MENU_ACTIONS = [
 ] as const;
 export type ContextMenuAction = (typeof CONTEXT_MENU_ACTIONS)[number];
 export const AnalyticsLocale = z.enum(["en", "uk", "ru"]);
-const session = { session_id: z.uuid() };
+/** What a review leg was opened for; the phone sends none yet. */
+export const REVIEW_SCOPES = [
+  "day",
+  "deck",
+  "series",
+  "section",
+  "round",
+  "filter_due",
+  "filter_all",
+] as const;
+export type ReviewScopeKind = (typeof REVIEW_SCOPES)[number];
+const session = { session_id: z.uuid(), scope: z.enum(REVIEW_SCOPES).optional() };
 const count = z.number().int().nonnegative().max(1_000_000);
 const slug = z
   .string()

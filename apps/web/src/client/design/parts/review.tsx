@@ -1,12 +1,14 @@
 import { type Ending, reviewEnd, type Stretch, streakWith } from "@lymi/client/review-end";
+import { ListFilter, X } from "lucide-react";
 import { LayoutGroup } from "motion/react";
 import type { ReactNode } from "react";
 import { useId, useState } from "react";
 import { Button } from "../../components/button";
+import { FilterReview } from "../../components/filter-review";
 import { StaticNavProvider } from "../../components/nav-link";
 import { PillNav } from "../../components/pill-nav";
 import { GradeBar, ReviewCard, ReviewComplete, ReviewHeader } from "../../views/review-view";
-import { type FrameTheme, Phone, useFrameTheme } from "../frame";
+import { type FrameTheme, Phone, useFrameTheme, Variants } from "../frame";
 import * as m from "../mock";
 import { type Group, noop } from "./types";
 
@@ -211,6 +213,27 @@ function ReviewPhone({
   );
 }
 
+/** A deck page's filter controls with one tag chosen, and the review line under them. */
+function FilteredList({ shown, started, due }: { shown: number; started: number; due: number }) {
+  return (
+    <div className="grid w-full max-w-[640px] gap-3">
+      <div className="flex items-center gap-2">
+        <Button size="sm" variant="secondary">
+          <ListFilter data-icon="inline-start" aria-hidden="true" />
+          Filter
+        </Button>
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="inline-flex h-8 items-center gap-1.5 rounded-full bg-plate-2 ps-3 pe-2 text-sm font-medium text-text-2">
+          Tag: casa
+          <X className="size-3.5 text-muted" aria-hidden="true" />
+        </span>
+      </div>
+      <FilterReview shown={shown} started={started} due={due} onReview={noop} />
+    </div>
+  );
+}
+
 export const review: Group = {
   slug: "review",
   title: "Review",
@@ -233,6 +256,39 @@ export const review: Group = {
             <ReviewPhone revealed={false} picture />
           </PhoneShot>
         </div>
+      ),
+    },
+    {
+      slug: "filter-review",
+      name: "Review a filter’s cards",
+      source: "components/filter-review.tsx",
+      note: "While a filter or search narrows a deck’s list, one line under the filters says how many cards it shows and how many of them are due today. Review 2 due takes the due ones; Review all, quieter still, goes over every card already started and not yet reviewed today, the rest early, for the night before a class. It carries no count, since the cards it leaves out would make a number disagree with the line. Neither is amber: the plate’s Review stays the page’s one primary.",
+      Demo: () => (
+        <Variants
+          stack
+          items={[
+            {
+              label: "Some due",
+              note: "Review all leaves the new card out; new cards start in the day’s draw.",
+              render: () => <FilteredList shown={6} started={5} due={2} />,
+            },
+            {
+              label: "None due yet",
+              note: "Only the quiet early choice.",
+              render: () => <FilteredList shown={3} started={3} due={0} />,
+            },
+            {
+              label: "All due",
+              note: "Only the due button, since nothing would be early.",
+              render: () => <FilteredList shown={4} started={4} due={4} />,
+            },
+            {
+              label: "Only new cards",
+              note: "The count alone: new cards start in the day’s draw.",
+              render: () => <FilteredList shown={3} started={0} due={0} />,
+            },
+          ]}
+        />
       ),
     },
     {

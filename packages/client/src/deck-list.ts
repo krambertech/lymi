@@ -1,14 +1,22 @@
-import { TAG_LIMITS, tagKey } from "@lymi/core";
+import {
+  type DeckFilters,
+  filterRows as filterDeckRows,
+  type StateKey,
+  sectionOf,
+  stateKey,
+  TAG_LIMITS,
+  tagKey,
+} from "@lymi/core";
 import type { Card, CardState, Section } from "./api";
 
-/** How the learner reads an FSRS state: Review is Known, and Relearning is Learning again. */
-export type StateKey = "new" | "learning" | "known";
-
-export function stateKey(state: number | null | undefined): StateKey {
-  if (state === 2) return "known";
-  if (state === 1 || state === 3) return "learning";
-  return "new";
-}
+export {
+  activeFilterCount,
+  type DeckFilters,
+  noFilters,
+  type StateKey,
+  sectionOf,
+  stateKey,
+} from "@lymi/core";
 
 export type DeckRow = { card: Card; state: CardState | null };
 
@@ -16,17 +24,6 @@ export type DeckSort = "section" | "due" | "added" | "az";
 
 /** Where a card stands in its schedule, as the When it's back headings name it. */
 export type DueBucket = "now" | "week" | "later" | "new";
-
-export interface DeckFilters {
-  states: StateKey[];
-  due: "today" | "week" | null;
-  /** Section ids; "" is a card with no section. */
-  sections: string[];
-  /** Tag keys, from `tagKey`; a card carrying any of them matches. */
-  tags: string[];
-}
-
-export const noFilters: DeckFilters = { states: [], due: null, sections: [], tags: [] };
 
 export type DeckGroup =
   | { kind: "all"; key: string; rows: DeckRow[] }
@@ -42,7 +39,7 @@ export const rowState = (row: DeckRow): StateKey => stateKey(row.state?.state);
 const createdAt = (row: DeckRow) => new Date(row.card.createdAt).getTime();
 const dueAt = (row: DeckRow) => (row.state ? new Date(row.state.due).getTime() : Number.NaN);
 
-function endOfDay(now: number): number {
+export function endOfDay(now: number): number {
   const d = new Date(now);
   return new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1).getTime();
 }
@@ -59,16 +56,7 @@ export function dueBucket(row: DeckRow, now: number): DueBucket {
   return due - now <= WEEK ? "week" : "later";
 }
 
-export function activeFilterCount(filters: DeckFilters): number {
-  return (
-    filters.states.length + (filters.due ? 1 : 0) + filters.sections.length + filters.tags.length
-  );
-}
-
-/** The section a card sorts under: its own when that section is listed, otherwise none. */
-export const sectionOf = (row: DeckRow, sections: readonly Section[]): string =>
-  row.card.sectionId && sections.some((s) => s.id === row.card.sectionId) ? row.card.sectionId : "";
-
+/** The cards the deck page shows; Due today ends at the browser's midnight. */
 export function filterRows(
   rows: DeckRow[],
   filters: DeckFilters,
@@ -76,25 +64,7 @@ export function filterRows(
   now: number,
   sections: readonly Section[] = [],
 ): DeckRow[] {
-  const needle = query.trim().toLocaleLowerCase();
-  const limit = filters.due === "today" ? endOfDay(now) : now + WEEK;
-  return rows.filter((row) => {
-    if (
-      needle &&
-      !row.card.term.toLocaleLowerCase().includes(needle) &&
-      !row.card.meaning?.toLocaleLowerCase().includes(needle)
-    )
-      return false;
-    if (filters.states.length && !filters.states.includes(rowState(row))) return false;
-    if (filters.sections.length && !filters.sections.includes(sectionOf(row, sections)))
-      return false;
-    if (filters.tags.length && !row.card.tags.some((tag) => filters.tags.includes(tagKey(tag))))
-      return false;
-    if (filters.due) {
-      if (rowState(row) === "new" || !(dueAt(row) < limit)) return false;
-    }
-    return true;
-  });
+  return filterDeckRows(rows, filters, query, now, sections, endOfDay(now));
 }
 
 /**

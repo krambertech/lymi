@@ -83,22 +83,31 @@ export function EmptySection({ icon, title, body, action, className, ...rest }: 
 }
 
 interface NoResultsProps {
+  /** What the empty list was narrowed by, as an outline icon: search or the filter. */
+  icon: ReactNode;
   /** Names the query or the filter. */
   title: ReactNode;
   detail?: ReactNode | undefined;
   /** The way back: Clear search, Show all. */
-  action: ReactNode;
+  action?: ReactNode | undefined;
 }
 
-/** A search or filter that matched nothing: one line under the controls that caused it. */
-export function NoResults({ title, detail, action }: NoResultsProps) {
+/**
+ * A search or filter that matched nothing, in the list's place under the controls that caused it.
+ * Dashed like a start panel, because it is temporary and must never read as a plate of cards.
+ */
+export function NoResults({ icon, title, detail, action }: NoResultsProps) {
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-edge px-1 py-4">
-      <p className="grid min-w-0 gap-0.5">
-        <span className="text-md font-medium">{title}</span>
-        {detail && <span className="text-sm text-muted">{detail}</span>}
-      </p>
-      <span className="ms-auto">{action}</span>
-    </div>
+    <section className="mt-2 flex flex-col items-center gap-1.5 rounded-xl border-[1.5px] border-dashed border-edge-2 px-5 py-10 text-center">
+      <span
+        className="mb-2 grid size-11 place-items-center rounded-full bg-plate-2 text-text-2 [&_svg]:size-5"
+        aria-hidden="true"
+      >
+        {icon}
+      </span>
+      <h2 className="text-base font-medium text-balance text-text">{title}</h2>
+      {detail && <p className="max-w-[40ch] text-sm text-pretty text-muted">{detail}</p>}
+      {action && <div className="mt-3 flex flex-wrap justify-center gap-2">{action}</div>}
+    </section>
   );
 }

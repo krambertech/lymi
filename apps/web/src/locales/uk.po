@@ -559,6 +559,9 @@ msgstr "{due, plural, one {картка до повторення сьогодн
 msgid "{due, plural, one {card to review now} other {cards to review now}}"
 msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
+msgid "{due, plural, one {Review # due} other {Review # due}}"
+msgstr "{due, plural, one {Повтори # на сьогодні} few {Повтори # на сьогодні} many {Повтори # на сьогодні} other {Повтори # на сьогодні}}"
+
 msgid "{field} becomes"
 msgstr "{field} стає"
 
@@ -648,6 +651,9 @@ msgstr "{queued, plural, one {# оцінка чи зміна, зроблена �
 
 msgid "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
 msgstr "{restNotes, plural, one {Ще # запис рідшого виду буде імпортовано як є.} few {Ще # записи рідших видів буде імпортовано як є.} many {Ще # записів рідших видів буде імпортовано як є.} other {Ще # запису рідших видів буде імпортовано як є.}}"
+
+msgid "{shown, plural, one {# card} other {# cards}}"
+msgstr "{shown, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
@@ -3130,6 +3136,9 @@ msgstr "Поки колода в архіві, до неї ніхто не мо�
 msgid "Nobody new can add it."
 msgstr "Нові люди вже не можуть її додати."
 
+msgid "None due today"
+msgstr "На сьогодні нічого"
+
 msgid "Not available on this server yet."
 msgstr "На цьому сервері поки недоступно."
 
@@ -3618,6 +3627,9 @@ msgstr "Прибрати {name}"
 msgid "Remove {name}?"
 msgstr "Вилучити {name}?"
 
+msgid "Remove a filter above, or show every card in this deck."
+msgstr "Прибери фільтр вище або покажи всі картки цієї колоди."
+
 msgid "Remove filter: {label}"
 msgstr "Прибрати фільтр: {label}"
 
@@ -3718,6 +3730,9 @@ msgstr "Повторення"
 
 msgid "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}"
 msgstr "Повторити серію «{seriesName}», {due, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
+
+msgid "Review all"
+msgstr "Повтори всі"
 
 msgid "Review done"
 msgstr "Повторення завершено"

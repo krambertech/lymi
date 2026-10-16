@@ -5,11 +5,13 @@ import {
   type DeckRow,
   type DeckSort,
   deckTags,
+  endOfDay,
   filterRows,
   groupRows,
   noFilters,
   rowState,
 } from "@lymi/client/deck-list";
+import type { DeckFilterQuery } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -26,6 +28,7 @@ import {
   Plug,
   Plus,
   Search,
+  SearchX,
   Settings2,
   Signpost,
   Sparkles,
@@ -51,6 +54,7 @@ import { CardPlace } from "../components/card-place";
 import { Chip } from "../components/chip";
 import { directionLabel, languageName } from "../components/deck-fields";
 import { ErrorState, NoResults } from "../components/empty-state";
+import { FilterReview } from "../components/filter-review";
 import { Screen, ScreenBar } from "../components/layout/screen";
 import { NavLink, useStaticNav } from "../components/nav-link";
 import { NextStep, NextSteps } from "../components/next-steps";
@@ -128,6 +132,8 @@ export interface DeckDetailProps {
   onStartSection?: ((section: Section) => void) | undefined;
   /** Review one section's cards, from its heading's menu. */
   onReviewSection?: ((section: Section) => void) | undefined;
+  /** Review the cards the list's filters and search show, from the line under them. */
+  onReviewFilter?: ((filter: DeckFilterQuery) => void) | undefined;
   startSectionPending?: boolean | undefined;
   /** Why the deck is not on screen: gone for good, or the app could not reach it. */
   failure?: DeckFailure | undefined;
@@ -761,6 +767,7 @@ export function DeckDetailView({
   progress,
   onStartSection,
   onReviewSection,
+  onReviewFilter,
   startSectionPending,
   failure,
   onRetry,
@@ -827,6 +834,21 @@ export function DeckDetailView({
     [cards, filters, q, now, sections],
   );
   const everything = q.trim() === "" && activeFilterCount(filters) === 0;
+  // What the filter's review line counts: started cards shown that today's review has not reached, as the server counts them.
+  const filterCounts = useMemo(() => {
+    if (everything || !shown) return null;
+    const dayStart = new Date(now).setHours(0, 0, 0, 0);
+    const dayEnd = endOfDay(now);
+    let started = 0;
+    let due = 0;
+    for (const row of shown) {
+      if (!row.state || rowState(row) === "new") continue;
+      if (row.state.lastReview && new Date(row.state.lastReview).getTime() >= dayStart) continue;
+      started++;
+      if (new Date(row.state.due).getTime() < dayEnd) due++;
+    }
+    return { shown: shown.length, started, due };
+  }, [everything, shown, now]);
   // The owner sees every section, empty ones too, so there is always somewhere to drop a card.
   const arranging = !!owner && sort === "section" && everything;
   const groups = useMemo(
@@ -1250,17 +1272,35 @@ export function DeckDetailView({
                 onDone={stopSelecting}
               />
             ) : (
-              <ListTools
-                sections={sections}
-                tags={tags}
-                filters={filters}
-                setFilters={setFilters}
-                sort={sort}
-                setSort={setSort}
-                query={q}
-                setQuery={setQ}
-                searchRef={searchRef}
-              />
+              <>
+                <ListTools
+                  sections={sections}
+                  tags={tags}
+                  filters={filters}
+                  setFilters={setFilters}
+                  sort={sort}
+                  setSort={setSort}
+                  query={q}
+                  setQuery={setQ}
+                  searchRef={searchRef}
+                />
+                {/* Under the filters it acts on, so what it reviews reads as theirs. */}
+                {filterCounts && onReviewFilter && (
+                  <FilterReview
+                    shown={filterCounts.shown}
+                    started={filterCounts.started}
+                    due={filterCounts.due}
+                    onReview={(kind) =>
+                      // The due ones are the same filter with Due today added.
+                      onReviewFilter({
+                        ...filters,
+                        ...(kind === "due" ? { due: "today" as const } : {}),
+                        q: q.trim(),
+                      })
+                    }
+                  />
+                )}
+              </>
             )}
           </div>
         )}
@@ -1291,14 +1331,21 @@ export function DeckDetailView({
           </div>
         )}
 
-        {/* The search and the filter stay in view, so no match is a line, not a screen. */}
+        {/* The search and the filter stay in view above it, so the way back is beside its cause. */}
         {shown && shown.length === 0 && cards && cards.length > 0 && (
           <NoResults
+            icon={query ? <SearchX /> : <ListFilter />}
             title={query ? t`No cards match “${query}”` : t`No cards match these filters`}
-            detail={query ? <Trans>Search looks at the term and the meaning.</Trans> : undefined}
+            detail={
+              query ? (
+                <Trans>Search looks at the term and the meaning.</Trans>
+              ) : (
+                <Trans>Remove a filter above, or show every card in this deck.</Trans>
+              )
+            }
             action={
               filtered ? (
-                <Button size="sm" onClick={clearAll}>
+                <Button onClick={clearAll}>
                   {query ? <Trans>Clear search</Trans> : <Trans>Show all</Trans>}
                 </Button>
               ) : undefined

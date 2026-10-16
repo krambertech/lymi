@@ -21,6 +21,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Series | [series.md](features/series.md) |
 | Insights | [insights.md](features/insights.md) |
 | Language | [language.md](features/language.md) |
+| Delete account | [delete-account.md](features/delete-account.md) |
 | Long-press menus | [row-menus.md](features/row-menus.md) |
 | Section heading menu | [section-menu.md](features/section-menu.md) |
 | Share deck and join links | [sharing.md](features/sharing.md) |

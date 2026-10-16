@@ -1,0 +1,46 @@
+# Delete account: from the end of You, what goes and the deck that stays, a wrong code, then the emailed code ends the account.
+appId: app.lymi
+name: Delete account
+---
+- runFlow: _open.yaml
+- tapOn: "You"
+- scrollUntilVisible:
+    element: "Delete account"
+    timeout: 20000
+- tapOn: "Delete account"
+- extendedWaitUntil:
+    visible: "What goes"
+    timeout: 20000
+- assertVisible: "${CARDS}"
+- assertVisible: "${SHARED}"
+- assertVisible: "1 person"
+- takeScreenshot: 01-what-goes
+- scrollUntilVisible:
+    element: "Send code"
+    timeout: 20000
+- assertVisible: "Export your library"
+- takeScreenshot: 02-before-code
+- tapOn: "Send code"
+- extendedWaitUntil:
+    visible: "We sent it to ${EMAIL}.*"
+    timeout: 20000
+- inputText: "000000"
+- tapOn:
+    id: "delete-account"
+- extendedWaitUntil:
+    visible: "That code isn’t right.*"
+    timeout: 20000
+- takeScreenshot: 03-wrong-code
+- runScript: delete-account-code.js
+- tapOn:
+    id: "deletion-code"
+- eraseText: 6
+- inputText: "${output.CODE}"
+- takeScreenshot: 04-code
+- tapOn:
+    id: "delete-account"
+# Signed out, the app lands on Welcome, whose dev door is the landmark.
+- extendedWaitUntil:
+    visible: "Dev sign-in as learner"
+    timeout: 30000
+- takeScreenshot: 05-signed-out

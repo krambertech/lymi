@@ -27,8 +27,8 @@ const API_DOCS = "https://lymi.app/docs/api";
 
 /**
  * Everything about the learner, and every setting: Insights first, then this phone's reminder, the
- * account's language, this phone's theme, Activity, the setup jobs that stay on the web, feedback
- * and sign-out. phone.md "Navigation", ADR 0030.
+ * account's language, this phone's theme, Activity, the setup jobs that stay on the web, feedback,
+ * sign-out and Delete account. phone.md "Navigation", ADR 0030.
  */
 export default function You() {
   const { t } = useLingui();
@@ -129,6 +129,15 @@ export default function You() {
       </Rows>
 
       <SignOut />
+
+      <Rows>
+        <Row
+          icon="delete"
+          label={t`Delete account`}
+          destructive
+          onPress={() => router.push("/you/delete-account")}
+        />
+      </Rows>
 
       <ProfileSheet open={editing} onOpenChange={setEditing} profile={profile} />
     </Screen>

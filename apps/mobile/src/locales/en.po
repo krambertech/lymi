@@ -70,6 +70,10 @@ msgstr "{0, plural, one {# more card} other {# more cards}}"
 msgid "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
 msgstr "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
 
+#. placeholder {0}: deck.members
+msgid "{0, plural, one {# person} other {# people}}"
+msgstr "{0, plural, one {# person} other {# people}}"
+
 #. placeholder {0}: today.attempts
 #. placeholder {1}: today.goal
 #. placeholder {2}: today.goal
@@ -87,8 +91,13 @@ msgid "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck}
 msgstr "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck} other {# decks}}"
 
 #. placeholder {0}: cards.total
+#. placeholder {0}: summary.cards
 msgid "{0, plural, one {card} other {cards}}"
 msgstr "{0, plural, one {card} other {cards}}"
+
+#. placeholder {0}: summary.decks
+msgid "{0, plural, one {deck} other {decks}}"
+msgstr "{0, plural, one {deck} other {decks}}"
 
 #. placeholder {0}: Math.round(days / 30)
 msgid "{0, plural, one {in # month} other {in # months}}"
@@ -105,6 +114,10 @@ msgstr "{0, plural, one {Longest stretch: # day in a row.} other {Longest stretc
 #. placeholder {0}: way.count
 msgid "{0, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
 msgstr "{0, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
+
+#. placeholder {0}: summary.reviews
+msgid "{0, plural, one {review} other {reviews}}"
+msgstr "{0, plural, one {review} other {reviews}}"
 
 #. placeholder {0}: items.length - HISTORY_ROWS
 msgid "{0, plural, one {Show # older entry} other {Show # older entries}}"
@@ -386,6 +399,9 @@ msgstr "A change made offline couldn’t be saved. {reason}"
 
 msgid "A change to “{label}” made offline couldn’t be saved. {reason}"
 msgstr "A change to “{label}” made offline couldn’t be saved. {reason}"
+
+msgid "A code is already on its way. Wait a minute before asking for another."
+msgstr "A code is already on its way. Wait a minute before asking for another."
 
 msgid "A connected app"
 msgstr "A connected app"
@@ -818,6 +834,9 @@ msgstr "Come back later, or add new cards."
 msgid "Confirm"
 msgstr "Confirm"
 
+msgid "Confirm with Apple, and your account is deleted at once."
+msgstr "Confirm with Apple, and your account is deleted at once."
+
 msgid "Connected apps"
 msgstr "Connected apps"
 
@@ -914,6 +933,9 @@ msgstr "Couldn’t load Today"
 
 msgid "Couldn’t load who’s in this deck"
 msgstr "Couldn’t load who’s in this deck"
+
+msgid "Couldn’t load your account"
+msgstr "Couldn’t load your account"
 
 msgid "Couldn’t load your cards"
 msgstr "Couldn’t load your cards"
@@ -1092,6 +1114,9 @@ msgstr "Delete"
 msgid "Delete “{seriesName}”?"
 msgstr "Delete “{seriesName}”?"
 
+msgid "Delete account"
+msgstr "Delete account"
+
 msgid "Delete series"
 msgstr "Delete series"
 
@@ -1100,6 +1125,9 @@ msgstr "Deleted"
 
 msgid "Deleted the series {name}"
 msgstr "Deleted the series {name}"
+
+msgid "Deleting your account needs a connection"
+msgstr "Deleting your account needs a connection"
 
 msgid "Describe what the picture shows without naming the term or the meaning."
 msgstr "Describe what the picture shows without naming the term or the meaning."
@@ -1221,6 +1249,9 @@ msgstr "Enter an email address, like you@example.com."
 msgid "Enter an email address."
 msgstr "Enter an email address."
 
+msgid "Enter the 6-digit code from the email."
+msgstr "Enter the 6-digit code from the email."
+
 msgid "Enter the 6-digit code we sent to {email}."
 msgstr "Enter the 6-digit code we sent to {email}."
 
@@ -1263,6 +1294,9 @@ msgstr "Export"
 
 msgid "Export of your cards"
 msgstr "Export of your cards"
+
+msgid "Export your library"
+msgstr "Export your library"
 
 msgid "Exported {cards, plural, one {# card} other {# cards}}"
 msgstr "Exported {cards, plural, one {# card} other {# cards}}"
@@ -1545,6 +1579,9 @@ msgstr "Italian"
 msgid "Its decks may have been withdrawn. Every other shelf is still in Explore."
 msgstr "Its decks may have been withdrawn. Every other shelf is still in Explore."
 
+msgid "Its owner deleted their account, so nobody can change this deck. You can keep studying it."
+msgstr "Its owner deleted their account, so nobody can change this deck. You can keep studying it."
+
 msgctxt "language"
 msgid "Japanese"
 msgstr "Japanese"
@@ -1589,6 +1626,9 @@ msgstr "Keep the message under {FEEDBACK_MESSAGE_MAX} characters."
 
 msgid "Keep the name under 80 characters."
 msgstr "Keep the name under 80 characters."
+
+msgid "Kept for their members"
+msgstr "Kept for their members"
 
 msgid "Known"
 msgstr "Known"
@@ -2404,6 +2444,9 @@ msgstr "Send"
 msgid "Send a new code"
 msgstr "Send a new code"
 
+msgid "Send code"
+msgstr "Send code"
+
 msgid "Send feedback"
 msgstr "Send feedback"
 
@@ -2431,6 +2474,9 @@ msgstr "Share deck"
 
 msgid "Shared by {owner}"
 msgstr "Shared by {owner}"
+
+msgid "Shared by a former owner"
+msgstr "Shared by a former owner"
 
 msgid "Shared deck"
 msgstr "Shared deck"
@@ -2479,6 +2525,9 @@ msgstr "Sign in to Lymi"
 
 msgid "Sign in with email"
 msgstr "Sign in with email"
+
+msgid "Sign in with the Apple ID this account uses."
+msgstr "Sign in with the Apple ID this account uses."
 
 msgid "Sign out"
 msgstr "Sign out"
@@ -2603,6 +2652,9 @@ msgstr "That code doesn’t match. Check the email and try again."
 msgid "That code has expired. Send a new one."
 msgstr "That code has expired. Send a new one."
 
+msgid "That code isn’t right. Check the email and try again."
+msgstr "That code isn’t right. Check the email and try again."
+
 msgid "That didn’t go through"
 msgstr "That didn’t go through"
 
@@ -2666,6 +2718,9 @@ msgstr "They already have a pending invitation."
 msgid "They get an email with a link only they can use."
 msgstr "They get an email with a link only they can use."
 
+msgid "They keep studying these decks, and nobody can change them again. Each one goes when its last member leaves."
+msgstr "They keep studying these decks, and nobody can change them again. Each one goes when its last member leaves."
+
 msgid "They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept."
 msgstr "They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept."
 
@@ -2674,6 +2729,12 @@ msgstr "They’re already in this deck."
 
 msgid "They’re ready when you are."
 msgstr "They’re ready when you are."
+
+msgid "This account publishes decks, so it can’t be deleted in the app."
+msgstr "This account publishes decks, so it can’t be deleted in the app."
+
+msgid "This account publishes decks, so it can’t be deleted in the app. Write to {SUPPORT} and we’ll delete it for you."
+msgstr "This account publishes decks, so it can’t be deleted in the app. Write to {SUPPORT} and we’ll delete it for you."
 
 msgid "This card isn’t in this deck"
 msgstr "This card isn’t in this deck"
@@ -2686,6 +2747,9 @@ msgstr "This card’s history needs a connection"
 
 msgid "This card’s picture was removed."
 msgstr "This card’s picture was removed."
+
+msgid "This code has expired. Send a new one."
+msgstr "This code has expired. Send a new one."
 
 msgid "This deck is already in Library."
 msgstr "This deck is already in Library."
@@ -2734,6 +2798,12 @@ msgstr "This week"
 
 msgid "Time"
 msgstr "Time"
+
+msgid "To confirm it’s you, we’ll email you a 6-digit code."
+msgstr "To confirm it’s you, we’ll email you a 6-digit code."
+
+msgid "To keep a copy of your decks, export them first."
+msgstr "To keep a copy of your decks, export them first."
 
 msgid "to review"
 msgstr "to review"
@@ -2858,12 +2928,19 @@ msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgid "Use at most {MAX_PASSWORD_LENGTH} characters."
 msgstr "Use at most {MAX_PASSWORD_LENGTH} characters."
 
+msgid "Use the code in the email we sent. It works for 15 minutes."
+msgstr "Use the code in the email we sent. It works for 15 minutes."
+
 msgctxt "language"
 msgid "Vietnamese"
 msgstr "Vietnamese"
 
 msgid "Waiting to reach Lymi"
 msgstr "Waiting to reach Lymi"
+
+#. placeholder {0}: sent.to
+msgid "We sent it to {0}. It works for 15 minutes."
+msgstr "We sent it to {0}. It works for 15 minutes."
 
 msgid "We’ll email you a link to set a new one."
 msgstr "We’ll email you a link to set a new one."
@@ -2874,6 +2951,9 @@ msgstr "week of {0}"
 
 msgid "Welcome back."
 msgstr "Welcome back."
+
+msgid "What goes"
+msgstr "What goes"
 
 msgid "What it means"
 msgstr "What it means"
@@ -2913,6 +2993,9 @@ msgstr "Work and study"
 
 msgid "Write a hook."
 msgstr "Write a hook."
+
+msgid "Write to {SUPPORT}"
+msgstr "Write to {SUPPORT}"
 
 msgid "Write what you want to tell Lymi."
 msgstr "Write what you want to tell Lymi."
@@ -2983,6 +3066,12 @@ msgstr "You’re done for today."
 msgid "You’re offline. Showing your cards as of {when}."
 msgstr "You’re offline. Showing your cards as of {when}."
 
+msgid "You’ve asked for several codes today. Try again tomorrow."
+msgstr "You’ve asked for several codes today. Try again tomorrow."
+
+msgid "Your account and everything in it are deleted for good. Nothing can bring them back."
+msgstr "Your account and everything in it are deleted for good. Nothing can bring them back."
+
 msgid "Your cards and your streak, on every device."
 msgstr "Your cards and your streak, on every device."
 
@@ -3018,6 +3107,9 @@ msgstr "Your own material, whatever it is."
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Your photo changed on another device. Try again."
+
+msgid "Your settings, photo, API keys and connected apps go too."
+msgstr "Your settings, photo, API keys and connected apps go too."
 
 msgid "Your unsent reviews and cards are saved on this phone. They send after the update."
 msgstr "Your unsent reviews and cards are saved on this phone. They send after the update."

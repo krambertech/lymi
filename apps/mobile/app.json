@@ -21,6 +21,7 @@
       "bundleIdentifier": "app.lymi",
       "appleTeamId": "C8CWG8CD76",
       "supportsTablet": true,
+      "usesAppleSignIn": true,
       "config": {
         "usesNonExemptEncryption": false
       }

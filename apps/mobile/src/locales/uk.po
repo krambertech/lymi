@@ -70,6 +70,10 @@ msgstr "{0, plural, one {ще # картка} few {ще # картки} many {щ
 msgid "{0, plural, one {# more review to your daily goal} other {# more reviews to your daily goal}}"
 msgstr "{0, plural, one {Ще # повторення до денної мети} few {Ще # повторення до денної мети} many {Ще # повторень до денної мети} other {Ще # повторення до денної мети}}"
 
+#. placeholder {0}: deck.members
+msgid "{0, plural, one {# person} other {# people}}"
+msgstr "{0, plural, one {# людина} few {# людини} many {# людей} other {# людини}}"
+
 #. placeholder {0}: today.attempts
 #. placeholder {1}: today.goal
 #. placeholder {2}: today.goal
@@ -87,8 +91,13 @@ msgid "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck}
 msgstr "{0, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}} у {1, plural, one {# колоді} few {# колодах} many {# колодах} other {# колодах}}"
 
 #. placeholder {0}: cards.total
+#. placeholder {0}: summary.cards
 msgid "{0, plural, one {card} other {cards}}"
 msgstr "{0, plural, one {картка} few {картки} many {карток} other {картки}}"
+
+#. placeholder {0}: summary.decks
+msgid "{0, plural, one {deck} other {decks}}"
+msgstr "{0, plural, one {колода} few {колоди} many {колод} other {колоди}}"
 
 #. placeholder {0}: Math.round(days / 30)
 msgid "{0, plural, one {in # month} other {in # months}}"
@@ -105,6 +114,10 @@ msgstr "{0, plural, one {Найбільше днів поспіль: #.} few {Н
 #. placeholder {0}: way.count
 msgid "{0, plural, one {Review # forgotten card} other {Review # forgotten cards}}"
 msgstr "{0, plural, one {Повторити # забуту картку} few {Повторити # забуті картки} many {Повторити # забутих карток} other {Повторити # забутої картки}}"
+
+#. placeholder {0}: summary.reviews
+msgid "{0, plural, one {review} other {reviews}}"
+msgstr "{0, plural, one {повторення} few {повторення} many {повторень} other {повторення}}"
 
 #. placeholder {0}: items.length - HISTORY_ROWS
 msgid "{0, plural, one {Show # older entry} other {Show # older entries}}"
@@ -386,6 +399,9 @@ msgstr "Не вдалося зберегти зміну, зроблену офл
 
 msgid "A change to “{label}” made offline couldn’t be saved. {reason}"
 msgstr "Не вдалося зберегти зміну в «{label}», зроблену офлайн. {reason}"
+
+msgid "A code is already on its way. Wait a minute before asking for another."
+msgstr "Код уже в дорозі. Зачекай хвилину, перш ніж просити ще один."
 
 msgid "A connected app"
 msgstr "Підключений застосунок"
@@ -818,6 +834,9 @@ msgstr "Повернися пізніше або додай нові картк�
 msgid "Confirm"
 msgstr "Підтвердити"
 
+msgid "Confirm with Apple, and your account is deleted at once."
+msgstr "Підтверди через Apple, і акаунт буде видалено одразу."
+
 msgid "Connected apps"
 msgstr "Підключені застосунки"
 
@@ -914,6 +933,9 @@ msgstr "Не вдалося завантажити екран «Сьогодні
 
 msgid "Couldn’t load who’s in this deck"
 msgstr "Не вдалося завантажити людей у цій колоді"
+
+msgid "Couldn’t load your account"
+msgstr "Не вдалося завантажити акаунт"
 
 msgid "Couldn’t load your cards"
 msgstr "Не вдалося завантажити картки"
@@ -1092,6 +1114,9 @@ msgstr "Видалити"
 msgid "Delete “{seriesName}”?"
 msgstr "Видалити «{seriesName}»?"
 
+msgid "Delete account"
+msgstr "Видалити акаунт"
+
 msgid "Delete series"
 msgstr "Видалити серію"
 
@@ -1100,6 +1125,9 @@ msgstr "Видалено"
 
 msgid "Deleted the series {name}"
 msgstr "Видалено серію «{name}»"
+
+msgid "Deleting your account needs a connection"
+msgstr "Щоб видалити акаунт, потрібне з’єднання"
 
 msgid "Describe what the picture shows without naming the term or the meaning."
 msgstr "Опиши, що на зображенні, не називаючи терміна чи значення."
@@ -1221,6 +1249,9 @@ msgstr "Введи адресу пошти, як-от you@example.com."
 msgid "Enter an email address."
 msgstr "Введи електронну адресу."
 
+msgid "Enter the 6-digit code from the email."
+msgstr "Введи 6-значний код з листа."
+
 msgid "Enter the 6-digit code we sent to {email}."
 msgstr "Введи 6-значний код, який ми надіслали на {email}."
 
@@ -1263,6 +1294,9 @@ msgstr "Експорт"
 
 msgid "Export of your cards"
 msgstr "Експорт карток"
+
+msgid "Export your library"
+msgstr "Експортувати бібліотеку"
 
 msgid "Exported {cards, plural, one {# card} other {# cards}}"
 msgstr "Експортовано {cards, plural, one {# картку} few {# картки} many {# карток} other {# картки}}"
@@ -1545,6 +1579,9 @@ msgstr "Італійська"
 msgid "Its decks may have been withdrawn. Every other shelf is still in Explore."
 msgstr "Можливо, її колоди зняли з публікації. Усі інші полиці й далі в каталозі."
 
+msgid "Its owner deleted their account, so nobody can change this deck. You can keep studying it."
+msgstr "Власник видалив свій акаунт, тож цю колоду більше ніхто не може змінити. Ти можеш і далі її вчити."
+
 msgctxt "language"
 msgid "Japanese"
 msgstr "Японська"
@@ -1589,6 +1626,9 @@ msgstr "Повідомлення має бути коротшим за {FEEDBACK
 
 msgid "Keep the name under 80 characters."
 msgstr "Назва має бути коротшою за 80 символів."
+
+msgid "Kept for their members"
+msgstr "Залишаться для учасників"
 
 msgid "Known"
 msgstr "Засвоєна"
@@ -2404,6 +2444,9 @@ msgstr "Надіслати"
 msgid "Send a new code"
 msgstr "Надіслати новий код"
 
+msgid "Send code"
+msgstr "Надіслати код"
+
 msgid "Send feedback"
 msgstr "Зворотний зв’язок"
 
@@ -2431,6 +2474,9 @@ msgstr "Поділитися колодою"
 
 msgid "Shared by {owner}"
 msgstr "Від {owner}"
+
+msgid "Shared by a former owner"
+msgstr "Від колишнього власника"
 
 msgid "Shared deck"
 msgstr "Спільна колода"
@@ -2479,6 +2525,9 @@ msgstr "Увійти в Lymi"
 
 msgid "Sign in with email"
 msgstr "Увійти через пошту"
+
+msgid "Sign in with the Apple ID this account uses."
+msgstr "Увійди з Apple ID, який використовує цей акаунт."
 
 msgid "Sign out"
 msgstr "Вийти"
@@ -2603,6 +2652,9 @@ msgstr "Код не збігається. Перевір лист і спроб�
 msgid "That code has expired. Send a new one."
 msgstr "Цей код уже не діє. Надішли новий."
 
+msgid "That code isn’t right. Check the email and try again."
+msgstr "Код неправильний. Перевір лист і спробуй ще раз."
+
 msgid "That didn’t go through"
 msgstr "Не вдалося"
 
@@ -2666,6 +2718,9 @@ msgstr "У цієї людини вже є запрошення без відп�
 msgid "They get an email with a link only they can use."
 msgstr "Людина отримає лист із посиланням, яке працює лише для неї."
 
+msgid "They keep studying these decks, and nobody can change them again. Each one goes when its last member leaves."
+msgstr "Учасники й далі вчитимуть ці колоди, але змінити їх уже ніхто не зможе. Кожна зникне, коли з неї вийде останній учасник."
+
 msgid "They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept."
 msgstr "Людина втратить доступ до колоди й не зможе повернутися ні за посиланням, ні за запрошенням. Її повторення збережуться."
 
@@ -2674,6 +2729,12 @@ msgstr "Ця людина вже в колоді."
 
 msgid "They’re ready when you are."
 msgstr "Вони чекають, коли тобі буде зручно."
+
+msgid "This account publishes decks, so it can’t be deleted in the app."
+msgstr "Цей акаунт публікує колоди, тому його не можна видалити в застосунку."
+
+msgid "This account publishes decks, so it can’t be deleted in the app. Write to {SUPPORT} and we’ll delete it for you."
+msgstr "Цей акаунт публікує колоди, тому його не можна видалити в застосунку. Напиши на {SUPPORT}, і ми видалимо його за тебе."
 
 msgid "This card isn’t in this deck"
 msgstr "Цієї картки немає в цій колоді"
@@ -2686,6 +2747,9 @@ msgstr "Для історії цієї картки потрібне з’єдн
 
 msgid "This card’s picture was removed."
 msgstr "Зображення цієї картки прибрано."
+
+msgid "This code has expired. Send a new one."
+msgstr "Термін дії коду минув. Надішли новий."
 
 msgid "This deck is already in Library."
 msgstr "Ця колода вже є в Бібліотеці."
@@ -2734,6 +2798,12 @@ msgstr "Цього тижня"
 
 msgid "Time"
 msgstr "Час"
+
+msgid "To confirm it’s you, we’ll email you a 6-digit code."
+msgstr "Щоб підтвердити, що це ти, ми надішлемо 6-значний код на пошту."
+
+msgid "To keep a copy of your decks, export them first."
+msgstr "Щоб зберегти копію своїх колод, спершу експортуй їх."
 
 msgid "to review"
 msgstr "до повторення"
@@ -2858,12 +2928,19 @@ msgstr "Використай щонайменше {MIN_PASSWORD_LENGTH} симв
 msgid "Use at most {MAX_PASSWORD_LENGTH} characters."
 msgstr "Використай не більше {MAX_PASSWORD_LENGTH} символів."
 
+msgid "Use the code in the email we sent. It works for 15 minutes."
+msgstr "Введи код із листа, який ми надіслали. Він діє 15 хвилин."
+
 msgctxt "language"
 msgid "Vietnamese"
 msgstr "Вʼєтнамська"
 
 msgid "Waiting to reach Lymi"
 msgstr "Чекає на з’єднання з Lymi"
+
+#. placeholder {0}: sent.to
+msgid "We sent it to {0}. It works for 15 minutes."
+msgstr "Ми надіслали його на {0}. Він діє 15 хвилин."
 
 msgid "We’ll email you a link to set a new one."
 msgstr "Надішлемо на пошту посилання, щоб задати новий."
@@ -2874,6 +2951,9 @@ msgstr "тиждень від {0}"
 
 msgid "Welcome back."
 msgstr "З поверненням."
+
+msgid "What goes"
+msgstr "Що буде видалено"
 
 msgid "What it means"
 msgstr "Що це означає"
@@ -2913,6 +2993,9 @@ msgstr "Робота й навчання"
 
 msgid "Write a hook."
 msgstr "Напиши зачіпку."
+
+msgid "Write to {SUPPORT}"
+msgstr "Написати на {SUPPORT}"
 
 msgid "Write what you want to tell Lymi."
 msgstr "Напиши, що хочеш розповісти Lymi."
@@ -2983,6 +3066,12 @@ msgstr "На сьогодні все."
 msgid "You’re offline. Showing your cards as of {when}."
 msgstr "Ти офлайн. Тут твої картки станом на {when}."
 
+msgid "You’ve asked for several codes today. Try again tomorrow."
+msgstr "Сьогодні ти вже кілька разів просив код. Спробуй завтра."
+
+msgid "Your account and everything in it are deleted for good. Nothing can bring them back."
+msgstr "Акаунт і все, що в ньому є, буде видалено назавжди. Відновити їх не вийде."
+
 msgid "Your cards and your streak, on every device."
 msgstr "Твої картки й лік днів поспіль на будь-якому пристрої."
 
@@ -3018,6 +3107,9 @@ msgstr "Твої власні матеріали, хай які."
 
 msgid "Your photo changed on another device. Try again."
 msgstr "Фото змінилося на іншому пристрої. Спробуй ще раз."
+
+msgid "Your settings, photo, API keys and connected apps go too."
+msgstr "Також буде видалено налаштування, фото, ключі API та підключені застосунки."
 
 msgid "Your unsent reviews and cards are saved on this phone. They send after the update."
 msgstr "Твої ненадіслані повторення й картки збережено на цьому телефоні. Вони надішлються після оновлення."

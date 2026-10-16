@@ -21,7 +21,7 @@ export const CACHE_MAX_AGE = 1000 * 60 * 60 * 24 * 30;
  * is not the app's version, because an update fetched online would then empty the next launch offline.
  * `pnpm check:cache-shape` fails until this decision is recorded for every change to the frozen responses.
  */
-const CACHE_SHAPE = "1";
+const CACHE_SHAPE = "2";
 
 let pending: PersistedClient | null = null;
 let timer: ReturnType<typeof setTimeout> | undefined;

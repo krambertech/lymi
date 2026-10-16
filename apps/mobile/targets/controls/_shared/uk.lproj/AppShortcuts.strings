@@ -1,0 +1,9 @@
+/* Siri phrases for Lymi’s App Shortcuts; keep ${applicationName}. */
+"Add a word in ${applicationName}" = "Додати слово в ${applicationName}";
+"Add a word to ${applicationName}" = "Додай слово в ${applicationName}";
+"How many cards are due in ${applicationName}" = "Скільки карток повторювати в ${applicationName}";
+"New word in ${applicationName}" = "Нове слово в ${applicationName}";
+"Review in ${applicationName}" = "Повторення в ${applicationName}";
+"Review my cards in ${applicationName}" = "Повтори мої картки в ${applicationName}";
+"Start a review in ${applicationName}" = "Почни повторення в ${applicationName}";
+"What’s due in ${applicationName}" = "Що повторювати в ${applicationName}";

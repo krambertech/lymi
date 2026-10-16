@@ -1,5 +1,5 @@
 import { Plural, Trans } from "@lingui/react/macro";
-import { Avatar } from "./avatar";
+import { Avatar, FormerOwnerMark } from "./avatar";
 import { languageName } from "./deck-fields";
 import { DueCount } from "./due-count";
 import { NavLink } from "./nav-link";
@@ -15,6 +15,8 @@ export interface DeckCardProps {
   next?: string | null | undefined;
   /** The owner's name on a deck the learner joined. An owned deck names nobody. */
   owner?: string | null | undefined;
+  /** A joined deck whose owner deleted their account. */
+  ownerLeft?: boolean | undefined;
   /** Whether the deck is published, which is what makes its owner a publisher. */
   published?: boolean | undefined;
   /** The publisher's photo, on a published deck. A deck shared by link keeps the letter. */
@@ -36,6 +38,7 @@ export function DeckCard({
   total,
   next,
   owner,
+  ownerLeft,
   published,
   publisherPhoto,
   "aria-describedby": describedBy,
@@ -75,17 +78,26 @@ export function DeckCard({
           </>
         )}
       </span>
-      {owner && (
+      {ownerLeft ? (
         <span className="mt-1.5 flex min-w-0 items-center gap-1.5 text-sm text-text-2">
-          {published ? (
-            <PublisherMark name={owner} src={publisherPhoto} size={18} />
-          ) : (
-            <Avatar name={owner} size={18} />
-          )}
+          <FormerOwnerMark size={18} />
           <span className="min-w-0 truncate">
-            <Trans>Shared by {owner}</Trans>
+            <Trans>Its owner left Lymi</Trans>
           </span>
         </span>
+      ) : (
+        owner && (
+          <span className="mt-1.5 flex min-w-0 items-center gap-1.5 text-sm text-text-2">
+            {published ? (
+              <PublisherMark name={owner} src={publisherPhoto} size={18} />
+            ) : (
+              <Avatar name={owner} size={18} />
+            )}
+            <span className="min-w-0 truncate">
+              <Trans>Shared by {owner}</Trans>
+            </span>
+          </span>
+        )
       )}
     </NavLink>
   );

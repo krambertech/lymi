@@ -39,7 +39,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Avatar } from "../components/avatar";
+import { Avatar, FormerOwnerMark } from "../components/avatar";
 import { Button, IconButton } from "../components/button";
 import { CardPlace } from "../components/card-place";
 import { directionLabel, languageName } from "../components/deck-fields";
@@ -197,6 +197,16 @@ export function exportCsv(deckName: string, rows: DeckRow[]) {
 /** Whose deck this is, under its title, with the mark the Library card draws. */
 function OwnerLine({ deck }: { deck: DeckSummary }) {
   const owner = deck.owner.name;
+  if (deck.owner.former) {
+    return (
+      <>
+        <FormerOwnerMark size={18} />
+        <span className="min-w-0 truncate">
+          <Trans>Its owner left Lymi</Trans>
+        </span>
+      </>
+    );
+  }
   return (
     <>
       {deck.published ? (
@@ -212,7 +222,8 @@ function OwnerLine({ deck }: { deck: DeckSummary }) {
 }
 
 /** What a member sees in a shared deck with nothing in it yet. */
-function OwnerAddsCards({ owner }: { owner: string }) {
+function OwnerAddsCards({ owner, former }: { owner: string; former: boolean }) {
+  if (former) return <Trans>Its owner left Lymi, so no cards will be added.</Trans>;
   return <Trans>Cards appear here when {owner} adds them.</Trans>;
 }
 
@@ -1059,7 +1070,7 @@ export function DeckDetailView({
           ) : !owner ? (
             <StartPanel
               title={<Trans>No cards in {deck.name} yet</Trans>}
-              body={<OwnerAddsCards owner={deck.owner.name} />}
+              body={<OwnerAddsCards owner={deck.owner.name} former={deck.owner.former === true} />}
             />
           ) : (
             <StartPanel

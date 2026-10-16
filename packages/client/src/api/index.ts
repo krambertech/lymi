@@ -22,7 +22,14 @@ export type { Export } from "./exports";
 export type { Import, ImportPreview } from "./imports";
 export type { ApiKeyCreated, ApiKeySummary } from "./keys";
 export type { PushSubscriptionStatus } from "./push";
-export { ApiError, apiUrl, deviceTimezone, errorMessage, refusalDetail } from "./request";
+export {
+  ApiError,
+  apiUrl,
+  deviceTimezone,
+  errorMessage,
+  refusalCode,
+  refusalDetail,
+} from "./request";
 export type { Draw, Queue, QueueItem, ReviewScope } from "./review";
 export { scopeKey } from "./review";
 export type { Section, Sections } from "./sections";

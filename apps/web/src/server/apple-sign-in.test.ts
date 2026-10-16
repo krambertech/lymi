@@ -232,7 +232,7 @@ describe("signing in with Apple from the phone app", () => {
 
 describe("Sign in with Apple before it is configured", () => {
   it("is not offered", async () => {
-    const bare = await testApp();
+    const bare = await testApp({ env: { APPLE_APP_BUNDLE_IDENTIFIER: "", APPLE_CLIENT_ID: "" } });
     const response = await bare.fetch(
       "/api/auth/sign-in/social",
       json(

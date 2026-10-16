@@ -13,6 +13,7 @@ A change is verified when the feature it touches has been driven in a running pr
 
 | Feature | Entry |
 | --- | --- |
+| Sign in | [sign-in.md](features/sign-in.md) |
 | Review | [review.md](features/review.md) |
 | Reveal hint | [reveal-hint.md](features/reveal-hint.md) |
 | Furigana | [furigana.md](features/furigana.md) |

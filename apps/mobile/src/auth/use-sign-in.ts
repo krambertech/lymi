@@ -195,6 +195,7 @@ export function useSignIn() {
   }
 
   async function submit() {
+    if (pending) return;
     clear();
     const address = email.trim();
     if (!address.includes("@")) {

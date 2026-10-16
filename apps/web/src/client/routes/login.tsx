@@ -312,6 +312,7 @@ function Login() {
   }
 
   async function submit(values: CredentialValues) {
+    if (busy || submitting) return;
     clearMessages();
     const address = values.email.trim();
     if (!address.includes("@")) {

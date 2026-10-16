@@ -1,4 +1,4 @@
-/* Siri phrases for Lymi’s App Shortcuts; keep ${applicationName}. The translate skill adds uk.lproj and ru.lproj. */
+/* Siri phrases for Lymi’s App Shortcuts; keep ${applicationName}. uk.lproj and ru.lproj hold the translations. */
 "Add a word in ${applicationName}" = "Add a word in ${applicationName}";
 "Add a word to ${applicationName}" = "Add a word to ${applicationName}";
 "How many cards are due in ${applicationName}" = "How many cards are due in ${applicationName}";

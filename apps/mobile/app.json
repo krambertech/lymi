@@ -23,6 +23,9 @@
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
+      },
+      "infoPlist": {
+        "CFBundleLocalizations": ["en", "uk", "ru"]
       }
     },
     "android": {

@@ -2,37 +2,191 @@
   "sourceLanguage": "en",
   "strings": {
     "Add ${term} to Lymi": {
-      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить ${term} в Lymi"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Додати ${term} в Lymi"
+          }
+        }
+      }
     },
     "Add a word": {
-      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить слово"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Додати слово"
+          }
+        }
+      }
     },
     "Cards due": {
-      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Карточки к повторению"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Картки до повторення"
+          }
+        }
+      }
     },
     "Open Lymi to see what’s due.": {
-      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открой Lymi, чтобы увидеть, что повторять."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Відкрий Lymi, щоб побачити, що повторювати."
+          }
+        }
+      }
     },
     "Opens Add a word in Lymi, with the term filled in when you give one.": {
-      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает «Добавить слово» в Lymi и вписывает термин, если ты его назовёшь."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Відкриває «Додати слово» в Lymi і вписує термін, якщо ти його назвеш."
+          }
+        }
+      }
     },
     "Opens Add a word in Lymi.": {
-      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает «Добавить слово» в Lymi."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Відкриває «Додати слово» в Lymi."
+          }
+        }
+      }
     },
     "Opens a review in Lymi and shows what’s due.": {
-      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает повторение в Lymi и показывает, что повторять."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Відкриває повторення в Lymi і показує, що повторювати."
+          }
+        }
+      }
     },
     "Opens a review in Lymi.": {
-      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает повторение в Lymi."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Відкриває повторення в Lymi."
+          }
+        }
+      }
     },
     "Review": {
-      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторение"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторення"
+          }
+        }
+      }
     },
     "Says how many cards are due and how today’s goal stands, without opening Lymi.": {
-      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Говорит, сколько карточек к повторению и как продвигается дневная цель, не открывая Lymi."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Каже, скільки карток до повторення і як просувається денна мета, не відкриваючи Lymi."
+          }
+        }
+      }
     },
     "Term": {
-      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru."
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Термин"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Термін"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

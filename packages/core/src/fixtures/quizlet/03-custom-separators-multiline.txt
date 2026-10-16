@@ -1,0 +1,7 @@
+Q: capital of Estonia? || Tallinn
+(since 1918)
+##
+Q: largest lake? || Peipus
+##
+Q: tab	inside term || definition with	tab and "quotes"
+##

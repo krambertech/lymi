@@ -13,6 +13,8 @@ export type SourceDeck = {
   reviewModes?: ReviewModeKey[] | undefined;
   /** Cards that arrive Known, counted by the server while it inspects the file. */
   known?: number | undefined;
+  /** One of the learner's own decks the cards join instead of a new deck, as a pasted import chooses. */
+  targetDeckId?: string | undefined;
 };
 
 /** A kind of note the file holds, with the fields the learner maps in the preview. */

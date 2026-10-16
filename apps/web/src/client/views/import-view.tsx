@@ -44,15 +44,18 @@ const ACCEPT: Record<ImportSource, string> = {
   mochi: ".mochi",
   noji: ".ofc",
   lymi: ".zip",
+  quizlet: ".txt,.tsv,.csv",
 };
 const FILE_NAME: Record<ImportSource, RegExp> = {
   anki: /\.(apkg|colpkg)$/i,
   mochi: /\.mochi$/i,
   noji: /\.ofc$/i,
   lymi: /\.zip$/i,
+  quizlet: /\.(txt|tsv|csv)$/i,
 };
 
-function Shell({
+/** The frame every import screen shares. */
+export function ImportShell({
   title,
   sub,
   back,
@@ -114,7 +117,7 @@ export function ImportStartView({
   const message = refused ?? error;
 
   return (
-    <Shell title={t`Import from ${app}`} back={back}>
+    <ImportShell title={t`Import from ${app}`} back={back}>
       <p className="-mt-4 max-w-[60ch] text-md text-text-2 text-pretty">
         {source === "lymi" ? (
           <Trans>
@@ -228,7 +231,7 @@ export function ImportStartView({
           )}
         </a>
       </section>
-    </Shell>
+    </ImportShell>
   );
 }
 
@@ -335,6 +338,8 @@ const STEPS: Record<ImportSource, { id: string; node: ReactNode }[]> = {
   mochi: MOCHI_STEPS,
   noji: NOJI_STEPS,
   lymi: LYMI_STEPS,
+  // Quizlet has its own start screen, with the paste box; these show nowhere.
+  quizlet: [],
 };
 
 /** Uploading, reading, importing: a file on its way, with what the learner may do meanwhile. */
@@ -363,7 +368,7 @@ export function ImportWorkingView({
 
   if (item.status === "uploading" && !upload) {
     return (
-      <Shell title={t`Import from ${app}`} sub={sub} back={back}>
+      <ImportShell title={t`Import from ${app}`} sub={sub} back={back}>
         <section className="edge grid gap-3 rounded-xl bg-plate p-5">
           <h2 className="text-lg font-medium">
             <Trans>The upload stopped partway</Trans>
@@ -404,7 +409,7 @@ export function ImportWorkingView({
             </Button>
           </div>
         </section>
-      </Shell>
+      </ImportShell>
     );
   }
 
@@ -430,7 +435,7 @@ export function ImportWorkingView({
         : t`This takes a few seconds for most files. Nothing is added to your decks yet.`;
 
   return (
-    <Shell title={t`Import from ${app}`} sub={sub} back={back}>
+    <ImportShell title={t`Import from ${app}`} sub={sub} back={back}>
       <section className="edge grid gap-3 rounded-xl bg-plate p-5" aria-live="polite">
         <h2 className="text-lg font-medium">{heading}</h2>
         {value === null ? (
@@ -470,7 +475,7 @@ export function ImportWorkingView({
           <Skeleton className="h-24 rounded-xl" />
         </div>
       )}
-    </Shell>
+    </ImportShell>
   );
 }
 
@@ -824,7 +829,7 @@ export function ImportPreviewView({
   }, [at]);
 
   return (
-    <Shell
+    <ImportShell
       title={t`Import from ${app}`}
       sub={t`${item.fileName} · ${fileSize(item.byteSize, i18n.locale)}`}
       back={back}
@@ -1033,7 +1038,7 @@ export function ImportPreviewView({
         onOpenChange={setLanguagesOpen}
         onSave={(languages) => onChoices({ ...choices, languages })}
       />
-    </Shell>
+    </ImportShell>
   );
 }
 
@@ -1277,7 +1282,7 @@ export function ImportDoneView({
   const archived = !!item.archivedAt;
   const app = SOURCE_NAMES[item.source];
   return (
-    <Shell title={t`Import from ${app}`} sub={t`${item.fileName} · ${date}`} back={back}>
+    <ImportShell title={t`Import from ${app}`} sub={t`${item.fileName} · ${date}`} back={back}>
       <section className="edge grid gap-4 rounded-xl bg-plate p-5">
         <div className="grid gap-1">
           <h2 className="text-xl font-medium text-balance">
@@ -1387,7 +1392,7 @@ export function ImportDoneView({
           </Button>
         )}
       </section>
-    </Shell>
+    </ImportShell>
   );
 }
 
@@ -1412,7 +1417,7 @@ export function ImportStoppedView({
   const copy = failureCopy(item.failure, item.source);
   const app = SOURCE_NAMES[item.source];
   return (
-    <Shell title={t`Import from ${app}`} sub={item.fileName} back={back}>
+    <ImportShell title={t`Import from ${app}`} sub={item.fileName} back={back}>
       {item.status === "cancelled" ? (
         <ErrorState
           title={t`Import cancelled`}
@@ -1455,6 +1460,6 @@ export function ImportStoppedView({
           </Button>
         </section>
       )}
-    </Shell>
+    </ImportShell>
   );
 }

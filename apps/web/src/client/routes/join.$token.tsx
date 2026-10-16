@@ -8,6 +8,7 @@ import { ApiError, api, refusalDetail } from "../lib/api";
 import { signInWithGoogle } from "../lib/auth";
 import { clearPersistedLearnerState } from "../lib/persisted";
 import { joinPreviewQuery } from "../lib/queries";
+import { withFirstTouch } from "../lib/telemetry";
 import { JoinView } from "../views/join-view";
 
 const Search = z.object({
@@ -72,12 +73,16 @@ function Join() {
       // The account coming back may not be the one whose cache is on this device.
       clearPersistedLearnerState({ keepQueued: true });
       if (via === "dev") {
-        window.location.assign(`/login?${new URLSearchParams({ dev: "1", returnTo })}`);
+        window.location.assign(
+          withFirstTouch(`/login?${new URLSearchParams({ dev: "1", returnTo })}`),
+        );
         return;
       }
       // A password account joins when its confirmation link makes the first session. Issue 251.
       if (via === "email") {
-        window.location.assign(`/login?${new URLSearchParams({ mode: "sign-up", returnTo })}`);
+        window.location.assign(
+          withFirstTouch(`/login?${new URLSearchParams({ mode: "sign-up", returnTo })}`),
+        );
         return;
       }
       const res = await signInWithGoogle(returnTo);

@@ -1,12 +1,12 @@
 import type { DeviceTimezoneInput, ReviewTimezoneInput } from "@lymi/core";
-import { newId } from "@lymi/core";
+import { newId, type StreakDay, summariseStreak } from "@lymi/core";
 import { and, eq, isNotNull, isNull, ne, sql } from "@lymi/core/db";
 import type { ReviewDay } from "@lymi/core/schema";
 import { schema } from "../db";
 import { track } from "./analytics";
 import { audit } from "./audit";
 import { notFound, type ServiceContext, ServiceError } from "./context";
-import { addDays, dateFormatter, daysBetween, type LocalDateFormatter } from "./days";
+import { dateFormatter, type LocalDateFormatter } from "./days";
 import { drawableCount } from "./draw";
 import { ensureSettings, getSettings } from "./settings";
 
@@ -351,61 +351,6 @@ function recordStreakChange(ctx: ServiceContext, today: string, zone: string): v
       /* A failed analytics read cannot undo the day it describes. */
     }
   });
-}
-
-/** A day on the streak calendar. */
-export interface StreakDay {
-  date: string;
-  attempts: number;
-  /** The goal the day was measured against. Null for a day from before goals. */
-  goal: number | null;
-  satisfied: boolean;
-  /** How the day ended, so met and exhausted stay apart. Null for a day from before goals. */
-  outcome: Outcome | null;
-}
-
-/** A rest day is allowed once the run has gone this many days without one. */
-const REST_EVERY = 7;
-
-/**
- * The current run, the longest, and the rest days. Today adds once satisfied and is otherwise
- * skipped, so an unfinished morning shows yesterday's run; a nothing-due day keeps a run without
- * adding to it. A past day that falls short, with reviews or none, is a rest day when the run
- * before it is live and has had no other rest day in the six days before it; a rest day keeps the
- * run without adding, and any other short day breaks it. Rest is derived on every read, never
- * stored, so the rule reaches all history.
- */
-export function summariseStreak(days: StreakDay[], today: string) {
-  const byDate = new Map(days.map((d) => [d.date, d]));
-  const keeps = (d: StreakDay | undefined) => !!d && (d.satisfied || d.outcome === "nothing_due");
-  const restDays: string[] = [];
-
-  let run = 0;
-  let longest = 0;
-  let lastRest: string | undefined;
-  // Today is open until it ends, so the walk stops before it and adds it only once satisfied.
-  for (let date = days[0]?.date ?? today; date < today; date = addDays(date, 1)) {
-    const d = byDate.get(date);
-    if (keeps(d)) {
-      if (d?.satisfied) run++;
-    } else if (run > 0 && (!lastRest || daysBetween(lastRest, date) >= REST_EVERY)) {
-      restDays.push(date);
-      lastRest = date;
-    } else {
-      run = 0;
-      lastRest = undefined;
-    }
-    if (run > longest) longest = run;
-  }
-  if (byDate.get(today)?.satisfied) run++;
-  if (run > longest) longest = run;
-
-  return {
-    current: run,
-    longest,
-    reviewedDays: days.filter((d) => d.attempts > 0).length,
-    restDays,
-  };
 }
 
 /**

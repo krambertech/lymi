@@ -20,7 +20,7 @@ import {
   seriesQuery,
   streakQuery,
 } from "@lymi/client/queries";
-import { drawableLeft, streakWith } from "@lymi/client/review-day";
+import { drawableLeft, streakToday } from "@lymi/client/review-day";
 import {
   type DrawData,
   type DrawState,
@@ -124,24 +124,6 @@ export function useDrawState(
 
 const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
   outcome === "goal_met" || outcome === "exhausted";
-
-/**
- * The streak on the learner's day as the draw counts it: past midnight a summary from yesterday
- * opens a new day, and a grade counts the moment it is made rather than when the refetch lands.
- */
-export function streakToday(summary: StreakOut, state: DrawState): StreakOut {
-  const date = state.day.date;
-  const rolled: StreakOut =
-    summary.today.date === date
-      ? summary
-      : {
-          ...summary,
-          // A run whose last day fell short can still hold by a rest day, which only the server knows.
-          today: { date, attempts: 0, goal: summary.goal, outcome: "open" },
-        };
-  const attempts = Math.max(rolled.today.attempts, state.attempts);
-  return streakWith(rolled, attempts, attempts >= rolled.today.goal);
-}
 
 /** Today against the goal, as the lantern, the flame and the seven lights read it. */
 export function useDay() {

@@ -138,32 +138,32 @@ export function hostOf(clientId: string | undefined): string | null {
   }
 }
 
-/** How an app the learner already let in is listed: its title, and whether that title is only its own claim. */
+/** How an app the learner already let in is listed: its name, its host, and how far to trust the name. */
 export type ListedApp = {
-  /** The name the row leads with: a recognised app's, the app's own, or its host. */
+  /** The name the row leads with: a recognised app's, else the one the app gave, else its host. */
   title: string | null;
-  /** The title is not one Lymi recognised, so the row marks it Unverified. */
-  unverified: boolean;
   /** The host to show under the title, when the title is not the host already. */
   host: string | null;
-  /** A name the app gave that the row repeats only as a claim, because it borrows a known app's. */
-  claimed: string | null;
+  /** The title is not one Lymi recognised, so the row says Unverified beside the host. */
+  unverified: boolean;
+  /** The app gave a known app's name from another host, so Unverified is a warning. */
+  borrowed: boolean;
 };
 
 /**
  * A connected app as Settings lists it. The consent screen titles an unrecognised app by its host,
  * because that is where an app is let in on the strength of its name; once let in, the learner
- * needs to recognise it, so the list leads with the name it gave, marked Unverified, with the host
- * under it. A name that borrows a known app's stays a claim under the host, so nothing in the list
- * passes for Claude or ChatGPT unless it signed in from their host. connected-apps.md.
+ * needs to recognise it, so the list leads with the name it gave and says Unverified beside its
+ * host, in the danger colour when the name borrows a known app's. connected-apps.md.
  */
 export function listedApp(app: AppIdentity): ListedApp {
-  if (app.recognised) return { title: app.name, unverified: false, host: app.host, claimed: null };
-  const claimed = app.claimed;
-  if (!claimed || borrowsKnownName(claimed)) {
-    return { title: app.host, unverified: true, host: null, claimed };
-  }
-  return { title: claimed, unverified: true, host: app.host, claimed: null };
+  const title = app.recognised ? app.name : (app.claimed ?? app.host);
+  return {
+    title,
+    host: title === app.host ? null : app.host,
+    unverified: !app.recognised,
+    borrowed: !app.recognised && !!app.claimed && borrowsKnownName(app.claimed),
+  };
 }
 
 /** Whether a name an app gave contains a known app's name as a word, as "Claude Helper" does. */

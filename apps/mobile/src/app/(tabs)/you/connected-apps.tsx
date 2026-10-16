@@ -5,11 +5,12 @@ import { connectedAppsQuery } from "@lymi/client/queries";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { openBrowserAsync } from "expo-web-browser";
 import { Alert, View } from "react-native";
+import { usePalette } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
 import { Chip } from "../../../ui/chip";
 import { EmptyState } from "../../../ui/empty-state";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
-import { Plate, SectionTitle, Text } from "../../../ui/primitives";
+import { Icon, Plate, SectionTitle, Text } from "../../../ui/primitives";
 import { Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
 import { Skeleton } from "../../../ui/skeleton";
@@ -116,33 +117,41 @@ function AppRow({
   onDisconnect: (id: string, name: string) => void;
 }) {
   const { t, i18n } = useLingui();
+  const p = usePalette();
   const app = identifyApp(item.clientId, item.name, site);
   const listed = listedApp(app);
   const name = listed.title ?? t`An app`;
   const connected = i18n.date(new Date(item.createdAt), { day: "numeric", month: "short" });
-  const line = [
-    listed.host,
-    listed.claimed ? t`calls itself “${listed.claimed}”` : null,
-    t`connected ${connected}`,
-  ]
-    .filter(Boolean)
-    .join(" · ");
   return (
     <View
       className={`min-h-[68px] flex-row items-center gap-3 py-3 ps-4 pe-3 ${first ? "" : "border-t border-edge"}`}
     >
       <AppMark app={{ ...app, name: listed.title }} />
-      <View className="flex-1 gap-1">
+      <View className="flex-1 gap-0.5">
         <View className="flex-row flex-wrap items-center gap-2">
           <Text className="shrink text-md font-medium text-text" numberOfLines={1}>
             {name}
           </Text>
           <Chip size="sm">{item.scope === "write" ? t`Read and write` : t`Read`}</Chip>
-          {listed.unverified && <Chip size="sm">{t`Unverified`}</Chip>}
         </View>
-        <Text className="text-sm text-muted" numberOfLines={2}>
-          {line}
-        </Text>
+        {listed.host && (
+          <Text className="text-sm text-muted" numberOfLines={1}>
+            {listed.host}
+          </Text>
+        )}
+        <View className="flex-row items-center gap-1">
+          {listed.unverified && (
+            <Icon name="alert" size={13} colour={listed.borrowed ? p.danger : p.muted} />
+          )}
+          <Text className="flex-1 text-sm text-muted" numberOfLines={1}>
+            {listed.unverified && (
+              <Text style={listed.borrowed ? { color: p.danger } : undefined}>
+                {`${t`Unverified`} · `}
+              </Text>
+            )}
+            {t`connected ${connected}`}
+          </Text>
+        </View>
       </View>
       <ActionMenu
         label={t`Options for ${name}`}

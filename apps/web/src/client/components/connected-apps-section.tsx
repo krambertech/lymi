@@ -1,7 +1,8 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { listedApp } from "@lymi/client/app-marks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plug } from "lucide-react";
+import { clsx } from "clsx";
+import { CircleAlert, Plug } from "lucide-react";
 import type { ReactNode } from "react";
 import type { ConnectedApp } from "../lib/api";
 import { api, errorMessage } from "../lib/api";
@@ -127,27 +128,28 @@ function AppRow({
         <div className="flex items-center gap-2">
           <span className="truncate text-base font-medium">{listed.title ?? t`An app`}</span>
           <Chip size="sm">{item.scope === "write" ? t`Read and write` : t`Read`}</Chip>
-          {listed.unverified && (
-            <Chip size="sm">
-              <Trans>Unverified</Trans>
-            </Chip>
-          )}
         </div>
         {/* A long host truncates; the date never does, so the row always says when. */}
-        <p className="flex min-w-0 items-baseline gap-1 text-sm text-muted">
+        <p className="flex min-w-0 items-center gap-1 text-sm text-muted">
+          {/* An app Lymi did not recognise is titled by the name it gave, so the row says so. */}
+          {listed.unverified && (
+            <>
+              <span
+                className={clsx(
+                  "flex shrink-0 items-center gap-1",
+                  listed.borrowed && "text-danger",
+                )}
+              >
+                <CircleAlert className="size-3.5" aria-hidden="true" />
+                <Trans>Unverified</Trans>
+              </span>
+              <span aria-hidden="true">·</span>
+            </>
+          )}
           {/* An app titled by its host has it in the title already; don't print it twice. */}
           {listed.host && (
             <>
               <span className="truncate font-mono">{listed.host}</span>
-              <span aria-hidden="true">·</span>
-            </>
-          )}
-          {/* A name that borrows a known app's stays a claim under its address. */}
-          {listed.claimed && (
-            <>
-              <span className="truncate">
-                <Trans>calls itself “{listed.claimed}”</Trans>
-              </span>
               <span aria-hidden="true">·</span>
             </>
           )}

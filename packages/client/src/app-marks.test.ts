@@ -8,36 +8,36 @@ describe("listedApp", () => {
   it("titles a recognised app by its own name, verified", () => {
     expect(listed("https://claude.ai/oauth/client.json", "Whatever")).toEqual({
       title: "Claude",
-      unverified: false,
       host: "claude.ai",
-      claimed: null,
+      unverified: false,
+      borrowed: false,
     });
   });
 
   it("titles an unrecognised app by the name it gave, unverified, with its host under it", () => {
     expect(listed("https://notes-helper.example.app/client.json", "Notes Helper")).toEqual({
       title: "Notes Helper",
-      unverified: true,
       host: "notes-helper.example.app",
-      claimed: null,
-    });
-  });
-
-  it("keeps the host as the title when the name borrows a known app's", () => {
-    expect(listed("https://evil.example/client.json", "Claude Desktop")).toEqual({
-      title: "evil.example",
       unverified: true,
-      host: null,
-      claimed: "Claude Desktop",
+      borrowed: false,
     });
   });
 
-  it("titles an app that gave no name by its host", () => {
+  it("marks a name that borrows a known app's from another host", () => {
+    expect(listed("https://evil.example/client.json", "Claude Desktop")).toEqual({
+      title: "Claude Desktop",
+      host: "evil.example",
+      unverified: true,
+      borrowed: true,
+    });
+  });
+
+  it("titles an app that gave no name by its host, without repeating it", () => {
     expect(listed("https://notes-helper.example.app/client.json")).toEqual({
       title: "notes-helper.example.app",
-      unverified: true,
       host: null,
-      claimed: null,
+      unverified: true,
+      borrowed: false,
     });
   });
 });

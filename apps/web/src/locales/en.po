@@ -769,6 +769,9 @@ msgstr "Add to Library"
 msgid "Add to Lymi"
 msgstr "Add to Lymi"
 
+msgid "Add with email"
+msgstr "Add with email"
+
 msgid "Add with Google"
 msgstr "Add with Google"
 
@@ -2282,6 +2285,9 @@ msgstr "Join {name} on Lymi"
 
 msgid "Join link"
 msgstr "Join link"
+
+msgid "Join with email"
+msgstr "Join with email"
 
 msgid "Join with Google"
 msgstr "Join with Google"

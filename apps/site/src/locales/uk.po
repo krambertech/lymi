@@ -445,11 +445,14 @@ msgstr "Додати «{title}»"
 msgid "Add both decks"
 msgstr "Додай обидві колоди"
 
+msgid "Add cards yourself"
+msgstr "Додати картки вручну"
+
 msgid "Add it to your assistant"
 msgstr "Додай її до свого асистента"
 
-msgid "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</0>."
-msgstr "Додай Lymi до Claude, Grok чи іншого асистента. <0>Це три кроки</0>."
+msgid "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</0>. No assistant? <1>Start another way</1>."
+msgstr "Додай Lymi до Claude, Grok чи іншого асистента. <0>Це три кроки</0>. Немає асистента? <1>Почни інакше</1>."
 
 msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
 msgstr "Додай колоду й вчи її безкоштовно — Lymi повертає кожну картку саме перед тим, як ти її забудеш."
@@ -724,6 +727,9 @@ msgstr "Перенеси свої колоди з Anki."
 
 msgid "Bring your assistant to Lymi."
 msgstr "Підключи свого асистента до Lymi."
+
+msgid "Bring your decks across with their review history."
+msgstr "Перенеси колоди разом з історією повторень."
 
 msgid "Bring your existing decks."
 msgstr "Перенеси свої колоди."
@@ -1796,6 +1802,9 @@ msgstr "Імпорт"
 msgid "Import an Anki package with its cards, tags, pictures and review history. Years of reviews carry on where they stopped, so nothing you already know starts over."
 msgstr "Імпортуй пакет Anki з картками, тегами, зображеннями й історією повторень. Роки повторень продовжуються з того ж місця, тож нічого з уже вивченого не починається спочатку."
 
+msgid "Import from Anki"
+msgstr "Імпорт з Anki"
+
 msgid "Import your flashcards from Anki or Mochi. Decks, pictures and review history come too, so nothing you’ve learned starts over."
 msgstr "Імпортуй свої флеш-картки з Anki чи Mochi. Колоди, картинки й історія повторень перенесуться теж, тож вивчене не доведеться починати спочатку."
 
@@ -2115,11 +2124,11 @@ msgstr "Що нового в Lymi"
 msgid "Lymi costs nothing. No trial, and no payment details to sign up."
 msgstr "Lymi нічого не коштує. Ні пробного періоду, ні платіжних даних для реєстрації."
 
-msgid "Lymi doesn’t connect to tutoring sites or read photos itself: your assistant does the reading. Without an assistant, add each word with Add a card, and AI fills in the meaning."
-msgstr "Lymi не підключається до сайтів з репетиторами і сам не читає фото: це робить асистент. Без асистента додай кожне слово через «Додати картку», а значення заповнить AI."
+msgid "Lymi doesn’t connect to tutoring sites or read photos itself: your assistant does the reading."
+msgstr "Lymi не підключається до сайтів з репетиторами і сам не читає фото: це робить асистент."
 
-msgid "Lymi doesn’t read PDFs or photos itself: your assistant does the reading. Without an assistant, add each term with Add a card, and AI fills in the meaning. A diagram can go on a card as its picture."
-msgstr "Lymi сам не читає PDF чи фото: це робить асистент. Без асистента додай кожен термін через «Додати картку», а значення заповнить AI. Схему можна додати на картку як зображення."
+msgid "Lymi doesn’t read PDFs or photos itself: your assistant does the reading. A diagram can go on a card as its picture."
+msgstr "Lymi сам не читає PDF чи фото: це робить асистент. Схему можна додати на картку як зображення."
 
 msgid "Lymi for certification prep · Flashcards with spaced repetition"
 msgstr "Lymi для підготовки до сертифікації · Картки з інтервальним повторенням"
@@ -2377,6 +2386,9 @@ msgstr "Приємно познайомитися; наперед дякую"
 
 msgid "No"
 msgstr "Ні"
+
+msgid "No assistant?"
+msgstr "Немає асистента?"
 
 msgid "No chat? Type the word."
 msgstr "Без чату? Введи слово."
@@ -3043,11 +3055,14 @@ msgstr "визначна пам’ятка"
 msgid "Sign drawings from Wikimedia Commons: public domain, and C-18 and C-19 by Harry-C under CC BY 3.0."
 msgstr "Зображення знаків з Wikimedia Commons: суспільне надбання, а C-18 і C-19 — автор Harry-C, ліцензія CC BY 3.0."
 
+msgid "Sign in"
+msgstr "Увійти"
+
 msgid "Sign in and let it add cards. Then send it your notes."
 msgstr "Увійди й дозволь асистентові додавати картки. Потім надішли йому нотатки."
 
-msgid "Sign in with Google and it joins your Library, free."
-msgstr "Увійди через Google, і колода з’явиться в Бібліотеці. Безкоштовно."
+msgid "Sign in with Google or an email address, and it joins your Library, free."
+msgstr "Увійди через Google чи пошту, і колода з’явиться в Бібліотеці. Безкоштовно."
 
 msgid "Signals"
 msgstr "Обробка сигналів"
@@ -3725,6 +3740,9 @@ msgstr "два"
 
 msgid "Two euros ten."
 msgstr "Два євро десять центів."
+
+msgid "Type each term, and AI fills in the meaning."
+msgstr "Введи термін, а значення заповнить AI."
 
 msgid "Type the term, and AI adds the meaning, an example and the pronunciation. It never changes what you typed, and everything it wrote is marked."
 msgstr "Введи термін — AI додасть значення, приклад і вимову. Твого тексту він не змінює, а все, що написав сам, позначає."

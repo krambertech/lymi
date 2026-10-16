@@ -20,6 +20,10 @@ export interface JoinProps {
   kind?: "link" | "publication" | undefined;
   /** Signed out: carry the link through Google sign-in. */
   onJoinWithGoogle?: (() => void) | undefined;
+  /** Signed out: carry the link through the email sign-up form. */
+  onJoinWithEmail?: (() => void) | undefined;
+  /** Which signed-out button the learner pressed, so only that one shows it is working. */
+  pending?: "google" | "email" | undefined;
   /** Signed in and not yet a member. */
   onJoin?: (() => void) | undefined;
   busy?: boolean | undefined;
@@ -30,12 +34,14 @@ export interface JoinProps {
 
 /**
  * A deck's join page. A classmate arrives from a chat on their phone, often signed out, so it
- * says whose deck it is, lets a few of its cards drift past, and offers one button. ADR 0011.
+ * says whose deck it is, lets a few of its cards drift past, and offers a way in with Google or email. ADR 0011.
  */
 export function JoinView({
   preview,
   kind = "link",
   onJoinWithGoogle,
+  onJoinWithEmail,
+  pending,
   onJoin,
   busy,
   error,
@@ -69,6 +75,8 @@ export function JoinView({
               kind={kind}
               deck={preview.deck}
               onJoinWithGoogle={onJoinWithGoogle}
+              onJoinWithEmail={onJoinWithEmail}
+              pending={pending}
               onJoin={onJoin}
               busy={busy}
               error={error}
@@ -92,6 +100,8 @@ function LiveLink({
   kind,
   deck,
   onJoinWithGoogle,
+  onJoinWithEmail,
+  pending,
   onJoin,
   busy,
   error,
@@ -237,16 +247,28 @@ function LiveLink({
             <Trans>Open deck</Trans>
           </Button>
         ) : viewer === "signed-out" ? (
-          <Button
-            variant="primary"
-            size="lg"
-            loading={busy}
-            onClick={onJoinWithGoogle}
-            aria-disabled={!onJoinWithGoogle}
-            className="mt-7 w-full"
-          >
-            {published ? <Trans>Add with Google</Trans> : <Trans>Join with Google</Trans>}
-          </Button>
+          <div className="mt-7 grid w-full gap-2">
+            <Button
+              variant="primary"
+              size="lg"
+              loading={busy && pending !== "email"}
+              onClick={onJoinWithGoogle}
+              aria-disabled={!onJoinWithGoogle}
+              className="w-full"
+            >
+              {published ? <Trans>Add with Google</Trans> : <Trans>Join with Google</Trans>}
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              loading={busy && pending === "email"}
+              onClick={onJoinWithEmail}
+              aria-disabled={!onJoinWithEmail}
+              className="w-full"
+            >
+              {published ? <Trans>Add with email</Trans> : <Trans>Join with email</Trans>}
+            </Button>
+          </div>
         ) : viewer === "visitor" ? (
           <Button
             variant="primary"

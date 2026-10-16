@@ -283,7 +283,12 @@ function DeckSpread({ deck, cards }: { deck: PublicDeckOut; cards: DeckCard[] })
 }
 
 /** The name, who made it, what it is, the way to add it, and a few of its cards. */
-export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCard[] }) {
+export function DeckHero({
+  deck,
+  locale,
+  spread,
+  canTry,
+}: DeckProps & { spread: DeckCard[]; canTry: boolean }) {
   const exam = examOfDeck(deck.slug);
   return (
     <Localized locale={locale}>
@@ -309,9 +314,11 @@ export function DeckHero({ deck, locale, spread }: DeckProps & { spread: DeckCar
           <a href={addUrl(deck.slug, editionOf(deck))} className={buttonClass("primary", "lg")}>
             <Trans>Add to Lymi</Trans>
           </a>
-          <a href="#how" className={buttonClass("ghost", "lg")}>
-            <Trans>Try a few cards</Trans>
-          </a>
+          {canTry && (
+            <a href="#try" className={buttonClass("ghost", "lg")}>
+              <Trans>Try a few cards</Trans>
+            </a>
+          )}
         </div>
         <p className="mx-auto mt-4 max-w-[46ch] text-sm text-pretty text-muted">
           <Trans>
@@ -332,7 +339,9 @@ export function DeckHowItWorks({ locale, cue }: LocaleProps & { cue: RecallCue }
     {
       key: "add",
       title: <Trans>Add the deck</Trans>,
-      body: <Trans>Sign in with Google and it joins your Library, free.</Trans>,
+      body: (
+        <Trans>Sign in with Google or an email address, and it joins your Library, free.</Trans>
+      ),
     },
     {
       key: "recall",

@@ -1,4 +1,7 @@
+import { Trans } from "@lingui/react/macro";
+import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
+import { signUpUrl } from "../../lib/origins";
 import { SectionTitle } from "./FeatureSection";
 
 export interface GuideStep {
@@ -14,10 +17,12 @@ interface Props {
   steps: GuideStep[];
   /** A plain line beside the steps: what the guide can't do, said once. */
   note?: ReactNode;
+  /** The ways in for a learner without an assistant, beside the steps. */
+  withoutAssistant?: boolean;
 }
 
 /** A how-to in numbered steps on one rail, each one a thing the learner does in Lymi or their assistant. */
-export function GuideSteps({ id, title, lede, steps, note }: Props) {
+export function GuideSteps({ id, title, lede, steps, note, withoutAssistant }: Props) {
   return (
     <section
       id={id}
@@ -56,10 +61,61 @@ export function GuideSteps({ id, title, lede, steps, note }: Props) {
             </li>
           ))}
         </ol>
-        {note && (
-          <p className="-mt-2 max-w-[46ch] text-sm text-pretty text-muted @4xl:mt-0">{note}</p>
+        {(note || withoutAssistant) && (
+          <div className="-mt-2 grid content-start gap-8 @4xl:mt-0">
+            {withoutAssistant && <WithoutAssistant id={`${id}-without`} />}
+            {note && <p className="max-w-[46ch] text-sm text-pretty text-muted">{note}</p>}
+          </div>
         )}
       </div>
     </section>
+  );
+}
+
+const wayClass =
+  "group flex items-center gap-4 rounded-lg bg-plate px-4 py-3.5 edge transition-colors duration-150 hoverable:hover:bg-plate-2";
+
+/** Two ways to start that need no assistant: typing cards in, or bringing an Anki deck across. */
+function WithoutAssistant({ id }: { id: string }) {
+  return (
+    <div id={id} className="scroll-mt-8">
+      <h3 className="text-lg font-medium tracking-[-0.02em] text-text">
+        <Trans>No assistant?</Trans>
+      </h3>
+      <ul className="mt-3 grid max-w-[30rem] gap-2">
+        <li>
+          <a href={signUpUrl()} className={wayClass}>
+            <span className="min-w-0 flex-1">
+              <span className="block text-md font-medium text-text">
+                <Trans>Add cards yourself</Trans>
+              </span>
+              <span className="mt-0.5 block text-sm text-pretty text-text-2">
+                <Trans>Type each term, and AI fills in the meaning.</Trans>
+              </span>
+            </span>
+            <ArrowRight
+              aria-hidden="true"
+              className="size-4 shrink-0 text-muted rtl:-scale-x-100"
+            />
+          </a>
+        </li>
+        <li>
+          <a href="/docs/import-from-anki" className={wayClass}>
+            <span className="min-w-0 flex-1">
+              <span className="block text-md font-medium text-text">
+                <Trans>Import from Anki</Trans>
+              </span>
+              <span className="mt-0.5 block text-sm text-pretty text-text-2">
+                <Trans>Bring your decks across with their review history.</Trans>
+              </span>
+            </span>
+            <ArrowRight
+              aria-hidden="true"
+              className="size-4 shrink-0 text-muted rtl:-scale-x-100"
+            />
+          </a>
+        </li>
+      </ul>
+    </div>
   );
 }

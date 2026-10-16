@@ -38,6 +38,17 @@ jobs:
           node scripts/phone-release.mjs ready
           grep -q '^ready=true' "$GITHUB_OUTPUT" || { echo "::error::EAS is not set up yet."; exit 1; }
 
+      # eas-cli evaluates app.json, whose config plugins need the app's dependencies.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
       - name: Create the beta and production channels a fresh project lacks
         run: node scripts/phone-release.mjs channels
 

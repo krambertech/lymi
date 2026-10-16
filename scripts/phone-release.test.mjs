@@ -230,3 +230,22 @@ test("promotes only the tested group, once, with no rollout running", () => {
     /rollout is still running/,
   );
 });
+
+test("every workflow installs the app's dependencies before it calls EAS", () => {
+  const dir = new URL("../.github/workflows/", import.meta.url);
+  for (const file of ["phone-beta", "phone-promote", "phone-rollback", "phone-rollout"]) {
+    const jobs = readFileSync(new URL(`${file}.yml`, dir), "utf8")
+      .split(/^jobs:$/m)[1]
+      .split(/^ {2}\S/m);
+    for (const job of jobs) {
+      for (const call of job.matchAll(/phone-release\.mjs ([\w-]+)/g)) {
+        if (call[1] === "ready") continue;
+        const install = job.indexOf("pnpm install");
+        assert.ok(
+          install !== -1 && install < call.index,
+          `${file}.yml runs phone-release.mjs ${call[1]} before pnpm install; eas-cli cannot load app.json's plugins without it.`,
+        );
+      }
+    }
+  }
+});

@@ -31,14 +31,14 @@ describe("AI Gateway", () => {
   });
 
   it("calls Anthropic directly without a gateway", async () => {
-    const urls: string[] = [];
+    const calls: { url: string; headers: Record<string, string> }[] = [];
     const reader = createLessonReader({ ANTHROPIC_API_KEY: "key" }, async (url, init) => {
-      urls.push(String(url));
-      expect((init?.headers as Record<string, string>)["cf-aig-authorization"]).toBeUndefined();
+      calls.push({ url: String(url), headers: init?.headers as Record<string, string> });
       return sse({ type: "message_start", message: { usage: { input_tokens: 1 } } });
     });
     await reader?.stream(material, "brief", {}, () => {});
-    expect(urls).toEqual(["https://api.anthropic.com/v1/messages"]);
+    expect(calls[0]?.url).toBe("https://api.anthropic.com/v1/messages");
+    expect(calls[0]?.headers["cf-aig-authorization"]).toBeUndefined();
   });
 
   it("names the gateway on Workers AI calls only when one is set", async () => {

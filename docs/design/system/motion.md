@@ -28,7 +28,7 @@ className="transition-all duration-300 ease-in"
 
 Name the properties a transition animates; never `transition-all`. Prefer `transform`, `opacity`, colours and `filter`. Animate height only with Motion's `height: "auto"`, for something that opens in place and pushes the content under it: the grade strip, a card form's extra fields, an Activity entry. A bar that fills, such as section progress, may animate its width.
 
-On the phone, a sheet whose content grows or shrinks while it is open glides to its new height on iOS's own sheet spring, so a ticked tag or an error line under a field never makes it jump. It opens at its height without a glide, and while the keyboard moves it follows the keyboard frame by frame instead. The patch to `@expo/ui` that does this is described in [phone.md](phone.md#sheets).
+On the phone, a sheet that changes height while it is open glides to the new height on iOS's own sheet spring, so a ticked tag, an error line under a field or the streak rising to full height before its goal's sheet never makes it jump. It opens at its height without a glide, and while the keyboard moves it follows the keyboard frame by frame instead. The patches that do this are described in [phone.md](phone.md#sheets).
 
 ## Press
 

@@ -1,0 +1,16 @@
+diff --git a/ios/RNSScreen.mm b/ios/RNSScreen.mm
+index 9b66012dc8db1e3af0cb5457f8dad86e7f2fe5e3..03679e30278a0bb174408a02d6a1d89ee5942dda 100644
+--- a/ios/RNSScreen.mm
++++ b/ios/RNSScreen.mm
+@@ -924,7 +924,10 @@ - (void)updateFormSheetPresentationStyle
+         // its frame. Fabric: nested stack: we wait until nested content wrapper registers itself with this view and
+         // then update the dimensions.
+       } else {
+-        [self setAllowedDetentsForSheet:sheet to:[self detentsFromMaxHeightFractions:_sheetAllowedDetents] animate:NO];
++        // Lymi: a change once the sheet is up glides instead of snapping; Reduce Motion keeps the snap.
++        [self setAllowedDetentsForSheet:sheet
++                                     to:[self detentsFromMaxHeightFractions:_sheetAllowedDetents]
++                                animate:_sheetHasInitialDetentSet && !UIAccessibilityIsReduceMotionEnabled()];
+       }
+     }
+   } else

@@ -134,24 +134,26 @@ function AppRow({
           </Text>
           <Chip size="sm">{item.scope === "write" ? t`Read and write` : t`Read`}</Chip>
         </View>
-        {listed.host && (
-          <Text className="text-sm text-muted" numberOfLines={1}>
-            {listed.host}
-          </Text>
-        )}
-        <View className="flex-row items-center gap-1">
-          {listed.unverified && (
-            <Icon name="alert" size={13} colour={listed.borrowed ? p.danger : p.muted} />
-          )}
-          <Text className="flex-1 text-sm text-muted" numberOfLines={1}>
+        {/* Unverified sits with the address, since the address is what was not recognised. */}
+        {(listed.unverified || listed.host) && (
+          <View className="flex-row items-center gap-1">
             {listed.unverified && (
-              <Text style={listed.borrowed ? { color: p.danger } : undefined}>
-                {`${t`Unverified`} · `}
-              </Text>
+              <Icon name="alert" size={13} colour={listed.borrowed ? p.danger : p.muted} />
             )}
-            {t`connected ${connected}`}
-          </Text>
-        </View>
+            {/* A long host gives up its middle, so the domain that identifies it stays. */}
+            <Text className="flex-1 text-sm text-muted" numberOfLines={1} ellipsizeMode="middle">
+              {listed.unverified && (
+                <Text style={listed.borrowed ? { color: p.danger } : undefined}>
+                  {listed.host ? `${t`Unverified`} · ` : t`Unverified`}
+                </Text>
+              )}
+              {listed.host}
+            </Text>
+          </View>
+        )}
+        <Text className="text-sm text-muted" numberOfLines={1}>
+          {t`connected ${connected}`}
+        </Text>
       </View>
       <ActionMenu
         label={t`Options for ${name}`}

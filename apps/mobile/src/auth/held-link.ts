@@ -27,6 +27,11 @@ export function noteLink(url: string) {
   if (atDoor) held = last;
 }
 
+/** Whether a held link to a deck will open once the learner is in, so Welcome waits for its deck. */
+export function holdsArrival() {
+  return !!held && Date.now() - held.at < KEEP_MS && /^\/(join|add)\//.test(held.path);
+}
+
 /** Drops the link that opened the app, for a screen that has already answered it, such as a dead join link. */
 export function letGoOfLink() {
   last = null;

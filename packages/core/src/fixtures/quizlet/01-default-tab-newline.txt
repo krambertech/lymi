@@ -1,0 +1,5 @@
+der Hund	the dog
+die Katze	the cat
+das Haus	the house
+laufen	to run
+schön	beautiful, nice

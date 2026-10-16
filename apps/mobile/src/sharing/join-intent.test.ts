@@ -6,7 +6,7 @@ describe("joining after sign-in", () => {
     takeJoin("link:reset");
   });
 
-  it("never joins for a link the learner did not press Sign in to join on", () => {
+  it("never joins for a link the learner did not press Join or Add to Library on", () => {
     expect(takeJoin("link:abc")).toBe(false);
   });
 

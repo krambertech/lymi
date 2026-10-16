@@ -10,7 +10,7 @@ import { Icon } from "../ui/icons";
 import { IconButton, Text } from "../ui/primitives";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 
-const GOAL_NAMES: Record<(typeof DAILY_GOAL_PRESETS)[number], MessageDescriptor> = {
+export const GOAL_NAMES: Record<(typeof DAILY_GOAL_PRESETS)[number], MessageDescriptor> = {
   10: msg({ message: "Light", context: "daily goal" }),
   25: msg({ message: "Steady", context: "daily goal" }),
   50: msg({ message: "Keen", context: "daily goal" }),

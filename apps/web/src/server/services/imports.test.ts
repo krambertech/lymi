@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import {
+  encodeTextImport,
   IMPORT_PART_BYTES,
   type ImportChoicesInput,
   type ImportCounts,
@@ -84,8 +85,9 @@ async function runImport(
   ctx: ServiceContext,
   name: string,
   choices: ImportChoicesInput = { languages: {}, roles: {} },
+  bytes: Uint8Array = fixture(name),
 ) {
-  const { id, runs } = await upload(ctx, name, fixture(name));
+  const { id, runs } = await upload(ctx, name, bytes);
   expect(runs).toEqual([{ importId: id, userId: ctx.userId, actor: ctx.actor, phase: "inspect" }]);
   await inspectImport(ctx, id, env.IMPORTS);
   const preview = await previewImportChoices(ctx, id, choices, env.IMPORTS);
@@ -197,6 +199,106 @@ describe("importing a Mochi export", () => {
 
     await archiveImport(ctx, first.id);
     expect((await cardsOf(ctx)).filter((c) => c.archivedAt === null)).toHaveLength(0);
+  });
+});
+
+const quizletText = (name: string) =>
+  readFileSync(
+    new URL(`../../../../../packages/core/src/fixtures/quizlet/${name}`, import.meta.url),
+    "utf8",
+  );
+const pasted = (text: string, meta: Partial<Parameters<typeof encodeTextImport>[0]> = {}) =>
+  new TextEncoder().encode(
+    encodeTextImport(
+      { separators: { field: "\t", row: "\n" }, deckName: "Quizlet set", ...meta },
+      text,
+    ),
+  );
+const NO_CHOICES: ImportChoicesInput = { languages: {}, roles: {} };
+
+describe("importing a Quizlet set", () => {
+  it("makes one deck named after the set, keeps repeated terms and skips nothing else", async () => {
+    const ctx = await fresh();
+    const bytes = pasted(quizletText("04-cyrillic-rtl-bom.txt"), { deckName: "Greetings" });
+    const { preview, result } = await runImport(ctx, "quizlet.txt", NO_CHOICES, bytes);
+    expect(preview).toMatchObject({ added: 6, duplicates: 0, skipped: 0 });
+    expect(preview.decks.map((d) => [d.name, d.cards])).toEqual([["Greetings", 6]]);
+    expect(result).toMatchObject({ source: "quizlet", status: "done" });
+    const cards = await cardsOf(ctx);
+    expect(cards.filter((c) => c.term === "привіт").map((c) => c.meaning)).toEqual(
+      expect.arrayContaining(["hello", "hi (duplicate term)"]),
+    );
+    expect(cards.every((c) => !c.term.startsWith("\ufeff"))).toBe(true);
+
+    // The same set again updates what it added and adds nothing.
+    const again = await runImport(ctx, "quizlet.txt", NO_CHOICES, bytes);
+    expect(again.preview).toMatchObject({ added: 0, existing: 6 });
+  });
+
+  it("reads a bare .txt with detected separators", async () => {
+    const ctx = await fresh();
+    const text = quizletText("02-comma-semicolon.txt");
+    const { preview } = await runImport(
+      ctx,
+      "biology.txt",
+      NO_CHOICES,
+      new TextEncoder().encode(text),
+    );
+    expect(preview).toMatchObject({ added: 3 });
+    expect(preview.decks.map((d) => d.name)).toEqual(["Quizlet import"]);
+    expect((await card(ctx, "mitochondria")).meaning).toBe("powerhouse of the cell, makes ATP");
+  });
+
+  it("keeps a repeat that lands in a later chunk", async () => {
+    const ctx = await fresh();
+    const rows = Array.from({ length: NOTES_PER_CHUNK + 10 }, (_, i) => `t${i}\tm${i}`);
+    rows.push("t0\tanother meaning");
+    const { preview, result } = await runImport(
+      ctx,
+      "quizlet.txt",
+      NO_CHOICES,
+      pasted(rows.join("\n")),
+    );
+    expect(preview.added).toBe(rows.length);
+    expect(result.counts).toMatchObject({ added: rows.length, duplicates: 0 });
+  });
+
+  it("adds to an existing deck of the learner's, and ignores someone else's", async () => {
+    const ctx = await fresh();
+    const deck = await createDeck(ctx, { name: "German", defaultLanguage: "de" });
+    const { preview, result } = await runImport(
+      ctx,
+      "quizlet.txt",
+      NO_CHOICES,
+      pasted(quizletText("01-default-tab-newline.txt"), { deckId: deck.id }),
+    );
+    expect(preview).toMatchObject({ added: 5 });
+    expect(preview.decks[0]?.existingDeckId).toBe(deck.id);
+    expect(result.counts).toMatchObject({ added: 5, decks: 0 });
+    const cards = await cardsOf(ctx);
+    expect(cards.every((c) => c.deckId === deck.id && c.language === "de")).toBe(true);
+
+    const other = await fresh();
+    const theirs = await runImport(
+      other,
+      "quizlet.txt",
+      NO_CHOICES,
+      pasted("a\tb", { deckId: deck.id }),
+    );
+    expect(theirs.preview.decks).toEqual([expect.objectContaining({ existingDeckId: null })]);
+    expect((await cardsOf(other))[0]?.deckId).not.toBe(deck.id);
+  });
+
+  it("refuses a set over the card cap and writes nothing", async () => {
+    const ctx = await fresh();
+    const rows = Array.from({ length: 5001 }, (_, i) => `t${i}\tm${i}`).join("\n");
+    const { id } = await upload(ctx, "quizlet.txt", pasted(rows));
+    const failure = await inspectImport(ctx, id, env.IMPORTS).then(
+      () => null,
+      (err) => failureOf(err),
+    );
+    expect(failure).toBe("too_large");
+    expect(await cardsOf(ctx)).toHaveLength(0);
   });
 });
 

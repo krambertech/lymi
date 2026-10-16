@@ -199,13 +199,18 @@ function SwitchLinks({ door, step }: { door: SignIn; step: EmailStep }) {
   );
 }
 
-/** Local development only: a persona without a password. */
+/** Local development only: a persona without a password, or an empty account that starts at Welcome. */
 export function DevSignIn() {
   if (!__DEV__) return null;
   return (
-    <Press onPress={() => devSignIn()} haptic={false} className="self-center px-2 py-2">
-      <Text className="text-xs text-faint">Dev sign-in as learner</Text>
-    </Press>
+    <View className="flex-row justify-center gap-2">
+      <Press onPress={() => devSignIn()} haptic={false} className="px-2 py-2">
+        <Text className="text-xs text-faint">Dev sign-in as learner</Text>
+      </Press>
+      <Press onPress={() => devSignIn("fresh", true)} haptic={false} className="px-2 py-2">
+        <Text className="text-xs text-faint">Dev sign-up as new</Text>
+      </Press>
+    </View>
   );
 }
 

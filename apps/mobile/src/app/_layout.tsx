@@ -30,6 +30,7 @@ import { startTelemetry } from "../telemetry/posthog";
 import { usePalette } from "../theme/palette";
 import { FloatingBarHost } from "../ui/floating-bar";
 import { clearToasts, ToastHost } from "../ui/toast-host";
+import { useWelcoming } from "../welcome/gate";
 import { clearWidgets, WidgetSync } from "../widgets/sync";
 
 startTelemetry();
@@ -72,6 +73,10 @@ function Root() {
   const session = useSession();
   const learnerId = session.data?.user.id;
   const signedIn = Boolean(session.data);
+  // A new account goes from sign-in straight into Welcome: sign-in stays up until the account is
+  // read, so Today never shows first. Undefined while that read is under way.
+  const welcoming = useWelcoming(learnerId);
+  const entered = signedIn && welcoming !== undefined;
   // A 426 from any request: this release is too old for the API, so nothing else can work.
   const update = useUpdateRequired();
   // A cold start mounts this once; a return from the background does not, so the splash never replays.
@@ -86,8 +91,13 @@ function Root() {
   // route can still read Welcome for a moment after it is read. A link into anywhere else has none.
   const path = usePathname();
   const landsOnFirst = !signedIn || ["/", "/today", "/welcome"].includes(path);
-  const first = !landsOnFirst ? "elsewhere" : signedIn ? "today" : "welcome";
-  const lands = session.isPending && !update ? undefined : update ? "elsewhere" : first;
+  const first = !landsOnFirst || welcoming ? "elsewhere" : signedIn ? "today" : "welcome";
+  const lands =
+    (session.isPending || (signedIn && welcoming === undefined)) && !update
+      ? undefined
+      : update
+        ? "elsewhere"
+        : first;
   const giveUp = useCallback(() => {
     void SplashScreen.hideAsync();
     setKindling(false);
@@ -136,15 +146,20 @@ function Root() {
         <Stack.Protected guard={!!update}>
           <Stack.Screen name="update" options={{ animation: "fade", gestureEnabled: false }} />
         </Stack.Protected>
-        <Stack.Protected guard={!update && !signedIn}>
+        <Stack.Protected guard={!update && !entered}>
           <Stack.Screen name="(auth)" options={{ animation: "fade" }} />
+        </Stack.Protected>
+        {/* Welcome is the only signed-in screen until it is done, and the first one a new account
+            lands on, so it comes before the deck links; it fades in place, as sign-in does. */}
+        <Stack.Protected guard={!update && entered && !!welcoming}>
+          <Stack.Screen name="onboarding" options={{ animation: "fade", gestureEnabled: false }} />
         </Stack.Protected>
         {/* A shared deck's link opens signed in or out; signed out, it signs in and comes back. */}
         <Stack.Protected guard={!update}>
           <Stack.Screen name="join/[token]" />
           <Stack.Screen name="add/[slug]" />
         </Stack.Protected>
-        <Stack.Protected guard={!update && signedIn}>
+        <Stack.Protected guard={!update && entered && !welcoming}>
           <Stack.Screen name="index" />
           <Stack.Screen name="(tabs)" />
           {/* Over Today rather than in place of it, so pulling the review's top bar down shows Today. */}

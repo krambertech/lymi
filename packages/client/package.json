@@ -24,7 +24,8 @@
     "./deck-list": "./src/deck-list.ts",
     "./update-required": "./src/update-required.ts",
     "./cache": "./src/cache.ts",
-    "./keyed": "./src/keyed.ts"
+    "./keyed": "./src/keyed.ts",
+    "./welcome": "./src/welcome.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",

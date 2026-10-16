@@ -21,6 +21,7 @@ import { ImportFileError, type RandomAccess, r2Source } from "../imports/files";
 import { lymi } from "../imports/lymi";
 import { mochi } from "../imports/mochi";
 import { noji } from "../imports/noji";
+import { quizlet } from "../imports/quizlet";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
 import type { CardImageStorage } from "./card-images";
@@ -40,7 +41,8 @@ import {
 export { archiveImport, ownedImport, restoreImport } from "./import-writer";
 
 /** Every source Lymi can import, tried in order. */
-const ADAPTERS = [anki, mochi, noji, lymi] as SourceAdapter<unknown>[];
+// Quizlet claims text by its extension alone, so it stays last.
+const ADAPTERS = [anki, mochi, noji, lymi, quizlet] as SourceAdapter<unknown>[];
 
 /** Notes per stored chunk: one chunk is one Workflow step and one D1 batch. */
 export const NOTES_PER_CHUNK = 500;
@@ -318,9 +320,20 @@ export async function inspectImport(
     provider,
   );
   const fallback = await usualLanguage(ctx);
+  // A deck the cards join keeps its own language; one that isn't the learner's is ignored.
+  const targets = await targetDecks(ctx, summary.decks);
+  for (const [key, deck] of targets) named.set(key, deck.language);
   const stored: StoredSummary = {
     ...summary,
-    decks: summary.decks.map((d) => ({ ...d, known: known.get(d.key) ?? 0 })),
+    decks: summary.decks.map((d) => {
+      const { targetDeckId: _, ...rest } = d;
+      const target = targets.get(d.key);
+      return {
+        ...rest,
+        known: known.get(d.key) ?? 0,
+        ...(target ? { targetDeckId: target.id } : {}),
+      };
+    }),
     noteTypes: summary.noteTypes.map((type) => ({
       ...type,
       decks: [...(typeDecks.get(type.key) ?? [])],
@@ -328,7 +341,7 @@ export async function inspectImport(
     languages: Object.fromEntries(
       summary.decks.map((d) => [
         d.key,
-        summary.languages?.[d.key] !== undefined
+        summary.languages?.[d.key] !== undefined || targets.has(d.key)
           ? (named.get(d.key) ?? null)
           : (named.get(d.key) ?? detected[d.key] ?? fallback),
       ]),
@@ -344,6 +357,35 @@ export async function inspectImport(
       updatedAt: new Date(),
     })
     .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "inspecting")));
+}
+
+/** The learner's active decks an import names as its target, by the import's deck key. */
+async function targetDecks(
+  ctx: ServiceContext,
+  decks: { key: string; targetDeckId?: string | undefined }[],
+) {
+  const wanted = decks.filter((d) => d.targetDeckId);
+  const found = new Map<string, { id: string; language: string | null }>();
+  if (wanted.length === 0) return found;
+  const rows = await ctx.db
+    .select({ id: schema.decks.id, language: schema.decks.defaultLanguage })
+    .from(schema.decks)
+    .where(
+      and(
+        eq(schema.decks.userId, ctx.userId),
+        isNull(schema.decks.archivedAt),
+        inArray(
+          schema.decks.id,
+          wanted.map((d) => d.targetDeckId as string),
+        ),
+      ),
+    );
+  const byId = new Map(rows.map((r) => [r.id, r]));
+  for (const d of wanted) {
+    const row = byId.get(d.targetDeckId as string);
+    if (row) found.set(d.key, { id: row.id, language: row.language ?? null });
+  }
+  return found;
 }
 
 async function detect(file: RandomAccess, fileName: string) {

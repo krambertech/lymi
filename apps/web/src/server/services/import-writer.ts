@@ -16,7 +16,7 @@ import {
   stateDirection,
   TEXT_MODES,
 } from "@lymi/core";
-import { and, eq, inArray, isNotNull, isNull, or, sql } from "@lymi/core/db";
+import { and, eq, inArray, isNotNull, isNull, ne, or, sql } from "@lymi/core/db";
 import type { Import } from "@lymi/core/schema";
 import { type BatchStatement, batchStatements } from "../batch";
 import { schema } from "../db";
@@ -74,6 +74,11 @@ export function deckName(path: string): string {
     : `…${chars.slice(-(IMPORT_LIMITS.deckName - 1)).join("")}`;
 }
 
+/** Sources whose repeated terms are each their own card rather than one duplicate. */
+function keepsRepeats(row: Import) {
+  return row.source === "quizlet";
+}
+
 function deckExternalId(source: string, key: string, name: string) {
   return `${source}:deck:${key}:${name}`;
 }
@@ -84,7 +89,7 @@ type Lookup = {
 };
 
 /** The learner's cards that an import could meet: by external id, and active ones by term. */
-async function lookup(ctx: ServiceContext, cards: ImportedCard[]) {
+async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?: string) {
   const { db, userId } = ctx;
   const externalIds = [...new Set(cards.map((c) => c.externalId))];
   const terms = [...new Set(cards.map((c) => normaliseTerm(c.fields.term)))];
@@ -113,6 +118,10 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[]) {
             eq(schema.cards.userId, userId),
             isNull(schema.cards.archivedAt),
             inArray(schema.cards.normalizedTerm, keys),
+            // Cards this import already wrote are its own repeats, not duplicates, where repeats stay.
+            exceptImport
+              ? or(isNull(schema.cards.importId), ne(schema.cards.importId, exceptImport))
+              : undefined,
           ),
         ),
     ),
@@ -177,6 +186,8 @@ function classify(
   languages: ImportChoices["languages"],
   deckNames: Map<string, string>,
   seen: Map<string, string>,
+  /** Keep a term the file repeats, as Quizlet sets reuse terms for different meanings. */
+  keepRepeats = false,
 ): Classified[] {
   return cards.map((card) => {
     const existing = found.byExternal.get(card.externalId);
@@ -184,7 +195,7 @@ function classify(
     const language =
       card.language !== undefined ? card.language : (languages[card.deckKey] ?? null);
     const key = dupKey(language, card.fields.term);
-    const held = found.active.get(key) ?? seen.get(key);
+    const held = found.active.get(key) ?? (keepRepeats ? undefined : seen.get(key));
     if (held !== undefined) return { kind: "duplicate", card, deckName: held };
     seen.set(key, deckNames.get(card.deckKey) ?? "");
     return { kind: "added", card, language };
@@ -253,10 +264,31 @@ async function importedDecks(ctx: ServiceContext, row: Import, summary: StoredSu
       ),
   );
   const byExternal = new Map(rows.map((r) => [r.externalId, r.id]));
+  // A deck the learner chose to add to, checked as theirs and active when the file was read.
+  const targetIds = summary.decks.flatMap((deck) => (deck.targetDeckId ? [deck.targetDeckId] : []));
+  const targets =
+    targetIds.length === 0
+      ? new Set<string>()
+      : new Set(
+          (
+            await ctx.db
+              .select({ id: schema.decks.id })
+              .from(schema.decks)
+              .where(
+                and(
+                  eq(schema.decks.userId, ctx.userId),
+                  isNull(schema.decks.archivedAt),
+                  inArray(schema.decks.id, targetIds),
+                ),
+              )
+          ).map((r) => r.id),
+        );
   return new Map(
     summary.decks.map((deck) => [
       deck.key,
-      byExternal.get(deckExternalId(row.source, deck.key, deck.name)) ?? null,
+      (deck.targetDeckId && targets.has(deck.targetDeckId) ? deck.targetDeckId : null) ??
+        byExternal.get(deckExternalId(row.source, deck.key, deck.name)) ??
+        null,
     ]),
   );
 }
@@ -297,7 +329,14 @@ export async function previewImport<Note>(
         picture: Boolean(card.picture),
       });
     }
-    const classified = classify(cards, found, work.choices.languages, names, seen);
+    const classified = classify(
+      cards,
+      found,
+      work.choices.languages,
+      names,
+      seen,
+      keepsRepeats(work.row),
+    );
     tally(counts, classified, { pictures: true });
     for (const item of classified) {
       if (item.kind !== "added") continue;
@@ -339,7 +378,14 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
   const seen = new Map<string, string>();
   const found = await lookupAll(ctx);
   for await (const { cards } of importedCards(work)) {
-    const classified = classify(cards, found, work.choices.languages, names, seen);
+    const classified = classify(
+      cards,
+      found,
+      work.choices.languages,
+      names,
+      seen,
+      keepsRepeats(work.row),
+    );
     for (const item of classified) {
       if (item.kind !== "added") continue;
       const tallyByDeck = modes.get(item.card.deckKey) ?? new Map<Directions, number>();
@@ -461,10 +507,11 @@ export async function writeChunk<Note>(
   const deckDirections = new Map(deckRows.map((d) => [d.id, d.directions]));
   const classified = classify(
     cards,
-    await lookup(ctx, cards),
+    await lookup(ctx, cards, keepsRepeats(row) ? row.id : undefined),
     work.choices.languages,
     names,
     new Map(),
+    keepsRepeats(row),
   );
   const counts = { ...emptyImportCounts(), ...((row.counts as ImportCounts | null) ?? {}) };
   counts.duplicateExamples = [...counts.duplicateExamples];

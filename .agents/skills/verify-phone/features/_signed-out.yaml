@@ -1,0 +1,63 @@
+# Welcome's flows start signed out: wait for this worktree's bundle, leave Welcome or Today, and sign out.
+appId: app.lymi
+---
+- extendedWaitUntil:
+    visible: "This is the developer menu.*|Toggle performance monitor|Dev sign-up as new|Library|Skip for now|End review|Go to Today"
+    timeout: 180000
+- runFlow:
+    when:
+      visible: "This is the developer menu.*"
+    commands:
+      - tapOn: "Continue"
+- runFlow:
+    when:
+      visible: "Toggle performance monitor"
+    commands:
+      - tapOn: "Close"
+# A join screen, a review and Welcome cover the tabs, so they are left before signing out.
+- runFlow:
+    when:
+      visible: "Go to Today"
+    commands:
+      - tapOn: "Go to Today"
+- runFlow:
+    when:
+      visible: "End review"
+    commands:
+      - tapOn: "End review"
+      - extendedWaitUntil:
+          visible: "^Done$|Library"
+          timeout: 20000
+      - runFlow:
+          when:
+            visible: "^Done$"
+          commands:
+            - tapOn: "^Done$"
+- runFlow:
+    when:
+      visible: "Skip for now"
+    commands:
+      - tapOn: "Skip for now"
+      - extendedWaitUntil:
+          visible: "Library"
+          timeout: 20000
+- runFlow:
+    when:
+      visible: "Library"
+    commands:
+      - tapOn: "You"
+      - scrollUntilVisible:
+          element: "Sign out"
+      - tapOn: "Sign out"
+      # Work not yet sent asks first; its alert repeats the label.
+      - runFlow:
+          when:
+            visible: "Sign out.*"
+          commands:
+            - tapOn:
+                text: "Sign out"
+                index: 1
+                optional: true
+- extendedWaitUntil:
+    visible: "Dev sign-up as new"
+    timeout: 30000

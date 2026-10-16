@@ -1,0 +1,8 @@
+﻿привіт	hello
+дякую	thank you
+спасибо	thank you
+שלום	peace, hello
+مرحبا	hello
+
+
+привіт	hi (duplicate term)

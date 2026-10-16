@@ -1,7 +1,13 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { ApiError, api, refusalDetail } from "@lymi/client/api";
-import { addPreviewQuery, exploreQuery, joinPreviewQuery } from "@lymi/client/queries";
+import {
+  addPreviewQuery,
+  exploreQuery,
+  joinPreviewQuery,
+  settingsQuery,
+  streakQuery,
+} from "@lymi/client/queries";
 import type { JoinPreviewOut } from "@lymi/core";
 import { onlineManager, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, Redirect, useRouter } from "expo-router";
@@ -18,7 +24,8 @@ import type { IconName } from "../ui/icons";
 import { Button, Icon, Text } from "../ui/primitives";
 import { Screen } from "../ui/screen";
 import { Skeleton } from "../ui/skeleton";
-import { promiseJoin, takeJoin } from "./join-intent";
+import { welcomeWith } from "../welcome/gate";
+import { isPromised, promiseJoin, takeJoin } from "./join-intent";
 
 /** A join link someone shared, or "Add to Lymi" on a published deck's public page. */
 export type Arrival =
@@ -72,6 +79,22 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
 
   const open = (deckId: string) => router.replace(`/library/${deckId}` as Href);
 
+  // An account that joins before it has got set up or reviewed is welcomed with this deck and asked
+  // only its daily goal, as the web's door does. docs/design/onboarding.md.
+  const awaitsWelcome = async () => {
+    try {
+      const [settings, streak] = await Promise.all([
+        qc.fetchQuery({ ...settingsQuery, staleTime: 0 }),
+        qc.fetchQuery({ ...streakQuery, staleTime: 0 }),
+      ]);
+      return (
+        settings.onboardedAt === null && streak.reviewedDays === 0 && streak.today.attempts === 0
+      );
+    } catch {
+      return false;
+    }
+  };
+
   const join = useMutation({
     networkMode: "always",
     mutationFn: async () => {
@@ -86,7 +109,11 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
         qc.invalidateQueries({ queryKey: ["rounds"] }),
         published && qc.invalidateQueries({ queryKey: exploreQuery.queryKey }),
       ]);
-      open(deckId);
+      if (await awaitsWelcome()) {
+        // Welcome becomes the signed-in screen with this deck; it is opened once the root has it.
+        welcomeWith(deckId);
+        requestAnimationFrame(() => router.replace("/onboarding"));
+      } else open(deckId);
     },
     onError: (err) => {
       setFailed(describe(err));
@@ -95,6 +122,9 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
   });
 
   const key = published ? `add:${arrival.slug}` : `link:${arrival.token}`;
+  // Back from sign-up for this link, the deck was already shown: it joins behind a loading state
+  // rather than appearing a second time.
+  const [resuming] = useState(() => isPromised(key));
   // Back from sign-in for this link: join at once, as the web does, rather than ask twice.
   const resumed = useRef(false);
   useEffect(() => {
@@ -135,7 +165,10 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
       </Screen>
     );
   }
-  if (!preview.data) {
+  const viewer = preview.data?.viewer;
+  const joining =
+    resuming && !failed && (!viewer || viewer === "visitor" || viewer === "signed-out");
+  if (!preview.data || joining) {
     return (
       <Screen title="" back={back} header={<LoadingHeader />}>
         <View />
@@ -250,10 +283,12 @@ function LiveLink({
   const action = deckId ? (
     <Button label={t`Open deck`} variant="primary" size="lg" onPress={() => onOpen(deckId)} />
   ) : viewer === "signed-out" ? (
+    // Signing up and signing in both start here, so the button names the outcome, not the door.
     <Button
-      label={published ? t`Sign in to add` : t`Sign in to join`}
+      label={published ? t`Add to Library` : t`Join`}
       variant="primary"
       size="lg"
+      icon={published ? "plus" : "joined"}
       onPress={onSignIn}
     />
   ) : viewer === "visitor" ? (

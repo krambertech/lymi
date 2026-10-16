@@ -39,6 +39,7 @@ export const SOURCE_NAMES: Record<ImportSource, string> = {
   mochi: "Mochi",
   noji: "Noji",
   lymi: "Lymi",
+  quizlet: "Quizlet",
 };
 
 /** The kinds of Mochi and Noji card with no template, named here because the server sends a key. */
@@ -65,6 +66,12 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
           body: msg`Choose the .zip file Lymi exports as a Lymi file, without unzipping it.`,
         };
       }
+      if (source === "quizlet") {
+        return {
+          title: msg`Couldn’t read this text`,
+          body: msg`Copy the set again from Quizlet with Export, then paste it.`,
+        };
+      }
       if (source === "noji") {
         return {
           title: msg`Couldn’t read this file`,
@@ -89,13 +96,15 @@ export function failureCopy(failure: ImportFailure | null, source: ImportSource)
       return {
         title: msg`This file is too large to import at once`,
         body:
-          source === "mochi"
-            ? msg`In Mochi, export one deck at a time instead of everything.`
-            : source === "noji"
-              ? msg`In Noji, export one sub-deck at a time instead of the whole deck.`
-              : source === "lymi"
-                ? msg`Export one deck at a time instead of the whole library.`
-                : msg`Export one deck at a time, or export again without media.`,
+          source === "quizlet"
+            ? msg`One import takes up to 5,000 cards. Split the set and import it in parts.`
+            : source === "mochi"
+              ? msg`In Mochi, export one deck at a time instead of everything.`
+              : source === "noji"
+                ? msg`In Noji, export one sub-deck at a time instead of the whole deck.`
+                : source === "lymi"
+                  ? msg`Export one deck at a time instead of the whole library.`
+                  : msg`Export one deck at a time, or export again without media.`,
       };
     case "upload_incomplete":
       return {
@@ -408,6 +417,7 @@ export function ImportSources({
     { source: "mochi", detail: t`A .mochi file from Mochi` },
     { source: "noji", detail: t`An .ofc file from Noji` },
     { source: "lymi", detail: t`A Lymi file from another Lymi account` },
+    { source: "quizlet", detail: t`Text you copy from a Quizlet set` },
   ];
   return (
     <ul aria-label={t`Apps you can import from`} className="edge grid rounded-xl bg-plate">

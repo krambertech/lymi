@@ -1,5 +1,5 @@
+import type { StreakDay } from "@lymi/core";
 import { describe, expect, it } from "vitest";
-import type { StreakDay } from "./review-days";
 import { type DayLight, lastThirty, longestRun, withImported } from "./stats";
 
 const day = (date: string, lit: boolean): DayLight => ({ date, lit });

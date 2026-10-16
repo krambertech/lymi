@@ -3,6 +3,7 @@ import {
   dayWindow,
   SLIPPING_FORGOTTEN_DAYS,
   SLIPPING_RECENT_DAYS,
+  type StreakDay,
 } from "@lymi/core";
 import { and, desc, eq, gte, isNull, lt, lte, ne, sql } from "@lymi/core/db";
 import { schema } from "../db";
@@ -10,7 +11,7 @@ import type { ServiceContext } from "./context";
 import { addDays, dateFormatter, daysBetween, type LocalDateFormatter } from "./days";
 import { asked } from "./decks";
 import { deckAccess, memberOf } from "./members";
-import { type Outcome, reviewZone, type StreakDay, streakDays } from "./review-days";
+import { type Outcome, reviewZone, streakDays } from "./review-days";
 import { waitingCardsSql } from "./sections";
 import { getSettings } from "./settings";
 import { lapsesSql, reviewCountSql, slippingCardIds, slippingReviewsWhere } from "./slipping";

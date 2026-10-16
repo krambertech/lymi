@@ -1469,9 +1469,6 @@ msgctxt "language"
 msgid "German"
 msgstr "Німецька"
 
-msgid "Getting set up"
-msgstr ""
-
 msgid "Getting started"
 msgstr ""
 

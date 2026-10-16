@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { api, type Settings } from "@lymi/client/api";
 import { decksQuery, exploreQuery, settingsQuery } from "@lymi/client/queries";
-import { catalogLanguages, startDecks, welcomePath } from "@lymi/client/welcome";
+import { catalogLanguages, startDecks } from "@lymi/client/welcome";
 import { type LearningKind, type OnboardingInput, STARTING_DAILY_GOAL } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Href } from "expo-router";
@@ -69,8 +69,6 @@ export default function Onboarding() {
   const meaningLanguage = settings.data?.meaningLanguage ?? "en";
   const languages = catalogLanguages(catalog ?? [], meaningLanguage);
   const { decks: offered, ownFirst } = startDecks(catalog ?? [], kind, language);
-  const path = welcomePath(kind);
-  const position = path.indexOf(step) + 1;
 
   const save = useMutation({
     mutationFn: api.finishOnboarding,
@@ -218,20 +216,6 @@ export default function Onboarding() {
           <View className="flex-1" />
           <BarText label={t`Skip for now`} onPress={() => void (busy ? null : skip())} />
         </View>
-        {/* One bar rather than a segment per question: the language question comes only after A language. */}
-        {!shortcut && step !== "hello" && (
-          <View
-            className="mx-5 mt-1 h-1 overflow-hidden rounded-full bg-plate-2"
-            accessibilityRole="progressbar"
-            accessibilityLabel={t`Getting set up`}
-            accessibilityValue={{ min: 0, max: path.length, now: position }}
-          >
-            <View
-              className="h-full rounded-full bg-text"
-              style={{ width: `${(position / path.length) * 100}%` }}
-            />
-          </View>
-        )}
       </View>
       <ScrollView
         ref={scroll}

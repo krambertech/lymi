@@ -133,7 +133,7 @@ Activity is the web's list ([activity.md](../activity.md)): day headings over pl
 
 ## Welcome
 
-Welcome is the web's questions as full-screen steps that fade in place of Today ([onboarding.md](../onboarding.md#on-the-phone)): one question to a screen with its answers as whole plates, the progress bar under the bar, and Continue as the `xl` button at the foot, where the thumb is. Until the first review, Today draws the getting started guide as a path from the lantern, with the current step as its one plate, then the Ready-made decks banner and the offer to connect an AI assistant.
+Welcome is the web's questions as full-screen steps that fade in place of Today ([onboarding.md](../onboarding.md#on-the-phone)): one question to a screen with its answers as whole plates, no progress bar, and Continue as the `xl` button at the foot, where the thumb is. Until the first review, Today draws the getting started guide as a path from the lantern, with the current step as its one plate, then the Ready-made decks banner and the offer to connect an AI assistant.
 
 ## Opening
 

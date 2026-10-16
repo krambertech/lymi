@@ -2,9 +2,10 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { type Href, useIsPreview, useRouter } from "expo-router";
-import { type ReactNode, useState } from "react";
+import { type ReactElement, type ReactNode, useState } from "react";
 import {
   I18nManager,
+  type ListRenderItem,
   RefreshControl,
   useWindowDimensions,
   View,
@@ -35,7 +36,18 @@ export function useStackOptions() {
   return { headerShown: false, contentStyle: { backgroundColor: p.canvas } };
 }
 
-interface Props {
+/** A long list the page holds, drawn as it scrolls into view rather than all at once. */
+export interface ScreenList<T> {
+  data: readonly T[];
+  renderItem: ListRenderItem<T>;
+  keyExtractor: (item: T) => string;
+  /** Whatever else a row reads, so a change to it draws the rows again. */
+  extraData?: unknown;
+  /** Under the list, such as room for a pinned toolbar. */
+  footer?: ReactElement | false | null;
+}
+
+interface Props<T> {
   title: string;
   /** A tab carries the streak and capture; a page carries its own actions and a named back. */
   kind?: "tab" | "page";
@@ -68,6 +80,8 @@ interface Props {
   onRefresh?: () => Promise<unknown>;
   /** Told once each time the page scrolls past this content offset, or back above it. */
   past?: { y: number; onChange: (past: boolean) => void } | undefined;
+  /** Rows under `children`, virtualized so a deck of thousands opens as fast as a short one. */
+  list?: ScreenList<T> | undefined;
   children: ReactNode;
 }
 
@@ -90,7 +104,7 @@ const TRAVEL_SIDE = 96;
  * and shrinks, a page's named back folds into a round glass back, and what scrolls beneath softens
  * into the room. phone.md "Navigation".
  */
-export function Screen({
+export function Screen<T = never>({
   title,
   kind = "page",
   back,
@@ -103,8 +117,9 @@ export function Screen({
   onEndReached,
   onRefresh,
   past,
+  list,
   children,
-}: Props) {
+}: Props<T>) {
   const insets = useSafeAreaInsets();
   // A long-press preview has no status bar to clear and nothing in it can be tapped, so it has no bar row.
   const preview = useIsPreview();
@@ -239,63 +254,88 @@ export function Screen({
       }
     : undefined;
 
+  const scroll = {
+    className: "flex-1",
+    contentContainerStyle: { paddingTop: bar, paddingBottom: insets.bottom + 110 },
+    onScroll,
+    scrollEventThrottle: 16,
+    // The pinned bar already clears the status bar; iOS's own tab bar would add the inset again.
+    contentInsetAdjustmentBehavior: "never",
+    refreshControl: refresh && (
+      <RefreshControl
+        refreshing={refreshing}
+        onRefresh={refresh}
+        tintColor={p.muted}
+        progressViewOffset={bar}
+      />
+    ),
+  } as const;
+  const content = (
+    <>
+      {header ? (
+        <View
+          className="-mx-5 px-5 pb-7"
+          // A preview has no bar to clear, so its header starts near the top, as a page's title does.
+          style={{ marginTop: -bar, paddingTop: preview ? 12 : bar + 8 }}
+          onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height - bar)}
+        >
+          {ground && <Ground {...ground} height={bar + headerHeight} />}
+          {header}
+        </View>
+      ) : (
+        /* Holds the title's place in the page; the title itself travels in the bar above. */
+        <View
+          className={kind === "tab" ? "-mt-14 h-14" : "-mt-1"}
+          style={kind === "page" ? { height: box.h } : undefined}
+          accessible
+          accessibilityRole="header"
+          accessibilityLabel={title}
+        />
+      )}
+      {kind === "page" && !own && (
+        <Text
+          className="absolute text-3xl font-medium tracking-tight opacity-0"
+          style={{ width: screen - 40 }}
+          importantForAccessibility="no-hide-descendants"
+          accessibilityElementsHidden
+          onTextLayout={(e) => setWraps(e.nativeEvent.lines.length > 1)}
+        >
+          {title}
+        </Text>
+      )}
+      {/* Pulled up from the page's 28 pt gap to 8 pt, so it reads as the title's own line. */}
+      {description && <Text className="-mt-5 text-base text-text-2">{description}</Text>}
+      {children}
+    </>
+  );
+
   return (
     <View className="flex-1 bg-canvas">
-      <Animated.ScrollView
-        keyboardShouldPersistTaps="handled"
-        className="flex-1"
-        contentContainerClassName="px-5 gap-7"
-        contentContainerStyle={{ paddingTop: bar, paddingBottom: insets.bottom + 110 }}
-        onScroll={onScroll}
-        scrollEventThrottle={16}
-        // The pinned bar already clears the status bar; iOS's own tab bar would add the inset again.
-        contentInsetAdjustmentBehavior="never"
-        refreshControl={
-          refresh && (
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={refresh}
-              tintColor={p.muted}
-              progressViewOffset={bar}
-            />
-          )
-        }
-      >
-        {header ? (
-          <View
-            className="-mx-5 px-5 pb-7"
-            // A preview has no bar to clear, so its header starts near the top, as a page's title does.
-            style={{ marginTop: -bar, paddingTop: preview ? 12 : bar + 8 }}
-            onLayout={(e) => setHeaderHeight(e.nativeEvent.layout.height - bar)}
-          >
-            {ground && <Ground {...ground} height={bar + headerHeight} />}
-            {header}
-          </View>
-        ) : (
-          /* Holds the title's place in the page; the title itself travels in the bar above. */
-          <View
-            className={kind === "tab" ? "-mt-14 h-14" : "-mt-1"}
-            style={kind === "page" ? { height: box.h } : undefined}
-            accessible
-            accessibilityRole="header"
-            accessibilityLabel={title}
-          />
-        )}
-        {kind === "page" && !own && (
-          <Text
-            className="absolute text-3xl font-medium tracking-tight opacity-0"
-            style={{ width: screen - 40 }}
-            importantForAccessibility="no-hide-descendants"
-            accessibilityElementsHidden
-            onTextLayout={(e) => setWraps(e.nativeEvent.lines.length > 1)}
-          >
-            {title}
-          </Text>
-        )}
-        {/* Pulled up from the page's 28 pt gap to 8 pt, so it reads as the title's own line. */}
-        {description && <Text className="-mt-5 text-base text-text-2">{description}</Text>}
-        {children}
-      </Animated.ScrollView>
+      {list ? (
+        <Animated.FlatList
+          {...scroll}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ ...scroll.contentContainerStyle, paddingHorizontal: 20 }}
+          ListHeaderComponent={<View className="gap-7">{content}</View>}
+          ListFooterComponent={list.footer || null}
+          // `data` is read only, as FlatList itself never changes it.
+          data={list.data as T[]}
+          renderItem={list.renderItem}
+          keyExtractor={list.keyExtractor}
+          extraData={list.extraData}
+          initialNumToRender={12}
+          maxToRenderPerBatch={12}
+          windowSize={9}
+        />
+      ) : (
+        <Animated.ScrollView
+          {...scroll}
+          keyboardShouldPersistTaps="handled"
+          contentContainerClassName="px-5 gap-7"
+        >
+          {content}
+        </Animated.ScrollView>
+      )}
       <Animated.View
         pointerEvents="none"
         className="absolute inset-x-0 top-0"

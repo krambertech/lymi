@@ -156,7 +156,7 @@ export async function seedPersona(ctx: ServiceContext, persona: Persona): Promis
   }
 
   await backdate(ctx, introducedAt);
-  await simulateReviews(ctx, introducedAt, persona.reviewDays, now, hashSeed(persona.id));
+  await simulateReviews(ctx, introducedAt, persona, now, hashSeed(persona.id));
   if (toArchive.length > 0) {
     await db
       .update(schema.cards)
@@ -251,10 +251,12 @@ async function backdate({ db }: ServiceContext, introducedAt: Map<string, Date>)
 async function simulateReviews(
   { db, userId }: ServiceContext,
   introducedAt: Map<string, Date>,
-  reviewDays: number[],
+  { reviewDays, reviewsPerDay }: Pick<Persona, "reviewDays" | "reviewsPerDay">,
   now: Date,
   seed: number,
 ) {
+  const most = reviewsPerDay?.max ?? MAX_REVIEWS_PER_DAY;
+  const least = reviewsPerDay?.min ?? MIN_REVIEWS_PER_DAY;
   if (reviewDays.length === 0 || introducedAt.size === 0) return;
   const states = await db
     .select()
@@ -283,11 +285,11 @@ async function simulateReviews(
     const due = existing
       .filter((e) => e.card.due.getTime() <= at.getTime())
       .sort((a, b) => a.card.due.getTime() - b.card.due.getTime())
-      .slice(0, MAX_REVIEWS_PER_DAY);
+      .slice(0, most);
     const ahead = existing
       .filter((e) => e.card.due.getTime() > at.getTime())
       .sort((a, b) => a.card.due.getTime() - b.card.due.getTime())
-      .slice(0, Math.max(0, MIN_REVIEWS_PER_DAY - due.length));
+      .slice(0, Math.max(0, least - due.length));
     for (const entry of [...due, ...ahead]) {
       const rating = pickRating(rng, entry.reviewed);
       const result = schedule(entry.card, rating, at);

@@ -6,6 +6,7 @@ import type {
   PublicationTag,
   StatedFieldSource,
 } from "@lymi/core";
+import { HEAVY } from "./heavy-persona";
 
 /**
  * The learners a local developer can become. Each is one account in the local D1, named
@@ -29,6 +30,8 @@ export interface Persona {
    * Zero is today. Empty means the account has never reviewed.
    */
   reviewDays: number[];
+  /** How many grades one review day holds, at least and at most. Defaults to 8 and 24. */
+  reviewsPerDay?: { min: number; max: number };
   /** How many cards are due when the seed lands. `all` makes every card due. */
   dueNow: number | "all";
   decks: PersonaDeck[];
@@ -651,4 +654,5 @@ export const personas: Persona[] = [
       },
     ],
   },
+  HEAVY,
 ];

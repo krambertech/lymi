@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type GoalStatus, useDailyGoal } from "@lymi/client/daily-goal";
+import { shownOutcome } from "@lymi/client/review-day";
 import type { StreakOut } from "@lymi/core";
 import { useNavigation } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -28,7 +29,7 @@ const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
 const RISE_MS = 320;
 
 export default function Streak() {
-  const { summary, flame } = useDay();
+  const { summary, flame, left } = useDay();
   const frost = useFrost();
   return (
     <OnGlass>
@@ -38,7 +39,7 @@ export default function Streak() {
         contentContainerClassName="px-5 pt-8 pb-12"
       >
         {summary ? (
-          <StreakPanel summary={summary} flame={flame} />
+          <StreakPanel summary={summary} flame={flame} due={left ?? 0} />
         ) : (
           <View className="gap-5">
             <Skeleton width={200} height={48} />
@@ -52,9 +53,12 @@ export default function Streak() {
 
 function StreakPanel({
   summary,
+  due,
   flame,
 }: {
   summary: StreakOut;
+  /** Cards still due today, which make a day confirmed as nothing due read as open. */
+  due: number;
   flame: ReturnType<typeof useDay>["flame"];
 }) {
   const { t } = useLingui();
@@ -106,7 +110,7 @@ function StreakPanel({
       ? t`Daily goal reached.`
       : today.outcome === "exhausted"
         ? t`You’re done for today.`
-        : today.outcome === "nothing_due"
+        : shownOutcome(today.outcome, due) === "nothing_due"
           ? t`Nothing due today, so your streak is safe.`
           : rest.has(addDays(today.date, -1))
             ? t`Yesterday was a rest day. Reach today’s goal to keep it going.`

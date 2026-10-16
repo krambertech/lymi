@@ -248,7 +248,9 @@ export type SignIn = ReturnType<typeof useSignIn>;
  * Local development only: become a persona without a password, as `/api/dev/sign-in` does in a
  * browser. The Worker answers 404 to it anywhere but a loopback origin.
  */
-export async function devSignIn(persona = "learner") {
-  await authClient.$fetch(`${API_URL}/api/dev/sign-in?as=${persona}`, { method: "POST" });
+export async function devSignIn(persona = "learner", reset = false) {
+  await authClient.$fetch(`${API_URL}/api/dev/sign-in?as=${persona}${reset ? "&reset=1" : ""}`, {
+    method: "POST",
+  });
   await authClient.getSession();
 }

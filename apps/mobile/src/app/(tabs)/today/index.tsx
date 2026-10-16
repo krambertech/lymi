@@ -1,11 +1,14 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { groupDecks } from "@lymi/client/library-groups";
+import { exploreQuery } from "@lymi/client/queries";
+import { shownOutcome } from "@lymi/client/review-day";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS, type StreakOut } from "@lymi/core";
 import { flameSize } from "@lymi/design";
+import { useQuery } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
 import { type Href, useIsFocused, useRouter } from "expo-router";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { View, type ViewStyle } from "react-native";
 import { Flame } from "../../../brand/flame";
 import { Lantern } from "../../../brand/lantern";
@@ -29,6 +32,9 @@ import { RowMenu } from "../../../ui/row-menu";
 import { Screen } from "../../../ui/screen";
 import { SevenLights } from "../../../ui/seven-lights";
 import { Skeleton } from "../../../ui/skeleton";
+import { takeAfterWelcome } from "../../../welcome/gate";
+import { ReadyDecks } from "../../../welcome/ready-decks";
+import { BringYourOwn, StartGuide } from "../../../welcome/start-guide";
 
 /**
  * Today, as the web's: the lit room with what is due, the streak, the rounds that can be reviewed
@@ -50,6 +56,16 @@ export default function Today() {
   const loading = (!decks.data || !streak.data) && !failed;
   const nothingYet = !loading && total === 0;
   const kept = !!useKeptSince(decks);
+  // Until the first review, Today is the getting started guide.
+  const guiding =
+    !!decks.data &&
+    !!streak.data &&
+    streak.data.reviewedDays === 0 &&
+    streak.data.today.attempts === 0;
+  // Only the guide offers ready-made decks, so nobody past it pays for the catalogue read.
+  const explore = useQuery({ ...exploreQuery, enabled: guiding });
+  const ready = explore.data?.decks.filter((deck) => !explore.data.added[deck.slug]);
+  useAfterWelcome();
 
   if (failed) {
     return (
@@ -61,6 +77,16 @@ export default function Today() {
             void streak.refetch();
           }}
         />
+      </Screen>
+    );
+  }
+  if (guiding && decks.data) {
+    return (
+      <Screen title={t`Today`} kind="tab">
+        <StartGuide decks={decks.data} />
+        {/* Only under the guide: a learner past their first review has their own work to get on with. */}
+        {ready && ready.length > 0 && <ReadyDecks decks={ready} />}
+        <BringYourOwn />
       </Screen>
     );
   }
@@ -93,6 +119,15 @@ export default function Today() {
       {!loading && !nothingYet && rounds.data && <Rounds rounds={rounds.data} />}
     </Screen>
   );
+}
+
+/** Where Welcome sent the learner on, such as their first review, opened once Today is back. */
+function useAfterWelcome() {
+  const router = useRouter();
+  useEffect(() => {
+    const then = takeAfterWelcome();
+    if (then) router.push(then);
+  }, [router]);
 }
 
 function startReview(router: ReturnType<typeof useRouter>, href: Href = "/review") {
@@ -256,9 +291,9 @@ function DueHeading({
 }
 
 /** One line on where today stands against the streak: what is left, or that the day counts. */
-function useTodayStatus(today: StreakOut["today"]): string {
+function useTodayStatus(today: StreakOut["today"], due: number): string {
   const { t } = useLingui();
-  switch (today.outcome) {
+  switch (shownOutcome(today.outcome, due)) {
     case "goal_met":
       return t`Daily goal reached.`;
     case "exhausted":
@@ -275,9 +310,9 @@ function useTodayStatus(today: StreakOut["today"]): string {
 /** The run, one plain line on today, and the week. The whole plate opens the streak. */
 function StreakPlate({ summary }: { summary: StreakOut }) {
   const { t } = useLingui();
-  const { streak, goal, dayDone, flame, lights } = useDay();
+  const { streak, goal, dayDone, flame, lights, left } = useDay();
   const router = useRouter();
-  const status = useTodayStatus(summary.today);
+  const status = useTodayStatus(summary.today, left ?? 0);
   return (
     <Press
       scale={0.98}

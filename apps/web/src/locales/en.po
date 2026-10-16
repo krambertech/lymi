@@ -763,7 +763,7 @@ msgstr "A subject or exam"
 msgid "A–Z"
 msgstr "A–Z"
 
-#. placeholder {0}: MINUTES[n]
+#. placeholder {0}: GOAL_MINUTES[n]
 msgid "About {0, plural, one {# minute} other {# minutes}}, {n, plural, one {# review} other {# reviews}}"
 msgstr "About {0, plural, one {# minute} other {# minutes}}, {n, plural, one {# review} other {# reviews}}"
 
@@ -1177,9 +1177,6 @@ msgstr "Both ways"
 
 msgid "Bring what you’re learning, or start with a ready-made deck."
 msgstr "Bring what you’re learning, or start with a ready-made deck."
-
-msgid "Bring your decks and their review history."
-msgstr "Bring your decks and their review history."
 
 msgid "Bring your own"
 msgstr "Bring your own"
@@ -1822,8 +1819,8 @@ msgstr "decks"
 msgid "Decks"
 msgstr "Decks"
 
-msgid "Decks from Anki or Mochi, with their review history."
-msgstr "Decks from Anki or Mochi, with their review history."
+msgid "Decks from Anki, Mochi or Noji, with their review history."
+msgstr "Decks from Anki, Mochi or Noji, with their review history."
 
 msgid "Decks from Lymi. Add one to study it in your language."
 msgstr "Decks from Lymi. Add one to study it in your language."
@@ -2214,6 +2211,9 @@ msgstr "Former owner"
 msgid "From {0}"
 msgstr "From {0}"
 
+msgid "From Anki, Mochi or Noji, with their review history."
+msgstr "From Anki, Mochi or Noji, with their review history."
+
 msgid "From the lesson"
 msgstr "From the lesson"
 
@@ -2387,9 +2387,6 @@ msgstr "Import decks from another Lymi account, with their pictures, tags and re
 
 msgid "Import from {app}"
 msgstr "Import from {app}"
-
-msgid "Import from Anki or Mochi"
-msgstr "Import from Anki or Mochi"
 
 msgid "Import from Quizlet"
 msgstr "Import from Quizlet"

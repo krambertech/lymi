@@ -82,6 +82,8 @@ export default defineConfig({
           ? {
               persistState: { path: ".wrangler/e2e" },
               inspectorPort: false,
+              // Workers AI is remote only; E2E never calls it and CI has no Cloudflare token.
+              remoteBindings: false,
               config: {
                 vars: {
                   PUBLIC_SITE_URL: e2eSiteUrl,

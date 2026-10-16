@@ -1,6 +1,6 @@
 import type { StreakOut } from "@lymi/core";
 import { describe, expect, it } from "vitest";
-import { streakToday } from "./review-day";
+import { shownOutcome, streakToday } from "./review-day";
 
 const met = (date: string) => ({
   date,
@@ -57,5 +57,17 @@ describe("the streak on a new day from an earlier read", () => {
     const read = tuesday({ restDays: ["2026-10-09"] });
 
     expect(streakToday(read, on("2026-10-13", 20)).restDays).toEqual(["2026-10-09"]);
+  });
+});
+
+describe("shownOutcome", () => {
+  it("reads a day confirmed as nothing due as open once cards are due", () => {
+    expect(shownOutcome("nothing_due", 4)).toBe("open");
+  });
+
+  it("keeps nothing due while nothing is due, and every other outcome as it is", () => {
+    expect(shownOutcome("nothing_due", 0)).toBe("nothing_due");
+    expect(shownOutcome("goal_met", 4)).toBe("goal_met");
+    expect(shownOutcome("exhausted", 0)).toBe("exhausted");
   });
 });

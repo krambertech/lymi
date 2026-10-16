@@ -116,9 +116,7 @@ test("a language asks which one, then offers that language's decks beside the le
   expect(
     page.getByRole("radiogroup", { name: "Ready-made decks" }).getByRole("radio").elements(),
   ).toHaveLength(2);
-  await expect
-    .element(page.getByRole("radio", { name: /Import from Anki or Mochi/ }))
-    .toBeVisible();
+  await expect.element(page.getByRole("radio", { name: /Import decks/ })).toBeVisible();
 
   await page.getByRole("radio", { name: /spanish-verbs/ }).click();
   await page.getByRole("button", { name: "Add and review" }).click();

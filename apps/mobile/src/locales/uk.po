@@ -58,6 +58,10 @@ msgstr "{0, plural, one {# поле} few {# поля} many {# полів} other 
 msgid "{0, plural, one {# forgotten} other {# forgotten}}"
 msgstr "{0, plural, one {Забуто # раз} few {Забуто # рази} many {Забуто # разів} other {Забуто # разу}}"
 
+#. placeholder {0}: GOAL_MINUTES[n]
+msgid "{0, plural, one {# minute} other {# minutes}}"
+msgstr ""
+
 #. placeholder {0}: screen.nudge.count
 msgid "{0, plural, one {# more card and you’re done for today} other {# more cards and you’re done for today}}"
 msgstr "{0, plural, one {Ще # картка — і на сьогодні все} few {Ще # картки — і на сьогодні все} many {Ще # карток — і на сьогодні все} other {Ще # картки — і на сьогодні все}}"
@@ -146,6 +150,10 @@ msgstr "{0} · У Бібліотеці"
 msgid "{0} of your cards are known."
 msgstr "Засвоєно {0} ваших карток."
 
+#. placeholder {0}: o.detail
+msgid "{0} Opens on the web."
+msgstr ""
+
 #. placeholder {0}: deck.owner.name
 msgid "{0} owns this deck and writes its cards."
 msgstr "{0} — власник цієї колоди й пише її картки."
@@ -158,6 +166,10 @@ msgstr "Запам’ятано: {0}, забуто: {1}."
 #. placeholder {0}: deck.owner.name
 msgid "{0} shared a deck"
 msgstr "{0} ділиться колодою"
+
+#. placeholder {0}: s.title
+msgid "{0}, done"
+msgstr ""
 
 msgid "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
 msgstr "{cards, plural, one {# картку буде додано до повторень.} few {# картки буде додано до повторень.} many {# карток буде додано до повторень.} other {# картки буде додано до повторень.}}"
@@ -191,6 +203,9 @@ msgstr "{current, plural, one {день поспіль} few {дні поспіл
 
 msgid "{current, plural, one {Your #-day streak carries on.} other {Your #-day streak carries on.}}"
 msgstr "{current, plural, one {# день поспіль, і лік триває.} few {# дні поспіль, і лік триває.} many {# днів поспіль, і лік триває.} other {# дня поспіль, і лік триває.}}"
+
+msgid "{current} of 3 done"
+msgstr ""
 
 msgid "{day}: {reviews}"
 msgstr "{day}: {reviews}"
@@ -310,6 +325,9 @@ msgstr "{own, plural, one {# повторення на день} few {# повт
 msgid "{own, plural, one {review a day} other {reviews a day}}"
 msgstr "{own, plural, one {повторення на день} few {повторення на день} many {повторень на день} other {повторення на день}}"
 
+msgid "{owner} shared a deck"
+msgstr ""
+
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "Запам’ятано: {passed}, забуто: {failed}"
 
@@ -391,6 +409,9 @@ msgstr "Не вдалося зберегти зміну, зроблену офл
 msgid "A change to “{label}” made offline couldn’t be saved. {reason}"
 msgstr "Не вдалося зберегти зміну в «{label}», зроблену офлайн. {reason}"
 
+msgid "A citizenship test, a driving test or another exam."
+msgstr ""
+
 msgid "A connected app"
 msgstr "Підключений застосунок"
 
@@ -399,6 +420,12 @@ msgstr "Колода тримає слова, які ти вчиш разом. �
 
 msgid "A few minutes keeps them fresh."
 msgstr "Кілька хвилин освіжать їх у пам’яті."
+
+msgid "A few quick questions, then your first review."
+msgstr ""
+
+msgid "A language"
+msgstr ""
 
 msgctxt "deck purpose"
 msgid "A language"
@@ -419,6 +446,9 @@ msgstr "Коротка фраза, що допоможе запам’ятати
 msgid "A sound-alike, or something to picture"
 msgstr "Співзвучне слово або те, що можна уявити"
 
+msgid "A subject"
+msgstr ""
+
 msgid "A subject or exam"
 msgstr "Предмет або іспит"
 
@@ -427,6 +457,9 @@ msgstr "Слово чи фраза"
 
 msgid "A–Z"
 msgstr "А–Я"
+
+msgid "About {minutes}, {reviews}"
+msgstr ""
 
 msgid "About this deck"
 msgstr "Про колоду"
@@ -452,11 +485,17 @@ msgstr ""
 msgid "Add a word"
 msgstr ""
 
+msgid "Add and review"
+msgstr ""
+
 msgid "Add cards"
 msgstr "Додати картки"
 
 msgid "Add cards and review them to see your progress here."
 msgstr "Додавай картки й повторюй їх, щоб бачити тут свій прогрес."
+
+msgid "Add cards from your last lesson"
+msgstr ""
 
 msgid "Add cards from your last lesson, then review them here."
 msgstr "Додай картки з останнього уроку, а потім повторюй їх тут."
@@ -555,6 +594,12 @@ msgstr "Алфавіт"
 msgid "Also on your list"
 msgstr "Ще для повторення"
 
+msgid "Anki, Mochi, Noji"
+msgstr ""
+
+msgid "Another language"
+msgstr ""
+
 msgid "Another way"
 msgstr "Інший спосіб"
 
@@ -638,6 +683,9 @@ msgstr "Заархівовано розділ «{name}» у колоді «{deck
 msgid "Arts"
 msgstr "Мистецтво"
 
+msgid "Ask Claude or ChatGPT to create cards and decks for you."
+msgstr ""
+
 msgid "Ask the person who shared it for a new link."
 msgstr "Попроси нове посилання в того, хто ним поділився."
 
@@ -674,6 +722,18 @@ msgstr "Обидва способи"
 msgctxt "language"
 msgid "Brazilian Portuguese"
 msgstr "Бразильська португальська"
+
+msgid "Bring what you have"
+msgstr ""
+
+msgid "Bring what you’re learning, or start with a ready-made deck."
+msgstr ""
+
+msgid "Bring your own"
+msgstr ""
+
+msgid "Browse ready-made decks"
+msgstr ""
 
 msgid "Bug"
 msgstr "Помилка"
@@ -780,6 +840,9 @@ msgstr "Китайська"
 msgid "Choose"
 msgstr "Вибрати"
 
+msgid "Choose a deck or a way to bring your own."
+msgstr ""
+
 msgid "Choose another"
 msgstr "Вибрати інше"
 
@@ -789,8 +852,14 @@ msgstr "Вибрати колоди"
 msgid "Choose from photos"
 msgstr "Вибрати з фото"
 
+msgid "Choose one to continue."
+msgstr ""
+
 msgid "Choose photo"
 msgstr "Вибрати фото"
+
+msgid "Choose the language you’re learning."
+msgstr ""
 
 msgid "Choose what the deck is for."
 msgstr "Обери, для чого ця колода."
@@ -828,8 +897,24 @@ msgstr "Підтвердити"
 msgid "Confirm it’s you"
 msgstr "Підтверди, що це ти"
 
+msgid "Connect"
+msgstr ""
+
+#. placeholder {0}: a.name
+msgid "Connect {0}"
+msgstr ""
+
+msgid "Connect an app"
+msgstr ""
+
+msgid "Connect it once, then send your notes as cards."
+msgstr ""
+
 msgid "Connect to the internet to delete your account."
 msgstr "Підключися до інтернету, щоб видалити акаунт."
+
+msgid "Connect your AI assistant"
+msgstr ""
 
 msgid "Connected apps"
 msgstr "Підключені застосунки"
@@ -999,6 +1084,12 @@ msgstr "Не вдалося зберегти зачіпку."
 msgid "Couldn’t save the language. Check your connection and try again."
 msgstr "Не вдалося зберегти мову. Перевір з’єднання й повтори спробу."
 
+msgid "Couldn’t save your answers. Check your connection and try again."
+msgstr ""
+
+msgid "Couldn’t save your daily goal. Check your connection and try again."
+msgstr ""
+
 msgid "Couldn’t save your grade for “{term}”. The card is no longer in your decks."
 msgstr "Не вдалося зберегти оцінку для «{term}». Цієї картки більше немає у твоїх колодах."
 
@@ -1020,6 +1111,9 @@ msgstr "Не вдалося надіслати запрошення. Забаг�
 msgid "Couldn’t send your feedback"
 msgstr "Не вдалося надіслати повідомлення"
 
+msgid "Couldn’t skip for now. Check your connection and try again."
+msgstr ""
+
 msgid "Couldn’t start the section"
 msgstr "Не вдалося почати розділ"
 
@@ -1031,6 +1125,9 @@ msgstr "Не вдалося вимкнути посилання для приє�
 
 msgid "Couldn’t turn on the join link. Try again."
 msgstr "Не вдалося увімкнути посилання для приєднання. Спробуй ще раз."
+
+msgid "Countries, stars, birds or anything else with names."
+msgstr ""
 
 msgid "Create a deck on the web first, then add cards here."
 msgstr "Спершу створи колоду у вебверсії, а тоді додавай картки тут."
@@ -1104,6 +1201,9 @@ msgstr "Налаштування колоди"
 
 msgid "Decks"
 msgstr "Колоди"
+
+msgid "Decks from Lymi. Add one to study it in your language."
+msgstr ""
 
 msgid "Decks to review"
 msgstr "Колоди до повторення"
@@ -1342,6 +1442,9 @@ msgctxt "language"
 msgid "Finnish"
 msgstr "Фінська"
 
+msgid "For a test"
+msgstr ""
+
 msgid "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
 msgstr "Для подорожі, перших уроків або словників Goethe від A1 до B1."
 
@@ -1383,6 +1486,12 @@ msgstr "Французька"
 msgid "From {0}"
 msgstr "Від {0}"
 
+msgid "From {owner}"
+msgstr ""
+
+msgid "From Anki, Mochi or Noji, with their review history."
+msgstr ""
+
 msgid "From the lesson"
 msgstr "З уроку"
 
@@ -1397,6 +1506,9 @@ msgctxt "language"
 msgid "German"
 msgstr "Німецька"
 
+msgid "Getting started"
+msgstr ""
+
 msgid "Give the deck a name."
 msgstr "Назви колоду."
 
@@ -1405,6 +1517,9 @@ msgstr "Назви розділ."
 
 msgid "Give the series a name."
 msgstr "Дай серії назву."
+
+msgid "Go to import"
+msgstr ""
 
 msgid "Go to Lymi"
 msgstr "Відкрити Lymi"
@@ -1421,6 +1536,9 @@ msgstr "Goethe-Zertifikat A1"
 
 msgid "Good"
 msgstr "Добре"
+
+msgid "Good to start"
+msgstr ""
 
 msgid "Graded Forgot today"
 msgstr "Сьогодні з оцінкою «Не пам’ятаю»"
@@ -1465,14 +1583,23 @@ msgstr "Зачіпка з уроку"
 msgid "How cards are asked"
 msgstr "Як запитуються картки"
 
+msgid "How do you want to start?"
+msgstr ""
+
 msgid "How it sounds"
 msgstr "Як це звучить"
+
+msgid "How it works"
+msgstr ""
 
 msgid "How it’s asked"
 msgstr "Як питати"
 
 msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
 msgstr "Скільки повторень на день зберігає лік днів поспіль. Рахується кожна оцінка, навіть «Не пам’ятаю»."
+
+msgid "How much time a day?"
+msgstr ""
 
 msgid "How sections open"
 msgstr "Як відкриваються розділи"
@@ -1533,6 +1660,9 @@ msgstr "Індонезійська"
 
 msgid "Insights"
 msgstr "Огляд"
+
+msgid "Insights fill in from your first review."
+msgstr ""
 
 msgid "Insights start after your first review"
 msgstr "Огляд з’явиться після першого повторення"
@@ -1676,6 +1806,9 @@ msgctxt "cards in this state"
 msgid "Learning"
 msgstr "У вивченні"
 
+msgid "Learning “{typed}”"
+msgstr ""
+
 msgid "Leave {name}?"
 msgstr "Вийти з {name}?"
 
@@ -1709,6 +1842,12 @@ msgctxt "language"
 msgid "Lithuanian"
 msgstr "Литовська"
 
+msgid "Little and often works best. Meeting your daily goal keeps your streak going. You can change it any time."
+msgstr ""
+
+msgid "Loading decks…"
+msgstr ""
+
 msgid "Loading more"
 msgstr "Завантажується ще"
 
@@ -1724,6 +1863,9 @@ msgstr "Lymi"
 msgid "Lymi also gets the screen you are on, the app version, your phone and your app language."
 msgstr "Lymi також отримає екран, на якому ти зараз, версію застосунку, модель телефона й мову застосунку."
 
+msgid "Lymi brings it back just before you’d forget it."
+msgstr ""
+
 msgid "Lymi can’t be reached. Check your connection and try again."
 msgstr "Lymi не на зв’язку. Перевір з’єднання й спробуй ще раз."
 
@@ -1735,6 +1877,9 @@ msgstr "Lymi пише перші колоди. А поки що створи в�
 
 msgid "Lymi keeps nothing once the account is gone."
 msgstr "Після видалення акаунта Lymi нічого не зберігає."
+
+msgid "Lymi works for anything you want to remember."
+msgstr ""
 
 msgid "Made a change"
 msgstr "Внесено зміну"
@@ -1750,6 +1895,12 @@ msgstr "Створено розділ «{name}» у колоді «{deck}»"
 
 msgid "Made the series {name}"
 msgstr "Створено серію «{name}»"
+
+msgid "Make a deck"
+msgstr ""
+
+msgid "Make a deck and add cards from your last lesson."
+msgstr ""
 
 msgid "Make one for each course or topic."
 msgstr "Створи колоду для кожного курсу чи теми."
@@ -1947,6 +2098,9 @@ msgstr "Нічого не знайдено"
 msgid "No meaning yet"
 msgstr "Значення поки немає"
 
+msgid "No ready-made decks yet."
+msgstr ""
+
 msgid "No recall data yet. Review more cards to see how you’re doing."
 msgstr "Ще немає даних про запам’ятовування. Повтори більше карток, щоб побачити результат."
 
@@ -2129,6 +2283,9 @@ msgctxt "language"
 msgid "Persian"
 msgstr "Перська"
 
+msgid "Pick a ready-made deck, or bring what you already have."
+msgstr ""
+
 msgid "Picture"
 msgstr "Зображення"
 
@@ -2199,8 +2356,15 @@ msgctxt "subject shelf"
 msgid "Ready-made {name} decks, written by a person and checked card by card."
 msgstr "{name} у готових колодах. Кожну склала людина й перевірила картку за карткою."
 
+msgid "Ready-made decks"
+msgstr ""
+
 msgid "Ready-made decks for learning {name}, written by a person and checked card by card."
 msgstr "{name} у готових колодах. Кожну склала людина й перевірила картку за карткою."
+
+#. placeholder {0}: nameOf(language)
+msgid "Ready-made decks in {0}"
+msgstr ""
 
 msgid "Recall"
 msgstr "Запам’ятовування"
@@ -2316,6 +2480,9 @@ msgstr "Повторити зараз"
 msgid "Review on your own schedule. New cards appear as they are added."
 msgstr "Повторюй у своєму темпі. Нові картки з’являються, щойно їх додають."
 
+msgid "Review them"
+msgstr ""
+
 msgid "Review these decks together, in this order."
 msgstr "Повторюй ці колоди разом, у такому порядку."
 
@@ -2362,6 +2529,9 @@ msgstr "Збережено"
 msgid "Saving…"
 msgstr "Збереження…"
 
+msgid "Say how well you knew it."
+msgstr ""
+
 msgid "Schedule"
 msgstr "Розклад"
 
@@ -2379,6 +2549,9 @@ msgstr "Пошук колод"
 
 msgid "Search decks and cards"
 msgstr "Пошук колод і карток"
+
+msgid "Search or type a language"
+msgstr ""
 
 msgid "Search this deck"
 msgstr "Шукати в цій колоді"
@@ -2412,6 +2585,9 @@ msgid "See {word}, recall “{answer}”"
 msgstr ""
 
 msgid "See {word}, recall what it means"
+msgstr ""
+
+msgid "See a card and recall the answer."
 msgstr ""
 
 msgid "See all"
@@ -2461,6 +2637,9 @@ msgstr "Вибрані картки"
 
 msgid "Send"
 msgstr "Надіслати"
+
+msgid "Send a lesson from Claude or ChatGPT"
+msgstr ""
 
 msgid "Send a new code"
 msgstr "Надіслати новий код"
@@ -2532,14 +2711,8 @@ msgstr "Показати пароль"
 msgid "Sign in"
 msgstr "Увійти"
 
-msgid "Sign in to add"
-msgstr "Увійди, щоб додати"
-
 msgid "Sign in to continue."
 msgstr "Увійди, щоб продовжити."
-
-msgid "Sign in to join"
-msgstr "Увійди, щоб приєднатися"
 
 msgid "Sign in to Lymi"
 msgstr "Увійти в Lymi"
@@ -2555,6 +2728,9 @@ msgstr "Вийти і втратити їх"
 
 msgid "Sign-in didn’t finish. Try again."
 msgstr "Вхід не завершено. Спробуй ще раз."
+
+msgid "Skip for now"
+msgstr ""
 
 msgctxt "language"
 msgid "Slovak"
@@ -2595,8 +2771,14 @@ msgstr "Почати {sectionName} раніше?"
 msgid "Start anyway"
 msgstr "Почати все одно"
 
+msgid "Start review"
+msgstr ""
+
 msgid "Start with a deck"
 msgstr "Почни з колоди"
+
+msgid "Start with a ready-made deck"
+msgstr ""
 
 msgid "State"
 msgstr "Стан"
@@ -2899,6 +3081,12 @@ msgstr "Посилання для приєднання до «{deck}» вимк�
 msgid "Turned on the join link for {deck}"
 msgstr "Посилання для приєднання до «{deck}» увімкнено"
 
+msgid "Type them here, or send a lesson from your AI assistant."
+msgstr ""
+
+msgid "Type your own cards"
+msgstr ""
+
 msgctxt "language"
 msgid "Ukrainian"
 msgstr "Українська"
@@ -2947,12 +3135,21 @@ msgstr "Ми надішлемо тобі 6-значний код. Акаунт �
 msgid "We’ll email you a link to set a new one."
 msgstr "Надішлемо на пошту посилання, щоб задати новий."
 
+msgid "We’ll show ready-made decks in it. You can add more languages later."
+msgstr ""
+
 #. placeholder {0}: i18n.date(start, { day: "numeric", month: "short", timeZone: "UTC" })
 msgid "week of {0}"
 msgstr "тиждень від {0}"
 
 msgid "Welcome back."
 msgstr "З поверненням."
+
+msgid "Welcome to Lymi"
+msgstr ""
+
+msgid "What are you learning?"
+msgstr ""
 
 msgid "What goes"
 msgstr "Що буде видалено"
@@ -2972,6 +3169,9 @@ msgstr "Про що це"
 msgid "What you learn, in order"
 msgstr "Що вивчаєш, по порядку"
 
+msgid "What you’re learning"
+msgstr ""
+
 msgid "When it’s back"
 msgstr "Коли повернеться"
 
@@ -2983,6 +3183,9 @@ msgstr "Коли почнеш"
 
 msgid "Where you met it, such as a lesson"
 msgstr "Звідки це, наприклад урок"
+
+msgid "Which language?"
+msgstr ""
 
 msgid "Who can join"
 msgstr "Хто може приєднатися"
@@ -3085,6 +3288,12 @@ msgstr "Твої дані"
 
 msgid "Your deck"
 msgstr "Твоя колода"
+
+msgid "Your deck is ready"
+msgstr ""
+
+msgid "Your deck is ready. Choose your daily goal, then review your first cards."
+msgstr ""
 
 msgid "Your decks and reviews still work offline."
 msgstr "Твої колоди й повторення працюють і без з’єднання."

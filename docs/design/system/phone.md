@@ -18,7 +18,8 @@ The phone app in `apps/mobile` takes the tokens, the lantern, the flame, the rev
 | --- | --- | --- |
 | Push from the side | A page to read or work in: a deck, a card, a series, Insights, Activity, a deck in Explore | The named back, or a swipe from the start edge |
 | Sheet from below | A task with an end: Add a word, New deck, Edit card, a choice list such as the daily goal, the card menu in a review, the streak | A swipe down, with detents where the task grows |
-| Cover from below | A mode that takes the screen: a review, Welcome and sign-in | X, or pulling the top bar down |
+| Cover from below | A mode that takes the screen: a review | X, or pulling the top bar down |
+| Fade in place | A mode that replaces the screen: Welcome and sign-in | Finishing, or Skip for now |
 
 This is [overlays.md](overlays.md)'s rule in iOS's own navigation: from the side means back, from below means swipe down.
 
@@ -129,6 +130,10 @@ Insights keeps the web's figures, lines and order ([insights.md](../insights.md)
 ## Activity
 
 Activity is the web's list ([activity.md](../activity.md)): day headings over plates of rows. On the phone the next page loads as the end of the list comes near, with a spinner at the foot and Try again only when it failed, and the last row waits for the next page while it may continue there, so no count above the foot grows. A row that wrote cards opens them in a sheet over the list rather than in place, so the day keeps its shape; it peeks at the first six and drags up for the rest. A card or a deck opens its deck in Library. An import or an export opens on the web with an arrow out, because files are handled there ([ADR 0030](../../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)). A kind of row a newer server sends reads as a change to its deck, and a file's stage or format it does not know is named neutrally, never as finished or as a Lymi file. Activity is not kept on the phone, so opened with no connection it says it needs one.
+
+## Welcome
+
+Welcome is the web's questions as full-screen steps that fade in place of Today ([onboarding.md](../onboarding.md#on-the-phone)): one question to a screen with its answers as whole plates, no progress bar, and Continue as the `xl` button at the foot, where the thumb is. Until the first review, Today draws the getting started guide as a path from the lantern, with the current step as its one plate, then the Ready-made decks banner and the offer to connect an AI assistant.
 
 ## Opening
 

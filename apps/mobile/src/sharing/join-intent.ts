@@ -7,12 +7,17 @@ const KEEP_MS = 60 * 60_000;
 
 let promised: { key: string; at: number } | null = null;
 
-/** "Sign in to join" promises the learner, before the door, that this link joins once they are in. */
+/** Join or Add to Library, pressed signed out, promises the learner, before the door, that this link joins once they are in. */
 export function promiseJoin(key: string, now = Date.now()) {
   promised = { key, at: now };
 }
 
-/** True once, for the link the learner pressed "Sign in to join" on. */
+/** Whether this link is on its way back from sign-in to join, without taking the promise. */
+export function isPromised(key: string, now = Date.now()): boolean {
+  return !!promised && promised.key === key && now - promised.at < KEEP_MS;
+}
+
+/** True once, for the link the learner pressed Join or Add to Library on while signed out. */
 export function takeJoin(key: string, now = Date.now()): boolean {
   const kept = promised;
   if (!kept || kept.key !== key || now - kept.at >= KEEP_MS) return false;

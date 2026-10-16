@@ -594,6 +594,9 @@ msgstr "Ключи API"
 msgid "App language, and the language AI uses for meanings."
 msgstr "Язык приложения и язык, на котором AI пишет значения."
 
+msgid "Apple couldn’t confirm it’s you. Try again."
+msgstr "Apple не удалось подтвердить, что это ты. Попробуй ещё раз."
+
 msgctxt "language"
 msgid "Arabic"
 msgstr "Арабский"

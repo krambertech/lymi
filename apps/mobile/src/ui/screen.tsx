@@ -243,6 +243,8 @@ export function Screen({
     <View className="flex-1 bg-canvas">
       <Animated.ScrollView
         keyboardShouldPersistTaps="handled"
+        // A field on a page, such as Delete account's code, scrolls above the keyboard as iOS's own do.
+        automaticallyAdjustKeyboardInsets
         className="flex-1"
         contentContainerClassName="px-5 gap-7"
         contentContainerStyle={{ paddingTop: bar, paddingBottom: insets.bottom + 110 }}

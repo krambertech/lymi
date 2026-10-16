@@ -16,6 +16,7 @@ The learner's session answers 401 on `/api/me`, and `streak`'s Library still has
 
 ## Gotchas
 
+- Scrolls to the row and to **Send code** centre them: stopped at the first sight, they sit behind the glass tab bar and the tap lands on Library.
 - The page title and the button share the label **Delete account**, so the flow taps the button by its `delete-account` test ID.
 - The flow deletes the `learner` account; the next run's reset sign-in creates it again.
 - The Apple path and the publisher state need a manual check: Apple needs an account row with `provider_id = 'apple'` (insert one for a persona in the local D1), and Apple's sheet needs an Apple ID signed in on the Simulator. `publisher` shows the write-to-us state.

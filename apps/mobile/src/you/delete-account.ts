@@ -16,6 +16,8 @@ export const REFUSALS = {
   publisher: msg`This account publishes decks, so it can’t be deleted in the app.`,
 } as const;
 
+export const APPLE_FAILED = msg`Apple couldn’t confirm it’s you. Try again.`;
+
 export type Refusal = keyof typeof REFUSALS;
 
 /** Which refusal a failed request was, or null for anything else, such as no connection. */
@@ -43,9 +45,12 @@ export async function confirmWithApple(): Promise<AccountDeletionInput | null> {
     };
   } catch (error) {
     if ((error as { code?: string }).code === "ERR_REQUEST_CANCELED") return null;
-    throw error;
+    throw new AppleNotConfirmed();
   }
 }
+
+/** Apple's sheet failed before Lymi was asked, such as with no Apple Account signed in. */
+export class AppleNotConfirmed extends Error {}
 
 /**
  * Deletes the account, then forgets it on this phone. The root clears the cache, the widgets and

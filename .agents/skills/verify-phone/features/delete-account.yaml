@@ -4,8 +4,10 @@ name: Delete account
 ---
 - runFlow: _open.yaml
 - tapOn: "You"
+# Centred, or the row stops behind the tab bar and the tap lands on Library.
 - scrollUntilVisible:
     element: "Delete account"
+    centerElement: true
     timeout: 20000
 - tapOn: "Delete account"
 - extendedWaitUntil:
@@ -17,30 +19,37 @@ name: Delete account
 - takeScreenshot: 01-what-goes
 - scrollUntilVisible:
     element: "Send code"
+    centerElement: true
     timeout: 20000
 - assertVisible: "Export your library"
 - takeScreenshot: 02-before-code
 - tapOn: "Send code"
+# Where the code went is the field's VoiceOver hint, not text Maestro can read.
 - extendedWaitUntil:
-    visible: "We sent it to ${EMAIL}.*"
+    visible:
+      id: "deletion-code"
     timeout: 20000
+- takeScreenshot: 03-code-sent
 - inputText: "000000"
+# The keyboard covers the button, and its Done only puts the keyboard away.
+- tapOn: "Done"
 - tapOn:
     id: "delete-account"
 - extendedWaitUntil:
     visible: "That code isn’t right.*"
     timeout: 20000
-- takeScreenshot: 03-wrong-code
+- takeScreenshot: 04-wrong-code
 - runScript: delete-account-code.js
 - tapOn:
     id: "deletion-code"
 - eraseText: 6
 - inputText: "${output.CODE}"
-- takeScreenshot: 04-code
+- tapOn: "Done"
+- takeScreenshot: 05-code
 - tapOn:
     id: "delete-account"
 # Signed out, the app lands on Welcome, whose dev door is the landmark.
 - extendedWaitUntil:
     visible: "Dev sign-in as learner"
     timeout: 30000
-- takeScreenshot: 05-signed-out
+- takeScreenshot: 06-signed-out

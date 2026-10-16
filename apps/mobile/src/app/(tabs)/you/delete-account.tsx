@@ -16,7 +16,14 @@ import { Button, Icon, Plate, SectionTitle, Text } from "../../../ui/primitives"
 import { Row, RowFace, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
 import { Skeleton } from "../../../ui/skeleton";
-import { confirmWithApple, deleteAccount, REFUSALS, refusalOf } from "../../../you/delete-account";
+import {
+  APPLE_FAILED,
+  AppleNotConfirmed,
+  confirmWithApple,
+  deleteAccount,
+  REFUSALS,
+  refusalOf,
+} from "../../../you/delete-account";
 
 const SUPPORT = "hello@lymi.app";
 
@@ -242,8 +249,8 @@ function CodeConfirm({ onBlocked }: { onBlocked: () => void }) {
           autoComplete="one-time-code"
           maxLength={6}
           autoFocus
+          // Only the button deletes; the keyboard's Done just puts the keyboard away.
           returnKeyType="done"
-          onSubmitEditing={() => void confirm()}
           testID="deletion-code"
         />
         <FieldDescription>
@@ -291,7 +298,13 @@ function AppleConfirm({ onBlocked }: { onBlocked: () => void }) {
     } catch (err) {
       const refusal = refusalOf(err);
       if (refusal === "publisher") onBlocked();
-      setError(refusal ? i18n._(REFUSALS[refusal]) : errorMessage(err));
+      setError(
+        err instanceof AppleNotConfirmed
+          ? i18n._(APPLE_FAILED)
+          : refusal
+            ? i18n._(REFUSALS[refusal])
+            : errorMessage(err),
+      );
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setPending(false);
     }

@@ -25,6 +25,8 @@ export function RowMenu({
 }: RowMenuProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  // The sheet mounts on a long press and stays until it has gone, so a long list carries none.
+  const [mounted, setMounted] = useState(false);
   // What a row chose runs once the sheet has gone, so a page it opens or a sheet it raises is not under it.
   const chosen = useRef<RowMenuItem | null>(null);
   const groups = ((Array.isArray(items[0]) ? items : [items]) as RowMenuItem[][]).filter(
@@ -56,6 +58,7 @@ export function RowMenu({
           flat.length > 0
             ? () => {
                 haptics.longPress();
+                setMounted(true);
                 setOpen(true);
               }
             : undefined
@@ -64,32 +67,35 @@ export function RowMenu({
       >
         {children}
       </Pressable>
-      <Sheet
-        open={open}
-        onOpenChange={setOpen}
-        onDismiss={() => {
-          const item = chosen.current;
-          chosen.current = null;
-          if (item) take(item);
-        }}
-      >
-        {groups.map((group) => (
-          <SheetGroup key={group.map((i) => i.id).join()}>
-            {group.map((item) => (
-              <SheetRow
-                key={item.id}
-                label={item.label}
-                icon={item.icon}
-                destructive={item.destructive}
-                onPress={() => {
-                  chosen.current = item;
-                  setOpen(false);
-                }}
-              />
-            ))}
-          </SheetGroup>
-        ))}
-      </Sheet>
+      {mounted && (
+        <Sheet
+          open={open}
+          onOpenChange={setOpen}
+          onDismiss={() => {
+            setMounted(false);
+            const item = chosen.current;
+            chosen.current = null;
+            if (item) take(item);
+          }}
+        >
+          {groups.map((group) => (
+            <SheetGroup key={group.map((i) => i.id).join()}>
+              {group.map((item) => (
+                <SheetRow
+                  key={item.id}
+                  label={item.label}
+                  icon={item.icon}
+                  destructive={item.destructive}
+                  onPress={() => {
+                    chosen.current = item;
+                    setOpen(false);
+                  }}
+                />
+              ))}
+            </SheetGroup>
+          ))}
+        </Sheet>
+      )}
     </View>
   );
 }

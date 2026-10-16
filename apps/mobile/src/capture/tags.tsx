@@ -45,7 +45,7 @@ export function TagsBox({
   const draft = held ?? own;
   const setDraft = onDraft ?? setOwn;
   const full = value.length >= TAG_LIMITS.count;
-  const focus = useSheetFocus({ on: autoFocus, ref: inputRef });
+  const focus = useSheetFocus({ on: !!autoFocus, ref: inputRef });
   const type = (text: string) => {
     // A pasted "streets, signs" is two tags, so the cap is per tag here rather than a maxLength that cuts the paste.
     const cut = text.lastIndexOf(",");

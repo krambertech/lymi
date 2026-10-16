@@ -124,6 +124,20 @@ function SmartAdd({
 
   useEffect(() => () => stop.current?.abort(), []);
 
+  // A photo's preview URL is freed once it leaves the list or Smart add closes.
+  const previews = useRef(new Set<string>());
+  useEffect(() => {
+    const current = new Set(pages.flatMap((page) => (page.url ? [page.url] : [])));
+    for (const url of previews.current) if (!current.has(url)) URL.revokeObjectURL(url);
+    previews.current = current;
+  }, [pages]);
+  useEffect(
+    () => () => {
+      for (const url of previews.current) URL.revokeObjectURL(url);
+    },
+    [],
+  );
+
   const start = async () => {
     if (decks.length === 0) {
       setError(t`Create a deck first, then add a lesson to it.`);

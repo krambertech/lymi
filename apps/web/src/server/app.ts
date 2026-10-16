@@ -19,6 +19,7 @@ import { requireStrongPassword } from "./password-rules";
 import { requireSupportedPhone } from "./phone-clients";
 import { openPreview, requirePreviewAccess } from "./preview-access";
 import { authenticate } from "./principal";
+import { account } from "./routes/account";
 import { activity } from "./routes/activity";
 import { add, addOpen } from "./routes/add";
 import { audio } from "./routes/audio";
@@ -292,6 +293,8 @@ app.patch(
     return c.json(me);
   },
 );
+
+app.route("/api/me", account);
 
 // A member's states catch up to their decks before anything that reads progress. ADR 0022.
 for (const path of [

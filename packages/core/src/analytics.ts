@@ -265,6 +265,11 @@ export const analyticsEvents = {
     added: z.number().int().min(0),
     removed: z.number().int().min(0),
   }),
+  account_deleted: z.object({
+    client: z.enum(["web", "phone"]),
+    confirmed_with: z.enum(["email", "apple"]),
+    kept_decks: count,
+  }),
 } as const;
 export type AnalyticsName = keyof typeof analyticsEvents;
 export type AnalyticsProperties<N extends AnalyticsName> = z.infer<(typeof analyticsEvents)[N]>;
@@ -319,6 +324,7 @@ export const analyticsProducers = {
   deck_enrichment_changed: ["worker"],
   deck_purpose_set: ["worker"],
   entry_opened: ["phone"],
+  account_deleted: ["worker"],
 } satisfies Record<AnalyticsName, readonly AnalyticsProducer[]>;
 
 export function eventProperties(

@@ -903,6 +903,27 @@ export const auditLog = sqliteTable(
   ],
 );
 
+/**
+ * That an account existed and ended, with nothing that identifies the person: no email, name or
+ * text. Not a foreign key, since the user row is gone the moment this is written.
+ */
+export const accountDeletions = sqliteTable("account_deletions", {
+  /** The deleted user's id, random and meaningless once the account is gone. */
+  id: text("id").primaryKey(),
+  client: text("client", { enum: ["web", "phone"] }).notNull(),
+  confirmedWith: text("confirmed_with", { enum: ["email", "apple"] }).notNull(),
+  /** When the account was made, so how long people stay can be read without the account. */
+  accountCreatedAt: integer("account_created_at", { mode: "timestamp_ms" }).notNull(),
+  decks: integer("decks").notNull(),
+  cards: integer("cards").notNull(),
+  reviews: integer("reviews").notNull(),
+  /** Owned decks other people studied, which stayed for them. */
+  keptDecks: integer("kept_decks").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp_ms" })
+    .notNull()
+    .default(sql`(unixepoch() * 1000)`),
+});
+
 export type Series = typeof series.$inferSelect;
 export type Deck = typeof decks.$inferSelect;
 export type Section = typeof sections.$inferSelect;

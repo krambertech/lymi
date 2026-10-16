@@ -201,7 +201,15 @@
       "sha256": "439fae9630cc2b54b9d136ead816ef7089768c1a496d88b611c34085bb0c75ae"
     },
     {
-      "name": "0050_slippery_mauler.sql",
+      "name": "0050_numerous_gwen_stacy.sql",
+      "sha256": "5d3291c7599a2c7742e10395b558afa38c76fe638ca014718a498ae29179b99f"
+    },
+    {
+      "name": "0051_seed_former_owner.sql",
+      "sha256": "9de39258e96580b1ad069bca62ba9e460c8120567c1972ad39516791a3ab609f"
+    },
+    {
+      "name": "0052_daffy_whizzer.sql",
       "sha256": "35b43d17d77adfe7edca98fa396a3cd23135ea1383e8c51194bb0259440ea7a0"
     }
   ]

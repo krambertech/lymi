@@ -1869,6 +1869,9 @@ msgstr "Enter an email address, like you@example.com."
 msgid "Enter an email address."
 msgstr "Enter an email address."
 
+msgid "Enter this code in Lymi to delete your account and everything in it:"
+msgstr "Enter this code in Lymi to delete your account and everything in it:"
+
 msgid "Enter this code in the Lymi app to finish creating your account:"
 msgstr "Enter this code in the Lymi app to finish creating your account:"
 
@@ -2174,6 +2177,9 @@ msgstr "If {address} has a Lymi password, a reset link is on the way. It works f
 
 msgid "If {address} isn’t confirmed yet, a confirmation link is on the way."
 msgstr "If {address} isn’t confirmed yet, a confirmation link is on the way."
+
+msgid "If you didn’t do this, reply to this email and tell us what happened."
+msgstr "If you didn’t do this, reply to this email and tell us what happened."
 
 msgid "Import"
 msgstr "Import"
@@ -3914,6 +3920,9 @@ msgstr "the card"
 msgid "The cards you kept move back into it"
 msgstr "The cards you kept move back into it"
 
+msgid "The code works for 15 minutes. If you didn’t ask to delete your account, ignore this email and nothing will change."
+msgstr "The code works for 15 minutes. If you didn’t ask to delete your account, ignore this email and nothing will change."
+
 msgid "The code works for 15 minutes. If you didn’t create a Lymi account, ignore this email."
 msgstr "The code works for 15 minutes. If you didn’t create a Lymi account, ignore this email."
 
@@ -4454,6 +4463,9 @@ msgstr "You’re done for today"
 msgid "You’re done for today."
 msgstr "You’re done for today."
 
+msgid "Your code to delete your Lymi account"
+msgstr "Your code to delete your Lymi account"
+
 msgid "Your deck"
 msgstr "Your deck"
 
@@ -4466,8 +4478,14 @@ msgstr "Your Google photo is back"
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Your grades are saved. Check your connection and try again."
 
+msgid "Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi."
+msgstr "Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi."
+
 msgid "Your Lymi account signs in with Google"
 msgstr "Your Lymi account signs in with Google"
+
+msgid "Your Lymi account was deleted"
+msgstr "Your Lymi account was deleted"
 
 msgid "Your Lymi confirmation code"
 msgstr "Your Lymi confirmation code"

@@ -1869,6 +1869,9 @@ msgstr "Введи адрес почты, например you@example.com."
 msgid "Enter an email address."
 msgstr "Введи адрес электронной почты."
 
+msgid "Enter this code in Lymi to delete your account and everything in it:"
+msgstr "Введи этот код в Lymi, чтобы удалить аккаунт и всё, что в нём есть:"
+
 msgid "Enter this code in the Lymi app to finish creating your account:"
 msgstr "Введи этот код в приложении Lymi, чтобы закончить создание аккаунта:"
 
@@ -2174,6 +2177,9 @@ msgstr "Если у адреса {address} есть пароль Lymi, ссыл�
 
 msgid "If {address} isn’t confirmed yet, a confirmation link is on the way."
 msgstr "Если адрес {address} ещё не подтверждён, ссылка для подтверждения уже в пути."
+
+msgid "If you didn’t do this, reply to this email and tell us what happened."
+msgstr "Если это был не ты, ответь на это письмо и расскажи, что случилось."
 
 msgid "Import"
 msgstr "Импорт"
@@ -3914,6 +3920,9 @@ msgstr "карточку"
 msgid "The cards you kept move back into it"
 msgstr "Оставленные карточки вернутся в него"
 
+msgid "The code works for 15 minutes. If you didn’t ask to delete your account, ignore this email and nothing will change."
+msgstr "Код действует 15 минут. Если это не ты просишь удалить аккаунт, просто не обращай внимания на это письмо, и ничего не изменится."
+
 msgid "The code works for 15 minutes. If you didn’t create a Lymi account, ignore this email."
 msgstr "Код действует 15 минут. Если это не ты создаёшь аккаунт Lymi, просто не обращай внимания на это письмо."
 
@@ -4454,6 +4463,9 @@ msgstr "На сегодня всё"
 msgid "You’re done for today."
 msgstr "На сегодня всё."
 
+msgid "Your code to delete your Lymi account"
+msgstr "Твой код для удаления аккаунта Lymi"
+
 msgid "Your deck"
 msgstr "Твоя колода"
 
@@ -4466,8 +4478,14 @@ msgstr "Снова показываем фото из Google"
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Твои оценки сохранены. Проверь соединение и попробуй снова."
 
+msgid "Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi."
+msgstr "Твой аккаунт Lymi и всё, что в нём было, удалены по твоей просьбе. Больше писем от Lymi не будет."
+
 msgid "Your Lymi account signs in with Google"
 msgstr "Твой аккаунт Lymi входит через Google"
+
+msgid "Your Lymi account was deleted"
+msgstr "Твой аккаунт Lymi удалён"
 
 msgid "Your Lymi confirmation code"
 msgstr "Твой код подтверждения Lymi"

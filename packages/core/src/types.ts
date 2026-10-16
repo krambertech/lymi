@@ -883,6 +883,26 @@ export const NameInput = z.object({
 });
 export type NameInput = z.infer<typeof NameInput>;
 
+/** Proof that the learner means to delete their account: the emailed code, or a fresh Sign in with Apple. */
+export const AccountDeletionInput = z.union([
+  z.object({
+    code: z
+      .string()
+      .trim()
+      .regex(/^\d{6}$/, "Enter the 6-digit code from the email."),
+  }),
+  z.object({
+    apple: z.object({
+      idToken: z.string().min(1),
+      /** The raw nonce the phone hashed into the Apple request. */
+      nonce: z.string().min(1),
+      /** Apple's one-use code, which the server trades for a token to revoke. */
+      authorizationCode: z.string().min(1).optional(),
+    }),
+  }),
+]);
+export type AccountDeletionInput = z.infer<typeof AccountDeletionInput>;
+
 export const SettingsPatch = z.object({
   /** The language of the interface and reminders. Meanings follow it. */
   appLanguage: AppLanguage.optional(),

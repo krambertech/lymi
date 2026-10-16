@@ -14,6 +14,7 @@ import {
   authClient,
   continueOAuthAuthorization,
   followOAuthRedirect,
+  signInWithApple,
   signInWithGoogle,
 } from "../lib/auth";
 import { useDocumentTitle } from "../lib/document-title";
@@ -108,11 +109,11 @@ function Login() {
   const [mode, setMode] = useState<LoginMode>(openOn ?? "sign-in");
   const [email, setEmail] = useState(known ?? "");
   const [password, setPassword] = useState("");
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState<"google" | "apple" | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [failed, setFailed] = useState<string | null>(null);
-  /** A Google failure belongs beside the Google button, not with the form. */
-  const [googleFailed, setGoogleFailed] = useState<string | null>(null);
+  /** A provider failure belongs beside the sign-in buttons. */
+  const [socialFailed, setSocialFailed] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [notice, setNotice] = useState<Notice | null>(null);
@@ -163,7 +164,7 @@ function Login() {
 
   function clearMessages() {
     setFailed(null);
-    setGoogleFailed(null);
+    setSocialFailed(null);
     setEmailError(null);
     setPasswordError(null);
   }
@@ -339,12 +340,27 @@ function Login() {
     }
   }
 
+  async function social(provider: "google" | "apple") {
+    if (busy || submitting) return;
+    setBusy(provider);
+    clearMessages();
+    clearPersistedLearnerState({ keepQueued: true });
+    try {
+      const res = await (provider === "apple" ? signInWithApple : signInWithGoogle)(returnTo);
+      if (res.error) setSocialFailed(t`Sign-in didn’t finish. Try again.`);
+    } catch {
+      setSocialFailed(t`Couldn’t reach the sign-in service. Check your connection and try again.`);
+    } finally {
+      setBusy(null);
+    }
+  }
+
   return (
     <LoginView
       app={app}
       mode={mode}
       onModeChange={switchTo}
-      pending={busy ? "google" : submitting ? "form" : undefined}
+      pending={busy ?? (submitting ? "form" : undefined)}
       email={email}
       onEmailChange={(value) => {
         setEmail(value);
@@ -359,29 +375,13 @@ function Login() {
       notice={notice ?? undefined}
       errors={{
         // The door's own failure: a Google attempt, or a callback that came back refused.
-        door: googleFailed ?? (issue ? i18n._(issue) : undefined),
+        door: socialFailed ?? (issue ? i18n._(issue) : undefined),
         form: failed,
         email: emailError,
         password: passwordError,
       }}
-      onGoogle={async () => {
-        setBusy(true);
-        clearMessages();
-        // The account coming back may not be the one whose cache is on this device.
-        clearPersistedLearnerState({ keepQueued: true });
-        try {
-          // better-auth returns the failure rather than throwing, so a silent `await` here
-          // left the button spinning and then stopping with nothing said.
-          const res = await signInWithGoogle(returnTo);
-          if (res.error) setGoogleFailed(t`Sign-in didn’t finish. Try again.`);
-        } catch {
-          setGoogleFailed(
-            t`Couldn’t reach the sign-in service. Check your connection and try again.`,
-          );
-        } finally {
-          setBusy(false);
-        }
-      }}
+      onGoogle={() => social("google")}
+      onApple={() => social("apple")}
     >
       {import.meta.env.DEV && dev === "1" && <DevSignIn returnTo={returnTo} />}
     </LoginView>

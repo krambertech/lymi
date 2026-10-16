@@ -2,6 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { MIN_PASSWORD_LENGTH } from "@lymi/core";
 import type { FormEvent, ReactNode } from "react";
 import { type AppIdentity, AppMark } from "../components/app-mark";
+import { AppleMark } from "../components/apple-mark";
 import { AuthFrame } from "../components/auth-frame";
 import { AuthNotice } from "../components/auth-notice";
 import { Button } from "../components/button";
@@ -39,6 +40,7 @@ export interface LoginErrors {
 export interface LoginProps {
   mode?: LoginMode | undefined;
   onModeChange?: ((mode: LoginMode) => void) | undefined;
+  onApple?: (() => void | Promise<void>) | undefined;
   onGoogle?: (() => void | Promise<void>) | undefined;
   /** Submits the form the current mode shows. */
   onSubmit?: ((values: CredentialValues) => void | Promise<void>) | undefined;
@@ -47,7 +49,7 @@ export interface LoginProps {
   password?: string | undefined;
   onPasswordChange?: ((password: string) => void) | undefined;
   /** Which way in is working: the Google button or the form. */
-  pending?: "google" | "form" | undefined;
+  pending?: "apple" | "google" | "form" | undefined;
   /**
    * Set when an MCP client sent the learner here from its own sign-in. The door then says
    * who is waiting on the other side, so the consent screen is not the first mention of it.
@@ -64,6 +66,7 @@ export function LoginView({
   mode = "sign-in",
   onModeChange,
   onGoogle,
+  onApple,
   onSubmit,
   email = "",
   onEmailChange,
@@ -149,11 +152,23 @@ export function LoginView({
                 <Button
                   variant="secondary"
                   size="lg"
+                  loading={pending === "apple"}
+                  disabled={Boolean(pending && pending !== "apple")}
+                  onClick={onApple}
+                  className="mt-7 w-full edge-2 font-medium"
+                >
+                  <AppleMark data-icon="inline-start" className="size-5" />
+                  <Trans>Continue with Apple</Trans>
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="lg"
                   loading={pending === "google"}
+                  disabled={Boolean(pending && pending !== "google")}
                   onClick={onGoogle}
                   // A stronger edge than the usual secondary: this is the way in most learners
                   // take, and the one amber belongs to the form they are filling.
-                  className="mt-7 w-full edge-2 font-medium"
+                  className="mt-3 w-full edge-2 font-medium"
                 >
                   <GoogleMark data-icon="inline-start" className="size-5" />
                   <Trans>Continue with Google</Trans>

@@ -1558,6 +1558,9 @@ msgstr "Continue"
 msgid "Continue to {appName}"
 msgstr "Continue to {appName}"
 
+msgid "Continue with Apple"
+msgstr "Continue with Apple"
+
 msgid "Continue with Google"
 msgstr "Continue with Google"
 

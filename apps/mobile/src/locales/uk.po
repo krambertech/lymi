@@ -1385,6 +1385,9 @@ msgstr "Підтвердити"
 msgid "Confirm it’s you"
 msgstr "Підтверди, що це ти"
 
+msgid "Confirm with Apple to delete your account for good."
+msgstr "Підтвердь через Apple, щоб назавжди видалити акаунт."
+
 msgid "Connect"
 msgstr "Підключити"
 

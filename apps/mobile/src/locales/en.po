@@ -1385,6 +1385,9 @@ msgstr "Confirm"
 msgid "Confirm it’s you"
 msgstr "Confirm it’s you"
 
+msgid "Confirm with Apple to delete your account for good."
+msgstr "Confirm with Apple to delete your account for good."
+
 msgid "Connect"
 msgstr "Connect"
 

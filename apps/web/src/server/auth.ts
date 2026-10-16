@@ -13,6 +13,7 @@ import { emailOTP } from "better-auth/plugins/email-otp";
 import { jwt } from "better-auth/plugins/jwt";
 import { cookiePrefix } from "../shared/cookies";
 import { appleIdTokenVerifier } from "./apple-id-token";
+import { appleClientSecret, appleKeyOf } from "./apple-revoke";
 import { fetchClientMetadataResource } from "./cimd-fetch";
 import type { Db } from "./db";
 import { schema } from "./db";
@@ -97,7 +98,7 @@ export function createAuth(
     baseURL: env.PRODUCT_URL,
     basePath: "/api/auth",
     secret: env.BETTER_AUTH_SECRET,
-    trustedOrigins: [env.PRODUCT_URL, PHONE_APP_ORIGIN],
+    trustedOrigins: [env.PRODUCT_URL, PHONE_APP_ORIGIN, "https://appleid.apple.com"],
     disabledPaths: UNUSED_OTP_PATHS,
     database: drizzleAdapter(db, {
       provider: "sqlite",
@@ -298,16 +299,22 @@ export function createAuth(
         : {}),
       ...(env.APPLE_APP_BUNDLE_IDENTIFIER
         ? {
-            // The phone's native sheet only: it posts Apple's ID token, whose audience is the
-            // app's bundle identifier. The web's redirect would need a Services ID and key. Issue 528.
-            apple: {
-              clientId: env.APPLE_APP_BUNDLE_IDENTIFIER,
-              clientSecret: "",
-              appBundleIdentifier: env.APPLE_APP_BUNDLE_IDENTIFIER,
-              verifyIdToken: appleIdTokenVerifier(env.APPLE_APP_BUNDLE_IDENTIFIER),
-              // Apple sends the name once, on the first sign-in, and a hidden address has none to borrow.
-              mapProfileToUser: (profile) =>
-                profile.name ? {} : { name: profile.email?.split("@")[0] ?? "" },
+            apple: async () => {
+              const bundleIdentifier = env.APPLE_APP_BUNDLE_IDENTIFIER;
+              if (!bundleIdentifier) throw new Error("Apple sign-in is not configured");
+              const key = appleKeyOf(env);
+              const serviceId = env.APPLE_CLIENT_ID;
+              return {
+                clientId: serviceId && key ? serviceId : bundleIdentifier,
+                clientSecret:
+                  serviceId && key
+                    ? await appleClientSecret({ ...key, bundleIdentifier: serviceId })
+                    : "",
+                appBundleIdentifier: bundleIdentifier,
+                verifyIdToken: appleIdTokenVerifier(bundleIdentifier),
+                mapProfileToUser: (profile: { name?: string; email?: string }) =>
+                  profile.name ? {} : { name: profile.email?.split("@")[0] ?? "" },
+              };
             },
           }
         : {}),
@@ -337,7 +344,7 @@ export function createAuth(
               {
                 name: "signed_up",
                 method: provingSignInOf(context) ?? "email",
-                ...(await firstTouchOf(isGoogleCallback(context), headers)),
+                ...(await firstTouchOf(callbackProvider(context) !== null, headers)),
               },
               waitUntil,
               analyticsContextFor(db, user.id, headers),
@@ -494,8 +501,8 @@ export type Auth = ReturnType<typeof createAuth>;
 export type SessionUser = NonNullable<Awaited<ReturnType<Auth["api"]["getSession"]>>>["user"];
 
 /** Where the visit began: the sign-up form sends it, and Google's round trip keeps it in OAuth state. */
-async function firstTouchOf(google: boolean, headers: Headers | undefined) {
-  if (!google) return parseFirstTouch(headers?.get(FIRST_TOUCH_HEADER));
+async function firstTouchOf(redirect: boolean, headers: Headers | undefined) {
+  if (!redirect) return parseFirstTouch(headers?.get(FIRST_TOUCH_HEADER));
   try {
     return parseFirstTouch((await getOAuthState<{ firstTouch?: unknown }>())?.firstTouch);
   } catch {
@@ -509,19 +516,20 @@ function isProvingProvider(id: unknown): id is ProvingProvider {
 
 /** The provider whose proof of the address this request signs in with: Google's callback, or an ID token the phone posts. */
 function provingSignInOf(context: GenericEndpointContext | null): ProvingProvider | null {
-  if (isGoogleCallback(context)) return "google";
+  const callback = callbackProvider(context);
+  if (callback) return callback;
   const body = context?.body as { provider?: unknown; idToken?: unknown } | undefined;
   if (context?.path === "/sign-in/social" && body?.idToken && isProvingProvider(body.provider))
     return body.provider;
   return null;
 }
 
-function isGoogleCallback(context: GenericEndpointContext | null): boolean {
-  // The router sets the matched path, "/callback/google"; direct API calls keep the pattern.
-  const path = context?.path;
-  return (
-    (path === "/callback/google" || path === "/callback/:id") && context?.params?.id === "google"
-  );
+function callbackProvider(context: GenericEndpointContext | null): ProvingProvider | null {
+  const provider = context?.params?.id;
+  if (!isProvingProvider(provider)) return null;
+  return context?.path === `/callback/${provider}` || context?.path === "/callback/:id"
+    ? provider
+    : null;
 }
 
 /** How long a first sign-in waits for the Google photo before the rest finishes in the background. */

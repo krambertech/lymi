@@ -246,3 +246,158 @@ describe("Sign in with Apple before it is configured", () => {
     expect(response.status).toBe(404);
   });
 });
+
+const SERVICE_ID = "app.lymi.web.test";
+const signingKey = generateKeyPairSync("ec", { namedCurve: "prime256v1" });
+let web: TestApp;
+
+async function webAppleSignIn(email: string, claims: Record<string, unknown> = {}) {
+  const start = await web.fetch(
+    "/api/auth/sign-in/social",
+    json(
+      {
+        provider: "apple",
+        callbackURL: "/library",
+        errorCallbackURL: "/login?returnTo=%2Flibrary",
+        additionalData: { firstTouch: { first_landing_page: "/explore/estonian-a1" } },
+      },
+      { headers: { origin: web.env.PRODUCT_URL } },
+    ),
+  );
+  expect(start.status).toBe(200);
+  const { url } = (await start.json()) as { url: string };
+  const authorize = new URL(url);
+  expect(authorize.searchParams.get("client_id")).toBe(SERVICE_ID);
+  expect(authorize.searchParams.get("response_mode")).toBe("form_post");
+  expect(authorize.searchParams.get("redirect_uri")).toBe(
+    `${web.env.PRODUCT_URL}/api/auth/callback/apple`,
+  );
+  const state = authorize.searchParams.get("state") ?? "";
+  vi.stubGlobal("fetch", async (input: RequestInfo | URL, init?: RequestInit) => {
+    const target = new URL(input instanceof Request ? input.url : String(input));
+    if (target.href === "https://appleid.apple.com/auth/token") {
+      const sent = new URLSearchParams(String(init?.body));
+      expect(sent.get("client_id")).toBe(SERVICE_ID);
+      const secret = JSON.parse(
+        Buffer.from(sent.get("client_secret")!.split(".")[1]!, "base64url").toString(),
+      );
+      expect(secret).toMatchObject({
+        iss: "TEAM",
+        sub: SERVICE_ID,
+        aud: "https://appleid.apple.com",
+      });
+      expect(secret.exp - secret.iat).toBe(300);
+      return Response.json({
+        access_token: "apple-access",
+        refresh_token: "apple-refresh",
+        token_type: "Bearer",
+        expires_in: 3600,
+        id_token: appleToken({ sub: email, email, aud: SERVICE_ID, ...claims }),
+      });
+    }
+    return realFetch(input, init);
+  });
+  const posted = await web.fetch("/api/auth/callback/apple", {
+    method: "POST",
+    headers: {
+      origin: "https://appleid.apple.com",
+      "content-type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      state,
+      code: "apple-code",
+      user: JSON.stringify({ name: { firstName: "Ada", lastName: "Apple" } }),
+    }),
+  });
+  expect(posted.status).toBe(302);
+  // Apple posts cross-site; Better Auth returns to a same-site GET before reading its state cookie.
+  const callback = new URL(posted.headers.get("location")!);
+  return web.fetch(`${callback.pathname}${callback.search}`, {
+    headers: { cookie: cookieOf(start) },
+  });
+}
+
+describe("signing in with Apple from the web", () => {
+  beforeAll(async () => {
+    web = await testApp({
+      env: {
+        APPLE_APP_BUNDLE_IDENTIFIER: BUNDLE,
+        APPLE_CLIENT_ID: SERVICE_ID,
+        APPLE_TEAM_ID: "TEAM",
+        APPLE_KEY_ID: "KEY",
+        APPLE_PRIVATE_KEY: signingKey.privateKey
+          .export({ format: "pem", type: "pkcs8" })
+          .toString(),
+      },
+    });
+  }, 60_000);
+
+  it("handles Apple's POST callback, keeps the destination, and records Apple attribution", async () => {
+    const delivered = vi.spyOn(posthog, "trackProductEvent").mockResolvedValue();
+    const email = "apple-web-new@lymi.test";
+    const response = await webAppleSignIn(email);
+    expect(response.status).toBe(302);
+    expect(response.headers.get("location")).toBe("/library");
+    const cookie = cookieOf(response);
+    expect(cookie).toContain("session_token=");
+    const session = await web.fetch("/api/auth/get-session", { headers: { cookie } });
+    expect(await session.json()).toMatchObject({ user: { email, name: "Ada Apple" } });
+    const signup = delivered.mock.calls.find((call) => call[2].name === "signed_up");
+    expect(signup?.[2]).toMatchObject({
+      name: "signed_up",
+      method: "apple",
+      first_landing_page: "/explore/estonian-a1",
+    });
+    expect(delivered.mock.calls.filter((call) => call[2].name === "signed_in")).toHaveLength(1);
+  });
+
+  it("retires an unconfirmed password when Apple's web callback proves the address", async () => {
+    const email = "apple-web-claims@lymi.test";
+    await web.fetch(
+      "/api/auth/sign-up/email",
+      json(
+        { email, password: PASSWORD, name: "Someone" },
+        { headers: { origin: web.env.PRODUCT_URL } },
+      ),
+    );
+    const response = await webAppleSignIn(email);
+    expect(cookieOf(response)).toContain("session_token=");
+    const [user] = await web.db.select().from(schema.user).where(eq(schema.user.email, email));
+    const accounts = await web.db
+      .select()
+      .from(schema.account)
+      .where(eq(schema.account.userId, user!.id));
+    expect(accounts.map((account) => account.providerId)).toEqual(["apple"]);
+  });
+
+  it("does not claim an existing account with an unverified Apple address", async () => {
+    const learner = await web.signUp("apple-web-unverified");
+    const response = await webAppleSignIn(learner.email, { email_verified: "false" });
+    expect(cookieOf(response)).not.toContain("session_token=");
+    expect(response.headers.get("location")).toContain("error=");
+  });
+
+  it("refuses a callback with a forged state", async () => {
+    const response = await web.fetch("/api/auth/callback/apple?code=apple-code&state=forged");
+    expect(cookieOf(response)).not.toContain("session_token=");
+    expect(response.headers.get("location")).toContain("error=");
+  });
+
+  it("still accepts the phone's bundle audience when the web Services ID is configured", async () => {
+    stubAppleKeys();
+    const response = await web.fetch(
+      "/api/auth/sign-in/social",
+      json(
+        {
+          provider: "apple",
+          idToken: {
+            token: appleToken({ sub: "apple-both", email: "apple-both@lymi.test" }),
+            nonce: NONCE,
+          },
+        },
+        { headers: { "expo-origin": "lymi://" } },
+      ),
+    );
+    expect(response.status).toBe(200);
+  });
+});

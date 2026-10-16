@@ -9,6 +9,7 @@ import {
 } from "@lymi/core";
 import { useState } from "react";
 import { haptics } from "../theme/haptics";
+import { appleSignInCancelled, requestAppleCredential, useAppleAvailable } from "./apple";
 import { API_URL, authClient } from "./client";
 
 /**
@@ -68,7 +69,7 @@ export interface Notice {
 }
 
 /**
- * The phone's front door: Google, or an email and password. A new account is confirmed with a
+ * The phone's front door: Apple, Google, or an email and password. A new account is confirmed with a
  * code from its email, because a link would open in Safari rather than here.
  */
 export function useSignIn() {
@@ -77,8 +78,9 @@ export function useSignIn() {
   const [email, setEmailValue] = useState("");
   const [password, setPasswordValue] = useState("");
   const [code, setCodeValue] = useState("");
-  const [pending, setPending] = useState<"google" | "form" | "resend" | null>(null);
-  const [googleError, setGoogleError] = useState<string | null>(null);
+  const [pending, setPending] = useState<"apple" | "google" | "form" | "resend" | null>(null);
+  const appleAvailable = useAppleAvailable();
+  const [socialError, setSocialError] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{
     email?: string;
@@ -88,7 +90,7 @@ export function useSignIn() {
   const [notice, setNotice] = useState<Notice | null>(null);
 
   function clear() {
-    setGoogleError(null);
+    setSocialError(null);
     setFormError(null);
     setFieldErrors({});
   }
@@ -99,16 +101,34 @@ export function useSignIn() {
   }
 
   async function google() {
+    if (pending) return;
     clear();
     setPending("google");
     try {
       // The session lands in SecureStore when the browser comes back; the guard then opens Today.
       const res = await authClient.signIn.social({ provider: "google", callbackURL: "/" });
-      if (res.error) fail(() => setGoogleError(t`Sign-in didn’t finish. Try again.`));
+      if (res.error) fail(() => setSocialError(t`Sign-in didn’t finish. Try again.`));
     } catch {
       fail(() =>
-        setGoogleError(t`Couldn’t reach the sign-in service. Check your connection and try again.`),
+        setSocialError(t`Couldn’t reach the sign-in service. Check your connection and try again.`),
       );
+    } finally {
+      setPending(null);
+    }
+  }
+
+  async function apple() {
+    if (pending) return;
+    clear();
+    setPending("apple");
+    try {
+      const { authorizationCode: _, ...idToken } = await requestAppleCredential();
+      const res = await authClient.signIn.social({ provider: "apple", idToken });
+      if (res.error) fail(() => setSocialError(t`Sign-in didn’t finish. Try again.`));
+    } catch (error) {
+      if (!appleSignInCancelled(error)) {
+        fail(() => setSocialError(t`Sign-in didn’t finish. Try again.`));
+      }
     } finally {
       setPending(null);
     }
@@ -234,9 +254,11 @@ export function useSignIn() {
     code,
     setCode,
     pending,
-    errors: { google: googleError, form: formError, ...fieldErrors },
+    errors: { social: socialError, form: formError, ...fieldErrors },
     notice,
     google,
+    apple,
+    appleAvailable,
     submit,
     resend,
   };

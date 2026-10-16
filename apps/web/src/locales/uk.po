@@ -2138,7 +2138,7 @@ msgid "If {address} isn’t confirmed yet, a confirmation link is on the way."
 msgstr "Якщо {address} ще не підтверджено, посилання для підтвердження вже в дорозі."
 
 msgid "If you didn’t do this, reply to this email and tell us what happened."
-msgstr "Якщо це зробив не ти, дай відповідь на цей лист і розкажи, що сталося."
+msgstr "Якщо це був не ти, дай відповідь на цей лист і розкажи, що сталося."
 
 msgid "Import"
 msgstr "Імпорт"
@@ -4374,7 +4374,7 @@ msgid "Your grades are saved. Check your connection and try again."
 msgstr "Твої оцінки збережено. Перевір з’єднання й повтори спробу."
 
 msgid "Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi."
-msgstr "Твій акаунт Lymi і все, що в ньому було, видалено, як ти й просив. Більше листів від Lymi не буде."
+msgstr "Твій акаунт Lymi і все, що в ньому було, видалено на твоє прохання. Більше листів від Lymi не буде."
 
 msgid "Your Lymi account signs in with Google"
 msgstr "Твій акаунт Lymi входить через Google"

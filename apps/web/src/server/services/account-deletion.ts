@@ -313,6 +313,8 @@ export interface DeletionLeftovers {
   privateImages: string[];
   imports: { objectKey: string | null; uploadId: string | null }[];
   exports: { objectKey: string | null }[];
+  /** False when ending the sessions failed after the delete, so the caller tries again. */
+  sessionsEnded: boolean;
 }
 
 /**
@@ -485,8 +487,17 @@ export async function deleteAccount(
     }),
     db.delete(schema.user).where(eq(schema.user.id, userId)),
   ]);
-  // After the batch, so a failed delete leaves the learner signed in; KV keeps its own list.
-  await deps.endSessions(userId);
+  // After the batch, so a failed delete leaves the learner signed in; KV keeps its own list. The
+  // account is gone by now, so a failure here must not skip the cleanup that follows.
+  const sessionsEnded = await deps.endSessions(userId).then(
+    () => true,
+    (error: unknown) => {
+      console.error("Ending sessions failed after an account deletion", {
+        error: error instanceof Error ? error.name : "unknown",
+      });
+      return false;
+    },
+  );
 
   return {
     email: account.email,
@@ -499,6 +510,7 @@ export async function deleteAccount(
     ],
     imports,
     exports,
+    sessionsEnded,
   };
 }
 

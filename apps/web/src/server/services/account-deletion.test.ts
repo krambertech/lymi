@@ -1,5 +1,5 @@
 import { newId } from "@lymi/core";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { type Db, schema } from "../db";
 import type { Bindings } from "../env";
 import {
@@ -92,6 +92,26 @@ describe("deleting an account", () => {
       reviews: 2,
       sharedDecks: [{ id: shared.id, name: shared.name, members: 1 }],
     });
+  });
+
+  it("still hands back the cleanup when ending the sessions fails", async () => {
+    const kai = await learner(db, "kai", "Kai");
+    const code = await codeFor(kai, "kai@lymi.test");
+    const error = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const leftovers = await deleteAccount(
+      kai,
+      { code },
+      {
+        ...deps,
+        endSessions: async () => {
+          throw new Error("KV unavailable");
+        },
+      },
+    );
+    error.mockRestore();
+
+    expect(leftovers).toMatchObject({ email: "kai@lymi.test", sessionsEnded: false });
+    expect(await count("user", "id", kai.userId)).toBe(0);
   });
 
   it("needs the emailed code, and a fifth wrong one ends it", async () => {

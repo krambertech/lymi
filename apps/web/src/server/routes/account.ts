@@ -71,14 +71,15 @@ account.delete(
     const bundle = c.env.APPLE_APP_BUNDLE_IDENTIFIER;
     const verify = bundle ? appleIdTokenVerifier(bundle) : null;
     const confirmation = c.req.valid("json");
+    const endSessions = async (userId: string) => {
+      const { internalAdapter } = await auth.$context;
+      await internalAdapter.deleteUserSessions(userId);
+    };
     const leftovers = await deleteAccount(ctx, confirmation, {
       client,
       request: c.req.raw,
       verifyApple: verify ? (token, nonce) => verify(token, nonce) : null,
-      endSessions: async (userId) => {
-        const { internalAdapter } = await auth.$context;
-        await internalAdapter.deleteUserSessions(userId);
-      },
+      endSessions,
     });
     // PostHog's copy goes with the person, so the count lives in the Worker's own dataset.
     track(c.env.EVENTS, {
@@ -91,6 +92,7 @@ account.delete(
       clearLeftovers(c.env, ctx.userId, leftovers, {
         appleCode: "apple" in confirmation ? confirmation.apple.authorizationCode : undefined,
         send: (input) => sendTransactionalEmail(ctx, c.env, input),
+        endSessions,
       }),
     );
     return c.json({ ok: true as const });
@@ -105,10 +107,12 @@ async function clearLeftovers(
   extra: {
     appleCode: string | undefined;
     send: (input: Parameters<typeof sendTransactionalEmail>[2]) => Promise<unknown>;
+    endSessions: (userId: string) => Promise<void>;
   },
 ) {
   const appleKey = appleKeyOf(env);
   await Promise.allSettled([
+    leftovers.sessionsEnded ? Promise.resolve() : extra.endSessions(userId),
     ...chunks(leftovers.privateImages, 1000).map((keys) => env.PRIVATE_IMAGES.delete(keys)),
     ...leftovers.imports.map((row) => deleteImportFiles(env.IMPORTS, row)),
     ...leftovers.exports.map((row) => deleteExportFiles(env.EXPORTS, row)),

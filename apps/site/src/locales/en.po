@@ -39,6 +39,10 @@ msgstr "{0, plural, one {# deck} other {# decks}}"
 msgid "{0, plural, one {# more section} other {# more sections}}"
 msgstr "{0, plural, one {# more section} other {# more sections}}"
 
+#. placeholder {0}: 3
+msgid "{0, plural, one {# person} other {# people}}"
+msgstr "{0, plural, one {# person} other {# people}}"
+
 #. placeholder {0}: SECTIONS.length
 #. placeholder {0}: deck.sectionCount
 #. placeholder {0}: deck.sections
@@ -256,6 +260,9 @@ msgstr "80% to pass. Questions from the official handbook."
 msgid "9 days"
 msgstr "9 days"
 
+msgid "A .mochi file from Mochi"
+msgstr "A .mochi file from Mochi"
+
 msgid "A bad idea that seemed good"
 msgstr "A bad idea that seemed good"
 
@@ -319,6 +326,10 @@ msgstr "A full flashcard in seconds."
 msgid "A hobby"
 msgstr "A hobby"
 
+msgid "A language"
+msgstr "A language"
+
+msgctxt "deck purpose"
 msgid "A language"
 msgstr "A language"
 
@@ -388,6 +399,9 @@ msgstr "A state’s full authority over its own territory"
 msgid "A subject"
 msgstr "A subject"
 
+msgid "A subject or exam"
+msgstr "A subject or exam"
+
 msgid "A thank-you to everyone who brought the food to the table."
 msgstr "A thank-you to everyone who brought the food to the table."
 
@@ -447,6 +461,9 @@ msgstr "Add both decks"
 
 msgid "Add cards yourself"
 msgstr "Add cards yourself"
+
+msgid "Add hook"
+msgstr "Add hook"
 
 msgid "Add it to your assistant"
 msgstr "Add it to your assistant"
@@ -563,6 +580,12 @@ msgstr "Already in your deck, so it’s skipped"
 msgid "Also called the frequency illusion."
 msgstr "Also called the frequency illusion."
 
+msgid "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
+msgstr "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
+
+msgid "An .ofc file from Noji"
+msgstr "An .ofc file from Noji"
+
 msgid "An example deck"
 msgstr "An example deck"
 
@@ -625,6 +648,9 @@ msgstr "API keys stay until you revoke them or they expire. Connected-app tokens
 
 msgid "API reference"
 msgstr "API reference"
+
+msgid "Archive card"
+msgstr "Archive card"
 
 msgid "Are the decks free?"
 msgstr "Are the decks free?"
@@ -819,6 +845,9 @@ msgstr "Card or cash?"
 msgid "Card. Thanks!"
 msgstr "Card. Thanks!"
 
+msgid "Cards"
+msgstr "Cards"
+
 msgid "Cards from this deck"
 msgstr "Cards from this deck"
 
@@ -967,6 +996,9 @@ msgstr "Come on; let’s go"
 msgid "Comes back a few cards later, then after longer gaps"
 msgstr "Comes back a few cards later, then after longer gaps"
 
+msgid "Confirm it’s you"
+msgstr "Confirm it’s you"
+
 msgid "Congratulations"
 msgstr "Congratulations"
 
@@ -1100,6 +1132,9 @@ msgstr "Deep, lasting affection"
 msgid "Defenestration of Prague"
 msgstr "Defenestration of Prague"
 
+msgid "Delete account"
+msgstr "Delete account"
+
 msgid "Depending on the activity and applicable law, we process data to perform our agreement with you, with your consent, for legitimate interests such as security, service reliability and understanding how Lymi is used, or to meet a legal obligation. You can object to product analytics by emailing us, and withdraw optional consent, such as reminders, at any time."
 msgstr "Depending on the activity and applicable law, we process data to perform our agreement with you, with your consent, for legitimate interests such as security, service reliability and understanding how Lymi is used, or to meet a legal obligation. You can object to product analytics by emailing us, and withdraw optional consent, such as reminders, at any time."
 
@@ -1217,6 +1252,9 @@ msgstr "Econ · week 3"
 
 msgid "Economics"
 msgstr "Economics"
+
+msgid "Edit card"
+msgstr "Edit card"
 
 msgid "Eesti · adjective"
 msgstr "Eesti · adjective"
@@ -1395,11 +1433,17 @@ msgstr "family"
 msgid "Feeling low; in a slump"
 msgstr "Feeling low; in a slump"
 
+msgid "Fields AI can fill"
+msgstr "Fields AI can fill"
+
 msgid "Fill decks from the tools you already use."
 msgstr "Fill decks from the tools you already use."
 
 msgid "Filled in 6 cards in Estonian A2"
 msgstr "Filled in 6 cards in Estonian A2"
+
+msgid "Filter"
+msgstr "Filter"
 
 msgid "Finance"
 msgstr "Finance"
@@ -1504,6 +1548,9 @@ msgstr "Free"
 
 msgid "Free flashcard decks — languages, exams and more · Lymi"
 msgstr "Free flashcard decks — languages, exams and more · Lymi"
+
+msgid "free of charge"
+msgstr "free of charge"
 
 msgid "Free, open source, and yours"
 msgstr "Free, open source, and yours"
@@ -1772,6 +1819,9 @@ msgstr "Ice, jää, plus edge, äär: four ä in a row."
 msgid "idea"
 msgstr "idea"
 
+msgid "idiom"
+msgstr "idiom"
+
 msgid "If a story shows a gun early on, it should go off later"
 msgstr "If a story shows a gun early on, it should go off later"
 
@@ -1828,6 +1878,9 @@ msgstr "In the order you learn them, one section at a time."
 
 msgid "Injured at the elbow; weak grip and numb little finger"
 msgstr "Injured at the elbow; weak grip and numb little finger"
+
+msgid "Instructions"
+msgstr "Instructions"
 
 msgid "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
 msgstr "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
@@ -2232,6 +2285,9 @@ msgstr "marginal cost"
 msgid "Mark a card important and it comes up four times as often, while its schedule stays the same. The cards you keep forgetting gather in Often forgotten, a round of their own."
 msgstr "Mark a card important and it comes up four times as often, while its schedule stays the same. The cards you keep forgetting gather in Often forgotten, a round of their own."
 
+msgid "Mark important"
+msgstr "Mark important"
+
 msgid "Mark what’s high-yield."
 msgstr "Mark what’s high-yield."
 
@@ -2246,6 +2302,9 @@ msgstr "May it come easy"
 
 msgid "Meaning"
 msgstr "Meaning"
+
+msgid "Medical French for nurses. Use the clinical meaning."
+msgstr "Medical French for nurses. Use the clinical meaning."
 
 msgid "Medical students"
 msgstr "Medical students"
@@ -2690,6 +2749,9 @@ msgstr "Programming"
 msgid "Project management"
 msgstr "Project management"
 
+msgid "Pronunciation"
+msgstr "Pronunciation"
+
 msgid "Pronunciation couldn’t play. Try again."
 msgstr "Pronunciation couldn’t play. Try again."
 
@@ -2768,6 +2830,9 @@ msgstr "questions, multiple choice or true or false"
 
 msgid "questions: 30 general and 3 about your state"
 msgstr "questions: 30 general and 3 about your state"
+
+msgid "queue, line"
+msgstr "queue, line"
 
 msgid "Quick nunchi means sensing a mood before anyone says a word."
 msgstr "Quick nunchi means sensing a mood before anyone says a word."
@@ -2872,6 +2937,9 @@ msgstr "Review on your phone or your computer, for free, even without a connecti
 msgid "Reviewed with Lymi"
 msgstr "Reviewed with Lymi"
 
+msgid "Reviews"
+msgstr "Reviews"
+
 msgid "Reviews spread over days stick better than the same reviews crammed together"
 msgstr "Reviews spread over days stick better than the same reviews crammed together"
 
@@ -2883,6 +2951,9 @@ msgstr "Reward lines of code, and the code gets longer."
 
 msgid "Right answer"
 msgstr "Right answer"
+
+msgid "right away"
+msgstr "right away"
 
 msgid "Roots, trunks, divisions, cords, branches: from C5 to T1."
 msgstr "Roots, trunks, divisions, cords, branches: from C5 to T1."
@@ -3232,6 +3303,9 @@ msgstr "Support"
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Swedes use it for coffee and working hours alike."
 
+msgid "Tag: {verb}"
+msgstr "Tag: {verb}"
+
 msgid "Tags"
 msgstr "Tags"
 
@@ -3282,6 +3356,9 @@ msgstr "Test yourself, then check."
 
 msgid "Text · 2 pages"
 msgstr "Text · 2 pages"
+
+msgid "Text you copy from a Quizlet set"
+msgstr "Text you copy from a Quizlet set"
 
 msgid "thank you"
 msgstr "thank you"
@@ -3577,6 +3654,9 @@ msgstr "To book; to reserve"
 msgid "To buy"
 msgstr "To buy"
 
+msgid "to come"
+msgstr "to come"
+
 msgid "to feel like"
 msgstr "to feel like"
 
@@ -3585,6 +3665,9 @@ msgstr "To feel like doing something"
 
 msgid "To feel like; to look forward to"
 msgstr "To feel like; to look forward to"
+
+msgid "to forget"
+msgstr "to forget"
 
 msgid "To get up early"
 msgstr "To get up early"
@@ -3658,6 +3741,9 @@ msgstr "TOPIK: the words for TOPIK I and the start of TOPIK II"
 
 msgid "Transcript · Spanish lesson"
 msgstr "Transcript · Spanish lesson"
+
+msgid "travel"
+msgstr "travel"
 
 msgctxt "deck tag"
 msgid "Travel"
@@ -3802,6 +3888,9 @@ msgstr "Version of 5 January 2026"
 msgid "Version of 7 May 2025"
 msgstr "Version of 7 May 2025"
 
+msgid "View card"
+msgstr "View card"
+
 msgid "Vocabulary for levels 1 and 2 of TOPIK I and for level 3 of TOPIK II, with a translation beside each word."
 msgstr "Vocabulary for levels 1 and 2 of TOPIK I and for level 3 of TOPIK II, with a translation beside each word."
 
@@ -3862,11 +3951,20 @@ msgstr "What does it cost?"
 msgid "What every exam deck gives you"
 msgstr "What every exam deck gives you"
 
+msgid "What goes"
+msgstr "What goes"
+
 msgid "What if I already use Anki?"
 msgstr "What if I already use Anki?"
 
 msgid "What if it gets something wrong?"
 msgstr "What if it gets something wrong?"
+
+msgid "What it’s for"
+msgstr "What it’s for"
+
+msgid "What stays for others"
+msgstr "What stays for others"
 
 msgid "What the test looks like"
 msgstr "What the test looks like"

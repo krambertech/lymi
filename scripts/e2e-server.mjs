@@ -224,6 +224,8 @@ generatedProductConfig.vars = {
   PRODUCT_URL: e2eProductPackageUrl,
 };
 generatedProductConfig.routes = [];
+// Workers AI is remote only and CI has no Cloudflare token; the smoke test never calls it.
+delete generatedProductConfig.ai;
 writeFileSync(productPackageConfig, JSON.stringify(generatedProductConfig));
 writeFileSync(
   productPackageDevVars,

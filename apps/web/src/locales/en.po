@@ -152,6 +152,10 @@ msgstr "{0, plural, one {# often forgotten.} other {# often forgotten.}}"
 msgid "{0, plural, one {# past review was imported.} other {# past reviews were imported.}}"
 msgstr "{0, plural, one {# past review was imported.} other {# past reviews were imported.}}"
 
+#. placeholder {0}: deck.members
+msgid "{0, plural, one {# person} other {# people}}"
+msgstr "{0, plural, one {# person} other {# people}}"
+
 #. placeholder {0}: counts.picturesSkipped
 msgid "{0, plural, one {# picture couldn’t be read and was skipped.} other {# pictures couldn’t be read and were skipped.}}"
 msgstr "{0, plural, one {# picture couldn’t be read and was skipped.} other {# pictures couldn’t be read and were skipped.}}"
@@ -649,6 +653,9 @@ msgstr "A change to “{label}” made offline couldn’t be saved. {reason}"
 msgid "A citizenship test, a driving test or another exam."
 msgstr "A citizenship test, a driving test or another exam."
 
+msgid "A code is already on its way. Wait a minute before asking for another."
+msgstr "A code is already on its way. Wait a minute before asking for another."
+
 msgid "a connected app"
 msgstr "a connected app"
 
@@ -1004,6 +1011,9 @@ msgstr "Archived “{sectionName}” and its cards"
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 
+msgid "Archived decks and cards go too, with your settings, photo, connected apps and API keys. You leave every deck you joined, and every device is signed out."
+msgstr "Archived decks and cards go too, with your settings, photo, connected apps and API keys. You leave every deck you joined, and every device is signed out."
+
 msgid "Archived sections"
 msgstr "Archived sections"
 
@@ -1349,11 +1359,17 @@ msgstr "Close"
 msgid "Cloze"
 msgstr "Cloze"
 
+msgid "Code from the email"
+msgstr "Code from the email"
+
 msgid "Come back later, or add new cards."
 msgstr "Come back later, or add new cards."
 
 msgid "Comma"
 msgstr "Comma"
+
+msgid "Confirm it’s you"
+msgstr "Confirm it’s you"
 
 msgid "Confirm your address to finish creating your Lymi account:"
 msgstr "Confirm your address to finish creating your Lymi account:"
@@ -1453,6 +1469,9 @@ msgstr "Couldn’t check this device. Reload to try again."
 msgid "Couldn’t connect to Lymi. Try again in a moment."
 msgstr "Couldn’t connect to Lymi. Try again in a moment."
 
+msgid "Couldn’t delete your account. Check your connection and try again."
+msgstr "Couldn’t delete your account. Check your connection and try again."
+
 msgid "Couldn’t enrich “{term}”. Check your connection and try again."
 msgstr "Couldn’t enrich “{term}”. Check your connection and try again."
 
@@ -1516,6 +1535,9 @@ msgstr "Couldn’t load this shelf"
 msgid "Couldn’t load Today"
 msgstr "Couldn’t load Today"
 
+msgid "Couldn’t load what your account holds"
+msgstr "Couldn’t load what your account holds"
+
 msgid "Couldn’t load your cards"
 msgstr "Couldn’t load your cards"
 
@@ -1569,6 +1591,9 @@ msgstr "Couldn’t save your grade for “{term}”. You’ll see it again."
 
 msgid "Couldn’t save. Try again."
 msgstr "Couldn’t save. Try again."
+
+msgid "Couldn’t send the code. Check your connection and try again."
+msgstr "Couldn’t send the code. Check your connection and try again."
 
 msgid "Couldn’t send the invitation. Too many went out recently, so try again later."
 msgstr "Couldn’t send the invitation. Too many went out recently, so try again later."
@@ -1700,6 +1725,9 @@ msgstr "Definition"
 msgid "Delete “{seriesName}”?"
 msgstr "Delete “{seriesName}”?"
 
+msgid "Delete account"
+msgstr "Delete account"
+
 msgid "Delete series"
 msgstr "Delete series"
 
@@ -1714,6 +1742,9 @@ msgstr "Deleted “{seriesName}” and archived its decks"
 
 msgid "Deleted the series {name}"
 msgstr "Deleted the series {name}"
+
+msgid "Deleting your account erases it for good. Nothing can bring it back."
+msgstr "Deleting your account erases it for good. Nothing can bring it back."
 
 msgid "Deny"
 msgstr "Deny"
@@ -1888,11 +1919,17 @@ msgstr "Enter an email address, like you@example.com."
 msgid "Enter an email address."
 msgstr "Enter an email address."
 
+msgid "Enter the 6-digit code from the email."
+msgstr "Enter the 6-digit code from the email."
+
 msgid "Enter this code in Lymi to delete your account and everything in it:"
 msgstr "Enter this code in Lymi to delete your account and everything in it:"
 
 msgid "Enter this code in the Lymi app to finish creating your account:"
 msgstr "Enter this code in the Lymi app to finish creating your account:"
+
+msgid "Erase your account and everything in it, for good. Decks other people study stay for them."
+msgstr "Erase your account and everything in it, for good. Decks other people study stay for them."
 
 msgid "Every card"
 msgstr "Every card"
@@ -1956,6 +1993,9 @@ msgstr "Export one deck at a time, or export again without media."
 
 msgid "Export the deck again from Noji in OFC format, then choose that file."
 msgstr "Export the deck again from Noji in OFC format, then choose that file."
+
+msgid "Export your library first if you might want your cards later. Lymi keeps nothing once the account is gone."
+msgstr "Export your library first if you might want your cards later. Lymi keeps nothing once the account is gone."
 
 msgid "Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package."
 msgstr "Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package."
@@ -2039,6 +2079,9 @@ msgstr "Forgotten today"
 
 msgid "Format"
 msgstr "Format"
+
+msgid "Former owner"
+msgstr "Former owner"
 
 #. placeholder {0}: deck.owner.name
 msgid "From {0}"
@@ -2324,6 +2367,12 @@ msgstr "Its cards and the decks it made are hidden. Restore brings them back wit
 msgid "Its decks may have been withdrawn. Every deck Lymi publishes is on Explore."
 msgstr "Its decks may have been withdrawn. Every deck Lymi publishes is on Explore."
 
+msgid "Its owner left Lymi"
+msgstr "Its owner left Lymi"
+
+msgid "Its owner left Lymi, so no cards will be added."
+msgstr "Its owner left Lymi, so no cards will be added."
+
 msgctxt "deck tag"
 msgid "JLPT N5"
 msgstr "JLPT N5"
@@ -2355,6 +2404,9 @@ msgstr "Keen"
 
 msgid "Keep <0>Tab</0> and <1>New line</1>. If a card has line breaks, set a custom row separator such as ##."
 msgstr "Keep <0>Tab</0> and <1>New line</1>. If a card has line breaks, set a custom row separator such as ##."
+
+msgid "Keep a copy"
+msgstr "Keep a copy"
 
 msgid "Keep invitation"
 msgstr "Keep invitation"
@@ -2482,6 +2534,9 @@ msgstr "Leben in Deutschland test"
 
 msgid "Left “{deckName}”"
 msgstr "Left “{deckName}”"
+
+msgid "Left Lymi, so nobody can change this deck"
+msgstr "Left Lymi, so nobody can change this deck"
 
 msgid "Lesson"
 msgstr "Lesson"
@@ -3067,6 +3122,9 @@ msgstr "or"
 msgid "Or choose a .txt file"
 msgstr "Or choose a .txt file"
 
+msgid "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
+msgstr "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
+
 msgid "Other subjects"
 msgstr "Other subjects"
 
@@ -3117,6 +3175,9 @@ msgstr "Peek at your hook"
 
 msgid "People"
 msgstr "People"
+
+msgid "People study these decks, so they stay until the last of them leaves. Nobody can change them after you go."
+msgstr "People study these decks, so they stay until the last of them leaves. Nobody can change them after you go."
 
 msgid "People who added it keep studying it, but nobody new can add it."
 msgstr "People who added it keep studying it, but nobody new can add it."
@@ -3596,8 +3657,14 @@ msgstr "Send"
 msgid "Send a lesson from Claude or ChatGPT"
 msgstr "Send a lesson from Claude or ChatGPT"
 
+msgid "Send a new code"
+msgstr "Send a new code"
+
 msgid "Send a new link"
 msgstr "Send a new link"
+
+msgid "Send code"
+msgstr "Send code"
 
 msgid "Send feedback"
 msgstr "Send feedback"
@@ -3613,6 +3680,9 @@ msgstr "Send reset link"
 
 msgid "Sent again"
 msgstr "Sent again"
+
+msgid "Sent to {sentTo}. It works for 15 minutes."
+msgstr "Sent to {sentTo}. It works for 15 minutes."
 
 msgid "Separators"
 msgstr "Separators"
@@ -3862,6 +3932,9 @@ msgstr "Text you copy from a Quizlet set"
 msgid "Thank you. Replies come to your email."
 msgstr "Thank you. Replies come to your email."
 
+msgid "That code isn’t right. Check the email and try again."
+msgstr "That code isn’t right. Check the email and try again."
+
 msgid "That didn’t go through. Reload and try again."
 msgstr "That didn’t go through. Reload and try again."
 
@@ -3932,6 +4005,9 @@ msgstr "The code works for 15 minutes. If you didn’t create a Lymi account, ig
 msgid "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 msgstr "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there."
 
+msgid "The deck leaves Library and its cards stop coming up in review. Its owner left Lymi, so you can’t join it again."
+msgstr "The deck leaves Library and its cards stop coming up in review. Its owner left Lymi, so you can’t join it again."
+
 msgid "The deck leaves Library and its cards stop coming up in review. Restore brings it back."
 msgstr "The deck leaves Library and its cards stop coming up in review. Restore brings it back."
 
@@ -3998,11 +4074,17 @@ msgstr "They lose this deck and can’t rejoin, by link or invitation. Their rev
 msgid "They’re already in this deck."
 msgstr "They’re already in this deck."
 
+msgid "This account publishes decks"
+msgstr "This account publishes decks"
+
 msgid "This browser can’t show reminders."
 msgstr "This browser can’t show reminders."
 
 msgid "This card’s picture was removed."
 msgstr "This card’s picture was removed."
+
+msgid "This code has expired. Send a new one."
+msgstr "This code has expired. Send a new one."
 
 msgid "This deck is already in Library."
 msgstr "This deck is already in Library."
@@ -4284,6 +4366,9 @@ msgstr "Visibility"
 msgid "We signed out your other devices."
 msgstr "We signed out your other devices."
 
+msgid "We’ll email you a 6-digit code. The account is deleted only once you enter it."
+msgstr "We’ll email you a 6-digit code. The account is deleted only once you enter it."
+
 msgid "We’ll email you a link to set a new one."
 msgstr "We’ll email you a link to set a new one."
 
@@ -4310,6 +4395,9 @@ msgstr "Welcome to Lymi"
 msgid "What are you learning?"
 msgstr "What are you learning?"
 
+msgid "What goes"
+msgstr "What goes"
+
 msgid "What happens to its cards"
 msgstr "What happens to its cards"
 
@@ -4321,6 +4409,9 @@ msgstr "What is Lymi?"
 
 msgid "What it’s for"
 msgstr "What it’s for"
+
+msgid "What stays for others"
+msgstr "What stays for others"
 
 msgid "What the picture shows, without the answer. Picture review needs it."
 msgstr "What the picture shows, without the answer. Picture review needs it."
@@ -4436,11 +4527,17 @@ msgstr "You cannot join this deck through this link."
 msgid "You don’t need to do anything."
 msgstr "You don’t need to do anything."
 
+msgid "You keep studying these cards on your own schedule. Nobody else sees your reviews or progress."
+msgstr "You keep studying these cards on your own schedule. Nobody else sees your reviews or progress."
+
 msgid "You know {knownN} of {total, plural, one {# card} other {# cards}}"
 msgstr "You know {knownN} of {total, plural, one {# card} other {# cards}}"
 
 msgid "You removed them from this deck, so you can’t invite them again."
 msgstr "You removed them from this deck, so you can’t invite them again."
+
+msgid "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."
+msgstr "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."
 
 msgid "You start with the first section. The next opens as you learn this one."
 msgstr "You start with the first section. The next opens as you learn this one."
@@ -4469,6 +4566,9 @@ msgstr "You’re done for today"
 msgid "You’re done for today."
 msgstr "You’re done for today."
 
+msgid "You’ve asked for several codes today. Try again tomorrow."
+msgstr "You’ve asked for several codes today. Try again tomorrow."
+
 msgid "Your code to delete your Lymi account"
 msgstr "Your code to delete your Lymi account"
 
@@ -4486,6 +4586,9 @@ msgstr "Your grades are saved. Check your connection and try again."
 
 msgid "Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi."
 msgstr "Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi."
+
+msgid "Your Lymi account is deleted"
+msgstr "Your Lymi account is deleted"
 
 msgid "Your Lymi account signs in with Google"
 msgstr "Your Lymi account signs in with Google"

@@ -13,6 +13,8 @@ export interface Bindings
     | "POSTHOG_PROJECT_TOKEN"
     | "PHONE_MINIMUM_VERSION_IOS"
     | "PHONE_UPDATE_URL_IOS"
+    | "AI_GATEWAY_ID"
+    | "ANTHROPIC_BASE_URL"
   > {
   /** Optional in local tests and loopback; previews use isolated datasets. */
   REQUESTS?: AnalyticsEngineDataset;
@@ -48,6 +50,14 @@ export interface Bindings
   OPENAI_SPEECH_VOICE?: string;
   OPENAI_TEXT_MODEL?: string;
   AI_GATEWAY_TOKEN?: string;
+  ANTHROPIC_API_KEY?: string;
+  /** An organisation-wide Anthropic key needs the workspace it bills to. */
+  ANTHROPIC_WORKSPACE_ID?: string;
+  ANTHROPIC_LESSON_MODEL?: string;
+  /** AI Gateway's Anthropic endpoint, ending in `/anthropic/v1`; used only with `AI_GATEWAY_TOKEN`. */
+  ANTHROPIC_BASE_URL?: string;
+  /** The AI Gateway that Workers AI calls go through; empty calls Workers AI directly. */
+  AI_GATEWAY_ID?: string;
   /** Web Push is unavailable until all three VAPID values are configured as secrets. */
   VAPID_PUBLIC_KEY?: string;
   VAPID_PRIVATE_KEY?: string;

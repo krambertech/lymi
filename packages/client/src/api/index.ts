@@ -21,8 +21,16 @@ export type { Deck, DeckSummary } from "./decks";
 export type { Export } from "./exports";
 export type { Import, ImportPreview } from "./imports";
 export type { ApiKeyCreated, ApiKeySummary } from "./keys";
+export type { LessonEvent, LessonQuestion, LessonRead, LessonTerm } from "./lessons";
 export type { PushSubscriptionStatus } from "./push";
-export { ApiError, apiUrl, deviceTimezone, errorMessage, refusalDetail } from "./request";
+export {
+  ApiError,
+  apiUrl,
+  deviceTimezone,
+  errorMessage,
+  refusalCode,
+  refusalDetail,
+} from "./request";
 export type { Draw, Queue, QueueItem, ReviewScope } from "./review";
 export { scopeKey } from "./review";
 export type { Section, Sections } from "./sections";
@@ -41,6 +49,7 @@ import { exportsApi } from "./exports";
 import { feedbackApi } from "./feedback";
 import { importsApi } from "./imports";
 import { keysApi } from "./keys";
+import { lessonsApi } from "./lessons";
 import { pushApi } from "./push";
 import { reviewApi } from "./review";
 import { sectionsApi } from "./sections";
@@ -61,6 +70,7 @@ export const api = {
   ...feedbackApi,
   ...importsApi,
   ...keysApi,
+  ...lessonsApi,
   ...pushApi,
   ...reviewApi,
   ...sectionsApi,

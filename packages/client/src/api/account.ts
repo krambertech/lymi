@@ -1,4 +1,9 @@
-import type { AvatarOut } from "@lymi/core";
+import type {
+  AccountDeletionInput,
+  AccountDeletionOut,
+  AvatarOut,
+  DeletionCodeOut,
+} from "@lymi/core";
 import { request } from "./request";
 
 export type Me = { id: string; name: string; email: string };
@@ -20,4 +25,9 @@ export const accountApi = {
     }),
   removeAvatar: (revision: number) =>
     request<AvatarOut>("/api/avatar", { method: "DELETE", headers: revisionHeader(revision) }),
+  deletion: () => request<AccountDeletionOut>("/api/me/deletion"),
+  sendDeletionCode: () => request<DeletionCodeOut>("/api/me/deletion/code", { method: "POST" }),
+  /** Final: the account and everything it holds are gone once this resolves. */
+  deleteAccount: (input: AccountDeletionInput) =>
+    request<{ ok: true }>("/api/me", { method: "DELETE", body: JSON.stringify(input) }),
 };

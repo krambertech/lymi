@@ -13,6 +13,8 @@ export class ApiError extends Error {
     message: string,
     /** The server's `issues`: a schema's problems, or a service's reason for refusing. */
     public issues?: unknown,
+    /** The server's stable name for a refusal, such as `code_wrong`. */
+    public code?: string,
   ) {
     super(message);
   }
@@ -55,8 +57,12 @@ export async function request<T>(path: string, init?: RequestInit): Promise<T> {
     throw new ApiError(426, config.messages.failed());
   }
   if (!res.ok) {
-    const body = (await res.json().catch(() => null)) as { issues?: unknown } | null;
-    throw new ApiError(res.status, failureMessage(res.status, body), body?.issues);
+    const body = (await res.json().catch(() => null)) as {
+      issues?: unknown;
+      code?: unknown;
+    } | null;
+    const code = typeof body?.code === "string" ? body.code : undefined;
+    throw new ApiError(res.status, failureMessage(res.status, body), body?.issues, code);
   }
   return (await res.json()) as T;
 }
@@ -69,7 +75,7 @@ function unreachable() {
  * The server's `error` is English and meant for integrations, so the learner sees the app's catalog
  * sentence instead; a 400 keeps the schema's own message, which is written for a person.
  */
-function failureMessage(status: number, body: { issues?: unknown } | null): string {
+export function failureMessage(status: number, body: { issues?: unknown } | null): string {
   if (status === 400) {
     const issue: unknown = Array.isArray(body?.issues) ? body.issues[0] : undefined;
     if (issue && typeof issue === "object" && "message" in issue) {
@@ -102,4 +108,9 @@ export function refusalDetail(error: unknown, key: string): string | null {
     error instanceof ApiError ? (error.issues as Record<string, unknown> | null) : null;
   const value = issues?.[key];
   return typeof value === "string" && value ? value : null;
+}
+
+/** The server's stable name for a refusal, such as `code_wrong`, or null. */
+export function refusalCode(error: unknown): string | null {
+  return error instanceof ApiError ? (error.code ?? null) : null;
 }

@@ -71,6 +71,7 @@ test("an owner shares a deck and a classmate joins through the link", async ({
       classmate.getByRole("list", { name: "Cards from this deck" }).getByRole("listitem"),
     ).toHaveText(["tere hommikustgood morning"]);
     await expect(classmate.getByRole("button", { name: "Join with Google" })).toBeVisible();
+    await expect(classmate.getByRole("button", { name: "Join with email" })).toBeVisible();
 
     await classmate.getByRole("button", { name: "Dev sign-in", exact: true }).click();
     await expect(classmate).toHaveURL(/\/login\?dev=1/);

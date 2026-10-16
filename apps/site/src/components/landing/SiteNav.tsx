@@ -222,18 +222,22 @@ function PhoneMenu({ openAppUrl, current, signUpHref }: PhoneMenuProps) {
           </div>
 
           <div className="mt-auto grid gap-3 pt-10">
-            <a onClick={close} href={openAppUrl} className={buttonClass("primary", "lg", "w-full")}>
-              <Trans>Open Lymi</Trans>
-            </a>
             {signUpHref !== null && (
               <a
                 onClick={close}
                 href={signUpHref}
-                className={buttonClass("secondary", "lg", "w-full")}
+                className={buttonClass("primary", "lg", "w-full")}
               >
                 <Trans>Get started</Trans>
               </a>
             )}
+            <a
+              onClick={close}
+              href={openAppUrl}
+              className={buttonClass(signUpHref === null ? "primary" : "secondary", "lg", "w-full")}
+            >
+              <Trans>Sign in</Trans>
+            </a>
           </div>
         </div>
       </dialog>
@@ -266,18 +270,18 @@ export function SiteNav({ openAppUrl, current, signUpHref = signUpUrl() }: Props
           <a href="/docs" className={buttonClass("ghost", "sm")}>
             <Trans>Docs</Trans>
           </a>
+          <a href={openAppUrl} className={buttonClass("ghost", "sm")}>
+            <Trans>Sign in</Trans>
+          </a>
           {signUpHref !== null && (
-            <a href={signUpHref} className={buttonClass("ghost", "sm")}>
+            <a href={signUpHref} className={buttonClass("secondary", "sm", "ms-1")}>
               <Trans>Get started</Trans>
             </a>
           )}
-          <a href={openAppUrl} className={buttonClass("secondary", "sm", "ms-1")}>
-            <Trans>Open Lymi</Trans>
-          </a>
         </div>
         <div className="flex items-center gap-2 @2xl:hidden">
           <a href={openAppUrl} className={buttonClass("secondary", "md")}>
-            <Trans>Open Lymi</Trans>
+            <Trans>Sign in</Trans>
           </a>
           <PhoneMenu openAppUrl={openAppUrl} current={current} signUpHref={signUpHref} />
         </div>

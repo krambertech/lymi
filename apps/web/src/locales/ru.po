@@ -769,6 +769,9 @@ msgstr "Добавить в Библиотеку"
 msgid "Add to Lymi"
 msgstr "Добавить в Lymi"
 
+msgid "Add with email"
+msgstr "Добавить через почту"
+
 msgid "Add with Google"
 msgstr "Добавить через Google"
 
@@ -2282,6 +2285,9 @@ msgstr "Присоединяйся к колоде «{name}» в Lymi"
 
 msgid "Join link"
 msgstr "Ссылка для присоединения"
+
+msgid "Join with email"
+msgstr "Присоединиться через почту"
 
 msgid "Join with Google"
 msgstr "Присоединиться через Google"

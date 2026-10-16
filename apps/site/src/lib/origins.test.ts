@@ -2,14 +2,14 @@ import { describe, expect, it } from "vitest";
 import { openLymiUrl, productUrl, signUpRedirect } from "./origins";
 
 describe("openLymiUrl", () => {
-  it("asks the product root for sign-up, which a session skips for Today", () => {
-    expect(openLymiUrl()).toBe(productUrl("/?mode=sign-up"));
-    expect(openLymiUrl("https://preview.example")).toBe("https://preview.example/?mode=sign-up");
+  it("goes to the product root, which sends a session to Today and anyone else to sign-in", () => {
+    expect(openLymiUrl()).toBe(productUrl("/"));
+    expect(openLymiUrl("https://preview.example")).toBe("https://preview.example/");
   });
 });
 
 describe("signUpRedirect", () => {
-  it("goes through the product root, like Open Lymi, and keeps the link's campaign tags", () => {
+  it("goes through the product root, so a session skips to Today, and keeps the link's campaign tags", () => {
     const url = new URL(signUpRedirect("?utm_source=newsletter&utm_campaign=autumn"));
     expect(url.origin + url.pathname).toBe(productUrl("/"));
     expect(url.searchParams.get("mode")).toBe("sign-up");

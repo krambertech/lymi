@@ -67,12 +67,17 @@ function Join() {
   };
 
   const hold = useMutation({
-    mutationFn: async (via: "google" | "dev") => {
+    mutationFn: async (via: "google" | "email" | "dev") => {
       await api.holdJoinLink(token);
       // The account coming back may not be the one whose cache is on this device.
       clearPersistedLearnerState({ keepQueued: true });
       if (via === "dev") {
         window.location.assign(`/login?${new URLSearchParams({ dev: "1", returnTo })}`);
+        return;
+      }
+      // A password account joins when its confirmation link makes the first session. Issue 251.
+      if (via === "email") {
+        window.location.assign(`/login?${new URLSearchParams({ mode: "sign-up", returnTo })}`);
         return;
       }
       const res = await signInWithGoogle(returnTo);
@@ -106,6 +111,8 @@ function Join() {
       busy={busy}
       error={failed ?? (preview.isError ? describe(preview.error) : undefined)}
       onJoinWithGoogle={busy ? undefined : () => hold.mutate("google")}
+      onJoinWithEmail={busy ? undefined : () => hold.mutate("email")}
+      pending={hold.isPending && hold.variables === "email" ? "email" : "google"}
       onJoin={busy ? undefined : () => join.mutate()}
       devSignIn={
         import.meta.env.DEV &&

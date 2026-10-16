@@ -130,12 +130,14 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
         importScripts: ["/push-sw.js"],
         navigateFallback: "/index.html",
+        // Workbox tests these against the path and query together, so `/?mode=sign-up` must
+        // still reach the Worker's door rather than the cached shell.
         navigateFallbackDenylist: [
-          /^\/$/,
+          /^\/(?:\?|$)/,
           /^\/api\//,
           /^\/mcp/,
-          /^\/docs(?:\/|$)/,
-          /^\/join(?:\/|$)/,
+          /^\/docs(?:[/?]|$)/,
+          /^\/join(?:[/?]|$)/,
           /^\/add\//,
         ],
         runtimeCaching: [

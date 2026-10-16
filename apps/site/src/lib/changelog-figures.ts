@@ -13,6 +13,11 @@ export const CHANGELOG_FIGURES = [
   "hook-peek",
   "hook-write",
   "rest-days",
+  "deck-ai",
+  "important",
+  "tags",
+  "import-sources",
+  "delete-account",
 ] as const;
 
 export type ChangelogFigureName = (typeof CHANGELOG_FIGURES)[number];

@@ -39,6 +39,10 @@ msgstr "{0, plural, one {# колода} few {# колоды} many {# колод
 msgid "{0, plural, one {# more section} other {# more sections}}"
 msgstr "{0, plural, one {Ещё # раздел} few {Ещё # раздела} many {Ещё # разделов} other {Ещё # раздела}}"
 
+#. placeholder {0}: 3
+msgid "{0, plural, one {# person} other {# people}}"
+msgstr "{0, plural, one {# человек} few {# человека} many {# человек} other {# человека}}"
+
 #. placeholder {0}: SECTIONS.length
 #. placeholder {0}: deck.sectionCount
 #. placeholder {0}: deck.sections
@@ -256,6 +260,9 @@ msgstr "80% правильных, чтобы сдать. Вопросы по о�
 msgid "9 days"
 msgstr "9 дней"
 
+msgid "A .mochi file from Mochi"
+msgstr "Файл .mochi из Mochi"
+
 msgid "A bad idea that seemed good"
 msgstr "Плохая идея, казавшаяся хорошей"
 
@@ -319,6 +326,10 @@ msgstr "Готовая флеш-карточка за несколько сек�
 msgid "A hobby"
 msgstr "Хобби"
 
+msgid "A language"
+msgstr "Язык"
+
+msgctxt "deck purpose"
 msgid "A language"
 msgstr "Язык"
 
@@ -388,6 +399,9 @@ msgstr "Полная власть государства над своей те�
 msgid "A subject"
 msgstr "Тему"
 
+msgid "A subject or exam"
+msgstr "Предмет или экзамен"
+
 msgid "A thank-you to everyone who brought the food to the table."
 msgstr "Благодарность всем, чьими трудами еда оказалась на столе."
 
@@ -447,6 +461,9 @@ msgstr "Добавь обе колоды"
 
 msgid "Add cards yourself"
 msgstr "Добавить карточки вручную"
+
+msgid "Add hook"
+msgstr "Добавить зацепку"
 
 msgid "Add it to your assistant"
 msgstr "Добавь его в своего ассистента"
@@ -563,6 +580,12 @@ msgstr "Уже есть в колоде, поэтому пропущено"
 msgid "Also called the frequency illusion."
 msgstr "Другое название — иллюзия частотности."
 
+msgid "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
+msgstr "Файл .apkg или .colpkg из Anki, AnkiDroid или AnkiMobile"
+
+msgid "An .ofc file from Noji"
+msgstr "Файл .ofc из Noji"
+
 msgid "An example deck"
 msgstr "Пример колоды"
 
@@ -625,6 +648,9 @@ msgstr "Ключи API хранятся, пока ты их не отзовёш�
 
 msgid "API reference"
 msgstr "Справочник API"
+
+msgid "Archive card"
+msgstr "Архивировать карточку"
 
 msgid "Are the decks free?"
 msgstr "Колоды бесплатные?"
@@ -819,6 +845,9 @@ msgstr "Картой или наличными?"
 msgid "Card. Thanks!"
 msgstr "Картой. Спасибо!"
 
+msgid "Cards"
+msgstr "Карточки"
+
 msgid "Cards from this deck"
 msgstr "Карточки из этой колоды"
 
@@ -967,6 +996,9 @@ msgstr "Давай; пошли"
 msgid "Comes back a few cards later, then after longer gaps"
 msgstr "Возвращается через несколько карточек, а потом через более длинные промежутки"
 
+msgid "Confirm it’s you"
+msgstr "Подтверди, что это ты"
+
 msgid "Congratulations"
 msgstr "Поздравляю"
 
@@ -1100,6 +1132,9 @@ msgstr "Глубокая, долгая привязанность"
 msgid "Defenestration of Prague"
 msgstr "Пражская дефенестрация"
 
+msgid "Delete account"
+msgstr "Удалить аккаунт"
+
 msgid "Depending on the activity and applicable law, we process data to perform our agreement with you, with your consent, for legitimate interests such as security, service reliability and understanding how Lymi is used, or to meet a legal obligation. You can object to product analytics by emailing us, and withdraw optional consent, such as reminders, at any time."
 msgstr "В зависимости от действия и применимого законодательства мы обрабатываем данные, чтобы выполнять наше соглашение с тобой, с твоего согласия, в законных интересах, например ради безопасности, надёжности сервиса и понимания того, как пользуются Lymi, или для выполнения юридической обязанности. Ты можешь возразить против аналитики продукта, написав нам, а необязательное согласие, например на напоминания, — отозвать в любое время."
 
@@ -1217,6 +1252,9 @@ msgstr "Экономика · неделя 3"
 
 msgid "Economics"
 msgstr "Экономика"
+
+msgid "Edit card"
+msgstr "Редактировать карточку"
 
 msgid "Eesti · adjective"
 msgstr "Eesti · прилагательное"
@@ -1395,11 +1433,17 @@ msgstr "семья"
 msgid "Feeling low; in a slump"
 msgstr "Плохое настроение; упадок сил"
 
+msgid "Fields AI can fill"
+msgstr "Что может заполнить AI"
+
 msgid "Fill decks from the tools you already use."
 msgstr "Наполняй колоды из инструментов, которыми уже пользуешься."
 
 msgid "Filled in 6 cards in Estonian A2"
 msgstr "Дополнено 6 карточек в Estonian A2"
+
+msgid "Filter"
+msgstr "Фильтр"
 
 msgid "Finance"
 msgstr "Финансы"
@@ -1504,6 +1548,9 @@ msgstr "Бесплатно"
 
 msgid "Free flashcard decks — languages, exams and more · Lymi"
 msgstr "Бесплатные колоды флеш-карточек — языки, экзамены и не только · Lymi"
+
+msgid "free of charge"
+msgstr "бесплатно"
 
 msgid "Free, open source, and yours"
 msgstr "Бесплатно, открыто и твоё"
@@ -1772,6 +1819,9 @@ msgstr "Лёд — jää, край — äär: четыре ä подряд."
 msgid "idea"
 msgstr "идея"
 
+msgid "idiom"
+msgstr "идиома"
+
 msgid "If a story shows a gun early on, it should go off later"
 msgstr "Если в начале истории появляется ружьё, позже оно должно выстрелить"
 
@@ -1828,6 +1878,9 @@ msgstr "В том порядке, в котором ты их учишь: раз
 
 msgid "Injured at the elbow; weak grip and numb little finger"
 msgstr "Повреждается у локтя; слабый хват и онемение мизинца"
+
+msgid "Instructions"
+msgstr "Инструкции"
 
 msgid "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
 msgstr "IRCC не публикует свои вопросы. Это тренировочные вопросы по каждой главе официального пособия."
@@ -2232,6 +2285,9 @@ msgstr "предельные издержки"
 msgid "Mark a card important and it comes up four times as often, while its schedule stays the same. The cards you keep forgetting gather in Often forgotten, a round of their own."
 msgstr "Отметь карточку как важную, и она будет попадаться вчетверо чаще, а её расписание не изменится. Карточки, которые ты постоянно забываешь, собираются в «Часто забываются» — отдельный раунд."
 
+msgid "Mark important"
+msgstr "Отметить важной"
+
 msgid "Mark what’s high-yield."
 msgstr "Отметь самое важное."
 
@@ -2246,6 +2302,9 @@ msgstr "Пусть будет легко"
 
 msgid "Meaning"
 msgstr "Значение"
+
+msgid "Medical French for nurses. Use the clinical meaning."
+msgstr "Медицинский французский для медсестёр. Бери клиническое значение."
 
 msgid "Medical students"
 msgstr "Студентам-медикам"
@@ -2690,6 +2749,9 @@ msgstr "Программирование"
 msgid "Project management"
 msgstr "Управление проектами"
 
+msgid "Pronunciation"
+msgstr "Произношение"
+
 msgid "Pronunciation couldn’t play. Try again."
 msgstr "Не удалось воспроизвести произношение. Попробуй ещё раз."
 
@@ -2768,6 +2830,9 @@ msgstr "вопросов: с вариантами ответа или «верн
 
 msgid "questions: 30 general and 3 about your state"
 msgstr "вопроса: 30 общих и 3 о твоей земле"
+
+msgid "queue, line"
+msgstr "очередь"
 
 msgid "Quick nunchi means sensing a mood before anyone says a word."
 msgstr "Хорошее нунчи — уловить настроение, пока никто ещё не сказал ни слова."
@@ -2872,6 +2937,9 @@ msgstr "Повторяй на телефоне или компьютере, бе
 msgid "Reviewed with Lymi"
 msgstr "С повторениями в Lymi"
 
+msgid "Reviews"
+msgstr "Повторения"
+
 msgid "Reviews spread over days stick better than the same reviews crammed together"
 msgstr "Несколько повторений в разные дни работают лучше, чем столько же за один раз"
 
@@ -2883,6 +2951,9 @@ msgstr "Поощряй за количество строк — и код ста
 
 msgid "Right answer"
 msgstr "Правильный ответ"
+
+msgid "right away"
+msgstr "сразу"
 
 msgid "Roots, trunks, divisions, cords, branches: from C5 to T1."
 msgstr "Корешки, стволы, деления, пучки, ветви: от C5 до T1."
@@ -3232,6 +3303,9 @@ msgstr "Поддержка"
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведы говорят так и о кофе, и о рабочем времени."
 
+msgid "Tag: {verb}"
+msgstr "Тег: {verb}"
+
 msgid "Tags"
 msgstr "Теги"
 
@@ -3282,6 +3356,9 @@ msgstr "Сначала вспомни, потом проверь."
 
 msgid "Text · 2 pages"
 msgstr "Текст · 2 страницы"
+
+msgid "Text you copy from a Quizlet set"
+msgstr "Текст, скопированный из набора Quizlet"
 
 msgid "thank you"
 msgstr "спасибо"
@@ -3577,6 +3654,9 @@ msgstr "Бронировать"
 msgid "To buy"
 msgstr "Покупать"
 
+msgid "to come"
+msgstr "приходить"
+
 msgid "to feel like"
 msgstr "хотеть чего-то"
 
@@ -3585,6 +3665,9 @@ msgstr "Хотеть что-то сделать"
 
 msgid "To feel like; to look forward to"
 msgstr "Хотеть; ждать с нетерпением"
+
+msgid "to forget"
+msgstr "забывать"
 
 msgid "To get up early"
 msgstr "Рано вставать"
@@ -3658,6 +3741,9 @@ msgstr "TOPIK: лексика для TOPIK I и начала TOPIK II"
 
 msgid "Transcript · Spanish lesson"
 msgstr "Транскрипт · урок испанского"
+
+msgid "travel"
+msgstr "путешествия"
 
 msgctxt "deck tag"
 msgid "Travel"
@@ -3802,6 +3888,9 @@ msgstr "Версия от 5 января 2026 года"
 msgid "Version of 7 May 2025"
 msgstr "Версия от 7 мая 2025 года"
 
+msgid "View card"
+msgstr "Посмотреть карточку"
+
 msgid "Vocabulary for levels 1 and 2 of TOPIK I and for level 3 of TOPIK II, with a translation beside each word."
 msgstr "Лексика для уровней 1 и 2 TOPIK I и уровня 3 TOPIK II, с переводом рядом с каждым словом."
 
@@ -3862,11 +3951,20 @@ msgstr "Сколько это стоит?"
 msgid "What every exam deck gives you"
 msgstr "Что даёт каждая колода для экзамена"
 
+msgid "What goes"
+msgstr "Что удалится"
+
 msgid "What if I already use Anki?"
 msgstr "А если я уже пользуюсь Anki?"
 
 msgid "What if it gets something wrong?"
 msgstr "А если он ошибётся?"
+
+msgid "What it’s for"
+msgstr "Для чего она"
+
+msgid "What stays for others"
+msgstr "Что останется другим"
 
 msgid "What the test looks like"
 msgstr "Как устроен тест"

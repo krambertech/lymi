@@ -10,8 +10,13 @@ import { LibraryDemo } from "../landing/LibraryDemo";
 import { ReviewDemo } from "../landing/ReviewDemo";
 import { SeriesDemo } from "../landing/SeriesDemo";
 import { ActivityFigure } from "./ActivityFigure";
+import { DeckAiFigure } from "./DeckAiFigure";
+import { DeleteAccountFigure } from "./DeleteAccountFigure";
 import { HookFigure } from "./HookFigure";
+import { ImportantFigure } from "./ImportantFigure";
+import { ImportSourcesFigure } from "./ImportSourcesFigure";
 import { RestDaysFigure } from "./RestDaysFigure";
+import { TagsFigure } from "./TagsFigure";
 import { VoicesFigure } from "./VoicesFigure";
 import { WelcomeFigure } from "./WelcomeFigure";
 
@@ -29,6 +34,11 @@ const FIGURES: Record<ChangelogFigureName, ComponentType> = {
   "hook-peek": () => <HookFigure variant="peek" />,
   "hook-write": () => <HookFigure variant="write" />,
   "rest-days": RestDaysFigure,
+  "deck-ai": DeckAiFigure,
+  important: ImportantFigure,
+  tags: TagsFigure,
+  "import-sources": ImportSourcesFigure,
+  "delete-account": DeleteAccountFigure,
 };
 
 interface Props {

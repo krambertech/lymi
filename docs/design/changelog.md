@@ -10,19 +10,18 @@ The summary stands on its own: it is the page description, the feed item and, on
 
 ## Writing
 
-Write for the learner and what they can now do, in the [voice](system/voice.md): warm, plain, one idea per sentence, no exclamation marks and no celebration. Name screens and controls as the app does and use [CONTEXT.md](../../CONTEXT.md)'s words. Say what changed for the reader, never how it was built: no pull requests, providers' model names or internal terms. Leave out internal work and anything learners cannot use yet, such as the phone app before it is in a store, and a feature that was later removed.
+[The changelog skill](../../.agents/skills/changelog/SKILL.md) decides what goes in and holds the plain-language rules every sentence meets.
 
-Spread updates out: about one a day at most, so a day that shipped a lot becomes two or three updates on the days after it. Never date an update before everything in it was live.
+Spread updates out: one a day at most, so a day that shipped a lot becomes two or three updates on that day and the days after it. Never date an update before everything in it was live.
 
 The Ukrainian and Russian files are transcreated from the English with the [translate skill](../../.agents/skills/translate/SKILL.md), as site copy is, and the pull request diff is their review.
 
 ## Pictures
 
-An update shows at most one picture, in a 16:10 tray in one of the eight Explore hues, stepped from the oldest update so neighbours differ and a new update repaints nothing. Every picture has the same shape, so the list keeps one rhythm and any picture can stand in for the update elsewhere. A figure is scaled down to fit its tray; a screenshot is placed by percentages, so it crops the same on a phone as on a desktop. Prefer, in order:
+Every update shows one picture, in a 16:10 tray in one of the eight Explore hues, stepped from the oldest update so neighbours differ and a new update repaints nothing. Every picture has the same shape, so the list keeps one rhythm and any picture can stand in for the update elsewhere. A figure is scaled down to fit its tray; a screenshot is placed by percentages, so it crops the same on a phone as on a desktop. Choose, in order:
 
 1. **A screenshot**, only when the screen itself impresses or explains: a redesigned screen, or one part of a screen that shows the change at a glance. A screen that is mostly empty, or that needs the text to make sense, is not one.
-2. **A figure**, for everything else worth showing: a landing demo or a drawing made for the update, listed in `changelog-figures.ts` and drawn by `ChangelogFigure` at 460 px wide. A drawing uses the product's own components and words, shows one moment, and leaves out anything the update does not mention.
-3. **Nothing**, when the words carry it. A short update needs no picture.
+2. **A figure**, for everything else: a landing demo or a drawing made for the update, listed in `changelog-figures.ts` and drawn by `ChangelogFigure` at 460 px wide. A drawing uses the product's own components and words, shows one moment, and leaves out anything the update does not mention.
 
 ### Screenshots
 

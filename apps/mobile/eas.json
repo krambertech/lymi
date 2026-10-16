@@ -7,6 +7,9 @@
     "base": {
       "node": "22.22.3",
       "pnpm": "10.16.1",
+      "env": {
+        "LYMI_APP_LINKS": "1"
+      },
       "ios": {
         "image": "latest"
       }

@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { api, type ConnectedApp, errorMessage } from "@lymi/client/api";
-import { identifyApp } from "@lymi/client/app-marks";
+import { identifyApp, listedApp } from "@lymi/client/app-marks";
 import { connectedAppsQuery } from "@lymi/client/queries";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { openBrowserAsync } from "expo-web-browser";
@@ -117,13 +117,12 @@ function AppRow({
 }) {
   const { t, i18n } = useLingui();
   const app = identifyApp(item.clientId, item.name, site);
-  const name = app.name ?? t`An app`;
+  const listed = listedApp(app);
+  const name = listed.title ?? t`An app`;
   const connected = i18n.date(new Date(item.createdAt), { day: "numeric", month: "short" });
-  // An app with no name of its own is titled by its host, so the host is not printed twice; an
-  // unrecognised app is titled by its address, so the name it sent is only a claim.
   const line = [
-    app.name !== app.host ? app.host : null,
-    app.claimed ? t`calls itself “${app.claimed}”` : null,
+    listed.host,
+    listed.claimed ? t`calls itself “${listed.claimed}”` : null,
     t`connected ${connected}`,
   ]
     .filter(Boolean)
@@ -132,13 +131,14 @@ function AppRow({
     <View
       className={`min-h-[68px] flex-row items-center gap-3 py-3 ps-4 pe-3 ${first ? "" : "border-t border-edge"}`}
     >
-      <AppMark app={app} />
+      <AppMark app={{ ...app, name: listed.title }} />
       <View className="flex-1 gap-1">
         <View className="flex-row flex-wrap items-center gap-2">
           <Text className="shrink text-md font-medium text-text" numberOfLines={1}>
             {name}
           </Text>
           <Chip size="sm">{item.scope === "write" ? t`Read and write` : t`Read`}</Chip>
+          {listed.unverified && <Chip size="sm">{t`Unverified`}</Chip>}
         </View>
         <Text className="text-sm text-muted" numberOfLines={2}>
           {line}

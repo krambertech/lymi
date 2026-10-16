@@ -1050,7 +1050,7 @@ msgstr "by the API"
 msgid "by you"
 msgstr "by you"
 
-#. placeholder {0}: app.claimed
+#. placeholder {0}: listed.claimed
 msgid "calls itself “{0}”"
 msgstr "calls itself “{0}”"
 
@@ -3929,6 +3929,9 @@ msgstr "Unmark important"
 
 msgid "Untitled key"
 msgstr "Untitled key"
+
+msgid "Unverified"
+msgstr "Unverified"
 
 msgid "Update"
 msgstr "Update"

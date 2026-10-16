@@ -1050,7 +1050,7 @@ msgstr "через API"
 msgid "by you"
 msgstr "тобою"
 
-#. placeholder {0}: app.claimed
+#. placeholder {0}: listed.claimed
 msgid "calls itself “{0}”"
 msgstr "називає себе «{0}»"
 
@@ -3929,6 +3929,9 @@ msgstr "Зняти позначку «важлива»"
 
 msgid "Untitled key"
 msgstr "Ключ без назви"
+
+msgid "Unverified"
+msgstr "Не перевірено"
 
 msgid "Update"
 msgstr "Оновити"

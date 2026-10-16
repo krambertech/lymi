@@ -6,6 +6,7 @@ import {
   CardEditsInput,
   CardHistoryOut,
   CardImportanceInput,
+  CardImportancesInput,
   CardInput,
   CardOut,
   CardPatch,
@@ -17,6 +18,7 @@ import {
   DeckChoiceOut,
   EditCardsOut,
   HookDraftOut,
+  ImportantCardsOut,
   OkOut,
   ResponseShapeQuery,
   TerseCardsOut,
@@ -43,6 +45,7 @@ import {
   restoreCards,
   searchCards,
   setImportant,
+  setImportantMany,
   showCard,
   terseOutcome,
   updateCard,
@@ -217,6 +220,19 @@ cards.post(
   }),
   body(CardArchiveInput, "restore"),
   async (c) => c.json({ results: await restoreCards(ctxOf(c), c.req.valid("json").cardIds) }),
+);
+
+cards.post(
+  "/important",
+  describe({
+    tags: ["Cards"],
+    summary: "Mark many cards as important",
+    description: `Needs the write scope. Up to 200 cards, each with its \`cardId\` and the mark it should have, in any deck you can see, including one you joined. Your own mark: nobody else sees it. A card that already has that mark is left as it is and still reported. Outcomes come back in the same order. ${PARTIAL}`,
+    ok: { schema: ImportantCardsOut, description: "One outcome per card sent" },
+    errors: [400],
+  }),
+  body(CardImportancesInput, "important marks"),
+  async (c) => c.json({ results: await setImportantMany(ctxOf(c), c.req.valid("json").cards) }),
 );
 
 cards.get(

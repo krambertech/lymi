@@ -2,8 +2,9 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { type Href, useIsPreview, useRouter } from "expo-router";
-import { Fragment, type ReactElement, type ReactNode, useState } from "react";
+import { Fragment, type ReactElement, type ReactNode, type RefObject, useState } from "react";
 import {
+  type FlatList,
   I18nManager,
   type ListRenderItem,
   RefreshControl,
@@ -45,6 +46,10 @@ export interface ScreenList<T> {
   extraData?: unknown;
   /** Under the list, such as room for a pinned toolbar. */
   footer?: ReactElement | false | null;
+  /** For a page that scrolls its list to a row, such as a section's heading. */
+  ref?: RefObject<FlatList<T> | null>;
+  /** A row past what is drawn yet: scroll near it, then try again. */
+  onScrollToIndexFailed?: (info: { index: number; averageItemLength: number }) => void;
 }
 
 interface Props<T> {
@@ -321,6 +326,8 @@ export function Screen<T = never>({
     <View className="flex-1 bg-canvas">
       {list && !preview ? (
         <Animated.FlatList
+          ref={list.ref}
+          onScrollToIndexFailed={list.onScrollToIndexFailed}
           {...scroll}
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ ...scroll.contentContainerStyle, paddingHorizontal: 20 }}

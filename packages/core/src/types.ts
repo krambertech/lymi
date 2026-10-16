@@ -713,6 +713,21 @@ export const CardImportanceInput = z
   .meta({ id: "CardImportance" });
 export type CardImportanceInput = z.infer<typeof CardImportanceInput>;
 
+/** A bulk change to important marks: each card with the mark it should have. */
+export const CardImportancesInput = z
+  .object({
+    cards: z
+      .array(CardImportanceInput.extend({ cardId: z.string().min(1) }))
+      .min(1, "Choose at least one card.")
+      .max(200)
+      .refine(
+        (marks) => new Set(marks.map((mark) => mark.cardId)).size === marks.length,
+        "List each card once.",
+      ),
+  })
+  .meta({ id: "CardImportances" });
+export type CardImportancesInput = z.infer<typeof CardImportancesInput>;
+
 /** One card's edit in a bulk edit: which card, and the fields to change on it. */
 export const CardEditInput = CardPatch.extend({ cardId: z.string().min(1) });
 export type CardEditInput = z.infer<typeof CardEditInput>;

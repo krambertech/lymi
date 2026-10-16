@@ -19,10 +19,21 @@ export function useReviewSession(leg: ReviewLeg): void {
     }, randomUUID);
   const streak = useStreak().data;
   useEffect(() => legs.current?.setStreak(streak), [streak]);
-  const { key, date, before, done, count, presenting, stopped, paused, finished } = leg;
+  const { key, date, scope, before, done, count, presenting, stopped, paused, finished } = leg;
   useEffect(() => {
-    legs.current?.step({ key, date, before, done, count, presenting, stopped, paused, finished });
-  }, [key, date, before, done, count, presenting, stopped, paused, finished]);
+    legs.current?.step({
+      key,
+      date,
+      scope,
+      before,
+      done,
+      count,
+      presenting,
+      stopped,
+      paused,
+      finished,
+    });
+  }, [key, date, scope, before, done, count, presenting, stopped, paused, finished]);
   useEffect(() => {
     const session = legs.current;
     return () => session?.leave();

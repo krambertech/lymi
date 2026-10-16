@@ -11,6 +11,7 @@ let legs: ReviewLegs;
 const leg = (over: Partial<ReviewLeg>): ReviewLeg => ({
   key: `${DATE}:draw:0`,
   date: DATE,
+  scope: "day",
   before: 0,
   done: 0,
   count: 10,
@@ -45,7 +46,27 @@ describe("review legs on the phone", () => {
         card_count: 10,
         is_first_session: true,
         ending: "goal",
+        scope: "day",
       },
+    ]);
+  });
+
+  it("says a review of chosen cards was one", () => {
+    legs.step(leg({ key: `${DATE}:list:0`, scope: "chosen", done: 0, count: 3 }));
+    legs.step(leg({ key: `${DATE}:list:0`, scope: "chosen", done: 1, count: 3 }));
+    legs.step(
+      leg({
+        key: `${DATE}:list:0`,
+        scope: "chosen",
+        done: 1,
+        count: 3,
+        presenting: false,
+        stopped: true,
+        paused: true,
+      }),
+    );
+    expect(events).toMatchObject([
+      { name: "review_session_abandoned", reason: "left", scope: "chosen", cards_done: 1 },
     ]);
   });
 

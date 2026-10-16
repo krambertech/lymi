@@ -9,6 +9,7 @@ import type {
   CardsInput,
   Direction,
   HookDraftOut,
+  ImportantCardsOut,
   ReviewMode,
   TerseCardsOut,
 } from "@lymi/core";
@@ -131,6 +132,12 @@ export const cardsApi = {
   editCards: (cards: CardEditInput[]) =>
     request<TerseCardsOut>("/api/cards/batch?response=terse", {
       method: "PATCH",
+      body: JSON.stringify({ cards }),
+    }),
+  /** Each card's own mark, in one call of up to 200. */
+  setCardsImportant: (cards: { cardId: string; important: boolean }[]) =>
+    request<ImportantCardsOut>("/api/cards/important", {
+      method: "POST",
       body: JSON.stringify({ cards }),
     }),
   setCardImportant: (id: string, important: boolean) =>

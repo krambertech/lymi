@@ -70,8 +70,8 @@ export function useStartSection(deckId: string, sections: readonly Section[]) {
 
 /**
  * Where the learner is in a deck whose sections open in order, under the deck's summary: the
- * section they are on and the one next step. It says what opens the next section in cards, never
- * as a percentage. The web's SectionProgress.
+ * section they are on, Go to its heading, and the one next step. It says what opens the next
+ * section in cards, never as a percentage. The web's SectionProgress.
  */
 export function SectionProgress({
   sections,
@@ -79,6 +79,7 @@ export function SectionProgress({
   due,
   starting,
   onStart,
+  onGoTo,
 }: {
   sections: readonly Section[];
   progress: NonNullable<Sections["progress"]>;
@@ -86,6 +87,8 @@ export function SectionProgress({
   due: number;
   starting: string | undefined;
   onStart: (section: Section) => void;
+  /** Scrolls the list to the section's heading, with nothing filtered out. */
+  onGoTo: (sectionId: string) => void;
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
@@ -131,9 +134,17 @@ export function SectionProgress({
 
   return (
     <View className="gap-3 border-t border-edge pt-4">
-      <View className="gap-0.5">
-        <Text className="text-md font-medium text-text">{title}</Text>
-        <Text className="text-sm text-text-2">{detail}</Text>
+      <View className="flex-row items-start gap-3">
+        <View className="flex-1 gap-0.5">
+          <Text className="text-md font-medium text-text">{title}</Text>
+          <Text className="text-sm text-text-2">{detail}</Text>
+        </View>
+        <Button
+          label={next && progress.ready ? t`Go to ${currentName}` : t`Go to section`}
+          variant="ghost"
+          size="sm"
+          onPress={() => onGoTo(current.id)}
+        />
       </View>
       {meter && (
         <View className="h-1.5 justify-center" accessibilityElementsHidden>
@@ -227,6 +238,12 @@ export function SectionHeading({
     ],
     owner
       ? [
+          {
+            id: "add_card" as const,
+            label: t`Add card here`,
+            icon: "plus" as const,
+            onSelect: () => router.push(`/capture?deck=${deckId}&section=${section.id}` as Href),
+          },
           {
             id: "rename_section" as const,
             label: t`Rename section`,

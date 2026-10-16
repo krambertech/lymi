@@ -333,6 +333,23 @@ export const ArchiveCardsOut = z
   .meta({ id: "ArchiveCardsResult" });
 export type ArchiveCardsOut = z.infer<typeof ArchiveCardsOut>;
 
+/** One outcome per card in a bulk change to important marks. */
+export const ImportantCardOutcomeOut = z
+  .discriminatedUnion("status", [
+    z.object({
+      id: OutcomeId,
+      status: z.literal("updated"),
+      important: z.boolean().meta({ description: "The mark the card has now" }),
+    }),
+    CardWriteErrorOut,
+  ])
+  .meta({ id: "ImportantCardOutcome" });
+
+export const ImportantCardsOut = z
+  .object({ results: z.array(ImportantCardOutcomeOut) })
+  .meta({ id: "ImportantCardsResult" });
+export type ImportantCardsOut = z.infer<typeof ImportantCardsOut>;
+
 /** A card write reduced to the card's id and what happened to it. */
 export const TerseCardOutcomeOut = z
   .object({

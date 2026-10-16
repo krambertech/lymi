@@ -3,6 +3,7 @@ import { useLingui } from "@lingui/react/macro";
 import { api, errorMessage } from "@lymi/client/api";
 import type { DeckRow } from "@lymi/client/deck-list";
 import { deckCardsQuery } from "@lymi/client/queries";
+import { showWrite } from "@lymi/client/write-projections";
 import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDecks } from "../data/queries";
@@ -48,9 +49,15 @@ async function leave(
   }
 }
 
+/** Shows each card's mark everywhere it is cached, at once, as a single mark's write does. */
+const showMarks = (qc: QueryClient, marks: ReadonlyMap<string, boolean>) => {
+  for (const [id, important] of marks) showWrite(qc, { kind: "card.important", id, important });
+};
+
 /**
- * Archive and Move to deck for chosen cards, each saying what it did in a toast with Undo, as Move
- * to section does. Plain promises, so Undo still works once the learner has left the deck.
+ * Archive, Move to deck and the important mark for chosen cards, each saying what it did in a toast
+ * with Undo, as Move to section does. Plain promises, so Undo still works once the learner has left
+ * the deck.
  */
 export function useCardBatch(deckId: string) {
   const { t } = useLingui();
@@ -109,7 +116,71 @@ export function useCardBatch(deckId: string) {
     );
   };
 
-  return { archive, moveToDeck };
+  /** The learner's own mark, so a member sets it too. Undo gives each card back the mark it had. */
+  const important = (cardIds: string[], mark: boolean) => {
+    const rows = qc.getQueryData<DeckRow[]>(deckCardsQuery(deckId).queryKey) ?? [];
+    const chosen = new Set(cardIds);
+    const before = new Map(
+      rows.flatMap((r) => (chosen.has(r.card.id) ? [[r.card.id, r.card.important]] : [])),
+    );
+    const write = (marks: ReadonlyMap<string, boolean>) => {
+      showMarks(qc, marks);
+      return api
+        .setCardsImportant([...marks].map(([cardId, important]) => ({ cardId, important })))
+        .then((out) => {
+          // A card the server refused shows the mark it had again.
+          const refused = out.results.filter((r) => r.status === "error").map((r) => r.id);
+          showMarks(qc, new Map(refused.map((id) => [id, before.get(id) ?? !mark])));
+          const done = out.results.flatMap((r) => (r.status === "updated" ? [r.id] : []));
+          if (done.length === 0) throw new Error("none");
+          return done;
+        })
+        .catch((e: unknown) => {
+          showMarks(qc, new Map([...marks.keys()].map((id) => [id, before.get(id) ?? !mark])));
+          throw e;
+        })
+        .finally(() => void qc.invalidateQueries({ queryKey: ["queue"] }));
+    };
+    return write(new Map(cardIds.map((cardId) => [cardId, mark]))).then(
+      (done) =>
+        toast.add({
+          id,
+          title: mark
+            ? plural(done.length, {
+                one: "Marked # card important",
+                other: "Marked # cards important",
+              })
+            : plural(done.length, {
+                one: "Removed the important mark from # card",
+                other: "Removed the important mark from # cards",
+              }),
+          action: {
+            label: t`Undo`,
+            onPress: () => {
+              toast.close(id);
+              const back = new Map(done.map((cardId) => [cardId, before.get(cardId) ?? !mark]));
+              write(back).catch((e) => toast.add({ id, error: true, title: errorMessage(e) }));
+            },
+          },
+        }),
+      (e) =>
+        failed(
+          e,
+          mark
+            ? plural(cardIds.length, {
+                one: "Couldn’t mark # card important.",
+                other: "Couldn’t mark # cards important.",
+              })
+            : plural(cardIds.length, {
+                one: "Couldn’t remove the important mark from # card.",
+                other: "Couldn’t remove the important mark from # cards.",
+              }),
+          () => important(cardIds, mark),
+        ),
+    );
+  };
+
+  return { archive, moveToDeck, important };
 }
 
 /**

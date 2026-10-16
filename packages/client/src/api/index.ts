@@ -29,7 +29,7 @@ export type { Section, Sections } from "./sections";
 export type { Series } from "./series";
 export type { Settings } from "./settings";
 export type { Invitation, Member } from "./sharing";
-export type { Tag } from "./tags";
+export type { DeckTags, Tag } from "./tags";
 
 import { accountApi } from "./account";
 import { activityApi } from "./activity";

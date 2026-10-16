@@ -199,6 +199,10 @@
     {
       "name": "0049_card_tags.sql",
       "sha256": "439fae9630cc2b54b9d136ead816ef7089768c1a496d88b611c34085bb0c75ae"
+    },
+    {
+      "name": "0050_slippery_mauler.sql",
+      "sha256": "35b43d17d77adfe7edca98fa396a3cd23135ea1383e8c51194bb0259440ea7a0"
     }
   ]
 }

@@ -25,6 +25,10 @@ msgstr "«{label}» уже є в «{deckName}», тож копію, додану
 msgid "“{term}” has nothing left to fill in."
 msgstr "У «{term}» нічого доповнювати."
 
+#. placeholder {0}: tags.count
+msgid "{0, plural, =0 {No tags yet} one {# tag} other {# tags}}"
+msgstr "{0, plural, =0 {Тегів ще немає} one {# тег} few {# теги} many {# тегів} other {# тегу}}"
+
 #. placeholder {0}: counts?.decks ?? 0
 msgid "{0, plural, =0 {The cards went into decks you already had.} one {They’re in # new deck in Library.} other {They’re in # new decks in Library.}}"
 msgstr "{0, plural, =0 {Картки потрапили в колоди, які в тебе вже були.} one {Вони в # новій колоді в Бібліотеці.} few {Вони в # нових колодах у Бібліотеці.} many {Вони в # нових колодах у Бібліотеці.} other {Вони в # нової колоди в Бібліотеці.}}"
@@ -989,11 +993,18 @@ msgstr "Заархівовано «{sectionName}»"
 msgid "Archived “{sectionName}” and its cards"
 msgstr "Заархівовано «{sectionName}» разом із картками"
 
+#. placeholder {0}: tag.cards
+msgid "Archived “{tagName}” from {0, plural, one {# card} other {# cards}}"
+msgstr "«{tagName}» архівовано з {0, plural, one {# картки} few {# карток} many {# карток} other {# картки}}"
+
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Заархівовано {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у колоді «{deck}»"
 
 msgid "Archived sections"
 msgstr "Архівовані розділи"
+
+msgid "Archived tags"
+msgstr "Архівовані теги"
 
 msgid "Archived the deck {deck}"
 msgstr "Заархівовано колоду «{deck}»"
@@ -1467,6 +1478,9 @@ msgstr "Не вдалося завантажити Бібліотеку"
 
 msgid "Couldn’t load more."
 msgstr "Не вдалося завантажити більше."
+
+msgid "Couldn’t load tags"
+msgstr "Не вдалося завантажити теги"
 
 msgid "Couldn’t load the deck"
 msgstr "Не вдалося завантажити колоду"
@@ -1962,6 +1976,9 @@ msgstr "Фільтр"
 msgid "Find a language"
 msgstr "Знайди мову"
 
+msgid "Find a tag"
+msgstr "Знайти тег"
+
 msgid "Find or create a tag"
 msgstr "Знайдіть або створіть тег"
 
@@ -2037,6 +2054,9 @@ msgstr "Назви розділ."
 
 msgid "Give the series a name."
 msgstr "Дай серії назву."
+
+msgid "Give the tag a name."
+msgstr "Дайте тегу назву."
 
 msgid "Go to {currentName}"
 msgstr "Перейти до «{currentName}»"
@@ -2224,6 +2244,9 @@ msgstr "У Noji відкрий створену тобою колоду, від�
 msgid "In the other account, open a deck’s menu and choose <0>Export</0>, or choose <1>Export library</1> in Settings."
 msgstr "В іншому акаунті відкрий меню колоди й вибери <0>Експортувати</0> або вибери <1>Експортувати бібліотеку</1> в Налаштуваннях."
 
+msgid "In use"
+msgstr "Використовуються"
+
 msgid "Includes your schedule and review history. Exporting doesn’t change the deck."
 msgstr "Містить твій розклад та історію повторень. Експорт не змінює колоду."
 
@@ -2281,6 +2304,9 @@ msgstr "Його не підтвердили протягом трьох дні�
 
 msgid "Its cards and the decks it made are hidden. Restore brings them back with their history."
 msgstr "Його картки й створені ним колоди приховано. Відновлення поверне їх разом з історією."
+
+msgid "Its cards take the other tag instead, here in this deck only."
+msgstr "Його картки отримають інший тег замість нього, лише в цій колоді."
 
 msgid "Its decks may have been withdrawn. Every deck Lymi publishes is on Explore."
 msgstr "Можливо, її колоди зняли з публікації. Усі колоди, які публікує Lymi, є в каталозі."
@@ -2544,6 +2570,9 @@ msgstr "Створи колоду й додай картки з останньо
 msgid "Make one for each course or topic."
 msgstr "Створи колоду для кожного курсу чи теми."
 
+msgid "Manage"
+msgstr "Керувати"
+
 msgid "Manage connected apps"
 msgstr "Керувати підключеними застосунками"
 
@@ -2585,6 +2614,18 @@ msgstr "Зачіпка:"
 
 msgid "Memory hook: {spokenAid}"
 msgstr "Зачіпка: {spokenAid}"
+
+msgid "Merge"
+msgstr "Об’єднати"
+
+msgid "Merge “{tagName}” into"
+msgstr "Об’єднати «{tagName}» з"
+
+msgid "Merge into…"
+msgstr "Об’єднати з…"
+
+msgid "Merged “{from}” into “{spelled}”"
+msgstr "«{from}» об’єднано з «{spelled}»"
 
 msgid "Message"
 msgstr "Повідомлення"
@@ -2830,6 +2871,12 @@ msgstr "Без розділу"
 msgid "No series"
 msgstr "Без серії"
 
+msgid "No tag matches “{query}”."
+msgstr "Немає тегу, що відповідає «{query}»."
+
+msgid "No tags yet"
+msgstr "Тегів ще немає"
+
 msgid "No tags yet. Type one to create it."
 msgstr "Тегів ще немає. Введіть назву, щоб створити тег."
 
@@ -2953,6 +3000,9 @@ msgstr "Приєднатися можуть лише ті, кого ти зап�
 msgid "Only the deck’s owner can change this."
 msgstr "Змінювати це може лише власник колоди."
 
+msgid "Only this deck’s cards change. Other decks keep the tag as it is."
+msgstr "Зміняться лише картки цієї колоди. В інших колодах тег залишиться як є."
+
 msgid "Only you see these."
 msgstr "Їх бачиш лише ти."
 
@@ -2997,6 +3047,7 @@ msgstr "Необов’язково"
 
 #. placeholder {0}: invitation.email
 #. placeholder {0}: member.name
+#. placeholder {0}: tag.name
 msgid "Options for {0}"
 msgstr "Дії для {0}"
 
@@ -3271,11 +3322,23 @@ msgstr "{name} вилучено з колоди «{deck}»"
 msgid "Rename"
 msgstr "Перейменувати"
 
+msgid "Rename “{tagName}”"
+msgstr "Перейменувати «{tagName}»"
+
 msgid "Rename {sectionName}"
 msgstr "Перейменувати «{sectionName}»"
 
 msgid "Rename section"
 msgstr "Перейменувати розділ"
+
+msgid "Rename, merge or archive the tags on this deck’s cards."
+msgstr "Перейменовуйте, об’єднуйте або архівуйте теги на картках цієї колоди."
+
+msgid "Rename…"
+msgstr "Перейменувати…"
+
+msgid "Renamed “{from}” to “{spelled}”"
+msgstr "«{from}» перейменовано на «{spelled}»"
 
 msgid "Replace the picture"
 msgstr "Замінити зображення"
@@ -3745,6 +3808,9 @@ msgstr "Тег: {tagName}"
 msgid "Tags"
 msgstr "Теги"
 
+msgid "Tags you put on this deck’s cards show here, to rename, merge or archive."
+msgstr "Тут з’являться теги з карток цієї колоди: їх можна перейменувати, об’єднати чи архівувати."
+
 msgid "Tags…"
 msgstr "Теги…"
 
@@ -3892,6 +3958,9 @@ msgstr "джерело"
 
 msgid "the tags"
 msgstr "теги"
+
+msgid "The tags on this deck’s cards. Changes here stay in this deck."
+msgstr "Теги на картках цієї колоди. Зміни тут стосуються лише цієї колоди."
 
 msgid "the term"
 msgstr "термін"
@@ -4300,6 +4369,9 @@ msgstr "ти"
 
 msgid "You"
 msgstr "Ти"
+
+msgid "You already have “{otherName}”, so the two merge into one tag on these cards."
+msgstr "У вас уже є «{otherName}», тож на цих картках два теги об’єднаються в один."
 
 msgid "You already have a Lymi account"
 msgstr "У тебе вже є акаунт Lymi"

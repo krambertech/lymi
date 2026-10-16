@@ -57,6 +57,20 @@ describe("analytics privacy contract", () => {
         "browser",
       ),
     ).toEqual({ cards: "1-20", added: 1, removed: 0 });
+    expect(
+      eventProperties(
+        "deck_tag_changed",
+        { action: "merge", channel: "app", cards: "1-20", from: "food" },
+        "worker",
+      ),
+    ).toEqual({ action: "merge", channel: "app", cards: "1-20" });
+    expect(
+      eventProperties(
+        "deck_tag_changed",
+        { action: "archive", channel: "app", cards: "0" },
+        "browser",
+      ),
+    ).toBeNull();
     expect(eventProperties("deck_filter_added", { kind: "tag", name: "food" }, "browser")).toEqual({
       kind: "tag",
     });

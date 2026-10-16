@@ -351,6 +351,13 @@
       "when": 1791922793214,
       "tag": "0049_card_tags",
       "breakpoints": true
+    },
+    {
+      "idx": 50,
+      "version": "6",
+      "when": 1792134569974,
+      "tag": "0050_slippery_mauler",
+      "breakpoints": true
     }
   ]
 }

@@ -187,6 +187,10 @@ msgstr "{0, plural, one {# review, goal {1}} other {# reviews, goal {2}}}"
 msgid "{0, plural, one {# review} other {# reviews}} since {1}"
 msgstr "{0, plural, one {# review} other {# reviews}} since {1}"
 
+#. placeholder {0}: parsed.oneSided
+msgid "{0, plural, one {# row has only one side, so it’s skipped.} other {# rows have only one side, so they’re skipped.}}"
+msgstr "{0, plural, one {# row has only one side, so it’s skipped.} other {# rows have only one side, so they’re skipped.}}"
+
 #. placeholder {0}: deck.sectionCount
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# section} other {# sections}}"
@@ -199,9 +203,17 @@ msgstr "{0, plural, one {# sound is skipped. Lymi reads terms aloud itself.} oth
 msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
 msgstr "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
 
+#. placeholder {0}: parsed.repeated
+msgid "{0, plural, one {# term appears more than once. Every card is imported.} other {# terms appear more than once. Every card is imported.}}"
+msgstr "{0, plural, one {# term appears more than once. Every card is imported.} other {# terms appear more than once. Every card is imported.}}"
+
 #. placeholder {0}: ticked.size
 msgid "{0, plural, one {Add # card} other {Add # cards}}"
 msgstr "{0, plural, one {Add # card} other {Add # cards}}"
+
+#. placeholder {0}: cards - PREVIEW_ROWS
+msgid "{0, plural, one {and # more card} other {and # more cards}}"
+msgstr "{0, plural, one {and # more card} other {and # more cards}}"
 
 #. placeholder {0}: preview.duplicates - preview.duplicateExamples.length
 msgid "{0, plural, one {and # more} other {and # more}}"
@@ -420,6 +432,9 @@ msgstr "{cards, plural, one {# card} other {# cards}}"
 #. placeholder {0}: fileSize(item.byteSize ?? 0, i18n.locale)
 msgid "{cards, plural, one {# card} other {# cards}} · {0}"
 msgstr "{cards, plural, one {# card} other {# cards}} · {0}"
+
+msgid "{cards, plural, one {Continue with # card} other {Continue with # cards}}"
+msgstr "{cards, plural, one {Continue with # card} other {Continue with # cards}}"
 
 msgid "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
 msgstr "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
@@ -714,6 +729,9 @@ msgstr "A link to a picture online."
 
 msgid "A Lymi file from another Lymi account"
 msgstr "A Lymi file from another Lymi account"
+
+msgid "A new deck"
+msgstr "A new deck"
 
 msgid "A PDF of the lesson"
 msgstr "A PDF of the lesson"
@@ -1145,6 +1163,12 @@ msgstr "Back to streak"
 msgid "Backup script on the laptop"
 msgstr "Backup script on the laptop"
 
+msgid "Between rows"
+msgstr "Between rows"
+
+msgid "Between term and definition"
+msgstr "Between term and definition"
+
 msgid "Both of the above, one card at a time."
 msgstr "Both of the above, one card at a time."
 
@@ -1299,6 +1323,9 @@ msgstr "Check that the whole link was copied."
 msgid "Check the cards again"
 msgstr "Check the cards again"
 
+msgid "Check the separators. The preview below shows how they read."
+msgstr "Check the separators. The preview below shows how they read."
+
 msgid "Check those too"
 msgstr "Check those too"
 
@@ -1435,6 +1462,9 @@ msgstr "Code from the email"
 msgid "Come back later, or add new cards."
 msgstr "Come back later, or add new cards."
 
+msgid "Comma"
+msgstr "Comma"
+
 msgid "Confirm it’s you"
 msgstr "Confirm it’s you"
 
@@ -1507,6 +1537,12 @@ msgstr "Copied when you save"
 
 msgid "Copy"
 msgstr "Copy"
+
+msgid "Copy the set again from Quizlet with Export, then paste it."
+msgstr "Copy the set again from Quizlet with Export, then paste it."
+
+msgid "Copying from Quizlet"
+msgstr "Copying from Quizlet"
 
 msgctxt "deck tag"
 msgid "Core vocabulary"
@@ -1623,6 +1659,9 @@ msgstr "Couldn’t reach the sign-in service. Check your connection and try agai
 msgid "Couldn’t read this file"
 msgstr "Couldn’t read this file"
 
+msgid "Couldn’t read this text"
+msgstr "Couldn’t read this text"
+
 msgid "Couldn’t remove the member. Try again."
 msgstr "Couldn’t remove the member. Try again."
 
@@ -1734,6 +1773,9 @@ msgstr "Current picture"
 msgid "Custom"
 msgstr "Custom"
 
+msgid "Custom separator"
+msgstr "Custom separator"
+
 msgctxt "deck tag"
 msgid "Czech citizenship test"
 msgstr "Czech citizenship test"
@@ -1786,6 +1828,9 @@ msgstr "Decks from Lymi. Add one to study it in your language."
 msgid "Decks to review"
 msgstr "Decks to review"
 
+msgid "Definition"
+msgstr "Definition"
+
 msgid "Delete “{seriesName}”?"
 msgstr "Delete “{seriesName}”?"
 
@@ -1812,6 +1857,9 @@ msgstr "Deleting your account erases it for good. Nothing can bring it back."
 
 msgid "Deny"
 msgstr "Deny"
+
+msgid "der Hund\tthe dog"
+msgstr "der Hund\tthe dog"
 
 msgid "Describe what the picture shows without naming the term or the meaning."
 msgstr "Describe what the picture shows without naming the term or the meaning."
@@ -2340,6 +2388,9 @@ msgstr "Import decks from another Lymi account, with their pictures, tags and re
 msgid "Import from {app}"
 msgstr "Import from {app}"
 
+msgid "Import from Quizlet"
+msgstr "Import from Quizlet"
+
 msgid "Import your decks with their pictures, tags and review history. Cards keep their due dates, and {app} is unchanged."
 msgstr "Import your decks with their pictures, tags and review history. Cards keep their due dates, and {app} is unchanged."
 
@@ -2490,6 +2541,9 @@ msgstr "JPEG, PNG, WebP or still GIF, up to 10 MB."
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Keen"
+
+msgid "Keep <0>Tab</0> and <1>New line</1>. If a card has line breaks, set a custom row separator such as ##."
+msgstr "Keep <0>Tab</0> and <1>New line</1>. If a card has line breaks, set a custom row separator such as ##."
 
 msgid "Keep a copy"
 msgstr "Keep a copy"
@@ -2911,6 +2965,9 @@ msgstr "New deck"
 msgid "New key"
 msgstr "New key"
 
+msgid "New line"
+msgstr "New line"
+
 msgid "New password"
 msgstr "New password"
 
@@ -3151,11 +3208,20 @@ msgstr "Often forgotten"
 msgid "On a phone, or stuck? Read the guide"
 msgstr "On a phone, or stuck? Read the guide"
 
+msgid "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
+msgstr "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
+
 msgid "One after another, automatically"
 msgstr "One after another, automatically"
 
 msgid "One after another, when you start them"
 msgstr "One after another, when you start them"
+
+msgid "One import takes up to {MAX_TEXT_IMPORT_CARDS} cards. Split the set and import it in parts."
+msgstr "One import takes up to {MAX_TEXT_IMPORT_CARDS} cards. Split the set and import it in parts."
+
+msgid "One import takes up to 5,000 cards. Split the set and import it in parts."
+msgstr "One import takes up to 5,000 cards. Split the set and import it in parts."
 
 msgid "One page at a time"
 msgstr "One page at a time"
@@ -3236,6 +3302,9 @@ msgctxt "Between two ways to sign in"
 msgid "or"
 msgstr "or"
 
+msgid "Or choose a .txt file"
+msgstr "Or choose a .txt file"
+
 msgid "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
 msgstr "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
 
@@ -3274,6 +3343,9 @@ msgstr "Past reviews show in Insights on the days you did them. They don’t cou
 
 msgid "Paste a link"
 msgstr "Paste a link"
+
+msgid "Paste a set you made in Quizlet. Terms and definitions come across; pictures, audio and progress don’t, so every card starts as new."
+msgstr "Paste a set you made in Quizlet. Terms and definitions come across; pictures, audio and progress don’t, so every card starts as new."
 
 msgid "Paste a transcript, your notes or the lesson’s text"
 msgstr "Paste a transcript, your notes or the lesson’s text"
@@ -3368,6 +3440,9 @@ msgstr "Policies and support"
 msgid "Position your photo"
 msgstr "Position your photo"
 
+msgid "Press <0>Copy text</0>, then paste it here."
+msgstr "Press <0>Copy text</0>, then paste it here."
+
 msgid "Press Enter after each tag."
 msgstr "Press Enter after each tag."
 
@@ -3410,6 +3485,9 @@ msgstr "Question {position} of {0}"
 
 msgid "Quickstart"
 msgstr "Quickstart"
+
+msgid "Quizlet import"
+msgstr "Quizlet import"
 
 msgid "Reach today’s goal to keep it going."
 msgstr "Reach today’s goal to keep it going."
@@ -3805,6 +3883,9 @@ msgstr "Select cards"
 msgid "Selected cards"
 msgstr "Selected cards"
 
+msgid "Semicolon"
+msgstr "Semicolon"
+
 msgid "Send"
 msgstr "Send"
 
@@ -3838,6 +3919,9 @@ msgstr "Sent again"
 msgid "Sent to {sentTo}. It works for 15 minutes."
 msgstr "Sent to {sentTo}. It works for 15 minutes."
 
+msgid "Separators"
+msgstr "Separators"
+
 msgid "Series"
 msgstr "Series"
 
@@ -3846,6 +3930,9 @@ msgstr "Set a new password"
 
 msgid "Set a new password for your Lymi account:"
 msgstr "Set a new password for your Lymi account:"
+
+msgid "Set name"
+msgstr "Set name"
 
 msgid "Settings"
 msgstr "Settings"
@@ -4044,6 +4131,9 @@ msgstr "Support"
 msgid "System"
 msgstr "System"
 
+msgid "Tab"
+msgstr "Tab"
+
 msgid "Tag: {tagName}"
 msgstr "Tag: {tagName}"
 
@@ -4098,6 +4188,9 @@ msgstr "Text"
 #. placeholder {0}: textItem.words
 msgid "Text · {0, plural, one {# word} other {# words}}"
 msgstr "Text · {0, plural, one {# word} other {# words}}"
+
+msgid "Text you copy from a Quizlet set"
+msgstr "Text you copy from a Quizlet set"
 
 msgid "Thank you. Replies come to your email."
 msgstr "Thank you. Replies come to your email."
@@ -4301,6 +4394,9 @@ msgstr "This file is empty. Export it again from {app}."
 msgid "This file is larger than 1 GB. Export one deck at a time."
 msgstr "This file is larger than 1 GB. Export one deck at a time."
 
+msgid "This file is larger than 5 MB. Split the set and import it in parts."
+msgstr "This file is larger than 5 MB. Split the set and import it in parts."
+
 msgid "This file is too large to import at once"
 msgstr "This file is too large to import at once"
 
@@ -4321,6 +4417,9 @@ msgstr "This is how it will look in Lymi. Change fields if a part is in the wron
 
 msgid "This isn’t a .mochi file. Choose the file you exported from Mochi."
 msgstr "This isn’t a .mochi file. Choose the file you exported from Mochi."
+
+msgid "This isn’t a .txt file. Paste the text Quizlet copies, or choose a .txt file."
+msgstr "This isn’t a .txt file. Paste the text Quizlet copies, or choose a .txt file."
 
 msgid "This isn’t a .zip file. Choose the file you exported from Lymi."
 msgstr "This isn’t a .zip file. Choose the file you exported from Lymi."
@@ -4351,6 +4450,9 @@ msgstr "This takes a few seconds for most files. Nothing is added to your decks 
 
 msgid "This test confirms that Lymi can send account emails."
 msgstr "This test confirms that Lymi can send account emails."
+
+msgid "This text is larger than 5 MB. Split the set and import it in parts."
+msgstr "This text is larger than 5 MB. Split the set and import it in parts."
 
 msgid "This week"
 msgstr "This week"
@@ -4604,6 +4706,9 @@ msgstr "What’s in this deck. Members see it too."
 msgid "When most of a section is known, the next one is ready and you choose when to start it."
 msgstr "When most of a section is known, the next one is ready and you choose when to start it."
 
+msgid "Where the cards go"
+msgstr "Where the cards go"
+
 msgid "Which days you reviewed"
 msgstr "Which days you reviewed"
 
@@ -4783,6 +4888,9 @@ msgstr "Your password is set"
 
 msgid "Your photo was changed somewhere else. Check it, then try again."
 msgstr "Your photo was changed somewhere else. Check it, then try again."
+
+msgid "Your set’s text"
+msgstr "Your set’s text"
 
 msgid "Your week"
 msgstr "Your week"

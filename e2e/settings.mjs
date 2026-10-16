@@ -41,6 +41,7 @@ export const e2eAccounts = [
   "anki-import",
   "sections",
   "mochi-import",
+  "quizlet-import",
   "export",
   "publisher",
   "password-account",

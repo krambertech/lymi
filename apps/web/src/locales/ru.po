@@ -187,6 +187,10 @@ msgstr "{0, plural, one {# повторение, цель {1}} few {# повто
 msgid "{0, plural, one {# review} other {# reviews}} since {1}"
 msgstr "{0, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}} с {1}"
 
+#. placeholder {0}: parsed.oneSided
+msgid "{0, plural, one {# row has only one side, so it’s skipped.} other {# rows have only one side, so they’re skipped.}}"
+msgstr "{0, plural, one {# строка заполнена только с одной стороны, поэтому она пропущена.} few {# строки заполнены только с одной стороны, поэтому они пропущены.} many {# строк заполнены только с одной стороны, поэтому они пропущены.} other {# строки заполнены только с одной стороны, поэтому они пропущены.}}"
+
 #. placeholder {0}: deck.sectionCount
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# раздел} few {# раздела} many {# разделов} other {# раздела}}"
@@ -199,9 +203,17 @@ msgstr "{0, plural, one {# звук пропущен. Lymi сам произно
 msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
 msgstr "{0, plural, one {# приостановленная карточка попадёт в архив.} few {# приостановленные карточки попадут в архив.} many {# приостановленных карточек попадут в архив.} other {# приостановленной карточки попадут в архив.}}"
 
+#. placeholder {0}: parsed.repeated
+msgid "{0, plural, one {# term appears more than once. Every card is imported.} other {# terms appear more than once. Every card is imported.}}"
+msgstr "{0, plural, one {# термин встречается больше одного раза. Импортируются все карточки.} few {# термина встречаются больше одного раза. Импортируются все карточки.} many {# терминов встречаются больше одного раза. Импортируются все карточки.} other {# термина встречаются больше одного раза. Импортируются все карточки.}}"
+
 #. placeholder {0}: ticked.size
 msgid "{0, plural, one {Add # card} other {Add # cards}}"
 msgstr "{0, plural, one {Добавить # карточку} few {Добавить # карточки} many {Добавить # карточек} other {Добавить # карточки}}"
+
+#. placeholder {0}: cards - PREVIEW_ROWS
+msgid "{0, plural, one {and # more card} other {and # more cards}}"
+msgstr "{0, plural, one {и ещё # карточка} few {и ещё # карточки} many {и ещё # карточек} other {и ещё # карточки}}"
 
 #. placeholder {0}: preview.duplicates - preview.duplicateExamples.length
 msgid "{0, plural, one {and # more} other {and # more}}"
@@ -420,6 +432,9 @@ msgstr "{cards, plural, one {# карточка} few {# карточки} many {
 #. placeholder {0}: fileSize(item.byteSize ?? 0, i18n.locale)
 msgid "{cards, plural, one {# card} other {# cards}} · {0}"
 msgstr "{cards, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}} · {0}"
+
+msgid "{cards, plural, one {Continue with # card} other {Continue with # cards}}"
+msgstr "{cards, plural, one {Продолжить с # карточкой} few {Продолжить с # карточками} many {Продолжить с # карточками} other {Продолжить с # карточки}}"
 
 msgid "{count, plural, =0 {Select cards} one {# selected} other {# selected}}"
 msgstr "{count, plural, =0 {Выбрать карточки} one {Выбрано: #} few {Выбрано: #} many {Выбрано: #} other {Выбрано: #}}"
@@ -714,6 +729,9 @@ msgstr "Ссылка на изображение в сети."
 
 msgid "A Lymi file from another Lymi account"
 msgstr "Файл Lymi из другого аккаунта Lymi"
+
+msgid "A new deck"
+msgstr "Новая колода"
 
 msgid "A PDF of the lesson"
 msgstr "PDF урока"
@@ -1145,6 +1163,12 @@ msgstr "Назад к дням подряд"
 msgid "Backup script on the laptop"
 msgstr "Скрипт резервной копии на ноутбуке"
 
+msgid "Between rows"
+msgstr "Между строками"
+
+msgid "Between term and definition"
+msgstr "Между термином и определением"
+
 msgid "Both of the above, one card at a time."
 msgstr "Оба варианта, по одной карточке за раз."
 
@@ -1299,6 +1323,9 @@ msgstr "Проверь, что ссылка скопирована полнос�
 msgid "Check the cards again"
 msgstr "Проверить карточки ещё раз"
 
+msgid "Check the separators. The preview below shows how they read."
+msgstr "Проверь разделители. Ниже видно, как они читаются."
+
 msgid "Check those too"
 msgstr "Проверить и их"
 
@@ -1435,6 +1462,9 @@ msgstr "Код из письма"
 msgid "Come back later, or add new cards."
 msgstr "Вернись позже или добавь новые карточки."
 
+msgid "Comma"
+msgstr "Запятая"
+
 msgid "Confirm it’s you"
 msgstr "Подтверди, что это ты"
 
@@ -1507,6 +1537,12 @@ msgstr "Скопируется при сохранении"
 
 msgid "Copy"
 msgstr "Копировать"
+
+msgid "Copy the set again from Quizlet with Export, then paste it."
+msgstr "Скопируй набор в Quizlet ещё раз через Export и вставь его."
+
+msgid "Copying from Quizlet"
+msgstr "Как скопировать из Quizlet"
 
 msgctxt "deck tag"
 msgid "Core vocabulary"
@@ -1623,6 +1659,9 @@ msgstr "Не удалось связаться с сервисом входа. �
 msgid "Couldn’t read this file"
 msgstr "Не удалось прочитать этот файл"
 
+msgid "Couldn’t read this text"
+msgstr "Не удалось прочитать этот текст"
+
 msgid "Couldn’t remove the member. Try again."
 msgstr "Не удалось исключить участника. Попробуй ещё раз."
 
@@ -1734,6 +1773,9 @@ msgstr "Текущее изображение"
 msgid "Custom"
 msgstr "Своя"
 
+msgid "Custom separator"
+msgstr "Свой разделитель"
+
 msgctxt "deck tag"
 msgid "Czech citizenship test"
 msgstr "Экзамен на гражданство Чехии"
@@ -1786,6 +1828,9 @@ msgstr "Колоды от Lymi. Добавь одну — учи её на св�
 msgid "Decks to review"
 msgstr "Колоды к повторению"
 
+msgid "Definition"
+msgstr "Определение"
+
 msgid "Delete “{seriesName}”?"
 msgstr "Удалить «{seriesName}»?"
 
@@ -1812,6 +1857,9 @@ msgstr "Удаление стирает аккаунт навсегда. Вос�
 
 msgid "Deny"
 msgstr "Отклонить"
+
+msgid "der Hund\tthe dog"
+msgstr "der Hund\tthe dog"
 
 msgid "Describe what the picture shows without naming the term or the meaning."
 msgstr "Опиши, что на изображении, не называя термин или значение."
@@ -2340,6 +2388,9 @@ msgstr "Импортируй колоды из другого аккаунта L
 msgid "Import from {app}"
 msgstr "Импорт из {app}"
 
+msgid "Import from Quizlet"
+msgstr "Импорт из Quizlet"
+
 msgid "Import your decks with their pictures, tags and review history. Cards keep their due dates, and {app} is unchanged."
 msgstr "Импортируй колоды с изображениями, тегами и историей повторений. Карточки сохранят даты повторения, а в {app} ничего не изменится."
 
@@ -2490,6 +2541,9 @@ msgstr "JPEG, PNG, WebP или статичный GIF, до 10 МБ."
 msgctxt "daily goal"
 msgid "Keen"
 msgstr "Усердно"
+
+msgid "Keep <0>Tab</0> and <1>New line</1>. If a card has line breaks, set a custom row separator such as ##."
+msgstr "Оставь <0>Tab</0> и <1>New line</1>. Если в карточке есть переносы строк, задай свой разделитель строк, например ##."
 
 msgid "Keep a copy"
 msgstr "Сохрани копию"
@@ -2911,6 +2965,9 @@ msgstr "Новая колода"
 msgid "New key"
 msgstr "Новый ключ"
 
+msgid "New line"
+msgstr "Новая строка"
+
 msgid "New password"
 msgstr "Новый пароль"
 
@@ -3151,11 +3208,20 @@ msgstr "Часто забываются"
 msgid "On a phone, or stuck? Read the guide"
 msgstr "На телефоне или что-то не получается? Прочитай руководство"
 
+msgid "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
+msgstr "На quizlet.com открой свой набор, открой меню <0>…</0> и выбери <1>Export</1>."
+
 msgid "One after another, automatically"
 msgstr "По очереди, автоматически"
 
 msgid "One after another, when you start them"
 msgstr "По очереди, когда ты их начнёшь"
+
+msgid "One import takes up to {MAX_TEXT_IMPORT_CARDS} cards. Split the set and import it in parts."
+msgstr "За один импорт можно добавить до {MAX_TEXT_IMPORT_CARDS} карточек. Раздели набор и импортируй его частями."
+
+msgid "One import takes up to 5,000 cards. Split the set and import it in parts."
+msgstr "За один импорт можно добавить до 5000 карточек. Раздели набор и импортируй его частями."
 
 msgid "One page at a time"
 msgstr "По одной странице"
@@ -3236,6 +3302,9 @@ msgctxt "Between two ways to sign in"
 msgid "or"
 msgstr "или"
 
+msgid "Or choose a .txt file"
+msgstr "Или выбери файл .txt"
+
 msgid "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
 msgstr "Другие люди изучают то, что опубликовал этот аккаунт, поэтому здесь его удалить нельзя. Напиши на <0>hello@lymi.app</0>, чтобы удалить его."
 
@@ -3274,6 +3343,9 @@ msgstr "Прошлые повторения появятся в Обзоре в 
 
 msgid "Paste a link"
 msgstr "Вставить ссылку"
+
+msgid "Paste a set you made in Quizlet. Terms and definitions come across; pictures, audio and progress don’t, so every card starts as new."
+msgstr "Вставь набор, который ты создал в Quizlet. Термины и определения перенесутся. Картинки, аудио и прогресс не переносятся, поэтому каждая карточка начнётся как новая."
 
 msgid "Paste a transcript, your notes or the lesson’s text"
 msgstr "Вставь транскрипт, свои заметки или текст урока"
@@ -3368,6 +3440,9 @@ msgstr "Правила и поддержка"
 msgid "Position your photo"
 msgstr "Расположи фото"
 
+msgid "Press <0>Copy text</0>, then paste it here."
+msgstr "Нажми <0>Copy text</0> и вставь текст сюда."
+
 msgid "Press Enter after each tag."
 msgstr "Нажимай Enter после каждого тега."
 
@@ -3410,6 +3485,9 @@ msgstr "Вопрос {position} из {0}"
 
 msgid "Quickstart"
 msgstr "Быстрый старт"
+
+msgid "Quizlet import"
+msgstr "Импорт из Quizlet"
 
 msgid "Reach today’s goal to keep it going."
 msgstr "Достигни сегодняшней цели, чтобы не прервать дни подряд."
@@ -3805,6 +3883,9 @@ msgstr "Выбрать карточки"
 msgid "Selected cards"
 msgstr "Выбранные карточки"
 
+msgid "Semicolon"
+msgstr "Точка с запятой"
+
 msgid "Send"
 msgstr "Отправить"
 
@@ -3838,6 +3919,9 @@ msgstr "Отправили ещё раз"
 msgid "Sent to {sentTo}. It works for 15 minutes."
 msgstr "Отправлено на {sentTo}. Код действует 15 минут."
 
+msgid "Separators"
+msgstr "Разделители"
+
 msgid "Series"
 msgstr "Серия"
 
@@ -3846,6 +3930,9 @@ msgstr "Задай новый пароль"
 
 msgid "Set a new password for your Lymi account:"
 msgstr "Задай новый пароль для аккаунта Lymi:"
+
+msgid "Set name"
+msgstr "Название набора"
 
 msgid "Settings"
 msgstr "Настройки"
@@ -4044,6 +4131,9 @@ msgstr "Поддержка"
 msgid "System"
 msgstr "Системная"
 
+msgid "Tab"
+msgstr "Табуляция"
+
 msgid "Tag: {tagName}"
 msgstr "Тег: {tagName}"
 
@@ -4098,6 +4188,9 @@ msgstr "Текст"
 #. placeholder {0}: textItem.words
 msgid "Text · {0, plural, one {# word} other {# words}}"
 msgstr "Текст · {0, plural, one {# слово} few {# слова} many {# слов} other {# слова}}"
+
+msgid "Text you copy from a Quizlet set"
+msgstr "Текст, скопированный из набора Quizlet"
 
 msgid "Thank you. Replies come to your email."
 msgstr "Спасибо. Ответ придёт на твою почту."
@@ -4301,6 +4394,9 @@ msgstr "Этот файл пустой. Экспортируй его ещё р�
 msgid "This file is larger than 1 GB. Export one deck at a time."
 msgstr "Этот файл больше 1 ГБ. Экспортируй колоды по одной."
 
+msgid "This file is larger than 5 MB. Split the set and import it in parts."
+msgstr "Этот файл больше 5 МБ. Раздели набор и импортируй его частями."
+
 msgid "This file is too large to import at once"
 msgstr "Этот файл слишком большой, чтобы импортировать его за раз"
 
@@ -4321,6 +4417,9 @@ msgstr "Так она будет выглядеть в Lymi. Измени пол
 
 msgid "This isn’t a .mochi file. Choose the file you exported from Mochi."
 msgstr "Это не файл .mochi. Выбери файл, экспортированный из Mochi."
+
+msgid "This isn’t a .txt file. Paste the text Quizlet copies, or choose a .txt file."
+msgstr "Это не файл .txt. Вставь текст, который копирует Quizlet, или выбери файл .txt."
 
 msgid "This isn’t a .zip file. Choose the file you exported from Lymi."
 msgstr "Это не файл .zip. Выбери файл, экспортированный из Lymi."
@@ -4351,6 +4450,9 @@ msgstr "Для большинства файлов это занимает не�
 
 msgid "This test confirms that Lymi can send account emails."
 msgstr "Этот тест подтверждает, что Lymi может отправлять письма об аккаунте."
+
+msgid "This text is larger than 5 MB. Split the set and import it in parts."
+msgstr "Этот текст больше 5 МБ. Раздели набор и импортируй его частями."
 
 msgid "This week"
 msgstr "На этой неделе"
@@ -4604,6 +4706,9 @@ msgstr "Что в этой колоде. Участники тоже это ви
 msgid "When most of a section is known, the next one is ready and you choose when to start it."
 msgstr "Когда большая часть раздела выучена, следующий готов, и ты решаешь, когда его начать."
 
+msgid "Where the cards go"
+msgstr "Куда пойдут карточки"
+
 msgid "Which days you reviewed"
 msgstr "Дни, когда были повторения"
 
@@ -4783,6 +4888,9 @@ msgstr "Пароль сохранён"
 
 msgid "Your photo was changed somewhere else. Check it, then try again."
 msgstr "Фото изменилось в другом месте. Проверь его и попробуй ещё раз."
+
+msgid "Your set’s text"
+msgstr "Текст твоего набора"
 
 msgid "Your week"
 msgstr "Твоя неделя"

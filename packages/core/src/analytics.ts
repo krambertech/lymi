@@ -236,6 +236,7 @@ export const analyticsEvents = {
     created: z.boolean(),
     channel: z.enum(["app", "api", "mcp"]),
   }),
+  lesson_read_limited: z.object({}),
   lesson_read: z.object({
     pages: count,
     pasted: z.boolean(),
@@ -337,6 +338,7 @@ export const analyticsProducers = {
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
   lesson_read: ["worker"],
+  lesson_read_limited: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser"],

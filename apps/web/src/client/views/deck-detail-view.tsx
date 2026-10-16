@@ -48,6 +48,7 @@ import {
 import { Avatar, FormerOwnerMark } from "../components/avatar";
 import { Button, IconButton } from "../components/button";
 import { CardPlace } from "../components/card-place";
+import { Chip } from "../components/chip";
 import { directionLabel, languageName } from "../components/deck-fields";
 import { ErrorState, NoResults } from "../components/empty-state";
 import { Screen, ScreenBar } from "../components/layout/screen";
@@ -994,6 +995,9 @@ export function DeckDetailView({
           <DropdownMenuItem onClick={owner.onSmartAdd}>
             <Sparkles />
             <Trans>Smart add</Trans>
+            <Chip size="sm" className="ms-auto">
+              <Trans>Beta</Trans>
+            </Chip>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

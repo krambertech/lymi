@@ -42,7 +42,9 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
   });
 
   await test.step("add a complete card", async () => {
-    await page.getByRole("button", { name: "Add card" }).first().click();
+    // On a deck the learner owns, the header's plus is a menu: New card or Smart add.
+    await page.locator("header").getByRole("button", { name: "Add", exact: true }).click();
+    await page.getByRole("menuitem", { name: "New card" }).click();
     const dialog = page.getByRole("dialog", { name: "Add a card" });
     await expect(dialog).toBeVisible();
     await page.getByRole("textbox", { name: "Term", exact: true }).fill("sbrigarsi");

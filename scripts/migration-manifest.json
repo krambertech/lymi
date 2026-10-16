@@ -211,6 +211,10 @@
     {
       "name": "0052_daffy_whizzer.sql",
       "sha256": "35b43d17d77adfe7edca98fa396a3cd23135ea1383e8c51194bb0259440ea7a0"
+    },
+    {
+      "name": "0053_rich_natasha_romanoff.sql",
+      "sha256": "41347856c75de425db924daaecb3df3644a12635d9da7c772994f675e7148ab1"
     }
   ]
 }

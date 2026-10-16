@@ -7,6 +7,7 @@ import { decisionModel, termsAgainstAnswer } from "../lessons/keep";
 import type { LessonMaterial } from "../lessons/reader";
 import { createLessonReader } from "../lessons/reader";
 import {
+  assertCanCheckAnswers,
   assertCanReadLessons,
   type LessonEvent,
   lessonAccess,
@@ -36,10 +37,10 @@ lessonReads.get(
   describe({
     hide: true,
     learnerOnly: true,
-    summary: "Whether this account can read lessons",
+    summary: "Whether this account can read lessons, and its reads left today",
     ok: { schema: LessonAccessOut, description: "Access" },
   }),
-  async (c) => c.json({ allowed: await lessonAccess(ctxOf(c), operatorEmails(c.env)) }),
+  async (c) => c.json(await lessonAccess(ctxOf(c), operatorEmails(c.env))),
 );
 
 lessonReads.post(
@@ -51,7 +52,7 @@ lessonReads.post(
     description:
       "Newline-delimited JSON: a term event per term as the model writes it, then questions, then done.",
     ok: { schema: LessonEventOut, description: "One line of the stream" },
-    errors: [400, 404, 503],
+    errors: [400, 404, 409, 503],
   }),
   async (c) => {
     const deps = {
@@ -130,9 +131,7 @@ lessonReads.post(
   }),
   body(LessonAnswerInput, "answer"),
   async (c) => {
-    if (!(await lessonAccess(ctxOf(c), operatorEmails(c.env)))) {
-      throw new ServiceError("forbidden", "Reading lessons is not available on this account yet.");
-    }
+    await assertCanCheckAnswers(ctxOf(c), operatorEmails(c.env));
     const { question, answer, terms } = c.req.valid("json");
     return c.json({
       drop: await termsAgainstAnswer(decisionModel(c.env), question, answer, terms),

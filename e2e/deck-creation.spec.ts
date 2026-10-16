@@ -1,6 +1,12 @@
 import { startAsTestLearner } from "./auth";
 import { expect, type Locator, type Page, test } from "./test";
 
+/** On a deck the learner owns, the header's plus is a menu: New card or Smart add. */
+async function openNewCard(page: Page) {
+  await page.locator("header").getByRole("button", { name: "Add", exact: true }).click();
+  await page.getByRole("menuitem", { name: "New card" }).click();
+}
+
 function sheet(page: Page, title: string): Locator {
   return page.locator('[role="dialog"], dialog').filter({
     has: page.getByRole("heading", { name: title, exact: true }),
@@ -130,8 +136,7 @@ test.describe("deck and card creation", () => {
     const firstId = await createDeck(page, firstName);
     await createDeck(page, secondName);
 
-    const addWord = page.locator("header").getByRole("button", { name: /^Add card/ });
-    await addWord.click();
+    await openNewCard(page);
     let dialog = sheet(page, "Add a card");
     await expect(dialog.getByRole("combobox", { name: "Deck", exact: true })).toHaveText(
       secondName,
@@ -167,10 +172,7 @@ test.describe("deck and card creation", () => {
     await dialog.getByRole("textbox", { name: "Term", exact: true }).press("Escape");
     await expect(dialog).toBeHidden();
 
-    await page
-      .locator("header")
-      .getByRole("button", { name: /^Add card/ })
-      .click();
+    await openNewCard(page);
     dialog = sheet(page, "Add a card");
     await expect(dialog.getByRole("combobox", { name: "Deck", exact: true })).toHaveText(firstName);
     await dialog.getByRole("textbox", { name: "Term", exact: true }).fill(term);
@@ -188,10 +190,7 @@ test.describe("deck and card creation", () => {
     const name = `Optional meaning ${testInfo.project.name}`;
     await createDeck(page, name);
 
-    await page
-      .locator("header")
-      .getByRole("button", { name: /^Add card/ })
-      .click();
+    await openNewCard(page);
     const dialog = sheet(page, "Add a card");
     await dialog.getByRole("textbox", { name: "Term", exact: true }).fill("pazienza");
     await dialog.getByRole("button", { name: `Add to ${name}`, exact: true }).click();
@@ -214,10 +213,7 @@ test.describe("deck and card creation", () => {
     const name = `More fields ${testInfo.project.name}`;
     await createDeck(page, name);
 
-    await page
-      .locator("header")
-      .getByRole("button", { name: /^Add card/ })
-      .click();
+    await openNewCard(page);
     const dialog = sheet(page, "Add a card");
     await dialog.getByRole("checkbox", { name: "Create more", exact: true }).check();
     await dialog.getByRole("textbox", { name: "Term", exact: true }).fill("fermata");
@@ -285,10 +281,7 @@ test.describe("deck and card creation", () => {
     await startAsTestLearner(page, testInfo, "more-fields");
     await createDeck(page, `Undo close ${testInfo.project.name}`);
 
-    await page
-      .locator("header")
-      .getByRole("button", { name: /^Add card/ })
-      .click();
+    await openNewCard(page);
     let dialog = sheet(page, "Add a card");
     await dialog.getByRole("textbox", { name: "Term", exact: true }).fill("la fermata");
     await page.keyboard.press("Escape");
@@ -308,10 +301,7 @@ test.describe("deck and card creation", () => {
     await startAsTestLearner(page, testInfo, "more-fields");
     await createDeck(page, `Picture retry ${testInfo.project.name}`);
 
-    await page
-      .locator("header")
-      .getByRole("button", { name: /^Add card/ })
-      .click();
+    await openNewCard(page);
     const dialog = sheet(page, "Add a card");
     await dialog.getByRole("textbox", { name: "Term", exact: true }).fill("strisce");
     const phone = testInfo.project.name === "webkit";
@@ -406,8 +396,7 @@ test.describe("deck and card creation", () => {
 
       await page.goto(`/library/${deckId}`);
       await expect(page.getByRole("heading", { name, exact: true })).toBeVisible();
-      const addWord = page.locator("header").getByRole("button", { name: /^Add card/ });
-      await addWord.click();
+      await openNewCard(page);
       const addCard = sheet(page, "Add a card");
       await expect(addCard).toBeVisible();
       const term = addCard.getByRole("textbox", { name: "Term", exact: true });

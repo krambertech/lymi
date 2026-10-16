@@ -74,6 +74,7 @@
     "vitest": "^5.0.3"
   },
   "scripts": {
+    "eas-build-pre-install": "npm install --global @posthog/cli@0.18.10",
     "start": "expo start",
     "ios": "expo run:ios",
     "dev-client": "node scripts/dev-client.mjs",

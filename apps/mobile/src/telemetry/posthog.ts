@@ -11,6 +11,7 @@ import { POSTHOG_PROXY_PATH } from "@lymi/core/posthog-proxy";
 import { exceptionProperties, POSTHOG_PROJECT_TOKEN } from "@lymi/core/telemetry";
 import Constants from "expo-constants";
 import { File, Paths } from "expo-file-system";
+import * as Updates from "expo-updates";
 import PostHog, { type PostHogCustomStorage } from "posthog-react-native";
 import { API_URL, PHONE_CLIENT } from "../auth/client";
 import { withUsageQueue } from "./usage-queue";
@@ -77,6 +78,7 @@ function release() {
     $os: PHONE_CLIENT?.platform === "android" ? "Android" : "iOS",
     $app_version: PHONE_CLIENT?.version ?? null,
     $app_build: PHONE_CLIENT?.build ?? null,
+    app_update: PHONE_CLIENT?.update ?? null,
     $app_namespace: Constants.expoConfig?.ios?.bundleIdentifier ?? null,
     $geoip_disable: true,
   };
@@ -160,6 +162,21 @@ export function startTelemetry(): void {
     });
   } catch {
     /* Monitoring never stops the app from opening. */
+  }
+}
+
+let checkedRelease = false;
+
+// Only an explicit link on an internal account's beta can create this source-map probe.
+export function verifyReleaseException(): boolean {
+  if (!client || !internal() || Updates.channel !== "beta" || checkedRelease) return false;
+  try {
+    client.captureException(new Error("Phone source-map check"));
+    checkedRelease = true;
+    void client.flush().catch(() => undefined);
+    return true;
+  } catch {
+    return false;
   }
 }
 

@@ -8,7 +8,9 @@
       "node": "22.22.3",
       "pnpm": "10.16.1",
       "env": {
-        "LYMI_APP_LINKS": "1"
+        "LYMI_APP_LINKS": "1",
+        "POSTHOG_CLI_HOST": "https://eu.posthog.com",
+        "POSTHOG_CLI_PROJECT_ID": "292417"
       },
       "ios": {
         "image": "latest"

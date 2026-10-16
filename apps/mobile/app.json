@@ -60,6 +60,7 @@
       "./plugins/no-push-entitlement.cjs",
       "./plugins/app-links.cjs",
       "./plugins/with-symbols.cjs",
+      "./plugins/with-source-maps.cjs",
       "expo-router",
       [
         "expo-splash-screen",

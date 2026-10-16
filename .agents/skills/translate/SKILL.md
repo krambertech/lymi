@@ -48,6 +48,7 @@ Landing and Join copy in `apps/site` must read as if it was written in Ukrainian
 | Library (screen) | Бібліотека | Библиотека |
 | series (group of decks) | серія | серия |
 | section (part of a deck) | розділ | раздел |
+| tag (on a card) | тег | тег |
 | Today (screen) | Сьогодні | Сегодня |
 | Explore (screen) | Каталог | Каталог |
 | You (screen) | Ти | Ты |

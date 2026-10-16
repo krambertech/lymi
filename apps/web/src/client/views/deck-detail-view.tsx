@@ -26,6 +26,7 @@ import {
   Settings2,
   Signpost,
   SquareCheck,
+  Tags,
   X,
 } from "lucide-react";
 import {
@@ -667,9 +668,20 @@ function SelectionToolbar({
       <Button size="sm" variant="ghost" onClick={all ? onClear : onAll}>
         {all ? <Trans>Clear</Trans> : <Trans>Select all</Trans>}
       </Button>
+      {/* A narrow list keeps the count and Move readable, so Tags is its icon there. */}
+      <IconButton
+        size="sm"
+        label={t`Tags…`}
+        className="@md/tools:hidden"
+        aria-disabled={count === 0}
+        onClick={() => count > 0 && onTags()}
+      >
+        <Tags />
+      </IconButton>
       <Button
         size="sm"
         variant="ghost"
+        className="hidden @md/tools:inline-flex"
         aria-disabled={count === 0}
         onClick={() => count > 0 && onTags()}
       >

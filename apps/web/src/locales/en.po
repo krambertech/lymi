@@ -1428,8 +1428,8 @@ msgstr "Couldn’t add the deck. It’s no longer published."
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Couldn’t cancel the invitation. Try again."
 
-msgid "Couldn’t change the tags on {failed} of {sent} cards. Try again."
-msgstr "Couldn’t change the tags on {failed} of {sent} cards. Try again."
+msgid "Couldn’t change the tags on {unsaved} of {sent} cards. Try again."
+msgstr "Couldn’t change the tags on {unsaved} of {sent} cards. Try again."
 
 msgid "Couldn’t check for more cards"
 msgstr "Couldn’t check for more cards"

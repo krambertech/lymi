@@ -1428,8 +1428,8 @@ msgstr "Не удалось добавить колоду. Она больше �
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Не удалось отменить приглашение. Попробуй ещё раз."
 
-msgid "Couldn’t change the tags on {failed} of {sent} cards. Try again."
-msgstr "Не удалось изменить теги на {failed} из {sent} карточек. Попробуйте ещё раз."
+msgid "Couldn’t change the tags on {unsaved} of {sent} cards. Try again."
+msgstr "Не удалось изменить теги на {unsaved} из {sent} карточек. Попробуй ещё раз."
 
 msgid "Couldn’t check for more cards"
 msgstr "Не удалось проверить, есть ли ещё карточки"
@@ -1983,7 +1983,7 @@ msgid "Find a tag"
 msgstr "Найти тег"
 
 msgid "Find or create a tag"
-msgstr "Найдите или создайте тег"
+msgstr "Найди или создай тег"
 
 msgid "For a test"
 msgstr "Для экзамена"
@@ -2059,7 +2059,7 @@ msgid "Give the series a name."
 msgstr "Дай серии название."
 
 msgid "Give the tag a name."
-msgstr "Дайте тегу название."
+msgstr "Дай тегу название."
 
 msgid "Go to {currentName}"
 msgstr "Перейти к «{currentName}»"
@@ -2884,7 +2884,7 @@ msgid "No tags yet"
 msgstr "Тегов пока нет"
 
 msgid "No tags yet. Type one to create it."
-msgstr "Тегов пока нет. Введите название, чтобы создать тег."
+msgstr "Тегов пока нет. Введи название, чтобы создать тег."
 
 msgid "Nobody can add it while it is archived."
 msgstr "Пока колода в архиве, её никто не может добавить."
@@ -3338,7 +3338,7 @@ msgid "Rename section"
 msgstr "Переименовать раздел"
 
 msgid "Rename, merge or archive the tags on this deck’s cards."
-msgstr "Переименовывайте, объединяйте или архивируйте теги на карточках этой колоды."
+msgstr "Переименовывай, объединяй или архивируй теги на карточках этой колоды."
 
 msgid "Rename…"
 msgstr "Переименовать…"
@@ -4101,7 +4101,7 @@ msgid "This week"
 msgstr "На этой неделе"
 
 msgid "Tick a tag to put it on every card, or untick it to take it off."
-msgstr "Отметьте тег, чтобы добавить его на все карточки, или снимите отметку, чтобы убрать."
+msgstr "Отметь тег, чтобы добавить его на все карточки, или сними отметку, чтобы убрать."
 
 msgid "Time"
 msgstr "Время"
@@ -4380,7 +4380,7 @@ msgid "You"
 msgstr "Ты"
 
 msgid "You already have “{otherName}”, so the two merge into one tag on these cards."
-msgstr "У вас уже есть «{otherName}», поэтому на этих карточках два тега объединятся в один."
+msgstr "У тебя уже есть «{otherName}», поэтому на этих карточках два тега объединятся в один."
 
 msgid "You already have a Lymi account"
 msgstr "У тебя уже есть аккаунт Lymi"

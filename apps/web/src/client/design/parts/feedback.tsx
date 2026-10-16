@@ -1,7 +1,9 @@
-import { Volume2 } from "lucide-react";
+import { Hourglass, Info, Volume2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button, IconButton } from "../../components/button";
 import { ErrorTip } from "../../components/error-tip";
+import { InfoTip } from "../../components/info-tip";
+import { Notice } from "../../components/notice";
 import { Progress } from "../../components/progress";
 import { Skeleton } from "../../components/skeleton";
 import {
@@ -132,6 +134,57 @@ export const feedback: Group = {
                   <Skeleton className="h-11" />
                   <Skeleton className="h-11" />
                 </div>
+              ),
+            },
+          ]}
+        />
+      ),
+    },
+    {
+      slug: "notice",
+      name: "Notice",
+      source: "components/notice.tsx",
+      note: "A short notice inside a screen: a title and at most one line more. Neutral on plate-2 says something worth knowing; warning on amber-soft says an action is out of reach for now and sits above the controls it disables, which stay in view and disabled. It is announced once.",
+      Demo: () => (
+        <Variants
+          items={[
+            {
+              label: "Warning",
+              note: "Smart add once the day's lessons are used.",
+              render: () => (
+                <Notice tone="warning" icon={Hourglass} title="You’ve used today’s 5 lessons">
+                  You can add more lessons in 4 hours.
+                </Notice>
+              ),
+            },
+            {
+              label: "Neutral",
+              render: () => (
+                <Notice icon={Info} title="Reading a long PDF takes a minute">
+                  You can keep the window open or come back to it.
+                </Notice>
+              ),
+            },
+          ]}
+        />
+      ),
+    },
+    {
+      slug: "info-tip",
+      name: "Info tip",
+      source: "components/info-tip.tsx",
+      note: "An info button that opens a few sentences about the thing beside it, on the shadcn Base UI popover. It holds an explanation, never a control, and never what the learner needs to act: that goes on the screen, as a Notice.",
+      Demo: () => (
+        <Variants
+          items={[
+            {
+              label: "Try it",
+              note: "Smart add's daily limit, in its footer.",
+              render: () => (
+                <InfoTip label="About the daily limit">
+                  Smart add is in beta, so it reads up to 5 lessons a day. A lesson it couldn’t read
+                  doesn’t count, and the count starts again at midnight.
+                </InfoTip>
               ),
             },
           ]}

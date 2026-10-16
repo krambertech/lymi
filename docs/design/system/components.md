@@ -29,6 +29,7 @@ Lymi-owned components compose the primitives. The ones every screen reaches for:
 | A group on a settings screen | `SettingsGroup` | `settings-group.tsx` | |
 | A string to copy (an API key) | `CopyField` | `copy-field.tsx` | [type.md](type.md#monospace) |
 | A label | `Chip`, `StateChip`, `SourceChip`, `DueCount`, `Kbd`, `StateIcon` | `chip.tsx` and others | [chips-and-marks.md](chips-and-marks.md) |
+| A notice inside a screen, or a few sentences behind an info button | `Notice` (`neutral`, `warning`), `InfoTip` | `notice.tsx`, `info-tip.tsx` | [colour.md](colour.md#amber-means-act) for the warning |
 | Nothing to show yet | `StartGuide`, `StartPanel`, `EmptySection`, `NoResults`, `ErrorState`, `Skeleton` | `empty-state.tsx` and others | [empty-states.md](empty-states.md) |
 | A row that goes somewhere | `NextSteps`, `NextStep`, `Go`, `NewCardsRow` | `next-steps.tsx` | [buttons.md](buttons.md#which-control) |
 | A figure | `StatPlate` (with `ghost`), `Progress`, `SectionProgress`, `SectionRing`, `TrendLine`, `DayGrid`, `RunStrip` | | |

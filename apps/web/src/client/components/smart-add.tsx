@@ -3,17 +3,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import type { LessonAccessOut } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { cn } from "cn";
-import {
-  Camera,
-  Check,
-  ChevronRight,
-  FileText,
-  Hourglass,
-  Images,
-  Info,
-  Type,
-  X,
-} from "lucide-react";
+import { Camera, Check, ChevronRight, FileText, Hourglass, Images, Type, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import {
@@ -28,13 +18,14 @@ import { refreshAfterCardWrite } from "../lib/card-writes";
 import { useDesktop } from "../lib/device";
 import { Button, IconButton } from "./button";
 import { Chip } from "./chip";
+import { InfoTip } from "./info-tip";
 import { PlaceBar } from "./layout/place-bar";
+import { Notice } from "./notice";
 import { RadioCard } from "./radio-card";
 import { RollingCount, type ScanPage, ScanStage } from "./smart-add-scan";
 import { Checkbox } from "./ui/checkbox";
 import { Dialog, DialogBody, DialogContent, usePlaceShape } from "./ui/dialog";
 import { Field, FieldError, FieldLabel, FieldLegend, FieldSet } from "./ui/field";
-import { Popover, PopoverContent } from "./ui/popover";
 import { RadioGroup } from "./ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
@@ -274,15 +265,12 @@ function SmartAdd({
   };
 
   const title = (
-    <div className="flex items-center gap-1">
-      <h2 id={titleId} className="flex items-center gap-2 text-lg font-medium text-text">
-        <Trans>Smart add</Trans>
-        <Chip size="sm">
-          <Trans>Beta</Trans>
-        </Chip>
-      </h2>
-      {daily && <LimitInfo limit={daily.limit} />}
-    </div>
+    <h2 id={titleId} className="flex items-center gap-2 text-lg font-medium text-text">
+      <Trans>Smart add</Trans>
+      <Chip size="sm">
+        <Trans>Beta</Trans>
+      </Chip>
+    </h2>
   );
 
   return (
@@ -570,179 +558,155 @@ function InputStep(props: {
       {input(fileRef, "application/pdf")}
       {input(photosRef, "image/*")}
       {input(cameraRef, "image/*", true)}
-      {atLimit && daily ? (
-        <DialogBody className="grid content-start">
-          <LimitCallout daily={daily} />
-        </DialogBody>
-      ) : (
-        <>
-          <DialogBody className="grid content-start gap-5">
-            <p className="text-base text-pretty text-text-2">
-              <Trans>
-                Add the lesson in any form, or several at once. You choose which terms become cards.
-              </Trans>
-            </p>
+      <DialogBody className="grid content-start gap-5">
+        {atLimit && daily ? (
+          <LimitNotice daily={daily} />
+        ) : (
+          <p className="text-base text-pretty text-text-2">
+            <Trans>
+              Add the lesson in any form, or several at once. You choose which terms become cards.
+            </Trans>
+          </p>
+        )}
 
-            {!empty && (
-              <ul className="edge grid divide-y divide-edge rounded-xl bg-plate-2">
-                {pages.map((page, i) => {
-                  // Photos are numbered among themselves, so a PDF ahead of them takes no number.
-                  const n = pages.slice(0, i + 1).filter((p) => p.kind === "photo").length;
-                  const name = page.kind === "pdf" ? page.file.name : t`Page ${n}`;
-                  return (
-                    <li key={page.id} className="flex items-center gap-3 px-3 py-2.5">
-                      <Thumb page={page} name={name} />
-                      <span className="grid min-w-0 flex-1">
-                        <span className="truncate text-base text-text">{name}</span>
-                        <span className="text-sm text-muted">
-                          {page.kind === "pdf" ? t`PDF` : t`Photo`}
-                        </span>
-                      </span>
-                      <IconButton
-                        label={t`Remove ${name}`}
-                        size="sm"
-                        onClick={() => onPagesChange(pages.filter((p) => p.id !== page.id))}
-                      >
-                        <X />
-                      </IconButton>
-                    </li>
-                  );
-                })}
-                {textItem && (
-                  <li className="flex items-center gap-3 px-3 py-2.5">
-                    <IconTile icon={Type} />
-                    <button
-                      type="button"
-                      onClick={textItem.edit}
-                      className="grid min-w-0 flex-1 text-start"
-                    >
-                      <span className="truncate text-base text-text">{textItem.preview}</span>
-                      <span className="text-sm text-muted">
-                        {t`Text · ${plural(textItem.words, { one: "# word", other: "# words" })}`}
-                      </span>
-                    </button>
-                    <IconButton
-                      label={t`Remove the text`}
-                      size="sm"
-                      onClick={() => props.onTextChange("")}
-                    >
-                      <X />
-                    </IconButton>
-                  </li>
-                )}
-              </ul>
-            )}
-            <div className="grid gap-2">
-              {!empty && (
-                <h3 className="text-sm font-medium text-muted">
-                  <Trans>Add more</Trans>
-                </h3>
-              )}
-              <div
-                className={cn(
-                  "edge grid divide-y divide-edge rounded-xl bg-plate-2",
-                  over && "bg-amber-soft",
-                )}
-              >
-                {sources.map((source) => (
-                  <button
-                    key={source.id}
-                    type="button"
-                    onClick={source.onClick}
-                    className="flex items-center gap-3 px-4 py-3.5 text-start transition-colors first:rounded-t-xl last:rounded-b-xl hoverable:hover:bg-hover"
+        {!empty && (
+          <ul className="edge grid divide-y divide-edge rounded-xl bg-plate-2">
+            {pages.map((page, i) => {
+              // Photos are numbered among themselves, so a PDF ahead of them takes no number.
+              const n = pages.slice(0, i + 1).filter((p) => p.kind === "photo").length;
+              const name = page.kind === "pdf" ? page.file.name : t`Page ${n}`;
+              return (
+                <li key={page.id} className="flex items-center gap-3 px-3 py-2.5">
+                  <Thumb page={page} name={name} />
+                  <span className="grid min-w-0 flex-1">
+                    <span className="truncate text-base text-text">{name}</span>
+                    <span className="text-sm text-muted">
+                      {page.kind === "pdf" ? t`PDF` : t`Photo`}
+                    </span>
+                  </span>
+                  <IconButton
+                    label={t`Remove ${name}`}
+                    size="sm"
+                    onClick={() => onPagesChange(pages.filter((p) => p.id !== page.id))}
                   >
-                    <span className="grid size-10 shrink-0 place-items-center rounded-full bg-plate text-text">
-                      <source.icon className="size-5" aria-hidden="true" />
-                    </span>
-                    <span className="grid min-w-0 flex-1">
-                      <span className="text-base font-medium text-text">{source.label}</span>
-                      <span className="text-sm text-muted">{source.hint}</span>
-                    </span>
-                    <ChevronRight
-                      className="size-5 text-faint rtl:-scale-x-100"
-                      aria-hidden="true"
-                    />
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {fileError && <FieldError>{fileError}</FieldError>}
-
-            {props.error && (
-              <Field invalid>
-                <FieldError>{props.error}</FieldError>
-              </Field>
+                    <X />
+                  </IconButton>
+                </li>
+              );
+            })}
+            {textItem && (
+              <li className="flex items-center gap-3 px-3 py-2.5">
+                <IconTile icon={Type} />
+                <button
+                  type="button"
+                  onClick={textItem.edit}
+                  className="grid min-w-0 flex-1 text-start"
+                >
+                  <span className="truncate text-base text-text">{textItem.preview}</span>
+                  <span className="text-sm text-muted">
+                    {t`Text · ${plural(textItem.words, { one: "# word", other: "# words" })}`}
+                  </span>
+                </button>
+                <IconButton
+                  label={t`Remove the text`}
+                  size="sm"
+                  onClick={() => props.onTextChange("")}
+                >
+                  <X />
+                </IconButton>
+              </li>
             )}
-          </DialogBody>
-          <ActionBar
-            note={
-              empty
-                ? undefined
-                : words > 0 && pages.length > 0
-                  ? t`${plural(pages.length, { one: "# file", other: "# files" })} and text`
-                  : pages.length > 0
-                    ? t`${plural(pages.length, { one: "# file", other: "# files" })} · up to ${MAX_FILES}`
-                    : t`${plural(words, { one: "# word", other: "# words" })}`
-            }
+          </ul>
+        )}
+        <div className="grid gap-2">
+          {!empty && (
+            <h3 className="text-sm font-medium text-muted">
+              <Trans>Add more</Trans>
+            </h3>
+          )}
+          <div
+            className={cn(
+              "edge grid divide-y divide-edge rounded-xl bg-plate-2",
+              over && "bg-amber-soft",
+            )}
           >
-            <Button variant="primary" onClick={props.onRead} disabled={empty}>
-              <Trans>Find terms</Trans>
-            </Button>
-          </ActionBar>
-        </>
-      )}
+            {sources.map((source) => (
+              <button
+                key={source.id}
+                type="button"
+                onClick={source.onClick}
+                disabled={atLimit}
+                className="flex items-center gap-3 px-4 py-3.5 text-start transition-colors first:rounded-t-xl last:rounded-b-xl disabled:opacity-45 hoverable:enabled:hover:bg-hover"
+              >
+                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-plate text-text">
+                  <source.icon className="size-5" aria-hidden="true" />
+                </span>
+                <span className="grid min-w-0 flex-1">
+                  <span className="text-base font-medium text-text">{source.label}</span>
+                  <span className="text-sm text-muted">{source.hint}</span>
+                </span>
+                <ChevronRight className="size-5 text-faint rtl:-scale-x-100" aria-hidden="true" />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {fileError && <FieldError>{fileError}</FieldError>}
+
+        {props.error && (
+          <Field invalid>
+            <FieldError>{props.error}</FieldError>
+          </Field>
+        )}
+      </DialogBody>
+      <ActionBar
+        note={
+          <span className="flex items-center gap-2">
+            {daily && <LimitInfo limit={daily.limit} />}
+            {empty
+              ? undefined
+              : words > 0 && pages.length > 0
+                ? t`${plural(pages.length, { one: "# file", other: "# files" })} and text`
+                : pages.length > 0
+                  ? t`${plural(pages.length, { one: "# file", other: "# files" })} · up to ${MAX_FILES}`
+                  : t`${plural(words, { one: "# word", other: "# words" })}`}
+          </span>
+        }
+      >
+        <Button variant="primary" onClick={props.onRead} disabled={empty || atLimit}>
+          <Trans>Find terms</Trans>
+        </Button>
+      </ActionBar>
     </>
   );
 }
 
-/** What the beta's daily limit is, a tap away beside the title. */
+/** What the beta's daily limit is, a tap away in the footer. */
 function LimitInfo({ limit }: { limit: number }) {
   const { t } = useLingui();
-  const anchor = useRef<HTMLButtonElement>(null);
-  const [open, setOpen] = useState(false);
   return (
-    <>
-      <IconButton
-        ref={anchor}
-        size="sm"
-        label={t`About the daily limit`}
-        aria-expanded={open}
-        onClick={() => setOpen((shown) => !shown)}
-      >
-        <Info />
-      </IconButton>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverContent anchor={anchor} side="bottom" className="leading-snug">
-          {t`${plural(limit, { one: "Smart add is in beta, so it reads up to # lesson a day.", other: "Smart add is in beta, so it reads up to # lessons a day." })} A lesson it couldn’t read doesn’t count, and the count starts again at midnight.`}
-        </PopoverContent>
-      </Popover>
-    </>
+    <InfoTip label={t`About the daily limit`} align="start">
+      {t`${plural(limit, { one: "Smart add is in beta, so it reads up to # lesson a day.", other: "Smart add is in beta, so it reads up to # lessons a day." })} A lesson it couldn’t read doesn’t count, and the count starts again at midnight.`}
+    </InfoTip>
   );
 }
 
-/** Takes the sources' place once today's reads are used, saying when more open. */
-function LimitCallout({ daily }: { daily: Daily }) {
+/** The warning above the disabled sources once today's reads are used, saying when more open. */
+function LimitNotice({ daily }: { daily: Daily }) {
   const { t } = useLingui();
   const minutes = Math.max(1, Math.ceil((Date.parse(daily.resetsAt) - Date.now()) / 60_000));
   const hours = Math.max(1, Math.round(minutes / 60));
   const { limit } = daily;
   return (
-    <div role="status" className="flex items-start gap-4 rounded-xl bg-plate-2 p-5">
-      <span className="grid size-10 shrink-0 place-items-center rounded-full bg-plate text-text">
-        <Hourglass className="size-5" aria-hidden="true" />
-      </span>
-      <div className="grid min-w-0 gap-1 pt-0.5">
-        <p className="text-md font-medium text-pretty text-text">
-          {t`${plural(limit, { one: "You’ve used today’s # lesson", other: "You’ve used today’s # lessons" })}`}
-        </p>
-        <p className="text-sm text-pretty text-text-2">
-          {minutes < 60
-            ? t`${plural(minutes, { one: "You can add more lessons in # minute.", other: "You can add more lessons in # minutes." })}`
-            : t`${plural(hours, { one: "You can add more lessons in # hour.", other: "You can add more lessons in # hours." })}`}
-        </p>
-      </div>
-    </div>
+    <Notice
+      tone="warning"
+      icon={Hourglass}
+      title={t`${plural(limit, { one: "You’ve used today’s # lesson", other: "You’ve used today’s # lessons" })}`}
+    >
+      {minutes < 60
+        ? t`${plural(minutes, { one: "You can add more lessons in # minute.", other: "You can add more lessons in # minutes." })}`
+        : t`${plural(hours, { one: "You can add more lessons in # hour.", other: "You can add more lessons in # hours." })}`}
+    </Notice>
   );
 }
 

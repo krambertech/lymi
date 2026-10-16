@@ -1092,6 +1092,9 @@ msgstr "Видалити"
 msgid "Delete “{seriesName}”?"
 msgstr "Видалити «{seriesName}»?"
 
+msgid "Delete account"
+msgstr "Видалити акаунт"
+
 msgid "Delete series"
 msgstr "Видалити серію"
 

@@ -1092,6 +1092,9 @@ msgstr "Delete"
 msgid "Delete “{seriesName}”?"
 msgstr "Delete “{seriesName}”?"
 
+msgid "Delete account"
+msgstr "Delete account"
+
 msgid "Delete series"
 msgstr "Delete series"
 

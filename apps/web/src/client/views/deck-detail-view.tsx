@@ -4,6 +4,7 @@ import {
   type DeckFilters,
   type DeckRow,
   type DeckSort,
+  deckTags,
   filterRows,
   groupRows,
   noFilters,
@@ -16,7 +17,9 @@ import {
   Download,
   KeyRound,
   Layers,
+  ListChecks,
   ListFilter,
+  ListX,
   LogOut,
   MoreHorizontal,
   PenLine,
@@ -27,6 +30,7 @@ import {
   Signpost,
   Sparkles,
   SquareCheck,
+  Tags,
   X,
 } from "lucide-react";
 import {
@@ -69,6 +73,7 @@ import {
 } from "../components/ui/dropdown-menu";
 import { Input } from "../components/ui/input";
 import type { DeckSummary, Section, Sections } from "../lib/api";
+import { captureAnalytics } from "../lib/telemetry";
 import { Glossary, type SectionEditing, sectionAnchor } from "./deck-glossary";
 import { type WordHistory, WordView } from "./word-view";
 
@@ -145,6 +150,8 @@ export interface DeckOwnerActions {
   onArchiveDeck: () => void;
   onExport: () => void;
   onMoveToSeries: () => void;
+  /** Open the tags dialog for these cards; `after` runs once it saves. */
+  onTagCards: (cardIds: string[], after: () => void) => void;
   sections: DeckSectionActions;
 }
 
@@ -404,6 +411,7 @@ function FilterChip({ label, onRemove }: { label: string; onRemove: () => void }
 
 function ListTools({
   sections,
+  tags,
   filters,
   setFilters,
   sort,
@@ -413,6 +421,8 @@ function ListTools({
   searchRef,
 }: {
   sections: Section[];
+  /** The tags on the deck's cards, most used first. */
+  tags: { key: string; name: string; cards: number }[];
   filters: DeckFilters;
   setFilters: (next: DeckFilters) => void;
   sort: DeckSort;
@@ -433,6 +443,11 @@ function ListTools({
   };
   const toggle = <T,>(list: T[], item: T, on: boolean) =>
     on ? [...list, item] : list.filter((x) => x !== item);
+  // Only the menu reports a filter turned on; a chip or Clear filters only takes one off.
+  const choose = (next: DeckFilters, kind: "state" | "due" | "section" | "tag", on: boolean) => {
+    if (on) captureAnalytics("deck_filter_added", { kind });
+    setFilters(next);
+  };
 
   const chips = [
     ...filters.states.map((state) => ({
@@ -454,6 +469,14 @@ function ListTools({
       label: sectionName(id),
       remove: () => setFilters({ ...filters, sections: toggle(filters.sections, id, false) }),
     })),
+    ...filters.tags.map((key) => {
+      const tagName = tags.find((tag) => tag.key === key)?.name ?? key;
+      return {
+        key: `tag:${key}`,
+        label: t`Tag: ${tagName}`,
+        remove: () => setFilters({ ...filters, tags: toggle(filters.tags, key, false) }),
+      };
+    }),
   ];
 
   return (
@@ -481,7 +504,7 @@ function ListTools({
                   key={state}
                   checked={filters.states.includes(state)}
                   onCheckedChange={(on) =>
-                    setFilters({ ...filters, states: toggle(filters.states, state, on) })
+                    choose({ ...filters, states: toggle(filters.states, state, on) }, "state", on)
                   }
                 >
                   <StateIcon state={state} className={menuMarkColour[state]} />
@@ -497,7 +520,11 @@ function ListTools({
               <DropdownMenuRadioGroup
                 value={filters.due ?? "any"}
                 onValueChange={(v) =>
-                  setFilters({ ...filters, due: v === "any" ? null : (v as "today" | "week") })
+                  choose(
+                    { ...filters, due: v === "any" ? null : (v as "today" | "week") },
+                    "due",
+                    v !== "any",
+                  )
                 }
               >
                 <DropdownMenuRadioItem value="any" closeOnClick={false}>
@@ -522,10 +549,38 @@ function ListTools({
                       key={id || "none"}
                       checked={filters.sections.includes(id)}
                       onCheckedChange={(on) =>
-                        setFilters({ ...filters, sections: toggle(filters.sections, id, on) })
+                        choose(
+                          { ...filters, sections: toggle(filters.sections, id, on) },
+                          "section",
+                          on,
+                        )
                       }
                     >
                       <span className="truncate">{sectionName(id)}</span>
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuGroup>
+              </>
+            )}
+            {tags.length > 0 && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel>
+                    <Trans>Tags</Trans>
+                  </DropdownMenuLabel>
+                  {tags.map((tag) => (
+                    <DropdownMenuCheckboxItem
+                      key={tag.key}
+                      checked={filters.tags.includes(tag.key)}
+                      onCheckedChange={(on) =>
+                        choose({ ...filters, tags: toggle(filters.tags, tag.key, on) }, "tag", on)
+                      }
+                    >
+                      <span className="min-w-0 flex-1 truncate">{tag.name}</span>
+                      <span className="ms-auto ps-3 text-sm text-muted tabular-nums">
+                        {i18n.number(tag.cards)}
+                      </span>
                     </DropdownMenuCheckboxItem>
                   ))}
                 </DropdownMenuGroup>
@@ -599,6 +654,7 @@ function SelectionToolbar({
   total,
   onAll,
   onClear,
+  onTags,
   onMove,
   onDone,
 }: {
@@ -606,6 +662,7 @@ function SelectionToolbar({
   total: number;
   onAll: () => void;
   onClear: () => void;
+  onTags: () => void;
   onMove: () => void;
   onDone: () => void;
 }) {
@@ -625,9 +682,41 @@ function SelectionToolbar({
       >
         <Plural value={count} _0="Select cards" one="# selected" other="# selected" />
       </p>
-      <Button size="sm" variant="ghost" onClick={all ? onClear : onAll}>
-        {all ? <Trans>Clear</Trans> : <Trans>Select all</Trans>}
-      </Button>
+      {/* The narrowest list keeps the count readable, so Select all is its icon there. */}
+      <IconButton
+        size="sm"
+        label={all ? t`Clear` : t`Select all`}
+        className="@xs/tools:hidden"
+        onClick={all ? onClear : onAll}
+      >
+        {all ? <ListX /> : <ListChecks />}
+      </IconButton>
+      <span className="hidden @xs/tools:contents">
+        <Button size="sm" variant="ghost" onClick={all ? onClear : onAll}>
+          {all ? <Trans>Clear</Trans> : <Trans>Select all</Trans>}
+        </Button>
+      </span>
+      {/* A narrow list keeps the count and Move readable, so Tags is its icon there. */}
+      <IconButton
+        size="sm"
+        label={t`Tags…`}
+        className="@md/tools:hidden"
+        aria-disabled={count === 0}
+        onClick={() => count > 0 && onTags()}
+      >
+        <Tags />
+      </IconButton>
+      {/* The wrapper hides it, since Button's own display would win over a plain hidden. */}
+      <span className="hidden @md/tools:contents">
+        <Button
+          size="sm"
+          variant="ghost"
+          aria-disabled={count === 0}
+          onClick={() => count > 0 && onTags()}
+        >
+          <Trans>Tags…</Trans>
+        </Button>
+      </span>
       <Button
         size="sm"
         variant="primary"
@@ -683,6 +772,7 @@ export function DeckDetailView({
   const st = useStaticNav();
   const [q, setQ] = useState("");
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
+  const tags = useMemo(() => deckTags(cards ?? []), [cards]);
   const [chosenSort, setSort] = useState<DeckSort | null>(null);
   // A deck with sections opens on them; one without has nothing to group that way.
   const sort: DeckSort =
@@ -1151,12 +1241,14 @@ export function DeckDetailView({
                 total={ordered.length}
                 onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
                 onClear={() => setSelected(new Set())}
+                onTags={() => owner.onTagCards([...selected], stopSelecting)}
                 onMove={() => owner.sections.onPickSection([...selected], stopSelecting)}
                 onDone={stopSelecting}
               />
             ) : (
               <ListTools
                 sections={sections}
+                tags={tags}
                 filters={filters}
                 setFilters={setFilters}
                 sort={sort}

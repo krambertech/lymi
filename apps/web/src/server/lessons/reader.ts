@@ -1,4 +1,5 @@
 import type { Fetch } from "../ai";
+import { type AiGatewayBindings, providerEndpoint } from "../ai/gateway";
 import { INSTRUCTIONS } from "./prompt";
 
 export type LessonReaderBindings = {
@@ -6,10 +7,7 @@ export type LessonReaderBindings = {
   /** An organisation-wide key needs the workspace it bills to. */
   ANTHROPIC_WORKSPACE_ID?: string | undefined;
   ANTHROPIC_LESSON_MODEL?: string | undefined;
-  /** AI Gateway's Anthropic endpoint, ending in `/anthropic/v1`; used only with the gateway's token. */
-  ANTHROPIC_BASE_URL?: string | undefined;
-  AI_GATEWAY_TOKEN?: string | undefined;
-};
+} & AiGatewayBindings;
 
 export type LessonMaterial = {
   /** Normalised pages, in the learner's order. */
@@ -55,9 +53,7 @@ export function createLessonReader(
   const key = env.ANTHROPIC_API_KEY?.trim();
   if (!key) return null;
   const model = env.ANTHROPIC_LESSON_MODEL || DEFAULT_MODEL;
-  // The gateway is authenticated, so without its token (as locally) the reader calls Anthropic.
-  const gateway = env.AI_GATEWAY_TOKEN ? env.ANTHROPIC_BASE_URL : undefined;
-  const baseUrl = (gateway || "https://api.anthropic.com/v1").replace(/\/$/, "");
+  const endpoint = providerEndpoint(env, "anthropic");
   return {
     model,
     async stream(material, brief, schema, onText) {
@@ -66,10 +62,10 @@ export function createLessonReader(
         "x-api-key": key,
         "anthropic-version": "2023-06-01",
         "content-type": "application/json",
+        ...endpoint.headers,
       };
       if (env.ANTHROPIC_WORKSPACE_ID)
         headers["anthropic-workspace-id"] = env.ANTHROPIC_WORKSPACE_ID;
-      if (env.AI_GATEWAY_TOKEN) headers["cf-aig-authorization"] = `Bearer ${env.AI_GATEWAY_TOKEN}`;
       const content = [
         ...material.pdfs.map((bytes) => ({
           type: "document",
@@ -86,7 +82,7 @@ export function createLessonReader(
       ];
       let response: Response;
       try {
-        response = await request(`${baseUrl}/messages`, {
+        response = await request(`${endpoint.base}/messages`, {
           method: "POST",
           headers,
           body: JSON.stringify({

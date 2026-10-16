@@ -3,7 +3,7 @@ import { useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
 import { type InviteRefusal, PENDING_INVITATION_LIMIT } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useMatches } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { LeaveDeckDialog } from "../components/leave-deck-dialog";
 import {
@@ -30,6 +30,7 @@ import {
   archivedSectionsQuery,
   deckCardsQuery,
   decksQuery,
+  deckTagsQuery,
   invitationsQuery,
   joinLinkQuery,
   membersQuery,
@@ -44,7 +45,14 @@ export const Route = createFileRoute("/library/$deckId/settings")({
   component: DeckSettings,
 });
 
+/** Tags is a child route, so it replaces settings rather than sitting under it. */
 function DeckSettings() {
+  const matches = useMatches();
+  if (matches.some((m) => m.routeId === "/library/$deckId/settings/tags")) return <Outlet />;
+  return <DeckSettingsPage />;
+}
+
+function DeckSettingsPage() {
   const { t } = useLingui();
   const { deckId } = Route.useParams();
   const qc = useQueryClient();
@@ -58,6 +66,7 @@ function DeckSettings() {
   const joinLink = useQuery({ ...joinLinkQuery(deckId), enabled: isOwner });
   const sections = useQuery({ ...sectionsQuery(deckId), enabled: isOwner });
   const sectionActions = useSectionActions(deckId);
+  const deckTags = useQuery({ ...deckTagsQuery(deckId), enabled: isOwner });
   const [naming, setNaming] = useState<{ section?: Section | undefined } | null>(null);
   const [archiving, setArchiving] = useState<Section | null>(null);
   const [showArchived, setShowArchived] = useState(false);
@@ -189,6 +198,7 @@ function DeckSettings() {
         error={save.isError ? errorMessage(save.error) : undefined}
         onArchive={isOwner ? () => archive.mutate() : undefined}
         onLeave={isMember ? () => setLeaving(true) : undefined}
+        tags={isOwner ? { count: deckTags.data?.tags.length } : undefined}
         sections={
           isOwner
             ? {

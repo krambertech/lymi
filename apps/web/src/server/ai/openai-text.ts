@@ -1,11 +1,10 @@
+import { type AiGatewayBindings, providerEndpoint } from "./gateway";
 import type { Fetch, TextObserver, TextProvider, TextRequest } from "./types";
 
 export type OpenAiTextBindings = {
   OPENAI_API_KEY?: string | undefined;
-  OPENAI_BASE_URL?: string | undefined;
   OPENAI_TEXT_MODEL?: string | undefined;
-  AI_GATEWAY_TOKEN?: string | undefined;
-};
+} & AiGatewayBindings;
 
 export class OpenAiTextError extends Error {
   readonly status: number | undefined;
@@ -89,13 +88,13 @@ async function completeOnce(
 ): Promise<{ reply: unknown; usage: Usage | undefined }> {
   const apiKey = env.OPENAI_API_KEY?.trim();
   if (!apiKey) throw new OpenAiTextError("OpenAI text is not configured");
-  const baseUrl = (env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/$/, "");
+  const endpoint = providerEndpoint(env, "openai");
   const headers: Record<string, string> = {
     Authorization: `Bearer ${apiKey}`,
     "Content-Type": "application/json",
+    ...endpoint.headers,
   };
-  if (env.AI_GATEWAY_TOKEN) headers["cf-aig-authorization"] = `Bearer ${env.AI_GATEWAY_TOKEN}`;
-  const response = await fetchWithRetry(request, `${baseUrl}/chat/completions`, {
+  const response = await fetchWithRetry(request, `${endpoint.base}/chat/completions`, {
     method: "POST",
     headers,
     body: JSON.stringify({

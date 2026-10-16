@@ -13,6 +13,7 @@ import {
   StartEarlyDialog,
 } from "../components/section-dialogs";
 import { MoveToSeriesDialog } from "../components/series-dialogs";
+import { TagCardsDialog } from "../components/tag-cards-dialog";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import { ApiError, api, type Card, errorMessage, type Section } from "../lib/api";
@@ -25,12 +26,14 @@ import {
   sectionsQuery,
   seriesQuery,
   streakQuery,
+  tagsQuery,
 } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { useLeaveDeck } from "../lib/use-leave-deck";
 import { useSectionActions } from "../lib/use-sections";
 import { useSeriesActions } from "../lib/use-series";
+import { useTagCards } from "../lib/use-tag-cards";
 import { useWordHistory } from "../lib/use-word-history";
 import { DeckDetailView, type DeckFailure, exportCsv } from "../views/deck-detail-view";
 
@@ -86,6 +89,9 @@ function DeckPage() {
     enabled: isOwner,
     staleTime: Number.POSITIVE_INFINITY,
   });
+  const [tagging, setTagging] = useState<{ cardIds: string[]; after: () => void } | null>(null);
+  const tagCards = useTagCards(deckId);
+  const tagsInUse = useQuery({ ...tagsQuery, enabled: !!tagging }).data;
   const sections = useQuery(sectionsQuery(deckId));
   const sectionActions = useSectionActions(deckId);
   const [naming, setNaming] = useState<{ section?: Section | undefined } | null>(null);
@@ -275,6 +281,7 @@ function DeckPage() {
                 onArchiveDeck: () => archiveDeck.mutate(),
                 onExport: () => setExporting(true),
                 onMoveToSeries: () => setMovingToSeries(true),
+                onTagCards: (cardIds, after) => setTagging({ cardIds, after }),
                 sections: {
                   onCreate: () => setNaming({}),
                   onRename: (section) => setNaming({ section }),
@@ -349,6 +356,24 @@ function DeckPage() {
               if (renaming) await sectionActions.rename.mutateAsync({ id: renaming.id, name });
               else await sectionActions.create.mutateAsync({ name });
               setNaming(null);
+            }}
+          />
+          <TagCardsDialog
+            open={!!tagging}
+            onOpenChange={(open) => !open && setTagging(null)}
+            cards={(cards.data ?? [])
+              .filter((row) => tagging?.cardIds.includes(row.card.id))
+              .map((row) => row.card.tags)}
+            suggestions={tagsInUse}
+            onApply={(change) => {
+              if (!tagging) return;
+              const chosen = new Set(tagging.cardIds);
+              tagCards.apply(
+                (cards.data ?? []).filter((row) => chosen.has(row.card.id)),
+                change,
+              );
+              tagging.after();
+              setTagging(null);
             }}
           />
           <MoveToSectionDialog

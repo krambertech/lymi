@@ -13,3 +13,20 @@ export const TagOut = z
   })
   .meta({ id: "Tag" });
 export type TagOut = z.infer<typeof TagOut>;
+
+const DeckTagOut = z
+  .object({
+    name: z.string(),
+    cards: z.number().int().meta({ description: "Active cards of the deck it is on" }),
+  })
+  .meta({ id: "DeckTag" });
+
+export const DeckTagsOut = z
+  .object({
+    tags: z.array(DeckTagOut).meta({ description: "Tags on the deck's cards, most used first" }),
+    archived: z.array(DeckTagOut).meta({
+      description: "Tags archived from this deck, with the cards Restore puts them back on",
+    }),
+  })
+  .meta({ id: "DeckTags" });
+export type DeckTagsOut = z.infer<typeof DeckTagsOut>;

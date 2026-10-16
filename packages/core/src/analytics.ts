@@ -275,6 +275,17 @@ export const analyticsEvents = {
     via: z.enum(["suggestion", "typed"]),
     in_use: z.boolean(),
   }),
+  deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
+  deck_tag_changed: z.object({
+    action: z.enum(["rename", "merge", "archive", "restore"]),
+    channel: z.enum(["app", "api", "mcp"]),
+    cards: Backlog,
+  }),
+  cards_tagged: z.object({
+    cards: Backlog,
+    added: z.number().int().min(0),
+    removed: z.number().int().min(0),
+  }),
   account_deleted: z.object({
     client: z.enum(["web", "phone"]),
     confirmed_with: z.enum(["email", "apple"]),
@@ -329,6 +340,9 @@ export const analyticsProducers = {
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser"],
+  deck_filter_added: ["browser"],
+  deck_tag_changed: ["worker"],
+  cards_tagged: ["browser"],
   deck_enrichment_changed: ["worker"],
   deck_purpose_set: ["worker"],
   entry_opened: ["phone"],

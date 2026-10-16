@@ -140,6 +140,15 @@ export function McpOverview() {
             def: "Hide a section, with its cards or leaving them in the deck, and bring it back.",
           },
           {
+            term: (
+              <>
+                <code>list_deck_tags</code>, <code>rename_tag</code>, <code>archive_tag</code>,{" "}
+                <code>restore_tag</code>
+              </>
+            ),
+            def: "A deck's tags: rename one, merge it into another by renaming onto its name, or archive it from the deck's cards and bring it back. Each acts on one deck; other decks keep their tags. Put tags on cards with update_cards.",
+          },
+          {
             term: <code>search_cards</code>,
             def: "Cards matching text, one exact term, a deck or an active section, or a filter on any card field and on your own review history, such as the cards you forgot most this month. Sorted, with each card's review record on request. Can look through archived cards. Results come a page at a time: pass nextCursor back as cursor until it is null, since a page can be short or even empty. total is null when it is not known exactly.",
           },

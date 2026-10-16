@@ -7,6 +7,7 @@ import {
   firstTouch,
   parseFirstTouch,
   textCallCost,
+  withoutCarriedFirstTouch,
 } from "./analytics";
 
 describe("analytics privacy contract", () => {
@@ -124,6 +125,9 @@ describe("analytics privacy contract", () => {
     expect(analyticsPath("/reset-password/token", "product")).toBe("/other");
     expect(analyticsPath("/you", "product")).toBe("/you");
     expect(analyticsPath("/uk/explore/eesti-a1", "public")).toBe("/uk/explore/eesti-a1");
+    expect(analyticsPath("/ru/explore/languages/german", "public")).toBe(
+      "/ru/explore/languages/german",
+    );
     expect(analyticsPath("/uk/medicine", "public")).toBe("/uk/medicine");
     expect(analyticsPath("/certifications", "public")).toBe("/certifications");
     expect(analyticsPath("/tutor-lessons", "public")).toBe("/tutor-lessons");
@@ -179,11 +183,40 @@ describe("analytics privacy contract", () => {
     });
     const direct = carryFirstTouch(
       new URL("https://my.lymi.app/"),
-      firstTouch("https://lymi.app/", "", "public"),
+      firstTouch("https://lymi.app/explore/languages/german", "", "public"),
     );
-    expect(direct.search).toBe("");
+    expect(Object.fromEntries(direct.searchParams)).toEqual({ lp: "/explore/languages/german" });
     const tagged = new URL("https://my.lymi.app/?utm_source=newsletter");
     expect(carryFirstTouch(tagged, touch).search).toBe("?utm_source=newsletter");
+  });
+  it("keeps a deck door's source across the reload to sign-up", () => {
+    const door = firstTouch(
+      "https://my.lymi.app/add/everyday-estonian?lp=%2Fuk%2Fexplore%2Feveryday-estonian&ref=www.google.com",
+      "https://lymi.app/uk/explore/everyday-estonian",
+      "product",
+    );
+    const login = carryFirstTouch(new URL("https://my.lymi.app/login?mode=sign-up"), door);
+    expect(
+      firstTouch(login.toString(), "https://my.lymi.app/add/everyday-estonian", "product"),
+    ).toEqual({ first_landing_page: "/uk/explore/everyday-estonian", referrer: "www.google.com" });
+
+    const shared = firstTouch("https://my.lymi.app/join/secret-token", "", "product");
+    const signUp = carryFirstTouch(new URL("https://my.lymi.app/login?mode=sign-up"), shared);
+    expect(signUp.searchParams.get("lp")).toBe("/join/:item");
+    expect(firstTouch(signUp.toString(), "", "product").first_landing_page).toBe("/join/:item");
+    expect(firstTouch("https://my.lymi.app/login?lp=%2Freset-password%2Ft", "", "product")).toEqual(
+      {
+        first_landing_page: "/other",
+      },
+    );
+  });
+  it("drops only the carried source from the visible address", () => {
+    expect(
+      withoutCarriedFirstTouch(
+        "https://lymi.app/teachers?lp=%2F&ref=www.google.com&utm_source=x#faq",
+      ),
+    ).toBe("/teachers?utm_source=x#faq");
+    expect(withoutCarriedFirstTouch("https://lymi.app/teachers?utm_source=x")).toBeUndefined();
   });
   it("adds only a bounded referrer host and campaign labels to page views", () => {
     expect(

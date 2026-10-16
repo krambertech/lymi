@@ -75,9 +75,8 @@ const step = z.enum([
   "review",
 ]);
 function approvedPath(value: string): string {
-  if (/^(?:\/(uk|ru))?\/explore\/[a-z0-9-]+$/.test(value)) return analyticsPath(value, "public");
-  const product = analyticsPath(value, "product");
-  return product !== "/other" ? product : analyticsPath(value, "public");
+  const page = analyticsPath(value, "public");
+  return page !== "/other" ? page : analyticsPath(value, "product");
 }
 const path = z.string().max(200).transform(approvedPath);
 const campaign = z.string().regex(/^[a-zA-Z0-9_-]{1,80}$/);
@@ -372,7 +371,7 @@ export function eventProperties(
 export function analyticsPath(path: string, surface: "public" | "product"): string {
   if (surface === "public") {
     const clean = path.replace(/^\/(uk|ru)(?=\/|$)/, "") || "/";
-    if (/^\/explore\/[a-z0-9-]+$/.test(clean)) return path.slice(0, 200);
+    if (/^\/explore\/[a-z0-9-]+(?:\/[a-z0-9-]+)?$/.test(clean)) return path.slice(0, 200);
     if (
       /^\/(?:docs(?:\/[a-z0-9-]+)*|languages(?:\/[a-z0-9-]+)?|ai-assistants|teachers|medicine|certifications|tutor-lessons|notes-to-flashcards|exams(?:\/[a-z0-9-]+)?|explore|changelog(?:\/[a-z0-9-]+)?|privacy|terms|support|signup|learn(?:\/[a-z0-9-]+)?)?$/.test(
         clean,
@@ -437,7 +436,7 @@ export function firstTouch(
   const carried = params.get(CARRIED.landing);
   const result: Attribution = {
     first_landing_page: carried
-      ? analyticsPath(carried, "public")
+      ? (path.safeParse(carried).data ?? "/other")
       : analyticsPath(parsed.pathname, surface),
   };
   const source = externalHost(params.get(CARRIED.referrer)) ?? externalHost(referrer);
@@ -449,15 +448,27 @@ export function firstTouch(
   return result;
 }
 
-/** Adds a visit's source to a link that leaves the page, unless the link already names one. */
+/**
+ * Adds a visit's source to a link that leaves the page, unless the link already names one. The
+ * landing page goes even without a referrer, since apps and messengers often send none.
+ */
 export function carryFirstTouch(target: URL, touch: Attribution): URL {
   const params = target.searchParams;
   if (params.has(CARRIED.landing) || CAMPAIGN_KEYS.some((key) => params.has(key))) return target;
-  if (!touch.referrer && !CAMPAIGN_KEYS.some((key) => touch[key])) return target;
   params.set(CARRIED.landing, touch.first_landing_page);
   if (touch.referrer) params.set(CARRIED.referrer, touch.referrer);
   for (const key of CAMPAIGN_KEYS) if (touch[key]) params.set(key, touch[key]);
   return target;
+}
+
+/** The address without the source a public page carried into it, so a copied link does not pass it on. */
+export function withoutCarriedFirstTouch(url: string): string | undefined {
+  const parsed = new URL(url);
+  if (!parsed.searchParams.has(CARRIED.landing) && !parsed.searchParams.has(CARRIED.referrer))
+    return;
+  parsed.searchParams.delete(CARRIED.landing);
+  parsed.searchParams.delete(CARRIED.referrer);
+  return parsed.pathname + parsed.search + parsed.hash;
 }
 
 /** Reads a first touch that arrived from the browser, which can send anything. */

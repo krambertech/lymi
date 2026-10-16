@@ -8,7 +8,7 @@ import {
   setAnalyticsOpening,
   visitFirstTouch,
 } from "@lymi/client/analytics";
-import { FIRST_TOUCH_HEADER } from "@lymi/core/analytics";
+import { carryFirstTouch, FIRST_TOUCH_HEADER } from "@lymi/core/analytics";
 import { isStaleChunkError, reloadOntoCurrentBuild } from "./stale-build";
 
 export { captureAnalytics, capturePageview };
@@ -22,6 +22,14 @@ export function firstTouchHeaders(): Record<string, string> {
 export function firstTouchData(): { firstTouch?: unknown } {
   const touch = visitFirstTouch("product");
   return touch ? { firstTouch: touch } : {};
+}
+
+/** A product address that keeps where this visit began across a full page load. */
+export function withFirstTouch(path: string): string {
+  const touch = visitFirstTouch("product");
+  if (!touch) return path;
+  const url = carryFirstTouch(new URL(path, location.origin), touch);
+  return url.pathname + url.search;
 }
 
 export function initTelemetry(): void {

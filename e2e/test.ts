@@ -9,12 +9,12 @@ import {
 
 export * from "@playwright/test";
 
-/** Playwright's test, with the end-of-review blur off in every page: it stalls WebKit without a GPU. docs/testing.md. */
+/** Playwright's test, without the end-of-review blur, which stalls WebKit without a GPU, or the developer tools. docs/testing.md. */
 export const test = base.extend({
   context: async ({ context }, use) => {
     await context.addInitScript(() => {
       const sheet = new CSSStyleSheet();
-      sheet.replaceSync(":root { --seq-filter: none; }");
+      sheet.replaceSync(":root { --seq-filter: none; } .dev-skin { display: none; }");
       document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
     });
     await use(context);

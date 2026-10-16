@@ -6,6 +6,7 @@ import type {
   CardImagePatch,
   CardInput,
   CardPatch,
+  CardsInput,
   Direction,
   HookDraftOut,
   ReviewMode,
@@ -74,6 +75,12 @@ export const cardsApi = {
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
   addCard: (body: CardInput) =>
     request<AddCardOutcome>("/api/cards", { method: "POST", body: JSON.stringify(body) }),
+  /** Many cards in one write; each is added or skipped on its own. */
+  addCards: (body: CardsInput) =>
+    request<{ results: AddCardOutcome[] }>("/api/cards/batch", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
   /** Send only the fields that changed. `deckId` moves the card to another deck. */
   updateCard: (id: string, body: CardPatch) =>
     request<Card>(`/api/cards/${id}`, { method: "PATCH", body: JSON.stringify(body) }),

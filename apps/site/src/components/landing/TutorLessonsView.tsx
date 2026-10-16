@@ -312,6 +312,13 @@ export function TutorLessonsView() {
                   >
                     It takes three steps
                   </a>
+                  . No assistant?{" "}
+                  <a
+                    href="#guide-without"
+                    className="text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+                  >
+                    Start another way
+                  </a>
                   .
                 </Trans>
               ),
@@ -360,10 +367,10 @@ export function TutorLessonsView() {
           note={
             <Trans>
               Lymi doesn’t connect to tutoring sites or read photos itself: your assistant does the
-              reading. Without an assistant, add each word with Add a card, and AI fills in the
-              meaning.
+              reading.
             </Trans>
           }
+          withoutAssistant
         />
 
         <FeatureSection

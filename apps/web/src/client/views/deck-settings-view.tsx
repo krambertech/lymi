@@ -20,7 +20,7 @@ import {
   UserPlus,
 } from "lucide-react";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
-import { Avatar } from "../components/avatar";
+import { Avatar, FormerOwnerMark } from "../components/avatar";
 import { Button, IconButton } from "../components/button";
 import { Chip } from "../components/chip";
 import { CopyField } from "../components/copy-field";
@@ -373,25 +373,47 @@ function DeckAbout({
   return (
     <>
       <SettingsGroup title={t`Shared with you`}>
-        <div className="flex items-center gap-2.5">
-          {deck.published ? (
-            <PublisherMark name={ownerName} src={deck.owner.avatarUrl} size={32} />
-          ) : (
-            <Avatar name={ownerName} size={32} />
-          )}
-          <div className="grid min-w-0 gap-0.5">
-            <p className="truncate text-base font-medium text-text">{ownerName}</p>
-            <p className="text-sm text-muted">
-              <Trans>Owns this deck and writes its cards</Trans>
+        {deck.owner.former ? (
+          <>
+            <div className="flex items-center gap-2.5">
+              <FormerOwnerMark size={32} />
+              <div className="grid min-w-0 gap-0.5">
+                <p className="truncate text-base font-medium text-text">{t`Former owner`}</p>
+                <p className="text-sm text-muted">
+                  <Trans>Left Lymi, so nobody can change this deck</Trans>
+                </p>
+              </div>
+            </div>
+            <p className="max-w-[60ch] text-sm text-muted">
+              <Trans>
+                You keep studying these cards on your own schedule. Nobody else sees your reviews or
+                progress.
+              </Trans>
             </p>
-          </div>
-        </div>
-        <p className="max-w-[60ch] text-sm text-muted">
-          <Trans>
-            You study the same cards as {ownerName}, on your own schedule. Nobody else sees your
-            reviews or progress.
-          </Trans>
-        </p>
+          </>
+        ) : (
+          <>
+            <div className="flex items-center gap-2.5">
+              {deck.published ? (
+                <PublisherMark name={ownerName} src={deck.owner.avatarUrl} size={32} />
+              ) : (
+                <Avatar name={ownerName} size={32} />
+              )}
+              <div className="grid min-w-0 gap-0.5">
+                <p className="truncate text-base font-medium text-text">{ownerName}</p>
+                <p className="text-sm text-muted">
+                  <Trans>Owns this deck and writes its cards</Trans>
+                </p>
+              </div>
+            </div>
+            <p className="max-w-[60ch] text-sm text-muted">
+              <Trans>
+                You study the same cards as {ownerName}, on your own schedule. Nobody else sees your
+                reviews or progress.
+              </Trans>
+            </p>
+          </>
+        )}
       </SettingsGroup>
 
       <SettingsGroup title={t`Deck`}>
@@ -413,10 +435,17 @@ function DeckAbout({
       <SettingsGroup title={t`Leaving this deck`}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="max-w-sm text-sm text-muted">
-            <Trans>
-              The deck leaves Library and its cards stop coming up in review. If you join again,
-              your reviews are still there.
-            </Trans>
+            {deck.owner.former ? (
+              <Trans>
+                The deck leaves Library and its cards stop coming up in review. Its owner left Lymi,
+                so you can’t join it again.
+              </Trans>
+            ) : (
+              <Trans>
+                The deck leaves Library and its cards stop coming up in review. If you join again,
+                your reviews are still there.
+              </Trans>
+            )}
           </p>
           <Button variant="danger" onClick={onLeave} aria-disabled={!onLeave}>
             <LogOut data-icon="inline-start" aria-hidden="true" />

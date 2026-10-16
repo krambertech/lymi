@@ -31,19 +31,19 @@ export function publicMediaUrl(cardId: string, kind: "image" | "audio"): string 
 }
 
 /**
- * Every Open Lymi on the site. The product's root sends a session to Today and, because of the
- * mode, a visitor without one to sign-up rather than sign-in.
+ * Every Sign in and Open Lymi on the site. The product's root sends a session to Today and a
+ * visitor without one to sign-in, so someone who already has an account is never shown sign-up.
  */
 export function openLymiUrl(origin = PRODUCT_ORIGIN): string {
-  return new URL("/?mode=sign-up", origin).toString();
+  return new URL("/", origin).toString();
 }
 
 /**
- * The site's own /signup. It goes through the product root like Open Lymi, so a session lands on
- * Today, and keeps whatever else the link carried, such as campaign tags.
+ * The site's own /signup. It goes through the product root, so a session lands on Today, asks a
+ * visitor without one for sign-up, and keeps whatever else the link carried, such as campaign tags.
  */
 export function signUpRedirect(search: string): string {
-  const url = new URL(openLymiUrl());
+  const url = new URL("/?mode=sign-up", PRODUCT_ORIGIN);
   for (const [key, value] of new URLSearchParams(search)) {
     if (key !== "mode") url.searchParams.append(key, value);
   }

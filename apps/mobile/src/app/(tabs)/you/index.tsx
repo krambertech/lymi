@@ -130,6 +130,15 @@ export default function You() {
 
       <SignOut />
 
+      <Rows>
+        <Row
+          icon="delete"
+          label={t`Delete account`}
+          destructive
+          onPress={() => router.push("/you/delete-account")}
+        />
+      </Rows>
+
       <ProfileSheet open={editing} onOpenChange={setEditing} profile={profile} />
     </Screen>
   );

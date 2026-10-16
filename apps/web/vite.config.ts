@@ -82,6 +82,8 @@ export default defineConfig({
           ? {
               persistState: { path: ".wrangler/e2e" },
               inspectorPort: false,
+              // Workers AI is remote only; E2E never calls it and CI has no Cloudflare token.
+              remoteBindings: false,
               config: {
                 vars: {
                   PUBLIC_SITE_URL: e2eSiteUrl,
@@ -130,12 +132,14 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
         importScripts: ["/push-sw.js"],
         navigateFallback: "/index.html",
+        // Workbox tests these against the path and query together, so `/?mode=sign-up` must
+        // still reach the Worker's door rather than the cached shell.
         navigateFallbackDenylist: [
-          /^\/$/,
+          /^\/(?:\?|$)/,
           /^\/api\//,
           /^\/mcp/,
-          /^\/docs(?:\/|$)/,
-          /^\/join(?:\/|$)/,
+          /^\/docs(?:[/?]|$)/,
+          /^\/join(?:[/?]|$)/,
           /^\/add\//,
         ],
         runtimeCaching: [

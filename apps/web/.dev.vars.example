@@ -40,13 +40,19 @@ VAPID_PRIVATE_KEY=
 VAPID_SUBJECT=mailto:you@example.com
 OPENAI_API_KEY=
 # Optional OpenAI speech overrides. OpenAI falls back to Chirp when Cloud credentials are present.
-OPENAI_BASE_URL=
 OPENAI_SPEECH_MODEL=gpt-4o-mini-tts
 OPENAI_SPEECH_VOICE=marin
-AI_GATEWAY_TOKEN=
 # Only while an OpenAI plugin submission is verifying the domain.
 OPENAI_APPS_CHALLENGE=
 # The phone app's `TEAMID.bundle`, so join and add links open it. Empty turns universal links off.
 APPLE_APP_ID=
 # Comma-separated SHA-256 fingerprints of the Android app's signing certificates. Empty turns app links off.
 ANDROID_CERT_FINGERPRINTS=
+# Reads lesson photos, PDFs and text into a pick list. Operators only until a paid plan exists.
+ANTHROPIC_API_KEY=
+# Needed when the key belongs to the organisation rather than one workspace.
+ANTHROPIC_WORKSPACE_ID=
+ANTHROPIC_LESSON_MODEL=claude-haiku-5-5
+# The lymi AI Gateway (AI_GATEWAY_ID and AI_GATEWAY_URL in wrangler.jsonc) carries OpenAI, Anthropic,
+# ElevenLabs and Gemini calls only when this is set; empty, they go to the providers directly.
+AI_GATEWAY_TOKEN=

@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { testGateway } from "../../test/ai-gateway";
 import { createGoogleChirpProvider } from "./google-chirp";
 import { GoogleSpeechError } from "./google-cloud-tts";
 
@@ -16,7 +17,7 @@ describe("Google Chirp provider", () => {
         Response.json({ audioContent: btoa("\u0001\u0002\u0003") }),
     );
     const provider = createGoogleChirpProvider(
-      { GOOGLE_CLOUD_TTS_CREDENTIALS: credentials },
+      { ...testGateway, GOOGLE_CLOUD_TTS_CREDENTIALS: credentials },
       { locale: "et-EE", request, accessToken: async () => "token" },
     );
 
@@ -25,7 +26,9 @@ describe("Google Chirp provider", () => {
     expect(await response.bytes()).toEqual(new Uint8Array([1, 2, 3]));
     const call = request.mock.calls[0];
     if (!call) throw new Error("Chirp request was not made");
-    expect(call[0]).toBe("https://texttospeech.googleapis.com/v1/text:synthesize");
+    expect(call[0]).toBe(
+      "https://gateway.ai.cloudflare.com/v1/acct/lymi/custom-google-cloud-tts/v1/text:synthesize",
+    );
     expect(call[1]?.headers).toMatchObject({
       Authorization: "Bearer token",
       "x-goog-user-project": "lymi-text-to-speech",
@@ -50,7 +53,7 @@ describe("Google Chirp provider", () => {
   it("exposes only the upstream status needed for safe diagnostics", async () => {
     const request = vi.fn(async () => new Response("private upstream details", { status: 403 }));
     const provider = createGoogleChirpProvider(
-      { GOOGLE_CLOUD_TTS_CREDENTIALS: credentials },
+      { ...testGateway, GOOGLE_CLOUD_TTS_CREDENTIALS: credentials },
       { locale: "et-EE", request, accessToken: async () => "token" },
     );
 

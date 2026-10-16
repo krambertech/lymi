@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { testGateway } from "../../test/ai-gateway";
 import { createOpenAiSpeechProvider, OpenAiSpeechError } from "./openai-speech";
 
 describe("OpenAI speech provider", () => {
@@ -8,7 +9,7 @@ describe("OpenAI speech provider", () => {
         new Response(new Uint8Array([1, 2]), { headers: { "Content-Type": "audio/mpeg" } }),
     );
     const provider = createOpenAiSpeechProvider(
-      { OPENAI_API_KEY: "key", OPENAI_SPEECH_VOICE: "marin" },
+      { ...testGateway, OPENAI_API_KEY: "key", OPENAI_SPEECH_VOICE: "marin" },
       "cy",
       request,
     );
@@ -18,7 +19,7 @@ describe("OpenAI speech provider", () => {
     );
     const call = request.mock.calls[0];
     if (!call) throw new Error("OpenAI request was not made");
-    expect(call[0]).toBe("https://api.openai.com/v1/audio/speech");
+    expect(call[0]).toBe("https://gateway.ai.cloudflare.com/v1/acct/lymi/openai/audio/speech");
     expect(JSON.parse(String(call[1]?.body))).toMatchObject({
       model: "gpt-4o-mini-tts",
       voice: "marin",
@@ -39,7 +40,11 @@ describe("OpenAI speech provider", () => {
 
   it("exposes only the upstream status needed for safe diagnostics", async () => {
     const request = vi.fn(async () => new Response("private upstream details", { status: 401 }));
-    const provider = createOpenAiSpeechProvider({ OPENAI_API_KEY: "key" }, "et", request);
+    const provider = createOpenAiSpeechProvider(
+      { ...testGateway, OPENAI_API_KEY: "key" },
+      "et",
+      request,
+    );
 
     await expect(provider.speech({ text: "tere", language: "et" })).rejects.toMatchObject({
       name: "OpenAiSpeechError",

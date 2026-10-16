@@ -1,9 +1,11 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { decisionModel } from "../lessons/keep";
 import { createLessonReader } from "../lessons/reader";
 import { createElevenLabsSpeechProvider } from "./elevenlabs-speech";
-import { providerEndpoint } from "./gateway";
+import { AiGatewayError, providerEndpoint } from "./gateway";
 import { createGeminiApiSpeechProvider } from "./gemini-api-speech";
+import { createGoogleChirpProvider } from "./google-chirp";
+import { createGoogleGeminiProvider } from "./google-gemini";
 import { createOpenAiSpeechProvider } from "./openai-speech";
 import { createOpenAiTextProvider } from "./openai-text";
 
@@ -26,20 +28,34 @@ describe("providerEndpoint", () => {
   it("routes each provider to its gateway path with the gateway's token", () => {
     expect(providerEndpoint(routed, "openai")).toEqual({
       base: `${GATEWAY}/openai`,
-      headers: { "cf-aig-authorization": "Bearer gateway-token" },
+      headers: {
+        "cf-aig-authorization": "Bearer gateway-token",
+        "cf-aig-collect-log-payload": "false",
+        "cf-aig-skip-cache": "true",
+      },
     });
     expect(providerEndpoint(routed, "anthropic").base).toBe(`${GATEWAY}/anthropic/v1`);
+    expect(providerEndpoint(routed, "typesafe").base).toBe(`${GATEWAY}/custom-typesafe`);
     expect(providerEndpoint(routed, "elevenlabs").base).toBe(`${GATEWAY}/elevenlabs`);
     expect(providerEndpoint(routed, "google-ai-studio").base).toBe(`${GATEWAY}/google-ai-studio`);
   });
 
-  it("calls the provider directly, without the token, unless both are set", () => {
-    const tokenOnly = providerEndpoint({ AI_GATEWAY_TOKEN: "gateway-token" }, "openai");
-    expect(tokenOnly).toEqual({ base: "https://api.openai.com/v1", headers: {} });
-    expect(providerEndpoint({ AI_GATEWAY_URL: GATEWAY }, "anthropic")).toEqual({
-      base: "https://api.anthropic.com/v1",
-      headers: {},
-    });
+  it.each([{}, { AI_GATEWAY_TOKEN: "gateway-token" }, { AI_GATEWAY_URL: GATEWAY }])(
+    "refuses incomplete gateway configuration",
+    (env) => expect(() => providerEndpoint(env, "openai")).toThrow(AiGatewayError),
+  );
+
+  it.each([
+    "http://gateway.ai.cloudflare.com/v1/acct/lymi",
+    "https://example.com/v1/acct/lymi",
+    "https://gateway.ai.cloudflare.com.evil.test/v1/acct/lymi",
+    `${GATEWAY}?token=secret`,
+    `${GATEWAY}#ignored`,
+    `${GATEWAY}/openai`,
+  ])("refuses an unsafe gateway URL without exposing it", (url) => {
+    expect(() => providerEndpoint({ ...routed, AI_GATEWAY_URL: url }, "openai")).toThrow(
+      "AI Gateway URL is invalid",
+    );
   });
 });
 
@@ -72,22 +88,63 @@ describe("clients through the gateway", () => {
     }
   });
 
-  it("never sends the gateway token to a provider directly", async () => {
-    const { calls, request } = recorder();
-    const env = { OPENAI_API_KEY: "k", ANTHROPIC_API_KEY: "k", AI_GATEWAY_TOKEN: "gateway-token" };
-    await createOpenAiTextProvider(env, request)
-      .complete({ instructions: "i", input: "x", schema: { name: "s", schema: {} } })
-      .catch(() => {});
-    await createOpenAiSpeechProvider(env, "et", request)
-      .speech({ text: "tere", language: "et" })
-      .catch(() => {});
-    await createLessonReader(env, request)
-      ?.stream({ images: [], pdfs: [], text: "Tund 6" }, "brief", {}, () => {})
-      .catch(() => {});
-    expect(calls.map((c) => new URL(c.url).host)).toEqual(
-      expect.arrayContaining(["api.openai.com", "api.anthropic.com"]),
+  it("never makes an upstream request with missing gateway configuration", async () => {
+    const request = vi.fn();
+    const env = { OPENAI_API_KEY: "k", ANTHROPIC_API_KEY: "k" };
+    await expect(
+      createOpenAiTextProvider(env, request).complete({
+        instructions: "i",
+        input: "x",
+        schema: { name: "s", schema: {} },
+      }),
+    ).rejects.toThrow(AiGatewayError);
+    await expect(
+      createOpenAiSpeechProvider(env, "et", request).speech({ text: "tere", language: "et" }),
+    ).rejects.toThrow(AiGatewayError);
+    expect(() => createLessonReader(env, request)).toThrow(AiGatewayError);
+    expect(request).not.toHaveBeenCalled();
+  });
+
+  it.each([401, 403, 429, 500])("never bypasses the gateway after HTTP %s", async (status) => {
+    const request = vi.fn(
+      async (_url: RequestInfo | URL, _init?: RequestInit) =>
+        new Response("private upstream detail", { status }),
     );
-    for (const call of calls) expect(call.headers["cf-aig-authorization"]).toBeUndefined();
+    await expect(
+      createOpenAiTextProvider({ OPENAI_API_KEY: "k", ...routed }, request).complete({
+        instructions: "i",
+        input: "x",
+        schema: { name: "s", schema: {} },
+      }),
+    ).rejects.toMatchObject({ status });
+    for (const [url, init] of request.mock.calls) {
+      expect(url).toBe(`${GATEWAY}/openai/chat/completions`);
+      expect(init?.redirect).toBe("error");
+    }
+  });
+
+  it("keeps Google Cloud speech behind its custom gateway provider", async () => {
+    const calls: string[] = [];
+    const credentials = JSON.stringify({
+      type: "service_account",
+      project_id: "lymi",
+      client_email: "test@example.com",
+      private_key: "unused",
+    });
+    const request = async (url: RequestInfo | URL, init?: RequestInit) => {
+      calls.push(String(url));
+      expect(new Headers(init?.headers).get("cf-aig-authorization")).toBe("Bearer gateway-token");
+      return Response.json({ audioContent: btoa("audio") });
+    };
+    const env = { ...routed, GOOGLE_CLOUD_TTS_CREDENTIALS: credentials };
+    const dependencies = { locale: "et-EE", accessToken: async () => "oauth-token", request };
+    for (const provider of [
+      createGoogleGeminiProvider(env, dependencies),
+      createGoogleChirpProvider(env, dependencies),
+    ]) {
+      expect(await (await provider.speech({ text: "tere", language: "et" })).text()).toBe("audio");
+    }
+    expect(calls).toEqual(Array(2).fill(`${GATEWAY}/custom-google-cloud-tts/v1/text:synthesize`));
   });
 
   it("sends lesson reads to the gateway's Anthropic endpoint", async () => {
@@ -99,17 +156,45 @@ describe("clients through the gateway", () => {
     expect(calls[0]?.headers["cf-aig-authorization"]).toBe("Bearer gateway-token");
   });
 
-  it("names the gateway on Workers AI calls only when one is set", async () => {
-    const options: unknown[] = [];
-    const AI = {
-      run: async (_model: string, _input: unknown, opts: unknown) => {
-        options.push(opts);
-        return {};
-      },
-    } as unknown as Ai;
+  it("keeps upstream lesson errors out of diagnostics", async () => {
+    const reader = createLessonReader(
+      { ...routed, ANTHROPIC_API_KEY: "k" },
+      async () => new Response("private upstream payload", { status: 403 }),
+    );
+    await expect(
+      reader?.stream({ images: [], pdfs: [], text: "lesson" }, "brief", {}, () => {}),
+    ).rejects.toMatchObject({ message: "The lesson reader failed (403)", status: 403 });
+
+    const stream = createLessonReader(
+      { ...routed, ANTHROPIC_API_KEY: "k" },
+      async () =>
+        new Response(
+          `data: ${JSON.stringify({
+            type: "error",
+            error: { message: "private stream payload" },
+          })}\n\n`,
+        ),
+    );
+    await expect(
+      stream?.stream({ images: [], pdfs: [], text: "lesson" }, "brief", {}, () => {}),
+    ).rejects.toThrow("The lesson reader stream failed");
+  });
+
+  it("requires a gateway on Workers AI calls and disables payload storage and caching", async () => {
+    const run = vi.fn(async () => ({}));
+    const AI = { run } as unknown as Ai;
     await decisionModel({ AI, AI_GATEWAY_ID: "lymi" })?.run("@cf/cloudflare/clef-flash", {});
-    await decisionModel({ AI })?.run("@cf/cloudflare/clef-flash", {});
-    expect(options).toEqual([{ gateway: { id: "lymi" } }, {}]);
+    expect(run).toHaveBeenCalledWith(
+      "@cf/cloudflare/clef-flash",
+      {},
+      {
+        gateway: { id: "lymi", skipCache: true },
+        extraHeaders: { "cf-aig-collect-log-payload": "false" },
+        signal: expect.any(AbortSignal),
+      },
+    );
+    expect(() => decisionModel({ AI })).toThrow(AiGatewayError);
+    expect(run).toHaveBeenCalledTimes(1);
     expect(decisionModel({})).toBeUndefined();
   });
 });

@@ -1,5 +1,6 @@
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
+  "account_id": "ce6da857aeb521aa2730848a194b8866",
   "name": "lymi-site",
   "main": "src/worker.ts",
   "compatibility_date": "2026-09-06",

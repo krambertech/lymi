@@ -1,5 +1,6 @@
 import { LESSON_READS_PER_DAY, newId } from "@lymi/core";
 import { beforeAll, describe, expect, it } from "vitest";
+import { testGateway } from "../../test/ai-gateway";
 import { schema } from "../db";
 import { type Session, type TestApp, testApp } from "../test-app";
 
@@ -22,6 +23,7 @@ beforeAll(async () => {
   app = await testApp({
     operators: ["lesson-operator@lymi.local"],
     env: {
+      ...testGateway,
       ANTHROPIC_API_KEY: "key",
       IMAGES: {
         input() {

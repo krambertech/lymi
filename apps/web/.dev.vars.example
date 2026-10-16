@@ -53,6 +53,6 @@ ANTHROPIC_API_KEY=
 # Needed when the key belongs to the organisation rather than one workspace.
 ANTHROPIC_WORKSPACE_ID=
 ANTHROPIC_LESSON_MODEL=claude-haiku-5-5
-# The lymi AI Gateway (AI_GATEWAY_ID and AI_GATEWAY_URL in wrangler.jsonc) carries OpenAI, Anthropic,
-# ElevenLabs and Gemini calls only when this is set; empty, they go to the providers directly.
+# Every model call requires the lymi AI Gateway; missing configuration fails without calling a vendor.
+# AI_GATEWAY_ID and AI_GATEWAY_URL are configured in wrangler.jsonc.
 AI_GATEWAY_TOKEN=

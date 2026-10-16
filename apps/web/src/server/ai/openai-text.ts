@@ -96,6 +96,7 @@ async function completeOnce(
   };
   const response = await fetchWithRetry(request, `${endpoint.base}/chat/completions`, {
     method: "POST",
+    redirect: "error",
     headers,
     body: JSON.stringify({
       model,

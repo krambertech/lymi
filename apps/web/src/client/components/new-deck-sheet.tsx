@@ -176,7 +176,7 @@ export function NewDeckForm({ seed, pending, error, onCancel, onSubmit }: NewDec
           setInvalid(({ purpose: _, ...rest }) => rest);
         }}
         error={invalid.purpose}
-        description={t`AI fills the deck’s cards to suit it.`}
+        description={t`AI uses this choice when filling empty fields.`}
         descriptionFirst
       />
       {purpose === "language" && (

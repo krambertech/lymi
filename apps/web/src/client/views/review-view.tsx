@@ -314,16 +314,16 @@ function TapHint({ lifted, aided }: { lifted: boolean; aided: boolean }) {
       <p className="flex items-center gap-2 text-center text-sm font-medium">
         <span className="@2xl:hidden">
           {aided ? (
-            <Trans>Tap the card when you have it</Trans>
+            <Trans>Tap to reveal the answer</Trans>
           ) : (
-            <Trans>Recall the answer, then tap the card</Trans>
+            <Trans>Try to remember, then tap to reveal</Trans>
           )}
         </span>
         <span className="hidden @2xl:inline">
           {aided ? (
-            <Trans>Reveal the card when you have it</Trans>
+            <Trans>Reveal the answer</Trans>
           ) : (
-            <Trans>Recall the answer, then reveal the card</Trans>
+            <Trans>Try to remember, then reveal the answer</Trans>
           )}
         </span>
         <span className="hidden @2xl:inline-flex">

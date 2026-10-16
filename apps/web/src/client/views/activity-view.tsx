@@ -535,7 +535,7 @@ export function ActivityView({
         <EmptySection
           icon={<ActivityIcon />}
           title={t`No activity yet`}
-          body={t`Changes from AI apps, imports, AI enrichment and shared decks show up here.`}
+          body={t`Imports, exports, changes by apps and AI, and shared deck activity appear here. Connect an app or import a deck in Settings.`}
         />
       ) : (
         <div className="grid gap-6">

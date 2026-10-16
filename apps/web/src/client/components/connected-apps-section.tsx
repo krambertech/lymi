@@ -42,7 +42,7 @@ export function ConnectedAppsSection() {
         <EmptySection
           icon={<Plug />}
           title={t`No apps connected`}
-          body={t`For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute.`}
+          body={t`After connecting, paste a lesson into your assistant and ask it to make cards.`}
           action={
             <Button render={<a href={publicSiteUrl("/docs/mcp")} />}>
               <Trans>How to connect</Trans>

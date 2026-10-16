@@ -94,9 +94,7 @@ test("a language asks which one, then offers that language's decks beside the le
     .element(page.getByText("A few quick questions, then your first review."))
     .toBeVisible();
   await expect.element(page.getByRole("heading", { name: "How it works" })).toBeVisible();
-  await expect
-    .element(page.getByText("Lymi brings it back just before you’d forget it."))
-    .toBeVisible();
+  await expect.element(page.getByText("Lymi schedules when you review it again.")).toBeVisible();
   await begin();
   await next();
   await expect.element(page.getByRole("alert")).toHaveTextContent("Choose one to continue.");

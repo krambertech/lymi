@@ -122,7 +122,7 @@ export function StartGuide({
       body: (
         <>
           <p className="text-md text-text-2">
-            <Trans>Insights fill in from your first review.</Trans>
+            <Trans>See your progress in Insights after your first review.</Trans>
           </p>
           <Button
             variant="primary"

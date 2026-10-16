@@ -388,7 +388,7 @@ function Rounds({ rounds, onAdd }: { rounds: RoundsOut; onAdd: (() => void) | un
   return (
     <section aria-labelledby="today-more" className="grid gap-2.5">
       <h2 id="today-more" className="flex min-h-8 items-center px-1 text-lg font-medium">
-        <Trans>Also on your list</Trans>
+        <Trans>More to review</Trans>
       </h2>
       <ul className="grid gap-3 @3xl:grid-cols-3 @3xl:gap-4">
         {tiles.map((item) => (

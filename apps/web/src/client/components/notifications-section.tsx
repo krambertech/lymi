@@ -203,7 +203,7 @@ export function NotificationsSection() {
   return (
     <SettingsGroup
       title={t`Daily reminder`}
-      description={t`Notify you on this device when cards are due.`}
+      description={t`Reminders are set separately on each device.`}
     >
       {!reminderAvailable ? (
         <p className="text-base text-muted">

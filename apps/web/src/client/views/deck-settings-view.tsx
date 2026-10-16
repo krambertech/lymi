@@ -254,7 +254,7 @@ export function DeckSettingsView({
             <PurposeField
               value={deck.purpose}
               onChange={(purpose) => onSave({ purpose })}
-              description={t`AI fills this deck’s cards to suit it. Only you see it.`}
+              description={t`AI uses this choice when filling empty fields. Only you see it.`}
               descriptionFirst
             />
             <LanguageField
@@ -265,7 +265,7 @@ export function DeckSettingsView({
             />
           </SettingsGroup>
 
-          <SettingsGroup title={t`How cards are asked`}>
+          <SettingsGroup title={t`Review modes`}>
             <DirectionField
               value={deck.directions}
               onChange={(directions) => onSave({ directions })}
@@ -422,7 +422,7 @@ function DeckAbout({
           <Fact label={t`Language`}>
             {deck.defaultLanguage ? languageName(deck.defaultLanguage) : t`Not set`}
           </Fact>
-          <Fact label={t`How cards are asked`}>
+          <Fact label={t`Review modes`}>
             <span className="grid gap-0.5">
               <span>{directionLabel(deck.directions)}</span>
               {direction && <span className="text-sm text-muted">{direction}</span>}

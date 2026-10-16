@@ -233,7 +233,7 @@ export function QuizletImportView({
             </h2>
             {cards > 0 && (
               <div className="edge overflow-hidden rounded-xl bg-plate">
-                <table className="w-full table-fixed text-left text-base">
+                <table className="w-full table-fixed text-start text-base">
                   <thead className="text-sm text-muted">
                     <tr>
                       <th scope="col" className="px-4 py-2 font-medium">

@@ -30,9 +30,13 @@ describe("AI Gateway", () => {
     expect(calls[0]?.headers["cf-aig-authorization"]).toBe("Bearer gateway-token");
   });
 
-  it("calls Anthropic directly without a gateway", async () => {
+  it("calls Anthropic directly without the gateway's token", async () => {
     const calls: { url: string; headers: Record<string, string> }[] = [];
-    const reader = createLessonReader({ ANTHROPIC_API_KEY: "key" }, async (url, init) => {
+    const env = {
+      ANTHROPIC_API_KEY: "key",
+      ANTHROPIC_BASE_URL: "https://gateway.ai.cloudflare.com/v1/acct/lymi/anthropic/v1",
+    };
+    const reader = createLessonReader(env, async (url, init) => {
       calls.push({ url: String(url), headers: init?.headers as Record<string, string> });
       return sse({ type: "message_start", message: { usage: { input_tokens: 1 } } });
     });

@@ -48,7 +48,5 @@ ANTHROPIC_API_KEY=
 # Needed when the key belongs to the organisation rather than one workspace.
 ANTHROPIC_WORKSPACE_ID=
 ANTHROPIC_LESSON_MODEL=claude-haiku-5-5
-# AI Gateway for lesson reads: https://gateway.ai.cloudflare.com/v1/<account>/<gateway>/anthropic/v1
-ANTHROPIC_BASE_URL=
-# The same gateway's name, for Workers AI calls. Empty calls Workers AI directly.
-AI_GATEWAY_ID=
+# AI_GATEWAY_ID and ANTHROPIC_BASE_URL come from wrangler.jsonc; lesson reads use the gateway
+# only when AI_GATEWAY_TOKEN is set.

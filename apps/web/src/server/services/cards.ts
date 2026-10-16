@@ -33,6 +33,7 @@ import {
   stateStatementsForCards,
 } from "./modes";
 import { bumped } from "./revisions";
+import { syncTagStatements } from "./tags";
 
 /**
  * What happened to one card in an add. A duplicate is skipped, never rejected, and the
@@ -257,6 +258,7 @@ export async function addCards(
     }
     groups.push([
       db.insert(schema.cards).values(card),
+      ...(card.tags.length > 0 ? syncTagStatements(db, [id], card.tags, now) : []),
       // A new card has no picture yet, so only its text modes can be asked.
       ...stateStatementsForCard(db, id, now, TEXT_MODES),
       auditStatement(ctx, {
@@ -276,6 +278,7 @@ export async function addCards(
   }
 
   await runInBatches(db, groups);
+  await respellTags(db, outcomes);
   if (groups.length > 0) {
     track(ctx.analytics, {
       name: "card_added",
@@ -312,6 +315,25 @@ export async function addCards(
       ? { id: card.id, status: "added", card }
       : { ...outcome, id: card.id, existing: card };
   });
+}
+
+/** Reads back the tags of added cards, which the write spelled as their owner's tags. */
+async function respellTags(db: Db, outcomes: RawOutcome[]) {
+  const tagged = new Map(
+    outcomes.flatMap((o) =>
+      o.status === "added" && o.card.tags.length > 0 ? [[o.card.id, o.card]] : [],
+    ),
+  );
+  const rows = await selectIn([...tagged.keys()], (ids) =>
+    db
+      .select({ id: schema.cards.id, tags: schema.cards.tags })
+      .from(schema.cards)
+      .where(inArray(schema.cards.id, ids)),
+  );
+  for (const row of rows) {
+    const card = tagged.get(row.id);
+    if (card) card.tags = row.tags;
+  }
 }
 
 type RawOutcome =
@@ -423,6 +445,8 @@ type CardWrite = {
   id: string;
   statements: Statement[];
   states: boolean;
+  /** The tags the write set, which then move into `card_tags` after it. */
+  tags?: readonly string[] | undefined;
   /** What product analytics reports once the write lands. */
   reports?: AnalyticsEvent | undefined;
 };
@@ -471,16 +495,25 @@ const aiWrote = (card: Card) =>
 
 /**
  * Cards per D1 batch. Each costs two statements, and the batch adds one set of state statements
- * for all of them, which keeps a batch under the fifty `runInBatches` allows.
+ * and one of tag statements for all of them, which keeps a batch under the fifty `runInBatches` allows.
  */
 export const CARDS_PER_BATCH = 20;
 
 /** The writes, then the missing review states of every card that needs them, in one statement per mode. */
 function batchOf(db: Db, writes: CardWrite[], now: Date): Statement[] {
   const stated = writes.filter((write) => write.states).map((write) => write.id);
+  const tagged = writes.filter((write) => write.tags);
   return [
     ...writes.flatMap((write) => write.statements),
     ...(stated.length > 0 ? stateStatementsForCards(db, JSON.stringify(stated), now) : []),
+    ...(tagged.length > 0
+      ? syncTagStatements(
+          db,
+          tagged.map((write) => write.id),
+          tagged.flatMap((write) => write.tags ?? []),
+          now,
+        )
+      : []),
   ];
 }
 
@@ -785,6 +818,7 @@ function editWrite(
       auditStatement(ctx, { entity: "card", action: "update", id, deckId, details: patch }),
     ],
     states: modes !== undefined || patch.deckId !== undefined,
+    tags: patch.tags,
     reports:
       hook && !current.hook && sources.hookSource
         ? { name: "hook_added", source: sources.hookSource }

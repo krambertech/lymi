@@ -344,6 +344,13 @@
       "when": 1791880312089,
       "tag": "0048_lucky_blackheart",
       "breakpoints": true
+    },
+    {
+      "idx": 49,
+      "version": "6",
+      "when": 1791922793214,
+      "tag": "0049_card_tags",
+      "breakpoints": true
     }
   ]
 }

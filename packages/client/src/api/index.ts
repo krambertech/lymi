@@ -29,6 +29,7 @@ export type { Section, Sections } from "./sections";
 export type { Series } from "./series";
 export type { Settings } from "./settings";
 export type { Invitation, Member } from "./sharing";
+export type { Tag } from "./tags";
 
 import { accountApi } from "./account";
 import { activityApi } from "./activity";
@@ -47,6 +48,7 @@ import { seriesApi } from "./series";
 import { settingsApi } from "./settings";
 import { sharingApi } from "./sharing";
 import { statsApi } from "./stats";
+import { tagsApi } from "./tags";
 
 export const api = {
   ...accountApi,
@@ -66,4 +68,5 @@ export const api = {
   ...settingsApi,
   ...sharingApi,
   ...statsApi,
+  ...tagsApi,
 };

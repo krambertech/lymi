@@ -7,6 +7,11 @@ export function normaliseTerm(term: string): string {
   return term.normalize("NFC").trim().replace(/\s+/g, " ").toLocaleLowerCase();
 }
 
+/** The key one learner's tags are joined by, so "Дієслова" and "дієслова" are one tag on every device. */
+export function tagKey(tag: string): string {
+  return tag.normalize("NFC").trim().toLowerCase();
+}
+
 /** A picture description that contains the term or the meaning would show the answer before reveal. */
 export function revealsAnswer(
   card: { term: string; meaning?: string | null | undefined },

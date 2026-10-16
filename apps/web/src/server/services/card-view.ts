@@ -75,10 +75,18 @@ export async function importantIds(db: Db, viewerId: string, cardIds: readonly s
 }
 
 /**
- * The text a pinned edition replaces on a card. The card's language, tags, picture, audio and
- * review modes are canonical and shared by every edition. ADR 0015.
+ * The text a pinned edition replaces on a card. The card's language, picture, audio and review
+ * modes are canonical and shared by every edition; its tags are hidden until editions name them.
+ * ADR 0015.
  */
 const EDITION_TEXT = ["term", "meaning", "pronunciation", "example", "notes"] as const;
+
+/** The cards the viewer reads in a pinned edition, with that edition's approved text where it has some. */
+export interface EditionText {
+  text: Map<string, CardLocalization>;
+  /** Decks the viewer reads in another edition, by id, with that edition's language. */
+  pinned: Map<string, string>;
+}
 
 /**
  * Approved text for these cards in the editions the viewer pinned. Nothing runs for a learner
@@ -88,13 +96,13 @@ export async function editionText(
   db: Db,
   viewerId: string,
   cards: readonly Pick<Card, "id" | "deckId">[],
-) {
+): Promise<EditionText> {
   const pinned = await pinnedEditions(
     db,
     viewerId,
     cards.map((card) => card.deckId),
   );
-  if (pinned.size === 0) return new Map<string, CardLocalization>();
+  if (pinned.size === 0) return { text: new Map(), pinned };
   const wanted = cards.filter((card) => pinned.has(card.deckId)).map((card) => card.id);
   const languages = [...new Set(pinned.values())];
   const rows = await selectIn(
@@ -114,12 +122,22 @@ export async function editionText(
     Math.max(1, 95 - languages.length),
   );
   const byCard = new Map(cards.map((card) => [card.id, card.deckId]));
-  return new Map(
+  const text = new Map(
     rows.flatMap((row) => {
       const deckId = byCard.get(row.cardId);
       return deckId && pinned.get(deckId) === row.language ? [[row.cardId, row]] : [];
     }),
   );
+  return { text, pinned };
+}
+
+/** The card as a reader of its pinned edition sees it: that edition's text and no tags yet. */
+export function seenIn<T extends Pick<Card, "id" | "deckId" | "normalizedTerm" | "tags">>(
+  card: T,
+  editions: EditionText,
+): T {
+  if (!editions.pinned.has(card.deckId)) return card;
+  return { ...inEdition(card, editions.text.get(card.id)), tags: [] };
 }
 
 /**
@@ -164,13 +182,14 @@ export async function presentCards(
     importantIds(db, viewerId, ids),
   ]);
   return cards.map((card) => {
-    const text = editions.get(card.id);
+    const text = editions.text.get(card.id);
     // A card in an archived section reads as having none, as a deck in an archived series does.
     const placed =
       card.sectionId && !activeSections.has(card.sectionId) ? { ...card, sectionId: null } : card;
     // A hook is in the deck's own meaning language and no edition carries one, so a reader of
     // another edition gets none.
-    const seen = text ? { ...inEdition(placed, text), hook: null, hookSource: null } : placed;
+    const read = seenIn(placed, editions);
+    const seen = text ? { ...read, hook: null, hookSource: null } : read;
     return view(seen, images.get(card.id), important.has(card.id));
   });
 }

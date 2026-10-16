@@ -1552,6 +1552,9 @@ msgstr "Не вдалося записати файл. Спробуй ще ра�
 msgid "Countries, stars, birds or anything else with names."
 msgstr "Країни, зорі, птахи чи будь-що інше з назвами."
 
+msgid "Create “{created}”"
+msgstr "Створити «{created}»"
+
 msgid "Create a deck to add this card to."
 msgstr "Створи колоду, щоб додати в неї цю картку."
 
@@ -3784,6 +3787,9 @@ msgstr "Це все."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "Цього вже немає. Онови сторінку, щоб побачити зміни."
+
+msgid "That’s the most tags a card can have"
+msgstr "Більше тегів на картці бути не може"
 
 msgid "the AI"
 msgstr "AI"

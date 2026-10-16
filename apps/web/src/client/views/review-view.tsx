@@ -1531,6 +1531,7 @@ export function ReviewComplete({
             <SevenLights
               days={days.attempts}
               satisfied={days.satisfied}
+              rest={days.rest}
               goals={days.goals}
               dates={days.dates}
               size="lg"

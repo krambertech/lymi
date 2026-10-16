@@ -27,6 +27,5 @@ export const REST_DISMISSED_KEY = "rest-dismissed";
 export const deviceStore = createMMKV({ id: "lymi-device" });
 export const DEVICE_KEYS = { theme: "theme", reminder: "reminder", snoozed: "snoozed" } as const;
 
-/** What the review has shown once on this phone, such as how to take back a grade. */
+/** What the review has shown once on this phone, such as how many reveals have taught Tap to reveal. */
 export const reviewStore = createMMKV({ id: "lymi-review" });
-export const UNDO_HINT_KEY = "undo-hint";

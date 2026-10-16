@@ -1,4 +1,4 @@
-import { drawableCount, type StreakOut } from "@lymi/core";
+import { drawableCount, type StreakOut, summariseStreak } from "@lymi/core";
 import { type DrawData, type DrawState, drawCards, drawLog } from "./review-draw";
 
 export type DayOutcome = "goal_met" | "exhausted" | "nothing_due";
@@ -58,6 +58,28 @@ export function streakWith(summary: StreakOut, attempts: number, counts: boolean
         )
       : [...summary.days, day],
   };
+}
+
+/**
+ * The streak on the learner's day as the draw counts it: past midnight a summary from yesterday
+ * opens a new day, and a grade counts the moment it is made rather than when the refetch lands.
+ */
+export function streakToday(
+  summary: StreakOut,
+  state: Pick<DrawState, "day" | "attempts">,
+): StreakOut {
+  const date = state.day.date;
+  const rolled: StreakOut =
+    summary.today.date === date
+      ? summary
+      : {
+          ...summary,
+          // The server's rule, so a day that ended short since this read is a rest day here too.
+          ...summariseStreak(summary.days, date),
+          today: { date, attempts: 0, goal: summary.goal, outcome: "open" },
+        };
+  const attempts = Math.max(rolled.today.attempts, state.attempts);
+  return streakWith(rolled, attempts, attempts >= rolled.today.goal);
 }
 
 /** Cards the draw still holds in scope, the number Today shows beside it. */

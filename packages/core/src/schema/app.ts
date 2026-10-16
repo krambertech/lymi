@@ -257,6 +257,8 @@ export const cardTags = sqliteTable(
       .notNull()
       .references(() => tags.id, { onDelete: "cascade" }),
     position: integer("position").notNull(),
+    /** Set when the tag was archived from the card's deck; Restore puts it back in its place. */
+    archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
   },
   (t) => [primaryKey({ columns: [t.cardId, t.tagId] }), index("card_tags_tag_idx").on(t.tagId)],
 );

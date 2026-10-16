@@ -1,0 +1,1 @@
+ALTER TABLE `card_tags` ADD `archived_at` integer;

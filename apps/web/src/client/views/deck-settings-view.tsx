@@ -1,4 +1,4 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import {
   type DeckEnrichField,
   type DeckPurpose,
@@ -10,6 +10,7 @@ import { clsx } from "clsx";
 import {
   Archive,
   Check,
+  ChevronRight,
   Link2Off,
   LogOut,
   MailX,
@@ -35,6 +36,7 @@ import {
 import { InlineError } from "../components/inline-error";
 import { Screen } from "../components/layout/screen";
 import { TurnOffLinkDialog } from "../components/member-dialogs";
+import { NavLink } from "../components/nav-link";
 import { PublisherMark } from "../components/publisher-mark";
 import { RadioCard } from "../components/radio-card";
 import { SectionManager, type SectionManagerProps } from "../components/section-manager";
@@ -82,6 +84,8 @@ export interface DeckSettingsProps {
   members?: MembersProps | undefined;
   /** The owner's join-link controls. Absent for a member, who cannot share the deck. */
   sharing?: SharingProps | undefined;
+  /** How many tags the deck's cards carry, for the owner's way to its Tags page; undefined while loading. */
+  tags?: { count: number | undefined } | undefined;
 }
 
 export interface MembersProps {
@@ -129,6 +133,7 @@ export function DeckSettingsView({
   sections,
   sharing,
   members,
+  tags,
 }: DeckSettingsProps) {
   const { t } = useLingui();
   const reading = !!deck && deck.role !== "owner";
@@ -281,6 +286,32 @@ export function DeckSettingsView({
             >
               <SectionManager {...sections} />
               {sections.sections.length > 0 && <ProgressionField deck={deck} onSave={onSave} />}
+            </SettingsGroup>
+          )}
+
+          {tags && (
+            <SettingsGroup
+              id="tags"
+              title={t`Tags`}
+              description={t`Rename, merge or archive the tags on this deck’s cards.`}
+            >
+              <NavLink
+                to="/library/$deckId/settings/tags"
+                params={{ deckId: deck.id }}
+                className="edge flex items-center justify-between gap-3 rounded-lg bg-plate px-4 py-3.5 text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:veil"
+              >
+                <span className="font-medium">
+                  {tags.count === undefined ? (
+                    <Trans>Tags</Trans>
+                  ) : (
+                    <Plural value={tags.count} _0="No tags yet" one="# tag" other="# tags" />
+                  )}
+                </span>
+                <span className="flex items-center gap-1 text-sm text-muted">
+                  <Trans>Manage</Trans>
+                  <ChevronRight className="size-4 text-faint" aria-hidden="true" />
+                </span>
+              </NavLink>
             </SettingsGroup>
           )}
 

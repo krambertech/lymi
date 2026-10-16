@@ -90,6 +90,33 @@ test("a learner can filter, sort and open the words in a deck", async ({
     await page.keyboard.press("Escape");
   });
 
+  await test.step("rename, archive and restore a tag from the deck's settings", async () => {
+    await page.getByRole("button", { name: "Deck options", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Settings", exact: true }).click();
+    await page.getByRole("link", { name: /Manage/ }).click();
+    await expect(page.getByRole("heading", { level: 1, name: "Tags" })).toBeVisible();
+
+    await page.getByRole("button", { name: "Options for food", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Rename…", exact: true }).click();
+    const rename = page.getByRole("dialog", { name: "Rename “food”" });
+    await rename.getByRole("textbox", { name: "Name", exact: true }).fill("meals");
+    await rename.getByRole("button", { name: "Rename", exact: true }).click();
+    await expect(page.getByText("Renamed “food” to “meals”", { exact: true })).toBeVisible();
+
+    await page.getByRole("button", { name: "Options for meals", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Archive", exact: true }).click();
+    const archived = page.getByRole("region", { name: "Archived tags" });
+    await expect(archived.getByText("meals", { exact: true })).toBeVisible();
+    await archived.getByRole("button", { name: "Restore", exact: true }).click();
+    await expect(archived).toHaveCount(0);
+
+    await page.getByRole("link", { name: "Settings", exact: true }).click();
+    await expect(page.getByRole("heading", { level: 1, name: "Deck settings" })).toBeVisible();
+    // The back link and the rail's deck row both lead to the deck.
+    await page.getByRole("link", { name: "Eesti A1", exact: true }).first().click();
+    await expect(page.getByRole("heading", { level: 1, name: "Eesti A1" })).toBeVisible();
+  });
+
   await test.step("say so when no word matches, and clear back to the deck", async () => {
     await page.getByRole("button", { name: "Filter", exact: true }).click();
     await page.getByRole("menuitemcheckbox", { name: "Known", exact: true }).click();

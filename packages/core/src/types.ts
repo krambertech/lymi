@@ -562,6 +562,21 @@ export const CARD_LIMITS = {
 /** How many tags a card may carry, and how long each may be. */
 export const TAG_LIMITS = { count: 20, length: 40 } as const;
 
+const TagName = z.string().trim().min(1).max(TAG_LIMITS.length);
+
+/** Renames a tag on one deck's cards; a name already in use merges the two. */
+export const DeckTagRename = z.object({
+  from: TagName.meta({ description: "The tag to rename, in any case" }),
+  to: TagName.meta({
+    description:
+      "Its new name. One you already use, in any case, merges the two; a change of case alone respells the tag in every deck.",
+  }),
+});
+export type DeckTagRename = z.infer<typeof DeckTagRename>;
+
+export const DeckTagRef = z.object({ name: TagName.meta({ description: "The tag, in any case" }) });
+export type DeckTagRef = z.infer<typeof DeckTagRef>;
+
 export const CardInput = z.object({
   id: ClientId.optional(),
   deckId: z.string().min(1, "Choose a deck."),

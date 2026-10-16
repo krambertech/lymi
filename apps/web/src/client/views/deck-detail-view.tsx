@@ -426,6 +426,7 @@ function ListTools({
   query,
   setQuery,
   searchRef,
+  review,
 }: {
   sections: Section[];
   /** The tags on the deck's cards, most used first. */
@@ -437,6 +438,8 @@ function ListTools({
   query: string;
   setQuery: (next: string) => void;
   searchRef: RefObject<HTMLInputElement | null>;
+  /** What the filters show and the ways to review it, at the end of the chips' row. */
+  review?: ReactNode;
 }) {
   const { t, i18n } = useLingui();
   const sectionName = (id: string) =>
@@ -636,7 +639,7 @@ function ListTools({
           />
         </div>
       </div>
-      {chips.length > 0 && (
+      {(chips.length > 0 || review) && (
         <div className="flex flex-wrap items-center gap-2">
           {chips.map((chip) => (
             <FilterChip key={chip.key} label={chip.label} onRemove={chip.remove} />
@@ -646,6 +649,8 @@ function ListTools({
               <Trans>Clear filters</Trans>
             </Button>
           )}
+          {/* The end of the filter's own row, so what it shows reads as the filter's; on a phone it takes a line of its own. */}
+          {review && <div className="ms-auto @max-3xl/shell:w-full">{review}</div>}
         </div>
       )}
     </div>
@@ -1272,35 +1277,35 @@ export function DeckDetailView({
                 onDone={stopSelecting}
               />
             ) : (
-              <>
-                <ListTools
-                  sections={sections}
-                  tags={tags}
-                  filters={filters}
-                  setFilters={setFilters}
-                  sort={sort}
-                  setSort={setSort}
-                  query={q}
-                  setQuery={setQ}
-                  searchRef={searchRef}
-                />
-                {/* Under the filters it acts on, so what it reviews reads as theirs. */}
-                {filterCounts && onReviewFilter && (
-                  <FilterReview
-                    shown={filterCounts.shown}
-                    started={filterCounts.started}
-                    due={filterCounts.due}
-                    onReview={(kind) =>
-                      // The due ones are the same filter with Due today added.
-                      onReviewFilter({
-                        ...filters,
-                        ...(kind === "due" ? { due: "today" as const } : {}),
-                        q: q.trim(),
-                      })
-                    }
-                  />
-                )}
-              </>
+              <ListTools
+                sections={sections}
+                tags={tags}
+                filters={filters}
+                setFilters={setFilters}
+                sort={sort}
+                setSort={setSort}
+                query={q}
+                setQuery={setQ}
+                searchRef={searchRef}
+                review={
+                  filterCounts &&
+                  onReviewFilter && (
+                    <FilterReview
+                      shown={filterCounts.shown}
+                      started={filterCounts.started}
+                      due={filterCounts.due}
+                      onReview={(kind) =>
+                        // The due ones are the same filter with Due today added.
+                        onReviewFilter({
+                          ...filters,
+                          ...(kind === "due" ? { due: "today" as const } : {}),
+                          q: q.trim(),
+                        })
+                      }
+                    />
+                  )
+                }
+              />
             )}
           </div>
         )}

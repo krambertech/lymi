@@ -15,15 +15,15 @@ export interface FilterReviewProps {
 }
 
 /**
- * One line under a deck's filters while they narrow the list: how many cards it shows and how
+ * At the end of a deck's chips while its filters narrow the list: how many cards they show and how
  * many are due, with quiet ways to review them. The plate's Review stays the page's one primary.
  */
 export function FilterReview({ shown, started, due, onReview }: FilterReviewProps) {
   if (shown === 0) return null;
   const early = started > due;
   return (
-    <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
-      <p className="me-auto flex items-center gap-2 text-sm text-text-2">
+    <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+      <p className="flex items-center gap-2 text-sm text-text-2">
         <span className="font-medium text-text">
           <Plural value={shown} one="# card" other="# cards" />
         </span>

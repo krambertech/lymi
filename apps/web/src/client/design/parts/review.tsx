@@ -213,7 +213,7 @@ function ReviewPhone({
   );
 }
 
-/** A deck page's filter controls with one tag chosen, and the review line under them. */
+/** A deck page's filter controls with one tag chosen, and the review at the end of its chips. */
 function FilteredList({ shown, started, due }: { shown: number; started: number; due: number }) {
   return (
     <div className="grid w-full max-w-[640px] gap-3">
@@ -228,8 +228,10 @@ function FilteredList({ shown, started, due }: { shown: number; started: number;
           Tag: casa
           <X className="size-3.5 text-muted" aria-hidden="true" />
         </span>
+        <div className="ms-auto">
+          <FilterReview shown={shown} started={started} due={due} onReview={noop} />
+        </div>
       </div>
-      <FilterReview shown={shown} started={started} due={due} onReview={noop} />
     </div>
   );
 }
@@ -262,7 +264,7 @@ export const review: Group = {
       slug: "filter-review",
       name: "Review a filter’s cards",
       source: "components/filter-review.tsx",
-      note: "While a filter or search narrows a deck’s list, one line under the filters says how many cards it shows and how many of them are due today. Review 2 due takes the due ones; Review all, quieter still, goes over every card already started and not yet reviewed today, the rest early, for the night before a class. It carries no count, since the cards it leaves out would make a number disagree with the line. Neither is amber: the plate’s Review stays the page’s one primary.",
+      note: "While a filter or search narrows a deck’s list, the end of the chips’ row says how many cards they show and how many of them are due today. Review 2 due takes the due ones; Review all, quieter still, goes over every card already started and not yet reviewed today, the rest early, for the night before a class. It carries no count, since the cards it leaves out would make a number disagree with the line. Neither is amber: the plate’s Review stays the page’s one primary.",
       Demo: () => (
         <Variants
           stack

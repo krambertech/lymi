@@ -46,7 +46,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Streak**: Days in a row whose daily goal was satisfied, drawn as the flame. Today adds once satisfied and is otherwise skipped, so an unfinished morning still shows yesterday's streak; a confirmed nothing-due day or a rest day keeps the run without adding to it. Distinct from the seven lights, which say which days rather than how many. _Avoid_: Chain, run, days active
 
-**Round**: A review of a chosen set beside the day's draw: one of Today's groups, new cards, forgotten today or slipping, Review forgotten at the end of a review, or the cards a deck page's filters show, from the line under them. Each card comes once, and every grade counts like any review, except that Easy on a card already seen today counts as Good (ADR 0031). _Avoid_: Session, quiz, practice
+**Round**: A review of a chosen set beside the day's draw: one of Today's groups, new cards, forgotten today or slipping, Review forgotten at the end of a review, or the cards a deck page's filters show, from beside their chips. Each card comes once, and every grade counts like any review, except that Easy on a card already seen today counts as Good (ADR 0031). _Avoid_: Session, quiz, practice
 
 **Slipping card**: A card whose first grade of the day was Forgot on at least 3 of the last 5 days it was reviewed, before today. It leaves the group once it is remembered, and review offers it a hook when it has none. ADR 0024. Insights lists them; Today offers them as a round. The interface calls the group "Often forgotten"; "slipping" is the code and API name. _Avoid_: Leech, slipping, stuck card, hard card (in copy)
 

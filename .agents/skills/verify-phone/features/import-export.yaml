@@ -15,11 +15,11 @@ name: Import and export
 - extendedWaitUntil:
     visible: "Import from Quizlet"
     timeout: 20000
-- tapOn: "Your set’s text"
+- tapOn: "Your set’s text.*"
 - inputText: "${SET}"
-- extendedWaitUntil:
-    visible: "3 cards"
-    timeout: 10000
+- hideKeyboard
+- scrollUntilVisible:
+    element: "3 cards"
 - scrollUntilVisible:
     element: "Set name"
 - tapOn: "Set name"

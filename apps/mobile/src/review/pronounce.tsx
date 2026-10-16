@@ -1,6 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { api } from "@lymi/client/api";
 import { canSpeakTerm } from "@lymi/core";
+import { SPEAKER_WAVES } from "@lymi/design";
 import { requireOptionalNativeModule } from "expo";
 import { useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
@@ -8,14 +9,17 @@ import Animated, {
   cancelAnimation,
   FadeIn,
   FadeOut,
+  type SharedValue,
+  useAnimatedProps,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withSequence,
   withTiming,
 } from "react-native-reanimated";
+import Svg, { Path } from "react-native-svg";
 import { useSessionHeaders } from "../auth/client";
-import { ALWAYS, useReduceMotion } from "../theme/motion";
+import { ALWAYS, timed, useReduceMotion } from "../theme/motion";
 import { IconButton, Text } from "../ui/primitives";
 
 /** Long enough for speech the server makes on first ask; past it, the play counts as failed. */
@@ -65,18 +69,21 @@ function useAudioPronunciation(
     player.pause();
   }, [cardId, player]);
 
+  // An ask is answered once the sound starts; until then it can time out.
+  const playing = status.isLoaded && status.playing;
   useEffect(() => {
-    if (!asked || status.isLoaded) return;
+    if (!asked) return;
+    if (playing) {
+      setAsked(false);
+      return;
+    }
     const timer = setTimeout(() => {
       setAsked(false);
       loaded.current = null;
       setError(t`Couldn’t play the pronunciation. Try again in a moment.`);
     }, LOAD_LIMIT_MS);
     return () => clearTimeout(timer);
-  }, [asked, status.isLoaded, t]);
-  useEffect(() => {
-    if (asked && status.isLoaded && status.didJustFinish) setAsked(false);
-  }, [asked, status.isLoaded, status.didJustFinish]);
+  }, [asked, playing, t]);
 
   const play = () => {
     if (!speakable || !headers || !card) return;
@@ -92,11 +99,8 @@ function useAudioPronunciation(
     setAsked(true);
   };
 
-  const state: "idle" | "loading" | "playing" = !asked
-    ? "idle"
-    : status.isLoaded && status.playing
-      ? "playing"
-      : "loading";
+  // The player's own state, since a replay starts while the last play's `didJustFinish` still holds.
+  const state: "idle" | "loading" | "playing" = playing ? "playing" : asked ? "loading" : "idle";
   return speakable ? { play, state, error } : null;
 }
 
@@ -131,8 +135,7 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
     return () => clearTimeout(timer);
   }, [error, reduce, shake]);
   const style = useAnimatedStyle(() => ({ transform: [{ translateX: shake.value }] }));
-  // A slow load turns a loader in the speaker's place, as the web's does; playing breathes.
-  const glow = useSharedValue(1);
+  // A slow load turns a loader in the speaker's place, as the web's does.
   const [slow, setSlow] = useState(false);
   useEffect(() => {
     if (state !== "loading") {
@@ -142,24 +145,6 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
     const timer = setTimeout(() => setSlow(true), SLOW_MS);
     return () => clearTimeout(timer);
   }, [state]);
-  useEffect(() => {
-    cancelAnimation(glow);
-    if (state === "playing" && !reduce) {
-      glow.value = withRepeat(
-        withSequence(
-          withTiming(0.45, { duration: 450, reduceMotion: ALWAYS }),
-          withTiming(1, { duration: 450, reduceMotion: ALWAYS }),
-        ),
-        -1,
-        false,
-        undefined,
-        ALWAYS,
-      );
-    } else {
-      glow.value = 1;
-    }
-  }, [state, reduce, glow]);
-  const dim = useAnimatedStyle(() => ({ opacity: glow.value }));
 
   return (
     // Its box sits inside the text's line height, so the line never moves when it appears.
@@ -175,21 +160,95 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
         </Animated.View>
       )}
       <Animated.View style={style}>
-        <Animated.View style={dim}>
-          <IconButton
-            icon="pronunciation"
-            label={state === "playing" ? t`Replay pronunciation` : t`Play pronunciation`}
-            variant={error ? "danger" : "secondary"}
-            size="sm"
-            round
-            busy={slow}
-            onPress={() => {
-              setTip(null);
-              play();
-            }}
-          />
-        </Animated.View>
+        <IconButton
+          icon="pronunciation"
+          label={state === "playing" ? t`Replay pronunciation` : t`Play pronunciation`}
+          variant={error ? "danger" : "secondary"}
+          size="sm"
+          round
+          busy={slow}
+          glyph={(ink, size) => (
+            <Speaker ink={ink} size={size} playing={state === "playing" && !reduce} />
+          )}
+          onPress={() => {
+            setTip(null);
+            play();
+          }}
+        />
       </Animated.View>
     </View>
+  );
+}
+
+const AnimatedPath = Animated.createAnimatedComponent(Path);
+/** How dim a wave is between its turns of light. */
+const WAVE_REST = 0.3;
+
+/** How lit a wave is at `t` through the loop: full at its `peak`, falling away smoothly either side. */
+function waveLight(t: number, peak: number) {
+  "worklet";
+  const apart = Math.abs(((t - peak + 1.5) % 1) - 0.5);
+  return Math.exp(-((apart / 0.18) ** 2));
+}
+
+/** One wave, dimmed while the speaker plays and lit as its turn comes round; whole when it is still. */
+function Wave({
+  d,
+  peak,
+  clock,
+  on,
+}: {
+  d: string;
+  peak: number;
+  clock: SharedValue<number>;
+  on: SharedValue<number>;
+}) {
+  const props = useAnimatedProps(() => {
+    const lit = WAVE_REST + (1 - WAVE_REST) * waveLight(clock.value, peak);
+    return { strokeOpacity: 1 - on.value * (1 - lit) };
+  });
+  return <AnimatedPath d={d} animatedProps={props} />;
+}
+
+/**
+ * Lucide's `volume-2`, whose waves light one after the other, outward, while the pronunciation
+ * plays, as iOS's own speaker does, and settle back whole when it stops. motion.md "Review".
+ */
+function Speaker({ ink, size, playing }: { ink: string; size: number; playing: boolean }) {
+  const clock = useSharedValue(0);
+  const on = useSharedValue(0);
+  useEffect(() => {
+    if (playing) {
+      clock.value = 0;
+      clock.value = withRepeat(
+        withTiming(1, timed(SPEAKER_WAVES.loop)),
+        -1,
+        false,
+        undefined,
+        ALWAYS,
+      );
+      on.value = withTiming(1, timed(SPEAKER_WAVES.start));
+      return;
+    }
+    on.value = withTiming(0, timed(SPEAKER_WAVES.settle), (done) => {
+      if (done) cancelAnimation(clock);
+    });
+  }, [playing, clock, on]);
+  useEffect(() => () => cancelAnimation(clock), [clock]);
+  return (
+    <Svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={ink}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <Path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z" />
+      <Wave d="M16 9a5 5 0 0 1 0 6" peak={0.3} clock={clock} on={on} />
+      <Wave d="M19.364 18.364a9 9 0 0 0 0-12.728" peak={0.55} clock={clock} on={on} />
+    </Svg>
   );
 }

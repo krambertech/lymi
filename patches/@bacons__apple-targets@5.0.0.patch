@@ -1,8 +1,31 @@
 diff --git a/build/with-xcode-changes.js b/build/with-xcode-changes.js
-index 96ded68c694a0eaae6e4068f09a55c50b119bc0c..196022bc89d412ad8ef0c116a52127f5999e52e2 100644
+index 96ded68c694a0eaae6e4068f09a55c50b119bc0c..6d3347293eee4c1a78ab743429442f51643da918 100644
 --- a/build/with-xcode-changes.js
 +++ b/build/with-xcode-changes.js
-@@ -62,7 +62,8 @@ async function applyXcodeChanges(config, project, props) {
+@@ -46,6 +46,22 @@ exports.withXcodeChanges = withXcodeChanges;
+ //   }
+ //   return version;
+ // }
++// Xcode names a localized file in a synchronized folder `/Localized/<dir>/<file>`; listing the
++// `.lproj` folder itself registers each of its files twice, which Xcode 27 refuses to build.
++function sharedMembership(cwd) {
++    const members = new Set();
++    for (const entry of (0, glob_1.globSync)("_shared/*", { absolute: false, cwd })) {
++        if (!entry.endsWith(".lproj")) {
++            members.add(entry);
++            continue;
++        }
++        for (const file of fs_1.default.readdirSync(path_1.default.join(cwd, entry))) {
++            if (file !== ".DS_Store")
++                members.add(`/Localized/_shared/${file}`);
++        }
++    }
++    return [...members];
++}
+ async function applyXcodeChanges(config, project, props) {
+     var _a, _b, _c;
+     var _d;
+@@ -62,7 +78,8 @@ async function applyXcodeChanges(config, project, props) {
      }
      const targets = getExtensionTargets();
      const productName = props.productName;
@@ -12,3 +35,22 @@ index 96ded68c694a0eaae6e4068f09a55c50b119bc0c..196022bc89d412ad8ef0c116a52127f5
      if (targetToUpdate) {
          (0, util_1.warnOnce)(`Target "${targetToUpdate.props.productName}" already exists, updating instead of creating a new one`);
      }
+@@ -329,16 +346,10 @@ async function applyXcodeChanges(config, project, props) {
+             fs_1.default.statSync(path_1.default.join(assetsDir, file)).isDirectory())
+             .map((file) => path_1.default.join("assets", file));
+     const protectedGroup = ensureProtectedGroup(project, path_1.default.dirname(props.cwd));
+-    const sharedAssets = (0, glob_1.globSync)("_shared/*", {
+-        absolute: false,
+-        cwd: magicCwd,
+-    });
++    const sharedAssets = sharedMembership(magicCwd);
+     // Also look for global shared assets in the parent targets/_shared directory
+     const targetsDir = path_1.default.dirname(magicCwd);
+-    const globalSharedAssets = (0, glob_1.globSync)("_shared/*", {
+-        absolute: false,
+-        cwd: targetsDir,
+-    });
++    const globalSharedAssets = sharedMembership(targetsDir);
+     let syncRootGroup = protectedGroup.props.children.find((child) => child.props.path === path_1.default.basename(props.cwd));
+     if (!syncRootGroup) {
+         syncRootGroup = xcode_1.PBXFileSystemSynchronizedRootGroup.create(project, {

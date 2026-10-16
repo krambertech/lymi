@@ -222,6 +222,8 @@ interface IconButtonProps {
   repeat?: boolean;
   /** Its work is slow in coming: a turning loader takes the icon's place, as on the web. */
   busy?: boolean;
+  /** Draws a glyph that moves in the icon's place, in the button's ink, such as the playing speaker. */
+  glyph?: (ink: string, size: number) => ReactNode;
   onPress?: () => void;
   testID?: string;
 }
@@ -240,6 +242,7 @@ export function IconButton({
   haptic = true,
   repeat = false,
   busy = false,
+  glyph,
   onPress,
   testID,
 }: IconButtonProps) {
@@ -280,6 +283,8 @@ export function IconButton({
         <Turning>
           <Icon name="loading" size={ICON_GLYPH[size]} colour={ink} />
         </Turning>
+      ) : glyph ? (
+        glyph(ink, ICON_GLYPH[size])
       ) : (
         <Icon
           name={icon}

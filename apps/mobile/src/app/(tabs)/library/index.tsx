@@ -55,6 +55,7 @@ export default function Library() {
             look="primary"
             items={[
               { label: t`Add a card`, icon: "plus", onSelect: () => router.push("/capture") },
+              { label: t`Smart add`, icon: "ai", onSelect: () => router.push("/smart-add") },
               { label: t`New deck`, icon: "deck", onSelect: newDeck },
               { label: t`New series`, icon: "series", onSelect: newSeries },
               { label: t`Import decks`, icon: "import", onSelect: () => openWeb("/import") },

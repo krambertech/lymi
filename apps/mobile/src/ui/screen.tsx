@@ -25,6 +25,7 @@ import { Flame } from "../brand/flame";
 import { useDay } from "../data/queries";
 import { useGlass } from "../theme/glass";
 import { usePalette } from "../theme/palette";
+import { ActionMenu } from "./action-menu";
 import { GlassSurface } from "./glass";
 import type { IconName } from "./icons";
 import { Icon, Press, Text } from "./primitives";
@@ -646,8 +647,18 @@ function TabActions({ own }: { own?: ReactNode }) {
           <View className="h-10 flex-row items-center gap-1.5 px-2">{streakInner}</View>
         )}
       </Press>
-      {/* Add a word rises as a sheet from below, as every task with an end does. phone.md. */}
-      <BarButton icon="plus" label={t`Add a card`} amber onPress={() => router.push("/capture")} />
+      {/* A tap opens Add a word as a sheet from below; a long press offers the other ways in. phone.md. */}
+      <ActionMenu
+        label={t`Add a card`}
+        symbol="plus"
+        look="primary"
+        onPrimaryAction={() => router.push("/capture")}
+        items={[
+          { label: t`Add a card`, icon: "plus", onSelect: () => router.push("/capture") },
+          { label: t`Smart add`, icon: "ai", onSelect: () => router.push("/smart-add") },
+          { label: t`New deck`, icon: "deck", onSelect: () => router.push("/new-deck") },
+        ]}
+      />
     </View>
   );
 }

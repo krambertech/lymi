@@ -117,8 +117,8 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Lymi uses your photos when you add a picture to a card.",
-          "cameraPermission": "Lymi uses the camera when you take a picture for a card."
+          "photosPermission": "Lymi uses your photos when you add a picture to a card or a lesson’s pages.",
+          "cameraPermission": "Lymi uses the camera when you take a picture for a card or photograph a lesson’s pages."
         }
       ],
       "expo-asset",

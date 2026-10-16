@@ -374,6 +374,13 @@ export function StartChoices({
   );
   const own: { value: Own; icon: IconName; title: string; detail: string; web: boolean }[] = [
     {
+      value: "lesson",
+      icon: "camera",
+      title: t`Turn your notes into cards`,
+      detail: t`Photograph a lesson or paste your notes, then choose the terms to keep.`,
+      web: false,
+    },
+    {
       value: "import",
       icon: "import",
       title: t`Import decks`,

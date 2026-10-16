@@ -177,6 +177,7 @@ export type PreparedLesson = {
   byHead: Map<string, Owned>;
   analytics: AnalyticsWriter | undefined;
   pasted: boolean;
+  client: "web" | "phone";
   /** Takes the read back off today's count, for a read that failed. */
   release: () => Promise<void>;
 };
@@ -199,7 +200,11 @@ export async function prepareLesson(
   ctx: ServiceContext,
   material: LessonMaterial,
   deps: LessonDeps,
-  choice: { deckId?: string | undefined; hint?: string | undefined } = {},
+  choice: {
+    deckId?: string | undefined;
+    hint?: string | undefined;
+    client?: "web" | "phone";
+  } = {},
 ): Promise<PreparedLesson> {
   const reader = await assertCanReadLessons(ctx, deps);
   const { db, userId } = ctx;
@@ -274,6 +279,7 @@ export async function prepareLesson(
     byHead: new Map(owned.map((c) => [headForm(c.key), c])),
     analytics: ctx.analytics,
     pasted: words > 0,
+    client: choice.client ?? "web",
   };
 }
 
@@ -420,6 +426,7 @@ async function readInto(
   const cost = textCallCost(usage.model, { input: usage.inputTokens, output: usage.outputTokens });
   track(lesson.analytics, {
     name: "lesson_read",
+    client: lesson.client,
     pages: lesson.pages,
     pasted: lesson.pasted,
     deck: lesson.fixed ? "fixed" : "guessed",
@@ -446,7 +453,7 @@ export async function readLesson(
   ctx: ServiceContext,
   material: LessonMaterial,
   deps: LessonDeps,
-  choice: { deckId?: string | undefined; hint?: string | undefined } = {},
+  choice: Parameters<typeof prepareLesson>[3] = {},
 ): Promise<LessonRead> {
   const lesson = await prepareLesson(ctx, material, deps, choice);
   const read: LessonRead = {

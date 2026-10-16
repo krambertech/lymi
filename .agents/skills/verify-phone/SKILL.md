@@ -27,6 +27,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Share deck and join links | [sharing.md](features/sharing.md) |
 | Entry points: controls, intents, quick actions | [entry-points.md](features/entry-points.md) |
 | Welcome, and arriving from a deck link or a join link | [welcome.md](features/welcome.md) |
+| Smart add | [smart-add.md](features/smart-add.md) |
 
 ## Launch
 

@@ -210,6 +210,11 @@ export default function Deck() {
                           icon: "plus" as const,
                           onSelect: addCard,
                         },
+                        {
+                          label: t`Smart add`,
+                          icon: "ai" as const,
+                          onSelect: () => router.push(`/smart-add?deck=${id}` as Href),
+                        },
                       ]
                     : []),
                   ...(owner

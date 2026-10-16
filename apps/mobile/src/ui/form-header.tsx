@@ -6,7 +6,7 @@ import { Text } from "./primitives";
 
 interface FormHeaderProps {
   /** Close at the start: Cancel when leaving discards something, Close when it does not. */
-  close: { label: string; onPress: () => void };
+  close: { label: string; onPress: () => void; icon?: IconName };
   /** The form's name, centred at `text-md`. */
   title?: string;
   /** A line under the name, such as the series being edited. */
@@ -36,7 +36,7 @@ export function FormHeader({ close, title, subtitle, middle, action, style }: Fo
       className="flex-row items-center justify-between gap-3 px-4 pt-5 pb-2"
       style={style}
     >
-      <GlassButton icon="close" label={close.label} onPress={close.onPress} />
+      <GlassButton icon={close.icon ?? "close"} label={close.label} onPress={close.onPress} />
       <View className="flex-1 items-center">
         {middle ?? (
           <>

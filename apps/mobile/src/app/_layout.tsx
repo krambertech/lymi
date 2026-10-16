@@ -211,6 +211,16 @@ function Root() {
             }}
           />
           <Stack.Screen
+            name="smart-add"
+            options={{
+              presentation: "formSheet",
+              // A long form: the list scrolls and the text runs long, so it is opaque. phone.md "Sheets".
+              sheetAllowedDetents: [1],
+              sheetGrabberVisible: true,
+              contentStyle: { backgroundColor: p.sheet },
+            }}
+          />
+          <Stack.Screen
             name="series"
             options={{
               presentation: "formSheet",

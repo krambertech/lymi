@@ -40,8 +40,8 @@ Product success is repeated use of real material and retained recall, not the nu
 
 Lymi has three surfaces: the web app, the phone app and the public site. They share the rules, the data and the design language. Only the layout and the input change with the screen.
 
-- The phone leads the daily jobs: reviewing in the evening, glancing at what is due, and catching a word while the lesson is fresh. It also reaches the learner outside the app, through a widget, the Lock Screen, controls, sharing from other apps and one reminder.
-- The web leads the jobs that want a keyboard and room: turning a lesson into cards, tidying a deck, reading Insights at length, and setup.
+- The phone leads the daily jobs: reviewing in the evening, glancing at what is due, catching a word while the lesson is fresh, and turning the lesson's pages into cards right after it. It also reaches the learner outside the app, through a widget, the Lock Screen, controls, sharing from other apps and one reminder.
+- The web leads the jobs that want a keyboard and room: turning long material such as a PDF or a transcript into cards, tidying a deck, reading Insights at length, and setup.
 - The site is where a visitor meets Lymi and finds a published deck.
 
 Every learning feature reaches both apps. It ships on the web first by default and reaches the phone through a linked phone issue once it is verified. Five setup jobs stay on the web, and the phone links to them: import, export, API keys and connected apps, publishing, and deck reports. A setup job moves to the phone once learners reach for it there. [ADR 0030](docs/adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)

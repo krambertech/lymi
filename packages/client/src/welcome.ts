@@ -7,7 +7,7 @@ import { type PublicDeckSummary, shelvesOf, subjectOf, taughtLanguage } from "@l
 export type WelcomeStep = "hello" | "kind" | "language" | "goal" | "start";
 
 /** How a learner without decks gets started when they bring their own. */
-export type Own = "import" | "assistant" | "type";
+export type Own = "lesson" | "import" | "assistant" | "type";
 
 /** Twelve languages as pills; the rest of the catalogue's languages sit behind Another language. */
 export const LANGUAGE_PILLS = 12;

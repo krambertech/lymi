@@ -32,6 +32,8 @@ interface ActionMenuProps {
   items: MenuItem[] | MenuItem[][];
   /** Its work is under way, such as a removal it started. */
   disabled?: boolean;
+  /** What a tap does, so the menu opens only on a long press, as capture's does. */
+  onPrimaryAction?: () => void;
 }
 
 /**
@@ -45,6 +47,7 @@ export function ActionMenu({
   look = "bar",
   items,
   disabled = false,
+  onPrimaryAction,
 }: ActionMenuProps) {
   const p = usePalette();
   const room = useRoom();
@@ -56,6 +59,7 @@ export function ActionMenu({
     // list around it moves, and its button drifts off its row.
     <Host colorScheme={room} style={{ width: bar ? 40 : 32, height: bar ? 40 : 32 }}>
       <Menu
+        {...(onPrimaryAction ? { onPrimaryAction } : {})}
         label={
           <Image
             assetName={symbolOf(TRIGGERS[symbol])}

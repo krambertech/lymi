@@ -126,6 +126,29 @@ describe("readLesson", () => {
 });
 
 describe("reporting a read", () => {
+  it("names the phone as the read's client", async () => {
+    const who = await learner(db, "lesson-phone", "Kateryna");
+    const events: AnalyticsEvent[] = [];
+    const ctx = {
+      ...who,
+      analytics: { writeDataPoint: () => {}, capture: (e: AnalyticsEvent) => events.push(e) },
+    };
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    await readLesson(
+      ctx,
+      material,
+      {
+        reader: fakeReader({ deck: deck.id, terms: [term("t1", "raamat")], questions: [] }),
+        ai: undefined,
+        operators: new Set(["lesson-phone@lymi.test"]),
+      },
+      { client: "phone" },
+    );
+    expect(events).toContainEqual(
+      expect.objectContaining({ name: "lesson_read", client: "phone" }),
+    );
+  });
+
   it("reports the read's outcome and cost, and a failed call as an error", async () => {
     const who = await learner(db, "lesson-counted", "Kateryna");
     const events: AnalyticsEvent[] = [];
@@ -160,6 +183,7 @@ describe("reporting a read", () => {
     });
     expect(events).toContainEqual({
       name: "lesson_read",
+      client: "web",
       pages: 0,
       pasted: true,
       deck: "guessed",

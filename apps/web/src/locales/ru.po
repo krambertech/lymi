@@ -3105,7 +3105,7 @@ msgid "People"
 msgstr "Люди"
 
 msgid "People study these decks, so they stay until the last of them leaves. Nobody can change them after you go."
-msgstr "Эти колоды изучают другие люди, поэтому они останутся, пока из них не выйдет последний. После твоего удаления их никто не сможет изменить."
+msgstr "Эти колоды изучают другие люди, поэтому они останутся, пока из них не выйдет последний. После удаления твоего аккаунта их никто не сможет изменить."
 
 msgid "People who added it keep studying it, but nobody new can add it."
 msgstr "Кто уже добавил колоду, продолжает её учить, но новые люди добавить её не могут."

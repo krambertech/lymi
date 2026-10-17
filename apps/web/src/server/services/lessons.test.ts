@@ -275,6 +275,18 @@ describe("reporting a read", () => {
       fromLesson: true,
     });
     expect(events).toContainEqual({ name: "cards_added", source: "lesson", count: 1 });
+
+    // A typed add names the optional fields it holds, never their text.
+    events.length = 0;
+    await addCards(ctx, [
+      { deckId: deck.id, term: "juua", notes: "+ partitive", tags: ["verbs"], enrich: false },
+    ]);
+    expect(events).toContainEqual({
+      name: "cards_added",
+      source: "typed",
+      count: 1,
+      fields: ["notes", "tags"],
+    });
   });
 });
 

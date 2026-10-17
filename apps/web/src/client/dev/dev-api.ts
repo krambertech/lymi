@@ -11,6 +11,17 @@ export type PersonaSummary = {
   dueNow: number | "all";
 };
 
+export type RenderedEmail = {
+  subject: string;
+  preview: string;
+  text: string;
+  html: string;
+  language: string;
+  from: string;
+  replyTo: string;
+  to: string;
+};
+
 export type DevCounts = { decks: number; cards: number; due: number; reviews: number };
 
 export type DevState = {
@@ -72,6 +83,15 @@ export const devApi = {
     request<{ slipped: number; counts: DevCounts }>("/api/dev/slip", {
       method: "POST",
       body: JSON.stringify({ count }),
+    }),
+  emails: () =>
+    request<{ kinds: string[]; operators: string[]; canSend: boolean }>("/api/dev/emails"),
+  renderEmail: (kind: string, language: string) =>
+    request<RenderedEmail>(`/api/dev/emails/render?${new URLSearchParams({ kind, language })}`),
+  sendEmail: (kind: string, language: string, to: string) =>
+    request<{ ok: true }>("/api/dev/emails/send", {
+      method: "POST",
+      body: JSON.stringify({ kind, language, to }),
     }),
   /** The URL a browser is pointed at to become a persona. Sets the session and redirects. */
   signInUrl: (persona: string, returnTo: string) =>

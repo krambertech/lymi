@@ -113,8 +113,11 @@ export default function Onboarding() {
     welcomeWith(null);
   };
 
+  /** The deck a lesson start made, so a retry after a failed save reuses it rather than making another. */
+  const lessonDeckRef = useRef<string | null>(null);
   /** The learner's first deck, named for what they learn, for Smart add to write to. */
   const firstDeck = async (learning: LearningKind) => {
+    if (lessonDeckRef.current) return lessonDeckRef.current;
     const purpose: DeckPurpose =
       learning === "language" ? "language" : learning === "other" ? "other" : "subject";
     // A language Lymi does not list is kept as it was typed, so it names the deck but sets nothing.
@@ -125,6 +128,7 @@ export default function Onboarding() {
       DeckInput.parse({ name, purpose, defaultLanguage: learning === "language" ? tag : null }),
     );
     void qc.invalidateQueries({ queryKey: ["decks"] });
+    lessonDeckRef.current = id;
     return id;
   };
 

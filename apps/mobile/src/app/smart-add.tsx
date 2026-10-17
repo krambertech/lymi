@@ -21,6 +21,7 @@ import {
   canScan,
   chooseFiles,
   choosePhotos,
+  discard,
   lessonForm,
   MAX_FILES,
   type Page,
@@ -111,6 +112,15 @@ export default function SmartAdd() {
   const readOf = useRef<string | null>(null);
 
   useEffect(() => () => stop.current?.abort(), []);
+  // The pages are read, not kept: their files leave the cache with the screen.
+  const kept = useRef(pages);
+  kept.current = pages;
+  useEffect(
+    () => () => {
+      for (const page of kept.current) discard(page.uri);
+    },
+    [],
+  );
   // The deck the server names must be on the list, though the web may have changed the decks since.
   useEffect(() => void qc.invalidateQueries({ queryKey: ["decks"] }), [qc]);
   // A new step starts at its top.
@@ -463,7 +473,11 @@ export default function SmartAdd() {
             <InputStep
               pages={pages}
               text={text}
-              onRemovePage={(id) => setPages((all) => all.filter((page) => page.id !== id))}
+              onRemovePage={(id) => {
+                const removed = pages.find((page) => page.id === id);
+                if (removed) discard(removed.uri);
+                setPages((all) => all.filter((page) => page.id !== id));
+              }}
               onEditText={() => setStep("writing")}
               onRemoveText={() => setText("")}
               sources={sources}

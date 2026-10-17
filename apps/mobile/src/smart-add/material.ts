@@ -1,6 +1,6 @@
 import { newId } from "@lymi/core";
 import * as DocumentPicker from "expo-document-picker";
-import { File } from "expo-file-system";
+import { File, Paths } from "expo-file-system";
 import { ImageManipulator, SaveFormat } from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
 import { isScannerAvailable, scanPages } from "../../modules/lymi-scanner";
@@ -23,6 +23,16 @@ export interface Picked {
 }
 
 export const MAX_FILES = 10;
+
+/** Deletes a file Smart add left in the cache; a file outside the cache is not its to delete. */
+export function discard(uri: string) {
+  if (!uri.startsWith(Paths.cache.uri)) return;
+  try {
+    new File(uri).delete();
+  } catch {
+    // Already gone, which is the outcome wanted.
+  }
+}
 /** Wider pages cost more to read and read no better; the server shrinks again to the same size. */
 const PAGE_SIDE = 1536;
 const TEXT_FILE = /\.(txt|md|srt|vtt)$/i;
@@ -42,6 +52,8 @@ async function shrink(uri: string): Promise<string> {
             .renderAsync()
         : full;
     const saved = await image.saveAsync({ format: SaveFormat.JPEG, compress: 0.85 });
+    // The picker's own copy is no longer needed once the smaller one exists.
+    if (saved.uri !== uri) discard(uri);
     return saved.uri;
   } catch {
     // A format the phone cannot draw goes as it is; the server checks it.
@@ -54,6 +66,7 @@ export const canScan = isScannerAvailable;
 /** iOS's document camera: several pages in one go, found at their edges and flattened. */
 export async function scan(room: number): Promise<Picked> {
   const pages = await scanPages();
+  for (const extra of pages.slice(room)) discard(extra.uri);
   return {
     pages: pages.slice(0, room).map((p) => photo(p.uri)),
     text: "",
@@ -92,6 +105,7 @@ export async function chooseFiles(room: number): Promise<Picked> {
     const type = asset.mimeType ?? "";
     if (type.startsWith("text/") || TEXT_FILE.test(asset.name)) {
       texts.push((await new File(asset.uri).text()).trim());
+      discard(asset.uri);
       continue;
     }
     if (pages.length >= room) {

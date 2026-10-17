@@ -6,8 +6,10 @@ import {
   deckTags,
   dueBucket,
   filterRows,
+  filtersParam,
   groupRows,
   noFilters,
+  parseFilters,
   retag,
   splitForms,
 } from "./deck-list";
@@ -123,6 +125,24 @@ describe("tags", () => {
       { key: "food", name: "food", cards: 1 },
       { key: "дієслова", name: "Дієслова", cards: 1 },
     ]);
+  });
+});
+
+describe("filters as a parameter", () => {
+  it("reads back what it wrote", () => {
+    const filters = {
+      states: ["known" as const],
+      due: "week" as const,
+      sections: [""],
+      tags: ["food"],
+    };
+    expect(parseFilters(filtersParam(filters))).toEqual(filters);
+  });
+
+  it("reads anything else as no filters", () => {
+    expect(parseFilters(undefined)).toEqual(noFilters);
+    expect(parseFilters("{not json")).toEqual(noFilters);
+    expect(parseFilters('{"states":["gone",3],"due":"soon","tags":"food"}')).toEqual(noFilters);
   });
 });
 

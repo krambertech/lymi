@@ -76,6 +76,8 @@ export interface DrawOptions {
   /** Only the decks of the caller's own active series. */
   seriesId?: string | undefined;
   sectionId?: string | undefined;
+  /** Only these cards, such as what a deck's filters show. */
+  cardIds?: readonly string[] | undefined;
   /** Also load slipping cards whatever their due, for the slipping round. */
   slipping?: boolean | undefined;
   /** Load every asked state whatever its due, for reviewing cards the learner chose. */
@@ -159,6 +161,10 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
     opts.deckId ? eq(schema.cards.deckId, opts.deckId) : undefined,
     opts.seriesId ? inSeries(userId, opts.seriesId) : undefined,
     opts.sectionId ? eq(schema.cards.sectionId, opts.sectionId) : undefined,
+    // One bound parameter however many ids, since D1 takes at most 100.
+    opts.cardIds
+      ? sql`${schema.cards.id} in (select value from json_each(${JSON.stringify(opts.cardIds)}))`
+      : undefined,
     waiting ? sql`not (${waiting})` : undefined,
   );
   const siblingOn = and(

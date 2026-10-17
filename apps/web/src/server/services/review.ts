@@ -145,6 +145,7 @@ export async function reviewDraw(
     deckId?: string | undefined;
     seriesId?: string | undefined;
     sectionId?: string | undefined;
+    cardIds?: readonly string[] | undefined;
     limit?: number | undefined;
     zone?: string | undefined;
   },
@@ -155,12 +156,13 @@ export async function reviewDraw(
   const settings = await getSettings(ctx);
   if (opts.seriesId) await activeSeries(ctx, opts.seriesId);
   if (opts.sectionId) await visibleSection(ctx, opts.sectionId, opts.deckId);
-  // The series or section narrows the rows loaded, so the rules need no scope of their own for it.
+  // The series, section or chosen cards narrow the rows loaded, so the rules need no scope of their own for them.
   const scope = { deckId: opts.deckId };
   const { cards, log, day, states, slipping } = await drawInputs(ctx, {
     ...scope,
     seriesId: opts.seriesId,
     sectionId: opts.sectionId,
+    cardIds: opts.cardIds,
     now,
     zone,
   });

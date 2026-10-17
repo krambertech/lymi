@@ -1,5 +1,6 @@
 import {
   CHOSEN_LIMIT,
+  DrawInput,
   DrawOut,
   GradeInput,
   GradeOut,
@@ -163,6 +164,23 @@ review.get(
         zone: tz,
       }),
     );
+  },
+);
+
+review.post(
+  "/draw",
+  describe({
+    tags: ["Review"],
+    summary: "What the draw reads, over chosen cards",
+    description:
+      "`GET /api/review/draw` narrowed to the `cards` named in the body, such as the cards a deck's filters show, which can be too many for a query string. The cards follow the same rules, so only those due today or new to the draw come back; `total` and `decks` count only the chosen cards, and `log` still covers every scope. An id that is not a card you study is ignored.",
+    ok: { schema: DrawOut, description: "The draw's inputs" },
+    errors: [400, 404],
+  }),
+  body(DrawInput, "draw"),
+  async (c) => {
+    const { cards, deck, limit, tz } = c.req.valid("json");
+    return c.json(await reviewDraw(ctxOf(c), { cardIds: cards, deckId: deck, limit, zone: tz }));
   },
 );
 

@@ -1,5 +1,6 @@
 import {
   type Direction,
+  type DrawInput,
   type DrawOut,
   type GradeInput,
   type GradeOut,
@@ -13,21 +14,38 @@ import {
 import type { Card } from "./cards";
 import { deviceTimezone, request } from "./request";
 
-/** What a review draws from: every deck, one deck or one of its sections, or one of the learner's series. */
+/**
+ * What a review draws from: every deck, one deck or one of its sections, one of the learner's
+ * series, or chosen cards of a deck, such as what its filters show.
+ */
 export type ReviewScope = {
   deck?: string | undefined;
   series?: string | undefined;
   section?: string | undefined;
+  cards?: readonly string[] | undefined;
 };
+
+/** A short, stable name for a set of ids, whatever their order. FNV-1a. */
+function idsHash(ids: readonly string[]): string {
+  let hash = 0x811c9dc5;
+  for (const char of [...ids].sort().join(",")) {
+    hash ^= char.charCodeAt(0);
+    hash = Math.imul(hash, 0x01000193);
+  }
+  return `${ids.length}.${(hash >>> 0).toString(36)}`;
+}
+
 /** One cache key per scope, so a series review and a deck review never share a draw. */
 export const scopeKey = (scope: ReviewScope = {}) =>
-  scope.section
-    ? `section:${scope.section}`
-    : scope.deck
-      ? `deck:${scope.deck}`
-      : scope.series
-        ? `series:${scope.series}`
-        : "all";
+  scope.cards
+    ? `cards:${scope.deck ?? ""}:${idsHash(scope.cards)}`
+    : scope.section
+      ? `section:${scope.section}`
+      : scope.deck
+        ? `deck:${scope.deck}`
+        : scope.series
+          ? `series:${scope.series}`
+          : "all";
 const scopeParams = (scope: ReviewScope = {}) => ({
   ...(scope.deck ? { deck: scope.deck } : {}),
   ...(scope.series ? { series: scope.series } : {}),
@@ -71,9 +89,19 @@ export const reviewApi = {
   rounds: () => request<RoundsOut>(`/api/review/rounds?tz=${encodeURIComponent(deviceTimezone())}`),
   /** What the review draws from; `tz` only matters until the review zone is known. */
   draw: async (scope?: ReviewScope) => {
-    const draw = await request<Draw>(
-      `/api/review/draw?${new URLSearchParams({ tz: deviceTimezone(), ...scopeParams(scope) })}`,
-    );
+    // Chosen cards can be too many for a query string, so they go in a body.
+    const draw = scope?.cards
+      ? await request<Draw>("/api/review/draw", {
+          method: "POST",
+          body: JSON.stringify({
+            cards: [...scope.cards],
+            ...(scope.deck ? { deck: scope.deck } : {}),
+            tz: deviceTimezone(),
+          } satisfies DrawInput),
+        })
+      : await request<Draw>(
+          `/api/review/draw?${new URLSearchParams({ tz: deviceTimezone(), ...scopeParams(scope) })}`,
+        );
     // The log keeps every grade, so today's attempts still count one in a mode left out.
     const cards = draw.cards
       .map((entry) => ({ ...entry, modes: entry.modes.filter((m) => askable(m.mode)) }))

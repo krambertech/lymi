@@ -1,9 +1,10 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { apiUrl, type Card, type QueueItem, type ReviewScope } from "@lymi/client/api";
+import { parseFilters } from "@lymi/client/deck-list";
 import { gradeStore } from "@lymi/client/grades";
 import { readingsFadedField, useKnownReadings } from "@lymi/client/known-readings";
-import { hookDraftQuery } from "@lymi/client/queries";
+import { deckCardsQuery, hookDraftQuery } from "@lymi/client/queries";
 import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawableLeft } from "@lymi/client/review-day";
 import { type LocalGrade, reviewItem, stateBefore } from "@lymi/client/review-draw";
@@ -34,7 +35,7 @@ import {
   LANTERN_FLIGHT,
   REVEAL_GLIDE,
 } from "@lymi/design";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -85,6 +86,7 @@ import {
   useSeriesList,
   useUndoGrade,
 } from "../data/queries";
+import { filteredIds } from "../deck/filtered-review";
 import { spokenInterval } from "../i18n/interval";
 import { CardNotes } from "../review/card-notes";
 import { CardLine, FIT_STEPS, typeAt, useFitStep } from "../review/card-type";
@@ -193,33 +195,54 @@ export default function Review() {
     deck?: string;
     series?: string;
     section?: string;
+    filters?: string;
     round?: string;
     /** Cards chosen on a deck page, comma-separated. */
     cards?: string;
   }>();
   const round = ROUNDS.find((r) => r === params.round);
   const deck = params.deck || undefined;
-  // One scope at a time, as on the web: a deck wins over a series, and a section needs its deck.
+  // One scope at a time, as on the web: a deck wins over a series, and a section or filters need their deck.
   const series = deck ? undefined : params.series || undefined;
   const section = deck ? params.section || undefined : undefined;
+  const filters = deck && !section && !round ? params.filters || undefined : undefined;
+  const filtered = useFilteredCards(deck, filters);
   // Trimmed rather than dropped, so a long list never widens into the whole deck's review.
-  const chosen = deck && !round && !section ? params.cards?.split(",").filter(Boolean) : undefined;
+  const chosen =
+    deck && !round && !section && !filters ? params.cards?.split(",").filter(Boolean) : undefined;
   const cards = chosen?.length ? chosen.slice(0, CHOSEN_LIMIT) : undefined;
   const router = useRouter();
 
   // Opened from a widget, the review is the only screen, so leaving goes to Today.
   const leave = () => (router.canGoBack() ? router.back() : router.replace("/today"));
 
+  // The filtered cards are known before the review starts, from the deck page that asked for it.
+  if (filters && !filtered) return null;
   // A review of another scope or round starts over, so nothing from this one carries into it.
   return (
     <Run
-      key={`${deck ?? ""}:${series ?? ""}:${section ?? ""}:${round ?? ""}:${cards?.join(",") ?? ""}`}
-      scope={{ deck, series, section }}
+      key={`${deck ?? ""}:${series ?? ""}:${section ?? ""}:${filters ?? ""}:${round ?? ""}:${cards?.join(",") ?? ""}`}
+      scope={{ deck, series, section, cards: filtered }}
       round={round}
       cards={cards}
       onClose={leave}
     />
   );
+}
+
+/**
+ * The cards a deck's filters keep, read once as the review opens: a grade can move a card out of
+ * a filter such as Due today, and the review keeps the cards it started with.
+ */
+function useFilteredCards(deck: string | undefined, filters: string | undefined) {
+  const rows = useQuery({ ...deckCardsQuery(deck ?? ""), enabled: !!deck && !!filters }).data;
+  const sections = useSections(filters ? deck : undefined).data?.sections;
+  const [cards, setCards] = useState<string[] | undefined>(undefined);
+  useEffect(() => {
+    if (cards || !filters || !rows || !sections) return;
+    setCards(filteredIds(rows, parseFilters(filters), sections));
+  }, [cards, filters, rows, sections]);
+  return cards;
 }
 
 /**
@@ -240,8 +263,11 @@ function Run({
 }) {
   const qc = useQueryClient();
   const router = useRouter();
-  const { deck, series, section } = given;
-  const scope = useMemo(() => ({ deck, series, section }), [deck, series, section]);
+  const { deck, series, section, cards: filteredCards } = given;
+  const scope = useMemo(
+    () => ({ deck, series, section, cards: filteredCards }),
+    [deck, series, section, filteredCards],
+  );
   const scoped = !!deck || !!series;
   const draw = useDraw(scope);
   const listed = !!round || !!cards;
@@ -506,6 +532,13 @@ function Run({
   const scopeSection = section
     ? scopeSections.data?.sections.find((s) => s.id === section)
     : undefined;
+  // What the filtered cards held as the review opened, so the rest of their deck is what it held besides.
+  const [filteredTotal, setFilteredTotal] = useState<number | null>(null);
+  useEffect(() => {
+    if (filteredCards && filteredTotal === null && data) setFilteredTotal(data.total);
+  }, [filteredCards, filteredTotal, data]);
+  // What a section or filtered review holds of its deck's due cards.
+  const partOfDeck = scopeSection ? scopeSection.due : filteredCards ? filteredTotal : null;
   const scopeName = section
     ? scopeSection?.name
     : deck
@@ -526,14 +559,14 @@ function Run({
           confirmed,
           elsewhere: !scoped
             ? 0
-            : decks && (!section || scopeSection)
+            : decks && (!section || scopeSection) && (!filteredCards || filteredTotal !== null)
               ? decks
                   .filter((d) => (series ? d.seriesId !== series : d.id !== deck))
                   .reduce((n, d) => n + d.due, 0) +
-                // The rest of a section's deck is its other sections.
-                (section && scopeSection
-                  ? Math.max(0, (decks.find((d) => d.id === deck)?.due ?? 0) - scopeSection.due)
-                  : 0)
+                // The rest of a section's deck is its other sections, and of filtered cards the rest of the deck.
+                (partOfDeck === null
+                  ? 0
+                  : Math.max(0, (decks.find((d) => d.id === deck)?.due ?? 0) - partOfDeck))
               : null,
           forgotten: forgottenItems.length,
         })
@@ -550,13 +583,15 @@ function Run({
           ? cards
             ? "chosen"
             : "round"
-          : section
-            ? "section"
-            : deck
-              ? "deck"
-              : series
-                ? "series"
-                : "day",
+          : filteredCards
+            ? "filtered"
+            : section
+              ? "section"
+              : deck
+                ? "deck"
+                : series
+                  ? "series"
+                  : "day",
     before: mark?.attempts ?? 0,
     done: progress?.done ?? 0,
     count: progress?.total ?? 0,
@@ -685,6 +720,7 @@ function Run({
           from={mark.attempts}
           to={state.attempts}
           scopeName={scopeName}
+          filtered={!!filteredCards}
           onOffer={onOffer}
           onClose={onClose}
           onAddCards={() => router.push(addTo ? (`/capture?deck=${addTo}` as Href) : "/capture")}
@@ -1755,6 +1791,7 @@ function Completion({
   from,
   to,
   scopeName,
+  filtered,
   onOffer,
   onClose,
   onAddCards,
@@ -1764,6 +1801,8 @@ function Completion({
   from: number;
   to: number;
   scopeName: string | undefined;
+  /** A review of what a deck's filters showed, which has no name of its own. */
+  filtered: boolean;
   onOffer: (offer: Offer) => void;
   onClose: () => void;
   onAddCards: () => void;
@@ -1777,7 +1816,11 @@ function Completion({
   const heading = {
     goal_reached: t`Daily goal reached`,
     day_done: t`You’re done for today`,
-    scope_done: scopeName ? t`Nothing left in ${scopeName}` : t`Nothing left in this deck`,
+    scope_done: filtered
+      ? t`No filtered cards left`
+      : scopeName
+        ? t`Nothing left in ${scopeName}`
+        : t`Nothing left in this deck`,
     nothing_due: t`Nothing due`,
     round_done: t`Round done`,
     review_done: t`Review done`,

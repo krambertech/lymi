@@ -70,6 +70,17 @@ describe("review legs on the phone", () => {
     ]);
   });
 
+  it("reports a leg under the scope it ran in when the next leg starts", () => {
+    legs.step(leg({ scope: "filtered", done: 0 }));
+    legs.step(leg({ scope: "filtered", done: 3 }));
+    legs.step(leg({ key: `${DATE}:forgotten:3`, scope: "round", done: 0 }));
+    legs.leave();
+    expect(events).toMatchObject([
+      { name: "review_session_abandoned", cards_done: 3, scope: "filtered" },
+      { name: "review_session_abandoned", cards_done: 0, scope: "round" },
+    ]);
+  });
+
   it("reports a leg finished before the streak lands, without claiming a first session", () => {
     legs.step(leg({ done: 0 }));
     legs.step(leg({ done: 10, presenting: false, stopped: true, finished: "goal" }));

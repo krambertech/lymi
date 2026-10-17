@@ -2,12 +2,14 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { Section } from "@lymi/client/api";
 import {
+  activeFilterCount,
   chosenReview,
   type DeckFilters,
   type DeckGroup,
   type DeckRow,
   type DeckSort,
   filterRows,
+  filtersParam,
   groupRows,
   noFilters,
   rowState,
@@ -17,7 +19,6 @@ import {
 import { CHOSEN_LIMIT, drawsReadings, termReading } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
-import { ArrowUpDown, ListFilter } from "lucide-react-native";
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type FlatList, View } from "react-native";
 import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated";
@@ -30,6 +31,8 @@ import { useNextDue } from "../../../data/next-due";
 import { useDeckCards, useDecks, useSections, useSeriesList } from "../../../data/queries";
 import { useMoveNotice, useSeriesActions } from "../../../data/series";
 import { useCardBatch, useMoveToDeck } from "../../../deck/card-batch";
+import { useFilteredDue } from "../../../deck/filtered-review";
+import { FilterTools } from "../../../deck/filters";
 import { useMoveToSection } from "../../../deck/move-to-section";
 import { SelectBox, SelectionToolbar } from "../../../deck/selection";
 import { ExportSheet } from "../../../export/export-sheet";
@@ -51,16 +54,19 @@ import { Furigana } from "../../../ui/furigana";
 import { Icon } from "../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
 import type { MenuItem } from "../../../ui/menu";
-import { Select } from "../../../ui/menu";
 import { OfflineNote } from "../../../ui/offline-note";
 import { Button, LIFT, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
 import { RowMenu, type RowMenuItem } from "../../../ui/row-menu";
 import { BarButton, Screen } from "../../../ui/screen";
-import { Segmented } from "../../../ui/segmented";
-import { Sheet, SheetGroup, SheetHeading, SheetRow } from "../../../ui/sheet";
+import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { StateIcon, stateMarks } from "../../../ui/state-mark";
-import { setDeckReviewHidden, setDeckSelecting } from "../../../ui/tab-bar";
+import {
+  DECK_ACCESSORY,
+  setDeckReviewHidden,
+  setDeckSelecting,
+  setDeckView,
+} from "../../../ui/tab-bar";
 import { toast } from "../../../ui/toast-host";
 
 /** Stable empties, so a deck without sections or cards does not regroup its list on every render. */
@@ -99,16 +105,23 @@ export default function Deck() {
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
   const [chosenSort, setSort] = useState<DeckSort | null>(null);
   const sort = chosenSort ?? (sections.length ? "section" : "added");
-  const groups = useMemo(() => {
-    const now = Date.now();
-    return groupRows(
-      filterRows(rows, filters, "", now, sections),
-      sort,
-      now,
-      i18n.locale,
-      sections,
-    );
-  }, [rows, filters, sort, i18n.locale, sections]);
+  const shown = useMemo(
+    () => filterRows(rows, filters, "", Date.now(), sections),
+    [rows, filters, sections],
+  );
+  const groups = useMemo(
+    () => groupRows(shown, sort, Date.now(), i18n.locale, sections),
+    [shown, sort, i18n.locale, sections],
+  );
+  // While the list is filtered, what it shows has a review of its own, in the tab bar's accessory.
+  const filtered = activeFilterCount(filters) > 0;
+  const shownIds = useMemo(
+    () => (filtered ? shown.map((r) => r.card.id) : null),
+    [filtered, shown],
+  );
+  const filteredDue = useFilteredDue(id, shownIds);
+  const filteredHref =
+    `/review?deck=${id}&filters=${encodeURIComponent(filtersParam(filters))}` as Href;
   const owner = deck?.role === "owner";
   // A deck that opens every section at once has no "where you are" to show.
   const progress =
@@ -262,6 +275,11 @@ export default function Deck() {
     setDeckSelecting(id, choosing);
     return () => setDeckSelecting(id, false);
   }, [id, choosing]);
+  useEffect(() => {
+    if (!filtered) setDeckView(id, undefined);
+    else setDeckView(id, filteredDue ? { due: filteredDue, href: filteredHref } : null);
+  }, [id, filtered, filteredDue, filteredHref]);
+  useEffect(() => () => setDeckView(id, undefined), [id]);
   useFloatingBar(
     selection && (
       <Animated.View
@@ -532,14 +550,20 @@ export default function Deck() {
               importantForAccessibility={selection ? "no-hide-descendants" : "auto"}
               accessibilityElementsHidden={!!selection}
             >
-              <Tools
+              <FilterTools
+                rows={rows}
                 sections={sections}
                 filters={filters}
                 setFilters={setFilters}
                 count={(f) => filterRows(rows, f, "", Date.now(), sections).length}
-                total={rows.length}
                 sort={sort}
                 setSort={setSort}
+                footer={
+                  // Before iOS 26 the tab bar has no accessory, so the review sits under the filters.
+                  !DECK_ACCESSORY &&
+                  filtered &&
+                  !!filteredDue && <FilteredReviewButton due={filteredDue} href={filteredHref} />
+                }
               />
             </View>
             {groups.length === 0 && (
@@ -671,200 +695,18 @@ function ReviewButton({ deck }: { deck: DeckData }) {
   );
 }
 
-/**
- * Filter and Sort over the list. Filter is one sheet with every filter on it: each tap saves to a
- * draft and the count under the title answers it, and the list changes once, as the sheet goes.
- * Each active filter is a chip that removes it. Both reset when the learner leaves the deck.
- */
-function Tools({
-  sections,
-  filters,
-  setFilters,
-  count,
-  total,
-  sort,
-  setSort,
-}: {
-  sections: { id: string; name: string }[];
-  filters: DeckFilters;
-  setFilters: (f: DeckFilters) => void;
-  /** How many of the deck's cards a set of filters keeps. */
-  count: (f: DeckFilters) => number;
-  total: number;
-  sort: DeckSort;
-  setSort: (s: DeckSort) => void;
-}) {
-  const { t, i18n } = useLingui();
-  const p = usePalette();
-  const [choosing, setChoosing] = useState(false);
-  const [draft, setDraft] = useState<DeckFilters>(filters);
-  const [allSections, setAllSections] = useState(false);
-  const sortName: Record<DeckSort, string> = {
-    section: t`Section`,
-    due: t`When it’s back`,
-    added: t`Recently added`,
-    az: t`A–Z`,
-  };
-  const dueName = { today: t`Due today`, week: t`Due this week` };
-  const sectionName = (sid: string) =>
-    sid ? (sections.find((s) => s.id === sid)?.name ?? "") : t`No section`;
-  const toggle = <T,>(list: T[], item: T) =>
-    list.includes(item) ? list.filter((x) => x !== item) : [...list, item];
-  const chips = [
-    ...filters.states.map((s) => ({
-      key: s,
-      label: i18n._(stateMarks[s].groupLabel),
-      remove: () => setFilters({ ...filters, states: toggle(filters.states, s) }),
-    })),
-    ...(filters.due
-      ? [
-          {
-            key: "due",
-            label: dueName[filters.due],
-            remove: () => setFilters({ ...filters, due: null }),
-          },
-        ]
-      : []),
-    ...filters.sections.map((sid) => ({
-      key: `s:${sid}`,
-      label: sectionName(sid),
-      remove: () => setFilters({ ...filters, sections: toggle(filters.sections, sid) }),
-    })),
-  ];
-  const open = () => {
-    setDraft(filters);
-    setAllSections(false);
-    setChoosing(true);
-  };
-  const drafted = draft.states.length > 0 || draft.due !== null || draft.sections.length > 0;
-  const kept = count(draft);
-  const shown = i18n.number(kept);
-  const counted = drafted
-    ? plural(total, { one: `${shown} of # card`, other: `${shown} of # cards` })
-    : plural(total, { one: "# card", other: "# cards" });
-  const sectionIds = [...sections.map((s) => s.id), ""];
-  // Past five a long list of lessons would push everything under the fold.
-  const visibleSections = allSections ? sectionIds : sectionIds.slice(0, 5);
-  const hiddenSections = sectionIds.length - visibleSections.length;
-  const pill = (icon: "filter" | "sort", label: string, on = false) => {
-    const Glyph = icon === "filter" ? ListFilter : ArrowUpDown;
-    return (
-      <View
-        className={`min-h-9 flex-row items-center gap-1.5 rounded-full border bg-plate px-3.5 py-1.5 ${on ? "border-text" : "border-edge"}`}
-      >
-        <Glyph size={15} color={p["text-2"]} strokeWidth={2} />
-        <Text className="text-base font-medium text-text">{label}</Text>
-      </View>
-    );
-  };
-  const sorts = sections.length
-    ? (["section", "due", "added", "az"] as const)
-    : (["added", "due", "az"] as const);
+/** A filtered list's review where the tab bar has no accessory to carry it. */
+function FilteredReviewButton({ due, href }: { due: number; href: Href }) {
+  const router = useRouter();
   return (
-    <View className="gap-2.5">
-      <View className="flex-row flex-wrap items-center gap-2">
-        <Press onPress={open} accessibilityRole="button" accessibilityLabel={t`Filter`}>
-          {pill(
-            "filter",
-            chips.length ? t`Filter · ${i18n.number(chips.length)}` : t`Filter`,
-            chips.length > 0,
-          )}
-        </Press>
-        <Select
-          label={t`Sort`}
-          value={sort}
-          options={sorts.map((k) => ({ value: k, label: sortName[k] }))}
-          onChange={setSort}
-          trigger={pill("sort", sortName[sort])}
-        />
-        {chips.map((c) => {
-          const name = c.label;
-          return (
-            <Press
-              key={c.key}
-              onPress={c.remove}
-              accessibilityRole="button"
-              accessibilityLabel={t`Remove filter: ${name}`}
-              // Grows with the text and stops at the row's width, so a long section name ends in an ellipsis.
-              className="min-h-9 max-w-full flex-row items-center gap-1.5 rounded-full bg-plate-2 py-1.5 ps-3 pe-2.5"
-            >
-              <Text className="shrink text-base font-medium text-text-2" numberOfLines={1}>
-                {name}
-              </Text>
-              <Icon name="close" size={14} colour={p.muted} />
-            </Press>
-          );
-        })}
-      </View>
-      <Sheet
-        title={t`Filter`}
-        description={counted}
-        aside={
-          drafted && (
-            <Press
-              onPress={() => setDraft(noFilters)}
-              accessibilityRole="button"
-              className="h-11 justify-center px-2"
-            >
-              <Text className="text-md font-medium text-text">{t`Reset`}</Text>
-            </Press>
-          )
-        }
-        open={choosing}
-        onOpenChange={setChoosing}
-        onDismiss={() => {
-          if (JSON.stringify(draft) !== JSON.stringify(filters)) setFilters(draft);
-        }}
-      >
-        <SheetHeading>{t`State`}</SheetHeading>
-        <SheetGroup>
-          {(["new", "learning", "known"] as const).map((s) => (
-            <SheetRow
-              key={s}
-              label={i18n._(stateMarks[s].groupLabel)}
-              value={i18n.number(count({ ...draft, states: [s] }))}
-              chosen={draft.states.includes(s)}
-              multiple
-              onPress={() => setDraft({ ...draft, states: toggle(draft.states, s) })}
-            />
-          ))}
-        </SheetGroup>
-        <SheetHeading>{t`Due`}</SheetHeading>
-        <Segmented
-          label={t`Due`}
-          value={draft.due ?? "any"}
-          options={[
-            { value: "any", label: t`Any time` },
-            { value: "today", label: t`Today` },
-            { value: "week", label: t`This week` },
-          ]}
-          onChange={(v) => setDraft({ ...draft, due: v === "any" ? null : v })}
-        />
-        {sections.length > 0 && (
-          <>
-            <SheetHeading>{t`Section`}</SheetHeading>
-            <SheetGroup>
-              {visibleSections.map((sid) => (
-                <SheetRow
-                  key={sid || "none"}
-                  label={sectionName(sid)}
-                  value={i18n.number(count({ ...draft, sections: [sid] }))}
-                  chosen={draft.sections.includes(sid)}
-                  multiple
-                  onPress={() => setDraft({ ...draft, sections: toggle(draft.sections, sid) })}
-                />
-              ))}
-              {hiddenSections > 0 && (
-                <SheetRow
-                  label={plural(hiddenSections, { one: "Show # more", other: "Show # more" })}
-                  onPress={() => setAllSections(true)}
-                />
-              )}
-            </SheetGroup>
-          </>
-        )}
-      </Sheet>
-    </View>
+    <Button
+      label={plural(due, { one: "Review # filtered card", other: "Review # filtered cards" })}
+      icon="play"
+      onPress={() => {
+        haptics.start();
+        router.push(href);
+      }}
+    />
   );
 }
 

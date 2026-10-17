@@ -194,6 +194,7 @@ msgid "{0, plural, one {# row has only one side, so it’s skipped.} other {# ro
 msgstr "{0, plural, one {# строка заполнена только с одной стороны, поэтому она пропущена.} few {# строки заполнены только с одной стороны, поэтому они пропущены.} many {# строк заполнены только с одной стороны, поэтому они пропущены.} other {# строки заполнены только с одной стороны, поэтому они пропущены.}}"
 
 #. placeholder {0}: deck.sectionCount
+#. placeholder {0}: draft.sections.length
 #. placeholder {0}: sections.length
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# раздел} few {# раздела} many {# разделов} other {# раздела}}"
@@ -201,6 +202,10 @@ msgstr "{0, plural, one {# раздел} few {# раздела} many {# разд
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
 msgstr "{0, plural, one {# приостановленная карточка попадёт в архив.} few {# приостановленные карточки попадут в архив.} many {# приостановленных карточек попадут в архив.} other {# приостановленной карточки попадут в архив.}}"
+
+#. placeholder {0}: draft.tags.length
+msgid "{0, plural, one {# tag} other {# tags}}"
+msgstr "{0, plural, one {# тег} few {# тега} many {# тегов} other {# тега}}"
 
 #. placeholder {0}: parsed.repeated
 msgid "{0, plural, one {# term appears more than once. Every card is imported.} other {# terms appear more than once. Every card is imported.}}"
@@ -397,6 +402,9 @@ msgstr "{0}, выполнено"
 msgid "{0}% of the file arrived. Choose the same file to send the rest."
 msgstr "Загружено {0}% файла. Выбери тот же файл, чтобы отправить остальное."
 
+msgid "{active, plural, one {# filter on} other {# filters on}}"
+msgstr "{active, plural, one {# фильтр включён} few {# фильтра включено} many {# фильтров включено} other {# фильтра включено}}"
+
 msgid "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
 msgstr "{added, plural, one {До остановки импорта добавлена # карточка.} few {До остановки импорта добавлены # карточки.} many {До остановки импорта добавлено # карточек.} other {До остановки импорта добавлено # карточки.}}"
 
@@ -528,6 +536,12 @@ msgstr "{due, plural, one {карточка к повторению} few {кар
 msgid "{due, plural, one {card to review} other {cards to review}}"
 msgstr "{due, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}}"
 
+msgid "{due, plural, one {filtered card to review} other {filtered cards to review}}"
+msgstr "{due, plural, one {отфильтрованная карточка к повторению} few {отфильтрованные карточки к повторению} many {отфильтрованных карточек к повторению} other {отфильтрованной карточки к повторению}}"
+
+msgid "{due, plural, one {Review # filtered card} other {Review # filtered cards}}"
+msgstr "{due, plural, one {Повторить # отфильтрованную карточку} few {Повторить # отфильтрованные карточки} many {Повторить # отфильтрованных карточек} other {Повторить # отфильтрованной карточки}}"
+
 msgid "{dueChosen, plural, one {Review # due} other {Review # due}}"
 msgstr "{dueChosen, plural, one {Повтори # на сегодня} few {Повтори # на сегодня} many {Повтори # на сегодня} other {Повтори # на сегодня}}"
 
@@ -539,9 +553,6 @@ msgstr "{found, plural, one {термин найден} few {термина на
 
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Показатель запоминания основан всего на # повторении, поэтому первые несколько недель он может сильно колебаться.} few {Показатель запоминания основан всего на # повторениях, поэтому первые несколько недель он может сильно колебаться.} many {Показатель запоминания основан всего на # повторениях, поэтому первые несколько недель он может сильно колебаться.} other {Показатель запоминания основан всего на # повторения, поэтому первые несколько недель он может сильно колебаться.}}"
-
-msgid "{hiddenSections, plural, one {Show # more} other {Show # more}}"
-msgstr "{hiddenSections, plural, one {Показать ещё #} few {Показать ещё #} many {Показать ещё #} other {Показать ещё #}}"
 
 msgid "{hours, plural, one {in # hour} other {in # hours}}"
 msgstr "{hours, plural, one {через # час} few {через # часа} many {через # часов} other {через # часа}}"
@@ -962,6 +973,12 @@ msgstr "Другой язык"
 msgid "Another way"
 msgstr "Другой способ"
 
+msgid "Any section"
+msgstr "Любой раздел"
+
+msgid "Any tag"
+msgstr "Любой тег"
+
 msgid "Any time"
 msgstr "В любое время"
 
@@ -991,6 +1008,9 @@ msgstr "Справочник API"
 
 msgid "App language, and the language AI uses for meanings."
 msgstr "Язык приложения и язык, на котором AI пишет значения."
+
+msgid "Apply filters"
+msgstr "Применить фильтры"
 
 msgid "Apps you can import from"
 msgstr "Приложения, из которых можно импортировать"
@@ -1853,12 +1873,6 @@ msgstr "Пора повторить"
 msgid "due this week"
 msgstr "к повторению на этой неделе"
 
-msgid "Due this week"
-msgstr "Повторить на этой неделе"
-
-msgid "Due today"
-msgstr "Повторить сегодня"
-
 msgctxt "language"
 msgid "Dutch"
 msgstr "Нидерландский"
@@ -2071,10 +2085,6 @@ msgstr "Дополнить остальное с AI"
 
 msgid "Filter"
 msgstr "Фильтр"
-
-#. placeholder {0}: i18n.number(chips.length)
-msgid "Filter · {0}"
-msgstr "Фильтр · {0}"
 
 msgid "Find terms"
 msgstr "Найти термины"
@@ -2897,6 +2907,9 @@ msgstr "Ни одна колода или карточка не подходит
 msgid "No decks yet"
 msgstr "Колод пока нет"
 
+msgid "No filtered cards left"
+msgstr "Отфильтрованных карточек больше нет"
+
 msgid "No history yet"
 msgstr "Истории пока нет"
 
@@ -3324,9 +3337,6 @@ msgstr "Убрать {name}"
 msgid "Remove {name}?"
 msgstr "Исключить {name}?"
 
-msgid "Remove filter: {name}"
-msgstr "Убрать фильтр: {name}"
-
 msgid "Remove from deck"
 msgstr "Исключить из колоды"
 
@@ -3363,8 +3373,8 @@ msgstr "Изменить порядок серий"
 msgid "Replay pronunciation"
 msgstr "Воспроизвести произношение ещё раз"
 
-msgid "Reset"
-msgstr "Сбросить"
+msgid "Reset filters"
+msgstr "Сбросить фильтры"
 
 msgid "Reset your password"
 msgstr "Новый пароль"

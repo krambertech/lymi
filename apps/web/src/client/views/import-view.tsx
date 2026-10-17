@@ -647,6 +647,15 @@ function ImportLines({
           })}
         </Line>
       )}
+      {preview.recordings > 0 && (
+        <Line tone="good">
+          {plural(preview.recordings, {
+            one: "# card brings its recording. Lymi plays it instead of reading the term aloud.",
+            other:
+              "# cards bring their recordings. Lymi plays them instead of reading the terms aloud.",
+          })}
+        </Line>
+      )}
       {preview.existing > 0 && (
         <Line tone="good">
           {plural(preview.existing, {
@@ -715,11 +724,29 @@ function ImportLines({
           })}
         </Line>
       )}
+      {preview.recordingsSkipped > 0 && (
+        <Line tone="skip">
+          {plural(preview.recordingsSkipped, {
+            one: "# recording is in a format Lymi can’t play, so Lymi reads that term aloud itself.",
+            other:
+              "# recordings are in a format Lymi can’t play, so Lymi reads those terms aloud itself.",
+          })}
+        </Line>
+      )}
       {preview.audio > 0 && (
         <Line tone="skip">
           {plural(preview.audio, {
-            one: "# sound is skipped. Lymi reads terms aloud itself.",
-            other: "# sounds are skipped. Lymi reads terms aloud itself.",
+            one: "# sound is skipped, such as a sentence’s recording. Only a term’s own recording comes across.",
+            other:
+              "# sounds are skipped, such as sentence recordings. Only a term’s own recording comes across.",
+          })}
+        </Line>
+      )}
+      {preview.pitchSkipped > 0 && (
+        <Line tone="skip">
+          {plural(preview.pitchSkipped, {
+            one: "# card’s pitch accent can’t be read as text, so it’s skipped.",
+            other: "# cards’ pitch accents can’t be read as text, so they’re skipped.",
           })}
         </Line>
       )}
@@ -1325,6 +1352,14 @@ export function ImportDoneView({
                 })}
               </Line>
             )}
+            {counts.recordings > 0 && (
+              <Line tone="good">
+                {plural(counts.recordings, {
+                  one: "# recording was imported.",
+                  other: "# recordings were imported.",
+                })}
+              </Line>
+            )}
             {counts.existing > 0 && (
               <Line tone="good">
                 {plural(counts.existing, {
@@ -1346,6 +1381,15 @@ export function ImportDoneView({
                 {plural(counts.picturesSkipped, {
                   one: "# picture couldn’t be read and was skipped.",
                   other: "# pictures couldn’t be read and were skipped.",
+                })}
+              </Line>
+            )}
+            {counts.recordingsSkipped > 0 && (
+              <Line tone="skip">
+                {plural(counts.recordingsSkipped, {
+                  one: "# recording couldn’t be read or played, so Lymi reads that term aloud itself.",
+                  other:
+                    "# recordings couldn’t be read or played, so Lymi reads those terms aloud itself.",
                 })}
               </Line>
             )}

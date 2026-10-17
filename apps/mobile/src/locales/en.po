@@ -46,6 +46,10 @@ msgstr "{0, plural, one {# card · {1} known} other {# cards · {2} known}}"
 msgid "{0, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 msgstr "{0, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 
+#. placeholder {0}: preview.recordings
+msgid "{0, plural, one {# card brings its recording. Lymi plays it instead of reading the term aloud.} other {# cards bring their recordings. Lymi plays them instead of reading the terms aloud.}}"
+msgstr "{0, plural, one {# card brings its recording. Lymi plays it instead of reading the term aloud.} other {# cards bring their recordings. Lymi plays them instead of reading the terms aloud.}}"
+
 #. placeholder {0}: s.archivedCards
 msgid "{0, plural, one {# card comes back with it} other {# cards come back with it}}"
 msgstr "{0, plural, one {# card comes back with it} other {# cards come back with it}}"
@@ -94,6 +98,10 @@ msgstr "{0, plural, one {# card you froze in Noji arrives archived.} other {# ca
 #. placeholder {0}: deck.cards
 msgid "{0, plural, one {# card, known} other {# cards, all known}}"
 msgstr "{0, plural, one {# card, known} other {# cards, all known}}"
+
+#. placeholder {0}: preview.pitchSkipped
+msgid "{0, plural, one {# card’s pitch accent can’t be read as text, so it’s skipped.} other {# cards’ pitch accents can’t be read as text, so they’re skipped.}}"
+msgstr "{0, plural, one {# card’s pitch accent can’t be read as text, so it’s skipped.} other {# cards’ pitch accents can’t be read as text, so they’re skipped.}}"
 
 #. placeholder {0}: d.total
 #. placeholder {0}: deck.cardCount
@@ -159,6 +167,18 @@ msgstr "{0, plural, one {# picture couldn’t be read and was skipped.} other {#
 msgid "{0, plural, one {# picture was imported.} other {# pictures were imported.}}"
 msgstr "{0, plural, one {# picture was imported.} other {# pictures were imported.}}"
 
+#. placeholder {0}: counts.recordingsSkipped
+msgid "{0, plural, one {# recording couldn’t be read or played, so Lymi reads that term aloud itself.} other {# recordings couldn’t be read or played, so Lymi reads those terms aloud itself.}}"
+msgstr "{0, plural, one {# recording couldn’t be read or played, so Lymi reads that term aloud itself.} other {# recordings couldn’t be read or played, so Lymi reads those terms aloud itself.}}"
+
+#. placeholder {0}: preview.recordingsSkipped
+msgid "{0, plural, one {# recording is in a format Lymi can’t play, so Lymi reads that term aloud itself.} other {# recordings are in a format Lymi can’t play, so Lymi reads those terms aloud itself.}}"
+msgstr "{0, plural, one {# recording is in a format Lymi can’t play, so Lymi reads that term aloud itself.} other {# recordings are in a format Lymi can’t play, so Lymi reads those terms aloud itself.}}"
+
+#. placeholder {0}: counts.recordings
+msgid "{0, plural, one {# recording was imported.} other {# recordings were imported.}}"
+msgstr "{0, plural, one {# recording was imported.} other {# recordings were imported.}}"
+
 #. placeholder {0}: today.attempts
 #. placeholder {1}: today.goal
 #. placeholder {2}: today.goal
@@ -175,8 +195,8 @@ msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# section} other {# sections}}"
 
 #. placeholder {0}: preview.audio
-msgid "{0, plural, one {# sound is skipped. Lymi reads terms aloud itself.} other {# sounds are skipped. Lymi reads terms aloud itself.}}"
-msgstr "{0, plural, one {# sound is skipped. Lymi reads terms aloud itself.} other {# sounds are skipped. Lymi reads terms aloud itself.}}"
+msgid "{0, plural, one {# sound is skipped, such as a sentence’s recording. Only a term’s own recording comes across.} other {# sounds are skipped, such as sentence recordings. Only a term’s own recording comes across.}}"
+msgstr "{0, plural, one {# sound is skipped, such as a sentence’s recording. Only a term’s own recording comes across.} other {# sounds are skipped, such as sentence recordings. Only a term’s own recording comes across.}}"
 
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"

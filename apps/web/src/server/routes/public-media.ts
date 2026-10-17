@@ -32,7 +32,11 @@ publicMedia.get(
       if ("retryAfter" in found) return tooManyRequests(found.retryAfter);
       object = found.clip;
     }
-    const audioType = object.httpMetadata?.contentType === "audio/wav" ? "audio/wav" : "audio/mpeg";
+    const stored = object.httpMetadata?.contentType ?? "";
+    // A recording an import brought may be WAV, M4A or AAC; generated speech is MP3 or WAV.
+    const audioType = ["audio/wav", "audio/mp4", "audio/aac"].includes(stored)
+      ? stored
+      : "audio/mpeg";
     const headers = new Headers({
       "Content-Type": kind === "image" ? "image/webp" : audioType,
       "Cache-Control": "no-store",

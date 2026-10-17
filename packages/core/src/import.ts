@@ -80,6 +80,12 @@ export type ImportedCard = {
   archived: boolean;
   /** The adapter's name for the first picture, fetched only while writing. */
   picture?: string | undefined;
+  /** The adapter's name for the term's own recording, fetched only while writing. */
+  recording?: string | undefined;
+  /** Clips the note held besides the term's recording, such as a sentence's, which are left out. */
+  soundsLeftOut?: number | undefined;
+  /** The note had a pitch accent that could not be read as text, which is left out. */
+  pitchLeftOut?: boolean | undefined;
   progress: ImportedProgress[];
   /** Fields cut or moved to fit Lymi's limits, for the preview's count. */
   shortened: boolean;
@@ -196,9 +202,197 @@ export function imageSources(html: string): string[] {
   return sources;
 }
 
-/** How many `[sound:]` references a field holds. Audio is dropped and counted. */
+/** How many `[sound:]` references a field holds. */
 export function soundCount(html: string): number {
   return html.match(/\[sound:[^\]]*\]/g)?.length ?? 0;
+}
+
+/** Every `[sound:]` file name in an Anki field, in order. */
+export function soundSources(html: string): string[] {
+  return [...html.matchAll(/\[sound:([^\]]*)\]/g)].flatMap((match) => {
+    const name = decodeEntities(match[1] ?? "").trim();
+    return name ? [name] : [];
+  });
+}
+
+/** A recording an import can keep by its name; the bytes decide when it is stored. */
+export function playableRecording(name: string): boolean {
+  return /\.(mp3|m4a|mp4|aac|wav)$/i.test(name);
+}
+
+/** Lymi's own generated speech in an Anki export, which Lymi makes again rather than keeps. */
+const LYMI_SPEECH = /^lymi-[^/]*-speech\.[a-z0-9]+$/i;
+const AUDIO_FIELD = /\b(audio|sound|voice|recording)s?\b|音声/i;
+const SENTENCE_FIELD = /\b(sentence|example|context|usage)s?\b|例文/i;
+
+/**
+ * The term's own recording among the clips a note's fields hold, by field: the first clip of a
+ * field named for audio and not for a sentence, then of the term, reading or meaning field.
+ * Every other clip, such as a sentence's, is left out and counted. Lymi's own speech is neither.
+ */
+export function termRecording(
+  names: readonly string[],
+  roles: readonly FieldRole[],
+  clips: readonly (readonly string[])[],
+): { recording: string | undefined; leftOut: number } {
+  const own = clips.map((list) => list.filter((name) => !LYMI_SPEECH.test(name)));
+  const total = own.reduce((sum, list) => sum + list.length, 0);
+  const sentence = names.map(
+    (name, i) => SENTENCE_FIELD.test(fieldWords(name)) || roles[i] === "example",
+  );
+  const order = [
+    ...names.flatMap((name, i) => (AUDIO_FIELD.test(fieldWords(name)) && !sentence[i] ? [i] : [])),
+    ...(["term", "pronunciation", "meaning"] as const).flatMap((role) =>
+      roles.flatMap((r, i) => (r === role && !sentence[i] ? [i] : [])),
+    ),
+  ];
+  const field = order.find((i) => (own[i]?.length ?? 0) > 0);
+  const recording = field === undefined ? undefined : own[field]?.[0];
+  return { recording, leftOut: total - (recording ? 1 : 0) };
+}
+
+type PitchUnit = { text: string; high: boolean; drop: boolean };
+type PitchFrame = {
+  tag: string;
+  units: PitchUnit[];
+  /** The element's own text is high, as an overline or `data-pitch="high"` says. */
+  high: boolean;
+  /** An empty child drew an overline or a downstep beside this element's text. */
+  line: { high: boolean; drop: boolean };
+  /** Drawn by this element when it is empty, as Yomitan draws a mora's line. */
+  draws: { high: boolean; drop: boolean };
+  drop: boolean;
+};
+
+const SMALL_KANA = /[ゃゅょぁぃぅぇぉゎャュョァィゥェォヮ]/;
+const MORA = /[\p{Script=Hiragana}\p{Script=Katakana}ー]/u;
+const DOWNSTEP = "ꜜ";
+
+function attribute(attrs: string, name: string): string {
+  const match = new RegExp(`\\b${name}\\s*=\\s*("([^"]*)"|'([^']*)'|([^\\s>]+))`, "i").exec(attrs);
+  return decodeEntities(match?.[2] ?? match?.[3] ?? match?.[4] ?? "");
+}
+
+function pitchItem(units: PitchUnit[]): string {
+  const text = units.map((unit) => unit.text).join("");
+  if (!units.some((unit) => unit.high || unit.drop)) {
+    const plain = text
+      .replace(/\s+/g, " ")
+      .replace(/[＼\\]/g, DOWNSTEP)
+      .trim();
+    const positions = plain.match(/\d+/g);
+    // A bare position, such as "0" or "[1][3]", reads as Yomitan writes it.
+    return positions && /^[\s\d[\](),、・/]+$/.test(plain)
+      ? positions.map((n) => `[${n}]`).join(" ")
+      : plain;
+  }
+  let out = "";
+  let position: number | null = null;
+  let morae = 0;
+  units.forEach((unit, i) => {
+    out += unit.text;
+    morae += [...unit.text].filter((ch) => MORA.test(ch) && !SMALL_KANA.test(ch)).length;
+    const next = units[i + 1];
+    if (position === null && (unit.drop || (unit.high && next && !next.high))) {
+      out += DOWNSTEP;
+      position = morae;
+    }
+  });
+  return `${out.replace(/\s+/g, "")} [${position ?? 0}]`;
+}
+
+/**
+ * A pitch accent field as one plain line, such as "はꜜし [1]": overlines and downstep marks in
+ * HTML, as Yomitan and the pitch add-ons write them, become a downstep after the last high mora
+ * and the accent's position. Graphs are dropped, so a field of graphs alone comes back empty.
+ */
+export function pitchNotation(html: string): string {
+  const source = html
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<(style|script|svg)\b[^>]*>[\s\S]*?<\/\1>/gi, "")
+    .replace(/\[sound:[^\]]*\]/g, "");
+  const frame = (tag: string, attrs = ""): PitchFrame => {
+    const style = attribute(attrs, "style").toLowerCase().replace(/\s+/g, "");
+    const names = attribute(attrs, "class").toLowerCase();
+    const pitch = attribute(attrs, "data-pitch").toLowerCase();
+    const next = attribute(attrs, "data-pitch-next").toLowerCase();
+    const overline =
+      /border-top(-style)?:[^;]*solid|border-top:[^;]*\d|text-decoration[^;]*overline/.test(style);
+    const downstep = /border-right(-style)?:[^;]*solid|border-right:[^;]*\d/.test(style);
+    return {
+      tag,
+      units: [],
+      high:
+        pitch === "high" ||
+        /\b(high|overline)\b/.test(names) ||
+        /text-decoration[^;]*overline/.test(style),
+      drop: next === "low" && pitch === "high",
+      line: { high: false, drop: false },
+      draws: { high: overline, drop: downstep || /\bdownstep\b/.test(names) },
+    };
+  };
+  const stack: PitchFrame[] = [frame("root")];
+  const items: string[] = [];
+  const top = () => stack[stack.length - 1] as PitchFrame;
+  for (const match of source.matchAll(/<(\/?)([a-z][a-z0-9]*)\b([^>]*)>|([^<]+)/gi)) {
+    const [, closing, tag, attrs, text] = match;
+    if (text !== undefined) {
+      const value = decodeEntities(text).replace(/\s+/g, " ");
+      if (!value.trim()) continue;
+      const high = stack.some((f) => f.high);
+      top().units.push({ text: value.trim(), high, drop: false });
+      continue;
+    }
+    const name = (tag ?? "").toLowerCase();
+    if (/^(br|img|wbr|hr|input|meta|link)$/.test(name) || /\/\s*$/.test(attrs ?? "")) continue;
+    if (!closing) {
+      stack.push(frame(name, attrs));
+      continue;
+    }
+    const at = stack.map((f) => f.tag).lastIndexOf(name);
+    if (at <= 0) continue;
+    while (stack.length > at) {
+      const done = stack.pop() as PitchFrame;
+      const parent = top();
+      if (done.units.length === 0) {
+        parent.line.high ||= done.draws.high;
+        parent.line.drop ||= done.draws.drop;
+        continue;
+      }
+      const lined = done.line.high || done.line.drop || done.drop;
+      const units = lined
+        ? [
+            {
+              text: done.units.map((unit) => unit.text).join(""),
+              high: done.line.high || done.units.some((unit) => unit.high),
+              drop: done.line.drop || done.drop,
+            },
+          ]
+        : done.units;
+      if (done.tag === "li") {
+        const item = pitchItem(units);
+        if (item) items.push(item);
+      } else parent.units.push(...units);
+    }
+  }
+  while (stack.length > 1) {
+    const done = stack.pop() as PitchFrame;
+    top().units.push(...done.units);
+  }
+  const rest = pitchItem(top().units);
+  if (rest) items.push(rest);
+  return items.filter((item) => /[\p{L}\p{N}]/u.test(item)).join(" · ");
+}
+
+/** A field's text as an import keeps it: pitch accent as its notation, a translation as one line. */
+export function importFieldText(
+  name: string,
+  raw: string,
+  toText: (raw: string) => string = htmlToText,
+): string {
+  if (isPitchField(name)) return pitchNotation(raw);
+  const text = toText(raw);
+  return isTranslationField(name) ? text.replace(/\s*\n\s*/g, " ") : text;
 }
 
 function cut(text: string, limit: number): string {
@@ -289,7 +483,11 @@ const ROLE_PATTERNS: [Exclude<FieldRole, "term" | "skip">, RegExp][] = [
 ];
 const TERM_PATTERN =
   /\b(front|word|term|expression|vocab(ulary)?|kanji|question|target|phrase)\b|単語/i;
-const SKIP_PATTERN = /\b(audio|sound|image|picture|photo|add reverse|pitch|sort)\b/i;
+const SKIP_PATTERN =
+  /\b(audio|sound|image|picture|photo|add reverse|sort|freq(uency)?|rank(ing)?)\b/i;
+/** A translation of the example sentence, such as Kaishi's "Sentence Meaning": one line of notes. */
+const TRANSLATION_PATTERN =
+  /\b(sentence|example|context)s?\b.*\b(meaning|translation|english|gloss|definition)$/i;
 /** Switches such as Lapis's `IsSentenceCard`, which choose a template rather than hold text. */
 const FLAG_PATTERN = /^(is|has)\s/i;
 
@@ -313,7 +511,29 @@ function patternRole(text: string): FieldRole | undefined {
 export function namedFieldRole(name: string): FieldRole | undefined {
   const words = fieldWords(name);
   if (SKIP_PATTERN.test(words) || FLAG_PATTERN.test(words)) return "skip";
+  if (/\bpitch\b/i.test(words)) {
+    if (isPitchField(name)) return "notes";
+    return /\bnotes?$/i.test(words) ? "notes" : "skip";
+  }
+  if (TRANSLATION_PATTERN.test(words)) return "notes";
   return patternRole(words.split(/\s+/).at(-1) ?? "") ?? patternRole(words);
+}
+
+/**
+ * A field holding the term's pitch accent, such as Kaishi's "Pitch Accent" or Lapis's
+ * "PitchPosition", which becomes one line of notes. "Pitch Accent Notes" is ordinary notes.
+ */
+export function isPitchField(name: string): boolean {
+  const words = fieldWords(name);
+  return (
+    (/\bpitch\b/i.test(words) && !/\b(notes?|categor(y|ies))$/i.test(words)) ||
+    /^accent$/i.test(words)
+  );
+}
+
+/** A field translating the example sentence, which becomes one line of notes. */
+export function isTranslationField(name: string): boolean {
+  return TRANSLATION_PATTERN.test(fieldWords(name));
 }
 
 /** "Expression Furigana" beside "Expression" repeats that field with readings over its kanji. */
@@ -331,6 +551,11 @@ function isFuriganaOf(name: string, names: readonly string[]): boolean {
  */
 export function guessFieldRoles(names: readonly string[]): FieldRole[] {
   const roles = names.map((name) => (isFuriganaOf(name, names) ? "skip" : namedFieldRole(name)));
+  // One pitch line is enough; a second pitch field, such as a graph beside positions, is left out.
+  const pitch = names.findIndex((name, i) => roles[i] === "notes" && isPitchField(name));
+  names.forEach((name, i) => {
+    if (i !== pitch && roles[i] === "notes" && isPitchField(name)) roles[i] = "skip";
+  });
   const claim = (role: FieldRole) => {
     let found = false;
     for (let i = 0; i < roles.length; i++) {
@@ -355,7 +580,7 @@ export function guessFieldRoles(names: readonly string[]): FieldRole[] {
 
 /**
  * Fields from a note's values under the chosen roles. Several fields with the notes role join
- * with a blank line; any other role takes its first non-empty field.
+ * line by line; any other role takes its first non-empty field.
  */
 export function fieldsFromRoles(
   values: readonly string[],
@@ -369,7 +594,8 @@ export function fieldsFromRoles(
     if (role === "notes") notes.push(value);
     else if (!fields[role]) fields[role] = value;
   });
-  if (notes.length > 0) fields.notes = notes.join("\n\n");
+  // Each field starts its own line, so a translation and a pitch accent stay one line each.
+  if (notes.length > 0) fields.notes = notes.join("\n");
   return fields;
 }
 
@@ -455,6 +681,21 @@ export const ImportCounts = z
       .number()
       .int()
       .meta({ description: "Pictures that could not be read or stored" }),
+    recordings: z.number().int().meta({
+      description:
+        "Terms' own recordings that become their cards' audio, which Lymi never replaces with generated speech",
+    }),
+    recordingsSkipped: z.number().int().meta({
+      description:
+        "Recordings that could not be read or stored: past 2 MB, or not MP3, M4A, AAC or WAV",
+    }),
+    soundsLeftOut: z.number().int().meta({
+      description: "Clips that are not a term's recording, such as sentence audio, left out",
+    }),
+    pitchSkipped: z
+      .number()
+      .int()
+      .meta({ description: "New cards whose pitch accent could not be read as text, left out" }),
     decks: z.number().int().meta({ description: "Decks created" }),
   })
   .meta({ id: "ImportCounts" });
@@ -471,6 +712,10 @@ export const emptyImportCounts = (): ImportCounts => ({
   reviews: 0,
   pictures: 0,
   picturesSkipped: 0,
+  recordings: 0,
+  recordingsSkipped: 0,
+  soundsLeftOut: 0,
+  pitchSkipped: 0,
   decks: 0,
 });
 
@@ -505,7 +750,7 @@ export const ImportSummaryOut = z
     notes: z.number().int(),
     reviews: z.number().int(),
     pictures: z.number().int(),
-    audio: z.number().int().meta({ description: "Sound references, which are not imported" }),
+    audio: z.number().int().meta({ description: "Sound references in the file" }),
     unsupported: z
       .number()
       .int()
@@ -551,7 +796,7 @@ export const ImportPreviewOut = ImportCounts.extend({
   addedByNoteType: z
     .record(z.string(), z.number().int())
     .meta({ description: "New cards per note type key" }),
-  audio: z.number().int(),
+  audio: z.number().int().meta({ description: "The same as `soundsLeftOut`, for older apps" }),
   unsupported: z.number().int(),
 }).meta({ id: "ImportPreview" });
 export type ImportPreviewOut = z.infer<typeof ImportPreviewOut>;

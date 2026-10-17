@@ -1,5 +1,5 @@
 import { canSpeakTerm, LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
-import { and, eq } from "@lymi/core/db";
+import { and, eq, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider } from "../ai";
 import { speechText } from "../ai/speech-text";
@@ -21,7 +21,8 @@ interface AudioDependencies {
 /**
  * Return cached pronunciation audio or generate it on the first play. Card creation and
  * enrichment never call this, and cards without a language never reach R2 or a provider.
- * Audio remembered from a fallback or a retired provider is replaced once the preferred one works.
+ * Audio remembered from a fallback or a retired provider is replaced once the preferred one works;
+ * a recording an import brought is served as it is.
  */
 export async function pronunciationAudio(
   ctx: ServiceContext,
@@ -29,11 +30,16 @@ export async function pronunciationAudio(
   deps: AudioDependencies,
 ): Promise<R2ObjectBody> {
   const card = await getCard(ctx, cardId);
+  if (card.archivedAt) throw new ServiceError("not_found", "Card not found");
+  // A recording is never replaced, whatever the term, language or provider. CONTEXT.md, Recording.
+  if (card.audioSource === "recorded" && card.audioKey) {
+    const recorded = await deps.bucket.get(card.audioKey);
+    if (recorded) return recorded;
+  }
   const language = LanguageTag.safeParse(card.language);
   if (!language.success) {
     throw new ServiceError("invalid", "Pronunciation audio is only available for language cards");
   }
-  if (card.archivedAt) throw new ServiceError("not_found", "Card not found");
   if (!canSpeakTerm(card)) {
     throw new ServiceError(
       "invalid",
@@ -176,10 +182,11 @@ async function rememberAudioKey(
 ): Promise<void> {
   const [updated] = await ctx.db
     .update(schema.cards)
-    .set({ audioKey: key, updatedAt: new Date() })
+    .set({ audioKey: key, audioSource: "generated", updatedAt: new Date() })
     .where(
       and(
         eq(schema.cards.id, card.id),
+        or(isNull(schema.cards.audioSource), eq(schema.cards.audioSource, "generated")),
         eq(schema.cards.userId, card.userId),
         eq(schema.cards.term, card.term),
         eq(schema.cards.language, card.language as string),

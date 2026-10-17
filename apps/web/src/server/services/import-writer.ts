@@ -11,6 +11,7 @@ import {
   isImageMode,
   newId,
   normaliseTerm,
+  playableRecording,
   replayProgress,
   serializeState,
   stateDirection,
@@ -27,6 +28,7 @@ import { selectIn } from "./batch";
 import { type CardImageStorage, uploadCardImage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { stateStatementsForCards } from "./modes";
+import { MAX_RECORDING_BYTES, storeRecording } from "./recordings";
 import { syncTagStatements } from "./tags";
 
 /**
@@ -202,15 +204,17 @@ function classify(
   });
 }
 
-/** Adds a batch to the counts. Pictures count as they land, except in a preview. */
+/** Adds a batch to the counts. Pictures and recordings count as they land, except in a preview. */
 function tally(
   counts: ImportCounts,
   classified: Classified[],
   { pictures }: { pictures: boolean },
 ) {
   for (const item of classified) {
-    if (item.kind === "existing") counts.existing++;
-    else if (item.kind === "duplicate") {
+    if (item.kind === "existing") {
+      counts.existing++;
+      if (pictures) countRecording(counts, item.card);
+    } else if (item.kind === "duplicate") {
       counts.duplicates++;
       if (counts.duplicateExamples.length < DUPLICATE_EXAMPLES) {
         counts.duplicateExamples.push({ term: item.card.fields.term, deckName: item.deckName });
@@ -221,8 +225,18 @@ function tally(
       if (item.card.shortened) counts.shortened++;
       counts.reviews += item.card.progress.reduce((sum, p) => sum + p.reviews.length, 0);
       if (pictures && item.card.picture) counts.pictures++;
+      if (pictures) countRecording(counts, item.card);
+      counts.soundsLeftOut += item.card.soundsLeftOut ?? 0;
+      if (item.card.pitchLeftOut) counts.pitchSkipped++;
     }
   }
+}
+
+/** A preview's guess from the clip's name; storing it reads the bytes and has the last word. */
+function countRecording(counts: ImportCounts, card: ImportedCard) {
+  if (!card.recording) return;
+  if (playableRecording(card.recording)) counts.recordings++;
+  else counts.recordingsSkipped++;
 }
 
 export type ImportWork<Note> = {
@@ -362,7 +376,8 @@ export async function previewImport<Note>(
     known,
     tags: tags.size,
     addedByNoteType,
-    audio: work.summary.audio,
+    // Clips that do not come across; the app before recordings named every clip here.
+    audio: counts.soundsLeftOut,
     unsupported: work.summary.unsupported,
   };
 }
@@ -472,7 +487,13 @@ async function reviewId(stateId: string, at: Date): Promise<string> {
   return at.getTime().toString(36).padStart(9, "0") + hash;
 }
 
-export type PendingPicture = { cardId: string; name: string; description?: string | undefined };
+/** A picture, or the term's recording when `kind` says so, stored after its card is written. */
+export type PendingPicture = {
+  cardId: string;
+  name: string;
+  description?: string | undefined;
+  kind?: "recording" | undefined;
+};
 
 /**
  * Writes one stored chunk as one D1 batch. Every statement runs only while the import's
@@ -529,6 +550,10 @@ export async function writeChunk<Note>(
   for (const item of classified) {
     if (item.kind === "existing") {
       const { fields, tags } = item.card;
+      // A recording replaces generated speech on a card an earlier import brought without it.
+      if (item.card.recording) {
+        pictures.push({ cardId: item.id, name: item.card.recording, kind: "recording" });
+      }
       existingRows.push({
         id: item.id,
         meaning: fields.meaning ?? null,
@@ -585,6 +610,9 @@ export async function writeChunk<Note>(
         name: item.card.picture,
         ...(item.card.pictureDescription ? { description: item.card.pictureDescription } : {}),
       });
+    }
+    if (item.card.recording) {
+      pictures.push({ cardId: id, name: item.card.recording, kind: "recording" });
     }
 
     for (const progress of item.card.progress) {
@@ -726,18 +754,43 @@ export async function writeChunk<Note>(
   return { pictures: moved ? pictures : [] };
 }
 
-/** Stores pictures for cards this import added. Returns how many landed and how many did not. */
+type Totals = { stored: number; skipped: number };
+export type MediaTotals = Totals & {
+  /** Absent in a run handed over before recordings were kept. */
+  recordings?: Totals | undefined;
+};
+export type AttachedMedia = Totals & { recordings: Totals };
+
+/**
+ * Stores pictures for cards this import added, and recordings for cards it added or met again.
+ * Returns how many of each landed and how many did not.
+ */
 export async function attachPictures<Note>(
   ctx: ServiceContext,
   work: ImportWork<Note>,
   file: Parameters<SourceAdapter<Note>["media"]>[0],
   pending: PendingPicture[],
-  storage: CardImageStorage,
-) {
+  storage: Partial<CardImageStorage> & { audio?: R2Bucket | undefined },
+): Promise<AttachedMedia> {
   const read = await work.adapter.media(file);
   let stored = 0;
   let skipped = 0;
+  const recordings = { stored: 0, skipped: 0 };
   for (const picture of pending) {
+    if (picture.kind === "recording") {
+      const bytes = storage.audio ? await read(picture.name, MAX_RECORDING_BYTES) : null;
+      const kept =
+        !!bytes &&
+        !!storage.audio &&
+        (await storeRecording(ctx, picture.cardId, bytes, storage.audio));
+      recordings[kept ? "stored" : "skipped"]++;
+      continue;
+    }
+    const images = imageStorage(storage);
+    if (!images) {
+      skipped++;
+      continue;
+    }
     const [card] = await ctx.db
       .select({ imageVersion: schema.cards.imageVersion })
       .from(schema.cards)
@@ -762,13 +815,13 @@ export async function attachPictures<Note>(
           picture.cardId,
           bytes,
           { version: null, description: picture.description },
-          storage,
+          images,
         );
       } catch (err) {
         // A description that names the answer is refused; the picture still comes across without it.
         if (!(picture.description && err instanceof ServiceError && err.code === "invalid"))
           throw err;
-        await uploadCardImage(ctx, picture.cardId, bytes, { version: null }, storage);
+        await uploadCardImage(ctx, picture.cardId, bytes, { version: null }, images);
       }
       stored++;
     } catch (err) {
@@ -776,7 +829,11 @@ export async function attachPictures<Note>(
       skipped++;
     }
   }
-  return { stored, skipped };
+  return { stored, skipped, recordings };
+}
+
+function imageStorage(storage: Partial<CardImageStorage>): CardImageStorage | null {
+  return storage.bucket && storage.images ? (storage as CardImageStorage) : null;
 }
 
 /**

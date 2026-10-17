@@ -198,6 +198,9 @@ export const analyticsEvents = {
     card_count: count,
     adapter: z.enum(["anki", "mochi", "noji", "lymi", "quizlet", "unknown"]),
     outcome: z.enum(["done", "failed"]),
+    recordings: count.optional(),
+    recordings_skipped: count.optional(),
+    sounds_left_out: count.optional(),
   }),
   import_failed: z.object({ source, card_count: count }),
   export_started: z.object({

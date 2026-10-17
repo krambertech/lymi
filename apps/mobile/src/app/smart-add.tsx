@@ -7,7 +7,6 @@ import {
   type LessonTerm,
   refusalCode,
 } from "@lymi/client/api";
-import { deckCardsQuery } from "@lymi/client/queries";
 import { PLATE_ARRIVE } from "@lymi/design";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
@@ -27,7 +26,6 @@ import {
   type Page,
   type Picked,
   scan,
-  shoot,
   wordCount,
 } from "../smart-add/material";
 import {
@@ -51,6 +49,8 @@ import { toast } from "../ui/toast-host";
 type Step = "input" | "writing" | "reading" | "questions" | "list";
 
 const LESSON_ACCESS = ["lesson-reads", "access"];
+/** Past the Worker's own 120 s limit on the model, so only a read the server has dropped stops. */
+const QUIET_MS = 130_000;
 
 const { duration, easing } = timed(PLATE_ARRIVE);
 /** Each step rises into place as the last one fades, as the web's do. */
@@ -106,8 +106,13 @@ export default function SmartAdd() {
   const existing = useMemo(() => terms.filter((term) => term.existing), [terms]);
   const words = wordCount(text);
   const empty = pages.length === 0 && words === 0;
+  /** What was read last, so going back and forward with the same lesson keeps its list. */
+  const material = `${pages.map((page) => page.id).join()}|${text.trim()}`;
+  const readOf = useRef<string | null>(null);
 
   useEffect(() => () => stop.current?.abort(), []);
+  // The deck the server names must be on the list, though the web may have changed the decks since.
+  useEffect(() => void qc.invalidateQueries({ queryKey: ["decks"] }), [qc]);
   // A new step starts at its top.
   // biome-ignore lint/correctness/useExhaustiveDependencies: runs on each step
   useEffect(() => scroll.current?.scrollTo({ y: 0, animated: false }), [step]);
@@ -145,21 +150,19 @@ export default function SmartAdd() {
   };
 
   const sources = [
-    canScan()
-      ? {
-          id: "scan",
-          icon: "camera" as const,
-          label: t`Scan pages`,
-          hint: t`Several pages at once`,
-          onPress: () => void take(scan),
-        }
-      : {
-          id: "camera",
-          icon: "camera" as const,
-          label: t`Camera`,
-          hint: t`One page at a time`,
-          onPress: () => void take(shoot),
-        },
+    // Every supported iPhone has the document camera; without one there is no camera to offer,
+    // and iOS's plain camera picker throws rather than refusing.
+    ...(canScan()
+      ? [
+          {
+            id: "scan",
+            icon: "camera" as const,
+            label: t`Scan pages`,
+            hint: t`Several pages at once`,
+            onPress: () => void take(scan),
+          },
+        ]
+      : []),
     {
       id: "photos",
       icon: "picture" as const,
@@ -184,16 +187,23 @@ export default function SmartAdd() {
   ];
 
   const start = async () => {
-    if (decks.length === 0) {
+    if (decks.length === 0 && !fixedDeck) {
       setError(t`Create a deck first, then add a lesson to it.`);
       return;
     }
-    if (empty || atLimit) return;
+    if (empty) return;
+    // Unchanged material goes back to its list, so looking at the lesson again costs no read.
+    if (finished && readOf.current === material) {
+      setStep(questions.length > 0 ? "questions" : "list");
+      return;
+    }
+    if (atLimit) return;
     setError(undefined);
     setTerms([]);
     setQuestions([]);
     setEdits(new Map());
     setFinished(false);
+    readOf.current = material;
     setStep("reading");
     const controller = new AbortController();
     stop.current = controller;
@@ -201,11 +211,27 @@ export default function SmartAdd() {
     const hint = decks.some((d) => d.id === last) ? last : undefined;
     let asked: LessonQuestion[] = [];
     let found: LessonTerm[] = [];
+    // A read that goes quiet is stopped, so the scan never runs on with nothing coming.
+    let quiet = false;
+    let idle: ReturnType<typeof setTimeout> | undefined;
+    const wake = () => {
+      clearTimeout(idle);
+      idle = setTimeout(() => {
+        quiet = true;
+        controller.abort();
+      }, QUIET_MS);
+    };
+    wake();
     try {
       await api.readLesson(
         lessonForm(pages, text, fixedDeck, hint),
         (event) => {
-          if (event.type === "deck") setDeckId(event.deckId);
+          wake();
+          if (event.type === "deck") {
+            setDeckId(event.deckId);
+            if (!decks.some((d) => d.id === event.deckId))
+              void qc.invalidateQueries({ queryKey: ["decks"] });
+          }
           if (event.type === "term") {
             found = [...found, event.term];
             setTerms(found);
@@ -219,6 +245,7 @@ export default function SmartAdd() {
         },
         controller.signal,
       );
+      clearTimeout(idle);
       setFinished(true);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       void qc.invalidateQueries({ queryKey: LESSON_ACCESS });
@@ -230,11 +257,19 @@ export default function SmartAdd() {
         if (!controller.signal.aborted) setStep(asked.length > 0 ? "questions" : "list");
       }, 700);
     } catch (failure) {
-      if (controller.signal.aborted) return;
+      clearTimeout(idle);
+      readOf.current = null;
+      if (controller.signal.aborted && !quiet) return;
       setStep("input");
       void qc.invalidateQueries({ queryKey: LESSON_ACCESS });
       // The notice says the limit is reached; an error line under it would only repeat it.
-      setError(refusalCode(failure) === "daily_limit" ? undefined : errorMessage(failure));
+      setError(
+        quiet
+          ? t`Couldn’t read the lesson. Try again.`
+          : refusalCode(failure) === "daily_limit"
+            ? undefined
+            : errorMessage(failure),
+      );
     }
   };
 
@@ -301,12 +336,15 @@ export default function SmartAdd() {
       captureStore.set(CAPTURE_KEYS.smartAddDeck, deck.id);
       for (const queryKey of [["decks"], ["queue"], ["rounds"], ["activity"]])
         void qc.invalidateQueries({ queryKey });
-      void qc.invalidateQueries({ queryKey: deckCardsQuery(deck.id).queryKey });
       const added = results.filter((r) => r.status === "added").length;
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      const name = deck.name;
       toast.add({
         id: "smart-added",
-        title: t`${plural(added, { one: "Added # card", other: "Added # cards" })} to ${deck.name}. Lymi is writing their examples.`,
+        title:
+          added > 0
+            ? t`${plural(added, { one: `Added # card to ${name}`, other: `Added # cards to ${name}` })}`
+            : t`Those terms are already in your decks`,
       });
       setAdded(true);
     } catch (failure) {
@@ -349,7 +387,7 @@ export default function SmartAdd() {
             close={{ ...back, onPress: () => setStep("input") }}
             middle={<SmartAddTitle />}
             action={{
-              icon: "forward",
+              icon: "check",
               label: t`Show terms`,
               busy: pending,
               onPress: () => void showTerms(),
@@ -395,9 +433,10 @@ export default function SmartAdd() {
             close={{ label: empty ? t`Close` : t`Cancel`, onPress: () => router.back() }}
             middle={<SmartAddTitle />}
             action={{
-              icon: "ai",
+              icon: "check",
               label: t`Find terms`,
-              disabled: empty || atLimit || !online,
+              disabled:
+                empty || ((atLimit || !online) && !(finished && readOf.current === material)),
               onPress: () => void start(),
             }}
           />
@@ -474,24 +513,25 @@ export default function SmartAdd() {
             />
           )}
         </Animated.View>
+        {/* Inside the scroll view: a form sheet lays out at most a header and one scroll view. */}
+        <TermSheet
+          term={editing}
+          edit={editing ? edits.get(editing.id) : undefined}
+          onClose={() => setEditing(null)}
+          onSave={(edit) => {
+            if (!editing) return;
+            const id = editing.id;
+            setEdits((all) => {
+              const next = new Map(all);
+              if (edit) next.set(id, edit);
+              else next.delete(id);
+              return next;
+            });
+            // An edited term is one the learner wants.
+            if (edit) setTicked((all) => new Set(all).add(id));
+          }}
+        />
       </ScrollView>
-      <TermSheet
-        term={editing}
-        edit={editing ? edits.get(editing.id) : undefined}
-        onClose={() => setEditing(null)}
-        onSave={(edit) => {
-          if (!editing) return;
-          const id = editing.id;
-          setEdits((all) => {
-            const next = new Map(all);
-            if (edit) next.set(id, edit);
-            else next.delete(id);
-            return next;
-          });
-          // An edited term is one the learner wants.
-          if (edit) setTicked((all) => new Set(all).add(id));
-        }}
-      />
     </View>
   );
 }

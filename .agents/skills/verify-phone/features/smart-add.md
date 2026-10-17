@@ -8,7 +8,7 @@ A long press on **Add a card** in a tab's top bar, then **Smart add**; Library's
 
 ## Drive
 
-[`smart-add.yaml`](smart-add.yaml), as `learner` from Today: long-press **Add a card**, choose **Smart add**, choose **Text**, type a short Estonian lesson, press **Done**, then **Find terms**. Once the list shows, open the first term, check **From the lesson** shows, close it, and press **Add** with the count in its name.
+[`smart-add.yaml`](smart-add.yaml), as `learner` from Today: long-press **Add a card**, choose **Smart add**, choose **Text**, type a short Italian word list with glosses, press **Done**, then **Find terms**. Once the list shows, hold the first term to open it, check **From the lesson** shows, close it, and press **Add** with the count in its name.
 
 ## End state
 
@@ -18,5 +18,6 @@ The sheet closes on the toast **Added … cards to** the deck. [`smart-add.mjs`]
 
 - The read needs `ANTHROPIC_API_KEY` in `apps/web/.dev.vars`; without it the Worker refuses with 503 and the flow stops on the lesson step with the error under the sources. `env()` fails first, naming the missing key.
 - A non-operator persona has 5 reads a day, so a sixth run in one day shows the limit notice instead; reset the persona or wait.
-- The Simulator has no camera, so **Scan pages** shows as **Camera** there and is not driven; the document scanner is checked on a device.
+- The Simulator has no camera, so **Scan pages** does not show there; the document scanner is checked on a device.
+- The reader takes the terms a lesson teaches, so plain sentences with no word list can come back with none; the flow's text is a glossed list, as a textbook page is. The learner persona's decks are Italian.
 - Photos and Files open iOS's pickers, which Maestro drives poorly; the flow uses Text, the same read path.

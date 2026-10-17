@@ -720,9 +720,6 @@ msgstr "день"
 msgid "A few quick questions, then your first review."
 msgstr "Несколько быстрых вопросов, а потом первое повторение."
 
-msgid "A few things before the list. The usual answer is already chosen."
-msgstr "Несколько вопросов перед списком. Обычный ответ уже выбран."
-
 msgid "a field"
 msgstr "поле"
 
@@ -2823,6 +2820,9 @@ msgstr "Как на устройстве."
 msgid "Matching languages"
 msgstr "Найденные языки"
 
+msgid "May belong on another card"
+msgstr "Может относиться к другой карточке"
+
 msgid "Meaning"
 msgstr "Значение"
 
@@ -2864,9 +2864,6 @@ msgstr "«{from}» объединён с «{spelled}»"
 
 msgid "Message"
 msgstr "Сообщение"
-
-msgid "Might not need its own card"
-msgstr "Возможно, отдельная карточка не нужна"
 
 msgid "Mode"
 msgstr "Режим"
@@ -3246,9 +3243,6 @@ msgstr "По одной странице"
 
 msgid "One side only"
 msgstr "Только одна сторона"
-
-msgid "One thing before the list. The usual answer is already chosen."
-msgstr "Один вопрос перед списком. Обычный ответ уже выбран."
 
 msgid "Only on days with cards due."
 msgstr "Только в дни, когда есть карточки к повторению."

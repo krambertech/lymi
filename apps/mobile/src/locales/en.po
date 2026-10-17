@@ -57,14 +57,6 @@ msgstr "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card
 msgid "{0, plural, one {# field} other {# fields}}"
 msgstr "{0, plural, one {# field} other {# fields}}"
 
-#. placeholder {0}: pages.length
-msgid "{0, plural, one {# file} other {# files}} · up to {MAX_FILES}"
-msgstr "{0, plural, one {# file} other {# files}} · up to {MAX_FILES}"
-
-#. placeholder {0}: pages.length
-msgid "{0, plural, one {# file} other {# files}} and text"
-msgstr "{0, plural, one {# file} other {# files}} and text"
-
 #. placeholder {0}: c.lapses
 msgid "{0, plural, one {# forgotten} other {# forgotten}}"
 msgstr "{0, plural, one {# forgotten} other {# forgotten}}"
@@ -191,9 +183,8 @@ msgstr "{0} shared a deck"
 msgid "{0}, done"
 msgstr "{0}, done"
 
-#. placeholder {0}: deck.name
-msgid "{added, plural, one {Added # card} other {Added # cards}} to {0}. Lymi is writing their examples."
-msgstr "{added, plural, one {Added # card} other {Added # cards}} to {0}. Lymi is writing their examples."
+msgid "{added, plural, one {Added # card to {name}} other {Added # cards to {name}}}"
+msgstr "{added, plural, one {Added # card to {name}} other {Added # cards to {name}}}"
 
 msgid "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
 msgstr "{cards, plural, one {# card is added to your reviews.} other {# cards are added to your reviews.}}"
@@ -334,9 +325,6 @@ msgstr "{lapses, plural, one {forgotten once} other {forgotten # times}}"
 msgid "{left, plural, one {# review} other {# reviews}} to today’s goal"
 msgstr "{left, plural, one {# review} other {# reviews}} to today’s goal"
 
-msgid "{limit, plural, one {Smart add is in beta, so it reads up to # lesson a day.} other {Smart add is in beta, so it reads up to # lessons a day.}} A lesson it couldn’t read doesn’t count, and the count starts again at midnight."
-msgstr "{limit, plural, one {Smart add is in beta, so it reads up to # lesson a day.} other {Smart add is in beta, so it reads up to # lessons a day.}} A lesson it couldn’t read doesn’t count, and the count starts again at midnight."
-
 msgid "{limit, plural, one {You’ve used today’s # lesson} other {You’ve used today’s # lessons}}"
 msgstr "{limit, plural, one {You’ve used today’s # lesson} other {You’ve used today’s # lessons}}"
 
@@ -465,9 +453,6 @@ msgstr "A few minutes keeps them fresh."
 
 msgid "A few quick questions, then your first review."
 msgstr "A few quick questions, then your first review."
-
-msgid "A few things before the list. The usual answer is already chosen."
-msgstr "A few things before the list. The usual answer is already chosen."
 
 msgid "A language"
 msgstr "A language"
@@ -598,9 +583,6 @@ msgstr "Added {count, plural, one {# card} other {# cards}} to {deck}"
 
 msgid "Adding a deck needs a connection. Connect and try again."
 msgstr "Adding a deck needs a connection. Connect and try again."
-
-msgid "After you add them, Lymi writes each card’s example and pronunciation."
-msgstr "After you add them, Lymi writes each card’s example and pronunciation."
 
 msgid "Ahead"
 msgstr "Ahead"
@@ -838,9 +820,6 @@ msgstr "by the API"
 
 msgid "by you"
 msgstr "by you"
-
-msgid "Camera"
-msgstr "Camera"
 
 msgctxt "deck tag"
 msgid "Canadian citizenship test"
@@ -1148,6 +1127,9 @@ msgstr "Couldn’t reach Lymi. Check your connection and try again."
 msgid "Couldn’t reach the sign-in service. Check your connection and try again."
 msgstr "Couldn’t reach the sign-in service. Check your connection and try again."
 
+msgid "Couldn’t read the lesson. Try again."
+msgstr "Couldn’t read the lesson. Try again."
+
 msgid "Couldn’t remove them. Try again."
 msgstr "Couldn’t remove them. Try again."
 
@@ -1403,9 +1385,6 @@ msgstr "Edit hook"
 
 msgid "Edit term"
 msgstr "Edit term"
-
-msgid "Edit the term or its meaning"
-msgstr "Edit the term or its meaning"
 
 msgid "Edit the text"
 msgstr "Edit the text"
@@ -2049,6 +2028,9 @@ msgstr "Mark important"
 msgid "Marked important"
 msgstr "Marked important"
 
+msgid "May belong on another card"
+msgstr "May belong on another card"
+
 msgid "Meaning"
 msgstr "Meaning"
 
@@ -2069,9 +2051,6 @@ msgstr "Memory hook: {text}"
 
 msgid "Message"
 msgstr "Message"
-
-msgid "Might not need its own card"
-msgstr "Might not need its own card"
 
 msgid "Modes"
 msgstr "Modes"
@@ -2338,12 +2317,6 @@ msgstr "One after another, automatically"
 
 msgid "One after another, when you start them"
 msgstr "One after another, when you start them"
-
-msgid "One page at a time"
-msgstr "One page at a time"
-
-msgid "One thing before the list. The usual answer is already chosen."
-msgstr "One thing before the list. The usual answer is already chosen."
 
 msgid "Only people you invite"
 msgstr "Only people you invite"
@@ -3211,6 +3184,9 @@ msgstr "This version of the app is out of date. Update it to keep reviewing."
 msgid "This week"
 msgstr "This week"
 
+msgid "Those terms are already in your decks"
+msgstr "Those terms are already in your decks"
+
 msgid "Time"
 msgstr "Time"
 
@@ -3326,9 +3302,6 @@ msgstr "Unmark important"
 
 msgid "Up to {MAX_FILES} files at a time. The first {room} were added."
 msgstr "Up to {MAX_FILES} files at a time. The first {room} were added."
-
-msgid "Up to {MAX_FILES} photos or PDFs, and any amount of text."
-msgstr "Up to {MAX_FILES} photos or PDFs, and any amount of text."
 
 msgid "Update"
 msgstr "Update"

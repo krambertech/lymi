@@ -61,19 +61,6 @@ export async function scan(room: number): Promise<Picked> {
   };
 }
 
-/** The plain camera, one page at a time, where the document camera is missing. */
-export async function shoot(): Promise<Picked> {
-  const allowed = await ImagePicker.requestCameraPermissionsAsync();
-  if (!allowed.granted) return { pages: [], text: "", over: false };
-  const result = await ImagePicker.launchCameraAsync({
-    mediaTypes: ["images"],
-    quality: 0.85,
-  });
-  const asset = result.assets?.[0];
-  if (result.canceled || !asset) return { pages: [], text: "", over: false };
-  return { pages: [photo(await shrink(asset.uri))], text: "", over: false };
-}
-
 export async function choosePhotos(room: number): Promise<Picked> {
   const result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ["images"],

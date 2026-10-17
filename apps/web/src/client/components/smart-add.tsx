@@ -831,13 +831,6 @@ function QuestionsStep({
   return (
     <>
       <DialogBody className="grid content-start gap-6">
-        <p className="text-base text-text-2">
-          {questions.length > 1 ? (
-            <Trans>A few things before the list. The usual answer is already chosen.</Trans>
-          ) : (
-            <Trans>One thing before the list. The usual answer is already chosen.</Trans>
-          )}
-        </p>
         {questions.map((question, index) => {
           const own = answers[index] === OWN_ANSWER;
           return (
@@ -1067,7 +1060,7 @@ function TermNote({ term }: { term: LessonTerm }) {
   if (term.keep !== null && !term.ticked) {
     return (
       <span className="text-xs text-muted">
-        <Trans>Might not need its own card</Trans>
+        <Trans>May belong on another card</Trans>
       </span>
     );
   }

@@ -7,14 +7,17 @@ import * as Haptics from "expo-haptics";
 import { type RefObject, useEffect, useState } from "react";
 import { Image, Pressable, TextInput, View } from "react-native";
 import Animated, { FadeOut, Keyframe } from "react-native-reanimated";
-import { ALWAYS, CROSSFADE, timed, useReduceMotion } from "../theme/motion";
+import { ALWAYS, timed, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { inputCap, MULTILINE } from "../theme/type";
 import { Chip } from "../ui/chip";
+import { FieldError } from "../ui/field";
 import type { IconName } from "../ui/icons";
 import { Icon, IconButton, Plate, Press, Text } from "../ui/primitives";
+import { Radio } from "../ui/radio";
 import { MAX_FILES, type Page, wordCount } from "./material";
 import { RollingCount, ScanStage } from "./scan-stage";
+import { Pulse, Swap } from "./swap";
 
 export type Daily = NonNullable<LessonAccessOut["daily"]>;
 
@@ -78,13 +81,12 @@ export function InputStep({
   const empty = pages.length === 0 && words === 0;
   const atLimit = daily !== null && daily.used >= daily.limit;
   const full = pages.length >= MAX_FILES;
-  const limit = daily?.limit ?? null;
   return (
     <View className="gap-5">
       {atLimit && daily ? (
         <LimitNotice daily={daily} />
       ) : (
-        <Text className="text-base text-text-2">
+        <Text className="px-1 text-base text-text-2">
           {t`Add the lesson in any form, or several at once. You choose which terms become cards.`}
         </Text>
       )}
@@ -151,7 +153,7 @@ export function InputStep({
       )}
 
       <View className="gap-2">
-        {!empty && <Text className="ps-4 text-sm font-medium text-muted">{t`Add more`}</Text>}
+        {!empty && <Text className="px-1 text-sm font-medium text-muted">{t`Add more`}</Text>}
         <Plate className="overflow-hidden">
           {sources.map((source, i) => {
             // Text is never full, and a lesson may still take text with ten pages.
@@ -191,24 +193,7 @@ export function InputStep({
         </Plate>
       </View>
 
-      {error && (
-        <View className="flex-row items-start gap-1.5 px-1" accessibilityLiveRegion="polite">
-          <Icon name="alert" size={14} colour={p.danger} />
-          <Text className="flex-1 text-base text-danger">{error}</Text>
-        </View>
-      )}
-
-      <Text className="px-1 text-sm text-muted">
-        {empty
-          ? t`Up to ${MAX_FILES} photos or PDFs, and any amount of text.`
-          : words > 0 && pages.length > 0
-            ? t`${plural(pages.length, { one: "# file", other: "# files" })} and text`
-            : pages.length > 0
-              ? t`${plural(pages.length, { one: "# file", other: "# files" })} · up to ${MAX_FILES}`
-              : t`${plural(words, { one: "# word", other: "# words" })}`}
-        {limit !== null &&
-          ` ${t`${plural(limit, { one: "Smart add is in beta, so it reads up to # lesson a day.", other: "Smart add is in beta, so it reads up to # lessons a day." })} A lesson it couldn’t read doesn’t count, and the count starts again at midnight.`}`}
-      </Text>
+      <FieldError>{error}</FieldError>
     </View>
   );
 }
@@ -285,8 +270,9 @@ export function WritingStep({
         // The lesson is in the language being learned, which autocorrect gets wrong.
         autoCorrect={false}
         selectionColor={p.text}
-        className="min-h-64 rounded-xl border border-edge bg-plate px-4 py-3 font-sans text-md text-text"
-        style={MULTILINE}
+        className="rounded-xl border border-edge bg-plate px-4 font-sans text-md text-text"
+        // A tall box from the start, since a lesson runs to paragraphs. phone.md "Sheets".
+        style={[MULTILINE, { minHeight: 256 }]}
         maxFontSizeMultiplier={inputCap(17)}
       />
       {words > 0 && (
@@ -311,7 +297,7 @@ export function ReadingStep({
   finished: boolean;
 }) {
   const { t } = useLingui();
-  const reduce = useReduceMotion();
+  const _reduce = useReduceMotion();
   const [elapsed, setElapsed] = useState(0);
   useEffect(() => {
     const tick = setInterval(() => setElapsed((s) => s + 0.5), 500);
@@ -337,39 +323,34 @@ export function ReadingStep({
   return (
     <View className="flex-1 items-center justify-center gap-6 py-6">
       <ScanStage pages={pages} text={text} finished={finished} current={current} />
-      <View className="items-center">
+      <View className="w-full items-center">
         <RollingCount value={found} />
         <Text className="text-sm text-muted">
           {t`${plural(found, { one: "term found", other: "terms found" })}`}
         </Text>
       </View>
-      <View className="h-6 items-center" accessibilityLiveRegion="polite">
-        <Animated.View
-          key={stage}
-          entering={reduce ? CROSSFADE : rise(0)}
-          className="flex-row items-center gap-2"
-        >
-          <View className="size-1.5 rounded-full bg-amber" />
-          <Text className="text-sm text-text-2">{stage}</Text>
-        </Animated.View>
+      <View accessibilityLiveRegion="polite" className="w-full">
+        <Swap id={stage} height={24}>
+          <View className="flex-row items-center gap-2">
+            <Pulse running={!finished} />
+            <Text className="text-sm text-text-2">{stage}</Text>
+          </View>
+        </Swap>
       </View>
       {/* The last term found, so the list is visibly filling while the pages are read. */}
-      <View className="h-7 items-center" accessibilityElementsHidden>
-        {latest && (
-          <Animated.View
-            key={latest.id}
-            entering={reduce ? CROSSFADE : rise(0)}
-            exiting={FadeOut.duration(150).reduceMotion(ALWAYS)}
-            className="absolute flex-row items-center gap-2 rounded-full bg-plate-2 px-3 py-1"
-          >
-            <Text className="text-sm font-medium text-text" numberOfLines={1}>
-              {latest.term}
-            </Text>
-            <Text className="shrink text-sm text-muted" numberOfLines={1}>
-              {latest.gloss}
-            </Text>
-          </Animated.View>
-        )}
+      <View className="w-full" accessibilityElementsHidden>
+        <Swap id={latest?.id ?? ""} height={32} distance={12}>
+          {latest ? (
+            <View className="flex-row items-center gap-2 rounded-full bg-plate-2 px-3 py-1">
+              <Text className="text-sm font-medium text-text" numberOfLines={1}>
+                {latest.term}
+              </Text>
+              <Text className="shrink text-sm text-muted" numberOfLines={1}>
+                {latest.gloss}
+              </Text>
+            </View>
+          ) : null}
+        </Swap>
       </View>
     </View>
   );
@@ -395,11 +376,6 @@ export function QuestionsStep({
   const p = usePalette();
   return (
     <View className="gap-6">
-      <Text className="text-base text-text-2">
-        {questions.length > 1
-          ? t`A few things before the list. The usual answer is already chosen.`
-          : t`One thing before the list. The usual answer is already chosen.`}
-      </Text>
       {questions.map((question, index) => {
         const chosen = answers[index] ?? question.default;
         return (
@@ -450,16 +426,6 @@ export function QuestionsStep({
   );
 }
 
-function Radio({ on }: { on: boolean }) {
-  return (
-    <View
-      className={`size-[22px] items-center justify-center rounded-full border-2 ${on ? "border-text" : "border-edge-2"}`}
-    >
-      {on && <View className="size-2.5 rounded-full bg-text" />}
-    </View>
-  );
-}
-
 /** What the learner changed on a term before adding it. */
 export interface TermEdit {
   term: string;
@@ -492,7 +458,7 @@ export function ListStep({
   if (fresh.length === 0) {
     return (
       <View className="gap-5">
-        <View className="gap-1">
+        <View className="gap-1 px-1">
           <Text className="text-md font-medium text-text">{t`Nothing new in this lesson`}</Text>
           <Text className="text-base text-text-2">
             {t`Every term worth a card is already in your decks.`}
@@ -508,7 +474,12 @@ export function ListStep({
         <Text className="text-sm text-text-2" style={{ fontVariant: ["tabular-nums"] }}>
           {t`${ticked.size} of ${fresh.length} chosen`}
         </Text>
-        <Press onPress={onToggleAll} accessibilityRole="button" hitSlop={10}>
+        <Press
+          onPress={onToggleAll}
+          accessibilityRole="button"
+          className="min-h-11 justify-center"
+          hitSlop={{ left: 10, right: 10 }}
+        >
           <Text className="text-sm font-medium text-text-2 underline">
             {all ? t`Clear all` : t`Select all`}
           </Text>
@@ -523,35 +494,41 @@ export function ListStep({
             <Animated.View
               key={term.id}
               entering={rise(i)}
-              className={`flex-row items-start ${i > 0 ? "border-t border-edge" : ""}`}
+              className={i > 0 ? "border-t border-edge" : ""}
             >
+              {/* A tap ticks, a hold edits; VoiceOver offers editing as an action, since a hold is never found by ear. */}
               <Pressable
                 onPress={() => {
                   Haptics.selectionAsync();
                   onToggle(term.id);
                 }}
+                onLongPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                  onOpen(term);
+                }}
+                delayLongPress={350}
+                testID="smart-add-term"
                 accessibilityRole="checkbox"
                 accessibilityLabel={name}
                 accessibilityState={{ checked: on }}
-                className="items-center justify-center py-3.5 ps-4 pe-2"
-                hitSlop={{ top: 4, bottom: 4 }}
+                accessibilityActions={[{ name: "edit", label: t`Edit term` }]}
+                onAccessibilityAction={(e) => e.nativeEvent.actionName === "edit" && onOpen(term)}
+                className="flex-row items-start gap-3 py-3 ps-4 pe-3.5"
+                style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
               >
+                {/* A rounded square, as the deck page's SelectBox, so several-of reads apart from a radio. */}
                 <View
-                  className={`size-[22px] items-center justify-center rounded-md border-2 ${on ? "border-text bg-text" : "border-edge-2"}`}
+                  className={`mt-0.5 size-[22px] items-center justify-center border-2 ${on ? "border-text bg-text" : "border-edge-2"}`}
+                  style={{ borderRadius: 6 }}
                 >
                   {on && <Icon name="check" size={14} colour={p.canvas} strokeWidth={3} />}
                 </View>
-              </Pressable>
-              <Pressable
-                onPress={() => onOpen(term)}
-                testID="smart-add-term"
-                accessibilityRole="button"
-                accessibilityHint={t`Edit the term or its meaning`}
-                className="flex-1 flex-row items-center gap-2 py-3 pe-3.5 ps-1"
-                style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
-              >
                 <View className="flex-1 gap-0.5">
-                  <Text className="text-md font-medium text-text">{name}</Text>
+                  {/* Edited sits at the term's end, so marking an edit adds no line. */}
+                  <View className="flex-row items-baseline gap-2">
+                    <Text className="flex-1 text-md font-medium text-text">{name}</Text>
+                    {edit !== undefined && <Text className="text-sm text-muted">{t`Edited`}</Text>}
+                  </View>
                   <Text
                     className={`text-base ${edit?.meaning === null ? "text-muted" : "text-text-2"}`}
                   >
@@ -559,9 +536,8 @@ export function ListStep({
                       ? term.gloss
                       : (edit.meaning ?? t`Lymi writes the meaning`)}
                   </Text>
-                  <TermNote term={term} edited={edit !== undefined} />
+                  <TermNote term={term} />
                 </View>
-                <Icon name="edit" size={16} colour={p.faint} />
               </Pressable>
             </Animated.View>
           );
@@ -570,30 +546,20 @@ export function ListStep({
 
       {existing.length > 0 && <ExistingList terms={existing} />}
 
-      {error && (
-        <View className="flex-row items-start gap-1.5 px-1" accessibilityLiveRegion="polite">
-          <Icon name="alert" size={14} colour={p.danger} />
-          <Text className="flex-1 text-base text-danger">{error}</Text>
-        </View>
-      )}
-      <Text className="px-1 text-sm text-muted">
-        {t`After you add them, Lymi writes each card’s example and pronunciation.`}
-      </Text>
+      <FieldError>{error}</FieldError>
     </View>
   );
 }
 
-function TermNote({ term, edited }: { term: LessonTerm; edited: boolean }) {
+function TermNote({ term }: { term: LessonTerm }) {
   const { t } = useLingui();
-  const note = edited
-    ? t`Edited`
-    : term.formOf
-      ? t`Another form of ${term.formOf.term}, in ${term.formOf.deckName}`
-      : term.keep !== null && !term.ticked
-        ? t`Might not need its own card`
-        : term.handwritten
-          ? t`Handwritten`
-          : null;
+  const note = term.formOf
+    ? t`Another form of ${term.formOf.term}, in ${term.formOf.deckName}`
+    : term.keep !== null && !term.ticked
+      ? t`May belong on another card`
+      : term.handwritten
+        ? t`Handwritten`
+        : null;
   return note ? <Text className="text-sm text-muted">{note}</Text> : null;
 }
 

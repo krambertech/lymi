@@ -1,21 +1,21 @@
-import { CHOICE_POP, DIGIT_ROLL, EASE_OUT } from "@lymi/design";
+import { CHOICE_POP, EASE_OUT } from "@lymi/design";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Image, View, type ViewStyle } from "react-native";
 import Animated, {
   cancelAnimation,
   Easing,
   FadeOut,
-  Keyframe,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withTiming,
   ZoomIn,
 } from "react-native-reanimated";
-import { ALWAYS, curve, spring, springIn, useReduceMotion } from "../theme/motion";
+import { ALWAYS, curve, springIn, useReduceMotion } from "../theme/motion";
 import { clear, usePalette } from "../theme/palette";
 import { Icon, Text } from "../ui/primitives";
 import type { Page } from "./material";
+import { Swap } from "./swap";
 
 // The lesson under a lamp, as on the web (smart-add-scan.tsx): a light passes over the top page, and
 // when it moves on, the top page slides out to the side and tucks under the rest.
@@ -75,7 +75,7 @@ export function ScanStage({ pages, text, finished, current }: ScanStageProps) {
       <View
         pointerEvents="none"
         className="absolute overflow-hidden rounded-lg"
-        style={{ inset: 6, zIndex: n + 2 }}
+        style={{ top: 6, bottom: 6, start: 6, end: 6, zIndex: n + 2 }}
       >
         {!finished && !reduce && <Light />}
       </View>
@@ -127,8 +127,9 @@ function Sheet({
   }));
   return (
     <Animated.View
-      className="absolute inset-0 rounded-xl border border-edge bg-plate p-1.5"
-      style={[{ zIndex: z }, style]}
+      className="absolute inset-0 rounded-xl border border-edge bg-plate"
+      // Padding in the style: the half-step class did not apply on this animated view.
+      style={[{ zIndex: z, padding: 6 }, style]}
     >
       {children}
     </Animated.View>
@@ -141,14 +142,14 @@ function Face({ page, text }: { page: Page | null; text: string }) {
     return (
       <Image
         source={{ uri: page.uri }}
-        className="size-full rounded-lg"
+        className="flex-1 rounded-lg"
         resizeMode="cover"
         accessibilityIgnoresInvertColors
       />
     );
   if (page)
     return (
-      <View className="size-full items-center justify-center gap-1.5 rounded-lg bg-plate-2 px-2">
+      <View className="flex-1 items-center justify-center gap-1.5 rounded-lg bg-plate-2 px-2">
         <Icon name="lesson" size={28} colour={p.muted} />
         <Text className="text-xs text-muted" numberOfLines={1}>
           {page.name}
@@ -156,7 +157,7 @@ function Face({ page, text }: { page: Page | null; text: string }) {
       </View>
     );
   return (
-    <View className="size-full overflow-hidden rounded-lg bg-plate-2 p-3">
+    <View className="flex-1 overflow-hidden rounded-lg bg-plate-2" style={{ padding: 12 }}>
       <Text
         className="text-text-2"
         style={{ fontSize: 9, lineHeight: 13 }}
@@ -195,7 +196,7 @@ function Light() {
       style={[{ height: LIGHT_H }, style]}
     >
       <View
-        className="size-full"
+        className="flex-1"
         style={
           {
             experimental_backgroundImage: `linear-gradient(to bottom, ${clear(tint)}, ${tint}, ${clear(tint)})`,
@@ -224,42 +225,18 @@ function Done({ z, reduce }: { z: number; reduce: boolean }) {
 }
 
 const ROLL_H = 44;
-const ROLL = spring(DIGIT_ROLL);
-const ROLL_IN = new Keyframe({
-  0: { transform: [{ translateY: ROLL_H }] },
-  100: { transform: [{ translateY: 0 }] },
-})
-  .duration(ROLL.duration)
-  .reduceMotion(ALWAYS);
-const ROLL_OUT = new Keyframe({
-  0: { transform: [{ translateY: 0 }] },
-  100: { transform: [{ translateY: -ROLL_H }] },
-})
-  .duration(ROLL.duration)
-  .reduceMotion(ALWAYS);
 
 /** A number that rolls up to its new value; under Reduce Motion it changes in place. */
 export function RollingCount({ value }: { value: number }) {
-  const reduce = useReduceMotion();
-  const first = useRef(true);
-  useEffect(() => {
-    first.current = false;
-  }, []);
   return (
-    <View className="overflow-hidden" style={{ height: ROLL_H }}>
-      <Animated.View
-        key={value}
-        entering={reduce || first.current ? undefined : ROLL_IN}
-        exiting={reduce ? undefined : ROLL_OUT}
+    <Swap id={value} height={ROLL_H} distance={ROLL_H} duration={360}>
+      <Text
+        className="font-medium text-text"
+        style={{ fontSize: 36, lineHeight: ROLL_H, fontVariant: ["tabular-nums"] }}
+        maxFontSizeMultiplier={1.2}
       >
-        <Text
-          className="font-medium text-text"
-          style={{ fontSize: 36, lineHeight: ROLL_H, fontVariant: ["tabular-nums"] }}
-          maxFontSizeMultiplier={1.2}
-        >
-          {String(value)}
-        </Text>
-      </Animated.View>
-    </View>
+        {String(value)}
+      </Text>
+    </Swap>
   );
 }

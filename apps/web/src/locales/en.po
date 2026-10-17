@@ -720,9 +720,6 @@ msgstr "a day"
 msgid "A few quick questions, then your first review."
 msgstr "A few quick questions, then your first review."
 
-msgid "A few things before the list. The usual answer is already chosen."
-msgstr "A few things before the list. The usual answer is already chosen."
-
 msgid "a field"
 msgstr "a field"
 
@@ -2823,6 +2820,9 @@ msgstr "Match your device."
 msgid "Matching languages"
 msgstr "Matching languages"
 
+msgid "May belong on another card"
+msgstr "May belong on another card"
+
 msgid "Meaning"
 msgstr "Meaning"
 
@@ -2864,9 +2864,6 @@ msgstr "Merged “{from}” into “{spelled}”"
 
 msgid "Message"
 msgstr "Message"
-
-msgid "Might not need its own card"
-msgstr "Might not need its own card"
 
 msgid "Mode"
 msgstr "Mode"
@@ -3246,9 +3243,6 @@ msgstr "One page at a time"
 
 msgid "One side only"
 msgstr "One side only"
-
-msgid "One thing before the list. The usual answer is already chosen."
-msgstr "One thing before the list. The usual answer is already chosen."
 
 msgid "Only on days with cards due."
 msgstr "Only on days with cards due."

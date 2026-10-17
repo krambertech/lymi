@@ -22,7 +22,7 @@ import { usePurposes } from "../../../data/purposes";
 import { useDeckCards, useDecks, useSections } from "../../../data/queries";
 import { usePalette } from "../../../theme/palette";
 import { inputCap, MULTILINE } from "../../../theme/type";
-import { Icon } from "../../../ui/icons";
+import { FieldError } from "../../../ui/field";
 import { Select } from "../../../ui/menu";
 import { Plate, Text } from "../../../ui/primitives";
 import { Row, RowFace, Rows } from "../../../ui/row";
@@ -265,12 +265,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
         </Text>
       }
     >
-      {error && (
-        <View className="flex-row items-center gap-1.5 px-1" accessibilityLiveRegion="polite">
-          <Icon name="alert" size={14} colour={p.danger} />
-          <Text className="flex-1 text-base text-danger">{error}</Text>
-        </View>
-      )}
+      <FieldError>{error}</FieldError>
       {!owner ? (
         <>
           <Group title={t`Shared with you`}>

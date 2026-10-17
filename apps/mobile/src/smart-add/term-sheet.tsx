@@ -19,10 +19,7 @@ interface TermSheetProps {
   onSave: (edit: TermEdit | undefined) => void;
 }
 
-/**
- * One term of the pick list, with its meaning and the line it was read from. The meaning starts as
- * the list's gloss; left as it is, the card keeps the lesson's meaning, or the AI writes one.
- */
+/** One term of the pick list with its meaning and its lesson line; an untouched gloss stays as the list had it. */
 export function TermSheet({ term, edit, onClose, onSave }: TermSheetProps) {
   const { t } = useLingui();
   const p = usePalette();

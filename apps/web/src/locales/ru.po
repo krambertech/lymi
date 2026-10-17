@@ -858,14 +858,14 @@ msgstr "Сначала добавь Lymi на экран «Домой». iPhone 
 msgid "Add more"
 msgstr "Добавить ещё"
 
+msgid "Add photos, PDFs or text from your lesson. Then choose which terms to add as cards."
+msgstr "Добавь фото, PDF или текст урока. Затем выбери термины для карточек."
+
 msgid "Add picture"
 msgstr "Добавить изображение"
 
 msgid "Add text"
 msgstr "Добавить текст"
-
-msgid "Add the lesson in any form, or several at once. You choose which terms become cards."
-msgstr "Добавь урок в любом виде или в нескольких сразу. Ты выбираешь, какие термины станут карточками."
 
 msgid "Add to"
 msgstr "Добавить в"
@@ -915,8 +915,8 @@ msgstr "{count, plural, one {Добавлена # карточка} few {Доб�
 msgid "Added today"
 msgstr "Добавлено сегодня"
 
-msgid "Adding a way asks every card that way from now on. Removing one keeps its progress."
-msgstr "Добавленный способ сразу применяется ко всем карточкам. Если убрать способ, его прогресс сохранится."
+msgid "After connecting, paste a lesson into your assistant and ask it to make cards."
+msgstr "После подключения отправь урок своему AI-помощнику и попроси создать карточки."
 
 msgid "After you add them, Lymi writes each card’s example and pronunciation."
 msgstr "Когда ты их добавишь, Lymi напишет к каждой карточке пример и произношение."
@@ -936,14 +936,8 @@ msgstr "Черновик AI · Tab, чтобы взять"
 msgid "AI example"
 msgstr "Пример от AI"
 
-msgid "AI fills the deck’s cards to suit it."
-msgstr "AI заполняет карточки колоды с учётом этого."
-
-msgid "AI fills them only when they help. It never changes your text."
-msgstr "AI заполняет их, только когда это полезно. Твой текст он не меняет."
-
-msgid "AI fills this deck’s cards to suit it. Only you see it."
-msgstr "AI заполняет карточки этой колоды с учётом этого. Это видишь только ты."
+msgid "AI fills only empty fields and leaves your text unchanged."
+msgstr "AI заполняет только пустые поля и не меняет твой текст."
 
 msgid "AI hook"
 msgstr "Зацепка от AI"
@@ -956,6 +950,12 @@ msgstr "Заметки от AI"
 
 msgid "AI pronunciation"
 msgstr "Произношение от AI"
+
+msgid "AI uses this choice when filling empty fields."
+msgstr "AI учитывает твой выбор при заполнении пустых полей."
+
+msgid "AI uses this choice when filling empty fields. Only you see it."
+msgstr "AI учитывает твой выбор при заполнении пустых полей. Только ты его видишь."
 
 msgid "AI wrote part of this card"
 msgstr "Часть этой карточки написал AI"
@@ -984,9 +984,6 @@ msgstr "Уже есть в твоих колодах"
 
 msgid "Also adds, edits and archives them."
 msgstr "Также добавляет, редактирует и архивирует их."
-
-msgid "Also on your list"
-msgstr "Ещё для повторения"
 
 msgid "Always"
 msgstr "Всегда"
@@ -1055,9 +1052,6 @@ msgstr "Ключ API для {name}"
 
 msgid "API keys"
 msgstr "Ключи API"
-
-msgid "App language, and the language AI uses for meanings."
-msgstr "Язык приложения и язык, на котором AI пишет значения."
 
 msgid "Apps you can import from"
 msgstr "Приложения, из которых можно импортировать"
@@ -1328,9 +1322,6 @@ msgstr "Изменения появляются сразу и видны в Ак
 msgid "Changes discarded"
 msgstr "Изменения отменены"
 
-msgid "Changes from AI apps, imports, AI enrichment and shared decks show up here."
-msgstr "Здесь видны изменения от AI-приложений, импорта, дополнений AI и общих колод."
-
 msgid "Check {address}. A message is on the way with the next step."
 msgstr "Проверь {address}. Письмо со следующим шагом уже в пути."
 
@@ -1376,6 +1367,9 @@ msgstr "Выбери <0>OFC</0>, включи прогресс обучения 
 msgid "Choose 00, 15, 30 or 45 minutes."
 msgstr "Выбери 00, 15, 30 или 45 минут."
 
+msgid "Choose a daily review goal. Every grade counts, even Forgot. You can change it later."
+msgstr "Выбери дневную цель повторений. Каждая оценка засчитывается, даже «Не помню». Цель можно изменить позже."
+
 msgid "Choose a deck"
 msgstr "Выбери колоду"
 
@@ -1408,6 +1402,12 @@ msgstr "Выбери ровно одно поле как термин."
 
 msgid "Choose file"
 msgstr "Выбрать файл"
+
+msgid "Choose how many reviews to do each day. Every grade counts, even Forgot."
+msgstr "Выбери, сколько повторений делать каждый день. Каждая оценка засчитывается, даже «Не помню»."
+
+msgid "Choose how well you remembered it."
+msgstr "Оцени, насколько хорошо помнишь ответ."
 
 msgctxt "photo"
 msgid "Choose new…"
@@ -1448,9 +1448,6 @@ msgstr "Выбери, для чего эта колода."
 
 msgid "Choose your {app} file"
 msgstr "Выбор файла {app}"
-
-msgid "Choosing the terms worth a card"
-msgstr "Выбираю термины, достойные карточки"
 
 msgid "Citizenship"
 msgstr "Гражданство"
@@ -1845,6 +1842,9 @@ msgstr "Колоды из Anki, Mochi или Noji вместе с историе
 msgid "Decks from Lymi. Add one to study it in your language."
 msgstr "Колоды от Lymi. Добавь одну — учи её на своём языке."
 
+msgid "Decks other people keep"
+msgstr "Колоды, которые останутся у других"
+
 msgid "Decks to review"
 msgstr "Колоды к повторению"
 
@@ -1860,6 +1860,9 @@ msgstr "Удалить аккаунт"
 msgid "Delete series"
 msgstr "Удалить серию"
 
+msgid "Delete your account, private cards and review history. Members keep shared decks."
+msgstr "Удали свой аккаунт, личные карточки и историю повторений. Общие колоды останутся у участников."
+
 msgid "Deleted"
 msgstr "Удалён"
 
@@ -1872,8 +1875,8 @@ msgstr "«{seriesName}» удалена, колоды в Архиве"
 msgid "Deleted the series {name}"
 msgstr "Удалена серия «{name}»"
 
-msgid "Deleting your account erases it for good. Nothing can bring it back."
-msgstr "Удаление стирает аккаунт навсегда. Восстановить его не получится."
+msgid "Deleting your account removes your private decks, cards and review history. You can’t undo this."
+msgstr "Твои личные колоды, карточки и история повторений будут удалены вместе с аккаунтом. Это действие нельзя отменить."
 
 msgid "Deny"
 msgstr "Отклонить"
@@ -2057,9 +2060,6 @@ msgstr "Введи этот код в Lymi, чтобы удалить аккау
 msgid "Enter this code in the Lymi app to finish creating your account:"
 msgstr "Введи этот код в приложении Lymi, чтобы закончить создание аккаунта:"
 
-msgid "Erase your account and everything in it, for good. Decks other people study stay for them."
-msgstr "Стереть аккаунт и всё, что в нём, навсегда. Колоды, которые изучают другие люди, останутся у них."
-
 msgid "Every card"
 msgstr "Все карточки"
 
@@ -2069,14 +2069,14 @@ msgstr "Все твои колоды, включая архивные, с тво
 msgid "Every deck, archived ones included, with your schedule and review history."
 msgstr "Все колоды, включая архивные, с твоим расписанием и историей повторений."
 
+msgid "Every grade counts toward today’s goal."
+msgstr "Каждая оценка засчитывается в сегодняшнюю цель."
+
 msgid "Every section is open"
 msgstr "Все разделы открыты"
 
 msgid "Every section is open, so any card can come up in review."
 msgstr "Все разделы открыты, так что любая карточка может появиться в повторении."
-
-msgid "Every term worth a card is already in your decks."
-msgstr "Все термины, достойные карточки, уже есть в твоих колодах."
 
 msgid "Everyone studying this deck. You see whether they joined, not their reviews."
 msgstr "Все, кто учит эту колоду. Ты видишь, присоединились ли они, но не их повторения."
@@ -2126,8 +2126,8 @@ msgstr "Экспортируй колоды по одной или ещё раз
 msgid "Export the deck again from Noji in OFC format, then choose that file."
 msgstr "Экспортируй колоду ещё раз из Noji в формате OFC и выбери этот файл."
 
-msgid "Export your library first if you might want your cards later. Lymi keeps nothing once the account is gone."
-msgstr "Сначала экспортируй библиотеку, если карточки могут пригодиться позже. После удаления аккаунта Lymi ничего не хранит."
+msgid "Export your library before deleting your account to keep a copy of your cards."
+msgstr "Экспортируй библиотеку перед удалением аккаунта, чтобы сохранить копию карточек."
 
 msgid "Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package."
 msgstr "Экспортируй всю библиотеку (изображения, расписание, историю повторений) как файл Lymi или пакет Anki."
@@ -2179,8 +2179,14 @@ msgstr "Найти тег"
 msgid "Find or create a tag"
 msgstr "Найди или создай тег"
 
+msgid "Find ready-made decks in this language. You can add other languages later."
+msgstr "Найди готовые колоды на этом языке. Другие языки можно добавить позже."
+
 msgid "Find terms"
 msgstr "Найти термины"
+
+msgid "Finding terms to review"
+msgstr "Поиск терминов для повторения"
 
 msgid "For a test"
 msgstr "Для экзамена"
@@ -2191,9 +2197,6 @@ msgstr "Для Anki, AnkiDroid и Mochi, с датами повторения, �
 msgctxt "deck tag"
 msgid "For beginners"
 msgstr "Для начинающих"
-
-msgid "For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute."
-msgstr "Например, вставь урок и попроси: «Сделай из этого эстонские карточки». Настройка займёт минуту."
 
 msgid "For scripts and curl. For AI apps, use Connected apps instead."
 msgstr "Для скриптов и curl. Для AI-приложений используй «Подключённые приложения»."
@@ -2332,9 +2335,6 @@ msgstr "Зацепка с урока"
 msgid "Hook saved"
 msgstr "Зацепка сохранена"
 
-msgid "How cards are asked"
-msgstr "Как задаются карточки"
-
 msgid "How do you want to start?"
 msgstr "С чего начнёшь?"
 
@@ -2344,17 +2344,11 @@ msgstr "как задаётся"
 msgid "How it works"
 msgstr "Как это работает"
 
-msgid "How it’s asked"
-msgstr "Как спрашивать"
-
 msgid "How it’s going"
 msgstr "Как идёт учёба"
 
 msgid "How many cards come back this week"
 msgstr "Сколько карточек вернётся на этой неделе"
-
-msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
-msgstr "Сколько повторений в день сохраняет счёт дней подряд. Считается каждая оценка, даже «Не помню»."
 
 msgid "How much time a day?"
 msgstr "Сколько времени в день?"
@@ -2435,6 +2429,9 @@ msgstr "Импорт из {source}"
 msgid "Importing your cards"
 msgstr "Импортируем твои карточки"
 
+msgid "Imports, exports, changes by apps and AI, and shared deck activity appear here. Connect an app or import a deck in Settings."
+msgstr "Здесь появляются импорт, экспорт, изменения от приложений и AI и действия с общими колодами. Подключи приложение или импортируй колоду в Настройках."
+
 #. placeholder {0}: term.existing?.deckName
 msgid "In {0}"
 msgstr "В «{0}»"
@@ -2468,9 +2465,6 @@ msgstr "Включает твоё расписание и историю пов�
 
 msgid "Insights"
 msgstr "Обзор"
-
-msgid "Insights fill in from your first review."
-msgstr "Обзор заполнится после первого повторения."
 
 msgid "Insights start after your first review"
 msgstr "Обзор появится после первого повторения"
@@ -2738,9 +2732,6 @@ msgstr "Просматривать список, искать и читать. �
 msgid "Lists and searches decks and cards."
 msgstr "Просматривает списки и ищет колоды и карточки."
 
-msgid "Little and often works best. Meeting your daily goal keeps your streak going. You can change it any time."
-msgstr "Лучше понемногу, но часто. Дневная цель поддерживает счёт дней подряд. Изменить её можно когда угодно."
-
 msgid "Loading decks…"
 msgstr "Загружаем колоды…"
 
@@ -2755,9 +2746,6 @@ msgstr "Lymi"
 
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi также получит экран, на котором ты сейчас, версию приложения, браузер и язык приложения."
-
-msgid "Lymi brings it back just before you’d forget it."
-msgstr "Lymi возвращает её как раз перед тем, как ты её забудешь."
 
 msgid "Lymi couldn’t tell from the cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi не удалось определить язык по карточкам. Он нужен, чтобы находить карточки, которые у тебя уже есть, и читать термины вслух."
@@ -2782,6 +2770,9 @@ msgstr "Lymi пишет первые колоды. А пока создай св
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Язык каждой колоды взят из {app}, её названия или карточек. Он нужен, чтобы находить карточки, которые у тебя уже есть, и читать термины вслух."
+
+msgid "Lymi schedules when you review it again."
+msgstr "Lymi определяет, когда повторить карточку снова."
 
 msgid "Lymi works for anything you want to remember."
 msgstr "Lymi подходит для всего, что хочешь запомнить."
@@ -2819,9 +2810,6 @@ msgstr "Отметить важной"
 msgid "Marked important"
 msgstr "Отмечена как важная"
 
-msgid "Match your device."
-msgstr "Как на устройстве."
-
 msgid "Matching languages"
 msgstr "Найденные языки"
 
@@ -2842,6 +2830,9 @@ msgstr "Значение с урока"
 
 msgid "Medical French for nurses. Use the clinical meaning."
 msgstr "Медицинский французский для медсестёр. Бери медицинское значение."
+
+msgid "Members keep these decks until they leave. After you delete your account, nobody can edit the cards."
+msgstr "Колоды останутся у участников, пока они из них не выйдут. После удаления твоего аккаунта никто не сможет редактировать карточки."
 
 msgid "Memory hook"
 msgstr "Зацепка"
@@ -2890,6 +2881,9 @@ msgstr "Ещё языки с готовыми колодами"
 
 msgid "More like this"
 msgstr "Похожие колоды"
+
+msgid "More to review"
+msgstr "Ещё для повторения"
 
 #. placeholder {0}: shortQuote(card.term)
 msgid "Move “{0}” to"
@@ -2984,6 +2978,9 @@ msgstr "Новый ключ"
 
 msgid "New line"
 msgstr "Новая строка"
+
+msgid "New modes apply to cards that follow this deck. Turning a mode off keeps its progress."
+msgstr "Новые режимы применяются к карточкам, которые используют режимы колоды. Если выключить режим, его прогресс сохранится."
 
 msgid "New password"
 msgstr "Новый пароль"
@@ -3086,6 +3083,9 @@ msgstr "Без значения"
 msgid "No meaning yet"
 msgstr "Значения пока нет"
 
+msgid "No new terms found"
+msgstr "Новые термины не найдены"
+
 msgid "No picture yet, so this card is asked in its other modes."
 msgstr "Изображения пока нет, поэтому карточка появляется в других режимах."
 
@@ -3098,9 +3098,6 @@ msgstr "Готовых колод для «{0}» пока нет. Но ты мо
 
 msgid "No ready-made decks yet."
 msgstr "Готовых колод пока нет."
-
-msgid "No recall data yet. Review more cards to see how you’re doing."
-msgstr "Пока нет данных о запоминании. Повтори больше карточек, чтобы увидеть результат."
 
 msgid "No reviews yet. Each day you review adds a block."
 msgstr "Повторений пока нет. Каждый день с повторениями добавляет блок."
@@ -3189,9 +3186,6 @@ msgstr "В «{scopeName}» больше ничего"
 msgid "Nothing left in this deck"
 msgstr "В этой колоде больше ничего"
 
-msgid "Nothing new in this lesson"
-msgstr "В этом уроке ничего нового"
-
 msgid "Nothing published yet"
 msgstr "Пока ничего не опубликовано"
 
@@ -3212,9 +3206,6 @@ msgstr "Уведомления заблокированы. Разреши их �
 
 msgid "Notifications are blocked. Allow them in your browser or device settings."
 msgstr "Уведомления заблокированы. Разреши их в настройках браузера или устройства."
-
-msgid "Notify you on this device when cards are due."
-msgstr "Уведомлять на этом устройстве, когда есть карточки к повторению."
 
 msgid "Now in {elsewhere}"
 msgstr "Сейчас в «{elsewhere}»"
@@ -3385,9 +3376,6 @@ msgstr "Заглянуть в зацепку"
 msgid "People"
 msgstr "Люди"
 
-msgid "People study these decks, so they stay until the last of them leaves. Nobody can change them after you go."
-msgstr "Эти колоды изучают другие люди, поэтому они останутся, пока из них не выйдет последний. После удаления твоего аккаунта их никто не сможет изменить."
-
 msgid "People who added it keep studying it, but nobody new can add it."
 msgstr "Кто уже добавил колоду, продолжает её учить, но новые люди добавить её не могут."
 
@@ -3503,22 +3491,11 @@ msgstr "Быстрый старт"
 msgid "Quizlet import"
 msgstr "Импорт из Quizlet"
 
-msgid "Reach today’s goal to keep it going."
-msgstr "Достигни сегодняшней цели, чтобы не прервать дни подряд."
-
-msgid "Reach today’s goal to start a streak."
-msgstr "Достигни сегодняшней цели, чтобы начать счёт дней подряд."
-
 msgid "Read"
 msgstr "Чтение"
 
 msgid "Read and write"
 msgstr "Чтение и запись"
-
-#. placeholder {0}: Math.round(usage.ms / 1000)
-#. placeholder {1}: usage.costUsd.toFixed(4)
-msgid "Read in {0} s for ${1}."
-msgstr "Прочитано за {0} с, ${1}."
 
 msgid "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews. <0>API reference</0>"
 msgstr "«Чтение» просматривает колоды и карточки. «Чтение и запись» также добавляет, редактирует и архивирует их. Ключ никогда не ставит оценок за повторение. <0>Справочник API</0>"
@@ -3565,6 +3542,9 @@ msgstr "Готовые колоды: {0}"
 msgid "Recall"
 msgstr "Запоминание"
 
+msgid "Recall appears after you review cards you’ve seen before."
+msgstr "Данные о запоминании появятся, когда повторишь уже знакомые карточки."
+
 msgid "Recall by month: {series}. The schedule aims for 90%."
 msgstr "Запоминание по месяцам: {series}. Цель расписания — 90%."
 
@@ -3573,12 +3553,6 @@ msgstr "Запоминание по неделям: {series}. Цель расп�
 
 msgid "Recall period"
 msgstr "Период запоминания"
-
-msgid "Recall the answer, then reveal the card"
-msgstr "Вспомни ответ, потом открой карточку"
-
-msgid "Recall the answer, then tap the card"
-msgstr "Вспомни ответ, потом нажми на карточку"
 
 msgid "Recently added"
 msgstr "Недавно добавленные"
@@ -3600,6 +3574,9 @@ msgstr "Напоминание для этого устройства включ
 
 msgid "Reminder time saved."
 msgstr "Время напоминания сохранено."
+
+msgid "Reminders are set separately on each device."
+msgstr "Напоминания настраиваются отдельно на каждом устройстве."
 
 msgid "Reminders stay off until notifications are allowed."
 msgstr "Напоминания выключены, пока не разрешишь уведомления."
@@ -3662,6 +3639,9 @@ msgstr "Заменить изображение"
 msgid "Replay pronunciation"
 msgstr "Воспроизвести произношение ещё раз"
 
+msgid "Report a problem or share an idea. We’ll reply by email."
+msgstr "Сообщи о проблеме или поделись идеей. Мы ответим по почте."
+
 msgid "Reset your Lymi password"
 msgstr "Новый пароль для Lymi"
 
@@ -3706,11 +3686,11 @@ msgstr "Восстановлена серия «{name}»"
 msgid "Retry"
 msgstr "Повторить"
 
+msgid "Reveal the answer"
+msgstr "Показать ответ"
+
 msgid "Reveal the card"
 msgstr "Открыть карточку"
-
-msgid "Reveal the card when you have it"
-msgstr "Открой карточку, когда вспомнишь"
 
 msgid "Review"
 msgstr "Повторение"
@@ -3735,6 +3715,9 @@ msgstr "Повторять в Lymi"
 
 msgid "Review mode"
 msgstr "Режим повторения"
+
+msgid "Review modes"
+msgstr "Режимы повторения"
 
 msgid "Review new"
 msgstr "Повторить новые"
@@ -3824,9 +3807,6 @@ msgstr "Сохранение…"
 msgid "Say {0}"
 msgstr "Сказать {0}"
 
-msgid "Say how well you knew it."
-msgstr "Оцени, насколько хорошо её помнишь."
-
 msgid "Schedule"
 msgstr "Расписание"
 
@@ -3838,9 +3818,6 @@ msgstr "Поиск"
 
 msgid "Search languages"
 msgstr "Поиск языков"
-
-msgid "Search looks at the term and the meaning."
-msgstr "Поиск смотрит на термин и значение."
 
 msgid "Search this deck"
 msgstr "Искать в этой колоде"
@@ -3897,8 +3874,14 @@ msgstr "Увидеть термин и вспомнить его значени�
 msgid "See your decks and cards"
 msgstr "Просматривать свои колоды и карточки"
 
+msgid "See your progress in Insights after your first review."
+msgstr "После первого повторения твой прогресс появится в Обзоре."
+
 msgid "Select all"
 msgstr "Выбрать все"
+
+msgid "Select at least one term to add."
+msgstr "Выбери хотя бы один термин."
 
 msgid "Select cards"
 msgstr "Выбрать карточки"
@@ -4175,14 +4158,11 @@ msgstr "Сфотографировать"
 msgid "Tap Add to Home Screen."
 msgstr "Коснись «На экран “Домой”»."
 
-msgid "Tap the card when you have it"
-msgstr "Нажми на карточку, когда вспомнишь"
+msgid "Tap to reveal the answer"
+msgstr "Нажми, чтобы увидеть ответ"
 
 msgid "Technology"
 msgstr "Технологии"
-
-msgid "Tell Lymi what broke or what it should do. Replies come to your email."
-msgstr "Расскажи Lymi, что сломалось или что стоит добавить. Ответ придёт на твою почту."
 
 msgid "Term"
 msgstr "Термин"
@@ -4214,9 +4194,6 @@ msgstr "Текст · {0, plural, one {# слово} few {# слова} many {# 
 
 msgid "Text you copy from a Quizlet set"
 msgstr "Текст, скопированный из набора Quizlet"
-
-msgid "Thank you. Replies come to your email."
-msgstr "Спасибо. Ответ придёт на твою почту."
 
 msgid "That code isn’t right. Check the email and try again."
 msgstr "Код неверный. Проверь письмо и попробуй ещё раз."
@@ -4303,6 +4280,9 @@ msgstr "пример"
 msgid "the language"
 msgstr "язык"
 
+msgid "The language of the app and AI-written meanings."
+msgstr "Язык приложения и значений, которые пишет AI."
+
 msgid "The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language."
 msgstr "Язык терминов этой колоды. Новые карточки получают его сразу, и он нужен для произношения и дополнения от AI. Значения пишутся на языке приложения."
 
@@ -4338,6 +4318,9 @@ msgstr "Теги на карточках этой колоды. Изменени
 
 msgid "the term"
 msgstr "термин"
+
+msgid "The terms Lymi found are already in your decks. Try another lesson."
+msgstr "Все найденные термины уже есть в твоих колодах. Попробуй другой урок."
 
 msgid "The upload stopped partway"
 msgstr "Загрузка остановилась на полпути"
@@ -4483,9 +4466,6 @@ msgstr "На этой неделе"
 msgid "Tick a tag to put it on every card, or untick it to take it off."
 msgstr "Отметь тег, чтобы добавить его на все карточки, или сними отметку, чтобы убрать."
 
-msgid "Tick at least one term to add."
-msgstr "Отметь хотя бы один термин, чтобы добавить."
-
 msgid "Time"
 msgstr "Время"
 
@@ -4552,6 +4532,12 @@ msgctxt "deck tag"
 msgid "Travel"
 msgstr "Путешествия"
 
+msgid "Try a clearer photo or paste the lesson text."
+msgstr "Попробуй более чёткое фото или вставь текст урока."
+
+msgid "Try a different term or meaning, or clear the search."
+msgstr "Попробуй другой термин или значение либо очисти поиск."
+
 msgid "Try a memory hook"
 msgstr "Попробуй зацепку"
 
@@ -4560,6 +4546,12 @@ msgstr "Попробовать снова"
 
 msgid "Try again on a steadier connection and keep Lymi open until the upload finishes."
 msgstr "Попробуй ещё раз с более стабильным соединением и не закрывай Lymi, пока файл не загрузится."
+
+msgid "Try to remember, then reveal the answer"
+msgstr "Попробуй вспомнить, затем открой ответ"
+
+msgid "Try to remember, then tap to reveal"
+msgstr "Попробуй вспомнить, затем нажми на карточку"
 
 msgid "Turn off link"
 msgstr "Выключить ссылку"
@@ -4628,11 +4620,11 @@ msgstr "Используй не меньше {MIN_PASSWORD_LENGTH} символ�
 msgid "Use at most {MAX_PASSWORD_LENGTH} characters."
 msgstr "Используй не больше {MAX_PASSWORD_LENGTH} символов."
 
+msgid "Use deck modes"
+msgstr "Режимы колоды"
+
 msgid "Use link"
 msgstr "Использовать ссылку"
-
-msgid "Use the deck’s"
-msgstr "Вернуть как в колоде"
 
 msgid "Use these fields"
 msgstr "Использовать эти поля"
@@ -4667,14 +4659,14 @@ msgstr "Видимость"
 msgid "We signed out your other devices."
 msgstr "Мы вышли из аккаунта на других устройствах."
 
-msgid "We’ll email you a 6-digit code. The account is deleted only once you enter it."
-msgstr "Мы отправим тебе 6-значный код. Аккаунт удалится, только когда ты его введёшь."
+msgid "We’ll email you a 6-digit code. Enter it below, then choose Delete account."
+msgstr "Мы отправим на почту шестизначный код. Введи его ниже и нажми «Удалить аккаунт»."
 
 msgid "We’ll email you a link to set a new one."
 msgstr "Отправим на почту ссылку, чтобы задать новый."
 
-msgid "We’ll show ready-made decks in it. You can add more languages later."
-msgstr "Покажем готовые колоды на этом языке. Другие языки можно добавить позже."
+msgid "We’ll reply by email."
+msgstr "Мы ответим по почте."
 
 msgctxt "Password strength"
 msgid "Weak"
@@ -4696,9 +4688,6 @@ msgstr "Добро пожаловать в Lymi"
 msgid "What are you learning?"
 msgstr "Что ты учишь?"
 
-msgid "What goes"
-msgstr "Что удалится"
-
 msgid "What happens to its cards"
 msgstr "Что будет с его карточками"
 
@@ -4710,9 +4699,6 @@ msgstr "Что такое Lymi?"
 
 msgid "What it’s for"
 msgstr "Для чего она"
-
-msgid "What stays for others"
-msgstr "Что останется другим"
 
 msgid "What the picture shows, without the answer. Picture review needs it."
 msgstr "Что на изображении, без ответа. Без описания повторение по изображению не начнётся."
@@ -4771,8 +4757,8 @@ msgstr "Вчера"
 msgid "Yesterday was a rest day"
 msgstr "Вчера был день отдыха"
 
-msgid "Yesterday was a rest day. Reach today’s goal to keep it going."
-msgstr "Вчера был день отдыха. Достигни сегодняшней цели, чтобы не прервать дни подряд."
+msgid "Yesterday was a rest day. Every grade counts toward today’s goal."
+msgstr "Вчера был день отдыха. Каждая оценка засчитывается в сегодняшнюю цель."
 
 msgid "you"
 msgstr "ты"
@@ -4873,6 +4859,9 @@ msgstr "На сегодня всё."
 msgid "You’ve asked for several codes today. Try again tomorrow."
 msgstr "Сегодня уже отправлено несколько кодов. Попробуй завтра."
 
+msgid "Your account data"
+msgstr "Данные твоего аккаунта"
+
 msgid "Your code to delete your Lymi account"
 msgstr "Твой код для удаления аккаунта Lymi"
 
@@ -4917,6 +4906,9 @@ msgstr "Фото изменилось в другом месте. Проверь
 
 msgid "Your set’s text"
 msgstr "Текст твоего набора"
+
+msgid "Your streak starts when you reach your daily goal."
+msgstr "Дни подряд начнут считаться, когда достигнешь дневной цели."
 
 msgid "Your week"
 msgstr "Твоя неделя"

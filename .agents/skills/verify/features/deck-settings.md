@@ -17,5 +17,5 @@ A deck's page, then its settings link; or `/library/<deck id>/settings`.
 ## Gotchas
 
 - The name, description and instructions save on leaving the field, not on typing; press Tab before reading the API.
-- The AI checkboxes flip only once the saved deck comes back, so Playwright's `check()` reports no change; click and wait for the checked state.
+- Review modes and AI checkboxes reflect the saved deck, so Playwright's `check()` can report no immediate change; click and wait for the checked state.
 - Sections, people and visibility are not driven yet; add steps when a change touches them.

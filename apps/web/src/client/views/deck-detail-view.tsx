@@ -1323,7 +1323,7 @@ export function DeckDetailView({
             title={query ? t`No cards match “${query}”` : t`No cards match these filters`}
             detail={
               query ? (
-                <Trans>Search looks at the term and the meaning.</Trans>
+                <Trans>Try a different term or meaning, or clear the search.</Trans>
               ) : (
                 <Trans>Remove a filter above, or show every card in this deck.</Trans>
               )

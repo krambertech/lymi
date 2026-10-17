@@ -198,7 +198,7 @@ export const empty: Group = {
                   <NoResults
                     icon={<SearchX />}
                     title="No cards match “sbrig”"
-                    detail="Search looks at the term and the meaning."
+                    detail="Try a different term or meaning, or clear the search."
                     action={<Button>Clear search</Button>}
                   />
                 </div>

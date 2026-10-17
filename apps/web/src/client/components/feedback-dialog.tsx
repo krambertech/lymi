@@ -71,7 +71,7 @@ export function FeedbackDialog({ open, onOpenChange }: Props) {
                 <Check className="size-4" />
               </span>
               <p className="text-base text-text-2 text-pretty">
-                <Trans>Thank you. Replies come to your email.</Trans>
+                <Trans>We’ll reply by email.</Trans>
               </p>
             </div>
             <DialogFooter>
@@ -85,9 +85,7 @@ export function FeedbackDialog({ open, onOpenChange }: Props) {
             <DialogHeader>
               <DialogTitle>{t`Send feedback`}</DialogTitle>
               <DialogDescription>
-                <Trans>
-                  Tell Lymi what broke or what it should do. Replies come to your email.
-                </Trans>
+                <Trans>Report a problem or share an idea. We’ll reply by email.</Trans>
               </DialogDescription>
             </DialogHeader>
             <form

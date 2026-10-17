@@ -716,7 +716,7 @@ export const forms: Group = {
                 note: "RadioCard, in components/radio-card.tsx. The whole row is the target and the edge strengthens on the chosen one. Children replace the title and description, as in the daily goal.",
                 render: () => (
                   <RadioGroup
-                    aria-label="How cards are asked"
+                    aria-label="Review modes"
                     value={direction}
                     onValueChange={setDirection}
                     className={box}
@@ -796,7 +796,7 @@ export const forms: Group = {
                 label: "Hover",
                 note: "A row that is not chosen takes the hover fill.",
                 render: () => (
-                  <RadioGroup aria-label="How cards are asked" value="recognition" className={box}>
+                  <RadioGroup aria-label="Review modes" value="recognition" className={box}>
                     <RadioCard
                       value="recognition"
                       title="Recognition"
@@ -817,7 +817,7 @@ export const forms: Group = {
                 note: "On a row the ring goes around the whole row; on a plain item, around the circle.",
                 render: () => (
                   <div className={`grid gap-4 ${box}`}>
-                    <RadioGroup aria-label="How cards are asked" value="recognition">
+                    <RadioGroup aria-label="Review modes" value="recognition">
                       <Force state="focus" on="[data-slot=radio-group-item]">
                         <RadioCard
                           value="recognition"

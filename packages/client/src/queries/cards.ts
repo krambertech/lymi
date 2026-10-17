@@ -1,7 +1,9 @@
-import { ENRICHMENT_PATIENCE } from "@lymi/core";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 import { api, type CardSearchPage } from "../api";
 import { fresh } from "../writes";
+
+/** How long a card may say it is working before the screen stops waiting on it. */
+const ENRICHMENT_PATIENCE = 10 * 60_000;
 
 export const deckCardsQuery = (deckId: string) =>
   queryOptions({

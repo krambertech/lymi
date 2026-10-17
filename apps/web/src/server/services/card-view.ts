@@ -1,4 +1,4 @@
-import { enrichmentStalled, normaliseTerm, type ReviewMode } from "@lymi/core";
+import { normaliseTerm, type ReviewMode } from "@lymi/core";
 import { and, eq, inArray, isNull } from "@lymi/core/db";
 import type { Card, CardImage, CardLocalization } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
@@ -52,8 +52,6 @@ function view(card: Card, image: CardImage | undefined, important: boolean): Car
   const { reviewModeKeys, revision, hookDraft: _draft, ...rest } = card;
   return {
     ...rest,
-    // A card that has waited too long has lost its run: it reads as failed, so Enrich is offered.
-    enrichmentStatus: enrichmentStalled(card) ? "failed" : card.enrichmentStatus,
     reviewModes: cardModes({ directions: card.directions, reviewModeKeys }),
     image: image ? imageView(image) : null,
     important,

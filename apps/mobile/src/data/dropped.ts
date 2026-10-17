@@ -12,10 +12,10 @@ const SENT_SETTLES = 60_000;
  */
 export function withoutDropped(
   grades: readonly StoredGrade[],
-  data: (DrawData & { fetchedAt?: number }) | undefined,
+  data: (DrawData & { fetchedAt: number }) | undefined,
 ): readonly StoredGrade[] {
-  const fetchedAt = data?.fetchedAt;
-  if (!data || fetchedAt === undefined) return grades;
+  if (!data) return grades;
+  const { fetchedAt } = data;
   const held = new Set(data.log.map((e) => `${e.cardId}|${new Date(e.at).getTime()}`));
   const kept = grades.filter(
     (g) =>

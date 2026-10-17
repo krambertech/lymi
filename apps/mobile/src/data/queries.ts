@@ -111,7 +111,7 @@ export function useNow(dayEnd: Date | undefined) {
 /** The draw's state now, with this device's grades in it; `lookahead` cards after the next are listed too. */
 export function useDrawState(
   scope: ReviewScope,
-  data: (DrawData & { fetchedAt?: number }) | undefined,
+  data: (DrawData & { fetchedAt: number }) | undefined,
   lookahead = 0,
 ) {
   const all = useGrades();

@@ -40,6 +40,8 @@ void audio
   .catch(() => undefined);
 
 type Card = { id: string; term: string; language?: string | null | undefined };
+/** How a press ended, with the sound started or never come; a card changed mid-load reports nothing. */
+export type PlaySettled = (outcome: "played" | "failed") => void;
 
 /**
  * Plays a card's pronunciation from the API with the learner's session. A second press replays it
@@ -48,6 +50,7 @@ type Card = { id: string; term: string; language?: string | null | undefined };
 function useAudioPronunciation(
   card: Card | null,
   { useAudioPlayer, useAudioPlayerStatus }: ExpoAudio,
+  onSettled?: PlaySettled,
 ) {
   const { t } = useLingui();
   const headers = useSessionHeaders();
@@ -56,6 +59,8 @@ function useAudioPronunciation(
   const [asked, setAsked] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const loaded = useRef<string | null>(null);
+  const settled = useRef(onSettled);
+  settled.current = onSettled;
   const speakable = !!card && canSpeakTerm(card) && !!headers;
 
   // A new card starts quiet, with no error from the last one.
@@ -75,10 +80,12 @@ function useAudioPronunciation(
     if (!asked) return;
     if (playing) {
       setAsked(false);
+      settled.current?.("played");
       return;
     }
     const timer = setTimeout(() => {
       setAsked(false);
+      settled.current?.("failed");
       loaded.current = null;
       setError(t`Couldn’t play the pronunciation. Try again in a moment.`);
     }, LOAD_LIMIT_MS);
@@ -104,9 +111,9 @@ function useAudioPronunciation(
   return speakable ? { play, state, error } : null;
 }
 
-const noPronunciation = (_card: Card | null) => null;
+const noPronunciation = (_card: Card | null, _onSettled?: PlaySettled) => null;
 export const usePronunciation = audio
-  ? (card: Card | null) => useAudioPronunciation(card, audio)
+  ? (card: Card | null, onSettled?: PlaySettled) => useAudioPronunciation(card, audio, onSettled)
   : noPronunciation;
 
 /**
@@ -166,6 +173,8 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
           variant={error ? "danger" : "secondary"}
           size="sm"
           round
+          // A miss reveals the card, so the speaker reaches 56 pt rather than the usual 44.
+          reach={12}
           busy={slow}
           glyph={(ink, size) => (
             <Speaker ink={ink} size={size} playing={state === "playing" && !reduce} />

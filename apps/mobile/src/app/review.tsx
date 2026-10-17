@@ -92,6 +92,7 @@ import { Cover, usePullToEnd } from "../review/pull-to-end";
 import { countReveal, RevealHint, useRevealHint } from "../review/reveal-hint";
 import { CardStack, type TopCard, UndoArea, useUndoSwipe } from "../review/undo-swipe";
 import { Wick } from "../review/wick";
+import { captureEvent } from "../telemetry/posthog";
 import { useReviewSession } from "../telemetry/review-session";
 import { haptics } from "../theme/haptics";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
@@ -374,7 +375,9 @@ function Run({
   const current =
     !leg || paused ? null : leg.kind === "draw" ? (atStop ? null : drawn) : (listLeft[0] ?? null);
   const recallTimes = useRecallClock(current ? `${keyOf(current)}:${done}` : null, revealed);
-  const pronounce = usePronunciation(current?.card ?? null);
+  const pronounce = usePronunciation(current?.card ?? null, (outcome) =>
+    captureEvent("pronunciation_played", { outcome, revealed }),
+  );
 
   // A review starts with one firm tap as its first card arrives.
   useEffect(() => {

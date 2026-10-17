@@ -239,7 +239,8 @@ function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
           size="sm"
           variant={error ? "danger" : "secondary"}
           round
-          className={className}
+          // A miss reveals the card, so the speaker reaches 56 px rather than the usual 44.
+          className={clsx("[--hit-x:-12px] before:-inset-y-3!", className)}
           aria-disabled={state === "loading"}
           onClick={(e) => {
             e.stopPropagation();
@@ -901,7 +902,8 @@ export function ReviewCard({
             ref={columnRef}
             className={clsx(
               "relative flex flex-1 flex-col justify-center gap-5 py-2",
-              animateIn && "enter-fade",
+              // A fade that stays filled would trap the speaker's z-20 under the reveal layer.
+              animateIn && "enter-fade [animation-fill-mode:backwards]!",
             )}
           >
             <motion.div

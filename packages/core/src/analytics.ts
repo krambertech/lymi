@@ -46,6 +46,20 @@ export const REVIEW_SCOPES = ["day", "deck", "series", "section", "round", "chos
 export type ReviewScopeKind = (typeof REVIEW_SCOPES)[number];
 const session = { session_id: z.uuid(), scope: z.enum(REVIEW_SCOPES).optional() };
 const count = z.number().int().nonnegative().max(1_000_000);
+/** The optional fields a typed card can arrive holding, by name; never their text. */
+export const TYPED_CARD_FIELDS = [
+  "example",
+  "pronunciation",
+  "notes",
+  "hook",
+  "source",
+  "tags",
+  "section",
+  "review_modes",
+] as const;
+export type TypedCardField = (typeof TYPED_CARD_FIELDS)[number];
+/** The fields a chip adds to the web card form. */
+const FORM_FIELDS = ["notes", "example", "pronunciation", "source", "picture", "hook"] as const;
 const slug = z
   .string()
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
@@ -181,7 +195,11 @@ export const analyticsEvents = {
     reason: z.enum(["left", "navigation", "pagehide"]),
   }),
   first_session_started: z.object({ deck_slug: slug }),
-  cards_added: z.object({ source, count }),
+  cards_added: z.object({
+    source,
+    count,
+    fields: z.array(z.enum(TYPED_CARD_FIELDS)).max(TYPED_CARD_FIELDS.length).optional(),
+  }),
   card_added: z.object({ source: z.enum(["manual", "api", "mcp", "import"]), count }),
   welcome_step_viewed: z.object({ step_name: step, skipped: z.boolean() }),
   welcome_step_finished: z.object({ step_name: step, skipped: z.boolean() }),
@@ -286,6 +304,10 @@ export const analyticsEvents = {
     via: z.enum(["suggestion", "typed"]),
     in_use: z.boolean(),
   }),
+  card_field_added: z.object({
+    field: z.enum(FORM_FIELDS),
+    form: z.enum(["add", "edit"]),
+  }),
   deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
   section_go_to: z.object({}),
   pronunciation_played: z.object({
@@ -358,6 +380,7 @@ export const analyticsProducers = {
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser"],
+  card_field_added: ["browser"],
   deck_filter_added: ["browser"],
   section_go_to: ["phone"],
   pronunciation_played: ["browser", "phone"],

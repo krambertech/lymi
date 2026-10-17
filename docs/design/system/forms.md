@@ -7,11 +7,11 @@ Every form is built from the parts in `apps/web/src/client/components/ui`: `Fiel
 ```text
 What is the learner giving?
  ├── Text they type → Input, or Textarea for more than one line
- ├── Several short tags → TagsInput
+ ├── Several short tags → a Combobox with `multiple` and a Create row (TagsChip)
  ├── On or off
  │    ├── Applies the moment it changes (a setting) → Switch
  │    └── Rides along with an action the form submits → Checkbox
- ├── Several of a fixed set → a Checkbox per option, each in a horizontal Field (ReviewModesField)
+ ├── Several of a fixed set → a Checkbox per option, each in a horizontal Field; in a row of chips, a DropdownMenu of checkbox rows (ModesChip)
  └── One of a fixed set of options
       ├── 2–4 short views of the same thing (Theme, a chart's range) → Segmented
       ├── 2–5 choices that each need a sentence
@@ -89,7 +89,7 @@ A row may carry a caption, `SelectItem`'s `description`, when each option needs 
 
 Anything a list accepts beyond its rows, such as a language tag it has never heard of, belongs to the product field that holds it (`LanguageField`), not to the primitive.
 
-`TagsInput` is the same box holding its tags as chips, with the text field after them. Enter or a comma adds what was typed, and Backspace on an empty field takes the last tag back. While a name is typed, the learner's tags in use that contain it unfold under the box as Combobox rows do, those starting with it first, at most six, each with its card count on the end; after them, below a divider, a + Create row adds the name as typed whenever it is not a tag in use already. On a touch screen, where the field sits in a drawer over the keyboard, the rows follow the box in place instead. Nothing is highlighted until an arrow key moves into the list, so Enter keeps adding exactly what was typed; a press or Enter on a tag row adds that tag in its own spelling.
+A card's tags are chosen from a chip, `TagsChip`: a `Combobox` with `multiple`, whose search finds the learner's tags in use, those starting with what was typed first, each with its card count on the end. A Create row after them adds the name as typed whenever it is not a tag in use already, and a tag row adds that tag in its own spelling. The list stays open while tags are picked, and the chip then reads the one tag, or how many.
 
 ## Choice controls
 

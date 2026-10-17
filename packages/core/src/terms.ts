@@ -29,6 +29,26 @@ export function kanaReading(card: {
   return KANA_READING.test(reading) ? reading : null;
 }
 
+/**
+ * The reading the duplicate rule compares: a Japanese card's kana reading, whitespace collapsed and
+ * katakana folded to hiragana, so ジョウズ and じょうず are one reading. Null where no reading applies.
+ */
+export function readingKey(card: {
+  language?: string | null | undefined;
+  pronunciation?: string | null | undefined;
+}): string | null {
+  const reading = kanaReading(card);
+  if (!reading) return null;
+  return reading
+    .replace(/\s+/g, " ")
+    .replace(/[\u30a1-\u30f6]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 0x60));
+}
+
+/** Two readings tell cards apart only when both cards have one and they differ: 上手 じょうず and うわて. */
+export function sameReading(a: string | null, b: string | null): boolean {
+  return a === null || b === null || a === b;
+}
+
 /** The key one learner's tags are joined by, so "Дієслова" and "дієслова" are one tag on every device. */
 export function tagKey(tag: string): string {
   return tag.normalize("NFC").trim().toLowerCase();

@@ -107,4 +107,26 @@ export default async function drive({ page, base, step, api, expect }) {
     expect(cat).toMatchObject({ pronunciation: null, pronunciationSource: null });
     return { cards: [unskilful, cat] };
   });
+
+  await step(
+    "Add 上手 read うわて: a homograph with its own reading is a second card",
+    async () => {
+      const { results } = await post("/api/cards/batch", {
+        cards: [
+          {
+            deckId: deck.id,
+            term: "上手",
+            meaning: "a superior",
+            pronunciation: "うわて",
+            enrich: false,
+          },
+          { deckId: deck.id, term: "上手", pronunciation: "ジョウズ", enrich: false },
+        ],
+      });
+      expect(results.map((r) => r.status)).toEqual(["added", "skipped"]);
+      const { cards } = await api(`/api/cards?term=${encodeURIComponent("上手")}`);
+      expect(cards.map((c) => c.pronunciation).sort()).toEqual(["うわて", "じょうず"]);
+      return { cards };
+    },
+  );
 }

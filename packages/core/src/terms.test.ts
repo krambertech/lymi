@@ -6,9 +6,11 @@ import {
   kanaReading,
   languageKey,
   normaliseTerm,
+  readingKey,
   revealedAnswer,
   revealsAnswer,
   SPOKEN_TERM_MAX,
+  sameReading,
 } from "./terms";
 
 describe("normaliseTerm", () => {
@@ -59,6 +61,28 @@ describe("kanaReading", () => {
   it("is only for Japanese", () => {
     expect(kanaReading({ language: "zh", pronunciation: "じょうず" })).toBeNull();
     expect(kanaReading({ language: null, pronunciation: "じょうず" })).toBeNull();
+  });
+});
+
+describe("readingKey", () => {
+  it("folds katakana, spacing and composition, so one reading written two ways is one", () => {
+    expect(readingKey({ language: "ja", pronunciation: "ジョウズ" })).toBe("じょうず");
+    expect(readingKey({ language: "ja-JP", pronunciation: " じょう  ず " })).toBe("じょう ず");
+    expect(readingKey({ language: "ja", pronunciation: "か\u3099" })).toBe("が");
+  });
+  it("has no reading where none applies", () => {
+    expect(readingKey({ language: "ja", pronunciation: "jōzu" })).toBeNull();
+    expect(readingKey({ language: "zh", pronunciation: "xuéxí" })).toBeNull();
+    expect(readingKey({ language: "it", pronunciation: null })).toBeNull();
+  });
+});
+
+describe("sameReading", () => {
+  it("tells cards apart only when both have a reading and they differ", () => {
+    expect(sameReading("じょうず", "うわて")).toBe(false);
+    expect(sameReading("じょうず", "じょうず")).toBe(true);
+    expect(sameReading(null, "うわて")).toBe(true);
+    expect(sameReading("じょうず", null)).toBe(true);
   });
 });
 

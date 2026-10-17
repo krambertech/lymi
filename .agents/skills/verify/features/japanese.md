@@ -1,6 +1,6 @@
 # Japanese cards
 
-What a card's language changes for Japanese: the duplicate rule compares `ja` and `ja-JP` as one language, review keeps the kana reading in `pronunciation` behind the reveal and draws kanji in a Japanese face, Smart add saves a reading the lesson prints, and audio says the kana reading rather than guessing the kanji's.
+What a card's language changes for Japanese: the duplicate rule compares `ja` and `ja-JP` as one language and keeps homographs with different readings apart, review keeps the kana reading in `pronunciation` behind the reveal and draws kanji in a Japanese face, Smart add saves a reading the lesson prints, and audio says the kana reading rather than guessing the kanji's.
 
 ## Reach
 
@@ -8,11 +8,11 @@ No persona has Japanese cards, so the recipe makes a deck as `fresh` through `/a
 
 ## Drive
 
-[`japanese.mjs`](japanese.mjs): add 上手 read じょうず, then 上手 tagged `ja-JP`; open the deck's review and check the cue, then press **Reveal the card**; then Smart add a pasted lesson, with the model's read stood in by a fixed stream that prints 下手's reading, and **Add 2 cards**.
+[`japanese.mjs`](japanese.mjs): add 上手 read じょうず, then 上手 tagged `ja-JP`; open the deck's review and check the cue, then press **Reveal the card**; then Smart add a pasted lesson, with the model's read stood in by a fixed stream that prints 下手's reading, and **Add 2 cards**; last, add 上手 read うわて and again read ジョウズ.
 
 ## End state
 
-The second add is `skipped`. Before the reveal no visible line reads じょうず and the cue's computed font names Hiragino Sans; after it, じょうず shows under the meaning with `lang="ja"`. The stored 下手 card has `pronunciation` へた with `pronunciationSource` `lesson`, and 猫, whose lesson printed no reading, has none.
+The second add is `skipped`. Before the reveal no visible line reads じょうず and the cue's computed font names Hiragino Sans; after it, じょうず shows under the meaning with `lang="ja"`. The stored 下手 card has `pronunciation` へた with `pronunciationSource` `lesson`, and 猫, whose lesson printed no reading, has none. 上手 read うわて is added as a second card and ジョウズ is skipped as the reading じょうず already has.
 
 ## Gotchas
 

@@ -14,6 +14,8 @@ import {
   needsEnrichment,
   newId,
   normaliseTerm,
+  readingKey,
+  sameReading,
   TEXT_MODES,
 } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNull } from "@lymi/core/db";
@@ -181,13 +183,13 @@ export async function addCards(
         ),
       ),
   );
-  const existing = new Map<string, Map<string, { card: Card; deckName: string }>>();
-  for (const row of existingRows) {
+  // Several cards can share a key: homographs told apart by their readings.
+  const existing = new Map<string, { card: Card; deckName: string }[]>();
+  const hold = (row: { card: Card; deckName: string }) => {
     const key = duplicateKey(row.card.language, row.card.normalizedTerm);
-    const byDeck = existing.get(key) ?? new Map();
-    byDeck.set(row.card.deckId, row);
-    existing.set(key, byDeck);
-  }
+    existing.set(key, [...(existing.get(key) ?? []), row]);
+  };
+  for (const row of existingRows) hold(row);
 
   const now = new Date();
   const outcomes: RawOutcome[] = [];
@@ -202,10 +204,14 @@ export async function addCards(
       if (again) outcomes.push({ status: "added", card: again });
       continue;
     }
-    const matches = existing.get(duplicateKey(language, key));
-    const hit = options.allowCrossDeckDuplicates
-      ? matches?.get(deck.id)
-      : matches?.values().next().value;
+    const reading = readingKey({ language, pronunciation: input.pronunciation });
+    const hit = existing
+      .get(duplicateKey(language, key))
+      ?.find(
+        (row) =>
+          (!options.allowCrossDeckDuplicates || row.card.deckId === deck.id) &&
+          sameReading(readingKey(row.card), reading),
+      );
     if (hit) {
       outcomes.push({
         status: "skipped",
@@ -275,10 +281,7 @@ export async function addCards(
       }),
     ]);
     // Later inputs in this batch with the same key are duplicates of this one.
-    const matchKey = duplicateKey(language, key);
-    const byDeck = existing.get(matchKey) ?? new Map();
-    byDeck.set(deck.id, { card, deckName: deck.name });
-    existing.set(matchKey, byDeck);
+    hold({ card, deckName: deck.name });
     outcomes.push({ status: "added", card });
   }
 

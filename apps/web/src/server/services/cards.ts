@@ -256,6 +256,8 @@ export async function addCards(
       enrichmentStatus: null,
       enrichmentFields: null,
       audioKey: null,
+      audioSource: null,
+      audioApprovedKey: null,
       createdBy: actor,
       archivedAt: null,
       createdAt: now,
@@ -804,6 +806,12 @@ function editWrite(
   const pronunciationChanged =
     (patch.term !== undefined && patch.term !== current.term) ||
     (patch.language !== undefined && patch.language !== current.language);
+  // A recording says the word, so only a new word drops it; generated speech follows the term
+  // and language. CONTEXT.md, Recording.
+  const audioStale =
+    current.audioSource === "recorded"
+      ? normalizedTerm !== normaliseTerm(current.term)
+      : pronunciationChanged;
   const { reviewModes, directions: _legacy, ...fields } = patch;
   const hook = patch.hook === undefined ? current.hook : patch.hook || null;
   // Changing a field's text changes where it came from, so an AI fill an app rewrites loses its badge.
@@ -838,7 +846,7 @@ function editWrite(
       ...section,
       ...(revision === undefined ? bumped("card", patch, current) : { revision }),
       normalizedTerm,
-      ...(pronunciationChanged ? { audioKey: null } : {}),
+      ...(audioStale ? { audioKey: null, audioSource: null, audioApprovedKey: null } : {}),
       ...(draftStale ? { hookDraft: null } : {}),
       updatedAt: now,
     })

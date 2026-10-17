@@ -9,17 +9,13 @@ import {
   widgetURL,
 } from "@expo/ui/swift-ui/modifiers";
 import { createWidget, type WidgetEnvironment } from "expo-widgets";
+import type { WidgetText } from "../i18n/widgets";
 import type { WidgetColours } from "./colours";
 
 type Paint = Parameters<typeof foregroundStyle>[0];
 
 export interface WeekProps {
-  streak: number;
-  due: number;
-  /** Reviews still to go before today counts; 0 once it does. */
-  left: number;
-  /** False when nobody is signed in, so the week says nothing about today. */
-  signedIn: boolean;
+  text: WidgetText;
   /** Seven days, oldest first; each 0 to 3, the steps of the seven lights. */
   week: number[];
   /** Each day's narrow weekday, oldest first, so today's letter is right on every day. */
@@ -40,11 +36,7 @@ const WeekWidget = (props: WeekProps, env: WidgetEnvironment) => {
   const week = props.week ?? [0, 0, 0, 0, 0, 0, 0];
   const letters = props.letters ?? ["", "", "", "", "", "", ""];
   const ids = ["d1", "d2", "d3", "d4", "d5", "d6", "d7"];
-  const left = props.left ?? 0;
-  const dueCount = props.due ?? 0;
-  // The gallery and a fresh install send nothing, which reads as signed out.
-  const today = !props.signedIn ? null : left === 0 ? "Today counts" : `${left} to today’s goal`;
-  const due = dueCount === 1 ? "1 card due" : `${dueCount} cards due`;
+  const text = props.text;
 
   return (
     <VStack
@@ -66,12 +58,14 @@ const WeekWidget = (props: WeekProps, env: WidgetEnvironment) => {
             foregroundStyle(ink),
           ]}
         >
-          {String(props.streak ?? 0)}
+          {text?.streakCount ?? "0"}
         </Text>
-        <Text modifiers={[font({ size: 15 }), foregroundStyle(muted)]}>days in a row</Text>
+        <Text modifiers={[font({ size: 15 }), foregroundStyle(muted)]}>
+          {text?.streakLabel ?? ""}
+        </Text>
         <Spacer />
         <Text modifiers={[font({ size: 13, weight: "medium" }), foregroundStyle(muted)]}>
-          {due}
+          {text?.dueLine ?? ""}
         </Text>
       </HStack>
       <Spacer />
@@ -103,7 +97,9 @@ const WeekWidget = (props: WeekProps, env: WidgetEnvironment) => {
         ))}
       </HStack>
       <Spacer />
-      {today ? <Text modifiers={[font({ size: 13 }), foregroundStyle(muted)]}>{today}</Text> : null}
+      {text?.today ? (
+        <Text modifiers={[font({ size: 13 }), foregroundStyle(muted)]}>{text.today}</Text>
+      ) : null}
     </VStack>
   );
 };

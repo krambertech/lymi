@@ -85,8 +85,8 @@ function Root() {
               closeLabel={t`Dismiss`}
               viewportClassName={pathname.startsWith("/review") ? REVIEW_TOAST_INSET : undefined}
             />
-            {/* Personas and seeds mean nothing on the design system pages. */}
-            {DevPanel && !pathname.startsWith("/design") && (
+            {/* Personas and seeds mean nothing on the design system and email pages. */}
+            {DevPanel && !pathname.startsWith("/design") && pathname !== "/emails" && (
               <Suspense fallback={null}>
                 <DevPanel />
               </Suspense>

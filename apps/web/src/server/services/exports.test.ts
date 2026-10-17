@@ -150,7 +150,7 @@ async function runImport(ctx: ServiceContext, name: string, bytes: Uint8Array) {
   const preview = await previewImportChoices(ctx, started.id, choices, env.IMPORTS);
   await confirmImport(ctx, started.id, choices, env.IMPORTS, async () => {});
   const decks = await prepareImportDecks(ctx, started.id, env.IMPORTS);
-  const pictures = { stored: 0, skipped: 0 };
+  const pictures = { stored: 0, skipped: 0, recordings: { stored: 0, skipped: 0 } };
   const { progress } = await getImport(ctx, started.id);
   for (let chunk = 0; chunk < progress.chunks; chunk++) {
     const { pictures: pending } = await writeImportChunk(
@@ -163,9 +163,12 @@ async function runImport(ctx: ServiceContext, name: string, bytes: Uint8Array) {
     const done = await attachImportPictures(ctx, started.id, pending, env.IMPORTS, {
       bucket: env.PRIVATE_IMAGES,
       images: env.IMAGES,
+      audio: env.AUDIO,
     });
     pictures.stored += done.stored;
     pictures.skipped += done.skipped;
+    pictures.recordings.stored += done.recordings.stored;
+    pictures.recordings.skipped += done.recordings.skipped;
   }
   await finishImport(ctx, started.id, pictures, env.IMPORTS);
   return { preview, result: await getImport(ctx, started.id) };
@@ -570,6 +573,62 @@ describe("exporting an Anki package", () => {
         DAY,
       );
     }
+  }, 60_000);
+});
+
+describe("a recording on export", () => {
+  it("goes out in a Lymi file and an Anki package and comes back as the card's recording", async () => {
+    const owner = await fresh("Owner");
+    const deck = await createDeck(owner, { name: "Japanese", defaultLanguage: "ja" });
+    const outcomes = await addCards(owner, [
+      { deckId: deck.id, term: "箸", meaning: "chopsticks" },
+      { deckId: deck.id, term: "桜", meaning: "cherry blossom" },
+    ]);
+    const [hashi, sakura] = outcomes.map((outcome) => {
+      if (outcome.status !== "added") throw new Error("card not added");
+      return outcome.card.id;
+    }) as [string, string];
+    const clip = new Uint8Array([0x49, 0x44, 0x33, ...new Array(61).fill(7)]);
+    for (const [id, key, source] of [
+      [hashi, `cards/${hashi}/recorded/clip.mp3`, "recorded"],
+      [sakura, `cards/${sakura}/v2/speech.mp3`, "generated"],
+    ] as const) {
+      await env.AUDIO.put(key, clip, { httpMetadata: { contentType: "audio/mpeg" } });
+      await db
+        .update(schema.cards)
+        .set({ audioKey: key, audioSource: source })
+        .where(eq(schema.cards.id, id));
+    }
+
+    // A Lymi file carries the recording alone; generated speech is made again on the other side.
+    const lymiFile = await runExport(owner, { format: "lymi", deckId: deck.id });
+    expect(lymiFile.view.counts).toMatchObject({ cards: 2, sounds: 1 });
+    expect((await entries(lymiFile.bytes)).names).toContain(`media/${hashi}.mp3`);
+    const copy = await fresh("Copy");
+    const { preview, result } = await runImport(copy, "japanese.zip", lymiFile.bytes);
+    expect(preview).toMatchObject({ added: 2, recordings: 1 });
+    expect(result.counts).toMatchObject({ recordings: 1, recordingsSkipped: 0 });
+    const copied = await db.select().from(schema.cards).where(eq(schema.cards.userId, copy.userId));
+    const kept = copied.find((card) => card.term === "箸");
+    expect(kept?.audioSource).toBe("recorded");
+    const bytes = await env.AUDIO.get(kept?.audioKey as string);
+    expect(new Uint8Array((await bytes?.arrayBuffer()) as ArrayBuffer)).toEqual(clip);
+    expect(copied.find((card) => card.term === "桜")?.audioKey).toBeNull();
+
+    // An Anki package names the two apart, so importing it back keeps only the recording.
+    const package_ = await runExport(owner, { format: "anki", deckId: deck.id });
+    const media = JSON.parse(
+      new TextDecoder().decode(await (await entries(package_.bytes)).read("media")),
+    );
+    expect(Object.values(media).sort()).toEqual(
+      [`lymi-${hashi}-recording.mp3`, `lymi-${sakura}-speech.mp3`].sort(),
+    );
+    const { summary, notes } = await anki.inspect(bytesSource(package_.bytes));
+    const cards = [...notes].flatMap((n) => anki.cards(n, summary, { languages: {}, roles: {} }));
+    expect(cards.map((card) => [card.fields.term, card.recording ?? null]).sort()).toEqual([
+      ["桜", null],
+      ["箸", `lymi-${hashi}-recording.mp3`],
+    ]);
   }, 60_000);
 });
 

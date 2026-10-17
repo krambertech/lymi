@@ -1,4 +1,4 @@
-import type { EditionImportInput, PublicationInput } from "@lymi/core";
+import { EDITION_IMPORT_CARDS, EditionImportInput, type PublicationInput } from "@lymi/core";
 import { loadPublicDeck } from "@lymi/core/catalog/server";
 import { and, eq, isNull, sql } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -186,6 +186,148 @@ describe("a long edition", () => {
     expect(read).toHaveLength(120);
     expect(meanings(read)["sona-7"]).toBe("слово 7");
   }, 60_000);
+});
+
+/** A published deck of `count` cards spread over `sections` sections, each card already voiced. */
+async function bigDeck(slug: string, count: number, sections: number) {
+  const deck = await createDeck(lymi, { name: `Big ${slug}`, defaultLanguage: "et" });
+  const sectionIds: string[] = [];
+  for (let s = 0; s < sections; s++) {
+    sectionIds.push((await createSection(lymi, deck.id, { name: `Part ${s + 1}` })).id);
+  }
+  const cardIds: string[] = [];
+  for (let start = 0; start < count; start += 200) {
+    const outcomes = await addCards(
+      lymi,
+      Array.from({ length: Math.min(200, count - start) }, (_, i) => ({
+        deckId: deck.id,
+        sectionId: sectionIds[(start + i) % sections],
+        term: `${slug}-${start + i}`,
+        meaning: `word ${start + i}`,
+      })),
+    );
+    for (const outcome of outcomes) {
+      if (outcome.status !== "added") throw new Error("card not added");
+      cardIds.push(outcome.card.id);
+    }
+  }
+  await db
+    .update(schema.cards)
+    .set({ audioKey: sql`'audio/' || ${schema.cards.id}` })
+    .where(eq(schema.cards.deckId, deck.id));
+  await publishDeck(lymi, deck.id, publication(slug), publishers);
+  return { deckId: deck.id, sectionIds, cardIds };
+}
+
+/** A big deck's Ukrainian edition in parts of at most the cap; the deck and sections ride on the first. */
+function bigEdition(deck: Awaited<ReturnType<typeof bigDeck>>): EditionImportInput[] {
+  const parts: EditionImportInput[] = [];
+  for (let start = 0; start < deck.cardIds.length; start += EDITION_IMPORT_CARDS) {
+    parts.push({
+      ...(start === 0
+        ? {
+            deck: { provenance: "imported" as const, name: "Велика", summary: "Велика колода." },
+            sections: deck.sectionIds.map((sectionId, s) => ({
+              sectionId,
+              provenance: "imported" as const,
+              name: `Частина ${s + 1}`,
+            })),
+          }
+        : { sections: [] }),
+      cards: deck.cardIds.slice(start, start + EDITION_IMPORT_CARDS).map((cardId, i) => ({
+        cardId,
+        provenance: "imported" as const,
+        meaning: `слово ${start + i}`,
+      })),
+    });
+  }
+  return parts;
+}
+
+describe("an edition past the per-call cap", () => {
+  it("refuses more than the cap in one call", () => {
+    const parsed = EditionImportInput.safeParse({
+      cards: Array.from({ length: EDITION_IMPORT_CARDS + 1 }, (_, i) => ({
+        cardId: `card-${i}`,
+        provenance: "imported",
+        meaning: "x",
+      })),
+    });
+    expect(parsed.success).toBe(false);
+    expect(JSON.stringify(parsed.error?.issues)).toContain("at most 500 cards per call");
+  });
+
+  it("lands every part in one edition and publishes a 1,001-card deck with sections as one deck", async () => {
+    const deck = await bigDeck("big-edition", 1001, 3);
+    const key = withKey(lymi);
+    const [first, ...rest] = bigEdition(deck);
+    if (!first) throw new Error("no parts");
+    expect([first, ...rest].map((part) => part.cards.length)).toEqual([500, 500, 1]);
+
+    await importEdition(key, deck.deckId, "uk", first, publishers);
+    // Half an edition cannot be published, even signed off.
+    await approveEdition(key, deck.deckId, "uk", {}, publishers);
+    await expect(publishEdition(key, deck.deckId, "uk", publishers)).rejects.toThrow(/not ready/);
+
+    for (const part of rest) await importEdition(key, deck.deckId, "uk", part, publishers);
+    await approveEdition(key, deck.deckId, "uk", {}, publishers);
+    const published = await publishEdition(key, deck.deckId, "uk", publishers);
+    expect(published).toMatchObject({ status: "published", total: 1 + 3 + 1001, missing: 0 });
+
+    const page = await loadPublicDeck(db, "big-edition", "uk");
+    if (page.status !== "published") throw new Error(page.status);
+    expect(page.deck.sections.map((section) => section.name)).toEqual([
+      "Частина 1",
+      "Частина 2",
+      "Частина 3",
+    ]);
+    const cards = page.deck.sections.flatMap((section) => section.cards);
+    expect(cards).toHaveLength(1001);
+    expect(cards.find((card) => card.term === "big-edition-1000")?.meaning).toBe("слово 1000");
+
+    // Writing an edition never touches a card's clip, so nothing is voiced again.
+    const clips = await db
+      .select({ id: schema.cards.id, audioKey: schema.cards.audioKey })
+      .from(schema.cards)
+      .where(eq(schema.cards.deckId, deck.deckId));
+    expect(clips.every((row) => row.audioKey === `audio/${row.id}`)).toBe(true);
+  }, 180_000);
+
+  it("writes nothing of a failed part, keeps the original live, and finishes on a retry", async () => {
+    const deck = await bigDeck("failed-part", 501, 2);
+    const other = await createDeckFor("failed-part-other");
+    const key = withKey(lymi);
+    const [first, second] = bigEdition(deck);
+    if (!first || !second) throw new Error("no parts");
+    await importEdition(key, deck.deckId, "uk", first, publishers);
+    const broken = {
+      ...second,
+      cards: [
+        ...second.cards,
+        { cardId: other.cardIds[0], provenance: "imported" as const, meaning: "x" },
+      ],
+    };
+    await expect(importEdition(key, deck.deckId, "uk", broken, publishers)).rejects.toThrow(
+      /not an active card/,
+    );
+    const written = await db
+      .select()
+      .from(schema.cardLocalizations)
+      .where(eq(schema.cardLocalizations.cardId, deck.cardIds[500] ?? ""));
+    expect(written).toEqual([]);
+    await approveEdition(key, deck.deckId, "uk", {}, publishers);
+    await expect(publishEdition(key, deck.deckId, "uk", publishers)).rejects.toThrow(/not ready/);
+    const page = await loadPublicDeck(db, "failed-part", "uk");
+    if (page.status !== "published") throw new Error(page.status);
+    expect(page.deck).toMatchObject({ meaningLanguage: "en", editions: ["en"] });
+
+    await importEdition(key, deck.deckId, "uk", second, publishers);
+    await approveEdition(key, deck.deckId, "uk", {}, publishers);
+    await expect(publishEdition(key, deck.deckId, "uk", publishers)).resolves.toMatchObject({
+      status: "published",
+      missing: 0,
+    });
+  }, 180_000);
 });
 
 describe("what an edition may change", () => {

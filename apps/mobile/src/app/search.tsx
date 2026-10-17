@@ -137,7 +137,11 @@ export default function Search() {
                         className={`gap-0.5 bg-plate py-3.5 ps-5 pe-4 ${i > 0 ? "border-t border-edge" : ""}`}
                       >
                         <View className="flex-row items-baseline gap-3">
-                          <Text className="flex-1 text-md font-medium text-text" numberOfLines={2}>
+                          <Text
+                            className="flex-1 text-md font-medium text-text"
+                            numberOfLines={2}
+                            lang={c.language}
+                          >
                             {c.term}
                           </Text>
                           <Text className="max-w-[40%] text-sm text-muted" numberOfLines={1}>

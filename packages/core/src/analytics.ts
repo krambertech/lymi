@@ -60,6 +60,21 @@ export const TYPED_CARD_FIELDS = [
 export type TypedCardField = (typeof TYPED_CARD_FIELDS)[number];
 /** The fields a chip adds to the web card form. */
 const FORM_FIELDS = ["notes", "example", "pronunciation", "source", "picture", "hook"] as const;
+/** Every email Lymi sends, by kind; the recipient and body never leave the Worker. */
+export const EMAIL_KINDS = [
+  "test",
+  "verify-email",
+  "verify-email-code",
+  "reset-password",
+  "existing-account",
+  "google-account",
+  "reset-google-account",
+  "deck-invitation",
+  "feedback",
+  "delete-account-code",
+  "account-deleted",
+] as const;
+const EmailKind = z.enum(EMAIL_KINDS);
 const slug = z
   .string()
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
@@ -181,6 +196,10 @@ export const analyticsEvents = {
     ai_written: count,
   }),
   reminder_sent: z.object({ backlog: Backlog }),
+  email_sent: z.object({ kind: EmailKind, language: z.enum(["en", "uk", "ru"]) }),
+  email_failed: z.object({ kind: EmailKind, error_class: z.string().max(40) }),
+  email_bounced: z.object({ kind: EmailKind.optional() }),
+  email_complained: z.object({ kind: EmailKind.optional() }),
   review_session_finished: z.object({
     ...session,
     card_count: count,
@@ -217,6 +236,9 @@ export const analyticsEvents = {
     card_count: count,
     adapter: z.enum(["anki", "mochi", "noji", "lymi", "quizlet", "unknown"]),
     outcome: z.enum(["done", "failed"]),
+    recordings: count.optional(),
+    recordings_skipped: count.optional(),
+    sounds_left_out: count.optional(),
   }),
   import_failed: z.object({ source, card_count: count }),
   export_started: z.object({
@@ -352,6 +374,10 @@ export const analyticsProducers = {
   hook_added: ["worker"],
   cards_archived: ["worker"],
   reminder_sent: ["worker"],
+  email_sent: ["worker"],
+  email_failed: ["worker"],
+  email_bounced: ["worker"],
+  email_complained: ["worker"],
   review_session_finished: ["browser", "phone"],
   review_session_abandoned: ["browser", "phone"],
   first_session_started: ["worker"],

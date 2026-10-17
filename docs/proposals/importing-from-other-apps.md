@@ -17,7 +17,7 @@ A learner brings their Anki or Mochi collection into Lymi by handing over the fi
 - **Progress replays.** Each grade in the source's log runs through Lymi's scheduler, so every review row carries Lymi's memory state and there is one scheduler. Imported reviews are `source: import` with no review day: they show in Insights and light past days, and never count toward today's goal. Exported stability and difficulty are used only for a card with state but no log.
 - **Language is chosen per import**, overridable per deck in the preview. Anki has no language; Lymi needs one for duplicates, audio and enrichment.
 - **The preview tells the truth first.** Before anything is written: cards, decks, tags, pictures and reviews coming across; duplicates; what is dropped or shortened. Imported text is labelled `manual`, never `lesson` or `ai`.
-- **Export is complete.** A Lymi zip with JSON and media that Lymi itself can import back, and a legacy Anki `.apkg` with scheduling and media that Anki, Mochi, RemNote and Noji read. CSV stays for spreadsheets. Files download only through an authenticated route.
+- **Export is complete.** A Lymi zip with JSON and media, recordings included, that Lymi itself can import back, and a legacy Anki `.apkg` with scheduling and media that Anki, Mochi, RemNote and Noji read. CSV stays for spreadsheets. Files download only through an authenticated route.
 - **Each source ships with a guide** in the public docs: how to export from that app, what carries over, what does not.
 
 ## What each source exports
@@ -42,7 +42,10 @@ Anki was not renamed. Noji is the former AnkiPro, an unrelated app whose CSV is 
 | Furigana `漢字[かんじ]`, a reading field | Pronunciation |
 | HTML, Markdown | Plain text with line breaks; CSS, templates and scripts dropped |
 | First `<img>` or attachment | The card's picture, without a description, so picture modes wait for one |
-| `[sound:]`, audio attachments | Dropped and counted in the preview; Lymi generates speech. A learner-audio path is a separate proposal |
+| The term's `[sound:]` or audio attachment | The card's recording, kept until the term changes; generated speech fills only cards without one, and a published deck's page plays it once the publisher approves it. Sentence clips, second clips and formats other than MP3, M4A, AAC and WAV up to 2 MB are left out and counted |
+| Pitch accent field | One notes line, such as `はꜜし [1]`; a graph alone is left out and counted |
+| Sentence translation | One notes line |
+| Frequency, rank and sort fields | Skipped |
 | Tags, including `a::b` | Tags, at most 20 of 40 characters; `marked` and `leech` dropped |
 | Suspended card | Archived card; buried and filtered-deck cards are active |
 | Text past a field limit | Meaning overflow moves to notes; notes are cut and counted as shortened |
@@ -50,4 +53,4 @@ Anki was not renamed. Noji is the former AnkiPro, an unrelated app whose CSV is 
 
 ## Out of scope
 
-Pasted lists and spreadsheets, keeping imported audio, AnkiWeb sync, and importing into a shared deck one does not own. Each is a later adapter or proposal, not a change to the foundation.
+Pasted lists and spreadsheets, sentence audio, AnkiWeb sync, and importing into a shared deck one does not own. Each is a later adapter or proposal, not a change to the foundation.

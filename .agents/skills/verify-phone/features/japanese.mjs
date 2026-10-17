@@ -1,8 +1,9 @@
 export const title = "Japanese";
 
 const DECK = "日本語";
-const TERM = "上手";
-const READING = "じょうず";
+const TERM = "直角";
+const READING = "ちょっかく";
+const EXAMPLE = "この角は直角だ。";
 
 export async function env({ api }) {
   const json = (body) => ({
@@ -15,11 +16,18 @@ export async function env({ api }) {
     "/api/cards/batch",
     json({
       cards: [
-        { deckId: deck.id, term: TERM, meaning: "skilful", pronunciation: READING, enrich: false },
+        {
+          deckId: deck.id,
+          term: TERM,
+          meaning: "right angle",
+          pronunciation: READING,
+          example: EXAMPLE,
+          enrich: false,
+        },
       ],
     }),
   );
-  return { DECK, TERM, READING };
+  return { DECK, TERM, READING, EXAMPLE };
 }
 
 /** Review shows what is stored, so the stored card must still carry its reading. */

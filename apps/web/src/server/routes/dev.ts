@@ -1,4 +1,5 @@
 import { AppLanguage } from "@lymi/core";
+import { EMAIL_KINDS } from "@lymi/core/analytics";
 import { type Context, Hono } from "hono";
 import { z } from "zod";
 import { devPersonaCookieName } from "../../shared/cookies";
@@ -7,7 +8,8 @@ import type { Auth } from "../auth";
 import type { Db } from "../db";
 import { callAsMcp, devHostPage, devHostView } from "../dev/mcp-host";
 import { DEV_PASSWORD, type Persona, personaEmail, personaFor, personas } from "../dev/personas";
-import { devToolsEnabled } from "../env";
+import { EMAIL_SAMPLES } from "../email/samples";
+import { devToolsEnabled, operatorEmails } from "../env";
 import { body, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import {
@@ -25,7 +27,13 @@ import {
   setDue,
   slipCards,
 } from "../services/dev";
-import { latestLocalEmail } from "../services/email";
+import {
+  EMAIL_FROM,
+  latestLocalEmail,
+  OPERATOR_INBOX,
+  renderTransactionalEmail,
+  sendEmailPreview,
+} from "../services/email";
 import { getSettings } from "../services/settings";
 
 /**
@@ -69,6 +77,72 @@ dev.post(
   (c) => {
     const message = latestLocalEmail(c.req.valid("json").to);
     return message ? c.json({ message }) : c.json({ error: "Email not found" }, 404);
+  },
+);
+
+const EmailPreviewQuery = z.object({
+  kind: z.enum(EMAIL_KINDS),
+  language: AppLanguage.default("en"),
+});
+
+const emailOrigins = (env: AppEnv["Bindings"]) => ({
+  productUrl: env.PRODUCT_URL,
+  siteUrl: env.PUBLIC_SITE_URL ?? "https://lymi.app",
+});
+
+/** The kinds the `/emails` page lists, and the operator addresses it may send to. */
+dev.get("/emails", describe({ hide: true, open: true }), (c) =>
+  c.json({
+    kinds: EMAIL_KINDS,
+    operators: [...operatorEmails(c.env)],
+    canSend: Boolean(c.env.RESEND_API_KEY),
+  }),
+);
+
+/** One kind rendered with its sample, through the renderer production sends with. */
+dev.get(
+  "/emails/render",
+  describe({ hide: true, open: true }),
+  query(EmailPreviewQuery, "email preview"),
+  async (c) => {
+    const { kind, language } = c.req.valid("query");
+    const message = await renderTransactionalEmail(
+      kind,
+      language,
+      EMAIL_SAMPLES[kind],
+      emailOrigins(c.env),
+    );
+    return c.json({
+      ...message,
+      from: `${EMAIL_FROM.name} <${EMAIL_FROM.email}>`,
+      replyTo: kind === "feedback" ? EMAIL_SAMPLES.feedback.feedback?.from : OPERATOR_INBOX,
+      to: kind === "feedback" ? OPERATOR_INBOX : "anna@example.com",
+    });
+  },
+);
+
+const EmailSendBody = EmailPreviewQuery.extend({
+  to: z.string().trim().toLowerCase().email().max(254),
+});
+
+/** Sends the preview for real through Resend, only to an operator address. */
+dev.post(
+  "/emails/send",
+  describe({ hide: true, open: true }),
+  body(EmailSendBody, "email preview"),
+  async (c) => {
+    const { kind, language, to } = c.req.valid("json");
+    if (!operatorEmails(c.env).has(to)) {
+      return c.json({ error: "Previews go only to OPERATOR_EMAILS addresses" }, 403);
+    }
+    const message = await renderTransactionalEmail(
+      kind,
+      language,
+      EMAIL_SAMPLES[kind],
+      emailOrigins(c.env),
+    );
+    await sendEmailPreview(c.env, message, to);
+    return c.json({ ok: true });
   },
 );
 

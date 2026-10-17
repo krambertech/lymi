@@ -32,7 +32,7 @@ import { auditStatement } from "./audit";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
 import { type CardView, presentCard, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
-import { type EnrichmentQueue, queueEnrichment } from "./enrichment";
+import { addRunId, type EnrichmentQueue, queueEnrichment, runState } from "./enrichment";
 import { memberOf } from "./members";
 import {
   presentModeRow,
@@ -201,14 +201,27 @@ export async function addCards(
   // One group per card: the card, live learner states, and its audit row. A group never
   // splits across batches, so a failed batch leaves no partially created card.
   const groups: Statement[][] = [];
-  const enriching: string[] = [];
+  let enriching: string[] = [];
+  // The add's first card, whose id names its run, and whether any card is a replay still waiting.
+  let firstAdded: string | undefined;
+  let replayedWorking = false;
   // Which optional fields the new cards hold, for the typed add's event; never their text.
   const filled = new Set<TypedCardField>();
 
   for (const { input, deck, language, key } of prepared) {
     const again = input.id ? replayed.get(input.id) : undefined;
     if (again || !deck) {
-      if (again) outcomes.push({ status: "added", card: again });
+      if (again) {
+        outcomes.push({ status: "added", card: again });
+        firstAdded ??= again.id;
+      }
+      // The first add saved the card at `working` but may have died before handing over its run,
+      // and a replay is the only request that will ever come for it. Below, a replay of an add
+      // whose run is still going leaves it to that run, so the model is asked once.
+      if (again?.enrichmentStatus === "working" && enrichment) {
+        enriching.push(again.id);
+        replayedWorking = true;
+      }
       continue;
     }
     const reading = readingKey({ language, pronunciation: input.pronunciation });
@@ -229,6 +242,7 @@ export async function addCards(
       continue;
     }
     const id = input.id ?? newId();
+    firstAdded ??= id;
     const modes = resolveCardModes(input, null);
     const card: Card = {
       id,
@@ -327,11 +341,22 @@ export async function addCards(
       ...(source === "typed" ? { fields: TYPED_CARD_FIELDS.filter((f) => filled.has(f)) } : {}),
     });
   }
+  // The run is named after the add's first card, so the same add sent again finds it. A replay
+  // whose run is still going leaves its cards to it; one whose run has finished, or that also
+  // brings new cards, starts a run of its own under a fresh name.
+  let runId = firstAdded ? addRunId(firstAdded) : undefined;
+  if (enrichment && runId && replayedWorking) {
+    const state = await runState(enrichment, runId);
+    if (state === "live") {
+      enriching = enriching.filter((id) => !replayed.has(id));
+    }
+    if (state !== "none") runId = undefined;
+  }
   // The add stands whatever the queue does; a refused run leaves its cards saying so.
   if (
     enrichment &&
     enriching.length > 0 &&
-    !(await queueEnrichment(db, userId, enriching, enrichment))
+    !(await queueEnrichment(db, userId, enriching, enrichment, "add", runId))
   ) {
     for (const outcome of outcomes) {
       if (outcome.status === "added" && enriching.includes(outcome.card.id)) {

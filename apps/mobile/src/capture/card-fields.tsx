@@ -1,7 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { cardLimits } from "@lymi/core";
+import { cardLimits, writtenWithReading } from "@lymi/core";
 import { PLATE_ARRIVE, PLATE_RISE } from "@lymi/design";
 import { type ReactNode, type RefObject, useEffect, useRef, useState } from "react";
 import { TextInput, View } from "react-native";
@@ -92,6 +92,15 @@ export const FORM_FIELD: Record<
   },
 };
 
+const READING = msg({ message: "Reading", context: "how a term is read" });
+
+/** A field's name: Japanese and Chinese call a term's pronunciation its reading. */
+export function fieldLabel(field: FormField, language: string | null | undefined) {
+  return field === "pronunciation" && writtenWithReading(language)
+    ? READING
+    : FORM_FIELD[field].label;
+}
+
 /**
  * Which fields a card form shows: the term and the meaning, then every field holding something and
  * any a chip added, in the order they came, so a tapped chip's field appears last, where the eye is.
@@ -143,6 +152,7 @@ export function CardFields({
   ai,
   footer,
   reveal,
+  language,
 }: {
   values: FormValues;
   onChange: (field: FormField, value: string) => void;
@@ -163,6 +173,8 @@ export function CardFields({
   footer?: ReactNode;
   /** Brings the field being added or typed in into view within the form's scroll. */
   reveal?: (y: number, height: number) => void;
+  /** The card's language, which names its pronunciation. */
+  language?: string | null | undefined;
 }) {
   const { i18n } = useLingui();
   const p = usePalette();
@@ -177,7 +189,7 @@ export function CardFields({
     <>
       {shown.map((f, i) => {
         const spec = FORM_FIELD[f];
-        const label = i18n._(spec.label);
+        const label = i18n._(fieldLabel(f, language));
         const next = shown[i + 1];
         const submits = f === submitFrom || !next;
         const term = f === "term";
@@ -242,9 +254,11 @@ export function CardFields({
 export function AddFieldChips({
   missing,
   onAdd,
+  language,
 }: {
   missing: readonly FormField[];
   onAdd: (field: FormField) => void;
+  language?: string | null | undefined;
 }) {
   const { i18n } = useLingui();
   const recentFirst = useRecentFirst();
@@ -259,7 +273,7 @@ export function AddFieldChips({
             onAdd(f);
           }}
         >
-          {i18n._(FORM_FIELD[f].label)}
+          {i18n._(fieldLabel(f, language))}
         </FieldChip>
       ))}
     </>

@@ -3247,6 +3247,10 @@ msgstr "Read the guide"
 msgid "Reading"
 msgstr "Reading"
 
+msgctxt "how a term is read"
+msgid "Reading"
+msgstr "Reading"
+
 #. placeholder {0}: scanned + 1
 #. placeholder {1}: pages.length
 msgid "Reading page {0} of {1}"

@@ -14,7 +14,7 @@ import {
   splitForms,
   stateKey,
 } from "@lymi/client/deck-list";
-import { CHOSEN_LIMIT } from "@lymi/core";
+import { CHOSEN_LIMIT, drawsReadings, termReading } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
@@ -47,6 +47,7 @@ import { usePalette, useRoom } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
 import { useFloatingBar } from "../../../ui/floating-bar";
+import { Furigana } from "../../../ui/furigana";
 import { Icon } from "../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
 import type { MenuItem } from "../../../ui/menu";
@@ -983,6 +984,8 @@ const WordRow = memo(function WordRow({
   const peek = usePeekSize();
   const state = stateKey(row.state?.state);
   const { word, forms } = splitForms(row.card.term);
+  // A Japanese row without furigana keeps a reading's room, so every row in the deck is one height.
+  const reading = useMemo(() => termReading({ ...row.card, term: word }), [row.card, word]);
   const selecting = selected !== undefined;
   const label = `${row.card.term}, ${row.card.meaning ?? ""}, ${waiting ? t`Not in review yet` : i18n._(stateMarks[state].label)}`;
   const face = (
@@ -1000,15 +1003,25 @@ const WordRow = memo(function WordRow({
         )}
       </View>
       <View className="flex-1 gap-0.5">
-        <Text className="text-md font-medium text-text" numberOfLines={3} lang={row.card.language}>
-          {word}
-          {forms && (
-            <Text className="font-normal text-text-2" lang={row.card.language}>
-              {` · ${forms}`}
-            </Text>
-          )}
-          {row.card.important && <Text style={{ color: p["amber-mark"] }}>{" ★"}</Text>}
-        </Text>
+        <Furigana
+          segments={reading ?? [{ text: word }]}
+          room={drawsReadings(row.card.language)}
+          className="text-md font-medium text-text"
+          lines={3}
+          lang={row.card.language}
+          after={
+            (forms || row.card.important) && (
+              <Text className="text-md font-medium text-text" lang={row.card.language}>
+                {forms && (
+                  <Text className="font-normal text-text-2" lang={row.card.language}>
+                    {` · ${forms}`}
+                  </Text>
+                )}
+                {row.card.important && <Text style={{ color: p["amber-mark"] }}>{" ★"}</Text>}
+              </Text>
+            )
+          }
+        />
         <Text className="text-base text-text-2" numberOfLines={2}>
           {row.card.meaning || t`No meaning yet`}
         </Text>

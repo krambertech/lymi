@@ -224,6 +224,7 @@ export default function EditCard() {
           >
             <CardFields
               reveal={form.reveal}
+              language={card.language}
               values={values}
               onChange={(f, v) => setTyped((d) => ({ ...d, [f]: v }))}
               shown={fields.shown}
@@ -243,7 +244,11 @@ export default function EditCard() {
               ))}
               <ChipIn index={choices.length} shown={chips}>
                 <View className="flex-row gap-2">
-                  <AddFieldChips missing={fields.missing} onAdd={fields.add} />
+                  <AddFieldChips
+                    missing={fields.missing}
+                    onAdd={fields.add}
+                    language={card.language}
+                  />
                 </View>
               </ChipIn>
             </FieldChipRow>

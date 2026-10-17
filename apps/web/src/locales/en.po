@@ -4778,6 +4778,9 @@ msgstr "What you’re learning"
 msgid "What’s in this deck. Members see it too."
 msgstr "What’s in this deck. Members see it too."
 
+msgid "What’s new"
+msgstr "What’s new"
+
 msgid "When most of a section is known, the next one is ready and you choose when to start it."
 msgstr "When most of a section is known, the next one is ready and you choose when to start it."
 

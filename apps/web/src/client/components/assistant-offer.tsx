@@ -116,7 +116,7 @@ export function AssistantOffer({ onDismiss }: { onDismiss: () => void }) {
   );
 }
 
-/** The learner menu's row beside Docs, on both the rail and the phone; the rail's card carries the marks. */
+/** The learner menu's row beside Docs, on both the rail and the phone. */
 export function AssistantMenuItem() {
   return (
     <DropdownMenuLinkItem render={<a href={GUIDES} />}>

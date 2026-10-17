@@ -630,6 +630,11 @@ function AddBar({ row, deckName, adding, checking, waiting, ...option }: AddBarP
         <span className="grid size-7 shrink-0 place-items-center rounded-full bg-plate text-text edge">
           <ArrowUpRight className="size-4" aria-hidden="true" />
         </span>
+      ) : checking ? (
+        // Amber only once the deck is known to lack the term: until then it may still be an Open.
+        <span className="grid size-7 shrink-0 place-items-center rounded-full bg-plate text-muted edge">
+          <Plus className="size-4" strokeWidth={2.5} aria-hidden="true" />
+        </span>
       ) : (
         <span className="grid size-7 shrink-0 place-items-center rounded-full bg-amber text-amber-ink">
           <Plus className="size-4" strokeWidth={2.5} aria-hidden="true" />
@@ -642,7 +647,9 @@ function AddBar({ row, deckName, adding, checking, waiting, ...option }: AddBarP
           // A long term gives way first: the deck is where the card lands.
           <>
             <span className="min-w-0 truncate font-medium text-text">{term}</span>
-            <span className="max-w-[60%] shrink-0 truncate ps-1.5 text-muted">→ {deckName}</span>
+            {!checking && (
+              <span className="max-w-[60%] shrink-0 truncate ps-1.5 text-muted">→ {deckName}</span>
+            )}
           </>
         ) : (
           <span className="truncate text-text">{t`Add “${shortQuote(term)}”`}</span>

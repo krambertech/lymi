@@ -264,6 +264,13 @@ export function CardForm(props: CardFormProps) {
   const [failure, setFailure] = useState<string | null>(null);
   const [invalid, setInvalid] = useState<FieldErrors>({});
   const termRef = useRef<HTMLInputElement>(null);
+  // Opened by the command menu's Enter, a second quick Enter from the same hand is not a submit.
+  const openedWithTerm = useRef(startTerm ? performance.now() : null);
+  const swallowEcho = (e: React.KeyboardEvent) => {
+    const since = openedWithTerm.current;
+    if (e.key === "Enter" && since !== null && performance.now() - since < ECHO_MS)
+      e.preventDefault();
+  };
   const meaningRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const fieldOf = (key: Extra) =>
@@ -714,6 +721,7 @@ export function CardForm(props: CardFormProps) {
       ref={formRef}
       className="grid min-w-0 gap-4"
       noValidate
+      onKeyDownCapture={swallowEcho}
       onSubmit={(e) => {
         e.preventDefault();
         void submit();
@@ -815,9 +823,11 @@ export function CardForm(props: CardFormProps) {
   );
 }
 
+const ECHO_MS = 600;
+
 /** Enter adds the card from a one-line field; Shift Enter breaks the line. */
 function submitOnEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-  if (e.key !== "Enter" || e.shiftKey || composing(e)) return;
+  if (e.key !== "Enter" || e.shiftKey || e.defaultPrevented || composing(e)) return;
   if (e.metaKey || e.ctrlKey) return;
   e.preventDefault();
   e.currentTarget.form?.requestSubmit();

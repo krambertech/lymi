@@ -101,6 +101,10 @@ function Root() {
   );
 }
 
+/** An open dialog or sheet, not counting toasts, which Base UI also marks as dialogs. */
+const OVERLAY_OPEN =
+  '[role="dialog"]:not([inert]):not([data-slot="toast"]), [role="alertdialog"]:not([data-slot="toast"])';
+
 function Shell() {
   const { t } = useLingui();
   const location = useLocation();
@@ -284,11 +288,7 @@ function Shell() {
       if (appleKeyboard() ? !e.metaKey || e.ctrlKey : !e.ctrlKey || e.metaKey) return;
       // Picking an autofill suggestion sends a keydown with no key.
       if (e.code !== "KeyK" && e.key?.toLowerCase() !== "k") return;
-      if (
-        !commandOpen &&
-        document.querySelector('[role="dialog"]:not([inert]), [role="alertdialog"]')
-      )
-        return;
+      if (!commandOpen && document.querySelector(OVERLAY_OPEN)) return;
       e.preventDefault();
       setCommandOpen((open) => !open);
     };

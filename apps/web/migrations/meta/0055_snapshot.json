@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "85138675-bdc4-4477-8b0f-96306be17b69",
+  "id": "c7f8494c-9b5f-479f-bc69-120e9960f099",
   "prevId": "cfb768e5-53c6-4d65-aaf5-0f0bf90e0c61",
   "tables": {
     "account_deletions": {
@@ -279,6 +279,31 @@
           "isUnique": true
         }
       },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "card_audio_purges": {
+      "name": "card_audio_purges",
+      "columns": {
+        "card_id": {
+          "name": "card_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
+        }
+      },
+      "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
@@ -2079,20 +2104,6 @@
         "enrich_instructions": {
           "name": "enrich_instructions",
           "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "enrich_style": {
-          "name": "enrich_style",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "enrich_style_at": {
-          "name": "enrich_style_at",
-          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

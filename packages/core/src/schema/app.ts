@@ -935,6 +935,17 @@ export const accountDeletions = sqliteTable("account_deletions", {
     .default(sql`(unixepoch() * 1000)`),
 });
 
+/**
+ * Deleted cards whose audio folder in R2 still needs clearing, which the cron works through. Not a
+ * foreign key, since the card row is gone by the time the sweep runs.
+ */
+export const cardAudioPurges = sqliteTable("card_audio_purges", {
+  cardId: text("card_id").primaryKey(),
+  createdAt: integer("created_at", { mode: "timestamp_ms" })
+    .notNull()
+    .default(sql`(unixepoch() * 1000)`),
+});
+
 export type Series = typeof series.$inferSelect;
 export type Deck = typeof decks.$inferSelect;
 export type Section = typeof sections.$inferSelect;

@@ -1,22 +1,37 @@
 import { Hono } from "hono";
+import { createSpeechProviders } from "../ai";
+import { tooManyRequests } from "../auth-rate-limit";
 import { describe } from "../http";
 import type { AppEnv } from "../index";
+import { spendPublicAudio } from "../public-audio-rate-limit";
 import { publisherAvatar } from "../services";
-import { publicMediaFile } from "../services/public-media";
+import { publicMediaFile, publicPronunciation } from "../services/public-media";
 
 /** A published deck's own media. The product Worker checks the publication on every request. */
 export const publicMedia = new Hono<AppEnv>();
 
 publicMedia.get(
   "/card/:cardId/:kind",
-  describe({ hide: true, open: true, errors: [404] }),
+  describe({ hide: true, open: true, errors: [404, 503] }),
   async (c) => {
     const kind = c.req.param("kind");
     if (kind !== "image" && kind !== "audio") return c.notFound();
-    const object = await publicMediaFile(c.get("db"), c.req.param("cardId"), kind, {
-      images: c.env.PRIVATE_IMAGES,
-      audio: c.env.AUDIO,
-    });
+    let object: R2ObjectBody;
+    if (kind === "image") {
+      object = await publicMediaFile(c.get("db"), c.req.param("cardId"), kind, {
+        images: c.env.PRIVATE_IMAGES,
+        audio: c.env.AUDIO,
+      });
+    } else {
+      const found = await publicPronunciation(
+        c.get("db"),
+        c.req.param("cardId"),
+        { bucket: c.env.AUDIO, providers: (language) => createSpeechProviders(c.env, language) },
+        () => spendPublicAudio(c),
+      );
+      if ("retryAfter" in found) return tooManyRequests(found.retryAfter);
+      object = found.clip;
+    }
     const audioType = object.httpMetadata?.contentType === "audio/wav" ? "audio/wav" : "audio/mpeg";
     const headers = new Headers({
       "Content-Type": kind === "image" ? "image/webp" : audioType,

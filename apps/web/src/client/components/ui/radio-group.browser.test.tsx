@@ -11,7 +11,7 @@ function Directions({ onValueChange }: { onValueChange?: (value: string) => void
   return (
     <form data-testid="form">
       <RadioGroup
-        aria-label="How cards are asked"
+        aria-label="Review modes"
         name="directions"
         value={value}
         onValueChange={(next) => {

@@ -5,7 +5,7 @@ import { useGlobalSearchParams, usePathname, useRootNavigationState } from "expo
 import { useEffect, useRef, useState } from "react";
 import { AppState } from "react-native";
 import { type EntryOpened, entryOf } from "../entry/links";
-import { captureEvent, setTelemetryLearner } from "./posthog";
+import { captureEvent, setTelemetryLearner, verifyReleaseException } from "./posthog";
 
 /** Back from the background after this long is another opening, as a reload would be on the web. */
 const AWAY_MS = 30 * 60_000;
@@ -77,7 +77,10 @@ export function Analytics({ learnerId }: { learnerId: string | null | undefined 
 
   // A link held through sign-in reaches its screen afterwards, so the entry waits for consent.
   // Each screen counts once, so coming back to it from another screen sends nothing.
-  const from = useGlobalSearchParams().from;
+  const { from, verify_phone_errors: verifyErrors } = useGlobalSearchParams();
+  useEffect(() => {
+    if (learnerId && verifyErrors === "source-maps") verifyReleaseException();
+  }, [verifyErrors, learnerId]);
   const screen = focusedKey(useRootNavigationState());
   const [entry, setEntry] = useState<EntryOpened>();
   const counted = useRef(new Set<string>());

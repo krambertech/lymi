@@ -23,9 +23,11 @@ Every EAS call goes through `scripts/phone-release.mjs`. `node scripts/phone-rel
 
 `beta` builds read the `beta` channel and `production` builds the `production` channel, with one bundle identifier ([`apps/mobile/eas.json`](../apps/mobile/eas.json)). EAS owns the build number. A native change costs two of the free tier's 15 iOS builds a month, one for TestFlight and one at Promote. Submitting a version for App Store review stays a person's step in App Store Connect.
 
-Each update's Hermes source maps go to PostHog's error tracking from Phone beta, and Promote republishes the same files. Metro writes a chunk ID into every bundle (`getPostHogExpoConfig` in `apps/mobile/metro.config.js`), which is how PostHog finds the map for a frame. Source maps for the bundle inside a binary are not uploaded yet, so an error before a binary's first update stays unreadable.
+Each update's Hermes source maps go to PostHog's error tracking from Phone beta, and Promote republishes the same files. Metro writes a chunk ID into every bundle (`getPostHogExpoConfig` in `apps/mobile/metro.config.js`), which is how PostHog finds the map for a frame. On EAS iOS Release builds, `with-source-maps.cjs` wraps the app's bundle phase with PostHog's Expo tooling, which preserves the Metro map, clones its chunk ID into the composed Hermes map and uploads it after bundling; a missing key or failed upload fails the build. The EAS pre-install hook installs the pinned CLI. Local and Debug builds run the original bundle phase without uploading; the gate runs at build time so the native fingerprint stays the same on every machine. [PostHog's React Native guide](https://posthog.com/docs/error-tracking/upload-source-maps/react-native) describes both upload paths.
 
 The Simulator smoke journey turns updates off in its build, so it always tests the bundle it embedded.
+
+Both upload paths use PostHog's `event` release mode: maps are matched by chunk ID, while an exception's `$app_namespace`, `$app_version` and `$app_build` name its release. Republishing an OTA or building another binary does not bind its shared maps to the first binary's build number; `app_update` names the bundle that actually ran.
 
 ## Setting it up
 
@@ -36,12 +38,18 @@ Do these once, in order. Steps 1 to 3 change `app.json` or `eas.json`, which are
 3. **Give EAS the Apple credentials.** Run `npx eas-cli@24.13.0 credentials --platform ios` in `apps/mobile` and sign in to Apple when asked. Let it create the distribution certificate and the provisioning profiles for the app and its widget extension, and add an App Store Connect API key for EAS Submit. Then add the app's numeric Apple ID as `ascAppId` to both `submit` profiles in `eas.json`, and the Apple Team ID as `ios.appleTeamId` in `app.json`, which `@bacons/apple-targets` needs to sign the extensions. Commit both.
 4. **Add the repository secrets** under Settings, Secrets and variables, Actions:
    - `EXPO_TOKEN`: an access token from expo.dev, Account settings, Access tokens. A robot user with the Developer role on the project is safer than a personal token.
-   - `POSTHOG_CLI_API_KEY`: a PostHog personal API key with error tracking write access to project 292417. Without it, updates still ship and the workflow warns that their errors stay unreadable.
+   - `POSTHOG_CLI_API_KEY`: a PostHog personal API key scoped to project 292417 with `error tracking write` and `organization read`. Without it, OTA updates still ship and the workflow warns that their errors stay unreadable; acceptance requires a successful upload, not a green workflow.
    - `RELEASE_GITHUB_TOKEN`: a fine-grained token for this repository with read and write access to contents and pull requests, so Promote's contract pull request runs CI. Without the token, Promote stops on a new version and attaches its frozen contract to the run for a person to commit.
 5. **Run Phone beta by hand** from the Actions tab. It publishes the first beta update and starts the first build, which reaches TestFlight once Apple has processed it.
 
-The workflows need no EAS environment variables: `preview` serves beta and `production` serves the App Store, and the app reaches `https://my.lymi.app` by default.
+Add the same `POSTHOG_CLI_API_KEY` as a secret in both EAS environments, `preview` for beta and `production` for the App Store. GitHub repository secrets do not reach the remote EAS builder. `eas.json` supplies the EU host and project ID, and the app reaches `https://my.lymi.app` by default. Never use an `EXPO_PUBLIC_` name for the upload key or put it in `app.json`.
 
 ## Checking a release
 
 `npx eas-cli@24.13.0 update:list --branch beta` lists the updates with their runtimes, one runtime per fingerprint. A TestFlight install picks up a beta update on its second launch after publishing. After a native change, `eas build:list --platform ios` shows a new build with a new runtime, and older binaries keep getting only updates for their own runtime.
+
+For Error Tracking acceptance, test both bundles on a real TestFlight install under an account in `INTERNAL_ACCOUNT_IDS`. The explicit link `lymi:///you?verify_phone_errors=source-maps` captures one handled exception per launch from `verifyReleaseException` in `apps/mobile/src/telemetry/posthog.ts` and flushes it; ordinary accounts, production-channel binaries and development/local builds cannot run it. The error message is scrubbed like every other exception, and the probe adds no usage event or private content.
+
+1. Install a fresh beta binary, launch it without a network connection so no OTA can download, then restore connectivity without relaunching and open the link. Record the event in [Lymi Error Tracking](https://eu.posthog.com/project/292417/error-tracking), including an application frame's real source file and line, its chunk ID, `$app_version`, `$app_build` and `app_update`. An embedded bundle can have an Expo-generated update ID; a missing ID is recorded as null, never guessed from the newest published update.
+2. Let the beta update download, relaunch to run it, and open the link again. Read back the new exception and confirm its `app_update` is the running OTA's ID, its frame resolves to the source file and line, and its version/build match that bundle and binary. The frame's chunk ID must match a symbol set with an uploaded file and no failure; a `last_used` timestamp alone does not prove resolution.
+3. Open the same link in a development build against production and a release build against a local Worker; neither should emit an exception. Keep the device/build/update identifiers, event links and resolved frame evidence with the release check. Unit tests of the gates and successful EAS jobs do not establish TestFlight acceptance.

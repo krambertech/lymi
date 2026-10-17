@@ -1,5 +1,12 @@
 import type { LessonAccessOut, LessonEventOut, LessonReadOut } from "@lymi/core";
-import { dayWindow, LESSON_READS_PER_DAY, newId, normaliseTerm } from "@lymi/core";
+import {
+  dayWindow,
+  LESSON_READS_PER_DAY,
+  newId,
+  normaliseTerm,
+  readingKey,
+  sameReading,
+} from "@lymi/core";
 import { textCallCost } from "@lymi/core/analytics";
 import { and, count, desc, eq, gt, isNull, sql } from "@lymi/core/db";
 import type { z } from "zod";
@@ -158,9 +165,21 @@ function materialLine(material: LessonMaterial, words: number): string {
 /** The first of a term's forms, so "küsima" and "küsima · küsida · küsin" meet. */
 const headForm = (key: string) => key.split(" · ")[0]?.trim() ?? key;
 
+type OwnedRow = Omit<Owned, "reading"> & { language: string | null; pronunciation: string | null };
+
+function ownedCard({ language, pronunciation, ...card }: OwnedRow): Owned {
+  return { ...card, reading: readingKey({ language, pronunciation }) };
+}
+
+function ownedByKey(rows: OwnedRow[]): Map<string, Owned[]> {
+  const byKey = new Map<string, Owned[]>();
+  for (const row of rows) byKey.set(row.key, [...(byKey.get(row.key) ?? []), ownedCard(row)]);
+  return byKey;
+}
+
 const ReplyTerm = Reply.shape.terms.element;
 
-type Owned = { id: string; term: string; key: string; deckName: string };
+type Owned = { id: string; term: string; key: string; reading: string | null; deckName: string };
 
 /** Everything a read needs before the model starts, checked first so a refusal is an ordinary error. */
 export type PreparedLesson = {
@@ -173,8 +192,11 @@ export type PreparedLesson = {
   fallback: string;
   pages: number;
   deckRule: string;
-  byKey: Map<string, Owned>;
+  /** Homographs told apart by their readings share a key, so a key can hold several cards. */
+  byKey: Map<string, Owned[]>;
   byHead: Map<string, Owned>;
+  /** Each candidate deck's language, which decides whether a term's reading counts. */
+  languages: Map<string, string | null>;
   analytics: AnalyticsWriter | undefined;
   pasted: boolean;
   client: "web" | "phone";
@@ -243,6 +265,8 @@ export async function prepareLesson(
         id: schema.cards.id,
         term: schema.cards.term,
         key: schema.cards.normalizedTerm,
+        language: schema.cards.language,
+        pronunciation: schema.cards.pronunciation,
         deckName: schema.decks.name,
       })
       .from(schema.cards)
@@ -275,8 +299,9 @@ export async function prepareLesson(
     fallback: fixed?.id ?? hint ?? candidates[0]?.id ?? "",
     deckRule:
       "One card per term; inflected forms, imperatives and request formulas belong to their word's card",
-    byKey: new Map(owned.map((c) => [c.key, c])),
-    byHead: new Map(owned.map((c) => [headForm(c.key), c])),
+    byKey: ownedByKey(owned),
+    byHead: new Map(owned.map((c) => [headForm(c.key), ownedCard(c)])),
+    languages: new Map(candidates.map((d) => [d.id, d.language])),
     analytics: ctx.analytics,
     pasted: words > 0,
     client: choice.client ?? "web",
@@ -332,8 +357,10 @@ async function readInto(
     if (!parsed.success) return;
     const t = parsed.data;
     const key = normaliseTerm(t.term);
-    if (seen.has(key)) return;
-    seen.add(key);
+    const language = lesson.languages.get(deck ?? lesson.fallback) ?? null;
+    const reading = readingKey({ language, pronunciation: t.pronunciation });
+    if (seen.has(`${key}\u0000${reading ?? ""}`)) return;
+    seen.add(`${key}\u0000${reading ?? ""}`);
     const scored = keepScore(ai, lesson.deckRule, {
       id: t.id,
       term: t.term,
@@ -342,8 +369,10 @@ async function readInto(
     });
     queue = queue.then(async () => {
       const keep = await scored;
-      const exact = lesson.byKey.get(key);
-      const head = exact ? undefined : lesson.byHead.get(headForm(key));
+      const sameKey = lesson.byKey.get(key);
+      const exact = sameKey?.find((c) => sameReading(c.reading, reading));
+      // A homograph with another reading is a different word, not another form of this one.
+      const head = sameKey ? undefined : lesson.byHead.get(headForm(key));
       const match = (c: Owned | undefined) =>
         c ? { cardId: c.id, term: c.term, deckName: c.deckName } : null;
       const term: LessonTerm = {
@@ -352,6 +381,7 @@ async function readInto(
         kind: t.kind,
         meaning: t.meaningFromLesson && t.meaning ? t.meaning : null,
         gloss: t.meaning,
+        pronunciation: t.pronunciation || null,
         handwritten: t.handwritten,
         heading: t.heading || null,
         seen: t.seen,

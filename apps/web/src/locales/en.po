@@ -858,14 +858,14 @@ msgstr "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders
 msgid "Add more"
 msgstr "Add more"
 
+msgid "Add photos, PDFs or text from your lesson. Then choose which terms to add as cards."
+msgstr "Add photos, PDFs or text from your lesson. Then choose which terms to add as cards."
+
 msgid "Add picture"
 msgstr "Add picture"
 
 msgid "Add text"
 msgstr "Add text"
-
-msgid "Add the lesson in any form, or several at once. You choose which terms become cards."
-msgstr "Add the lesson in any form, or several at once. You choose which terms become cards."
 
 msgid "Add to"
 msgstr "Add to"
@@ -915,8 +915,8 @@ msgstr "Added {count, plural, one {# card} other {# cards}} to {deck}"
 msgid "Added today"
 msgstr "Added today"
 
-msgid "Adding a way asks every card that way from now on. Removing one keeps its progress."
-msgstr "Adding a way asks every card that way from now on. Removing one keeps its progress."
+msgid "After connecting, paste a lesson into your assistant and ask it to make cards."
+msgstr "After connecting, paste a lesson into your assistant and ask it to make cards."
 
 msgid "After you add them, Lymi writes each card’s example and pronunciation."
 msgstr "After you add them, Lymi writes each card’s example and pronunciation."
@@ -936,14 +936,8 @@ msgstr "AI draft · Tab keeps it"
 msgid "AI example"
 msgstr "AI example"
 
-msgid "AI fills the deck’s cards to suit it."
-msgstr "AI fills the deck’s cards to suit it."
-
-msgid "AI fills them only when they help. It never changes your text."
-msgstr "AI fills them only when they help. It never changes your text."
-
-msgid "AI fills this deck’s cards to suit it. Only you see it."
-msgstr "AI fills this deck’s cards to suit it. Only you see it."
+msgid "AI fills only empty fields and leaves your text unchanged."
+msgstr "AI fills only empty fields and leaves your text unchanged."
 
 msgid "AI hook"
 msgstr "AI hook"
@@ -962,6 +956,12 @@ msgstr "AI notes"
 
 msgid "AI pronunciation"
 msgstr "AI pronunciation"
+
+msgid "AI uses this choice when filling empty fields."
+msgstr "AI uses this choice when filling empty fields."
+
+msgid "AI uses this choice when filling empty fields. Only you see it."
+msgstr "AI uses this choice when filling empty fields. Only you see it."
 
 msgid "AI wrote part of this card"
 msgstr "AI wrote part of this card"
@@ -990,9 +990,6 @@ msgstr "Already in your decks"
 
 msgid "Also adds, edits and archives them."
 msgstr "Also adds, edits and archives them."
-
-msgid "Also on your list"
-msgstr "Also on your list"
 
 msgid "Always"
 msgstr "Always"
@@ -1061,9 +1058,6 @@ msgstr "API key for {name}"
 
 msgid "API keys"
 msgstr "API keys"
-
-msgid "App language, and the language AI uses for meanings."
-msgstr "App language, and the language AI uses for meanings."
 
 msgid "Apps you can import from"
 msgstr "Apps you can import from"
@@ -1337,9 +1331,6 @@ msgstr "Changes appear right away and are listed in Activity. You can edit or ar
 msgid "Changes discarded"
 msgstr "Changes discarded"
 
-msgid "Changes from AI apps, imports, AI enrichment and shared decks show up here."
-msgstr "Changes from AI apps, imports, AI enrichment and shared decks show up here."
-
 msgid "Check {address}. A message is on the way with the next step."
 msgstr "Check {address}. A message is on the way with the next step."
 
@@ -1385,6 +1376,9 @@ msgstr "Choose <0>OFC</0> and turn on learning progress, then enter your email."
 msgid "Choose 00, 15, 30 or 45 minutes."
 msgstr "Choose 00, 15, 30 or 45 minutes."
 
+msgid "Choose a daily review goal. Every grade counts, even Forgot. You can change it later."
+msgstr "Choose a daily review goal. Every grade counts, even Forgot. You can change it later."
+
 msgid "Choose a deck"
 msgstr "Choose a deck"
 
@@ -1417,6 +1411,12 @@ msgstr "Choose exactly one field as the term."
 
 msgid "Choose file"
 msgstr "Choose file"
+
+msgid "Choose how many reviews to do each day. Every grade counts, even Forgot."
+msgstr "Choose how many reviews to do each day. Every grade counts, even Forgot."
+
+msgid "Choose how well you remembered it."
+msgstr "Choose how well you remembered it."
 
 msgctxt "photo"
 msgid "Choose new…"
@@ -1457,9 +1457,6 @@ msgstr "Choose what the deck is for."
 
 msgid "Choose your {app} file"
 msgstr "Choose your {app} file"
-
-msgid "Choosing the terms worth a card"
-msgstr "Choosing the terms worth a card"
 
 msgid "Citizenship"
 msgstr "Citizenship"
@@ -1854,6 +1851,9 @@ msgstr "Decks from Anki, Mochi or Noji, with their review history."
 msgid "Decks from Lymi. Add one to study it in your language."
 msgstr "Decks from Lymi. Add one to study it in your language."
 
+msgid "Decks other people keep"
+msgstr "Decks other people keep"
+
 msgid "Decks to review"
 msgstr "Decks to review"
 
@@ -1869,6 +1869,9 @@ msgstr "Delete account"
 msgid "Delete series"
 msgstr "Delete series"
 
+msgid "Delete your account, private cards and review history. Members keep shared decks."
+msgstr "Delete your account, private cards and review history. Members keep shared decks."
+
 msgid "Deleted"
 msgstr "Deleted"
 
@@ -1881,8 +1884,8 @@ msgstr "Deleted “{seriesName}” and archived its decks"
 msgid "Deleted the series {name}"
 msgstr "Deleted the series {name}"
 
-msgid "Deleting your account erases it for good. Nothing can bring it back."
-msgstr "Deleting your account erases it for good. Nothing can bring it back."
+msgid "Deleting your account removes your private decks, cards and review history. You can’t undo this."
+msgstr "Deleting your account removes your private decks, cards and review history. You can’t undo this."
 
 msgid "Deny"
 msgstr "Deny"
@@ -2066,9 +2069,6 @@ msgstr "Enter this code in Lymi to delete your account and everything in it:"
 msgid "Enter this code in the Lymi app to finish creating your account:"
 msgstr "Enter this code in the Lymi app to finish creating your account:"
 
-msgid "Erase your account and everything in it, for good. Decks other people study stay for them."
-msgstr "Erase your account and everything in it, for good. Decks other people study stay for them."
-
 msgid "Every card"
 msgstr "Every card"
 
@@ -2078,14 +2078,14 @@ msgstr "Every deck you own, archived ones included, with your schedule and revie
 msgid "Every deck, archived ones included, with your schedule and review history."
 msgstr "Every deck, archived ones included, with your schedule and review history."
 
+msgid "Every grade counts toward today’s goal."
+msgstr "Every grade counts toward today’s goal."
+
 msgid "Every section is open"
 msgstr "Every section is open"
 
 msgid "Every section is open, so any card can come up in review."
 msgstr "Every section is open, so any card can come up in review."
-
-msgid "Every term worth a card is already in your decks."
-msgstr "Every term worth a card is already in your decks."
 
 msgid "Everyone studying this deck. You see whether they joined, not their reviews."
 msgstr "Everyone studying this deck. You see whether they joined, not their reviews."
@@ -2135,8 +2135,8 @@ msgstr "Export one deck at a time, or export again without media."
 msgid "Export the deck again from Noji in OFC format, then choose that file."
 msgstr "Export the deck again from Noji in OFC format, then choose that file."
 
-msgid "Export your library first if you might want your cards later. Lymi keeps nothing once the account is gone."
-msgstr "Export your library first if you might want your cards later. Lymi keeps nothing once the account is gone."
+msgid "Export your library before deleting your account to keep a copy of your cards."
+msgstr "Export your library before deleting your account to keep a copy of your cards."
 
 msgid "Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package."
 msgstr "Export your whole library (pictures, schedule, review history) as a Lymi file or Anki package."
@@ -2188,8 +2188,14 @@ msgstr "Find a tag"
 msgid "Find or create a tag"
 msgstr "Find or create a tag"
 
+msgid "Find ready-made decks in this language. You can add other languages later."
+msgstr "Find ready-made decks in this language. You can add other languages later."
+
 msgid "Find terms"
 msgstr "Find terms"
+
+msgid "Finding terms to review"
+msgstr "Finding terms to review"
 
 msgid "For a test"
 msgstr "For a test"
@@ -2200,9 +2206,6 @@ msgstr "For Anki, AnkiDroid and Mochi, with due dates, review history and pictur
 msgctxt "deck tag"
 msgid "For beginners"
 msgstr "For beginners"
-
-msgid "For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute."
-msgstr "For example, paste a lesson and ask: “Make Estonian cards from this.” Setup takes a minute."
 
 msgid "For scripts and curl. For AI apps, use Connected apps instead."
 msgstr "For scripts and curl. For AI apps, use Connected apps instead."
@@ -2341,9 +2344,6 @@ msgstr "Hook from lesson"
 msgid "Hook saved"
 msgstr "Hook saved"
 
-msgid "How cards are asked"
-msgstr "How cards are asked"
-
 msgid "How do you want to start?"
 msgstr "How do you want to start?"
 
@@ -2353,17 +2353,11 @@ msgstr "how it is asked"
 msgid "How it works"
 msgstr "How it works"
 
-msgid "How it’s asked"
-msgstr "How it’s asked"
-
 msgid "How it’s going"
 msgstr "How it’s going"
 
 msgid "How many cards come back this week"
 msgstr "How many cards come back this week"
-
-msgid "How many reviews a day keep your streak. Every grade counts, even Forgot."
-msgstr "How many reviews a day keep your streak. Every grade counts, even Forgot."
 
 msgid "How much time a day?"
 msgstr "How much time a day?"
@@ -2444,6 +2438,9 @@ msgstr "Importing from {source}"
 msgid "Importing your cards"
 msgstr "Importing your cards"
 
+msgid "Imports, exports, changes by apps and AI, and shared deck activity appear here. Connect an app or import a deck in Settings."
+msgstr "Imports, exports, changes by apps and AI, and shared deck activity appear here. Connect an app or import a deck in Settings."
+
 #. placeholder {0}: term.existing?.deckName
 msgid "In {0}"
 msgstr "In {0}"
@@ -2477,9 +2474,6 @@ msgstr "Includes your schedule and review history. Exporting doesn’t change th
 
 msgid "Insights"
 msgstr "Insights"
-
-msgid "Insights fill in from your first review."
-msgstr "Insights fill in from your first review."
 
 msgid "Insights start after your first review"
 msgstr "Insights start after your first review"
@@ -2622,6 +2616,9 @@ msgstr "Keep the notes under 2000 characters."
 msgid "Keep the pronunciation under 200 characters."
 msgstr "Keep the pronunciation under 200 characters."
 
+msgid "Keep the reading under 200 characters."
+msgstr "Keep the reading under 200 characters."
+
 msgid "Keep the source under 200 characters."
 msgstr "Keep the source under 200 characters."
 
@@ -2750,9 +2747,6 @@ msgstr "List, search and read them. Every AI app needs this."
 msgid "Lists and searches decks and cards."
 msgstr "Lists and searches decks and cards."
 
-msgid "Little and often works best. Meeting your daily goal keeps your streak going. You can change it any time."
-msgstr "Little and often works best. Meeting your daily goal keeps your streak going. You can change it any time."
-
 msgid "Loading decks…"
 msgstr "Loading decks…"
 
@@ -2767,9 +2761,6 @@ msgstr "Lymi"
 
 msgid "Lymi also gets the screen you are on, the app version, your browser and your app language."
 msgstr "Lymi also gets the screen you are on, the app version, your browser and your app language."
-
-msgid "Lymi brings it back just before you’d forget it."
-msgstr "Lymi brings it back just before you’d forget it."
 
 msgid "Lymi couldn’t tell from the cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi couldn’t tell from the cards. It uses the language to find cards you already have and to read terms aloud."
@@ -2794,6 +2785,9 @@ msgstr "Lymi is writing the first decks. Until then, make your own in Library."
 
 msgid "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
 msgstr "Lymi read each deck’s language from {app}, its name or its cards. It uses the language to find cards you already have and to read terms aloud."
+
+msgid "Lymi schedules when you review it again."
+msgstr "Lymi schedules when you review it again."
 
 msgid "Lymi works for anything you want to remember."
 msgstr "Lymi works for anything you want to remember."
@@ -2831,9 +2825,6 @@ msgstr "Mark important"
 msgid "Marked important"
 msgstr "Marked important"
 
-msgid "Match your device."
-msgstr "Match your device."
-
 msgid "Matching languages"
 msgstr "Matching languages"
 
@@ -2854,6 +2845,9 @@ msgstr "Meaning from lesson"
 
 msgid "Medical French for nurses. Use the clinical meaning."
 msgstr "Medical French for nurses. Use the clinical meaning."
+
+msgid "Members keep these decks until they leave. After you delete your account, nobody can edit the cards."
+msgstr "Members keep these decks until they leave. After you delete your account, nobody can edit the cards."
 
 msgid "Memory hook"
 msgstr "Memory hook"
@@ -2902,6 +2896,9 @@ msgstr "More languages with ready-made decks"
 
 msgid "More like this"
 msgstr "More like this"
+
+msgid "More to review"
+msgstr "More to review"
 
 #. placeholder {0}: shortQuote(card.term)
 msgid "Move “{0}” to"
@@ -2996,6 +2993,9 @@ msgstr "New key"
 
 msgid "New line"
 msgstr "New line"
+
+msgid "New modes apply to cards that follow this deck. Turning a mode off keeps its progress."
+msgstr "New modes apply to cards that follow this deck. Turning a mode off keeps its progress."
 
 msgid "New password"
 msgstr "New password"
@@ -3098,6 +3098,9 @@ msgstr "No meaning"
 msgid "No meaning yet"
 msgstr "No meaning yet"
 
+msgid "No new terms found"
+msgstr "No new terms found"
+
 msgid "No picture yet, so this card is asked in its other modes."
 msgstr "No picture yet, so this card is asked in its other modes."
 
@@ -3110,9 +3113,6 @@ msgstr "No ready-made decks in “{0}” yet. You can still bring your own."
 
 msgid "No ready-made decks yet."
 msgstr "No ready-made decks yet."
-
-msgid "No recall data yet. Review more cards to see how you’re doing."
-msgstr "No recall data yet. Review more cards to see how you’re doing."
 
 msgid "No reviews yet. Each day you review adds a block."
 msgstr "No reviews yet. Each day you review adds a block."
@@ -3201,9 +3201,6 @@ msgstr "Nothing left in {scopeName}"
 msgid "Nothing left in this deck"
 msgstr "Nothing left in this deck"
 
-msgid "Nothing new in this lesson"
-msgstr "Nothing new in this lesson"
-
 msgid "Nothing published yet"
 msgstr "Nothing published yet"
 
@@ -3224,9 +3221,6 @@ msgstr "Notifications are blocked. Allow them in your browser or device settings
 
 msgid "Notifications are blocked. Allow them in your browser or device settings."
 msgstr "Notifications are blocked. Allow them in your browser or device settings."
-
-msgid "Notify you on this device when cards are due."
-msgstr "Notify you on this device when cards are due."
 
 msgid "Now in {elsewhere}"
 msgstr "Now in {elsewhere}"
@@ -3397,9 +3391,6 @@ msgstr "Peek at your hook"
 msgid "People"
 msgstr "People"
 
-msgid "People study these decks, so they stay until the last of them leaves. Nobody can change them after you go."
-msgstr "People study these decks, so they stay until the last of them leaves. Nobody can change them after you go."
-
 msgid "People who added it keep studying it, but nobody new can add it."
 msgstr "People who added it keep studying it, but nobody new can add it."
 
@@ -3515,22 +3506,11 @@ msgstr "Quickstart"
 msgid "Quizlet import"
 msgstr "Quizlet import"
 
-msgid "Reach today’s goal to keep it going."
-msgstr "Reach today’s goal to keep it going."
-
-msgid "Reach today’s goal to start a streak."
-msgstr "Reach today’s goal to start a streak."
-
 msgid "Read"
 msgstr "Read"
 
 msgid "Read and write"
 msgstr "Read and write"
-
-#. placeholder {0}: Math.round(usage.ms / 1000)
-#. placeholder {1}: usage.costUsd.toFixed(4)
-msgid "Read in {0} s for ${1}."
-msgstr "Read in {0} s for ${1}."
 
 msgid "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews. <0>API reference</0>"
 msgstr "Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews. <0>API reference</0>"
@@ -3544,6 +3524,10 @@ msgstr "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 msgid "Read the guide"
 msgstr "Read the guide"
 
+msgid "Reading"
+msgstr "Reading"
+
+msgctxt "how a term is read"
 msgid "Reading"
 msgstr "Reading"
 
@@ -3577,6 +3561,9 @@ msgstr "Ready-made decks in {0}"
 msgid "Recall"
 msgstr "Recall"
 
+msgid "Recall appears after you review cards you’ve seen before."
+msgstr "Recall appears after you review cards you’ve seen before."
+
 msgid "Recall by month: {series}. The schedule aims for 90%."
 msgstr "Recall by month: {series}. The schedule aims for 90%."
 
@@ -3585,12 +3572,6 @@ msgstr "Recall by week: {series}. The schedule aims for 90%."
 
 msgid "Recall period"
 msgstr "Recall period"
-
-msgid "Recall the answer, then reveal the card"
-msgstr "Recall the answer, then reveal the card"
-
-msgid "Recall the answer, then tap the card"
-msgstr "Recall the answer, then tap the card"
 
 msgid "Recently added"
 msgstr "Recently added"
@@ -3612,6 +3593,9 @@ msgstr "Reminder on for this device."
 
 msgid "Reminder time saved."
 msgstr "Reminder time saved."
+
+msgid "Reminders are set separately on each device."
+msgstr "Reminders are set separately on each device."
 
 msgid "Reminders stay off until notifications are allowed."
 msgstr "Reminders stay off until notifications are allowed."
@@ -3674,6 +3658,9 @@ msgstr "Replace the picture"
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"
 
+msgid "Report a problem or share an idea. We’ll reply by email."
+msgstr "Report a problem or share an idea. We’ll reply by email."
+
 msgid "Reset your Lymi password"
 msgstr "Reset your Lymi password"
 
@@ -3718,11 +3705,11 @@ msgstr "Restored the series {name}"
 msgid "Retry"
 msgstr "Retry"
 
+msgid "Reveal the answer"
+msgstr "Reveal the answer"
+
 msgid "Reveal the card"
 msgstr "Reveal the card"
-
-msgid "Reveal the card when you have it"
-msgstr "Reveal the card when you have it"
 
 msgid "Review"
 msgstr "Review"
@@ -3747,6 +3734,9 @@ msgstr "Review in Lymi"
 
 msgid "Review mode"
 msgstr "Review mode"
+
+msgid "Review modes"
+msgstr "Review modes"
 
 msgid "Review new"
 msgstr "Review new"
@@ -3836,9 +3826,6 @@ msgstr "Saving…"
 msgid "Say {0}"
 msgstr "Say {0}"
 
-msgid "Say how well you knew it."
-msgstr "Say how well you knew it."
-
 msgid "Schedule"
 msgstr "Schedule"
 
@@ -3850,9 +3837,6 @@ msgstr "Search"
 
 msgid "Search languages"
 msgstr "Search languages"
-
-msgid "Search looks at the term and the meaning."
-msgstr "Search looks at the term and the meaning."
 
 msgid "Search this deck"
 msgstr "Search this deck"
@@ -3909,8 +3893,14 @@ msgstr "See the term, recall what it means."
 msgid "See your decks and cards"
 msgstr "See your decks and cards"
 
+msgid "See your progress in Insights after your first review."
+msgstr "See your progress in Insights after your first review."
+
 msgid "Select all"
 msgstr "Select all"
+
+msgid "Select at least one term to add."
+msgstr "Select at least one term to add."
 
 msgid "Select cards"
 msgstr "Select cards"
@@ -4187,14 +4177,11 @@ msgstr "Take photo"
 msgid "Tap Add to Home Screen."
 msgstr "Tap Add to Home Screen."
 
-msgid "Tap the card when you have it"
-msgstr "Tap the card when you have it"
+msgid "Tap to reveal the answer"
+msgstr "Tap to reveal the answer"
 
 msgid "Technology"
 msgstr "Technology"
-
-msgid "Tell Lymi what broke or what it should do. Replies come to your email."
-msgstr "Tell Lymi what broke or what it should do. Replies come to your email."
 
 msgid "Term"
 msgstr "Term"
@@ -4226,9 +4213,6 @@ msgstr "Text · {0, plural, one {# word} other {# words}}"
 
 msgid "Text you copy from a Quizlet set"
 msgstr "Text you copy from a Quizlet set"
-
-msgid "Thank you. Replies come to your email."
-msgstr "Thank you. Replies come to your email."
 
 msgid "That code isn’t right. Check the email and try again."
 msgstr "That code isn’t right. Check the email and try again."
@@ -4315,6 +4299,9 @@ msgstr "the example"
 msgid "the language"
 msgstr "the language"
 
+msgid "The language of the app and AI-written meanings."
+msgstr "The language of the app and AI-written meanings."
+
 msgid "The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language."
 msgstr "The language of this deck’s terms. New cards start with it, and pronunciation and AI enrichment need it. Meanings are in your app language."
 
@@ -4350,6 +4337,9 @@ msgstr "The tags on this deck’s cards. Changes here stay in this deck."
 
 msgid "the term"
 msgstr "the term"
+
+msgid "The terms Lymi found are already in your decks. Try another lesson."
+msgstr "The terms Lymi found are already in your decks. Try another lesson."
 
 msgid "The upload stopped partway"
 msgstr "The upload stopped partway"
@@ -4495,9 +4485,6 @@ msgstr "This week"
 msgid "Tick a tag to put it on every card, or untick it to take it off."
 msgstr "Tick a tag to put it on every card, or untick it to take it off."
 
-msgid "Tick at least one term to add."
-msgstr "Tick at least one term to add."
-
 msgid "Time"
 msgstr "Time"
 
@@ -4564,6 +4551,12 @@ msgctxt "deck tag"
 msgid "Travel"
 msgstr "Travel"
 
+msgid "Try a clearer photo or paste the lesson text."
+msgstr "Try a clearer photo or paste the lesson text."
+
+msgid "Try a different term or meaning, or clear the search."
+msgstr "Try a different term or meaning, or clear the search."
+
 msgid "Try a memory hook"
 msgstr "Try a memory hook"
 
@@ -4572,6 +4565,12 @@ msgstr "Try again"
 
 msgid "Try again on a steadier connection and keep Lymi open until the upload finishes."
 msgstr "Try again on a steadier connection and keep Lymi open until the upload finishes."
+
+msgid "Try to remember, then reveal the answer"
+msgstr "Try to remember, then reveal the answer"
+
+msgid "Try to remember, then tap to reveal"
+msgstr "Try to remember, then tap to reveal"
 
 msgid "Turn off link"
 msgstr "Turn off link"
@@ -4640,11 +4639,11 @@ msgstr "Use at least {MIN_PASSWORD_LENGTH} characters."
 msgid "Use at most {MAX_PASSWORD_LENGTH} characters."
 msgstr "Use at most {MAX_PASSWORD_LENGTH} characters."
 
+msgid "Use deck modes"
+msgstr "Use deck modes"
+
 msgid "Use link"
 msgstr "Use link"
-
-msgid "Use the deck’s"
-msgstr "Use the deck’s"
 
 msgid "Use these fields"
 msgstr "Use these fields"
@@ -4679,14 +4678,14 @@ msgstr "Visibility"
 msgid "We signed out your other devices."
 msgstr "We signed out your other devices."
 
-msgid "We’ll email you a 6-digit code. The account is deleted only once you enter it."
-msgstr "We’ll email you a 6-digit code. The account is deleted only once you enter it."
+msgid "We’ll email you a 6-digit code. Enter it below, then choose Delete account."
+msgstr "We’ll email you a 6-digit code. Enter it below, then choose Delete account."
 
 msgid "We’ll email you a link to set a new one."
 msgstr "We’ll email you a link to set a new one."
 
-msgid "We’ll show ready-made decks in it. You can add more languages later."
-msgstr "We’ll show ready-made decks in it. You can add more languages later."
+msgid "We’ll reply by email."
+msgstr "We’ll reply by email."
 
 msgctxt "Password strength"
 msgid "Weak"
@@ -4708,9 +4707,6 @@ msgstr "Welcome to Lymi"
 msgid "What are you learning?"
 msgstr "What are you learning?"
 
-msgid "What goes"
-msgstr "What goes"
-
 msgid "What happens to its cards"
 msgstr "What happens to its cards"
 
@@ -4722,9 +4718,6 @@ msgstr "What is Lymi?"
 
 msgid "What it’s for"
 msgstr "What it’s for"
-
-msgid "What stays for others"
-msgstr "What stays for others"
 
 msgid "What the picture shows, without the answer. Picture review needs it."
 msgstr "What the picture shows, without the answer. Picture review needs it."
@@ -4783,8 +4776,8 @@ msgstr "Yesterday"
 msgid "Yesterday was a rest day"
 msgstr "Yesterday was a rest day"
 
-msgid "Yesterday was a rest day. Reach today’s goal to keep it going."
-msgstr "Yesterday was a rest day. Reach today’s goal to keep it going."
+msgid "Yesterday was a rest day. Every grade counts toward today’s goal."
+msgstr "Yesterday was a rest day. Every grade counts toward today’s goal."
 
 msgid "you"
 msgstr "you"
@@ -4885,6 +4878,9 @@ msgstr "You’re done for today."
 msgid "You’ve asked for several codes today. Try again tomorrow."
 msgstr "You’ve asked for several codes today. Try again tomorrow."
 
+msgid "Your account data"
+msgstr "Your account data"
+
 msgid "Your code to delete your Lymi account"
 msgstr "Your code to delete your Lymi account"
 
@@ -4929,6 +4925,9 @@ msgstr "Your photo was changed somewhere else. Check it, then try again."
 
 msgid "Your set’s text"
 msgstr "Your set’s text"
+
+msgid "Your streak starts when you reach your daily goal."
+msgstr "Your streak starts when you reach your daily goal."
 
 msgid "Your week"
 msgstr "Your week"

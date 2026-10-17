@@ -121,7 +121,6 @@ function SmartAdd({
   const [error, setError] = useState<string>();
   const [terms, setTerms] = useState<LessonTerm[]>([]);
   const [questions, setQuestions] = useState<LessonQuestion[]>([]);
-  const [usage, setUsage] = useState<{ ms: number; costUsd: number } | null>(null);
   const [finished, setFinished] = useState(false);
   const [answers, setAnswers] = useState<number[]>([]);
   /** The learner's own answer per question, used when its option is chosen. */
@@ -167,7 +166,6 @@ function SmartAdd({
     setTerms([]);
     setOwnDrops(new Set());
     setQuestions([]);
-    setUsage(null);
     setFinished(false);
     setStep("reading");
     const controller = new AbortController();
@@ -192,7 +190,6 @@ function SmartAdd({
             setAnswers(event.questions.map((q) => q.default));
             setOwnAnswers(event.questions.map(() => ""));
           }
-          if (event.type === "done") setUsage(event.usage);
         },
         controller.signal,
       );
@@ -250,6 +247,9 @@ function SmartAdd({
           deckId,
           term: term.term,
           ...(term.meaning ? { meaning: term.meaning, meaningSource: "lesson" as const } : {}),
+          ...(term.pronunciation
+            ? { pronunciation: term.pronunciation, pronunciationSource: "lesson" as const }
+            : {}),
           ...(term.heading ? { source: term.heading } : {}),
         })),
       },
@@ -341,7 +341,6 @@ function SmartAdd({
               onDeckChange={setDeckId}
               terms={terms}
               dropped={dropped}
-              usage={usage}
               onBack={() => {
                 setStep(questions.length > 0 ? "questions" : "input");
               }}
@@ -564,7 +563,7 @@ function InputStep(props: {
         ) : (
           <p className="text-base text-pretty text-text-2">
             <Trans>
-              Add the lesson in any form, or several at once. You choose which terms become cards.
+              Add photos, PDFs or text from your lesson. Then choose which terms to add as cards.
             </Trans>
           </p>
         )}
@@ -764,7 +763,7 @@ export function ReadingStep({
         : t`Reading the text`
     : finished
       ? t`Checking your decks for duplicates`
-      : t`Choosing the terms worth a card`;
+      : t`Finding terms to review`;
 
   return (
     <>
@@ -896,7 +895,6 @@ function ListStep({
   onDeckChange,
   terms,
   dropped,
-  usage,
   onBack,
   onAdd,
 }: {
@@ -905,7 +903,6 @@ function ListStep({
   onDeckChange: (deckId: string) => void;
   terms: LessonTerm[];
   dropped: Set<string>;
-  usage: { ms: number; costUsd: number } | null;
   onBack: () => void;
   onAdd: (terms: LessonTerm[]) => Promise<void>;
 }) {
@@ -926,10 +923,14 @@ function ListStep({
         <DialogBody className="grid content-start gap-5">
           <div className="grid gap-1">
             <p className="text-md font-medium text-text">
-              <Trans>Nothing new in this lesson</Trans>
+              <Trans>No new terms found</Trans>
             </p>
             <p className="text-base text-text-2">
-              <Trans>Every term worth a card is already in your decks.</Trans>
+              {existing.length > 0 ? (
+                <Trans>The terms Lymi found are already in your decks. Try another lesson.</Trans>
+              ) : (
+                <Trans>Try a clearer photo or paste the lesson text.</Trans>
+              )}
             </p>
           </div>
           <ExistingList terms={existing} />
@@ -1015,8 +1016,6 @@ function ListStep({
 
         <p className="text-sm text-muted">
           <Trans>After you add them, Lymi writes each card’s example and pronunciation.</Trans>
-          {usage &&
-            ` ${t`Read in ${Math.round(usage.ms / 1000)} s for $${usage.costUsd.toFixed(4)}.`}`}
         </p>
       </DialogBody>
       <ActionBar note={error ? <span className="text-danger">{error}</span> : undefined}>
@@ -1028,7 +1027,7 @@ function ListStep({
           disabled={pending}
           onClick={async () => {
             if (ticked.size === 0) {
-              setError(t`Tick at least one term to add.`);
+              setError(t`Select at least one term to add.`);
               return;
             }
             setPending(true);

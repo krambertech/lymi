@@ -10,7 +10,13 @@
  * file outside the repository and pass it with `--cards`.
  */
 import { readFileSync, writeFileSync } from "node:fs";
-import { type DeckPurpose, deckEnrichFields, deckPurpose, fieldsToFill } from "@lymi/core";
+import {
+  type DeckPurpose,
+  deckEnrichFields,
+  deckPurpose,
+  drawsReadings,
+  fieldsToFill,
+} from "@lymi/core";
 import { createTextProvider, type TextProvider } from "../ai";
 import { CARDS_PER_CALL, chunked } from "../services/enrichment";
 import { type CaseExpectations, type CheckResult, checkCard, tally } from "./checks";
@@ -137,6 +143,7 @@ function score(decks: FixtureDeck[], calls: Call[]) {
           term: item.term,
           mayFill: mayFillOf(deck, item),
           language: deckPurpose(deck.purpose, deck.language) === "language",
+          readings: drawsReadings(deck.language),
           expect: item.expect,
         },
         reply,

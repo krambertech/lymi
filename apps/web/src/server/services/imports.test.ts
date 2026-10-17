@@ -526,6 +526,36 @@ describe("importing an Anki package", () => {
     expect((await cardsOf(ctx)).filter((c) => c.normalizedTerm === "il gatto")).toHaveLength(1);
   });
 
+  it("skips a term the learner has under a regional tag of the same language", async () => {
+    const ctx = await fresh();
+    const deck = await createDeck(ctx, { name: "Mine", defaultLanguage: "it-IT" });
+    await addCards(ctx, [{ deckId: deck.id, term: "Il gatto", meaning: "my cat" }]);
+    const { preview } = await runImport(ctx, "current.apkg");
+    expect(preview.duplicateExamples).toEqual([{ term: "il gatto", deckName: "Mine" }]);
+  });
+
+  it("skips a Japanese term only when its reading matches or either has none, and again on re-import", async () => {
+    const same = await fresh();
+    const deck = await createDeck(same, { name: "Mine", defaultLanguage: "ja" });
+    await addCards(same, [{ deckId: deck.id, term: "猫", pronunciation: "ネコ", enrich: false }]);
+    expect((await runImport(same, "current.apkg")).preview.duplicateExamples).toContainEqual({
+      term: "猫",
+      deckName: "Mine",
+    });
+
+    const other = await fresh();
+    const theirs = await createDeck(other, { name: "Mine", defaultLanguage: "ja" });
+    await addCards(other, [
+      { deckId: theirs.id, term: "猫", pronunciation: "びょう", enrich: false },
+    ]);
+    const first = await runImport(other, "current.apkg");
+    expect(first.preview.duplicateExamples.map((d) => d.term)).not.toContain("猫");
+    expect((await cardsOf(other)).filter((c) => c.term === "猫")).toHaveLength(2);
+    const again = await runImport(other, "current.apkg");
+    expect(again.preview).toMatchObject({ added: 0, duplicates: 0 });
+    expect((await cardsOf(other)).filter((c) => c.term === "猫")).toHaveLength(2);
+  });
+
   it("follows the learner's language and field choices", async () => {
     const ctx = await fresh();
     const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));

@@ -1,5 +1,6 @@
 import { LESSON_READS_PER_DAY, newId } from "@lymi/core";
 import { beforeAll, describe, expect, it } from "vitest";
+import { testGateway } from "../../test/ai-gateway";
 import { schema } from "../db";
 import { type Session, type TestApp, testApp } from "../test-app";
 
@@ -22,6 +23,7 @@ beforeAll(async () => {
   app = await testApp({
     operators: ["lesson-operator@lymi.local"],
     env: {
+      ...testGateway,
       ANTHROPIC_API_KEY: "key",
       IMAGES: {
         input() {
@@ -36,6 +38,24 @@ beforeAll(async () => {
 }, 60_000);
 
 describe("POST /api/lesson-reads", () => {
+  it.each(["AI_GATEWAY_URL", "AI_GATEWAY_TOKEN"] as const)(
+    "returns unavailable when %s is missing",
+    async (binding) => {
+      const configured = testGateway[binding];
+      app.env[binding] = "";
+      try {
+        const response = await upload([photo()], operator);
+        expect(response.status).toBe(503);
+        expect(await response.json()).toEqual({
+          error: "This capability is not configured or temporarily unavailable.",
+        });
+        expect(resized).toEqual([]);
+      } finally {
+        app.env[binding] = configured;
+      }
+    },
+  );
+
   it("refuses a learner at today's limit before touching their photos", async () => {
     const today = new Date().toISOString().slice(0, 10);
     await app.db.insert(schema.lessonReads).values(

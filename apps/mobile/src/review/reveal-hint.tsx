@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { revealHintDelayMs } from "@lymi/client/reveal-hint";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import Animated, {
@@ -12,15 +13,14 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { reviewStore } from "../data/kept";
+import { useStreak } from "../data/queries";
 import { ALWAYS, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { Icon, Text } from "../ui/primitives";
 
 const REVEALS_KEY = "reveals";
-/** A learner's first card shows how to reveal after a second; after that, only an idle card does. */
+/** Reveals on this phone after which the hint stops coming soon and waits for an idle card. */
 const LEARNING_REVEALS = 1;
-const SOON_MS = 1000;
-const IDLE_MS = 60_000;
 
 /** Counts a reveal on this phone, so the hint stops leading once the learner has found the card. */
 export const countReveal = () =>
@@ -28,14 +28,17 @@ export const countReveal = () =>
 
 /** Whether the pointing hand shows on this card yet, by the web's rules. motion.md "Review". */
 export function useRevealHint(card: string | null, revealed: boolean) {
+  const reviewedDays = useStreak().data?.reviewedDays;
   const [shown, setShown] = useState(false);
   useEffect(() => {
     setShown(false);
     if (!card || revealed) return;
     const learning = (reviewStore.getNumber(REVEALS_KEY) ?? 0) < LEARNING_REVEALS;
-    const timer = setTimeout(() => setShown(true), learning ? SOON_MS : IDLE_MS);
+    const delay = revealHintDelayMs(reviewedDays, learning);
+    if (delay === null) return;
+    const timer = setTimeout(() => setShown(true), delay);
     return () => clearTimeout(timer);
-  }, [card, revealed]);
+  }, [card, revealed, reviewedDays]);
   return shown && !revealed;
 }
 

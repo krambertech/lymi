@@ -74,7 +74,7 @@ export function SettingsView({
 
       <SettingsGroup
         title={t`Language`}
-        description={t`App language, and the language AI uses for meanings.`}
+        description={t`The language of the app and AI-written meanings.`}
       >
         {language ? (
           // The group's title already says Language; the field's label names the picker for
@@ -106,7 +106,7 @@ export function SettingsView({
         )}
       </SettingsGroup>
 
-      <SettingsGroup title={t`Theme`} description={t`Match your device.`}>
+      <SettingsGroup title={t`Theme`}>
         <Segmented
           value={theme}
           onValueChange={onTheme}
@@ -145,7 +145,7 @@ export function SettingsView({
         <SettingsGroup
           id="delete-account"
           title={t`Delete account`}
-          description={t`Erase your account and everything in it, for good. Decks other people study stay for them.`}
+          description={t`Delete your account, private cards and review history. Members keep shared decks.`}
         >
           <Button variant="danger" className="justify-self-start" render={deleteAccountLink}>
             <Trash2 data-icon="inline-start" aria-hidden="true" />

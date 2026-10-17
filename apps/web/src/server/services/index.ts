@@ -28,6 +28,7 @@ export * from "./members";
 export * from "./modes";
 export * from "./public-media";
 export * from "./publications";
+export * from "./published-audio";
 export * from "./publishers";
 export * from "./push";
 export * from "./reports";

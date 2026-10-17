@@ -124,6 +124,52 @@ test("a pronunciation that loads quickly dims the button and shows no spinner", 
   await expect.poll(() => button.element().querySelector(".animate-spin")).not.toBeNull();
 });
 
+// The hidden copy that sizes the card holds the answer before the reveal, so look at what shows.
+const shown = (text: string) =>
+  page
+    .getByText(text, { exact: true })
+    .elements()
+    .filter((el) => !el.closest("[aria-hidden='true']") && el.checkVisibility());
+
+async function reviewCue(card: Partial<QueueItem["card"]>, fsrsState: number) {
+  const cue = (revealed: boolean) => (
+    <I18nProvider i18n={i18n}>
+      <ReviewCard
+        item={{ ...item(card), fsrsState }}
+        revealed={revealed}
+        animateReveal={false}
+        onReveal={noop}
+      />
+    </I18nProvider>
+  );
+  const screen = await render(cue(false));
+  return { reveal: () => screen.rerender(cue(true)) };
+}
+
+test("a Known Chinese card's pinyin waits for the reveal", async () => {
+  const { reveal } = await reviewCue({ term: "学习", language: "zh", pronunciation: "xuéxí" }, 2);
+  expect(shown("xuéxí")).toHaveLength(0);
+  await reveal();
+  await expect.poll(() => shown("xuéxí")).toHaveLength(1);
+  expect(shown("xuéxí")[0]?.getAttribute("lang")).toBe("zh");
+});
+
+test("a New or Learning Chinese card keeps its pinyin on the cue", async () => {
+  const { reveal } = await reviewCue({ term: "学习", language: "zh", pronunciation: "xuéxí" }, 1);
+  expect(shown("xuéxí")).toHaveLength(1);
+  await reveal();
+  // Still one line: the cue keeps it, so the answer does not repeat it.
+  await expect.poll(() => shown("to hurry up, to get a move on")).toHaveLength(1);
+  expect(shown("xuéxí")).toHaveLength(1);
+});
+
+test("another language's reading waits for the reveal, even on a New card", async () => {
+  const { reveal } = await reviewCue({ term: "학교", language: "ko", pronunciation: "hakgyo" }, 0);
+  expect(shown("hakgyo")).toHaveLength(0);
+  await reveal();
+  await expect.poll(() => shown("hakgyo")).toHaveLength(1);
+});
+
 test("a relearning card under review says Forgotten", async () => {
   await render(
     <I18nProvider i18n={i18n}>
@@ -134,6 +180,63 @@ test("a relearning card under review says Forgotten", async () => {
   const text = page.getByRole("region", { name: /Recognition card/ }).element().textContent ?? "";
   expect(text).toContain("Forgotten");
   expect(text).not.toContain("recently");
+});
+
+test("a Japanese cue draws furigana until the card is Known, keeps its room, and always after the reveal", async () => {
+  const japanese = (fsrsState: number): QueueItem => ({
+    ...queueItem,
+    fsrsState,
+    card: {
+      ...queueItem.card,
+      term: "食べる",
+      language: "ja",
+      pronunciation: "たべる",
+      example: "毎朝[まいあさ]パンを食[た]べます。",
+    },
+  });
+  const cue = () =>
+    page
+      .getByRole("region", { name: /Recognition card/ })
+      .element()
+      .querySelector("p[lang]");
+  const reading = () => cue()?.querySelector("rt") as HTMLElement;
+  const shown = (rt: HTMLElement) => getComputedStyle(rt).visibility === "visible";
+  const card = (fsrsState: number, revealed: boolean) => (
+    <I18nProvider i18n={i18n}>
+      <ReviewCard
+        item={japanese(fsrsState)}
+        revealed={revealed}
+        animateReveal={false}
+        onReveal={noop}
+      />
+    </I18nProvider>
+  );
+
+  const fresh = await render(card(0, false));
+  expect(reading().textContent).toBe("た");
+  expect(shown(reading())).toBe(true);
+  // The parentheses are the fallback for a browser without ruby.
+  expect(cue()?.textContent).toBe("食(た)べる");
+  const height = cue()?.getBoundingClientRect().height;
+
+  await fresh.rerender(card(1, false));
+  expect(shown(reading())).toBe(true);
+
+  await fresh.rerender(card(2, false));
+  await expect.poll(() => shown(reading())).toBe(false);
+  expect(cue()?.getBoundingClientRect().height).toBe(height);
+  // Nothing a learner or a screen reader can reach says the reading either; the hidden copy that
+  // sizes the card holds the answer.
+  const said = page
+    .getByText("たべる", { exact: true })
+    .elements()
+    .filter((el) => !el.closest("[aria-hidden='true']"));
+  expect(said).toHaveLength(0);
+
+  await fresh.rerender(card(2, true));
+  await expect.poll(() => shown(reading())).toBe(true);
+  const example = [...document.querySelectorAll("rt")].map((rt) => rt.textContent);
+  expect(example).toEqual(expect.arrayContaining(["まいあさ", "た"]));
 });
 
 test("the head names the deck alone, and the mode only for a picture", async () => {

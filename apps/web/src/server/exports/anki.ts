@@ -5,6 +5,7 @@ import {
   type LymiFileCard,
   type LymiFileState,
   modesFromDirections,
+  parseReadings,
   type ReviewModeKey,
 } from "@lymi/core";
 import { ANKI_DAY_SECONDS, ANKI_SEPARATOR, ankiDayNumber } from "../imports/anki/model";
@@ -50,7 +51,7 @@ const BACK = (answer: string) =>
     "",
     `<div class="answer">{{${answer}}}</div>`,
     '{{#Pronunciation}}<div class="pronunciation">{{Pronunciation}}</div>{{/Pronunciation}}',
-    '{{#Example}}<div class="example">{{Example}}</div>{{/Example}}',
+    '{{#Example}}<div class="example">{{furigana:Example}}</div>{{/Example}}',
     '{{#Notes}}<div class="notes">{{Notes}}</div>{{/Notes}}',
     '{{#Picture}}<div class="picture">{{Picture}}</div>{{/Picture}}',
     "{{Audio}}",
@@ -181,6 +182,25 @@ const DECK_CONFIG = {
   lapse: { delays: [10], leechAction: 1, leechFails: 8, minInt: 1, mult: 0 },
   dyn: false,
 };
+
+/**
+ * An example as an Anki field its furigana filter reads right. The filter gives a reading
+ * everything back to a space, so each reading's kanji start after one, which Anki drops when it
+ * draws them; any other bracket is an entity, so `Haus[e]` stays text.
+ */
+export function ankiExample(text: string | null | undefined): string {
+  let out = "";
+  for (const { text: run, reading } of parseReadings(text ?? "")) {
+    const html = ankiField(run).replaceAll("[", "&#91;").replaceAll("]", "&#93;");
+    if (reading === undefined) {
+      out += html;
+      continue;
+    }
+    if (out && !/(\s|>|\])$/.test(out)) out += " ";
+    out += `${html}[${reading}]`;
+  }
+  return out;
+}
 
 /** Plain text as an Anki field: HTML special characters escaped, line breaks as `<br>`. */
 export function ankiField(text: string | null | undefined): string {
@@ -393,7 +413,7 @@ export class AnkiCollection {
       ankiField(card.term),
       ankiField(card.meaning),
       ankiField(card.pronunciation),
-      ankiField(card.example),
+      ankiExample(card.example),
       ankiField(card.notes),
       picture ? `<img src="${ankiField(picture)}">` : "",
       sound ? `[sound:${sound}]` : "",

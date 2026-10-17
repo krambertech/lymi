@@ -42,6 +42,11 @@ export function furigana(text: string): { base: string; reading: string } | null
   };
 }
 
+/** Mochi's furigana in Lymi's inline notation, `漢字(かんじ)` → `漢字[かんじ]`. */
+export function inlineReadings(text: string): string {
+  return text.replace(FURIGANA, "$1[$2]");
+}
+
 export const isImage = (name: string) => IMAGE.test(name);
 export const isAudio = (name: string) => AUDIO.test(name);
 

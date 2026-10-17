@@ -1,7 +1,13 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { EndScreen, Offer } from "@lymi/client/review-end";
-import { gradeAllowed, type Rating, type ReviewAid } from "@lymi/core";
+import {
+  cueKeepsReading,
+  gradeAllowed,
+  type Rating,
+  type ReviewAid,
+  termReading,
+} from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
   EASE_OUT,
@@ -51,6 +57,7 @@ import { AiCardChip, Chip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
 import { Flame } from "../components/flame";
+import { Furigana, ReadingText } from "../components/furigana";
 import { GRADES } from "../components/grade";
 import {
   HOOK_OFFER_BOX,
@@ -71,7 +78,7 @@ import {
 import { RollingNumber } from "../components/rolling-number";
 import { SevenLights } from "../components/seven-lights";
 import { Skeleton } from "../components/skeleton";
-import { StateIcon } from "../components/state-mark";
+import { StateIcon, stateKey } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import type { QueueItem } from "../lib/api";
@@ -239,7 +246,8 @@ function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
           size="sm"
           variant={error ? "danger" : "secondary"}
           round
-          className={className}
+          // A miss reveals the card, so the speaker reaches 56 px rather than the usual 44.
+          className={clsx("[--hit-x:-12px] before:-inset-y-3!", className)}
           aria-disabled={state === "loading"}
           onClick={(e) => {
             e.stopPropagation();
@@ -314,16 +322,16 @@ function TapHint({ lifted, aided }: { lifted: boolean; aided: boolean }) {
       <p className="flex items-center gap-2 text-center text-sm font-medium">
         <span className="@2xl:hidden">
           {aided ? (
-            <Trans>Tap the card when you have it</Trans>
+            <Trans>Tap to reveal the answer</Trans>
           ) : (
-            <Trans>Recall the answer, then tap the card</Trans>
+            <Trans>Try to remember, then tap to reveal</Trans>
           )}
         </span>
         <span className="hidden @2xl:inline">
           {aided ? (
-            <Trans>Reveal the card when you have it</Trans>
+            <Trans>Reveal the answer</Trans>
           ) : (
-            <Trans>Recall the answer, then reveal the card</Trans>
+            <Trans>Try to remember, then reveal the answer</Trans>
           )}
         </span>
         <span className="hidden @2xl:inline-flex">
@@ -528,6 +536,18 @@ export function ReviewCard({
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const front = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
+  const readingOnCue =
+    mode.cue === "term" &&
+    !!card.pronunciation &&
+    cueKeepsReading(card.language, stateKey(item.fsrsState) === "known");
+  // Furigana over the term: on the cue until the card is Known, and always once it is the answer.
+  const reading = useMemo(() => termReading(card), [card]);
+  const cueReading = revealed || stateKey(item.fsrsState) !== "known";
+  const term = reading ? (
+    <Furigana segments={reading} lang={card.language ?? undefined} />
+  ) : (
+    card.term
+  );
   const label =
     mode.cue === "term"
       ? t`Recognition card for ${front}`
@@ -699,7 +719,7 @@ export function ReviewCard({
           className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           lang={card.language ?? undefined}
         >
-          {card.example}
+          <ReadingText text={card.example} lang={card.language ?? undefined} />
         </motion.p>
       )}
       {card.notes && (
@@ -713,11 +733,23 @@ export function ReviewCard({
   /** Everything under the rule. `measure` is the hidden copy that sizes a card before its reveal. */
   const answer = (measure: boolean) => {
     const sound = measure ? audioPlace : audio;
-    const pronunciation = card.pronunciation && (
-      <motion.p variants={answerLine} className="text-md text-muted [overflow-wrap:anywhere]">
-        {card.pronunciation}
-      </motion.p>
-    );
+    // Under the rule unless the cue keeps it: a reading under a term cue reads the term out. Where
+    // furigana draws it over the term, the line is only for a screen reader.
+    const pronunciation =
+      card.pronunciation &&
+      (reading ? (
+        <p className="sr-only" lang={card.language ?? undefined}>
+          {card.pronunciation}
+        </p>
+      ) : (
+        <motion.p
+          variants={answerLine}
+          className="text-md text-muted [overflow-wrap:anywhere]"
+          lang={card.language ?? undefined}
+        >
+          {card.pronunciation}
+        </motion.p>
+      ));
     return (
       <>
         <motion.div
@@ -736,7 +768,7 @@ export function ReviewCard({
                 )}
                 lang={card.language ?? undefined}
               >
-                {card.term}
+                {term}
                 {sound()}
               </motion.p>
               {pronunciation}
@@ -763,6 +795,7 @@ export function ReviewCard({
               >
                 {back}
               </motion.p>
+              {mode.cue === "term" && !readingOnCue && pronunciation}
               {picture && (
                 <>
                   <motion.p
@@ -773,7 +806,7 @@ export function ReviewCard({
                     )}
                     lang={card.language ?? undefined}
                   >
-                    {card.term}
+                    {term}
                     {sound()}
                   </motion.p>
                   {pronunciation}
@@ -901,7 +934,8 @@ export function ReviewCard({
             ref={columnRef}
             className={clsx(
               "relative flex flex-1 flex-col justify-center gap-5 py-2",
-              animateIn && "enter-fade",
+              // A fade that stays filled would trap the speaker's z-20 under the reveal layer.
+              animateIn && "enter-fade [animation-fill-mode:backwards]!",
             )}
           >
             <motion.div
@@ -931,11 +965,29 @@ export function ReviewCard({
                         CUE_SIZE[step],
                       )}
                     >
-                      {front}
+                      {mode.cue === "term" && reading ? (
+                        <Furigana
+                          segments={reading}
+                          lang={card.language ?? undefined}
+                          hidden={!cueReading}
+                        />
+                      ) : (
+                        front
+                      )}
                       {mode.cue === "term" && audio("z-20")}
                     </p>
-                    {mode.cue === "term" && card.pronunciation && (
-                      <p className="text-md text-muted [overflow-wrap:anywhere]">
+                    {readingOnCue && (
+                      <p
+                        className="text-md text-muted [overflow-wrap:anywhere]"
+                        lang={card.language ?? undefined}
+                      >
+                        {card.pronunciation}
+                      </p>
+                    )}
+                    {/* Furigana is hidden from a screen reader, which hears the reading here while
+                        it shows on the cue; after the reveal the answer's line says it. */}
+                    {mode.cue === "term" && reading && cueReading && !revealed && (
+                      <p className="sr-only" lang={card.language ?? undefined}>
                         {card.pronunciation}
                       </p>
                     )}

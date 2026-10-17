@@ -97,7 +97,13 @@ test("Enter adds what was typed unless an arrow key picked a tag in use", async 
   await userEvent.type(page.getByRole("combobox"), "verb{Enter}");
   expect(posted()).toEqual(["verb"]);
 
-  await userEvent.type(page.getByRole("combobox"), "ver{ArrowDown}{Enter}");
+  const input = page.getByRole("combobox");
+  const choice = page.getByRole("option", { name: "verbs", exact: true });
+  await userEvent.type(input, "ver");
+  await expect.element(choice).toBeVisible();
+  await userEvent.keyboard("{ArrowDown}");
+  await expect.element(input).toHaveAttribute("aria-activedescendant", choice.element().id);
+  await userEvent.keyboard("{Enter}");
   expect(posted()).toEqual(["verb", "verbs"]);
   expect(onTagAdded.mock.calls).toEqual([
     ["typed", false],

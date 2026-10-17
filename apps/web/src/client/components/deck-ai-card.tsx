@@ -59,7 +59,7 @@ export function DeckAiCard({ deck, onSave }: Props) {
       <FieldSet className="gap-3">
         <FieldLegend variant="label">{t`Fields AI can fill`}</FieldLegend>
         <FieldDescription className="-mt-2">
-          {t`AI fills them only when they help. It never changes your text.`}
+          {t`AI fills only empty fields and leaves your text unchanged.`}
         </FieldDescription>
         <div className="grid gap-3">
           {DECK_ENRICH_FIELDS.map((field) => (

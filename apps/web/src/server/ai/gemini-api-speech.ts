@@ -62,6 +62,7 @@ export function createGeminiApiSpeechProvider(
           `${endpoint.base}/v1beta/models/${encodeURIComponent(model)}:generateContent`,
           {
             method: "POST",
+            redirect: "manual",
             headers: {
               "x-goog-api-key": key,
               "Content-Type": "application/json",

@@ -303,3 +303,15 @@
   --z-toast: 300;
   --z-tooltip: 400;
 }
+
+/*
+ * Onest has no Japanese, so kana and kanji come from the system. Naming Japanese faces gives kanji
+ * that Chinese shares their Japanese forms; no web font, since every platform ships one of these.
+ */
+@layer base {
+  :lang(ja) {
+    font-family:
+      "Onest", "Onest Fallback", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic",
+      YuGothic, "Noto Sans JP", Meiryo, ui-sans-serif, system-ui, sans-serif;
+  }
+}

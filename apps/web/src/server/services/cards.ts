@@ -8,11 +8,15 @@ import type {
 } from "@lymi/core";
 import {
   deckEnrichFields,
+  duplicateKey,
   emptyFields,
   fieldsToFill,
   needsEnrichment,
   newId,
   normaliseTerm,
+  readingKey,
+  sameReading,
+  stripReadings,
   TEXT_MODES,
 } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNull } from "@lymi/core/db";
@@ -180,13 +184,13 @@ export async function addCards(
         ),
       ),
   );
-  const existing = new Map<string, Map<string, { card: Card; deckName: string }>>();
-  for (const row of existingRows) {
-    const key = dupKey(row.card.language, row.card.normalizedTerm);
-    const byDeck = existing.get(key) ?? new Map();
-    byDeck.set(row.card.deckId, row);
-    existing.set(key, byDeck);
-  }
+  // Several cards can share a key: homographs told apart by their readings.
+  const existing = new Map<string, { card: Card; deckName: string }[]>();
+  const hold = (row: { card: Card; deckName: string }) => {
+    const key = duplicateKey(row.card.language, row.card.normalizedTerm);
+    existing.set(key, [...(existing.get(key) ?? []), row]);
+  };
+  for (const row of existingRows) hold(row);
 
   const now = new Date();
   const outcomes: RawOutcome[] = [];
@@ -201,10 +205,14 @@ export async function addCards(
       if (again) outcomes.push({ status: "added", card: again });
       continue;
     }
-    const matches = existing.get(dupKey(language, key));
-    const hit = options.allowCrossDeckDuplicates
-      ? matches?.get(deck.id)
-      : matches?.values().next().value;
+    const reading = readingKey({ language, pronunciation: input.pronunciation });
+    const hit = existing
+      .get(duplicateKey(language, key))
+      ?.find(
+        (row) =>
+          (!options.allowCrossDeckDuplicates || row.card.deckId === deck.id) &&
+          sameReading(readingKey(row.card), reading),
+      );
     if (hit) {
       outcomes.push({
         status: "skipped",
@@ -274,10 +282,7 @@ export async function addCards(
       }),
     ]);
     // Later inputs in this batch with the same key are duplicates of this one.
-    const matchKey = dupKey(language, key);
-    const byDeck = existing.get(matchKey) ?? new Map();
-    byDeck.set(deck.id, { card, deckName: deck.name });
-    existing.set(matchKey, byDeck);
+    hold({ card, deckName: deck.name });
     outcomes.push({ status: "added", card });
   }
 
@@ -351,11 +356,6 @@ type RawOutcome =
   | { status: "added"; card: Card }
   | { status: "skipped"; term: string; existing: Card; deckName: string };
 
-/** A card with no language only matches other cards with no language. */
-function dupKey(language: string | null, normalizedTerm: string): string {
-  return `${language ?? ""} ${normalizedTerm}`;
-}
-
 /** Case and Unicode folding for search, the same rule as the duplicate key. */
 export function foldForSearch(text: string): string {
   return normaliseTerm(text);
@@ -381,7 +381,7 @@ export function matchesSearch(
     card.normalizedTerm,
     card.pronunciation,
     card.meaning,
-    card.example,
+    card.example && stripReadings(card.example),
     notes,
   ]) {
     if (field && searchKey(field).includes(needle)) return true;

@@ -152,6 +152,7 @@ export const analyticsEvents = {
     grade: z.number().int().min(1).max(4),
     state: z.enum(CARD_STATES).optional(),
     aid: ReviewAid.optional(),
+    reading: z.enum(["cue", "answer"]).optional(),
   }),
   review_undone: z.object({
     mode: ReviewModeKey.optional(),
@@ -228,6 +229,7 @@ export const analyticsEvents = {
     has_instructions: z.boolean().optional(),
     samples: count.optional(),
     skipped: count.optional(),
+    readings_added: count.optional(),
     prompt_version: z.number().int().positive().max(1000).optional(),
     has_style: z.boolean().optional(),
   }),
@@ -301,6 +303,10 @@ export const analyticsEvents = {
   }),
   deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
   section_go_to: z.object({}),
+  pronunciation_played: z.object({
+    outcome: z.enum(["played", "failed"]),
+    revealed: z.boolean(),
+  }),
   deck_tag_changed: z.object({
     action: z.enum(["rename", "merge", "archive", "restore"]),
     channel: z.enum(["app", "api", "mcp"]),
@@ -370,6 +376,7 @@ export const analyticsProducers = {
   tag_added: ["browser"],
   deck_filter_added: ["browser"],
   section_go_to: ["phone"],
+  pronunciation_played: ["browser", "phone"],
   deck_tag_changed: ["worker"],
   cards_tagged: ["browser"],
   deck_enrichment_changed: ["worker"],

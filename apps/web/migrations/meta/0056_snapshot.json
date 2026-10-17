@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "ae0c1df6-6bcb-438a-89c5-72b1eeb7b37e",
-  "prevId": "85138675-bdc4-4477-8b0f-96306be17b69",
+  "id": "9d1805c6-73ff-45ec-a81b-eaa9b1945a6e",
+  "prevId": "c7f8494c-9b5f-479f-bc69-120e9960f099",
   "tables": {
     "account_deletions": {
       "name": "account_deletions",
@@ -284,34 +284,13 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "card_corrections": {
-      "name": "card_corrections",
+    "card_audio_purges": {
+      "name": "card_audio_purges",
       "columns": {
         "card_id": {
           "name": "card_id",
           "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "field": {
-          "name": "field",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "ai_text": {
-          "name": "ai_text",
-          "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true,
           "autoincrement": false
         },
@@ -320,56 +299,13 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": "(unixepoch() * 1000)"
         }
       },
-      "indexes": {
-        "card_corrections_user_idx": {
-          "name": "card_corrections_user_idx",
-          "columns": [
-            "user_id",
-            "created_at"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "card_corrections_card_id_cards_id_fk": {
-          "name": "card_corrections_card_id_cards_id_fk",
-          "tableFrom": "card_corrections",
-          "tableTo": "cards",
-          "columnsFrom": [
-            "card_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "card_corrections_user_id_user_id_fk": {
-          "name": "card_corrections_user_id_user_id_fk",
-          "tableFrom": "card_corrections",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "card_corrections_card_id_field_pk": {
-          "columns": [
-            "card_id",
-            "field"
-          ],
-          "name": "card_corrections_card_id_field_pk"
-        }
-      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
     },

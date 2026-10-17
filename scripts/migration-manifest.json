@@ -221,11 +221,15 @@
       "sha256": "3fc8f7ee27ccc53a57ab5ffdb8ca4d1b62a324fe2994d56393ebc9c5e855707a"
     },
     {
-      "name": "0055_perfect_post.sql",
+      "name": "0055_normal_frightful_four.sql",
+      "sha256": "6328c34b1fb31bb4ac0f44891564fe3c51589d97733960754183cb3d89683081"
+    },
+    {
+      "name": "0056_conscious_sebastian_shaw.sql",
       "sha256": "7bc1cab50059a643fdd81806f4d00e6cf7f3f67582459ef8876ce4e7364fdff2"
     },
     {
-      "name": "0056_bent_overlord.sql",
+      "name": "0057_dry_warbird.sql",
       "sha256": "35d2639eb22c29cef993954372c180e6451e40fe48321951c2890afbc76a121d"
     }
   ]

@@ -268,7 +268,6 @@ msgstr "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck
 msgid "{0, plural, one {card} other {cards}}"
 msgstr "{0, plural, one {card} other {cards}}"
 
-#. placeholder {0}: run ?? 0
 #. placeholder {0}: summary.current
 msgid "{0, plural, one {day in a row} other {days in a row}}"
 msgstr "{0, plural, one {day in a row} other {days in a row}}"
@@ -681,6 +680,9 @@ msgstr "{restNotes, plural, one {# more note of a less common kind is imported a
 
 msgid "{reviewable, plural, =0 {Nothing to review} one {Review all #} other {Review all #}}"
 msgstr "{reviewable, plural, =0 {Nothing to review} one {Review all #} other {Review all #}}"
+
+msgid "{run, plural, one {day in a row} other {days in a row}}"
+msgstr "{run, plural, one {day in a row} other {days in a row}}"
 
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"

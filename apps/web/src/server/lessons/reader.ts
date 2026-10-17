@@ -84,7 +84,7 @@ export function createLessonReader(
       try {
         response = await request(`${endpoint.base}/messages`, {
           method: "POST",
-          redirect: "error",
+          redirect: "manual",
           headers,
           body: JSON.stringify({
             model,

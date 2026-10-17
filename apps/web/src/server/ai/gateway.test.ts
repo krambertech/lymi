@@ -12,13 +12,17 @@ import { createOpenAiTextProvider } from "./openai-text";
 const GATEWAY = "https://gateway.ai.cloudflare.com/v1/acct/lymi";
 const routed = { AI_GATEWAY_URL: `${GATEWAY}/`, AI_GATEWAY_TOKEN: "gateway-token" };
 
-type Call = { url: string; headers: Record<string, string> };
+type Call = { url: string; headers: Record<string, string>; redirect: RequestRedirect | undefined };
 
 /** Records each request and answers with a failure, so a provider stops after its first call. */
 function recorder() {
   const calls: Call[] = [];
   const request = async (url: RequestInfo | URL, init?: RequestInit) => {
-    calls.push({ url: String(url), headers: init?.headers as Record<string, string> });
+    calls.push({
+      url: String(url),
+      headers: init?.headers as Record<string, string>,
+      redirect: init?.redirect,
+    });
     return new Response("{}", { status: 400 });
   };
   return { calls, request };
@@ -85,6 +89,7 @@ describe("clients through the gateway", () => {
     ]);
     for (const call of calls) {
       expect(call.headers["cf-aig-authorization"]).toBe("Bearer gateway-token");
+      expect(call.redirect).toBe("manual");
     }
   });
 
@@ -105,23 +110,26 @@ describe("clients through the gateway", () => {
     expect(request).not.toHaveBeenCalled();
   });
 
-  it.each([401, 403, 429, 500])("never bypasses the gateway after HTTP %s", async (status) => {
-    const request = vi.fn(
-      async (_url: RequestInfo | URL, _init?: RequestInit) =>
-        new Response("private upstream detail", { status }),
-    );
-    await expect(
-      createOpenAiTextProvider({ OPENAI_API_KEY: "k", ...routed }, request).complete({
-        instructions: "i",
-        input: "x",
-        schema: { name: "s", schema: {} },
-      }),
-    ).rejects.toMatchObject({ status });
-    for (const [url, init] of request.mock.calls) {
-      expect(url).toBe(`${GATEWAY}/openai/chat/completions`);
-      expect(init?.redirect).toBe("error");
-    }
-  });
+  it.each([301, 302, 307, 308, 401, 403, 429, 500])(
+    "never bypasses the gateway after HTTP %s",
+    async (status) => {
+      const request = vi.fn(
+        async (_url: RequestInfo | URL, _init?: RequestInit) =>
+          new Response("private upstream detail", { status }),
+      );
+      await expect(
+        createOpenAiTextProvider({ OPENAI_API_KEY: "k", ...routed }, request).complete({
+          instructions: "i",
+          input: "x",
+          schema: { name: "s", schema: {} },
+        }),
+      ).rejects.toMatchObject({ status });
+      for (const [url, init] of request.mock.calls) {
+        expect(url).toBe(`${GATEWAY}/openai/chat/completions`);
+        expect(init?.redirect).toBe("manual");
+      }
+    },
+  );
 
   it("keeps Google Cloud speech behind its custom gateway provider", async () => {
     const calls: string[] = [];
@@ -133,6 +141,7 @@ describe("clients through the gateway", () => {
     });
     const request = async (url: RequestInfo | URL, init?: RequestInit) => {
       calls.push(String(url));
+      expect(init?.redirect).toBe("manual");
       expect(new Headers(init?.headers).get("cf-aig-authorization")).toBe("Bearer gateway-token");
       return Response.json({ audioContent: btoa("audio") });
     };
@@ -153,6 +162,7 @@ describe("clients through the gateway", () => {
       ?.stream({ images: [], pdfs: [], text: "Tund 6" }, "brief", {}, () => {})
       .catch(() => {});
     expect(calls[0]?.url).toBe(`${GATEWAY}/anthropic/v1/messages`);
+    expect(calls[0]?.redirect).toBe("manual");
     expect(calls[0]?.headers["cf-aig-authorization"]).toBe("Bearer gateway-token");
   });
 

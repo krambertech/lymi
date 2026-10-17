@@ -14,9 +14,9 @@ import {
 import { type Persona, personas } from "./personas";
 
 /**
- * What the developer palette can do to the signed-in account. The web palette, the phone's sheet
- * and `pnpm local` all list and run these through `/api/dev/commands`, so a new one reaches every
- * tool without a client change. Persona, language and theme stay client-side: they are a sign-in,
+ * What the developer palette can do to the signed-in account. The web palette and `pnpm local`
+ * list and run these through `/api/dev/commands`, so a new one reaches both without a client
+ * change; the phone is meant to read the same list. Persona, language and theme stay client-side: they are a sign-in,
  * a setting and a local preference, not states of the account.
  */
 export interface DevCommand {

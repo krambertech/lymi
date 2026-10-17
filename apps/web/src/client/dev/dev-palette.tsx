@@ -138,6 +138,8 @@ export function DevPalette({
   const [page, setPage] = useState<Page | null>(null);
   const [raw, setRaw] = useState("");
   const [selected, setSelected] = useState(0);
+  // A touch layout shows no selection until the keyboard is used, so Enter never runs an unseen row.
+  const [keyed, setKeyed] = useState(false);
   const [theme, setThemeState] = useState<ThemeChoice>(getTheme);
   const [recent, setRecent] = useState(readRecent);
   const [note, setNote] = useState<{ text: string; tone: "muted" | "danger" } | null>(null);
@@ -158,6 +160,7 @@ export function DevPalette({
     setPage(null);
     setRaw("");
     setSelected(0);
+    setKeyed(false);
     if (!compact) inputRef.current?.focus({ preventScroll: true });
   }, [open, compact]);
 
@@ -355,6 +358,7 @@ export function DevPalette({
       })
     : rows;
   const active = Math.min(selected, Math.max(0, shown.length - 1));
+  const highlight = !compact || keyed;
 
   function activate(row: Row | undefined) {
     if (!row) return;
@@ -393,12 +397,13 @@ export function DevPalette({
   function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault();
+      setKeyed(true);
       if (!shown.length) return;
       const step = e.key === "ArrowDown" ? 1 : -1;
       setSelected((active + step + shown.length) % shown.length);
     } else if (e.key === "Enter") {
       e.preventDefault();
-      activate(shown[active]);
+      if (highlight) activate(shown[active]);
     } else if (e.key === "Escape" && (page || raw)) {
       // Stop here so the shell does not close the palette as well.
       e.preventDefault();
@@ -419,7 +424,13 @@ export function DevPalette({
   }, [active, listId]);
 
   const c = state.data?.counts;
-  let group = "";
+  // Consecutive rows that share a group sit under one heading and keep their place in `shown`.
+  const groups: { name: string; rows: { row: Row; i: number }[] }[] = [];
+  shown.forEach((row, i) => {
+    const last = groups.at(-1);
+    if (last?.name === row.group) last.rows.push({ row, i });
+    else groups.push({ name: row.group, rows: [{ row, i }] });
+  });
 
   return (
     <>
@@ -492,7 +503,7 @@ export function DevPalette({
             role="combobox"
             aria-expanded="true"
             aria-controls={listId}
-            aria-activedescendant={!compact && shown.length ? `${listId}-${active}` : undefined}
+            aria-activedescendant={highlight && shown.length ? `${listId}-${active}` : undefined}
             aria-autocomplete="list"
             aria-label="Search developer tools"
             autoComplete="off"
@@ -502,6 +513,7 @@ export function DevPalette({
             onChange={(e) => {
               setRaw(e.target.value);
               setSelected(0);
+              setKeyed(true);
             }}
             onKeyDown={onKeyDown}
             className="h-full min-w-0 flex-1 bg-transparent font-mono text-base text-text caret-amber outline-none placeholder:text-muted md:text-sm"
@@ -574,110 +586,112 @@ export function DevPalette({
           )}
 
           <div id={listId} role="listbox" aria-label="Developer commands">
-            {shown.map((row, i) => {
-              const header = row.group !== group;
-              group = row.group;
-              const blocked = row.kind === "command" ? row.command.blocked : null;
-              const working = run.isPending && run.variables?.key === row.key;
-              const Icon =
-                row.kind === "command"
-                  ? (ICONS[row.command.id] ?? Play)
-                  : row.kind === "page"
-                    ? row.icon
-                    : row.kind === "action"
-                      ? row.checked
-                        ? Check
-                        : row.icon
-                      : null;
-              return (
-                <div key={row.key} role="presentation">
-                  {header && (
-                    <p
-                      role="presentation"
-                      className="px-2.5 pt-3 pb-1 font-mono text-2xs tracking-wider text-muted uppercase"
-                    >
-                      {row.group}
-                    </p>
-                  )}
-                  <div
-                    id={`${listId}-${i}`}
-                    role="option"
-                    tabIndex={-1}
-                    aria-selected={!compact && i === active}
-                    aria-disabled={blocked ? true : undefined}
-                    onPointerMove={() => {
-                      if (!compact && i !== active) setSelected(i);
-                    }}
-                    onClick={() => activate(row)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        activate(row);
-                      }
-                    }}
-                    className={clsx(
-                      "flex cursor-default items-center gap-3 rounded-sm px-2.5 text-sm",
-                      compact ? "min-h-12 py-2" : "min-h-10 py-1.5",
-                      !compact && i === active && "bg-hover",
-                      compact && "active:bg-hover",
-                      blocked && "text-faint",
-                    )}
-                  >
-                    <span className="grid size-6 shrink-0 place-items-center text-muted">
-                      {row.kind === "persona" ? (
-                        <PersonaAvatar
-                          id={row.persona.id}
-                          name={row.persona.name}
-                          className="size-6 text-xs"
-                        />
-                      ) : (
-                        Icon && <Icon className="size-4" aria-hidden="true" />
+            {groups.map((g, gi) => (
+              // biome-ignore lint/a11y/useSemanticElements: a group inside a listbox, which a fieldset cannot be.
+              <div key={g.name} role="group" aria-labelledby={`${listId}-group-${gi}`}>
+                <p
+                  id={`${listId}-group-${gi}`}
+                  className="px-2.5 pt-3 pb-1 font-mono text-2xs tracking-wider text-muted uppercase"
+                >
+                  {g.name}
+                </p>
+                {g.rows.map(({ row, i }) => {
+                  const blocked = row.kind === "command" ? row.command.blocked : null;
+                  const working = run.isPending && run.variables?.key === row.key;
+                  const Icon =
+                    row.kind === "command"
+                      ? (ICONS[row.command.id] ?? Play)
+                      : row.kind === "page"
+                        ? row.icon
+                        : row.kind === "action"
+                          ? row.checked
+                            ? Check
+                            : row.icon
+                          : null;
+                  return (
+                    <div
+                      key={row.key}
+                      id={`${listId}-${i}`}
+                      role="option"
+                      tabIndex={-1}
+                      aria-selected={highlight && i === active}
+                      aria-disabled={blocked ? true : undefined}
+                      onPointerMove={() => {
+                        if (!compact && i !== active) setSelected(i);
+                      }}
+                      // Keeps focus in the search, so the keys still work after a click.
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => activate(row)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          activate(row);
+                        }
+                      }}
+                      className={clsx(
+                        "flex cursor-default items-center gap-3 rounded-sm px-2.5 text-sm",
+                        compact ? "min-h-12 py-2" : "min-h-10 py-1.5",
+                        highlight && i === active && "bg-hover",
+                        compact && "active:bg-hover",
+                        blocked && "text-faint",
                       )}
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="flex items-baseline gap-2">
-                        <span className="truncate">{row.title}</span>
-                        {row.kind === "persona" && row.persona.id === current?.id && (
-                          <span className="text-xs text-amber">You</span>
+                    >
+                      <span className="grid size-6 shrink-0 place-items-center text-muted">
+                        {row.kind === "persona" ? (
+                          <PersonaAvatar
+                            id={row.persona.id}
+                            name={row.persona.name}
+                            className="size-6 text-xs"
+                          />
+                        ) : (
+                          Icon && <Icon className="size-4" aria-hidden="true" />
                         )}
                       </span>
-                      {row.detail && (
-                        <span
-                          className={clsx(
-                            "block text-xs leading-snug text-muted",
-                            !compact && "truncate",
+                      <span className="min-w-0 flex-1">
+                        <span className="flex items-baseline gap-2">
+                          <span className="truncate">{row.title}</span>
+                          {row.kind === "persona" && row.persona.id === current?.id && (
+                            <span className="text-xs text-amber">You</span>
                           )}
-                        >
-                          {row.detail}
                         </span>
-                      )}
-                    </span>
-                    <span className="shrink-0 text-xs text-muted">
-                      {working
-                        ? "Working…"
-                        : (blocked ??
-                          (row.kind === "page" ? (
-                            <ChevronRight className="size-4 rtl:rotate-180" aria-hidden="true" />
-                          ) : switching &&
-                            row.kind === "persona" &&
-                            switching === row.persona.id ? (
-                            "Switching…"
-                          ) : row.kind === "command" ? (
-                            <span className="font-mono text-faint">{row.command.id}</span>
-                          ) : row.kind === "persona" ? (
-                            <span className="font-mono text-faint">{row.persona.id}</span>
-                          ) : null))}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-            {shown.length === 0 && (
-              <p className="px-2.5 py-6 text-center text-sm text-muted">
-                {commands.isPending && !personas.length ? "Loading…" : `Nothing matches "${raw}".`}
-              </p>
-            )}
+                        {row.detail && (
+                          <span
+                            className={clsx(
+                              "block text-xs leading-snug text-muted",
+                              !compact && "truncate",
+                            )}
+                          >
+                            {row.detail}
+                          </span>
+                        )}
+                      </span>
+                      <span className="shrink-0 text-xs text-muted">
+                        {working
+                          ? "Working…"
+                          : (blocked ??
+                            (row.kind === "page" ? (
+                              <ChevronRight className="size-4 rtl:rotate-180" aria-hidden="true" />
+                            ) : switching &&
+                              row.kind === "persona" &&
+                              switching === row.persona.id ? (
+                              "Switching…"
+                            ) : row.kind === "command" ? (
+                              <span className="font-mono text-faint">{row.command.id}</span>
+                            ) : row.kind === "persona" ? (
+                              <span className="font-mono text-faint">{row.persona.id}</span>
+                            ) : null))}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
           </div>
+          {shown.length === 0 && (
+            <p className="px-2.5 py-6 text-center text-sm text-muted">
+              {commands.isPending && !personas.length ? "Loading…" : `Nothing matches "${raw}".`}
+            </p>
+          )}
         </div>
 
         <footer className="flex min-h-10 shrink-0 items-center gap-4 border-t border-edge px-4 py-2 font-mono text-xs">

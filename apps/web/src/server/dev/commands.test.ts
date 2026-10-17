@@ -74,8 +74,8 @@ describe("dev commands", () => {
   });
 
   it("caps the count at the command's maximum and refuses an unknown command", async () => {
-    const due = (await (await run("due", { count: 50_000 })).json()) as { note: string };
-    expect(due.note).toBe("2 cards due now.");
+    const added = (await (await run("claude", { count: 500 })).json()) as { note: string };
+    expect(added.note).toBe("Claude added 200 cards.");
     expect((await run("nothing")).status).toBe(404);
   });
 });

@@ -1,4 +1,4 @@
-import { Plural } from "@lingui/react/macro";
+import { Plural, Trans } from "@lingui/react/macro";
 import type { StreakOut } from "@lymi/core";
 import { clsx } from "clsx";
 import { RollingNumber } from "./rolling-number";
@@ -23,6 +23,11 @@ export function lastDays(summary: StreakSummary, n = 7) {
     rest: dates.map((date) => rest.has(date)),
     goals: days.map((d, i) => (i === n - 1 ? summary.today.goal : (d?.goal ?? null))),
   };
+}
+
+/** Said in place of a run of zero, which reads as a failure rather than a start. */
+export function StreakStart({ summary }: { summary: StreakSummary }) {
+  return summary.longest > 0 ? <Trans>Start a new streak</Trans> : <Trans>Start your streak</Trans>;
 }
 
 /**
@@ -58,19 +63,25 @@ export function StreakWeek({
         dates={week.dates}
         size={size}
       />
-      <p className="flex shrink-0 items-baseline gap-1.5 @md:grid @md:gap-0 @md:border-s @md:border-edge @md:ps-4 @md:text-start">
-        <span
-          className={clsx(
-            "font-semibold leading-none tabular-nums text-text",
-            large ? "text-lg @md:text-2xl" : "text-lg",
-          )}
-        >
-          <RollingNumber value={summary.current} />
-        </span>
-        <span className="whitespace-nowrap text-sm text-muted @md:mt-1 @md:text-xs">
-          <Plural value={summary.current} one="day in a row" other="days in a row" />
-        </span>
-      </p>
+      {summary.current === 0 ? (
+        <p className="shrink-0 text-sm font-medium text-text-2 @md:border-s @md:border-edge @md:ps-4">
+          <StreakStart summary={summary} />
+        </p>
+      ) : (
+        <p className="flex shrink-0 items-baseline gap-1.5 @md:grid @md:gap-0 @md:border-s @md:border-edge @md:ps-4 @md:text-start">
+          <span
+            className={clsx(
+              "font-semibold leading-none tabular-nums text-text",
+              large ? "text-lg @md:text-2xl" : "text-lg",
+            )}
+          >
+            <RollingNumber value={summary.current} />
+          </span>
+          <span className="whitespace-nowrap text-sm text-muted @md:mt-1 @md:text-xs">
+            <Plural value={summary.current} one="day in a row" other="days in a row" />
+          </span>
+        </p>
+      )}
     </div>
   );
 }

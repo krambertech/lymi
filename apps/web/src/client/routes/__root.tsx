@@ -8,6 +8,7 @@ import {
   Outlet,
   useLocation,
   useNavigate,
+  useRouterState,
 } from "@tanstack/react-router";
 import { MotionConfig } from "motion/react";
 import { lazy, Suspense, useEffect, useMemo, useRef } from "react";
@@ -109,8 +110,12 @@ function Shell() {
   // Consent is a stop inside another app's sign-in; the local design page is its own document.
   const bare = isBareShell(location.pathname);
   const onReview = location.pathname.startsWith("/review");
+  // The screen on show, not the one loading: leaving Welcome would otherwise draw the rail around its last question.
+  const shown = useRouterState({
+    select: (s) => (s.resolvedLocation ?? s.location).pathname,
+  });
   // Getting set up closes the app around it as review does, so the way out is Skip, not the rail.
-  const closed = onReview || location.pathname === "/welcome";
+  const closed = shown.startsWith("/review") || shown === "/welcome";
   const me = useQuery({ ...meQuery, enabled: !bare });
   useEffect(() => {
     capturePageview(location.pathname);
@@ -337,7 +342,7 @@ function Shell() {
             )
           }
           nav={closed ? undefined : <PillNav />}
-          fill={onReview}
+          fill={shown.startsWith("/review")}
         >
           <Outlet />
         </AppShell>

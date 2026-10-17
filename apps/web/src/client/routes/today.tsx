@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAddCard } from "../lib/add-card";
+import { api } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { publicSiteUrl } from "../lib/origins";
 import {
@@ -37,6 +38,13 @@ function Today() {
   const explore = useQuery({ ...exploreQuery, enabled: guiding });
   const ready = explore.data?.decks.filter((deck) => !explore.data.added[deck.slug]);
   const add = useAddCard();
+  // The same read as the add menu's, so the guide offers Smart add exactly where the menu does.
+  const lessons = useQuery({
+    queryKey: ["lesson-reads", "access"],
+    queryFn: api.lessonAccess,
+    enabled: guiding,
+    staleTime: Number.POSITIVE_INFINITY,
+  });
   const rest = useRestDismissal(streak.data?.today.date);
   const settings = useQuery(settingsQuery);
   // An account with nothing in it that has not got set up starts at Welcome; it never comes back after.
@@ -69,6 +77,7 @@ function Today() {
       connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}
       onAdd={() => add.openCard()}
       onCreateDeck={add.openDeck}
+      onSmartAdd={lessons.data?.allowed ? () => add.openSmart() : undefined}
       failed={(decks.isError && !decks.data) || (streak.isError && !streak.data)}
       onRetry={() => {
         void decks.refetch();

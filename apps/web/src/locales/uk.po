@@ -268,7 +268,6 @@ msgstr "{0, plural, one {картка до повторення} few {картк
 msgid "{0, plural, one {card} other {cards}}"
 msgstr "{0, plural, one {картка} few {картки} many {карток} other {картки}}"
 
-#. placeholder {0}: run ?? 0
 #. placeholder {0}: summary.current
 msgid "{0, plural, one {day in a row} other {days in a row}}"
 msgstr "{0, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
@@ -681,6 +680,9 @@ msgstr "{restNotes, plural, one {Ще # запис рідшого виду бу�
 
 msgid "{reviewable, plural, =0 {Nothing to review} one {Review all #} other {Review all #}}"
 msgstr "{reviewable, plural, =0 {Нічого повторювати} one {Повтори всі #} few {Повтори всі #} many {Повтори всі #} other {Повтори всі #}}"
+
+msgid "{run, plural, one {day in a row} other {days in a row}}"
+msgstr "{run, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
 
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
@@ -2281,9 +2283,6 @@ msgstr "Географія"
 msgid "Getting a card ready…"
 msgstr "Готуємо картку…"
 
-msgid "Getting set up"
-msgstr "Початок роботи"
-
 msgid "Getting started"
 msgstr "Початок роботи"
 
@@ -2991,6 +2990,9 @@ msgstr "Назва"
 msgid "Name the key, so you know which one to revoke later."
 msgstr "Назви ключ, щоб потім знати, який саме відкликати."
 
+msgid "Name your first tag"
+msgstr "Назви свій перший тег"
+
 msgid "Nature"
 msgstr "Природа"
 
@@ -3220,6 +3222,9 @@ msgstr "Зараз нема що повторювати"
 msgid "Nothing due today, so your streak is safe."
 msgstr "Сьогодні нічого повторювати, тож дні поспіль не перервуться."
 
+msgid "Nothing due today."
+msgstr "Сьогодні нічого повторювати."
+
 msgid "Nothing forgotten today"
 msgstr "Сьогодні нічого не забуто"
 
@@ -3395,6 +3400,9 @@ msgstr "минулі повторення"
 msgid "Past reviews show in Insights on the days you did them. They don’t count toward today’s goal or your streak."
 msgstr "Минулі повторення з’являться в Огляді в ті дні, коли вони були. Вони не зараховуються ні до сьогоднішньої мети, ні до днів поспіль."
 
+msgid "Paste a lesson or add photos of it, then pick the words"
+msgstr "Встав урок або додай його фото, а тоді вибери слова"
+
 msgid "Paste a link"
 msgstr "Вставити посилання"
 
@@ -3526,10 +3534,6 @@ msgstr "Нова вимова: «{value}»"
 
 msgid "Pronunciation from lesson"
 msgstr "Вимова з уроку"
-
-#. placeholder {0}: path.length
-msgid "Question {position} of {0}"
-msgstr "Питання {position} з {0}"
 
 msgid "Quickstart"
 msgstr "Швидкий старт"
@@ -4128,6 +4132,9 @@ msgstr "Почати {nextName}"
 msgid "Start {sectionName} early?"
 msgstr "Почати {sectionName} раніше?"
 
+msgid "Start a new streak"
+msgstr "Почни лік днів поспіль заново"
+
 msgid "Start anyway"
 msgstr "Почати все одно"
 
@@ -4139,6 +4146,9 @@ msgstr "Почни з колоди"
 
 msgid "Start with a ready-made deck"
 msgstr "Почни з готової колоди"
+
+msgid "Start your streak"
+msgstr "Почни лік днів поспіль"
 
 msgid "Started {sectionName}"
 msgstr "Розпочато «{sectionName}»"
@@ -4614,14 +4624,17 @@ msgstr "Вимкнути посилання"
 msgid "Turn off the join link?"
 msgstr "Вимкнути посилання для приєднання?"
 
+msgid "Turn your notes into cards"
+msgstr "Перетвори нотатки на картки"
+
 msgid "Turned off the join link for {deck}"
 msgstr "Посилання для приєднання до «{deck}» вимкнено"
 
 msgid "Turned on the join link for {deck}"
 msgstr "Посилання для приєднання до «{deck}» увімкнено"
 
-msgid "Type a name to create your first tag."
-msgstr "Введи назву, щоб створити перший тег."
+msgid "Type a name above, then press Enter to tag this card."
+msgstr "Введи назву вище й натисни Enter, щоб додати тег до картки."
 
 msgid "Type the term."
 msgstr "Введи термін."

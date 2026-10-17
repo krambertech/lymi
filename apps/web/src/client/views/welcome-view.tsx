@@ -8,7 +8,6 @@ import {
   type Own,
   startDecks,
   type WelcomeStep,
-  welcomePath,
 } from "@lymi/client/welcome";
 import {
   DAILY_GOAL_PRESETS,
@@ -187,9 +186,6 @@ export function WelcomeView({
     window.scrollTo({ top: 0 });
     document.querySelector("main")?.scrollTo({ top: 0 });
   }, [step]);
-  // The learner's own path: the language question joins it only after A language.
-  const path = welcomePath(kind);
-  const position = path.indexOf(step) + 1;
   const languages = catalogLanguages(catalog ?? [], meaningLanguage);
   const { decks, ownFirst } = startDecks(catalog ?? [], kind, language);
   const name = (tag: string) =>
@@ -264,15 +260,17 @@ export function WelcomeView({
     <ScreenBar>
       <div className="flex w-full items-center">
         {trail.length > 1 && <BackButton label={t`Back`} onClick={() => move(null, false)} />}
-        <Button
-          variant="ghost"
-          size="sm"
-          className="-me-3 ms-auto"
-          onClick={() => onSkip(step)}
-          aria-disabled={busy}
+        {/* Back's size and colour, so the bar's two ways out read as a pair. */}
+        <button
+          type="button"
+          className="-me-2.5 ms-auto inline-flex h-11 items-center rounded-sm px-2.5 text-md text-text-2 transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] aria-disabled:pointer-events-none motion-reduce:active:scale-100 hoverable:hover:bg-plate-2 hoverable:hover:text-text"
+          onClick={() => {
+            if (!busy) onSkip(step);
+          }}
+          aria-disabled={busy || undefined}
         >
           <Trans>Skip for now</Trans>
-        </Button>
+        </button>
       </div>
     </ScreenBar>
   );
@@ -367,25 +365,6 @@ export function WelcomeView({
 
   return (
     <Screen ownTitle backOnDesktop bar={bar} width="md">
-      {/* One bar rather than a segment per question: the language question comes only after A language. */}
-      {!shortcut && step !== "hello" && (
-        <div
-          role="progressbar"
-          aria-label={t`Getting set up`}
-          aria-valuemin={0}
-          aria-valuemax={path.length}
-          aria-valuenow={position}
-          aria-valuetext={t`Question ${position} of ${path.length}`}
-          className="-mt-1 mb-7 h-1 overflow-hidden rounded-full bg-plate-2"
-        >
-          <motion.div
-            className="h-full origin-left rounded-full bg-text rtl:origin-right"
-            initial={false}
-            animate={{ scaleX: position / path.length }}
-            transition={still ? { duration: 0 } : { duration: 0.32, ease: EASE }}
-          />
-        </div>
-      )}
       <form
         className="flex flex-1 flex-col"
         onSubmit={(e) => {
@@ -394,160 +373,159 @@ export function WelcomeView({
           keyed.current = true;
         }}
       >
-        <AnimatePresence mode="wait" initial={false} custom={dir}>
-          <motion.div
-            key={step}
-            custom={dir}
-            variants={screen}
-            initial="enter"
-            animate="shown"
-            exit="leave"
-            className="grid content-start"
-          >
-            {step === "hello" && <Hello joined={joined} />}
+        {/* The area eases to each question's height, so Continue glides under it instead of jumping. */}
+        <QuestionArea still={still}>
+          <AnimatePresence mode="wait" initial={false} custom={dir}>
+            <motion.div
+              key={step}
+              custom={dir}
+              variants={screen}
+              initial="enter"
+              animate="shown"
+              exit="leave"
+              className="grid content-start"
+            >
+              {step === "hello" && <Hello joined={joined} />}
 
-            {step === "kind" && (
-              <>
-                {heading(
-                  t`What are you learning?`,
-                  t`Lymi works for anything you want to remember.`,
-                )}
-                <ChoiceGroup
-                  label={t`What you’re learning`}
-                  value={kind}
-                  onChange={(k) => {
-                    setKind(k as LearningKind);
-                    setStart(null);
-                    setMissing(null);
-                  }}
-                  className="grid gap-3 @xl/shell:grid-cols-2"
-                >
-                  <KindTile
-                    variants={item}
-                    value="language"
-                    icon={<Languages />}
-                    title={<Trans>A language</Trans>}
-                    detail={<Trans>Words and phrases in a language you’re learning.</Trans>}
-                  />
-                  <KindTile
-                    variants={item}
-                    value="test"
-                    icon={<ClipboardCheck />}
-                    title={<Trans>For a test</Trans>}
-                    detail={<Trans>A citizenship test, a driving test or another exam.</Trans>}
-                  />
-                  <KindTile
-                    variants={item}
-                    value="subject"
-                    icon={<Globe />}
-                    title={<Trans>A subject</Trans>}
-                    detail={<Trans>Countries, stars, birds or anything else with names.</Trans>}
-                  />
-                  <KindTile
-                    variants={item}
-                    value="other"
-                    icon={<Shapes />}
-                    title={<Trans>Something else</Trans>}
-                    detail={<Trans>Your own material, whatever it is.</Trans>}
-                  />
-                </ChoiceGroup>
-              </>
-            )}
-
-            {step === "language" && (
-              <>
-                {heading(
-                  t`Which language?`,
-                  t`Find ready-made decks in this language. You can add other languages later.`,
-                )}
-                <LanguagePicker
-                  item={item}
-                  languages={languages}
-                  value={language}
-                  name={name}
-                  onChange={(tag) => {
-                    setLanguage(tag);
-                    setStart(null);
-                    setMissing(null);
-                  }}
-                />
-              </>
-            )}
-
-            {step === "goal" && (
-              <>
-                {heading(
-                  t`How much time a day?`,
-                  t`Choose a daily review goal. Every grade counts, even Forgot. You can change it later.`,
-                )}
-                <ChoiceGroup
-                  label={t`Daily goal`}
-                  value={String(goal)}
-                  onChange={(v) => setGoal(Number(v))}
-                  className="grid gap-2"
-                >
-                  {DAILY_GOAL_PRESETS.map((n) => (
-                    <GoalRow
-                      key={n}
-                      variants={item}
-                      value={String(n)}
-                      title={
-                        <span className="flex flex-wrap items-center gap-2">
-                          {i18n._(GOAL_NAMES[n])}
-                          {n === STARTING_DAILY_GOAL && (
-                            <Chip>
-                              <Trans>Good to start</Trans>
-                            </Chip>
-                          )}
-                        </span>
-                      }
-                      detail={
-                        <Trans>
-                          About <Plural value={GOAL_MINUTES[n]} one="# minute" other="# minutes" />,{" "}
-                          <Plural value={n} one="# review" other="# reviews" />
-                        </Trans>
-                      }
-                    />
-                  ))}
-                </ChoiceGroup>
-              </>
-            )}
-
-            {step === "start" && (
-              <>
-                {heading(
-                  t`How do you want to start?`,
-                  ownFirst
-                    ? t`Bring what you’re learning, or start with a ready-made deck.`
-                    : t`Pick a ready-made deck, or bring what you already have.`,
-                )}
-                <div className="grid gap-8">
-                  {ownFirst ? (
-                    <>
-                      {ownSection}
-                      {deckSection}
-                    </>
-                  ) : (
-                    <>
-                      {deckSection}
-                      {ownSection}
-                    </>
+              {step === "kind" && (
+                <>
+                  {heading(
+                    t`What are you learning?`,
+                    t`Lymi works for anything you want to remember.`,
                   )}
-                </div>
-              </>
-            )}
-          </motion.div>
-        </AnimatePresence>
+                  <ChoiceGroup
+                    label={t`What you’re learning`}
+                    value={kind}
+                    onChange={(k) => {
+                      setKind(k as LearningKind);
+                      setStart(null);
+                      setMissing(null);
+                    }}
+                    className="grid gap-3 @xl/shell:grid-cols-2"
+                  >
+                    <KindTile
+                      variants={item}
+                      value="language"
+                      icon={<Languages />}
+                      title={<Trans>A language</Trans>}
+                      detail={<Trans>Words and phrases in a language you’re learning.</Trans>}
+                    />
+                    <KindTile
+                      variants={item}
+                      value="test"
+                      icon={<ClipboardCheck />}
+                      title={<Trans>For a test</Trans>}
+                      detail={<Trans>A citizenship test, a driving test or another exam.</Trans>}
+                    />
+                    <KindTile
+                      variants={item}
+                      value="subject"
+                      icon={<Globe />}
+                      title={<Trans>A subject</Trans>}
+                      detail={<Trans>Countries, stars, birds or anything else with names.</Trans>}
+                    />
+                    <KindTile
+                      variants={item}
+                      value="other"
+                      icon={<Shapes />}
+                      title={<Trans>Something else</Trans>}
+                      detail={<Trans>Your own material, whatever it is.</Trans>}
+                    />
+                  </ChoiceGroup>
+                </>
+              )}
 
-        {(missing || error) && (
-          <p role="alert" className="mt-4 text-sm text-danger">
-            {missing ?? error}
-          </p>
-        )}
+              {step === "language" && (
+                <>
+                  {heading(
+                    t`Which language?`,
+                    t`Find ready-made decks in this language. You can add other languages later.`,
+                  )}
+                  <LanguagePicker
+                    item={item}
+                    languages={languages}
+                    value={language}
+                    name={name}
+                    onChange={(tag) => {
+                      setLanguage(tag);
+                      setStart(null);
+                      setMissing(null);
+                    }}
+                  />
+                </>
+              )}
+
+              {step === "goal" && (
+                <>
+                  {heading(
+                    t`How much time a day?`,
+                    t`Choose a daily review goal. Every grade counts, even Forgot. You can change it later.`,
+                  )}
+                  <ChoiceGroup
+                    label={t`Daily goal`}
+                    value={String(goal)}
+                    onChange={(v) => setGoal(Number(v))}
+                    className="grid gap-2"
+                  >
+                    {DAILY_GOAL_PRESETS.map((n) => (
+                      <GoalRow
+                        key={n}
+                        variants={item}
+                        value={String(n)}
+                        title={
+                          <span className="flex flex-wrap items-center gap-2">
+                            {i18n._(GOAL_NAMES[n])}
+                            {n === STARTING_DAILY_GOAL && (
+                              <Chip>
+                                <Trans>Good to start</Trans>
+                              </Chip>
+                            )}
+                          </span>
+                        }
+                        detail={
+                          <Trans>
+                            About{" "}
+                            <Plural value={GOAL_MINUTES[n]} one="# minute" other="# minutes" />,{" "}
+                            <Plural value={n} one="# review" other="# reviews" />
+                          </Trans>
+                        }
+                      />
+                    ))}
+                  </ChoiceGroup>
+                </>
+              )}
+
+              {step === "start" && (
+                <>
+                  {heading(
+                    t`How do you want to start?`,
+                    ownFirst
+                      ? t`Bring what you’re learning, or start with a ready-made deck.`
+                      : t`Pick a ready-made deck, or bring what you already have.`,
+                  )}
+                  <div className="grid gap-8">
+                    {ownFirst ? (
+                      <>
+                        {ownSection}
+                        {deckSection}
+                      </>
+                    ) : (
+                      <>
+                        {deckSection}
+                        {ownSection}
+                      </>
+                    )}
+                  </div>
+                </>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </QuestionArea>
+
         {/* The page keeps room for the pill, which this screen hides, so the foot takes it back on a phone. */}
         <div
           className={clsx(
-            step === "hello" && "@3xl/shell:flex @3xl/shell:justify-center",
+            step === "hello" && "@3xl/shell:flex @3xl/shell:flex-col @3xl/shell:items-center",
             "sticky bottom-0 -mx-5 mt-auto -mb-[calc(env(safe-area-inset-bottom)+96px)] border-t border-edge bg-canvas px-5 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] @3xl/shell:static @3xl/shell:mx-0 @3xl/shell:mt-8 @3xl/shell:mb-0 @3xl/shell:border-0 @3xl/shell:bg-transparent @3xl/shell:p-0",
           )}
         >
@@ -570,9 +548,43 @@ export function WelcomeView({
               <Trans>Continue</Trans>
             )}
           </Button>
+          {/* Under the button, so a message never pushes it down. */}
+          {(missing || error) && (
+            <p role="alert" className="mt-3 text-sm text-danger">
+              {missing ?? error}
+            </p>
+          )}
         </div>
       </form>
     </Screen>
+  );
+}
+
+/** Follows its content's height with a short ease, clipping only while it moves. */
+function QuestionArea({ still, children }: { still: boolean; children: ReactNode }) {
+  const inner = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState<number | "auto">("auto");
+  const [moving, setMoving] = useState(false);
+  useEffect(() => {
+    const el = inner.current;
+    if (!el) return;
+    const observer = new ResizeObserver(() => setHeight(el.offsetHeight));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <motion.div
+      initial={false}
+      animate={{ height }}
+      transition={still ? { duration: 0 } : { duration: 0.26, ease: EASE }}
+      onAnimationStart={() => setMoving(true)}
+      onAnimationComplete={() => setMoving(false)}
+      className={clsx(moving && "overflow-hidden")}
+    >
+      <div ref={inner} className="grid">
+        {children}
+      </div>
+    </motion.div>
   );
 }
 

@@ -358,7 +358,7 @@ test("a deck that runs out below the goal names itself and leads on to the rest 
   await page.keyboard.press("Space");
   await page.keyboard.press("3");
   await expect(heading(page, "Nothing left in Spanish")).toBeVisible();
-  await expect(page.getByText(/^0\s*days in a row$/)).toBeVisible();
+  await expect(page.getByText("Start your streak", { exact: true })).toBeVisible();
   await expect(
     page.getByText("3 more cards and you’re done for today", { exact: true }),
   ).toBeVisible();

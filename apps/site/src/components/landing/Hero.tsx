@@ -19,10 +19,12 @@ interface Props {
   visual?: ReactNode;
   /** The one action, when the page has a better first step than signing up. */
   action?: ReactNode;
+  /** Shows where Lymi is made; a page about one language can leave it out. */
+  badge?: boolean | undefined;
 }
 
 /** The headline, one action, and a hand of cards to turn over. */
-export function Hero({ title, lede, cards, layout, behind, visual, action }: Props) {
+export function Hero({ title, lede, cards, layout, behind, visual, action, badge = true }: Props) {
   const [front, setFront] = useState<string>();
   return (
     <div
@@ -35,7 +37,7 @@ export function Hero({ title, lede, cards, layout, behind, visual, action }: Pro
       )}
     >
       <div className="min-w-0 max-w-[540px]">
-        <OriginBadge />
+        {badge && <OriginBadge />}
         <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.25rem] @4xl:leading-[0.98]">
           {title}
         </h1>

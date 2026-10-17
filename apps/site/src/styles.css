@@ -1661,3 +1661,47 @@ html:has(.deck-cards[open]) {
     display: none;
   }
 }
+
+/* Japanese manuscript paper on the Japanese page: the system's Mincho, ink that settles into
+   each square, and furigana that fades from the words already known. */
+@utility font-mincho {
+  font-family:
+    "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Yu Mincho", YuMincho, "Noto Serif JP",
+    "Noto Serif CJK JP", "Source Han Serif JP", serif;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .genko-ink {
+    animation: genko-ink 760ms var(--ease-out) var(--ink) both;
+  }
+  .genko-known {
+    animation:
+      genko-ink 760ms var(--ease-out) var(--ink) both,
+      genko-fade 1100ms var(--ease-out) var(--known) forwards;
+  }
+  .genko-mark {
+    animation: genko-mark 520ms var(--ease-out) var(--known) both;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .genko-known {
+    opacity: 0;
+  }
+}
+@keyframes genko-ink {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+    transform: scale(1.18);
+  }
+}
+@keyframes genko-fade {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes genko-mark {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}

@@ -284,9 +284,6 @@ msgstr "Блискучий перший раунд рідко вдається �
 msgid "A café, an evening or a person can all be gezellig."
 msgstr "Gezellig буває і кафе, і вечір, і людина."
 
-msgid "A card you know"
-msgstr "Засвоєна картка"
-
 msgid "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
 msgstr "Після сьогоднішнього уроку в колоді групи «Естонська A2 · щовівторка» з’являються три нові картки: kohtuma, broneerima та ilm. Їх отримують усі {learners} учнів."
 
@@ -362,9 +359,6 @@ msgstr "Мажорний акорд із малою септимою, побуд
 
 msgid "A native Japanese voice."
 msgstr "Голос носія японської."
-
-msgid "A new card"
-msgstr "Нова картка"
 
 msgid "A new format applies from 11 April 2026. The level stays A2."
 msgstr "З 11 квітня 2026 року діє новий формат. Рівень лишається A2."
@@ -515,6 +509,9 @@ msgstr "Додано 4 картки в колоду з німецької."
 
 msgid "Added 6 cards to Estonian A2"
 msgstr "Додано 6 карток до Estonian A2"
+
+msgid "Added 7 cards to Japanese, readings included. I skipped <0>食べる</0>, which you already have."
+msgstr "Додав 7 карток у «Японську», разом із читаннями. <0>食べる</0> пропустив, бо вона в тебе вже є."
 
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 msgstr "Додав 8 карток у колоду «Іспанська». Пропустив «ojalá»: така картка в тебе вже є."
@@ -766,6 +763,9 @@ msgstr "Міст, 橋, — теж hashi. Розрізнити їх можна л
 msgid "Bring Lymi to your next class."
 msgstr "Спробуй Lymi на наступному уроці."
 
+msgid "Bring your AI along."
+msgstr "Візьми з собою свій AI."
+
 msgid "Bring your Anki decks with their recordings."
 msgstr "Перенось колоди з Anki разом із записами."
 
@@ -936,6 +936,9 @@ msgstr "Шахи · нова"
 msgid "Chinese"
 msgstr "Китайська"
 
+msgid "Chinese characters"
+msgstr "китайські ієрогліфи"
+
 msgid "Choose a grade to move to the next card."
 msgstr "Обери оцінку, щоб перейти до наступної картки."
 
@@ -1028,6 +1031,9 @@ msgstr "Вітаю"
 
 msgid "Connect an assistant"
 msgstr "Підключити асистента"
+
+msgid "Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Send a photo of your textbook page and your assistant adds the new words, readings included. Ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? It all works through the public API too."
+msgstr "Підключи Claude, ChatGPT, Gemini або Grok до Lymi один раз. Надішли фото сторінки з підручника, і асистент додасть нові слова разом із читаннями. Запитай, що чекає на тебе ввечері, або наведи лад у колоді звичайними словами. Робиш щось своє? Усе це працює і через публічний API."
 
 msgid "Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
 msgstr "Підключи Claude, ChatGPT, Gemini або Grok до Lymi один раз. Потім встав розшифровку уроку й попроси виписати нові слова, запитай, що чекає сьогодні, або наведи лад у колоді звичайними словами. Робиш щось своє? Усе це працює й через публічний API."
@@ -1304,6 +1310,9 @@ msgstr "Eesti · слово"
 msgid "Effortless grace"
 msgstr "Невимушена грація"
 
+msgid "Eighteen. Today’s new words will come up a few at a time."
+msgstr "Вісімнадцять. Нові слова з’являтимуться по кілька за раз."
+
 msgid "Einbürgerungstest"
 msgstr "Einbürgerungstest"
 
@@ -1375,6 +1384,9 @@ msgstr "Кожна картка вимовляє своє слово мовою 
 
 msgid "Every detail in a story should earn its place."
 msgstr "У сюжеті не має бути зайвих деталей."
+
+msgid "Every Japanese deck"
+msgstr "Усі японські колоди"
 
 msgid "Every language"
 msgstr "Усі мови"
@@ -1615,6 +1627,9 @@ msgstr "Від сьогодні до дня тесту"
 msgid "Furigana until you know the word."
 msgstr "Фуріґана, поки не знаєш слова."
 
+msgid "Furigana while you learn a word"
+msgstr "Фуріґана, поки вчиш слово"
+
 msgid "Generated audio stays with the related card or account until it is removed under the service’s storage lifecycle."
 msgstr "Створене озвучення зберігається разом із відповідною карткою або обліковим записом, доки його не буде видалено за правилами життєвого циклу сховища сервісу."
 
@@ -1678,6 +1693,9 @@ msgstr "Goethe-Zertifikat A1, A2 і B1"
 
 msgid "Goethe-Zertifikat A1, A2 and B1: the words for each level"
 msgstr "Goethe-Zertifikat A1, A2 і B1: лексика для кожного рівня"
+
+msgid "Gone once you know it"
+msgstr "Зникає, коли знаєш його"
 
 msgid "good"
 msgstr "добрий"
@@ -2026,8 +2044,11 @@ msgstr "Японська"
 msgid "Japanese 1 · Mondays"
 msgstr "Японська 1 · щопонеділка"
 
-msgid "Japanese is written in hiragana, katakana and kanji. Learn the kana first, every sign with its sound. Then move on to the words of JLPT N5 and N4, kanji and all. Add a deck and its first cards are ready to review."
-msgstr "Японською пишуть хіраганою, катаканою і кандзі. Спершу вивчи кану: кожен знак зі звучанням. Далі переходь до слів рівнів JLPT N5 і N4, уже з кандзі. Додай колоду, і перші картки вже чекатимуть на повторення."
+msgid "Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign with its sound, then move on to the words of JLPT N5 and N4. The decks are ready, so you don’t start from scratch: add one and its first cards are waiting."
+msgstr "Японською пишуть хіраганою, катаканою і кандзі. Почни з кани, кожен знак зі звучанням, а потім переходь до слів рівнів JLPT N5 і N4. Колоди вже готові, тож не треба починати з нуля: додай одну, і перші картки вже чекають."
+
+msgid "Japanese written on squared manuscript paper: あいうえお, アイウエオ, then 食べる, 毎日, 日本語 and 漢字 with their readings beside the kanji. The readings fade from the words already known."
+msgstr "Японський текст на зошитовому папері в клітинку: あいうえお, アイウエオ, потім 食べる, 毎日, 日本語 і 漢字 з читаннями поруч із кандзі. Читання зникають зі слів, які вже засвоєні."
 
 msgid "JLPT N4 words"
 msgstr "Слова JLPT N4"
@@ -2129,6 +2150,9 @@ msgstr "Запам’ятовуй надовго."
 msgid "Know where you stand."
 msgstr "Знай, де ти зараз."
 
+msgid "Known"
+msgstr "Засвоєна"
+
 msgctxt "cards in this state"
 msgid "Known"
 msgstr "Засвоєні"
@@ -2175,8 +2199,14 @@ msgstr "Вивчи питання один раз. Пам’ятай їх до �
 msgid "Learn to speak Estonian."
 msgstr "Заговори естонською."
 
+msgid "Learn together."
+msgstr "Вчіться разом."
+
 msgid "Learned once, never revisited"
 msgstr "Без повторень"
+
+msgid "Learning"
+msgstr "Вивчається"
 
 msgctxt "cards in this state"
 msgid "Learning"
@@ -2187,6 +2217,9 @@ msgstr "{name} в Lymi"
 
 msgid "Learning data"
 msgstr "Навчальні дані"
+
+msgid "Learning: the reading stays while the word settles."
+msgstr "Вивчається: читання лишається, поки слово закріплюється."
 
 msgctxt "deck tag"
 msgid "Leben in Deutschland test"
@@ -2635,8 +2668,8 @@ msgstr "Одна картка за раз, оцінка одним дотико�
 msgid "One deck for your whole class."
 msgstr "Одна колода для всієї групи."
 
-msgid "One kanji can be read many ways: <0>日</0> is <1>に</1> in <2>日本</2> and <3>にち</3> in <4>毎日</4>. So while a card is new, its reading sits over the kanji, as in your textbook. Once you know the word, the reading waits until you turn the card, and you read the kanji yourself."
-msgstr "Один кандзі можна прочитати по-різному: <0>日</0> — це <1>に</1> у <2>日本</2> і <3>にち</3> у <4>毎日</4>. Тож поки картка нова, читання стоїть над кандзі, як у підручнику. Коли слово засвоєне, читання з’являється лише після того, як перевернеш картку, і кандзі ти читаєш сам."
+msgid "One kanji can be read many ways: <0>日</0> is <1>に</1> in <2>日本</2> and <3>にち</3> in <4>毎日</4>. So while you learn a word, its reading sits over the kanji, as in your textbook. Once you know it, the reading waits until you turn the card, and you read the kanji yourself."
+msgstr "Один кандзі можна прочитати по-різному: <0>日</0> — це <1>に</1> у <2>日本</2> і <3>にち</3> у <4>毎日</4>. Тож поки ти вчиш слово, читання стоїть над кандзі, як у підручнику. Коли засвоїш його, читання з’являється лише після того, як перевернеш картку, і кандзі ти читаєш сам."
 
 msgid "One word for asking, handing something over and answering thanks."
 msgstr "Одне слово, щоб попросити, щось подати й відповісти на подяку."
@@ -2736,6 +2769,9 @@ msgstr "Фармакологія · нова"
 
 msgid "Philosophy"
 msgstr "Філософія"
+
+msgid "Photo"
+msgstr "Фото"
 
 msgid "phrase"
 msgstr "фраза"
@@ -3375,6 +3411,9 @@ msgstr "Уперта витривалість; не здаватися, коли
 msgid "Study for the certification. Keep what it taught you."
 msgstr "Готуйся до сертифікації. Збережи те, чого вона навчила."
 
+msgid "Studying with friends or a class? Make one deck and share its join link. Every card you add reaches everyone who joined, and each person keeps their own schedule."
+msgstr "Вчишся з друзями чи з групою? Створи одну колоду й поділися посиланням для приєднання. Кожна картка, яку ти додаєш, з’являється в усіх, хто приєднався, а кожен повторює у своєму темпі."
+
 msgid "Subjects"
 msgstr "Теми"
 
@@ -3830,6 +3869,9 @@ msgstr "Зазвичай щось робити"
 
 msgid "Today"
 msgstr "Сьогодні"
+
+msgid "Today’s textbook page. Add the new words to my Japanese deck."
+msgstr "Сьогоднішня сторінка з підручника. Додай нові слова в мою японську колоду."
 
 msgid "Tonight"
 msgstr "Сьогодні ввечері"

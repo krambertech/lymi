@@ -5,19 +5,23 @@ import { clsx } from "clsx";
 import { ArrowRight, Volume2 } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { deckPath } from "../../lib/deck-page";
+import { shelfPath } from "../../lib/explore";
 import { openLymiUrl, productUrl } from "../../lib/origins";
-import type { Locale } from "../../lib/routes";
+import { type Locale, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
+import { Added, AssistantChat, Attachment } from "./AssistantChat";
+import { AssistantMarksWithMore } from "./AssistantMarks";
+import type { SampleCard } from "./cards";
 import { FeatureSection } from "./FeatureSection";
 import { Furigana } from "./Furigana";
 import { JAPANESE_QUESTIONS } from "./faq";
+import { GenkoSheet } from "./GenkoSheet";
 import { Hero } from "./Hero";
 import { ImportDemo } from "./ImportDemo";
-import { NotesSection } from "./LanguagesView";
 import { JAPANESE, JAPANESE_HAND, type LanguageCard } from "./language-cards";
-import { Pick } from "./MaterialToCards";
 import { Questions } from "./Questions";
 import { ReadingDemo } from "./ReadingDemo";
+import { SharedDeckDemo } from "./SharedDeckDemo";
 import { SignUpSection } from "./SignUpSection";
 import { SiteFooter } from "./SiteFooter";
 import { SiteNav } from "./SiteNav";
@@ -50,35 +54,6 @@ const PATH: { slug: string; glyph: string; name: MessageDescriptor; detail: Mess
       detail: msg`The next level, once N5 feels easy.`,
     },
   ];
-
-const HERO_IDS = JAPANESE_HAND.map((card) => card.id);
-
-/**
- * The page of the learner's notebook the hand came from, written down the page as Japanese is,
- * with the top card's word lit where it was written.
- */
-function NotebookPage({ mark }: { mark: (i: number, text: ReactNode) => ReactNode }) {
-  return (
-    <div className="rounded-2xl bg-plate p-5 pb-24 edge">
-      <p lang="ja" className="text-xs text-muted">
-        日本語 · 第3課
-      </p>
-      <div
-        lang="ja"
-        className="mt-4 h-[236px] overflow-hidden bg-[linear-gradient(to_left,var(--color-edge)_1px,transparent_1px)] bg-size-[2.75rem_100%] bg-right text-lg leading-[2.75rem] text-text [writing-mode:vertical-rl]"
-      >
-        <p>{mark(0, <Furigana term="お疲れ様です" reading="おつかれさまです" lang="ja" />)}。</p>
-        <p>
-          {mark(1, <Furigana term="箸" reading="はし" lang="ja" />)}と
-          <Furigana term="橋" reading="はし" lang="ja" />
-        </p>
-        <p>{mark(2, <Furigana term="木漏れ日" reading="こもれび" lang="ja" />)}がきれい。</p>
-        <p>{mark(3, "いただきます")}。</p>
-        <p>{mark(4, <Furigana term="積ん読" reading="つんどく" lang="ja" />)}</p>
-      </div>
-    </div>
-  );
-}
 
 /** The beginner's decks as numbered steps, each opening its page in Explore. */
 function ScriptPath() {
@@ -169,17 +144,54 @@ function VoiceList() {
   );
 }
 
-function AnkiGuideLink() {
+function JapaneseShelfLink() {
+  const { i18n } = useLingui();
+  return (
+    <MoreLink href={shelfPath({ kind: "languages", name: "japanese" }, i18n.locale)}>
+      <Trans>Every Japanese deck</Trans>
+    </MoreLink>
+  );
+}
+
+function TeachersLink() {
+  const { i18n } = useLingui();
+  return (
+    <MoreLink href={localizedPath("teachers", i18n.locale)}>
+      <Trans>Lymi for teachers</Trans>
+    </MoreLink>
+  );
+}
+
+/** A link under a section's text, to the page that goes further. */
+function MoreLink({ href, children }: { href: string; children: ReactNode }) {
   return (
     <a
-      href="/docs/import-from-anki"
+      href={href}
       className="inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 hoverable:hover:text-text"
     >
-      <Trans>How to import from Anki</Trans>
+      {children}
       <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
     </a>
   );
 }
+
+const STATION: SampleCard = {
+  label: msg`日本語 · noun`,
+  term: "駅",
+  language: "ja",
+  meaning: msg`Station`,
+};
+
+/** The class deck's cards: the phrase added after class and two words from the notes. */
+const CLASS_CARDS = [
+  JAPANESE.classDeck.added,
+  ...JAPANESE.notes.lines.flatMap((line) => {
+    const meaning = line.gloss ?? line.meaning;
+    return meaning && !line.duplicate && !line.term.includes("(")
+      ? [{ term: line.term, meaning }]
+      : [];
+  }),
+];
 
 /** For someone starting Japanese: kana first, then JLPT words, with readings and a native voice. */
 export function JapaneseView() {
@@ -192,7 +204,15 @@ export function JapaneseView() {
         <Hero
           title={
             <Trans>
-              From <span lang="ja">あ</span> to <span lang="ja">漢字</span>.
+              From{" "}
+              <span lang="ja" className="font-mincho font-normal">
+                あ
+              </span>{" "}
+              to{" "}
+              <span lang="ja" className="font-mincho font-normal">
+                漢字
+              </span>
+              .
             </Trans>
           }
           lede={
@@ -201,10 +221,8 @@ export function JapaneseView() {
               over the kanji until you know each word, and a native Japanese voice reads every card.
             </Trans>
           }
-          cards={JAPANESE_HAND}
-          behind={(front) => (
-            <NotebookPage mark={(i, text) => <Pick on={front === HERO_IDS[i]}>{text}</Pick>} />
-          )}
+          badge={false}
+          visual={<GenkoSheet />}
           action={
             <a href={productUrl(`/add/${KANA_DECK}`)} className={buttonClass("primary", "lg")}>
               <Trans>Start with kana</Trans>
@@ -220,11 +238,12 @@ export function JapaneseView() {
           title={<Trans>Three scripts, one at a time.</Trans>}
           body={
             <Trans>
-              Japanese is written in hiragana, katakana and kanji. Learn the kana first, every sign
-              with its sound. Then move on to the words of JLPT N5 and N4, kanji and all. Add a deck
-              and its first cards are ready to review.
+              Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign
+              with its sound, then move on to the words of JLPT N5 and N4. The decks are ready, so
+              you don’t start from scratch: add one and its first cards are waiting.
             </Trans>
           }
+          after={<JapaneseShelfLink />}
         >
           <ScriptPath />
         </FeatureSection>
@@ -235,9 +254,9 @@ export function JapaneseView() {
             <Trans>
               One kanji can be read many ways: <span lang="ja">日</span> is{" "}
               <span lang="ja">に</span> in <span lang="ja">日本</span> and{" "}
-              <span lang="ja">にち</span> in <span lang="ja">毎日</span>. So while a card is new,
-              its reading sits over the kanji, as in your textbook. Once you know the word, the
-              reading waits until you turn the card, and you read the kanji yourself.
+              <span lang="ja">にち</span> in <span lang="ja">毎日</span>. So while you learn a word,
+              its reading sits over the kanji, as in your textbook. Once you know it, the reading
+              waits until you turn the card, and you read the kanji yourself.
             </Trans>
           }
         >
@@ -259,6 +278,63 @@ export function JapaneseView() {
         </FeatureSection>
 
         <FeatureSection
+          title={<Trans>Bring your AI along.</Trans>}
+          body={
+            <Trans>
+              Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Send a photo of your textbook
+              page and your assistant adds the new words, readings included. Ask what’s waiting
+              tonight, or tidy a deck in plain language. Building something of your own? It all
+              works through the public API too.
+            </Trans>
+          }
+          after={<AssistantMarksWithMore />}
+        >
+          <AssistantChat
+            conversation={[
+              {
+                from: "you",
+                body: (
+                  <>
+                    <Attachment name="IMG_2041.jpg" kind={<Trans>Photo</Trans>} photo />
+                    <Trans>Today’s textbook page. Add the new words to my Japanese deck.</Trans>
+                  </>
+                ),
+              },
+              {
+                from: "them",
+                body: (
+                  <Added card={STATION}>
+                    <Trans>
+                      Added 7 cards to Japanese, readings included. I skipped{" "}
+                      <span lang="ja">食べる</span>, which you already have.
+                    </Trans>
+                  </Added>
+                ),
+              },
+              { from: "you", body: <Trans>How many are waiting for me tonight?</Trans> },
+              {
+                from: "them",
+                body: <Trans>Eighteen. Today’s new words will come up a few at a time.</Trans>,
+              },
+            ]}
+          />
+        </FeatureSection>
+
+        <FeatureSection
+          demoFirst
+          title={<Trans>Learn together.</Trans>}
+          body={
+            <Trans>
+              Studying with friends or a class? Make one deck and share its join link. Every card
+              you add reaches everyone who joined, and each person keeps their own schedule.
+            </Trans>
+          }
+          after={<TeachersLink />}
+        >
+          <SharedDeckDemo name={JAPANESE.classDeck.name} language="ja" cards={CLASS_CARDS} />
+        </FeatureSection>
+
+        <FeatureSection
           title={<Trans>Bring your Anki decks with their recordings.</Trans>}
           body={
             <Trans>
@@ -267,7 +343,11 @@ export function JapaneseView() {
               Lymi plays the recording instead of a generated voice.
             </Trans>
           }
-          after={<AnkiGuideLink />}
+          after={
+            <MoreLink href="/docs/import-from-anki">
+              <Trans>How to import from Anki</Trans>
+            </MoreLink>
+          }
         >
           <ImportDemo
             collection={{
@@ -281,8 +361,6 @@ export function JapaneseView() {
             }}
           />
         </FeatureSection>
-
-        <NotesSection notebooks={[JAPANESE]} />
 
         <Questions title={<Trans>Questions before you start.</Trans>} items={JAPANESE_QUESTIONS} />
 

@@ -42,8 +42,31 @@ export async function voicePublishedDecks(
   const slugs = options.slug
     ? [options.slug]
     : (await listPublicDeckSlugs(db)).map((row) => row.slug);
-  const ids: string[] = [];
-  for (const slug of slugs) ids.push(...(await publicDeckFrontCards(db, slug)));
+  // Newest-published decks first: a deck just published is the one visitors are opening now.
+  const publishedAt = new Map(
+    (
+      await selectIn(slugs, (slice) =>
+        db
+          .select({
+            slug: schema.deckPublications.slug,
+            publishedAt: schema.deckPublications.publishedAt,
+          })
+          .from(schema.deckPublications)
+          .where(inArray(schema.deckPublications.slug, slice)),
+      )
+    ).map((row) => [row.slug, row.publishedAt.getTime()]),
+  );
+  const newestFirst = [...slugs].sort(
+    (a, b) => (publishedAt.get(b) ?? 0) - (publishedAt.get(a) ?? 0),
+  );
+  /** Each front card's deck, by its place in the newest-first order. */
+  const deckRank = new Map<string, number>();
+  for (const [rank, slug] of newestFirst.entries()) {
+    for (const id of await publicDeckFrontCards(db, slug)) {
+      if (!deckRank.has(id)) deckRank.set(id, rank);
+    }
+  }
+  const ids = [...deckRank.keys()];
 
   const rows = await selectIn(ids, (slice) =>
     db
@@ -64,7 +87,8 @@ export async function voicePublishedDecks(
       canSpeakTerm(row) &&
       deps.providers(row.language as string).length > 0,
   );
-  // Random order, so a card every provider rejects cannot hold the front of the backlog for good.
+  // Random order within a deck, so a card every provider rejects cannot hold the front of its
+  // deck's backlog for good. The sort is stable, so the newest deck still goes first.
   for (let i = pending.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [pending[i], pending[j]] = [
@@ -72,6 +96,7 @@ export async function voicePublishedDecks(
       pending[i] as (typeof pending)[number],
     ];
   }
+  pending.sort((a, b) => (deckRank.get(a.id) ?? 0) - (deckRank.get(b.id) ?? 0));
   const batch = pending.slice(0, limit);
 
   let voiced = 0;

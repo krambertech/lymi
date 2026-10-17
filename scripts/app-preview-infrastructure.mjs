@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { spawnSync } from "node:child_process";
-import { createHmac } from "node:crypto";
+import { createHash, createHmac } from "node:crypto";
 import { appendFileSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -129,8 +129,110 @@ async function exactBucket(client, name) {
   return result.buckets?.find((item) => item.name === name) ?? null;
 }
 
+// R2's S3 credentials for an API token are its id and the SHA-256 of its value: https://developers.cloudflare.com/r2/api/tokens/
+async function s3Credentials(client) {
+  const verify = async (url) =>
+    (await client.fetchImpl(url, { headers: { authorization: `Bearer ${client.token}` } })).json();
+  // An account-owned token verifies only under its account, a user token only under /user.
+  let payload = await verify(`${apiRoot}/${client.accountId}/tokens/verify`);
+  if (!payload.success)
+    payload = await verify(`${apiRoot.replace(/accounts$/, "user")}/tokens/verify`);
+  if (!payload.success || !payload.result?.id) {
+    throw new Error("Cloudflare did not identify the preview API token for R2's S3 API");
+  }
+  return {
+    accessKeyId: payload.result.id,
+    secretAccessKey: createHash("sha256").update(client.token).digest("hex"),
+  };
+}
+
+const rfc3986 = (value) =>
+  encodeURIComponent(value).replace(
+    /[!'()*]/g,
+    (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`,
+  );
+const sha256Hex = (value) => createHash("sha256").update(value).digest("hex");
+const hmac = (key, value) => createHmac("sha256", key).update(value).digest();
+
+export function signS3Request({ method, url, credentials, now = new Date() }) {
+  const { host, pathname, searchParams } = new URL(url);
+  const amzDate = now.toISOString().replace(/[-:]|\.\d{3}/g, "");
+  const day = amzDate.slice(0, 8);
+  const scope = `${day}/auto/s3/aws4_request`;
+  const payloadHash = sha256Hex("");
+  const query = [...searchParams]
+    .map(([key, value]) => `${rfc3986(key)}=${rfc3986(value)}`)
+    .sort()
+    .join("&");
+  const signedHeaders = "host;x-amz-content-sha256;x-amz-date";
+  const canonical = [
+    method,
+    pathname,
+    query,
+    `host:${host}\nx-amz-content-sha256:${payloadHash}\nx-amz-date:${amzDate}\n`,
+    signedHeaders,
+    payloadHash,
+  ].join("\n");
+  const stringToSign = ["AWS4-HMAC-SHA256", amzDate, scope, sha256Hex(canonical)].join("\n");
+  const signingKey = ["auto", "s3", "aws4_request"].reduce(
+    hmac,
+    hmac(`AWS4${credentials.secretAccessKey}`, day),
+  );
+  const signature = createHmac("sha256", signingKey).update(stringToSign).digest("hex");
+  return {
+    authorization: `AWS4-HMAC-SHA256 Credential=${credentials.accessKeyId}/${scope}, SignedHeaders=${signedHeaders}, Signature=${signature}`,
+    "x-amz-content-sha256": payloadHash,
+    "x-amz-date": amzDate,
+  };
+}
+
+const xmlText = (value) =>
+  value
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, "&");
+
+// An unfinished multipart upload lists as no object yet still blocks bucket deletion, and the v4 API cannot see it.
+async function abortMultipartUploads(client, name) {
+  const bucketUrl = `https://${client.accountId}.r2.cloudflarestorage.com/${rfc3986(name)}`;
+  const s3 = async (method, url) => {
+    client.s3 ??= await s3Credentials(client);
+    const response = await client.fetchImpl(url, {
+      method,
+      headers: signS3Request({ method, url, credentials: client.s3 }),
+    });
+    if (!response.ok && response.status !== 404) {
+      throw new Error(`R2 ${method} ${new URL(url).search} returned HTTP ${response.status}`);
+    }
+    return response;
+  };
+  const aborted = new Set();
+  for (;;) {
+    const response = await s3("GET", `${bucketUrl}?uploads=`);
+    if (response.status === 404) return;
+    const uploads = [...(await response.text()).matchAll(/<Upload>([\s\S]*?)<\/Upload>/g)].map(
+      ([, upload]) => ({
+        key: xmlText(upload.match(/<Key>([\s\S]*?)<\/Key>/)[1]),
+        uploadId: xmlText(upload.match(/<UploadId>([\s\S]*?)<\/UploadId>/)[1]),
+      }),
+    );
+    if (!uploads.length) return;
+    if (uploads.every(({ uploadId }) => aborted.has(uploadId))) {
+      throw new Error(`R2 still lists ${uploads.length} aborted multipart uploads in ${name}`);
+    }
+    for (const { key, uploadId } of uploads) {
+      const path = key.split("/").map(rfc3986).join("/");
+      await s3("DELETE", `${bucketUrl}/${path}?uploadId=${rfc3986(uploadId)}`);
+      aborted.add(uploadId);
+    }
+  }
+}
+
 // R2 refuses to delete a bucket that still holds objects; the first page is re-listed until empty because deletions shift any cursor.
 async function emptyBucket(client, name) {
+  await abortMultipartUploads(client, name);
   const bucketPath = `/r2/buckets/${encodeURIComponent(name)}`;
   for (;;) {
     const objects = await cfRequest(client, `${bucketPath}/objects?per_page=1000`, {}, true);

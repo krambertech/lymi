@@ -70,7 +70,11 @@ export async function checkAppPreview(
     throw new Error("preview entry did not set the access cookie");
   }
 
-  const signed = await settledFetch(new URL(opened.headers.get("location"), entry), jar, settling);
+  // A preview keeps its database across deploys, so the persona is reseeded to match this deploy's
+  // seed; otherwise an account seeded by an earlier push keeps whatever that push wrote.
+  const signIn = new URL(opened.headers.get("location"), entry);
+  signIn.searchParams.set("reset", "1");
+  const signed = await settledFetch(signIn, jar, settling);
   if (signed.status !== 303 || !signed.headers.get("location")) {
     throw new Error(`preview persona sign-in returned HTTP ${signed.status}`);
   }
@@ -87,7 +91,7 @@ export async function checkAppPreview(
     throw new Error("preview persona did not receive seeded learning data");
   }
   // A seed that stopped part way still leaves some decks, so compare with what the persona promises.
-  const id = new URL(opened.headers.get("location"), entry).searchParams.get("as") ?? "learner";
+  const id = signIn.searchParams.get("as") ?? "learner";
   const listed = await settledFetch(new URL("/api/dev/personas", entry), jar, settling);
   const expected = (await listed.json()).personas?.find((p) => p.id === id)?.library;
   if (typeof expected === "number" && data.length < expected) {

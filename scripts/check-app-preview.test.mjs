@@ -55,6 +55,8 @@ test("verifies capability entry, persona sign-in, and seeded data", async () => 
   assert.equal(result.destination, "/today");
   assert.match(calls[1][1], /__Host-lymi-preview=access/);
   assert.match(calls[2][1], /lymi\.session_token=session/);
+  // Reseeds, since a preview's database outlives the deploy that seeded it.
+  assert.match(calls[1][0], /\/api\/dev\/sign-in\?as=learner&reset=1$/);
 });
 
 test("waits for a new preview Worker that answers 404 or drops the connection", async () => {

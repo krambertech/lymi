@@ -9,19 +9,19 @@ test("the privacy policy names email delivery in every supported language", asyn
       path: "/privacy",
       locale: "en",
       disclosure:
-        "When Lymi sends an account email, Cloudflare Email Service receives the recipient address, sender, subject and message body.",
+        "When Lymi sends an email, Resend receives the recipient address, sender, subject and message body.",
     },
     {
       path: "/uk/privacy",
       locale: "uk",
       disclosure:
-        "Коли Lymi надсилає лист про обліковий запис, Cloudflare Email Service отримує адресу одержувача, відправника, тему й текст листа.",
+        "Коли Lymi надсилає лист, Resend отримує адресу одержувача, відправника, тему й текст листа.",
     },
     {
       path: "/ru/privacy",
       locale: "ru",
       disclosure:
-        "Когда Lymi отправляет письмо об аккаунте, Cloudflare Email Service получает адрес получателя, отправителя, тему и текст письма.",
+        "Когда Lymi отправляет письмо, Resend получает адрес получателя, отправителя, тему и текст письма.",
     },
   ] as const;
 

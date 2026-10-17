@@ -84,10 +84,11 @@ pnpm run deploy:product # deploy the product Worker; user-owned production actio
 5. In Google Cloud, authorize `https://my.lymi.app` and the callback `https://my.lymi.app/api/auth/callback/google`
 6. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`
 7. Generate one VAPID key pair, then add `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, and `VAPID_SUBJECT` with `wrangler secret put`
-8. Configure separate Workers Builds projects for `apps/site` and `apps/web`, and confirm the `lymi.app` and `my.lymi.app` custom domains are ready in Cloudflare
-9. `pnpm db:migrate:prod`
-10. `pnpm run deploy:product` and `pnpm run deploy:site`
-11. `pnpm deploy:health`, then verify the reported tag is the intended commit
+8. In Resend, verify `lymi.app`, add a webhook to `https://my.lymi.app/api/email/events` for bounced and complained events, then add `RESEND_API_KEY` and `RESEND_WEBHOOK_SECRET` with `wrangler secret put`; until the key exists, email goes through the Cloudflare binding
+9. Configure separate Workers Builds projects for `apps/site` and `apps/web`, and confirm the `lymi.app` and `my.lymi.app` custom domains are ready in Cloudflare
+10. `pnpm db:migrate:prod`
+11. `pnpm run deploy:product` and `pnpm run deploy:site`
+12. `pnpm deploy:health`, then verify the reported tag is the intended commit
 
 After initial setup, each Cloudflare Workers Builds project runs its package's `deploy:ci` script with a D1-enabled build token so pending migrations succeed before a new Worker version becomes active. Both scripts safely retry if the other build is applying the same shared migration. Migration files already merged to `main` are immutable; create a new migration after syncing rather than renaming or replacing an existing one.
 

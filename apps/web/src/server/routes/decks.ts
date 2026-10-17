@@ -236,7 +236,13 @@ decks.post(
         to,
         language,
         url: new URL(`/join/${token}`, c.env.PRODUCT_URL).toString(),
-        invitation: { deckName: deck.name, ownerName: deck.owner, cards: deck.cards },
+        invitation: {
+          deckId: deck.id,
+          deckName: deck.name,
+          ownerName: deck.owner,
+          cards: deck.cards,
+          language: deck.language,
+        },
       });
     });
     return c.json(written, 201);

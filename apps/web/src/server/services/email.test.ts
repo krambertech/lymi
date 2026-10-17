@@ -1,4 +1,6 @@
+import { trayHue } from "@lymi/core/catalog";
 import { eq } from "@lymi/core/db";
+import { hues } from "@lymi/design";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { type Db, schema } from "../db";
 import type { Bindings } from "../env";
@@ -52,24 +54,67 @@ describe("transactional email", () => {
     const expected = {
       en: [
         "Test email from Lymi",
-        "Hello,\n\nThis test confirms that Lymi can send account emails.\n\nYou don’t need to do anything.\n\nLymi",
+        "Test email from Lymi\n\nThis test confirms that Lymi can send account emails.\n\nYou don’t need to do anything.\n\nLymi",
       ],
       uk: [
         "Тестовий лист від Lymi",
-        "Вітаємо,\n\nЦей тест підтверджує, що Lymi може надсилати листи щодо акаунта.\n\nНічого робити не потрібно.\n\nLymi",
+        "Тестовий лист від Lymi\n\nЦей тест підтверджує, що Lymi може надсилати листи щодо акаунта.\n\nНічого робити не потрібно.\n\nLymi",
       ],
       ru: [
         "Тестовое письмо от Lymi",
-        "Привет,\n\nЭтот тест подтверждает, что Lymi может отправлять письма об аккаунте.\n\nНичего делать не нужно.\n\nLymi",
+        "Тестовое письмо от Lymi\n\nЭтот тест подтверждает, что Lymi может отправлять письма об аккаунте.\n\nНичего делать не нужно.\n\nLymi",
       ],
     } as const;
 
     for (const [language, [subject, text]] of Object.entries(expected)) {
       const message = await renderTransactionalEmail("test", language);
       expect(message).toMatchObject({ kind: "test", language, subject, text });
-      expect(message.html).toContain(`<html lang="${language}">`);
-      expect(message.html).toContain(`<p>${text.split("\n")[0]}</p>`);
+      expect(message.html).toContain(`lang="${language}"`);
+      expect(message.html).toContain(`<title>${subject}</title>`);
+      expect(message.html).toContain("https://my.lymi.app/brand/email/lantern-light.png");
     }
+  });
+
+  it("points images and the footer at the origins it is sent from", async () => {
+    const message = await renderTransactionalEmail(
+      "test",
+      "en",
+      {},
+      { productUrl: "http://localhost:5241", siteUrl: "http://localhost:4321" },
+    );
+    expect(message.html).toContain("http://localhost:5241/brand/email/lantern-dark.png");
+    expect(message.html).toContain('href="http://localhost:4321"');
+  });
+
+  it("puts a link kind's link behind its button and repeats it to paste", async () => {
+    const url = "https://my.lymi.app/api/auth/reset-password/token?callbackURL=%2F";
+    const message = await renderTransactionalEmail("reset-password", "en", { url });
+    expect(message.text).toContain(`Set a new password for your Lymi account:\n\n${url}`);
+    expect(
+      message.html.match(/href="https:\/\/my\.lymi\.app\/api\/auth\/reset-password/g),
+    ).toHaveLength(2);
+    expect(message.html).toContain(">Set a new password<");
+  });
+
+  it("opens an invitation on the deck's cover in its hue, naming the language and cards", async () => {
+    const message = await renderTransactionalEmail("deck-invitation", "en", {
+      url: "https://my.lymi.app/join/token",
+      invitation: {
+        deckId: "deck-1",
+        deckName: "Estonian A2",
+        ownerName: "Maria Kask",
+        cards: 214,
+        language: "et",
+      },
+    });
+    expect(message.subject).toBe("Maria Kask shared a deck with you");
+    expect(message.html).toContain("Estonian · 214 cards");
+    expect(message.html).toContain(">MK<");
+    expect(message.html).toContain("Maria Kask invited you to study this deck on Lymi.");
+    expect(message.html).toContain(hues.tray.light[trayHue("deck-1")] ?? "the deck's tray colour");
+    expect(message.text).toMatch(
+      /^Estonian A2\nEstonian · 214 cards\n\nMaria Kask invited you to study this deck on Lymi\.\n\nYou review/,
+    );
   });
 
   it("falls back to English for an unknown language", async () => {
@@ -100,8 +145,8 @@ describe("transactional email", () => {
     expect(message.text).toBe(
       "Let a deck hold a picture.\n\nFrom: Lesia <lesia@example.com>\nScreen: /today\nApp version: v42\nBrowser: Safari/17\nApp language: uk",
     );
-    expect(message.html).toContain('<html lang="en">');
-    expect(message.html).toContain("Screen: /today<br>");
+    expect(message.html).toContain('lang="en"');
+    expect(message.html).toContain("Screen: /today\n");
     // The learner's own words are escaped rather than rendered as markup.
     expect(message.html).toContain("Lesia &lt;lesia@example.com&gt;");
   });
@@ -181,7 +226,7 @@ describe("transactional email", () => {
         replyTo: "hello@lymi.app",
         subject: "Test email from Lymi",
         text: expect.stringContaining("Lymi can send account emails"),
-        html: expect.stringContaining("<p>Lymi</p>"),
+        html: expect.stringContaining("This test confirms that Lymi can send account emails."),
       }),
     );
     const audits = await sentAudits(ctx);
@@ -259,5 +304,64 @@ describe("transactional email", () => {
       }),
     );
     expect(JSON.stringify(log.mock.calls)).not.toContain("Private provider detail");
+  });
+
+  it("sends through Resend once its key is set, tagging the kind and leaving the binding alone", async () => {
+    const ctx = await person("Resend");
+    const binding = vi.fn();
+    const fetcher = vi
+      .spyOn(globalThis, "fetch")
+      .mockResolvedValue(new Response(JSON.stringify({ id: "re_1" }), { status: 200 }));
+    await expect(
+      sendTransactionalEmail(
+        ctx,
+        {
+          PRODUCT_URL: "https://my.lymi.app",
+          EMAIL: { send: binding },
+          RESEND_API_KEY: "re_key",
+        } as never,
+        { kind: "test", to: "learner@example.com", language: "en" },
+      ),
+    ).resolves.toEqual({ delivery: "provider" });
+
+    expect(binding).not.toHaveBeenCalled();
+    const [url, init] = fetcher.mock.calls[0] ?? [];
+    expect(url).toBe("https://api.resend.com/emails");
+    expect(new Headers(init?.headers).get("authorization")).toBe("Bearer re_key");
+    expect(JSON.parse(String(init?.body))).toMatchObject({
+      from: "Lymi <notifications@lymi.app>",
+      to: ["learner@example.com"],
+      reply_to: "hello@lymi.app",
+      subject: "Test email from Lymi",
+      tags: [{ name: "kind", value: "test" }],
+    });
+  });
+
+  it("maps a Resend refusal to a safe error class", async () => {
+    const ctx = await person("ResendRefused");
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response(JSON.stringify({ name: "daily_quota_exceeded", message: "private" }), {
+        status: 429,
+      }),
+    );
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    await expect(
+      sendTransactionalEmail(
+        ctx,
+        {
+          PRODUCT_URL: "https://my.lymi.app",
+          EMAIL: { send: vi.fn() },
+          RESEND_API_KEY: "re_key",
+        } as never,
+        { kind: "test", to: "learner@example.com", language: "en" },
+      ),
+    ).rejects.toMatchObject({ code: "unavailable" });
+    expect(log).toHaveBeenCalledWith(
+      JSON.stringify({
+        event: "transactional_email_failed",
+        kind: "test",
+        errorClass: "daily_limit",
+      }),
+    );
   });
 });

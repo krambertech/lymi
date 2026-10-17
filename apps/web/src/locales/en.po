@@ -346,13 +346,6 @@ msgstr "{0} · uploads when you save"
 msgid "{0} forgotten <0>·</0> {1, plural, one {# review} other {# reviews}}"
 msgstr "{0} forgotten <0>·</0> {1, plural, one {# review} other {# reviews}}"
 
-#. placeholder {0}: it.ownerName
-#. placeholder {1}: it.deckName
-#. placeholder {2}: it.cards
-#. placeholder {3}: it.ownerName
-msgid "{0} invited you to study {1} on Lymi. It has {2, plural, one {# card} other {# cards}}. You review them on your own schedule, and {3} doesn’t see your progress."
-msgstr "{0} invited you to study {1} on Lymi. It has {2, plural, one {# card} other {# cards}}. You review them on your own schedule, and {3} doesn’t see your progress."
-
 #. placeholder {0}: outcome.term
 #. placeholder {1}: outcome.deckName
 msgid "{0} is already in {1}"
@@ -385,10 +378,6 @@ msgstr "{0} remembered, {1} forgotten."
 #. placeholder {0}: deck.owner.name
 msgid "{0} shared a deck"
 msgstr "{0} shared a deck"
-
-#. placeholder {0}: it.ownerName
-msgid "{0} shared a deck with you"
-msgstr "{0} shared a deck with you"
 
 #. placeholder {0}: Math.round((item.upload.received / item.upload.parts) * 100)
 msgid "{0}% of the file arrived. Choose the same file to send the rest."
@@ -592,6 +581,9 @@ msgstr "{label}, locked"
 msgid "{label}, next in {schedules}"
 msgstr "{label}, next in {schedules}"
 
+msgid "{language} · {cards}"
+msgstr "{language} · {cards}"
+
 msgid "{left, plural, one {# character left} other {# characters left}}"
 msgstr "{left, plural, one {# character left} other {# characters left}}"
 
@@ -639,6 +631,15 @@ msgstr "{oneSided, plural, one {# card has no --- line, so it’s imported with 
 
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
+
+msgid "{ownerName} entered this address in Lymi."
+msgstr "{ownerName} entered this address in Lymi."
+
+msgid "{ownerName} invited you to study this deck on Lymi."
+msgstr "{ownerName} invited you to study this deck on Lymi."
+
+msgid "{ownerName} shared a deck with you"
+msgstr "{ownerName} shared a deck with you"
 
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "{passed} remembered, {failed} forgotten"
@@ -1208,6 +1209,9 @@ msgstr "Browse ready-made decks"
 msgid "Bug"
 msgstr "Bug"
 
+msgid "Button not working? Paste this link into your browser:"
+msgstr "Button not working? Paste this link into your browser:"
+
 #. placeholder {0}: deck.publisher
 msgid "By {0}"
 msgstr "By {0}"
@@ -1481,6 +1485,9 @@ msgstr "Come back later, or add new cards."
 
 msgid "Comma"
 msgstr "Comma"
+
+msgid "Confirm address"
+msgstr "Confirm address"
 
 msgid "Confirm it’s you"
 msgstr "Confirm it’s you"
@@ -2310,9 +2317,6 @@ msgstr "Has a picture"
 
 msgid "Head back to the app. You can close this tab."
 msgstr "Head back to the app. You can close this tab."
-
-msgid "Hello,"
-msgstr "Hello,"
 
 msgid "Hide password"
 msgstr "Hide password"
@@ -3284,6 +3288,9 @@ msgstr "Open Lymi from the new icon."
 
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Open Lymi in Safari and tap Share."
+
+msgid "Open the invitation"
+msgstr "Open the invitation"
 
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Open your browser menu and choose Install Lymi. Not every browser offers it."
@@ -4817,6 +4824,12 @@ msgstr "You cannot join this deck through this link."
 msgid "You don’t need to do anything."
 msgstr "You don’t need to do anything."
 
+msgid "You got this email because of your Lymi account."
+msgstr "You got this email because of your Lymi account."
+
+msgid "You got this email because someone used this address on Lymi."
+msgstr "You got this email because someone used this address on Lymi."
+
 msgid "You keep studying these cards on your own schedule. Nobody else sees your reviews or progress."
 msgstr "You keep studying these cards on your own schedule. Nobody else sees your reviews or progress."
 
@@ -4825,6 +4838,9 @@ msgstr "You know {knownN} of {total, plural, one {# card} other {# cards}}"
 
 msgid "You removed them from this deck, so you can’t invite them again."
 msgstr "You removed them from this deck, so you can’t invite them again."
+
+msgid "You review on your own schedule, and {ownerName} doesn’t see your progress."
+msgstr "You review on your own schedule, and {ownerName} doesn’t see your progress."
 
 msgid "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."
 msgstr "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."

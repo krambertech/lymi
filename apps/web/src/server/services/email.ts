@@ -1,27 +1,20 @@
 import type { I18n } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import type { FeedbackKind } from "@lymi/core";
+import type { EMAIL_KINDS } from "@lymi/core/analytics";
+import { trayHue } from "@lymi/core/catalog";
 import { eq, sql } from "@lymi/core/db";
 import { isLoopbackUrl } from "../../shared/origins";
 import type { Db } from "../db";
 import { schema } from "../db";
+import type { Block, ComposedEmail } from "../email/template";
 import type { Bindings } from "../env";
 import { serverI18n } from "../i18n";
+import { track } from "./analytics";
 import { audit } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
 
-export type TransactionalEmailKind =
-  | "test"
-  | "verify-email"
-  | "verify-email-code"
-  | "reset-password"
-  | "existing-account"
-  | "google-account"
-  | "reset-google-account"
-  | "deck-invitation"
-  | "feedback"
-  | "delete-account-code"
-  | "account-deleted";
+export type TransactionalEmailKind = (typeof EMAIL_KINDS)[number];
 export type TransactionalEmailLanguage = "en" | "uk" | "ru";
 
 /** What a learner wrote and the little Lymi knows about where they wrote it. */
@@ -44,6 +37,10 @@ export interface DeckInvitationEmailData {
   ownerName: string;
   /** Active cards, so the reader knows the size of what they are being handed. */
   cards: number;
+  /** The deck's language tag, named in the reader's language on the cover. */
+  language?: string | null;
+  /** The deck's id, hashed to its cover colour. */
+  deckId: string;
 }
 
 /** What a message needs beyond its kind: an account kind's one link or code, or a learner's note. */
@@ -67,6 +64,8 @@ export interface RenderedEmail {
   kind: TransactionalEmailKind;
   language: TransactionalEmailLanguage;
   subject: string;
+  /** The line an inbox shows after the subject. */
+  preview: string;
   text: string;
   html: string;
 }
@@ -78,7 +77,19 @@ export interface LocalEmail extends RenderedEmail {
   sentAt: string;
 }
 
-const FROM = { email: "notifications@lymi.app", name: "Lymi" } as const;
+/** Where an email's links and images point. */
+export interface EmailOrigins {
+  productUrl: string;
+  siteUrl: string;
+}
+
+const PRODUCTION_ORIGINS: EmailOrigins = {
+  productUrl: "https://my.lymi.app",
+  siteUrl: "https://lymi.app",
+};
+
+export const EMAIL_FROM = { email: "notifications@lymi.app", name: "Lymi" } as const;
+const FROM = EMAIL_FROM;
 /** Where a learner reaches a person, and where a message written for Lymi itself lands. */
 export const OPERATOR_INBOX = "hello@lymi.app";
 const REPLY_TO = OPERATOR_INBOX;
@@ -89,47 +100,55 @@ function emailLanguage(language: string): TransactionalEmailLanguage {
   return language === "uk" || language === "ru" ? language : "en";
 }
 
-/** A paragraph of prose, or the message's one link on a line of its own. */
-type Block = string | { link: string };
-
-function textBody(blocks: Block[]): string {
-  return blocks.map((block) => (typeof block === "string" ? block : block.link)).join("\n\n");
+/** A block in plain text: a button is its bare link, and the paste-this-link note is left out. */
+function blockText(block: Block): string | null {
+  switch (block.type) {
+    case "text":
+    case "note":
+      return block.text;
+    case "button":
+      return block.url;
+    case "code":
+      return block.code;
+    case "details":
+      return block.lines.join("\n");
+    case "fallback":
+      return null;
+  }
 }
 
-function htmlDocument(language: TransactionalEmailLanguage, blocks: Block[]): string {
-  const body = blocks
-    .map((block) =>
-      typeof block === "string"
-        ? `<p>${escapeHtml(block).replaceAll("\n", "<br>")}</p>`
-        : `<p><a href="${escapeHtml(block.link)}">${escapeHtml(block.link)}</a></p>`,
-    )
-    .join("");
-  return `<!doctype html><html lang="${language}"><body>${body}</body></html>`;
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+/** The plain-text body: the heading, then each block. */
+function textBody(email: ComposedEmail): string {
+  const { hero } = email;
+  const cover = hero?.kind === "deck" ? [`${hero.name}\n${hero.meta}`, hero.invitedBy] : [];
+  const parts = email.blocks.map(blockText);
+  return [email.heading, ...cover, ...parts, hero ? "Lymi" : null]
+    .filter((part): part is string => Boolean(part))
+    .join("\n\n");
 }
 
 export async function renderTransactionalEmail(
   kind: TransactionalEmailKind,
   language: string,
   params: TransactionalEmailParams = {},
+  origins: EmailOrigins = PRODUCTION_ORIGINS,
 ): Promise<RenderedEmail> {
-  const locale = emailLanguage(language);
+  const locale = kind === "feedback" ? "en" : emailLanguage(language);
   const i18n = await serverI18n(locale);
-  const { subject, blocks } = compose(i18n, kind, params);
+  const email = compose(i18n, kind, params);
+  // React's server renderer stays out of the Worker entry's static graph, as @lingui/core does.
+  const { renderEmailHtml } = await import("../email/template");
   return {
     kind,
     language: locale,
-    subject,
-    text: textBody(blocks),
-    html: htmlDocument(locale, blocks),
+    subject: email.subject,
+    preview: email.preview,
+    text: textBody(email),
+    html: await renderEmailHtml(email, {
+      language: locale,
+      assetOrigin: origins.productUrl,
+      siteUrl: origins.siteUrl,
+    }),
   };
 }
 
@@ -146,13 +165,63 @@ function required(url: string | undefined, kind: TransactionalEmailKind): string
   return url;
 }
 
+/** The first letter of a name's first two words, for the inviter's circle. */
+function initials(name: string): string {
+  return name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => Array.from(word)[0] ?? "")
+    .join("")
+    .toLocaleUpperCase();
+}
+
+function languageName(tag: string | null | undefined, locale: string): string | null {
+  if (!tag) return null;
+  try {
+    const name = new Intl.DisplayNames([locale], { type: "language" }).of(tag);
+    // Ukrainian and Russian name languages in lower case; on the cover the name starts the line.
+    return name ? name.charAt(0).toLocaleUpperCase(locale) + name.slice(1) : null;
+  } catch {
+    return null;
+  }
+}
+
 function compose(
   i18n: I18n,
   kind: TransactionalEmailKind,
   params: TransactionalEmailParams,
-): { subject: string; blocks: Block[] } {
-  const hello = i18n._(msg`Hello,`);
-  const signature = "Lymi";
+): ComposedEmail {
+  const lantern = { kind: "lantern" } as const;
+  const someoneUsedThis = i18n._(
+    msg`You got this email because someone used this address on Lymi.`,
+  );
+  const yourAccount = i18n._(msg`You got this email because of your Lymi account.`);
+  const fallback = (url: string): Block => ({
+    type: "fallback",
+    label: i18n._(msg`Button not working? Paste this link into your browser:`),
+    url,
+  });
+  const linked = (
+    subject: string,
+    lead: string[],
+    label: string,
+    url: string,
+    note: string | null,
+    footer: string,
+  ): ComposedEmail => ({
+    subject,
+    preview: lead[0] ?? subject,
+    heading: subject,
+    hero: lantern,
+    blocks: [
+      ...lead.map((text): Block => ({ type: "text", text })),
+      { type: "button", label, url },
+      ...(note ? [{ type: "note", text: note } as const] : []),
+      fallback(url),
+    ],
+    footer: [footer],
+  });
 
   switch (kind) {
     case "feedback": {
@@ -160,153 +229,204 @@ function compose(
       if (!it) throw new Error("The feedback email needs the note it is about");
       return {
         subject: FEEDBACK_SUBJECTS[it.kind],
+        preview: it.message.slice(0, 120),
         blocks: [
-          it.message,
-          [
-            `From: ${it.from}`,
-            `Screen: ${it.screen}`,
-            `App version: ${it.appVersion}`,
-            `Browser: ${it.browser}`,
-            `App language: ${it.language}`,
-          ].join("\n"),
+          { type: "text", text: it.message },
+          {
+            type: "details",
+            lines: [
+              `From: ${it.from}`,
+              `Screen: ${it.screen}`,
+              `App version: ${it.appVersion}`,
+              `Browser: ${it.browser}`,
+              `App language: ${it.language}`,
+            ],
+          },
         ],
+        footer: [],
       };
     }
-    case "test":
+    case "test": {
+      const subject = i18n._(msg`Test email from Lymi`);
+      const text = i18n._(msg`This test confirms that Lymi can send account emails.`);
       return {
-        subject: i18n._(msg`Test email from Lymi`),
+        subject,
+        preview: text,
+        heading: subject,
+        hero: lantern,
         blocks: [
-          hello,
-          i18n._(msg`This test confirms that Lymi can send account emails.`),
-          i18n._(msg`You don’t need to do anything.`),
-          signature,
+          { type: "text", text },
+          { type: "note", text: i18n._(msg`You don’t need to do anything.`) },
         ],
+        footer: [yourAccount],
       };
+    }
     case "verify-email":
-      return {
-        subject: i18n._(msg`Confirm your email address`),
-        blocks: [
-          hello,
-          i18n._(msg`Confirm your address to finish creating your Lymi account:`),
-          { link: required(params.url, kind) },
-          i18n._(
-            msg`The link works for 24 hours. If you didn’t create a Lymi account, ignore this email.`,
-          ),
-          signature,
-        ],
-      };
+      return linked(
+        i18n._(msg`Confirm your email address`),
+        [i18n._(msg`Confirm your address to finish creating your Lymi account:`)],
+        i18n._(msg`Confirm address`),
+        required(params.url, kind),
+        i18n._(
+          msg`The link works for 24 hours. If you didn’t create a Lymi account, ignore this email.`,
+        ),
+        someoneUsedThis,
+      );
     case "verify-email-code": {
       if (!params.code) throw new Error("The verify-email-code email needs a code");
+      const text = i18n._(msg`Enter this code in the Lymi app to finish creating your account:`);
       return {
         subject: i18n._(msg`Your Lymi confirmation code`),
+        preview: text,
+        heading: i18n._(msg`Your Lymi confirmation code`),
+        hero: lantern,
         blocks: [
-          hello,
-          i18n._(msg`Enter this code in the Lymi app to finish creating your account:`),
-          params.code,
-          i18n._(
-            msg`The code works for 15 minutes. If you didn’t create a Lymi account, ignore this email.`,
-          ),
-          signature,
+          { type: "text", text },
+          { type: "code", code: params.code },
+          {
+            type: "note",
+            text: i18n._(
+              msg`The code works for 15 minutes. If you didn’t create a Lymi account, ignore this email.`,
+            ),
+          },
         ],
+        footer: [someoneUsedThis],
       };
     }
     case "delete-account-code": {
       if (!params.code) throw new Error("The delete-account-code email needs a code");
+      const subject = i18n._(msg`Your code to delete your Lymi account`);
+      const text = i18n._(
+        msg`Enter this code in Lymi to delete your account and everything in it:`,
+      );
       return {
-        subject: i18n._(msg`Your code to delete your Lymi account`),
+        subject,
+        preview: text,
+        heading: subject,
+        hero: lantern,
         blocks: [
-          hello,
-          i18n._(msg`Enter this code in Lymi to delete your account and everything in it:`),
-          params.code,
-          i18n._(
-            msg`The code works for 15 minutes. If you didn’t ask to delete your account, ignore this email and nothing will change.`,
-          ),
-          signature,
+          { type: "text", text },
+          { type: "code", code: params.code },
+          {
+            type: "note",
+            text: i18n._(
+              msg`The code works for 15 minutes. If you didn’t ask to delete your account, ignore this email and nothing will change.`,
+            ),
+          },
         ],
+        footer: [yourAccount],
       };
     }
-    case "account-deleted":
+    case "account-deleted": {
+      const subject = i18n._(msg`Your Lymi account was deleted`);
+      const text = i18n._(
+        msg`Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi.`,
+      );
       return {
-        subject: i18n._(msg`Your Lymi account was deleted`),
+        subject,
+        preview: text,
+        heading: subject,
+        hero: lantern,
         blocks: [
-          hello,
-          i18n._(
-            msg`Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi.`,
-          ),
-          i18n._(msg`If you didn’t do this, reply to this email and tell us what happened.`),
-          signature,
+          { type: "text", text },
+          {
+            type: "note",
+            text: i18n._(
+              msg`If you didn’t do this, reply to this email and tell us what happened.`,
+            ),
+          },
         ],
+        footer: [],
       };
+    }
     case "reset-password":
-      return {
-        subject: i18n._(msg`Reset your Lymi password`),
-        blocks: [
-          hello,
-          i18n._(msg`Set a new password for your Lymi account:`),
-          { link: required(params.url, kind) },
-          i18n._(
-            msg`The link works for one hour. If you didn’t ask for a new password, ignore this email. Your password hasn’t changed.`,
-          ),
-          signature,
-        ],
-      };
+      return linked(
+        i18n._(msg`Reset your Lymi password`),
+        [i18n._(msg`Set a new password for your Lymi account:`)],
+        i18n._(msg`Set a new password`),
+        required(params.url, kind),
+        i18n._(
+          msg`The link works for one hour. If you didn’t ask for a new password, ignore this email. Your password hasn’t changed.`,
+        ),
+        someoneUsedThis,
+      );
     case "deck-invitation": {
       const it = params.invitation;
       if (!it) throw new Error("The deck invitation email needs the deck it is for");
+      const { ownerName } = it;
+      const url = required(params.url, kind);
+      const cards = i18n._(msg`${plural(it.cards, { one: "# card", other: "# cards" })}`);
+      const language = languageName(it.language, i18n.locale);
+      const text = i18n._(
+        msg`You review on your own schedule, and ${ownerName} doesn’t see your progress.`,
+      );
       return {
-        subject: i18n._(msg`${it.ownerName} shared a deck with you`),
+        subject: i18n._(msg`${ownerName} shared a deck with you`),
+        preview: text,
+        hero: {
+          kind: "deck",
+          name: it.deckName,
+          meta: language ? i18n._(msg`${language} · ${cards}`) : cards,
+          hue: trayHue(it.deckId),
+          initials: initials(ownerName),
+          invitedBy: i18n._(msg`${ownerName} invited you to study this deck on Lymi.`),
+        },
         blocks: [
-          hello,
-          i18n._(
-            msg`${it.ownerName} invited you to study ${it.deckName} on Lymi. It has ${plural(it.cards, { one: "# card", other: "# cards" })}. You review them on your own schedule, and ${it.ownerName} doesn’t see your progress.`,
-          ),
-          { link: required(params.url, kind) },
-          i18n._(
-            msg`This invitation only works for this email address. If you weren’t expecting it, ignore this email.`,
-          ),
-          signature,
+          { type: "text", text },
+          { type: "button", label: i18n._(msg`Open the invitation`), url },
+          {
+            type: "note",
+            text: i18n._(
+              msg`This invitation only works for this email address. If you weren’t expecting it, ignore this email.`,
+            ),
+          },
+          fallback(url),
         ],
+        footer: [i18n._(msg`${ownerName} entered this address in Lymi.`)],
       };
     }
     case "existing-account":
-      return {
-        subject: i18n._(msg`You already have a Lymi account`),
-        blocks: [
-          hello,
+      return linked(
+        i18n._(msg`You already have a Lymi account`),
+        [
           i18n._(
             msg`Someone tried to create a Lymi account with this address. You already have one, so nothing changed.`,
           ),
           i18n._(msg`Sign in here, or reset your password from the same page:`),
-          { link: required(params.url, kind) },
-          signature,
         ],
-      };
+        i18n._(msg`Sign in`),
+        required(params.url, kind),
+        null,
+        someoneUsedThis,
+      );
     case "reset-google-account":
-      return {
-        subject: i18n._(msg`Your Lymi account signs in with Google`),
-        blocks: [
-          hello,
+      return linked(
+        i18n._(msg`Your Lymi account signs in with Google`),
+        [
           i18n._(
             msg`Someone asked to reset the password for this address. It signs in with Google, so there is no password to reset.`,
           ),
           i18n._(msg`Continue with Google here:`),
-          { link: required(params.url, kind) },
-          signature,
         ],
-      };
+        i18n._(msg`Continue with Google`),
+        required(params.url, kind),
+        null,
+        someoneUsedThis,
+      );
     case "google-account":
-      return {
-        subject: i18n._(msg`You already have a Lymi account`),
-        blocks: [
-          hello,
+      return linked(
+        i18n._(msg`You already have a Lymi account`),
+        [
           i18n._(
             msg`Someone tried to create a Lymi account with this address and a password. This address signs in with Google, so nothing changed.`,
           ),
           i18n._(msg`Continue with Google here:`),
-          { link: required(params.url, kind) },
-          signature,
         ],
-      };
+        i18n._(msg`Continue with Google`),
+        required(params.url, kind),
+        null,
+        someoneUsedThis,
+      );
   }
 }
 
@@ -314,8 +434,11 @@ function providerErrorClass(error: unknown): string {
   const code = (error as { code?: unknown })?.code;
   switch (code) {
     case "E_RATE_LIMIT_EXCEEDED":
+    case "rate_limit_exceeded":
       return "rate_limit";
     case "E_DAILY_LIMIT_EXCEEDED":
+    case "daily_quota_exceeded":
+    case "monthly_quota_exceeded":
       return "daily_limit";
     case "E_RECIPIENT_SUPPRESSED":
       return "recipient_suppressed";
@@ -323,8 +446,15 @@ function providerErrorClass(error: unknown): string {
       return "delivery";
     case "E_SENDER_NOT_VERIFIED":
     case "E_SENDER_DOMAIN_NOT_AVAILABLE":
+    case "invalid_from_address":
+    case "missing_api_key":
+    case "invalid_api_key":
+    case "restricted_api_key":
       return "sender_configuration";
     case "E_INTERNAL_SERVER_ERROR":
+    case "application_error":
+    case "internal_server_error":
+    case "network_error":
       return "provider";
     case "E_VALIDATION_ERROR":
     case "E_FIELD_MISSING":
@@ -338,6 +468,9 @@ function providerErrorClass(error: unknown): string {
     case "E_HEADER_NAME_INVALID":
     case "E_HEADERS_TOO_LARGE":
     case "E_HEADERS_TOO_MANY":
+    case "validation_error":
+    case "missing_required_field":
+    case "invalid_parameter":
       return "request_configuration";
     default:
       return typeof code === "string" ? code : "unknown";
@@ -378,18 +511,61 @@ async function withinDailyBudget(sessions: KVNamespace | undefined): Promise<boo
   }
 }
 
-/** Send through Cloudflare in production and keep all loopback delivery inside the local Worker. */
+export type EmailEnv = Pick<Bindings, "PRODUCT_URL" | "EMAIL"> & {
+  SESSIONS?: KVNamespace;
+  PUBLIC_SITE_URL?: string;
+  /** Sends through Resend when set; until then the Cloudflare binding delivers. */
+  RESEND_API_KEY?: string | undefined;
+};
+
+function originsOf(env: { PRODUCT_URL: string; PUBLIC_SITE_URL?: string }): EmailOrigins {
+  return {
+    productUrl: env.PRODUCT_URL,
+    siteUrl: env.PUBLIC_SITE_URL ?? PRODUCTION_ORIGINS.siteUrl,
+  };
+}
+
+async function deliver(env: EmailEnv, message: RenderedEmail, to: string, replyTo: string) {
+  if (env.RESEND_API_KEY) {
+    const { sendWithResend } = await import("../email/resend");
+    await sendWithResend(env.RESEND_API_KEY, {
+      to,
+      from: FROM,
+      replyTo,
+      subject: message.subject,
+      text: message.text,
+      html: message.html,
+      kind: message.kind,
+    });
+    return;
+  }
+  await env.EMAIL.send({
+    to,
+    from: FROM,
+    replyTo,
+    subject: message.subject,
+    text: message.text,
+    html: message.html,
+  });
+}
+
+/** Send through the provider in production and keep all loopback delivery inside the local Worker. */
 export async function sendTransactionalEmail(
   ctx: ServiceContext,
-  env: Pick<Bindings, "PRODUCT_URL" | "EMAIL"> & { SESSIONS?: KVNamespace },
+  env: EmailEnv,
   input: TransactionalEmailInput,
 ): Promise<{ delivery: "provider" | "outbox" }> {
-  const message = await renderTransactionalEmail(input.kind, input.language, {
-    ...(input.url ? { url: input.url } : {}),
-    ...(input.code ? { code: input.code } : {}),
-    ...(input.feedback ? { feedback: input.feedback } : {}),
-    ...(input.invitation ? { invitation: input.invitation } : {}),
-  });
+  const message = await renderTransactionalEmail(
+    input.kind,
+    input.language,
+    {
+      ...(input.url ? { url: input.url } : {}),
+      ...(input.code ? { code: input.code } : {}),
+      ...(input.feedback ? { feedback: input.feedback } : {}),
+      ...(input.invitation ? { invitation: input.invitation } : {}),
+    },
+    originsOf(env),
+  );
   let delivery: "provider" | "outbox";
   if (isLoopbackUrl(env.PRODUCT_URL)) {
     writeLocalEmail(message, input.to, input.replyTo ?? REPLY_TO);
@@ -402,26 +578,18 @@ export async function sendTransactionalEmail(
       throw new ServiceError("unavailable", "Couldn’t send the email. Try again in a moment.");
     }
     try {
-      await env.EMAIL.send({
-        to: input.to,
-        from: FROM,
-        replyTo: input.replyTo ?? REPLY_TO,
-        subject: message.subject,
-        text: message.text,
-        html: message.html,
-      });
+      await deliver(env, message, input.to, input.replyTo ?? REPLY_TO);
       delivery = "provider";
     } catch (error) {
+      const errorClass = providerErrorClass(error);
       console.error(
-        JSON.stringify({
-          event: "transactional_email_failed",
-          kind: input.kind,
-          errorClass: providerErrorClass(error),
-        }),
+        JSON.stringify({ event: "transactional_email_failed", kind: input.kind, errorClass }),
       );
+      track(ctx.analytics, { name: "email_failed", kind: input.kind, error_class: errorClass });
       throw new ServiceError("unavailable", "Couldn’t send the email. Try again in a moment.");
     }
   }
+  track(ctx.analytics, { name: "email_sent", kind: input.kind, language: message.language });
 
   // A deleted account has no row left to record the goodbye against.
   if (input.kind === "account-deleted") return { delivery };
@@ -437,7 +605,7 @@ export async function sendTransactionalEmail(
 /** Send the operational smoke-test message only for accounts on the dedicated capability list. */
 export async function sendOperatorTestEmail(
   ctx: ServiceContext,
-  env: Pick<Bindings, "PRODUCT_URL" | "EMAIL">,
+  env: EmailEnv,
   input: Omit<TransactionalEmailInput, "kind">,
   operators: Set<string>,
 ) {
@@ -510,7 +678,7 @@ export async function addressEmailLanguage(
  */
 export async function sendAccountEmail(
   ctx: ServiceContext,
-  env: Pick<Bindings, "PRODUCT_URL" | "EMAIL">,
+  env: EmailEnv,
   input: TransactionalEmailInput,
 ): Promise<void> {
   try {
@@ -518,4 +686,38 @@ export async function sendAccountEmail(
   } catch {
     console.error(JSON.stringify({ event: "account_email_not_sent", kind: input.kind }));
   }
+}
+
+/**
+ * A rendered email sent for real to an operator from the local `/emails` preview, so a design can
+ * be checked in actual mail clients. It skips the outbox, the daily budget and the audit trail.
+ */
+export async function sendEmailPreview(
+  env: Pick<EmailEnv, "RESEND_API_KEY">,
+  message: RenderedEmail,
+  to: string,
+): Promise<void> {
+  if (!env.RESEND_API_KEY) {
+    throw new ServiceError("unavailable", "Add RESEND_API_KEY to .dev.vars to send a preview.");
+  }
+  const { sendWithResend } = await import("../email/resend");
+  await sendWithResend(env.RESEND_API_KEY, {
+    to,
+    from: FROM,
+    replyTo: REPLY_TO,
+    subject: message.subject,
+    text: message.text,
+    html: message.html,
+    kind: message.kind,
+  });
+}
+
+/** The account at an address, so a delivery report can be counted against it; null when none. */
+export async function accountIdForEmail(db: Db, email: string): Promise<string | null> {
+  const [row] = await db
+    .select({ id: schema.user.id })
+    .from(schema.user)
+    // biome-ignore lint/plugin: Better Auth stores emails lower-cased, so ASCII-only folding loses nothing here.
+    .where(sql`lower(${schema.user.email}) = ${email.trim().toLowerCase()}`);
+  return row?.id ?? null;
 }

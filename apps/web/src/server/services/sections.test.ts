@@ -1,5 +1,5 @@
 import { and, eq } from "@lymi/core/db";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { type Db, schema } from "../db";
 import { addCards, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
@@ -510,6 +510,50 @@ describe("opening sections in order", () => {
     ]);
   });
 
+  it("counts a two-way card Known by the side it is taught first", async () => {
+    const capture = vi.fn();
+    const me = { ...(await person("Kateryna")), analytics: { capture, writeDataPoint: vi.fn() } };
+    const deck = await createDeck(me, {
+      name: `Deck ${n}`,
+      defaultLanguage: "et",
+      directions: "both",
+    });
+    const outcomes = await addCards(me, [
+      { deckId: deck.id, term: "Tere!", meaning: "Hello!" },
+      { deckId: deck.id, term: "Head aega!", meaning: "Goodbye!" },
+    ]);
+    const ids = outcomes.flatMap((o) => (o.status === "added" ? [o.card.id] : []));
+    await createSection(me, deck.id, { name: "Hello and goodbye", cardIds: ids });
+    const next = await createSection(me, deck.id, { name: "Small talk", cardIds: [] });
+    const later = await addCards(me, [
+      { deckId: deck.id, term: "Kuidas läheb?", meaning: "How are you?" },
+    ]);
+    await setCardsSection(me, deck.id, {
+      cardIds: later.flatMap((o) => (o.status === "added" ? [o.card.id] : [])),
+      sectionId: next.id,
+    });
+
+    // The draw teaches meaning → term first, and the other side waits for tomorrow.
+    for (const cardId of ids) {
+      await gradeCard(me, { cardId, direction: "production", rating: 4, timezone: "UTC" });
+    }
+
+    const list = await listDeckCards(me, deck.id);
+    const marked = list.filter((row) => ids.includes(row.card.id));
+    expect(marked.map((row) => [row.state?.direction, row.state?.state])).toEqual([
+      ["production", 2],
+      ["production", 2],
+    ]);
+    expect(await statuses(me, deck.id)).toEqual([
+      ["Hello and goodbye", "open"],
+      ["Small talk", "open"],
+    ]);
+    const opened = capture.mock.calls
+      .map(([event]) => event)
+      .filter((e) => e.name === "section_opened");
+    expect(opened).toEqual([{ name: "section_opened", how: "auto", position: 2, sections: 1 }]);
+  });
+
   it("opens the next section when the current one was already known before its last card came up", async () => {
     const me = await person("Kateryna");
     const { deck, cards, sections } = await sectioned(me, { A: ["a1"], B: ["b1"], C: ["c1"] });
@@ -667,8 +711,9 @@ describe("opening sections in order", () => {
     expect(await inReview(me, deck.id)).toEqual(["a1"]);
   });
 
-  it("records one Activity entry per start, and none for a retry", async () => {
-    const me = await person("Kateryna");
+  it("records one Activity entry and one event per start, and none for a retry", async () => {
+    const capture = vi.fn();
+    const me = { ...(await person("Kateryna")), analytics: { capture, writeDataPoint: vi.fn() } };
     const { sections } = await sectioned(me, { A: ["a1"], B: ["b1"], C: ["c1"] });
     const c = sections.C as string;
 
@@ -677,6 +722,10 @@ describe("opening sections in order", () => {
 
     const starts = (await sectionAudits(me, c)).filter((x) => x.action === "start");
     expect(starts).toHaveLength(1);
+    const opened = capture.mock.calls.map(([event]) => event);
+    expect(opened.filter((e) => e.name === "section_opened")).toEqual([
+      { name: "section_opened", how: "early", position: 3, sections: 2 },
+    ]);
   });
 
   it("leaves a deck without sections exactly as it was", async () => {

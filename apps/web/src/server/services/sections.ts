@@ -9,12 +9,13 @@ import type {
 import { deckProgress, newId, sectionsToStart } from "@lymi/core";
 import { and, asc, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
+import { track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
 import { runBatch } from "./batch";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { drawableBySection } from "./draw";
 import { deckAccess, memberOf, ownedDeck } from "./members";
-import { askedSql, stateStatementsForDeck } from "./modes";
+import { askedSql, stateStatementsForDeck, taughtFirstSql } from "./modes";
 import { getSettings } from "./settings";
 
 type Statement = Parameters<Db["batch"]>[0][number];
@@ -50,8 +51,7 @@ async function standings(ctx: ServiceContext, deckId?: string) {
     select leading.state from card_states as leading
     where leading.card_id = cards.id and leading.user_id = ${userId}
       and ${sql.raw(askedSql("leading.direction"))}
-    order by case when leading.direction like 'image_%' then 0
-      when leading.direction = 'recognition' then 1 else 2 end
+    order by ${sql.raw(taughtFirstSql("leading"))}
     limit 1
   )`;
   const started = startedSql(userId);
@@ -526,6 +526,19 @@ async function openSections(
       landed,
     ),
   ]);
+  const [started] = await db
+    .select({ id: schema.sectionStarts.id })
+    .from(schema.sectionStarts)
+    .where(landed)
+    .limit(1);
+  if (started) {
+    track(ctx.analytics, {
+      name: "section_opened",
+      how,
+      position: progress.sections.findIndex((s) => s.id === targetId) + 1,
+      sections: opening.length,
+    });
+  }
 }
 
 /**

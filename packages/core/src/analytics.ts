@@ -257,6 +257,11 @@ export const analyticsEvents = {
   }),
   deck_added: z.object({ deck_slug: slug }),
   deck_joined: z.object({}),
+  section_opened: z.object({
+    how: z.enum(["auto", "ready", "early"]),
+    position: z.number().int().min(1).max(1_000),
+    sections: z.number().int().min(1).max(1_000),
+  }),
   mcp_tool: z.object({
     tool: z.string().regex(/^[a-z_]{1,80}$/),
     outcome: z.enum(["success", "error"]),
@@ -414,6 +419,7 @@ export const analyticsProducers = {
   context_menu_action: ["phone"],
   deck_added: ["worker"],
   deck_joined: ["worker"],
+  section_opened: ["worker"],
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
   deck_style_learned: ["worker"],

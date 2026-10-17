@@ -1,6 +1,7 @@
 import { emptyState, type FsrsCard, State, schedule } from "./fsrs";
 import type { ImportedCard, ImportedProgress } from "./import";
-import type { Rating } from "./types";
+import { directionsFromModes, introductionOrder, isImageMode } from "./modes";
+import type { Rating, ReviewModeKey } from "./types";
 
 const DAY_MS = 86_400_000;
 
@@ -79,21 +80,35 @@ export function replayProgress(
   return { state, reviews };
 }
 
-/** Image modes lead, then term to meaning, as the deck's list picks the state it marks a card by. */
-const leadRank = (mode: string) =>
-  mode.startsWith("image_") ? 0 : mode === "term_to_meaning" ? 1 : 2;
+/**
+ * The rank of a mode in the order the card will be taught, lowest first. A card with picture
+ * modes keeps its own list; a text-only card is ranked as following its deck, the common case.
+ */
+function taughtRank(card: Pick<ImportedCard, "modes"> & Partial<Pick<ImportedCard, "fields">>) {
+  const order = card.modes.some(isImageMode)
+    ? card.modes
+    : introductionOrder(
+        { directions: null, reviewModeKeys: null },
+        directionsFromModes(card.modes),
+      );
+  const hasMeaning = (card.fields?.meaning ?? "").trim().length > 0;
+  return (mode: ReviewModeKey) =>
+    (mode === "meaning_to_term" && !hasMeaning ? 1000 : 0) + order.indexOf(mode);
+}
 
 /**
- * Whether a card arrives Known: its leading asked mode replays to Review, the state a deck's
+ * Whether a card arrives Known: the mode it is taught first replays to Review, the state a deck's
  * list marks Known. A suspended card arrives archived and is not counted.
  */
 export function arrivesKnown(
-  card: Pick<ImportedCard, "modes" | "progress" | "archived">,
+  card: Pick<ImportedCard, "modes" | "progress" | "archived"> &
+    Partial<Pick<ImportedCard, "fields">>,
   now: Date,
 ): boolean {
   if (card.archived) return false;
+  const rank = taughtRank(card);
   const [leading] = card.progress
     .filter((progress) => card.modes.includes(progress.mode))
-    .sort((a, b) => leadRank(a.mode) - leadRank(b.mode));
+    .sort((a, b) => rank(a.mode) - rank(b.mode));
   return leading !== undefined && replayProgress(leading, now).state.state === State.Review;
 }

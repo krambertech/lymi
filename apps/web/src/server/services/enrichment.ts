@@ -433,7 +433,37 @@ async function workingCards(db: Db, userId: string, cardIds: readonly string[]):
 /** The workflow binding, narrowed to what an add needs from it. */
 export type EnrichmentQueue = {
   create(options: { id: string; params: EnrichRunParams }): Promise<unknown>;
+  /** The run with this id; throws when there is none. */
+  get?(id: string): Promise<{ status(): Promise<{ status: string }> }>;
 };
+
+/** The name of the run an add starts: its first card's, so the same add sent again can find it. */
+export function addRunId(firstCardId: string): string {
+  return `enrich-add-${firstCardId}`;
+}
+
+/** Workflow states after which a run will never write to its cards again. */
+const FINISHED_RUN = new Set(["complete", "errored", "terminated"]);
+
+/** Whether the run with this id is still going, has finished, or was never started. */
+export async function runState(
+  queue: EnrichmentQueue,
+  id: string,
+): Promise<"live" | "finished" | "none"> {
+  if (!queue.get) return "none";
+  let instance: Awaited<ReturnType<NonNullable<EnrichmentQueue["get"]>>>;
+  try {
+    instance = await queue.get(id);
+  } catch {
+    return "none";
+  }
+  try {
+    return FINISHED_RUN.has((await instance.status()).status) ? "finished" : "live";
+  } catch {
+    // The run exists but will not say how it is doing: its name is taken, and it may still write.
+    return "live";
+  }
+}
 
 /**
  * Hand one run to the workflow. True when it took it; false when it refused, in which case
@@ -445,11 +475,14 @@ export async function queueEnrichment(
   cardIds: string[],
   queue: EnrichmentQueue,
   trigger: NonNullable<EnrichRunParams["trigger"]> = "add",
+  id: string = `enrich-${newId()}`,
 ): Promise<boolean> {
   try {
-    await queue.create({ id: `enrich-${newId()}`, params: { userId, cardIds, trigger } });
+    await queue.create({ id, params: { userId, cardIds, trigger } });
     return true;
   } catch {
+    // The same add sent twice at once can race for the run's name; the one that lost is answered.
+    if ((await runState(queue, id)) === "live") return true;
     await failEnrichment(db, userId, cardIds);
     return false;
   }

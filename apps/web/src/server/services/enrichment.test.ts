@@ -563,6 +563,72 @@ describe("enrichCards", () => {
     expect((await showCard(ctx, input.id as string)).enrichmentStatus).toBe("failed");
   });
 
+  /** A workflow that remembers each run it took and reports it in `status` until told otherwise. */
+  function workflow(status = "running") {
+    const runs = new Set<string>();
+    const create = vi.fn(async ({ id }: { id: string }) => {
+      if (runs.has(id)) throw new Error("instance.already_exists");
+      runs.add(id);
+    });
+    const queue: EnrichmentQueue = {
+      create,
+      get: async (id) => {
+        if (!runs.has(id)) throw new Error("instance.not_found");
+        return { status: async () => ({ status }) };
+      },
+    };
+    return { queue, create, finish: () => (status = "complete") };
+  }
+
+  it("names an add's run after its first card, and a replay leaves a live run to finish", async () => {
+    const ctx = await learner(db, "enrich-6g", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+    const inputs = ["0replaylive0000001", "0replaylive0000002"].map((id, index) =>
+      CardInput.parse({ id, deckId: deck.id, term: ["煎餅", "団子"][index] }),
+    );
+    const { queue: running, create } = workflow();
+    await addCards(ctx, inputs, running);
+    expect(create).toHaveBeenCalledTimes(1);
+    expect(create.mock.calls[0]?.[0]).toMatchObject({ id: "enrich-add-0replaylive0000001" });
+
+    // The device never saw the answer and sends the add again while the first run is working.
+    const outcomes = await addCards(ctx, inputs, running);
+    expect(create).toHaveBeenCalledTimes(1);
+    expect(outcomes.map((o) => o.status === "added" && o.card.enrichmentStatus)).toEqual([
+      "working",
+      "working",
+    ]);
+  });
+
+  it("starts a fresh run for a replay whose run has finished without settling its cards", async () => {
+    const ctx = await learner(db, "enrich-6h", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+    const input = CardInput.parse({ id: "0replaydone0000001", deckId: deck.id, term: "煎餅" });
+    const { queue: done, create, finish } = workflow();
+    await addCards(ctx, [input], done);
+    finish();
+    await addCards(ctx, [input], done);
+    expect(create).toHaveBeenCalledTimes(2);
+    expect(create.mock.calls[1]?.[0].id).not.toBe("enrich-add-0replaydone0000001");
+    expect((await showCard(ctx, input.id as string)).enrichmentStatus).toBe("working");
+  });
+
+  it("answers the same add sent twice at once with the one run that took its name", async () => {
+    const ctx = await learner(db, "enrich-6i", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+    const input = CardInput.parse({ id: "0replayrace0000001", deckId: deck.id, term: "煎餅" });
+    const { queue: racing, create } = workflow();
+    // The other request took the name between this one's look and its create.
+    await racing.create({
+      id: "enrich-add-0replayrace0000001",
+      params: { userId: ctx.userId, cardIds: [] },
+    });
+    const [added] = await addCards(ctx, [input], racing);
+    expect(create).toHaveBeenCalledTimes(2);
+    if (added?.status !== "added") throw new Error("not added");
+    expect(added.card.enrichmentStatus).toBe("working");
+  });
+
   it("does not queue a second run for a replayed card that is no longer working", async () => {
     const ctx = await learner(db, "enrich-6d", "Kateryna");
     const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });

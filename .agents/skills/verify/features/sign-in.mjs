@@ -3,7 +3,12 @@ export const persona = "learner";
 export const start = "/login?returnTo=%2Flibrary";
 
 export default async function drive({ page, base, step, api, expect }) {
-  await page.context().clearCookies();
+  // The preview access cookie must survive signing out of the learner account.
+  const signedOut = await page.request.post(`${base}/api/auth/sign-out`, {
+    headers: { origin: base },
+    data: {},
+  });
+  expect(signedOut.ok()).toBe(true);
   await page.goto(`${base}/login?returnTo=%2Flibrary`);
   await step("Apple sign-in is available alongside Google and email", async () => {
     await expect(

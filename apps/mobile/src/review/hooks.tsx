@@ -5,9 +5,18 @@ import { writes } from "@lymi/client/writes";
 import { CARD_LIMITS, type FieldSource } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
+import { GlassView } from "expo-glass-effect";
 import { useEffect, useState } from "react";
-import { Alert, Pressable, TextInput, View } from "react-native";
-import Animated, { FadeIn, FadeOut, Keyframe } from "react-native-reanimated";
+import { Alert, type LayoutChangeEvent, Pressable, TextInput, View } from "react-native";
+import Animated, {
+  FadeOut,
+  Keyframe,
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withTiming,
+} from "react-native-reanimated";
+import { useGlass } from "../theme/glass";
 import { ALWAYS, CROSSFADE, curve, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
@@ -94,58 +103,97 @@ export function HookLine({
   );
 }
 
+/** How far the offer rises from under the card's foot, past its own height so it waits unseen. */
+const OFFER_RISE = 120;
+const offerOut = new Keyframe({
+  0: { transform: [{ translateY: 0 }] },
+  100: { transform: [{ translateY: OFFER_RISE }], easing: EASE },
+})
+  .duration(200)
+  .reduceMotion(ALWAYS);
+
 /**
- * The offer to write a hook for an often-forgotten card, at the foot of a revealed card. It asks for
- * nothing, so it is never amber and never in the way of a grade.
+ * The offer to write a hook for an often-forgotten card. It floats in glass over the card's foot,
+ * so a long card scrolls on under it rather than stopping at its edge. It asks for nothing, so it
+ * is never amber and never in the way of a grade. Glass that starts transparent never draws, so it
+ * rises in from under the card's edge rather than fading. phone.md "Glass".
  */
-export function HookOffer({ still, onOpen }: { still: boolean; onOpen: () => void }) {
+export function HookOffer({
+  still,
+  onOpen,
+  onLayout,
+}: {
+  still: boolean;
+  onOpen: () => void;
+  /** Its height, so the card can leave that room under its last line. */
+  onLayout?: (e: LayoutChangeEvent) => void;
+}) {
   const { t } = useLingui();
   const p = usePalette();
+  const glass = useGlass();
   const reduce = useReduceMotion();
   const [ready, setReady] = useState(still);
+  // Below the card's edge from the reveal, so the card leaves its room at once and nothing jumps when it rises.
+  const rise = useSharedValue(still ? 0 : OFFER_RISE);
   useEffect(() => {
     if (ready) return;
-    const timer = setTimeout(() => setReady(true), OFFER_DELAY + 200);
+    rise.value = withDelay(
+      OFFER_DELAY,
+      withTiming(0, { duration: reduce ? 0 : 320, easing: EASE, reduceMotion: ALWAYS }),
+    );
+    const timer = setTimeout(() => setReady(true), OFFER_DELAY + 320);
     return () => clearTimeout(timer);
-  }, [ready]);
+  }, [ready, reduce, rise]);
+  const risen = useAnimatedStyle(() => ({ transform: [{ translateY: rise.value }] }));
+  const face = (
+    <Pressable
+      // It cannot be pressed until it has landed.
+      disabled={!ready}
+      onPress={onOpen}
+      accessibilityRole="button"
+      accessibilityLabel={t`Try a memory hook`}
+      accessibilityHint={t`A short phrase that helps you remember it`}
+      className="flex-row items-center gap-3 px-3 py-3"
+      style={({ pressed }) => (pressed && !glass ? { backgroundColor: p.hover } : null)}
+    >
+      <View
+        className={`size-10 items-center justify-center rounded-full ${glass ? "bg-glass-plate" : "bg-plate"}`}
+      >
+        <Icon name="hook" size={18} colour={p["text-2"]} />
+      </View>
+      <View className="min-w-0 flex-1 gap-0.5">
+        <Text className="text-md font-medium text-text" numberOfLines={2}>
+          {t`Try a memory hook`}
+        </Text>
+        <Text className="text-sm text-text-2" numberOfLines={2}>
+          {t`A short phrase that helps you remember it`}
+        </Text>
+      </View>
+      <Icon name="forward" size={16} colour={p.muted} />
+    </Pressable>
+  );
   return (
     <Animated.View
-      entering={
-        still
-          ? undefined
-          : reduce
-            ? FadeIn.duration(200).delay(OFFER_DELAY).reduceMotion(ALWAYS)
-            : arrive(200, 6, OFFER_DELAY)
-      }
-      exiting={FadeOut.duration(140).reduceMotion(ALWAYS)}
-      className="px-4 pb-4"
+      style={risen}
+      exiting={reduce ? FadeOut.duration(140).reduceMotion(ALWAYS) : offerOut}
+      onLayout={onLayout}
+      // Inset 12 under a 30 pt card corner, so its 18 pt corners run parallel to the card's.
+      className="absolute inset-x-0 bottom-0 px-3 pb-3"
     >
-      <Pressable
-        // It cannot be pressed until it can be seen.
-        disabled={!ready}
-        onPress={onOpen}
-        accessibilityRole="button"
-        accessibilityLabel={t`Try a memory hook`}
-        accessibilityHint={t`A short phrase that helps you remember it`}
-        className="flex-row items-center gap-3 rounded-lg bg-plate-2 px-3 py-3"
-        style={({ pressed }) => (pressed ? { backgroundColor: p.hover } : null)}
-      >
-        <View className="size-10 items-center justify-center rounded-full bg-plate">
-          <Icon name="hook" size={18} colour={p["text-2"]} />
+      {glass ? (
+        <GlassView isInteractive glassEffectStyle="regular" style={OFFER_SHAPE}>
+          {face}
+        </GlassView>
+      ) : (
+        <View className="overflow-hidden bg-plate-2" style={OFFER_SHAPE}>
+          {face}
         </View>
-        <View className="min-w-0 flex-1 gap-0.5">
-          <Text className="text-md font-medium text-text" numberOfLines={2}>
-            {t`Try a memory hook`}
-          </Text>
-          <Text className="text-sm text-muted" numberOfLines={2}>
-            {t`A short phrase that helps you remember it`}
-          </Text>
-        </View>
-        <Icon name="forward" size={16} colour={p.faint} />
-      </Pressable>
+      )}
     </Animated.View>
   );
 }
+
+const OFFER_SHAPE = { borderRadius: 18 } as const;
 
 /**
  * The card's memory hook, written in a sheet with the keyboard up, as the card's other fields are.

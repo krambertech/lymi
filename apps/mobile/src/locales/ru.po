@@ -250,7 +250,7 @@ msgid "{due, plural, one {# card due} other {# cards due}}"
 msgstr "{due, plural, one {# карточка к повторению} few {# карточки к повторению} many {# карточек к повторению} other {# карточки к повторению}}"
 
 msgid "{due, plural, one {# card due} other {# cards due}} · {streak, plural, one {# day} other {# days}}"
-msgstr "{due, plural, one {# карточка к повторению} few {# карточки к повторению} many {# карточек к повторению} other {# карточки к повторению}} · {streak, plural, one {# день} few {# дня} many {# дней} other {# дня}}"
+msgstr "{due, plural, one {# к повторению} other {# к повторению}} · {streak, plural, one {# день} few {# дня} many {# дней} other {# дня}}"
 
 msgid "{due, plural, one {# card is due. {reviewed} of {goal} reviewed today.} other {# cards are due. {reviewed} of {goal} reviewed today.}}"
 msgstr "{due, plural, one {# карточка к повторению. Сегодня повторено {reviewed} из {goal}.} few {# карточки к повторению. Сегодня повторено {reviewed} из {goal}.} many {# карточек к повторению. Сегодня повторено {reviewed} из {goal}.} other {# карточки к повторению. Сегодня повторено {reviewed} из {goal}.}}"

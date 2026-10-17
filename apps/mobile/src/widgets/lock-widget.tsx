@@ -3,6 +3,8 @@ import {
   containerBackground,
   font,
   gaugeStyle,
+  lineLimit,
+  minimumScaleFactor,
   monospacedDigit,
   widgetURL,
 } from "@expo/ui/swift-ui/modifiers";
@@ -44,7 +46,9 @@ const LockWidget = (props: LockProps, env: WidgetEnvironment) => {
   }
 
   if (env.widgetFamily === "accessoryInline") {
-    return <Text modifiers={[clear]}>{text?.inline ?? ""}</Text>;
+    return (
+      <Text modifiers={[clear, lineLimit(1), minimumScaleFactor(0.75)]}>{text?.inline ?? ""}</Text>
+    );
   }
 
   return (
@@ -55,9 +59,19 @@ const LockWidget = (props: LockProps, env: WidgetEnvironment) => {
     >
       <HStack spacing={4}>
         <Image systemName="flame.fill" size={13} />
-        <Text modifiers={[font({ size: 15, weight: "semibold" })]}>{text?.streakLine ?? ""}</Text>
+        <Text
+          modifiers={[
+            font({ size: 15, weight: "semibold" }),
+            lineLimit(1),
+            minimumScaleFactor(0.75),
+          ]}
+        >
+          {text?.streakLine ?? ""}
+        </Text>
       </HStack>
-      <Text modifiers={[font({ size: 15 })]}>{text?.dueLine ?? ""}</Text>
+      <Text modifiers={[font({ size: 15 }), lineLimit(1), minimumScaleFactor(0.75)]}>
+        {text?.dueLine ?? ""}
+      </Text>
       <Gauge value={progress} modifiers={[gaugeStyle("linearCapacity")]} />
     </VStack>
   );

@@ -40,6 +40,8 @@ vi.mock("@expo/ui/swift-ui/modifiers", () => {
     foregroundStyle: modifier,
     frame: modifier,
     gaugeStyle: modifier,
+    lineLimit: modifier,
+    minimumScaleFactor: modifier,
     monospacedDigit: modifier,
     resizable: modifier,
     widgetURL: modifier,
@@ -111,7 +113,8 @@ describe.each(languages)("widget text in %s", (locale) => {
     expect(text.streakLabel.split(" ")[0]).toBe(forms[locale].day[index]);
     expect(text.dueLine).toBe(`${i18n.number(count)} ${text.dueLabel}`);
     expect(text.streakLine).toBe(`${i18n.number(count)} ${text.streakLabel}`);
-    expect(text.inline).toBe(`${text.dueLine} · ${i18n.number(count)} ${forms[locale].day[index]}`);
+    const inlineDue = locale === "en" ? text.dueLine : `${i18n.number(count)} ${text.dueShort}`;
+    expect(text.inline).toBe(`${inlineDue} · ${i18n.number(count)} ${forms[locale].day[index]}`);
     expect(Object.values(JSON.parse(JSON.stringify(text)))).toEqual(Object.values(text));
   });
 

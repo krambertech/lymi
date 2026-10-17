@@ -4,6 +4,8 @@ import {
   font,
   foregroundStyle,
   frame,
+  lineLimit,
+  minimumScaleFactor,
   monospacedDigit,
   resizable,
   widgetURL,
@@ -113,7 +115,16 @@ const TodayWidget = (props: TodayProps, env: WidgetEnvironment) => {
         >
           {text?.dueCount ?? "0"}
         </Text>
-        <Text modifiers={[font({ size: 15 }), foregroundStyle(muted)]}>{text?.dueShort ?? ""}</Text>
+        <Text
+          modifiers={[
+            font({ size: 15 }),
+            lineLimit(1),
+            minimumScaleFactor(0.75),
+            foregroundStyle(muted),
+          ]}
+        >
+          {text?.dueShort ?? ""}
+        </Text>
       </HStack>
     </VStack>
   );

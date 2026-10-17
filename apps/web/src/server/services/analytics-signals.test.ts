@@ -62,6 +62,28 @@ it("names the card's state before the grade and a peek at the hook", async () =>
   expect(graded).toMatchObject([{ name: "review_graded", grade: 3, state: "new", aid: "hook" }]);
 });
 
+it("says where web review drew a Japanese term's reading, and nothing for other cards or the phone", async () => {
+  const { analytics, events } = writer();
+  const ctx = { ...(await learner(db, "signals-reading", "Learner")), analytics };
+  const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja", directions: "both" });
+  const added = await addCards(ctx, [
+    { deckId: deck.id, term: "食べる", meaning: "to eat", pronunciation: "たべる" },
+    { deckId: deck.id, term: "ありがとう", meaning: "thank you" },
+    { deckId: deck.id, term: "学校", meaning: "school", pronunciation: "がっこう" },
+  ]);
+  const [eat, thanks, school] = added.flatMap((o) => (o.status === "added" ? [o.card] : []));
+  if (!eat || !thanks || !school) throw new Error("Cards not added");
+  const at = new Date();
+  await gradeCard(ctx, { cardId: eat.id, direction: "recognition", rating: 3, reviewedAt: at });
+  await gradeCard(ctx, { cardId: eat.id, direction: "production", rating: 3, reviewedAt: at });
+  await gradeCard(ctx, { cardId: thanks.id, direction: "recognition", rating: 3, reviewedAt: at });
+  // The phone draws no furigana yet, so its grades say nothing about where it was.
+  const phone = { cardId: school.id, direction: "recognition" as const, rating: 3 as const };
+  await gradeCard(ctx, { ...phone, reviewedAt: at }, false);
+  const graded = (await events()).filter((event) => event.name === "review_graded");
+  expect(graded.map((event) => event.reading)).toEqual(["cue", "answer", undefined, undefined]);
+});
+
 it("reports a rest day and a broken run once, from the day's first activity", async () => {
   const { analytics, events } = writer();
   const ctx = { ...(await learner(db, "signals-streak", "Learner")), analytics };

@@ -16,6 +16,7 @@ import {
   normaliseTerm,
   readingKey,
   sameReading,
+  stripReadings,
   TEXT_MODES,
 } from "@lymi/core";
 import { and, asc, desc, eq, inArray, isNull } from "@lymi/core/db";
@@ -380,7 +381,7 @@ export function matchesSearch(
     card.normalizedTerm,
     card.pronunciation,
     card.meaning,
-    card.example,
+    card.example && stripReadings(card.example),
     notes,
   ]) {
     if (field && searchKey(field).includes(needle)) return true;

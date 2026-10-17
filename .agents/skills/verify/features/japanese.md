@@ -1,6 +1,6 @@
 # Japanese cards
 
-What a card's language changes for Japanese, and for Chinese pinyin on the cue: the duplicate rule compares `ja` and `ja-JP` as one language and keeps homographs with different readings apart, review keeps the kana reading in `pronunciation` behind the reveal and draws kanji in a Japanese face, Smart add saves a reading the lesson prints, and audio says the kana reading rather than guessing the kanji's.
+What a card's language changes for Japanese, and for Chinese pinyin on the cue: the duplicate rule compares `ja` and `ja-JP` as one language and keeps homographs with different readings apart, review draws the kana reading in `pronunciation` as furigana rather than a line and draws kanji in a Japanese face (the [furigana](furigana.md) entry covers when it shows), Smart add saves a reading the lesson prints, and audio says the kana reading rather than guessing the kanji's.
 
 ## Reach
 
@@ -12,7 +12,7 @@ No persona has Japanese cards, so the recipe makes a deck as `fresh` through `/a
 
 ## End state
 
-The second add is `skipped`. Before the reveal no visible line reads じょうず and the cue's computed font names Hiragino Sans; after it, じょうず shows under the meaning with `lang="ja"`. The stored 下手 card has `pronunciation` へた with `pronunciationSource` `lesson`, and 猫, whose lesson printed no reading, has none. 上手 read うわて is added as a second card and ジョウズ is skipped as the reading じょうず already has. The New Chinese card shows xuéxí under its cue before the reveal, while its meaning does not show.
+The second add is `skipped`. On the New card's cue じょうず is furigana over 上手 in a `lang="ja"` ruby, no line under it reads じょうず, and the cue's computed font names Hiragino Sans; after the reveal the furigana stays. The stored 下手 card has `pronunciation` へた with `pronunciationSource` `lesson`, and 猫, whose lesson printed no reading, has none. 上手 read うわて is added as a second card and ジョウズ is skipped as the reading じょうず already has. The New Chinese card shows xuéxí under its cue before the reveal, while its meaning does not show.
 
 ## Gotchas
 

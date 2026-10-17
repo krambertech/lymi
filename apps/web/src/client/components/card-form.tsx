@@ -4,11 +4,15 @@ import {
   CARD_LIMITS,
   CardInput,
   cardLimits,
+  hasReadings,
   ImageDescription,
   modeKey,
   modeOf,
   type ReviewModeKey,
   revealsAnswer,
+  stripReadings,
+  termReading,
+  writtenWithReading,
 } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
@@ -42,6 +46,7 @@ import { Button } from "./button";
 import { acceptsPictureFile, CardPictureField, type PictureDraft } from "./card-picture-field";
 import { LanguageField, languageName } from "./deck-fields";
 import { FieldChip, FieldChipRow } from "./field-chip";
+import { Furigana, ReadingText } from "./furigana";
 import { Kbd } from "./kbd";
 import { useStaticNav } from "./nav-link";
 import { ReviewModesField } from "./review-modes-field";
@@ -277,6 +282,9 @@ export function CardForm(props: CardFormProps) {
   const tagsInUse = useQuery({ ...tagsQuery, enabled: !st }).data;
   const deckLanguage = current?.defaultLanguage ?? null;
   const language = chosenLanguage ? chosenLanguage.value : deckLanguage;
+  // Japanese and Chinese call a term's pronunciation its reading.
+  const reads = writtenWithReading(language);
+  const termDrawn = termReading({ term: term.trim(), language, pronunciation });
   const deckModes = (current?.reviewModes ?? []).map(modeKey);
   const hasPicture = picture.kind !== "none";
   const preview = useObjectUrl(picture.kind === "file" ? picture.file : null);
@@ -349,7 +357,9 @@ export function CardForm(props: CardFormProps) {
           deckId: t`Choose a deck.`,
           term: values.term ? t`Keep the term under 500 characters.` : t`Type the term.`,
           meaning: t`Keep the meaning under 2000 characters.`,
-          pronunciation: t`Keep the pronunciation under 200 characters.`,
+          pronunciation: reads
+            ? t`Keep the reading under 200 characters.`
+            : t`Keep the pronunciation under 200 characters.`,
           example: t`Keep the example under 2000 characters.`,
           notes: t`Keep the notes under 2000 characters.`,
           hook: t`Keep the hook under 200 characters.`,
@@ -620,7 +630,7 @@ export function CardForm(props: CardFormProps) {
         className={chips ? "sr-only" : undefined}
         aside={roomLeft(pronunciation, cardLimits.pronunciation)}
       >
-        {t`Pronunciation`}
+        {reads ? t({ message: "Reading", context: "how a term is read" }) : t`Pronunciation`}
       </FieldLabel>
       <Input
         maxLength={cardLimits.pronunciation ?? undefined}
@@ -634,6 +644,28 @@ export function CardForm(props: CardFormProps) {
       />
       <FieldError>{invalid.pronunciation}</FieldError>
     </Field>
+  );
+
+  // How the term and the example will read, so a reading or bracket in the wrong place shows at
+  // once. It repeats what the fields hold, so assistive tech reads the fields instead.
+  const exampleDrawn = hasReadings(example);
+  const readingPreview = (termDrawn || exampleDrawn) && (
+    <div
+      aria-hidden="true"
+      lang={language ?? undefined}
+      className="grid gap-1.5 rounded-lg bg-plate-2 px-3 py-2.5"
+    >
+      {termDrawn && (
+        <p className="text-lg font-medium text-text">
+          <Furigana segments={termDrawn} lang={language ?? undefined} />
+        </p>
+      )}
+      {exampleDrawn && (
+        <p className="text-md text-text-2 [overflow-wrap:anywhere]">
+          <ReadingText text={example} lang={language ?? undefined} />
+        </p>
+      )}
+    </div>
   );
 
   const notesField = (
@@ -811,20 +843,24 @@ export function CardForm(props: CardFormProps) {
             <FieldChip
               icon={TextQuote}
               label={t`Example`}
-              value={example.trim()}
+              value={stripReadings(example.trim())}
               invalid={!!invalid.example}
               {...panelProps("example")}
             >
               {exampleField}
+              {readingPreview}
             </FieldChip>
             <FieldChip
               icon={AudioLines}
-              label={t`Pronunciation`}
+              label={
+                reads ? t({ message: "Reading", context: "how a term is read" }) : t`Pronunciation`
+              }
               value={pronunciation.trim()}
               invalid={!!invalid.pronunciation}
               {...panelProps("pronunciation")}
             >
               {pronunciationField}
+              {readingPreview}
             </FieldChip>
             <FieldChip
               icon={Library}
@@ -931,6 +967,7 @@ export function CardForm(props: CardFormProps) {
                     {pronunciationField}
                     {sourceField}
                   </div>
+                  {readingPreview}
                   {tagsField}
                   {notesField}
                   {hookField}

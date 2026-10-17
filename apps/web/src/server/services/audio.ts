@@ -1,9 +1,9 @@
 import { canSpeakTerm, kanaReading, LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
-import { and, eq, isNull, or } from "@lymi/core/db";
+import { and, eq, inArray, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider } from "../ai";
 import { speechText } from "../ai/speech-text";
-import { schema } from "../db";
+import { type Db, schema } from "../db";
 import { audit } from "./audit";
 import { getCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
@@ -210,6 +210,46 @@ async function rememberAudioKey(
 /** A Japanese card's kana reading, so 上手 is said じょうず or うわて as the card says, else the term. */
 function spokenText(card: Card): string {
   return speechText(kanaReading(card) ?? card.term);
+}
+
+// One `IN` list's worth (see selectIn), which also bounds this run's share of the cron's subrequests.
+const PURGES_PER_RUN = 90;
+
+/**
+ * Clears the audio folders of deleted cards, recordings and superseded speech included, a bounded
+ * number per cron run. A card R2 refused stays queued for the next run.
+ */
+export async function purgeCardAudio(db: Db, bucket: R2Bucket): Promise<number> {
+  const queued = await db
+    .select({ cardId: schema.cardAudioPurges.cardId })
+    .from(schema.cardAudioPurges)
+    .orderBy(schema.cardAudioPurges.createdAt)
+    .limit(PURGES_PER_RUN);
+  const cleared: string[] = [];
+  const worker = async () => {
+    for (let next = queued.pop(); next; next = queued.pop()) {
+      try {
+        let cursor: string | undefined;
+        do {
+          const page = await bucket.list({
+            prefix: `cards/${next.cardId}/`,
+            ...(cursor ? { cursor } : {}),
+          });
+          const keys = page.objects.map((object) => object.key);
+          if (keys.length > 0) await bucket.delete(keys);
+          cursor = page.truncated ? page.cursor : undefined;
+        } while (cursor);
+        cleared.push(next.cardId);
+      } catch {
+        // Retried next run; the key is never logged.
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(10, queued.length) }, worker));
+  if (cleared.length > 0) {
+    await db.delete(schema.cardAudioPurges).where(inArray(schema.cardAudioPurges.cardId, cleared));
+  }
+  return cleared.length;
 }
 
 async function audioKey(card: Card, provider: SpeechProvider): Promise<string> {

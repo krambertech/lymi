@@ -434,6 +434,32 @@ describe("withdrawing with a redirect", () => {
     expect(await publicationAdmits(db, "fading-part")).toBe(true);
   });
 
+  it("follows a target withdrawn with its own redirect straight to the live deck", async () => {
+    const final = await publishedDeck("twice-final");
+    const middle = await publishedDeck("twice-middle");
+    const part = await publishedDeck("twice-part");
+    await withdrawDeck(lymi, part.id, { redirectTo: "twice-middle" });
+    await withdrawDeck(lymi, middle.id, { redirectTo: "twice-final" });
+    expect(await publicDeckRedirect(db, "twice-part")).toBe("twice-final");
+    expect(await publicDeckRedirect(db, "twice-middle")).toBe("twice-final");
+
+    // A chain that ends at a deck withdrawn with nowhere to go answers 410 again.
+    await withdrawDeck(lymi, final.id);
+    expect(await publicDeckRedirect(db, "twice-part")).toBeNull();
+  });
+
+  it("gives up on a redirect that loops", async () => {
+    const one = await publishedDeck("loop-one");
+    const two = await publishedDeck("loop-two");
+    await withdrawDeck(lymi, one.id, { redirectTo: "loop-two" });
+    // Withdrawing refuses a target that is not live, so only a hand edit can close the loop.
+    await db
+      .update(schema.deckPublications)
+      .set({ status: "withdrawn", redirectSlug: "loop-one" })
+      .where(eq(schema.deckPublications.deckId, two.id));
+    expect(await publicDeckRedirect(db, "loop-one")).toBeNull();
+  });
+
   it("is only the owner's", async () => {
     await publishedDeck("owner-target");
     const part = await publishedDeck("owner-part");

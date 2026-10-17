@@ -447,18 +447,31 @@ export async function isLivePublicDeck(db: CatalogDb, slug: string): Promise<boo
   return Boolean(row);
 }
 
+/** How many withdrawn decks a redirect may pass through before giving up on finding a live one. */
+const REDIRECT_HOPS = 5;
+
 /**
- * Where a withdrawn deck's public page sends visitors, or null. A target that has since gone is
- * no redirect at all, so the old page answers 410 rather than pointing at another dead one.
+ * Where a withdrawn deck's public page sends visitors, or null. A target withdrawn later with a
+ * redirect of its own is followed, so a deck merged twice still sends its links to the live page
+ * in one step. A chain that ends at a deck that has gone is no redirect at all, so the old page
+ * answers 410 rather than pointing at another dead one.
  */
 export async function publicDeckRedirect(db: CatalogDb, slug: string): Promise<string | null> {
   if (!isPublicDeckSlug(slug)) return null;
-  const [row] = await db
-    .select({ status: deckPublications.status, redirectSlug: deckPublications.redirectSlug })
-    .from(deckPublications)
-    .where(eq(deckPublications.slug, slug));
-  if (row?.status !== "withdrawn" || !row.redirectSlug) return null;
-  return (await isLivePublicDeck(db, row.redirectSlug)) ? row.redirectSlug : null;
+  const seen = new Set([slug]);
+  let from = slug;
+  for (let hop = 0; hop < REDIRECT_HOPS; hop++) {
+    const [row] = await db
+      .select({ status: deckPublications.status, redirectSlug: deckPublications.redirectSlug })
+      .from(deckPublications)
+      .where(eq(deckPublications.slug, from));
+    const next = row?.status === "withdrawn" ? row.redirectSlug : null;
+    if (!next || seen.has(next)) return null;
+    if (await isLivePublicDeck(db, next)) return next;
+    seen.add(next);
+    from = next;
+  }
+  return null;
 }
 
 /** The published decks a reader of `language` can use, or every one when no language is given. */

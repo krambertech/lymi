@@ -12,8 +12,9 @@ import { useMoveNotice, useSeriesActions } from "../data/series";
 import { useOnline } from "../streak/goal-picker";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
+import { FieldError } from "../ui/field";
 import { FormHeader } from "../ui/form-header";
-import { Icon, Press, Text } from "../ui/primitives";
+import { Press, Text } from "../ui/primitives";
 import { OnGlass } from "../ui/surface";
 
 /**
@@ -128,18 +129,14 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
           <Press
             onPress={() => void listQuery.refetch()}
             accessibilityRole="button"
-            className="flex-row items-center gap-1.5 pt-2"
+            className="pt-2"
           >
-            <Icon name="alert" size={14} colour={p.danger} />
-            <Text className="flex-1 text-base text-danger">
-              {t`Couldn’t load your series. Try again`}
-            </Text>
+            <FieldError flush>{t`Couldn’t load your series. Try again`}</FieldError>
           </Press>
         )}
         {error && (
-          <View className="flex-row items-center gap-1.5 pt-2" accessibilityLiveRegion="polite">
-            <Icon name="alert" size={14} colour={p.danger} />
-            <Text className="flex-1 text-base text-danger">{error}</Text>
+          <View className="pt-2">
+            <FieldError flush>{error}</FieldError>
           </View>
         )}
       </View>

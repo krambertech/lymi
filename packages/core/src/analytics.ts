@@ -185,7 +185,7 @@ export const analyticsEvents = {
   welcome_step_viewed: z.object({ step_name: step, skipped: z.boolean() }),
   welcome_step_finished: z.object({ step_name: step, skipped: z.boolean() }),
   empty_state_option_picked: z.object({
-    option: z.enum(["create_deck", "typed", "ai_mcp", "api", "explore", "import"]),
+    option: z.enum(["create_deck", "typed", "lesson", "ai_mcp", "api", "explore", "import"]),
   }),
   import_started: z.object({
     source,
@@ -244,6 +244,7 @@ export const analyticsEvents = {
   }),
   lesson_read_limited: z.object({}),
   lesson_read: z.object({
+    client: z.enum(["web", "phone"]),
     pages: count,
     pasted: z.boolean(),
     deck: z.enum(["fixed", "guessed"]),

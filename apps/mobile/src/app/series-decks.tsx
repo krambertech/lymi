@@ -10,6 +10,7 @@ import { useDecks, useSeriesList } from "../data/queries";
 import { useSeriesActions } from "../data/series";
 import { useOnline } from "../streak/goal-picker";
 import { usePalette } from "../theme/palette";
+import { FieldError } from "../ui/field";
 import { FormHeader } from "../ui/form-header";
 import { KeyboardRoom } from "../ui/keyboard";
 import { Icon, IconButton, Press, Text } from "../ui/primitives";
@@ -86,12 +87,7 @@ export default function SeriesDecks() {
               {t`Changing series needs a connection.`}
             </Text>
           )}
-          {error && (
-            <View className="flex-row items-center gap-1.5 px-1" accessibilityLiveRegion="polite">
-              <Icon name="alert" size={14} colour={p.danger} />
-              <Text className="flex-1 text-base text-danger">{error}</Text>
-            </View>
-          )}
+          <FieldError>{error}</FieldError>
           {rows.length > 0 && (
             <View className="overflow-hidden rounded-xl border border-edge bg-plate">
               {rows.map((d, i) => {

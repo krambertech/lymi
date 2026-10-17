@@ -23,14 +23,12 @@ Write each term as one card: one term, one sense
 - When that meaning also fits another common word, add a short cue in parentheses so only this term fits it: "думать (размышлять)".
 
 Questions
-Ask only what the material leaves open and the learner can answer in one tap, and only when the answer changes which terms stay ticked. Questions are about what the learner marked, which pages or exercises count, and which lesson a term belongs to; grammar categories are always kept. Ask only about what the material shows: a question about marks, highlighting or handwriting needs a photo or PDF that has them, and pasted text has none. Write each question as one plain sentence of at most 12 words, addressed to the learner as "you", and each option in at most 5 words. Each option lists the ids of the terms it drops; "default" is the index of the option most learners want. Typical questions: the learner marked some words, keep only those? Some pages are exercises, include their words?`;
+Most lessons need no question: the learner sees the list and unticks what they do not want. Ask only when one answer unticks several terms at once, such as a page of exercises, a second lesson in the same upload, or the few words the learner marked among many printed ones; never ask when every option keeps nearly the same terms. Ask about marks, highlighting or handwriting only when a photo or PDF shows them on some of the terms and not the rest; glossed and listed words are not "marked". Grammar categories are always kept. Write each question as one plain sentence of at most 12 words, addressed to the learner as "you", and each option as the learner's own short reply to it, in at most 5 words and without repeating the question's nouns. Each option lists the ids of the terms it drops; "default" is the index of the option most learners want.`;
 
-/** Fewer questions for less material, so a paragraph never stops to ask. */
+/** No question for a page's worth of material, one for a few pages, two for a long upload. */
 export function questionLimit(pages: number, words: number): number {
   const size = pages + Math.ceil(words / 1500);
-  if (size <= 0) return 0;
-  if (words < 300 && pages === 0) return 0;
-  return size <= 1 ? 2 : Math.min(5, 2 + Math.floor(size / 3));
+  return size <= 1 ? 0 : size <= 5 ? 1 : 2;
 }
 
 export type DeckCandidate = {

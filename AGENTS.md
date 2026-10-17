@@ -55,6 +55,7 @@ Each rule below fails a check instead of waiting for review, and the check's mes
 | Web motion honours both the learner's setting and `/design`'s switch: call `useReduceMotion()`, never `useReducedMotion` or `useReducedMotionConfig` from `motion/react` directly | Biome `noRestrictedImports` in `biome.json` |
 | The phone never calls `Intl.ListFormat`, which Hermes lacks; use `formatList()` from `apps/mobile/src/i18n/list.ts` | `biome-plugins/no-intl-list-format.grit` |
 | Every phone scroll view sets `keyboardShouldPersistTaps`, so a tap with the keyboard up reaches its button | `biome-plugins/scroll-view-persist-taps.grit` |
+| Every phone error line is `FieldError`, so its icon centres on the first line and its text keeps the form's line | `biome-plugins/field-error.grit` |
 | A change to the phone's frozen responses records a `CACHE_SHAPE` decision | `pnpm check:cache-shape` |
 | Server SQL and new migrations never case-fold with `lower()`, which is ASCII-only on D1 | `biome-plugins/no-sql-lower.grit` and `pnpm check:migrations` |
 | New lines use Lymi tokens and logical directions: no raw hex, stock Tailwind colour, `ml-`/`text-left`, `margin-left` or `marginLeft` | `pnpm check:styling` |

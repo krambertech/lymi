@@ -5,13 +5,15 @@ import {
   deckEnrichFields,
   deckPurpose,
   defaultEnrichFields,
+  ENRICHMENT_STALLED_AFTER,
   emptyFields,
   fieldsToFill,
   needsEnrichment,
 } from "@lymi/core";
+import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider, TextRequest } from "../ai";
-import type { Db } from "../db";
+import { type Db, schema } from "../db";
 import {
   addCards,
   archiveCard,
@@ -20,7 +22,7 @@ import {
   showCard,
   updateCard,
 } from "./cards";
-import { ServiceError } from "./context";
+import { type ServiceContext, ServiceError } from "./context";
 import { createDeck } from "./decks";
 import {
   CARDS_PER_CALL,
@@ -498,6 +500,45 @@ describe("enrichCards", () => {
     if (added?.status !== "added") throw new Error("not added");
     expect(added.card.enrichmentStatus).toBe("failed");
     expect((await showCard(ctx, added.card.id)).enrichmentStatus).toBe("failed");
+  });
+
+  /** A card left at `working` by an add whose run never started, last changed `ago` ms back. */
+  async function stuck(ctx: ServiceContext, ago: number) {
+    const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+    const [added] = await addCards(
+      ctx,
+      [CardInput.parse({ deckId: deck.id, term: "煎餅" })],
+      queue,
+    );
+    if (added?.status !== "added") throw new Error("not added");
+    expect(added.card.enrichmentStatus).toBe("working");
+    await db
+      .update(schema.cards)
+      .set({ updatedAt: new Date(Date.now() - ago) })
+      .where(eq(schema.cards.id, added.card.id));
+    return added.card.id;
+  }
+
+  it("reads a card stuck at working past the cutoff as failed, and Enrich starts a new run", async () => {
+    const ctx = await learner(db, "enrich-6e", "Kateryna");
+    const id = await stuck(ctx, ENRICHMENT_STALLED_AFTER + 60_000);
+    expect((await showCard(ctx, id)).enrichmentStatus).toBe("failed");
+
+    const create = vi.fn().mockResolvedValue(undefined);
+    const asked = await requestEnrichment(ctx, id, { create });
+    expect(create).toHaveBeenCalledTimes(1);
+    expect(asked.enrichmentStatus).toBe("working");
+    expect((await showCard(ctx, id)).enrichmentStatus).toBe("working");
+  });
+
+  it("keeps a card working for as long as the slowest run can take, and Enrich does not queue twice", async () => {
+    const ctx = await learner(db, "enrich-6f", "Kateryna");
+    // Past the slowest 200-card run, about 7 hours, but inside the cutoff.
+    const id = await stuck(ctx, 8 * 60 * 60_000);
+    expect((await showCard(ctx, id)).enrichmentStatus).toBe("working");
+    const create = vi.fn().mockResolvedValue(undefined);
+    await requestEnrichment(ctx, id, { create });
+    expect(create).not.toHaveBeenCalled();
   });
 });
 

@@ -10,6 +10,7 @@ import {
   deckEnrichFields,
   duplicateKey,
   emptyFields,
+  enrichmentStalled,
   fieldsToFill,
   needsEnrichment,
   newId,
@@ -588,8 +589,11 @@ export async function requestEnrichment(
   if (!enrichment) {
     throw new ServiceError("unavailable", "Enrichment is not configured on this server");
   }
-  // A run already outstanding is the answer, so asking twice does not queue twice.
-  if (card.enrichmentStatus === "working") return presentCard(db, card, userId);
+  // A run already outstanding is the answer, so asking twice does not queue twice. A card
+  // waiting long past any run has lost its run, so asking starts a new one.
+  if (card.enrichmentStatus === "working" && !enrichmentStalled(card)) {
+    return presentCard(db, card, userId);
+  }
   // `updatedAt` moves because the card did, and because the screen stops waiting on a card
   // that has said `working` for too long: a card added months ago must not read as stale.
   // Asking is the learner changing their mind about a field they cleared, so blank becomes unset.

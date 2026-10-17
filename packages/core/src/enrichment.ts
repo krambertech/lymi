@@ -8,6 +8,25 @@ export const ENRICHED_FIELDS = [
 ] as const;
 export type EnrichedField = (typeof ENRICHED_FIELDS)[number];
 
+/**
+ * How long a card may say `working` before it is treated as failed. It must outlast the slowest
+ * run that can still finish: a 200-card add is 20 model calls in a row, each up to 4 tries of
+ * 5 minutes, about 7 hours with the final settle. A card still `working` past a day has lost its
+ * run, so it reads as failed and the learner can ask again.
+ */
+export const ENRICHMENT_STALLED_AFTER = 24 * 60 * 60_000;
+
+/** True for a card still at `working` long after its last change, whose run will never settle it. */
+export function enrichmentStalled(
+  card: { enrichmentStatus: string | null; updatedAt: Date | string },
+  now: number = Date.now(),
+): boolean {
+  return (
+    card.enrichmentStatus === "working" &&
+    now - new Date(card.updatedAt).getTime() >= ENRICHMENT_STALLED_AFTER
+  );
+}
+
 /** The fields a deck lets the AI fill. Language is always filled, because audio needs it. */
 export const DECK_ENRICH_FIELDS = ["meaning", "example", "notes", "pronunciation"] as const;
 export type DeckEnrichField = (typeof DECK_ENRICH_FIELDS)[number];

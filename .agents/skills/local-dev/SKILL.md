@@ -5,7 +5,7 @@ description: Run the Lymi product locally and put it in a chosen state. Use when
 
 # Local development
 
-[docs/local-dev.md](../../../docs/local-dev.md) owns the personas, the developer panel, the `pnpm local` commands and the `/api/dev` routes. This is the order of operations.
+[docs/local-dev.md](../../../docs/local-dev.md) owns the personas, the developer palette, the `pnpm local` commands and the `/api/dev` routes. This is the order of operations.
 
 ## Start
 
@@ -23,7 +23,7 @@ Pick the persona from the table in [Become a persona](../../../docs/local-dev.md
 
 Prefer `pnpm local` from a terminal: it needs no clicks and its output is text you can check. `pnpm local --help` lists the commands.
 
-Use the developer panel when the state is one only its Simulate actions reach. Press the backtick key to open it; [Change the state from the panel](../../../docs/local-dev.md#change-the-state-from-the-panel) describes each control.
+Use the developer palette when the state is one only its Simulate commands reach. Press the backtick key to open it, or run the same command with `pnpm local <command>`; [Change the state from the palette](../../../docs/local-dev.md#change-the-state-from-the-palette) describes each one.
 
 ## Verify
 

@@ -1,3 +1,4 @@
+import type { DevCommandSummary } from "@lymi/client/dev-palette";
 import { ApiError } from "../lib/api";
 
 export type PersonaSummary = {
@@ -5,6 +6,10 @@ export type PersonaSummary = {
   name: string;
   email: string;
   description: string;
+  /** Where the palette lists it: Start, Everyday, Languages, Scale and edges, Together. */
+  group: string;
+  /** Signing in lands on a screen of its own, such as a join link. */
+  landing: boolean;
   appLanguage: string;
   decks: number;
   cards: number;
@@ -52,37 +57,11 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 export const devApi = {
   personas: () => request<{ personas: PersonaSummary[] }>("/api/dev/personas"),
   state: () => request<DevState>("/api/dev/state"),
-  seed: (persona?: string) =>
-    request<{ counts: DevCounts }>("/api/dev/seed", {
+  commands: () => request<{ commands: DevCommandSummary[] }>("/api/dev/commands"),
+  run: (id: string, count?: number) =>
+    request<{ note: string; counts: DevCounts }>(`/api/dev/commands/${encodeURIComponent(id)}`, {
       method: "POST",
-      body: JSON.stringify(persona ? { persona } : {}),
-    }),
-  reset: () => request<{ counts: DevCounts }>("/api/dev/reset", { method: "POST" }),
-  due: (count: number | "all") =>
-    request<{ due: number; counts: DevCounts }>("/api/dev/due", {
-      method: "POST",
-      body: JSON.stringify({ count }),
-    }),
-  cards: (count: number) =>
-    request<{ added: number; counts: DevCounts }>("/api/dev/cards", {
-      method: "POST",
-      body: JSON.stringify({ count }),
-    }),
-  goal: () => request<{ graded: number; counts: DevCounts }>("/api/dev/goal", { method: "POST" }),
-  recall: (count: number, rating?: 1 | 3) =>
-    request<{ graded: number; counts: DevCounts }>("/api/dev/recall", {
-      method: "POST",
-      body: JSON.stringify({ count, rating }),
-    }),
-  enrich: (count: number) =>
-    request<{ enriched: number; counts: DevCounts }>("/api/dev/enrich", {
-      method: "POST",
-      body: JSON.stringify({ count }),
-    }),
-  slip: (count: number) =>
-    request<{ slipped: number; counts: DevCounts }>("/api/dev/slip", {
-      method: "POST",
-      body: JSON.stringify({ count }),
+      body: JSON.stringify(count === undefined ? {} : { count }),
     }),
   emails: () =>
     request<{ kinds: string[]; operators: string[]; canSend: boolean }>("/api/dev/emails"),
@@ -94,6 +73,6 @@ export const devApi = {
       body: JSON.stringify({ kind, language, to }),
     }),
   /** The URL a browser is pointed at to become a persona. Sets the session and redirects. */
-  signInUrl: (persona: string, returnTo: string) =>
-    `/api/dev/sign-in?${new URLSearchParams({ as: persona, returnTo })}`,
+  signInUrl: (persona: string, returnTo?: string) =>
+    `/api/dev/sign-in?${new URLSearchParams(returnTo ? { as: persona, returnTo } : { as: persona })}`,
 };

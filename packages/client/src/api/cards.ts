@@ -57,7 +57,14 @@ export type AddCardOutcome =
 
 /** One page of a search, newest first. `total` is null when it is not known exactly. */
 export type CardSearchPage = { cards: CardHit[]; nextCursor: string | null; total: number | null };
-export type CardSearch = { query: string; deckId?: string; cursor?: string; limit?: number };
+export type CardSearch = {
+  query?: string;
+  /** The card with exactly this term, compared as the duplicate rule compares it. */
+  term?: string;
+  deckId?: string;
+  cursor?: string;
+  limit?: number;
+};
 
 /** Browsers refuse a kept-alive request whose body passes 64 KB, so a larger one is sent plainly. */
 export const KEEPALIVE_MAX_BYTES = 64 * 1024;
@@ -68,8 +75,10 @@ export function fitsKeepalive(body: string): boolean {
 
 export const cardsApi = {
   /** One page of the cards matching the text, in every deck or in `deckId`; `cursor` is the last page's `nextCursor`. */
-  searchCards: ({ query, deckId, cursor, limit = 50 }: CardSearch) => {
-    const params = new URLSearchParams({ query, limit: String(limit) });
+  searchCards: ({ query, term, deckId, cursor, limit = 50 }: CardSearch) => {
+    const params = new URLSearchParams({ limit: String(limit) });
+    if (query) params.set("query", query);
+    if (term) params.set("term", term);
     if (deckId) params.set("deckId", deckId);
     if (cursor) params.set("cursor", cursor);
     return request<CardSearchPage>(`/api/cards?${params.toString()}`);

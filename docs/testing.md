@@ -144,7 +144,7 @@ A newer run supersedes an older one on every branch, `main` included. Only one r
 - Every push to `main` and `/e2e` command runs Chromium and WebKit journeys, every component instance, and the deployment-package dry run.
 - A manually dispatched workflow runs the full policy by default and can explicitly skip browser E2E.
 - Public-site pull requests upload a preview after the quality job passes without waiting for browser E2E. The stable `pr-<number>` alias follows the pull request across new commits and appears as GitHub's View deployment link and in the job summary.
-- Product-affecting pull requests provision an isolated app preview after quality passes. Drafts and changes that touch only `*.test.ts` or `*.test.tsx` files get none; marking a draft ready for review deploys it. GitHub's View deployment link establishes the preview capability, signs in a synthetic learner and opens seeded data; the same link follows later commits.
+- Product-affecting pull requests provision an isolated app preview after quality passes. Drafts and changes that touch only `*.test.ts` or `*.test.tsx` files get none; marking a draft ready for review deploys it. GitHub's View deployment link establishes the preview capability, signs in a synthetic learner and opens seeded data; the same link follows later commits. The preview keeps its database between deploys, so when the learner's Library holds fewer decks than the persona promises, the deploy check reseeds her once and fails if it still does.
 
 Every run writes a final summary with its selected browser and component coverage and the outcome of each job and gate. A green Chromium pull request is deliberately labelled as Chromium evidence, not as full cross-browser evidence.
 

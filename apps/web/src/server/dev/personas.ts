@@ -7,6 +7,8 @@ import type {
   StatedFieldSource,
 } from "@lymi/core";
 import { HEAVY } from "./heavy-persona";
+import { JAPANESE } from "./japanese-persona";
+import { COMPANIONS, JOINING, SHARED } from "./sharing-personas";
 
 /**
  * The learners a local developer can become. Each is one account in the local D1, named
@@ -23,6 +25,8 @@ export interface Persona {
   name: string;
   /** One line for the panel and the CLI. Names the state, not the data. */
   description: string;
+  /** Where the palette lists it, so a face is found by what it is for. */
+  group: "Start" | "Everyday" | "Languages" | "Scale and edges" | "Together";
   /** The interface language. Meanings follow it, as they do for a real learner. */
   appLanguage: AppLanguage;
   /**
@@ -35,6 +39,12 @@ export interface Persona {
   /** How many cards are due when the seed lands. `all` makes every card due. */
   dueNow: number | "all";
   decks: PersonaDeck[];
+  /** Series of the persona's own decks, by deck name, in order. */
+  series?: { name: string; decks: string[] }[];
+  /** Published decks added from Explore, with the edition to pin. */
+  explore?: { slug: string; meaningLanguage?: string }[];
+  /** Where sign-in lands when no screen is asked for: Welcome with another account's deck. */
+  landing?: { welcomeWith: { owner: string; deck: string } };
 }
 
 export interface PersonaDeck {
@@ -50,6 +60,11 @@ export interface PersonaDeck {
   archived?: boolean;
   /** Publishes the deck in the local database, so its public page and add flow can be opened. */
   publication?: PersonaPublication;
+  /**
+   * Who else is in the deck, by account id: a persona or a companion. The only place a
+   * membership is written down, so seeding either side finds the other.
+   */
+  people?: { members: string[]; invitations?: string[]; joinLink?: boolean };
 }
 
 /** A local publication, seeded through the same services a publisher would call. ADR 0015. */
@@ -94,6 +109,11 @@ export interface PersonaCard {
   section?: string;
   /** Who added it. `mcp` and `api` cards show up in Activity. */
   createdBy?: Actor;
+  hook?: string;
+  /** Marked important by the learner. */
+  important?: boolean;
+  /** A picture from `pictures.ts`, by its key. */
+  picture?: string;
   introducedDaysAgo?: number;
   archived?: boolean;
 }
@@ -277,6 +297,36 @@ const ARRIVALS: PersonaCard[] = [
     introducedDaysAgo: 0,
   },
 ];
+
+/** A newer lesson with pictures, important cards and memory hooks. */
+const CASA: PersonaCard[] = lesson("Lezione 15", [
+  { term: "la finestra", meaning: "the window", picture: "la finestra", important: true },
+  { term: "la porta", meaning: "the door", picture: "la porta" },
+  { term: "la lampada", meaning: "the lamp", picture: "la lampada" },
+  {
+    term: "il cassetto della cucina",
+    meaning: "the kitchen drawer",
+    hook: "A cassette tape hidden among the spoons.",
+    important: true,
+  },
+  { term: "il divano", meaning: "the sofa", important: true },
+  { term: "lo specchio", meaning: "the mirror", hook: "Spec-chio: you inspect yourself in it." },
+  { term: "il tappeto", meaning: "the rug" },
+  { term: "le scale", meaning: "the stairs", important: true },
+  { term: "il bagno", meaning: "the bathroom" },
+  { term: "il frigorifero", meaning: "the fridge" },
+]);
+
+const CITTA: PersonaCard[] = lesson("Lezione 16", [
+  { term: "la piazza", meaning: "the square" },
+  { term: "il ponte", meaning: "the bridge", important: true },
+  { term: "la fermata", meaning: "the stop (bus, tram)" },
+  { term: "il mercato", meaning: "the market" },
+  { term: "la farmacia", meaning: "the pharmacy" },
+  { term: "l'incrocio", meaning: "the crossroads" },
+  { term: "il parcheggio", meaning: "the car park" },
+  { term: "la biblioteca", meaning: "the library" },
+]);
 
 /** One card the learner archived, so Archived has something to show. */
 const ARCHIVED_CARD: PersonaCard = {
@@ -469,6 +519,7 @@ const N4_JA = japanese([
 export const personas: Persona[] = [
   {
     id: "fresh",
+    group: "Start",
     name: "Fresh",
     description: "Just signed up. No decks, nothing due, the first-run screens.",
     appLanguage: "en",
@@ -478,8 +529,10 @@ export const personas: Persona[] = [
   },
   {
     id: "learner",
+    group: "Everyday",
     name: "Kateryna",
-    description: "Three weeks in. Three decks, a few due, cards from an assistant to inspect.",
+    description:
+      "A little of everything: three weeks in, a series, pictures, important cards, hooks, cards from an assistant, a deck shared by Noor and one from Explore.",
     appLanguage: "en",
     // Misses 18 and 7 days ago are rest days; 13 and 5 fall within a week of one and break the run, so the streak (4) and the best run (7) differ.
     reviewDays: [21, 20, 19, 17, 16, 15, 14, 12, 11, 10, 9, 8, 6, 4, 3, 2, 1],
@@ -506,6 +559,19 @@ export const personas: Persona[] = [
         cards: PORTUGUESE,
       },
       {
+        name: "Casa",
+        description: "Rooms and things at home.",
+        defaultLanguage: "it",
+        introducedDaysAgo: 7,
+        cards: CASA,
+      },
+      {
+        name: "In città",
+        defaultLanguage: "it",
+        introducedDaysAgo: 5,
+        cards: CITTA,
+      },
+      {
         name: "Lista vecchia",
         defaultLanguage: "it",
         introducedDaysAgo: 30,
@@ -513,9 +579,13 @@ export const personas: Persona[] = [
         cards: ITALIAN_MORE.slice(1, 4),
       },
     ],
+    series: [{ name: "Italiano A2", decks: ["Casa", "In città"] }],
+    // Not Everyday Estonian: the phone's row-menus recipe adds that one from Explore.
+    explore: [{ slug: "everyday-finnish" }],
   },
   {
     id: "streak",
+    group: "Everyday",
     name: "Sanna",
     description: "Fourteen days running and nothing due today. The small flame stays lit.",
     appLanguage: "en",
@@ -539,6 +609,7 @@ export const personas: Persona[] = [
   },
   {
     id: "rested",
+    group: "Everyday",
     name: "Leena",
     description:
       "Eleven days running through two rest days, the last one yesterday. Today opens on the rest-day banner.",
@@ -557,6 +628,7 @@ export const personas: Persona[] = [
   },
   {
     id: "backlog",
+    group: "Everyday",
     name: "Marco",
     description: "Back after a month away. Everything is due at once.",
     appLanguage: "en",
@@ -592,6 +664,7 @@ export const personas: Persona[] = [
   },
   {
     id: "long",
+    group: "Scale and edges",
     name: "Ingrid",
     description:
       "Long cards: sentences as terms, dictionary-length meanings, every field at its limit.",
@@ -610,6 +683,7 @@ export const personas: Persona[] = [
   },
   {
     id: "polyglot",
+    group: "Languages",
     name: "Оксана",
     description: "Ukrainian interface and meanings. Italian, Finnish, and a deck with no language.",
     appLanguage: "uk",
@@ -639,6 +713,7 @@ export const personas: Persona[] = [
   },
   {
     id: "publisher",
+    group: "Together",
     name: "Lymi",
     description:
       "The publisher account. Estonian, Finnish, driving and Japanese decks; one in English and Ukrainian editions.",
@@ -787,4 +862,24 @@ export const personas: Persona[] = [
     ],
   },
   HEAVY,
+  JAPANESE,
+  SHARED,
+  JOINING,
 ];
+
+/** Every account a seed may need: the personas and the companions that fill their people lists. */
+export const accounts: Persona[] = [...personas, ...COMPANIONS];
+
+export function accountPersona(id: string): Persona | undefined {
+  return accounts.find((p) => p.id === id);
+}
+
+/** How many decks the persona's Library holds once seeded: its own, the shared ones and Explore's. */
+export function librarySize(p: Persona): number {
+  const own = p.decks.filter((d) => !d.archived).length;
+  const shared = accounts
+    .filter((owner) => owner.id !== p.id)
+    .flatMap((owner) => owner.decks)
+    .filter((d) => !d.archived && d.people?.members.includes(p.id)).length;
+  return own + shared + (p.explore?.length ?? 0);
+}

@@ -1,6 +1,7 @@
 import { CardInput, DeckInput } from "@lymi/core";
 import { describe, expect, it } from "vitest";
-import { personaEmail, personaFor, personas } from "./personas";
+import { accountPersona, accounts, personaEmail, personaFor, personas } from "./personas";
+import { PICTURES } from "./pictures";
 
 describe("personas", () => {
   it("have unique ids and resolve from their email", () => {
@@ -15,7 +16,7 @@ describe("personas", () => {
   });
 
   it("seed only what the real deck and card schemas accept", () => {
-    for (const p of personas) {
+    for (const p of accounts) {
       for (const deck of p.decks) {
         expect(
           DeckInput.safeParse({
@@ -27,7 +28,14 @@ describe("personas", () => {
           `${p.id} / ${deck.name}`,
         ).toBe(true);
         for (const card of deck.cards) {
-          const { createdBy: _actor, introducedDaysAgo: _days, archived: _a, ...input } = card;
+          const {
+            createdBy: _actor,
+            introducedDaysAgo: _days,
+            archived: _a,
+            important: _i,
+            picture: _p,
+            ...input
+          } = card;
           const result = CardInput.safeParse({ deckId: "deck", ...input });
           expect(result.success, `${p.id} / ${deck.name} / ${card.term}`).toBe(true);
         }
@@ -36,7 +44,7 @@ describe("personas", () => {
   });
 
   it("never ask for a review before a card exists", () => {
-    for (const p of personas) {
+    for (const p of accounts.filter((a) => a.decks.length > 0)) {
       const newest = Math.min(
         ...p.decks.flatMap((d) => d.cards.map((c) => c.introducedDaysAgo ?? d.introducedDaysAgo)),
       );
@@ -51,7 +59,7 @@ describe("personas", () => {
   });
 
   it("do not seed a term twice into one persona unless one copy is archived", () => {
-    for (const p of personas) {
+    for (const p of accounts) {
       const seen = new Map<string, number>();
       for (const deck of p.decks.filter((d) => !d.archived)) {
         for (const card of deck.cards.filter((c) => !c.archived)) {
@@ -61,6 +69,30 @@ describe("personas", () => {
       }
       const twice = [...seen].filter(([, n]) => n > 1).map(([k]) => k);
       expect(twice, p.id).toEqual([]);
+    }
+  });
+
+  it("name only accounts, decks and pictures that exist", () => {
+    for (const p of accounts) {
+      const own = new Set(p.decks.map((d) => d.name));
+      for (const series of p.series ?? []) {
+        for (const name of series.decks) expect(own.has(name), `${p.id} series ${name}`).toBe(true);
+      }
+      for (const deck of p.decks) {
+        for (const id of deck.people?.members ?? []) {
+          expect(accountPersona(id), `${p.id} / ${deck.name} member ${id}`).toBeDefined();
+          expect(id, `${p.id} cannot join its own deck`).not.toBe(p.id);
+        }
+        for (const card of deck.cards) {
+          if (card.picture) expect(PICTURES[card.picture], card.term).toBeDefined();
+        }
+      }
+      const welcome = p.landing?.welcomeWith;
+      if (welcome) {
+        const owner = accountPersona(welcome.owner);
+        const deck = owner?.decks.find((d) => d.name === welcome.deck);
+        expect(deck?.people?.members, `${p.id} lands on a deck it belongs to`).toContain(p.id);
+      }
     }
   });
 });

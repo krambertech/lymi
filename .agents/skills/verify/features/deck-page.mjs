@@ -1,19 +1,20 @@
 export const title = "Library and the deck page";
 export const start = "/library";
 
+/** A deck's link by its name, escaped, ending at a space so "In città" matches where `\b` cannot. */
+const named = (name) => new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?=\\s|$)`);
+
 export default async function drive({ page, step, api, expect }) {
   const decks = await api("/api/decks");
   const deck = decks.find((d) => d.name === "Lezione 12");
   const rows = page.getByRole("main").getByRole("listitem").getByRole("button");
 
-  await step("Library lists the learner's three decks with their counts", async () => {
+  await step("Library lists every deck of the learner's with its count", async () => {
     await expect(page.getByRole("heading", { level: 1, name: "Library" })).toBeVisible();
     const cards = decks.reduce((n, d) => n + d.total, 0);
     await expect(page.getByText(`${decks.length} decks · ${cards} cards`)).toBeVisible();
     for (const d of decks) {
-      await expect(
-        page.getByRole("main").getByRole("link", { name: new RegExp(`^${d.name}\\b`) }),
-      ).toBeVisible();
+      await expect(page.getByRole("main").getByRole("link", { name: named(d.name) })).toBeVisible();
     }
     return { decks: decks.map(({ id, name, total, due }) => ({ id, name, total, due })) };
   });
@@ -27,7 +28,7 @@ export default async function drive({ page, step, api, expect }) {
     const one = decks.find((d) => d.name === "Verbi") ?? decks[0];
     await field.fill(one.name);
     for (const d of decks) {
-      const link = page.getByRole("main").getByRole("link", { name: new RegExp(`^${d.name}\\b`) });
+      const link = page.getByRole("main").getByRole("link", { name: named(d.name) });
       if (d.id === one.id) await expect(link).toBeVisible();
       else await expect(link).toHaveCount(0);
     }
@@ -36,9 +37,7 @@ export default async function drive({ page, step, api, expect }) {
     // The phone's field has its own Clear search; the one in the list's place comes last.
     await page.getByRole("button", { name: "Clear search", exact: true }).last().click();
     for (const d of decks) {
-      await expect(
-        page.getByRole("main").getByRole("link", { name: new RegExp(`^${d.name}\\b`) }),
-      ).toBeVisible();
+      await expect(page.getByRole("main").getByRole("link", { name: named(d.name) })).toBeVisible();
     }
     return { query: one.name, matched: 1 };
   });
@@ -67,7 +66,7 @@ export default async function drive({ page, step, api, expect }) {
       ).toBeVisible();
     }
     for (const d of inSeries) {
-      await expect(region.getByRole("link", { name: new RegExp(`^${d.name}\\b`) })).toBeVisible();
+      await expect(region.getByRole("link", { name: named(d.name) })).toBeVisible();
     }
     const stored = (await api("/api/series")).find((s) => s.name === series);
     expect(stored?.deckIds.length).toBe(inSeries.length);

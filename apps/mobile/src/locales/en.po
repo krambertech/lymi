@@ -475,6 +475,9 @@ msgstr "{deckCount} · {cardCount}"
 msgid "{due, plural, one {# card due} other {# cards due}}"
 msgstr "{due, plural, one {# card due} other {# cards due}}"
 
+msgid "{due, plural, one {# card due} other {# cards due}} · {streak, plural, one {# day} other {# days}}"
+msgstr "{due, plural, one {# card due} other {# cards due}} · {streak, plural, one {# day} other {# days}}"
+
 msgid "{due, plural, one {# card is due. {reviewed} of {goal} reviewed today.} other {# cards are due. {reviewed} of {goal} reviewed today.}}"
 msgstr "{due, plural, one {# card is due. {reviewed} of {goal} reviewed today.} other {# cards are due. {reviewed} of {goal} reviewed today.}}"
 
@@ -498,6 +501,9 @@ msgstr "{due, plural, one {card due in {deckName}} other {cards due in {deckName
 
 msgid "{due, plural, one {card due today} other {cards due today}}"
 msgstr "{due, plural, one {card due today} other {cards due today}}"
+
+msgid "{due, plural, one {card due} other {cards due}}"
+msgstr "{due, plural, one {card due} other {cards due}}"
 
 msgid "{due, plural, one {card to review} other {cards to review}}"
 msgstr "{due, plural, one {card to review} other {cards to review}}"
@@ -608,6 +614,9 @@ msgstr "{sectionName} is ready. Start it to review its cards."
 #. placeholder {0}: s.deckIds.length
 msgid "{seriesName}, {0, plural, one {# deck} other {# decks}}"
 msgstr "{seriesName}, {0, plural, one {# deck} other {# decks}}"
+
+msgid "{streak, plural, one {# day in a row} other {# days in a row}}"
+msgstr "{streak, plural, one {# day in a row} other {# days in a row}}"
 
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {day in a row} other {days in a row}}"
@@ -1805,6 +1814,9 @@ msgstr "Drag a series by its handle. Library shows them in this order."
 
 msgid "Driving"
 msgstr "Driving"
+
+msgid "due"
+msgstr "due"
 
 msgid "Due"
 msgstr "Due"
@@ -4062,6 +4074,9 @@ msgstr "to review"
 
 msgid "Today"
 msgstr "Today"
+
+msgid "Today counts"
+msgstr "Today counts"
 
 msgid "Today, {day}: {reviews}"
 msgstr "Today, {day}: {reviews}"

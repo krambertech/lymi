@@ -50,7 +50,7 @@ export async function synthesizeGoogleSpeech(
     : await serviceAccountAccessToken(credentials, request);
   const response = await fetchWithRetry(request, `${endpoint.base}/v1/text:synthesize`, {
     method: "POST",
-    redirect: "error",
+    redirect: "manual",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -114,7 +114,7 @@ async function serviceAccountAccessToken(
   const assertion = await signedAssertion(credentials, tokenUrl, now);
   const response = await fetchWithRetry(request, tokenUrl, {
     method: "POST",
-    redirect: "error",
+    redirect: "manual",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
       grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",

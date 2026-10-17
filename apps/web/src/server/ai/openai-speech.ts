@@ -45,7 +45,7 @@ export function createOpenAiSpeechProvider(
       };
       const response = await fetchWithRetry(request, `${endpoint.base}/audio/speech`, {
         method: "POST",
-        redirect: "error",
+        redirect: "manual",
         headers,
         body: JSON.stringify({
           model,

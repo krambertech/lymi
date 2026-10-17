@@ -212,17 +212,20 @@ export function parseReadings(text: string): ReadingSegment[] {
     }
     // A stretch starts at a kanji, at the honorific お or ご right before one, or at kana only
     // where Anki starts one: after a space or at the start. So で in 駅で電車[でんしゃ] never joins
-    // the word after it, while お茶[おちゃ] mid-sentence still reads お + 茶[ちゃ].
+    // the word after it, while お茶[おちゃ] mid-sentence still reads お + 茶[ちゃ]. A reading that
+    // begins おお or ごご is the kanji's own, so the お ending なお in なお多[おお]く stays out.
+    const read = toHiragana(match[1] as string);
+    const honorific = (char: string) => /[おご]/.test(char) && !read.startsWith(char + char);
     const opens = (at: number) =>
       isBase(text[at] as string) ||
-      (/[おご]/.test(text[at] ?? "") && isBase(text[at + 1] ?? "")) ||
+      (honorific(text[at] ?? "") && isBase(text[at + 1] ?? "")) ||
       (at === start && (at === 0 || /\s/.test(text[at - 1] ?? "")));
     let found: { at: number; segments: ReadingSegment[] } | null = null;
     for (let at = start; at < open && !found; at++) {
       const base = text.slice(at, open);
       if (![...base].some(isBase)) break;
       if (!opens(at)) continue;
-      const segments = align(base, toHiragana(match[1] as string));
+      const segments = align(base, read);
       if (segments) found = { at, segments };
     }
     if (!found) continue;

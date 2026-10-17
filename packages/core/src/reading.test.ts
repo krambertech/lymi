@@ -184,6 +184,12 @@ describe("parseReadings", () => {
       { text: "飯", reading: "はん" },
     ]);
     expect(stripReadings("今日はお弁当[おべんとう]")).toBe("今日はお弁当");
+    // Here お ends なお, and おお is 多's own reading.
+    expect(parseReadings("なお多[おお]く")).toEqual([
+      { text: "なお" },
+      { text: "多", reading: "おお" },
+      { text: "く" },
+    ]);
     expect(parseReadings("今日はお弁当[おべんとう]").at(-1)).toEqual({
       text: "弁当",
       reading: "べんとう",

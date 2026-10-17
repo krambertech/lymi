@@ -62,7 +62,7 @@ export function DeleteAccountView({
           retrying={retrying}
         />
       ) : !summary ? (
-        <div className="grid gap-3 py-6">
+        <div className="grid gap-3 pb-6">
           <Skeleton className="h-5 w-3/4 rounded-md" />
           <Skeleton className="h-5 w-1/2 rounded-md" />
           <Skeleton className="mt-4 h-24 w-full rounded-lg" />

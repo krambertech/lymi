@@ -49,9 +49,25 @@ msgstr "{0, plural, one {# person} other {# people}}"
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# section} other {# sections}}"
 
+#. placeholder {0}: 3
+msgid "{0, plural, one {# selected} other {# selected}}"
+msgstr "{0, plural, one {# selected} other {# selected}}"
+
+#. placeholder {0}: 3
+msgid "{0, plural, one {Add # card} other {Add # cards}}"
+msgstr "{0, plural, one {Add # card} other {Add # cards}}"
+
 #. placeholder {0}: step.cards.length - shownCards.length
 msgid "{0, plural, one {One more card in this section, in Lymi.} other {# more cards in this section, in Lymi.}}"
 msgstr "{0, plural, one {One more card in this section, in Lymi.} other {# more cards in this section, in Lymi.}}"
+
+#. placeholder {0}: 2
+msgid "{0, plural, one {Review # due} other {Review # due}}"
+msgstr "{0, plural, one {Review # due} other {Review # due}}"
+
+#. placeholder {0}: 3
+msgid "{0, plural, one {Review all #} other {Review all #}}"
+msgstr "{0, plural, one {Review all #} other {Review all #}}"
 
 #. placeholder {0}: decks.length
 msgid "{0, plural, one {Your deck} other {Your decks}}"
@@ -232,6 +248,9 @@ msgstr "2026 edition"
 
 msgid "25 questions, 15 to pass. 300 to learn."
 msgstr "25 questions, 15 to pass. 300 to learn."
+
+msgid "3 of 4 chosen"
+msgstr "3 of 4 chosen"
 
 msgid "3.5–5.0 mmol/L in adults"
 msgstr "3.5–5.0 mmol/L in adults"
@@ -444,6 +463,9 @@ msgstr "Account-wide access, export, correction and deletion are not self-servic
 msgid "Accounting"
 msgstr "Accounting"
 
+msgid "Actions"
+msgstr "Actions"
+
 msgid "active transport"
 msgstr "active transport"
 
@@ -473,6 +495,9 @@ msgstr "Add it to your assistant"
 
 msgid "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</0>. No assistant? <1>Start another way</1>."
 msgstr "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</0>. No assistant? <1>Start another way</1>."
+
+msgid "Add now"
+msgstr "Add now"
 
 msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
 msgstr "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
@@ -518,6 +543,9 @@ msgstr "Added to Chess, with the meaning and an example."
 
 msgid "adjective"
 msgstr "adjective"
+
+msgid "advantage"
+msgstr "advantage"
 
 msgid "After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, which brings each one back before you forget. Free."
 msgstr "After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, which brings each one back before you forget. Free."
@@ -709,6 +737,9 @@ msgstr "Auditors use it to spot figures that were made up."
 msgid "AWS, Azure and Google Cloud: services, limits and the trade-offs between them."
 msgstr "AWS, Azure and Google Cloud: services, limits and the trade-offs between them."
 
+msgid "Back"
+msgstr "Back"
+
 msgid "Back in 10 minutes."
 msgstr "Back in 10 minutes."
 
@@ -732,6 +763,12 @@ msgstr "Before the test"
 
 msgid "Began in 1618 with the <0>Defenestration of Prague</0>."
 msgstr "Began in 1618 with the <0>Defenestration of Prague</0>."
+
+msgid "Beta"
+msgstr "Beta"
+
+msgid "bill, check"
+msgstr "bill, check"
 
 msgid "Biology"
 msgstr "Biology"
@@ -786,6 +823,9 @@ msgstr "By {publisher}"
 
 msgid "by card"
 msgstr "by card"
+
+msgid "café"
+msgstr "café"
 
 msgid "California DMV knowledge test"
 msgstr "California DMV knowledge test"
@@ -1022,6 +1062,9 @@ msgstr "Connect your own tools."
 
 msgid "Connecting an assistant"
 msgstr "Connecting an assistant"
+
+msgid "Continue with Apple"
+msgstr "Continue with Apple"
 
 msgid "Conversation"
 msgstr "Conversation"
@@ -2360,6 +2403,9 @@ msgstr "Move from Anki"
 msgid "Move from Mochi"
 msgstr "Move from Mochi"
 
+msgid "Move to section…"
+msgstr "Move to section…"
+
 msgid "Moving a substance against its concentration gradient, using energy"
 msgstr "Moving a substance against its concentration gradient, using energy"
 
@@ -2982,6 +3028,9 @@ msgstr "Said to anyone about to eat, the way French says bon appétit."
 msgid "Said to cut a rambling story down to its point."
 msgstr "Said to cut a rambling story down to its point."
 
+msgid "sale"
+msgstr "sale"
+
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Sample twice as fast as the highest frequency"
 
@@ -3047,6 +3096,9 @@ msgstr "See you soon"
 
 msgid "see you; literally, we see"
 msgstr "see you; literally, we see"
+
+msgid "Select all"
+msgstr "Select all"
 
 msgid "Send a chapter to Claude, ChatGPT, Gemini or Grok and ask for the key terms. Each one lands in your deck with the guide’s definition, ready for tonight’s review."
 msgstr "Send a chapter to Claude, ChatGPT, Gemini or Grok and ask for the key terms. Each one lands in your deck with the guide’s definition, ready for tonight’s review."
@@ -3161,6 +3213,9 @@ msgstr "Slides, photos or typed notes."
 
 msgid "Slow or stop so others can pass without you forcing them to change speed or path."
 msgstr "Slow or stop so others can pass without you forcing them to change speed or path."
+
+msgid "Smart add"
+msgstr "Smart add"
 
 msgid "So-so"
 msgstr "So-so"
@@ -3306,11 +3361,17 @@ msgstr "Support"
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Swedes use it for coffee and working hours alike."
 
+msgid "table"
+msgstr "table"
+
 msgid "Tag: {verb}"
 msgstr "Tag: {verb}"
 
 msgid "Tags"
 msgstr "Tags"
+
+msgid "Tags…"
+msgstr "Tags…"
 
 msgid "Take a photo"
 msgstr "Take a photo"
@@ -3630,6 +3691,9 @@ msgstr "Three: SAML, CVSS, and the difference between RTO and RPO."
 msgid "ticket"
 msgstr "ticket"
 
+msgid "tip"
+msgstr "tip"
+
 msgid "To agree"
 msgstr "To agree"
 
@@ -3659,6 +3723,9 @@ msgstr "To buy"
 
 msgid "to come"
 msgstr "to come"
+
+msgid "to eat"
+msgstr "to eat"
 
 msgid "to feel like"
 msgstr "to feel like"
@@ -3716,6 +3783,9 @@ msgstr "To provide accounts, decks, cards, review scheduling, audio, reminders, 
 
 msgid "To pull"
 msgstr "To pull"
+
+msgid "to run"
+msgstr "to run"
 
 msgid "To stop"
 msgstr "To stop"

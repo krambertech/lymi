@@ -1,0 +1,33 @@
+name: Changelog publish
+
+# The site is built ahead, so a changelog update dated ahead appears only when a build runs on its day.
+on:
+  schedule:
+    - cron: "5 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: apps/site/src/content/changelog
+
+      - name: Rebuild lymi.app when an update is dated today
+        env:
+          SITE_DEPLOY_HOOK: ${{ secrets.SITE_DEPLOY_HOOK }}
+        run: |
+          today=$(date -u +%F)
+          if ! ls -d apps/site/src/content/changelog/"$today"-* >/dev/null 2>&1; then
+            echo "No update is dated $today."
+            exit 0
+          fi
+          if [ -z "$SITE_DEPLOY_HOOK" ]; then
+            echo "::error::An update is dated $today but SITE_DEPLOY_HOOK is not set. Add the lymi-site deploy hook for main as a repository secret."
+            exit 1
+          fi
+          curl --fail-with-body --silent --show-error -X POST "$SITE_DEPLOY_HOOK"

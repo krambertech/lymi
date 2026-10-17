@@ -14,6 +14,8 @@ export default defineConfig({
   session: false,
   integrations: [react()],
   vite: {
+    // Pages prerender in workerd, whose clock reads 1970, so the changelog takes its day from here.
+    define: { "import.meta.env.BUILD_DAY": JSON.stringify(new Date().toISOString().slice(0, 10)) },
     plugins: [
       tailwindcss(),
       lingui({ failOnMissing: true }),

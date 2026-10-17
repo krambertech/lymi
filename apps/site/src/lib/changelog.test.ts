@@ -1,7 +1,7 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { parse } from "yaml";
 import { CHANGELOG_FIGURES } from "./changelog-figures";
-import { CHANGELOG_FOLDER } from "./changelog-paths";
+import { CHANGELOG_FOLDER, isChangelogPublished } from "./changelog-paths";
 import { locales } from "./routes";
 
 const sources = import.meta.glob<string>("../content/changelog/*/*.md", {
@@ -81,5 +81,21 @@ describe("changelog updates", () => {
         expect(shape(read(folder, locale)?.source ?? ""), `${folder}/${locale}`).toBe(en);
       }
     }
+  });
+});
+
+describe("an update dated ahead", () => {
+  afterEach(() => vi.unstubAllEnvs());
+
+  it("stays off the built site until it is built on that day", () => {
+    vi.stubEnv("DEV", false);
+    expect(isChangelogPublished("2026-10-17-today", "2026-10-17")).toBe(true);
+    expect(isChangelogPublished("2026-10-18-tomorrow", "2026-10-17")).toBe(false);
+    expect(isChangelogPublished("2026-10-18-tomorrow", "2026-10-18")).toBe(true);
+  });
+
+  it("shows on the dev server", () => {
+    vi.stubEnv("DEV", true);
+    expect(isChangelogPublished("2026-10-18-tomorrow", "2026-10-17")).toBe(true);
   });
 });

@@ -3,3 +3,8 @@ declare module "*.wasm" {
   const module: WebAssembly.Module;
   export default module;
 }
+
+interface ImportMetaEnv {
+  /** The UTC day of the build, `YYYY-MM-DD`, set in `astro.config.mjs`. */
+  readonly BUILD_DAY: string;
+}

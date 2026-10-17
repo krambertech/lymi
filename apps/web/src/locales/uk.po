@@ -2607,6 +2607,9 @@ msgstr "Нотатки мають бути коротшими за 2000 симв
 msgid "Keep the pronunciation under 200 characters."
 msgstr "Вимова має бути коротшою за 200 символів."
 
+msgid "Keep the reading under 200 characters."
+msgstr "Читання має бути коротшим за 200 символів."
+
 msgid "Keep the source under 200 characters."
 msgstr "Джерело має бути коротшим за 200 символів."
 
@@ -3509,6 +3512,10 @@ msgstr "Прочитай <0>політику конфіденційності</0
 msgid "Read the guide"
 msgstr "Прочитати посібник"
 
+msgid "Reading"
+msgstr "Читання"
+
+msgctxt "how a term is read"
 msgid "Reading"
 msgstr "Читання"
 

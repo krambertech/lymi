@@ -23,6 +23,7 @@ import {
   rowState,
   splitForms,
 } from "@lymi/client/deck-list";
+import { drawsReadings, termReading } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Check,
@@ -46,6 +47,7 @@ import {
   useState,
 } from "react";
 import { Button, IconButton } from "../components/button";
+import { Furigana } from "../components/furigana";
 import { SectionRing } from "../components/section-ring";
 import { StateIcon, stateMarks } from "../components/state-mark";
 import {
@@ -576,6 +578,10 @@ const GlossaryRow = memo(function GlossaryRow({
   const { t, i18n } = useLingui();
   const { card, state } = row;
   const { word, forms } = splitForms(card.term);
+  // A Japanese row without furigana keeps a reading's room, so every row in the deck is one height.
+  const reading =
+    termReading({ ...card, term: word }) ??
+    (drawsReadings(card.language) ? [{ text: word, reading: "\u00a0" }] : null);
   const bucket = sort === "due" ? dueBucket(row, now) : null;
   const date =
     state && (bucket === "week" || bucket === "later")
@@ -634,7 +640,15 @@ const GlossaryRow = memo(function GlossaryRow({
         )}
         lang={card.language ?? undefined}
       >
-        {word}
+        {reading ? (
+          <Furigana
+            segments={reading}
+            lang={card.language ?? undefined}
+            hidden={reading[0]?.reading === "\u00a0"}
+          />
+        ) : (
+          word
+        )}
         {forms && (
           <span className="font-normal text-text-2">
             {" · "}

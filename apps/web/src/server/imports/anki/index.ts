@@ -1,12 +1,14 @@
 import {
   fieldsFromRoles,
   fitFields,
+  formatReadings,
   guessFieldRoles,
   htmlToText,
   type ImportedCard,
   type ImportedProgress,
   imageSources,
   importTags,
+  parseReadings,
   type Rating,
   type ReviewModeKey,
   soundCount,
@@ -37,6 +39,7 @@ import {
   plainReading,
   questionField,
   revealCloze,
+  withoutOtherReadings,
 } from "./text";
 
 /**
@@ -416,7 +419,8 @@ export const anki: SourceAdapter<AnkiNote> = {
           : hasFurigana(term)
             ? furiganaReading(term)
             : undefined,
-        example: withoutReadings(raw.example),
+        // Kana readings stay in Lymi's notation; pinyin and other readings go, as they always did.
+        example: raw.example && formatReadings(parseReadings(withoutOtherReadings(raw.example))),
         notes: raw.notes,
       });
       if (!fitted.fields.term) return [];

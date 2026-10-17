@@ -21,6 +21,7 @@ import {
   type Rating,
   ROUNDS,
   type Round,
+  stripReadings,
 } from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
@@ -1489,7 +1490,7 @@ function CardPlate({
                 {card.example && (
                   <Animated.View entering={arrive()}>
                     <Text className="text-md text-text-2" lang={card.language}>
-                      {card.example}
+                      {stripReadings(card.example)}
                     </Text>
                   </Animated.View>
                 )}

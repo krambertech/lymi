@@ -4,7 +4,7 @@ import { useLingui } from "@lingui/react/macro";
 import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { deserializeState } from "@lymi/core";
+import { deserializeState, stripReadings } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
@@ -228,7 +228,7 @@ export default function CardPage() {
         onPress={edit("example")}
       >
         <Text className="text-md text-text" lang={card.language}>
-          {card.example}
+          {stripReadings(card.example)}
         </Text>
       </Field>
     ),

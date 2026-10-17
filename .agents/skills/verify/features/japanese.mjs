@@ -60,25 +60,36 @@ export default async function drive({ page, base, step, api, expect }) {
     },
   );
 
-  const reading = page.getByText("じょうず", { exact: true }).filter({ visible: true });
-  await step("Review it: the term shows in a Japanese face and its reading does not", async () => {
-    await page.goto(`/review?deck=${deck.id}`);
-    const cue = page.getByText("上手").filter({ visible: true }).first();
-    await expect(cue).toBeVisible();
-    await expect(cue).toHaveAttribute("lang", "ja");
-    expect(await cue.evaluate((el) => getComputedStyle(el).fontFamily)).toContain("Hiragino Sans");
-    await expect(reading).toHaveCount(0);
-  });
+  // A New card draws its reading as furigana over the kanji, never as a line under the cue.
+  const furigana = page.locator("rt", { hasText: "じょうず" }).filter({ visible: true });
+  const line = page
+    .getByText("じょうず", { exact: true })
+    .filter({ visible: true })
+    .and(page.locator(":not(rt):not(.sr-only)"));
+  await step(
+    "Review it: the term shows in a Japanese face with furigana, and no reading line",
+    async () => {
+      await page.goto(`/review?deck=${deck.id}`);
+      const cue = page.getByText("上手").filter({ visible: true }).first();
+      await expect(cue).toBeVisible();
+      await expect(cue).toHaveAttribute("lang", "ja");
+      expect(await cue.evaluate((el) => getComputedStyle(el).fontFamily)).toContain(
+        "Hiragino Sans",
+      );
+      await expect(furigana).toHaveCount(1);
+      await expect(line).toHaveCount(0);
+    },
+  );
 
-  await step("Reveal it: the reading shows under the meaning", async () => {
+  await step("Reveal it: the furigana stays and the meaning shows", async () => {
     await page
       .getByRole("button", { name: "Reveal the card" })
       .click({ position: { x: 24, y: 24 } });
     await expect(
       page.getByText("skilful", { exact: true }).filter({ visible: true }),
     ).toBeVisible();
-    await expect(reading).toBeVisible();
-    await expect(reading).toHaveAttribute("lang", "ja");
+    await expect(furigana).toHaveCount(1);
+    await expect(furigana.locator("xpath=..")).toHaveAttribute("lang", "ja");
   });
 
   await step("Smart add a lesson that prints 下手's reading: the card keeps it", async () => {

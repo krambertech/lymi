@@ -121,5 +121,6 @@ jobs:
             exit 0
           fi
           npx --yes "$POSTHOG_CLI" --host "$POSTHOG_CLI_HOST" hermes upload --directory dist \
+            --release-mode event \
             --release-name "$(node -p 'require("./app.json").expo.ios.bundleIdentifier')" \
             --release-version "$(node -p 'require("./app.json").expo.version')"

@@ -31,6 +31,7 @@ A change is verified when the feature it touches has been driven in the running 
 | Import and export | [import-export.md](features/import-export.md) |
 | API keys and connected apps | [keys-and-apps.md](features/keys-and-apps.md) |
 | Smart add | [smart-add.md](features/smart-add.md) |
+| Japanese: the reading after the reveal | [japanese.md](features/japanese.md) |
 
 ## Launch
 

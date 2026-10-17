@@ -47,8 +47,7 @@ export default async function drive({ page, step, api, expect }) {
 
   await step("Back on Today, the forgotten card is listed and the due count fell", async () => {
     await page.goto("/today");
-    const list = page.getByRole("region", { name: "More to review" });
-    await expect(list.getByText(/^1\s*Forgotten today/)).toBeVisible();
+    await expect(page.getByRole("link", { name: /^1\s+Forgotten today\b/ })).toBeVisible();
     const { counts } = await api("/api/dev/state");
     expect(counts.due).toBeLessThan(seeded.due);
     return counts;

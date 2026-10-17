@@ -14,6 +14,8 @@ On a desktop, `CardForm` shows Term, Meaning, Deck and Section, then a **More fi
 
 At 393 px the same four fields lead a sideways-scrolling row of eight chips, of which three and a half fit: Example, Pronunciation, Source and part of Tags. Each chip opens its field in its own drawer.
 
+The furigana pull request ([#785](https://github.com/krambertech/lymi/pull/785)) relabels Pronunciation as **Reading** on Japanese and Chinese cards. It also adds a "how it reads" preview of the term with furigana and the example with its readings. The preview shows only for a Japanese card with a kana reading over kanji, or an example with `[かな]` readings. On a desktop it is a full-width block under the Reading and Source row. In the touch layout it sits inside the Example and Reading drawers.
+
 The phone app already has the lighter shape ([phone.md](../design/system/phone.md), Add a word). Term and meaning are always shown, and every other text field appears only once it holds something or its chip adds it in place, drawn as a name over a line with no box. The chips are ordered by last use on that phone, and the choices (deck, section, picture, how it's asked, tags) each open a row sheet.
 
 ## Evidence
@@ -55,7 +57,7 @@ Every field can be changed later from the card page's edit sheet. When adding, a
 
 ## Leaning
 
-B with D. Adding shows two fields, the deck row and a chip row, with no hook and no settings. Editing is the same form: every field that holds text is shown, and every empty one is a chip, the hook included, with **Card settings** last. The phone app and the web then share one shape, and the furigana reading preview appears only once Example is added. C is an [open question](#open-questions).
+B with D. Adding shows two fields, the deck row and a chip row, with no hook and no settings. Editing is the same form: every field that holds text is shown, and every empty one is a chip, the hook included, with **Card settings** last. The phone app and the web then share one shape. The furigana preview becomes one block under the last of Reading and Example that is shown, and only while one of them holds a reading. It never takes its own row while both are still chips. C is an [open question](#open-questions).
 
 ## Instrumentation
 

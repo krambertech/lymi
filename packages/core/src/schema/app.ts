@@ -8,7 +8,12 @@ import {
   text,
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
-import { DECK_PURPOSES, type DeckEnrichField, type EnrichedField } from "../enrichment";
+import {
+  DECK_ENRICH_FIELDS,
+  DECK_PURPOSES,
+  type DeckEnrichField,
+  type EnrichedField,
+} from "../enrichment";
 import {
   EDITION_STATUSES,
   type EditionCardField,
@@ -272,6 +277,29 @@ export const cardTags = sqliteTable(
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
   },
   (t) => [primaryKey({ columns: [t.cardId, t.tagId] }), index("card_tags_tag_idx").on(t.tagId)],
+);
+
+/**
+ * The AI's text from a field the owner then rewrote. The learner's side is the card's current text,
+ * read while the field is still theirs, so later edits refine the same correction. ADR 0037.
+ */
+export const cardCorrections = sqliteTable(
+  "card_corrections",
+  {
+    cardId: text("card_id")
+      .notNull()
+      .references(() => cards.id, { onDelete: "cascade" }),
+    field: text("field", { enum: DECK_ENRICH_FIELDS }).notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    aiText: text("ai_text").notNull(),
+    createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.cardId, t.field] }),
+    index("card_corrections_user_idx").on(t.userId, t.createdAt),
+  ],
 );
 
 /** Per-learner settings. One row per user, created on first read. */

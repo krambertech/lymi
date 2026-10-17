@@ -169,6 +169,82 @@ describe("field sources", () => {
     expect(stated.exampleSource).toBe("manual");
   });
 
+  it("keeps the AI's text from each field the owner rewrites, and reports counts only", async () => {
+    const capture = vi.fn();
+    const base = await learner(db, "corrections-1", "Kateryna");
+    const ctx = { ...base, analytics: { capture, writeDataPoint: vi.fn() } };
+    const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+    const [added] = await addCards(ctx, [
+      CardInput.parse({ deckId: deck.id, term: "sbrigarsi", meaning: "hurry" }),
+    ]);
+    if (added?.status !== "added") throw new Error("expected an added card");
+    const id = added.card.id;
+    await db
+      .update(schema.cards)
+      .set({
+        example: "Sbrigati!",
+        exampleSource: "ai",
+        notes: "Reflexive.",
+        notesSource: "ai",
+        pronunciation: "zbriˈɡarsi",
+        pronunciationSource: "ai",
+      })
+      .where(eq(schema.cards.id, id));
+    const corrections = () =>
+      db
+        .select({ field: schema.cardCorrections.field, aiText: schema.cardCorrections.aiText })
+        .from(schema.cardCorrections)
+        .where(eq(schema.cardCorrections.cardId, id))
+        .orderBy(schema.cardCorrections.field);
+
+    await updateCard(
+      ctx,
+      id,
+      // The meaning was never the AI's, and the notes come back as the AI wrote them.
+      CardPatch.parse({ meaning: "to hurry", example: "Sbrigati, è tardi!", notes: "Reflexive. " }),
+    );
+    await updateCards({ ...ctx, actor: "mcp" }, [{ cardId: id, pronunciation: "" }]);
+    expect(await corrections()).toEqual([
+      { field: "example", aiText: "Sbrigati!" },
+      { field: "pronunciation", aiText: "zbriˈɡarsi" },
+    ]);
+
+    // Once the field is the learner's, a later edit leaves the AI's text as it was.
+    await updateCard(ctx, id, CardPatch.parse({ example: "Sbrighiamoci." }));
+    // Text put back as the AI's, as Undo does, or cleared to never set, is no correction.
+    await updateCard(ctx, id, { notes: "Reflexive.", notesSource: "ai" });
+    await db
+      .update(schema.cards)
+      .set({ meaning: "to hasten", meaningSource: "ai" })
+      .where(eq(schema.cards.id, id));
+    await updateCard(ctx, id, { meaning: null });
+    expect(await corrections()).toHaveLength(2);
+
+    const events = capture.mock.calls
+      .map(([event]) => event)
+      .filter((event) => event.name === "ai_text_corrected");
+    expect(events).toEqual([
+      {
+        name: "ai_text_corrected",
+        channel: "app",
+        count: 1,
+        meaning: 0,
+        example: 1,
+        notes: 0,
+        pronunciation: 0,
+      },
+      {
+        name: "ai_text_corrected",
+        channel: "mcp",
+        count: 1,
+        meaning: 0,
+        example: 0,
+        notes: 0,
+        pronunciation: 1,
+      },
+    ]);
+  });
+
   it("refuses ai from a caller", () => {
     expect(
       CardInput.safeParse({ deckId: "d", term: "t", meaning: "m", meaningSource: "ai" }).success,

@@ -1,9 +1,9 @@
-import { CardInput } from "@lymi/core";
+import { CardInput, CardPatch } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider, TextRequest } from "../ai";
 import { type Db, schema } from "../db";
-import { addCards } from "./cards";
+import { addCards, updateCard } from "./cards";
 import { STYLE_LEARN_AFTER, STYLE_RELEARN_AFTER, spread } from "./deck-style";
 import { createDeck, updateDeck } from "./decks";
 import { enrichCards, learnDeckStyles } from "./index";
@@ -162,19 +162,111 @@ describe("learnDeckStyles", () => {
         name: "deck_style_learned",
         outcome: "failed",
         cards: 8,
+        corrections: 0,
         topic: false,
         chars: 0,
-        prompt_version: 1,
+        prompt_version: 2,
       },
       {
         name: "deck_style_learned",
         outcome: "learned",
         cards: 8,
+        corrections: 0,
         topic: false,
         chars: article.style.length,
-        prompt_version: 1,
+        prompt_version: 2,
       },
     ]);
+  });
+
+  /** Stands in for enrichment writing each card's example. */
+  async function aiExamples(ids: readonly string[]) {
+    for (const id of ids) {
+      await db
+        .update(schema.cards)
+        .set({ example: `AI example ${id}`, exampleSource: "ai" })
+        .where(eq(schema.cards.id, id));
+    }
+  }
+
+  async function correct(ctx: Awaited<ReturnType<typeof learner>>, id: string, example: string) {
+    tick();
+    await updateCard(ctx, id, CardPatch.parse({ example }));
+  }
+
+  it("reads the owner's corrections, newest first, with the learner's text as the card holds it", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    const capture = vi.fn();
+    const base = await learner(db, "style-corrections", "Kateryna");
+    const ctx = { ...base, analytics: { capture, writeDataPoint: vi.fn() } };
+    const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+    const other = await createDeck(ctx, { name: "Altro", defaultLanguage: "it" });
+    const ids = await write(
+      ctx,
+      deck.id,
+      Array.from({ length: STYLE_LEARN_AFTER }, (_, i) => `parola ${i}`),
+    );
+    const [elsewhere] = await write(ctx, other.id, ["altrove"]);
+    const [first = "", second = "", undone = "", archived = ""] = ids;
+    await aiExamples([first, second, undone, archived, elsewhere ?? ""]);
+
+    await correct(ctx, first, "Una frase mia.");
+    await correct(ctx, second, "Prima.");
+    await correct(ctx, second, "Dopo, più breve.");
+    await correct(ctx, undone, "Annullata.");
+    await correct(ctx, archived, "Archiviata.");
+    await correct(ctx, elsewhere ?? "", "Altrove.");
+    // Undo puts the AI's text back, and the card's correction no longer holds.
+    await updateCard(ctx, undone, { example: `AI example ${undone}`, exampleSource: "ai" });
+    await db
+      .update(schema.cards)
+      .set({ archivedAt: new Date() })
+      .where(eq(schema.cards.id, archived));
+    tick();
+
+    const provider = fakeProvider(article);
+    expect(await learnDeckStyles(ctx, ids, provider)).toMatchObject({ learned: 1 });
+    const input = JSON.parse(provider.asked[0]?.input ?? "{}");
+    expect(input.corrections).toEqual([
+      {
+        term: "parola 1",
+        field: "example",
+        ai: `AI example ${second}`,
+        learner: "Dopo, più breve.",
+      },
+      { term: "parola 0", field: "example", ai: `AI example ${first}`, learner: "Una frase mia." },
+    ]);
+    expect(provider.asked[0]?.instructions).toContain("They are the strongest signal you have");
+    const [event] = capture.mock.calls
+      .map(([event]) => event)
+      .filter((event) => event.name === "deck_style_learned");
+    expect(event).toMatchObject({ corrections: 2, prompt_version: 2 });
+  });
+
+  it("counts corrections toward learning again, beside the cards they changed", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    const ctx = await learner(db, "style-relearn", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Deutsch", defaultLanguage: "de" });
+    const ids = await write(
+      ctx,
+      deck.id,
+      Array.from({ length: STYLE_RELEARN_AFTER }, (_, i) => `Wort ${i}`),
+    );
+    await aiExamples(ids.slice(0, 3));
+    tick();
+    const provider = fakeProvider(article);
+    expect(await learnDeckStyles(ctx, ids, provider)).toMatchObject({ learned: 1 });
+
+    // Four plain edits are four changed cards, short of the ten that learn again.
+    for (const id of ids.slice(-4)) {
+      tick();
+      await updateCard(ctx, id, CardPatch.parse({ notes: "Mine." }));
+    }
+    expect(await learnDeckStyles(ctx, ids, provider)).toMatchObject({ learned: 0 });
+    // Three corrections count as three cards and three corrections.
+    for (const id of ids.slice(0, 3)) await correct(ctx, id, "Mein Beispiel.");
+    tick();
+    expect(await learnDeckStyles(ctx, ids, provider)).toMatchObject({ learned: 1 });
   });
 
   it("never reads a deck the learner does not own", async () => {

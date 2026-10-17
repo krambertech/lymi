@@ -7,7 +7,7 @@
  * `--runs` asks each deck more than once, to see whether the note holds steady.
  */
 import { readFileSync } from "node:fs";
-import { type DeckPurpose, deckEnrichFields } from "@lymi/core";
+import { type DeckEnrichField, type DeckPurpose, deckEnrichFields } from "@lymi/core";
 import { createTextProvider } from "../ai";
 import { languageGuide } from "./languages";
 import {
@@ -24,6 +24,8 @@ type FixtureDeck = {
   deck: { name: string; language?: string; purpose: DeckPurpose; instructions?: string };
   /** Day added, term, meaning, example. */
   cards: [string, string, string, string][];
+  /** Term, field, the AI's text, the learner's, newest first. */
+  corrections?: [string, DeckEnrichField, string, string][];
   expect: {
     /** Each group needs one of its words in the note. */
     mentions?: string[][];
@@ -56,6 +58,12 @@ function inputOf(fixture: FixtureDeck): string {
       example,
       notes: "",
       pronunciation: "",
+    })),
+    corrections: (fixture.corrections ?? []).map(([term, field, ai, learner]) => ({
+      term,
+      field,
+      ai,
+      learner,
     })),
   });
 }

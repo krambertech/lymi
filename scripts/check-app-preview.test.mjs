@@ -38,6 +38,7 @@ function previewFetch(calls, queues = {}) {
       return queued("me") ?? Response.json({ email: "learner@lymi.local" });
     }
     if (value.endsWith("/api/decks")) return queued("decks") ?? Response.json([{ id: "deck" }]);
+    if (value.endsWith("/api/dev/seed")) return queued("seed") ?? Response.json({ counts: {} });
     if (value.endsWith("/api/dev/personas")) {
       return queued("personas") ?? Response.json({ personas: [{ id: "learner", library: 1 }] });
     }
@@ -55,8 +56,6 @@ test("verifies capability entry, persona sign-in, and seeded data", async () => 
   assert.equal(result.destination, "/today");
   assert.match(calls[1][1], /__Host-lymi-preview=access/);
   assert.match(calls[2][1], /lymi\.session_token=session/);
-  // Reseeds, since a preview's database outlives the deploy that seeded it.
-  assert.match(calls[1][0], /\/api\/dev\/sign-in\?as=learner&reset=1$/);
 });
 
 test("waits for a new preview Worker that answers 404 or drops the connection", async () => {
@@ -189,6 +188,20 @@ test("rejects a raw preview URL without its protected entry path", async () => {
     () => checkAppPreview("https://preview-lymi-app-pr-105.example.workers.dev"),
     /protected app preview entry link/,
   );
+});
+
+test("reseeds once when an earlier push left the persona's Library short", async () => {
+  const calls = [];
+  const fetchImpl = previewFetch(calls, {
+    decks: [
+      Response.json([{ id: "a" }]),
+      Response.json(Array.from({ length: 7 }, (_, i) => ({ id: i }))),
+    ],
+    personas: [Response.json({ personas: [{ id: "learner", library: 7 }] })],
+  });
+  const result = await checkAppPreview(entryUrl, { fetchImpl });
+  assert.equal(result.decks, 7);
+  assert.equal(requestsTo(calls, "/api/dev/seed"), 1);
 });
 
 test("fails when the seed stopped before the persona's whole Library landed", async () => {

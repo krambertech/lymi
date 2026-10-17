@@ -70,10 +70,7 @@ export async function checkAppPreview(
     throw new Error("preview entry did not set the access cookie");
   }
 
-  // A preview keeps its database across deploys, so the persona is reseeded to match this deploy's
-  // seed; otherwise an account seeded by an earlier push keeps whatever that push wrote.
   const signIn = new URL(opened.headers.get("location"), entry);
-  signIn.searchParams.set("reset", "1");
   const signed = await settledFetch(signIn, jar, settling);
   if (signed.status !== 303 || !signed.headers.get("location")) {
     throw new Error(`preview persona sign-in returned HTTP ${signed.status}`);
@@ -85,20 +82,35 @@ export async function checkAppPreview(
     throw new Error("preview persona session was not available after sign-in");
   }
 
-  const decks = await settledFetch(new URL("/api/decks", entry), jar, settling);
-  const data = await decks.json();
-  if (!decks.ok || !Array.isArray(data) || data.length === 0) {
-    throw new Error("preview persona did not receive seeded learning data");
-  }
-  // A seed that stopped part way still leaves some decks, so compare with what the persona promises.
+  const library = async () => {
+    const decks = await settledFetch(new URL("/api/decks", entry), jar, settling);
+    const data = await decks.json();
+    if (!decks.ok || !Array.isArray(data) || data.length === 0) {
+      throw new Error("preview persona did not receive seeded learning data");
+    }
+    return data.length;
+  };
+  let held = await library();
+  // A preview keeps its database across deploys, so an account seeded by an earlier push keeps what
+  // that push wrote. One reseed, given the time a whole seed takes on D1, brings it up to this deploy.
   const id = signIn.searchParams.get("as") ?? "learner";
   const listed = await settledFetch(new URL("/api/dev/personas", entry), jar, settling);
   const expected = (await listed.json()).personas?.find((p) => p.id === id)?.library;
-  if (typeof expected === "number" && data.length < expected) {
-    throw new Error(`preview persona ${id} holds ${data.length} deck(s), expected ${expected}`);
+  if (typeof expected === "number" && held < expected) {
+    const reseeded = await fetchImpl(new URL("/api/dev/seed", entry), {
+      method: "POST",
+      headers: { cookie: cookieHeader(jar), "content-type": "application/json" },
+      body: "{}",
+      signal: AbortSignal.timeout(120_000),
+    });
+    if (!reseeded.ok) throw new Error(`preview persona reseed returned HTTP ${reseeded.status}`);
+    held = await library();
+    if (held < expected) {
+      throw new Error(`preview persona ${id} holds ${held} deck(s), expected ${expected}`);
+    }
   }
 
-  return { learner, decks: data.length, destination: signed.headers.get("location") };
+  return { learner, decks: held, destination: signed.headers.get("location") };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

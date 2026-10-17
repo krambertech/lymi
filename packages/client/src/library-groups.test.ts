@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { groupDecks, seriesForm } from "./library-groups";
+import { groupDecks, nameInSeries, seriesForm } from "./library-groups";
 
 const deck = (id: string, seriesId: string | null = null) => ({ id, seriesId });
 
@@ -49,5 +49,24 @@ describe("seriesForm", () => {
 
   it("says a series that has gone is missing rather than creating one", () => {
     expect(seriesForm("s2", list)).toEqual({ mode: "missing" });
+  });
+});
+
+describe("nameInSeries", () => {
+  it("drops the series' name and its separator", () => {
+    expect(nameInSeries("Eesti A1 · Words", "Eesti A1")).toBe("Words");
+    expect(nameInSeries("eesti a1 - Phrases", "Eesti A1")).toBe("Phrases");
+    expect(nameInSeries("Eesti A1: Grammar", "Eesti A1")).toBe("Grammar");
+  });
+
+  it("keeps a name that only starts with the same words", () => {
+    expect(nameInSeries("Eesti A1 Words", "Eesti A1")).toBe("Eesti A1 Words");
+    expect(nameInSeries("Eesti A12 · Words", "Eesti A1")).toBe("Eesti A12 · Words");
+    expect(nameInSeries("Words", "Eesti A1")).toBe("Words");
+  });
+
+  it("never leaves a deck without a name", () => {
+    expect(nameInSeries("Eesti A1", "Eesti A1")).toBe("Eesti A1");
+    expect(nameInSeries("Eesti A1 · ", "Eesti A1")).toBe("Eesti A1 · ");
   });
 });

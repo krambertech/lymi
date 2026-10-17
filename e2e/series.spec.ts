@@ -81,7 +81,11 @@ test("a learner gathers decks into a series and reviews them together", async ({
     await expect(sheet).toBeHidden();
 
     const region = seriesRegion(page, series);
-    await expect(region.getByText("2 decks · 3 cards", { exact: true })).toBeVisible();
+    await expect(deckLinks(region)).toHaveCount(2);
+    // The series reviews from the strip under its plate.
+    await expect(
+      region.getByRole("link", { name: new RegExp(`^Review ${series}, `) }),
+    ).toBeVisible();
     await expect(deckLinks(region).nth(0)).toContainText(verbs);
     await page.reload();
     await expect(deckLinks(region).nth(0)).toContainText(verbs);
@@ -235,7 +239,7 @@ test("a deck can be dragged into a series and along it", async ({ page, isMobile
     await expect(page).toHaveURL(/\/library$/);
     await page.reload();
     await expect(deckLinks(region).nth(0)).toContainText(loose);
-    await expect(region.getByText("2 decks · 2 cards", { exact: true })).toBeVisible();
+    await expect(deckLinks(region)).toHaveCount(2);
   });
 
   await test.step("dragging along the series changes its order", async () => {
@@ -245,12 +249,13 @@ test("a deck can be dragged into a series and along it", async ({ page, isMobile
     await expect(deckLinks(region).nth(0)).toContainText(inside);
   });
 
-  await test.step("with every deck in the series, New deck stays below it", async () => {
+  await test.step("with every deck in the series, New deck stays by the title and nothing waits below", async () => {
     const newDeck = page.locator("main").getByRole("button", { name: "New deck", exact: true });
     await expect(newDeck).toBeVisible();
-    const tray = await region.boundingBox();
-    const tile = await newDeck.boundingBox();
-    expect(tile && tray && tile.y > tray.y + tray.height).toBe(true);
+    const plate = await region.boundingBox();
+    const button = await newDeck.boundingBox();
+    expect(button && plate && button.y < plate.y).toBe(true);
+    await expect(page.getByText("Drop a deck here to take it out of its series.")).toHaveCount(0);
   });
 
   await test.step("the keyboard carries a deck out of its series", async () => {
@@ -271,6 +276,6 @@ test("a deck can be dragged into a series and along it", async ({ page, isMobile
     await page.reload();
     await expect(deckLink(page.locator("main"), inside)).toBeVisible();
     await expect(deckLink(region, inside)).toHaveCount(0);
-    await expect(region.getByText("1 deck · 1 card", { exact: true })).toBeVisible();
+    await expect(deckLinks(region)).toHaveCount(1);
   });
 });

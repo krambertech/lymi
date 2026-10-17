@@ -2,7 +2,7 @@ import { Archive } from "lucide-react";
 import { useState } from "react";
 import { IconButton } from "../../components/button";
 import { SourceChip, StateChip } from "../../components/chip";
-import { DeckCard } from "../../components/deck-card";
+import { DeckRow } from "../../components/deck-row";
 import { NewCardsRow } from "../../components/new-cards-row";
 import { SettingsGroup } from "../../components/settings-group";
 import { Table as DataTable, Td, Th } from "../../components/table";
@@ -19,19 +19,19 @@ export const lists: Group = {
   lede: "Decks, new cards and settings, one after another. Rows press down 3%; numbers are tabular.",
   entries: [
     {
-      slug: "deck-card",
-      name: "Deck card",
-      source: "components/deck-card.tsx",
-      note: "A deck in Library is for choosing one to open: its name, whether it wants you today, its language and size.",
+      slug: "deck-row",
+      name: "Deck row",
+      source: "components/deck-row.tsx",
+      note: "A deck in Library, one row in its group's plate like Today's deck rows: its name, its language and size, and whether it wants you today.",
       Demo: () => (
         <Variants
           items={[
             {
               label: "Due today",
-              note: "The due count is the card’s only colour, an amber tint at the end of the name.",
+              note: "The due count is the row’s only colour, an amber tint before the arrow.",
               render: () => (
-                <div className="w-full">
-                  <DeckCard id="d1" name="Italian with Giulia" language="it" due={8} total={64} />
+                <div className="edge w-full overflow-hidden rounded-xl bg-plate">
+                  <DeckRow id="d1" name="Italian with Giulia" language="it" due={8} total={64} />
                 </div>
               ),
             },
@@ -39,8 +39,8 @@ export const lists: Group = {
               label: "Nothing due",
               note: "Says when it next asks for something.",
               render: () => (
-                <div className="w-full">
-                  <DeckCard
+                <div className="edge w-full overflow-hidden rounded-xl bg-plate">
+                  <DeckRow
                     id="d2"
                     name="Portuguese"
                     language="pt-BR"
@@ -55,8 +55,8 @@ export const lists: Group = {
               label: "Shared with you",
               note: "A joined deck names its owner on its own line, the way the join page does.",
               render: () => (
-                <div className="w-full">
-                  <DeckCard
+                <div className="edge w-full overflow-hidden rounded-xl bg-plate">
+                  <DeckRow
                     id="d4"
                     name="Eesti keel, A1"
                     language="et"
@@ -71,8 +71,8 @@ export const lists: Group = {
               label: "Added from Explore",
               note: "A published deck names its publisher with their mark, the lantern for Lymi’s own decks.",
               render: () => (
-                <div className="w-full">
-                  <DeckCard
+                <div className="edge w-full overflow-hidden rounded-xl bg-plate">
+                  <DeckRow
                     id="d5"
                     name="Eesti keel, A2"
                     language="et"

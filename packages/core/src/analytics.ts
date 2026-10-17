@@ -361,6 +361,7 @@ export const analyticsEvents = {
   }),
   deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
   changelog_opened: z.object({ from: z.enum(["learner_menu"]) }),
+  library_searched: z.object({ matches: z.enum(["1", "2-5", "6+"]) }),
   section_go_to: z.object({}),
   pronunciation_played: z.object({
     outcome: z.enum(["played", "failed"]),
@@ -442,6 +443,7 @@ export const analyticsProducers = {
   card_field_added: ["browser"],
   deck_filter_added: ["browser"],
   changelog_opened: ["browser"],
+  library_searched: ["browser"],
   section_go_to: ["phone"],
   pronunciation_played: ["browser", "phone"],
   deck_tag_changed: ["worker"],

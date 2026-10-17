@@ -131,10 +131,6 @@ msgstr "{0, plural, one {# аудиофрагмент пропущен, напр
 msgid "{0, plural, one {# deck} other {# decks}}"
 msgstr "{0, plural, one {# колода} few {# колоды} many {# колод} other {# колоды}}"
 
-#. placeholder {0}: inSeries.length
-msgid "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
-msgstr "{0, plural, one {# колода} few {# колоды} many {# колод} other {# колоды}} · {cards, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
-
 #. placeholder {0}: decks.length
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# колода} few {# колоды} many {# колод} other {# колоды}} · {total, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
@@ -433,9 +429,6 @@ msgstr "Приложение {appName} подключено"
 msgid "{appName} was not connected"
 msgstr "Приложение {appName} не подключено"
 
-msgid "{archivedCount, plural, one {# archived deck} other {# archived decks}}"
-msgstr "{archivedCount, plural, one {# архивная колода} few {# архивные колоды} many {# архивных колод} other {# архивной колоды}}"
-
 msgid "{attempts, plural, one {review today} other {reviews today}}"
 msgstr "{attempts, plural, one {повторение сегодня} few {повторения сегодня} many {повторений сегодня} other {повторения сегодня}}"
 
@@ -626,6 +619,9 @@ msgstr "{limit, plural, one {Умное добавление в бета-вер�
 
 msgid "{limit, plural, one {You’ve used today’s # lesson} other {You’ve used today’s # lessons}}"
 msgstr "{limit, plural, one {На сегодня использован # урок} few {На сегодня использованы все # урока} many {На сегодня использованы все # уроков} other {На сегодня использовано # урока}}"
+
+msgid "{matches, plural, =0 {No decks match} one {# deck matches} other {# decks match}}"
+msgstr "{matches, plural, =0 {Ни одна колода не подходит} one {# колода подходит} few {# колоды подходят} many {# колод подходят} other {# колоды подходят}}"
 
 msgid "{minutes, plural, one {You can add more lessons in # minute.} other {You can add more lessons in # minutes.}}"
 msgstr "{minutes, plural, one {Новые уроки можно добавить через # минуту.} few {Новые уроки можно добавить через # минуты.} many {Новые уроки можно добавить через # минут.} other {Новые уроки можно добавить через # минуты.}}"
@@ -1144,6 +1140,9 @@ msgstr "«{tagName}» архивирован с {0, plural, one {# карточ�
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "{count, plural, one {Заархивирована # карточка} few {Заархивировано # карточки} many {Заархивировано # карточек} other {Заархивировано # карточки}} в колоде «{deck}»"
 
+msgid "Archived decks"
+msgstr "Архивные колоды"
+
 msgid "Archived decks and cards go too, with your settings, photo, connected apps and API keys. You leave every deck you joined, and every device is signed out."
 msgstr "Архивированные колоды и карточки тоже удалятся, вместе с настройками, фото, подключёнными приложениями и ключами API. Ты покинешь колоды других людей, которые изучаешь, и выйдешь из аккаунта на всех устройствах."
 
@@ -1505,6 +1504,9 @@ msgstr "Убрать изображение"
 
 msgid "Close"
 msgstr "Закрыть"
+
+msgid "Close search"
+msgstr "Закрыть поиск"
 
 msgid "Cloze"
 msgstr "Пропуск в предложении"
@@ -1979,6 +1981,9 @@ msgstr "Перетащи, чтобы подвинуть фото. Чтобы и�
 
 msgid "Driving"
 msgstr "Вождение"
+
+msgid "Drop a deck here to take it out of its series."
+msgstr "Перетащи колоду сюда, чтобы убрать её из серии."
 
 msgid "Drop or paste a picture"
 msgstr "Перетащи или вставь изображение"
@@ -3098,6 +3103,9 @@ msgstr "Нет карточек, которые ты часто забываеш
 msgid "No decks in this series yet."
 msgstr "В этой серии пока нет колод."
 
+msgid "No decks match “{term}”"
+msgstr "Нет колод по запросу «{term}»"
+
 msgid "No decks of your own yet. Only decks you create can go in a series."
 msgstr "У тебя пока нет своих колод. В серию можно добавить только созданные тобой колоды."
 
@@ -3758,6 +3766,9 @@ msgstr "Повтори {limit} из {reviewable}"
 msgid "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}"
 msgstr "Повторить серию «{seriesName}», {due, plural, one {# карточка к повторению} few {# карточки к повторению} many {# карточек к повторению} other {# карточки к повторению}}"
 
+msgid "Review all"
+msgstr "Повторить всё"
+
 msgid "Review done"
 msgstr "Повторение завершено"
 
@@ -3869,6 +3880,9 @@ msgstr "Наука"
 
 msgid "Search"
 msgstr "Поиск"
+
+msgid "Search decks"
+msgstr "Искать колоды"
 
 msgid "Search languages"
 msgstr "Поиск языков"
@@ -4008,9 +4022,6 @@ msgstr "Поделились с тобой"
 
 msgid "Shelves"
 msgstr "Полки"
-
-msgid "Show"
-msgstr "Показать"
 
 msgid "Show all"
 msgstr "Показать все"
@@ -4599,6 +4610,9 @@ msgstr "Путешествия"
 
 msgid "Try a clearer photo or paste the lesson text."
 msgstr "Попробуй более чёткое фото или вставь текст урока."
+
+msgid "Try a deck’s name, its language or its series."
+msgstr "Попробуй название колоды, её язык или серию."
 
 msgid "Try a different term or meaning, or clear the search."
 msgstr "Попробуй другой термин или значение либо очисти поиск."

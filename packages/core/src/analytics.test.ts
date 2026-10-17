@@ -85,7 +85,12 @@ describe("analytics privacy contract", () => {
     ).toBeNull();
     expect(eventProperties("deck_filter_added", { kind: "tag", name: "food" }, "browser")).toEqual({
       kind: "tag",
-    });
+    }); // A Library search sends how many decks it left, never what was typed.
+    expect(
+      eventProperties("library_searched", { matches: "2-5", query: "eesti" }, "browser"),
+    ).toEqual({ matches: "2-5" });
+    expect(eventProperties("library_searched", { matches: 3 }, "browser")).toBeNull();
+    expect(eventProperties("library_searched", { matches: "1" }, "worker")).toBeNull();
   });
   it("bands a backlog and sends an AI call's size without its text", () => {
     expect([0, 1, 20, 21, 100, 101].map(backlogOf)).toEqual([

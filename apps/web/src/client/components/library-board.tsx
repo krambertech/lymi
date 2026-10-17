@@ -19,10 +19,10 @@ import {
 } from "@dnd-kit/core";
 import {
   arrayMove,
-  rectSortingStrategy,
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
+  verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useLingui } from "@lingui/react/macro";
@@ -45,8 +45,10 @@ export interface LibraryBoardProps {
   renderSeriesHeader: (series: Series, decks: DeckSummary[]) => ReactNode;
   /** What an empty series shows where its decks would be. */
   renderEmptySeries: (series: Series) => ReactNode;
-  /** Trailing tile in the loose grid, such as New deck. */
-  looseTrailer?: ReactNode | undefined;
+  /** Drawn under a series' plate, tucked beneath its bottom edge, such as its Review. */
+  renderSeriesFoot?: ((series: Series, decks: DeckSummary[]) => ReactNode) | undefined;
+  /** Where a dragged deck leaves its series when no deck is loose; drawn only during a drag. */
+  looseTarget?: ReactNode | undefined;
   /** A series' whole deck list after a drop into it. Absent, nothing can be dragged. */
   onSetSeriesDecks?: ((seriesId: string, deckIds: string[]) => void) | undefined;
   /** A deck dropped outside every series. */
@@ -63,7 +65,7 @@ const containerOf = (id: UniqueIdentifier, containers: Containers) =>
 
 /**
  * Library's decks, which the learner's own can be dragged into, out of and along a series. A deck
- * without a series has no order to change, so the loose grid takes drops without making room.
+ * without a series has no order to change, so the loose list takes drops without making room.
  * Menus do the same moves without a pointer: Move to series on a deck, Edit series on a series.
  */
 export function LibraryBoard({
@@ -72,7 +74,8 @@ export function LibraryBoard({
   renderDeck,
   renderSeriesHeader,
   renderEmptySeries,
-  looseTrailer,
+  renderSeriesFoot,
+  looseTarget,
   onSetSeriesDecks,
   onRemoveFromSeries,
 }: LibraryBoardProps) {
@@ -229,15 +232,19 @@ export function LibraryBoard({
   const active = drag ? decks.get(drag.id) : undefined;
   const target = drag ? containerOf(drag.id, drag.items) : undefined;
 
-  const grid = (container: string, children: ReactNode, trailer?: ReactNode) => (
-    <Group id={container} over={!!drag && target === container && drag.from !== container}>
+  const list = (container: string, children: ReactNode, empty?: ReactNode) => (
+    <Group
+      id={container}
+      over={!!drag && target === container && drag.from !== container}
+      bare={!!empty}
+    >
+      {empty && <li className="flex min-w-0">{empty}</li>}
       <SortableContext
         id={container}
         items={items[container] ?? []}
-        strategy={container === LOOSE ? () => null : rectSortingStrategy}
+        strategy={container === LOOSE ? () => null : verticalListSortingStrategy}
       >
         {children}
-        {trailer}
       </SortableContext>
     </Group>
   );
@@ -265,27 +272,31 @@ export function LibraryBoard({
       ];
     });
 
-  // New deck stays even when every deck is in a series, below them, as the drop target out of one.
-  const looseGrid = grid(LOOSE, deckItems(LOOSE), looseTrailer);
+  const looseItems = deckItems(LOOSE);
+  // With every deck in a series, the loose list is only a drop target, so it shows only in a drag.
+  const looseList =
+    looseItems.length > 0 || drag
+      ? list(LOOSE, looseItems, looseItems.length === 0 ? looseTarget : undefined)
+      : null;
   const body = (
     <div className="grid gap-8">
-      {!looseLast && looseGrid}
+      {!looseLast && looseList}
       {series.map(({ series: s }) => {
         const groupDecks = (items[s.id] ?? []).flatMap((id) => decks.get(id) ?? []);
         return (
-          <section key={s.id} aria-label={s.name} className="grid gap-3">
+          <section key={s.id} aria-label={s.name} className="grid gap-2">
             {renderSeriesHeader(s, groupDecks)}
-            {grid(
-              s.id,
-              deckItems(s.id),
-              groupDecks.length === 0 ? (
-                <li className="flex min-w-0 @3xl:col-span-2">{renderEmptySeries(s)}</li>
-              ) : undefined,
-            )}
+            {/* One gapless wrapper either way: a deck dragged into an empty series keeps its drop target, and the foot tucks under the plate. */}
+            <div className="grid">
+              {groupDecks.length === 0
+                ? list(s.id, null, renderEmptySeries(s))
+                : list(s.id, deckItems(s.id))}
+              {groupDecks.length > 0 && renderSeriesFoot?.(s, groupDecks)}
+            </div>
           </section>
         );
       })}
-      {looseLast && looseGrid}
+      {looseLast && looseList}
     </div>
   );
 
@@ -311,7 +322,7 @@ export function LibraryBoard({
       {body}
       <DragOverlay dropAnimation={still ? null : undefined}>
         {active ? (
-          <div className="flex min-w-0 scale-[1.02] cursor-grabbing [&>*]:edge-2">
+          <div className="edge-2 flex min-w-0 scale-[1.02] cursor-grabbing overflow-hidden rounded-xl bg-plate">
             {renderDeck(active, undefined)}
           </div>
         ) : null}
@@ -320,14 +331,26 @@ export function LibraryBoard({
   );
 }
 
-function Group({ id, over, children }: { id: string; over: boolean; children: ReactNode }) {
+function Group({
+  id,
+  over,
+  bare,
+  children,
+}: {
+  id: string;
+  over: boolean;
+  /** No plate of its own, for a drop target that draws its own outline. */
+  bare?: boolean | undefined;
+  children: ReactNode;
+}) {
   const { setNodeRef } = useDroppable({ id });
   return (
     <ul
       ref={setNodeRef}
       className={clsx(
-        "-m-1.5 grid gap-3 rounded-xl p-1.5 transition-[background-color] duration-150 @3xl:grid-cols-2",
-        over && "bg-plate-2",
+        "grid rounded-xl transition-[background-color] duration-150",
+        !bare && "edge relative z-1 overflow-hidden",
+        over ? "bg-plate-2" : !bare && "bg-plate",
       )}
     >
       {children}
@@ -360,7 +383,11 @@ function SortableDeck({
       {...listeners}
       onClickCapture={onClickCapture}
       style={{ transform: CSS.Translate.toString(transform), transition }}
-      className={clsx("flex min-w-0 [-webkit-touch-callout:none]", isDragging && "opacity-40")}
+      className={clsx(
+        // A hairline between rows, as on Today.
+        "flex min-w-0 border-edge not-first:border-t [-webkit-touch-callout:none]",
+        isDragging && "opacity-40",
+      )}
     >
       {children}
     </li>

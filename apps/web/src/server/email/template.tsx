@@ -58,6 +58,7 @@ export interface EmailRenderOptions {
 
 const light = palette.light;
 const dark = palette.dark;
+/** System faces only: a web font would make every opened email fetch from a third party. */
 const FONT =
   "Onest, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
 
@@ -344,10 +345,6 @@ export function EmailTemplate({
         <title>{email.subject}</title>
         <meta name="color-scheme" content="light dark" />
         <meta name="supported-color-schemes" content="light dark" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
         <style>{darkStyles(hero)}</style>
       </Head>
       <Preview>{email.preview}</Preview>

@@ -75,6 +75,17 @@ describe("transactional email", () => {
     }
   });
 
+  it("loads nothing from a third party when opened", async () => {
+    const message = await renderTransactionalEmail("deck-invitation", "en", {
+      url: "https://my.lymi.app/join/token",
+      invitation: { deckId: "d", deckName: "Verbs", ownerName: "Maria", cards: 1 },
+    });
+    const fetched = [...message.html.matchAll(/(?:src|href)="(https?:\/\/[^"/]+)/g)].map(
+      ([, origin]) => origin,
+    );
+    expect(new Set(fetched)).toEqual(new Set(["https://my.lymi.app", "https://lymi.app"]));
+  });
+
   it("points images and the footer at the origins it is sent from", async () => {
     const message = await renderTransactionalEmail(
       "test",

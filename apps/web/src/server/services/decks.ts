@@ -23,6 +23,7 @@ import {
   presentModeRow,
   resolveDeckDirections,
   stateStatementsForDeck,
+  taughtFirstSql,
 } from "./modes";
 import { bumped } from "./revisions";
 import { activeSeries, deckOrder, effectiveSeriesId, nextDeckPosition } from "./series-access";
@@ -197,9 +198,8 @@ export async function getDeck(ctx: ServiceContext, id: string) {
 }
 
 /**
- * Cards in a deck, newest first, each with the caller's state for the direction the deck
- * leads with. A production-only deck shows its production state rather than an empty
- * Status column.
+ * Cards in a deck, newest first, each with the caller's state for the mode the draw teaches
+ * first, so a card answered once in that mode stops reading New.
  */
 export async function listDeckCards(ctx: ServiceContext, deckId: string) {
   const { db, userId } = ctx;
@@ -212,13 +212,12 @@ export async function listDeckCards(ctx: ServiceContext, deckId: string) {
       schema.cardStates,
       and(
         eq(schema.cardStates.cardId, schema.cards.id),
-        // The state for the mode the card leads with: its picture mode when that is asked.
+        // The state for the mode the draw teaches first, which is what Known reads.
         sql`card_states.id = (
           select leading.id from card_states as leading
           where leading.card_id = cards.id and leading.user_id = ${userId}
             and ${sql.raw(askedSql("leading.direction"))}
-          order by case when leading.direction like 'image_%' then 0
-            when leading.direction = 'recognition' then 1 else 2 end
+          order by ${sql.raw(taughtFirstSql("leading"))}
           limit 1
         )`,
       ),

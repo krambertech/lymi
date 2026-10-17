@@ -1,4 +1,4 @@
-import type { Directions, Rating, ReviewModeKey } from "@lymi/core";
+import type { Rating, ReviewModeKey } from "@lymi/core";
 import {
   drawableCount as countDrawable,
   type DayWindow,
@@ -8,7 +8,7 @@ import {
   dayWindow,
   deserializeState,
   drawKey,
-  effectiveModes,
+  introductionOrder,
   isImageMode,
   retrievability,
 } from "@lymi/core";
@@ -38,23 +38,6 @@ import { slippingCardIds } from "./slipping";
  * What `draw` in core needs, loaded from D1: every mode that could be reviewed today and
  * today's log in every scope. Rules live in core; this file only gathers rows. ADR 0019.
  */
-
-/**
- * The order a card's modes are introduced in. A list the learner ordered is kept; a list that
- * only the legacy `directions` gives starts with meaning → term, which teaches more (ADR 0019).
- */
-const TEXT_DEFAULT: readonly ReviewModeKey[] = ["meaning_to_term", "term_to_meaning"];
-function modeOrder(
-  card: { directions: Directions | null; reviewModeKeys: ReviewModeKey[] | null },
-  deckDirections: Directions,
-): ReviewModeKey[] {
-  if (card.directions && card.reviewModeKeys) {
-    return effectiveModes(card.directions, card.reviewModeKeys);
-  }
-  const directions = card.directions ?? deckDirections;
-  if (directions === "both") return [...TEXT_DEFAULT];
-  return [directions === "recognition" ? "term_to_meaning" : "meaning_to_term"];
-}
 
 /** Cards of the caller's own decks in their active series; a member's copy of a deck never matches. */
 function inSeries(userId: string, seriesId: string) {
@@ -270,7 +253,7 @@ export async function drawInputs(ctx: ServiceContext, opts: DrawOptions): Promis
       important: row.important !== null,
       modes: [],
       byMode: new Map<ReviewModeKey, DrawMode>(),
-      order: modeOrder(card, row.deckDirections),
+      order: introductionOrder(card, row.deckDirections),
     };
     take(entry, row.state, card);
     if (row.sibling?.id) take(entry, row.sibling as ModeRow, card);

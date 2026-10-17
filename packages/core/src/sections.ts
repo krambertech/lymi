@@ -12,7 +12,7 @@ export interface SectionStanding {
   id: string;
   /** Active cards in the section. */
   total: number;
-  /** Cards whose leading state is Review, as the deck's list marks Known. */
+  /** Cards in Review in the mode the draw teaches first, as the deck's list marks Known. */
   known: number;
   /** Cards with at least one asked state that has left New. */
   started: number;

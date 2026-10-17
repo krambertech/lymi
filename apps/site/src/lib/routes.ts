@@ -3,6 +3,7 @@ export const localizedPages = {
   landing: "/",
   languages: "/languages",
   estonian: "/languages/estonian",
+  japanese: "/languages/japanese",
   assistants: "/ai-assistants",
   teachers: "/teachers",
   medicine: "/medicine",

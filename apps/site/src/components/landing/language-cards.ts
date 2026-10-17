@@ -316,6 +316,21 @@ const byId = (id: LearningLanguage["id"]) =>
   LEARNING_LANGUAGES.find((l) => l.id === id) as LearningLanguage;
 
 export const ESTONIAN = byId("et");
+export const JAPANESE = byId("ja");
+
+/** Kana readings for the Japanese page's hand, drawn over the kanji instead of a reading line. */
+const KANA_READINGS: Record<string, string> = {
+  otsukaresama: "おつかれさまです",
+  hashi: "はし",
+  komorebi: "こもれび",
+  tsundoku: "つんどく",
+};
+
+/** The Japanese page's hand, read as review reads it: furigana over the kanji and no romaji. */
+export const JAPANESE_HAND: LanguageCard[] = JAPANESE.hand.map(({ reading: _, ...card }) => {
+  const furigana = KANA_READINGS[card.id];
+  return furigana ? { ...card, furigana } : card;
+});
 
 /** Every language's hand shuffled together, for the page about all of them. */
 export const MIXED_HAND: LanguageCard[] = LEARNING_LANGUAGES.flatMap((l) => l.hand);

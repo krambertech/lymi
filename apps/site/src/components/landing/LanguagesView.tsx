@@ -65,7 +65,7 @@ interface PageProps {
 }
 
 /** The notes photographed into cards, with the assistants that can do the reading. */
-function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
+export function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
   return (
     <section
       aria-labelledby="notes-title"

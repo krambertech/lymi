@@ -11,7 +11,9 @@ export interface Collection {
   cards: number;
   reviews: number;
   decks: number;
-  pictures: number;
+  pictures?: number | undefined;
+  /** Cards whose term came with a native speaker's recording. */
+  recordings?: number | undefined;
 }
 
 const COLLECTION: Collection = {
@@ -53,7 +55,7 @@ export function ImportDemo({ collection = COLLECTION }: { collection?: Collectio
   const still = useReducedMotion();
   const run = visible && !still;
 
-  const { app, cards, reviews, decks, pictures } = collection;
+  const { app, cards, reviews, decks, pictures, recordings } = collection;
   const size = new Intl.NumberFormat(i18n.locale, {
     style: "unit",
     unit: "megabyte",
@@ -109,15 +111,28 @@ export function ImportDemo({ collection = COLLECTION }: { collection?: Collectio
             <Trans>Cards keep the due dates they had in {app}.</Trans>
           </span>
         </li>
-        <li className="flex gap-2.5 text-sm text-text-2">
-          <CircleCheck aria-hidden="true" className="mt-px size-4 shrink-0 text-good" />
-          <span className="min-w-0 text-pretty">
-            {t`${plural(pictures, {
-              one: "# card brings its picture.",
-              other: "# cards bring their pictures.",
-            })}`}
-          </span>
-        </li>
+        {recordings !== undefined && (
+          <li className="flex gap-2.5 text-sm text-text-2">
+            <CircleCheck aria-hidden="true" className="mt-px size-4 shrink-0 text-good" />
+            <span className="min-w-0 text-pretty">
+              {t`${plural(recordings, {
+                one: "# card brings its recording.",
+                other: "# cards bring their recordings.",
+              })}`}
+            </span>
+          </li>
+        )}
+        {pictures !== undefined && (
+          <li className="flex gap-2.5 text-sm text-text-2">
+            <CircleCheck aria-hidden="true" className="mt-px size-4 shrink-0 text-good" />
+            <span className="min-w-0 text-pretty">
+              {t`${plural(pictures, {
+                one: "# card brings its picture.",
+                other: "# cards bring their pictures.",
+              })}`}
+            </span>
+          </li>
+        )}
       </ul>
     </div>
   );

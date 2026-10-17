@@ -14,6 +14,7 @@ import {
 } from "react";
 import { HAND_SIZE } from "../../lib/hand";
 import { buttonClass } from "../Button";
+import { Furigana } from "./Furigana";
 import { HAND_CARDS, type HandCard } from "./hand-cards";
 
 const DEAL_STAGGER_MS = 90;
@@ -149,7 +150,11 @@ function FanCard({
       className="whitespace-pre-line mt-3.5 text-[min(46px,calc(var(--cw)*var(--term)))] leading-[1.02] font-medium tracking-[-0.03em] text-balance text-text [overflow-wrap:anywhere]"
       style={{ "--term": cueStep(cueText) } as CSSProperties}
     >
-      {cueText}
+      {cue === "term" && card.furigana ? (
+        <Furigana term={card.term} reading={card.furigana} lang={card.language} />
+      ) : (
+        cueText
+      )}
     </p>
   );
 
@@ -197,7 +202,11 @@ function FanCard({
           dir="auto"
           className="whitespace-pre-line text-[min(28px,calc(var(--cw)*0.092))] leading-[1.15] font-medium tracking-[-0.02em] text-balance text-text [overflow-wrap:anywhere]"
         >
-          {card.term}
+          {card.furigana ? (
+            <Furigana term={card.term} reading={card.furigana} lang={card.language} />
+          ) : (
+            card.term
+          )}
         </p>
         {termDetails}
         {picture && (

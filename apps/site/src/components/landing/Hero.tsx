@@ -17,10 +17,12 @@ interface Props {
   behind?: ((front: string | undefined) => ReactNode) | undefined;
   /** A scene of its own in place of the hand of cards. */
   visual?: ReactNode;
+  /** The one action, when the page has a better first step than signing up. */
+  action?: ReactNode;
 }
 
 /** The headline, one action, and a hand of cards to turn over. */
-export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
+export function Hero({ title, lede, cards, layout, behind, visual, action }: Props) {
   const [front, setFront] = useState<string>();
   return (
     <div
@@ -39,9 +41,11 @@ export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
         </h1>
         <p className="mt-6 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl">{lede}</p>
         <div className="mt-8">
-          <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-            <Trans>Get started</Trans>
-          </a>
+          {action ?? (
+            <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
+              <Trans>Get started</Trans>
+            </a>
+          )}
         </div>
       </div>
 

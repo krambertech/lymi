@@ -411,6 +411,61 @@ const ESTONIAN_A1_UK: Record<string, string> = {
   paremale: "праворуч",
 };
 
+/**
+ * Japanese decks under the slugs Lymi publishes them as, small and in production's publish order,
+ * so Welcome's Japanese offer and its beginner order can be seen locally.
+ */
+const japanese = (cards: PersonaCard[]): PersonaCard[] =>
+  cards.map((card) => ({ ...card, language: "ja", meaningSource: "lesson" as const }));
+
+const TRAVEL_JA = japanese([
+  { term: "駅", pronunciation: "えき", meaning: "station" },
+  { term: "切符", pronunciation: "きっぷ", meaning: "ticket" },
+  { term: "電車", pronunciation: "でんしゃ", meaning: "train" },
+  { term: "いくらですか", meaning: "how much is it?" },
+  { term: "すみません", meaning: "excuse me" },
+]);
+
+const KANA_JA = japanese([
+  { term: "あ", meaning: "a", section: "Hiragana: vowels" },
+  { term: "い", meaning: "i", section: "Hiragana: vowels" },
+  { term: "う", meaning: "u", section: "Hiragana: vowels" },
+  { term: "え", meaning: "e", section: "Hiragana: vowels" },
+  { term: "お", meaning: "o", section: "Hiragana: vowels" },
+  { term: "ア", meaning: "a", section: "Katakana: vowels" },
+  { term: "イ", meaning: "i", section: "Katakana: vowels" },
+  { term: "ウ", meaning: "u", section: "Katakana: vowels" },
+  { term: "エ", meaning: "e", section: "Katakana: vowels" },
+  { term: "オ", meaning: "o", section: "Katakana: vowels" },
+]);
+
+const CORE_JA = japanese([
+  { term: "時間", pronunciation: "じかん", meaning: "time" },
+  { term: "友達", pronunciation: "ともだち", meaning: "friend" },
+  { term: "仕事", pronunciation: "しごと", meaning: "work" },
+  { term: "店", pronunciation: "みせ", meaning: "shop" },
+]);
+
+const N5_JA = japanese([
+  { term: "家族", pronunciation: "かぞく", meaning: "family" },
+  { term: "学校", pronunciation: "がっこう", meaning: "school" },
+  {
+    term: "食べる",
+    pronunciation: "たべる",
+    meaning: "to eat",
+    example: "毎朝[まいあさ]パンを食[た]べます。",
+    notes: "ichidan verb · 食べます",
+  },
+  { term: "水", pronunciation: "みず", meaning: "water" },
+]);
+
+const N4_JA = japanese([
+  { term: "準備", pronunciation: "じゅんび", meaning: "preparation" },
+  { term: "届ける", pronunciation: "とどける", meaning: "to deliver" },
+  { term: "経験", pronunciation: "けいけん", meaning: "experience" },
+  { term: "急ぐ", pronunciation: "いそぐ", meaning: "to hurry" },
+]);
+
 export const personas: Persona[] = [
   {
     id: "fresh",
@@ -585,7 +640,8 @@ export const personas: Persona[] = [
   {
     id: "publisher",
     name: "Lymi",
-    description: "The publisher account. One published deck, in English and Ukrainian editions.",
+    description:
+      "The publisher account. Estonian, Finnish, driving and Japanese decks; one in English and Ukrainian editions.",
     appLanguage: "en",
     reviewDays: [],
     dueNow: 0,
@@ -648,6 +704,82 @@ export const personas: Persona[] = [
           summary: "Signs, right of way and the questions the test repeats.",
           category: "driving",
           tags: ["beginner"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Japanese Essentials",
+        description: "Stations, tickets and the phrases a first trip needs.",
+        defaultLanguage: "ja",
+        introducedDaysAgo: 12,
+        cards: TRAVEL_JA,
+        publication: {
+          slug: "travel-japanese",
+          summary: "Stations, tickets and the phrases a first trip needs.",
+          category: "languages",
+          tags: ["travel", "beginner"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Read Japanese Kana",
+        description: "Hiragana and katakana, sign by sign, with the sound of each.",
+        defaultLanguage: "ja",
+        introducedDaysAgo: 11,
+        sections: ["Hiragana: vowels", "Katakana: vowels"],
+        cards: KANA_JA,
+        publication: {
+          slug: "read-japanese-kana",
+          summary: "Hiragana and katakana, sign by sign, with the sound of each.",
+          category: "languages",
+          tags: ["alphabet", "beginner"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Core Japanese Words",
+        description: "Everyday words worth knowing first.",
+        defaultLanguage: "ja",
+        introducedDaysAgo: 10,
+        cards: CORE_JA,
+        publication: {
+          slug: "core-japanese-words",
+          summary: "Everyday words worth knowing first.",
+          category: "languages",
+          tags: ["core-words"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Japanese N5 Vocabulary Practice",
+        description: "Words for the JLPT N5.",
+        defaultLanguage: "ja",
+        introducedDaysAgo: 9,
+        cards: N5_JA,
+        publication: {
+          slug: "japanese-n5-vocabulary-practice",
+          summary: "Words for the JLPT N5.",
+          category: "languages",
+          tags: ["exam-jlpt-n5", "beginner"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Japanese N4 Vocabulary",
+        description: "Words for the JLPT N4.",
+        defaultLanguage: "ja",
+        introducedDaysAgo: 8,
+        cards: N4_JA,
+        publication: {
+          slug: "japanese-n4-vocabulary",
+          summary: "Words for the JLPT N4.",
+          category: "languages",
+          tags: ["core-words"],
           publisher: "Lymi",
           meaningLanguage: "en",
         },

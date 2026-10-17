@@ -112,8 +112,16 @@ it("gives every frame the filename and function PostHog's frame schema requires"
               lineno: 3,
               colno: 1.5,
             },
+            { platform: "node:javascript", filename: "index.js", lineno: 0, colno: 2 ** 32 },
             { platform: "hermes", filename: "private native", function: "private name" },
-            { platform: "web:javascript", lineno: -1 },
+            {
+              platform: "hermes",
+              filename: "private native",
+              chunk_id: "0b5f6a1e-9d2c-4f7b-8e1a-3c4d5e6f7a8b",
+              colno: 0,
+              in_app: true,
+            },
+            { platform: "web:javascript", lineno: -1, in_app: true },
           ],
         },
       },
@@ -128,8 +136,17 @@ it("gives every frame the filename and function PostHog's frame schema requires"
       in_app: false,
     },
     { platform: "node:javascript", filename: "index.js", function: "readPublicDeck", lineno: 3 },
+    { platform: "node:javascript", filename: "index.js", function: "?" },
     { platform: "hermes", filename: "<anonymous>", function: "?", in_app: false },
-    { platform: "web:javascript", function: "?" },
+    {
+      platform: "hermes",
+      filename: "<anonymous>",
+      chunk_id: "0b5f6a1e-9d2c-4f7b-8e1a-3c4d5e6f7a8b",
+      function: "?",
+      colno: 0,
+      in_app: true,
+    },
+    { platform: "web:javascript", function: "?", in_app: false },
   ]);
   expect(JSON.stringify(sanitized)).not.toContain("private");
 });

@@ -1,11 +1,13 @@
 import { LessonAccessOut, LessonAnswerInput, LessonAnswerOut, LessonEventOut } from "@lymi/core";
 import { Hono } from "hono";
+import { meteredFetch } from "../dependency-health";
 import { operatorEmails } from "../env";
 import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
 import { decisionModel, termsAgainstAnswer } from "../lessons/keep";
 import type { LessonMaterial } from "../lessons/reader";
-import { createLessonReader } from "../lessons/reader";
+import { createLessonReader, LessonReaderError } from "../lessons/reader";
+import { posthogEnabled, reportServerException } from "../posthog";
 import {
   assertCanCheckAnswers,
   assertCanReadLessons,
@@ -56,7 +58,7 @@ lessonReads.post(
   }),
   async (c) => {
     const deps = {
-      reader: createLessonReader(c.env),
+      reader: createLessonReader(c.env, meteredFetch(c.env, "anthropic")),
       ai: decisionModel(c.env),
       operators: operatorEmails(c.env),
     };
@@ -105,6 +107,18 @@ lessonReads.post(
       .catch((error: unknown) => {
         console.error("Lesson read failed", error);
         send({ type: "error", message: "The lesson could not be read. Try again." });
+        // The stream has already answered 200, so the HTTP error handler never sees this; a vendor's
+        // HTTP refusal is already in lymi_health.
+        const refused = error instanceof LessonReaderError && error.status !== undefined;
+        if (!refused && posthogEnabled(c.env)) {
+          c.executionCtx.waitUntil(
+            reportServerException(c.env, error, {
+              method: "POST",
+              route: "/api/lesson-reads",
+              userId: c.get("user")?.id,
+            }),
+          );
+        }
       })
       .finally(() => writer.close());
     c.executionCtx.waitUntil(reading);

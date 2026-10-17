@@ -52,7 +52,9 @@
   ],
   "analytics_engine_datasets": [
     { "binding": "REQUESTS", "dataset": "lymi_requests" },
-    { "binding": "EVENTS", "dataset": "lymi_events" }
+    { "binding": "EVENTS", "dataset": "lymi_events" },
+    // Each outside call's outcome and the canary's checks, which the production alerts read.
+    { "binding": "HEALTH", "dataset": "lymi_health" }
   ],
   "r2_buckets": [
     { "binding": "AUDIO", "bucket_name": "lymi-audio" },

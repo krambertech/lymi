@@ -3,6 +3,7 @@ import { NonRetryableError } from "cloudflare:workflows";
 import { ExportFailure } from "@lymi/core";
 import { createDb } from "../db";
 import type { Bindings } from "../env";
+import { reportServerException } from "../posthog";
 import {
   type ExportRunParams,
   ExportTooLarge,
@@ -79,7 +80,16 @@ export class ExportWorkflow extends WorkflowEntrypoint<Bindings, ExportRunParams
         err instanceof Error && ExportFailure.safeParse(err.message).success
           ? (err.message as ExportFailure)
           : exportFailureOf(err);
-      await step.do("fail", STEP, () => failExport(db, id, failure, storage.bucket));
+      await step.do("fail", STEP, async () => {
+        await failExport(db, id, failure, storage.bucket);
+        if (failure === "internal") {
+          await reportServerException(this.env, err, {
+            route: "export",
+            method: "WORKFLOW",
+            userId: params.userId,
+          });
+        }
+      });
     }
   }
 }

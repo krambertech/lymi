@@ -10,6 +10,7 @@ export interface Bindings
     Env,
     | "REQUESTS"
     | "EVENTS"
+    | "HEALTH"
     | "POSTHOG_PROJECT_TOKEN"
     | "PHONE_MINIMUM_VERSION_IOS"
     | "PHONE_UPDATE_URL_IOS"
@@ -19,6 +20,7 @@ export interface Bindings
   /** Optional in local tests and loopback; previews use isolated datasets. */
   REQUESTS?: AnalyticsEngineDataset;
   EVENTS?: AnalyticsEngineDataset;
+  HEALTH?: AnalyticsEngineDataset;
   POSTHOG_PROJECT_TOKEN?: string;
   /** Unset means every iPhone release is served. */
   PHONE_MINIMUM_VERSION_IOS?: string;

@@ -4,11 +4,14 @@ import {
   asClaude,
   type DevCounts,
   enrichSampleCards,
+  ownerAddsCards,
   reachGoal,
   recallCards,
   resetAccount,
+  type SeedDeps,
   seedPersona,
   setDue,
+  sharedDeckOf,
   slipCards,
 } from "../services/dev";
 import { type Persona, personas } from "./personas";
@@ -30,9 +33,19 @@ export interface DevCommand {
   /** Throws data away, so the palette asks twice and never offers it in Recent. */
   confirm?: boolean;
   /** Why it can do nothing for this account right now, or null. */
-  blocked: (counts: DevCounts) => string | null;
+  blocked: (state: CommandState) => string | null;
   /** Does it and says what happened, in one sentence. */
-  run: (ctx: ServiceContext, input: { count: number; persona: Persona | null }) => Promise<string>;
+  run: (
+    ctx: ServiceContext,
+    input: { count: number; persona: Persona | null; deps: SeedDeps },
+  ) => Promise<string>;
+}
+
+/** What a command's blocked reason is decided from. */
+export type CommandState = DevCounts & { sharedDeck: boolean };
+
+export async function commandState(ctx: ServiceContext, counts: DevCounts): Promise<CommandState> {
+  return { ...counts, sharedDeck: Boolean(await sharedDeckOf(ctx)) };
 }
 
 const noCards = (c: DevCounts) => (c.cards ? null : "No cards");
@@ -104,16 +117,26 @@ export const commands: DevCommand[] = [
     run: async (ctx, { count }) => `${cards(await setDue(ctx, count))} due now.`,
   },
   {
+    id: "owner",
+    group: "Simulate",
+    title: "The owner adds {count} cards",
+    count: { default: 3, max: 200 },
+    keywords: "shared deck member teacher lesson",
+    blocked: (c) => (c.sharedDeck ? null : "No shared deck"),
+    run: async (ctx, { count }) =>
+      `The owner added ${cards(await ownerAddsCards(ctx, count))} to the shared deck.`,
+  },
+  {
     id: "reseed",
     group: "Account",
     confirm: true,
     title: "Reseed",
     keywords: "persona starting data restore",
     blocked: () => null,
-    run: async (ctx, { persona }) => {
+    run: async (ctx, { persona, deps }) => {
       const target = persona ?? personas.find((p) => p.id === "learner");
       if (!target) throw new Error("No persona to reseed from");
-      const counts = await seedPersona(ctx, target);
+      const counts = await seedPersona(ctx, target, deps);
       return `Reseeded ${target.name}: ${cards(counts.cards)}, ${counts.reviews} reviews.`;
     },
   },
@@ -132,7 +155,7 @@ export const commands: DevCommand[] = [
 ];
 
 /** The list for an account, or without blocked reasons when nobody is signed in. */
-export function summarize(counts: DevCounts | null) {
+export function summarize(state: CommandState | null) {
   return commands.map(({ id, group, title, count, keywords, confirm, blocked }) => ({
     id,
     group,
@@ -140,6 +163,6 @@ export function summarize(counts: DevCounts | null) {
     count: count ?? null,
     keywords: keywords ?? "",
     confirm: confirm ?? false,
-    blocked: counts ? blocked(counts) : null,
+    blocked: state ? blocked(state) : null,
   }));
 }

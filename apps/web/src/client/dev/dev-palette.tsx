@@ -56,7 +56,7 @@ const ICONS: Record<string, LucideIcon> = {
   slip: TrendingDown,
   goal: Target,
   due: Clock,
-  member: Users,
+  owner: Users,
   reseed: RefreshCw,
   reset: Eraser,
 };
@@ -215,7 +215,8 @@ export function DevPalette({
     queryClient.clear();
     const { pathname, search } = window.location;
     const returnTo = pathname === "/login" ? "/today" : `${pathname}${search}`;
-    window.location.assign(devApi.signInUrl(id, returnTo));
+    const landing = props.personas.find((p) => p.id === id)?.landing;
+    window.location.assign(devApi.signInUrl(id, landing ? undefined : returnTo));
   }
 
   const query = parsePaletteQuery(raw);

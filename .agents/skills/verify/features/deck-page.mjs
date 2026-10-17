@@ -6,13 +6,15 @@ export default async function drive({ page, step, api, expect }) {
   const deck = decks.find((d) => d.name === "Lezione 12");
   const rows = page.getByRole("main").getByRole("listitem").getByRole("button");
 
-  await step("Library lists the learner's three decks with their counts", async () => {
+  await step("Library lists every deck of the learner's with its count", async () => {
     await expect(page.getByRole("heading", { level: 1, name: "Library" })).toBeVisible();
     const cards = decks.reduce((n, d) => n + d.total, 0);
     await expect(page.getByText(`${decks.length} decks · ${cards} cards`)).toBeVisible();
     for (const d of decks) {
       await expect(
-        page.getByRole("main").getByRole("link", { name: new RegExp(`^${d.name}\\b`) }),
+        page.getByRole("main").getByRole("link", {
+          name: new RegExp(`^${d.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?=\\s|$)`),
+        }),
       ).toBeVisible();
     }
     return { decks: decks.map(({ id, name, total, due }) => ({ id, name, total, due })) };

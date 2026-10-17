@@ -59,7 +59,12 @@ describe("dev commands", () => {
       commands: { id: string; title: string; blocked: string | null }[];
     };
     const blocked = Object.fromEntries(commands.map((c) => [c.id, c.blocked]));
-    expect(blocked).toMatchObject({ claude: null, due: "No cards", reset: "Already empty" });
+    expect(blocked).toMatchObject({
+      claude: null,
+      due: "No cards",
+      owner: "No shared deck",
+      reset: "Already empty",
+    });
     expect(commands.find((c) => c.id === "claude")?.title).toBe("Claude adds {count} cards");
   });
 

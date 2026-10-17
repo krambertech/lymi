@@ -2,7 +2,7 @@ import type { Directions } from "@lymi/core";
 import type { Persona, PersonaCard, PersonaDeck } from "./personas";
 
 /**
- * The `heavy` persona: two years of daily study, so every list, count and draw runs at the size a
+ * The `heavy` persona: four years of daily study, so every list, count and draw runs at the size a
  * devoted learner reaches. Cards are generated from a fixed seed, so every seed is the same.
  */
 
@@ -356,6 +356,10 @@ function cards(
       ...(rng() < 0.05 && { notes: `Seen in ${pick(TAGS)}. Not the same as ${word()}.` }),
       ...(tags.length > 0 && { tags }),
       ...(rng() < 0.25 && { source: `Lesson ${1 + Math.floor(rng() * 60)}` }),
+      ...(rng() < 0.017 && { important: true }),
+      ...(rng() < 0.0035 && {
+        hook: `Sounds like ${word()}, picture a ${pick(ADJECTIVES)} ${pick(NOUNS)}.`,
+      }),
       ...(sections.length > 0 && rng() < 0.95 && { section: pick(sections) }),
       // Cards arrive over the deck's life, most of them early.
       introducedDaysAgo: Math.floor(ageDays * (1 - rng() ** 2)),
@@ -412,10 +416,20 @@ const PLANS: DeckPlan[] = [
   { name: "Old Finnish", language: "fi", size: 100, ageDays: 550, archived: true },
 ];
 
+/**
+ * Two years' plans stretched over four: twice the age, half again the cards. The newest month and
+ * the one-card and empty decks stay as they are, since they are there for their edges.
+ */
+const STRETCHED = PLANS.map((plan) => ({
+  ...plan,
+  size: plan.size <= 1 ? plan.size : Math.round(plan.size * 1.5),
+  ageDays: plan.ageDays <= 30 ? plan.ageDays : plan.ageDays * 2,
+}));
+
 function decks(): PersonaDeck[] {
   const rng = random(0x1e4a7);
   const used = new Set<string>();
-  return PLANS.map((plan) => {
+  return STRETCHED.map((plan) => {
     const sections = Array.from({ length: plan.sections ?? 0 }, (_, i) => `Lesson ${i + 1}`);
     return {
       name: plan.name,
@@ -437,10 +451,10 @@ function decks(): PersonaDeck[] {
   });
 }
 
-/** Most days for two years, with a gap now and then: about one day in nine is missed. */
+/** Most days for four years, with a gap now and then: about one day in nine is missed. */
 function studyDays(): number[] {
   const rng = random(0x5eed);
-  return Array.from({ length: 720 }, (_, i) => i).filter((day) => day <= 1 || rng() > 0.11);
+  return Array.from({ length: 1440 }, (_, i) => i).filter((day) => day <= 1 || rng() > 0.11);
 }
 
 export const HEAVY: Persona = {
@@ -448,10 +462,21 @@ export const HEAVY: Persona = {
   group: "Scale and edges",
   name: "Vera",
   description:
-    "Two years of daily study. 27 decks and about 8,000 cards, tens of thousands of reviews, 400 due.",
+    "Four years of daily study. 27 decks and about 12,000 cards in three series, a hundred thousand reviews, 400 due.",
   appLanguage: "en",
   reviewDays: studyDays(),
   reviewsPerDay: { min: 40, max: 160 },
   dueNow: 400,
   decks: decks(),
+  series: [
+    {
+      name: "Italiano",
+      decks: ["Everything Italian", "Italian verbs", "Recipes", "Doctor visits"],
+    },
+    { name: "Suomi", decks: ["Suomi 1–24", "Finnish cases", "Kalevala", "Market"] },
+    {
+      name: "Deutsch",
+      decks: ["Deutsch im Beruf", "German idioms", "Work emails", "False friends"],
+    },
+  ],
 };

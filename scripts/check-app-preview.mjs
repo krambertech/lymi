@@ -86,6 +86,13 @@ export async function checkAppPreview(
   if (!decks.ok || !Array.isArray(data) || data.length === 0) {
     throw new Error("preview persona did not receive seeded learning data");
   }
+  // A seed that stopped part way still leaves some decks, so compare with what the persona promises.
+  const id = new URL(opened.headers.get("location"), entry).searchParams.get("as") ?? "learner";
+  const listed = await settledFetch(new URL("/api/dev/personas", entry), jar, settling);
+  const expected = (await listed.json()).personas?.find((p) => p.id === id)?.library;
+  if (typeof expected === "number" && data.length < expected) {
+    throw new Error(`preview persona ${id} holds ${data.length} deck(s), expected ${expected}`);
+  }
 
   return { learner, decks: data.length, destination: signed.headers.get("location") };
 }

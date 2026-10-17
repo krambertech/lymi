@@ -2,9 +2,9 @@ export const title = "Series";
 
 const SERIES = "Weekend reading";
 
-/** No persona has a series, so the flow makes one around the first deck. */
+/** Learner already has Italiano A2; the flow makes another around Lezione 12, which no series holds. */
 export async function env({ api }) {
-  const [deck] = await api("/api/decks");
+  const deck = (await api("/api/decks")).find((d) => d.name === "Lezione 12");
   await api("/api/series", {
     method: "POST",
     headers: { "content-type": "application/json" },

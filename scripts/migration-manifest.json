@@ -217,11 +217,15 @@
       "sha256": "41347856c75de425db924daaecb3df3644a12635d9da7c772994f675e7148ab1"
     },
     {
-      "name": "0054_yummy_harpoon.sql",
+      "name": "0054_unusual_enchantress.sql",
+      "sha256": "3fc8f7ee27ccc53a57ab5ffdb8ca4d1b62a324fe2994d56393ebc9c5e855707a"
+    },
+    {
+      "name": "0055_perfect_post.sql",
       "sha256": "7bc1cab50059a643fdd81806f4d00e6cf7f3f67582459ef8876ce4e7364fdff2"
     },
     {
-      "name": "0055_yielding_whiplash.sql",
+      "name": "0056_bent_overlord.sql",
       "sha256": "35d2639eb22c29cef993954372c180e6451e40fe48321951c2890afbc76a121d"
     }
   ]

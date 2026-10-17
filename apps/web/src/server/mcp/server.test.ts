@@ -117,6 +117,7 @@ const card: CardView = {
   enrichmentStatus: null,
   enrichmentFields: null,
   audioKey: null,
+  audioSource: null,
   createdBy: "mcp",
   archivedAt: null,
   createdAt: now,

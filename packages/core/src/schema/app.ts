@@ -207,8 +207,15 @@ export const cards = sqliteTable(
     enrichmentStatus: text("enrichment_status", { enum: ["working", "failed"] }),
     /** The fields the outstanding run may fill, so a screen holds space for those alone. */
     enrichmentFields: text("enrichment_fields", { mode: "json" }).$type<EnrichedField[]>(),
-    /** R2 key of generated pronunciation audio, if any. */
+    /** R2 key of the card's pronunciation audio, if any. */
     audioKey: text("audio_key"),
+    /**
+     * Whether `audio_key` is speech Lymi generated, a cache it may replace, or a recording an
+     * import brought, which is the card's audio for good. Null without audio.
+     */
+    audioSource: text("audio_source", { enum: ["generated", "recorded"] }),
+    /** The recording its publisher approved for a published deck's page; public only while it is `audio_key`. */
+    audioApprovedKey: text("audio_approved_key"),
     /** Who added the card. Activity filters on this without parsing the audit log. */
     createdBy: text("created_by", { enum: ["user", "api", "mcp", "ai", "system"] })
       .notNull()

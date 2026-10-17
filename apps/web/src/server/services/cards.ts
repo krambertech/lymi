@@ -199,6 +199,10 @@ export async function addCards(
     const again = input.id ? replayed.get(input.id) : undefined;
     if (again || !deck) {
       if (again) outcomes.push({ status: "added", card: again });
+      // The first add saved the card at `working` but may have died before handing over its run,
+      // and a replay is the only request that will ever come for it. If that run did start, the
+      // second one finds the card settled, and the guarded writes keep a single fill either way.
+      if (again?.enrichmentStatus === "working" && enrichment) enriching.push(again.id);
       continue;
     }
     const matches = existing.get(dupKey(language, key));

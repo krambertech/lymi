@@ -499,6 +499,67 @@ describe("enrichCards", () => {
     expect(added.card.enrichmentStatus).toBe("failed");
     expect((await showCard(ctx, added.card.id)).enrichmentStatus).toBe("failed");
   });
+
+  it("queues the run again when an add is replayed after it died between the save and the queue", async () => {
+    const ctx = await learner(db, "enrich-6b", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+    const input = CardInput.parse({ id: "0stuckworking000001", deckId: deck.id, term: "煎餅" });
+    // The first request saves the card, then is cut off while handing over its run: the
+    // Worker is canceled when the client goes away, so the queue never hears of the card.
+    let handedOver!: () => void;
+    const reached = new Promise<void>((resolve) => {
+      handedOver = resolve;
+    });
+    const cutOff: EnrichmentQueue = {
+      create: () => {
+        handedOver();
+        return new Promise(() => {});
+      },
+    };
+    void addCards(ctx, [input], cutOff);
+    await reached;
+    expect((await showCard(ctx, input.id as string)).enrichmentStatus).toBe("working");
+
+    // The device sends the same add again with its id, and that must not leave it shimmering.
+    const create = vi.fn().mockResolvedValue(undefined);
+    const [again] = await addCards(ctx, [input], { create });
+    expect(again).toMatchObject({ status: "added", id: input.id });
+    expect(create).toHaveBeenCalledTimes(1);
+    expect(create.mock.calls[0]?.[0]).toMatchObject({
+      params: { userId: ctx.userId, cardIds: [input.id], trigger: "add" },
+    });
+    if (again?.status !== "added") throw new Error("not added");
+    expect(again.card.enrichmentStatus).toBe("working");
+  });
+
+  it("marks a replayed card failed when the queue refuses its second run", async () => {
+    const ctx = await learner(db, "enrich-6c", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+    const input = CardInput.parse({ id: "0stuckworking000002", deckId: deck.id, term: "煎餅" });
+    const cutOff: EnrichmentQueue = { create: () => new Promise(() => {}) };
+    void addCards(ctx, [input], cutOff);
+    await vi.waitFor(async () =>
+      expect((await showCard(ctx, input.id as string)).enrichmentStatus).toBe("working"),
+    );
+    const refusing: EnrichmentQueue = { create: vi.fn().mockRejectedValue(new Error("no")) };
+    const [again] = await addCards(ctx, [input], refusing);
+    if (again?.status !== "added") throw new Error("not added");
+    expect(again.card.enrichmentStatus).toBe("failed");
+    expect((await showCard(ctx, input.id as string)).enrichmentStatus).toBe("failed");
+  });
+
+  it("does not queue a second run for a replayed card that is no longer working", async () => {
+    const ctx = await learner(db, "enrich-6d", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+    const input = CardInput.parse({ id: "0stuckworking000003", deckId: deck.id, term: "煎餅" });
+    await addCards(ctx, [input], queue);
+    await failEnrichment(db, ctx.userId, [input.id as string]);
+    const create = vi.fn().mockResolvedValue(undefined);
+    const [again] = await addCards(ctx, [input], { create });
+    expect(create).not.toHaveBeenCalled();
+    if (again?.status !== "added") throw new Error("not added");
+    expect(again.card.enrichmentStatus).toBe("failed");
+  });
 });
 
 describe("enrichment that follows the deck", () => {

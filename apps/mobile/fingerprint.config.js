@@ -9,6 +9,7 @@ module.exports = {
   extraSources: [
     { type: "dir", filePath: "targets", reasons: ["appleTargets"] },
     { type: "dir", filePath: "assets/symbols", reasons: ["menuSymbols"] },
+    { type: "dir", filePath: "assets/widgets", reasons: ["widgetLocalizations"] },
   ],
   ignorePaths: ["targets/*/fonts/**", "targets/*/Assets.xcassets/**"],
 };

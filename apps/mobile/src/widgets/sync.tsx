@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import { dueToday } from "../data/due";
 import { useDay, useDecks, useDraw, useKeptSince } from "../data/queries";
 import { sendControls } from "../entry/controls";
+import { i18n } from "../i18n";
+import { widgetText } from "../i18n/widgets";
 import { deviceDate, lastSevenDays, weekLetters } from "../ui/days";
 import { WIDGET_COLOURS } from "./colours";
 import LockWidget from "./lock-widget";
@@ -53,22 +55,19 @@ function send(name: string, update: () => void) {
   }
 }
 
-function widgetProps(s: Snapshot, images: Images, locale?: string) {
+function widgetProps(s: Snapshot, images: Images, locale = i18n.locale) {
   const { flame, ...lanterns } = images;
+  const text = widgetText(i18n, s);
   return {
-    lock: { due: s.due, streak: s.streak, reviewed: s.reviewed, goal: s.goal },
+    lock: { text, reviewed: s.reviewed, goal: s.goal },
     today: {
-      due: s.due,
-      streak: s.streak,
+      text,
       out: s.out,
       lanterns: lanterns as Lanterns,
       colours: WIDGET_COLOURS,
     },
     week: {
-      streak: s.streak,
-      due: s.due,
-      left: s.left,
-      signedIn: s.signedIn,
+      text,
       week: s.week,
       letters: weekLetters(s.dates, locale),
       flame: flame ?? "",

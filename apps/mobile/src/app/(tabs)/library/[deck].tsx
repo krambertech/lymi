@@ -1000,9 +1000,13 @@ const WordRow = memo(function WordRow({
         )}
       </View>
       <View className="flex-1 gap-0.5">
-        <Text className="text-md font-medium text-text" numberOfLines={3}>
+        <Text className="text-md font-medium text-text" numberOfLines={3} lang={row.card.language}>
           {word}
-          {forms && <Text className="font-normal text-text-2">{` · ${forms}`}</Text>}
+          {forms && (
+            <Text className="font-normal text-text-2" lang={row.card.language}>
+              {` · ${forms}`}
+            </Text>
+          )}
           {row.card.important && <Text style={{ color: p["amber-mark"] }}>{" ★"}</Text>}
         </Text>
         <Text className="text-base text-text-2" numberOfLines={2}>

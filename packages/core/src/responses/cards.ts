@@ -90,6 +90,15 @@ export const CardOut = z
           "The fields an outstanding enrichment may fill, so a screen holds space for those alone. Null when none is outstanding.",
       }),
     audioKey: z.string().nullable(),
+    audioSource: z
+      .enum(["generated", "recorded"])
+      .nullable()
+      .optional()
+      .meta({
+        ...OPEN,
+        description:
+          "`recorded` for a recording an import brought, which plays even without a language and is never replaced; `generated` for Lymi's speech; null without audio",
+      }),
     createdBy: Actor.meta({ ...OPEN, description: "Who added the card" }),
     importId: z
       .string()

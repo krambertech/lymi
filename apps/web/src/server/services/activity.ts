@@ -32,6 +32,8 @@ const SENTENCES: Sentences = {
     archive: "cards_archived",
     restore: "cards_restored",
     generate_audio: null,
+    // A recording arrives with its import, which Activity already lists.
+    set_audio: null,
     set_image: null,
     update_image: null,
     archive_image: null,

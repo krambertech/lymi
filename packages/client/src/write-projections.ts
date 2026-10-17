@@ -119,6 +119,7 @@ export function localCard(w: Extract<Write, { kind: "card.add" }>, lookup: Looku
     enrichmentStatus: null,
     enrichmentFields: null,
     audioKey: null,
+    audioSource: null,
     createdBy: "user",
     archivedAt: null,
     createdAt: now,

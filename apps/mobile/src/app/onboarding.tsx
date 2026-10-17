@@ -1,8 +1,16 @@
 import { useLingui } from "@lingui/react/macro";
-import { api, type Settings } from "@lymi/client/api";
+import { api, errorMessage, type Settings } from "@lymi/client/api";
 import { decksQuery, exploreQuery, settingsQuery } from "@lymi/client/queries";
 import { catalogLanguages, startDecks } from "@lymi/client/welcome";
-import { type LearningKind, type OnboardingInput, STARTING_DAILY_GOAL } from "@lymi/core";
+import { writes } from "@lymi/client/writes";
+import {
+  DeckInput,
+  type DeckPurpose,
+  LANGUAGE_TAGS,
+  type LearningKind,
+  type OnboardingInput,
+  STARTING_DAILY_GOAL,
+} from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Href } from "expo-router";
 import { openBrowserAsync } from "expo-web-browser";
@@ -10,8 +18,8 @@ import { useEffect, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Pool } from "../auth/door-parts";
+import { languageName } from "../data/languages";
 import { useAddDeck, useAddFailure } from "../explore/catalogue";
-import { openWeb } from "../ui/on-the-web";
 import { Button, Text } from "../ui/primitives";
 import { BarButton, BarText } from "../ui/screen";
 import { useSystemBack } from "../ui/system-back";
@@ -105,11 +113,40 @@ export default function Onboarding() {
     welcomeWith(null);
   };
 
+  /** The deck a lesson start made, so a retry after a failed save reuses it rather than making another. */
+  const lessonDeckRef = useRef<string | null>(null);
+  /** The learner's first deck, named for what they learn, for Smart add to write to. */
+  const firstDeck = async (learning: LearningKind) => {
+    if (lessonDeckRef.current) return lessonDeckRef.current;
+    const purpose: DeckPurpose =
+      learning === "language" ? "language" : learning === "other" ? "other" : "subject";
+    // A language Lymi does not list is kept as it was typed, so it names the deck but sets nothing.
+    const tag = (LANGUAGE_TAGS as readonly string[]).includes(language ?? "") ? language : null;
+    const name =
+      learning === "language" && language ? (tag ? languageName(tag) : language) : t`My notes`;
+    const { id } = await writes.createDeck(
+      DeckInput.parse({ name, purpose, defaultLanguage: learning === "language" ? tag : null }),
+    );
+    void qc.invalidateQueries({ queryKey: ["decks"] });
+    lessonDeckRef.current = id;
+    return id;
+  };
+
   const finish = async (answers: WelcomeStart) => {
     if (!kind) return;
     setError(null);
     let saving = false;
+    let lessonDeck: string | undefined;
     try {
+      // Smart add writes to a deck, so a lesson first makes one from the answers.
+      if (answers.kind === "own" && answers.own === "lesson") {
+        try {
+          lessonDeck = await firstDeck(kind);
+        } catch (e) {
+          setError(errorMessage(e));
+          return;
+        }
+      }
       if (answers.kind === "deck") {
         await add.mutateAsync({
           slug: answers.deck.slug,
@@ -123,7 +160,15 @@ export default function Onboarding() {
           learningLanguage: kind === "language" ? language : null,
           dailyGoal: goal,
         },
-        answers.kind === "deck" ? "/review" : answers.own === "type" ? "/new-deck" : undefined,
+        answers.kind === "deck"
+          ? "/review"
+          : answers.own === "type"
+            ? "/new-deck"
+            : lessonDeck
+              ? (`/smart-add?deck=${lessonDeck}` as Href)
+              : answers.own === "import"
+                ? "/import"
+                : undefined,
       );
     } catch (e) {
       setError(
@@ -137,18 +182,18 @@ export default function Onboarding() {
     trackGuide(
       answers.kind === "deck"
         ? "explore"
-        : answers.own === "assistant"
-          ? "ai_mcp"
-          : answers.own === "type"
-            ? "typed"
-            : "import",
+        : answers.own === "lesson"
+          ? "lesson"
+          : answers.own === "assistant"
+            ? "ai_mcp"
+            : answers.own === "type"
+              ? "typed"
+              : "import",
     );
     finishStep("start", false);
     endWelcome();
-    // The web's own pages, over Today with its guide.
-    if (answers.kind === "own" && answers.own === "import") void openWeb("/import");
-    else if (answers.kind === "own" && answers.own === "assistant")
-      void openBrowserAsync(CONNECT_DOCS);
+    // The assistant's guide is on the web, over Today with its guide.
+    if (answers.kind === "own" && answers.own === "assistant") void openBrowserAsync(CONNECT_DOCS);
   };
 
   const startJoined = async () => {
@@ -205,11 +250,13 @@ export default function Onboarding() {
         ? t`Continue`
         : start.kind === "deck"
           ? t`Add and review`
-          : start.own === "import"
-            ? t`Go to import`
-            : start.own === "assistant"
-              ? t`Connect an app`
-              : t`New deck`
+          : start.own === "lesson"
+            ? t`Add a lesson`
+            : start.own === "import"
+              ? t`Go to import`
+              : start.own === "assistant"
+                ? t`Connect an app`
+                : t`New deck`
       : shortcut && step === "goal"
         ? t`Start review`
         : t`Continue`;

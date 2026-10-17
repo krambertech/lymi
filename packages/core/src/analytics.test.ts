@@ -122,6 +122,8 @@ describe("analytics privacy contract", () => {
     expect(analyticsPath("/library/private-deck", "product")).toBe("/library/:item");
     expect(analyticsPath("/share", "product")).toBe("/share");
     expect(analyticsPath("/series-order", "product")).toBe("/series-order");
+    expect(analyticsPath("/api-keys", "product")).toBe("/api-keys");
+    expect(analyticsPath("/connected-apps", "product")).toBe("/connected-apps");
     expect(analyticsPath("/reset-password/token", "product")).toBe("/other");
     expect(analyticsPath("/you", "product")).toBe("/you");
     expect(analyticsPath("/uk/explore/eesti-a1", "public")).toBe("/uk/explore/eesti-a1");

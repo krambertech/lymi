@@ -59,6 +59,29 @@ export function dueBucket(row: DeckRow, now: number): DueBucket {
   return due - now <= WEEK ? "week" : "later";
 }
 
+/**
+ * What Review takes from chosen cards, as the server counts them: each started card not reviewed
+ * today, soonest due first, and whether it is due before the day ends.
+ */
+export function chosenReview(
+  rows: readonly DeckRow[],
+  chosen: ReadonlySet<string>,
+  now: number,
+): { id: string; due: boolean }[] {
+  const dayStart = startOfDay(now).getTime();
+  const dayEnd = endOfDay(now);
+  return rows
+    .filter(
+      (row) =>
+        chosen.has(row.card.id) &&
+        rowState(row) !== "new" &&
+        !(row.state?.lastReview && new Date(row.state.lastReview).getTime() >= dayStart),
+    )
+    .map((row) => ({ id: row.card.id, at: dueAt(row) || 0 }))
+    .sort((a, b) => a.at - b.at)
+    .map(({ id, at }) => ({ id, due: at < dayEnd }));
+}
+
 export function activeFilterCount(filters: DeckFilters): number {
   return (
     filters.states.length + (filters.due ? 1 : 0) + filters.sections.length + filters.tags.length
@@ -212,4 +235,41 @@ export function splitForms(term: string): { word: string; forms: string | null }
   const at = term.indexOf(" · ");
   if (at <= 0) return { word: term, forms: null };
   return { word: term.slice(0, at), forms: term.slice(at + 3) };
+}
+
+/** A deck's word, meaning, status and next review as CSV, with a BOM so spreadsheets read it as UTF-8. */
+export function deckCsv(rows: readonly DeckRow[]): string {
+  const esc = (v: string | null | undefined) => `"${(v ?? "").replace(/"/g, '""')}"`;
+  const lines = [
+    [
+      "term",
+      "meaning",
+      "pronunciation",
+      "example",
+      "notes",
+      "language",
+      "source",
+      "state",
+      "due",
+    ].join(","),
+    ...rows.map(({ card, state }) =>
+      [
+        esc(card.term),
+        esc(card.meaning),
+        esc(card.pronunciation),
+        esc(card.example),
+        esc(card.notes),
+        esc(card.language),
+        esc(card.source),
+        String(state?.state ?? 0),
+        state ? new Date(state.due).toISOString() : "",
+      ].join(","),
+    ),
+  ];
+  return `﻿${lines.join("\n")}`;
+}
+
+/** The name a deck's CSV saves as: "Verbi irregolari" is `verbi-irregolari.csv`. */
+export function deckCsvName(deckName: string): string {
+  return `${deckName.replace(/[^\p{L}\p{N}]+/gu, "-").toLowerCase()}.csv`;
 }

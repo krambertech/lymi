@@ -18,10 +18,12 @@ import { usePurposes } from "../data/purposes";
 import { haptics } from "../theme/haptics";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
+import { FieldError } from "../ui/field";
 import { FormHeader } from "../ui/form-header";
 import type { IconName } from "../ui/icons";
 import { Select } from "../ui/menu";
 import { Icon, Plate, RowArrow, Text } from "../ui/primitives";
+import { Radio } from "../ui/radio";
 import { RowFace, Rows } from "../ui/row";
 import { OnGlass } from "../ui/surface";
 
@@ -167,9 +169,8 @@ export default function NewDeck() {
             maxFontSizeMultiplier={inputCap(28)}
           />
           {error && (
-            <View className="flex-row items-center gap-1.5 pt-2" accessibilityLiveRegion="polite">
-              <Icon name="alert" size={14} colour={p.danger} />
-              <Text className="flex-1 text-base text-danger">{error}</Text>
+            <View className="pt-2">
+              <FieldError flush>{error}</FieldError>
             </View>
           )}
         </View>
@@ -202,7 +203,7 @@ export default function NewDeck() {
                       <Text className="text-md font-medium text-text">{o.label}</Text>
                       <Text className="text-base text-text-2">{o.detail}</Text>
                     </View>
-                    <Radio on={chosen} />
+                    <Radio on={chosen} className="mt-0.5" />
                   </Pressable>
                   {/* The language is part of this answer, so it sits inside its card. */}
                   {chosen &&
@@ -223,12 +224,7 @@ export default function NewDeck() {
               );
             })}
           </Plate>
-          {purposeError && (
-            <View className="flex-row items-center gap-1.5 px-1">
-              <Icon name="alert" size={14} colour={p.danger} />
-              <Text className="flex-1 text-base text-danger">{t`Choose what the deck is for.`}</Text>
-            </View>
-          )}
+          {purposeError && <FieldError>{t`Choose what the deck is for.`}</FieldError>}
         </View>
 
         <Rows>
@@ -238,16 +234,5 @@ export default function NewDeck() {
         </Rows>
       </ScrollView>
     </OnGlass>
-  );
-}
-
-/** A radio's mark: an empty ring, or a ring around a dot once chosen. */
-function Radio({ on }: { on: boolean }) {
-  return (
-    <View
-      className={`mt-0.5 size-[22px] items-center justify-center rounded-full border-2 ${on ? "border-text" : "border-edge-2"}`}
-    >
-      {on && <View className="size-2.5 rounded-full bg-text" />}
-    </View>
   );
 }

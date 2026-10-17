@@ -1,0 +1,48 @@
+# Smart add: open it from capture's long press, read a pasted lesson, open a term, and add the list.
+appId: app.lymi
+name: Smart add
+---
+- runFlow: _open.yaml
+- tapOn: "Today"
+- longPressOn: "Add a card"
+- tapOn: "Smart add"
+- extendedWaitUntil:
+    visible: "Find terms"
+    timeout: 20000
+- takeScreenshot: 00-sources
+- tapOn: "Text"
+- tapOn: "Lesson text"
+- inputText: "${LESSON}"
+- takeScreenshot: 01-text
+- tapOn: "Done"
+- tapOn: "Find terms"
+- extendedWaitUntil:
+    visible: ".*terms? found"
+    timeout: 20000
+- takeScreenshot: 02-reading
+# Questions come only for longer material; take the defaults when they do.
+- extendedWaitUntil:
+    visible: "Add \\d+ cards?|Show terms"
+    timeout: 90000
+- runFlow:
+    when:
+      visible: "Show terms"
+    commands:
+      - tapOn: "Show terms"
+- extendedWaitUntil:
+    visible: "Add \\d+ cards?"
+    timeout: 20000
+- takeScreenshot: 03-list
+- longPressOn:
+    id: "smart-add-term"
+    index: 0
+- extendedWaitUntil:
+    visible: "From the lesson"
+    timeout: 10000
+- takeScreenshot: 04-term
+- tapOn: "Cancel"
+- tapOn: "Add \\d+ cards?"
+- extendedWaitUntil:
+    visible: "Added \\d+ cards? to .*"
+    timeout: 20000
+- takeScreenshot: 05-added

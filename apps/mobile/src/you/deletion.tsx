@@ -1,9 +1,8 @@
 import { useLingui } from "@lingui/react/macro";
 import { api, refusalCode } from "@lymi/client/api";
 import { useMutation } from "@tanstack/react-query";
-import { View } from "react-native";
-import { usePalette } from "../theme/palette";
-import { Icon, Text } from "../ui/primitives";
+import { FieldError } from "../ui/field";
+import { Text } from "../ui/primitives";
 
 /** Asks for the emailed code. A code still on its way counts as sent, so its sheet opens again. */
 export function useSendCode({
@@ -45,14 +44,7 @@ export function useSendCode({
 }
 
 export function ErrorLine({ children }: { children: string | null }) {
-  const p = usePalette();
-  if (!children) return null;
-  return (
-    <View className="flex-row items-center gap-1.5 px-1" accessibilityLiveRegion="polite">
-      <Icon name="alert" size={14} colour={p.danger} />
-      <Text className="flex-1 text-base text-danger">{children}</Text>
-    </View>
-  );
+  return <FieldError>{children}</FieldError>;
 }
 
 export function AppleNote() {

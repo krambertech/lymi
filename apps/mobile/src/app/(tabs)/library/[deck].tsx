@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { Section } from "@lymi/client/api";
 import {
+  chosenReview,
   type DeckFilters,
   type DeckGroup,
   type DeckRow,
@@ -9,14 +10,16 @@ import {
   filterRows,
   groupRows,
   noFilters,
+  rowState,
   splitForms,
   stateKey,
 } from "@lymi/client/deck-list";
+import { CHOSEN_LIMIT } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { View } from "react-native";
+import { type FlatList, View } from "react-native";
 import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useCardMenu } from "../../../card/card-menu";
@@ -29,6 +32,7 @@ import { useMoveNotice, useSeriesActions } from "../../../data/series";
 import { useCardBatch, useMoveToDeck } from "../../../deck/card-batch";
 import { useMoveToSection } from "../../../deck/move-to-section";
 import { SelectBox, SelectionToolbar } from "../../../deck/selection";
+import { ExportSheet } from "../../../export/export-sheet";
 import {
   ReadyNote,
   SectionHeading,
@@ -36,6 +40,7 @@ import {
   useStartSection,
 } from "../../../sections/sections";
 import { useOnline } from "../../../streak/goal-picker";
+import { captureEvent } from "../../../telemetry/posthog";
 import { haptics } from "../../../theme/haptics";
 import { springIn, useReduceMotion } from "../../../theme/motion";
 import { usePalette, useRoom } from "../../../theme/palette";
@@ -44,6 +49,7 @@ import { EmptyState } from "../../../ui/empty-state";
 import { useFloatingBar } from "../../../ui/floating-bar";
 import { Icon } from "../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
+import type { MenuItem } from "../../../ui/menu";
 import { Select } from "../../../ui/menu";
 import { OfflineNote } from "../../../ui/offline-note";
 import { Button, LIFT, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
@@ -63,7 +69,16 @@ const NO_SECTIONS: Section[] = [];
 /** The list a deck draws: each group's heading, then its words one row at a time. */
 type Item =
   | { kind: "heading"; key: string; group: DeckGroup }
-  | { kind: "row"; key: string; row: DeckRow; first: boolean; last: boolean; dim: boolean };
+  | {
+      kind: "row";
+      key: string;
+      row: DeckRow;
+      first: boolean;
+      last: boolean;
+      dim: boolean;
+      /** A new card in a section that isn't open, which review won't show yet. */
+      waiting: boolean;
+    };
 
 /**
  * A deck: what it wants today and how far along it is, then its words as a glossary, which Filter
@@ -100,6 +115,7 @@ export default function Deck() {
   const sectionStart = useStartSection(id, sections);
   const exits = useDeckExits(deck);
   const [moving, setMoving] = useState(false);
+  const [exporting, setExporting] = useState(false);
   // The cards chosen with Select cards, or null when the list is not choosing.
   const [selected, setSelected] = useState<ReadonlySet<string> | null>(null);
   const moveToSection = useMoveToSection(id);
@@ -117,7 +133,7 @@ export default function Deck() {
   const menuShape = `${owner} ${moveToSection.canMove} ${moveToDeck.canMove}`;
   const lift = useRoom() === "dark";
   const reduce = useReduceMotion();
-  const selection = owner && selected ? selected : null;
+  const selection = selected;
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
   const items = useMemo(
     () =>
@@ -133,6 +149,7 @@ export default function Deck() {
               first: i === 0,
               last: i === group.rows.length - 1,
               dim,
+              waiting: dim && rowState(row) === "new",
             }),
           ),
         ];
@@ -141,6 +158,105 @@ export default function Deck() {
   );
   const done = () => setSelected(null);
   const choosing = !!selection;
+  // What Review takes from the chosen cards, due ones first, as the web's selection does.
+  const reviewable = useMemo(
+    () => (selection ? chosenReview(rows, selection, Date.now()) : []),
+    [rows, selection],
+  );
+  const dueChosen = reviewable.filter((r) => r.due).length;
+  const reviewChosen = (kind: "due" | "all") => {
+    // One review takes at most CHOSEN_LIMIT, and the list is due first, so the cap keeps those.
+    const ids = reviewable
+      .filter((r) => kind === "all" || r.due)
+      .slice(0, CHOSEN_LIMIT)
+      .map((r) => r.id);
+    done();
+    router.push(`/review?deck=${id}&cards=${ids.join(",")}` as Href);
+  };
+  const unmarked = !!selection && rows.some((r) => selection.has(r.card.id) && !r.card.important);
+  const limit = CHOSEN_LIMIT;
+  const reviewAll = reviewable.length;
+  const selectionActions: MenuItem[][] = selection
+    ? [
+        [
+          ...(dueChosen > 0
+            ? [
+                {
+                  label:
+                    dueChosen > limit
+                      ? t`Review ${limit} of ${dueChosen} due`
+                      : plural(dueChosen, { one: "Review # due", other: "Review # due" }),
+                  icon: "play" as const,
+                  onSelect: () => reviewChosen("due"),
+                },
+              ]
+            : []),
+          // Review all is the same list as Review due when every chosen card is due.
+          ...(reviewAll > dueChosen
+            ? [
+                {
+                  label:
+                    reviewAll > limit
+                      ? t`Review ${limit} of ${reviewAll}`
+                      : plural(reviewAll, { one: "Review all #", other: "Review all #" }),
+                  icon: "play" as const,
+                  onSelect: () => reviewChosen("all"),
+                },
+              ]
+            : []),
+        ],
+        [
+          {
+            // Its own message, since Ukrainian and Russian say it of several cards.
+            label: unmarked
+              ? t({ message: "Mark important", context: "chosen cards" })
+              : t({ message: "Unmark important", context: "chosen cards" }),
+            icon: "important" as const,
+            onSelect: () => {
+              const ids = [...selection];
+              done();
+              void batch.important(ids, unmarked);
+            },
+          },
+        ],
+        // Changing the cards themselves stays the owner's.
+        ...(owner
+          ? [
+              [
+                ...(moveToSection.canMove
+                  ? [
+                      {
+                        label: t`Move to section`,
+                        icon: "section" as const,
+                        onSelect: () => moveToSection.open([...selection], done),
+                      },
+                    ]
+                  : []),
+                ...(moveToDeck.canMove
+                  ? [
+                      {
+                        label: t`Move to deck`,
+                        icon: "deck" as const,
+                        onSelect: () => moveToDeck.open([...selection], done),
+                      },
+                    ]
+                  : []),
+              ],
+              [
+                {
+                  label: t`Archive`,
+                  icon: "archive" as const,
+                  destructive: true,
+                  onSelect: () => {
+                    done();
+                    void batch.archive([...selection]);
+                  },
+                },
+              ],
+            ]
+          : []),
+      ].filter((group) => group.length > 0)
+    : [];
   useEffect(() => {
     setDeckSelecting(id, choosing);
     return () => setDeckSelecting(id, false);
@@ -158,39 +274,7 @@ export default function Deck() {
           onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
           onClear={() => setSelected(new Set())}
           onDone={done}
-          actions={[
-            [
-              ...(moveToSection.canMove
-                ? [
-                    {
-                      label: t`Move to section`,
-                      icon: "section" as const,
-                      onSelect: () => moveToSection.open([...selection], done),
-                    },
-                  ]
-                : []),
-              ...(moveToDeck.canMove
-                ? [
-                    {
-                      label: t`Move to deck`,
-                      icon: "deck" as const,
-                      onSelect: () => moveToDeck.open([...selection], done),
-                    },
-                  ]
-                : []),
-            ],
-            [
-              {
-                label: t`Archive`,
-                icon: "archive",
-                destructive: true,
-                onSelect: () => {
-                  done();
-                  void batch.archive([...selection]);
-                },
-              },
-            ],
-          ]}
+          actions={selectionActions}
         />
       </Animated.View>
     ),
@@ -214,6 +298,27 @@ export default function Deck() {
   const cardsFailed = useLoadFailed(cards);
   const decksFailed = useLoadFailed(decks);
   const addCard = () => router.push(`/capture?deck=${id}` as Href);
+  const listRef = useRef<FlatList<Item>>(null);
+  // Go to clears the filters and sorts by section, so the heading is in the list it scrolls.
+  const [goingTo, setGoingTo] = useState<string | null>(null);
+  const goTo = (sectionId: string) => {
+    captureEvent("section_go_to", {});
+    setFilters(noFilters);
+    setSort(null);
+    setGoingTo(sectionId);
+  };
+  const bar = insets.top + 56;
+  const scrollTo = useCallback(
+    (index: number) =>
+      listRef.current?.scrollToIndex({ index, viewOffset: bar, animated: !reduce }),
+    [bar, reduce],
+  );
+  useEffect(() => {
+    if (!goingTo) return;
+    setGoingTo(null);
+    const index = items.findIndex((item) => item.key === `h:section:${goingTo}`);
+    if (index >= 0) scrollTo(index);
+  }, [goingTo, items, scrollTo]);
   // The words draw as a list only once the page has a deck with cards to show.
   const listed = !gone && !cardsFailed && !decksFailed && !!deck && rows.length > 0;
 
@@ -244,6 +349,7 @@ export default function Deck() {
                     <WordRow
                       row={item.row}
                       first={item.first}
+                      waiting={item.waiting}
                       selected={selection ? selection.has(item.row.card.id) : undefined}
                       onToggle={selection ? toggleSelected : undefined}
                       menu={menu}
@@ -254,6 +360,15 @@ export default function Deck() {
                 ),
               // The last cards scroll clear of the pinned toolbar.
               footer: selection && <View className="h-16" />,
+              ref: listRef,
+              // A heading past what is drawn: scroll near it so it draws, then go to it.
+              onScrollToIndexFailed: ({ index, averageItemLength }) => {
+                listRef.current?.scrollToOffset({
+                  offset: averageItemLength * index,
+                  animated: false,
+                });
+                setTimeout(() => scrollTo(index), 100);
+              },
             }
           : undefined
       }
@@ -282,6 +397,11 @@ export default function Deck() {
                           icon: "plus" as const,
                           onSelect: addCard,
                         },
+                        {
+                          label: t`Smart add`,
+                          icon: "ai" as const,
+                          onSelect: () => router.push(`/smart-add?deck=${id}` as Href),
+                        },
                       ]
                     : []),
                   ...(owner
@@ -296,9 +416,14 @@ export default function Deck() {
                           icon: "series" as const,
                           onSelect: () => setMoving(true),
                         },
+                        {
+                          label: t`Export deck`,
+                          icon: "export" as const,
+                          onSelect: () => setExporting(true),
+                        },
                       ]
                     : []),
-                  ...(owner && rows.length > 0 && !selection
+                  ...(rows.length > 0 && !selection
                     ? [
                         {
                           label: t`Select cards`,
@@ -391,6 +516,7 @@ export default function Deck() {
                     due={deck.due}
                     starting={sectionStart.starting}
                     onStart={sectionStart.start}
+                    onGoTo={goTo}
                   />
                 )
               }
@@ -429,6 +555,18 @@ export default function Deck() {
         </>
       )}
       {deck && owner && <MoveToSeries deck={deck} open={moving} onOpenChange={setMoving} />}
+      {deck && owner && (
+        <ExportSheet
+          open={exporting}
+          onOpenChange={setExporting}
+          scope={{
+            kind: "deck",
+            deckId: deck.id,
+            deckName: deck.name,
+            rows: cards.data,
+          }}
+        />
+      )}
       {owner && moveToSection.sheet}
       {owner && moveToDeck.sheet}
     </Screen>
@@ -823,6 +961,7 @@ function Slice({
 const WordRow = memo(function WordRow({
   row,
   first,
+  waiting,
   selected,
   onToggle,
   menu,
@@ -830,6 +969,7 @@ const WordRow = memo(function WordRow({
 }: {
   row: DeckRow;
   first: boolean;
+  waiting: boolean;
   /** Undefined unless the list is choosing cards. */
   selected?: boolean | undefined;
   onToggle?: ((cardId: string) => void) | undefined;
@@ -844,14 +984,20 @@ const WordRow = memo(function WordRow({
   const state = stateKey(row.state?.state);
   const { word, forms } = splitForms(row.card.term);
   const selecting = selected !== undefined;
-  const label = `${row.card.term}, ${row.card.meaning ?? ""}, ${i18n._(stateMarks[state].label)}`;
+  const label = `${row.card.term}, ${row.card.meaning ?? ""}, ${waiting ? t`Not in review yet` : i18n._(stateMarks[state].label)}`;
   const face = (
     <View
       className={`flex-row gap-3 py-3.5 ps-4 pe-5 ${first ? "" : "border-t border-edge"}`}
       style={selected ? { backgroundColor: p.hover } : { backgroundColor: p.plate }}
     >
       <View className="pt-[5px]">
-        {selecting ? <SelectBox checked={selected} /> : <StateIcon state={state} size={15} />}
+        {selecting ? (
+          <SelectBox checked={selected} />
+        ) : waiting ? (
+          <Icon name="lock" size={15} colour={p.faint} />
+        ) : (
+          <StateIcon state={state} size={15} />
+        )}
       </View>
       <View className="flex-1 gap-0.5">
         <Text className="text-md font-medium text-text" numberOfLines={3}>

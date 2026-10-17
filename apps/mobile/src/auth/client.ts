@@ -12,6 +12,12 @@ import { Platform } from "react-native";
 /** The Worker the app talks to. `EXPO_PUBLIC_API_URL=http://localhost:5241` points it at a local one. */
 export const API_URL = process.env.EXPO_PUBLIC_API_URL ?? "https://my.lymi.app";
 
+/** The public site, where the docs live and some apps' sign-in documents are served. */
+export const SITE_URL = process.env.EXPO_PUBLIC_SITE_URL ?? "https://lymi.app";
+
+/** A page of the public site, such as `/docs/api`. */
+export const siteUrl = (path: string) => `${SITE_URL}${path}`;
+
 /** The scheme in app.json, which the Worker trusts as the phone's origin. */
 const SCHEME = "lymi";
 

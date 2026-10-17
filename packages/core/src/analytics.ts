@@ -41,7 +41,7 @@ export const CONTEXT_MENU_ACTIONS = [
 ] as const;
 export type ContextMenuAction = (typeof CONTEXT_MENU_ACTIONS)[number];
 export const AnalyticsLocale = z.enum(["en", "uk", "ru"]);
-/** What a review leg was opened for; the phone sends none yet. */
+/** What a review leg was opened for. */
 export const REVIEW_SCOPES = ["day", "deck", "series", "section", "round", "chosen"] as const;
 export type ReviewScopeKind = (typeof REVIEW_SCOPES)[number];
 const session = { session_id: z.uuid(), scope: z.enum(REVIEW_SCOPES).optional() };
@@ -185,7 +185,7 @@ export const analyticsEvents = {
   welcome_step_viewed: z.object({ step_name: step, skipped: z.boolean() }),
   welcome_step_finished: z.object({ step_name: step, skipped: z.boolean() }),
   empty_state_option_picked: z.object({
-    option: z.enum(["create_deck", "typed", "ai_mcp", "api", "explore", "import"]),
+    option: z.enum(["create_deck", "typed", "lesson", "ai_mcp", "api", "explore", "import"]),
   }),
   import_started: z.object({
     source,
@@ -200,6 +200,10 @@ export const analyticsEvents = {
     outcome: z.enum(["done", "failed"]),
   }),
   import_failed: z.object({ source, card_count: count }),
+  export_started: z.object({
+    format: z.enum(["lymi", "anki"]),
+    scope: z.enum(["deck", "library"]),
+  }),
   daily_goal_set: z.object({ value: z.number().int().min(1).max(200), is_change: z.boolean() }),
   reminder_prompt_shown: z.object({}),
   reminder_prompt_accepted: z.object({}),
@@ -248,6 +252,7 @@ export const analyticsEvents = {
   }),
   lesson_read_limited: z.object({}),
   lesson_read: z.object({
+    client: z.enum(["web", "phone"]),
     pages: count,
     pasted: z.boolean(),
     deck: z.enum(["fixed", "guessed"]),
@@ -284,6 +289,7 @@ export const analyticsEvents = {
   card_importance_set: z.object({
     important: z.boolean(),
     channel: z.enum(["app", "api", "mcp"]),
+    count: count.optional(),
   }),
   entry_opened: z.object({
     entry: z.enum(["control", "shortcut", "quick_action", "widget"]),
@@ -294,6 +300,7 @@ export const analyticsEvents = {
     in_use: z.boolean(),
   }),
   deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
+  section_go_to: z.object({}),
   deck_tag_changed: z.object({
     action: z.enum(["rename", "merge", "archive", "restore"]),
     channel: z.enum(["app", "api", "mcp"]),
@@ -343,6 +350,7 @@ export const analyticsProducers = {
   import_started: ["worker"],
   import_finished: ["worker"],
   import_failed: ["worker"],
+  export_started: ["worker"],
   daily_goal_set: ["worker"],
   reminder_prompt_shown: ["browser"],
   reminder_prompt_accepted: ["browser"],
@@ -361,6 +369,7 @@ export const analyticsProducers = {
   card_importance_set: ["worker"],
   tag_added: ["browser"],
   deck_filter_added: ["browser"],
+  section_go_to: ["phone"],
   deck_tag_changed: ["worker"],
   cards_tagged: ["browser"],
   deck_enrichment_changed: ["worker"],
@@ -418,6 +427,8 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     "/feedback",
     "/share",
     "/series-order",
+    "/api-keys",
+    "/connected-apps",
   ];
   const base = routes.find((route) => path === route || path.startsWith(`${route}/`));
   return base ? (path === base ? base : `${base}/:item`) : "/other";

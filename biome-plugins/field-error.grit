@@ -1,0 +1,5 @@
+`<Icon $attrs />` where {
+  $attrs <: contains `name="alert"`,
+  $attrs <: contains `size={14}`,
+  register_diagnostic(span=$attrs, message="An error line is FieldError from src/ui/field.tsx: it centres the icon on the first line, keeps the text on the form's line and reads it out. Pass flush under a field drawn as a line with no box.")
+}

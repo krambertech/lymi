@@ -1,4 +1,4 @@
-import type { ProductAnalyticsEvent } from "@lymi/core/analytics";
+import type { ProductAnalyticsEvent, ReviewScopeKind } from "@lymi/core/analytics";
 import { ReviewSessionTracker } from "@lymi/core/analytics-review-session";
 
 /** Where the review stands, as the screen draws it. */
@@ -6,6 +6,8 @@ export interface ReviewLeg {
   /** Changes when a new leg begins, so the last one is closed first; null before the first. */
   key: string | null;
   date: string | null;
+  /** What the leg was opened for. */
+  scope: ReviewScopeKind;
   /** Today's attempts before this leg began. */
   before: number;
   done: number;
@@ -52,9 +54,20 @@ export class ReviewLegs {
     if (streak) this.streak = streak;
   }
 
-  step({ key, date, before, done, count, presenting, stopped, paused, finished }: ReviewLeg): void {
+  step({
+    key,
+    date,
+    scope,
+    before,
+    done,
+    count,
+    presenting,
+    stopped,
+    paused,
+    finished,
+  }: ReviewLeg): void {
     if (key === null) return;
-    const snapshot = { cardsDone: done, cardCount: count, first: before === 0 };
+    const snapshot = { cardsDone: done, cardCount: count, first: before === 0, scope };
     // The leg being closed by a new key is reported under its own day, so the day moves after.
     if (presenting) this.tracker.update(key, snapshot);
     else if (stopped) {

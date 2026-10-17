@@ -1,0 +1,53 @@
+# API keys and connected apps: make a key, copy it, revoke it, then open Connected apps.
+appId: app.lymi
+name: API keys and connected apps
+---
+- runFlow: _open.yaml
+- tapOn: "You"
+- scrollUntilVisible:
+    element: "API keys"
+- tapOn: "API keys"
+- extendedWaitUntil:
+    visible: "For scripts and curl.*"
+    timeout: 20000
+- takeScreenshot: 01-keys
+- tapOn: "New key"
+- extendedWaitUntil:
+    visible: "So you know which key to revoke later."
+    timeout: 10000
+- inputText: "${KEY}"
+- takeScreenshot: 02-new-key
+- tapOn: "Create key"
+- extendedWaitUntil:
+    visible: "${KEY} is ready.*"
+    timeout: 20000
+- tapOn: "Copy key"
+- assertVisible: "Copied"
+- takeScreenshot: 03-fresh
+- tapOn: "Done"
+- extendedWaitUntil:
+    visible: "${KEY}"
+    timeout: 10000
+- takeScreenshot: 04-listed
+- tapOn: "Options for ${KEY}"
+- extendedWaitUntil:
+    visible: "Revoke key"
+    timeout: 10000
+- takeScreenshot: 05-menu
+- tapOn: "Revoke key"
+- extendedWaitUntil:
+    visible: "Revoke “${KEY}”\\?"
+    timeout: 10000
+- takeScreenshot: 06-alert
+- tapOn: "Revoke key"
+- extendedWaitUntil:
+    notVisible: "${KEY}"
+    timeout: 20000
+- tapOn: "You"
+- scrollUntilVisible:
+    element: "Connected apps"
+- tapOn: "Connected apps"
+- extendedWaitUntil:
+    visible: "Connect ChatGPT or Claude.*"
+    timeout: 20000
+- takeScreenshot: 07-apps

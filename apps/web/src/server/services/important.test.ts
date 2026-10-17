@@ -5,7 +5,7 @@ import type { AnalyticsEvent } from "./analytics";
 import { addCards, showCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
-import { setImportant } from "./important";
+import { setImportant, setImportantMany } from "./important";
 import { join } from "./members";
 import { reviewDraw } from "./review";
 import { setReviewTimezone } from "./review-days";
@@ -105,5 +105,49 @@ describe("the important mark", () => {
     const draw = await reviewDraw(owner, { deckId: deck.id });
     const important = Object.fromEntries(draw.cards.map((c) => [c.card.id, c.card.important]));
     expect(important).toEqual({ [marked.id]: true, [plain.id]: false });
+  });
+
+  it("sets many marks at once for a member, one event per direction", async () => {
+    const { deck, cards } = await deckWith(["viis", "kuus", "seitse"]);
+    const [a, b, c] = cards;
+    if (!a || !b || !c) throw new Error("no cards");
+    await join(member, deck.id);
+    const memberEvents: AnalyticsEvent[] = [];
+    const tracked = {
+      ...member,
+      analytics: { writeDataPoint: vi.fn(), capture: (e: AnalyticsEvent) => memberEvents.push(e) },
+    };
+    await setImportant(member, a.id, true);
+
+    const outcomes = await setImportantMany(tracked, [
+      { cardId: a.id, important: true },
+      { cardId: b.id, important: true },
+      { cardId: c.id, important: false },
+      { cardId: "missing", important: true },
+    ]);
+
+    expect(outcomes).toEqual([
+      { id: a.id, status: "updated", important: true },
+      { id: b.id, status: "updated", important: true },
+      { id: c.id, status: "updated", important: false },
+      expect.objectContaining({ id: "missing", status: "error", code: "not_found" }),
+    ]);
+    expect((await showCard(member, b.id)).important).toBe(true);
+    expect((await showCard(owner, b.id)).important).toBe(false);
+    expect((await auditActions(b.id)).filter((x) => x === "mark_important")).toHaveLength(1);
+    expect(memberEvents).toEqual([
+      { name: "card_importance_set", important: true, channel: "app", count: 1 },
+    ]);
+
+    // Undo puts each card back as it was.
+    await setImportantMany(member, [
+      { cardId: a.id, important: true },
+      { cardId: b.id, important: false },
+    ]);
+    expect((await showCard(member, a.id)).important).toBe(true);
+    expect((await showCard(member, b.id)).important).toBe(false);
+    const [refused] = await setImportantMany(stranger, [{ cardId: a.id, important: false }]);
+    expect(refused).toMatchObject({ status: "error", code: "not_found" });
+    expect((await showCard(member, a.id)).important).toBe(true);
   });
 });

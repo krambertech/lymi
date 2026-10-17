@@ -3,8 +3,16 @@ import { useLingui } from "@lingui/react/macro";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { type Href, useIsPreview, useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
-import { Fragment, type ReactElement, type ReactNode, useState } from "react";
 import {
+  Fragment,
+  type ReactElement,
+  type ReactNode,
+  type RefObject,
+  useEffect,
+  useState,
+} from "react";
+import {
+  type FlatList,
   I18nManager,
   type ListRenderItem,
   Platform,
@@ -19,6 +27,7 @@ import Animated, {
   runOnJS,
   type SharedValue,
   useAnimatedReaction,
+  useAnimatedRef,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
@@ -28,6 +37,7 @@ import { Flame } from "../brand/flame";
 import { useDay } from "../data/queries";
 import { useGlass } from "../theme/glass";
 import { usePalette } from "../theme/palette";
+import { ActionMenu } from "./action-menu";
 import { GlassSurface } from "./glass";
 import type { IconName } from "./icons";
 import { Icon, Press, Text } from "./primitives";
@@ -41,6 +51,10 @@ export interface ScreenList<T> {
   extraData?: unknown;
   /** Under the list, such as room for a pinned toolbar. */
   footer?: ReactElement | false | null;
+  /** For a page that scrolls its list to a row, such as a section's heading. */
+  ref?: RefObject<FlatList<T> | null>;
+  /** A row past what is drawn yet: scroll near it, then try again. */
+  onScrollToIndexFailed?: (info: { index: number; averageItemLength: number }) => void;
 }
 
 interface Props<T> {
@@ -76,6 +90,8 @@ interface Props<T> {
   onRefresh?: () => Promise<unknown>;
   /** Told once each time the page scrolls past this content offset, or back above it. */
   past?: { y: number; onChange: (past: boolean) => void } | undefined;
+  /** A page of steps, such as an import's questions, starts each one at the top: change it per step. */
+  scrollKey?: string | number;
   /** Rows under `children`, virtualized so a deck of thousands opens as fast as a short one. */
   list?: ScreenList<T> | undefined;
   children: ReactNode;
@@ -133,6 +149,7 @@ export function Screen<T = never>({
   onEndReached,
   onRefresh,
   past,
+  scrollKey,
   list,
   children,
 }: Props<T>) {
@@ -145,6 +162,11 @@ export function Screen<T = never>({
   const { t } = useLingui();
   const p = usePalette();
   const y = useSharedValue(0);
+  const scroller = useAnimatedRef<Animated.ScrollView>();
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the key is the trigger.
+  useEffect(() => {
+    if (scrollKey !== undefined) scroller.current?.scrollTo({ y: 0, animated: false });
+  }, [scrollKey]);
   const [compact, setCompact] = useState(false);
   const hasEnd = !!onEndReached;
   const endJS = () => onEndReached?.();
@@ -345,6 +367,8 @@ export function Screen<T = never>({
     <View className="flex-1 bg-canvas">
       {list && !preview ? (
         <Animated.FlatList
+          ref={list.ref}
+          onScrollToIndexFailed={list.onScrollToIndexFailed}
           {...scroll}
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={{ ...scroll.contentContainerStyle, paddingHorizontal: 20 }}
@@ -362,6 +386,7 @@ export function Screen<T = never>({
       ) : (
         <Animated.ScrollView
           {...scroll}
+          ref={scroller}
           keyboardShouldPersistTaps="handled"
           contentContainerClassName="px-5 gap-7"
         >
@@ -754,8 +779,18 @@ function TabActions({ own }: { own?: ReactNode }) {
           <View className="h-10 flex-row items-center gap-1.5 px-2">{streakInner}</View>
         )}
       </Press>
-      {/* Add a word rises as a sheet from below, as every task with an end does. phone.md. */}
-      <BarButton icon="plus" label={t`Add a card`} amber onPress={() => router.push("/capture")} />
+      {/* A tap opens Add a word as a sheet from below; a long press offers the other ways in. phone.md. */}
+      <ActionMenu
+        label={t`Add a card`}
+        symbol="plus"
+        look="primary"
+        onPrimaryAction={() => router.push("/capture")}
+        items={[
+          { label: t`Add a card`, icon: "plus", onSelect: () => router.push("/capture") },
+          { label: t`Smart add`, icon: "ai", onSelect: () => router.push("/smart-add") },
+          { label: t`New deck`, icon: "deck", onSelect: () => router.push("/new-deck") },
+        ]}
+      />
     </View>
   );
 }

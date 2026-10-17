@@ -6,7 +6,6 @@ import { View } from "react-native";
 import { Lantern } from "../brand/lantern";
 import { haptics } from "../theme/haptics";
 import { usePalette } from "../theme/palette";
-import { openWeb } from "../ui/on-the-web";
 import { Button, Icon, Plate, Text } from "../ui/primitives";
 import { Row, Rows } from "../ui/row";
 import { AssistantOffer, useAssistantOffer } from "./assistant-offer";
@@ -227,11 +226,12 @@ function StepNumber({ n, state }: { n: number; state: "done" | "current" | "late
 }
 
 /**
- * Ways to bring what the learner already has, which stay on the web: an assistant, offered with its
- * marks until one is connected, and an import as a row that opens the web. ADR 0030.
+ * Ways to bring what the learner already has: an assistant, offered with its marks until one is
+ * connected, and an import from another app.
  */
 export function BringYourOwn() {
   const { t } = useLingui();
+  const router = useRouter();
   const offer = useAssistantOffer();
   return (
     <View className="gap-3">
@@ -244,10 +244,9 @@ export function BringYourOwn() {
           icon="import"
           label={t`Import decks`}
           value={t`Anki, Mochi, Noji`}
-          end="web"
           onPress={() => {
             trackGuide("import");
-            void openWeb("/import");
+            router.push("/import");
           }}
         />
       </Rows>

@@ -29,6 +29,7 @@ import {
   ZipSegment,
   ZipTooLarge,
 } from "../exports/zip";
+import { track } from "./analytics";
 import { auditStatement } from "./audit";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { dateFormatter } from "./days";
@@ -191,6 +192,11 @@ export async function startExport(
       .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.status, "exporting")));
     throw err;
   }
+  track(ctx.analytics, {
+    name: "export_started",
+    format: input.format,
+    scope: deck ? "deck" : "library",
+  });
   return getExport(ctx, id);
 }
 

@@ -15,7 +15,6 @@ import { EmptyState } from "../../../ui/empty-state";
 import { ListRow, ListRowFace, listRowLabel } from "../../../ui/list-row";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
 import { OfflineNote } from "../../../ui/offline-note";
-import { openWeb } from "../../../ui/on-the-web";
 import { Icon, Plate, Press, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { RowMenu } from "../../../ui/row-menu";
@@ -55,9 +54,10 @@ export default function Library() {
             look="primary"
             items={[
               { label: t`Add a card`, icon: "plus", onSelect: () => router.push("/capture") },
+              { label: t`Smart add`, icon: "ai", onSelect: () => router.push("/smart-add") },
               { label: t`New deck`, icon: "deck", onSelect: newDeck },
               { label: t`New series`, icon: "series", onSelect: newSeries },
-              { label: t`Import decks`, icon: "import", onSelect: () => openWeb("/import") },
+              { label: t`Import decks`, icon: "import", onSelect: () => router.push("/import") },
             ]}
           />
         </>
@@ -80,7 +80,7 @@ export default function Library() {
           kind="start"
           icon="library"
           title={t`No decks yet`}
-          body={t`A deck holds the words you learn together. Make one, or import decks on the web.`}
+          body={t`A deck holds the words you learn together. Make one, or import decks from another app.`}
           action={{ label: t`New deck`, onPress: newDeck }}
         />
       ) : (

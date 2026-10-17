@@ -177,6 +177,7 @@ export type PreparedLesson = {
   byHead: Map<string, Owned>;
   analytics: AnalyticsWriter | undefined;
   pasted: boolean;
+  client: "web" | "phone";
   /** Takes the read back off today's count, for a read that failed. */
   release: () => Promise<void>;
 };
@@ -199,7 +200,11 @@ export async function prepareLesson(
   ctx: ServiceContext,
   material: LessonMaterial,
   deps: LessonDeps,
-  choice: { deckId?: string | undefined; hint?: string | undefined } = {},
+  choice: {
+    deckId?: string | undefined;
+    hint?: string | undefined;
+    client?: "web" | "phone";
+  } = {},
 ): Promise<PreparedLesson> {
   const reader = await assertCanReadLessons(ctx, deps);
   const { db, userId } = ctx;
@@ -274,6 +279,7 @@ export async function prepareLesson(
     byHead: new Map(owned.map((c) => [headForm(c.key), c])),
     analytics: ctx.analytics,
     pasted: words > 0,
+    client: choice.client ?? "web",
   };
 }
 
@@ -296,6 +302,15 @@ export async function streamLesson(
   }
 }
 
+/** The fewest terms one answer must untick for its question to beat unticking them on the list. */
+const QUESTION_DROPS = 2;
+
+/** Whether some answer unticks a few of the new terms and none unticks them all, leaving nothing to add. */
+export function worthAsking(options: { drop: string[] }[], fresh: number): boolean {
+  const drops = options.map((o) => new Set(o.drop).size);
+  return drops.some((n) => n >= QUESTION_DROPS) && drops.every((n) => n < fresh);
+}
+
 async function readInto(
   lesson: PreparedLesson,
   material: LessonMaterial,
@@ -305,6 +320,8 @@ async function readInto(
   const stream = new TermsStream();
   const seen = new Set<string>();
   const ids = new Set<string>();
+  /** Terms not already among the learner's cards: the ones a question's answer can untick. */
+  const fresh = new Set<string>();
   let ticked = 0;
   let existing = 0;
   // Each term waits for its own score and for the term before it, so the list keeps the page's order.
@@ -344,6 +361,7 @@ async function readInto(
         formOf: match(head),
       };
       ids.add(t.id);
+      if (!exact) fresh.add(t.id);
       if (term.ticked) ticked++;
       if (exact || head) existing++;
       emit({ type: "term", term });
@@ -406,13 +424,24 @@ async function readInto(
   if (!reply && ids.size === 0)
     throw new ServiceError("unavailable", "The lesson could not be read. Try again.");
 
-  const questions = (reply?.questions ?? []).slice(0, 5);
+  const questions = (reply?.questions ?? [])
+    .map((q) => ({
+      ...q,
+      options: q.options.map((o) => ({ label: o.label, drop: o.drop.filter((id) => ids.has(id)) })),
+    }))
+    .filter((q) =>
+      worthAsking(
+        q.options.map((o) => ({ drop: o.drop.filter((id) => fresh.has(id)) })),
+        fresh.size,
+      ),
+    )
+    .slice(0, 2);
   emit({
     type: "questions",
     questions: questions.map((q, i) => ({
       id: `q${i + 1}`,
       question: q.question,
-      options: q.options.map((o) => ({ label: o.label, drop: o.drop.filter((id) => ids.has(id)) })),
+      options: q.options,
       default: Math.min(q.default, q.options.length - 1),
     })),
   });
@@ -420,6 +449,7 @@ async function readInto(
   const cost = textCallCost(usage.model, { input: usage.inputTokens, output: usage.outputTokens });
   track(lesson.analytics, {
     name: "lesson_read",
+    client: lesson.client,
     pages: lesson.pages,
     pasted: lesson.pasted,
     deck: lesson.fixed ? "fixed" : "guessed",
@@ -446,7 +476,7 @@ export async function readLesson(
   ctx: ServiceContext,
   material: LessonMaterial,
   deps: LessonDeps,
-  choice: { deckId?: string | undefined; hint?: string | undefined } = {},
+  choice: Parameters<typeof prepareLesson>[3] = {},
 ): Promise<LessonRead> {
   const lesson = await prepareLesson(ctx, material, deps, choice);
   const read: LessonRead = {

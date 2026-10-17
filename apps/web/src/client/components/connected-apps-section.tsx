@@ -1,6 +1,8 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { listedApp } from "@lymi/client/app-marks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plug } from "lucide-react";
+import { clsx } from "clsx";
+import { CircleAlert, Plug } from "lucide-react";
 import type { ReactNode } from "react";
 import type { ConnectedApp } from "../lib/api";
 import { api, errorMessage } from "../lib/api";
@@ -115,32 +117,39 @@ function AppRow({
 }) {
   const { t, i18n } = useLingui();
   const app = identifyApp(item.clientId, item.name);
+  const listed = listedApp(app);
   const confirm = useConfirmStep();
   const connected = i18n.date(item.createdAt, { day: "numeric", month: "short" });
 
   return (
     <li className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-edge py-3 last:border-b-0">
-      <AppMark app={app} className="size-9 rounded-sm" />
+      <AppMark app={{ ...app, name: listed.title }} className="size-9 rounded-sm" />
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="truncate text-base font-medium">{app.name ?? t`An app`}</span>
+          <span className="truncate text-base font-medium">{listed.title ?? t`An app`}</span>
           <Chip size="sm">{item.scope === "write" ? t`Read and write` : t`Read`}</Chip>
         </div>
         {/* A long host truncates; the date never does, so the row always says when. */}
-        <p className="flex min-w-0 items-baseline gap-1 text-sm text-muted">
-          {/* An app that sent no name is titled by its host already; don't print it twice. */}
-          {app.name !== app.host && app.host && (
+        <p className="flex min-w-0 items-center gap-1 text-sm text-muted">
+          {/* An app Lymi did not recognise is titled by the name it gave, so the row says so. */}
+          {listed.unverified && (
             <>
-              <span className="truncate font-mono">{app.host}</span>
+              <span
+                className={clsx(
+                  "flex shrink-0 items-center gap-1",
+                  listed.borrowed && "text-danger",
+                )}
+              >
+                <CircleAlert className="size-3.5" aria-hidden="true" />
+                <Trans>Unverified</Trans>
+              </span>
               <span aria-hidden="true">·</span>
             </>
           )}
-          {/* An unrecognised app is titled by its address, so its own name is a claim. */}
-          {app.claimed && (
+          {/* An app titled by its host has it in the title already; don't print it twice. */}
+          {listed.host && (
             <>
-              <span className="truncate">
-                <Trans>calls itself “{app.claimed}”</Trans>
-              </span>
+              <span className="truncate font-mono">{listed.host}</span>
               <span aria-hidden="true">·</span>
             </>
           )}

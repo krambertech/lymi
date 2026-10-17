@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { Pressable, TextInput, type TextInputProps, View } from "react-native";
+import { AccessibilityInfo, Pressable, TextInput, type TextInputProps, View } from "react-native";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { ForcedStateContext, Icon, Press, Text } from "./primitives";
@@ -137,8 +137,14 @@ export function FieldDescription({ children }: { children: ReactNode }) {
   );
 }
 
-/** How to fix what is wrong. With a message it marks the field and its control invalid. */
-export function FieldError({ children }: { children?: string | null | undefined }) {
+/** Every error line on the phone; in a Field it marks the control invalid, and `flush` aligns it to a boxless line. */
+export function FieldError({
+  children,
+  flush = false,
+}: {
+  children?: string | null | undefined;
+  flush?: boolean;
+}) {
   const p = usePalette();
   const field = useContext(FieldContext);
   const setError = field?.setError;
@@ -147,9 +153,16 @@ export function FieldError({ children }: { children?: string | null | undefined 
     setError?.(message);
     return () => setError?.(undefined);
   }, [message, setError]);
+  // iOS ignores accessibilityLiveRegion, so the line is read out as it appears.
+  useEffect(() => {
+    if (message) AccessibilityInfo.announceForAccessibility(message);
+  }, [message]);
   if (!message) return null;
   return (
-    <View className="flex-row items-start gap-1.5 px-1" accessibilityLiveRegion="polite">
+    <View
+      className={`flex-row items-start gap-1.5 ${flush ? "" : "px-1"}`}
+      accessibilityLiveRegion="polite"
+    >
       {/* As tall as the text's first line, so the icon centres on it however the line wraps. */}
       <View className="h-[21px] justify-center">
         <Icon name="alert" size={14} colour={p.danger} />

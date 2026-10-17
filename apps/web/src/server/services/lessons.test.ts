@@ -6,7 +6,7 @@ import { type LessonMaterial, type LessonReader, LessonReaderError } from "../le
 import type { AnalyticsEvent } from "./analytics";
 import { addCards } from "./cards";
 import { createDeck } from "./decks";
-import { lessonAccess, readLesson } from "./lessons";
+import { lessonAccess, readLesson, worthAsking } from "./lessons";
 import { learner, testDb } from "./test-db";
 
 let db: Db;
@@ -78,7 +78,7 @@ describe("readLesson", () => {
           question: "Only the words you marked?",
           options: [
             { label: "All", drop: [] },
-            { label: "Marked", drop: ["t1", "t9"] },
+            { label: "Marked", drop: ["t1", "t3", "t9"] },
           ],
           default: 7,
         },
@@ -103,7 +103,7 @@ describe("readLesson", () => {
     expect(byId.t2?.ticked).toBe(false);
     expect(byId.t3?.formOf?.term).toBe("küsima");
     expect(byId.t4).toMatchObject({ ticked: false, meaning: null, gloss: "значение", keep: 0.05 });
-    expect(read.questions[0]?.options[1]?.drop).toEqual(["t1"]);
+    expect(read.questions[0]?.options[1]?.drop).toEqual(["t1", "t3"]);
     expect(read.questions[0]?.default).toBe(1);
     expect(read.usage.costUsd).toBeCloseTo(0.0002);
     expect(reader.briefs[0]).toContain("küsima — спрашивать");
@@ -126,6 +126,29 @@ describe("readLesson", () => {
 });
 
 describe("reporting a read", () => {
+  it("names the phone as the read's client", async () => {
+    const who = await learner(db, "lesson-phone", "Kateryna");
+    const events: AnalyticsEvent[] = [];
+    const ctx = {
+      ...who,
+      analytics: { writeDataPoint: () => {}, capture: (e: AnalyticsEvent) => events.push(e) },
+    };
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    await readLesson(
+      ctx,
+      material,
+      {
+        reader: fakeReader({ deck: deck.id, terms: [term("t1", "raamat")], questions: [] }),
+        ai: undefined,
+        operators: new Set(["lesson-phone@lymi.test"]),
+      },
+      { client: "phone" },
+    );
+    expect(events).toContainEqual(
+      expect.objectContaining({ name: "lesson_read", client: "phone" }),
+    );
+  });
+
   it("reports the read's outcome and cost, and a failed call as an error", async () => {
     const who = await learner(db, "lesson-counted", "Kateryna");
     const events: AnalyticsEvent[] = [];
@@ -143,13 +166,18 @@ describe("reporting a read", () => {
     await readLesson(ctx, material, {
       reader: fakeReader({
         deck: deck.id,
-        terms: [term("t1", "jooma · juua · joon"), term("t2", "küsima")],
+        terms: [
+          term("t1", "jooma · juua · joon"),
+          term("t2", "küsima"),
+          term("t3", "lugema"),
+          term("t4", "kirjutama"),
+        ],
         questions: [
           {
             question: "Marked only?",
             options: [
               { label: "All", drop: [] },
-              { label: "Marked", drop: ["t1"] },
+              { label: "Marked", drop: ["t1", "t3"] },
             ],
             default: 0,
           },
@@ -160,11 +188,12 @@ describe("reporting a read", () => {
     });
     expect(events).toContainEqual({
       name: "lesson_read",
+      client: "web",
       pages: 0,
       pasted: true,
       deck: "guessed",
-      terms: 2,
-      ticked: 1,
+      terms: 4,
+      ticked: 3,
       existing: 1,
       questions: 1,
     });
@@ -291,9 +320,47 @@ describe("choosing the deck", () => {
 });
 
 describe("questionLimit", () => {
-  it("asks nothing about a paragraph and more about a long upload", () => {
+  it("asks nothing about a page's worth, one about a few pages and two about a long upload", () => {
     expect(questionLimit(0, 120)).toBe(0);
-    expect(questionLimit(1, 0)).toBe(2);
-    expect(questionLimit(10, 0)).toBe(5);
+    expect(questionLimit(1, 0)).toBe(0);
+    expect(questionLimit(3, 0)).toBe(1);
+    expect(questionLimit(0, 4000)).toBe(1);
+    expect(questionLimit(10, 0)).toBe(2);
+  });
+});
+
+describe("worthAsking", () => {
+  it("asks only when an answer unticks a few terms and none unticks them all", () => {
+    expect(worthAsking([{ drop: [] }, { drop: ["t1", "t2"] }], 6)).toBe(true);
+    expect(worthAsking([{ drop: [] }, { drop: ["t1"] }], 6)).toBe(false);
+    expect(worthAsking([{ drop: [] }, { drop: [] }], 6)).toBe(false);
+    expect(worthAsking([{ drop: [] }, { drop: ["t1", "t2"] }], 2)).toBe(false);
+  });
+
+  it("leaves out a question whose answer unticks every new term", async () => {
+    const ctx = await learner(db, "lesson-guard", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    await addCards(ctx, [
+      { deckId: deck.id, term: "küsima", meaning: "спрашивать", enrich: false },
+    ]);
+    const read = await readLesson(ctx, material, {
+      reader: fakeReader({
+        deck: deck.id,
+        terms: [term("t1", "jooma"), term("t2", "lugema"), term("t3", "küsima")],
+        questions: [
+          {
+            question: "Only the ones you marked?",
+            options: [
+              { label: "All of them", drop: [] },
+              { label: "Only the marked ones", drop: ["t1", "t2"] },
+            ],
+            default: 0,
+          },
+        ],
+      }),
+      ai: undefined,
+      operators: new Set(["lesson-guard@lymi.test"]),
+    });
+    expect(read.questions).toEqual([]);
   });
 });

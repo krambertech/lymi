@@ -1,9 +1,12 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import {
   activeFilterCount,
+  chosenReview,
   type DeckFilters,
   type DeckRow,
   type DeckSort,
+  deckCsv,
+  deckCsvName,
   deckTags,
   filterRows,
   groupRows,
@@ -174,38 +177,11 @@ export interface DeckSectionActions extends Omit<SectionEditing, "onDropCards"> 
 
 /** Word, meaning, status and next review as a CSV file the browser saves. */
 export function exportCsv(deckName: string, rows: DeckRow[]) {
-  const esc = (v: string | null | undefined) => `"${(v ?? "").replace(/"/g, '""')}"`;
-  const lines = [
-    [
-      "term",
-      "meaning",
-      "pronunciation",
-      "example",
-      "notes",
-      "language",
-      "source",
-      "state",
-      "due",
-    ].join(","),
-    ...rows.map(({ card, state }) =>
-      [
-        esc(card.term),
-        esc(card.meaning),
-        esc(card.pronunciation),
-        esc(card.example),
-        esc(card.notes),
-        esc(card.language),
-        esc(card.source),
-        String(state?.state ?? 0),
-        state ? new Date(state.due).toISOString() : "",
-      ].join(","),
-    ),
-  ];
-  const blob = new Blob([`﻿${lines.join("\n")}`], { type: "text/csv;charset=utf-8" });
+  const blob = new Blob([deckCsv(rows)], { type: "text/csv;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `${deckName.replace(/[^\p{L}\p{N}]+/gu, "-").toLowerCase()}.csv`;
+  a.download = deckCsvName(deckName);
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -887,24 +863,10 @@ export function DeckDetailView({
     });
   }, []);
   // What Review takes from the selection: started cards not reviewed today, as the server counts them.
-  const reviewable = useMemo(() => {
-    if (!selected || !cards) return [];
-    const today = new Date();
-    const dayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
-    const dayEnd = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1).getTime();
-    return cards
-      .filter(
-        (row) =>
-          selected.has(row.card.id) &&
-          rowState(row) !== "new" &&
-          !(row.state?.lastReview && new Date(row.state.lastReview).getTime() >= dayStart),
-      )
-      .map((row) => {
-        const at = new Date(row.state?.due ?? 0).getTime();
-        return { id: row.card.id, at, due: at < dayEnd };
-      })
-      .sort((a, b) => a.at - b.at);
-  }, [selected, cards]);
+  const reviewable = useMemo(
+    () => (selected && cards ? chosenReview(cards, selected, Date.now()) : []),
+    [selected, cards],
+  );
   const stopSelecting = useCallback(() => {
     setSelected(null);
     anchor.current = null;

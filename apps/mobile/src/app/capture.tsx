@@ -25,6 +25,7 @@ import { useOwnedDecks, useSections } from "../data/queries";
 import { formatList } from "../i18n/list";
 import { haptics } from "../theme/haptics";
 import { usePalette } from "../theme/palette";
+import { FieldError } from "../ui/field";
 import { FieldChip, FieldChipRow } from "../ui/field-chip";
 import { FormHeader } from "../ui/form-header";
 import { GlassPill } from "../ui/glass";
@@ -253,12 +254,8 @@ function Composer() {
                   }}
                   footer={
                     error && (
-                      <View
-                        className="flex-row items-center gap-1.5 pt-2"
-                        accessibilityLiveRegion="polite"
-                      >
-                        <Icon name="alert" size={14} colour={p.danger} />
-                        <Text className="flex-1 text-base text-danger">{error}</Text>
+                      <View className="pt-2">
+                        <FieldError flush>{error}</FieldError>
                       </View>
                     )
                   }

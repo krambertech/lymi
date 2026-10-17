@@ -726,9 +726,6 @@ msgstr "день"
 msgid "A few quick questions, then your first review."
 msgstr "Кілька швидких запитань, а тоді перше повторення."
 
-msgid "A few things before the list. The usual answer is already chosen."
-msgstr "Кілька питань перед списком. Звичну відповідь уже вибрано."
-
 msgid "a field"
 msgstr "поле"
 
@@ -1232,10 +1229,6 @@ msgstr "Автор: {0}"
 
 msgid "by {who}"
 msgstr "автор: {who}"
-
-#. placeholder {0}: app.claimed
-msgid "calls itself “{0}”"
-msgstr "називає себе «{0}»"
 
 msgid "Camera"
 msgstr "Камера"
@@ -2844,6 +2837,9 @@ msgstr "Як на пристрої."
 msgid "Matching languages"
 msgstr "Знайдені мови"
 
+msgid "May belong on another card"
+msgstr "Може належати до іншої картки"
+
 msgid "Meaning"
 msgstr "Значення"
 
@@ -2885,9 +2881,6 @@ msgstr "«{from}» об’єднано з «{spelled}»"
 
 msgid "Message"
 msgstr "Повідомлення"
-
-msgid "Might not need its own card"
-msgstr "Можливо, окрема картка не потрібна"
 
 msgid "Mode"
 msgstr "Режим"
@@ -3264,9 +3257,6 @@ msgstr "По одній сторінці"
 
 msgid "One side only"
 msgstr "Лише один бік"
-
-msgid "One thing before the list. The usual answer is already chosen."
-msgstr "Одне питання перед списком. Звичну відповідь уже вибрано."
 
 msgid "Only on days with cards due."
 msgstr "Лише в дні, коли є картки до повторення."
@@ -4612,6 +4602,9 @@ msgstr "Зняти позначку «важлива»"
 
 msgid "Untitled key"
 msgstr "Ключ без назви"
+
+msgid "Unverified"
+msgstr "Не перевірено"
 
 msgid "Up to {MAX_FILES} files at a time. The first {room} were added."
 msgstr "Не більше {MAX_FILES} файлів за раз. Додано перші {room}."

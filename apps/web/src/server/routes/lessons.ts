@@ -94,6 +94,7 @@ lessonReads.post(
     const lesson = await prepareLesson(ctxOf(c), material, deps, {
       deckId: typeof deckId === "string" && deckId ? deckId : undefined,
       hint: typeof hint === "string" && hint ? hint : undefined,
+      client: c.get("phone") ? "phone" : "web",
     });
     const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
     const writer = writable.getWriter();

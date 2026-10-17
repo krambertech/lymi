@@ -143,6 +143,8 @@ function Select({
 
 interface TriggerProps extends React.ComponentProps<"button"> {
   children: React.ReactNode;
+  /** "chip" draws no box and no chevron, for a chip in a form's row that styles itself. */
+  look?: "box" | "chip" | undefined;
 }
 
 /** The box. Put a `SelectValue` inside; the chevron is already there. */
@@ -150,23 +152,28 @@ function SelectTrigger({
   id,
   "aria-describedby": describedBy,
   "aria-invalid": invalid,
+  look = "box",
   className,
   children,
   ...props
 }: TriggerProps) {
   const { shape, open, value, disabled, required } = useSelect("SelectTrigger");
   const a11y = useFieldControl({ id, "aria-describedby": describedBy, "aria-invalid": invalid });
-  const classes = cn(
-    controlBase,
-    controlSize,
-    "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-open:not-aria-invalid:edge-2 data-placeholder:text-muted",
-    className,
-  );
+  const classes =
+    look === "chip"
+      ? cn("select-none", className)
+      : cn(
+          controlBase,
+          controlSize,
+          "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-open:not-aria-invalid:edge-2 data-placeholder:text-muted",
+          className,
+        );
+  const chevron = look === "box" && <TriggerChevron />;
   if (shape === "desktop") {
     return (
       <SelectPrimitive.Trigger data-slot="select-trigger" {...props} {...a11y} className={classes}>
         {children}
-        <TriggerChevron />
+        {chevron}
       </SelectPrimitive.Trigger>
     );
   }
@@ -185,7 +192,7 @@ function SelectTrigger({
       className={classes}
     >
       {children}
-      <TriggerChevron />
+      {chevron}
     </DrawerTrigger>
   );
 }

@@ -158,6 +158,17 @@ describe("mochi adapter", () => {
     expect(byTerm(second.cards, "grazie").externalId).toBe(grazie);
   });
 
+  it("keeps an example's furigana as inline readings", async () => {
+    const { summary, notes } = await mochi.inspect(file());
+    const note = [...notes].find((n) => n.type === TWO_SIDED);
+    if (!note) throw new Error("no two-sided note");
+    const [card] = mochi.cards({ ...note, fields: ["猫", "猫(ねこ)が好(す)きです。"] }, summary, {
+      languages: {},
+      roles: { [TWO_SIDED]: ["term", "example"] },
+    });
+    expect(card?.fields.example).toBe("猫[ねこ]が好[す]きです。");
+  });
+
   it("follows the learner's field choices", async () => {
     const { cards } = await read({ languages: {}, roles: { [TWO_SIDED]: ["meaning", "term"] } });
     const cat = byTerm(cards, "the cat");

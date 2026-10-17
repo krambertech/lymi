@@ -164,6 +164,21 @@ describe("enrichmentWrite", () => {
     });
   });
 
+  it("adds readings to an example only when its text is otherwise unchanged", () => {
+    const card = { ...blank, example: "毎朝パンを食べます。" };
+    const withReadings = { ...reply, example: "毎朝[まいあさ]パンを食[た]べます。" };
+    expect(enrichmentWrite(card, withReadings, ["meaning"], true)).toEqual({
+      meaning: "AI meaning",
+      meaningSource: "ai",
+      example: "毎朝[まいあさ]パンを食[た]べます。",
+      readingsFor: "毎朝パンを食べます。",
+    });
+    expect(
+      enrichmentWrite(card, { ...reply, example: "毎朝[まいあさ]パンを食[た]べる。" }, [], true),
+    ).toEqual({});
+    expect(enrichmentWrite(card, withReadings, [], false)).toEqual({});
+  });
+
   it("drops a value the model left out and a language tag that is not one", () => {
     expect(
       enrichmentWrite(blank, {
@@ -731,6 +746,69 @@ describe("enrichment that follows the deck", () => {
         skipped: 1,
       }),
     );
+  });
+
+  it("adds readings to a Japanese example and keeps it the learner's", async () => {
+    const ctx = await learner(db, "deck-fields-readings", "Kateryna");
+    const capture = vi.fn();
+    const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja" });
+    const card = await added(
+      ctx,
+      CardInput.parse({ deckId: deck.id, term: "食べる", example: "毎朝パンを食べます。" }),
+    );
+    const provider = fakeProvider({
+      cards: [
+        {
+          id: card.id,
+          meaning: "to eat",
+          example: "毎朝[まいあさ]パンを食[た]べます。",
+          notes: null,
+          pronunciation: "たべる",
+          language: null,
+        },
+      ],
+    });
+    await enrichCards(
+      { ...ctx, actor: "ai", analytics: { capture, writeDataPoint: vi.fn() } },
+      [card.id],
+      provider,
+    );
+    const input = JSON.parse(provider.asked[0]?.input ?? "{}");
+    expect(input.cards).toEqual([expect.objectContaining({ id: card.id, addReadings: true })]);
+    expect(await showCard(ctx, card.id)).toMatchObject({
+      example: "毎朝[まいあさ]パンを食[た]べます。",
+      exampleSource: "manual",
+      pronunciation: "たべる",
+    });
+    expect(capture).toHaveBeenCalledWith(
+      expect.objectContaining({ name: "enrichment_finished", readings_added: 1 }),
+    );
+  });
+
+  it("never changes a Japanese example's text while adding readings", async () => {
+    const ctx = await learner(db, "deck-fields-readings-2", "Kateryna");
+    const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja" });
+    const card = await added(
+      ctx,
+      CardInput.parse({ deckId: deck.id, term: "食べる", example: "毎朝パンを食べます。" }),
+    );
+    await enrichCards(
+      { ...ctx, actor: "ai" },
+      [card.id],
+      fakeProvider({
+        cards: [
+          {
+            id: card.id,
+            meaning: "to eat",
+            example: "毎朝[まいあさ]ご飯[はん]を食[た]べます。",
+            notes: null,
+            pronunciation: null,
+            language: null,
+          },
+        ],
+      }),
+    );
+    expect((await showCard(ctx, card.id)).example).toBe("毎朝パンを食べます。");
   });
 
   it("makes an edited AI note the learner's", async () => {

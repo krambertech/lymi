@@ -2,6 +2,7 @@ import {
   arrivesKnown,
   type Directions,
   directionsFromModes,
+  duplicateKey,
   emptyImportCounts,
   IMAGE_LIMITS,
   IMPORT_LIMITS,
@@ -11,7 +12,10 @@ import {
   isImageMode,
   newId,
   normaliseTerm,
+  playableRecording,
+  readingKey,
   replayProgress,
+  sameReading,
   serializeState,
   stateDirection,
   TEXT_MODES,
@@ -27,6 +31,7 @@ import { selectIn } from "./batch";
 import { type CardImageStorage, uploadCardImage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { stateStatementsForCards } from "./modes";
+import { MAX_RECORDING_BYTES, storeRecording } from "./recordings";
 import { syncTagStatements } from "./tags";
 
 /**
@@ -54,9 +59,9 @@ export async function readNoteChunk<Note>(bucket: R2Bucket, objectKey: string, c
   return (await object.json()) as Note[];
 }
 
-/** A card with no language only matches other cards with no language, as in `addCards`. */
+/** The duplicate rule's key for an imported term, as in `addCards`. */
 function dupKey(language: string | null, term: string) {
-  return `${language ?? ""} ${normaliseTerm(term)}`;
+  return duplicateKey(language, normaliseTerm(term));
 }
 
 /** The deck path as a Lymi name: `Italian::Lesson 1` reads `Italian / Lesson 1`. */
@@ -83,10 +88,23 @@ function deckExternalId(source: string, key: string, name: string) {
   return `${source}:deck:${key}:${name}`;
 }
 
+/** Cards under one duplicate key, each with its reading, since homographs share a key. */
+type Held = Map<string, { reading: string | null; deckName: string }[]>;
+
 type Lookup = {
-  byExternal: Map<string, { id: string; deckId: string }>;
-  active: Map<string, string>;
+  /** `recorded` when the card already has a recording, which an import never reads again. */
+  byExternal: Map<string, { id: string; deckId: string; term: string; recorded: boolean }>;
+  active: Held;
 };
+
+function hold(held: Held, key: string, reading: string | null, deckName: string) {
+  held.set(key, [...(held.get(key) ?? []), { reading, deckName }]);
+}
+
+/** The deck of a held card this one duplicates, or undefined. */
+function heldDeck(held: Held, key: string, reading: string | null) {
+  return held.get(key)?.find((h) => sameReading(h.reading, reading))?.deckName;
+}
 
 /** The learner's cards that an import could meet: by external id, and active ones by term. */
 async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?: string) {
@@ -100,6 +118,8 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?:
           id: schema.cards.id,
           deckId: schema.cards.deckId,
           externalId: schema.cards.externalId,
+          audioSource: schema.cards.audioSource,
+          term: schema.cards.term,
         })
         .from(schema.cards)
         .where(and(eq(schema.cards.userId, userId), inArray(schema.cards.externalId, ids))),
@@ -109,6 +129,7 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?:
         .select({
           language: schema.cards.language,
           normalizedTerm: schema.cards.normalizedTerm,
+          pronunciation: schema.cards.pronunciation,
           deckName: schema.decks.name,
         })
         .from(schema.cards)
@@ -128,10 +149,22 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?:
   ]);
   const result: Lookup = { byExternal: new Map(), active: new Map() };
   for (const row of external) {
-    if (row.externalId) result.byExternal.set(row.externalId, { id: row.id, deckId: row.deckId });
+    if (row.externalId) {
+      result.byExternal.set(row.externalId, {
+        id: row.id,
+        deckId: row.deckId,
+        term: row.term,
+        recorded: row.audioSource === "recorded",
+      });
+    }
   }
   for (const row of active) {
-    result.active.set(`${row.language ?? ""} ${row.normalizedTerm}`, row.deckName);
+    hold(
+      result.active,
+      duplicateKey(row.language, row.normalizedTerm),
+      readingKey(row),
+      row.deckName,
+    );
   }
   return result;
 }
@@ -148,6 +181,8 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
         id: schema.cards.id,
         deckId: schema.cards.deckId,
         externalId: schema.cards.externalId,
+        audioSource: schema.cards.audioSource,
+        term: schema.cards.term,
       })
       .from(schema.cards)
       .where(and(eq(schema.cards.userId, userId), isNotNull(schema.cards.externalId))),
@@ -155,6 +190,7 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
       .select({
         language: schema.cards.language,
         normalizedTerm: schema.cards.normalizedTerm,
+        pronunciation: schema.cards.pronunciation,
         deckName: schema.decks.name,
       })
       .from(schema.cards)
@@ -163,16 +199,34 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
   ]);
   const result: Lookup = { byExternal: new Map(), active: new Map() };
   for (const row of external) {
-    if (row.externalId) result.byExternal.set(row.externalId, { id: row.id, deckId: row.deckId });
+    if (row.externalId) {
+      result.byExternal.set(row.externalId, {
+        id: row.id,
+        deckId: row.deckId,
+        term: row.term,
+        recorded: row.audioSource === "recorded",
+      });
+    }
   }
   for (const row of active) {
-    result.active.set(`${row.language ?? ""} ${row.normalizedTerm}`, row.deckName);
+    hold(
+      result.active,
+      duplicateKey(row.language, row.normalizedTerm),
+      readingKey(row),
+      row.deckName,
+    );
   }
   return result;
 }
 
 type Classified =
-  | { kind: "existing"; card: ImportedCard; id: string }
+  | {
+      kind: "existing";
+      card: ImportedCard;
+      id: string;
+      /** The file's recording goes on the card: it has none, and it still says the same word. */
+      takesRecording: boolean;
+    }
   | { kind: "duplicate"; card: ImportedCard; deckName: string }
   | { kind: "added"; card: ImportedCard; language: string | null };
 
@@ -185,32 +239,42 @@ function classify(
   found: Lookup,
   languages: ImportChoices["languages"],
   deckNames: Map<string, string>,
-  seen: Map<string, string>,
+  seen: Held,
   /** Keep a term the file repeats, as Quizlet sets reuse terms for different meanings. */
   keepRepeats = false,
 ): Classified[] {
   return cards.map((card) => {
     const existing = found.byExternal.get(card.externalId);
-    if (existing) return { kind: "existing", card, id: existing.id };
+    if (existing) {
+      // A card whose word the learner changed since never gets the old word's clip.
+      const takesRecording =
+        !existing.recorded && normaliseTerm(existing.term) === normaliseTerm(card.fields.term);
+      return { kind: "existing", card, id: existing.id, takesRecording };
+    }
     const language =
       card.language !== undefined ? card.language : (languages[card.deckKey] ?? null);
     const key = dupKey(language, card.fields.term);
-    const held = found.active.get(key) ?? (keepRepeats ? undefined : seen.get(key));
+    const reading = readingKey({ language, pronunciation: card.fields.pronunciation });
+    const held =
+      heldDeck(found.active, key, reading) ??
+      (keepRepeats ? undefined : heldDeck(seen, key, reading));
     if (held !== undefined) return { kind: "duplicate", card, deckName: held };
-    seen.set(key, deckNames.get(card.deckKey) ?? "");
+    hold(seen, key, reading, deckNames.get(card.deckKey) ?? "");
     return { kind: "added", card, language };
   });
 }
 
-/** Adds a batch to the counts. Pictures count as they land, except in a preview. */
+/** Adds a batch to the counts. Pictures and recordings count as they land, except in a preview. */
 function tally(
   counts: ImportCounts,
   classified: Classified[],
   { pictures }: { pictures: boolean },
 ) {
   for (const item of classified) {
-    if (item.kind === "existing") counts.existing++;
-    else if (item.kind === "duplicate") {
+    if (item.kind === "existing") {
+      counts.existing++;
+      if (pictures && item.takesRecording) countRecording(counts, item.card);
+    } else if (item.kind === "duplicate") {
       counts.duplicates++;
       if (counts.duplicateExamples.length < DUPLICATE_EXAMPLES) {
         counts.duplicateExamples.push({ term: item.card.fields.term, deckName: item.deckName });
@@ -221,8 +285,18 @@ function tally(
       if (item.card.shortened) counts.shortened++;
       counts.reviews += item.card.progress.reduce((sum, p) => sum + p.reviews.length, 0);
       if (pictures && item.card.picture) counts.pictures++;
+      if (pictures) countRecording(counts, item.card);
+      counts.soundsLeftOut += item.card.soundsLeftOut ?? 0;
+      if (item.card.pitchLeftOut) counts.pitchSkipped++;
     }
   }
+}
+
+/** A preview's guess from the clip's name; storing it reads the bytes and has the last word. */
+function countRecording(counts: ImportCounts, card: ImportedCard) {
+  if (!card.recording) return;
+  if (playableRecording(card.recording)) counts.recordings++;
+  else counts.recordingsSkipped++;
 }
 
 export type ImportWork<Note> = {
@@ -307,7 +381,7 @@ export async function previewImport<Note>(
   const perDeck = new Map<string, number>();
   const addedByNoteType: Record<string, number> = {};
   const tags = new Set<string>();
-  const seen = new Map<string, string>();
+  const seen: Held = new Map();
   const samples: ImportPreviewOut["samples"] = {};
   const found = await lookupAll(ctx);
   const now = new Date();
@@ -362,7 +436,8 @@ export async function previewImport<Note>(
     known,
     tags: tags.size,
     addedByNoteType,
-    audio: work.summary.audio,
+    // Clips that do not come across; the app before recordings named every clip here.
+    audio: counts.soundsLeftOut,
     unsupported: work.summary.unsupported,
   };
 }
@@ -375,7 +450,7 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
   const { db, userId, actor } = ctx;
   const names = new Map(work.summary.decks.map((d) => [d.key, deckName(d.name)]));
   const modes = new Map<string, Map<Directions, number>>();
-  const seen = new Map<string, string>();
+  const seen: Held = new Map();
   const found = await lookupAll(ctx);
   for await (const { cards } of importedCards(work)) {
     const classified = classify(
@@ -472,7 +547,13 @@ async function reviewId(stateId: string, at: Date): Promise<string> {
   return at.getTime().toString(36).padStart(9, "0") + hash;
 }
 
-export type PendingPicture = { cardId: string; name: string; description?: string | undefined };
+/** A picture, or the term's recording when `kind` says so, stored after its card is written. */
+export type PendingPicture = {
+  cardId: string;
+  name: string;
+  description?: string | undefined;
+  kind?: "recording" | undefined;
+};
 
 /**
  * Writes one stored chunk as one D1 batch. Every statement runs only while the import's
@@ -529,6 +610,10 @@ export async function writeChunk<Note>(
   for (const item of classified) {
     if (item.kind === "existing") {
       const { fields, tags } = item.card;
+      // A recording replaces generated speech on a card an earlier import brought without it.
+      if (item.card.recording && item.takesRecording) {
+        pictures.push({ cardId: item.id, name: item.card.recording, kind: "recording" });
+      }
       existingRows.push({
         id: item.id,
         meaning: fields.meaning ?? null,
@@ -585,6 +670,9 @@ export async function writeChunk<Note>(
         name: item.card.picture,
         ...(item.card.pictureDescription ? { description: item.card.pictureDescription } : {}),
       });
+    }
+    if (item.card.recording) {
+      pictures.push({ cardId: id, name: item.card.recording, kind: "recording" });
     }
 
     for (const progress of item.card.progress) {
@@ -726,18 +814,49 @@ export async function writeChunk<Note>(
   return { pictures: moved ? pictures : [] };
 }
 
-/** Stores pictures for cards this import added. Returns how many landed and how many did not. */
+type Totals = { stored: number; skipped: number };
+export type MediaTotals = Totals & {
+  /** Absent in a run handed over before recordings were kept. */
+  recordings?: Totals | undefined;
+};
+export type AttachedMedia = Totals & { recordings: Totals };
+
+/**
+ * Stores pictures for cards this import added, and recordings for cards it added or met again.
+ * Returns how many of each landed and how many did not.
+ */
 export async function attachPictures<Note>(
   ctx: ServiceContext,
   work: ImportWork<Note>,
   file: Parameters<SourceAdapter<Note>["media"]>[0],
   pending: PendingPicture[],
-  storage: CardImageStorage,
-) {
+  storage: Partial<CardImageStorage> & { audio?: R2Bucket | undefined },
+): Promise<AttachedMedia> {
   const read = await work.adapter.media(file);
   let stored = 0;
   let skipped = 0;
+  const recordings = { stored: 0, skipped: 0 };
   for (const picture of pending) {
+    if (picture.kind === "recording") {
+      const { audio } = storage;
+      // A damaged clip is left out like an unplayable one; a storage failure still retries.
+      const outcome = audio
+        ? await storeRecording(
+            ctx,
+            picture.cardId,
+            () => read(picture.name, MAX_RECORDING_BYTES).catch(() => null),
+            audio,
+          )
+        : "skipped";
+      // A card a retried step already recorded was counted then.
+      if (outcome !== "kept") recordings[outcome]++;
+      continue;
+    }
+    const images = imageStorage(storage);
+    if (!images) {
+      skipped++;
+      continue;
+    }
     const [card] = await ctx.db
       .select({ imageVersion: schema.cards.imageVersion })
       .from(schema.cards)
@@ -762,13 +881,13 @@ export async function attachPictures<Note>(
           picture.cardId,
           bytes,
           { version: null, description: picture.description },
-          storage,
+          images,
         );
       } catch (err) {
         // A description that names the answer is refused; the picture still comes across without it.
         if (!(picture.description && err instanceof ServiceError && err.code === "invalid"))
           throw err;
-        await uploadCardImage(ctx, picture.cardId, bytes, { version: null }, storage);
+        await uploadCardImage(ctx, picture.cardId, bytes, { version: null }, images);
       }
       stored++;
     } catch (err) {
@@ -776,7 +895,11 @@ export async function attachPictures<Note>(
       skipped++;
     }
   }
-  return { stored, skipped };
+  return { stored, skipped, recordings };
+}
+
+function imageStorage(storage: Partial<CardImageStorage>): CardImageStorage | null {
+  return storage.bucket && storage.images ? (storage as CardImageStorage) : null;
 }
 
 /**

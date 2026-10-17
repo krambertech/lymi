@@ -129,6 +129,38 @@ describe("anki adapter", () => {
     expect(byTerm(cards, "猫").fields).toMatchObject({ pronunciation: "ねこ", meaning: "cat" });
   });
 
+  it("keeps an example's readings, in Lymi's inline notation", async () => {
+    const { summary, notes } = await anki.inspect(file("current.apkg"));
+    const note = [...notes].find((n) => n.fields[0] === "猫");
+    const type = summary.noteTypes.find((t) => t.name === "Japanese (reading)");
+    if (!note || !type) throw new Error("no Japanese note");
+    const [card] = anki.cards(
+      { ...note, fields: ["猫", "猫[ねこ]が 好[す]きです。", "cat"] },
+      summary,
+      {
+        languages: {},
+        roles: { [type.key]: ["term", "example", "meaning"] },
+      },
+    );
+    expect(card?.fields.example).toBe("猫[ねこ]が好[す]きです。");
+  });
+
+  it("strips readings that are not kana from an example, such as pinyin", async () => {
+    const { summary, notes } = await anki.inspect(file("current.apkg"));
+    const note = [...notes].find((n) => n.fields[0] === "猫");
+    const type = summary.noteTypes.find((t) => t.name === "Japanese (reading)");
+    if (!note || !type) throw new Error("no Japanese note");
+    const [card] = anki.cards(
+      { ...note, fields: ["猫", "我[wǒ] 喜欢[xǐhuan]猫。", "cat"] },
+      summary,
+      {
+        languages: {},
+        roles: { [type.key]: ["term", "example", "meaning"] },
+      },
+    );
+    expect(card?.fields.example).toBe("我喜欢猫。");
+  });
+
   it("carries the log, the due date and the memory state Anki had", async () => {
     const { cards } = await read("legacy.apkg");
     const [gatto] = byTerm(cards, "il gatto").progress;

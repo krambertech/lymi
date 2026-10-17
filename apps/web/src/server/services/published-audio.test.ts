@@ -147,6 +147,33 @@ describe("published deck audio", () => {
     expect(second).toEqual({ voiced: first.remaining, failed: 0, remaining: 0 });
   });
 
+  it("voices the newest-published deck's front cards before an older deck's", async () => {
+    const older = await publishedDeck("older", terms(12, "vana"));
+    const newer = await publishedDeck("newer", terms(12, "uus"));
+    const at = (slug: string, time: number) =>
+      db
+        .update(schema.deckPublications)
+        .set({ publishedAt: new Date(time) })
+        .where(eq(schema.deckPublications.slug, slug));
+    // The older deck sorts first by slug, so only its publish date can put it second.
+    await at("older", Date.UTC(2000, 0, 1));
+    await at("newer", Date.UTC(2100, 0, 1));
+    const newFront = await publicDeckFrontCards(db, "newer");
+    expect(newFront.length).toBeGreaterThan(1);
+
+    const speech = vi.fn(async () => new Response(new Uint8Array([1])));
+    const deps = voice(speech);
+    const first = await voicePublishedDecks(db, deps, { limit: newFront.length - 1 });
+    expect(first.voiced).toBe(newFront.length - 1);
+    expect(await voicedIn(older.id)).toEqual([]);
+    expect((await voicedIn(newer.id)).every((id) => newFront.includes(id))).toBe(true);
+
+    // The next run finishes the newest deck before anything else.
+    await voicePublishedDecks(db, deps, { limit: 1 });
+    expect((await voicedIn(newer.id)).sort()).toEqual([...newFront].sort());
+    expect(await voicedIn(older.id)).toEqual([]);
+  });
+
   it("leaves out cards no provider can voice", async () => {
     const deck = await publishedDeck("welsh", ["bore da"]);
     await db.update(schema.cards).set({ language: "cy" }).where(eq(schema.cards.deckId, deck.id));

@@ -20,7 +20,8 @@
     "db:migrate:prod": "wrangler d1 migrations apply lymi --remote",
     "auth:schema": "auth generate --config src/server/auth-cli.ts --output ../../packages/core/src/schema/auth.ts -y",
     "i18n:extract": "lingui extract --clean",
-    "eval:enrichment": "tsx --env-file-if-exists=.dev.vars src/server/enrichment/evaluate.ts"
+    "eval:enrichment": "tsx --env-file-if-exists=.dev.vars src/server/enrichment/evaluate.ts",
+    "eval:style": "tsx --env-file-if-exists=.dev.vars src/server/enrichment/style-evaluate.ts"
   },
   "devDependencies": {
     "@babel/core": "8.0.7",
@@ -90,6 +91,7 @@
     "posthog-node": "^5.55.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
+    "react-email": "6.11.0",
     "web-push": "^3.6.7",
     "workbox-window": "^7.4.1",
     "zod": "^4.6.5"

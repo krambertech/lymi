@@ -71,9 +71,12 @@ export function CardLine({
   after,
   muted,
   grows = false,
+  lang,
   children,
 }: {
   style: LineStyle;
+  /** The card's language, when the line is its term. */
+  lang?: string | null;
   /** Follows Dynamic Type, as the answer does; the cue stays its size, already the card's largest. */
   grows?: boolean;
   after?: ReactNode;
@@ -94,6 +97,7 @@ export function CardLine({
         muted ? { color: muted } : null,
       ]}
       maxFontSizeMultiplier={limit}
+      lang={lang}
     >
       {children}
       {after ? (

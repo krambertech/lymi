@@ -25,6 +25,16 @@ export default async function drive({ page, step, api, expect }) {
     await dialog.getByRole("textbox", { name: "Meaning", exact: true }).fill("the fog");
   });
 
+  await step("Add Notes from its chip and pick a tag from Tags", async () => {
+    // A text chip adds its field in place; a choice chip opens its list and then shows the choice.
+    await dialog.getByRole("button", { name: "Notes", exact: true }).click();
+    await dialog.getByRole("textbox", { name: "Notes", exact: true }).fill("c'è la nebbia");
+    await dialog.getByLabel("Tags", { exact: true }).click();
+    await page.getByRole("option", { name: /^noun\b/ }).click();
+    await page.keyboard.press("Escape");
+    await expect(dialog.getByLabel("Tags: noun", { exact: true })).toBeVisible();
+  });
+
   await step("Add it and see it in the deck", async () => {
     await dialog.getByRole("button", { name: "Add to Lezione 12", exact: true }).click();
     await expect(dialog).toBeHidden();
@@ -35,7 +45,13 @@ export default async function drive({ page, step, api, expect }) {
     await expect.poll(total).toBe(deck.total + 1);
     const { cards } = await api(`/api/cards?term=${encodeURIComponent(term)}`);
     expect(cards).toHaveLength(1);
-    expect(cards[0]).toMatchObject({ deckId: deck.id, term, meaning: "the fog" });
+    expect(cards[0]).toMatchObject({
+      deckId: deck.id,
+      term,
+      meaning: "the fog",
+      notes: "c'è la nebbia",
+      tags: ["noun"],
+    });
     return { card: cards[0] };
   });
 

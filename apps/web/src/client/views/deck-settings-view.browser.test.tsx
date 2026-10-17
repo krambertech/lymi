@@ -75,3 +75,28 @@ test("shows a member no AI settings and none of the owner's instructions", async
   await expect.element(page.getByText("About this deck").first()).toBeVisible();
   expect(page.getByRole("heading", { name: "AI" }).elements()).toHaveLength(0);
 });
+
+test("keeps what the AI learned closed until the owner opens it, marked as the AI's", async () => {
+  await renderSettings(
+    deck({
+      enrichStyle: "- Kitchen words from a cooking course.\n- Meanings usually give the article.",
+    }),
+    vi.fn(),
+  );
+  const about = page.getByText("Kitchen words from a cooking course.");
+  await expect.element(page.getByText("AI wrote this")).toBeInTheDocument();
+  await expect.element(about).not.toBeVisible();
+  await page.getByText("Learned from your cards").click();
+  await expect.element(about).toBeVisible();
+  const box = page.getByRole("region", { name: "Learned from your cards" });
+  expect(box.getByRole("listitem").elements()).toHaveLength(2);
+});
+
+test("says what the AI will learn while a deck has nothing learned yet", async () => {
+  await renderSettings(deck({ enrichStyle: null }), vi.fn());
+  await expect
+    .element(page.getByText("AI learns how you write this deck’s cards as you add them."))
+    .toBeVisible();
+  expect(page.getByText("AI wrote this").elements()).toHaveLength(0);
+  expect(page.getByText("Learned from your cards").elements()).toHaveLength(0);
+});

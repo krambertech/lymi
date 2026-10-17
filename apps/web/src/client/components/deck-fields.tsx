@@ -94,6 +94,42 @@ export function LanguageField({
   descriptionFirst,
   error,
 }: LanguageProps) {
+  const { t } = useLingui();
+  const fieldLabel = label ?? t`Language`;
+  const hint = description !== null && (
+    <FieldDescription>
+      {description ?? t`New cards in this deck get this language.`}
+    </FieldDescription>
+  );
+  return (
+    <Field>
+      <FieldLabel>{fieldLabel}</FieldLabel>
+      {descriptionFirst && hint}
+      <LanguageCombobox value={value} onChange={onChange}>
+        <ComboboxTrigger>
+          <ComboboxValue />
+        </ComboboxTrigger>
+      </LanguageCombobox>
+      {!descriptionFirst && hint}
+      <FieldError>{error}</FieldError>
+    </Field>
+  );
+}
+
+/** The language list with a trigger of the caller's own, such as a chip in the card form's row. */
+export function LanguageCombobox({
+  value,
+  onChange,
+  label,
+  children,
+}: {
+  value: string | null;
+  onChange: (value: string | null) => void;
+  /** Names the list when no Field label does. */
+  label?: string | undefined;
+  /** The trigger: a `ComboboxTrigger`. */
+  children: ReactNode;
+}) {
   const { t, i18n } = useLingui();
   const [query, setQuery] = useState("");
   const { contains } = useComboboxFilter({ locale: i18n.locale });
@@ -116,50 +152,36 @@ export function LanguageField({
       : null;
   const shown = custom ? [...matches, custom] : matches;
 
-  const fieldLabel = label ?? t`Language`;
-  const hint = description !== null && (
-    <FieldDescription>
-      {description ?? t`New cards in this deck get this language.`}
-    </FieldDescription>
-  );
   return (
-    <Field>
-      <FieldLabel>{fieldLabel}</FieldLabel>
-      {descriptionFirst && hint}
-      <Combobox<LanguageOption>
-        items={custom ? [none, ...known, custom] : [none, ...known]}
-        filteredItems={shown}
-        value={known.find((o) => o.value === value) ?? none}
-        onValueChange={(next) => onChange(next?.value ?? null)}
-        isItemEqualToValue={(a, b) => a.value === b.value}
-        inputValue={query}
-        onInputValueChange={setQuery}
-        // On opening rather than closing, so the closing list does not flash back to every language.
-        onOpenChange={(open) => {
-          if (open) setQuery("");
-        }}
-      >
-        <ComboboxTrigger>
-          <ComboboxValue />
-        </ComboboxTrigger>
-        <ComboboxContent>
-          <ComboboxInput placeholder={t`Search languages`} />
-          <ComboboxEmpty>
-            <Trans>No language by that name. Type its tag to use it anyway.</Trans>
-          </ComboboxEmpty>
-          <ComboboxList>
-            {(option: LanguageOption) => (
-              <ComboboxItem key={option.value ?? ""} value={option}>
-                <span className="flex-1 truncate">{option.label}</span>
-                {option.hint && <ComboboxItemHint>{option.hint}</ComboboxItemHint>}
-              </ComboboxItem>
-            )}
-          </ComboboxList>
-        </ComboboxContent>
-      </Combobox>
-      {!descriptionFirst && hint}
-      <FieldError>{error}</FieldError>
-    </Field>
+    <Combobox<LanguageOption>
+      items={custom ? [none, ...known, custom] : [none, ...known]}
+      filteredItems={shown}
+      value={known.find((o) => o.value === value) ?? none}
+      onValueChange={(next) => onChange(next?.value ?? null)}
+      isItemEqualToValue={(a, b) => a.value === b.value}
+      inputValue={query}
+      onInputValueChange={setQuery}
+      // On opening rather than closing, so the closing list does not flash back to every language.
+      onOpenChange={(open) => {
+        if (open) setQuery("");
+      }}
+    >
+      {children}
+      <ComboboxContent aria-label={label}>
+        <ComboboxInput placeholder={t`Search languages`} />
+        <ComboboxEmpty>
+          <Trans>No language by that name. Type its tag to use it anyway.</Trans>
+        </ComboboxEmpty>
+        <ComboboxList>
+          {(option: LanguageOption) => (
+            <ComboboxItem key={option.value ?? ""} value={option}>
+              <span className="flex-1 truncate">{option.label}</span>
+              {option.hint && <ComboboxItemHint>{option.hint}</ComboboxItemHint>}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
   );
 }
 

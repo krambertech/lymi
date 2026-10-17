@@ -9,9 +9,12 @@ import {
 import { and, eq, isNull, sql } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
-import { addCards, archiveCard } from "./cards";
+import { bytesSource } from "../imports/files";
+import { pronunciationAudio } from "./audio";
+import { addCards, archiveCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
+import { attachPictures, type ImportWork } from "./import-writer";
 import {
   archiveImport,
   attachImportPictures,
@@ -95,16 +98,19 @@ async function runImport(
   const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
   // A retried step writes no second deck.
   expect(await prepareImportDecks(ctx, id, env.IMPORTS)).toEqual(decks);
-  const pictures = { stored: 0, skipped: 0 };
+  const pictures = { stored: 0, skipped: 0, recordings: { stored: 0, skipped: 0 } };
   const { progress } = await getImport(ctx, id);
   for (let chunk = 0; chunk < progress.chunks; chunk++) {
     const { pictures: pending } = await writeImportChunk(ctx, id, chunk, decks, env.IMPORTS);
     const done = await attachImportPictures(ctx, id, pending, env.IMPORTS, {
       bucket: env.PRIVATE_IMAGES,
       images: env.IMAGES,
+      audio: env.AUDIO,
     });
     pictures.stored += done.stored;
     pictures.skipped += done.skipped;
+    pictures.recordings.stored += done.recordings.stored;
+    pictures.recordings.skipped += done.recordings.skipped;
   }
   await finishImport(ctx, id, pictures, env.IMPORTS);
   return { id, preview, result: await getImport(ctx, id) };
@@ -149,7 +155,8 @@ describe("importing a Mochi export", () => {
       archived: 1,
       reviews: 12,
       pictures: 3,
-      audio: 1,
+      recordings: 1,
+      audio: 0,
     });
     expect(preview.addedByNoteType["content:one"]).toBe(1);
     expect(preview.decks.map((d) => [d.name, d.cards])).toEqual([
@@ -158,7 +165,13 @@ describe("importing a Mochi export", () => {
       ["Japanese", 5],
     ]);
     expect(result).toMatchObject({ source: "mochi", status: "done", failure: null });
-    expect(result.counts).toMatchObject({ added: 12, reviews: 12, pictures: 3, decks: 3 });
+    expect(result.counts).toMatchObject({
+      added: 12,
+      reviews: 12,
+      pictures: 3,
+      recordings: 1,
+      decks: 3,
+    });
 
     const gatto = await card(ctx, "il gatto");
     expect(gatto).toMatchObject({ meaning: "the cat", language: "it", importId: id });
@@ -335,6 +348,144 @@ describe("importing a Noji export", () => {
   });
 });
 
+describe("importing a Kaishi-shaped Japanese deck", () => {
+  const japanese = { languages: { ja: "ja" }, roles: {} };
+  const recorded = async (cardId: string) => {
+    const [row] = await db.select().from(schema.cards).where(eq(schema.cards.id, cardId));
+    return { key: row?.audioKey ?? null, source: row?.audioSource ?? null };
+  };
+
+  it("keeps each term's recording, a pitch line and the translation, and leaves the rest out", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "kaishi.apkg", fixture("kaishi.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    const deck = (await getImport(ctx, id)).summary?.decks[0]?.key as string;
+    const { preview, result } = await runImport(ctx, "kaishi.apkg", {
+      ...japanese,
+      languages: { [deck]: "ja" },
+    });
+
+    expect(preview).toMatchObject({
+      added: 3,
+      recordings: 2,
+      recordingsSkipped: 1,
+      soundsLeftOut: 2,
+      audio: 2,
+      pitchSkipped: 1,
+    });
+    expect(result.counts).toMatchObject({
+      added: 3,
+      recordings: 2,
+      recordingsSkipped: 1,
+      soundsLeftOut: 2,
+      pitchSkipped: 1,
+    });
+
+    const hashi = await card(ctx, "箸");
+    expect(hashi.notes).toBe("I eat with chopsticks.\nCounted with 膳\nはꜜし [1]");
+    expect((await card(ctx, "桜")).notes).toBe("The cherry blossoms bloomed.\nさくら [0]");
+    const neko = await card(ctx, "猫");
+    expect(neko.notes).toBeNull();
+    expect(await recorded(neko.id)).toEqual({ key: null, source: null });
+
+    const clip = await recorded(hashi.id);
+    expect(clip.source).toBe("recorded");
+    expect(clip.key).toMatch(new RegExp(`^cards/${hashi.id}/recorded/[0-9a-f]{32}\\.mp3$`));
+    const stored = await env.AUDIO.get(clip.key as string);
+    expect(stored?.httpMetadata?.contentType).toBe("audio/mpeg");
+    await stored?.body.cancel();
+    const audit = await db
+      .select()
+      .from(schema.auditLog)
+      .where(and(eq(schema.auditLog.entityId, hashi.id), eq(schema.auditLog.action, "set_audio")));
+    expect(audit).toHaveLength(1);
+  });
+
+  it("plays a recording without a speech provider, keeps it through edits and drops it for a new term", async () => {
+    const ctx = await fresh();
+    await runImport(ctx, "kaishi.apkg");
+    const hashi = await card(ctx, "箸");
+    const before = await recorded(hashi.id);
+
+    const played = await pronunciationAudio(ctx, hashi.id, {
+      bucket: env.AUDIO,
+      providers: () => [],
+    });
+    expect(played.key).toBe(before.key);
+    await played.body.cancel();
+
+    await updateCard(ctx, hashi.id, {
+      meaning: "a pair of chopsticks",
+      pronunciation: "おはし",
+      notes: "Counted with 膳",
+      language: "ja",
+    });
+    expect(await recorded(hashi.id)).toEqual(before);
+
+    // 橋 is another word, so the clip that says 箸 goes with the old term.
+    await updateCard(ctx, hashi.id, { term: "橋" });
+    expect(await recorded(hashi.id)).toEqual({ key: null, source: null });
+  });
+
+  it("gives no clip to a card whose word the learner changed since the first import", async () => {
+    const ctx = await fresh();
+    await runImport(ctx, "kaishi.apkg");
+    const sakura = await card(ctx, "桜");
+    await db
+      .update(schema.cards)
+      .set({ audioKey: null, audioSource: null })
+      .where(eq(schema.cards.id, sakura.id));
+    await updateCard(ctx, sakura.id, { term: "花" });
+
+    const { preview, result } = await runImport(ctx, "kaishi.apkg");
+    expect(preview).toMatchObject({ existing: 3, recordings: 0 });
+    expect(result.counts).toMatchObject({ recordings: 0 });
+    expect(await recorded(sakura.id)).toEqual({ key: null, source: null });
+  });
+
+  it("leaves out a clip the file cannot give back, and goes on with the import", async () => {
+    const ctx = await fresh();
+    const deck = await createDeck(ctx, { name: "Damaged", defaultLanguage: "ja" });
+    const [added] = await addCards(ctx, [{ deckId: deck.id, term: "猫" }]);
+    if (added?.status !== "added") throw new Error("card not added");
+    const damaged = {
+      adapter: {
+        media: async () => async () => {
+          throw new Error("A zstd frame is damaged");
+        },
+      },
+    } as unknown as ImportWork<unknown>;
+    const totals = await attachPictures(
+      ctx,
+      damaged,
+      bytesSource(new Uint8Array()),
+      [{ cardId: added.card.id, name: "neko.mp3", kind: "recording" }],
+      { audio: env.AUDIO },
+    );
+    expect(totals.recordings).toEqual({ stored: 0, skipped: 1 });
+    expect(await recorded(added.card.id)).toEqual({ key: null, source: null });
+  });
+
+  it("gives a card an earlier import brought its recording in place of generated speech", async () => {
+    const ctx = await fresh();
+    await runImport(ctx, "kaishi.apkg");
+    const sakura = await card(ctx, "桜");
+    await db
+      .update(schema.cards)
+      .set({ audioKey: `cards/${sakura.id}/v2/generated.mp3`, audioSource: "generated" })
+      .where(eq(schema.cards.id, sakura.id));
+    const hashi = await card(ctx, "箸");
+    const kept = await recorded(hashi.id);
+
+    // 箸 already has its recording, so it is neither read again nor counted again.
+    const { preview, result } = await runImport(ctx, "kaishi.apkg");
+    expect(preview).toMatchObject({ added: 0, existing: 3, recordings: 1, recordingsSkipped: 1 });
+    expect(result.counts).toMatchObject({ recordings: 1, recordingsSkipped: 1 });
+    expect((await recorded(sakura.id)).source).toBe("recorded");
+    expect(await recorded(hashi.id)).toEqual(kept);
+  });
+});
+
 describe("importing an Anki package", () => {
   it("writes decks, cards, states, reviews and pictures, and deletes the file", async () => {
     const ctx = await fresh();
@@ -348,7 +499,8 @@ describe("importing an Anki package", () => {
       archived: 1,
       reviews: 11,
       pictures: 2,
-      audio: 1,
+      recordings: 1,
+      audio: 0,
     });
     expect(preview.decks.map((d) => [d.name, d.cards])).toEqual([
       ["Italian / Grammar", 2],
@@ -361,6 +513,8 @@ describe("importing an Anki package", () => {
       reviews: 11,
       pictures: 2,
       picturesSkipped: 0,
+      recordings: 1,
+      recordingsSkipped: 0,
       archived: 1,
       decks: 3,
     });
@@ -524,6 +678,36 @@ describe("importing an Anki package", () => {
     expect(preview.duplicateExamples).toEqual([{ term: "il gatto", deckName: "Mine" }]);
     expect(result.counts).toMatchObject({ added: 9, duplicates: 1, pictures: 1 });
     expect((await cardsOf(ctx)).filter((c) => c.normalizedTerm === "il gatto")).toHaveLength(1);
+  });
+
+  it("skips a term the learner has under a regional tag of the same language", async () => {
+    const ctx = await fresh();
+    const deck = await createDeck(ctx, { name: "Mine", defaultLanguage: "it-IT" });
+    await addCards(ctx, [{ deckId: deck.id, term: "Il gatto", meaning: "my cat" }]);
+    const { preview } = await runImport(ctx, "current.apkg");
+    expect(preview.duplicateExamples).toEqual([{ term: "il gatto", deckName: "Mine" }]);
+  });
+
+  it("skips a Japanese term only when its reading matches or either has none, and again on re-import", async () => {
+    const same = await fresh();
+    const deck = await createDeck(same, { name: "Mine", defaultLanguage: "ja" });
+    await addCards(same, [{ deckId: deck.id, term: "猫", pronunciation: "ネコ", enrich: false }]);
+    expect((await runImport(same, "current.apkg")).preview.duplicateExamples).toContainEqual({
+      term: "猫",
+      deckName: "Mine",
+    });
+
+    const other = await fresh();
+    const theirs = await createDeck(other, { name: "Mine", defaultLanguage: "ja" });
+    await addCards(other, [
+      { deckId: theirs.id, term: "猫", pronunciation: "びょう", enrich: false },
+    ]);
+    const first = await runImport(other, "current.apkg");
+    expect(first.preview.duplicateExamples.map((d) => d.term)).not.toContain("猫");
+    expect((await cardsOf(other)).filter((c) => c.term === "猫")).toHaveLength(2);
+    const again = await runImport(other, "current.apkg");
+    expect(again.preview).toMatchObject({ added: 0, duplicates: 0 });
+    expect((await cardsOf(other)).filter((c) => c.term === "猫")).toHaveLength(2);
   });
 
   it("follows the learner's language and field choices", async () => {
@@ -701,7 +885,8 @@ describe("importing an Anki package", () => {
     const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
     const first = await writeImportChunk(ctx, id, 0, decks, env.IMPORTS);
     const again = await writeImportChunk(ctx, id, 0, decks, env.IMPORTS);
-    expect(first.pictures).toHaveLength(2);
+    expect(first.pictures.filter((item) => item.kind !== "recording")).toHaveLength(2);
+    expect(first.pictures.filter((item) => item.kind === "recording")).toHaveLength(1);
     expect(again.pictures).toEqual([]);
     expect((await cardsOf(ctx)).length).toBe(10);
     expect(((await getImport(ctx, id)).counts as ImportCounts).added).toBe(10);
@@ -729,9 +914,12 @@ describe("counting what was written", () => {
       id,
       [...pictures, { cardId: "not-a-card-of-this-import", name: "gatto.png" }],
       env.IMPORTS,
-      { bucket: env.PRIVATE_IMAGES, images: env.IMAGES },
+      { bucket: env.PRIVATE_IMAGES, images: env.IMAGES, audio: env.AUDIO },
     );
-    expect(totals.stored + totals.skipped).toBe(pictures.length + 1);
+    const { recordings } = totals;
+    expect(totals.stored + totals.skipped + recordings.stored + recordings.skipped).toBe(
+      pictures.length + 1,
+    );
     expect(totals.skipped).toBeGreaterThanOrEqual(1);
   });
 });

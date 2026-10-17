@@ -306,7 +306,11 @@ async function* scopeCards(ctx: ServiceContext, decks: readonly ScopeDeck[]) {
 
 type ScopeCard = { card: Card; image: CardImage | null; states: LymiFileState[] };
 
-function fileCard(item: ScopeCard, picture: string | null): LymiFileCard {
+function fileCard(
+  item: ScopeCard,
+  picture: string | null,
+  recording: string | null = null,
+): LymiFileCard {
   const { card, image } = item;
   return {
     id: card.id,
@@ -336,16 +340,24 @@ function fileCard(item: ScopeCard, picture: string | null): LymiFileCard {
             height: image.height,
           }
         : null,
+    recording: recording ? { file: recording } : null,
     archivedAt: card.archivedAt?.getTime() ?? null,
     createdAt: card.createdAt.getTime(),
     states: item.states.sort((a, b) => a.mode.localeCompare(b.mode)),
   };
 }
 
-/** A sound's file name from its stored key's extension; the key itself never leaves the server. */
-function soundName(card: Card) {
-  const extension = /\.([a-z0-9]{2,5})$/i.exec(card.audioKey ?? "")?.[1];
-  return extension ? `lymi-${card.id}-speech.${extension.toLowerCase()}` : null;
+/**
+ * A sound's file name from its stored key's extension; the key itself never leaves the server.
+ * A Lymi file carries recordings alone, and an Anki package names them apart from generated
+ * speech, so importing either back keeps the recording and makes the speech again.
+ */
+function soundName(card: Card, format: "anki" | "lymi") {
+  const extension = /\.([a-z0-9]{2,5})$/i.exec(card.audioKey ?? "")?.[1]?.toLowerCase();
+  if (!extension) return null;
+  const recorded = card.audioSource === "recorded";
+  if (format === "lymi") return recorded ? `media/${card.id}.${extension}` : null;
+  return `lymi-${card.id}-${recorded ? "recording" : "speech"}.${extension}`;
 }
 
 const segmentKey = (row: Export, segment: number) => `${row.objectKey}/${segment}`;
@@ -390,10 +402,15 @@ export async function writeExportData(ctx: ServiceContext, id: string, storage: 
       const encoder = new TextEncoder();
       for await (const page of scopeCards(ctx, decks)) {
         for (const item of page) {
-          const card = fileCard(item, item.image ? `media/${item.card.id}.webp` : null);
+          const card = fileCard(
+            item,
+            item.image ? `media/${item.card.id}.webp` : null,
+            soundName(item.card, "lymi"),
+          );
           counts.cards++;
           counts.reviews += card.states.reduce((sum, state) => sum + state.reviews.length, 0);
           if (card.picture) counts.pictures++;
+          if (card.recording) counts.sounds++;
           await lines.write(encoder.encode(`${JSON.stringify(card)}\n`));
         }
       }
@@ -417,7 +434,7 @@ export async function writeExportData(ctx: ServiceContext, id: string, storage: 
       for await (const page of scopeCards(ctx, decks)) {
         for (const item of page) {
           const picture = item.image ? `lymi-${item.card.id}.webp` : null;
-          const sound = soundName(item.card);
+          const sound = soundName(item.card, "anki");
           const card = fileCard(item, picture);
           const own = card.reviewModes ?? deckModes.get(card.deck) ?? [];
           const modes = own.some((mode) => !isImageMode(mode))
@@ -535,7 +552,7 @@ export async function writeExportMedia(
         sql`${schema.cards.deckId} in (select value from json_each(${deckIds}))`,
         anki
           ? sql`(${schema.cardImages.id} is not null or ${schema.cards.audioKey} is not null)`
-          : sql`${schema.cardImages.id} is not null`,
+          : sql`(${schema.cardImages.id} is not null or ${schema.cards.audioSource} = 'recorded')`,
         step.after ? sql`${schema.cards.id} > ${step.after}` : undefined,
       ),
     )
@@ -569,7 +586,7 @@ export async function writeExportMedia(
           objectKey,
           anki ? `lymi-${card.id}.webp` : `media/${card.id}.webp`,
         );
-      const sound = anki ? soundName(card) : null;
+      const sound = soundName(card, anki ? "anki" : "lymi");
       if (sound && card.audioKey) await copy(storage.audio, card.audioKey, sound);
     }
   } catch (err) {

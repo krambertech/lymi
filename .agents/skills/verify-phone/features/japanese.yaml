@@ -1,0 +1,27 @@
+# Japanese: review a kanji term, see its kana reading only once revealed, and open its word screen.
+appId: app.lymi
+name: Japanese
+---
+- runFlow: _open.yaml
+- tapOn: "Library"
+- tapOn: "${DECK}.*"
+- tapOn: "^Review.*"
+- extendedWaitUntil:
+    visible: ".*${TERM}.*Tap to reveal"
+    timeout: 30000
+- assertNotVisible: ".*${READING}.*"
+- takeScreenshot: 01-cue-without-reading
+# The card's centre can be its pronunciation button, so reveal by tapping low on the card.
+- tapOn:
+    point: "50%,80%"
+- assertVisible: "^Good.*"
+- assertVisible: ".*${READING}.*"
+- takeScreenshot: 02-revealed-with-reading
+# Ending review mid-deck lands on the deck page, where the card's row opens its word screen.
+- tapOn: "End review"
+- tapOn: "${TERM}.*"
+- extendedWaitUntil:
+    visible: ".*${EXAMPLE}.*"
+    timeout: 20000
+- assertVisible: ".*${READING}.*"
+- takeScreenshot: 03-word-screen

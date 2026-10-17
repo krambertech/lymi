@@ -4,15 +4,19 @@ import {
   fitFields,
   guessFieldRoles,
   type ImportedProgress,
+  importFieldText,
   importTags,
+  isPitchField,
   namedFieldRole,
   type ReviewModeKey,
+  termRecording,
 } from "@lymi/core";
 import type { SourceAdapter, SourceDeck, SourceNoteType, SourceSummary } from "../adapter";
 import { ImportFileError, openZip, type RandomAccess, readZipEntry, type ZipEntry } from "../files";
 import {
   attachments,
   furigana,
+  inlineReadings,
   isAudio,
   isImage,
   markdownToText,
@@ -382,13 +386,21 @@ export const mochi: SourceAdapter<MochiNote> = {
     const type = summary.noteTypes.find((t) => t.key === note.type);
     if (!type) return [];
     const roles = choices.roles[type.key] ?? type.roles;
-    const raw = fieldsFromRoles(note.fields.map(markdownToText), roles);
+    const values = note.fields.map((field, i) =>
+      importFieldText(type.fields[i] ?? "", field, markdownToText),
+    );
+    const raw = fieldsFromRoles(values, roles);
+    const sounds = termRecording(
+      type.fields,
+      roles,
+      note.fields.map((field) => [...new Set(attachments(field).filter(isAudio))]),
+    );
     const reading = furigana(raw.term ?? "");
     const fitted = fitFields({
       term: reading?.base ?? raw.term ?? "",
       meaning: raw.meaning && (furigana(raw.meaning)?.base ?? raw.meaning),
       pronunciation: raw.pronunciation || reading?.reading,
-      example: raw.example && (furigana(raw.example)?.base ?? raw.example),
+      example: raw.example && inlineReadings(raw.example),
       notes: raw.notes,
     });
     if (!fitted.fields.term) return [];
@@ -410,6 +422,12 @@ export const mochi: SourceAdapter<MochiNote> = {
         modes: progress.map((p) => p.mode),
         archived: note.archived,
         picture: note.picture,
+        recording: sounds.recording,
+        soundsLeftOut: sounds.leftOut,
+        pitchLeftOut: type.fields.some(
+          (name, i) =>
+            roles[i] === "notes" && isPitchField(name) && !values[i] && !!note.fields[i]?.trim(),
+        ),
         progress,
         shortened: fitted.shortened || tags.shortened,
       },

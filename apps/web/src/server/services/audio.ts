@@ -1,9 +1,9 @@
-import { canSpeakTerm, LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
-import { and, eq } from "@lymi/core/db";
+import { canSpeakTerm, kanaReading, LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
+import { and, eq, inArray, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider } from "../ai";
 import { speechText } from "../ai/speech-text";
-import { schema } from "../db";
+import { type Db, schema } from "../db";
 import { audit } from "./audit";
 import { getCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
@@ -21,7 +21,8 @@ interface AudioDependencies {
 /**
  * Return cached pronunciation audio or generate it on the first play. Card creation and
  * enrichment never call this, and cards without a language never reach R2 or a provider.
- * Audio remembered from a fallback or a retired provider is replaced once the preferred one works.
+ * Audio remembered from a fallback or a retired provider is replaced once the preferred one works;
+ * a recording an import brought is served as it is.
  */
 export async function pronunciationAudio(
   ctx: ServiceContext,
@@ -29,11 +30,16 @@ export async function pronunciationAudio(
   deps: AudioDependencies,
 ): Promise<R2ObjectBody> {
   const card = await getCard(ctx, cardId);
+  if (card.archivedAt) throw new ServiceError("not_found", "Card not found");
+  // A recording is never replaced, whatever the term, language or provider. CONTEXT.md, Recording.
+  if (card.audioSource === "recorded" && card.audioKey) {
+    const recorded = await deps.bucket.get(card.audioKey);
+    if (recorded) return recorded;
+  }
   const language = LanguageTag.safeParse(card.language);
   if (!language.success) {
     throw new ServiceError("invalid", "Pronunciation audio is only available for language cards");
   }
-  if (card.archivedAt) throw new ServiceError("not_found", "Card not found");
   if (!canSpeakTerm(card)) {
     throw new ServiceError(
       "invalid",
@@ -63,7 +69,7 @@ export async function pronunciationAudio(
     let audio: Uint8Array;
     try {
       const generated = await provider.speech({
-        text: speechText(card.term),
+        text: spokenText(card),
         language: language.data,
       });
       audio = await boundedAudio(generated);
@@ -176,10 +182,11 @@ async function rememberAudioKey(
 ): Promise<void> {
   const [updated] = await ctx.db
     .update(schema.cards)
-    .set({ audioKey: key, updatedAt: new Date() })
+    .set({ audioKey: key, audioSource: "generated", updatedAt: new Date() })
     .where(
       and(
         eq(schema.cards.id, card.id),
+        or(isNull(schema.cards.audioSource), eq(schema.cards.audioSource, "generated")),
         eq(schema.cards.userId, card.userId),
         eq(schema.cards.term, card.term),
         eq(schema.cards.language, card.language as string),
@@ -200,9 +207,54 @@ async function rememberAudioKey(
   );
 }
 
+/** A Japanese card's kana reading, so 上手 is said じょうず or うわて as the card says, else the term. */
+function spokenText(card: Card): string {
+  return speechText(kanaReading(card) ?? card.term);
+}
+
+// One `IN` list's worth (see selectIn), which also bounds this run's share of the cron's subrequests.
+const PURGES_PER_RUN = 90;
+
+/**
+ * Clears the audio folders of deleted cards, recordings and superseded speech included, a bounded
+ * number per cron run. A card R2 refused stays queued for the next run.
+ */
+export async function purgeCardAudio(db: Db, bucket: R2Bucket): Promise<number> {
+  const queued = await db
+    .select({ cardId: schema.cardAudioPurges.cardId })
+    .from(schema.cardAudioPurges)
+    .orderBy(schema.cardAudioPurges.createdAt)
+    .limit(PURGES_PER_RUN);
+  const cleared: string[] = [];
+  const worker = async () => {
+    for (let next = queued.pop(); next; next = queued.pop()) {
+      try {
+        let cursor: string | undefined;
+        do {
+          const page = await bucket.list({
+            prefix: `cards/${next.cardId}/`,
+            ...(cursor ? { cursor } : {}),
+          });
+          const keys = page.objects.map((object) => object.key);
+          if (keys.length > 0) await bucket.delete(keys);
+          cursor = page.truncated ? page.cursor : undefined;
+        } while (cursor);
+        cleared.push(next.cardId);
+      } catch {
+        // Retried next run; the key is never logged.
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(10, queued.length) }, worker));
+  if (cleared.length > 0) {
+    await db.delete(schema.cardAudioPurges).where(inArray(schema.cardAudioPurges.cardId, cleared));
+  }
+  return cleared.length;
+}
+
 async function audioKey(card: Card, provider: SpeechProvider): Promise<string> {
   const bytes = new TextEncoder().encode(
-    `${speechText(card.term)}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}`,
+    `${spokenText(card)}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}`,
   );
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
   const fingerprint = [...digest]

@@ -57,7 +57,7 @@ Every field can be changed later from the card page's edit sheet. When adding, a
 
 ## Leaning
 
-B with D. Adding shows two fields, the deck row and a chip row, with no hook and no settings. Editing is the same form: every field that holds text is shown, and every empty one is a chip, the hook included, with **Card settings** last. The phone app and the web then share one shape. The furigana preview becomes one block under the last of Reading and Example that is shown, and only while one of them holds a reading. It never takes its own row while both are still chips. C is an [open question](#open-questions).
+B with D. Adding shows two fields, the deck row and a chip row, with no hook and no settings. Editing is the same form: every field that holds text is shown, and every empty one is a chip, the hook included, with **Card settings** last. The phone app and the web then share one shape, as long as D reaches the phone too: its Add a word drops the hook and "how it's asked" chips, and Edit card keeps them. The furigana preview becomes one block under the last of Reading and Example that is shown, and only while one of them holds a reading. It never takes its own row while both are still chips. C is an [open question](#open-questions).
 
 ## Instrumentation
 
@@ -66,7 +66,7 @@ Product question: which optional fields does a learner fill by hand when adding 
 ## Open questions
 
 1. Should desktops use the chip row too (B), or a shorter fold (A)? Lean: B, so all three surfaces work one way.
-2. Should the chips be ordered by last use on this device, or by what the deck's cards hold? Lean: last use, as the phone does today. A deck-based order would be right from the first card, and could come to both apps later.
-3. Should the hook and the card's settings leave the add sheet (D)? Lean: yes.
+2. Should the chips be ordered by last use on this device, or by what the deck's cards hold? Lean: last use, as the phone does today. Chips with no last use yet follow the deck language's enrichment preset ([defaults](../../packages/core/src/enrichment.ts)): Reading and Example first for Japanese or Chinese, and Notes first for Estonian or German. A deck-based order would be right from the first card, and could come to both apps later.
+3. Should the hook and the card's settings leave the add sheet in both apps (D)? Lean: yes. Leaving them on the phone would keep the two apps different.
 4. Should the fields be drawn without boxes, as on the phone, or keep the standard control box from [forms.md](../design/system/forms.md)? Lean: keep the box, because showing only the added fields removes most of the weight. Drawing them without boxes would change the design system's rule that every control is the same box.
 5. Should source, tags and section become a lesson line (C)? Lean: not in the first slice. Revisit once `fields` shows how often they change between cards.

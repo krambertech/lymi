@@ -2,7 +2,8 @@ import { newId, type PublicationInput } from "@lymi/core";
 import { loadPublicDeck } from "@lymi/core/catalog/server";
 import { eq } from "@lymi/core/db";
 import { Hono } from "hono";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import type { SpeechProvider } from "../ai";
 import { type Db, schema } from "../db";
 import { handleError } from "../http";
 import type { AppEnv } from "../index";
@@ -11,7 +12,7 @@ import { addCards, archiveCard, restoreCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
 import { approveEdition, importEdition, publishEdition } from "./editions";
-import { publicMediaFile } from "./public-media";
+import { publicMediaFile, publicPronunciation } from "./public-media";
 import { publishDeck, withdrawDeck } from "./publications";
 import { learner, type TestBindings, testDb } from "./test-db";
 
@@ -250,5 +251,71 @@ describe("public deck media", () => {
       image: { cardId },
       audio: { cardId },
     });
+  });
+
+  it("offers every speakable card's pronunciation on the page, stored or not", async () => {
+    const { deckId, slug } = await publishedCard("audio-offered");
+    await addCards(publisher, [{ deckId, term: "a".repeat(201), meaning: "too long to say" }]);
+    const page = await loadPublicDeck(db, slug);
+    if (page.status !== "published") throw new Error("Expected published deck");
+    const [short, long] = page.deck.sections[0]?.cards ?? [];
+    expect(short?.audio).toEqual({ cardId: expect.any(String) });
+    expect(long?.audio).toBeUndefined();
+  });
+});
+
+describe("public pronunciation on first play", () => {
+  const provider = (speech: SpeechProvider["speech"]): SpeechProvider => ({
+    provider: "elevenlabs",
+    model: "eleven_v4",
+    voice: "voice",
+    locale: "et-EE",
+    contentType: "audio/mpeg",
+    extension: "mp3",
+    speech,
+  });
+  const deps = (speech: SpeechProvider["speech"], providers = true) => ({
+    bucket: env.AUDIO,
+    providers: () => (providers ? [provider(speech)] : []),
+  });
+
+  it("makes the clip once within budget and serves it free afterwards", async () => {
+    const { cardId } = await publishedCard("first-play");
+    const speech = vi.fn(async () => new Response(new Uint8Array([5, 6, 7])));
+    const spend = vi.fn(async () => null);
+    const first = await publicPronunciation(db, cardId, deps(speech), spend);
+    if (!("clip" in first)) throw new Error("Expected a clip");
+    expect(first.clip.size).toBe(3);
+    const second = await publicPronunciation(db, cardId, deps(speech), spend);
+    expect("clip" in second).toBe(true);
+    expect(speech).toHaveBeenCalledTimes(1);
+    expect(spend).toHaveBeenCalledTimes(1);
+    expect((await publicMediaFile(db, cardId, "audio", storage())).size).toBe(3);
+  });
+
+  it("makes nothing once the budget is spent", async () => {
+    const { cardId } = await publishedCard("over-budget");
+    const speech = vi.fn(async () => new Response(new Uint8Array([1])));
+    expect(await publicPronunciation(db, cardId, deps(speech), async () => 120)).toEqual({
+      retryAfter: 120,
+    });
+    expect(speech).not.toHaveBeenCalled();
+  });
+
+  it("refuses a card it cannot voice without spending budget", async () => {
+    const deck = await createDeck(publisher, { name: "Private first play", defaultLanguage: "et" });
+    const [added] = await addCards(publisher, [{ deckId: deck.id, term: "salajane" }]);
+    if (added?.status !== "added") throw new Error("Private card fixture was not added");
+    const { cardId } = await publishedCard("no-provider");
+    const speech = vi.fn(async () => new Response(new Uint8Array([1])));
+    const spend = vi.fn(async () => null);
+    await expect(publicPronunciation(db, added.card.id, deps(speech), spend)).rejects.toEqual(
+      missing,
+    );
+    await expect(publicPronunciation(db, cardId, deps(speech, false), spend)).rejects.toEqual(
+      missing,
+    );
+    expect(spend).not.toHaveBeenCalled();
+    expect(speech).not.toHaveBeenCalled();
   });
 });

@@ -338,9 +338,9 @@ decks.put(
   body(PublicationInput, "publication"),
   async (c) => {
     const ctx = ctxOf(c);
-    const deckId = c.req.param("id");
-    const publication = await publishDeck(ctx, deckId, c.req.valid("json"), publisherEmails(c.env));
-    // Start voicing the deck now; the cron finishes whatever one request cannot. #759.
+    const input = c.req.valid("json");
+    const publication = await publishDeck(ctx, c.req.param("id"), input, publisherEmails(c.env));
+    // Voice what the deck page shows up front; the cron finishes whatever one request cannot. #759.
     c.executionCtx.waitUntil(
       voicePublishedDecks(
         ctx.db,
@@ -348,7 +348,7 @@ decks.put(
           bucket: c.env.AUDIO,
           providers: (language) => createSpeechProviders(c.env, language),
         },
-        { deckId, limit: PUBLISHED_AUDIO_ON_PUBLISH },
+        { slug: input.slug, limit: PUBLISHED_AUDIO_ON_PUBLISH },
       ).catch(() => undefined),
     );
     return c.json(publicationOut(c.env.PRODUCT_URL, publication));

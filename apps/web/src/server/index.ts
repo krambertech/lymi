@@ -27,13 +27,15 @@ export default {
       expireExports(createDb(env.DB), env.EXPORTS, new Date(controller.scheduledTime)),
     );
     executionCtx.waitUntil(dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
-    // Published decks get their pronunciation ahead of a first play, a batch per run. #759.
-    executionCtx.waitUntil(
-      voicePublishedDecks(createDb(env.DB), {
-        bucket: env.AUDIO,
-        providers: (language) => createSpeechProviders(env, language),
-      }),
-    );
+    // Hourly, because each run reads every published deck to find the cards its page shows first. #759.
+    if (new Date(controller.scheduledTime).getUTCMinutes() < 15) {
+      executionCtx.waitUntil(
+        voicePublishedDecks(createDb(env.DB), {
+          bucket: env.AUDIO,
+          providers: (language) => createSpeechProviders(env, language),
+        }),
+      );
+    }
   },
 } satisfies ExportedHandler<Bindings>;
 

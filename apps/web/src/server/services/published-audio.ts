@@ -1,5 +1,6 @@
-import { LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
-import { and, count, eq, inArray, isNotNull, isNull, lte, sql } from "@lymi/core/db";
+import { canSpeakTerm, LanguageTag } from "@lymi/core";
+import { listPublicDeckSlugs, publicDeckFrontCards } from "@lymi/core/catalog/server";
+import { and, eq, inArray, isNull, selectIn } from "@lymi/core/db";
 import type { SpeechProvider } from "../ai";
 import { type Db, schema } from "../db";
 import { pronunciationAudio } from "./audio";
@@ -9,7 +10,7 @@ export const PUBLISHED_AUDIO_BATCH = 40;
 /** Voice calls in flight at once, so a big deck does not burst the provider. */
 export const PUBLISHED_AUDIO_CONCURRENCY = 4;
 /** Cards a publish voices itself: a request's `waitUntil` ends about 30 seconds after the response. */
-export const PUBLISHED_AUDIO_ON_PUBLISH = 8;
+export const PUBLISHED_AUDIO_ON_PUBLISH = 12;
 
 interface PublishedAudioDependencies {
   bucket: R2Bucket;
@@ -26,64 +27,52 @@ export interface PublishedAudioRun {
 }
 
 /**
- * Give every card of a published deck its pronunciation before a visitor plays it, through the
- * same path a first play uses, so each clip is generated and stored once. Only publishers can
- * publish, so this only ever touches curated decks. Cards that already have a clip are skipped,
- * which makes every run safe to repeat: the cron drains the backlog, including decks that were
- * live before this existed, and a publish starts on its own deck right away.
+ * Voice the cards a published deck's page shows before a visitor opens the full list, the spread
+ * and the hand, so the first plays a visitor makes are instant. Every other card is voiced on its
+ * first play from the page, which keeps the spend to what visitors use. #759.
+ * Cards that already have a clip are skipped, which makes every run safe to repeat.
  */
 export async function voicePublishedDecks(
   db: Db,
   deps: PublishedAudioDependencies,
-  options: { deckId?: string; limit?: number; concurrency?: number } = {},
+  options: { slug?: string; limit?: number; concurrency?: number } = {},
 ): Promise<PublishedAudioRun> {
   const limit = options.limit ?? PUBLISHED_AUDIO_BATCH;
   const concurrency = Math.max(1, options.concurrency ?? PUBLISHED_AUDIO_CONCURRENCY);
-  // Cards the audio path refuses (no language, a long term) would never leave the backlog.
-  const unvoiced = and(
-    eq(schema.deckPublications.status, "published"),
-    isNull(schema.decks.archivedAt),
-    isNull(schema.cards.archivedAt),
-    isNull(schema.cards.audioKey),
-    isNotNull(schema.cards.language),
-    lte(sql`length(${schema.cards.term})`, SPOKEN_TERM_MAX),
-    ...(options.deckId ? [eq(schema.cards.deckId, options.deckId)] : []),
-  );
+  const slugs = options.slug
+    ? [options.slug]
+    : (await listPublicDeckSlugs(db)).map((row) => row.slug);
+  const ids: string[] = [];
+  for (const slug of slugs) ids.push(...(await publicDeckFrontCards(db, slug)));
 
-  // A language no provider covers fails every time, so it is left for a first play to report.
-  const languages = (
-    await db
-      .selectDistinct({ language: schema.cards.language })
+  const rows = await selectIn(ids, (slice) =>
+    db
+      .select({
+        id: schema.cards.id,
+        term: schema.cards.term,
+        language: schema.cards.language,
+        ownerId: schema.decks.userId,
+      })
       .from(schema.cards)
       .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-      .innerJoin(schema.deckPublications, eq(schema.deckPublications.deckId, schema.cards.deckId))
-      .where(unvoiced)
-  ).flatMap(({ language }) =>
-    LanguageTag.safeParse(language).success && deps.providers(language as string).length > 0
-      ? [language as string]
-      : [],
+      .where(and(inArray(schema.cards.id, slice), isNull(schema.cards.audioKey))),
   );
-  if (languages.length === 0) return { voiced: 0, failed: 0, remaining: 0 };
-  const speakable = and(unvoiced, inArray(schema.cards.language, languages));
-
-  const [{ pending = 0 } = {}] = await db
-    .select({ pending: count() })
-    .from(schema.cards)
-    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-    .innerJoin(schema.deckPublications, eq(schema.deckPublications.deckId, schema.cards.deckId))
-    .where(speakable);
+  // A language no provider covers, or a term the audio path refuses, would fail every time.
+  const pending = rows.filter(
+    (row) =>
+      LanguageTag.safeParse(row.language).success &&
+      canSpeakTerm(row) &&
+      deps.providers(row.language as string).length > 0,
+  );
   // Random order, so a card every provider rejects cannot hold the front of the backlog for good.
-  const batch = await db
-    .select({
-      id: schema.cards.id,
-      ownerId: schema.decks.userId,
-    })
-    .from(schema.cards)
-    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-    .innerJoin(schema.deckPublications, eq(schema.deckPublications.deckId, schema.cards.deckId))
-    .where(speakable)
-    .orderBy(sql`random()`)
-    .limit(limit);
+  for (let i = pending.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pending[i], pending[j]] = [
+      pending[j] as (typeof pending)[number],
+      pending[i] as (typeof pending)[number],
+    ];
+  }
+  const batch = pending.slice(0, limit);
 
   let voiced = 0;
   let failed = 0;
@@ -113,5 +102,5 @@ export async function voicePublishedDecks(
     }
   };
   await Promise.all(Array.from({ length: Math.min(concurrency, batch.length) }, worker));
-  return { voiced, failed, remaining: pending - voiced };
+  return { voiced, failed, remaining: pending.length - voiced };
 }

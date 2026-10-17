@@ -2,6 +2,8 @@ import { and, asc, eq, inArray, isNotNull, isNull, type SQL, sql } from "drizzle
 import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
 import {
   activeAvatarVersion,
+  deckPageHand,
+  deckPageSpread,
   isPublicDeckSlug,
   PublicDeckOut,
   type PublicDeckResult,
@@ -26,6 +28,7 @@ import {
   sections,
   userAvatars,
 } from "./schema/app";
+import { SPOKEN_TERM_MAX } from "./terms";
 import {
   type Directions,
   publicationTags,
@@ -72,6 +75,8 @@ export interface CardRow {
   /** The card's own review modes, or null to follow the deck. */
   directions: Directions | null;
   reviewModeKeys: ReviewModeKey[] | null;
+  /** Whether the card can be spoken, so its page offers a clip the product makes on first play. */
+  speakable?: boolean;
 }
 
 export interface PublicMediaRow {
@@ -170,12 +175,13 @@ export function projectPublicDeck(
   for (const card of cardRows) {
     const group = groups.get(card.sectionId) ?? groups.get(null);
     const media = mediaByCard.get(card.id);
+    const audio = media?.audio ?? (card.speakable ? { cardId: card.id } : undefined);
     group?.cards.push({
       term: card.term,
       meaning: card.meaning,
       modes: modesOf(publication.deckDirections, card, !!media?.image),
       ...(media?.image ? { image: media.image } : {}),
-      ...(media?.audio ? { audio: media.audio } : {}),
+      ...(audio ? { audio } : {}),
     });
   }
   const deck = PublicDeckOut.parse({
@@ -234,6 +240,52 @@ export async function loadPublicDeck(
   slug: string,
   language?: string | undefined,
 ): Promise<PublicDeckResult> {
+  const read = await readPublicDeck(db, slug, language);
+  if ("status" in read) return read;
+  return projectPublicDeck(read.publication, read.sectionRows, read.cardRows, read.mediaRows);
+}
+
+/**
+ * The ids of the cards a deck page shows before a visitor opens the full list, the spread and
+ * the hand, in the original and every published edition. The product voices these ahead. #759.
+ */
+export async function publicDeckFrontCards(db: CatalogDb, slug: string): Promise<string[]> {
+  const original = await readPublicDeck(db, slug);
+  if ("status" in original) return [];
+  const editions = await Promise.all(
+    original.publication.editions.slice(1).map((language) => readPublicDeck(db, slug, language)),
+  );
+  const ids = new Set<string>();
+  for (const read of [original, ...editions]) {
+    if ("status" in read) continue;
+    const groups = new Map<string | null, (CardRow & { meaning: string })[]>();
+    for (const section of read.sectionRows) groups.set(section.id, []);
+    groups.set(null, []);
+    for (const card of read.cardRows) {
+      if (!card.meaning) continue;
+      const group = groups.get(card.sectionId) ?? groups.get(null);
+      group?.push({ ...card, meaning: card.meaning });
+    }
+    const shown = [...groups.values()].filter((cards) => cards.length > 0);
+    for (const card of deckPageSpread(read.publication, shown)) ids.add(card.id);
+    for (const card of deckPageHand(read.publication, shown)) ids.add(card.id);
+  }
+  return [...ids];
+}
+
+async function readPublicDeck(
+  db: CatalogDb,
+  slug: string,
+  language?: string | undefined,
+): Promise<
+  | { status: "missing" | "unavailable" }
+  | {
+      publication: PublicationRow;
+      sectionRows: SectionRow[];
+      cardRows: CardRow[];
+      mediaRows: PublicMediaRow[];
+    }
+> {
   if (!isPublicDeckSlug(slug)) return { status: "missing" };
   const [publication] = await db
     .select({
@@ -315,6 +367,7 @@ export async function loadPublicDeck(
         sectionId: cards.sectionId,
         directions: cards.directions,
         reviewModeKeys: cards.reviewModeKeys,
+        speakable: sql<number>`${cards.language} is not null and length(${cards.term}) <= ${SPOKEN_TERM_MAX}`,
       })
       .from(cards)
       .leftJoin(
@@ -327,8 +380,8 @@ export async function loadPublicDeck(
     livePublicationMedia(db, { publicationId: publication.id }),
   ]);
   const text = deckText[0];
-  return projectPublicDeck(
-    {
+  return {
+    publication: {
       ...publication,
       meaningLanguage: shown,
       originalMeaningLanguage: original,
@@ -338,9 +391,9 @@ export async function loadPublicDeck(
       publisherAvatar: activeAvatarVersion(publication),
     },
     sectionRows,
-    cardRows,
+    cardRows: cardRows.map(({ speakable, ...card }) => ({ ...card, speakable: speakable === 1 })),
     mediaRows,
-  );
+  };
 }
 
 /**

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   canSpeakTerm,
+  cueKeepsReading,
   duplicateKey,
   headword,
   kanaReading,
@@ -67,13 +68,28 @@ describe("kanaReading", () => {
 describe("readingKey", () => {
   it("folds katakana, spacing and composition, so one reading written two ways is one", () => {
     expect(readingKey({ language: "ja", pronunciation: "ジョウズ" })).toBe("じょうず");
-    expect(readingKey({ language: "ja-JP", pronunciation: " じょう  ず " })).toBe("じょう ず");
+    expect(readingKey({ language: "ja-JP", pronunciation: " じょう  ず " })).toBe("じょうず");
+    expect(readingKey({ language: "ja", pronunciation: "た・べる" })).toBe("たべる");
+    expect(readingKey({ language: "ja", pronunciation: "じょう\u3000ず" })).toBe("じょうず");
     expect(readingKey({ language: "ja", pronunciation: "か\u3099" })).toBe("が");
   });
   it("has no reading where none applies", () => {
     expect(readingKey({ language: "ja", pronunciation: "jōzu" })).toBeNull();
     expect(readingKey({ language: "zh", pronunciation: "xuéxí" })).toBeNull();
     expect(readingKey({ language: "it", pronunciation: null })).toBeNull();
+  });
+});
+
+describe("cueKeepsReading", () => {
+  it("keeps Chinese pinyin on the cue until the card is Known", () => {
+    expect(cueKeepsReading("zh", false)).toBe(true);
+    expect(cueKeepsReading("zh-Hans", false)).toBe(true);
+    expect(cueKeepsReading("zh", true)).toBe(false);
+  });
+  it("leaves every other reading for the reveal", () => {
+    expect(cueKeepsReading("ja", false)).toBe(false);
+    expect(cueKeepsReading("ko", false)).toBe(false);
+    expect(cueKeepsReading(null, false)).toBe(false);
   });
 });
 

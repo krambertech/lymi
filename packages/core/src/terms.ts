@@ -30,8 +30,9 @@ export function kanaReading(card: {
 }
 
 /**
- * The reading the duplicate rule compares: a Japanese card's kana reading, whitespace collapsed and
- * katakana folded to hiragana, so ジョウズ and じょうず are one reading. Null where no reading applies.
+ * The reading the duplicate rule compares: a Japanese card's kana reading without spaces or ・ and
+ * with katakana folded to hiragana, so ジョウズ, じょう ず and じょうず are one reading. Null where no
+ * reading applies.
  */
 export function readingKey(card: {
   language?: string | null | undefined;
@@ -40,8 +41,16 @@ export function readingKey(card: {
   const reading = kanaReading(card);
   if (!reading) return null;
   return reading
-    .replace(/\s+/g, " ")
+    .replace(/[\s・]/g, "")
     .replace(/[\u30a1-\u30f6]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 0x60));
+}
+
+/**
+ * Whether a term cue shows the card's pronunciation before the reveal: Chinese keeps its pinyin
+ * until the card is Known; every other language's reading waits for the reveal.
+ */
+export function cueKeepsReading(language: string | null | undefined, known: boolean): boolean {
+  return languageKey(language) === "zh" && !known;
 }
 
 /** Two readings tell cards apart only when both cards have one and they differ: 上手 じょうず and うわて. */

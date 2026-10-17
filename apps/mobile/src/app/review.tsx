@@ -11,6 +11,7 @@ import { writes } from "@lymi/client/writes";
 import {
   CHOSEN_LIMIT,
   countedRating,
+  cueKeepsReading,
   type Drawn,
   drawKey,
   type FieldSource,
@@ -99,6 +100,7 @@ import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "..
 import { usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
 import { AiCardChip, Chip, StateChip } from "../ui/chip";
+import { stateKey } from "../ui/state-mark";
 import { GlassSurface } from "../ui/glass";
 import { GRADES } from "../ui/grade";
 import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
@@ -1281,6 +1283,10 @@ function CardPlate({
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
+  const readingOnCue =
+    mode.cue === "term" &&
+    !!card.pronunciation &&
+    cueKeepsReading(card.language, stateKey(forgotten ? 3 : fsrsState) === "known");
   const { width: screenWidth, fontScale } = useWindowDimensions();
   // The page's and the card's 20 pt sides, and the speaker beside a term.
   const cueLine = screenWidth - 80 - (pronounce && mode.cue === "term" ? 56 : 0);
@@ -1400,6 +1406,7 @@ function CardPlate({
                 {cue}
               </CardLine>
             )}
+            {readingOnCue && <Text className="pt-2 text-md text-muted">{card.pronunciation}</Text>}
             {/* The hook has one place, under the cue, before the reveal and after it. */}
             {hook && hookShown ? (
               <View className="pt-3">
@@ -1453,8 +1460,8 @@ function CardPlate({
                     )}
                   </Animated.View>
                 )}
-                {/* After the reveal in every mode: under a term cue it would read the term out. */}
-                {card.pronunciation && (
+                {/* After the reveal unless the cue keeps it: under a term cue it reads the term out. */}
+                {card.pronunciation && !readingOnCue && (
                   <Animated.View entering={arrive()}>
                     <Text className="text-md text-muted">{card.pronunciation}</Text>
                   </Animated.View>

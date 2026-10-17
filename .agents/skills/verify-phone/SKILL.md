@@ -32,6 +32,7 @@ A change is verified when the feature it touches has been driven in the running 
 | API keys and connected apps | [keys-and-apps.md](features/keys-and-apps.md) |
 | Smart add | [smart-add.md](features/smart-add.md) |
 | Japanese: the reading after the reveal | [japanese.md](features/japanese.md) |
+| Chinese: pinyin on the cue until Known | [chinese.md](features/chinese.md) |
 
 ## Launch
 

@@ -281,9 +281,12 @@ export const CardLocalizationInput = CardLocalizationFields.extend({
 });
 export type CardLocalizationInput = z.infer<typeof CardLocalizationInput>;
 
+/** The most cards one edition call takes. A longer edition is sent in parts, which all land in the same edition. */
+export const EDITION_IMPORT_CARDS = 500;
+
 /**
- * One edition's text, written in one call so a retry lands the same. Rows arrive as drafts;
- * a person approves them before the edition can be published. ADR 0015.
+ * One edition's text, or one part of it, written so a retry lands the same. Rows arrive as
+ * drafts; a person approves them before the edition can be published. ADR 0015.
  */
 export const EditionImportInput = z
   .object({
@@ -301,7 +304,10 @@ export const EditionImportInput = z
       .default([]),
     cards: z
       .array(CardLocalizationInput)
-      .max(500)
+      .max(
+        EDITION_IMPORT_CARDS,
+        `Send at most ${EDITION_IMPORT_CARDS} cards per call, and the rest in further calls.`,
+      )
       .refine(
         (rows) => new Set(rows.map((row) => row.cardId)).size === rows.length,
         "List each card once.",

@@ -133,6 +133,50 @@ describe("learnDeckStyles", () => {
     expect(await learnDeckStyles(ctx, ids, provider)).toEqual({ learned: 0, deckIds: [] });
   });
 
+  it("records each learning call as counts, and a failed call before it rethrows", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    const capture = vi.fn();
+    const base = await learner(db, "style-events", "Kateryna");
+    const ctx = { ...base, analytics: { capture, writeDataPoint: vi.fn() } };
+    const deck = await createDeck(ctx, { name: "Events" });
+    const ids = await write(
+      ctx,
+      deck.id,
+      Array.from({ length: STYLE_LEARN_AFTER }, (_, i) => `event ${i}`),
+    );
+    tick();
+    const failing: TextProvider = {
+      provider: "openai",
+      model: "test",
+      complete: async () => {
+        throw new Error("vendor down");
+      },
+    };
+    await expect(learnDeckStyles(ctx, ids, failing)).rejects.toThrow("vendor down");
+    await learnDeckStyles(ctx, ids, fakeProvider(article));
+    const events = capture.mock.calls
+      .map(([event]) => event)
+      .filter((event) => event.name === "deck_style_learned");
+    expect(events).toEqual([
+      {
+        name: "deck_style_learned",
+        outcome: "failed",
+        cards: 8,
+        topic: false,
+        chars: 0,
+        prompt_version: 1,
+      },
+      {
+        name: "deck_style_learned",
+        outcome: "learned",
+        cards: 8,
+        topic: false,
+        chars: article.style.length,
+        prompt_version: 1,
+      },
+    ]);
+  });
+
   it("never reads a deck the learner does not own", async () => {
     const owner = await learner(db, "style-owner", "Giulia");
     const other = await learner(db, "style-other", "Kateryna");

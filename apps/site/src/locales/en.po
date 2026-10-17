@@ -754,9 +754,6 @@ msgstr "Breadcrumb"
 msgid "breakfast"
 msgstr "breakfast"
 
-msgid "Bridge, <0>橋</0>, is read <1>はし</1> too. Only the pitch tells them apart."
-msgstr "Bridge, <0>橋</0>, is read <1>はし</1> too. Only the pitch tells them apart."
-
 msgid "Bridge, 橋, is also hashi. Only the pitch tells them apart."
 msgstr "Bridge, 橋, is also hashi. Only the pitch tells them apart."
 
@@ -935,9 +932,6 @@ msgstr "Chess · new"
 
 msgid "Chinese"
 msgstr "Chinese"
-
-msgid "Chinese characters"
-msgstr "Chinese characters"
 
 msgid "Choose a grade to move to the next card."
 msgstr "Choose a grade to move to the next card."
@@ -1145,9 +1139,6 @@ msgstr "Dear; expensive"
 
 msgid "Decks"
 msgstr "Decks"
-
-msgid "Decks to start with"
-msgstr "Decks to start with"
 
 #. placeholder {0}: date(changed)
 msgid "Decks updated {0}"
@@ -1418,9 +1409,6 @@ msgstr "Every sign by its picture, with its German name and number, for the theo
 msgid "Every sign of the Polish regulation by its picture, with its Polish name and code."
 msgstr "Every sign of the Polish regulation by its picture, with its Polish name and code."
 
-msgid "Every sign with its sound, a few rows at a time."
-msgstr "Every sign with its sound, a few rows at a time."
-
 msgid "Every state’s deck"
 msgstr "Every state’s deck"
 
@@ -1627,9 +1615,6 @@ msgstr "From now until your test date"
 msgid "Furigana until you know the word."
 msgstr "Furigana until you know the word."
 
-msgid "Furigana while you learn a word"
-msgstr "Furigana while you learn a word"
-
 msgid "Generated audio stays with the related card or account until it is removed under the service’s storage lifecycle."
 msgstr "Generated audio stays with the related card or account until it is removed under the service’s storage lifecycle."
 
@@ -1693,9 +1678,6 @@ msgstr "Goethe-Zertifikat A1, A2 and B1"
 
 msgid "Goethe-Zertifikat A1, A2 and B1: the words for each level"
 msgstr "Goethe-Zertifikat A1, A2 and B1: the words for each level"
-
-msgid "Gone once you know it"
-msgstr "Gone once you know it"
 
 msgid "good"
 msgstr "good"
@@ -1790,9 +1772,6 @@ msgstr "Hi! How’s it going?"
 
 msgid "Hi! What can I get you?"
 msgstr "Hi! What can I get you?"
-
-msgid "Hiragana and katakana"
-msgstr "Hiragana and katakana"
 
 msgid "History"
 msgstr "History"
@@ -2044,14 +2023,8 @@ msgstr "Japanese"
 msgid "Japanese 1 · Mondays"
 msgstr "Japanese 1 · Mondays"
 
-msgid "Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign with its sound, then move on to the words of JLPT N5 and N4. The decks are ready, so you don’t start from scratch: add one and its first cards are waiting."
-msgstr "Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign with its sound, then move on to the words of JLPT N5 and N4. The decks are ready, so you don’t start from scratch: add one and its first cards are waiting."
-
-msgid "Japanese written on squared manuscript paper: あいうえお, アイウエオ, then 食べる, 毎日, 日本語 and 漢字 with their readings beside the kanji. The readings fade from the words already known."
-msgstr "Japanese written on squared manuscript paper: あいうえお, アイウエオ, then 食べる, 毎日, 日本語 and 漢字 with their readings beside the kanji. The readings fade from the words already known."
-
-msgid "JLPT N4 words"
-msgstr "JLPT N4 words"
+msgid "Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign with its sound, then move on to the words of JLPT N5 and N4. You don’t start from scratch: add a deck and its first cards are waiting."
+msgstr "Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign with its sound, then move on to the words of JLPT N5 and N4. You don’t start from scratch: add a deck and its first cards are waiting."
 
 msgctxt "deck tag"
 msgid "JLPT N5"
@@ -2062,9 +2035,6 @@ msgstr "JLPT N5 and N4"
 
 msgid "JLPT N5 and N4: the words for each level"
 msgstr "JLPT N5 and N4: the words for each level"
-
-msgid "JLPT N5 words"
-msgstr "JLPT N5 words"
 
 msgid "Join link"
 msgstr "Join link"
@@ -2157,8 +2127,8 @@ msgctxt "cards in this state"
 msgid "Known"
 msgstr "Known"
 
-msgid "Known: read it yourself. The reading shows when you turn it over."
-msgstr "Known: read it yourself. The reading shows when you turn it over."
+msgid "Known, turned over"
+msgstr "Known, turned over"
 
 msgid "Korean"
 msgstr "Korean"
@@ -2205,9 +2175,6 @@ msgstr "Learn together."
 msgid "Learned once, never revisited"
 msgstr "Learned once, never revisited"
 
-msgid "Learning"
-msgstr "Learning"
-
 msgctxt "cards in this state"
 msgid "Learning"
 msgstr "Learning"
@@ -2217,9 +2184,6 @@ msgstr "Learning {name} with Lymi"
 
 msgid "Learning data"
 msgstr "Learning data"
-
-msgid "Learning: the reading stays while the word settles."
-msgstr "Learning: the reading stays while the word settles."
 
 msgctxt "deck tag"
 msgid "Leben in Deutschland test"
@@ -2538,9 +2502,6 @@ msgstr "New York DMV written test"
 msgid "New York DMV written test: the rules of the road"
 msgstr "New York DMV written test: the rules of the road"
 
-msgid "New: the reading sits over the kanji."
-msgstr "New: the reading sits over the kanji."
-
 msgid "Newer"
 msgstr "Newer"
 
@@ -2656,6 +2617,9 @@ msgstr "Older"
 msgid "Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day."
 msgstr "Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day."
 
+msgid "Once you know it, you read the kanji yourself."
+msgstr "Once you know it, you read the kanji yourself."
+
 msgid "one"
 msgstr "one"
 
@@ -2668,8 +2632,8 @@ msgstr "One card at a time, graded in a tap, on your phone or your laptop, even 
 msgid "One deck for your whole class."
 msgstr "One deck for your whole class."
 
-msgid "One kanji can be read many ways: <0>日</0> is <1>に</1> in <2>日本</2> and <3>にち</3> in <4>毎日</4>. So while you learn a word, its reading sits over the kanji, as in your textbook. Once you know it, the reading waits until you turn the card, and you read the kanji yourself."
-msgstr "One kanji can be read many ways: <0>日</0> is <1>に</1> in <2>日本</2> and <3>にち</3> in <4>毎日</4>. So while you learn a word, its reading sits over the kanji, as in your textbook. Once you know it, the reading waits until you turn the card, and you read the kanji yourself."
+msgid "One kanji can be read many ways: <0>日</0> is <1>に</1> in <2>日本</2> and <3>にち</3> in <4>毎日</4>. So Lymi shows the reading while you learn a word, as your textbook does, and takes it away once you know it."
+msgstr "One kanji can be read many ways: <0>日</0> is <1>に</1> in <2>日本</2> and <3>にち</3> in <4>毎日</4>. So Lymi shows the reading while you learn a word, as your textbook does, and takes it away once you know it."
 
 msgid "One word for asking, handing something over and answering thanks."
 msgstr "One word for asking, handing something over and answering thanks."
@@ -2991,6 +2955,9 @@ msgstr "Ready-made {name} decks, written by a person and checked card by card."
 msgid "Ready-made decks for learning {name}, written by a person and checked card by card."
 msgstr "Ready-made decks for learning {name}, written by a person and checked card by card."
 
+msgid "Ready-made decks, from kana to N4."
+msgstr "Ready-made decks, from kana to N4."
+
 msgid "Ready-made flashcard decks, written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one free and review it in your own language, a few minutes a day."
 msgstr "Ready-made flashcard decks, written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one free and review it in your own language, a few minutes a day."
 
@@ -3236,9 +3203,6 @@ msgstr "Show the answer"
 
 msgid "Show the answer, then grade how well you knew it."
 msgstr "Show the answer, then grade how well you knew it."
-
-msgid "Show the card as"
-msgstr "Show the card as"
 
 msgid "Show the meaning"
 msgstr "Show the meaning"
@@ -3585,9 +3549,6 @@ msgstr "The end of the working day, and the free time after it"
 msgid "The evening after work"
 msgstr "The evening after work"
 
-msgid "The everyday words of the first level."
-msgstr "The everyday words of the first level."
-
 msgid "The facial nerve: muscles of facial expression and taste on the front two-thirds of the tongue"
 msgstr "The facial nerve: muscles of facial expression and taste on the front two-thirds of the tongue"
 
@@ -3647,9 +3608,6 @@ msgstr "The new cards are in your deck, and terms you already have are skipped. 
 
 msgid "The new cards are in your deck, and words you already have are skipped. Fix or archive any card."
 msgstr "The new cards are in your deck, and words you already have are skipped. Fix or archive any card."
-
-msgid "The next level, once N5 feels easy."
-msgstr "The next level, once N5 feels easy."
 
 msgid "The next section opens at 80% known"
 msgstr "The next section opens at 80% known"
@@ -3762,9 +3720,6 @@ msgstr "This is the current HSK 2.0 format. The syllabus published in 2025 grows
 msgid "This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have."
 msgstr "This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have."
 
-msgid "Three scripts, one at a time."
-msgstr "Three scripts, one at a time."
-
 msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
 msgstr "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
 
@@ -3803,6 +3758,9 @@ msgstr "To buy"
 
 msgid "to come"
 msgstr "to come"
+
+msgid "To eat"
+msgstr "To eat"
 
 msgid "to feel like"
 msgstr "to feel like"
@@ -3935,9 +3893,6 @@ msgstr "Turn a study guide into cards for cloud, security or finance exams."
 msgid "Turn a study guide into cards."
 msgstr "Turn a study guide into cards."
 
-msgid "Turn it back"
-msgstr "Turn it back"
-
 msgid "Turn it over"
 msgstr "Turn it over"
 
@@ -3949,6 +3904,9 @@ msgstr "Turn the card back"
 
 msgid "Turn the card over"
 msgstr "Turn the card over"
+
+msgid "Turn the card over and the reading comes back with the answer."
+msgstr "Turn the card over and the reading comes back with the answer."
 
 msgid "Turn tonight’s lecture into cards."
 msgstr "Turn tonight’s lecture into cards."
@@ -4205,6 +4163,9 @@ msgstr "Which words should I ask Marta about on Friday?"
 
 msgid "While Lymi was private, we stored the email address of anyone who asked for access, where on the site they asked, and when. We no longer collect these, and anyone can sign up."
 msgstr "While Lymi was private, we stored the email address of anyone who asked for access, where on the site they asked, and when. We no longer collect these, and anyone can sign up."
+
+msgid "While you learn a word, its reading sits over the kanji."
+msgstr "While you learn a word, its reading sits over the kanji."
 
 msgid "Who can see the cards I make?"
 msgstr "Who can see the cards I make?"

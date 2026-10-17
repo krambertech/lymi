@@ -1,26 +1,25 @@
-import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { clsx } from "clsx";
 import { ArrowRight, Volume2 } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import { deckPath } from "../../lib/deck-page";
 import { shelfPath } from "../../lib/explore";
 import { openLymiUrl, productUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
+import { DeckShowcase } from "../exams/DeckShowcase";
 import { Added, AssistantChat, Attachment } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
 import type { SampleCard } from "./cards";
-import { FeatureSection } from "./FeatureSection";
+import { FeatureSection, SectionTitle } from "./FeatureSection";
 import { Furigana } from "./Furigana";
 import { JAPANESE_QUESTIONS } from "./faq";
-import { GenkoSheet } from "./GenkoSheet";
 import { Hero } from "./Hero";
 import { ImportDemo } from "./ImportDemo";
 import { JAPANESE, JAPANESE_HAND, type LanguageCard } from "./language-cards";
 import { Questions } from "./Questions";
-import { ReadingDemo } from "./ReadingDemo";
+import { ReadingStages } from "./ReadingStages";
 import { SharedDeckDemo } from "./SharedDeckDemo";
 import { SignUpSection } from "./SignUpSection";
 import { SiteFooter } from "./SiteFooter";
@@ -32,59 +31,82 @@ export const JAPANESE_BLURB = msg`Start with hiragana and katakana, then the wor
 /** The published kana deck, which Welcome also offers a Japanese beginner first. */
 const KANA_DECK = "read-japanese-kana";
 
-/** The beginner's way in, in order: the same decks Welcome offers first. */
-const PATH: { slug: string; glyph: string; name: MessageDescriptor; detail: MessageDescriptor }[] =
-  [
-    {
-      slug: KANA_DECK,
-      glyph: "あア",
-      name: msg`Hiragana and katakana`,
-      detail: msg`Every sign with its sound, a few rows at a time.`,
-    },
-    {
-      slug: "japanese-n5-vocabulary-practice",
-      glyph: "食",
-      name: msg`JLPT N5 words`,
-      detail: msg`The everyday words of the first level.`,
-    },
-    {
-      slug: "japanese-n4-vocabulary",
-      glyph: "経",
-      name: msg`JLPT N4 words`,
-      detail: msg`The next level, once N5 feels easy.`,
-    },
-  ];
+/** The gojūon's first rows, written down the page as a chart is: the ground the hand is dealt on. */
+const KANA_ROWS = [
+  "あいうえお",
+  "かきくけこ",
+  "さしすせそ",
+  "たちつてと",
+  "なにぬねの",
+  "はひふへほ",
+  "まみむめも",
+];
 
-/** The beginner's decks as numbered steps, each opening its page in Explore. */
-function ScriptPath() {
-  const { t, i18n } = useLingui();
+/** A faint kana chart in vertical writing, the ground the hero's hand is dealt on. */
+function KanaGround() {
   return (
-    <ol aria-label={t`Decks to start with`} className="mx-auto grid w-full max-w-[440px] gap-2.5">
-      {PATH.map((step) => (
-        <li key={step.slug}>
-          <a
-            href={deckPath(step.slug, i18n.locale as Locale)}
-            className="flex items-center gap-4 rounded-2xl bg-plate p-3.5 edge transition-colors duration-150 hoverable:hover:bg-hover"
-          >
-            <span
-              lang="ja"
-              aria-hidden="true"
-              className="grid h-14 w-16 shrink-0 place-items-center rounded-xl bg-plate-2 text-xl font-medium text-text"
-            >
-              {step.glyph}
-            </span>
-            <span className="grid min-w-0 flex-1 gap-0.5">
-              <span className="text-md font-medium text-text">{i18n._(step.name)}</span>
-              <span className="text-sm text-pretty text-muted">{i18n._(step.detail)}</span>
-            </span>
-            <ArrowRight
-              aria-hidden="true"
-              className="size-4 shrink-0 text-muted rtl:-scale-x-100"
-            />
-          </a>
-        </li>
-      ))}
-    </ol>
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 grid place-items-center overflow-hidden select-none"
+    >
+      <div
+        dir="ltr"
+        className="font-mincho text-[2.75rem] leading-[1.45] tracking-[0.3em] text-muted/25 [writing-mode:vertical-rl] @2xl:text-[3.5rem]"
+      >
+        {KANA_ROWS.map((row) => (
+          <p key={row}>{row}</p>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** A section as wide as the page, its words above what proves them. */
+function WideSection({
+  id,
+  title,
+  body,
+  after,
+  children,
+}: {
+  id: string;
+  title: ReactNode;
+  body: ReactNode;
+  after?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <section
+      aria-labelledby={`${id}-title`}
+      className="border-t border-edge px-5 py-20 @2xl:px-10 @4xl:py-28"
+    >
+      <div className="mx-auto max-w-[1040px]">
+        <div id={`${id}-title`} className="max-w-[640px]">
+          <SectionTitle>{title}</SectionTitle>
+        </div>
+        <p className="mt-5 max-w-[56ch] text-md text-pretty text-text-2">{body}</p>
+        {after && <div className="mt-5">{after}</div>}
+        <div className="mt-12">{children}</div>
+      </div>
+    </section>
+  );
+}
+
+/** The published Japanese decks at full size, the first a beginner takes widest. */
+function JapaneseDecks({ decks }: { decks: PublicDeckSummary[] }) {
+  const { t, i18n } = useLingui();
+  const locale = i18n.locale as Locale;
+  const [first, ...rest] = decks.slice(0, 5);
+  if (!first) return null;
+  return (
+    <div className="grid gap-5">
+      <DeckShowcase deck={first} locale={locale} eyebrow={t`Start here`} />
+      <div className="grid gap-5 @4xl:grid-cols-2">
+        {rest.map((deck) => (
+          <DeckShowcase key={deck.slug} deck={deck} locale={locale} layout="tall" />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -194,7 +216,7 @@ const CLASS_CARDS = [
 ];
 
 /** For someone starting Japanese: kana first, then JLPT words, with readings and a native voice. */
-export function JapaneseView() {
+export function JapaneseView({ decks }: { decks: PublicDeckSummary[] }) {
   const openAppUrl = openLymiUrl();
 
   return (
@@ -222,7 +244,8 @@ export function JapaneseView() {
             </Trans>
           }
           badge={false}
-          visual={<GenkoSheet />}
+          cards={JAPANESE_HAND}
+          ground={<KanaGround />}
           action={
             <a href={productUrl(`/add/${KANA_DECK}`)} className={buttonClass("primary", "lg")}>
               <Trans>Start with kana</Trans>
@@ -232,36 +255,35 @@ export function JapaneseView() {
       </header>
 
       <main>
-        <FeatureSection
-          id="start"
-          demoFirst
-          title={<Trans>Three scripts, one at a time.</Trans>}
-          body={
-            <Trans>
-              Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign
-              with its sound, then move on to the words of JLPT N5 and N4. The decks are ready, so
-              you don’t start from scratch: add one and its first cards are waiting.
-            </Trans>
-          }
-          after={<JapaneseShelfLink />}
-        >
-          <ScriptPath />
-        </FeatureSection>
-
-        <FeatureSection
+        <WideSection
+          id="furigana"
           title={<Trans>Furigana until you know the word.</Trans>}
           body={
             <Trans>
               One kanji can be read many ways: <span lang="ja">日</span> is{" "}
               <span lang="ja">に</span> in <span lang="ja">日本</span> and{" "}
-              <span lang="ja">にち</span> in <span lang="ja">毎日</span>. So while you learn a word,
-              its reading sits over the kanji, as in your textbook. Once you know it, the reading
-              waits until you turn the card, and you read the kanji yourself.
+              <span lang="ja">にち</span> in <span lang="ja">毎日</span>. So Lymi shows the reading
+              while you learn a word, as your textbook does, and takes it away once you know it.
             </Trans>
           }
         >
-          <ReadingDemo />
-        </FeatureSection>
+          <ReadingStages />
+        </WideSection>
+
+        <WideSection
+          id="decks"
+          title={<Trans>Ready-made decks, from kana to N4.</Trans>}
+          body={
+            <Trans>
+              Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign
+              with its sound, then move on to the words of JLPT N5 and N4. You don’t start from
+              scratch: add a deck and its first cards are waiting.
+            </Trans>
+          }
+          after={<JapaneseShelfLink />}
+        >
+          <JapaneseDecks decks={decks} />
+        </WideSection>
 
         <FeatureSection
           demoFirst
@@ -276,7 +298,6 @@ export function JapaneseView() {
         >
           <VoiceList />
         </FeatureSection>
-
         <FeatureSection
           title={<Trans>Bring your AI along.</Trans>}
           body={

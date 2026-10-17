@@ -21,10 +21,22 @@ interface Props {
   action?: ReactNode;
   /** Shows where Lymi is made; a page about one language can leave it out. */
   badge?: boolean | undefined;
+  /** Drawn behind a fanned hand, outside its layout. */
+  ground?: ReactNode;
 }
 
 /** The headline, one action, and a hand of cards to turn over. */
-export function Hero({ title, lede, cards, layout, behind, visual, action, badge = true }: Props) {
+export function Hero({
+  title,
+  lede,
+  cards,
+  layout,
+  behind,
+  visual,
+  action,
+  badge = true,
+  ground,
+}: Props) {
   const [front, setFront] = useState<string>();
   return (
     <div
@@ -58,6 +70,13 @@ export function Hero({ title, lede, cards, layout, behind, visual, action, badge
               <HandOfCards cards={cards} layout="stack" onFront={setFront} />
             </div>
           </HeroGround>
+        ) : ground ? (
+          <div className="relative">
+            {ground}
+            <div className="relative">
+              <HandOfCards cards={cards} layout={layout} />
+            </div>
+          </div>
         ) : (
           <HandOfCards cards={cards} layout={layout} />
         ))}

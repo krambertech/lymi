@@ -754,9 +754,6 @@ msgstr "Навігаційний ланцюжок"
 msgid "breakfast"
 msgstr "сніданок"
 
-msgid "Bridge, <0>橋</0>, is read <1>はし</1> too. Only the pitch tells them apart."
-msgstr "Міст, <0>橋</0>, теж читається <1>はし</1>. Розрізняє їх лише висота тону."
-
 msgid "Bridge, 橋, is also hashi. Only the pitch tells them apart."
 msgstr "Міст, 橋, — теж hashi. Розрізнити їх можна лише за висотою тону."
 
@@ -935,9 +932,6 @@ msgstr "Шахи · нова"
 
 msgid "Chinese"
 msgstr "Китайська"
-
-msgid "Chinese characters"
-msgstr "китайські ієрогліфи"
 
 msgid "Choose a grade to move to the next card."
 msgstr "Обери оцінку, щоб перейти до наступної картки."
@@ -1145,9 +1139,6 @@ msgstr "Любий; дорогий"
 
 msgid "Decks"
 msgstr "Колоди"
-
-msgid "Decks to start with"
-msgstr "Колоди для початку"
 
 #. placeholder {0}: date(changed)
 msgid "Decks updated {0}"
@@ -1418,9 +1409,6 @@ msgstr "Кожен знак за зображенням, з німецькою �
 msgid "Every sign of the Polish regulation by its picture, with its Polish name and code."
 msgstr "Кожен знак польських правил за зображенням, з польською назвою та кодом."
 
-msgid "Every sign with its sound, a few rows at a time."
-msgstr "Кожен знак зі звучанням, кілька рядів за раз."
-
 msgid "Every state’s deck"
 msgstr "Колоди всіх земель"
 
@@ -1627,9 +1615,6 @@ msgstr "Від сьогодні до дня тесту"
 msgid "Furigana until you know the word."
 msgstr "Фуріґана, поки не знаєш слова."
 
-msgid "Furigana while you learn a word"
-msgstr "Фуріґана, поки вчиш слово"
-
 msgid "Generated audio stays with the related card or account until it is removed under the service’s storage lifecycle."
 msgstr "Створене озвучення зберігається разом із відповідною карткою або обліковим записом, доки його не буде видалено за правилами життєвого циклу сховища сервісу."
 
@@ -1693,9 +1678,6 @@ msgstr "Goethe-Zertifikat A1, A2 і B1"
 
 msgid "Goethe-Zertifikat A1, A2 and B1: the words for each level"
 msgstr "Goethe-Zertifikat A1, A2 і B1: лексика для кожного рівня"
-
-msgid "Gone once you know it"
-msgstr "Зникає, коли знаєш його"
 
 msgid "good"
 msgstr "добрий"
@@ -1790,9 +1772,6 @@ msgstr "Привіт! Як справи?"
 
 msgid "Hi! What can I get you?"
 msgstr "Добрий день! Що для вас?"
-
-msgid "Hiragana and katakana"
-msgstr "Хірагана й катакана"
 
 msgid "History"
 msgstr "Історія"
@@ -2044,14 +2023,8 @@ msgstr "Японська"
 msgid "Japanese 1 · Mondays"
 msgstr "Японська 1 · щопонеділка"
 
-msgid "Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign with its sound, then move on to the words of JLPT N5 and N4. The decks are ready, so you don’t start from scratch: add one and its first cards are waiting."
-msgstr "Японською пишуть хіраганою, катаканою і кандзі. Почни з кани, кожен знак зі звучанням, а потім переходь до слів рівнів JLPT N5 і N4. Колоди вже готові, тож не треба починати з нуля: додай одну, і перші картки вже чекають."
-
-msgid "Japanese written on squared manuscript paper: あいうえお, アイウエオ, then 食べる, 毎日, 日本語 and 漢字 with their readings beside the kanji. The readings fade from the words already known."
-msgstr "Японський текст на зошитовому папері в клітинку: あいうえお, アイウエオ, потім 食べる, 毎日, 日本語 і 漢字 з читаннями поруч із кандзі. Читання зникають зі слів, які вже засвоєні."
-
-msgid "JLPT N4 words"
-msgstr "Слова JLPT N4"
+msgid "Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign with its sound, then move on to the words of JLPT N5 and N4. You don’t start from scratch: add a deck and its first cards are waiting."
+msgstr "Японською пишуть хіраганою, катаканою і кандзі. Почни з кани, кожен знак зі звучанням, а потім переходь до слів рівнів JLPT N5 і N4. Починати з нуля не треба: додай колоду, і перші картки вже чекають."
 
 msgctxt "deck tag"
 msgid "JLPT N5"
@@ -2062,9 +2035,6 @@ msgstr "JLPT N5 і N4"
 
 msgid "JLPT N5 and N4: the words for each level"
 msgstr "JLPT N5 і N4: лексика для кожного рівня"
-
-msgid "JLPT N5 words"
-msgstr "Слова JLPT N5"
 
 msgid "Join link"
 msgstr "Посилання для приєднання"
@@ -2157,8 +2127,8 @@ msgctxt "cards in this state"
 msgid "Known"
 msgstr "Засвоєні"
 
-msgid "Known: read it yourself. The reading shows when you turn it over."
-msgstr "Засвоєна: прочитай сам. Читання з’явиться, коли перевернеш картку."
+msgid "Known, turned over"
+msgstr "Засвоєна, перевернута"
 
 msgid "Korean"
 msgstr "Корейська"
@@ -2205,9 +2175,6 @@ msgstr "Вчіться разом."
 msgid "Learned once, never revisited"
 msgstr "Без повторень"
 
-msgid "Learning"
-msgstr "Вивчається"
-
 msgctxt "cards in this state"
 msgid "Learning"
 msgstr "У вивченні"
@@ -2217,9 +2184,6 @@ msgstr "{name} в Lymi"
 
 msgid "Learning data"
 msgstr "Навчальні дані"
-
-msgid "Learning: the reading stays while the word settles."
-msgstr "Вивчається: читання лишається, поки слово закріплюється."
 
 msgctxt "deck tag"
 msgid "Leben in Deutschland test"
@@ -2538,9 +2502,6 @@ msgstr "Письмовий іспит DMV у Нью-Йорку"
 msgid "New York DMV written test: the rules of the road"
 msgstr "Письмовий іспит DMV у Нью-Йорку: правила дорожнього руху"
 
-msgid "New: the reading sits over the kanji."
-msgstr "Нова: читання стоїть над кандзі."
-
 msgid "Newer"
 msgstr "Новіше"
 
@@ -2656,6 +2617,9 @@ msgstr "Раніше"
 msgid "Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day."
 msgstr "Щойно колода потрапляє у твій Lymi, він повертає кожну картку саме перед тим, як ти її забудеш, — кілька хвилин на день."
 
+msgid "Once you know it, you read the kanji yourself."
+msgstr "Коли знаєш слово, кандзі читаєш сам."
+
 msgid "one"
 msgstr "один"
 
@@ -2668,8 +2632,8 @@ msgstr "Одна картка за раз, оцінка одним дотико�
 msgid "One deck for your whole class."
 msgstr "Одна колода для всієї групи."
 
-msgid "One kanji can be read many ways: <0>日</0> is <1>に</1> in <2>日本</2> and <3>にち</3> in <4>毎日</4>. So while you learn a word, its reading sits over the kanji, as in your textbook. Once you know it, the reading waits until you turn the card, and you read the kanji yourself."
-msgstr "Один кандзі можна прочитати по-різному: <0>日</0> — це <1>に</1> у <2>日本</2> і <3>にち</3> у <4>毎日</4>. Тож поки ти вчиш слово, читання стоїть над кандзі, як у підручнику. Коли засвоїш його, читання з’являється лише після того, як перевернеш картку, і кандзі ти читаєш сам."
+msgid "One kanji can be read many ways: <0>日</0> is <1>に</1> in <2>日本</2> and <3>にち</3> in <4>毎日</4>. So Lymi shows the reading while you learn a word, as your textbook does, and takes it away once you know it."
+msgstr "Один кандзі можна прочитати по-різному: <0>日</0> — це <1>に</1> у <2>日本</2> і <3>にち</3> у <4>毎日</4>. Тож Lymi показує читання, поки ти вчиш слово, як підручник, і прибирає його, коли ти слово вже знаєш."
 
 msgid "One word for asking, handing something over and answering thanks."
 msgstr "Одне слово, щоб попросити, щось подати й відповісти на подяку."
@@ -2991,6 +2955,9 @@ msgstr "{name} у готових колодах. Кожну склала люд�
 msgid "Ready-made decks for learning {name}, written by a person and checked card by card."
 msgstr "{name} у готових колодах. Кожну склала людина й перевірила картку за карткою."
 
+msgid "Ready-made decks, from kana to N4."
+msgstr "Готові колоди, від кани до N4."
+
 msgid "Ready-made flashcard decks, written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one free and review it in your own language, a few minutes a day."
 msgstr "Готові колоди флеш-карток, написані людиною та перевірені картка за карткою: мови, іспити й усе інше, що варто пам’ятати. Додай колоду безкоштовно й повторюй її своєю мовою по кілька хвилин на день."
 
@@ -3236,9 +3203,6 @@ msgstr "Показати відповідь"
 
 msgid "Show the answer, then grade how well you knew it."
 msgstr "Покажи відповідь, а потім оціни, як добре ти її пам’ятаєш."
-
-msgid "Show the card as"
-msgstr "Показати картку як"
 
 msgid "Show the meaning"
 msgstr "Показати значення"
@@ -3585,9 +3549,6 @@ msgstr "Кінець робочого дня і вільний час після
 msgid "The evening after work"
 msgstr "Вечір після роботи"
 
-msgid "The everyday words of the first level."
-msgstr "Щоденні слова першого рівня."
-
 msgid "The facial nerve: muscles of facial expression and taste on the front two-thirds of the tongue"
 msgstr "Лицевий нерв: м’язи міміки та смак на передніх двох третинах язика"
 
@@ -3647,9 +3608,6 @@ msgstr "Нові картки вже в колоді, а терміни, які 
 
 msgid "The new cards are in your deck, and words you already have are skipped. Fix or archive any card."
 msgstr "Нові картки вже в колоді, а слова, які в тебе є, пропущено. Будь-яку картку можна виправити або архівувати."
-
-msgid "The next level, once N5 feels easy."
-msgstr "Наступний рівень, коли N5 дається легко."
 
 msgid "The next section opens at 80% known"
 msgstr "Наступний розділ відкривається, коли засвоєно 80%"
@@ -3762,9 +3720,6 @@ msgstr "Це чинний формат HSK 2.0. Програма, опублік
 msgid "This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have."
 msgstr "Ця політика пояснює, які дані отримує Lymi, навіщо їх використовує, хто допомагає надавати сервіс і який вибір маєш ти."
 
-msgid "Three scripts, one at a time."
-msgstr "Три писемності, по черзі."
-
 msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
 msgstr "Ось три, що двічі не згадалися: дифузія, мітохондрія і рибосома."
 
@@ -3803,6 +3758,9 @@ msgstr "Купувати"
 
 msgid "to come"
 msgstr "приходити"
+
+msgid "To eat"
+msgstr "Їсти"
 
 msgid "to feel like"
 msgstr "хотіти чогось"
@@ -3935,9 +3893,6 @@ msgstr "Перетвори посібник на картки для іспит�
 msgid "Turn a study guide into cards."
 msgstr "Перетвори посібник на картки."
 
-msgid "Turn it back"
-msgstr "Перевернути назад"
-
 msgid "Turn it over"
 msgstr "Перевернути"
 
@@ -3949,6 +3904,9 @@ msgstr "Перевернути картку назад"
 
 msgid "Turn the card over"
 msgstr "Перевернути картку"
+
+msgid "Turn the card over and the reading comes back with the answer."
+msgstr "Переверни картку, і читання повернеться разом із відповіддю."
 
 msgid "Turn tonight’s lecture into cards."
 msgstr "Перетвори сьогоднішню лекцію на картки."
@@ -4205,6 +4163,9 @@ msgstr "Про які слова спитати Марту в п’ятницю?
 
 msgid "While Lymi was private, we stored the email address of anyone who asked for access, where on the site they asked, and when. We no longer collect these, and anyone can sign up."
 msgstr "Поки Lymi був закритий, ми зберігали електронну адресу кожного, хто просив доступ, місце на сайті, де він це зробив, і час запиту. Більше ми їх не збираємо: зареєструватися може будь-хто."
+
+msgid "While you learn a word, its reading sits over the kanji."
+msgstr "Поки вчиш слово, читання стоїть над кандзі."
 
 msgid "Who can see the cards I make?"
 msgstr "Хто бачить картки, які я створюю?"

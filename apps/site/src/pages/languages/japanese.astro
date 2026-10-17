@@ -4,10 +4,15 @@ import { JAPANESE_BLURB, JAPANESE_TITLE } from "../../components/landing/Japanes
 import { SHARE_IMAGE_ALT } from "../../components/landing/LandingView";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { pageI18n } from "../../lib/i18n";
+import { resolveLanguageDecks } from "../../lib/public-catalog";
 import { localizedPath } from "../../lib/routes";
 import { marketingPage } from "../../lib/structured-data";
 
-const locale = Astro.currentLocale ?? "en";
+export const prerender = false;
+
+const locale = "en";
+const page = await resolveLanguageDecks(Astro, locale, "ja", "japanese");
+if (page instanceof Response) return page;
 const i18n = pageI18n(locale);
 const title = i18n._(JAPANESE_TITLE);
 const description = i18n._(JAPANESE_BLURB);
@@ -35,5 +40,5 @@ const structuredData = marketingPage({
     type="application/ld+json"
     set:html={JSON.stringify(structuredData).replaceAll("<", "\\u003c")}
   />
-  <LanguagesPage client:load page="japanese" locale={locale} />
+  <LanguagesPage client:load page="japanese" locale={locale} decks={page.decks} />
 </BaseLayout>

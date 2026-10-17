@@ -19,7 +19,7 @@ const TEST_CATEGORIES = ["citizenship", "driving"];
  * Published decks a beginner in a language should start with, in the order to take them; the rest
  * of the language's decks follow in Explore's order. docs/proposals/japanese.md.
  */
-const BEGINNER_DECKS: Record<string, readonly string[]> = {
+export const BEGINNER_DECKS: Record<string, readonly string[]> = {
   ja: [
     "read-japanese-kana",
     "japanese-n5-vocabulary-practice",
@@ -36,21 +36,24 @@ export const GOAL_MINUTES: Record<(typeof DAILY_GOAL_PRESETS)[number], number> =
   100: 30,
 };
 
+/** A language's decks, those a beginner starts from first and the rest in Explore's order. */
+export function languageDecks(catalog: PublicDeckSummary[], language: string | null) {
+  const decks = catalog.filter((d) => taughtLanguage(d) === language);
+  const first = (language && BEGINNER_DECKS[language]) || [];
+  const rank = (slug: string) => {
+    const at = first.indexOf(slug);
+    return at === -1 ? first.length : at;
+  };
+  return [...decks].sort((a, b) => rank(a.slug) - rank(b.slug));
+}
+
 /** The decks that match the answers: the language's shelf, the test shelves, or the other subjects. */
 export function decksFor(
   catalog: PublicDeckSummary[],
   kind: LearningKind | null,
   language: string | null,
 ) {
-  if (kind === "language") {
-    const decks = catalog.filter((d) => taughtLanguage(d) === language);
-    const first = (language && BEGINNER_DECKS[language]) || [];
-    const rank = (slug: string) => {
-      const at = first.indexOf(slug);
-      return at === -1 ? first.length : at;
-    };
-    return [...decks].sort((a, b) => rank(a.slug) - rank(b.slug));
-  }
+  if (kind === "language") return languageDecks(catalog, language);
   if (kind === "test") return catalog.filter((d) => TEST_CATEGORIES.includes(d.category ?? ""));
   if (kind === "subject") {
     return catalog.filter((d) => subjectOf(d) && !TEST_CATEGORIES.includes(d.category ?? ""));

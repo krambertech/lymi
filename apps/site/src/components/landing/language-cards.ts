@@ -318,18 +318,26 @@ const byId = (id: LearningLanguage["id"]) =>
 export const ESTONIAN = byId("et");
 export const JAPANESE = byId("ja");
 
-/** Kana readings for the Japanese page's hand, drawn over the kanji instead of a reading line. */
-const KANA_READINGS: Record<string, string> = {
-  otsukaresama: "おつかれさまです",
-  hashi: "はし",
-  komorebi: "こもれび",
-  tsundoku: "つんどく",
+/** The Japanese page's hand: each card's kana reading and the state it shows. */
+const JAPANESE_FACES: Record<string, Pick<LanguageCard, "furigana" | "state">> = {
+  komorebi: { furigana: "こもれび", state: "new" },
+  hashi: { furigana: "はし", state: "known" },
+  otsukaresama: { furigana: "おつかれさまです", state: "new" },
+  tsundoku: { furigana: "つんどく", state: "known" },
+  itadakimasu: { state: "known" },
 };
 
-/** The Japanese page's hand, read as review reads it: furigana over the kanji and no romaji. */
-export const JAPANESE_HAND: LanguageCard[] = JAPANESE.hand.map(({ reading: _, ...card }) => {
-  const furigana = KANA_READINGS[card.id];
-  return furigana ? { ...card, furigana } : card;
+/**
+ * The Japanese page's hand, read as review reads it: furigana over the kanji on a New card,
+ * waiting for the turn on a Known one, and no romaji or IPA line.
+ */
+export const JAPANESE_HAND: LanguageCard[] = Object.entries(JAPANESE_FACES).map(([id, face]) => {
+  const {
+    reading: _r,
+    pronunciation: _p,
+    ...card
+  } = JAPANESE.hand.find((each) => each.id === id) as LanguageCard;
+  return { ...card, ...face };
 });
 
 /** Every language's hand shuffled together, for the page about all of them. */

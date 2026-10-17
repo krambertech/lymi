@@ -113,7 +113,7 @@ export function ImportAnki() {
           },
           {
             term: "Recordings",
-            def: "A recording of the word itself, such as a Word Audio field, becomes the card’s audio. Lymi plays it instead of reading the term aloud, and keeps it when you edit the card. MP3, M4A, AAC and WAV clips up to 2 MB come across.",
+            def: "A recording of the word itself, such as a Word Audio field, becomes the card’s audio. Lymi plays it instead of reading the term aloud, and keeps it when you edit the card, unless you change the word itself. MP3, M4A, AAC and WAV clips up to 2 MB come across.",
           },
           {
             term: "Pitch accent and translations",
@@ -133,9 +133,9 @@ export function ImportAnki() {
       <H2>What stays behind</H2>
       <ul>
         <li>
-          <strong>Other audio.</strong> Sentence recordings and any second clip of a word stay
-          behind, and so does a recording in another format, such as Ogg. Lymi reads those terms
-          aloud itself. The preview counts what is left out.
+          <strong>Other audio.</strong> Sentence clips and any second clip of a word stay behind,
+          and so does a recording in another format, such as Ogg. Lymi reads those terms aloud
+          itself. The preview counts what is left out.
         </li>
         <li>
           <strong>Frequency and sort fields</strong>, and a pitch accent drawn only as a graph.

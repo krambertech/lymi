@@ -120,6 +120,10 @@ msgstr "{0, plural, one {# картка} few {# картки} many {# карто
 msgid "{0, plural, one {# card} other {# cards}} · {1}"
 msgstr "{0, plural, one {# картка} few {# картки} many {# карток} other {# картки}} · {1}"
 
+#. placeholder {0}: preview.audio
+msgid "{0, plural, one {# clip is left out, such as a sentence’s. Only a term’s own recording comes across.} other {# clips are left out, such as sentence clips. Only a term’s own recording comes across.}}"
+msgstr "{0, plural, one {# аудіофрагмент пропущено, наприклад фрагмент речення. Переноситься лише запис самого терміна.} few {# аудіофрагменти пропущено, наприклад фрагменти речень. Переноситься лише запис самого терміна.} many {# аудіофрагментів пропущено, наприклад фрагменти речень. Переноситься лише запис самого терміна.} other {# аудіофрагмента пропущено, наприклад фрагменти речень. Переноситься лише запис самого терміна.}}"
+
 #. placeholder {0}: shelf.decks.length
 msgid "{0, plural, one {# deck} other {# decks}}"
 msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}}"
@@ -214,10 +218,6 @@ msgstr "{0, plural, one {# рядок має лише одну сторону, �
 #. placeholder {0}: deck.sectionCount
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# розділ} few {# розділи} many {# розділів} other {# розділу}}"
-
-#. placeholder {0}: preview.audio
-msgid "{0, plural, one {# sound is skipped, such as a sentence’s recording. Only a term’s own recording comes across.} other {# sounds are skipped, such as sentence recordings. Only a term’s own recording comes across.}}"
-msgstr "{0, plural, one {# звук пропущено, наприклад запис речення. Переноситься лише запис самого терміна.} few {# звуки пропущено, наприклад записи речень. Переноситься лише запис самого терміна.} many {# звуків пропущено, наприклад записи речень. Переноситься лише запис самого терміна.} other {# звуку пропущено, наприклад записи речень. Переноситься лише запис самого терміна.}}"
 
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
@@ -3585,6 +3585,9 @@ msgstr "Розпізнавання"
 
 msgid "Recognition card for {front}"
 msgstr "Картка на розпізнавання для {front}"
+
+msgid "Recording added"
+msgstr "Додано запис вимови"
 
 msgid "Reminder off for this device."
 msgstr "Нагадування для цього пристрою вимкнено."

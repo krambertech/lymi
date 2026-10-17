@@ -142,6 +142,21 @@ export async function publishDeck(
               then ${now.getTime()} else ${schema.deckPublications.publishedAt} end`,
           },
         }),
+      // Approval names each clip as it is now, so a recording that changes later needs another.
+      ...(input.approveRecordings
+        ? [
+            db
+              .update(schema.cards)
+              .set({ audioApprovedKey: sql`${schema.cards.audioKey}` })
+              .where(
+                and(
+                  eq(schema.cards.deckId, deckId),
+                  eq(schema.cards.audioSource, "recorded"),
+                  isNull(schema.cards.archivedAt),
+                ),
+              ),
+          ]
+        : []),
       ...(summaryChanged
         ? [
             db
@@ -154,7 +169,10 @@ export async function publishDeck(
         entity: "deck",
         action: existing?.status === "published" ? "update_publication" : "publish",
         id: deckId,
-        details: { slug: input.slug },
+        details: {
+          slug: input.slug,
+          ...(input.approveRecordings ? { approveRecordings: true } : {}),
+        },
       }),
     ]);
   } catch (err) {

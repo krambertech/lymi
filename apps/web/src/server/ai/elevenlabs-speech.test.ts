@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { testGateway } from "../../test/ai-gateway";
 import { createElevenLabsSpeechProvider, ElevenLabsSpeechError } from "./elevenlabs-speech";
 
 describe("ElevenLabs speech", () => {
@@ -14,7 +15,7 @@ describe("ElevenLabs speech", () => {
         new Response("audio", { headers: { "Content-Type": "audio/mpeg" } }),
     );
     const provider = createElevenLabsSpeechProvider(
-      { ELEVENLABS_API_KEY: "test-key" },
+      { ...testGateway, ELEVENLABS_API_KEY: "test-key" },
       locale,
       "jGja51dd7gcoK0zkxeyg",
       request,
@@ -32,7 +33,7 @@ describe("ElevenLabs speech", () => {
   it("falls back after one failure without retrying or including upstream details", async () => {
     const request = vi.fn(async () => new Response("private details", { status: 403 }));
     const provider = createElevenLabsSpeechProvider(
-      { ELEVENLABS_API_KEY: "test-key" },
+      { ...testGateway, ELEVENLABS_API_KEY: "test-key" },
       "et-EE",
       "voice",
       request,
@@ -47,7 +48,7 @@ describe("ElevenLabs speech", () => {
 
   it("rejects a successful response containing JSON instead of MP3", async () => {
     const provider = createElevenLabsSpeechProvider(
-      { ELEVENLABS_API_KEY: "test-key" },
+      { ...testGateway, ELEVENLABS_API_KEY: "test-key" },
       "et-EE",
       "voice",
       async () => Response.json({ error: "bad" }),

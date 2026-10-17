@@ -45,6 +45,15 @@ export function canSpeakTerm(card: {
   return !!card.language && Array.from(card.term).length <= SPOKEN_TERM_MAX;
 }
 
+/** Whether a card has pronunciation to play: its own recording, or speech Lymi can generate. */
+export function canPlayPronunciation(card: {
+  term: string;
+  language?: string | null | undefined;
+  audioSource?: string | null | undefined;
+}): boolean {
+  return card.audioSource === "recorded" || canSpeakTerm(card);
+}
+
 /** The first form of a term written as principal parts ("pikk · pika · pikka" → "pikk"), for a title. */
 export function headword(term: string): string {
   const at = term.indexOf(" · ");

@@ -40,6 +40,7 @@ function card(patch: Partial<Card> = {}): Card {
     enrichmentFields: null,
     audioKey: null,
     audioSource: null,
+    audioApprovedKey: null,
     createdBy: "user",
     archivedAt: null,
     createdAt: now,

@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "d953e7f6-440d-4dc6-81e4-71dac7943748",
-  "prevId": "9af35e7a-f7c3-4edc-91bf-5f1a6d539773",
+  "id": "33ddad34-052c-4297-9ae1-157eed8a1707",
+  "prevId": "cfb768e5-53c6-4d65-aaf5-0f0bf90e0c61",
   "tables": {
     "account_deletions": {
       "name": "account_deletions",
@@ -1026,6 +1026,13 @@
         },
         "audio_source": {
           "name": "audio_source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "audio_approved_key": {
+          "name": "audio_approved_key",
           "type": "text",
           "primaryKey": false,
           "notNull": false,

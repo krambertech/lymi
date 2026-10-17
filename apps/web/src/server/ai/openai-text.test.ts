@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { testGateway } from "../../test/ai-gateway";
 import { createOpenAiTextProvider, OpenAiTextError } from "./openai-text";
 
 const schema = { name: "reply", schema: { type: "object" } };
@@ -13,14 +14,14 @@ function reply(content: string, finishReason = "stop") {
 describe("OpenAI text provider", () => {
   it("asks GPT-6 Luna at high effort for a strict structured reply", async () => {
     const request = reply('{"cards":[]}');
-    const provider = createOpenAiTextProvider({ OPENAI_API_KEY: "key" }, request);
+    const provider = createOpenAiTextProvider({ ...testGateway, OPENAI_API_KEY: "key" }, request);
 
     expect(await provider.complete({ instructions: "fill", input: "{}", schema })).toEqual({
       cards: [],
     });
     const call = request.mock.calls[0];
     if (!call) throw new Error("OpenAI request was not made");
-    expect(call[0]).toBe("https://api.openai.com/v1/chat/completions");
+    expect(call[0]).toBe("https://gateway.ai.cloudflare.com/v1/acct/lymi/openai/chat/completions");
     expect(JSON.parse(String(call[1]?.body))).toMatchObject({
       model: "gpt-6-luna",
       reasoning_effort: "high",
@@ -31,7 +32,7 @@ describe("OpenAI text provider", () => {
   it("uses the model the environment names", async () => {
     const request = reply("{}");
     const provider = createOpenAiTextProvider(
-      { OPENAI_API_KEY: "key", OPENAI_TEXT_MODEL: "gpt-5-mini" },
+      { ...testGateway, OPENAI_API_KEY: "key", OPENAI_TEXT_MODEL: "gpt-5-mini" },
       request,
     );
 
@@ -42,7 +43,7 @@ describe("OpenAI text provider", () => {
 
   it("fails a reply that was cut off", async () => {
     const provider = createOpenAiTextProvider(
-      { OPENAI_API_KEY: "key" },
+      { ...testGateway, OPENAI_API_KEY: "key" },
       reply('{"cards":', "length"),
     );
     await expect(
@@ -61,7 +62,11 @@ describe("OpenAI text provider", () => {
       Response.json({ choices: [{ message: { content: "{}" }, finish_reason: "stop" }], usage }),
     );
     const observe = vi.fn();
-    const provider = createOpenAiTextProvider({ OPENAI_API_KEY: "key" }, request, observe);
+    const provider = createOpenAiTextProvider(
+      { ...testGateway, OPENAI_API_KEY: "key" },
+      request,
+      observe,
+    );
     await provider.complete({ instructions: "fill", input: "private", schema });
     expect(observe).toHaveBeenCalledWith(
       expect.objectContaining({

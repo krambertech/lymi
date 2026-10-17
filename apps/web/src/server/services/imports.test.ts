@@ -9,10 +9,12 @@ import {
 import { and, eq, isNull, sql } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
+import { bytesSource } from "../imports/files";
 import { pronunciationAudio } from "./audio";
 import { addCards, archiveCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
+import { attachPictures, type ImportWork } from "./import-writer";
 import {
   archiveImport,
   attachImportPictures,
@@ -399,7 +401,7 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     expect(audit).toHaveLength(1);
   });
 
-  it("plays a recording without a speech provider, and keeps it when the term is edited", async () => {
+  it("plays a recording without a speech provider, keeps it through edits and drops it for a new term", async () => {
     const ctx = await fresh();
     await runImport(ctx, "kaishi.apkg");
     const hashi = await card(ctx, "箸");
@@ -412,8 +414,40 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     expect(played.key).toBe(before.key);
     await played.body.cancel();
 
-    await updateCard(ctx, hashi.id, { term: "お箸", language: "ja" });
+    await updateCard(ctx, hashi.id, {
+      meaning: "a pair of chopsticks",
+      pronunciation: "おはし",
+      notes: "Counted with 膳",
+      language: "ja",
+    });
     expect(await recorded(hashi.id)).toEqual(before);
+
+    // 橋 is another word, so the clip that says 箸 goes with the old term.
+    await updateCard(ctx, hashi.id, { term: "橋" });
+    expect(await recorded(hashi.id)).toEqual({ key: null, source: null });
+  });
+
+  it("leaves out a clip the file cannot give back, and goes on with the import", async () => {
+    const ctx = await fresh();
+    const deck = await createDeck(ctx, { name: "Damaged", defaultLanguage: "ja" });
+    const [added] = await addCards(ctx, [{ deckId: deck.id, term: "猫" }]);
+    if (added?.status !== "added") throw new Error("card not added");
+    const damaged = {
+      adapter: {
+        media: async () => async () => {
+          throw new Error("A zstd frame is damaged");
+        },
+      },
+    } as unknown as ImportWork<unknown>;
+    const totals = await attachPictures(
+      ctx,
+      damaged,
+      bytesSource(new Uint8Array()),
+      [{ cardId: added.card.id, name: "neko.mp3", kind: "recording" }],
+      { audio: env.AUDIO },
+    );
+    expect(totals.recordings).toEqual({ stored: 0, skipped: 1 });
+    expect(await recorded(added.card.id)).toEqual({ key: null, source: null });
   });
 
   it("gives a card an earlier import brought its recording in place of generated speech", async () => {
@@ -427,9 +461,10 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     const hashi = await card(ctx, "箸");
     const kept = await recorded(hashi.id);
 
+    // 箸 already has its recording, so it is neither read again nor counted again.
     const { preview, result } = await runImport(ctx, "kaishi.apkg");
-    expect(preview).toMatchObject({ added: 0, existing: 3, recordings: 2 });
-    expect(result.counts).toMatchObject({ recordings: 2, recordingsSkipped: 1 });
+    expect(preview).toMatchObject({ added: 0, existing: 3, recordings: 1, recordingsSkipped: 1 });
+    expect(result.counts).toMatchObject({ recordings: 1, recordingsSkipped: 1 });
     expect((await recorded(sakura.id)).source).toBe("recorded");
     expect(await recorded(hashi.id)).toEqual(kept);
   });

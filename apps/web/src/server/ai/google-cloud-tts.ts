@@ -1,13 +1,13 @@
+import { type AiGatewayBindings, providerEndpoint } from "./gateway";
 import type { Fetch } from "./types";
 
-const TTS_URL = "https://texttospeech.googleapis.com/v1/text:synthesize";
 const CLOUD_PLATFORM_SCOPE = "https://www.googleapis.com/auth/cloud-platform";
 const DEFAULT_TOKEN_URL = "https://oauth2.googleapis.com/token";
 const MAX_RESPONSE_BYTES = 8_000_000;
 
 export type GoogleCloudTtsBindings = {
   GOOGLE_CLOUD_TTS_CREDENTIALS?: string | undefined;
-};
+} & AiGatewayBindings;
 
 type ServiceAccountCredentials = {
   type: "service_account";
@@ -44,15 +44,18 @@ export async function synthesizeGoogleSpeech(
   { body, request, accessToken }: GoogleSynthesisOptions,
 ): Promise<Response> {
   const credentials = readCredentials(env);
+  const endpoint = providerEndpoint(env, "google-cloud-tts");
   const token = accessToken
     ? await accessToken()
     : await serviceAccountAccessToken(credentials, request);
-  const response = await fetchWithRetry(request, TTS_URL, {
+  const response = await fetchWithRetry(request, `${endpoint.base}/v1/text:synthesize`, {
     method: "POST",
+    redirect: "manual",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
       "x-goog-user-project": credentials.project_id,
+      ...endpoint.headers,
     },
     body: JSON.stringify(body),
   });
@@ -111,6 +114,7 @@ async function serviceAccountAccessToken(
   const assertion = await signedAssertion(credentials, tokenUrl, now);
   const response = await fetchWithRetry(request, tokenUrl, {
     method: "POST",
+    redirect: "manual",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
       grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",

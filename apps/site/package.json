@@ -15,7 +15,7 @@
     "test": "vitest run --passWithNoTests",
     "cf-typegen": "wrangler types",
     "i18n:extract": "lingui extract --clean",
-    "hand:audio": "node scripts/hand-audio.mjs",
+    "hand:audio": "pnpm --filter @lymi/web exec tsx ../site/scripts/hand-audio.mjs",
     "changelog:screenshots": "node scripts/changelog-screenshots.mjs"
   },
   "dependencies": {

@@ -18,6 +18,8 @@ interface Look {
   eyes?: ReactNode;
   /** Drawn over the shirt. */
   collar?: ReactNode;
+  /** Drawn last, over the face, e.g. a second person. */
+  extra?: ReactNode;
 }
 
 const LONG_HAIR = "M11.5 19.8C11.5 12.2 15.1 8.4 20 8.4s8.5 3.8 8.5 11.4V32h-17z";
@@ -79,6 +81,100 @@ const LOOKS: Record<string, Look> = {
           d="M14.8 9.8c1.2 1.1 1.8 2 1.8 3a1.8 1.8 0 0 1-3.6 0c0-1 .6-1.9 1.8-3z"
           fill="var(--av-red)"
         />
+      </>
+    ),
+  },
+  // A rest day yesterday: closed eyes and a crescent clip.
+  rested: {
+    bg: "var(--av-bg-sky)",
+    skin: "var(--av-skin-1)",
+    shirt: "var(--av-blue)",
+    back: <path d={LONG_HAIR} fill="var(--av-hair-blonde)" />,
+    front: (
+      <>
+        <path d={CENTRE_PART} fill="var(--av-hair-blonde)" />
+        <path d="M13.6 10.2a2.6 2.6 0 1 0 2.9 3.4 2.1 2.1 0 1 1-2.9-3.4z" fill="var(--av-yellow)" />
+      </>
+    ),
+    eyes: (
+      <g stroke="var(--av-ink)" strokeWidth={0.9} strokeLinecap="round" fill="none">
+        <path d="M15.9 19.6q1.2 1 2.4 0" />
+        <path d="M21.7 19.6q1.2 1 2.4 0" />
+      </g>
+    ),
+  },
+  // Arrived through a join link: a link pin.
+  joining: {
+    bg: "var(--av-bg-sand)",
+    skin: "var(--av-skin-2)",
+    shirt: "var(--av-bg-teal)",
+    front: (
+      <path
+        d="M12.3 17C12.6 11.6 15.9 9.2 20 9.2s7.4 2.4 7.7 7.8c-1.8-1.3-3.4-2.8-4.2-4.6-1.6 1.9-5.6 3.5-11.2 4.6z"
+        fill="var(--av-hair-brown)"
+      />
+    ),
+    collar: (
+      <g stroke="var(--av-ink)" strokeWidth={0.9} fill="none">
+        <rect x={22.6} y={32.2} width={4} height={2.4} rx={1.2} transform="rotate(-30 24.6 33.4)" />
+        <rect x={25} y={33.6} width={4} height={2.4} rx={1.2} transform="rotate(-30 27 34.8)" />
+      </g>
+    ),
+  },
+  // Japanese: straight bangs and a kana pin.
+  japanese: {
+    bg: "var(--av-bg-rose)",
+    skin: "var(--av-skin-1)",
+    shirt: "var(--av-ink)",
+    back: (
+      <path
+        d="M11.8 20.5c0-7.8 3.6-11.6 8.2-11.6s8.2 3.8 8.2 11.6v5.5H11.8z"
+        fill="var(--av-hair-dark)"
+      />
+    ),
+    front: (
+      <path d="M12.1 17.2C12.3 11.6 15.7 9 20 9s7.7 2.6 7.9 8.2z" fill="var(--av-hair-dark)" />
+    ),
+    collar: (
+      <>
+        <circle cx={25.4} cy={34.6} r={2.9} fill="var(--av-shirt-light)" />
+        <text
+          x={25.4}
+          y={35.9}
+          textAnchor="middle"
+          fontSize={3.6}
+          fontWeight={700}
+          fill="var(--av-ink)"
+        >
+          あ
+        </text>
+      </>
+    ),
+  },
+  // A shared deck: a friend at her shoulder.
+  shared: {
+    bg: "var(--av-bg-sage)",
+    skin: "var(--av-skin-3)",
+    shirt: "var(--av-shirt-orange)",
+    back: <path d={LONG_HAIR} fill="var(--av-hair-dark)" />,
+    front: (
+      <path
+        d="M12.2 18.4C12.4 12.2 15.8 9.2 20 9.2s7.6 3 7.8 9.2c-2.2-2.8-4.8-4.5-7.8-4.5s-5.6 1.7-7.8 4.5z"
+        fill="var(--av-hair-dark)"
+      />
+    ),
+    extra: (
+      <>
+        <path d="M27 41c0-5 2.6-7.4 6.6-7.4S40 36 40 41z" fill="var(--av-blue)" />
+        <circle cx={33.4} cy={29.4} r={4} fill="var(--av-skin-1)" />
+        <path
+          d="M29.4 28.6c.2-2.6 1.8-4 4-4s3.8 1.4 4 4c-1.2-.9-2.4-1.4-4-1.4s-2.8.5-4 1.4z"
+          fill="var(--av-hair-red)"
+        />
+        <g fill="var(--av-ink)">
+          <circle cx={32.2} cy={29.8} r={0.55} />
+          <circle cx={34.6} cy={29.8} r={0.55} />
+        </g>
       </>
     ),
   },
@@ -177,6 +273,11 @@ const LOOKS: Record<string, Look> = {
   },
 };
 
+/** Whether a persona has its own face; the publisher draws the lantern instead. */
+export function hasLook(id: string): boolean {
+  return id in LOOKS || id === "publisher";
+}
+
 /** The publisher is the product itself, so it is the lantern rather than a person. */
 function Lantern() {
   return (
@@ -252,6 +353,7 @@ export function PersonaAvatar({
               strokeLinecap="round"
               fill="none"
             />
+            {look.extra}
           </>
         ) : (
           <>

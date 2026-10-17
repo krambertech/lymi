@@ -28,7 +28,8 @@
     "./welcome": "./src/welcome.ts",
     "./imports": "./src/imports.ts",
     "./app-marks": "./src/app-marks.ts",
-    "./reveal-hint": "./src/reveal-hint.ts"
+    "./reveal-hint": "./src/reveal-hint.ts",
+    "./dev-palette": "./src/dev-palette.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",

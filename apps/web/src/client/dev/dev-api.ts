@@ -1,3 +1,4 @@
+import type { DevCommandSummary } from "@lymi/client/dev-palette";
 import { ApiError } from "../lib/api";
 
 export type PersonaSummary = {
@@ -5,6 +6,8 @@ export type PersonaSummary = {
   name: string;
   email: string;
   description: string;
+  /** Where the palette lists it: Start, Everyday, Languages, Scale and edges, Together. */
+  group: string;
   appLanguage: string;
   decks: number;
   cards: number;
@@ -58,6 +61,12 @@ export const devApi = {
       body: JSON.stringify(persona ? { persona } : {}),
     }),
   reset: () => request<{ counts: DevCounts }>("/api/dev/reset", { method: "POST" }),
+  commands: () => request<{ commands: DevCommandSummary[] }>("/api/dev/commands"),
+  run: (id: string, count?: number) =>
+    request<{ note: string; counts: DevCounts }>(`/api/dev/commands/${encodeURIComponent(id)}`, {
+      method: "POST",
+      body: JSON.stringify(count === undefined ? {} : { count }),
+    }),
   due: (count: number | "all") =>
     request<{ due: number; counts: DevCounts }>("/api/dev/due", {
       method: "POST",

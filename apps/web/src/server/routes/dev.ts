@@ -6,6 +6,7 @@ import { devPersonaCookieName } from "../../shared/cookies";
 import { safeProductReturnPath } from "../../shared/origins";
 import type { Auth } from "../auth";
 import type { Db } from "../db";
+import { commands, summarize } from "../dev/commands";
 import { callAsMcp, devHostPage, devHostView } from "../dev/mcp-host";
 import { DEV_PASSWORD, type Persona, personaEmail, personaFor, personas } from "../dev/personas";
 import { EMAIL_SAMPLES } from "../email/samples";
@@ -55,6 +56,7 @@ const summary = (p: Persona) => ({
   name: p.name,
   email: personaEmail(p.id),
   description: p.description,
+  group: p.group,
   appLanguage: p.appLanguage,
   decks: p.decks.filter((d) => !d.archived).length,
   cards: p.decks.filter((d) => !d.archived).flatMap((d) => d.cards.filter((c) => !c.archived))
@@ -237,6 +239,29 @@ dev.get("/state", describe({ hide: true, open: true }), async (c) => {
     settings: { appLanguage: settings.appLanguage, meaningLanguage: settings.meaningLanguage },
   });
 });
+
+dev.get("/commands", describe({ hide: true, open: true }), async (c) =>
+  c.json({ commands: summarize(await devCounts(ctxOf(c))) }),
+);
+
+const CommandBody = z.object({ count: z.number().int().min(1).optional() });
+
+dev.post(
+  "/commands/:id",
+  describe({ hide: true, open: true }),
+  body(CommandBody, "command"),
+  async (c) => {
+    const command = commands.find((cmd) => cmd.id === c.req.param("id"));
+    if (!command) return c.json({ error: "Unknown command" }, 404);
+    const ctx = ctxOf(c);
+    const reason = command.blocked(await devCounts(ctx));
+    if (reason) return c.json({ error: reason }, 409);
+    const asked = c.req.valid("json").count ?? command.count?.default ?? 1;
+    const count = Math.min(asked, command.count?.max ?? asked);
+    const note = await command.run(ctx, { count, persona: personaFor(c.get("user").email) });
+    return c.json({ note, counts: await devCounts(ctx) });
+  },
+);
 
 /** The MCP Apps view in a stand-in host, for working on it without an assistant. ADR 0026. */
 dev.get("/mcp-host", describe({ hide: true, open: true }), async (c) => {

@@ -6,7 +6,7 @@ A private-first vocabulary app with a storm lantern. Collect cards from language
 - [DESIGN.md](DESIGN.md): the rules every screen follows, indexing the system files in `docs/design/system` and the feature design in `docs/design`
 - `/design` on the local dev server: the design system rendered with the real components (local only)
 - [docs/stack.md](docs/stack.md): the technical decisions and why
-- [docs/local-dev.md](docs/local-dev.md): running locally, personas, the developer panel and `pnpm local`
+- [docs/local-dev.md](docs/local-dev.md): running locally, personas, the developer palette and `pnpm local`
 - [docs/testing.md](docs/testing.md): the canonical E2E journey and CI policy
 - [docs/operations.md](docs/operations.md): the production alerts and what to do when one fires
 - [docs/phone-release.md](docs/phone-release.md): how the phone app ships over the air and to TestFlight, and its one-time setup
@@ -28,7 +28,7 @@ pnpm db:migrate                                     # applies migrations to the 
 pnpm dev                                            # site http://localhost:4321, product http://localhost:5173
 ```
 
-`pnpm dev` runs both deployables: Astro serves the public website, while the Cloudflare Vite plugin runs the React product and its Hono Worker so product `/api/*` requests hit real Worker code locally. To sign in without Google, open `http://localhost:5173/api/dev/sign-in?as=learner`: it creates a seeded local account and lands on Today. [docs/local-dev.md](docs/local-dev.md) has the other personas, the developer panel, and `pnpm local`. Production uses `https://lymi.app` for the public website and docs, and `https://my.lymi.app` for the product, auth, API, MCP and PWA.
+`pnpm dev` runs both deployables: Astro serves the public website, while the Cloudflare Vite plugin runs the React product and its Hono Worker so product `/api/*` requests hit real Worker code locally. To sign in without Google, open `http://localhost:5173/api/dev/sign-in?as=learner`: it creates a seeded local account and lands on Today. [docs/local-dev.md](docs/local-dev.md) has the other personas, the developer palette, and `pnpm local`. Production uses `https://lymi.app` for the public website and docs, and `https://my.lymi.app` for the product, auth, API, MCP and PWA.
 
 ## Layout
 

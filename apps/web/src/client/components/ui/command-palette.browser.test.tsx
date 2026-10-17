@@ -144,7 +144,9 @@ test("compact waits for a tap before the keyboard and highlights nothing until i
   await expect.element(field).not.toHaveFocus();
   await expect.element(field).not.toHaveAttribute("aria-activedescendant");
 
-  await field.click();
+  // Playwright reads a full-screen popup in the touch frame as off-screen and won't tap the field.
+  field.element().focus();
+  await expect.element(field).toHaveFocus();
   await userEvent.keyboard("{Enter}");
   expect(onRun).not.toHaveBeenCalled();
   await userEvent.keyboard("{ArrowDown}");

@@ -1,9 +1,12 @@
 import {
+  addsReadingsOnly,
   deckEnrichFields,
+  drawsReadings,
   ENRICHED_FIELDS,
   type EnrichedField,
   fieldsToFill,
   LanguageTag,
+  missingReadings,
   newId,
   unsetFields,
 } from "@lymi/core";
@@ -72,10 +75,13 @@ const SOURCE_COLUMN = {
 type TextField = keyof typeof SOURCE_COLUMN;
 const TEXT_FIELDS = Object.keys(SOURCE_COLUMN) as TextField[];
 
-/** What enrichment writes to one card: the fields it filled, and the `ai` label on each text. */
+/**
+ * What enrichment writes to one card: the fields it filled, and the `ai` label on each text.
+ * `readingsFor` is the example the new one only adds readings to, which stays the writer's.
+ */
 export type EnrichmentWrite = { [F in TextField]?: string } & {
   [F in TextField as (typeof SOURCE_COLUMN)[F]]?: "ai";
-} & { language?: string };
+} & { language?: string; readingsFor?: string };
 
 /**
  * The write for one card: only fields the run may fill that were never set, only values the
@@ -86,6 +92,7 @@ export function enrichmentWrite(
   card: Fillable,
   filled: Filled,
   allowed: readonly EnrichedField[] = ENRICHED_FIELDS,
+  addReadings = false,
 ): EnrichmentWrite {
   const open = new Set(unsetFields(card).filter((field) => allowed.includes(field)));
   const write: EnrichmentWrite = {};
@@ -99,7 +106,28 @@ export function enrichmentWrite(
   if (language && open.has("language") && LanguageTag.safeParse(language).success) {
     write.language = language;
   }
+  // Compared untrimmed: the learner's text comes back exactly, with readings and nothing else.
+  if (
+    addReadings &&
+    card.example &&
+    filled.example &&
+    addsReadingsOnly(card.example, filled.example)
+  ) {
+    write.example = filled.example;
+    write.readingsFor = card.example;
+  }
   return write;
+}
+
+/** Whether a run may add readings to the card's example: the deck lets the AI write examples, and kanji in it have none. */
+export function mayAddReadings(card: Card, deck: DeckRow | undefined): boolean {
+  const fields = deckEnrichFields(deck?.enrichFields, deck?.defaultLanguage, deck?.purpose);
+  return (
+    fields.includes("example") &&
+    !!card.example &&
+    drawsReadings(card.language ?? deck?.defaultLanguage) &&
+    missingReadings(card.example)
+  );
 }
 
 type DeckRow = Pick<
@@ -181,6 +209,7 @@ function landed(after: Card | undefined, write: EnrichmentWrite): EnrichedField[
   return ENRICHED_FIELDS.filter((field) => {
     const value = write[field];
     if (value === undefined || after[field] !== value) return false;
+    if (field === "example" && write.readingsFor !== undefined) return true;
     return field === "language" || after[SOURCE_COLUMN[field]] === "ai";
   });
 }
@@ -227,11 +256,16 @@ export async function enrichCards(
       .where(inArray(schema.decks.id, ids)),
   );
   const decks = new Map(deckRows.map((deck) => [deck.id, deck]));
-  const asks = before.map((card) => ({ card, mayFill: mayFill(card, decks.get(card.deckId)) }));
+  const asks = before.map((card) => ({
+    card,
+    mayFill: mayFill(card, decks.get(card.deckId)),
+    addReadings: mayAddReadings(card, decks.get(card.deckId)),
+  }));
 
   let filled = new Map<string, Filled>();
   const briefs: DeckBrief[] = [];
-  if (asks.some((ask) => ask.mayFill.length > 0)) {
+  const asked = (ask: (typeof asks)[number]) => ask.mayFill.length > 0 || ask.addReadings;
+  if (asks.some(asked)) {
     for (const deck of deckRows) {
       briefs.push(
         deckBrief({
@@ -249,7 +283,9 @@ export async function enrichCards(
     const input = enrichmentInput(
       meaningLanguage,
       briefs,
-      asks.flatMap((ask) => (ask.mayFill.length > 0 ? [cardBrief(ask.card, ask.mayFill)] : [])),
+      asks.flatMap((ask) =>
+        asked(ask) ? [cardBrief(ask.card, ask.mayFill, ask.addReadings)] : [],
+      ),
     );
     filled = new Map((await askProvider(provider, input)).map((card) => [card.id, card]));
   }
@@ -258,9 +294,9 @@ export async function enrichCards(
   const writes = [];
   const attempted = new Map<string, EnrichmentWrite>();
   let skipped = 0;
-  for (const { card, mayFill: allowed } of asks) {
+  for (const { card, mayFill: allowed, addReadings } of asks) {
     const reply = filled.get(card.id);
-    const write = reply ? enrichmentWrite(card, reply, allowed) : {};
+    const write = reply ? enrichmentWrite(card, reply, allowed, addReadings) : {};
     if (reply) {
       skipped += allowed.filter((field) => field !== "language" && !write[field]).length;
     }
@@ -268,6 +304,16 @@ export async function enrichCards(
     for (const field of ENRICHED_FIELDS) {
       const value = write[field];
       if (value === undefined) continue;
+      if (field === "example" && write.readingsFor !== undefined) {
+        // Only over the text the model read, so an edit made meanwhile is never overwritten.
+        writes.push(
+          db
+            .update(schema.cards)
+            .set({ example: value, revision: sql`revision + 1`, updatedAt: now })
+            .where(and(stillWorking(userId, card.id), eq(schema.cards.example, write.readingsFor))),
+        );
+        continue;
+      }
       const source = field === "language" ? {} : { [SOURCE_COLUMN[field]]: "ai" as const };
       // Filling an empty field is text an edition translates, so its localization goes stale.
       // The write is guarded by `unsetColumn`, so the revision only moves when the fill lands.
@@ -305,9 +351,12 @@ export async function enrichCards(
     ).map((card) => [card.id, card]),
   );
   const rows = [];
+  let readingsAdded = 0;
   for (const card of before) {
-    const fields = landed(after.get(card.id), attempted.get(card.id) ?? {});
+    const write = attempted.get(card.id) ?? {};
+    const fields = landed(after.get(card.id), write);
     if (fields.length === 0) continue;
+    if (write.readingsFor !== undefined && fields.includes("example")) readingsAdded += 1;
     rows.push(
       auditStatement(ctx, {
         entity: "card",
@@ -328,6 +377,7 @@ export async function enrichCards(
     has_instructions: briefs.some((deck) => deck.instructions),
     samples: briefs.reduce((sum, deck) => sum + deck.samples.length, 0),
     skipped,
+    ...(readingsAdded ? { readings_added: readingsAdded } : {}),
     prompt_version: ENRICHMENT_PROMPT_VERSION,
   });
   return { enriched: rows.length };

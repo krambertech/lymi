@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { stripReadings } from "@lymi/core/reading";
 import { ExternalLink } from "lucide-react";
 import { productLinks, type ViewCard } from "../../../shared/mcp-app";
 import { Button } from "../../components/button";
@@ -21,7 +22,8 @@ export function CardView({ card }: { card: ViewCard }) {
   }[] = [
     {
       label: t`Example`,
-      text: card.example,
+      // Small type leaves no room for furigana, so the example reads as written.
+      text: card.example && stripReadings(card.example),
       field: "example",
       ai: card.exampleSource === "ai",
       lang,

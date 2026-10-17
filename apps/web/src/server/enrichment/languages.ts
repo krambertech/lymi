@@ -2,7 +2,7 @@
  * How to write cards in one language, field by field, keyed by primary language subtag. The
  * deck's samples and instructions override it. Keep each rule short and plain.
  */
-type Guide = { notes?: string; pronunciation?: string; meaning?: string };
+type Guide = { notes?: string; pronunciation?: string; meaning?: string; example?: string };
 
 const GUIDES: Record<string, Guide> = {
   et: {
@@ -84,8 +84,10 @@ const GUIDES: Record<string, Guide> = {
   },
   ja: {
     notes:
-      "Verb: its group, godan or ichidan, if the ending doesn't show it, and its transitive or intransitive pair (*開ける / 開く*).",
+      "Verb or adjective: its type and polite form on one line (*ichidan verb · 食べます*, *i-adjective · 高いです*), and its transitive or intransitive pair if it has one (*開ける / 開く*).",
     pronunciation: "The reading in hiragana (たべる). Null if the term is written only in kana.",
+    example:
+      "Put the reading in hiragana in square brackets right after each run of kanji, and nothing over kana: 毎朝[まいあさ]パンを食[た]べます。",
   },
   ko: {
     notes: "Verb or adjective: its polite present form (*가다 → 가요*).",
@@ -97,7 +99,7 @@ const GUIDES: Record<string, Guide> = {
 export function languageGuide(tag: string | null | undefined): string | undefined {
   const guide = tag ? GUIDES[tag.split("-")[0]?.toLowerCase() ?? ""] : undefined;
   if (!guide) return undefined;
-  return (["meaning", "notes", "pronunciation"] as const)
+  return (["meaning", "example", "notes", "pronunciation"] as const)
     .flatMap((field) => (guide[field] ? [`${field}: ${guide[field]}`] : []))
     .join("\n");
 }

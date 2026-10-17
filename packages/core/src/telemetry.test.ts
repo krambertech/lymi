@@ -96,6 +96,61 @@ it("keeps a Hermes frame's bundle name and chunk ID for the phone's source maps"
   expect(JSON.stringify(sanitized)).not.toContain("private");
 });
 
+it("gives every frame the filename and function PostHog's frame schema requires", () => {
+  const sanitized = exceptionProperties({
+    $exception_list: [
+      {
+        type: "Error",
+        value: "D1_ERROR: private card",
+        stacktrace: {
+          frames: [
+            { platform: "node:javascript", function: "Promise.all", in_app: true },
+            {
+              platform: "node:javascript",
+              filename: "/private/worker/index.js",
+              function: "readPublicDeck",
+              lineno: 3,
+              colno: 1.5,
+            },
+            { platform: "node:javascript", filename: "index.js", lineno: 0, colno: 2 ** 32 },
+            { platform: "hermes", filename: "private native", function: "private name" },
+            {
+              platform: "hermes",
+              filename: "private native",
+              chunk_id: "0b5f6a1e-9d2c-4f7b-8e1a-3c4d5e6f7a8b",
+              colno: 0,
+              in_app: true,
+            },
+            { platform: "web:javascript", lineno: -1, in_app: true },
+          ],
+        },
+      },
+    ],
+  });
+  const [exception] = sanitized.$exception_list as { stacktrace: { frames: object[] } }[];
+  expect(exception?.stacktrace.frames).toEqual([
+    {
+      platform: "node:javascript",
+      filename: "<anonymous>",
+      function: "Promise.all",
+      in_app: false,
+    },
+    { platform: "node:javascript", filename: "index.js", function: "readPublicDeck", lineno: 3 },
+    { platform: "node:javascript", filename: "index.js", function: "?" },
+    { platform: "hermes", filename: "<anonymous>", function: "?", in_app: false },
+    {
+      platform: "hermes",
+      filename: "<anonymous>",
+      chunk_id: "0b5f6a1e-9d2c-4f7b-8e1a-3c4d5e6f7a8b",
+      function: "?",
+      colno: 0,
+      in_app: true,
+    },
+    { platform: "web:javascript", function: "?", in_app: false },
+  ]);
+  expect(JSON.stringify(sanitized)).not.toContain("private");
+});
+
 it("keeps a runtime's network or chunk failure message without the address it names", () => {
   const sanitize = (value: string) =>
     exceptionProperties({ $exception_list: [{ type: "TypeError", value }] }).$exception_list as {

@@ -48,6 +48,11 @@ function scriptFilename(value: unknown): string | undefined {
 
 const PLATFORMS = new Set(["web:javascript", "node:javascript", "hermes"]);
 
+// PostHog reads positions as u32 and subtracts 1 from a line before it looks up a source map.
+function position(value: unknown, min: number): value is number {
+  return Number.isInteger(value) && (value as number) >= min && (value as number) <= 0xffffffff;
+}
+
 function record(value: unknown): Record<string, unknown> {
   return value && typeof value === "object" ? (value as Record<string, unknown>) : {};
 }
@@ -77,20 +82,36 @@ export function exceptionProperties(properties: Record<string, unknown>): Record
           type: "raw",
           frames: frames.slice(-50).map((value) => {
             const frame = record(value);
+            const platform = PLATFORMS.has(frame.platform as string)
+              ? frame.platform
+              : "web:javascript";
             const filename = scriptFilename(frame.filename);
+            // The phone's uploaded source maps are found by the bundle's chunk ID.
+            const chunkId =
+              typeof frame.chunk_id === "string" && CHUNK_ID.test(frame.chunk_id)
+                ? frame.chunk_id
+                : undefined;
             return {
-              platform: PLATFORMS.has(frame.platform as string) ? frame.platform : "web:javascript",
-              ...(filename ? { filename } : {}),
-              // The phone's uploaded source maps are found by the bundle's chunk ID.
-              ...(typeof frame.chunk_id === "string" && CHUNK_ID.test(frame.chunk_id)
-                ? { chunk_id: frame.chunk_id }
-                : {}),
-              ...(typeof frame.function === "string" && SAFE_FRAME.test(frame.function)
-                ? { function: frame.function }
-                : {}),
-              ...(typeof frame.lineno === "number" ? { lineno: frame.lineno } : {}),
-              ...(typeof frame.colno === "number" ? { colno: frame.colno } : {}),
-              ...(typeof frame.in_app === "boolean" ? { in_app: frame.in_app } : {}),
+              platform,
+              // PostHog rejects a Node or Hermes frame without a filename, and any frame without a function.
+              ...(filename
+                ? { filename }
+                : platform !== "web:javascript"
+                  ? { filename: "<anonymous>" }
+                  : {}),
+              ...(chunkId ? { chunk_id: chunkId } : {}),
+              function:
+                typeof frame.function === "string" && SAFE_FRAME.test(frame.function)
+                  ? frame.function
+                  : "?",
+              ...(position(frame.lineno, 1) ? { lineno: frame.lineno } : {}),
+              ...(position(frame.colno, 0) ? { colno: frame.colno } : {}),
+              // A frame with neither is runtime, extension or page code, kept out of grouping.
+              ...(!filename && !chunkId
+                ? { in_app: false }
+                : typeof frame.in_app === "boolean"
+                  ? { in_app: frame.in_app }
+                  : {}),
             };
           }),
         },

@@ -10,6 +10,7 @@ import {
   FORMER_OWNER_ID,
   sendDeletionCode,
 } from "./account-deletion";
+import { deleteCardAudio } from "./audio";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
@@ -18,10 +19,11 @@ import { inviteByEmail } from "./invitations";
 import { join, leave } from "./members";
 import { publishDeck } from "./publications";
 import { gradeCard } from "./review";
-import { learner, testDb } from "./test-db";
+import { learner, type TestBindings, testDb } from "./test-db";
 
 let db: Db;
 let raw: D1Database;
+let bindings: TestBindings;
 let dispose: () => Promise<void>;
 
 const env = {
@@ -40,7 +42,7 @@ const deps: DeletionDeps = {
 };
 
 beforeAll(async () => {
-  ({ db, raw, dispose } = await testDb());
+  ({ db, raw, env: bindings, dispose } = await testDb());
 }, 60_000);
 
 afterAll(async () => {
@@ -256,6 +258,34 @@ describe("deleting an account", () => {
     expect(await count("card_states", "user_id", kadri.userId)).toBe(0);
   });
 
+  it("deletes the audio of the learner's cards and leaves a kept deck's", async () => {
+    const owner = await learner(db, "ene", "Ene");
+    const member = await learner(db, "toomas", "Toomas");
+    const { card: own } = await deckWithCard(owner, "lill");
+    const { card: kept } = await deckWithCard(owner, "meri", member);
+    const keys = [
+      `cards/${own.id}/v2/speech.mp3`,
+      `cards/${own.id}/recorded/term.mp3`,
+      `cards/${kept.id}/recorded/term.mp3`,
+    ];
+    for (const key of keys) await bindings.AUDIO.put(key, "clip");
+
+    const leftovers = await deleteAccount(
+      owner,
+      { code: await codeFor(owner, "ene@lymi.test") },
+      deps,
+    );
+    expect(leftovers.audioCards).toEqual([own.id]);
+    expect(await deleteCardAudio(bindings.AUDIO, leftovers.audioCards)).toBe(0);
+
+    const stored = async (cardId: string) =>
+      (await bindings.AUDIO.list({ prefix: `cards/${cardId}/` })).objects.map(
+        (object) => object.key,
+      );
+    expect(await stored(own.id)).toEqual([]);
+    expect(await stored(kept.id)).toEqual([`cards/${kept.id}/recorded/term.mp3`]);
+  });
+
   it("refuses an account that owns a published deck", async () => {
     await db.insert(schema.user).values({ id: "lymi-lib", name: "Lymi", email: "lib@lymi.test" });
     const lymi: ServiceContext = { db, userId: "lymi-lib", actor: "user" };
@@ -334,7 +364,7 @@ describe("deleting an account", () => {
     expect(verbs?.n).toBe(1);
   });
 
-  it("drops a kept deck and its pictures once its last member leaves", async () => {
+  it("drops a kept deck, its pictures and its audio once its last member leaves", async () => {
     const owner = await learner(db, "maret", "Maret");
     const member = await learner(db, "jaan", "Jaan");
     const { deck, card } = await deckWithCard(owner, "puu", member);
@@ -350,6 +380,7 @@ describe("deleting an account", () => {
       sourceKind: "upload",
       createdBy: "user",
     });
+    await bindings.AUDIO.put(`cards/${card.id}/recorded/term.mp3`, "clip");
     await deleteAccount(owner, { code: await codeFor(owner, "maret@lymi.test") }, deps);
 
     const deleted: string[] = [];
@@ -358,14 +389,19 @@ describe("deleting an account", () => {
         deleted.push(...(Array.isArray(keys) ? keys : [keys]));
       },
     } as unknown as R2Bucket;
-    expect(await dropUnstudiedFormerDecks(db, images)).toBe(0);
+    const buckets = { images, audio: bindings.AUDIO };
+    const audio = async () =>
+      (await bindings.AUDIO.list({ prefix: `cards/${card.id}/` })).objects.length;
+    expect(await dropUnstudiedFormerDecks(db, buckets)).toBe(0);
     expect(await count("decks", "id", deck.id)).toBe(1);
+    expect(await audio()).toBe(1);
 
     await leave(member, deck.id);
-    expect(await dropUnstudiedFormerDecks(db, images)).toBe(1);
+    expect(await dropUnstudiedFormerDecks(db, buckets)).toBe(1);
     expect(await count("decks", "id", deck.id)).toBe(0);
     expect(await count("cards", "id", card.id)).toBe(0);
     expect(deleted).toEqual([`cards/${card.id}/picture`]);
+    expect(await audio()).toBe(0);
   });
 
   describe("with Sign in with Apple", () => {

@@ -26,7 +26,9 @@ export default {
     executionCtx.waitUntil(
       expireExports(createDb(env.DB), env.EXPORTS, new Date(controller.scheduledTime)),
     );
-    executionCtx.waitUntil(dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
+    executionCtx.waitUntil(
+      dropUnstudiedFormerDecks(createDb(env.DB), { images: env.PRIVATE_IMAGES, audio: env.AUDIO }),
+    );
     // Hourly, because each run reads every published deck to find the cards its page shows first. #759.
     if (new Date(controller.scheduledTime).getUTCMinutes() < 15) {
       executionCtx.waitUntil(

@@ -207,6 +207,33 @@ async function rememberAudioKey(
   );
 }
 
+/**
+ * Deletes every clip stored under these cards, recordings and superseded speech included. A card
+ * R2 refused is skipped, so one failure does not keep the rest; returns how many were.
+ */
+export async function deleteCardAudio(bucket: R2Bucket, cardIds: string[]): Promise<number> {
+  const queue = [...cardIds];
+  let failed = 0;
+  const worker = async () => {
+    for (let id = queue.pop(); id; id = queue.pop()) {
+      try {
+        let cursor: string | undefined;
+        do {
+          const page = await bucket.list({ prefix: `cards/${id}/`, ...(cursor ? { cursor } : {}) });
+          const keys = page.objects.map((object) => object.key);
+          if (keys.length > 0) await bucket.delete(keys);
+          cursor = page.truncated ? page.cursor : undefined;
+        } while (cursor);
+      } catch {
+        failed++;
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(10, queue.length) }, worker));
+  if (failed > 0) console.error("Deleting card audio failed", { cards: failed });
+  return failed;
+}
+
 async function audioKey(card: Card, provider: SpeechProvider): Promise<string> {
   const bytes = new TextEncoder().encode(
     `${speechText(card.term)}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}`,

@@ -323,8 +323,12 @@ export function CommandMenu({
   }, [query, commands, decks, hits, t, i18n]);
 
   // Whether this very query's search has landed, so an add can tell a new term from one already there.
+  // A search paused offline or failed counts as landed: waiting on it would leave Enter doing nothing.
   const searched =
-    settled === query && search.isSuccess && !search.isPlaceholderData && !search.isFetching;
+    settled === query &&
+    (search.fetchStatus === "paused" ||
+      search.isError ||
+      (search.isSuccess && !search.isPlaceholderData && !search.isFetching));
   // Enter or ⌘Enter on the add bar before that, held until it lands.
   const [held, setHeld] = useState<RunKeys | null>(null);
   const addRow: Row | null = useMemo(() => {
@@ -489,7 +493,7 @@ export function CommandMenu({
           {...list.inputProps}
           onKeyDown={onKeyDown}
           lead={<Search className="size-5" />}
-          trail={<Kbd>esc</Kbd>}
+          trail={<Kbd className="max-sm:hidden">esc</Kbd>}
           aria-label={t`Search cards, decks and commands`}
           placeholder={t`Search cards, decks and commands`}
           value={raw}
@@ -609,16 +613,17 @@ function AddBar({ row, deckName, adding, ...option }: AddBarProps) {
           <Plus className="size-4" strokeWidth={2.5} aria-hidden="true" />
         </span>
       )}
-      <span className="min-w-0 flex-1 truncate text-base">
+      <span className="flex min-w-0 flex-1 text-base">
         {row.existing ? (
-          <span className="text-text">{t`Open “${shortQuote(row.existing.term)}” in ${row.existing.deckName}`}</span>
+          <span className="truncate text-text">{t`Open “${shortQuote(row.existing.term)}” in ${row.existing.deckName}`}</span>
         ) : deckName ? (
+          // A long term gives way first: the deck is where the card lands.
           <>
-            <span className="font-medium text-text">{term}</span>
-            <span className="text-muted"> → {deckName}</span>
+            <span className="min-w-0 truncate font-medium text-text">{term}</span>
+            <span className="max-w-[60%] shrink-0 truncate ps-1.5 text-muted">→ {deckName}</span>
           </>
         ) : (
-          <span className="text-text">{t`Add “${shortQuote(term)}”`}</span>
+          <span className="truncate text-text">{t`Add “${shortQuote(term)}”`}</span>
         )}
       </span>
       {!row.existing && deckName && (
@@ -631,7 +636,7 @@ function AddBar({ row, deckName, adding, ...option }: AddBarProps) {
               <Kbd>
                 <CornerDownLeft className="size-3" aria-hidden="true" />
               </Kbd>
-              {t`Add now`}
+              <span className="max-sm:hidden">{t`Add now`}</span>
             </>
           )}
         </span>

@@ -1,6 +1,7 @@
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
 import { cn } from "cn";
 import * as React from "react";
+import { composing } from "../../lib/composing";
 
 /*
  * The shell both palettes draw with: ⌘K in the product and the developer palette on backtick.
@@ -71,8 +72,8 @@ function useCommandList<T>({ items, onRun }: ListOptions<T>) {
   }, [active, items, listId]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // A Japanese or Chinese input method confirms its word with Enter; that Enter is not a run.
-    if (e.nativeEvent.isComposing) return;
+    // An input method confirms its word with Enter; that Enter is not a run.
+    if (composing(e)) return;
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault();
       if (!items.length) return;

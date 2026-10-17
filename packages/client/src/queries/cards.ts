@@ -43,6 +43,15 @@ export const cardSearchQuery = (query: string, deckId?: string) =>
     staleTime: 30_000,
     enabled: query.length > 0,
   });
+/** The card in one deck with exactly this term, as the duplicate rule compares it, or none. */
+export const cardTermQuery = (deckId: string, term: string) =>
+  queryOptions({
+    queryKey: ["cards", "search", "term", deckId, term],
+    queryFn: async () => (await api.searchCards({ term, deckId, limit: 1 })).cards[0] ?? null,
+    meta: { persist: false },
+    staleTime: 30_000,
+    enabled: term.length > 0,
+  });
 /** Every archived card, a page at a time, for a screen that shows Show more. */
 export const archivedCardPagesQuery = infiniteQueryOptions({
   queryKey: ["cards", "archived", "pages"],

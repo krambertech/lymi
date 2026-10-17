@@ -30,6 +30,7 @@ import {
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import type { Card, DeckSummary } from "../lib/api";
+import { composing } from "../lib/composing";
 import { modShortcut, useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { lastDeckId } from "../lib/last-deck";
@@ -816,7 +817,7 @@ export function CardForm(props: CardFormProps) {
 
 /** Enter adds the card from a one-line field; Shift Enter breaks the line. */
 function submitOnEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-  if (e.key !== "Enter" || e.shiftKey || e.nativeEvent.isComposing) return;
+  if (e.key !== "Enter" || e.shiftKey || composing(e)) return;
   if (e.metaKey || e.ctrlKey) return;
   e.preventDefault();
   e.currentTarget.form?.requestSubmit();

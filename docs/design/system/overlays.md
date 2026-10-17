@@ -79,8 +79,9 @@ Menu rows do not scale on press. The hover is one fill that slides between rows 
 
 - Focus stays in the field. Arrows move the highlight and wrap, Enter runs the row, ⌘Enter runs its second action, and Escape closes. An Enter that confirms an input method's word is not a run.
 - It appears and leaves without motion, since a keyboard opens it.
+- ⌘K is ⌘ on a Mac and Ctrl elsewhere; Ctrl K on a Mac stays the field's delete-to-end. It never opens over another dialog, so it can't stack on a half-written form, nor in review or Welcome, where the shell is closed on purpose.
 - Rows are 40 px, the menu row's type, with the hover fill on the highlighted row only, so pointer and keys never show two.
-- The command menu's add bar is pinned under the list and is its last arrow stop. It waits for three characters, or one Han or kana character, and names the deck before anything is added.
+- The command menu's add bar is pinned under the list and is its last arrow stop. It waits for three characters, or one Han, kana or Hangul character, and names the deck before anything is added. Before the target deck is checked for the exact term, it promises nothing, and an Enter waits for that check, so a term the deck already has opens instead of adding again.
 
 ## Tooltips
 

@@ -55,6 +55,8 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
   const close = (keepWork: boolean) => {
     const work = draft.current;
     draft.current = null;
+    // A brought-back draft is for the one reopening Undo makes, not every opening after it.
+    setRestored(null);
     onOpenChange(false);
     if (!keepWork || !hasWork(work) || !work) return;
     toast.add({

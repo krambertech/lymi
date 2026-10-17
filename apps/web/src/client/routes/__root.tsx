@@ -30,6 +30,7 @@ import { TooltipProvider } from "../components/ui/tooltip";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, api } from "../lib/api";
 import { LearnerAvatarProvider } from "../lib/avatar";
+import { appleKeyboard } from "../lib/device";
 import {
   activate,
   bootstrapLanguage,
@@ -273,20 +274,27 @@ function Shell() {
     return () => window.removeEventListener("keydown", onKey);
   }, [navigate, onReview, bare, add, activeDeckId]);
 
-  // ⌘K, or Ctrl K, opens the command menu from anywhere, a field included. Not over an add
-  // sheet, where adding from the menu would replace the half-written card.
-  const adding = add.open !== null;
+  // ⌘K on a Mac, Ctrl K elsewhere, opens the command menu from any field. Not over another
+  // dialog, where it would stack a second modal on a half-written form, and not where the shell
+  // is closed on purpose (review, Welcome). Ctrl K on a Mac stays the field's "delete to end".
   useEffect(() => {
-    if (bare || adding) return;
+    if (bare || closed) return;
     const onKey = (e: KeyboardEvent) => {
-      const k = e.code === "KeyK" || e.key.toLowerCase() === "k";
-      if (!k || !(e.metaKey || e.ctrlKey) || e.altKey || e.shiftKey) return;
+      if (e.repeat || e.altKey || e.shiftKey) return;
+      if (appleKeyboard() ? !e.metaKey || e.ctrlKey : !e.ctrlKey || e.metaKey) return;
+      // Picking an autofill suggestion sends a keydown with no key.
+      if (e.code !== "KeyK" && e.key?.toLowerCase() !== "k") return;
+      if (
+        !commandOpen &&
+        document.querySelector('[role="dialog"]:not([inert]), [role="alertdialog"]')
+      )
+        return;
       e.preventDefault();
       setCommandOpen((open) => !open);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [bare, adding]);
+  }, [bare, closed, commandOpen]);
 
   const signedIn = me.isSuccess;
   const learnerName = me.data?.name;

@@ -2,8 +2,14 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
+import { standsAlone } from "@lymi/core";
 import type { AnalyticsProperties, COMMAND_MENU_COMMANDS } from "@lymi/core/analytics";
-import { keepPreviousData, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import {
   Archive,
@@ -30,9 +36,10 @@ import { useEffect, useMemo, useState } from "react";
 import type { CardHit, DeckSummary } from "../lib/api";
 import { errorMessage } from "../lib/api";
 import { addInput, refreshAfterCardWrite } from "../lib/card-writes";
+import { composing } from "../lib/composing";
 import { modShortcut } from "../lib/device";
 import { lastDeckId, rememberDeck } from "../lib/last-deck";
-import { cardSearchQuery } from "../lib/queries";
+import { cardSearchQuery, cardTermQuery } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
 import { captureAnalytics } from "../lib/telemetry";
 import { getTheme, setTheme } from "../lib/theme";
@@ -213,10 +220,6 @@ const SETTLE_MS = 150;
 /** ⌘ on a Mac, Ctrl elsewhere, as the key hint shows it. */
 const modKey = () => modShortcut("").trim();
 
-const ideographic = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u;
-/** Three letters before offering an add; one ideograph or kana is already a word. */
-export const canOffer = (term: string) => term.length >= 3 || ideographic.test(term);
-
 /** Every word of the query appears somewhere in what the row is known by. */
 function matches(knownBy: string, query: string, locale: string) {
   const hay = knownBy.toLocaleLowerCase(locale);
@@ -272,7 +275,7 @@ export function CommandMenu({
     }
   }
 
-  const searchable = settled.length >= 2 || ideographic.test(settled);
+  const searchable = settled.length >= 2 || standsAlone(settled);
   const search = useInfiniteQuery({
     ...cardSearchQuery(settled),
     enabled: open && searchable,
@@ -322,22 +325,29 @@ export function CommandMenu({
     return out;
   }, [query, commands, decks, hits, t, i18n]);
 
-  // Whether this very query's search has landed, so an add can tell a new term from one already there.
-  // A search paused offline or failed counts as landed: waiting on it would leave Enter doing nothing.
-  const searched =
+  // A request paused offline or failed counts as landed: waiting on it would leave Enter doing nothing.
+  const landed = (q: {
+    fetchStatus: string;
+    isError: boolean;
+    isSuccess: boolean;
+    isFetching: boolean;
+  }) =>
     settled === query &&
-    (search.fetchStatus === "paused" ||
-      search.isError ||
-      (search.isSuccess && !search.isPlaceholderData && !search.isFetching));
-  // Enter or ⌘Enter on the add bar before that, held until it lands.
+    (q.fetchStatus === "paused" || q.isError || (q.isSuccess && !q.isFetching));
+  const searched = landed(search) && !search.isPlaceholderData;
+  // Whether the term is already in the target deck, asked of the server exactly as the duplicate rule compares it.
+  const termCheck = useQuery({
+    ...cardTermQuery(target?.id ?? "", settled),
+    enabled: open && !!target && standsAlone(settled),
+  });
+  const checked = !target || landed(termCheck);
+  // Enter or ⌘Enter on the add bar before the check lands, held until it does.
   const [held, setHeld] = useState<RunKeys | null>(null);
-  const addRow: Row | null = useMemo(() => {
-    if (!canOffer(query)) return null;
-    const same = (a: string) =>
-      a.trim().toLocaleLowerCase(i18n.locale) === query.toLocaleLowerCase(i18n.locale);
-    const existing = (target && hits.find((h) => h.deckId === target.id && same(h.term))) ?? null;
-    return { kind: "add", key: "add", term: query, existing };
-  }, [query, hits, target, i18n.locale]);
+  const existing = (checked && termCheck.data) || null;
+  const addRow: Row | null = useMemo(
+    () => (standsAlone(query) ? { kind: "add", key: "add", term: query, existing } : null),
+    [query, existing],
+  );
 
   const rows = useMemo(
     () => [...groups.flatMap((g) => g.rows), ...(addRow ? [addRow] : [])],
@@ -440,8 +450,9 @@ export function CommandMenu({
       track({ kind: "card", typed: true });
       return openCard(row.card);
     }
-    if (!searched) {
-      setHeld({ mod });
+    if (!checked) {
+      // A second Enter while the first waits is the same request, not a new one.
+      setHeld((current) => current ?? { mod });
       return;
     }
     if (row.existing) {
@@ -456,7 +467,7 @@ export function CommandMenu({
   }
 
   useEffect(() => {
-    if (!held || !searched || !addRow) return;
+    if (!held || !checked || !addRow) return;
     setHeld(null);
     run(addRow, held);
   });
@@ -474,7 +485,7 @@ export function CommandMenu({
       (e.metaKey || e.ctrlKey) &&
       addRow &&
       active?.kind !== "deck" &&
-      !e.nativeEvent.isComposing
+      !composing(e)
     ) {
       e.preventDefault();
       run(addRow, { mod: true });
@@ -511,7 +522,9 @@ export function CommandMenu({
               <AddBar
                 row={addRow}
                 deckName={target?.name}
-                adding={adding || !!held?.mod}
+                adding={adding}
+                checking={!checked}
+                waiting={!!held}
                 {...list.optionProps(rows.length - 1)}
               />
             )
@@ -522,7 +535,12 @@ export function CommandMenu({
               {group.rows.map((row) => {
                 const i = index++;
                 return (
-                  <CommandItem key={row.key} {...list.optionProps(i)}>
+                  <CommandItem
+                    key={row.key}
+                    {...list.optionProps(i)}
+                    // Cards for the previous text, kept so the list doesn't jump, fade until this text's arrive.
+                    className={row.kind === "card" && !searched ? "opacity-60" : undefined}
+                  >
                     <RowBody row={row} active={activeRow === row} />
                   </CommandItem>
                 );
@@ -593,10 +611,14 @@ interface AddBarProps extends React.ComponentProps<"div"> {
   row: Extract<Row, { kind: "add" }>;
   deckName: string | undefined;
   adding: boolean;
+  /** The deck isn't yet known to lack this term, so the bar promises nothing. */
+  checking: boolean;
+  /** An Enter is held until that check lands. */
+  waiting: boolean;
 }
 
 /** Layout C: the typed term, pinned under the results, one ⌘Enter from being a card. */
-function AddBar({ row, deckName, adding, ...option }: AddBarProps) {
+function AddBar({ row, deckName, adding, checking, waiting, ...option }: AddBarProps) {
   const { t } = useLingui();
   const term = row.term;
   return (
@@ -630,7 +652,9 @@ function AddBar({ row, deckName, adding, ...option }: AddBarProps) {
         <span className="flex shrink-0 items-center gap-1.5 text-sm text-muted">
           {adding ? (
             t`Adding…`
-          ) : (
+          ) : waiting ? (
+            t`Checking…`
+          ) : checking ? null : (
             <>
               <Kbd>{modKey()}</Kbd>
               <Kbd>

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
-import { canOffer } from "../command-menu";
 import {
   CommandGroup,
   CommandInput,
@@ -79,13 +78,6 @@ test("a click runs the row and leaves focus in the field", async () => {
   await page.getByRole("option", { name: "Library" }).click();
   expect(onRun).toHaveBeenLastCalledWith("Library", { mod: false });
   await expect.element(page.getByRole("combobox", { name: "Search" })).toHaveFocus();
-});
-
-test("the add bar waits for three letters, or one ideograph or kana", () => {
-  expect(canOffer("ca")).toBe(false);
-  expect(canOffer("cas")).toBe(true);
-  expect(canOffer("家")).toBe(true);
-  expect(canOffer("ね")).toBe(true);
 });
 
 test("with no rows to scroll, a pinned row sits right under the field", async () => {

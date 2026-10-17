@@ -26,11 +26,12 @@ What is empty?
 
 ## StartPanel
 
-`StartPanel` in `components/start-panel.tsx` serves Library with no decks, a deck with no cards, and Insights with no history. It is a 1.5 px dashed `edge-2` outline on the bare canvas, never a plate, because dashed is New's own mark for "not here yet". Inside sit a `text-lg` title, one sentence in `text-2`, one primary button at its normal size, and optionally a `StartPanelSection` under a dashed rule holding `NextSteps` rows for the other ways in.
+`StartPanel` in `components/start-panel.tsx` serves Library with no decks, a deck with no cards, and Insights with no history. It is a 1.5 px dashed `edge-2` outline on the bare canvas, never a plate, because dashed is New's own mark for "not here yet". Inside sit an outline icon of what is missing in a `plate-2` circle (`icon`), a `text-lg` title, one sentence in `text-2`, one primary button at its normal size, and optionally a `StartPanelSection` under a dashed rule holding `NextSteps` rows for the other ways in. Library's icon is the rail's Library mark and a deck's is Layers, the cards mark.
 
 ```tsx
 // Correct, from deck-detail-view.tsx
 <StartPanel
+  icon={<Layers />}
   title={<Trans>No cards in {deck.name} yet</Trans>}
   body={<Trans>Add cards from your last lesson, then review them here.</Trans>}
   action={<Button variant="primary" className="justify-self-start" onClick={onAdd} kbd="N"><Trans>Add a card</Trans></Button>}
@@ -43,7 +44,7 @@ What is empty?
 </div>
 ```
 
-A start panel has one primary action. The other ways in are `NextSteps` rows: an outlined icon, a title, one line of detail and the arrow (`Go`), separated by a gap rather than rules so the hover fill never meets a line. Each row opens where the work happens, such as a Settings group by its anchor or the public docs. Connecting Claude or ChatGPT is offered only while no app is connected.
+A start panel has one primary action. The other ways in are `NextSteps` rows: an outlined icon, a title, one line of detail and the arrow (`Go`), separated by a gap rather than rules so the hover fill never meets a line. Each row opens where the work happens, such as a Settings group by its anchor or the public docs. Where the learner may use Smart add, **Turn your notes into cards** leads the rows of a deck with no cards and the links of the getting started guide's cards step, and opens Smart add on that deck. Connecting Claude or ChatGPT is offered only while no app is connected.
 
 ## Previews at zero
 

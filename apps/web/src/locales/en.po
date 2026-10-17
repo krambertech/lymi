@@ -2269,9 +2269,6 @@ msgstr "Geography"
 msgid "Getting a card ready…"
 msgstr "Getting a card ready…"
 
-msgid "Getting set up"
-msgstr "Getting set up"
-
 msgid "Getting started"
 msgstr "Getting started"
 
@@ -2976,6 +2973,9 @@ msgstr "Name"
 msgid "Name the key, so you know which one to revoke later."
 msgstr "Name the key, so you know which one to revoke later."
 
+msgid "Name your first tag"
+msgstr "Name your first tag"
+
 msgid "Nature"
 msgstr "Nature"
 
@@ -3205,6 +3205,9 @@ msgstr "Nothing due right now"
 msgid "Nothing due today, so your streak is safe."
 msgstr "Nothing due today, so your streak is safe."
 
+msgid "Nothing due today."
+msgstr "Nothing due today."
+
 msgid "Nothing forgotten today"
 msgstr "Nothing forgotten today"
 
@@ -3380,6 +3383,9 @@ msgstr "past reviews"
 msgid "Past reviews show in Insights on the days you did them. They don’t count toward today’s goal or your streak."
 msgstr "Past reviews show in Insights on the days you did them. They don’t count toward today’s goal or your streak."
 
+msgid "Paste a lesson or add photos of it, then pick the words"
+msgstr "Paste a lesson or add photos of it, then pick the words"
+
 msgid "Paste a link"
 msgstr "Paste a link"
 
@@ -3511,10 +3517,6 @@ msgstr "Pronunciation changed to “{value}”"
 
 msgid "Pronunciation from lesson"
 msgstr "Pronunciation from lesson"
-
-#. placeholder {0}: path.length
-msgid "Question {position} of {0}"
-msgstr "Question {position} of {0}"
 
 msgid "Quickstart"
 msgstr "Quickstart"
@@ -4113,6 +4115,9 @@ msgstr "Start {nextName}"
 msgid "Start {sectionName} early?"
 msgstr "Start {sectionName} early?"
 
+msgid "Start a new streak"
+msgstr "Start a new streak"
+
 msgid "Start anyway"
 msgstr "Start anyway"
 
@@ -4124,6 +4129,9 @@ msgstr "Start with a deck"
 
 msgid "Start with a ready-made deck"
 msgstr "Start with a ready-made deck"
+
+msgid "Start your streak"
+msgstr "Start your streak"
 
 msgid "Started {sectionName}"
 msgstr "Started {sectionName}"
@@ -4599,14 +4607,17 @@ msgstr "Turn off link"
 msgid "Turn off the join link?"
 msgstr "Turn off the join link?"
 
+msgid "Turn your notes into cards"
+msgstr "Turn your notes into cards"
+
 msgid "Turned off the join link for {deck}"
 msgstr "Turned off the join link for {deck}"
 
 msgid "Turned on the join link for {deck}"
 msgstr "Turned on the join link for {deck}"
 
-msgid "Type a name to create your first tag."
-msgstr "Type a name to create your first tag."
+msgid "Type a name above, then press Enter to tag this card."
+msgstr "Type a name above, then press Enter to tag this card."
 
 msgid "Type the term."
 msgstr "Type the term."

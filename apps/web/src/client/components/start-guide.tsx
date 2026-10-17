@@ -17,6 +17,8 @@ interface StartGuideProps {
   connectUrl: string | undefined;
   onAdd: (() => void) | undefined;
   onCreateDeck: (() => void) | undefined;
+  /** Smart add, where the learner may use it. */
+  onSmartAdd?: (() => void) | undefined;
 }
 
 /**
@@ -30,6 +32,7 @@ export function StartGuide({
   connectUrl,
   onAdd,
   onCreateDeck,
+  onSmartAdd,
 }: StartGuideProps) {
   const st = useStaticNav();
   const current = decks === 0 ? 0 : cards === 0 ? 1 : 2;
@@ -51,7 +54,7 @@ export function StartGuide({
     window.addEventListener(ANALYTICS_READY, observe);
     return () => window.removeEventListener(ANALYTICS_READY, observe);
   }, [current]);
-  const pick = (option: "create_deck" | "typed" | "ai_mcp" | "api") =>
+  const pick = (option: "create_deck" | "typed" | "lesson" | "ai_mcp" | "api") =>
     captureAnalytics("empty_state_option_picked", { option });
   const link =
     "text-base font-medium text-text-2 underline decoration-edge-2 underline-offset-4 transition-colors duration-150 hoverable:hover:text-text hoverable:hover:decoration-text";
@@ -97,6 +100,18 @@ export function StartGuide({
             <Trans>Add a card</Trans>
           </Button>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
+            {onSmartAdd && (
+              <button
+                type="button"
+                onClick={() => {
+                  pick("lesson");
+                  onSmartAdd();
+                }}
+                className={link}
+              >
+                <Trans>Turn your notes into cards</Trans>
+              </button>
+            )}
             {connected === false && connectUrl && (
               <a
                 href={connectUrl}

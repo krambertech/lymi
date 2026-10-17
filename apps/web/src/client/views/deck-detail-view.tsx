@@ -1206,6 +1206,7 @@ export function DeckDetailView({
             />
           ) : (
             <StartPanel
+              icon={<Layers />}
               title={<Trans>No cards in {deck.name} yet</Trans>}
               body={<Trans>Add cards from your last lesson, then review them here.</Trans>}
               action={
@@ -1221,6 +1222,19 @@ export function DeckDetailView({
             >
               <StartPanelSection>
                 <NextSteps label={t`Other ways to add cards`}>
+                  {owner.onSmartAdd && (
+                    <NextStep
+                      icon={<Sparkles />}
+                      title={<Trans>Turn your notes into cards</Trans>}
+                      detail={
+                        <Trans>Paste a lesson or add photos of it, then pick the words</Trans>
+                      }
+                      onClick={() => {
+                        captureAnalytics("empty_state_option_picked", { option: "lesson" });
+                        owner.onSmartAdd?.();
+                      }}
+                    />
+                  )}
                   {connected === false && connectUrl && (
                     <NextStep
                       icon={<Plug />}

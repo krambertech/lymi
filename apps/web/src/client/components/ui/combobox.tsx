@@ -3,7 +3,7 @@ import type { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
 import { mergeProps } from "@base-ui/react/merge-props";
 import type { BaseUIEvent } from "@base-ui/react/types";
 import { cn } from "cn";
-import { Check, Search } from "lucide-react";
+import { Check, type LucideIcon, Search } from "lucide-react";
 import * as React from "react";
 import { useOverlayShape } from "../../lib/device";
 import { useFluidHover } from "../../lib/fluid-hover";
@@ -372,10 +372,18 @@ function DrawerSearchContent({
 interface InputProps extends Omit<React.ComponentProps<"input">, "defaultValue" | "value"> {
   /** Names the search field, unless it has an `aria-label`, and fills it while it is empty. */
   placeholder: string;
+  /** The field's leading icon: Search, or Plus where there is nothing to find yet and the field only creates. */
+  icon?: LucideIcon | undefined;
 }
 
 /** The search field at the top of the panel. It takes focus as the panel opens. */
-function ComboboxInput({ placeholder, ref: refProp, className, ...props }: InputProps) {
+function ComboboxInput({
+  placeholder,
+  icon: Icon = Search,
+  ref: refProp,
+  className,
+  ...props
+}: InputProps) {
   const { shape, input } = useCombobox("ComboboxInput");
   const ref = useMergedRefs(input, refProp);
   return (
@@ -386,7 +394,7 @@ function ComboboxInput({ placeholder, ref: refProp, className, ...props }: Input
         shape === "desktop" ? "border-b border-edge" : "mx-1 mb-1 rounded-md edge",
       )}
     >
-      <Search className="size-4 shrink-0 text-muted" aria-hidden="true" />
+      <Icon className="size-4 shrink-0 text-muted" aria-hidden="true" />
       <ComboboxPrimitive.Input
         ref={ref}
         data-slot="combobox-input"
@@ -479,11 +487,13 @@ function ComboboxList<Item>({ className, children }: ListProps<Item>) {
 
 interface ItemProps extends Omit<ComboboxPrimitive.Item.Props, "className" | "render"> {
   className?: string | undefined;
+  /** Takes the check's slot in a row that is never chosen, such as Create, so it lines up with the search icon. */
+  icon?: React.ReactNode | undefined;
   children: React.ReactNode;
 }
 
 /** The check leads, in a slot every row keeps, so choosing one moves nothing. */
-function ComboboxItem({ className, children, ...props }: ItemProps) {
+function ComboboxItem({ className, icon, children, ...props }: ItemProps) {
   const { shape } = useCombobox("ComboboxItem");
   return (
     <ComboboxPrimitive.Item
@@ -492,9 +502,11 @@ function ComboboxItem({ className, children, ...props }: ItemProps) {
       className={cn(choiceRowClassName, shape === "touch" && touchRowClassName, className)}
     >
       <span className="flex size-4 shrink-0 items-center justify-center" aria-hidden="true">
-        <ComboboxPrimitive.ItemIndicator>
-          <Check className="size-4" />
-        </ComboboxPrimitive.ItemIndicator>
+        {icon ?? (
+          <ComboboxPrimitive.ItemIndicator>
+            <Check className="size-4" />
+          </ComboboxPrimitive.ItemIndicator>
+        )}
       </span>
       {children}
     </ComboboxPrimitive.Item>

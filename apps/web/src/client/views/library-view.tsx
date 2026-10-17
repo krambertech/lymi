@@ -4,6 +4,7 @@ import { groupDecks } from "@lymi/client/library-groups";
 import {
   ArrowDown,
   ArrowUp,
+  BookMarked,
   ChevronRight,
   FileUp,
   Layers,
@@ -242,6 +243,7 @@ export function LibraryView({
 
       {decks && decks.length === 0 && (
         <StartPanel
+          icon={<BookMarked />}
           title={<Trans>No decks yet</Trans>}
           body={<Trans>Make one for each course or topic.</Trans>}
           action={

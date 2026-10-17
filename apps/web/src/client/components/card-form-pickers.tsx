@@ -212,8 +212,23 @@ export function TagsChip({
         </ComboboxTrigger>
       </WithTip>
       <ComboboxContent aria-label={t`Tags`} className="min-w-64">
-        <ComboboxInput placeholder={t`Find or create a tag`} />
-        <ComboboxEmpty>{t`Type a name to create your first tag.`}</ComboboxEmpty>
+        {/* With no tags yet there is nothing to find, so the field only makes one. */}
+        <ComboboxInput
+          icon={known.length ? undefined : Plus}
+          placeholder={known.length ? t`Find or create a tag` : t`Name your first tag`}
+        />
+        <ComboboxEmpty className="grid justify-items-center gap-1 px-5 py-6 text-center">
+          <span
+            className="mb-2 grid size-10 place-items-center rounded-full bg-plate-2 text-text-2"
+            aria-hidden="true"
+          >
+            <Tag className="size-[18px]" strokeWidth={1.75} />
+          </span>
+          <span className="text-base font-medium text-text">{t`No tags yet`}</span>
+          <span className="max-w-[28ch] text-sm text-text-2">
+            {t`Type a name above, then press Enter to tag this card.`}
+          </span>
+        </ComboboxEmpty>
         <ComboboxList>
           {(option: TagOption) =>
             option.note ? (
@@ -221,8 +236,11 @@ export function TagsChip({
                 <span className="flex-1 whitespace-normal">{option.name}</span>
               </ComboboxItem>
             ) : option.create ? (
-              <ComboboxItem key={`+${option.name}`} value={option}>
-                <Plus className="size-4 shrink-0 text-text-2" aria-hidden="true" />
+              <ComboboxItem
+                key={`+${option.name}`}
+                value={option}
+                icon={<Plus className="size-4 text-text-2" />}
+              >
                 <span className="flex-1 truncate">
                   {t`Create ${names(option.create.map((name) => t`“${name}”`))}`}
                 </span>

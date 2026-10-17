@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import type { OnboardingInput } from "@lymi/core";
+import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
@@ -46,6 +47,11 @@ function Welcome() {
   const joined = deck ? decks.data?.find((d) => d.id === deck) : undefined;
   const addDeck = useAddPublishedDeck({ announce: "page" });
   const [error, setError] = useState<string | null>(null);
+  // Adding a deck refetches Explore, which drops it from the choices; the list holds still until Welcome leaves.
+  const [held, setHeld] = useState<PublicDeckSummary[] | undefined>();
+  // Saved and on the way out: the button keeps loading until the next screen replaces this one.
+  const [leaving, setLeaving] = useState(false);
+  const catalog = explore.data?.decks.filter((deck) => !explore.data.added[deck.slug]);
 
   const save = useMutation({
     mutationFn: api.finishOnboarding,
@@ -54,6 +60,7 @@ function Welcome() {
 
   const finish = async (answers: WelcomeAnswers) => {
     setError(null);
+    setHeld((h) => h ?? catalog);
     const { start } = answers;
     // Opened inside the press, before anything is awaited, or the browser blocks the new tab.
     if (start.kind === "own" && start.own === "assistant") {
@@ -91,6 +98,7 @@ function Welcome() {
     });
     finishWelcomeStep("start", false);
     clearWelcomeProgress();
+    setLeaving(true);
     if (start.kind === "deck") return navigate({ to: "/review", replace: true });
     if (start.own === "import") return navigate({ to: "/settings", hash: "import", replace: true });
     await navigate({ to: "/today", replace: true });
@@ -107,6 +115,7 @@ function Welcome() {
     }
     finishWelcomeStep("goal", false);
     clearWelcomeProgress();
+    setLeaving(true);
     // A deck shared before its owner added a card has nothing to review yet, so its page says so.
     if (deck.total === 0) {
       return navigate({ to: "/library/$deckId", params: { deckId: deck.id }, replace: true });
@@ -141,13 +150,13 @@ function Welcome() {
   if (deck && !joined && (decks.isPending || decks.isFetching)) return null;
   return (
     <WelcomeView
-      catalog={explore.data?.decks.filter((deck) => !explore.data.added[deck.slug])}
+      catalog={held ?? catalog}
       meaningLanguage={settings.data?.meaningLanguage ?? "en"}
       onFinish={(answers) => void finish(answers)}
       joined={joined}
       onChooseGoal={joined && ((dailyGoal) => void startJoined(joined, dailyGoal))}
       onSkip={(step) => void skip(step)}
-      busy={save.isPending || addDeck.isPending}
+      busy={save.isPending || addDeck.isPending || leaving}
       error={error}
     />
   );

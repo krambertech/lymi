@@ -38,6 +38,8 @@ export interface TodayProps {
   connected?: boolean | undefined;
   onAdd?: (() => void) | undefined;
   onCreateDeck?: (() => void) | undefined;
+  /** Smart add, where the learner may use it; the getting started guide offers it. */
+  onSmartAdd?: (() => void) | undefined;
   /** The decks or the streak failed to load and nothing is cached, so the screen offers a retry. */
   failed?: boolean | undefined;
   onRetry?: (() => void) | undefined;
@@ -70,6 +72,7 @@ export function TodayView({
   connected,
   onAdd,
   onCreateDeck,
+  onSmartAdd,
   failed,
   onRetry,
   retrying,
@@ -120,6 +123,7 @@ export function TodayView({
             connectUrl={connectUrl}
             onAdd={onAdd}
             onCreateDeck={onCreateDeck}
+            onSmartAdd={onSmartAdd}
           />
           {/* Only under the guide: a learner past their first review has their own work to get on with. */}
           {ready && ready.length > 0 && <ReadyDecks decks={ready} />}

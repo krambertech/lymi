@@ -116,19 +116,12 @@ export function AssistantOffer({ onDismiss }: { onDismiss: () => void }) {
   );
 }
 
-/** The learner menu's row beside Docs, on both the rail and the phone, with the assistants' marks at its end. */
+/** The learner menu's row beside Docs, on both the rail and the phone; the rail's card carries the marks. */
 export function AssistantMenuItem() {
   return (
     <DropdownMenuLinkItem render={<a href={GUIDES} />}>
       <Plug aria-hidden="true" />
-      <span className="flex-1">
-        <Trans>Connect AI assistant</Trans>
-      </span>
-      <span className="ms-4 flex items-center gap-1.5 text-text" aria-hidden="true">
-        {ASSISTANTS.map(({ app }) => (
-          <Glyph key={app.name} app={app} className="size-3.5" />
-        ))}
-      </span>
+      <Trans>Connect AI assistant</Trans>
     </DropdownMenuLinkItem>
   );
 }

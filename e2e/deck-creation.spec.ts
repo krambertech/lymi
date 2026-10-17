@@ -224,9 +224,9 @@ test.describe("deck and card creation", () => {
     };
     await fill("Example", "Scendo alla fermata.");
     await fill("Source", "Lesson 14");
-    // Tags is a choice: its chip opens a search of the tags in use, with Create for a new one.
+    // Tags is a choice: its chip opens a search of the tags in use, with Create for a new one; with none yet, the field only names one.
     await dialog.getByLabel("Tags", { exact: true }).click();
-    await page.getByRole("combobox", { name: "Find or create a tag", exact: true }).fill("streets");
+    await page.getByRole("combobox", { name: "Name your first tag", exact: true }).fill("streets");
     await page.getByRole("option", { name: "Create “streets”", exact: true }).click();
     await page.keyboard.press("Escape");
     await expect(dialog.getByLabel("Tags: streets", { exact: true })).toBeVisible();

@@ -123,15 +123,16 @@ export function EmailPreview() {
     document.title = `${about?.name ?? "Emails"} · Lymi emails`;
   }, [about]);
 
-  // Up and down move through the kinds, as in a mail client.
+  // J and K move through the kinds, as in a mail client; the arrows keep scrolling the page.
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLSelectElement)
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if (event.target instanceof HTMLElement && event.target.closest("input, select, textarea"))
         return;
-      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
-      event.preventDefault();
+      const step = event.key === "j" ? 1 : event.key === "k" ? -1 : 0;
+      if (!step) return;
       const at = ORDER.findIndex((k) => k.kind === kind);
-      const next = ORDER[(at + (event.key === "ArrowDown" ? 1 : -1) + ORDER.length) % ORDER.length];
+      const next = ORDER[(at + step + ORDER.length) % ORDER.length];
       if (next) navigate({ search: (prev) => ({ ...prev, kind: next.kind }), replace: true });
     };
     window.addEventListener("keydown", onKey);
@@ -169,8 +170,8 @@ export function EmailPreview() {
           </RailNav>
         </div>
         <p className="flex items-center gap-1.5 border-t border-edge px-5 py-4 text-sm text-muted">
-          <Kbd>↑</Kbd>
-          <Kbd>↓</Kbd>
+          <Kbd>J</Kbd>
+          <Kbd>K</Kbd>
           <span className="ms-1">to move between emails</span>
         </p>
       </aside>
@@ -305,10 +306,12 @@ function EmailFrame({ html, room, width }: { html: string; room: "light" | "dark
   const measure = () => {
     const doc = ref.current?.contentDocument;
     if (!doc?.body) return;
-    setHeight(doc.documentElement.scrollHeight);
+    // The body's own height, since the document is never shorter than the frame around it.
+    const resize = () => setHeight(Math.ceil(doc.body.getBoundingClientRect().height));
+    resize();
     // Images arrive after load and change the height.
     observer.current?.disconnect();
-    observer.current = new ResizeObserver(() => setHeight(doc.documentElement.scrollHeight));
+    observer.current = new ResizeObserver(resize);
     observer.current.observe(doc.body);
   };
 

@@ -1,4 +1,5 @@
 import { AppLanguage } from "@lymi/core";
+import { EMAIL_KINDS } from "@lymi/core/analytics";
 import { type Context, Hono } from "hono";
 import { z } from "zod";
 import { devPersonaCookieName } from "../../shared/cookies";
@@ -7,7 +8,7 @@ import type { Auth } from "../auth";
 import type { Db } from "../db";
 import { callAsMcp, devHostPage, devHostView } from "../dev/mcp-host";
 import { DEV_PASSWORD, type Persona, personaEmail, personaFor, personas } from "../dev/personas";
-import { EMAIL_SAMPLE_KINDS, EMAIL_SAMPLES } from "../email/samples";
+import { EMAIL_SAMPLES } from "../email/samples";
 import { devToolsEnabled, operatorEmails } from "../env";
 import { body, describe, query } from "../http";
 import type { AppEnv } from "../index";
@@ -80,7 +81,7 @@ dev.post(
 );
 
 const EmailPreviewQuery = z.object({
-  kind: z.enum(EMAIL_SAMPLE_KINDS),
+  kind: z.enum(EMAIL_KINDS),
   language: AppLanguage.default("en"),
 });
 
@@ -92,7 +93,7 @@ const emailOrigins = (env: AppEnv["Bindings"]) => ({
 /** The kinds the `/emails` page lists, and the operator addresses it may send to. */
 dev.get("/emails", describe({ hide: true, open: true }), (c) =>
   c.json({
-    kinds: EMAIL_SAMPLE_KINDS,
+    kinds: EMAIL_KINDS,
     operators: [...operatorEmails(c.env)],
     canSend: Boolean(c.env.RESEND_API_KEY),
   }),

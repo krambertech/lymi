@@ -89,7 +89,6 @@ const PRODUCTION_ORIGINS: EmailOrigins = {
 };
 
 export const EMAIL_FROM = { email: "notifications@lymi.app", name: "Lymi" } as const;
-const FROM = EMAIL_FROM;
 /** Where a learner reaches a person, and where a message written for Lymi itself lands. */
 export const OPERATOR_INBOX = "hello@lymi.app";
 const REPLY_TO = OPERATOR_INBOX;
@@ -120,7 +119,10 @@ function blockText(block: Block): string | null {
 /** The plain-text body: the heading, then each block. */
 function textBody(email: ComposedEmail): string {
   const { hero } = email;
-  const cover = hero?.kind === "deck" ? [`${hero.name}\n${hero.meta}`, hero.invitedBy] : [];
+  const cover =
+    hero?.kind === "deck"
+      ? [hero.byline.replace("<0/>", hero.inviter), `${hero.name}\n${hero.meta}`]
+      : [];
   const parts = email.blocks.map(blockText);
   return [email.heading, ...cover, ...parts, hero ? "Lymi" : null]
     .filter((part): part is string => Boolean(part))
@@ -141,7 +143,8 @@ export async function renderTransactionalEmail(
   return {
     kind,
     language: locale,
-    subject: email.subject,
+    // A deck or person's name may hold a line break, which a Subject header cannot.
+    subject: email.subject.replace(/\s*[\r\n]+\s*/g, " "),
     preview: email.preview,
     text: textBody(email),
     html: await renderEmailHtml(email, {
@@ -193,34 +196,41 @@ function compose(
   params: TransactionalEmailParams,
 ): ComposedEmail {
   const lantern = { kind: "lantern" } as const;
-  const someoneUsedThis = i18n._(
-    msg`You got this email because someone used this address on Lymi.`,
-  );
-  const yourAccount = i18n._(msg`You got this email because of your Lymi account.`);
-  const fallback = (url: string): Block => ({
-    type: "fallback",
-    label: i18n._(msg`Button not working? Paste this link into your browser:`),
-    url,
-  });
+  const signIn = i18n._(msg({ message: "Sign in", context: "email button" }));
   const linked = (
     subject: string,
     lead: string[],
     label: string,
     url: string,
     note: string | null,
-    footer: string,
   ): ComposedEmail => ({
     subject,
-    preview: lead[0] ?? subject,
+    preview: lead[0] ?? note ?? subject,
     heading: subject,
     hero: lantern,
     blocks: [
       ...lead.map((text): Block => ({ type: "text", text })),
       { type: "button", label, url },
       ...(note ? [{ type: "note", text: note } as const] : []),
-      fallback(url),
+      {
+        type: "fallback",
+        label: i18n._(msg`Or paste this link into your browser:`),
+        url,
+      },
     ],
-    footer: [footer],
+    footer: [],
+  });
+  const coded = (subject: string, text: string, code: string, note: string): ComposedEmail => ({
+    subject,
+    preview: text,
+    heading: subject,
+    hero: lantern,
+    blocks: [
+      { type: "text", text },
+      { type: "code", code },
+      { type: "note", text: note },
+    ],
+    footer: [],
   });
 
   switch (kind) {
@@ -258,69 +268,43 @@ function compose(
           { type: "text", text },
           { type: "note", text: i18n._(msg`You don’t need to do anything.`) },
         ],
-        footer: [yourAccount],
+        footer: [],
       };
     }
     case "verify-email":
       return linked(
         i18n._(msg`Confirm your email address`),
-        [i18n._(msg`Confirm your address to finish creating your Lymi account:`)],
+        [i18n._(msg`Confirming it signs you in and finishes creating your Lymi account.`)],
         i18n._(msg`Confirm address`),
         required(params.url, kind),
         i18n._(
           msg`The link works for 24 hours. If you didn’t create a Lymi account, ignore this email.`,
         ),
-        someoneUsedThis,
       );
-    case "verify-email-code": {
+    case "verify-email-code":
       if (!params.code) throw new Error("The verify-email-code email needs a code");
-      const text = i18n._(msg`Enter this code in the Lymi app to finish creating your account:`);
-      return {
-        subject: i18n._(msg`Your Lymi confirmation code`),
-        preview: text,
-        heading: i18n._(msg`Your Lymi confirmation code`),
-        hero: lantern,
-        blocks: [
-          { type: "text", text },
-          { type: "code", code: params.code },
-          {
-            type: "note",
-            text: i18n._(
-              msg`The code works for 15 minutes. If you didn’t create a Lymi account, ignore this email.`,
-            ),
-          },
-        ],
-        footer: [someoneUsedThis],
-      };
-    }
-    case "delete-account-code": {
-      if (!params.code) throw new Error("The delete-account-code email needs a code");
-      const subject = i18n._(msg`Your code to delete your Lymi account`);
-      const text = i18n._(
-        msg`Enter this code in Lymi to delete your account and everything in it:`,
+      return coded(
+        i18n._(msg`Your Lymi confirmation code`),
+        i18n._(msg`Enter this code in the Lymi app to finish creating your account:`),
+        params.code,
+        i18n._(
+          msg`The code works for 15 minutes. If you didn’t create a Lymi account, ignore this email.`,
+        ),
       );
-      return {
-        subject,
-        preview: text,
-        heading: subject,
-        hero: lantern,
-        blocks: [
-          { type: "text", text },
-          { type: "code", code: params.code },
-          {
-            type: "note",
-            text: i18n._(
-              msg`The code works for 15 minutes. If you didn’t ask to delete your account, ignore this email and nothing will change.`,
-            ),
-          },
-        ],
-        footer: [yourAccount],
-      };
-    }
+    case "delete-account-code":
+      if (!params.code) throw new Error("The delete-account-code email needs a code");
+      return coded(
+        i18n._(msg`Your code to delete your Lymi account`),
+        i18n._(msg`Enter this code in Lymi to delete your account:`),
+        params.code,
+        i18n._(
+          msg`The code works for 15 minutes. If you didn’t ask to delete your account, ignore this email and nothing will change.`,
+        ),
+      );
     case "account-deleted": {
       const subject = i18n._(msg`Your Lymi account was deleted`);
       const text = i18n._(
-        msg`Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi.`,
+        msg`Your cards, reviews and settings are gone. Decks other people study stay for them.`,
       );
       return {
         subject,
@@ -329,6 +313,7 @@ function compose(
         hero: lantern,
         blocks: [
           { type: "text", text },
+          { type: "text", text: i18n._(msg`You won’t get any more emails from Lymi.`) },
           {
             type: "note",
             text: i18n._(
@@ -342,18 +327,17 @@ function compose(
     case "reset-password":
       return linked(
         i18n._(msg`Reset your Lymi password`),
-        [i18n._(msg`Set a new password for your Lymi account:`)],
+        [],
         i18n._(msg`Set a new password`),
         required(params.url, kind),
         i18n._(
           msg`The link works for one hour. If you didn’t ask for a new password, ignore this email. Your password hasn’t changed.`,
         ),
-        someoneUsedThis,
       );
     case "deck-invitation": {
       const it = params.invitation;
       if (!it) throw new Error("The deck invitation email needs the deck it is for");
-      const { ownerName } = it;
+      const { ownerName, deckName } = it;
       const url = required(params.url, kind);
       const cards = i18n._(msg`${plural(it.cards, { one: "# card", other: "# cards" })}`);
       const language = languageName(it.language, i18n.locale);
@@ -361,15 +345,21 @@ function compose(
         msg`You review on your own schedule, and ${ownerName} doesn’t see your progress.`,
       );
       return {
-        subject: i18n._(msg`${ownerName} shared a deck with you`),
+        subject: i18n._(msg`${ownerName} invited you to study ${deckName}`),
         preview: text,
         hero: {
           kind: "deck",
-          name: it.deckName,
+          name: deckName,
           meta: language ? i18n._(msg`${language} · ${cards}`) : cards,
           hue: trayHue(it.deckId),
+          inviter: ownerName,
           initials: initials(ownerName),
-          invitedBy: i18n._(msg`${ownerName} invited you to study this deck on Lymi.`),
+          byline: i18n._(
+            msg({
+              message: "<0/> invited you to study this deck",
+              comment: "<0/> is the name of the person inviting",
+            }),
+          ),
         },
         blocks: [
           { type: "text", text },
@@ -380,9 +370,9 @@ function compose(
               msg`This invitation only works for this email address. If you weren’t expecting it, ignore this email.`,
             ),
           },
-          fallback(url),
+          { type: "fallback", label: i18n._(msg`Or paste this link into your browser:`), url },
         ],
-        footer: [i18n._(msg`${ownerName} entered this address in Lymi.`)],
+        footer: [],
       };
     }
     case "existing-account":
@@ -392,12 +382,11 @@ function compose(
           i18n._(
             msg`Someone tried to create a Lymi account with this address. You already have one, so nothing changed.`,
           ),
-          i18n._(msg`Sign in here, or reset your password from the same page:`),
+          i18n._(msg`Sign in, or reset your password from the sign-in page.`),
         ],
-        i18n._(msg`Sign in`),
+        signIn,
         required(params.url, kind),
         null,
-        someoneUsedThis,
       );
     case "reset-google-account":
       return linked(
@@ -406,12 +395,10 @@ function compose(
           i18n._(
             msg`Someone asked to reset the password for this address. It signs in with Google, so there is no password to reset.`,
           ),
-          i18n._(msg`Continue with Google here:`),
         ],
-        i18n._(msg`Continue with Google`),
+        signIn,
         required(params.url, kind),
         null,
-        someoneUsedThis,
       );
     case "google-account":
       return linked(
@@ -420,12 +407,10 @@ function compose(
           i18n._(
             msg`Someone tried to create a Lymi account with this address and a password. This address signs in with Google, so nothing changed.`,
           ),
-          i18n._(msg`Continue with Google here:`),
         ],
-        i18n._(msg`Continue with Google`),
+        signIn,
         required(params.url, kind),
         null,
-        someoneUsedThis,
       );
   }
 }
@@ -530,7 +515,7 @@ async function deliver(env: EmailEnv, message: RenderedEmail, to: string, replyT
     const { sendWithResend } = await import("../email/resend");
     await sendWithResend(env.RESEND_API_KEY, {
       to,
-      from: FROM,
+      from: EMAIL_FROM,
       replyTo,
       subject: message.subject,
       text: message.text,
@@ -541,7 +526,7 @@ async function deliver(env: EmailEnv, message: RenderedEmail, to: string, replyT
   }
   await env.EMAIL.send({
     to,
-    from: FROM,
+    from: EMAIL_FROM,
     replyTo,
     subject: message.subject,
     text: message.text,
@@ -575,6 +560,7 @@ export async function sendTransactionalEmail(
       console.error(
         JSON.stringify({ event: "transactional_email_over_daily_budget", kind: input.kind }),
       );
+      track(ctx.analytics, { name: "email_failed", kind: input.kind, error_class: "daily_budget" });
       throw new ServiceError("unavailable", "Couldn’t send the email. Try again in a moment.");
     }
     try {
@@ -703,7 +689,7 @@ export async function sendEmailPreview(
   const { sendWithResend } = await import("../email/resend");
   await sendWithResend(env.RESEND_API_KEY, {
     to,
-    from: FROM,
+    from: EMAIL_FROM,
     replyTo: REPLY_TO,
     subject: message.subject,
     text: message.text,

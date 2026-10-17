@@ -632,14 +632,8 @@ msgstr "{oneSided, plural, one {# card has no --- line, so it’s imported with 
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 
-msgid "{ownerName} entered this address in Lymi."
-msgstr "{ownerName} entered this address in Lymi."
-
-msgid "{ownerName} invited you to study this deck on Lymi."
-msgstr "{ownerName} invited you to study this deck on Lymi."
-
-msgid "{ownerName} shared a deck with you"
-msgstr "{ownerName} shared a deck with you"
+msgid "{ownerName} invited you to study {deckName}"
+msgstr "{ownerName} invited you to study {deckName}"
 
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "{passed} remembered, {failed} forgotten"
@@ -675,6 +669,10 @@ msgstr "{words, plural, one {# word} other {# words}}"
 #. placeholder {0}: consistency.days.length
 msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# day} other {# days}}"
+
+#. <0/> is the name of the person inviting
+msgid "<0/> invited you to study this deck"
+msgstr "<0/> invited you to study this deck"
 
 #. placeholder {0}: section.name
 msgid "<0>{0} is ready.</0> Start it to review its cards."
@@ -1209,9 +1207,6 @@ msgstr "Browse ready-made decks"
 msgid "Bug"
 msgstr "Bug"
 
-msgid "Button not working? Paste this link into your browser:"
-msgstr "Button not working? Paste this link into your browser:"
-
 #. placeholder {0}: deck.publisher
 msgid "By {0}"
 msgstr "By {0}"
@@ -1492,14 +1487,14 @@ msgstr "Confirm address"
 msgid "Confirm it’s you"
 msgstr "Confirm it’s you"
 
-msgid "Confirm your address to finish creating your Lymi account:"
-msgstr "Confirm your address to finish creating your Lymi account:"
-
 msgid "Confirm your email address"
 msgstr "Confirm your email address"
 
 msgid "Confirm your email address first."
 msgstr "Confirm your email address first."
+
+msgid "Confirming it signs you in and finishes creating your Lymi account."
+msgstr "Confirming it signs you in and finishes creating your Lymi account."
 
 msgid "Connect"
 msgstr "Connect"
@@ -1545,9 +1540,6 @@ msgstr "Continue to {appName}"
 
 msgid "Continue with Google"
 msgstr "Continue with Google"
-
-msgid "Continue with Google here:"
-msgstr "Continue with Google here:"
 
 msgctxt "deck tag"
 msgid "Conversation"
@@ -2061,8 +2053,8 @@ msgstr "Enter an email address."
 msgid "Enter the 6-digit code from the email."
 msgstr "Enter the 6-digit code from the email."
 
-msgid "Enter this code in Lymi to delete your account and everything in it:"
-msgstr "Enter this code in Lymi to delete your account and everything in it:"
+msgid "Enter this code in Lymi to delete your account:"
+msgstr "Enter this code in Lymi to delete your account:"
 
 msgid "Enter this code in the Lymi app to finish creating your account:"
 msgstr "Enter this code in the Lymi app to finish creating your account:"
@@ -3317,6 +3309,9 @@ msgstr "or"
 msgid "Or choose a .txt file"
 msgstr "Or choose a .txt file"
 
+msgid "Or paste this link into your browser:"
+msgstr "Or paste this link into your browser:"
+
 msgid "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
 msgstr "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
 
@@ -3941,9 +3936,6 @@ msgstr "Series"
 msgid "Set a new password"
 msgstr "Set a new password"
 
-msgid "Set a new password for your Lymi account:"
-msgstr "Set a new password for your Lymi account:"
-
 msgid "Set name"
 msgstr "Set name"
 
@@ -3992,11 +3984,12 @@ msgstr "Sign back in to this account and choose that file, without unzipping it.
 msgid "Sign in"
 msgstr "Sign in"
 
+msgctxt "email button"
+msgid "Sign in"
+msgstr "Sign in"
+
 msgid "Sign in as you anywhere else"
 msgstr "Sign in as you anywhere else"
-
-msgid "Sign in here, or reset your password from the same page:"
-msgstr "Sign in here, or reset your password from the same page:"
 
 msgid "Sign in to continue."
 msgstr "Sign in to continue."
@@ -4006,6 +3999,9 @@ msgstr "Sign in to Lymi"
 
 msgid "Sign in with your new password."
 msgstr "Sign in with your new password."
+
+msgid "Sign in, or reset your password from the sign-in page."
+msgstr "Sign in, or reset your password from the sign-in page."
 
 msgid "Sign in, then choose what it can do."
 msgstr "Sign in, then choose what it can do."
@@ -4824,12 +4820,6 @@ msgstr "You cannot join this deck through this link."
 msgid "You don’t need to do anything."
 msgstr "You don’t need to do anything."
 
-msgid "You got this email because of your Lymi account."
-msgstr "You got this email because of your Lymi account."
-
-msgid "You got this email because someone used this address on Lymi."
-msgstr "You got this email because someone used this address on Lymi."
-
 msgid "You keep studying these cards on your own schedule. Nobody else sees your reviews or progress."
 msgstr "You keep studying these cards on your own schedule. Nobody else sees your reviews or progress."
 
@@ -4860,6 +4850,9 @@ msgstr "You were removed from this deck, so this link cannot add you back. Your 
 msgid "You were removed from this deck, so you cannot add it again. Your reviews are kept."
 msgstr "You were removed from this deck, so you cannot add it again. Your reviews are kept."
 
+msgid "You won’t get any more emails from Lymi."
+msgstr "You won’t get any more emails from Lymi."
+
 msgid "You wrote this"
 msgstr "You wrote this"
 
@@ -4878,6 +4871,9 @@ msgstr "You’ve asked for several codes today. Try again tomorrow."
 msgid "Your account data"
 msgstr "Your account data"
 
+msgid "Your cards, reviews and settings are gone. Decks other people study stay for them."
+msgstr "Your cards, reviews and settings are gone. Decks other people study stay for them."
+
 msgid "Your code to delete your Lymi account"
 msgstr "Your code to delete your Lymi account"
 
@@ -4892,9 +4888,6 @@ msgstr "Your Google photo is back"
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Your grades are saved. Check your connection and try again."
-
-msgid "Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi."
-msgstr "Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi."
 
 msgid "Your Lymi account is deleted"
 msgstr "Your Lymi account is deleted"

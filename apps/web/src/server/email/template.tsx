@@ -17,7 +17,17 @@ import {
 /** The picture an email opens with: the brand lantern in its pool, or the deck being offered. */
 export type Hero =
   | { kind: "lantern" }
-  | { kind: "deck"; name: string; meta: string; hue: number; initials: string; invitedBy: string };
+  | {
+      kind: "deck";
+      name: string;
+      meta: string;
+      hue: number;
+      /** Who offers the deck, drawn in ink where the byline has `<0/>`. */
+      inviter: string;
+      initials: string;
+      /** The translated byline, with `<0/>` where the translator put the inviter's name. */
+      byline: string;
+    };
 
 /** One piece of an email's body, drawn the same way in every kind. */
 export type Block =
@@ -63,8 +73,20 @@ const s = {
     fontWeight: 500,
     color: light.text,
   },
-  text: { margin: "0 0 16px", fontSize: "15px", lineHeight: "1.6", color: light["text-2"] },
-  note: { margin: "0 0 12px", fontSize: "13px", lineHeight: "1.55", color: light.muted },
+  text: {
+    margin: "0 0 16px",
+    fontSize: "15px",
+    lineHeight: "1.6",
+    color: light["text-2"],
+    whiteSpace: "pre-line",
+  },
+  note: {
+    margin: "0 0 12px",
+    fontSize: "13px",
+    lineHeight: "1.55",
+    color: light.muted,
+    whiteSpace: "pre-line",
+  },
   button: {
     display: "block",
     boxSizing: "border-box",
@@ -107,7 +129,6 @@ function darkStyles(hero: Hero | undefined): string {
   const hue = hero?.kind === "deck" ? hues.tray.dark[hero.hue % hues.tray.dark.length] : null;
   return `
 :root { color-scheme: light dark; supported-color-schemes: light dark; }
-.lx-dark { display: none; overflow: hidden; max-height: 0; mso-hide: all; }
 @media (prefers-color-scheme: dark) {
   .lx-body, .lx-body > table > tbody > tr > td { background-color: ${dark.canvas} !important; }
   .lx-plate { background-color: ${dark.plate} !important; }
@@ -117,100 +138,150 @@ function darkStyles(hero: Hero | undefined): string {
   .lx-button { background-color: ${dark.amber} !important; color: ${dark["amber-ink"]} !important; }
   .lx-code { background-color: ${dark["plate-2"]} !important; color: ${dark.text} !important; }
   .lx-link { color: ${dark["amber-text"]} !important; }
-  .lx-avatar { background-color: ${dark.glass} !important; color: ${dark["amber-text"]} !important; }
+  .lx-avatar { background-color: ${dark.plate} !important; color: ${dark["amber-text"]} !important; }
   ${hue ? `.lx-hue { background-color: ${hue} !important; }` : ""}
   .lx-light { display: none !important; }
   .lx-dark { display: block !important; max-height: none !important; }
 }`;
 }
 
-/** The lantern and wordmark, for an email that opens on something other than the lantern. */
-function Lockup({ assetOrigin }: { assetOrigin: string }) {
-  const image = (room: "light" | "dark") => ({
-    src: new URL(`/brand/email/lockup-${room}.png`, assetOrigin).toString(),
-    width: 72,
-    height: 36,
-    alt: "Lymi",
-  });
+/**
+ * A picture drawn for each room. The night one is hidden inline, so a client that strips <style>
+ * shows only the day one, and the dark-mode rule shows it instead.
+ */
+function RoomImage({
+  name,
+  width,
+  height,
+  alt,
+  assetOrigin,
+  centered,
+}: {
+  name: string;
+  width: number;
+  height: number;
+  alt: string;
+  assetOrigin: string;
+  centered?: boolean;
+}) {
+  const src = (room: "light" | "dark") =>
+    new URL(`/brand/email/${name}-${room}.png`, assetOrigin).toString();
+  const style = centered ? { margin: "0 auto" } : {};
   return (
-    <Section style={{ margin: "0 0 24px" }}>
-      <Img {...image("light")} className="lx-light" />
-      <div className="lx-dark">
-        <Img {...image("dark")} />
+    <>
+      <Img
+        src={src("light")}
+        width={width}
+        height={height}
+        alt={alt}
+        className="lx-light"
+        style={style}
+      />
+      <div
+        className="lx-dark"
+        // Outlook's own property, which React's style type does not list.
+        style={
+          { display: "none", maxHeight: 0, overflow: "hidden", msoHide: "all" } as CSSProperties
+        }
+      >
+        <Img src={src("dark")} width={width} height={height} alt={alt} style={style} />
       </div>
+    </>
+  );
+}
+
+/** The lantern and wordmark, for an email that opens on something other than the lantern. */
+function Lockup({ assetOrigin, centered }: { assetOrigin: string; centered?: boolean }) {
+  return (
+    <Section
+      style={centered ? { margin: "0 0 16px", textAlign: "center" } : { margin: "0 0 24px" }}
+    >
+      <RoomImage
+        name="lockup"
+        width={72}
+        height={36}
+        alt="Lymi"
+        assetOrigin={assetOrigin}
+        centered={centered ?? false}
+      />
     </Section>
   );
 }
 
 function LanternHero({ assetOrigin }: { assetOrigin: string }) {
-  const image = (room: "light" | "dark") => ({
-    src: new URL(`/brand/email/lantern-${room}.png`, assetOrigin).toString(),
-    width: 240,
-    height: 160,
-    alt: "",
-  });
   return (
     <Section style={{ textAlign: "center", paddingTop: "8px" }}>
-      <Img {...image("light")} className="lx-light" style={{ margin: "0 auto" }} />
-      <div className="lx-dark">
-        <Img {...image("dark")} style={{ margin: "0 auto" }} />
-      </div>
+      <RoomImage
+        name="lantern"
+        width={240}
+        height={160}
+        alt=""
+        assetOrigin={assetOrigin}
+        centered
+      />
     </Section>
   );
 }
 
-function DeckHero({
-  hero,
-  assetOrigin,
-}: {
-  hero: Extract<Hero, { kind: "deck" }>;
-  assetOrigin: string;
-}) {
+/** The byline with the inviter's name in ink, on a line of its own when it leads. */
+function Byline({ hero }: { hero: Extract<Hero, { kind: "deck" }> }) {
+  const [before = "", after = ""] = hero.byline.split("<0/>");
+  return (
+    <>
+      {before}
+      <span className="lx-strong" style={{ color: light.text, fontWeight: 500 }}>
+        {hero.inviter}
+      </span>
+      {before.trim() ? " " : <br />}
+      {after.trimStart()}
+    </>
+  );
+}
+
+/** The deck's cover, with the person offering it as its byline. */
+function DeckHero({ hero }: { hero: Extract<Hero, { kind: "deck" }> }) {
   const tray = hues.tray.light[hero.hue % hues.tray.light.length];
   return (
-    <Section className="lx-hue" style={{ backgroundColor: tray, padding: "28px 32px 26px" }}>
-      <Lockup assetOrigin={assetOrigin} />
-      <Text className="lx-text" style={{ ...s.note, color: light["text-2"], margin: "0 0 6px" }}>
-        {hero.meta}
-      </Text>
-      <Text className="lx-strong" style={{ ...s.heading, fontSize: "28px", margin: 0 }}>
+    <Section className="lx-hue" style={{ backgroundColor: tray, padding: "28px 32px 28px" }}>
+      <table role="presentation" cellPadding={0} cellSpacing={0} style={{ margin: "0 0 32px" }}>
+        <tbody>
+          <tr>
+            <td style={{ paddingInlineEnd: "12px", verticalAlign: "middle" }}>
+              <div
+                className="lx-avatar"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  lineHeight: "40px",
+                  borderRadius: "20px",
+                  backgroundColor: light.plate,
+                  color: light["amber-text"],
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  textAlign: "center",
+                }}
+              >
+                {hero.initials}
+              </div>
+            </td>
+            <td style={{ verticalAlign: "middle" }}>
+              <Text
+                className="lx-text"
+                style={{ ...s.note, fontSize: "14px", lineHeight: "1.4", color: light["text-2"] }}
+              >
+                <Byline hero={hero} />
+              </Text>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <Text className="lx-strong" style={{ ...s.heading, fontSize: "28px", margin: "0 0 8px" }}>
         {hero.name}
       </Text>
+      <Text className="lx-text" style={{ ...s.note, color: light["text-2"], margin: 0 }}>
+        {hero.meta}
+      </Text>
     </Section>
-  );
-}
-
-function Inviter({ hero }: { hero: Extract<Hero, { kind: "deck" }> }) {
-  return (
-    <table role="presentation" cellPadding={0} cellSpacing={0} style={{ margin: "0 0 16px" }}>
-      <tbody>
-        <tr>
-          <td style={{ paddingInlineEnd: "12px", verticalAlign: "middle" }}>
-            <div
-              className="lx-avatar"
-              style={{
-                width: "44px",
-                height: "44px",
-                lineHeight: "44px",
-                borderRadius: "22px",
-                backgroundColor: light.glass,
-                color: light["amber-text"],
-                fontSize: "15px",
-                fontWeight: 500,
-                textAlign: "center",
-              }}
-            >
-              {hero.initials}
-            </div>
-          </td>
-          <td style={{ verticalAlign: "middle" }}>
-            <Text className="lx-text" style={{ ...s.text, margin: 0 }}>
-              {hero.invitedBy}
-            </Text>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   );
 }
 
@@ -282,9 +353,10 @@ export function EmailTemplate({
       <Preview>{email.preview}</Preview>
       <Body className="lx-body" style={s.body}>
         <Container style={s.container}>
+          {hero?.kind === "deck" && <Lockup assetOrigin={options.assetOrigin} centered />}
           <Section className="lx-plate" style={s.plate}>
             {hero?.kind === "lantern" && <LanternHero assetOrigin={options.assetOrigin} />}
-            {hero?.kind === "deck" && <DeckHero hero={hero} assetOrigin={options.assetOrigin} />}
+            {hero?.kind === "deck" && <DeckHero hero={hero} />}
             <Section
               style={{
                 ...s.inner,
@@ -292,7 +364,6 @@ export function EmailTemplate({
               }}
             >
               {!hero && <Lockup assetOrigin={options.assetOrigin} />}
-              {hero?.kind === "deck" && <Inviter hero={hero} />}
               {email.heading && (
                 <Text className="lx-strong" style={s.heading}>
                   {email.heading}

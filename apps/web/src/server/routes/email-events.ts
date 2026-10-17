@@ -13,6 +13,17 @@ import { analyticsContextFor } from "../services/analytics-context";
  */
 export const emailEvents = new Hono<AppEnv>();
 
+/** True when this delivery id was already handled; storage trouble lets the event through. */
+async function seenBefore(sessions: KVNamespace | undefined, id: string): Promise<boolean> {
+  if (!sessions || !id) return false;
+  const key = `email-event:${id}`;
+  try {
+    if (await sessions.get(key)) return true;
+    await sessions.put(key, "1", { expirationTtl: 60 * 60 * 24 * 3 });
+  } catch {}
+  return false;
+}
+
 const isKind = (kind: string | null): kind is (typeof EMAIL_KINDS)[number] =>
   (EMAIL_KINDS as readonly (string | null)[]).includes(kind);
 
@@ -39,6 +50,8 @@ emailEvents.post("/", describe({ hide: true, open: true }), async (c) => {
   }
   const problem = deliveryProblem(body);
   if (!problem) return c.json({ ok: true });
+  // Resend retries a delivery it is unsure of under the same id; count each event once.
+  if (await seenBefore(c.env.SESSIONS, c.req.header("svix-id") ?? "")) return c.json({ ok: true });
 
   const kind = isKind(problem.kind) ? problem.kind : undefined;
   console.error(JSON.stringify({ event: `email_${problem.type}`, kind: kind ?? "unknown" }));

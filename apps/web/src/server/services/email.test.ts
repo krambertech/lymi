@@ -89,7 +89,7 @@ describe("transactional email", () => {
   it("puts a link kind's link behind its button and repeats it to paste", async () => {
     const url = "https://my.lymi.app/api/auth/reset-password/token?callbackURL=%2F";
     const message = await renderTransactionalEmail("reset-password", "en", { url });
-    expect(message.text).toContain(`Set a new password for your Lymi account:\n\n${url}`);
+    expect(message.text).toContain(`Reset your Lymi password\n\n${url}`);
     expect(
       message.html.match(/href="https:\/\/my\.lymi\.app\/api\/auth\/reset-password/g),
     ).toHaveLength(2);
@@ -107,13 +107,14 @@ describe("transactional email", () => {
         language: "et",
       },
     });
-    expect(message.subject).toBe("Maria Kask shared a deck with you");
+    expect(message.subject).toBe("Maria Kask invited you to study Estonian A2");
     expect(message.html).toContain("Estonian · 214 cards");
     expect(message.html).toContain(">MK<");
-    expect(message.html).toContain("Maria Kask invited you to study this deck on Lymi.");
+    expect(message.html).toMatch(/>Maria Kask<\/span><br\/?>invited you to study this deck/);
+    expect(message.html).toContain("/brand/email/lockup-light.png");
     expect(message.html).toContain(hues.tray.light[trayHue("deck-1")] ?? "the deck's tray colour");
     expect(message.text).toMatch(
-      /^Estonian A2\nEstonian · 214 cards\n\nMaria Kask invited you to study this deck on Lymi\.\n\nYou review/,
+      /^Maria Kask invited you to study this deck\n\nEstonian A2\nEstonian · 214 cards\n\nYou review/,
     );
   });
 
@@ -149,6 +150,36 @@ describe("transactional email", () => {
     expect(message.html).toContain("Screen: /today\n");
     // The learner's own words are escaped rather than rendered as markup.
     expect(message.html).toContain("Lesia &lt;lesia@example.com&gt;");
+  });
+
+  it("keeps a subject on one line when a deck name holds a line break", async () => {
+    const message = await renderTransactionalEmail("deck-invitation", "en", {
+      url: "https://my.lymi.app/join/token",
+      invitation: { deckId: "d", deckName: "Verbs\nweek 2", ownerName: "Maria", cards: 1 },
+    });
+    expect(message.subject).toBe("Maria invited you to study Verbs week 2");
+  });
+
+  it("hides the night picture inline, so a client without styles shows only the day one", async () => {
+    const message = await renderTransactionalEmail("test", "en");
+    expect(message.html).toContain(
+      '<div class="lx-dark" style="display:none;max-height:0;overflow:hidden;mso-hide:all">',
+    );
+  });
+
+  it("keeps the line breaks a learner typed in feedback", async () => {
+    const message = await renderTransactionalEmail("feedback", "en", {
+      feedback: {
+        kind: "bug",
+        message: "First line.\n\nSecond paragraph.",
+        from: "Lesia <lesia@example.com>",
+        screen: "/today",
+        appVersion: "v42",
+        browser: "Safari/17",
+        language: "uk",
+      },
+    });
+    expect(message.html).toMatch(/white-space:pre-line[^>]*>First line\.\n\nSecond paragraph\.</);
   });
 
   it("sends feedback to the operator inbox with the learner as reply-to", async () => {

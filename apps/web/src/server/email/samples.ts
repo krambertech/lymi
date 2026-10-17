@@ -1,4 +1,3 @@
-import { EMAIL_KINDS } from "@lymi/core/analytics";
 import type { TransactionalEmailKind, TransactionalEmailParams } from "../services/email";
 
 /** What each kind is drawn with on the local `/emails` page. Invented, and never sent to a learner. */
@@ -34,5 +33,3 @@ export const EMAIL_SAMPLES: Record<TransactionalEmailKind, TransactionalEmailPar
   "delete-account-code": { code: "205918" },
   "account-deleted": {},
 };
-
-export const EMAIL_SAMPLE_KINDS = EMAIL_KINDS;

@@ -595,7 +595,10 @@ export const CardInput = z.object({
     .max(CARD_LIMITS.meaning, "Keep the meaning under 2000 characters.")
     .optional(),
   pronunciation: z.string().trim().max(CARD_LIMITS.pronunciation).optional(),
-  example: z.string().trim().max(CARD_LIMITS.example).optional(),
+  example: z.string().trim().max(CARD_LIMITS.example).optional().meta({
+    description:
+      "One sentence in the term's language. Japanese carries a hiragana reading in square brackets after each run of kanji: 毎朝[まいあさ]パンを食[た]べます。",
+  }),
   notes: z
     .string()
     .trim()

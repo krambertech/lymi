@@ -2,6 +2,7 @@ import {
   arrivesKnown,
   type Directions,
   directionsFromModes,
+  duplicateKey,
   emptyImportCounts,
   IMAGE_LIMITS,
   IMPORT_LIMITS,
@@ -12,7 +13,9 @@ import {
   newId,
   normaliseTerm,
   playableRecording,
+  readingKey,
   replayProgress,
+  sameReading,
   serializeState,
   stateDirection,
   TEXT_MODES,
@@ -56,9 +59,9 @@ export async function readNoteChunk<Note>(bucket: R2Bucket, objectKey: string, c
   return (await object.json()) as Note[];
 }
 
-/** A card with no language only matches other cards with no language, as in `addCards`. */
+/** The duplicate rule's key for an imported term, as in `addCards`. */
 function dupKey(language: string | null, term: string) {
-  return `${language ?? ""} ${normaliseTerm(term)}`;
+  return duplicateKey(language, normaliseTerm(term));
 }
 
 /** The deck path as a Lymi name: `Italian::Lesson 1` reads `Italian / Lesson 1`. */
@@ -85,11 +88,23 @@ function deckExternalId(source: string, key: string, name: string) {
   return `${source}:deck:${key}:${name}`;
 }
 
+/** Cards under one duplicate key, each with its reading, since homographs share a key. */
+type Held = Map<string, { reading: string | null; deckName: string }[]>;
+
 type Lookup = {
   /** `recorded` when the card already has a recording, which an import never reads again. */
   byExternal: Map<string, { id: string; deckId: string; recorded: boolean }>;
-  active: Map<string, string>;
+  active: Held;
 };
+
+function hold(held: Held, key: string, reading: string | null, deckName: string) {
+  held.set(key, [...(held.get(key) ?? []), { reading, deckName }]);
+}
+
+/** The deck of a held card this one duplicates, or undefined. */
+function heldDeck(held: Held, key: string, reading: string | null) {
+  return held.get(key)?.find((h) => sameReading(h.reading, reading))?.deckName;
+}
 
 /** The learner's cards that an import could meet: by external id, and active ones by term. */
 async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?: string) {
@@ -113,6 +128,7 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?:
         .select({
           language: schema.cards.language,
           normalizedTerm: schema.cards.normalizedTerm,
+          pronunciation: schema.cards.pronunciation,
           deckName: schema.decks.name,
         })
         .from(schema.cards)
@@ -141,7 +157,12 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?:
     }
   }
   for (const row of active) {
-    result.active.set(`${row.language ?? ""} ${row.normalizedTerm}`, row.deckName);
+    hold(
+      result.active,
+      duplicateKey(row.language, row.normalizedTerm),
+      readingKey(row),
+      row.deckName,
+    );
   }
   return result;
 }
@@ -166,6 +187,7 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
       .select({
         language: schema.cards.language,
         normalizedTerm: schema.cards.normalizedTerm,
+        pronunciation: schema.cards.pronunciation,
         deckName: schema.decks.name,
       })
       .from(schema.cards)
@@ -183,7 +205,12 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
     }
   }
   for (const row of active) {
-    result.active.set(`${row.language ?? ""} ${row.normalizedTerm}`, row.deckName);
+    hold(
+      result.active,
+      duplicateKey(row.language, row.normalizedTerm),
+      readingKey(row),
+      row.deckName,
+    );
   }
   return result;
 }
@@ -202,7 +229,7 @@ function classify(
   found: Lookup,
   languages: ImportChoices["languages"],
   deckNames: Map<string, string>,
-  seen: Map<string, string>,
+  seen: Held,
   /** Keep a term the file repeats, as Quizlet sets reuse terms for different meanings. */
   keepRepeats = false,
 ): Classified[] {
@@ -212,9 +239,12 @@ function classify(
     const language =
       card.language !== undefined ? card.language : (languages[card.deckKey] ?? null);
     const key = dupKey(language, card.fields.term);
-    const held = found.active.get(key) ?? (keepRepeats ? undefined : seen.get(key));
+    const reading = readingKey({ language, pronunciation: card.fields.pronunciation });
+    const held =
+      heldDeck(found.active, key, reading) ??
+      (keepRepeats ? undefined : heldDeck(seen, key, reading));
     if (held !== undefined) return { kind: "duplicate", card, deckName: held };
-    seen.set(key, deckNames.get(card.deckKey) ?? "");
+    hold(seen, key, reading, deckNames.get(card.deckKey) ?? "");
     return { kind: "added", card, language };
   });
 }
@@ -336,7 +366,7 @@ export async function previewImport<Note>(
   const perDeck = new Map<string, number>();
   const addedByNoteType: Record<string, number> = {};
   const tags = new Set<string>();
-  const seen = new Map<string, string>();
+  const seen: Held = new Map();
   const samples: ImportPreviewOut["samples"] = {};
   const found = await lookupAll(ctx);
   const now = new Date();
@@ -405,7 +435,7 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
   const { db, userId, actor } = ctx;
   const names = new Map(work.summary.decks.map((d) => [d.key, deckName(d.name)]));
   const modes = new Map<string, Map<Directions, number>>();
-  const seen = new Map<string, string>();
+  const seen: Held = new Map();
   const found = await lookupAll(ctx);
   for await (const { cards } of importedCards(work)) {
     const classified = classify(

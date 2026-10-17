@@ -95,6 +95,42 @@ describe("bulk card writes", () => {
     expect(added.results[1]).toMatchObject({ status: "added", enrichmentStatus: null });
   });
 
+  it("treats a language and its regional tag as one language for duplicates", async () => {
+    const add = async (language: string | null, term: string) => {
+      const response = await app.fetch("/api/cards/batch", {
+        ...json({ cards: [{ deckId, term, language }] }),
+        as: learner,
+      });
+      return AddCardsOut.parse(await response.json()).results[0]?.status;
+    };
+    expect(await add("ja", "上手")).toBe("added");
+    expect(await add("ja-JP", "上手")).toBe("skipped");
+    expect(await add("ja", "じょうず")).toBe("added");
+    expect(await add("zh", "上手")).toBe("added");
+    expect(await add(null, "上手")).toBe("added");
+  });
+
+  it("keeps Japanese homographs with different readings as two cards", async () => {
+    const add = async (cards: { term: string; pronunciation?: string }[]) => {
+      const response = await app.fetch("/api/cards/batch", {
+        ...json({ cards: cards.map((c) => ({ deckId, language: "ja", ...c })) }),
+        as: learner,
+      });
+      return AddCardsOut.parse(await response.json()).results.map((r) => r.status);
+    };
+    expect(await add([{ term: "一日", pronunciation: "ついたち" }])).toEqual(["added"]);
+    expect(await add([{ term: "一日", pronunciation: "いちにち" }])).toEqual(["added"]);
+    expect(await add([{ term: "一日", pronunciation: "イチニチ" }])).toEqual(["skipped"]);
+    expect(await add([{ term: "一日" }])).toEqual(["skipped"]);
+    expect(
+      await add([
+        { term: "下手", pronunciation: "へた" },
+        { term: "下手", pronunciation: "しもて" },
+        { term: "下手", pronunciation: "へた" },
+      ]),
+    ).toEqual(["added", "added", "skipped"]);
+  });
+
   it("answers a single edit with the whole card, whatever the query asks", async () => {
     const [first] = await ids(["quindi"]);
     const response = await app.fetch(`/api/cards/${first}?response=terse`, {

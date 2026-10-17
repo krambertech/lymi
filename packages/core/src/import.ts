@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { moraCount } from "./reading";
 import { OPEN } from "./responses/common";
 import { type FieldSource, LanguageTag, type Rating, ReviewModeKey } from "./types";
 
@@ -264,8 +265,6 @@ type PitchFrame = {
   drop: boolean;
 };
 
-const SMALL_KANA = /[ゃゅょぁぃぅぇぉゎャュョァィゥェォヮ]/;
-const MORA = /[\p{Script=Hiragana}\p{Script=Katakana}ー]/u;
 const DOWNSTEP = "ꜜ";
 
 function attribute(attrs: string, name: string): string {
@@ -291,7 +290,7 @@ function pitchItem(units: PitchUnit[]): string {
   let morae = 0;
   units.forEach((unit, i) => {
     out += unit.text;
-    morae += [...unit.text].filter((ch) => MORA.test(ch) && !SMALL_KANA.test(ch)).length;
+    morae += moraCount(unit.text);
     const next = units[i + 1];
     if (position === null && (unit.drop || (unit.high && next && !next.high))) {
       out += DOWNSTEP;

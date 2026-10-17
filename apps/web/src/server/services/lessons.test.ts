@@ -57,6 +57,55 @@ const fakeAi = (scores: Record<string, number>): DecisionModel => ({
 });
 
 describe("readLesson", () => {
+  it("carries the reading a lesson prints for a term", async () => {
+    const ctx = await learner(db, "lesson-reading", "Kateryna");
+    const operators = new Set(["lesson-reading@lymi.test"]);
+    const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja" });
+    const reader = fakeReader({
+      deck: deck.id,
+      terms: [term("t1", "上手", { pronunciation: "じょうず" }), term("t2", "ねこ")],
+      questions: [],
+    });
+    const read = await readLesson(
+      ctx,
+      material,
+      { reader, ai: fakeAi({}), operators },
+      { deckId: deck.id },
+    );
+    const byId = Object.fromEntries(read.terms.map((t) => [t.id, t]));
+    expect(byId.t1?.pronunciation).toBe("じょうず");
+    expect(byId.t2?.pronunciation).toBeNull();
+  });
+
+  it("greys a Japanese term as owned only when no reading tells the two apart", async () => {
+    const ctx = await learner(db, "lesson-homograph", "Kateryna");
+    const operators = new Set(["lesson-homograph@lymi.test"]);
+    const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja" });
+    await addCards(ctx, [
+      { deckId: deck.id, term: "上手", pronunciation: "じょうず", enrich: false },
+      { deckId: deck.id, term: "下手", enrich: false },
+    ]);
+    const reader = fakeReader({
+      deck: deck.id,
+      terms: [
+        term("t1", "上手", { pronunciation: "うわて" }),
+        term("t2", "上手", { pronunciation: "ジョウズ" }),
+        term("t3", "下手", { pronunciation: "へた" }),
+      ],
+      questions: [],
+    });
+    const read = await readLesson(
+      ctx,
+      material,
+      { reader, ai: fakeAi({}), operators },
+      { deckId: deck.id },
+    );
+    const byId = Object.fromEntries(read.terms.map((t) => [t.id, t]));
+    expect(byId.t1).toMatchObject({ existing: null, formOf: null, ticked: true });
+    expect(byId.t2?.existing?.term).toBe("上手");
+    expect(byId.t3?.existing?.term).toBe("下手");
+  });
+
   it("greys terms already owned, flags other forms, and keeps the lesson's meaning only", async () => {
     const ctx = await learner(db, "lesson-owner", "Kateryna");
     const operators = new Set(["lesson-owner@lymi.test"]);

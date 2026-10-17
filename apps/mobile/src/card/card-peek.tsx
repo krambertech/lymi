@@ -1,6 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import type { Card, CardState } from "@lymi/client/api";
 import { splitForms } from "@lymi/client/deck-list";
+import { stripReadings } from "@lymi/core";
 import { useWindowDimensions, View } from "react-native";
 import { usePalette, useRoom } from "../theme/palette";
 import { StateChip } from "../ui/chip";
@@ -104,7 +105,7 @@ export function CardPeek({
         )}
         {card.example && (
           <Text className="text-md text-text-2" numberOfLines={2}>
-            {card.example}
+            {stripReadings(card.example)}
           </Text>
         )}
       </View>

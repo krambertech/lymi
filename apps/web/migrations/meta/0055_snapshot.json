@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "33ddad34-052c-4297-9ae1-157eed8a1707",
+  "id": "052dfa03-6262-4103-a32e-8075912d2d9a",
   "prevId": "cfb768e5-53c6-4d65-aaf5-0f0bf90e0c61",
   "tables": {
     "account_deletions": {

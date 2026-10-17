@@ -2627,6 +2627,9 @@ msgstr "Заметки должны быть короче 2000 символов.
 msgid "Keep the pronunciation under 200 characters."
 msgstr "Произношение должно быть короче 200 символов."
 
+msgid "Keep the reading under 200 characters."
+msgstr "Чтение должно быть короче 200 символов."
+
 msgid "Keep the source under 200 characters."
 msgstr "Источник должен быть короче 200 символов."
 
@@ -3529,6 +3532,10 @@ msgstr "Прочитай <0>политику конфиденциальност�
 msgid "Read the guide"
 msgstr "Прочитать руководство"
 
+msgid "Reading"
+msgstr "Чтение"
+
+msgctxt "how a term is read"
 msgid "Reading"
 msgstr "Чтение"
 

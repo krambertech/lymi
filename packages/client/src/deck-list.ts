@@ -1,4 +1,4 @@
-import { TAG_LIMITS, tagKey } from "@lymi/core";
+import { stripReadings, TAG_LIMITS, tagKey } from "@lymi/core";
 import type { Card, CardState, Section } from "./api";
 
 /** How the learner reads an FSRS state: Review is Known, and Relearning is Learning again. */
@@ -257,7 +257,7 @@ export function deckCsv(rows: readonly DeckRow[]): string {
         esc(card.term),
         esc(card.meaning),
         esc(card.pronunciation),
-        esc(card.example),
+        esc(card.example && stripReadings(card.example)),
         esc(card.notes),
         esc(card.language),
         esc(card.source),

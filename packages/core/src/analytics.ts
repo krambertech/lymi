@@ -152,6 +152,7 @@ export const analyticsEvents = {
     grade: z.number().int().min(1).max(4),
     state: z.enum(CARD_STATES).optional(),
     aid: ReviewAid.optional(),
+    reading: z.enum(["cue", "answer"]).optional(),
   }),
   review_undone: z.object({
     mode: ReviewModeKey.optional(),
@@ -231,6 +232,7 @@ export const analyticsEvents = {
     has_instructions: z.boolean().optional(),
     samples: count.optional(),
     skipped: count.optional(),
+    readings_added: count.optional(),
     prompt_version: z.number().int().positive().max(1000).optional(),
   }),
   deck_enrichment_changed: z.object({

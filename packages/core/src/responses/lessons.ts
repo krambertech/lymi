@@ -15,6 +15,8 @@ export const LessonTermOut = z.object({
   meaning: z.string().nullable(),
   /** The gloss the list shows, from the lesson or written by the model. */
   gloss: z.string(),
+  /** The reading the lesson prints for the term, such as furigana; null when it prints none. */
+  pronunciation: z.string().nullable(),
   handwritten: z.boolean(),
   heading: z.string().nullable(),
   /** The text the model read the term from. */

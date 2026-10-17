@@ -295,6 +295,15 @@
             "meaning": { "oneOf": ["school"] },
             "pronunciation": { "oneOf": ["がっこう"] }
           }
+        },
+        {
+          "id": "ja-en-04",
+          "term": "毎朝",
+          "expect": {
+            "meaning": { "oneOf": ["every morning"] },
+            "pronunciation": { "oneOf": ["まいあさ"] },
+            "example": { "includes": ["毎朝[まいあさ]"] }
+          }
         }
       ]
     },

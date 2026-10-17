@@ -11,6 +11,7 @@ import { writes } from "@lymi/client/writes";
 import {
   CHOSEN_LIMIT,
   countedRating,
+  cueKeepsReading,
   type Drawn,
   drawKey,
   type FieldSource,
@@ -20,6 +21,7 @@ import {
   type Rating,
   ROUNDS,
   type Round,
+  stripReadings,
 } from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
@@ -105,6 +107,7 @@ import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { Skeleton } from "../ui/skeleton";
+import { stateKey } from "../ui/state-mark";
 import { useSystemBack } from "../ui/system-back";
 
 const EASE = curve(EASE_OUT);
@@ -1281,6 +1284,11 @@ function CardPlate({
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
+  const reading = card.pronunciation;
+  const readingOnCue =
+    mode.cue === "term" &&
+    !!card.pronunciation &&
+    cueKeepsReading(card.language, stateKey(forgotten ? 3 : fsrsState) === "known");
   const { width: screenWidth, fontScale } = useWindowDimensions();
   // The page's and the card's 20 pt sides, and the speaker beside a term.
   const cueLine = screenWidth - 80 - (pronounce && mode.cue === "term" ? 56 : 0);
@@ -1351,9 +1359,11 @@ function CardPlate({
             ? undefined
             : picture
               ? t`Picture card: ${card.image?.description ?? ""}. Tap to reveal`
-              : mode.cue === "term"
-                ? t`Recognition card for ${cue}. Tap to reveal`
-                : t`Production card for ${cue}. Tap to reveal`
+              : readingOnCue
+                ? t`Recognition card for ${cue}, read ${reading}. Tap to reveal`
+                : mode.cue === "term"
+                  ? t`Recognition card for ${cue}. Tap to reveal`
+                  : t`Production card for ${cue}. Tap to reveal`
         }
         className="flex-1 overflow-hidden rounded-2xl border border-edge bg-plate"
         style={dark ? LIFT : undefined}
@@ -1400,6 +1410,7 @@ function CardPlate({
                 {cue}
               </CardLine>
             )}
+            {readingOnCue && <Text className="pt-2 text-md text-muted">{reading}</Text>}
             {/* The hook has one place, under the cue, before the reveal and after it. */}
             {hook && hookShown ? (
               <View className="pt-3">
@@ -1453,7 +1464,8 @@ function CardPlate({
                     )}
                   </Animated.View>
                 )}
-                {card.pronunciation && (mode.target === "term" || picture) && (
+                {/* After the reveal unless the cue keeps it: under a term cue it reads the term out. */}
+                {card.pronunciation && !readingOnCue && (
                   <Animated.View entering={arrive()}>
                     <Text className="text-md text-muted">{card.pronunciation}</Text>
                   </Animated.View>
@@ -1465,7 +1477,7 @@ function CardPlate({
                 )}
                 {card.example && (
                   <Animated.View entering={arrive()}>
-                    <Text className="text-md text-text-2">{card.example}</Text>
+                    <Text className="text-md text-text-2">{stripReadings(card.example)}</Text>
                   </Animated.View>
                 )}
                 {card.notes && (

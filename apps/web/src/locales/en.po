@@ -2627,6 +2627,9 @@ msgstr "Keep the notes under 2000 characters."
 msgid "Keep the pronunciation under 200 characters."
 msgstr "Keep the pronunciation under 200 characters."
 
+msgid "Keep the reading under 200 characters."
+msgstr "Keep the reading under 200 characters."
+
 msgid "Keep the source under 200 characters."
 msgstr "Keep the source under 200 characters."
 
@@ -3529,6 +3532,10 @@ msgstr "Read Lymi’s <0>privacy policy</0> or get help from <1>support</1>."
 msgid "Read the guide"
 msgstr "Read the guide"
 
+msgid "Reading"
+msgstr "Reading"
+
+msgctxt "how a term is read"
 msgid "Reading"
 msgstr "Reading"
 

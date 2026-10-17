@@ -1,16 +1,20 @@
 import { useLingui } from "@lingui/react/macro";
 import type { Card, CardState } from "@lymi/client/api";
 import { splitForms } from "@lymi/client/deck-list";
-import { stripReadings } from "@lymi/core";
+import { hasReadings, termReading } from "@lymi/core";
+import { useMemo } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { usePalette, useRoom } from "../theme/palette";
 import { StateChip } from "../ui/chip";
+import { Furigana, ReadingText } from "../ui/furigana";
 import { Icon } from "../ui/icons";
 import { LIFT, Text } from "../ui/primitives";
 
 /** Onest's letters average a little over half their size across. */
 const lines = (text: string, size: number, width: number, most: number) =>
   Math.min(most, Math.max(1, Math.ceil((text.length * size * 0.55) / width)));
+
+const WORD = { fontSize: 34, lineHeight: 41, fontWeight: "500", letterSpacing: -1 } as const;
 
 /** The padding, the deck line, the rule and the gaps between them, in points. */
 const FRAME = 16 + 20 + 16 + 16 + 1 + 16 + 20;
@@ -22,12 +26,15 @@ const FRAME = 16 + 20 + 16 + 16 + 1 + 16 + 20;
 export function peekHeight(card: Card, width: number, scale: number) {
   const inner = width - 40;
   const { word, forms } = splitForms(card.term);
+  // Furigana stands a reading's line over each line it draws on, and then says the pronunciation.
+  const drawn = !!termReading({ ...card, term: word });
+  const example = card.example && (hasReadings(card.example) ? 23 + 12 : 23);
   const text =
-    lines(word, 34 * scale, inner, 2) * 41 +
+    lines(word, 34 * scale, inner, 2) * (drawn ? 41 + 21 : 41) +
     (forms ? 4 + 23 : 0) +
     lines(card.meaning || "", 20 * scale, inner, 3) * 26 +
-    (card.pronunciation ? 8 + 23 : 0) +
-    (card.example ? 8 + lines(card.example, 17 * scale, inner, 2) * 23 : 0);
+    (card.pronunciation && !drawn ? 8 + 23 : 0) +
+    (card.example && example ? 8 + lines(card.example, 17 * scale, inner, 2) * example : 0);
   return Math.min(Math.round(FRAME + text * scale), 420);
 }
 
@@ -55,6 +62,7 @@ export function CardPeek({
   const p = usePalette();
   const dark = useRoom() === "dark";
   const { word, forms } = splitForms(card.term);
+  const reading = useMemo(() => termReading({ ...card, term: word }), [card, word]);
   const { width, scale } = usePeekSize();
   return (
     <View
@@ -75,14 +83,14 @@ export function CardPeek({
         {state !== undefined && <StateChip state={state?.state} />}
       </View>
       <View className="gap-1">
-        <Text
+        <Furigana
+          segments={reading ?? [{ text: word }]}
           className="text-text"
-          numberOfLines={2}
-          style={{ fontSize: 34, lineHeight: 41, fontWeight: "500", letterSpacing: -1 }}
-        >
-          {word}
-          {card.important && <Text style={{ color: p["amber-mark"] }}>{" ★"}</Text>}
-        </Text>
+          lines={2}
+          style={WORD}
+          lang={card.language}
+          after={card.important && <Text style={[WORD, { color: p["amber-mark"] }]}>{" ★"}</Text>}
+        />
         {forms && (
           <Text className="text-md text-text-2" numberOfLines={1}>
             {forms}
@@ -98,15 +106,18 @@ export function CardPeek({
         >
           {card.meaning || t`No meaning yet`}
         </Text>
-        {card.pronunciation && (
+        {card.pronunciation && !reading && (
           <Text className="text-md text-muted" numberOfLines={1}>
             {card.pronunciation}
           </Text>
         )}
         {card.example && (
-          <Text className="text-md text-text-2" numberOfLines={2}>
-            {stripReadings(card.example)}
-          </Text>
+          <ReadingText
+            text={card.example}
+            className="text-md text-text-2"
+            lines={2}
+            lang={card.language}
+          />
         )}
       </View>
     </View>

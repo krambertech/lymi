@@ -1,11 +1,19 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
+import { api, refusalCode } from "@lymi/client/api";
 import { deletionQuery } from "@lymi/client/queries";
+import { dropQueued } from "@lymi/client/queued";
 import type { AccountDeletionOut } from "@lymi/core";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import { type ReactNode, useState } from "react";
 import { Linking, View } from "react-native";
+import {
+  appleSignInCancelled,
+  requestAppleCredential,
+  useAppleAvailable,
+} from "../../../auth/apple";
+import { authClient } from "../../../auth/client";
 import { ExportSheet } from "../../../export/export-sheet";
 import { LoadFailed } from "../../../ui/load-failed";
 import { Button, Plate, SectionTitle, Text } from "../../../ui/primitives";
@@ -144,6 +152,28 @@ function WhatStays({ decks }: { decks: AccountDeletionOut["sharedDecks"] }) {
 function Confirm({ apple, onPublisher }: { apple: boolean; onPublisher: () => void }) {
   const { t } = useLingui();
   const router = useRouter();
+  const appleAvailable = useAppleAvailable();
+  const remove = useMutation({
+    mutationFn: async () => {
+      const credential = await requestAppleCredential();
+      if (!credential.authorizationCode) throw new Error("Apple returned no authorization code");
+      return api.deleteAccount({
+        apple: {
+          idToken: credential.token,
+          nonce: credential.nonce,
+          authorizationCode: credential.authorizationCode,
+        },
+      });
+    },
+    onSuccess: async () => {
+      await authClient.signOut().catch(() => undefined);
+      dropQueued();
+    },
+    onError: (error) => {
+      if (refusalCode(error) === "publisher") onPublisher();
+    },
+  });
+  const nativeApple = apple && appleAvailable;
   const code = useSendCode({
     onSent: (sentTo) =>
       router.push({
@@ -157,12 +187,33 @@ function Confirm({ apple, onPublisher }: { apple: boolean; onPublisher: () => vo
       <View>
         <SectionTitle>{t`Confirm it’s you`}</SectionTitle>
         <Text className="px-1 text-base text-text-2">
-          {t`We’ll email you a 6-digit code. The account is deleted only once you enter it.`}
+          {nativeApple
+            ? t`Confirm with Apple to delete your account for good.`
+            : t`We’ll email you a 6-digit code. The account is deleted only once you enter it.`}
         </Text>
       </View>
-      <Button label={t`Send code`} size="lg" loading={code.pending} onPress={code.send} />
-      <ErrorLine>{code.error}</ErrorLine>
-      {apple && <AppleNote />}
+      {nativeApple ? (
+        <>
+          <Button
+            label={t`Delete account`}
+            variant="danger"
+            size="lg"
+            loading={remove.isPending}
+            onPress={() => remove.mutate()}
+          />
+          <ErrorLine>
+            {remove.isError && !appleSignInCancelled(remove.error)
+              ? t`Couldn’t delete your account. Check your connection and try again.`
+              : null}
+          </ErrorLine>
+        </>
+      ) : (
+        <>
+          <Button label={t`Send code`} size="lg" loading={code.pending} onPress={code.send} />
+          <ErrorLine>{code.error}</ErrorLine>
+          {apple && <AppleNote />}
+        </>
+      )}
     </View>
   );
 }

@@ -1,27 +1,66 @@
-# Japanese: review a kanji term, see its kana reading only once revealed, and open its word screen.
+# Japanese: furigana over a Known and a New card's term in review, over an example, a deck's row,
+# the card page and search, and the Reading field.
 appId: app.lymi
 name: Japanese
 ---
 - runFlow: _open.yaml
+# A Known card's cue keeps the furigana's room but hides it, and its label does not read it out.
 - tapOn: "Library"
-- tapOn: "${DECK}.*"
+- tapOn: "${KNOWN_DECK}.*"
 - tapOn: "^Review.*"
 - extendedWaitUntil:
-    visible: ".*${TERM}.*Tap to reveal"
+    visible: ".*${KNOWN_TERM}. Tap to reveal"
     timeout: 30000
-- assertNotVisible: ".*${READING}.*"
-- takeScreenshot: 01-cue-without-reading
+- assertNotVisible: ".*read ${KNOWN_READING}.*"
+- takeScreenshot: 01-known-cue-hidden
 # The card's centre can be its pronunciation button, so reveal by tapping low on the card.
 - tapOn:
     point: "50%,80%"
 - assertVisible: "^Good.*"
-- assertVisible: ".*${READING}.*"
-- takeScreenshot: 02-revealed-with-reading
-# Ending review mid-deck lands on the deck page, where the card's row opens its word screen.
+- assertVisible: ".*${KNOWN_READING}.*"
+- takeScreenshot: 02-known-revealed
 - tapOn: "End review"
+- tapOn: "Library"
+# A long verb's forms wrap after it, and a term past three lines ends in an ellipsis and its ★.
+- tapOn: "${ROWS_DECK}.*"
+- extendedWaitUntil:
+    visible: "食べる.*"
+    timeout: 20000
+- assertVisible: "経済的.*"
+- takeScreenshot: 03-long-rows
+- tapOn: "Library"
+# A New card's cue draws the furigana, and its label reads it.
+- tapOn: "${DECK}.*"
+- tapOn: "^Review.*"
+- extendedWaitUntil:
+    visible: ".*${TERM}, read ${READING}. Tap to reveal"
+    timeout: 30000
+- takeScreenshot: 04-new-cue-furigana
+- tapOn:
+    point: "50%,80%"
+- assertVisible: "^Good.*"
+- assertVisible: ".*${EXAMPLE_SPOKEN}.*"
+- takeScreenshot: 05-new-revealed-example
+# Ending review mid-deck lands on the deck page, where the row draws the furigana too.
+- tapOn: "End review"
+- extendedWaitUntil:
+    visible: "${TERM}.*"
+    timeout: 20000
+- takeScreenshot: 06-deck-row
 - tapOn: "${TERM}.*"
 - extendedWaitUntil:
-    visible: ".*${EXAMPLE}.*"
+    visible: ".*${EXAMPLE_SPOKEN}.*"
     timeout: 20000
-- assertVisible: ".*${READING}.*"
-- takeScreenshot: 03-word-screen
+- assertVisible: ".*Reading.*"
+- takeScreenshot: 07-card-page
+- tapOn: ".*Reading.*"
+- extendedWaitUntil:
+    visible: "Reading"
+    timeout: 20000
+- takeScreenshot: 08-edit-reading-field
+- tapOn: "Cancel"
+- openLink: "lymi://search?q=%E7%9B%B4%E8%A7%92"
+- extendedWaitUntil:
+    visible: "${TERM}.*"
+    timeout: 20000
+- takeScreenshot: 09-search

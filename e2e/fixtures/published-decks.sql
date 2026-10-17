@@ -7,6 +7,9 @@ INSERT INTO decks (id, user_id, name, default_language, description) VALUES
   ('e2e-deck-evening', 'e2e-publisher', 'Evening Estonian', 'et', 'PRIVATE description'),
   ('e2e-deck-signs', 'e2e-publisher', 'Estonian road signs', 'et', NULL),
   ('e2e-deck-withdrawn', 'e2e-publisher', 'Withdrawn Estonian', 'et', NULL),
+  ('e2e-deck-moved', 'e2e-publisher', 'Moved Estonian', 'et', NULL),
+  ('e2e-deck-moved-twice', 'e2e-publisher', 'Moved twice Estonian', 'et', NULL),
+  ('e2e-deck-dead-end', 'e2e-publisher', 'Dead-end Estonian', 'et', NULL),
   ('e2e-deck-cities', 'e2e-publisher', 'Міста Естонії', 'et', NULL);
 INSERT INTO decks (id, user_id, name, default_language, archived_at) VALUES
   ('e2e-deck-archived', 'e2e-publisher', 'Archived Estonian', 'et', unixepoch() * 1000);
@@ -50,3 +53,9 @@ INSERT INTO deck_publications (id, deck_id, slug, status, summary, category, tag
   -- Explained only in Ukrainian, so English Explore leaves it out while its page still answers.
   ('e2e-pub-cities', 'e2e-deck-cities', 'estonian-cities', 'published', 'Міста й містечка Естонії.', 'geography', '[]', 'uk', 'Lymi', '[]', 1, unixepoch() * 1000, NULL);
 
+-- Withdrawn decks whose pages send visitors on: straight to a live deck, through another
+-- withdrawn one, and to a deck that has gone with nowhere to go, which answers 410.
+INSERT INTO deck_publications (id, deck_id, slug, status, summary, category, tags, meaning_language, publisher, sources, revision, published_at, withdrawn_at, redirect_slug) VALUES
+  ('e2e-pub-moved', 'e2e-deck-moved', 'moved-estonian', 'withdrawn', 'Moved.', 'languages', '[]', 'en', 'Lymi', '[]', 1, unixepoch() * 1000, unixepoch() * 1000, 'evening-estonian'),
+  ('e2e-pub-moved-twice', 'e2e-deck-moved-twice', 'moved-twice-estonian', 'withdrawn', 'Moved twice.', 'languages', '[]', 'en', 'Lymi', '[]', 1, unixepoch() * 1000, unixepoch() * 1000, 'moved-estonian'),
+  ('e2e-pub-dead-end', 'e2e-deck-dead-end', 'dead-end-estonian', 'withdrawn', 'Dead end.', 'languages', '[]', 'en', 'Lymi', '[]', 1, unixepoch() * 1000, unixepoch() * 1000, 'withdrawn-estonian');

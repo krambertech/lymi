@@ -26,8 +26,8 @@ describe("the style prompt", () => {
       .slice(0, 16);
     // Raise STYLE_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ STYLE_PROMPT_VERSION, hash }).toEqual({
-      STYLE_PROMPT_VERSION: 1,
-      hash: "870401707740b6f0",
+      STYLE_PROMPT_VERSION: 2,
+      hash: "df40e549f936d452",
     });
   });
 
@@ -51,7 +51,9 @@ describe("topicAllowed", () => {
   it("tells the model whether it may say what the deck is about", () => {
     const deck = { name: "Italiano", purpose: "language" as const, fields: ["meaning" as const] };
     const topic = (shown: ReturnType<typeof cards>) =>
-      JSON.parse(styleInput({ meaningLanguage: "en", deck, previous: null, cards: shown })).topic;
+      JSON.parse(
+        styleInput({ meaningLanguage: "en", deck, previous: null, cards: shown, corrections: [] }),
+      ).topic;
     expect(topic(cards(20, 10))).toBe(false);
     expect(topic(cards(15, 5))).toBe(true);
   });

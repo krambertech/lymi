@@ -1009,15 +1009,11 @@ const WordRow = memo(function WordRow({
           className="text-md font-medium text-text"
           lines={3}
           lang={row.card.language}
+          tail={forms ? { text: ` · ${forms}`, className: "text-md text-text-2" } : undefined}
           after={
-            (forms || row.card.important) && (
-              <Text className="text-md font-medium text-text" lang={row.card.language}>
-                {forms && (
-                  <Text className="font-normal text-text-2" lang={row.card.language}>
-                    {` · ${forms}`}
-                  </Text>
-                )}
-                {row.card.important && <Text style={{ color: p["amber-mark"] }}>{" ★"}</Text>}
+            row.card.important && (
+              <Text className="text-md" style={{ color: p["amber-mark"] }}>
+                {" ★"}
               </Text>
             )
           }

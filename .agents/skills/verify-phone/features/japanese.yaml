@@ -21,38 +21,46 @@ name: Japanese
 - takeScreenshot: 02-known-revealed
 - tapOn: "End review"
 - tapOn: "Library"
+# A long verb's forms wrap after it, and a term past three lines ends in an ellipsis and its ★.
+- tapOn: "${ROWS_DECK}.*"
+- extendedWaitUntil:
+    visible: "食べる.*"
+    timeout: 20000
+- assertVisible: "経済的.*"
+- takeScreenshot: 03-long-rows
+- tapOn: "Library"
 # A New card's cue draws the furigana, and its label reads it.
 - tapOn: "${DECK}.*"
 - tapOn: "^Review.*"
 - extendedWaitUntil:
     visible: ".*${TERM}, read ${READING}. Tap to reveal"
     timeout: 30000
-- takeScreenshot: 03-new-cue-furigana
+- takeScreenshot: 04-new-cue-furigana
 - tapOn:
     point: "50%,80%"
 - assertVisible: "^Good.*"
 - assertVisible: ".*${EXAMPLE_SPOKEN}.*"
-- takeScreenshot: 04-new-revealed-example
+- takeScreenshot: 05-new-revealed-example
 # Ending review mid-deck lands on the deck page, where the row draws the furigana too.
 - tapOn: "End review"
 - extendedWaitUntil:
     visible: "${TERM}.*"
     timeout: 20000
-- takeScreenshot: 05-deck-row
+- takeScreenshot: 06-deck-row
 - tapOn: "${TERM}.*"
 - extendedWaitUntil:
     visible: ".*${EXAMPLE_SPOKEN}.*"
     timeout: 20000
 - assertVisible: ".*Reading.*"
-- takeScreenshot: 06-card-page
+- takeScreenshot: 07-card-page
 - tapOn: ".*Reading.*"
 - extendedWaitUntil:
     visible: "Reading"
     timeout: 20000
-- takeScreenshot: 07-edit-reading-field
+- takeScreenshot: 08-edit-reading-field
 - tapOn: "Cancel"
 - openLink: "lymi://search?q=%E7%9B%B4%E8%A7%92"
 - extendedWaitUntil:
     visible: "${TERM}.*"
     timeout: 20000
-- takeScreenshot: 08-search
+- takeScreenshot: 09-search

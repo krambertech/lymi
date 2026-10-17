@@ -75,7 +75,7 @@ export function CardLine({
   grows = false,
   lang,
   reading,
-  hidden = false,
+  hidden,
   children,
 }: {
   style: LineStyle;

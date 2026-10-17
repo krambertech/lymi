@@ -1,6 +1,6 @@
 import { parseReadings, termReading } from "@lymi/core";
 import { describe, expect, it } from "vitest";
-import { furiganaBoxes, spokenReading } from "./furigana-boxes";
+import { clampBoxes, furiganaBoxes, spokenReading } from "./furigana-boxes";
 
 const texts = (segments: Parameters<typeof furiganaBoxes>[0]) =>
   furiganaBoxes(segments).map((box) =>
@@ -37,9 +37,43 @@ describe("furiganaBoxes", () => {
     expect(texts([{ text: "OK です a cat" }])).toEqual(["OK ", "で", "す ", "a ", "cat"]);
   });
 
+  it("flows a tail after the term, never starting a line with its space", () => {
+    const term = termReading({ term: "見る", language: "ja", pronunciation: "みる" }) ?? [];
+    const boxes = furiganaBoxes([...term, { text: " · 見ます", tail: true }]);
+    expect(boxes.map((box) => box.map((run) => `${run.text}${run.tail ? "*" : ""}`))).toEqual([
+      ["見"],
+      ["る", " *"],
+      ["· *"],
+      ["見*"],
+      ["ま*"],
+      ["す*"],
+    ]);
+  });
+
   it("returns nothing for nothing", () => {
     expect(furiganaBoxes([])).toEqual([]);
     expect(furiganaBoxes([{ text: "" }])).toEqual([]);
+  });
+});
+
+describe("clampBoxes", () => {
+  // Three lines of boxes 30 pt tall in a 100 pt line.
+  const frames = [
+    { top: 0, end: 40 },
+    { top: 0, end: 90 },
+    { top: 30, end: 40 },
+    { top: 30, end: 95 },
+    { top: 60, end: 50 },
+  ];
+
+  it("keeps every box that fits", () => {
+    expect(clampBoxes(frames, 3, 100, 20)).toBeNull();
+  });
+
+  it("drops what runs past the last line and makes room at its end", () => {
+    expect(clampBoxes(frames, 2, 100, 20)).toBe(3);
+    expect(clampBoxes(frames, 2, 100, 4)).toBe(4);
+    expect(clampBoxes(frames, 1, 100, 70)).toBe(0);
   });
 });
 

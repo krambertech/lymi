@@ -13,6 +13,8 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 # The iPhone app's bundle identifier, which Apple's ID tokens name as their audience.
 APPLE_APP_BUNDLE_IDENTIFIER=
+# The web Services ID; also needs the signing key below.
+APPLE_CLIENT_ID=
 # A Sign in with Apple key (team id, key id, the .p8 file's PEM), so deleting an account revokes its Apple grant.
 APPLE_TEAM_ID=
 APPLE_KEY_ID=

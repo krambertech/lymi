@@ -20,6 +20,7 @@
     "ios": {
       "bundleIdentifier": "app.lymi",
       "appleTeamId": "C8CWG8CD76",
+      "usesAppleSignIn": true,
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
@@ -152,6 +153,7 @@
       ],
       "expo-asset",
       "expo-secure-store",
+      "expo-apple-authentication",
       "expo-web-browser",
       [
         "expo-audio",

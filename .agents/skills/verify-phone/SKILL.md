@@ -13,6 +13,7 @@ A change is verified when the feature it touches has been driven in the running 
 
 | Feature | Entry |
 | --- | --- |
+| Sign in with Apple | [sign-in.md](features/sign-in.md) |
 | Today | [today.md](features/today.md) |
 | Review | [review.md](features/review.md) |
 | Add a card | [add-card.md](features/add-card.md) |

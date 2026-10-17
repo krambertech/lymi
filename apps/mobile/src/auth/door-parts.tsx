@@ -17,6 +17,7 @@ import { Lantern } from "../brand/lantern";
 import { useLandingSpot } from "../splash/landing";
 import { useReduceMotion } from "../theme/motion";
 import { clear, usePalette } from "../theme/palette";
+import { AppleMark } from "../ui/apple-mark";
 import { Field, FieldDescription, FieldError, FieldLabel, Input, PasswordInput } from "../ui/field";
 import { GoogleMark } from "../ui/google-mark";
 import { Button, Icon, Press, Text } from "../ui/primitives";
@@ -98,12 +99,25 @@ export function Brand() {
   );
 }
 
-/** Two equal ways in, each with the stronger edge the web gives Google, and a door for someone new. */
+/** The available providers, email sign-in, and a door for someone new. */
 export function DoorButtons({ door, open }: { door: SignIn; open: (step: EmailStep) => void }) {
   const { t } = useLingui();
   const arrive = useArrival();
   return (
     <View className="gap-3">
+      {door.appleAvailable && (
+        <Animated.View entering={arrive(220)}>
+          <Button
+            label={t`Continue with Apple`}
+            size="lg"
+            strong
+            lead={<AppleMark size={20} />}
+            loading={door.pending === "apple"}
+            disabled={Boolean(door.pending && door.pending !== "apple")}
+            onPress={door.apple}
+          />
+        </Animated.View>
+      )}
       <Animated.View entering={arrive(280)}>
         <Button
           label={t`Continue with Google`}
@@ -111,10 +125,11 @@ export function DoorButtons({ door, open }: { door: SignIn; open: (step: EmailSt
           strong
           lead={<GoogleMark size={20} />}
           loading={door.pending === "google"}
+          disabled={Boolean(door.pending && door.pending !== "google")}
           onPress={door.google}
         />
       </Animated.View>
-      {door.errors.google && <Alert>{door.errors.google}</Alert>}
+      {door.errors.social && <Alert>{door.errors.social}</Alert>}
       <Animated.View entering={arrive(340)}>
         <Button
           label={t`Sign in with email`}

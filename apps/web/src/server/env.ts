@@ -29,6 +29,8 @@ export interface Bindings
   GOOGLE_CLIENT_SECRET: string;
   /** The iPhone app's bundle identifier; Sign in with Apple is unavailable until it is set. */
   APPLE_APP_BUNDLE_IDENTIFIER?: string;
+  /** The web Services ID, grouped with the iPhone App ID in Apple Developer. */
+  APPLE_CLIENT_ID?: string;
   /** A Sign in with Apple key, so a deleted account's Apple grant is revoked. All three or none. */
   APPLE_TEAM_ID?: string;
   APPLE_KEY_ID?: string;

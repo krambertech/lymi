@@ -35,10 +35,18 @@ export function followOAuthRedirect(data: unknown): boolean {
  * a raw error from the auth handler. With it they come back to the door with a sentence.
  */
 export function signInWithGoogle(returnTo?: string | null) {
+  return signInWithProvider("google", returnTo);
+}
+
+export function signInWithApple(returnTo?: string | null) {
+  return signInWithProvider("apple", returnTo);
+}
+
+function signInWithProvider(provider: "google" | "apple", returnTo?: string | null) {
   const destination = safeProductReturnPath(returnTo);
   const errorCallbackURL = `/login?${new URLSearchParams({ returnTo: destination })}`;
   return authClient.signIn.social({
-    provider: "google",
+    provider,
     callbackURL: destination,
     errorCallbackURL,
     additionalData: firstTouchData(),

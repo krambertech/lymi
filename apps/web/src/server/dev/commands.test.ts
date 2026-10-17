@@ -63,6 +63,19 @@ describe("dev commands", () => {
     expect(commands.find((c) => c.id === "claude")?.title).toBe("Claude adds {count} cards");
   });
 
+  it("lists the commands signed out too, without blocked reasons, but runs none", async () => {
+    const signedOut = await app.request("http://localhost/api/dev/commands", undefined, env);
+    const { commands } = (await signedOut.json()) as { commands: { blocked: string | null }[] };
+    expect(commands.length).toBeGreaterThan(0);
+    expect(commands.every((c) => c.blocked === null)).toBe(true);
+    const refused = await app.request(
+      "http://localhost/api/dev/commands/claude",
+      { method: "POST", headers: { "content-type": "application/json" }, body: "{}" },
+      env,
+    );
+    expect(refused.status).toBe(401);
+  });
+
   it("refuses a blocked command and runs one with the count it is given", async () => {
     expect((await run("due")).status).toBe(409);
     const added = await run("claude", { count: 2 });

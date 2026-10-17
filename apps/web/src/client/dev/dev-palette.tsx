@@ -140,6 +140,8 @@ export function DevPalette({
   const [selected, setSelected] = useState(0);
   // A touch layout shows no selection until the keyboard is used, so Enter never runs an unseen row.
   const [keyed, setKeyed] = useState(false);
+  // A command that throws data away runs on its second press, so a stray Enter never empties an account.
+  const [confirming, setConfirming] = useState<string | null>(null);
   const [theme, setThemeState] = useState<ThemeChoice>(getTheme);
   const [recent, setRecent] = useState(readRecent);
   const [note, setNote] = useState<{ text: string; tone: "muted" | "danger" } | null>(null);
@@ -161,6 +163,8 @@ export function DevPalette({
     setRaw("");
     setSelected(0);
     setKeyed(false);
+    setConfirming(null);
+    setNote(null);
     if (!compact) inputRef.current?.focus({ preventScroll: true });
   }, [open, compact]);
 
@@ -187,12 +191,11 @@ export function DevPalette({
       count: number | null;
     }) => devApi.run(command.id, count ?? undefined),
     onSuccess: async ({ note: text }, { command, count }) => {
-      const next = [{ id: command.id, count }, ...recent.filter((r) => r.id !== command.id)].slice(
-        0,
-        3,
-      );
-      setRecent(next);
-      writeRecent(next);
+      if (!command.confirm) {
+        const next = [{ id: command.id, count }, ...recent.filter((r) => r.id !== command.id)];
+        setRecent(next.slice(0, 3));
+        writeRecent(next.slice(0, 3));
+      }
       await landed(text);
     },
     onError: failed,
@@ -313,7 +316,7 @@ export function DevPalette({
       ];
     }
     const recentRows = recent.flatMap(({ id, count }) => {
-      const command = list.find((c) => c.id === id);
+      const command = list.find((c) => c.id === id && !c.confirm);
       return command ? [commandRow(command, "Recent", `recent-${id}`, count)] : [];
     });
     return [
@@ -383,9 +386,33 @@ export function DevPalette({
       return;
     }
     if (run.isPending) return;
+    if (row.command.confirm && confirming !== row.key) {
+      setConfirming(row.key);
+      setNote({ text: `Press again to confirm: ${row.title}.`, tone: "danger" });
+      return;
+    }
+    setConfirming(null);
     run.mutate({ key: row.key, command: row.command, count: row.count });
     setRaw("");
     setSelected(0);
+  }
+
+  // Tab stays inside the palette; the rows move with the arrow keys, so on a laptop it stays in the search.
+  function trapTab(e: React.KeyboardEvent<HTMLElement>) {
+    if (e.key !== "Tab") return;
+    const focusable = [
+      ...e.currentTarget.querySelectorAll<HTMLElement>("button:not([disabled]), input"),
+    ];
+    const first = focusable[0];
+    const last = focusable.at(-1);
+    if (!first || !last) return;
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 
   function back() {
@@ -395,6 +422,9 @@ export function DevPalette({
   }
 
   function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    // The Enter and arrows that pick an IME candidate, as in Japanese, belong to the input method.
+    if (e.nativeEvent.isComposing || e.keyCode === 229) return;
+    if (e.key !== "Enter") setConfirming(null);
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault();
       setKeyed(true);
@@ -446,7 +476,9 @@ export function DevPalette({
         tabIndex={-1}
         inert={!open}
         role="dialog"
+        aria-modal="true"
         aria-label="Developer tools"
+        onKeyDown={trapTab}
         className={clsx(
           "fixed z-(--z-sheet) flex flex-col bg-plate text-text outline-none",
           compact
@@ -671,6 +703,8 @@ export function DevPalette({
                           : (blocked ??
                             (row.kind === "page" ? (
                               <ChevronRight className="size-4 rtl:rotate-180" aria-hidden="true" />
+                            ) : confirming === row.key ? (
+                              <span className="text-danger">Press again</span>
                             ) : switching &&
                               row.kind === "persona" &&
                               switching === row.persona.id ? (

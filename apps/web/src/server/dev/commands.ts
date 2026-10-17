@@ -27,6 +27,8 @@ export interface DevCommand {
   count?: { default: number; max: number };
   /** Further words a search should find it by. */
   keywords?: string;
+  /** Throws data away, so the palette asks twice and never offers it in Recent. */
+  confirm?: boolean;
   /** Why it can do nothing for this account right now, or null. */
   blocked: (counts: DevCounts) => string | null;
   /** Does it and says what happened, in one sentence. */
@@ -104,6 +106,7 @@ export const commands: DevCommand[] = [
   {
     id: "reseed",
     group: "Account",
+    confirm: true,
     title: "Reseed",
     keywords: "persona starting data restore",
     blocked: () => null,
@@ -117,6 +120,7 @@ export const commands: DevCommand[] = [
   {
     id: "reset",
     group: "Account",
+    confirm: true,
     title: "Empty this account",
     keywords: "reset delete clear",
     blocked: (c) => (c.decks ? null : "Already empty"),
@@ -127,13 +131,15 @@ export const commands: DevCommand[] = [
   },
 ];
 
-export function summarize(counts: DevCounts) {
-  return commands.map(({ id, group, title, count, keywords, blocked }) => ({
+/** The list for an account, or without blocked reasons when nobody is signed in. */
+export function summarize(counts: DevCounts | null) {
+  return commands.map(({ id, group, title, count, keywords, confirm, blocked }) => ({
     id,
     group,
     title,
     count: count ?? null,
     keywords: keywords ?? "",
-    blocked: blocked(counts),
+    confirm: confirm ?? false,
+    blocked: counts ? blocked(counts) : null,
   }));
 }

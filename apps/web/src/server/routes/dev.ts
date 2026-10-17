@@ -213,6 +213,14 @@ dev.on(
   },
 );
 
+/** Answers signed out too, so the CLI can tell a typo from a command before signing anyone in. */
+dev.get("/commands", describe({ hide: true, open: true }), async (c) => {
+  const session = await c.get("auth").api.getSession({ headers: c.req.raw.headers });
+  if (!session) return c.json({ commands: summarize(null) });
+  const ctx = { db: c.get("db"), userId: session.user.id, actor: "user" as const };
+  return c.json({ commands: summarize(await devCounts(ctx)) });
+});
+
 /** The routes below act on the signed-in account, whichever persona or real account it is. */
 dev.use("*", async (c, next) => {
   const session = await c.get("auth").api.getSession({ headers: c.req.raw.headers });
@@ -239,10 +247,6 @@ dev.get("/state", describe({ hide: true, open: true }), async (c) => {
     settings: { appLanguage: settings.appLanguage, meaningLanguage: settings.meaningLanguage },
   });
 });
-
-dev.get("/commands", describe({ hide: true, open: true }), async (c) =>
-  c.json({ commands: summarize(await devCounts(ctxOf(c))) }),
-);
 
 const CommandBody = z.object({ count: z.number().int().min(1).optional() });
 

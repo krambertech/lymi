@@ -6,6 +6,8 @@ export interface DevCommandSummary {
   title: string;
   count: { default: number; max: number } | null;
   keywords: string;
+  /** Throws data away: asked twice and kept out of Recent. */
+  confirm: boolean;
   /** Why it can do nothing for this account right now, or null. */
   blocked: string | null;
 }
@@ -13,20 +15,20 @@ export interface DevCommandSummary {
 export interface PaletteQuery {
   /** What to search for, lowercased. */
   text: string;
-  /** A trailing number, so `due 12` runs "Make 12 cards due". */
+  /** A number after a space, so `due 12` runs "Make 12 cards due" and `a1` stays a search. */
   count: number | null;
 }
 
 export function parsePaletteQuery(raw: string): PaletteQuery {
-  const match = /^(.*?)\s*(\d+)?\s*$/.exec(raw.trim());
-  const count = match?.[2] ? Number(match[2]) : null;
-  return { text: (match?.[1] ?? "").toLowerCase(), count: count || null };
+  const match = /^(?:(.*\S)\s+)?(\d+)$/.exec(raw.trim());
+  if (!match) return { text: raw.trim().toLowerCase(), count: null };
+  return { text: (match[1] ?? "").toLowerCase(), count: Number(match[2]) };
 }
 
-/** The count a command runs with: the query's number within its maximum, or its default. */
+/** The count a command runs with: the query's number between 1 and its maximum, or its default. */
 export function commandCount(command: DevCommandSummary, query: PaletteQuery): number | null {
   if (!command.count) return null;
-  return Math.min(query.count ?? command.count.default, command.count.max);
+  return Math.max(1, Math.min(query.count ?? command.count.default, command.count.max));
 }
 
 export function commandTitle(command: DevCommandSummary, count: number | null): string {

@@ -53,13 +53,13 @@ A real account signed in locally through Google works with every tool below too;
 
 ## Change the state from the palette
 
-Backtick opens the developer palette over any product screen. Type to search commands, personas, languages and themes; a trailing number sets a command's count, so `due 12` runs "Make 12 cards due". The arrow keys move, Enter runs, Escape goes back from a page and then closes, and Backspace on an empty search goes back too. Recent keeps the last three commands with the count each ran with.
+Backtick opens the developer palette over any product screen. Type to search commands, personas, languages and themes; a number after a space sets a command's count, so `due 12` runs "Make 12 cards due". The arrow keys move, Enter runs, Escape goes back from a page and then closes, and Backspace on an empty search goes back too. Recent keeps the last three commands with the count each ran with.
 
 A small tab on the end edge of every product screen shows the current persona's avatar and opens the same palette without a keyboard. On a phone or a touch screen the palette fills the screen, waits for a tap before raising the keyboard, and shows every persona's face above the list. Dragging the tab moves it up or down the edge, and the position is remembered. The palette keeps its own dark graphite look in both themes, so it never passes for product UI.
 
 - **Personas**: Switch persona lists each one under Start, Everyday, Languages, Scale and edges, or Together, with what it holds. Choosing one signs you in as that account and reloads the screen you were on.
 - **Simulate**: states that are slow or impossible to reach by hand. Claude adds cards (an Activity row naming the app), enrich cards (AI examples and an enrichment row), forget cards (Forgotten today), make cards often forgotten (the slipping round, with a Forgot on the latest past days that already hold reviews), reach today's goal, and make cards due. A command that cannot do anything for this account says why.
-- **Account**: Reseed puts the account back to its persona's starting data; switching persona does not. Empty this account removes everything.
+- **Account**: Reseed puts the account back to its persona's starting data; switching persona does not. Empty this account removes everything. Both run on a second press and never appear in Recent.
 - **View and Open**: English, Ukrainian or Russian, which the meaning language follows; system, light or dark; a sign-in link to the current screen as the current persona; `/design`, `/emails` and the API docs.
 
 The server owns the list of commands at `/api/dev/commands`, so the palette and `pnpm local` show the same ones, and each row shows the id that runs it from a terminal. Each command refreshes the queries behind the screen, so Today, Library and Insights update without a reload. The palette is compiled into the Vite dev server only; a production build has no trace of it.

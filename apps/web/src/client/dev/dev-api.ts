@@ -55,43 +55,11 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 export const devApi = {
   personas: () => request<{ personas: PersonaSummary[] }>("/api/dev/personas"),
   state: () => request<DevState>("/api/dev/state"),
-  seed: (persona?: string) =>
-    request<{ counts: DevCounts }>("/api/dev/seed", {
-      method: "POST",
-      body: JSON.stringify(persona ? { persona } : {}),
-    }),
-  reset: () => request<{ counts: DevCounts }>("/api/dev/reset", { method: "POST" }),
   commands: () => request<{ commands: DevCommandSummary[] }>("/api/dev/commands"),
   run: (id: string, count?: number) =>
     request<{ note: string; counts: DevCounts }>(`/api/dev/commands/${encodeURIComponent(id)}`, {
       method: "POST",
       body: JSON.stringify(count === undefined ? {} : { count }),
-    }),
-  due: (count: number | "all") =>
-    request<{ due: number; counts: DevCounts }>("/api/dev/due", {
-      method: "POST",
-      body: JSON.stringify({ count }),
-    }),
-  cards: (count: number) =>
-    request<{ added: number; counts: DevCounts }>("/api/dev/cards", {
-      method: "POST",
-      body: JSON.stringify({ count }),
-    }),
-  goal: () => request<{ graded: number; counts: DevCounts }>("/api/dev/goal", { method: "POST" }),
-  recall: (count: number, rating?: 1 | 3) =>
-    request<{ graded: number; counts: DevCounts }>("/api/dev/recall", {
-      method: "POST",
-      body: JSON.stringify({ count, rating }),
-    }),
-  enrich: (count: number) =>
-    request<{ enriched: number; counts: DevCounts }>("/api/dev/enrich", {
-      method: "POST",
-      body: JSON.stringify({ count }),
-    }),
-  slip: (count: number) =>
-    request<{ slipped: number; counts: DevCounts }>("/api/dev/slip", {
-      method: "POST",
-      body: JSON.stringify({ count }),
     }),
   emails: () =>
     request<{ kinds: string[]; operators: string[]; canSend: boolean }>("/api/dev/emails"),

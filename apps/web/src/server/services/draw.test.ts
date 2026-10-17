@@ -99,32 +99,6 @@ describe("every count is the drawable set", () => {
     const scoped = await reviewDraw(ctx, { deckId: other.id });
     expect(scoped.decks).toEqual({ [other.id]: 3 });
   });
-
-  it("narrows to chosen cards and keeps the whole day's log", async () => {
-    const { ctx, deck, cards } = await setup(
-      Array.from({ length: 5 }, (_, i) => ({ term: `sõna ${i}`, meaning: `word ${i}` })),
-    );
-    const [first, second, third] = cards;
-    if (!first || !second || !third) throw new Error("no cards");
-    await gradeCard(ctx, { cardId: third.id, direction: "recognition", rating: 3 });
-
-    // The graded card is no longer due, and an id that is not a card is ignored.
-    const chosen = [first.id, second.id, third.id, "not-a-card"];
-    const draw = await reviewDraw(ctx, { deckId: deck.id, cardIds: chosen });
-    expect(draw.cards.map((c) => c.card.id).sort()).toEqual([first.id, second.id].sort());
-    expect(draw).toMatchObject({ total: 2, decks: { [deck.id]: 2 }, attempts: 1 });
-    expect(draw.log.map((entry) => entry.cardId)).toEqual([third.id]);
-    expect((await reviewDraw(ctx, { cardIds: [] })).total).toBe(0);
-  });
-
-  it("draws none of another learner's cards, however they are named", async () => {
-    const mine = await setup([{ term: "minu", meaning: "mine" }]);
-    const theirs = await setup([{ term: "sinu", meaning: "yours" }]);
-    const ids = theirs.cards.map((c) => c.id);
-
-    expect((await reviewDraw(mine.ctx, { cardIds: ids })).total).toBe(0);
-    expect((await reviewDraw(mine.ctx, { deckId: mine.deck.id, cardIds: ids })).total).toBe(0);
-  });
 });
 
 describe("one direction per card per day", () => {

@@ -41,16 +41,8 @@ export const CONTEXT_MENU_ACTIONS = [
 ] as const;
 export type ContextMenuAction = (typeof CONTEXT_MENU_ACTIONS)[number];
 export const AnalyticsLocale = z.enum(["en", "uk", "ru"]);
-/** What a review leg was opened for; never the deck, section or filter it names. */
-export const REVIEW_SCOPES = [
-  "day",
-  "deck",
-  "series",
-  "section",
-  "round",
-  "chosen",
-  "filtered",
-] as const;
+/** What a review leg was opened for. */
+export const REVIEW_SCOPES = ["day", "deck", "series", "section", "round", "chosen"] as const;
 export type ReviewScopeKind = (typeof REVIEW_SCOPES)[number];
 const session = { session_id: z.uuid(), scope: z.enum(REVIEW_SCOPES).optional() };
 const count = z.number().int().nonnegative().max(1_000_000);

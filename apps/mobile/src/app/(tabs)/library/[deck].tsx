@@ -2,7 +2,6 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { Section } from "@lymi/client/api";
 import {
-  activeFilterCount,
   chosenReview,
   type DeckFilters,
   type DeckGroup,
@@ -10,7 +9,6 @@ import {
   type DeckSort,
   deckTags,
   filterRows,
-  filtersParam,
   groupRows,
   liveFilters,
   noFilters,
@@ -33,7 +31,6 @@ import { useNextDue } from "../../../data/next-due";
 import { useDeckCards, useDecks, useSections, useSeriesList } from "../../../data/queries";
 import { useMoveNotice, useSeriesActions } from "../../../data/series";
 import { useCardBatch, useMoveToDeck } from "../../../deck/card-batch";
-import { useFilteredDue } from "../../../deck/filtered-review";
 import { FilterTools } from "../../../deck/filters";
 import { useMoveToSection } from "../../../deck/move-to-section";
 import { SelectBox, SelectionToolbar } from "../../../deck/selection";
@@ -63,12 +60,7 @@ import { BarButton, Screen } from "../../../ui/screen";
 import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { StateIcon, stateMarks } from "../../../ui/state-mark";
-import {
-  DECK_ACCESSORY,
-  setDeckReviewHidden,
-  setDeckSelecting,
-  setDeckView,
-} from "../../../ui/tab-bar";
+import { setDeckReviewHidden, setDeckSelecting } from "../../../ui/tab-bar";
 import { toast } from "../../../ui/toast-host";
 
 /** Stable empties, so a deck without sections or cards does not regroup its list on every render. */
@@ -114,23 +106,16 @@ export default function Deck() {
     setFilters((f) => liveFilters(f, tagKeys, sectionIds));
   }, [cards.data, sectionsQuery.data]);
   const sort = chosenSort ?? (sections.length ? "section" : "added");
-  const shown = useMemo(
-    () => filterRows(rows, filters, "", Date.now(), sections),
-    [rows, filters, sections],
-  );
-  const groups = useMemo(
-    () => groupRows(shown, sort, Date.now(), i18n.locale, sections),
-    [shown, sort, i18n.locale, sections],
-  );
-  // While the list is filtered, what it shows has a review of its own, in the tab bar's accessory.
-  const filtered = activeFilterCount(filters) > 0;
-  const shownIds = useMemo(
-    () => (filtered ? shown.map((r) => r.card.id) : null),
-    [filtered, shown],
-  );
-  const filteredDue = useFilteredDue(id, shownIds);
-  const filteredHref =
-    `/review?deck=${id}&filters=${encodeURIComponent(filtersParam(filters))}` as Href;
+  const groups = useMemo(() => {
+    const now = Date.now();
+    return groupRows(
+      filterRows(rows, filters, "", now, sections),
+      sort,
+      now,
+      i18n.locale,
+      sections,
+    );
+  }, [rows, filters, sort, i18n.locale, sections]);
   const owner = deck?.role === "owner";
   // A deck that opens every section at once has no "where you are" to show.
   const progress =
@@ -284,11 +269,6 @@ export default function Deck() {
     setDeckSelecting(id, choosing);
     return () => setDeckSelecting(id, false);
   }, [id, choosing]);
-  useEffect(() => {
-    if (!filtered) setDeckView(id, undefined);
-    else setDeckView(id, filteredDue ? { due: filteredDue, href: filteredHref } : null);
-  }, [id, filtered, filteredDue, filteredHref]);
-  useEffect(() => () => setDeckView(id, undefined), [id]);
   useFloatingBar(
     selection && (
       <Animated.View
@@ -567,12 +547,6 @@ export default function Deck() {
                 count={(f) => filterRows(rows, f, "", Date.now(), sections).length}
                 sort={sort}
                 setSort={setSort}
-                footer={
-                  // Before iOS 26 the tab bar has no accessory, so the review sits under the filters.
-                  !DECK_ACCESSORY &&
-                  filtered &&
-                  !!filteredDue && <FilteredReviewButton due={filteredDue} href={filteredHref} />
-                }
               />
             </View>
             {groups.length === 0 && (
@@ -699,21 +673,6 @@ function ReviewButton({ deck }: { deck: DeckData }) {
       onPress={() => {
         haptics.start();
         router.push(`/review?deck=${deck.id}` as Href);
-      }}
-    />
-  );
-}
-
-/** A filtered list's review where the tab bar has no accessory to carry it. */
-function FilteredReviewButton({ due, href }: { due: number; href: Href }) {
-  const router = useRouter();
-  return (
-    <Button
-      label={plural(due, { one: "Review # filtered card", other: "Review # filtered cards" })}
-      icon="play"
-      onPress={() => {
-        haptics.start();
-        router.push(href);
       }}
     />
   );

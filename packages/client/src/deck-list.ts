@@ -28,31 +28,6 @@ export interface DeckFilters {
 
 export const noFilters: DeckFilters = { states: [], due: null, sections: [], tags: [] };
 
-const STATE_KEYS: readonly StateKey[] = ["new", "learning", "known"];
-
-/** Filters as one URL parameter, so a review can narrow to what the deck page showed. */
-export function filtersParam(filters: DeckFilters): string {
-  return JSON.stringify(filters);
-}
-
-/** The filters `filtersParam` wrote; anything it did not write reads as none. */
-export function parseFilters(param: string | undefined): DeckFilters {
-  if (!param) return noFilters;
-  try {
-    const raw = JSON.parse(param) as Partial<Record<keyof DeckFilters, unknown>>;
-    const strings = (value: unknown) =>
-      Array.isArray(value) ? value.filter((v): v is string => typeof v === "string") : [];
-    return {
-      states: strings(raw.states).filter((s): s is StateKey => STATE_KEYS.includes(s as StateKey)),
-      due: raw.due === "today" || raw.due === "week" ? raw.due : null,
-      sections: strings(raw.sections),
-      tags: strings(raw.tags),
-    };
-  } catch {
-    return noFilters;
-  }
-}
-
 export type DeckGroup =
   | { kind: "all"; key: string; rows: DeckRow[] }
   | { kind: "section"; key: string; section: Section | null; rows: DeckRow[] }

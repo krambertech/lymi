@@ -11,7 +11,7 @@ import {
 import type { AnalyticsProperties } from "@lymi/core/analytics";
 import { EASE_OUT } from "@lymi/design";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
-import { type ReactNode, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { I18nManager, ScrollView, useWindowDimensions, View } from "react-native";
 import Animated, { withTiming } from "react-native-reanimated";
 import { captureEvent } from "../telemetry/posthog";
@@ -67,8 +67,6 @@ interface FilterToolsProps {
   count: (f: DeckFilters) => number;
   sort: DeckSort;
   setSort: (s: DeckSort) => void;
-  /** Under the row, such as the filtered review where the tab bar cannot carry it. */
-  footer?: ReactNode;
 }
 
 /**
@@ -86,7 +84,6 @@ export function FilterTools({
   count,
   sort,
   setSort,
-  footer,
 }: FilterToolsProps) {
   const { t, i18n } = useLingui();
   const p = usePalette();
@@ -304,7 +301,6 @@ export function FilterTools({
           trigger={pill("sort", sortName[sort])}
         />
       </View>
-      {footer}
       <Sheet
         title={level === "tags" ? t`Tags` : level === "sections" ? t`Section` : t`Filter`}
         back={level === "filters" ? undefined : { label: t`Filter`, onPress: () => go("filters") }}

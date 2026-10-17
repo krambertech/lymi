@@ -1,4 +1,4 @@
-# A deck filtered by one tag: the sheet's count and Tags level, Reset and Cancel, then the filtered review from the accessory.
+# A deck filtered by one tag: the sheet's count and Tags level, Reset and Cancel, then Select all and Review due.
 appId: app.lymi
 name: Deck filters
 ---
@@ -26,9 +26,6 @@ name: Deck filters
     timeout: 10000
 - assertVisible: "${TAGGED_TERM}, .*"
 - assertNotVisible: "${OTHER_TERM}, .*"
-- extendedWaitUntil:
-    visible: "Review ${DUE} filtered cards?"
-    timeout: 20000
 - takeScreenshot: 03-filtered-list
 # Reset clears the draft only; Cancel leaves the filters as they were.
 - tapOn: "Filter"
@@ -45,18 +42,29 @@ name: Deck filters
     notVisible: "Apply filters"
     timeout: 10000
 - assertNotVisible: "${OTHER_TERM}, .*"
-- tapOn: "Review ${DUE} filtered cards?"
+# What the filters show is reviewed as on the web: select all of it, then Review due.
+- tapOn: "Deck options"
+- tapOn: "Select cards"
+- tapOn: "Select all"
+- tapOn: "Actions for the selected cards"
+- extendedWaitUntil:
+    visible: "Review \\d+ due"
+    timeout: 10000
+- takeScreenshot: 05-selection-actions
+- tapOn: "Review \\d+ due"
 - extendedWaitUntil:
     visible: ".*Tap to reveal"
     timeout: 30000
-- takeScreenshot: 05-filtered-review
+- takeScreenshot: 06-review-chosen
 - repeat:
-    times: ${DUE}
+    times: ${KEPT}
+    while:
+      notVisible: "Round done"
     commands:
       - tapOn:
           point: "50%,80%"
       - tapOn: "^Good.*"
 - extendedWaitUntil:
-    visible: "No filtered cards left"
+    visible: "Round done"
     timeout: 20000
-- takeScreenshot: 06-no-filtered-left
+- takeScreenshot: 07-round-done

@@ -536,12 +536,6 @@ msgstr "{due, plural, one {card due} other {cards due}}"
 msgid "{due, plural, one {card to review} other {cards to review}}"
 msgstr "{due, plural, one {card to review} other {cards to review}}"
 
-msgid "{due, plural, one {filtered card to review} other {filtered cards to review}}"
-msgstr "{due, plural, one {filtered card to review} other {filtered cards to review}}"
-
-msgid "{due, plural, one {Review # filtered card} other {Review # filtered cards}}"
-msgstr "{due, plural, one {Review # filtered card} other {Review # filtered cards}}"
-
 msgid "{dueChosen, plural, one {Review # due} other {Review # due}}"
 msgstr "{dueChosen, plural, one {Review # due} other {Review # due}}"
 
@@ -2906,9 +2900,6 @@ msgstr "No decks or cards match “{query}”"
 
 msgid "No decks yet"
 msgstr "No decks yet"
-
-msgid "No filtered cards left"
-msgstr "No filtered cards left"
 
 msgid "No history yet"
 msgstr "No history yet"

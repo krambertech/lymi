@@ -32,8 +32,6 @@ export const drawQuery = (scope: ReviewScope) =>
       }),
     staleTime: 0,
     refetchOnWindowFocus: false,
-    // Each set of chosen cards is a key of its own, so keeping them would fill the disk a filter at a time.
-    ...(scope.cards ? { meta: { persist: false }, gcTime: 5 * 60_000 } : {}),
   });
 /** How many cards each Today round holds. A review invalidates it with the decks. */
 export const roundsQuery = queryOptions({

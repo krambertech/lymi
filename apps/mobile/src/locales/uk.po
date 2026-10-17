@@ -536,12 +536,6 @@ msgstr "{due, plural, one {картка до повторення} few {карт
 msgid "{due, plural, one {card to review} other {cards to review}}"
 msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
-msgid "{due, plural, one {filtered card to review} other {filtered cards to review}}"
-msgstr "{due, plural, one {відфільтрована картка до повторення} few {відфільтровані картки до повторення} many {відфільтрованих карток до повторення} other {відфільтрованої картки до повторення}}"
-
-msgid "{due, plural, one {Review # filtered card} other {Review # filtered cards}}"
-msgstr "{due, plural, one {Повторити # відфільтровану картку} few {Повторити # відфільтровані картки} many {Повторити # відфільтрованих карток} other {Повторити # відфільтрованої картки}}"
-
 msgid "{dueChosen, plural, one {Review # due} other {Review # due}}"
 msgstr "{dueChosen, plural, one {Повтори # на сьогодні} few {Повтори # на сьогодні} many {Повтори # на сьогодні} other {Повтори # на сьогодні}}"
 
@@ -2906,9 +2900,6 @@ msgstr "Жодна колода чи картка не підходить під
 
 msgid "No decks yet"
 msgstr "Колод ще немає"
-
-msgid "No filtered cards left"
-msgstr "Відфільтрованих карток більше немає"
 
 msgid "No history yet"
 msgstr "Історії ще немає"

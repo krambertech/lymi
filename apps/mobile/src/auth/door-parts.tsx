@@ -2,7 +2,6 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { MIN_PASSWORD_LENGTH } from "@lymi/core";
-import * as AppleAuthentication from "expo-apple-authentication";
 import { type ReactNode, useEffect, useRef } from "react";
 import { type TextInput, View, type ViewStyle } from "react-native";
 import Animated, {
@@ -17,7 +16,8 @@ import Animated, {
 import { Lantern } from "../brand/lantern";
 import { useLandingSpot } from "../splash/landing";
 import { useReduceMotion } from "../theme/motion";
-import { clear, usePalette, useRoom } from "../theme/palette";
+import { clear, usePalette } from "../theme/palette";
+import { AppleMark } from "../ui/apple-mark";
 import { Field, FieldDescription, FieldError, FieldLabel, Input, PasswordInput } from "../ui/field";
 import { GoogleMark } from "../ui/google-mark";
 import { Button, Icon, Press, Text } from "../ui/primitives";
@@ -101,26 +101,19 @@ export function Brand() {
 
 /** The available providers, email sign-in, and a door for someone new. */
 export function DoorButtons({ door, open }: { door: SignIn; open: (step: EmailStep) => void }) {
-  const room = useRoom();
   const { t } = useLingui();
   const arrive = useArrival();
   return (
     <View className="gap-3">
       {door.appleAvailable && (
-        <Animated.View
-          entering={arrive(220)}
-          pointerEvents={door.pending ? "none" : "auto"}
-          accessibilityState={{ busy: door.pending === "apple", disabled: Boolean(door.pending) }}
-        >
-          <AppleAuthentication.AppleAuthenticationButton
-            buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
-            buttonStyle={
-              room === "dark"
-                ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
-                : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
-            }
-            cornerRadius={12}
-            style={{ height: 52, width: "100%" }}
+        <Animated.View entering={arrive(220)}>
+          <Button
+            label={t`Continue with Apple`}
+            size="lg"
+            strong
+            lead={<AppleMark size={20} />}
+            loading={door.pending === "apple"}
+            disabled={Boolean(door.pending && door.pending !== "apple")}
             onPress={door.apple}
           />
         </Animated.View>

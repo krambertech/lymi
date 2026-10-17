@@ -1425,6 +1425,9 @@ msgstr "Consistency"
 msgid "Continue"
 msgstr "Continue"
 
+msgid "Continue with Apple"
+msgstr "Continue with Apple"
+
 msgid "Continue with Google"
 msgstr "Continue with Google"
 

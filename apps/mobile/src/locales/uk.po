@@ -1425,6 +1425,9 @@ msgstr "Послідовність"
 msgid "Continue"
 msgstr "Продовжити"
 
+msgid "Continue with Apple"
+msgstr "Продовжити з Apple"
+
 msgid "Continue with Google"
 msgstr "Продовжити з Google"
 

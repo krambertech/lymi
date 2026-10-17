@@ -1425,6 +1425,9 @@ msgstr "Регулярность"
 msgid "Continue"
 msgstr "Продолжить"
 
+msgid "Continue with Apple"
+msgstr "Продолжить с Apple"
+
 msgid "Continue with Google"
 msgstr "Продолжить с Google"
 

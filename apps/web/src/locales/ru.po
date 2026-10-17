@@ -366,13 +366,6 @@ msgstr "{0} · загрузится при сохранении"
 msgid "{0} forgotten <0>·</0> {1, plural, one {# review} other {# reviews}}"
 msgstr "{0} забыто <0>·</0> {1, plural, one {# повторение} few {# повторения} many {# повторений} other {# повторения}}"
 
-#. placeholder {0}: it.ownerName
-#. placeholder {1}: it.deckName
-#. placeholder {2}: it.cards
-#. placeholder {3}: it.ownerName
-msgid "{0} invited you to study {1} on Lymi. It has {2, plural, one {# card} other {# cards}}. You review them on your own schedule, and {3} doesn’t see your progress."
-msgstr "{0} приглашает тебя учить колоду «{1}» в Lymi. В ней {2, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. Ты повторяешь их в своём темпе, а {3} не видит твоего прогресса."
-
 #. placeholder {0}: outcome.term
 #. placeholder {1}: outcome.deckName
 msgid "{0} is already in {1}"
@@ -405,10 +398,6 @@ msgstr "Запомнено: {0}, забыто: {1}."
 #. placeholder {0}: deck.owner.name
 msgid "{0} shared a deck"
 msgstr "{0} делится колодой"
-
-#. placeholder {0}: it.ownerName
-msgid "{0} shared a deck with you"
-msgstr "{0} делится с тобой колодой"
 
 #. placeholder {0}: Math.round((item.upload.received / item.upload.parts) * 100)
 msgid "{0}% of the file arrived. Choose the same file to send the rest."
@@ -612,6 +601,9 @@ msgstr "{label}, заблокировано"
 msgid "{label}, next in {schedules}"
 msgstr "{label}, дальше через {schedules}"
 
+msgid "{language} · {cards}"
+msgstr "{language} · {cards}"
+
 msgid "{left, plural, one {# character left} other {# characters left}}"
 msgstr "{left, plural, one {остался # символ} few {осталось # символа} many {осталось # символов} other {осталось # символа}}"
 
@@ -660,6 +652,9 @@ msgstr "{oneSided, plural, one {В # карточке нет строки ---, �
 msgid "{others, plural, one {The section before it starts too, so sections stay in order.} other {The # sections before it start too, so sections stay in order.}}"
 msgstr "{others, plural, one {Предыдущий раздел тоже начнётся, чтобы разделы шли по порядку.} few {# предыдущих раздела тоже начнутся, чтобы разделы шли по порядку.} many {# предыдущих разделов тоже начнутся, чтобы разделы шли по порядку.} other {# предыдущего раздела тоже начнутся, чтобы разделы шли по порядку.}}"
 
+msgid "{ownerName} invited you to study {deckName}"
+msgstr "{ownerName} приглашает тебя изучать «{deckName}»"
+
 msgid "{passed} remembered, {failed} forgotten"
 msgstr "Запомнено: {passed}, забыто: {failed}"
 
@@ -694,6 +689,10 @@ msgstr "{words, plural, one {# слово} few {# слова} many {# слов} 
 #. placeholder {0}: consistency.days.length
 msgid "/ {0, plural, one {# day} other {# days}}"
 msgstr "/ {0, plural, one {# день} few {# дня} many {# дней} other {# дня}}"
+
+#. <0/> is the name of the person inviting
+msgid "<0/> invited you to study this deck"
+msgstr "<0/> приглашает тебя изучать эту колоду"
 
 #. placeholder {0}: section.name
 msgid "<0>{0} is ready.</0> Start it to review its cards."
@@ -1502,17 +1501,20 @@ msgstr "Вернись позже или добавь новые карточк�
 msgid "Comma"
 msgstr "Запятая"
 
+msgid "Confirm address"
+msgstr "Подтвердить адрес"
+
 msgid "Confirm it’s you"
 msgstr "Подтверди, что это ты"
-
-msgid "Confirm your address to finish creating your Lymi account:"
-msgstr "Подтверди адрес, чтобы закончить создание аккаунта Lymi:"
 
 msgid "Confirm your email address"
 msgstr "Подтверди свой адрес"
 
 msgid "Confirm your email address first."
 msgstr "Сначала подтверди адрес почты."
+
+msgid "Confirming it signs you in and finishes creating your Lymi account."
+msgstr "После подтверждения ты войдёшь в Lymi, и создание аккаунта завершится."
 
 msgid "Connect"
 msgstr "Подключить"
@@ -1558,9 +1560,6 @@ msgstr "Продолжить в {appName}"
 
 msgid "Continue with Google"
 msgstr "Продолжить с Google"
-
-msgid "Continue with Google here:"
-msgstr "Продолжить через Google здесь:"
 
 msgctxt "deck tag"
 msgid "Conversation"
@@ -2074,8 +2073,8 @@ msgstr "Введи адрес электронной почты."
 msgid "Enter the 6-digit code from the email."
 msgstr "Введи 6-значный код из письма."
 
-msgid "Enter this code in Lymi to delete your account and everything in it:"
-msgstr "Введи этот код в Lymi, чтобы удалить аккаунт и всё, что в нём есть:"
+msgid "Enter this code in Lymi to delete your account:"
+msgstr "Введи этот код в Lymi, чтобы удалить аккаунт:"
 
 msgid "Enter this code in the Lymi app to finish creating your account:"
 msgstr "Введи этот код в приложении Lymi, чтобы закончить создание аккаунта:"
@@ -2330,9 +2329,6 @@ msgstr "Есть изображение"
 
 msgid "Head back to the app. You can close this tab."
 msgstr "Вернись в приложение. Эту вкладку можно закрыть."
-
-msgid "Hello,"
-msgstr "Привет,"
 
 msgid "Hide password"
 msgstr "Скрыть пароль"
@@ -3308,6 +3304,9 @@ msgstr "Открой Lymi с новой иконки."
 msgid "Open Lymi in Safari and tap Share."
 msgstr "Открой Lymi в Safari и коснись «Поделиться»."
 
+msgid "Open the invitation"
+msgstr "Открыть приглашение"
+
 msgid "Open your browser menu and choose Install Lymi. Not every browser offers it."
 msgstr "Открой меню браузера и выбери «Установить Lymi». Не каждый браузер это предлагает."
 
@@ -3332,6 +3331,9 @@ msgstr "или"
 
 msgid "Or choose a .txt file"
 msgstr "Или выбери файл .txt"
+
+msgid "Or paste this link into your browser:"
+msgstr "Или вставь эту ссылку в браузер:"
 
 msgid "Other people study what this account published, so it can’t be deleted here. Write to <0>hello@lymi.app</0> to delete it."
 msgstr "Другие люди изучают то, что опубликовал этот аккаунт, поэтому здесь его удалить нельзя. Напиши на <0>hello@lymi.app</0>, чтобы удалить его."
@@ -3964,9 +3966,6 @@ msgstr "Серия"
 msgid "Set a new password"
 msgstr "Задай новый пароль"
 
-msgid "Set a new password for your Lymi account:"
-msgstr "Задай новый пароль для аккаунта Lymi:"
-
 msgid "Set name"
 msgstr "Название набора"
 
@@ -4015,11 +4014,12 @@ msgstr "Снова войди в этот аккаунт и выбери это�
 msgid "Sign in"
 msgstr "Вход"
 
+msgctxt "email button"
+msgid "Sign in"
+msgstr "Войти"
+
 msgid "Sign in as you anywhere else"
 msgstr "Войти как ты в других местах"
-
-msgid "Sign in here, or reset your password from the same page:"
-msgstr "Войди здесь или задай новый пароль на той же странице:"
 
 msgid "Sign in to continue."
 msgstr "Войди, чтобы продолжить."
@@ -4029,6 +4029,9 @@ msgstr "Войти в Lymi"
 
 msgid "Sign in with your new password."
 msgstr "Войди с новым паролем."
+
+msgid "Sign in, or reset your password from the sign-in page."
+msgstr "Войди или сбрось пароль на странице входа."
 
 msgid "Sign in, then choose what it can do."
 msgstr "Войди, а потом выбери, что ему можно делать."
@@ -4443,7 +4446,7 @@ msgid "This import is archived"
 msgstr "Этот импорт архивирован"
 
 msgid "This invitation only works for this email address. If you weren’t expecting it, ignore this email."
-msgstr "Это приглашение работает только для этого адреса. Если ты его не ждёшь, проигнорируй это письмо."
+msgstr "Это приглашение работает только для этого адреса. Если ты его не ждёшь, просто не обращай внимания на это письмо."
 
 msgid "This invitation was sent to {invited}. Sign in with that address to join."
 msgstr "Это приглашение отправлено на {invited}. Войди с этим адресом, чтобы присоединиться."
@@ -4856,6 +4859,9 @@ msgstr "Выучено {knownN} из {total, plural, one {# карточки} fe
 msgid "You removed them from this deck, so you can’t invite them again."
 msgstr "Этот человек исключён из колоды, поэтому пригласить его снова нельзя."
 
+msgid "You review on your own schedule, and {ownerName} doesn’t see your progress."
+msgstr "Ты повторяешь в своём ритме, а {ownerName} не видит твоего прогресса."
+
 msgid "You sign in with Apple, so once the account is deleted, also remove Lymi under Sign in with Apple in your Apple Account settings."
 msgstr "Ты входишь через Apple, поэтому после удаления аккаунта убери Lymi из раздела «Вход с Apple» в настройках аккаунта Apple."
 
@@ -4873,6 +4879,9 @@ msgstr "Тебя убрали из этой колоды, поэтому эта 
 
 msgid "You were removed from this deck, so you cannot add it again. Your reviews are kept."
 msgstr "Тебя убрали из этой колоды, поэтому добавить её снова не получится. Твои повторения сохранены."
+
+msgid "You won’t get any more emails from Lymi."
+msgstr "Больше писем от Lymi не будет."
 
 msgid "You wrote this"
 msgstr "Это написано тобой"
@@ -4892,6 +4901,9 @@ msgstr "Сегодня уже отправлено несколько кодов
 msgid "Your account data"
 msgstr "Данные твоего аккаунта"
 
+msgid "Your cards, reviews and settings are gone. Decks other people study stay for them."
+msgstr "Твои карточки, повторения и настройки удалены. Колоды, которые изучают другие люди, остаются у них."
+
 msgid "Your code to delete your Lymi account"
 msgstr "Твой код для удаления аккаунта Lymi"
 
@@ -4906,9 +4918,6 @@ msgstr "Снова показываем фото из Google"
 
 msgid "Your grades are saved. Check your connection and try again."
 msgstr "Твои оценки сохранены. Проверь соединение и попробуй снова."
-
-msgid "Your Lymi account and everything in it were deleted, as you asked. You won’t get any more emails from Lymi."
-msgstr "Твой аккаунт Lymi и всё, что в нём было, удалены по твоей просьбе. Больше писем от Lymi не будет."
 
 msgid "Your Lymi account is deleted"
 msgstr "Твой аккаунт Lymi удалён"

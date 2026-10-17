@@ -229,7 +229,7 @@ export async function inviteByEmail(
   send: (
     to: string,
     token: string,
-    deck: { name: string; owner: string; cards: number },
+    deck: { id: string; name: string; owner: string; cards: number; language: string | null },
   ) => Promise<void>,
 ) {
   const { db, userId } = ctx;
@@ -306,9 +306,11 @@ export async function inviteByEmail(
 
   // Sending is last: a row with no message can be cancelled and resent, a message with no row cannot.
   await send(email, token, {
+    id: deck.id,
     name: deck.name,
     owner: deck.owner.name,
     cards: counted?.cards ?? 0,
+    language: deck.defaultLanguage,
   });
   return { id, email, invitedAt: written.invitedAt };
 }

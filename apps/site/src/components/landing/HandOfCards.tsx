@@ -14,6 +14,7 @@ import {
 } from "react";
 import { HAND_SIZE } from "../../lib/hand";
 import { buttonClass } from "../Button";
+import { Furigana } from "./Furigana";
 import { HAND_CARDS, type HandCard } from "./hand-cards";
 
 const DEAL_STAGGER_MS = 90;
@@ -124,34 +125,58 @@ function FanCard({
   const cueText = cue === "meaning" ? meaning : card.term;
 
   const header = (
-    <p className="min-h-4 text-xs font-medium tracking-[0.06em] text-muted uppercase">{heading}</p>
+    <p className="flex min-h-4 items-center justify-between gap-2 text-xs font-medium tracking-[0.06em] text-muted uppercase">
+      <span>{heading}</span>
+      {card.state && (
+        <span className="inline-flex shrink-0 items-center gap-1.5 tracking-normal normal-case">
+          <span
+            aria-hidden="true"
+            className={clsx(
+              "size-1.5 rounded-full",
+              card.state === "known" ? "bg-state-known" : "bg-state-new",
+            )}
+          />
+          {card.state === "known" ? t`Known` : t`New`}
+        </span>
+      )}
+    </p>
   );
 
   // The picture keeps its own shape on the start edge, as review draws it.
-  const cueBlock = picture ? (
-    <span
-      className="hand-picture mt-3.5"
-      style={{ "--ratio": picture.width / picture.height } as CSSProperties}
-    >
-      <img
-        src={picture.url}
-        alt={picture.description}
-        width={picture.width}
-        height={picture.height}
-        loading="lazy"
-        decoding="async"
-      />
-    </span>
-  ) : (
-    <p
-      lang={cue === "term" ? card.language : undefined}
-      dir="auto"
-      className="whitespace-pre-line mt-3.5 text-[min(46px,calc(var(--cw)*var(--term)))] leading-[1.02] font-medium tracking-[-0.03em] text-balance text-text [overflow-wrap:anywhere]"
-      style={{ "--term": cueStep(cueText) } as CSSProperties}
-    >
-      {cueText}
-    </p>
-  );
+  const cueFor = (back: boolean) =>
+    picture ? (
+      <span
+        className="hand-picture mt-3.5"
+        style={{ "--ratio": picture.width / picture.height } as CSSProperties}
+      >
+        <img
+          src={picture.url}
+          alt={picture.description}
+          width={picture.width}
+          height={picture.height}
+          loading="lazy"
+          decoding="async"
+        />
+      </span>
+    ) : (
+      <p
+        lang={cue === "term" ? card.language : undefined}
+        dir="auto"
+        className="whitespace-pre-line mt-3.5 text-[min(46px,calc(var(--cw)*var(--term)))] leading-[1.02] font-medium tracking-[-0.03em] text-balance text-text [overflow-wrap:anywhere]"
+        style={{ "--term": cueStep(cueText) } as CSSProperties}
+      >
+        {cue === "term" && card.furigana ? (
+          <Furigana
+            term={card.term}
+            reading={card.furigana}
+            lang={card.language}
+            hidden={card.state === "known" && !back}
+          />
+        ) : (
+          cueText
+        )}
+      </p>
+    );
 
   // The reading and the sound belong to the term, so they go wherever the term is shown.
   const termDetails = (
@@ -197,7 +222,11 @@ function FanCard({
           dir="auto"
           className="whitespace-pre-line text-[min(28px,calc(var(--cw)*0.092))] leading-[1.15] font-medium tracking-[-0.02em] text-balance text-text [overflow-wrap:anywhere]"
         >
-          {card.term}
+          {card.furigana ? (
+            <Furigana term={card.term} reading={card.furigana} lang={card.language} />
+          ) : (
+            card.term
+          )}
         </p>
         {termDetails}
         {picture && (
@@ -248,7 +277,7 @@ function FanCard({
       <div ref={flipRef} className="hand-flip">
         <div className="hand-face" aria-hidden={revealed || undefined}>
           {header}
-          {cueBlock}
+          {cueFor(false)}
           {cue === "term" && termDetails}
           <p
             className="hand-hint mt-auto text-base text-muted"
@@ -259,7 +288,7 @@ function FanCard({
         </div>
         <div className="hand-face hand-back" aria-hidden={!revealed || undefined}>
           {header}
-          {cueBlock}
+          {cueFor(true)}
           {cue === "term" && termDetails}
           {/* Review shows a text card's picture only once it is turned. */}
           {!picture && card.image && (

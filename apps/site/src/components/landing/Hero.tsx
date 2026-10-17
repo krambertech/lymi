@@ -17,10 +17,26 @@ interface Props {
   behind?: ((front: string | undefined) => ReactNode) | undefined;
   /** A scene of its own in place of the hand of cards. */
   visual?: ReactNode;
+  /** The one action, when the page has a better first step than signing up. */
+  action?: ReactNode;
+  /** Shows where Lymi is made; a page about one language can leave it out. */
+  badge?: boolean | undefined;
+  /** Drawn behind a fanned hand, outside its layout. */
+  ground?: ReactNode;
 }
 
 /** The headline, one action, and a hand of cards to turn over. */
-export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
+export function Hero({
+  title,
+  lede,
+  cards,
+  layout,
+  behind,
+  visual,
+  action,
+  badge = true,
+  ground,
+}: Props) {
   const [front, setFront] = useState<string>();
   return (
     <div
@@ -33,15 +49,17 @@ export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
       )}
     >
       <div className="min-w-0 max-w-[540px]">
-        <OriginBadge />
+        {badge && <OriginBadge />}
         <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.25rem] @4xl:leading-[0.98]">
           {title}
         </h1>
         <p className="mt-6 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl">{lede}</p>
         <div className="mt-8">
-          <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-            <Trans>Get started</Trans>
-          </a>
+          {action ?? (
+            <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
+              <Trans>Get started</Trans>
+            </a>
+          )}
         </div>
       </div>
 
@@ -52,6 +70,13 @@ export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
               <HandOfCards cards={cards} layout="stack" onFront={setFront} />
             </div>
           </HeroGround>
+        ) : ground ? (
+          <div className="relative">
+            {ground}
+            <div className="relative">
+              <HandOfCards cards={cards} layout={layout} />
+            </div>
+          </div>
         ) : (
           <HandOfCards cards={cards} layout={layout} />
         ))}

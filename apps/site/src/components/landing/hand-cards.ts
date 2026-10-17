@@ -18,6 +18,10 @@ export interface HandCard {
   term: string;
   /** A reading for a term in a script the visitor may not read. */
   reading?: string;
+  /** A kana reading drawn over the term's kanji as furigana, in place of a reading line. */
+  furigana?: string;
+  /** Marked on the face; a Known card's furigana waits for the turn, as review draws it. */
+  state?: "new" | "known";
   pronunciation?: string;
   meaning: string | MessageDescriptor;
   /** One line that makes the term stick: where it comes from, or when it is said. */

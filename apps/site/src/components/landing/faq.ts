@@ -65,6 +65,30 @@ export const ESTONIAN_QUESTIONS: Question[] = [
   ...COMMON,
 ];
 
+export const JAPANESE_QUESTIONS: Question[] = [
+  {
+    id: "kana",
+    question: msg`Do I need to read kana first?`,
+    answer: msg`It helps. Start with the kana deck, then add N5-level words once the signs feel familiar.`,
+  },
+  {
+    id: "romaji",
+    question: msg`Does Lymi show romaji?`,
+    answer: msg`Words show their reading in kana over the kanji. The kana deck is the exception: there a sign’s sound is the answer.`,
+  },
+  {
+    id: "voice",
+    question: msg`How does the voice know how to read a kanji?`,
+    answer: msg`It reads the word from its kana reading, so a word with several possible readings is said the way your card has it.`,
+  },
+  {
+    id: "anki",
+    question: msg`Can I bring my Anki deck?`,
+    answer: msg`Yes. Its cards keep their readings, their due dates and the recordings that came with them.`,
+  },
+  ...COMMON,
+];
+
 export const ASSISTANTS_QUESTIONS: Question[] = [
   {
     id: "which",

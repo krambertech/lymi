@@ -1661,3 +1661,10 @@ html:has(.deck-cards[open]) {
     display: none;
   }
 }
+
+/* The system's Mincho, for the Japanese page's kana in vertical writing. */
+@utility font-mincho {
+  font-family:
+    "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Yu Mincho", YuMincho, "Noto Serif JP",
+    "Noto Serif CJK JP", "Source Han Serif JP", serif;
+}

@@ -141,6 +141,9 @@ msgstr "{pictures, plural, one {# карточка переносится с к�
 msgid "{position} of {total}"
 msgstr "{position} из {total}"
 
+msgid "{recordings, plural, one {# card brings its recording.} other {# cards bring their recordings.}}"
+msgstr "{recordings, plural, one {# карточка переносится с записью произношения.} few {# карточки переносятся с записями произношения.} many {# карточек переносятся с записями произношения.} other {# карточки переносятся с записями произношения.}}"
+
 msgid "{reviews, plural, one {past review} other {past reviews}}"
 msgstr "{reviews, plural, one {прошлое повторение} few {прошлых повторения} many {прошлых повторений} other {прошлого повторения}}"
 
@@ -504,6 +507,9 @@ msgstr "Добавлено 4 карточки в колоду по немецк�
 msgid "Added 6 cards to Estonian A2"
 msgstr "Добавлено 6 карточек в Estonian A2"
 
+msgid "Added 7 cards to Japanese, readings included. I skipped <0>食べる</0>, which you already have."
+msgstr "Добавил 7 карточек в «Японский», вместе с чтениями. <0>食べる</0> пропустил: она у тебя уже есть."
+
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 msgstr "Добавил 8 карточек в колоду «Испанский». Пропустил «ojalá»: такая карточка у тебя уже есть."
 
@@ -751,6 +757,12 @@ msgstr "Мост, 橋, — тоже hashi. Различить их можно т
 msgid "Bring Lymi to your next class."
 msgstr "Попробуй Lymi на следующем уроке."
 
+msgid "Bring your AI along."
+msgstr "Возьми с собой свой AI."
+
+msgid "Bring your Anki decks with their recordings."
+msgstr "Переноси колоды из Anki вместе с записями."
+
 msgid "Bring your Anki decks."
 msgstr "Перенеси свои колоды из Anki."
 
@@ -798,6 +810,9 @@ msgstr "California Driver’s Handbook © California DMV, лицензия CC BY
 
 msgid "Can a card have a picture?"
 msgstr "Может ли у карточки быть изображение?"
+
+msgid "Can I bring my Anki deck?"
+msgstr "Можно перенести колоду из Anki?"
 
 msgid "Can I bring my Anki decks?"
 msgstr "Можно ли перенести колоды из Anki?"
@@ -1008,6 +1023,9 @@ msgstr "Поздравляю"
 msgid "Connect an assistant"
 msgstr "Подключить ассистента"
 
+msgid "Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Send a photo of your textbook page and your assistant adds the new words, readings included. Ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? It all works through the public API too."
+msgstr "Подключи Claude, ChatGPT, Gemini или Grok к Lymi один раз. Отправь фото страницы учебника, и ассистент добавит новые слова вместе с чтениями. Спроси, что ждёт тебя вечером, или наведи порядок в колоде обычными словами. Делаешь что-то своё? Всё это работает и через публичный API."
+
 msgid "Connect Claude, ChatGPT, Gemini or Grok to Lymi once. Then paste a transcript and ask for the new words, ask what’s waiting tonight, or tidy a deck in plain language. Building something of your own? The same things work through the public API."
 msgstr "Подключи Claude, ChatGPT, Gemini или Grok к Lymi один раз. Потом вставь расшифровку урока и попроси выписать новые слова, спроси, что ждёт сегодня, или наведи порядок в колоде обычными словами. Делаешь что-то своё? Всё это работает и через публичный API."
 
@@ -1193,6 +1211,9 @@ msgstr "Подключается ли Lymi к italki или Preply?"
 msgid "Does Lymi see my chats?"
 msgstr "Видит ли Lymi мои чаты?"
 
+msgid "Does Lymi show romaji?"
+msgstr "Показывает ли Lymi ромадзи?"
+
 msgid "Does the AI write my cards?"
 msgstr "Карточки за меня пишет AI?"
 
@@ -1277,6 +1298,9 @@ msgstr "Eesti · слово"
 msgid "Effortless grace"
 msgstr "Непринуждённое изящество"
 
+msgid "Eighteen. Today’s new words will come up a few at a time."
+msgstr "Восемнадцать. Новые слова будут появляться по нескольку за раз."
+
 msgid "Einbürgerungstest"
 msgstr "Einbürgerungstest"
 
@@ -1346,6 +1370,9 @@ msgstr "Каждая карточка произносит своё слово �
 msgid "Every detail in a story should earn its place."
 msgstr "В сюжете не должно быть лишних деталей."
 
+msgid "Every Japanese deck"
+msgstr "Все японские колоды"
+
 msgid "Every language"
 msgstr "Все языки"
 
@@ -1381,6 +1408,9 @@ msgstr "Колоды всех земель"
 
 msgid "Every subject on one schedule."
 msgstr "Все предметы в одном расписании."
+
+msgid "Everyday words, from family and food to your first verbs."
+msgstr "Повседневные слова: от семьи и еды до первых глаголов."
 
 msgid "Everyone learns the 300 general questions. Three of the 33 come from the 10 about your state, so add the deck for the state where you’re registered too."
 msgstr "300 общих вопросов учат все. Три из 33 вопросов теста — из 10 о твоей земле, поэтому добавь и колоду земли, где у тебя регистрация."
@@ -1567,6 +1597,9 @@ msgstr "Французский A2 · по средам"
 msgid "French for “putting in place”."
 msgstr "По-французски — «разложить всё по местам»."
 
+msgid "From <0>あ</0><1/>to <2>漢字</2>."
+msgstr "От <0>あ</0><1/>до <2>漢字</2>."
+
 msgid "From Arabic law šāʼ Allāh, “if God wills”."
 msgstr "От арабского law šāʼ Allāh — «если Бог захочет»."
 
@@ -1575,6 +1608,9 @@ msgstr "Из книги Г. К. Честертона «The Thing» 1929 года
 
 msgid "From now until your test date"
 msgstr "С сегодняшнего дня до даты теста"
+
+msgid "Furigana until you know the word."
+msgstr "Фуригана, пока слово не выучено."
 
 msgid "Generated audio stays with the related card or account until it is removed under the service’s storage lifecycle."
 msgstr "Созданное озвучивание хранится вместе с соответствующей карточкой или аккаунтом, пока не будет удалено по правилам жизненного цикла хранилища сервиса."
@@ -1692,6 +1728,9 @@ msgstr "иметь; быть"
 msgid "health insurance company"
 msgstr "медицинская страховая компания"
 
+msgid "Hear every word."
+msgstr "Слушай каждое слово."
+
 msgid "Hear this line"
 msgstr "Послушать строку"
 
@@ -1734,6 +1773,9 @@ msgstr "Привет! Как дела?"
 msgid "Hi! What can I get you?"
 msgstr "Здравствуйте! Что для вас?"
 
+msgid "Hiragana, then katakana, a few rows at a time, each sign with its sound."
+msgstr "Сначала хирагана, потом катакана, по нескольку рядов за раз, каждый знак со звучанием."
+
 msgid "History"
 msgstr "История"
 
@@ -1745,6 +1787,9 @@ msgstr "как"
 
 msgid "How does Lymi decide when to show a card again?"
 msgstr "Как Lymi решает, когда снова показать карточку?"
+
+msgid "How does the voice know how to read a kanji?"
+msgstr "Откуда голос знает, как читать кандзи?"
 
 msgid "How far must other drivers be able to see you for a legal U-turn?"
 msgstr "С какого расстояния другие водители должны тебя видеть, чтобы разворот был разрешён?"
@@ -1784,6 +1829,9 @@ msgstr "Как устроен Einbürgerungstest, и колода для каж�
 
 msgid "How to connect"
 msgstr "Как подключить"
+
+msgid "How to import from Anki"
+msgstr "Как импортировать из Anki"
 
 msgid "How well-timed reviews change recall"
 msgstr "Как своевременные повторения помогают помнить"
@@ -1870,6 +1918,9 @@ msgstr "В испанском баре кофе просят «поставит�
 msgid "in cash"
 msgstr "наличными"
 
+msgid "In Lymi a native Japanese voice reads every card from its kana reading, so <0>今日</0> comes out <1>きょう</1>, never a guess from the kanji. The words here are generated samples."
+msgstr "В Lymi каждую карточку озвучивает голос носителя японского по её чтению каной, поэтому <0>今日</0> звучит как <1>きょう</1>, а не как догадка по кандзи. Слова здесь — сгенерированные образцы."
+
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "Во многих реальных наборах данных около 30% чисел начинаются с 1"
 
@@ -1921,11 +1972,17 @@ msgstr "идёт"
 msgid "It helps. Read Japanese Kana teaches hiragana and katakana, and the other decks are easier once you can read them."
 msgstr "Это помогает. Колода Read Japanese Kana учит хирагане и катакане, а с ними остальные колоды даются легче."
 
+msgid "It helps. Start with the kana deck, then add N5-level words once the signs feel familiar."
+msgstr "Так будет проще. Начни с колоды каны, а когда знаки станут привычными, добавь слова уровня N5."
+
 msgid "It joins your daily review straight away. There is nothing to build."
 msgstr "Она сразу попадает в ежедневное повторение. Ничего не нужно собирать самому."
 
 msgid "It needs energy from <0>ATP</0>."
 msgstr "Для него нужна энергия <0>АТФ</0>."
+
+msgid "It reads the word from its kana reading, so a word with several possible readings is said the way your card has it."
+msgstr "Он читает слово по чтению каной, поэтому слово с несколькими возможными чтениями звучит так, как записано на твоей карточке."
 
 msgid "It schedules every card with spaced repetition and brings it back right before you’d forget it."
 msgstr "Lymi планирует каждую карточку по методу интервальных повторений и возвращает её прямо перед тем, как ты её забудешь."
@@ -1971,6 +2028,9 @@ msgstr "Японский"
 
 msgid "Japanese 1 · Mondays"
 msgstr "Японский 1 · по понедельникам"
+
+msgid "Japanese is written in three scripts, so you learn it in order. First the kana: the sounds of hiragana and katakana. Then everyday N5-level words, kanji and all, and N4-level words after them. Each step is a ready-made deck, so you don’t start from scratch."
+msgstr "Японский пишется тремя письменностями, поэтому его учат по порядку. Сначала кана: звуки хираганы и катаканы. Потом повседневные слова уровня N5, уже с кандзи, а после них слова уровня N4. Каждый шаг — это готовая колода, так что начинать с нуля не нужно."
 
 msgctxt "deck tag"
 msgid "JLPT N5"
@@ -2066,9 +2126,15 @@ msgstr "Запоминай надолго."
 msgid "Know where you stand."
 msgstr "Знай, где ты сейчас."
 
+msgid "Known"
+msgstr "Выученная"
+
 msgctxt "cards in this state"
 msgid "Known"
 msgstr "Выученные"
+
+msgid "Known, turned over"
+msgstr "Выученная, перевёрнутая"
 
 msgid "Korean"
 msgstr "Корейский"
@@ -2100,11 +2166,17 @@ msgstr "По-латыни — «ты должен иметь тело»."
 msgid "Law"
 msgstr "Право"
 
+msgid "Learn Japanese vocabulary with kana and JLPT decks · Lymi"
+msgstr "Учи японские слова с каной и колодами JLPT · Lymi"
+
 msgid "Learn the questions once. Keep them until exam day."
 msgstr "Выучи вопросы один раз. Помни их до экзамена."
 
 msgid "Learn to speak Estonian."
 msgstr "Заговори по-эстонски."
+
+msgid "Learn together."
+msgstr "Учитесь вместе."
 
 msgid "Learned once, never revisited"
 msgstr "Без повторений"
@@ -2282,6 +2354,9 @@ msgstr "Создавай карточки с Claude, ChatGPT, Gemini, Grok, Code
 msgid "Make flashcards in ChatGPT, Claude or Gemini."
 msgstr "Создавай флеш-карточки в ChatGPT, Claude или Gemini."
 
+msgid "Many Japanese decks on Anki come with a native speaker’s recording of every word. Import yours and each card keeps its recording, reading and due date, and pitch accent written as text comes along in its notes. Lymi plays the recording instead of a generated voice."
+msgstr "Во многих японских колодах для Anki каждое слово записал носитель языка. Импортируй свою, и каждая карточка сохранит запись, чтение и дату повторения, а музыкальное ударение, записанное текстом, перейдёт в заметки. Lymi включает запись вместо синтезированного голоса."
+
 msgid "marginal cost"
 msgstr "предельные издержки"
 
@@ -2383,6 +2458,12 @@ msgstr "Теория музыки"
 
 msgid "My dear"
 msgstr "Мой дорогой"
+
+msgid "N4-level words"
+msgstr "Слова уровня N4"
+
+msgid "N5-level words"
+msgstr "Слова уровня N5"
 
 msgid "Na⁺ − (Cl⁻ + HCO₃⁻); raised in some metabolic acidoses"
 msgstr "Na⁺ − (Cl⁻ + HCO₃⁻); повышена при некоторых метаболических ацидозах"
@@ -2548,6 +2629,9 @@ msgstr "Раньше"
 msgid "Once a deck is in your Lymi, it brings each card back right before you’d forget it, a few minutes a day."
 msgstr "Как только колода попадает в твой Lymi, он возвращает каждую карточку прямо перед тем, как ты её забудешь, — несколько минут в день."
 
+msgid "Once you know it, you read the kanji yourself."
+msgstr "Когда знаешь слово, кандзи читаешь сам."
+
 msgid "one"
 msgstr "один"
 
@@ -2559,6 +2643,12 @@ msgstr "Одна карточка за раз, оценка одним каса�
 
 msgid "One deck for your whole class."
 msgstr "Одна колода для всей группы."
+
+msgid "One kanji can be read many ways: <0>日</0> is <1>に</1> in <2>日本</2> and <3>にち</3> in <4>毎日</4>. So Lymi shows the reading while you learn a word, as your textbook does, and takes it away once you know it."
+msgstr "Один кандзи читается по-разному: <0>日</0> — это <1>に</1> в <2>日本</2> и <3>にち</3> в <4>毎日</4>. Поэтому Lymi показывает чтение, пока ты учишь слово, как учебник, и убирает его, когда слово уже выучено."
+
+msgid "One step at a time, from kana to N4."
+msgstr "Шаг за шагом, от каны до N4."
 
 msgid "One word for asking, handing something over and answering thanks."
 msgstr "Одно слово, чтобы попросить, что-то подать и ответить на благодарность."
@@ -2659,6 +2749,9 @@ msgstr "Фармакология · новая"
 msgid "Philosophy"
 msgstr "Философия"
 
+msgid "Photo"
+msgstr "Фото"
+
 msgid "phrase"
 msgstr "фраза"
 
@@ -2673,6 +2766,9 @@ msgstr "Выбери своего ассистента, чтобы увидет�
 
 msgid "Pick your exam."
 msgstr "Выбери свой экзамен."
+
+msgid "Play {term}"
+msgstr "Послушать {term}"
 
 msgid "Play pronunciation"
 msgstr "Послушать произношение"
@@ -3228,11 +3324,20 @@ msgstr "Начни отсюда"
 msgid "Start learning"
 msgstr "Начни учиться"
 
+msgid "Start with <0>あ</0>."
+msgstr "Начни с <0>あ</0>."
+
 msgid "Start with a ready-made course."
 msgstr "Начни с готового курса."
 
 msgid "Start with chapter one."
 msgstr "Начни с первой главы."
+
+msgid "Start with hiragana and katakana, then N5- and N4-level words. Furigana sits over the kanji until you know a word, and a native Japanese voice reads every card."
+msgstr "Начни с хираганы и катаканы, потом слова уровней N5 и N4. Фуригана стоит над кандзи, пока не выучишь слово, а голос носителя японского озвучивает каждую карточку."
+
+msgid "Start with kana"
+msgstr "Начать с каны"
 
 msgid "Start with today’s notes."
 msgstr "Начни с сегодняшних заметок."
@@ -3254,6 +3359,11 @@ msgstr "Статистика"
 
 msgid "Staying at the table to talk after a meal"
 msgstr "Оставаться за столом и разговаривать после еды"
+
+#. placeholder {0}: i18n.number(at + 1)
+#. placeholder {0}: i18n.number(index + 1)
+msgid "Step {0}"
+msgstr "Шаг {0}"
 
 msgid "Step by step, after a tutor lesson"
 msgstr "Шаг за шагом после урока с репетитором"
@@ -3278,6 +3388,9 @@ msgstr "Упрямая стойкость; не сдаваться, когда �
 
 msgid "Study for the certification. Keep what it taught you."
 msgstr "Готовься к сертификации. Сохрани то, чему она научила."
+
+msgid "Studying with friends or a class? Make one deck and share its join link. Every card you add reaches everyone who joined, and each person keeps their own schedule."
+msgstr "Учишься с друзьями или в группе? Создай одну колоду и поделись ссылкой для вступления. Каждая карточка, которую ты добавляешь, появляется у всех, кто вступил, а каждый повторяет в своём темпе."
 
 msgid "Subjects"
 msgstr "Темы"
@@ -3474,6 +3587,9 @@ msgstr "С 2010 года JLPT не публикует официального �
 msgid "The JLPT has published no official word list since 2010, so these decks follow the Japan Foundation’s course lists and widely used study lists."
 msgstr "С 2010 года JLPT не публикует официального списка слов, поэтому эти колоды опираются на списки курсов Японского фонда и распространённые учебные списки."
 
+msgid "The kana"
+msgstr "Кана"
+
 msgid "The knack of reading the room"
 msgstr "Умение чувствовать настроение людей вокруг"
 
@@ -3509,6 +3625,9 @@ msgstr "Новые карточки уже в колоде, а термины, �
 
 msgid "The new cards are in your deck, and words you already have are skipped. Fix or archive any card."
 msgstr "Новые карточки уже в колоде, а слова, которые у тебя есть, пропущены. Любую карточку можно исправить или архивировать."
+
+msgid "The next level, once N5 feels easy."
+msgstr "Следующий уровень, когда N5 даётся легко."
 
 msgid "The next section opens at 80% known"
 msgstr "Следующий раздел открывается, когда выучено 80%"
@@ -3581,6 +3700,9 @@ msgstr "Викинги"
 
 msgid "The vocabulary of the first two HSK levels, from the classic word lists and the 2025 syllabus, with a translation beside each word."
 msgstr "Лексика первых двух уровней HSK — из классических списков слов и программы 2025 года, с переводом рядом с каждым словом."
+
+msgid "The way in"
+msgstr "С чего начать"
 
 msgid "The whiteboard"
 msgstr "Доска"
@@ -3660,6 +3782,9 @@ msgstr "Покупать"
 msgid "to come"
 msgstr "приходить"
 
+msgid "To eat"
+msgstr "Есть"
+
 msgid "to feel like"
 msgstr "хотеть чего-то"
 
@@ -3725,6 +3850,9 @@ msgstr "Обычно что-то делать"
 
 msgid "Today"
 msgstr "Сегодня"
+
+msgid "Today’s textbook page. Add the new words to my Japanese deck."
+msgstr "Сегодняшняя страница учебника. Добавь новые слова в мою японскую колоду."
 
 msgid "Tonight"
 msgstr "Сегодня вечером"
@@ -3799,6 +3927,9 @@ msgstr "Перевернуть карточку обратно"
 
 msgid "Turn the card over"
 msgstr "Перевернуть карточку"
+
+msgid "Turn the card over and the reading comes back with the answer."
+msgstr "Переверни карточку, и чтение вернётся вместе с ответом."
 
 msgid "Turn tonight’s lecture into cards."
 msgstr "Преврати сегодняшнюю лекцию в карточки."
@@ -4056,6 +4187,9 @@ msgstr "О каких словах спросить Марту в пятницу
 msgid "While Lymi was private, we stored the email address of anyone who asked for access, where on the site they asked, and when. We no longer collect these, and anyone can sign up."
 msgstr "Пока Lymi был закрытым, мы хранили электронный адрес каждого, кто просил доступ, место на сайте, где он это сделал, и время запроса. Больше мы их не собираем: зарегистрироваться может любой."
 
+msgid "While you learn a word, its reading sits over the kanji."
+msgstr "Пока учишь слово, чтение стоит над кандзи."
+
 msgid "Who can see the cards I make?"
 msgstr "Кто видит карточки, которые я создаю?"
 
@@ -4097,6 +4231,9 @@ msgstr "Слова к экзамену на гражданство"
 
 msgid "Words from your deck"
 msgstr "Слова из твоей колоды"
+
+msgid "Words show their reading in kana over the kanji. The kana deck is the exception: there a sign’s sound is the answer."
+msgstr "Чтение слов показано каной над кандзи. Исключение — колода каны: там ответ — это звучание знака."
 
 msgid "work"
 msgstr "работа"
@@ -4145,6 +4282,9 @@ msgstr "Да. Пакет Anki импортируется с карточками
 
 msgid "Yes. Every letter stays as you typed it, so tuli, fire, and tüli, a quarrel, are two different cards."
 msgstr "Да. Каждая буква остаётся такой, какой её ввели, так что tuli, огонь, и tüli, ссора, — две разные карточки."
+
+msgid "Yes. Its cards keep their readings, their due dates and the recordings that came with them."
+msgstr "Да. Карточки сохранят чтения, даты повторений и записи произношения, которые были в колоде."
 
 msgid "Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both."
 msgstr "Да. Lymi работает в браузере на телефоне и компьютере, его можно добавить на главный экран. Карточки и прогресс на обоих одинаковые."

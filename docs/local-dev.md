@@ -39,7 +39,7 @@ No password is typed anywhere. The server creates the account on first use, seed
 | `long` | Ingrid | Six German cards asked both ways, all due: a sentence as the term, a dictionary-length meaning, and a card with every field at its limit. |
 | `polyglot` | Оксана | Ukrainian interface and meanings. Italian, Finnish, and a deck with no language. |
 | `heavy` | Vera | Two years of daily study, to profile at scale: 27 decks from 0 to 3,000 cards (7,933 in all), a 1,500-card deck in 24 sections, two decks asked both ways, three archived decks, about 62,000 reviews and 400 due. It seeds in about 20 seconds. On the phone, **Dev sign-in as heavy** signs in as it. |
-| `publisher` | Lymi | The publisher account: one Estonian deck in three sections, published as `everyday-estonian` with an English original and a signed-off Ukrainian edition. |
+| `publisher` | Lymi | The publisher account: one Estonian deck in three sections, published as `everyday-estonian` with an English original and a signed-off Ukrainian edition, beside Finnish and driving decks and five small Japanese decks under production's slugs, so Welcome's Japanese offer can be seen. |
 
 The accounts are `<id>@lymi.local`. They exist only on a loopback origin, and they are created already confirmed so no confirmation email stands between the URL and the app. `pnpm local personas` prints the same table from the running server.
 

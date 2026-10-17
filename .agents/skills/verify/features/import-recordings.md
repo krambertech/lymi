@@ -12,7 +12,7 @@ A Kaishi 1.5k-shaped Anki package keeps each term's own recording as the card's 
 
 ## End state
 
-The preview says 2 cards bring their recordings, 1 recording is in a format Lymi can’t play, 2 sounds are skipped and 1 pitch accent can’t be read. The finished import says **2 recordings were imported.** 箸's notes are `I eat with chopsticks.`, `Counted with 膳` and `はꜜし [1]`, one per line, and the clip review plays is `audio/mpeg` from the card's `recorded/` key.
+The preview says 2 cards bring their recordings, 1 recording is in a format Lymi can’t play, 2 clips are left out and 1 pitch accent can’t be read. The finished import says **2 recordings were imported.** 箸's notes are `I eat with chopsticks.`, `Counted with 膳` and `はꜜし [1]`, one per line, and the clip review plays is `audio/mpeg` from the card's `recorded/` key.
 
 ## Gotchas
 

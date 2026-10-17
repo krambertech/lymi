@@ -56,6 +56,13 @@ export type AddCardOutcome =
 export type CardSearchPage = { cards: CardHit[]; nextCursor: string | null; total: number | null };
 export type CardSearch = { query: string; deckId?: string; cursor?: string; limit?: number };
 
+/** Browsers refuse a kept-alive request whose body passes 64 KB, so a larger one is sent plainly. */
+export const KEEPALIVE_MAX_BYTES = 64 * 1024;
+
+export function fitsKeepalive(body: string): boolean {
+  return new TextEncoder().encode(body).byteLength < KEEPALIVE_MAX_BYTES;
+}
+
 export const cardsApi = {
   /** One page of the cards matching the text, in every deck or in `deckId`; `cursor` is the last page's `nextCursor`. */
   searchCards: ({ query, deckId, cursor, limit = 50 }: CardSearch) => {
@@ -74,8 +81,15 @@ export const cardsApi = {
   },
   deckCards: (deckId: string) =>
     request<{ card: Card; state: CardState | null }[]>(`/api/decks/${deckId}/cards`),
-  addCard: (body: CardInput) =>
-    request<AddCardOutcome>("/api/cards", { method: "POST", body: JSON.stringify(body) }),
+  addCard: (body: CardInput) => {
+    const json = JSON.stringify(body);
+    // Kept alive, the add still lands when the page reloads or navigates away mid-send.
+    return request<AddCardOutcome>("/api/cards", {
+      method: "POST",
+      body: json,
+      keepalive: fitsKeepalive(json),
+    });
+  },
   /** Many cards in one write; each is added or skipped on its own. */
   addCards: (body: CardsInput, from?: "lesson") =>
     request<{ results: AddCardOutcome[] }>(`/api/cards/batch${from ? `?from=${from}` : ""}`, {

@@ -32,14 +32,19 @@ No password is typed anywhere. The server creates the account on first use, seed
 | Persona | Account | Starts with |
 | --- | --- | --- |
 | `fresh` | Fresh | Nothing. The first-run screens. |
-| `learner` | Kateryna | Three weeks in: three decks, 43 cards, 9 due, a 4-day streak with a longer best run and two rest days, three cards an assistant added today, one archived deck and one archived card. |
+| `learner` | Kateryna | A little of everything. Three weeks in: Lezione 12, Verbi and Portuguese as before, plus the series Italiano A2 (Casa and In città) with three pictures, five important cards and two memory hooks, Noor's shared Lisboa a dois, and Everyday Estonian from Explore. 9 due, a 4-day streak with a longer best run and two rest days, three cards an assistant added today, one archived deck and one archived card. |
 | `streak` | Sanna | Fourteen days running and nothing due. The flame is lit, small and still. |
 | `rested` | Leena | Eleven days running through two rest days, the last one yesterday, and 9 due. Today opens on the rest-day banner. |
 | `backlog` | Marco | A month away: four decks, 60 cards, all due. |
 | `long` | Ingrid | Six German cards asked both ways, all due: a sentence as the term, a dictionary-length meaning, and a card with every field at its limit. |
 | `polyglot` | Оксана | Ukrainian interface and meanings. Italian, Finnish, and a deck with no language. |
-| `heavy` | Vera | Two years of daily study, to profile at scale: 27 decks from 0 to 3,000 cards (7,933 in all), a 1,500-card deck in 24 sections, two decks asked both ways, three archived decks, about 62,000 reviews and 400 due. It seeds in about 20 seconds. On the phone, **Dev sign-in as heavy** signs in as it. |
+| `heavy` | Vera | Four years of daily study, to profile at scale: 27 decks from 0 to 4,500 cards (11,900 in all), three series, a 2,250-card deck in 24 sections, two decks asked both ways, three archived decks, about 200 important cards and 40 hooks, about 112,000 reviews and 400 due. It seeds in about 40 seconds. On the phone, **Dev sign-in as heavy** signs in as it. |
+| `japanese` | Mika | Five months of Japanese with English meanings: 169 real words and sentences in JLPT sections, kanji with kana readings, kana-only words, katakana loanwords, examples with inline furigana, and a numbers deck asked both ways. |
+| `shared` | Noor | Owns Lisboa a dois with four learners (Kateryna, Tomás and the companion accounts Ana and Pedro), a waiting invitation to mira@example.com and its join link on. A learner in Ana's deck, with Everyday Estonian added in its Ukrainian edition. |
+| `joining` | Tomás | Joined Noor's deck through its link and has not got set up. Signing in without `returnTo` opens `/welcome?deck=<id>`, the Welcome that arriving from a join link opens. |
 | `publisher` | Lymi | The publisher account: one Estonian deck in three sections, published as `everyday-estonian` with an English original and a signed-off Ukrainian edition. |
+
+Shared decks are written down once, on the owner's deck, so seeding either side makes sure the other account exists: seeding Noor joins Kateryna, Tomás, Ana and Pedro, and reseeding Kateryna rejoins Noor's deck. A member persona whose account holds nothing yet is seeded first. The product grants members only the learner role so far ([ADR 0011](adr/0011-a-shared-deck-is-one-deck-with-many-learners.md)).
 
 The accounts are `<id>@lymi.local`. They exist only on a loopback origin, and they are created already confirmed so no confirmation email stands between the URL and the app. `pnpm local personas` prints the same table from the running server.
 
@@ -58,7 +63,7 @@ Backtick opens the developer palette over any product screen. Type to search com
 A small tab on the end edge of every product screen shows the current persona's avatar and opens the same palette without a keyboard. On a phone or a touch screen the palette fills the screen, waits for a tap before raising the keyboard, and shows every persona's face above the list. Dragging the tab moves it up or down the edge, and the position is remembered. The palette keeps its own dark graphite look in both themes, so it never passes for product UI.
 
 - **Personas**: Switch persona lists each one under Start, Everyday, Languages, Scale and edges, or Together, with what it holds. Choosing one signs you in as that account and reloads the screen you were on.
-- **Simulate**: states that are slow or impossible to reach by hand. Claude adds cards (an Activity row naming the app), enrich cards (AI examples and an enrichment row), forget cards (Forgotten today), make cards often forgotten (the slipping round, with a Forgot on the latest past days that already hold reviews), reach today's goal, and make cards due. A command that cannot do anything for this account says why.
+- **Simulate**: states that are slow or impossible to reach by hand. Claude adds cards (an Activity row naming the app), enrich cards (AI examples and an enrichment row), forget cards (Forgotten today), make cards often forgotten (the slipping round, with a Forgot on the latest past days that already hold reviews), reach today's goal, make cards due, and the owner adds cards (new cards in a shared deck this account learns from, written by its owner). A command that cannot do anything for this account says why.
 - **Account**: Reseed puts the account back to its persona's starting data; switching persona does not. Empty this account removes everything. Both run on a second press and never appear in Recent.
 - **View and Open**: English, Ukrainian or Russian, which the meaning language follows; system, light or dark; a sign-in link to the current screen as the current persona; `/design`, `/emails` and the API docs.
 

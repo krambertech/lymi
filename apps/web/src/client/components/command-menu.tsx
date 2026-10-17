@@ -322,6 +322,11 @@ export function CommandMenu({
     return out;
   }, [query, commands, decks, hits, t, i18n]);
 
+  // Whether this very query's search has landed, so an add can tell a new term from one already there.
+  const searched =
+    settled === query && search.isSuccess && !search.isPlaceholderData && !search.isFetching;
+  // Enter or ⌘Enter on the add bar before that, held until it lands.
+  const [held, setHeld] = useState<RunKeys | null>(null);
   const addRow: Row | null = useMemo(() => {
     if (!canOffer(query)) return null;
     const same = (a: string) =>
@@ -400,7 +405,8 @@ export function CommandMenu({
         return;
       }
       rememberDeck(target.id);
-      setRaw("");
+      // Only the term that was sent, so a next one typed while it was adding stays.
+      setRaw((current) => (current.trim() === term ? "" : current));
       await refreshAfterCardWrite(qc);
       const card = outcome.card;
       const deckName = target.name;
@@ -430,6 +436,10 @@ export function CommandMenu({
       track({ kind: "card", typed: true });
       return openCard(row.card);
     }
+    if (!searched) {
+      setHeld({ mod });
+      return;
+    }
     if (row.existing) {
       close();
       track({ kind: "add", add: "existing", typed: true });
@@ -440,6 +450,12 @@ export function CommandMenu({
     track({ kind: "add", add: "form", typed: true });
     onAddCard(target?.id, row.term);
   }
+
+  useEffect(() => {
+    if (!held || !searched || !addRow) return;
+    setHeld(null);
+    run(addRow, held);
+  });
 
   const list = useCommandList({ items: rows, onRun: run });
   const { reset } = list;
@@ -479,6 +495,7 @@ export function CommandMenu({
           value={raw}
           onChange={(e) => {
             setRaw(e.target.value);
+            setHeld(null);
             reset();
           }}
         />
@@ -490,7 +507,7 @@ export function CommandMenu({
               <AddBar
                 row={addRow}
                 deckName={target?.name}
-                adding={adding}
+                adding={adding || !!held?.mod}
                 {...list.optionProps(rows.length - 1)}
               />
             )
@@ -508,12 +525,8 @@ export function CommandMenu({
               })}
             </CommandGroup>
           ))}
-          {groups.length === 0 && !addRow && (
-            <CommandEmpty>
-              {searchable && search.isFetching
-                ? t`Searching…`
-                : t`Nothing matches “${shortQuote(query)}”`}
-            </CommandEmpty>
+          {groups.length === 0 && !addRow && (!searchable || searched) && (
+            <CommandEmpty>{t`Nothing matches “${shortQuote(query)}”`}</CommandEmpty>
           )}
         </CommandList>
       </CommandPalette>
@@ -585,7 +598,7 @@ function AddBar({ row, deckName, adding, ...option }: AddBarProps) {
   return (
     <div
       {...option}
-      className="flex min-h-14 shrink-0 cursor-default items-center gap-3 border-t border-edge bg-plate-2 px-4 py-2.5 data-active:bg-hover"
+      className="flex min-h-14 shrink-0 cursor-default items-center gap-3 border-edge bg-plate-2 not-first:border-t px-4 py-2.5 data-active:bg-hover"
     >
       {row.existing ? (
         <span className="grid size-7 shrink-0 place-items-center rounded-full bg-plate text-text edge">

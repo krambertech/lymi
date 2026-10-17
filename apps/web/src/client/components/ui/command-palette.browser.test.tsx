@@ -87,3 +87,17 @@ test("the add bar waits for three letters, or one ideograph or kana", () => {
   expect(canOffer("家")).toBe(true);
   expect(canOffer("ね")).toBe(true);
 });
+
+test("with no rows to scroll, a pinned row sits right under the field", async () => {
+  await render(
+    <CommandPalette open onOpenChange={() => {}} label="Command menu">
+      <CommandInput lead="›" aria-label="Search" />
+      <CommandList role="listbox" aria-label="Results" pinned={<div role="option">Add</div>}>
+        {[]}
+      </CommandList>
+    </CommandPalette>,
+  );
+  const list = page.getByRole("listbox", { name: "Results" }).element();
+  expect(list.children).toHaveLength(1);
+  expect(list.firstElementChild?.textContent).toBe("Add");
+});

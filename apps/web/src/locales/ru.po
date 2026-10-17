@@ -3989,9 +3989,6 @@ msgstr "Поиск языков"
 msgid "Search this deck"
 msgstr "Искать в этой колоде"
 
-msgid "Searching…"
-msgstr "Ищем…"
-
 msgid "Section"
 msgstr "Раздел"
 

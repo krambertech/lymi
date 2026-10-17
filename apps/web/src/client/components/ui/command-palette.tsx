@@ -154,16 +154,20 @@ interface ListProps extends React.ComponentProps<"div"> {
 
 /** Spread `listProps` on it. Holds the scrolling rows and any pinned row, all in one listbox. */
 function CommandList({ pinned, className, children, ...props }: ListProps) {
+  // With nothing to scroll, its padding would leave a blank strip above a pinned row.
+  const rows = React.Children.toArray(children);
   return (
     <div className="flex min-h-0 flex-1 flex-col" {...props}>
-      <div
-        className={cn(
-          "min-h-0 flex-1 overflow-y-auto overscroll-contain p-2 [scrollbar-width:thin]",
-          className,
-        )}
-      >
-        {children}
-      </div>
+      {rows.length > 0 && (
+        <div
+          className={cn(
+            "min-h-0 flex-1 overflow-y-auto overscroll-contain p-2 [scrollbar-width:thin]",
+            className,
+          )}
+        >
+          {rows}
+        </div>
+      )}
       {pinned}
     </div>
   );

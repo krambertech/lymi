@@ -12,9 +12,9 @@ No persona has Chinese cards, so [`chinese.mjs`](chinese.mjs) adds a 中文 deck
 
 ## End state
 
-Before the reveal the card's label holds xuéxí and not "to study"; after it, the grades and the meaning show. The check reads the stored card back with its pinyin.
+Before the reveal the card's label reads "Recognition card for 学习, read xuéxí" and the meaning is not on screen; after it, the grades and the meaning show. The check reads the stored card back with its pinyin.
 
 ## Gotchas
 
-- The card is one accessibility element whose label joins its lines, so the flow matches text inside that label.
+- Before the reveal the card is one button whose label says the term and its pinyin, "Recognition card for 学习, read xuéxí", so the flow matches the pinyin inside that label.
 - A Known card would hide the pinyin until the reveal; the seeded card is New, so this flow checks the New side only, and the web's component tests check the Known side.

@@ -1,4 +1,4 @@
-# Japanese: review a kanji term and see its kana reading only once the card is revealed.
+# Japanese: review a kanji term, see its kana reading only once revealed, and open its word screen.
 appId: app.lymi
 name: Japanese
 ---
@@ -17,3 +17,11 @@ name: Japanese
 - assertVisible: "^Good.*"
 - assertVisible: ".*${READING}.*"
 - takeScreenshot: 02-revealed-with-reading
+# Ending review mid-deck lands on the deck page, where the card's row opens its word screen.
+- tapOn: "End review"
+- tapOn: "${TERM}.*"
+- extendedWaitUntil:
+    visible: ".*${EXAMPLE}.*"
+    timeout: 20000
+- assertVisible: ".*${READING}.*"
+- takeScreenshot: 03-word-screen

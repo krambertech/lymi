@@ -1,0 +1,86 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "Lantern": {
+      "localizations": {
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ліхтар"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фонарь"
+          }
+        }
+      }
+    },
+    "Week": {
+      "localizations": {
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тиждень"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неделя"
+          }
+        }
+      }
+    },
+    "What's due, under the lantern.": {
+      "localizations": {
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Картки до повторення у світлі ліхтаря."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Карточки к повторению в свете фонаря."
+          }
+        }
+      }
+    },
+    "Your streak's week, as seven lights.": {
+      "localizations": {
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тиждень повторень у семи вогниках."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неделя повторений в семи огоньках."
+          }
+        }
+      }
+    },
+    "Cards due on your Lock Screen.": {
+      "localizations": {
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Картки до повторення на екрані блокування."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Карточки к повторению на экране блокировки."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

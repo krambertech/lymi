@@ -385,6 +385,14 @@ function Done({
                 })}
               </Line>
             )}
+            {counts.recordings > 0 && (
+              <Line tone="good">
+                {plural(counts.recordings, {
+                  one: "# recording was imported.",
+                  other: "# recordings were imported.",
+                })}
+              </Line>
+            )}
             {counts.existing > 0 && (
               <Line tone="good">
                 {plural(counts.existing, {
@@ -406,6 +414,15 @@ function Done({
                 {plural(counts.picturesSkipped, {
                   one: "# picture couldn’t be read and was skipped.",
                   other: "# pictures couldn’t be read and were skipped.",
+                })}
+              </Line>
+            )}
+            {counts.recordingsSkipped > 0 && (
+              <Line tone="skip">
+                {plural(counts.recordingsSkipped, {
+                  one: "# recording couldn’t be read or played, so Lymi reads that term aloud itself.",
+                  other:
+                    "# recordings couldn’t be read or played, so Lymi reads those terms aloud itself.",
                 })}
               </Line>
             )}

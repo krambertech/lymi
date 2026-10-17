@@ -6,6 +6,7 @@ import type { Bindings } from "./env";
 import { reportServerException } from "./posthog";
 import { dispatchReviewReminders } from "./push-delivery";
 import { dropUnstudiedFormerDecks } from "./services/account-deletion";
+import { purgeCardAudio } from "./services/audio";
 import { expireExports } from "./services/exports";
 import { expireImports } from "./services/imports";
 import { voicePublishedDecks } from "./services/published-audio";
@@ -44,6 +45,7 @@ export default {
     run("expire-imports", expireImports(createDb(env.DB), env.IMPORTS, at, env.EVENTS));
     run("expire-exports", expireExports(createDb(env.DB), env.EXPORTS, at));
     run("former-decks", dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
+    run("purge-card-audio", purgeCardAudio(createDb(env.DB), env.AUDIO));
     // Hourly, because each run reads every published deck to find the cards its page shows first. #759.
     if (at.getUTCMinutes() < 15) {
       run(

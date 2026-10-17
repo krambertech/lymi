@@ -27,6 +27,14 @@ const ALIGN_MAX = 80;
 const isBase = (char: string) => BASE.test(char);
 const isKana = (char: string) => KANA.test(char) && !isBase(char);
 
+/** Kana that join the mora before them rather than make their own: きょ is one mora. */
+const SMALL_KANA = /[ゃゅょぁぃぅぇぉゎャュョァィゥェォヮ]/;
+
+/** How many morae a stretch of kana holds, as a pitch accent counts them. */
+export function moraCount(text: string): number {
+  return [...text].filter((char) => KANA.test(char) && !SMALL_KANA.test(char)).length;
+}
+
 /** Katakana as hiragana, so a reading written either way compares and shows as one. */
 export function toHiragana(text: string): string {
   return text.replace(/[ァ-ヶ]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 0x60));

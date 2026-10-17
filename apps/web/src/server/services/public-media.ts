@@ -24,8 +24,8 @@ export async function publicMediaFile(
 }
 
 /**
- * A live published card's pronunciation: the stored clip, or one made on its first play when
- * `spend` has budget left, so a deck is voiced only as far as visitors listen. #759.
+ * A live published card's pronunciation: the stored clip or approved recording, or one made on
+ * its first play when `spend` has budget left, so a deck is voiced only as far as visitors listen. #759.
  */
 export async function publicPronunciation(
   db: Db,
@@ -43,6 +43,7 @@ export async function publicPronunciation(
     .select({
       term: schema.cards.term,
       language: schema.cards.language,
+      audioSource: schema.cards.audioSource,
       ownerId: schema.decks.userId,
     })
     .from(schema.cards)
@@ -57,6 +58,8 @@ export async function publicPronunciation(
       ),
     );
   const language = LanguageTag.safeParse(card?.language);
+  // A recording its publisher has not approved is never heard on the public page, nor replaced.
+  if (card?.audioSource === "recorded") throw new ServiceError("not_found", "Media not found");
   if (!card || !language.success || !canSpeakTerm(card) || !deps.providers(language.data).length) {
     throw new ServiceError("not_found", "Media not found");
   }

@@ -110,8 +110,10 @@ export function ImportMochi() {
       <H2>What stays behind</H2>
       <ul>
         <li>
-          <strong>Audio.</strong> Lymi makes its own pronunciation for words in a language. The
-          preview counts the sounds that are left out.
+          <strong>Other audio.</strong> A recording of the word, in an audio field or beside the
+          word, becomes the card’s audio and Lymi plays it. Sentence recordings and clips in formats
+          such as Ogg stay behind, and Lymi reads those terms aloud itself. The preview counts what
+          is left out.
         </li>
         <li>
           <strong>What Mochi generated.</strong> Speech, image search results and AI text that Mochi

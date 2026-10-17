@@ -198,8 +198,15 @@ export const cards = sqliteTable(
     enrichmentStatus: text("enrichment_status", { enum: ["working", "failed"] }),
     /** The fields the outstanding run may fill, so a screen holds space for those alone. */
     enrichmentFields: text("enrichment_fields", { mode: "json" }).$type<EnrichedField[]>(),
-    /** R2 key of generated pronunciation audio, if any. */
+    /** R2 key of the card's pronunciation audio, if any. */
     audioKey: text("audio_key"),
+    /**
+     * Whether `audio_key` is speech Lymi generated, a cache it may replace, or a recording an
+     * import brought, which is the card's audio for good. Null without audio.
+     */
+    audioSource: text("audio_source", { enum: ["generated", "recorded"] }),
+    /** The recording its publisher approved for a published deck's page; public only while it is `audio_key`. */
+    audioApprovedKey: text("audio_approved_key"),
     /** Who added the card. Activity filters on this without parsing the audit log. */
     createdBy: text("created_by", { enum: ["user", "api", "mcp", "ai", "system"] })
       .notNull()
@@ -919,6 +926,17 @@ export const accountDeletions = sqliteTable("account_deletions", {
   reviews: integer("reviews").notNull(),
   /** Owned decks other people studied, which stayed for them. */
   keptDecks: integer("kept_decks").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp_ms" })
+    .notNull()
+    .default(sql`(unixepoch() * 1000)`),
+});
+
+/**
+ * Deleted cards whose audio folder in R2 still needs clearing, which the cron works through. Not a
+ * foreign key, since the card row is gone by the time the sweep runs.
+ */
+export const cardAudioPurges = sqliteTable("card_audio_purges", {
+  cardId: text("card_id").primaryKey(),
   createdAt: integer("created_at", { mode: "timestamp_ms" })
     .notNull()
     .default(sql`(unixepoch() * 1000)`),

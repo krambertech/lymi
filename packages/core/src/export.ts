@@ -39,7 +39,10 @@ export const ExportCounts = z
     cards: z.number().int(),
     reviews: z.number().int().meta({ description: "The learner's own recalls" }),
     pictures: z.number().int(),
-    sounds: z.number().int().meta({ description: "Generated speech, in the Anki package only" }),
+    sounds: z.number().int().meta({
+      description:
+        "Pronunciation audio: recordings and generated speech in an Anki package, recordings alone in a Lymi file",
+    }),
   })
   .meta({ id: "ExportCounts" });
 export type ExportCounts = z.infer<typeof ExportCounts>;
@@ -101,7 +104,7 @@ export const LymiFileState = z.object({
 });
 export type LymiFileState = z.infer<typeof LymiFileState>;
 
-/** One card in a Lymi zip: every field and field source, its picture and its schedule. */
+/** One card in a Lymi zip: every field and field source, its picture, recording and schedule. */
 export const LymiFileCard = z.object({
   id: z.string(),
   deck: z.string(),
@@ -133,6 +136,8 @@ export const LymiFileCard = z.object({
       height: z.number().int(),
     })
     .nullable(),
+  // A recording an import brought, in `media/`; generated speech is made again rather than carried.
+  recording: z.object({ file: z.string() }).nullable().optional(),
   archivedAt: Moment.nullable(),
   createdAt: Moment,
   states: z.array(LymiFileState),

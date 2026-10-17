@@ -3267,6 +3267,9 @@ msgstr "Recently added"
 msgid "Recognition"
 msgstr "Recognition"
 
+msgid "Recognition card for {cue}, read {reading}. Tap to reveal"
+msgstr "Recognition card for {cue}, read {reading}. Tap to reveal"
+
 msgid "Recognition card for {cue}. Tap to reveal"
 msgstr "Recognition card for {cue}. Tap to reveal"
 

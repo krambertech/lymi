@@ -333,10 +333,16 @@ export default function SmartAdd() {
                 : term.meaning
                   ? { meaning: term.meaning, meaningSource: "lesson" as const }
                   : {};
+            // The lesson's reading is for the lesson's spelling; a retyped term goes without it.
+            const reading =
+              term.pronunciation && (!edit || edit.term === term.term)
+                ? { pronunciation: term.pronunciation, pronunciationSource: "lesson" as const }
+                : {};
             return {
               deckId: deck.id,
               term: edit?.term ?? term.term,
               ...meaning,
+              ...reading,
               ...(term.heading ? { source: term.heading } : {}),
             };
           }),

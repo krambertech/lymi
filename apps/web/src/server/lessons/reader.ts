@@ -84,6 +84,7 @@ export function createLessonReader(
       try {
         response = await request(`${endpoint.base}/messages`, {
           method: "POST",
+          redirect: "manual",
           headers,
           body: JSON.stringify({
             model,
@@ -99,11 +100,10 @@ export function createLessonReader(
         throw new LessonReaderError("The lesson reader could not be reached", { cause });
       }
       if (!response.ok || !response.body) {
-        const detail = await response.text().catch(() => "");
-        throw new LessonReaderError(
-          `The lesson reader failed (${response.status}) ${detail.slice(0, 200)}`,
-          { status: response.status },
-        );
+        await response.body?.cancel();
+        throw new LessonReaderError(`The lesson reader failed (${response.status})`, {
+          status: response.status,
+        });
       }
 
       const usage: LessonUsage = { model, inputTokens: 0, outputTokens: 0, ms: 0 };
@@ -122,8 +122,7 @@ export function createLessonReader(
           usage.outputTokens = event.usage?.output_tokens ?? usage.outputTokens;
           stop = event.delta?.stop_reason ?? stop;
         }
-        if (event.type === "error")
-          throw new LessonReaderError(`The lesson reader failed: ${event.error?.message ?? ""}`);
+        if (event.type === "error") throw new LessonReaderError("The lesson reader stream failed");
       }
       if (stop === "max_tokens") throw new LessonReaderError("The lesson reply was cut off");
       usage.ms = Date.now() - started;

@@ -458,7 +458,7 @@ export function WelcomeView({
               <>
                 {heading(
                   t`Which language?`,
-                  t`We’ll show ready-made decks in it. You can add more languages later.`,
+                  t`Find ready-made decks in this language. You can add other languages later.`,
                 )}
                 <LanguagePicker
                   item={item}
@@ -478,7 +478,7 @@ export function WelcomeView({
               <>
                 {heading(
                   t`How much time a day?`,
-                  t`Little and often works best. Meeting your daily goal keeps your streak going. You can change it any time.`,
+                  t`Choose a daily review goal. Every grade counts, even Forgot. You can change it later.`,
                 )}
                 <ChoiceGroup
                   label={t`Daily goal`}
@@ -635,8 +635,8 @@ function HowItWorks({ startAt }: { startAt: number }) {
   }, [reduce, startAt]);
   const steps = [
     <Trans key="see">See a card and recall the answer.</Trans>,
-    <Trans key="say">Say how well you knew it.</Trans>,
-    <Trans key="back">Lymi brings it back just before you’d forget it.</Trans>,
+    <Trans key="say">Choose how well you remembered it.</Trans>,
+    <Trans key="back">Lymi schedules when you review it again.</Trans>,
   ];
   return (
     <section aria-labelledby="welcome-how" className="edge grid gap-4 rounded-xl bg-plate p-5">

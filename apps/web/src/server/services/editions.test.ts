@@ -533,8 +533,18 @@ describe("the public page", () => {
       {
         name: "Вітання",
         cards: [
-          { term: "tere public-edition", meaning: "привіт", modes: ["term_to_meaning"] },
-          { term: "leib public-edition", meaning: "хліб", modes: ["term_to_meaning"] },
+          {
+            term: "tere public-edition",
+            meaning: "привіт",
+            modes: ["term_to_meaning"],
+            audio: { cardId: expect.any(String) },
+          },
+          {
+            term: "leib public-edition",
+            meaning: "хліб",
+            modes: ["term_to_meaning"],
+            audio: { cardId: expect.any(String) },
+          },
         ],
       },
     ]);

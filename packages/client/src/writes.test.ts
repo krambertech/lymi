@@ -101,6 +101,51 @@ describe("submitting a write", () => {
     expect(qc.getQueryState(["queue", "all", "draw"])?.isInvalidated).toBe(true);
   });
 
+  it("skips an offline add the cache holds under a regional tag, unless its reading differs", async () => {
+    const { QueryClient } = await import("@tanstack/react-query");
+    const qc = new QueryClient();
+    qc.setQueryData(["decks"], [{ id: "deck", name: "Japanese", defaultLanguage: "ja" }]);
+    qc.setQueryData(
+      ["decks", "deck", "cards"],
+      [
+        {
+          card: {
+            id: "c1",
+            deckId: "deck",
+            normalizedTerm: "上手",
+            language: "ja-JP",
+            pronunciation: "じょうず",
+          },
+        },
+      ],
+    );
+    w.bindWriteCache(qc);
+    vi.stubGlobal("navigator", { onLine: false });
+    try {
+      const same = await w.writes.addCard({ deckId: "deck", term: "上手" });
+      expect(same.outcome).toMatchObject({ status: "skipped", existing: { id: "c1" } });
+      const sameReading = await w.writes.addCard({
+        deckId: "deck",
+        term: "上手",
+        pronunciation: "ジョウズ",
+      });
+      expect(sameReading.outcome.status).toBe("skipped");
+      expect(calls).toEqual([]);
+      answers.push(offline);
+      const kana = await w.writes.addCard({ deckId: "deck", term: "じょうず" });
+      expect(kana.outcome.status).toBe("added");
+      answers.push(offline);
+      const homograph = await w.writes.addCard({
+        deckId: "deck",
+        term: "上手",
+        pronunciation: "うわて",
+      });
+      expect(homograph.outcome.status).toBe("added");
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
   it("throws a refusal, as the plain request would", async () => {
     answers.push(fail(400));
     await expect(w.submit(add("a"), "a")).rejects.toMatchObject({ status: 400 });

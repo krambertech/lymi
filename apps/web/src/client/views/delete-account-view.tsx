@@ -85,7 +85,7 @@ export function DeleteAccountView({
           {summary.sharedDecks.length > 0 && <WhatStays decks={summary.sharedDecks} />}
           <SettingsGroup
             title={t`Keep a copy`}
-            description={t`Export your library first if you might want your cards later. Lymi keeps nothing once the account is gone.`}
+            description={t`Export your library before deleting your account to keep a copy of your cards.`}
           >
             <Button
               className="justify-self-start"
@@ -116,8 +116,8 @@ function WhatGoes({ summary }: { summary: AccountDeletionOut }) {
   const { t, i18n } = useLingui();
   return (
     <SettingsGroup
-      title={t`What goes`}
-      description={t`Deleting your account erases it for good. Nothing can bring it back.`}
+      title={t`Your account data`}
+      description={t`Deleting your account removes your private decks, cards and review history. You can’t undo this.`}
     >
       <dl className="grid grid-cols-3 gap-3">
         <Count label={t`Decks`}>{i18n.number(summary.decks)}</Count>
@@ -147,8 +147,8 @@ function WhatStays({ decks }: { decks: AccountDeletionOut["sharedDecks"] }) {
   const { t } = useLingui();
   return (
     <SettingsGroup
-      title={t`What stays for others`}
-      description={t`People study these decks, so they stay until the last of them leaves. Nobody can change them after you go.`}
+      title={t`Decks other people keep`}
+      description={t`Members keep these decks until they leave. After you delete your account, nobody can edit the cards.`}
     >
       <ul className="grid">
         {decks.map((deck) => (
@@ -210,7 +210,7 @@ function Confirm({
     return (
       <SettingsGroup
         title={t`Confirm it’s you`}
-        description={t`We’ll email you a 6-digit code. The account is deleted only once you enter it.`}
+        description={t`We’ll email you a 6-digit code. Enter it below, then choose Delete account.`}
       >
         <Button
           className="justify-self-start"

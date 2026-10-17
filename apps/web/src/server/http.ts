@@ -11,6 +11,7 @@ import {
   validator,
 } from "hono-openapi";
 import type { ZodType } from "zod";
+import { AiGatewayError } from "./ai/gateway";
 import type { AppEnv } from "./index";
 import { posthogEnabled, productAnalytics, reportServerException } from "./posthog";
 import { requireLearner, requireScopeForWrites } from "./principal";
@@ -159,6 +160,9 @@ const ERRORS = {
 } as const;
 
 export const handleError: ErrorHandler<AppEnv> = (err, c) => {
+  if (err instanceof AiGatewayError) {
+    return c.json({ error: ERRORS[503] }, 503);
+  }
   if (err instanceof ServiceError) {
     return c.json(
       { error: err.message, ...(err.reason ? { code: err.reason } : {}), issues: err.details },

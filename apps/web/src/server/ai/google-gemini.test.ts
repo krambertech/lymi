@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { testGateway } from "../../test/ai-gateway";
 import { GoogleSpeechError } from "./google-cloud-tts";
 import { createGoogleGeminiProvider, pronunciationPrompt } from "./google-gemini";
 
@@ -16,7 +17,7 @@ describe("Google Gemini provider", () => {
         Response.json({ audioContent: btoa("\u0001\u0002\u0003") }),
     );
     const provider = createGoogleGeminiProvider(
-      { GOOGLE_CLOUD_TTS_CREDENTIALS: credentials },
+      { ...testGateway, GOOGLE_CLOUD_TTS_CREDENTIALS: credentials },
       { locale: "et-EE", request, accessToken: async () => "token" },
     );
 
@@ -31,7 +32,9 @@ describe("Google Gemini provider", () => {
     });
     const call = request.mock.calls[0];
     if (!call) throw new Error("Gemini request was not made");
-    expect(call[0]).toBe("https://texttospeech.googleapis.com/v1/text:synthesize");
+    expect(call[0]).toBe(
+      "https://gateway.ai.cloudflare.com/v1/acct/lymi/custom-google-cloud-tts/v1/text:synthesize",
+    );
     expect(JSON.parse(String(call[1]?.body))).toEqual({
       input: { text: "jäääär", prompt: pronunciationPrompt("et-EE") },
       voice: { languageCode: "et-EE", name: "Kore", modelName: "gemini-3.1-flash-tts-preview" },

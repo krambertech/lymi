@@ -22,8 +22,8 @@ describe("the enrichment prompt", () => {
       .slice(0, 16);
     // Raise ENRICHMENT_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ ENRICHMENT_PROMPT_VERSION, hash }).toEqual({
-      ENRICHMENT_PROMPT_VERSION: 3,
-      hash: "8463b4858c3fc514",
+      ENRICHMENT_PROMPT_VERSION: 4,
+      hash: "144506686689fc51",
     });
   });
 
@@ -33,11 +33,17 @@ describe("the enrichment prompt", () => {
       const term = lines[at - 1]?.match(/Card "([^"]+)"/)?.[1];
       return line.startsWith("{") && term ? [{ term, reply: JSON.parse(line) }] : [];
     });
-    expect(examples).toHaveLength(5);
+    expect(examples).toHaveLength(6);
     for (const { term, reply } of examples) {
       expect(Object.keys(reply).sort()).toEqual([...ENRICHED_FIELDS].sort());
       const broken = checkCard(
-        { term, mayFill: ENRICHED_FIELDS, language: term !== "mitochondrion", expect: {} },
+        {
+          term,
+          mayFill: ENRICHED_FIELDS,
+          language: term !== "mitochondrion",
+          readings: /\p{Script=Han}/u.test(term),
+          expect: {},
+        },
         { id: term, ...reply },
       ).filter((result) => !result.pass);
       expect(broken).toEqual([]);

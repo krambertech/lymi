@@ -116,6 +116,18 @@
   p {
     text-wrap: pretty;
   }
+  /* A reading wider than its kanji centres over them rather than prising them apart. */
+  ruby {
+    ruby-align: center;
+  }
+  /* Furigana: half its kanji's size and never under 10 px, in the second text colour, untracked. */
+  rt {
+    font-size: max(0.5em, 0.625rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.2;
+    color: var(--text-2);
+  }
   a,
   button,
   input,

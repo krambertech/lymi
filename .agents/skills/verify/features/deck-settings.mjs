@@ -25,7 +25,9 @@ export default async function drive({ page, step, api, expect }) {
   });
 
   await step("Ask its cards both ways", async () => {
-    await main.getByRole("radio", { name: "Both ways" }).check();
+    const bothWays = main.getByRole("radio", { name: "Both ways" });
+    await bothWays.click();
+    await expect(bothWays).toBeChecked();
     await expect.poll(async () => (await stored()).directions).toBe("both");
     return stored();
   });

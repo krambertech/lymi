@@ -65,14 +65,14 @@ export function ReviewModesField({
   return (
     <FieldSet className="gap-0">
       <FieldLegend variant="label" className="flex w-full items-baseline justify-between gap-3">
-        <Trans>How it’s asked</Trans>
+        <Trans>Review modes</Trans>
         {value ? (
           <button
             type="button"
             onClick={() => onChange(null)}
             className="-my-2 min-h-11 text-xs font-medium text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:hover:text-text hoverable:hover:decoration-current md:min-h-0"
           >
-            <Trans>Use the deck’s</Trans>
+            <Trans>Use deck modes</Trans>
           </button>
         ) : (
           <span className="text-xs font-normal text-muted">

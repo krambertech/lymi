@@ -247,7 +247,7 @@ export function StreakPanel({
         />
         {!titleInBar && <div className="text-xl font-medium text-text">{goalTitle}</div>}
         <p className="text-sm text-text-2">
-          <Trans>How many reviews a day keep your streak. Every grade counts, even Forgot.</Trans>
+          <Trans>Choose how many reviews to do each day. Every grade counts, even Forgot.</Trans>
         </p>
         <GoalPicker value={summary.goal} onValueChange={(n) => onGoalChange?.(n)} />
       </div>
@@ -262,10 +262,10 @@ export function StreakPanel({
         : today.outcome === "nothing_due"
           ? t`Nothing due today, so your streak is safe.`
           : restedYesterday(summary)
-            ? t`Yesterday was a rest day. Reach today’s goal to keep it going.`
+            ? t`Yesterday was a rest day. Every grade counts toward today’s goal.`
             : current > 0
-              ? t`Reach today’s goal to keep it going.`
-              : t`Reach today’s goal to start a streak.`;
+              ? t`Every grade counts toward today’s goal.`
+              : t`Your streak starts when you reach your daily goal.`;
 
   return (
     <div className={clsx("grid gap-5", className)}>

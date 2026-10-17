@@ -1,58 +1,56 @@
 ---
 name: ux-copy
-description: Write or revise Lymi's learner-facing interface text. Use whenever a product change adds or changes controls, instructions, states, notifications, accessibility names, or localized messages; review English, Ukrainian, and Russian.
+description: Write or audit Lymi's learner-facing interface text. Use when adding or changing controls, instructions, states, notifications, accessibility names, or localized messages; review English, Ukrainian, and Russian.
 ---
 
 # Write Lymi UX copy
 
-[The voice rules](../../../docs/design/system/voice.md) own Lymi's tone and its message patterns. This skill is the order you write in.
+[The voice rules](../../../docs/design/system/voice.md) own Lymi’s tone and message patterns. This skill is the order you write in.
 
 ## Ground the copy
 
-Read the affected behavior in [`PRODUCT.md`](../../../PRODUCT.md), the terms and avoid-list in [`CONTEXT.md`](../../../CONTEXT.md), the voice rules, and the strings already on the same screen. Describe only behavior the product has, and name the learner's task, not the system behind it: "Couldn’t save the card", not "Request failed".
+Read the affected behavior in [`PRODUCT.md`](../../../PRODUCT.md), the terms and avoid-list in [`CONTEXT.md`](../../../CONTEXT.md), the voice rules, and the strings on the same screen. Check the code behind a claim: what is saved, who can see it, what can be undone, and what happens next. Describe the learner’s task in ordinary language.
+
+For an audit, walk the flow before rewriting individual strings. Cover navigation, forms, loading, success, empty results, errors and confirmations. Record which states you saw running and which you inspected only in source. Read the final screen as a whole to catch repetition and inconsistent terms.
 
 ## Choose the message shape
 
-Walk this once per string:
-
-```
-Is it a button, menu row, or tab?
-├── Yes → a verb that names what happens, 3 words or fewer ("Create deck", "Archive")
-└── No
-    ├── A field error?            → how to fix it, one sentence ("Keep the term under 500 characters.")
-    ├── Any other error?          → "Couldn’t [verb] [thing]." then the fix, never a status code
-    ├── An empty state?           → what is empty and why, then one action ("Insights fill in from your first review.")
-    ├── A destructive confirm?    → only when nothing can undo it; buttons name the consequence and what stays ("Revoke key" / "Keep key")
-    ├── A title or heading?       → 6 words or fewer, sentence case, no final period
-    ├── A toast or notice?        → 2 sentences or fewer; say what happened, then what to do if anything
-    └── An accessible name?       → what the control does, as a button label would say it
-```
-
-The limits exist because a phone row at 393 px holds about 3 words of button and Ukrainian runs longer than English, so a label at the limit in English is often over it in Ukrainian.
-
-## Check each string
-
-- One term for one thing across the flow, taken from `CONTEXT.md`. A learner who reads "archive" on one screen and "remove" on the next assumes two different actions.
-- One idea per sentence.
-- Sentence case. No exclamation marks, idioms, guilt, urgency, or celebration, because Lymi speaks to one learner who chose to be here.
-- Count cards, never words or points.
-- Write apostrophes as ’ (U+2019), as every string in the catalog does.
-- Mark AI-written content only on the field it wrote.
-- Every field has a visible label; every icon-only control has an accessible name.
-
-| Draft | Shipped |
+| Place | Write |
 | --- | --- |
-| Oops! Something went wrong loading Explore. | Couldn’t load Explore |
-| No data yet. Start reviewing to see your stats! | Insights fill in from your first review. |
-| Invalid invitation (410) | This join link stopped working. Ask the owner for a new one. |
+| Navigation or tab | The destination: “Settings”, “Library”. |
+| Action | What happens: “Create deck”, “Send feedback”. Include the object when context is ambiguous. |
+| Command palette | A searchable action and destination. |
+| Field | A visible label; a useful example or format instruction where needed. |
+| Error or empty result | What is missing or failed and a usable next step, in text or a nearby control. |
+| Irreversible action | What is lost, what stays and whether it can be undone; buttons name the choices. |
+| Wait | What is happening. Give a duration only when measured and reliable. |
+| Toast | What changed; add a next step only if one is needed. |
+| Icon-only control | An accessible name that identifies its action and object. |
+
+Use short labels and headings, but let clarity decide their length. “New deck” opens the form; “Create deck” saves it. Check the available space rather than enforcing a word count.
+
+## Edit in context
+
+Apply these checks together, adapted from Rene Wang’s [Wording in Interfaces](https://rene.wang/essay/wording-in-interfaces):
+
+- **Purpose:** Each line adds a useful fact. Remove text that repeats a heading, control or result.
+- **Precision:** Choose the verb for the actual action. Keep one name for each concept throughout the flow.
+- **Recovery:** A learner can tell what to try next after failure or an empty search.
+- **Consequences:** Explain concrete effects without repeated warnings or fear.
+- **Intent:** Speak about what the learner can do; keep implementation details out of ordinary flows.
+- **Shape:** Read the rendered text for density, line breaks and scanning, not just grammar.
+
+Then read it aloud. Replace strained phrases such as “Insights fill in” or “the usual answer” with a concrete subject and action. Shorter is useful only when the meaning stays clear. Keep necessary caveats; remove filler, invented certainty and claims about what is worth learning.
+
+Follow Lymi’s vocabulary and voice: count cards; use sentence case and curly quotes; mark AI text only on the field it wrote. Keep screen and grade names capitalized in sentences. A visible label and its accessible name must describe the same action.
 
 ## Check every language
 
-- English is the source message. Mark a whole sentence for localization; never assemble one from fragments around a value. `AGENTS.md` has the Lingui macros.
-- Translate every changed message with [the translate skill](../translate/SKILL.md), then read English, Ukrainian, and Russian in the running interface, in each affected state.
-- Check 393 px and 1280 px for wrapping, overflow, and truncation. When a natural translation does not fit, change the layout or shorten the English idea; never bend the translation to fit.
-- Mark wording you are unsure of as needing native review, and do not report that language as verified.
+- English is the source message. Localize a whole sentence; `AGENTS.md` has the Lingui macros.
+- Extract and translate every changed message with [the translate skill](../translate/SKILL.md). Keep placeholders, complete plurals and the same consequences in each language.
+- Read English, Ukrainian and Russian in the running interface at 393 px and 1280 px, including changed error and empty states. Check wrapping, overflow, truncation and competing labels.
+- When a translation does not fit, adjust the layout or simplify the idea without changing the meaning. List uncertain wording for native review.
 
 ## Finish
 
-The copy is done when all three languages carry the same meaning and action, every affected state was read in the running interface, and every uncertain translation is listed. Hand off the languages and states checked, any visual check skipped, and each translation still needing review.
+Re-read each changed flow from entry to outcome. Report the main defects and replacements, checks that ran, states or languages not visually checked, and translations needing native review. Distinguish changes made locally from copy verified in production.

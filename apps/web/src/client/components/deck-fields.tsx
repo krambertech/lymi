@@ -221,7 +221,7 @@ export function DirectionField({ value, onChange, example, total, disabled }: Di
   return (
     <div className="grid gap-2">
       <RadioGroup<Directions>
-        aria-label={t`How cards are asked`}
+        aria-label={t`Review modes`}
         aria-describedby={noteId}
         value={value}
         onValueChange={onChange}
@@ -234,7 +234,7 @@ export function DirectionField({ value, onChange, example, total, disabled }: Di
       <p id={noteId} className="pt-1 text-sm text-muted">
         {total ? (
           <Trans>
-            Adding a way asks every card that way from now on. Removing one keeps its progress.
+            New modes apply to cards that follow this deck. Turning a mode off keeps its progress.
           </Trans>
         ) : (
           <Trans>You can change this later. It applies to every card in the deck.</Trans>

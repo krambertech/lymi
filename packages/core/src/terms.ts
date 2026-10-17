@@ -1,3 +1,5 @@
+import { languageKey, stripReadings } from "./reading";
+
 /**
  * The key the duplicate rule compares. Trimmed, whitespace collapsed, case-folded,
  * Unicode-normalised so "é" typed two ways is one string. Accents are kept: "pesca" and
@@ -7,10 +9,23 @@ export function normaliseTerm(term: string): string {
   return term.normalize("NFC").trim().replace(/\s+/g, " ").toLocaleLowerCase();
 }
 
+/** What the duplicate rule compares, from a card's language and its `normaliseTerm` key. */
+export function duplicateKey(language: string | null | undefined, normalizedTerm: string): string {
+  return `${languageKey(language)} ${normalizedTerm}`;
+}
+
+/** Two readings tell cards apart only when both cards have one and they differ: 上手 じょうず and うわて. */
+export function sameReading(a: string | null, b: string | null): boolean {
+  return a === null || b === null || a === b;
+}
+
 /** The key one learner's tags are joined by, so "Дієслова" and "дієслова" are one tag on every device. */
 export function tagKey(tag: string): string {
   return tag.normalize("NFC").trim().toLowerCase();
 }
+
+/** Scripts where one or two characters are a whole word, so a short answer still gives itself away. */
+const DENSE_SCRIPT = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u;
 
 /** A picture description that contains the term or the meaning would show the answer before reveal. */
 export function revealsAnswer(
@@ -25,11 +40,13 @@ export function revealedAnswer(
   card: { term: string; meaning?: string | null | undefined },
   description: string,
 ): { field: "term" | "meaning"; text: string } | null {
-  const text = normaliseTerm(description);
+  const text = normaliseTerm(stripReadings(description));
   for (const field of ["term", "meaning"] as const) {
     const answer = card[field] ?? "";
     const key = normaliseTerm(answer);
-    if (key.length >= 3 && text.includes(key)) return { field, text: answer };
+    if ((key.length >= 3 || DENSE_SCRIPT.test(key)) && text.includes(key)) {
+      return { field, text: answer };
+    }
   }
   return null;
 }

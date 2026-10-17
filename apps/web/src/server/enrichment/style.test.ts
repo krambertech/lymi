@@ -27,7 +27,7 @@ describe("the style prompt", () => {
     // Raise STYLE_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ STYLE_PROMPT_VERSION, hash }).toEqual({
       STYLE_PROMPT_VERSION: 2,
-      hash: "ddb1161881088498",
+      hash: "df40e549f936d452",
     });
   });
 

@@ -1,10 +1,9 @@
+import { revealHintDelayMs } from "@lymi/client/reveal-hint";
 import { useEffect, useState } from "react";
 
 const KEY = "lymi-reveals";
 /** Reveals after which the learner has shown they know the card is the button. */
-export const LEARNED_AFTER = 3;
-const NEW_LEARNER_DELAY_MS = 1_000;
-const IDLE_DELAY_MS = 60_000;
+const LEARNED_AFTER = 3;
 
 // Kept in memory as well, so a browser that refuses storage still stops hinting in one session.
 let memory = 0;
@@ -27,11 +26,6 @@ export function recordReveal(): void {
   } catch {}
 }
 
-/** A new learner is shown the hint after a second; everyone else only after a minute idle. */
-export function hintDelayMs(reveals: number): number {
-  return reveals < LEARNED_AFTER ? NEW_LEARNER_DELAY_MS : IDLE_DELAY_MS;
-}
-
 const ACTIVITY = ["pointerdown", "keydown", "wheel"] as const;
 
 /**
@@ -39,12 +33,17 @@ const ACTIVITY = ["pointerdown", "keydown", "wheel"] as const;
  * until the hint appears, restarts on any press, key or scroll, so it only answers a learner who
  * is looking at the card and doing nothing.
  */
-export function useRevealHint(cardKey: string | undefined, revealed: boolean): boolean {
+export function useRevealHint(
+  cardKey: string | undefined,
+  revealed: boolean,
+  reviewedDays: number | undefined,
+): boolean {
   const [show, setShow] = useState(false);
   useEffect(() => {
     setShow(false);
     if (!cardKey || revealed) return;
-    const delay = hintDelayMs(readReveals());
+    const delay = revealHintDelayMs(reviewedDays, readReveals() < LEARNED_AFTER);
+    if (delay === null) return;
     let timer = 0;
     const start = () => {
       window.clearTimeout(timer);
@@ -59,6 +58,6 @@ export function useRevealHint(cardKey: string | undefined, revealed: boolean): b
       window.clearTimeout(timer);
       for (const e of ACTIVITY) window.removeEventListener(e, start);
     };
-  }, [cardKey, revealed]);
+  }, [cardKey, revealed, reviewedDays]);
   return show;
 }

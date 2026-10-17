@@ -3,7 +3,7 @@
 Plain and friendly. The interface counts cards, not points, never nags and never celebrates for you: "You’re done for today", not "Congratulations!". The words for things are in [CONTEXT.md](../../../CONTEXT.md), and the process for changing any learner-facing string is the `ux-copy` skill.
 
 - A field error says how to fix it: "Keep the term under 500 characters."
-- Any other error says "Couldn't [verb] [thing]." and then the fix, never a status code: "Couldn't save the reminder. Check your connection and try again."
+- An error names what failed and how to recover, through its text or a nearby action. State a known cause; keep status codes out of copy. "Couldn’t save the reminder. Check your connection and try again."
 - "New deck" opens the form; "Create deck" submits it.
 - Confirmation stays only where there is nothing to undo. The destructive button names the consequence ("Revoke key") and the safe button names what stays ("Keep key").
 - Screen names (Library, Settings, Activity) and grade names (Forgot, Hard, Good, Easy) keep their capitals inside a sentence.

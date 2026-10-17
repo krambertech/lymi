@@ -1,4 +1,4 @@
-// Type imports only: the site's hand:audio script runs this file under plain Node.
+import { type AiGatewayBindings, providerEndpoint } from "./gateway";
 import type { Fetch, SpeechProvider } from "./types";
 
 const languageNames = new Intl.DisplayNames(["en"], { type: "language" });
@@ -7,9 +7,7 @@ export type OpenAiSpeechBindings = {
   OPENAI_API_KEY?: string | undefined;
   OPENAI_SPEECH_MODEL?: string | undefined;
   OPENAI_SPEECH_VOICE?: string | undefined;
-  AI_GATEWAY_URL?: string | undefined;
-  AI_GATEWAY_TOKEN?: string | undefined;
-};
+} & AiGatewayBindings;
 
 export class OpenAiSpeechError extends Error {
   readonly status: number | undefined;
@@ -39,17 +37,15 @@ export function createOpenAiSpeechProvider(
     async speech(input) {
       const apiKey = env.OPENAI_API_KEY?.trim();
       if (!apiKey) throw new OpenAiSpeechError("OpenAI speech is not configured");
-      // providerEndpoint() in gateway.ts, inlined: the site's script cannot import a module here.
-      const token = env.AI_GATEWAY_TOKEN?.trim();
-      const gateway = env.AI_GATEWAY_URL?.trim().replace(/\/$/, "");
-      const baseUrl = token && gateway ? `${gateway}/openai` : "https://api.openai.com/v1";
+      const endpoint = providerEndpoint(env, "openai");
       const headers: Record<string, string> = {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
+        ...endpoint.headers,
       };
-      if (token && gateway) headers["cf-aig-authorization"] = `Bearer ${token}`;
-      const response = await fetchWithRetry(request, `${baseUrl}/audio/speech`, {
+      const response = await fetchWithRetry(request, `${endpoint.base}/audio/speech`, {
         method: "POST",
+        redirect: "manual",
         headers,
         body: JSON.stringify({
           model,

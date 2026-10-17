@@ -53,6 +53,12 @@ describe("matchesSearch", () => {
     );
   });
 
+  it("matches an example as written, around its inline readings", () => {
+    const example = card({ example: "毎朝[まいあさ]パンを食[た]べます。" });
+    expect(matchesSearch(example, searchKey("パンを食べ"))).toBe(true);
+    expect(matchesSearch(example, searchKey("[た]"))).toBe(false);
+  });
+
   it("matches the reading, so a kana query finds a kanji term", () => {
     const kanji = card({ normalizedTerm: "漢字", pronunciation: "かんじ" });
     expect(matchesSearch(kanji, searchKey("かんじ"))).toBe(true);

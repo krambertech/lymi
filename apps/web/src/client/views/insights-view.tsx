@@ -258,7 +258,7 @@ export function InsightsView({
           }
           note={
             recall.rate === null
-              ? t`No recall data yet. Review more cards to see how you’re doing.`
+              ? t`Recall appears after you review cards you’ve seen before.`
               : t`${recall.passed} remembered, ${recall.failed} forgotten.`
           }
         />

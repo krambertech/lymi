@@ -332,7 +332,11 @@ function Review() {
   const sectionName = sectionId
     ? sections.data?.sections.find((s) => s.id === sectionId)?.name
     : undefined;
-  const hint = useRevealHint(current ? `${current.stateId}-${done}` : undefined, revealed);
+  const hint = useRevealHint(
+    current ? `${current.stateId}-${done}` : undefined,
+    revealed,
+    streak.data?.reviewedDays,
+  );
   usePrefetchPictures(drawLeg ? (state?.upcoming ?? []) : listLeft, 0);
 
   // Cards the draw still holds, the number Today shows; a forgotten card owed a return stays in it.
@@ -662,6 +666,7 @@ function Review() {
       if (playingAudio.current === audio) {
         loadedAudio.current = { source, audio };
         setAudioState("playing");
+        captureAnalytics("pronunciation_played", { outcome: "played", revealed });
       }
     } catch {
       if (loadedAudio.current?.audio === audio) loadedAudio.current = null;
@@ -672,9 +677,10 @@ function Review() {
           item: itemKey(current),
           message: t`Couldn’t play the pronunciation. Try again in a moment.`,
         });
+        captureAnalytics("pronunciation_played", { outcome: "failed", revealed });
       }
     }
-  }, [audioState, current, stopAudio, t]);
+  }, [audioState, current, revealed, stopAudio, t]);
 
   const invalidateReviewData = useCallback(() => {
     qc.invalidateQueries({ queryKey: ["decks"] });

@@ -194,7 +194,7 @@ review.post(
     errors: [400, 404],
   }),
   body(GradeInput, "grade"),
-  async (c) => c.json(await gradeCard(ctxOf(c), c.req.valid("json"))),
+  async (c) => c.json(await gradeCard(ctxOf(c), c.req.valid("json"), !c.get("phone"))),
 );
 
 review.post(

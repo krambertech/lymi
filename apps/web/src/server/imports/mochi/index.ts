@@ -13,6 +13,7 @@ import { ImportFileError, openZip, type RandomAccess, readZipEntry, type ZipEntr
 import {
   attachments,
   furigana,
+  inlineReadings,
   isAudio,
   isImage,
   markdownToText,
@@ -388,7 +389,7 @@ export const mochi: SourceAdapter<MochiNote> = {
       term: reading?.base ?? raw.term ?? "",
       meaning: raw.meaning && (furigana(raw.meaning)?.base ?? raw.meaning),
       pronunciation: raw.pronunciation || reading?.reading,
-      example: raw.example && (furigana(raw.example)?.base ?? raw.example),
+      example: raw.example && inlineReadings(raw.example),
       notes: raw.notes,
     });
     if (!fitted.fields.term) return [];

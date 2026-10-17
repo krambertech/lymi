@@ -12,7 +12,7 @@ Today's **Review** link, `R` on a keyboard, a deck's **Review** button, or `/rev
 
 ## End state
 
-The progress reads **1 of 9** after the first grade, and the card on screen changed. `/api/dev/state` counts one more review after each grade, which proves the outbox reached the server. Back on Today, **Also on your list** shows **1 Forgotten today** and the due count is lower than the seed's.
+The progress reads **1 of 9** after the first grade, and the card on screen changed. `/api/dev/state` counts one more review after each grade, which proves the outbox reached the server. Back on Today, the **Review forgotten** link shows **1 Forgotten today** and the due count is lower than the seed's.
 
 ## Gotchas
 

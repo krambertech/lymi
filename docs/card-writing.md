@@ -17,6 +17,17 @@ A good card asks one thing and has one normal answer. Everything else on it is o
 9. **A card that keeps failing is split or rewritten, not given more notes.**
 10. **One format per deck.** The same term shape, the same meaning style and the same note labels on every card, so the deck reads as one voice and the AI can copy it.
 
+## Japanese cards
+
+A Japanese card is shaped by its language, with no setting of its own:
+
+- **Term**: the dictionary form, written as natives write it: 食べる, 学校, and kana alone for a word normally written in kana, such as ありがとう or たくさん.
+- **Reading**: the term's reading in hiragana, たべる, stored as the pronunciation and drawn over the kanji as furigana. Empty for a term written only in kana. No romaji.
+- **Notes**: the word type and the polite form on one line, "ichidan verb · 食べます", "i-adjective · 高いです", and a transitive or intransitive pair when there is one.
+- **Example**: one short sentence with a reading in square brackets after each run of kanji, and none over kana: `毎朝[まいあさ]パンを食[た]べます。`. A reading over a longer stretch, Anki's `食べます[たべます]`, is read the same way.
+
+The AI may add readings to an example someone else wrote only when the text is otherwise unchanged; it never rewrites it.
+
 ## Notes
 
 Notes are read after the answer and are never needed to grade it. Empty notes are fine.
@@ -34,7 +45,7 @@ A second example, a full paradigm, etymology and grammar explanations belong in 
 1. What the lesson marks first: glossed, bold, highlighted, underlined, drilled, or written in by hand.
 2. Then frequent, useful words the learner does not have.
 3. A term already in the learner's decks is skipped (ADR 0004). A second card for the same word is added only for a clearly different sense, with its own cue.
-4. Page furniture is never a card: headings, row numbers, transcriptions, mnemonics columns, exercise instructions.
+4. Page furniture is never a card: headings, row numbers, transcriptions, mnemonics columns, exercise instructions. A reading the lesson prints beside a term, such as furigana or a kana gloss, goes on that term's card as its pronunciation.
 
 ## Examples
 

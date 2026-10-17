@@ -1,4 +1,4 @@
-import { canSpeakTerm, LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
+import { canSpeakTerm, kanaReading, LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
 import { and, eq } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider } from "../ai";
@@ -63,7 +63,7 @@ export async function pronunciationAudio(
     let audio: Uint8Array;
     try {
       const generated = await provider.speech({
-        text: speechText(card.term),
+        text: spokenText(card),
         language: language.data,
       });
       audio = await boundedAudio(generated);
@@ -200,9 +200,14 @@ async function rememberAudioKey(
   );
 }
 
+/** A Japanese card's kana reading, so 上手 is said じょうず or うわて as the card says, else the term. */
+function spokenText(card: Card): string {
+  return speechText(kanaReading(card) ?? card.term);
+}
+
 async function audioKey(card: Card, provider: SpeechProvider): Promise<string> {
   const bytes = new TextEncoder().encode(
-    `${speechText(card.term)}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}`,
+    `${spokenText(card)}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}`,
   );
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
   const fingerprint = [...digest]

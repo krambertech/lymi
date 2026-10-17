@@ -2,7 +2,10 @@ import { createContext, type ReactNode, useContext, useMemo, useState } from "re
 
 interface AddCard {
   /** Open the capture sheet, optionally targeting one deck. */
-  openCard: (deckId?: string, opts?: { sectionId?: string | undefined }) => void;
+  openCard: (
+    deckId?: string,
+    opts?: { sectionId?: string | undefined; term?: string | undefined },
+  ) => void;
   /** Open the new-deck field. */
   openDeck: () => void;
   /** Open Smart add, optionally for one deck. */
@@ -13,6 +16,8 @@ interface AddCard {
   deckId: string | undefined;
   /** The section the capture sheet was opened for, from a section's menu. */
   sectionId: string | undefined;
+  /** A term the capture sheet starts with, typed in the command menu. */
+  term: string | undefined;
 }
 
 const Ctx = createContext<AddCard | null>(null);
@@ -25,31 +30,36 @@ export function AddCardProvider({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState<"card" | "deck" | "smart" | null>(null);
   const [deckId, setDeckId] = useState<string | undefined>(undefined);
   const [sectionId, setSectionId] = useState<string | undefined>(undefined);
+  const [term, setTerm] = useState<string | undefined>(undefined);
 
   const value = useMemo<AddCard>(
     () => ({
       open,
       deckId,
       sectionId,
+      term,
       openCard: (id, opts) => {
         setDeckId(id);
         setSectionId(opts?.sectionId);
+        setTerm(opts?.term);
         setOpen("card");
       },
       openDeck: () => {
         setDeckId(undefined);
         setSectionId(undefined);
+        setTerm(undefined);
         setOpen("deck");
       },
       openSmart: (id) => {
         setDeckId(id);
         setSectionId(undefined);
+        setTerm(undefined);
         setOpen("smart");
       },
       close: (expected) =>
         setOpen((current) => (expected && current !== expected ? current : null)),
     }),
-    [open, deckId, sectionId],
+    [open, deckId, sectionId, term],
   );
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

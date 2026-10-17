@@ -11,7 +11,7 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { MotionConfig } from "motion/react";
-import { lazy, Suspense, useEffect, useMemo, useRef } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { z } from "zod";
 import { AddCardSheet } from "../components/add-card-sheet";
 import { AnalyticsLearnerSync } from "../components/analytics-learner-sync";
@@ -20,6 +20,7 @@ import {
   AssistantOffer,
   useAssistantOffer,
 } from "../components/assistant-offer";
+import { CommandMenu } from "../components/command-menu";
 import { ShellChrome } from "../components/layout/shell-chrome";
 import { NewDeckSheet } from "../components/new-deck-sheet";
 import { PillNav } from "../components/pill-nav";
@@ -107,6 +108,7 @@ function Shell() {
   const add = useAddCard();
   const seededLanguage = useRef(false);
   const activeDeckId = location.pathname.match(/^\/library\/([^/]+)/)?.[1];
+  const [commandOpen, setCommandOpen] = useState(false);
   // Consent is a stop inside another app's sign-in; the local design page is its own document.
   const bare = isBareShell(location.pathname);
   const onReview = location.pathname.startsWith("/review");
@@ -271,6 +273,21 @@ function Shell() {
     return () => window.removeEventListener("keydown", onKey);
   }, [navigate, onReview, bare, add, activeDeckId]);
 
+  // ⌘K, or Ctrl K, opens the command menu from anywhere, a field included. Not over an add
+  // sheet, where adding from the menu would replace the half-written card.
+  const adding = add.open !== null;
+  useEffect(() => {
+    if (bare || adding) return;
+    const onKey = (e: KeyboardEvent) => {
+      const k = e.code === "KeyK" || e.key.toLowerCase() === "k";
+      if (!k || !(e.metaKey || e.ctrlKey) || e.altKey || e.shiftKey) return;
+      e.preventDefault();
+      setCommandOpen((open) => !open);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [bare, adding]);
+
   const signedIn = me.isSuccess;
   const learnerName = me.data?.name;
   const learnerEmail = me.data?.email;
@@ -352,6 +369,7 @@ function Shell() {
         onOpenChange={(v) => (v ? add.openCard() : add.close("card"))}
         deckId={add.deckId}
         sectionId={add.sectionId}
+        term={add.term}
         onCreateDeck={add.openDeck}
       />
       <NewDeckSheet
@@ -367,6 +385,17 @@ function Shell() {
         />
       )}
       {me.isSuccess && <StreakPlace />}
+      {me.isSuccess && (
+        <CommandMenu
+          open={commandOpen}
+          onOpenChange={setCommandOpen}
+          decks={decks.data}
+          activeDeckId={activeDeckId}
+          onAddCard={(deckId, term) => openCard(deckId, { term })}
+          onCreateDeck={openDeck}
+          onSmartAdd={onSmartAdd}
+        />
+      )}
     </LearnerAvatarProvider>
   );
 }

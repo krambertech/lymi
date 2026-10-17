@@ -25,6 +25,10 @@ msgstr "“{label}” was already in {deckName}, so the copy added offline was l
 msgid "“{name}”"
 msgstr "“{name}”"
 
+#. placeholder {0}: outcome.deckName
+msgid "“{quoted}” is already in {0}"
+msgstr "“{quoted}” is already in {0}"
+
 msgid "“{term}” has nothing left to fill in."
 msgstr "“{term}” has nothing left to fill in."
 
@@ -374,6 +378,10 @@ msgstr "{0} · created {1}"
 #. placeholder {0}: formatSize(value.file.size, i18n.locale)
 msgid "{0} · uploads when you save"
 msgstr "{0} · uploads when you save"
+
+#. placeholder {0}: i18n.number(row.deck.due)
+msgid "{0} due"
+msgstr "{0} due"
 
 #. placeholder {0}: c.lapses
 #. placeholder {1}: c.reviews
@@ -827,6 +835,10 @@ msgstr "Access"
 msgid "Account"
 msgstr "Account"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "account goal"
+msgstr "account goal"
+
 msgid "Actions"
 msgstr "Actions"
 
@@ -835,6 +847,10 @@ msgstr "Activity"
 
 msgid "Add"
 msgstr "Add"
+
+#. placeholder {0}: shortQuote(term)
+msgid "Add “{0}”"
+msgstr "Add “{0}”"
 
 #. placeholder {0}: deck.name
 msgid "Add “{0}” to Library"
@@ -891,6 +907,9 @@ msgstr "Add Lymi to your Home Screen first. iPhone and iPad only allow reminders
 msgid "Add more"
 msgstr "Add more"
 
+msgid "Add now"
+msgstr "Add now"
+
 msgid "Add photos, PDFs or text from your lesson. Then choose which terms to add as cards."
 msgstr "Add photos, PDFs or text from your lesson. Then choose which terms to add as cards."
 
@@ -933,6 +952,12 @@ msgstr "Added “{0}” without its picture. {1}"
 msgid "Added “{name}” to Library"
 msgstr "Added “{name}” to Library"
 
+msgid "Added “{quoted}” to {deckName}"
+msgstr "Added “{quoted}” to {deckName}"
+
+msgid "Added “{quoted}” to {deckName}. It’s saved on this device until Lymi can be reached."
+msgstr "Added “{quoted}” to {deckName}. It’s saved on this device until Lymi can be reached."
+
 msgid "Added “{term}”"
 msgstr "Added “{term}”"
 
@@ -947,6 +972,9 @@ msgstr "Added {count, plural, one {# card} other {# cards}} to {deck}"
 
 msgid "Added today"
 msgstr "Added today"
+
+msgid "Adding…"
+msgstr "Adding…"
 
 msgid "After connecting, paste a lesson into your assistant and ask it to make cards."
 msgstr "After connecting, paste a lesson into your assistant and ask it to make cards."
@@ -1050,6 +1078,10 @@ msgstr "Animated images can’t be used. Choose a still image."
 
 msgid "Anki package"
 msgstr "Anki package"
+
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "anki quizlet"
+msgstr "anki quizlet"
 
 msgid "anna@example.com"
 msgstr "anna@example.com"
@@ -1518,6 +1550,12 @@ msgstr "Come back later, or add new cards."
 msgid "Comma"
 msgstr "Comma"
 
+msgid "Command menu"
+msgstr "Command menu"
+
+msgid "Commands"
+msgstr "Commands"
+
 msgid "Confirm address"
 msgstr "Confirm address"
 
@@ -1803,6 +1841,10 @@ msgstr "Create an account"
 msgid "Create and move"
 msgstr "Create and move"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "create deck"
+msgstr "create deck"
+
 msgid "Create deck"
 msgstr "Create deck"
 
@@ -1855,6 +1897,10 @@ msgstr "Daily reminder"
 msgid "Dark"
 msgstr "Dark"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "dark light"
+msgstr "dark light"
+
 msgid "Day by day"
 msgstr "Day by day"
 
@@ -1870,6 +1916,7 @@ msgstr "Deck options"
 msgid "Deck settings"
 msgstr "Deck settings"
 
+#. Words, separated by spaces, that also find this command in the command menu
 msgid "decks"
 msgstr "decks"
 
@@ -2210,6 +2257,9 @@ msgstr "Find a language"
 msgid "Find a tag"
 msgstr "Find a tag"
 
+msgid "Find cards and decks, or run a command"
+msgstr "Find cards and decks, or run a command"
+
 msgid "Find or create a tag"
 msgstr "Find or create a tag"
 
@@ -2298,6 +2348,9 @@ msgstr "Give the series a name."
 msgid "Give the tag a name."
 msgstr "Give the tag a name."
 
+msgid "Go to"
+msgstr "Go to"
+
 msgid "Go to {currentName}"
 msgstr "Go to {currentName}"
 
@@ -2347,6 +2400,10 @@ msgstr "Hide password"
 
 msgid "History"
 msgstr "History"
+
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "history changes"
+msgstr "history changes"
 
 msgid "Hook"
 msgstr "Hook"
@@ -2424,6 +2481,9 @@ msgstr "Import archived"
 
 msgid "Import cancelled"
 msgstr "Import cancelled"
+
+msgid "Import cards"
+msgstr "Import cards"
 
 msgid "Import decks"
 msgstr "Import decks"
@@ -2658,6 +2718,10 @@ msgstr "Keep the term under 500 characters."
 msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "keys"
+msgstr "keys"
+
 msgid "known"
 msgstr "known"
 
@@ -2739,6 +2803,10 @@ msgstr "Left “{deckName}”"
 
 msgid "Left Lymi, so nobody can change this deck"
 msgstr "Left Lymi, so nobody can change this deck"
+
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "lesson"
+msgstr "lesson"
 
 msgid "Lesson"
 msgstr "Lesson"
@@ -3009,6 +3077,10 @@ msgctxt "cards in this state"
 msgid "New"
 msgstr "New"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "new card"
+msgstr "new card"
+
 msgid "New card"
 msgstr "New card"
 
@@ -3237,6 +3309,10 @@ msgstr "Nothing left in {scopeName}"
 msgid "Nothing left in this deck"
 msgstr "Nothing left in this deck"
 
+#. placeholder {0}: shortQuote(query)
+msgid "Nothing matches “{0}”"
+msgstr "Nothing matches “{0}”"
+
 msgid "Nothing published yet"
 msgstr "Nothing published yet"
 
@@ -3308,6 +3384,11 @@ msgstr "Only your name is shared, never your progress."
 
 msgid "Open"
 msgstr "Open"
+
+#. placeholder {0}: shortQuote(row.existing.term)
+#. placeholder {1}: row.existing.deckName
+msgid "Open “{0}” in {1}"
+msgstr "Open “{0}” in {1}"
 
 msgid "Open deck"
 msgstr "Open deck"
@@ -3523,6 +3604,10 @@ msgstr "Production"
 msgid "Production card for {front}"
 msgstr "Production card for {front}"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "progress stats"
+msgstr "progress stats"
+
 msgid "Pronunciation"
 msgstr "Pronunciation"
 
@@ -3534,6 +3619,10 @@ msgstr "Pronunciation changed to “{value}”"
 
 msgid "Pronunciation from lesson"
 msgstr "Pronunciation from lesson"
+
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "published decks"
+msgstr "published decks"
 
 msgid "Quickstart"
 msgstr "Quickstart"
@@ -3702,6 +3791,10 @@ msgstr "Reset your Lymi password"
 msgid "Reset your password"
 msgstr "Reset your password"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "restore"
+msgstr "restore"
+
 msgid "Restore"
 msgstr "Restore"
 
@@ -3736,6 +3829,9 @@ msgstr "Restored the section {name} in {deck}"
 
 msgid "Restored the series {name}"
 msgstr "Restored the series {name}"
+
+msgid "Results"
+msgstr "Results"
 
 msgid "Retry"
 msgstr "Retry"
@@ -3870,11 +3966,17 @@ msgstr "Science"
 msgid "Search"
 msgstr "Search"
 
+msgid "Search cards, decks and commands"
+msgstr "Search cards, decks and commands"
+
 msgid "Search languages"
 msgstr "Search languages"
 
 msgid "Search this deck"
 msgstr "Search this deck"
+
+msgid "Searching…"
+msgstr "Searching…"
 
 msgid "Section"
 msgstr "Section"
@@ -4197,6 +4299,9 @@ msgstr "Subjects"
 
 msgid "Support"
 msgstr "Support"
+
+msgid "Switch theme"
+msgstr "Switch theme"
 
 msgid "System"
 msgstr "System"

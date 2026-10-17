@@ -34,11 +34,15 @@ export function applyTheme(choice: ThemeChoice) {
   );
 }
 
+/** Fired on `window` after the theme changes, so a screen showing the choice can follow. */
+export const THEME_CHANGED = "lymi:theme-changed";
+
 export function setTheme(choice: ThemeChoice) {
   try {
     localStorage.setItem(KEY, choice);
   } catch {}
   applyTheme(choice);
+  window.dispatchEvent(new Event(THEME_CHANGED));
 }
 
 export function getTheme(): ThemeChoice {

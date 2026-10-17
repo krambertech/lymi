@@ -26,6 +26,8 @@ interface Props {
   deckId?: string | undefined;
   /** Preselect a section of that deck. */
   sectionId?: string | undefined;
+  /** Start from a term typed elsewhere. */
+  term?: string | undefined;
   /** A word needs a deck to land in, so the first run offers to make one. */
   onCreateDeck?: (() => void) | undefined;
 }
@@ -36,7 +38,7 @@ const hasWork = (d: CardFormDraft | null) =>
   !!(d.term || d.meaning || d.example || d.notes || d.pronunciation || d.picture.kind !== "none");
 
 /** Quick capture: term, meaning and deck, with the rest of the card one tap away. */
-export function AddCardSheet({ open, onOpenChange, deckId, sectionId, onCreateDeck }: Props) {
+export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCreateDeck }: Props) {
   const { t } = useLingui();
   const qc = useQueryClient();
   const decks = useQuery(decksQuery);
@@ -147,13 +149,14 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, onCreateDe
           <CardForm
             key={
               open
-                ? `open:${deckId ?? "default"}:${sectionId ?? ""}:${restored?.key ?? 0}`
+                ? `open:${deckId ?? "default"}:${sectionId ?? ""}:${term ?? ""}:${restored?.key ?? 0}`
                 : "closed"
             }
             mode="add"
             decks={decks.data}
             deckId={deckId}
             sectionId={sectionId}
+            term={term}
             draft={open ? restored?.draft : undefined}
             pending={pending}
             layout={shape === "desktop" ? "whole" : "chips"}

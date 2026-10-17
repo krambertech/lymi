@@ -11,7 +11,7 @@ Look here before building anything: if a component below does the job, use it, a
 - `pnpm dlx shadcn@latest add <name> --diff` shows what changed upstream, and an update is merged by hand.
 - A primitive that changes shape by device keeps both shapes in its own file, behind shadcn's part names, and tests every part in both.
 
-The primitives: `Checkbox`, `Combobox`, `Dialog`, `Drawer`, `DropdownMenu`, `Field`, `Input`, `Popover`, `RadioGroup`, `Select`, `Separator`, `Slider`, `SlidingPlate`, `Switch`, `Textarea`, `Toast`, `ToggleGroup`, `Tooltip`. `Drawer` is the touch shape inside `Dialog`, `DropdownMenu` and `Select`; a call site uses those rather than `Drawer` directly. See [ADR 0017](../../adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md).
+The primitives: `Checkbox`, `Combobox`, `CommandPalette`, `Dialog`, `Drawer`, `DropdownMenu`, `Field`, `Input`, `Popover`, `RadioGroup`, `Select`, `Separator`, `Slider`, `SlidingPlate`, `Switch`, `Textarea`, `Toast`, `ToggleGroup`, `Tooltip`. `Drawer` is the touch shape inside `Dialog`, `DropdownMenu` and `Select`; a call site uses those rather than `Drawer` directly. See [ADR 0017](../../adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md).
 
 ## Product components: components
 

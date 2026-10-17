@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import type { AppLanguage } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AccountSection } from "../components/account-section";
 import { ApiKeysSection } from "../components/api-keys-section";
 import { ConnectedAppsSection } from "../components/connected-apps-section";
@@ -12,7 +12,7 @@ import { api, type Settings } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { activate, pickLocale } from "../lib/i18n";
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
-import { getTheme, setTheme, type ThemeChoice } from "../lib/theme";
+import { getTheme, setTheme, THEME_CHANGED, type ThemeChoice } from "../lib/theme";
 import { SettingsView } from "../views/settings-view";
 
 export const Route = createFileRoute("/settings")({
@@ -50,6 +50,12 @@ function SettingsRoute() {
     onSuccess: (value) => qc.setQueryData(settingsQuery.queryKey, value),
   });
   const [theme, setThemeState] = useState<ThemeChoice>(getTheme());
+  // The command menu can switch the theme while Settings is open.
+  useEffect(() => {
+    const follow = () => setThemeState(getTheme());
+    window.addEventListener(THEME_CHANGED, follow);
+    return () => window.removeEventListener(THEME_CHANGED, follow);
+  }, []);
   const [exporting, setExporting] = useState(false);
   return (
     <SettingsView

@@ -79,13 +79,20 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
       };
       const decks = await counted("decks", () => prepareImportDecks(ctx, id, uploads));
       const chunks = await counted("chunks", async () => (await ownedImport(ctx, id)).chunks);
-      const pictures = { ...(params.resume?.pictures ?? { stored: 0, skipped: 0 }) };
+      const resumed = params.resume?.pictures;
+      const pictures = {
+        stored: resumed?.stored ?? 0,
+        skipped: resumed?.skipped ?? 0,
+        recordings: { ...(resumed?.recordings ?? { stored: 0, skipped: 0 }) },
+      };
       let chunk = params.resume?.chunk ?? 0;
       let pending = params.resume?.pending ?? [];
-      const storage =
-        this.env.PRIVATE_IMAGES && this.env.IMAGES
-          ? { bucket: this.env.PRIVATE_IMAGES, images: this.env.IMAGES }
-          : null;
+      // A preview Worker has no pictures bucket; its imports keep their cards and skip pictures.
+      const storage = {
+        bucket: this.env.PRIVATE_IMAGES,
+        images: this.env.IMAGES,
+        audio: this.env.AUDIO,
+      };
 
       for (;;) {
         const next = nextWriteStep({ chunk, chunks, pending: pending.length, steps });
@@ -105,18 +112,14 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
           return;
         }
         if (next === "pictures") {
-          // A preview Worker has no pictures bucket; its imports keep their cards and skip pictures.
-          if (!storage) {
-            pictures.skipped += pending.length;
-            pending = [];
-            continue;
-          }
           const batch = pending.slice(0, PICTURES_PER_STEP);
           const done = await counted(`pictures ${chunk} ${pending.length}`, () =>
             attachImportPictures(ctx, id, batch, uploads, storage),
           );
           pictures.stored += done.stored;
           pictures.skipped += done.skipped;
+          pictures.recordings.stored += done.recordings.stored;
+          pictures.recordings.skipped += done.recordings.skipped;
           pending = pending.slice(PICTURES_PER_STEP);
           continue;
         }

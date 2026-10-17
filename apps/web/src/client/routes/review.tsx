@@ -13,7 +13,7 @@ import {
 import { writes } from "@lymi/client/writes";
 import {
   CHOSEN_LIMIT,
-  canSpeakTerm,
+  canPlayPronunciation,
   countedRating,
   type Drawn,
   drawKey,
@@ -645,7 +645,7 @@ function Review() {
   }, [currentCardId, stopAudio]);
 
   const playAudio = useCallback(async () => {
-    if (!current?.card.language || audioState === "loading") return;
+    if (!current || !canPlayPronunciation(current.card) || audioState === "loading") return;
     stopAudio();
     setAudioError(null);
     const { id, language, term } = current.card;
@@ -1159,7 +1159,7 @@ function Review() {
                 setFocusGrades(document.activeElement instanceof HTMLButtonElement);
                 setRevealed(true);
               }}
-              onPlayAudio={canSpeakTerm(current.card) ? playAudio : undefined}
+              onPlayAudio={canPlayPronunciation(current.card) ? playAudio : undefined}
               audioState={audioState}
               audioError={
                 audioError && audioError.item === currentItemKey ? audioError.message : null
@@ -1247,7 +1247,7 @@ function Review() {
             modes={current.card.reviewModes ?? currentDeck.reviewModes}
             history={placeHistory}
             titleId={placeTitleId}
-            onPlayAudio={canSpeakTerm(current.card) ? playAudio : undefined}
+            onPlayAudio={canPlayPronunciation(current.card) ? playAudio : undefined}
             onClose={closePlace}
             owner={
               owned

@@ -21,6 +21,7 @@ export type AuditEvent =
         | Change
         | "enrich"
         | "generate_audio"
+        | "set_audio"
         | ImageAction
         | "mark_important"
         | "unmark_important";

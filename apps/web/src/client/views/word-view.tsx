@@ -3,7 +3,7 @@ import { msg, plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { splitForms } from "@lymi/client/deck-list";
 import {
-  canSpeakTerm,
+  canPlayPronunciation,
   type DeckEnrichField,
   deserializeState,
   type EnrichedField,
@@ -152,6 +152,8 @@ export function describeEvent(e: CardEvent, i18n: I18n = globalI18n): WordEvent 
     return { ...base, kind: "archived", text: i18n._(msg`Archived`), actor: by };
   if (e.action === "restore")
     return { ...base, kind: "restored", text: i18n._(msg`Restored`), actor: by };
+  if (e.action === "set_audio")
+    return { ...base, kind: "edited", text: i18n._(msg`Recording added`), actor: by };
   if (e.action === "mark_important")
     return { ...base, kind: "edited", text: i18n._(msg`Marked important`), actor: by };
   if (e.action === "unmark_important")
@@ -598,7 +600,7 @@ export function WordView({
               </span>
             )}
           </span>
-          {onPlayAudio && canSpeakTerm(card) && (
+          {onPlayAudio && canPlayPronunciation(card) && (
             <IconButton
               label={t`Say ${card.term}`}
               variant="secondary"

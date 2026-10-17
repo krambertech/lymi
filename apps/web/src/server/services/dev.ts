@@ -96,11 +96,6 @@ export async function deletePersonaAccount(db: Db, email: string): Promise<void>
   ]);
 }
 
-/**
- * Seed a persona's data under the account in `ctx`. The account is emptied first, so the
- * result is the same whoever was there before. Deterministic: the same persona seeds the
- * same grades every time.
- */
 /** What a seed needs beyond its own account, from the route that holds auth and the bindings. */
 export interface SeedDeps {
   /** Another persona's or companion's user id, its account created on first use. */
@@ -109,6 +104,11 @@ export interface SeedDeps {
   images?: CardImageStorage | undefined;
 }
 
+/**
+ * Seed a persona's data under the account in `ctx`. The account is emptied first, so the
+ * result is the same whoever was there before. Deterministic: the same persona seeds the
+ * same grades every time.
+ */
 export async function seedPersona(
   ctx: ServiceContext,
   persona: Persona,
@@ -215,6 +215,7 @@ export async function seedPersona(
     for (const { slug, meaningLanguage } of persona.explore ?? []) {
       await addFromExplore(ctx, slug, meaningLanguage, deps, seeding);
     }
+    await reAddToExplorers(db, persona, seeding);
   }
 
   await setDue(ctx, persona.dueNow);
@@ -269,10 +270,11 @@ async function share(
     const member = accountPersona(id);
     if (!member) throw new Error(`No account named ${id}`);
     const memberCtx = { db: ctx.db, userId: await deps.account(id), actor: "user" as const };
-    if (!seeding.has(id) && member.decks.length > 0 && (await ownsNothing(memberCtx))) {
-      await seedPersona(memberCtx, member, deps, seeding);
-    }
+    const fresh = !seeding.has(id) && member.decks.length > 0 && (await ownsNothing(memberCtx));
+    if (fresh) await seedPersona(memberCtx, member, deps, seeding);
     await join(memberCtx, deckId);
+    // A rebuilt deck hands an existing member new states, all due; put the member's own count back.
+    if (!fresh && !seeding.has(id)) await setDue(memberCtx, member.dueNow);
   }
   if (people.joinLink) await turnOnJoinLink(ctx, deckId);
   for (const email of people.invitations ?? []) {
@@ -303,6 +305,30 @@ async function joinOthersDecks(
       const found = await ownersDeck(ctx.db, { owner: owner.id, deck: deck.name }, deps, seeding);
       if (found) await join(ctx, found.deckId);
     }
+  }
+}
+
+/**
+ * Republishing deletes the old deck and every membership in it, so the accounts that had added it
+ * from Explore get it back, with their own due count. Accounts that were never signed in are left alone.
+ */
+async function reAddToExplorers(db: Db, publisher: Persona, seeding: Set<string>) {
+  const slugs = new Set(publisher.decks.flatMap((d) => d.publication?.slug ?? []));
+  if (slugs.size === 0) return;
+  for (const account of accounts) {
+    const wanted = (account.explore ?? []).filter((e) => slugs.has(e.slug));
+    if (wanted.length === 0 || account.id === publisher.id || seeding.has(account.id)) continue;
+    const [user] = await db
+      .select({ id: schema.user.id })
+      .from(schema.user)
+      .where(eq(schema.user.email, personaEmail(account.id)));
+    if (!user) continue;
+    const ctx = { db, userId: user.id, actor: "user" as const };
+    if (await ownsNothing(ctx)) continue;
+    for (const { slug, meaningLanguage } of wanted) {
+      await addPublishedDeck(ctx, slug, meaningLanguage);
+    }
+    await setDue(ctx, account.dueNow);
   }
 }
 

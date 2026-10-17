@@ -199,7 +199,11 @@ dev.on(
         seeded = true;
       }
     }
-    const landing = returnTo ? null : await landingPath(c.get("db"), persona, deps);
+    // Only a browser lands anywhere, and finding the deck may seed its owner, which seed=0 forbids.
+    const landing =
+      c.req.method === "GET" && !returnTo && seed !== "0"
+        ? await landingPath(c.get("db"), persona, deps)
+        : null;
 
     const headers = new Headers();
     for (const cookie of signed.cookies) headers.append("set-cookie", cookie);
@@ -220,7 +224,6 @@ dev.on(
       persona: summary(persona),
       created: signed.created,
       seeded,
-      landing,
       counts: await devCounts(ctx),
     };
     return new Response(JSON.stringify(body), { status: 200, headers });

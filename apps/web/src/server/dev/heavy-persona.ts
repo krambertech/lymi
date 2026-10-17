@@ -416,11 +416,14 @@ const PLANS: DeckPlan[] = [
   { name: "Old Finnish", language: "fi", size: 100, ageDays: 550, archived: true },
 ];
 
-/** Two years' plans stretched over four: twice the age, half again the cards. */
+/**
+ * Two years' plans stretched over four: twice the age, half again the cards. The newest month and
+ * the one-card and empty decks stay as they are, since they are there for their edges.
+ */
 const STRETCHED = PLANS.map((plan) => ({
   ...plan,
-  size: Math.round(plan.size * 1.5),
-  ageDays: plan.ageDays * 2,
+  size: plan.size <= 1 ? plan.size : Math.round(plan.size * 1.5),
+  ageDays: plan.ageDays <= 30 ? plan.ageDays : plan.ageDays * 2,
 }));
 
 function decks(): PersonaDeck[] {

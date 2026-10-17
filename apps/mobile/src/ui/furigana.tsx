@@ -1,4 +1,9 @@
-import { parseReadings, type ReadingSegment } from "@lymi/core";
+import {
+  type KnownReadings,
+  markKnownReadings,
+  parseReadings,
+  type ReadingSegment,
+} from "@lymi/core";
 import { READING_FADE } from "@lymi/design";
 import { type ComponentProps, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -66,9 +71,13 @@ export function Furigana(props: Props) {
   );
 }
 
-/** Text that may carry inline readings, such as an example, drawn with them. */
-export function ReadingText({ text, ...props }: Omit<Props, "segments"> & { text: string }) {
-  const segments = useMemo(() => parseReadings(text), [text]);
+/** Text that may carry inline readings, such as an example, drawn with them; `known` fades the learner's Known pairs. */
+export function ReadingText({
+  text,
+  known,
+  ...props
+}: Omit<Props, "segments"> & { text: string; known?: KnownReadings | undefined }) {
+  const segments = useMemo(() => markKnownReadings(parseReadings(text), known), [text, known]);
   return <Furigana segments={segments} {...props} />;
 }
 
@@ -168,7 +177,9 @@ function Ruby({
               // A reading wider than its kanji centres over them, as the web's ruby does.
               // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
               <View key={j} className="shrink items-center">
-                {fade ? (
+                {run.known ? (
+                  <View style={{ opacity: 0 }}>{reading(run.reading)}</View>
+                ) : fade ? (
                   <Animated.View style={fade}>{reading(run.reading)}</Animated.View>
                 ) : (
                   reading(run.reading)

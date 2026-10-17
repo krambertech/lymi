@@ -4,6 +4,7 @@ import type { EndScreen, Offer } from "@lymi/client/review-end";
 import {
   cueKeepsReading,
   gradeAllowed,
+  type KnownReadings,
   type Rating,
   type ReviewAid,
   termReading,
@@ -369,6 +370,8 @@ export interface ReviewCardProps {
   deck?: { name: string; language?: string | null | undefined } | undefined;
   /** The deck's section the card is in, named under the answer in place of the card's source. */
   section?: string | undefined;
+  /** The learner's Known pairs, whose readings fade in the example. */
+  knownReadings?: KnownReadings | undefined;
   revealed: boolean;
   animateReveal?: boolean | undefined;
   /** The words fade in as the card arrives. Off when the grade before it came from the keyboard. */
@@ -514,6 +517,7 @@ export function ReviewCard({
   item,
   deck,
   section,
+  knownReadings,
   revealed,
   animateReveal = true,
   animateIn = false,
@@ -720,7 +724,11 @@ export function ReviewCard({
           className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           lang={card.language ?? undefined}
         >
-          <ReadingText text={card.example} lang={card.language ?? undefined} />
+          <ReadingText
+            text={card.example}
+            lang={card.language ?? undefined}
+            known={knownReadings}
+          />
         </motion.p>
       )}
       {card.notes && (

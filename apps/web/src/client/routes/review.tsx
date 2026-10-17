@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { gradeStore, recordGrade, retireGrades } from "@lymi/client/grades";
+import { readingsFadedField, useKnownReadings } from "@lymi/client/known-readings";
 import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawState, reviewItem, stateBefore } from "@lymi/client/review-draw";
 import {
@@ -691,6 +692,7 @@ function Review() {
 
   const showing = current ? `${itemKey(current)}-${done}` : "";
   const recallTimes = useRecallClock(showing || null, revealed);
+  const knownReadings = useKnownReadings();
   const writingHook = !!showing && hookFor === showing;
   const revealedAt = useRef(0);
   useEffect(() => {
@@ -766,6 +768,7 @@ function Review() {
         timezone: deviceTimezone(),
         ...(aid ? { aid } : {}),
         ...recallTimes(),
+        ...readingsFadedField(qc, item.card.example),
       });
       setFocusReveal(!!document.activeElement?.closest("[data-grade-strip]"));
       const listed = !!leg && !drawLeg;
@@ -1148,6 +1151,7 @@ function Review() {
                 }
               }
               section={sectionName}
+              knownReadings={knownReadings}
               revealed={revealed}
               animateReveal={animateReveal}
               animateIn={animateNextCard}
@@ -1245,6 +1249,7 @@ function Review() {
             state={placeHistory?.states[0] ?? null}
             deckName={currentDeck.name}
             modes={current.card.reviewModes ?? currentDeck.reviewModes}
+            knownReadings={knownReadings}
             history={placeHistory}
             titleId={placeTitleId}
             onPlayAudio={canPlayPronunciation(current.card) ? playAudio : undefined}

@@ -2,6 +2,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
+import { useKnownReadings } from "@lymi/client/known-readings";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
 import { deserializeState, termReading, writtenWithReading } from "@lymi/core";
@@ -79,6 +80,7 @@ export default function CardPage() {
   const { card: id, deck: deckId } = useLocalSearchParams<{ card: string; deck: string }>();
   const deck = useDecks().data?.find((d) => d.id === deckId);
   const cards = useDeckCards(deckId);
+  const known = useKnownReadings();
   const listed = cards.data?.find((r) => r.card.id === id);
   const row = listed;
   const historyQuery = useQuery(cardHistoryQuery(id));
@@ -234,7 +236,12 @@ export default function CardPage() {
         field="example"
         onPress={edit("example")}
       >
-        <ReadingText text={card.example} className="text-md text-text" lang={card.language} />
+        <ReadingText
+          text={card.example}
+          known={known}
+          className="text-md text-text"
+          lang={card.language}
+        />
       </Field>
     ),
     card.notes && (

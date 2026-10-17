@@ -7,6 +7,7 @@ import {
   drawableCount,
   drawKey,
   drawOrder,
+  exampleReadings,
   legacyDirection,
   missed,
   modeKey,
@@ -243,6 +244,13 @@ function readingShown(key: ReviewModeKey, state: number): "cue" | "answer" {
   return modeOf(key).cue === "term" && state !== 2 ? "cue" : "answer";
 }
 
+/** How many readings the card's example draws, and how many the grader saw fade, when it says. */
+function fadedReadings(example: string | null, faded: number | undefined) {
+  if (faded === undefined) return {};
+  const { readings } = exampleReadings(example);
+  return readings ? { example_readings: readings, readings_faded: Math.min(faded, readings) } : {};
+}
+
 /**
  * Apply one grade. Only the learner grades; integrations never reach this function.
  * Idempotent enough for offline replay: a review older than the state's last review is a no-op.
@@ -269,6 +277,7 @@ export async function gradeCard(
       term: schema.cards.term,
       language: schema.cards.language,
       pronunciation: schema.cards.pronunciation,
+      example: schema.cards.example,
     })
     .from(schema.cardStates)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
@@ -378,6 +387,7 @@ export async function gradeCard(
     ...(CARD_STATES[state.state] ? { state: CARD_STATES[state.state] } : {}),
     ...(input.aid ? { aid: input.aid } : {}),
     ...(furigana && termReading(row) ? { reading: readingShown(key, state.state) } : {}),
+    ...fadedReadings(row.example, input.readingsFaded),
   });
   recordFirstReview(ctx, row.deckId, { id: reviewId, reviewedAt });
   // Readiness only moves when a card leaves New or becomes Known, so other grades skip the check.

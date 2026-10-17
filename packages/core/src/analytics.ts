@@ -182,6 +182,8 @@ export const analyticsEvents = {
     state: z.enum(CARD_STATES).optional(),
     aid: ReviewAid.optional(),
     reading: z.enum(["cue", "answer"]).optional(),
+    example_readings: count.optional(),
+    readings_faded: count.optional(),
   }),
   review_undone: z.object({
     mode: ReviewModeKey.optional(),

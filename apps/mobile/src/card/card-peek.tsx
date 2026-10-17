@@ -1,6 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import type { Card, CardState } from "@lymi/client/api";
 import { splitForms } from "@lymi/client/deck-list";
+import { useKnownReadings } from "@lymi/client/known-readings";
 import { hasReadings, termReading } from "@lymi/core";
 import { useMemo } from "react";
 import { useWindowDimensions, View } from "react-native";
@@ -58,6 +59,7 @@ export function CardPeek({
   state?: CardState | null | undefined;
   deckName?: string | undefined;
 }) {
+  const known = useKnownReadings();
   const { t } = useLingui();
   const p = usePalette();
   const dark = useRoom() === "dark";
@@ -114,6 +116,7 @@ export function CardPeek({
         {card.example && (
           <ReadingText
             text={card.example}
+            known={known}
             className="text-md text-text-2"
             lines={2}
             lang={card.language}

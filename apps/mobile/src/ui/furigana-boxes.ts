@@ -91,6 +91,8 @@ export function clampBoxes(
 /** What VoiceOver says for the runs: the reading in place of the kanji it is drawn over, while shown. */
 export function spokenReading(segments: readonly ReadingSegment[], shown: boolean): string {
   return segments
-    .map((segment) => (shown && segment.reading?.trim() ? segment.reading : segment.text))
+    .map((segment) =>
+      shown && !segment.known && segment.reading?.trim() ? segment.reading : segment.text,
+    )
     .join("");
 }

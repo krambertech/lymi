@@ -1,5 +1,5 @@
-# Japanese: furigana over a Known and a New card's term in review, over an example, a deck's row,
-# the card page and search, and the Reading field.
+# Japanese: furigana over a Known and a New card's term in review, over an example, which fades
+# over a Known word, a deck's row, the card page, search and its peek, and the Reading field.
 appId: app.lymi
 name: Japanese
 ---
@@ -64,3 +64,10 @@ name: Japanese
     visible: "${TERM}.*"
     timeout: 20000
 - takeScreenshot: 09-search
+# The peek draws the example as the card page does, the Known 角 without its reading. iOS keeps
+# the preview out of the accessibility tree, so the menu beside it is what the flow waits for.
+- longPressOn: "${TERM}.*"
+- extendedWaitUntil:
+    visible: "Edit card"
+    timeout: 20000
+- takeScreenshot: 10-search-peek

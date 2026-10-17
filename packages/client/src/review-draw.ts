@@ -36,6 +36,8 @@ export interface LocalGrade {
   /** Foreground time before the reveal and before the grade, from `RecallClock`. */
   recallMs?: number | undefined;
   gradeMs?: number | undefined;
+  /** How many of the example's readings faded over Known words, when the answer drew any. */
+  readingsFaded?: number | undefined;
   /** Taken back on this device, so no draw counts it, even once the fetched log holds it. */
   undone?: boolean | undefined;
 }

@@ -1,9 +1,11 @@
+import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { clsx } from "clsx";
 import { ArrowRight, Volume2 } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
+import { deckPath } from "../../lib/deck-page";
 import { shelfPath } from "../../lib/explore";
 import { openLymiUrl, productUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
@@ -92,18 +94,88 @@ function WideSection({
   );
 }
 
-/** The published Japanese decks at full size, the first a beginner takes widest. */
+/** The way in, in the order to take it: each step is one of the decks Welcome offers first. */
+const STEPS: { slug: string; glyph: string; name: MessageDescriptor; detail: MessageDescriptor }[] =
+  [
+    {
+      slug: KANA_DECK,
+      glyph: "あア",
+      name: msg`The kana`,
+      detail: msg`Hiragana, then katakana, a few rows at a time, each sign with its sound.`,
+    },
+    {
+      slug: "japanese-n5-vocabulary-practice",
+      glyph: "食",
+      name: msg`JLPT N5 words`,
+      detail: msg`Everyday words, from family and food to your first verbs.`,
+    },
+    {
+      slug: "japanese-n4-vocabulary",
+      glyph: "経",
+      name: msg`JLPT N4 words`,
+      detail: msg`The next level, once N5 feels easy.`,
+    },
+  ];
+
+/** The three steps side by side, numbered, each opening its deck. */
+function PathSteps() {
+  const { t, i18n } = useLingui();
+  return (
+    <ol aria-label={t`The way in`} className="grid gap-3 @3xl:grid-cols-3 @3xl:gap-5">
+      {STEPS.map((step, index) => (
+        <li key={step.slug}>
+          <a
+            href={deckPath(step.slug, i18n.locale as Locale)}
+            className="group flex h-full gap-4 rounded-2xl bg-plate p-4 edge transition-colors duration-150 hoverable:hover:bg-hover @3xl:flex-col @3xl:p-5"
+          >
+            <span className="flex shrink-0 items-start gap-3 @3xl:items-center">
+              <span
+                lang="ja"
+                aria-hidden="true"
+                className="grid h-14 w-16 place-items-center rounded-xl bg-plate-2 font-mincho text-2xl text-text"
+              >
+                {step.glyph}
+              </span>
+              <span className="hidden text-sm font-medium text-muted @3xl:inline">
+                {t`Step ${i18n.number(index + 1)}`}
+              </span>
+            </span>
+            <span className="grid min-w-0 gap-1">
+              <span className="text-sm font-medium text-muted @3xl:hidden">
+                {t`Step ${i18n.number(index + 1)}`}
+              </span>
+              <span className="text-lg font-medium text-text">{i18n._(step.name)}</span>
+              <span className="text-sm text-pretty text-text-2">{i18n._(step.detail)}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+/** The published Japanese decks at full size, each step's deck marked with its step. */
 function JapaneseDecks({ decks }: { decks: PublicDeckSummary[] }) {
   const { t, i18n } = useLingui();
   const locale = i18n.locale as Locale;
+  const step = (slug: string) => {
+    const at = STEPS.findIndex((each) => each.slug === slug);
+    return at === -1 ? undefined : t`Step ${i18n.number(at + 1)}`;
+  };
   const [first, ...rest] = decks.slice(0, 5);
   if (!first) return null;
   return (
     <div className="grid gap-5">
-      <DeckShowcase deck={first} locale={locale} eyebrow={t`Start here`} />
+      <DeckShowcase deck={first} locale={locale} eyebrow={step(first.slug)} />
       <div className="grid gap-5 @4xl:grid-cols-2">
         {rest.map((deck) => (
-          <DeckShowcase key={deck.slug} deck={deck} locale={locale} layout="tall" />
+          <DeckShowcase
+            key={deck.slug}
+            deck={deck}
+            locale={locale}
+            layout="tall"
+            eyebrow={step(deck.slug)}
+          />
         ))}
       </div>
     </div>
@@ -272,17 +344,22 @@ export function JapaneseView({ decks }: { decks: PublicDeckSummary[] }) {
 
         <WideSection
           id="decks"
-          title={<Trans>Ready-made decks, from kana to N4.</Trans>}
+          title={<Trans>One step at a time, from kana to N4.</Trans>}
           body={
             <Trans>
-              Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign
-              with its sound, then move on to the words of JLPT N5 and N4. You don’t start from
-              scratch: add a deck and its first cards are waiting.
+              Japanese is written in three scripts, so you learn it in order. First the kana: the
+              sounds of hiragana and katakana. Then the everyday words of JLPT N5, kanji and all,
+              and N4 after them. Each step is a ready-made deck, so you don’t start from scratch.
             </Trans>
           }
-          after={<JapaneseShelfLink />}
         >
-          <JapaneseDecks decks={decks} />
+          <PathSteps />
+          <div className="mt-14">
+            <JapaneseDecks decks={decks} />
+          </div>
+          <div className="mt-8">
+            <JapaneseShelfLink />
+          </div>
         </WideSection>
 
         <FeatureSection

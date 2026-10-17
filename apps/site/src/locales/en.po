@@ -1415,6 +1415,9 @@ msgstr "Every state’s deck"
 msgid "Every subject on one schedule."
 msgstr "Every subject on one schedule."
 
+msgid "Everyday words, from family and food to your first verbs."
+msgstr "Everyday words, from family and food to your first verbs."
+
 msgid "Everyone learns the 300 general questions. Three of the 33 come from the 10 about your state, so add the deck for the state where you’re registered too."
 msgstr "Everyone learns the 300 general questions. Three of the 33 come from the 10 about your state, so add the deck for the state where you’re registered too."
 
@@ -1773,6 +1776,9 @@ msgstr "Hi! How’s it going?"
 msgid "Hi! What can I get you?"
 msgstr "Hi! What can I get you?"
 
+msgid "Hiragana, then katakana, a few rows at a time, each sign with its sound."
+msgstr "Hiragana, then katakana, a few rows at a time, each sign with its sound."
+
 msgid "History"
 msgstr "History"
 
@@ -2023,8 +2029,11 @@ msgstr "Japanese"
 msgid "Japanese 1 · Mondays"
 msgstr "Japanese 1 · Mondays"
 
-msgid "Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign with its sound, then move on to the words of JLPT N5 and N4. You don’t start from scratch: add a deck and its first cards are waiting."
-msgstr "Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign with its sound, then move on to the words of JLPT N5 and N4. You don’t start from scratch: add a deck and its first cards are waiting."
+msgid "Japanese is written in three scripts, so you learn it in order. First the kana: the sounds of hiragana and katakana. Then the everyday words of JLPT N5, kanji and all, and N4 after them. Each step is a ready-made deck, so you don’t start from scratch."
+msgstr "Japanese is written in three scripts, so you learn it in order. First the kana: the sounds of hiragana and katakana. Then the everyday words of JLPT N5, kanji and all, and N4 after them. Each step is a ready-made deck, so you don’t start from scratch."
+
+msgid "JLPT N4 words"
+msgstr "JLPT N4 words"
 
 msgctxt "deck tag"
 msgid "JLPT N5"
@@ -2035,6 +2044,9 @@ msgstr "JLPT N5 and N4"
 
 msgid "JLPT N5 and N4: the words for each level"
 msgstr "JLPT N5 and N4: the words for each level"
+
+msgid "JLPT N5 words"
+msgstr "JLPT N5 words"
 
 msgid "Join link"
 msgstr "Join link"
@@ -2635,6 +2647,9 @@ msgstr "One deck for your whole class."
 msgid "One kanji can be read many ways: <0>日</0> is <1>に</1> in <2>日本</2> and <3>にち</3> in <4>毎日</4>. So Lymi shows the reading while you learn a word, as your textbook does, and takes it away once you know it."
 msgstr "One kanji can be read many ways: <0>日</0> is <1>に</1> in <2>日本</2> and <3>にち</3> in <4>毎日</4>. So Lymi shows the reading while you learn a word, as your textbook does, and takes it away once you know it."
 
+msgid "One step at a time, from kana to N4."
+msgstr "One step at a time, from kana to N4."
+
 msgid "One word for asking, handing something over and answering thanks."
 msgstr "One word for asking, handing something over and answering thanks."
 
@@ -2954,9 +2969,6 @@ msgstr "Ready-made {name} decks, written by a person and checked card by card."
 
 msgid "Ready-made decks for learning {name}, written by a person and checked card by card."
 msgstr "Ready-made decks for learning {name}, written by a person and checked card by card."
-
-msgid "Ready-made decks, from kana to N4."
-msgstr "Ready-made decks, from kana to N4."
 
 msgid "Ready-made flashcard decks, written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one free and review it in your own language, a few minutes a day."
 msgstr "Ready-made flashcard decks, written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one free and review it in your own language, a few minutes a day."
@@ -3351,6 +3363,11 @@ msgstr "Statistics"
 msgid "Staying at the table to talk after a meal"
 msgstr "Staying at the table to talk after a meal"
 
+#. placeholder {0}: i18n.number(at + 1)
+#. placeholder {0}: i18n.number(index + 1)
+msgid "Step {0}"
+msgstr "Step {0}"
+
 msgid "Step by step, after a tutor lesson"
 msgstr "Step by step, after a tutor lesson"
 
@@ -3573,6 +3590,9 @@ msgstr "The JLPT has published no official word list since 2010, so the N5 and N
 msgid "The JLPT has published no official word list since 2010, so these decks follow the Japan Foundation’s course lists and widely used study lists."
 msgstr "The JLPT has published no official word list since 2010, so these decks follow the Japan Foundation’s course lists and widely used study lists."
 
+msgid "The kana"
+msgstr "The kana"
+
 msgid "The knack of reading the room"
 msgstr "The knack of reading the room"
 
@@ -3608,6 +3628,9 @@ msgstr "The new cards are in your deck, and terms you already have are skipped. 
 
 msgid "The new cards are in your deck, and words you already have are skipped. Fix or archive any card."
 msgstr "The new cards are in your deck, and words you already have are skipped. Fix or archive any card."
+
+msgid "The next level, once N5 feels easy."
+msgstr "The next level, once N5 feels easy."
 
 msgid "The next section opens at 80% known"
 msgstr "The next section opens at 80% known"
@@ -3680,6 +3703,9 @@ msgstr "The Vikings"
 
 msgid "The vocabulary of the first two HSK levels, from the classic word lists and the 2025 syllabus, with a translation beside each word."
 msgstr "The vocabulary of the first two HSK levels, from the classic word lists and the 2025 syllabus, with a translation beside each word."
+
+msgid "The way in"
+msgstr "The way in"
 
 msgid "The whiteboard"
 msgstr "The whiteboard"

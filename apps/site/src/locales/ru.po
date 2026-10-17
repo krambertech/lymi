@@ -1415,6 +1415,9 @@ msgstr "Колоды всех земель"
 msgid "Every subject on one schedule."
 msgstr "Все предметы в одном расписании."
 
+msgid "Everyday words, from family and food to your first verbs."
+msgstr "Повседневные слова: от семьи и еды до первых глаголов."
+
 msgid "Everyone learns the 300 general questions. Three of the 33 come from the 10 about your state, so add the deck for the state where you’re registered too."
 msgstr "300 общих вопросов учат все. Три из 33 вопросов теста — из 10 о твоей земле, поэтому добавь и колоду земли, где у тебя регистрация."
 
@@ -1773,6 +1776,9 @@ msgstr "Привет! Как дела?"
 msgid "Hi! What can I get you?"
 msgstr "Здравствуйте! Что для вас?"
 
+msgid "Hiragana, then katakana, a few rows at a time, each sign with its sound."
+msgstr "Сначала хирагана, потом катакана, по нескольку рядов за раз, каждый знак со звучанием."
+
 msgid "History"
 msgstr "История"
 
@@ -2023,8 +2029,11 @@ msgstr "Японский"
 msgid "Japanese 1 · Mondays"
 msgstr "Японский 1 · по понедельникам"
 
-msgid "Japanese is written in hiragana, katakana and kanji. Start with the kana, every sign with its sound, then move on to the words of JLPT N5 and N4. You don’t start from scratch: add a deck and its first cards are waiting."
-msgstr "По-японски пишут хираганой, катаканой и кандзи. Начни с каны, каждый знак со звучанием, а потом переходи к словам уровней JLPT N5 и N4. Начинать с нуля не нужно: добавь колоду, и первые карточки уже ждут."
+msgid "Japanese is written in three scripts, so you learn it in order. First the kana: the sounds of hiragana and katakana. Then the everyday words of JLPT N5, kanji and all, and N4 after them. Each step is a ready-made deck, so you don’t start from scratch."
+msgstr "Японский пишется тремя письменностями, поэтому его учат по порядку. Сначала кана: звуки хираганы и катаканы. Потом повседневные слова уровня JLPT N5, уже с кандзи, а после них N4. Каждый шаг — это готовая колода, так что начинать с нуля не нужно."
+
+msgid "JLPT N4 words"
+msgstr "Слова JLPT N4"
 
 msgctxt "deck tag"
 msgid "JLPT N5"
@@ -2035,6 +2044,9 @@ msgstr "JLPT N5 и N4"
 
 msgid "JLPT N5 and N4: the words for each level"
 msgstr "JLPT N5 и N4: лексика для каждого уровня"
+
+msgid "JLPT N5 words"
+msgstr "Слова JLPT N5"
 
 msgid "Join link"
 msgstr "Ссылка для присоединения"
@@ -2635,6 +2647,9 @@ msgstr "Одна колода для всей группы."
 msgid "One kanji can be read many ways: <0>日</0> is <1>に</1> in <2>日本</2> and <3>にち</3> in <4>毎日</4>. So Lymi shows the reading while you learn a word, as your textbook does, and takes it away once you know it."
 msgstr "Один кандзи читается по-разному: <0>日</0> — это <1>に</1> в <2>日本</2> и <3>にち</3> в <4>毎日</4>. Поэтому Lymi показывает чтение, пока ты учишь слово, как учебник, и убирает его, когда слово уже выучено."
 
+msgid "One step at a time, from kana to N4."
+msgstr "Шаг за шагом, от каны до N4."
+
 msgid "One word for asking, handing something over and answering thanks."
 msgstr "Одно слово, чтобы попросить, что-то подать и ответить на благодарность."
 
@@ -2954,9 +2969,6 @@ msgstr "{name} в готовых колодах. Каждую составил �
 
 msgid "Ready-made decks for learning {name}, written by a person and checked card by card."
 msgstr "{name} в готовых колодах. Каждую составил человек и проверил карточку за карточкой."
-
-msgid "Ready-made decks, from kana to N4."
-msgstr "Готовые колоды, от каны до N4."
 
 msgid "Ready-made flashcard decks, written by a person and checked card by card: languages, exams, and whatever else is worth remembering. Add one free and review it in your own language, a few minutes a day."
 msgstr "Готовые колоды флеш-карточек, написанные человеком и проверенные карточка за карточкой: языки, экзамены и всё остальное, что стоит помнить. Добавь колоду бесплатно и повторяй её на своём языке по нескольку минут в день."
@@ -3351,6 +3363,11 @@ msgstr "Статистика"
 msgid "Staying at the table to talk after a meal"
 msgstr "Оставаться за столом и разговаривать после еды"
 
+#. placeholder {0}: i18n.number(at + 1)
+#. placeholder {0}: i18n.number(index + 1)
+msgid "Step {0}"
+msgstr "Шаг {0}"
+
 msgid "Step by step, after a tutor lesson"
 msgstr "Шаг за шагом после урока с репетитором"
 
@@ -3573,6 +3590,9 @@ msgstr "С 2010 года JLPT не публикует официального �
 msgid "The JLPT has published no official word list since 2010, so these decks follow the Japan Foundation’s course lists and widely used study lists."
 msgstr "С 2010 года JLPT не публикует официального списка слов, поэтому эти колоды опираются на списки курсов Японского фонда и распространённые учебные списки."
 
+msgid "The kana"
+msgstr "Кана"
+
 msgid "The knack of reading the room"
 msgstr "Умение чувствовать настроение людей вокруг"
 
@@ -3608,6 +3628,9 @@ msgstr "Новые карточки уже в колоде, а термины, �
 
 msgid "The new cards are in your deck, and words you already have are skipped. Fix or archive any card."
 msgstr "Новые карточки уже в колоде, а слова, которые у тебя есть, пропущены. Любую карточку можно исправить или архивировать."
+
+msgid "The next level, once N5 feels easy."
+msgstr "Следующий уровень, когда N5 даётся легко."
 
 msgid "The next section opens at 80% known"
 msgstr "Следующий раздел открывается, когда выучено 80%"
@@ -3680,6 +3703,9 @@ msgstr "Викинги"
 
 msgid "The vocabulary of the first two HSK levels, from the classic word lists and the 2025 syllabus, with a translation beside each word."
 msgstr "Лексика первых двух уровней HSK — из классических списков слов и программы 2025 года, с переводом рядом с каждым словом."
+
+msgid "The way in"
+msgstr "С чего начать"
 
 msgid "The whiteboard"
 msgstr "Доска"

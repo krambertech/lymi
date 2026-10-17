@@ -1,9 +1,9 @@
 import { canSpeakTerm, LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
-import { and, eq, isNull, or } from "@lymi/core/db";
+import { and, eq, inArray, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider } from "../ai";
 import { speechText } from "../ai/speech-text";
-import { schema } from "../db";
+import { type Db, schema } from "../db";
 import { audit } from "./audit";
 import { getCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
@@ -207,31 +207,44 @@ async function rememberAudioKey(
   );
 }
 
+// One `IN` list's worth (see selectIn), which also bounds this run's share of the cron's subrequests.
+const PURGES_PER_RUN = 90;
+
 /**
- * Deletes every clip stored under these cards, recordings and superseded speech included. A card
- * R2 refused is skipped, so one failure does not keep the rest; returns how many were.
+ * Clears the audio folders of deleted cards, recordings and superseded speech included, a bounded
+ * number per cron run. A card R2 refused stays queued for the next run.
  */
-export async function deleteCardAudio(bucket: R2Bucket, cardIds: string[]): Promise<number> {
-  const queue = [...cardIds];
-  let failed = 0;
+export async function purgeCardAudio(db: Db, bucket: R2Bucket): Promise<number> {
+  const queued = await db
+    .select({ cardId: schema.cardAudioPurges.cardId })
+    .from(schema.cardAudioPurges)
+    .orderBy(schema.cardAudioPurges.createdAt)
+    .limit(PURGES_PER_RUN);
+  const cleared: string[] = [];
   const worker = async () => {
-    for (let id = queue.pop(); id; id = queue.pop()) {
+    for (let next = queued.pop(); next; next = queued.pop()) {
       try {
         let cursor: string | undefined;
         do {
-          const page = await bucket.list({ prefix: `cards/${id}/`, ...(cursor ? { cursor } : {}) });
+          const page = await bucket.list({
+            prefix: `cards/${next.cardId}/`,
+            ...(cursor ? { cursor } : {}),
+          });
           const keys = page.objects.map((object) => object.key);
           if (keys.length > 0) await bucket.delete(keys);
           cursor = page.truncated ? page.cursor : undefined;
         } while (cursor);
+        cleared.push(next.cardId);
       } catch {
-        failed++;
+        // Retried next run; the key is never logged.
       }
     }
   };
-  await Promise.all(Array.from({ length: Math.min(10, queue.length) }, worker));
-  if (failed > 0) console.error("Deleting card audio failed", { cards: failed });
-  return failed;
+  await Promise.all(Array.from({ length: Math.min(10, queued.length) }, worker));
+  if (cleared.length > 0) {
+    await db.delete(schema.cardAudioPurges).where(inArray(schema.cardAudioPurges.cardId, cleared));
+  }
+  return cleared.length;
 }
 
 async function audioKey(card: Card, provider: SpeechProvider): Promise<string> {

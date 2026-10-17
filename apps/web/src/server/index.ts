@@ -4,6 +4,7 @@ import { createDb } from "./db";
 import type { Bindings } from "./env";
 import { dispatchReviewReminders } from "./push-delivery";
 import { dropUnstudiedFormerDecks } from "./services/account-deletion";
+import { purgeCardAudio } from "./services/audio";
 import { expireExports } from "./services/exports";
 import { expireImports } from "./services/imports";
 import { voicePublishedDecks } from "./services/published-audio";
@@ -26,9 +27,8 @@ export default {
     executionCtx.waitUntil(
       expireExports(createDb(env.DB), env.EXPORTS, new Date(controller.scheduledTime)),
     );
-    executionCtx.waitUntil(
-      dropUnstudiedFormerDecks(createDb(env.DB), { images: env.PRIVATE_IMAGES, audio: env.AUDIO }),
-    );
+    executionCtx.waitUntil(dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
+    executionCtx.waitUntil(purgeCardAudio(createDb(env.DB), env.AUDIO));
     // Hourly, because each run reads every published deck to find the cards its page shows first. #759.
     if (new Date(controller.scheduledTime).getUTCMinutes() < 15) {
       executionCtx.waitUntil(

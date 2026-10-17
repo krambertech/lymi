@@ -15,7 +15,6 @@ import { erasePostHogPerson } from "../posthog";
 import {
   type DeletionLeftovers,
   deleteAccount,
-  deleteCardAudio,
   deleteExportFiles,
   deleteImportFiles,
   deletionSummary,
@@ -115,7 +114,7 @@ async function clearLeftovers(
   await Promise.allSettled([
     leftovers.sessionsEnded ? Promise.resolve() : extra.endSessions(userId),
     ...chunks(leftovers.privateImages, 1000).map((keys) => env.PRIVATE_IMAGES.delete(keys)),
-    deleteCardAudio(env.AUDIO, leftovers.audioCards),
+    ...chunks(leftovers.audioKeys, 1000).map((keys) => env.AUDIO.delete(keys)),
     ...leftovers.imports.map((row) => deleteImportFiles(env.IMPORTS, row)),
     ...leftovers.exports.map((row) => deleteExportFiles(env.EXPORTS, row)),
     erasePostHogPerson(env, userId),

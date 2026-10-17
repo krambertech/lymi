@@ -1,0 +1,174 @@
+{
+  "decks": [
+    {
+      "id": "kitchen-german",
+      "note": "A kitchen deck over four days; meanings carry the plural and examples are always left empty.",
+      "meaningLanguage": "en",
+      "deck": {
+        "name": "Deutsch B1",
+        "language": "de",
+        "purpose": "language"
+      },
+      "cards": [
+        ["2026-09-01", "der Löffel", "spoon (pl. die Löffel)", ""],
+        ["2026-09-01", "die Gabel", "fork (pl. die Gabeln)", ""],
+        ["2026-09-01", "das Messer", "knife (pl. die Messer)", ""],
+        ["2026-09-01", "der Topf", "pot (pl. die Töpfe)", ""],
+        ["2026-09-03", "die Pfanne", "pan (pl. die Pfannen)", ""],
+        ["2026-09-03", "der Herd", "stove (pl. die Herde)", ""],
+        ["2026-09-03", "schneiden", "to cut", ""],
+        ["2026-09-03", "der Teller", "plate (pl. die Teller)", ""],
+        ["2026-09-07", "die Schüssel", "bowl (pl. die Schüsseln)", ""],
+        ["2026-09-07", "kochen", "to cook", ""],
+        ["2026-09-07", "der Kühlschrank", "fridge (pl. die Kühlschränke)", ""],
+        ["2026-09-07", "das Rezept", "recipe (pl. die Rezepte)", ""],
+        ["2026-09-12", "braten", "to fry", ""],
+        ["2026-09-12", "die Zwiebel", "onion (pl. die Zwiebeln)", ""],
+        ["2026-09-12", "der Ofen", "oven (pl. die Öfen)", ""],
+        ["2026-09-12", "umrühren", "to stir", ""]
+      ],
+      "expect": {
+        "mentions": [["kitchen", "cook", "food"], ["plural", "pl."], ["example"]]
+      }
+    },
+    {
+      "id": "one-lesson-of-animals",
+      "note": "The first lesson was all animals; the rest of the deck is mixed. No topic, and nothing beyond the defaults.",
+      "meaningLanguage": "en",
+      "deck": {
+        "name": "Italiano",
+        "language": "it",
+        "purpose": "language"
+      },
+      "cards": [
+        ["2026-09-01", "il cane", "dog", "Il cane dorme."],
+        ["2026-09-01", "il gatto", "cat", "Il gatto è nero."],
+        ["2026-09-01", "il cavallo", "horse", "Il cavallo corre."],
+        ["2026-09-01", "la mucca", "cow", "La mucca mangia."],
+        ["2026-09-01", "l'uccello", "bird", "L'uccello canta."],
+        ["2026-09-01", "il pesce", "fish", "Il pesce nuota."],
+        ["2026-09-01", "la pecora", "sheep", "La pecora è bianca."],
+        ["2026-09-01", "il maiale", "pig", "Il maiale è rosa."],
+        ["2026-09-04", "sbrigarsi", "to hurry up", "Sbrigati, il treno parte!"],
+        ["2026-09-04", "magari", "if only; maybe", "Magari fosse vero."],
+        ["2026-09-06", "la bolletta", "bill (utility)", "Devo pagare la bolletta."],
+        ["2026-09-06", "comunque", "anyway", "Comunque, ci vediamo domani."],
+        ["2026-09-09", "il colloquio", "job interview", "Ho un colloquio lunedì."],
+        ["2026-09-09", "stanco", "tired", "Sono molto stanco."],
+        ["2026-09-12", "il traffico", "traffic", "C'è troppo traffico."],
+        ["2026-09-12", "noleggiare", "to rent", "Vorrei noleggiare una bici."]
+      ],
+      "expect": {
+        "avoids": ["animal"],
+        "maxChars": 200
+      }
+    },
+    {
+      "id": "exam-instructions-say-it",
+      "note": "The instructions already say what the deck is about, and the cards follow the defaults.",
+      "meaningLanguage": "en",
+      "deck": {
+        "name": "Pharmacology",
+        "purpose": "subject",
+        "instructions": "Drug classes for my nursing exam."
+      },
+      "cards": [
+        ["2026-09-01", "beta blocker", "lowers heart rate and blood pressure", ""],
+        ["2026-09-01", "ACE inhibitor", "relaxes blood vessels by blocking angiotensin", ""],
+        ["2026-09-02", "statin", "lowers LDL cholesterol", ""],
+        ["2026-09-02", "diuretic", "makes the kidneys remove more water and salt", ""],
+        ["2026-09-05", "anticoagulant", "slows blood clotting", ""],
+        ["2026-09-05", "NSAID", "reduces pain and inflammation", ""],
+        ["2026-09-08", "opioid", "strong painkiller acting on opioid receptors", ""],
+        ["2026-09-08", "antiemetic", "prevents nausea and vomiting", ""],
+        ["2026-09-10", "SSRI", "antidepressant that raises serotonin", ""],
+        ["2026-09-10", "PPI", "reduces stomach acid", ""],
+        ["2026-09-12", "bronchodilator", "opens the airways", ""],
+        ["2026-09-12", "antihistamine", "blocks histamine in allergies", ""]
+      ],
+      "expect": {
+        "avoids": ["pharmac", "drug", "exam"],
+        "maxChars": 200
+      }
+    },
+    {
+      "id": "corrections-shorten-examples",
+      "note": "The learner's own examples are short, and every correction cuts a long AI example down to a few words.",
+      "meaningLanguage": "en",
+      "deck": {
+        "name": "Español A2",
+        "language": "es",
+        "purpose": "language"
+      },
+      "cards": [
+        ["2026-09-01", "correr", "to run", "Corro cada mañana."],
+        ["2026-09-01", "comer", "to eat", "Comemos juntos."],
+        ["2026-09-01", "hablar", "to speak", "Hablo poco."],
+        ["2026-09-01", "vivir", "to live", "Vivo aquí."],
+        ["2026-09-04", "abrir", "to open", "Abre la puerta."],
+        ["2026-09-04", "cerrar", "to close", "Cierra la ventana."],
+        ["2026-09-04", "pagar", "to pay", "Pago yo."],
+        ["2026-09-04", "llegar", "to arrive", "Llegamos tarde."],
+        ["2026-09-09", "salir", "to go out", "Salgo ahora."],
+        ["2026-09-09", "volver", "to come back", "Vuelvo pronto."],
+        ["2026-09-09", "dormir", "to sleep", "Duermo mal."],
+        ["2026-09-09", "leer", "to read", "Leo mucho."]
+      ],
+      "corrections": [
+        [
+          "escribir",
+          "example",
+          "Todos los domingos por la tarde escribo una carta larga a mi abuela, que vive en un pueblo pequeño.",
+          "Escribo cartas."
+        ],
+        [
+          "comprar",
+          "example",
+          "Cuando voy al mercado del barrio compro fruta fresca, verduras y a veces un poco de pan.",
+          "Compro pan."
+        ],
+        [
+          "esperar",
+          "example",
+          "Esperamos el autobús durante más de veinte minutos porque había mucho tráfico en el centro.",
+          "Espero el bus."
+        ]
+      ],
+      "expect": {
+        "mentions": [["short", "brief", "few words"], ["example"]]
+      }
+    },
+    {
+      "id": "corrections-fix-facts",
+      "note": "Two corrections each fix a wrong sense on one card and share nothing else; the cards follow the defaults.",
+      "meaningLanguage": "en",
+      "deck": {
+        "name": "Italiano",
+        "language": "it",
+        "purpose": "language"
+      },
+      "cards": [
+        ["2026-09-01", "la casa", "house", ""],
+        ["2026-09-01", "il libro", "book", ""],
+        ["2026-09-01", "la sedia", "chair", ""],
+        ["2026-09-01", "il tavolo", "table", ""],
+        ["2026-09-04", "la finestra", "window", ""],
+        ["2026-09-04", "la porta", "door", ""],
+        ["2026-09-04", "il letto", "bed", ""],
+        ["2026-09-04", "la cucina", "kitchen", ""],
+        ["2026-09-09", "il bagno", "bathroom", ""],
+        ["2026-09-09", "lo specchio", "mirror", ""],
+        ["2026-09-09", "il divano", "sofa", ""],
+        ["2026-09-09", "la lampada", "lamp", ""]
+      ],
+      "corrections": [
+        ["la camera", "meaning", "camera", "room"],
+        ["il burro", "meaning", "donkey", "butter"]
+      ],
+      "expect": {
+        "avoids": ["wrong", "mistake", "false friend"],
+        "maxChars": 200
+      }
+    }
+  ]
+}

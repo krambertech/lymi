@@ -18,7 +18,7 @@ Every add filled meaning, example, pronunciation and language, and the meaning r
 - **One list for the whole account:** rejected. Decks differ: an Estonian deck wants word forms in notes, a biology deck wants a short explanation and nothing else.
 - **Fill every allowed field:** rejected. The deck's own cards show which fields it fills, and a field the learner deletes costs more than one never written.
 - **Enrich on one card fills every empty field:** rejected. Enrich follows the same rules as an add, so it never fills a field the deck has turned off.
-- **A stored deck profile, kept up to date by a model:** deferred. Showing the model up to five of the deck's own cards on every call gives the same signal with no extra call and nothing to go stale. Asking a deck's purpose when it is created is [issue #567](https://github.com/krambertech/lymi/issues/567).
+- **A stored deck profile, kept up to date by a model:** deferred here, then taken up by [ADR 0037](0037-a-deck-learns-its-style-from-the-owners-cards.md). Showing the model up to five of the deck's own cards on every call gives the same signal with no extra call and nothing to go stale. Asking a deck's purpose when it is created is [issue #567](https://github.com/krambertech/lymi/issues/567).
 
 ## Consequences
 

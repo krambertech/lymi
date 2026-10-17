@@ -11,6 +11,7 @@ import {
   migratePreviewDatabase,
   migrationFailureReason,
   previewNames,
+  signS3Request,
 } from "./app-preview-infrastructure.mjs";
 
 const accountId = "account";
@@ -151,6 +152,8 @@ test("cleanup empties the bucket, then deletes only the exact pull request resou
       return response(null);
     }
     if (url.includes("/r2/buckets/lymi-app-pr-105-audio/objects?")) return response(objects);
+    if (url.endsWith("?uploads=")) return multipartUploads([]);
+    if (url.endsWith("/tokens/verify")) return response({ id: "token-id" });
     if (url.includes("/workflows?search=lymi-app-pr-105&")) {
       return response([
         { name: "lymi-app-pr-105-import" },
@@ -353,6 +356,8 @@ test("cleanup succeeds when the bucket disappears before it is deleted", async (
       return response(null, 404);
     }
     if (url.includes("/r2/buckets/lymi-app-pr-105-audio/objects?")) return response(null, 404);
+    if (url.endsWith("?uploads=")) return new Response("<Error/>", { status: 404 });
+    if (url.endsWith("/tokens/verify")) return response({ id: "token-id" });
     if (url.includes("/workflows?")) return response([]);
     if (url.includes("/d1/database?")) return response([]);
     if (url.includes("/storage/kv/namespaces?")) return response([]);
@@ -365,6 +370,94 @@ test("cleanup succeeds when the bucket disappears before it is deleted", async (
   await cleanupPreviewInfrastructure({ accountId, token, prNumber: 105, fetchImpl });
   assert.equal(deleted.at(-1), `${apiRoot()}/r2/buckets/lymi-app-pr-105-audio`);
 });
+
+test("cleanup aborts unfinished multipart uploads with the token's S3 credentials", async () => {
+  const calls = [];
+  let uploads = [
+    { key: "imports/a&b", uploadId: "upload/1+" },
+    { key: "imports/c", uploadId: "upload-2" },
+  ];
+  const fetchImpl = async (url, init = {}) => {
+    const method = init.method ?? "GET";
+    calls.push([method, url]);
+    if (url.startsWith("https://account.r2.cloudflarestorage.com/")) {
+      assert.match(init.headers.authorization, /^AWS4-HMAC-SHA256 Credential=user-token-id\//);
+      if (method === "GET") return multipartUploads(uploads);
+      const uploadId = new URL(url).searchParams.get("uploadId");
+      uploads = uploads.filter((upload) => upload.uploadId !== uploadId);
+      return new Response(null, { status: 204 });
+    }
+    if (url === `${apiRoot()}/tokens/verify`) return response(null, 401);
+    if (url === "https://api.cloudflare.com/client/v4/user/tokens/verify") {
+      return response({ id: "user-token-id" });
+    }
+    if (method === "DELETE") return response(null);
+    if (url.includes("/objects?")) return response([]);
+    if (url.includes("/r2/buckets?")) {
+      return response({ buckets: [{ name: "lymi-app-pr-105-audio" }] });
+    }
+    if (url.includes("/workflows?")) return response([]);
+    if (url.includes("/d1/database?")) return response([]);
+    if (url.includes("/storage/kv/namespaces?")) return response([]);
+    throw new Error(`Unexpected ${method} ${url}`);
+  };
+
+  await cleanupPreviewInfrastructure({ accountId, token, prNumber: 105, fetchImpl });
+  const bucket = "https://account.r2.cloudflarestorage.com/lymi-app-pr-105-audio";
+  const r2 = calls.filter(([, url]) => url.includes("cloudflarestorage") || url.endsWith("-audio"));
+  assert.deepEqual(r2, [
+    ["GET", `${bucket}?uploads=`],
+    ["DELETE", `${bucket}/imports/a%26b?uploadId=upload%2F1%2B`],
+    ["DELETE", `${bucket}/imports/c?uploadId=upload-2`],
+    ["GET", `${bucket}?uploads=`],
+    ["DELETE", `${apiRoot()}/r2/buckets/lymi-app-pr-105-audio`],
+  ]);
+});
+
+test("cleanup stops when R2 keeps listing uploads it has aborted", async () => {
+  const fetchImpl = async (url, init = {}) => {
+    if (url.endsWith("?uploads=")) return multipartUploads([{ key: "k", uploadId: "u" }]);
+    if (url.includes("cloudflarestorage")) return new Response(null, { status: 404 });
+    if (url.endsWith("/tokens/verify")) return response({ id: "token-id" });
+    if ((init.method ?? "GET") === "DELETE") return response(null);
+    if (url.includes("/r2/buckets?")) {
+      return response({ buckets: [{ name: "lymi-app-pr-105-audio" }] });
+    }
+    return response([]);
+  };
+
+  await assert.rejects(
+    cleanupPreviewInfrastructure({ accountId, token, prNumber: 105, fetchImpl }),
+    /still lists 1 aborted multipart uploads/,
+  );
+});
+
+test("signs R2 S3 requests with Signature Version 4", () => {
+  const headers = signS3Request({
+    method: "GET",
+    url: "https://account.r2.cloudflarestorage.com/bucket?uploads=",
+    credentials: { accessKeyId: "AKID", secretAccessKey: "secret" },
+    now: new Date("2026-10-17T12:34:56.789Z"),
+  });
+  // Cross-checked against aws4fetch 1.0.20 with service s3 and region auto.
+  assert.deepEqual(headers, {
+    authorization:
+      "AWS4-HMAC-SHA256 Credential=AKID/20261017/auto/s3/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=53afde9f7c45ec958a49ab890c9d45b22e89b83f01de8105e106681d7eeeeae0",
+    "x-amz-content-sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "x-amz-date": "20261017T123456Z",
+  });
+});
+
+function multipartUploads(uploads) {
+  const xml = (value) => value.replaceAll("&", "&amp;");
+  const body = uploads
+    .map(
+      ({ key, uploadId }) =>
+        `<Upload><Key>${xml(key)}</Key><UploadId>${xml(uploadId)}</UploadId></Upload>`,
+    )
+    .join("");
+  return new Response(`<ListMultipartUploadsResult>${body}</ListMultipartUploadsResult>`);
+}
 
 function apiRoot() {
   return "https://api.cloudflare.com/client/v4/accounts/account";

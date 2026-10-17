@@ -29,6 +29,8 @@ export interface Bindings
   GOOGLE_CLIENT_SECRET: string;
   /** The iPhone app's bundle identifier; Sign in with Apple is unavailable until it is set. */
   APPLE_APP_BUNDLE_IDENTIFIER?: string;
+  /** The web Services ID, grouped with the iPhone App ID in Apple Developer. */
+  APPLE_CLIENT_ID?: string;
   /** A Sign in with Apple key, so a deleted account's Apple grant is revoked. All three or none. */
   APPLE_TEAM_ID?: string;
   APPLE_KEY_ID?: string;
@@ -57,6 +59,10 @@ export interface Bindings
   AI_GATEWAY_URL?: string;
   /** Required whenever the Workers AI binding is used. */
   AI_GATEWAY_ID?: string;
+  /** Email goes through Resend once this is set; until then the Cloudflare binding delivers. */
+  RESEND_API_KEY?: string;
+  /** The `whsec_` secret Resend signs its delivery webhook with; the webhook refuses everything without it. */
+  RESEND_WEBHOOK_SECRET?: string;
   /** Web Push is unavailable until all three VAPID values are configured as secrets. */
   VAPID_PUBLIC_KEY?: string;
   VAPID_PRIVATE_KEY?: string;

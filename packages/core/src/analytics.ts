@@ -46,6 +46,35 @@ export const REVIEW_SCOPES = ["day", "deck", "series", "section", "round", "chos
 export type ReviewScopeKind = (typeof REVIEW_SCOPES)[number];
 const session = { session_id: z.uuid(), scope: z.enum(REVIEW_SCOPES).optional() };
 const count = z.number().int().nonnegative().max(1_000_000);
+/** The optional fields a typed card can arrive holding, by name; never their text. */
+export const TYPED_CARD_FIELDS = [
+  "example",
+  "pronunciation",
+  "notes",
+  "hook",
+  "source",
+  "tags",
+  "section",
+  "review_modes",
+] as const;
+export type TypedCardField = (typeof TYPED_CARD_FIELDS)[number];
+/** The fields a chip adds to the web card form. */
+const FORM_FIELDS = ["notes", "example", "pronunciation", "source", "picture", "hook"] as const;
+/** Every email Lymi sends, by kind; the recipient and body never leave the Worker. */
+export const EMAIL_KINDS = [
+  "test",
+  "verify-email",
+  "verify-email-code",
+  "reset-password",
+  "existing-account",
+  "google-account",
+  "reset-google-account",
+  "deck-invitation",
+  "feedback",
+  "delete-account-code",
+  "account-deleted",
+] as const;
+const EmailKind = z.enum(EMAIL_KINDS);
 const slug = z
   .string()
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
@@ -167,6 +196,10 @@ export const analyticsEvents = {
     ai_written: count,
   }),
   reminder_sent: z.object({ backlog: Backlog }),
+  email_sent: z.object({ kind: EmailKind, language: z.enum(["en", "uk", "ru"]) }),
+  email_failed: z.object({ kind: EmailKind, error_class: z.string().max(40) }),
+  email_bounced: z.object({ kind: EmailKind.optional() }),
+  email_complained: z.object({ kind: EmailKind.optional() }),
   review_session_finished: z.object({
     ...session,
     card_count: count,
@@ -181,7 +214,11 @@ export const analyticsEvents = {
     reason: z.enum(["left", "navigation", "pagehide"]),
   }),
   first_session_started: z.object({ deck_slug: slug }),
-  cards_added: z.object({ source, count }),
+  cards_added: z.object({
+    source,
+    count,
+    fields: z.array(z.enum(TYPED_CARD_FIELDS)).max(TYPED_CARD_FIELDS.length).optional(),
+  }),
   card_added: z.object({ source: z.enum(["manual", "api", "mcp", "import"]), count }),
   welcome_step_viewed: z.object({ step_name: step, skipped: z.boolean() }),
   welcome_step_finished: z.object({ step_name: step, skipped: z.boolean() }),
@@ -234,6 +271,23 @@ export const analyticsEvents = {
     skipped: count.optional(),
     readings_added: count.optional(),
     prompt_version: z.number().int().positive().max(1000).optional(),
+    has_style: z.boolean().optional(),
+  }),
+  deck_style_learned: z.object({
+    outcome: z.enum(["learned", "empty", "failed"]),
+    cards: count,
+    corrections: count,
+    topic: z.boolean(),
+    chars: count,
+    prompt_version: z.number().int().positive().max(1000),
+  }),
+  ai_text_corrected: z.object({
+    channel: z.enum(["app", "api", "mcp"]),
+    count,
+    meaning: count,
+    example: count,
+    notes: count,
+    pronunciation: count,
   }),
   deck_enrichment_changed: z.object({
     meaning: z.boolean(),
@@ -262,7 +316,14 @@ export const analyticsEvents = {
   $ai_generation: z.object({
     $ai_trace_id: z.uuid(),
     $ai_session_id: z.null(),
-    $ai_span_name: z.enum(["enrich", "hook", "import_languages", "deck_choice", "lesson_read"]),
+    $ai_span_name: z.enum([
+      "enrich",
+      "deck_style",
+      "hook",
+      "import_languages",
+      "deck_choice",
+      "lesson_read",
+    ]),
     $ai_provider: z.enum(["openai", "anthropic"]),
     $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),
     $ai_input_tokens: tokens,
@@ -288,6 +349,10 @@ export const analyticsEvents = {
   tag_added: z.object({
     via: z.enum(["suggestion", "typed"]),
     in_use: z.boolean(),
+  }),
+  card_field_added: z.object({
+    field: z.enum(FORM_FIELDS),
+    form: z.enum(["add", "edit"]),
   }),
   deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
   section_go_to: z.object({}),
@@ -333,6 +398,10 @@ export const analyticsProducers = {
   hook_added: ["worker"],
   cards_archived: ["worker"],
   reminder_sent: ["worker"],
+  email_sent: ["worker"],
+  email_failed: ["worker"],
+  email_bounced: ["worker"],
+  email_complained: ["worker"],
   review_session_finished: ["browser", "phone"],
   review_session_abandoned: ["browser", "phone"],
   first_session_started: ["worker"],
@@ -356,11 +425,14 @@ export const analyticsProducers = {
   deck_joined: ["worker"],
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
+  deck_style_learned: ["worker"],
+  ai_text_corrected: ["worker"],
   lesson_read: ["worker"],
   lesson_read_limited: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser"],
+  card_field_added: ["browser"],
   deck_filter_added: ["browser"],
   section_go_to: ["phone"],
   pronunciation_played: ["browser", "phone"],

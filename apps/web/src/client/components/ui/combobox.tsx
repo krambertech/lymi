@@ -126,6 +126,8 @@ function Combobox<Value, Multiple extends boolean | undefined = false, Item = Va
 
 interface TriggerProps extends React.ComponentProps<"button"> {
   children: React.ReactNode;
+  /** "chip" draws no box and no chevron, for a chip in a form's row that styles itself. */
+  look?: "box" | "chip" | undefined;
 }
 
 const setInputValue = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")?.set;
@@ -136,6 +138,7 @@ function ComboboxTrigger({
   "aria-describedby": describedBy,
   "aria-invalid": invalid,
   ref: refProp,
+  look = "box",
   className,
   children,
   ...props
@@ -180,12 +183,16 @@ function ComboboxTrigger({
     };
     requestAnimationFrame(hand);
   };
-  const classes = cn(
-    controlBase,
-    controlSize,
-    "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-popup-open:not-aria-invalid:edge-2",
-    className,
-  );
+  const classes =
+    look === "chip"
+      ? cn("select-none", className)
+      : cn(
+          controlBase,
+          controlSize,
+          "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-popup-open:not-aria-invalid:edge-2",
+          className,
+        );
+  const chevron = look === "box" && <TriggerChevron />;
   if (shape === "touch") {
     // The drawer's own trigger: Base UI's would toggle the list a second time on the same tap.
     return (
@@ -202,7 +209,7 @@ function ComboboxTrigger({
         className={classes}
       >
         {children}
-        <TriggerChevron />
+        {chevron}
       </DrawerTrigger>
     );
   }
@@ -215,7 +222,7 @@ function ComboboxTrigger({
       className={classes}
     >
       {children}
-      <TriggerChevron />
+      {chevron}
     </ComboboxPrimitive.Trigger>
   );
 }

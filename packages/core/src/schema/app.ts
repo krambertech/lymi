@@ -8,7 +8,12 @@ import {
   text,
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
-import { DECK_PURPOSES, type DeckEnrichField, type EnrichedField } from "../enrichment";
+import {
+  DECK_ENRICH_FIELDS,
+  DECK_PURPOSES,
+  type DeckEnrichField,
+  type EnrichedField,
+} from "../enrichment";
 import {
   EDITION_STATUSES,
   type EditionCardField,
@@ -101,6 +106,10 @@ export const decks = sqliteTable(
     enrichFields: text("enrich_fields", { mode: "json" }).$type<DeckEnrichField[]>(),
     /** The owner's own words to the AI about this deck. Never shown to a member. */
     enrichInstructions: text("enrich_instructions"),
+    /** What the AI learned from the owner's cards. Null until enough cards exist. ADR 0037. */
+    enrichStyle: text("enrich_style"),
+    /** When the style was last learned, so it is learned again only after the cards change. */
+    enrichStyleAt: integer("enrich_style_at", { mode: "timestamp_ms" }),
   },
   (t) => [
     index("decks_user_idx").on(t.userId, t.archivedAt, t.position),
@@ -268,6 +277,29 @@ export const cardTags = sqliteTable(
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
   },
   (t) => [primaryKey({ columns: [t.cardId, t.tagId] }), index("card_tags_tag_idx").on(t.tagId)],
+);
+
+/**
+ * The AI's text from a field the owner then rewrote. The learner's side is the card's current text,
+ * read while the field is still theirs, so later edits refine the same correction. ADR 0037.
+ */
+export const cardCorrections = sqliteTable(
+  "card_corrections",
+  {
+    cardId: text("card_id")
+      .notNull()
+      .references(() => cards.id, { onDelete: "cascade" }),
+    field: text("field", { enum: DECK_ENRICH_FIELDS }).notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    aiText: text("ai_text").notNull(),
+    createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.cardId, t.field] }),
+    index("card_corrections_user_idx").on(t.userId, t.createdAt),
+  ],
 );
 
 /** Per-learner settings. One row per user, created on first read. */
@@ -928,6 +960,17 @@ export const accountDeletions = sqliteTable("account_deletions", {
   reviews: integer("reviews").notNull(),
   /** Owned decks other people studied, which stayed for them. */
   keptDecks: integer("kept_decks").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp_ms" })
+    .notNull()
+    .default(sql`(unixepoch() * 1000)`),
+});
+
+/**
+ * Deleted cards whose audio folder in R2 still needs clearing, which the cron works through. Not a
+ * foreign key, since the card row is gone by the time the sweep runs.
+ */
+export const cardAudioPurges = sqliteTable("card_audio_purges", {
+  cardId: text("card_id").primaryKey(),
   createdAt: integer("created_at", { mode: "timestamp_ms" })
     .notNull()
     .default(sql`(unixepoch() * 1000)`),

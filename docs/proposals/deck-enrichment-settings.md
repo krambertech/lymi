@@ -63,4 +63,4 @@ Each model call receives the deck's name, description, language and instructions
 
 ## Later
 
-An AI-maintained deck profile: classify the deck (language, test, subject), keep a short summary current as cards change, including format seen in integration edits, and show it as suggested instructions the owner can edit rather than a hidden prompt. Open questions are when it refreshes, what it costs, and how the owner sees it.
+The AI-maintained deck profile shipped as a deck's learned style: [ADR 0037](../adr/0037-a-deck-learns-its-style-from-the-owners-cards.md).

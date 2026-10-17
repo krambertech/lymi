@@ -14,6 +14,8 @@ import {
   ne,
   notExists,
   notInArray,
+  or,
+  type SQL,
   sql,
 } from "@lymi/core/db";
 import { type Db, schema } from "../db";
@@ -49,6 +51,22 @@ async function sha256(value: string): Promise<string> {
 function newCode(): string {
   const [n = 0] = crypto.getRandomValues(new Uint32Array(1));
   return String(n % 1_000_000).padStart(6, "0");
+}
+
+/** Queues the audio folders of the cards matching `where`, which must run before they are deleted. */
+function enqueueAudioPurge(db: Db, where: SQL | undefined, now: Date) {
+  return db
+    .insert(schema.cardAudioPurges)
+    .select(
+      db
+        .select({
+          cardId: schema.cards.id,
+          createdAt: sql<Date>`${now.getTime()}`.as("created_at"),
+        })
+        .from(schema.cards)
+        .where(where),
+    )
+    .onConflictDoNothing();
 }
 
 /** Owned decks other people study now: they stay for those people when the owner leaves Lymi. */
@@ -311,6 +329,8 @@ export interface DeletionLeftovers {
   confirmedWith: "email" | "apple";
   keptDecks: number;
   privateImages: string[];
+  /** The cards' current clips; the cron clears the rest of each card's audio folder. */
+  audioKeys: string[];
   imports: { objectKey: string | null; uploadId: string | null }[];
   exports: { objectKey: string | null }[];
   /** False when ending the sessions failed after the delete, so the caller tries again. */
@@ -363,6 +383,24 @@ export async function deleteAccount(
         kept.length > 0 ? notInArray(schema.cardImages.cardId, keptCards) : undefined,
       ),
     );
+  // The cards that go with the account; a kept deck's cards keep their audio.
+  const going = and(
+    or(
+      eq(schema.cards.userId, userId),
+      inArray(
+        schema.cards.deckId,
+        db
+          .select({ id: schema.decks.id })
+          .from(schema.decks)
+          .where(eq(schema.decks.userId, userId)),
+      ),
+    ),
+    kept.length > 0 ? notInArray(schema.cards.deckId, kept) : undefined,
+  );
+  const audio = await db
+    .select({ key: schema.cards.audioKey })
+    .from(schema.cards)
+    .where(and(going, isNotNull(schema.cards.audioKey)));
   const imports = await db
     .select({ objectKey: schema.imports.objectKey, uploadId: schema.imports.uploadId })
     .from(schema.imports)
@@ -450,6 +488,8 @@ export async function deleteAccount(
               userId: FORMER_OWNER_ID,
               seriesId: null,
               enrichInstructions: null,
+              enrichStyle: null,
+              enrichStyleAt: null,
               updatedAt: now,
             })
             .where(inArray(schema.decks.id, kept)),
@@ -475,6 +515,8 @@ export async function deleteAccount(
         sendsKey(userId, new Date(now.getTime() - 24 * 60 * 60 * 1000)),
       ]),
     ),
+    // Kept cards stay for their members; the owner's corrections of them go with the owner.
+    db.delete(schema.cardCorrections).where(eq(schema.cardCorrections.userId, userId)),
     db.insert(schema.accountDeletions).values({
       id: userId,
       client: deps.client,
@@ -485,6 +527,7 @@ export async function deleteAccount(
       reviews: summary.reviews,
       keptDecks: kept.length,
     }),
+    enqueueAudioPurge(db, going, now),
     db.delete(schema.user).where(eq(schema.user.id, userId)),
   ]);
   // After the batch, so a failed delete leaves the learner signed in; KV keeps its own list. The
@@ -508,6 +551,7 @@ export async function deleteAccount(
       ...images.map((image) => image.key),
       ...[avatar?.custom, avatar?.google].filter((key): key is string => Boolean(key)),
     ],
+    audioKeys: audio.flatMap((card) => (card.key ? [card.key] : [])),
     imports,
     exports,
     sessionsEnded,
@@ -515,8 +559,9 @@ export async function deleteAccount(
 }
 
 /**
- * Deletes kept decks whose last member has left, with their pictures, so what a deleted learner
- * wrote lasts only while someone studies it. A deck whose pictures R2 refused waits for the next run.
+ * Deletes kept decks whose last member has left, with their pictures, and queues their audio, so
+ * what a deleted learner wrote lasts only while someone studies it. A deck whose pictures R2
+ * refused waits for the next run.
  */
 export async function dropUnstudiedFormerDecks(db: Db, images: R2Bucket): Promise<number> {
   const decks = await db
@@ -554,6 +599,7 @@ export async function dropUnstudiedFormerDecks(db: Db, images: R2Bucket): Promis
       continue;
     }
     await db.batch([
+      enqueueAudioPurge(db, eq(schema.cards.deckId, id), new Date()),
       db.delete(schema.decks).where(eq(schema.decks.id, id)),
       db
         .delete(schema.tags)

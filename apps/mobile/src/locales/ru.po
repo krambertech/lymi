@@ -1385,6 +1385,9 @@ msgstr "Подтвердить"
 msgid "Confirm it’s you"
 msgstr "Подтверди, что это ты"
 
+msgid "Confirm with Apple to delete your account for good."
+msgstr "Подтверди через Apple, чтобы навсегда удалить аккаунт."
+
 msgid "Connect"
 msgstr "Подключить"
 
@@ -1421,6 +1424,9 @@ msgstr "Регулярность"
 
 msgid "Continue"
 msgstr "Продолжить"
+
+msgid "Continue with Apple"
+msgstr "Продолжить с Apple"
 
 msgid "Continue with Google"
 msgstr "Продолжить с Google"

@@ -10,6 +10,7 @@ import {
   FORMER_OWNER_ID,
   sendDeletionCode,
 } from "./account-deletion";
+import { purgeCardAudio } from "./audio";
 import { addCards } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
@@ -18,10 +19,11 @@ import { inviteByEmail } from "./invitations";
 import { join, leave } from "./members";
 import { publishDeck } from "./publications";
 import { gradeCard } from "./review";
-import { learner, testDb } from "./test-db";
+import { learner, type TestBindings, testDb } from "./test-db";
 
 let db: Db;
 let raw: D1Database;
+let bindings: TestBindings;
 let dispose: () => Promise<void>;
 
 const env = {
@@ -40,7 +42,7 @@ const deps: DeletionDeps = {
 };
 
 beforeAll(async () => {
-  ({ db, raw, dispose } = await testDb());
+  ({ db, raw, env: bindings, dispose } = await testDb());
 }, 60_000);
 
 afterAll(async () => {
@@ -66,6 +68,11 @@ async function deckWithCard(owner: ServiceContext, term: string, member?: Servic
     await gradeCard(member, { cardId: added.card.id, direction: "recognition", rating: 3 });
   }
   return { deck, card: added.card };
+}
+
+async function stored(cardId: string) {
+  const { objects } = await bindings.AUDIO.list({ prefix: `cards/${cardId}/` });
+  return objects.map((object) => object.key);
 }
 
 async function codeFor(ctx: ServiceContext, email: string) {
@@ -236,6 +243,12 @@ describe("deleting an account", () => {
     const peeter = await learner(db, "peeter", "Peeter");
     const { deck, card } = await deckWithCard(kadri, "maja", peeter);
     await raw.prepare("update cards set hook_draft = 'a draft' where id = ?").bind(card.id).run();
+    await raw
+      .prepare(
+        "insert into card_corrections (card_id, field, user_id, ai_text, created_at) values (?, 'meaning', ?, 'the AI', 0)",
+      )
+      .bind(card.id, kadri.userId)
+      .run();
 
     const code = await codeFor(kadri, "kadri@lymi.test");
     const leftovers = await deleteAccount(kadri, { code }, deps);
@@ -250,10 +263,62 @@ describe("deleting an account", () => {
     expect(await count("cards", "id", card.id)).toBe(1);
     // The AI's draft was only ever the owner's.
     expect(await count("cards", "hook_draft", "a draft")).toBe(0);
+    expect(await count("card_corrections", "card_id", card.id)).toBe(0);
     expect(await count("card_states", "user_id", peeter.userId)).toBe(1);
     expect(await count("reviews", "user_id", peeter.userId)).toBe(1);
     // The owner's own schedule and reviews go with them.
     expect(await count("card_states", "user_id", kadri.userId)).toBe(0);
+  });
+
+  it("deletes the audio of the learner's cards and leaves a kept deck's", async () => {
+    const owner = await learner(db, "ene", "Ene");
+    const member = await learner(db, "toomas", "Toomas");
+    const { card: own } = await deckWithCard(owner, "lill");
+    const { card: kept } = await deckWithCard(owner, "meri", member);
+    const current = `cards/${own.id}/recorded/term.mp3`;
+    await raw.prepare("update cards set audio_key = ? where id = ?").bind(current, own.id).run();
+    for (const key of [
+      current,
+      `cards/${own.id}/v1/old.mp3`,
+      `cards/${kept.id}/recorded/term.mp3`,
+    ]) {
+      await bindings.AUDIO.put(key, "clip");
+    }
+
+    const leftovers = await deleteAccount(
+      owner,
+      { code: await codeFor(owner, "ene@lymi.test") },
+      deps,
+    );
+    // The current clip goes straight away; the cron clears the rest of the folder.
+    expect(leftovers.audioKeys).toEqual([current]);
+    expect(await count("card_audio_purges", "card_id", own.id)).toBe(1);
+    expect(await count("card_audio_purges", "card_id", kept.id)).toBe(0);
+    await bindings.AUDIO.delete(leftovers.audioKeys);
+    await purgeCardAudio(db, bindings.AUDIO);
+
+    expect(await stored(own.id)).toEqual([]);
+    expect(await stored(kept.id)).toEqual([`cards/${kept.id}/recorded/term.mp3`]);
+    expect(await count("card_audio_purges", "card_id", own.id)).toBe(0);
+  });
+
+  it("keeps a card's audio queued while R2 refuses it", async () => {
+    const owner = await learner(db, "malle", "Malle");
+    const { card } = await deckWithCard(owner, "tool");
+    await bindings.AUDIO.put(`cards/${card.id}/v2/speech.mp3`, "clip");
+    await deleteAccount(owner, { code: await codeFor(owner, "malle@lymi.test") }, deps);
+
+    const refusing = {
+      list: async () => {
+        throw new Error("R2 unavailable");
+      },
+    } as unknown as R2Bucket;
+    await purgeCardAudio(db, refusing);
+    expect(await count("card_audio_purges", "card_id", card.id)).toBe(1);
+
+    await purgeCardAudio(db, bindings.AUDIO);
+    expect(await count("card_audio_purges", "card_id", card.id)).toBe(0);
+    expect(await stored(card.id)).toEqual([]);
   });
 
   it("refuses an account that owns a published deck", async () => {
@@ -334,7 +399,7 @@ describe("deleting an account", () => {
     expect(verbs?.n).toBe(1);
   });
 
-  it("drops a kept deck and its pictures once its last member leaves", async () => {
+  it("drops a kept deck and its pictures, and queues its audio, once its last member leaves", async () => {
     const owner = await learner(db, "maret", "Maret");
     const member = await learner(db, "jaan", "Jaan");
     const { deck, card } = await deckWithCard(owner, "puu", member);
@@ -360,12 +425,14 @@ describe("deleting an account", () => {
     } as unknown as R2Bucket;
     expect(await dropUnstudiedFormerDecks(db, images)).toBe(0);
     expect(await count("decks", "id", deck.id)).toBe(1);
+    expect(await count("card_audio_purges", "card_id", card.id)).toBe(0);
 
     await leave(member, deck.id);
     expect(await dropUnstudiedFormerDecks(db, images)).toBe(1);
     expect(await count("decks", "id", deck.id)).toBe(0);
     expect(await count("cards", "id", card.id)).toBe(0);
     expect(deleted).toEqual([`cards/${card.id}/picture`]);
+    expect(await count("card_audio_purges", "card_id", card.id)).toBe(1);
   });
 
   describe("with Sign in with Apple", () => {

@@ -42,7 +42,7 @@ Lymi-owned components compose the primitives. The ones every screen reaches for:
 
 These belong to one feature and are listed so nothing is drawn twice.
 
-- Cards: `CardForm`, `AddCardSheet`, `EditCardSheet`, `FieldChip`, `FieldChipRow`, `CardPictureField`, `CardPicture`, `CardNotes`, `CardStream`, `TagsInput`, `ReviewModesField`, `ReviewTimeline`, `RecallTally`, `GradeMark`.
+- Cards: `CardForm`, `AddCardSheet`, `EditCardSheet`, `FieldChipButton`, `FieldChipRow`, `SectionChip`, `TagsChip`, `ModesChip`, `LanguageChip`, `CardPictureField`, `CardPicture`, `CardNotes`, `CardStream`, `ReviewTimeline`, `RecallTally`, `GradeMark`.
 - Decks: `DeckCard`, `NewDeckSheet`, `NewDeckForm`, `LanguageField`, `PurposeField`, `DirectionField`, `DirectionSelect`, `LibraryBoard`, `DeckTray`, `DeckTile`, `ReadyDecks`, `LeaveDeckDialog`.
 - Sections and series: `SectionManager`, `SectionNameDialog`, `ArchiveSectionDialog`, `ArchivedSectionsDialog`, `MoveToSectionDialog`, `StartEarlyDialog`, `SeriesSheet`, `SeriesForm`, `DeleteSeriesDialog`, `MoveToSeriesDialog`.
 - Sharing: `InviteDialog`, `RemoveMemberDialog`, `TurnOffLinkDialog`, `CancelInvitationDialog`.

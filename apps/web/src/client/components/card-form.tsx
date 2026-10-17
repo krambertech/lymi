@@ -102,6 +102,8 @@ export interface AddCardFormProps extends CardFormBase {
   deckId?: string | undefined;
   /** Preselect a section of that deck. */
   sectionId?: string | undefined;
+  /** A term typed elsewhere, such as in the command menu, to start from. */
+  term?: string | undefined;
   /** Whether the sheet stays open for the next card. */
   createMore?: boolean | undefined;
   onCreateMoreChange?: ((createMore: boolean) => void) | undefined;
@@ -197,6 +199,7 @@ export function CardForm(props: CardFormProps) {
   const {
     deckId,
     sectionId,
+    term: startTerm,
     createMore,
     onCreateMoreChange,
     onCreateDeck,
@@ -209,7 +212,7 @@ export function CardForm(props: CardFormProps) {
   const chips = (layout ?? (desktop ? "whole" : "chips")) === "chips";
   const queryClient = useQueryClient();
 
-  const [term, setTerm] = useState(draft?.term ?? card?.term ?? "");
+  const [term, setTerm] = useState(draft?.term ?? card?.term ?? startTerm ?? "");
   const [meaning, setMeaning] = useState(draft?.meaning ?? card?.meaning ?? "");
   const [deck, setDeck] = useState(draft?.deckId ?? card?.deckId ?? deckId ?? "");
   const [section, setSection] = useState<string | null>(

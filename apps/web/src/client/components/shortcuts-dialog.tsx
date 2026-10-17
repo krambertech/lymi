@@ -1,12 +1,14 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { modShortcut } from "../lib/device";
 import { Button } from "./button";
 import { Kbd } from "./kbd";
 import { AID_KEY } from "./recall-aid";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 
 export const SHORTCUTS: [string, MessageDescriptor][] = [
+  [modShortcut("K"), msg`Find cards and decks, or run a command`],
   ["N", msg`Add a card`],
   ["R", msg`Start review`],
   ["/", msg`Search`],

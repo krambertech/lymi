@@ -165,6 +165,25 @@ export const CARD_STATES = ["new", "learning", "review", "relearning"] as const;
 const tokens = z.number().int().nonnegative().max(10_000_000);
 export type Attribution = z.infer<typeof Attribution>;
 
+/** The command menu's own commands: its places, its actions, and reviewing a deck from its row. */
+export const COMMAND_MENU_COMMANDS = [
+  "today",
+  "library",
+  "insights",
+  "explore",
+  "settings",
+  "activity",
+  "archived",
+  "add_card",
+  "review",
+  "smart_add",
+  "new_deck",
+  "import",
+  "theme",
+  "shortcuts",
+  "review_deck",
+] as const;
+
 export const analyticsEvents = {
   $pageview: z.object({ pathname: path, ...source_fields }),
   app_opened: z.object({
@@ -379,6 +398,12 @@ export const analyticsEvents = {
     added: z.number().int().min(0),
     removed: z.number().int().min(0),
   }),
+  command_menu_run: z.object({
+    kind: z.enum(["card", "deck", "place", "action", "add"]),
+    command: z.enum(COMMAND_MENU_COMMANDS).optional(),
+    add: z.enum(["form", "now", "existing"]).optional(),
+    typed: z.boolean(),
+  }),
   account_deleted: z.object({
     client: z.enum(["web", "phone"]),
     confirmed_with: z.enum(["email", "apple"]),
@@ -407,6 +432,7 @@ export const analyticsProducers = {
   hook_added: ["worker"],
   cards_archived: ["worker"],
   reminder_sent: ["worker"],
+  command_menu_run: ["browser"],
   email_sent: ["worker"],
   email_failed: ["worker"],
   email_bounced: ["worker"],

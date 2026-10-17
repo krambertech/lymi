@@ -99,10 +99,13 @@ export function FieldChipRow({
     mutation.observe(el, { childList: true, subtree: true, characterData: true });
     el.addEventListener("scroll", measure, { passive: true });
     const wheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX) || el.scrollWidth <= el.clientWidth) return;
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
       const rtl = getComputedStyle(el).direction === "rtl";
-      el.scrollLeft += rtl ? -e.deltaY : e.deltaY;
-      e.preventDefault();
+      const step = rtl ? -e.deltaY : e.deltaY;
+      const before = el.scrollLeft;
+      el.scrollLeft += step;
+      // At the end of the row the wheel goes on to scroll the sheet, so the row never traps it.
+      if (el.scrollLeft !== before) e.preventDefault();
     };
     el.addEventListener("wheel", wheel, { passive: false });
     return () => {

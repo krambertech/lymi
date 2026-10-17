@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { REVIEW_MODE_KEYS, type ReviewModeKey } from "@lymi/core";
+import { REVIEW_MODE_KEYS, type ReviewModeKey, TAG_LIMITS } from "@lymi/core";
 import { ArrowLeftRight, Languages, Layers, Plus, Tag } from "lucide-react";
 import { type ReactElement, useState } from "react";
 import { MODE_LABELS } from "../lib/review-modes";
@@ -84,11 +84,23 @@ export function SectionChip({
 interface TagOption {
   name: string;
   cards?: number | undefined;
-  /** The row that makes a tag of what was typed. */
-  create?: boolean | undefined;
+  /** The row that adds what was typed: each comma-separated name, in the spelling it has if in use. */
+  create?: string[] | undefined;
+  /** A row that says why nothing can be added, chosen by nobody. */
+  note?: boolean | undefined;
 }
 
 const sameTag = (a: string, b: string) => a.toLocaleLowerCase() === b.toLocaleLowerCase();
+
+/** The names typed into the search, split on commas as the tags box did, each once. */
+function typedNames(query: string) {
+  const names: string[] = [];
+  for (const part of query.split(/[,\n]/)) {
+    const name = part.trim();
+    if (name && !names.some((n) => sameTag(n, name))) names.push(name);
+  }
+  return names;
+}
 
 export function TagsChip({
   value,
@@ -107,26 +119,46 @@ export function TagsChip({
   const { t } = useLingui();
   const names = useNames();
   const [query, setQuery] = useState("");
-  const typed = query.trim();
+  const typed = typedNames(query);
   const known: TagOption[] = [
     ...(inUse ?? []),
     ...value.filter((v) => !inUse?.some((u) => sameTag(u.name, v))).map((name) => ({ name })),
   ];
-  const needle = typed.toLocaleLowerCase();
-  const matches = typed
-    ? known
-        .filter((o) => o.name.toLocaleLowerCase().includes(needle))
-        // Those starting with what was typed come first, as in the tags box.
-        .sort(
-          (a, b) =>
-            Number(!a.name.toLocaleLowerCase().startsWith(needle)) -
-            Number(!b.name.toLocaleLowerCase().startsWith(needle)),
-        )
-    : known;
-  const create: TagOption | null =
-    typed && !known.some((o) => sameTag(o.name, typed)) ? { name: typed, create: true } : null;
-  const rows = create ? [...matches, create] : matches;
-  const chosen = known.filter((o) => value.some((v) => sameTag(v, o.name)));
+  const spelling = (name: string) => known.find((o) => sameTag(o.name, name))?.name ?? name;
+  const has = (name: string) => value.some((v) => sameTag(v, name));
+  const room = TAG_LIMITS.count - value.length;
+  const needle = typed.length === 1 ? (typed[0] ?? "").toLocaleLowerCase() : "";
+  const matches =
+    typed.length > 1
+      ? []
+      : needle
+        ? known
+            .filter((o) => o.name.toLocaleLowerCase().includes(needle))
+            // Those starting with what was typed come first, as in the tags box.
+            .sort(
+              (a, b) =>
+                Number(!a.name.toLocaleLowerCase().startsWith(needle)) -
+                Number(!b.name.toLocaleLowerCase().startsWith(needle)),
+            )
+        : known;
+  const fresh = typed.filter((name) => !has(name));
+  // A list typed with commas adds every name in it; one name adds itself when it is not in use.
+  const wanted =
+    typed.length > 1 ? fresh : fresh.filter((n) => !known.some((o) => sameTag(o.name, n)));
+  const tooLong = wanted.some((name) => name.length > TAG_LIMITS.length);
+  const extra: TagOption | null =
+    wanted.length === 0
+      ? null
+      : tooLong
+        ? { name: t`Keep each tag to ${TAG_LIMITS.length} characters or fewer.`, note: true }
+        : wanted.length > room
+          ? {
+              name: t`${plural(TAG_LIMITS.count, { one: "A card holds up to # tag.", other: "A card holds up to # tags." })}`,
+              note: true,
+            }
+          : { name: wanted.join(", "), create: wanted };
+  const rows = extra ? [...matches, extra] : matches;
+  const chosen = known.filter((o) => has(o.name));
   const label =
     value.length === 0
       ? t`Tags`
@@ -136,21 +168,30 @@ export function TagsChip({
   return (
     <Combobox<TagOption, true>
       multiple
-      items={create ? [...known, create] : known}
+      items={extra ? [...known, extra] : known}
       filteredItems={rows}
       value={chosen}
       onValueChange={(next) => {
-        const added = next.filter((o) => !value.some((v) => sameTag(v, o.name)));
-        for (const o of added) {
-          onTagAdded?.(
-            o.create ? "typed" : "suggestion",
-            !!inUse?.some((u) => sameTag(u.name, o.name)),
-          );
+        const row = next.find((o) => o.create);
+        if (row?.create) {
+          const adding = row.create.map(spelling).filter((name) => !has(name));
+          for (const name of adding) {
+            onTagAdded?.("typed", !!inUse?.some((u) => sameTag(u.name, name)));
+          }
+          onChange([...value, ...adding]);
+          setQuery("");
+          return;
         }
-        onChange(next.map((o) => o.name));
+        const picked = next.filter((o) => !o.note).map((o) => o.name);
+        const added = picked.filter((name) => !has(name));
+        if (added.length > room) return;
+        for (const name of added) {
+          onTagAdded?.("suggestion", !!inUse?.some((u) => sameTag(u.name, name)));
+        }
+        onChange(picked);
         if (added.length) setQuery("");
       }}
-      isItemEqualToValue={(a, b) => sameTag(a.name, b.name)}
+      isItemEqualToValue={(a, b) => !a.create && !b.create && sameTag(a.name, b.name)}
       itemToStringLabel={(o) => o.name}
       inputValue={query}
       onInputValueChange={setQuery}
@@ -175,13 +216,23 @@ export function TagsChip({
         <ComboboxEmpty>{t`Type a name to create your first tag.`}</ComboboxEmpty>
         <ComboboxList>
           {(option: TagOption) =>
-            option.create ? (
+            option.note ? (
+              <ComboboxItem key="note" value={option} disabled className="text-text-2">
+                <span className="flex-1 whitespace-normal">{option.name}</span>
+              </ComboboxItem>
+            ) : option.create ? (
               <ComboboxItem key={`+${option.name}`} value={option}>
                 <Plus className="size-4 shrink-0 text-text-2" aria-hidden="true" />
-                <span className="flex-1 truncate">{t`Create “${option.name}”`}</span>
+                <span className="flex-1 truncate">
+                  {t`Create ${names(option.create.map((name) => t`“${name}”`))}`}
+                </span>
               </ComboboxItem>
             ) : (
-              <ComboboxItem key={option.name} value={option}>
+              <ComboboxItem
+                key={option.name}
+                value={option}
+                disabled={room <= 0 && !has(option.name)}
+              >
                 <span className="flex-1 truncate">{option.name}</span>
                 {option.cards !== undefined && <ComboboxItemHint>{option.cards}</ComboboxItemHint>}
               </ComboboxItem>

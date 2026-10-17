@@ -754,6 +754,8 @@ export function CardForm(props: CardFormProps) {
           invalid={!!invalid.reviewModes}
         />
       </FieldChipRow>
+      {/* A choice's refusal has no field to sit under, so it sits under the row of chips. */}
+      <FieldError className="-mt-3">{invalid.tags ?? invalid.reviewModes}</FieldError>
 
       {failure && (
         <p role="alert" className="flex items-start gap-1.5 text-sm text-danger">

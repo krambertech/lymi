@@ -22,6 +22,9 @@ msgstr "«{deckName}» повторяется вместе с другими к�
 msgid "“{label}” was already in {deckName}, so the copy added offline was left out."
 msgstr "«{label}» уже есть в «{deckName}», поэтому копия, добавленная офлайн, не сохранена."
 
+msgid "“{name}”"
+msgstr "«{name}»"
+
 msgid "“{term}” has nothing left to fill in."
 msgstr "В «{term}» нечего дополнять."
 
@@ -230,6 +233,10 @@ msgstr "{0, plural, one {# тег} few {# тега} many {# тегов} other {#
 #. placeholder {0}: parsed.repeated
 msgid "{0, plural, one {# term appears more than once. Every card is imported.} other {# terms appear more than once. Every card is imported.}}"
 msgstr "{0, plural, one {# термин встречается больше одного раза. Импортируются все карточки.} few {# термина встречаются больше одного раза. Импортируются все карточки.} many {# терминов встречаются больше одного раза. Импортируются все карточки.} other {# термина встречаются больше одного раза. Импортируются все карточки.}}"
+
+#. placeholder {0}: TAG_LIMITS.count
+msgid "{0, plural, one {A card holds up to # tag.} other {A card holds up to # tags.}}"
+msgstr "{0, plural, one {В карточке может быть до # тега.} few {В карточке может быть до # тегов.} many {В карточке может быть до # тегов.} other {В карточке может быть до # тега.}}"
 
 #. placeholder {0}: ticked.size
 msgid "{0, plural, one {Add # card} other {Add # cards}}"
@@ -1757,12 +1764,12 @@ msgstr "Не удалось записать файл. Попробуй ещё �
 msgid "Countries, stars, birds or anything else with names."
 msgstr "Страны, звёзды, птицы или что угодно ещё с названиями."
 
-#. placeholder {0}: option.name
-msgid "Create “{0}”"
-msgstr "Создать «{0}»"
-
 msgid "Create “{typed}”"
 msgstr "Создать «{typed}»"
+
+#. placeholder {0}: names(option.create.map((name) => t`“${name}”`))
+msgid "Create {0}"
+msgstr "Создать {0}"
 
 msgid "Create a deck first, then add a lesson to it."
 msgstr "Сначала создай колоду, а потом добавь в неё урок."
@@ -2578,6 +2585,10 @@ msgstr "Оставь <0>Tab</0> и <1>New line</1>. Если в карточке
 
 msgid "Keep a copy"
 msgstr "Сохрани копию"
+
+#. placeholder {0}: TAG_LIMITS.length
+msgid "Keep each tag to {0} characters or fewer."
+msgstr "Тег должен быть не длиннее {0} символов."
 
 msgid "Keep invitation"
 msgstr "Оставить приглашение"

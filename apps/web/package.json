@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && pnpm design:build",
     "preview": "vite preview",
     "deploy": "vite build && wrangler deploy -c dist/lymi/wrangler.json",
     "deploy:ci": "node ../../scripts/apply-migrations-ci.mjs && wrangler deploy -c dist/lymi/wrangler.json --tag \"$WORKERS_CI_COMMIT_SHA\"",
@@ -21,7 +21,12 @@
     "auth:schema": "auth generate --config src/server/auth-cli.ts --output ../../packages/core/src/schema/auth.ts -y",
     "i18n:extract": "lingui extract --clean",
     "eval:enrichment": "tsx --env-file-if-exists=.dev.vars src/server/enrichment/evaluate.ts",
-    "eval:style": "tsx --env-file-if-exists=.dev.vars src/server/enrichment/style-evaluate.ts"
+    "eval:style": "tsx --env-file-if-exists=.dev.vars src/server/enrichment/style-evaluate.ts",
+    "design:dev": "vite --config vite.design.config.ts",
+    "design:build": "vite build --config vite.design.config.ts",
+    "design:deploy": "pnpm design:build && wrangler deploy -c wrangler.design.jsonc",
+    "design:deploy:ci": "wrangler deploy -c wrangler.design.jsonc --tag \"$WORKERS_CI_COMMIT_SHA\"",
+    "design:check": "pnpm design:build && wrangler deploy --dry-run -c wrangler.design.jsonc"
   },
   "devDependencies": {
     "@babel/core": "8.0.7",

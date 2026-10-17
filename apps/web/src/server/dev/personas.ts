@@ -23,6 +23,8 @@ export interface Persona {
   name: string;
   /** One line for the panel and the CLI. Names the state, not the data. */
   description: string;
+  /** Where the palette lists it, so a face is found by what it is for. */
+  group: "Start" | "Everyday" | "Languages" | "Scale and edges" | "Together";
   /** The interface language. Meanings follow it, as they do for a real learner. */
   appLanguage: AppLanguage;
   /**
@@ -414,6 +416,7 @@ const ESTONIAN_A1_UK: Record<string, string> = {
 export const personas: Persona[] = [
   {
     id: "fresh",
+    group: "Start",
     name: "Fresh",
     description: "Just signed up. No decks, nothing due, the first-run screens.",
     appLanguage: "en",
@@ -423,6 +426,7 @@ export const personas: Persona[] = [
   },
   {
     id: "learner",
+    group: "Everyday",
     name: "Kateryna",
     description: "Three weeks in. Three decks, a few due, cards from an assistant to inspect.",
     appLanguage: "en",
@@ -461,6 +465,7 @@ export const personas: Persona[] = [
   },
   {
     id: "streak",
+    group: "Everyday",
     name: "Sanna",
     description: "Fourteen days running and nothing due today. The small flame stays lit.",
     appLanguage: "en",
@@ -484,6 +489,7 @@ export const personas: Persona[] = [
   },
   {
     id: "rested",
+    group: "Everyday",
     name: "Leena",
     description:
       "Eleven days running through two rest days, the last one yesterday. Today opens on the rest-day banner.",
@@ -502,6 +508,7 @@ export const personas: Persona[] = [
   },
   {
     id: "backlog",
+    group: "Everyday",
     name: "Marco",
     description: "Back after a month away. Everything is due at once.",
     appLanguage: "en",
@@ -537,6 +544,7 @@ export const personas: Persona[] = [
   },
   {
     id: "long",
+    group: "Scale and edges",
     name: "Ingrid",
     description:
       "Long cards: sentences as terms, dictionary-length meanings, every field at its limit.",
@@ -555,6 +563,7 @@ export const personas: Persona[] = [
   },
   {
     id: "polyglot",
+    group: "Languages",
     name: "Оксана",
     description: "Ukrainian interface and meanings. Italian, Finnish, and a deck with no language.",
     appLanguage: "uk",
@@ -584,6 +593,7 @@ export const personas: Persona[] = [
   },
   {
     id: "publisher",
+    group: "Together",
     name: "Lymi",
     description: "The publisher account. One published deck, in English and Ukrainian editions.",
     appLanguage: "en",

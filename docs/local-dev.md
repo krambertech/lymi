@@ -51,15 +51,18 @@ To publish a deck of your own instead, add `PUBLISHER_EMAILS=learner@lymi.local`
 
 A real account signed in locally through Google works with every tool below too; it just has no persona of its own, so seeding it loads `learner` unless another persona is named.
 
-## Change the state from the panel
+## Change the state from the palette
 
-A small tab on the end edge of every product screen shows the current persona's avatar. Pressing it, or the backtick key, opens the developer panel beside it, or across the whole screen on a phone; the close button, Escape, or a press anywhere else puts it away. Dragging the tab moves it up or down the edge, and the position is remembered. The panel keeps its own dark graphite look in both themes, so it never passes for product UI.
+Backtick opens the developer palette over any product screen. Type to search commands, personas, languages and themes; a number after a space sets a command's count, so `due 12` runs "Make 12 cards due". The arrow keys move, Enter runs, Escape goes back from a page and then closes, and Backspace on an empty search goes back too. Recent keeps the last three commands with the count each ran with.
 
-- **Persona**: one drawn avatar per persona, with yours ringed. Pointing at a face describes it; pressing it signs you in as that account and reloads the screen you were on.
-- **Language and theme**: English or Ukrainian, which the meaning language follows, and system, light or dark.
-- **Simulate**: states that are slow or impossible to reach by hand. Claude adds 5 cards (an Activity row naming the app), enrich 5 cards (AI examples and an enrichment row), forget 3 cards (Forgotten today), make 3 often forgotten (the slipping round, with a Forgot on the three latest past days that already hold reviews), reach today's goal, and make 5 cards due. An action that cannot do anything for this account says why. **Reseed**, beside the persona, puts the account back to the persona's starting data; switching persona does not.
+A small tab on the end edge of every product screen shows the current persona's avatar and opens the same palette without a keyboard. On a phone or a touch screen the palette fills the screen, waits for a tap before raising the keyboard, and shows every persona's face above the list. Dragging the tab moves it up or down the edge, and the position is remembered. The palette keeps its own dark graphite look in both themes, so it never passes for product UI.
 
-Each change refreshes the queries behind the screen, so Today, Library and Insights update without a reload. The last thing that happened is written at the bottom. The panel is compiled into the Vite dev server only; a production build has no trace of it.
+- **Personas**: Switch persona lists each one under Start, Everyday, Languages, Scale and edges, or Together, with what it holds. Choosing one signs you in as that account and reloads the screen you were on.
+- **Simulate**: states that are slow or impossible to reach by hand. Claude adds cards (an Activity row naming the app), enrich cards (AI examples and an enrichment row), forget cards (Forgotten today), make cards often forgotten (the slipping round, with a Forgot on the latest past days that already hold reviews), reach today's goal, and make cards due. A command that cannot do anything for this account says why.
+- **Account**: Reseed puts the account back to its persona's starting data; switching persona does not. Empty this account removes everything. Both run on a second press and never appear in Recent.
+- **View and Open**: English, Ukrainian or Russian, which the meaning language follows; system, light or dark; a sign-in link to the current screen as the current persona; `/design`, `/emails` and the API docs.
+
+The server owns the list of commands at `/api/dev/commands`, so the palette and `pnpm local` show the same ones, and each row shows the id that runs it from a terminal. Each command refreshes the queries behind the screen, so Today, Library and Insights update without a reload. The palette is compiled into the Vite dev server only; a production build has no trace of it.
 
 ## Change the state from a terminal
 
@@ -75,6 +78,8 @@ pnpm local seed polyglot --as learner --reset   # any persona's data into any ac
 pnpm local reset --as learner     # empty the account
 pnpm local due 5 --as learner     # exactly five cards due now
 pnpm local due all --as streak
+pnpm local commands --as learner  # what the palette can do to this account
+pnpm local forget 3 --as learner  # any palette command, with an optional count
 pnpm local db:fresh               # rebuild the local D1 from the migrations
 ```
 
@@ -172,13 +177,15 @@ A JavaScript change needs no native build: `npx expo export:embed --platform ios
 
 ## Call the routes directly
 
-The panel and the CLI use these. They sit under `/api/dev`, outside the OpenAPI document.
+The palette and the CLI use these. They sit under `/api/dev`, outside the OpenAPI document.
 
 | Route | Does |
 | --- | --- |
 | `GET /api/dev/personas` | Lists the personas. No session needed. |
 | `GET` or `POST /api/dev/sign-in?as=<id>` | Signs the persona in; seeds an empty account. GET redirects, POST answers JSON. Both set the cookies. |
 | `GET /api/dev/state` | The signed-in account, its persona, counts and settings. |
+| `GET /api/dev/commands` | The palette's commands for the signed-in account: id, group, title with `{count}`, the count's default and maximum, and why it cannot run now. |
+| `POST /api/dev/commands/<id>` `{ count? }` | Runs one, with the count capped at its maximum, and answers with one sentence saying what happened. 409 with the reason when it cannot run. |
 | `POST /api/dev/seed` `{ persona? }` | Empties the account and loads a persona's data. |
 | `POST /api/dev/reset` | Empties the account, its review days included. |
 | `POST /api/dev/cards` `{ count }` | Adds that many sample cards to the oldest deck, or a new one, written as the connected app Claude. |
@@ -199,7 +206,7 @@ Seeding goes through the same services as the app and the API, so decks and card
 
 Two gates, one at build time and one at run time. The Worker imports the `/api/dev` routes only inside an `import.meta.env.DEV` branch, so a production build contains none of the routes, the persona fixtures, the fixed password, or the seed and reset services. At run time, `devToolsEnabled` in `apps/web/src/server/env.ts` is true only when `PRODUCT_URL` has a loopback hostname. It decides whether the routes answer, whether a `@lymi.local` address may create an account, and whether that address skips the confirmation email. Email and password sign-in itself is no longer local-only: it is how anyone without a Google account gets in. Production's `PRODUCT_URL` is `https://my.lymi.app`, so even a build that carried the routes would answer 404.
 
-The client side is gated the same way. The panel and the boot guard that drops the persisted query cache when the persona changes are dynamic imports behind `import.meta.env.DEV`, so the production bundle never includes them. Sign-out and every sign-in path clear the same persisted state through `clearPersistedLearnerState`, so a real account signed in after a persona never inherits its cache or queued grades.
+The client side is gated the same way. The palette and the boot guard that drops the persisted query cache when the persona changes are dynamic imports behind `import.meta.env.DEV`, so the production bundle never includes them. Sign-out and every sign-in path clear the same persisted state through `clearPersistedLearnerState`, so a real account signed in after a persona never inherits its cache or queued grades.
 
 The Playwright suite runs the product through Vite with a loopback `PRODUCT_URL`, so the routes exist there too. The tests do not use them: `docs/testing.md` keeps the canonical journey on the public flows.
 

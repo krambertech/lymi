@@ -46,7 +46,7 @@ With the product running (`pnpm --filter @lymi/web dev --port 5241`), `pnpm --fi
 A good screenshot:
 
 - **Shows one change at work.** The state the text describes, with real-looking content from a persona: never empty, loading or mid-animation, and never a real account.
-- **Is framed by the page, not the browser.** No browser chrome, device bezel, cursor, developer panel or drop shadow. `window` is the app at 1280 px wide, starting in from the tray's top-start corner and cut by its end and foot, so put the change in the window's top-start. `phone` is a 393 px screen standing in the tray's middle, cut by its foot. `panel` is one part of a screen, taken exactly by its `element` selector and shown whole: choose an element with padding of its own, such as a plate or a dialog.
+- **Is framed by the page, not the browser.** No browser chrome, device bezel, cursor, developer tools or drop shadow. `window` is the app at 1280 px wide, starting in from the tray's top-start corner and cut by its end and foot, so put the change in the window's top-start. `phone` is a 393 px screen standing in the tray's middle, cut by its foot. `panel` is one part of a screen, taken exactly by its `element` selector and shown whole: choose an element with padding of its own, such as a plate or a dialog.
 - **Has nothing the text does not mention.** Close toasts and menus unless they are the change, and pick a persona and path that keep the screen quiet.
 - **Says what it shows** in `alt`, in each language, as a sentence about the screen rather than the feature.
 - **Is taken once.** The screenshot records the update as it shipped; a later redesign does not retake it.

@@ -352,6 +352,7 @@ async function readInto(
         kind: t.kind,
         meaning: t.meaningFromLesson && t.meaning ? t.meaning : null,
         gloss: t.meaning,
+        pronunciation: t.pronunciation || null,
         handwritten: t.handwritten,
         heading: t.heading || null,
         seen: t.seen,

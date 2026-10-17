@@ -95,6 +95,21 @@ describe("bulk card writes", () => {
     expect(added.results[1]).toMatchObject({ status: "added", enrichmentStatus: null });
   });
 
+  it("treats a language and its regional tag as one language for duplicates", async () => {
+    const add = async (language: string | null, term: string) => {
+      const response = await app.fetch("/api/cards/batch", {
+        ...json({ cards: [{ deckId, term, language }] }),
+        as: learner,
+      });
+      return AddCardsOut.parse(await response.json()).results[0]?.status;
+    };
+    expect(await add("ja", "上手")).toBe("added");
+    expect(await add("ja-JP", "上手")).toBe("skipped");
+    expect(await add("ja", "じょうず")).toBe("added");
+    expect(await add("zh", "上手")).toBe("added");
+    expect(await add(null, "上手")).toBe("added");
+  });
+
   it("answers a single edit with the whole card, whatever the query asks", async () => {
     const [first] = await ids(["quindi"]);
     const response = await app.fetch(`/api/cards/${first}?response=terse`, {

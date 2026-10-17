@@ -1453,7 +1453,8 @@ function CardPlate({
                     )}
                   </Animated.View>
                 )}
-                {card.pronunciation && (mode.target === "term" || picture) && (
+                {/* After the reveal in every mode: under a term cue it would read the term out. */}
+                {card.pronunciation && (
                   <Animated.View entering={arrive()}>
                     <Text className="text-md text-muted">{card.pronunciation}</Text>
                   </Animated.View>

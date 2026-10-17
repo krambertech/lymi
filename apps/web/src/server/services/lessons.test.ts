@@ -57,6 +57,26 @@ const fakeAi = (scores: Record<string, number>): DecisionModel => ({
 });
 
 describe("readLesson", () => {
+  it("carries the reading a lesson prints for a term", async () => {
+    const ctx = await learner(db, "lesson-reading", "Kateryna");
+    const operators = new Set(["lesson-reading@lymi.test"]);
+    const deck = await createDeck(ctx, { name: "日本語", defaultLanguage: "ja" });
+    const reader = fakeReader({
+      deck: deck.id,
+      terms: [term("t1", "上手", { pronunciation: "じょうず" }), term("t2", "ねこ")],
+      questions: [],
+    });
+    const read = await readLesson(
+      ctx,
+      material,
+      { reader, ai: fakeAi({}), operators },
+      { deckId: deck.id },
+    );
+    const byId = Object.fromEntries(read.terms.map((t) => [t.id, t]));
+    expect(byId.t1?.pronunciation).toBe("じょうず");
+    expect(byId.t2?.pronunciation).toBeNull();
+  });
+
   it("greys terms already owned, flags other forms, and keeps the lesson's meaning only", async () => {
     const ctx = await learner(db, "lesson-owner", "Kateryna");
     const operators = new Set(["lesson-owner@lymi.test"]);

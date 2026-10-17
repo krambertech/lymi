@@ -8,6 +8,7 @@ import type {
 } from "@lymi/core";
 import {
   deckEnrichFields,
+  duplicateKey,
   emptyFields,
   fieldsToFill,
   needsEnrichment,
@@ -182,7 +183,7 @@ export async function addCards(
   );
   const existing = new Map<string, Map<string, { card: Card; deckName: string }>>();
   for (const row of existingRows) {
-    const key = dupKey(row.card.language, row.card.normalizedTerm);
+    const key = duplicateKey(row.card.language, row.card.normalizedTerm);
     const byDeck = existing.get(key) ?? new Map();
     byDeck.set(row.card.deckId, row);
     existing.set(key, byDeck);
@@ -201,7 +202,7 @@ export async function addCards(
       if (again) outcomes.push({ status: "added", card: again });
       continue;
     }
-    const matches = existing.get(dupKey(language, key));
+    const matches = existing.get(duplicateKey(language, key));
     const hit = options.allowCrossDeckDuplicates
       ? matches?.get(deck.id)
       : matches?.values().next().value;
@@ -274,7 +275,7 @@ export async function addCards(
       }),
     ]);
     // Later inputs in this batch with the same key are duplicates of this one.
-    const matchKey = dupKey(language, key);
+    const matchKey = duplicateKey(language, key);
     const byDeck = existing.get(matchKey) ?? new Map();
     byDeck.set(deck.id, { card, deckName: deck.name });
     existing.set(matchKey, byDeck);
@@ -350,11 +351,6 @@ async function respellTags(db: Db, outcomes: RawOutcome[]) {
 type RawOutcome =
   | { status: "added"; card: Card }
   | { status: "skipped"; term: string; existing: Card; deckName: string };
-
-/** A card with no language only matches other cards with no language. */
-function dupKey(language: string | null, normalizedTerm: string): string {
-  return `${language ?? ""} ${normalizedTerm}`;
-}
 
 /** Case and Unicode folding for search, the same rule as the duplicate key. */
 export function foldForSearch(text: string): string {

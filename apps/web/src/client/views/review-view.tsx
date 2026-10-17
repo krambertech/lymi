@@ -714,8 +714,13 @@ export function ReviewCard({
   /** Everything under the rule. `measure` is the hidden copy that sizes a card before its reveal. */
   const answer = (measure: boolean) => {
     const sound = measure ? audioPlace : audio;
+    // Only ever under the rule: a reading shown with the term as the cue would read the term out.
     const pronunciation = card.pronunciation && (
-      <motion.p variants={answerLine} className="text-md text-muted [overflow-wrap:anywhere]">
+      <motion.p
+        variants={answerLine}
+        className="text-md text-muted [overflow-wrap:anywhere]"
+        lang={card.language ?? undefined}
+      >
         {card.pronunciation}
       </motion.p>
     );
@@ -764,6 +769,7 @@ export function ReviewCard({
               >
                 {back}
               </motion.p>
+              {mode.cue === "term" && pronunciation}
               {picture && (
                 <>
                   <motion.p
@@ -925,23 +931,16 @@ export function ReviewCard({
                     </p>
                   )
                 ) : (
-                  <>
-                    <p
-                      lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
-                      className={clsx(
-                        "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
-                        CUE_SIZE[step],
-                      )}
-                    >
-                      {front}
-                      {mode.cue === "term" && audio("z-20")}
-                    </p>
-                    {mode.cue === "term" && card.pronunciation && (
-                      <p className="text-md text-muted [overflow-wrap:anywhere]">
-                        {card.pronunciation}
-                      </p>
+                  <p
+                    lang={mode.cue === "term" ? (card.language ?? undefined) : undefined}
+                    className={clsx(
+                      "hyphenate whitespace-pre-line font-medium tracking-[-0.03em] text-text [overflow-wrap:anywhere]",
+                      CUE_SIZE[step],
                     )}
-                  </>
+                  >
+                    {front}
+                    {mode.cue === "term" && audio("z-20")}
+                  </p>
                 )}
               </div>
               {/* Popped out of the flow as it leaves, so the cue glides back while the lines fade. */}

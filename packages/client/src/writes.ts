@@ -1,5 +1,5 @@
 import type { CardInput, CardPatch, DeckInput, NewDeckInput } from "@lymi/core";
-import { newId, normaliseTerm } from "@lymi/core";
+import { duplicateKey, newId, normaliseTerm } from "@lymi/core";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
 import { type AddCardOutcome, ApiError, api, type Card, type Deck, errorMessage } from "./api";
 import { waitsToSend } from "./api/request";
@@ -446,17 +446,17 @@ function forget() {
 /** A card already on the device with the same term, which the server would skip the add for. */
 function localDuplicate(input: CardInput): { card: Card; deckName: string } | null {
   if (!client) return null;
-  const key = normaliseTerm(input.term);
   const lookup = cacheLookup(client);
   const language =
     input.language === undefined
       ? (lookup.deck(input.deckId)?.defaultLanguage ?? null)
       : input.language;
+  const key = duplicateKey(language, normaliseTerm(input.term));
   for (const [, rows] of client.getQueriesData<{ card: Card }[]>({ queryKey: ["decks"] })) {
     if (!Array.isArray(rows)) continue;
     for (const row of rows) {
       const card = row?.card;
-      if (card?.normalizedTerm === key && card.language === language && !card.archivedAt) {
+      if (card && !card.archivedAt && duplicateKey(card.language, card.normalizedTerm) === key) {
         return { card, deckName: lookup.deck(card.deckId)?.name ?? "" };
       }
     }

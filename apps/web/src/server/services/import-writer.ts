@@ -2,6 +2,7 @@ import {
   arrivesKnown,
   type Directions,
   directionsFromModes,
+  duplicateKey,
   emptyImportCounts,
   IMAGE_LIMITS,
   IMPORT_LIMITS,
@@ -54,9 +55,9 @@ export async function readNoteChunk<Note>(bucket: R2Bucket, objectKey: string, c
   return (await object.json()) as Note[];
 }
 
-/** A card with no language only matches other cards with no language, as in `addCards`. */
+/** The duplicate rule's key for an imported term, as in `addCards`. */
 function dupKey(language: string | null, term: string) {
-  return `${language ?? ""} ${normaliseTerm(term)}`;
+  return duplicateKey(language, normaliseTerm(term));
 }
 
 /** The deck path as a Lymi name: `Italian::Lesson 1` reads `Italian / Lesson 1`. */
@@ -131,7 +132,7 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?:
     if (row.externalId) result.byExternal.set(row.externalId, { id: row.id, deckId: row.deckId });
   }
   for (const row of active) {
-    result.active.set(`${row.language ?? ""} ${row.normalizedTerm}`, row.deckName);
+    result.active.set(duplicateKey(row.language, row.normalizedTerm), row.deckName);
   }
   return result;
 }
@@ -166,7 +167,7 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
     if (row.externalId) result.byExternal.set(row.externalId, { id: row.id, deckId: row.deckId });
   }
   for (const row of active) {
-    result.active.set(`${row.language ?? ""} ${row.normalizedTerm}`, row.deckName);
+    result.active.set(duplicateKey(row.language, row.normalizedTerm), row.deckName);
   }
   return result;
 }

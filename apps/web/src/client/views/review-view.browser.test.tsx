@@ -124,6 +124,28 @@ test("a pronunciation that loads quickly dims the button and shows no spinner", 
   await expect.poll(() => button.element().querySelector(".animate-spin")).not.toBeNull();
 });
 
+test("the reading of a term cue waits for the reveal", async () => {
+  const japanese = item({ term: "上手", language: "ja", pronunciation: "じょうず" });
+  const card = (revealed: boolean) => (
+    <I18nProvider i18n={i18n}>
+      <ReviewCard item={japanese} revealed={revealed} animateReveal={false} onReveal={noop} />
+    </I18nProvider>
+  );
+  // The hidden copy that sizes the card holds the answer before the reveal, so look at what shows.
+  const shown = (text: string) =>
+    page
+      .getByText(text, { exact: true })
+      .elements()
+      .filter((el) => !el.closest("[aria-hidden='true']") && el.checkVisibility());
+  const screen = await render(card(false));
+  expect(shown("上手").length).toBeGreaterThan(0);
+  expect(shown("じょうず")).toHaveLength(0);
+
+  await screen.rerender(card(true));
+  await expect.poll(() => shown("じょうず")).toHaveLength(1);
+  expect(shown("じょうず")[0]?.getAttribute("lang")).toBe("ja");
+});
+
 test("a relearning card under review says Forgotten", async () => {
   await render(
     <I18nProvider i18n={i18n}>

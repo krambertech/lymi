@@ -526,6 +526,14 @@ describe("importing an Anki package", () => {
     expect((await cardsOf(ctx)).filter((c) => c.normalizedTerm === "il gatto")).toHaveLength(1);
   });
 
+  it("skips a term the learner has under a regional tag of the same language", async () => {
+    const ctx = await fresh();
+    const deck = await createDeck(ctx, { name: "Mine", defaultLanguage: "it-IT" });
+    await addCards(ctx, [{ deckId: deck.id, term: "Il gatto", meaning: "my cat" }]);
+    const { preview } = await runImport(ctx, "current.apkg");
+    expect(preview.duplicateExamples).toEqual([{ term: "il gatto", deckName: "Mine" }]);
+  });
+
   it("follows the learner's language and field choices", async () => {
     const ctx = await fresh();
     const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));

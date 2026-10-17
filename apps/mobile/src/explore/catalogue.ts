@@ -15,6 +15,7 @@ import { onlineManager, useMutation, useQuery, useQueryClient } from "@tanstack/
 import { useMemo } from "react";
 import { englishLanguageName, languageName } from "../data/languages";
 import { messages as en } from "../locales/en.po";
+import { fold } from "./fold";
 
 /** A heading per subject, as the web's; each app extracts its own catalogue. */
 const SUBJECT_LABELS: Record<string, MessageDescriptor> = {
@@ -84,11 +85,6 @@ export function useTagLabel() {
     const label = TAG_LABELS[tag as PublicationTag];
     return label ? i18n._(label) : null;
   };
-}
-
-/** Lower case with the accents gone, so "cafe" finds "Café" and "zurich" finds "Zürich". */
-function fold(text: string) {
-  return text.normalize("NFD").replace(/\p{M}/gu, "").toLocaleLowerCase();
 }
 
 function words(query: string) {

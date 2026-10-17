@@ -70,7 +70,11 @@ export async function checkAppPreview(
     throw new Error("preview entry did not set the access cookie");
   }
 
-  const signed = await settledFetch(new URL(opened.headers.get("location"), entry), jar, settling);
+  // Signs in without seeding: a whole seed outlasts this hop's timeout on D1, and a request cut off
+  // part way leaves half-built accounts. The one long reseed below does it instead.
+  const signIn = new URL(opened.headers.get("location"), entry);
+  signIn.searchParams.set("seed", "0");
+  const signed = await settledFetch(signIn, jar, settling);
   if (signed.status !== 303 || !signed.headers.get("location")) {
     throw new Error(`preview persona sign-in returned HTTP ${signed.status}`);
   }
@@ -81,13 +85,34 @@ export async function checkAppPreview(
     throw new Error("preview persona session was not available after sign-in");
   }
 
-  const decks = await settledFetch(new URL("/api/decks", entry), jar, settling);
-  const data = await decks.json();
-  if (!decks.ok || !Array.isArray(data) || data.length === 0) {
-    throw new Error("preview persona did not receive seeded learning data");
+  const library = async () => {
+    const decks = await settledFetch(new URL("/api/decks", entry), jar, settling);
+    const data = await decks.json();
+    if (!decks.ok || !Array.isArray(data))
+      throw new Error(`preview Library returned HTTP ${decks.status}`);
+    return data.length;
+  };
+  let held = await library();
+  // A new preview starts empty, and one kept from an earlier push holds what that push seeded.
+  const id = signIn.searchParams.get("as") ?? "learner";
+  const listed = await settledFetch(new URL("/api/dev/personas", entry), jar, settling);
+  const expected = (await listed.json()).personas?.find((p) => p.id === id)?.library ?? 1;
+  if (held < expected) {
+    const reseeded = await fetchImpl(new URL("/api/dev/seed", entry), {
+      method: "POST",
+      headers: { cookie: cookieHeader(jar), "content-type": "application/json" },
+      body: "{}",
+      signal: AbortSignal.timeout(300_000),
+    });
+    if (!reseeded.ok) throw new Error(`preview persona seed returned HTTP ${reseeded.status}`);
+    held = await library();
+  }
+  if (held === 0) throw new Error("preview persona did not receive seeded learning data");
+  if (held < expected) {
+    throw new Error(`preview persona ${id} holds ${held} deck(s), expected ${expected}`);
   }
 
-  return { learner, decks: data.length, destination: signed.headers.get("location") };
+  return { learner, decks: held, destination: signed.headers.get("location") };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

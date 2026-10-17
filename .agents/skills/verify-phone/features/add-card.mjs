@@ -7,7 +7,7 @@ const TERM = "il collaudo";
 const MEANING = "the acceptance test";
 
 export async function env({ api }) {
-  const [deck] = await api("/api/decks");
+  const deck = (await api("/api/decks")).find((d) => d.name === "Lezione 12");
   const { cards } = await api(`/api/cards?query=${encodeURIComponent(TERM)}`);
   if (cards.some((c) => c.term === TERM)) throw new Error(`The persona already has “${TERM}”`);
   const shared = await joinAnotherDeck(api);
@@ -32,7 +32,7 @@ async function joinAnotherDeck(api) {
 
 /** The card is written through the card outbox, so it reaches the Worker after the screen says Added. */
 export async function check({ before, api, poll }) {
-  const [deck] = await api("/api/decks");
+  const deck = (await api("/api/decks")).find((d) => d.name === "Lezione 12");
   return poll(async () => {
     const { cards } = await api(`/api/cards?query=${encodeURIComponent(TERM)}`);
     const card = cards.find((c) => c.term === TERM);

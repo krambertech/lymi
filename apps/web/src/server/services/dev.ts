@@ -10,18 +10,24 @@ import {
 import { and, asc, desc, eq, inArray, isNull, lte, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import type { Persona, PersonaCard, PersonaDeck } from "../dev/personas";
-import { personaEmail } from "../dev/personas";
+import { accountPersona, accounts, personaEmail } from "../dev/personas";
+import { PICTURES } from "../dev/pictures";
 import { auditStatement } from "./audit";
+import { type CardImageStorage, uploadCardImage } from "./card-images";
 import { addCards } from "./cards";
-import type { ServiceContext } from "./context";
+import { type ServiceContext, ServiceError } from "./context";
 import { dateFormatter } from "./days";
 import { archiveDeck, asked, createDeck, listDecks } from "./decks";
 import { approveEdition, importEdition, publishEdition } from "./editions";
-import { publishDeck } from "./publications";
+import { setImportantMany } from "./important";
+import { inviteByEmail, turnOnJoinLink } from "./invitations";
+import { join } from "./members";
+import { addPublishedDeck, publishDeck } from "./publications";
 import { gradeCard } from "./review";
 import { reviewZone, streak } from "./review-days";
 import { activeCardsOf, activeSectionsOf } from "./revisions";
 import { createSection } from "./sections";
+import { createSeries } from "./series";
 import { updateSettings } from "./settings";
 
 const DAY = 86_400_000;
@@ -59,8 +65,25 @@ export async function devCounts({ db, userId }: ServiceContext): Promise<DevCoun
   };
 }
 
-/** Everything the account holds in the product: decks and memberships, cards, states, reviews, audit, settings. */
-export async function resetAccount({ db, userId }: ServiceContext): Promise<void> {
+/**
+ * Everything the account holds in the product: decks and memberships, cards, states, reviews, audit
+ * including the joins its owners' Activity records, settings. Given the picture store, the account's picture files go too, or each reseed would leave
+ * three behind.
+ */
+export async function resetAccount(
+  { db, userId }: ServiceContext,
+  pictures?: R2Bucket,
+): Promise<void> {
+  if (pictures) {
+    const keys = await db
+      .select({ key: schema.cardImages.objectKey })
+      .from(schema.cardImages)
+      .innerJoin(schema.cards, eq(schema.cards.id, schema.cardImages.cardId))
+      .where(eq(schema.cards.userId, userId));
+    for (let i = 0; i < keys.length; i += 1000) {
+      await pictures.delete(keys.slice(i, i + 1000).map((k) => k.key));
+    }
+  }
   await db.batch([
     db.delete(schema.reviewUndos).where(eq(schema.reviewUndos.userId, userId)),
     db.delete(schema.reviews).where(eq(schema.reviews.userId, userId)),
@@ -73,6 +96,16 @@ export async function resetAccount({ db, userId }: ServiceContext): Promise<void
     db.delete(schema.decks).where(eq(schema.decks.userId, userId)),
     db.delete(schema.series).where(eq(schema.series.userId, userId)),
     db.delete(schema.auditLog).where(eq(schema.auditLog.userId, userId)),
+    // An owner's Activity records each join; a reseeded member joins again, so its old rows go.
+    db
+      .delete(schema.auditLog)
+      .where(
+        and(
+          eq(schema.auditLog.entity, "deck"),
+          inArray(schema.auditLog.action, ["join", "leave", "remove_member"]),
+          sql`json_extract(${schema.auditLog.payload}, '$.memberId') = ${userId}`,
+        ),
+      ),
     db.delete(schema.userSettings).where(eq(schema.userSettings.userId, userId)),
   ]);
 }
@@ -90,19 +123,36 @@ export async function deletePersonaAccount(db: Db, email: string): Promise<void>
   ]);
 }
 
+/** What a seed needs beyond its own account, from the route that holds auth and the bindings. */
+export interface SeedDeps {
+  /** Another persona's or companion's user id, its account created on first use. */
+  account: (id: string) => Promise<string>;
+  /** Where card pictures are stored; without it the cards keep none. */
+  images?: CardImageStorage | undefined;
+}
+
 /**
  * Seed a persona's data under the account in `ctx`. The account is emptied first, so the
  * result is the same whoever was there before. Deterministic: the same persona seeds the
  * same grades every time.
  */
-export async function seedPersona(ctx: ServiceContext, persona: Persona): Promise<DevCounts> {
+export async function seedPersona(
+  ctx: ServiceContext,
+  persona: Persona,
+  deps?: SeedDeps,
+  /** Personas this seed is already inside, so two accounts that share a deck never seed each other forever. */
+  seeding: Set<string> = new Set(),
+): Promise<DevCounts> {
   const { db, userId } = ctx;
-  await resetAccount(ctx);
+  seeding.add(persona.id);
+  await resetAccount(ctx, deps?.images?.bucket);
   await updateSettings(ctx, { appLanguage: persona.appLanguage });
 
   const now = new Date();
   const introducedAt = new Map<string, Date>();
   const toArchive: string[] = [];
+  const deckIds = new Map<string, string>();
+  const added: { id: string; spec: PersonaCard }[] = [];
 
   for (const deck of persona.decks) {
     const created = await createDeck(
@@ -114,6 +164,7 @@ export async function seedPersona(ctx: ServiceContext, persona: Persona): Promis
         directions: deck.directions ?? "recognition",
       },
     );
+    deckIds.set(deck.name, created.id);
     const sections = new Map<string, string>();
     for (const name of deck.sections ?? []) {
       const section = await createSection({ db, userId, actor: "user" }, created.id, { name });
@@ -140,6 +191,7 @@ export async function seedPersona(ctx: ServiceContext, persona: Persona): Promis
           ...(c.source !== undefined && { source: c.source }),
           ...(c.meaningSource !== undefined && { meaningSource: c.meaningSource }),
           ...(c.exampleSource !== undefined && { exampleSource: c.exampleSource }),
+          ...(c.hook !== undefined && { hook: c.hook }),
           ...(c.section && { sectionId: sections.get(c.section) }),
         })),
       );
@@ -149,6 +201,7 @@ export async function seedPersona(ctx: ServiceContext, persona: Persona): Promis
         const daysAgo = spec?.introducedDaysAgo ?? deck.introducedDaysAgo;
         introducedAt.set(outcome.card.id, new Date(now.getTime() - daysAgo * DAY - 60_000));
         if (spec?.archived) toArchive.push(outcome.card.id);
+        if (spec) added.push({ id: outcome.card.id, spec });
       });
     }
     if (deck.archived) await archiveDeck({ db, userId, actor: "user" }, created.id);
@@ -163,8 +216,170 @@ export async function seedPersona(ctx: ServiceContext, persona: Persona): Promis
       .set({ archivedAt: now, updatedAt: now })
       .where(inArray(schema.cards.id, toArchive));
   }
+
+  for (const series of persona.series ?? []) {
+    const ids = series.decks.flatMap((name) => deckIds.get(name) ?? []);
+    await createSeries(ctx, { name: series.name, deckIds: ids });
+  }
+  const marks = added
+    .filter((c) => c.spec.important)
+    .map((c) => ({ cardId: c.id, important: true }));
+  if (marks.length > 0) await setImportantMany(ctx, marks);
+  if (deps?.images) {
+    for (const { id, spec } of added) {
+      const picture = spec.picture ? PICTURES[spec.picture] : undefined;
+      if (!picture) continue;
+      const bytes = Uint8Array.from(atob(picture.png), (ch) => ch.charCodeAt(0));
+      await uploadCardImage(ctx, id, bytes, { description: picture.description }, deps.images);
+    }
+  }
+  if (deps) {
+    for (const deck of persona.decks) {
+      const id = deckIds.get(deck.name);
+      if (id && deck.people && !deck.archived) await share(ctx, id, deck.people, deps, seeding);
+    }
+    await joinOthersDecks(ctx, persona, deps, seeding);
+    for (const { slug, meaningLanguage } of persona.explore ?? []) {
+      await addFromExplore(ctx, slug, meaningLanguage, deps, seeding);
+    }
+    await reAddToExplorers(db, persona, seeding);
+  }
+
   await setDue(ctx, persona.dueNow);
   return devCounts(ctx);
+}
+
+/** The id of an account's active deck with this name, or null. */
+async function deckNamed(db: Db, userId: string, name: string): Promise<string | null> {
+  const [deck] = await db
+    .select({ id: schema.decks.id })
+    .from(schema.decks)
+    .where(
+      and(
+        eq(schema.decks.userId, userId),
+        eq(schema.decks.name, name),
+        isNull(schema.decks.archivedAt),
+      ),
+    );
+  return deck?.id ?? null;
+}
+
+/** Another account's deck, seeding that account first when the deck is not there yet. */
+export async function ownersDeck(
+  db: Db,
+  ref: { owner: string; deck: string },
+  deps: SeedDeps,
+  seeding: Set<string> = new Set(),
+): Promise<{ owner: ServiceContext; deckId: string } | null> {
+  const persona = accountPersona(ref.owner);
+  if (!persona) throw new Error(`No account named ${ref.owner}`);
+  const owner = { db, userId: await deps.account(persona.id), actor: "user" as const };
+  let deckId = await deckNamed(db, owner.userId, ref.deck);
+  if (!deckId && !seeding.has(persona.id)) {
+    await seedPersona(owner, persona, deps, seeding);
+    deckId = await deckNamed(db, owner.userId, ref.deck);
+  }
+  return deckId ? { owner, deckId } : null;
+}
+
+/**
+ * Put the deck's people in it. A member persona whose account holds nothing yet is seeded first,
+ * so signing in as it later finds its own data and not just this deck.
+ */
+async function share(
+  ctx: ServiceContext,
+  deckId: string,
+  people: NonNullable<PersonaDeck["people"]>,
+  deps: SeedDeps,
+  seeding: Set<string>,
+) {
+  for (const id of people.members) {
+    const member = accountPersona(id);
+    if (!member) throw new Error(`No account named ${id}`);
+    const memberCtx = { db: ctx.db, userId: await deps.account(id), actor: "user" as const };
+    const fresh = !seeding.has(id) && member.decks.length > 0 && (await ownsNothing(memberCtx));
+    if (fresh) await seedPersona(memberCtx, member, deps, seeding);
+    await join(memberCtx, deckId);
+    // A rebuilt deck hands an existing member new states, all due; put the member's own count back.
+    if (!fresh && !seeding.has(id)) await setDue(memberCtx, member.dueNow);
+  }
+  if (people.joinLink) await turnOnJoinLink(ctx, deckId);
+  for (const email of people.invitations ?? []) {
+    await inviteByEmail(ctx, deckId, email, async () => {});
+  }
+}
+
+async function ownsNothing({ db, userId }: ServiceContext): Promise<boolean> {
+  const [deck] = await db
+    .select({ id: schema.decks.id })
+    .from(schema.decks)
+    .where(eq(schema.decks.userId, userId))
+    .limit(1);
+  return !deck;
+}
+
+/** Join every deck whose people name this persona, so reseeding a member restores its memberships. */
+async function joinOthersDecks(
+  ctx: ServiceContext,
+  persona: Persona,
+  deps: SeedDeps,
+  seeding: Set<string>,
+) {
+  for (const owner of accounts) {
+    if (owner.id === persona.id) continue;
+    for (const deck of owner.decks) {
+      if (!deck.people?.members.includes(persona.id)) continue;
+      const found = await ownersDeck(ctx.db, { owner: owner.id, deck: deck.name }, deps, seeding);
+      if (found) await join(ctx, found.deckId);
+    }
+  }
+}
+
+/**
+ * Republishing deletes the old deck and every membership in it, so the accounts that had added it
+ * from Explore get it back, with their own due count. Accounts that were never signed in are left alone.
+ */
+async function reAddToExplorers(db: Db, publisher: Persona, seeding: Set<string>) {
+  const slugs = new Set(publisher.decks.flatMap((d) => d.publication?.slug ?? []));
+  if (slugs.size === 0) return;
+  for (const account of accounts) {
+    const wanted = (account.explore ?? []).filter((e) => slugs.has(e.slug));
+    if (wanted.length === 0 || account.id === publisher.id || seeding.has(account.id)) continue;
+    const [user] = await db
+      .select({ id: schema.user.id })
+      .from(schema.user)
+      .where(eq(schema.user.email, personaEmail(account.id)));
+    if (!user) continue;
+    const ctx = { db, userId: user.id, actor: "user" as const };
+    if (await ownsNothing(ctx)) continue;
+    for (const { slug, meaningLanguage } of wanted) {
+      await addPublishedDeck(ctx, slug, meaningLanguage);
+    }
+    await setDue(ctx, account.dueNow);
+  }
+}
+
+async function addFromExplore(
+  ctx: ServiceContext,
+  slug: string,
+  meaningLanguage: string | undefined,
+  deps: SeedDeps,
+  seeding: Set<string>,
+) {
+  try {
+    await addPublishedDeck(ctx, slug, meaningLanguage);
+  } catch (err) {
+    const publisher = accountPersona("publisher");
+    if (!(err instanceof ServiceError) || err.code !== "not_found" || !publisher) throw err;
+    if (seeding.has("publisher")) return;
+    const publisherCtx = {
+      db: ctx.db,
+      userId: await deps.account("publisher"),
+      actor: "user" as const,
+    };
+    await seedPersona(publisherCtx, publisher, deps, seeding);
+    await addPublishedDeck(ctx, slug, meaningLanguage);
+  }
 }
 
 /**
@@ -513,18 +728,73 @@ export async function addSampleCards(ctx: ServiceContext, count: number): Promis
         directions: "recognition",
       })
     ).id;
+  return addNumberedCards(ctx, deckId, count, SAMPLE_TERMS);
+}
+
+const SAMPLE_TERMS_PT: [string, string][] = [
+  ["o guarda-chuva", "the umbrella"],
+  ["a mochila", "the backpack"],
+  ["o bilhete", "the ticket"],
+  ["a padaria", "the bakery"],
+  ["o talho", "the butcher's"],
+  ["a fruta", "the fruit"],
+  ["o peixe", "the fish"],
+  ["a feira", "the market"],
+  ["o comboio", "the train"],
+  ["a estação", "the station"],
+];
+
+async function addNumberedCards(
+  ctx: ServiceContext,
+  deckId: string,
+  count: number,
+  terms: readonly [string, string][],
+): Promise<number> {
   const [row = { n: 0 }] = await ctx.db
     .select({ n: sql<number>`count(*)` })
     .from(schema.cards)
     .where(eq(schema.cards.deckId, deckId));
   const inputs = Array.from({ length: count }, (_, i) => {
     const n = row.n + i;
-    const [term, meaning] = SAMPLE_TERMS[n % SAMPLE_TERMS.length] as [string, string];
-    const round = Math.floor(n / SAMPLE_TERMS.length);
+    const [term, meaning] = terms[n % terms.length] as [string, string];
+    const round = Math.floor(n / terms.length);
     return { deckId, term: round ? `${term} ${round + 1}` : term, meaning };
   });
   const outcomes = await addCards(ctx, inputs);
   return outcomes.filter((o) => o.status === "added").length;
+}
+
+/** A deck someone shares with this account, never one added from Explore, or null. */
+export async function sharedDeckOf({ db, userId }: ServiceContext) {
+  const [deck] = await db
+    .select({
+      id: schema.decks.id,
+      ownerId: schema.decks.userId,
+      language: schema.decks.defaultLanguage,
+    })
+    .from(schema.deckMembers)
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.deckMembers.deckId))
+    .leftJoin(schema.deckPublications, eq(schema.deckPublications.deckId, schema.decks.id))
+    .where(
+      and(
+        eq(schema.deckMembers.userId, userId),
+        isNull(schema.deckMembers.removedAt),
+        isNull(schema.decks.archivedAt),
+        isNull(schema.deckPublications.id),
+      ),
+    )
+    .orderBy(asc(schema.deckMembers.joinedAt))
+    .limit(1);
+  return deck ?? null;
+}
+
+/** The owner of a deck this account learns from adds cards to it, as a teacher adds a lesson. */
+export async function ownerAddsCards(ctx: ServiceContext, count: number): Promise<number> {
+  const deck = await sharedDeckOf(ctx);
+  if (!deck) return 0;
+  const owner = { db: ctx.db, userId: deck.ownerId, actor: "user" as const };
+  const terms = deck.language?.startsWith("pt") ? SAMPLE_TERMS_PT : SAMPLE_TERMS;
+  return addNumberedCards(owner, deck.id, count, terms);
 }
 
 function askedStates(ctx: ServiceContext, dueOnly: boolean) {

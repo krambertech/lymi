@@ -8,6 +8,8 @@ export type PersonaSummary = {
   description: string;
   /** Where the palette lists it: Start, Everyday, Languages, Scale and edges, Together. */
   group: string;
+  /** Signing in lands on a screen of its own, such as a join link. */
+  landing: boolean;
   appLanguage: string;
   decks: number;
   cards: number;
@@ -71,6 +73,6 @@ export const devApi = {
       body: JSON.stringify({ kind, language, to }),
     }),
   /** The URL a browser is pointed at to become a persona. Sets the session and redirects. */
-  signInUrl: (persona: string, returnTo: string) =>
-    `/api/dev/sign-in?${new URLSearchParams({ as: persona, returnTo })}`,
+  signInUrl: (persona: string, returnTo?: string) =>
+    `/api/dev/sign-in?${new URLSearchParams(returnTo ? { as: persona, returnTo } : { as: persona })}`,
 };

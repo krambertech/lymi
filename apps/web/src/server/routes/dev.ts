@@ -6,9 +6,17 @@ import { devPersonaCookieName } from "../../shared/cookies";
 import { safeProductReturnPath } from "../../shared/origins";
 import type { Auth } from "../auth";
 import type { Db } from "../db";
-import { commands, summarize } from "../dev/commands";
+import { commandState, commands, summarize } from "../dev/commands";
 import { callAsMcp, devHostPage, devHostView } from "../dev/mcp-host";
-import { DEV_PASSWORD, type Persona, personaEmail, personaFor, personas } from "../dev/personas";
+import {
+  accountPersona,
+  DEV_PASSWORD,
+  librarySize,
+  type Persona,
+  personaEmail,
+  personaFor,
+  personas,
+} from "../dev/personas";
 import { EMAIL_SAMPLES } from "../email/samples";
 import { devToolsEnabled, operatorEmails } from "../env";
 import { body, describe, query } from "../http";
@@ -20,9 +28,11 @@ import {
   devCounts,
   enrichSampleCards,
   markEnriched,
+  ownersDeck,
   reachGoal,
   recallCards,
   resetAccount,
+  type SeedDeps,
   seedOftenForgotten,
   seedPersona,
   setDue,
@@ -57,11 +67,14 @@ const summary = (p: Persona) => ({
   email: personaEmail(p.id),
   description: p.description,
   group: p.group,
+  /** Sign-in lands on a screen of its own, so the palette asks for no other. */
+  landing: Boolean(p.landing),
   appLanguage: p.appLanguage,
   decks: p.decks.filter((d) => !d.archived).length,
   cards: p.decks.filter((d) => !d.archived).flatMap((d) => d.cards.filter((c) => !c.archived))
     .length,
   dueNow: p.dueNow,
+  library: librarySize(p),
 });
 
 dev.get("/personas", describe({ hide: true, open: true }), (c) =>
@@ -178,15 +191,22 @@ dev.on(
 
     const signed = await signInPersona(c.get("auth"), c.get("db"), persona);
     const ctx = { db: c.get("db"), userId: signed.userId, actor: "user" as const };
+    const deps = seedDeps(c);
 
     let seeded = false;
     if (seed !== "0") {
       const counts = await devCounts(ctx);
-      if (reset === "1" || counts.decks === 0) {
-        await seedPersona(ctx, persona);
+      // A persona that lands somewhere is a moment, like Tomás before Welcome, so it starts over each time.
+      if (reset === "1" || counts.decks === 0 || persona.landing) {
+        await seedPersona(ctx, persona, deps);
         seeded = true;
       }
     }
+    // Only a browser lands anywhere, and finding the deck may seed its owner, which seed=0 forbids.
+    const landing =
+      c.req.method === "GET" && !returnTo && seed !== "0"
+        ? await landingPath(c.get("db"), persona, deps)
+        : null;
 
     const headers = new Headers();
     for (const cookie of signed.cookies) headers.append("set-cookie", cookie);
@@ -197,7 +217,7 @@ dev.on(
     );
 
     if (c.req.method === "GET") {
-      const destination = new URL(safeProductReturnPath(returnTo), c.env.PRODUCT_URL);
+      const destination = new URL(landing ?? safeProductReturnPath(returnTo), c.env.PRODUCT_URL);
       headers.set("location", destination.toString());
       return new Response(null, { status: 303, headers });
     }
@@ -213,12 +233,35 @@ dev.on(
   },
 );
 
+/** Accounts a seed reaches beyond its own, created through sign-up like a persona's, and the picture store. */
+function seedDeps(c: Context<AppEnv>): SeedDeps {
+  return {
+    account: async (id) => {
+      const persona = accountPersona(id);
+      if (!persona) throw new Error(`No account named ${id}`);
+      return (await signInPersona(c.get("auth"), c.get("db"), persona)).userId;
+    },
+    // App previews bind no picture store, so their personas seed without pictures.
+    images:
+      c.env.PRIVATE_IMAGES && c.env.IMAGES
+        ? { bucket: c.env.PRIVATE_IMAGES, images: c.env.IMAGES }
+        : undefined,
+  };
+}
+
+/** Welcome with the deck a persona joined before getting set up, as the return from a join link opens it. */
+async function landingPath(db: Db, persona: Persona, deps: SeedDeps): Promise<string | null> {
+  if (!persona.landing) return null;
+  const found = await ownersDeck(db, persona.landing.welcomeWith, deps);
+  return found ? `/welcome?deck=${found.deckId}` : null;
+}
+
 /** Answers signed out too, so the CLI can tell a typo from a command before signing anyone in. */
 dev.get("/commands", describe({ hide: true, open: true }), async (c) => {
   const session = await c.get("auth").api.getSession({ headers: c.req.raw.headers });
   if (!session) return c.json({ commands: summarize(null) });
   const ctx = { db: c.get("db"), userId: session.user.id, actor: "user" as const };
-  return c.json({ commands: summarize(await devCounts(ctx)) });
+  return c.json({ commands: summarize(await commandState(ctx, await devCounts(ctx))) });
 });
 
 /** The routes below act on the signed-in account, whichever persona or real account it is. */
@@ -258,11 +301,15 @@ dev.post(
     const command = commands.find((cmd) => cmd.id === c.req.param("id"));
     if (!command) return c.json({ error: "Unknown command" }, 404);
     const ctx = ctxOf(c);
-    const reason = command.blocked(await devCounts(ctx));
+    const reason = command.blocked(await commandState(ctx, await devCounts(ctx)));
     if (reason) return c.json({ error: reason }, 409);
     const asked = c.req.valid("json").count ?? command.count?.default ?? 1;
     const count = Math.min(asked, command.count?.max ?? asked);
-    const note = await command.run(ctx, { count, persona: personaFor(c.get("user").email) });
+    const note = await command.run(ctx, {
+      count,
+      persona: personaFor(c.get("user").email),
+      deps: seedDeps(c),
+    });
     return c.json({ note, counts: await devCounts(ctx) });
   },
 );
@@ -311,13 +358,13 @@ dev.post("/seed", describe({ hide: true, open: true }), body(SeedBody, "seed"), 
     ? personas.find((p) => p.id === id)
     : (personaFor(c.get("user").email) ?? personas.find((p) => p.id === "learner"));
   if (!persona) return c.json({ error: "Unknown persona" }, 400);
-  const counts = await seedPersona(ctxOf(c), persona);
+  const counts = await seedPersona(ctxOf(c), persona, seedDeps(c));
   return c.json({ persona: summary(persona), counts });
 });
 
 dev.post("/reset", describe({ hide: true, open: true }), async (c) => {
   const ctx = ctxOf(c);
-  await resetAccount(ctx);
+  await resetAccount(ctx, seedDeps(c).images?.bucket);
   return c.json({ counts: await devCounts(ctx) });
 });
 

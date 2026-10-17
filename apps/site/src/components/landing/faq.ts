@@ -69,7 +69,7 @@ export const JAPANESE_QUESTIONS: Question[] = [
   {
     id: "kana",
     question: msg`Do I need to read kana first?`,
-    answer: msg`It helps. Start with the kana deck, then add the words for JLPT N5 once the signs feel familiar.`,
+    answer: msg`It helps. Start with the kana deck, then add N5-level words once the signs feel familiar.`,
   },
   {
     id: "romaji",

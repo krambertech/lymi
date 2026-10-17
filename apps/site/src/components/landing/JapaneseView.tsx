@@ -7,9 +7,10 @@ import { ArrowRight, Volume2 } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { deckPath } from "../../lib/deck-page";
 import { shelfPath } from "../../lib/explore";
-import { openLymiUrl, productUrl } from "../../lib/origins";
+import { openLymiUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
+import { addUrl } from "../deck/DeckView";
 import { DeckShowcase } from "../exams/DeckShowcase";
 import { Added, AssistantChat, Attachment } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
@@ -28,7 +29,7 @@ import { SiteFooter } from "./SiteFooter";
 import { SiteNav } from "./SiteNav";
 
 export const JAPANESE_TITLE = msg`Learn Japanese vocabulary with kana and JLPT decks · Lymi`;
-export const JAPANESE_BLURB = msg`Start with hiragana and katakana, then the words for JLPT N5 and N4. Furigana sits over the kanji until you know a word, and a native Japanese voice reads every card.`;
+export const JAPANESE_BLURB = msg`Start with hiragana and katakana, then N5- and N4-level words. Furigana sits over the kanji until you know a word, and a native Japanese voice reads every card.`;
 
 /** The published kana deck, which Welcome also offers a Japanese beginner first. */
 const KANA_DECK = "read-japanese-kana";
@@ -106,23 +107,26 @@ const STEPS: { slug: string; glyph: string; name: MessageDescriptor; detail: Mes
     {
       slug: "japanese-n5-vocabulary-practice",
       glyph: "食",
-      name: msg`JLPT N5 words`,
+      name: msg`N5-level words`,
       detail: msg`Everyday words, from family and food to your first verbs.`,
     },
     {
       slug: "japanese-n4-vocabulary",
       glyph: "経",
-      name: msg`JLPT N4 words`,
+      name: msg`N4-level words`,
       detail: msg`The next level, once N5 feels easy.`,
     },
   ];
 
-/** The three steps side by side, numbered, each opening its deck. */
-function PathSteps() {
+type Step = (typeof STEPS)[number];
+
+/** The steps whose deck is published now, side by side and numbered, each opening its deck. */
+function PathSteps({ steps }: { steps: Step[] }) {
   const { t, i18n } = useLingui();
+  if (steps.length === 0) return null;
   return (
     <ol aria-label={t`The way in`} className="grid gap-3 @3xl:grid-cols-3 @3xl:gap-5">
-      {STEPS.map((step, index) => (
+      {steps.map((step, index) => (
         <li key={step.slug}>
           <a
             href={deckPath(step.slug, i18n.locale as Locale)}
@@ -154,15 +158,15 @@ function PathSteps() {
   );
 }
 
-/** The published Japanese decks at full size, each step's deck marked with its step. */
-function JapaneseDecks({ decks }: { decks: PublicDeckSummary[] }) {
+/** Every published Japanese deck at full size, each step's deck marked with its step. */
+function JapaneseDecks({ decks, steps }: { decks: PublicDeckSummary[]; steps: Step[] }) {
   const { t, i18n } = useLingui();
   const locale = i18n.locale as Locale;
   const step = (slug: string) => {
-    const at = STEPS.findIndex((each) => each.slug === slug);
+    const at = steps.findIndex((each) => each.slug === slug);
     return at === -1 ? undefined : t`Step ${i18n.number(at + 1)}`;
   };
-  const [first, ...rest] = decks.slice(0, 5);
+  const [first, ...rest] = decks;
   if (!first) return null;
   return (
     <div className="grid gap-5">
@@ -289,7 +293,10 @@ const CLASS_CARDS = [
 
 /** For someone starting Japanese: kana first, then JLPT words, with readings and a native voice. */
 export function JapaneseView({ decks }: { decks: PublicDeckSummary[] }) {
+  const { i18n } = useLingui();
   const openAppUrl = openLymiUrl();
+  const steps = STEPS.filter((step) => decks.some((deck) => deck.slug === step.slug));
+  const kana = decks.find((deck) => deck.slug === KANA_DECK);
 
   return (
     <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
@@ -301,7 +308,8 @@ export function JapaneseView({ decks }: { decks: PublicDeckSummary[] }) {
               From{" "}
               <span lang="ja" className="font-mincho font-normal">
                 あ
-              </span>{" "}
+              </span>
+              <br />
               to{" "}
               <span lang="ja" className="font-mincho font-normal">
                 漢字
@@ -309,19 +317,19 @@ export function JapaneseView({ decks }: { decks: PublicDeckSummary[] }) {
               .
             </Trans>
           }
-          lede={
-            <Trans>
-              Start with hiragana and katakana, then the words for JLPT N5 and N4. Furigana sits
-              over the kanji until you know each word, and a native Japanese voice reads every card.
-            </Trans>
-          }
+          lede={i18n._(JAPANESE_BLURB)}
           badge={false}
           cards={JAPANESE_HAND}
           ground={<KanaGround />}
           action={
-            <a href={productUrl(`/add/${KANA_DECK}`)} className={buttonClass("primary", "lg")}>
-              <Trans>Start with kana</Trans>
-            </a>
+            kana && (
+              <a
+                href={addUrl(kana.slug, kana.meaningLanguage)}
+                className={buttonClass("primary", "lg")}
+              >
+                <Trans>Start with kana</Trans>
+              </a>
+            )
           }
         />
       </header>
@@ -348,14 +356,15 @@ export function JapaneseView({ decks }: { decks: PublicDeckSummary[] }) {
           body={
             <Trans>
               Japanese is written in three scripts, so you learn it in order. First the kana: the
-              sounds of hiragana and katakana. Then the everyday words of JLPT N5, kanji and all,
-              and N4 after them. Each step is a ready-made deck, so you don’t start from scratch.
+              sounds of hiragana and katakana. Then everyday N5-level words, kanji and all, and
+              N4-level words after them. Each step is a ready-made deck, so you don’t start from
+              scratch.
             </Trans>
           }
         >
-          <PathSteps />
+          <PathSteps steps={steps} />
           <div className="mt-14">
-            <JapaneseDecks decks={decks} />
+            <JapaneseDecks decks={decks} steps={steps} />
           </div>
           <div className="mt-8">
             <JapaneseShelfLink />
@@ -364,12 +373,12 @@ export function JapaneseView({ decks }: { decks: PublicDeckSummary[] }) {
 
         <FeatureSection
           demoFirst
-          title={<Trans>A native Japanese voice.</Trans>}
+          title={<Trans>Hear every word.</Trans>}
           body={
             <Trans>
-              Every card is read aloud in a native Japanese voice. It says the word from its kana
-              reading, so <span lang="ja">今日</span> comes out <span lang="ja">きょう</span>, never
-              a guess from the kanji.
+              In Lymi a native Japanese voice reads every card from its kana reading, so{" "}
+              <span lang="ja">今日</span> comes out <span lang="ja">きょう</span>, never a guess
+              from the kanji. The words here are generated samples.
             </Trans>
           }
         >
@@ -437,8 +446,9 @@ export function JapaneseView({ decks }: { decks: PublicDeckSummary[] }) {
           body={
             <Trans>
               Many Japanese decks on Anki come with a native speaker’s recording of every word.
-              Import yours and each card keeps its recording, reading, pitch accent and due date.
-              Lymi plays the recording instead of a generated voice.
+              Import yours and each card keeps its recording, reading and due date, and pitch accent
+              written as text comes along in its notes. Lymi plays the recording instead of a
+              generated voice.
             </Trans>
           }
           after={

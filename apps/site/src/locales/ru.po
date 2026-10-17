@@ -357,9 +357,6 @@ msgstr "Колода в Lymi"
 msgid "A major chord with a minor seventh, built on the fifth note of the key"
 msgstr "Мажорный аккорд с малой септимой, построенный на пятой ступени тональности"
 
-msgid "A native Japanese voice."
-msgstr "Голос носителя японского."
-
 msgid "A new format applies from 11 April 2026. The level stays A2."
 msgstr "С 11 апреля 2026 года действует новый формат. Уровень остаётся A2."
 
@@ -1367,9 +1364,6 @@ msgstr "Даже начальнику?"
 msgid "Every card in the deck"
 msgstr "Все карточки колоды"
 
-msgid "Every card is read aloud in a native Japanese voice. It says the word from its kana reading, so <0>今日</0> comes out <1>きょう</1>, never a guess from the kanji."
-msgstr "Каждую карточку озвучивает голос носителя японского. Он читает слово по его чтению каной, поэтому <0>今日</0> звучит как <1>きょう</1>, а не как догадка по кандзи."
-
 msgid "Every card says its word aloud, in its own language. The back keeps the line that makes it stick: the false friend, the gender, the tone that changes the meaning."
 msgstr "Каждая карточка произносит своё слово на языке оригинала. На обороте — строка, которая помогает запомнить: ложный друг, род, тон, меняющий значение."
 
@@ -1603,8 +1597,8 @@ msgstr "Французский A2 · по средам"
 msgid "French for “putting in place”."
 msgstr "По-французски — «разложить всё по местам»."
 
-msgid "From <0>あ</0> to <1>漢字</1>."
-msgstr "От <0>あ</0> до <1>漢字</1>."
+msgid "From <0>あ</0><1/>to <2>漢字</2>."
+msgstr "От <0>あ</0><1/>до <2>漢字</2>."
 
 msgid "From Arabic law šāʼ Allāh, “if God wills”."
 msgstr "От арабского law šāʼ Allāh — «если Бог захочет»."
@@ -1733,6 +1727,9 @@ msgstr "иметь; быть"
 
 msgid "health insurance company"
 msgstr "медицинская страховая компания"
+
+msgid "Hear every word."
+msgstr "Слушай каждое слово."
 
 msgid "Hear this line"
 msgstr "Послушать строку"
@@ -1921,6 +1918,9 @@ msgstr "В испанском баре кофе просят «поставит�
 msgid "in cash"
 msgstr "наличными"
 
+msgid "In Lymi a native Japanese voice reads every card from its kana reading, so <0>今日</0> comes out <1>きょう</1>, never a guess from the kanji. The words here are generated samples."
+msgstr "В Lymi каждую карточку озвучивает голос носителя японского по её чтению каной, поэтому <0>今日</0> звучит как <1>きょう</1>, а не как догадка по кандзи. Слова здесь — сгенерированные образцы."
+
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "Во многих реальных наборах данных около 30% чисел начинаются с 1"
 
@@ -1972,8 +1972,8 @@ msgstr "идёт"
 msgid "It helps. Read Japanese Kana teaches hiragana and katakana, and the other decks are easier once you can read them."
 msgstr "Это помогает. Колода Read Japanese Kana учит хирагане и катакане, а с ними остальные колоды даются легче."
 
-msgid "It helps. Start with the kana deck, then add the words for JLPT N5 once the signs feel familiar."
-msgstr "Так будет проще. Начни с колоды каны, а когда знаки станут привычными, добавь слова для JLPT N5."
+msgid "It helps. Start with the kana deck, then add N5-level words once the signs feel familiar."
+msgstr "Так будет проще. Начни с колоды каны, а когда знаки станут привычными, добавь слова уровня N5."
 
 msgid "It joins your daily review straight away. There is nothing to build."
 msgstr "Она сразу попадает в ежедневное повторение. Ничего не нужно собирать самому."
@@ -2029,11 +2029,8 @@ msgstr "Японский"
 msgid "Japanese 1 · Mondays"
 msgstr "Японский 1 · по понедельникам"
 
-msgid "Japanese is written in three scripts, so you learn it in order. First the kana: the sounds of hiragana and katakana. Then the everyday words of JLPT N5, kanji and all, and N4 after them. Each step is a ready-made deck, so you don’t start from scratch."
-msgstr "Японский пишется тремя письменностями, поэтому его учат по порядку. Сначала кана: звуки хираганы и катаканы. Потом повседневные слова уровня JLPT N5, уже с кандзи, а после них N4. Каждый шаг — это готовая колода, так что начинать с нуля не нужно."
-
-msgid "JLPT N4 words"
-msgstr "Слова JLPT N4"
+msgid "Japanese is written in three scripts, so you learn it in order. First the kana: the sounds of hiragana and katakana. Then everyday N5-level words, kanji and all, and N4-level words after them. Each step is a ready-made deck, so you don’t start from scratch."
+msgstr "Японский пишется тремя письменностями, поэтому его учат по порядку. Сначала кана: звуки хираганы и катаканы. Потом повседневные слова уровня N5, уже с кандзи, а после них слова уровня N4. Каждый шаг — это готовая колода, так что начинать с нуля не нужно."
 
 msgctxt "deck tag"
 msgid "JLPT N5"
@@ -2044,9 +2041,6 @@ msgstr "JLPT N5 и N4"
 
 msgid "JLPT N5 and N4: the words for each level"
 msgstr "JLPT N5 и N4: лексика для каждого уровня"
-
-msgid "JLPT N5 words"
-msgstr "Слова JLPT N5"
 
 msgid "Join link"
 msgstr "Ссылка для присоединения"
@@ -2360,8 +2354,8 @@ msgstr "Создавай карточки с Claude, ChatGPT, Gemini, Grok, Code
 msgid "Make flashcards in ChatGPT, Claude or Gemini."
 msgstr "Создавай флеш-карточки в ChatGPT, Claude или Gemini."
 
-msgid "Many Japanese decks on Anki come with a native speaker’s recording of every word. Import yours and each card keeps its recording, reading, pitch accent and due date. Lymi plays the recording instead of a generated voice."
-msgstr "Во многих японских колодах для Anki каждое слово записал носитель языка. Импортируй свою, и каждая карточка сохранит запись, чтение, музыкальное ударение и дату повторения. Lymi включает запись вместо синтезированного голоса."
+msgid "Many Japanese decks on Anki come with a native speaker’s recording of every word. Import yours and each card keeps its recording, reading and due date, and pitch accent written as text comes along in its notes. Lymi plays the recording instead of a generated voice."
+msgstr "Во многих японских колодах для Anki каждое слово записал носитель языка. Импортируй свою, и каждая карточка сохранит запись, чтение и дату повторения, а музыкальное ударение, записанное текстом, перейдёт в заметки. Lymi включает запись вместо синтезированного голоса."
 
 msgid "marginal cost"
 msgstr "предельные издержки"
@@ -2464,6 +2458,12 @@ msgstr "Теория музыки"
 
 msgid "My dear"
 msgstr "Мой дорогой"
+
+msgid "N4-level words"
+msgstr "Слова уровня N4"
+
+msgid "N5-level words"
+msgstr "Слова уровня N5"
 
 msgid "Na⁺ − (Cl⁻ + HCO₃⁻); raised in some metabolic acidoses"
 msgstr "Na⁺ − (Cl⁻ + HCO₃⁻); повышена при некоторых метаболических ацидозах"
@@ -3333,11 +3333,8 @@ msgstr "Начни с готового курса."
 msgid "Start with chapter one."
 msgstr "Начни с первой главы."
 
-msgid "Start with hiragana and katakana, then the words for JLPT N5 and N4. Furigana sits over the kanji until you know a word, and a native Japanese voice reads every card."
-msgstr "Начни с хираганы и катаканы, потом слова для JLPT N5 и N4. Фуригана стоит над кандзи, пока не выучишь слово, а голос носителя японского озвучивает каждую карточку."
-
-msgid "Start with hiragana and katakana, then the words for JLPT N5 and N4. Furigana sits over the kanji until you know each word, and a native Japanese voice reads every card."
-msgstr "Начни с хираганы и катаканы, а потом учи слова для JLPT N5 и N4. Фуригана стоит над кандзи, пока не выучишь слово, а голос носителя японского озвучивает каждую карточку."
+msgid "Start with hiragana and katakana, then N5- and N4-level words. Furigana sits over the kanji until you know a word, and a native Japanese voice reads every card."
+msgstr "Начни с хираганы и катаканы, потом слова уровней N5 и N4. Фуригана стоит над кандзи, пока не выучишь слово, а голос носителя японского озвучивает каждую карточку."
 
 msgid "Start with kana"
 msgstr "Начать с каны"

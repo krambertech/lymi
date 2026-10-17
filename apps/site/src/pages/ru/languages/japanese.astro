@@ -1,5 +1,5 @@
 ---
-import LanguagesPage from "../../../components/islands/LanguagesPage";
+import JapanesePage from "../../../components/islands/JapanesePage";
 import { JAPANESE_BLURB, JAPANESE_TITLE } from "../../../components/landing/JapaneseView";
 import { SHARE_IMAGE_ALT } from "../../../components/landing/LandingView";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
@@ -40,5 +40,5 @@ const structuredData = marketingPage({
     type="application/ld+json"
     set:html={JSON.stringify(structuredData).replaceAll("<", "\\u003c")}
   />
-  <LanguagesPage client:load page="japanese" locale={locale} decks={page.decks} />
+  <JapanesePage client:load locale={locale} decks={page.decks} />
 </BaseLayout>

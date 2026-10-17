@@ -5,6 +5,7 @@ import { eq, sql } from "@lymi/core/db";
 import { isLoopbackUrl } from "../../shared/origins";
 import type { Db } from "../db";
 import { schema } from "../db";
+import { type HealthEnv, metered } from "../dependency-health";
 import type { Bindings } from "../env";
 import { serverI18n } from "../i18n";
 import { audit } from "./audit";
@@ -381,7 +382,7 @@ async function withinDailyBudget(sessions: KVNamespace | undefined): Promise<boo
 /** Send through Cloudflare in production and keep all loopback delivery inside the local Worker. */
 export async function sendTransactionalEmail(
   ctx: ServiceContext,
-  env: Pick<Bindings, "PRODUCT_URL" | "EMAIL"> & { SESSIONS?: KVNamespace },
+  env: Pick<Bindings, "PRODUCT_URL" | "EMAIL"> & { SESSIONS?: KVNamespace } & HealthEnv,
   input: TransactionalEmailInput,
 ): Promise<{ delivery: "provider" | "outbox" }> {
   const message = await renderTransactionalEmail(input.kind, input.language, {
@@ -402,14 +403,16 @@ export async function sendTransactionalEmail(
       throw new ServiceError("unavailable", "Couldn’t send the email. Try again in a moment.");
     }
     try {
-      await env.EMAIL.send({
-        to: input.to,
-        from: FROM,
-        replyTo: input.replyTo ?? REPLY_TO,
-        subject: message.subject,
-        text: message.text,
-        html: message.html,
-      });
+      await metered(env, "email", () =>
+        env.EMAIL.send({
+          to: input.to,
+          from: FROM,
+          replyTo: input.replyTo ?? REPLY_TO,
+          subject: message.subject,
+          text: message.text,
+          html: message.html,
+        }),
+      );
       delivery = "provider";
     } catch (error) {
       console.error(

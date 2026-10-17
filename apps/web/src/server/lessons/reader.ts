@@ -58,14 +58,7 @@ export function createLessonReader(
     model,
     async stream(material, brief, schema, onText) {
       const started = Date.now();
-      const headers: Record<string, string> = {
-        "x-api-key": key,
-        "anthropic-version": "2023-06-01",
-        "content-type": "application/json",
-        ...endpoint.headers,
-      };
-      if (env.ANTHROPIC_WORKSPACE_ID)
-        headers["anthropic-workspace-id"] = env.ANTHROPIC_WORKSPACE_ID;
+      const headers = readerHeaders(env, key, endpoint.headers);
       const content = [
         ...material.pdfs.map((bytes) => ({
           type: "document",
@@ -129,6 +122,51 @@ export function createLessonReader(
       return usage;
     },
   };
+}
+
+function readerHeaders(
+  env: LessonReaderBindings,
+  key: string,
+  gateway: Record<string, string>,
+): Record<string, string> {
+  const headers: Record<string, string> = {
+    "x-api-key": key,
+    "anthropic-version": "2023-06-01",
+    "content-type": "application/json",
+    ...gateway,
+  };
+  if (env.ANTHROPIC_WORKSPACE_ID) headers["anthropic-workspace-id"] = env.ANTHROPIC_WORKSPACE_ID;
+  return headers;
+}
+
+/**
+ * A one-token request on the reader's own route, key and fetch options, so the production canary
+ * proves a lesson read can reach Anthropic without paying for one.
+ */
+export async function pingLessonReader(
+  env: LessonReaderBindings,
+  request: Fetch = fetch,
+): Promise<void> {
+  const key = env.ANTHROPIC_API_KEY?.trim();
+  if (!key) throw new LessonReaderError("The lesson reader is not configured");
+  const endpoint = providerEndpoint(env, "anthropic");
+  const response = await request(`${endpoint.base}/messages`, {
+    method: "POST",
+    redirect: "manual",
+    headers: readerHeaders(env, key, endpoint.headers),
+    body: JSON.stringify({
+      model: env.ANTHROPIC_LESSON_MODEL || DEFAULT_MODEL,
+      max_tokens: 1,
+      messages: [{ role: "user", content: "ok" }],
+    }),
+    signal: AbortSignal.timeout(30_000),
+  });
+  await response.body?.cancel();
+  if (!response.ok) {
+    throw new LessonReaderError(`The lesson reader failed (${response.status})`, {
+      status: response.status,
+    });
+  }
 }
 
 type StreamEvent = {

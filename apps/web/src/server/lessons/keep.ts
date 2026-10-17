@@ -1,4 +1,5 @@
 import { AiGatewayError } from "../ai/gateway";
+import { type DependencySource, type HealthEnv, metered } from "../dependency-health";
 
 /**
  * Below this, a term starts unticked. Clef-flash rates real words as low as 0.17, so the bar only
@@ -14,18 +15,27 @@ type Candidate = { id: string; term: string; meaning: string; kind: "word" | "ph
 export type DecisionModel = { run(model: string, input: unknown): Promise<unknown> } | undefined;
 
 /** Workers AI through the named AI Gateway, so its calls are logged beside the reader's. */
-export function decisionModel(env: { AI?: Ai; AI_GATEWAY_ID?: string | undefined }): DecisionModel {
+export function decisionModel(
+  env: { AI?: Ai; AI_GATEWAY_ID?: string | undefined } & HealthEnv,
+  source: DependencySource = "traffic",
+): DecisionModel {
   const ai = env.AI;
   if (!ai) return undefined;
   const id = env.AI_GATEWAY_ID?.trim();
   if (!id) throw new AiGatewayError("Workers AI Gateway is not configured");
   return {
     run: (model, input) =>
-      ai.run(model as keyof AiModels, input as never, {
-        gateway: { id, skipCache: true },
-        extraHeaders: { "cf-aig-collect-log-payload": "false" },
-        signal: AbortSignal.timeout(30_000),
-      }),
+      metered(
+        env,
+        "workers_ai",
+        () =>
+          ai.run(model as keyof AiModels, input as never, {
+            gateway: { id, skipCache: true },
+            extraHeaders: { "cf-aig-collect-log-payload": "false" },
+            signal: AbortSignal.timeout(30_000),
+          }),
+        source,
+      ),
   };
 }
 

@@ -34,7 +34,7 @@ A second example, a full paradigm, etymology and grammar explanations belong in 
 1. What the lesson marks first: glossed, bold, highlighted, underlined, drilled, or written in by hand.
 2. Then frequent, useful words the learner does not have.
 3. A term already in the learner's decks is skipped (ADR 0004). A second card for the same word is added only for a clearly different sense, with its own cue.
-4. Page furniture is never a card: headings, row numbers, transcriptions, mnemonics columns, exercise instructions.
+4. Page furniture is never a card: headings, row numbers, transcriptions, mnemonics columns, exercise instructions. A reading the lesson prints beside a term, such as furigana or a kana gloss, goes on that term's card as its pronunciation.
 
 ## Examples
 

@@ -1,7 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { EndScreen, Offer } from "@lymi/client/review-end";
-import { gradeAllowed, type Rating, type ReviewAid } from "@lymi/core";
+import { cueKeepsReading, gradeAllowed, type Rating, type ReviewAid } from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
   EASE_OUT,
@@ -71,7 +71,7 @@ import {
 import { RollingNumber } from "../components/rolling-number";
 import { SevenLights } from "../components/seven-lights";
 import { Skeleton } from "../components/skeleton";
-import { StateIcon } from "../components/state-mark";
+import { StateIcon, stateKey } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import type { QueueItem } from "../lib/api";
@@ -529,6 +529,10 @@ export function ReviewCard({
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const front = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
+  const readingOnCue =
+    mode.cue === "term" &&
+    !!card.pronunciation &&
+    cueKeepsReading(card.language, stateKey(item.fsrsState) === "known");
   const label =
     mode.cue === "term"
       ? t`Recognition card for ${front}`
@@ -714,8 +718,13 @@ export function ReviewCard({
   /** Everything under the rule. `measure` is the hidden copy that sizes a card before its reveal. */
   const answer = (measure: boolean) => {
     const sound = measure ? audioPlace : audio;
+    // Under the rule unless the cue keeps it: a reading under a term cue reads the term out.
     const pronunciation = card.pronunciation && (
-      <motion.p variants={answerLine} className="text-md text-muted [overflow-wrap:anywhere]">
+      <motion.p
+        variants={answerLine}
+        className="text-md text-muted [overflow-wrap:anywhere]"
+        lang={card.language ?? undefined}
+      >
         {card.pronunciation}
       </motion.p>
     );
@@ -764,6 +773,7 @@ export function ReviewCard({
               >
                 {back}
               </motion.p>
+              {mode.cue === "term" && !readingOnCue && pronunciation}
               {picture && (
                 <>
                   <motion.p
@@ -936,8 +946,11 @@ export function ReviewCard({
                       {front}
                       {mode.cue === "term" && audio("z-20")}
                     </p>
-                    {mode.cue === "term" && card.pronunciation && (
-                      <p className="text-md text-muted [overflow-wrap:anywhere]">
+                    {readingOnCue && (
+                      <p
+                        className="text-md text-muted [overflow-wrap:anywhere]"
+                        lang={card.language ?? undefined}
+                      >
                         {card.pronunciation}
                       </p>
                     )}

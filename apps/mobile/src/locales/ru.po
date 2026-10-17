@@ -3267,6 +3267,9 @@ msgstr "Недавно добавленные"
 msgid "Recognition"
 msgstr "Распознавание"
 
+msgid "Recognition card for {cue}, read {reading}. Tap to reveal"
+msgstr "Карточка на распознавание для {cue}, читается {reading}. Нажми, чтобы открыть"
+
 msgid "Recognition card for {cue}. Tap to reveal"
 msgstr "Карточка на распознавание для {cue}. Нажми, чтобы открыть"
 

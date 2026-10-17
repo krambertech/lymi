@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { type CheckedCard, checkCard, isSentence, tally } from "./checks";
+import { type CheckedCard, checkCard, isSentence, tally, words } from "./checks";
 
 const reply = (fields: Partial<Record<string, string | null>>) => ({
   id: "c1",
@@ -29,9 +29,42 @@ describe("isSentence", () => {
     expect(isSentence("in bocca al lupo")).toBe(false);
     expect(isSentence("die Bank")).toBe(false);
   });
+  it("reads Japanese and Chinese sentence enders as a sentence", () => {
+    expect(isSentence("まだ分かりません。")).toBe(true);
+    expect(isSentence("本当？")).toBe(true);
+    expect(isSentence("すごい！")).toBe(true);
+    expect(isSentence("上手")).toBe(false);
+  });
+});
+
+describe("words", () => {
+  it("counts spaced scripts by spaces, a hyphenated word as one", () => {
+    expect(words("  a well-known  word ")).toBe(3);
+    expect(words("jooma · juua")).toBe(3);
+  });
+  it("counts the words inside an unspaced script", () => {
+    expect(words("上手")).toBe(1);
+    expect(words("日本語を勉強します")).toBeGreaterThan(3);
+  });
 });
 
 describe("checkCard", () => {
+  it("holds a Japanese example to the word limit", () => {
+    const japanese: CheckedCard = {
+      term: "上手",
+      mayFill: ["example"],
+      language: true,
+      expect: {},
+    };
+    expect(broken(japanese, { example: "彼女は絵が上手です。" })).toEqual([]);
+    expect(
+      broken(japanese, {
+        example:
+          "私の友達の妹は小さい時から毎日ピアノを練習していたので今ではとても上手に弾けます。",
+      }),
+    ).toEqual(["example: under twelve words"]);
+  });
+
   it("passes a short gloss with forms in the notes", () => {
     expect(broken(word, { meaning: "приходить", notes: "*tulema · tulla · tulen*" })).toEqual([]);
   });

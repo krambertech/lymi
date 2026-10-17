@@ -124,6 +124,52 @@ test("a pronunciation that loads quickly dims the button and shows no spinner", 
   await expect.poll(() => button.element().querySelector(".animate-spin")).not.toBeNull();
 });
 
+// The hidden copy that sizes the card holds the answer before the reveal, so look at what shows.
+const shown = (text: string) =>
+  page
+    .getByText(text, { exact: true })
+    .elements()
+    .filter((el) => !el.closest("[aria-hidden='true']") && el.checkVisibility());
+
+async function reviewCue(card: Partial<QueueItem["card"]>, fsrsState: number) {
+  const cue = (revealed: boolean) => (
+    <I18nProvider i18n={i18n}>
+      <ReviewCard
+        item={{ ...item(card), fsrsState }}
+        revealed={revealed}
+        animateReveal={false}
+        onReveal={noop}
+      />
+    </I18nProvider>
+  );
+  const screen = await render(cue(false));
+  return { reveal: () => screen.rerender(cue(true)) };
+}
+
+test("a Known Chinese card's pinyin waits for the reveal", async () => {
+  const { reveal } = await reviewCue({ term: "学习", language: "zh", pronunciation: "xuéxí" }, 2);
+  expect(shown("xuéxí")).toHaveLength(0);
+  await reveal();
+  await expect.poll(() => shown("xuéxí")).toHaveLength(1);
+  expect(shown("xuéxí")[0]?.getAttribute("lang")).toBe("zh");
+});
+
+test("a New or Learning Chinese card keeps its pinyin on the cue", async () => {
+  const { reveal } = await reviewCue({ term: "学习", language: "zh", pronunciation: "xuéxí" }, 1);
+  expect(shown("xuéxí")).toHaveLength(1);
+  await reveal();
+  // Still one line: the cue keeps it, so the answer does not repeat it.
+  await expect.poll(() => shown("to hurry up, to get a move on")).toHaveLength(1);
+  expect(shown("xuéxí")).toHaveLength(1);
+});
+
+test("another language's reading waits for the reveal, even on a New card", async () => {
+  const { reveal } = await reviewCue({ term: "학교", language: "ko", pronunciation: "hakgyo" }, 0);
+  expect(shown("hakgyo")).toHaveLength(0);
+  await reveal();
+  await expect.poll(() => shown("hakgyo")).toHaveLength(1);
+});
+
 test("a relearning card under review says Forgotten", async () => {
   await render(
     <I18nProvider i18n={i18n}>

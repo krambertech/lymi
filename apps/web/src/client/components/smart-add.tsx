@@ -247,6 +247,9 @@ function SmartAdd({
           deckId,
           term: term.term,
           ...(term.meaning ? { meaning: term.meaning, meaningSource: "lesson" as const } : {}),
+          ...(term.pronunciation
+            ? { pronunciation: term.pronunciation, pronunciationSource: "lesson" as const }
+            : {}),
           ...(term.heading ? { source: term.heading } : {}),
         })),
       },

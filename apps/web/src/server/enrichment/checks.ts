@@ -32,11 +32,29 @@ export type CheckedCard = {
 };
 
 const fold = (text: string) => text.trim().toLowerCase();
-const words = (text: string) => text.trim().split(/\s+/).filter(Boolean).length;
+/** Scripts written without spaces between words, where a space-separated chunk is a whole phrase. */
+const UNSPACED =
+  /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Thai}\p{Script=Lao}\p{Script=Khmer}\p{Script=Myanmar}]/u;
+const segmenter = new Intl.Segmenter("und", { granularity: "word" });
+
+/** Words split on spaces, and a chunk in an unspaced script split by the word segmenter. */
+export function words(text: string): number {
+  let count = 0;
+  for (const chunk of text.trim().split(/\s+/).filter(Boolean)) {
+    if (!UNSPACED.test(chunk)) {
+      count += 1;
+      continue;
+    }
+    let inChunk = 0;
+    for (const part of segmenter.segment(chunk)) if (part.isWordLike) inChunk += 1;
+    count += Math.max(inChunk, 1);
+  }
+  return count;
+}
 
 /** A term ending in sentence punctuation reads as a sentence; an idiom without it does not. */
 export function isSentence(term: string): boolean {
-  return /[.!?…]$/.test(term.trim());
+  return /[.!?…。！？]$/.test(term.trim());
 }
 
 /** Markdown the notes renderer shows as literal text, or that the prompt rules out. */

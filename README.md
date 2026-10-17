@@ -4,7 +4,7 @@ A private-first vocabulary app with a storm lantern. Collect cards from language
 
 - [PRODUCT.md](PRODUCT.md): who it is for, what it is, how it should feel
 - [DESIGN.md](DESIGN.md): the rules every screen follows, indexing the system files in `docs/design/system` and the feature design in `docs/design`
-- `/design` on the local dev server: the design system rendered with the real components (local only)
+- [design.lymi.app](https://design.lymi.app): the design system rendered with the real components; also `/design` on the local dev server
 - [docs/stack.md](docs/stack.md): the technical decisions and why
 - [docs/local-dev.md](docs/local-dev.md): running locally, personas, the developer panel and `pnpm local`
 - [docs/testing.md](docs/testing.md): the canonical E2E journey and CI policy
@@ -98,3 +98,11 @@ See [docs/site-structure.md](docs/site-structure.md) for the origin contract, cu
 ## License
 
 [AGPL-3.0-only](LICENSE). You can read, run, change, and share the code for any purpose. If you run a changed copy as a service others use, you must offer them its source under the same license. The license grants no rights to the Lymi name or the lantern mark.
+
+## Design deployment
+
+`design.lymi.app` is served by the separate `lymi-design` Worker, built from the product’s real design pages and components. It has no product API, authentication, database, PWA, or analytics; examples use the design fixtures. Robots headers keep it out of search results.
+
+Run `pnpm --filter @lymi/web design:dev` locally, `pnpm --filter @lymi/web design:check` to build and dry-run the Worker, and `pnpm --filter @lymi/web design:deploy` to publish it. Check the active version with `node scripts/check-deployment.mjs https://design.lymi.app/api/health lymi-design`.
+
+For automatic updates, connect the `lymi-design` Worker to this repository’s `main` branch in Workers Builds, with the repository root as the build root, `pnpm --filter @lymi/web design:build` as the build command, and `pnpm --filter @lymi/web design:deploy:ci` as the deploy command. Include `apps/web/**`, `packages/**`, `pnpm-lock.yaml` and `pnpm-workspace.yaml` in its build watch paths.

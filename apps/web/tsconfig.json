@@ -9,5 +9,13 @@
       "@/*": ["./src/client/*"]
     }
   },
-  "include": ["src/client", "src/shared", "vite.config.ts", "mcp-app.build.ts", "drizzle.config.ts"]
+  "include": [
+    "src/client",
+    "src/shared",
+    "vite.config.ts",
+    "mcp-app.build.ts",
+    "drizzle.config.ts",
+    "design",
+    "vite.design.config.ts"
+  ]
 }

@@ -28,6 +28,7 @@ import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
 import { decks } from "./routes/decks";
 import { email } from "./routes/email";
+import { emailEvents } from "./routes/email-events";
 import { explore } from "./routes/explore";
 import { exports as exportRoutes } from "./routes/exports";
 import { feedback } from "./routes/feedback";
@@ -247,6 +248,9 @@ if (import.meta.env.DEV || import.meta.env.LYMI_APP_PREVIEW) {
   const { dev } = await import("./routes/dev");
   app.route("/api/dev", dev);
 }
+
+// Resend's delivery reports are signed, not sent with a session.
+app.route("/api/email/events", emailEvents);
 
 // Everything else under /api needs a session cookie or an API key. What the caller may then
 // do is declared on each route with describe(): writes need the write scope, learner-only

@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { api } from "@lymi/client/api";
-import { canSpeakTerm } from "@lymi/core";
+import { canPlayPronunciation } from "@lymi/core";
 import { SPEAKER_WAVES } from "@lymi/design";
 import { requireOptionalNativeModule } from "expo";
 import { useEffect, useRef, useState } from "react";
@@ -39,7 +39,12 @@ void audio
   ?.setAudioModeAsync({ playsInSilentMode: true, interruptionMode: "duckOthers" })
   .catch(() => undefined);
 
-type Card = { id: string; term: string; language?: string | null | undefined };
+type Card = {
+  id: string;
+  term: string;
+  language?: string | null | undefined;
+  audioSource?: string | null | undefined;
+};
 /** How a press ended, with the sound started or never come; a card changed mid-load reports nothing. */
 export type PlaySettled = (outcome: "played" | "failed") => void;
 
@@ -61,7 +66,7 @@ function useAudioPronunciation(
   const loaded = useRef<string | null>(null);
   const settled = useRef(onSettled);
   settled.current = onSettled;
-  const speakable = !!card && canSpeakTerm(card) && !!headers;
+  const speakable = !!card && canPlayPronunciation(card) && !!headers;
 
   // A new card starts quiet, with no error from the last one.
   const cardId = card?.id ?? null;

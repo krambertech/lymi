@@ -112,6 +112,14 @@ export function ImportAnki() {
             def: "The first picture on a note becomes the card’s picture. Picture review waits until you describe it.",
           },
           {
+            term: "Recordings",
+            def: "A recording of the word itself, such as a Word Audio field, becomes the card’s audio. Lymi plays it instead of reading the term aloud, and keeps it when you edit the card, unless you change the word itself. MP3, M4A, AAC and WAV clips up to 2 MB come across.",
+          },
+          {
+            term: "Pitch accent and translations",
+            def: "A pitch accent field becomes one line of notes, such as はꜜし [1]. A translation of the example sentence becomes its own line of notes.",
+          },
+          {
             term: "Review history",
             def: "Every past review comes across on its original day and shows in Insights. Each card keeps the due date it had in Anki.",
           },
@@ -125,8 +133,12 @@ export function ImportAnki() {
       <H2>What stays behind</H2>
       <ul>
         <li>
-          <strong>Audio.</strong> Lymi makes its own pronunciation for words in a language. The
-          preview counts the sounds that are left out.
+          <strong>Other audio.</strong> Sentence clips and any second clip of a word stay behind,
+          and so does a recording in another format, such as Ogg. Lymi reads those terms aloud
+          itself. The preview counts what is left out.
+        </li>
+        <li>
+          <strong>Frequency and sort fields</strong>, and a pitch accent drawn only as a graph.
         </li>
         <li>
           <strong>Extra pictures.</strong> A card has one picture in Lymi, so only the first comes

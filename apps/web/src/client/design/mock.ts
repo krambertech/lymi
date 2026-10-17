@@ -132,6 +132,7 @@ function card(p: Partial<Card> & Pick<Card, "id" | "term">): Card {
     enrichmentStatus: null,
     enrichmentFields: null,
     audioKey: null,
+    audioSource: null,
     createdBy: "user",
     archivedAt: null,
     createdAt: new Date(now - 3 * day),

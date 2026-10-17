@@ -4,6 +4,7 @@ import {
   type CardSortField,
   type DateComparator,
   dayWindow,
+  ENRICHMENT_STALLED_AFTER,
   type GradeComparator,
   type IdComparator,
   modeOf,
@@ -180,7 +181,11 @@ export async function searchCards(
     if (comparator) cardWhere.push(...idConditions(schema.cards[field], comparator));
   }
   if (filter.enrichmentStatus) {
-    cardWhere.push(...idConditions(schema.cards.enrichmentStatus, filter.enrichmentStatus));
+    // The status the card reads as: one left at `working` past the cutoff has lost its run and
+    // reads as failed, so a search for failed cards finds the ones that need asking again.
+    const stalledBefore = now.getTime() - ENRICHMENT_STALLED_AFTER;
+    const status = sql`(case when ${schema.cards.enrichmentStatus} = 'working' and ${schema.cards.updatedAt} <= ${stalledBefore} then 'failed' else ${schema.cards.enrichmentStatus} end)`;
+    cardWhere.push(...idConditions(status, filter.enrichmentStatus));
   }
   if (filter.createdAt) {
     cardWhere.push(...dateConditions(sql`${schema.cards.createdAt}`, filter.createdAt, at));

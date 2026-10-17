@@ -14,6 +14,7 @@ import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider, TextRequest } from "../ai";
 import { type Db, schema } from "../db";
+import { searchCards } from "./card-search";
 import {
   addCards,
   archiveCard,
@@ -534,10 +535,18 @@ describe("enrichCards", () => {
     return added.card.id;
   }
 
+  /** The ids a search for one enrichment status finds, as an agent looking for cards to retry. */
+  async function statusSearch(ctx: ServiceContext, status: "working" | "failed") {
+    const page = await searchCards(ctx, { filter: { enrichmentStatus: { eq: status } } });
+    return page.cards.map((hit) => hit.card.id);
+  }
+
   it("reads a card stuck at working past the cutoff as failed, and Enrich starts a new run", async () => {
     const ctx = await learner(db, "enrich-6e", "Kateryna");
     const id = await stuck(ctx, ENRICHMENT_STALLED_AFTER + 60_000);
     expect((await showCard(ctx, id)).enrichmentStatus).toBe("failed");
+    expect(await statusSearch(ctx, "failed")).toEqual([id]);
+    expect(await statusSearch(ctx, "working")).toEqual([]);
 
     const create = vi.fn().mockResolvedValue(undefined);
     const asked = await requestEnrichment(ctx, id, { create });
@@ -551,6 +560,8 @@ describe("enrichCards", () => {
     // Past the slowest 200-card run, about 7 hours, but inside the cutoff.
     const id = await stuck(ctx, 8 * 60 * 60_000);
     expect((await showCard(ctx, id)).enrichmentStatus).toBe("working");
+    expect(await statusSearch(ctx, "working")).toEqual([id]);
+    expect(await statusSearch(ctx, "failed")).toEqual([]);
     const create = vi.fn().mockResolvedValue(undefined);
     await requestEnrichment(ctx, id, { create });
     expect(create).not.toHaveBeenCalled();

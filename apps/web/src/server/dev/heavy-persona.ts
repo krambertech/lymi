@@ -445,6 +445,7 @@ function studyDays(): number[] {
 
 export const HEAVY: Persona = {
   id: "heavy",
+  group: "Scale and edges",
   name: "Vera",
   description:
     "Two years of daily study. 27 decks and about 8,000 cards, tens of thousands of reviews, 400 due.",

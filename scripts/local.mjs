@@ -24,6 +24,8 @@ Commands
   seed [persona] [--reset]    Load a persona's data into the account (reset: even if not empty)
   reset                       Empty the account
   due <n|all>                 Make exactly n cards due now
+  commands                    List what the developer palette can do to the account
+  <command> [n]               Run one of them, e.g. claude 5, forget 3, slip 3, goal
   db:fresh                    Move the local D1 aside and apply every migration again
 
 Options
@@ -212,8 +214,43 @@ export async function run(argv, { stdout = process.stdout, env = process.env } =
       stdout.write("Fresh local D1. Restart the product server if it was running.\n");
       return;
     }
-    default:
-      throw new Error(`Unknown command: ${command}\n\n${HELP}`);
+    case "commands": {
+      const cookie = await session(base, persona);
+      const { data } = await call(base, "/api/dev/commands", { cookie });
+      for (const c of data.commands) {
+        const title = c.title.replace("{count}", c.count ? `[n=${c.count.default}]` : "");
+        const blocked = c.blocked ? `  (${c.blocked})` : "";
+        stdout.write(`${c.id.padEnd(10)} ${title}${blocked}\n`);
+      }
+      return;
+    }
+    default: {
+      // The palette's commands, so the terminal can do what the palette does without a copy here.
+      // The list answers signed out, so a typo never signs a persona in or creates its account.
+      let listed;
+      try {
+        listed = await call(base, "/api/dev/commands");
+      } catch (error) {
+        throw new Error(
+          `"${command}" is not a built-in command, and looking it up failed: ${error.message}\n\n${HELP}`,
+        );
+      }
+      if (!listed.data.commands.some((c) => c.id === command)) {
+        throw new Error(`Unknown command: ${command}\n\n${HELP}`);
+      }
+      const count = args[0] === undefined ? undefined : Number(args[0]);
+      if (count !== undefined && !(Number.isInteger(count) && count > 0)) {
+        throw new Error(`${command} takes a positive whole number`);
+      }
+      const cookie = await session(base, persona);
+      const result = await call(base, `/api/dev/commands/${encodeURIComponent(command)}`, {
+        method: "POST",
+        body: count === undefined ? {} : { count },
+        cookie,
+      });
+      stdout.write(`${persona}: ${result.data.note} ${describe(result.data.counts)}\n`);
+      return;
+    }
   }
 }
 

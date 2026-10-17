@@ -17,8 +17,10 @@ import {
   normaliseTerm,
   readingKey,
   sameReading,
+  stripReadings,
   TEXT_MODES,
 } from "@lymi/core";
+import { TYPED_CARD_FIELDS, type TypedCardField } from "@lymi/core/analytics";
 import { and, asc, desc, eq, inArray, isNull } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
@@ -198,6 +200,8 @@ export async function addCards(
   // splits across batches, so a failed batch leaves no partially created card.
   const groups: Statement[][] = [];
   const enriching: string[] = [];
+  // Which optional fields the new cards hold, for the typed add's event; never their text.
+  const filled = new Set<TypedCardField>();
 
   for (const { input, deck, language, key } of prepared) {
     const again = input.id ? replayed.get(input.id) : undefined;
@@ -253,12 +257,22 @@ export async function addCards(
       enrichmentStatus: null,
       enrichmentFields: null,
       audioKey: null,
+      audioSource: null,
+      audioApprovedKey: null,
       createdBy: actor,
       archivedAt: null,
       createdAt: now,
       updatedAt: now,
       revision: 1,
     };
+    if (card.example) filled.add("example");
+    if (card.pronunciation) filled.add("pronunciation");
+    if (card.notes) filled.add("notes");
+    if (card.hook) filled.add("hook");
+    if (card.source) filled.add("source");
+    if (card.tags.length) filled.add("tags");
+    if (card.sectionId) filled.add("section");
+    if (card.reviewModeKeys) filled.add("review_modes");
     const filling = fieldsToFill(
       card,
       deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose),
@@ -295,19 +309,22 @@ export async function addCards(
       source: actor === "api" || actor === "mcp" ? actor : "manual",
     });
   }
-  if (groups.length > 0)
+  if (groups.length > 0) {
+    const source =
+      actor === "mcp"
+        ? "ai_mcp"
+        : actor === "api"
+          ? "api"
+          : options.fromLesson
+            ? "lesson"
+            : "typed";
     track(ctx.analytics, {
       name: "cards_added",
       count: groups.length,
-      source:
-        actor === "mcp"
-          ? "ai_mcp"
-          : actor === "api"
-            ? "api"
-            : options.fromLesson
-              ? "lesson"
-              : "typed",
+      source,
+      ...(source === "typed" ? { fields: TYPED_CARD_FIELDS.filter((f) => filled.has(f)) } : {}),
     });
+  }
   // The add stands whatever the queue does; a refused run leaves its cards saying so.
   if (
     enrichment &&
@@ -381,7 +398,7 @@ export function matchesSearch(
     card.normalizedTerm,
     card.pronunciation,
     card.meaning,
-    card.example,
+    card.example && stripReadings(card.example),
     notes,
   ]) {
     if (field && searchKey(field).includes(needle)) return true;
@@ -793,6 +810,12 @@ function editWrite(
   const pronunciationChanged =
     (patch.term !== undefined && patch.term !== current.term) ||
     (patch.language !== undefined && patch.language !== current.language);
+  // A recording says the word, so only a new word drops it; generated speech follows the term
+  // and language. CONTEXT.md, Recording.
+  const audioStale =
+    current.audioSource === "recorded"
+      ? normalizedTerm !== normaliseTerm(current.term)
+      : pronunciationChanged;
   const { reviewModes, directions: _legacy, ...fields } = patch;
   const hook = patch.hook === undefined ? current.hook : patch.hook || null;
   // Changing a field's text changes where it came from, so an AI fill an app rewrites loses its badge.
@@ -827,7 +850,7 @@ function editWrite(
       ...section,
       ...(revision === undefined ? bumped("card", patch, current) : { revision }),
       normalizedTerm,
-      ...(pronunciationChanged ? { audioKey: null } : {}),
+      ...(audioStale ? { audioKey: null, audioSource: null, audioApprovedKey: null } : {}),
       ...(draftStale ? { hookDraft: null } : {}),
       updatedAt: now,
     })

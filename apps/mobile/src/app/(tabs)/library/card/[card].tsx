@@ -4,7 +4,7 @@ import { useLingui } from "@lingui/react/macro";
 import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { deserializeState } from "@lymi/core";
+import { deserializeState, stripReadings } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
@@ -203,7 +203,9 @@ export default function CardPage() {
         ai={card.pronunciationSource === "ai"}
         onPress={edit("pronunciation")}
       >
-        <Text className="text-md text-text">{card.pronunciation}</Text>
+        <Text className="text-md text-text" lang={card.language}>
+          {card.pronunciation}
+        </Text>
       </Field>
     ),
     <Field
@@ -225,7 +227,9 @@ export default function CardPage() {
         field="example"
         onPress={edit("example")}
       >
-        <Text className="text-md text-text">{card.example}</Text>
+        <Text className="text-md text-text" lang={card.language}>
+          {stripReadings(card.example)}
+        </Text>
       </Field>
     ),
     card.notes && (
@@ -351,6 +355,7 @@ export default function CardPage() {
   return (
     <Screen
       title={card.term}
+      titleLang={card.language}
       back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}
       actions={
         <View className="flex-row items-center gap-2.5">

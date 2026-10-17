@@ -1,15 +1,21 @@
 import {
   fieldsFromRoles,
   fitFields,
+  formatReadings,
   guessFieldRoles,
   htmlToText,
   type ImportedCard,
   type ImportedProgress,
   imageSources,
+  importFieldText,
   importTags,
+  isPitchField,
+  parseReadings,
   type Rating,
   type ReviewModeKey,
   soundCount,
+  soundSources,
+  termRecording,
 } from "@lymi/core";
 import type { SourceAdapter, SourceNoteType, SourceSummary } from "../adapter";
 import {
@@ -37,6 +43,7 @@ import {
   plainReading,
   questionField,
   revealCloze,
+  withoutOtherReadings,
 } from "./text";
 
 /**
@@ -396,9 +403,19 @@ export const anki: SourceAdapter<AnkiNote> = {
     const type = summary.noteTypes.find((t) => t.key === note.type);
     if (!type) return [];
     const roles = choices.roles[type.key] ?? type.roles;
-    const values = note.fields.map(htmlToText);
+    const values = note.fields.map((field, i) => importFieldText(type.fields[i] ?? "", field));
     const tags = importTags(note.tags);
     const picture = note.fields.flatMap(imageSources)[0];
+    const clips = note.fields.map(soundSources);
+    // A cloze's clips speak its sentence, not the word it hides.
+    const sounds =
+      type.kind === "cloze"
+        ? { recording: undefined, leftOut: clips.flat().length }
+        : termRecording(type.fields, roles, clips);
+    const pitchLeftOut = type.fields.some(
+      (name, i) =>
+        roles[i] === "notes" && isPitchField(name) && !values[i] && !!note.fields[i]?.trim(),
+    );
     const base = fieldsFromRoles(values, roles);
 
     const build = (
@@ -416,7 +433,8 @@ export const anki: SourceAdapter<AnkiNote> = {
           : hasFurigana(term)
             ? furiganaReading(term)
             : undefined,
-        example: withoutReadings(raw.example),
+        // Kana readings stay in Lymi's notation; pinyin and other readings go, as they always did.
+        example: raw.example && formatReadings(parseReadings(withoutOtherReadings(raw.example))),
         notes: raw.notes,
       });
       if (!fitted.fields.term) return [];
@@ -437,6 +455,9 @@ export const anki: SourceAdapter<AnkiNote> = {
           modes: [...progress.keys()],
           archived: active.length === 0,
           picture,
+          recording: sounds.recording,
+          soundsLeftOut: sounds.leftOut,
+          pitchLeftOut,
           progress: [...progress.values()],
           shortened: fitted.shortened || tags.shortened,
         },

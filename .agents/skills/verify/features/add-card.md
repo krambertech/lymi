@@ -8,14 +8,15 @@ The deck page's **Add → New card** menu or `N`, the rail's **Add** menu, or To
 
 ## Drive
 
-[`add-card.mjs`](add-card.mjs), as `learner` from Library: open **Lezione 12**, choose **Add → New card**, fill **Term** with `la nebbia` and **Meaning** with `the fog`, and press **Add to Lezione 12**.
+[`add-card.mjs`](add-card.mjs), as `learner` from Library: open **Lezione 12**, choose **Add → New card**, fill **Term** with `la nebbia` and **Meaning** with `the fog`, press the **Notes** chip and write a note in the field it adds, open the **Tags** chip and pick **noun**, and press **Add to Lezione 12**.
 
 ## End state
 
-The sheet closes, **Notifications** says **Added “la nebbia”**, and the card is in the deck's list, also after a reload. `/api/decks` gives Lezione 12 one more card, and `/api/cards?term=la%20nebbia` returns exactly one card, in that deck, with that meaning.
+The sheet closes, **Notifications** says **Added “la nebbia”**, and the card is in the deck's list, also after a reload. `/api/decks` gives Lezione 12 one more card, and `/api/cards?term=la%20nebbia` returns exactly one card, in that deck, with that meaning, the note and the tag `noun`. Before adding, the Tags chip reads **noun**.
 
 ## Gotchas
 
 - Pick a term the persona does not have: `sbrigarsi` is already in Lezione 12, so adding it again keeps the sheet open on the duplicate notice.
 - `GET /api/decks/<id>` carries no counts; read `total` from the `/api/decks` list.
-- On a phone the sheet's optional fields sit behind their own buttons instead of **More fields**.
+- The optional fields are chips in one row that scrolls sideways, the same on a desktop and a phone; a chip off the end of the row needs the row scrolled before it can be pressed.
+- Tags is a combobox trigger rather than a button, so find it by its label.

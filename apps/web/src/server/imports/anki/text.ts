@@ -95,6 +95,15 @@ export function furiganaBase(text: string): string {
   );
 }
 
+const KANA_READING = /^[\p{Script=Hiragana}\p{Script=Katakana}ー]+$/u;
+
+/** The text with every reading that is not kana taken out, so `我[wǒ]` → `我` and `漢字[かんじ]` stays. */
+export function withoutOtherReadings(text: string): string {
+  return text.replace(FURIGANA, (match, base: string, reading: string) =>
+    HAN.test(base) && !reading.startsWith("sound:") && !KANA_READING.test(reading) ? base : match,
+  );
+}
+
 /** The text as read, kanji replaced by their readings: `漢字[かんじ]` → `かんじ`. */
 export function furiganaReading(text: string): string {
   return text.replace(FURIGANA, (match, base: string, reading: string) =>

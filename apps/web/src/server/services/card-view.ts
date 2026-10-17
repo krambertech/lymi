@@ -23,7 +23,10 @@ export interface CardImageView {
 }
 
 /** A card as the API, MCP and app see it: its own review modes as objects, and its active picture. */
-export type CardView = Omit<Card, "reviewModeKeys" | "revision" | "hookDraft"> & {
+export type CardView = Omit<
+  Card,
+  "reviewModeKeys" | "revision" | "hookDraft" | "audioApprovedKey"
+> & {
   reviewModes: ReviewMode[] | null;
   image: CardImageView | null;
   /** The viewer's own mark, never the owner's. */
@@ -49,7 +52,13 @@ export function imageView(image: CardImage): CardImageView {
 
 function view(card: Card, image: CardImage | undefined, important: boolean): CardView {
   // The draft is the owner's editor's, never shown on the card, so a member never reads it.
-  const { reviewModeKeys, revision, hookDraft: _draft, ...rest } = card;
+  const {
+    reviewModeKeys,
+    revision,
+    hookDraft: _draft,
+    audioApprovedKey: _approved,
+    ...rest
+  } = card;
   return {
     ...rest,
     // A card waiting long past any run has lost its run: it reads as failed, so Enrich is offered.

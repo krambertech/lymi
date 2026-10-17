@@ -30,6 +30,8 @@ const OPEN_PRODUCT_PATHS = [
   "/reset-password",
   // The live design system. Its route redirects home outside local development.
   "/design",
+  // Every email, drawn by the production renderer. Its route redirects home outside local development.
+  "/emails",
 ] as const;
 
 const PRODUCT_PATHS = [...PROTECTED_PRODUCT_PATHS, ...OPEN_PRODUCT_PATHS];

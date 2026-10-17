@@ -64,6 +64,9 @@ export function defaultEnrichFields(
   ];
 }
 
+/** How long a deck's learned style may be, so it stays a list and not an essay. ADR 0037. */
+export const DECK_STYLE_MAX = 1200;
+
 /** How long a deck's instructions to the AI may be. */
 export const ENRICH_INSTRUCTIONS_MAX = 1000;
 

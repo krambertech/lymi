@@ -4,48 +4,44 @@ import {
   CARD_LIMITS,
   CardInput,
   cardLimits,
+  hasReadings,
   ImageDescription,
   modeKey,
   modeOf,
   type ReviewModeKey,
   revealsAnswer,
+  termReading,
+  writtenWithReading,
 } from "@lymi/core";
-import { EASE_OUT } from "@lymi/design";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { cn } from "cn";
 import {
   AlertCircle,
   Anchor,
   AudioLines,
   Check,
-  ChevronDown,
   Image as ImageIcon,
   Library,
-  Link2,
+  type LucideIcon,
   NotebookPen,
   Plus,
-  Settings2,
-  Tag,
   TextQuote,
 } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import { type ReactNode, useEffect, useId, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import type { Card, DeckSummary } from "../lib/api";
-import { useObjectUrl } from "../lib/avatar";
 import { modShortcut, useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { lastDeckId } from "../lib/last-deck";
-import { sectionsQuery, tagsQuery } from "../lib/queries";
+import { deckCardsQuery, sectionsQuery, tagsQuery } from "../lib/queries";
 import { captureAnalytics } from "../lib/telemetry";
-import { useReduceMotion } from "../lib/use-reduce-motion";
 import { Button } from "./button";
+import { LanguageChip, ModesChip, SectionChip, TagsChip } from "./card-form-pickers";
 import { acceptsPictureFile, CardPictureField, type PictureDraft } from "./card-picture-field";
-import { LanguageField, languageName } from "./deck-fields";
-import { FieldChip, FieldChipRow } from "./field-chip";
+import { FieldChipButton, FieldChipRow } from "./field-chip";
+import { Furigana, ReadingText } from "./furigana";
 import { Kbd } from "./kbd";
 import { useStaticNav } from "./nav-link";
-import { ReviewModesField } from "./review-modes-field";
-import { TagsInput } from "./tags-input";
 import { Checkbox } from "./ui/checkbox";
 import { Field, FieldDescription, FieldError, FieldLabel, FieldLegend, FieldSet } from "./ui/field";
 import { Input } from "./ui/input";
@@ -96,7 +92,7 @@ interface CardFormBase {
   ) => Promise<CardFormOutcome | undefined> | CardFormOutcome | undefined;
   /** Every change, so the sheet can keep a draft to bring back. */
   onDraftChange?: ((draft: CardFormDraft) => void) | undefined;
-  /** Chips that open one field at a time, or the whole form. Follows the machine unless set. */
+  /** "chips" is the sheet as a drawer on touch, "whole" a dialog on a desktop. Follows the machine unless set. */
   layout?: "chips" | "whole" | undefined;
 }
 
@@ -131,31 +127,69 @@ export type CardFormProps = AddCardFormProps | EditCardFormProps;
 const NEARLY_FULL = 0.9;
 
 type Notice = { kind: "ok" | "warn" | "dup"; text: string };
-type Panel =
-  | "picture"
-  | "example"
-  | "pronunciation"
-  | "notes"
-  | "hook"
-  | "source"
-  | "tags"
-  | "settings";
 
-/** Which panel holds each field, so a refused field opens where it can be fixed. */
-const PANEL_OF: Record<string, Panel> = {
+/** A field a chip adds to the form. Tags, the section and how it is asked are choices instead. */
+type Extra = "notes" | "example" | "pronunciation" | "source" | "picture" | "hook";
+/** What a chip in the row stands for. */
+type ChipKey = Extra | "tags";
+
+const EXTRAS: Extra[] = ["notes", "example", "pronunciation", "source", "picture", "hook"];
+/** The order for a deck with no cards to count, after the fields its AI may fill. */
+const BASE_ORDER: ChipKey[] = ["notes", "tags", "source", "example", "pronunciation", "picture"];
+
+/** Which field each refused value sits in, so a refusal adds that field to the form. */
+const FIELD_OF: Record<string, Extra> = {
   description: "picture",
   example: "example",
   pronunciation: "pronunciation",
   notes: "notes",
   hook: "hook",
   source: "source",
-  tags: "tags",
-  reviewModes: "settings",
+};
+
+type Holds = Partial<Record<ChipKey, unknown>>;
+const holds = (card: Holds, key: ChipKey) => {
+  const value = card[key];
+  return Array.isArray(value)
+    ? value.length > 0
+    : typeof value === "string"
+      ? !!value.trim()
+      : !!value;
 };
 
 /**
+ * The chips run from the field the deck's cards use most, so a lesson's habits lead; a deck with
+ * no cards yet starts from the fields its AI may fill. Read once per deck, so nothing moves under
+ * the pointer.
+ */
+function chipOrder(
+  cards: { card: Card }[] | undefined,
+  aiFields: readonly string[],
+  keys: ChipKey[],
+): ChipKey[] {
+  const preset = [
+    ...aiFields.filter((f): f is ChipKey => keys.includes(f as ChipKey)),
+    ...BASE_ORDER,
+  ];
+  const rank = (key: ChipKey) => {
+    const at = preset.indexOf(key);
+    return at < 0 ? preset.length : at;
+  };
+  const use = new Map<ChipKey, number>();
+  for (const key of keys) {
+    use.set(
+      key,
+      cards?.filter(({ card }) => holds({ ...card, picture: card.image } as Holds, key)).length ??
+        0,
+    );
+  }
+  return [...keys].sort((a, b) => (use.get(b) ?? 0) - (use.get(a) ?? 0) || rank(a) - rank(b));
+}
+
+/**
  * One form for adding a card and changing it: term, meaning and deck, then a row of chips for
- * everything else a card holds. docs/design/library-decks-and-cards.md, "Adding and editing a card".
+ * everything else a card holds. A chip adds its field in place, or opens its choices.
+ * docs/design/library-decks-and-cards.md, "Adding and editing a card".
  */
 export function CardForm(props: CardFormProps) {
   const { decks, draft, pending, onCancel, onSubmit, onDraftChange, layout } = props;
@@ -169,10 +203,11 @@ export function CardForm(props: CardFormProps) {
     onRetryPicture,
   }: Partial<AddCardFormProps> = adding ? props : {};
   const { card, focus }: Partial<EditCardFormProps> = adding ? {} : props;
-  const { t, i18n } = useLingui();
+  const { t } = useLingui();
   const st = !!useStaticNav();
   const desktop = useDesktop();
   const chips = (layout ?? (desktop ? "whole" : "chips")) === "chips";
+  const queryClient = useQueryClient();
 
   const [term, setTerm] = useState(draft?.term ?? card?.term ?? "");
   const [meaning, setMeaning] = useState(draft?.meaning ?? card?.meaning ?? "");
@@ -204,60 +239,55 @@ export function CardForm(props: CardFormProps) {
     draft?.description ?? card?.image?.description ?? "",
   );
   const [fileError, setFileError] = useState<string>();
-  // On a phone the field opens in its own drawer, which focuses it; see the effect below for a desktop.
-  const [panel, setPanel] = useState<Panel | null>(
-    chips && (focus === "picture" || focus === "hook") ? focus : null,
-  );
-  // Desktop: the extra fields stay folded until asked for, or until an edited card already uses them.
-  const [expanded, setExpanded] = useState(
-    () =>
-      focus === "picture" ||
-      focus === "hook" ||
-      (!!card &&
-        !!(
-          card.image ||
-          card.example ||
-          card.pronunciation ||
-          card.notes ||
-          card.hook ||
-          card.source ||
-          card.tags.length ||
-          card.reviewModes
-        )),
-  );
-  const moreId = useId();
-  const reduceMotion = useReduceMotion();
+  const text: Record<Extra, string> = {
+    notes,
+    example,
+    pronunciation,
+    source,
+    hook,
+    picture: picture.kind === "none" ? "" : "picture",
+  };
+  // A field once shown stays until the next card, even emptied to be rewritten, so it never
+  // vanishes from under the caret; the fields a card already holds start shown.
+  const [shown, setShown] = useState<Extra[]>(() => {
+    const start = EXTRAS.filter((key) => text[key].trim());
+    if (focus === "picture" || focus === "hook") {
+      if (!start.includes(focus)) start.push(focus);
+    }
+    return start;
+  });
   const [notice, setNotice] = useState<Notice | null>(null);
   const [failure, setFailure] = useState<string | null>(null);
   const [invalid, setInvalid] = useState<FieldErrors>({});
   const termRef = useRef<HTMLInputElement>(null);
   const meaningRef = useRef<HTMLTextAreaElement>(null);
-  const pictureRef = useRef<HTMLDivElement>(null);
-  const hookRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const fieldOf = (key: Extra) =>
+    formRef.current?.querySelector<HTMLElement>(
+      `[data-extra="${key}"] :is(textarea, input:not([type=file]), button)`,
+    );
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the field the editor opened at, once
   useEffect(() => {
-    // A drawer settles before any field takes focus, overlays.md; a desktop dialog has no keyboard to raise.
-    if (!focus || chips) return;
-    // After the dialog has placed its own initial focus, so this one wins.
+    if (!focus) return;
+    // After the sheet has placed its own initial focus, so this one wins.
     const timer = setTimeout(() => {
-      if (focus === "picture") {
-        pictureRef.current
-          ?.querySelector<HTMLElement>("button, input")
-          ?.focus({ preventScroll: true });
-        pictureRef.current?.scrollIntoView({ block: "center" });
-        return;
-      }
       const field =
         focus === "term"
           ? termRef.current
           : focus === "meaning"
             ? meaningRef.current
-            : hookRef.current;
-      field?.focus({ preventScroll: focus !== "hook" });
-      field?.setSelectionRange(field.value.length, field.value.length);
+            : fieldOf(focus);
+      field?.scrollIntoView({ block: "nearest" });
+      // A drawer settles before any field takes focus, and the keyboard waits for a tap; overlays.md.
+      if (chips) return;
+      field?.focus({ preventScroll: true });
+      if (field instanceof HTMLTextAreaElement || field instanceof HTMLInputElement) {
+        field.setSelectionRange(field.value.length, field.value.length);
+      }
     }, 80);
     return () => clearTimeout(timer);
-  }, [focus, chips]);
-  const formRef = useRef<HTMLFormElement>(null);
+  }, []);
 
   const owned = useMemo(() => decks?.filter((d) => d.role === "owner"), [decks]);
   // A deck handed in that the learner does not own, such as the N key on a shared deck, is not
@@ -277,9 +307,24 @@ export function CardForm(props: CardFormProps) {
   const tagsInUse = useQuery({ ...tagsQuery, enabled: !st }).data;
   const deckLanguage = current?.defaultLanguage ?? null;
   const language = chosenLanguage ? chosenLanguage.value : deckLanguage;
+  // Japanese and Chinese call a term's pronunciation its reading.
+  const reads = writtenWithReading(language);
+  const termDrawn = termReading({ term: term.trim(), language, pronunciation });
   const deckModes = (current?.reviewModes ?? []).map(modeKey);
   const hasPicture = picture.kind !== "none";
-  const preview = useObjectUrl(picture.kind === "file" ? picture.file : null);
+
+  const chipKeys: ChipKey[] = adding ? [...BASE_ORDER] : [...BASE_ORDER, "hook"];
+  // The deck's cards as the deck page last read them; without them the AI's fields lead.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: read once per deck, so chips stay put
+  const order = useMemo(
+    () =>
+      chipOrder(
+        queryClient.getQueryData(deckCardsQuery(deck).queryKey),
+        current?.enrichFields ?? [],
+        chipKeys,
+      ),
+    [deck, !!current],
+  );
 
   const values: CardFormValues = {
     deckId: deck,
@@ -314,20 +359,18 @@ export function CardForm(props: CardFormProps) {
       </span>
     );
   };
-  const panelProps = (name: Panel) => ({
-    open: panel === name,
-    onOpenChange: (open: boolean) => setPanel(open ? name : null),
-  });
-  // Enter in a one-line field inside a panel is done with that field, not the card.
-  const closeOnEnter = (e: React.KeyboardEvent) => {
-    if (chips && e.key === "Enter" && !e.metaKey && !e.ctrlKey) {
-      e.preventDefault();
-      setPanel(null);
-    }
+  const show = (key: Extra) => setShown((now) => (now.includes(key) ? now : [...now, key]));
+  const addField = (key: Extra) => {
+    // Rendered and focused inside the tap, since iOS raises the keyboard only for focus in a gesture.
+    flushSync(() => setShown((now) => (now.includes(key) ? now : [...now, key])));
+    const field = fieldOf(key);
+    field?.focus({ preventScroll: true });
+    field?.scrollIntoView({ block: "nearest" });
+    captureAnalytics("card_field_added", { field: key, form: adding ? "add" : "edit" });
   };
 
   const takePastedPicture = (file: File) => {
-    setPanel("picture");
+    show("picture");
     if (!acceptsPictureFile(file)) {
       setFileError(t`Use a JPEG, PNG, WebP or still GIF under 10 MB.`);
       return;
@@ -349,7 +392,9 @@ export function CardForm(props: CardFormProps) {
           deckId: t`Choose a deck.`,
           term: values.term ? t`Keep the term under 500 characters.` : t`Type the term.`,
           meaning: t`Keep the meaning under 2000 characters.`,
-          pronunciation: t`Keep the pronunciation under 200 characters.`,
+          pronunciation: reads
+            ? t`Keep the reading under 200 characters.`
+            : t`Keep the pronunciation under 200 characters.`,
           example: t`Keep the example under 2000 characters.`,
           notes: t`Keep the notes under 2000 characters.`,
           hook: t`Keep the hook under 200 characters.`,
@@ -367,18 +412,16 @@ export function CardForm(props: CardFormProps) {
     if (Object.keys(errors).length) {
       setInvalid(errors);
       setNotice(null);
-      const onForm = errors.term || errors.meaning || errors.deckId;
-      const first = Object.keys(errors)
-        .map((k) => PANEL_OF[k])
-        .find(Boolean);
-      if (!onForm && first && !chips) setExpanded(true);
-      if (!onForm && first && chips) setPanel(first);
-      else focusFirstInvalid(formRef.current);
+      // A refused field is always on the form, since only text it holds can be refused.
+      const refused = Object.keys(errors)
+        .map((k) => FIELD_OF[k])
+        .filter((k): k is Extra => !!k && !shown.includes(k));
+      if (refused.length) setShown((now) => [...now, ...refused]);
+      requestAnimationFrame(() => focusFirstInvalid(formRef.current));
       return;
     }
     setInvalid({});
     setFailure(null);
-    setPanel(null);
     const outcome = await onSubmit(values);
     if (!outcome) return;
     if (outcome.status === "failed") {
@@ -398,7 +441,7 @@ export function CardForm(props: CardFormProps) {
           }
         : { kind: "ok", text: t`Added “${outcome.term}”` },
     );
-    // A lesson's cards share a language, a source and tags, so those stay for the next card.
+    // A lesson's cards share a language, a section, a source and tags, so those stay for the next card.
     setTerm("");
     setMeaning("");
     setPronunciation("");
@@ -409,45 +452,10 @@ export function CardForm(props: CardFormProps) {
     setPicture({ kind: "none" });
     setDescription("");
     setFileError(undefined);
+    setShown(source.trim() ? ["source"] : []);
     termRef.current?.focus();
   };
 
-  const pictureThumb: ReactNode =
-    picture.kind === "file" && preview ? (
-      <img src={preview} alt="" className="image-edge size-5 shrink-0 rounded-[4px] object-cover" />
-    ) : picture.kind === "link" ? (
-      <Link2 className="size-4 shrink-0 text-text-2" aria-hidden="true" />
-    ) : undefined;
-  const pictureName =
-    picture.kind === "file"
-      ? picture.file.name || t`Pasted picture`
-      : picture.kind === "link"
-        ? picture.host
-        : picture.kind === "current"
-          ? t`Current picture`
-          : undefined;
-  const settingsValue = [
-    chosenLanguage && language !== deckLanguage
-      ? language
-        ? languageName(language, i18n.locale)
-        : t`No language`
-      : null,
-    modes ? t`own review` : null,
-  ]
-    .filter(Boolean)
-    .join(" · ");
-  const filled = [
-    hasPicture,
-    example.trim(),
-    pronunciation.trim(),
-    notes.trim(),
-    hook.trim(),
-    source.trim(),
-    tags.length > 0,
-    !!settingsValue,
-  ].filter(Boolean).length;
-  const tagsValue =
-    tags.length === 0 ? "" : tags.length === 1 ? tags[0] : `${tags[0]} +${tags.length - 1}`;
   const deckName = current?.name;
 
   const termField = (
@@ -511,12 +519,7 @@ export function CardForm(props: CardFormProps) {
           setMeaning(e.target.value);
           clear("meaning");
         }}
-        onKeyDown={(e) => {
-          if (e.key !== "Enter" || e.shiftKey || e.nativeEvent.isComposing) return;
-          if (e.metaKey || e.ctrlKey) return;
-          e.preventDefault();
-          e.currentTarget.form?.requestSubmit();
-        }}
+        onKeyDown={submitOnEnter}
         autoComplete="off"
       />
       <FieldError>{invalid.meaning}</FieldError>
@@ -553,230 +556,154 @@ export function CardForm(props: CardFormProps) {
     </Field>
   );
 
-  // A deck with sections asks which one; the list is the deck's own, so a moved card leaves its section.
-  const sectionField = sections && sections.length > 0 && (
-    <Field>
-      <FieldLabel aside={t`Optional`}>{t`Section`}</FieldLabel>
-      <Select
-        value={section ?? ""}
-        onValueChange={(v) => setSection(v ? v : null)}
-        items={[
-          { value: "", label: t`No section` },
-          ...sections.map((s) => ({ value: s.id, label: s.name })),
-        ]}
-      >
-        <SelectTrigger>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent />
-      </Select>
-    </Field>
-  );
+  const textField = (
+    key: Exclude<Extra, "picture">,
+    label: string,
+    value: string,
+    set: (value: string) => void,
+    limit: number | null,
+    options: {
+      long?: boolean;
+      enterAdds?: boolean;
+      description?: ReactNode;
+    } = {},
+  ) => {
+    const change = (next: string) => {
+      set(next);
+      clear(key);
+    };
+    return (
+      <Field key={key} data-extra={key}>
+        <FieldLabel aside={roomLeft(value, limit)}>{label}</FieldLabel>
+        {options.description}
+        {options.long ? (
+          <Textarea
+            maxLength={limit ?? undefined}
+            value={value}
+            rows={2}
+            className={options.enterAdds ? undefined : "min-h-[68px]"}
+            onChange={(e) => change(e.target.value)}
+            onKeyDown={options.enterAdds ? submitOnEnter : undefined}
+          />
+        ) : (
+          <Input
+            maxLength={limit ?? undefined}
+            value={value}
+            autoComplete="off"
+            onChange={(e) => change(e.target.value)}
+          />
+        )}
+        <FieldError>{invalid[key]}</FieldError>
+      </Field>
+    );
+  };
 
-  const pictureControl = (
-    <CardPictureField
-      compact={!chips}
-      value={picture}
-      onChange={(next) => {
-        setPicture(next);
-        clear("description");
-      }}
-      description={description}
-      onDescriptionChange={(value) => {
-        setDescription(value);
-        clear("description");
-      }}
-      descriptionError={invalid.description}
-      fileError={fileError}
-      onFileError={setFileError}
-    />
-  );
-
-  const exampleField = (
-    <Field>
-      <FieldLabel
-        className={chips ? "sr-only" : undefined}
-        aside={roomLeft(example, cardLimits.example)}
-      >
-        {t`Example`}
-      </FieldLabel>
-      <Textarea
-        maxLength={cardLimits.example ?? undefined}
-        value={example}
-        rows={chips ? 3 : 2}
-        className={chips ? undefined : "min-h-[68px]"}
-        onChange={(e) => {
-          setExample(e.target.value);
-          clear("example");
-        }}
-      />
-      <FieldError>{invalid.example}</FieldError>
-    </Field>
-  );
-
-  const pronunciationField = (
-    <Field>
-      <FieldLabel
-        className={chips ? "sr-only" : undefined}
-        aside={roomLeft(pronunciation, cardLimits.pronunciation)}
-      >
-        {t`Pronunciation`}
-      </FieldLabel>
-      <Input
-        maxLength={cardLimits.pronunciation ?? undefined}
-        value={pronunciation}
-        autoComplete="off"
-        onKeyDown={closeOnEnter}
-        onChange={(e) => {
-          setPronunciation(e.target.value);
-          clear("pronunciation");
-        }}
-      />
-      <FieldError>{invalid.pronunciation}</FieldError>
-    </Field>
-  );
-
-  const notesField = (
-    <Field>
-      <FieldLabel
-        className={chips ? "sr-only" : undefined}
-        aside={roomLeft(notes, cardLimits.notes)}
-      >
-        {t`Notes`}
-      </FieldLabel>
-      <Textarea
-        maxLength={cardLimits.notes ?? undefined}
-        value={notes}
-        rows={chips ? 3 : 2}
-        className={chips ? undefined : "min-h-[68px]"}
-        onChange={(e) => {
-          setNotes(e.target.value);
-          clear("notes");
-        }}
-      />
-      <FieldDescription>{t`Use **bold**, *italic*, ++underline++, ~~strikethrough~~, and [text](https://…). Start a line with - or 1. for a list.`}</FieldDescription>
-      <FieldError>{invalid.notes}</FieldError>
-    </Field>
-  );
-
-  const hookField = (
-    <Field>
-      <FieldLabel
-        className={chips ? "sr-only" : undefined}
-        aside={roomLeft(hook, CARD_LIMITS.hook)}
-      >
-        {t`Memory hook`}
-      </FieldLabel>
-      <FieldDescription>{t`A short phrase that helps you remember it.`}</FieldDescription>
-      {/* Two lines, so a long hook can be read on a phone. */}
-      <Textarea
-        ref={hookRef}
-        rows={2}
-        maxLength={CARD_LIMITS.hook}
-        value={hook}
-        autoComplete="off"
-        enterKeyHint="done"
-        onKeyDown={(e) => {
-          // A hook is one phrase, so Enter is done with it, as in the fix sheet; Shift Enter still breaks the line.
-          if (
-            e.key !== "Enter" ||
-            e.shiftKey ||
-            e.metaKey ||
-            e.ctrlKey ||
-            e.nativeEvent.isComposing
-          )
-            return;
-          e.preventDefault();
-          if (chips) setPanel(null);
-          else e.currentTarget.form?.requestSubmit();
-        }}
-        onChange={(e) => {
-          setHook(e.target.value);
-          clear("hook");
-        }}
-      />
-      <FieldError>{invalid.hook}</FieldError>
-    </Field>
-  );
-
-  const sourceField = (
-    <Field>
-      <FieldLabel
-        className={chips ? "sr-only" : undefined}
-        aside={roomLeft(source, cardLimits.source)}
-      >
-        {t`Source`}
-      </FieldLabel>
-      <Input
-        maxLength={cardLimits.source ?? undefined}
-        value={source}
-        autoComplete="off"
-        onKeyDown={closeOnEnter}
-        onChange={(e) => {
-          setSource(e.target.value);
-          clear("source");
-        }}
-      />
-      <FieldError>{invalid.source}</FieldError>
-    </Field>
-  );
-
-  const tagsField = (
-    <Field>
-      <FieldLabel
-        className={chips ? "sr-only" : undefined}
-        aside={chips ? undefined : t`Enter after each`}
-      >
-        {t`Tags`}
-      </FieldLabel>
-      <TagsInput
-        value={tags}
-        suggestions={tagsInUse}
-        onTagAdded={(via, inUse) => captureAnalytics("tag_added", { via, in_use: inUse })}
-        onValueChange={(next) => {
-          setTags(next);
-          clear("tags");
-        }}
-      />
-      {chips && <FieldDescription>{t`Press Enter after each tag.`}</FieldDescription>}
-      <FieldError>{invalid.tags}</FieldError>
-    </Field>
-  );
-
-  const settingsFields = (
-    <>
-      <LanguageField
-        value={language}
-        onChange={(value) => setChosenLanguage({ value })}
-        description={null}
-      />
-      <ReviewModesField
-        value={modes}
-        deckModes={deckModes}
-        onChange={(next) => {
-          setModes(next);
-          clear("reviewModes");
-        }}
-        term={term}
-        meaning={meaning}
-        hasPicture={hasPicture}
-        pictureDescribed={hasPicture && !!description.trim()}
-        error={invalid.reviewModes}
-      />
-    </>
-  );
-  const settingsChip = (
-    <FieldChip
-      icon={Settings2}
-      keyboard={false}
-      label={t`Card settings`}
-      value={settingsValue}
-      invalid={!!invalid.reviewModes}
-      {...panelProps("settings")}
+  const pronunciationLabel = reads
+    ? t({ message: "Reading", context: "how a term is read" })
+    : t`Pronunciation`;
+  // How the term and the example will read, so a reading or bracket in the wrong place shows at
+  // once. It repeats what the fields hold, so assistive tech reads the fields instead.
+  const exampleDrawn = hasReadings(example);
+  const readingPreview = (termDrawn || exampleDrawn) && (
+    <div
+      key="reading-preview"
+      aria-hidden="true"
+      lang={language ?? undefined}
+      className="grid gap-1.5 rounded-lg bg-plate-2 px-3 py-2.5"
     >
-      {settingsFields}
-    </FieldChip>
+      {termDrawn && (
+        <p className="text-lg font-medium text-text">
+          <Furigana segments={termDrawn} lang={language ?? undefined} />
+        </p>
+      )}
+      {exampleDrawn && (
+        <p className="text-md text-text-2 [overflow-wrap:anywhere]">
+          <ReadingText text={example} lang={language ?? undefined} />
+        </p>
+      )}
+    </div>
   );
+  // The preview sits under the last of the reading and the example shown, and only once one is.
+  const previewAfter = shown.findLast((key) => key === "pronunciation" || key === "example");
+
+  const extraField: Record<Extra, () => ReactNode> = {
+    notes: () => textField("notes", t`Notes`, notes, setNotes, cardLimits.notes, { long: true }),
+    example: () =>
+      textField("example", t`Example`, example, setExample, cardLimits.example, { long: true }),
+    pronunciation: () =>
+      textField(
+        "pronunciation",
+        pronunciationLabel,
+        pronunciation,
+        setPronunciation,
+        cardLimits.pronunciation,
+      ),
+    source: () => textField("source", t`Source`, source, setSource, cardLimits.source),
+    hook: () =>
+      // Two lines, so a long hook can be read on a phone; it is one phrase, so Enter is done with it.
+      textField("hook", t`Memory hook`, hook, setHook, CARD_LIMITS.hook, {
+        long: true,
+        enterAdds: true,
+        description: (
+          <FieldDescription>{t`A short phrase that helps you remember it.`}</FieldDescription>
+        ),
+      }),
+    picture: () => (
+      <div key="picture" data-extra="picture" className="grid gap-1.5">
+        <span className="text-sm font-medium text-text-2">
+          <Trans>Picture</Trans>
+        </span>
+        <CardPictureField
+          compact={!chips}
+          value={picture}
+          onChange={(next) => {
+            setPicture(next);
+            clear("description");
+          }}
+          description={description}
+          onDescriptionChange={(value) => {
+            setDescription(value);
+            clear("description");
+          }}
+          descriptionError={invalid.description}
+          fileError={fileError}
+          onFileError={setFileError}
+        />
+      </div>
+    ),
+  };
+
+  const chipOf: Record<Extra, { icon: LucideIcon; label: string }> = {
+    notes: { icon: NotebookPen, label: t`Notes` },
+    example: { icon: TextQuote, label: t`Example` },
+    pronunciation: { icon: AudioLines, label: pronunciationLabel },
+    source: { icon: Library, label: t`Source` },
+    picture: { icon: ImageIcon, label: t`Picture` },
+    hook: { icon: Anchor, label: t`Memory hook` },
+  };
+  const chipFor = (key: ChipKey) => {
+    if (key === "tags")
+      return (
+        <TagsChip
+          key="tags"
+          value={tags}
+          inUse={tagsInUse}
+          invalid={!!invalid.tags}
+          onTagAdded={(via, inUse) => captureAnalytics("tag_added", { via, in_use: inUse })}
+          onChange={(next) => {
+            setTags(next);
+            clear("tags");
+          }}
+        />
+      );
+    if (shown.includes(key)) return null;
+    const { icon, label } = chipOf[key];
+    return (
+      <FieldChipButton key={key} icon={icon} onClick={() => addField(key)}>
+        {label}
+      </FieldChipButton>
+    );
+  };
 
   return (
     <form
@@ -788,7 +715,7 @@ export function CardForm(props: CardFormProps) {
         void submit();
       }}
       onKeyDown={(e) => {
-        // ⌘ Enter adds from any field, a panel's included, since panels render inside the form's tree.
+        // ⌘ Enter adds from any field.
         if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
           e.preventDefault();
           void submit();
@@ -801,152 +728,34 @@ export function CardForm(props: CardFormProps) {
         takePastedPicture(file);
       }}
     >
-      {chips ? (
-        <>
-          {termField}
-          {meaningField}
-          {deckField}
-          {sectionField}
-          <FieldChipRow label={t`More about this card`}>
-            <FieldChip
-              icon={TextQuote}
-              label={t`Example`}
-              value={example.trim()}
-              invalid={!!invalid.example}
-              {...panelProps("example")}
-            >
-              {exampleField}
-            </FieldChip>
-            <FieldChip
-              icon={AudioLines}
-              label={t`Pronunciation`}
-              value={pronunciation.trim()}
-              invalid={!!invalid.pronunciation}
-              {...panelProps("pronunciation")}
-            >
-              {pronunciationField}
-            </FieldChip>
-            <FieldChip
-              icon={Library}
-              label={t`Source`}
-              value={source.trim()}
-              invalid={!!invalid.source}
-              {...panelProps("source")}
-            >
-              {sourceField}
-            </FieldChip>
-            <FieldChip
-              icon={Tag}
-              label={t`Tags`}
-              value={tagsValue}
-              invalid={!!invalid.tags}
-              {...panelProps("tags")}
-            >
-              {tagsField}
-            </FieldChip>
-            <FieldChip
-              icon={NotebookPen}
-              label={t`Notes`}
-              value={notes.trim()}
-              invalid={!!invalid.notes}
-              {...panelProps("notes")}
-            >
-              {notesField}
-            </FieldChip>
-            <FieldChip
-              icon={Anchor}
-              label={t`Memory hook`}
-              value={hook.trim()}
-              invalid={!!invalid.hook}
-              {...panelProps("hook")}
-            >
-              {hookField}
-            </FieldChip>
-            <FieldChip
-              icon={ImageIcon}
-              keyboard={false}
-              label={t`Picture`}
-              value={pictureName}
-              valueText={pictureName}
-              thumbnail={pictureThumb}
-              invalid={!!invalid.description || !!fileError}
-              {...panelProps("picture")}
-            >
-              {pictureControl}
-            </FieldChip>
-            {settingsChip}
-          </FieldChipRow>
-        </>
-      ) : (
-        <>
-          {termField}
-          {meaningField}
-          {deckField}
-          {sectionField}
-          <button
-            type="button"
-            aria-expanded={expanded}
-            aria-controls={moreId}
-            onClick={() => setExpanded((open) => !open)}
-            className="-my-1 inline-flex h-9 items-center gap-1.5 justify-self-start rounded-xs text-base font-medium text-text-2 transition-colors duration-150 hoverable:hover:text-text"
-          >
-            {expanded ? <Trans>Fewer fields</Trans> : <Trans>More fields</Trans>}
-            <ChevronDown
-              className={cn(
-                "size-4 text-muted transition-transform duration-260 ease-(--ease-out) motion-reduce:transition-none",
-                expanded && "rotate-180",
-              )}
-              aria-hidden="true"
-            />
-            {!expanded && filled > 0 && (
-              <span className="font-normal text-muted">
-                {t`${plural(filled, { one: "# filled", other: "# filled" })}`}
-              </span>
-            )}
-          </button>
-          <AnimatePresence initial={false}>
-            {expanded && (
-              <motion.div
-                key="more"
-                id={moreId}
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                // Closes faster than it opens: the learner has already moved on.
-                exit={{
-                  height: 0,
-                  opacity: 0,
-                  ...(reduceMotion ? {} : { transition: { duration: 0.18, ease: EASE_OUT } }),
-                }}
-                transition={
-                  reduceMotion
-                    ? { duration: 0.15, height: { duration: 0 } }
-                    : { duration: 0.26, ease: EASE_OUT, opacity: { duration: 0.18 } }
-                }
-                // Room on every side, so the clip while it opens never cuts a focus ring.
-                className="-m-1 -mt-3 overflow-hidden p-1"
-              >
-                <div className="grid gap-4 pt-2 pb-1">
-                  {exampleField}
-                  <div className="grid grid-cols-2 items-start gap-x-3 gap-y-4">
-                    {pronunciationField}
-                    {sourceField}
-                  </div>
-                  {tagsField}
-                  {notesField}
-                  {hookField}
-                  <div ref={pictureRef} className="grid gap-1.5">
-                    <span className="text-sm font-medium text-text-2">
-                      <Trans>Picture</Trans>
-                    </span>
-                    {pictureControl}
-                  </div>
-                  {settingsFields}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </>
-      )}
+      {termField}
+      {meaningField}
+      {deckField}
+      {shown.flatMap((key) => [extraField[key](), key === previewAfter && readingPreview])}
+      <FieldChipRow label={t`More about this card`} className={chips ? "-mx-4 px-4" : "-mx-5 px-5"}>
+        {sections && sections.length > 0 && (
+          <SectionChip sections={sections} value={section} onChange={setSection} />
+        )}
+        {order.map(chipFor)}
+        {!adding && (
+          <LanguageChip value={language} onChange={(value) => setChosenLanguage({ value })} />
+        )}
+        <ModesChip
+          value={modes}
+          deckModes={deckModes}
+          onChange={(next) => {
+            setModes(next);
+            clear("reviewModes");
+          }}
+          term={term}
+          meaning={meaning}
+          hasPicture={hasPicture}
+          pictureDescribed={hasPicture && !!description.trim()}
+          invalid={!!invalid.reviewModes}
+        />
+      </FieldChipRow>
+      {/* A choice's refusal has no field to sit under, so it sits under the row of chips. */}
+      <FieldError className="-mt-3">{invalid.tags ?? invalid.reviewModes}</FieldError>
 
       {failure && (
         <p role="alert" className="flex items-start gap-1.5 text-sm text-danger">
@@ -1000,4 +809,12 @@ export function CardForm(props: CardFormProps) {
       </div>
     </form>
   );
+}
+
+/** Enter adds the card from a one-line field; Shift Enter breaks the line. */
+function submitOnEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+  if (e.key !== "Enter" || e.shiftKey || e.nativeEvent.isComposing) return;
+  if (e.metaKey || e.ctrlKey) return;
+  e.preventDefault();
+  e.currentTarget.form?.requestSubmit();
 }

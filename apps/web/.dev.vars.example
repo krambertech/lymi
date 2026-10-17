@@ -34,6 +34,8 @@ ELEVENLABS_SPEECH_VOICES=
 # Optional Gemini speech overrides.
 GEMINI_SPEECH_MODEL=gemini-3.1-flash-tts-preview
 GEMINI_SPEECH_VOICE=Kore
+# Optional. With a key, the /emails page's Send to my inbox delivers through Resend to OPERATOR_EMAILS.
+RESEND_API_KEY=
 # Generate once with `pnpm --filter @lymi/web exec web-push generate-vapid-keys`.
 VAPID_PUBLIC_KEY=
 VAPID_PRIVATE_KEY=

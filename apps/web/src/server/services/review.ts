@@ -17,6 +17,7 @@ import {
   schedule,
   serializeState,
   stateDirection,
+  termReading,
 } from "@lymi/core";
 import { CARD_STATES } from "@lymi/core/analytics";
 import { and, eq, gte, ne } from "@lymi/core/db";
@@ -237,12 +238,22 @@ async function presentContent(ctx: ServiceContext, ids: string[]) {
   return new Map(views.map((view) => [view.id, view]));
 }
 
+/** Where review drew the term's reading: over the cue until the card is Known, else only after the reveal. */
+function readingShown(key: ReviewModeKey, state: number): "cue" | "answer" {
+  return modeOf(key).cue === "term" && state !== 2 ? "cue" : "answer";
+}
+
 /**
  * Apply one grade. Only the learner grades; integrations never reach this function.
  * Idempotent enough for offline replay: a review older than the state's last review is a no-op.
  * Every accepted grade is one attempt toward the learner-local day it happened on, fixed now.
  */
-export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
+export async function gradeCard(
+  ctx: ServiceContext,
+  input: GradeInput,
+  /** The grader draws furigana, so `review_graded` can say where; the phone does not yet (#786). */
+  furigana = true,
+) {
   const { db, userId } = ctx;
   const { cardId } = input;
   const key = gradedMode(input);
@@ -255,6 +266,9 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
       deckId: schema.cards.deckId,
       sectionId: schema.cards.sectionId,
       progression: schema.decks.sectionProgression,
+      term: schema.cards.term,
+      language: schema.cards.language,
+      pronunciation: schema.cards.pronunciation,
     })
     .from(schema.cardStates)
     .innerJoin(schema.cards, eq(schema.cards.id, schema.cardStates.cardId))
@@ -363,6 +377,7 @@ export async function gradeCard(ctx: ServiceContext, input: GradeInput) {
     grade: rating,
     ...(CARD_STATES[state.state] ? { state: CARD_STATES[state.state] } : {}),
     ...(input.aid ? { aid: input.aid } : {}),
+    ...(furigana && termReading(row) ? { reading: readingShown(key, state.state) } : {}),
   });
   recordFirstReview(ctx, row.deckId, { id: reviewId, reviewedAt });
   // Readiness only moves when a card leaves New or becomes Known, so other grades skip the check.

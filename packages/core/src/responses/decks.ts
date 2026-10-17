@@ -33,7 +33,7 @@ const Membership = {
   }),
 };
 
-/** How the AI fills the deck's cards. The owner's alone: a member reads null purpose and instructions. */
+/** How the AI fills the deck's cards. The owner's alone: a member reads null purpose, instructions and style. */
 const Enrichment = {
   purpose: DeckPurpose.nullable().meta({
     description:
@@ -42,6 +42,10 @@ const Enrichment = {
   enrichFields: DeckEnrichFields,
   enrichInstructions: DeckEnrichInstructions.meta({
     description: "The owner's instructions to the AI. Always null for a member.",
+  }),
+  enrichStyle: z.string().nullable().default(null).meta({
+    description:
+      "What the AI learned from the owner's own cards, a few sentences read under their instructions. Null until the deck has enough cards, and always null for a member.",
   }),
 };
 

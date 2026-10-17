@@ -236,7 +236,13 @@ decks.post(
         to,
         language,
         url: new URL(`/join/${token}`, c.env.PRODUCT_URL).toString(),
-        invitation: { deckName: deck.name, ownerName: deck.owner, cards: deck.cards },
+        invitation: {
+          deckId: deck.id,
+          deckName: deck.name,
+          ownerName: deck.owner,
+          cards: deck.cards,
+          language: deck.language,
+        },
       });
     });
     return c.json(written, 201);
@@ -395,7 +401,7 @@ decks.put(
   describe({
     tags: ["Decks"],
     summary: "Write an edition's text",
-    description: `${EDITION} Every row lands as a draft against the text it was written from, so text sent over a signed-off row is signed off again.`,
+    description: `${EDITION} Every row lands as a draft against the text it was written from, so text sent over a signed-off row is signed off again. One call takes at most 500 cards; send a longer edition in parts, and each part adds to the same edition. Nothing reaches learners until the edition is published.`,
     ok: { schema: EditionOut, description: "Where the edition stands now" },
     errors: [400, 404],
   }),

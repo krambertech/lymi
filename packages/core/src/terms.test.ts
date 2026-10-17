@@ -1,13 +1,11 @@
 import { describe, expect, it } from "vitest";
+import { languageKey } from "./reading";
 import {
+  canPlayPronunciation,
   canSpeakTerm,
-  cueKeepsReading,
   duplicateKey,
   headword,
-  kanaReading,
-  languageKey,
   normaliseTerm,
-  readingKey,
   revealedAnswer,
   revealsAnswer,
   SPOKEN_TERM_MAX,
@@ -44,52 +42,6 @@ describe("duplicateKey", () => {
     expect(duplicateKey("ja", normaliseTerm("上手"))).not.toBe(
       duplicateKey("ja", normaliseTerm("じょうず")),
     );
-  });
-});
-
-describe("kanaReading", () => {
-  it("takes a Japanese card's kana reading", () => {
-    expect(kanaReading({ language: "ja", pronunciation: " じょうず " })).toBe("じょうず");
-    expect(kanaReading({ language: "ja-JP", pronunciation: "コーヒー" })).toBe("コーヒー");
-  });
-  it("refuses anything that is not kana", () => {
-    expect(kanaReading({ language: "ja", pronunciation: "joːzɯ" })).toBeNull();
-    expect(kanaReading({ language: "ja", pronunciation: "jōzu" })).toBeNull();
-    expect(kanaReading({ language: "ja", pronunciation: "上手" })).toBeNull();
-    expect(kanaReading({ language: "ja", pronunciation: "" })).toBeNull();
-    expect(kanaReading({ language: "ja", pronunciation: null })).toBeNull();
-  });
-  it("is only for Japanese", () => {
-    expect(kanaReading({ language: "zh", pronunciation: "じょうず" })).toBeNull();
-    expect(kanaReading({ language: null, pronunciation: "じょうず" })).toBeNull();
-  });
-});
-
-describe("readingKey", () => {
-  it("folds katakana, spacing and composition, so one reading written two ways is one", () => {
-    expect(readingKey({ language: "ja", pronunciation: "ジョウズ" })).toBe("じょうず");
-    expect(readingKey({ language: "ja-JP", pronunciation: " じょう  ず " })).toBe("じょうず");
-    expect(readingKey({ language: "ja", pronunciation: "た・べる" })).toBe("たべる");
-    expect(readingKey({ language: "ja", pronunciation: "じょう\u3000ず" })).toBe("じょうず");
-    expect(readingKey({ language: "ja", pronunciation: "か\u3099" })).toBe("が");
-  });
-  it("has no reading where none applies", () => {
-    expect(readingKey({ language: "ja", pronunciation: "jōzu" })).toBeNull();
-    expect(readingKey({ language: "zh", pronunciation: "xuéxí" })).toBeNull();
-    expect(readingKey({ language: "it", pronunciation: null })).toBeNull();
-  });
-});
-
-describe("cueKeepsReading", () => {
-  it("keeps Chinese pinyin on the cue until the card is Known", () => {
-    expect(cueKeepsReading("zh", false)).toBe(true);
-    expect(cueKeepsReading("zh-Hans", false)).toBe(true);
-    expect(cueKeepsReading("zh", true)).toBe(false);
-  });
-  it("leaves every other reading for the reveal", () => {
-    expect(cueKeepsReading("ja", false)).toBe(false);
-    expect(cueKeepsReading("ko", false)).toBe(false);
-    expect(cueKeepsReading(null, false)).toBe(false);
   });
 });
 
@@ -154,5 +106,17 @@ describe("headword", () => {
     expect(headword("to lie (lay, lain)")).toBe("to lie (lay, lain)");
     expect(headword("брать / взять")).toBe("брать / взять");
     expect(headword("a·b")).toBe("a·b");
+  });
+});
+
+describe("canPlayPronunciation", () => {
+  it("plays a recording on a card with no language, and speech only where it can be made", () => {
+    expect(canPlayPronunciation({ term: "猫", language: null, audioSource: "recorded" })).toBe(
+      true,
+    );
+    expect(canPlayPronunciation({ term: "猫", language: null, audioSource: "generated" })).toBe(
+      false,
+    );
+    expect(canPlayPronunciation({ term: "猫", language: "ja" })).toBe(true);
   });
 });

@@ -7,7 +7,7 @@ export const PRIVACY_TITLE = msg`Privacy policy · Lymi`;
 export const PRIVACY_DESCRIPTION = msg`How Lymi handles account, learning, integration and service data.`;
 export const PRIVACY_HEADING = msg`Privacy policy`;
 export const PRIVACY_LEAD = msg`This policy explains what Lymi receives, why it uses it, who helps provide the service, and the choices you have.`;
-export const PRIVACY_UPDATED = msg`11 October 2026`;
+export const PRIVACY_UPDATED = msg`17 October 2026`;
 
 function PrivacyPolicyContent() {
   return (
@@ -112,9 +112,11 @@ function PrivacyPolicyContent() {
       </p>
       <p>
         <Trans>
-          When Lymi sends an account email, Cloudflare Email Service receives the recipient address,
-          sender, subject and message body. Cloudflare handles delivery, bounces and suppression of
-          addresses that should not receive another message.
+          When Lymi sends an email, Resend receives the recipient address, sender, subject and
+          message body. Resend handles delivery, bounces and suppression of addresses that should
+          not receive another message, and tells us when an email bounces or is marked as spam.
+          While Lymi moves its email to Resend, Cloudflare Email Service may deliver it instead and
+          receives the same information.
         </Trans>
       </p>
 
@@ -198,8 +200,14 @@ function PrivacyPolicyContent() {
         <li>
           <Trans>
             <strong>Cloudflare</strong> provides the website, application, database, object storage,
-            session storage, network protection, aggregate usage metrics, operational logs and
-            transactional email delivery.
+            session storage, network protection, aggregate usage metrics and operational logs, and
+            delivers email until Lymi’s move to Resend is complete.
+          </Trans>
+        </li>
+        <li>
+          <Trans>
+            <strong>Resend</strong> delivers Lymi’s email. It receives each email’s recipient,
+            subject and body.
           </Trans>
         </li>
         <li>
@@ -280,8 +288,9 @@ function PrivacyPolicyContent() {
         </li>
         <li>
           <Trans>
-            Cloudflare keeps operational and email-delivery logs under the active service
-            configuration. Lymi does not maintain a separate long-term copy of those logs.
+            Cloudflare keeps operational logs, and Resend and Cloudflare keep email-delivery logs,
+            under the active service configuration. Lymi does not maintain a separate long-term copy
+            of those logs.
           </Trans>
         </li>
       </ul>

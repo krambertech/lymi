@@ -3,13 +3,14 @@ import { msg, plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { splitForms } from "@lymi/client/deck-list";
 import {
-  canSpeakTerm,
+  canPlayPronunciation,
   type DeckEnrichField,
   deserializeState,
   type EnrichedField,
   type FsrsCard,
   needsEnrichment,
   type ReviewMode,
+  termReading,
 } from "@lymi/core";
 import { notesToText } from "@lymi/core/notes";
 import { clsx } from "clsx";
@@ -30,12 +31,13 @@ import {
   Star,
   Volume2,
 } from "lucide-react";
-import { Fragment, type ReactNode, useEffect, useRef, useState } from "react";
+import { Fragment, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { IconButton } from "../components/button";
 import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
+import { Furigana, ReadingText } from "../components/furigana";
 import { GRADES, GradeMark, Mark } from "../components/grade";
 import { PlaceBar } from "../components/layout/place-bar";
 import { ReviewTimeline } from "../components/review-timeline";
@@ -150,6 +152,8 @@ export function describeEvent(e: CardEvent, i18n: I18n = globalI18n): WordEvent 
     return { ...base, kind: "archived", text: i18n._(msg`Archived`), actor: by };
   if (e.action === "restore")
     return { ...base, kind: "restored", text: i18n._(msg`Restored`), actor: by };
+  if (e.action === "set_audio")
+    return { ...base, kind: "edited", text: i18n._(msg`Recording added`), actor: by };
   if (e.action === "mark_important")
     return { ...base, kind: "edited", text: i18n._(msg`Marked important`), actor: by };
   if (e.action === "unmark_important")
@@ -470,6 +474,7 @@ export function WordView({
   const elsewhere = (decks ?? []).filter((d) => d.id !== card.deckId);
   const [moving, setMoving] = useState(false);
   const forms = splitForms(card.term);
+  const reading = useMemo(() => termReading({ ...card, term: forms.word }), [card, forms.word]);
   useEffect(() => {
     onBusyChange?.(moving);
     return () => onBusyChange?.(false);
@@ -583,7 +588,11 @@ export function WordView({
           className="flex min-w-0 items-center gap-3 text-3xl font-medium leading-[1.05] tracking-[-0.03em] outline-none"
         >
           <span className="hyphenate min-w-0 break-words" lang={card.language ?? undefined}>
-            {forms.word}
+            {reading ? (
+              <Furigana segments={reading} lang={card.language ?? undefined} />
+            ) : (
+              forms.word
+            )}
             {forms.forms && (
               <span className="font-normal text-text-2">
                 {" · "}
@@ -591,7 +600,7 @@ export function WordView({
               </span>
             )}
           </span>
-          {onPlayAudio && canSpeakTerm(card) && (
+          {onPlayAudio && canPlayPronunciation(card) && (
             <IconButton
               label={t`Say ${card.term}`}
               variant="secondary"
@@ -603,9 +612,14 @@ export function WordView({
             </IconButton>
           )}
         </h1>
-        {card.pronunciation ? (
+        {card.pronunciation && reading && card.pronunciationSource !== "ai" ? (
+          // Furigana draws the reading over the term, so the line is only for a screen reader.
+          <p className="sr-only">{card.pronunciation}</p>
+        ) : card.pronunciation ? (
           <p className="flex flex-wrap items-center gap-1.5 text-md text-muted">
-            <span className="[overflow-wrap:anywhere]">{card.pronunciation}</span>
+            <span className={reading ? "sr-only" : "[overflow-wrap:anywhere]"}>
+              {card.pronunciation}
+            </span>
             {card.pronunciationSource === "ai" && (
               <SourceChip source="ai" field="pronunciation" size="xs" />
             )}
@@ -683,10 +697,17 @@ export function WordView({
               card.example &&
               card.exampleSource === "ai" && <SourceChip source="ai" field="example" size="xs" />
             }
-            value={card.example ?? ""}
-            lang={card.language ?? undefined}
             working={waiting("example")}
-          />
+          >
+            {card.example && (
+              <p
+                lang={card.language ?? undefined}
+                className="hyphenate whitespace-pre-line text-md leading-relaxed text-text [overflow-wrap:anywhere]"
+              >
+                <ReadingText text={card.example} lang={card.language ?? undefined} />
+              </p>
+            )}
+          </ReadField>
         )}
         {card.notes ? (
           <ReadField

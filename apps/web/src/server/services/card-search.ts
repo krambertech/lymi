@@ -15,6 +15,7 @@ import {
   type ReviewModeKey,
   resolveDateValue,
   type StringComparator,
+  stripReadings,
 } from "@lymi/core";
 import {
   and,
@@ -150,7 +151,12 @@ export async function searchCards(
     }
     const whole = stringTest(comparator);
     const partial = stringTest(rest);
-    const read = field === "notes" ? (text: string) => notesToText(text) : (text: string) => text;
+    const read =
+      field === "notes"
+        ? notesToText
+        : field === "example"
+          ? stripReadings
+          : (text: string) => text;
     const text = (row: ScanRow) => foldForSearch(read(row[field] ?? ""));
     if (edition && whole) {
       checks.push((row) =>

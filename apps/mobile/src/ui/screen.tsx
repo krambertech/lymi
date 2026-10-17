@@ -59,6 +59,8 @@ export interface ScreenList<T> {
 
 interface Props<T> {
   title: string;
+  /** The title's language when it is a card's term, so Japanese draws in a Japanese face. */
+  titleLang?: string | null;
   /** A tab carries the streak and capture; a page carries its own actions and a named back. */
   kind?: "tab" | "page";
   /** Where a page goes back to: its parent, named, whatever the history holds. */
@@ -138,6 +140,7 @@ const DOCK_START = 64;
  */
 export function Screen<T = never>({
   title,
+  titleLang,
   kind = "page",
   back,
   actions,
@@ -205,7 +208,11 @@ export function Screen<T = never>({
   const header =
     own ??
     (wraps ? (
-      <Text className="text-3xl font-medium tracking-tight text-text" accessibilityRole="header">
+      <Text
+        className="text-3xl font-medium tracking-tight text-text"
+        accessibilityRole="header"
+        lang={titleLang}
+      >
         {title}
       </Text>
     ) : undefined);
@@ -353,6 +360,7 @@ export function Screen<T = never>({
           importantForAccessibility="no-hide-descendants"
           accessibilityElementsHidden
           onTextLayout={(e) => setWraps(e.nativeEvent.lines.length > 1)}
+          lang={titleLang}
         >
           {title}
         </Text>
@@ -447,6 +455,7 @@ export function Screen<T = never>({
               const { width, height } = e.nativeEvent.layout;
               if (width !== box.w || height !== box.h) setBox({ w: width, h: height });
             }}
+            lang={titleLang}
           >
             {title}
           </Text>

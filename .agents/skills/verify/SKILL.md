@@ -15,11 +15,14 @@ A change is verified when the feature it touches has been driven in a running pr
 | --- | --- |
 | Review | [review.md](features/review.md) |
 | Reveal hint | [reveal-hint.md](features/reveal-hint.md) |
+| Furigana | [furigana.md](features/furigana.md) |
 | Add a card | [add-card.md](features/add-card.md) |
 | Library and the deck page | [deck-page.md](features/deck-page.md) |
 | Create a deck | [new-deck.md](features/new-deck.md) |
 | Deck settings | [deck-settings.md](features/deck-settings.md) |
+| Deck invitation | [deck-invitation.md](features/deck-invitation.md) |
 | Import from Anki | [import.md](features/import.md) |
+| Import recordings, pitch and translations | [import-recordings.md](features/import-recordings.md) |
 | Offline writes | [offline-writes.md](features/offline-writes.md) |
 | Japanese cards | [japanese.md](features/japanese.md) |
 | Rest day | [rest-day.md](features/rest-day.md) |

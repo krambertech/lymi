@@ -1,7 +1,17 @@
+import { languageKey } from "@lymi/core";
 import { shadows } from "@lymi/design";
-import { createContext, type ReactNode, type Ref, useContext, useEffect, useRef } from "react";
+import {
+  Children,
+  createContext,
+  type ReactNode,
+  type Ref,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import {
   ActivityIndicator,
+  Platform,
   Pressable,
   type PressableProps,
   Text as RNText,
@@ -34,16 +44,44 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 const STEP = /(?:^|\s)(text-(?:2xs|xs|sm|base|md|lg|[2-7]?xl))(?=\s|$)/;
 
+/** Kana, kanji and the marks and full-width forms that run with them, none of which Onest has. */
+const KANA_KANJI =
+  /([\u3000-\u303f\u3040-\u30ff\u31f0-\u31ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef\u{20000}-\u{3134f}]+)/u;
+
+// iOS falls back from Onest by the device's languages, so kanji need a named face; phone.md "Components".
+const JAPANESE_FACE = Platform.OS === "ios" ? { fontFamily: "Hiragino Sans" } : null;
+
+/** Kana and kanji runs take the Japanese face and the rest stays in Onest, as the web's `:lang(ja)`. */
+function inJapanese(children: ReactNode): ReactNode {
+  return Children.map(children, (child) =>
+    typeof child === "string"
+      ? child.split(KANA_KANJI).map((run, i) =>
+          i % 2 ? (
+            // biome-ignore lint/suspicious/noArrayIndexKey: runs are derived from the string and never reorder.
+            <RNText key={i} style={JAPANESE_FACE}>
+              {run}
+            </RNText>
+          ) : (
+            run
+          ),
+        )
+      : child,
+  );
+}
+
 /**
  * Text in Onest. Size and colour come from the token classes, as on the web. It follows Dynamic Type
- * by the size it is set in, and `maxFontSizeMultiplier` can only lower that size's own cap.
+ * by the size it is set in, and `maxFontSizeMultiplier` can only lower that size's own cap. `lang` is
+ * the BCP 47 tag of a card's own words, so Japanese draws in a Japanese face.
  */
 export function Text({
   className,
   style,
   maxFontSizeMultiplier,
+  lang,
+  children,
   ...props
-}: TextProps & { className?: string; ref?: Ref<RNText> }) {
+}: Omit<TextProps, "lang"> & { className?: string; lang?: string | null; ref?: Ref<RNText> }) {
   const step = useResolveClassNames(className?.match(STEP)?.[1] ?? "");
   const { fontScale } = useWindowDimensions();
   const size = StyleSheet.flatten(style)?.fontSize ?? step.fontSize ?? 17;
@@ -55,7 +93,9 @@ export function Text({
       maxFontSizeMultiplier={fit.cap}
       style={[{ letterSpacing: fit.letterSpacing }, style]}
       {...props}
-    />
+    >
+      {JAPANESE_FACE && languageKey(lang) === "ja" ? inJapanese(children) : children}
+    </RNText>
   );
 }
 

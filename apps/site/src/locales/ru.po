@@ -161,8 +161,8 @@ msgstr "<0>{0}</0>: <1>{1}</1>"
 msgid "<0>Active transport</0> moves substances against the gradient."
 msgstr "<0>Активный транспорт</0> переносит вещества против градиента."
 
-msgid "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, aggregate usage metrics, operational logs and transactional email delivery."
-msgstr "<0>Cloudflare</0> предоставляет сайт, приложение, базу данных, хранилище объектов, хранилище сессий, защиту сети, сводные показатели использования, рабочие журналы и доставку транзакционных писем."
+msgid "<0>Cloudflare</0> provides the website, application, database, object storage, session storage, network protection, aggregate usage metrics and operational logs, and delivers email until Lymi’s move to Resend is complete."
+msgstr "<0>Cloudflare</0> предоставляет сайт, приложение, базу данных, хранилище объектов, хранилище сессий, защиту сети, сводные показатели использования и рабочие журналы, а также доставляет письма, пока Lymi не завершит переход на Resend."
 
 msgid "<0>Diffusion</0>: particles move from high to low concentration."
 msgstr "<0>Диффузия</0>: частицы движутся от высокой концентрации к низкой."
@@ -188,6 +188,9 @@ msgstr "<0>PostHog</0> предоставляет аналитику испол�
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>эластичность спроса</0> ?"
 
+msgid "<0>Resend</0> delivers Lymi’s email. It receives each email’s recipient, subject and body."
+msgstr "<0>Resend</0> доставляет письма Lymi. Он получает получателя, тему и текст каждого письма."
+
 msgid "<0>Your browser’s push service</0> receives an encrypted reminder when you enable notifications."
 msgstr "<0>Служба push-уведомлений твоего браузера</0> получает зашифрованное напоминание, когда ты включаешь уведомления."
 
@@ -197,11 +200,11 @@ msgstr "<0>Подключённые приложения</0> получают т
 msgid "10 min"
 msgstr "10 мин"
 
-msgid "11 October 2026"
-msgstr "11 октября 2026 года"
-
 msgid "135–145 mmol/L in adults"
 msgstr "135–145 ммоль/л у взрослых"
+
+msgid "17 October 2026"
+msgstr "17 октября 2026 года"
 
 msgid "17."
 msgstr "17."
@@ -981,8 +984,8 @@ msgstr "Закрыть меню"
 msgid "Cloud"
 msgstr "Облако"
 
-msgid "Cloudflare keeps operational and email-delivery logs under the active service configuration. Lymi does not maintain a separate long-term copy of those logs."
-msgstr "Cloudflare хранит рабочие журналы и журналы доставки писем в соответствии с активными настройками сервиса. Lymi не хранит отдельную долгосрочную копию этих журналов."
+msgid "Cloudflare keeps operational logs, and Resend and Cloudflare keep email-delivery logs, under the active service configuration. Lymi does not maintain a separate long-term copy of those logs."
+msgstr "Cloudflare хранит рабочие журналы, а Resend и Cloudflare — журналы доставки писем в соответствии с активными настройками сервиса. Lymi не хранит отдельную долгосрочную копию этих журналов."
 
 msgid "coffee"
 msgstr "кофе"
@@ -3999,8 +4002,8 @@ msgstr "Когда показатель становится целью, он п
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "Когда коллеги уходят с работы, им говорят <0><1>お疲れ様です</1></0>."
 
-msgid "When Lymi sends an account email, Cloudflare Email Service receives the recipient address, sender, subject and message body. Cloudflare handles delivery, bounces and suppression of addresses that should not receive another message."
-msgstr "Когда Lymi отправляет письмо об аккаунте, Cloudflare Email Service получает адрес получателя, отправителя, тему и текст письма. Cloudflare обрабатывает доставку, возвраты писем и блокировку адресов, на которые больше не следует отправлять сообщения."
+msgid "When Lymi sends an email, Resend receives the recipient address, sender, subject and message body. Resend handles delivery, bounces and suppression of addresses that should not receive another message, and tells us when an email bounces or is marked as spam. While Lymi moves its email to Resend, Cloudflare Email Service may deliver it instead and receives the same information."
+msgstr "Когда Lymi отправляет письмо, Resend получает адрес получателя, отправителя, тему и текст письма. Resend обрабатывает доставку, возвраты писем и блокировку адресов, на которые больше не следует отправлять сообщения, а также сообщает нам, когда письмо вернулось или его отметили как спам. Пока Lymi переносит письма на Resend, их может доставлять Cloudflare Email Service, который получает те же данные."
 
 msgid "When pronunciation audio is first requested, Lymi sends the card term and language to a speech provider. It stores the resulting audio so it can be reused. We do not send the rest of the card for speech generation."
 msgstr "Когда ты впервые запрашиваешь озвучивание произношения, Lymi отправляет поставщику синтеза речи термин карточки и язык. Полученное аудио хранится для повторного использования. Остальную часть карточки мы не отправляем для создания озвучивания."

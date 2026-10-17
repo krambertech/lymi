@@ -52,6 +52,7 @@ const card: Card = {
   enrichmentStatus: null,
   enrichmentFields: null,
   audioKey: null,
+  audioSource: null,
   createdBy: "user",
   archivedAt: null,
   createdAt: new Date(0),

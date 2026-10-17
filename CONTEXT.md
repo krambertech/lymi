@@ -12,6 +12,8 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Deck**: A named group of cards. It may carry a default language, but language lives on the card. _Avoid_: Collection, list, folder
 
+**Style**: What the AI learned about a deck from the cards its owner wrote: what the deck is about and the habits its cards follow. It sits under the owner's instructions, which it never changes, and only the owner sees it. ADR 0037. _Avoid_: Profile, preferences, memory
+
 **Library**: The screen holding every deck. The decks are decks; Library is where they are. _Avoid_: Decks (as a screen name), collections, my decks
 
 **Series**: An owner's optional, ordered group of their own decks, reviewed together. A deck is in at most one series, and a deck without one works as it always has. A member of a shared deck never sees the owner's series. Deleting a series asks whether its decks are archived with it or stay in Library; the series itself is gone for good, and grouping those decks again means making a new one. _Avoid_: Course, collection, folder, playlist, group
@@ -19,6 +21,10 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 **Section**: An optional, ordered part of one deck, such as one lesson. Every learner of the deck sees its sections; only the owner changes them. A card is in at most one section of its own deck, and a card without one works as it always has. The owner chooses how sections open for everyone studying the deck. By default each learner starts with the first, and the next opens automatically once every card of the current section has come up and 80% are Known. The owner can instead make it **ready** at that point, for the learner to **Start**, or open every section at once. **Start anyway** opens a later section early, with every section before it. A section never locks again, and a card the learner already started always stays in review. _Avoid_: Lesson (for the grouping), chapter, unit, module, level
 
 **Tag**: A label on a card that finds it across decks, such as "food" or "verbs". A card's tags are part of the card, so only whoever can change the card changes them, and a member of a shared deck filters and reviews by the owner's tags without adding their own. The same name is one tag in every deck the learner studies, whatever its case. Tags are plain chips with no colour. Not a **Deck tag**. _Avoid_: Label, category, topic, keyword
+
+**Reading**: How a term written in a script that does not show its sound is read, such as たべる for 食べる or xuéxí for 学习. It is stored as the card's pronunciation, and the card form calls that field Reading on a Japanese or Chinese card. **Furigana** is how Lymi draws a Japanese reading: small kana over the kanji, aligned at display so kana the term already shows stay plain. An example carries its readings inline, `毎朝[まいあさ]パンを食[た]べます。`, each one after the kanji it belongs to. In review furigana sits over the term while the card is New or Learning and waits for the reveal once it is Known. _Avoid_: Romaji, transcription, furigana field, ruby (in copy)
+
+**Recording**: A clip of the term itself that came with an import, such as an Anki deck's word audio. It is the card's audio: Lymi plays it instead of reading the term aloud, even on a card with no language, and keeps it through every edit but a new term, which drops it. An export carries it out. On a published deck's public page it plays only once its publisher approves that exact clip, and until then the card plays nothing there, as a picture without a description shows nothing. Generated speech fills only a card without one. A sentence's clip is not a recording of the term and is left out. _Avoid_: Sound, voice, native audio, attachment
 
 **Field source**: Where one field's text came from: the lesson, the AI, or the learner. Kept per field, on the meaning, the example, the notes, the pronunciation and the hook, so AI text is never mistaken for the lesson. "AI" is Lymi's own enrichment and nothing else: text a connected app or the API sends is the learner's whoever composed it, because Activity already names the app, and only the lesson may be claimed for it.
 
@@ -30,7 +36,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Duplicate**: A card whose normalised term and language match an existing active card anywhere in the learner's decks. Languages match by their primary subtag, so `ja` and `ja-JP` are one language, and a kana spelling never matches a kanji one. In Japanese, two cards whose kana readings both exist and differ are two words, so 上手 read じょうず and 上手 read うわて are not duplicates; a card without a reading matches either. Adding one is skipped, never rejected, and the caller is told which card already exists.
 
-**Enrich**: The AI filling in missing fields on an existing card. The deck lists which of meaning, example, notes and pronunciation it may fill, and the language is always filled; the AI fills only the ones that suit the card, following the deck's own cards and the owner's instructions for the AI. It never overwrites a field that has text. Extraction from lesson material happens in the MCP client. ADR 0033. _Avoid_: Prepare, generate, suggest
+**Enrich**: The AI filling in missing fields on an existing card. The deck lists which of meaning, example, notes and pronunciation it may fill, and the language is always filled; the AI fills only the ones that suit the card, following the owner's instructions for the AI, the deck's style and the deck's own cards. It never overwrites a field that has text. Extraction from lesson material happens in the MCP client. ADR 0033. _Avoid_: Prepare, generate, suggest
 
 ### Remembering
 

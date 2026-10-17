@@ -1,3 +1,5 @@
+import { languageKey, stripReadings } from "./reading";
+
 /**
  * The key the duplicate rule compares. Trimmed, whitespace collapsed, case-folded,
  * Unicode-normalised so "é" typed two ways is one string. Accents are kept: "pesca" and
@@ -7,50 +9,9 @@ export function normaliseTerm(term: string): string {
   return term.normalize("NFC").trim().replace(/\s+/g, " ").toLocaleLowerCase();
 }
 
-/** "ja" and "ja-JP" are one language to the duplicate rule; no language is its own language. */
-export function languageKey(language: string | null | undefined): string {
-  return language?.split("-")[0]?.toLowerCase() ?? "";
-}
-
 /** What the duplicate rule compares, from a card's language and its `normaliseTerm` key. */
 export function duplicateKey(language: string | null | undefined, normalizedTerm: string): string {
   return `${languageKey(language)} ${normalizedTerm}`;
-}
-
-const KANA_READING = /^[\p{Script=Hiragana}\p{Script=Katakana}ー・\s]+$/u;
-
-/** A Japanese card's pronunciation when it is a kana reading, never IPA, romaji or a hint. */
-export function kanaReading(card: {
-  language?: string | null | undefined;
-  pronunciation?: string | null | undefined;
-}): string | null {
-  const reading = card.pronunciation?.normalize("NFC").trim();
-  if (languageKey(card.language) !== "ja" || !reading) return null;
-  return KANA_READING.test(reading) ? reading : null;
-}
-
-/**
- * The reading the duplicate rule compares: a Japanese card's kana reading without spaces or ・ and
- * with katakana folded to hiragana, so ジョウズ, じょう ず and じょうず are one reading. Null where no
- * reading applies.
- */
-export function readingKey(card: {
-  language?: string | null | undefined;
-  pronunciation?: string | null | undefined;
-}): string | null {
-  const reading = kanaReading(card);
-  if (!reading) return null;
-  return reading
-    .replace(/[\s・]/g, "")
-    .replace(/[\u30a1-\u30f6]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 0x60));
-}
-
-/**
- * Whether a term cue shows the card's pronunciation before the reveal: Chinese keeps its pinyin
- * until the card is Known; every other language's reading waits for the reveal.
- */
-export function cueKeepsReading(language: string | null | undefined, known: boolean): boolean {
-  return languageKey(language) === "zh" && !known;
 }
 
 /** Two readings tell cards apart only when both cards have one and they differ: 上手 じょうず and うわて. */
@@ -79,7 +40,7 @@ export function revealedAnswer(
   card: { term: string; meaning?: string | null | undefined },
   description: string,
 ): { field: "term" | "meaning"; text: string } | null {
-  const text = normaliseTerm(description);
+  const text = normaliseTerm(stripReadings(description));
   for (const field of ["term", "meaning"] as const) {
     const answer = card[field] ?? "";
     const key = normaliseTerm(answer);
@@ -99,6 +60,15 @@ export function canSpeakTerm(card: {
   language?: string | null | undefined;
 }): boolean {
   return !!card.language && Array.from(card.term).length <= SPOKEN_TERM_MAX;
+}
+
+/** Whether a card has pronunciation to play: its own recording, or speech Lymi can generate. */
+export function canPlayPronunciation(card: {
+  term: string;
+  language?: string | null | undefined;
+  audioSource?: string | null | undefined;
+}): boolean {
+  return card.audioSource === "recorded" || canSpeakTerm(card);
 }
 
 /** The first form of a term written as principal parts ("pikk · pika · pikka" → "pikk"), for a title. */

@@ -427,6 +427,22 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     expect(await recorded(hashi.id)).toEqual({ key: null, source: null });
   });
 
+  it("gives no clip to a card whose word the learner changed since the first import", async () => {
+    const ctx = await fresh();
+    await runImport(ctx, "kaishi.apkg");
+    const sakura = await card(ctx, "桜");
+    await db
+      .update(schema.cards)
+      .set({ audioKey: null, audioSource: null })
+      .where(eq(schema.cards.id, sakura.id));
+    await updateCard(ctx, sakura.id, { term: "花" });
+
+    const { preview, result } = await runImport(ctx, "kaishi.apkg");
+    expect(preview).toMatchObject({ existing: 3, recordings: 0 });
+    expect(result.counts).toMatchObject({ recordings: 0 });
+    expect(await recorded(sakura.id)).toEqual({ key: null, source: null });
+  });
+
   it("leaves out a clip the file cannot give back, and goes on with the import", async () => {
     const ctx = await fresh();
     const deck = await createDeck(ctx, { name: "Damaged", defaultLanguage: "ja" });

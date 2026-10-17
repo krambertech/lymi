@@ -93,7 +93,7 @@ type Held = Map<string, { reading: string | null; deckName: string }[]>;
 
 type Lookup = {
   /** `recorded` when the card already has a recording, which an import never reads again. */
-  byExternal: Map<string, { id: string; deckId: string; recorded: boolean }>;
+  byExternal: Map<string, { id: string; deckId: string; term: string; recorded: boolean }>;
   active: Held;
 };
 
@@ -119,6 +119,7 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?:
           deckId: schema.cards.deckId,
           externalId: schema.cards.externalId,
           audioSource: schema.cards.audioSource,
+          term: schema.cards.term,
         })
         .from(schema.cards)
         .where(and(eq(schema.cards.userId, userId), inArray(schema.cards.externalId, ids))),
@@ -152,6 +153,7 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?:
       result.byExternal.set(row.externalId, {
         id: row.id,
         deckId: row.deckId,
+        term: row.term,
         recorded: row.audioSource === "recorded",
       });
     }
@@ -180,6 +182,7 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
         deckId: schema.cards.deckId,
         externalId: schema.cards.externalId,
         audioSource: schema.cards.audioSource,
+        term: schema.cards.term,
       })
       .from(schema.cards)
       .where(and(eq(schema.cards.userId, userId), isNotNull(schema.cards.externalId))),
@@ -200,6 +203,7 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
       result.byExternal.set(row.externalId, {
         id: row.id,
         deckId: row.deckId,
+        term: row.term,
         recorded: row.audioSource === "recorded",
       });
     }
@@ -216,7 +220,13 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
 }
 
 type Classified =
-  | { kind: "existing"; card: ImportedCard; id: string; recorded: boolean }
+  | {
+      kind: "existing";
+      card: ImportedCard;
+      id: string;
+      /** The file's recording goes on the card: it has none, and it still says the same word. */
+      takesRecording: boolean;
+    }
   | { kind: "duplicate"; card: ImportedCard; deckName: string }
   | { kind: "added"; card: ImportedCard; language: string | null };
 
@@ -235,7 +245,12 @@ function classify(
 ): Classified[] {
   return cards.map((card) => {
     const existing = found.byExternal.get(card.externalId);
-    if (existing) return { kind: "existing", card, id: existing.id, recorded: existing.recorded };
+    if (existing) {
+      // A card whose word the learner changed since never gets the old word's clip.
+      const takesRecording =
+        !existing.recorded && normaliseTerm(existing.term) === normaliseTerm(card.fields.term);
+      return { kind: "existing", card, id: existing.id, takesRecording };
+    }
     const language =
       card.language !== undefined ? card.language : (languages[card.deckKey] ?? null);
     const key = dupKey(language, card.fields.term);
@@ -258,7 +273,7 @@ function tally(
   for (const item of classified) {
     if (item.kind === "existing") {
       counts.existing++;
-      if (pictures && !item.recorded) countRecording(counts, item.card);
+      if (pictures && item.takesRecording) countRecording(counts, item.card);
     } else if (item.kind === "duplicate") {
       counts.duplicates++;
       if (counts.duplicateExamples.length < DUPLICATE_EXAMPLES) {
@@ -596,7 +611,7 @@ export async function writeChunk<Note>(
     if (item.kind === "existing") {
       const { fields, tags } = item.card;
       // A recording replaces generated speech on a card an earlier import brought without it.
-      if (item.card.recording && !item.recorded) {
+      if (item.card.recording && item.takesRecording) {
         pictures.push({ cardId: item.id, name: item.card.recording, kind: "recording" });
       }
       existingRows.push({

@@ -92,7 +92,15 @@ test("with no rows to scroll, a pinned row sits right under the field", async ()
   await render(
     <CommandPalette open onOpenChange={() => {}} label="Command menu">
       <CommandInput lead="›" aria-label="Search" />
-      <CommandList role="listbox" aria-label="Results" pinned={<div role="option">Add</div>}>
+      <CommandList
+        role="listbox"
+        aria-label="Results"
+        pinned={
+          <div role="option" tabIndex={-1} aria-selected={false}>
+            Add
+          </div>
+        }
+      >
         {[]}
       </CommandList>
     </CommandPalette>,

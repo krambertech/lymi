@@ -12,6 +12,7 @@ What is opening?
  │     (only when Undo is impossible; otherwise act at once and offer Undo in a toast)
  ├── A page read over the current screen (a word, the streak) → a place: Dialog kind="place", open state in the URL
  ├── What just happened, after the fact → toast
+ ├── Finding something or running a command from the keyboard → the command palette (⌘K)
  ├── The name of an icon control → Tooltip, which IconButton already does
  └── Why one control failed, or cannot act (a pronunciation that would not play, Easy after a peek) → a tip over that control (ErrorTip)
 ```
@@ -71,6 +72,16 @@ A menu's surface, like a popover's and a list's, is the slight `glass` ([surface
 `DropdownMenuItem` variants: `default` and `destructive`, for Archive, Remove or Leave. Nothing else exists. A destructive row that can be undone acts at once and offers Undo in a toast; one that cannot opens a question.
 
 Menu rows do not scale on press. The hover is one fill that slides between rows ([motion.md](motion.md#hover)).
+
+## Command palette
+
+⌘K (Ctrl K elsewhere) opens the command menu on a desktop: one field over a list of cards, decks, places and actions, top-anchored at 12% of the window and 620 px wide. The developer palette on backtick is the same shell in its graphite skin. Both draw with `components/ui/command-palette.tsx`, which owns the frame, the field, the list's keys and the row; each palette brings only its rows.
+
+- Focus stays in the field. Arrows move the highlight and wrap, Enter runs the row, ⌘Enter runs its second action, and Escape closes. An Enter that confirms an input method's word is not a run.
+- It appears and leaves without motion, since a keyboard opens it.
+- ⌘K is ⌘ on a Mac and Ctrl elsewhere; Ctrl K on a Mac stays the field's delete-to-end. It never opens over another dialog, so it can't stack on a half-written form, nor in review or Welcome, where the shell is closed on purpose.
+- Rows are 40 px, the menu row's type, with the hover fill on the highlighted row only, so pointer and keys never show two.
+- The command menu's add bar is pinned under the list and is its last arrow stop. It waits for three characters, or one Han, kana or Hangul character, and names the deck before anything is added. Before the target deck is checked for the exact term, it promises nothing, and an Enter waits for that check, so a term the deck already has opens instead of adding again.
 
 ## Tooltips
 

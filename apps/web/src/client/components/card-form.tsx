@@ -30,6 +30,7 @@ import {
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import type { Card, DeckSummary } from "../lib/api";
+import { composing } from "../lib/composing";
 import { modShortcut, useDesktop } from "../lib/device";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../lib/form";
 import { lastDeckId } from "../lib/last-deck";
@@ -102,6 +103,8 @@ export interface AddCardFormProps extends CardFormBase {
   deckId?: string | undefined;
   /** Preselect a section of that deck. */
   sectionId?: string | undefined;
+  /** A term typed elsewhere, such as in the command menu, to start from. */
+  term?: string | undefined;
   /** Whether the sheet stays open for the next card. */
   createMore?: boolean | undefined;
   onCreateMoreChange?: ((createMore: boolean) => void) | undefined;
@@ -197,6 +200,7 @@ export function CardForm(props: CardFormProps) {
   const {
     deckId,
     sectionId,
+    term: startTerm,
     createMore,
     onCreateMoreChange,
     onCreateDeck,
@@ -209,7 +213,7 @@ export function CardForm(props: CardFormProps) {
   const chips = (layout ?? (desktop ? "whole" : "chips")) === "chips";
   const queryClient = useQueryClient();
 
-  const [term, setTerm] = useState(draft?.term ?? card?.term ?? "");
+  const [term, setTerm] = useState(draft?.term ?? card?.term ?? startTerm ?? "");
   const [meaning, setMeaning] = useState(draft?.meaning ?? card?.meaning ?? "");
   const [deck, setDeck] = useState(draft?.deckId ?? card?.deckId ?? deckId ?? "");
   const [section, setSection] = useState<string | null>(
@@ -260,6 +264,13 @@ export function CardForm(props: CardFormProps) {
   const [failure, setFailure] = useState<string | null>(null);
   const [invalid, setInvalid] = useState<FieldErrors>({});
   const termRef = useRef<HTMLInputElement>(null);
+  // Opened by the command menu's Enter, a second quick Enter or that Enter held down is not a submit.
+  const openedWithTerm = useRef(startTerm ? performance.now() : null);
+  const swallowEcho = (e: React.KeyboardEvent) => {
+    const since = openedWithTerm.current;
+    if (e.key !== "Enter" || since === null) return;
+    if (e.repeat || performance.now() - since < ECHO_MS) e.preventDefault();
+  };
   const meaningRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const fieldOf = (key: Extra) =>
@@ -710,6 +721,7 @@ export function CardForm(props: CardFormProps) {
       ref={formRef}
       className="grid min-w-0 gap-4"
       noValidate
+      onKeyDownCapture={swallowEcho}
       onSubmit={(e) => {
         e.preventDefault();
         void submit();
@@ -811,9 +823,11 @@ export function CardForm(props: CardFormProps) {
   );
 }
 
+const ECHO_MS = 600;
+
 /** Enter adds the card from a one-line field; Shift Enter breaks the line. */
 function submitOnEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-  if (e.key !== "Enter" || e.shiftKey || e.nativeEvent.isComposing) return;
+  if (e.key !== "Enter" || e.shiftKey || e.defaultPrevented || composing(e)) return;
   if (e.metaKey || e.ctrlKey) return;
   e.preventDefault();
   e.currentTarget.form?.requestSubmit();

@@ -25,6 +25,10 @@ msgstr "«{label}» уже есть в «{deckName}», поэтому копия
 msgid "“{name}”"
 msgstr "«{name}»"
 
+#. placeholder {0}: outcome.deckName
+msgid "“{quoted}” is already in {0}"
+msgstr "«{quoted}» уже есть в колоде {0}"
+
 msgid "“{term}” has nothing left to fill in."
 msgstr "В «{term}» нечего дополнять."
 
@@ -370,6 +374,10 @@ msgstr "{0} · создан {1}"
 #. placeholder {0}: formatSize(value.file.size, i18n.locale)
 msgid "{0} · uploads when you save"
 msgstr "{0} · загрузится при сохранении"
+
+#. placeholder {0}: i18n.number(row.deck.due)
+msgid "{0} due"
+msgstr "{0} к повторению"
 
 #. placeholder {0}: c.lapses
 #. placeholder {1}: c.reviews
@@ -823,6 +831,10 @@ msgstr "Доступ"
 msgid "Account"
 msgstr "Аккаунт"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "account goal"
+msgstr "аккаунт цель"
+
 msgid "Actions"
 msgstr "Действия"
 
@@ -831,6 +843,10 @@ msgstr "Активность"
 
 msgid "Add"
 msgstr "Добавить"
+
+#. placeholder {0}: shortQuote(term)
+msgid "Add “{0}”"
+msgstr "Добавить «{0}»"
 
 #. placeholder {0}: deck.name
 msgid "Add “{0}” to Library"
@@ -887,6 +903,9 @@ msgstr "Сначала добавь Lymi на экран «Домой». iPhone 
 msgid "Add more"
 msgstr "Добавить ещё"
 
+msgid "Add now"
+msgstr "Добавить сейчас"
+
 msgid "Add photos, PDFs or text from your lesson. Then choose which terms to add as cards."
 msgstr "Добавь фото, PDF или текст урока. Затем выбери термины для карточек."
 
@@ -929,6 +948,12 @@ msgstr "«{0}» добавлено без изображения. {1}"
 msgid "Added “{name}” to Library"
 msgstr "Колода «{name}» добавлена в Библиотеку"
 
+msgid "Added “{quoted}” to {deckName}"
+msgstr "Добавлено «{quoted}» в колоду {deckName}"
+
+msgid "Added “{quoted}” to {deckName}. It’s saved on this device until Lymi can be reached."
+msgstr "Добавлено «{quoted}» в колоду {deckName}. Карточка сохранена на этом устройстве, пока Lymi недоступен."
+
 msgid "Added “{term}”"
 msgstr "Добавлено «{term}»"
 
@@ -943,6 +968,9 @@ msgstr "{count, plural, one {Добавлена # карточка} few {Доб�
 
 msgid "Added today"
 msgstr "Добавлено сегодня"
+
+msgid "Adding…"
+msgstr "Добавляем…"
 
 msgid "After connecting, paste a lesson into your assistant and ask it to make cards."
 msgstr "После подключения отправь урок своему AI-помощнику и попроси создать карточки."
@@ -1046,6 +1074,10 @@ msgstr "Анимированные изображения не подходят.
 
 msgid "Anki package"
 msgstr "Пакет Anki"
+
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "anki quizlet"
+msgstr "anki quizlet импорт"
 
 msgid "anna@example.com"
 msgstr "anna@example.com"
@@ -1520,6 +1552,12 @@ msgstr "Вернись позже или добавь новые карточк�
 msgid "Comma"
 msgstr "Запятая"
 
+msgid "Command menu"
+msgstr "Меню команд"
+
+msgid "Commands"
+msgstr "Команды"
+
 msgid "Confirm address"
 msgstr "Подтвердить адрес"
 
@@ -1805,6 +1843,10 @@ msgstr "Создать аккаунт"
 msgid "Create and move"
 msgstr "Создать и перенести"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "create deck"
+msgstr "создать колоду"
+
 msgid "Create deck"
 msgstr "Создать колоду"
 
@@ -1857,6 +1899,10 @@ msgstr "Ежедневное напоминание"
 msgid "Dark"
 msgstr "Тёмная"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "dark light"
+msgstr "тёмная светлая"
+
 msgid "Day by day"
 msgstr "День за днём"
 
@@ -1872,6 +1918,7 @@ msgstr "Параметры колоды"
 msgid "Deck settings"
 msgstr "Настройки колоды"
 
+#. Words, separated by spaces, that also find this command in the command menu
 msgid "decks"
 msgstr "колоды"
 
@@ -2215,6 +2262,9 @@ msgstr "Найди язык"
 msgid "Find a tag"
 msgstr "Найти тег"
 
+msgid "Find cards and decks, or run a command"
+msgstr "Найти карточку или колоду либо выполнить команду"
+
 msgid "Find or create a tag"
 msgstr "Найди или создай тег"
 
@@ -2303,6 +2353,9 @@ msgstr "Дай серии название."
 msgid "Give the tag a name."
 msgstr "Дай тегу название."
 
+msgid "Go to"
+msgstr "Перейти"
+
 msgid "Go to {currentName}"
 msgstr "Перейти к «{currentName}»"
 
@@ -2352,6 +2405,10 @@ msgstr "Скрыть пароль"
 
 msgid "History"
 msgstr "История"
+
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "history changes"
+msgstr "история изменения"
 
 msgid "Hook"
 msgstr "Зацепка"
@@ -2429,6 +2486,9 @@ msgstr "Импорт архивирован"
 
 msgid "Import cancelled"
 msgstr "Импорт отменён"
+
+msgid "Import cards"
+msgstr "Импортировать карточки"
 
 msgid "Import decks"
 msgstr "Импортировать колоды"
@@ -2663,6 +2723,10 @@ msgstr "Термин должен быть короче 500 символов."
 msgid "Keyboard shortcuts"
 msgstr "Сочетания клавиш"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "keys"
+msgstr "клавиши"
+
 msgid "known"
 msgstr "выучено"
 
@@ -2744,6 +2808,10 @@ msgstr "Колода «{deckName}» больше не в Библиотеке"
 
 msgid "Left Lymi, so nobody can change this deck"
 msgstr "Аккаунт удалён, так что колоду никто не изменит"
+
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "lesson"
+msgstr "урок"
 
 msgid "Lesson"
 msgstr "Урок"
@@ -3014,6 +3082,10 @@ msgctxt "cards in this state"
 msgid "New"
 msgstr "Новые"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "new card"
+msgstr "новая карточка"
+
 msgid "New card"
 msgstr "Новая карточка"
 
@@ -3245,6 +3317,10 @@ msgstr "В «{scopeName}» больше ничего"
 msgid "Nothing left in this deck"
 msgstr "В этой колоде больше ничего"
 
+#. placeholder {0}: shortQuote(query)
+msgid "Nothing matches “{0}”"
+msgstr "Ничего не найдено по «{0}»"
+
 msgid "Nothing published yet"
 msgstr "Пока ничего не опубликовано"
 
@@ -3316,6 +3392,11 @@ msgstr "Видно только твоё имя, а прогресс — нет.
 
 msgid "Open"
 msgstr "Открыть"
+
+#. placeholder {0}: shortQuote(row.existing.term)
+#. placeholder {1}: row.existing.deckName
+msgid "Open “{0}” in {1}"
+msgstr "Открыть «{0}» в колоде {1}"
 
 msgid "Open deck"
 msgstr "Открыть колоду"
@@ -3531,6 +3612,10 @@ msgstr "Воспроизведение"
 msgid "Production card for {front}"
 msgstr "Карточка на воспроизведение для {front}"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "progress stats"
+msgstr "прогресс статистика"
+
 msgid "Pronunciation"
 msgstr "Произношение"
 
@@ -3542,6 +3627,10 @@ msgstr "Новое произношение: «{value}»"
 
 msgid "Pronunciation from lesson"
 msgstr "Произношение с урока"
+
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "published decks"
+msgstr "опубликованные колоды"
 
 msgid "Quickstart"
 msgstr "Быстрый старт"
@@ -3710,6 +3799,10 @@ msgstr "Новый пароль для Lymi"
 msgid "Reset your password"
 msgstr "Новый пароль"
 
+#. Words, separated by spaces, that also find this command in the command menu
+msgid "restore"
+msgstr "восстановить"
+
 msgid "Restore"
 msgstr "Восстановить"
 
@@ -3744,6 +3837,9 @@ msgstr "Восстановлен раздел «{name}» в колоде «{deck
 
 msgid "Restored the series {name}"
 msgstr "Восстановлена серия «{name}»"
+
+msgid "Results"
+msgstr "Результаты"
 
 msgid "Retry"
 msgstr "Повторить"
@@ -3880,6 +3976,9 @@ msgstr "Наука"
 
 msgid "Search"
 msgstr "Поиск"
+
+msgid "Search cards, decks and commands"
+msgstr "Искать карточки, колоды и команды"
 
 msgid "Search decks"
 msgstr "Искать колоды"
@@ -4208,6 +4307,9 @@ msgstr "Темы"
 
 msgid "Support"
 msgstr "Поддержка"
+
+msgid "Switch theme"
+msgstr "Сменить тему"
 
 msgid "System"
 msgstr "Системная"

@@ -10,6 +10,7 @@ import {
   revealsAnswer,
   SPOKEN_TERM_MAX,
   sameReading,
+  standsAlone,
 } from "./terms";
 
 describe("normaliseTerm", () => {
@@ -118,5 +119,15 @@ describe("canPlayPronunciation", () => {
       false,
     );
     expect(canPlayPronunciation({ term: "猫", language: "ja" })).toBe(true);
+  });
+});
+
+describe("standsAlone", () => {
+  it("takes three letters, or one character of a dense script", () => {
+    expect(standsAlone("ca")).toBe(false);
+    expect(standsAlone("cas")).toBe(true);
+    expect(standsAlone("家")).toBe(true);
+    expect(standsAlone("ね")).toBe(true);
+    expect(standsAlone("물")).toBe(true);
   });
 });

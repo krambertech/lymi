@@ -2,7 +2,10 @@ import { createContext, type ReactNode, useContext, useMemo, useState } from "re
 
 interface AddCard {
   /** Open the capture sheet, optionally targeting one deck. */
-  openCard: (deckId?: string, opts?: { sectionId?: string | undefined }) => void;
+  openCard: (
+    deckId?: string,
+    opts?: { sectionId?: string | undefined; term?: string | undefined },
+  ) => void;
   /** Open the new-deck field, optionally making the deck inside one series. */
   openDeck: (opts?: { seriesId?: string | undefined }) => void;
   /** Open Smart add, optionally for one deck. */
@@ -15,6 +18,8 @@ interface AddCard {
   sectionId: string | undefined;
   /** The series the new-deck field was opened for, from a series' menu. */
   seriesId: string | undefined;
+  /** A term the capture sheet starts with, typed in the command menu. */
+  term: string | undefined;
 }
 
 const Ctx = createContext<AddCard | null>(null);
@@ -28,6 +33,7 @@ export function AddCardProvider({ children }: { children: ReactNode }) {
   const [deckId, setDeckId] = useState<string | undefined>(undefined);
   const [sectionId, setSectionId] = useState<string | undefined>(undefined);
   const [seriesId, setSeriesId] = useState<string | undefined>(undefined);
+  const [term, setTerm] = useState<string | undefined>(undefined);
 
   const value = useMemo<AddCard>(
     () => ({
@@ -35,14 +41,17 @@ export function AddCardProvider({ children }: { children: ReactNode }) {
       deckId,
       sectionId,
       seriesId,
+      term,
       openCard: (id, opts) => {
         setDeckId(id);
         setSectionId(opts?.sectionId);
+        setTerm(opts?.term);
         setOpen("card");
       },
       openDeck: (opts) => {
         setDeckId(undefined);
         setSectionId(undefined);
+        setTerm(undefined);
         // Read off an object, so a click handler passing its event opens a deck in no series.
         setSeriesId(typeof opts?.seriesId === "string" ? opts.seriesId : undefined);
         setOpen("deck");
@@ -50,12 +59,13 @@ export function AddCardProvider({ children }: { children: ReactNode }) {
       openSmart: (id) => {
         setDeckId(id);
         setSectionId(undefined);
+        setTerm(undefined);
         setOpen("smart");
       },
       close: (expected) =>
         setOpen((current) => (expected && current !== expected ? current : null)),
     }),
-    [open, deckId, sectionId, seriesId],
+    [open, deckId, sectionId, seriesId, term],
   );
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

@@ -27,6 +27,11 @@ export function tagKey(tag: string): string {
 /** Scripts where one or two characters are a whole word, so a short answer still gives itself away. */
 const DENSE_SCRIPT = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u;
 
+/** Long enough to be a word by itself: three characters, or one in a dense script such as 猫 or 물. */
+export function standsAlone(text: string): boolean {
+  return text.length >= 3 || DENSE_SCRIPT.test(text);
+}
+
 /** A picture description that contains the term or the meaning would show the answer before reveal. */
 export function revealsAnswer(
   card: { term: string; meaning?: string | null | undefined },
@@ -44,7 +49,7 @@ export function revealedAnswer(
   for (const field of ["term", "meaning"] as const) {
     const answer = card[field] ?? "";
     const key = normaliseTerm(answer);
-    if ((key.length >= 3 || DENSE_SCRIPT.test(key)) && text.includes(key)) {
+    if (standsAlone(key) && text.includes(key)) {
       return { field, text: answer };
     }
   }

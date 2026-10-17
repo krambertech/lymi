@@ -67,7 +67,12 @@ export function useOverlayShape(open: boolean): "desktop" | "touch" {
   return (open ? (held ?? isDesktop()) : desktop) ? "desktop" : "touch";
 }
 
-/** A shortcut as the keyboard in front of the learner labels it; the bindings accept both keys. */
+/** Whether the keyboard in front of the learner has ⌘ rather than Ctrl for shortcuts. */
+export function appleKeyboard(): boolean {
+  return /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+}
+
+/** A shortcut as the keyboard in front of the learner labels it. */
 export function modShortcut(key: string): string {
-  return /Mac|iPhone|iPad|iPod/.test(navigator.platform) ? `⌘${key}` : `Ctrl ${key}`;
+  return appleKeyboard() ? `⌘${key}` : `Ctrl ${key}`;
 }

@@ -10,11 +10,15 @@ import {
   Keyboard,
   LogOut,
   MessageSquare,
+  Newspaper,
   Settings,
 } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { useLearnerAvatar } from "../lib/avatar";
+import { isAppLanguage } from "../lib/i18n";
+import { publicSiteUrl } from "../lib/origins";
 import { promptToInstall, useInstallState } from "../lib/pwa-install";
+import { captureAnalytics } from "../lib/telemetry";
 import { Avatar } from "./avatar";
 import { FeedbackDialog } from "./feedback-dialog";
 import { InstallDialog } from "./install-dialog";
@@ -64,7 +68,7 @@ export function LearnerMenu({
   signingOut,
   connect,
 }: Props) {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const st = useStaticNav();
   const install = useInstallState();
   const photo = useLearnerAvatar();
@@ -73,6 +77,9 @@ export function LearnerMenu({
   const [installHelp, setInstallHelp] = useState(false);
   const short = firstName(name) ?? t`You`;
   const installable = !install.installed && (install.canPrompt || install.isIOS);
+  const changelogUrl = publicSiteUrl(
+    isAppLanguage(i18n.locale) && i18n.locale !== "en" ? `/${i18n.locale}/changelog` : "/changelog",
+  );
 
   const place = (to: Place, icon: ReactNode, label: ReactNode, trailing?: ReactNode) => (
     <DropdownMenuLinkItem render={<NavLink to={to} />}>
@@ -174,6 +181,13 @@ export function LearnerMenu({
           <DropdownMenuLinkItem render={<a href={docsUrl} />}>
             <BookOpen aria-hidden="true" />
             <Trans>Docs</Trans>
+          </DropdownMenuLinkItem>
+          <DropdownMenuLinkItem
+            render={<a href={changelogUrl} />}
+            onClick={() => captureAnalytics("changelog_opened", { from: "learner_menu" })}
+          >
+            <Newspaper aria-hidden="true" />
+            <Trans>What’s new</Trans>
           </DropdownMenuLinkItem>
           <DropdownMenuItem onClick={() => !st && setFeedback(true)}>
             <MessageSquare aria-hidden="true" />

@@ -355,6 +355,7 @@ export const analyticsEvents = {
     form: z.enum(["add", "edit"]),
   }),
   deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
+  changelog_opened: z.object({ from: z.enum(["learner_menu"]) }),
   section_go_to: z.object({}),
   pronunciation_played: z.object({
     outcome: z.enum(["played", "failed"]),
@@ -434,6 +435,7 @@ export const analyticsProducers = {
   tag_added: ["browser"],
   card_field_added: ["browser"],
   deck_filter_added: ["browser"],
+  changelog_opened: ["browser"],
   section_go_to: ["phone"],
   pronunciation_played: ["browser", "phone"],
   deck_tag_changed: ["worker"],

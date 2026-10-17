@@ -5,10 +5,11 @@ import { expect, test } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
+import { messages as ukMessages } from "../../locales/uk.po";
 import { LearnerMenu } from "./learner-menu";
 import { StaticNavProvider } from "./nav-link";
 
-i18n.load("en", messages);
+i18n.load({ en: messages, uk: ukMessages });
 i18n.activate("en");
 
 function Menu({ variant }: { variant: "phone" | "rail" }) {
@@ -28,4 +29,16 @@ test("on the phone the avatar opens Insights and Explore", async () => {
   await page.getByRole("button", { name: "Alex", exact: true }).click();
   await expect.element(page.getByRole("menuitem", { name: "Insights" })).toBeVisible();
   await expect.element(page.getByRole("menuitem", { name: "Explore" })).toBeVisible();
+});
+
+test("What’s new opens the public changelog in the learner's language", async () => {
+  i18n.activate("uk");
+  try {
+    await render(<Menu variant="rail" />);
+    await page.getByRole("button", { name: "Alex" }).click();
+    const item = page.getByRole("menuitem", { name: "Що нового" });
+    await expect.element(item).toHaveAttribute("href", expect.stringMatching(/\/uk\/changelog$/));
+  } finally {
+    i18n.activate("en");
+  }
 });

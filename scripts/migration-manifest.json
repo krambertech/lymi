@@ -217,7 +217,11 @@
       "sha256": "41347856c75de425db924daaecb3df3644a12635d9da7c772994f675e7148ab1"
     },
     {
-      "name": "0054_vengeful_hydra.sql",
+      "name": "0054_unusual_enchantress.sql",
+      "sha256": "3fc8f7ee27ccc53a57ab5ffdb8ca4d1b62a324fe2994d56393ebc9c5e855707a"
+    },
+    {
+      "name": "0055_harsh_shotgun.sql",
       "sha256": "52d25af4a17cc670db2d50403e21a691d3bb6ae90b724e2fdfec1811fb2c9ed8"
     }
   ]

@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "dcc332ed-44aa-4d6e-97f6-6527624acc57",
+  "id": "cfb768e5-53c6-4d65-aaf5-0f0bf90e0c61",
   "prevId": "e5864ff3-8646-4271-89d4-13ca841ff551",
   "tables": {
     "account_deletions": {
@@ -999,6 +999,20 @@
           "notNull": false,
           "autoincrement": false
         },
+        "audio_source": {
+          "name": "audio_source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "audio_approved_key": {
+          "name": "audio_approved_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "created_by": {
           "name": "created_by",
           "type": "text",
@@ -1870,13 +1884,6 @@
         "withdrawn_at": {
           "name": "withdrawn_at",
           "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "redirect_slug": {
-          "name": "redirect_slug",
-          "type": "text",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

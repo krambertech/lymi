@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { type Card, errorMessage, type Sections } from "@lymi/client/api";
 import { sectionsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { canSpeakTerm } from "@lymi/core";
+import { canPlayPronunciation } from "@lymi/core";
 import { useQueries, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -91,7 +91,7 @@ export function useCardMenu({ owner, moveToSection, moveToDeck }: CardMenuOption
     const toDeck = owns ? moveToDeck?.(card) : null;
     return [
       [
-        ...(canSpeakTerm(card)
+        ...(canPlayPronunciation(card)
           ? [
               {
                 id: "play" as const,

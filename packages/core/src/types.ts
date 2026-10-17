@@ -439,6 +439,10 @@ export const PublicationInput = z
       .nullable()
       .optional()
       .meta({ description: "When a person last checked the whole deck" }),
+    approveRecordings: z.boolean().optional().meta({
+      description:
+        "Approve the recordings the deck's cards hold now for its public page. A recording added or replaced later stays off the page until the deck is published again with this set; until then that card plays nothing there. You are responsible for the right to publish every recording you approve.",
+    }),
   })
   .meta({ id: "PublicationInput" });
 export type PublicationInput = z.infer<typeof PublicationInput>;

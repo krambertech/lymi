@@ -28,7 +28,9 @@ import type { CardImageStorage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { detectDeckLanguages, TERMS_PER_DECK } from "./import-languages";
 import {
+  type AttachedMedia,
   attachPictures,
+  type MediaTotals,
   noteChunkKey,
   ownedImport,
   type PendingPicture,
@@ -64,7 +66,7 @@ export type ImportRunParams = {
 export type ImportResume = {
   chunk: number;
   pending: PendingPicture[];
-  pictures: { stored: number; skipped: number };
+  pictures: MediaTotals;
 };
 
 /** Pictures stored per Workflow step. */
@@ -109,7 +111,8 @@ export function presentImport(row: Import) {
     failure: row.failure,
     summary: (row.summary as StoredSummary | null) ?? null,
     choices: (row.choices as ImportChoices | null) ?? null,
-    counts: (row.counts as ImportCounts | null) ?? null,
+    // Counts added since an import finished read as none.
+    counts: row.counts ? { ...emptyImportCounts(), ...(row.counts as ImportCounts) } : null,
     progress: { written: row.written, chunks: row.chunks },
     upload: {
       partBytes: IMPORT_PART_BYTES,
@@ -506,10 +509,17 @@ export async function attachImportPictures(
   id: string,
   pending: PendingPicture[],
   uploads: R2Bucket,
-  storage: CardImageStorage,
-) {
+  storage: Partial<CardImageStorage> & { audio?: R2Bucket | undefined },
+): Promise<AttachedMedia> {
   const work = await readyWork(ctx, id, uploads);
-  if (!work.row.objectKey) return { stored: 0, skipped: pending.length };
+  if (!work.row.objectKey) {
+    const recordings = pending.filter((item) => item.kind === "recording").length;
+    return {
+      stored: 0,
+      skipped: pending.length - recordings,
+      recordings: { stored: 0, skipped: recordings },
+    };
+  }
   return attachPictures(ctx, work, await r2Source(uploads, work.row.objectKey), pending, storage);
 }
 
@@ -517,7 +527,7 @@ export async function attachImportPictures(
 export async function finishImport(
   ctx: ServiceContext,
   id: string,
-  pictures: { stored: number; skipped: number },
+  pictures: MediaTotals,
   uploads: R2Bucket,
 ) {
   const row = await ownedImport(ctx, id);
@@ -525,6 +535,8 @@ export async function finishImport(
   const counts = { ...emptyImportCounts(), ...((row.counts as ImportCounts | null) ?? {}) };
   counts.pictures = pictures.stored;
   counts.picturesSkipped = pictures.skipped;
+  counts.recordings = pictures.recordings?.stored ?? 0;
+  counts.recordingsSkipped = pictures.recordings?.skipped ?? 0;
   const now = new Date();
   const eligible = and(eq(schema.imports.id, id), eq(schema.imports.status, "importing"))!;
   const [, completed] = await ctx.db.batch([
@@ -552,6 +564,9 @@ export async function finishImport(
     source: row.source,
     card_count: counts.added,
     outcome: "done",
+    recordings: counts.recordings,
+    recordings_skipped: counts.recordingsSkipped,
+    sounds_left_out: counts.soundsLeftOut,
   });
   await deleteImportFiles(uploads, row);
 }

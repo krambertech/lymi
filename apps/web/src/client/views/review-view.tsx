@@ -4,6 +4,7 @@ import type { EndScreen, Offer } from "@lymi/client/review-end";
 import {
   cueKeepsReading,
   gradeAllowed,
+  type KnownReadings,
   type Rating,
   type ReviewAid,
   termReading,
@@ -80,6 +81,7 @@ import { SevenLights } from "../components/seven-lights";
 import { Skeleton } from "../components/skeleton";
 import { StateIcon, stateKey } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
+import { StreakStart } from "../components/streak-week";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import type { QueueItem } from "../lib/api";
 import { intervalLabel } from "../lib/i18n";
@@ -368,6 +370,8 @@ export interface ReviewCardProps {
   deck?: { name: string; language?: string | null | undefined } | undefined;
   /** The deck's section the card is in, named under the answer in place of the card's source. */
   section?: string | undefined;
+  /** The learner's Known pairs, whose readings fade in the example. */
+  knownReadings?: KnownReadings | undefined;
   revealed: boolean;
   animateReveal?: boolean | undefined;
   /** The words fade in as the card arrives. Off when the grade before it came from the keyboard. */
@@ -513,6 +517,7 @@ export function ReviewCard({
   item,
   deck,
   section,
+  knownReadings,
   revealed,
   animateReveal = true,
   animateIn = false,
@@ -719,7 +724,11 @@ export function ReviewCard({
           className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           lang={card.language ?? undefined}
         >
-          <ReadingText text={card.example} lang={card.language ?? undefined} />
+          <ReadingText
+            text={card.example}
+            lang={card.language ?? undefined}
+            known={knownReadings}
+          />
         </motion.p>
       )}
       {card.notes && (
@@ -1592,15 +1601,23 @@ export function ReviewComplete({
             />
             <p className="seq flex items-center gap-2 text-md text-text-2" style={at(AT.run)}>
               <Flame className="h-5 w-4" state={flame} flicker={flame === "full"} />
-              <span className="inline-flex overflow-hidden font-semibold tabular-nums text-text">
-                <span
-                  key={run}
-                  className={clsx("block", landed && !reduce && screen.streak && "streak-tick")}
-                >
-                  {run}
+              {run ? (
+                <>
+                  <span className="inline-flex overflow-hidden font-semibold tabular-nums text-text">
+                    <span
+                      key={run}
+                      className={clsx("block", landed && !reduce && screen.streak && "streak-tick")}
+                    >
+                      {run}
+                    </span>
+                  </span>
+                  <Plural value={run} one="day in a row" other="days in a row" />
+                </>
+              ) : (
+                <span className="font-medium text-text">
+                  <StreakStart summary={streak ?? week} />
                 </span>
-              </span>
-              <Plural value={run ?? 0} one="day in a row" other="days in a row" />
+              )}
             </p>
           </div>
         )}

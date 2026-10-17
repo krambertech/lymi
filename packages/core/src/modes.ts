@@ -58,6 +58,23 @@ export function effectiveModes(
 }
 
 /**
+ * The order a card's modes are introduced in, which also picks the mode a card's Known reads. A
+ * list the learner ordered is kept; a list that only the legacy `directions` gives starts with
+ * meaning → term, which teaches more (ADR 0019). `taughtFirstSql` on the server mirrors it.
+ */
+export function introductionOrder(
+  card: { directions: Directions | null; reviewModeKeys: readonly ReviewModeKey[] | null },
+  deckDirections: Directions,
+): ReviewModeKey[] {
+  if (card.directions && card.reviewModeKeys) {
+    return effectiveModes(card.directions, card.reviewModeKeys);
+  }
+  const directions = card.directions ?? deckDirections;
+  if (directions === "both") return ["meaning_to_term", "term_to_meaning"];
+  return [directions === "recognition" ? "term_to_meaning" : "meaning_to_term"];
+}
+
+/**
  * The modes a card is asked in, as `askedSql` decides on the server: picture modes only while it
  * has a described picture, and a picture-only list's text fallback while it has none.
  */

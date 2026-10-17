@@ -1,0 +1,1 @@
+ALTER TABLE `deck_publications` ADD `redirect_slug` text;

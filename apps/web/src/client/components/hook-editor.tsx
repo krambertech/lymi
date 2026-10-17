@@ -6,6 +6,7 @@ import { Anchor, Sparkle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { type Card, errorMessage } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
+import { composing } from "../lib/composing";
 import { useMouse } from "../lib/device";
 import { hookDraftQuery } from "../lib/queries";
 import { Button } from "./button";
@@ -138,7 +139,7 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
               return;
             }
             // A hook is one phrase, so Enter keeps it; Shift Enter still breaks the line.
-            if (e.key !== "Enter" || e.shiftKey || e.nativeEvent.isComposing) return;
+            if (e.key !== "Enter" || e.shiftKey || composing(e)) return;
             e.preventDefault();
             e.currentTarget.form?.requestSubmit();
           }}

@@ -45,6 +45,19 @@ export function groupDecks<D extends GroupableDeck, S extends GroupableSeries>(
   return { loose: decks.filter((deck) => !placed.has(deck.id)), series: groups };
 }
 
+const SERIES_PREFIX = /^\s*[·•:|/\-–—]\s*(\S.*)$/u;
+
+/**
+ * A deck's name as its series shows it: "Eesti A1 · Words" in Eesti A1 reads "Words". Only a name
+ * that repeats the series' name and then a separator loses it, so "Eesti A1 Words" stays whole.
+ */
+export function nameInSeries(name: string, seriesName: string): string {
+  const prefix = seriesName.trim();
+  if (!prefix || name.length <= prefix.length) return name;
+  if (name.slice(0, prefix.length).toLocaleLowerCase() !== prefix.toLocaleLowerCase()) return name;
+  return name.slice(prefix.length).match(SERIES_PREFIX)?.[1] ?? name;
+}
+
 /**
  * What a series form shows. A route with an id renames that series; without one it makes a new one.
  * The mode comes from the route, never from whether the list has arrived, so a cold rename waits

@@ -90,6 +90,8 @@ export function refreshAfterCardWrite(qc: QueryClient, cardId?: string) {
     qc.invalidateQueries({ queryKey: ["rounds"] }),
     // Activity lists the cards an app wrote, so an edit from there refreshes the terms it shows.
     qc.invalidateQueries({ queryKey: ["activity"] }),
+    // A search or a duplicate check that ran before the write would miss or keep the card.
+    qc.invalidateQueries({ queryKey: ["cards", "search"] }),
     ...(cardId ? [qc.invalidateQueries({ queryKey: ["cards", cardId, "history"] })] : []),
   ]);
 }

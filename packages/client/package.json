@@ -25,6 +25,7 @@
     "./update-required": "./src/update-required.ts",
     "./cache": "./src/cache.ts",
     "./keyed": "./src/keyed.ts",
+    "./known-readings": "./src/known-readings.ts",
     "./welcome": "./src/welcome.ts",
     "./imports": "./src/imports.ts",
     "./app-marks": "./src/app-marks.ts",

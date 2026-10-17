@@ -8,9 +8,10 @@ import {
   Outlet,
   useLocation,
   useNavigate,
+  useRouterState,
 } from "@tanstack/react-router";
 import { MotionConfig } from "motion/react";
-import { lazy, Suspense, useEffect, useMemo, useRef } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { z } from "zod";
 import { AddCardSheet } from "../components/add-card-sheet";
 import { AnalyticsLearnerSync } from "../components/analytics-learner-sync";
@@ -19,6 +20,7 @@ import {
   AssistantOffer,
   useAssistantOffer,
 } from "../components/assistant-offer";
+import { CommandMenu } from "../components/command-menu";
 import { ShellChrome } from "../components/layout/shell-chrome";
 import { NewDeckSheet } from "../components/new-deck-sheet";
 import { PillNav } from "../components/pill-nav";
@@ -28,6 +30,7 @@ import { TooltipProvider } from "../components/ui/tooltip";
 import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, api } from "../lib/api";
 import { LearnerAvatarProvider } from "../lib/avatar";
+import { appleKeyboard } from "../lib/device";
 import {
   activate,
   bootstrapLanguage,
@@ -98,6 +101,10 @@ function Root() {
   );
 }
 
+/** An open dialog or sheet, not counting toasts, which Base UI also marks as dialogs. */
+const OVERLAY_OPEN =
+  '[role="dialog"]:not([inert]):not([data-slot="toast"]), [role="alertdialog"]:not([data-slot="toast"])';
+
 function Shell() {
   const { t } = useLingui();
   const location = useLocation();
@@ -106,11 +113,16 @@ function Shell() {
   const add = useAddCard();
   const seededLanguage = useRef(false);
   const activeDeckId = location.pathname.match(/^\/library\/([^/]+)/)?.[1];
+  const [commandOpen, setCommandOpen] = useState(false);
   // Consent is a stop inside another app's sign-in; the local design page is its own document.
   const bare = isBareShell(location.pathname);
   const onReview = location.pathname.startsWith("/review");
+  // The screen on show, not the one loading: leaving Welcome would otherwise draw the rail around its last question.
+  const shown = useRouterState({
+    select: (s) => (s.resolvedLocation ?? s.location).pathname,
+  });
   // Getting set up closes the app around it as review does, so the way out is Skip, not the rail.
-  const closed = onReview || location.pathname === "/welcome";
+  const closed = shown.startsWith("/review") || shown === "/welcome";
   const me = useQuery({ ...meQuery, enabled: !bare });
   useEffect(() => {
     capturePageview(location.pathname);
@@ -266,6 +278,24 @@ function Shell() {
     return () => window.removeEventListener("keydown", onKey);
   }, [navigate, onReview, bare, add, activeDeckId]);
 
+  // ⌘K on a Mac, Ctrl K elsewhere, opens the command menu from any field. Not over another
+  // dialog, where it would stack a second modal on a half-written form, and not where the shell
+  // is closed on purpose (review, Welcome). Ctrl K on a Mac stays the field's "delete to end".
+  useEffect(() => {
+    if (bare || closed) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.repeat || e.altKey || e.shiftKey) return;
+      if (appleKeyboard() ? !e.metaKey || e.ctrlKey : !e.ctrlKey || e.metaKey) return;
+      // Picking an autofill suggestion sends a keydown with no key.
+      if (e.code !== "KeyK" && e.key?.toLowerCase() !== "k") return;
+      if (!commandOpen && document.querySelector(OVERLAY_OPEN)) return;
+      e.preventDefault();
+      setCommandOpen((open) => !open);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [bare, closed, commandOpen]);
+
   const signedIn = me.isSuccess;
   const learnerName = me.data?.name;
   const learnerEmail = me.data?.email;
@@ -337,7 +367,7 @@ function Shell() {
             )
           }
           nav={closed ? undefined : <PillNav />}
-          fill={onReview}
+          fill={shown.startsWith("/review")}
         >
           <Outlet />
         </AppShell>
@@ -347,11 +377,13 @@ function Shell() {
         onOpenChange={(v) => (v ? add.openCard() : add.close("card"))}
         deckId={add.deckId}
         sectionId={add.sectionId}
+        term={add.term}
         onCreateDeck={add.openDeck}
       />
       <NewDeckSheet
         open={add.open === "deck"}
-        onOpenChange={(v) => (v ? add.openDeck() : add.close("deck"))}
+        seriesId={add.seriesId}
+        onOpenChange={(v) => (v ? add.openDeck({ seriesId: add.seriesId }) : add.close("deck"))}
       />
       {smartAccess.data?.allowed && (
         <SmartAddDialog
@@ -362,6 +394,17 @@ function Shell() {
         />
       )}
       {me.isSuccess && <StreakPlace />}
+      {me.isSuccess && (
+        <CommandMenu
+          open={commandOpen}
+          onOpenChange={setCommandOpen}
+          decks={decks.data}
+          activeDeckId={activeDeckId}
+          onAddCard={(deckId, term) => openCard(deckId, { term })}
+          onCreateDeck={openDeck}
+          onSmartAdd={onSmartAdd}
+        />
+      )}
     </LearnerAvatarProvider>
   );
 }

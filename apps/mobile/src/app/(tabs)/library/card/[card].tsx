@@ -2,13 +2,14 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg, plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
+import { useKnownReadings } from "@lymi/client/known-readings";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { deserializeState, stripReadings } from "@lymi/core";
+import { deserializeState, termReading, writtenWithReading } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Image, View } from "react-native";
 import Animated, { FadeOut, LinearTransition, ZoomIn } from "react-native-reanimated";
 import { useSessionHeaders } from "../../../../auth/client";
@@ -26,6 +27,7 @@ import { TEXT_END } from "../../../../theme/type";
 import { ActionMenu } from "../../../../ui/action-menu";
 import { SourceChip, StateChip } from "../../../../ui/chip";
 import { EmptyState } from "../../../../ui/empty-state";
+import { Furigana, ReadingText } from "../../../../ui/furigana";
 import { GRADES, GradeMark } from "../../../../ui/grade";
 import { Icon, type IconName } from "../../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
@@ -78,6 +80,7 @@ export default function CardPage() {
   const { card: id, deck: deckId } = useLocalSearchParams<{ card: string; deck: string }>();
   const deck = useDecks().data?.find((d) => d.id === deckId);
   const cards = useDeckCards(deckId);
+  const known = useKnownReadings();
   const listed = cards.data?.find((r) => r.card.id === id);
   const row = listed;
   const historyQuery = useQuery(cardHistoryQuery(id));
@@ -112,6 +115,7 @@ export default function CardPage() {
   }, [playError]);
   const failed = useLoadFailed(cards);
   const historyFailed = useLoadFailed(historyQuery);
+  const reading = useMemo(() => (card ? termReading(card) : null), [card]);
   if (!card || !row) {
     return (
       <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>
@@ -199,7 +203,12 @@ export default function CardPage() {
     card.pronunciation && (
       <Field
         key="pronunciation"
-        label={t`Pronunciation`}
+        // Japanese and Chinese call a term's pronunciation its reading.
+        label={
+          writtenWithReading(card.language)
+            ? t({ message: "Reading", context: "how a term is read" })
+            : t`Pronunciation`
+        }
         ai={card.pronunciationSource === "ai"}
         onPress={edit("pronunciation")}
       >
@@ -227,9 +236,12 @@ export default function CardPage() {
         field="example"
         onPress={edit("example")}
       >
-        <Text className="text-md text-text" lang={card.language}>
-          {stripReadings(card.example)}
-        </Text>
+        <ReadingText
+          text={card.example}
+          known={known}
+          className="text-md text-text"
+          lang={card.language}
+        />
       </Field>
     ),
     card.notes && (
@@ -356,6 +368,17 @@ export default function CardPage() {
     <Screen
       title={card.term}
       titleLang={card.language}
+      // The page holds the term with its furigana, and the bar takes it plain once it scrolls under.
+      header={
+        reading ? (
+          <Furigana
+            segments={reading}
+            className="text-3xl font-medium tracking-tight text-text"
+            accessibilityRole="header"
+            lang={card.language}
+          />
+        ) : undefined
+      }
       back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}
       actions={
         <View className="flex-row items-center gap-2.5">

@@ -3253,6 +3253,10 @@ msgstr "Прочитати посібник"
 msgid "Reading"
 msgstr "Читання"
 
+msgctxt "how a term is read"
+msgid "Reading"
+msgstr "Читання"
+
 #. placeholder {0}: scanned + 1
 #. placeholder {1}: pages.length
 msgid "Reading page {0} of {1}"

@@ -6,6 +6,8 @@ interface StartPanelProps {
   body?: ReactNode | undefined;
   /** Beside the title, e.g. the lantern. */
   lead?: ReactNode | undefined;
+  /** An outline icon of what is missing, in a circle above the title. */
+  icon?: ReactNode | undefined;
   /** The one thing to press. */
   action?: ReactNode | undefined;
   /** Further sections, each under a dashed rule, such as the other ways in. */
@@ -17,7 +19,15 @@ interface StartPanelProps {
  * Where an empty screen says how to fill it. Dashed, like New's mark, and on the bare canvas, so
  * it reads as a temporary panel rather than a plate of content. docs/design/system/empty-states.md.
  */
-export function StartPanel({ title, body, lead, action, children, className }: StartPanelProps) {
+export function StartPanel({
+  title,
+  body,
+  lead,
+  icon,
+  action,
+  children,
+  className,
+}: StartPanelProps) {
   return (
     <section
       className={clsx(
@@ -25,6 +35,14 @@ export function StartPanel({ title, body, lead, action, children, className }: S
         className,
       )}
     >
+      {icon && (
+        <span
+          className="edge-inset grid size-11 place-items-center rounded-full bg-plate-2 text-text-2 [&_svg]:size-5 [&_svg]:stroke-[1.75]"
+          aria-hidden="true"
+        >
+          {icon}
+        </span>
+      )}
       <div className="flex items-center gap-4">
         {lead}
         <div className="grid min-w-0 gap-0.5">

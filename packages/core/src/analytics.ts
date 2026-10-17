@@ -165,6 +165,25 @@ export const CARD_STATES = ["new", "learning", "review", "relearning"] as const;
 const tokens = z.number().int().nonnegative().max(10_000_000);
 export type Attribution = z.infer<typeof Attribution>;
 
+/** The command menu's own commands: its places, its actions, and reviewing a deck from its row. */
+export const COMMAND_MENU_COMMANDS = [
+  "today",
+  "library",
+  "insights",
+  "explore",
+  "settings",
+  "activity",
+  "archived",
+  "add_card",
+  "review",
+  "smart_add",
+  "new_deck",
+  "import",
+  "theme",
+  "shortcuts",
+  "review_deck",
+] as const;
+
 export const analyticsEvents = {
   $pageview: z.object({ pathname: path, ...source_fields }),
   app_opened: z.object({
@@ -182,6 +201,8 @@ export const analyticsEvents = {
     state: z.enum(CARD_STATES).optional(),
     aid: ReviewAid.optional(),
     reading: z.enum(["cue", "answer"]).optional(),
+    example_readings: count.optional(),
+    readings_faded: count.optional(),
   }),
   review_undone: z.object({
     mode: ReviewModeKey.optional(),
@@ -257,6 +278,11 @@ export const analyticsEvents = {
   }),
   deck_added: z.object({ deck_slug: slug }),
   deck_joined: z.object({}),
+  section_opened: z.object({
+    how: z.enum(["auto", "ready", "early"]),
+    position: z.number().int().min(1).max(1_000),
+    sections: z.number().int().min(1).max(1_000),
+  }),
   mcp_tool: z.object({
     tool: z.string().regex(/^[a-z_]{1,80}$/),
     outcome: z.enum(["success", "error"]),
@@ -355,6 +381,8 @@ export const analyticsEvents = {
     form: z.enum(["add", "edit"]),
   }),
   deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
+  changelog_opened: z.object({ from: z.enum(["learner_menu"]) }),
+  library_searched: z.object({ matches: z.enum(["1", "2-5", "6+"]) }),
   section_go_to: z.object({}),
   pronunciation_played: z.object({
     outcome: z.enum(["played", "failed"]),
@@ -369,6 +397,12 @@ export const analyticsEvents = {
     cards: Backlog,
     added: z.number().int().min(0),
     removed: z.number().int().min(0),
+  }),
+  command_menu_run: z.object({
+    kind: z.enum(["card", "deck", "place", "action", "add"]),
+    command: z.enum(COMMAND_MENU_COMMANDS).optional(),
+    add: z.enum(["form", "now", "existing"]).optional(),
+    typed: z.boolean(),
   }),
   account_deleted: z.object({
     client: z.enum(["web", "phone"]),
@@ -398,6 +432,7 @@ export const analyticsProducers = {
   hook_added: ["worker"],
   cards_archived: ["worker"],
   reminder_sent: ["worker"],
+  command_menu_run: ["browser"],
   email_sent: ["worker"],
   email_failed: ["worker"],
   email_bounced: ["worker"],
@@ -423,6 +458,7 @@ export const analyticsProducers = {
   context_menu_action: ["phone"],
   deck_added: ["worker"],
   deck_joined: ["worker"],
+  section_opened: ["worker"],
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
   deck_style_learned: ["worker"],
@@ -434,6 +470,8 @@ export const analyticsProducers = {
   tag_added: ["browser"],
   card_field_added: ["browser"],
   deck_filter_added: ["browser"],
+  changelog_opened: ["browser"],
+  library_searched: ["browser"],
   section_go_to: ["phone"],
   pronunciation_played: ["browser", "phone"],
   deck_tag_changed: ["worker"],

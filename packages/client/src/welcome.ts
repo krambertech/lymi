@@ -24,11 +24,6 @@ export const GOAL_MINUTES: Record<(typeof DAILY_GOAL_PRESETS)[number], number> =
   100: 30,
 };
 
-/** The steps a learner's own answers take them through: the language only after A language. */
-export function welcomePath(kind: LearningKind | null): WelcomeStep[] {
-  return kind === "language" ? ["kind", "language", "goal", "start"] : ["kind", "goal", "start"];
-}
-
 /** The decks that match the answers: the language's shelf, the test shelves, or the other subjects. */
 export function decksFor(
   catalog: PublicDeckSummary[],

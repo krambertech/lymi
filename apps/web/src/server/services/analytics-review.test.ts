@@ -143,3 +143,82 @@ it("activates the earlier grade when a later one's marker runs first", async () 
     [{ name: "welcome_step_finished", step_name: "review", skipped: false }],
   ]);
 });
+
+it("says where a Japanese term's reading showed, only when the grader draws furigana", async () => {
+  const student = await learner(db, "analytics-reading", "Learner");
+  const { analytics, capture, settled } = writer();
+  const ctx = { ...student, analytics };
+  const deck = await createDeck(ctx, {
+    name: "Japanese",
+    defaultLanguage: "ja",
+    reviewModes: [
+      { cue: "term", target: "meaning" },
+      { cue: "meaning", target: "term" },
+    ],
+  });
+  const added = await addCards(ctx, [
+    { deckId: deck.id, term: "食べる", meaning: "to eat", pronunciation: "たべる" },
+    { deckId: deck.id, term: "見る", meaning: "to see", pronunciation: "みる" },
+  ]);
+  const [eat, see] = added.map((a) => (a.status === "added" ? a.card.id : ""));
+  const at = (cardId: string, furigana: boolean, mode: "term_to_meaning" | "meaning_to_term") =>
+    gradeCard(
+      ctx,
+      {
+        cardId,
+        mode:
+          mode === "term_to_meaning"
+            ? { cue: "term", target: "meaning" }
+            : { cue: "meaning", target: "term" },
+        rating: 3,
+        reviewedAt: new Date(),
+      },
+      furigana,
+    );
+  await at(eat as string, true, "term_to_meaning");
+  await at(eat as string, true, "meaning_to_term");
+  await at(see as string, false, "term_to_meaning");
+  await settled();
+  const readings = capture.mock.calls
+    .map((call) => call[0])
+    .filter((event) => event.name === "review_graded")
+    .map((event) => event.reading);
+  expect(readings).toEqual(["cue", "answer", undefined]);
+});
+
+it("counts the example's readings and the ones that faded, never the example", async () => {
+  const student = await learner(db, "analytics-example-readings", "Learner");
+  const { analytics, capture, settled } = writer();
+  const ctx = { ...student, analytics };
+  const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+  const added = await addCards(ctx, [
+    {
+      deckId: deck.id,
+      term: "毎朝",
+      meaning: "every morning",
+      pronunciation: "まいあさ",
+      example: "毎朝[まいあさ]パンを食[た]べます。",
+    },
+    { deckId: deck.id, term: "水", meaning: "water", pronunciation: "みず", example: "水です。" },
+  ]);
+  const [morning, water] = added.map((a) => (a.status === "added" ? a.card.id : ""));
+  const grade = (cardId: string, readingsFaded?: number) =>
+    gradeCard(ctx, {
+      cardId,
+      direction: "recognition",
+      rating: 3,
+      reviewedAt: new Date(),
+      ...(readingsFaded === undefined ? {} : { readingsFaded }),
+    });
+  await grade(morning as string, 9);
+  await grade(water as string, 0);
+  await settled();
+  const graded = capture.mock.calls
+    .map((call) => call[0])
+    .filter((event) => event.name === "review_graded");
+  expect(graded.map((e) => [e.example_readings, e.readings_faded])).toEqual([
+    [2, 2],
+    [undefined, undefined],
+  ]);
+  expect(JSON.stringify(graded)).not.toContain("パン");
+});

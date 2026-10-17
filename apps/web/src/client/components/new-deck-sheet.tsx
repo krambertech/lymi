@@ -28,6 +28,8 @@ import { toast } from "./ui/toast";
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** Make the deck inside this series, from the series' own menu. */
+  seriesId?: string | undefined;
 }
 
 /** Welcome's answer as a deck purpose: a test is a subject, and a typed language name is no tag. */
@@ -42,7 +44,7 @@ function seedFrom(kind: LearningKind | null, language: string | null): NewDeckSe
  * A deck is a name, what it is for, and how it is asked, so it is one sheet rather than a wizard.
  * Creating it lands the learner in the empty deck, which is where the words go next.
  */
-export function NewDeckSheet({ open, onOpenChange }: Props) {
+export function NewDeckSheet({ open, onOpenChange, seriesId }: Props) {
   const { t } = useLingui();
   const qc = useQueryClient();
   const navigate = useNavigate();
@@ -57,6 +59,7 @@ export function NewDeckSheet({ open, onOpenChange }: Props) {
     mutationFn: (input: DeckInput) => writes.createDeck(input),
     onSuccess: ({ id, queued }) => {
       qc.invalidateQueries({ queryKey: ["decks"] });
+      if (seriesId) qc.invalidateQueries({ queryKey: ["series"] });
       onOpenChange(false);
       navigate({ to: "/library/$deckId", params: { deckId: id } });
       if (queued) toast.add({ title: t`Saved on this device until Lymi can be reached.` });
@@ -72,7 +75,7 @@ export function NewDeckSheet({ open, onOpenChange }: Props) {
           pending={create.isPending}
           error={create.isError ? errorMessage(create.error) : undefined}
           onCancel={() => onOpenChange(false)}
-          onSubmit={(input) => create.mutateAsync(input)}
+          onSubmit={(input) => create.mutateAsync(seriesId ? { ...input, seriesId } : input)}
         />
       </DialogContent>
     </Dialog>

@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "account_id": "ce6da857aeb521aa2730848a194b8866",
+  "name": "lymi-design",
+  "main": "design/worker.ts",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": false,
+  "preview_urls": false,
+  "version_metadata": {
+    "binding": "CF_VERSION_METADATA"
+  },
+  "assets": {
+    "directory": "dist-design",
+    "binding": "ASSETS",
+    "html_handling": "none",
+    "run_worker_first": true
+  },
+  "routes": [
+    {
+      "pattern": "design.lymi.app",
+      "custom_domain": true
+    }
+  ]
+}

@@ -13,7 +13,7 @@ import {
   noFilters,
   rowState,
 } from "@lymi/client/deck-list";
-import { CHOSEN_LIMIT } from "@lymi/core";
+import { CHOSEN_LIMIT, type KnownReadings } from "@lymi/core";
 import { clsx } from "clsx";
 import {
   Archive,
@@ -101,6 +101,8 @@ export type DeckFailure = "gone" | "unreachable";
 export interface DeckDetailProps {
   deck: DeckSummary | undefined;
   cards: DeckRow[] | undefined;
+  /** The learner's Known pairs across every deck, whose readings fade in an open card's example. */
+  knownReadings?: KnownReadings | undefined;
   /** Where today's goal stands, for the line under the due count. */
   streak?: StreakSummary | undefined;
   onReview?: (() => void) | undefined;
@@ -750,6 +752,7 @@ function SelectionToolbar({
 export function DeckDetailView({
   deck,
   cards,
+  knownReadings,
   streak,
   onReview,
   onSettings,
@@ -943,6 +946,7 @@ export function DeckDetailView({
       state={shownWord.state}
       deckName={deck.name}
       modes={shownWord.card.reviewModes ?? deck.reviewModes}
+      knownReadings={knownReadings}
       history={history}
       onPlayAudio={onPlayAudio ? () => onPlayAudio(shownWord.card) : undefined}
       onImportantChange={
@@ -1206,6 +1210,7 @@ export function DeckDetailView({
             />
           ) : (
             <StartPanel
+              icon={<Layers />}
               title={<Trans>No cards in {deck.name} yet</Trans>}
               body={<Trans>Add cards from your last lesson, then review them here.</Trans>}
               action={
@@ -1221,6 +1226,19 @@ export function DeckDetailView({
             >
               <StartPanelSection>
                 <NextSteps label={t`Other ways to add cards`}>
+                  {owner.onSmartAdd && (
+                    <NextStep
+                      icon={<Sparkles />}
+                      title={<Trans>Turn your notes into cards</Trans>}
+                      detail={
+                        <Trans>Paste a lesson or add photos of it, then pick the words</Trans>
+                      }
+                      onClick={() => {
+                        captureAnalytics("empty_state_option_picked", { option: "lesson" });
+                        owner.onSmartAdd?.();
+                      }}
+                    />
+                  )}
                   {connected === false && connectUrl && (
                     <NextStep
                       icon={<Plug />}

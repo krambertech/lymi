@@ -14,7 +14,7 @@ import { RollingNumber } from "./rolling-number";
 import { SevenLights } from "./seven-lights";
 import { Skeleton } from "./skeleton";
 import { addDays, StreakCalendar } from "./streak-calendar";
-import { lastDays } from "./streak-week";
+import { lastDays, StreakStart } from "./streak-week";
 import { Dialog, DialogContent, usePlaceShape } from "./ui/dialog";
 
 export type StreakSummary = StreakOut;
@@ -102,10 +102,18 @@ function CardFace({ summary, status }: { summary: StreakSummary; status: string 
       <span className="grid gap-2">
         <span className="flex items-center gap-2.5">
           <Flame className="h-7 w-[22px]" state={flame} flicker={flame === "full"} />
-          <RollingNumber value={current} className="text-3xl font-medium leading-none" />
-          <span className="text-md font-medium text-text-2">
-            <Plural value={current} one="day in a row" other="days in a row" />
-          </span>
+          {current > 0 ? (
+            <>
+              <RollingNumber value={current} className="text-3xl font-medium leading-none" />
+              <span className="text-md font-medium text-text-2">
+                <Plural value={current} one="day in a row" other="days in a row" />
+              </span>
+            </>
+          ) : (
+            <span className="text-xl font-medium tracking-[-0.01em] text-text">
+              <StreakStart summary={summary} />
+            </span>
+          )}
         </span>
         <span className="text-sm text-text-2 tabular-nums">{status}</span>
       </span>
@@ -132,7 +140,9 @@ export function useTodayStatus(summary: StreakSummary | undefined): string {
     case "exhausted":
       return t`You’re done for today.`;
     case "nothing_due":
-      return t`Nothing due today, so your streak is safe.`;
+      return summary.current > 0
+        ? t`Nothing due today, so your streak is safe.`
+        : t`Nothing due today.`;
     default: {
       const left = Math.max(today.goal - today.attempts, 0);
       return t`${plural(left, { one: "# review", other: "# reviews" })} to today’s goal`;
@@ -260,7 +270,9 @@ export function StreakPanel({
       : today.outcome === "exhausted"
         ? t`You’re done for today.`
         : today.outcome === "nothing_due"
-          ? t`Nothing due today, so your streak is safe.`
+          ? current > 0
+            ? t`Nothing due today, so your streak is safe.`
+            : t`Nothing due today.`
           : restedYesterday(summary)
             ? t`Yesterday was a rest day. Every grade counts toward today’s goal.`
             : current > 0
@@ -281,15 +293,21 @@ export function StreakPanel({
         {/* The flame sits on the number's line, the words on its baseline. */}
         <h2 id={titleId} tabIndex={-1} className="flex items-center gap-3 text-text outline-none">
           <Flame className="h-11 w-[35px] shrink-0" state={flame} flicker={flame === "full"} />
-          <span className="flex items-baseline gap-2.5">
-            <RollingNumber
-              value={current}
-              className="text-5xl font-semibold leading-none tracking-tight"
-            />
-            <span className="text-lg font-medium text-text-2">
-              <Plural value={current} one="day in a row" other="days in a row" />
+          {current > 0 ? (
+            <span className="flex items-baseline gap-2.5">
+              <RollingNumber
+                value={current}
+                className="text-5xl font-semibold leading-none tracking-tight"
+              />
+              <span className="text-lg font-medium text-text-2">
+                <Plural value={current} one="day in a row" other="days in a row" />
+              </span>
             </span>
-          </span>
+          ) : (
+            <span className="text-2xl font-semibold tracking-[-0.02em]">
+              <StreakStart summary={summary} />
+            </span>
+          )}
         </h2>
         <p className="text-sm text-text-2">{status}</p>
       </header>
@@ -383,7 +401,13 @@ export function StreakButton({ summary, variant, className, onOpen }: StreakButt
     );
   }
 
-  const label = t`Streak: ${plural(summary.current, { one: "# day in a row", other: "# days in a row" })}`;
+  // The card's name starts with the words it shows, so a run of zero is named as the start it shows.
+  const label =
+    card && summary.current === 0
+      ? summary.longest > 0
+        ? t`Start a new streak`
+        : t`Start your streak`
+      : t`Streak: ${plural(summary.current, { one: "# day in a row", other: "# days in a row" })}`;
   const face = card
     ? clsx(
         // A wide single-column card puts the week beside the run; the desktop column stacks them again.

@@ -23,6 +23,10 @@ export const PublicationOut = z
         revision: z.number().int(),
         publishedAt: Timestamp,
         withdrawnAt: Timestamp.nullable(),
+        redirectTo: z.string().nullable().meta({
+          description:
+            "Where a withdrawn deck's public page sends visitors, as another deck's slug",
+        }),
         addUrl: z.string().meta({ description: "Where anyone can add the deck" }),
       })
       .nullable()

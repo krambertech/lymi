@@ -15,6 +15,8 @@ export interface StoredGrade extends LocalGrade {
   sentAt?: number | undefined;
   /** The attempt the server recorded, which Undo names. */
   reviewId?: string | undefined;
+  /** The FSRS state the server scheduled, once it accepted the grade. */
+  stateAfter?: number | undefined;
 }
 
 /** A grade queued before modes existed names a legacy direction instead. */
@@ -106,6 +108,7 @@ function input(g: StoredGrade): GradeInput {
     ...(g.aid ? { aid: g.aid } : {}),
     ...(g.recallMs !== undefined ? { recallMs: g.recallMs } : {}),
     ...(g.gradeMs !== undefined ? { gradeMs: g.gradeMs } : {}),
+    ...(g.readingsFaded !== undefined ? { readingsFaded: g.readingsFaded } : {}),
   };
 }
 
@@ -120,7 +123,11 @@ async function send(grade: StoredGrade): Promise<Sent> {
       return "duplicate";
     }
     const reviewId = result.reviewId ?? undefined;
-    write(read().map((g) => (same(g, grade) ? { ...g, sentAt: Date.now(), reviewId } : g)));
+    write(
+      read().map((g) =>
+        same(g, grade) ? { ...g, sentAt: Date.now(), reviewId, stateAfter: result.state } : g,
+      ),
+    );
     return "sent";
   } catch (err) {
     if (err instanceof ApiError && err.status === 0) return "offline";

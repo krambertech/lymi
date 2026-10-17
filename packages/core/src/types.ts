@@ -345,6 +345,17 @@ export type AddQuery = z.infer<typeof AddQuery>;
 /** Lower-case words joined by hyphens, as in `everyday-estonian`. */
 export const PUBLICATION_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
+/** Withdrawing takes no body, as it always has; the redirect rides as a query parameter. */
+export const WithdrawQuery = z
+  .object({
+    redirectTo: z.string().min(3).max(80).regex(PUBLICATION_SLUG).optional().meta({
+      description:
+        "The slug of another published deck. The withdrawn deck's public page then sends visitors there with a permanent redirect.",
+    }),
+  })
+  .meta({ id: "WithdrawQuery" });
+export type WithdrawQuery = z.infer<typeof WithdrawQuery>;
+
 /**
  * Where a deck sits on Explore: `languages` puts it on the shelf of the language it teaches, and
  * each subject is a shelf of its own, in this order. A closed list, because each subject is a
@@ -822,6 +833,10 @@ export const GradeInput = z
     gradeMs: ReviewTime.optional().meta({
       description:
         "Milliseconds the answer was on screen in the foreground before the grade. Left out when unknown, over 10 minutes or with no reveal.",
+    }),
+    readingsFaded: z.number().int().min(0).max(500).optional().meta({
+      description:
+        "How many of the example's readings the answer drew faded, over words the learner knows. Left out when the example drew no reading.",
     }),
   })
   .refine((grade) => grade.mode || grade.direction, {

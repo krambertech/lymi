@@ -10,6 +10,36 @@ import {
   withoutCarriedFirstTouch,
 } from "./analytics";
 
+describe("command_menu_run", () => {
+  it("keeps the command and drops the query", () => {
+    expect(
+      eventProperties(
+        "command_menu_run",
+        { kind: "add", add: "now", typed: true, query: "casa" },
+        "browser",
+      ),
+    ).toEqual({ kind: "add", add: "now", typed: true });
+    expect(
+      eventProperties(
+        "command_menu_run",
+        { kind: "place", command: "settings", typed: false },
+        "browser",
+      ),
+    ).toEqual({ kind: "place", command: "settings", typed: false });
+  });
+
+  it("refuses a command outside the list and any producer but the browser", () => {
+    expect(
+      eventProperties(
+        "command_menu_run",
+        { kind: "action", command: "delete", typed: false },
+        "browser",
+      ),
+    ).toBeNull();
+    expect(eventProperties("command_menu_run", { kind: "card", typed: true }, "phone")).toBeNull();
+  });
+});
+
 describe("analytics privacy contract", () => {
   it("rejects unknown events and strips private fields", () => {
     expect(
@@ -85,7 +115,12 @@ describe("analytics privacy contract", () => {
     ).toBeNull();
     expect(eventProperties("deck_filter_added", { kind: "tag", name: "food" }, "browser")).toEqual({
       kind: "tag",
-    });
+    }); // A Library search sends how many decks it left, never what was typed.
+    expect(
+      eventProperties("library_searched", { matches: "2-5", query: "eesti" }, "browser"),
+    ).toEqual({ matches: "2-5" });
+    expect(eventProperties("library_searched", { matches: 3 }, "browser")).toBeNull();
+    expect(eventProperties("library_searched", { matches: "1" }, "worker")).toBeNull();
   });
   it("bands a backlog and sends an AI call's size without its text", () => {
     expect([0, 1, 20, 21, 100, 101].map(backlogOf)).toEqual([

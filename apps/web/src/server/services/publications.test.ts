@@ -1,5 +1,10 @@
 import { PublicationInput } from "@lymi/core";
-import { loadPublicDeck } from "@lymi/core/catalog/server";
+import {
+  listPublicCatalog,
+  listPublicDeckSlugs,
+  loadPublicDeck,
+  publicDeckRedirect,
+} from "@lymi/core/catalog/server";
 import { and, eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
@@ -355,5 +360,111 @@ describe("the publisher's photo", () => {
 
     const seen = (await listDecks(anna, { archived: true })).find((d) => d.id === deck.id);
     expect(seen).toMatchObject({ published: true, owner: { avatarUrl: null } });
+  });
+});
+
+describe("withdrawing with a redirect", () => {
+  it("sends a part deck's page to the merged deck, and leaves its learners their cards", async () => {
+    await publishedDeck("merged-verbs");
+    const part = await publishedDeck("verbs-part-1");
+    await addPublishedDeck(anna, "verbs-part-1");
+    const before = await db.select().from(schema.cards).where(eq(schema.cards.deckId, part.id));
+
+    const withdrawn = await withdrawDeck(lymi, part.id, { redirectTo: "merged-verbs" });
+    expect(withdrawn).toMatchObject({ status: "withdrawn", redirectSlug: "merged-verbs" });
+    expect(publicationOut("https://my.lymi.app", withdrawn).publication).toMatchObject({
+      status: "withdrawn",
+      redirectTo: "merged-verbs",
+    });
+    expect(await publicDeckRedirect(db, "verbs-part-1")).toBe("merged-verbs");
+    expect(await loadPublicDeck(db, "verbs-part-1")).toEqual({ status: "unavailable" });
+    expect((await listPublicDeckSlugs(db)).map((row) => row.slug)).not.toContain("verbs-part-1");
+    const shelf = (await listPublicCatalog(db)).map((row) => row.slug);
+    expect(shelf).toContain("merged-verbs");
+    expect(shelf).not.toContain("verbs-part-1");
+
+    expect((await listDecks(anna)).map((d) => d.id)).toContain(part.id);
+    const after = await db.select().from(schema.cards).where(eq(schema.cards.deckId, part.id));
+    expect(after).toEqual(before);
+    const [audit] = await auditRows(part.id, "withdraw_publication");
+    expect(audit?.payload).toMatchObject({ slug: "verbs-part-1", redirectTo: "merged-verbs" });
+  });
+
+  it("refuses a target that is missing, withdrawn, archived, or the deck itself", async () => {
+    const part = await publishedDeck("refused-part");
+    const gone = await publishedDeck("refused-gone");
+    await withdrawDeck(lymi, gone.id);
+    const archived = await publishedDeck("refused-archived");
+    await archiveDeck(lymi, archived.id);
+    for (const target of ["no-such-deck", "refused-gone", "refused-archived", "refused-part"]) {
+      await expect(withdrawDeck(lymi, part.id, { redirectTo: target })).rejects.toEqual(invalid);
+    }
+    await expect(withdrawDeck(lymi, part.id, { redirectTo: "no-such-deck" })).rejects.toThrow(
+      /no published deck has that slug yet/,
+    );
+    // A refused redirect withdraws nothing.
+    expect(await getPublication(lymi, part.id)).toMatchObject({ status: "published" });
+  });
+
+  it("adds a redirect to an already withdrawn deck once its target is live", async () => {
+    const part = await publishedDeck("later-part-01");
+    await withdrawDeck(lymi, part.id);
+    expect(await publicDeckRedirect(db, "later-part-01")).toBeNull();
+    await expect(withdrawDeck(lymi, part.id, { redirectTo: "later-merged" })).rejects.toEqual(
+      invalid,
+    );
+    await publishedDeck("later-merged");
+    await withdrawDeck(lymi, part.id, { redirectTo: "later-merged" });
+    expect(await publicDeckRedirect(db, "later-part-01")).toBe("later-merged");
+  });
+
+  it("stops redirecting when the target goes, and publishing again brings the deck back", async () => {
+    const target = await publishedDeck("fading-target");
+    const part = await publishedDeck("fading-part");
+    await withdrawDeck(lymi, part.id, { redirectTo: "fading-target" });
+    await withdrawDeck(lymi, target.id);
+    expect(await publicDeckRedirect(db, "fading-part")).toBeNull();
+    await publishDeck(lymi, target.id, input("fading-target"), publishers);
+    expect(await publicDeckRedirect(db, "fading-part")).toBe("fading-target");
+
+    const back = await publishDeck(lymi, part.id, input("fading-part"), publishers);
+    expect(back).toMatchObject({ status: "published", redirectSlug: null });
+    expect(await publicDeckRedirect(db, "fading-part")).toBeNull();
+    expect(await loadPublicDeck(db, "fading-part")).toMatchObject({ status: "published" });
+    expect(await publicationAdmits(db, "fading-part")).toBe(true);
+  });
+
+  it("follows a target withdrawn with its own redirect straight to the live deck", async () => {
+    const final = await publishedDeck("twice-final");
+    const middle = await publishedDeck("twice-middle");
+    const part = await publishedDeck("twice-part");
+    await withdrawDeck(lymi, part.id, { redirectTo: "twice-middle" });
+    await withdrawDeck(lymi, middle.id, { redirectTo: "twice-final" });
+    expect(await publicDeckRedirect(db, "twice-part")).toBe("twice-final");
+    expect(await publicDeckRedirect(db, "twice-middle")).toBe("twice-final");
+
+    // A chain that ends at a deck withdrawn with nowhere to go answers 410 again.
+    await withdrawDeck(lymi, final.id);
+    expect(await publicDeckRedirect(db, "twice-part")).toBeNull();
+  });
+
+  it("gives up on a redirect that loops", async () => {
+    const one = await publishedDeck("loop-one");
+    const two = await publishedDeck("loop-two");
+    await withdrawDeck(lymi, one.id, { redirectTo: "loop-two" });
+    // Withdrawing refuses a target that is not live, so only a hand edit can close the loop.
+    await db
+      .update(schema.deckPublications)
+      .set({ status: "withdrawn", redirectSlug: "loop-one" })
+      .where(eq(schema.deckPublications.deckId, two.id));
+    expect(await publicDeckRedirect(db, "loop-one")).toBeNull();
+  });
+
+  it("is only the owner's", async () => {
+    await publishedDeck("owner-target");
+    const part = await publishedDeck("owner-part");
+    await expect(withdrawDeck(anna, part.id, { redirectTo: "owner-target" })).rejects.toEqual(
+      notFound,
+    );
   });
 });

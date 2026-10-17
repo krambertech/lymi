@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { DeckSummary } from "@lymi/client/api";
 import { cardSearchQuery } from "@lymi/client/queries";
+import { termReading } from "@lymi/core";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
@@ -12,6 +13,7 @@ import { languageName } from "../data/languages";
 import { useDecks } from "../data/queries";
 import { useOnline } from "../streak/goal-picker";
 import { EmptyState } from "../ui/empty-state";
+import { Furigana } from "../ui/furigana";
 import { DISMISS_ON_DRAG, KeyboardRoom } from "../ui/keyboard";
 import { ListRow } from "../ui/list-row";
 import { useLoadFailed } from "../ui/load-failed";
@@ -120,6 +122,7 @@ export default function Search() {
               <Plate className="overflow-hidden">
                 {cards.map((c, i) => {
                   const meaning = c.meaning || t`No meaning yet`;
+                  const reading = termReading(c);
                   return (
                     <RowMenu
                       key={c.id}
@@ -136,14 +139,18 @@ export default function Search() {
                       <View
                         className={`gap-0.5 bg-plate py-3.5 ps-5 pe-4 ${i > 0 ? "border-t border-edge" : ""}`}
                       >
-                        <View className="flex-row items-baseline gap-3">
-                          <Text
-                            className="flex-1 text-md font-medium text-text"
-                            numberOfLines={2}
-                            lang={c.language}
-                          >
-                            {c.term}
-                          </Text>
+                        {/* Furigana has no baseline to share, so the deck sits on the term's last line. */}
+                        <View
+                          className={`flex-row gap-3 ${reading ? "items-end" : "items-baseline"}`}
+                        >
+                          <View className="flex-1">
+                            <Furigana
+                              segments={reading ?? [{ text: c.term }]}
+                              className="text-md font-medium text-text"
+                              lines={2}
+                              lang={c.language}
+                            />
+                          </View>
                           <Text className="max-w-[40%] text-sm text-muted" numberOfLines={1}>
                             {c.deckName}
                           </Text>

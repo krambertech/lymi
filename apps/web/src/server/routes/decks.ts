@@ -16,6 +16,7 @@ import {
   OkOut,
   PublicationInput,
   PublicationOut,
+  WithdrawQuery,
 } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
@@ -366,12 +367,20 @@ decks.delete(
   describe({
     tags: ["Decks"],
     summary: "Withdraw a published deck",
-    description: `${PUBLICATION} Members keep studying it; nobody new can add it.`,
+    description: `${PUBLICATION} Members keep studying it; nobody new can add it, and it leaves Explore and the sitemap. With \`redirectTo\`, its public page sends visitors to that deck with a permanent redirect; a target that is not published is refused. Withdrawing a withdrawn deck again sets or moves its redirect. Publishing it again brings it back and drops the redirect.`,
     ok: { schema: PublicationOut, description: "The withdrawn publication" },
-    errors: [404],
+    errors: [400, 404],
   }),
+  query(WithdrawQuery, "withdrawal"),
   async (c) =>
-    c.json(publicationOut(c.env.PRODUCT_URL, await withdrawDeck(ctxOf(c), c.req.param("id")))),
+    c.json(
+      publicationOut(
+        c.env.PRODUCT_URL,
+        await withdrawDeck(ctxOf(c), c.req.param("id"), {
+          redirectTo: c.req.valid("query").redirectTo,
+        }),
+      ),
+    ),
 );
 
 const EDITION =

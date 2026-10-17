@@ -7,7 +7,7 @@
 ```text
 What does pressing it do?
  ├── Goes to another screen → a router Link; rendered through Button with render={<Link …/>} when it is the page's action
- ├── Goes to a row's screen from a list (a deck, a round, a next step) → the whole row is the link, ending in Go; never a button inside a row
+ ├── Goes to a row's screen from a list (a deck, a round, a next step) → the whole row is the link, ending in Go (a plain chevron; a circle only around an icon such as a plus); never a button inside a row
  ├── Opens a menu of actions → DropdownMenu with a Button or IconButton as its trigger (see overlays.md)
  ├── An action whose meaning an icon carries alone (Edit, Search, Previous card) → IconButton, with label
  └── Any other action → Button

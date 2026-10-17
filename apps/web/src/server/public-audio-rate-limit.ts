@@ -21,7 +21,11 @@ export async function spendPublicAudio(c: Context<AppEnv>): Promise<number | nul
   }
   for (const { key, budget } of checks) {
     const full = await windowFull(c.env.SESSIONS, key, budget);
-    if (full !== null) return full;
+    if (full !== null) {
+      const spent = budget === EVERYONE ? "everyone" : "caller";
+      console.warn(JSON.stringify({ event: "public_audio_budget_spent", budget: spent }));
+      return full;
+    }
   }
   for (const { key, budget } of checks) await count(c.env.SESSIONS, key, budget);
   return null;

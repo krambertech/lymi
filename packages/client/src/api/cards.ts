@@ -22,7 +22,10 @@ import { apiUrl, request } from "./request";
 
 export type CardImage = CardImageOut;
 /** A card as the API sends it: its own review modes or null when it follows its deck, and its picture. */
-export type Card = Omit<CardRow, "reviewModeKeys" | "revision" | "hookDraft"> & {
+export type Card = Omit<
+  CardRow,
+  "reviewModeKeys" | "revision" | "hookDraft" | "audioApprovedKey"
+> & {
   reviewModes: ReviewMode[] | null;
   image: CardImage | null;
   /** The learner's own mark, never another member's. */

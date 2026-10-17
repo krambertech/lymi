@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  canPlayPronunciation,
   canSpeakTerm,
   headword,
   normaliseTerm,
@@ -69,5 +70,17 @@ describe("headword", () => {
     expect(headword("to lie (lay, lain)")).toBe("to lie (lay, lain)");
     expect(headword("брать / взять")).toBe("брать / взять");
     expect(headword("a·b")).toBe("a·b");
+  });
+});
+
+describe("canPlayPronunciation", () => {
+  it("plays a recording on a card with no language, and speech only where it can be made", () => {
+    expect(canPlayPronunciation({ term: "猫", language: null, audioSource: "recorded" })).toBe(
+      true,
+    );
+    expect(canPlayPronunciation({ term: "猫", language: null, audioSource: "generated" })).toBe(
+      false,
+    );
+    expect(canPlayPronunciation({ term: "猫", language: "ja" })).toBe(true);
   });
 });

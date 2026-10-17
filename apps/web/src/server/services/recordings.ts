@@ -31,23 +31,26 @@ export function recordingFormat(bytes: Uint8Array): RecordingFormat | null {
 
 /**
  * Stores an imported recording as the card's audio, which nothing replaces afterwards. A card
- * that already has a recording keeps it, so a retried step changes nothing. Returns whether the
- * card has a recording now.
+ * that already has a recording keeps it without reading the clip, so a retried step changes
+ * nothing. `skipped` is a clip that could not be read, played or fitted, or a card not found.
  */
 export async function storeRecording(
   ctx: ServiceContext,
   cardId: string,
-  bytes: Uint8Array,
+  load: () => Promise<Uint8Array | null>,
   bucket: R2Bucket,
-): Promise<boolean> {
+): Promise<"stored" | "kept" | "skipped"> {
   const [card] = await ctx.db
     .select({ deckId: schema.cards.deckId, audioSource: schema.cards.audioSource })
     .from(schema.cards)
     .where(and(eq(schema.cards.id, cardId), eq(schema.cards.userId, ctx.userId)));
-  if (!card) return false;
-  if (card.audioSource === "recorded") return true;
-  const format = recordingFormat(bytes);
-  if (!format || bytes.byteLength === 0 || bytes.byteLength > MAX_RECORDING_BYTES) return false;
+  if (!card) return "skipped";
+  if (card.audioSource === "recorded") return "kept";
+  const bytes = await load();
+  const format = bytes && recordingFormat(bytes);
+  if (!bytes || !format || bytes.byteLength === 0 || bytes.byteLength > MAX_RECORDING_BYTES) {
+    return "skipped";
+  }
 
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes.slice()));
   const fingerprint = [...digest.subarray(0, 16)]
@@ -83,5 +86,5 @@ export async function storeRecording(
       stored,
     ),
   ]);
-  return true;
+  return "stored";
 }

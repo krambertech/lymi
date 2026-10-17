@@ -876,9 +876,9 @@ function ImportLines({
       {preview.audio > 0 && (
         <Line tone="skip">
           {plural(preview.audio, {
-            one: "# sound is skipped, such as a sentence’s recording. Only a term’s own recording comes across.",
+            one: "# clip is left out, such as a sentence’s. Only a term’s own recording comes across.",
             other:
-              "# sounds are skipped, such as sentence recordings. Only a term’s own recording comes across.",
+              "# clips are left out, such as sentence clips. Only a term’s own recording comes across.",
           })}
         </Line>
       )}

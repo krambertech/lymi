@@ -86,7 +86,8 @@ function deckExternalId(source: string, key: string, name: string) {
 }
 
 type Lookup = {
-  byExternal: Map<string, { id: string; deckId: string }>;
+  /** `recorded` when the card already has a recording, which an import never reads again. */
+  byExternal: Map<string, { id: string; deckId: string; recorded: boolean }>;
   active: Map<string, string>;
 };
 
@@ -102,6 +103,7 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?:
           id: schema.cards.id,
           deckId: schema.cards.deckId,
           externalId: schema.cards.externalId,
+          audioSource: schema.cards.audioSource,
         })
         .from(schema.cards)
         .where(and(eq(schema.cards.userId, userId), inArray(schema.cards.externalId, ids))),
@@ -130,7 +132,13 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?:
   ]);
   const result: Lookup = { byExternal: new Map(), active: new Map() };
   for (const row of external) {
-    if (row.externalId) result.byExternal.set(row.externalId, { id: row.id, deckId: row.deckId });
+    if (row.externalId) {
+      result.byExternal.set(row.externalId, {
+        id: row.id,
+        deckId: row.deckId,
+        recorded: row.audioSource === "recorded",
+      });
+    }
   }
   for (const row of active) {
     result.active.set(`${row.language ?? ""} ${row.normalizedTerm}`, row.deckName);
@@ -150,6 +158,7 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
         id: schema.cards.id,
         deckId: schema.cards.deckId,
         externalId: schema.cards.externalId,
+        audioSource: schema.cards.audioSource,
       })
       .from(schema.cards)
       .where(and(eq(schema.cards.userId, userId), isNotNull(schema.cards.externalId))),
@@ -165,7 +174,13 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
   ]);
   const result: Lookup = { byExternal: new Map(), active: new Map() };
   for (const row of external) {
-    if (row.externalId) result.byExternal.set(row.externalId, { id: row.id, deckId: row.deckId });
+    if (row.externalId) {
+      result.byExternal.set(row.externalId, {
+        id: row.id,
+        deckId: row.deckId,
+        recorded: row.audioSource === "recorded",
+      });
+    }
   }
   for (const row of active) {
     result.active.set(`${row.language ?? ""} ${row.normalizedTerm}`, row.deckName);
@@ -174,7 +189,7 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
 }
 
 type Classified =
-  | { kind: "existing"; card: ImportedCard; id: string }
+  | { kind: "existing"; card: ImportedCard; id: string; recorded: boolean }
   | { kind: "duplicate"; card: ImportedCard; deckName: string }
   | { kind: "added"; card: ImportedCard; language: string | null };
 
@@ -193,7 +208,7 @@ function classify(
 ): Classified[] {
   return cards.map((card) => {
     const existing = found.byExternal.get(card.externalId);
-    if (existing) return { kind: "existing", card, id: existing.id };
+    if (existing) return { kind: "existing", card, id: existing.id, recorded: existing.recorded };
     const language =
       card.language !== undefined ? card.language : (languages[card.deckKey] ?? null);
     const key = dupKey(language, card.fields.term);
@@ -213,7 +228,7 @@ function tally(
   for (const item of classified) {
     if (item.kind === "existing") {
       counts.existing++;
-      if (pictures) countRecording(counts, item.card);
+      if (pictures && !item.recorded) countRecording(counts, item.card);
     } else if (item.kind === "duplicate") {
       counts.duplicates++;
       if (counts.duplicateExamples.length < DUPLICATE_EXAMPLES) {
@@ -551,7 +566,7 @@ export async function writeChunk<Note>(
     if (item.kind === "existing") {
       const { fields, tags } = item.card;
       // A recording replaces generated speech on a card an earlier import brought without it.
-      if (item.card.recording) {
+      if (item.card.recording && !item.recorded) {
         pictures.push({ cardId: item.id, name: item.card.recording, kind: "recording" });
       }
       existingRows.push({
@@ -778,12 +793,18 @@ export async function attachPictures<Note>(
   const recordings = { stored: 0, skipped: 0 };
   for (const picture of pending) {
     if (picture.kind === "recording") {
-      const bytes = storage.audio ? await read(picture.name, MAX_RECORDING_BYTES) : null;
-      const kept =
-        !!bytes &&
-        !!storage.audio &&
-        (await storeRecording(ctx, picture.cardId, bytes, storage.audio));
-      recordings[kept ? "stored" : "skipped"]++;
+      const { audio } = storage;
+      // A damaged clip is left out like an unplayable one; a storage failure still retries.
+      const outcome = audio
+        ? await storeRecording(
+            ctx,
+            picture.cardId,
+            () => read(picture.name, MAX_RECORDING_BYTES).catch(() => null),
+            audio,
+          )
+        : "skipped";
+      // A card a retried step already recorded was counted then.
+      if (outcome !== "kept") recordings[outcome]++;
       continue;
     }
     const images = imageStorage(storage);

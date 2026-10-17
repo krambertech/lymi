@@ -1,0 +1,70 @@
+# A deck filtered by one tag: the sheet's count and Tags level, Reset and Cancel, then Select all and Review due.
+appId: app.lymi
+name: Deck filters
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/${DECK_ID}
+- extendedWaitUntil:
+    visible: "Search this deck"
+    timeout: 20000
+- tapOn: "Filter"
+- extendedWaitUntil:
+    visible: "${TOTAL} cards"
+    timeout: 10000
+- assertVisible: "Any tag"
+- takeScreenshot: 01-filter-sheet
+- tapOn: "Any tag"
+- extendedWaitUntil:
+    visible: "Tags"
+    timeout: 10000
+- tapOn: "${TAG}.*"
+- assertVisible: "${KEPT} of ${TOTAL} cards"
+- takeScreenshot: 02-tags-level
+- tapOn: "Apply filters"
+- extendedWaitUntil:
+    notVisible: "Apply filters"
+    timeout: 10000
+- assertVisible: "${TAGGED_TERM}, .*"
+- assertNotVisible: "${OTHER_TERM}, .*"
+- takeScreenshot: 03-filtered-list
+# Reset clears the draft only; Cancel leaves the filters as they were.
+- tapOn: "Filter"
+- extendedWaitUntil:
+    visible: "${KEPT} of ${TOTAL} cards"
+    timeout: 10000
+- assertVisible: "${TAG}"
+- tapOn: "Reset filters"
+- assertVisible: "${TOTAL} cards"
+- assertVisible: "Any tag"
+- takeScreenshot: 04-reset-draft
+- tapOn: "Cancel"
+- extendedWaitUntil:
+    notVisible: "Apply filters"
+    timeout: 10000
+- assertNotVisible: "${OTHER_TERM}, .*"
+# What the filters show is reviewed as on the web: select all of it, then Review due.
+- tapOn: "Deck options"
+- tapOn: "Select cards"
+- tapOn: "Select all"
+- tapOn: "Actions for the selected cards"
+- extendedWaitUntil:
+    visible: "Review \\d+ due"
+    timeout: 10000
+- takeScreenshot: 05-selection-actions
+- tapOn: "Review \\d+ due"
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 30000
+- takeScreenshot: 06-review-chosen
+- repeat:
+    times: ${KEPT}
+    while:
+      notVisible: "Round done"
+    commands:
+      - tapOn:
+          point: "50%,80%"
+      - tapOn: "^Good.*"
+- extendedWaitUntil:
+    visible: "Round done"
+    timeout: 20000
+- takeScreenshot: 07-round-done

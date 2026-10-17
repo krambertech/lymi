@@ -469,7 +469,7 @@ export const analyticsProducers = {
   card_importance_set: ["worker"],
   tag_added: ["browser"],
   card_field_added: ["browser"],
-  deck_filter_added: ["browser"],
+  deck_filter_added: ["browser", "phone"],
   changelog_opened: ["browser"],
   library_searched: ["browser"],
   section_go_to: ["phone"],

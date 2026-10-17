@@ -194,6 +194,7 @@ msgid "{0, plural, one {# row has only one side, so it’s skipped.} other {# ro
 msgstr "{0, plural, one {# рядок має лише одну сторону, тож його пропущено.} few {# рядки мають лише одну сторону, тож їх пропущено.} many {# рядків мають лише одну сторону, тож їх пропущено.} other {# рядка мають лише одну сторону, тож їх пропущено.}}"
 
 #. placeholder {0}: deck.sectionCount
+#. placeholder {0}: draft.sections.length
 #. placeholder {0}: sections.length
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# розділ} few {# розділи} many {# розділів} other {# розділу}}"
@@ -201,6 +202,10 @@ msgstr "{0, plural, one {# розділ} few {# розділи} many {# розд
 #. placeholder {0}: preview.archived
 msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
 msgstr "{0, plural, one {# призупинена картка прийде в архів.} few {# призупинені картки прийдуть в архів.} many {# призупинених карток прийдуть в архів.} other {# призупиненої картки прийдуть в архів.}}"
+
+#. placeholder {0}: draft.tags.length
+msgid "{0, plural, one {# tag} other {# tags}}"
+msgstr "{0, plural, one {# тег} few {# теги} many {# тегів} other {# тегу}}"
 
 #. placeholder {0}: parsed.repeated
 msgid "{0, plural, one {# term appears more than once. Every card is imported.} other {# terms appear more than once. Every card is imported.}}"
@@ -397,6 +402,9 @@ msgstr "{0}, виконано"
 msgid "{0}% of the file arrived. Choose the same file to send the rest."
 msgstr "Завантажено {0}% файлу. Вибери той самий файл, щоб надіслати решту."
 
+msgid "{active, plural, one {# filter on} other {# filters on}}"
+msgstr "{active, plural, one {# фільтр увімкнено} few {# фільтри увімкнено} many {# фільтрів увімкнено} other {# фільтра увімкнено}}"
+
 msgid "{added, plural, one {# card was added before the import stopped.} other {# cards were added before the import stopped.}}"
 msgstr "{added, plural, one {До зупинки імпорту додано # картку.} few {До зупинки імпорту додано # картки.} many {До зупинки імпорту додано # карток.} other {До зупинки імпорту додано # картки.}}"
 
@@ -539,9 +547,6 @@ msgstr "{found, plural, one {термін знайдено} few {терміни 
 
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Запам’ятовування пораховано лише за # повторенням, тож перші кілька тижнів воно може сильно коливатися.} few {Запам’ятовування пораховано лише за # повтореннями, тож перші кілька тижнів воно може сильно коливатися.} many {Запам’ятовування пораховано лише за # повтореннями, тож перші кілька тижнів воно може сильно коливатися.} other {Запам’ятовування пораховано лише за # повторення, тож перші кілька тижнів воно може сильно коливатися.}}"
-
-msgid "{hiddenSections, plural, one {Show # more} other {Show # more}}"
-msgstr "{hiddenSections, plural, one {Показати ще #} few {Показати ще #} many {Показати ще #} other {Показати ще #}}"
 
 msgid "{hours, plural, one {in # hour} other {in # hours}}"
 msgstr "{hours, plural, one {через # годину} few {через # години} many {через # годин} other {через # години}}"
@@ -962,6 +967,12 @@ msgstr "Інша мова"
 msgid "Another way"
 msgstr "Інший спосіб"
 
+msgid "Any section"
+msgstr "Будь-який розділ"
+
+msgid "Any tag"
+msgstr "Будь-який тег"
+
 msgid "Any time"
 msgstr "Будь-коли"
 
@@ -991,6 +1002,9 @@ msgstr "Довідник API"
 
 msgid "App language, and the language AI uses for meanings."
 msgstr "Мова застосунку й мова, якою AI пише значення."
+
+msgid "Apply filters"
+msgstr "Застосувати фільтри"
 
 msgid "Apps you can import from"
 msgstr "Застосунки, з яких можна імпортувати"
@@ -1853,12 +1867,6 @@ msgstr "Час повторити"
 msgid "due this week"
 msgstr "до повторення цього тижня"
 
-msgid "Due this week"
-msgstr "Повторити цього тижня"
-
-msgid "Due today"
-msgstr "Повторити сьогодні"
-
 msgctxt "language"
 msgid "Dutch"
 msgstr "Нідерландська"
@@ -2071,10 +2079,6 @@ msgstr "Доповнити решту з AI"
 
 msgid "Filter"
 msgstr "Фільтр"
-
-#. placeholder {0}: i18n.number(chips.length)
-msgid "Filter · {0}"
-msgstr "Фільтр · {0}"
 
 msgid "Find terms"
 msgstr "Знайти терміни"
@@ -3324,9 +3328,6 @@ msgstr "Прибрати {name}"
 msgid "Remove {name}?"
 msgstr "Вилучити {name}?"
 
-msgid "Remove filter: {name}"
-msgstr "Прибрати фільтр: {name}"
-
 msgid "Remove from deck"
 msgstr "Вилучити з колоди"
 
@@ -3363,8 +3364,8 @@ msgstr "Змінити порядок серій"
 msgid "Replay pronunciation"
 msgstr "Відтворити вимову ще раз"
 
-msgid "Reset"
-msgstr "Скинути"
+msgid "Reset filters"
+msgstr "Скинути фільтри"
 
 msgid "Reset your password"
 msgstr "Новий пароль"

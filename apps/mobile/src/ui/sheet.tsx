@@ -61,6 +61,10 @@ interface SheetProps {
   description?: ReactNode;
   /** A quiet action at the title's end, such as Reset. */
   aside?: ReactNode;
+  /** In a sheet that saves, a short line centred under the title, such as how many cards filters keep. */
+  subtitle?: string;
+  /** A level of a sheet that saves, below its first: a back chevron takes close's place, named by `label`. */
+  back?: { label: string; onPress: () => void };
   /**
    * A sheet that saves: close at the start and an amber ✓ at the end, the title between them, as
    * every form has. Close and a swipe leave without saving.
@@ -83,6 +87,8 @@ export function Sheet({
   title,
   description,
   aside,
+  subtitle,
+  back,
   save,
   children,
   more,
@@ -101,14 +107,29 @@ export function Sheet({
   const inset = ROW_INSET;
   const heading = save ? (
     <View className="flex-row items-center gap-3 pb-3">
-      <GlassButton icon="close" label={t`Cancel`} onPress={() => onOpenChange(false)} />
-      <Text
-        className="flex-1 text-center text-md font-medium text-text"
-        accessibilityRole="header"
-        numberOfLines={1}
-      >
-        {title}
-      </Text>
+      {back ? (
+        <GlassButton icon="back" label={back.label} onPress={back.onPress} />
+      ) : (
+        <GlassButton icon="close" label={t`Cancel`} onPress={() => onOpenChange(false)} />
+      )}
+      <View className="flex-1 items-center">
+        <Text
+          className="text-center text-md font-medium text-text"
+          accessibilityRole="header"
+          numberOfLines={1}
+        >
+          {title}
+        </Text>
+        {subtitle && (
+          <Text
+            className="text-center text-sm text-muted"
+            style={{ fontVariant: ["tabular-nums"] }}
+            numberOfLines={1}
+          >
+            {subtitle}
+          </Text>
+        )}
+      </View>
       <GlassButton
         icon="check"
         label={save.label}

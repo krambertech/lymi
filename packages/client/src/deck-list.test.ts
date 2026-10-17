@@ -7,6 +7,7 @@ import {
   dueBucket,
   filterRows,
   groupRows,
+  liveFilters,
   noFilters,
   retag,
   splitForms,
@@ -123,6 +124,22 @@ describe("tags", () => {
       { key: "food", name: "food", cards: 1 },
       { key: "дієслова", name: "Дієслова", cards: 1 },
     ]);
+  });
+});
+
+describe("live filters", () => {
+  const filters = { states: [], due: null, sections: ["s1", "gone", ""], tags: ["food", "old"] };
+
+  it("drops the tags and sections the deck no longer has, keeping No section", () => {
+    expect(liveFilters(filters, new Set(["food"]), new Set(["s1"]))).toEqual({
+      ...filters,
+      sections: ["s1", ""],
+      tags: ["food"],
+    });
+  });
+
+  it("returns the same filters when every one still applies", () => {
+    expect(liveFilters(filters, new Set(["food", "old"]), new Set(["s1", "gone"]))).toBe(filters);
   });
 });
 

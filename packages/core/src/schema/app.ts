@@ -502,6 +502,8 @@ export const deckPublications = sqliteTable(
     revision: integer("revision").notNull().default(1),
     publishedAt: integer("published_at", { mode: "timestamp_ms" }).notNull(),
     withdrawnAt: integer("withdrawn_at", { mode: "timestamp_ms" }),
+    /** Another live deck's slug that a withdrawn deck's public page sends visitors to. Publishing clears it. */
+    redirectSlug: text("redirect_slug"),
     ...timestamps,
   },
   (t) => [

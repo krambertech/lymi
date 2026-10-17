@@ -195,12 +195,29 @@ test("anyone can read a published deck's page, see its sections and cards, and t
       expect(redirect.headers().location).toBe(`${publicSite}${moved}`);
     }
 
+    // A withdrawn deck merged into another sends its links there, keeping locale and query,
+    // through a target that was itself merged later, and answers 410 once the chain ends at a
+    // deck that has gone.
+    for (const [old, moved] of [
+      ["/explore/moved-estonian", pagePath],
+      ["/uk/explore/moved-estonian?utm_source=x", `/uk${pagePath}?utm_source=x`],
+      ["/explore/moved-twice-estonian", pagePath],
+    ]) {
+      const redirect = await request.get(`${publicSite}${old}`, { maxRedirects: 0 });
+      expect(redirect.status()).toBe(301);
+      expect(redirect.headers().location).toBe(`${publicSite}${moved}`);
+    }
+    expect(
+      (await request.get(`${publicSite}/explore/dead-end-estonian`, { maxRedirects: 0 })).status(),
+    ).toBe(410);
+
     const sitemap = await (await request.get(`${publicSite}/sitemap-decks.xml`)).text();
     expect(sitemap).toContain(`<loc>https://lymi.app/uk${pagePath}</loc>`);
     expect(sitemap).toContain("<loc>https://lymi.app/explore</loc>");
     expect(sitemap).toContain('hreflang="uk" href="https://lymi.app/uk/explore"');
     expect(sitemap).not.toContain("withdrawn-estonian");
     expect(sitemap).not.toContain("archived-estonian");
+    expect(sitemap).not.toContain("moved-estonian");
   });
 });
 

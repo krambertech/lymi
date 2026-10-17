@@ -1399,6 +1399,7 @@ function CardPlate({
             ) : (
               <CardLine
                 style={type.cue}
+                lang={mode.cue === "term" ? card.language : null}
                 // The term can be heard as soon as it is the question.
                 after={
                   pronounce && mode.cue === "term" ? (
@@ -1409,7 +1410,11 @@ function CardPlate({
                 {cue}
               </CardLine>
             )}
-            {readingOnCue && <Text className="pt-2 text-md text-muted">{reading}</Text>}
+            {readingOnCue && (
+              <Text className="pt-2 text-md text-muted" lang={card.language}>
+                {reading}
+              </Text>
+            )}
             {/* The hook has one place, under the cue, before the reveal and after it. */}
             {hook && hookShown ? (
               <View className="pt-3">
@@ -1431,6 +1436,7 @@ function CardPlate({
                       <Text
                         className="shrink text-2xl font-medium text-text"
                         style={back === noMeaning ? { color: p.muted } : undefined}
+                        lang={mode.target === "term" ? card.language : null}
                       >
                         {back}
                       </Text>
@@ -1442,6 +1448,7 @@ function CardPlate({
                     <CardLine
                       style={type.answer}
                       grows
+                      lang={mode.target === "term" ? card.language : null}
                       muted={back === noMeaning ? p.muted : undefined}
                       after={
                         pronounce && mode.target === "term" ? (
@@ -1455,7 +1462,10 @@ function CardPlate({
                 </Animated.View>
                 {picture && (
                   <Animated.View entering={arrive()} className="flex-row items-center gap-3">
-                    <Text className="shrink text-lg text-text-2">
+                    <Text
+                      className="shrink text-lg text-text-2"
+                      lang={mode.target === "term" ? null : card.language}
+                    >
                       {mode.target === "term" ? card.meaning : card.term}
                     </Text>
                     {pronounce && mode.target !== "term" && (
@@ -1466,7 +1476,9 @@ function CardPlate({
                 {/* After the reveal unless the cue keeps it: under a term cue it reads the term out. */}
                 {card.pronunciation && !readingOnCue && (
                   <Animated.View entering={arrive()}>
-                    <Text className="text-md text-muted">{card.pronunciation}</Text>
+                    <Text className="text-md text-muted" lang={card.language}>
+                      {card.pronunciation}
+                    </Text>
                   </Animated.View>
                 )}
                 {!picture && card.image && (
@@ -1476,7 +1488,9 @@ function CardPlate({
                 )}
                 {card.example && (
                   <Animated.View entering={arrive()}>
-                    <Text className="text-md text-text-2">{card.example}</Text>
+                    <Text className="text-md text-text-2" lang={card.language}>
+                      {card.example}
+                    </Text>
                   </Animated.View>
                 )}
                 {card.notes && (

@@ -158,7 +158,8 @@ test("a learner can filter, sort and open the words in a deck", async ({
       await expect(
         page.getByRole("heading", { level: 1, name: "leib · leiva · leiba" }),
       ).toBeVisible();
-      await expect(page.getByRole("dialog")).toHaveCount(0);
+      // The rename's toast is a dialog too and may still be up, so only the card's own sheet counts.
+      await expect(page.getByRole("dialog", { name: "leib · leiva · leiba" })).toHaveCount(0);
       await page.keyboard.press("j");
       await expect(
         page.getByRole("heading", { level: 1, name: "õppima · õppida · õpin" }),

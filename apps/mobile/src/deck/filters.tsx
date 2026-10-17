@@ -75,7 +75,7 @@ interface FilterToolsProps {
  * Filter and Sort over the list. Filter is one sheet: state and when cards are due are chosen on
  * its first level, and Section and Tags, which can run long, each open a level of their own in the
  * same sheet. Each tap saves to a draft that the count under the title answers, and the list
- * changes once, as the sheet goes. Each active filter is a chip that removes it. Both reset when
+ * changes once, as the sheet goes. With filters on, the Filter pill counts them. Both reset when
  * the learner leaves the deck. phone.md "Sheets".
  */
 export function FilterTools({

@@ -1,5 +1,6 @@
 import {
   type Direction,
+  DRAW_CARDS_MAX,
   type DrawInput,
   type DrawOut,
   type GradeInput,
@@ -94,7 +95,8 @@ export const reviewApi = {
       ? await request<Draw>("/api/review/draw", {
           method: "POST",
           body: JSON.stringify({
-            cards: [...scope.cards],
+            // Past the most one draw names, the deck's order keeps the first, so a huge filter still has its review.
+            cards: scope.cards.slice(0, DRAW_CARDS_MAX),
             ...(scope.deck ? { deck: scope.deck } : {}),
             tz: deviceTimezone(),
           } satisfies DrawInput),

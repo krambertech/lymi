@@ -8,6 +8,7 @@ import {
   filterRows,
   filtersParam,
   groupRows,
+  liveFilters,
   noFilters,
   parseFilters,
   retag,
@@ -143,6 +144,22 @@ describe("filters as a parameter", () => {
     expect(parseFilters(undefined)).toEqual(noFilters);
     expect(parseFilters("{not json")).toEqual(noFilters);
     expect(parseFilters('{"states":["gone",3],"due":"soon","tags":"food"}')).toEqual(noFilters);
+  });
+});
+
+describe("live filters", () => {
+  const filters = { states: [], due: null, sections: ["s1", "gone", ""], tags: ["food", "old"] };
+
+  it("drops the tags and sections the deck no longer has, keeping No section", () => {
+    expect(liveFilters(filters, new Set(["food"]), new Set(["s1"]))).toEqual({
+      ...filters,
+      sections: ["s1", ""],
+      tags: ["food"],
+    });
+  });
+
+  it("returns the same filters when every one still applies", () => {
+    expect(liveFilters(filters, new Set(["food", "old"]), new Set(["s1", "gone"]))).toBe(filters);
   });
 });
 

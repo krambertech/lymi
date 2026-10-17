@@ -8,9 +8,11 @@ import {
   type DeckGroup,
   type DeckRow,
   type DeckSort,
+  deckTags,
   filterRows,
   filtersParam,
   groupRows,
+  liveFilters,
   noFilters,
   rowState,
   splitForms,
@@ -104,6 +106,13 @@ export default function Deck() {
   const sections = sectionsQuery.data?.sections ?? NO_SECTIONS;
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
   const [chosenSort, setSort] = useState<DeckSort | null>(null);
+  // A tag renamed or a section deleted while the page is open would leave a filter nothing lists to untick.
+  useEffect(() => {
+    if (!cards.data || !sectionsQuery.data) return;
+    const tagKeys = new Set(deckTags(cards.data).map((tag) => tag.key));
+    const sectionIds = new Set(sectionsQuery.data.sections.map((s) => s.id));
+    setFilters((f) => liveFilters(f, tagKeys, sectionIds));
+  }, [cards.data, sectionsQuery.data]);
   const sort = chosenSort ?? (sections.length ? "section" : "added");
   const shown = useMemo(
     () => filterRows(rows, filters, "", Date.now(), sections),

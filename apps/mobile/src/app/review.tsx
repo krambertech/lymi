@@ -108,6 +108,7 @@ import { AiCardChip, Chip, StateChip } from "../ui/chip";
 import { Furigana, ReadingText } from "../ui/furigana";
 import { GlassSurface } from "../ui/glass";
 import { GRADES } from "../ui/grade";
+import { useLoadFailed } from "../ui/load-failed";
 import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
 import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
@@ -206,7 +207,11 @@ export default function Review() {
   const series = deck ? undefined : params.series || undefined;
   const section = deck ? params.section || undefined : undefined;
   const filters = deck && !section && !round ? params.filters || undefined : undefined;
-  const filtered = useFilteredCards(deck, filters);
+  const {
+    cards: filtered,
+    failed: filteredFailed,
+    retry: retryFiltered,
+  } = useFilteredCards(deck, filters);
   // Trimmed rather than dropped, so a long list never widens into the whole deck's review.
   const chosen =
     deck && !round && !section && !filters ? params.cards?.split(",").filter(Boolean) : undefined;
@@ -217,7 +222,9 @@ export default function Review() {
   const leave = () => (router.canGoBack() ? router.back() : router.replace("/today"));
 
   // The filtered cards are known before the review starts, from the deck page that asked for it.
-  if (filters && !filtered) return null;
+  if (filters && !filtered) {
+    return filteredFailed ? <FilteredCardsFailed onRetry={retryFiltered} onClose={leave} /> : null;
+  }
   // A review of another scope or round starts over, so nothing from this one carries into it.
   return (
     <Run
@@ -235,14 +242,46 @@ export default function Review() {
  * a filter such as Due today, and the review keeps the cards it started with.
  */
 function useFilteredCards(deck: string | undefined, filters: string | undefined) {
-  const rows = useQuery({ ...deckCardsQuery(deck ?? ""), enabled: !!deck && !!filters }).data;
-  const sections = useSections(filters ? deck : undefined).data?.sections;
+  const rowsQuery = useQuery({ ...deckCardsQuery(deck ?? ""), enabled: !!deck && !!filters });
+  const sectionsQuery = useSections(filters ? deck : undefined);
+  const rows = rowsQuery.data;
+  const sections = sectionsQuery.data?.sections;
   const [cards, setCards] = useState<string[] | undefined>(undefined);
   useEffect(() => {
     if (cards || !filters || !rows || !sections) return;
     setCards(filteredIds(rows, parseFilters(filters), sections));
   }, [cards, filters, rows, sections]);
-  return cards;
+  const rowsFailed = useLoadFailed(rowsQuery);
+  const sectionsFailed = useLoadFailed(sectionsQuery);
+  return {
+    cards,
+    failed: rowsFailed || sectionsFailed,
+    retry: () => {
+      if (rowsFailed) void rowsQuery.refetch();
+      if (sectionsFailed) void sectionsQuery.refetch();
+    },
+  };
+}
+
+/** Filtered cards that could not load, offline with nothing kept or after an error, rather than a blank modal over the deck. */
+function FilteredCardsFailed({ onRetry, onClose }: { onRetry: () => void; onClose: () => void }) {
+  const { t } = useLingui();
+  const pull = usePullToEnd({ onEnd: onClose, away: true });
+  useSystemBack(() => {
+    onClose();
+    return true;
+  });
+  return (
+    <Cover style={pull.style}>
+      <ReviewError
+        title={t`Couldn’t load your cards`}
+        body={t`Check your connection and try again.`}
+        onRetry={onRetry}
+        action={t`Back`}
+        onAction={onClose}
+      />
+    </Cover>
+  );
 }
 
 /**

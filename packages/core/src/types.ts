@@ -976,7 +976,7 @@ export const DRAW_CARDS_MAX = 10_000;
 /** `POST /api/review/draw`: the draw over chosen cards, such as the cards a deck's filters show. */
 export const DrawInput = z
   .object({
-    cards: z.array(z.string().min(1)).max(DRAW_CARDS_MAX).meta({
+    cards: z.array(z.string().min(1).max(64)).max(DRAW_CARDS_MAX).meta({
       description: "Only these cards are drawn from; today's log still covers every scope.",
     }),
     deck: z.string().optional().meta({ description: "Limit the cards to one deck" }),

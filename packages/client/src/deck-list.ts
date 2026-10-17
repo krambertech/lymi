@@ -113,6 +113,20 @@ export function activeFilterCount(filters: DeckFilters): number {
   );
 }
 
+/** Filters without the tags and sections the deck no longer has, and the same filters when it still has them all. */
+export function liveFilters(
+  filters: DeckFilters,
+  tagKeys: ReadonlySet<string>,
+  sectionIds: ReadonlySet<string>,
+): DeckFilters {
+  const tags = filters.tags.filter((key) => tagKeys.has(key));
+  // "" is No section, which every deck has.
+  const sections = filters.sections.filter((id) => id === "" || sectionIds.has(id));
+  return tags.length === filters.tags.length && sections.length === filters.sections.length
+    ? filters
+    : { ...filters, tags, sections };
+}
+
 /** The section a card sorts under: its own when that section is listed, otherwise none. */
 export const sectionOf = (row: DeckRow, sections: readonly Section[]): string =>
   row.card.sectionId && sections.some((s) => s.id === row.card.sectionId) ? row.card.sectionId : "";

@@ -7,7 +7,7 @@ import {
   shouldPersistQuery,
   warmCache,
 } from "./cache";
-import { deckCardsQuery } from "./queries";
+import { deckCardsQuery, drawQuery } from "./queries";
 import { configureForTest } from "./test/configure";
 
 configureForTest(new Map(), { baseUrl: "https://lymi.test" });
@@ -94,6 +94,21 @@ describe("what the kept cache holds", () => {
         .filter(shouldPersistQuery)
         .map((q) => q.queryKey),
     ).toEqual([["decks"]]);
+  });
+
+  it("keeps a deck's draw but not a draw over chosen cards", () => {
+    const qc = client();
+    const cache = qc.getQueryCache();
+    for (const scope of [{ deck: "d1" }, { deck: "d1", cards: ["c1", "c2"] }]) {
+      const { queryKey, meta } = drawQuery(scope);
+      cache.build(qc, { queryKey, ...(meta ? { meta } : {}) }).setData({});
+    }
+    expect(
+      cache
+        .getAll()
+        .filter(shouldPersistQuery)
+        .map((q) => q.queryKey),
+    ).toEqual([["queue", "deck:d1", "draw"]]);
   });
 });
 

@@ -40,8 +40,15 @@ name: Long-press menus
 - assertVisible: "Archive card"
 - takeScreenshot: 02-card-menu
 - tapOn: "Mark important"
+# The two cards come in the API's order, so the second can sit above the first on the page.
 - scrollUntilVisible:
     element: "${ARCHIVE_TERM}, .*"
+    centerElement: true
+    timeout: 5000
+    optional: true
+- scrollUntilVisible:
+    element: "${ARCHIVE_TERM}, .*"
+    direction: UP
     centerElement: true
 - longPressOn: "${ARCHIVE_TERM}, .*"
 - extendedWaitUntil:

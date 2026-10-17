@@ -17,6 +17,7 @@ import { Button, Plate, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { BarText, Screen } from "../../../ui/screen";
 import { Sheet, SheetError, SheetGroup, SheetNote, SheetRow } from "../../../ui/sheet";
+import { useSheetFocus } from "../../../ui/sheet-focus";
 import { Skeleton } from "../../../ui/skeleton";
 import { toast } from "../../../ui/toast-host";
 
@@ -306,6 +307,7 @@ function NameSheet({
   const [name, setName] = useState("");
   const [invalid, setInvalid] = useState<string | null>(null);
   const [opened, setOpened] = useState<typeof target>(null);
+  const focus = useSheetFocus({ open: target !== null });
   // Each opening starts from the section's name, or empty for a new one.
   if (target !== opened) {
     setOpened(target);
@@ -343,7 +345,7 @@ function NameSheet({
             setName(next);
             setInvalid(null);
           }}
-          autoFocus
+          {...focus}
           onSubmitEditing={submit}
           submitBehavior="submit"
           returnKeyType="done"

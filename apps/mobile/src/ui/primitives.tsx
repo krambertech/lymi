@@ -1,5 +1,4 @@
 import { shadows } from "@lymi/design";
-import * as Haptics from "expo-haptics";
 import { createContext, type ReactNode, type Ref, useContext, useEffect, useRef } from "react";
 import {
   ActivityIndicator,
@@ -22,6 +21,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useResolveClassNames } from "uniwind";
+import { haptics } from "../theme/haptics";
 import { ALWAYS, useReduceMotion } from "../theme/motion";
 import { clear, type Palette, usePalette, useRoom } from "../theme/palette";
 import { fitType } from "../theme/type";
@@ -106,7 +106,7 @@ export function Press({
         onPressOut?.(e);
       }}
       onPress={(e) => {
-        if (haptic) Haptics.selectionAsync();
+        if (haptic) haptics.press();
         onPress?.(e);
       }}
       style={[animated, style]}
@@ -262,7 +262,7 @@ export function IconButton({
         repeat && !disabled
           ? () => {
               held.current = setInterval(() => {
-                Haptics.selectionAsync();
+                haptics.tick();
                 onPress?.();
               }, REPEAT_MS);
             }

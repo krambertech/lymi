@@ -1,11 +1,12 @@
 import { useLingui } from "@lingui/react/macro";
 import { useRouter } from "expo-router";
 import { useEffect, useRef } from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDoor } from "../../auth/door";
 import { EmailContent } from "../../auth/door-parts";
 import { usePalette } from "../../theme/palette";
+import { KeyboardScroll } from "../../ui/keyboard";
 import { Icon, Press, Text } from "../../ui/primitives";
 
 /** The email forms on their own screen, top-aligned, so nothing re-centres as a step changes. */
@@ -20,12 +21,11 @@ export default function Email() {
   goTo.current = door.goTo;
   useEffect(() => () => goTo.current("doors"), []);
   return (
-    <ScrollView
+    <KeyboardScroll
       className="flex-1 bg-canvas"
       contentContainerClassName="gap-6 px-5"
       contentContainerStyle={{ paddingTop: insets.top, paddingBottom: insets.bottom + 24 }}
       keyboardShouldPersistTaps="handled"
-      automaticallyAdjustKeyboardInsets
     >
       <View className="h-14 flex-row items-center">
         <Press
@@ -38,6 +38,6 @@ export default function Email() {
         </Press>
       </View>
       <EmailContent door={door} />
-    </ScrollView>
+    </KeyboardScroll>
   );
 }

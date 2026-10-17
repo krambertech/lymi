@@ -559,6 +559,9 @@ msgstr "{due, plural, one {карточка к повторению сегодн
 msgid "{due, plural, one {card to review now} other {cards to review now}}"
 msgstr "{due, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}}"
 
+msgid "{due, plural, one {Review # due} other {Review # due}}"
+msgstr "{due, plural, one {Повтори # на сегодня} few {Повтори # на сегодня} many {Повтори # на сегодня} other {Повтори # на сегодня}}"
+
 msgid "{field} becomes"
 msgstr "{field} становится"
 
@@ -648,6 +651,9 @@ msgstr "{queued, plural, one {# оценка или изменение, сдел
 
 msgid "{restNotes, plural, one {# more note of a less common kind is imported as it is.} other {# more notes of less common kinds are imported as they are.}}"
 msgstr "{restNotes, plural, one {Ещё # запись более редкого вида импортируется как есть.} few {Ещё # записи более редких видов импортируются как есть.} many {Ещё # записей более редких видов импортируются как есть.} other {Ещё # записи более редких видов импортируются как есть.}}"
+
+msgid "{reviewable, plural, =0 {Nothing to review} one {Review all #} other {Review all #}}"
+msgstr "{reviewable, plural, =0 {Нечего повторять} one {Повтори все #} few {Повтори все #} many {Повтори все #} other {Повтори все #}}"
 
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
@@ -787,6 +793,9 @@ msgstr "Доступ"
 
 msgid "Account"
 msgstr "Аккаунт"
+
+msgid "Actions"
+msgstr "Действия"
 
 msgid "Activity"
 msgstr "Активность"
@@ -1211,10 +1220,6 @@ msgstr "Автор: {0}"
 
 msgid "by {who}"
 msgstr "автор: {who}"
-
-#. placeholder {0}: app.claimed
-msgid "calls itself “{0}”"
-msgstr "называет себя «{0}»"
 
 msgid "Camera"
 msgstr "Камера"
@@ -2922,9 +2927,6 @@ msgstr "Переместить в…"
 msgid "Move up"
 msgstr "Выше"
 
-msgid "Move…"
-msgstr "Переместить…"
-
 msgid "Moved “{deckName}” to {seriesName}"
 msgstr "«{deckName}» перенесена в «{seriesName}»"
 
@@ -3612,6 +3614,9 @@ msgstr "Убрать {name}"
 msgid "Remove {name}?"
 msgstr "Исключить {name}?"
 
+msgid "Remove a filter above, or show every card in this deck."
+msgstr "Убери фильтр выше или покажи все карточки этой колоды."
+
 msgid "Remove filter: {label}"
 msgstr "Убрать фильтр: {label}"
 
@@ -3709,6 +3714,12 @@ msgstr "Открой карточку, когда вспомнишь"
 
 msgid "Review"
 msgstr "Повторение"
+
+msgid "Review {limit} of {due} due"
+msgstr "Повтори {limit} из {due} на сегодня"
+
+msgid "Review {limit} of {reviewable}"
+msgstr "Повтори {limit} из {reviewable}"
 
 msgid "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}"
 msgstr "Повторить серию «{seriesName}», {due, plural, one {# карточка к повторению} few {# карточки к повторению} many {# карточек к повторению} other {# карточки к повторению}}"
@@ -4579,6 +4590,9 @@ msgstr "Снять отметку «важная»"
 
 msgid "Untitled key"
 msgstr "Ключ без названия"
+
+msgid "Unverified"
+msgstr "Не проверено"
 
 msgid "Up to {MAX_FILES} files at a time. The first {room} were added."
 msgstr "Не больше {MAX_FILES} файлов за раз. Добавлены первые {room}."

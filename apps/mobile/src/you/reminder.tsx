@@ -1,15 +1,13 @@
-import { DatePicker, Host } from "@expo/ui/swift-ui";
-import { datePickerStyle, labelsHidden } from "@expo/ui/swift-ui/modifiers";
 import { useLingui } from "@lingui/react/macro";
 import { useCallback, useEffect, useState } from "react";
 import { AppState, Linking, View } from "react-native";
 import { useMMKVString } from "react-native-mmkv";
 import { DEVICE_KEYS, deviceStore } from "../data/kept";
 import { askPermission, notificationPermission, type Permission } from "../reminders/notifications";
-import { useRoom } from "../theme/palette";
 import { Button, Text } from "../ui/primitives";
 import { RowFace } from "../ui/row";
 import { Switch } from "../ui/switch";
+import { TimePicker } from "../ui/time-picker";
 
 /** Where the reminder starts when it is first turned on, as on the web. */
 const FIRST_TIME = "19:00";
@@ -81,22 +79,17 @@ export function ReminderSwitch({ reminder }: { reminder: Reminder }) {
 /** The time, on iOS's compact picker, under the switch while the reminder is on. */
 export function TimeRow({ reminder }: { reminder: Reminder }) {
   const { t } = useLingui();
-  const room = useRoom();
   if (!reminder.time) return null;
   return (
     <RowFace
       icon="time"
       label={t`Time`}
       control={
-        <Host colorScheme={room} matchContents>
-          <DatePicker
-            title={t`Time`}
-            selection={toDate(reminder.time)}
-            displayedComponents={["hourAndMinute"]}
-            onDateChange={(d) => reminder.set(toTime(d))}
-            modifiers={[datePickerStyle("compact"), labelsHidden()]}
-          />
-        </Host>
+        <TimePicker
+          label={t`Time`}
+          value={toDate(reminder.time)}
+          onChange={(d) => reminder.set(toTime(d))}
+        />
       }
     />
   );

@@ -2,20 +2,19 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type DeckSummary, errorMessage, type Series } from "@lymi/client/api";
 import { groupDecks } from "@lymi/client/library-groups";
-import * as Haptics from "expo-haptics";
 import { type Href, useRouter } from "expo-router";
 import { Alert, View } from "react-native";
 import { languageName } from "../../../data/languages";
 import { useArchivedDecks, useDecks, useSeriesList } from "../../../data/queries";
 import { useSeriesActions } from "../../../data/series";
 import { useOnline } from "../../../streak/goal-picker";
+import { haptics } from "../../../theme/haptics";
 import { usePalette } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
 import { ListRow, ListRowFace, listRowLabel } from "../../../ui/list-row";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
 import { OfflineNote } from "../../../ui/offline-note";
-import { openWeb } from "../../../ui/on-the-web";
 import { Icon, Plate, Press, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { RowMenu } from "../../../ui/row-menu";
@@ -58,7 +57,7 @@ export default function Library() {
               { label: t`Smart add`, icon: "ai", onSelect: () => router.push("/smart-add") },
               { label: t`New deck`, icon: "deck", onSelect: newDeck },
               { label: t`New series`, icon: "series", onSelect: newSeries },
-              { label: t`Import decks`, icon: "import", onSelect: () => openWeb("/import") },
+              { label: t`Import decks`, icon: "import", onSelect: () => router.push("/import") },
             ]}
           />
         </>
@@ -81,7 +80,7 @@ export default function Library() {
           kind="start"
           icon="library"
           title={t`No decks yet`}
-          body={t`A deck holds the words you learn together. Make one, or import decks on the web.`}
+          body={t`A deck holds the words you learn together. Make one, or import decks from another app.`}
           action={{ label: t`New deck`, onPress: newDeck }}
         />
       ) : (
@@ -136,7 +135,7 @@ function SeriesGroup({
   const cards = decks.reduce((n, d) => n + d.total, 0);
   const due = decks.reduce((n, d) => n + d.due, 0);
   const review = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    haptics.start();
     router.push(`/review?series=${s.id}`);
   };
   const seriesName = s.name;
@@ -275,7 +274,7 @@ function DeckRow({ deck: d, first }: { deck: DeckSummary; first: boolean }) {
   const due = d.total > 0 ? d.due : undefined;
   const href = `/library/${d.id}` as const;
   const review = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    haptics.start();
     router.push(`/review?deck=${d.id}`);
   };
   return (

@@ -1,4 +1,5 @@
 import {
+  type CaughtBy,
   captureAnalytics,
   capturePageview,
   initAnalytics,
@@ -7,7 +8,7 @@ import {
   setAnalyticsOpening,
   visitFirstTouch,
 } from "@lymi/client/analytics";
-import { FIRST_TOUCH_HEADER } from "@lymi/core/analytics";
+import { carryFirstTouch, FIRST_TOUCH_HEADER } from "@lymi/core/analytics";
 import { isStaleChunkError, reloadOntoCurrentBuild } from "./stale-build";
 
 export { captureAnalytics, capturePageview };
@@ -23,6 +24,14 @@ export function firstTouchData(): { firstTouch?: unknown } {
   return touch ? { firstTouch: touch } : {};
 }
 
+/** A product address that keeps where this visit began across a full page load. */
+export function withFirstTouch(path: string): string {
+  const touch = visitFirstTouch("product");
+  if (!touch) return path;
+  const url = carryFirstTouch(new URL(path, location.origin), touch);
+  return url.pathname + url.search;
+}
+
 export function initTelemetry(): void {
   initAnalytics({
     token: document.querySelector<HTMLMetaElement>('meta[name="lymi-posthog-token"]')?.content,
@@ -36,15 +45,24 @@ export function initTelemetry(): void {
   // Vite still rethrows the failed import, which the router or the handlers below then see.
   window.addEventListener("vite:preloadError", () => reloadOntoCurrentBuild());
   window.addEventListener("error", (event) => {
-    if (event.error) reportClientException(event.error);
+    if (event.error) reportClientException(event.error, "window");
   });
-  window.addEventListener("unhandledrejection", (event) => reportClientException(event.reason));
+  window.addEventListener("unhandledrejection", (event) =>
+    reportClientException(event.reason, "rejection"),
+  );
 }
 export const setTelemetryLearner = setAnalyticsLearner;
 export const setTelemetryOpening = setAnalyticsOpening;
 
+// A route error reaches both the router's boundary and React's root, which would report it twice.
+const reported = new WeakSet<object>();
+
 /** A chunk an older build named is recovered by a reload, so only a second failure is reported. */
-export function reportClientException(error: unknown): void {
+export function reportClientException(error: unknown, caughtBy: CaughtBy): void {
+  if (typeof error === "object" && error !== null) {
+    if (reported.has(error)) return;
+    reported.add(error);
+  }
   if (isStaleChunkError(error) && reloadOntoCurrentBuild()) return;
-  reportBrowserException(error);
+  reportBrowserException(error, caughtBy);
 }

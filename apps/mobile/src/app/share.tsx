@@ -21,8 +21,6 @@ import {
   ScrollView,
   Share,
   TextInput,
-  type TurboModule,
-  TurboModuleRegistry,
   View,
 } from "react-native";
 import { useDecks } from "../data/queries";
@@ -31,6 +29,7 @@ import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { ActionMenu } from "../ui/action-menu";
 import { Chip } from "../ui/chip";
+import { clipboard } from "../ui/clipboard";
 import { FormHeader } from "../ui/form-header";
 import { useFrost } from "../ui/glass";
 import { Icon, type IconName } from "../ui/icons";
@@ -39,11 +38,6 @@ import { Press, Text } from "../ui/primitives";
 import { SheetError, SheetGroup, SheetHeading, SheetNote, SheetRow } from "../ui/sheet";
 import { Skeleton } from "../ui/skeleton";
 import { OnGlass } from "../ui/surface";
-
-// React Native still ships its clipboard natively; importing `Clipboard` from it only adds a warning that it moved.
-const clipboard = TurboModuleRegistry.get<TurboModule & { setString(content: string): void }>(
-  "Clipboard",
-);
 
 const WHOLE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -407,7 +401,12 @@ export default function ShareDeck() {
                   <>
                     <View className="min-h-11 flex-row items-center gap-2 rounded-xl bg-glass-plate px-3 py-2">
                       <Icon name="linkOn" size={16} colour={p.muted} />
-                      <Text className="flex-1 text-md text-text" numberOfLines={1} selectable>
+                      {/* Android clips a selectable line rather than ending it in an ellipsis; Copy link is beside it. */}
+                      <Text
+                        className="flex-1 text-md text-text"
+                        numberOfLines={1}
+                        selectable={Platform.OS === "ios"}
+                      >
                         {link.url}
                       </Text>
                     </View>
@@ -417,7 +416,7 @@ export default function ShareDeck() {
                           icon={copied ? "check" : "copy"}
                           label={copied ? t`Copied` : t`Copy link`}
                           onPress={() => {
-                            clipboard.setString(link.url);
+                            clipboard?.setString(link.url);
                             setCopied(true);
                             AccessibilityInfo.announceForAccessibility(t`Copied`);
                           }}

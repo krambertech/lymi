@@ -7,13 +7,13 @@ import { useRouter } from "expo-router";
 import { openBrowserAsync } from "expo-web-browser";
 import { useState } from "react";
 import { Alert, View } from "react-native";
-import { authClient } from "../../../auth/client";
+import { authClient, siteUrl } from "../../../auth/client";
 import { useDecks, useInsights } from "../../../data/queries";
+import { ExportSheet } from "../../../export/export-sheet";
 import { RunStrip } from "../../../insights/figures";
 import { chooseTheme, savedTheme, type ThemeChoice } from "../../../theme/choice";
 import { usePalette } from "../../../theme/palette";
 import { Select } from "../../../ui/menu";
-import { openWeb } from "../../../ui/on-the-web";
 import { Icon, Plate, Press, RowArrow, SectionTitle, Text } from "../../../ui/primitives";
 import { Row, RowFace, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
@@ -23,12 +23,12 @@ import { ProfileSheet, useProfile } from "../../../you/profile";
 import { Blocked, ReminderSwitch, TimeRow, useReminder } from "../../../you/reminder";
 
 /** The API reference, where publishing and deck reports are done with a key. ADR 0028. */
-const API_DOCS = "https://lymi.app/docs/api";
+const API_DOCS = siteUrl("/docs/api");
 
 /**
  * Everything about the learner, and every setting: Insights first, then this phone's reminder, the
- * account's language, this phone's theme, Activity, the setup jobs that stay on the web, feedback
- * and sign-out. phone.md "Navigation", ADR 0030.
+ * account's language, this phone's theme, Activity, the learner's data, feedback and sign-out.
+ * phone.md "Navigation", ADR 0036.
  */
 export default function You() {
   const { t } = useLingui();
@@ -38,6 +38,7 @@ export default function You() {
   const language = useAppLanguage();
   const profile = useProfile();
   const [editing, setEditing] = useState(false);
+  const [exporting, setExporting] = useState(false);
   // Publishing and its reports are done with an API key by the few accounts Lymi lets publish.
   const publishes = useDecks().data?.some((d) => d.role === "owner" && d.published) ?? false;
   const themes: { value: ThemeChoice; label: string }[] = [
@@ -90,24 +91,13 @@ export default function You() {
       <View>
         <SectionTitle>{t`Your data`}</SectionTitle>
         <Rows>
-          <Row icon="import" label={t`Import`} end="web" onPress={() => openWeb("/import")} />
-          <Row
-            icon="export"
-            label={t`Export`}
-            end="web"
-            onPress={() => openWeb("/settings#export")}
-          />
-          <Row
-            icon="keys"
-            label={t`API keys`}
-            end="web"
-            onPress={() => openWeb("/settings#api-keys")}
-          />
+          <Row icon="import" label={t`Import`} onPress={() => router.push("/import")} />
+          <Row icon="export" label={t`Export library`} onPress={() => setExporting(true)} />
+          <Row icon="keys" label={t`API keys`} onPress={() => router.push("/you/api-keys")} />
           <Row
             icon="apps"
             label={t`Connected apps`}
-            end="web"
-            onPress={() => openWeb("/settings#connected-apps")}
+            onPress={() => router.push("/you/connected-apps")}
           />
           {publishes && (
             <Row
@@ -140,6 +130,7 @@ export default function You() {
       </Rows>
 
       <ProfileSheet open={editing} onOpenChange={setEditing} profile={profile} />
+      <ExportSheet open={exporting} onOpenChange={setExporting} scope={{ kind: "library" }} />
     </Screen>
   );
 }

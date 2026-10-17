@@ -52,3 +52,11 @@ it("ends the previous scope on navigation and never fabricates empty completions
   tracker.finish("empty");
   expect(send).toHaveBeenCalledOnce();
 });
+it("names what the leg was opened for", () => {
+  const send = vi.fn();
+  const tracker = new ReviewSessionTracker(send, id);
+  tracker.update("filter", { cardsDone: 0, cardCount: 3, first: false, scope: "chosen" });
+  tracker.update("filter", { cardsDone: 3, cardCount: 3, first: false, scope: "chosen" });
+  tracker.finish("empty");
+  expect(send.mock.calls[0]?.[0]).toMatchObject({ scope: "chosen", card_count: 3 });
+});

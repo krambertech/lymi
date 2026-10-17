@@ -5,7 +5,9 @@ import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { Icon, type IconName } from "./icons";
 import { Press, Text } from "./primitives";
+import { ClearText } from "./search-bar";
 import { Sheet, SheetGroup, SheetRow } from "./sheet";
+import { useSheetFocus } from "./sheet-focus";
 
 // A choice rises from the bottom edge as a sheet: iOS's glass, Lymi's rows. Commands from a button are
 // iOS's own menu, in action-menu.tsx. phone.md "Menus" and "Sheets".
@@ -96,13 +98,14 @@ export function SearchField({
 }) {
   const { t } = useLingui();
   const p = usePalette();
+  const focus = useSheetFocus();
   return (
     <View
       className={`h-11 flex-row items-center gap-2 rounded-xl px-3.5 ${fill === "group" ? "bg-glass-group" : "bg-glass-plate"}`}
     >
       <Icon name="search" size={18} colour={p.muted} />
       <TextInput
-        autoFocus
+        {...focus}
         value={query}
         onChangeText={onChange}
         placeholder={t`Search`}
@@ -119,6 +122,7 @@ export function SearchField({
         style={{ fontSize: 17 }}
         maxFontSizeMultiplier={inputCap(17)}
       />
+      <ClearText value={query} onClear={() => onChange("")} />
     </View>
   );
 }

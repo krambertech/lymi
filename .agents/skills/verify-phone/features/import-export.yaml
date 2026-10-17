@@ -1,0 +1,115 @@
+# Import and export: a Quizlet set pasted, previewed and imported, then the library exported as an Anki package.
+appId: app.lymi
+name: Import and export
+---
+- runFlow: _open.yaml
+- tapOn: "You"
+- scrollUntilVisible:
+    element: "Import"
+- tapOn: "Import"
+- extendedWaitUntil:
+    visible: "Quizlet, .*"
+    timeout: 20000
+- takeScreenshot: 01-sources
+- tapOn: "Quizlet, .*"
+- extendedWaitUntil:
+    visible: "Import from Quizlet"
+    timeout: 20000
+- tapOn: "Your set’s text.*"
+- inputText: "${SET}"
+# The keyboard can already be gone by now, and hiding it again fails.
+- runFlow:
+    when:
+      visible: "space"
+    commands:
+      - hideKeyboard
+- scrollUntilVisible:
+    element: "3 cards"
+- scrollUntilVisible:
+    element: "Set name"
+- tapOn: "Set name"
+- inputText: "${DECK}"
+- runFlow:
+    when:
+      visible: "space"
+    commands:
+      - hideKeyboard
+- takeScreenshot: 02-pasted
+- scrollUntilVisible:
+    element: "Continue with 3 cards"
+- tapOn: "Continue with 3 cards"
+# A deck whose language the cards don't settle is asked about first.
+- extendedWaitUntil:
+    visible: "Does this card look right\\?|What language is this deck in\\?"
+    timeout: 60000
+- runFlow:
+    when:
+      visible: "What language is this deck in\\?"
+    commands:
+      - takeScreenshot: 03-language
+      - scrollUntilVisible:
+          element: "Continue"
+      - tapOn: "Continue"
+- extendedWaitUntil:
+    visible: "Does this card look right\\?"
+    timeout: 20000
+- takeScreenshot: 04-card
+- scrollUntilVisible:
+    element: "Looks right"
+- tapOn: "Looks right"
+- extendedWaitUntil:
+    visible: "Ready to import 3 cards"
+    timeout: 20000
+- takeScreenshot: 05-ready
+- scrollUntilVisible:
+    element: "Import 3 cards"
+- tapOn: "Import 3 cards"
+- extendedWaitUntil:
+    visible: "Imported 3 cards"
+    timeout: 90000
+- takeScreenshot: 06-imported
+- tapOn: "Open Library"
+- extendedWaitUntil:
+    visible: "${DECK}.*"
+    timeout: 20000
+- takeScreenshot: 07-library
+- tapOn: "You"
+- scrollUntilVisible:
+    element: "Export library"
+- tapOn: "Export library"
+- extendedWaitUntil:
+    visible: "Anki package.*"
+    timeout: 20000
+- takeScreenshot: 08-formats
+- tapOn: "Anki package.*"
+- extendedWaitUntil:
+    visible: "Save or share"
+    timeout: 90000
+- takeScreenshot: 09-ready
+- tapOn: "Save or share"
+# iOS's share sheet names the file it was given.
+- extendedWaitUntil:
+    visible: ".*\\.apkg.*|Save to Files"
+    timeout: 30000
+- takeScreenshot: 10-share
+# Opened from Activity, the export comes back as its file each time, not as the format list.
+- swipe:
+    direction: DOWN
+- tapOn: "Activity"
+- extendedWaitUntil:
+    visible: "Exported .* as an Anki package.*"
+    timeout: 20000
+- tapOn: "Exported .* as an Anki package.*"
+- extendedWaitUntil:
+    visible: "Save or share"
+    timeout: 20000
+# From the sheet's grabber, since a swipe that starts on a button presses it.
+- swipe:
+    start: "50%, 71%"
+    end: "50%, 99%"
+- tapOn: "Exported .* as an Anki package.*"
+- extendedWaitUntil:
+    visible: "Save or share"
+    timeout: 20000
+- assertNotVisible: "Anki package"
+- takeScreenshot: 11-activity-again

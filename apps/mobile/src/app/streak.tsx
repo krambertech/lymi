@@ -25,8 +25,8 @@ const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
  * against the goal with the longest run and the days reviewed, then the month a drag further up.
  * The goal is changed only from here, in a sheet of its own. streak.md, phone.md.
  */
-/** Long enough for the streak sheet to reach full height before the goal's sheet rises over it. */
-const RISE_MS = 320;
+/** Long enough for the streak sheet to glide to full height before the goal's sheet rises over it. */
+const RISE_MS = 500;
 
 export default function Streak() {
   const { summary, flame, left } = useDay();

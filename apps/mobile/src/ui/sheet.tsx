@@ -1,8 +1,4 @@
-// biome-ignore lint/style/noRestrictedImports: this is the one place the raw sheet is wrapped.
-import { BottomSheet, Group, Host, RNHostView } from "@expo/ui/swift-ui";
-import { presentationDetents, presentationDragIndicator } from "@expo/ui/swift-ui/modifiers";
 import { useLingui } from "@lingui/react/macro";
-import * as Haptics from "expo-haptics";
 import {
   Children,
   createContext,
@@ -15,6 +11,7 @@ import {
 } from "react";
 import {
   AccessibilityInfo,
+  Platform,
   Pressable,
   ScrollView,
   useWindowDimensions,
@@ -32,10 +29,12 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { haptics } from "../theme/haptics";
 import { clear, usePalette, useRoom } from "../theme/palette";
 import { GlassButton } from "./glass";
 import { Icon, type IconName } from "./icons";
 import { Text } from "./primitives";
+import { SheetFrame } from "./sheet-frame";
 import { OnGlass } from "./surface";
 
 // A sheet that rises over the screen, presented by iOS so it is Liquid Glass, follows the finger
@@ -100,7 +99,6 @@ export function Sheet({
   const fits = useAnimatedStyle(() => ({ maxHeight: tallest + keyboard.value }));
   const [peek, setPeek] = useState<number | null>(null);
   const inset = ROW_INSET;
-  const detents = more && peek ? [presentationDetents([{ height: peek }, "large"])] : [];
   const heading = save ? (
     <View className="flex-row items-center gap-3 pb-3">
       <GlassButton icon="close" label={t`Cancel`} onPress={() => onOpenChange(false)} />
@@ -158,62 +156,53 @@ export function Sheet({
   const left = useDerivedValue(() => whole.value - shown.value - offset.value);
   const edge = room === "dark" ? p.sheet : p.plate;
   return (
-    <Host colorScheme={room} style={{ position: "absolute", width: 0, height: 0 }}>
-      <BottomSheet
-        isPresented={open}
-        onIsPresentedChange={onOpenChange}
-        onDismiss={() => {
-          onDismiss?.();
-        }}
-        fitToContents={!more}
-      >
-        <Group modifiers={[presentationDragIndicator("visible"), ...detents]}>
-          {more ? (
-            // Fills the sheet rather than sizing to its rows, so its top shows when it peeks and the
-            // rest scrolls once it is dragged up to the full screen.
-            <RNHostView>
-              <ScrollView
-                style={{ width }}
-                contentContainerClassName={`px-4 pb-8 ${top}`}
-                keyboardShouldPersistTaps="handled"
-              >
-                <View onLayout={(e) => setPeek(e.nativeEvent.layout.height + 56)}>{first}</View>
-                <View className="gap-3 pt-3">
-                  <SheetInset.Provider value={inset}>
-                    <OnGlass>{more}</OnGlass>
-                  </SheetInset.Provider>
-                </View>
-              </ScrollView>
-            </RNHostView>
-          ) : (
-            <RNHostView matchContents>
-              {/* A list taller than the screen, such as every language, scrolls inside the sheet. */}
-              <View>
-                <Animated.ScrollView
-                  style={[{ width }, fits]}
-                  contentContainerClassName={`px-4 pb-4 ${top}`}
-                  // A row or Save takes the first tap, even with the keyboard up.
-                  keyboardShouldPersistTaps="handled"
-                  onScroll={onScroll}
-                  scrollEventThrottle={16}
-                  onLayout={(e) => {
-                    shown.value = e.nativeEvent.layout.height;
-                  }}
-                  onContentSizeChange={(_, h) => {
-                    whole.value = h;
-                  }}
-                >
-                  {first}
-                </Animated.ScrollView>
-                {/* At full height iOS turns the glass opaque, white by day and the room's sheet at night. */}
-                <ScrollEdge side="top" colour={edge} before={scrolled} />
-                <ScrollEdge side="bottom" colour={edge} before={left} />
-              </View>
-            </RNHostView>
-          )}
-        </Group>
-      </BottomSheet>
-    </Host>
+    <SheetFrame
+      open={open}
+      onOpenChange={onOpenChange}
+      onDismiss={() => onDismiss?.()}
+      expands={!!more}
+      peek={peek}
+    >
+      {more ? (
+        // Fills the sheet rather than sizing to its rows, so its top shows when it peeks and the
+        // rest scrolls once it is dragged up to the full screen.
+        <ScrollView
+          style={{ width }}
+          contentContainerClassName={`px-4 pb-8 ${top}`}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View onLayout={(e) => setPeek(e.nativeEvent.layout.height + 56)}>{first}</View>
+          <View className="gap-3 pt-3">
+            <SheetInset.Provider value={inset}>
+              <OnGlass>{more}</OnGlass>
+            </SheetInset.Provider>
+          </View>
+        </ScrollView>
+      ) : (
+        // A list taller than the screen, such as every language, scrolls inside the sheet.
+        <View>
+          <Animated.ScrollView
+            style={[{ width }, fits]}
+            contentContainerClassName={`px-4 pb-4 ${top}`}
+            // A row or Save takes the first tap, even with the keyboard up.
+            keyboardShouldPersistTaps="handled"
+            onScroll={onScroll}
+            scrollEventThrottle={16}
+            onLayout={(e) => {
+              shown.value = e.nativeEvent.layout.height;
+            }}
+            onContentSizeChange={(_, h) => {
+              whole.value = h;
+            }}
+          >
+            {first}
+          </Animated.ScrollView>
+          {/* At full height iOS turns the glass opaque, white by day and the room's sheet at night. */}
+          <ScrollEdge side="top" colour={edge} before={scrolled} />
+          <ScrollEdge side="bottom" colour={edge} before={left} />
+        </View>
+      )}
+    </SheetFrame>
   );
 }
 
@@ -272,11 +261,11 @@ export function SheetNote({ children }: { children: ReactNode }) {
   );
 }
 
-/** An error in a sheet, on the sheet's text line and read out as it appears: iOS ignores accessibilityLiveRegion. */
+/** An error in a sheet, on the sheet's text line and read out as it appears: iOS ignores accessibilityLiveRegion, so it is announced there. */
 export function SheetError({ children }: { children: string }) {
   const inset = useContext(SheetInset);
   useEffect(() => {
-    AccessibilityInfo.announceForAccessibility(children);
+    if (Platform.OS === "ios") AccessibilityInfo.announceForAccessibility(children);
   }, [children]);
   return (
     <Text
@@ -369,7 +358,7 @@ export function SheetRow({
   return (
     <Pressable
       onPress={() => {
-        Haptics.selectionAsync();
+        haptics.tick();
         onPress();
       }}
       accessibilityRole={chosen === undefined ? "menuitem" : multiple ? "checkbox" : "radio"}

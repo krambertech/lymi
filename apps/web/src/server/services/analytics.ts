@@ -30,7 +30,9 @@ export function track(dataset: AnalyticsWriter | undefined, event: AnalyticsEven
               ? event.kind
               : event.name === "account_deleted"
                 ? `${event.client}:${event.confirmed_with}`
-                : "";
+                : event.name === "export_started"
+                  ? `${event.format}:${event.scope}`
+                  : "";
   const value =
     event.name === "card_added" || event.name === "enrichment_finished"
       ? event.count

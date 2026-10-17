@@ -20,6 +20,7 @@ import { clear, usePalette } from "../theme/palette";
 import { Field, FieldDescription, FieldError, FieldLabel, Input, PasswordInput } from "../ui/field";
 import { GoogleMark } from "../ui/google-mark";
 import { Button, Icon, Press, Text } from "../ui/primitives";
+import { API_URL } from "./client";
 import { devSignIn, type SignIn, type Step } from "./use-sign-in";
 
 type EmailStep = Exclude<Step, "doors">;
@@ -199,13 +200,19 @@ function SwitchLinks({ door, step }: { door: SignIn; step: EmailStep }) {
   );
 }
 
+/** A Worker on this Mac, which alone answers the dev routes; a Release build pointed at one keeps them, to profile. */
+const LOCAL_WORKER = /^http:\/\/(localhost|127\.0\.0\.1)(:|\/|$)/.test(API_URL);
+
 /** Local development only: a persona without a password, or an empty account that starts at Welcome. */
 export function DevSignIn() {
-  if (!__DEV__) return null;
+  if (!__DEV__ && !LOCAL_WORKER) return null;
   return (
-    <View className="flex-row justify-center gap-2">
+    <View className="flex-row flex-wrap justify-center gap-2">
       <Press onPress={() => devSignIn()} haptic={false} className="px-2 py-2">
         <Text className="text-xs text-faint">Dev sign-in as learner</Text>
+      </Press>
+      <Press onPress={() => devSignIn("heavy")} haptic={false} className="px-2 py-2">
+        <Text className="text-xs text-faint">Dev sign-in as heavy</Text>
       </Press>
       <Press onPress={() => devSignIn("fresh", true)} haptic={false} className="px-2 py-2">
         <Text className="text-xs text-faint">Dev sign-up as new</Text>

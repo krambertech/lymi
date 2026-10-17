@@ -1,4 +1,4 @@
-import { KeyRound, Plug } from "lucide-react";
+import { KeyRound, ListFilter, Plug, SearchX } from "lucide-react";
 import { Button } from "../../components/button";
 import { EmptySection, ErrorState, NoResults } from "../../components/empty-state";
 import { NextStep, NextSteps } from "../../components/next-steps";
@@ -187,7 +187,7 @@ export const empty: Group = {
       slug: "no-results",
       name: "No results",
       source: "components/empty-state.tsx",
-      note: "A search or filter that matched nothing is one line under the controls that caused it, with the way back.",
+      note: "A search or filter that matched nothing takes the list's place under the controls that caused it: dashed, because it is temporary, with what to do and the way back.",
       Demo: () => (
         <Variants
           items={[
@@ -196,9 +196,10 @@ export const empty: Group = {
               render: () => (
                 <div className="w-full">
                   <NoResults
-                    title="Nothing matches “sbrig”"
+                    icon={<SearchX />}
+                    title="No cards match “sbrig”"
                     detail="Search looks at the term and the meaning."
-                    action={<Button size="sm">Clear search</Button>}
+                    action={<Button>Clear search</Button>}
                   />
                 </div>
               ),
@@ -208,8 +209,10 @@ export const empty: Group = {
               render: () => (
                 <div className="w-full">
                   <NoResults
-                    title="No Known cards in this deck"
-                    action={<Button size="sm">Show all</Button>}
+                    icon={<ListFilter />}
+                    title="No cards match these filters"
+                    detail="Remove a filter above, or show every card in this deck."
+                    action={<Button>Show all</Button>}
                   />
                 </div>
               ),

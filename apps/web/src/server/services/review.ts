@@ -1,5 +1,7 @@
 import type { Direction, DrawLogEntry, GradeInput, ReviewModeKey, Round } from "@lymi/core";
 import {
+  CHOSEN_LIMIT,
+  chosenOrder,
   countedRating,
   deserializeState,
   drawableCount,
@@ -23,10 +25,10 @@ import { track } from "./analytics";
 import { recordFirstReview } from "./analytics-review";
 import { audit } from "./audit";
 import { presentCards } from "./card-view";
-import { notFound, type ServiceContext } from "./context";
+import { notFound, type ServiceContext, ServiceError } from "./context";
 import { dateFormatter } from "./days";
 import { cardsById, drawInputs } from "./draw";
-import { memberOf } from "./members";
+import { deckAccess, memberOf } from "./members";
 import {
   type DayProgress,
   openDay,
@@ -52,14 +54,24 @@ export async function reviewQueue(
     sectionId?: string | undefined;
     limit?: number | undefined;
     round?: Round | undefined;
+    /** Cards the learner chose in one deck: review the started ones, due ones first. */
+    cardIds?: readonly string[] | undefined;
   } = {},
 ) {
-  const limit = Math.min(opts.limit ?? 50, 200);
+  const { round, deckId, seriesId, sectionId, cardIds } = opts;
+  if (cardIds && (!deckId || round || seriesId || sectionId)) {
+    throw new ServiceError("invalid", "Chosen cards review one deck, without a round or section");
+  }
+  if (cardIds && cardIds.length > CHOSEN_LIMIT) {
+    throw new ServiceError("invalid", `Choose at most ${CHOSEN_LIMIT} cards`);
+  }
+  // Chosen cards are fetched once, so they come whole up to the cap rather than a page at a time.
+  const limit = Math.min(opts.limit ?? (cardIds ? CHOSEN_LIMIT : 50), 200);
   const now = new Date();
   const zone = await reviewZone(ctx);
-  const { round, deckId, seriesId, sectionId } = opts;
   if (seriesId) await activeSeries(ctx, seriesId);
   if (sectionId) await visibleSection(ctx, sectionId, deckId);
+  if (cardIds && deckId) await deckAccess(ctx, deckId);
   const { cards, log, day, states, slipping } = await drawInputs(ctx, {
     deckId,
     sectionId,
@@ -67,10 +79,14 @@ export async function reviewQueue(
     now,
     zone,
     slipping: round === "slipping",
+    everyState: !!cardIds,
   });
-  const order = round
-    ? roundOrder(cards, log, day, { deckId, round, slipping })
-    : drawOrder(cards, log, day, { deckId }, limit);
+  const chosen = cardIds ? new Set(cardIds) : null;
+  const order = chosen
+    ? chosenOrder(cards, log, chosen)
+    : round
+      ? roundOrder(cards, log, day, { deckId, round, slipping })
+      : drawOrder(cards, log, day, { deckId }, limit);
   const front = order.slice(0, limit);
   const content = await presentContent(ctx, [...new Set(front.map((d) => d.cardId))]);
 
@@ -100,7 +116,11 @@ export async function reviewQueue(
     ];
   });
 
-  const total = round ? order.length : drawableCount(cards, log, day, { deckId });
+  const total = chosen
+    ? Math.min(order.length, limit)
+    : round
+      ? order.length
+      : drawableCount(cards, log, day, { deckId });
   return { total, items };
 }
 

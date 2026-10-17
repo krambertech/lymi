@@ -41,7 +41,10 @@ export const CONTEXT_MENU_ACTIONS = [
 ] as const;
 export type ContextMenuAction = (typeof CONTEXT_MENU_ACTIONS)[number];
 export const AnalyticsLocale = z.enum(["en", "uk", "ru"]);
-const session = { session_id: z.uuid() };
+/** What a review leg was opened for. */
+export const REVIEW_SCOPES = ["day", "deck", "series", "section", "round", "chosen"] as const;
+export type ReviewScopeKind = (typeof REVIEW_SCOPES)[number];
+const session = { session_id: z.uuid(), scope: z.enum(REVIEW_SCOPES).optional() };
 const count = z.number().int().nonnegative().max(1_000_000);
 const slug = z
   .string()
@@ -72,9 +75,8 @@ const step = z.enum([
   "review",
 ]);
 function approvedPath(value: string): string {
-  if (/^(?:\/(uk|ru))?\/explore\/[a-z0-9-]+$/.test(value)) return analyticsPath(value, "public");
-  const product = analyticsPath(value, "product");
-  return product !== "/other" ? product : analyticsPath(value, "public");
+  const page = analyticsPath(value, "public");
+  return page !== "/other" ? page : analyticsPath(value, "product");
 }
 const path = z.string().max(200).transform(approvedPath);
 const campaign = z.string().regex(/^[a-zA-Z0-9_-]{1,80}$/);
@@ -198,6 +200,10 @@ export const analyticsEvents = {
     outcome: z.enum(["done", "failed"]),
   }),
   import_failed: z.object({ source, card_count: count }),
+  export_started: z.object({
+    format: z.enum(["lymi", "anki"]),
+    scope: z.enum(["deck", "library"]),
+  }),
   daily_goal_set: z.object({ value: z.number().int().min(1).max(200), is_change: z.boolean() }),
   reminder_prompt_shown: z.object({}),
   reminder_prompt_accepted: z.object({}),
@@ -268,6 +274,7 @@ export const analyticsEvents = {
   card_importance_set: z.object({
     important: z.boolean(),
     channel: z.enum(["app", "api", "mcp"]),
+    count: count.optional(),
   }),
   entry_opened: z.object({
     entry: z.enum(["control", "shortcut", "quick_action", "widget"]),
@@ -278,6 +285,7 @@ export const analyticsEvents = {
     in_use: z.boolean(),
   }),
   deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
+  section_go_to: z.object({}),
   deck_tag_changed: z.object({
     action: z.enum(["rename", "merge", "archive", "restore"]),
     channel: z.enum(["app", "api", "mcp"]),
@@ -327,6 +335,7 @@ export const analyticsProducers = {
   import_started: ["worker"],
   import_finished: ["worker"],
   import_failed: ["worker"],
+  export_started: ["worker"],
   daily_goal_set: ["worker"],
   reminder_prompt_shown: ["browser"],
   reminder_prompt_accepted: ["browser"],
@@ -344,6 +353,7 @@ export const analyticsProducers = {
   card_importance_set: ["worker"],
   tag_added: ["browser"],
   deck_filter_added: ["browser"],
+  section_go_to: ["phone"],
   deck_tag_changed: ["worker"],
   cards_tagged: ["browser"],
   deck_enrichment_changed: ["worker"],
@@ -370,7 +380,7 @@ export function eventProperties(
 export function analyticsPath(path: string, surface: "public" | "product"): string {
   if (surface === "public") {
     const clean = path.replace(/^\/(uk|ru)(?=\/|$)/, "") || "/";
-    if (/^\/explore\/[a-z0-9-]+$/.test(clean)) return path.slice(0, 200);
+    if (/^\/explore\/[a-z0-9-]+(?:\/[a-z0-9-]+)?$/.test(clean)) return path.slice(0, 200);
     if (
       /^\/(?:docs(?:\/[a-z0-9-]+)*|languages(?:\/[a-z0-9-]+)?|ai-assistants|teachers|medicine|certifications|tutor-lessons|notes-to-flashcards|exams(?:\/[a-z0-9-]+)?|explore|changelog(?:\/[a-z0-9-]+)?|privacy|terms|support|signup|learn(?:\/[a-z0-9-]+)?)?$/.test(
         clean,
@@ -401,6 +411,8 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     "/feedback",
     "/share",
     "/series-order",
+    "/api-keys",
+    "/connected-apps",
   ];
   const base = routes.find((route) => path === route || path.startsWith(`${route}/`));
   return base ? (path === base ? base : `${base}/:item`) : "/other";
@@ -435,7 +447,7 @@ export function firstTouch(
   const carried = params.get(CARRIED.landing);
   const result: Attribution = {
     first_landing_page: carried
-      ? analyticsPath(carried, "public")
+      ? (path.safeParse(carried).data ?? "/other")
       : analyticsPath(parsed.pathname, surface),
   };
   const source = externalHost(params.get(CARRIED.referrer)) ?? externalHost(referrer);
@@ -447,15 +459,27 @@ export function firstTouch(
   return result;
 }
 
-/** Adds a visit's source to a link that leaves the page, unless the link already names one. */
+/**
+ * Adds a visit's source to a link that leaves the page, unless the link already names one. The
+ * landing page goes even without a referrer, since apps and messengers often send none.
+ */
 export function carryFirstTouch(target: URL, touch: Attribution): URL {
   const params = target.searchParams;
   if (params.has(CARRIED.landing) || CAMPAIGN_KEYS.some((key) => params.has(key))) return target;
-  if (!touch.referrer && !CAMPAIGN_KEYS.some((key) => touch[key])) return target;
   params.set(CARRIED.landing, touch.first_landing_page);
   if (touch.referrer) params.set(CARRIED.referrer, touch.referrer);
   for (const key of CAMPAIGN_KEYS) if (touch[key]) params.set(key, touch[key]);
   return target;
+}
+
+/** The address without the source a public page carried into it, so a copied link does not pass it on. */
+export function withoutCarriedFirstTouch(url: string): string | undefined {
+  const parsed = new URL(url);
+  if (!parsed.searchParams.has(CARRIED.landing) && !parsed.searchParams.has(CARRIED.referrer))
+    return;
+  parsed.searchParams.delete(CARRIED.landing);
+  parsed.searchParams.delete(CARRIED.referrer);
+  return parsed.pathname + parsed.search + parsed.hash;
 }
 
 /** Reads a first touch that arrived from the browser, which can send anything. */

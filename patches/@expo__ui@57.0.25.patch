@@ -1,0 +1,131 @@
+diff --git a/ios/BottomSheetView.swift b/ios/BottomSheetView.swift
+index 29b1a3ad7a8dc653347899c514fc538f9f9433f3..633aa43c71256e988b30db36185a2b85ae52f130 100644
+--- a/ios/BottomSheetView.swift
++++ b/ios/BottomSheetView.swift
+@@ -58,16 +58,106 @@ private struct BottomSheetSizeReader<Content: View>: View {
+   }
+ }
+ 
++#if os(iOS)
++// Lymi: SwiftUI snaps a sheet to a replaced detent, so once the sheet is up its later heights go
++// through UIKit's animateChanges, which glides; under Reduce Motion or while the keyboard moves they snap.
++private final class SheetResizer: ObservableObject {
++  weak var sheet: UISheetPresentationController? {
++    didSet { height = 0 }
++  }
++  private(set) var latest: CGSize = .zero
++  private var height: CGFloat = 0
++  private var keyboardUntil: CFTimeInterval = 0
++  private var observer: NSObjectProtocol?
++
++  init() {
++    observer = NotificationCenter.default.addObserver(
++      forName: UIResponder.keyboardWillChangeFrameNotification, object: nil, queue: .main
++    ) { [weak self] note in
++      let duration = note.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 0.25
++      self?.keyboardUntil = CACurrentMediaTime() + duration + 0.1
++    }
++  }
++
++  deinit {
++    if let observer { NotificationCenter.default.removeObserver(observer) }
++  }
++
++  func resize(to size: CGSize) -> Bool {
++    latest = size
++    let newHeight = size.height
++    guard let sheet, sheet.presentedViewController.viewIfLoaded?.window != nil else { return false }
++    // A sheet on its way down keeps its height; the next presentation opens at `latest`.
++    guard newHeight != height, !sheet.presentedViewController.isBeingDismissed else { return true }
++    height = newHeight
++    let apply = {
++      sheet.detents = [.custom(identifier: .init("expo.ui.fitted")) { _ in newHeight }]
++      sheet.invalidateDetents()
++    }
++    if UIAccessibility.isReduceMotionEnabled || CACurrentMediaTime() < keyboardUntil {
++      apply()
++    } else {
++      sheet.animateChanges(apply)
++    }
++    return true
++  }
++}
++
++private struct SheetControllerReader: UIViewControllerRepresentable {
++  let resizer: SheetResizer
++
++  final class Reader: UIViewController {
++    weak var resizer: SheetResizer?
++
++    override func viewDidAppear(_ animated: Bool) {
++      super.viewDidAppear(animated)
++      var top: UIViewController = self
++      while let parent = top.parent { top = parent }
++      resizer?.sheet = top.sheetPresentationController
++    }
++  }
++
++  func makeUIViewController(context: Context) -> Reader {
++    let reader = Reader()
++    reader.view.isUserInteractionEnabled = false
++    reader.resizer = resizer
++    return reader
++  }
++
++  func updateUIViewController(_ reader: Reader, context: Context) {
++    reader.resizer = resizer
++  }
++}
++#endif
++
+ struct BottomSheetView: ExpoSwiftUI.View {
+   @ObservedObject var props: BottomSheetProps
+   @State private var isPresented: Bool = false
+   @State private var childrenSize: CGSize = .zero
++  #if os(iOS)
++  @StateObject private var resizer = SheetResizer()
++  #endif
+ 
+   private func handleSizeChange(_ size: CGSize) {
++    #if os(iOS)
++    if childrenSize.height > 0, resizer.resize(to: size) { return }
++    #endif
+     guard childrenSize != size else { return }
+     childrenSize = size
+   }
+ 
++  @ViewBuilder
++  private func fitted(_ content: some View) -> some View {
++    #if os(iOS)
++    content
++      // Top-anchored, so the content holds still while the sheet glides to its new height.
++      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
++      .background(SheetControllerReader(resizer: resizer))
++    #else
++    content
++    #endif
++  }
++
+   @ViewBuilder
+   private func contentChildren() -> some View {
+     ForEach(props.children?.withoutSlot("anchor") ?? [], id: \.id) { child in
+@@ -84,7 +174,7 @@ struct BottomSheetView: ExpoSwiftUI.View {
+         onSizeChange: handleSizeChange
+       )
+       if #available(iOS 16.0, tvOS 16.0, *) {
+-        content.presentationDetents(childrenSize.height > 0 ? [.height(childrenSize.height)] : [.medium])
++        fitted(content).presentationDetents(childrenSize.height > 0 ? [.height(childrenSize.height)] : [.medium])
+       } else {
+         content
+       }
+@@ -105,6 +195,10 @@ struct BottomSheetView: ExpoSwiftUI.View {
+   var body: some View {
+     anchor
+       .sheet(isPresented: $isPresented, onDismiss: {
++        #if os(iOS)
++        // The next presentation opens at the last height, which only UIKit has seen.
++        if resizer.latest.height > 0 { childrenSize = resizer.latest }
++        #endif
+         props.onDismiss()
+       }) {
+         sheetContent

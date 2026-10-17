@@ -47,7 +47,7 @@ Every flashcard failure comes from two people writing tags on the same card. In 
 ## Delivery
 
 1. **Tags on the web.** Tags move to a table and typing suggests existing ones (#677); the deck page filters by tag and Select cards tags many at once (#735); each deck's Tags page renames, merges, archives and restores (#737). Non-original editions hide publisher tags until slice 3.
-2. **Review what a filter shows.** A filtered deck page reviews its started cards, due ones first.
+2. **Review what a filter shows.** Select cards' Actions menu offers Review due and Review all, so filtering and selecting all reviews a tag or a search (Kateryna's call, 16 October 2026). It takes the started cards chosen, due ones first, leaving out a card reviewed today. Members can select to review, and the phone waits for slice 4.
 3. **Published tags per edition.** Publishers translate tag names, and each edition shows them once translated. Deferred until the catalog's decks carry tags readers want.
 4. **The phone.** Tags arrive with a rework of the phone deck page's filtering ([ADR 0030](../adr/0030-the-phone-leads-the-daily-jobs-and-setup-stays-on-the-web.md)); until then the phone edits a card's tags and the server keeps the learner's spelling.
 

@@ -9,13 +9,13 @@ import {
   LANGUAGE_TAGS,
 } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
-import * as Haptics from "expo-haptics";
 import { type Href, useRouter } from "expo-router";
 import { type ReactNode, useRef, useState } from "react";
 import { AccessibilityInfo, Pressable, ScrollView, TextInput, View } from "react-native";
 import { FieldName } from "../capture/composer-field";
 import { languageName } from "../data/languages";
 import { usePurposes } from "../data/purposes";
+import { haptics } from "../theme/haptics";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { FieldError } from "../ui/field";
@@ -92,7 +92,7 @@ export default function NewDeck() {
     setError(null);
     try {
       const { id } = await writes.createDeck(parsed.data);
-      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      haptics.success();
       void qc.invalidateQueries({ queryKey: ["decks"] });
       router.back();
       router.push(`/library/${id}` as Href);
@@ -184,7 +184,7 @@ export default function NewDeck() {
                 <View key={o.value} className={i > 0 ? "border-t border-edge" : ""}>
                   <Pressable
                     onPress={() => {
-                      Haptics.selectionAsync();
+                      haptics.tick();
                       setPurpose(o.value);
                       setPurposeError(false);
                       if (o.value === "language" && !language) setChoosingLanguage(true);

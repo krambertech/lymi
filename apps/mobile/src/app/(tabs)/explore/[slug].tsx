@@ -17,7 +17,7 @@ import { useCoverColour } from "../../../explore/tray";
 import { CROSSFADE, springIn, useReduceMotion } from "../../../theme/motion";
 import { usePalette } from "../../../theme/palette";
 import { GlassSurface } from "../../../ui/glass";
-import { OnTheWeb } from "../../../ui/on-the-web";
+import { LoadFailed } from "../../../ui/load-failed";
 import { Button, Icon, Plate, Press, Text } from "../../../ui/primitives";
 import { Screen } from "../../../ui/screen";
 import { Skeleton } from "../../../ui/skeleton";
@@ -40,12 +40,10 @@ export default function ExploreDeck() {
   if (query.isError) {
     return (
       <Screen title={name ?? t`Deck`} back={back}>
-        <OnTheWeb
-          icon="explore"
-          title={t`Couldn’t open this deck`}
-          line={t`It may have been withdrawn, or the connection dropped.`}
-          action={t`Open on the web`}
-          path={`/explore/${encodeURIComponent(slug)}`}
+        <LoadFailed
+          query={query}
+          failed={t`Couldn’t open this deck`}
+          offline={t`This deck needs a connection`}
         />
       </Screen>
     );

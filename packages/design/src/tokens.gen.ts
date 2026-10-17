@@ -142,11 +142,13 @@ export const shadows = {
     lift: "0 0 #0000",
     well: "inset 0 1px 1.5px #2d1e141a",
     "lit-glow": "0 0 #0000",
+    "glass-drop": "0 8px 24px -12px #2d1e142e",
   },
   dark: {
     lift: "0 1px 2px #00000038, 0 8px 16px -12px #00000066",
     well: "inset 0 1px 1px #00000040",
     "lit-glow": "0 0 10px -2px #fdb44399",
+    "glass-drop": "0 12px 32px -14px #000000b3",
   },
 } as const;
 

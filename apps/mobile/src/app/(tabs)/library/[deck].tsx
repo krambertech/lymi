@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { Section } from "@lymi/client/api";
 import {
+  chosenReview,
   type DeckFilters,
   type DeckGroup,
   type DeckRow,
@@ -9,15 +10,16 @@ import {
   filterRows,
   groupRows,
   noFilters,
+  rowState,
   splitForms,
   stateKey,
 } from "@lymi/client/deck-list";
+import { CHOSEN_LIMIT } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
-import * as Haptics from "expo-haptics";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
-import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
-import { View } from "react-native";
+import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type FlatList, View } from "react-native";
 import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useCardMenu } from "../../../card/card-menu";
@@ -30,6 +32,7 @@ import { useMoveNotice, useSeriesActions } from "../../../data/series";
 import { useCardBatch, useMoveToDeck } from "../../../deck/card-batch";
 import { useMoveToSection } from "../../../deck/move-to-section";
 import { SelectBox, SelectionToolbar } from "../../../deck/selection";
+import { ExportSheet } from "../../../export/export-sheet";
 import {
   ReadyNote,
   SectionHeading,
@@ -37,16 +40,19 @@ import {
   useStartSection,
 } from "../../../sections/sections";
 import { useOnline } from "../../../streak/goal-picker";
+import { captureEvent } from "../../../telemetry/posthog";
+import { haptics } from "../../../theme/haptics";
 import { springIn, useReduceMotion } from "../../../theme/motion";
-import { usePalette } from "../../../theme/palette";
+import { usePalette, useRoom } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
 import { useFloatingBar } from "../../../ui/floating-bar";
 import { Icon } from "../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
+import type { MenuItem } from "../../../ui/menu";
 import { Select } from "../../../ui/menu";
 import { OfflineNote } from "../../../ui/offline-note";
-import { Button, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
+import { Button, LIFT, Plate, Press, SectionTitle, Text } from "../../../ui/primitives";
 import { RowMenu, type RowMenuItem } from "../../../ui/row-menu";
 import { BarButton, Screen } from "../../../ui/screen";
 import { Segmented } from "../../../ui/segmented";
@@ -55,6 +61,24 @@ import { Skeleton } from "../../../ui/skeleton";
 import { StateIcon, stateMarks } from "../../../ui/state-mark";
 import { setDeckReviewHidden, setDeckSelecting } from "../../../ui/tab-bar";
 import { toast } from "../../../ui/toast-host";
+
+/** Stable empties, so a deck without sections or cards does not regroup its list on every render. */
+const NO_ROWS: DeckRow[] = [];
+const NO_SECTIONS: Section[] = [];
+
+/** The list a deck draws: each group's heading, then its words one row at a time. */
+type Item =
+  | { kind: "heading"; key: string; group: DeckGroup }
+  | {
+      kind: "row";
+      key: string;
+      row: DeckRow;
+      first: boolean;
+      last: boolean;
+      dim: boolean;
+      /** A new card in a section that isn't open, which review won't show yet. */
+      waiting: boolean;
+    };
 
 /**
  * A deck: what it wants today and how far along it is, then its words as a glossary, which Filter
@@ -68,9 +92,9 @@ export default function Deck() {
   const deck = decks.data?.find((d) => d.id === id);
   const gone = !!decks.data && !deck;
   const cards = useDeckCards(id);
-  const rows: DeckRow[] = cards.data ?? [];
+  const rows = cards.data ?? NO_ROWS;
   const sectionsQuery = useSections(id);
-  const sections = sectionsQuery.data?.sections ?? [];
+  const sections = sectionsQuery.data?.sections ?? NO_SECTIONS;
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
   const [chosenSort, setSort] = useState<DeckSort | null>(null);
   const sort = chosenSort ?? (sections.length ? "section" : "added");
@@ -91,6 +115,7 @@ export default function Deck() {
   const sectionStart = useStartSection(id, sections);
   const exits = useDeckExits(deck);
   const [moving, setMoving] = useState(false);
+  const [exporting, setExporting] = useState(false);
   // The cards chosen with Select cards, or null when the list is not choosing.
   const [selected, setSelected] = useState<ReadonlySet<string> | null>(null);
   const moveToSection = useMoveToSection(id);
@@ -101,11 +126,137 @@ export default function Deck() {
     moveToSection: moveToSection.canMove ? (c) => () => moveToSection.open([c.id]) : undefined,
     moveToDeck: moveToDeck.canMove ? (c) => () => moveToDeck.open([c.id]) : undefined,
   });
+  // Rows keep one menu function, so a render of the page redraws only rows whose card changed.
+  const latestMenu = useRef(cardMenu);
+  latestMenu.current = cardMenu;
+  const menu = useCallback((card: DeckRow["card"]) => latestMenu.current(card), []);
+  const menuShape = `${owner} ${moveToSection.canMove} ${moveToDeck.canMove}`;
+  const lift = useRoom() === "dark";
   const reduce = useReduceMotion();
-  const selection = owner && selected ? selected : null;
+  const selection = selected;
   const ordered = useMemo(() => groups.flatMap((g) => g.rows), [groups]);
+  const items = useMemo(
+    () =>
+      groups.flatMap((group): Item[] => {
+        const dim = group.kind === "section" && !!group.section && group.section.status !== "open";
+        return [
+          { kind: "heading", key: `h:${group.key}`, group },
+          ...group.rows.map(
+            (row, i): Item => ({
+              kind: "row",
+              key: row.card.id,
+              row,
+              first: i === 0,
+              last: i === group.rows.length - 1,
+              dim,
+              waiting: dim && rowState(row) === "new",
+            }),
+          ),
+        ];
+      }),
+    [groups],
+  );
   const done = () => setSelected(null);
   const choosing = !!selection;
+  // What Review takes from the chosen cards, due ones first, as the web's selection does.
+  const reviewable = useMemo(
+    () => (selection ? chosenReview(rows, selection, Date.now()) : []),
+    [rows, selection],
+  );
+  const dueChosen = reviewable.filter((r) => r.due).length;
+  const reviewChosen = (kind: "due" | "all") => {
+    // One review takes at most CHOSEN_LIMIT, and the list is due first, so the cap keeps those.
+    const ids = reviewable
+      .filter((r) => kind === "all" || r.due)
+      .slice(0, CHOSEN_LIMIT)
+      .map((r) => r.id);
+    done();
+    router.push(`/review?deck=${id}&cards=${ids.join(",")}` as Href);
+  };
+  const unmarked = !!selection && rows.some((r) => selection.has(r.card.id) && !r.card.important);
+  const limit = CHOSEN_LIMIT;
+  const reviewAll = reviewable.length;
+  const selectionActions: MenuItem[][] = selection
+    ? [
+        [
+          ...(dueChosen > 0
+            ? [
+                {
+                  label:
+                    dueChosen > limit
+                      ? t`Review ${limit} of ${dueChosen} due`
+                      : plural(dueChosen, { one: "Review # due", other: "Review # due" }),
+                  icon: "play" as const,
+                  onSelect: () => reviewChosen("due"),
+                },
+              ]
+            : []),
+          // Review all is the same list as Review due when every chosen card is due.
+          ...(reviewAll > dueChosen
+            ? [
+                {
+                  label:
+                    reviewAll > limit
+                      ? t`Review ${limit} of ${reviewAll}`
+                      : plural(reviewAll, { one: "Review all #", other: "Review all #" }),
+                  icon: "play" as const,
+                  onSelect: () => reviewChosen("all"),
+                },
+              ]
+            : []),
+        ],
+        [
+          {
+            // Its own message, since Ukrainian and Russian say it of several cards.
+            label: unmarked
+              ? t({ message: "Mark important", context: "chosen cards" })
+              : t({ message: "Unmark important", context: "chosen cards" }),
+            icon: "important" as const,
+            onSelect: () => {
+              const ids = [...selection];
+              done();
+              void batch.important(ids, unmarked);
+            },
+          },
+        ],
+        // Changing the cards themselves stays the owner's.
+        ...(owner
+          ? [
+              [
+                ...(moveToSection.canMove
+                  ? [
+                      {
+                        label: t`Move to section`,
+                        icon: "section" as const,
+                        onSelect: () => moveToSection.open([...selection], done),
+                      },
+                    ]
+                  : []),
+                ...(moveToDeck.canMove
+                  ? [
+                      {
+                        label: t`Move to deck`,
+                        icon: "deck" as const,
+                        onSelect: () => moveToDeck.open([...selection], done),
+                      },
+                    ]
+                  : []),
+              ],
+              [
+                {
+                  label: t`Archive`,
+                  icon: "archive" as const,
+                  destructive: true,
+                  onSelect: () => {
+                    done();
+                    void batch.archive([...selection]);
+                  },
+                },
+              ],
+            ]
+          : []),
+      ].filter((group) => group.length > 0)
+    : [];
   useEffect(() => {
     setDeckSelecting(id, choosing);
     return () => setDeckSelecting(id, false);
@@ -123,39 +274,7 @@ export default function Deck() {
           onAll={() => setSelected(new Set(ordered.map((r) => r.card.id)))}
           onClear={() => setSelected(new Set())}
           onDone={done}
-          actions={[
-            [
-              ...(moveToSection.canMove
-                ? [
-                    {
-                      label: t`Move to section`,
-                      icon: "section" as const,
-                      onSelect: () => moveToSection.open([...selection], done),
-                    },
-                  ]
-                : []),
-              ...(moveToDeck.canMove
-                ? [
-                    {
-                      label: t`Move to deck`,
-                      icon: "deck" as const,
-                      onSelect: () => moveToDeck.open([...selection], done),
-                    },
-                  ]
-                : []),
-            ],
-            [
-              {
-                label: t`Archive`,
-                icon: "archive",
-                destructive: true,
-                onSelect: () => {
-                  done();
-                  void batch.archive([...selection]);
-                },
-              },
-            ],
-          ]}
+          actions={selectionActions}
         />
       </Animated.View>
     ),
@@ -179,12 +298,80 @@ export default function Deck() {
   const cardsFailed = useLoadFailed(cards);
   const decksFailed = useLoadFailed(decks);
   const addCard = () => router.push(`/capture?deck=${id}` as Href);
+  const listRef = useRef<FlatList<Item>>(null);
+  // Go to clears the filters and sorts by section, so the heading is in the list it scrolls.
+  const [goingTo, setGoingTo] = useState<string | null>(null);
+  const goTo = (sectionId: string) => {
+    captureEvent("section_go_to", {});
+    setFilters(noFilters);
+    setSort(null);
+    setGoingTo(sectionId);
+  };
+  const bar = insets.top + 56;
+  const scrollTo = useCallback(
+    (index: number) =>
+      listRef.current?.scrollToIndex({ index, viewOffset: bar, animated: !reduce }),
+    [bar, reduce],
+  );
+  useEffect(() => {
+    if (!goingTo) return;
+    setGoingTo(null);
+    const index = items.findIndex((item) => item.key === `h:section:${goingTo}`);
+    if (index >= 0) scrollTo(index);
+  }, [goingTo, items, scrollTo]);
+  // The words draw as a list only once the page has a deck with cards to show.
+  const listed = !gone && !cardsFailed && !decksFailed && !!deck && rows.length > 0;
 
   return (
     <Screen
       title={deck?.name ?? ""}
       onRefresh={() => Promise.all([decks.refetch(), cards.refetch(), sectionsQuery.refetch()])}
       back={{ label: t`Library`, to: "/library" }}
+      list={
+        listed && deck
+          ? {
+              data: items,
+              keyExtractor: (item) => item.key,
+              extraData: `${selection?.size ?? -1} ${menuShape} ${lift} ${progress?.currentId} ${sectionStart.starting}`,
+              renderItem: ({ item }) =>
+                item.kind === "heading" ? (
+                  <Heading
+                    group={item.group}
+                    deckId={id}
+                    hereId={progress?.currentId ?? null}
+                    starting={sectionStart.starting}
+                    onStart={sectionStart.start}
+                    owner={owner}
+                    several={sections.length > 1}
+                  />
+                ) : (
+                  <Slice first={item.first} last={item.last} dim={item.dim} lift={lift}>
+                    <WordRow
+                      row={item.row}
+                      first={item.first}
+                      waiting={item.waiting}
+                      selected={selection ? selection.has(item.row.card.id) : undefined}
+                      onToggle={selection ? toggleSelected : undefined}
+                      menu={menu}
+                      menuShape={menuShape}
+                      deckName={deck.name}
+                    />
+                  </Slice>
+                ),
+              // The last cards scroll clear of the pinned toolbar.
+              footer: selection && <View className="h-16" />,
+              ref: listRef,
+              // A heading past what is drawn: scroll near it so it draws, then go to it.
+              onScrollToIndexFailed: ({ index, averageItemLength }) => {
+                listRef.current?.scrollToOffset({
+                  offset: averageItemLength * index,
+                  animated: false,
+                });
+                setTimeout(() => scrollTo(index), 100);
+              },
+            }
+          : undefined
+      }
       past={
         reviewEnd === null ? undefined : { y: reviewEnd - insets.top - 56, onChange: onReviewPast }
       }
@@ -229,9 +416,14 @@ export default function Deck() {
                           icon: "series" as const,
                           onSelect: () => setMoving(true),
                         },
+                        {
+                          label: t`Export deck`,
+                          icon: "export" as const,
+                          onSelect: () => setExporting(true),
+                        },
                       ]
                     : []),
-                  ...(owner && rows.length > 0 && !selection
+                  ...(rows.length > 0 && !selection
                     ? [
                         {
                           label: t`Select cards`,
@@ -324,6 +516,7 @@ export default function Deck() {
                     due={deck.due}
                     starting={sectionStart.starting}
                     onStart={sectionStart.start}
+                    onGoTo={goTo}
                   />
                 )
               }
@@ -348,7 +541,7 @@ export default function Deck() {
                 setSort={setSort}
               />
             </View>
-            {groups.length === 0 ? (
+            {groups.length === 0 && (
               <Plate>
                 <EmptyState
                   kind="noMatch"
@@ -357,31 +550,25 @@ export default function Deck() {
                   action={{ label: t`Show all`, onPress: () => setFilters(noFilters) }}
                 />
               </Plate>
-            ) : (
-              groups.map((g) => (
-                <Group
-                  key={g.key}
-                  group={g}
-                  deckId={id}
-                  hereId={progress?.currentId ?? null}
-                  starting={sectionStart.starting}
-                  onStart={sectionStart.start}
-                  selection={selection ? { ids: selection, onToggle: toggleSelected } : undefined}
-                  menu={cardMenu}
-                  deckName={deck.name}
-                  owner={owner}
-                  several={sections.length > 1}
-                />
-              ))
             )}
           </View>
         </>
       )}
       {deck && owner && <MoveToSeries deck={deck} open={moving} onOpenChange={setMoving} />}
+      {deck && owner && (
+        <ExportSheet
+          open={exporting}
+          onOpenChange={setExporting}
+          scope={{
+            kind: "deck",
+            deckId: deck.id,
+            deckName: deck.name,
+            rows: cards.data,
+          }}
+        />
+      )}
       {owner && moveToSection.sheet}
       {owner && moveToDeck.sheet}
-      {/* The last cards scroll clear of the pinned toolbar. */}
-      {selection && <View className="h-16" />}
     </Screen>
   );
 }
@@ -476,7 +663,7 @@ function ReviewButton({ deck }: { deck: DeckData }) {
       variant="primary"
       size="lg"
       onPress={() => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        haptics.start();
         router.push(`/review?deck=${deck.id}` as Href);
       }}
     />
@@ -680,16 +867,13 @@ function Tools({
   );
 }
 
-/** One heading and its words: a section, when it's back, or the day the words arrived. */
-function Group({
+/** A group's heading over its words: a section, when it's back, or the day the words arrived. */
+function Heading({
   group: g,
   deckId,
   hereId,
   starting,
   onStart,
-  selection,
-  menu,
-  deckName,
   owner,
   several,
 }: {
@@ -699,10 +883,6 @@ function Group({
   hereId: string | null;
   starting: string | undefined;
   onStart: (section: Section) => void;
-  /** Set while the list is choosing cards. */
-  selection?: { ids: ReadonlySet<string>; onToggle: (cardId: string) => void } | undefined;
-  menu: (card: DeckRow["card"]) => RowMenuItem[][];
-  deckName: string;
   owner: boolean;
   several: boolean;
 }) {
@@ -717,7 +897,7 @@ function Group({
           : null;
   const section = g.kind === "section" ? g.section : null;
   return (
-    <View>
+    <View className="pt-6">
       {section?.status === "ready" && (
         <ReadyNote section={section} starting={starting === section.id} onStart={onStart} />
       )}
@@ -745,21 +925,30 @@ function Group({
           </SectionTitle>
         )
       )}
-      <Plate
-        className={`overflow-hidden ${section && section.status !== "open" ? "opacity-70" : ""}`}
-      >
-        {g.rows.map((row, i) => (
-          <WordRow
-            key={row.card.id}
-            row={row}
-            first={i === 0}
-            selected={selection?.ids.has(row.card.id)}
-            onToggle={selection?.onToggle}
-            menu={menu}
-            deckName={deckName}
-          />
-        ))}
-      </Plate>
+    </View>
+  );
+}
+
+/** One row's share of its group's plate, so a group of thousands draws only the rows in view. */
+function Slice({
+  first,
+  last,
+  dim,
+  lift,
+  children,
+}: {
+  first: boolean;
+  last: boolean;
+  dim: boolean;
+  lift: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <View
+      className={`overflow-hidden border-x border-edge bg-plate ${first ? "rounded-t-xl border-t" : ""} ${last ? "rounded-b-xl border-b" : ""}`}
+      style={[lift ? LIFT : null, dim ? { opacity: 0.7 } : null]}
+    >
+      {children}
     </View>
   );
 }
@@ -769,9 +958,10 @@ function Group({
  * under it, at most three lines of term and two of meaning. The open card shows the rest. While the
  * list is choosing cards, the mark is a checkbox and a tap chooses rather than opens.
  */
-function WordRow({
+const WordRow = memo(function WordRow({
   row,
   first,
+  waiting,
   selected,
   onToggle,
   menu,
@@ -779,10 +969,13 @@ function WordRow({
 }: {
   row: DeckRow;
   first: boolean;
+  waiting: boolean;
   /** Undefined unless the list is choosing cards. */
   selected?: boolean | undefined;
   onToggle?: ((cardId: string) => void) | undefined;
   menu: (card: DeckRow["card"]) => RowMenuItem[][];
+  /** Changes when what the menu offers does, since `menu` itself stays the same function. */
+  menuShape: string;
   deckName: string;
 }) {
   const { t, i18n } = useLingui();
@@ -791,14 +984,20 @@ function WordRow({
   const state = stateKey(row.state?.state);
   const { word, forms } = splitForms(row.card.term);
   const selecting = selected !== undefined;
-  const label = `${row.card.term}, ${row.card.meaning ?? ""}, ${i18n._(stateMarks[state].label)}`;
+  const label = `${row.card.term}, ${row.card.meaning ?? ""}, ${waiting ? t`Not in review yet` : i18n._(stateMarks[state].label)}`;
   const face = (
     <View
       className={`flex-row gap-3 py-3.5 ps-4 pe-5 ${first ? "" : "border-t border-edge"}`}
       style={selected ? { backgroundColor: p.hover } : { backgroundColor: p.plate }}
     >
       <View className="pt-[5px]">
-        {selecting ? <SelectBox checked={selected} /> : <StateIcon state={state} size={15} />}
+        {selecting ? (
+          <SelectBox checked={selected} />
+        ) : waiting ? (
+          <Icon name="lock" size={15} colour={p.faint} />
+        ) : (
+          <StateIcon state={state} size={15} />
+        )}
       </View>
       <View className="flex-1 gap-0.5">
         <Text className="text-md font-medium text-text" numberOfLines={3}>
@@ -840,7 +1039,7 @@ function WordRow({
       {face}
     </RowMenu>
   );
-}
+});
 
 /**
  * Move to series, as the web's: no series, one of the learner's, or a new one that starts with
@@ -865,6 +1064,8 @@ function MoveToSeries({
   const { moveDeck, undoMove } = useSeriesActions();
   const notice = useMoveNotice();
   const deckName = deck.name;
+  // New series opens once this sheet has gone, as every sheet's choice does, so its name gets the keyboard.
+  const opening = useRef<Href | null>(null);
   const move = (seriesId: string | null, then?: () => void) =>
     moveDeck.mutate(
       { deckId: deck.id, seriesId },
@@ -883,7 +1084,7 @@ function MoveToSeries({
     if (!online || !back) return;
     onOpenChange(false);
     if (seriesId === deck.seriesId) return;
-    Haptics.selectionAsync();
+    haptics.tick();
     const name = seriesId ? series.find((s) => s.id === seriesId)?.name : undefined;
     move(seriesId, () => notice(deck.id, deckName, name, () => undoMove(deck.id, back)));
   };
@@ -897,6 +1098,11 @@ function MoveToSeries({
       }
       open={open}
       onOpenChange={onOpenChange}
+      onDismiss={() => {
+        const href = opening.current;
+        opening.current = null;
+        if (href) router.push(href);
+      }}
     >
       {!back &&
         (query.isPending || query.isFetching ? (
@@ -934,7 +1140,7 @@ function MoveToSeries({
             onPress={() => {
               if (!online) return;
               onOpenChange(false);
-              router.push(`/series?deck=${deck.id}` as Href);
+              opening.current = `/series?deck=${deck.id}` as Href;
             }}
           />
         </SheetGroup>

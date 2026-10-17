@@ -8,6 +8,24 @@ export const ENRICHED_FIELDS = [
 ] as const;
 export type EnrichedField = (typeof ENRICHED_FIELDS)[number];
 
+/**
+ * How long a card may say `working` before it is treated as failed. A run settles its cards
+ * long before this, so a card still waiting has lost its run, and reading it as failed lets the
+ * learner ask again rather than watch it shimmer for ever.
+ */
+export const ENRICHMENT_PATIENCE = 10 * 60_000;
+
+/** True for a card still at `working` past the patience, measured from its last change. */
+export function enrichmentStalled(
+  card: { enrichmentStatus: string | null; updatedAt: Date | string },
+  now: number = Date.now(),
+): boolean {
+  return (
+    card.enrichmentStatus === "working" &&
+    now - new Date(card.updatedAt).getTime() >= ENRICHMENT_PATIENCE
+  );
+}
+
 /** The fields a deck lets the AI fill. Language is always filled, because audio needs it. */
 export const DECK_ENRICH_FIELDS = ["meaning", "example", "notes", "pronunciation"] as const;
 export type DeckEnrichField = (typeof DECK_ENRICH_FIELDS)[number];

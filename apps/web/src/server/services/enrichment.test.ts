@@ -5,13 +5,15 @@ import {
   deckEnrichFields,
   deckPurpose,
   defaultEnrichFields,
+  ENRICHMENT_PATIENCE,
   emptyFields,
   fieldsToFill,
   needsEnrichment,
 } from "@lymi/core";
+import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider, TextRequest } from "../ai";
-import type { Db } from "../db";
+import { type Db, schema } from "../db";
 import {
   addCards,
   archiveCard,
@@ -20,7 +22,7 @@ import {
   showCard,
   updateCard,
 } from "./cards";
-import { ServiceError } from "./context";
+import { type ServiceContext, ServiceError } from "./context";
 import { createDeck } from "./decks";
 import {
   CARDS_PER_CALL,
@@ -546,6 +548,53 @@ describe("enrichCards", () => {
     if (again?.status !== "added") throw new Error("not added");
     expect(again.card.enrichmentStatus).toBe("failed");
     expect((await showCard(ctx, input.id as string)).enrichmentStatus).toBe("failed");
+  });
+
+  /** A card left at `working` by an add whose run was never handed over, last changed `ago` ms back. */
+  async function stuck(ctx: ServiceContext, id: string, ago: number) {
+    const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+    const input = CardInput.parse({ id, deckId: deck.id, term: "煎餅" });
+    const cutOff: EnrichmentQueue = { create: () => new Promise(() => {}) };
+    void addCards(ctx, [input], cutOff);
+    await vi.waitFor(async () =>
+      expect((await showCard(ctx, id)).enrichmentStatus).toBe("working"),
+    );
+    await db
+      .update(schema.cards)
+      .set({ updatedAt: new Date(Date.now() - ago) })
+      .where(eq(schema.cards.id, id));
+    return input;
+  }
+
+  it("reads a card stuck at working past the patience as failed, and Enrich starts a new run", async () => {
+    const ctx = await learner(db, "enrich-6e", "Kateryna");
+    const input = await stuck(ctx, "0stuckworking000004", ENRICHMENT_PATIENCE + 60_000);
+    expect((await showCard(ctx, input.id as string)).enrichmentStatus).toBe("failed");
+
+    const create = vi.fn().mockResolvedValue(undefined);
+    const asked = await requestEnrichment(ctx, input.id as string, { create });
+    expect(create).toHaveBeenCalledTimes(1);
+    expect(asked.enrichmentStatus).toBe("working");
+    expect((await showCard(ctx, input.id as string)).enrichmentStatus).toBe("working");
+  });
+
+  it("keeps a card working within the patience, and Enrich does not queue a second run", async () => {
+    const ctx = await learner(db, "enrich-6f", "Kateryna");
+    const input = await stuck(ctx, "0stuckworking000005", ENRICHMENT_PATIENCE - 60_000);
+    expect((await showCard(ctx, input.id as string)).enrichmentStatus).toBe("working");
+    const create = vi.fn().mockResolvedValue(undefined);
+    await requestEnrichment(ctx, input.id as string, { create });
+    expect(create).not.toHaveBeenCalled();
+  });
+
+  it("does not queue a replayed card past the patience, which reads as failed instead", async () => {
+    const ctx = await learner(db, "enrich-6g", "Kateryna");
+    const input = await stuck(ctx, "0stuckworking000006", ENRICHMENT_PATIENCE + 60_000);
+    const create = vi.fn().mockResolvedValue(undefined);
+    const [again] = await addCards(ctx, [input], { create });
+    expect(create).not.toHaveBeenCalled();
+    if (again?.status !== "added") throw new Error("not added");
+    expect(again.card.enrichmentStatus).toBe("failed");
   });
 
   it("does not queue a second run for a replayed card that is no longer working", async () => {

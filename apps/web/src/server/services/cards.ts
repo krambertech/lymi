@@ -9,6 +9,7 @@ import type {
 import {
   deckEnrichFields,
   emptyFields,
+  enrichmentStalled,
   fieldsToFill,
   needsEnrichment,
   newId,
@@ -202,7 +203,9 @@ export async function addCards(
       // The first add saved the card at `working` but may have died before handing over its run,
       // and a replay is the only request that will ever come for it. If that run did start, the
       // second one finds the card settled, and the guarded writes keep a single fill either way.
-      if (again?.enrichmentStatus === "working" && enrichment) enriching.push(again.id);
+      if (again?.enrichmentStatus === "working" && !enrichmentStalled(again) && enrichment) {
+        enriching.push(again.id);
+      }
       continue;
     }
     const matches = existing.get(dupKey(language, key));
@@ -593,8 +596,11 @@ export async function requestEnrichment(
   if (!enrichment) {
     throw new ServiceError("unavailable", "Enrichment is not configured on this server");
   }
-  // A run already outstanding is the answer, so asking twice does not queue twice.
-  if (card.enrichmentStatus === "working") return presentCard(db, card, userId);
+  // A run already outstanding is the answer, so asking twice does not queue twice. One that has
+  // waited past the patience has lost its run, so asking starts a new one.
+  if (card.enrichmentStatus === "working" && !enrichmentStalled(card)) {
+    return presentCard(db, card, userId);
+  }
   // `updatedAt` moves because the card did, and because the screen stops waiting on a card
   // that has said `working` for too long: a card added months ago must not read as stale.
   // Asking is the learner changing their mind about a field they cleared, so blank becomes unset.

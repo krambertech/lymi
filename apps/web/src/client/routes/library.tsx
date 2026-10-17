@@ -61,7 +61,9 @@ function DeckList() {
         retrying={decks.isFetching}
         series={series.data}
         archivedCount={archivedCount.data}
-        onCreateDeck={add.openDeck}
+        onShowArchived={() => void navigate({ to: "/archived" })}
+        onCreateDeck={() => add.openDeck()}
+        onCreateDeckInSeries={(s) => add.openDeck({ seriesId: s.id })}
         onImport={() => void navigate({ to: "/settings", hash: "import" })}
         onNewSeries={() => setEditing(null)}
         onEditSeries={setEditing}

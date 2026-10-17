@@ -356,7 +356,8 @@ function Shell() {
       />
       <NewDeckSheet
         open={add.open === "deck"}
-        onOpenChange={(v) => (v ? add.openDeck() : add.close("deck"))}
+        seriesId={add.seriesId}
+        onOpenChange={(v) => (v ? add.openDeck({ seriesId: add.seriesId }) : add.close("deck"))}
       />
       {smartAccess.data?.allowed && (
         <SmartAddDialog

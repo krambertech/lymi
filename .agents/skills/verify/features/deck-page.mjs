@@ -18,6 +18,80 @@ export default async function drive({ page, step, api, expect }) {
     return { decks: decks.map(({ id, name, total, due }) => ({ id, name, total, due })) };
   });
 
+  await step("Searching Library narrows its decks and says when none match", async () => {
+    // On a desktop the field opens from the title's search button; on a phone it is always there.
+    const field = page.getByRole("textbox", { name: "Search decks" });
+    if (!(await field.isVisible())) {
+      await page.getByRole("button", { name: "Search decks", exact: true }).click();
+    }
+    const one = decks.find((d) => d.name === "Verbi") ?? decks[0];
+    await field.fill(one.name);
+    for (const d of decks) {
+      const link = page.getByRole("main").getByRole("link", { name: new RegExp(`^${d.name}\\b`) });
+      if (d.id === one.id) await expect(link).toBeVisible();
+      else await expect(link).toHaveCount(0);
+    }
+    await field.fill("zzz");
+    await expect(page.getByRole("heading", { name: "No decks match “zzz”" })).toBeVisible();
+    // The phone's field has its own Clear search; the one in the list's place comes last.
+    await page.getByRole("button", { name: "Clear search", exact: true }).last().click();
+    for (const d of decks) {
+      await expect(
+        page.getByRole("main").getByRole("link", { name: new RegExp(`^${d.name}\\b`) }),
+      ).toBeVisible();
+    }
+    return { query: one.name, matched: 1 };
+  });
+
+  const series = "Italiano";
+  const inSeries = decks.filter((d) => d.name === "Lezione 12" || d.name === "Verbi");
+  const region = page.getByRole("main").getByRole("region", { name: series, exact: true });
+
+  await step("A new series reviews its decks from the strip under its plate", async () => {
+    await page.getByRole("button", { name: "Library options", exact: true }).click();
+    await page.getByRole("menuitem", { name: "New series", exact: true }).click();
+    const sheet = page
+      .getByRole("dialog")
+      .filter({ has: page.getByRole("heading", { name: "New series" }) });
+    await sheet.getByRole("textbox", { name: "Name", exact: true }).fill(series);
+    for (const d of inSeries)
+      await sheet.getByRole("checkbox", { name: d.name, exact: true }).click();
+    await sheet.getByRole("button", { name: "Create series", exact: true }).click();
+    await expect(sheet).toBeHidden();
+    const due = inSeries.reduce((n, d) => n + d.due, 0);
+    if (due > 0) {
+      await expect(
+        region.getByRole("link", {
+          name: `Review ${series}, ${due} ${due === 1 ? "card" : "cards"} due`,
+        }),
+      ).toBeVisible();
+    }
+    for (const d of inSeries) {
+      await expect(region.getByRole("link", { name: new RegExp(`^${d.name}\\b`) })).toBeVisible();
+    }
+    const stored = (await api("/api/series")).find((s) => s.name === series);
+    expect(stored?.deckIds.length).toBe(inSeries.length);
+    return { series: { id: stored.id, deckIds: stored.deckIds, due } };
+  });
+
+  await step("New deck from a series' menu makes the deck inside it", async () => {
+    await page.getByRole("button", { name: `Options for ${series}`, exact: true }).click();
+    await page.getByRole("menuitem", { name: "New deck", exact: true }).click();
+    const sheet = page
+      .getByRole("dialog")
+      .filter({ has: page.getByRole("heading", { name: "New deck" }) });
+    await sheet.getByRole("textbox", { name: "Name", exact: true }).fill("Parole");
+    await sheet.getByRole("radio", { name: /^Something else/ }).click();
+    await sheet.getByRole("button", { name: "Create deck", exact: true }).click();
+    await expect(page.getByRole("heading", { level: 1, name: "Parole" })).toBeVisible();
+    const made = (await api("/api/decks")).find((d) => d.name === "Parole");
+    const stored = (await api("/api/series")).find((s) => s.name === series);
+    expect(made?.seriesId).toBe(stored.id);
+    await page.goto("/library");
+    await expect(region.getByRole("link", { name: /^Parole\b/ })).toBeVisible();
+    return { deck: { id: made.id, seriesId: made.seriesId }, series: { deckIds: stored.deckIds } };
+  });
+
   await step("The deck page lists every card in Lezione 12", async () => {
     await page
       .getByRole("main")

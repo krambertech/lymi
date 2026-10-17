@@ -145,9 +145,11 @@ export const lists: Group = {
                           <FieldLabel className="text-base text-text">Evening reminder</FieldLabel>
                           <FieldDescription>Only when cards are due.</FieldDescription>
                         </FieldContent>
-                        <span className="flex h-lh shrink-0 items-center text-base">
-                          <Switch checked={reminder} onCheckedChange={setReminder} />
-                        </span>
+                        <Switch
+                          className="self-center"
+                          checked={reminder}
+                          onCheckedChange={setReminder}
+                        />
                       </Field>
                     </SettingsGroup>
                   </div>

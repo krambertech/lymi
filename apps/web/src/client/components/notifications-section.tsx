@@ -205,81 +205,82 @@ export function NotificationsSection() {
       title={t`Daily reminder`}
       description={t`Reminders are set separately on each device.`}
     >
-      {!reminderAvailable ? (
-        <p className="text-base text-muted">
-          <Trans>This browser can’t show reminders.</Trans>
-        </p>
-      ) : (
-        <div className="edge grid rounded-md bg-plate">
-          <Field
-            orientation="horizontal"
-            disabled={unusable || busy || permissionBlocked}
-            className="relative gap-3 px-4 py-3.5"
-          >
-            <span
-              className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full bg-plate-2 text-text-2"
-              aria-hidden="true"
+      {/* No gap of the group's own, so an empty message line adds no space under the plate. */}
+      <div className="grid">
+        {!reminderAvailable ? (
+          <p className="text-base text-muted">
+            <Trans>This browser can’t show reminders.</Trans>
+          </p>
+        ) : (
+          <div className="edge grid rounded-md bg-plate">
+            <Field
+              orientation="horizontal"
+              disabled={unusable || busy || permissionBlocked}
+              className="relative gap-3 px-4 py-3.5"
             >
-              <Bell className="size-4" />
-            </span>
-            <FieldContent className="gap-0.5">
-              {/* Stretched over the row, so a tap on the bell or the sentence flips the switch too. */}
-              <FieldLabel className="text-base text-text after:absolute after:inset-0 after:content-['']">
-                <Trans>Daily reminder</Trans>
-              </FieldLabel>
-              <FieldDescription>
-                {needsInstall
-                  ? t`Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there.`
-                  : blocked === "unconfigured"
-                    ? t`Not available on this server yet.`
-                    : blocked === "unreachable"
-                      ? t`Couldn’t check this device. Reload to try again.`
-                      : permissionBlocked
-                        ? t`Notifications are blocked. Allow them in your browser or device settings.`
-                        : enabled
-                          ? t`At ${savedTime}, ${zone} time, only on days with cards due.`
-                          : t`Only on days with cards due.`}
-              </FieldDescription>
-            </FieldContent>
-            {/* One line tall at the label's size, so the track centres on the label's first line. */}
-            <span className="flex h-lh shrink-0 items-center text-base">
+              <span
+                className="grid size-9 shrink-0 place-items-center self-center rounded-full bg-plate-2 text-text-2"
+                aria-hidden="true"
+              >
+                <Bell className="size-4" />
+              </span>
+              <FieldContent className="gap-0.5">
+                {/* Stretched over the row, so a tap on the bell or the sentence flips the switch too. */}
+                <FieldLabel className="text-base text-text after:absolute after:inset-0 after:content-['']">
+                  <Trans>Daily reminder</Trans>
+                </FieldLabel>
+                <FieldDescription>
+                  {needsInstall
+                    ? t`Add Lymi to your Home Screen first. iPhone and iPad only allow reminders from there.`
+                    : blocked === "unconfigured"
+                      ? t`Not available on this server yet.`
+                      : blocked === "unreachable"
+                        ? t`Couldn’t check this device. Reload to try again.`
+                        : permissionBlocked
+                          ? t`Notifications are blocked. Allow them in your browser or device settings.`
+                          : enabled
+                            ? t`At ${savedTime}, ${zone} time, only on days with cards due.`
+                            : t`Only on days with cards due.`}
+                </FieldDescription>
+              </FieldContent>
               <Switch
+                className="self-center"
                 checked={enabled}
                 onCheckedChange={(on) => void (on ? enable() : disable())}
               />
-            </span>
-          </Field>
-          {enabled && (
-            <div className="flex flex-wrap items-end gap-3 border-t border-edge px-4 py-3.5">
-              <Field className="w-40">
-                <FieldLabel>{t`Time`}</FieldLabel>
-                <Input
-                  type="time"
-                  step={900}
-                  value={time}
-                  disabled={busy}
-                  onChange={(event) => setTime(event.target.value as ReminderTime)}
-                />
-                {!validTime && <FieldError>{t`Choose 00, 15, 30 or 45 minutes.`}</FieldError>}
-              </Field>
-              <Button
-                aria-disabled={busy || time === savedTime || !validTime}
-                onClick={() => void saveTime()}
-              >
-                <Trans>Save time</Trans>
-              </Button>
-            </div>
-          )}
+            </Field>
+            {enabled && (
+              <div className="flex flex-wrap items-end gap-3 border-t border-edge px-4 py-3.5">
+                <Field className="w-40">
+                  <FieldLabel>{t`Time`}</FieldLabel>
+                  <Input
+                    type="time"
+                    step={900}
+                    value={time}
+                    disabled={busy}
+                    onChange={(event) => setTime(event.target.value as ReminderTime)}
+                  />
+                  {!validTime && <FieldError>{t`Choose 00, 15, 30 or 45 minutes.`}</FieldError>}
+                </Field>
+                <Button
+                  aria-disabled={busy || time === savedTime || !validTime}
+                  onClick={() => void saveTime()}
+                >
+                  <Trans>Save time</Trans>
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+        <div className="text-sm not-empty:mt-2" aria-live="polite">
+          {error ? (
+            <p role="alert">
+              <InlineError>{error}</InlineError>
+            </p>
+          ) : notice ? (
+            <p className="text-muted">{notice}</p>
+          ) : null}
         </div>
-      )}
-      <div className="min-h-5 text-sm" aria-live="polite">
-        {error ? (
-          <p role="alert">
-            <InlineError>{error}</InlineError>
-          </p>
-        ) : notice ? (
-          <p className="text-muted">{notice}</p>
-        ) : null}
       </div>
 
       {needsInstall && (

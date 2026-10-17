@@ -30,6 +30,8 @@ Spacing is Tailwind's 4 px scale. DESIGN.md's frontmatter names `xs` 4, `sm` 8, 
 
 The page gutter is 20 px on a phone (`px-5`). Plates in one group sit `gap-3` apart, `gap-4` from `@3xl`, and Insights' figure plates sit `gap-4` at every width because each one is dense. Groups and sections sit `gap-8`.
 
+A settings screen is a run of `SettingsGroup`s: a rule above every group but the first, and the same 24 px either side of it. The first group sits on the page header's own gap, so the title is no further from it than one group is from the next.
+
 ## Container queries
 
 Views lay out by their container (`@3xl` = 768 px), not the viewport, so the design page and the component tests can render them at any width. Chrome that follows the rail, such as page padding, top bars and back rows, queries the whole window's `@3xl/shell`, because the rail appears at a 768 px window while the column beside it is still narrower. The toast renders outside the shell, so its clearance for the pill uses the matching `md` media query. Form controls size by the viewport ([forms.md](forms.md#the-control-box)).

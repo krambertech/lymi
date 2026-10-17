@@ -128,10 +128,11 @@ export function ConsentView({
                     </Trans>
                   </FieldDescription>
                 </FieldContent>
-                {/* One line tall at the label's size, so the track centres on the label's first line. */}
-                <span className="flex h-lh shrink-0 items-center text-base">
-                  <Switch checked={allowWrite} onCheckedChange={onAllowWrite} />
-                </span>
+                <Switch
+                  className="self-center"
+                  checked={allowWrite}
+                  onCheckedChange={onAllowWrite}
+                />
               </Field>
             </li>
           )}

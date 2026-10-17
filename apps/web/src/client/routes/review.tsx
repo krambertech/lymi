@@ -666,6 +666,7 @@ function Review() {
       if (playingAudio.current === audio) {
         loadedAudio.current = { source, audio };
         setAudioState("playing");
+        captureAnalytics("pronunciation_played", { outcome: "played", revealed });
       }
     } catch {
       if (loadedAudio.current?.audio === audio) loadedAudio.current = null;
@@ -676,9 +677,10 @@ function Review() {
           item: itemKey(current),
           message: t`Couldn’t play the pronunciation. Try again in a moment.`,
         });
+        captureAnalytics("pronunciation_played", { outcome: "failed", revealed });
       }
     }
-  }, [audioState, current, stopAudio, t]);
+  }, [audioState, current, revealed, stopAudio, t]);
 
   const invalidateReviewData = useCallback(() => {
     qc.invalidateQueries({ queryKey: ["decks"] });

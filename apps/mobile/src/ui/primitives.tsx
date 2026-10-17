@@ -224,6 +224,8 @@ interface IconButtonProps {
   busy?: boolean;
   /** Draws a glyph that moves in the icon's place, in the button's ink, such as the playing speaker. */
   glyph?: (ink: string, size: number) => ReactNode;
+  /** How far the touch area reaches past each side, where a miss costs more than the 44 pt default. */
+  reach?: number;
   onPress?: () => void;
   testID?: string;
 }
@@ -243,12 +245,13 @@ export function IconButton({
   repeat = false,
   busy = false,
   glyph,
+  reach,
   onPress,
   testID,
 }: IconButtonProps) {
   const p = usePalette();
   const { box, ink } = look(variant, p);
-  const slop = size === "sm" ? 6 : 0;
+  const slop = reach ?? (size === "sm" ? 6 : 0);
   const held = useRef<ReturnType<typeof setInterval>>(undefined);
   const release = () => clearInterval(held.current);
   useEffect(() => () => clearInterval(held.current), []);

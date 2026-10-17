@@ -264,12 +264,12 @@ export function CardForm(props: CardFormProps) {
   const [failure, setFailure] = useState<string | null>(null);
   const [invalid, setInvalid] = useState<FieldErrors>({});
   const termRef = useRef<HTMLInputElement>(null);
-  // Opened by the command menu's Enter, a second quick Enter from the same hand is not a submit.
+  // Opened by the command menu's Enter, a second quick Enter or that Enter held down is not a submit.
   const openedWithTerm = useRef(startTerm ? performance.now() : null);
   const swallowEcho = (e: React.KeyboardEvent) => {
     const since = openedWithTerm.current;
-    if (e.key === "Enter" && since !== null && performance.now() - since < ECHO_MS)
-      e.preventDefault();
+    if (e.key !== "Enter" || since === null) return;
+    if (e.repeat || performance.now() - since < ECHO_MS) e.preventDefault();
   };
   const meaningRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);

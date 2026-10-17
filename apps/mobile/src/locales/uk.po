@@ -495,6 +495,9 @@ msgstr "{deckCount} · {cardCount}"
 msgid "{due, plural, one {# card due} other {# cards due}}"
 msgstr "{due, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
 
+msgid "{due, plural, one {# card due} other {# cards due}} · {streak, plural, one {# day} other {# days}}"
+msgstr "{due, plural, one {# до повторення} other {# до повторення}} · {streak, plural, one {# день} few {# дні} many {# днів} other {# дня}}"
+
 msgid "{due, plural, one {# card is due. {reviewed} of {goal} reviewed today.} other {# cards are due. {reviewed} of {goal} reviewed today.}}"
 msgstr "{due, plural, one {# картка до повторення. Сьогодні повторено {reviewed} з {goal}.} few {# картки до повторення. Сьогодні повторено {reviewed} з {goal}.} many {# карток до повторення. Сьогодні повторено {reviewed} з {goal}.} other {# картки до повторення. Сьогодні повторено {reviewed} з {goal}.}}"
 
@@ -518,6 +521,9 @@ msgstr "{due, plural, one {картка до повторення в колод�
 
 msgid "{due, plural, one {card due today} other {cards due today}}"
 msgstr "{due, plural, one {картка до повторення сьогодні} few {картки до повторення сьогодні} many {карток до повторення сьогодні} other {картки до повторення сьогодні}}"
+
+msgid "{due, plural, one {card due} other {cards due}}"
+msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
 msgid "{due, plural, one {card to review} other {cards to review}}"
 msgstr "{due, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
@@ -628,6 +634,9 @@ msgstr "Можна починати {sectionName}. Почни розділ, що
 #. placeholder {0}: s.deckIds.length
 msgid "{seriesName}, {0, plural, one {# deck} other {# decks}}"
 msgstr "{seriesName}, {0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}}"
+
+msgid "{streak, plural, one {# day in a row} other {# days in a row}}"
+msgstr "{streak, plural, one {# день поспіль} few {# дні поспіль} many {# днів поспіль} other {# дня поспіль}}"
 
 msgid "{streak, plural, one {day in a row} other {days in a row}}"
 msgstr "{streak, plural, one {день поспіль} few {дні поспіль} many {днів поспіль} other {дня поспіль}}"
@@ -1825,6 +1834,9 @@ msgstr "Перетягніть серію за ручку. У Бібліотец
 
 msgid "Driving"
 msgstr "Водіння"
+
+msgid "due"
+msgstr "до повторення"
 
 msgid "Due"
 msgstr "Коли повторювати"
@@ -4082,6 +4094,9 @@ msgstr "до повторення"
 
 msgid "Today"
 msgstr "Сьогодні"
+
+msgid "Today counts"
+msgstr "Сьогодні зараховано"
 
 msgid "Today, {day}: {reviews}"
 msgstr "Сьогодні, {day}: {reviews}"

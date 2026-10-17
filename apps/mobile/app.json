@@ -107,6 +107,7 @@
           }
         }
       ],
+      "./plugins/with-widget-localizations.cjs",
       [
         "expo-widgets",
         {

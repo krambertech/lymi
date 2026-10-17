@@ -7,6 +7,7 @@ import {
   publicationTags,
 } from "@lymi/core";
 import { activeAvatarVersion, publisherAvatarPath } from "@lymi/core/catalog";
+import { isLivePublicDeck } from "@lymi/core/catalog/server";
 import { and, eq, isNull, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { auditStatement } from "./audit";
@@ -53,6 +54,7 @@ export function publicationOut(
       revision: row.revision,
       publishedAt: row.publishedAt.toISOString(),
       withdrawnAt: row.withdrawnAt?.toISOString() ?? null,
+      redirectTo: row.status === "withdrawn" ? row.redirectSlug : null,
       addUrl: new URL(`/add/${row.slug}`, productUrl).toString(),
     },
   };
@@ -122,6 +124,8 @@ export async function publishDeck(
     sources: input.sources,
     reviewedAt: input.reviewedAt ? new Date(input.reviewedAt) : null,
     withdrawnAt: null,
+    // Back on its own page, the deck no longer sends visitors elsewhere.
+    redirectSlug: null,
     updatedAt: now,
   };
   const revision = (existing?.revision ?? 0) + 1;
@@ -166,20 +170,42 @@ export async function publishDeck(
   return publicationOf(db, deckId);
 }
 
-/** Take a deck off its public page. Members keep studying it; nobody new can add it. */
-export async function withdrawDeck(ctx: ServiceContext, deckId: string) {
+/**
+ * Take a deck off its public page. Members keep studying it; nobody new can add it. With
+ * `redirectTo`, its page sends visitors to that deck, which must be live; withdrawing an already
+ * withdrawn deck again sets or moves its redirect, so a merged deck can be named once it is live.
+ */
+export async function withdrawDeck(
+  ctx: ServiceContext,
+  deckId: string,
+  opts: { redirectTo?: string | undefined } = {},
+) {
   const { db } = ctx;
   await ownedDeck(ctx, deckId);
   const existing = await publicationOf(db, deckId);
   if (!existing) throw new ServiceError("not_found", "This deck is not published");
-  if (existing.status === "withdrawn") return existing;
+  const { redirectTo } = opts;
+  if (redirectTo !== undefined) {
+    if (redirectTo === existing.slug) {
+      throw new ServiceError("invalid", "A deck cannot redirect to its own page");
+    }
+    if (!(await isLivePublicDeck(db, redirectTo))) {
+      throw new ServiceError(
+        "invalid",
+        `Cannot redirect to ${redirectTo}: no published deck has that slug yet. Publish it first.`,
+      );
+    }
+  }
+  const redirectSlug = redirectTo ?? existing.redirectSlug;
+  if (existing.status === "withdrawn" && redirectSlug === existing.redirectSlug) return existing;
   const now = new Date();
   await db.batch([
     db
       .update(schema.deckPublications)
       .set({
         status: "withdrawn",
-        withdrawnAt: now,
+        withdrawnAt: existing.withdrawnAt ?? now,
+        redirectSlug,
         revision: sql`${schema.deckPublications.revision} + 1`,
         updatedAt: now,
       })
@@ -188,7 +214,7 @@ export async function withdrawDeck(ctx: ServiceContext, deckId: string) {
       entity: "deck",
       action: "withdraw_publication",
       id: deckId,
-      details: { slug: existing.slug },
+      details: { slug: existing.slug, ...(redirectSlug ? { redirectTo: redirectSlug } : {}) },
     }),
   ]);
   return publicationOf(db, deckId);

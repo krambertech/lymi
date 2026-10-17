@@ -434,6 +434,31 @@ const publishedAndAlive = () =>
     sql`exists (select 1 from ${cards} where ${cards.deckId} = ${decks.id} and ${cards.archivedAt} is null)`,
   );
 
+/** True while the slug's own public page answers 200: published, not archived, with a card left. */
+export async function isLivePublicDeck(db: CatalogDb, slug: string): Promise<boolean> {
+  if (!isPublicDeckSlug(slug)) return false;
+  const [row] = await db
+    .select({ slug: deckPublications.slug })
+    .from(deckPublications)
+    .innerJoin(decks, eq(decks.id, deckPublications.deckId))
+    .where(and(eq(deckPublications.slug, slug), publishedAndAlive()));
+  return Boolean(row);
+}
+
+/**
+ * Where a withdrawn deck's public page sends visitors, or null. A target that has since gone is
+ * no redirect at all, so the old page answers 410 rather than pointing at another dead one.
+ */
+export async function publicDeckRedirect(db: CatalogDb, slug: string): Promise<string | null> {
+  if (!isPublicDeckSlug(slug)) return null;
+  const [row] = await db
+    .select({ status: deckPublications.status, redirectSlug: deckPublications.redirectSlug })
+    .from(deckPublications)
+    .where(eq(deckPublications.slug, slug));
+  if (row?.status !== "withdrawn" || !row.redirectSlug) return null;
+  return (await isLivePublicDeck(db, row.redirectSlug)) ? row.redirectSlug : null;
+}
+
 /** The published decks a reader of `language` can use, or every one when no language is given. */
 async function readableRows<T extends { deckId: string; meaningLanguage: string }>(
   db: CatalogDb,

@@ -1,11 +1,17 @@
 import { modeOf, type ReviewModeKey } from "@lymi/core";
-import { type PublicDeckOut, type PublicDeckSummary, previewMode } from "@lymi/core/catalog";
+import {
+  DECK_PAGE_SPREAD,
+  deckPageHand,
+  deckPageSpread,
+  type PublicDeckOut,
+  type PublicDeckSummary,
+  previewMode,
+  stableHash,
+} from "@lymi/core/catalog";
 import { HAND_SIZE } from "./hand";
 import { type Locale, locales } from "./routes";
 
-/** The most cards laid out at the top of the page. */
-export const SPREAD_SIZE = 5;
-/** How many cards the page's hand holds, which is the hand's own size so a second round matches. */
+export const SPREAD_SIZE = DECK_PAGE_SPREAD;
 export const STACK_SIZE = HAND_SIZE;
 
 export type DeckCard = {
@@ -74,29 +80,8 @@ function sectionsWithMeanings(deck: PublicDeckOut): DeckCard[][] {
     .filter((cards) => cards.length > 0);
 }
 
-/** FNV-1a, so the spread stays the same for one revision of a deck. */
-function hash(text: string): number {
-  let h = 0x811c9dc5;
-  for (let i = 0; i < text.length; i++) {
-    h ^= text.charCodeAt(i);
-    h = Math.imul(h, 0x01000193);
-  }
-  return h >>> 0;
-}
-
-/**
- * Distinct cards from anywhere in the deck, shuffled from the deck own revision rather than at
- * random, so everyone who loads one revision is served the same page and its ETag stays honest.
- */
 export function stackCards(deck: PublicDeckOut, size = STACK_SIZE): DeckCard[] {
-  const cards = sectionsWithMeanings(deck).flat();
-  let seed = hash(`${deck.slug}:${deck.revision}:stack`);
-  for (let i = cards.length - 1; i > 0; i--) {
-    seed = (seed * 1103515245 + 12345) >>> 0;
-    const j = seed % (i + 1);
-    [cards[i], cards[j]] = [cards[j] as DeckCard, cards[i] as DeckCard];
-  }
-  return steppedModes(cards.slice(0, size));
+  return steppedModes(deckPageHand(deck, sectionsWithMeanings(deck), size));
 }
 
 /** Each card in its place's mode, so a deck asked more than one way shows each of them. */
@@ -104,43 +89,8 @@ function steppedModes(cards: DeckCard[]): DeckCard[] {
   return cards.map((card, place) => ({ ...card, mode: previewMode(card, place) }));
 }
 
-/**
- * The cards laid out at the top of the page, in deck order: one from each of sections spread evenly
- * through the deck, preferring cards short enough to read at a glance. A deck with fewer sections
- * than places gives more than one card from a section. The choice changes only with the revision.
- */
 export function spreadCards(deck: PublicDeckOut, size = SPREAD_SIZE): DeckCard[] {
-  const groups = sectionsWithMeanings(deck);
-  const count = Math.min(
-    size,
-    groups.reduce((sum, cards) => sum + cards.length, 0),
-  );
-  if (count === 0) return [];
-  const perGroup = groups.map(() => 0);
-  if (groups.length >= count) {
-    for (let i = 0; i < count; i++) {
-      const at = count === 1 ? 0 : Math.round((i * (groups.length - 1)) / (count - 1));
-      perGroup[at] = 1;
-    }
-  } else {
-    for (let placed = 0; placed < count; ) {
-      groups.forEach((cards, at) => {
-        if (placed < count && (perGroup[at] ?? 0) < cards.length) {
-          perGroup[at] = (perGroup[at] ?? 0) + 1;
-          placed++;
-        }
-      });
-    }
-  }
-  const picked = groups.flatMap((cards, at) => {
-    const take = perGroup[at] ?? 0;
-    if (take === 0) return [];
-    const glanceable = cards.filter((card) => card.term.length <= 20 && card.meaning.length <= 36);
-    const from = glanceable.length >= take ? glanceable : cards;
-    const start = hash(`${deck.slug}:${deck.revision}:${at}`) % from.length;
-    return Array.from({ length: take }, (_, k) => from[(start + k) % from.length] as DeckCard);
-  });
-  return steppedModes(picked);
+  return steppedModes(deckPageSpread(deck, sectionsWithMeanings(deck), size));
 }
 
 export type RecallCue = "term" | "meaning" | "image" | "mixed";
@@ -201,7 +151,7 @@ export function deckContentHash(
   deck: PublicDeckOut,
   related: readonly PublicDeckSummary[] = [],
 ): string {
-  return hash(JSON.stringify({ deck, related })).toString(36);
+  return stableHash(JSON.stringify({ deck, related })).toString(36);
 }
 
 /**

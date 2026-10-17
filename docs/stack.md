@@ -234,7 +234,7 @@ Pronunciation audio is generated only when the learner first presses play. Cards
 
 Bump `AUDIO_CACHE_VERSION` to refresh all existing recordings on their next authenticated play. A successful replacement is cached once; if every provider fails, the old clip still plays. No bulk provider requests, database reset or R2 deletion are needed, and superseded objects remain in R2.
 
-A published deck's stored pronunciation is public with the deck. The public site receives only the card ID; `/public/media/card/<id>/audio` on the product Worker checks the live publication, card and asset before streaming the existing R2 object. An anonymous visitor never reaches a speech provider.
+A published deck's pronunciation is public with the deck. The public site receives only the card ID; `/public/media/card/<id>/audio` on the product Worker checks the live publication and card, then streams the stored R2 object or generates it as a first play would, acting as the publisher. Generation from that route spends a budget of 30 clips per caller an hour and 500 a day across all callers, so an anonymous visitor's spend is bounded and a stored clip is always free. The cards the deck page shows before the full list, its spread and its hand, are voiced ahead: on publish and by an hourly cron, through the same path. Everything else is voiced only when a visitor or learner plays it, so the spend follows what people listen to rather than the size of the catalogue.
 
 ### Avatars: Images binding, private R2
 

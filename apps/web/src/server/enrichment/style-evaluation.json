@@ -90,6 +90,85 @@
         "avoids": ["pharmac", "drug", "exam"],
         "maxChars": 200
       }
+    },
+    {
+      "id": "corrections-shorten-examples",
+      "note": "The learner's own examples are short, and every correction cuts a long AI example down to a few words.",
+      "meaningLanguage": "en",
+      "deck": {
+        "name": "Español A2",
+        "language": "es",
+        "purpose": "language"
+      },
+      "cards": [
+        ["2026-09-01", "correr", "to run", "Corro cada mañana."],
+        ["2026-09-01", "comer", "to eat", "Comemos juntos."],
+        ["2026-09-01", "hablar", "to speak", "Hablo poco."],
+        ["2026-09-01", "vivir", "to live", "Vivo aquí."],
+        ["2026-09-04", "abrir", "to open", "Abre la puerta."],
+        ["2026-09-04", "cerrar", "to close", "Cierra la ventana."],
+        ["2026-09-04", "pagar", "to pay", "Pago yo."],
+        ["2026-09-04", "llegar", "to arrive", "Llegamos tarde."],
+        ["2026-09-09", "salir", "to go out", "Salgo ahora."],
+        ["2026-09-09", "volver", "to come back", "Vuelvo pronto."],
+        ["2026-09-09", "dormir", "to sleep", "Duermo mal."],
+        ["2026-09-09", "leer", "to read", "Leo mucho."]
+      ],
+      "corrections": [
+        [
+          "escribir",
+          "example",
+          "Todos los domingos por la tarde escribo una carta larga a mi abuela, que vive en un pueblo pequeño.",
+          "Escribo cartas."
+        ],
+        [
+          "comprar",
+          "example",
+          "Cuando voy al mercado del barrio compro fruta fresca, verduras y a veces un poco de pan.",
+          "Compro pan."
+        ],
+        [
+          "esperar",
+          "example",
+          "Esperamos el autobús durante más de veinte minutos porque había mucho tráfico en el centro.",
+          "Espero el bus."
+        ]
+      ],
+      "expect": {
+        "mentions": [["short", "brief", "few words"], ["example"]]
+      }
+    },
+    {
+      "id": "corrections-fix-facts",
+      "note": "Two corrections each fix a wrong sense on one card and share nothing else; the cards follow the defaults.",
+      "meaningLanguage": "en",
+      "deck": {
+        "name": "Italiano",
+        "language": "it",
+        "purpose": "language"
+      },
+      "cards": [
+        ["2026-09-01", "la casa", "house", ""],
+        ["2026-09-01", "il libro", "book", ""],
+        ["2026-09-01", "la sedia", "chair", ""],
+        ["2026-09-01", "il tavolo", "table", ""],
+        ["2026-09-04", "la finestra", "window", ""],
+        ["2026-09-04", "la porta", "door", ""],
+        ["2026-09-04", "il letto", "bed", ""],
+        ["2026-09-04", "la cucina", "kitchen", ""],
+        ["2026-09-09", "il bagno", "bathroom", ""],
+        ["2026-09-09", "lo specchio", "mirror", ""],
+        ["2026-09-09", "il divano", "sofa", ""],
+        ["2026-09-09", "la lampada", "lamp", ""]
+      ],
+      "corrections": [
+        ["la camera", "meaning", "camera", "room"],
+        ["il burro", "meaning", "donkey", "butter"]
+      ],
+      "expect": {
+        "avoids": ["wrong", "mistake", "false friend"],
+        "maxChars": 200
+      }
     }
   ]
 }

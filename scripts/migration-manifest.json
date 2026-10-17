@@ -219,6 +219,10 @@
     {
       "name": "0054_yummy_harpoon.sql",
       "sha256": "7bc1cab50059a643fdd81806f4d00e6cf7f3f67582459ef8876ce4e7364fdff2"
+    },
+    {
+      "name": "0055_yielding_whiplash.sql",
+      "sha256": "35d2639eb22c29cef993954372c180e6451e40fe48321951c2890afbc76a121d"
     }
   ]
 }

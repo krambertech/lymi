@@ -12,7 +12,9 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Deck**: A named group of cards. It may carry a default language, but language lives on the card. _Avoid_: Collection, list, folder
 
-**Style**: What the AI learned about a deck from the cards its owner wrote: what the deck is about and the habits its cards follow. It sits under the owner's instructions, which it never changes, and only the owner sees it. ADR 0037. _Avoid_: Profile, preferences, memory
+**Style**: What the AI learned about a deck from the cards its owner wrote and their corrections of its text: what the deck is about and the habits its cards follow. It sits under the owner's instructions, which it never changes, and only the owner sees it. ADR 0037. _Avoid_: Profile, preferences, memory
+
+**Correction**: The owner's rewrite of a field the AI wrote, kept as the AI's text beside the card's text now, so the deck's style learns what enrichment gets wrong. Emptying the field counts; putting the AI's text back with Undo withdraws it. Only the owner's own cards have them, and nobody sees them. ADR 0037. _Avoid_: Feedback, rating, fix
 
 **Library**: The screen holding every deck. The decks are decks; Library is where they are. _Avoid_: Decks (as a screen name), collections, my decks
 

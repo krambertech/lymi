@@ -22,6 +22,7 @@ erDiagram
   user ||--o{ deck_members : "studies"
   cards ||--o{ card_states : "one per learner per review mode"
   cards ||--o{ important_cards : "marked by each learner"
+  cards ||--o{ card_corrections : "AI text the owner rewrote"
   cards ||--o{ card_images : "one active picture"
   card_states ||--o{ reviews : "append-only"
   user ||--o{ review_days : "one per local date"
@@ -211,6 +212,13 @@ erDiagram
     text id PK
     text card_id FK
     text user_id FK
+    int created_at
+  }
+  card_corrections {
+    text card_id PK "and FK"
+    text field PK "meaning | example | notes | pronunciation"
+    text user_id FK "the owner who rewrote it"
+    text ai_text "what the AI wrote; the learner's side is the card's current text"
     int created_at
   }
   reviews {

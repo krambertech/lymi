@@ -7,6 +7,8 @@ import type {
   TerseCardOutcomeOut,
 } from "@lymi/core";
 import {
+  DECK_ENRICH_FIELDS,
+  type DeckEnrichField,
   deckEnrichFields,
   emptyFields,
   fieldsToFill,
@@ -15,7 +17,7 @@ import {
   normaliseTerm,
   TEXT_MODES,
 } from "@lymi/core";
-import { and, asc, desc, eq, inArray, isNull } from "@lymi/core/db";
+import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
@@ -462,11 +464,50 @@ type CardWrite = {
   archiveTags?: readonly string[] | undefined;
   /** What product analytics reports once the write lands. */
   reports?: AnalyticsEvent | undefined;
+  /** The AI's text from each field the write rewrites, for the deck's style. */
+  corrections?: readonly Correction[] | undefined;
 };
 
-/** Reports the writes that landed, one archive event per origin rather than per card. */
+type Correction = typeof schema.cardCorrections.$inferInsert;
+
+/** Rows per insert, under D1's hundred bound parameters. */
+const CORRECTIONS_PER_INSERT = 16;
+
+/** The AI's text replaces any earlier correction of the same field, since the field was the AI's again. */
+function correctionStatements(db: Db, rows: readonly Correction[]): Statement[] {
+  const statements: Statement[] = [];
+  for (let i = 0; i < rows.length; i += CORRECTIONS_PER_INSERT) {
+    statements.push(
+      db
+        .insert(schema.cardCorrections)
+        .values(rows.slice(i, i + CORRECTIONS_PER_INSERT))
+        .onConflictDoUpdate({
+          target: [schema.cardCorrections.cardId, schema.cardCorrections.field],
+          set: {
+            aiText: sql`excluded.ai_text`,
+            createdAt: sql`excluded.created_at`,
+          },
+        }),
+    );
+  }
+  return statements;
+}
+
+const CHANNEL = { user: "app", api: "api", mcp: "mcp" } as const;
+
+/** Reports the writes that landed, one archive event per origin and one correction event for all. */
 function reportWrites(ctx: ServiceContext, writes: CardWrite[], failed: ReadonlySet<string>) {
   const archived = new Map<CardOrigin, { count: number; ai_written: number }>();
+  const corrected = { count: 0, meaning: 0, example: 0, notes: 0, pronunciation: 0 };
+  for (const write of writes) {
+    if (failed.has(write.id)) continue;
+    if (write.corrections?.length) corrected.count += 1;
+    for (const { field } of write.corrections ?? []) corrected[field] += 1;
+  }
+  const channel = CHANNEL[ctx.actor as keyof typeof CHANNEL];
+  if (channel && corrected.count > 0) {
+    track(ctx.analytics, { name: "ai_text_corrected", channel, ...corrected });
+  }
   for (const write of writes) {
     const event = write.reports;
     if (!event || failed.has(write.id)) continue;
@@ -518,6 +559,10 @@ function batchOf(db: Db, writes: CardWrite[], now: Date): Statement[] {
   const tagged = writes.filter((write) => write.tags);
   return [
     ...writes.flatMap((write) => write.statements),
+    ...correctionStatements(
+      db,
+      writes.flatMap((write) => write.corrections ?? []),
+    ),
     ...(stated.length > 0 ? stateStatementsForCards(db, JSON.stringify(stated), now) : []),
     ...(tagged.length > 0
       ? syncTagStatements(
@@ -759,6 +804,26 @@ async function editLookups(ctx: ServiceContext, edits: ServerCardEdit[]): Promis
   };
 }
 
+/**
+ * The AI's text from each field this edit rewrites: text the AI wrote that the owner changed,
+ * emptying included. Null clears a field for a split or Undo, which says nothing about the text.
+ */
+function correctionsOf(
+  { userId }: ServiceContext,
+  current: Card,
+  patch: Partial<Record<DeckEnrichField, string | null | undefined>>,
+  sources: Partial<Record<`${DeckEnrichField}Source`, FieldSource | null | undefined>>,
+  now: Date,
+): Correction[] {
+  return DECK_ENRICH_FIELDS.flatMap((field) => {
+    const text = patch[field];
+    const aiText = current[field] ?? "";
+    if (typeof text !== "string" || current[`${field}Source`] !== "ai") return [];
+    if (sources[`${field}Source`] === "ai" || text.trim() === aiText.trim()) return [];
+    return [{ cardId: current.id, field, userId, aiText, createdAt: now }];
+  });
+}
+
 /** One card's edit and its audit row, or the ServiceError that refuses it. */
 function editWrite(
   ctx: ServiceContext,
@@ -837,6 +902,7 @@ function editWrite(
     ],
     states: modes !== undefined || patch.deckId !== undefined,
     tags: patch.tags,
+    corrections: correctionsOf(ctx, current, patch, sources, now),
     reports:
       hook && !current.hook && sources.hookSource
         ? { name: "hook_added", source: sources.hookSource }

@@ -1,5 +1,18 @@
 import { deckEnrichFields, deckPurpose } from "@lymi/core";
-import { and, asc, count, eq, gt, inArray, isNull, ne, or, type SQL } from "@lymi/core/db";
+import {
+  and,
+  asc,
+  count,
+  desc,
+  eq,
+  gt,
+  inArray,
+  isNull,
+  ne,
+  or,
+  type SQL,
+  sql,
+} from "@lymi/core/db";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
 import { languageGuide } from "../enrichment/languages";
@@ -10,6 +23,7 @@ import {
   STYLE_PROMPT_VERSION,
   STYLE_REPLY_SCHEMA,
   type StyleCard,
+  type StyleCorrection,
   styleInput,
   topicAllowed,
 } from "../enrichment/style";
@@ -24,6 +38,8 @@ export const STYLE_LEARN_AFTER = 8;
 export const STYLE_RELEARN_AFTER = 10;
 /** Cards shown per call, spread across the deck's life rather than its latest lesson. */
 export const STYLE_CARDS = 60;
+/** Corrections shown per call, the newest, since they say what the AI gets wrong now. */
+export const STYLE_CORRECTIONS = 20;
 
 /** Active cards in the deck whose meaning a person wrote, the same rule enrichment samples follow. */
 function ownCards(deckId: string): SQL {
@@ -57,14 +73,78 @@ type StyleDeck = Pick<
   | "enrichStyleAt"
 >;
 
-/** True when the deck has enough cards of its own, and enough changed since it was last learned. */
-async function due(db: Db, deck: StyleDeck): Promise<boolean> {
+const corrected = schema.cardCorrections;
+
+/** The corrected field's text on the card as it is now. */
+const correctedText = sql<string | null>`case ${corrected.field}
+  when 'meaning' then ${schema.cards.meaning}
+  when 'example' then ${schema.cards.example}
+  when 'notes' then ${schema.cards.notes}
+  else ${schema.cards.pronunciation} end`;
+/** Where the corrected field's text on the card came from now. */
+const correctedSource = sql<string | null>`case ${corrected.field}
+  when 'meaning' then ${schema.cards.meaningSource}
+  when 'example' then ${schema.cards.exampleSource}
+  when 'notes' then ${schema.cards.notesSource}
+  else ${schema.cards.pronunciationSource} end`;
+
+/** The owner's corrections on the deck's active cards whose field is still theirs, not the AI's again. */
+function ownCorrections(userId: string, deckId: string): SQL {
+  return and(
+    eq(corrected.userId, userId),
+    eq(schema.cards.userId, userId),
+    eq(schema.cards.deckId, deckId),
+    isNull(schema.cards.archivedAt),
+    sql`(${correctedSource} is null or ${correctedSource} != 'ai')`,
+  ) as SQL;
+}
+
+/**
+ * True when the deck has enough cards and corrections of its own, and enough of them new since it was
+ * last learned. A correction counts beside the card it changed, because it says more.
+ */
+async function due(db: Db, userId: string, deck: StyleDeck): Promise<boolean> {
   const since = deck.enrichStyleAt;
-  const [row] = await db
-    .select({ total: count() })
-    .from(schema.cards)
-    .where(since ? and(ownCards(deck.id), gt(schema.cards.updatedAt, since)) : ownCards(deck.id));
-  return (row?.total ?? 0) >= (since ? STYLE_RELEARN_AFTER : STYLE_LEARN_AFTER);
+  const [[cards], [corrections]] = await Promise.all([
+    db
+      .select({ total: count() })
+      .from(schema.cards)
+      .where(since ? and(ownCards(deck.id), gt(schema.cards.updatedAt, since)) : ownCards(deck.id)),
+    db
+      .select({ total: count() })
+      .from(corrected)
+      .innerJoin(schema.cards, eq(schema.cards.id, corrected.cardId))
+      .where(
+        and(ownCorrections(userId, deck.id), since ? gt(corrected.createdAt, since) : undefined),
+      ),
+  ]);
+  const total = (cards?.total ?? 0) + (corrections?.total ?? 0);
+  return total >= (since ? STYLE_RELEARN_AFTER : STYLE_LEARN_AFTER);
+}
+
+/** The newest corrections on the deck: the AI's text beside the learner's as the card holds it now. */
+async function correctionsFor(db: Db, userId: string, deckId: string): Promise<StyleCorrection[]> {
+  const rows = await db
+    .select({
+      term: schema.cards.term,
+      field: corrected.field,
+      ai: corrected.aiText,
+      learner: correctedText,
+    })
+    .from(corrected)
+    .innerJoin(schema.cards, eq(schema.cards.id, corrected.cardId))
+    .where(ownCorrections(userId, deckId))
+    .orderBy(desc(corrected.createdAt), asc(corrected.cardId))
+    .limit(STYLE_CORRECTIONS);
+  return rows.map(({ term, field, ai, learner }) => {
+    const max = field === "notes" ? NOTES_READ_MAX : undefined;
+    return {
+      term,
+      field,
+      ai: ai.trim().slice(0, max),
+      learner: (learner ?? "").trim().slice(0, max),
+    };
+  });
 }
 
 /** The text of one field as the style reads it: the learner's or the lesson's, missing when the AI wrote it. */
@@ -116,7 +196,8 @@ export type LearnStyleOptions = {
 
 /**
  * Learn the style of each deck the run's cards belong to, where it is due. Only the owner's decks
- * are read, and only the cards a person wrote, so the AI never learns from its own text. A deck
+ * are read, and only the cards a person wrote and the owner's corrections of the AI's text, so the AI
+ * never learns from its own text alone. A deck
  * whose cards show nothing worth saying stores no style but the time, so it waits for more cards
  * rather than asking again on the next add. ADR 0037.
  */
@@ -165,8 +246,9 @@ export async function learnDeckStyles(
 
   const learned: string[] = [];
   for (const deck of decks) {
-    if (!(await due(db, deck))) continue;
+    if (!(await due(db, userId, deck))) continue;
     const cards = await cardsFor(db, deck.id);
+    const corrections = await correctionsFor(db, userId, deck.id);
     const { meaningLanguage } = await getSettings(ctx);
     const guide = languageGuide(deck.defaultLanguage);
     const fields = deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose);
@@ -185,6 +267,7 @@ export async function learnDeckStyles(
       },
       previous: deck.enrichStyle,
       cards,
+      corrections,
     });
     let reply: unknown;
     try {
@@ -198,6 +281,7 @@ export async function learnDeckStyles(
         name: "deck_style_learned",
         outcome: "failed",
         cards: cards.length,
+        corrections: corrections.length,
         topic: topicAllowed(cards),
         chars: 0,
         prompt_version: STYLE_PROMPT_VERSION,
@@ -215,6 +299,7 @@ export async function learnDeckStyles(
       name: "deck_style_learned",
       outcome: style ? "learned" : "empty",
       cards: cards.length,
+      corrections: corrections.length,
       topic: topicAllowed(cards),
       chars: style?.length ?? 0,
       prompt_version: STYLE_PROMPT_VERSION,

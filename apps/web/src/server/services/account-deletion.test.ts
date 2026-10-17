@@ -236,6 +236,12 @@ describe("deleting an account", () => {
     const peeter = await learner(db, "peeter", "Peeter");
     const { deck, card } = await deckWithCard(kadri, "maja", peeter);
     await raw.prepare("update cards set hook_draft = 'a draft' where id = ?").bind(card.id).run();
+    await raw
+      .prepare(
+        "insert into card_corrections (card_id, field, user_id, ai_text, created_at) values (?, 'meaning', ?, 'the AI', 0)",
+      )
+      .bind(card.id, kadri.userId)
+      .run();
 
     const code = await codeFor(kadri, "kadri@lymi.test");
     const leftovers = await deleteAccount(kadri, { code }, deps);
@@ -250,6 +256,7 @@ describe("deleting an account", () => {
     expect(await count("cards", "id", card.id)).toBe(1);
     // The AI's draft was only ever the owner's.
     expect(await count("cards", "hook_draft", "a draft")).toBe(0);
+    expect(await count("card_corrections", "card_id", card.id)).toBe(0);
     expect(await count("card_states", "user_id", peeter.userId)).toBe(1);
     expect(await count("reviews", "user_id", peeter.userId)).toBe(1);
     // The owner's own schedule and reviews go with them.

@@ -234,9 +234,18 @@ export const analyticsEvents = {
   deck_style_learned: z.object({
     outcome: z.enum(["learned", "empty", "failed"]),
     cards: count,
+    corrections: count,
     topic: z.boolean(),
     chars: count,
     prompt_version: z.number().int().positive().max(1000),
+  }),
+  ai_text_corrected: z.object({
+    channel: z.enum(["app", "api", "mcp"]),
+    count,
+    meaning: count,
+    example: count,
+    notes: count,
+    pronunciation: count,
   }),
   deck_enrichment_changed: z.object({
     meaning: z.boolean(),
@@ -363,6 +372,7 @@ export const analyticsProducers = {
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
   deck_style_learned: ["worker"],
+  ai_text_corrected: ["worker"],
   lesson_read: ["worker"],
   lesson_read_limited: ["worker"],
   $ai_generation: ["worker"],

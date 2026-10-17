@@ -4,7 +4,7 @@ What a card's language changes for Japanese on the phone: furigana from the kana
 
 ## Reach
 
-No persona has Japanese cards, so [`japanese.mjs`](japanese.mjs) adds two decks to `learner` before the flow: 日本語 holding the New card 直角 read ちょっかく, with the example `この角[かど]は直角[ちょっかく]だ。`, 漢字 holding 見る read みる, graded Easy two months ago so it is Known and due, and 動詞 holding two important cards: a verb with seven forms and a term too long for a row's three lines.
+No persona has Japanese cards, so [`japanese.mjs`](japanese.mjs) adds three decks to `learner` before the flow: 日本語 holding the New card 直角 read ちょっかく, with the example `この角[かど]は直角[ちょっかく]だ。`, 漢字 holding 見る read みる, graded Easy two months ago so it is Known and due, and 動詞 holding two important cards: a verb with seven forms and a term too long for a row's three lines.
 
 ## Drive
 

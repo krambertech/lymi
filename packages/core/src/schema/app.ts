@@ -101,6 +101,10 @@ export const decks = sqliteTable(
     enrichFields: text("enrich_fields", { mode: "json" }).$type<DeckEnrichField[]>(),
     /** The owner's own words to the AI about this deck. Never shown to a member. */
     enrichInstructions: text("enrich_instructions"),
+    /** What the AI learned from the owner's cards. Null until enough cards exist. ADR 0037. */
+    enrichStyle: text("enrich_style"),
+    /** When the style was last learned, so it is learned again only after the cards change. */
+    enrichStyleAt: integer("enrich_style_at", { mode: "timestamp_ms" }),
   },
   (t) => [
     index("decks_user_idx").on(t.userId, t.archivedAt, t.position),

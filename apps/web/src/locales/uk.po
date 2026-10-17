@@ -951,6 +951,12 @@ msgstr "AI заповнює картки цієї колоди з огляду �
 msgid "AI hook"
 msgstr "Зачіпка від AI"
 
+msgid "AI keeps this up to date from the cards you write. Your instructions come first."
+msgstr "AI оновлює це за картками, які ти пишеш. Твої інструкції важливіші."
+
+msgid "AI learns how you write this deck’s cards as you add them."
+msgstr "AI вивчає, як ти пишеш картки цієї колоди, поки ти їх додаєш."
+
 msgid "AI meaning"
 msgstr "Значення від AI"
 
@@ -1165,6 +1171,9 @@ msgstr "О {savedTime} за часом {zone}, лише в дні, коли є �
 
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Щонайменше {MIN_PASSWORD_LENGTH} символів."
+
+msgid "Automatic"
+msgstr "Автоматично"
 
 msgid "Back"
 msgstr "Назад"
@@ -2666,6 +2675,9 @@ msgstr "Пізніше сьогодні"
 
 msgid "Learn Estonian"
 msgstr "Естонська з нуля"
+
+msgid "Learned from your cards"
+msgstr "Вивчено з твоїх карток"
 
 msgid "Learning"
 msgstr "У вивченні"

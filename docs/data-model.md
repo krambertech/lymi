@@ -63,6 +63,8 @@ erDiagram
     text purpose "nullable language | subject | other; null is language with a language, else other"
     json enrich_fields "nullable, fields the AI may fill; null follows the purpose and language's default"
     text enrich_instructions "nullable, the owner's instructions to the AI"
+    text enrich_style "nullable, what the AI learned from the owner's cards (ADR 0037)"
+    int enrich_style_at "nullable, when the style was last learned"
   }
   sections {
     text id PK

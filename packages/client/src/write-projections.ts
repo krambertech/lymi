@@ -146,6 +146,7 @@ export function localDeck(w: Extract<Write, { kind: "deck.create" }>, lookup: Lo
     purpose: deckPurpose(input.purpose, input.defaultLanguage),
     enrichFields: deckEnrichFields(input.enrichFields, input.defaultLanguage, input.purpose),
     enrichInstructions: input.enrichInstructions || null,
+    enrichStyle: null,
     reviewModes: modesFromDirections(directions).map(modeOf),
     total: 0,
     due: 0,

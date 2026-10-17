@@ -951,6 +951,12 @@ msgstr "AI fills this deck’s cards to suit it. Only you see it."
 msgid "AI hook"
 msgstr "AI hook"
 
+msgid "AI keeps this up to date from the cards you write. Your instructions come first."
+msgstr "AI keeps this up to date from the cards you write. Your instructions come first."
+
+msgid "AI learns how you write this deck’s cards as you add them."
+msgstr "AI learns how you write this deck’s cards as you add them."
+
 msgid "AI meaning"
 msgstr "AI meaning"
 
@@ -1165,6 +1171,9 @@ msgstr "At {savedTime}, {zone} time, only on days with cards due."
 
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "At least {MIN_PASSWORD_LENGTH} characters."
+
+msgid "Automatic"
+msgstr "Automatic"
 
 msgid "Back"
 msgstr "Back"
@@ -2666,6 +2675,9 @@ msgstr "Later today"
 
 msgid "Learn Estonian"
 msgstr "Learn Estonian"
+
+msgid "Learned from your cards"
+msgstr "Learned from your cards"
 
 msgid "Learning"
 msgstr "Learning"

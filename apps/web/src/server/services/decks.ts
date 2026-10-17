@@ -58,6 +58,7 @@ export async function listDecks(
       purpose: schema.decks.purpose,
       enrichFields: schema.decks.enrichFields,
       enrichInstructions: schema.decks.enrichInstructions,
+      enrichStyle: schema.decks.enrichStyle,
       total: sql<number>`(select count(*) from cards where cards.deck_id = decks.id and cards.archived_at is null)`,
       archivedAt: schema.decks.archivedAt,
       ownerId: schema.decks.userId,
@@ -129,6 +130,7 @@ export async function listDecks(
         purpose: owner ? deckPurpose(deck.purpose, deck.defaultLanguage) : null,
         enrichFields: deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose),
         enrichInstructions: owner ? deck.enrichInstructions : null,
+        enrichStyle: owner ? deck.enrichStyle : null,
         // Cards, not direction states: the same count the queue reports as its total.
         due: due.get(deck.id) ?? 0,
         role: owner ? ("owner" as const) : (memberRole ?? ("learner" as const)),

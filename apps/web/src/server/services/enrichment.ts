@@ -111,6 +111,7 @@ type DeckRow = Pick<
   | "purpose"
   | "enrichFields"
   | "enrichInstructions"
+  | "enrichStyle"
 >;
 
 /** The text of one sample field: the learner's or the lesson's, "" for none, missing when the AI wrote it. */
@@ -222,6 +223,7 @@ export async function enrichCards(
         purpose: schema.decks.purpose,
         enrichFields: schema.decks.enrichFields,
         enrichInstructions: schema.decks.enrichInstructions,
+        enrichStyle: schema.decks.enrichStyle,
       })
       .from(schema.decks)
       .where(inArray(schema.decks.id, ids)),
@@ -241,6 +243,7 @@ export async function enrichCards(
           language: deck.defaultLanguage,
           purpose: deck.purpose,
           instructions: deck.enrichInstructions,
+          style: deck.enrichStyle,
           samples: await samplesFor(db, deck, cardIds),
         }),
       );
@@ -329,6 +332,7 @@ export async function enrichCards(
     samples: briefs.reduce((sum, deck) => sum + deck.samples.length, 0),
     skipped,
     prompt_version: ENRICHMENT_PROMPT_VERSION,
+    has_style: briefs.some((deck) => deck.style),
   });
   return { enriched: rows.length };
 }

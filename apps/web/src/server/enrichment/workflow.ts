@@ -10,6 +10,8 @@ import {
   enrichCards,
   enrichmentContext,
   failEnrichment,
+  type LearnStyleOptions,
+  learnDeckStyles,
   settleEnrichment,
 } from "../services";
 import { textCallReporter, track } from "../services/analytics";
@@ -26,11 +28,19 @@ const SETTLE_STEP = {
   timeout: "1 minute",
 } as const;
 
+/** Learning a deck's style is extra: one retry, and a failure leaves the cards as they landed. */
+const STYLE_STEP = {
+  retries: { limit: 1, delay: "10 seconds", backoff: "constant" },
+  timeout: "2 minutes",
+} as const;
+
 /**
  * Fills the empty fields on the cards one add left behind, ten per model call so a lesson
  * lands in waves rather than all at once. Each run is its own step: a run that gives up
  * leaves its cards at `failed` and the rest of the batch still fills. However the instance
- * ends, a final step settles anything still at `working`, so nothing shimmers forever.
+ * ends, a final step settles anything still at `working`, so nothing shimmers forever. A deck
+ * with no style yet learns one before its cards are filled, so the first fill already uses it;
+ * after the fill, the rest learn again if enough has changed. ADR 0037.
  */
 export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams> {
   async run(event: WorkflowEvent<EnrichRunParams>, step: WorkflowStep) {
@@ -52,6 +62,29 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
         return;
       }
       const ctx = enrichmentContext(db, params, analytics);
+      const styles = createTextProvider(this.env, textCallReporter(analytics, "deck_style"));
+      // A style is extra: a failure is reported once and the cards fill without it.
+      const learn = async (name: string, options: LearnStyleOptions): Promise<string[]> => {
+        if (!styles) return [];
+        try {
+          const { deckIds } = await step.do(name, STYLE_STEP, () =>
+            analytics.run(() => learnDeckStyles(ctx, params.cardIds, styles, options)),
+          );
+          return deckIds;
+        } catch (err) {
+          await step
+            .do(`${name} failed`, STEP, () =>
+              reportServerException(this.env, err, {
+                route: "deck-style",
+                method: "WORKFLOW",
+                userId: params.userId,
+              }),
+            )
+            .catch(() => {});
+          return [];
+        }
+      };
+      const first = await learn("style first", { firstOnly: true });
       for (const [index, ids] of chunked(params.cardIds, CARDS_PER_CALL).entries()) {
         try {
           await step.do(`cards ${index}`, STEP, () =>
@@ -75,6 +108,7 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
           });
         }
       }
+      await learn("style", { skip: first });
     } finally {
       // Nothing may stay at `working` once this instance stops, whatever stopped it: a step that
       // exhausted its retries ends the run, and a card left shimmering would shimmer forever.

@@ -2,8 +2,8 @@ import type { DeckEnrichField, DeckInput, DeckPurpose, MemberRole, ReviewMode } 
 import type { Deck as DeckRow } from "@lymi/core/schema";
 import { request } from "./request";
 
-/** A deck as the API sends it. `revision` is the server's own bookkeeping for editions. */
-export type Deck = Omit<DeckRow, "revision">;
+/** A deck as the API sends it. `revision` and `enrichStyleAt` are the server's own bookkeeping. */
+export type Deck = Omit<DeckRow, "revision" | "enrichStyleAt">;
 
 export type DeckSummary = Pick<
   Deck,
@@ -23,6 +23,8 @@ export type DeckSummary = Pick<
   enrichFields: DeckEnrichField[];
   /** The owner's instructions to the AI. Null for a member. */
   enrichInstructions: string | null;
+  /** What the AI learned from the owner's cards. Null for a member; a cache from before it lacks it. */
+  enrichStyle?: string | null;
   total: number;
   due: number;
   /** When the deck was archived, null while it is active. */

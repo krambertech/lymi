@@ -12,6 +12,8 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Deck**: A named group of cards. It may carry a default language, but language lives on the card. _Avoid_: Collection, list, folder
 
+**Style**: What the AI learned about a deck from the cards its owner wrote: what the deck is about and the habits its cards follow. It sits under the owner's instructions, which it never changes, and only the owner sees it. ADR 0037. _Avoid_: Profile, preferences, memory
+
 **Library**: The screen holding every deck. The decks are decks; Library is where they are. _Avoid_: Decks (as a screen name), collections, my decks
 
 **Series**: An owner's optional, ordered group of their own decks, reviewed together. A deck is in at most one series, and a deck without one works as it always has. A member of a shared deck never sees the owner's series. Deleting a series asks whether its decks are archived with it or stay in Library; the series itself is gone for good, and grouping those decks again means making a new one. _Avoid_: Course, collection, folder, playlist, group
@@ -30,7 +32,7 @@ A vocabulary app for one learner. Cards come from lessons, by hand or through in
 
 **Duplicate**: A card whose normalised term and language match an existing active card anywhere in the learner's decks. Adding one is skipped, never rejected, and the caller is told which card already exists.
 
-**Enrich**: The AI filling in missing fields on an existing card. The deck lists which of meaning, example, notes and pronunciation it may fill, and the language is always filled; the AI fills only the ones that suit the card, following the deck's own cards and the owner's instructions for the AI. It never overwrites a field that has text. Extraction from lesson material happens in the MCP client. ADR 0033. _Avoid_: Prepare, generate, suggest
+**Enrich**: The AI filling in missing fields on an existing card. The deck lists which of meaning, example, notes and pronunciation it may fill, and the language is always filled; the AI fills only the ones that suit the card, following the owner's instructions for the AI, the deck's style and the deck's own cards. It never overwrites a field that has text. Extraction from lesson material happens in the MCP client. ADR 0033. _Avoid_: Prepare, generate, suggest
 
 ### Remembering
 

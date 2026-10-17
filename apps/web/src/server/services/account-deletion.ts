@@ -450,6 +450,8 @@ export async function deleteAccount(
               userId: FORMER_OWNER_ID,
               seriesId: null,
               enrichInstructions: null,
+              enrichStyle: null,
+              enrichStyleAt: null,
               updatedAt: now,
             })
             .where(inArray(schema.decks.id, kept)),

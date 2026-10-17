@@ -42,7 +42,7 @@ No password is typed anywhere. The server creates the account on first use, seed
 | `japanese` | Mika | Five months of Japanese with English meanings: 169 real words and sentences in JLPT sections, kanji with kana readings, kana-only words, katakana loanwords, examples with inline furigana, and a numbers deck asked both ways. |
 | `shared` | Noor | Owns Lisboa a dois with four learners (Kateryna, Tomás and the companion accounts Ana and Pedro), a waiting invitation to mira@example.com and its join link on. A learner in Ana's deck, with Everyday Estonian added in its Ukrainian edition. |
 | `joining` | Tomás | Joined Noor's deck through its link and has not got set up. Signing in without `returnTo` opens `/welcome?deck=<id>`, the Welcome that arriving from a join link opens. |
-| `publisher` | Lymi | The publisher account: one Estonian deck in three sections, published as `everyday-estonian` with an English original and a signed-off Ukrainian edition. |
+| `publisher` | Lymi | The publisher account: one Estonian deck in three sections, published as `everyday-estonian` with an English original and a signed-off Ukrainian edition, beside Finnish and driving decks and five small Japanese decks under production's slugs, so Welcome's Japanese offer can be seen. |
 
 Shared decks are written down once, on the owner's deck, so seeding either side makes sure the other account exists: seeding Noor joins Kateryna, Tomás, Ana and Pedro, and reseeding Kateryna rejoins Noor's deck. A member persona whose account holds nothing yet is seeded first. The product grants members only the learner role so far ([ADR 0011](adr/0011-a-shared-deck-is-one-deck-with-many-learners.md)).
 

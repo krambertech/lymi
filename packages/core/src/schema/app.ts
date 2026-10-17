@@ -8,7 +8,12 @@ import {
   text,
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
-import { DECK_PURPOSES, type DeckEnrichField, type EnrichedField } from "../enrichment";
+import {
+  DECK_ENRICH_FIELDS,
+  DECK_PURPOSES,
+  type DeckEnrichField,
+  type EnrichedField,
+} from "../enrichment";
 import {
   EDITION_STATUSES,
   type EditionCardField,
@@ -101,6 +106,10 @@ export const decks = sqliteTable(
     enrichFields: text("enrich_fields", { mode: "json" }).$type<DeckEnrichField[]>(),
     /** The owner's own words to the AI about this deck. Never shown to a member. */
     enrichInstructions: text("enrich_instructions"),
+    /** What the AI learned from the owner's cards. Null until enough cards exist. ADR 0037. */
+    enrichStyle: text("enrich_style"),
+    /** When the style was last learned, so it is learned again only after the cards change. */
+    enrichStyleAt: integer("enrich_style_at", { mode: "timestamp_ms" }),
   },
   (t) => [
     index("decks_user_idx").on(t.userId, t.archivedAt, t.position),
@@ -268,6 +277,29 @@ export const cardTags = sqliteTable(
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),
   },
   (t) => [primaryKey({ columns: [t.cardId, t.tagId] }), index("card_tags_tag_idx").on(t.tagId)],
+);
+
+/**
+ * The AI's text from a field the owner then rewrote. The learner's side is the card's current text,
+ * read while the field is still theirs, so later edits refine the same correction. ADR 0037.
+ */
+export const cardCorrections = sqliteTable(
+  "card_corrections",
+  {
+    cardId: text("card_id")
+      .notNull()
+      .references(() => cards.id, { onDelete: "cascade" }),
+    field: text("field", { enum: DECK_ENRICH_FIELDS }).notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    aiText: text("ai_text").notNull(),
+    createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.cardId, t.field] }),
+    index("card_corrections_user_idx").on(t.userId, t.createdAt),
+  ],
 );
 
 /** Per-learner settings. One row per user, created on first read. */
@@ -470,6 +502,8 @@ export const deckPublications = sqliteTable(
     revision: integer("revision").notNull().default(1),
     publishedAt: integer("published_at", { mode: "timestamp_ms" }).notNull(),
     withdrawnAt: integer("withdrawn_at", { mode: "timestamp_ms" }),
+    /** Another live deck's slug that a withdrawn deck's public page sends visitors to. Publishing clears it. */
+    redirectSlug: text("redirect_slug"),
     ...timestamps,
   },
   (t) => [

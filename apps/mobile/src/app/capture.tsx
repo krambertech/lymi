@@ -8,7 +8,7 @@ import { File } from "expo-file-system";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { ScrollView, type TextInput, View } from "react-native";
-import { CardFields, FORM_FIELD, useFormFields } from "../capture/card-fields";
+import { CardFields, FORM_FIELD, fieldLabel, useFormFields } from "../capture/card-fields";
 import { ChipIn } from "../capture/chip-in";
 import { type ChipKey, markChipUsed, useRecentFirst } from "../capture/chip-order";
 import { useChoiceSheet } from "../capture/choice-sheet";
@@ -239,6 +239,7 @@ function Composer() {
               >
                 <CardFields
                   reveal={form.reveal}
+                  language={deck.defaultLanguage}
                   values={draft}
                   onChange={(field, value) => {
                     write(field)(value);
@@ -295,7 +296,7 @@ function Composer() {
                             fields.add(f);
                           }}
                         >
-                          {i18n._(FORM_FIELD[f].label)}
+                          {i18n._(fieldLabel(f, deck.defaultLanguage))}
                         </FieldChip>
                       ),
                     })),

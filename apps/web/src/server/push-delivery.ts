@@ -1,6 +1,7 @@
 import { msg, plural } from "@lingui/core/macro";
 import { backlogOf, REMINDER_ENTRY } from "@lymi/core/analytics";
 import { createDb } from "./db";
+import { outcomeOfStatus, recordCall } from "./dependency-health";
 import type { Bindings } from "./env";
 import { serverI18n } from "./i18n";
 import { trackProductEvent } from "./posthog";
@@ -200,8 +201,10 @@ export async function dispatchReviewReminders(
       .run();
     if ((claim.meta.changes ?? 0) === 0) continue;
 
+    const started = Date.now();
     try {
       await send(candidate, due, env);
+      recordCall(env, { dependency: "web_push", outcome: "ok", durationMs: Date.now() - started });
       summary.sent += 1;
       reports.push(
         trackProductEvent(
@@ -214,7 +217,14 @@ export async function dispatchReviewReminders(
       );
     } catch (error) {
       const statusCode = (error as { statusCode?: number }).statusCode;
-      if (statusCode === 404 || statusCode === 410) {
+      const gone = statusCode === 404 || statusCode === 410;
+      recordCall(env, {
+        dependency: "web_push",
+        outcome: gone ? "gone" : statusCode ? outcomeOfStatus(statusCode) : "unreachable",
+        status: statusCode,
+        durationMs: Date.now() - started,
+      });
+      if (gone) {
         await env.DB.prepare("DELETE FROM push_subscriptions WHERE id = ?")
           .bind(candidate.id)
           .run();

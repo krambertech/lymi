@@ -177,7 +177,8 @@ export const CardFilter = z
     pronunciationSource: SourceComparator.optional(),
     notesSource: SourceComparator.optional(),
     enrichmentStatus: EnrichmentComparator.optional().meta({
-      description: "working while AI enrichment runs, failed if it did not finish, null otherwise",
+      description:
+        "working while AI enrichment runs, failed if it did not finish or has been working for over a day, null otherwise",
     }),
     createdAt: DateComparator.optional(),
     updatedAt: DateComparator.optional(),

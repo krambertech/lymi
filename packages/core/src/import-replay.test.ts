@@ -107,24 +107,35 @@ describe("arrivesKnown", () => {
   };
   const fresh = { mode: "meaning_to_term" as const, reviews: [] };
 
-  it("follows the leading mode: term to meaning before meaning to term", () => {
-    const card = { modes: ["meaning_to_term", "term_to_meaning"] as const, archived: false };
-    expect(arrivesKnown({ ...card, modes: [...card.modes], progress: [fresh, learned] }, now)).toBe(
-      true,
-    );
+  const both = {
+    modes: ["term_to_meaning", "meaning_to_term"] as ("term_to_meaning" | "meaning_to_term")[],
+    archived: false,
+    fields: { term: "kass", meaning: "cat" },
+  };
+
+  it("follows the mode a two-way card is taught first, meaning to term", () => {
+    const produced = { ...learned, mode: "meaning_to_term" as const };
+    const recognised = { ...fresh, mode: "term_to_meaning" as const };
+    expect(arrivesKnown({ ...both, progress: [recognised, produced] }, now)).toBe(true);
+    expect(arrivesKnown({ ...both, progress: [fresh, learned] }, now)).toBe(false);
   });
 
-  it("is not Known when the leading mode is new or the card arrives archived", () => {
-    const progress = [
-      { ...fresh, mode: "term_to_meaning" as const },
-      { ...learned, mode: "meaning_to_term" as const },
-    ];
+  it("follows term to meaning when the card has no meaning to show", () => {
+    const { fields: _, ...noMeaning } = both;
+    expect(arrivesKnown({ ...noMeaning, progress: [fresh, learned] }, now)).toBe(true);
+  });
+
+  it("keeps a picture card's own order", () => {
+    const picture = { mode: "image_to_term" as const, reviews: learned.reviews };
     expect(
       arrivesKnown(
-        { modes: ["term_to_meaning", "meaning_to_term"], archived: false, progress },
+        { ...both, modes: ["image_to_term", "meaning_to_term"], progress: [fresh, picture] },
         now,
       ),
-    ).toBe(false);
+    ).toBe(true);
+  });
+
+  it("is not Known when the card arrives archived", () => {
     expect(
       arrivesKnown({ modes: ["term_to_meaning"], archived: true, progress: [learned] }, now),
     ).toBe(false);

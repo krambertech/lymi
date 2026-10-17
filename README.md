@@ -8,6 +8,7 @@ A private-first vocabulary app with a storm lantern. Collect cards from language
 - [docs/stack.md](docs/stack.md): the technical decisions and why
 - [docs/local-dev.md](docs/local-dev.md): running locally, personas, the developer panel and `pnpm local`
 - [docs/testing.md](docs/testing.md): the canonical E2E journey and CI policy
+- [docs/operations.md](docs/operations.md): the production alerts and what to do when one fires
 - [docs/phone-release.md](docs/phone-release.md): how the phone app ships over the air and to TestFlight, and its one-time setup
 - [docs/mcp-directory-review.md](docs/mcp-directory-review.md): what ChatGPT and Claude directory review checks, and the review cases
 - [docs/adr](docs/adr/README.md): the decisions that were hard to reverse, with the alternatives
@@ -81,7 +82,7 @@ pnpm run deploy:product # deploy the product Worker; user-owned production actio
 2. `wrangler d1 create lymi` and paste the `database_id` into `apps/web/wrangler.jsonc`
 3. `wrangler r2 bucket create lymi-audio` and `wrangler r2 bucket create lymi-private-images`, and enable Cloudflare Images for the Images binding
 4. `wrangler kv namespace create SESSIONS` and paste the id
-5. In Google Cloud, authorize `https://my.lymi.app` and the callback `https://my.lymi.app/api/auth/callback/google`
+5. In Google Cloud, authorize `https://my.lymi.app` and the callback `https://my.lymi.app/api/auth/callback/google`. Configure [Sign in with Apple](docs/phone-release.md#sign-in-with-apple) for the web and iPhone.
 6. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`, `AI_GATEWAY_TOKEN`
 7. Generate one VAPID key pair, then add `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, and `VAPID_SUBJECT` with `wrangler secret put`
 8. In Resend, verify `lymi.app`, add a webhook to `https://my.lymi.app/api/email/events` for bounced and complained events, then add `RESEND_API_KEY` and `RESEND_WEBHOOK_SECRET` with `wrangler secret put`; until the key exists, email goes through the Cloudflare binding

@@ -22,6 +22,7 @@ erDiagram
   user ||--o{ deck_members : "studies"
   cards ||--o{ card_states : "one per learner per review mode"
   cards ||--o{ important_cards : "marked by each learner"
+  cards ||--o{ card_corrections : "AI text the owner rewrote"
   cards ||--o{ card_images : "one active picture"
   card_states ||--o{ reviews : "append-only"
   user ||--o{ review_days : "one per local date"
@@ -63,6 +64,8 @@ erDiagram
     text purpose "nullable language | subject | other; null is language with a language, else other"
     json enrich_fields "nullable, fields the AI may fill; null follows the purpose and language's default"
     text enrich_instructions "nullable, the owner's instructions to the AI"
+    text enrich_style "nullable, what the AI learned from the owner's cards (ADR 0037)"
+    int enrich_style_at "nullable, when the style was last learned"
   }
   sections {
     text id PK
@@ -213,6 +216,13 @@ erDiagram
     text user_id FK
     int created_at
   }
+  card_corrections {
+    text card_id PK "and FK"
+    text field PK "meaning | example | notes | pronunciation"
+    text user_id FK "the owner who rewrote it"
+    text ai_text "what the AI wrote; the learner's side is the card's current text"
+    int created_at
+  }
   reviews {
     text id PK
     text card_state_id FK
@@ -300,7 +310,7 @@ A review day is one learner-local date measured against its streak goal. Attempt
 
 A section is an optional, ordered part of one deck, and every learner of the deck sees it. `cards.section_id` points at a section of the card's own deck; moving a card to another deck clears it. Archiving a section with `cards: keep` leaves `section_id` on its cards, and a card in an archived section reads as having none, so Restore regroups it. Archiving with `cards: archive` stamps the cards with the section's own `archived_at`.
 
-Unless `decks.section_progression` is `open`, each learner opens sections in order, and the rules live in `packages/core/src/sections.ts`. Open sections are always a prefix of the deck: every section up to the last one the learner has a `section_starts` row for, or has started a card in, plus the first section with cards. The next section is ready once every card of the current one has left New and 80% of them, rounded up, are Known by the state the deck's list shows. Start writes a row for the target and every section before it that was not open, with `on conflict do nothing`, so a retry or a second device lands the same, and rows are never removed. In an `automatic` deck, `gradeCard` writes that row itself, `how = 'auto'`, on the grade that makes the next section ready and on its retries; readiness is only a grade away, so nothing else has to look. Writing it once is what keeps a section open after the learner later forgets cards below 80%. The draw in `services/draw.ts` leaves out a card in a section that is not open unless the learner has already started it, so Today, deck and series review, rounds, reminders and the offline draw all agree.
+Unless `decks.section_progression` is `open`, each learner opens sections in order, and the rules live in `packages/core/src/sections.ts`. Open sections are always a prefix of the deck: every section up to the last one the learner has a `section_starts` row for, or has started a card in, plus the first section with cards. The next section is ready once every card of the current one has left New and 80% of them, rounded up, are Known by the state the deck's list shows. That state is the card's mode the draw teaches first, `introductionOrder` in `packages/core/src/modes.ts`, so a two-way card counts once its meaning → term side reaches Review and its other side, which waits a day, never holds a section shut. Start writes a row for the target and every section before it that was not open, with `on conflict do nothing`, so a retry or a second device lands the same, and rows are never removed. In an `automatic` deck, `gradeCard` writes that row itself, `how = 'auto'`, on the grade that makes the next section ready and on its retries; readiness is only a grade away, so nothing else has to look. Writing it once is what keeps a section open after the learner later forgets cards below 80%. The draw in `services/draw.ts` leaves out a card in a section that is not open unless the learner has already started it, so Today, deck and series review, rounds, reminders and the offline draw all agree.
 
 ### Shared decks
 

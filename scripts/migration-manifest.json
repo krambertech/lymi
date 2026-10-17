@@ -223,6 +223,18 @@
     {
       "name": "0055_normal_frightful_four.sql",
       "sha256": "6328c34b1fb31bb4ac0f44891564fe3c51589d97733960754183cb3d89683081"
+    },
+    {
+      "name": "0056_conscious_sebastian_shaw.sql",
+      "sha256": "7bc1cab50059a643fdd81806f4d00e6cf7f3f67582459ef8876ce4e7364fdff2"
+    },
+    {
+      "name": "0057_dry_warbird.sql",
+      "sha256": "35d2639eb22c29cef993954372c180e6451e40fe48321951c2890afbc76a121d"
+    },
+    {
+      "name": "0058_odd_the_fury.sql",
+      "sha256": "52d25af4a17cc670db2d50403e21a691d3bb6ae90b724e2fdfec1811fb2c9ed8"
     }
   ]
 }

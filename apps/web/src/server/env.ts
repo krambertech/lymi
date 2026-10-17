@@ -10,6 +10,7 @@ export interface Bindings
     Env,
     | "REQUESTS"
     | "EVENTS"
+    | "HEALTH"
     | "POSTHOG_PROJECT_TOKEN"
     | "PHONE_MINIMUM_VERSION_IOS"
     | "PHONE_UPDATE_URL_IOS"
@@ -19,6 +20,7 @@ export interface Bindings
   /** Optional in local tests and loopback; previews use isolated datasets. */
   REQUESTS?: AnalyticsEngineDataset;
   EVENTS?: AnalyticsEngineDataset;
+  HEALTH?: AnalyticsEngineDataset;
   POSTHOG_PROJECT_TOKEN?: string;
   /** Unset means every iPhone release is served. */
   PHONE_MINIMUM_VERSION_IOS?: string;
@@ -29,6 +31,8 @@ export interface Bindings
   GOOGLE_CLIENT_SECRET: string;
   /** The iPhone app's bundle identifier; Sign in with Apple is unavailable until it is set. */
   APPLE_APP_BUNDLE_IDENTIFIER?: string;
+  /** The web Services ID, grouped with the iPhone App ID in Apple Developer. */
+  APPLE_CLIENT_ID?: string;
   /** A Sign in with Apple key, so a deleted account's Apple grant is revoked. All three or none. */
   APPLE_TEAM_ID?: string;
   APPLE_KEY_ID?: string;

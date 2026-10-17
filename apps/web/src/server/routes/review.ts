@@ -14,6 +14,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
+import { clientSupports } from "../phone-clients";
 import {
   checkToday,
   gradeCard,
@@ -182,6 +183,9 @@ review.get(
   },
 );
 
+/** The first phone release that draws furigana, so its grades say where the reading showed. */
+const FURIGANA_SINCE = { ios: "0.0.2" };
+
 review.post(
   "/grade",
   describe({
@@ -194,7 +198,8 @@ review.post(
     errors: [400, 404],
   }),
   body(GradeInput, "grade"),
-  async (c) => c.json(await gradeCard(ctxOf(c), c.req.valid("json"), !c.get("phone"))),
+  async (c) =>
+    c.json(await gradeCard(ctxOf(c), c.req.valid("json"), clientSupports(c, FURIGANA_SINCE))),
 );
 
 review.post(

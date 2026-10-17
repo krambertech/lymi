@@ -7,6 +7,7 @@ import { eq, sql } from "@lymi/core/db";
 import { isLoopbackUrl } from "../../shared/origins";
 import type { Db } from "../db";
 import { schema } from "../db";
+import { type HealthEnv, metered } from "../dependency-health";
 import type { Block, ComposedEmail } from "../email/template";
 import type { Bindings } from "../env";
 import { serverI18n } from "../i18n";
@@ -496,12 +497,13 @@ async function withinDailyBudget(sessions: KVNamespace | undefined): Promise<boo
   }
 }
 
-export type EmailEnv = Pick<Bindings, "PRODUCT_URL" | "EMAIL"> & {
-  SESSIONS?: KVNamespace;
-  PUBLIC_SITE_URL?: string;
-  /** Sends through Resend when set; until then the Cloudflare binding delivers. */
-  RESEND_API_KEY?: string | undefined;
-};
+export type EmailEnv = Pick<Bindings, "PRODUCT_URL" | "EMAIL"> &
+  HealthEnv & {
+    SESSIONS?: KVNamespace;
+    PUBLIC_SITE_URL?: string;
+    /** Sends through Resend when set; until then the Cloudflare binding delivers. */
+    RESEND_API_KEY?: string | undefined;
+  };
 
 function originsOf(env: { PRODUCT_URL: string; PUBLIC_SITE_URL?: string }): EmailOrigins {
   return {
@@ -564,7 +566,7 @@ export async function sendTransactionalEmail(
       throw new ServiceError("unavailable", "Couldn’t send the email. Try again in a moment.");
     }
     try {
-      await deliver(env, message, input.to, input.replyTo ?? REPLY_TO);
+      await metered(env, "email", () => deliver(env, message, input.to, input.replyTo ?? REPLY_TO));
       delivery = "provider";
     } catch (error) {
       const errorClass = providerErrorClass(error);

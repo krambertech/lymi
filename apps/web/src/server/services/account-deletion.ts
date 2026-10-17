@@ -488,6 +488,8 @@ export async function deleteAccount(
               userId: FORMER_OWNER_ID,
               seriesId: null,
               enrichInstructions: null,
+              enrichStyle: null,
+              enrichStyleAt: null,
               updatedAt: now,
             })
             .where(inArray(schema.decks.id, kept)),
@@ -513,6 +515,8 @@ export async function deleteAccount(
         sendsKey(userId, new Date(now.getTime() - 24 * 60 * 60 * 1000)),
       ]),
     ),
+    // Kept cards stay for their members; the owner's corrections of them go with the owner.
+    db.delete(schema.cardCorrections).where(eq(schema.cardCorrections.userId, userId)),
     db.insert(schema.accountDeletions).values({
       id: userId,
       client: deps.client,

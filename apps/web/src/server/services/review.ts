@@ -251,7 +251,7 @@ function readingShown(key: ReviewModeKey, state: number): "cue" | "answer" {
 export async function gradeCard(
   ctx: ServiceContext,
   input: GradeInput,
-  /** The grader draws furigana, so `review_graded` can say where; the phone does not yet (#786). */
+  /** The grader draws furigana, so `review_graded` can say where; a phone before 0.0.2 does not. */
   furigana = true,
 ) {
   const { db, userId } = ctx;

@@ -48,6 +48,25 @@ export function askedSql(
   )`;
 }
 
+/**
+ * Ranks a card's states as `introductionOrder` does, lowest first, so Known reads the mode the
+ * draw teaches first. A meaning → term state on a card without a meaning has no cue and goes last.
+ */
+export function taughtFirstSql(state = "card_states", cards = "cards"): string {
+  const key = `coalesce(${state}.mode, case ${state}.direction
+    when 'recognition' then 'term_to_meaning' when 'production' then 'meaning_to_term'
+    else ${state}.direction end)`;
+  const listed = `(select json_each.key from json_each(${cards}.review_modes)
+    where json_each.value = ${key})`;
+  // `effectiveModes` appends text modes missing from a learner's list, term → meaning first.
+  const appended = `100 + case when ${state}.direction = 'recognition' then 0 else 1 end`;
+  return `(case when ${state}.direction = 'production' and trim(coalesce(${cards}.meaning, '')) = ''
+      then 1000 else 0 end
+    + case when ${cards}.directions is not null and ${cards}.review_modes is not null
+        then coalesce(${listed}, ${appended})
+      when ${state}.direction = 'production' then 0 else 1 end)`;
+}
+
 type Statement = Parameters<Db["batch"]>[0][number];
 
 /**

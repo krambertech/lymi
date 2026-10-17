@@ -23,6 +23,7 @@ import {
   presentModeRow,
   resolveDeckDirections,
   stateStatementsForDeck,
+  taughtFirstSql,
 } from "./modes";
 import { bumped } from "./revisions";
 import { activeSeries, deckOrder, effectiveSeriesId, nextDeckPosition } from "./series-access";
@@ -58,6 +59,7 @@ export async function listDecks(
       purpose: schema.decks.purpose,
       enrichFields: schema.decks.enrichFields,
       enrichInstructions: schema.decks.enrichInstructions,
+      enrichStyle: schema.decks.enrichStyle,
       total: sql<number>`(select count(*) from cards where cards.deck_id = decks.id and cards.archived_at is null)`,
       archivedAt: schema.decks.archivedAt,
       ownerId: schema.decks.userId,
@@ -129,6 +131,7 @@ export async function listDecks(
         purpose: owner ? deckPurpose(deck.purpose, deck.defaultLanguage) : null,
         enrichFields: deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose),
         enrichInstructions: owner ? deck.enrichInstructions : null,
+        enrichStyle: owner ? deck.enrichStyle : null,
         // Cards, not direction states: the same count the queue reports as its total.
         due: due.get(deck.id) ?? 0,
         role: owner ? ("owner" as const) : (memberRole ?? ("learner" as const)),
@@ -195,9 +198,8 @@ export async function getDeck(ctx: ServiceContext, id: string) {
 }
 
 /**
- * Cards in a deck, newest first, each with the caller's state for the direction the deck
- * leads with. A production-only deck shows its production state rather than an empty
- * Status column.
+ * Cards in a deck, newest first, each with the caller's state for the mode the draw teaches
+ * first, so a card answered once in that mode stops reading New.
  */
 export async function listDeckCards(ctx: ServiceContext, deckId: string) {
   const { db, userId } = ctx;
@@ -210,13 +212,12 @@ export async function listDeckCards(ctx: ServiceContext, deckId: string) {
       schema.cardStates,
       and(
         eq(schema.cardStates.cardId, schema.cards.id),
-        // The state for the mode the card leads with: its picture mode when that is asked.
+        // The state for the mode the draw teaches first, which is what Known reads.
         sql`card_states.id = (
           select leading.id from card_states as leading
           where leading.card_id = cards.id and leading.user_id = ${userId}
             and ${sql.raw(askedSql("leading.direction"))}
-          order by case when leading.direction like 'image_%' then 0
-            when leading.direction = 'recognition' then 1 else 2 end
+          order by ${sql.raw(taughtFirstSql("leading"))}
           limit 1
         )`,
       ),

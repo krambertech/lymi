@@ -1,0 +1,101 @@
+# Operations
+
+Production alerts email k.porshnieva@gmail.com from Cloudflare and PostHog. Every alert links to its section below: what it means, then what to check first. [The stack](stack.md#analytics-workers-analytics-engine-and-posthog-eu) says why monitoring is split this way.
+
+## What watches production
+
+The 15-minute cron runs a canary on the production Worker (`apps/web/src/server/canary.ts`). It calls D1, KV, R2, the public site's health endpoint, OpenAI text, the Anthropic lesson reader and Workers AI the way a learner's request would. Every hour it also calls each configured speech provider once with "ok", in English or, for ElevenLabs, which has no native English voice, in Estonian. Each service gets one verdict per run, after one retry, so a single dropped request does not alert.
+
+Every real call to an outside service records its outcome too: `meteredFetch` and `metered` in `apps/web/src/server/dependency-health.ts`, covering AI text, the lesson reader, Workers AI, speech, email and web push. Both write to the `lymi_health` Analytics Engine dataset, which holds no account, card or request content.
+
+| Field | Holds |
+| --- | --- |
+| `index1` | The dependency: `d1`, `kv`, `r2`, `site`, `openai_text`, `anthropic`, `workers_ai`, `elevenlabs`, `gemini_speech`, `google_speech`, `openai_speech`, `email`, `web_push` |
+| `blob1` | `call` for one attempt, `check` for the canary's verdict |
+| `blob2` | `ok`, `gone`, `limited`, `rejected`, `failed`, `timeout` or `unreachable` |
+| `blob3` | HTTP status class, or `none` |
+| `blob4` | `traffic` or `canary` |
+| `blob5` | The Worker version tag, which is the commit it was built from |
+| `double1` | Duration in milliseconds |
+
+Unexpected errors still reach PostHog Error Tracking: HTTP and MCP failures, exhausted enrichment, internal import and export failures, failed lesson reads and failed cron jobs (`route` is `cron/<job>`).
+
+## Alerts
+
+| Alert | Lives in | Fires when |
+| --- | --- | --- |
+| [A production check is failing](#a-production-check-is-failing) | Cloudflare | Any canary verdict other than `ok` in a 15-minute run |
+| [Production checks stopped](#production-checks-stopped) | Cloudflare | No canary verdict for 45 minutes |
+| [Outside calls are failing for learners](#outside-calls-are-failing-for-learners) | Cloudflare | 3 or more failed `traffic` calls in 30 minutes to a service with no fallback |
+| [Server errors](#server-errors) | Cloudflare | 3 or more HTTP 5xx responses in 15 minutes |
+| [Cloudflare Worker issue](#cloudflare-worker-issue) | Cloudflare | Any real-time issue on `lymi` or `lymi-site` |
+| [Cloudflare incident](#cloudflare-incident) | Cloudflare | A major or critical Cloudflare incident |
+| [Errors in production](#errors-in-production) | PostHog | Any `$exception` in an hour |
+| [AI calls are failing](#ai-calls-are-failing) | PostHog | 2 or more failed `$ai_generation` events in an hour |
+| [Nobody reviewed yesterday](#nobody-reviewed-yesterday) | PostHog | Zero `review_graded` in a day, checked at 09:00 Tallinn |
+
+Cloudflare alerts are under Observability → Alerts and re-send at most hourly while firing. PostHog alerts are on [the alerts page](https://eu.posthog.com/project/292417/alerts) and read the insights tagged `ops`. The three `lymi_health` alerts use these queries, with Cloudflare supplying the time range:
+
+```sql
+-- A production check is failing: threshold >= 1, 15m window, every 15m
+SELECT count() AS "value" FROM "events"."analyticsEngine"."lymi_health"
+WHERE "accountTag" = 'ce6da857aeb521aa2730848a194b8866' AND "blob1" = 'check' AND "blob2" != 'ok'
+
+-- Production checks stopped: threshold < 1, 45m window, every 15m
+SELECT count() AS "value" FROM "events"."analyticsEngine"."lymi_health"
+WHERE "accountTag" = 'ce6da857aeb521aa2730848a194b8866' AND "blob1" = 'check'
+
+-- Outside calls are failing for learners: threshold >= 3, 30m window, every 5m
+SELECT count() AS "value" FROM "events"."analyticsEngine"."lymi_health"
+WHERE "accountTag" = 'ce6da857aeb521aa2730848a194b8866' AND "blob1" = 'call' AND "blob4" = 'traffic'
+  AND "blob2" IN ('rejected', 'failed', 'timeout', 'unreachable')
+  AND "index1" NOT IN ('elevenlabs', 'gemini_speech', 'google_speech', 'openai_speech')
+```
+
+## First steps for any alert
+
+1. Run `pnpm deploy:health` and compare the version tag with the latest commit on `main`. A failure that began with a deploy is usually fixed by reverting that commit.
+2. Break the failures down by dependency and version in the Cloudflare dashboard (Workers & Pages → Analytics Engine → `lymi_health`) or with the SQL API:
+
+   ```sql
+   SELECT index1 AS dependency, blob2 AS outcome, blob5 AS version, count() AS n
+   FROM lymi_health WHERE timestamp > NOW() - INTERVAL '2' HOUR
+   GROUP BY dependency, outcome, version ORDER BY n DESC
+   ```
+3. Read the Worker's logs in Cloudflare (Observability → Logs, script `lymi`) for the same window.
+
+## A production check is failing
+
+The canary could not use a service after a retry. `unreachable` means the request never got an answer, which is a code or configuration fault more often than an outage: 17 October 2026 was a `redirect` option Workers rejects. `rejected` means our request is wrong or a key was revoked; `failed` means the vendor or AI Gateway answered with an error. Check the vendor's status page and AI Gateway's logs, then the last deploy.
+
+## Production checks stopped
+
+The canary has not reported for 45 minutes, so the cron, the Worker or Analytics Engine has stopped. Check that the Worker still has its `*/15 * * * *` trigger, that `pnpm deploy:health` answers, and Cloudflare's status page.
+
+## Outside calls are failing for learners
+
+Real requests are failing against a dependency, which the breakdown above names. If the canary is passing, the failure is specific to some input, such as one file type in imports. Speech is left out because each failed attempt falls through to the next provider; a learner sees a speech failure only when every provider fails, which [Server errors](#server-errors) catches as a 503 from `/api/audio/:cardId`.
+
+## Server errors
+
+The product returned HTTP 5xx. `lymi_requests` names the route (`blob1`), and a 503 usually means a dependency was unavailable: `/api/audio/:cardId` answers 503 when every speech provider failed. Error Tracking has the stack for a 500.
+
+## Cloudflare Worker issue
+
+Cloudflare recorded an uncaught exception or an exceeded limit, such as CPU time, which never reaches our own error handler. Open the issue under Observability → Logs for its message and stack.
+
+## Cloudflare incident
+
+Cloudflare itself is degraded. Check whether the affected components include Workers, D1, KV, R2, Workers AI or AI Gateway; if not, no action is needed.
+
+## Errors in production
+
+An exception reached PostHog Error Tracking. Open [Error Tracking](https://eu.posthog.com/project/292417/error_tracking), find the newest issue, and use its `route`, `surface` and `release` to locate the code and the deploy. A browser error with `caught_by=router` or `react` broke a screen.
+
+## AI calls are failing
+
+`$ai_generation` events with `$ai_is_error` are piling up: enrichment, hook drafts, deck choice, import language detection or lesson reads. Learners see empty drafts, failed enrichment and "Try again". Follow [A production check is failing](#a-production-check-is-failing).
+
+## Nobody reviewed yesterday
+
+A whole day passed without a graded review. Open the product and review a card; if that works, check grade delivery in the phone and web outboxes and the `review_graded` event in PostHog before assuming learners stopped.

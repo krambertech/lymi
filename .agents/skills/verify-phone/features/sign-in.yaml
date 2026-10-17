@@ -1,0 +1,8 @@
+appId: app.lymi
+name: Sign in with Apple
+---
+- runFlow: _signed-out.yaml
+- assertVisible: "Continue with Apple"
+- assertVisible: "Continue with Google"
+- assertVisible: "Sign in with email"
+- takeScreenshot: 01-apple-sign-in

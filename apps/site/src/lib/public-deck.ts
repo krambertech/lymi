@@ -5,6 +5,7 @@ import {
   listPublicDeckSlugs,
   listRelatedDecks,
   loadPublicDeck,
+  publicDeckRedirect,
 } from "@lymi/core/catalog/server";
 import { drizzle } from "@lymi/core/db";
 import type { AstroGlobal } from "astro";
@@ -13,6 +14,7 @@ import {
   DECK_CACHE_CONTROL,
   deckContentHash,
   deckEtag,
+  deckPath,
   etagMatches,
   MISSING_CACHE_CONTROL,
 } from "./deck-page";
@@ -41,6 +43,20 @@ export async function resolveDeckPage(
   const result = await loadPublicDeck(db, slug, locale);
   const headers = astro.response.headers;
   headers.set("content-type", "text/html; charset=utf-8");
+  if (result.status === "unavailable") {
+    // A withdrawn deck replaced by another sends its links and search results there for good.
+    const target = await publicDeckRedirect(db, slug);
+    if (target) {
+      const location = new URL(
+        deckPath(target, locale) + new URL(astro.request.url).search,
+        astro.request.url,
+      );
+      return new Response(null, {
+        status: 301,
+        headers: { location: location.toString(), "cache-control": MISSING_CACHE_CONTROL },
+      });
+    }
+  }
   if (result.status !== "published") {
     headers.set("cache-control", MISSING_CACHE_CONTROL);
     const status = result.status === "missing" ? 404 : 410;

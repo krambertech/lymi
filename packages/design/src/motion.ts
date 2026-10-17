@@ -78,6 +78,9 @@ export const SPEAKER_WAVES = {
 export const PLATE_ARRIVE = { duration: 0.2, ease: EASE_OUT } as const satisfies Timed;
 export const PLATE_RISE = 6;
 
+/** Furigana coming over a term at the reveal, or leaving it, in place: a fade. */
+export const READING_FADE = { duration: 0.2, ease: EASE_OUT } as const satisfies Timed;
+
 /**
  * A row of chips under a sheet that opens over them: they sink and fade together as it rises, then
  * return one after another as it goes, each rising into place a little after the one before.

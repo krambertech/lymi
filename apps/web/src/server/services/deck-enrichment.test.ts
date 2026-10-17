@@ -1,5 +1,6 @@
+import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
-import type { Db } from "../db";
+import { type Db, schema } from "../db";
 import type { ServiceContext } from "./context";
 import { createDeck, getDeck, listDecks, updateDeck } from "./decks";
 import { join } from "./members";
@@ -93,6 +94,22 @@ describe("a deck's enrichment settings", () => {
     expect(
       (await updateDeck(owner, deck.id, { enrichInstructions: "  " })).enrichInstructions,
     ).toBeNull();
+  });
+
+  it("keep what the AI learned the owner's, and never send its bookkeeping", async () => {
+    const deck = await createDeck(owner, { name: "Küche", defaultLanguage: "de" });
+    const style = "Kitchen words from a cooking course.";
+    await db
+      .update(schema.decks)
+      .set({ enrichStyle: style, enrichStyleAt: new Date() })
+      .where(eq(schema.decks.id, deck.id));
+    await join(member, deck.id);
+    const own = await getDeck(owner, deck.id);
+    expect(own.enrichStyle).toEqual(style);
+    expect(own).not.toHaveProperty("enrichStyleAt");
+    expect((await listDecks(owner)).find((row) => row.id === deck.id)?.enrichStyle).toEqual(style);
+    expect((await getDeck(member, deck.id)).enrichStyle).toBeNull();
+    expect((await listDecks(member)).find((row) => row.id === deck.id)?.enrichStyle).toBeNull();
   });
 
   it("record a change once, as flags and never the words", async () => {

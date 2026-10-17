@@ -1385,6 +1385,9 @@ msgstr "Підтвердити"
 msgid "Confirm it’s you"
 msgstr "Підтверди, що це ти"
 
+msgid "Confirm with Apple to delete your account for good."
+msgstr "Підтвердь через Apple, щоб назавжди видалити акаунт."
+
 msgid "Connect"
 msgstr "Підключити"
 
@@ -1421,6 +1424,9 @@ msgstr "Послідовність"
 
 msgid "Continue"
 msgstr "Продовжити"
+
+msgid "Continue with Apple"
+msgstr "Продовжити з Apple"
 
 msgid "Continue with Google"
 msgstr "Продовжити з Google"
@@ -3244,6 +3250,10 @@ msgstr "«Читання» переглядає колоди й картки. «
 msgid "Read the guide"
 msgstr "Прочитати посібник"
 
+msgid "Reading"
+msgstr "Читання"
+
+msgctxt "how a term is read"
 msgid "Reading"
 msgstr "Читання"
 

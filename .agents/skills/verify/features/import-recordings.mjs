@@ -29,9 +29,7 @@ export default async function drive({ page, step, api, expect }) {
     const main = page.getByRole("main");
     await expect(main.getByText(/^2 cards bring their recordings\./)).toBeVisible();
     await expect(main.getByText(/^1 recording is in a format Lymi can’t play/)).toBeVisible();
-    await expect(
-      main.getByText(/^2 clips are left out, such as sentence clips\./),
-    ).toBeVisible();
+    await expect(main.getByText(/^2 clips are left out, such as sentence clips\./)).toBeVisible();
     await expect(main.getByText(/^1 card’s pitch accent can’t be read as text/)).toBeVisible();
   });
 

@@ -1,3 +1,4 @@
+import { SPOKEN_TERM_MAX } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { SpeechProvider } from "../ai";
@@ -41,6 +42,14 @@ function voice(speech: SpeechProvider["speech"]) {
   };
   return { bucket, providers: () => [provider] };
 }
+
+const publication = (slug: string) => ({
+  slug,
+  summary: "Common Estonian words.",
+  meaningLanguage: "en",
+  publisher: "Lymi",
+  sources: [{ title: "Frequency list" }],
+});
 
 async function deckWith(ctx: ServiceContext, name: string, terms: string[]) {
   const deck = await createDeck(ctx, { name, defaultLanguage: "et" });
@@ -120,5 +129,47 @@ describe("published deck audio", () => {
       remaining: 1,
     });
     expect(await keysOf(deck.id)).toEqual([null]);
+  });
+
+  it("leaves cards no provider can voice out of the batch", async () => {
+    const deck = await deckWith(lymi, "Mixed", ["tere", "a".repeat(SPOKEN_TERM_MAX + 1)]);
+    const [welsh] = await addCards(lymi, [
+      { deckId: deck.id, term: "bore da", meaning: "good morning", language: "cy" },
+    ]);
+    await publishDeck(lymi, deck.id, publication("mixed"), publishers);
+    const speech = vi.fn(async () => new Response(new Uint8Array([1])));
+    const estonianOnly = voice(speech);
+    const deps = {
+      ...estonianOnly,
+      providers: (language: string) => (language === "et" ? estonianOnly.providers() : []),
+    };
+
+    expect(await voicePublishedDecks(db, deps, { deckId: deck.id })).toEqual({
+      voiced: 1,
+      failed: 0,
+      remaining: 0,
+    });
+    expect(speech).toHaveBeenCalledTimes(1);
+    const [card] = await db
+      .select()
+      .from(schema.cards)
+      .where(eq(schema.cards.id, welsh?.id ?? ""));
+    expect(card?.audioKey).toBeNull();
+  });
+
+  it("reaches every card even when some always fail", async () => {
+    const deck = await deckWith(lymi, "Stuck", ["halb üks", "halb kaks", "halb kolm", "hea"]);
+    await publishDeck(lymi, deck.id, publication("stuck"), publishers);
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    const speech = vi.fn(async ({ text }: { text: string }) => {
+      if (text.startsWith("halb")) throw new Error("rejected");
+      return new Response(new Uint8Array([1]));
+    });
+
+    let runs = 0;
+    while ((await keysOf(deck.id)).every((key) => key === null) && runs++ < 40) {
+      await voicePublishedDecks(db, voice(speech), { deckId: deck.id, limit: 2 });
+    }
+    expect((await keysOf(deck.id)).filter(Boolean)).toHaveLength(1);
   });
 });

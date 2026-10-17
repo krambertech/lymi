@@ -1,5 +1,5 @@
-import { canSpeakTerm, LanguageTag } from "@lymi/core";
-import { and, asc, eq, isNull } from "@lymi/core/db";
+import { LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
+import { and, count, eq, inArray, isNotNull, isNull, lte, sql } from "@lymi/core/db";
 import type { SpeechProvider } from "../ai";
 import { type Db, schema } from "../db";
 import { pronunciationAudio } from "./audio";
@@ -8,6 +8,8 @@ import { pronunciationAudio } from "./audio";
 export const PUBLISHED_AUDIO_BATCH = 40;
 /** Voice calls in flight at once, so a big deck does not burst the provider. */
 export const PUBLISHED_AUDIO_CONCURRENCY = 4;
+/** Cards a publish voices itself: a request's `waitUntil` ends about 30 seconds after the response. */
+export const PUBLISHED_AUDIO_ON_PUBLISH = 8;
 
 interface PublishedAudioDependencies {
   bucket: R2Bucket;
@@ -37,31 +39,51 @@ export async function voicePublishedDecks(
 ): Promise<PublishedAudioRun> {
   const limit = options.limit ?? PUBLISHED_AUDIO_BATCH;
   const concurrency = Math.max(1, options.concurrency ?? PUBLISHED_AUDIO_CONCURRENCY);
-  const rows = await db
+  // Cards the audio path refuses (no language, a long term) would never leave the backlog.
+  const unvoiced = and(
+    eq(schema.deckPublications.status, "published"),
+    isNull(schema.decks.archivedAt),
+    isNull(schema.cards.archivedAt),
+    isNull(schema.cards.audioKey),
+    isNotNull(schema.cards.language),
+    lte(sql`length(${schema.cards.term})`, SPOKEN_TERM_MAX),
+    ...(options.deckId ? [eq(schema.cards.deckId, options.deckId)] : []),
+  );
+
+  // A language no provider covers fails every time, so it is left for a first play to report.
+  const languages = (
+    await db
+      .selectDistinct({ language: schema.cards.language })
+      .from(schema.cards)
+      .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+      .innerJoin(schema.deckPublications, eq(schema.deckPublications.deckId, schema.cards.deckId))
+      .where(unvoiced)
+  ).flatMap(({ language }) =>
+    LanguageTag.safeParse(language).success && deps.providers(language as string).length > 0
+      ? [language as string]
+      : [],
+  );
+  if (languages.length === 0) return { voiced: 0, failed: 0, remaining: 0 };
+  const speakable = and(unvoiced, inArray(schema.cards.language, languages));
+
+  const [{ pending = 0 } = {}] = await db
+    .select({ pending: count() })
+    .from(schema.cards)
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+    .innerJoin(schema.deckPublications, eq(schema.deckPublications.deckId, schema.cards.deckId))
+    .where(speakable);
+  // Random order, so a card every provider rejects cannot hold the front of the backlog for good.
+  const batch = await db
     .select({
       id: schema.cards.id,
-      term: schema.cards.term,
-      language: schema.cards.language,
       ownerId: schema.decks.userId,
     })
     .from(schema.cards)
     .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
     .innerJoin(schema.deckPublications, eq(schema.deckPublications.deckId, schema.cards.deckId))
-    .where(
-      and(
-        eq(schema.deckPublications.status, "published"),
-        isNull(schema.decks.archivedAt),
-        isNull(schema.cards.archivedAt),
-        isNull(schema.cards.audioKey),
-        ...(options.deckId ? [eq(schema.cards.deckId, options.deckId)] : []),
-      ),
-    )
-    .orderBy(asc(schema.cards.createdAt), asc(schema.cards.id));
-  // Cards the audio path refuses (no language, a long term) would never leave the backlog.
-  const pending = rows.filter(
-    (row) => LanguageTag.safeParse(row.language).success && canSpeakTerm(row),
-  );
-  const batch = pending.slice(0, limit);
+    .where(speakable)
+    .orderBy(sql`random()`)
+    .limit(limit);
 
   let voiced = 0;
   let failed = 0;
@@ -91,5 +113,5 @@ export async function voicePublishedDecks(
     }
   };
   await Promise.all(Array.from({ length: Math.min(concurrency, batch.length) }, worker));
-  return { voiced, failed, remaining: pending.length - voiced };
+  return { voiced, failed, remaining: pending - voiced };
 }

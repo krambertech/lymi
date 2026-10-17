@@ -39,6 +39,7 @@ import {
   listEditions,
   listInvitations,
   listMembers,
+  PUBLISHED_AUDIO_ON_PUBLISH,
   publicationOut,
   publishDeck,
   publishEdition,
@@ -347,7 +348,7 @@ decks.put(
           bucket: c.env.AUDIO,
           providers: (language) => createSpeechProviders(c.env, language),
         },
-        { deckId },
+        { deckId, limit: PUBLISHED_AUDIO_ON_PUBLISH },
       ).catch(() => undefined),
     );
     return c.json(publicationOut(c.env.PRODUCT_URL, publication));

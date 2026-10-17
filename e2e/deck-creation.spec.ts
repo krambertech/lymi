@@ -217,54 +217,29 @@ test.describe("deck and card creation", () => {
     const dialog = sheet(page, "Add a card");
     await dialog.getByRole("checkbox", { name: "Create more", exact: true }).check();
     await dialog.getByRole("textbox", { name: "Term", exact: true }).fill("fermata");
-    // A desktop unfolds the rest under More fields; a phone opens each one from its chip, in a drawer.
-    const phone = testInfo.project.name === "webkit";
-    if (!phone) await dialog.getByRole("button", { name: "More fields", exact: true }).click();
-    // Tags suggests the ones in use, so its field is a combobox.
-    const role = (field: string) => (field === "Tags" ? "combobox" : "textbox");
+    // A chip adds its field in place, the same on a desktop and a phone.
     const fill = async (field: string, value: string) => {
-      if (!phone) {
-        await dialog.getByRole(role(field), { name: field, exact: true }).fill(value);
-        return;
-      }
       await dialog.getByRole("button", { name: field, exact: true }).click();
-      const panel = page.getByRole("dialog", { name: field, exact: true });
-      await panel.getByRole(role(field), { name: field, exact: true }).fill(value);
-      if (field === "Tags")
-        await panel.getByRole("combobox", { name: field, exact: true }).press("Enter");
-      await panel.getByRole("button", { name: "Done", exact: true }).click();
+      await dialog.getByRole("textbox", { name: field, exact: true }).fill(value);
     };
     await fill("Example", "Scendo alla fermata.");
     await fill("Source", "Lesson 14");
-    await fill("Tags", "streets");
-    // A new name opens the list with its Create row, and an open combobox hides the rest of the dialog from the accessibility tree, as the ARIA pattern does.
-    if (!phone) await page.getByRole("combobox", { name: "Tags", exact: true }).press("Enter");
-    if (phone) {
-      await expect(
-        dialog.getByRole("button", { name: "Source: Lesson 14", exact: true }),
-      ).toBeVisible();
-    }
+    // Tags is a choice: its chip opens a search of the tags in use, with Create for a new one.
+    await dialog.getByLabel("Tags", { exact: true }).click();
+    await page.getByRole("combobox", { name: "Find or create a tag", exact: true }).fill("streets");
+    await page.getByRole("option", { name: "Create “streets”", exact: true }).click();
+    await page.keyboard.press("Escape");
+    await expect(dialog.getByLabel("Tags: streets", { exact: true })).toBeVisible();
 
     await dialog.getByRole("button", { name: `Add to ${name}`, exact: true }).click();
     await expect(dialog.getByRole("status")).toHaveText("Added “fermata”");
     await expect(dialog.getByRole("textbox", { name: "Term", exact: true })).toHaveValue("");
-    if (phone) {
-      await expect(dialog.getByRole("button", { name: "Example", exact: true })).toBeVisible();
-      await expect(
-        dialog.getByRole("button", { name: "Source: Lesson 14", exact: true }),
-      ).toBeVisible();
-      await expect(
-        dialog.getByRole("button", { name: "Tags: streets", exact: true }),
-      ).toBeVisible();
-    } else {
-      await expect(dialog.getByRole("textbox", { name: "Example", exact: true })).toHaveValue("");
-      await expect(dialog.getByRole("textbox", { name: "Source", exact: true })).toHaveValue(
-        "Lesson 14",
-      );
-      await expect(
-        dialog.getByRole("button", { name: "Remove the tag streets", exact: true }),
-      ).toBeVisible();
-    }
+    // The lesson's source and tags stay for the next card; the example goes back to its chip.
+    await expect(dialog.getByRole("button", { name: "Example", exact: true })).toBeVisible();
+    await expect(dialog.getByRole("textbox", { name: "Source", exact: true })).toHaveValue(
+      "Lesson 14",
+    );
+    await expect(dialog.getByLabel("Tags: streets", { exact: true })).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(dialog).toBeHidden();
 
@@ -304,10 +279,7 @@ test.describe("deck and card creation", () => {
     await openNewCard(page);
     const dialog = sheet(page, "Add a card");
     await dialog.getByRole("textbox", { name: "Term", exact: true }).fill("strisce");
-    const phone = testInfo.project.name === "webkit";
-    await dialog
-      .getByRole("button", { name: phone ? "Picture" : "More fields", exact: true })
-      .click();
+    await dialog.getByRole("button", { name: "Picture", exact: true }).click();
     // The type passes the form's check; the bytes are what the server refuses.
     await page
       .locator("input[type=file]:not([capture])")
@@ -317,12 +289,6 @@ test.describe("deck and card creation", () => {
         mimeType: "image/png",
         buffer: Buffer.from("not a picture"),
       });
-    if (phone) {
-      await page
-        .getByRole("dialog", { name: "Picture", exact: true })
-        .getByRole("button", { name: "Done", exact: true })
-        .click();
-    }
     await dialog.getByRole("button", { name: /^Add to/ }).click();
     await expect(dialog).toBeHidden();
 
@@ -330,13 +296,12 @@ test.describe("deck and card creation", () => {
       .getByRole("region", { name: "Notifications" })
       .getByRole("button", { name: "Add picture", exact: true })
       .click();
-    if (phone) {
-      await expect(page.getByRole("dialog", { name: "Picture", exact: true })).toBeVisible();
-    } else {
-      const edit = sheet(page, "Edit card");
-      await expect(edit.getByRole("textbox", { name: "Term", exact: true })).toHaveValue("strisce");
-      await expect(edit.getByRole("button", { name: "Choose file", exact: true })).toBeFocused();
-    }
+    // The card's editor opens at its picture field; a drawer settles before anything takes focus.
+    const edit = sheet(page, "Edit card");
+    await expect(edit.getByRole("textbox", { name: "Term", exact: true })).toHaveValue("strisce");
+    const choose = edit.getByRole("button", { name: "Choose file", exact: true });
+    if (testInfo.project.name === "webkit") await expect(choose).toBeInViewport();
+    else await expect(choose).toBeFocused();
   });
 
   test("rejects card creation into an archived deck", async ({ page }, testInfo) => {

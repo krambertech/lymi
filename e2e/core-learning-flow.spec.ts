@@ -49,13 +49,9 @@ test("a learner can capture and review a new word", async ({ page }, testInfo) =
     await expect(dialog).toBeVisible();
     await page.getByRole("textbox", { name: "Term", exact: true }).fill("sbrigarsi");
     await page.getByRole("textbox", { name: "Meaning", exact: true }).fill("to hurry up");
-    const phone = testInfo.project.name === "webkit";
-    await dialog
-      .getByRole("button", { name: phone ? "Notes" : "More fields", exact: true })
-      .click();
-    const notesPanel = phone ? page.getByRole("dialog", { name: "Notes", exact: true }) : dialog;
-    await notesPanel.getByRole("textbox", { name: "Notes", exact: true }).fill(notes);
-    if (phone) await notesPanel.getByRole("button", { name: "Done", exact: true }).click();
+    // The Notes chip adds its field in place, on a desktop and a phone alike.
+    await dialog.getByRole("button", { name: "Notes", exact: true }).click();
+    await dialog.getByRole("textbox", { name: "Notes", exact: true }).fill(notes);
     await page.getByRole("button", { name: "Add to Italian lesson", exact: true }).click();
 
     await expect(dialog).toBeHidden();

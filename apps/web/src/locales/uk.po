@@ -22,6 +22,9 @@ msgstr "«{deckName}» повторюватиметься разом з інши
 msgid "“{label}” was already in {deckName}, so the copy added offline was left out."
 msgstr "«{label}» уже є в «{deckName}», тож копію, додану офлайн, не збережено."
 
+msgid "“{name}”"
+msgstr "«{name}»"
+
 msgid "“{term}” has nothing left to fill in."
 msgstr "У «{term}» нічого доповнювати."
 
@@ -223,9 +226,17 @@ msgstr "{0, plural, one {# розділ} few {# розділи} many {# розд
 msgid "{0, plural, one {# suspended card arrives archived.} other {# suspended cards arrive archived.}}"
 msgstr "{0, plural, one {# призупинена картка прийде в архів.} few {# призупинені картки прийдуть в архів.} many {# призупинених карток прийдуть в архів.} other {# призупиненої картки прийдуть в архів.}}"
 
+#. placeholder {0}: value.length
+msgid "{0, plural, one {# tag} other {# tags}}"
+msgstr "{0, plural, one {# тег} few {# теги} many {# тегів} other {# тегу}}"
+
 #. placeholder {0}: parsed.repeated
 msgid "{0, plural, one {# term appears more than once. Every card is imported.} other {# terms appear more than once. Every card is imported.}}"
 msgstr "{0, plural, one {# термін трапляється більше одного разу. Імпортуються всі картки.} few {# терміни трапляються більше одного разу. Імпортуються всі картки.} many {# термінів трапляються більше одного разу. Імпортуються всі картки.} other {# терміна трапляються більше одного разу. Імпортуються всі картки.}}"
+
+#. placeholder {0}: TAG_LIMITS.count
+msgid "{0, plural, one {A card holds up to # tag.} other {A card holds up to # tags.}}"
+msgstr "{0, plural, one {У картці може бути до # тегу.} few {У картці може бути до # тегів.} many {У картці може бути до # тегів.} other {У картці може бути до # тегу.}}"
 
 #. placeholder {0}: ticked.size
 msgid "{0, plural, one {Add # card} other {Add # cards}}"
@@ -238,6 +249,10 @@ msgstr "{0, plural, one {і ще # картка} few {і ще # картки} ma
 #. placeholder {0}: preview.duplicates - preview.duplicateExamples.length
 msgid "{0, plural, one {and # more} other {and # more}}"
 msgstr "{0, plural, one {і ще #} few {і ще #} many {і ще #} other {і ще #}}"
+
+#. placeholder {0}: value.length
+msgid "{0, plural, one {Asked # way} other {Asked # ways}}"
+msgstr "{0, plural, one {# режим} few {# режими} many {# режимів} other {# режиму}}"
 
 #. placeholder {0}: d.due
 msgid "{0, plural, one {card due} other {cards due}}"
@@ -573,9 +588,6 @@ msgstr "{due, plural, one {Повтори # на сьогодні} few {Повт
 
 msgid "{field} becomes"
 msgstr "{field} стає"
-
-msgid "{filled, plural, one {# filled} other {# filled}}"
-msgstr "{filled, plural, one {заповнено: #} few {заповнено: #} many {заповнено: #} other {заповнено: #}}"
 
 msgid "{found, plural, one {term found} other {terms found}}"
 msgstr "{found, plural, one {термін знайдено} few {терміни знайдено} many {термінів знайдено} other {терміна знайдено}}"
@@ -1164,9 +1176,6 @@ msgstr "Питатиме в обидва боки: від терміна і ві
 msgid "asked by {0}"
 msgstr "запитано як {0}"
 
-msgid "Asked once the card has a picture."
-msgstr "Запитуватиметься, коли в картки буде зображення."
-
 msgid "Asked once the picture has a description."
 msgstr "Запитуватиметься, коли зображення матиме опис."
 
@@ -1279,9 +1288,6 @@ msgstr "Картку скасовано"
 
 msgid "Card options"
 msgstr "Параметри картки"
-
-msgid "Card settings"
-msgstr "Налаштування картки"
 
 msgid "cards"
 msgstr "картки"
@@ -1758,11 +1764,12 @@ msgstr "Не вдалося записати файл. Спробуй ще ра�
 msgid "Countries, stars, birds or anything else with names."
 msgstr "Країни, зорі, птахи чи будь-що інше з назвами."
 
-msgid "Create “{created}”"
-msgstr "Створити «{created}»"
-
 msgid "Create “{typed}”"
 msgstr "Створити «{typed}»"
+
+#. placeholder {0}: names(option.create.map((name) => t`“${name}”`))
+msgid "Create {0}"
+msgstr "Створити {0}"
 
 msgid "Create a deck first, then add a lesson to it."
 msgstr "Спершу створи колоду, а тоді додай до неї урок."
@@ -2061,9 +2068,6 @@ msgstr "Доповнюємо цю картку"
 msgid "Enter a full email address, like anna@example.com."
 msgstr "Введи повну адресу, наприклад anna@example.com."
 
-msgid "Enter after each"
-msgstr "Enter після кожного"
-
 msgid "Enter an email address, like you@example.com."
 msgstr "Введи адресу пошти, як-от you@example.com."
 
@@ -2172,9 +2176,6 @@ msgstr "Непогано"
 
 msgid "Feedback sent"
 msgstr "Повідомлення надіслано"
-
-msgid "Fewer fields"
-msgstr "Менше полів"
 
 msgid "Fields AI can fill"
 msgstr "Що може заповнити AI"
@@ -2359,6 +2360,13 @@ msgstr "як запитується"
 
 msgid "How it works"
 msgstr "Як це працює"
+
+msgid "How it's asked"
+msgstr "Як запитується"
+
+#. placeholder {0}: names(value.map(modeName))
+msgid "How it's asked: {0}"
+msgstr "Як запитується: {0}"
 
 msgid "How it’s going"
 msgstr "Як іде навчання"
@@ -2578,6 +2586,10 @@ msgstr "Залиш <0>Tab</0> і <1>New line</1>. Якщо в картці є п
 msgid "Keep a copy"
 msgstr "Збережи копію"
 
+#. placeholder {0}: TAG_LIMITS.length
+msgid "Keep each tag to {0} characters or fewer."
+msgstr "Тег має бути не довшим за {0} символів."
+
 msgid "Keep invitation"
 msgstr "Залишити запрошення"
 
@@ -2654,6 +2666,9 @@ msgstr "Нова мова: {0}"
 
 msgid "Language you’re learning"
 msgstr "Мова, яку вчиш"
+
+msgid "Language: {name}"
+msgstr "Мова: {name}"
 
 msgid "Languages"
 msgstr "Мови"
@@ -2888,9 +2903,6 @@ msgstr "Більше про картку"
 
 msgid "More decks"
 msgstr "Інші колоди"
-
-msgid "More fields"
-msgstr "Більше полів"
 
 msgid "More languages"
 msgstr "Інші мови"
@@ -3347,9 +3359,6 @@ msgstr "Інші способи додати картки"
 msgid "Other ways to add decks"
 msgstr "Інші способи додати колоди"
 
-msgid "own review"
-msgstr "власне повторення"
-
 msgid "Owner"
 msgstr "Власник"
 
@@ -3469,9 +3478,6 @@ msgstr "Розташуй фото"
 
 msgid "Press <0>Copy text</0>, then paste it here."
 msgstr "Натисни <0>Copy text</0> і встав текст сюди."
-
-msgid "Press Enter after each tag."
-msgstr "Натискай Enter після кожного тегу."
 
 msgid "Press Export, save the file, then choose it here."
 msgstr "Натисни Export, збережи файл і вибери його тут."
@@ -3634,9 +3640,6 @@ msgstr "Вилучити з колоди"
 
 msgid "Remove member"
 msgstr "Вилучити учасника"
-
-msgid "Remove the tag {tag}"
-msgstr "Прибрати тег {tag}"
 
 msgid "Remove the text"
 msgstr "Прибрати текст"
@@ -3856,6 +3859,9 @@ msgstr "Шукати в цій колоді"
 
 msgid "Section"
 msgstr "Розділ"
+
+msgid "Section: {name}"
+msgstr "Розділ: {name}"
 
 msgid "Sections"
 msgstr "Розділи"
@@ -4182,6 +4188,10 @@ msgstr "Теги"
 msgid "Tags you put on this deck’s cards show here, to rename, merge or archive."
 msgstr "Тут з’являться теги з карток цієї колоди: їх можна перейменувати, об’єднати чи архівувати."
 
+#. placeholder {0}: names(value)
+msgid "Tags: {0}"
+msgstr "Теги: {0}"
+
 msgid "Tags…"
 msgstr "Теги…"
 
@@ -4261,9 +4271,6 @@ msgstr "Це все."
 
 msgid "That’s no longer here. Reload to see what changed."
 msgstr "Цього вже немає. Онови сторінку, щоб побачити зміни."
-
-msgid "That’s the most tags a card can have"
-msgstr "Більше тегів на картці бути не може"
 
 msgid "the AI"
 msgstr "AI"
@@ -4598,6 +4605,9 @@ msgstr "Посилання для приєднання до «{deck}» вимк�
 msgid "Turned on the join link for {deck}"
 msgstr "Посилання для приєднання до «{deck}» увімкнено"
 
+msgid "Type a name to create your first tag."
+msgstr "Введи назву, щоб створити перший тег."
+
 msgid "Type the term."
 msgstr "Введи термін."
 
@@ -4635,9 +4645,6 @@ msgstr "Тест на громадянство США"
 msgid "Use “{tag}” as the tag"
 msgstr "Використати «{tag}» як тег"
 
-msgid "Use **bold**, *italic*, ++underline++, ~~strikethrough~~, and [text](https://…). Start a line with - or 1. for a list."
-msgstr "Використовуй **жирний**, *курсив*, ++підкреслення++, ~~закреслення~~ та [текст](https://…). Почни рядок з - або 1. для списку."
-
 msgid "Use a JPEG, PNG, WebP or still GIF under 10 MB."
 msgstr "Використай JPEG, PNG, WebP або статичний GIF до 10 МБ."
 
@@ -4652,9 +4659,6 @@ msgstr "Використай щонайменше {MIN_PASSWORD_LENGTH} симв
 
 msgid "Use at most {MAX_PASSWORD_LENGTH} characters."
 msgstr "Використай не більше {MAX_PASSWORD_LENGTH} символів."
-
-msgid "Use deck modes"
-msgstr "Режими колоди"
 
 msgid "Use link"
 msgstr "Використати посилання"

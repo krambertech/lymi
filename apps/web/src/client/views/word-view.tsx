@@ -8,6 +8,7 @@ import {
   deserializeState,
   type EnrichedField,
   type FsrsCard,
+  type KnownReadings,
   needsEnrichment,
   type ReviewMode,
   termReading,
@@ -223,6 +224,8 @@ export interface WordProps {
   deckName: string;
   /** The modes the card is asked in: its own, or its deck's. */
   modes?: ReviewMode[] | undefined;
+  /** The learner's Known pairs, whose readings fade in the example. */
+  knownReadings?: KnownReadings | undefined;
   /** Absent until the route fetches it. */
   history?: WordHistory | undefined;
   hasPrev?: boolean | undefined;
@@ -401,6 +404,7 @@ export function WordView({
   state,
   deckName,
   modes,
+  knownReadings,
   history: record,
   hasPrev,
   hasNext,
@@ -704,7 +708,11 @@ export function WordView({
                 lang={card.language ?? undefined}
                 className="hyphenate whitespace-pre-line text-md leading-relaxed text-text [overflow-wrap:anywhere]"
               >
-                <ReadingText text={card.example} lang={card.language ?? undefined} />
+                <ReadingText
+                  text={card.example}
+                  lang={card.language ?? undefined}
+                  known={knownReadings}
+                />
               </p>
             )}
           </ReadField>

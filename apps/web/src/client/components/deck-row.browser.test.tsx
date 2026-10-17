@@ -4,10 +4,15 @@ import { expect, test } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
-import { DeckCard } from "./deck-card";
+import { DeckRow } from "./deck-row";
 import { StaticNavProvider } from "./nav-link";
 
 i18n.load("en", messages);
+
+/** The line that names a joined deck's owner, with its mark, apart from the row's arrow. */
+const ownerLine = (row: Element) =>
+  [...row.querySelectorAll("span")].find((el) => el.textContent?.startsWith("Shared by"))
+    ?.parentElement;
 i18n.activate("en");
 
 test("a joined deck names its owner and an owned deck names nobody", async () => {
@@ -16,10 +21,10 @@ test("a joined deck names its owner and an owned deck names nobody", async () =>
       <StaticNavProvider path="">
         <ul>
           <li>
-            <DeckCard id="d1" name="Italian with Giulia" language="it" due={8} total={64} />
+            <DeckRow id="d1" name="Italian with Giulia" language="it" due={8} total={64} />
           </li>
           <li>
-            <DeckCard id="d4" name="Eesti keel, A1" language="et" due={5} total={38} owner="Liis" />
+            <DeckRow id="d4" name="Eesti keel, A1" language="et" due={5} total={38} owner="Liis" />
           </li>
         </ul>
       </StaticNavProvider>
@@ -31,15 +36,15 @@ test("a joined deck names its owner and an owned deck names nobody", async () =>
   expect(owned.textContent).not.toContain("Shared by");
   expect(joined.textContent).toContain("Shared by Liis");
 
-  // The whole card stays the one tap target, and the due count stays where it was.
+  // The whole row stays the one tap target, and the due count says what it counts.
   expect(page.getByRole("link").elements()).toHaveLength(2);
   expect(joined.querySelectorAll("a, button")).toHaveLength(0);
   expect(owned.textContent).toContain("8 due today");
   expect(joined.textContent).toContain("5 due today");
 
   // A deck shared by link keeps the letter plate: only publishing makes a photo public.
-  expect(joined.querySelector("img")).toBeNull();
-  expect(joined.querySelector(".bg-plate-2")).not.toBeNull();
+  expect(ownerLine(joined)?.querySelector("img")).toBeNull();
+  expect(ownerLine(joined)?.querySelector(".bg-plate-2")).not.toBeNull();
 });
 
 test("a deck added from Explore draws its publisher's mark", async () => {
@@ -51,7 +56,7 @@ test("a deck added from Explore draws its publisher's mark", async () => {
       <StaticNavProvider path="">
         <ul>
           <li>
-            <DeckCard
+            <DeckRow
               id="d5"
               name="Eesti keel, A2"
               language="et"
@@ -63,7 +68,7 @@ test("a deck added from Explore draws its publisher's mark", async () => {
             />
           </li>
           <li>
-            <DeckCard
+            <DeckRow
               id="d6"
               name="Eesti keel, B1"
               language="et"
@@ -84,7 +89,7 @@ test("a deck added from Explore draws its publisher's mark", async () => {
 
   // Lymi's own decks get the lantern tile rather than an "L" on a plate.
   const lymi = page.getByRole("link", { name: /Eesti keel, B1/ }).element();
-  expect(lymi.querySelector("svg")).not.toBeNull();
-  expect(lymi.querySelector(".bg-plate-2")).toBeNull();
+  expect(ownerLine(lymi)?.querySelector("svg")).not.toBeNull();
+  expect(ownerLine(lymi)?.querySelector(".bg-plate-2")).toBeNull();
   expect(lymi.textContent).toContain("Shared by Lymi");
 });

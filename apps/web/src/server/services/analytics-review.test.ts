@@ -185,3 +185,40 @@ it("says where a Japanese term's reading showed, only when the grader draws furi
     .map((event) => event.reading);
   expect(readings).toEqual(["cue", "answer", undefined]);
 });
+
+it("counts the example's readings and the ones that faded, never the example", async () => {
+  const student = await learner(db, "analytics-example-readings", "Learner");
+  const { analytics, capture, settled } = writer();
+  const ctx = { ...student, analytics };
+  const deck = await createDeck(ctx, { name: "Japanese", defaultLanguage: "ja" });
+  const added = await addCards(ctx, [
+    {
+      deckId: deck.id,
+      term: "毎朝",
+      meaning: "every morning",
+      pronunciation: "まいあさ",
+      example: "毎朝[まいあさ]パンを食[た]べます。",
+    },
+    { deckId: deck.id, term: "水", meaning: "water", pronunciation: "みず", example: "水です。" },
+  ]);
+  const [morning, water] = added.map((a) => (a.status === "added" ? a.card.id : ""));
+  const grade = (cardId: string, readingsFaded?: number) =>
+    gradeCard(ctx, {
+      cardId,
+      direction: "recognition",
+      rating: 3,
+      reviewedAt: new Date(),
+      ...(readingsFaded === undefined ? {} : { readingsFaded }),
+    });
+  await grade(morning as string, 9);
+  await grade(water as string, 0);
+  await settled();
+  const graded = capture.mock.calls
+    .map((call) => call[0])
+    .filter((event) => event.name === "review_graded");
+  expect(graded.map((e) => [e.example_readings, e.readings_faded])).toEqual([
+    [2, 2],
+    [undefined, undefined],
+  ]);
+  expect(JSON.stringify(graded)).not.toContain("パン");
+});

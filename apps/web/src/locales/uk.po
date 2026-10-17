@@ -135,10 +135,6 @@ msgstr "{0, plural, one {# аудіофрагмент пропущено, нап
 msgid "{0, plural, one {# deck} other {# decks}}"
 msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}}"
 
-#. placeholder {0}: inSeries.length
-msgid "{0, plural, one {# deck} other {# decks}} · {cards, plural, one {# card} other {# cards}}"
-msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}} · {cards, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
-
 #. placeholder {0}: decks.length
 msgid "{0, plural, one {# deck} other {# decks}} · {total, plural, one {# card} other {# cards}}"
 msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}} · {total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
@@ -441,9 +437,6 @@ msgstr "Застосунок {appName} підключено"
 msgid "{appName} was not connected"
 msgstr "Застосунок {appName} не підключено"
 
-msgid "{archivedCount, plural, one {# archived deck} other {# archived decks}}"
-msgstr "{archivedCount, plural, one {# архівна колода} few {# архівні колоди} many {# архівних колод} other {# архівної колоди}}"
-
 msgid "{attempts, plural, one {review today} other {reviews today}}"
 msgstr "{attempts, plural, one {повторення сьогодні} few {повторення сьогодні} many {повторень сьогодні} other {повторення сьогодні}}"
 
@@ -634,6 +627,9 @@ msgstr "{limit, plural, one {Розумне додавання в бета-ве�
 
 msgid "{limit, plural, one {You’ve used today’s # lesson} other {You’ve used today’s # lessons}}"
 msgstr "{limit, plural, one {На сьогодні використано # урок} few {На сьогодні використано всі # уроки} many {На сьогодні використано всі # уроків} other {На сьогодні використано # уроку}}"
+
+msgid "{matches, plural, =0 {No decks match} one {# deck matches} other {# decks match}}"
+msgstr "{matches, plural, =0 {Жодна колода не підходить} one {# колода підходить} few {# колоди підходять} many {# колод підходять} other {# колоди підходять}}"
 
 msgid "{minutes, plural, one {You can add more lessons in # minute.} other {You can add more lessons in # minutes.}}"
 msgstr "{minutes, plural, one {Нові уроки можна додати через # хвилину.} few {Нові уроки можна додати через # хвилини.} many {Нові уроки можна додати через # хвилин.} other {Нові уроки можна додати через # хвилини.}}"
@@ -1176,6 +1172,9 @@ msgstr "«{tagName}» архівовано з {0, plural, one {# картки} f
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Заархівовано {count, plural, one {# картку} few {# картки} many {# карток} other {# картки}} у колоді «{deck}»"
 
+msgid "Archived decks"
+msgstr "Архівовані колоди"
+
 msgid "Archived decks and cards go too, with your settings, photo, connected apps and API keys. You leave every deck you joined, and every device is signed out."
 msgstr "Архівовані колоди й картки теж буде видалено, разом із налаштуваннями, фото, підключеними застосунками та ключами API. Ти покинеш колоди інших людей, які вивчаєш, і вийдеш з акаунта на всіх пристроях."
 
@@ -1537,6 +1536,9 @@ msgstr "Прибрати зображення"
 
 msgid "Close"
 msgstr "Закрити"
+
+msgid "Close search"
+msgstr "Закрити пошук"
 
 msgid "Cloze"
 msgstr "Пропуск у реченні"
@@ -2026,6 +2028,9 @@ msgstr "Перетягни, щоб посунути фото. Щоб зміни�
 
 msgid "Driving"
 msgstr "Водіння"
+
+msgid "Drop a deck here to take it out of its series."
+msgstr "Перетягни колоду сюди, щоб вийняти її із серії."
 
 msgid "Drop or paste a picture"
 msgstr "Перетягни або встав зображення"
@@ -3170,6 +3175,9 @@ msgstr "Немає карток, які ти часто забуваєш"
 msgid "No decks in this series yet."
 msgstr "У цій серії ще немає колод."
 
+msgid "No decks match “{term}”"
+msgstr "Немає колод за запитом «{term}»"
+
 msgid "No decks of your own yet. Only decks you create can go in a series."
 msgstr "Власних колод ще немає. У серію можна додати лише створені тобою колоди."
 
@@ -3854,6 +3862,9 @@ msgstr "Повтори {limit} з {reviewable}"
 msgid "Review {seriesName}, {due, plural, one {# card due} other {# cards due}}"
 msgstr "Повторити серію «{seriesName}», {due, plural, one {# картка до повторення} few {# картки до повторення} many {# карток до повторення} other {# картки до повторення}}"
 
+msgid "Review all"
+msgstr "Повторити все"
+
 msgid "Review done"
 msgstr "Повторення завершено"
 
@@ -3968,6 +3979,9 @@ msgstr "Пошук"
 
 msgid "Search cards, decks and commands"
 msgstr "Шукати картки, колоди й команди"
+
+msgid "Search decks"
+msgstr "Шукати колоди"
 
 msgid "Search languages"
 msgstr "Пошук мов"
@@ -4110,9 +4124,6 @@ msgstr "Поділилися з тобою"
 
 msgid "Shelves"
 msgstr "Полиці"
-
-msgid "Show"
-msgstr "Показати"
 
 msgid "Show all"
 msgstr "Показати всі"
@@ -4704,6 +4715,9 @@ msgstr "Подорожі"
 
 msgid "Try a clearer photo or paste the lesson text."
 msgstr "Спробуй чіткіше фото або встав текст уроку."
+
+msgid "Try a deck’s name, its language or its series."
+msgstr "Спробуй назву колоди, її мову або серію."
 
 msgid "Try a different term or meaning, or clear the search."
 msgstr "Спробуй інший термін чи значення або очисть пошук."

@@ -1,5 +1,6 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
+import { knownReadings } from "@lymi/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { expect, test, vi } from "vitest";
@@ -237,6 +238,61 @@ test("a Japanese cue draws furigana until the card is Known, keeps its room, and
   await expect.poll(() => shown(reading())).toBe(true);
   const example = [...document.querySelectorAll("rt")].map((rt) => rt.textContent);
   expect(example).toEqual(expect.arrayContaining(["まいあさ", "た"]));
+});
+
+test("an example's reading fades over a Known word and keeps its room", async () => {
+  const japanese: QueueItem = {
+    ...queueItem,
+    fsrsState: 2,
+    card: {
+      ...queueItem.card,
+      term: "毎朝",
+      language: "ja",
+      pronunciation: "まいあさ",
+      example: "毎朝[まいあさ]パンを食[た]べます。食事[しょくじ]も。",
+    },
+  };
+  const known = knownReadings([
+    { term: "食べる", pronunciation: "たべる", language: "ja", known: true },
+  ]);
+  const example = () =>
+    [
+      ...page
+        .getByText(/パンを/)
+        .element()
+        .querySelectorAll("rt"),
+    ].map((rt) => ({
+      reading: rt.textContent,
+      shown: getComputedStyle(rt).visibility === "visible",
+    }));
+  const card = (knownReadings?: typeof known) => (
+    <I18nProvider i18n={i18n}>
+      <ReviewCard
+        item={japanese}
+        knownReadings={knownReadings}
+        revealed
+        animateReveal={false}
+        onReveal={noop}
+      />
+    </I18nProvider>
+  );
+  const shown = await render(card());
+  const height = page
+    .getByText(/パンを/)
+    .element()
+    .getBoundingClientRect().height;
+  await shown.rerender(card(known));
+  await expect.poll(example).toEqual([
+    { reading: "まいあさ", shown: true },
+    { reading: "た", shown: false },
+    { reading: "しょくじ", shown: true },
+  ]);
+  expect(
+    page
+      .getByText(/パンを/)
+      .element()
+      .getBoundingClientRect().height,
+  ).toBe(height);
 });
 
 test("the head names the deck alone, and the mode only for a picture", async () => {

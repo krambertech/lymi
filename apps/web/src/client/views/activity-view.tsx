@@ -339,10 +339,10 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
         </Button>
       ) : expandable ? (
         <Go
-          icon={
+          glyph={
             <ChevronDown
               className={clsx(
-                "size-4 transition-transform duration-260 ease-(--ease-out) motion-reduce:transition-none",
+                "transition-transform duration-260 ease-(--ease-out) motion-reduce:transition-none",
                 open && "rotate-180",
               )}
               aria-hidden="true"

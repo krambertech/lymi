@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
+import { useKnownReadings } from "@lymi/client/known-readings";
 import { writes } from "@lymi/client/writes";
 import type { CardPatch } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -64,6 +65,7 @@ function DeckPage() {
   const navigate = useNavigate();
   const decks = useQuery(decksQuery);
   const cards = useQuery(deckCardsQuery(deckId));
+  const knownReadings = useKnownReadings();
   const streak = useQuery(streakQuery);
   const apps = useQuery({ ...connectedAppsQuery, enabled: cards.data?.length === 0 });
   const wordHistory = useWordHistory(openCardId);
@@ -263,6 +265,7 @@ function DeckPage() {
         retryPending={decks.isFetching || cards.isFetching || sections.isFetching}
         // Held until the sections arrive, so a sectioned deck never flashes in another order.
         cards={sections.isPending ? undefined : cards.data}
+        knownReadings={knownReadings}
         streak={streak.data}
         onReview={() => navigate({ to: "/review", search: { deck: deckId } })}
         onImportantChange={(card, important) => mark.mutate({ card, important })}

@@ -104,6 +104,16 @@ describe("recording a grade", () => {
     expect(grade.mock.calls.at(-1)?.[0]).toMatchObject({ recallMs: 4210, gradeMs: 870 });
   });
 
+  it("keeps the faded readings with a queued grade, sends them on replay, and keeps the state the server set", async () => {
+    grade.mockRejectedValueOnce(offline());
+    expect(await grades.recordGrade({ ...g("a"), readingsFaded: 2 })).toBe("queued");
+    grades.resetGradeCache();
+    grade.mockResolvedValueOnce({ ...accepted("rev-a"), state: 2 });
+    expect(await grades.flushOutbox()).toBe(1);
+    expect(grade.mock.calls.at(-1)?.[0]).toMatchObject({ readingsFaded: 2 });
+    expect(grades.gradeStore.snapshot()).toMatchObject([{ cardId: "a", stateAfter: 2 }]);
+  });
+
   it("drops a refused grade, so the card comes back", async () => {
     grade.mockRejectedValueOnce(new ApiError(422, "invalid"));
     expect(await grades.recordGrade(g("a"))).toBe("refused");

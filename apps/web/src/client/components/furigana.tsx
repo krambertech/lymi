@@ -1,4 +1,9 @@
-import { parseReadings, type ReadingSegment } from "@lymi/core";
+import {
+  type KnownReadings,
+  markKnownReadings,
+  parseReadings,
+  type ReadingSegment,
+} from "@lymi/core";
 import { clsx } from "clsx";
 import { Fragment, useMemo } from "react";
 
@@ -9,7 +14,7 @@ interface Props {
   hidden?: boolean | undefined;
 }
 
-/** Runs of text with their readings drawn over them, as furigana over kanji. */
+/** Runs of text with their readings drawn over them, as furigana over kanji; a known run's reading keeps its room unseen. */
 export function Furigana({ segments, lang, hidden }: Props) {
   return segments.map((segment, index) =>
     segment.reading === undefined ? (
@@ -27,7 +32,7 @@ export function Furigana({ segments, lang, hidden }: Props) {
           aria-hidden="true"
           className={clsx(
             "transition-[opacity,visibility] duration-200 ease-out motion-reduce:transition-none",
-            hidden && "invisible opacity-0",
+            (hidden || segment.known) && "invisible opacity-0",
           )}
         >
           {segment.reading}
@@ -41,10 +46,12 @@ export function Furigana({ segments, lang, hidden }: Props) {
 interface ReadingTextProps {
   text: string;
   lang?: string | undefined;
+  /** The learner's Known pairs, whose readings fade. */
+  known?: KnownReadings | undefined;
 }
 
 /** Text that may carry inline readings, such as an example, drawn with them. */
-export function ReadingText({ text, lang }: ReadingTextProps) {
-  const segments = useMemo(() => parseReadings(text), [text]);
+export function ReadingText({ text, lang, known }: ReadingTextProps) {
+  const segments = useMemo(() => markKnownReadings(parseReadings(text), known), [text, known]);
   return <Furigana segments={segments} lang={lang} />;
 }

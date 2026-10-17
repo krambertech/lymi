@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { clsx } from "clsx";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ApiError } from "../lib/api";
 import "./dev-panel.css";
 import { devApi } from "./dev-api";
@@ -35,7 +35,6 @@ function clampTop(fraction: number) {
 export default function DevPanel() {
   const [open, setOpen] = useState(false);
   const [top, setTop] = useState(() => clampTop(Number(read(TOP_KEY) ?? 0.5) || 0.5));
-  const panelRef = useRef<HTMLElement>(null);
   const tabRef = useRef<HTMLButtonElement>(null);
   const drag = useRef<{ y: number; top: number; moved: boolean } | null>(null);
   const dragged = useRef(false);
@@ -57,23 +56,19 @@ export default function DevPanel() {
 
   const { refetch } = state;
   useEffect(() => {
-    if (!open) return;
-    // The palette focuses its search on a keyboard device; otherwise the dialog takes focus.
-    if (!panelRef.current?.contains(document.activeElement)) {
-      panelRef.current?.focus({ preventScroll: true });
-    }
     // Reviews and adds made in the app since change what each action can do.
-    void refetch();
+    if (open) void refetch();
   }, [open, refetch]);
 
+  // Closing puts focus back on the tab, so the next Tab starts from it rather than from the top of the page.
+  const onOpenChange = useCallback((next: boolean) => {
+    setOpen(next);
+    if (!next) requestAnimationFrame(() => tabRef.current?.focus());
+  }, []);
+
   useEffect(() => {
-    // A keyboard dismissal puts focus back on the tab, so the next Tab starts from it
-    // rather than from the top of the page.
-    const dismiss = () => {
-      setOpen(false);
-      requestAnimationFrame(() => tabRef.current?.focus());
-    };
     const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "`" || e.metaKey || e.ctrlKey || e.altKey) return;
       const target = e.target as HTMLElement | null;
       const typing =
         target &&
@@ -81,51 +76,25 @@ export default function DevPanel() {
           target.tagName === "TEXTAREA" ||
           target.tagName === "SELECT" ||
           target.isContentEditable);
-      if (e.key === "`" && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
-        e.preventDefault();
-        if (open) dismiss();
-        else setOpen(true);
-      }
-      const idle = document.activeElement === document.body;
-      if (
-        e.key === "Escape" &&
+      // The palette's own field closes it on a backtick while it is empty.
+      const paletteField =
         open &&
-        (idle || panelRef.current?.contains(document.activeElement))
-      ) {
-        dismiss();
-      }
-    };
-    // A press anywhere else on the page closes it, except inside a drawer the app has open above it.
-    const onPointerDown = (e: PointerEvent) => {
-      const target = e.target as Element | null;
-      if (
-        !open ||
-        !target ||
-        panelRef.current?.contains(target) ||
-        tabRef.current?.contains(target) ||
-        target.closest('[data-slot^="drawer"]')
-      ) {
-        return;
-      }
-      setOpen(false);
+        target instanceof HTMLInputElement &&
+        target.value === "" &&
+        !!target.closest('[data-slot="command-palette"]');
+      if (typing && !paletteField) return;
+      e.preventDefault();
+      onOpenChange(!open);
     };
     window.addEventListener("keydown", onKey);
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.removeEventListener("pointerdown", onPointerDown);
-    };
-  }, [open]);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onOpenChange]);
 
   return (
     <div className="dev-skin">
       <DevPalette
-        ref={panelRef}
         open={open}
-        onClose={() => {
-          setOpen(false);
-          requestAnimationFrame(() => tabRef.current?.focus());
-        }}
+        onOpenChange={onOpenChange}
         personas={personas.data?.personas ?? []}
         personasFailed={personas.isError}
         state={state}
@@ -138,7 +107,7 @@ export default function DevPanel() {
           open ? "Close developer tools" : `Developer tools, signed in as ${who ?? "nobody"}`
         }
         aria-expanded={open}
-        aria-controls="dev-panel"
+        aria-haspopup="dialog"
         title="Developer tools (`). Drag to move."
         style={{ top: `${top * 100}%` }}
         onPointerDown={(e) => {

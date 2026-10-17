@@ -153,6 +153,25 @@ describe("a deck archive in review", () => {
     expect(left(qc, all)).toBe(0);
   });
 
+  it("keeps when the draw was read through every card write, which the phone dates grades by", () => {
+    const qc = cache();
+    const fetchedAt = Date.parse("2026-10-12T11:00:00Z");
+    qc.setQueryData(all, {
+      ...draw([entry("a", "it"), entry("b", "it"), entry("c", "et")]),
+      fetchedAt,
+    });
+    const writes: Write[] = [
+      { kind: "card.update", id: "a", patch: { meaning: "maybe" } },
+      { kind: "card.important", id: "a", important: true },
+      { kind: "card.archive", id: "b" },
+      { kind: "deck.archive", id: "et" },
+    ];
+    for (const w of writes) {
+      showWrite(qc, w);
+      expect(qc.getQueryData<Draw & { fetchedAt: number }>(all)?.fetchedAt).toBe(fetchedAt);
+    }
+  });
+
   it("keeps the other decks' cards", () => {
     const qc = cache();
     qc.setQueryData(all, draw([entry("a", "it"), entry("b", "et"), entry("c", "it")]));

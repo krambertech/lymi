@@ -269,12 +269,7 @@ function Run({
   }, [settled, draw.data, archived]);
   const listData =
     list.isFetchedAfterMount || list.fetchStatus !== "fetching" ? list.data : undefined;
-  const { state, grades, setNow } = useDrawState(
-    scope,
-    data,
-    LOOKAHEAD,
-    draw.dataUpdatedAt || undefined,
-  );
+  const { state, grades, setNow } = useDrawState(scope, data, LOOKAHEAD);
   // The card on screen stays put while a refetch lands; only a grade moves it.
   const [pinned, setPinned] = useState<Pinned | null>(null);
   const [chosenLeg, setLeg] = useState<Leg | null>(null);

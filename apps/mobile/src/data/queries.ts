@@ -111,12 +111,11 @@ export function useNow(dayEnd: Date | undefined) {
 /** The draw's state now, with this device's grades in it; `lookahead` cards after the next are listed too. */
 export function useDrawState(
   scope: ReviewScope,
-  data: DrawData | undefined,
+  data: (DrawData & { fetchedAt?: number }) | undefined,
   lookahead = 0,
-  fetchedAt?: number,
 ) {
   const all = useGrades();
-  const grades = useMemo(() => withoutDropped(all, data, fetchedAt), [all, data, fetchedAt]);
+  const grades = useMemo(() => withoutDropped(all, data), [all, data]);
   const [now, setNow] = useNow(data ? new Date(data.day.end) : undefined);
   const state: DrawState | undefined = useMemo(
     () => (data ? drawState(data, grades, now, scope.deck, lookahead) : undefined),
@@ -131,9 +130,8 @@ const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
 /** Today against the goal, as the lantern, the flame and the seven lights read it. */
 export function useDay() {
   const streak = useStreak().data;
-  const drawn = useDraw();
-  const draw = drawn.data;
-  const { state } = useDrawState({}, draw, 0, drawn.dataUpdatedAt || undefined);
+  const draw = useDraw().data;
+  const { state } = useDrawState({}, draw);
   const left = useMemo(
     () => (draw && state ? drawableLeft(draw, state, undefined) : undefined),
     [draw, state],

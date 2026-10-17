@@ -271,6 +271,14 @@ export const analyticsEvents = {
     skipped: count.optional(),
     readings_added: count.optional(),
     prompt_version: z.number().int().positive().max(1000).optional(),
+    has_style: z.boolean().optional(),
+  }),
+  deck_style_learned: z.object({
+    outcome: z.enum(["learned", "empty", "failed"]),
+    cards: count,
+    topic: z.boolean(),
+    chars: count,
+    prompt_version: z.number().int().positive().max(1000),
   }),
   deck_enrichment_changed: z.object({
     meaning: z.boolean(),
@@ -299,7 +307,14 @@ export const analyticsEvents = {
   $ai_generation: z.object({
     $ai_trace_id: z.uuid(),
     $ai_session_id: z.null(),
-    $ai_span_name: z.enum(["enrich", "hook", "import_languages", "deck_choice", "lesson_read"]),
+    $ai_span_name: z.enum([
+      "enrich",
+      "deck_style",
+      "hook",
+      "import_languages",
+      "deck_choice",
+      "lesson_read",
+    ]),
     $ai_provider: z.enum(["openai", "anthropic"]),
     $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),
     $ai_input_tokens: tokens,
@@ -401,6 +416,7 @@ export const analyticsProducers = {
   deck_joined: ["worker"],
   mcp_tool: ["worker"],
   enrichment_finished: ["worker"],
+  deck_style_learned: ["worker"],
   lesson_read: ["worker"],
   lesson_read_limited: ["worker"],
   $ai_generation: ["worker"],

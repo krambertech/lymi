@@ -65,8 +65,25 @@ export async function devCounts({ db, userId }: ServiceContext): Promise<DevCoun
   };
 }
 
-/** Everything the account holds in the product: decks and memberships, cards, states, reviews, audit, settings. */
-export async function resetAccount({ db, userId }: ServiceContext): Promise<void> {
+/**
+ * Everything the account holds in the product: decks and memberships, cards, states, reviews, audit,
+ * settings. Given the picture store, the account's picture files go too, or each reseed would leave
+ * three behind.
+ */
+export async function resetAccount(
+  { db, userId }: ServiceContext,
+  pictures?: R2Bucket,
+): Promise<void> {
+  if (pictures) {
+    const keys = await db
+      .select({ key: schema.cardImages.objectKey })
+      .from(schema.cardImages)
+      .innerJoin(schema.cards, eq(schema.cards.id, schema.cardImages.cardId))
+      .where(eq(schema.cards.userId, userId));
+    for (let i = 0; i < keys.length; i += 1000) {
+      await pictures.delete(keys.slice(i, i + 1000).map((k) => k.key));
+    }
+  }
   await db.batch([
     db.delete(schema.reviewUndos).where(eq(schema.reviewUndos.userId, userId)),
     db.delete(schema.reviews).where(eq(schema.reviews.userId, userId)),
@@ -118,7 +135,7 @@ export async function seedPersona(
 ): Promise<DevCounts> {
   const { db, userId } = ctx;
   seeding.add(persona.id);
-  await resetAccount(ctx);
+  await resetAccount(ctx, deps?.images?.bucket);
   await updateSettings(ctx, { appLanguage: persona.appLanguage });
 
   const now = new Date();

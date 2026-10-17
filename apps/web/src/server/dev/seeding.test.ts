@@ -34,7 +34,11 @@ async function holdings(persona: string) {
     await app.request("http://localhost/api/dev/state", { headers: { cookie } }, env)
   ).json()) as { user: { id: string }; counts: { due: number } };
   const decks = await listDecks({ db, userId: user.id, actor: "system" });
-  return { decks: decks.map((d) => d.name).sort(), due: counts.due };
+  return {
+    decks: decks.map((d) => d.name).sort(),
+    due: counts.due,
+    ids: Object.fromEntries(decks.map((d) => [d.name, d.id])),
+  };
 }
 
 beforeAll(async () => {
@@ -52,30 +56,45 @@ afterAll(async () => {
 });
 
 describe("seeding accounts that share decks", () => {
-  let learner: Awaited<ReturnType<typeof holdings>>;
+  let learner: { decks: string[]; due: number };
+  const kept = ({ decks, due }: { decks: string[]; due: number }) => ({ decks, due });
 
-  it("brings every account a persona needs and lands on the arrival Welcome", async () => {
+  it("signs in with seed=0 without seeding anyone else or landing anywhere", async () => {
+    const response = await signIn("as=joining&seed=0", "GET");
+    expect(new URL(response.headers.get("location") ?? "").pathname).toBe("/today");
+    expect((await holdings("shared")).decks).toEqual([]);
+  }, 60_000);
+
+  it("brings every account a persona needs and lands on Welcome with that deck", async () => {
     const response = await signIn("as=joining", "GET");
     expect(response.status).toBe(303);
-    expect(new URL(response.headers.get("location") ?? "").pathname).toBe("/welcome");
+    const landing = new URL(response.headers.get("location") ?? "");
+    expect(landing.pathname).toBe("/welcome");
 
-    expect((await holdings("joining")).decks).toEqual(["Lisboa a dois"]);
-    learner = await holdings("learner");
+    const tomas = await holdings("joining");
+    expect(tomas.decks).toEqual(["Lisboa a dois"]);
+    expect(landing.searchParams.get("deck")).toBe(tomas.ids["Lisboa a dois"]);
+    // The deck opens one section at a time, so only its first section counts as due.
+    expect(tomas.due).toBeGreaterThan(0);
+    learner = kept(await holdings("learner"));
     expect(learner.decks).toContain("Lisboa a dois");
-    expect(learner.decks).toContain("Everyday Estonian");
+    expect(learner.decks).toContain("Everyday Finnish");
     expect(learner.due).toBe(9);
   }, 60_000);
 
   it("gives members back their decks and due counts when an owner reseeds", async () => {
     await signIn("as=publisher&reset=1");
-    expect(await holdings("learner")).toEqual(learner);
+    expect(kept(await holdings("learner"))).toEqual(learner);
     await signIn("as=shared&reset=1");
-    expect(await holdings("learner")).toEqual(learner);
+    expect(kept(await holdings("learner"))).toEqual(learner);
   }, 60_000);
 
-  it("signs in with seed=0 without seeding anyone else", async () => {
-    const before = await holdings("shared");
-    await signIn("as=joining&seed=0");
-    expect(await holdings("shared")).toEqual(before);
+  it("removes the old picture files when an account is reseeded", async () => {
+    const pictures = async () =>
+      (await env.PRIVATE_IMAGES.list({ prefix: "cards/" })).objects.length;
+    const before = await pictures();
+    expect(before).toBeGreaterThan(0);
+    await signIn("as=learner&reset=1");
+    expect(await pictures()).toBe(before);
   }, 60_000);
 });

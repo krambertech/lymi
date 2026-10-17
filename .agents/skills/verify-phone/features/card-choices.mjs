@@ -4,7 +4,7 @@ const TERM = "il semaforo";
 const MEANING = "the traffic light";
 
 export async function env({ api }) {
-  const [deck] = await api("/api/decks");
+  const deck = (await api("/api/decks")).find((d) => d.name === "Lezione 12");
   const { cards } = await api(`/api/cards?query=${encodeURIComponent(TERM)}`);
   if (cards.some((c) => c.term === TERM)) throw new Error(`The persona already has “${TERM}”`);
   return {

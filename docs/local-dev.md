@@ -32,7 +32,7 @@ No password is typed anywhere. The server creates the account on first use, seed
 | Persona | Account | Starts with |
 | --- | --- | --- |
 | `fresh` | Fresh | Nothing. The first-run screens. |
-| `learner` | Kateryna | A little of everything. Three weeks in: Lezione 12, Verbi and Portuguese as before, plus the series Italiano A2 (Casa and In città) with three pictures, five important cards and two memory hooks, Noor's shared Lisboa a dois, and Everyday Estonian from Explore. 9 due, a 4-day streak with a longer best run and two rest days, three cards an assistant added today, one archived deck and one archived card. |
+| `learner` | Kateryna | A little of everything. Three weeks in: Lezione 12, Verbi and Portuguese as before, plus the series Italiano A2 (Casa and In città) with three pictures, five important cards and two memory hooks, Noor's shared Lisboa a dois, and Everyday Finnish from Explore. 9 due, a 4-day streak with a longer best run and two rest days, three cards an assistant added today, one archived deck and one archived card. |
 | `streak` | Sanna | Fourteen days running and nothing due. The flame is lit, small and still. |
 | `rested` | Leena | Eleven days running through two rest days, the last one yesterday, and 9 due. Today opens on the rest-day banner. |
 | `backlog` | Marco | A month away: four decks, 60 cards, all due. |

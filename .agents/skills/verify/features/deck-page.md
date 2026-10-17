@@ -12,7 +12,7 @@ Library holds every deck with its due and card counts. A deck's page lists its c
 
 ## End state
 
-Library reads **7 decks · 112 cards** for `learner`, matching the totals from `/api/decks`. The deck page lists as many cards as the deck's `total`, the Due today filter as many as its `due` (or **No cards match these filters** when that is 0), and removing the chip brings every card back. The opened card shows the term and meaning `/api/cards?deckId=<id>` stores for it. Selecting the money filter's cards reads **N selected**, and Actions offers **Review N due** and **Review all N**, counting the started cards not reviewed today from `/api/decks/<id>/cards`. The search shows **No cards match “zzz”** in the list's place, another deck opens with no filter chips, and Review opens a review whose header counts 0 of the `total` of `/api/review/queue` for the same filter.
+Library reads **7 decks · 105 cards** for `learner`, matching the totals from `/api/decks`. The deck page lists as many cards as the deck's `total`, the Due today filter as many as its `due` (or **No cards match these filters** when that is 0), and removing the chip brings every card back. The opened card shows the term and meaning `/api/cards?deckId=<id>` stores for it. Selecting the money filter's cards reads **N selected**, and Actions offers **Review N due** and **Review all N**, counting the started cards not reviewed today from `/api/decks/<id>/cards`. The search shows **No cards match “zzz”** in the list's place, another deck opens with no filter chips, and Review opens a review whose header counts 0 of the `total` of `/api/review/queue` for the same filter.
 
 ## Gotchas
 

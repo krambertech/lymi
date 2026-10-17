@@ -9,7 +9,9 @@ export async function env({ api }) {
   await api("/api/dev/sign-in?as=publisher", { method: "POST" });
   const decks = await api("/api/decks");
   // The most due, so the phone's own count, which can lag a reset, still lists it on Today.
-  const due = decks.filter((d) => d.due > 0 && !d.seriesId).sort((a, b) => b.due - a.due)[0];
+  const due = decks
+    .filter((d) => d.role === "owner" && d.due > 0 && !d.seriesId)
+    .sort((a, b) => b.due - a.due)[0];
   if (!due) throw new Error("No deck with cards due outside a series");
   const { cards } = await api(`/api/cards?deckId=${due.id}&limit=50`);
   const [star, archive] = cards.filter((c) => !c.important);

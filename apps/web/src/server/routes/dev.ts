@@ -11,6 +11,7 @@ import { callAsMcp, devHostPage, devHostView } from "../dev/mcp-host";
 import {
   accountPersona,
   DEV_PASSWORD,
+  librarySize,
   type Persona,
   personaEmail,
   personaFor,
@@ -73,6 +74,7 @@ const summary = (p: Persona) => ({
   cards: p.decks.filter((d) => !d.archived).flatMap((d) => d.cards.filter((c) => !c.archived))
     .length,
   dueNow: p.dueNow,
+  library: librarySize(p),
 });
 
 dev.get("/personas", describe({ hide: true, open: true }), (c) =>
@@ -194,7 +196,8 @@ dev.on(
     let seeded = false;
     if (seed !== "0") {
       const counts = await devCounts(ctx);
-      if (reset === "1" || counts.decks === 0) {
+      // A persona that lands somewhere is a moment, like Tomás before Welcome, so it starts over each time.
+      if (reset === "1" || counts.decks === 0 || persona.landing) {
         await seedPersona(ctx, persona, deps);
         seeded = true;
       }
@@ -238,7 +241,11 @@ function seedDeps(c: Context<AppEnv>): SeedDeps {
       if (!persona) throw new Error(`No account named ${id}`);
       return (await signInPersona(c.get("auth"), c.get("db"), persona)).userId;
     },
-    images: { bucket: c.env.PRIVATE_IMAGES, images: c.env.IMAGES },
+    // App previews bind no picture store, so their personas seed without pictures.
+    images:
+      c.env.PRIVATE_IMAGES && c.env.IMAGES
+        ? { bucket: c.env.PRIVATE_IMAGES, images: c.env.IMAGES }
+        : undefined,
   };
 }
 

@@ -114,7 +114,8 @@ export const JOINING: Persona = {
     "Joined Noor's deck through its link and has not got set up. Signing in opens Welcome with her deck, as arriving from a join link does.",
   appLanguage: "en",
   reviewDays: [],
-  dueNow: 0,
+  // A real join leaves every card due, so the review Welcome opens has something in it.
+  dueNow: "all",
   decks: [],
   landing: { welcomeWith: { owner: "shared", deck: "Lisboa a dois" } },
 };

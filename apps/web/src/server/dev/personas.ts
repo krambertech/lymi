@@ -525,7 +525,8 @@ export const personas: Persona[] = [
       },
     ],
     series: [{ name: "Italiano A2", decks: ["Casa", "In città"] }],
-    explore: [{ slug: "everyday-estonian" }],
+    // Not Everyday Estonian: the phone's row-menus recipe adds that one from Explore.
+    explore: [{ slug: "everyday-finnish" }],
   },
   {
     id: "streak",
@@ -739,4 +740,14 @@ export const accounts: Persona[] = [...personas, ...COMPANIONS];
 
 export function accountPersona(id: string): Persona | undefined {
   return accounts.find((p) => p.id === id);
+}
+
+/** How many decks the persona's Library holds once seeded: its own, the shared ones and Explore's. */
+export function librarySize(p: Persona): number {
+  const own = p.decks.filter((d) => !d.archived).length;
+  const shared = accounts
+    .filter((owner) => owner.id !== p.id)
+    .flatMap((owner) => owner.decks)
+    .filter((d) => !d.archived && d.people?.members.includes(p.id)).length;
+  return own + shared + (p.explore?.length ?? 0);
 }

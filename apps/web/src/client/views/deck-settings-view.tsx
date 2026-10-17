@@ -319,19 +319,24 @@ export function DeckSettingsView({
 
           {sharing && <SharingGroup {...sharing} />}
 
-          <SettingsGroup title={t`Archive`}>
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <p className="max-w-sm text-sm text-muted">
-                <Trans>
-                  The deck leaves Library and its cards stop coming up in review. Restore brings it
-                  back.
-                </Trans>
-              </p>
-              <Button variant="danger" onClick={onArchive} aria-disabled={!onArchive}>
-                <Archive data-icon="inline-start" aria-hidden="true" />
-                <Trans>Archive deck</Trans>
-              </Button>
-            </div>
+          <SettingsGroup
+            title={t`Archive`}
+            description={
+              <Trans>
+                The deck leaves Library and its cards stop coming up in review. Restore brings it
+                back.
+              </Trans>
+            }
+          >
+            <Button
+              variant="danger"
+              className="justify-self-start"
+              onClick={onArchive}
+              aria-disabled={!onArchive}
+            >
+              <Archive data-icon="inline-start" aria-hidden="true" />
+              <Trans>Archive deck</Trans>
+            </Button>
           </SettingsGroup>
         </>
       )}
@@ -432,26 +437,31 @@ function DeckAbout({
         </dl>
       </SettingsGroup>
 
-      <SettingsGroup title={t`Leaving this deck`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="max-w-sm text-sm text-muted">
-            {deck.owner.former ? (
-              <Trans>
-                The deck leaves Library and its cards stop coming up in review. Its owner left Lymi,
-                so you can’t join it again.
-              </Trans>
-            ) : (
-              <Trans>
-                The deck leaves Library and its cards stop coming up in review. If you join again,
-                your reviews are still there.
-              </Trans>
-            )}
-          </p>
-          <Button variant="danger" onClick={onLeave} aria-disabled={!onLeave}>
-            <LogOut data-icon="inline-start" aria-hidden="true" />
-            <Trans>Leave deck</Trans>
-          </Button>
-        </div>
+      <SettingsGroup
+        title={t`Leaving this deck`}
+        description={
+          deck.owner.former ? (
+            <Trans>
+              The deck leaves Library and its cards stop coming up in review. Its owner left Lymi,
+              so you can’t join it again.
+            </Trans>
+          ) : (
+            <Trans>
+              The deck leaves Library and its cards stop coming up in review. If you join again,
+              your reviews are still there.
+            </Trans>
+          )
+        }
+      >
+        <Button
+          variant="danger"
+          className="justify-self-start"
+          onClick={onLeave}
+          aria-disabled={!onLeave}
+        >
+          <LogOut data-icon="inline-start" aria-hidden="true" />
+          <Trans>Leave deck</Trans>
+        </Button>
       </SettingsGroup>
     </>
   );

@@ -10,11 +10,14 @@ interface Props extends Omit<ComponentProps<"section">, "title"> {
   children: ReactNode;
 }
 
-/** A titled group of settings. One per concern, separated by a rule. */
+/** A titled group of settings, one per concern; layout.md has the rule and spacing between groups. */
 export function SettingsGroup({ title, description, className, children, ...rest }: Props) {
   return (
     <section
-      className={clsx("grid scroll-mt-4 gap-4 py-6 [&+&]:border-t [&+&]:border-edge", className)}
+      className={clsx(
+        "grid scroll-mt-4 gap-4 py-6 [&:not(&~&)]:pt-0 [&~&]:border-t [&~&]:border-edge",
+        className,
+      )}
       {...rest}
     >
       <div className="grid gap-1">

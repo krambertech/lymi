@@ -481,7 +481,7 @@ export const forms: Group = {
               },
               {
                 label: "Off, with a description",
-                note: "One more sentence when the label cannot say it all. The track centres on the label’s first line.",
+                note: "One more sentence when the label cannot say it all. The track centres on the label and its description together.",
                 render: () => (
                   <Field orientation="horizontal" className={`${box} gap-4`}>
                     <FieldContent className="gap-0.5">
@@ -492,9 +492,7 @@ export const forms: Group = {
                         Off by default. Audio always has a visible control.
                       </FieldDescription>
                     </FieldContent>
-                    <span className="flex h-lh shrink-0 items-center text-base">
-                      <Switch checked={off} onCheckedChange={setOff} />
-                    </span>
+                    <Switch className="self-center" checked={off} onCheckedChange={setOff} />
                   </Field>
                 ),
               },
@@ -520,9 +518,7 @@ export const forms: Group = {
                       </FieldLabel>
                       <FieldError>Turn this on to send the invite.</FieldError>
                     </FieldContent>
-                    <span className="flex h-lh shrink-0 items-center text-base">
-                      <Switch checked={false} />
-                    </span>
+                    <Switch className="self-center" checked={false} />
                   </Field>
                 ),
               },
@@ -537,9 +533,7 @@ export const forms: Group = {
                         Notifications are blocked. Allow them in your browser settings.
                       </FieldDescription>
                     </FieldContent>
-                    <span className="flex h-lh shrink-0 items-center text-base">
-                      <Switch checked={false} />
-                    </span>
+                    <Switch className="self-center" checked={false} />
                   </Field>
                 ),
               },

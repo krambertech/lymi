@@ -39,6 +39,7 @@ function card(patch: Partial<Card> = {}): Card {
     enrichmentStatus: null,
     enrichmentFields: null,
     audioKey: null,
+    audioSource: null,
     createdBy: "user",
     archivedAt: null,
     createdAt: now,
@@ -109,6 +110,26 @@ function provider(
 }
 
 describe("pronunciation audio", () => {
+  it("serves a recording an import brought and never asks a provider for speech", async () => {
+    const key = "cards/card-1/recorded/0123.mp3";
+    const get = vi.fn(async (asked: string) => (asked === key ? storedAudio(key) : null));
+    const put = vi.fn();
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) => ({ get, put })[property as "get"],
+    });
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+
+    const audio = await pronunciationAudio(
+      context(card({ audioKey: key, audioSource: "recorded" })),
+      "card-1",
+      { bucket, providers: () => [provider("google-gemini", speech)] },
+    );
+
+    expect(audio.key).toBe(key);
+    expect(speech).not.toHaveBeenCalled();
+    expect(put).not.toHaveBeenCalled();
+  });
+
   it.each([
     {
       term: "õppima · õppida · õpin",

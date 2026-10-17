@@ -6,9 +6,23 @@ import {
   htmlToText,
   IMPORT_LIMITS,
   imageSources,
+  importFieldText,
   importTags,
+  pitchNotation,
   soundCount,
+  soundSources,
+  termRecording,
 } from "./import";
+
+/** A mora as Yomitan writes pitch accent for Anki: the kana, then an empty span drawing its line. */
+const mora = (kana: string, line: "high" | "low" | "drop") =>
+  `<span style="display:inline-block;position:relative;"><span style="display:inline;">${kana}</span>${
+    line === "low"
+      ? ""
+      : `<span style="display:block;position:absolute;top:0.1em;left:0;right:0;height:0;border-top-width:0.1em;border-top-style:solid;${
+          line === "drop" ? "border-right-width:0.1em;border-right-style:solid;" : ""
+        }"></span>`
+  }</span>`;
 
 describe("htmlToText", () => {
   it("turns block tags and breaks into lines and drops the rest", () => {
@@ -130,9 +144,9 @@ describe("guessFieldRoles", () => {
       IsClickCard: "skip",
       IsSentenceCard: "skip",
       IsAudioCard: "skip",
-      PitchPosition: "skip",
+      PitchPosition: "notes",
       PitchCategories: "skip",
-      Frequency: "notes",
+      Frequency: "skip",
       FreqSort: "skip",
       MiscInfo: "notes",
     };
@@ -159,7 +173,34 @@ describe("guessFieldRoles", () => {
       "skip",
       "example",
       "notes",
+      "notes",
       "skip",
+    ]);
+  });
+  it("reads Kaishi 1.5k: the translation and one pitch line go to notes, frequency is left out", () => {
+    const kaishi = {
+      Word: "term",
+      "Word Reading": "pronunciation",
+      "Word Meaning": "meaning",
+      "Word Furigana": "skip",
+      "Word Audio": "skip",
+      Sentence: "example",
+      "Sentence Meaning": "notes",
+      "Sentence Furigana": "skip",
+      "Sentence Audio": "skip",
+      Notes: "notes",
+      "Pitch Accent": "notes",
+      "Pitch Accent Notes": "notes",
+      Frequency: "skip",
+      Picture: "skip",
+    };
+    expect(guessFieldRoles(Object.keys(kaishi))).toEqual(Object.values(kaishi));
+  });
+  it("keeps a sentence translation listed before the meaning out of the meaning", () => {
+    expect(guessFieldRoles(["Expression", "Sentence-English", "Meaning", "Rank"])).toEqual([
+      "term",
+      "notes",
+      "meaning",
       "skip",
     ]);
   });
@@ -180,9 +221,94 @@ describe("fieldsFromRoles", () => {
         ["gatto", "", "cat", "pet", "furry"],
         ["term", "meaning", "meaning", "notes", "notes"],
       ),
-    ).toEqual({ term: "gatto", meaning: "cat", notes: "pet\n\nfurry" });
+    ).toEqual({ term: "gatto", meaning: "cat", notes: "pet\nfurry" });
   });
   it("ignores skipped fields and fields without a role", () => {
     expect(fieldsFromRoles(["a", "b", "c"], ["term", "skip"])).toEqual({ term: "a" });
+  });
+});
+
+describe("termRecording", () => {
+  const names = ["Word", "Word Meaning", "Word Audio", "Sentence", "Sentence Audio"];
+  const roles = guessFieldRoles(names);
+
+  it("takes the term's clip and leaves the sentence's out", () => {
+    expect(termRecording(names, roles, [[], [], ["word.mp3"], [], ["sentence.mp3"]])).toEqual({
+      recording: "word.mp3",
+      leftOut: 1,
+    });
+  });
+  it("falls back to a clip in the term field and never takes the example's", () => {
+    expect(
+      termRecording(
+        ["Front", "Back", "Example"],
+        ["term", "meaning", "example"],
+        [["hund.mp3"], [], ["satz.mp3"]],
+      ),
+    ).toEqual({ recording: "hund.mp3", leftOut: 1 });
+    expect(
+      termRecording(
+        ["Front", "Back", "Example"],
+        ["term", "meaning", "example"],
+        [[], [], ["satz.mp3"]],
+      ),
+    ).toEqual({ recording: undefined, leftOut: 1 });
+  });
+  it("keeps one clip per term and ignores Lymi's own speech", () => {
+    expect(termRecording(names, roles, [[], [], ["a.mp3", "b.mp3"], [], []])).toEqual({
+      recording: "a.mp3",
+      leftOut: 1,
+    });
+    expect(
+      termRecording(["Term", "Sound"], ["term", "skip"], [[], ["lymi-card1-speech.mp3"]]),
+    ).toEqual({ recording: undefined, leftOut: 0 });
+  });
+  it("reads every sound reference in a field", () => {
+    expect(soundSources("[sound:a b.mp3] text [sound:R&amp;B.mp3]")).toEqual([
+      "a b.mp3",
+      "R&B.mp3",
+    ]);
+  });
+});
+
+describe("pitchNotation", () => {
+  it("marks the downstep and position from Yomitan's lines", () => {
+    // 箸 はし is atamadaka: high, then low.
+    expect(pitchNotation(`<ol><li>${mora("は", "drop")}${mora("し", "low")}</li></ol>`)).toBe(
+      "はꜜし [1]",
+    );
+    // 桜 さくら is heiban: low, then high with no fall.
+    expect(pitchNotation(mora("さ", "low") + mora("く", "high") + mora("ら", "high"))).toBe(
+      "さくら [0]",
+    );
+  });
+  it("counts morae, so a small kana joins the one before it", () => {
+    // 京都 きょうと is atamadaka, and きょ is one mora.
+    expect(pitchNotation(mora("きょ", "drop") + mora("う", "low") + mora("と", "low"))).toBe(
+      "きょꜜうと [1]",
+    );
+  });
+  it("reads an overline run and keeps each pronunciation", () => {
+    expect(
+      pitchNotation(
+        '<ol><li><span style="text-decoration:overline">は</span>し</li><li>は<span style="text-decoration: overline">し</span></li></ol>',
+      ),
+    ).toBe("はꜜし [1] · はし [0]");
+  });
+  it("reads bare positions and drops graphs", () => {
+    expect(pitchNotation("0")).toBe("[0]");
+    expect(pitchNotation("<ol><li>1</li><li>3</li></ol>")).toBe("[1] · [3]");
+    expect(pitchNotation('<svg viewBox="0 0 10 10"><path d="M0 0"/></svg>')).toBe("");
+    expect(pitchNotation('<img src="pitch.png">')).toBe("");
+  });
+});
+
+describe("importFieldText", () => {
+  it("reads a translation as one line and a pitch field as its notation", () => {
+    expect(importFieldText("Sentence Meaning", "I eat<br>with chopsticks.")).toBe(
+      "I eat with chopsticks.",
+    );
+    expect(importFieldText("Pitch Accent", "[1]")).toBe("[1]");
+    expect(importFieldText("Notes", "one<br>two")).toBe("one\ntwo");
   });
 });

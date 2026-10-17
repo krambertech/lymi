@@ -245,6 +245,7 @@ export async function addCards(
       enrichmentStatus: null,
       enrichmentFields: null,
       audioKey: null,
+      audioSource: null,
       createdBy: actor,
       archivedAt: null,
       createdAt: now,
@@ -824,7 +825,10 @@ function editWrite(
       ...section,
       ...(revision === undefined ? bumped("card", patch, current) : { revision }),
       normalizedTerm,
-      ...(pronunciationChanged ? { audioKey: null } : {}),
+      // A recording is the card's own audio, so it stays through an edit. CONTEXT.md, Recording.
+      ...(pronunciationChanged && current.audioSource !== "recorded"
+        ? { audioKey: null, audioSource: null }
+        : {}),
       ...(draftStale ? { hookDraft: null } : {}),
       updatedAt: now,
     })

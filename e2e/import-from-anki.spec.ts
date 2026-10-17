@@ -70,7 +70,9 @@ test("a learner imports an Anki file, sees it in Activity, undoes it and imports
     ).toBeVisible();
     await expect(page.getByText("Cards keep the due dates they had in Anki.")).toBeVisible();
     await expect(
-      page.getByText("1 sound is skipped. Lymi reads terms aloud itself."),
+      page.getByText(
+        "1 card brings its recording. Lymi plays it instead of reading the term aloud.",
+      ),
     ).toBeVisible();
     await expect(page.getByText("Italian and Japanese", { exact: true })).toBeVisible();
     await page.getByRole("button", { name: "Import 10 cards", exact: true }).click();
@@ -81,6 +83,7 @@ test("a learner imports an Anki file, sees it in Activity, undoes it and imports
     );
     await expect(page.getByText("11 past reviews were imported.")).toBeVisible();
     await expect(page.getByText("2 pictures were imported.")).toBeVisible();
+    await expect(page.getByText("1 recording was imported.")).toBeVisible();
   });
 
   await test.step("the decks are in Library and the import is in Activity", async () => {

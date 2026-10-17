@@ -215,6 +215,10 @@
     {
       "name": "0053_rich_natasha_romanoff.sql",
       "sha256": "41347856c75de425db924daaecb3df3644a12635d9da7c772994f675e7148ab1"
+    },
+    {
+      "name": "0054_tan_swordsman.sql",
+      "sha256": "6b187f0651e81002e9c8233572e4c510d4102926603adf3aa420f13143e97f3b"
     }
   ]
 }

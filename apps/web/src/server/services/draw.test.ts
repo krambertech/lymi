@@ -116,6 +116,15 @@ describe("every count is the drawable set", () => {
     expect(draw.log.map((entry) => entry.cardId)).toEqual([third.id]);
     expect((await reviewDraw(ctx, { cardIds: [] })).total).toBe(0);
   });
+
+  it("draws none of another learner's cards, however they are named", async () => {
+    const mine = await setup([{ term: "minu", meaning: "mine" }]);
+    const theirs = await setup([{ term: "sinu", meaning: "yours" }]);
+    const ids = theirs.cards.map((c) => c.id);
+
+    expect((await reviewDraw(mine.ctx, { cardIds: ids })).total).toBe(0);
+    expect((await reviewDraw(mine.ctx, { deckId: mine.deck.id, cardIds: ids })).total).toBe(0);
+  });
 });
 
 describe("one direction per card per day", () => {

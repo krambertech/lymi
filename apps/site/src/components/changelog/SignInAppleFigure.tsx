@@ -1,0 +1,30 @@
+import { Trans } from "@lingui/react/macro";
+import type { SVGProps } from "react";
+import { AppTile } from "../Logo";
+
+function AppleMark(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M17.05 12.536c.031 3.258 2.858 4.342 2.89 4.356-.024.076-.452 1.545-1.49 3.063-.898 1.313-1.83 2.621-3.298 2.648-1.442.027-1.906-.856-3.555-.856-1.648 0-2.164.83-3.528.883-1.417.054-2.496-1.42-3.402-2.728-1.852-2.676-3.267-7.562-1.367-10.86.944-1.638 2.63-2.675 4.46-2.702 1.394-.027 2.71.938 3.555.938.846 0 2.433-1.16 4.098-.99.697.029 2.655.282 3.912 2.123-.101.063-2.336 1.36-2.312 4.125zM14.338 4.577c.753-.912 1.26-2.182 1.122-3.446-1.085.044-2.398.723-3.176 1.634-.697.806-1.308 2.095-1.144 3.333 1.21.094 2.444-.615 3.198-1.52z" />
+    </svg>
+  );
+}
+
+/** Lymi's icon beside Apple's, over the Continue with Apple button in Apple's own ink-and-canvas style. */
+export function SignInAppleFigure() {
+  return (
+    <div aria-hidden="true" className="mx-auto grid w-fit justify-items-center gap-8">
+      <div className="flex items-center gap-5">
+        <AppTile size={112} />
+        <span className="text-4xl font-light text-muted">+</span>
+        <span className="grid size-28 place-items-center rounded-[25px] bg-text text-canvas">
+          <AppleMark className="-mt-2 size-16" />
+        </span>
+      </div>
+      <span className="flex h-12 items-center justify-center gap-2 rounded-lg bg-text px-6 text-lg font-medium text-canvas">
+        <AppleMark className="-mt-0.5 size-5" />
+        <Trans>Continue with Apple</Trans>
+      </span>
+    </div>
+  );
+}

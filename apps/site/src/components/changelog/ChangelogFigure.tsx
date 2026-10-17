@@ -10,12 +10,17 @@ import { LibraryDemo } from "../landing/LibraryDemo";
 import { ReviewDemo } from "../landing/ReviewDemo";
 import { SeriesDemo } from "../landing/SeriesDemo";
 import { ActivityFigure } from "./ActivityFigure";
+import { CommandMenuFigure } from "./CommandMenuFigure";
 import { DeckAiFigure } from "./DeckAiFigure";
 import { DeleteAccountFigure } from "./DeleteAccountFigure";
+import { FuriganaFigure } from "./FuriganaFigure";
 import { HookFigure } from "./HookFigure";
 import { ImportantFigure } from "./ImportantFigure";
 import { ImportSourcesFigure } from "./ImportSourcesFigure";
 import { RestDaysFigure } from "./RestDaysFigure";
+import { ReviewChosenFigure } from "./ReviewChosenFigure";
+import { SignInAppleFigure } from "./SignInAppleFigure";
+import { SmartAddFigure } from "./SmartAddFigure";
 import { TagsFigure } from "./TagsFigure";
 import { VoicesFigure } from "./VoicesFigure";
 import { WelcomeFigure } from "./WelcomeFigure";
@@ -39,6 +44,11 @@ const FIGURES: Record<ChangelogFigureName, ComponentType> = {
   tags: TagsFigure,
   "import-sources": ImportSourcesFigure,
   "delete-account": DeleteAccountFigure,
+  "smart-add": SmartAddFigure,
+  "review-chosen": ReviewChosenFigure,
+  furigana: FuriganaFigure,
+  "sign-in-apple": SignInAppleFigure,
+  "command-menu": CommandMenuFigure,
 };
 
 interface Props {

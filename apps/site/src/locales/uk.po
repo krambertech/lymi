@@ -49,9 +49,25 @@ msgstr "{0, plural, one {# людина} few {# людини} many {# людей
 msgid "{0, plural, one {# section} other {# sections}}"
 msgstr "{0, plural, one {# розділ} few {# розділи} many {# розділів} other {# розділу}}"
 
+#. placeholder {0}: 3
+msgid "{0, plural, one {# selected} other {# selected}}"
+msgstr "{0, plural, one {Вибрано: #} few {Вибрано: #} many {Вибрано: #} other {Вибрано: #}}"
+
+#. placeholder {0}: 3
+msgid "{0, plural, one {Add # card} other {Add # cards}}"
+msgstr "{0, plural, one {Додати # картку} few {Додати # картки} many {Додати # карток} other {Додати # картки}}"
+
 #. placeholder {0}: step.cards.length - shownCards.length
 msgid "{0, plural, one {One more card in this section, in Lymi.} other {# more cards in this section, in Lymi.}}"
 msgstr "{0, plural, one {Ще одна картка цього розділу — у Lymi.} few {Ще # картки цього розділу — у Lymi.} many {Ще # карток цього розділу — у Lymi.} other {Ще # картки цього розділу — у Lymi.}}"
+
+#. placeholder {0}: 2
+msgid "{0, plural, one {Review # due} other {Review # due}}"
+msgstr "{0, plural, one {Повтори # на сьогодні} few {Повтори # на сьогодні} many {Повтори # на сьогодні} other {Повтори # на сьогодні}}"
+
+#. placeholder {0}: 3
+msgid "{0, plural, one {Review all #} other {Review all #}}"
+msgstr "{0, plural, one {Повтори всі #} few {Повтори всі #} many {Повтори всі #} other {Повтори всі #}}"
 
 #. placeholder {0}: decks.length
 msgid "{0, plural, one {Your deck} other {Your decks}}"
@@ -232,6 +248,9 @@ msgstr "Видання 2026 року"
 
 msgid "25 questions, 15 to pass. 300 to learn."
 msgstr "25 питань, 15 для складання. Вивчити — 300."
+
+msgid "3 of 4 chosen"
+msgstr "Обрано 3 з 4"
 
 msgid "3.5–5.0 mmol/L in adults"
 msgstr "3,5–5,0 ммоль/л у дорослих"
@@ -444,6 +463,9 @@ msgstr "Самостійний доступ до всіх даних облік�
 msgid "Accounting"
 msgstr "Бухгалтерія"
 
+msgid "Actions"
+msgstr "Дії"
+
 msgid "active transport"
 msgstr "активний транспорт"
 
@@ -473,6 +495,9 @@ msgstr "Додай її до свого асистента"
 
 msgid "Add Lymi to Claude, Grok or another assistant. <0>It takes three steps</0>. No assistant? <1>Start another way</1>."
 msgstr "Додай Lymi до Claude, Grok чи іншого асистента. <0>Це три кроки</0>. Немає асистента? <1>Почни інакше</1>."
+
+msgid "Add now"
+msgstr "Додати зараз"
 
 msgid "Add one and learn it for free — Lymi brings each card back right before you’d forget it."
 msgstr "Додай колоду й вчи її безкоштовно — Lymi повертає кожну картку саме перед тим, як ти її забудеш."
@@ -518,6 +543,9 @@ msgstr "Готово: картка в колоді «Шахи», зі значе
 
 msgid "adjective"
 msgstr "прикметник"
+
+msgid "advantage"
+msgstr "перевага"
 
 msgid "After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, which brings each one back before you forget. Free."
 msgstr "Після уроку на italki, Preply чи з приватним репетитором надішли чат, нотатки або фото зошита своєму AI-асистенту. Він додасть нові слова в Lymi, а Lymi поверне кожне, перш ніж ти його забудеш. Безкоштовно."
@@ -709,6 +737,9 @@ msgstr "За ним аудитори виявляють вигадані циф�
 msgid "AWS, Azure and Google Cloud: services, limits and the trade-offs between them."
 msgstr "AWS, Azure і Google Cloud: сервіси, обмеження й компроміси між ними."
 
+msgid "Back"
+msgstr "Назад"
+
 msgid "Back in 10 minutes."
 msgstr "Повернеться через 10 хвилин."
 
@@ -732,6 +763,12 @@ msgstr "Перед тестом"
 
 msgid "Began in 1618 with the <0>Defenestration of Prague</0>."
 msgstr "Почалася 1618 року з <0>Празької дефенестрації</0>."
+
+msgid "Beta"
+msgstr "Бета"
+
+msgid "bill, check"
+msgstr "рахунок"
 
 msgid "Biology"
 msgstr "Біологія"
@@ -786,6 +823,9 @@ msgstr "Від {publisher}"
 
 msgid "by card"
 msgstr "карткою"
+
+msgid "café"
+msgstr "кав’ярня"
 
 msgid "California DMV knowledge test"
 msgstr "Теоретичний іспит DMV у Каліфорнії"
@@ -1022,6 +1062,9 @@ msgstr "Підключай свої інструменти."
 
 msgid "Connecting an assistant"
 msgstr "Як підключити асистента"
+
+msgid "Continue with Apple"
+msgstr "Продовжити з Apple"
 
 msgid "Conversation"
 msgstr "Розмова"
@@ -2360,6 +2403,9 @@ msgstr "Перехід з Anki"
 msgid "Move from Mochi"
 msgstr "Перехід з Mochi"
 
+msgid "Move to section…"
+msgstr "Перемістити в розділ…"
+
 msgid "Moving a substance against its concentration gradient, using energy"
 msgstr "Перенесення речовини проти градієнта концентрації із затратою енергії"
 
@@ -2982,6 +3028,9 @@ msgstr "Кажуть кожному, хто сідає їсти, — як фра
 msgid "Said to cut a rambling story down to its point."
 msgstr "Так кажуть, щоб звести довгу історію до суті."
 
+msgid "sale"
+msgstr "продаж"
+
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Дискретизуй із частотою, удвічі вищою за максимальну"
 
@@ -3047,6 +3096,9 @@ msgstr "До зустрічі"
 
 msgid "see you; literally, we see"
 msgstr "побачимось; дослівно — «бачимо»"
+
+msgid "Select all"
+msgstr "Вибрати всі"
 
 msgid "Send a chapter to Claude, ChatGPT, Gemini or Grok and ask for the key terms. Each one lands in your deck with the guide’s definition, ready for tonight’s review."
 msgstr "Надішли розділ Claude, ChatGPT, Gemini чи Grok і попроси ключові терміни. Кожен потрапить у твою колоду з визначенням із посібника, готовий до вечірнього повторення."
@@ -3161,6 +3213,9 @@ msgstr "Слайди, фото чи нотатки з ноутбука."
 
 msgid "Slow or stop so others can pass without you forcing them to change speed or path."
 msgstr "Сповільнись або зупинись, щоб інші проїхали, не змінюючи через тебе швидкості чи напрямку."
+
+msgid "Smart add"
+msgstr "Розумне додавання"
 
 msgid "So-so"
 msgstr "Так собі"
@@ -3306,11 +3361,17 @@ msgstr "Підтримка"
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведи кажуть так і про каву, і про робочий час."
 
+msgid "table"
+msgstr "стіл"
+
 msgid "Tag: {verb}"
 msgstr "Тег: {verb}"
 
 msgid "Tags"
 msgstr "Теги"
+
+msgid "Tags…"
+msgstr "Теги…"
 
 msgid "Take a photo"
 msgstr "Сфотографувати"
@@ -3630,6 +3691,9 @@ msgstr "Три: SAML, CVSS і різницю між RTO та RPO."
 msgid "ticket"
 msgstr "квиток"
 
+msgid "tip"
+msgstr "чайові"
+
 msgid "To agree"
 msgstr "Погоджуватися"
 
@@ -3659,6 +3723,9 @@ msgstr "Купувати"
 
 msgid "to come"
 msgstr "приходити"
+
+msgid "to eat"
+msgstr "їсти"
 
 msgid "to feel like"
 msgstr "хотіти чогось"
@@ -3716,6 +3783,9 @@ msgstr "Щоб надавати облікові записи, колоди, к�
 
 msgid "To pull"
 msgstr "Тягнути"
+
+msgid "to run"
+msgstr "бігти"
 
 msgid "To stop"
 msgstr "Припиняти; зупинятися"

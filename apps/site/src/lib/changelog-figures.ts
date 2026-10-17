@@ -18,6 +18,11 @@ export const CHANGELOG_FIGURES = [
   "tags",
   "import-sources",
   "delete-account",
+  "smart-add",
+  "review-chosen",
+  "furigana",
+  "sign-in-apple",
+  "command-menu",
 ] as const;
 
 export type ChangelogFigureName = (typeof CHANGELOG_FIGURES)[number];

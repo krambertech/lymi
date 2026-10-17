@@ -1,6 +1,6 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import type { ImageMetadata } from "astro";
-import { CHANGELOG_FOLDER } from "./changelog-paths";
+import { CHANGELOG_FOLDER, isChangelogPublished } from "./changelog-paths";
 import type { Locale } from "./routes";
 import { TRAY_HUES } from "./tray";
 
@@ -31,7 +31,7 @@ function screenshotOf(folder: string, locale: Locale) {
   return { light, dark };
 }
 
-/** Every update in one language, newest first. */
+/** Every published update in one language, newest first. */
 export async function changelogUpdates(locale: Locale): Promise<ChangelogUpdate[]> {
   const entries = await getCollection("changelog");
   const updates: ChangelogUpdate[] = [];
@@ -39,7 +39,7 @@ export async function changelogUpdates(locale: Locale): Promise<ChangelogUpdate[
     const [folder = "", language] = entry.id.split("/");
     const match = CHANGELOG_FOLDER.exec(folder);
     if (!match) throw new Error(`Changelog entry ${entry.id} is not in a YYYY-MM-DD-slug folder.`);
-    if (language !== locale) continue;
+    if (language !== locale || !isChangelogPublished(folder)) continue;
     const [, day, slug] = match as unknown as [string, string, string];
     const screenshot = entry.data.screenshot ? screenshotOf(folder, locale) : undefined;
     updates.push({ slug, date: new Date(`${day}T12:00:00Z`), entry, hue: 0, screenshot });

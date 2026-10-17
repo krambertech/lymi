@@ -312,6 +312,8 @@ jobs:
           fi
 
       - name: Build public site
+        env:
+          CHANGELOG_DRAFTS: "1"
         run: pnpm --filter @lymi/site run build
 
       - name: Upload stable preview

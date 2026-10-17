@@ -14,7 +14,7 @@ The summary stands on its own: it is the page description, the feed item and, on
 
 Spread updates out: one a day at most, so a day that shipped a lot becomes two or three updates on that day and the days after it. Never date an update before everything in it was live.
 
-An update dated ahead is a draft: the list, its page, the feed and the sitemap leave it out until a build runs on its UTC day, and the dev server shows it. `changelog-publish.yml` runs that build through the `SITE_DEPLOY_HOOK` deploy hook just after midnight UTC on any day an update is dated.
+An update dated ahead is a draft: the list, its page, the feed and the sitemap leave it out until a build runs on or after its UTC day. The dev server and the pull request's site preview show it. Just after midnight UTC, `changelog-publish.yml` checks lymi.app for every update dated in the past week and, if one is missing, runs that build through the `SITE_DEPLOY_HOOK` deploy hook.
 
 The Ukrainian and Russian files are transcreated from the English with the [translate skill](../../.agents/skills/translate/SKILL.md), as site copy is, and the pull request diff is their review.
 

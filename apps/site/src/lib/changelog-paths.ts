@@ -4,11 +4,11 @@ import { type Locale, localizedPath } from "./routes";
 export const CHANGELOG_FOLDER = /^(\d{4}-\d{2}-\d{2})-([a-z0-9]+(?:-[a-z0-9]+)*)$/;
 
 /**
- * An update dated ahead is a draft until the site is built on its day, and the dev server shows drafts.
+ * An update dated ahead is a draft until the site is built on its day; the dev server and the pull request preview show drafts.
  * `changelog-publish.yml` rebuilds the site on each update's day.
  */
 export function isChangelogPublished(folder: string, today = import.meta.env.BUILD_DAY): boolean {
-  if (import.meta.env.DEV) return true;
+  if (import.meta.env.DEV || import.meta.env.CHANGELOG_DRAFTS) return true;
   const day = CHANGELOG_FOLDER.exec(folder)?.[1];
   return day !== undefined && day <= today;
 }

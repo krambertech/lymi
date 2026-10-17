@@ -1,6 +1,6 @@
 name: Changelog publish
 
-# The site is built ahead, so a changelog update dated ahead appears only when a build runs on its day.
+# The site is built ahead, so a changelog update dated ahead appears only when a build runs on or after its day.
 on:
   schedule:
     - cron: "5 0 * * *"
@@ -17,17 +17,29 @@ jobs:
         with:
           sparse-checkout: apps/site/src/content/changelog
 
-      - name: Rebuild lymi.app when an update is dated today
+      # Checks the past week rather than today alone, so a skipped or failed run heals on the next one.
+      - name: Rebuild lymi.app when a due update is missing
         env:
           SITE_DEPLOY_HOOK: ${{ secrets.SITE_DEPLOY_HOOK }}
         run: |
           today=$(date -u +%F)
-          if ! ls -d apps/site/src/content/changelog/"$today"-* >/dev/null 2>&1; then
-            echo "No update is dated $today."
+          since=$(date -u -d '7 days ago' +%F)
+          missing=""
+          for dir in apps/site/src/content/changelog/*/; do
+            folder=$(basename "$dir")
+            day=${folder:0:10}
+            slug=${folder:11}
+            if [[ "$day" > "$today" || "$day" < "$since" ]]; then continue; fi
+            status=$(curl --silent --output /dev/null --write-out '%{http_code}' "https://lymi.app/changelog/$slug")
+            if [ "$status" != "200" ]; then missing="$missing $slug"; fi
+          done
+          if [ -z "$missing" ]; then
+            echo "Every update up to $today is live."
             exit 0
           fi
+          echo "Not live yet:$missing"
           if [ -z "$SITE_DEPLOY_HOOK" ]; then
-            echo "::error::An update is dated $today but SITE_DEPLOY_HOOK is not set. Add the lymi-site deploy hook for main as a repository secret."
+            echo "::error::Updates are due but SITE_DEPLOY_HOOK is not set. Add the lymi-site deploy hook for main as a repository secret."
             exit 1
           fi
           curl --fail-with-body --silent --show-error -X POST "$SITE_DEPLOY_HOOK"

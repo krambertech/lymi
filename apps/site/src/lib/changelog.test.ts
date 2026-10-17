@@ -98,4 +98,10 @@ describe("an update dated ahead", () => {
     vi.stubEnv("DEV", true);
     expect(isChangelogPublished("2026-10-18-tomorrow", "2026-10-17")).toBe(true);
   });
+
+  it("shows on the pull request preview", () => {
+    vi.stubEnv("DEV", false);
+    vi.stubEnv("CHANGELOG_DRAFTS", "true");
+    expect(isChangelogPublished("2026-10-18-tomorrow", "2026-10-17")).toBe(true);
+  });
 });

@@ -12,11 +12,9 @@ export default async function drive({ page, step, api, expect }) {
     await expect(page.getByText(`${decks.length} decks · ${cards} cards`)).toBeVisible();
     for (const d of decks) {
       await expect(
-        page
-          .getByRole("main")
-          .getByRole("link", {
-            name: new RegExp(`^${d.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?=\\s|$)`),
-          }),
+        page.getByRole("main").getByRole("link", {
+          name: new RegExp(`^${d.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?=\\s|$)`),
+        }),
       ).toBeVisible();
     }
     return { decks: decks.map(({ id, name, total, due }) => ({ id, name, total, due })) };

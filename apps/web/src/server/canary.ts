@@ -18,6 +18,8 @@ const SPEECH: Record<SpeechProvider["provider"], Dependency> = {
   openai: "openai_speech",
 };
 
+const SPEECH_LANGUAGES = ["en", "et"];
+
 class CheckFailed extends Error {
   constructor(readonly outcome: DependencyOutcome) {
     super(`check ${outcome}`);
@@ -105,14 +107,20 @@ function checks(env: Bindings, hourly: boolean): Check[] {
   ];
   // Speech is billed per call, so it is checked hourly rather than every run.
   if (hourly) {
-    for (const provider of createSpeechProviders(env, "en", "canary")) {
-      list.push({
-        dependency: SPEECH[provider.provider],
-        run: async () => {
-          const response = await provider.speech({ text: "ok", language: "en" });
-          await response.body?.cancel();
-        },
-      });
+    const seen = new Set<SpeechProvider["provider"]>();
+    // English has no native ElevenLabs voice, so Estonian brings ElevenLabs into the check.
+    for (const language of SPEECH_LANGUAGES) {
+      for (const provider of createSpeechProviders(env, language, "canary")) {
+        if (seen.has(provider.provider)) continue;
+        seen.add(provider.provider);
+        list.push({
+          dependency: SPEECH[provider.provider],
+          run: async () => {
+            const response = await provider.speech({ text: "ok", language });
+            await response.body?.cancel();
+          },
+        });
+      }
     }
   }
   return list;

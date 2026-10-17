@@ -77,6 +77,15 @@ describe("production canary", () => {
     });
   });
 
+  it("checks each configured speech provider once an hour, ElevenLabs through Estonian", async () => {
+    const { env, checks } = production(healthy);
+    const voiced = { ...env, ELEVENLABS_API_KEY: "eleven", GEMINI_API_KEY: "gemini" } as Bindings;
+    await run(voiced, new Date("2026-10-17T11:05:00Z"));
+    expect(Object.keys(checks())).toEqual(
+      expect.arrayContaining(["elevenlabs", "gemini_speech", "openai_speech"]),
+    );
+  });
+
   it("fails the AI checks when every provider request throws, as on 17 October", async () => {
     const { env, checks, calls } = production((url) =>
       url.startsWith(GATEWAY)

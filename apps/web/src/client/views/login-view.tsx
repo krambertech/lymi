@@ -241,6 +241,7 @@ export function LoginView({
                 variant="primary"
                 size="lg"
                 loading={pending === "form"}
+                disabled={pending === "apple" || pending === "google"}
                 className="mt-6 w-full"
               >
                 {mode === "sign-up" ? (

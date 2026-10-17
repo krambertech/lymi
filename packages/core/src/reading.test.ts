@@ -3,9 +3,12 @@ import {
   addsReadingsOnly,
   alignReading,
   cueKeepsReading,
+  exampleReadings,
   formatReadings,
   hasReadings,
   kanaReading,
+  knownReadings,
+  markKnownReadings,
   missingReadings,
   parseReadings,
   readingKey,
@@ -214,6 +217,73 @@ describe("parseReadings", () => {
       { text: "[sound:a.mp3] [note] ありがとう[ありがとう]" },
     ]);
     expect(parseReadings("Plain text.")).toEqual([{ text: "Plain text." }]);
+  });
+});
+
+describe("markKnownReadings", () => {
+  const card = (term: string, pronunciation: string | null, known = true, language = "ja") => ({
+    term,
+    pronunciation,
+    language,
+    known,
+  });
+  /** The kanji whose reading fades in the example, given the learner's cards. */
+  const faded = (example: string, cards: Parameters<typeof knownReadings>[0]) =>
+    markKnownReadings(parseReadings(example), knownReadings(cards))
+      .filter((segment) => segment.known)
+      .map((segment) => segment.text);
+
+  it("fades a Known word's reading through its inflections", () => {
+    expect(faded("毎朝[まいあさ]パンを食[た]べます。", [card("食べる", "たべる")])).toEqual(["食"]);
+    expect(faded("食べます[たべます]", [card("食べる", "たべる")])).toEqual(["食"]);
+  });
+
+  it("keeps the reading of another word that shares the kanji", () => {
+    expect(faded("食事[しょくじ]をします。", [card("食べる", "たべる")])).toEqual([]);
+    expect(faded("食[た]べます。", [card("食事", "しょくじ")])).toEqual([]);
+  });
+
+  it("fades a compound only when the compound is Known", () => {
+    const example = "毎朝[まいあさ]走[はし]る。";
+    expect(faded(example, [card("毎", "まい")])).toEqual([]);
+    expect(faded(example, [card("毎朝", "まいあさ")])).toEqual(["毎朝"]);
+    expect(faded("毎[まい]朝[あさ]走[はし]る。", [card("毎朝", "まいあさ")])).toEqual(["毎", "朝"]);
+    expect(faded("毎[まい]朝[あさ]走[はし]る。", [card("毎", "まい")])).toEqual(["毎"]);
+  });
+
+  it("matches a word read as a whole", () => {
+    expect(faded("今日[きょう]は暑[あつ]い。", [card("今日", "きょう")])).toEqual(["今日"]);
+    expect(faded("今日[こんにち]は。", [card("今日", "きょう")])).toEqual([]);
+  });
+
+  it("tells apart two readings of the same kanji", () => {
+    expect(faded("歌[うた]が上手[じょうず]です。", [card("上手", "じょうず")])).toEqual(["上手"]);
+    expect(faded("一枚[いちまい]上手[うわて]だ。", [card("上手", "じょうず")])).toEqual([]);
+  });
+
+  it("folds the reading as the duplicate rule does", () => {
+    expect(faded("上手[ジョウズ]です。", [card("上手", "じょう・ず")])).toEqual(["上手"]);
+  });
+
+  it("takes nothing from a card that is not Known, not Japanese, or written in kana", () => {
+    expect(knownReadings([card("食べる", "たべる", false)]).size).toBe(0);
+    expect(knownReadings([card("学习", "xuéxí", true, "zh")]).size).toBe(0);
+    expect(knownReadings([card("ありがとう", "ありがとう")]).size).toBe(0);
+    expect(knownReadings([card("食べる", null)]).size).toBe(0);
+  });
+
+  it("leaves the runs as they are when nothing is Known", () => {
+    const segments = parseReadings("食[た]べる");
+    expect(markKnownReadings(segments, new Set())).toBe(segments);
+    expect(markKnownReadings(segments, undefined)).toBe(segments);
+  });
+
+  it("counts an example's readings and the ones that fade", () => {
+    const example = "毎朝[まいあさ]パンを食[た]べます。";
+    const known = knownReadings([card("食べる", "たべる")]);
+    expect(exampleReadings(example, known)).toEqual({ readings: 2, known: 1 });
+    expect(exampleReadings(example)).toEqual({ readings: 2, known: 0 });
+    expect(exampleReadings(null, known)).toEqual({ readings: 0, known: 0 });
   });
 });
 

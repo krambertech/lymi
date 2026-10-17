@@ -834,6 +834,10 @@ export const GradeInput = z
       description:
         "Milliseconds the answer was on screen in the foreground before the grade. Left out when unknown, over 10 minutes or with no reveal.",
     }),
+    readingsFaded: z.number().int().min(0).max(500).optional().meta({
+      description:
+        "How many of the example's readings the answer drew faded, over words the learner knows. Left out when the example drew no reading.",
+    }),
   })
   .refine((grade) => grade.mode || grade.direction, {
     message: "Say which review mode was graded.",

@@ -27,5 +27,5 @@ Kanji carry meaning and are read differently from word to word (日 in 日本, �
 2. Furigana on the web, with the shared code in `packages/core`.
 3. Import fidelity: recorded audio, pitch accent, notes.
 4. Furigana on the phone.
-5. Example furigana that fades over known words.
+5. Example furigana that fades over known words, on the web and the phone. The Known pairs come from every deck's card list the clients already keep for offline use, so it costs no request; a reading that fades keeps its room. The card form's preview shows every reading, because it is where the learner checks what they typed.
 6. A beginner's start: Hiragana and Katakana decks, Japanese in Welcome, `lymi.app/languages/japanese`.

@@ -2,6 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { apiUrl, type Card, type QueueItem, type ReviewScope } from "@lymi/client/api";
 import { gradeStore } from "@lymi/client/grades";
+import { useKnownReadings } from "@lymi/client/known-readings";
 import { hookDraftQuery } from "@lymi/client/queries";
 import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawableLeft } from "@lymi/client/review-day";
@@ -14,9 +15,11 @@ import {
   cueKeepsReading,
   type Drawn,
   drawKey,
+  exampleReadings,
   type FieldSource,
   gradeAllowed,
   interval,
+  type KnownReadings,
   modeKey,
   type Rating,
   ROUNDS,
@@ -247,6 +250,7 @@ function Run({
   const { reviewsToday, goal, dayDone } = useDay();
   const grade = useGrade();
   const takeBack = useUndoGrade();
+  const known = useKnownReadings();
   const { t } = useLingui();
   const decksQuery = useDecks();
   const decks = decksQuery.data;
@@ -791,6 +795,7 @@ function Run({
     );
     const runningShort = state.upcoming.length <= LOOKAHEAD;
     const listed = leg.kind !== "draw";
+    const example = exampleReadings(item.card.example, known);
     const record: LocalGrade = {
       cardId: item.card.id,
       mode: item.mode,
@@ -799,6 +804,7 @@ function Run({
       stateBefore: repeat ? stateBefore(data, state.log, item.card.id, item.mode) : item.fsrsState,
       ...(peeked ? { aid: "hook" as const } : {}),
       ...recallTimes(),
+      ...(example.readings ? { readingsFaded: example.known } : {}),
     };
     // The graded step shows under the next card from the frame it starts to slide in.
     swipe.arrive();
@@ -877,6 +883,7 @@ function Run({
                   forgotten={lastGraded.forgotten}
                   hook={lastGraded.hook}
                   hookShown={!!lastGraded.hook}
+                  known={known}
                   easyLocked={lastGraded.grade.aid === "hook"}
                   revealed
                   still
@@ -892,6 +899,7 @@ function Run({
                 forgotten={forgotten}
                 hook={hook}
                 hookShown={hookShown}
+                known={known}
                 revealed={revealed}
                 still={returned}
                 onReveal={() => {
@@ -1083,6 +1091,7 @@ function Turn({
   forgotten,
   hook,
   hookShown,
+  known,
   revealed,
   still = false,
   onReveal,
@@ -1105,6 +1114,8 @@ function Turn({
   hook: Hook | null;
   /** The hook shows under the cue: peeked at before the reveal, or shown after it. */
   hookShown: boolean;
+  /** The learner's Known pairs, whose readings fade in the example. */
+  known: KnownReadings;
   revealed: boolean;
   /** Shown as it already stands, with nothing arriving: a card brought back, or one underneath. */
   still?: boolean;
@@ -1131,6 +1142,7 @@ function Turn({
       forgotten={forgotten}
       hook={hook}
       hookShown={hookShown}
+      known={known}
       revealed={revealed}
       still={still}
       onReveal={onReveal}
@@ -1240,6 +1252,7 @@ function CardPlate({
   forgotten,
   hook,
   hookShown,
+  known,
   revealed,
   still,
   onReveal,
@@ -1257,6 +1270,7 @@ function CardPlate({
   forgotten: boolean;
   hook: Hook | null;
   hookShown: boolean;
+  known: KnownReadings;
   revealed: boolean;
   still: boolean;
   onReveal: (() => void) | undefined;
@@ -1505,6 +1519,7 @@ function CardPlate({
                   <Animated.View entering={arrive()}>
                     <ReadingText
                       text={card.example}
+                      known={known}
                       className="text-md text-text-2"
                       lang={card.language}
                     />

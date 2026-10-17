@@ -4,8 +4,8 @@
  * a bracketed kana reading belongs to the kanji just before it. docs/card-writing.md.
  */
 
-/** One run of text, with the reading drawn over it when it has one. */
-export type ReadingSegment = { text: string; reading?: string };
+/** One run of text, with the reading drawn over it when it has one; `known` fades that reading. */
+export type ReadingSegment = { text: string; reading?: string; known?: boolean };
 
 /** Characters a reading is drawn over: kanji, their iteration marks, and the counter ヶ. */
 const BASE = /[\p{Script=Han}〆ヵヶ]/u;
@@ -252,6 +252,85 @@ export function parseReadings(text: string): ReadingSegment[] {
   }
   out.push({ text: text.slice(cursor) });
   return merged(out);
+}
+
+/**
+ * The runs of kanji and their readings on the learner's Known cards, so an example's furigana
+ * fades over words they know. A pair is the kanji and its reading together, so 食べます still
+ * meets the Known 食べる as 食 read た, while 食事 read しょくじ, sharing only the kanji, does not.
+ */
+export type KnownReadings = ReadonlySet<string>;
+
+/** How many readings side by side an example may join to meet one Known word: 毎[まい]朝[あさ]. */
+const JOIN_MAX = 4;
+
+const pairKey = (text: string, reading: string) =>
+  `${text.normalize("NFC")}[${foldReading(reading)}]`;
+
+/** The pairs of a card's term: each run of kanji with its part of the reading. A kana term has none. */
+function termPairs(card: {
+  term: string;
+  language?: string | null | undefined;
+  pronunciation?: string | null | undefined;
+}): string[] {
+  const keys: string[] = [];
+  for (const { text, reading } of termReading(card) ?? []) {
+    if (reading !== undefined && [...text].every(isBase)) keys.push(pairKey(text, reading));
+  }
+  return keys;
+}
+
+/** The pairs of the cards that are Known, for `markKnownReadings`. */
+export function knownReadings(
+  cards: Iterable<{
+    term: string;
+    language?: string | null | undefined;
+    pronunciation?: string | null | undefined;
+    known: boolean;
+  }>,
+): Set<string> {
+  const known = new Set<string>();
+  for (const card of cards) {
+    if (card.known) for (const key of termPairs(card)) known.add(key);
+  }
+  return known;
+}
+
+/**
+ * The runs with `known` on each reading whose kanji and reading are a Known pair, alone or joined
+ * with the readings beside it, so 毎[まい]朝[あさ] fades for a Known 毎朝 but not for a Known 毎.
+ */
+export function markKnownReadings(
+  segments: readonly ReadingSegment[],
+  known: KnownReadings | undefined,
+): readonly ReadingSegment[] {
+  if (!known?.size || !segments.some((segment) => segment.reading !== undefined)) return segments;
+  const marked = segments.map((segment) => ({ ...segment }));
+  for (let i = 0; i < marked.length; i++) {
+    let text = "";
+    let reading = "";
+    for (let j = i; j < Math.min(marked.length, i + JOIN_MAX); j++) {
+      const segment = marked[j] as ReadingSegment;
+      if (segment.reading === undefined) break;
+      text += segment.text;
+      reading += segment.reading;
+      if (known.has(pairKey(text, reading))) {
+        for (let k = i; k <= j; k++) (marked[k] as ReadingSegment).known = true;
+      }
+    }
+  }
+  return marked;
+}
+
+/** How many readings an example draws, and how many of them fade over the learner's Known words. */
+export function exampleReadings(
+  example: string | null | undefined,
+  known?: KnownReadings | undefined,
+): { readings: number; known: number } {
+  const drawn = markKnownReadings(parseReadings(example ?? ""), known).filter(
+    (segment) => segment.reading !== undefined,
+  );
+  return { readings: drawn.length, known: drawn.filter((segment) => segment.known).length };
 }
 
 /** Text with its inline readings taken out: `毎朝[まいあさ]パンを食[た]べる` → `毎朝パンを食べる`. */

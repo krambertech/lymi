@@ -106,6 +106,7 @@ function input(g: StoredGrade): GradeInput {
     ...(g.aid ? { aid: g.aid } : {}),
     ...(g.recallMs !== undefined ? { recallMs: g.recallMs } : {}),
     ...(g.gradeMs !== undefined ? { gradeMs: g.gradeMs } : {}),
+    ...(g.readingsFaded !== undefined ? { readingsFaded: g.readingsFaded } : {}),
   };
 }
 

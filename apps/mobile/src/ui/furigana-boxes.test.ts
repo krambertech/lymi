@@ -1,4 +1,4 @@
-import { parseReadings, termReading } from "@lymi/core";
+import { knownReadings, markKnownReadings, parseReadings, termReading } from "@lymi/core";
 import { describe, expect, it } from "vitest";
 import { clampBoxes, furiganaBoxes, spokenReading } from "./furigana-boxes";
 
@@ -86,6 +86,13 @@ describe("spokenReading", () => {
 
   it("says the text as written while the reading is hidden", () => {
     expect(spokenReading(segments, false)).toBe("毎朝パンを食べる");
+  });
+
+  it("says a Known word as written, since its reading has faded", () => {
+    const known = knownReadings([
+      { term: "食べる", pronunciation: "たべる", language: "ja", known: true },
+    ]);
+    expect(spokenReading(markKnownReadings(segments, known), true)).toBe("まいあさパンを食べる");
   });
 
   it("says the text where a reading only holds room", () => {

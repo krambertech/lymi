@@ -4,7 +4,7 @@ A Japanese card's reading drawn over its kanji. The term's reading is its pronun
 
 ## Reach
 
-No persona has Japanese cards with readings, so the recipe makes two decks as `fresh` through `/api/decks` and `/api/cards/batch`: one asked by recognition only, and one card graded Easy forty days ago through `/api/review/grade` so it is Known and due. A third card, 好き, is graded Easy a day ago, Known and not due, so its す fades in the first deck's example. Review is `/review?deck=<id>`, the card page `/library/<deck>?card=<id>`.
+No persona has Japanese cards with readings, so the recipe makes two decks as `fresh` through `/api/decks` and `/api/cards/batch`: one asked by recognition only, and one card graded Easy forty days ago through `/api/review/grade` so it is Known and due. A third card, 好き, is graded Easy a day ago, Known and not due, so its す fades in the first deck's example, as does 学校's がっこう until the recipe grades 学校 Forgot in review. Review is `/review?deck=<id>`, the card page `/library/<deck>?card=<id>`.
 
 ## Drive
 
@@ -12,7 +12,7 @@ No persona has Japanese cards with readings, so the recipe makes two decks as `f
 
 ## End state
 
-On the New card's cue the `rt` reading たべもの is visible; after the reveal the example's た and もの are visible and its す is attached but hidden, and the reading's only other line is `sr-only`, for a screen reader, which never hears the `aria-hidden` furigana. On the Known card's cue the `rt` is hidden and becomes visible after the reveal. Each term's accessible text is the term as written, without its reading. The card page shows 食べ物 with furigana and hides the example's す, and the editor labels the field **Reading** and shows one preview of the term and the example with their readings under the Reading and Source row.
+On the New card's cue the `rt` reading たべもの is visible; after the reveal the example's た and もの are visible and its す is attached but hidden, and the reading's only other line is `sr-only`, for a screen reader, which never hears the `aria-hidden` furigana. On the Known card's cue the `rt` is hidden and becomes visible after the reveal. Each term's accessible text is the term as written, without its reading. The card page shows 食べ物 with furigana and hides the example's す, while がっこう is back over 学校 because of the Forgot, with no refetch of 漢字's cards, and the editor labels the field **Reading** and shows one preview of the term and the example with their readings under the Reading and Source row.
 
 ## Gotchas
 

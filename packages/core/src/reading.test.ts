@@ -238,6 +238,13 @@ describe("markKnownReadings", () => {
     expect(faded("食べます[たべます]", [card("食べる", "たべる")])).toEqual(["食"]);
   });
 
+  it("fades 来る through the readings its kanji takes as it inflects", () => {
+    const come = [card("来る", "くる")];
+    expect(faded("明日[あした]来[き]ます。", come)).toEqual(["来"]);
+    expect(faded("誰[だれ]も来[こ]ない。", come)).toEqual(["来"]);
+    expect(faded("来年[らいねん]", come)).toEqual([]);
+  });
+
   it("keeps the reading of another word that shares the kanji", () => {
     expect(faded("食事[しょくじ]をします。", [card("食べる", "たべる")])).toEqual([]);
     expect(faded("食[た]べます。", [card("食事", "しょくじ")])).toEqual([]);

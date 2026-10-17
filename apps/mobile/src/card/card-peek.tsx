@@ -1,7 +1,8 @@
 import { useLingui } from "@lingui/react/macro";
 import type { Card, CardState } from "@lymi/client/api";
 import { splitForms } from "@lymi/client/deck-list";
-import { hasReadings, type KnownReadings, termReading } from "@lymi/core";
+import { useKnownReadings } from "@lymi/client/known-readings";
+import { hasReadings, termReading } from "@lymi/core";
 import { useMemo } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { usePalette, useRoom } from "../theme/palette";
@@ -52,15 +53,13 @@ export function CardPeek({
   card,
   state,
   deckName,
-  known,
 }: {
   card: Card;
   /** Left out where the list does not know it, such as search. */
   state?: CardState | null | undefined;
   deckName?: string | undefined;
-  /** The learner's Known pairs, whose readings fade in the example. */
-  known?: KnownReadings | undefined;
 }) {
+  const known = useKnownReadings();
   const { t } = useLingui();
   const p = usePalette();
   const dark = useRoom() === "dark";

@@ -1,7 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { DeckSummary } from "@lymi/client/api";
-import { useKnownReadings } from "@lymi/client/known-readings";
 import { cardSearchQuery } from "@lymi/client/queries";
 import { termReading } from "@lymi/core";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
@@ -53,7 +52,6 @@ export default function Search() {
   const moves = useMovesAcrossDecks(cards.map((c) => c.deckId));
   const cardMenu = useCardMenu(moves);
   const peek = usePeekSize();
-  const known = useKnownReadings();
   const unread = useLoadFailed(search);
   const failed = !!query && unread;
   const nothing =
@@ -133,7 +131,7 @@ export default function Search() {
                       label={`${c.term}, ${meaning}, ${c.deckName}`}
                       items={cardMenu(c)}
                       preview={{
-                        node: <CardPeek card={c} deckName={c.deckName} known={known} />,
+                        node: <CardPeek card={c} deckName={c.deckName} />,
                         width: peek.width,
                         height: peekHeight(c, peek.width, peek.scale),
                       }}

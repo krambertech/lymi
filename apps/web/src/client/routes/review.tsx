@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { gradeStore, recordGrade, retireGrades } from "@lymi/client/grades";
-import { useKnownReadings } from "@lymi/client/known-readings";
+import { readingsFadedField, useKnownReadings } from "@lymi/client/known-readings";
 import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawState, reviewItem, stateBefore } from "@lymi/client/review-draw";
 import {
@@ -18,7 +18,6 @@ import {
   countedRating,
   type Drawn,
   drawKey,
-  exampleReadings,
   gradeAllowed,
   modeKey,
   type Rating,
@@ -758,7 +757,6 @@ function Review() {
       }
       const item = current;
       const runningShort = state.upcoming.length <= LOOKAHEAD;
-      const example = exampleReadings(item.card.example, knownReadings);
       const recorded = recordGrade({
         cardId: item.card.id,
         mode: item.mode,
@@ -770,7 +768,7 @@ function Review() {
         timezone: deviceTimezone(),
         ...(aid ? { aid } : {}),
         ...recallTimes(),
-        ...(example.readings ? { readingsFaded: example.known } : {}),
+        ...readingsFadedField(qc, item.card.example),
       });
       setFocusReveal(!!document.activeElement?.closest("[data-grade-strip]"));
       const listed = !!leg && !drawLeg;
@@ -823,7 +821,6 @@ function Review() {
       repeat,
       showing,
       recallTimes,
-      knownReadings,
       leg,
       drawLeg,
       invalidateReviewData,

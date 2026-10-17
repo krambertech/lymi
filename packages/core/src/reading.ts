@@ -267,15 +267,23 @@ const JOIN_MAX = 4;
 const pairKey = (text: string, reading: string) =>
   `${text.normalize("NFC")}[${foldReading(reading)}]`;
 
-/** The pairs of a card's term: each run of kanji with its part of the reading. A kana term has none. */
-function termPairs(card: {
+/** 来る is the one verb whose kanji changes its reading as it inflects: 来[き]ます, 来[こ]ない. */
+const INFLECTED: Record<string, readonly string[]> = { "来[く]": ["来[き]", "来[こ]"] };
+
+/**
+ * The pairs a card's term gives: each run of kanji with its part of the reading, and for 来る the
+ * readings its inflections take. A kana term gives none.
+ */
+export function readingPairs(card: {
   term: string;
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): string[] {
   const keys: string[] = [];
   for (const { text, reading } of termReading(card) ?? []) {
-    if (reading !== undefined && [...text].every(isBase)) keys.push(pairKey(text, reading));
+    if (reading === undefined || ![...text].every(isBase)) continue;
+    const key = pairKey(text, reading);
+    keys.push(key, ...(INFLECTED[key] ?? []));
   }
   return keys;
 }
@@ -291,7 +299,7 @@ export function knownReadings(
 ): Set<string> {
   const known = new Set<string>();
   for (const card of cards) {
-    if (card.known) for (const key of termPairs(card)) known.add(key);
+    if (card.known) for (const key of readingPairs(card)) known.add(key);
   }
   return known;
 }

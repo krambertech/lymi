@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { apiUrl, type Card, type QueueItem, type ReviewScope } from "@lymi/client/api";
 import { gradeStore } from "@lymi/client/grades";
-import { useKnownReadings } from "@lymi/client/known-readings";
+import { readingsFadedField, useKnownReadings } from "@lymi/client/known-readings";
 import { hookDraftQuery } from "@lymi/client/queries";
 import { useRecallClock } from "@lymi/client/recall-clock";
 import { drawableLeft } from "@lymi/client/review-day";
@@ -15,7 +15,6 @@ import {
   cueKeepsReading,
   type Drawn,
   drawKey,
-  exampleReadings,
   type FieldSource,
   gradeAllowed,
   interval,
@@ -795,7 +794,6 @@ function Run({
     );
     const runningShort = state.upcoming.length <= LOOKAHEAD;
     const listed = leg.kind !== "draw";
-    const example = exampleReadings(item.card.example, known);
     const record: LocalGrade = {
       cardId: item.card.id,
       mode: item.mode,
@@ -804,7 +802,8 @@ function Run({
       stateBefore: repeat ? stateBefore(data, state.log, item.card.id, item.mode) : item.fsrsState,
       ...(peeked ? { aid: "hook" as const } : {}),
       ...recallTimes(),
-      ...(example.readings ? { readingsFaded: example.known } : {}),
+      // Counted from the card as it shows, edits made during this review included.
+      ...readingsFadedField(qc, (edits.get(item.card.id) ?? item.card).example),
     };
     // The graded step shows under the next card from the frame it starts to slide in.
     swipe.arrive();

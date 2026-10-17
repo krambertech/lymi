@@ -14,8 +14,7 @@ import {
   splitForms,
   stateKey,
 } from "@lymi/client/deck-list";
-import { useKnownReadings } from "@lymi/client/known-readings";
-import { CHOSEN_LIMIT, drawsReadings, type KnownReadings, termReading } from "@lymi/core";
+import { CHOSEN_LIMIT, drawsReadings, termReading } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ArrowUpDown, ListFilter } from "lucide-react-native";
@@ -95,7 +94,6 @@ export default function Deck() {
   const gone = !!decks.data && !deck;
   const cards = useDeckCards(id);
   const rows = cards.data ?? NO_ROWS;
-  const known = useKnownReadings();
   const sectionsQuery = useSections(id);
   const sections = sectionsQuery.data?.sections ?? NO_SECTIONS;
   const [filters, setFilters] = useState<DeckFilters>(noFilters);
@@ -358,7 +356,6 @@ export default function Deck() {
                       menu={menu}
                       menuShape={menuShape}
                       deckName={deck.name}
-                      known={known}
                     />
                   </Slice>
                 ),
@@ -970,7 +967,6 @@ const WordRow = memo(function WordRow({
   onToggle,
   menu,
   deckName,
-  known,
 }: {
   row: DeckRow;
   first: boolean;
@@ -982,8 +978,6 @@ const WordRow = memo(function WordRow({
   /** Changes when what the menu offers does, since `menu` itself stays the same function. */
   menuShape: string;
   deckName: string;
-  /** The learner's Known pairs, whose readings fade in the peek's example. */
-  known: KnownReadings;
 }) {
   const { t, i18n } = useLingui();
   const p = usePalette();
@@ -1050,7 +1044,7 @@ const WordRow = memo(function WordRow({
       label={label}
       items={menu(row.card)}
       preview={{
-        node: <CardPeek card={row.card} state={row.state} deckName={deckName} known={known} />,
+        node: <CardPeek card={row.card} state={row.state} deckName={deckName} />,
         width: peek.width,
         height: peekHeight(row.card, peek.width, peek.scale),
       }}

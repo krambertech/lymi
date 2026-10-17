@@ -34,7 +34,7 @@ export default async function drive({ page, base, step, expect }) {
           term: "食べ物",
           meaning: "food",
           pronunciation: "たべもの",
-          example: "どんな食[た]べ物[もの]が好[す]きですか。",
+          example: "学校[がっこう]でどんな食[た]べ物[もの]が好[す]きですか。",
           enrich: false,
         },
         {
@@ -90,6 +90,7 @@ export default async function drive({ page, base, step, expect }) {
       await expect(page.getByText("food", { exact: true }).filter({ visible: true })).toBeVisible();
       // The Known pairs come from every deck's cached cards, which the app warms after it loads.
       await expect(shown("す")).toHaveCount(0);
+      await expect(shown("がっこう")).toHaveCount(0);
       await expect(page.locator("rt", { hasText: "す" }).first()).toBeAttached();
       // た and もの show twice: over the answer's term and over the example.
       await expect(shown("た")).toHaveCount(2);
@@ -100,14 +101,24 @@ export default async function drive({ page, base, step, expect }) {
     },
   );
 
-  await step("A Known card's cue hides the reading until the reveal", async () => {
-    await page.goto(`/review?deck=${known.id}`);
-    await expect(card).toHaveAttribute("aria-label", "Recognition card for 学校");
-    await expect(page.locator("rt", { hasText: "がっこう" }).first()).toBeAttached();
-    await expect(shown("がっこう")).toHaveCount(0);
-    await reveal();
-    await expect(shown("がっこう")).toHaveCount(1);
-  });
+  await step(
+    "A Known card's cue hides the reading until the reveal, and the learner grades it Forgot",
+    async () => {
+      await page.goto(`/review?deck=${known.id}`);
+      await expect(card).toHaveAttribute("aria-label", "Recognition card for 学校");
+      await expect(page.locator("rt", { hasText: "がっこう" }).first()).toBeAttached();
+      await expect(shown("がっこう")).toHaveCount(0);
+      await reveal();
+      await expect(shown("がっこう")).toHaveCount(1);
+      await page.getByRole("button", { name: /^Forgot/ }).click();
+      // The grade reaches the server before the card page opens; nothing refetches 漢字's cards.
+      await page.waitForFunction(() =>
+        JSON.parse(localStorage.getItem("lymi-outbox") ?? "[]").some(
+          (g) => g.rating === 1 && g.sentAt,
+        ),
+      );
+    },
+  );
 
   await step(
     "The card page fades the Known reading, and the editor calls the field Reading and previews every reading",
@@ -118,6 +129,10 @@ export default async function drive({ page, base, step, expect }) {
       await expect(
         page.locator("main rt", { hasText: "す" }).filter({ visible: true }),
       ).toHaveCount(0);
+      // 学校 was just graded Forgot, so its reading is back without its deck's cards refetching.
+      await expect(
+        page.locator("main rt", { hasText: "がっこう" }).filter({ visible: true }),
+      ).toHaveCount(1);
       await page.getByRole("button", { name: "Edit card" }).click();
       const dialog = page.getByRole("dialog", { name: "Edit card" });
       await expect(dialog.getByRole("textbox", { name: "Reading" })).toHaveValue("たべもの");

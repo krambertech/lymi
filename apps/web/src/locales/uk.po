@@ -1224,10 +1224,6 @@ msgstr "Автор: {0}"
 msgid "by {who}"
 msgstr "автор: {who}"
 
-#. placeholder {0}: app.claimed
-msgid "calls itself “{0}”"
-msgstr "називає себе «{0}»"
-
 msgid "Camera"
 msgstr "Камера"
 
@@ -4600,6 +4596,9 @@ msgstr "Зняти позначку «важлива»"
 
 msgid "Untitled key"
 msgstr "Ключ без назви"
+
+msgid "Unverified"
+msgstr "Не перевірено"
 
 msgid "Up to {MAX_FILES} files at a time. The first {room} were added."
 msgstr "Не більше {MAX_FILES} файлів за раз. Додано перші {room}."

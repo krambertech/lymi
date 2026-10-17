@@ -1224,10 +1224,6 @@ msgstr "By {0}"
 msgid "by {who}"
 msgstr "by {who}"
 
-#. placeholder {0}: app.claimed
-msgid "calls itself “{0}”"
-msgstr "calls itself “{0}”"
-
 msgid "Camera"
 msgstr "Camera"
 
@@ -4600,6 +4596,9 @@ msgstr "Unmark important"
 
 msgid "Untitled key"
 msgstr "Untitled key"
+
+msgid "Unverified"
+msgstr "Unverified"
 
 msgid "Up to {MAX_FILES} files at a time. The first {room} were added."
 msgstr "Up to {MAX_FILES} files at a time. The first {room} were added."

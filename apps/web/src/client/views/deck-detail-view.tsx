@@ -5,6 +5,8 @@ import {
   type DeckFilters,
   type DeckRow,
   type DeckSort,
+  deckCsv,
+  deckCsvName,
   deckTags,
   filterRows,
   groupRows,
@@ -175,38 +177,11 @@ export interface DeckSectionActions extends Omit<SectionEditing, "onDropCards"> 
 
 /** Word, meaning, status and next review as a CSV file the browser saves. */
 export function exportCsv(deckName: string, rows: DeckRow[]) {
-  const esc = (v: string | null | undefined) => `"${(v ?? "").replace(/"/g, '""')}"`;
-  const lines = [
-    [
-      "term",
-      "meaning",
-      "pronunciation",
-      "example",
-      "notes",
-      "language",
-      "source",
-      "state",
-      "due",
-    ].join(","),
-    ...rows.map(({ card, state }) =>
-      [
-        esc(card.term),
-        esc(card.meaning),
-        esc(card.pronunciation),
-        esc(card.example),
-        esc(card.notes),
-        esc(card.language),
-        esc(card.source),
-        String(state?.state ?? 0),
-        state ? new Date(state.due).toISOString() : "",
-      ].join(","),
-    ),
-  ];
-  const blob = new Blob([`﻿${lines.join("\n")}`], { type: "text/csv;charset=utf-8" });
+  const blob = new Blob([deckCsv(rows)], { type: "text/csv;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `${deckName.replace(/[^\p{L}\p{N}]+/gu, "-").toLowerCase()}.csv`;
+  a.download = deckCsvName(deckName);
   a.click();
   URL.revokeObjectURL(url);
 }

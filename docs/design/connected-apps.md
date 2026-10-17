@@ -12,4 +12,6 @@ The ending is not optional. An MCP client's redirect is usually a custom scheme,
 
 Until the learner has connected one, the rail offers the setup guides and the learner menu has a Connect AI assistant row ([rail.md](system/rail.md#the-offer-to-connect-an-assistant)).
 
-A grant lasts until it is taken back, so Settings has Connected apps beside API keys, with the same row shape: name, what it may do, the host, and an inline confirm to cut it off.
+A grant lasts until it is taken back, so Settings has Connected apps beside API keys, with the same row shape: name, what it may do, the host, and an inline confirm to cut it off. On the phone both are pages under You with the same rows, and cutting an app off asks in iOS's alert.
+
+The list titles apps differently from the consent screen, because its job is recognising an app already let in, not deciding whether to let one in. Every row leads with the app's name: a recognised app's own, else the name the app gave, else its host. Under it is the host, which for an app Lymi did not recognise starts with an alert mark and **Unverified**, since the host is what was not recognised, then when it was connected. A long host loses its middle, so the domain that identifies it stays. When the name borrows a known app's as a word, such as "Claude Desktop" from another host, Unverified is in the danger colour, so the learner can tell it is not the app it names. `listedApp` in `packages/client` holds the rule for both apps.

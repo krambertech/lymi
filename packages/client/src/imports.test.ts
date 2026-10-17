@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 import { ApiError } from "./api";
-import { type UploadProgress, uploadInParts } from "./import-upload";
+import { blobSource, splitNoteTypes, type UploadProgress, uploadInParts } from "./imports";
 
-const file = new Blob([new Uint8Array(25).map((_, i) => i)]);
+const file = blobSource(new Blob([new Uint8Array(25).map((_, i) => i)]));
 
 describe("uploadInParts", () => {
   it("sends every part in order, each the right slice, and reports progress", async () => {
@@ -12,7 +12,7 @@ describe("uploadInParts", () => {
       file,
       10,
       async (part, body) => {
-        sent.push([part, [...new Uint8Array(await body.arrayBuffer())]]);
+        sent.push([part, [...new Uint8Array(await (body as Blob).arrayBuffer())]]);
       },
       { signal: new AbortController().signal, onProgress: (p) => progress.push(p) },
     );
@@ -64,5 +64,26 @@ describe("uploadInParts", () => {
     });
     await expect(uploadInParts(file, 10, send, { signal: controller.signal })).rejects.toThrow();
     expect(send).toHaveBeenCalledTimes(1);
+  });
+});
+
+const types = (...notes: number[]) => notes.map((n, i) => ({ key: `t${i}`, notes: n }));
+
+describe("splitNoteTypes", () => {
+  it("asks about the biggest kinds and folds the rare tail", () => {
+    const { asked, rest } = splitNoteTypes(types(3, 1800, 5, 150, 2, 40));
+    expect(asked.map((t) => t.notes)).toEqual([1800, 150]);
+    expect(rest.map((t) => t.notes)).toEqual([40, 5, 3, 2]);
+  });
+
+  it("asks about every kind when the tail would be a single one", () => {
+    const { asked, rest } = splitNoteTypes(types(6, 1, 1, 1));
+    expect(asked.map((t) => t.notes)).toEqual([6, 1, 1, 1]);
+    expect(rest).toEqual([]);
+    expect(splitNoteTypes(types(990, 10)).asked).toHaveLength(2);
+  });
+
+  it("always asks about at least one kind", () => {
+    expect(splitNoteTypes(types(500)).asked).toHaveLength(1);
   });
 });

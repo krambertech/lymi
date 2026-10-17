@@ -25,7 +25,9 @@
     "./update-required": "./src/update-required.ts",
     "./cache": "./src/cache.ts",
     "./keyed": "./src/keyed.ts",
-    "./welcome": "./src/welcome.ts"
+    "./welcome": "./src/welcome.ts",
+    "./imports": "./src/imports.ts",
+    "./app-marks": "./src/app-marks.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",

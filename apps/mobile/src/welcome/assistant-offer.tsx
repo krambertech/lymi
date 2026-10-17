@@ -4,11 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import { openBrowserAsync } from "expo-web-browser";
 import { View } from "react-native";
 import Svg, { Path } from "react-native-svg";
+import { siteUrl } from "../auth/client";
 import { usePalette } from "../theme/palette";
 import { Button, Plate, Press, Text } from "../ui/primitives";
 
 /** The public site's guides to connecting an assistant, where the web's offer also sends it. */
-export const CONNECT_DOCS = "https://lymi.app/docs/mcp";
+export const CONNECT_DOCS = siteUrl("/docs/mcp");
 
 /**
  * The assistants with a setup guide, as the web's `AssistantOffer` lists them. Paths from lobe-icons
@@ -61,7 +62,7 @@ export function AssistantOffer({ onConnect }: { onConnect: () => void }) {
             key={a.name}
             onPress={() => {
               onConnect();
-              void openBrowserAsync(`https://lymi.app${a.guide}`);
+              void openBrowserAsync(siteUrl(a.guide));
             }}
             accessibilityRole="link"
             accessibilityLabel={t`Connect ${a.name}`}

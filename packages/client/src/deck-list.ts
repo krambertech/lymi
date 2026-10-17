@@ -236,3 +236,40 @@ export function splitForms(term: string): { word: string; forms: string | null }
   if (at <= 0) return { word: term, forms: null };
   return { word: term.slice(0, at), forms: term.slice(at + 3) };
 }
+
+/** A deck's word, meaning, status and next review as CSV, with a BOM so spreadsheets read it as UTF-8. */
+export function deckCsv(rows: readonly DeckRow[]): string {
+  const esc = (v: string | null | undefined) => `"${(v ?? "").replace(/"/g, '""')}"`;
+  const lines = [
+    [
+      "term",
+      "meaning",
+      "pronunciation",
+      "example",
+      "notes",
+      "language",
+      "source",
+      "state",
+      "due",
+    ].join(","),
+    ...rows.map(({ card, state }) =>
+      [
+        esc(card.term),
+        esc(card.meaning),
+        esc(card.pronunciation),
+        esc(card.example),
+        esc(card.notes),
+        esc(card.language),
+        esc(card.source),
+        String(state?.state ?? 0),
+        state ? new Date(state.due).toISOString() : "",
+      ].join(","),
+    ),
+  ];
+  return `﻿${lines.join("\n")}`;
+}
+
+/** The name a deck's CSV saves as: "Verbi irregolari" is `verbi-irregolari.csv`. */
+export function deckCsvName(deckName: string): string {
+  return `${deckName.replace(/[^\p{L}\p{N}]+/gu, "-").toLowerCase()}.csv`;
+}

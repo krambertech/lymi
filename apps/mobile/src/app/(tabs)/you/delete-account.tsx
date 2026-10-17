@@ -4,10 +4,10 @@ import { deletionQuery } from "@lymi/client/queries";
 import type { AccountDeletionOut } from "@lymi/core";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
-import type { ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { Linking, View } from "react-native";
+import { ExportSheet } from "../../../export/export-sheet";
 import { LoadFailed } from "../../../ui/load-failed";
-import { openWeb } from "../../../ui/on-the-web";
 import { Button, Plate, SectionTitle, Text } from "../../../ui/primitives";
 import { Row, Rows } from "../../../ui/row";
 import { Screen } from "../../../ui/screen";
@@ -21,6 +21,7 @@ import { AppleNote, ErrorLine, useSendCode } from "../../../you/deletion";
 export default function DeleteAccount() {
   const { t } = useLingui();
   const summary = useQuery(deletionQuery);
+  const [exporting, setExporting] = useState(false);
   return (
     <Screen title={t`Delete account`} back={{ label: t`You`, to: "/you" }}>
       {summary.data ? (
@@ -33,12 +34,7 @@ export default function DeleteAccount() {
             <View>
               <SectionTitle>{t`Keep a copy`}</SectionTitle>
               <Rows>
-                <Row
-                  icon="export"
-                  label={t`Export library`}
-                  end="web"
-                  onPress={() => openWeb("/settings#export")}
-                />
+                <Row icon="export" label={t`Export library`} onPress={() => setExporting(true)} />
               </Rows>
               <Note>{t`Lymi keeps nothing once the account is gone.`}</Note>
             </View>
@@ -60,6 +56,7 @@ export default function DeleteAccount() {
           <Skeleton height={72} />
         </View>
       )}
+      <ExportSheet open={exporting} onOpenChange={setExporting} scope={{ kind: "library" }} />
     </Screen>
   );
 }

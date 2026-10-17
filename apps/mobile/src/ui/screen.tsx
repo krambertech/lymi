@@ -3,7 +3,14 @@ import { useLingui } from "@lingui/react/macro";
 import { GlassView, isGlassEffectAPIAvailable } from "expo-glass-effect";
 import { type Href, useIsPreview, useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
-import { Fragment, type ReactElement, type ReactNode, type RefObject, useState } from "react";
+import {
+  Fragment,
+  type ReactElement,
+  type ReactNode,
+  type RefObject,
+  useEffect,
+  useState,
+} from "react";
 import {
   type FlatList,
   I18nManager,
@@ -20,6 +27,7 @@ import Animated, {
   runOnJS,
   type SharedValue,
   useAnimatedReaction,
+  useAnimatedRef,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
@@ -81,6 +89,8 @@ interface Props<T> {
   onRefresh?: () => Promise<unknown>;
   /** Told once each time the page scrolls past this content offset, or back above it. */
   past?: { y: number; onChange: (past: boolean) => void } | undefined;
+  /** A page of steps, such as an import's questions, starts each one at the top: change it per step. */
+  scrollKey?: string | number;
   /** Rows under `children`, virtualized so a deck of thousands opens as fast as a short one. */
   list?: ScreenList<T> | undefined;
   children: ReactNode;
@@ -138,6 +148,7 @@ export function Screen<T = never>({
   onEndReached,
   onRefresh,
   past,
+  scrollKey,
   list,
   children,
 }: Props<T>) {
@@ -150,6 +161,11 @@ export function Screen<T = never>({
   const { t } = useLingui();
   const p = usePalette();
   const y = useSharedValue(0);
+  const scroller = useAnimatedRef<Animated.ScrollView>();
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the key is the trigger.
+  useEffect(() => {
+    if (scrollKey !== undefined) scroller.current?.scrollTo({ y: 0, animated: false });
+  }, [scrollKey]);
   const [compact, setCompact] = useState(false);
   const hasEnd = !!onEndReached;
   const endJS = () => onEndReached?.();
@@ -369,6 +385,7 @@ export function Screen<T = never>({
       ) : (
         <Animated.ScrollView
           {...scroll}
+          ref={scroller}
           keyboardShouldPersistTaps="handled"
           contentContainerClassName="px-5 gap-7"
         >

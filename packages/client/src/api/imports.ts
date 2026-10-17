@@ -1,4 +1,5 @@
 import type { ImportChoicesInput, ImportOut, ImportPreviewOut } from "@lymi/core";
+import type { UploadBody } from "../imports";
 import { request } from "./request";
 
 export type Import = ImportOut;
@@ -11,8 +12,8 @@ export const importsApi = {
       method: "POST",
       body: JSON.stringify({ fileName: file.name, byteSize: file.size }),
     }),
-  /** One part of the file. A Blob body carries its own length, which the route requires. */
-  uploadImportPart: (id: string, part: number, body: Blob, signal?: AbortSignal) =>
+  /** One part of the file. A Blob or bytes carry their own length, which the route requires. */
+  uploadImportPart: (id: string, part: number, body: UploadBody, signal?: AbortSignal) =>
     request<Import>(`/api/imports/${id}/parts/${part}`, {
       method: "PUT",
       body,

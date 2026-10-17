@@ -364,7 +364,7 @@ dev.post("/seed", describe({ hide: true, open: true }), body(SeedBody, "seed"), 
 
 dev.post("/reset", describe({ hide: true, open: true }), async (c) => {
   const ctx = ctxOf(c);
-  await resetAccount(ctx);
+  await resetAccount(ctx, seedDeps(c).images?.bucket);
   return c.json({ counts: await devCounts(ctx) });
 });
 

@@ -1,7 +1,9 @@
+import { and, eq } from "@lymi/core/db";
 import { Hono } from "hono";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createAuth } from "../auth";
 import type { Db } from "../db";
+import { schema } from "../db";
 import type { Bindings } from "../env";
 import type { AppEnv } from "../index";
 import { dev } from "../routes/dev";
@@ -96,5 +98,43 @@ describe("seeding accounts that share decks", () => {
     expect(before).toBeGreaterThan(0);
     await signIn("as=learner&reset=1");
     expect(await pictures()).toBe(before);
+  }, 60_000);
+
+  it("keeps the owner's Activity as seeded when a member signs in again", async () => {
+    await signIn("as=shared&reset=1");
+    const joins = async () =>
+      (
+        await db
+          .select({ id: schema.auditLog.id })
+          .from(schema.auditLog)
+          .innerJoin(schema.user, eq(schema.user.id, schema.auditLog.userId))
+          .where(
+            and(eq(schema.user.email, "shared@lymi.local"), eq(schema.auditLog.action, "join")),
+          )
+      ).length;
+    const seeded = await joins();
+    expect(seeded).toBe(4);
+    await signIn("as=joining", "GET");
+    await signIn("as=joining", "GET");
+    await signIn("as=learner&reset=1");
+    expect(await joins()).toBe(seeded);
+  }, 60_000);
+
+  it("removes the picture files when the account is emptied", async () => {
+    await signIn("as=learner&reset=1");
+    const signed = await signIn("as=learner&seed=0");
+    const cookie = signed.headers
+      .getSetCookie()
+      .map((c) => c.split(";", 1)[0])
+      .join("; ");
+    const pictures = async () =>
+      (await env.PRIVATE_IMAGES.list({ prefix: "cards/" })).objects.length;
+    const before = await pictures();
+    await app.request(
+      "http://localhost/api/dev/commands/reset",
+      { method: "POST", headers: { cookie, "content-type": "application/json" }, body: "{}" },
+      env,
+    );
+    expect(await pictures()).toBe(before - 3);
   }, 60_000);
 });

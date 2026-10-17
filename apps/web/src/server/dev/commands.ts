@@ -147,8 +147,8 @@ export const commands: DevCommand[] = [
     title: "Empty this account",
     keywords: "reset delete clear",
     blocked: (c) => (c.decks ? null : "Already empty"),
-    run: async (ctx) => {
-      await resetAccount(ctx);
+    run: async (ctx, { deps }) => {
+      await resetAccount(ctx, deps.images?.bucket);
       return "The account is empty.";
     },
   },

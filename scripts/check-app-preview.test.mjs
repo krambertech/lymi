@@ -56,6 +56,19 @@ test("verifies capability entry, persona sign-in, and seeded data", async () => 
   assert.equal(result.destination, "/today");
   assert.match(calls[1][1], /__Host-lymi-preview=access/);
   assert.match(calls[2][1], /lymi\.session_token=session/);
+  // Signs in without seeding, so a seed never runs inside the short sign-in hop.
+  assert.match(calls[1][0], /\/api\/dev\/sign-in\?as=learner&seed=0$/);
+  assert.equal(requestsTo(calls, "/api/dev/seed"), 0);
+});
+
+test("seeds a new preview's empty Library in one long request", async () => {
+  const calls = [];
+  const fetchImpl = previewFetch(calls, {
+    decks: [Response.json([]), Response.json([{ id: "deck" }])],
+  });
+  const result = await checkAppPreview(entryUrl, { fetchImpl });
+  assert.equal(result.decks, 1);
+  assert.equal(requestsTo(calls, "/api/dev/seed"), 1);
 });
 
 test("waits for a new preview Worker that answers 404 or drops the connection", async () => {

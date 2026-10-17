@@ -66,8 +66,8 @@ export async function devCounts({ db, userId }: ServiceContext): Promise<DevCoun
 }
 
 /**
- * Everything the account holds in the product: decks and memberships, cards, states, reviews, audit,
- * settings. Given the picture store, the account's picture files go too, or each reseed would leave
+ * Everything the account holds in the product: decks and memberships, cards, states, reviews, audit
+ * including the joins its owners' Activity records, settings. Given the picture store, the account's picture files go too, or each reseed would leave
  * three behind.
  */
 export async function resetAccount(
@@ -96,6 +96,16 @@ export async function resetAccount(
     db.delete(schema.decks).where(eq(schema.decks.userId, userId)),
     db.delete(schema.series).where(eq(schema.series.userId, userId)),
     db.delete(schema.auditLog).where(eq(schema.auditLog.userId, userId)),
+    // An owner's Activity records each join; a reseeded member joins again, so its old rows go.
+    db
+      .delete(schema.auditLog)
+      .where(
+        and(
+          eq(schema.auditLog.entity, "deck"),
+          inArray(schema.auditLog.action, ["join", "leave", "remove_member"]),
+          sql`json_extract(${schema.auditLog.payload}, '$.memberId') = ${userId}`,
+        ),
+      ),
     db.delete(schema.userSettings).where(eq(schema.userSettings.userId, userId)),
   ]);
 }

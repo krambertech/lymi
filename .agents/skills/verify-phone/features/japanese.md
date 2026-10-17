@@ -16,5 +16,6 @@ After the reveal the grades show and じょうず is on screen. The check reads 
 
 ## Gotchas
 
+- The card is one accessibility element whose label joins its lines, so the flow matches the reading inside that label, before the reveal as well as after it.
 - The new card is asked as recognition first, so the cue is the term; that is the mode where a reading under the cue would give the answer away.
 - Smart add's saved reading is covered by the web's `japanese` recipe and the Worker tests, since a read on the phone needs `ANTHROPIC_API_KEY`.

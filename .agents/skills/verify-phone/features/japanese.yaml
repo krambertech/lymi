@@ -9,11 +9,11 @@ name: Japanese
 - extendedWaitUntil:
     visible: ".*${TERM}.*Tap to reveal"
     timeout: 30000
-- assertNotVisible: "${READING}"
+- assertNotVisible: ".*${READING}.*"
 - takeScreenshot: 01-cue-without-reading
 # The card's centre can be its pronunciation button, so reveal by tapping low on the card.
 - tapOn:
     point: "50%,80%"
 - assertVisible: "^Good.*"
-- assertVisible: "${READING}"
+- assertVisible: ".*${READING}.*"
 - takeScreenshot: 02-revealed-with-reading

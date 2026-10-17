@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { testGateway } from "../../test/ai-gateway";
 import { createGeminiApiSpeechProvider, GeminiApiSpeechError } from "./gemini-api-speech";
 
 const payload = (data = "AQIDBA==", mimeType = "audio/l16; rate=24000; channels=1") => ({
@@ -13,7 +14,7 @@ describe("Gemini API speech", () => {
         Response.json(payload()),
       );
       const provider = createGeminiApiSpeechProvider(
-        { GEMINI_API_KEY: "test-key" },
+        { ...testGateway, GEMINI_API_KEY: "test-key" },
         locale,
         request,
       );
@@ -45,7 +46,7 @@ describe("Gemini API speech", () => {
     { candidates: [{ content: { parts: "invalid" } }] },
   ])("rejects malformed audio", async (body) => {
     const provider = createGeminiApiSpeechProvider(
-      { GEMINI_API_KEY: "test-key" },
+      { ...testGateway, GEMINI_API_KEY: "test-key" },
       "et-EE",
       async () => Response.json(body),
     );
@@ -63,7 +64,7 @@ describe("Gemini API speech", () => {
       cancel,
     });
     const provider = createGeminiApiSpeechProvider(
-      { GEMINI_API_KEY: "test-key" },
+      { ...testGateway, GEMINI_API_KEY: "test-key" },
       "et-EE",
       async () => new Response(body),
     );
@@ -76,7 +77,7 @@ describe("Gemini API speech", () => {
   it("does not retry billed requests or expose upstream response text", async () => {
     const request = vi.fn(async () => new Response("private upstream details", { status: 429 }));
     const provider = createGeminiApiSpeechProvider(
-      { GEMINI_API_KEY: "test-key" },
+      { ...testGateway, GEMINI_API_KEY: "test-key" },
       "et-EE",
       request,
     );

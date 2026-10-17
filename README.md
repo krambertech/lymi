@@ -82,7 +82,7 @@ pnpm run deploy:product # deploy the product Worker; user-owned production actio
 3. `wrangler r2 bucket create lymi-audio` and `wrangler r2 bucket create lymi-private-images`, and enable Cloudflare Images for the Images binding
 4. `wrangler kv namespace create SESSIONS` and paste the id
 5. In Google Cloud, authorize `https://my.lymi.app` and the callback `https://my.lymi.app/api/auth/callback/google`
-6. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`
+6. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`, `AI_GATEWAY_TOKEN`
 7. Generate one VAPID key pair, then add `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, and `VAPID_SUBJECT` with `wrangler secret put`
 8. Configure separate Workers Builds projects for `apps/site` and `apps/web`, and confirm the `lymi.app` and `my.lymi.app` custom domains are ready in Cloudflare
 9. `pnpm db:migrate:prod`

@@ -48,14 +48,14 @@ export interface Bindings
   OPENAI_SPEECH_MODEL?: string;
   OPENAI_SPEECH_VOICE?: string;
   OPENAI_TEXT_MODEL?: string;
-  /** Sends OpenAI, Anthropic, ElevenLabs and Gemini calls through AI_GATEWAY_URL; unset, they go direct. */
+  /** Authenticates every external model call through AI_GATEWAY_URL; missing configuration fails closed. */
   AI_GATEWAY_TOKEN?: string;
   ANTHROPIC_API_KEY?: string;
   /** An organisation-wide Anthropic key needs the workspace it bills to. */
   ANTHROPIC_WORKSPACE_ID?: string;
   ANTHROPIC_LESSON_MODEL?: string;
   AI_GATEWAY_URL?: string;
-  /** The AI Gateway that Workers AI calls go through; empty calls Workers AI directly. */
+  /** Required whenever the Workers AI binding is used. */
   AI_GATEWAY_ID?: string;
   /** Web Push is unavailable until all three VAPID values are configured as secrets. */
   VAPID_PUBLIC_KEY?: string;

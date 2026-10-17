@@ -1,6 +1,6 @@
 // Generates pronunciation audio for the landing and languages hands and the Estonian conversations with the product's own speech provider.
 // Only cards whose term, language, model or voice changed are regenerated.
-// Usage: OPENAI_API_KEY=… pnpm --filter @lymi/site hand:audio
+// Requires OPENAI_API_KEY, AI_GATEWAY_URL and AI_GATEWAY_TOKEN.
 import {
   existsSync,
   mkdirSync,

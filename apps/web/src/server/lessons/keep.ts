@@ -1,3 +1,5 @@
+import { AiGatewayError } from "../ai/gateway";
+
 /**
  * Below this, a term starts unticked. Clef-flash rates real words as low as 0.17, so the bar only
  * catches what is clearly not a card until a threshold is fitted per deck.
@@ -16,9 +18,14 @@ export function decisionModel(env: { AI?: Ai; AI_GATEWAY_ID?: string | undefined
   const ai = env.AI;
   if (!ai) return undefined;
   const id = env.AI_GATEWAY_ID?.trim();
+  if (!id) throw new AiGatewayError("Workers AI Gateway is not configured");
   return {
     run: (model, input) =>
-      ai.run(model as keyof AiModels, input as never, id ? { gateway: { id } } : {}),
+      ai.run(model as keyof AiModels, input as never, {
+        gateway: { id, skipCache: true },
+        extraHeaders: { "cf-aig-collect-log-payload": "false" },
+        signal: AbortSignal.timeout(30_000),
+      }),
   };
 }
 

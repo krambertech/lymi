@@ -42,6 +42,7 @@ export function createElevenLabsSpeechProvider(
           `${endpoint.base}/v1/text-to-speech/${encodeURIComponent(voice)}?output_format=mp3_44100_128`,
           {
             method: "POST",
+            redirect: "error",
             headers: { "xi-api-key": key, "Content-Type": "application/json", ...endpoint.headers },
             body: JSON.stringify({
               text: input.text,

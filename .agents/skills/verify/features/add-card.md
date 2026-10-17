@@ -4,11 +4,11 @@ The learner writes a term and its meaning into a deck from the **Add a card** sh
 
 ## Reach
 
-The deck page's **Add card** button or `N`, the rail's **Add** menu, or Today's **Add cards** under New cards.
+The deck page's **Add → New card** menu or `N`, the rail's **Add** menu, or Today's **Add cards** under New cards.
 
 ## Drive
 
-[`add-card.mjs`](add-card.mjs), as `learner` from Library: open **Lezione 12**, press **Add card**, fill **Term** with `la nebbia` and **Meaning** with `the fog`, and press **Add to Lezione 12**.
+[`add-card.mjs`](add-card.mjs), as `learner` from Library: open **Lezione 12**, choose **Add → New card**, fill **Term** with `la nebbia` and **Meaning** with `the fog`, and press **Add to Lezione 12**.
 
 ## End state
 

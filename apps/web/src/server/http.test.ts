@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { AiGatewayError } from "./ai/gateway";
 import { handleError } from "./http";
 import type { AppEnv } from "./index";
 import { ServiceError } from "./services/context";
@@ -47,6 +48,19 @@ describe("handleError", () => {
     for (const secret of ["to hurry up", "user-1", "card-1", "sbrigarsi", "Failed query"]) {
       expect(logged).not.toContain(secret);
     }
+  });
+
+  it("returns unavailable without exposing gateway configuration", async () => {
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    const app = appThrowing(new AiGatewayError("Unsafe gateway URL: https://private.test"));
+
+    const res = await app.request("/api/cards/card-1", { method: "PATCH" });
+
+    expect(res.status).toBe(503);
+    expect(await res.json()).toEqual({
+      error: "This capability is not configured or temporarily unavailable.",
+    });
+    expect(log).not.toHaveBeenCalled();
   });
 
   it("answers a service error without logging it", async () => {

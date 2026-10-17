@@ -18,7 +18,8 @@ export default async function drive({ page, step, api, expect }) {
 
   const dialog = page.getByRole("dialog", { name: "Add a card" });
   await step("Fill the term and meaning in Add a card", async () => {
-    await page.getByRole("button", { name: "Add card" }).first().click();
+    await page.getByRole("main").getByRole("button", { name: "Add", exact: true }).click();
+    await page.getByRole("menuitem", { name: /^New card/ }).click();
     await expect(dialog).toBeVisible();
     await dialog.getByRole("textbox", { name: "Term", exact: true }).fill(term);
     await dialog.getByRole("textbox", { name: "Meaning", exact: true }).fill("the fog");

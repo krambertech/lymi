@@ -1,14 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
-import { CARD_LIMITS } from "@lymi/core";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { CARD_LIMITS, hookableTerm } from "@lymi/core";
+import { useQueryClient } from "@tanstack/react-query";
 import { Anchor, Sparkle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { type Card, errorMessage } from "../lib/api";
+import { api, type Card, errorMessage } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
 import { composing } from "../lib/composing";
-import { useMouse } from "../lib/device";
-import { hookDraftQuery } from "../lib/queries";
+import { captureAnalytics } from "../lib/telemetry";
 import { Button } from "./button";
 import { InlineError } from "./inline-error";
 import { toast } from "./ui/toast";
@@ -24,8 +23,8 @@ interface Props {
 /**
  * The card's memory hook, written in its own place under the cue, like a message composer: the
  * field on top and its actions along the foot. Enter saves and Escape lets go. Undo in the toast
- * puts back the hook the card had. A card with no hook shows the AI's draft as the placeholder;
- * Tab, or saving the empty field, keeps it.
+ * puts back the hook the card had. Draft a hook asks the AI for one and puts it in the field to
+ * edit; while the field still holds that draft, the button asks for another.
  */
 export function HookEditor({ card, onCancel, onSaved }: Props) {
   const { t } = useLingui();
@@ -34,10 +33,37 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
   const [problem, setProblem] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const field = useRef<HTMLTextAreaElement>(null);
-  const mouse = useMouse();
-  const draft = useQuery({ ...hookDraftQuery(card), enabled: !card.hook });
-  const drafted = draft.data ?? null;
+  const [drafted, setDrafted] = useState<string | null>(null);
+  const [drafting, setDrafting] = useState(false);
+  const [draftNote, setDraftNote] = useState<string | null>(null);
   const empty = !text.trim();
+  const untouched = drafted !== null && text === drafted;
+  // A sentence has nothing to sound alike, so only a word or a short phrase offers a draft.
+  const draftable = !!card.language && hookableTerm(card.term) && (empty || untouched);
+
+  const draft = async () => {
+    setDrafting(true);
+    setDraftNote(null);
+    setProblem(null);
+    const started = performance.now();
+    const waited = () => Math.min(60_000, Math.round(performance.now() - started));
+    try {
+      const { hook } = await api.draftHook(card.id);
+      captureAnalytics("hook_drafted", { outcome: hook ? "drafted" : "none", wait_ms: waited() });
+      if (hook) {
+        setText(hook);
+        setDrafted(hook);
+        field.current?.focus();
+      } else {
+        setDraftNote(t`No strong hook for this one. Try again, or write your own.`);
+      }
+    } catch {
+      captureAnalytics("hook_drafted", { outcome: "failed", wait_ms: waited() });
+      setDraftNote(t`Couldn’t draft a hook. Try again in a moment.`);
+    } finally {
+      setDrafting(false);
+    }
+  };
 
   useEffect(() => {
     const node = field.current;
@@ -62,7 +88,7 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
   };
 
   const save = async () => {
-    const hook = text.trim() || drafted || "";
+    const hook = text.trim();
     if (!hook) {
       setProblem(t`Write a hook.`);
       field.current?.focus();
@@ -118,19 +144,14 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
           rows={1}
           value={text}
           maxLength={CARD_LIMITS.hook}
-          placeholder={drafted ?? t`A sound-alike, or something to picture`}
+          placeholder={t`A sound-alike, or something to picture`}
           aria-invalid={!!problem || undefined}
           onChange={(e) => {
             setText(e.target.value);
             setProblem(null);
+            setDraftNote(null);
           }}
           onKeyDown={(e) => {
-            // Tab on an empty field keeps the AI's draft, as an editor takes a completion.
-            if (e.key === "Tab" && !e.shiftKey && empty && drafted) {
-              e.preventDefault();
-              setText(drafted);
-              return;
-            }
             if (e.key === "Escape") {
               // The review leaves on Escape; here it only closes the editor.
               e.preventDefault();
@@ -152,15 +173,31 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
         <p role="status" className="min-w-0 flex-1 truncate text-xs text-muted empty:invisible">
           {problem ? (
             <InlineError>{problem}</InlineError>
-          ) : empty && drafted ? (
+          ) : drafting ? (
+            <Trans>Drafting a hook…</Trans>
+          ) : draftNote ? (
+            draftNote
+          ) : untouched ? (
             <span className="inline-flex items-center gap-1.5">
               <Sparkle className="size-3.5 shrink-0" aria-hidden="true" />
-              {mouse ? <Trans>AI draft · Tab keeps it</Trans> : <Trans>AI draft</Trans>}
+              <Trans>AI draft</Trans>
             </span>
-          ) : empty && draft.isFetching ? (
-            <Trans>Drafting a hook…</Trans>
           ) : null}
         </p>
+        {draftable && (
+          <Button
+            size="sm"
+            variant="ghost"
+            loading={drafting}
+            aria-disabled={drafting}
+            onClick={() => {
+              if (!drafting) void draft();
+            }}
+          >
+            <Sparkle data-icon="inline-start" aria-hidden="true" />
+            {untouched ? <Trans>Another draft</Trans> : <Trans>Draft a hook</Trans>}
+          </Button>
+        )}
         <Button size="sm" variant="ghost" onClick={onCancel}>
           <Trans>Cancel</Trans>
         </Button>

@@ -101,10 +101,12 @@ describe("hookDraftFor", () => {
     return { ctx, cardId: added.card.id, deckId: deck.id };
   }
 
-  it("drafts once, keeps the draft until the meaning changes, and marks a hook saved as drafted as the AI's", async () => {
+  it("drafts afresh on every ask, and marks a hook saved as the latest draft as the AI's", async () => {
     const { ctx, cardId } = await card("hook-draft-1");
+    expect(await hookDraftFor(ctx, cardId, provider("КУРБан плачет").provider)).toBe(
+      "КУРБан плачет",
+    );
     const first = provider("КУРБан грустит");
-    expect(await hookDraftFor(ctx, cardId, first.provider)).toBe("КУРБан грустит");
     expect(await hookDraftFor(ctx, cardId, first.provider)).toBe("КУРБан грустит");
     expect(first.complete).toHaveBeenCalledOnce();
 
@@ -135,35 +137,31 @@ describe("hookDraftFor", () => {
     expect(JSON.parse(request.input).deckMeanings).toEqual(["море"]);
   });
 
-  it("remembers that the AI had none, and drafts nothing without a vendor", async () => {
+  it("asks twice before answering none, and drafts nothing without a vendor", async () => {
     const { ctx, cardId } = await card("hook-draft-2");
     expect(await hookDraftFor(ctx, cardId, null)).toBeNull();
     const none = provider(null);
     expect(await hookDraftFor(ctx, cardId, none.provider)).toBeNull();
-    expect(await hookDraftFor(ctx, cardId, none.provider)).toBeNull();
-    // Asked twice the first time, then never again until the card's text changes.
     expect(none.complete).toHaveBeenCalledTimes(2);
   });
 
-  it("checks a kept draft again once the deck asks for the meaning", async () => {
+  it("guards the modes the deck asks in now", async () => {
     const { ctx, cardId, deckId } = await card("hook-draft-5");
-    expect(await hookDraftFor(ctx, cardId, provider("КУРБан грустит").provider)).toBe(
-      "КУРБан грустит",
-    );
     await updateDeck(ctx, deckId, { directions: "recognition" });
-    const next = provider("КУРБан опустил голову");
-    expect(await hookDraftFor(ctx, cardId, next.provider)).toBe("КУРБан опустил голову");
-    expect(next.complete).toHaveBeenCalledOnce();
+    expect(await hookDraftFor(ctx, cardId, provider("КУРБан грустит").provider)).toBeNull();
+    expect(await hookDraftFor(ctx, cardId, provider("КУРБан опустил голову").provider)).toBe(
+      "КУРБан опустил голову",
+    );
   });
 
-  it("keeps nothing when the vendor fails, so the next editor asks again", async () => {
+  it("says the AI is unavailable when the vendor fails, and keeps nothing", async () => {
     const { ctx, cardId } = await card("hook-draft-6");
     const complete = vi.fn(async () => {
       throw new Error("outage");
     });
     const failing = { provider: "openai", model: "test", complete } as TextProvider;
     const quiet = vi.spyOn(console, "error").mockImplementation(() => {});
-    expect(await hookDraftFor(ctx, cardId, failing)).toBeNull();
+    await expect(hookDraftFor(ctx, cardId, failing)).rejects.toMatchObject({ code: "unavailable" });
     quiet.mockRestore();
     const after = provider("КУРБан грустит");
     expect(await hookDraftFor(ctx, cardId, after.provider)).toBe("КУРБан грустит");

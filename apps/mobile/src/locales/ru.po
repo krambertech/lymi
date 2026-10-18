@@ -956,6 +956,9 @@ msgstr "Пакет Anki"
 msgid "Anki, Mochi, Noji"
 msgstr "Anki, Mochi, Noji"
 
+msgid "Another draft"
+msgstr "Другой черновик"
+
 #. placeholder {0}: term.formOf.term
 #. placeholder {1}: term.formOf.deckName
 msgid "Another form of {0}, in {1}"
@@ -1506,6 +1509,9 @@ msgstr "Не удалось удалить аккаунт. Проверь сое
 msgid "Couldn’t download the file. Check your connection and try again."
 msgstr "Не удалось скачать файл. Проверь соединение и попробуй ещё раз."
 
+msgid "Couldn’t draft a hook. Try again in a moment."
+msgstr "Не удалось подготовить зацепку. Попробуй ещё раз чуть позже."
+
 msgid "Couldn’t finish the import"
 msgstr "Не удалось завершить импорт"
 
@@ -1846,8 +1852,8 @@ msgstr "Не используй адрес почты в пароле."
 msgid "Done"
 msgstr "Готово"
 
-msgid "Drafting a hook…"
-msgstr "Готовим зацепку…"
+msgid "Draft a hook"
+msgstr "Подготовить зацепку"
 
 msgid "Drag a series by its handle. Library shows them in this order."
 msgstr "Перетащите серию за ручку. В Библиотеке серии стоят в этом порядке."
@@ -2936,6 +2942,9 @@ msgstr "Разделов пока нет"
 
 msgid "No series"
 msgstr "Без серии"
+
+msgid "No strong hook for this one. Try again, or write your own."
+msgstr "Для этой карточки нет удачной зацепки. Попробуй ещё раз или напиши свою."
 
 msgid "Nobody can add it while it is archived."
 msgstr "Пока колода в архиве, её никто не может добавить."

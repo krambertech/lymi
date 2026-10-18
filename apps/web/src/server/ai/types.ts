@@ -41,7 +41,7 @@ export type TextRequest = {
   /** JSON Schema the reply must satisfy, named for the vendor's structured-output call. */
   schema: { name: string; schema: Record<string, unknown> };
   /** How hard the model reasons; left out, the provider's own default. */
-  effort?: "low" | "medium" | "high" | undefined;
+  effort?: "none" | "low" | "medium" | "high" | undefined;
 };
 
 /** One model call's size and time, for cost; it never carries the prompt or the reply. */

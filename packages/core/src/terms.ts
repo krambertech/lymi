@@ -81,3 +81,8 @@ export function headword(term: string): string {
   const at = term.indexOf(" · ");
   return at > 0 ? term.slice(0, at) : term;
 }
+
+/** A word or a phrase of up to three words, on its first form: what a keyword hook can sound like. */
+export function hookableTerm(term: string): boolean {
+  return headword(term).trim().split(/\s+/).length <= 3;
+}

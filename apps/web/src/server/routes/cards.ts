@@ -333,11 +333,11 @@ cards.post(
     tags: ["Cards"],
     summary: "Draft a memory hook",
     description:
-      "The AI's draft for the card's memory hook: a short mnemonic, in the meaning's language, that leads back to the answer without writing it. " +
-      "The draft is kept until the card's term or meaning changes, so asking again returns it at once. Nothing on the card changes. " +
+      "A fresh AI draft for the card's memory hook: a short mnemonic, in the meaning's language, that leads back to the answer without writing it. " +
+      "Each ask drafts again, so asking twice gives another. Nothing on the card changes. " +
       "Only the card's owner may ask.",
     ok: { schema: HookDraftOut, description: "The draft, or null" },
-    errors: [404],
+    errors: [404, 503],
   }),
   async (c) => {
     const ctx = ctxOf(c);

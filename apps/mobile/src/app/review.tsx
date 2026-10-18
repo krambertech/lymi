@@ -36,15 +36,7 @@ import {
 } from "@lymi/design";
 import { useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
-import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
   AccessibilityInfo,
   Alert,
@@ -126,7 +118,7 @@ import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { Skeleton } from "../ui/skeleton";
 import { stateKey } from "../ui/state-mark";
 import { useSystemBack } from "../ui/system-back";
-import { ToastHost, toast } from "../ui/toast-host";
+import { ToastFloor, ToastHost, ToastScope, toast } from "../ui/toast-host";
 
 const EASE = curve(EASE_OUT);
 const GLIDE = REVEAL_GLIDE.duration * 1000;
@@ -137,8 +129,6 @@ const REFRESH_AFTER = 20;
 // Review is presented over the root, so it hosts its own toasts.
 const REVIEW_TOASTS = "review";
 const ARCHIVED_TOAST = "review-archived";
-/** What the screen's own buttons take at its foot, the grades or the end screen's, so a toast rises above them. */
-const ToastRoom = createContext<(room: number) => void>(() => {});
 
 type Pinned = { cardId: string; mode: string };
 /** A card archived from its menu, offered back for a few seconds. */
@@ -226,14 +216,13 @@ export default function Review() {
   const cards = chosen?.length ? chosen.slice(0, CHOSEN_LIMIT) : undefined;
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const [toastRoom, setToastRoom] = useState(0);
 
   // Opened from a widget, the review is the only screen, so leaving goes to Today.
   const leave = () => (router.canGoBack() ? router.back() : router.replace("/today"));
 
   // A review of another scope or round starts over, so nothing from this one carries into it.
   return (
-    <ToastRoom.Provider value={setToastRoom}>
+    <ToastScope.Provider value={REVIEW_TOASTS}>
       <Run
         key={`${deck ?? ""}:${series ?? ""}:${section ?? ""}:${round ?? ""}:${cards?.join(",") ?? ""}`}
         scope={{ deck, series, section }}
@@ -241,8 +230,8 @@ export default function Review() {
         cards={cards}
         onClose={leave}
       />
-      <ToastHost scope={REVIEW_TOASTS} bottom={Math.max(insets.bottom, 12) + toastRoom + 12} />
-    </ToastRoom.Provider>
+      <ToastHost />
+    </ToastScope.Provider>
   );
 }
 
@@ -1164,7 +1153,6 @@ function Turn({
           card
         )}
       </View>
-      <RoomFor room={revealed ? GRADE_ROOM : 0} />
       {revealed && (
         <GradeStrip
           still={!top}
@@ -1659,16 +1647,6 @@ const gradeIn = (i: number) =>
  * Four grades under the card, 80 pt tall and nearly square, in the thumb's reach. Same tap, same
  * weight, whichever is chosen. phone.md "Review".
  */
-/** Tells the review's toasts what sits under them while this is on screen. */
-function RoomFor({ room }: { room: number }) {
-  const set = useContext(ToastRoom);
-  useEffect(() => {
-    set(room);
-    return () => set(0);
-  }, [room, set]);
-  return null;
-}
-
 /** What the grade strip takes from the card at the reveal: its 80 pt plates under a 12 pt gap. */
 const GRADE_ROOM = 92;
 
@@ -1703,7 +1681,7 @@ function GradeStrip({
     return () => clearTimeout(timer);
   }, [lockedTip, why]);
   return (
-    <Animated.View
+    <ToastFloor
       exiting={FadeOut.duration(120).reduceMotion(ALWAYS)}
       className="flex-row gap-2 px-4 pt-3"
     >
@@ -1762,7 +1740,7 @@ function GradeStrip({
           </Animated.View>
         );
       })}
-    </Animated.View>
+    </ToastFloor>
   );
 }
 
@@ -1824,8 +1802,6 @@ function Completion({
   const { t } = useLingui();
   const p = usePalette();
   const { goal, streak, lights, flame, out, progress, fed } = useDay();
-  const setToastRoom = useContext(ToastRoom);
-  useEffect(() => () => setToastRoom(0), [setToastRoom]);
   const insets = useSafeAreaInsets();
   const reduce = useReduceMotion();
   const counted = screen.heading !== "nothing_due";
@@ -1989,12 +1965,7 @@ function Completion({
           </View>
         </View>
         {/* One shape for every way on, the count said in words; the primary sits last. */}
-        <View
-          className="gap-3 px-5 pt-6"
-          pointerEvents={settled ? "auto" : "none"}
-          // Its 24 pt top gap is not the buttons', and the scroll's foot keeps 4 pt more than the review's.
-          onLayout={(e) => setToastRoom(e.nativeEvent.layout.height - 20)}
-        >
+        <ToastFloor className="mt-6 gap-3 px-5" pointerEvents={settled ? "auto" : "none"}>
           {ways.map((way, i) => (
             <Animated.View key={way.kind} style={way$[i]}>
               {way.kind === "forgotten" ? (
@@ -2029,7 +2000,7 @@ function Completion({
               doneButton("primary")
             )}
           </Animated.View>
-        </View>
+        </ToastFloor>
       </ScrollView>
     </Animated.View>
   );

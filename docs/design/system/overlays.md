@@ -78,6 +78,8 @@ Menu rows do not scale on press. The hover is one fill that slides between rows 
 ⌘K (Ctrl K elsewhere) opens the command menu on a desktop: one field over a list of cards, decks, places and actions, top-anchored at 12% of the window and 620 px wide. The developer palette on backtick is the same shell in its graphite skin. Both draw with `components/ui/command-palette.tsx`, which owns the frame, the field, the list's keys and the row; each palette brings only its rows.
 
 - Focus stays in the field. Arrows move the highlight and wrap, Enter runs the row, ⌘Enter runs its second action, and Escape closes. An Enter that confirms an input method's word is not a run.
+- A palette with pages, like the developer palette, passes `onBack`: Escape empties the field first, then leaves the page, and Backspace in an empty field leaves it too; Escape closes only from the first page.
+- On a phone or a touch screen (`compact`) the palette fills the screen without a scrim, and the field waits for a tap so the keyboard doesn't cover the list. No row is highlighted until the keyboard is used, and the pointer never moves the highlight, so Go never runs a row nobody saw.
 - It appears and leaves without motion, since a keyboard opens it.
 - ⌘K is ⌘ on a Mac and Ctrl elsewhere; Ctrl K on a Mac stays the field's delete-to-end. It never opens over another dialog, so it can't stack on a half-written form, nor in review or Welcome, where the shell is closed on purpose.
 - Rows are 40 px, the menu row's type, with the hover fill on the highlighted row only, so pointer and keys never show two.

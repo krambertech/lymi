@@ -14,6 +14,7 @@ import {
 } from "react";
 import { HAND_SIZE } from "../../lib/hand";
 import { buttonClass } from "../Button";
+import { Furigana } from "./Furigana";
 import { HAND_CARDS, type HandCard } from "./hand-cards";
 
 const DEAL_STAGGER_MS = 90;
@@ -46,7 +47,18 @@ function shuffle<T>(list: readonly T[]): T[] {
  * Takes the next card from a shuffled pile: never one already held, never the field just dealt
  * when there is another, and, in a mixed hand, never a third language or idea in a row.
  */
-function draw(pile: HandCard[], held: Dealt[], cards: readonly HandCard[]): HandCard {
+function draw(
+  pile: HandCard[],
+  held: Dealt[],
+  cards: readonly HandCard[],
+  ordered = false,
+): HandCard {
+  if (ordered) {
+    if (pile.length === 0) pile.push(...cards);
+    const inHand = new Set(held.map((d) => d.card.id));
+    const i = pile.findIndex((c) => !inHand.has(c.id));
+    return (i >= 0 ? pile.splice(i, 1)[0] : cards[0]) as HandCard;
+  }
   const inHand = new Set(held.map((d) => d.card.id));
   const last = held.at(-1)?.card;
   const beforeLast = held.at(-2)?.card;
@@ -124,34 +136,62 @@ function FanCard({
   const cueText = cue === "meaning" ? meaning : card.term;
 
   const header = (
-    <p className="min-h-4 text-xs font-medium tracking-[0.06em] text-muted uppercase">{heading}</p>
+    <p className="flex min-h-4 items-center justify-between gap-2 text-xs font-medium tracking-[0.06em] text-muted uppercase">
+      <span>{heading}</span>
+      {card.state && (
+        <span className="inline-flex shrink-0 items-center gap-1.5 tracking-normal normal-case">
+          <span
+            aria-hidden="true"
+            className={clsx(
+              "size-1.5 rounded-full",
+              card.state === "known"
+                ? "bg-state-known"
+                : card.state === "learning"
+                  ? "bg-state-learning"
+                  : "bg-state-new",
+            )}
+          />
+          {card.state === "known" ? t`Known` : card.state === "learning" ? t`Learning` : t`New`}
+        </span>
+      )}
+    </p>
   );
 
   // The picture keeps its own shape on the start edge, as review draws it.
-  const cueBlock = picture ? (
-    <span
-      className="hand-picture mt-3.5"
-      style={{ "--ratio": picture.width / picture.height } as CSSProperties}
-    >
-      <img
-        src={picture.url}
-        alt={picture.description}
-        width={picture.width}
-        height={picture.height}
-        loading="lazy"
-        decoding="async"
-      />
-    </span>
-  ) : (
-    <p
-      lang={cue === "term" ? card.language : undefined}
-      dir="auto"
-      className="whitespace-pre-line mt-3.5 text-[min(46px,calc(var(--cw)*var(--term)))] leading-[1.02] font-medium tracking-[-0.03em] text-balance text-text [overflow-wrap:anywhere]"
-      style={{ "--term": cueStep(cueText) } as CSSProperties}
-    >
-      {cueText}
-    </p>
-  );
+  const cueFor = (back: boolean) =>
+    picture ? (
+      <span
+        className="hand-picture mt-3.5"
+        style={{ "--ratio": picture.width / picture.height } as CSSProperties}
+      >
+        <img
+          src={picture.url}
+          alt={picture.description}
+          width={picture.width}
+          height={picture.height}
+          loading="lazy"
+          decoding="async"
+        />
+      </span>
+    ) : (
+      <p
+        lang={cue === "term" ? card.language : undefined}
+        dir="auto"
+        className="whitespace-pre-line mt-3.5 text-[min(46px,calc(var(--cw)*var(--term)))] leading-[1.02] font-medium tracking-[-0.03em] text-balance text-text [overflow-wrap:anywhere]"
+        style={{ "--term": cueStep(cueText) } as CSSProperties}
+      >
+        {cue === "term" && card.furigana ? (
+          <Furigana
+            term={card.term}
+            reading={card.furigana}
+            lang={card.language}
+            hidden={card.state === "known" && !back}
+          />
+        ) : (
+          cueText
+        )}
+      </p>
+    );
 
   // The reading and the sound belong to the term, so they go wherever the term is shown.
   const termDetails = (
@@ -197,7 +237,11 @@ function FanCard({
           dir="auto"
           className="whitespace-pre-line text-[min(28px,calc(var(--cw)*0.092))] leading-[1.15] font-medium tracking-[-0.02em] text-balance text-text [overflow-wrap:anywhere]"
         >
-          {card.term}
+          {card.furigana ? (
+            <Furigana term={card.term} reading={card.furigana} lang={card.language} />
+          ) : (
+            card.term
+          )}
         </p>
         {termDetails}
         {picture && (
@@ -248,7 +292,7 @@ function FanCard({
       <div ref={flipRef} className="hand-flip">
         <div className="hand-face" aria-hidden={revealed || undefined}>
           {header}
-          {cueBlock}
+          {cueFor(false)}
           {cue === "term" && termDetails}
           <p
             className="hand-hint mt-auto text-base text-muted"
@@ -259,7 +303,7 @@ function FanCard({
         </div>
         <div className="hand-face hand-back" aria-hidden={!revealed || undefined}>
           {header}
-          {cueBlock}
+          {cueFor(true)}
           {cue === "term" && termDetails}
           {/* Review shows a text card's picture only once it is turned. */}
           {!picture && card.image && (
@@ -322,6 +366,10 @@ interface Props {
   finale?: ((again: () => void, turned: readonly HandCard[]) => ReactNode) | undefined;
   /** Told the top card's id whenever it changes, so a page can point at where the card came from. */
   onFront?: ((id: string | undefined) => void) | undefined;
+  /** No words under or on the cards: the turn button shows only to the keyboard. */
+  quiet?: boolean | undefined;
+  /** Deal in the given order rather than shuffled, so a page can tell its cards in sequence. */
+  ordered?: boolean | undefined;
 }
 
 /**
@@ -335,6 +383,8 @@ export function HandOfCards({
   dealt: given,
   finale,
   onFront,
+  quiet,
+  ordered,
 }: Props) {
   const { t, i18n } = useLingui();
   const [hand, setHand] = useState<Dealt[]>(() =>
@@ -397,7 +447,9 @@ export function HandOfCards({
     const first: Dealt[] = [];
     const count = Math.min(HAND_SIZE, cards.length);
     for (let i = 0; i < count; i++) {
-      const card = once ? (pile.current.shift() as HandCard) : draw(pile.current, first, cards);
+      const card = once
+        ? (pile.current.shift() as HandCard)
+        : draw(pile.current, first, cards, ordered);
       first.push({ key: nextKey.current++, card });
     }
     const play = (redeal || !seen) && !still;
@@ -410,7 +462,7 @@ export function HandOfCards({
       DEAL_STAGGER_MS * (count - 1) + DEAL_MS,
     );
     return () => window.clearTimeout(settle);
-  }, [cards, given, once, round]);
+  }, [cards, given, once, round, ordered]);
 
   // A visitor who has not turned the first card after a moment is shown how: the card is pressed
   // and lifts at one edge as if turning, and a line says what to do. Anyone who already knows
@@ -475,7 +527,7 @@ export function HandOfCards({
     const [front, ...rest] = hand;
     if (phase !== "back" || !front) return;
     stopAudio();
-    const card = once ? pile.current.shift() : draw(pile.current, rest, cards);
+    const card = once ? pile.current.shift() : draw(pile.current, rest, cards, ordered);
     setGone((g) => [...g, front]);
     window.setTimeout(() => setGone((g) => g.filter((d) => d.key !== front.key)), TOSS_MS);
     setHand(card ? [...rest, { key: nextKey.current++, card }] : rest);
@@ -491,7 +543,7 @@ export function HandOfCards({
         </Trans>,
       );
     }
-  }, [hand, phase, cards, once, stopAudio, i18n]);
+  }, [hand, phase, cards, once, stopAudio, i18n, ordered]);
 
   const finale_ = useRef<HTMLDivElement>(null);
   const pressed = useRef(false);
@@ -559,7 +611,7 @@ export function HandOfCards({
               onPlay={play}
               onPress={press}
               hint={
-                k === 0 && hint
+                k === 0 && hint && !quiet
                   ? finePointer
                     ? t`Click to turn it over`
                     : t`Tap to turn it over`
@@ -589,13 +641,16 @@ export function HandOfCards({
             className={buttonClass(
               "ghost",
               "sm",
-              "font-normal text-muted before:absolute before:-inset-2 before:content-[''] hoverable:hover:bg-transparent hoverable:hover:text-text-2",
+              clsx(
+                "font-normal text-muted before:absolute before:-inset-2 before:content-[''] hoverable:hover:bg-transparent hoverable:hover:text-text-2",
+                quiet && "not-focus-visible:sr-only",
+              ),
             )}
           >
             {phase === "back" ? <Trans>Next card</Trans> : <Trans>Turn it over</Trans>}
           </button>
         )}
-        {turned > 0 && phase !== "done" && (
+        {turned > 0 && phase !== "done" && !quiet && (
           <p className="text-xs text-muted tabular-nums" aria-hidden="true">
             <Plural value={turned} one="# turned" other="# turned" />
           </p>

@@ -36,6 +36,12 @@ const SpeechPayload = z.object({
       }),
     )
     .min(1),
+  usageMetadata: z
+    .object({
+      promptTokenCount: z.number().int().nonnegative().optional(),
+      candidatesTokenCount: z.number().int().nonnegative().optional(),
+    })
+    .optional(),
 });
 
 export function createGeminiApiSpeechProvider(
@@ -93,6 +99,10 @@ export function createGeminiApiSpeechProvider(
       const parsed = SpeechPayload.safeParse(await boundedPayload(response));
       if (!parsed.success) throw new GeminiApiSpeechError("Gemini API returned no audio");
       const payload = parsed.data;
+      input.usage?.({
+        inputTokens: payload.usageMetadata?.promptTokenCount,
+        outputTokens: payload.usageMetadata?.candidatesTokenCount,
+      });
       const audio = payload.candidates?.[0]?.content?.parts?.find(
         (part) => part.inlineData,
       )?.inlineData;

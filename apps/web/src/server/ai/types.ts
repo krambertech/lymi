@@ -1,6 +1,24 @@
 export type SpeechRequest = {
   text: string;
   language: string;
+  /** Receives what the vendor bills by, when the provider can tell. */
+  usage?: ((usage: SpeechUsage) => void) | undefined;
+};
+
+export type SpeechUsage = {
+  inputTokens?: number | undefined;
+  outputTokens?: number | undefined;
+  audioSeconds?: number | undefined;
+};
+
+/** One speech call's size and time, for cost; it never carries the text. */
+export type SpeechCall = SpeechUsage & {
+  provider: SpeechProvider["provider"];
+  model: string;
+  characters: number;
+  latencyMs: number;
+  error: boolean;
+  status?: number | undefined;
 };
 
 export interface SpeechProvider {

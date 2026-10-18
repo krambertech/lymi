@@ -3,6 +3,7 @@ import { createSpeechProviders } from "../ai";
 import { tooManyRequests } from "../auth-rate-limit";
 import { describe } from "../http";
 import type { AppEnv } from "../index";
+import { ownerAnalytics } from "../posthog";
 import { spendPublicAudio } from "../public-audio-rate-limit";
 import { publisherAvatar } from "../services";
 import { publicMediaFile, publicPronunciation } from "../services/public-media";
@@ -26,7 +27,11 @@ publicMedia.get(
       const found = await publicPronunciation(
         c.get("db"),
         c.req.param("cardId"),
-        { bucket: c.env.AUDIO, providers: (language) => createSpeechProviders(c.env, language) },
+        {
+          bucket: c.env.AUDIO,
+          providers: (language) => createSpeechProviders(c.env, language),
+          analytics: ownerAnalytics(c.env, c.get("db"), (work) => c.executionCtx.waitUntil(work)),
+        },
         () => spendPublicAudio(c),
       );
       if ("retryAfter" in found) return tooManyRequests(found.retryAfter);

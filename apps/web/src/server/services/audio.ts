@@ -1,9 +1,10 @@
 import { canSpeakTerm, kanaReading, LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
 import { and, eq, inArray, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
-import type { SpeechProvider } from "../ai";
+import type { SpeechProvider, SpeechUsage } from "../ai";
 import { speechText } from "../ai/speech-text";
 import { type Db, schema } from "../db";
+import { trackSpeechCall } from "./analytics";
 import { audit } from "./audit";
 import { getCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
@@ -67,15 +68,33 @@ export async function pronunciationAudio(
     }
 
     let audio: Uint8Array;
+    const text = spokenText(card);
+    let usage: SpeechUsage = {};
+    const started = Date.now();
+    const report = (error: boolean, status?: number) =>
+      trackSpeechCall(ctx.analytics, {
+        provider: provider.provider,
+        model: provider.model,
+        characters: [...text].length,
+        ...usage,
+        latencyMs: Date.now() - started,
+        error,
+        status,
+      });
     try {
       const generated = await provider.speech({
-        text: spokenText(card),
+        text,
         language: language.data,
+        usage: (reported) => {
+          usage = reported;
+        },
       });
       audio = await boundedAudio(generated);
+      report(false);
     } catch (error) {
       lastFailure = error;
       const status = providerStatus(error);
+      report(true, status ?? undefined);
       console.warn(
         JSON.stringify({
           event: "pronunciation_provider_failed",

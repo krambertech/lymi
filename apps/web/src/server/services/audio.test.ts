@@ -1,6 +1,6 @@
 import type { Card } from "@lymi/core/schema";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { SpeechProvider } from "../ai";
+import type { SpeechProvider, SpeechRequest } from "../ai";
 import type { Db } from "../db";
 import { pronunciationAudio } from "./audio";
 import type { ServiceContext } from "./context";
@@ -160,7 +160,11 @@ describe("pronunciation audio", () => {
         providers,
       });
       expect(speech).toHaveBeenCalledOnce();
-      expect(speech).toHaveBeenCalledWith({ text: spoken, language: "et" });
+      expect(speech).toHaveBeenCalledWith({
+        text: spoken,
+        language: "et",
+        usage: expect.any(Function),
+      });
       expect(first.key).toMatch(/^cards\/card-1\/v2\//);
       expect(first.key).not.toBe(oldKey);
       expect(objects.has(oldKey)).toBe(true);
@@ -190,17 +194,29 @@ describe("pronunciation audio", () => {
       "card-1",
       deps,
     );
-    expect(speech).toHaveBeenLastCalledWith({ text: "じょうず", language: "ja" });
+    expect(speech).toHaveBeenLastCalledWith({
+      text: "じょうず",
+      language: "ja",
+      usage: expect.any(Function),
+    });
     const expert = await pronunciationAudio(
       context(card({ ...japanese, pronunciation: "うわて", audioKey: skilled.key })),
       "card-1",
       deps,
     );
-    expect(speech).toHaveBeenLastCalledWith({ text: "うわて", language: "ja" });
+    expect(speech).toHaveBeenLastCalledWith({
+      text: "うわて",
+      language: "ja",
+      usage: expect.any(Function),
+    });
     expect(expert.key).not.toBe(skilled.key);
 
     await pronunciationAudio(context(card({ ...japanese, pronunciation: "jōzu" })), "card-1", deps);
-    expect(speech).toHaveBeenLastCalledWith({ text: "上手", language: "ja" });
+    expect(speech).toHaveBeenLastCalledWith({
+      text: "上手",
+      language: "ja",
+      usage: expect.any(Function),
+    });
   });
 
   it("keeps saying the term for a language without readings, whatever the pronunciation", async () => {
@@ -214,7 +230,11 @@ describe("pronunciation audio", () => {
       bucket,
       providers: () => [provider("google-chirp", speech)],
     }).catch(() => undefined);
-    expect(speech).toHaveBeenCalledWith({ text: "jäääär", language: "et" });
+    expect(speech).toHaveBeenCalledWith({
+      text: "jäääär",
+      language: "et",
+      usage: expect.any(Function),
+    });
   });
 
   it("generates only on first play and reuses R2 afterward", async () => {
@@ -509,5 +529,54 @@ describe("pronunciation audio", () => {
     });
 
     expect(get).toHaveBeenCalledWith(stored.key);
+  });
+
+  it("reports each paid speech attempt with its cost, and nothing for a clip already stored", async () => {
+    let stored: R2ObjectBody | null = null;
+    const get = vi.fn(async () => stored);
+    const put = vi.fn(async (key: string) => {
+      stored = storedAudio(key);
+    });
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) => ({ get, put })[property as "get"],
+    });
+    const capture = vi.fn();
+    const analytics = { writeDataPoint: vi.fn(), capture };
+    const failing = vi.fn(async () => {
+      throw Object.assign(new Error("down"), { status: 503 });
+    });
+    const gemini = vi.fn(async (request: SpeechRequest) => {
+      request.usage?.({ inputTokens: 80, outputTokens: 25 });
+      return new Response(new Uint8Array([1, 2, 3]));
+    });
+    const deps = {
+      bucket,
+      providers: () => [provider("elevenlabs", failing), provider("gemini-api", gemini)],
+    };
+
+    await pronunciationAudio({ ...context(card()), analytics }, "card-1", deps);
+    await pronunciationAudio({ ...context(card()), analytics }, "card-1", deps);
+
+    expect(capture.mock.calls.map(([event]) => event)).toEqual([
+      expect.objectContaining({
+        name: "$ai_generation",
+        $ai_span_name: "pronunciation",
+        $ai_provider: "elevenlabs",
+        $ai_model: "eleven_v4",
+        characters: 6,
+        $ai_is_error: true,
+        $ai_http_status: 503,
+      }),
+      expect.objectContaining({
+        $ai_provider: "google",
+        $ai_model: "gemini-3.1-flash-tts-preview",
+        $ai_input_tokens: 80,
+        $ai_output_tokens: 25,
+        characters: 6,
+        $ai_is_error: false,
+        $ai_total_cost_usd: (80 * 1 + 25 * 20) / 1e6,
+      }),
+    ]);
+    expect(capture.mock.calls[0]?.[0]).not.toHaveProperty("$ai_total_cost_usd");
   });
 });

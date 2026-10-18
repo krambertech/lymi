@@ -42,6 +42,21 @@ describe("Google Gemini provider", () => {
     });
   });
 
+  it("measures the clip's length from its 32 kbps MP3, since Cloud returns no tokens", async () => {
+    const provider = createGoogleGeminiProvider(
+      { ...testGateway, GOOGLE_CLOUD_TTS_CREDENTIALS: credentials },
+      {
+        locale: "et-EE",
+        request: async () => Response.json({ audioContent: btoa("\u0001".repeat(4000)) }),
+        accessToken: async () => "token",
+      },
+    );
+    const usage = vi.fn();
+    const response = await provider.speech({ text: "tere", language: "et", usage });
+    expect(usage).toHaveBeenCalledWith({ audioSeconds: 1 });
+    expect((await response.bytes()).byteLength).toBe(4000);
+  });
+
   it("names the language in words rather than as a code", () => {
     expect(pronunciationPrompt("et-EE")).toContain("native Estonian (Estonia) speaker");
     expect(pronunciationPrompt("pt-BR")).toContain("Brazilian Portuguese sounds");

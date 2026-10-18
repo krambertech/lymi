@@ -430,6 +430,9 @@ export const analyticsEvents = {
   pronunciation_played: z.object({
     outcome: z.enum(["played", "failed"]),
     revealed: z.boolean(),
+    // Optional because earlier phone releases send neither.
+    preloaded: z.boolean().optional(),
+    wait_ms: z.number().int().nonnegative().max(60_000).optional(),
   }),
   deck_tag_changed: z.object({
     action: z.enum(["rename", "merge", "archive", "restore"]),

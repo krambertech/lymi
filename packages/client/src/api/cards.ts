@@ -119,6 +119,8 @@ export const cardsApi = {
   /** Every review and every write, newest first. */
   cardHistory: (id: string) => request<CardHistory>(`/api/cards/${id}/history`),
   audioUrl: (cardId: string) => apiUrl(`/api/audio/${encodeURIComponent(cardId)}`),
+  /** A clip already voiced, or a 404: a preload never spends on speech. */
+  storedAudioUrl: (cardId: string) => apiUrl(`/api/audio/${encodeURIComponent(cardId)}?stored=1`),
   /**
    * `version` is the card's `imageVersion` as last read; null expects a card with no picture yet.
    * The phone passes an Expo `File`, whose bytes Expo's fetch can read, not React Native's `{ uri }`.

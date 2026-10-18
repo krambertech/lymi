@@ -10,6 +10,7 @@ audio.get("/:cardId", describe({ hide: true, errors: [400, 404, 503] }), async (
   const object = await pronunciationAudio(ctxOf(c), c.req.param("cardId"), {
     bucket: c.env.AUDIO,
     providers: (language) => createSpeechProviders(c.env, language),
+    storedOnly: c.req.query("stored") === "1",
   });
   const headers = new Headers();
   object.writeHttpMetadata(headers);

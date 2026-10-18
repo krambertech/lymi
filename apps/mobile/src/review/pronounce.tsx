@@ -25,8 +25,6 @@ import { IconButton, Text } from "../ui/primitives";
 /** Long enough for speech the server makes on first ask; past it, the play counts as failed. */
 const LOAD_LIMIT_MS = 12_000;
 const TIP_MS = 4000;
-/** How long a play waits before a spinner says it is still coming. */
-const SLOW_MS = 600;
 
 type ExpoAudio = typeof import("expo-audio");
 // A build from before the audio module has no pronunciation rather than a broken review.
@@ -44,9 +42,13 @@ type Card = {
   term: string;
   language?: string | null | undefined;
   audioSource?: string | null | undefined;
+  audioKey?: string | null | undefined;
 };
 /** How a press ended, with the sound started or never come; a card changed mid-load reports nothing. */
-export type PlaySettled = (outcome: "played" | "failed") => void;
+export type PlaySettled = (
+  outcome: "played" | "failed",
+  timing: { preloaded: boolean; waitMs: number },
+) => void;
 
 /**
  * Plays a card's pronunciation from the API with the learner's session. A second press replays it
@@ -64,33 +66,46 @@ function useAudioPronunciation(
   const [asked, setAsked] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const loaded = useRef<string | null>(null);
+  const pressed = useRef({ at: 0, preloaded: false });
   const settled = useRef(onSettled);
   settled.current = onSettled;
   const speakable = !!card && canPlayPronunciation(card) && !!headers;
 
-  // A new card starts quiet, with no error from the last one.
+  // A new card starts quiet, with no error from the last one, and loads a clip voiced before so a
+  // tap plays it at once; a missing clip is never voiced ahead.
   const cardId = card?.id ?? null;
-  const shown = useRef(cardId);
+  const preload = speakable && !!card?.audioKey;
+  const shown = useRef<string | null>(null);
   useEffect(() => {
     if (shown.current === cardId) return;
     shown.current = cardId;
     setError(null);
     setAsked(false);
     player.pause();
-  }, [cardId, player]);
+    loaded.current = null;
+    if (cardId && preload && headers) {
+      const uri = api.storedAudioUrl(cardId);
+      player.replace({ uri, headers });
+      loaded.current = uri;
+    }
+  }, [cardId, preload, headers, player]);
 
   // An ask is answered once the sound starts; until then it can time out.
   const playing = status.isLoaded && status.playing;
   useEffect(() => {
     if (!asked) return;
+    const timing = () => ({
+      preloaded: pressed.current.preloaded,
+      waitMs: Math.min(60_000, Math.round(performance.now() - pressed.current.at)),
+    });
     if (playing) {
       setAsked(false);
-      settled.current?.("played");
+      settled.current?.("played", timing());
       return;
     }
     const timer = setTimeout(() => {
       setAsked(false);
-      settled.current?.("failed");
+      settled.current?.("failed", timing());
       loaded.current = null;
       setError(t`Couldn’t play the pronunciation. Try again in a moment.`);
     }, LOAD_LIMIT_MS);
@@ -101,11 +116,14 @@ function useAudioPronunciation(
     if (!speakable || !headers || !card) return;
     setError(null);
     const uri = api.audioUrl(card.id);
-    if (loaded.current !== uri) {
+    // A preload that has not loaded may be a clip not voiced yet, so the full address voices it.
+    const ready = loaded.current === uri || (!!loaded.current && status.isLoaded);
+    pressed.current = { at: performance.now(), preloaded: ready && status.isLoaded };
+    if (ready) {
+      void player.seekTo(0);
+    } else {
       player.replace({ uri, headers });
       loaded.current = uri;
-    } else {
-      void player.seekTo(0);
     }
     player.play();
     setAsked(true);
@@ -217,16 +235,6 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
     }
   }, [error, reduce, shake, tips]);
   const style = useAnimatedStyle(() => ({ transform: [{ translateX: shake.value }] }));
-  // A slow load turns a loader in the speaker's place, as the web's does.
-  const [slow, setSlow] = useState(false);
-  useEffect(() => {
-    if (state !== "loading") {
-      setSlow(false);
-      return;
-    }
-    const timer = setTimeout(() => setSlow(true), SLOW_MS);
-    return () => clearTimeout(timer);
-  }, [state]);
 
   return (
     // Its box sits inside the text's line height, so the line never moves when it appears.
@@ -240,7 +248,8 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
           round
           // A miss reveals the card, so the speaker reaches 56 pt rather than the usual 44.
           reach={12}
-          busy={slow}
+          // A clip voiced before is preloaded, so a load here is speech being made.
+          busy={state === "loading"}
           glyph={(ink, size) => (
             <Speaker ink={ink} size={size} playing={state === "playing" && !reduce} />
           )}

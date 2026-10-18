@@ -475,6 +475,53 @@ describe("pronunciation audio", () => {
     expect(get).toHaveBeenCalledOnce();
   });
 
+  it("serves a stored clip to a preload and never voices one that is missing", async () => {
+    const objects = new Map<string, R2ObjectBody>();
+    const put = vi.fn(async (key: string) => {
+      objects.set(key, storedAudio(key));
+    });
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) =>
+        ({ get: vi.fn(async (key: string) => objects.get(key) ?? null), put })[property as "get"],
+    });
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const providers = () => [provider("google-gemini", speech)];
+
+    await expect(
+      pronunciationAudio(context(card()), "card-1", { bucket, providers, storedOnly: true }),
+    ).rejects.toMatchObject({ code: "not_found" });
+    expect(speech).not.toHaveBeenCalled();
+
+    const played = await pronunciationAudio(context(card()), "card-1", { bucket, providers });
+    const preloaded = await pronunciationAudio(context(card()), "card-1", {
+      bucket,
+      providers,
+      storedOnly: true,
+    });
+    expect(preloaded.key).toBe(played.key);
+    expect(speech).toHaveBeenCalledOnce();
+  });
+
+  it("never voices for a preload when the remembered clip is from a retired provider", async () => {
+    const old = storedAudio("cards/card-1/openai.mp3");
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) =>
+        ({ get: vi.fn(async (key: string) => (key === old.key ? old : null)), put: vi.fn() })[
+          property as "get"
+        ],
+    });
+    const gemini = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+
+    await expect(
+      pronunciationAudio(context(card({ audioKey: old.key })), "card-1", {
+        bucket,
+        providers: () => [provider("google-gemini", gemini)],
+        storedOnly: true,
+      }),
+    ).rejects.toMatchObject({ code: "not_found" });
+    expect(gemini).not.toHaveBeenCalled();
+  });
+
   it("replaces remembered audio from a provider that is no longer preferred", async () => {
     const old = storedAudio("cards/card-1/openai.mp3");
     const objects = new Map<string, R2ObjectBody>([[old.key, old]]);

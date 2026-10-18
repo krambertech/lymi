@@ -388,8 +388,8 @@ function Run({
   const current =
     !leg || paused ? null : leg.kind === "draw" ? (atStop ? null : drawn) : (listLeft[0] ?? null);
   const recallTimes = useRecallClock(current ? `${keyOf(current)}:${done}` : null, revealed);
-  const pronounce = usePronunciation(current?.card ?? null, (outcome) =>
-    captureEvent("pronunciation_played", { outcome, revealed }),
+  const pronounce = usePronunciation(current?.card ?? null, (outcome, { preloaded, waitMs }) =>
+    captureEvent("pronunciation_played", { outcome, revealed, preloaded, wait_ms: waitMs }),
   );
 
   // A review starts with one firm tap as its first card arrives.

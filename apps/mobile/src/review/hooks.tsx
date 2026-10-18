@@ -114,7 +114,7 @@ const offerOut = new Keyframe({
   .reduceMotion(ALWAYS);
 
 /**
- * The offer to write a hook for an often-forgotten card. It floats in glass over the card's foot,
+ * The offer to write a hook for an often-forgotten card. It floats in clear glass over the card's foot,
  * so a long card scrolls on under it rather than stopping at its edge. It asks for nothing, so it
  * is never amber and never in the way of a grade. Glass that starts transparent never draws, so it
  * rises in from under the card's edge rather than fading. phone.md "Glass".
@@ -178,7 +178,7 @@ export function HookOffer({
       className="absolute inset-x-0 bottom-0 px-3 pb-3"
     >
       {glass ? (
-        <GlassView isInteractive glassEffectStyle="regular" style={OFFER_SHAPE}>
+        <GlassView isInteractive glassEffectStyle="clear" style={OFFER_SHAPE}>
           {face}
         </GlassView>
       ) : (

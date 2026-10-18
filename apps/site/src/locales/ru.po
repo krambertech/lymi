@@ -3730,7 +3730,7 @@ msgid "The facial nerve: muscles of facial expression and taste on the front two
 msgstr "Лицевой нерв: мимические мышцы и вкус на передних двух третях языка"
 
 msgid "The flashcard app that speaks Japanese."
-msgstr "Карточки, которые говорят по-японски."
+msgstr "Флеш-карточки, которые говорят по-японски."
 
 msgid "The free evening after work"
 msgstr "Свободный вечер после работы"

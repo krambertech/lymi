@@ -163,7 +163,7 @@ const HEIGHT: Record<ButtonSize, string> = {
   sm: "h-8 px-3 rounded-sm",
   md: "h-11 px-4 rounded-md",
   lg: "h-12 px-5 rounded-md",
-  xl: "h-13 px-5 rounded-md",
+  xl: "h-[52px] px-5 rounded-md",
 };
 const LABEL: Record<ButtonSize, string> = {
   sm: "text-sm",

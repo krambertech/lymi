@@ -1331,6 +1331,13 @@ function CardPlate({
       ? { icon: "source" as const, name: card.source }
       : null;
   const canPeek = !revealed && !!hook && !hookShown && !!onPeek;
+  const hold =
+    revealed && onMenu
+      ? () => {
+          haptics.reveal();
+          onMenu();
+        }
+      : undefined;
   const fit = useFitStep(revealed, GRADE_ROOM);
   const edges = useScrollEdges();
   const tip = useTipLayer();
@@ -1409,7 +1416,7 @@ function CardPlate({
             <ScrollView
               keyboardShouldPersistTaps="handled"
               className="flex-1"
-              contentContainerClassName="grow justify-center px-5 pt-4"
+              contentContainerClassName="grow px-5 pt-4"
               // The offer floats over the card's foot, so the last line can scroll clear above it.
               contentContainerStyle={{ paddingBottom: 16 + (offerShown ? offerRoom : 0) }}
               onLayout={(e) => {
@@ -1423,147 +1430,155 @@ function CardPlate({
               scrollEnabled={revealed}
               showsVerticalScrollIndicator={false}
             >
-              <Animated.View layout={glide}>
-                {picture ? (
-                  card.image ? (
-                    <Picture card={card} />
+              {/* The hold lives inside the scroll: the card's own Pressable, as the responder, stops a native scroll. */}
+              <Pressable
+                onLongPress={hold}
+                delayLongPress={400}
+                disabled={!hold}
+                accessible={false}
+                className="grow justify-center"
+              >
+                <Animated.View layout={glide}>
+                  {picture ? (
+                    card.image ? (
+                      <Picture card={card} />
+                    ) : (
+                      <Text className="text-md text-muted">{t`This card’s picture was removed.`}</Text>
+                    )
                   ) : (
-                    <Text className="text-md text-muted">{t`This card’s picture was removed.`}</Text>
-                  )
-                ) : (
-                  <CardLine
-                    style={type.cue}
-                    lang={mode.cue === "term" ? card.language : null}
-                    reading={mode.cue === "term" ? furigana : null}
-                    hidden={!cueFurigana}
-                    // The term can be heard as soon as it is the question.
-                    after={
-                      pronounce && mode.cue === "term" ? (
-                        <PronounceButton pronounce={pronounce} />
-                      ) : undefined
-                    }
-                  >
-                    {cue}
-                  </CardLine>
-                )}
-                {readingOnCue && (
-                  <Text className="pt-2 text-md text-muted" lang={card.language}>
-                    {reading}
-                  </Text>
-                )}
-                {/* The hook has one place, under the cue, before the reveal and after it. */}
-                {hook && hookShown ? (
-                  <View className="pt-3">
-                    <HookLine text={hook.text} source={hook.source} still={still} />
-                  </View>
-                ) : hook && revealed && onShowHook ? (
-                  <View className="pt-2">
-                    <ShowHookButton still={still} onShow={onShowHook} />
-                  </View>
-                ) : null}
-              </Animated.View>
-              {revealed && (
-                <View className="gap-5 pt-5">
-                  <Wick still={still} />
-                  <View className="gap-3">
-                    <Animated.View entering={arrive()}>
-                      {picture ? (
-                        <View className="flex-row items-center gap-3">
+                    <CardLine
+                      style={type.cue}
+                      lang={mode.cue === "term" ? card.language : null}
+                      reading={mode.cue === "term" ? furigana : null}
+                      hidden={!cueFurigana}
+                      // The term can be heard as soon as it is the question.
+                      after={
+                        pronounce && mode.cue === "term" ? (
+                          <PronounceButton pronounce={pronounce} />
+                        ) : undefined
+                      }
+                    >
+                      {cue}
+                    </CardLine>
+                  )}
+                  {readingOnCue && (
+                    <Text className="pt-2 text-md text-muted" lang={card.language}>
+                      {reading}
+                    </Text>
+                  )}
+                  {/* The hook has one place, under the cue, before the reveal and after it. */}
+                  {hook && hookShown ? (
+                    <View className="pt-3">
+                      <HookLine text={hook.text} source={hook.source} still={still} />
+                    </View>
+                  ) : hook && revealed && onShowHook ? (
+                    <View className="pt-2">
+                      <ShowHookButton still={still} onShow={onShowHook} />
+                    </View>
+                  ) : null}
+                </Animated.View>
+                {revealed && (
+                  <View className="gap-5 pt-5">
+                    <Wick still={still} />
+                    <View className="gap-3">
+                      <Animated.View entering={arrive()}>
+                        {picture ? (
+                          <View className="flex-row items-center gap-3">
+                            <View className="shrink">
+                              <Furigana
+                                segments={(mode.target === "term" && furigana) || [{ text: back }]}
+                                className="text-2xl font-medium text-text"
+                                style={back === noMeaning ? { color: p.muted } : undefined}
+                                lang={mode.target === "term" ? card.language : null}
+                              />
+                            </View>
+                            {pronounce && mode.target === "term" && (
+                              <PronounceButton pronounce={pronounce} />
+                            )}
+                          </View>
+                        ) : (
+                          <CardLine
+                            style={type.answer}
+                            grows
+                            lang={mode.target === "term" ? card.language : null}
+                            reading={mode.target === "term" ? furigana : null}
+                            muted={back === noMeaning ? p.muted : undefined}
+                            after={
+                              pronounce && mode.target === "term" ? (
+                                <PronounceButton pronounce={pronounce} />
+                              ) : undefined
+                            }
+                          >
+                            {back}
+                          </CardLine>
+                        )}
+                      </Animated.View>
+                      {picture && (
+                        <Animated.View entering={arrive()} className="flex-row items-center gap-3">
                           <View className="shrink">
                             <Furigana
-                              segments={(mode.target === "term" && furigana) || [{ text: back }]}
-                              className="text-2xl font-medium text-text"
-                              style={back === noMeaning ? { color: p.muted } : undefined}
-                              lang={mode.target === "term" ? card.language : null}
+                              segments={
+                                mode.target === "term"
+                                  ? [{ text: card.meaning ?? "" }]
+                                  : (furigana ?? [{ text: card.term }])
+                              }
+                              className="text-lg text-text-2"
+                              lang={mode.target === "term" ? null : card.language}
                             />
                           </View>
-                          {pronounce && mode.target === "term" && (
+                          {pronounce && mode.target !== "term" && (
                             <PronounceButton pronounce={pronounce} />
                           )}
-                        </View>
-                      ) : (
-                        <CardLine
-                          style={type.answer}
-                          grows
-                          lang={mode.target === "term" ? card.language : null}
-                          reading={mode.target === "term" ? furigana : null}
-                          muted={back === noMeaning ? p.muted : undefined}
-                          after={
-                            pronounce && mode.target === "term" ? (
-                              <PronounceButton pronounce={pronounce} />
-                            ) : undefined
-                          }
-                        >
-                          {back}
-                        </CardLine>
+                        </Animated.View>
                       )}
-                    </Animated.View>
-                    {picture && (
-                      <Animated.View entering={arrive()} className="flex-row items-center gap-3">
-                        <View className="shrink">
-                          <Furigana
-                            segments={
-                              mode.target === "term"
-                                ? [{ text: card.meaning ?? "" }]
-                                : (furigana ?? [{ text: card.term }])
-                            }
-                            className="text-lg text-text-2"
-                            lang={mode.target === "term" ? null : card.language}
-                          />
-                        </View>
-                        {pronounce && mode.target !== "term" && (
-                          <PronounceButton pronounce={pronounce} />
-                        )}
-                      </Animated.View>
-                    )}
-                    {/* After the reveal unless the cue keeps it or furigana draws it over the term, which
+                      {/* After the reveal unless the cue keeps it or furigana draws it over the term, which
                     VoiceOver reads out. Under a term cue it reads the term out. */}
-                    {card.pronunciation && !readingOnCue && !furigana && (
-                      <Animated.View entering={arrive()}>
-                        <Text className="text-md text-muted" lang={card.language}>
-                          {card.pronunciation}
-                        </Text>
-                      </Animated.View>
-                    )}
-                    {!picture && card.image && (
-                      <Animated.View entering={arrive()} style={{ maxWidth: 220 }}>
-                        <Picture card={card} maxHeight={120} />
-                      </Animated.View>
-                    )}
-                    {card.example && (
-                      <Animated.View entering={arrive()}>
-                        <ReadingText
-                          text={card.example}
-                          known={known}
-                          className="text-md text-text-2"
-                          lang={card.language}
-                        />
-                      </Animated.View>
-                    )}
-                    {card.notes && (
-                      <Animated.View entering={arrive()}>
-                        <CardNotes source={card.notes} className="text-base text-muted" />
-                      </Animated.View>
-                    )}
-                    {(place || aiWritten) && (
-                      <Animated.View
-                        entering={arrive()}
-                        className="mt-1 flex-row flex-wrap items-center gap-1.5"
-                      >
-                        {place && (
-                          <Chip size="sm" icon={place.icon}>
-                            {place.name}
-                          </Chip>
-                        )}
-                        {aiWritten && <AiCardChip />}
-                      </Animated.View>
-                    )}
+                      {card.pronunciation && !readingOnCue && !furigana && (
+                        <Animated.View entering={arrive()}>
+                          <Text className="text-md text-muted" lang={card.language}>
+                            {card.pronunciation}
+                          </Text>
+                        </Animated.View>
+                      )}
+                      {!picture && card.image && (
+                        <Animated.View entering={arrive()} style={{ maxWidth: 220 }}>
+                          <Picture card={card} maxHeight={120} />
+                        </Animated.View>
+                      )}
+                      {card.example && (
+                        <Animated.View entering={arrive()}>
+                          <ReadingText
+                            text={card.example}
+                            known={known}
+                            className="text-md text-text-2"
+                            lang={card.language}
+                          />
+                        </Animated.View>
+                      )}
+                      {card.notes && (
+                        <Animated.View entering={arrive()}>
+                          <CardNotes source={card.notes} className="text-base text-muted" />
+                        </Animated.View>
+                      )}
+                      {(place || aiWritten) && (
+                        <Animated.View
+                          entering={arrive()}
+                          className="mt-1 flex-row flex-wrap items-center gap-1.5"
+                        >
+                          {place && (
+                            <Chip size="sm" icon={place.icon}>
+                              {place.name}
+                            </Chip>
+                          )}
+                          {aiWritten && <AiCardChip />}
+                        </Animated.View>
+                      )}
+                    </View>
                   </View>
-                </View>
-              )}
+                )}
+              </Pressable>
             </ScrollView>
             <ScrollFade edge="top" height={24} shown={edges.more.above} />
-            <ScrollFade edge="bottom" height={40} shown={edges.more.below} />
           </View>
 
           {/* The cue and the target at each step, unseen, to choose the largest that fits. */}
@@ -1614,6 +1629,8 @@ function CardPlate({
 
           {!revealed && hint && <RevealHint lifted={canPeek} />}
           {canPeek && onPeek && <PeekButton onPeek={onPeek} />}
+          {/* None under the offer, so its glass has text to blur. On the plate, since the scroll's box stops short of its foot. */}
+          <ScrollFade edge="bottom" height={40} shown={edges.more.below && !offerShown} />
           {offerShown && onOffer && (
             <HookOffer
               still={still}

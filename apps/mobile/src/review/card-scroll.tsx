@@ -51,8 +51,8 @@ export function ScrollFade({
   return (
     <Animated.View
       pointerEvents="none"
-      className={`absolute inset-x-0 ${edge === "top" ? "top-0" : "bottom-0"}`}
-      style={[{ height }, style]}
+      // A plain style, since Uniwind's `absolute` drops an edge class beside an inline style.
+      style={[{ position: "absolute", left: 0, right: 0, [edge]: 0, height }, style]}
     >
       <Svg width="100%" height="100%">
         <Defs>

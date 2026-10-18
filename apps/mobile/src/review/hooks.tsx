@@ -39,8 +39,9 @@ const arrive = (ms: number, y: number, delay = 0) =>
     .reduceMotion(ALWAYS);
 
 /**
- * The pill at the foot of an unrevealed card that peeks at its hook. A tap on it never turns the
- * card, and once the hook shows it goes, since there is nothing more to take.
+ * The quiet control at the foot of an unrevealed card that peeks at its hook, as quiet as Show hook
+ * after the reveal, since recall comes first. A tap on it never turns the card, and once the hook
+ * shows it goes, since there is nothing more to take.
  */
 export function PeekButton({ onPeek }: { onPeek: () => void }) {
   const { t } = useLingui();
@@ -49,7 +50,7 @@ export function PeekButton({ onPeek }: { onPeek: () => void }) {
       exiting={FadeOut.duration(120).reduceMotion(ALWAYS)}
       className="items-center px-5 pb-5"
     >
-      <Button size="md" icon="hook" label={t`Peek at your hook`} onPress={onPeek} />
+      <Button size="sm" variant="ghost" icon="hook" label={t`Peek at your hook`} onPress={onPeek} />
     </Animated.View>
   );
 }
@@ -153,22 +154,18 @@ export function HookOffer({
       accessibilityRole="button"
       accessibilityLabel={t`Try a memory hook`}
       accessibilityHint={t`A short phrase that helps you remember it`}
-      className="flex-row items-center gap-3 px-3 py-3"
+      className="flex-row items-center gap-3 py-2 ps-2 pe-3"
       style={({ pressed }) => (pressed && !glass ? { backgroundColor: p.hover } : null)}
     >
       <View
-        className={`size-10 items-center justify-center rounded-full ${glass ? "bg-glass-plate" : "bg-plate"}`}
+        className={`size-8 items-center justify-center rounded-full ${glass ? "bg-glass-plate" : "bg-plate"}`}
       >
-        <Icon name="hook" size={18} colour={p["text-2"]} />
+        <Icon name="hook" size={16} colour={p["text-2"]} />
       </View>
-      <View className="min-w-0 flex-1 gap-0.5">
-        <Text className="text-md font-medium text-text" numberOfLines={2}>
-          {t`Try a memory hook`}
-        </Text>
-        <Text className="text-sm text-text-2" numberOfLines={2}>
-          {t`A short phrase that helps you remember it`}
-        </Text>
-      </View>
+      {/* One line, so a long card keeps its room; what a hook is stays in the hint. */}
+      <Text className="min-w-0 flex-1 text-base font-medium text-text" numberOfLines={1}>
+        {t`Try a memory hook`}
+      </Text>
       <Icon name="forward" size={16} colour={p.muted} />
     </Pressable>
   );

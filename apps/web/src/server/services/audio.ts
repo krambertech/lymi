@@ -17,6 +17,8 @@ interface AudioDependencies {
   bucket: R2Bucket;
   /** In preference order. Building a provider must not parse credentials or reach the network. */
   providers: (language: string) => SpeechProvider[];
+  /** Serve only a clip a play would serve without voicing it, so a preload never spends. */
+  storedOnly?: boolean | undefined;
 }
 
 /**
@@ -66,6 +68,8 @@ export async function pronunciationAudio(
       if (card.audioKey !== key) await rememberAudioKey(ctx, card, key, false, provider.provider);
       return cached;
     }
+    if (deps.storedOnly)
+      throw new ServiceError("not_found", "Pronunciation audio is not stored yet");
 
     let audio: Uint8Array;
     const text = spokenText(card);

@@ -179,6 +179,10 @@ function leftInLeg<T>(items: readonly T[], cards: LegCards, key: (item: T) => st
   ];
 }
 
+/** What a loaded clip says, so a replay reuses it until an edit changes the card's words. */
+const audioSourceOf = (card: { id: string; language: string | null; term: string }) =>
+  `${card.id}\n${card.language}\n${card.term}`;
+
 /** A review of another deck or series starts over, so nothing from this one carries into it. */
 function ReviewPage() {
   const { deck, series, section, cards } = Route.useSearch();
@@ -636,38 +640,65 @@ function Review() {
     setAudioState("idle");
   }, []);
 
+  const watchAudio = useCallback(
+    (audio: HTMLAudioElement) => {
+      audio.addEventListener("ended", () => {
+        if (playingAudio.current === audio) stopAudio();
+      });
+      return audio;
+    },
+    [stopAudio],
+  );
+
+  // A clip voiced before is loaded with the card, so a tap plays it at once; a missing one is never voiced ahead.
+  const preloadCard = current?.card;
+  const preloadSource =
+    preloadCard?.audioKey && canPlayPronunciation(preloadCard) ? audioSourceOf(preloadCard) : null;
   useEffect(() => {
     setAudioError(null);
     if (!currentCardId) stopAudio();
+    let live = true;
+    if (preloadSource && currentCardId) {
+      const audio = watchAudio(new Audio());
+      audio.preload = "auto";
+      audio.addEventListener(
+        "canplaythrough",
+        () => {
+          if (live && !loadedAudio.current) loadedAudio.current = { source: preloadSource, audio };
+        },
+        { once: true },
+      );
+      audio.src = api.storedAudioUrl(currentCardId);
+    }
     return () => {
+      live = false;
       stopAudio();
       loadedAudio.current = null;
     };
-  }, [currentCardId, stopAudio]);
+  }, [currentCardId, preloadSource, stopAudio, watchAudio]);
 
   const playAudio = useCallback(async () => {
     if (!current || !canPlayPronunciation(current.card) || audioState === "loading") return;
     stopAudio();
     setAudioError(null);
-    const { id, language, term } = current.card;
     // The response is no-store, so a replay rewinds the element that already holds it, until an edit changes what it says.
-    const source = `${id}\n${language}\n${term}`;
+    const source = audioSourceOf(current.card);
     const loaded = loadedAudio.current?.source === source ? loadedAudio.current.audio : null;
-    const audio = loaded ?? new Audio(api.audioUrl(id));
+    const pressed = performance.now();
+    const timing = () => ({
+      preloaded: !!loaded,
+      wait_ms: Math.min(60_000, Math.round(performance.now() - pressed)),
+    });
+    const audio = loaded ?? watchAudio(new Audio(api.audioUrl(current.card.id)));
     if (loaded) audio.currentTime = 0;
-    else {
-      setAudioState("loading");
-      audio.addEventListener("ended", () => {
-        if (playingAudio.current === audio) stopAudio();
-      });
-    }
+    else setAudioState("loading");
     playingAudio.current = audio;
     try {
       await audio.play();
       if (playingAudio.current === audio) {
         loadedAudio.current = { source, audio };
         setAudioState("playing");
-        captureAnalytics("pronunciation_played", { outcome: "played", revealed });
+        captureAnalytics("pronunciation_played", { outcome: "played", revealed, ...timing() });
       }
     } catch {
       if (loadedAudio.current?.audio === audio) loadedAudio.current = null;
@@ -678,10 +709,10 @@ function Review() {
           item: itemKey(current),
           message: t`Couldn’t play the pronunciation. Try again in a moment.`,
         });
-        captureAnalytics("pronunciation_played", { outcome: "failed", revealed });
+        captureAnalytics("pronunciation_played", { outcome: "failed", revealed, ...timing() });
       }
     }
-  }, [audioState, current, revealed, stopAudio, t]);
+  }, [audioState, current, revealed, stopAudio, t, watchAudio]);
 
   const invalidateReviewData = useCallback(() => {
     qc.invalidateQueries({ queryKey: ["decks"] });

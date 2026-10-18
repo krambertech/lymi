@@ -106,7 +106,7 @@ test("a revealed card names its section in place of its source", async () => {
   expect(card.textContent).not.toContain("Lesson 14");
 });
 
-test("a pronunciation that loads quickly dims the button and shows no spinner", async () => {
+test("a pronunciation that loads shows the spinner at once", async () => {
   await render(
     <I18nProvider i18n={i18n}>
       <ReviewCard
@@ -121,8 +121,7 @@ test("a pronunciation that loads quickly dims the button and shows no spinner", 
 
   const button = page.getByRole("button", { name: "Play pronunciation" });
   await expect.element(button).toHaveAttribute("aria-disabled", "true");
-  expect(button.element().querySelector(".animate-spin")).toBeNull();
-  await expect.poll(() => button.element().querySelector(".animate-spin")).not.toBeNull();
+  expect(button.element().querySelector(".animate-spin")).not.toBeNull();
 });
 
 // The hidden copy that sizes the card holds the answer before the reveal, so look at what shows.

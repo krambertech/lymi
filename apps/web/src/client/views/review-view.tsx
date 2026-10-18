@@ -199,22 +199,6 @@ interface AudioButtonProps {
   className?: string | undefined;
 }
 
-// Most audio arrives within a beat, so the spinner waits for a load that is actually slow.
-const SPINNER_DELAY_MS = 600;
-
-function useSlowLoad(loading: boolean) {
-  const [slow, setSlow] = useState(false);
-  useEffect(() => {
-    if (!loading) {
-      setSlow(false);
-      return;
-    }
-    const timer = setTimeout(() => setSlow(true), SPINNER_DELAY_MS);
-    return () => clearTimeout(timer);
-  }, [loading]);
-  return slow;
-}
-
 /**
  * Pronunciation, at the end of the word. A failure turns the button red, shakes it once and says
  * why in a tip over it; the button stays red until the next try.
@@ -228,7 +212,6 @@ function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
   const [scope, animate] = useAnimate<HTMLSpanElement>();
   const reduce = useReduceMotion();
   const shaken = useRef(error);
-  const slow = useSlowLoad(state === "loading") && state === "loading";
 
   // Shake once per new failure, never for an error the button was drawn with.
   useEffect(() => {
@@ -256,13 +239,11 @@ function AudioButton({ state, error, onPlay, className }: AudioButtonProps) {
             onPlay();
           }}
         >
-          {slow ? (
+          {/* A clip voiced before is preloaded, so a load here is speech being made. */}
+          {state === "loading" ? (
             <Loader2 className="animate-spin" aria-hidden="true" />
           ) : (
-            <Volume2
-              className={clsx("transition-opacity", state === "loading" && "opacity-50")}
-              aria-hidden="true"
-            />
+            <Volume2 aria-hidden="true" />
           )}
         </IconButton>
       </span>

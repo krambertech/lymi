@@ -414,6 +414,13 @@
       "when": 1792249127807,
       "tag": "0058_odd_the_fury",
       "breakpoints": true
+    },
+    {
+      "idx": 59,
+      "version": "6",
+      "when": 1792329224521,
+      "tag": "0059_redraft_hooks",
+      "breakpoints": true
     }
   ]
 }

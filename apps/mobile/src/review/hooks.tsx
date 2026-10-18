@@ -154,14 +154,10 @@ export function HookOffer({
       accessibilityRole="button"
       accessibilityLabel={t`Try a memory hook`}
       accessibilityHint={t`A short phrase that helps you remember it`}
-      className="flex-row items-center gap-3 py-2 ps-2 pe-3"
+      className="flex-row items-center gap-2 py-3 ps-4 pe-3"
       style={({ pressed }) => (pressed && !glass ? { backgroundColor: p.hover } : null)}
     >
-      <View
-        className={`size-8 items-center justify-center rounded-full ${glass ? "bg-glass-plate" : "bg-plate"}`}
-      >
-        <Icon name="hook" size={16} colour={p["text-2"]} />
-      </View>
+      <Icon name="hook" size={16} colour={p["text-2"]} />
       {/* One line, so a long card keeps its room; what a hook is stays in the hint. */}
       <Text className="min-w-0 flex-1 text-base font-medium text-text" numberOfLines={1}>
         {t`Try a memory hook`}

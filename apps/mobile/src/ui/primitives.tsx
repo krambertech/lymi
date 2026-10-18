@@ -157,20 +157,21 @@ export function Press({
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md" | "lg" | "xl";
 
-// Every control on the phone is 44 pt, so `md` is too; `sm` reaches 44 through its hit slop.
+// Every control on the phone is 44 pt, so `md` is too; `sm` reaches 44 through its hit slop. `xl` is
+// iOS's large button, 52 pt with a 17 pt label, since the web's 64 px stacks too tall on a phone.
 const HEIGHT: Record<ButtonSize, string> = {
   sm: "h-8 px-3 rounded-sm",
   md: "h-11 px-4 rounded-md",
   lg: "h-12 px-5 rounded-md",
-  xl: "h-16 px-5 rounded-md",
+  xl: "h-[52px] px-5 rounded-md",
 };
 const LABEL: Record<ButtonSize, string> = {
   sm: "text-sm",
   md: "text-md",
   lg: "text-md",
-  xl: "text-lg",
+  xl: "text-md",
 };
-const ICON: Record<ButtonSize, number> = { sm: 16, md: 18, lg: 20, xl: 20 };
+const ICON: Record<ButtonSize, number> = { sm: 16, md: 18, lg: 20, xl: 18 };
 const SLOP = { sm: 6, md: 0, lg: 0, xl: 0 } as const;
 
 function look(variant: ButtonVariant, p: Palette, strong = false) {

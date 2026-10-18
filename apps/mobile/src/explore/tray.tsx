@@ -21,10 +21,12 @@ export const useCoverColour = (slug: string) => useHue("cover", slug);
 export const usePoolColour = (name: string) => useHue("pool", name);
 
 /** A long word would break mid-letter at the full size, and a long cue would run past three lines. */
-function cueStep(text: string): number {
+function cueSize(text: string, cw: number): number {
   const longest = Math.max(...text.split(/\s+/).map((word) => word.length));
   const step = longest >= 13 ? 0.105 : longest >= 10 ? 0.12 : 0.14;
-  return text.length > 28 ? Math.min(step, 0.1) : step;
+  const size = Math.max(17, cw * (text.length > 28 ? Math.min(step, 0.1) : step));
+  // Below the floor rather than breaking the longest word mid-word: the face is 83% of the card wide.
+  return Math.min(size, (cw * 0.83) / (longest * 0.6));
 }
 
 export type TrayCard = NonNullable<PublicDeckSummary["card"]>;
@@ -37,7 +39,7 @@ export function CardFace({ card, cw }: { card: TrayCard; cw: number }) {
   const { cue, target } = modeOf(known ? card.mode : "term_to_meaning");
   const picture = cue === "image" ? card.image : undefined;
   const cueText = cue === "meaning" ? card.meaning : card.term;
-  const step = cueStep(cueText);
+  const size = cueSize(cueText, cw);
   return (
     <>
       {card.section && (
@@ -74,9 +76,9 @@ export function CardFace({ card, cw }: { card: TrayCard; cw: number }) {
           className="font-medium text-text"
           style={{
             marginTop: cw * 0.06,
-            fontSize: Math.max(17, cw * step),
-            lineHeight: Math.max(17, cw * step) * 1.12,
-            letterSpacing: -0.03 * Math.max(17, cw * step),
+            fontSize: size,
+            lineHeight: size * 1.12,
+            letterSpacing: -0.03 * size,
           }}
           maxFontSizeMultiplier={1}
         >

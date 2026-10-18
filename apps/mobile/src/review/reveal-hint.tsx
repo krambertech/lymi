@@ -80,7 +80,7 @@ export function RevealHint({ lifted = false }: { lifted?: boolean }) {
       importantForAccessibility="no-hide-descendants"
       accessibilityElementsHidden
       className="absolute inset-x-0 items-center gap-1 px-5 pb-5"
-      style={{ bottom: lifted ? 64 : 0 }}
+      style={{ bottom: lifted ? 52 : 0 }}
     >
       <Animated.View style={hand}>
         <View className="size-11 items-center justify-center">

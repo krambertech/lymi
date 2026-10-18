@@ -3,8 +3,8 @@ import { api } from "@lymi/client/api";
 import { canPlayPronunciation } from "@lymi/core";
 import { SPEAKER_WAVES } from "@lymi/design";
 import { requireOptionalNativeModule } from "expo";
-import { useEffect, useRef, useState } from "react";
-import { AccessibilityInfo, View } from "react-native";
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { AccessibilityInfo, StyleSheet, View, type ViewStyle } from "react-native";
 import Animated, {
   cancelAnimation,
   FadeIn,
@@ -121,31 +121,101 @@ export const usePronunciation = audio
   ? (card: Card | null, onSettled?: PlaySettled) => useAudioPronunciation(card, audio, onSettled)
   : noPronunciation;
 
+interface Anchor {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+interface Tips {
+  show: (text: string, anchor: Anchor) => void;
+  hide: () => void;
+}
+const TipContext = createContext<Tips | null>(null);
+export const TipProvider = TipContext.Provider;
+/** Room a two-line tip needs over its button before it drops below instead. */
+const TIP_ROOM = 72;
+const TIP_GAP = 6;
+const TIP_INSET = 12;
+
+/**
+ * Where the pronunciation's tip draws: a layer over the whole card. The button sits inside a line of
+ * text and a scroll view, and either would cut a tip drawn beside it.
+ */
+export function useTipLayer() {
+  const host = useRef<View>(null);
+  const [tip, setTip] = useState<{ text: string; place: ViewStyle } | null>(null);
+  const tips = useMemo<Tips>(
+    () => ({
+      show: (text, a) =>
+        host.current?.measureInWindow((hx, hy, hw, hh) => {
+          const width = Math.min(256, hw - 2 * TIP_INSET);
+          const x = a.x - hx;
+          const y = a.y - hy;
+          const left = Math.min(
+            Math.max(x + a.width / 2 - width / 2, TIP_INSET),
+            hw - TIP_INSET - width,
+          );
+          setTip({
+            text,
+            place:
+              y >= TIP_ROOM
+                ? { left, width, bottom: hh - y + TIP_GAP }
+                : { left, width, top: y + a.height + TIP_GAP },
+          });
+        }),
+      hide: () => setTip(null),
+    }),
+    [],
+  );
+  useEffect(() => {
+    if (!tip) return;
+    const timer = setTimeout(() => setTip(null), TIP_MS);
+    return () => clearTimeout(timer);
+  }, [tip]);
+  const layer = (
+    <View ref={host} pointerEvents="none" style={StyleSheet.absoluteFill}>
+      {tip && (
+        <Animated.View
+          entering={FadeIn.duration(150).reduceMotion(ALWAYS)}
+          exiting={FadeOut.duration(100).reduceMotion(ALWAYS)}
+          className="absolute rounded-lg bg-text px-3 py-2"
+          style={tip.place}
+        >
+          <Text className="text-sm text-canvas">{tip.text}</Text>
+        </Animated.View>
+      )}
+    </View>
+  );
+  return { tips, layer };
+}
+
 /**
  * The round pronunciation button. It turns red and shakes once when a play fails, and says why in a
- * tip over itself for four seconds, so nothing is added under the card.
+ * tip over itself for four seconds, drawn on the card's tip layer so nothing is added under the card.
  */
 export type Pronunciation = NonNullable<ReturnType<typeof useAudioPronunciation>>;
 
 export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
   const { t } = useLingui();
   const reduce = useReduceMotion();
+  const tips = useContext(TipContext);
+  const anchor = useRef<View>(null);
   const shake = useSharedValue(0);
-  const [tip, setTip] = useState<string | null>(null);
   const { error, state, play } = pronounce;
 
   useEffect(() => {
     if (!error) return;
-    setTip(error);
+    anchor.current?.measureInWindow((x, y, width, height) =>
+      tips?.show(error, { x, y, width, height }),
+    );
     AccessibilityInfo.announceForAccessibility(error);
     if (!reduce) {
       shake.value = withSequence(
         ...[-6, 6, -4, 4, 0].map((x) => withTiming(x, { duration: 80, reduceMotion: ALWAYS })),
       );
     }
-    const timer = setTimeout(() => setTip(null), TIP_MS);
-    return () => clearTimeout(timer);
-  }, [error, reduce, shake]);
+  }, [error, reduce, shake, tips]);
   const style = useAnimatedStyle(() => ({ transform: [{ translateX: shake.value }] }));
   // A slow load turns a loader in the speaker's place, as the web's does.
   const [slow, setSlow] = useState(false);
@@ -161,17 +231,7 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
   return (
     // Its box sits inside the text's line height, so the line never moves when it appears.
     <View className="-my-2">
-      {tip && (
-        <Animated.View
-          entering={FadeIn.duration(150).reduceMotion(ALWAYS)}
-          exiting={FadeOut.duration(100).reduceMotion(ALWAYS)}
-          pointerEvents="none"
-          className="absolute bottom-12 end-0 w-56 rounded-lg bg-text px-3 py-2"
-        >
-          <Text className="text-sm text-canvas">{tip}</Text>
-        </Animated.View>
-      )}
-      <Animated.View style={style}>
+      <Animated.View ref={anchor} style={style}>
         <IconButton
           icon="pronunciation"
           label={state === "playing" ? t`Replay pronunciation` : t`Play pronunciation`}
@@ -185,7 +245,7 @@ export function PronounceButton({ pronounce }: { pronounce: Pronunciation }) {
             <Speaker ink={ink} size={size} playing={state === "playing" && !reduce} />
           )}
           onPress={() => {
-            setTip(null);
+            tips?.hide();
             play();
           }}
         />

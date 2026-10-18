@@ -1,8 +1,17 @@
 import { ARRIVE, SNAP_BACK } from "@lymi/design";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { View } from "react-native";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+import { useWindowDimensions, View, type ViewProps } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
+  type AnimatedProps,
   FadeIn,
   FadeInDown,
   FadeOut,
@@ -14,7 +23,6 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { spring, springIn, useReduceMotion } from "../theme/motion";
-import { useFloatingBarHeight } from "./floating-bar";
 import { useAboveTabBar } from "./tab-bar";
 import { Toast } from "./toast";
 
@@ -46,6 +54,12 @@ const listeners = new Set<() => void>();
 const emit = () => {
   for (const l of listeners) l();
 };
+const subscribe = (l: () => void) => {
+  listeners.add(l);
+  return () => {
+    listeners.delete(l);
+  };
+};
 
 /** What just happened, from anywhere, with at most one action; the newest is in front. */
 export const toast = {
@@ -71,26 +85,76 @@ export function clearToasts(scope?: string) {
   emit();
 }
 
-function useToasts() {
-  return useSyncExternalStore(
-    (l) => {
-      listeners.add(l);
-      return () => listeners.delete(l);
+// What sits at the foot of a screen, such as the review's grades or a selection bar: each claims the
+// distance from its top edge to the screen's bottom, and that scope's toasts rise above the highest.
+const floors = new Map<number, { scope: string | undefined; height: number }>();
+let nextFloor = 0;
+
+/** The toast scope a screen's controls belong to; a screen with its own `ToastHost` provides it. */
+export const ToastScope = createContext<string | undefined>(undefined);
+
+/**
+ * A control pinned to the screen's foot, such as grades or an end screen's buttons. While it shows,
+ * toasts rise above its top edge rather than covering it, wherever it sits.
+ */
+export function ToastFloor({
+  children,
+  onLayout,
+  ...props
+}: AnimatedProps<ViewProps> & { children: ReactNode }) {
+  const scope = useContext(ToastScope);
+  const ref = useRef<Animated.View>(null);
+  const id = useRef(nextFloor++).current;
+  const { height: screen } = useWindowDimensions();
+  useEffect(
+    () => () => {
+      floors.delete(id);
+      emit();
     },
-    () => items,
+    [id],
+  );
+  return (
+    <Animated.View
+      ref={ref}
+      {...props}
+      onLayout={(e) => {
+        if (typeof onLayout === "function") onLayout(e);
+        ref.current?.measureInWindow((_x, y) => {
+          floors.set(id, { scope, height: Math.max(0, screen - y) });
+          emit();
+        });
+      }}
+    >
+      {children}
+    </Animated.View>
   );
 }
 
+function useFloor(scope: string | undefined) {
+  return useSyncExternalStore(subscribe, () => {
+    let top = 0;
+    for (const f of floors.values()) if (f.scope === scope) top = Math.max(top, f.height);
+    return top;
+  });
+}
+
+function useToasts() {
+  return useSyncExternalStore(subscribe, () => items);
+}
+
 /**
- * Where toasts show: over every screen, above the tab bar on a tab's screens, mounted once in the
- * root. A screen iOS presents over the root mounts its own for its `scope`, at the `bottom` it sets.
+ * Where toasts show: over every screen, above the tab bar on a tab's screens and above any
+ * `ToastFloor`, mounted once in the root. A screen iOS presents over the root mounts its own inside
+ * its `ToastScope`; one inside a sheet's footer passes the `bottom` it sets there.
  */
-export function ToastHost({ scope, bottom: at }: { scope?: string; bottom?: number }) {
+export function ToastHost({ scope: named, bottom: at }: { scope?: string; bottom?: number }) {
+  const provided = useContext(ToastScope);
+  const scope = named ?? provided;
   const shown = useToasts();
   useEffect(() => () => clearToasts(scope), [scope]);
-  // A floating bar, such as the selection's, keeps its place and the toast rises over it.
-  const above = useAboveTabBar() + useFloatingBarHeight() + 12;
-  const bottom = at ?? above;
+  const floor = useFloor(scope);
+  const above = useAboveTabBar();
+  const bottom = at ?? Math.max(above, floor) + 12;
   // The web shows three, the older two peeking behind the newest.
   const visible = shown.filter((i) => i.scope === scope).slice(-3);
   return (

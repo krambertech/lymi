@@ -58,8 +58,8 @@ test("a new learner picks a ready-made deck on Today and starts reviewing it", a
     await learner.getByRole("combobox", { name: "I’m learning" }).click();
     await learner.getByRole("option", { name: "Icelandic", exact: true }).click();
     const tile = learner.getByRole("listitem").filter({ hasText: deck.name });
-    await tile.getByRole("button", { name: "Add", exact: true }).click();
-    await expect(learner).toHaveURL(/\/review$/);
+    await tile.getByRole("button", { name: /^Add/ }).click();
+    await expect(learner).toHaveURL(/\/review\?deck=/);
     // The card's label names what it asks, whichever direction the deck starts with.
     await expect(learner.getByLabel(new RegExp(` card for (${term}|good morning)$`))).toBeVisible();
   });

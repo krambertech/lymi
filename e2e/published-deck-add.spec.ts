@@ -68,7 +68,7 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
   await test.step("the new account lands on Today with its deck ready and reviews it", async () => {
     await expect(visitor).toHaveURL(/\/today$/);
     await expect(visitor.getByText(`${deckName} is ready.`, { exact: false })).toBeVisible();
-    await visitor.getByRole("link", { name: "Review", exact: true }).click();
+    await visitor.getByRole("link", { name: /^Review/ }).click();
 
     await expect(visitor).toHaveURL(new RegExp(`/review\\?deck=${deckId}$`));
     // The card's label names what it asks, whichever direction the deck starts with.

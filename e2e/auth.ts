@@ -106,16 +106,16 @@ function pathOf(page: Page) {
 }
 
 /**
- * The due card names the state: the count on an account with cards, nothing due, or the
- * first-run line on a fresh one. Match it in any state, specific enough that another screen
- * cannot pass.
+ * The due card names the state: the count on an account with cards or nothing due, and a fresh
+ * account is welcomed by the first-run guide. Match it in any state, specific enough that another
+ * screen cannot pass.
  */
 async function expectToday(page: Page) {
   await expect(page.getByRole("heading", { level: 1, name: "Today", exact: true })).toBeVisible();
   await expect(
     page.getByRole("heading", {
       level: 2,
-      name: /due|Getting started|Start with a deck|No cards yet|Nothing due/,
+      name: /due|^Welcome, |No cards yet|Nothing due/,
     }),
   ).toBeVisible();
 }

@@ -22,10 +22,18 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-function Editor(props: { hook?: string | null; onCancel?: () => void; onSaved?: () => void }) {
+function Editor(props: {
+  hook?: string | null;
+  meaningLanguage?: string;
+  onCancel?: () => void;
+  onSaved?: () => void;
+}) {
   const card = { ...queueItem.card, hook: props.hook ?? null };
+  const client = new QueryClient();
+  // The settings the editor reads to tell whether the AI can draft for this card.
+  client.setQueryData(["settings"], { meaningLanguage: props.meaningLanguage ?? "en" });
   return (
-    <QueryClientProvider client={new QueryClient()}>
+    <QueryClientProvider client={client}>
       <I18nProvider i18n={i18n}>
         <HookEditor
           card={card}
@@ -123,4 +131,22 @@ test("a draft that fails or comes back empty says so and leaves the field alone"
     .element(page.getByText("Couldn’t draft a hook. Try again in a moment."))
     .toBeVisible();
   await expect.element(page.getByRole("textbox", { name: "Memory hook" })).toHaveValue("");
+});
+
+test("words typed while a draft is on its way stay, and the late draft gives way", async () => {
+  let land: (value: { hook: string | null }) => void = () => undefined;
+  vi.spyOn(api, "draftHook").mockReturnValue(new Promise((resolve) => (land = resolve)));
+  await render(<Editor />);
+  await page.getByRole("button", { name: "Draft a hook" }).click();
+  const field = page.getByRole("textbox", { name: "Memory hook" });
+  await userEvent.type(field, "My own");
+  land({ hook: "A fire BRIGAde scrambling out" });
+  await expect.element(page.getByRole("button", { name: "Draft a hook" })).not.toBeInTheDocument();
+  await expect.element(field).toHaveValue("My own");
+});
+
+test("a card the AI cannot draft for offers no button", async () => {
+  await render(<Editor meaningLanguage="it" />);
+  await expect.element(page.getByRole("textbox", { name: "Memory hook" })).toBeVisible();
+  await expect.element(page.getByRole("button", { name: "Draft a hook" })).not.toBeInTheDocument();
 });

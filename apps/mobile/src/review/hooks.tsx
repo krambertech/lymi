@@ -1,10 +1,12 @@
 import { useLingui } from "@lingui/react/macro";
 import { api, type Card } from "@lymi/client/api";
+import { settingsQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { CARD_LIMITS, type FieldSource, hookableTerm } from "@lymi/core";
+import { CARD_LIMITS, type FieldSource, hookable } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
+import { useQuery } from "@tanstack/react-query";
 import { GlassView } from "expo-glass-effect";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Alert, type LayoutChangeEvent, Pressable, TextInput, View } from "react-native";
 import Animated, {
   FadeOut,
@@ -215,23 +217,36 @@ export function HookSheet({
   const [drafting, setDrafting] = useState(false);
   const [draftNote, setDraftNote] = useState<string | null>(null);
   const focus = useSheetFocus({ open });
+  // The sheet stays mounted between cards, so each opening counts and a reply from an earlier one is dropped.
+  const opening = useRef(0);
+  // What the field holds now, read when a draft lands after the learner may have typed.
+  const latest = useRef(text);
+  latest.current = text;
   // biome-ignore lint/correctness/useExhaustiveDependencies: once per opening, not per render of the card.
   useEffect(() => {
     if (!open || !card) return;
+    opening.current += 1;
     setShown(card);
     setText(card.hook ?? "");
     setDrafted(null);
+    setDrafting(false);
     setDraftNote(null);
   }, [open]);
+  const settings = useQuery(settingsQuery);
   const editing = card ?? shown;
   const empty = !text.trim();
   const untouched = drafted !== null && text === drafted;
-  // A sentence has nothing to sound alike, so only a word or a short phrase offers a draft.
+  // Only where the server drafts at all, and never over the learner's own words.
   const draftable =
-    !!editing?.language && hookableTerm(editing.term) && (empty || untouched || drafting);
+    !!editing &&
+    !!settings.data &&
+    hookable(editing, settings.data.meaningLanguage) &&
+    (empty || untouched || drafting);
 
   const draft = async () => {
     if (!editing || drafting) return;
+    const asked = opening.current;
+    const before = latest.current;
     setDrafting(true);
     setDraftNote(null);
     const started = performance.now();
@@ -239,6 +254,7 @@ export function HookSheet({
     try {
       const { hook } = await api.draftHook(editing.id);
       captureEvent("hook_drafted", { outcome: hook ? "drafted" : "none", wait_ms: waited() });
+      if (opening.current !== asked || latest.current !== before) return;
       if (hook) {
         setText(hook);
         setDrafted(hook);
@@ -247,9 +263,9 @@ export function HookSheet({
       }
     } catch {
       captureEvent("hook_drafted", { outcome: "failed", wait_ms: waited() });
-      setDraftNote(t`Couldn’t draft a hook. Try again in a moment.`);
+      if (opening.current === asked) setDraftNote(t`Couldn’t draft a hook. Try again in a moment.`);
     } finally {
-      setDrafting(false);
+      if (opening.current === asked) setDrafting(false);
     }
   };
 

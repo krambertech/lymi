@@ -2,7 +2,7 @@ import {
   CARD_LIMITS,
   effectiveModes,
   headword,
-  hookableTerm,
+  hookable,
   modesFromDirections,
   type ReviewModeKey,
 } from "@lymi/core";
@@ -176,17 +176,6 @@ export function acceptDraft(raw: string | null, card: HookCard): string | null {
   return givesAway(hook, card) ? null : hook;
 }
 
-/**
- * Whether a card is one the keyword method fits: a word or short phrase in a language other than
- * the one its meanings are written in. A fact in the learner's own language has nothing to sound alike.
- */
-export function hookable(card: Omit<HookCard, "asked">, meaningLanguage: string): boolean {
-  if (!card.meaning.trim() || !card.language) return false;
-  const primary = (tag: string) => tag.toLowerCase().split("-")[0];
-  if (primary(card.language) === primary(meaningLanguage)) return false;
-  return hookableTerm(card.term);
-}
-
 /** One draft for one card, or null when the model has none it may offer. */
 export async function draftHook(provider: TextProvider, card: HookCard): Promise<string | null> {
   const input = JSON.stringify({
@@ -265,7 +254,9 @@ export async function hookDraftFor(
     });
     throw new ServiceError("unavailable", "The AI couldn't draft a hook. Try again in a moment.");
   }
-  // Only while the card still reads as it did, so a draft never outlives the words it was for.
+  // An empty answer keeps the last draft, which may still be in the learner's field. Only while the
+  // card still reads as it did, so a draft never outlives the words it was for.
+  if (draft === null) return null;
   await ctx.db
     .update(schema.cards)
     .set({ hookDraft: draft })

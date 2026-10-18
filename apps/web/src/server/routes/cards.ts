@@ -27,6 +27,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { createTextProvider } from "../ai";
 import { publisherEmails } from "../env";
+import { limitHookDrafts } from "../hook-draft-rate-limit";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import {
@@ -334,11 +335,12 @@ cards.post(
     summary: "Draft a memory hook",
     description:
       "A fresh AI draft for the card's memory hook: a short mnemonic, in the meaning's language, that leads back to the answer without writing it. " +
-      "Each ask drafts again, so asking twice gives another. Nothing on the card changes. " +
+      "Each ask drafts again, so asking twice gives another, up to 60 an hour. Nothing on the card changes. " +
       "Only the card's owner may ask.",
     ok: { schema: HookDraftOut, description: "The draft, or null" },
     errors: [404, 503],
   }),
+  limitHookDrafts,
   async (c) => {
     const ctx = ctxOf(c);
     const provider = createTextProvider(c.env, textCallReporter(ctx.analytics, "hook"));

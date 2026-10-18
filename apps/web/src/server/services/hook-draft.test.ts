@@ -1,10 +1,11 @@
+import { hookable } from "@lymi/core";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider } from "../ai";
 import type { Db } from "../db";
 import { addCards, archiveCard, showCard, updateCard } from "./cards";
 import { ServiceError } from "./context";
 import { createDeck, updateDeck } from "./decks";
-import { acceptDraft, givesAway, type HookCard, hookable, hookDraftFor } from "./hook-draft";
+import { acceptDraft, givesAway, type HookCard, hookDraftFor } from "./hook-draft";
 import { learner, testDb } from "./test-db";
 
 const kurb: HookCard = {
@@ -135,6 +136,16 @@ describe("hookDraftFor", () => {
     await hookDraftFor(ctx, cardId, drafted.provider);
     const [request] = drafted.complete.mock.calls[0] as unknown as [{ input: string }];
     expect(JSON.parse(request.input).deckMeanings).toEqual(["море"]);
+  });
+
+  it("keeps the last draft when another ask comes back empty, so saving it is still the AI's", async () => {
+    const { ctx, cardId } = await card("hook-draft-keep");
+    expect(await hookDraftFor(ctx, cardId, provider("КУРБан грустит").provider)).toBe(
+      "КУРБан грустит",
+    );
+    expect(await hookDraftFor(ctx, cardId, provider(null).provider)).toBeNull();
+    await updateCard(ctx, cardId, { hook: "КУРБан грустит", hookSource: "manual" });
+    expect((await showCard(ctx, cardId)).hookSource).toBe("ai");
   });
 
   it("asks twice before answering none, and drafts nothing without a vendor", async () => {

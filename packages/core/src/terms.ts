@@ -82,7 +82,17 @@ export function headword(term: string): string {
   return at > 0 ? term.slice(0, at) : term;
 }
 
-/** A word or a phrase of up to three words, on its first form: what a keyword hook can sound like. */
-export function hookableTerm(term: string): boolean {
-  return headword(term).trim().split(/\s+/).length <= 3;
+/**
+ * Whether a card is one the keyword method fits, so the AI may draft its hook: a word or a phrase of
+ * up to three words, on its first form, in a language other than the one its meanings are written
+ * in. A sentence or a fact in the learner's own language has nothing to sound alike.
+ */
+export function hookable(
+  card: { term: string; meaning?: string | null | undefined; language?: string | null | undefined },
+  meaningLanguage: string,
+): boolean {
+  if (!card.meaning?.trim() || !card.language) return false;
+  const primary = (tag: string) => tag.toLowerCase().split("-")[0];
+  if (primary(card.language) === primary(meaningLanguage)) return false;
+  return headword(card.term).trim().split(/\s+/).length <= 3;
 }

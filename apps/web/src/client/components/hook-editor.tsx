@@ -1,12 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
-import { CARD_LIMITS, hookableTerm } from "@lymi/core";
-import { useQueryClient } from "@tanstack/react-query";
+import { CARD_LIMITS, hookable } from "@lymi/core";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Anchor, Sparkle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { api, type Card, errorMessage } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
 import { composing } from "../lib/composing";
+import { settingsQuery } from "../lib/queries";
 import { captureAnalytics } from "../lib/telemetry";
 import { Button } from "./button";
 import { InlineError } from "./inline-error";
@@ -36,12 +37,20 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
   const [drafted, setDrafted] = useState<string | null>(null);
   const [drafting, setDrafting] = useState(false);
   const [draftNote, setDraftNote] = useState<string | null>(null);
+  // What the field holds now, read when a draft lands after the learner may have typed.
+  const latest = useRef(text);
+  latest.current = text;
+  const settings = useQuery(settingsQuery);
   const empty = !text.trim();
   const untouched = drafted !== null && text === drafted;
-  // A sentence has nothing to sound alike, so only a word or a short phrase offers a draft.
-  const draftable = !!card.language && hookableTerm(card.term) && (empty || untouched);
+  // Only where the server drafts at all, and never over the learner's own words.
+  const draftable =
+    !!settings.data &&
+    hookable(card, settings.data.meaningLanguage) &&
+    (empty || untouched || drafting);
 
   const draft = async () => {
+    const before = latest.current;
     setDrafting(true);
     setDraftNote(null);
     setProblem(null);
@@ -50,9 +59,12 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
     try {
       const { hook } = await api.draftHook(card.id);
       captureAnalytics("hook_drafted", { outcome: hook ? "drafted" : "none", wait_ms: waited() });
+      // Words typed while the draft was on its way are the learner's, so the draft gives way.
+      if (latest.current !== before) return;
       if (hook) {
         setText(hook);
         setDrafted(hook);
+        setProblem(null);
         field.current?.focus();
       } else {
         setDraftNote(t`No strong hook for this one. Try again, or write your own.`);
@@ -173,7 +185,8 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
       <div className="flex flex-wrap items-center justify-end gap-1 ps-6">
         <p
           role="status"
-          className="min-w-0 basis-full text-xs text-muted empty:hidden @md:flex-1 @md:truncate @md:basis-0 @md:empty:invisible @md:empty:block"
+          // A note wraps rather than lose its second half beside the buttons.
+          className={`min-w-0 basis-full text-xs text-muted empty:hidden @md:flex-1 @md:basis-0 @md:empty:invisible @md:empty:block ${draftNote ? "" : "@md:truncate"}`}
         >
           {problem ? (
             <InlineError>{problem}</InlineError>

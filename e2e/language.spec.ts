@@ -26,11 +26,11 @@ test("a learner can switch the app language and keep it after reload", async ({
   await expect(picker("Мова")).toHaveText("Українська");
 
   await page.goto("/today");
-  await expect(page.getByRole("heading", { name: "Початок роботи", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Створи першу колоду", exact: true })).toBeVisible();
 
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("lang", "uk");
-  await expect(page.getByRole("heading", { name: "Початок роботи", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Створи першу колоду", exact: true })).toBeVisible();
   await page.goto("/settings");
   await picker("Мова").click();
   const savedEn = saved();

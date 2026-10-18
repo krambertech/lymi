@@ -34,6 +34,7 @@ export const USE_CASE_LINKS: UseCaseLink[] = [
     hue: 4,
   },
   { page: "estonian", label: msg`Estonian`, footerOnly: true },
+  { page: "japanese", label: msg`Japanese`, footerOnly: true },
   {
     page: "assistants",
     label: msg`AI assistants`,

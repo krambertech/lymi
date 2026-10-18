@@ -1661,3 +1661,33 @@ html:has(.deck-cards[open]) {
     display: none;
   }
 }
+
+/* The Japanese page's example sentences, drifting slowly behind the hand; they blur only as they come and go. */
+.hand-drift {
+  animation: hand-drift 9s ease-in-out infinite alternate;
+}
+@keyframes hand-drift {
+  from {
+    translate: -4px -6px;
+  }
+  to {
+    translate: 6px 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hand-drift {
+    animation: none;
+  }
+}
+
+/* A Chinese font's forms of three kanji, for showing how Japanese draws them differently. */
+@font-face {
+  font-family: "Kanji Chinese Forms";
+  font-weight: 500;
+  font-display: block;
+  src: url("/fonts/noto-sans-sc-kanji-forms.woff2") format("woff2");
+}
+.kanji-zh {
+  font-family: "Kanji Chinese Forms", "PingFang SC", "Noto Sans SC", sans-serif;
+  font-weight: 500;
+}

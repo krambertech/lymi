@@ -1,5 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { Furigana } from "./Furigana";
 
 /**
  * Classmates drawn with DiceBear's Notionists style (CC0, a remix of Zoish's Notionists), baked
@@ -12,7 +13,8 @@ interface Props {
   name: MessageDescriptor;
   /** BCP 47 tag of the deck's terms. */
   language: string;
-  cards: { term: string; meaning: MessageDescriptor }[];
+  /** A reading, when there is one, sits over the term as furigana. */
+  cards: { term: string; reading?: string; meaning: MessageDescriptor }[];
 }
 
 /** A class deck at rest: who has joined, and what the owner added after this week's lesson. */
@@ -54,7 +56,11 @@ export function SharedDeckDemo({ name, language, cards }: Props) {
           <li key={card.term} className="flex items-center gap-3 py-2.5">
             <div className="min-w-0 flex-1">
               <p lang={language} className="truncate text-md font-medium text-text">
-                {card.term}
+                {card.reading ? (
+                  <Furigana term={card.term} reading={card.reading} lang={language} />
+                ) : (
+                  card.term
+                )}
               </p>
               <p className="truncate text-sm text-muted">{i18n._(card.meaning)}</p>
             </div>

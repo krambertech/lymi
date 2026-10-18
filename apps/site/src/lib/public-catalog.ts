@@ -1,4 +1,5 @@
 import { env } from "cloudflare:workers";
+import { languageDecks } from "@lymi/client/welcome";
 import {
   hasShelfPage,
   type PublicDeckSummary,
@@ -177,4 +178,40 @@ export async function resolveExamsPage(
     });
   }
   return { locale, exams, updated };
+}
+
+export interface LanguageDecksPage {
+  locale: Locale;
+  /** The language's decks, those a beginner starts from first, as Welcome offers them. */
+  decks: PublicDeckSummary[];
+}
+
+/**
+ * A language page's decks in this locale, read and cached like Explore, so the page shows only
+ * decks that are published now. `page` keeps its validator apart from other pages'.
+ */
+export async function resolveLanguageDecks(
+  astro: AstroGlobal,
+  locale: Locale,
+  language: string,
+  page: string,
+): Promise<LanguageDecksPage | Response> {
+  const decks = languageDecks(await listPublicCatalog(drizzle(env.DB), locale), language);
+  const headers = astro.response.headers;
+  headers.set("content-type", "text/html; charset=utf-8");
+  const etag = catalogEtag({
+    content: catalogContentHash(decks),
+    locale,
+    version: env.CF_VERSION_METADATA?.id,
+    page,
+  });
+  headers.set("cache-control", DECK_CACHE_CONTROL);
+  headers.set("etag", etag);
+  if (etagMatches(astro.request.headers.get("if-none-match"), etag)) {
+    return new Response(null, {
+      status: 304,
+      headers: { "cache-control": DECK_CACHE_CONTROL, etag },
+    });
+  }
+  return { locale, decks };
 }

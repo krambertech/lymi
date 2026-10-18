@@ -49,6 +49,7 @@ export function llmsTxt(): string {
     `- [Notes and PDFs to flashcards](${SITE}/notes-to-flashcards): turning class notes, PDFs and photos of notes into cards with an assistant, step by step.`,
     `- [Exam prep](${SITE}/exams): ready decks for citizenship and driving tests, with a page per exam giving its format, decks and source.`,
     `- [Estonian](${SITE}/languages/estonian): keeping the Estonian from classes, letters and conversations.`,
+    `- [Japanese](${SITE}/languages/japanese): learning Japanese from kana to N4 with furigana over the kanji, a voice that reads each word, ready-made decks and your own AI assistant.`,
     `- [Documentation](${SITE}/docs): guides, the MCP setup, the API reference and the import guides.`,
     `- [Changelog](${SITE}/changelog): new features and improvements in Lymi.`,
     `- [Privacy](${SITE}/privacy): what Lymi stores and who can read it.`,

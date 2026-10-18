@@ -65,6 +65,40 @@ export const ESTONIAN_QUESTIONS: Question[] = [
   ...COMMON,
 ];
 
+export const JAPANESE_QUESTIONS: Question[] = [
+  {
+    id: "kana",
+    question: msg`Do I need to know kana first?`,
+    answer: msg`Yes, because every reading is written in kana. Start with the kana deck, and add N5 words once the signs feel familiar.`,
+  },
+  {
+    id: "romaji",
+    question: msg`Does Lymi show romaji?`,
+    answer: msg`Words show their reading in kana over the kanji. The kana deck is the one place with romaji, because there the sound is the answer.`,
+  },
+  {
+    id: "review",
+    question: msg`What does a card ask me?`,
+    answer: msg`One way at a time: the Japanese for its meaning, or the meaning for the Japanese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type.`,
+  },
+  {
+    id: "known",
+    question: msg`How does Lymi know I know a word?`,
+    answer: msg`When its card reaches Known in your reviews. From then on the reading steps aside, on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it.`,
+  },
+  {
+    id: "voice",
+    question: msg`How does the voice know how to read a kanji?`,
+    answer: msg`It reads from the reading on your card, so a word that can be read several ways is said the way your card has it.`,
+  },
+  {
+    id: "anki",
+    question: msg`Can I bring my Anki deck?`,
+    answer: msg`Yes. Cards keep their readings, their schedule and their word recordings. Sentence recordings stay behind.`,
+  },
+  ...COMMON,
+];
+
 export const ASSISTANTS_QUESTIONS: Question[] = [
   {
     id: "which",

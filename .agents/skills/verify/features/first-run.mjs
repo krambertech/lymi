@@ -41,7 +41,7 @@ export default async function drive({ page, step, api, expect }) {
       "aria-pressed",
       "true",
     );
-    return { reviews: (await api("/api/streak")).today.attempts };
+    return { reviews: (await api("/api/stats/streak")).today.attempts };
   });
 
   await step("Back on Today the guide has gone", async () => {

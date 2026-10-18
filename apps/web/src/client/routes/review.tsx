@@ -63,6 +63,7 @@ import {
   queueQuery,
   sectionsQuery,
   seriesQuery,
+  settingsQuery,
   streakQuery,
 } from "../lib/queries";
 import { recordReveal, useRevealHint } from "../lib/reveal-hint";
@@ -489,6 +490,11 @@ function Review() {
       () => crypto.randomUUID(),
     );
   const sessionFirst = useRef<boolean | null>(null);
+  // The end of the first review asks for the goal only while the learner has not chosen one, as
+  // it stood when the review opened, so choosing there does not take the choice away.
+  const settings = useQuery(settingsQuery);
+  const askGoal = useRef<boolean | null>(null);
+  if (askGoal.current === null && settings.data) askGoal.current = !settings.data.dailyGoalChosenAt;
   useEffect(() => {
     if (sessionFirst.current === null && streakSettled && streak.data)
       sessionFirst.current = streak.data.reviewedDays === 0 && streak.data.today.attempts === 0;
@@ -1142,7 +1148,7 @@ function Review() {
               lanternFrom={held.lantern.out ? "out" : (held.lantern.progress ?? "brand")}
               focusOnMount
               setUp={
-                sessionFirst.current && streakNow ? (
+                sessionFirst.current && askGoal.current && streakNow ? (
                   <FirstReviewSetUp goal={streakNow.goal} />
                 ) : undefined
               }

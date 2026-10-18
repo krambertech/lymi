@@ -20,7 +20,7 @@ A done step is an amber check with its title struck through, the current step's 
 
 ## The end of the first review
 
-`FirstReviewSetUp` in `components/first-review-set-up.tsx` sits between the lights and the ways on, only at the end of the review that held the account's first grade ([review-completion.md](review-completion.md)). **Your daily goal** is the streak's own goal picker, already on the learner's goal, and saves on the tap. **Remind me each evening** turns on this device's reminder at 19:00 with **Turn on**, the same reminder as Settings; it says when notifications are blocked, asks an iPhone to add Lymi to the Home Screen first and links to Settings at the reminder, and is left out where the browser cannot show reminders.
+`FirstReviewSetUp` in `components/first-review-set-up.tsx` sits between the lights and the ways on, only at the end of the review that held the account's first grade, and only when no goal had been chosen when that review opened ([review-completion.md](review-completion.md)). **Your daily goal** is the streak's own goal picker, already on the learner's goal, and saves on the tap. **Remind me each evening** turns on this device's reminder at 19:00 with **Turn on**, the same reminder as Settings; it says when notifications are blocked, asks an iPhone to add Lymi to the Home Screen first and links to Settings at the reminder, and is left out where the browser cannot show reminders.
 
 ## Getting set up
 

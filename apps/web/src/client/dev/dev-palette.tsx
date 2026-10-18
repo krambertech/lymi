@@ -159,7 +159,11 @@ function Body({
   const [page, setPage] = useState<Page | null>(null);
   const [raw, setRaw] = useState("");
   // A command that throws data away runs on its second press, so a stray Enter never empties an account.
-  const [confirming, setConfirming] = useState<{ key: string; at: number } | null>(null);
+  const [confirming, setConfirming] = useState<{
+    key: string;
+    title: string;
+    at: number;
+  } | null>(null);
   const [theme, setThemeState] = useState<ThemeChoice>(getTheme);
   const [recent, setRecent] = useState(readRecent);
   const [note, setNote] = useState<{ text: string; tone: "muted" | "danger" } | null>(null);
@@ -382,8 +386,11 @@ function Body({
     onBack: raw ? () => setRaw("") : page ? back : undefined,
     compact,
   });
-  // Moving off a row that waits for its second press disarms it.
+  // Moving off a row that waits for its second press disarms it, and its prompt leaves the footer with it.
   if (confirming && confirming.at !== list.active) setConfirming(null);
+  const status: typeof note = confirming
+    ? { text: `Press again to confirm: ${confirming.title}.`, tone: "danger" }
+    : note;
 
   function activate(row: Row) {
     if (row.kind === "page") {
@@ -407,8 +414,8 @@ function Body({
     }
     if (run.isPending) return;
     if (row.command.confirm && confirming?.key !== row.key) {
-      setConfirming({ key: row.key, at: list.active });
-      setNote({ text: `Press again to confirm: ${row.title}.`, tone: "danger" });
+      setConfirming({ key: row.key, title: row.title, at: list.active });
+      setNote(null);
       return;
     }
     setConfirming(null);
@@ -633,10 +640,10 @@ function Body({
           role="status"
           className={clsx(
             "min-w-0 flex-1",
-            note?.tone === "danger" ? "text-danger" : "text-text-2",
+            status?.tone === "danger" ? "text-danger" : "text-text-2",
           )}
         >
-          {note?.text ??
+          {status?.text ??
             (personasFailed || commands.isError ? "Developer tools are unavailable." : "")}
         </p>
         {!compact && (

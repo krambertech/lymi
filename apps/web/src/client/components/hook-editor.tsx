@@ -130,7 +130,7 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
   return (
     <form
       noValidate
-      className="relative z-20 grid gap-1 rounded-md bg-plate-2 ps-3 pe-1.5 pt-2.5 pb-1.5 outline-1 -outline-offset-1 outline-transparent transition-[outline-color] duration-150 focus-within:outline-edge-2"
+      className="@container relative z-20 grid gap-1 rounded-md bg-plate-2 ps-3 pe-1.5 pt-2.5 pb-1.5 outline-1 -outline-offset-1 outline-transparent transition-[outline-color] duration-150 focus-within:outline-edge-2"
       onSubmit={(e) => {
         e.preventDefault();
         if (!pending) void save();
@@ -169,8 +169,12 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
           className="field-sizing-content min-w-0 flex-1 resize-none bg-transparent text-md leading-snug text-text outline-none placeholder:text-faint"
         />
       </label>
-      <div className="flex items-center gap-1 ps-6">
-        <p role="status" className="min-w-0 flex-1 truncate text-xs text-muted empty:invisible">
+      {/* A narrow card puts the status on its own line, so Save never leaves the edge. */}
+      <div className="flex flex-wrap items-center justify-end gap-1 ps-6">
+        <p
+          role="status"
+          className="min-w-0 basis-full text-xs text-muted empty:hidden @md:flex-1 @md:truncate @md:basis-0 @md:empty:invisible @md:empty:block"
+        >
           {problem ? (
             <InlineError>{problem}</InlineError>
           ) : drafting ? (

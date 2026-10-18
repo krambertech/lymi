@@ -2,6 +2,8 @@ import { type GoogleCloudTtsBindings, synthesizeGoogleSpeech } from "./google-cl
 import type { Fetch, SpeechProvider } from "./types";
 
 const languageNames = new Intl.DisplayNames(["en"], { type: "language" });
+// https://cloud.google.com/text-to-speech/docs/reference/rest/v1/AudioConfig#audioencoding
+const MP3_BITS_PER_SECOND = 32_000;
 
 export type GoogleGeminiBindings = GoogleCloudTtsBindings & {
   GEMINI_SPEECH_MODEL?: string | undefined;
@@ -32,8 +34,8 @@ export function createGoogleGeminiProvider(
     locale,
     contentType: "audio/mpeg",
     extension: "mp3",
-    speech: (input) =>
-      synthesizeGoogleSpeech(env, {
+    async speech(input) {
+      const response = await synthesizeGoogleSpeech(env, {
         request: dependencies.request ?? fetch,
         accessToken: dependencies.accessToken,
         body: {
@@ -41,7 +43,13 @@ export function createGoogleGeminiProvider(
           voice: { languageCode: locale, name: voice, modelName: model },
           audioConfig: { audioEncoding: "MP3" },
         },
-      }),
+      });
+      if (!input.usage) return response;
+      // Cloud returns no token counts; its MP3 is 32 kbps, so the clip's length comes from its size.
+      const audio = await response.arrayBuffer();
+      input.usage({ audioSeconds: (audio.byteLength * 8) / MP3_BITS_PER_SECOND });
+      return new Response(audio, { headers: response.headers });
+    },
   };
 }
 

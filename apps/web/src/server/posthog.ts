@@ -2,8 +2,10 @@ import type { PhoneClient } from "@lymi/core";
 import { ANALYTICS_SCHEMA_VERSION, AnalyticsLocale, eventProperties } from "@lymi/core/analytics";
 import { exceptionProperties, POSTHOG_HOST } from "@lymi/core/telemetry";
 import { PostHog } from "posthog-node";
+import type { Db } from "./db";
 import type { Bindings } from "./env";
 import { type AnalyticsEvent, type AnalyticsWriter, track } from "./services/analytics";
+import { analyticsContextFor } from "./services/analytics-context";
 
 type TelemetryEnv = { PRODUCT_URL: string } & Partial<
   Pick<Bindings, "POSTHOG_PROJECT_TOKEN" | "EVENTS" | "CF_VERSION_METADATA" | "APP_PREVIEW">
@@ -123,6 +125,11 @@ export function productAnalytics(
       }
     },
   };
+}
+
+/** Analytics for a deck owner's account, for work a visitor or the cron started on their cards. */
+export function ownerAnalytics(env: TelemetryEnv, db: Db, defer: Defer) {
+  return (userId: string) => productAnalytics(env, userId, defer, analyticsContextFor(db, userId));
 }
 
 export async function trackProductEvent(

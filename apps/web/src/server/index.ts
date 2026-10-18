@@ -3,7 +3,7 @@ import { handleFetch } from "./app";
 import { runCanary } from "./canary";
 import { createDb } from "./db";
 import type { Bindings } from "./env";
-import { reportServerException } from "./posthog";
+import { ownerAnalytics, reportServerException } from "./posthog";
 import { dispatchReviewReminders } from "./push-delivery";
 import { dropUnstudiedFormerDecks } from "./services/account-deletion";
 import { purgeCardAudio } from "./services/audio";
@@ -48,11 +48,13 @@ export default {
     run("purge-card-audio", purgeCardAudio(createDb(env.DB), env.AUDIO));
     // Hourly, because each run reads every published deck to find the cards its page shows first. #759.
     if (at.getUTCMinutes() < 15) {
+      const db = createDb(env.DB);
       run(
         "published-audio",
-        voicePublishedDecks(createDb(env.DB), {
+        voicePublishedDecks(db, {
           bucket: env.AUDIO,
           providers: (language) => createSpeechProviders(env, language),
+          analytics: ownerAnalytics(env, db, (work) => executionCtx.waitUntil(work)),
         }),
       );
     }

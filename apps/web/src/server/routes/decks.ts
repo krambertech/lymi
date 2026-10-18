@@ -25,6 +25,7 @@ import { publisherEmails } from "../env";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
 import { limitInvitationSends } from "../invitation-rate-limit";
+import { ownerAnalytics } from "../posthog";
 import {
   approveEdition,
   archiveDeck,
@@ -354,6 +355,7 @@ decks.put(
         {
           bucket: c.env.AUDIO,
           providers: (language) => createSpeechProviders(c.env, language),
+          analytics: ownerAnalytics(c.env, ctx.db, (work) => c.executionCtx.waitUntil(work)),
         },
         { slug: input.slug, limit: PUBLISHED_AUDIO_ON_PUBLISH },
       ).catch(() => undefined),

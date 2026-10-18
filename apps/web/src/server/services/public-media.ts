@@ -3,6 +3,7 @@ import { and, eq, isNull } from "@lymi/core/db";
 import { livePublicationMedia } from "@lymi/core/publication-media";
 import type { SpeechProvider } from "../ai";
 import { type Db, schema } from "../db";
+import type { AnalyticsWriter } from "./analytics";
 import { pronunciationAudio } from "./audio";
 import { ServiceError } from "./context";
 
@@ -30,7 +31,11 @@ export async function publicMediaFile(
 export async function publicPronunciation(
   db: Db,
   cardId: string,
-  deps: { bucket: R2Bucket; providers: (language: string) => SpeechProvider[] },
+  deps: {
+    bucket: R2Bucket;
+    providers: (language: string) => SpeechProvider[];
+    analytics?: (userId: string) => AnalyticsWriter;
+  },
   spend: () => Promise<number | null>,
 ): Promise<{ clip: R2ObjectBody } | { retryAfter: number }> {
   const [stored] = await livePublicationMedia(db, { cardId }, "delivery");
@@ -67,6 +72,10 @@ export async function publicPronunciation(
   if (retryAfter !== null) return { retryAfter };
   // The clip is a cache on the owner's card, so the play acts as the publisher. ADR 0011.
   return {
-    clip: await pronunciationAudio({ db, userId: card.ownerId, actor: "system" }, cardId, deps),
+    clip: await pronunciationAudio(
+      { db, userId: card.ownerId, actor: "system", analytics: deps.analytics?.(card.ownerId) },
+      cardId,
+      deps,
+    ),
   };
 }

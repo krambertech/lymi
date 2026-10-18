@@ -3,6 +3,7 @@ import { listPublicDeckSlugs, publicDeckFrontCards } from "@lymi/core/catalog/se
 import { and, eq, inArray, isNull, selectIn } from "@lymi/core/db";
 import type { SpeechProvider } from "../ai";
 import { type Db, schema } from "../db";
+import type { AnalyticsWriter } from "./analytics";
 import { pronunciationAudio } from "./audio";
 
 /** Cards voiced per run. Each one without a clip costs one paid voice call, once. */
@@ -15,6 +16,7 @@ export const PUBLISHED_AUDIO_ON_PUBLISH = 12;
 interface PublishedAudioDependencies {
   bucket: R2Bucket;
   providers: (language: string) => SpeechProvider[];
+  analytics?: (userId: string) => AnalyticsWriter;
 }
 
 export interface PublishedAudioRun {
@@ -109,7 +111,7 @@ export async function voicePublishedDecks(
       try {
         // The clip is a cache on the owner's card, so the run acts as the publisher. ADR 0011.
         const clip = await pronunciationAudio(
-          { db, userId: row.ownerId, actor: "system" },
+          { db, userId: row.ownerId, actor: "system", analytics: deps.analytics?.(row.ownerId) },
           row.id,
           deps,
         );

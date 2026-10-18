@@ -37,6 +37,21 @@ describe("Gemini API speech", () => {
     },
   );
 
+  it("passes on the tokens Gemini bills", async () => {
+    const provider = createGeminiApiSpeechProvider(
+      { ...testGateway, GEMINI_API_KEY: "test-key" },
+      "et-EE",
+      async () =>
+        Response.json({
+          ...payload(),
+          usageMetadata: { promptTokenCount: 84, candidatesTokenCount: 31 },
+        }),
+    );
+    const usage = vi.fn();
+    await provider.speech({ text: "kooli", language: "et", usage });
+    expect(usage).toHaveBeenCalledWith({ inputTokens: 84, outputTokens: 31 });
+  });
+
   it.each([
     payload(""),
     payload("AQ=="),

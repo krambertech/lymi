@@ -1,5 +1,5 @@
-import { type ProductAnalyticsEvent, textCallCost } from "@lymi/core/analytics";
-import type { TextObserver } from "../ai";
+import { type ProductAnalyticsEvent, speechCallCost, textCallCost } from "@lymi/core/analytics";
+import type { SpeechCall, TextObserver } from "../ai";
 
 export type AnalyticsWriter = Pick<AnalyticsEngineDataset, "writeDataPoint"> & {
   capture?: (event: AnalyticsEvent) => void;
@@ -81,6 +81,46 @@ export function textCallReporter(dataset: AnalyticsWriter | undefined, span: AiS
         : {}),
     });
   };
+}
+
+const SPEECH_VENDORS = {
+  "gemini-api": "google",
+  "google-gemini": "google",
+  "google-chirp": "google",
+  openai: "openai",
+  elevenlabs: "elevenlabs",
+} as const satisfies Record<SpeechCall["provider"], string>;
+
+/** Reports a pronunciation call in the same LLM analytics shape, priced by what its vendor bills. */
+export function trackSpeechCall(dataset: AnalyticsWriter | undefined, call: SpeechCall): void {
+  // A failed call is not billed, except a Gemini reply whose audio was then refused.
+  const cost =
+    call.error && call.outputTokens === undefined ? undefined : speechCallCost(call.model, call);
+  const tokens = (value: number | undefined) =>
+    value === undefined ? undefined : Math.round(value);
+  const output = tokens(call.outputTokens);
+  const input = tokens(call.inputTokens);
+  track(dataset, {
+    name: "$ai_generation",
+    $ai_trace_id: crypto.randomUUID(),
+    $ai_session_id: null,
+    $ai_span_name: "pronunciation",
+    $ai_provider: SPEECH_VENDORS[call.provider],
+    $ai_model: call.model,
+    ...(input !== undefined ? { $ai_input_tokens: input } : {}),
+    ...(output !== undefined ? { $ai_output_tokens: output } : {}),
+    characters: call.characters,
+    $ai_latency: call.latencyMs / 1000,
+    $ai_is_error: call.error,
+    ...(call.status !== undefined ? { $ai_http_status: call.status } : {}),
+    ...(cost
+      ? {
+          $ai_input_cost_usd: cost.input,
+          $ai_output_cost_usd: cost.output,
+          $ai_total_cost_usd: cost.input + cost.output,
+        }
+      : {}),
+  });
 }
 
 export function recordRequest(

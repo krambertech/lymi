@@ -215,7 +215,7 @@ export function HookSheet({
   const [drafting, setDrafting] = useState(false);
   const [draftNote, setDraftNote] = useState<string | null>(null);
   const focus = useSheetFocus({ open });
-  // biome-ignore lint/correctness/useExhaustiveDependencies: once per opening, not per render of the card.
+  // Once per opening, not per render of the card.
   useEffect(() => {
     if (!open || !card) return;
     setShown(card);

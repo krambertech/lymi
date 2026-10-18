@@ -5,7 +5,8 @@ export const start = "/today";
 export default async function drive({ page, step, api, expect }) {
   await step("Today greets a new account with the guide and sets it up on 25", async () => {
     await expect(page.getByRole("heading", { name: /^Welcome, / })).toBeVisible();
-    await expect(page.getByText("0 of 3 done")).toBeVisible();
+    // The count shows from a wider screen; on a phone it is only in the page.
+    await expect(page.getByText("0 of 3 done")).toBeAttached();
     await expect(page.getByRole("heading", { name: "Create your first deck" })).toBeVisible();
     await expect.poll(async () => (await api("/api/settings")).dailyGoal).toBe(25);
     const settings = await api("/api/settings");

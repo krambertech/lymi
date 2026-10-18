@@ -85,4 +85,4 @@ Write for the next decision, not as a record of the work session. State each out
 
 ## Leave alone
 
-`pnpm deploy`, `deploy:site`, `deploy:product` and `db:migrate:prod` touch production; the user runs those. `.dev.vars` holds real secrets and is git-ignored — keep it that way.
+`pnpm deploy`, `deploy:site`, `deploy:product` and `db:migrate:prod` touch production; the user runs those. A merged migration needs none of them: the post-merge build's `deploy:ci` applies pending migrations before it deploys. `.dev.vars` holds real secrets and is git-ignored — keep it that way.

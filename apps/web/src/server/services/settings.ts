@@ -173,14 +173,18 @@ export async function finishOnboarding(ctx: ServiceContext, input: OnboardingInp
       value: dailyGoal,
       is_change: before.dailyGoalChosenAt !== null,
     });
-  track(ctx.analytics, {
-    name: "welcome_step_finished",
-    step_name: "setup",
-    skipped: input.learningKind === null && input.dailyGoal === null,
-  });
+  if (input.from !== "today")
+    track(ctx.analytics, {
+      name: "welcome_step_finished",
+      step_name: "setup",
+      skipped: input.learningKind === null && input.dailyGoal === null,
+    });
   if (dailyGoal !== before.dailyGoal) await applyGoalToToday(ctx, dailyGoal);
   // Only the shortcut from a shared or published deck chooses a goal without saying what it is for.
-  const kind = input.learningKind ?? (input.dailyGoal === null ? "skipped" : "joined");
+  const kind =
+    input.from === "today"
+      ? "today"
+      : (input.learningKind ?? (input.dailyGoal === null ? "skipped" : "joined"));
   track(ctx.analytics, { name: "onboarding_finished", kind });
   return getSettings(ctx);
 }

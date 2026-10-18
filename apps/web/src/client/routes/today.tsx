@@ -1,15 +1,14 @@
 import { useLingui } from "@lingui/react/macro";
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Navigate } from "@tanstack/react-router";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAddCard } from "../lib/add-card";
 import { api } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
-import { publicSiteUrl } from "../lib/origins";
 import {
-  connectedAppsQuery,
   decksQuery,
   exploreQuery,
+  meQuery,
   roundsQuery,
   seriesQuery,
   settingsQuery,
@@ -17,6 +16,7 @@ import {
 } from "../lib/queries";
 import { useRestDismissal } from "../lib/rest-day";
 import { Streak } from "../lib/streak";
+import { useAddPublishedDeck } from "../lib/use-add-published-deck";
 import { isGuiding, TodayView } from "../views/today-view";
 
 export const Route = createFileRoute("/today")({
@@ -31,9 +31,7 @@ function Today() {
   // The same query as the rail's pill, so the flame in the chrome and the card always agree.
   const streak = useQuery(streakQuery);
   const rounds = useQuery(roundsQuery);
-  const firstRun = decks.data?.every((d) => d.total === 0) ?? false;
-  const apps = useQuery({ ...connectedAppsQuery, enabled: firstRun });
-  // Only the guide offers ready-made decks, so nobody past it pays for the catalogue read.
+  // Only the first-run guide offers ready-made decks, so nobody past it pays for the catalogue read.
   const guiding = isGuiding(streak.data);
   const explore = useQuery({ ...exploreQuery, enabled: guiding });
   const ready = explore.data?.decks.filter((deck) => !explore.data.added[deck.slug]);
@@ -47,25 +45,30 @@ function Today() {
   });
   const rest = useRestDismissal(streak.data?.today.date);
   const settings = useQuery(settingsQuery);
-  // An account with nothing in it that has not got set up starts at Welcome; it never comes back after.
-  const unwelcomed = settings.data ? settings.data.onboardedAt === null : settings.isPending;
-  // A read that failed, or one paused offline, shows Today rather than holding an empty screen.
-  const reading =
-    !settings.isError &&
-    !decks.isError &&
-    settings.fetchStatus !== "paused" &&
-    decks.fetchStatus !== "paused";
-  const candidate = unwelcomed && decks.data?.length === 0 && guiding && reading;
-  // The persisted cache can predate finishing Welcome, so the redirect waits for this mount's reads.
-  const confirmed = settings.isFetchedAfterMount && decks.isFetchedAfterMount;
-  const { refetch: refetchSettings } = settings;
-  const { refetch: refetchDecks } = decks;
+  const me = useQuery(meQuery);
+  const addReady = useAddPublishedDeck({ announce: "page" });
+  const navigate = useNavigate();
+  // Today is where a new account starts, so its first visit counts as getting set up: the goal
+  // starts at 25 and Welcome on the phone is not shown again. docs/design/onboarding.md.
+  const qc = useQueryClient();
+  const setUp = useMutation({
+    mutationFn: () =>
+      api.finishOnboarding({
+        learningKind: null,
+        learningLanguage: null,
+        dailyGoal: null,
+        from: "today",
+      }),
+    onSuccess: (value) => {
+      qc.setQueryData(settingsQuery.queryKey, value);
+      void qc.invalidateQueries({ queryKey: streakQuery.queryKey });
+    },
+  });
+  const unset = settings.data?.onboardedAt === null && settings.isFetchedAfterMount;
+  const { mutate: finishSetUp, isIdle } = setUp;
   useEffect(() => {
-    if (!candidate) return;
-    void refetchSettings();
-    void refetchDecks();
-  }, [candidate, refetchSettings, refetchDecks]);
-  if (candidate) return confirmed ? <Navigate to="/welcome" replace /> : null;
+    if (unset && isIdle) finishSetUp();
+  }, [unset, isIdle, finishSetUp]);
   return (
     <TodayView
       decks={decks.data}
@@ -73,8 +76,6 @@ function Today() {
       streak={streak.data}
       streakCard={<Streak variant="card" />}
       rounds={rounds.data}
-      connectUrl={publicSiteUrl("/docs/mcp")}
-      connected={apps.isSuccess ? apps.data.length > 0 : apps.isError ? false : undefined}
       onAdd={() => add.openCard()}
       onCreateDeck={add.openDeck}
       onSmartAdd={lessons.data?.allowed ? () => add.openSmart() : undefined}
@@ -87,6 +88,15 @@ function Today() {
       ready={ready}
       restDismissed={rest.dismissed}
       onDismissRest={rest.dismiss}
+      name={me.data?.name}
+      learning={settings.data?.learningLanguage}
+      onAddReady={(deck) =>
+        addReady.mutate(
+          { slug: deck.slug, name: deck.name, edition: deck.meaningLanguage },
+          { onSuccess: ({ deckId }) => navigate({ to: "/review", search: { deck: deckId } }) },
+        )
+      }
+      addingReady={addReady.isPending ? addReady.variables?.slug : undefined}
     />
   );
 }

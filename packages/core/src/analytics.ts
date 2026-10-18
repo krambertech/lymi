@@ -231,7 +231,7 @@ export const analyticsEvents = {
     backlog: Backlog.optional(),
   }),
   onboarding_finished: z.object({
-    kind: z.enum(["language", "test", "subject", "other", "skipped", "joined"]),
+    kind: z.enum(["language", "test", "subject", "other", "skipped", "joined", "today"]),
   }),
   signed_up: Attribution.extend({ method: z.enum(["google", "apple", "email"]) }),
   signed_in: z.object({}),

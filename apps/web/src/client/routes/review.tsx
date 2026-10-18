@@ -44,6 +44,7 @@ import { Button } from "../components/button";
 import { CardMenu } from "../components/card-menu";
 import { CardPlace } from "../components/card-place";
 import { EditCardSheet } from "../components/edit-card-sheet";
+import { FirstReviewSetUp } from "../components/first-review-set-up";
 import { GRADES } from "../components/grade";
 import { HookEditor } from "../components/hook-editor";
 import { AID_KEY, aidSteps, aidTaken } from "../components/recall-aid";
@@ -1140,6 +1141,11 @@ function Review() {
               streakBefore={held.week}
               lanternFrom={held.lantern.out ? "out" : (held.lantern.progress ?? "brand")}
               focusOnMount
+              setUp={
+                sessionFirst.current && streakNow ? (
+                  <FirstReviewSetUp goal={streakNow.goal} />
+                ) : undefined
+              }
               onOffer={onOffer}
               done={doneLink}
               addCards={

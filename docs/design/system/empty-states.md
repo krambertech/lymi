@@ -15,14 +15,13 @@ What is empty?
  └── A search or filter with no match → NoResults
 ```
 
-## StartGuide
+## First-run guide
 
-`StartGuide` in `components/start-guide.tsx` is Today before the first review, for a learner who skipped Welcome or left it for their own material ([onboarding.md](../onboarding.md)): one plate headed **Getting started**, with a count ("1 of 3 done") and a three-part track, then three steps in order: **Make a deck**, **Add cards from your last lesson**, **Review them**.
+`FirstRunGuide` in `components/first-run.tsx` is Today until the first review ([onboarding.md](../onboarding.md)): dashed on the bare canvas with the lantern's light at its start, a count ("1 of 3 done"), then three numbered steps, **Create a deck**, **Add cards**, **Finish your first review**.
 
 - Each step is done by the learner's own data, never by a dismissal.
-- A done step shows a green check and a struck-through title, the current step holds its action, and a later step stays muted.
-- Under the plate, a banner on a deck tray colour, **Start with a ready-made deck**, holds a card from each of up to three published decks the learner has not added and leads to Explore (`ReadyDecks`). It is gone once there is nothing left to add.
-- After the first review the usual Today takes over, and the banner goes with the guide.
+- A done step shows an amber check and a struck-through title, the current step holds its action, and a later step stays muted. No progress bars.
+- **Create your first deck** (three cards, each with its own button) and **Or start with a ready-made deck** (an **I'm learning** pill over a row of decks) follow it, and Today's own cards wait.
 
 ## StartPanel
 
@@ -44,7 +43,7 @@ What is empty?
 </div>
 ```
 
-A start panel has one primary action. The other ways in are `NextSteps` rows: an outlined icon, a title, one line of detail and the arrow (`Go`), separated by a gap rather than rules so the hover fill never meets a line. Each row opens where the work happens, such as a Settings group by its anchor or the public docs. Where the learner may use Smart add, **Turn your notes into cards** leads the rows of a deck with no cards and the links of the getting started guide's cards step, and opens Smart add on that deck. Connecting Claude or ChatGPT is offered only while no app is connected.
+A start panel has one primary action. The other ways in are `NextSteps` rows: an outlined icon, a title, one line of detail and the arrow (`Go`), separated by a gap rather than rules so the hover fill never meets a line. Each row opens where the work happens, such as a Settings group by its anchor or the public docs. Where the learner may use Smart add, **Turn your notes into cards** leads the rows of a deck with no cards and Today's first-run guide offers it as **From your notes**; both open Smart add. Connecting Claude or ChatGPT is offered only while no app is connected.
 
 ## Previews at zero
 
@@ -70,7 +69,7 @@ A screen whose layout is worth previewing shows its real components at zero. Ins
 
 ## Rules for all of them
 
-- Every empty state is quieter than the page: its title is `text-xl` for the getting started guide, which is the whole of Today, and `text-lg` or smaller everywhere else. Its button is a normal button, never `size="xl"`.
+- Every empty state is quieter than the page: its title is `text-xl` for the first-run guide, which heads Today, and `text-lg` or smaller everywhere else. Its button is a normal button, never `size="xl"`.
 - An empty state holds no examples or sample content. They crowd the action and can be mistaken for the learner's own data.
 - The copy names what is missing and how to fill it: "No cards in Estonian A2 yet", not "Nothing here". It never promises what the product does not do yet, and never ties the lantern to anything but the streak.
 - An empty screen may show the brand lantern, because an empty screen says nothing about the streak. An error never does.

@@ -132,6 +132,18 @@ describe("getting set up", () => {
     expect(done.dailyGoalChosenAt).toBeInstanceOf(Date);
   });
 
+  it("counts a start from Today as its own kind, on the lighter goal", async () => {
+    const who = await learner(db, "today-start", "Today");
+    const events: AnalyticsEvent[] = [];
+    const done = await finishOnboarding(
+      { ...who, analytics: { writeDataPoint: () => {}, capture: (event) => events.push(event) } },
+      { ...skip, from: "today" },
+    );
+    expect(events).toContainEqual({ name: "onboarding_finished", kind: "today" });
+    expect(events.some((e) => e.name === "welcome_step_finished")).toBe(false);
+    expect(done).toMatchObject({ dailyGoal: 25, dailyGoalChosenAt: null });
+  });
+
   it("refuses an integration", async () => {
     const who = await learner(db, "keyholder", "Keyholder");
     await expect(finishOnboarding({ ...who, actor: "api" }, skip)).rejects.toMatchObject({

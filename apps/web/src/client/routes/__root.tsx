@@ -41,12 +41,13 @@ import {
 } from "../lib/i18n";
 import { publicSiteUrl } from "../lib/origins";
 import { useRouteFocus } from "../lib/page-focus";
-import { decksQuery, meQuery, seriesQuery, settingsQuery } from "../lib/queries";
+import { decksQuery, meQuery, seriesQuery, settingsQuery, streakQuery } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
 import { Streak, StreakPlace, useSettleToday } from "../lib/streak";
 import { capturePageview } from "../lib/telemetry";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { AppShell, Sidebar } from "../views/shell";
+import { isGuiding } from "../views/today-view";
 
 // Local and isolated preview builds only. Vite drops the import from production.
 const DevPanel =
@@ -307,6 +308,9 @@ function Shell() {
     : undefined;
   const { signOut, busy: signingOut } = leave;
   const assistant = useAssistantOffer(signedIn);
+  // Today's first run offers assistants itself, so the rail does not say it twice.
+  const streak = useQuery({ ...streakQuery, enabled: signedIn });
+  const offerOnToday = location.pathname === "/today" && isGuiding(streak.data);
   const assistantRow = assistant.row;
   // One object until something in it changes, so a query tick does not re-render every screen's bar.
   const chrome = useMemo(
@@ -359,7 +363,9 @@ function Shell() {
                 signingOut={leave.busy}
                 streak={me.isSuccess ? <Streak variant="rail" /> : undefined}
                 aside={
-                  assistant.card ? <AssistantOffer onDismiss={assistant.dismiss} /> : undefined
+                  assistant.card && !offerOnToday ? (
+                    <AssistantOffer onDismiss={assistant.dismiss} />
+                  ) : undefined
                 }
                 connect={assistantRow ? <AssistantMenuItem /> : undefined}
                 className="hidden @3xl/shell:flex"

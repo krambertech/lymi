@@ -142,10 +142,9 @@ test("an owner invites somebody by name and only they can come in", async ({
     await expect(classmate).toHaveURL(/\/login\?dev=1/);
     await createAccountThroughDevForm(classmate, invited);
 
-    // Skipping the welcome lands on the deck the invitation was for.
-    await expect(classmate).toHaveURL(new RegExp(`/welcome\\?deck=${deckId}$`));
-    await classmate.getByRole("button", { name: "Skip for now", exact: true }).click();
-    await expect(classmate).toHaveURL(new RegExp(`/library/${deckId}$`));
+    // A new account lands on Today with the invitation's deck ready, and the deck holds its cards.
+    await expect(classmate).toHaveURL(/\/today$/);
+    await classmate.goto(`/library/${deckId}`);
     await expect(classmate.getByText("kutsuda", { exact: true })).toBeVisible();
 
     await page.reload();

@@ -27,8 +27,8 @@ A change is verified when the feature it touches has been driven in a running pr
 | Offline writes | [offline-writes.md](features/offline-writes.md) |
 | Japanese cards | [japanese.md](features/japanese.md) |
 | Rest day | [rest-day.md](features/rest-day.md) |
-| Welcome | [welcome.md](features/welcome.md) |
-| Welcome for a Japanese beginner | [welcome-japanese.md](features/welcome-japanese.md) |
+| First run | [first-run.md](features/first-run.md) |
+| First run for a Japanese beginner | [first-run-japanese.md](features/first-run-japanese.md) |
 
 ## Launch
 

@@ -10,15 +10,20 @@ import { type ReactNode, useRef } from "react";
 import { Button } from "../components/button";
 import { DueCount } from "../components/due-count";
 import { ErrorState } from "../components/empty-state";
+import {
+  CreateFirstDeck,
+  FirstRunGuide,
+  ReadyToStart,
+  startedDeck,
+  useFirstArrival,
+} from "../components/first-run";
 import { Lantern } from "../components/lantern";
 import { Screen } from "../components/layout/screen";
 import { NavLink } from "../components/nav-link";
 import { Go } from "../components/next-steps";
-import { ReadyDecks } from "../components/ready-decks";
 import { RestDayBanner } from "../components/rest-day-banner";
 import { RollingNumber } from "../components/rolling-number";
 import { Skeleton } from "../components/skeleton";
-import { StartGuide } from "../components/start-guide";
 import { StateIcon } from "../components/state-mark";
 import { restedYesterday, type StreakSummary } from "../components/streak";
 import type { DeckSummary, Series } from "../lib/api";
@@ -32,13 +37,9 @@ export interface TodayProps {
   streakCard?: ReactNode | undefined;
   /** How many cards each round holds. Missing offline, which hides the rounds. */
   rounds?: RoundsOut | undefined;
-  /** How to connect an assistant, offered until the learner has cards. */
-  connectUrl?: string | undefined;
-  /** An assistant is already connected, so the first run does not offer to connect one. */
-  connected?: boolean | undefined;
   onAdd?: (() => void) | undefined;
   onCreateDeck?: (() => void) | undefined;
-  /** Smart add, where the learner may use it; the getting started guide offers it. */
+  /** Smart add, where the learner may use it; the first-run guide offers it. */
   onSmartAdd?: (() => void) | undefined;
   /** The decks or the streak failed to load and nothing is cached, so the screen offers a retry. */
   failed?: boolean | undefined;
@@ -49,9 +50,17 @@ export interface TodayProps {
   onDismissRest?: (() => void) | undefined;
   /** Published decks the learner has not added. Undefined while Explore is still unread. */
   ready?: PublicDeckSummary[] | undefined;
+  /** The learner's name, for the first-run welcome. */
+  name?: string | undefined;
+  /** The language the learner most likely came for, chosen first among the ready-made decks. */
+  learning?: string | null | undefined;
+  /** Adds a ready-made deck and opens its first review. */
+  onAddReady?: ((deck: PublicDeckSummary) => void) | undefined;
+  /** The ready-made deck being added. */
+  addingReady?: string | undefined;
 }
 
-/** Until the first review, Today is the getting started guide. False while the streak is unread. */
+/** Until the first review, Today is the first-run guide. False while the streak is unread. */
 export function isGuiding(streak: StreakSummary | undefined): boolean {
   return !!streak && streak.reviewedDays === 0 && streak.today.attempts === 0;
 }
@@ -68,8 +77,6 @@ export function TodayView({
   streak,
   streakCard,
   rounds,
-  connectUrl,
-  connected,
   onAdd,
   onCreateDeck,
   onSmartAdd,
@@ -79,6 +86,10 @@ export function TodayView({
   ready,
   restDismissed,
   onDismissRest,
+  name,
+  learning,
+  onAddReady,
+  addingReady,
 }: TodayProps) {
   const { t } = useLingui();
   const due = decks?.reduce((n, d) => n + d.due, 0) ?? 0;
@@ -109,6 +120,7 @@ export function TodayView({
   const nothingYet = !loading && total === 0;
   const noDecks = nothingYet && decks?.length === 0;
   const guiding = !!decks && isGuiding(streak);
+  const play = useFirstArrival();
   const [onlyDeck] = decks?.length === 1 ? decks : [];
   const todayRef = useRef<HTMLElement>(null);
 
@@ -116,17 +128,28 @@ export function TodayView({
     <Screen kind="tab" title={<Trans>Today</Trans>}>
       {guiding ? (
         <div className="grid gap-8 @3xl:gap-10">
-          <StartGuide
-            decks={decks.length}
-            cards={total}
-            connected={connected}
-            connectUrl={connectUrl}
-            onAdd={onAdd}
-            onCreateDeck={onCreateDeck}
+          <FirstRunGuide
+            name={name}
+            decks={decks}
+            play={play}
+            onAddCard={onAdd}
             onSmartAdd={onSmartAdd}
           />
-          {/* Only under the guide: a learner past their first review has their own work to get on with. */}
-          {ready && ready.length > 0 && <ReadyDecks decks={ready} />}
+          <CreateFirstDeck
+            started={decks.length > 0}
+            play={play}
+            onSmartAdd={onSmartAdd}
+            onCreateDeck={onCreateDeck}
+          />
+          {ready && ready.length > 0 && (
+            <ReadyToStart
+              ready={ready}
+              initialLanguage={startedDeck(decks)?.defaultLanguage ?? learning ?? null}
+              play={play}
+              onAdd={onAddReady}
+              adding={addingReady}
+            />
+          )}
         </div>
       ) : failedEmpty ? (
         <ErrorState

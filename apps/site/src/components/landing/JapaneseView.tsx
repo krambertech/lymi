@@ -71,8 +71,8 @@ function Hero() {
           <p lang="ja" className="mb-5 text-md tracking-[0.06em] text-amber-text">
             日本語
           </p>
-          <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.25rem] @4xl:leading-[0.98]">
-            <Trans>The flashcard app that gets Japanese.</Trans>
+          <h1 className="max-w-[460px] text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.25rem] @4xl:leading-[0.98]">
+            <Trans>The flashcard app that speaks Japanese.</Trans>
           </h1>
           <p className="mt-6 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl">
             <Trans>

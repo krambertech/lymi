@@ -3729,8 +3729,8 @@ msgstr "Вечер после работы"
 msgid "The facial nerve: muscles of facial expression and taste on the front two-thirds of the tongue"
 msgstr "Лицевой нерв: мимические мышцы и вкус на передних двух третях языка"
 
-msgid "The flashcard app that gets Japanese."
-msgstr "Флеш-карточки, которые понимают японский."
+msgid "The flashcard app that speaks Japanese."
+msgstr "Карточки, которые говорят по-японски."
 
 msgid "The free evening after work"
 msgstr "Свободный вечер после работы"

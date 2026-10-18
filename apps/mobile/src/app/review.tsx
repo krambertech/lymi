@@ -36,7 +36,15 @@ import {
 } from "@lymi/design";
 import { useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
-import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   AccessibilityInfo,
   Alert,
@@ -111,7 +119,6 @@ import { usePalette } from "../theme/palette";
 import { fitType } from "../theme/type";
 import { AiCardChip, Chip, StateChip } from "../ui/chip";
 import { Furigana, ReadingText } from "../ui/furigana";
-import { GlassSurface } from "../ui/glass";
 import { GRADES } from "../ui/grade";
 import { Button, Icon, IconButton, LIFT, Press, Text } from "../ui/primitives";
 import { SevenLights } from "../ui/seven-lights";
@@ -119,6 +126,7 @@ import { Sheet, SheetGroup, SheetRow } from "../ui/sheet";
 import { Skeleton } from "../ui/skeleton";
 import { stateKey } from "../ui/state-mark";
 import { useSystemBack } from "../ui/system-back";
+import { ToastHost, toast } from "../ui/toast-host";
 
 const EASE = curve(EASE_OUT);
 const GLIDE = REVEAL_GLIDE.duration * 1000;
@@ -126,7 +134,11 @@ const GLIDE = REVEAL_GLIDE.duration * 1000;
 const LOOKAHEAD = 3;
 /** Local grades a fetch can fall behind by before the draw data is refreshed. */
 const REFRESH_AFTER = 20;
-const ARCHIVE_UNDO_FOR = 5000;
+// Review is presented over the root, so it hosts its own toasts.
+const REVIEW_TOASTS = "review";
+const ARCHIVED_TOAST = "review-archived";
+/** What the screen's own buttons take at its foot, the grades or the end screen's, so a toast rises above them. */
+const ToastRoom = createContext<(room: number) => void>(() => {});
 
 type Pinned = { cardId: string; mode: string };
 /** A card archived from its menu, offered back for a few seconds. */
@@ -213,19 +225,24 @@ export default function Review() {
   const chosen = deck && !round && !section ? params.cards?.split(",").filter(Boolean) : undefined;
   const cards = chosen?.length ? chosen.slice(0, CHOSEN_LIMIT) : undefined;
   const router = useRouter();
+  const insets = useSafeAreaInsets();
+  const [toastRoom, setToastRoom] = useState(0);
 
   // Opened from a widget, the review is the only screen, so leaving goes to Today.
   const leave = () => (router.canGoBack() ? router.back() : router.replace("/today"));
 
   // A review of another scope or round starts over, so nothing from this one carries into it.
   return (
-    <Run
-      key={`${deck ?? ""}:${series ?? ""}:${section ?? ""}:${round ?? ""}:${cards?.join(",") ?? ""}`}
-      scope={{ deck, series, section }}
-      round={round}
-      cards={cards}
-      onClose={leave}
-    />
+    <ToastRoom.Provider value={setToastRoom}>
+      <Run
+        key={`${deck ?? ""}:${series ?? ""}:${section ?? ""}:${round ?? ""}:${cards?.join(",") ?? ""}`}
+        scope={{ deck, series, section }}
+        round={round}
+        cards={cards}
+        onClose={leave}
+      />
+      <ToastHost scope={REVIEW_TOASTS} bottom={Math.max(insets.bottom, 12) + toastRoom + 12} />
+    </ToastRoom.Provider>
   );
 }
 
@@ -302,8 +319,6 @@ function Run({
   const [locked, setLocked] = useState({ key: "", presses: 0 });
   const [menuOpen, setMenuOpen] = useState(false);
   const [hookOpen, setHookOpen] = useState(false);
-  // The card just archived from its menu, offered back for a few seconds.
-  const [gone, setGone] = useState<Gone | null>(null);
   // What the menu chose, run once its sheet has gone, so nothing moves under it.
   const chosen = useRef<(() => void) | null>(null);
   // Hooks and marks set in this review, shown at once rather than when the draw is fetched again.
@@ -616,13 +631,10 @@ function Run({
       return next;
     });
     setListCards((c) => ({ ...c, dropped: withoutKey(c.dropped, key) }));
-    setGone(null);
   };
-  const undoArchive = async () => {
-    if (!gone) return;
+  const undoArchive = async (gone: Gone) => {
     const { card: back, mode } = gone;
     haptics.tick();
-    setGone(null);
     try {
       await writes.restoreCard(back.id);
       bringBack(gone);
@@ -654,13 +666,6 @@ function Run({
     return (
       <Cover style={pull.style}>
         <ReviewSkeleton />
-        {gone && (
-          <ArchivedLine
-            term={gone.card.term}
-            onUndo={() => void undoArchive()}
-            onDone={() => setGone(null)}
-          />
-        )}
       </Cover>
     );
   }
@@ -697,13 +702,6 @@ function Run({
             style={{ position: "absolute", top: 0, left: 0, right: 0, height: insets.top + 64 }}
           />
         </GestureDetector>
-        {gone && (
-          <ArchivedLine
-            term={gone.card.term}
-            onUndo={() => void undoArchive()}
-            onDone={() => setGone(null)}
-          />
-        )}
       </Cover>
     );
   }
@@ -764,10 +762,17 @@ function Run({
     setPinned(null);
     setRevealed(false);
     const held: Gone = { card, key, mode: modeKey(current.mode) };
-    setGone(held);
+    const { term } = card;
+    toast.add({
+      id: ARCHIVED_TOAST,
+      scope: REVIEW_TOASTS,
+      title: t`Archived “${term}”`,
+      action: { label: t`Undo`, onPress: () => void undoArchive(held) },
+    });
     try {
       await writes.archiveCard(card.id);
     } catch (e) {
+      toast.close(ARCHIVED_TOAST);
       bringBack(held);
       Alert.alert(t`Couldn’t archive “${card.term}”.`, e instanceof Error ? e.message : undefined);
     }
@@ -990,13 +995,6 @@ function Run({
           </SheetGroup>
         )}
       </Sheet>
-      {gone && (
-        <ArchivedLine
-          term={gone.card.term}
-          onUndo={() => void undoArchive()}
-          onDone={() => setGone(null)}
-        />
-      )}
       <HookSheet
         card={{ ...card, hook: hook?.text ?? null, hookSource: hook?.source ?? null }}
         open={hookOpen}
@@ -1166,6 +1164,7 @@ function Turn({
           card
         )}
       </View>
+      <RoomFor room={revealed ? GRADE_ROOM : 0} />
       {revealed && (
         <GradeStrip
           still={!top}
@@ -1660,6 +1659,16 @@ const gradeIn = (i: number) =>
  * Four grades under the card, 80 pt tall and nearly square, in the thumb's reach. Same tap, same
  * weight, whichever is chosen. phone.md "Review".
  */
+/** Tells the review's toasts what sits under them while this is on screen. */
+function RoomFor({ room }: { room: number }) {
+  const set = useContext(ToastRoom);
+  useEffect(() => {
+    set(room);
+    return () => set(0);
+  }, [room, set]);
+  return null;
+}
+
 /** What the grade strip takes from the card at the reveal: its 80 pt plates under a 12 pt gap. */
 const GRADE_ROOM = 92;
 
@@ -1815,6 +1824,8 @@ function Completion({
   const { t } = useLingui();
   const p = usePalette();
   const { goal, streak, lights, flame, out, progress, fed } = useDay();
+  const setToastRoom = useContext(ToastRoom);
+  useEffect(() => () => setToastRoom(0), [setToastRoom]);
   const insets = useSafeAreaInsets();
   const reduce = useReduceMotion();
   const counted = screen.heading !== "nothing_due";
@@ -1978,7 +1989,12 @@ function Completion({
           </View>
         </View>
         {/* One shape for every way on, the count said in words; the primary sits last. */}
-        <View className="gap-3 px-5 pt-6" pointerEvents={settled ? "auto" : "none"}>
+        <View
+          className="gap-3 px-5 pt-6"
+          pointerEvents={settled ? "auto" : "none"}
+          // Its 24 pt top gap is not the buttons', and the scroll's foot keeps 4 pt more than the review's.
+          onLayout={(e) => setToastRoom(e.nativeEvent.layout.height - 20)}
+        >
           {ways.map((way, i) => (
             <Animated.View key={way.kind} style={way$[i]}>
               {way.kind === "forgotten" ? (
@@ -2130,56 +2146,3 @@ const styles = StyleSheet.create({
   count: { fontSize: COUNT_SIZE, lineHeight: COUNT_SIZE * 1.2, fontVariant: ["tabular-nums"] },
   figures: { fontVariant: ["tabular-nums"] },
 });
-
-/** Says a card left the review for Archived, with Undo, for a few seconds under the header. */
-function ArchivedLine({
-  term,
-  onUndo,
-  onDone,
-}: {
-  term: string;
-  onUndo: () => void;
-  onDone: () => void;
-}) {
-  const { t } = useLingui();
-  const p = usePalette();
-  const insets = useSafeAreaInsets();
-  // biome-ignore lint/correctness/useExhaustiveDependencies: one timer per card archived.
-  useEffect(() => {
-    const timer = setTimeout(onDone, ARCHIVE_UNDO_FOR);
-    return () => clearTimeout(timer);
-  }, [term]);
-  return (
-    <View
-      pointerEvents="box-none"
-      className="absolute inset-x-0 items-center px-4"
-      style={{ top: insets.top + 60 }}
-    >
-      <GlassSurface
-        tint="room"
-        // Never wider than the screen: a long term shortens and Undo stays whole.
-        style={{
-          maxWidth: "100%",
-          borderRadius: 22,
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 10,
-        }}
-      >
-        <View className="min-w-0 shrink flex-row items-center gap-2 ps-4">
-          <Icon name="archive" size={16} colour={p["text-2"]} />
-          <Text className="shrink text-base text-text" numberOfLines={1}>
-            {t`Archived “${term}”`}
-          </Text>
-        </View>
-        <Press
-          onPress={onUndo}
-          accessibilityRole="button"
-          className="h-11 justify-center pe-4 ps-1"
-        >
-          <Text className="text-base font-medium text-text">{t`Undo`}</Text>
-        </Press>
-      </GlassSurface>
-    </View>
-  );
-}

@@ -9,7 +9,8 @@ import { Press, Text } from "./primitives";
 
 // What just happened, with at most one action, as the web's toast. phone.md "After an action".
 
-const HEIGHT = 52;
+// iOS's compact pill, so it sits over a review's card or a list without taking it over.
+const HEIGHT = 44;
 // Ink over the blur, as opaque as Undo's 4.5:1 needs over a white or black screen beneath.
 const SMOKE = { light: "e6", dark: "f0" } as const;
 
@@ -43,26 +44,28 @@ export function Toast({ title, error = false, action, announce = true }: ToastPr
     minHeight: HEIGHT,
     borderRadius: HEIGHT / 2,
     overflow: "hidden",
-    paddingVertical: 6,
+    paddingVertical: 4,
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
-    paddingStart: 18,
-    paddingEnd: action ? 6 : 18,
+    gap: 8,
+    paddingStart: 14,
+    paddingEnd: action ? 4 : 16,
   };
   const content = (
     <>
-      <Icon name={error ? "alert" : "check"} size={20} colour={error ? red : p.canvas} />
-      <Text className="flex-1 text-md text-canvas" numberOfLines={2}>
+      <Icon name={error ? "alert" : "check"} size={16} colour={error ? red : p.canvas} />
+      <Text className="flex-1 text-base text-canvas" numberOfLines={2}>
         {title}
       </Text>
       {action && (
         <Press
           onPress={action.onPress}
           accessibilityRole="button"
-          className="h-11 justify-center px-3"
+          // 36 pt inside the pill, reaching 44 through its hit area.
+          hitSlop={4}
+          className="h-9 justify-center px-3"
         >
-          <Text className="text-md font-semibold" style={{ color: p["toast-action"] }}>
+          <Text className="text-base font-semibold" style={{ color: p["toast-action"] }}>
             {action.label}
           </Text>
         </Press>

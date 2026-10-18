@@ -1,10 +1,9 @@
 import { canSpeakTerm, LanguageTag } from "@lymi/core";
 import { and, eq, isNull } from "@lymi/core/db";
 import { livePublicationMedia } from "@lymi/core/publication-media";
-import type { SpeechProvider } from "../ai";
 import { type Db, schema } from "../db";
 import type { AnalyticsWriter } from "./analytics";
-import { pronunciationAudio } from "./audio";
+import { type AudioDependencies, pronunciationAudio } from "./audio";
 import { ServiceError } from "./context";
 
 export type PublicMediaKind = "image" | "audio";
@@ -31,11 +30,7 @@ export async function publicMediaFile(
 export async function publicPronunciation(
   db: Db,
   cardId: string,
-  deps: {
-    bucket: R2Bucket;
-    providers: (language: string) => SpeechProvider[];
-    analytics?: (userId: string) => AnalyticsWriter;
-  },
+  deps: AudioDependencies & { analytics?: (userId: string) => AnalyticsWriter },
   spend: () => Promise<number | null>,
 ): Promise<{ clip: R2ObjectBody } | { retryAfter: number }> {
   const [stored] = await livePublicationMedia(db, { cardId }, "delivery");

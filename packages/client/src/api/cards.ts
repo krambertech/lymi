@@ -118,9 +118,17 @@ export const cardsApi = {
     request<HookDraftOut>(`/api/cards/${id}/hook-draft`, { method: "POST" }),
   /** Every review and every write, newest first. */
   cardHistory: (id: string) => request<CardHistory>(`/api/cards/${id}/history`),
-  audioUrl: (cardId: string) => apiUrl(`/api/audio/${encodeURIComponent(cardId)}`),
+  // Bump the request version when a speech policy changes without a card edit.
+  audioUrl: (cardId: string, updatedAt?: Date | string) => {
+    const version =
+      updatedAt instanceof Date ? updatedAt.getTime() : updatedAt ? Date.parse(updatedAt) : 0;
+    return apiUrl(
+      `/api/audio/${encodeURIComponent(cardId)}?v=1-${Number.isFinite(version) ? version : 0}`,
+    );
+  },
   /** A clip already voiced, or a 404: a preload never spends on speech. */
-  storedAudioUrl: (cardId: string) => apiUrl(`/api/audio/${encodeURIComponent(cardId)}?stored=1`),
+  storedAudioUrl: (cardId: string, updatedAt?: Date | string): string =>
+    `${cardsApi.audioUrl(cardId, updatedAt)}&stored=1`,
   /**
    * `version` is the card's `imageVersion` as last read; null expects a card with no picture yet.
    * The phone passes an Expo `File`, whose bytes Expo's fetch can read, not React Native's `{ uri }`.

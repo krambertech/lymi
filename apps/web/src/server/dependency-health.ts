@@ -10,6 +10,7 @@ export type Dependency =
   | "anthropic"
   | "workers_ai"
   | "elevenlabs"
+  | "gemini_text"
   | "gemini_speech"
   | "google_speech"
   | "openai_speech"

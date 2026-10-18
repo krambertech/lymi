@@ -155,7 +155,7 @@ function DeckPage() {
     });
   const playAudio = (card: Card) => {
     toast.close("audio");
-    new Audio(api.audioUrl(card.id)).play().catch(() =>
+    new Audio(api.audioUrl(card.id, card.updatedAt)).play().catch(() =>
       toast.add({
         id: "audio",
         type: "error",

@@ -10,7 +10,7 @@ Every real call to an outside service records its outcome too: `meteredFetch` an
 
 | Field | Holds |
 | --- | --- |
-| `index1` | The dependency: `d1`, `kv`, `r2`, `site`, `openai_text`, `anthropic`, `workers_ai`, `elevenlabs`, `gemini_speech`, `google_speech`, `openai_speech`, `email`, `web_push` |
+| `index1` | The dependency: `d1`, `kv`, `r2`, `site`, `openai_text`, `anthropic`, `workers_ai`, `elevenlabs`, `gemini_text`, `gemini_speech`, `google_speech`, `openai_speech`, `email`, `web_push` |
 | `blob1` | `call` for one attempt, `check` for the canary's verdict |
 | `blob2` | `ok`, `gone`, `limited`, `rejected`, `failed`, `timeout` or `unreachable` |
 | `blob3` | HTTP status class, or `none` |
@@ -99,3 +99,5 @@ An exception reached PostHog Error Tracking. Open [Error Tracking](https://eu.po
 ## Nobody reviewed yesterday
 
 A whole day passed without a graded review. Open the product and review a card; if that works, check grade delivery in the phone and web outboxes and the `review_graded` event in PostHog before assuming learners stopped.
+
+Japanese term audio logs `pronunciation_context_resolved` with `outcome: cached|cooldown|generated|unneeded|failed`, fixed model, and generation latency and input/output token counts on successful replies. No text, reading, meaning, card or owner identifier enters this log. A failed context call has a 24-hour cooldown; concurrent generation returns unavailable rather than purchasing a duplicate. `pronunciation_lease_release_failed` names a storage failure without the private object key.

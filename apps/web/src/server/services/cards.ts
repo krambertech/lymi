@@ -905,7 +905,10 @@ function editWrite(
   const audioStale =
     current.audioSource === "recorded"
       ? normalizedTerm !== normaliseTerm(current.term)
-      : pronunciationChanged;
+      : pronunciationChanged ||
+        (current.language?.split(/[-_]/)[0]?.toLowerCase() === "ja" &&
+          ((patch.pronunciation !== undefined && patch.pronunciation !== current.pronunciation) ||
+            (patch.meaning !== undefined && patch.meaning !== current.meaning)));
   const { reviewModes, directions: _legacy, ...fields } = patch;
   const hook = patch.hook === undefined ? current.hook : patch.hook || null;
   // Changing a field's text changes where it came from, so an AI fill an app rewrites loses its badge.

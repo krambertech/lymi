@@ -74,3 +74,14 @@ describe("a request", () => {
     expect(error).toMatchObject({ status: 0, message: "unreachable" });
   });
 });
+
+it("versions audio URLs on edits without putting card text in the URL", async () => {
+  const { cardsApi } = await import("./cards");
+  configureForTest(new Map());
+  const timestamp = "2026-10-18T12:00:00.000Z";
+  const first = cardsApi.audioUrl("card/one", timestamp);
+  expect(first).toBe(`/api/audio/card%2Fone?v=1-${Date.parse(timestamp)}`);
+  expect(cardsApi.audioUrl("card/one", new Date(timestamp))).toBe(first);
+  expect(cardsApi.storedAudioUrl("card/one", timestamp)).toBe(`${first}&stored=1`);
+  expect(cardsApi.audioUrl("card/one", "2026-10-18T12:01:00.000Z")).not.toBe(first);
+});

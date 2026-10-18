@@ -1,4 +1,5 @@
 export type SpeechRequest = {
+  previousText?: string | undefined;
   text: string;
   language: string;
   /** Receives what the vendor bills by, when the provider can tell. */

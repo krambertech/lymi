@@ -21,6 +21,8 @@ import {
 import { Hono } from "hono";
 import { z } from "zod";
 import { createSpeechProviders } from "../ai";
+import { createJapaneseContextProvider } from "../ai/japanese-audio-context";
+import { meteredFetch } from "../dependency-health";
 import { publisherEmails } from "../env";
 import { body, ctxOf, describe, query } from "../http";
 import type { AppEnv } from "../index";
@@ -354,6 +356,7 @@ decks.put(
         ctx.db,
         {
           bucket: c.env.AUDIO,
+          japaneseContext: createJapaneseContextProvider(c.env, meteredFetch(c.env, "gemini_text")),
           providers: (language) => createSpeechProviders(c.env, language),
           analytics: ownerAnalytics(c.env, ctx.db, (work) => c.executionCtx.waitUntil(work)),
         },

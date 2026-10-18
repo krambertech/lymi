@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider } from "../ai";
 import type { Db } from "../db";
-import { addCards, showCard, updateCard } from "./cards";
+import { addCards, archiveCard, showCard, updateCard } from "./cards";
 import { ServiceError } from "./context";
 import { createDeck, updateDeck } from "./decks";
 import { acceptDraft, givesAway, type HookCard, hookable, hookDraftFor } from "./hook-draft";
@@ -117,6 +117,22 @@ describe("hookDraftFor", () => {
     const second = provider("КУРБан печалится");
     expect(await hookDraftFor(ctx, cardId, second.provider)).toBe("КУРБан печалится");
     expect(second.complete).toHaveBeenCalledOnce();
+  });
+
+  it("shows the model other meanings from the deck, so it can tell the meaning's language", async () => {
+    const { ctx, cardId, deckId } = await card("hook-draft-deck");
+    const added = await addCards(ctx, [
+      { deckId, term: "meri", meaning: "море" },
+      { deckId, term: "nõrk", meaning: "слабый" },
+    ]);
+    const archived = added[1];
+    if (archived?.status !== "added") throw new Error("not added");
+    await archiveCard(ctx, archived.card.id);
+
+    const drafted = provider("КУРБан грустит");
+    await hookDraftFor(ctx, cardId, drafted.provider);
+    const [request] = drafted.complete.mock.calls[0] as unknown as [{ input: string }];
+    expect(JSON.parse(request.input).deckMeanings).toEqual(["море"]);
   });
 
   it("remembers that the AI had none, and drafts nothing without a vendor", async () => {

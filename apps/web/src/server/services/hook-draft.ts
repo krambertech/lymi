@@ -5,7 +5,7 @@ import {
   modesFromDirections,
   type ReviewModeKey,
 } from "@lymi/core";
-import { and, eq, isNull } from "@lymi/core/db";
+import { and, eq, isNotNull, isNull, ne } from "@lymi/core/db";
 import { z } from "zod";
 import type { TextProvider } from "../ai";
 import { schema } from "../db";
@@ -23,41 +23,61 @@ export type HookCard = {
   language: string;
   pronunciation?: string | null | undefined;
   asked: readonly ReviewModeKey[];
+  /** A few other meanings from the card's deck, which tell Ukrainian from Russian where one meaning cannot. */
+  deckMeanings?: readonly string[];
 };
+
+/** Enough other meanings to tell the deck's meaning language apart from its closest neighbour. */
+const DECK_MEANINGS = 8;
 
 /** One line the learner can read in a glance under the cue. */
 const MAX_WORDS = 6;
 
 export const HOOK_INSTRUCTIONS = [
-  "You write one memory hook for a language learner's vocabulary card: a tiny mnemonic that brings the answer back when the card's cue is shown.",
-  "Write the hook entirely in the language the card's meaning is written in, the learner's own language. No words of the language being learned appear in it.",
-  "Use the keyword method. Say the term aloud the way a native speaker does, using its pronunciation when one is given. Think of several common words or well-known names in the learner's language that start with the same sounds, and keep the one that sounds closest and pictures most easily. Write the sound it shares with the term in capitals. Then tie that keyword to the meaning as directly as possible, in a picture you could draw in one line.",
-  "For a card asked meaning first, the strongest pattern is the keyword doing the meaning, often just two or three words. These are the learner's own hooks, the standard to match:",
-  "- kurb (Estonian, грустный): КУРБан грустит",
-  "- nõrk (Estonian, слабый): НОРКа слабая",
-  "- meri (Estonian, море): МЭРИ у моря",
-  "- vaatama (Estonian, смотреть): Смотри, ВАТА летит!",
-  "- astuma (Estonian, шагать): пАСТУх шагает за стадом",
-  "- tooma (Estonian, приносить): ТОМ принёс томатный сок",
+  "You write one memory hook for a language learner's vocabulary card: a short line in the learner's own language that, once read, makes the term hard to forget.",
+  "Write the hook entirely in the language the card's meaning is written in. Read the meaning text to tell which, along with deckMeanings, other meanings from the same deck in the same language, and give that language's tag in language before the hook. Most examples below are Russian, but a meaning in English gets an English hook, and a meaning in Ukrainian, with letters such as і, ї, є or ґ, gets a Ukrainian hook, never a Russian one. When the meaning alone could be either, such as магазин, the language of deckMeanings decides. No words of the language being learned appear in the hook.",
+  "A hook needs two links, and both must click.",
+  "Sound: words of the learner's language that, said aloud, sound like the term. Cover as much of the term's stem as you can, in its order: its stressed syllable and its distinctive consonants. An ending that every word of its kind shares, such as the -ma of an Estonian infinitive or the -ar of a Spanish verb, comes back on its own, so never spend a word covering it. A whole word that sounds like the whole stem is best. Two or three short words can chain to cover it, and the sound can hide inside a longer word instead of starting it. Sharing only the first two or three letters is the weakest link and rarely enough.",
+  "Meaning: the sound words and the meaning act on each other in one scene with a reason in it. The keyword does, causes, wants or suffers the meaning, so recalling the meaning brings back the scene and the scene brings back the sound. A scene that is true to life, a small joke, a pun or a strong feeling sticks; a keyword merely placed next to the meaning does not.",
+  "The line reads as natural speech someone might say, and makes literal sense. One strong keyword in a sensible scene beats a chain that forces nonsense: read the line back, and if a listener would ask what it means, it fails.",
+  "Other routes, when they beat a sound-alike:",
+  "- A compound: check every term for one first. When the term is two or more words joined, its parts' literal meanings joined with a plus sign are usually the best hook, because they rebuild the term itself: a glove that is literally a hand shoe. Use them when they are vivid or sensible.",
+  "- A loanword or a shared root with a word the learner already knows in their own language: name that word.",
+  "Work like this. Say the term aloud as a native speaker does, using its pronunciation when one is given, and split it into syllables. Draft at least six candidates across different routes: a whole-word sound-alike, a chain of short words covering the term, a sound hidden inside a longer word, and a parts or root reading where one exists. Rate each on how much of the term it sounds like, how surely it leads to the meaning, how easily it is pictured or felt, and how naturally it reads. Keep the one that is strong on all four. If none is, return null.",
+  "Write the sounds shared with the term in capitals.",
+  "These are the learner's own hooks for cards asked meaning first, the standard to match, with what makes each work:",
+  "- meri (Estonian, море): МЭРИ у моря. The whole word is a name.",
+  "- kurb (Estonian, грустный): КУРБан грустит. The whole word, in a name that does the meaning.",
+  "- näitama (Estonian, показывать): НЯНЯ ТАМ! Показываешь пальцем. Two words chain over the whole term, and pointing is the meaning.",
+  "- tegema (Estonian, делать): ТЕ ГЕНы делают тебя тобой. A chain, with a true reason.",
+  "- astuma (Estonian, шагать): пАСТУх шагает за стадом. The sound sits inside the word.",
+  "- kordama (Estonian, повторять): Повтори свой реКОРД. The sound sits inside the word, and repeating a record is the meaning.",
+  "- kõhn (Estonian, худой): Худой не ходит на КУХНю. A joke that is true.",
+  "- elukutse (Estonian, профессия): жизнь + призвание. A compound read as its parts.",
+  "Weak drafts, for contrast: ТУНДра чувствует ветер for tundma (чувствовать) only shares the first letters, and a tundra has no reason to feel; ХАРВИ появляется нечасто for harva (редко) leans on a name few people know.",
   "For a card asked term first, the learner sees the term and recalls the meaning, so the scene suggests the meaning without naming it:",
   "- sbrigarsi (Italian, to hurry up): fire BRIGAde scrambling out",
+  "An English hook for a card asked meaning first works the same way:",
+  "- pato (Spanish, duck): a duck asleep in a POT",
   "Rules:",
-  `- At most ${MAX_WORDS} words, one line. Shorter is better. No explanation, quotation marks, emoji or arrows.`,
-  "- The keyword is a real everyday word or a name everyone knows, never a made-up word, a fragment split across words, or a brand or abbreviation.",
-  "- The keyword must truly sound like the start of the term. If no keyword sounds close, return null.",
-  "- The picture is ordinary and instant: no puzzles, nothing surreal, no alcohol, drugs, violence or illness.",
+  `- At most ${MAX_WORDS} words, one line; count them before answering. Shorter is better. No explanation, quotation marks, emoji, arrows or dashes: where a pause is needed, use a comma or start a new sentence. A plus sign goes only between the parts of a compound.`,
+  "- Every word is a real everyday word or a name everyone in the learner's language knows. No made-up words, brands, abbreviations or rare names.",
+  "- The picture is instant: no puzzles, no alcohol, drugs, violence or illness.",
   "- The card lists the modes it is asked in. meaning_to_term: the learner sees the meaning and recalls the term, so never write the term or any word of it in its own spelling. term_to_meaning: the learner sees the term and recalls the meaning, so never write the meaning or a word sharing its root. image_to_term asks for the term as meaning_to_term does, and image_to_meaning asks for the meaning as term_to_meaning does.",
   "- A term with forms separated by ' · ' is hooked on its first form.",
   "- A phrase of up to three words is hooked on its hardest word. Return null for a longer sentence.",
-  "- Return null when the term is in the same language as its meaning, or when the card is not a word or phrase with a translation. Null is better than a strange hook.",
+  "- Return null when the term is in the same language as its meaning, or when the card is not a word or phrase with a translation. Null is better than a weak hook.",
 ].join("\n");
 
 const REPLY_SCHEMA = {
   name: "memory_hook",
   schema: {
     type: "object",
-    properties: { hook: { type: ["string", "null"], maxLength: CARD_LIMITS.hook } },
-    required: ["hook"],
+    properties: {
+      language: { type: "string" },
+      hook: { type: ["string", "null"], maxLength: CARD_LIMITS.hook },
+    },
+    required: ["language", "hook"],
     additionalProperties: false,
   },
 } as const;
@@ -173,6 +193,7 @@ export async function draftHook(provider: TextProvider, card: HookCard): Promise
     termLanguage: card.language,
     ...(card.pronunciation ? { pronunciation: card.pronunciation } : {}),
     asked: card.asked,
+    ...(card.deckMeanings?.length ? { deckMeanings: card.deckMeanings } : {}),
   });
   const reply = Reply.safeParse(
     await provider.complete({
@@ -216,7 +237,20 @@ export async function hookDraftFor(
   const asked = card.directions
     ? effectiveModes(card.directions, card.reviewModeKeys)
     : modesFromDirections(deck?.directions ?? "recognition");
-  const hookCard = { ...subject, asked };
+  const neighbours = await ctx.db
+    .select({ meaning: schema.cards.meaning })
+    .from(schema.cards)
+    .where(
+      and(
+        eq(schema.cards.deckId, card.deckId),
+        isNull(schema.cards.archivedAt),
+        isNotNull(schema.cards.meaning),
+        ne(schema.cards.id, card.id),
+      ),
+    )
+    .limit(DECK_MEANINGS);
+  const deckMeanings = neighbours.flatMap(({ meaning }) => (meaning?.trim() ? [meaning] : []));
+  const hookCard = { ...subject, asked, deckMeanings };
   // A kept draft is checked again, since the card's modes or its deck's may have changed since.
   if (card.hookDraft === "") return null;
   if (card.hookDraft !== null && !givesAway(card.hookDraft, hookCard)) return card.hookDraft;

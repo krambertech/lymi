@@ -52,10 +52,12 @@ export function createGeminiApiSpeechProvider(
     locale,
     contentType: "audio/wav",
     extension: "wav",
+    readsWritten: true,
     async speech(input) {
       const key = env.GEMINI_API_KEY?.trim();
       if (!key) throw new GeminiApiSpeechError("Gemini API speech is not configured");
       const endpoint = providerEndpoint(env, "google-ai-studio");
+      const prompt = pronunciationPrompt(locale, input.written);
       let response: Response;
       try {
         response = await request(
@@ -69,9 +71,7 @@ export function createGeminiApiSpeechProvider(
               ...endpoint.headers,
             },
             body: JSON.stringify({
-              contents: [
-                { parts: [{ text: `${pronunciationPrompt(locale)}\n\nText: ${input.text}` }] },
-              ],
+              contents: [{ parts: [{ text: `${prompt}\n\nText: ${input.text}` }] }],
               generationConfig: {
                 responseModalities: ["AUDIO"],
                 speechConfig: {

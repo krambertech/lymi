@@ -32,12 +32,13 @@ export function createGoogleGeminiProvider(
     locale,
     contentType: "audio/mpeg",
     extension: "mp3",
+    readsWritten: true,
     speech: (input) =>
       synthesizeGoogleSpeech(env, {
         request: dependencies.request ?? fetch,
         accessToken: dependencies.accessToken,
         body: {
-          input: { text: input.text, prompt: pronunciationPrompt(locale) },
+          input: { text: input.text, prompt: pronunciationPrompt(locale, input.written) },
           voice: { languageCode: locale, name: voice, modelName: model },
           audioConfig: { audioEncoding: "MP3" },
         },
@@ -45,12 +46,22 @@ export function createGoogleGeminiProvider(
   };
 }
 
-export function pronunciationPrompt(locale: string): string {
+export function pronunciationPrompt(locale: string, written?: string): string {
   const language = languageNames.of(locale) ?? locale;
   return (
     `You are a native ${language} speaker saying a word or phrase for a learner. ` +
     `Say the text once, clearly and at a natural pace, with ${language} sounds, stress and ` +
     "intonation, even where a word is spelled like an English word. Do not translate it, " +
-    "spell it out, repeat it, or add any other words or sounds."
+    "spell it out, repeat it, or add any other words or sounds." +
+    (written ? ` ${writtenFormHint(written)}` : "")
+  );
+}
+
+/** The text stays the reading, so 上手 is still じょうず or うわて as the card says; the written form only picks the accent. */
+export function writtenFormHint(written: string): string {
+  return (
+    `The text is the reading of the word written 「${written}」. Give it the pitch accent of ` +
+    "that word, so homophones such as 箸, 橋 and 端 sound different, but say only the sounds of " +
+    "the text and never read the written form another way."
   );
 }

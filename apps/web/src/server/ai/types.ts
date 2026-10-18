@@ -1,6 +1,8 @@
 export type SpeechRequest = {
   text: string;
   language: string;
+  /** The term as written when `text` is its reading, such as 橋 for はし: context for the accent, never spoken. */
+  written?: string | undefined;
 };
 
 export interface SpeechProvider {
@@ -11,6 +13,8 @@ export interface SpeechProvider {
   locale: string;
   contentType: "audio/mpeg" | "audio/wav";
   extension: "mp3" | "wav";
+  /** Whether `written` reaches the voice, which makes it part of the cache identity. */
+  readsWritten?: boolean;
   speech(request: SpeechRequest): Promise<Response>;
 }
 

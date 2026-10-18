@@ -69,7 +69,7 @@ export async function pronunciationAudio(
     let audio: Uint8Array;
     try {
       const generated = await provider.speech({
-        text: spokenText(card),
+        ...spoken(card, provider),
         language: language.data,
       });
       audio = await boundedAudio(generated);
@@ -207,9 +207,16 @@ async function rememberAudioKey(
   );
 }
 
-/** A Japanese card's kana reading, so 上手 is said じょうず or うわて as the card says, else the term. */
-function spokenText(card: Card): string {
-  return speechText(kanaReading(card) ?? card.term);
+/**
+ * A Japanese card's kana reading, so 上手 is said じょうず or うわて as the card says, else the term;
+ * a voice that reads the written form also gets the kanji, for the accent of a homophone.
+ */
+function spoken(card: Card, provider: SpeechProvider): { text: string; written?: string } {
+  const term = speechText(card.term);
+  const reading = kanaReading(card);
+  if (!reading) return { text: term };
+  const text = speechText(reading);
+  return provider.readsWritten && term !== text ? { text, written: term } : { text };
 }
 
 // One `IN` list's worth (see selectIn), which also bounds this run's share of the cron's subrequests.
@@ -253,8 +260,10 @@ export async function purgeCardAudio(db: Db, bucket: R2Bucket): Promise<number> 
 }
 
 async function audioKey(card: Card, provider: SpeechProvider): Promise<string> {
+  const { text, written } = spoken(card, provider);
+  // A key without a written form is unchanged, so clips said from the reading alone stay cached.
   const bytes = new TextEncoder().encode(
-    `${spokenText(card)}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}`,
+    `${text}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}${written ? `\u0000${written}` : ""}`,
   );
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
   const fingerprint = [...digest]

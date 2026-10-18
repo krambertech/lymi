@@ -94,6 +94,7 @@ function provider(
   speech: SpeechProvider["speech"],
 ): SpeechProvider {
   return {
+    ...(["google-gemini", "gemini-api", "openai"].includes(name) ? { readsWritten: true } : {}),
     provider: name,
     model: {
       "google-gemini": "gemini-3.1-flash-tts-preview",
@@ -201,6 +202,63 @@ describe("pronunciation audio", () => {
 
     await pronunciationAudio(context(card({ ...japanese, pronunciation: "jōzu" })), "card-1", deps);
     expect(speech).toHaveBeenLastCalledWith({ text: "上手", language: "ja" });
+  });
+
+  it("gives a voice that reads the written form the kanji, and still says the reading", async () => {
+    const objects = new Map<string, R2ObjectBody>();
+    const get = vi.fn(async (key: string) => objects.get(key) ?? null);
+    const put = vi.fn(async (key: string) => {
+      objects.set(key, storedAudio(key));
+    });
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) => ({ get, put })[property as "get"],
+    });
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const deps = { bucket, providers: () => [provider("gemini-api", speech)] };
+    const say = (term: string, pronunciation: string | null) =>
+      pronunciationAudio(
+        context(card({ term, normalizedTerm: term, language: "ja", pronunciation })),
+        "card-1",
+        deps,
+      );
+
+    const chopsticks = await say("箸", "はし");
+    expect(speech).toHaveBeenLastCalledWith({ text: "はし", written: "箸", language: "ja" });
+    const bridge = await say("橋", "はし");
+    expect(speech).toHaveBeenLastCalledWith({ text: "はし", written: "橋", language: "ja" });
+    expect(bridge.key).not.toBe(chopsticks.key);
+
+    await say("上手", "うわて");
+    expect(speech).toHaveBeenLastCalledWith({ text: "うわて", written: "上手", language: "ja" });
+    await say("はし", "はし");
+    expect(speech).toHaveBeenLastCalledWith({ text: "はし", language: "ja" });
+    await say("上手", null);
+    expect(speech).toHaveBeenLastCalledWith({ text: "上手", language: "ja" });
+  });
+
+  it("keeps a reading-only voice's key, so its Japanese clips stay cached", async () => {
+    const get = vi.fn(async () => null);
+    const put = vi.fn(async () => undefined);
+    const bucket = new Proxy(Object.create(null) as R2Bucket, {
+      get: (_target, property) => ({ get, put })[property as "get"],
+    });
+    const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
+    const say = (term: string) =>
+      pronunciationAudio(
+        context(card({ term, normalizedTerm: term, language: "ja", pronunciation: "はし" })),
+        "card-1",
+        { bucket, providers: () => [provider("elevenlabs", speech)] },
+      ).catch(() => undefined);
+
+    await say("箸");
+    await say("橋");
+    expect(speech).toHaveBeenNthCalledWith(1, { text: "はし", language: "ja" });
+    expect(speech).toHaveBeenNthCalledWith(2, { text: "はし", language: "ja" });
+    const keys = put.mock.calls.map((call) => (call as unknown[])[0]);
+    expect(keys).toEqual([
+      "cards/card-1/v2/ccab440bcade18476ff894c7e2be8350.mp3",
+      "cards/card-1/v2/ccab440bcade18476ff894c7e2be8350.mp3",
+    ]);
   });
 
   it("keeps saying the term for a language without readings, whatever the pronunciation", async () => {

@@ -47,6 +47,12 @@ describe("Google Gemini provider", () => {
     expect(pronunciationPrompt("pt-BR")).toContain("Brazilian Portuguese sounds");
   });
 
+  it("names a reading's written form for its accent and keeps the reading as the text", () => {
+    expect(pronunciationPrompt("ja-JP")).not.toContain("「");
+    expect(pronunciationPrompt("ja-JP", "橋")).toContain("the reading of the word written 「橋」");
+    expect(pronunciationPrompt("ja-JP", "橋")).toContain("say only the sounds of the text");
+  });
+
   it("accepts a model and voice override", () => {
     const provider = createGoogleGeminiProvider(
       { GEMINI_SPEECH_MODEL: "gemini-2.5-pro-tts", GEMINI_SPEECH_VOICE: "Charon" },

@@ -1,4 +1,5 @@
 import { type AiGatewayBindings, providerEndpoint } from "./gateway";
+import { writtenFormHint } from "./google-gemini";
 import type { Fetch, SpeechProvider } from "./types";
 
 const languageNames = new Intl.DisplayNames(["en"], { type: "language" });
@@ -34,6 +35,7 @@ export function createOpenAiSpeechProvider(
     locale: language,
     contentType: "audio/mpeg",
     extension: "mp3",
+    readsWritten: true,
     async speech(input) {
       const apiKey = env.OPENAI_API_KEY?.trim();
       if (!apiKey) throw new OpenAiSpeechError("OpenAI speech is not configured");
@@ -53,7 +55,8 @@ export function createOpenAiSpeechProvider(
           input: input.text,
           instructions:
             `Pronounce exactly the provided text once, naturally and clearly, as a native ${languageNames.of(input.language) ?? input.language} speaker. ` +
-            "Do not translate it, spell it out, add commentary, or make non-speech sounds.",
+            "Do not translate it, spell it out, add commentary, or make non-speech sounds." +
+            (input.written ? ` ${writtenFormHint(input.written)}` : ""),
           response_format: "mp3",
         }),
       });

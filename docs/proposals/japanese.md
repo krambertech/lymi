@@ -18,6 +18,7 @@ Kanji carry meaning and are read differently from word to word (日 in 日本, �
 - **Furigana.** Over the term on the cue while the card is New or Learning, gone once it is Known; always over the term in the answer. Over an example's kanji except where the kanji and reading match one of the learner's Known cards.
 - **The AI.** It writes example readings, and adds them to a learner's example only when the text without brackets is unchanged.
 - **Audio.** Spoken from the reading. A recorded clip from an import is the card's audio and is never replaced; generated speech fills only cards without one. Sentence audio waits.
+- **Accent.** Kana alone cannot tell 箸, 橋 and 端 apart, so a voice that takes instructions, Gemini or OpenAI, also gets the written form in its prompt while the text it speaks stays the reading. ElevenLabs and Chirp get the reading alone: ElevenLabs takes accent only as IPA in a stored pronunciation dictionary or inline, and Chirp only as IPA or X-SAMPA phonemes, and Lymi keeps no accent to write there. While ElevenLabs is first for Japanese, a homophone's accent is still its guess; an imported card's pitch-accent notes line, such as `はꜜし [1]`, is the source if that changes.
 - **Import.** Pitch accent and the sentence translation each become one notes line; a frequency number is dropped.
 - **Left out.** Romaji as a reading aid, extra review modes, kanji cards as a type, handwriting and typed answers.
 

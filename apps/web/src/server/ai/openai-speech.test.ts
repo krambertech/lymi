@@ -29,6 +29,23 @@ describe("OpenAI speech provider", () => {
     expect(JSON.parse(String(call[1]?.body)).instructions).toContain("native Welsh speaker");
   });
 
+  it("names a Japanese reading's written form in the instructions, not the input", async () => {
+    const request = vi.fn(
+      async (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> =>
+        new Response(new Uint8Array([1, 2]), { headers: { "Content-Type": "audio/mpeg" } }),
+    );
+    const provider = createOpenAiSpeechProvider(
+      { ...testGateway, OPENAI_API_KEY: "key" },
+      "ja",
+      request,
+    );
+
+    await provider.speech({ text: "はし", written: "橋", language: "ja" });
+    const body = JSON.parse(String(request.mock.calls[0]?.[1]?.body));
+    expect(body.input).toBe("はし");
+    expect(body.instructions).toContain("the reading of the word written 「橋」");
+  });
+
   it("does not make a request when the key is missing", async () => {
     const request = vi.fn();
     const provider = createOpenAiSpeechProvider({}, "cy", request);

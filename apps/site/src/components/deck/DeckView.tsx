@@ -7,6 +7,7 @@ import {
   taughtLanguage,
   trayHue,
 } from "@lymi/core/catalog";
+import { clsx } from "clsx";
 import { ChevronRight } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 import type { DeckLinks } from "../../lib/deck-links";
@@ -24,7 +25,7 @@ import { shelfLabel, tagLabel } from "../explore/explore-labels";
 import { AppTile } from "../Logo";
 import { Questions } from "../landing/Questions";
 import { SiteFooter } from "../landing/SiteFooter";
-import { deckIntro, deckQuestions, listedSections } from "./deck-content";
+import { deckIntro, deckQuestions, listedSections, unlistedSections } from "./deck-content";
 import { PreviewFace } from "./PreviewFace";
 
 interface LocaleProps {
@@ -216,6 +217,9 @@ function DeckWordsBody({ deck }: { deck: PublicDeckOut }) {
   const sections = listedSections(deck);
   if (sections.length === 0) return null;
   const intro = deckIntro(i18n, deck);
+  const unlisted = unlistedSections(deck);
+  // A subject deck's term is a whole question, often with its options, so it is cut short here.
+  const termClamp = taughtLanguage(deck) ? "" : "line-clamp-3";
   return (
     <section
       id="words"
@@ -241,7 +245,7 @@ function DeckWordsBody({ deck }: { deck: PublicDeckOut }) {
               {section.name && (
                 <h3
                   lang={deck.meaningLanguage}
-                  className="text-lg font-medium tracking-[-0.02em] text-balance text-text"
+                  className="text-lg font-medium tracking-[-0.02em] text-balance text-text @2xl:min-h-[2lh]"
                 >
                   {section.name}
                 </h3>
@@ -252,7 +256,10 @@ function DeckWordsBody({ deck }: { deck: PublicDeckOut }) {
                   <li key={at} className="grid gap-0.5 text-md">
                     <span
                       lang={deck.language ?? undefined}
-                      className="font-medium break-words whitespace-pre-line text-text"
+                      className={clsx(
+                        "font-medium break-words whitespace-pre-line text-text",
+                        termClamp,
+                      )}
                     >
                       {card.term}
                     </span>
@@ -271,6 +278,11 @@ function DeckWordsBody({ deck }: { deck: PublicDeckOut }) {
             </div>
           ))}
         </div>
+        {unlisted > 0 && (
+          <p className="mt-8 text-md text-muted">
+            <Plural value={unlisted} one="And # more section" other="And # more sections" />
+          </p>
+        )}
       </div>
     </section>
   );

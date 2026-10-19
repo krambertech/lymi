@@ -190,6 +190,9 @@ msgstr "{title} · Lymi"
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# картку перевернуто} few {# картки перевернуто} many {# карток перевернуто} other {# картки перевернуто}}"
 
+msgid "{unlisted, plural, one {And # more section} other {And # more sections}}"
+msgstr "{unlisted, plural, one {І ще # розділ} few {І ще # розділи} many {І ще # розділів} other {І ще # розділу}}"
+
 msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
@@ -820,6 +823,9 @@ msgstr "Почалася 1618 року з <0>Празької дефенестр
 
 msgid "Below are the first cards of each section, so you can see what you would learn before you add the deck."
 msgstr "Нижче перші картки кожного розділу, щоб було видно, що ти вивчиш, ще до того, як додаси колоду."
+
+msgid "Below are the first few cards, so you can see what you would learn before you add the deck."
+msgstr "Нижче перші кілька карток, щоб було видно, що ти вивчиш, ще до того, як додаси колоду."
 
 msgid "Beta"
 msgstr "Бета"

@@ -8,6 +8,7 @@ import {
   deckQuestions,
   LISTED_SECTIONS,
   listedSections,
+  unlistedSections,
   WORDS_PER_SECTION,
 } from "./deck-content";
 
@@ -59,6 +60,12 @@ describe("listedSections", () => {
     expect(listed).toHaveLength(LISTED_SECTIONS);
     expect(listed[0]?.cards).toHaveLength(CARDS_PER_SUBJECT_SECTION);
   });
+
+  it("counts the sections the list leaves out, so the page can say how many more there are", () => {
+    const many = Array.from({ length: 20 }, (_, at) => ({ name: `S${at}`, cards: cards(9, "x") }));
+    expect(unlistedSections(deck({ sections: many }))).toBe(20 - LISTED_SECTIONS);
+    expect(unlistedSections(deck())).toBe(0);
+  });
 });
 
 describe("deckIntro", () => {
@@ -73,6 +80,14 @@ describe("deckIntro", () => {
     expect(deckIntro(pageI18n("uk"), one)[0]).toBe(
       "У колоді «Greek Essentials» 1 картка. Мова: грецька, переклад: англійська. Усі вони в одному розділі: «Hello».",
     );
+  });
+
+  it("does not mention sections when the deck has none named", () => {
+    const flags = deck({ category: "geography", sections: [{ name: null, cards: cards(5, "f") }] });
+    expect(deckIntro(pageI18n("en"), flags)[1]).toBe(
+      "Below are the first few cards, so you can see what you would learn before you add the deck.",
+    );
+    expect(deckIntro(pageI18n("en"), deck())[1]).toContain("each section");
   });
 });
 

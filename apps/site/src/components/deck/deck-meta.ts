@@ -39,14 +39,19 @@ export function deckTitle(i18n: I18n, deck: PublicDeckOut): string {
     !language ||
     namesLanguage(name, language, i18n.locale) ||
     (ownName !== null && namesLanguage(name, ownName, deck.meaningLanguage));
+  const counted = i18n._(
+    msg`${name} · ${plural(count, { one: "# free flashcard", other: "# free flashcards" })}`,
+  );
   const facts = !named
     ? i18n._(
         msg`${language} · ${name} · ${plural(count, { one: "# free flashcard", other: "# free flashcards" })}`,
       )
-    : i18n._(
-        msg`${name} · ${plural(count, { one: "# free flashcard", other: "# free flashcards" })}`,
-      );
-  return firstThatFits([branded(i18n, facts), facts, branded(i18n, name), name], TITLE_MAX);
+    : counted;
+  // When the language makes it too long, the count is worth more than the brand.
+  return firstThatFits(
+    [branded(i18n, facts), facts, branded(i18n, counted), counted, branded(i18n, name), name],
+    TITLE_MAX,
+  );
 }
 
 /**

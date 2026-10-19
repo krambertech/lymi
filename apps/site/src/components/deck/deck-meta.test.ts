@@ -116,6 +116,18 @@ describe("deckTitle", () => {
     );
   });
 
+  it("keeps the count when only the language makes the title too long", () => {
+    const nato = deck({
+      name: "NATO Phonetic Alphabet for Radio",
+      category: "languages",
+      language: "en",
+      cardCount: 26,
+    });
+    expect(deckTitle(pageI18n("ru"), nato)).toBe(
+      "NATO Phonetic Alphabet for Radio · 26 бесплатных карточек",
+    );
+  });
+
   it("falls back to the bare name for a very long one", () => {
     const long = deck({ name: "A".repeat(58) });
     expect(deckTitle(pageI18n("en"), long)).toBe("A".repeat(58));

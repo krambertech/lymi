@@ -190,6 +190,9 @@ msgstr "{title} · Lymi"
 msgid "{turned, plural, one {# turned} other {# turned}}"
 msgstr "{turned, plural, one {# turned} other {# turned}}"
 
+msgid "{unlisted, plural, one {And # more section} other {And # more sections}}"
+msgstr "{unlisted, plural, one {And # more section} other {And # more sections}}"
+
 msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {due} other {due}}"
 
@@ -820,6 +823,9 @@ msgstr "Began in 1618 with the <0>Defenestration of Prague</0>."
 
 msgid "Below are the first cards of each section, so you can see what you would learn before you add the deck."
 msgstr "Below are the first cards of each section, so you can see what you would learn before you add the deck."
+
+msgid "Below are the first few cards, so you can see what you would learn before you add the deck."
+msgstr "Below are the first few cards, so you can see what you would learn before you add the deck."
 
 msgid "Beta"
 msgstr "Beta"

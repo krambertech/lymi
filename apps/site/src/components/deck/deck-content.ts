@@ -59,10 +59,21 @@ export function deckIntro(i18n: I18n, deck: PublicDeckOut): string[] {
           })}`,
         )
       : "";
-  const list = i18n._(
-    msg`Below are the first cards of each section, so you can see what you would learn before you add the deck.`,
-  );
+  const list =
+    sections > 0
+      ? i18n._(
+          msg`Below are the first cards of each section, so you can see what you would learn before you add the deck.`,
+        )
+      : i18n._(
+          msg`Below are the first few cards, so you can see what you would learn before you add the deck.`,
+        );
   return [[opening, order].filter(Boolean).join(" "), list];
+}
+
+/** How many sections with cards the word list leaves out, past the first LISTED_SECTIONS. */
+export function unlistedSections(deck: PublicDeckOut): number {
+  const filled = deck.sections.filter((section) => section.cards.length > 0).length;
+  return Math.max(0, filled - LISTED_SECTIONS);
 }
 
 /** The deck page's questions. The page shows exactly these answers, and its FAQPage repeats them. */

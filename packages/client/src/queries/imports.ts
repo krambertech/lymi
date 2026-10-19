@@ -1,6 +1,7 @@
 import type { ImportChoicesInput } from "@lymi/core";
-import { type FetchStatus, queryOptions } from "@tanstack/react-query";
-import { api } from "../api";
+import { type FetchStatus, onlineManager, queryOptions } from "@tanstack/react-query";
+import { useSyncExternalStore } from "react";
+import { api, errorMessage, RequestTimeout } from "../api";
 
 /** Statuses the server is still working through, so a screen keeps asking. */
 export const WORKING = new Set(["inspecting", "importing"]);
@@ -22,12 +23,40 @@ export const importPreviewQuery = (id: string, choices: ImportChoicesInput) =>
     queryKey: ["imports", id, "preview", JSON.stringify(choices)],
     queryFn: ({ signal }) => api.previewImport(id, choices, signal),
     staleTime: 60_000,
-    retry: 1,
+    // A second attempt after the deadline would double the wait before Try again shows.
+    retry: (failures, error) => failures < 1 && !(error instanceof RequestTimeout),
     placeholderData: (previous) => previous,
     meta: { persist: false },
   });
 
-/** A retry paused for focus or a connection is not fetching, but it has not answered either. */
-export function previewWaiting(query: { isPending: boolean; fetchStatus: FetchStatus }): boolean {
-  return query.isPending || query.fetchStatus !== "idle";
+interface PreviewQuery {
+  isPending: boolean;
+  isPlaceholderData: boolean;
+  isError: boolean;
+  error: unknown;
+  fetchStatus: FetchStatus;
+}
+
+/** What the preview step shows for the learner's current choices, by the rule in `previewState`. */
+export function usePreviewState(query: PreviewQuery) {
+  const online = useSyncExternalStore(onlineManager.subscribe, isOnline, isOnline);
+  return previewState(query, online);
+}
+
+const isOnline = () => onlineManager.isOnline();
+
+/**
+ * A retry paused for focus is still on its way, so it waits rather than reading as no term. One
+ * paused for a lost connection has no end in sight, so it reads as unreachable, with Try again.
+ */
+export function previewState(
+  query: PreviewQuery,
+  online: boolean,
+): { waiting: boolean; error: string | undefined } {
+  const unanswered = query.isPending || query.isPlaceholderData;
+  const offline = !online && query.fetchStatus === "paused" && unanswered;
+  return {
+    waiting: !offline && (query.isPending || query.fetchStatus !== "idle"),
+    error: query.isError || offline ? errorMessage(query.error) : undefined,
+  };
 }

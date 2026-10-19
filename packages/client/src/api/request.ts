@@ -20,6 +20,9 @@ export class ApiError extends Error {
   }
 }
 
+/** A request the network never settled before its deadline; worth trying again later, not at once. */
+export class RequestTimeout extends ApiError {}
+
 /** A path on the product API as this app reaches it: the web's own origin, or the phone's base URL. */
 export function apiUrl(path: string): string {
   return `${clientConfig().baseUrl ?? ""}${path}`;
@@ -37,7 +40,7 @@ export async function request<T>(path: string, options?: RequestOptions): Promis
   try {
     return await send<T>(path, { ...init, signal: limit.signal });
   } catch (error) {
-    if (limit.expired()) throw new ApiError(0, unreachable());
+    if (limit.expired()) throw new RequestTimeout(0, unreachable());
     throw error;
   } finally {
     limit.clear();

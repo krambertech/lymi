@@ -3,7 +3,7 @@ import { msg, plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { api, errorMessage, type Import, type ImportPreview } from "@lymi/client/api";
 import { splitNoteTypes } from "@lymi/client/imports";
-import { importPreviewQuery, importQuery, previewWaiting } from "@lymi/client/queries";
+import { importPreviewQuery, importQuery, usePreviewState } from "@lymi/client/queries";
 import { type FieldRole, type ImportSource, LANGUAGE_TAGS } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type ReactNode, useMemo, useState } from "react";
@@ -90,7 +90,7 @@ export function ImportPreviewScreen({
     skipDecks: [],
   }));
   const preview = useQuery(importPreviewQuery(item.id, choices));
-  const previewLoading = previewWaiting(preview);
+  const { waiting: previewLoading, error: previewError } = usePreviewState(preview);
   const retryPreview = () => void preview.refetch();
   const confirm = useMutation({
     mutationFn: () => api.confirmImport(item.id, choices),
@@ -133,7 +133,6 @@ export function ImportPreviewScreen({
   const setLanguage = (deck: string, value: string | null) =>
     setChoices((c) => ({ ...c, languages: { ...c.languages, [deck]: value } }));
   const data = preview.data;
-  const previewError = preview.isError ? errorMessage(preview.error) : undefined;
 
   let body: ReactNode;
   if (editing?.kind === "fields") {

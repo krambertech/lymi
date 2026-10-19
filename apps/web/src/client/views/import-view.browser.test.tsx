@@ -14,8 +14,8 @@ import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import type { Choices } from "../components/import-parts";
 import { StaticNavProvider } from "../components/nav-link";
-import { errorMessage, type Import, type ImportPreview } from "../lib/api";
-import { importPreviewQuery, previewWaiting } from "../lib/queries";
+import type { Import, ImportPreview } from "../lib/api";
+import { importPreviewQuery, usePreviewState } from "../lib/queries";
 import { ImportPreviewView } from "./import-view";
 
 i18n.load("en", messages);
@@ -107,6 +107,7 @@ function Preview() {
     skipDecks: [],
   });
   const query = useQuery(importPreviewQuery(item.id, choices));
+  const state = usePreviewState(query);
   return (
     <ImportPreviewView
       item={item}
@@ -114,8 +115,8 @@ function Preview() {
       choices={choices}
       onChoices={setChoices}
       preview={query.data}
-      previewLoading={previewWaiting(query)}
-      previewError={query.isError ? errorMessage(query.error) : undefined}
+      previewLoading={state.waiting}
+      previewError={state.error}
       onPreviewRetry={() => void query.refetch()}
       onConfirm={() => {}}
       onCancel={() => {}}
@@ -171,6 +172,22 @@ test("a retry paused for a hidden tab is still getting a card ready", async () =
 
   fetch.mockResolvedValue(Response.json(preview));
   focusManager.setFocused(true);
+  await expect.element(page.getByText("猫")).toBeVisible();
+});
+
+test("a preview waiting for a connection says so and tries again", async () => {
+  onlineManager.setOnline(false);
+  const fetch = fetchPreview();
+  await renderPreview();
+  await expect
+    .element(page.getByRole("alert"))
+    .toHaveTextContent("Couldn’t reach Lymi. Check your connection and try again.");
+  await expect.element(gettingReady()).not.toBeInTheDocument();
+  await expect.element(noTerm()).not.toBeInTheDocument();
+  expect(fetch).not.toHaveBeenCalled();
+
+  fetch.mockResolvedValue(Response.json(preview));
+  onlineManager.setOnline(true);
   await expect.element(page.getByText("猫")).toBeVisible();
 });
 

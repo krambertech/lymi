@@ -11,7 +11,7 @@ import { api, errorMessage, type Import } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { importGuideUrl } from "../lib/import-guides";
 import { resumeUpload, retryUpload, stopUpload, uploading, useUpload } from "../lib/import-uploads";
-import { importPreviewQuery, importQuery, previewWaiting } from "../lib/queries";
+import { importPreviewQuery, importQuery, usePreviewState } from "../lib/queries";
 import {
   ImportDoneView,
   ImportPreviewView,
@@ -192,6 +192,7 @@ function Ready({
     skipDecks: [],
   }));
   const preview = useQuery(importPreviewQuery(item.id, choices));
+  const previewState = usePreviewState(preview);
   const confirm = useMutation({
     mutationFn: () => api.confirmImport(item.id, choices),
     onSuccess: (next) => qc.setQueryData(importQuery(item.id).queryKey, next),
@@ -203,8 +204,8 @@ function Ready({
       choices={choices}
       onChoices={setChoices}
       preview={preview.data}
-      previewLoading={previewWaiting(preview)}
-      previewError={preview.isError ? errorMessage(preview.error) : undefined}
+      previewLoading={previewState.waiting}
+      previewError={previewState.error}
       onPreviewRetry={() => void preview.refetch()}
       onConfirm={() => confirm.mutate()}
       confirming={confirm.isPending}

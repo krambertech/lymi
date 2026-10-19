@@ -3,7 +3,7 @@ import { z } from "zod";
 import { languageGuide } from "./languages";
 
 /** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const ENRICHMENT_PROMPT_VERSION = 4;
+export const ENRICHMENT_PROMPT_VERSION = 5;
 
 /** `LanguageTag`'s own ceiling, so an over-long tag is dropped before it reaches the parse. */
 export const LANGUAGE_MAX = 12;
@@ -17,11 +17,11 @@ The learner sees the term, tries to remember the answer, then turns the card to 
 A JSON object:
 - meaningLanguage: the learner's language.
 - decks: the decks the cards belong to. Each has a name, description, language and purpose: "language" if the deck teaches a language, "subject" if it is for a subject or an exam, "other" for anything else. It may also have:
-  - guide: how to write cards in this language, field by field.
+  - guide: how to write cards in this language, field by field, and sometimes a worked example like those under Examples.
   - samples: up to five cards from this deck, written by the learner or a lesson. "" means the card leaves that field empty.
   - instructions: what the deck's owner wants from you.
   - style: a note on what the deck's cards show, learned from many of them: what the deck is about, and how its cards are usually written.
-- cards: the cards to fill. Each has an id, its deck, its term, any text it already has, and mayFill: the empty fields you may fill. A card may also have addReadings: its example has kanji without readings.
+- cards: the cards to fill. Each has an id, its deck, its term, any text it already has, and mayFill: the empty fields you may fill. A card may also have addReadings: its example lacks the readings its language guide asks for.
 
 ## What to fill
 - Fill only the fields in mayFill. Return null for every other field, except example on a card with addReadings.
@@ -92,10 +92,6 @@ Why: the word has two common meanings, and each has a different plural.
 {"meaning": "the organelle that makes most of a cell's energy", "example": null, "notes": null, "pronunciation": null, "language": "en"}
 Why: a subject deck's meaning is a short explanation, not a translation.
 
-6. Japanese deck, no samples, meaningLanguage en. Card "食べる", example "毎朝パンを食べます。", addReadings, mayFill: meaning.
-{"meaning": "to eat", "example": "毎朝[まいあさ]パンを食[た]べます。", "notes": null, "pronunciation": null, "language": null}
-Why: addReadings asks for the same example with a reading after each run of kanji, and nothing else changed.
-
 ## Reply
 Return one entry for each card, with its id and all five fields. Use null for any field you don't fill.`;
 
@@ -127,7 +123,7 @@ export type CardBrief = {
   example?: string;
   notes?: string;
   mayFill: readonly EnrichedField[];
-  /** The example has kanji without readings, which the model may add and nothing else. */
+  /** The example lacks the readings its language draws, which the model may add and nothing else. */
   addReadings?: true;
 };
 

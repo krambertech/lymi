@@ -33,7 +33,8 @@ export const NATIVE_SPEECH_VOICES: Readonly<Record<string, NativeVoice>> = {
 const DEFAULT_NATIVE_SPEECH_LANGUAGES = new Set([
   "ar",
   "pt-BR",
-  "cmn",
+  // Mainland only, so a Taiwan locale speaks with Gemini's Taiwan voice.
+  "cmn-CN",
   "da",
   "nl",
   "et",

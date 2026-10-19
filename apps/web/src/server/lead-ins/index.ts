@@ -1,4 +1,4 @@
-import { languageSupport, type SUPPORTED_LANGUAGES, type SupportedTag } from "@lymi/core";
+import { type SUPPORTED_LANGUAGES, type SupportedTag, supportedLanguage } from "@lymi/core";
 import { createLeadInWriter, type LeadInWriter } from "../ai/lead-in-writer";
 import { meteredFetch } from "../dependency-health";
 import type { Bindings } from "../env";
@@ -19,7 +19,7 @@ type Policies = {
 const POLICIES: Policies = { ja: japanese };
 
 export function leadInPolicy(language: string | null | undefined): LeadInPolicy | undefined {
-  const support = languageSupport(language);
+  const support = supportedLanguage(language);
   return (support && POLICIES[support.tag]) ?? undefined;
 }
 

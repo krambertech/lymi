@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
-  cueKeepsReading,
   drawsReadings,
   languageScript,
   languageSupport,
   speechInputs,
+  speechLocale,
+  supportedLanguage,
   writtenWithReading,
 } from ".";
 
@@ -13,16 +14,30 @@ describe("languageSupport", () => {
     for (const tag of ["ja", "ja-JP", "JA", "ja-Jpan"])
       expect(languageSupport(tag)?.tag).toBe("ja");
   });
+  it("finds Chinese from every zh tag but Cantonese's", () => {
+    for (const tag of ["zh", "zh-CN", "zh-TW", "zh-HK", "zh-Hant", "zh_Hans_SG", "zh-cmn"])
+      expect(languageSupport(tag)?.tag).toBe("zh");
+    for (const tag of ["zh-yue", "zh-yue-HK", "yue", "yue-Hant"])
+      expect(languageSupport(tag)).toBeNull();
+  });
   it("has no record for any other language", () => {
-    for (const tag of ["zh", "ko", "en", "", null, undefined, "constructor"])
+    for (const tag of ["ko", "en", "", null, undefined, "constructor"])
       expect(languageSupport(tag)).toBeNull();
   });
 });
 
+describe("supportedLanguage", () => {
+  it("leaves out Chinese until it joins SupportedTag", () => {
+    expect(supportedLanguage("ja-JP")?.tag).toBe("ja");
+    expect(supportedLanguage("zh")).toBeNull();
+  });
+});
+
 describe("drawsReadings", () => {
-  it("draws Japanese readings and no others", () => {
+  it("draws Japanese and Chinese readings and no others", () => {
     expect(drawsReadings("ja-JP")).toBe(true);
-    expect(drawsReadings("zh")).toBe(false);
+    expect(drawsReadings("zh-TW")).toBe(true);
+    expect(drawsReadings("zh-yue")).toBe(false);
     expect(drawsReadings(null)).toBe(false);
   });
 });
@@ -30,8 +45,13 @@ describe("drawsReadings", () => {
 describe("languageScript", () => {
   it("names the Japanese face and leaves the rest to Onest", () => {
     expect(languageScript("ja")).toBe("Jpan");
-    expect(languageScript("zh")).toBeNull();
     expect(languageScript("ru")).toBeNull();
+  });
+  it("writes Chinese in its script subtag, else traditional for Taiwan, Hong Kong and Macau", () => {
+    for (const tag of ["zh", "zh-CN", "zh-SG", "zh-Hans", "zh-Hans-TW", "zh-Hans-HK"])
+      expect(languageScript(tag)).toBe("Hans");
+    for (const tag of ["zh-TW", "zh-HK", "zh-MO", "zh-Hant", "zh-Hant-CN", "ZH_hant"])
+      expect(languageScript(tag)).toBe("Hant");
   });
 });
 
@@ -44,25 +64,20 @@ describe("speechInputs", () => {
   });
 });
 
-describe("writtenWithReading", () => {
-  it("calls a Japanese or Chinese pronunciation a Reading", () => {
-    for (const tag of ["ja", "ja-JP", "zh", "zh-TW", "zh-yue"])
-      expect(writtenWithReading(tag)).toBe(true);
-  });
-  it("calls every other pronunciation a pronunciation", () => {
-    for (const tag of ["ko", "ru", "en", null]) expect(writtenWithReading(tag)).toBe(false);
+describe("speechLocale", () => {
+  it("speaks traditional Chinese with the Taiwan voice and leaves the rest to the default", () => {
+    expect(speechLocale("zh-Hant")).toBe("cmn-TW");
+    expect(speechLocale("zh")).toBeNull();
+    expect(speechLocale("ja")).toBeNull();
   });
 });
 
-describe("cueKeepsReading", () => {
-  it("keeps Chinese pinyin on the cue until the card is Known", () => {
-    expect(cueKeepsReading("zh", false)).toBe(true);
-    expect(cueKeepsReading("zh-Hans", false)).toBe(true);
-    expect(cueKeepsReading("zh", true)).toBe(false);
+describe("writtenWithReading", () => {
+  it("calls a Japanese or Chinese pronunciation a Reading", () => {
+    for (const tag of ["ja", "ja-JP", "zh", "zh-TW"]) expect(writtenWithReading(tag)).toBe(true);
   });
-  it("leaves every other reading for the reveal", () => {
-    expect(cueKeepsReading("ja", false)).toBe(false);
-    expect(cueKeepsReading("ko", false)).toBe(false);
-    expect(cueKeepsReading(null, false)).toBe(false);
+  it("calls every other pronunciation a pronunciation", () => {
+    for (const tag of ["ko", "ru", "en", "zh-yue", null])
+      expect(writtenWithReading(tag)).toBe(false);
   });
 });

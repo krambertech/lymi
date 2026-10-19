@@ -1,5 +1,5 @@
 {
-  "tags": ["ja", "ja-JP", "JA", "ja-Jpan-JP"],
+  "tags": { "ja": "Jpan", "ja-JP": "Jpan", "JA": "Jpan", "ja-Jpan-JP": "Jpan" },
   "terms": [
     {
       "term": "食べる",

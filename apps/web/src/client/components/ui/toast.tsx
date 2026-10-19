@@ -77,7 +77,7 @@ function ToastContent({ className, ...props }: ToastPrimitive.Content.Props) {
     <ToastPrimitive.Content
       data-slot="toast-content"
       className={cn(
-        "flex h-full items-center gap-3 overflow-hidden p-4 transition-opacity duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] data-behind:opacity-0 data-expanded:opacity-100",
+        "flex h-full items-center gap-3 overflow-hidden py-2.5 ps-4 pe-2.5 transition-opacity duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] data-behind:opacity-0 data-expanded:opacity-100",
         className,
       )}
       {...props}
@@ -90,7 +90,7 @@ function ToastTitle({ className, ...props }: ToastPrimitive.Title.Props) {
     <ToastPrimitive.Title
       data-slot="toast-title"
       className={cn(
-        "line-clamp-4 text-sm font-medium text-pretty [overflow-wrap:anywhere]",
+        "line-clamp-4 text-base font-medium text-pretty [overflow-wrap:anywhere]",
         className,
       )}
       {...props}
@@ -113,7 +113,7 @@ function ToastAction({ className, ...props }: ToastPrimitive.Action.Props) {
     <ToastPrimitive.Action
       data-slot="toast-action"
       className={cn(
-        "relative shrink-0 rounded-sm px-2.5 py-1.5 text-sm font-semibold text-toast-action transition-[background-color,scale] duration-150 ease-out before:absolute before:-inset-x-1 before:-inset-y-2 before:content-[''] hoverable:hover:bg-canvas/10 focus-visible:outline-canvas active:scale-[0.97] motion-reduce:active:scale-100",
+        "relative shrink-0 rounded-sm px-2.5 py-1.5 text-base font-semibold text-toast-action transition-[background-color,scale] duration-150 ease-out before:absolute before:-inset-x-1 before:-inset-y-2 before:content-[''] hoverable:hover:bg-canvas/10 focus-visible:outline-canvas active:scale-[0.97] motion-reduce:active:scale-100",
         className,
       )}
       {...props}

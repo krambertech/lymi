@@ -44,12 +44,16 @@ function subtags(language: string | null | undefined): string[] {
   return (language ?? "").trim().toLowerCase().split(/[-_]/);
 }
 
-/** The record a full tag names, or null: by its primary subtag, unless its second names a language the record leaves out. */
+/**
+ * The record a full tag names, or null: by its primary subtag, unless an extended language subtag
+ * names another language, so zh-yue, Cantonese, never draws pinyin.
+ */
 export function languageSupport(language: string | null | undefined): LanguageSupport | null {
-  const [primary = "", second] = subtags(language);
+  const [primary = "", second = ""] = subtags(language);
   if (!Object.hasOwn(LANGUAGE_RECORDS, primary)) return null;
   const record: LanguageSupport = LANGUAGE_RECORDS[primary as RecordTag];
-  return second !== undefined && record.excludes?.includes(second) ? null : record;
+  const other = /^[a-z]{3}$/.test(second) && !record.extlangs?.includes(second);
+  return other ? null : record;
 }
 
 /** The record for a tag that has joined SupportedTag, for a registry keyed by it, or null. */
@@ -70,6 +74,14 @@ export function readingEngine(language: string | null | undefined): ReadingEngin
 /** Whether Lymi draws readings over this language's terms and examples. */
 export function drawsReadings(language: string | null | undefined): boolean {
   return readingEngine(language) !== null;
+}
+
+/**
+ * Whether this language's examples carry inline readings Lymi parses, so the AI may add them:
+ * furigana's today. Pinyin joins when Chinese examples draw it (docs/proposals/chinese.md, slice 4).
+ */
+export function examplesCarryReadings(language: string | null | undefined): boolean {
+  return readingEngine(language) === "furigana";
 }
 
 /** The script whose face draws this language's text, or null when Onest draws it. */

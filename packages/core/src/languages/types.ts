@@ -20,8 +20,11 @@ export interface LanguageSupport {
   scripts: readonly [Script, ...Script[]];
   /** The script a full tag names, from its lower-case subtags. */
   script?: (subtags: readonly string[]) => Script;
-  /** Second subtags naming another language the record leaves out, such as Cantonese's zh-yue. */
-  excludes?: readonly string[];
+  /**
+   * Extended language subtags that are still this language, such as Mandarin's zh-cmn. Any other
+   * three-letter second subtag names another language, such as Cantonese's zh-yue or Hakka's zh-hak.
+   */
+  extlangs?: readonly string[];
   engine: ReadingEngine;
   /** The pronunciation holds a Reading, and the card form calls the field so. */
   pronunciation: "reading";

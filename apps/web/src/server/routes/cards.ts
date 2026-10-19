@@ -67,7 +67,7 @@ const DUPLICATE_RULE =
   "A duplicate is a card whose normalised term and language match an active card anywhere in the learner's decks; for a first-party publisher, only in the target deck. " +
   "It is skipped, never rejected, and the response names the existing card. A card with no language only matches cards with no language. " +
   "A Japanese card whose kana reading differs from the existing card's is a different word, as long as both have a reading of the term: 上手 read じょうず and うわて are two cards. " +
-  "A Chinese card's pinyin counts the same way when it carries tone marks: 行 read háng and xíng are two cards, while xue2 xi2 and Xué xí are one reading. " +
+  "A Chinese card's pinyin counts the same way when it carries tone marks: 行 read háng and xíng are two cards, while xue2 xi2 and Xué xí are one reading, and 一 and 不 compare without their tone, so 不是 bù shì and bú shì are one card. " +
   "A Japanese term sent with its reading inline, `食[た]べる`, is stored as 食べる with the pronunciation たべる before the check, unless another pronunciation was sent, and Chinese pinyin sent with tone numbers, ni3 hao3, is stored with tone marks, nǐ hǎo; the outcome lists the fields converted in `normalized`. " +
   "Re-running the same call is safe.";
 

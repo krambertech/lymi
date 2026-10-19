@@ -4,7 +4,7 @@
  */
 import { alignPinyin, isHan, type PinyinSegment, pinyinTermSegments } from "./align";
 import { cleanPinyin, pinyinSyllables, readingTokens } from "./split";
-import { hasToneMark, toneMarks } from "./tones";
+import { hasToneMark, toneMarks, untoned } from "./tones";
 
 export type { PinyinSegment } from "./align";
 export { alignPinyin, pinyinTermSegments } from "./align";
@@ -38,10 +38,16 @@ export function pinyinTermReading(term: string, pronunciation: string): PinyinSe
   return pinyinSyllables(reading) ? pinyinTermSegments(term, reading) : null;
 }
 
+/** Characters whose spoken tone follows the next syllable, so a reading may give either: 不是 bù shì or bú shì. */
+const SANDHI = /^[一不]$/u;
+
+const toneless = (text: string) => [...text].map((char) => untoned(char).plain).join("");
+
 /**
  * The reading the duplicate rule compares: NFC, lower case, tone marks, without spaces or
- * apostrophes. Null unless it is pinyin that fits the term and carries a tone, so a toneless
- * reading, an IPA line or another word's pinyin never splits one word into two cards.
+ * punctuation, and with no tone over 一 or 不, which dictionaries write in citation tone and
+ * learners often as spoken. Null unless it is pinyin that fits the term and carries a tone, so a
+ * toneless reading, an IPA line or another word's pinyin never splits one word into two cards.
  */
 export function pinyinKey(term: string, pronunciation: string): string | null {
   const reading = cleanPinyin(pronunciation);
@@ -49,11 +55,17 @@ export function pinyinKey(term: string, pronunciation: string): string | null {
   const text = term.normalize("NFC").trim();
   const tokens = readingTokens(reading);
   const form = firstForm(text);
-  const fits =
-    alignPinyin(text, tokens) !== null ||
-    (form !== null && alignPinyin(form, tokens) !== null) ||
-    (Array.from(text).length > KEY_ALIGN_MAX && pinyinSyllables(reading) !== null);
-  return fits ? reading.toLowerCase().replace(/[\s'’ʼ‘-]/gu, "") : null;
+  const aligned = alignPinyin(text, tokens) ?? (form === null ? null : alignPinyin(form, tokens));
+  const passage = Array.from(text).length > KEY_ALIGN_MAX && pinyinSyllables(reading) !== null;
+  if (!aligned && !passage) return null;
+  const spoken = aligned
+    ? aligned
+        .map(({ text, reading }) =>
+          reading === undefined ? "" : SANDHI.test(text) ? toneless(reading) : reading,
+        )
+        .join("")
+    : reading;
+  return spoken.toLowerCase().replace(/[\s\p{P}ʼ]/gu, "");
 }
 
 /**

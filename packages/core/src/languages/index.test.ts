@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   drawsReadings,
+  examplesCarryReadings,
   languageScript,
   languageSupport,
   speechInputs,
@@ -17,7 +18,7 @@ describe("languageSupport", () => {
   it("finds Chinese from every zh tag but Cantonese's", () => {
     for (const tag of ["zh", "zh-CN", "zh-TW", "zh-HK", "zh-Hant", "zh_Hans_SG", "zh-cmn"])
       expect(languageSupport(tag)?.tag).toBe("zh");
-    for (const tag of ["zh-yue", "zh-yue-HK", "yue", "yue-Hant"])
+    for (const tag of ["zh-yue", "zh-yue-HK", "yue", "yue-Hant", "zh-hak", "zh-nan", "zh-min-nan"])
       expect(languageSupport(tag)).toBeNull();
   });
   it("has no record for any other language", () => {
@@ -39,6 +40,14 @@ describe("drawsReadings", () => {
     expect(drawsReadings("zh-TW")).toBe(true);
     expect(drawsReadings("zh-yue")).toBe(false);
     expect(drawsReadings(null)).toBe(false);
+  });
+});
+
+describe("examplesCarryReadings", () => {
+  it("lets Japanese examples carry readings, and Chinese ones not yet", () => {
+    expect(examplesCarryReadings("ja")).toBe(true);
+    expect(examplesCarryReadings("zh")).toBe(false);
+    expect(examplesCarryReadings("ko")).toBe(false);
   });
 });
 

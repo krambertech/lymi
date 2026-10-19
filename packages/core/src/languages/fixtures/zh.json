@@ -33,7 +33,10 @@
   "keys": [
     { "term": "行", "pronunciations": ["háng", "HÁNG", "hang2", "ha\u0301ng"] },
     { "term": "东西", "pronunciations": ["dōngxi", "dōng xi", "dong1 xi5", "Dōngxi"] },
-    { "term": "西安", "pronunciations": ["Xī'ān", "xī ān", "xi1 an1", "xī’ān"] }
+    { "term": "西安", "pronunciations": ["Xī'ān", "xī ān", "xi1 an1", "xī’ān"] },
+    { "term": "你好", "pronunciations": ["nǐ hǎo", "Nǐ hǎo!", "nǐ hǎo.", "ni3 hao3"] },
+    { "term": "不是", "pronunciations": ["bù shì", "bú shì", "bu4 shi4", "Bú shì."] },
+    { "term": "一会儿", "pronunciations": ["yíhuìr", "yīhuìr", "yí huìr"] }
   ],
   "apart": [
     { "term": "行", "pronunciations": ["háng", "xíng"] },

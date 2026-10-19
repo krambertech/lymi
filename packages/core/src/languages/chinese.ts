@@ -10,12 +10,12 @@ function chineseScript(subtags: readonly string[]): Script {
   return subtags.some((subtag) => TRADITIONAL.has(subtag)) ? "Hant" : "Hans";
 }
 
-/** Mandarin Chinese: pinyin, one syllable over each character. Cantonese is another language. docs/proposals/chinese.md. */
+/** Mandarin Chinese: pinyin, one syllable over each character. Cantonese, Hakka and Min are other languages. docs/proposals/chinese.md. */
 export const chinese = {
   tag: "zh",
   scripts: ["Hans", "Hant"],
   script: chineseScript,
-  excludes: ["yue"],
+  extlangs: ["cmn"],
   engine: "pinyin",
   pronunciation: "reading",
   // Voices read hanzi with tone sandhi and pinyin text poorly, so speech says the term.

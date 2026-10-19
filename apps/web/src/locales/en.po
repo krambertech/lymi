@@ -269,6 +269,18 @@ msgstr "{0, plural, one {card due} other {cards due}} in {1, plural, one {# deck
 msgid "{0, plural, one {card} other {cards}}"
 msgstr "{0, plural, one {card} other {cards}}"
 
+#. placeholder {0}: cardIds.length
+msgid "{0, plural, one {Couldn’t mark # card important.} other {Couldn’t mark # cards important.}}"
+msgstr "{0, plural, one {Couldn’t mark # card important.} other {Couldn’t mark # cards important.}}"
+
+#. placeholder {0}: cardIds.length
+msgid "{0, plural, one {Couldn’t remove the important mark from # card.} other {Couldn’t remove the important mark from # cards.}}"
+msgstr "{0, plural, one {Couldn’t remove the important mark from # card.} other {Couldn’t remove the important mark from # cards.}}"
+
+#. placeholder {0}: ids.length
+msgid "{0, plural, one {Couldn’t undo {missed} of # card.} other {Couldn’t undo {missed} of # cards.}}"
+msgstr "{0, plural, one {Couldn’t undo {missed} of # card.} other {Couldn’t undo {missed} of # cards.}}"
+
 #. placeholder {0}: summary.current
 msgid "{0, plural, one {day in a row} other {days in a row}}"
 msgstr "{0, plural, one {day in a row} other {days in a row}}"
@@ -700,6 +712,12 @@ msgstr "{reviewable, plural, =0 {Nothing to review} one {Review all #} other {Re
 msgid "{run, plural, one {day in a row} other {days in a row}}"
 msgstr "{run, plural, one {day in a row} other {days in a row}}"
 
+msgid "{saved, plural, one {Marked # card important} other {Marked # cards important}}"
+msgstr "{saved, plural, one {Marked # card important} other {Marked # cards important}}"
+
+msgid "{saved, plural, one {Removed the important mark from # card} other {Removed the important mark from # cards}}"
+msgstr "{saved, plural, one {Removed the important mark from # card} other {Removed the important mark from # cards}}"
+
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# card} other {# cards}}"
 
@@ -708,6 +726,18 @@ msgstr "{total, plural, one {# card} other {# cards}} from {owner}. Join to revi
 
 msgid "{total, plural, one {# card} other {# cards}}. Add the deck to review them on your own schedule."
 msgstr "{total, plural, one {# card} other {# cards}}. Add the deck to review them on your own schedule."
+
+msgid "{total, plural, one {Archived {saved} of # card} other {Archived {saved} of # cards}}"
+msgstr "{total, plural, one {Archived {saved} of # card} other {Archived {saved} of # cards}}"
+
+msgid "{total, plural, one {Marked {saved} of # card important} other {Marked {saved} of # cards important}}"
+msgstr "{total, plural, one {Marked {saved} of # card important} other {Marked {saved} of # cards important}}"
+
+msgid "{total, plural, one {Moved {saved} of # card to {deckName}} other {Moved {saved} of # cards to {deckName}}}"
+msgstr "{total, plural, one {Moved {saved} of # card to {deckName}} other {Moved {saved} of # cards to {deckName}}}"
+
+msgid "{total, plural, one {Removed the important mark from {saved} of # card} other {Removed the important mark from {saved} of # cards}}"
+msgstr "{total, plural, one {Removed the important mark from {saved} of # card} other {Removed the important mark from {saved} of # cards}}"
 
 msgid "{total, plural, one {Tags for # card} other {Tags for # cards}}"
 msgstr "{total, plural, one {Tags for # card} other {Tags for # cards}}"
@@ -750,6 +780,9 @@ msgstr "A .mochi file, up to 1 GB. You can also drop it here."
 
 msgid "A .zip file, up to 1 GB. You can also drop it here."
 msgstr "A .zip file, up to 1 GB. You can also drop it here."
+
+msgid "A card keeps its progress and leaves its section."
+msgstr "A card keeps its progress and leaves its section."
 
 msgid "A change made offline couldn’t be saved. {reason}"
 msgstr "A change made offline couldn’t be saved. {reason}"
@@ -1170,6 +1203,9 @@ msgstr "Archived “{tagName}” from {0, plural, one {# card} other {# cards}}"
 
 msgid "Archived {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Archived {count, plural, one {# card} other {# cards}} in {deck}"
+
+msgid "Archived {saved, plural, one {# card} other {# cards}}"
+msgstr "Archived {saved, plural, one {# card} other {# cards}}"
 
 msgid "Archived decks"
 msgstr "Archived decks"
@@ -1637,6 +1673,10 @@ msgstr "Couldn’t add the deck. Check your connection and try again."
 msgid "Couldn’t add the deck. It’s no longer published."
 msgstr "Couldn’t add the deck. It’s no longer published."
 
+#. placeholder {0}: cardIds.length
+msgid "Couldn’t archive {0, plural, one {# card} other {# cards}}."
+msgstr "Couldn’t archive {0, plural, one {# card} other {# cards}}."
+
 msgid "Couldn’t cancel the invitation. Try again."
 msgstr "Couldn’t cancel the invitation. Try again."
 
@@ -1726,6 +1766,10 @@ msgstr "Couldn’t load what your account holds"
 
 msgid "Couldn’t load your cards"
 msgstr "Couldn’t load your cards"
+
+#. placeholder {0}: cardIds.length
+msgid "Couldn’t move {0, plural, one {# card} other {# cards}}."
+msgstr "Couldn’t move {0, plural, one {# card} other {# cards}}."
 
 msgid "Couldn’t open that file. Choose a JPEG, PNG or WebP image."
 msgstr "Couldn’t open that file. Choose a JPEG, PNG or WebP image."
@@ -2883,6 +2927,10 @@ msgstr "Manage connected apps"
 msgid "Mark important"
 msgstr "Mark important"
 
+msgctxt "chosen cards"
+msgid "Mark important"
+msgstr "Mark important"
+
 msgid "Marked important"
 msgstr "Marked important"
 
@@ -2979,6 +3027,9 @@ msgstr "Move {sectionName} up"
 msgid "Move down"
 msgstr "Move down"
 
+msgid "Move to deck…"
+msgstr "Move to deck…"
+
 msgid "Move to section…"
 msgstr "Move to section…"
 
@@ -2999,6 +3050,9 @@ msgstr "Moved “{term}” to {sectionName}"
 
 msgid "Moved {count, plural, one {# card} other {# cards}} to {sectionName}"
 msgstr "Moved {count, plural, one {# card} other {# cards}} to {sectionName}"
+
+msgid "Moved {saved, plural, one {# card} other {# cards}} to {deckName}"
+msgstr "Moved {saved, plural, one {# card} other {# cards}} to {deckName}"
 
 msgid "Moved to {sectionName}"
 msgstr "Moved to {sectionName}"
@@ -4705,6 +4759,10 @@ msgstr "Undo"
 msgid "Undo this import"
 msgstr "Undo this import"
 
+msgid "Unmark important"
+msgstr "Unmark important"
+
+msgctxt "chosen cards"
 msgid "Unmark important"
 msgstr "Unmark important"
 

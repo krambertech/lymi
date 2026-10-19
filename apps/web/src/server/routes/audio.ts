@@ -7,8 +7,6 @@ import { pronunciationAudio } from "../services";
 
 export const audio = new Hono<AppEnv>();
 
-const noop = () => {};
-
 audio.get("/:cardId", describe({ hide: true, errors: [400, 404, 503] }), async (c) => {
   const work = pronunciationAudio(ctxOf(c), c.req.param("cardId"), {
     bucket: c.env.AUDIO,
@@ -17,7 +15,7 @@ audio.get("/:cardId", describe({ hide: true, errors: [400, 404, 503] }), async (
     storedOnly: c.req.query("stored") === "1",
   });
   // A learner who moves on mid-generation still gets the clip stored, and its lease released.
-  c.executionCtx.waitUntil(work.then(noop, noop));
+  c.executionCtx.waitUntil(work.catch(() => undefined));
   const object = await work;
   const headers = new Headers();
   object.writeHttpMetadata(headers);

@@ -55,19 +55,19 @@ export async function pronunciationAudio(
   }
 
   const providers = deps.providers(language.data);
-  const writer = deps.leadIns?.writer;
+  const { writer, decide } = deps.leadIns ?? {};
   const policy =
     writer && providers[0] && takesLeadIn(providers[0]) ? leadInPolicy(language.data) : undefined;
   const screened = policy?.screen(card);
   const input = typeof screened === "object" ? screened : null;
   const spoken =
-    policy && input && writer && deps.leadIns
+    writer && policy && input
       ? await settleLeadIn(
           card,
           policy,
           input,
           deps.bucket,
-          { ...deps.leadIns, writer },
+          { writer, decide },
           deps.storedOnly,
           ctx.analytics,
         )
@@ -183,7 +183,7 @@ async function generatedPronunciation(
     return stored;
   }
 
-  // A clip of the same kana without a lead-in, from before contexts, still beats no sound.
+  // A clip of the same kana from before lead-ins still beats no sound.
   const fallbacks = spoken
     ? await Promise.all(
         providers.flatMap((provider) => [
@@ -355,7 +355,7 @@ async function audioKey(
   spoken?: SpokenLeadIn,
 ): Promise<string> {
   const bytes = new TextEncoder().encode(
-    `${spokenText(card)}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}${takesLeadIn(provider) && spoken?.previousText ? `\u0000${spoken.identity}\u0000${spoken.previousText ?? ""}` : ""}`,
+    `${spokenText(card)}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}${takesLeadIn(provider) && spoken?.previousText ? `\u0000${spoken.identity}\u0000${spoken.previousText}` : ""}`,
   );
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
   const fingerprint = [...digest]

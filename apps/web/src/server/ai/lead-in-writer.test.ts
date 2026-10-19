@@ -8,11 +8,7 @@ const env = {
   AI_GATEWAY_TOKEN: "test-token",
 };
 const input = { term: "橋", reading: "はし", meaning: "bridge" };
-const request = {
-  instructions: japanese.instructions,
-  input,
-  accepts: (previousText: string | null) => japanese.accepts(previousText, input),
-};
+const request = { instructions: japanese.instructions, input };
 const payload = (previousText: string | null) => ({
   candidates: [
     { finishReason: "STOP", content: { parts: [{ text: JSON.stringify({ previousText }) }] } },
@@ -64,20 +60,18 @@ describe("lead-in writer", () => {
     expect(limited).toHaveBeenCalledOnce();
   });
 
-  it("tells a refused reply, which would come back the same, from an outage, and keeps its usage", async () => {
-    const refused = createLeadInWriter(env, async () => Response.json(payload("とても")));
-    const error = await refused?.write(request).catch((e: unknown) => e);
+  it("tells an unusable reply, which would come back the same, from an outage, and keeps its usage", async () => {
+    const truncated = payload("川を渡る");
+    const candidate = truncated.candidates[0];
+    if (candidate) candidate.finishReason = "MAX_TOKENS";
+    const error = await createLeadInWriter(env, async () => Response.json(truncated))
+      ?.write(request)
+      .catch((e: unknown) => e);
     expect(error).toBeInstanceOf(LeadInError);
     expect(error).toMatchObject({
       reason: "refused",
       usage: { inputTokens: 300, outputTokens: 410, reasoningTokens: 400, status: 200 },
     });
-    const truncated = payload("川を渡る");
-    const candidate = truncated.candidates[0];
-    if (candidate) candidate.finishReason = "MAX_TOKENS";
-    await expect(
-      createLeadInWriter(env, async () => Response.json(truncated))?.write(request),
-    ).rejects.toMatchObject({ reason: "refused" });
     const garbled = createLeadInWriter(env, async () => new Response("not json"));
     await expect(garbled?.write(request)).rejects.toMatchObject({ reason: "failed" });
   });

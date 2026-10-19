@@ -1,11 +1,7 @@
 import type { Card } from "@lymi/core/schema";
 
 /** What a lead-in is written from: the written term, what is spoken, and the sense meant. */
-export interface LeadInInput {
-  term: string;
-  reading: string;
-  meaning: string;
-}
+export type LeadInInput = { term: string; reading: string; meaning: string };
 
 /** Why a card is spoken without a lead-in before any model is asked. */
 export type LeadInSkip =

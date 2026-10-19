@@ -14,8 +14,6 @@ export interface LeadInUsage {
 export interface LeadInRequest {
   instructions: string;
   input: Record<string, string>;
-  /** Our own checks on the reply; a reply that fails them is refused rather than asked again. */
-  accepts(previousText: string | null): boolean;
 }
 
 export interface LeadInWriter {
@@ -25,7 +23,7 @@ export interface LeadInWriter {
 
 export class LeadInError extends Error {
   constructor(
-    /** `refused` when a reply arrived but failed its checks, so asking again buys the same answer. */
+    /** `refused` when a reply arrived but was unusable, so asking again buys the same answer. */
     readonly reason: "refused" | "failed",
     readonly usage?: LeadInUsage,
   ) {
@@ -69,7 +67,7 @@ export function createLeadInWriter(
   if (!key) return null;
   return {
     model: LEAD_IN_MODEL,
-    async write({ instructions, input, accepts }) {
+    async write({ instructions, input }) {
       const endpoint = providerEndpoint(env, "google-ai-studio");
       const response = await request(
         `${endpoint.base}/v1beta/models/${LEAD_IN_MODEL}:generateContent`,
@@ -149,9 +147,7 @@ export function createLeadInWriter(
           .filter((p) => !p.thought)
           .map((p) => p.text ?? "")
           .join("");
-        const reply = Reply.parse(JSON.parse(text ?? ""));
-        if (!accepts(reply.previousText)) throw new Error("Refused lead-in");
-        return { previousText: reply.previousText, ...usage };
+        return { previousText: Reply.parse(JSON.parse(text ?? "")).previousText, ...usage };
       } catch {
         throw new LeadInError("refused", usage);
       }

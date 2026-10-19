@@ -57,21 +57,21 @@ describe("ElevenLabs speech", () => {
       ElevenLabsSpeechError,
     );
   });
-});
 
-it("supplies only preceding context for Japanese without changing the requested kana", async () => {
-  const request = vi.fn(
-    async (_url: RequestInfo | URL, _init?: RequestInit) =>
-      new Response("audio", { headers: { "Content-Type": "audio/mpeg" } }),
-  );
-  await createElevenLabsSpeechProvider(
-    { ...testGateway, ELEVENLABS_API_KEY: "test" },
-    "ja-JP",
-    "Hiroki",
-    request,
-  ).speech({ text: "はし", language: "ja", previousText: "川を渡る" });
-  const body = JSON.parse(String(request.mock.calls[0]?.[1]?.body));
-  expect(body.text).toBe("はし");
-  expect(body.previous_text).toBe("川を渡る");
-  expect(body).not.toHaveProperty("next_text");
+  it("sends a lead-in only as preceding text, without changing the requested kana", async () => {
+    const request = vi.fn(
+      async (_url: RequestInfo | URL, _init?: RequestInit) =>
+        new Response("audio", { headers: { "Content-Type": "audio/mpeg" } }),
+    );
+    await createElevenLabsSpeechProvider(
+      { ...testGateway, ELEVENLABS_API_KEY: "test" },
+      "ja-JP",
+      "Hiroki",
+      request,
+    ).speech({ text: "はし", language: "ja", previousText: "川を渡る" });
+    const body = JSON.parse(String(request.mock.calls[0]?.[1]?.body));
+    expect(body.text).toBe("はし");
+    expect(body.previous_text).toBe("川を渡る");
+    expect(body).not.toHaveProperty("next_text");
+  });
 });

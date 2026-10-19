@@ -130,16 +130,14 @@ function checks(env: Bindings, hourly: boolean): Check[] {
       list.push({
         dependency: "gemini_text",
         run: async () => {
-          const input = { term: "船", reading: "ふね", meaning: "boat" };
           try {
             await writer.write({
               instructions: japanese.instructions,
-              input,
-              accepts: (previousText) => japanese.accepts(previousText, input),
+              input: { term: "船", reading: "ふね", meaning: "boat" },
             });
           } catch (error) {
             if (!(error instanceof LeadInError)) throw error;
-            // A reply that failed our checks still proves the key works.
+            // An unusable reply still proves the key works.
             if (error.reason === "failed") throw new CheckFailed("failed");
           }
         },

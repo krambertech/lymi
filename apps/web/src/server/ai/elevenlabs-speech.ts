@@ -46,9 +46,7 @@ export function createElevenLabsSpeechProvider(
             headers: { "xi-api-key": key, "Content-Type": "application/json", ...endpoint.headers },
             body: JSON.stringify({
               text: input.text,
-              ...(locale === "ja-JP" && input.previousText
-                ? { previous_text: input.previousText }
-                : {}),
+              ...(input.previousText ? { previous_text: input.previousText } : {}),
               model_id: model,
               language_code: elevenLabsLanguage(locale),
               voice_settings: { stability: 1 },

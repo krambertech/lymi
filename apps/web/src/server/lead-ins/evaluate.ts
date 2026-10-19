@@ -82,9 +82,10 @@ try {
           .write({
             instructions: policy.instructions,
             input: { term: item.term, reading: item.reading, meaning: item.meaning },
-            accepts: (text) => policy.accepts(text, item),
           })
-          .then((reply) => reply.previousText)
+          .then((reply) =>
+            policy.accepts(reply.previousText, item) ? reply.previousText : undefined,
+          )
           .catch(() => undefined);
         console.log(`  ${item.term} ${item.reading}: ${previousText ?? "(none)"}`);
       }

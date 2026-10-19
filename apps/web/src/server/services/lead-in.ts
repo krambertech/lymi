@@ -1,13 +1,8 @@
 import type { Card } from "@lymi/core/schema";
 import { z } from "zod";
-import { LeadInError, type LeadInUsage } from "../ai/lead-in-writer";
-import {
-  DECISION_MODEL,
-  type LeadInDependencies,
-  type LeadInInput,
-  type LeadInPolicy,
-  leadInScore,
-} from "../lead-ins";
+import { LeadInError, type LeadInUsage, type LeadInWriter } from "../ai/lead-in-writer";
+import { DECISION_MODEL, type LeadInInput, type LeadInPolicy, leadInScore } from "../lead-ins";
+import type { DecisionModel } from "../lessons/keep";
 import { type AnalyticsWriter, textCallReporter, track } from "./analytics";
 import { ServiceError } from "./context";
 
@@ -99,11 +94,10 @@ export async function settleLeadIn(
   policy: LeadInPolicy,
   input: LeadInInput,
   bucket: R2Bucket,
-  deps: LeadInDependencies & { writer: NonNullable<LeadInDependencies["writer"]> },
+  { writer, decide }: { writer: LeadInWriter; decide: DecisionModel },
   cachedOnly = false,
   analytics?: AnalyticsWriter,
 ): Promise<SpokenLeadIn | undefined> {
-  const { writer } = deps;
   const identity = await audioFingerprint({
     input,
     language: policy.language,
@@ -112,8 +106,8 @@ export async function settleLeadIn(
     writer: writer.model,
   });
   const key = `cards/${card.id}/lead-in/${identity}.json`;
-  const log = (outcome: string, detail: Record<string, number | string> = {}) =>
-    console.info(
+  const log = (outcome: string, detail: Record<string, number> = {}, write = console.info) =>
+    write(
       JSON.stringify({
         event: "lead_in_resolved",
         outcome,
@@ -169,8 +163,8 @@ export async function settleLeadIn(
       pendingUntil: Date.now() + LEASE_MS,
     });
     const started = Date.now();
-    const score = await leadInScore(deps.decide, policy, input);
-    const decide = (outcome: Outcome | "failed") =>
+    const score = await leadInScore(decide, policy, input);
+    const reportDecision = (outcome: Outcome | "failed") =>
       track(analytics, {
         name: "lead_in_decided",
         language: policy.language,
@@ -180,13 +174,13 @@ export async function settleLeadIn(
       });
     const settle = async (outcome: Outcome, previousText: string | null) => {
       await record({ status: "ready", previousText, outcome, score });
-      decide(outcome);
+      reportDecision(outcome);
       log(outcome, { latencyMs: Date.now() - started });
       return { identity, previousText };
     };
     if (score !== null && score < policy.threshold) return settle("unambiguous", null);
 
-    const written = Date.now();
+    const writing = Date.now();
     const report = (usage: LeadInUsage | undefined, error: boolean) =>
       textCallReporter(
         analytics,
@@ -197,17 +191,13 @@ export async function settleLeadIn(
         inputTokens: usage?.inputTokens ?? 0,
         outputTokens: usage?.outputTokens ?? 0,
         reasoningTokens: usage?.reasoningTokens,
-        latencyMs: Date.now() - written,
+        latencyMs: Date.now() - writing,
         error,
         status: usage?.status,
       });
     let result: Awaited<ReturnType<typeof writer.write>>;
     try {
-      result = await writer.write({
-        instructions: policy.instructions,
-        input: { ...input },
-        accepts: (previousText) => policy.accepts(previousText, input),
-      });
+      result = await writer.write({ instructions: policy.instructions, input });
       if (!policy.accepts(result.previousText, input)) throw new LeadInError("refused", result);
     } catch (error) {
       const failure = error instanceof LeadInError ? error : undefined;
@@ -216,16 +206,8 @@ export async function settleLeadIn(
       // At temperature 0 a refused reply would come back the same, so it is kept as no lead-in.
       if (failure?.reason === "refused") return settle("refused", null);
       await record({ status: "failed", retryAt: Date.now() + FAILURE_COOLDOWN_MS });
-      decide("failed");
-      console.warn(
-        JSON.stringify({
-          event: "lead_in_resolved",
-          outcome: "failed",
-          language: policy.language,
-          model: writer.model,
-          latencyMs: Date.now() - started,
-        }),
-      );
+      reportDecision("failed");
+      log("failed", { latencyMs: Date.now() - started }, console.warn);
       return { identity, previousText: null };
     }
     report(result, false);

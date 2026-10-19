@@ -29,7 +29,8 @@ import { STRESS_ITEMS, type StressForm, type StressItem } from "./words";
 type Mode = "plain" | "acute" | "markup";
 type Body = Record<string, unknown>;
 type Env = Record<string, string | undefined>;
-type Spoken = { text: string; edit?: (body: Body) => void };
+/** `note` names anything `edit` adds, so a changed prompt makes a new clip. */
+type Spoken = { text: string; edit?: (body: Body) => void; note?: string };
 
 interface Voice {
   key: "elevenlabs" | "gemini" | "openai" | "chirp";
@@ -37,6 +38,8 @@ interface Voice {
   needs: string;
   ready: boolean;
   name?: string;
+  /** A voice weighed against today's: it speaks the marked words only. */
+  candidate?: boolean;
   /** What its third mode sends, or null when it has no stress markup for this language. */
   markup: string | null;
   create(request: Fetch): SpeechProvider;
@@ -51,6 +54,7 @@ export type Clip = {
   model: string;
   locale: string;
   mode: Mode;
+  candidate: boolean;
   markup: string | null;
   /** A flag beyond stress the page offers, such as a Russian accent on a Ukrainian word. */
   accent: string | null;
@@ -65,8 +69,22 @@ export type Clip = {
 const ACUTE = "́";
 const VOWEL = /[аеёиіїоуыэєюя]/u;
 const ACCENT_FLAGS: Record<string, string> = { uk: "Russian vowels" };
+// Library voices to weigh against today's, each verified for eleven_v4 in its language (2026-10-19).
+const CANDIDATE_VOICES: Record<string, { voice: string; name: string }[]> = {
+  ru: [
+    { voice: "3EuKHIEZbSzrHGNmdYsx", name: "Nikolay" },
+    { voice: "MWyJiWDobXN8FX3CJTdE", name: "Oleg" },
+  ],
+  uk: [
+    { voice: "Ntd0iVwICtUtA6Fvx27M", name: "Evgeniy Shevchenko" },
+    { voice: "eLDtXX7z65CuLasDRxrP", name: "Leonid Drapei" },
+  ],
+};
+const GEMINI_CANDIDATE = "Charon";
+const OPENAI_CANDIDATE = "cedar";
+// Gemini answers a Ukrainian prompt naming "U+0301" with 400 INVALID_ARGUMENT, so the line doesn't.
 const STRESS_INSTRUCTION =
-  "An acute accent (U+0301) after a vowel marks the stressed syllable: stress that syllable and never pronounce the accent itself.";
+  "An acute accent after a vowel marks the stressed syllable: stress that syllable and never pronounce the accent itself.";
 
 const args = process.argv.slice(2);
 const option = (name: string) => {
@@ -131,6 +149,7 @@ for (const language of languages) {
         model: provider.model,
         locale: provider.locale,
         mode: job.mode,
+        candidate: Boolean(voice.candidate),
         markup: voice.markup,
         accent: ACCENT_FLAGS[language] ?? null,
         sent: job.spoken.text,
@@ -179,7 +198,11 @@ const rank = (clip: Clip) =>
   STRESS_ITEMS.findIndex((item) => item.language === clip.language) * CHAIN.length +
   CHAIN.findIndex((provider) => clip.voice.startsWith(`${provider} `));
 clips.sort(
-  (a, b) => rank(a) - rank(b) || a.voice.localeCompare(b.voice) || a.id.localeCompare(b.id),
+  (a, b) =>
+    rank(a) - rank(b) ||
+    Number(a.candidate) - Number(b.candidate) ||
+    a.voice.localeCompare(b.voice) ||
+    a.id.localeCompare(b.id),
 );
 writeFileSync(index, `${JSON.stringify(clips, null, 2)}\n`);
 writeFileSync(join(out, "requests.json"), `${JSON.stringify(sent, null, 2)}\n`);
@@ -215,18 +238,31 @@ function voices(env: Env, language: string): Voice[] {
         create: (request) => createElevenLabsSpeechProvider(env, gemini, native.voice, request),
         markupRequest: (_plain, form) => ({ text: `/${form.ipa}/` }),
       });
+    for (const candidate of CANDIDATE_VOICES[language] ?? [])
+      list.push({
+        key: "elevenlabs",
+        needs: "ELEVENLABS_API_KEY",
+        ready: Boolean(env.ELEVENLABS_API_KEY?.trim()),
+        name: candidate.name,
+        candidate: true,
+        markup: null,
+        create: (request) => createElevenLabsSpeechProvider(env, gemini, candidate.voice, request),
+        markupRequest: (plain) => ({ text: plain }),
+      });
     const apiKey = Boolean(env.GEMINI_API_KEY?.trim());
-    list.push({
+    const geminiVoice = (voiceEnv: Env, candidate: boolean): Voice => ({
       key: "gemini",
       needs: "GEMINI_API_KEY",
       ready: apiKey || Boolean(env.GOOGLE_CLOUD_TTS_CREDENTIALS?.trim()),
-      markup: acutePrompt,
+      candidate,
+      markup: candidate ? null : acutePrompt,
       create: (request) =>
         apiKey
-          ? createGeminiApiSpeechProvider(env, gemini, request)
-          : createGoogleGeminiProvider(env, { locale: gemini, request, ...dryToken() }),
+          ? createGeminiApiSpeechProvider(voiceEnv, gemini, request)
+          : createGoogleGeminiProvider(voiceEnv, { locale: gemini, request, ...dryToken() }),
       markupRequest: (_plain, form) => ({
         text: form.marked,
+        note: STRESS_INSTRUCTION,
         edit: (body) => {
           const input = body.input as { prompt?: string } | undefined;
           if (input?.prompt) input.prompt += ` ${STRESS_INSTRUCTION}`;
@@ -236,21 +272,32 @@ function voices(env: Env, language: string): Voice[] {
         },
       }),
     });
+    list.push(
+      geminiVoice(env, false),
+      geminiVoice({ ...env, GEMINI_SPEECH_VOICE: GEMINI_CANDIDATE }, true),
+    );
   }
-  if (openAiSupportsLanguage(language))
-    list.push({
+  if (openAiSupportsLanguage(language)) {
+    const openAiVoice = (voiceEnv: Env, candidate: boolean): Voice => ({
       key: "openai",
       needs: "OPENAI_API_KEY",
       ready: Boolean(env.OPENAI_API_KEY?.trim()),
-      markup: acutePrompt,
-      create: (request) => createOpenAiSpeechProvider(env, language, request),
+      candidate,
+      markup: candidate ? null : acutePrompt,
+      create: (request) => createOpenAiSpeechProvider(voiceEnv, language, request),
       markupRequest: (_plain, form) => ({
         text: form.marked,
+        note: STRESS_INSTRUCTION,
         edit: (body) => {
           body.instructions = `${body.instructions} ${STRESS_INSTRUCTION}`;
         },
       }),
     });
+    list.push(
+      openAiVoice(env, false),
+      openAiVoice({ ...env, OPENAI_SPEECH_VOICE: OPENAI_CANDIDATE }, true),
+    );
+  }
   if (chirp)
     list.push({
       key: "chirp",
@@ -285,6 +332,7 @@ function requests(voice: Voice, item: StressItem) {
           mode,
           spoken.text,
           forms.map((form) => form.marked),
+          ...(spoken.note ? [spoken.note] : []),
         ]),
       )
       .digest("hex")
@@ -294,6 +342,7 @@ function requests(voice: Voice, item: StressItem) {
     forms,
     spoken,
   });
+  if (voice.candidate) return item.forms.map((form) => job("acute", [form], { text: form.marked }));
   return [
     job("plain", item.forms, { text: plain }),
     ...item.forms.flatMap((form) => [
@@ -463,7 +512,7 @@ kbd { font: 0.8125rem ui-monospace, monospace; border: 1px solid GrayText; borde
 </head>
 <body>
 <h1>Stress listening test</h1>
-<p>Play each clip and pick the syllable you hear stressed. Flag a clip when the voice says the accent mark or garbles the word, and, in Ukrainian, when it uses Russian vowels. The page hides what was sent until you show answers, and keeps your ratings in this browser.</p>
+<p>Play each clip and pick the syllable you hear stressed. Flag a clip when the voice says the accent mark or garbles the word, and, in Ukrainian, when it uses Russian vowels. Above each voice's clips, rate how native it sounds. Voices marked candidate are library voices weighed against today's, and they speak only the marked words. The page hides what was sent until you show answers, and keeps your ratings in this browser.</p>
 <p><kbd>Space</kbd> plays again, <kbd>1</kbd>–<kbd>5</kbd> pick a syllable and move on, <kbd>0</kbd> can't tell, <kbd>m</kbd> mark voiced or garbled, <kbd>r</kbd> Russian vowels, <kbd>↑</kbd> <kbd>↓</kbd> move.</p>
 <div id="app"></div>
 <script>window.CLIPS = ${data};</script>

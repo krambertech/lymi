@@ -1,24 +1,38 @@
 // The listening page, inlined by evaluate.ts; `evaluate.ts --summary` runs stressSummary from here too.
 // A rating is { heard: vowel index, or null for can't tell; voiced: the mark was voiced or the word garbled; accent: the clip's accent flag }.
+// A voice's own rating, under `native:<language> <voice>`, is { native: 1 to 5 }.
 
 function stressSummary(clips, ratings) {
   const percent = (right, trials) => `${right}/${trials} (${Math.round((100 * right) / trials)}%)`;
   const lines = [];
   const misses = [];
   for (const language of [...new Set(clips.map((clip) => clip.language))]) {
-    const own = clips.filter((clip) => clip.language === language && !clip.error);
+    const own = clips.filter((clip) => clip.language === language);
     const accent = own.find((clip) => clip.accent)?.accent;
     lines.push(
       `#### ${language}`,
       "",
-      `| Voice | Plain | Acute | Markup | Mark voiced or garbled |${accent ? ` ${accent} |` : ""} Acute | Markup |`,
-      `| --- | --- | --- | --- | --- |${accent ? " --- |" : ""} --- | --- |`,
+      `| Voice | Sounds native | Plain | Acute | Markup | Mark voiced or garbled |${accent ? ` ${accent} |` : ""} Acute | Markup |`,
+      `| --- | --- | --- | --- | --- | --- |${accent ? " --- |" : ""} --- | --- |`,
     );
+    const best = [];
     for (const voice of [...new Set(own.map((clip) => clip.voice))]) {
       const score = (mode) => {
-        const result = { right: 0, trials: 0, unrated: 0, voiced: 0, accent: 0, clips: 0 };
+        const result = {
+          right: 0,
+          trials: 0,
+          unrated: 0,
+          failed: 0,
+          voiced: 0,
+          accent: 0,
+          clips: 0,
+        };
         for (const clip of own.filter((clip) => clip.voice === voice && clip.mode === mode)) {
           result.clips += 1;
+          if (clip.error) {
+            result.failed += 1;
+            continue;
+          }
           const rating = ratings[clip.id];
           if (!rating || rating.heard === undefined) {
             result.unrated += 1;
@@ -44,25 +58,38 @@ function stressSummary(clips, ratings) {
       const cell = (result) =>
         !result.clips
           ? "none"
-          : `${result.trials ? percent(result.right, result.trials) : "—"}${result.unrated ? `, ${result.unrated} unrated` : ""}`;
+          : `${result.trials ? percent(result.right, result.trials) : "—"}${result.unrated ? `, ${result.unrated} unrated` : ""}${result.failed ? `, ${result.failed} failed` : ""}`;
       const verdict = (result) =>
         !result.clips
           ? "—"
-          : result.unrated
-            ? "unrated"
-            : result.right / result.trials >= 0.95 && !result.voiced && !result.accent
-              ? "pass"
-              : "fail";
+          : result.failed
+            ? "fail"
+            : result.unrated
+              ? "unrated"
+              : result.right / result.trials >= 0.95 && !result.voiced && !result.accent
+                ? "pass"
+                : "fail";
       const plain = score("plain");
       const acute = score("acute");
       const markup = score("markup");
-      const markupKind = own.find((clip) => clip.voice === voice)?.markup;
+      const first = own.find((clip) => clip.voice === voice);
+      const native = ratings[`native:${language} ${voice}`]?.native;
+      const name = `${voice}${first?.candidate ? " (candidate)" : ""}`;
       const flags = (key) => `${plain[key]} · ${acute[key]} · ${markup[key]}`;
+      if (verdict(acute) === "pass")
+        best.push({ name, right: acute.right / acute.trials, native: native ?? 0 });
       lines.push(
-        `| ${voice} | ${cell(plain)} | ${cell(acute)} | ${cell(markup)}${markupKind ? ` (${markupKind})` : ""} | ${flags("voiced")} |${accent ? ` ${flags("accent")} |` : ""} ${verdict(acute)} | ${verdict(markup)} |`,
+        `| ${name} | ${native ? `${native}/5` : "—"} | ${cell(plain)} | ${cell(acute)} | ${cell(markup)}${first?.markup ? ` (${first.markup})` : ""} | ${flags("voiced")} |${accent ? ` ${flags("accent")} |` : ""} ${verdict(acute)} | ${verdict(markup)} |`,
       );
     }
-    lines.push("");
+    best.sort((a, b) => b.native - a.native || b.right - a.right);
+    lines.push(
+      "",
+      best[0]
+        ? `Best voice that passes with U+0301: ${best[0].name}${best[0].native ? `, sounds native ${best[0].native}/5` : ""}.`
+        : "No voice passes with U+0301 yet.",
+      "",
+    );
   }
   return [
     ...lines,
@@ -128,7 +155,11 @@ if (typeof document !== "undefined") {
     app.append(element("h2", { textContent: names.of(language) ?? language }));
     const own = clips.filter((clip) => clip.language === language);
     for (const voice of [...new Set(own.map((clip) => clip.voice))]) {
-      app.append(element("h3", { textContent: voice }));
+      const first = own.find((clip) => clip.voice === voice);
+      app.append(
+        element("h3", { textContent: `${voice}${first?.candidate ? " · candidate" : ""}` }),
+        nativeRating(`native:${language} ${voice}`),
+      );
       const list = element("ol");
       app.append(list);
       for (const clip of own.filter((clip) => clip.voice === voice)) list.append(row(clip));
@@ -223,6 +254,26 @@ if (typeof document !== "undefined") {
     item.paint();
     rows.push(item);
     return item;
+  }
+
+  function nativeRating(key) {
+    const group = element("p", { textContent: "Sounds native: " });
+    const buttons = [1, 2, 3, 4, 5].map((score) => {
+      const button = element("button", { type: "button", textContent: String(score) });
+      button.addEventListener("click", () => {
+        ratings[key] = { native: score };
+        save();
+        paint();
+      });
+      return button;
+    });
+    const paint = () => {
+      for (const [at, button] of buttons.entries())
+        button.setAttribute("aria-pressed", String(ratings[key]?.native === at + 1));
+    };
+    paint();
+    group.append(...buttons, " (1 foreign, 5 a native speaker)");
+    return group;
   }
 
   function listen(clip) {

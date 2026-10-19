@@ -240,6 +240,10 @@ msgstr "{0, plural, one {Не удалось отметить # карточку
 msgid "{0, plural, one {Couldn’t remove the important mark from # card.} other {Couldn’t remove the important mark from # cards.}}"
 msgstr "{0, plural, one {Не удалось снять отметку «важная» с # карточки.} few {Не удалось снять отметку «важная» с # карточек.} many {Не удалось снять отметку «важная» с # карточек.} other {Не удалось снять отметку «важная» с # карточки.}}"
 
+#. placeholder {0}: ids.length
+msgid "{0, plural, one {Couldn’t undo {missed} of # card.} other {Couldn’t undo {missed} of # cards.}}"
+msgstr "{0, plural, one {Не удалось отменить изменение для {missed} из # карточки.} few {Не удалось отменить изменение для {missed} из # карточек.} many {Не удалось отменить изменение для {missed} из # карточек.} other {Не удалось отменить изменение для {missed} из # карточки.}}"
+
 #. placeholder {0}: data?.added ?? 0
 msgid "{0, plural, one {Import # card} other {Import # cards}}"
 msgstr "{0, plural, one {Импортировать # карточку} few {Импортировать # карточки} many {Импортировать # карточек} other {Импортировать # карточки}}"

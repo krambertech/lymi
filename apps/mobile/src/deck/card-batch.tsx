@@ -25,6 +25,32 @@ export function useCardBatch(deckId: string) {
   const qc = useQueryClient();
   const id = `card-batch-${deckId}`;
   const cards = (count: number) => plural(count, { one: "# card", other: "# cards" });
+  /** Runs an Undo; cards it could not bring back get their own message and Try again for just those. */
+  const undo = (run: (ids: string[]) => Promise<string[]>, ids: string[]) => {
+    toast.close(id);
+    run(ids).then(
+      (left) => {
+        if (left.length === 0) return;
+        const missed = left.length;
+        toast.add({
+          id,
+          error: true,
+          title: plural(ids.length, {
+            one: `Couldn’t undo ${missed} of # card.`,
+            other: `Couldn’t undo ${missed} of # cards.`,
+          }),
+          action: { label: t`Try again`, onPress: () => undo(run, left) },
+        });
+      },
+      (e: unknown) =>
+        toast.add({
+          id,
+          error: true,
+          title: errorMessage(e),
+          action: { label: t`Try again`, onPress: () => undo(run, ids) },
+        }),
+    );
+  };
   const failed = (e: unknown, title: string, retry: () => void) =>
     toast.add({
       id,
@@ -50,12 +76,7 @@ export function useCardBatch(deckId: string) {
               : t`Archived ${cards(done.length)}`,
           action: {
             label: t`Undo`,
-            onPress: () => {
-              toast.close(id);
-              restoreCards(qc, done).catch((e) =>
-                toast.add({ id, error: true, title: errorMessage(e) }),
-              );
-            },
+            onPress: () => undo((ids) => restoreCards(qc, ids), done),
           },
         });
       },
@@ -80,12 +101,7 @@ export function useCardBatch(deckId: string) {
               : t`Moved ${cards(done.length)} to ${deckName}`,
           action: {
             label: t`Undo`,
-            onPress: () => {
-              toast.close(id);
-              moving
-                .undo(done)
-                .catch((e) => toast.add({ id, error: true, title: errorMessage(e) }));
-            },
+            onPress: () => undo(moving.undo, done),
           },
         });
       },
@@ -124,12 +140,7 @@ export function useCardBatch(deckId: string) {
                   }),
           action: {
             label: t`Undo`,
-            onPress: () => {
-              toast.close(id);
-              marking
-                .undo(done)
-                .catch((e) => toast.add({ id, error: true, title: errorMessage(e) }));
-            },
+            onPress: () => undo(marking.undo, done),
           },
         });
       },

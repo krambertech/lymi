@@ -8,7 +8,8 @@ import { showWrite } from "./write-projections";
  * Archive, Move to deck and the important mark for a deck's chosen cards, as the web's and the
  * phone's selections both run them: the list answers at once, a card the server did not change
  * goes back, and each resolves with the cards that changed so a client can offer Undo. A write
- * where no card changed rejects with `NOTHING_CHANGED`.
+ * where no card changed rejects with `NOTHING_CHANGED`. An Undo resolves with the cards that did
+ * not come back, for the client to say so and send again.
  */
 
 type Outcome = { results: { id: string | null; status: string }[] };
@@ -23,6 +24,12 @@ const refresh = (qc: QueryClient) =>
 /** The cards a bulk write changed; one that failed stays where it was. */
 const changed = (out: Outcome) =>
   out.results.flatMap((r) => (r.status !== "error" && r.id ? [r.id] : []));
+
+/** Of the cards an Undo sent, those it left as they were. */
+const missed = (sent: readonly string[], back: Iterable<string>) => {
+  const came = new Set(back);
+  return sent.filter((id) => !came.has(id));
+};
 
 /** Takes cards off the deck's list at once, then writes; a card the server did not change goes back. */
 async function leave(
@@ -59,7 +66,10 @@ export const archiveCards = (qc: QueryClient, deckId: string, cardIds: string[])
   leave(qc, deckId, cardIds, () => api.archiveCards(cardIds));
 
 export const restoreCards = (qc: QueryClient, cardIds: string[]) =>
-  api.restoreCards(cardIds).finally(() => void refresh(qc));
+  api
+    .restoreCards(cardIds)
+    .then((out) => missed(cardIds, changed(out)))
+    .finally(() => void refresh(qc));
 
 /**
  * A card keeps its progress and leaves its section. `undo` puts each card it moved back in this
@@ -85,7 +95,8 @@ export function moveCardsToDeck(qc: QueryClient, deckId: string, cardIds: string
             ? [r.id]
             : [],
         );
-        if (homeless.length > 0) await back(homeless, () => null);
+        const again = homeless.length > 0 ? changed(await back(homeless, () => null)) : [];
+        return missed(done, [...changed(out), ...again]);
       } finally {
         void refresh(qc);
       }
@@ -131,6 +142,12 @@ export function markCards(qc: QueryClient, deckId: string, cardIds: string[], ma
   return {
     done: write(new Map(cardIds.map((cardId) => [cardId, mark])), was),
     undo: (done: string[]) =>
-      write(new Map(done.map((cardId) => [cardId, was(cardId)])), () => mark),
+      write(new Map(done.map((cardId) => [cardId, was(cardId)])), () => mark).then(
+        (back) => missed(done, back),
+        (e: unknown) => {
+          if (e instanceof Error && e.message === NOTHING_CHANGED) return done;
+          throw e;
+        },
+      ),
   };
 }

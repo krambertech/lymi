@@ -45,8 +45,32 @@ export function useCardBatch(deckId: string) {
         },
       },
     });
-  const undone = (id: string) => (e: unknown) =>
-    toast.add({ id, type: "error", title: errorMessage(e) });
+  /** Runs an Undo; cards it could not bring back get their own message and Try again for just those. */
+  const undo = (id: string, run: (ids: string[]) => Promise<string[]>, ids: string[]) => {
+    toast.close(id);
+    run(ids).then(
+      (left) => {
+        if (left.length === 0) return;
+        const missed = left.length;
+        toast.add({
+          id,
+          type: "error",
+          title: plural(ids.length, {
+            one: `Couldn’t undo ${missed} of # card.`,
+            other: `Couldn’t undo ${missed} of # cards.`,
+          }),
+          actionProps: { children: t`Try again`, onClick: () => undo(id, run, left) },
+        });
+      },
+      (e: unknown) =>
+        toast.add({
+          id,
+          type: "error",
+          title: errorMessage(e),
+          actionProps: { children: t`Try again`, onClick: () => undo(id, run, ids) },
+        }),
+    );
+  };
 
   const archive = (cardIds: string[]) => {
     const id = next();
@@ -65,10 +89,7 @@ export function useCardBatch(deckId: string) {
               : t`Archived ${plural(saved, { one: "# card", other: "# cards" })}`,
           actionProps: {
             children: t`Undo`,
-            onClick: () => {
-              toast.close(id);
-              restoreCards(qc, done).catch(undone(id));
-            },
+            onClick: () => undo(id, (ids) => restoreCards(qc, ids), done),
           },
         });
       },
@@ -101,10 +122,7 @@ export function useCardBatch(deckId: string) {
               : t`Moved ${plural(saved, { one: "# card", other: "# cards" })} to ${deckName}`,
           actionProps: {
             children: t`Undo`,
-            onClick: () => {
-              toast.close(id);
-              moving.undo(done).catch(undone(id));
-            },
+            onClick: () => undo(id, moving.undo, done),
           },
         });
       },
@@ -150,10 +168,7 @@ export function useCardBatch(deckId: string) {
                   }),
           actionProps: {
             children: t`Undo`,
-            onClick: () => {
-              toast.close(id);
-              marking.undo(done).catch(undone(id));
-            },
+            onClick: () => undo(id, marking.undo, done),
           },
         });
       },

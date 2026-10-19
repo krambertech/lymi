@@ -1,11 +1,18 @@
 import { QueryClient } from "@tanstack/react-query";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { archiveCards, markCards, moveCardsToDeck, NOTHING_CHANGED } from "./card-batch";
+import {
+  archiveCards,
+  markCards,
+  moveCardsToDeck,
+  NOTHING_CHANGED,
+  restoreCards,
+} from "./card-batch";
 import type { DeckRow } from "./deck-list";
 import { deckCardsQuery } from "./queries";
 
 const api = vi.hoisted(() => ({
   archiveCards: vi.fn(),
+  restoreCards: vi.fn(),
   editCards: vi.fn(),
   setCardsImportant: vi.fn(),
 }));
@@ -90,7 +97,7 @@ describe("moving chosen cards to another deck", () => {
       .mockResolvedValueOnce({ results: [{ id: "b", status: "updated" }] });
     const moving = moveCardsToDeck(qc, "d1", ["a", "b", "c"], "d2");
     const done = await moving.done;
-    await moving.undo(done);
+    await expect(moving.undo(done)).resolves.toEqual([]);
     expect(api.editCards.mock.calls.slice(1).map(([edits]) => edits)).toEqual([
       [
         { cardId: "a", deckId: "d1", sectionId: "s1" },
@@ -99,5 +106,45 @@ describe("moving chosen cards to another deck", () => {
       ],
       [{ cardId: "b", deckId: "d1", sectionId: null }],
     ]);
+  });
+});
+
+describe("Undo", () => {
+  it("names the cards a restore left archived, to send again", async () => {
+    api.restoreCards.mockResolvedValue({
+      results: [
+        { id: "a", status: "restored" },
+        { id: "b", status: "error", code: "unavailable", error: "offline" },
+      ],
+    });
+    await expect(restoreCards(qc, ["a", "b"])).resolves.toEqual(["b"]);
+  });
+
+  it("names the cards a move back left in the other deck", async () => {
+    api.editCards
+      .mockResolvedValueOnce({
+        results: [
+          { id: "a", status: "updated" },
+          { id: "b", status: "updated" },
+        ],
+      })
+      .mockResolvedValueOnce({
+        results: [
+          { id: "a", status: "updated" },
+          { id: "b", status: "error", code: "unavailable", error: "offline" },
+        ],
+      });
+    const moving = moveCardsToDeck(qc, "d1", ["a", "b"], "d2");
+    await expect(moving.undo(await moving.done)).resolves.toEqual(["b"]);
+  });
+
+  it("names every card when no mark came back", async () => {
+    api.setCardsImportant
+      .mockResolvedValueOnce({ results: [{ id: "a", status: "updated" }] })
+      .mockResolvedValueOnce({
+        results: [{ id: "a", status: "error", code: "unavailable", error: "offline" }],
+      });
+    const marking = markCards(qc, "d1", ["a"], true);
+    await expect(marking.undo(await marking.done)).resolves.toEqual(["a"]);
   });
 });

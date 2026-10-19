@@ -1,4 +1,4 @@
-import { canSpeakTerm, kanaReading, LanguageTag, SPOKEN_TERM_MAX } from "@lymi/core";
+import { canSpeakTerm, LanguageTag, SPOKEN_TERM_MAX, spokenText } from "@lymi/core";
 import { and, eq, inArray, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider, SpeechUsage } from "../ai";
@@ -122,7 +122,7 @@ async function generatedPronunciation(
       throw new ServiceError("not_found", "Pronunciation audio is not stored yet");
 
     let audio: Uint8Array;
-    const text = spokenText(card);
+    const text = speechText(spokenText(card));
     let usage: SpeechUsage = {};
     const started = Date.now();
     const report = (error: boolean, status?: number) =>
@@ -299,11 +299,6 @@ async function rememberAudioKey(
   );
 }
 
-/** A Japanese card's kana reading, so 上手 is said じょうず or うわて as the card says, else the term. */
-function spokenText(card: Card): string {
-  return speechText(kanaReading(card) ?? card.term);
-}
-
 // One `IN` list's worth (see selectIn), which also bounds this run's share of the cron's subrequests.
 const PURGES_PER_RUN = 90;
 
@@ -355,7 +350,7 @@ async function audioKey(
   spoken?: SpokenLeadIn,
 ): Promise<string> {
   const bytes = new TextEncoder().encode(
-    `${spokenText(card)}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}${takesLeadIn(provider) && spoken?.previousText ? `\u0000${spoken.identity}\u0000${spoken.previousText}` : ""}`,
+    `${speechText(spokenText(card))}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}${takesLeadIn(provider) && spoken?.previousText ? `\u0000${spoken.identity}\u0000${spoken.previousText}` : ""}`,
   );
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
   const fingerprint = [...digest]

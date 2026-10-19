@@ -2,14 +2,14 @@ import { useLingui } from "@lingui/react/macro";
 import type { Card, CardState } from "@lymi/client/api";
 import { splitForms } from "@lymi/client/deck-list";
 import { useKnownReadings } from "@lymi/client/known-readings";
-import { hasReadings, termReading } from "@lymi/core";
+import { drawsTermReading, hasReadings } from "@lymi/core";
 import { useMemo } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { usePalette, useRoom } from "../theme/palette";
 import { StateChip } from "../ui/chip";
-import { Furigana, ReadingText } from "../ui/furigana";
 import { Icon } from "../ui/icons";
 import { LIFT, Text } from "../ui/primitives";
+import { ExampleText, TermText } from "../ui/term-text";
 
 /** Onest's letters average a little over half their size across. */
 const lines = (text: string, size: number, width: number, most: number) =>
@@ -28,7 +28,7 @@ export function peekHeight(card: Card, width: number, scale: number) {
   const inner = width - 40;
   const { word, forms } = splitForms(card.term);
   // Furigana stands a reading's line over each line it draws on, and then says the pronunciation.
-  const drawn = !!termReading({ ...card, term: word });
+  const drawn = drawsTermReading({ ...card, term: word });
   const example = card.example && (hasReadings(card.example) ? 23 + 12 : 23);
   const text =
     lines(word, 34 * scale, inner, 2) * (drawn ? 41 + 21 : 41) +
@@ -64,7 +64,7 @@ export function CardPeek({
   const p = usePalette();
   const dark = useRoom() === "dark";
   const { word, forms } = splitForms(card.term);
-  const reading = useMemo(() => termReading({ ...card, term: word }), [card, word]);
+  const reading = useMemo(() => drawsTermReading({ ...card, term: word }), [card, word]);
   const { width, scale } = usePeekSize();
   return (
     <View
@@ -85,12 +85,11 @@ export function CardPeek({
         {state !== undefined && <StateChip state={state?.state} />}
       </View>
       <View className="gap-1">
-        <Furigana
-          segments={reading ?? [{ text: word }]}
+        <TermText
+          card={{ ...card, term: word }}
           className="text-text"
           lines={2}
           style={WORD}
-          lang={card.language}
           after={card.important && <Text style={[WORD, { color: p["amber-mark"] }]}>{" ★"}</Text>}
         />
         {forms && (
@@ -114,7 +113,7 @@ export function CardPeek({
           </Text>
         )}
         {card.example && (
-          <ReadingText
+          <ExampleText
             text={card.example}
             known={known}
             className="text-md text-text-2"

@@ -81,8 +81,11 @@ interface SitemapDeck {
   editions: readonly string[];
 }
 
-/** A shelf's page, in the locales where its readers have enough decks for one. */
-export type SitemapShelf = Partial<Record<Locale, string>>;
+/** A shelf's page, in the locales where its readers have enough decks for one, and its decks. */
+export interface SitemapShelf {
+  paths: Partial<Record<Locale, string>>;
+  slugs?: readonly string[];
+}
 
 /** A translated page built from a fixed list of decks, which changed when the newest of them did. */
 export interface SitemapGuide {
@@ -92,31 +95,29 @@ export interface SitemapGuide {
 
 /**
  * The pages rendered per request: Explore in every locale, the shelves' own pages, then every
- * published deck in the locales whose Explore lists it. Explore changed when its newest deck did.
+ * published deck in the locales whose Explore lists it. A page that lists decks changed when its
+ * newest deck did.
  */
 export function runtimeSitemap(
   decks: readonly SitemapDeck[],
   shelves: readonly SitemapShelf[] = [],
   guides: readonly SitemapGuide[] = [],
 ): string {
-  const latest = decks.reduce<Date | undefined>(
-    (max, deck) => (!max || deck.updatedAt > max ? deck.updatedAt : max),
-    undefined,
-  );
-  return urlset([
-    ...localized(explorePath, latest),
-    ...shelves.flatMap((paths) => {
-      const listed = locales.filter((locale) => paths[locale]);
-      return localized((locale) => paths[locale] ?? "", undefined, listed);
-    }),
-    ...guides.flatMap((guide) => {
-      const own = decks.filter((deck) => guide.slugs.includes(deck.slug));
-      const changed = own.reduce<Date | undefined>(
+  const newest = (slugs?: readonly string[]) =>
+    decks
+      .filter((deck) => !slugs || slugs.includes(deck.slug))
+      .reduce<Date | undefined>(
         (max, deck) => (!max || deck.updatedAt > max ? deck.updatedAt : max),
         undefined,
       );
-      return localized(guide.path, changed);
+  return urlset([
+    ...localized(explorePath, newest()),
+    ...shelves.flatMap(({ paths, slugs }) => {
+      const listed = locales.filter((locale) => paths[locale]);
+      const changed = slugs ? newest(slugs) : undefined;
+      return localized((locale) => paths[locale] ?? "", changed, listed);
     }),
+    ...guides.flatMap((guide) => localized(guide.path, newest(guide.slugs))),
     ...decks.flatMap((deck) =>
       localized(
         (locale) => deckPath(deck.slug, locale),

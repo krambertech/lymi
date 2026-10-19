@@ -620,6 +620,59 @@ export async function listRelatedDecks(
   return ranked.flatMap((key) => bySlug.get(key) ?? []);
 }
 
+/** Where a published deck sits in the catalog: enough to pick links to it, nothing to show. */
+export type PublicDeckPlace = Pick<
+  PublicDeckSummary,
+  "slug" | "category" | "language" | "meaningLanguage"
+>;
+
+/**
+ * Every published deck readable in `language`, in Explore's order, from publication rows alone.
+ * A deck page picks its links from this, then loads only those decks' rows with `listPublicDecks`.
+ */
+export async function listPublicDeckPlaces(
+  db: CatalogDb,
+  language: string,
+): Promise<PublicDeckPlace[]> {
+  const rows = await db
+    .select({
+      deckId: deckPublications.deckId,
+      slug: deckPublications.slug,
+      category: deckPublications.category,
+      language: decks.defaultLanguage,
+      meaningLanguage: deckPublications.meaningLanguage,
+    })
+    .from(deckPublications)
+    .innerJoin(decks, eq(decks.id, deckPublications.deckId))
+    .where(publishedAndAlive())
+    .orderBy(asc(deckPublications.publishedAt), asc(deckPublications.slug))
+    .limit(SITEMAP_DECK_LIMIT);
+  const readable = await readableRows(db, rows, language);
+  return readable.map(({ slug, category, language, meaningLanguage }) => ({
+    slug,
+    category,
+    language,
+    meaningLanguage,
+  }));
+}
+
+/** The Explore rows of the decks at `slugs`, in that order, read in `language`. */
+export async function listPublicDecks(
+  db: CatalogDb,
+  slugs: readonly string[],
+  language: string,
+): Promise<PublicDeckSummary[]> {
+  if (slugs.length === 0) return [];
+  const summaries = await catalogSummaries(
+    db,
+    and(publishedAndAlive(), inArray(deckPublications.slug, [...slugs])),
+    language,
+    slugs.length,
+  );
+  const bySlug = new Map(summaries.map((summary) => [summary.slug, summary]));
+  return slugs.flatMap((slug) => bySlug.get(slug) ?? []);
+}
+
 interface ShownEdition {
   language: string;
   deck: { name: string | null; summary: string | null } | undefined;

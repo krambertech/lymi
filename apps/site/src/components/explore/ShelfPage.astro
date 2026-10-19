@@ -22,7 +22,10 @@ const { page } = Astro.props;
 const { locale, shelf, route, alternates, others } = page;
 const i18n = pageI18n(locale);
 const name = shelfLabel(i18n, shelf);
-const copy = shelfCopy(i18n, route, name);
+const copy = shelfCopy(i18n, route, name, {
+  decks: shelf.decks.length,
+  cards: shelf.decks.reduce((sum, deck) => sum + deck.cardCount, 0),
+});
 const path = shelfPath(route, locale);
 const languages = route.kind === "languages";
 // The footer's language links always lead somewhere: this shelf where that locale has it, else Explore.
@@ -31,7 +34,7 @@ const footerPaths = Object.fromEntries(
 ) as Record<Locale, string>;
 ---
 
-<BaseLayout title={copy.pageTitle} description={copy.lede} canonicalPath={path} alternatePaths={alternates}>
+<BaseLayout title={copy.pageTitle} description={copy.metaDescription} canonicalPath={path} alternatePaths={alternates}>
   <script
     slot="head"
     is:inline

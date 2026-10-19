@@ -7,9 +7,12 @@ import {
   taughtLanguage,
   trayHue,
 } from "@lymi/core/catalog";
+import { ChevronRight } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
-import { type DeckCard, languageName, type RecallCue } from "../../lib/deck-page";
+import type { DeckLinks } from "../../lib/deck-links";
+import { type DeckCard, deckPath, languageName, type RecallCue } from "../../lib/deck-page";
 import { examOfDeck } from "../../lib/exams";
+import { shelfPath } from "../../lib/explore";
 import { pageI18n } from "../../lib/i18n";
 import { openLymiUrl, productUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
@@ -17,7 +20,7 @@ import { deckSubject } from "../../lib/subjects";
 import { buttonClass } from "../Button";
 import { ExamPageLink } from "../exams/ExamPageLink";
 import { DeckTile } from "../explore/DeckTile";
-import { tagLabel } from "../explore/explore-labels";
+import { shelfLabel, tagLabel } from "../explore/explore-labels";
 import { AppTile } from "../Logo";
 import { SiteFooter } from "../landing/SiteFooter";
 import { PreviewFace } from "./PreviewFace";
@@ -191,6 +194,84 @@ export function DeckRelated({ decks, locale }: LocaleProps & { decks: PublicDeck
         </div>
       </section>
     </Localized>
+  );
+}
+
+const LINK_CHIP =
+  "inline-flex h-10 items-center gap-2 rounded-full bg-plate-2 px-4 text-md font-medium text-text transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring pointer-coarse:h-11";
+
+/** One row of plain links to other decks, each named as Explore names it, with its card count. */
+function DeckLinkRow({
+  id,
+  title,
+  decks,
+  locale,
+}: LocaleProps & { id: string; title: ReactNode; decks: PublicDeckSummary[] }) {
+  if (decks.length === 0) return null;
+  return (
+    <div>
+      <h2 id={id} className="text-sm text-muted">
+        {title}
+      </h2>
+      <ul aria-labelledby={id} className="mt-3 flex flex-wrap gap-2">
+        {decks.map((deck) => (
+          <li key={deck.slug}>
+            <a href={deckPath(deck.slug, locale)} className={LINK_CHIP}>
+              <span lang={deck.meaningLanguage}>{deck.name}</span>
+              <span className="text-sm text-muted tabular-nums">{deck.cardCount}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/**
+ * Links to the deck's shelf, the other decks in its language, and the same topic in other
+ * languages, so search reaches every deck from its neighbours and not only from Explore.
+ */
+export function DeckNeighbours({ deck, links, locale }: DeckProps & { links: DeckLinks }) {
+  return (
+    <Localized locale={locale}>
+      <DeckNeighboursBody deck={deck} links={links} locale={locale} />
+    </Localized>
+  );
+}
+
+function DeckNeighboursBody({ deck, links, locale }: DeckProps & { links: DeckLinks }) {
+  const { i18n, t } = useLingui();
+  const language = languageName(taughtLanguage(deck), i18n.locale, { label: true });
+  const shelfName = links.shelf ? shelfLabel(i18n, links.shelf) : null;
+  if (!links.shelf && links.language.length === 0 && links.topic.length === 0) return null;
+  return (
+    <nav aria-label={t`Related decks`} className="border-t border-edge px-5 py-12 @2xl:px-10">
+      <div className="mx-auto grid max-w-[1040px] gap-8">
+        <DeckLinkRow
+          id="language-decks"
+          locale={locale}
+          decks={links.language}
+          title={language ? <Trans>More {language} decks</Trans> : <Trans>More decks</Trans>}
+        />
+        <DeckLinkRow
+          id="topic-decks"
+          locale={locale}
+          decks={links.topic}
+          title={<Trans>The same topic in other languages</Trans>}
+        />
+        {links.shelf && shelfName && (
+          <p>
+            <a
+              href={shelfPath(links.shelf.route, locale)}
+              className={`${LINK_CHIP} bg-transparent shadow-[inset_0_0_0_1px_var(--edge-2)]`}
+            >
+              <Trans>All {shelfName} decks</Trans>
+              <ChevronRight aria-hidden="true" className="size-4 text-muted rtl:rotate-180" />
+            </a>
+          </p>
+        )}
+      </div>
+    </nav>
   );
 }
 

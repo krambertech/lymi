@@ -143,15 +143,18 @@ export function languageName(
 }
 
 /**
- * Everything the page renders, folded into one value: the deck and the decks More like this shows.
+ * Everything the page renders, folded into one value: the deck, More like this and its other links.
  * The publish revision moves only on publish and withdrawal, so a corrected meaning, a new card or
  * another deck's new tag would otherwise keep the old validator.
  */
 export function deckContentHash(
   deck: PublicDeckOut,
   related: readonly PublicDeckSummary[] = [],
+  /** The page's other links to decks and shelves, which a new deck elsewhere can change. */
+  links?: unknown,
 ): string {
-  return stableHash(JSON.stringify({ deck, related })).toString(36);
+  const shown = links === undefined ? { deck, related } : { deck, related, links };
+  return stableHash(JSON.stringify(shown)).toString(36);
 }
 
 /**

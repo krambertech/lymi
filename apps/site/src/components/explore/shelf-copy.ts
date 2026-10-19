@@ -1,6 +1,7 @@
 import type { I18n, MessageDescriptor } from "@lingui/core";
-import { msg } from "@lingui/core/macro";
+import { msg, plural } from "@lingui/core/macro";
 import type { ShelfRoute } from "../../lib/explore";
+import { branded, DESCRIPTION_MAX, firstThatFits, TITLE_MAX } from "../../lib/seo-text";
 import type { Question } from "../landing/faq";
 
 /**
@@ -10,8 +11,10 @@ import type { Question } from "../landing/faq";
  */
 export interface ShelfCopy {
   title: string;
-  /** The document title, the page's name and Lymi's. */
+  /** The document title: the page's name, how many free decks, and Lymi's. */
   pageTitle: string;
+  /** The search result's line: the lede, then what the shelf holds. */
+  metaDescription: string;
   aboutHeading: string;
   lede: string;
   about: string[];
@@ -108,7 +111,18 @@ function commonQuestions(language: boolean): Question[] {
   ];
 }
 
-export function shelfCopy(i18n: I18n, route: ShelfRoute, name: string): ShelfCopy {
+/** What a shelf holds, for its title and description. */
+export interface ShelfCounts {
+  decks: number;
+  cards: number;
+}
+
+export function shelfCopy(
+  i18n: I18n,
+  route: ShelfRoute,
+  name: string,
+  counts?: ShelfCounts,
+): ShelfCopy {
   const written = WRITTEN[`${route.kind}/${route.name}`];
   const language = route.kind === "languages";
   const title = written?.title
@@ -116,24 +130,39 @@ export function shelfCopy(i18n: I18n, route: ShelfRoute, name: string): ShelfCop
     : language
       ? i18n._(msg`${name} flashcards`)
       : i18n._(msg({ message: `${name} flashcards`, context: "subject shelf" }));
+  const lede = written
+    ? i18n._(written.lede)
+    : language
+      ? i18n._(
+          msg`Ready-made decks for learning ${name}, written by a person and checked card by card.`,
+        )
+      : i18n._(
+          msg({
+            message: `Ready-made ${name} decks, written by a person and checked card by card.`,
+            context: "subject shelf",
+          }),
+        );
+  const decks = counts?.decks ?? 0;
+  const cards = counts?.cards ?? 0;
+  const withDecks = counts
+    ? i18n._(msg`${title} · ${plural(decks, { one: "# free deck", other: "# free decks" })}`)
+    : title;
+  const holds = counts
+    ? i18n._(
+        msg`${plural(decks, { one: "# free deck", other: "# free decks" })} with ${plural(cards, { one: "# card", other: "# cards" })} in all.`,
+      )
+    : "";
   return {
     title,
-    pageTitle: i18n._(msg`${title} · Lymi`),
+    pageTitle: firstThatFits(
+      [branded(i18n, withDecks), withDecks, branded(i18n, title), title],
+      TITLE_MAX,
+    ),
+    metaDescription: firstThatFits([holds ? `${lede} ${holds}` : lede, lede], DESCRIPTION_MAX),
     aboutHeading: language
       ? i18n._(msg`Learning ${name} with Lymi`)
       : i18n._(msg`About these decks`),
-    lede: written
-      ? i18n._(written.lede)
-      : language
-        ? i18n._(
-            msg`Ready-made decks for learning ${name}, written by a person and checked card by card.`,
-          )
-        : i18n._(
-            msg({
-              message: `Ready-made ${name} decks, written by a person and checked card by card.`,
-              context: "subject shelf",
-            }),
-          ),
+    lede,
     about: written
       ? written.about.map((paragraph) => i18n._(paragraph))
       : [

@@ -6,6 +6,8 @@ let app: TestApp;
 
 beforeAll(async () => {
   app = await testApp();
+  // Signing up settles Better Auth's background seeding, which each request otherwise races.
+  await app.signUp("learner");
 }, 60_000);
 
 describe("GET /api/languages", () => {

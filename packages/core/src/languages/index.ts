@@ -3,14 +3,15 @@
  * language does, and never checks a tag itself. docs/proposals/supported-languages.md.
  */
 import { japanese } from "./japanese";
-import type { LanguageSupport, ReadingEngine, Script, SupportedTag } from "./types";
+import type { LanguageSupport, ReadingEngine, Script, SpeechInput, SupportedTag } from "./types";
 
 export * from "./names";
-export type { LanguageSupport, ReadingEngine, Script, SupportedTag } from "./types";
+export type { LanguageSupport, ReadingEngine, Script, SpeechInput, SupportedTag } from "./types";
 
-export const SUPPORTED_LANGUAGES: Readonly<Record<SupportedTag, LanguageSupport>> = {
+/** Each record keeps its literal type, so a registry elsewhere can follow what a record turns on. */
+export const SUPPORTED_LANGUAGES = {
   ja: japanese,
-};
+} as const satisfies Record<SupportedTag, LanguageSupport>;
 
 /** A language with a row of data and no engine. */
 interface LanguageConfig {
@@ -56,9 +57,14 @@ export function languageScript(language: string | null | undefined): Script | nu
   return languageSupport(language)?.script ?? null;
 }
 
-/** Whether generated speech says the card's Reading, led in by its meaning, so either changing makes a new clip. */
-export function speaksReading(language: string | null | undefined): boolean {
-  return languageSupport(language)?.speech === "reading";
+/** The fields a generated clip is made from besides the term and language, so a change to one makes a new clip. */
+export function speechInputs(language: string | null | undefined): readonly SpeechInput[] {
+  const speech = languageSupport(language)?.speech;
+  if (!speech) return [];
+  return [
+    ...(speech.saysReading || speech.leadIn ? (["pronunciation"] as const) : []),
+    ...(speech.leadIn ? (["meaning"] as const) : []),
+  ];
 }
 
 /** Languages whose pronunciation is a reading of a script that does not show it, so the field is called Reading. */

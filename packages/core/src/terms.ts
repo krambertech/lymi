@@ -1,5 +1,5 @@
-import { languageKey, speaksReading } from "./languages";
-import { stripReadings } from "./reading";
+import { languageKey, languageSupport, speechInputs } from "./languages";
+import { kanaReading, stripReadings } from "./reading";
 
 /**
  * The key the duplicate rule compares. Trimmed, whitespace collapsed, case-folded,
@@ -83,7 +83,16 @@ export function headword(term: string): string {
   return at > 0 ? term.slice(0, at) : term;
 }
 
-/** In-memory players must discard a Japanese clip when its reading or meaning changes. */
+/** What generated speech says: the card's Reading where its language says one, so 上手 is said じょうず or うわて as the card reads it, else the term. */
+export function spokenText(card: {
+  term: string;
+  language?: string | null | undefined;
+  pronunciation?: string | null | undefined;
+}): string {
+  return (languageSupport(card.language)?.speech.saysReading && kanaReading(card)) || card.term;
+}
+
+/** What an in-memory player's clip was made from, so it is discarded when any of it changes. */
 export function pronunciationInputKey(card: {
   id: string;
   term: string;
@@ -92,12 +101,12 @@ export function pronunciationInputKey(card: {
   meaning?: string | null | undefined;
   audioSource?: string | null | undefined;
 }): string {
-  const japanese = speaksReading(card.language) && card.audioSource !== "recorded";
+  const inputs = card.audioSource === "recorded" ? [] : speechInputs(card.language);
   return JSON.stringify([
     card.id,
     card.language,
     card.term,
     card.audioSource,
-    ...(japanese ? [card.pronunciation, card.meaning] : []),
+    ...inputs.map((field) => card[field]),
   ]);
 }

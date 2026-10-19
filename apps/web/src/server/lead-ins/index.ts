@@ -1,4 +1,4 @@
-import { languageKey } from "@lymi/core";
+import { languageSupport, type SUPPORTED_LANGUAGES, type SupportedTag } from "@lymi/core";
 import { createLeadInWriter, type LeadInWriter } from "../ai/lead-in-writer";
 import { meteredFetch } from "../dependency-health";
 import type { Bindings } from "../env";
@@ -9,11 +9,18 @@ import type { LeadInPolicy } from "./policy";
 export { DECISION_MODEL, leadInScore } from "./decide";
 export type { LeadInInput, LeadInPolicy, LeadInSkip } from "./policy";
 
-const POLICIES: LeadInPolicy[] = [japanese];
+/** A policy where the language's record turns lead-ins on and null where it does not, so the two cannot drift. */
+type Policies = {
+  readonly [T in SupportedTag]: (typeof SUPPORTED_LANGUAGES)[T]["speech"]["leadIn"] extends true
+    ? LeadInPolicy & { language: T }
+    : null;
+};
+
+const POLICIES: Policies = { ja: japanese };
 
 export function leadInPolicy(language: string | null | undefined): LeadInPolicy | undefined {
-  const key = languageKey(language);
-  return POLICIES.find((policy) => policy.language === key);
+  const support = languageSupport(language);
+  return (support && POLICIES[support.tag]) ?? undefined;
 }
 
 export interface LeadInDependencies {

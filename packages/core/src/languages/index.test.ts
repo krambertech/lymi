@@ -4,7 +4,7 @@ import {
   drawsReadings,
   languageScript,
   languageSupport,
-  speaksReading,
+  speechInputs,
   writtenWithReading,
 } from ".";
 
@@ -35,10 +35,12 @@ describe("languageScript", () => {
   });
 });
 
-describe("speaksReading", () => {
-  it("speaks a Japanese reading and no other", () => {
-    expect(speaksReading("ja-JP")).toBe(true);
-    for (const tag of ["zh", "ko", null]) expect(speaksReading(tag)).toBe(false);
+describe("speechInputs", () => {
+  it("makes a Japanese clip from its reading and, for the lead-in, its meaning", () => {
+    expect(speechInputs("ja-JP")).toEqual(["pronunciation", "meaning"]);
+  });
+  it("makes every other clip from the term alone", () => {
+    for (const tag of ["zh", "ko", null]) expect(speechInputs(tag)).toEqual([]);
   });
 });
 

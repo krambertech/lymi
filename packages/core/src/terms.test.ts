@@ -11,6 +11,7 @@ import {
   revealsAnswer,
   SPOKEN_TERM_MAX,
   sameReading,
+  spokenText,
   standsAlone,
 } from "./terms";
 
@@ -130,6 +131,17 @@ describe("standsAlone", () => {
     expect(standsAlone("家")).toBe(true);
     expect(standsAlone("ね")).toBe(true);
     expect(standsAlone("물")).toBe(true);
+  });
+});
+
+describe("spokenText", () => {
+  it("says a Japanese card's kana reading, so the card decides how 上手 is read", () => {
+    expect(spokenText({ term: "上手", language: "ja", pronunciation: "うわて" })).toBe("うわて");
+  });
+  it("says the term where there is no reading to say", () => {
+    expect(spokenText({ term: "上手", language: "ja", pronunciation: "jōzu" })).toBe("上手");
+    expect(spokenText({ term: "学习", language: "zh", pronunciation: "xuéxí" })).toBe("学习");
+    expect(spokenText({ term: "casa", language: "it", pronunciation: "ˈkaːza" })).toBe("casa");
   });
 });
 

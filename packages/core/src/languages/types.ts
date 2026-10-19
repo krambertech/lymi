@@ -14,6 +14,13 @@ export interface LanguageSupport {
   engine: ReadingEngine;
   /** The pronunciation holds a Reading, and the card form calls the field so. */
   pronunciation: "reading";
-  /** Generated speech says the Reading, led in by the meaning, so a new reading or meaning makes a new clip. */
-  speech: "reading";
+  speech: {
+    /** Generated speech says the card's Reading in place of the term, so 上手 is said as the card reads it. */
+    saysReading: boolean;
+    /** A lead-in written from the reading and meaning may go before the term. docs/lead-ins.md. */
+    leadIn: boolean;
+  };
 }
+
+/** A card field a generated clip is made from, besides its term and language. */
+export type SpeechInput = "pronunciation" | "meaning";

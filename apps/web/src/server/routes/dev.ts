@@ -249,11 +249,11 @@ function seedDeps(c: Context<AppEnv>): SeedDeps {
   };
 }
 
-/** Welcome with the deck a persona joined before getting set up, as the return from a join link opens it. */
+/** Today with the deck a persona joined before getting set up, as the return from a join link opens it. */
 async function landingPath(db: Db, persona: Persona, deps: SeedDeps): Promise<string | null> {
   if (!persona.landing) return null;
   const found = await ownersDeck(db, persona.landing.welcomeWith, deps);
-  return found ? `/welcome?deck=${found.deckId}` : null;
+  return found ? "/today" : null;
 }
 
 /** Answers signed out too, so the CLI can tell a typo from a command before signing anyone in. */

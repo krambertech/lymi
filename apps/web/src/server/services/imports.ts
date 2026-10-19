@@ -21,6 +21,7 @@ import { ImportFileError, type RandomAccess, r2Source } from "../imports/files";
 import { lymi } from "../imports/lymi";
 import { mochi } from "../imports/mochi";
 import { noji } from "../imports/noji";
+import { pleco } from "../imports/pleco";
 import { quizlet } from "../imports/quizlet";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
@@ -44,7 +45,7 @@ export { archiveImport, ownedImport, restoreImport } from "./import-writer";
 
 /** Every source Lymi can import, tried in order. */
 // Quizlet claims text by its extension alone, so it stays last.
-const ADAPTERS = [anki, mochi, noji, lymi, quizlet] as SourceAdapter<unknown>[];
+const ADAPTERS = [anki, mochi, noji, lymi, pleco, quizlet] as SourceAdapter<unknown>[];
 
 /** Notes per stored chunk: one chunk is one Workflow step and one D1 batch. */
 export const NOTES_PER_CHUNK = 500;
@@ -165,7 +166,7 @@ export async function startImport(ctx: ServiceContext, input: ImportStartInput, 
     db.insert(schema.imports).values({
       id,
       userId,
-      source: sourceOfFileName(input.fileName),
+      source: input.source ?? sourceOfFileName(input.fileName),
       fileName: input.fileName,
       byteSize: input.byteSize,
       objectKey,
@@ -596,6 +597,9 @@ export async function finishImport(
     sounds_left_out: counts.soundsLeftOut,
     pictures: counts.pictures,
     pictures_skipped: counts.picturesSkipped,
+    ...(counts.readingsConverted !== undefined
+      ? { readings_converted: counts.readingsConverted }
+      : {}),
     ...(row.confirmedAt ? { write_seconds: secondsSince(row.confirmedAt, now) } : {}),
   });
   await deleteImportFiles(uploads, row);

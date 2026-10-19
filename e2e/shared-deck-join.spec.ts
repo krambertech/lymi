@@ -77,11 +77,10 @@ test("an owner shares a deck and a classmate joins through the link", async ({
     await expect(classmate).toHaveURL(/\/login\?dev=1/);
     await createAccountThroughDevForm(classmate, outsider(testInfo, "classmate"));
 
-    // A new account is welcomed with the deck and chooses its daily goal, then reviews it.
-    await expect(classmate).toHaveURL(new RegExp(`/welcome\\?deck=${deckId}$`));
-    await expect(classmate.getByRole("heading", { name: deckName, exact: true })).toBeVisible();
-    await classmate.getByRole("button", { name: "Continue", exact: true }).click();
-    await classmate.getByRole("button", { name: "Start review", exact: true }).click();
+    // A new account lands on Today with the deck ready to review.
+    await expect(classmate).toHaveURL(/\/today$/);
+    await expect(classmate.getByText(`${deckName} is ready.`, { exact: false })).toBeVisible();
+    await classmate.getByRole("link", { name: /^Review/ }).click();
     await expect(classmate).toHaveURL(new RegExp(`/review\\?deck=${deckId}$`));
     await expect(classmate.getByLabel(/ card for (tere hommikust|good morning)$/)).toBeVisible();
   });

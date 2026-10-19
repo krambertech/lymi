@@ -52,3 +52,28 @@ export function FeatureSection({ id, title, body, after, children, demoFirst, ti
     </section>
   );
 }
+
+/** A section with its title and copy above a wide demo. */
+export function Wide({
+  id,
+  title,
+  body,
+  children,
+}: {
+  id?: string;
+  title: ReactNode;
+  body: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <section id={id} className="scroll-mt-8 border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
+      <div className="mx-auto max-w-[1040px]">
+        <div className="max-w-[640px]">
+          <SectionTitle>{title}</SectionTitle>
+          <p className="mt-5 text-md text-pretty text-text-2">{body}</p>
+        </div>
+        {children}
+      </div>
+    </section>
+  );
+}

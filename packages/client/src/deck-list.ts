@@ -250,7 +250,7 @@ export type TagChoice = "all" | "none" | "mixed";
 export interface TagPickerInput {
   /** The chosen cards' tags, each list one card's. */
   cards: readonly (readonly string[])[];
-  /** Tags made in the picker, newest first. */
+  /** Tags made in the picker, in the order they were made, which is the order they go on. */
   created: readonly string[];
   /** Tags in use elsewhere, offered after the ones the cards carry. */
   suggestions: readonly { name: string }[];
@@ -279,8 +279,18 @@ export function tagPicker({ cards, created, suggestions, choices, query }: TagPi
     ...suggestions.map((tag) => tag.name),
   ].filter((name, i, all) => all.findIndex((other) => tagKey(other) === tagKey(name)) === i);
   const typed = query.trim().slice(0, TAG_LIMITS.length);
-  const shown = typed ? offered.filter((name) => tagKey(name).includes(tagKey(typed))) : offered;
-  const fresh = !!typed && !offered.some((name) => tagKey(name) === tagKey(typed));
+  const needle = tagKey(typed);
+  // The name typed first, then names that start with it, then any that hold it, each kept in order.
+  const rank = (name: string) => {
+    const key = tagKey(name);
+    return key === needle ? 0 : key.startsWith(needle) ? 1 : key.includes(needle) ? 2 : 3;
+  };
+  const shown = typed
+    ? offered.filter((name) => rank(name) < 3).sort((a, b) => rank(a) - rank(b))
+    : offered;
+  const fresh = !!typed && !offered.some((name) => tagKey(name) === needle);
+  /** What Return takes: the tag named exactly as typed; any other text is a new tag. */
+  const pick = shown[0] !== undefined && rank(shown[0]) === 0 ? shown[0] : undefined;
 
   const count = (name: string) => carried.get(tagKey(name))?.count ?? 0;
   const start = (name: string): TagChoice => {
@@ -302,7 +312,18 @@ export function tagPicker({ cards, created, suggestions, choices, query }: TagPi
   };
   const add = offered.filter((name) => choiceOf(name) === "all" && start(name) !== "all");
   const remove = offered.filter((name) => choiceOf(name) === "none" && start(name) !== "none");
-  return { total, shown, typed, fresh, choiceOf, next, after, change: { add, remove } };
+  return {
+    total,
+    offered,
+    shown,
+    typed,
+    fresh,
+    pick,
+    choiceOf,
+    next,
+    after,
+    change: { add, remove },
+  };
 }
 
 /**

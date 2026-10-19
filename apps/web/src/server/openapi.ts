@@ -116,6 +116,10 @@ export function mountOpenApi(app: Hono<AppEnv>) {
           },
           { name: "Settings", description: "The learner's own preferences." },
           {
+            name: "Languages",
+            description: "How cards in each language are written. Public and cacheable.",
+          },
+          {
             name: "API keys",
             description: "Session only: no key can list, mint or revoke another key.",
           },

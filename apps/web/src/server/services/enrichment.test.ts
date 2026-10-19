@@ -65,6 +65,7 @@ describe("deck enrichment fields", () => {
     expect(defaultEnrichFields("it")).toEqual(["meaning", "example"]);
     expect(defaultEnrichFields("et")).toEqual(["meaning", "example", "notes"]);
     expect(defaultEnrichFields("zh-Hans")).toEqual(["meaning", "example", "pronunciation"]);
+    expect(defaultEnrichFields("ko-KR")).toEqual(["meaning", "example", "notes", "pronunciation"]);
     expect(deckEnrichFields(null, "et")).toEqual(["meaning", "example", "notes"]);
     expect(deckEnrichFields(["notes", "meaning"], "it")).toEqual(["meaning", "notes"]);
     expect(deckEnrichFields([], "it")).toEqual([]);
@@ -861,6 +862,7 @@ describe("enrichment that follows the deck", () => {
         has_instructions: false,
         samples: 0,
         skipped: 1,
+        languages: ["et"],
       }),
     );
   });
@@ -900,6 +902,30 @@ describe("enrichment that follows the deck", () => {
     expect(capture).toHaveBeenCalledWith(
       expect.objectContaining({ name: "enrichment_finished", readings_added: 1 }),
     );
+  });
+
+  it("never asks for readings in a Chinese example, which carries none yet", async () => {
+    const ctx = await learner(db, "deck-fields-readings-zh", "Kateryna");
+    const deck = await createDeck(ctx, { name: "中文", defaultLanguage: "zh" });
+    const card = await added(
+      ctx,
+      CardInput.parse({ deckId: deck.id, term: "学习", example: "我在学校学习。" }),
+    );
+    const provider = fakeProvider({
+      cards: [
+        {
+          id: card.id,
+          meaning: "to study",
+          example: "我在学校学习。",
+          notes: null,
+          pronunciation: "xuéxí",
+          language: null,
+        },
+      ],
+    });
+    await enrichCards({ ...ctx, actor: "ai" }, [card.id], provider);
+    const input = JSON.parse(provider.asked[0]?.input ?? "{}");
+    expect(input.cards?.[0]?.addReadings).toBeFalsy();
   });
 
   it("never changes a Japanese example's text while adding readings", async () => {

@@ -108,6 +108,8 @@ pnpm --filter @lymi/web exec vitest run --project components
 
 Each browser context asks for reduced motion, for the same reason the journeys do: a toast that changes opacity and height without travelling holds still long enough to be clicked, where one sliding into a stack does not. `forced-states` rewrites both motion queries into `data-motion` selectors, so the specimens that prove the full and reduced forms are unaffected by what the context asks for. A test that drives full motion wraps its subject in `<MotionConfig reducedMotion="never">` and says why. CI retries a failed test once, matching the journeys: these gate the same merges.
 
+An instance's files run one after another in the same browser page, so a file can leave state behind for the next. On touch Chromium, `page.viewport()` wider than the device leaves the whole page pinch-zoomed after the size is restored, and a later file can pan that zoomed view; Playwright then aims a click a row off and reports another element intercepting it. The test setup resets the page scale before every file.
+
 WebKit does not focus a button that is clicked, so a test about focus return opens the overlay from the keyboard. A swipe is not covered here; it belongs in a Playwright journey on the iPhone project.
 
 ## Service tests on a real D1

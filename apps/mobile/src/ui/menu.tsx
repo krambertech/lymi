@@ -90,6 +90,7 @@ export function SearchField({
   onSubmit,
   fill = "plate",
   placeholder,
+  stay = false,
 }: {
   label: string;
   query: string;
@@ -98,6 +99,8 @@ export function SearchField({
   fill?: "plate" | "group";
   /** Search, unless the field does more, such as creating what it does not find. */
   placeholder?: string;
+  /** Return keeps the keyboard up, for a field that takes one entry after another. */
+  stay?: boolean;
 }) {
   const { t } = useLingui();
   const p = usePalette();
@@ -119,6 +122,7 @@ export function SearchField({
         spellCheck={false}
         clearButtonMode="while-editing"
         returnKeyType="done"
+        submitBehavior={stay ? "submit" : "blurAndSubmit"}
         onSubmitEditing={onSubmit}
         selectionColor={p.text}
         className="flex-1 font-sans text-text"

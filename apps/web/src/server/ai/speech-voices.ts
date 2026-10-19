@@ -15,7 +15,7 @@ export const NATIVE_SPEECH_VOICES: Readonly<Record<string, NativeVoice>> = {
   hi: { voice: "MF4J4IDTRo0AxOO4dpFR", name: "Devi - Encouraging and Motivating" },
   it: { voice: "HuK8QKF35exsCh2e7fLT", name: "Carmelo La Rosa - Deep and Balanced" },
   ja: { voice: "vzIXwvf41vKosKu00hYj", name: "Hiroki - Calm and Precise" },
-  ko: { voice: "PDoCXqBQFGsvfO0hNkEs", name: "Chris - Warm and Clear" },
+  ko: { voice: "s07IwTCOrCDCaETjUVjx", name: "Hyunbin - Diplomatic, Clear and Measured" },
   nl: { voice: "YUdpWWny7k5yb4QCeweX", name: "Ruth - Warm and Dynamic Narrator" },
   nb: { voice: "xF681s0UeE04gsf0mVsJ", name: "Olaf - Clear and Natural" },
   pl: { voice: "H5xTcsAIeS5RAykjz57a", name: "Alex - Warm Storyteller" },
@@ -28,12 +28,15 @@ export const NATIVE_SPEECH_VOICES: Readonly<Record<string, NativeVoice>> = {
   uk: { voice: "9Sj8ugvpK1DmcAXyvi3a", name: "Alex Nekrasov - Confident and Clear" },
   vi: { voice: "A5w1fw5x0uXded1LDvZp", name: "Nhu - Calm and Confident" },
   cmn: { voice: "bhJUNIXWQQ94l8eI2VUf", name: "Amy - Friendly, Young and Natural" },
+  // Traditional tags speak with a Taiwan voice; chosen on 一 and 不 sandhi and 行 háng/xíng, PR #869.
+  "cmn-TW": { voice: "Z8Aisvg1z70p27kGvkZZ", name: "Ling - Steady, Calm and Grounded" },
 };
 
 const DEFAULT_NATIVE_SPEECH_LANGUAGES = new Set([
   "ar",
   "pt-BR",
-  "cmn",
+  "cmn-CN",
+  "cmn-TW",
   "da",
   "nl",
   "et",
@@ -43,6 +46,7 @@ const DEFAULT_NATIVE_SPEECH_LANGUAGES = new Set([
   "el",
   "it",
   "ja",
+  "ko",
   "ru",
   "uk",
 ]);

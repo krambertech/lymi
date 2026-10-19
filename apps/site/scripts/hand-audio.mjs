@@ -31,18 +31,6 @@ if (cards.length !== declared || cards.length === 0) {
   );
 }
 
-// The Estonian conversations speak each line whole, under the clip name the line declares.
-const scenes = readFileSync(join(site, "src/components/landing/estonian-scenes.ts"), "utf8");
-const lines = [...scenes.matchAll(/audio: "([^"]+)",\s*say: "([^"]+)",/g)].map(([, id, term]) => ({
-  id,
-  language: "et",
-  term,
-}));
-if (lines.length !== (scenes.match(/audio: "/g) ?? []).length) {
-  throw new Error("Read fewer conversation lines than declared; keep audio then say on each line.");
-}
-cards.push(...lines);
-
 if (!process.env.OPENAI_API_KEY?.trim()) throw new Error("Set OPENAI_API_KEY to generate audio.");
 mkdirSync(outDir, { recursive: true });
 const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, "utf8")) : {};

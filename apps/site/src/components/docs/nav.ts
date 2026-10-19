@@ -9,9 +9,11 @@ export type DocPath =
   | "/docs/authentication"
   | "/docs/mobile"
   | "/docs/cards"
+  | "/docs/languages"
   | "/docs/import-from-anki"
   | "/docs/import-from-mochi"
   | "/docs/import-from-noji"
+  | "/docs/import-from-pleco"
   | "/docs/export"
   | "/docs/scheduling"
   | "/docs/recipes"
@@ -101,6 +103,14 @@ export const PAGES: DocPage[] = [
     section: "Guides",
   },
   {
+    to: "/docs/languages",
+    nav: "Languages",
+    title: "Languages",
+    blurb:
+      "How a card's pronunciation and example are written in each language with its own format.",
+    section: "Guides",
+  },
+  {
     to: "/docs/import-from-anki",
     nav: "Import from Anki",
     title: "Import from Anki",
@@ -119,6 +129,13 @@ export const PAGES: DocPage[] = [
     nav: "Import from Noji",
     title: "Import from Noji",
     blurb: "Bring your Noji decks across with their sub-decks, pictures and learning progress.",
+    section: "Guides",
+  },
+  {
+    to: "/docs/import-from-pleco",
+    nav: "Import from Pleco",
+    title: "Import from Pleco",
+    blurb: "Bring your Pleco flashcards across with their pinyin, definitions and categories.",
     section: "Guides",
   },
   {

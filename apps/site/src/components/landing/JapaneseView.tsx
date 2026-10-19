@@ -1,8 +1,9 @@
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
+import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
-import { type ReactNode, useState } from "react";
+import { useState } from "react";
 import { openLymiUrl, signUpUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
@@ -10,15 +11,15 @@ import { addUrl } from "../deck/DeckView";
 import { Added, AssistantChat, Attachment } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
 import { DeckPath } from "./DeckPath";
-import { FeatureSection, SectionTitle } from "./FeatureSection";
+import { FeatureSection, Wide } from "./FeatureSection";
 import { JAPANESE_QUESTIONS } from "./faq";
 import { HandExamples } from "./HandExamples";
 import { HandOfCards } from "./HandOfCards";
 import { EnrichJapanese, PageToCards } from "./JapaneseAi";
 import { JapaneseBento } from "./JapaneseBento";
-import { JapaneseDecks } from "./JapaneseDecks";
 import { CLASS_CARDS, HAND_EXAMPLES, JAPANESE_HAND, JAPANESE_PATH, VOICE_WORDS } from "./japanese";
 import { KanjiReadings } from "./KanjiReadings";
+import { LanguageDecks } from "./LanguageDecks";
 import { Questions } from "./Questions";
 import { ReturnLane } from "./ReturnLane";
 import { SharedDeckDemo } from "./SharedDeckDemo";
@@ -28,31 +29,6 @@ import { SiteNav } from "./SiteNav";
 import { VoiceTiles } from "./VoiceTiles";
 
 const KANA = "read-japanese-kana";
-
-/** A section with its title and copy centred above a wide demo. */
-function Wide({
-  id,
-  title,
-  body,
-  children,
-}: {
-  id?: string;
-  title: ReactNode;
-  body: ReactNode;
-  children: ReactNode;
-}) {
-  return (
-    <section id={id} className="scroll-mt-8 border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
-      <div className="mx-auto max-w-[1040px]">
-        <div className="max-w-[640px]">
-          <SectionTitle>{title}</SectionTitle>
-          <p className="mt-5 text-md text-pretty text-text-2">{body}</p>
-        </div>
-        {children}
-      </div>
-    </section>
-  );
-}
 
 function Hero() {
   const [front, setFront] = useState<string>();
@@ -88,7 +64,7 @@ function Hero() {
           </div>
         </div>
         <div className="relative pt-20 pb-4 @5xl:py-20">
-          <HandExamples front={front} examples={HAND_EXAMPLES} />
+          <HandExamples front={front} examples={HAND_EXAMPLES} lang="ja" />
           <div className="relative">
             <HandOfCards cards={JAPANESE_HAND} onFront={setFront} quiet ordered />
           </div>
@@ -198,7 +174,19 @@ export function JapaneseView({ decks, locale }: Props) {
             </Trans>
           }
         >
-          <ReturnLane />
+          <ReturnLane
+            lang="ja"
+            term={(known) => (
+              <ruby>
+                電車
+                <rt
+                  className={clsx("text-[0.45em] text-amber-text", known && "invisible opacity-0")}
+                >
+                  でんしゃ
+                </rt>
+              </ruby>
+            )}
+          />
         </Wide>
 
         <Wide
@@ -228,7 +216,7 @@ export function JapaneseView({ decks, locale }: Props) {
               </Trans>
             }
           >
-            <DeckPath steps={steps} />
+            <DeckPath steps={steps} lang="ja" />
           </Wide>
         )}
 
@@ -243,7 +231,7 @@ export function JapaneseView({ decks, locale }: Props) {
             </Trans>
           }
         >
-          <VoiceTiles words={VOICE_WORDS} />
+          <VoiceTiles words={VOICE_WORDS} lang="ja" folder="japanese" />
         </Wide>
 
         <FeatureSection
@@ -303,7 +291,20 @@ export function JapaneseView({ decks, locale }: Props) {
           <JapaneseBento />
         </Wide>
 
-        {decks.length > 0 && <JapaneseDecks decks={decks} locale={locale} />}
+        {decks.length > 0 && (
+          <LanguageDecks
+            decks={decks}
+            locale={locale}
+            shelf="japanese"
+            body={
+              <Trans>
+                Free Japanese decks with readings and a voice on every card. Add one in a tap. More
+                are on the way.
+              </Trans>
+            }
+            all={<Trans>All Japanese decks</Trans>}
+          />
+        )}
 
         <Questions title={<Trans>Questions before you start.</Trans>} items={JAPANESE_QUESTIONS} />
 

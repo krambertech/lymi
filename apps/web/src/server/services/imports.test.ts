@@ -9,12 +9,14 @@ import {
   importProgress,
   type LymiFileCard,
   type LymiFileManifest,
+  normalizeCardText,
 } from "@lymi/core";
 import { and, eq, isNull, sql } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
 import { centralDirectory, ZipSegment } from "../exports/zip";
 import { bytesSource } from "../imports/files";
+import type { AnalyticsEvent } from "./analytics";
 import { pronunciationAudio } from "./audio";
 import { addCards, archiveCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
@@ -362,6 +364,58 @@ describe("importing a Quizlet set", () => {
     );
     expect(failure).toBe("too_large");
     expect(await cardsOf(ctx)).toHaveLength(0);
+  });
+});
+
+const plecoExport = () =>
+  new Uint8Array(readFileSync(new URL("../imports/pleco/fixtures/both.txt", import.meta.url)));
+
+describe("importing a Pleco export", () => {
+  it("writes one Chinese deck with categories as tags, converting readings as core does", async () => {
+    const events: AnalyticsEvent[] = [];
+    const ctx = {
+      ...(await fresh()),
+      analytics: { capture: (e: AnalyticsEvent) => events.push(e), writeDataPoint: () => {} },
+    };
+    const { id, preview, result } = await runImport(ctx, "flash.txt", NO_CHOICES, plecoExport());
+    expect(result).toMatchObject({ source: "pleco", status: "done", failure: null });
+    expect(result.summary?.tags).toEqual(["HSK 1", "HSK 1/Verbs", "Bank words/Places"]);
+    // 行 and 东西 each come twice with different pinyin: one card, or two once readings tell them apart.
+    expect(preview.added + preview.duplicates).toBe(9);
+    expect(preview).toMatchObject({ reviews: 0, known: 0, skipped: 0 });
+
+    const stored = (pinyin: string) =>
+      normalizeCardText("zh", { pronunciation: pinyin }).fields.pronunciation;
+    const nihao = await card(ctx, "你好");
+    expect(nihao).toMatchObject({
+      language: "zh",
+      importId: id,
+      meaning: "hello (fixture gloss)",
+      pronunciation: stored("ni3hao3"),
+      notes: null,
+    });
+    const study = await card(ctx, "学习");
+    expect(study).toMatchObject({ notes: "學習", pronunciation: stored("xue2xi2") });
+    expect(study.tags).toEqual(["HSK 1/Verbs", "HSK 1"]);
+    // Every pinyin in the export has tone numbers, so one stored without digits was converted.
+    const converted = (await cardsOf(ctx)).filter(
+      (c) => c.pronunciation && !/\d/.test(c.pronunciation),
+    );
+    expect(result.counts?.readingsConverted).toBe(converted.length);
+    expect(events).toContainEqual(
+      expect.objectContaining({
+        name: "import_finished",
+        source: "pleco",
+        adapter: "pleco",
+        outcome: "done",
+        card_count: preview.added,
+        readings_converted: converted.length,
+      }),
+    );
+
+    const second = await runImport(ctx, "flash.txt", NO_CHOICES, plecoExport());
+    expect(second.preview).toMatchObject({ added: 0, existing: preview.added });
+    expect(await cardsOf(ctx)).toHaveLength(preview.added);
   });
 });
 

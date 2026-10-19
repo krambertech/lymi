@@ -186,6 +186,35 @@ it("says where a Japanese term's reading showed, only when the grader draws furi
   expect(readings).toEqual(["cue", "answer", undefined]);
 });
 
+it("names the language whose reading was drawn, so Chinese and Japanese chart apart", async () => {
+  const student = await learner(db, "analytics-reading-language", "Learner");
+  const { analytics, capture, settled } = writer();
+  const ctx = { ...student, analytics };
+  const ids: string[] = [];
+  for (const [language, term, pronunciation] of [
+    ["zh-TW", "學習", "xue2 xi2"],
+    ["ja", "見る", "みる"],
+    ["ko", "학교", "hakgyo"],
+  ] as const) {
+    const deck = await createDeck(ctx, { name: language, defaultLanguage: language });
+    const [added] = await addCards(ctx, [{ deckId: deck.id, term, meaning: "m", pronunciation }]);
+    ids.push(added?.status === "added" ? added.card.id : "");
+  }
+  for (const cardId of ids) {
+    await gradeCard(ctx, { cardId, direction: "recognition", rating: 3, reviewedAt: new Date() });
+  }
+  await settled();
+  const graded = capture.mock.calls
+    .map((call) => call[0])
+    .filter((event) => event.name === "review_graded")
+    .map((event) => [event.reading, event.reading_language]);
+  expect(graded).toEqual([
+    ["cue", "zh"],
+    ["cue", "ja"],
+    [undefined, undefined],
+  ]);
+});
+
 it("counts the example's readings and the ones that faded, never the example", async () => {
   const student = await learner(db, "analytics-example-readings", "Learner");
   const { analytics, capture, settled } = writer();

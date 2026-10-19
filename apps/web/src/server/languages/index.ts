@@ -2,7 +2,7 @@
  * Each supported language's AI text, one module per language, so generic prompts never name one.
  * docs/proposals/supported-languages.md.
  */
-import { languageKey, languageSupport, type SupportedTag } from "@lymi/core";
+import { languageKey, type SupportedTag, supportedLanguage } from "@lymi/core";
 import { japanese } from "./japanese";
 import type { LanguagePrompts } from "./types";
 
@@ -17,7 +17,7 @@ const CONFIGURED_LESSON: Readonly<Record<string, string>> = { zh: "pinyin" };
 
 /** The AI text for a supported language, or null for any other. */
 export function languagePrompts(tag: string | null | undefined): LanguagePrompts | null {
-  const support = languageSupport(tag);
+  const support = supportedLanguage(tag);
   return support ? LANGUAGE_PROMPTS[support.tag] : null;
 }
 

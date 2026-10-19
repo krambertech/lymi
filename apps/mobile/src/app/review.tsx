@@ -11,7 +11,6 @@ import { writes } from "@lymi/client/writes";
 import {
   CHOSEN_LIMIT,
   countedRating,
-  cueKeepsReading,
   type Drawn,
   drawKey,
   drawsTermReading,
@@ -1055,8 +1054,8 @@ function ReviewError({
         <Text className="text-center text-md text-text-2">{body}</Text>
       </View>
       <View className="gap-3">
-        <Button label={action} size="xl" onPress={onAction} />
-        <Button label={t`Try again`} variant="primary" size="xl" onPress={onRetry} />
+        <Button label={action} size="lg" onPress={onAction} />
+        <Button label={t`Try again`} variant="primary" size="lg" onPress={onRetry} />
       </View>
     </View>
   );
@@ -1279,11 +1278,7 @@ function CardPlate({
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const cue = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
   const reading = card.pronunciation;
-  const readingOnCue =
-    mode.cue === "term" &&
-    !!card.pronunciation &&
-    cueKeepsReading(card.language, stateKey(forgotten ? 3 : fsrsState) === "known");
-  // Furigana over the term: on the cue until the card is Known, and always once it is the answer.
+  // Furigana or pinyin over the term: on the cue until the card is Known, and always once it is the answer.
   const furigana = useMemo(() => drawsTermReading(card), [card]);
   const cueFurigana = revealed || stateKey(forgotten ? 3 : fsrsState) !== "known";
   const { width: screenWidth, fontScale } = useWindowDimensions();
@@ -1367,7 +1362,7 @@ function CardPlate({
             ? undefined
             : picture
               ? t`Picture card: ${card.image?.description ?? ""}. Tap to reveal`
-              : readingOnCue || (mode.cue === "term" && furigana && cueFurigana)
+              : mode.cue === "term" && furigana && cueFurigana
                 ? t`Recognition card for ${cue}, read ${reading}. Tap to reveal`
                 : mode.cue === "term"
                   ? t`Recognition card for ${cue}. Tap to reveal`
@@ -1439,11 +1434,6 @@ function CardPlate({
                       {cue}
                     </CardLine>
                   )}
-                  {readingOnCue && (
-                    <Text className="pt-2 text-md text-muted" lang={card.language}>
-                      {reading}
-                    </Text>
-                  )}
                   {/* The hook has one place, under the cue, before the reveal and after it. */}
                   {hook && hookShown ? (
                     <View className="pt-3">
@@ -1511,9 +1501,9 @@ function CardPlate({
                           )}
                         </Animated.View>
                       )}
-                      {/* After the reveal unless the cue keeps it or furigana draws it over the term, which
-                    VoiceOver reads out. Under a term cue it reads the term out. */}
-                      {card.pronunciation && !readingOnCue && !furigana && (
+                      {/* After the reveal unless a reading is drawn over the term, which VoiceOver
+                    reads out. Under a term cue it reads the term out. */}
+                      {card.pronunciation && !furigana && (
                         <Animated.View entering={arrive()}>
                           <Text className="text-md text-muted" lang={card.language}>
                             {card.pronunciation}
@@ -1856,7 +1846,7 @@ function Completion({
   const done$ = useRise(clock, actionsAt);
 
   const doneButton = (variant: "primary" | "secondary") => (
-    <Button label={t`Done`} variant={variant} size="xl" onPress={onClose} />
+    <Button label={t`Done`} variant={variant} size="lg" onPress={onClose} />
   );
 
   return (
@@ -1965,18 +1955,18 @@ function Completion({
                 <Button
                   label={t`${plural(way.count, { one: "Review # forgotten card", other: "Review # forgotten cards" })}`}
                   lead={<Icon name="forgot" size={18} colour={p["grade-forgot"]} />}
-                  size="xl"
+                  size="lg"
                   onPress={() => onOffer(way)}
                 />
               ) : (
-                <Button label={t`Continue`} size="xl" onPress={() => onOffer(way)} />
+                <Button label={t`Continue`} size="lg" onPress={() => onOffer(way)} />
               )}
             </Animated.View>
           ))}
           <Animated.View style={done$} className="gap-3">
             {!counted ? (
               <>
-                <Button label={t`Add cards`} variant="primary" size="xl" onPress={onAddCards} />
+                <Button label={t`Add cards`} variant="primary" size="lg" onPress={onAddCards} />
                 {doneButton("secondary")}
               </>
             ) : screen.continueLeads && proceed ? (
@@ -1985,7 +1975,7 @@ function Completion({
                 <Button
                   label={t`Continue`}
                   variant="primary"
-                  size="xl"
+                  size="lg"
                   onPress={() => onOffer(proceed)}
                 />
               </>

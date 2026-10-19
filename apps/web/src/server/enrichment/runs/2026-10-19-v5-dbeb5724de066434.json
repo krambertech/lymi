@@ -2,7 +2,7 @@
   "version": 5,
   "hash": "dbeb5724de066434",
   "model": "gpt-6-luna",
-  "recordedAt": "2026-10-19T18:39:09.891Z",
+  "recordedAt": "2026-10-19T19:35:49.092Z",
   "calls": [
     {
       "deck": "et-ru-words",
@@ -18,7 +18,7 @@
       "reply": [
         {
           "id": "et-ru-01",
-          "meaning": "идти; ехать",
+          "meaning": "идти; уходить",
           "example": null,
           "notes": "*minema · minna · lähen*",
           "pronunciation": null,
@@ -44,7 +44,7 @@
           "id": "et-ru-04",
           "meaning": "бояться",
           "example": null,
-          "notes": "*kartma · karta · kardan*",
+          "notes": "*kartma · karta · kardan*\nпосле *kartma* — партитив",
           "pronunciation": null,
           "language": null
         },
@@ -52,7 +52,7 @@
           "id": "et-ru-05",
           "meaning": "учиться; изучать",
           "example": null,
-          "notes": "*õppima · õppida · õpin*",
+          "notes": "*õppima · õppida · õpin*\nизучаемое — в партитиве",
           "pronunciation": null,
           "language": null
         },
@@ -79,7 +79,7 @@
           "id": "et-ph-01",
           "meaning": "Я не могу найти свои ключи.",
           "example": null,
-          "notes": "- находить — *leidma · leida · leian*\n- ключ — *võti · võtme · võtit*\nпосле *ei* объект ставится в партитив: *võtmeid*",
+          "notes": "- находить — *leidma · leida · leian*\n- ключ — *võti · võtme · võtit*\nпосле *ei* объект в партитиве: *võtmeid*",
           "pronunciation": null,
           "language": null
         },
@@ -87,7 +87,7 @@
           "id": "et-ph-02",
           "meaning": "Ты хочешь кофе?",
           "example": null,
-          "notes": "- хотеть — *tahtma · tahta · tahan*\n- кофе — *kohv · kohvi · kohvi*\n*tahtma* требует объект в партитиве: *kohvi*",
+          "notes": "- хотеть — *tahtma · tahta · tahan*\n- кофе — *kohv · kohvi · kohvi*\nобъект после *tahad* — в партитиве: *kohvi*",
           "pronunciation": null,
           "language": null
         },
@@ -95,7 +95,7 @@
           "id": "et-ph-03",
           "meaning": "Я живу в Таллине.",
           "example": null,
-          "notes": "- жить — *elama · elada · elan*\n- Таллин — *Tallinn · Tallinna · Tallinnat*\n*Tallinnas* — «в Таллине» (где?)",
+          "notes": "- жить — *elama · elada · elan*\n- Таллин — *Tallinn · Tallinna · Tallinnat*\nместо, где живут: *Tallinnas* (inessive, окончание *-s*)",
           "pronunciation": null,
           "language": null
         }
@@ -113,7 +113,7 @@
         {
           "id": "et-en-01",
           "meaning": "to eat",
-          "example": "Ma söön hommikul putru.",
+          "example": "Ma söön hommikusööki.",
           "notes": "*sööma · süüa · söön*",
           "pronunciation": null,
           "language": null
@@ -121,7 +121,7 @@
         {
           "id": "et-en-02",
           "meaning": "house",
-          "example": "See maja on väga suur.",
+          "example": "Meie maja on suur.",
           "notes": "*maja · maja · maja*",
           "pronunciation": null,
           "language": null
@@ -129,7 +129,7 @@
         {
           "id": "et-en-03",
           "meaning": "Good morning!",
-          "example": null,
+          "example": "Tere hommikust, Mari!",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -150,15 +150,15 @@
         {
           "id": "it-en-01",
           "meaning": "to hurry up",
-          "example": "Sbrigati, siamo in ritardo!",
+          "example": "Dobbiamo sbrigarci o faremo tardi.",
           "notes": null,
           "pronunciation": null,
           "language": null
         },
         {
           "id": "it-en-02",
-          "meaning": "platform; track",
-          "example": "Il treno arriva al binario tre.",
+          "meaning": "track; platform",
+          "example": "Il treno parte dal binario tre.",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -182,7 +182,7 @@
         {
           "id": "it-en-05",
           "meaning": "to go",
-          "example": "Vado al lavoro in autobus.",
+          "example": "Andiamo al cinema stasera.",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -201,16 +201,16 @@
       "reply": [
         {
           "id": "de-en-01",
-          "meaning": "bench; bank",
-          "example": "Wir sitzen auf der Bank im Park.",
-          "notes": "- plural: *die Bänke* (bench), *die Banken* (bank)",
+          "meaning": "bank; bench",
+          "example": "Ich sitze auf der Bank.",
+          "notes": "- plural: *die Banken* (bank), *die Bänke* (bench)",
           "pronunciation": null,
           "language": null
         },
         {
           "id": "de-en-02",
           "meaning": "to drive; to travel",
-          "example": "Wir fahren morgen ans Meer.",
+          "example": "Wir fahren morgen nach Berlin.",
           "notes": "*fahren · fährt · fuhr · ist gefahren*",
           "pronunciation": null,
           "language": null
@@ -253,7 +253,7 @@
         {
           "id": "ru-en-02",
           "meaning": "to do; to make",
-          "example": "Что ты делаешь сегодня?",
+          "example": "Я люблю делать это.",
           "notes": null,
           "pronunciation": "де́лать",
           "language": null
@@ -289,7 +289,7 @@
         {
           "id": "ja-en-02",
           "meaning": "thank you",
-          "example": "助[たす]けてくれてありがとう。",
+          "example": "ありがとう、助[たす]かりました。",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -297,7 +297,7 @@
         {
           "id": "ja-en-03",
           "meaning": "school",
-          "example": "学校[がっこう]で勉強[べんきょう]します。",
+          "example": "学校[がっこう]は九時[くじ]に始[はじ]まります。",
           "notes": null,
           "pronunciation": "がっこう",
           "language": null
@@ -323,7 +323,7 @@
         {
           "id": "zh-en-01",
           "meaning": "to study; to learn",
-          "example": "我每天学习汉语。",
+          "example": "我喜欢学习。",
           "notes": null,
           "pronunciation": "xuéxí",
           "language": null
@@ -331,9 +331,133 @@
         {
           "id": "zh-en-02",
           "meaning": "book",
-          "example": "我有一本书。",
+          "example": "这是一本书。",
           "notes": null,
           "pronunciation": "shū",
+          "language": null
+        }
+      ]
+    },
+    {
+      "deck": "ko-en",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"ko-en\",\"name\":\"Korean A1\",\"language\":\"ko\",\"purpose\":\"language\",\"guide\":\"notes: Verb or adjective: its polite present form (*가다 → 가요*).\\npronunciation: Revised Romanization (hakgyo). Not IPA.\",\"samples\":[]}],\"cards\":[{\"id\":\"ko-en-01\",\"deck\":\"ko-en\",\"term\":\"학교\",\"language\":\"ko\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"ko-en-02\",\"deck\":\"ko-en\",\"term\":\"학생\",\"language\":\"ko\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"ko-en-03\",\"deck\":\"ko-en\",\"term\":\"국물\",\"language\":\"ko\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"ko-en-04\",\"deck\":\"ko-en\",\"term\":\"같이\",\"language\":\"ko\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"ko-en-05\",\"deck\":\"ko-en\",\"term\":\"좋다\",\"language\":\"ko\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"ko-en-06\",\"deck\":\"ko-en\",\"term\":\"사랑\",\"language\":\"ko\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"ko-en-07\",\"deck\":\"ko-en\",\"term\":\"가다\",\"language\":\"ko\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"ko-en-08\",\"deck\":\"ko-en\",\"term\":\"연락\",\"language\":\"ko\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"ko-en-09\",\"deck\":\"ko-en\",\"term\":\"도서관\",\"language\":\"ko\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"ko-en-10\",\"deck\":\"ko-en\",\"term\":\"읽다\",\"language\":\"ko\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]}]}",
+      "cases": [
+        "ko-en-01",
+        "ko-en-02",
+        "ko-en-03",
+        "ko-en-04",
+        "ko-en-05",
+        "ko-en-06",
+        "ko-en-07",
+        "ko-en-08",
+        "ko-en-09",
+        "ko-en-10"
+      ],
+      "reply": [
+        {
+          "id": "ko-en-01",
+          "meaning": "school",
+          "example": "저는 학교에 가요.",
+          "notes": null,
+          "pronunciation": "hakgyo",
+          "language": null
+        },
+        {
+          "id": "ko-en-02",
+          "meaning": "student",
+          "example": "학생이 한국어를 공부해요.",
+          "notes": null,
+          "pronunciation": "haksaeng",
+          "language": null
+        },
+        {
+          "id": "ko-en-03",
+          "meaning": "broth; soup",
+          "example": "국물이 정말 뜨거워요.",
+          "notes": null,
+          "pronunciation": "gungmul",
+          "language": null
+        },
+        {
+          "id": "ko-en-04",
+          "meaning": "together",
+          "example": "우리 같이 점심 먹어요.",
+          "notes": null,
+          "pronunciation": "gachi",
+          "language": null
+        },
+        {
+          "id": "ko-en-05",
+          "meaning": "good",
+          "example": "오늘 날씨가 좋아요.",
+          "notes": "*좋다 → 좋아요*",
+          "pronunciation": "jota",
+          "language": null
+        },
+        {
+          "id": "ko-en-06",
+          "meaning": "love",
+          "example": "그들의 사랑은 깊어요.",
+          "notes": null,
+          "pronunciation": "sarang",
+          "language": null
+        },
+        {
+          "id": "ko-en-07",
+          "meaning": "to go",
+          "example": "저는 학교에 가요.",
+          "notes": "*가다 → 가요*",
+          "pronunciation": "gada",
+          "language": null
+        },
+        {
+          "id": "ko-en-08",
+          "meaning": "contact",
+          "example": "나중에 연락 주세요.",
+          "notes": null,
+          "pronunciation": "yeollak",
+          "language": null
+        },
+        {
+          "id": "ko-en-09",
+          "meaning": "library",
+          "example": "도서관에서 책을 읽어요.",
+          "notes": null,
+          "pronunciation": "doseogwan",
+          "language": null
+        },
+        {
+          "id": "ko-en-10",
+          "meaning": "to read",
+          "example": "저는 매일 책을 읽어요.",
+          "notes": "*읽다 → 읽어요*",
+          "pronunciation": "iktta",
+          "language": null
+        }
+      ]
+    },
+    {
+      "deck": "ko-en",
+      "input": "{\"meaningLanguage\":\"en\",\"decks\":[{\"id\":\"ko-en\",\"name\":\"Korean A1\",\"language\":\"ko\",\"purpose\":\"language\",\"guide\":\"notes: Verb or adjective: its polite present form (*가다 → 가요*).\\npronunciation: Revised Romanization (hakgyo). Not IPA.\",\"samples\":[]}],\"cards\":[{\"id\":\"ko-en-11\",\"deck\":\"ko-en\",\"term\":\"한국어\",\"language\":\"ko\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]},{\"id\":\"ko-en-12\",\"deck\":\"ko-en\",\"term\":\"먹다\",\"language\":\"ko\",\"mayFill\":[\"meaning\",\"example\",\"notes\",\"pronunciation\"]}]}",
+      "cases": [
+        "ko-en-11",
+        "ko-en-12"
+      ],
+      "reply": [
+        {
+          "id": "ko-en-11",
+          "meaning": "Korean",
+          "example": "저는 한국어를 공부해요.",
+          "notes": null,
+          "pronunciation": "hangugeo",
+          "language": null
+        },
+        {
+          "id": "ko-en-12",
+          "meaning": "to eat",
+          "example": "저는 밥을 먹어요.",
+          "notes": "*먹다 → 먹어요*",
+          "pronunciation": "meokda",
           "language": null
         }
       ]
@@ -348,7 +472,7 @@
       "reply": [
         {
           "id": "es-uk-01",
-          "meaning": "рука",
+          "meaning": "рука; кисть",
           "example": "Me duele la mano.",
           "notes": null,
           "pronunciation": null,
@@ -357,7 +481,7 @@
         {
           "id": "es-uk-02",
           "meaning": "мати",
-          "example": "Tengo dos hermanos.",
+          "example": "Quiero tener un perro.",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -383,7 +507,7 @@
         {
           "id": "en-ru-02",
           "meaning": "идти; ехать",
-          "example": "I go to work by bus.",
+          "example": "We go to school by bus.",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -401,7 +525,7 @@
         {
           "id": "es-en-01",
           "meaning": "to eat",
-          "example": "Como frutas todos los días.",
+          "example": "Como fruta todos los días.",
           "notes": null,
           "pronunciation": null,
           "language": null
@@ -487,7 +611,7 @@
       "reply": [
         {
           "id": "bio-01",
-          "meaning": "organelle that produces most of a cell’s usable energy",
+          "meaning": "the organelle that produces most of a cell’s ATP",
           "example": null,
           "notes": null,
           "pronunciation": null,
@@ -495,7 +619,7 @@
         },
         {
           "id": "bio-02",
-          "meaning": "movement of water across a selectively permeable membrane",
+          "meaning": "the movement of water across a selectively permeable membrane",
           "example": null,
           "notes": null,
           "pronunciation": null,
@@ -513,7 +637,7 @@
       "reply": [
         {
           "id": "exam-01",
-          "meaning": "the first ten amendments, protecting individual rights and freedoms",
+          "meaning": "The first ten amendments to the U.S. Constitution",
           "example": null,
           "notes": null,
           "pronunciation": null,
@@ -521,7 +645,7 @@
         },
         {
           "id": "exam-02",
-          "meaning": "the group of electors that formally chooses the U.S. president",
+          "meaning": "The system that formally elects the U.S. president and vice president",
           "example": null,
           "notes": null,
           "pronunciation": null,
@@ -547,7 +671,7 @@
         },
         {
           "id": "exam-de-02",
-          "meaning": "основний закон, конституція Німеччини",
+          "meaning": "основний закон Німеччини",
           "example": null,
           "notes": null,
           "pronunciation": null,
@@ -565,7 +689,7 @@
         {
           "id": "lm-01",
           "meaning": null,
-          "example": "La stazione è vicina al centro.",
+          "example": "La stazione è molto affollata oggi.",
           "notes": null,
           "pronunciation": null,
           "language": null

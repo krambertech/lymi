@@ -1,4 +1,5 @@
-# Brings ${CHIP} into view in the chip row at the foot of a card form, scrolling either way.
+# Brings ${CHIP} into view in a card form's chip row, scrolling either way, with the row at the foot
+# or riding over the keyboard, which comes back on the term once a sheet closes.
 appId: app.lymi
 ---
 - repeat:
@@ -17,3 +18,19 @@ appId: app.lymi
       - swipe:
           start: 15%, 92%
           end: 95%, 92%
+- repeat:
+    times: 3
+    while:
+      notVisible: "${CHIP}"
+    commands:
+      - swipe:
+          start: 85%, 62%
+          end: 5%, 62%
+- repeat:
+    times: 3
+    while:
+      notVisible: "${CHIP}"
+    commands:
+      - swipe:
+          start: 15%, 62%
+          end: 95%, 62%

@@ -1,20 +1,20 @@
 # Chinese
 
-Chinese keeps its pinyin under a term cue while the card is New or Learning, and it waits for the reveal once the card is Known, the same rule as Japanese furigana. Every other language's reading waits for the reveal; [japanese.md](japanese.md) drives that side.
+A Chinese card's pinyin is drawn over its hanzi, one syllable per character, on the cue while the card is New or Learning and always after the reveal, the same rule as [japanese.md](japanese.md)'s furigana. A traditional tag such as `zh-TW` draws its hanzi in the traditional face.
 
 ## Reach
 
-No persona has Chinese cards, so [`chinese.mjs`](chinese.mjs) adds a 中文 deck holding 学习 read xuéxí to `learner` before the flow; the flow opens it from Library and presses its **Review**.
+No persona has Chinese cards, so [`chinese.mjs`](chinese.mjs) adds to `learner` a 中文 deck holding 一点儿 sent as `yi4 dian3r` and a `zh-TW` 國語 deck holding 學習 read xuéxí; the flow opens each from Library and presses its **Review**.
 
 ## Drive
 
-[`chinese.yaml`](chinese.yaml): open the deck, press **Review**, check xuéxí is on the card and the meaning is not while it says **Tap to reveal**, then tap low on the card to reveal it.
+[`chinese.yaml`](chinese.yaml): review 一点儿, check its label reads the pinyin and the meaning is not on screen, and tap low on the card to reveal it; end review, then review 學習 and reveal it.
 
 ## End state
 
-Before the reveal the card's label reads "Recognition card for 学习, read xuéxí" and the meaning is not on screen; after it, the grades and the meaning show. The check reads the stored card back with its pinyin.
+Before each reveal the card's label reads "Recognition card for 一点儿, read yì diǎnr" or "Recognition card for 學習, read xuéxí", the screenshot shows yì over 一 and diǎnr over 点儿, and the meaning is not on screen; after it, the grades and the meaning show with the pinyin still over the term. The check reads both cards back, 一点儿 with its tone numbers stored as yì diǎnr.
 
 ## Gotchas
 
-- Before the reveal the card is one button whose label says the term and its pinyin, "Recognition card for 学习, read xuéxí", so the flow matches the pinyin inside that label.
-- A Known card would hide the pinyin until the reveal; the seeded card is New, so this flow checks the New side only, and the web's component tests check the Known side.
+- Before the reveal the card is one button whose label says the term and its pinyin, so the flow matches the pinyin inside that label; VoiceOver reads the term's hanzi, not the pinyin drawn over it.
+- A Known card would hide the pinyin until the reveal; both seeded cards are New, so this flow checks the New side only, and the web's component tests and [the web's Chinese feature](../../verify/features/chinese.md) check the Known side.

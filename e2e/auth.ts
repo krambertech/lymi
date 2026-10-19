@@ -28,7 +28,7 @@ const sessions = new Map<string, StoredSession>();
  * allowlist and Better Auth are all real; only the walk through the form is skipped. A journey
  * whose subject is arriving drives the form instead, through `signInAsTestLearner`.
  *
- * A new account starts past Welcome, on the old default goal, unless `welcomed` is false.
+ * A new account starts set up, on the old default goal, unless `welcomed` is false.
  */
 export async function startAsTestLearner(
   page: Page,
@@ -85,15 +85,9 @@ export async function signInAsTestLearner(
     await panel.getByRole("button", { name: "Create account", exact: true }).click();
     const retry = await created;
     expect(retry.ok(), `Sign in after creating failed with HTTP ${retry.status()}`).toBe(true);
-    // These journeys are about what comes after Welcome, wherever they land first.
+    // These journeys are about what comes after getting set up, on the old default goal.
     await getPastWelcome(page.request, email);
-    // Today may have sent the account to Welcome before the answers landed.
-    await expect
-      .poll(async () => {
-        if (pathOf(page) === "/welcome") await page.goto(returnTo);
-        return pathOf(page);
-      })
-      .toBe(returnTo);
+    await expect.poll(() => pathOf(page)).toBe(returnTo);
   } else {
     expect(signIn.ok(), `Sign in failed with HTTP ${signIn.status()}`).toBe(true);
   }
@@ -112,16 +106,16 @@ function pathOf(page: Page) {
 }
 
 /**
- * The due card names the state: the count on an account with cards, nothing due, or the
- * first-run line on a fresh one. Match it in any state, specific enough that another screen
- * cannot pass.
+ * The due card names the state: the count on an account with cards or nothing due, and a fresh
+ * account is welcomed by the first-run guide. Match it in any state, specific enough that another
+ * screen cannot pass.
  */
 async function expectToday(page: Page) {
   await expect(page.getByRole("heading", { level: 1, name: "Today", exact: true })).toBeVisible();
   await expect(
     page.getByRole("heading", {
       level: 2,
-      name: /due|Getting started|Start with a deck|No cards yet|Nothing due/,
+      name: /due|^Welcome, |No cards yet|Nothing due/,
     }),
   ).toBeVisible();
 }
@@ -159,7 +153,7 @@ async function establishSession(email: string, welcomed: boolean): Promise<Store
   }
 }
 
-/** Through Welcome on the old default goal, so goal-counting journeys count as they did. */
+/** Set up on the old default goal, so goal-counting journeys count as they did. */
 async function getPastWelcome(api: APIRequestContext, email: string) {
   const welcome = await api.put("/api/settings/onboarding", {
     data: { learningKind: null, learningLanguage: null, dailyGoal: 50 },
@@ -167,6 +161,11 @@ async function getPastWelcome(api: APIRequestContext, email: string) {
   expect(welcome.ok(), `Getting ${email} past Welcome failed with HTTP ${welcome.status()}`).toBe(
     true,
   );
+  // Today sets a new account up on its own first visit, at 25, and may have got there first.
+  if (((await welcome.json()) as { dailyGoal: number }).dailyGoal !== 50) {
+    const goal = await api.patch("/api/settings", { data: { dailyGoal: 50 } });
+    expect(goal.ok(), `Setting ${email}'s goal failed with HTTP ${goal.status()}`).toBe(true);
+  }
 }
 
 /** Ask the dev email form to create an account, without waiting for what it leads to. */

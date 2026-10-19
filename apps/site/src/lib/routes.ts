@@ -26,6 +26,7 @@ export type LocalizedPage = keyof typeof localizedPages;
 
 /** Pages rendered per request from the database, in every locale; `sitemap-decks.xml` lists them. */
 export const localizedRuntimePages = [
+  "/languages/estonian",
   "/languages/[language]",
   "/explore",
   "/explore/[slug]",
@@ -58,9 +59,11 @@ export const englishOnlyPaths = [
   "/docs/quickstart",
   "/docs/mobile",
   "/docs/cards",
+  "/docs/languages",
   "/docs/import-from-anki",
   "/docs/import-from-mochi",
   "/docs/import-from-noji",
+  "/docs/import-from-pleco",
   "/docs/export",
   "/docs/scheduling",
   "/docs/mcp",

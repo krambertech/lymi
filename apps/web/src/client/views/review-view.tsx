@@ -2,7 +2,6 @@ import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { EndScreen, Offer } from "@lymi/client/review-end";
 import {
-  cueKeepsReading,
   drawsTermReading,
   gradeAllowed,
   type KnownReadings,
@@ -522,11 +521,7 @@ export function ReviewCard({
   const noMeaning = t`No meaning yet`;
   const back = mode.target === "term" ? card.term : (card.meaning ?? noMeaning);
   const front = mode.cue === "meaning" ? (card.meaning ?? card.term) : card.term;
-  const readingOnCue =
-    mode.cue === "term" &&
-    !!card.pronunciation &&
-    cueKeepsReading(card.language, stateKey(item.fsrsState) === "known");
-  // Furigana over the term: on the cue until the card is Known, and always once it is the answer.
+  // Furigana or pinyin over the term: on the cue until the card is Known, and always once it is the answer.
   const reading = useMemo(() => drawsTermReading(card), [card]);
   const cueReading = revealed || stateKey(item.fsrsState) !== "known";
   const term = <TermText card={card} />;
@@ -719,8 +714,8 @@ export function ReviewCard({
   /** Everything under the rule. `measure` is the hidden copy that sizes a card before its reveal. */
   const answer = (measure: boolean) => {
     const sound = measure ? audioPlace : audio;
-    // Under the rule unless the cue keeps it: a reading under a term cue reads the term out. Where
-    // furigana draws it over the term, the line is only for a screen reader.
+    // Under the rule: a reading under a term cue reads the term out. Where it is drawn over the
+    // term, the line is only for a screen reader.
     const pronunciation =
       card.pronunciation &&
       (reading ? (
@@ -781,7 +776,7 @@ export function ReviewCard({
               >
                 {back}
               </motion.p>
-              {mode.cue === "term" && !readingOnCue && pronunciation}
+              {mode.cue === "term" && pronunciation}
               {picture && (
                 <>
                   <motion.p
@@ -954,15 +949,7 @@ export function ReviewCard({
                       {mode.cue === "term" ? <TermText card={card} hidden={!cueReading} /> : front}
                       {mode.cue === "term" && audio("z-20")}
                     </p>
-                    {readingOnCue && (
-                      <p
-                        className="text-md text-muted [overflow-wrap:anywhere]"
-                        lang={card.language ?? undefined}
-                      >
-                        {card.pronunciation}
-                      </p>
-                    )}
-                    {/* Furigana is hidden from a screen reader, which hears the reading here while
+                    {/* A drawn reading is hidden from a screen reader, which hears the reading here while
                         it shows on the cue; after the reveal the answer's line says it. */}
                     {mode.cue === "term" && reading && cueReading && !revealed && (
                       <p className="sr-only" lang={card.language ?? undefined}>

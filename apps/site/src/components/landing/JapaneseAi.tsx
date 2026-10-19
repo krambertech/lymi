@@ -18,7 +18,7 @@ function AiMark({ on }: { on: boolean }) {
   );
 }
 
-function Field({
+export function Field({
   label,
   filling,
   wrote,

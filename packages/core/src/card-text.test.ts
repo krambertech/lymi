@@ -24,6 +24,14 @@ describe("normalizeCardText", () => {
     expect(normalizeCardText("ja", sent)).toEqual({ fields: sent, normalized: [] });
   });
 
+  it("stores Chinese tone numbers as tone marks", () => {
+    expect(normalizeCardText("zh-TW", { term: "學習", pronunciation: "xue2 xi2" })).toEqual({
+      fields: { term: "學習", pronunciation: "xué xí" },
+      normalized: ["pronunciation"],
+    });
+    expect(normalizeCardText("it", { pronunciation: "ni3 hao3" }).normalized).toEqual([]);
+  });
+
   it("converts nothing when no term is written, as an enrichment fill sends", () => {
     expect(normalizeCardText("ja", { pronunciation: "たべる" }).normalized).toEqual([]);
   });

@@ -50,7 +50,17 @@ export const ESTONIAN_QUESTIONS: Question[] = [
   {
     id: "audio",
     question: msg`Can Lymi say Estonian words aloud?`,
-    answer: msg`Yes. Press play on any card to hear it in Estonian.`,
+    answer: msg`Yes. Every card is read by a native Estonian AI voice. Press play on any card to hear it.`,
+  },
+  {
+    id: "forms",
+    question: msg`Does Lymi teach the three forms?`,
+    answer: msg`Yes. The verb deck lists each verb’s three forms, and when you add a word, AI writes its forms in the card’s notes: nominative, genitive and partitive for a noun, and the ma-infinitive, the da-infinitive and the present tense for a verb.`,
+  },
+  {
+    id: "russian",
+    question: msg`Can I learn Estonian from Russian or Ukrainian?`,
+    answer: msg`Yes. The ready-made Estonian decks have meanings in Russian and Ukrainian as well as English, and Lymi itself is in both languages.`,
   },
   {
     id: "letters",

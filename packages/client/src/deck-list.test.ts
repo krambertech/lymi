@@ -198,6 +198,20 @@ describe("tagPicker", () => {
     });
   });
 
+  it("lists the tag typed first, then those starting with it, and Return takes it", () => {
+    const p = tagPicker({
+      cards: [["seafood"], ["seafood"], ["food court"]],
+      created: [],
+      suggestions: [{ name: "Food" }],
+      choices: new Map(),
+      query: "food",
+    });
+    expect(p.shown).toEqual(["Food", "food court", "seafood"]);
+    expect(p.pick).toBe("Food");
+    expect(pick([], "verb").pick).toBeUndefined();
+    expect(pick([], "v").pick).toBeUndefined();
+  });
+
   it("finds a tag in any case and offers to create a name no tag has", () => {
     expect(pick([], "FO").shown).toEqual(["food"]);
     expect(pick([], "FOOD").fresh).toBe(false);

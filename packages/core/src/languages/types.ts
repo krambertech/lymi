@@ -1,24 +1,62 @@
 /** A tag Lymi treats in full. A tag joins only in the last delivery slice for its language. */
 export type SupportedTag = "ja";
 
-/** ISO 15924 scripts whose faces Lymi names, because Onest has none of their letters. */
-export type Script = "Jpan";
+/**
+ * A tag with a record in the index: each supported tag, and one whose language is still landing.
+ * Registries keyed by SupportedTag, such as prompts and pages, leave it out until it joins.
+ */
+export type RecordTag = SupportedTag | "zh";
 
-/** How a reading is drawn: furigana puts kana over kanji, aligned at display. */
-export type ReadingEngine = "furigana";
+/** ISO 15924 scripts whose faces Lymi names, because Onest has none of their letters. */
+export type Script = "Jpan" | "Hans" | "Hant";
+
+/** How a reading is drawn: furigana puts kana over kanji, pinyin one syllable over each hanzi; both align at display. */
+export type ReadingEngine = "furigana" | "pinyin";
+
+/** What makes two cards of a language the same card: the term alone, or the term and a differing Reading. */
+export type DuplicateRule = "term" | "term-and-reading";
+
+/**
+ * How a language's cards are written, as `GET /api/languages`, the MCP server, the docs and the
+ * enrichment guide all say it, so none of them can drift from another.
+ */
+export interface LanguageFormat {
+  /** The language's English name. */
+  name: string;
+  /** What the pronunciation field holds, in words a client and the model both follow. */
+  pronunciation: string;
+  /** When the field stays empty, as a clause after "when", or null when every term has one. */
+  empty: string | null;
+  /** A last sentence on what the field never holds, or null. */
+  never: string | null;
+  /** A term and the pronunciation that goes with it. */
+  sample: { term: string; pronunciation: string };
+  duplicates: DuplicateRule;
+}
 
 /** What a supported language does differently, chosen from the card's language tag alone. */
 export interface LanguageSupport {
-  tag: SupportedTag;
-  script: Script;
+  tag: RecordTag;
+  /** The scripts it is written in; the first unless `script` picks another from the full tag. */
+  scripts: readonly [Script, ...Script[]];
+  /** The script a full tag names, from its lower-case subtags. */
+  script?: (subtags: readonly string[]) => Script;
+  /**
+   * Extended language subtags that are still this language, such as Mandarin's zh-cmn. Any other
+   * three-letter second subtag names another language, such as Cantonese's zh-yue or Hakka's zh-hak.
+   */
+  extlangs?: readonly string[];
   engine: ReadingEngine;
   /** The pronunciation holds a Reading, and the card form calls the field so. */
   pronunciation: "reading";
+  format: LanguageFormat;
   speech: {
     /** Generated speech says the card's Reading in place of the term, so 上手 is said as the card reads it. */
     saysReading: boolean;
     /** A lead-in written from the reading and meaning may go before the term. docs/lead-ins.md. */
     leadIn: boolean;
+    /** The published voice locale for a script where it differs from the language's default. */
+    locales?: Partial<Record<Script, string>>;
   };
 }
 

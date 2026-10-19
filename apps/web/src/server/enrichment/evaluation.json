@@ -327,6 +327,119 @@
       ]
     },
     {
+      "id": "ko-en",
+      "name": "Korean A1",
+      "language": "ko",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "ko-en-01",
+          "term": "학교",
+          "expect": {
+            "meaning": { "oneOf": ["school"] },
+            "pronunciation": { "oneOf": ["학꾜"] },
+            "notes": { "includes": ["學"] }
+          }
+        },
+        {
+          "id": "ko-en-02",
+          "term": "학생",
+          "expect": {
+            "meaning": { "includes": ["student"] },
+            "pronunciation": { "oneOf": ["학쌩"] },
+            "notes": { "includes": ["學"] }
+          }
+        },
+        {
+          "id": "ko-en-03",
+          "term": "국물",
+          "expect": {
+            "pronunciation": { "oneOf": ["궁물"] }
+          }
+        },
+        {
+          "id": "ko-en-04",
+          "term": "같이",
+          "expect": {
+            "meaning": { "includes": ["together"] },
+            "pronunciation": { "oneOf": ["가치"] }
+          }
+        },
+        {
+          "id": "ko-en-05",
+          "term": "좋다",
+          "expect": {
+            "meaning": { "includes": ["good"] },
+            "pronunciation": { "oneOf": ["조타"] },
+            "notes": { "includes": ["좋아요"] }
+          }
+        },
+        {
+          "id": "ko-en-06",
+          "term": "사랑",
+          "expect": {
+            "meaning": { "includes": ["love"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "ko-en-07",
+          "term": "가다",
+          "expect": {
+            "meaning": { "includes": ["go"] },
+            "pronunciation": "empty",
+            "notes": { "includes": ["가요"] }
+          }
+        },
+        {
+          "id": "ko-en-08",
+          "term": "연락",
+          "expect": {
+            "meaning": { "includes": ["contact"] },
+            "pronunciation": { "oneOf": ["열락"] },
+            "notes": { "includes": ["連"] }
+          }
+        },
+        {
+          "id": "ko-en-09",
+          "term": "도서관",
+          "expect": {
+            "meaning": { "includes": ["library"] },
+            "pronunciation": "empty",
+            "notes": { "includes": ["圖"] }
+          }
+        },
+        {
+          "id": "ko-en-10",
+          "term": "읽다",
+          "expect": {
+            "meaning": { "includes": ["read"] },
+            "pronunciation": { "oneOf": ["익따"] }
+          }
+        },
+        {
+          "id": "ko-en-11",
+          "term": "한국어",
+          "expect": {
+            "meaning": { "includes": ["korean"] },
+            "pronunciation": { "oneOf": ["한구거"] },
+            "notes": { "includes": ["韓"] }
+          }
+        },
+        {
+          "id": "ko-en-12",
+          "term": "먹다",
+          "expect": {
+            "meaning": { "includes": ["eat"] },
+            "pronunciation": { "oneOf": ["먹따"] },
+            "notes": { "includes": ["먹어요"] }
+          }
+        }
+      ]
+    },
+    {
       "id": "es-uk",
       "name": "Іспанська A1",
       "language": "es",

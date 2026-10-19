@@ -37,5 +37,5 @@ const structuredData = marketingPage({
     type="application/ld+json"
     set:html={JSON.stringify(structuredData).replaceAll("<", "\\u003c")}
   />
-  <LanguagesPage client:load page="languages" locale={locale} />
+  <LanguagesPage client:load locale={locale} />
 </BaseLayout>

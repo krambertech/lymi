@@ -354,7 +354,7 @@ export default function Onboarding() {
             {missing ?? error}
           </Text>
         )}
-        <Button label={label} variant="primary" size="xl" loading={busy} onPress={next} />
+        <Button label={label} variant="primary" size="lg" loading={busy} onPress={next} />
       </View>
     </View>
   );

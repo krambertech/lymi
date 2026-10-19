@@ -53,14 +53,17 @@ async function doorPage(
     "x-robots-tag": "noindex, nofollow",
   });
 
-  // Back from sign-in: the session hook has joined or added, so go straight to the deck, by way
-  // of the daily goal for an account that has just been made. docs/design/onboarding.md.
+  // Back from sign-in: the session hook has joined or added, so go straight to the deck, or to
+  // Today's first-run guide for an account that has just been made and a deck it can review now.
+  // An empty deck's own page says it is waiting for cards, which a member cannot add.
+  // docs/design/onboarding.md.
   if (c.req.query("continue") === "1" && viewerId) {
     headers.append("set-cookie", clearedJoinCookie(c.env.PRODUCT_URL));
     if (preview.deckId) {
       const welcome = await awaitsWelcome(c.get("db"), viewerId);
       const deckId = encodeURIComponent(preview.deckId);
-      headers.set("location", welcome ? `/welcome?deck=${deckId}` : `/library/${deckId}`);
+      const reviewable = (preview.deck?.total ?? 0) > 0;
+      headers.set("location", welcome && reviewable ? "/today" : `/library/${deckId}`);
       return new Response(null, { status: 302, headers });
     }
   }

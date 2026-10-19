@@ -5,7 +5,7 @@ import { useInView } from "motion/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { useStill } from "./playback";
 
-function Tile({
+export function Tile({
   title,
   body,
   children,

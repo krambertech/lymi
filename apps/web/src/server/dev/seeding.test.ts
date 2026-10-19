@@ -67,15 +67,14 @@ describe("seeding accounts that share decks", () => {
     expect((await holdings("shared")).decks).toEqual([]);
   }, 60_000);
 
-  it("brings every account a persona needs and lands on Welcome with that deck", async () => {
+  it("brings every account a persona needs and lands on Today with that deck", async () => {
     const response = await signIn("as=joining", "GET");
     expect(response.status).toBe(303);
     const landing = new URL(response.headers.get("location") ?? "");
-    expect(landing.pathname).toBe("/welcome");
+    expect(landing.pathname).toBe("/today");
 
     const tomas = await holdings("joining");
     expect(tomas.decks).toEqual(["Lisboa a dois"]);
-    expect(landing.searchParams.get("deck")).toBe(tomas.ids["Lisboa a dois"]);
     // The deck opens one section at a time, so only its first section counts as due.
     expect(tomas.due).toBeGreaterThan(0);
     learner = kept(await holdings("learner"));

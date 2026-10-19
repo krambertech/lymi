@@ -48,6 +48,14 @@ const emulateReducedMotion: BrowserCommand<["reduce" | "no-preference"]> = async
   await context.page.emulateMedia({ reducedMotion });
 };
 
+// `page.viewport()` on touch Chromium leaves the whole page pinch-zoomed for the next file. docs/testing.md.
+const resetPageScale: BrowserCommand<[]> = async (context) => {
+  if (context.context.browser()?.browserType().name() !== "chromium") return;
+  const session = await context.context.newCDPSession(context.page);
+  await session.send("Emulation.setPageScaleFactor", { pageScaleFactor: 1 });
+  await session.detach();
+};
+
 export default defineConfig({
   define: {
     __QUERY_CACHE_BUSTER__: JSON.stringify(buildId),
@@ -224,7 +232,7 @@ export default defineConfig({
               // A part that is still moving is not clickable, and `forced-states` rewrites the
               // motion queries into `data-motion`, so the specimens still prove both. docs/testing.md.
               provider: playwright({ contextOptions: { reducedMotion: "reduce" } }),
-              commands: { emulateReducedMotion },
+              commands: { emulateReducedMotion, resetPageScale },
               instances: selectInstances([
                 {
                   name: "desktop",

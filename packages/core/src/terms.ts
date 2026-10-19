@@ -1,4 +1,4 @@
-import { languageKey, languageSupport, speechInputs } from "./languages";
+import { languageKey, saysReading, speechInputs } from "./languages";
 import { kanaReading, stripReadings } from "./reading";
 
 /**
@@ -103,7 +103,7 @@ export function spokenText(card: {
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): string {
-  return (languageSupport(card.language)?.speech.saysReading && kanaReading(card)) || card.term;
+  return (saysReading(card.language) && kanaReading(card)) || card.term;
 }
 
 /** What an in-memory player's clip was made from, so it is discarded when any of it changes. */

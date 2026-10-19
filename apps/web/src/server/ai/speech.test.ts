@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { chirpLocale, createSpeechProviders, geminiLocale, openAiSupportsLanguage } from "./speech";
+import { nativeSpeechVoice } from "./speech-voices";
 
 const env = {
   GOOGLE_CLOUD_TTS_CREDENTIALS: "configured",
@@ -31,6 +32,15 @@ describe("speech provider routing", () => {
     expect(geminiLocale("en-NZ")).toBe("en-US");
     expect(geminiLocale("tl")).toBe("fil-PH");
     expect(geminiLocale("cy")).toBeNull();
+  });
+
+  it("speaks traditional Chinese with the Taiwan voice and simplified with the mainland one", () => {
+    for (const tag of ["zh-TW", "zh-Hant", "zh-HK", "zh-Hant-HK", "zh_MO"])
+      expect(geminiLocale(tag)).toBe("cmn-TW");
+    for (const tag of ["zh", "zh-CN", "zh-Hans", "zh-Hans-TW", "zh-SG"])
+      expect(geminiLocale(tag)).toBe("cmn-CN");
+    expect(nativeSpeechVoice("cmn-CN")?.name).toMatch(/Amy/);
+    expect(nativeSpeechVoice("cmn-TW")?.name).toMatch(/Ling/);
   });
 
   it("recognizes OpenAI's published languages and common tag aliases", () => {
@@ -80,7 +90,7 @@ describe("speech provider routing", () => {
 
   it("routes native voices first and leaves Gemini as their fallback", () => {
     const configured = { ...env, GEMINI_API_KEY: "gemini-key", ELEVENLABS_API_KEY: "eleven-key" };
-    for (const language of ["et-EE", "uk", "ru", "zh", "pt-BR", "ja"]) {
+    for (const language of ["et-EE", "uk", "ru", "zh", "pt-BR", "ja", "ko"]) {
       expect(names(createSpeechProviders(configured, language))).toEqual([
         "elevenlabs",
         "gemini-api",
@@ -89,6 +99,7 @@ describe("speech provider routing", () => {
       ]);
     }
     expect(createSpeechProviders(configured, "et")[0]?.voice).toBe("jGja51dd7gcoK0zkxeyg");
+    expect(createSpeechProviders(configured, "ko-KR")[0]?.voice).toBe("s07IwTCOrCDCaETjUVjx");
     expect(createSpeechProviders(configured, "pt-PT")[0]?.provider).toBe("gemini-api");
     for (const language of [
       "cs",
@@ -97,7 +108,6 @@ describe("speech provider routing", () => {
       "nb-NO",
       "he",
       "hi",
-      "ko",
       "ro",
       "sr",
       "es",

@@ -280,10 +280,10 @@ export function ExportSheet({
         current
           ? undefined
           : scope.kind === "deck"
-            ? t`Includes your schedule and review history. Exporting doesn’t change the deck.`
+            ? t`Includes your schedule and review history.`
             : shared
-              ? t`Every deck you own, archived ones included, with your schedule and review history. Decks shared with you aren’t included.`
-              : t`Every deck, archived ones included, with your schedule and review history.`
+              ? t`All your decks and their history, not decks shared with you.`
+              : t`All your decks, with schedules and review history.`
       }
     >
       {body}

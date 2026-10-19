@@ -12,7 +12,7 @@ import { CardFields, FORM_FIELD, fieldLabel, useFormFields } from "../capture/ca
 import { ChipIn } from "../capture/chip-in";
 import { type ChipKey, markChipUsed, useRecentFirst } from "../capture/chip-order";
 import { useChoiceSheet } from "../capture/choice-sheet";
-import { CHOICE_TITLES, CHOICES, type ChoiceKind } from "../capture/choice-sheets";
+import { CHOICE_TITLES, CHOICES, type ChoiceKind, DRAFTED } from "../capture/choice-sheets";
 import { ChoicesProvider, useChoices } from "../capture/choices";
 import { EMPTY_FORM, type FormValues } from "../capture/form";
 import type { Picture } from "../capture/model";
@@ -104,7 +104,7 @@ function Composer() {
   const [pending, setPending] = useState(false);
   const termRef = useRef<TextInput>(null);
   // Once a choice's sheet has gone, the keyboard comes back on the term.
-  const { held, hold, chips, open, close, sheet } = useChoiceSheet<ChoiceKind>(() =>
+  const { held, hold, chips, open, close, keep, done, sheet } = useChoiceSheet<ChoiceKind>(() =>
     termRef.current?.focus(),
   );
 
@@ -394,8 +394,19 @@ function Composer() {
         </OnGlass>
       </KeyboardRoom>
       {/* Filled from its first frame, since iOS sizes the sheet to what it holds as it rises. */}
-      <Sheet {...sheet} title={held ? i18n._(CHOICE_TITLES[held]) : ""}>
-        {Choice && <Choice onChosen={close} card={{ term: draft.term, meaning: draft.meaning }} />}
+      <Sheet
+        {...sheet}
+        title={held ? i18n._(CHOICE_TITLES[held]) : ""}
+        save={held && DRAFTED.has(held) ? { label: t`Apply`, onPress: done } : undefined}
+      >
+        {Choice && (
+          <Choice
+            onChosen={close}
+            onDone={done}
+            keep={keep}
+            card={{ term: draft.term, meaning: draft.meaning }}
+          />
+        )}
       </Sheet>
     </View>
   );

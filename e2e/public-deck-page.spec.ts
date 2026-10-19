@@ -41,9 +41,16 @@ test("anyone can read a published deck's page, see its sections and cards, and t
       name: "Evening Estonian",
       teaches: "Estonian vocabulary",
     });
+    // The page's questions, answered the same way in its FAQPage.
+    expect(jsonLd[1]).toMatchObject({
+      "@type": "FAQPage",
+      url: `https://lymi.app${pagePath}`,
+      name: "Evening Estonian",
+    });
+    expect(jsonLd[1].mainEntity).toHaveLength(4);
     // The fixture's Estonian shelf is too small for a page, so the breadcrumb skips the shelf;
     // structured-data.test.ts covers the crumb a shelf with a page adds.
-    expect(jsonLd[1]).toMatchObject({
+    expect(jsonLd[2]).toMatchObject({
       "@type": "BreadcrumbList",
       itemListElement: [
         { position: 1, name: "Explore", item: "https://lymi.app/explore" },

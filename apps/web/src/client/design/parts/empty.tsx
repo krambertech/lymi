@@ -1,11 +1,12 @@
 import { KeyRound, ListFilter, Plug, SearchX } from "lucide-react";
 import { Button } from "../../components/button";
 import { EmptySection, ErrorState, NoResults } from "../../components/empty-state";
+import { FirstRunGuide } from "../../components/first-run";
 import { NextStep, NextSteps } from "../../components/next-steps";
-import { StartGuide } from "../../components/start-guide";
 import { StartPanel, StartPanelSection } from "../../components/start-panel";
 import { StatPlate } from "../../components/stat-plate";
 import { Variants } from "../frame";
+import { decks } from "../mock";
 import { type Group, noop } from "./types";
 
 export const empty: Group = {
@@ -14,40 +15,38 @@ export const empty: Group = {
   lede: "What a screen or a group shows before it has anything in it, or when it could not load. Each says what is missing and how to fill it, and looks temporary so it is never mistaken for content. docs/design/system/empty-states.md has the rules.",
   entries: [
     {
-      slug: "start-guide",
+      slug: "first-run-guide",
       name: "Getting started",
-      source: "components/start-guide.tsx",
-      note: "Today until the first review. Three steps in order, each done by the learner's own data; the current step holds its action.",
+      source: "components/first-run.tsx",
+      note: "Today until the first review: three numbered steps on the bare canvas, dashed like every empty state and lit by the lantern, each ticked by the learner's own data; the current step holds its action. Create your first deck and ready-made decks follow it.",
       Demo: () => (
         <Variants
           stack
           items={[
             {
-              label: "No decks",
+              label: "No deck yet",
               render: () => (
                 <div className="w-full">
-                  <StartGuide
-                    decks={0}
-                    cards={0}
-                    connected={false}
-                    connectUrl="/docs/mcp"
-                    onAdd={noop}
-                    onCreateDeck={noop}
+                  <FirstRunGuide
+                    name="Kateryna"
+                    decks={[]}
+                    play={false}
+                    onAddCard={noop}
+                    onSmartAdd={noop}
                   />
                 </div>
               ),
             },
             {
-              label: "A deck, no cards",
+              label: "An empty deck",
               render: () => (
                 <div className="w-full">
-                  <StartGuide
-                    decks={1}
-                    cards={0}
-                    connected={false}
-                    connectUrl="/docs/mcp"
-                    onAdd={noop}
-                    onCreateDeck={noop}
+                  <FirstRunGuide
+                    name="Kateryna"
+                    decks={[{ ...(decks[0] as (typeof decks)[number]), total: 0, due: 0 }]}
+                    play={false}
+                    onAddCard={noop}
+                    onSmartAdd={noop}
                   />
                 </div>
               ),
@@ -56,13 +55,12 @@ export const empty: Group = {
               label: "Cards, never reviewed",
               render: () => (
                 <div className="w-full">
-                  <StartGuide
-                    decks={1}
-                    cards={12}
-                    connected={false}
-                    connectUrl="/docs/mcp"
-                    onAdd={noop}
-                    onCreateDeck={noop}
+                  <FirstRunGuide
+                    name="Kateryna"
+                    decks={decks.slice(0, 1)}
+                    play={false}
+                    onAddCard={noop}
+                    onSmartAdd={noop}
                   />
                 </div>
               ),

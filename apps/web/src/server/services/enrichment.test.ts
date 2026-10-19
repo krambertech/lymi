@@ -14,6 +14,7 @@ import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider, TextRequest } from "../ai";
 import { type Db, schema } from "../db";
+import { CARDS_PER_CALL, chunked } from "../enrichment/prompt";
 import { searchCards } from "./card-search";
 import {
   addCards,
@@ -26,8 +27,6 @@ import {
 import { type ServiceContext, ServiceError } from "./context";
 import { createDeck } from "./decks";
 import {
-  CARDS_PER_CALL,
-  chunked,
   type EnrichmentQueue,
   enrichCards,
   enrichmentQueue,

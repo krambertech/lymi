@@ -1,5 +1,5 @@
 import { createAccountThroughDevForm, startAsTestLearner } from "./auth";
-import { expect, newTestContext, persistedCache, type TestInfo, test } from "./test";
+import { expect, newTestContext, type TestInfo, test } from "./test";
 
 /** An email on no allowlist and not a local persona, so only the published deck can admit it. */
 function stranger(testInfo: TestInfo, who: string) {
@@ -65,25 +65,19 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
     await createAccountThroughDevForm(visitor, stranger(testInfo, "visitor"));
   });
 
-  await test.step("the new account is welcomed with its deck, chooses a goal and reviews", async () => {
-    await expect(visitor).toHaveURL(new RegExp(`/welcome\\?deck=${deckId}$`));
-    await expect(visitor.getByRole("heading", { name: "Welcome to Lymi" })).toBeVisible();
-    await expect(visitor.getByRole("heading", { name: deckName, exact: true })).toBeVisible();
-    // Kept before the goal is saved, so a quick return to Welcome below can restore this copy.
-    await expect.poll(() => persistedCache(visitor)).toContain('"onboardedAt":null');
-    await visitor.getByRole("button", { name: "Continue", exact: true }).click();
-    await expect(visitor.getByRole("heading", { name: "How much time a day?" })).toBeVisible();
-    await visitor.getByRole("radio", { name: /Light/ }).click();
-    await visitor.getByRole("button", { name: "Start review", exact: true }).click();
+  await test.step("the new account lands on Today with its deck ready and reviews it", async () => {
+    await expect(visitor).toHaveURL(/\/today$/);
+    await expect(visitor.getByText(`${deckName} is ready.`, { exact: false })).toBeVisible();
+    await visitor.getByRole("link", { name: /^Review/ }).click();
 
     await expect(visitor).toHaveURL(new RegExp(`/review\\?deck=${deckId}$`));
     // The card's label names what it asks, whichever direction the deck starts with.
     await expect(visitor.getByLabel(/ card for (tere hommikust|good morning)$/)).toBeVisible();
     const settings = await visitor.request.get("/api/settings");
-    expect(await settings.json()).toMatchObject({ dailyGoal: 10, learningKind: null });
+    expect(await settings.json()).toMatchObject({ dailyGoal: 25, learningKind: null });
   });
 
-  await test.step("leaving the review lands on Today, and the goal question never returns", async () => {
+  await test.step("leaving the review lands on Today, and Welcome's address leads there too", async () => {
     await visitor.getByRole("button", { name: "Leave review" }).click();
     await expect(visitor).toHaveURL(/\/today$/);
     await expect(visitor.getByRole("heading", { name: "Today", exact: true })).toBeVisible();

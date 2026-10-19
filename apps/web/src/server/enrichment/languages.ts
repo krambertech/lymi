@@ -1,10 +1,12 @@
+import { languageKey } from "@lymi/core";
+import { type FieldGuide, LANGUAGE_PROMPTS, languagePrompts } from "../languages";
+
 /**
  * How to write cards in one language, field by field, keyed by primary language subtag. The
- * deck's samples and instructions override it. Keep each rule short and plain.
+ * deck's samples and instructions override it. Keep each rule short and plain. A supported
+ * language's guide lives in its module under server/languages.
  */
-type Guide = { notes?: string; pronunciation?: string; meaning?: string; example?: string };
-
-const GUIDES: Record<string, Guide> = {
+const GUIDES: Record<string, FieldGuide> = {
   et: {
     notes:
       "Give the three forms on one line, in italics. Noun or adjective: nominative · genitive · partitive singular (*maja · maja · maja*). Verb: ma-infinitive · da-infinitive · present tense, first person (*tulema · tulla · tulen*). Add one short line only if needed: the case a verb takes (*aitama* + partitive), or a similar word to tell apart (*pikk* for people, *kõrge* for buildings). For a sentence: list its main words with their forms, and say which case or form matters and why, like the partitive object after *ei*.",
@@ -82,13 +84,6 @@ const GUIDES: Record<string, Guide> = {
     notes: "Noun: its usual measure word (*一本书*: 本 for books).",
     pronunciation: "Pinyin with tone marks (xuéxí). Not IPA.",
   },
-  ja: {
-    notes:
-      "Verb or adjective: its type and polite form on one line (*ichidan verb · 食べます*, *i-adjective · 高いです*), and its transitive or intransitive pair if it has one (*開ける / 開く*).",
-    pronunciation: "The reading in hiragana (たべる). Null if the term is written only in kana.",
-    example:
-      "Put the reading in hiragana in square brackets right after each run of kanji, and nothing over kana: 毎朝[まいあさ]パンを食[た]べます。",
-  },
   ko: {
     notes: "Verb or adjective: its polite present form (*가다 → 가요*).",
     pronunciation: "Revised Romanization (hakgyo). Not IPA.",
@@ -97,12 +92,14 @@ const GUIDES: Record<string, Guide> = {
 
 /** A deck's guide as one block of text the model reads, or undefined for a language without one. */
 export function languageGuide(tag: string | null | undefined): string | undefined {
-  const guide = tag ? GUIDES[tag.split("-")[0]?.toLowerCase() ?? ""] : undefined;
+  const enrich = languagePrompts(tag)?.enrich;
+  const guide = enrich?.guide ?? GUIDES[languageKey(tag)];
   if (!guide) return undefined;
   return (["meaning", "example", "notes", "pronunciation"] as const)
     .flatMap((field) => (guide[field] ? [`${field}: ${guide[field]}`] : []))
+    .concat(enrich ? [`worked example: ${enrich.example}`] : [])
     .join("\n");
 }
 
 /** Every language with a guide, for the evaluation's coverage report. */
-export const GUIDED_LANGUAGES = Object.keys(GUIDES);
+export const GUIDED_LANGUAGES = [...Object.keys(GUIDES), ...Object.keys(LANGUAGE_PROMPTS)];

@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { type DeckRow, retag } from "@lymi/client/deck-list";
+import { type DeckRow, tagEdits } from "@lymi/client/deck-list";
 import { backlogOf } from "@lymi/core/analytics";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "../components/ui/toast";
@@ -102,16 +102,7 @@ export function useTagCards(deckId: string) {
 
   /** Applies the change to these rows; a card it leaves as it was is not sent. */
   const apply = (rows: readonly DeckRow[], change: Change) => {
-    const edits: Edit[] = [];
-    const undo: Edit[] = [];
-    let full = 0;
-    for (const row of rows) {
-      const next = retag(row.card.tags, change.add, change.remove);
-      if (next.full) full += 1;
-      if (next.tags.join("\n") === row.card.tags.join("\n")) continue;
-      edits.push({ cardId: row.card.id, tags: next.tags });
-      undo.push({ cardId: row.card.id, tags: [...row.card.tags] });
-    }
+    const { edits, undo, full } = tagEdits(rows, change);
     if (edits.length > 0) write.mutate({ edits, undo, offerUndo: true, full, change });
   };
 

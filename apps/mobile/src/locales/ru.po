@@ -411,6 +411,9 @@ msgstr "{added, plural, one {До остановки импорта добавл
 msgid "{added, plural, one {Added # card to {name}} other {Added # cards to {name}}}"
 msgstr "{added, plural, one {Добавлена # карточка в колоду {name}} few {Добавлены # карточки в колоду {name}} many {Добавлено # карточек в колоду {name}} other {Добавлено # карточки в колоду {name}}}"
 
+msgid "{after} of {total}"
+msgstr "{after} из {total}"
+
 #. placeholder {0}: chosen.length
 #. placeholder {1}: decks.length
 #. placeholder {2}: chosen.length
@@ -636,6 +639,12 @@ msgstr "{sectionCount, plural, one {# раздел} few {# раздела} many 
 msgid "{sectionName} is ready. Start it to review its cards."
 msgstr "Можно начинать {sectionName}. Начни раздел, чтобы повторять его карточки."
 
+msgid "{sent, plural, one {Couldn’t change the tags on {unsaved} of # card.} other {Couldn’t change the tags on {unsaved} of # cards.}}"
+msgstr "{sent, plural, one {Не удалось изменить теги на {unsaved} из # карточки.} few {Не удалось изменить теги на {unsaved} из # карточек.} many {Не удалось изменить теги на {unsaved} из # карточек.} other {Не удалось изменить теги на {unsaved} из # карточки.}}"
+
+msgid "{sent, plural, one {Couldn’t change the tags on # card.} other {Couldn’t change the tags on # cards.}}"
+msgstr "{sent, plural, one {Не удалось изменить теги на # карточке.} few {Не удалось изменить теги на # карточках.} many {Не удалось изменить теги на # карточках.} other {Не удалось изменить теги на # карточки.}}"
+
 #. placeholder {0}: s.deckIds.length
 msgid "{seriesName}, {0, plural, one {# deck} other {# decks}}"
 msgstr "{seriesName}, {0, plural, one {# колода} few {# колоды} many {# колод} other {# колоды}}"
@@ -669,6 +678,9 @@ msgstr "{total, plural, one {Перемещено {saved} из # карточк�
 
 msgid "{total, plural, one {Removed the important mark from {saved} of # card} other {Removed the important mark from {saved} of # cards}}"
 msgstr "{total, plural, one {Снята отметка «важная» с {saved} из # карточки} few {Снята отметка «важная» с {saved} из # карточек} many {Снята отметка «важная» с {saved} из # карточек} other {Снята отметка «важная» с {saved} из # карточки}}"
+
+msgid "{total, plural, one {Tags for # card} other {Tags for # cards}}"
+msgstr "{total, plural, one {Теги для # карточки} few {Теги для # карточек} many {Теги для # карточек} other {Теги для # карточки}}"
 
 msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
 msgstr "{total, plural, one {Выучено {knownN} из # карточки} few {Выучено {knownN} из # карточек} many {Выучено {knownN} из # карточек} other {Выучено {knownN} из # карточки}}"
@@ -1257,11 +1269,20 @@ msgstr "Изменить поля"
 msgid "Change languages"
 msgstr "Изменить языки"
 
+msgid "Changed the tags on {count, plural, one {# card} other {# cards}}"
+msgstr "{count, plural, one {Теги изменены на # карточке} few {Теги изменены на # карточках} many {Теги изменены на # карточках} other {Теги изменены на # карточки}}"
+
+msgid "Changed the tags on {count, plural, one {# card} other {# cards}}. {full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
+msgstr "{count, plural, one {Теги изменены на # карточке} few {Теги изменены на # карточках} many {Теги изменены на # карточках} other {Теги изменены на # карточки}}. {full, plural, one {На # карточке} few {На # карточках} many {На # карточках} other {На # карточках}} уже было 20 тегов, поэтому тег туда не добавлен."
+
 msgid "Changes from AI apps, imports, AI enrichment and shared decks show up here."
 msgstr "Здесь видны изменения от AI-приложений, импорта, дополнений AI и общих колод."
 
 msgid "Changing series needs a connection."
 msgstr "Чтобы менять серии, нужно соединение."
+
+msgid "Changing tags needs a connection."
+msgstr "Чтобы менять теги, нужно подключение."
 
 msgid "Changing the goal needs a connection."
 msgstr "Чтобы изменить цель, нужно подключение."
@@ -1700,6 +1721,9 @@ msgstr "Не удалось записать файл. Попробуй ещё �
 msgid "Countries, stars, birds or anything else with names."
 msgstr "Страны, звёзды, птицы или что угодно ещё с названиями."
 
+msgid "Create “{typed}”"
+msgstr "Создать «{typed}»"
+
 msgid "Create a deck first, then add a lesson to it."
 msgstr "Сначала создай колоду, а потом добавь в неё урок."
 
@@ -2091,6 +2115,9 @@ msgstr "Дополнить остальное с AI"
 
 msgid "Filter"
 msgstr "Фильтр"
+
+msgid "Find or create a tag"
+msgstr "Найди или создай тег"
 
 msgid "Find terms"
 msgstr "Найти термины"
@@ -2948,6 +2975,9 @@ msgstr "Разделов пока нет"
 
 msgid "No series"
 msgstr "Без серии"
+
+msgid "No tags yet. Type one to create it."
+msgstr "Тегов пока нет. Введи название, чтобы создать тег."
 
 msgid "Nobody can add it while it is archived."
 msgstr "Пока колода в архиве, её никто не может добавить."
@@ -4105,6 +4135,9 @@ msgstr "На этой неделе"
 
 msgid "Those terms are already in your decks"
 msgstr "Эти термины уже есть в твоих колодах"
+
+msgid "Tick a tag to put it on every card, or untick it to take it off."
+msgstr "Отметь тег, чтобы добавить его на все карточки, или сними отметку, чтобы убрать."
 
 msgid "Time"
 msgstr "Время"

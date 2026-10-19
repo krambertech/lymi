@@ -89,12 +89,15 @@ export function SearchField({
   onChange,
   onSubmit,
   fill = "plate",
+  placeholder,
 }: {
   label: string;
   query: string;
   onChange: (query: string) => void;
   onSubmit: () => void;
   fill?: "plate" | "group";
+  /** Search, unless the field does more, such as creating what it does not find. */
+  placeholder?: string;
 }) {
   const { t } = useLingui();
   const p = usePalette();
@@ -108,7 +111,7 @@ export function SearchField({
         {...focus}
         value={query}
         onChangeText={onChange}
-        placeholder={t`Search`}
+        placeholder={placeholder ?? t`Search`}
         placeholderTextColor={p.muted}
         accessibilityLabel={t`Search ${label}`}
         autoCapitalize="none"

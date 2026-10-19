@@ -521,7 +521,7 @@ export const analyticsProducers = {
   section_go_to: ["phone"],
   pronunciation_played: ["browser", "phone"],
   deck_tag_changed: ["worker"],
-  cards_tagged: ["browser"],
+  cards_tagged: ["browser", "phone"],
   deck_enrichment_changed: ["worker"],
   deck_purpose_set: ["worker"],
   entry_opened: ["phone"],

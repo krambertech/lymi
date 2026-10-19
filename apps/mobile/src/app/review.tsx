@@ -746,11 +746,10 @@ function Run({
     setPinned(null);
     setRevealed(false);
     const held: Gone = { card, key, mode: modeKey(current.mode) };
-    const { term } = card;
     toast.add({
       id: ARCHIVED_TOAST,
       scope: REVIEW_TOASTS,
-      title: t`Archived “${term}”`,
+      title: t`Card archived`,
       action: { label: t`Undo`, onPress: () => void undoArchive(held) },
     });
     try {

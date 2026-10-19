@@ -1,4 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { type TagChoice, tagPicker } from "@lymi/client/deck-list";
 import { TAG_LIMITS, tagKey } from "@lymi/core";
 import { clsx } from "clsx";
 import { Plus, Search } from "lucide-react";
@@ -28,9 +29,6 @@ interface Props {
   onApply: (change: { add: string[]; remove: string[] }) => void;
 }
 
-/** Where a tag ends up on the chosen cards: on every one, off every one, or left as it is. */
-type Choice = "all" | "none" | "mixed";
-
 const row =
   "flex min-h-12 w-full items-center gap-3 px-4 text-start text-base transition-[background-color] duration-150 hoverable:hover:veil";
 
@@ -53,46 +51,14 @@ function TagCardsBody({
   onClose,
 }: Omit<Props, "open" | "onOpenChange"> & { onClose: () => void }) {
   const { t } = useLingui();
-  const total = cards.length;
-  // Each tag the cards carry, under its key, with how many carry it.
-  const carried = new Map<string, { name: string; count: number }>();
-  for (const tags of cards)
-    for (const name of tags) {
-      const seen = carried.get(tagKey(name));
-      if (seen) seen.count += 1;
-      else carried.set(tagKey(name), { name, count: 1 });
-    }
   const [created, setCreated] = useState<string[]>([]);
-  const [choices, setChoices] = useState<ReadonlyMap<string, Choice>>(new Map());
+  const [choices, setChoices] = useState<ReadonlyMap<string, TagChoice>>(new Map());
   const [query, setQuery] = useState("");
-
-  const offered = [
-    ...[...carried.values()].sort((a, b) => b.count - a.count).map((tag) => tag.name),
-    ...created,
-    ...suggestions.map((tag) => tag.name),
-  ].filter((name, i, all) => all.findIndex((other) => tagKey(other) === tagKey(name)) === i);
-  const typed = query.trim().slice(0, TAG_LIMITS.length);
-  const shown = typed ? offered.filter((name) => tagKey(name).includes(tagKey(typed))) : offered;
-  const fresh = typed && !offered.some((name) => tagKey(name) === tagKey(typed));
-
-  const start = (name: string): Choice => {
-    const count = carried.get(tagKey(name))?.count ?? 0;
-    return count === 0 ? "none" : count === total ? "all" : "mixed";
-  };
-  const choiceOf = (name: string) => choices.get(tagKey(name)) ?? start(name);
-  // A tag on some cards goes on all of them first, then off all, then back as it was.
-  const next = (name: string): Choice => {
-    const now = choiceOf(name);
-    if (now === "all") return "none";
-    if (now === "mixed") return "all";
-    return start(name) === "mixed" ? "mixed" : "all";
-  };
-  const set = (name: string, choice: Choice) =>
+  const picker = tagPicker({ cards, created, suggestions, choices, query });
+  const { total, shown, typed, fresh, change } = picker;
+  const set = (name: string, choice: TagChoice) =>
     setChoices((prev) => new Map(prev).set(tagKey(name), choice));
-
-  const add = offered.filter((name) => choiceOf(name) === "all" && start(name) !== "all");
-  const remove = offered.filter((name) => choiceOf(name) === "none" && start(name) !== "none");
-  const changed = add.length + remove.length;
+  const changed = change.add.length + change.remove.length;
 
   return (
     <>
@@ -133,16 +99,15 @@ function TagCardsBody({
         </div>
         <ul className="edge max-h-[50dvh] overflow-y-auto rounded-lg bg-plate">
           {shown.map((name) => {
-            const choice = choiceOf(name);
-            const count = carried.get(tagKey(name))?.count ?? 0;
-            const after = choice === "all" ? total : choice === "none" ? 0 : count;
+            const choice = picker.choiceOf(name);
+            const after = picker.after(name);
             return (
               <li key={tagKey(name)} className="border-edge not-first:border-t">
                 <Field orientation="horizontal" className={row}>
                   <Checkbox
                     checked={choice === "all"}
                     indeterminate={choice === "mixed"}
-                    onCheckedChange={() => set(name, next(name))}
+                    onCheckedChange={() => set(name, picker.next(name))}
                   />
                   <FieldLabel className="min-w-0 flex-1 cursor-pointer truncate py-3 text-base font-normal text-text">
                     {name}
@@ -186,7 +151,7 @@ function TagCardsBody({
           aria-disabled={changed === 0}
           onClick={() => {
             if (changed === 0) return;
-            onApply({ add, remove });
+            onApply(change);
             onClose();
           }}
         >

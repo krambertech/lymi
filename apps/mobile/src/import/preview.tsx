@@ -3,7 +3,7 @@ import { msg, plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { api, errorMessage, type Import, type ImportPreview } from "@lymi/client/api";
 import { splitNoteTypes } from "@lymi/client/imports";
-import { importQuery } from "@lymi/client/queries";
+import { importPreviewQuery, importQuery, usePreviewState } from "@lymi/client/queries";
 import { type FieldRole, type ImportSource, LANGUAGE_TAGS } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type ReactNode, useMemo, useState } from "react";
@@ -12,6 +12,7 @@ import { languageName } from "../data/languages";
 import { formatList } from "../i18n/list";
 import { usePalette } from "../theme/palette";
 import { Chip } from "../ui/chip";
+import { FieldError } from "../ui/field";
 import { Select } from "../ui/menu";
 import { Button, Icon, Plate, Press, Text } from "../ui/primitives";
 import { Tick } from "../welcome/parts";
@@ -88,15 +89,9 @@ export function ImportPreviewScreen({
     roles: Object.fromEntries(summary.noteTypes.map((type) => [type.key, type.roles])),
     skipDecks: [],
   }));
-  const key = useMemo(() => JSON.stringify(choices), [choices]);
-  const preview = useQuery({
-    queryKey: ["imports", item.id, "preview", key],
-    queryFn: () => api.previewImport(item.id, choices),
-    staleTime: 60_000,
-    retry: 1,
-    placeholderData: (previous) => previous,
-    meta: { persist: false },
-  });
+  const preview = useQuery(importPreviewQuery(item.id, choices));
+  const { waiting: previewLoading, error: previewError } = usePreviewState(preview);
+  const retryPreview = () => void preview.refetch();
   const confirm = useMutation({
     mutationFn: () => api.confirmImport(item.id, choices),
     onSuccess: (next) => qc.setQueryData(importQuery(item.id).queryKey, next),
@@ -138,7 +133,6 @@ export function ImportPreviewScreen({
   const setLanguage = (deck: string, value: string | null) =>
     setChoices((c) => ({ ...c, languages: { ...c.languages, [deck]: value } }));
   const data = preview.data;
-  const previewError = preview.isError ? errorMessage(preview.error) : undefined;
 
   let body: ReactNode;
   if (editing?.kind === "fields") {
@@ -206,8 +200,9 @@ export function ImportPreviewScreen({
         type={step.type}
         name={typeName(step.type)}
         samples={data?.samples[step.type.key]}
-        loading={preview.isFetching}
+        loading={previewLoading}
         error={previewError}
+        onRetry={retryPreview}
         tail={
           step.type === asked.at(-1) && !showRest && rest.length > 0 ? (
             <View className="gap-1">
@@ -293,19 +288,19 @@ export function ImportPreviewScreen({
         {/* Noji exports where each card stands, never its past reviews, so there are none to count. */}
         <Figures
           figures={[
-            { label: t`cards`, value: preview.isFetching ? undefined : data?.added },
-            { label: t`known`, value: preview.isFetching ? undefined : data?.known },
+            { label: t`cards`, value: previewLoading ? undefined : data?.added },
+            { label: t`known`, value: previewLoading ? undefined : data?.known },
             ...(item.source !== "noji"
               ? [
                   {
                     label: t`past reviews`,
-                    value: preview.isFetching ? undefined : data?.reviews,
+                    value: previewLoading ? undefined : data?.reviews,
                   },
                 ]
               : []),
           ]}
         />
-        {previewError && <Text className="px-1 text-base text-danger">{previewError}</Text>}
+        {previewError && <PreviewError error={previewError} onRetry={retryPreview} />}
         {data && <ImportLines item={item} summary={summary} preview={data} />}
         <Plate className="overflow-hidden">
           {answers.map((answer, i) => (
@@ -567,6 +562,19 @@ function LanguageRows({
   );
 }
 
+/** Why the count failed, with the way to ask again. */
+function PreviewError({ error, onRetry }: { error: string; onRetry: () => void }) {
+  const { t } = useLingui();
+  return (
+    <View className="gap-2">
+      <FieldError>{error}</FieldError>
+      <View className="flex-row">
+        <Button label={t`Try again`} variant="ghost" size="sm" onPress={onRetry} />
+      </View>
+    </View>
+  );
+}
+
 /** One kind of card, drawn the way it will arrive, asking whether it looks right. */
 function CardStep({
   source,
@@ -575,6 +583,7 @@ function CardStep({
   samples,
   loading,
   error,
+  onRetry,
   tail,
   onChangeFields,
   onBack,
@@ -586,6 +595,7 @@ function CardStep({
   samples: ImportPreview["samples"][string] | undefined;
   loading: boolean;
   error?: string | undefined;
+  onRetry: () => void;
   tail: ReactNode;
   onChangeFields: () => void;
   onBack?: (() => void) | undefined;
@@ -617,9 +627,9 @@ function CardStep({
             />
           )}
         </View>
-        <SampleCard sample={sample} loading={loading} />
+        <SampleCard sample={sample} loading={loading} error={error} onRetry={onRetry} />
       </Plate>
-      {error && <Text className="px-1 text-base text-danger">{error}</Text>}
+      {error && sample && <PreviewError error={error} onRetry={onRetry} />}
       {tail}
       <StepActions onBack={onBack}>
         <Button label={t`Looks right`} icon="check" variant="primary" size="lg" onPress={onNext} />

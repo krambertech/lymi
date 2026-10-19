@@ -35,7 +35,8 @@ export function normalizeBoundedImage(images: ImagesBinding, bytes: Uint8Array, 
 
 /**
  * The one image pipeline: bytes are checked before the Images binding decodes them and again after
- * it encodes, and WebP output carries no metadata.
+ * it encodes, and WebP output carries no metadata. The header gives the size, so the binding is
+ * called once per image.
  */
 async function normalizeImage(
   images: ImagesBinding,
@@ -51,8 +52,6 @@ async function normalizeImage(
 
   let output: Uint8Array;
   try {
-    const info = await images.info(streamOf(bytes));
-    if (!("width" in info) || info.width <= 0 || info.height <= 0) throw rejection("unsupported");
     const result = await images
       .input(streamOf(bytes))
       .transform(target(inspected.image))

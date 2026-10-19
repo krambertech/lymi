@@ -1,15 +1,12 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { type DeckRow, retag } from "@lymi/client/deck-list";
+import { type DeckRow, tagEdits } from "@lymi/client/deck-list";
 import { backlogOf } from "@lymi/core/analytics";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "../components/ui/toast";
 import { api, errorMessage } from "./api";
 import { deckCardsQuery } from "./queries";
 import { captureAnalytics } from "./telemetry";
-
-/** One bulk edit carries at most this many cards. */
-const PER_CALL = 200;
 
 type Edit = { cardId: string; tags: string[] };
 type Change = { add: string[]; remove: string[] };
@@ -20,20 +17,15 @@ export function useTagCards(deckId: string) {
   const qc = useQueryClient();
   const cardsKey = deckCardsQuery(deckId).queryKey;
 
-  /** Sends the edits a call at a time; a call that fails, and every one after it, counts as unsaved. */
+  /** Cards a failed call never reached come back unsaved, beside whatever earlier calls saved. */
   const send = async (edits: Edit[]) => {
-    const saved = new Set<string>();
-    let error: unknown;
-    for (let i = 0; i < edits.length && error === undefined; i += PER_CALL) {
-      const chunk = edits.slice(i, i + PER_CALL);
-      try {
-        const out = await api.editCards(chunk.map(({ cardId, tags }) => ({ cardId, tags })));
-        for (const r of out.results) if (r.status !== "error") saved.add(r.id);
-      } catch (caught) {
-        error = caught;
-      }
+    try {
+      const out = await api.editCards(edits);
+      const saved = new Set(out.results.flatMap((r) => (r.status === "error" ? [] : [r.id])));
+      return { saved, error: undefined };
+    } catch (error) {
+      return { saved: new Set<string>(), error };
     }
-    return { saved, error };
   };
 
   const place = (edits: Edit[]) => {
@@ -110,17 +102,14 @@ export function useTagCards(deckId: string) {
 
   /** Applies the change to these rows; a card it leaves as it was is not sent. */
   const apply = (rows: readonly DeckRow[], change: Change) => {
-    const edits: Edit[] = [];
-    const undo: Edit[] = [];
-    let full = 0;
-    for (const row of rows) {
-      const next = retag(row.card.tags, change.add, change.remove);
-      if (next.full) full += 1;
-      if (next.tags.join("\n") === row.card.tags.join("\n")) continue;
-      edits.push({ cardId: row.card.id, tags: next.tags });
-      undo.push({ cardId: row.card.id, tags: [...row.card.tags] });
-    }
+    const { edits, undo, full } = tagEdits(rows, change);
     if (edits.length > 0) write.mutate({ edits, undo, offerUndo: true, full, change });
+    // Every chosen card already held twenty, so nothing was sent, which the learner should hear.
+    else if (full > 0)
+      toast.add({
+        id: `tag-cards-${deckId}`,
+        title: t`${plural(full, { one: "# card", other: "# cards" })} already had 20 tags, so a tag was left off.`,
+      });
   };
 
   return { apply, pending: write.isPending };

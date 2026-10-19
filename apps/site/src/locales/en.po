@@ -496,6 +496,9 @@ msgstr "Add {name} to Lymi"
 msgid "Add {title}"
 msgstr "Add {title}"
 
+msgid "Add a photo, PDF or transcript, and tick the words you want."
+msgstr "Add a photo, PDF or transcript, and tick the words you want."
+
 msgid "Add a word from today’s lesson and AI fills in the reading, the meaning, an example and a hook to help you remember it. It only fills what you left empty, and marks what it wrote."
 msgstr "Add a word from today’s lesson and AI fills in the reading, the meaning, an example and a hook to help you remember it. It only fills what you left empty, and marks what it wrote."
 
@@ -2367,11 +2370,8 @@ msgstr "Lymi changelog"
 msgid "Lymi costs nothing. No trial, and no payment details to sign up."
 msgstr "Lymi costs nothing. No trial, and no payment details to sign up."
 
-msgid "Lymi doesn’t connect to tutoring sites or read photos itself: your assistant does the reading."
-msgstr "Lymi doesn’t connect to tutoring sites or read photos itself: your assistant does the reading."
-
-msgid "Lymi doesn’t read PDFs or photos itself: your assistant does the reading. A diagram can go on a card as its picture."
-msgstr "Lymi doesn’t read PDFs or photos itself: your assistant does the reading. A diagram can go on a card as its picture."
+msgid "Lymi doesn’t connect to tutoring sites. Smart add is in beta and reads up to 5 lessons a day."
+msgstr "Lymi doesn’t connect to tutoring sites. Smart add is in beta and reads up to 5 lessons a day."
 
 msgid "Lymi for certification prep · Flashcards with spaced repetition"
 msgstr "Lymi for certification prep · Flashcards with spaced repetition"
@@ -2672,8 +2672,8 @@ msgstr "No. Add the Leben in Deutschland deck for the 300 general questions and 
 msgid "No. Each learner’s reviews stay private to them. Lymi is a place to practise, not to be graded."
 msgstr "No. Each learner’s reviews stay private to them. Lymi is a place to practise, not to be graded."
 
-msgid "No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo, and your assistant turns them into cards."
-msgstr "No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo, and your assistant turns them into cards."
+msgid "No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo. Then Smart add or your assistant turns them into cards."
+msgstr "No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo. Then Smart add or your assistant turns them into cards."
 
 msgid "No. Lymi only gets what your assistant sends it, like the cards it adds. The rest of the conversation stays with your assistant."
 msgstr "No. Lymi only gets what your assistant sends it, like the cards it adds. The rest of the conversation stays with your assistant."
@@ -2689,9 +2689,6 @@ msgstr "Not for most certifications yet. Your assistant can turn your study guid
 
 msgid "Not marked important"
 msgstr "Not marked important"
-
-msgid "Not yet. Lymi has no PDF or photo upload of its own. Your assistant reads the file and adds the cards, and you can add terms by hand with Add a card."
-msgstr "Not yet. Lymi has no PDF or photo upload of its own. Your assistant reads the file and adds the cards, and you can add terms by hand with Add a card."
 
 msgid "Notes"
 msgstr "Notes"
@@ -3404,6 +3401,9 @@ msgstr "Slow or stop so others can pass without you forcing them to change speed
 
 msgid "Smart add"
 msgstr "Smart add"
+
+msgid "Smart add is in beta and reads up to 5 lessons a day. A diagram can go on a card as its picture."
+msgstr "Smart add is in beta and reads up to 5 lessons a day. A diagram can go on a card as its picture."
 
 msgid "So-so"
 msgstr "So-so"
@@ -4197,6 +4197,9 @@ msgstr "US civics test"
 msgid "Use cases"
 msgstr "Use cases"
 
+msgid "Use Smart add"
+msgstr "Use Smart add"
+
 msgid "Used Lymi"
 msgstr "Used Lymi"
 
@@ -4475,6 +4478,9 @@ msgstr "Yes, please; I’d be glad to"
 
 msgid "Yes, to everyone."
 msgstr "Yes, to everyone."
+
+msgid "Yes, with Smart add. Add up to 3 PDFs or 10 photos, or paste the text, and tick the terms you want. It’s in beta, so it reads up to 5 lessons a day."
+msgstr "Yes, with Smart add. Add up to 3 PDFs or 10 photos, or paste the text, and tick the terms you want. It’s in beta, so it reads up to 5 lessons a day."
 
 msgid "Yes. A card can hold one picture, such as a diagram or a slide, and a review can ask from the picture instead of the words."
 msgstr "Yes. A card can hold one picture, such as a diagram or a slide, and a review can ask from the picture instead of the words."

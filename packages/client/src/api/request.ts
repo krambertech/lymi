@@ -20,12 +20,55 @@ export class ApiError extends Error {
   }
 }
 
+/** A request the network never settled before its deadline; worth trying again later, not at once. */
+export class RequestTimeout extends ApiError {}
+
 /** A path on the product API as this app reaches it: the web's own origin, or the phone's base URL. */
 export function apiUrl(path: string): string {
   return `${clientConfig().baseUrl ?? ""}${path}`;
 }
 
-export async function request<T>(path: string, init?: RequestInit): Promise<T> {
+export type RequestOptions = RequestInit & {
+  /** Milliseconds before a request the network never settles ends as unreachable. */
+  timeout?: number;
+};
+
+export async function request<T>(path: string, options?: RequestOptions): Promise<T> {
+  const { timeout, ...init } = options ?? {};
+  if (!timeout) return send<T>(path, init);
+  const limit = deadline(timeout, init.signal);
+  try {
+    return await send<T>(path, { ...init, signal: limit.signal });
+  } catch (error) {
+    if (limit.expired()) throw new RequestTimeout(0, unreachable());
+    throw error;
+  } finally {
+    limit.clear();
+  }
+}
+
+/** Aborts with the caller's signal or after `ms`; the phone's AbortSignal has neither `any` nor `timeout`. */
+function deadline(ms: number, outer?: AbortSignal | null) {
+  const controller = new AbortController();
+  let expired = false;
+  const timer = setTimeout(() => {
+    expired = true;
+    controller.abort();
+  }, ms);
+  const forward = () => controller.abort();
+  if (outer?.aborted) controller.abort();
+  else outer?.addEventListener("abort", forward);
+  return {
+    signal: controller.signal,
+    expired: () => expired,
+    clear: () => {
+      clearTimeout(timer);
+      outer?.removeEventListener("abort", forward);
+    },
+  };
+}
+
+async function send<T>(path: string, init: RequestInit): Promise<T> {
   const config = clientConfig();
   let session: Record<string, string> = {};
   try {
@@ -40,9 +83,9 @@ export async function request<T>(path: string, init?: RequestInit): Promise<T> {
       ...init,
       // A form body sets its own multipart boundary.
       headers: {
-        ...(init?.body instanceof FormData ? {} : { "content-type": "application/json" }),
+        ...(init.body instanceof FormData ? {} : { "content-type": "application/json" }),
         ...session,
-        ...(init?.headers ?? {}),
+        ...(init.headers ?? {}),
       },
       credentials: config.credentials ?? "include",
     });

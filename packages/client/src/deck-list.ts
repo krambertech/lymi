@@ -244,6 +244,88 @@ export function retag(
   return { tags: next, full };
 }
 
+/** Where a tag ends up on chosen cards: on every one, off every one, or left as it is. */
+export type TagChoice = "all" | "none" | "mixed";
+
+export interface TagPickerInput {
+  /** The chosen cards' tags, each list one card's. */
+  cards: readonly (readonly string[])[];
+  /** Tags made in the picker, newest first. */
+  created: readonly string[];
+  /** Tags in use elsewhere, offered after the ones the cards carry. */
+  suggestions: readonly { name: string }[];
+  /** The learner's ticks so far, by tag key. */
+  choices: ReadonlyMap<string, TagChoice>;
+  query: string;
+}
+
+/**
+ * Tags… for chosen cards, as the web's dialog and the phone's sheet both draw it: the tags the
+ * cards carry, most carried first, then new and suggested ones, each ticked on every card, on some
+ * or on none, and the change a save makes.
+ */
+export function tagPicker({ cards, created, suggestions, choices, query }: TagPickerInput) {
+  const total = cards.length;
+  const carried = new Map<string, { name: string; count: number }>();
+  for (const tags of cards)
+    for (const name of tags) {
+      const seen = carried.get(tagKey(name));
+      if (seen) seen.count += 1;
+      else carried.set(tagKey(name), { name, count: 1 });
+    }
+  const offered = [
+    ...[...carried.values()].sort((a, b) => b.count - a.count).map((tag) => tag.name),
+    ...created,
+    ...suggestions.map((tag) => tag.name),
+  ].filter((name, i, all) => all.findIndex((other) => tagKey(other) === tagKey(name)) === i);
+  const typed = query.trim().slice(0, TAG_LIMITS.length);
+  const shown = typed ? offered.filter((name) => tagKey(name).includes(tagKey(typed))) : offered;
+  const fresh = !!typed && !offered.some((name) => tagKey(name) === tagKey(typed));
+
+  const count = (name: string) => carried.get(tagKey(name))?.count ?? 0;
+  const start = (name: string): TagChoice => {
+    const n = count(name);
+    return n === 0 ? "none" : n === total ? "all" : "mixed";
+  };
+  const choiceOf = (name: string) => choices.get(tagKey(name)) ?? start(name);
+  /** A tag on some cards goes on all of them first, then off all, then back as it was. */
+  const next = (name: string): TagChoice => {
+    const now = choiceOf(name);
+    if (now === "all") return "none";
+    if (now === "mixed") return "all";
+    return start(name) === "mixed" ? "mixed" : "all";
+  };
+  /** How many of the chosen cards carry the tag once saved. */
+  const after = (name: string) => {
+    const choice = choiceOf(name);
+    return choice === "all" ? total : choice === "none" ? 0 : count(name);
+  };
+  const add = offered.filter((name) => choiceOf(name) === "all" && start(name) !== "all");
+  const remove = offered.filter((name) => choiceOf(name) === "none" && start(name) !== "none");
+  return { total, shown, typed, fresh, choiceOf, next, after, change: { add, remove } };
+}
+
+/**
+ * The edits that make a tag change on rows, leaving out a card it would not change; `undo` puts
+ * each card's tags back, and `full` counts cards already holding twenty, which a new tag skips.
+ */
+export function tagEdits(
+  rows: readonly DeckRow[],
+  change: { add: readonly string[]; remove: readonly string[] },
+) {
+  const edits: { cardId: string; tags: string[] }[] = [];
+  const undo: { cardId: string; tags: string[] }[] = [];
+  let full = 0;
+  for (const row of rows) {
+    const next = retag(row.card.tags, change.add, change.remove);
+    if (next.full) full += 1;
+    if (next.tags.join("\n") === row.card.tags.join("\n")) continue;
+    edits.push({ cardId: row.card.id, tags: next.tags });
+    undo.push({ cardId: row.card.id, tags: [...row.card.tags] });
+  }
+  return { edits, undo, full };
+}
+
 /** A term that lists its forms, "õppima · õppida · õpin", as the word and the forms after it. */
 export function splitForms(term: string): { word: string; forms: string | null } {
   const at = term.indexOf(" · ");

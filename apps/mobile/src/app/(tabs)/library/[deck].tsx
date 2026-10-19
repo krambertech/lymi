@@ -34,6 +34,7 @@ import { useCardBatch, useMoveToDeck } from "../../../deck/card-batch";
 import { FilterTools } from "../../../deck/filters";
 import { useMoveToSection } from "../../../deck/move-to-section";
 import { SelectBox, SelectionToolbar } from "../../../deck/selection";
+import { useTagCards } from "../../../deck/tag-cards";
 import { ExportSheet } from "../../../export/export-sheet";
 import {
   ReadyNote,
@@ -129,6 +130,7 @@ export default function Deck() {
   const moveToSection = useMoveToSection(id);
   const moveToDeck = useMoveToDeck(id);
   const batch = useCardBatch(id);
+  const tagCards = useTagCards(id);
   const cardMenu = useCardMenu({
     owner: () => owner,
     moveToSection: moveToSection.canMove ? (c) => () => moveToSection.open([c.id]) : undefined,
@@ -231,6 +233,11 @@ export default function Deck() {
         ...(owner
           ? [
               [
+                {
+                  label: t`Tags`,
+                  icon: "tags" as const,
+                  onSelect: () => tagCards.open([...selection], done),
+                },
                 ...(moveToSection.canMove
                   ? [
                       {
@@ -577,6 +584,7 @@ export default function Deck() {
       )}
       {owner && moveToSection.sheet}
       {owner && moveToDeck.sheet}
+      {owner && tagCards.sheet}
     </Screen>
   );
 }

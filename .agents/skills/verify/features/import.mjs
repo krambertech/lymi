@@ -29,6 +29,26 @@ export default async function drive({ page, step, api, expect }) {
     await page.getByRole("button", { name: "Continue", exact: true }).click();
   });
 
+  const preview = "**/api/imports/*/preview";
+  await step("A preview that cannot reach Lymi offers Try again", async () => {
+    await page.route(preview, (route) => route.abort("failed"));
+    await page.getByRole("button", { name: "Back", exact: true }).click();
+    await page.getByRole("checkbox").last().click();
+    await page.getByRole("button", { name: "Continue", exact: true }).click();
+    await expect(page.getByRole("alert")).toHaveText(/Couldn’t reach Lymi/);
+    await expect(page.getByText("No card of this kind has a term.")).toBeHidden();
+  });
+
+  await step("Try again shows the card, then every deck is kept", async () => {
+    await page.unroute(preview);
+    await page.getByRole("button", { name: "Try again", exact: true }).click();
+    await expect(page.getByRole("alert")).toBeHidden();
+    await expect(page.getByRole("button", { name: "Looks right", exact: true })).toBeVisible();
+    await page.getByRole("button", { name: "Back", exact: true }).click();
+    await page.getByRole("checkbox").last().click();
+    await page.getByRole("button", { name: "Continue", exact: true }).click();
+  });
+
   let count = 0;
   await step("Confirm each kind of card looks right", async () => {
     const looksRight = page.getByRole("button", { name: "Looks right", exact: true });

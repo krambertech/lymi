@@ -11,7 +11,7 @@ import {
   newId,
   sourceOfFileName,
 } from "@lymi/core";
-import { and, desc, eq, inArray, isNull, lt, sql } from "@lymi/core/db";
+import { and, desc, eq, inArray, isNull, lt, or, sql } from "@lymi/core/db";
 import type { Import } from "@lymi/core/schema";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
@@ -49,8 +49,14 @@ const ADAPTERS = [anki, mochi, noji, lymi, quizlet] as SourceAdapter<unknown>[];
 /** Notes per stored chunk: one chunk is one Workflow step and one D1 batch. */
 export const NOTES_PER_CHUNK = 500;
 
-/** An import still waiting on the learner, or on a step, past this is given up and its file deleted. */
+/** An import still waiting on the learner past this is given up and its file deleted. */
 export const IMPORT_EXPIRY_MS = 3 * 24 * 60 * 60 * 1000;
+
+/**
+ * A write with no step landing for this long has stalled. Every step moves `updated_at`, and the
+ * longest a step can take is four ten-minute attempts with their backoff.
+ */
+export const IMPORT_STALL_MS = 60 * 60 * 1000;
 
 /** Starts a Workflow run: `inspect` reads the file, `write` writes it after confirmation. */
 export type StartRun = (params: ImportRunParams) => Promise<void>;
@@ -67,6 +73,8 @@ export type ImportResume = {
   chunk: number;
   pending: PendingPicture[];
   pictures: MediaTotals;
+  /** Pictures and recordings handled so far; absent in a run handed over before it was kept. */
+  handled?: number | undefined;
 };
 
 /** Pictures stored per Workflow step. */
@@ -113,7 +121,11 @@ export function presentImport(row: Import) {
     choices: (row.choices as ImportChoices | null) ?? null,
     // Counts added since an import finished read as none.
     counts: row.counts ? { ...emptyImportCounts(), ...(row.counts as ImportCounts) } : null,
-    progress: { written: row.written, chunks: row.chunks },
+    progress: {
+      written: row.written,
+      chunks: row.chunks,
+      media: { done: row.mediaDone, total: row.mediaTotal },
+    },
     upload: {
       partBytes: IMPORT_PART_BYTES,
       parts: partCount(row.byteSize),
@@ -470,7 +482,10 @@ export async function confirmImport(
       choices: work.choices,
       status: "importing",
       written: 0,
+      mediaTotal: 0,
+      mediaDone: 0,
       counts: emptyImportCounts(),
+      confirmedAt: new Date(),
       updatedAt: new Date(),
     })
     .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "ready")))
@@ -504,23 +519,35 @@ export async function writeImportChunk(
   return writeChunk(ctx, await readyWork(ctx, id, uploads), chunk, decks);
 }
 
+/**
+ * Stores one step's pictures and recordings, then records `handled`, the run's count of them
+ * once this step lands, as progress. A retried step records the same count again.
+ */
 export async function attachImportPictures(
   ctx: ServiceContext,
   id: string,
   pending: PendingPicture[],
   uploads: R2Bucket,
   storage: Partial<CardImageStorage> & { audio?: R2Bucket | undefined },
+  handled: number,
 ): Promise<AttachedMedia> {
   const work = await readyWork(ctx, id, uploads);
-  if (!work.row.objectKey) {
+  let attached: AttachedMedia;
+  if (work.row.objectKey) {
+    const file = await r2Source(uploads, work.row.objectKey);
+    attached = await attachPictures(ctx, work, file, pending, storage);
+  } else {
     const recordings = pending.filter((item) => item.kind === "recording").length;
-    return {
+    attached = {
       stored: 0,
       skipped: pending.length - recordings,
       recordings: { stored: 0, skipped: recordings },
     };
   }
-  return attachPictures(ctx, work, await r2Source(uploads, work.row.objectKey), pending, storage);
+  await ctx.db.run(sql`update imports set media_done = max(media_done, ${handled}),
+      updated_at = ${Date.now()}
+    where id = ${id} and status = 'importing'`);
+  return attached;
 }
 
 /** Marks the import done with its picture totals, and deletes the file. */
@@ -567,8 +594,16 @@ export async function finishImport(
     recordings: counts.recordings,
     recordings_skipped: counts.recordingsSkipped,
     sounds_left_out: counts.soundsLeftOut,
+    pictures: counts.pictures,
+    pictures_skipped: counts.picturesSkipped,
+    ...(row.confirmedAt ? { write_seconds: secondsSince(row.confirmedAt, now) } : {}),
   });
   await deleteImportFiles(uploads, row);
+}
+
+/** Whole seconds from `from` to `to`, within what an event's count holds. */
+function secondsSince(from: Date, to: Date) {
+  return Math.min(1_000_000, Math.max(0, Math.round((to.getTime() - from.getTime()) / 1000)));
 }
 
 /** Stops an import with a reason and deletes its file. Cards a failed write already added stay. */
@@ -658,24 +693,33 @@ export async function deleteImportFiles(
   }
 }
 
-/** Gives up on imports left waiting, so no upload stays in R2. Run from the cron trigger. */
+/**
+ * Gives up on imports left waiting, so no upload stays in R2, and fails writes that stalled.
+ * Run from the cron trigger, which reports any stalled write.
+ */
 export async function expireImports(
   db: Db,
   uploads: R2Bucket,
   now = new Date(),
   analytics?: AnalyticsWriter,
 ) {
+  const before = (ms: number) => lt(schema.imports.updatedAt, new Date(now.getTime() - ms));
   const stale = await db
     .select()
     .from(schema.imports)
     .where(
-      and(
-        inArray(schema.imports.status, ["uploading", "inspecting", "ready", "importing"]),
-        lt(schema.imports.updatedAt, new Date(now.getTime() - IMPORT_EXPIRY_MS)),
+      or(
+        and(
+          inArray(schema.imports.status, ["uploading", "inspecting", "ready"]),
+          before(IMPORT_EXPIRY_MS),
+        ),
+        and(eq(schema.imports.status, "importing"), before(IMPORT_STALL_MS)),
       ),
     )
     .limit(50);
+  let stalled = 0;
   for (const row of stale) {
+    if (row.status === "importing") stalled++;
     await failImport(
       db,
       row.id,
@@ -684,7 +728,7 @@ export async function expireImports(
       analytics,
     );
   }
-  return stale.length;
+  return { expired: stale.length - stalled, stalled };
 }
 
 /** Turns a step's error into the failure the learner is shown. */

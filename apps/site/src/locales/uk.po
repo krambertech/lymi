@@ -496,6 +496,9 @@ msgstr "Додати {name} в Lymi"
 msgid "Add {title}"
 msgstr "Додати «{title}»"
 
+msgid "Add a photo, PDF or transcript, and tick the words you want."
+msgstr "Додай фото, PDF або транскрипт і познач потрібні слова."
+
 msgid "Add a word from today’s lesson and AI fills in the reading, the meaning, an example and a hook to help you remember it. It only fills what you left empty, and marks what it wrote."
 msgstr "Додай слово із сьогоднішнього уроку, і AI допише читання, значення, приклад і зачіпку, щоб легше запам’ятати. Він заповнює лише те, що ти лишаєш порожнім, і позначає, що написав сам."
 
@@ -2367,11 +2370,8 @@ msgstr "Що нового в Lymi"
 msgid "Lymi costs nothing. No trial, and no payment details to sign up."
 msgstr "Lymi нічого не коштує. Ні пробного періоду, ні платіжних даних для реєстрації."
 
-msgid "Lymi doesn’t connect to tutoring sites or read photos itself: your assistant does the reading."
-msgstr "Lymi не підключається до сайтів з репетиторами і сам не читає фото: це робить асистент."
-
-msgid "Lymi doesn’t read PDFs or photos itself: your assistant does the reading. A diagram can go on a card as its picture."
-msgstr "Lymi сам не читає PDF чи фото: це робить асистент. Схему можна додати на картку як зображення."
+msgid "Lymi doesn’t connect to tutoring sites. Smart add is in beta and reads up to 5 lessons a day."
+msgstr "Lymi не підключається до сайтів з репетиторами. Розумне додавання в бета-версії, тому читає до 5 уроків на день."
 
 msgid "Lymi for certification prep · Flashcards with spaced repetition"
 msgstr "Lymi для підготовки до сертифікації · Картки з інтервальним повторенням"
@@ -2672,8 +2672,8 @@ msgstr "Ні. Додай колоду Leben in Deutschland для 300 загал
 msgid "No. Each learner’s reviews stay private to them. Lymi is a place to practise, not to be graded."
 msgstr "Ні. Повторення кожного учня бачить лише сам учень. Lymi — місце для практики, а не для оцінок."
 
-msgid "No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo, and your assistant turns them into cards."
-msgstr "Ні. Lymi не читає твої уроки на жодному сайті з репетиторами. Ти копіюєш чат чи нотатки або робиш фото, а асистент перетворює їх на картки."
+msgid "No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo. Then Smart add or your assistant turns them into cards."
+msgstr "Ні. Lymi не читає твої уроки на жодному сайті з репетиторами. Ти копіюєш чат чи нотатки або робиш фото. Потім Розумне додавання чи твій асистент перетворює їх на картки."
 
 msgid "No. Lymi only gets what your assistant sends it, like the cards it adds. The rest of the conversation stays with your assistant."
 msgstr "Ні. Lymi отримує лише те, що надсилає асистент, наприклад картки, які він додає. Решта розмови залишається в асистента."
@@ -2689,9 +2689,6 @@ msgstr "Для більшості сертифікацій поки що ні. �
 
 msgid "Not marked important"
 msgstr "Не позначена як важлива"
-
-msgid "Not yet. Lymi has no PDF or photo upload of its own. Your assistant reads the file and adds the cards, and you can add terms by hand with Add a card."
-msgstr "Поки що ні. У Lymi немає власного завантаження PDF чи фото. Файл читає асистент і додає картки, а вручну терміни можна додати через «Додати картку»."
 
 msgid "Notes"
 msgstr "Нотатки"
@@ -3404,6 +3401,9 @@ msgstr "Сповільнись або зупинись, щоб інші прої
 
 msgid "Smart add"
 msgstr "Розумне додавання"
+
+msgid "Smart add is in beta and reads up to 5 lessons a day. A diagram can go on a card as its picture."
+msgstr "Розумне додавання в бета-версії, тому читає до 5 уроків на день. Схему можна додати на картку як зображення."
 
 msgid "So-so"
 msgstr "Так собі"
@@ -4197,6 +4197,9 @@ msgstr "Тест на громадянство США"
 msgid "Use cases"
 msgstr "Для чого"
 
+msgid "Use Smart add"
+msgstr "Розумне додавання"
+
 msgid "Used Lymi"
 msgstr "Використано Lymi"
 
@@ -4475,6 +4478,9 @@ msgstr "Так, будь ласка; залюбки"
 
 msgid "Yes, to everyone."
 msgstr "Так, усім."
+
+msgid "Yes, with Smart add. Add up to 3 PDFs or 10 photos, or paste the text, and tick the terms you want. It’s in beta, so it reads up to 5 lessons a day."
+msgstr "Так, через Розумне додавання. Додай до 3 PDF або 10 фото чи встав текст і познач потрібні терміни. Воно в бета-версії, тому читає до 5 уроків на день."
 
 msgid "Yes. A card can hold one picture, such as a diagram or a slide, and a review can ask from the picture instead of the words."
 msgstr "Так. Картка може мати одне зображення, наприклад схему чи слайд, і повторення може питати за зображенням замість слів."

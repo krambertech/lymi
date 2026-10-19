@@ -110,6 +110,9 @@ describe("analytics privacy contract", () => {
       ),
     ).toEqual({ cards: "1-20", added: 1, removed: 0 });
     expect(
+      eventProperties("cards_tagged", { cards: "100+", added: 0, removed: 2 }, "phone"),
+    ).toEqual({ cards: "100+", added: 0, removed: 2 });
+    expect(
       eventProperties(
         "deck_tag_changed",
         { action: "merge", channel: "app", cards: "1-20", from: "food" },

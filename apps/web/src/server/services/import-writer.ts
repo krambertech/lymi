@@ -15,6 +15,7 @@ import {
   playableRecording,
   readingKey,
   replayProgress,
+  revealedAnswer,
   sameReading,
   serializeState,
   stateDirection,
@@ -28,7 +29,7 @@ import type { ImportChoices, SourceAdapter, SourceSummary } from "../imports/ada
 import { track } from "./analytics";
 import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
-import { type CardImageStorage, uploadCardImage } from "./card-images";
+import { type CardImageStorage, storeImportedImage } from "./card-images";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { stateStatementsForCards } from "./modes";
 import { MAX_RECORDING_BYTES, storeRecording } from "./recordings";
@@ -452,6 +453,8 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
   const modes = new Map<string, Map<Directions, number>>();
   const seen: Held = new Map();
   const found = await lookupAll(ctx);
+  // What `writeChunk` will hand to `attachPictures`, so progress has its total before any lands.
+  let media = 0;
   for await (const { cards } of importedCards(work)) {
     const classified = classify(
       cards,
@@ -462,7 +465,10 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
       keepsRepeats(work.row),
     );
     for (const item of classified) {
+      if (item.kind === "existing" && item.takesRecording && item.card.recording) media++;
       if (item.kind !== "added") continue;
+      if (item.card.picture) media++;
+      if (item.card.recording) media++;
       const tallyByDeck = modes.get(item.card.deckKey) ?? new Map<Directions, number>();
       const directions = directionsFromModes(item.card.modes);
       tallyByDeck.set(directions, (tallyByDeck.get(directions) ?? 0) + 1);
@@ -507,13 +513,18 @@ export async function prepareDecks<Note>(ctx: ServiceContext, work: ImportWork<N
       (result, index) => index % 2 === 0 && result.meta.changes === 1,
     ).length;
   }
-  if (created > 0) {
-    await batchStatements(db, [
-      sql`update imports set counts = json_set(coalesce(counts, '{}'), '$.decks',
-          coalesce(json_extract(counts, '$.decks'), 0) + ${created})
-        where id = ${work.row.id}`,
-    ]);
-  }
+  await batchStatements(db, [
+    // A run handed over meets this import's own cards as existing, so the first count stands.
+    sql`update imports set media_total = max(media_total, ${media}), updated_at = ${Date.now()}
+      where id = ${work.row.id}`,
+    ...(created > 0
+      ? [
+          sql`update imports set counts = json_set(coalesce(counts, '{}'), '$.decks',
+              coalesce(json_extract(counts, '$.decks'), 0) + ${created})
+            where id = ${work.row.id}`,
+        ]
+      : []),
+  ]);
   const decks = await importedDecks(ctx, work.row, work.summary);
   return Object.fromEntries([...decks].filter(([, id]) => id !== null)) as Record<string, string>;
 }
@@ -821,9 +832,12 @@ export type MediaTotals = Totals & {
 };
 export type AttachedMedia = Totals & { recordings: Totals };
 
+/** Pictures and recordings stored at once, matching the six connections a Worker keeps open. */
+export const MEDIA_CONCURRENCY = 6;
+
 /**
- * Stores pictures for cards this import added, and recordings for cards it added or met again.
- * Returns how many of each landed and how many did not.
+ * Stores pictures for cards this import added, and recordings for cards it added or met again,
+ * several at a time. Returns how many of each landed and how many did not.
  */
 export async function attachPictures<Note>(
   ctx: ServiceContext,
@@ -833,10 +847,32 @@ export async function attachPictures<Note>(
   storage: Partial<CardImageStorage> & { audio?: R2Bucket | undefined },
 ): Promise<AttachedMedia> {
   const read = await work.adapter.media(file);
+  const images = imageStorage(storage);
+  const pictureIds = images
+    ? pending.filter((item) => item.kind !== "recording").map((item) => item.cardId)
+    : [];
+  // One read for the step's cards, rather than one per picture.
+  const cards = new Map(
+    (
+      await selectIn([...new Set(pictureIds)], (ids) =>
+        ctx.db
+          .select()
+          .from(schema.cards)
+          .where(
+            and(
+              inArray(schema.cards.id, ids),
+              eq(schema.cards.userId, ctx.userId),
+              eq(schema.cards.importId, work.row.id),
+            ),
+          ),
+      )
+    ).map((card) => [card.id, card]),
+  );
   let stored = 0;
   let skipped = 0;
   const recordings = { stored: 0, skipped: 0 };
-  for (const picture of pending) {
+
+  const attach = async (picture: PendingPicture) => {
     if (picture.kind === "recording") {
       const { audio } = storage;
       // A damaged clip is left out like an unplayable one; a storage failure still retries.
@@ -850,51 +886,51 @@ export async function attachPictures<Note>(
         : "skipped";
       // A card a retried step already recorded was counted then.
       if (outcome !== "kept") recordings[outcome]++;
-      continue;
+      return;
     }
-    const images = imageStorage(storage);
-    if (!images) {
+    const card = cards.get(picture.cardId);
+    if (!images || !card) {
       skipped++;
-      continue;
-    }
-    const [card] = await ctx.db
-      .select({ imageVersion: schema.cards.imageVersion })
-      .from(schema.cards)
-      .where(and(eq(schema.cards.id, picture.cardId), eq(schema.cards.importId, work.row.id)));
-    if (!card) {
-      skipped++;
-      continue;
+      return;
     }
     if (card.imageVersion) {
       stored++;
-      continue;
+      return;
     }
     try {
       const bytes = await read(picture.name, IMAGE_LIMITS.maxBytes);
       if (!bytes) {
         skipped++;
-        continue;
+        return;
       }
-      try {
-        await uploadCardImage(
-          ctx,
-          picture.cardId,
-          bytes,
-          { version: null, description: picture.description },
-          images,
-        );
-      } catch (err) {
-        // A description that names the answer is refused; the picture still comes across without it.
-        if (!(picture.description && err instanceof ServiceError && err.code === "invalid"))
-          throw err;
-        await uploadCardImage(ctx, picture.cardId, bytes, { version: null }, images);
-      }
+      // A description that names the answer is dropped; the picture still comes across.
+      const description =
+        picture.description && !revealedAnswer(card, picture.description)
+          ? picture.description
+          : undefined;
+      await storeImportedImage(ctx, card, bytes, description, images);
       stored++;
     } catch (err) {
       if (!(err instanceof ServiceError)) throw err;
       skipped++;
     }
-  }
+  };
+
+  // An unexpected error stops every worker and fails the step, whose retry finds what was stored.
+  let next = 0;
+  let failure: { error: unknown } | null = null;
+  const worker = async () => {
+    while (!failure && next < pending.length) {
+      const picture = pending[next++] as PendingPicture;
+      try {
+        await attach(picture);
+      } catch (error) {
+        failure ??= { error };
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(MEDIA_CONCURRENCY, pending.length) }, worker));
+  if (failure) throw (failure as { error: unknown }).error;
   return { stored, skipped, recordings };
 }
 

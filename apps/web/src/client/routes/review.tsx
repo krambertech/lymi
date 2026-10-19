@@ -20,6 +20,7 @@ import {
   drawKey,
   gradeAllowed,
   modeKey,
+  pronunciationInputKey,
   type Rating,
   ROUNDS,
   type Round,
@@ -178,10 +179,6 @@ function leftInLeg<T>(items: readonly T[], cards: LegCards, key: (item: T) => st
   ];
 }
 
-/** What a loaded clip says, so a replay reuses it until an edit changes the card's words. */
-const audioSourceOf = (card: { id: string; language: string | null; term: string }) =>
-  `${card.id}\n${card.language}\n${card.term}`;
-
 /** A review of another deck or series starts over, so nothing from this one carries into it. */
 function ReviewPage() {
   const { deck, series, section, cards } = Route.useSearch();
@@ -313,7 +310,6 @@ function Review() {
         : [];
   const current: QueueItem | null =
     !leg || paused ? null : drawLeg ? (atStop ? null : drawn) : (listLeft[0] ?? null);
-  const currentCardId = current?.card.id;
   const currentItemKey = current ? itemKey(current) : undefined;
   const scopeSections = useQuery({ ...sectionsQuery(deck ?? ""), enabled: !!section });
   const scopeSection = section
@@ -651,11 +647,15 @@ function Review() {
 
   // A clip voiced before is loaded with the card, so a tap plays it at once; a missing one is never voiced ahead.
   const preloadCard = current?.card;
+  const currentCardId = preloadCard?.id;
+  const currentAudioInput = preloadCard ? pronunciationInputKey(preloadCard) : null;
   const preloadSource =
-    preloadCard?.audioKey && canPlayPronunciation(preloadCard) ? audioSourceOf(preloadCard) : null;
+    preloadCard?.audioKey && canPlayPronunciation(preloadCard)
+      ? pronunciationInputKey(preloadCard)
+      : null;
   useEffect(() => {
     setAudioError(null);
-    if (!currentCardId) stopAudio();
+    if (!currentAudioInput) stopAudio();
     let live = true;
     if (preloadSource && currentCardId) {
       const audio = watchAudio(new Audio());
@@ -667,28 +667,36 @@ function Review() {
         },
         { once: true },
       );
-      audio.src = api.storedAudioUrl(currentCardId);
+      audio.src = api.storedAudioUrl(currentCardId, preloadCard?.updatedAt);
     }
     return () => {
       live = false;
       stopAudio();
       loadedAudio.current = null;
     };
-  }, [currentCardId, preloadSource, stopAudio, watchAudio]);
+  }, [
+    currentCardId,
+    currentAudioInput,
+    preloadSource,
+    preloadCard?.updatedAt,
+    stopAudio,
+    watchAudio,
+  ]);
 
   const playAudio = useCallback(async () => {
     if (!current || !canPlayPronunciation(current.card) || audioState === "loading") return;
     stopAudio();
     setAudioError(null);
     // The response is no-store, so a replay rewinds the element that already holds it, until an edit changes what it says.
-    const source = audioSourceOf(current.card);
+    const source = pronunciationInputKey(current.card);
     const loaded = loadedAudio.current?.source === source ? loadedAudio.current.audio : null;
     const pressed = performance.now();
     const timing = () => ({
       preloaded: !!loaded,
       wait_ms: Math.min(60_000, Math.round(performance.now() - pressed)),
     });
-    const audio = loaded ?? watchAudio(new Audio(api.audioUrl(current.card.id)));
+    const audio =
+      loaded ?? watchAudio(new Audio(api.audioUrl(current.card.id, current.card.updatedAt)));
     if (loaded) audio.currentTime = 0;
     else setAudioState("loading");
     playingAudio.current = audio;

@@ -86,6 +86,31 @@ describe("production canary", () => {
     );
   });
 
+  it("checks hourly that the deployed key may call the Japanese context model", async () => {
+    const context = `${GATEWAY}/google-ai-studio/v1beta/models/gemini-2.5-flash-lite:generateContent`;
+    const reply = (previousText: string) =>
+      Response.json({
+        candidates: [
+          {
+            finishReason: "STOP",
+            content: { parts: [{ text: JSON.stringify({ previousText }) }] },
+          },
+        ],
+      });
+    const at = new Date("2026-10-17T11:05:00Z");
+    for (const [answer, verdict] of [
+      [() => reply("海を渡る"), "ok"],
+      [() => reply("ふね"), "ok"],
+      [() => new Response("denied", { status: 403 }), "failed"],
+    ] as const) {
+      const { env, checks } = production((url) =>
+        url === context ? Promise.resolve(answer()) : healthy(url),
+      );
+      await run({ ...env, GEMINI_API_KEY: "gemini" } as Bindings, at);
+      expect(checks().gemini_text).toBe(verdict);
+    }
+  });
+
   it("fails the AI checks when every provider request throws, as on 17 October", async () => {
     const { env, checks, calls } = production((url) =>
       url.startsWith(GATEWAY)

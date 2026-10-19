@@ -142,6 +142,7 @@ const TEXT_PRICES: Record<string, TextPrice & { longPrompt?: TextPrice & { above
     output: 0.5,
     longPrompt: { above: 100_000, input: 0.5, cachedInput: 0.05, output: 2.5 },
   },
+  "gemini-2.5-flash-lite": { input: 0.1, cachedInput: 0.01, output: 0.4 },
 };
 
 /** A text call's cost in USD, or nothing for a model without a known price. */
@@ -393,6 +394,7 @@ export const analyticsEvents = {
       "deck_choice",
       "lesson_read",
       "pronunciation",
+      "lead_in",
     ]),
     $ai_provider: z.enum(["openai", "anthropic", "google", "elevenlabs"]),
     $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),
@@ -440,6 +442,12 @@ export const analyticsEvents = {
     // Optional because earlier phone releases send neither.
     preloaded: z.boolean().optional(),
     wait_ms: z.number().int().nonnegative().max(60_000).optional(),
+  }),
+  lead_in_decided: z.object({
+    language: z.string().regex(/^[a-z]{2,3}$/),
+    outcome: z.enum(["unambiguous", "written", "no_fragment", "refused", "failed"]),
+    decided_by: z.enum(["model", "writer"]),
+    score: z.number().min(0).max(1).optional(),
   }),
   deck_tag_changed: z.object({
     action: z.enum(["rename", "merge", "archive", "restore"]),
@@ -528,6 +536,7 @@ export const analyticsProducers = {
   section_go_to: ["phone"],
   hook_drafted: ["browser", "phone"],
   pronunciation_played: ["browser", "phone"],
+  lead_in_decided: ["worker"],
   deck_tag_changed: ["worker"],
   cards_tagged: ["browser", "phone"],
   deck_enrichment_changed: ["worker"],

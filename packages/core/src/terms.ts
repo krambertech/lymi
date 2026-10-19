@@ -96,3 +96,22 @@ export function hookable(
   if (primary(card.language) === primary(meaningLanguage)) return false;
   return headword(card.term).trim().split(/\s+/).length <= 3;
 }
+
+/** In-memory players must discard a Japanese clip when its reading or meaning changes. */
+export function pronunciationInputKey(card: {
+  id: string;
+  term: string;
+  language?: string | null | undefined;
+  pronunciation?: string | null | undefined;
+  meaning?: string | null | undefined;
+  audioSource?: string | null | undefined;
+}): string {
+  const japanese = languageKey(card.language) === "ja" && card.audioSource !== "recorded";
+  return JSON.stringify([
+    card.id,
+    card.language,
+    card.term,
+    card.audioSource,
+    ...(japanese ? [card.pronunciation, card.meaning] : []),
+  ]);
+}

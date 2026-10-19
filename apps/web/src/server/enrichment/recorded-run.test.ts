@@ -1,10 +1,11 @@
 import { CONFIGURED_LANGUAGES } from "@lymi/core";
 import { describe, expect, it } from "vitest";
 import {
-  ENRICHMENT_BAR,
+  enrichesByDefault,
   enrichmentPromptHash,
   languagePassRates,
   passRates,
+  type RecordedRun,
   readFixtures,
   recordedRuns,
   regressions,
@@ -43,22 +44,40 @@ describe("the recorded enrichment run", () => {
 });
 
 describe("the enrichment gate", () => {
-  const rates = latest ? languagePassRates(scoreCalls(decks, latest.run.calls)) : new Map();
+  // Only the cases a run was asked, so a run from before a language's fixture has no rate for it.
+  const rates = (run: RecordedRun | undefined) => {
+    const asked = new Set(run?.calls.flatMap((call) => call.cases));
+    return languagePassRates(
+      scoreCalls(decks, run?.calls ?? []).filter((one) => asked.has(one.item.id)),
+    );
+  };
+  const now = rates(latest?.run);
+  const before = rates(previous?.run);
 
   it.each(Object.entries(CONFIGURED_LANGUAGES))(
     "enriches %s decks unasked only while its fixture passes the bar",
     (tag, row) => {
-      const rate = rates.get(tag);
+      const rate = now.get(tag);
       expect(rate?.total ?? 0, `Add a fixture deck for ${tag} to evaluation.json`).toBeGreaterThan(
         20,
       );
-      const passes = (rate?.pass ?? 0) / (rate?.total ?? 1) >= ENRICHMENT_BAR;
+      const passes = enrichesByDefault(rate, before.get(tag));
       expect(
         row.enrichByDefault,
-        `${tag} meets ${rate?.pass}/${rate?.total} of its expectations; set enrichByDefault to ${passes} in packages/core/src/languages/configured.ts`,
+        `${tag} meets ${rate?.pass}/${rate?.total} of its expectations now and ${before.get(tag)?.pass ?? "-"}/${before.get(tag)?.total ?? "-"} before; set enrichByDefault to ${passes} in packages/core/src/languages/configured.ts`,
       ).toBe(passes);
     },
   );
+});
+
+describe("enrichesByDefault", () => {
+  it("turns a language on after two passing runs, or one when it is new, and off after one failing run", () => {
+    expect(enrichesByDefault({ pass: 35, total: 37 }, { pass: 33, total: 37 })).toBe(false);
+    expect(enrichesByDefault({ pass: 35, total: 37 }, { pass: 36, total: 37 })).toBe(true);
+    expect(enrichesByDefault({ pass: 35, total: 37 }, undefined)).toBe(true);
+    expect(enrichesByDefault({ pass: 33, total: 37 }, { pass: 37, total: 37 })).toBe(false);
+    expect(enrichesByDefault(undefined, undefined)).toBe(false);
+  });
 });
 
 describe("regressions", () => {

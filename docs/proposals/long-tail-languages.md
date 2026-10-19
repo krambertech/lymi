@@ -14,7 +14,7 @@ A configured language joins with an invented fixture in `apps/web/src/server/enr
 
 **The bar.** A language's pass rate counts only the expectation checks, which ask whether the AI got the language right, not the house-style checks. At 90% or above, a new language deck lets the AI fill the fields its row starts with. Below it, the deck starts with no AI fields, so nothing is filled until the owner turns fields on in deck settings; from then on adds and Enrich fill them as in any deck. AI text carries the AI badge either way.
 
-**Enforcement.** Each row in `packages/core/src/languages/configured.ts` states `enrichByDefault`. `recorded-run.test.ts` fails when a row has no fixture or disagrees with the latest recorded run, and names the value to set, so a prompt change that moves a language across the bar says so. Runs are compared with the one before only on the cases both answered, so a new fixture is not a regression.
+**Enforcement.** Each row in `packages/core/src/languages/configured.ts` states `enrichByDefault`. `recorded-run.test.ts` fails when a row has no fixture or disagrees with the recorded runs, and names the value to set. A language turns on only when it meets the bar in the latest run and in the run before, where that run had its cases, and turns off after one run below it, so one noisy run can close the gate but not open it. Runs are compared with the one before only on the cases both answered, so a new fixture is not a regression.
 
 **First run** (v7, `gpt-6-luna`): Korean 58/59, Vietnamese, Georgian and Armenian 42/42, Tamil 41/42, and Filipino 33/37. Filipino misses its stress marks (baháy for báhay, tubíg, magánda, basá for bása, read), so Filipino decks wait for their owner; the live product wrote baháy again when verified.
 
@@ -56,7 +56,7 @@ Filipino marks stress in place rather than respelling it in capitals: Filipino d
 ## Open questions
 
 1. Should the gate work per field, so Filipino meanings, which pass, stay on while only its stress marks wait?
-2. Is 90% over about forty expectations the right bar, or should a language need two runs in a row, since one case moves Filipino across it?
+2. Is 90% over about forty expectations the right bar? Two cases move Filipino across it, which is why opening the gate takes two runs.
 3. Who reviews each fixture? They are invented, and a wrong expectation fails a right answer: a fluent reader should check each before the gate is trusted.
 4. Vietnamese has two tone placements, hòa and hoà, which NFC does not unify: should the duplicate key fold them?
 5. Should a Western Armenian deck (`hyw`) get its own row, since its consonants voice the other way?

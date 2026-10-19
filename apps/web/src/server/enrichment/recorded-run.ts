@@ -5,11 +5,11 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import {
   CONFIGURED_LANGUAGES,
+  configuredLanguage,
   type DeckPurpose,
   deckEnrichFields,
   deckPurpose,
   fieldsToFill,
-  languageFormat,
 } from "@lymi/core";
 import { promptHash } from "../ai/prompt-hash";
 import { languagePrompts } from "../languages";
@@ -198,10 +198,12 @@ function expected(rule: string): boolean {
 
 /** How often a run meets each configured language's expectations, by the row's own tag. */
 export function languagePassRates(scored: readonly ScoredCase[]) {
+  const tags = new Map(Object.entries(CONFIGURED_LANGUAGES).map(([tag, row]) => [row, tag]));
   const rates = new Map<string, { pass: number; total: number }>();
   for (const { deck, results } of scored) {
-    const tag = languageFormat(deck.language)?.tag;
-    if (!tag || !Object.hasOwn(CONFIGURED_LANGUAGES, tag)) continue;
+    const config = configuredLanguage(deck.language);
+    const tag = config && tags.get(config);
+    if (!tag) continue;
     const count = rates.get(tag) ?? { pass: 0, total: 0 };
     for (const result of results.filter((one) => expected(one.rule))) {
       count.total += 1;
@@ -210,4 +212,17 @@ export function languagePassRates(scored: readonly ScoredCase[]) {
     rates.set(tag, count);
   }
   return rates;
+}
+
+/**
+ * Whether a language's decks should enrich unasked: it meets the bar in the latest run, and in
+ * the run before when that run had its cases, so one noisy run can turn it off but not on.
+ */
+export function enrichesByDefault(
+  latest: { pass: number; total: number } | undefined,
+  previous: { pass: number; total: number } | undefined,
+): boolean {
+  const passes = (rate: { pass: number; total: number }) =>
+    rate.total > 0 && rate.pass / rate.total >= ENRICHMENT_BAR;
+  return !!latest && passes(latest) && (!previous?.total || passes(previous));
 }

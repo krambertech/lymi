@@ -366,8 +366,8 @@ export function TutorLessonsView() {
           ]}
           note={
             <Trans>
-              Lymi doesn’t connect to tutoring sites. Smart add is in beta and reads up to 5
-              lessons a day.
+              Lymi doesn’t connect to tutoring sites. Smart add is in beta and reads up to 5 lessons
+              a day.
             </Trans>
           }
           withoutAssistant

@@ -46,7 +46,7 @@ A language with no native voice speaks with Gemini's default voice; one Gemini d
 | Vietnamese | `vi` | tone marks for a term typed without them (cam on → cảm ơn), an abbreviation said (km → ki-lô-mét), else empty | classifier, north and south words | configured |
 | Georgian | `ka` | national romanization with ejectives marked: ჭიქა ch'ika | verbal noun, present, aorist | configured |
 | Armenian | `hy` | Eastern Armenian romanized as said: քույր k'uyr | irregular plurals, present | configured |
-| Tamil | `ta` | the written word read aloud, romanized: தம்பி tambi | verb forms, the spoken form | configured, until a transliteration engine |
+| Tamil | `ta` | the written word read aloud, romanized: தம்பி tambi | verb forms, the spoken form | configured, until the word-by-word engine of [Tamil](tamil.md), whose letters it already uses |
 | Estonian, Latvian, Lithuanian, Finnish, Norwegian, Danish, Dutch | | | principal forms, gender and plural | configured, next |
 | Persian, Urdu | | | | platform: right-to-left first |
 | Cantonese | `yue` | | | supported: jyutping engine |

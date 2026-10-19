@@ -1,3 +1,5 @@
+import { configuredLanguage } from "./languages";
+
 /** The fields enrichment may fill. Text already on a card is never overwritten, whatever wrote it. */
 export const ENRICHED_FIELDS = [
   "meaning",
@@ -31,11 +33,11 @@ export function enrichmentStalled(
 export const DECK_ENRICH_FIELDS = ["meaning", "example", "notes", "pronunciation"] as const;
 export type DeckEnrichField = (typeof DECK_ENRICH_FIELDS)[number];
 
-/** Languages whose cards list a word's forms or roots, so notes start on. */
-const FORM_LANGUAGES = new Set(["et", "fi", "de", "nl", "sv", "ko"]);
+/** Languages without a configured row whose cards list a word's forms, so notes start on. */
+const FORM_LANGUAGES = new Set(["et", "fi", "de", "nl", "sv"]);
 
-/** Languages whose spelling does not show how a word is said or stressed, so pronunciation starts on. */
-const READING_LANGUAGES = new Set(["zh", "ja", "ko", "ru", "uk"]);
+/** Languages without a configured row whose spelling does not show how a word is said or stressed. */
+const READING_LANGUAGES = new Set(["zh", "ja", "ru", "uk"]);
 
 /** What a deck is for: a language, a subject or exam, or something else. */
 export const DECK_PURPOSES = ["language", "subject", "other"] as const;
@@ -56,11 +58,16 @@ export function defaultEnrichFields(
 ): DeckEnrichField[] {
   const primary = language?.split("-")[0]?.toLowerCase();
   if (!primary || deckPurpose(purpose, language) !== "language") return ["meaning"];
+  const configured = configuredLanguage(language);
+  // Below the evaluation's bar the AI waits to be asked. docs/proposals/long-tail-languages.md.
+  if (configured && !configured.enrichByDefault) return [];
+  const starts = (field: "notes" | "pronunciation", fallback: ReadonlySet<string>) =>
+    configured ? configured.starts.includes(field) : fallback.has(primary);
   return [
     "meaning",
     "example",
-    ...(FORM_LANGUAGES.has(primary) ? (["notes"] as const) : []),
-    ...(READING_LANGUAGES.has(primary) ? (["pronunciation"] as const) : []),
+    ...(starts("notes", FORM_LANGUAGES) ? (["notes"] as const) : []),
+    ...(starts("pronunciation", READING_LANGUAGES) ? (["pronunciation"] as const) : []),
   ];
 }
 

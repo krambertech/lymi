@@ -1,6 +1,9 @@
+import { CONFIGURED_LANGUAGES } from "@lymi/core";
 import { describe, expect, it } from "vitest";
 import {
+  ENRICHMENT_BAR,
   enrichmentPromptHash,
+  languagePassRates,
   passRates,
   readFixtures,
   recordedRuns,
@@ -30,11 +33,32 @@ describe("the recorded enrichment run", () => {
     ).toEqual(now);
   });
 
-  it("passes each rule about as often as the run before it", () => {
+  it("passes each rule about as often as the run before it, on the cases both ran", () => {
     if (!latest || !previous) return;
-    const rates = (calls: typeof latest.run.calls) => passRates(scoreCalls(decks, calls));
+    const shared = new Set(previous.run.calls.flatMap((call) => call.cases));
+    const rates = (calls: typeof latest.run.calls) =>
+      passRates(scoreCalls(decks, calls).filter((one) => shared.has(one.item.id)));
     expect(regressions(rates(previous.run.calls), rates(latest.run.calls))).toEqual([]);
   });
+});
+
+describe("the enrichment gate", () => {
+  const rates = latest ? languagePassRates(scoreCalls(decks, latest.run.calls)) : new Map();
+
+  it.each(Object.entries(CONFIGURED_LANGUAGES))(
+    "enriches %s decks unasked only while its fixture passes the bar",
+    (tag, row) => {
+      const rate = rates.get(tag);
+      expect(rate?.total ?? 0, `Add a fixture deck for ${tag} to evaluation.json`).toBeGreaterThan(
+        20,
+      );
+      const passes = (rate?.pass ?? 0) / (rate?.total ?? 1) >= ENRICHMENT_BAR;
+      expect(
+        row.enrichByDefault,
+        `${tag} meets ${rate?.pass}/${rate?.total} of its expectations; set enrichByDefault to ${passes} in packages/core/src/languages/configured.ts`,
+      ).toBe(passes);
+    },
+  );
 });
 
 describe("regressions", () => {

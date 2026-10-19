@@ -34,6 +34,15 @@ The AI may add readings to an example someone else wrote only when the text is o
 - **Pronunciation**: the term as it is said, in Hangul, only where that differs from the spelling: 학교 is said 학꾜, 국물 궁물. Empty for a word said as written, such as 사랑. No romanization, which a learner outgrows once they read Hangul.
 - **Notes**: a verb or adjective's polite present form, 가다 → 가요. A Sino-Korean word gives each root's hanja and reading with one or two words that share it, 學 학: 학생, 학년, so one root opens a family of words. A native Korean word has no roots line.
 
+## Other configured languages
+
+- **Filipino** (`fil`, `tl`): the pronunciation is the term with its stress marks, an acute on the stressed vowel (báhay), a grave on a final vowel cut by a glottal stop (bátà) and a circumflex where both meet (basâ). Notes give a verb's root, its focus and its three aspects: *kumain · kumakain · kakain*.
+- **Vietnamese** (`vi`): every word keeps its tone marks. The pronunciation is empty unless the term does not show how it is said: typed without tone marks (cam on → cảm ơn) or abbreviated (km → ki-lô-mét). Notes give a noun's classifier, *con chó*.
+- **Georgian** (`ka`) and **Armenian** (`hy`): the pronunciation is a romanization, Georgian's national system with each ejective marked (ჭიქა ch'ika), and Eastern Armenian as it is said (քույր k'uyr).
+- **Tamil** (`ta`): the pronunciation romanizes the written word as it is read aloud, with macrons and dots (தம்பி tambi). Notes give the spoken form where it differs, *தண்ணீர்*, said *taṇṇi*.
+
+A configured language's AI fills cards unasked only while its evaluation passes the bar ([long-tail languages](proposals/long-tail-languages.md)); Filipino is below it, so its decks start with no AI fields until the owner turns them on.
+
 `GET /api/languages` and [the docs](https://lymi.app/docs/languages) give every language's format from the records in `packages/core/src/languages`.
 
 ## Notes

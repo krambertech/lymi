@@ -3,7 +3,14 @@
  * evaluate.ts and the test that rescores the recorded runs in `runs/` on every CI run.
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { type DeckPurpose, deckEnrichFields, deckPurpose, fieldsToFill } from "@lymi/core";
+import {
+  CONFIGURED_LANGUAGES,
+  type DeckPurpose,
+  deckEnrichFields,
+  deckPurpose,
+  fieldsToFill,
+  languageFormat,
+} from "@lymi/core";
 import { promptHash } from "../ai/prompt-hash";
 import { languagePrompts } from "../languages";
 import { type CaseExpectations, type CheckResult, checkCard, tally } from "./checks";
@@ -179,4 +186,28 @@ export function regressions(
       ? [`${rule}: ${now.pass}/${now.total}, was ${before.pass}/${before.total}`]
       : [];
   });
+}
+
+/** The share of a configured language's expectations a run must meet before its decks enrich unasked. */
+export const ENRICHMENT_BAR = 0.9;
+
+/** The rules that check what a case expects of the AI, rather than the house style every card keeps. */
+function expected(rule: string): boolean {
+  return /^(answered|expected |includes |excludes )/.test(rule);
+}
+
+/** How often a run meets each configured language's expectations, by the row's own tag. */
+export function languagePassRates(scored: readonly ScoredCase[]) {
+  const rates = new Map<string, { pass: number; total: number }>();
+  for (const { deck, results } of scored) {
+    const tag = languageFormat(deck.language)?.tag;
+    if (!tag || !Object.hasOwn(CONFIGURED_LANGUAGES, tag)) continue;
+    const count = rates.get(tag) ?? { pass: 0, total: 0 };
+    for (const result of results.filter((one) => expected(one.rule))) {
+      count.total += 1;
+      if (result.pass) count.pass += 1;
+    }
+    rates.set(tag, count);
+  }
+  return rates;
 }

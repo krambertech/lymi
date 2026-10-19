@@ -66,9 +66,21 @@ describe("deck enrichment fields", () => {
     expect(defaultEnrichFields("et")).toEqual(["meaning", "example", "notes"]);
     expect(defaultEnrichFields("zh-Hans")).toEqual(["meaning", "example", "pronunciation"]);
     expect(defaultEnrichFields("ko-KR")).toEqual(["meaning", "example", "notes", "pronunciation"]);
+    expect(defaultEnrichFields("vi")).toEqual(["meaning", "example", "pronunciation"]);
+    expect(defaultEnrichFields("ka")).toEqual(["meaning", "example", "pronunciation"]);
     expect(deckEnrichFields(null, "et")).toEqual(["meaning", "example", "notes"]);
     expect(deckEnrichFields(["notes", "meaning"], "it")).toEqual(["meaning", "notes"]);
     expect(deckEnrichFields([], "it")).toEqual([]);
+  });
+
+  it("leaves a deck in a language below the evaluation's bar for its owner to ask", () => {
+    for (const tag of ["tl", "fil-PH"]) expect(defaultEnrichFields(tag)).toEqual([]);
+    expect(deckEnrichFields(null, "tl")).toEqual([]);
+    expect(deckEnrichFields(["meaning", "pronunciation"], "tl")).toEqual([
+      "meaning",
+      "pronunciation",
+    ]);
+    expect(defaultEnrichFields("tl", "subject")).toEqual(["meaning"]);
   });
 
   it("starts a subject or other deck from the meaning alone, whatever its language", () => {

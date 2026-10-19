@@ -96,11 +96,20 @@ msgstr "{cards, plural, one {карточка} few {карточки} many {ка
 msgid "{CLASS_LEARNERS, plural, one {# learner joined} other {# learners joined}}"
 msgstr "{CLASS_LEARNERS, plural, one {Присоединился # ученик} few {Присоединились # ученика} many {Присоединились # учеников} other {Присоединились # ученика}}"
 
-msgid "{count, plural, one {# {language} card} other {# {language} cards}} with meanings in {meaningLanguage}. Try a few, then add the deck to Lymi to review them all."
-msgstr "{count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. Язык: {language}. Значения — {meaningLanguage}. Попробуй несколько, а потом добавь колоду в Lymi, чтобы повторять все."
+msgid "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}} with meanings in {meaningLanguage}."
+msgstr "{language}: {count, plural, one {# бесплатная карточка} few {# бесплатные карточки} many {# бесплатных карточек} other {# бесплатной карточки}}, язык перевода: {meaningLanguage}."
 
-msgid "{count, plural, one {# card} other {# cards}}. Try a few, then add the deck to Lymi to review them all."
-msgstr "{count, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}. Попробуй несколько, а потом добавь колоду в Lymi, чтобы повторять все."
+msgid "{count, plural, one {# free {language} flashcard} other {# free {language} flashcards}}."
+msgstr "{language}: {count, plural, one {# бесплатная карточка} few {# бесплатные карточки} many {# бесплатных карточек} other {# бесплатной карточки}}."
+
+msgid "{count, plural, one {# free flashcard} other {# free flashcards}} in {deckCount, plural, one {# deck} other {# decks}}."
+msgstr "{count, plural, one {# бесплатная карточка} few {# бесплатные карточки} many {# бесплатных карточек} other {# бесплатной карточки}} в {deckCount, plural, one {# колоде} few {# колодах} many {# колодах} other {# колоды}}."
+
+msgid "{count, plural, one {# free flashcard} other {# free flashcards}}."
+msgstr "{count, plural, one {# бесплатная карточка} few {# бесплатные карточки} many {# бесплатных карточек} other {# бесплатной карточки}}."
+
+msgid "{decks, plural, one {# free deck} other {# free decks}} with {cards, plural, one {# card} other {# cards}} in all."
+msgstr "{decks, plural, one {# бесплатная колода} few {# бесплатные колоды} many {# бесплатных колод} other {# бесплатной колоды}}, всего {cards, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}."
 
 msgid "{decks, plural, one {deck} other {decks}}"
 msgstr "{decks, plural, one {колода} few {колоды} many {колод} other {колоды}}"
@@ -108,14 +117,14 @@ msgstr "{decks, plural, one {колода} few {колоды} many {колод} 
 msgid "{found, plural, one {# deck} other {# decks}}"
 msgstr "{found, plural, one {# колода} few {# колоды} many {# колод} other {# колоды}}"
 
-msgid "{heading} · Lymi"
-msgstr "{heading} · Lymi"
-
 msgid "{known}% known"
 msgstr "Выучено {known}%"
 
 msgid "{label} decks"
 msgstr "Колоды: {label}"
+
+msgid "{language} · {name} · {count, plural, one {# free flashcard} other {# free flashcards}}"
+msgstr "{language} · {name} · {count, plural, one {# бесплатная карточка} few {# бесплатные карточки} many {# бесплатных карточек} other {# бесплатной карточки}}"
 
 msgid "{learners, plural, one {# learner} other {# learners}}"
 msgstr "{learners, plural, one {# ученик} few {# ученика} many {# учеников} other {# ученика}}"
@@ -126,14 +135,8 @@ msgstr "{learners, plural, one {Доставлено # ученику} few {До
 msgid "{left, plural, =0 {That’s the whole deck. Add it, and Lymi chooses when to bring each card back.} one {One more card is waiting. Add the deck, and Lymi chooses when to bring each one back.} other {Another # cards are waiting. Add the deck, and Lymi chooses when to bring each one back.}}"
 msgstr "{left, plural, =0 {Это вся колода. Добавь её, и Lymi сама выберет, когда вернуть каждую карточку.} one {Ждёт ещё одна карточка. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} few {Ждут ещё # карточки. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} many {Ждут ещё # карточек. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} other {Ждут ещё # карточки. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.}}"
 
-msgid "{name} · {language} vocabulary · Lymi"
-msgstr "{name} · {language} · Lymi"
-
-msgid "{name} · {subject} · Lymi"
-msgstr "{name} · {subject} · Lymi"
-
-msgid "{name} · Flashcards · Lymi"
-msgstr "{name} · Флеш-карточки · Lymi"
+msgid "{name} · {count, plural, one {# free flashcard} other {# free flashcards}}"
+msgstr "{name} · {count, plural, one {# бесплатная карточка} few {# бесплатные карточки} many {# бесплатных карточек} other {# бесплатной карточки}}"
 
 msgid "{name} flashcards"
 msgstr "{name}: флеш-карточки"
@@ -159,6 +162,9 @@ msgstr "{position} из {total}"
 
 msgid "{reviews, plural, one {past review} other {past reviews}}"
 msgstr "{reviews, plural, one {прошлое повторение} few {прошлых повторения} many {прошлых повторений} other {прошлого повторения}}"
+
+msgid "{title} · {decks, plural, one {# free deck} other {# free decks}}"
+msgstr "{title} · {decks, plural, one {# бесплатная колода} few {# бесплатные колоды} many {# бесплатных колод} other {# бесплатной колоды}}"
 
 msgid "{title} · Lymi"
 msgstr "{title} · Lymi"
@@ -591,6 +597,9 @@ msgstr "AI-ассистенты"
 
 msgid "Al que madruga, Dios lo ayuda: the early bird catches the worm."
 msgstr "Al que madruga, Dios lo ayuda: кто рано встаёт, тому Бог подаёт."
+
+msgid "All {shelfName} decks"
+msgstr "Все колоды: {shelfName}"
 
 msgid "All 300 general questions of the Einbürgerungstest and the 10 for your state, in German as on the test, with English next to each. Free flashcards from the BAMF catalogue."
 msgstr "Einbürgerungstest и Leben in Deutschland на русском: все 300 общих вопросов и 10 вопросов твоей земли, на немецком, как на тесте, с переводом рядом. Бесплатные карточки по каталогу BAMF для теста на гражданство Германии."
@@ -1643,6 +1652,9 @@ msgstr "Для всех"
 msgid "For example: “Add the key terms from this lecture to my Biology deck in Lymi, with the definitions from the notes.” Ask for one section at a time when the file is long."
 msgstr "Например: «Добавь ключевые термины из этой лекции в мою колоду „Биология“ в Lymi с определениями из заметок». Если файл длинный, проси по одному разделу."
 
+msgid "For example: {list}."
+msgstr "Например: {list}."
+
 msgid "For Germany, the US, Czechia and Spain, the decks follow the question list each exam publishes, named under the exam. Canada and the DMVs don’t publish their questions, so those decks are practice questions written from the official guide, and the language exam decks teach the vocabulary of each level rather than an official list. Lymi isn’t affiliated with any exam authority and can’t promise a pass."
 msgstr "Колоды для Германии, США, Чехии и Испании следуют списку вопросов, который публикует каждый экзамен; источник указан под экзаменом. Канада и DMV свои вопросы не публикуют, поэтому эти колоды — тренировочные вопросы по официальному пособию, а колоды языковых экзаменов учат лексике уровня, а не официальному списку. Lymi не связан ни с одним экзаменационным органом и не может гарантировать, что ты сдашь экзамен."
 
@@ -1673,8 +1685,8 @@ msgstr "Бесплатные колоды, которые проходишь о�
 msgid "Free Estonian decks with a native voice on every card, with meanings in English, Russian or Ukrainian. Add one in a tap."
 msgstr "Бесплатные эстонские колоды с голосом носителя на каждой карточке и значениями на русском, украинском или английском. Добавь в одно касание."
 
-msgid "Free flashcard decks — languages, exams and more · Lymi"
-msgstr "Бесплатные колоды флеш-карточек — языки, экзамены и не только · Lymi"
+msgid "Free flashcard decks: languages, exams and more · Lymi"
+msgstr "Бесплатные карточки: языки, экзамены и не только · Lymi"
 
 msgid "Free Japanese decks with readings and a voice on every card. Add one in a tap. More are on the way."
 msgstr "Бесплатные японские колоды с чтением и голосом на каждой карточке. Добавляются одним касанием. Скоро будет больше."
@@ -2496,6 +2508,9 @@ msgstr "минут на ответы"
 msgid "mitochondrion"
 msgstr "митохондрия"
 
+msgid "More {language} decks"
+msgstr "Ещё колоды: {language}"
+
 msgid "More decks"
 msgstr "Другие колоды"
 
@@ -3097,6 +3112,9 @@ msgstr "Целевая точка восстановления: сколько �
 msgid "Recovery time objective: how long a service can be down"
 msgstr "Целевое время восстановления: сколько сервис может не работать"
 
+msgid "Related decks"
+msgstr "Похожие колоды"
+
 msgid "Remember a card, and Lymi waits longer before showing it again. Forget it, and it comes back soon."
 msgstr "Если помнишь карточку, Lymi дольше ждёт, прежде чем показать её снова. Если нет — она скоро вернётся."
 
@@ -3219,6 +3237,9 @@ msgstr "Разделы"
 
 msgid "Sections and the deck library are rolling out during the beta. We’ll tell you when your account has them."
 msgstr "Разделы и библиотека колод появляются постепенно во время беты. Мы сообщим, когда они будут в твоём аккаунте."
+
+msgid "Sections: {list}."
+msgstr "Разделы: {list}."
 
 msgid "Security"
 msgstr "Безопасность"
@@ -3825,6 +3846,9 @@ msgstr "Один адрес работает везде. Ничего не ну�
 
 msgid "The same kanji sounds different in different words. Lymi shows the reading over the kanji until you know the word, then takes it away so you learn to read it on your own."
 msgstr "Один и тот же кандзи в разных словах звучит по-разному. Lymi показывает чтение над кандзи, пока ты не знаешь слово, а потом убирает его, и дальше ты читаешь без подсказки."
+
+msgid "The same topic in other languages"
+msgstr "Та же тема на других языках"
 
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "Одно слово и для любимого человека, и для цены, которую не хочется платить."

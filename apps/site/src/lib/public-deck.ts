@@ -2,13 +2,17 @@ import { env, waitUntil } from "cloudflare:workers";
 import type { PublicDeckOut, PublicDeckSummary } from "@lymi/core/catalog";
 import {
   countDeckPageView,
+  listPublicDeckPlaces,
   listPublicDeckSlugs,
+  listPublicDecks,
   listRelatedDecks,
   loadPublicDeck,
+  type PublicDeckPlace,
   publicDeckRedirect,
 } from "@lymi/core/catalog/server";
 import { drizzle } from "@lymi/core/db";
 import type { AstroGlobal } from "astro";
+import { type DeckLinks, deckLinks, linkedSlugs, withSummaries } from "./deck-links";
 import {
   countsAsPageView,
   DECK_CACHE_CONTROL,
@@ -21,7 +25,13 @@ import {
 import type { Locale } from "./routes";
 
 export type DeckPage =
-  | { status: 200; locale: Locale; deck: PublicDeckOut; related: PublicDeckSummary[] }
+  | {
+      status: 200;
+      locale: Locale;
+      deck: PublicDeckOut;
+      related: PublicDeckSummary[];
+      links: DeckLinks;
+    }
   | { status: 404 | 410; locale: Locale; slug: string };
 
 const catalogDb = () => drizzle(env.DB);
@@ -63,10 +73,14 @@ export async function resolveDeckPage(
     astro.response.status = status;
     return { status, locale, slug };
   }
-  const related = await listRelatedDecks(db, slug, { language: locale, limit: RELATED_ON_PAGE });
+  const [related, places] = await Promise.all([
+    listRelatedDecks(db, slug, { language: locale, limit: RELATED_ON_PAGE }),
+    listPublicDeckPlaces(db, locale).catch(linksFailed(slug, locale)),
+  ]);
+  const links = places ? await neighbourLinks(places, result.deck, related, locale) : NO_LINKS;
   const etag = deckEtag({
     slug: result.deck.slug,
-    content: deckContentHash(result.deck, related),
+    content: deckContentHash(result.deck, related, links),
     locale,
     version: env.CF_VERSION_METADATA?.id,
   });
@@ -80,7 +94,30 @@ export async function resolveDeckPage(
       headers: { "cache-control": DECK_CACHE_CONTROL, etag },
     });
   }
-  return { status: 200, locale, deck: result.deck, related };
+  return { status: 200, locale, deck: result.deck, related, links };
+}
+
+const NO_LINKS: DeckLinks = { shelf: null, language: [], topic: [] };
+
+/** A failure to load the page's links leaves them out rather than failing the page. */
+function linksFailed(slug: string, locale: Locale) {
+  return (error: unknown) => {
+    console.error("deck page links failed", { slug, locale, error });
+    return null;
+  };
+}
+
+async function neighbourLinks(
+  places: readonly PublicDeckPlace[],
+  deck: PublicDeckOut,
+  related: readonly PublicDeckSummary[],
+  locale: Locale,
+): Promise<DeckLinks> {
+  const picked = deckLinks(places, deck, related);
+  const rows = await listPublicDecks(catalogDb(), linkedSlugs(picked), locale).catch(
+    linksFailed(deck.slug, locale),
+  );
+  return rows ? withSummaries(picked, rows) : NO_LINKS;
 }
 
 export function publishedDeckSlugs() {

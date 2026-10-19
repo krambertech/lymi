@@ -54,11 +54,12 @@ export function deckStructuredData(deck: PublicDeckOut, locale: Locale) {
   };
 }
 
-/** schema.org BreadcrumbList: Explore, then the deck, so a result shows where the page sits. */
+/** schema.org BreadcrumbList: Explore, the deck's shelf where it has a page, then the deck. */
 export function deckBreadcrumbs(
   deck: Pick<PublicDeckSummary, "slug" | "name">,
   locale: Locale,
   exploreName: string,
+  shelf?: { name: string; path: string } | null,
 ) {
   const crumb = (position: number, name: string, path: string) => ({
     "@type": "ListItem",
@@ -71,7 +72,8 @@ export function deckBreadcrumbs(
     "@type": "BreadcrumbList",
     itemListElement: [
       crumb(1, exploreName, explorePath(locale)),
-      crumb(2, deck.name, deckPath(deck.slug, locale)),
+      ...(shelf ? [crumb(2, shelf.name, shelf.path)] : []),
+      crumb(shelf ? 3 : 2, deck.name, deckPath(deck.slug, locale)),
     ],
   };
 }

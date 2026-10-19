@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { api } from "@lymi/client/api";
-import { canPlayPronunciation } from "@lymi/core";
+import { canPlayPronunciation, pronunciationInputKey } from "@lymi/core";
 import { SPEAKER_WAVES } from "@lymi/design";
 import { requireOptionalNativeModule } from "expo";
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
@@ -39,7 +39,10 @@ void audio
 
 type Card = {
   id: string;
+  updatedAt?: Date | string | undefined;
   term: string;
+  pronunciation?: string | null | undefined;
+  meaning?: string | null | undefined;
   language?: string | null | undefined;
   audioSource?: string | null | undefined;
   audioKey?: string | null | undefined;
@@ -66,6 +69,7 @@ function useAudioPronunciation(
   const [asked, setAsked] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const loaded = useRef<string | null>(null);
+  const preloaded = useRef(false);
   const pressed = useRef({ at: 0, preloaded: false });
   const settled = useRef(onSettled);
   settled.current = onSettled;
@@ -74,21 +78,23 @@ function useAudioPronunciation(
   // A new card starts quiet, with no error from the last one, and loads a clip voiced before so a
   // tap plays it at once; a missing clip is never voiced ahead.
   const cardId = card?.id ?? null;
+  const audioInput = card ? pronunciationInputKey(card) : null;
   const preload = speakable && !!card?.audioKey;
   const shown = useRef<string | null>(null);
   useEffect(() => {
-    if (shown.current === cardId) return;
-    shown.current = cardId;
+    if (shown.current === audioInput) return;
+    shown.current = audioInput;
     setError(null);
     setAsked(false);
     player.pause();
     loaded.current = null;
     if (cardId && preload && headers) {
-      const uri = api.storedAudioUrl(cardId);
+      const uri = api.storedAudioUrl(cardId, card?.updatedAt);
       player.replace({ uri, headers });
-      loaded.current = uri;
+      loaded.current = audioInput;
+      preloaded.current = true;
     }
-  }, [cardId, preload, headers, player]);
+  }, [cardId, audioInput, card?.updatedAt, preload, headers, player]);
 
   // An ask is answered once the sound starts; until then it can time out.
   const playing = status.isLoaded && status.playing;
@@ -115,15 +121,17 @@ function useAudioPronunciation(
   const play = () => {
     if (!speakable || !headers || !card) return;
     setError(null);
-    const uri = api.audioUrl(card.id);
+    const uri = api.audioUrl(card.id, card.updatedAt);
+    const source = pronunciationInputKey(card);
     // A preload that has not loaded may be a clip not voiced yet, so the full address voices it.
-    const ready = loaded.current === uri || (!!loaded.current && status.isLoaded);
+    const ready = loaded.current === source && (!preloaded.current || status.isLoaded);
     pressed.current = { at: performance.now(), preloaded: ready && status.isLoaded };
     if (ready) {
       void player.seekTo(0);
     } else {
       player.replace({ uri, headers });
-      loaded.current = uri;
+      loaded.current = source;
+      preloaded.current = false;
     }
     player.play();
     setAsked(true);

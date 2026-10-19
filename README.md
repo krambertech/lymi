@@ -9,6 +9,7 @@ A private-first vocabulary app with a storm lantern. Collect cards from language
 - [docs/local-dev.md](docs/local-dev.md): running locally, personas, the developer palette and `pnpm local`
 - [docs/testing.md](docs/testing.md): the canonical E2E journey and CI policy
 - [docs/operations.md](docs/operations.md): the production alerts and what to do when one fires
+- [docs/lead-ins.md](docs/lead-ins.md): how Japanese speech decides and writes the words before a term, and how to add a language
 - [docs/phone-release.md](docs/phone-release.md): how the phone app ships over the air and to TestFlight, and its one-time setup
 - [docs/mcp-directory-review.md](docs/mcp-directory-review.md): what ChatGPT and Claude directory review checks, and the review cases
 - [docs/adr](docs/adr/README.md): the decisions that were hard to reverse, with the alternatives

@@ -1,10 +1,9 @@
 import { canSpeakTerm, LanguageTag } from "@lymi/core";
 import { listPublicDeckSlugs, publicDeckFrontCards } from "@lymi/core/catalog/server";
 import { and, eq, inArray, isNull, selectIn } from "@lymi/core/db";
-import type { SpeechProvider } from "../ai";
 import { type Db, schema } from "../db";
 import type { AnalyticsWriter } from "./analytics";
-import { pronunciationAudio } from "./audio";
+import { type AudioDependencies, pronunciationAudio } from "./audio";
 
 /** Cards voiced per run. Each one without a clip costs one paid voice call, once. */
 export const PUBLISHED_AUDIO_BATCH = 40;
@@ -12,12 +11,6 @@ export const PUBLISHED_AUDIO_BATCH = 40;
 export const PUBLISHED_AUDIO_CONCURRENCY = 4;
 /** Cards a publish voices itself: a request's `waitUntil` ends about 30 seconds after the response. */
 export const PUBLISHED_AUDIO_ON_PUBLISH = 12;
-
-interface PublishedAudioDependencies {
-  bucket: R2Bucket;
-  providers: (language: string) => SpeechProvider[];
-  analytics?: (userId: string) => AnalyticsWriter;
-}
 
 export interface PublishedAudioRun {
   /** Cards that got a clip in this run. */
@@ -36,7 +29,7 @@ export interface PublishedAudioRun {
  */
 export async function voicePublishedDecks(
   db: Db,
-  deps: PublishedAudioDependencies,
+  deps: AudioDependencies & { analytics?: (userId: string) => AnalyticsWriter },
   options: { slug?: string; limit?: number; concurrency?: number } = {},
 ): Promise<PublishedAudioRun> {
   const limit = options.limit ?? PUBLISHED_AUDIO_BATCH;

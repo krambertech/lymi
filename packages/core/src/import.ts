@@ -489,6 +489,12 @@ const TRANSLATION_PATTERN =
   /\b(sentence|example|context)s?\b.*\b(meaning|translation|english|gloss|definition)$/i;
 /** Switches such as Lapis's `IsSentenceCard`, which choose a template rather than hold text. */
 const FLAG_PATTERN = /^(is|has)\s/i;
+/** A sentence's own pinyin, such as an HSK deck's "SentencePinyin": never the term's Reading. */
+const SENTENCE_PINYIN_PATTERN = /\b(sentence|example|context)s?\b.*\b(pinyin|zhuyin|bopomofo)$/i;
+/** Words naming which characters a Chinese field is written in rather than what it holds. */
+const SCRIPT_WORDS =
+  /\b(simplified|simp|traditional|trad|hanzi|characters?)\b|简体字?|簡體字?|繁体字?|繁體字?|汉字|漢字/giu;
+const TRADITIONAL = /\b(traditional|trad)\b|繁体|繁體/iu;
 
 /** "ExpressionFurigana" and "word_audio" as spaced words, so the patterns' word edges find them. */
 function fieldWords(name: string): string {
@@ -496,6 +502,13 @@ function fieldWords(name: string): string {
     .replace(/(\p{Ll}|\d)(\p{Lu})/gu, "$1 $2")
     .replace(/[_\-.]+/g, " ")
     .trim();
+}
+
+/** A Chinese field's name without its script: "WordTraditional" → "Word", "Hanzi" → "". Null when it names none. */
+function scriptRest(name: string): string | null {
+  const words = fieldWords(name);
+  const rest = words.replace(SCRIPT_WORDS, " ").replace(/\s+/g, " ").trim();
+  return rest === words ? null : rest.toLowerCase();
 }
 
 function patternRole(text: string): FieldRole | undefined {
@@ -514,8 +527,12 @@ export function namedFieldRole(name: string): FieldRole | undefined {
     if (isPitchField(name)) return "notes";
     return /\bnotes?$/i.test(words) ? "notes" : "skip";
   }
-  if (TRANSLATION_PATTERN.test(words)) return "notes";
-  return patternRole(words.split(/\s+/).at(-1) ?? "") ?? patternRole(words);
+  if (TRANSLATION_PATTERN.test(words) || SENTENCE_PINYIN_PATTERN.test(words)) return "notes";
+  // "SentenceHanzi" is a sentence and "Simplified" the term itself.
+  const rest = scriptRest(name);
+  if (rest === "") return "term";
+  const named = rest ?? words;
+  return patternRole(named.split(/\s+/).at(-1) ?? "") ?? patternRole(named);
 }
 
 /**
@@ -535,6 +552,24 @@ export function isTranslationField(name: string): boolean {
   return TRANSLATION_PATTERN.test(fieldWords(name));
 }
 
+/** A field of a sentence's pinyin, which a Chinese import draws inline over the sentence. */
+export function isSentencePinyinField(name: string): boolean {
+  return SENTENCE_PINYIN_PATTERN.test(fieldWords(name));
+}
+
+/**
+ * "WordTraditional" beside "WordSimplified", or "Traditional" beside "Hanzi", holds the same text in
+ * traditional characters, which becomes a notes line; the field it repeats keeps its role.
+ */
+function isTraditionalOf(name: string, names: readonly string[]): boolean {
+  const rest = scriptRest(name);
+  return (
+    rest !== null &&
+    TRADITIONAL.test(fieldWords(name)) &&
+    names.some((other) => !TRADITIONAL.test(fieldWords(other)) && scriptRest(other) === rest)
+  );
+}
+
 /** "Expression Furigana" beside "Expression" repeats that field with readings over its kanji. */
 function isFuriganaOf(name: string, names: readonly string[]): boolean {
   const match = /^(.+?)\s*furigana$/i.exec(fieldWords(name));
@@ -549,7 +584,13 @@ function isFuriganaOf(name: string, names: readonly string[]): boolean {
  * learner corrects this in the preview.
  */
 export function guessFieldRoles(names: readonly string[]): FieldRole[] {
-  const roles = names.map((name) => (isFuriganaOf(name, names) ? "skip" : namedFieldRole(name)));
+  const roles = names.map((name) =>
+    isFuriganaOf(name, names)
+      ? "skip"
+      : isTraditionalOf(name, names)
+        ? "notes"
+        : namedFieldRole(name),
+  );
   // One pitch line is enough; a second pitch field, such as a graph beside positions, is left out.
   const pitch = names.findIndex((name, i) => roles[i] === "notes" && isPitchField(name));
   names.forEach((name, i) => {

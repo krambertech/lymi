@@ -1,4 +1,15 @@
-/** Anki's own field syntax: cloze deletions, furigana and the fields a template asks from. */
+/** Anki's own field syntax: cloze deletions, furigana, pinyin and the fields a template asks from. */
+import { htmlToText } from "@lymi/core";
+import {
+  alignPinyin,
+  cleanPinyin,
+  formatPinyin,
+  type PinyinSegment,
+  parsePinyin,
+  pinyinSyllables,
+  readingTokens,
+  stripPinyin,
+} from "@lymi/core/pinyin";
 
 type Cloze = { number: number; answer: string; hint: string | null; start: number; end: number };
 
@@ -137,4 +148,69 @@ export function questionField(template: string, fields: readonly string[]): numb
 /** Whether a template is image occlusion, which Lymi cannot ask. */
 export function isImageOcclusion(template: string): boolean {
   return /\{\{[^}]*image-occlusion:/i.test(template);
+}
+
+/** A pinyin field as one line; tone-colour spans are already gone with the rest of the HTML. */
+export function pinyinReading(text: string): string {
+  return text.replace(/\s+/gu, " ").trim();
+}
+
+const pinyinFold = (text: string) =>
+  cleanPinyin(text)
+    .toLowerCase()
+    .replace(/[\s'’ʼ-]/gu, "");
+
+/** Whether two fields are the same pinyin however written, as `ni3 hao3` beside `nǐ hǎo`. */
+export function samePinyin(a: string, b: string): boolean {
+  return pinyinSyllables(a) !== null && pinyinFold(a) === pinyinFold(b);
+}
+
+/**
+ * Whether a field repeats the term with only markup or readings added, as Chinese Support Redux's
+ * coloured `Color` and `<ruby>` fields do.
+ */
+export function repeatsTerm(html: string, term: string): boolean {
+  const bare = (text: string) => stripPinyin(furiganaBase(text)).replace(/\s+/gu, "");
+  const text = htmlToText(html.replace(/<rt\b[^>]*>[\s\S]*?<\/rt>/giu, ""));
+  return !!text && bare(text) === bare(term);
+}
+
+/** An example's inline pinyin with tone numbers written as marks: `你好[ni3 hao3]` → `你好[nǐ hǎo]`. */
+export function markedExample(text: string): string {
+  return formatPinyin(
+    parsePinyin(text).map((segment) =>
+      segment.reading === undefined
+        ? segment
+        : { ...segment, reading: cleanPinyin(segment.reading) },
+    ),
+  );
+}
+
+/**
+ * The sentence with its pinyin inline, one bracket per pinyin word (`我去银行[yín háng]`), or null
+ * unless each syllable falls on one Han character in order.
+ */
+export function inlinePinyin(sentence: string, pinyin: string): string | null {
+  const tokens = readingTokens(pinyin);
+  if (tokens.length === 0 || tokens.some((token) => !token.syllables)) return null;
+  const aligned = alignPinyin(sentence, tokens);
+  if (!aligned) return null;
+  const out: PinyinSegment[] = [];
+  let at = 0;
+  for (const token of tokens) {
+    const syllables = token.syllables ?? [];
+    while (aligned[at] && aligned[at]?.reading === undefined)
+      out.push(aligned[at++] as PinyinSegment);
+    const word = aligned.slice(at, at + syllables.length);
+    // A word the sentence breaks with punctuation is not one pinyin word.
+    if (word.length < syllables.length || word.some((s) => s.reading === undefined)) return null;
+    out.push({
+      text: word.map((s) => s.text).join(""),
+      reading: syllables.map((s) => s.text).join(" "),
+    });
+    at += syllables.length;
+  }
+  out.push(...aligned.slice(at));
+  const text = formatPinyin(out);
+  return stripPinyin(text) === sentence ? text : null;
 }

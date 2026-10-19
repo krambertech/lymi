@@ -204,6 +204,32 @@ describe("guessFieldRoles", () => {
       "skip",
     ]);
   });
+  it("reads Chinese decks' script names, keeping the simplified term and its sentence", () => {
+    const both = {
+      WordTraditional: "notes",
+      WordSimplified: "term",
+      Definition: "meaning",
+      SentenceTraditional: "notes",
+      SentenceSimplified: "example",
+      SentencePinyin: "notes",
+      SentenceZhuyin: "notes",
+      SentenceTranslation: "notes",
+      WordAudio: "skip",
+    };
+    expect(guessFieldRoles(Object.keys(both))).toEqual(Object.values(both));
+    expect(guessFieldRoles(["Traditional", "Hanzi", "Pinyin", "English"])).toEqual([
+      "notes",
+      "term",
+      "pronunciation",
+      "meaning",
+    ]);
+    // A deck written only in traditional characters keeps them as its term.
+    expect(guessFieldRoles(["Traditional", "Pinyin", "English"])).toEqual([
+      "term",
+      "pronunciation",
+      "meaning",
+    ]);
+  });
   it("gives each single role to one field", () => {
     expect(guessFieldRoles(["Word", "Term", "Meaning", "Translation"])).toEqual([
       "term",

@@ -1,4 +1,6 @@
 import {
+  examplesCarryReadings,
+  type FieldRole,
   fieldsFromRoles,
   fitFields,
   formatReadings,
@@ -10,13 +12,16 @@ import {
   importFieldText,
   importTags,
   isPitchField,
+  isSentencePinyinField,
   parseReadings,
   type Rating,
   type ReviewModeKey,
+  readingEngine,
   soundCount,
   soundSources,
   termRecording,
 } from "@lymi/core";
+import { stripPinyin } from "@lymi/core/pinyin";
 import type { SourceAdapter, SourceNoteType, SourceSummary } from "../adapter";
 import {
   decodeProto,
@@ -39,10 +44,15 @@ import {
   furiganaBase,
   furiganaReading,
   hasFurigana,
+  inlinePinyin,
   isImageOcclusion,
+  markedExample,
+  pinyinReading,
   plainReading,
   questionField,
+  repeatsTerm,
   revealCloze,
+  samePinyin,
   withoutOtherReadings,
 } from "./text";
 
@@ -234,6 +244,45 @@ function guessRoles(model: Model) {
   return roles;
 }
 
+/**
+ * A Chinese note's roles with its repeats left out: a numbered pinyin field beside the Reading, and
+ * a coloured or ruby copy of the term. Where examples draw pinyin, a sentence's pinyin goes inline
+ * over the example when it fits one syllable a character; otherwise it stays a notes line.
+ * docs/proposals/chinese.md, Import.
+ */
+function pinyinFields(
+  type: SourceNoteType,
+  roles: readonly FieldRole[],
+  values: readonly string[],
+  raw: readonly string[],
+  inlineExample: boolean,
+): { roles: FieldRole[]; example?: string } {
+  const first = (role: FieldRole) => values.find((value, i) => roles[i] === role && value);
+  const term = withoutReadings(first("term")) ?? "";
+  const reading = first("pronunciation");
+  const example = first("example");
+  let inline: string | undefined;
+  const kept = roles.map((role, i) => {
+    const value = values[i];
+    if (role !== "notes" || !value) return role;
+    if (reading && samePinyin(value, reading)) return "skip";
+    if (term && repeatsTerm(raw[i] ?? "", term)) return "skip";
+    // A cloze's example is its revealed sentence, which the pinyin field may not read.
+    if (
+      inlineExample &&
+      type.kind === "basic" &&
+      example &&
+      !inline &&
+      isSentencePinyinField(type.fields[i] ?? "")
+    ) {
+      inline = inlinePinyin(stripPinyin(example), value) ?? undefined;
+      if (inline) return "skip";
+    }
+    return role;
+  });
+  return inline ? { roles: kept, example: inline } : { roles: kept };
+}
+
 /** Media file name to zip entry name, from a JSON map or Anki's protobuf list. */
 async function mediaIndex(file: RandomAccess, zip: Map<string, ZipEntry>) {
   const index = new Map<string, string>();
@@ -402,8 +451,14 @@ export const anki: SourceAdapter<AnkiNote> = {
   cards(note, summary, choices) {
     const type = summary.noteTypes.find((t) => t.key === note.type);
     if (!type) return [];
-    const roles = choices.roles[type.key] ?? type.roles;
+    const chosen = choices.roles[type.key] ?? type.roles;
     const values = note.fields.map((field, i) => importFieldText(type.fields[i] ?? "", field));
+    const language = choices.languages[note.cards[0]?.deck ?? ""];
+    const pinyin = readingEngine(language) === "pinyin";
+    // Chinese examples keep pinyin once they draw it (docs/proposals/chinese.md, slice 4).
+    const examplePinyin = pinyin && examplesCarryReadings(language);
+    const chinese = pinyin ? pinyinFields(type, chosen, values, note.fields, examplePinyin) : null;
+    const roles = chinese?.roles ?? chosen;
     const tags = importTags(note.tags);
     const picture = note.fields.flatMap(imageSources)[0];
     const clips = note.fields.map(soundSources);
@@ -417,6 +472,7 @@ export const anki: SourceAdapter<AnkiNote> = {
         roles[i] === "notes" && isPitchField(name) && !values[i] && !!note.fields[i]?.trim(),
     );
     const base = fieldsFromRoles(values, roles);
+    if (chinese?.example) base.example = chinese.example;
 
     const build = (
       externalId: string,
@@ -428,13 +484,20 @@ export const anki: SourceAdapter<AnkiNote> = {
       const fitted = fitFields({
         term: withoutReadings(term) ?? "",
         meaning: withoutReadings(raw.meaning),
+        // Tone numbers stay for `normalizeCardText`, which counts the Readings it converts.
         pronunciation: raw.pronunciation
-          ? plainReading(raw.pronunciation)
+          ? pinyin
+            ? pinyinReading(plainReading(raw.pronunciation))
+            : plainReading(raw.pronunciation)
           : hasFurigana(term)
             ? furiganaReading(term)
             : undefined,
-        // Kana readings stay in Lymi's notation; pinyin and other readings go, as they always did.
-        example: raw.example && formatReadings(parseReadings(withoutOtherReadings(raw.example))),
+        // Kana readings stay in Lymi's notation, and pinyin where examples draw it; others go.
+        example:
+          raw.example &&
+          (examplePinyin
+            ? markedExample(raw.example)
+            : formatReadings(parseReadings(withoutOtherReadings(raw.example)))),
         notes: raw.notes,
       });
       if (!fitted.fields.term) return [];

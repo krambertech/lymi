@@ -1,9 +1,22 @@
 import { readFileSync } from "node:fs";
 import type { ImportedCard } from "@lymi/core";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import type { ImportChoices } from "../adapter";
 import { bytesSource } from "../files";
 import { anki } from "./index";
+
+/** Whether Chinese examples draw pinyin, which slice 4 of docs/proposals/chinese.md turns on in core. */
+const examples = vi.hoisted(() => ({ drawPinyin: false }));
+vi.mock("@lymi/core", async (original) => {
+  const core = await original<typeof import("@lymi/core")>();
+  return {
+    ...core,
+    examplesCarryReadings: (language: string | null | undefined) =>
+      core.readingEngine(language) === "pinyin"
+        ? examples.drawPinyin
+        : core.examplesCarryReadings(language),
+  };
+});
 
 const FILES = ["legacy.apkg", "current.apkg", "legacy.colpkg", "current.colpkg"];
 const file = (name: string) =>
@@ -159,6 +172,100 @@ describe("anki adapter", () => {
       },
     );
     expect(card?.fields.example).toBe("我喜欢猫。");
+  });
+
+  describe("an HSK-shaped Chinese deck", () => {
+    async function hsk(language: string | null = "zh", drawPinyin = true) {
+      examples.drawPinyin = drawPinyin;
+      const { summary, notes } = await anki.inspect(file("hsk.apkg"));
+      const deck = summary.decks[0]?.key as string;
+      const choices = { languages: { [deck]: language }, roles: {} };
+      return { summary, cards: [...notes].flatMap((note) => anki.cards(note, summary, choices)) };
+    }
+
+    it("guesses the simplified term, its Reading and the sentence by name", async () => {
+      const { summary } = await hsk();
+      const types = Object.fromEntries(summary.noteTypes.map((t) => [t.name, t]));
+      const roles = (name: string) => {
+        const type = types[name];
+        return Object.fromEntries(type?.fields.map((f, i) => [f, type.roles[i]]) ?? []);
+      };
+      expect(roles("HSK Vocabulary")).toMatchObject({
+        Simplified: "term",
+        Traditional: "notes",
+        Pinyin: "pronunciation",
+        "Pinyin.1": "notes",
+        SentenceSimplified: "example",
+        SentenceTraditional: "notes",
+        SentencePinyin: "notes",
+      });
+      expect(roles("HSK 3.0")).toMatchObject({
+        Hanzi: "term",
+        SentenceHanzi: "example",
+        SentencePinyin: "notes",
+      });
+    });
+
+    it("reads pinyin without its tone colours and drops the numbered pinyin beside it", async () => {
+      const { cards } = await hsk();
+      expect(byTerm(cards, "银行").fields).toMatchObject({
+        pronunciation: "yínháng",
+        notes: "銀行\nnoun\n我去銀行。\nI am going to the bank.",
+      });
+      expect(byTerm(cards, "一点儿").fields.pronunciation).toBe("yìdiǎnr");
+      // Tone numbers stay for normalizeCardText, which counts the Readings it converts.
+      expect(byTerm(cards, "东西").fields.pronunciation).toBe("dong1 xi5");
+      expect(byTerm(cards, "你好").fields).toEqual({
+        term: "你好",
+        meaning: "hello",
+        pronunciation: "nǐ hǎo",
+      });
+    });
+
+    it("puts sentence pinyin inline when it fits, and keeps it a notes line when not", async () => {
+      const { cards } = await hsk();
+      expect(byTerm(cards, "银行").fields.example).toBe("我[Wǒ]去[qù]银行[yín háng]。");
+      expect(byTerm(cards, "一点儿").fields.example).toBe(
+        "我[Wǒ]会[huì]说[shuō]一点儿[yì diǎnr]中文[Zhōng wén]。",
+      );
+      expect(byTerm(cards, "东西").fields).toMatchObject({
+        example: "这个[Zhè ge]东西[dōng xi]很[hěn]好[hǎo]。",
+        notes: "This thing is good.",
+      });
+      expect(byTerm(cards, "学习").fields).toMatchObject({
+        example: "他每天学习3个小时。",
+        notes:
+          "學習\n他每天學習3個小時。\nTā měitiān xuéxí sān gè xiǎoshí.\nHe studies for three hours a day.",
+      });
+    });
+
+    it("keeps each word's recording and leaves the sentence's out", async () => {
+      const { cards } = await hsk();
+      expect(cards.map((c) => [c.fields.term, c.recording, c.soundsLeftOut])).toEqual([
+        ["银行", "hsk_yinhang.mp3", 1],
+        ["一点儿", "hsk_yidianr.mp3", 0],
+        ["学习", "hsk_xuexi.mp3", 0],
+        ["东西", "hsk_dongxi.mp3", 1],
+        ["你好", "hsk_nihao.mp3", 0],
+      ]);
+    });
+
+    it("keeps sentence pinyin a notes line while Chinese examples draw none", async () => {
+      const { cards } = await hsk("zh", false);
+      expect(byTerm(cards, "银行").fields).toMatchObject({
+        pronunciation: "yínháng",
+        example: "我去银行。",
+        notes: "銀行\nnoun\n我去銀行。\nWǒ qù yínháng.\nI am going to the bank.",
+      });
+    });
+
+    it("leaves a deck of no language as it always was", async () => {
+      const { cards } = await hsk(null);
+      expect(byTerm(cards, "银行").fields).toMatchObject({
+        example: "我去银行。",
+        notes: expect.stringContaining("yin2hang2"),
+      });
+    });
   });
 
   it("carries the log, the due date and the memory state Anki had", async () => {

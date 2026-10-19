@@ -25,6 +25,7 @@ A change is verified when the feature it touches has been driven in a running pr
 | Import from Anki | [import.md](features/import.md) |
 | Import from Pleco | [import-pleco.md](features/import-pleco.md) |
 | Import recordings, pitch and translations | [import-recordings.md](features/import-recordings.md) |
+| Import an HSK-shaped Chinese Anki deck | [import-chinese.md](features/import-chinese.md) |
 | Offline writes | [offline-writes.md](features/offline-writes.md) |
 | Japanese cards | [japanese.md](features/japanese.md) |
 | Chinese cards | [chinese.md](features/chinese.md) |

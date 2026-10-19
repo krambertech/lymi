@@ -75,7 +75,7 @@ export function GuideSteps({ id, title, lede, steps, note, withoutAssistant }: P
 const wayClass =
   "group flex items-center gap-4 rounded-lg bg-plate px-4 py-3.5 edge transition-colors duration-150 hoverable:hover:bg-plate-2";
 
-/** Two ways to start that need no assistant: typing cards in, or bringing an Anki deck across. */
+/** Ways to start that need no assistant: typing cards in, Smart add, or bringing an Anki deck across. */
 function WithoutAssistant({ id }: { id: string }) {
   return (
     <div id={id} className="scroll-mt-8">
@@ -91,6 +91,22 @@ function WithoutAssistant({ id }: { id: string }) {
               </span>
               <span className="mt-0.5 block text-sm text-pretty text-text-2">
                 <Trans>Type each term, and AI fills in the meaning.</Trans>
+              </span>
+            </span>
+            <ArrowRight
+              aria-hidden="true"
+              className="size-4 shrink-0 text-muted rtl:-scale-x-100"
+            />
+          </a>
+        </li>
+        <li>
+          <a href={signUpUrl()} className={wayClass}>
+            <span className="min-w-0 flex-1">
+              <span className="block text-md font-medium text-text">
+                <Trans>Use Smart add</Trans>
+              </span>
+              <span className="mt-0.5 block text-sm text-pretty text-text-2">
+                <Trans>Add a photo, PDF or transcript, and tick the words you want.</Trans>
               </span>
             </span>
             <ArrowRight

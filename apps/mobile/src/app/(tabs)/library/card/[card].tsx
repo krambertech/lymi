@@ -5,7 +5,7 @@ import { apiUrl, type CardEvent, type CardState } from "@lymi/client/api";
 import { useKnownReadings } from "@lymi/client/known-readings";
 import { cardHistoryQuery } from "@lymi/client/queries";
 import { writes } from "@lymi/client/writes";
-import { deserializeState, termReading, writtenWithReading } from "@lymi/core";
+import { deserializeState, drawsTermReading, writtenWithReading } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
@@ -27,7 +27,6 @@ import { TEXT_END } from "../../../../theme/type";
 import { ActionMenu } from "../../../../ui/action-menu";
 import { SourceChip, StateChip } from "../../../../ui/chip";
 import { EmptyState } from "../../../../ui/empty-state";
-import { Furigana, ReadingText } from "../../../../ui/furigana";
 import { GRADES, GradeMark } from "../../../../ui/grade";
 import { Icon, type IconName } from "../../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../../ui/load-failed";
@@ -35,6 +34,7 @@ import { Plate, Press, Text } from "../../../../ui/primitives";
 import { useAccessibilitySizes } from "../../../../ui/row";
 import { BarButton, Screen } from "../../../../ui/screen";
 import { Skeleton } from "../../../../ui/skeleton";
+import { ExampleText, TermText } from "../../../../ui/term-text";
 import { toast } from "../../../../ui/toast-host";
 
 const DAY = 86_400_000;
@@ -115,7 +115,7 @@ export default function CardPage() {
   }, [playError]);
   const failed = useLoadFailed(cards);
   const historyFailed = useLoadFailed(historyQuery);
-  const reading = useMemo(() => (card ? termReading(card) : null), [card]);
+  const reading = useMemo(() => !!card && drawsTermReading(card), [card]);
   if (!card || !row) {
     return (
       <Screen title="" back={{ label: deck?.name ?? t`Deck`, to: `/library/${deckId}` }}>
@@ -236,7 +236,7 @@ export default function CardPage() {
         field="example"
         onPress={edit("example")}
       >
-        <ReadingText
+        <ExampleText
           text={card.example}
           known={known}
           className="text-md text-text"
@@ -371,11 +371,10 @@ export default function CardPage() {
       // The page holds the term with its furigana, and the bar takes it plain once it scrolls under.
       header={
         reading ? (
-          <Furigana
-            segments={reading}
+          <TermText
+            card={card}
             className="text-3xl font-medium tracking-tight text-text"
             accessibilityRole="header"
-            lang={card.language}
           />
         ) : undefined
       }

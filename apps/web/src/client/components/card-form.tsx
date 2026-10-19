@@ -4,13 +4,13 @@ import {
   CARD_LIMITS,
   CardInput,
   cardLimits,
+  drawsTermReading,
   hasReadings,
   ImageDescription,
   modeKey,
   modeOf,
   type ReviewModeKey,
   revealsAnswer,
-  termReading,
   writtenWithReading,
 } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -40,9 +40,9 @@ import { Button } from "./button";
 import { LanguageChip, ModesChip, SectionChip, TagsChip } from "./card-form-pickers";
 import { acceptsPictureFile, CardPictureField, type PictureDraft } from "./card-picture-field";
 import { FieldChipButton, FieldChipRow } from "./field-chip";
-import { Furigana, ReadingText } from "./furigana";
 import { Kbd } from "./kbd";
 import { useStaticNav } from "./nav-link";
+import { ExampleText, TermText } from "./term-text";
 import { Checkbox } from "./ui/checkbox";
 import { Field, FieldDescription, FieldError, FieldLabel, FieldLegend, FieldSet } from "./ui/field";
 import { Input } from "./ui/input";
@@ -320,7 +320,8 @@ export function CardForm(props: CardFormProps) {
   const language = chosenLanguage ? chosenLanguage.value : deckLanguage;
   // Japanese and Chinese call a term's pronunciation its reading.
   const reads = writtenWithReading(language);
-  const termDrawn = termReading({ term: term.trim(), language, pronunciation });
+  const termCard = { term: term.trim(), language, pronunciation };
+  const termDrawn = drawsTermReading(termCard);
   const deckModes = (current?.reviewModes ?? []).map(modeKey);
   const hasPicture = picture.kind !== "none";
 
@@ -624,12 +625,12 @@ export function CardForm(props: CardFormProps) {
     >
       {termDrawn && (
         <p className="text-lg font-medium text-text">
-          <Furigana segments={termDrawn} lang={language ?? undefined} />
+          <TermText card={termCard} />
         </p>
       )}
       {exampleDrawn && (
         <p className="text-md text-text-2 [overflow-wrap:anywhere]">
-          <ReadingText text={example} lang={language ?? undefined} />
+          <ExampleText text={example} lang={language ?? undefined} />
         </p>
       )}
     </div>

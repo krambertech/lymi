@@ -186,6 +186,18 @@ export const textSteps = [
   "7xl",
 ] as const;
 
+/** Each script's faces in order, keyed by ISO 15924 code, for the scripts Onest has none of. */
+export const faces = {
+  Jpan: [
+    "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    "YuGothic",
+    "Noto Sans JP",
+    "Meiryo",
+  ],
+} as const;
+
 /** The eight deck hues per surface and room, from tray.css, indexed by core's `trayHue`. */
 export const hues = {
   tray: {

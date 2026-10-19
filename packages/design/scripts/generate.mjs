@@ -182,6 +182,18 @@ function scale(css) {
   };
 }
 
+/** Each script's faces from `--face-<code>` on `:root`, keyed by its ISO 15924 code: Jpan. */
+function faces(css) {
+  return Object.fromEntries(
+    Object.entries(block(css, ":root"))
+      .filter(([name]) => name.startsWith("face-"))
+      .map(([name, value]) => [
+        name.charAt(5).toUpperCase() + name.slice(6),
+        value.split(",").map((family) => family.trim().replace(/^"|"$/g, "")),
+      ]),
+  );
+}
+
 /** A value as TypeScript source in the shape Biome formats it to, so the check compares exactly. */
 function literal(value, indent = "") {
   const inner = `${indent}  `;
@@ -249,6 +261,9 @@ export const ease = ${literal(ease)} as const;
 
 /** The type scale's step names. Each app sets its own size per step. */
 export const textSteps = ${literal(textSteps)} as const;
+
+/** Each script's faces in order, keyed by ISO 15924 code, for the scripts Onest has none of. */
+export const faces = ${literal(faces(css))} as const;
 
 /** The eight deck hues per surface and room, from tray.css, indexed by core's \`trayHue\`. */
 export const hues = ${literal(huesFrom(tray))} as const;

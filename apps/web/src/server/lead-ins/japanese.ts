@@ -3,7 +3,7 @@ import type { LeadInPolicy } from "./policy";
 
 const SINGLE_KANA = /^[\p{Script=Hiragana}\p{Script=Katakana}ー]$/u;
 
-export const japanese: LeadInPolicy = {
+export const japanese = {
   language: "ja",
   name: "Japanese",
   version: 2,
@@ -48,4 +48,4 @@ previousText + reading が自然な日本語の文頭または句になるよう
       !["とても", "非常に", "新しい", "古い"].includes(value)
     );
   },
-};
+} satisfies LeadInPolicy;

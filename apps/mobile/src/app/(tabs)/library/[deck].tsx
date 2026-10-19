@@ -16,7 +16,7 @@ import {
   splitForms,
   stateKey,
 } from "@lymi/client/deck-list";
-import { CHOSEN_LIMIT, drawsReadings, termReading } from "@lymi/core";
+import { CHOSEN_LIMIT } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -50,7 +50,6 @@ import { usePalette, useRoom } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
 import { EmptyState } from "../../../ui/empty-state";
 import { useFloatingBar } from "../../../ui/floating-bar";
-import { Furigana } from "../../../ui/furigana";
 import { Icon } from "../../../ui/icons";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
 import type { MenuItem } from "../../../ui/menu";
@@ -62,6 +61,7 @@ import { Sheet, SheetGroup, SheetRow } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { StateIcon, stateMarks } from "../../../ui/state-mark";
 import { setDeckReviewHidden, setDeckSelecting } from "../../../ui/tab-bar";
+import { TermText } from "../../../ui/term-text";
 import { toast } from "../../../ui/toast-host";
 
 /** Stable empties, so a deck without sections or cards does not regroup its list on every render. */
@@ -802,8 +802,6 @@ const WordRow = memo(function WordRow({
   const peek = usePeekSize();
   const state = stateKey(row.state?.state);
   const { word, forms } = splitForms(row.card.term);
-  // A Japanese row without furigana keeps a reading's room, so every row in the deck is one height.
-  const reading = useMemo(() => termReading({ ...row.card, term: word }), [row.card, word]);
   const selecting = selected !== undefined;
   const label = `${row.card.term}, ${row.card.meaning ?? ""}, ${waiting ? t`Not in review yet` : i18n._(stateMarks[state].label)}`;
   const face = (
@@ -821,12 +819,12 @@ const WordRow = memo(function WordRow({
         )}
       </View>
       <View className="flex-1 gap-0.5">
-        <Furigana
-          segments={reading ?? [{ text: word }]}
-          room={drawsReadings(row.card.language)}
+        {/* A row without a reading keeps a reading's room, so every row in the deck is one height. */}
+        <TermText
+          card={{ ...row.card, term: word }}
+          room
           className="text-md font-medium text-text"
           lines={3}
-          lang={row.card.language}
           tail={forms ? { text: ` · ${forms}`, className: "text-md text-text-2" } : undefined}
           after={
             row.card.important && (

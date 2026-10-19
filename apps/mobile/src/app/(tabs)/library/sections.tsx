@@ -234,7 +234,7 @@ export default function DeckSections() {
 
       <Sheet
         title={t`How sections open`}
-        description={t`Anyone studying the deck can start a later section early.`}
+        description={t`Anyone can still start a later section early.`}
         open={choosingOrder}
         onOpenChange={setChoosingOrder}
       >
@@ -256,7 +256,7 @@ export default function DeckSections() {
 
       <Sheet
         title={t`Archived sections`}
-        description={t`Restoring a section puts it back in its place, with its archived cards.`}
+        description={t`Restored sections return with their archived cards.`}
         open={showArchived}
         onOpenChange={setShowArchived}
       >

@@ -64,7 +64,7 @@ interface SheetProps {
   /** A short line centred under the title, such as how many cards the drafted filters keep. */
   subtitle?: string;
   /**
-   * One or two short sentences centred under the title, only for what the rows can't say: what
+   * A short line centred under the title, two lines at most in every language, only for what the rows can't say: what
    * the choice changes, a rule behind it, or why the sheet can't act while offline. Never how to
    * use the rows.
    */

@@ -747,9 +747,6 @@ msgstr "A connected app"
 msgid "A deck holds the words you learn together. Make one, or import decks from another app."
 msgstr "A deck holds the words you learn together. Make one, or import decks from another app."
 
-msgid "A deck is reviewed together with the other decks in its series."
-msgstr "A deck is reviewed together with the other decks in its series."
-
 msgid "A few minutes keeps them fresh."
 msgstr "A few minutes keeps them fresh."
 
@@ -913,11 +910,8 @@ msgstr "AI fills"
 msgid "AI fills in"
 msgstr "AI fills in"
 
-msgid "AI fills only the fields a card leaves empty. It never changes your text."
-msgstr "AI fills only the fields a card leaves empty. It never changes your text."
-
-msgid "AI follows these when it fills cards. Only you see them."
-msgstr "AI follows these when it fills cards. Only you see them."
+msgid "AI follows these when filling cards. Only you see them."
+msgstr "AI follows these when filling cards. Only you see them."
 
 msgid "AI hook"
 msgstr "AI hook"
@@ -927,6 +921,9 @@ msgstr "AI meaning"
 
 msgid "AI off"
 msgstr "AI off"
+
+msgid "AI only fills empty fields. It never changes your text."
+msgstr "AI only fills empty fields. It never changes your text."
 
 msgid "AI pronunciation"
 msgstr "AI pronunciation"
@@ -945,6 +942,12 @@ msgstr "All at once"
 
 msgid "All shelves"
 msgstr "All shelves"
+
+msgid "All your decks and their history, not decks shared with you."
+msgstr "All your decks and their history, not decks shared with you."
+
+msgid "All your decks, with schedules and review history."
+msgstr "All your decks, with schedules and review history."
 
 msgctxt "deck tag"
 msgid "Alphabet"
@@ -1003,8 +1006,8 @@ msgstr "Any time"
 msgid "Anyone can add this deck from its public page."
 msgstr "Anyone can add this deck from its public page."
 
-msgid "Anyone studying the deck can start a later section early."
-msgstr "Anyone studying the deck can start a later section early."
+msgid "Anyone can still start a later section early."
+msgstr "Anyone can still start a later section early."
 
 msgid "Anyone who opens it can join"
 msgstr "Anyone who opens it can join"
@@ -1824,6 +1827,9 @@ msgstr "Decks"
 msgid "Decks from Lymi. Add one to study it in your language."
 msgstr "Decks from Lymi. Add one to study it in your language."
 
+msgid "Decks in a series are reviewed together."
+msgstr "Decks in a series are reviewed together."
+
 msgid "Decks to review"
 msgstr "Decks to review"
 
@@ -2016,12 +2022,6 @@ msgstr "Estonian"
 
 msgid "Every card"
 msgstr "Every card"
-
-msgid "Every deck you own, archived ones too, with schedules and review history. Decks shared with you aren’t included."
-msgstr "Every deck you own, archived ones too, with schedules and review history. Decks shared with you aren’t included."
-
-msgid "Every deck, archived ones too, with schedules and review history."
-msgstr "Every deck, archived ones too, with schedules and review history."
 
 msgid "Every endpoint, with examples"
 msgstr "Every endpoint, with examples"
@@ -2426,8 +2426,8 @@ msgstr "In Noji, open a deck you made, open its Settings and choose Export deck.
 msgid "In the other account, open a deck’s menu and choose Export deck, or choose Export library in You."
 msgstr "In the other account, open a deck’s menu and choose Export deck, or choose Export library in You."
 
-msgid "Includes your schedule and review history. The deck stays as it is."
-msgstr "Includes your schedule and review history. The deck stays as it is."
+msgid "Includes your schedule and review history."
+msgstr "Includes your schedule and review history."
 
 msgctxt "language"
 msgid "Indonesian"
@@ -3421,6 +3421,9 @@ msgstr "Restored"
 msgid "Restored {count, plural, one {# card} other {# cards}} in {deck}"
 msgstr "Restored {count, plural, one {# card} other {# cards}} in {deck}"
 
+msgid "Restored sections return with their archived cards."
+msgstr "Restored sections return with their archived cards."
+
 msgid "Restored the deck {deck}"
 msgstr "Restored the deck {deck}"
 
@@ -3429,9 +3432,6 @@ msgstr "Restored the section {name} in {deck}"
 
 msgid "Restored the series {name}"
 msgstr "Restored the series {name}"
-
-msgid "Restoring a section puts it back in its place, with its archived cards."
-msgstr "Restoring a section puts it back in its place, with its archived cards."
 
 msgid "Review"
 msgstr "Review"
@@ -3483,8 +3483,8 @@ msgstr "Reviewed on {lit} of the last {0, plural, one {# day} other {# days}}, i
 msgid "Reviews"
 msgstr "Reviews"
 
-msgid "Reviews a day to keep your streak going. Every grade counts, even Forgot."
-msgstr "Reviews a day to keep your streak going. Every grade counts, even Forgot."
+msgid "Reviews a day to keep your streak. Forgot counts too."
+msgstr "Reviews a day to keep your streak. Forgot counts too."
 
 msgid "Revoke “{name}”?"
 msgstr "Revoke “{name}”?"

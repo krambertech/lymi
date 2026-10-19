@@ -349,7 +349,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
             }
             description={
               editing === "instructions"
-                ? t`AI follows these when it fills cards. Only you see them.`
+                ? t`AI follows these when filling cards. Only you see them.`
                 : undefined
             }
             save={{ label: t`Save`, onPress: finishEditing }}
@@ -366,7 +366,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
           </Sheet>
           <Sheet
             title={t`Fields AI can fill`}
-            description={t`AI fills only the fields a card leaves empty. It never changes your text.`}
+            description={t`AI only fills empty fields. It never changes your text.`}
             open={fields !== null}
             onOpenChange={(open) => !open && setFields(null)}
             save={{ label: t`Save`, onPress: saveFields }}

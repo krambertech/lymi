@@ -922,7 +922,7 @@ function MoveToSeries({
       title={t`Move to series`}
       description={
         online
-          ? t`A deck is reviewed together with the other decks in its series.`
+          ? t`Decks in a series are reviewed together.`
           : t`Changing series needs a connection.`
       }
       open={open}

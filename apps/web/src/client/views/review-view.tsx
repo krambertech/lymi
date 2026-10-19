@@ -1410,8 +1410,6 @@ export interface ReviewCompleteProps {
   addCards?: ReactNode | undefined;
   /** Move focus to the heading, so it is announced and Tab starts at the choices. */
   focusOnMount?: boolean | undefined;
-  /** After the first review: the goal and the reminder, above the ways on. */
-  setUp?: ReactNode | undefined;
 }
 
 const at = (ms: number) => ({ "--at": `${ms}ms` }) as CSSProperties;
@@ -1431,7 +1429,6 @@ export function ReviewComplete({
   done,
   addCards,
   focusOnMount = false,
-  setUp,
 }: ReviewCompleteProps) {
   const { t } = useLingui();
   const reduce = !!useReduceMotion();
@@ -1626,12 +1623,6 @@ export function ReviewComplete({
               />
             )}
           </p>
-        )}
-
-        {setUp && (
-          <div className="seq mt-6 w-full @3xl:mt-8" style={at(AT.run + 200)}>
-            {setUp}
-          </div>
         )}
 
         {/* Unpressable while still invisible: the tap that finishes the sequence must not also press a hidden button. */}

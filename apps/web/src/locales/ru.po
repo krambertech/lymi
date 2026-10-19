@@ -607,12 +607,6 @@ msgstr "{found, plural, one {термин найден} few {термина на
 msgid "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
 msgstr "{full, plural, one {На # карточке} few {На # карточках} many {На # карточках} other {На # карточках}} уже было 20 тегов, поэтому тег туда не добавлен."
 
-msgid "{goal, plural, one {# review a day, about {minutes} minutes} other {# reviews a day, about {minutes} minutes}}"
-msgstr "{goal, plural, one {# повторение в день, примерно {minutes} мин} few {# повторения в день, примерно {minutes} мин} many {# повторений в день, примерно {minutes} мин} other {# повторения в день, примерно {minutes} мин}}"
-
-msgid "{goal, plural, one {# review a day} other {# reviews a day}}"
-msgstr "{goal, plural, one {# повторение в день} few {# повторения в день} many {# повторений в день} other {# повторения в день}}"
-
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Показатель запоминания основан всего на # повторении, поэтому первые несколько недель он может сильно колебаться.} few {Показатель запоминания основан всего на # повторениях, поэтому первые несколько недель он может сильно колебаться.} many {Показатель запоминания основан всего на # повторениях, поэтому первые несколько недель он может сильно колебаться.} other {Показатель запоминания основан всего на # повторения, поэтому первые несколько недель он может сильно колебаться.}}"
 
@@ -799,9 +793,6 @@ msgstr "PDF урока"
 
 msgid "A PDF, or drop it here"
 msgstr "PDF, или перетащи его сюда"
-
-msgid "A reminder at {time} on this device."
-msgstr "Напоминание в {time} на этом устройстве."
 
 msgid "A reset link works once, within an hour."
 msgstr "Ссылка действует один час и только один раз."
@@ -3293,9 +3284,6 @@ msgstr "Уведомления"
 msgid "Notifications are blocked. Allow them in your browser or device settings, then try again."
 msgstr "Уведомления заблокированы. Разреши их в настройках браузера или устройства и попробуй снова."
 
-msgid "Notifications are blocked. Allow them in your browser or device settings, then turn the reminder on in Settings."
-msgstr "Уведомления заблокированы. Разреши их в настройках браузера или устройства, а потом включи напоминание в Настройках."
-
 msgid "Notifications are blocked. Allow them in your browser or device settings."
 msgstr "Уведомления заблокированы. Разреши их в настройках браузера или устройства."
 
@@ -3307,12 +3295,6 @@ msgstr "Часто забываются"
 
 msgid "On a phone, or stuck? Read the guide"
 msgstr "На телефоне или что-то не получается? Прочитай руководство"
-
-msgid "On at {time} on this device. Change it in Settings."
-msgstr "Включено в {time} на этом устройстве. Изменить можно в Настройках."
-
-msgid "On iPhone, add Lymi to your Home Screen first, then turn it on in Settings."
-msgstr "На iPhone сначала добавь Lymi на экран «Домой», а потом включи напоминание в Настройках."
 
 msgid "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
 msgstr "На quizlet.com открой свой набор, открой меню <0>…</0> и выбери <1>Export</1>."
@@ -3684,9 +3666,6 @@ msgstr "Карточка на распознавание для {front}"
 
 msgid "Recording added"
 msgstr "Добавлена запись произношения"
-
-msgid "Remind me each evening"
-msgstr "Напоминать каждый вечер"
 
 msgid "Reminder off for this device."
 msgstr "Напоминание для этого устройства выключено."
@@ -4702,12 +4681,6 @@ msgstr "Выключить ссылку"
 msgid "Turn off the join link?"
 msgstr "Выключить ссылку для присоединения?"
 
-msgid "Turn on"
-msgstr "Включить"
-
-msgid "Turn on the reminder"
-msgstr "Включить напоминание"
-
 msgid "Turn your notes into cards"
 msgstr "Преврати заметки в карточки"
 
@@ -5023,9 +4996,6 @@ msgstr "Твои карточки, повторения и настройки у
 
 msgid "Your code to delete your Lymi account"
 msgstr "Твой код для удаления аккаунта Lymi"
-
-msgid "Your daily goal"
-msgstr "Твоя дневная цель"
 
 msgid "Your deck"
 msgstr "Твоя колода"

@@ -607,12 +607,6 @@ msgstr "{found, plural, one {термін знайдено} few {терміни 
 msgid "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
 msgstr "{full, plural, one {На # картці} few {На # картках} many {На # картках} other {На # картках}} вже було 20 тегів, тож тег туди не додано."
 
-msgid "{goal, plural, one {# review a day, about {minutes} minutes} other {# reviews a day, about {minutes} minutes}}"
-msgstr "{goal, plural, one {# повторення на день, приблизно {minutes} хв} few {# повторення на день, приблизно {minutes} хв} many {# повторень на день, приблизно {minutes} хв} other {# повторення на день, приблизно {minutes} хв}}"
-
-msgid "{goal, plural, one {# review a day} other {# reviews a day}}"
-msgstr "{goal, plural, one {# повторення на день} few {# повторення на день} many {# повторень на день} other {# повторення на день}}"
-
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Запам’ятовування пораховано лише за # повторенням, тож перші кілька тижнів воно може сильно коливатися.} few {Запам’ятовування пораховано лише за # повтореннями, тож перші кілька тижнів воно може сильно коливатися.} many {Запам’ятовування пораховано лише за # повтореннями, тож перші кілька тижнів воно може сильно коливатися.} other {Запам’ятовування пораховано лише за # повторення, тож перші кілька тижнів воно може сильно коливатися.}}"
 
@@ -799,9 +793,6 @@ msgstr "PDF уроку"
 
 msgid "A PDF, or drop it here"
 msgstr "PDF, або перетягни його сюди"
-
-msgid "A reminder at {time} on this device."
-msgstr "Нагадування о {time} на цьому пристрої."
 
 msgid "A reset link works once, within an hour."
 msgstr "Посилання діє одну годину й тільки один раз."
@@ -3293,9 +3284,6 @@ msgstr "Сповіщення"
 msgid "Notifications are blocked. Allow them in your browser or device settings, then try again."
 msgstr "Сповіщення заблоковано. Дозволь їх у налаштуваннях браузера або пристрою й повтори спробу."
 
-msgid "Notifications are blocked. Allow them in your browser or device settings, then turn the reminder on in Settings."
-msgstr "Сповіщення заблоковано. Дозволь їх у налаштуваннях браузера чи пристрою, а потім увімкни нагадування в Налаштуваннях."
-
 msgid "Notifications are blocked. Allow them in your browser or device settings."
 msgstr "Сповіщення заблоковано. Дозволь їх у налаштуваннях браузера або пристрою."
 
@@ -3307,12 +3295,6 @@ msgstr "Часто забуваються"
 
 msgid "On a phone, or stuck? Read the guide"
 msgstr "На телефоні або щось не виходить? Прочитай посібник"
-
-msgid "On at {time} on this device. Change it in Settings."
-msgstr "Увімкнено о {time} на цьому пристрої. Змінити можна в Налаштуваннях."
-
-msgid "On iPhone, add Lymi to your Home Screen first, then turn it on in Settings."
-msgstr "На iPhone спершу додай Lymi на початковий екран, а потім увімкни нагадування в Налаштуваннях."
 
 msgid "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
 msgstr "На quizlet.com відкрий свій набір, відкрий меню <0>…</0> і вибери <1>Export</1>."
@@ -3684,9 +3666,6 @@ msgstr "Картка на розпізнавання для {front}"
 
 msgid "Recording added"
 msgstr "Додано запис вимови"
-
-msgid "Remind me each evening"
-msgstr "Нагадувати щовечора"
 
 msgid "Reminder off for this device."
 msgstr "Нагадування для цього пристрою вимкнено."
@@ -4702,12 +4681,6 @@ msgstr "Вимкнути посилання"
 msgid "Turn off the join link?"
 msgstr "Вимкнути посилання для приєднання?"
 
-msgid "Turn on"
-msgstr "Увімкнути"
-
-msgid "Turn on the reminder"
-msgstr "Увімкнути нагадування"
-
 msgid "Turn your notes into cards"
 msgstr "Перетвори нотатки на картки"
 
@@ -5023,9 +4996,6 @@ msgstr "Твої картки, повторення й налаштування 
 
 msgid "Your code to delete your Lymi account"
 msgstr "Твій код для видалення акаунта Lymi"
-
-msgid "Your daily goal"
-msgstr "Твоя денна мета"
 
 msgid "Your deck"
 msgstr "Твоя колода"

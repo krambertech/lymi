@@ -1,17 +1,10 @@
 import { i18n } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { ReminderTime } from "@lymi/core";
+import type { PushSubscriptionInput, ReminderTime } from "@lymi/core";
 import { Bell } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ApiError, api } from "../lib/api";
-import {
-  DEFAULT_TIME,
-  publicKeyBytes,
-  subscriptionInput,
-  supportsPush,
-  timezone,
-} from "../lib/push-reminder";
 import { useInstallState } from "../lib/pwa-install";
 import { captureAnalytics } from "../lib/telemetry";
 import { Button } from "./button";
@@ -21,6 +14,44 @@ import { SettingsGroup } from "./settings-group";
 import { Field, FieldContent, FieldDescription, FieldError, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import { Switch } from "./ui/switch";
+
+const DEFAULT_TIME: ReminderTime = "19:00";
+
+function supportsPush() {
+  return (
+    typeof window !== "undefined" &&
+    "Notification" in window &&
+    "serviceWorker" in navigator &&
+    "PushManager" in window
+  );
+}
+
+function timezone() {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+}
+
+function publicKeyBytes(value: string) {
+  const padding = "=".repeat((4 - (value.length % 4)) % 4);
+  const base64 = (value + padding).replace(/-/g, "+").replace(/_/g, "/");
+  return Uint8Array.from(atob(base64), (character) => character.charCodeAt(0));
+}
+
+function subscriptionInput(
+  subscription: PushSubscription,
+  reminderTime: ReminderTime,
+): PushSubscriptionInput {
+  const json = subscription.toJSON();
+  if (!json.endpoint || !json.keys?.p256dh || !json.keys.auth) {
+    throw new Error("This browser did not return a complete push subscription");
+  }
+  return {
+    endpoint: json.endpoint,
+    expirationTime: json.expirationTime ?? null,
+    keys: { p256dh: json.keys.p256dh, auth: json.keys.auth },
+    reminderTime,
+    timezone: timezone(),
+  };
+}
 
 /** Resolved when the error happens, so the sentence is in the language active at the time. */
 function messageFor(error: unknown) {
@@ -171,7 +202,6 @@ export function NotificationsSection() {
 
   return (
     <SettingsGroup
-      id="reminder"
       title={t`Daily reminder`}
       description={t`Reminders are set separately on each device.`}
     >

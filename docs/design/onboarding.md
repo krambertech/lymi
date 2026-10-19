@@ -1,6 +1,6 @@
 # Getting started
 
-A new account starts on Today, not on a separate set of screens. Today carries a first-run guide until the first review, so the place a learner learns the product is the place they will use every day. Its job is to get them to a first review, not to teach the product or ask questions whose answers change nothing. The end of that review asks the two things that keep it going: the daily goal and a reminder. The web drew Welcome's questions until October 2026; the phone still does (below).
+A new account starts on Today, not on a separate set of screens. Today carries a first-run guide until the first review, so the place a learner learns the product is the place they will use every day. Its job is to get them to a first review, not to teach the product or ask questions whose answers change nothing. The web drew Welcome's questions until October 2026; the phone still does (below).
 
 ## The guide
 
@@ -17,10 +17,6 @@ Every step has the same box, so the rhythm holds whatever is current; the curren
 **Create your first deck** comes first, because most learners bring their own material. Three cards, each with its own button and an icon on it: **From your notes** (camera, file and paste marks; Smart add, which reads a photo, a PDF or pasted text), **Connect your AI assistant** (the Claude, ChatGPT, Gemini and Grok marks, each opening its setup guide; **Connect** opens them all) and **Import a deck** (Anki, Mochi, Noji and Quizlet by name; Settings at Import). Once an assistant is connected its card says so, **Claude is connected**, with what to ask it and **Connected apps** in place of Connect. **Or start an empty deck** opens New deck. Once a deck exists the heading reads **More ways to add cards** and the empty-deck link goes. The rail's assistant card stays hidden on Today while the guide shows, so the offer is made once.
 
 The ready-made decks follow under a heading whose last words are the choice: **Explore ready-made decks about** **anything**, a language, or **tests**, underlined in amber and opening a short list the learner can search by the language's name, with each choice's deck count; **All decks** opens Explore. The list holds the catalogue's languages, most decks first, then **For a test**, with **Anything** for all of them. A language leads with the decks a beginner starts from, where `BEGINNER_DECKS` in `packages/client/src/welcome.ts` names them: Japanese offers Read Japanese Kana, JLPT N5, JLPT N4 and Japanese Essentials first, and one that is not published leaves its place to the shelf's next deck. It starts on the language the learner most likely came for: the deck they arrived with, else the language they gave Welcome, else everything. The decks sit in one row that scrolls sideways, up to twelve, faded at the end while more follow; a new choice slides the row in from its first deck. **Add** puts the deck in Library and opens its first review.
-
-## The end of the first review
-
-`FirstReviewSetUp` in `components/first-review-set-up.tsx` sits between the lights and the ways on, only at the end of the review that held the account's first grade, and only when no goal had been chosen when that review opened ([review-completion.md](review-completion.md)). **Your daily goal** is the streak's own goal picker, already on the learner's goal, and saves on the tap. **Remind me each evening** turns on this device's reminder at 19:00 with **Turn on**, the same reminder as Settings; it says when notifications are blocked, asks an iPhone to add Lymi to the Home Screen first and links to Settings at the reminder, and is left out where the browser cannot show reminders.
 
 ## Getting set up
 

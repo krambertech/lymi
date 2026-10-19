@@ -28,20 +28,16 @@ export default async function drive({ page, step, api, expect }) {
     return { deckId };
   });
 
-  await step("The end of the first review offers the daily goal", async () => {
-    const goal = page.getByText("Your daily goal");
-    for (let i = 0; i < 30 && !(await goal.isVisible()); i++) {
+  await step("The learner finishes the first review", async () => {
+    const done = page.getByRole("link", { name: "Done", exact: true });
+    for (let i = 0; i < 30 && !(await done.isVisible()); i++) {
       const reveal = page.getByRole("button", { name: "Reveal the card" });
       if (await reveal.isVisible()) await reveal.click();
       const good = page.getByRole("button", { name: /^Good/ });
       if (await good.isVisible()) await good.click();
       await page.waitForTimeout(300);
     }
-    await expect(goal).toBeVisible();
-    await expect(page.getByRole("button", { name: "Steady" })).toHaveAttribute(
-      "aria-pressed",
-      "true",
-    );
+    await expect(done).toBeVisible();
     return { reviews: (await api("/api/stats/streak")).today.attempts };
   });
 

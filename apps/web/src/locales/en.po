@@ -607,12 +607,6 @@ msgstr "{found, plural, one {term found} other {terms found}}"
 msgid "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
 msgstr "{full, plural, one {# card} other {# cards}} already had 20 tags, so a tag was left off."
 
-msgid "{goal, plural, one {# review a day, about {minutes} minutes} other {# reviews a day, about {minutes} minutes}}"
-msgstr "{goal, plural, one {# review a day, about {minutes} minutes} other {# reviews a day, about {minutes} minutes}}"
-
-msgid "{goal, plural, one {# review a day} other {# reviews a day}}"
-msgstr "{goal, plural, one {# review a day} other {# reviews a day}}"
-
 msgid "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 msgstr "{graded, plural, one {Recall is based on only # review, so it can swing a lot for the first few weeks.} other {Recall is based on only # reviews, so it can swing a lot for the first few weeks.}}"
 
@@ -799,9 +793,6 @@ msgstr "A PDF of the lesson"
 
 msgid "A PDF, or drop it here"
 msgstr "A PDF, or drop it here"
-
-msgid "A reminder at {time} on this device."
-msgstr "A reminder at {time} on this device."
 
 msgid "A reset link works once, within an hour."
 msgstr "A reset link works once, within an hour."
@@ -3293,9 +3284,6 @@ msgstr "Notifications"
 msgid "Notifications are blocked. Allow them in your browser or device settings, then try again."
 msgstr "Notifications are blocked. Allow them in your browser or device settings, then try again."
 
-msgid "Notifications are blocked. Allow them in your browser or device settings, then turn the reminder on in Settings."
-msgstr "Notifications are blocked. Allow them in your browser or device settings, then turn the reminder on in Settings."
-
 msgid "Notifications are blocked. Allow them in your browser or device settings."
 msgstr "Notifications are blocked. Allow them in your browser or device settings."
 
@@ -3307,12 +3295,6 @@ msgstr "Often forgotten"
 
 msgid "On a phone, or stuck? Read the guide"
 msgstr "On a phone, or stuck? Read the guide"
-
-msgid "On at {time} on this device. Change it in Settings."
-msgstr "On at {time} on this device. Change it in Settings."
-
-msgid "On iPhone, add Lymi to your Home Screen first, then turn it on in Settings."
-msgstr "On iPhone, add Lymi to your Home Screen first, then turn it on in Settings."
 
 msgid "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
 msgstr "On quizlet.com, open your set, open its <0>…</0> menu and choose <1>Export</1>."
@@ -3684,9 +3666,6 @@ msgstr "Recognition card for {front}"
 
 msgid "Recording added"
 msgstr "Recording added"
-
-msgid "Remind me each evening"
-msgstr "Remind me each evening"
 
 msgid "Reminder off for this device."
 msgstr "Reminder off for this device."
@@ -4702,12 +4681,6 @@ msgstr "Turn off link"
 msgid "Turn off the join link?"
 msgstr "Turn off the join link?"
 
-msgid "Turn on"
-msgstr "Turn on"
-
-msgid "Turn on the reminder"
-msgstr "Turn on the reminder"
-
 msgid "Turn your notes into cards"
 msgstr "Turn your notes into cards"
 
@@ -5023,9 +4996,6 @@ msgstr "Your cards, reviews and settings are gone. Decks other people study stay
 
 msgid "Your code to delete your Lymi account"
 msgstr "Your code to delete your Lymi account"
-
-msgid "Your daily goal"
-msgstr "Your daily goal"
 
 msgid "Your deck"
 msgstr "Your deck"

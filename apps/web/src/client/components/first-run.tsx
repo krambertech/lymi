@@ -25,7 +25,7 @@ import { useReduceMotion } from "../lib/use-reduce-motion";
 import { identifyApp } from "./app-mark";
 import { Button } from "./button";
 import { DeckTile } from "./deck-tray";
-import { LanguagePicker } from "./language-picker";
+import { type LanguageChoice, LanguagePicker } from "./language-picker";
 import { Lantern } from "./lantern";
 import { LanternLight } from "./lantern-light";
 import { NavLink, useStaticNav } from "./nav-link";
@@ -575,7 +575,7 @@ export function ReadyToStart({ ready, initialLanguage, play, onAdd, adding }: Re
       return l;
     }
   };
-  const items = [
+  const items: LanguageChoice[] = [
     { value: "all", label: t`Anything`, inline: t`anything`, count: ready.length },
     ...languages.map((l) => ({
       value: l,
@@ -593,6 +593,7 @@ export function ReadyToStart({ ready, initialLanguage, play, onAdd, adding }: Re
         ]
       : []),
   ];
+  const chosen = items.find((c) => c.value === choice);
   // A language leads with the decks a beginner starts from, as Welcome on the phone offers them.
   const decks = (
     choice === "all"
@@ -608,8 +609,12 @@ export function ReadyToStart({ ready, initialLanguage, play, onAdd, adding }: Re
       style={play ? at(T.below + 320) : undefined}
     >
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-1">
-        {/* The choice is the heading's last words, so the title says what the row below holds. */}
-        <h2 id="ready-title" className="text-lg font-medium">
+        {/* The label repeats the choice, which a combobox leaves out of its heading's name. */}
+        <h2
+          id="ready-title"
+          aria-label={t`Explore ready-made decks about ${chosen?.inline ?? chosen?.label ?? ""}`}
+          className="text-lg font-medium"
+        >
           <Trans>
             Explore ready-made decks about{" "}
             <LanguagePicker

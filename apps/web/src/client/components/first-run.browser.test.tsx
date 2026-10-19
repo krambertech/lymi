@@ -129,8 +129,8 @@ test("the decks start on the language the learner came for, and adding one says 
   );
   // The choice is the heading's last words.
   await expect
-    .element(page.getByRole("heading", { name: /Explore ready-made decks about/ }))
-    .toHaveTextContent("Explore ready-made decks about Estonian");
+    .element(page.getByRole("heading", { name: "Explore ready-made decks about Estonian" }))
+    .toBeVisible();
   await expect.element(page.getByText("Everyday Estonian")).toBeVisible();
   await expect.element(page.getByText("Everyday Finnish")).not.toBeInTheDocument();
 
@@ -145,8 +145,8 @@ test("the decks start on the language the learner came for, and adding one says 
   await page.getByRole("option", { name: /Finnish/ }).click();
   await expect.element(page.getByText("Everyday Finnish")).toBeVisible();
   await expect
-    .element(page.getByRole("heading", { name: /Explore ready-made decks about/ }))
-    .toHaveTextContent("Explore ready-made decks about Finnish");
+    .element(page.getByRole("heading", { name: "Explore ready-made decks about Finnish" }))
+    .toBeVisible();
 });
 
 test("choosing a topic says which, and whether it was searched for, never what was typed", async () => {

@@ -2175,6 +2175,10 @@ msgstr "Пример с урока"
 msgid "Explore"
 msgstr "Каталог"
 
+#. placeholder {0}: chosen?.inline ?? chosen?.label ?? ""
+msgid "Explore ready-made decks about {0}"
+msgstr "Готовые колоды: {0}"
+
 msgid "Explore ready-made decks about <0/>"
 msgstr "Готовые колоды: <0/>"
 

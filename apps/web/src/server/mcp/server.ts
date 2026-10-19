@@ -1015,6 +1015,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     writeMeta: writeTool({ idempotent: true })._meta,
     viewUri: (view) => viewUri(view, views.locale),
     cardOut,
+    deckPreview: (cards) => cards.slice(0, DECK_PREVIEW_LIMIT).map(cardPreview),
   });
 
   withSecuritySchemes(server);

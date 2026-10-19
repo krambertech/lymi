@@ -507,6 +507,29 @@ describe("Lymi MCP server", () => {
     });
   });
 
+  it("summarises a mentioned deck like get_deck, not as every card's fields", async () => {
+    const rows = Array.from({ length: 365 }, (_, i) => ({
+      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hook: "h".repeat(300) },
+      state: null,
+    }));
+    services.getDeck.mockResolvedValue(deck);
+    services.listDeckCards.mockResolvedValue(rows);
+    const client = await connect("read");
+
+    const { contents } = await client.readResource({ uri: "lymi://deck/deck-1" });
+
+    const text = (contents[0] as { text: string }).text;
+    expect(text.length).toBeLessThan(4_000);
+    const body = JSON.parse(text);
+    expect(body).toMatchObject({
+      deck: { id: "deck-1", name: "Italian", defaultLanguage: "it" },
+      total: 365,
+      more: expect.stringContaining('search_cards with deckId "deck-1"'),
+    });
+    expect(body.newest).toHaveLength(DECK_PREVIEW_LIMIT);
+    expect(body.newest[0]).toEqual({ id: "card-0", term: card.term, meaning: card.meaning });
+  });
+
   it("saves the app language from ChatGPT's settings, and only with write", async () => {
     services.updateSettings.mockResolvedValue({} as never);
     const write = await connect("write");

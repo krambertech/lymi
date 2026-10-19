@@ -50,6 +50,8 @@ export interface ToolKit {
   writeMeta: Record<string, unknown>;
   viewUri: (view: McpView) => string;
   cardOut: (card: CardView) => Record<string, unknown>;
+  /** The id, term and meaning of a deck's newest cards, as many as `get_deck` names. */
+  deckPreview: (cards: CardView[]) => { id: string; term: string; meaning: string | null }[];
 }
 
 const appOnly = { visibility: ["app"] };
@@ -178,16 +180,20 @@ export function registerHostExtensions(server: McpServer, ctx: ServiceContext, k
     new ResourceTemplate("lymi://deck/{deckId}", { list: undefined }),
     {
       title: "A Lymi deck",
-      description: "One deck and its newest cards.",
+      description: "One deck's card count and the term and meaning of its newest cards.",
       mimeType: "application/json",
     },
     async (uri, { deckId }) => {
       const id = String(deckId);
       const [deck, rows] = await Promise.all([getDeck(ctx, id), listDeckCards(ctx, id)]);
+      const newest = kit.deckPreview(rows.map((row) => row.card));
       const text = JSON.stringify({
         deck: { id: deck.id, name: deck.name, defaultLanguage: deck.defaultLanguage },
         total: rows.length,
-        cards: rows.slice(0, 50).map((row) => kit.cardOut(row.card)),
+        newest,
+        ...(rows.length > newest.length && {
+          more: `These are the ${newest.length} newest of ${rows.length} cards. For the rest, page through search_cards with deckId "${id}".`,
+        }),
       });
       return { contents: [{ uri: uri.href, mimeType: "application/json", text }] };
     },

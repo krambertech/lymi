@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { languageOfScript } from "./languages";
+import { languageOfScript } from "./names";
 
 describe("languageOfScript", () => {
   it("reads Japanese from kana, even among kanji-only terms", () => {

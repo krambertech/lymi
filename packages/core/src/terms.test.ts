@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { languageKey } from "./reading";
+import { languageKey } from "./languages";
 import {
   canPlayPronunciation,
   canSpeakTerm,

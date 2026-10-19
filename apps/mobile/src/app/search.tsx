@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import type { DeckSummary } from "@lymi/client/api";
 import { cardSearchQuery } from "@lymi/client/queries";
-import { termReading } from "@lymi/core";
+import { drawsTermReading } from "@lymi/core";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
@@ -13,7 +13,6 @@ import { languageName } from "../data/languages";
 import { useDecks } from "../data/queries";
 import { useOnline } from "../streak/goal-picker";
 import { EmptyState } from "../ui/empty-state";
-import { Furigana } from "../ui/furigana";
 import { DISMISS_ON_DRAG, KeyboardRoom } from "../ui/keyboard";
 import { ListRow } from "../ui/list-row";
 import { useLoadFailed } from "../ui/load-failed";
@@ -21,6 +20,7 @@ import { Plate, Press, SectionTitle, Text } from "../ui/primitives";
 import { RowMenu } from "../ui/row-menu";
 import { SearchBar, useSearchText } from "../ui/search-bar";
 import { Skeleton } from "../ui/skeleton";
+import { TermText } from "../ui/term-text";
 
 /**
  * Search across Library, from its bar. The field waits at the foot with the keyboard up and the
@@ -122,7 +122,7 @@ export default function Search() {
               <Plate className="overflow-hidden">
                 {cards.map((c, i) => {
                   const meaning = c.meaning || t`No meaning yet`;
-                  const reading = termReading(c);
+                  const reading = drawsTermReading(c);
                   return (
                     <RowMenu
                       key={c.id}
@@ -144,11 +144,10 @@ export default function Search() {
                           className={`flex-row gap-3 ${reading ? "items-end" : "items-baseline"}`}
                         >
                           <View className="flex-1">
-                            <Furigana
-                              segments={reading ?? [{ text: c.term }]}
+                            <TermText
+                              card={c}
                               className="text-md font-medium text-text"
                               lines={2}
-                              lang={c.language}
                             />
                           </View>
                           <Text className="max-w-[40%] text-sm text-muted" numberOfLines={1}>

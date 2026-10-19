@@ -57,6 +57,8 @@ Each rule below fails a check instead of waiting for review, and the check's mes
 | Every phone scroll view sets `keyboardShouldPersistTaps`, so a tap with the keyboard up reaches its button | `biome-plugins/scroll-view-persist-taps.grit` |
 | Every phone error line is `FieldError`, so its icon centres on the first line and its text keeps the form's line | `biome-plugins/field-error.grit` |
 | A change to the phone's frozen responses records a `CACHE_SHAPE` decision | `pnpm check:cache-shape` |
+| Language behaviour comes from `packages/core/src/languages`: no other code compares a supported tag with `languageKey(…)`, `.language` or `lang`, switches on it, or lists it in a literal set; files not yet moved are excluded in `biome.json` | `biome-plugins/language-tags.grit` |
+| A screen draws a card's term with `TermText` and its example with `ExampleText`, never `termReading` or `parseReadings` itself | `biome-plugins/term-text.grit` |
 | Server SQL and new migrations never case-fold with `lower()`, which is ASCII-only on D1 | `biome-plugins/no-sql-lower.grit` and `pnpm check:migrations` |
 | New lines use Lymi tokens and logical directions: no raw hex, stock Tailwind colour, `ml-`/`text-left`, `margin-left` or `marginLeft` | `pnpm check:styling` |
 | Token values match `packages/design/tokens.css` everywhere they are copied | `pnpm check:design` |

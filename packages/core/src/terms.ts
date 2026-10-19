@@ -1,4 +1,5 @@
-import { languageKey, stripReadings } from "./reading";
+import { languageKey } from "./languages";
+import { stripReadings } from "./reading";
 
 /**
  * The key the duplicate rule compares. Trimmed, whitespace collapsed, case-folded,

@@ -3,11 +3,11 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { EndScreen, Offer } from "@lymi/client/review-end";
 import {
   cueKeepsReading,
+  drawsTermReading,
   gradeAllowed,
   type KnownReadings,
   type Rating,
   type ReviewAid,
-  termReading,
 } from "@lymi/core";
 import {
   END_OF_REVIEW as AT,
@@ -58,7 +58,6 @@ import { AiCardChip, Chip, StateChip } from "../components/chip";
 import { ErrorState } from "../components/empty-state";
 import { ErrorTip } from "../components/error-tip";
 import { Flame } from "../components/flame";
-import { Furigana, ReadingText } from "../components/furigana";
 import { GRADES } from "../components/grade";
 import {
   HOOK_OFFER_BOX,
@@ -82,6 +81,7 @@ import { Skeleton } from "../components/skeleton";
 import { StateIcon, stateKey } from "../components/state-mark";
 import { lastDays, type StreakSummary } from "../components/streak";
 import { StreakStart } from "../components/streak-week";
+import { ExampleText, TermText } from "../components/term-text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../components/ui/tooltip";
 import type { QueueItem } from "../lib/api";
 import { intervalLabel } from "../lib/i18n";
@@ -527,13 +527,9 @@ export function ReviewCard({
     !!card.pronunciation &&
     cueKeepsReading(card.language, stateKey(item.fsrsState) === "known");
   // Furigana over the term: on the cue until the card is Known, and always once it is the answer.
-  const reading = useMemo(() => termReading(card), [card]);
+  const reading = useMemo(() => drawsTermReading(card), [card]);
   const cueReading = revealed || stateKey(item.fsrsState) !== "known";
-  const term = reading ? (
-    <Furigana segments={reading} lang={card.language ?? undefined} />
-  ) : (
-    card.term
-  );
+  const term = <TermText card={card} />;
   const label =
     mode.cue === "term"
       ? t`Recognition card for ${front}`
@@ -705,7 +701,7 @@ export function ReviewCard({
           className="hyphenate whitespace-pre-line text-md leading-relaxed text-text-2 [overflow-wrap:anywhere]"
           lang={card.language ?? undefined}
         >
-          <ReadingText
+          <ExampleText
             text={card.example}
             lang={card.language ?? undefined}
             known={knownReadings}
@@ -955,15 +951,7 @@ export function ReviewCard({
                         CUE_SIZE[step],
                       )}
                     >
-                      {mode.cue === "term" && reading ? (
-                        <Furigana
-                          segments={reading}
-                          lang={card.language ?? undefined}
-                          hidden={!cueReading}
-                        />
-                      ) : (
-                        front
-                      )}
+                      {mode.cue === "term" ? <TermText card={card} hidden={!cueReading} /> : front}
                       {mode.cue === "term" && audio("z-20")}
                     </p>
                     {readingOnCue && (

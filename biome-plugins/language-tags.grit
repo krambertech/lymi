@@ -1,0 +1,15 @@
+or {
+  JsBinaryExpression(),
+  JsCaseClause(),
+  JsNewExpression(),
+  JsCallExpression()
+} as $match where {
+  $match <: or {
+    r"(?s)(?:languageKey\(.*\)|.*\.language|lang|language)\s*[!=]==?\s*[\"'](?:ja|zh)(?:-[\w-]+)?[\"']",
+    r"(?s)[\"'](?:ja|zh)(?:-[\w-]+)?[\"']\s*[!=]==?\s*(?:languageKey\(.*\)|.*\.language|lang|language)",
+    r"(?s)case\s+[\"'](?:ja|zh)(?:-[\w-]+)?[\"']\s*:.*",
+    r"(?s)new\s+(?:Set|Map)\b.*[\"'](?:ja|zh)(?:-[\w-]+)?[\"'].*",
+    r"(?s)\[[^\]]*[\"'](?:ja|zh)(?:-[\w-]+)?[\"'][^\]]*\]\s*\.\s*includes\s*\(.*"
+  },
+  register_diagnostic(span=$match, message="Language behaviour comes from the card's tag through packages/core/src/languages, the one place that compares language codes. Ask it, as in drawsReadings(tag) or languageScript(tag), or add what you need to the record.")
+}

@@ -1,9 +1,8 @@
-import type { ReadingSegment } from "@lymi/core";
 import { type ReactNode, useState } from "react";
 import { type LayoutChangeEvent, type TextStyle, useWindowDimensions, View } from "react-native";
 import { fitType, INLINE_LIFT } from "../theme/type";
-import { Furigana } from "../ui/furigana";
 import { Text } from "../ui/primitives";
+import { TermText } from "../ui/term-text";
 
 // The review card's type on the phone's ramp, which steps down at most twice to fit. phone.md "Review".
 
@@ -74,15 +73,19 @@ export function CardLine({
   muted,
   grows = false,
   lang,
-  reading,
+  term,
   hidden,
   children,
 }: {
   style: LineStyle;
   /** The card's language, when the line is its term. */
   lang?: string | null;
-  /** The term as drawn with furigana over it, when the line is a term that has them. */
-  reading?: ReadingSegment[] | null;
+  /** The card, when the line is its term, so a reading can be drawn over it. */
+  term?: {
+    term: string;
+    language?: string | null | undefined;
+    pronunciation?: string | null | undefined;
+  } | null;
   /** Keeps the furigana's room but hides it, as on the cue of a Known card. */
   hidden?: boolean;
   /** Follows Dynamic Type, as the answer does; the cue stays its size, already the card's largest. */
@@ -95,28 +98,7 @@ export function CardLine({
   // The cue is sized for the text size already; the answer grows, short of the cue.
   const limit = grows ? ANSWER_GROWS : 1;
   const drawn = fitType(style.fontSize, fontScale, limit).drawn;
-  if (reading) {
-    const line = Math.round(((style.lineHeight ?? style.fontSize * 1.2) * drawn) / style.fontSize);
-    return (
-      <Furigana
-        segments={reading}
-        hidden={hidden}
-        lang={lang}
-        className="text-text"
-        style={[style, muted ? { color: muted } : null]}
-        maxFontSizeMultiplier={limit}
-        after={
-          after ? (
-            // Centred on the line as drawn, beside the last run, as the inline speaker is.
-            <View style={{ height: line, justifyContent: "center", paddingStart: 12 }}>
-              {after}
-            </View>
-          ) : undefined
-        }
-      />
-    );
-  }
-  return (
+  const plain = (
     <Text
       className="text-text"
       style={[
@@ -146,6 +128,25 @@ export function CardLine({
         </>
       ) : null}
     </Text>
+  );
+  if (!term) return plain;
+  const line = Math.round(((style.lineHeight ?? style.fontSize * 1.2) * drawn) / style.fontSize);
+  return (
+    <TermText
+      card={term}
+      plain={plain}
+      hidden={hidden}
+      lang={lang}
+      className="text-text"
+      style={[style, muted ? { color: muted } : null]}
+      maxFontSizeMultiplier={limit}
+      after={
+        after ? (
+          // Centred on the line as drawn, beside the last run, as the inline speaker is.
+          <View style={{ height: line, justifyContent: "center", paddingStart: 12 }}>{after}</View>
+        ) : undefined
+      }
+    />
   );
 }
 

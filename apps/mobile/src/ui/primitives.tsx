@@ -1,5 +1,5 @@
-import { languageKey } from "@lymi/core";
-import { shadows } from "@lymi/design";
+import { languageScript, type Script } from "@lymi/core";
+import { faces, shadows } from "@lymi/design";
 import {
   Children,
   createContext,
@@ -44,21 +44,23 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 const STEP = /(?:^|\s)(text-(?:2xs|xs|sm|base|md|lg|[2-7]?xl))(?=\s|$)/;
 
-/** Kana, kanji and the marks and full-width forms that run with them, none of which Onest has. */
-const KANA_KANJI =
-  /([\u3000-\u303f\u3040-\u30ff\u31f0-\u31ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef\u{20000}-\u{3134f}]+)/u;
+/** Each script's letters with the marks and full-width forms that run with them, none of which Onest has. */
+const SCRIPT_RUNS: Record<Script, RegExp> = {
+  Jpan: /([\u3000-\u303f\u3040-\u30ff\u31f0-\u31ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef\u{20000}-\u{3134f}]+)/u,
+};
 
-// iOS falls back from Onest by the device's languages, so kanji need a named face; phone.md "Components".
-const JAPANESE_FACE = Platform.OS === "ios" ? { fontFamily: "Hiragino Sans" } : null;
+// iOS falls back from Onest by the device's languages, so a script needs a named face; phone.md "Components".
+const NAMES_FACES = Platform.OS === "ios";
 
-/** Kana and kanji runs take the Japanese face and the rest stays in Onest, as the web's `:lang(ja)`. */
-function inJapanese(children: ReactNode): ReactNode {
+/** The script's runs take its face and the rest stays in Onest, as the web's `:lang()` rules. */
+function inScript(children: ReactNode, script: Script): ReactNode {
+  const face = { fontFamily: faces[script][0] };
   return Children.map(children, (child) =>
     typeof child === "string"
-      ? child.split(KANA_KANJI).map((run, i) =>
+      ? child.split(SCRIPT_RUNS[script]).map((run, i) =>
           i % 2 ? (
             // biome-ignore lint/suspicious/noArrayIndexKey: runs are derived from the string and never reorder.
-            <RNText key={i} style={JAPANESE_FACE}>
+            <RNText key={i} style={face}>
               {run}
             </RNText>
           ) : (
@@ -72,7 +74,7 @@ function inJapanese(children: ReactNode): ReactNode {
 /**
  * Text in Onest. Size and colour come from the token classes, as on the web. It follows Dynamic Type
  * by the size it is set in, and `maxFontSizeMultiplier` can only lower that size's own cap. `lang` is
- * the BCP 47 tag of a card's own words, so Japanese draws in a Japanese face.
+ * the BCP 47 tag of a card's own words, so a script Onest lacks draws in that script's face.
  */
 export function Text({
   className,
@@ -86,6 +88,7 @@ export function Text({
   const { fontScale } = useWindowDimensions();
   const size = StyleSheet.flatten(style)?.fontSize ?? step.fontSize ?? 17;
   const fit = fitType(size, fontScale, maxFontSizeMultiplier ?? undefined);
+  const script = NAMES_FACES ? languageScript(lang) : null;
   return (
     <RNText
       className={`font-sans ${className ?? ""}`}
@@ -94,7 +97,7 @@ export function Text({
       style={[{ letterSpacing: fit.letterSpacing }, style]}
       {...props}
     >
-      {JAPANESE_FACE && languageKey(lang) === "ja" ? inJapanese(children) : children}
+      {script ? inScript(children, script) : children}
     </RNText>
   );
 }

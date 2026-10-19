@@ -10,6 +10,8 @@ The choices Add a word and Edit card open as sheets over the form: tags, found o
 
 [`card-choices.yaml`](card-choices.yaml), as `learner` from Today: open **Add a card** with the AI off, write **il semaforo** and **the traffic light**, create the tags **street** and **city** by typing each and pressing Return, which ticks them, see that **How it’s asked** offers only Recognition and Production, choose the first photo and describe it as **the traffic light at a junction**, see the refusal under it, press **Add to** the deck and land back in the picture's sheet, describe it again without the answer, tick **Picture → term**, and add. The tags chip still reads **street**. Then in Library open the first deck, the card, its **Tags**, untick **city** and press **Save**.
 
+[`card-tags.yaml`](card-tags.yaml), as `learner`, opens **il rimborso** in Lezione 12, which carries noun and money, unticks **money**, creates **refund** and saves; [`card-tags.mjs`](card-tags.mjs) finds the card with noun and refund, in that order.
+
 ## End state
 
 The sheet confirms **Added “il semaforo” to** the deck. [`card-choices.mjs`](card-choices.mjs) finds the card with the tag **street** alone, the mode image → term, and the second description on its picture.

@@ -1,0 +1,32 @@
+# Edit card's tags: untick one the card carries, create a new one, and save.
+appId: app.lymi
+name: Card tags
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/card/${CARD_ID}?deck=${DECK_ID}
+- extendedWaitUntil:
+    visible: "Details"
+    timeout: 20000
+- scrollUntilVisible:
+    element: "Tags.*"
+- tapOn: "Tags.*money.*"
+- extendedWaitUntil:
+    visible: "Find or create a tag"
+    timeout: 20000
+- takeScreenshot: 01-tags-sheet
+- tapOn: "^money$"
+- tapOn: "Find or create a tag"
+- inputText: "${NEW}"
+- tapOn: "Create “${NEW}”"
+- assertVisible: "^${NEW}$"
+- takeScreenshot: 02-edited
+- swipe:
+    start: 50%, 30%
+    end: 50%, 95%
+- waitForAnimationToEnd
+- tapOn: "Save"
+- extendedWaitUntil:
+    visible: "Details"
+    timeout: 20000
+- assertVisible: ".*noun, ${NEW}.*"
+- takeScreenshot: 03-saved

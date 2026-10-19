@@ -126,7 +126,8 @@ export function FirstRunGuide({ name, email, decks, play, onAddCard, onSmartAdd 
   const deck = startedDeck(decks);
   const empty = decks?.find((d) => d.total === 0 && d.role === "owner");
   // An email sign-up is named for the address, which is no name to greet.
-  const first = name === email?.split("@")[0] ? undefined : name?.trim().split(/\s+/)[0];
+  const fromEmail = !!name && name.toLowerCase() === email?.split("@")[0]?.toLowerCase();
+  const first = fromEmail ? undefined : name?.trim().split(/\s+/)[0];
   const steps: { key: string; title: ReactNode; detail: ReactNode; action?: ReactNode }[] = [
     {
       key: "deck",

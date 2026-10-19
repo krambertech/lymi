@@ -222,7 +222,7 @@ test("a learner whose only deck was shared is offered a deck of their own", asyn
 test("an email sign-up is welcomed without its address", async () => {
   await wrap(
     <FirstRunGuide
-      name="olena.k92"
+      name="Olena.K92"
       email="olena.k92@example.com"
       decks={[]}
       play={false}

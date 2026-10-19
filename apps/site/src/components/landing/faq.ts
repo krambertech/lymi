@@ -240,7 +240,7 @@ export const TUTOR_LESSONS_QUESTIONS: Question[] = [
   {
     id: "tutor-sites",
     question: msg`Does Lymi connect to italki or Preply?`,
-    answer: msg`No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo, and your assistant turns them into cards.`,
+    answer: msg`No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo. Then Smart add or your assistant turns them into cards.`,
   },
   {
     id: "tutor-share",
@@ -257,7 +257,7 @@ export const NOTES_TO_FLASHCARDS_QUESTIONS: Question[] = [
   {
     id: "upload",
     question: msg`Can I upload a PDF to Lymi directly?`,
-    answer: msg`Not yet. Lymi has no PDF or photo upload of its own. Your assistant reads the file and adds the cards, and you can add terms by hand with Add a card.`,
+    answer: msg`Yes, with Smart add. Add up to 3 PDFs or 10 photos, or paste the text, and tick the terms you want. It’s in beta, so it reads up to 5 lessons a day.`,
   },
   {
     id: "material",

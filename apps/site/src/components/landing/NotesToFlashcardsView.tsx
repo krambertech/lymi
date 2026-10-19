@@ -388,8 +388,8 @@ export function NotesToFlashcardsView() {
           ]}
           note={
             <Trans>
-              Lymi doesn’t read PDFs or photos itself: your assistant does the reading. A diagram
-              can go on a card as its picture.
+              Smart add is in beta and reads up to 5 lessons a day. A diagram can go on a card as
+              its picture.
             </Trans>
           }
           withoutAssistant

@@ -104,7 +104,7 @@ describe("termReading", () => {
 
   it("draws nothing for another language, a missing or non-kana reading, or a kana term", () => {
     expect(termReading({ term: "молоко", language: "ru", pronunciation: "молоко́" })).toBeNull();
-    expect(termReading({ term: "学习", language: "zh", pronunciation: "xuéxí" })).toBeNull();
+    expect(termReading({ term: "學校", language: "ko", pronunciation: "hakgyo" })).toBeNull();
     expect(termReading({ term: "食べる", language: "ja", pronunciation: "taberu" })).toBeNull();
     expect(termReading({ term: "食べる", language: "ja", pronunciation: null })).toBeNull();
     expect(
@@ -272,9 +272,9 @@ describe("markKnownReadings", () => {
     expect(faded("上手[ジョウズ]です。", [card("上手", "じょう・ず")])).toEqual(["上手"]);
   });
 
-  it("takes nothing from a card that is not Known, not Japanese, or written in kana", () => {
+  it("takes nothing from a card that is not Known, in a language with no reading, or written in kana", () => {
     expect(knownReadings([card("食べる", "たべる", false)]).size).toBe(0);
-    expect(knownReadings([card("学习", "xuéxí", true, "zh")]).size).toBe(0);
+    expect(knownReadings([card("學校", "hakgyo", true, "ko")]).size).toBe(0);
     expect(knownReadings([card("ありがとう", "ありがとう")]).size).toBe(0);
     expect(knownReadings([card("食べる", null)]).size).toBe(0);
   });
@@ -374,7 +374,7 @@ describe("readingKey", () => {
   });
   it("has no reading where none applies", () => {
     expect(readingKey({ term: "上手", language: "ja", pronunciation: "jōzu" })).toBeNull();
-    expect(readingKey({ term: "学习", language: "zh", pronunciation: "xuéxí" })).toBeNull();
+    expect(readingKey({ term: "學校", language: "ko", pronunciation: "hakgyo" })).toBeNull();
     expect(readingKey({ term: "ciao", language: "it", pronunciation: null })).toBeNull();
   });
   it("keys only a reading that fits the term, so a stray reading never splits a word", () => {

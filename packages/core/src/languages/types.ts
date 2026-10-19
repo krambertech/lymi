@@ -1,16 +1,30 @@
 /** A tag Lymi treats in full. A tag joins only in the last delivery slice for its language. */
 export type SupportedTag = "ja";
 
-/** ISO 15924 scripts whose faces Lymi names, because Onest has none of their letters. */
-export type Script = "Jpan";
+/**
+ * A tag with a record in the index: each supported tag, and one whose language is still landing.
+ * Registries keyed by SupportedTag, such as prompts and pages, leave it out until it joins.
+ */
+export type RecordTag = SupportedTag | "zh";
 
-/** How a reading is drawn: furigana puts kana over kanji, aligned at display. */
-export type ReadingEngine = "furigana";
+/** ISO 15924 scripts whose faces Lymi names, because Onest has none of their letters. */
+export type Script = "Jpan" | "Hans" | "Hant";
+
+/** How a reading is drawn: furigana puts kana over kanji, pinyin one syllable over each hanzi; both align at display. */
+export type ReadingEngine = "furigana" | "pinyin";
 
 /** What a supported language does differently, chosen from the card's language tag alone. */
 export interface LanguageSupport {
-  tag: SupportedTag;
-  script: Script;
+  tag: RecordTag;
+  /** The scripts it is written in; the first unless `script` picks another from the full tag. */
+  scripts: readonly [Script, ...Script[]];
+  /** The script a full tag names, from its lower-case subtags. */
+  script?: (subtags: readonly string[]) => Script;
+  /**
+   * Extended language subtags that are still this language, such as Mandarin's zh-cmn. Any other
+   * three-letter second subtag names another language, such as Cantonese's zh-yue or Hakka's zh-hak.
+   */
+  extlangs?: readonly string[];
   engine: ReadingEngine;
   /** The pronunciation holds a Reading, and the card form calls the field so. */
   pronunciation: "reading";
@@ -19,6 +33,8 @@ export interface LanguageSupport {
     saysReading: boolean;
     /** A lead-in written from the reading and meaning may go before the term. docs/lead-ins.md. */
     leadIn: boolean;
+    /** The published voice locale for a script where it differs from the language's default. */
+    locales?: Partial<Record<Script, string>>;
   };
 }
 

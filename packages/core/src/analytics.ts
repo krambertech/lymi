@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { DECK_PURPOSES } from "./enrichment";
+import { LANGUAGE_RECORDS, type RecordTag } from "./languages";
 import { ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
@@ -244,6 +245,9 @@ export const analyticsEvents = {
     reading: z.enum(["cue", "answer"]).optional(),
     example_readings: count.optional(),
     readings_faded: count.optional(),
+    reading_language: z
+      .enum(Object.keys(LANGUAGE_RECORDS) as [RecordTag, ...RecordTag[]])
+      .optional(),
   }),
   review_undone: z.object({
     mode: ReviewModeKey.optional(),

@@ -1,10 +1,12 @@
 /**
- * Readings drawn over a term or an example: furigana over kanji. A term's reading is its
- * pronunciation, aligned at display; an example carries its readings inline, `食[た]べる`, where
- * a bracketed kana reading belongs to the kanji just before it. docs/card-writing.md.
+ * Readings drawn over a term or an example: furigana over kanji, or pinyin over hanzi through
+ * `./pinyin`. A term's reading is its pronunciation, aligned at display; an example carries its
+ * readings inline, `食[た]べる`, where a bracketed kana reading belongs to the kanji just before
+ * it. docs/card-writing.md.
  */
 
-import { drawsReadings, readingEngine } from "./languages";
+import { readingEngine } from "./languages";
+import { pinyinKey, pinyinPairs, pinyinTermReading } from "./pinyin";
 
 /** One run of text, with the reading drawn over it when it has one; `known` fades that reading. */
 export type ReadingSegment = { text: string; reading?: string; known?: boolean };
@@ -58,14 +60,18 @@ export function kanaReading(card: {
 }
 
 /**
- * The reading the duplicate rule compares: a Japanese card's folded kana reading when it fits the
- * term, else null, so an IPA line or another word's reading never splits one word into two cards.
+ * The reading the duplicate rule compares: a Japanese card's folded kana reading, or a Chinese
+ * card's toned pinyin, when it fits the term, else null, so an IPA line or another word's reading
+ * never splits one word into two cards.
  */
 export function readingKey(card: {
   term: string;
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): string | null {
+  if (readingEngine(card.language) === "pinyin") {
+    return card.pronunciation ? pinyinKey(card.term, card.pronunciation) : null;
+  }
   const reading = kanaReading(card);
   if (!reading) return null;
   const folded = foldReading(reading);
@@ -172,15 +178,20 @@ export function alignReading(term: string, reading: string): ReadingSegment[] {
 
 /**
  * The term as drawn with its reading, or null when nothing is drawn over it: the card is not in
- * a language Lymi draws readings for, it has no kana reading, or its term has no kanji. A term
- * that lists forms (食べる · 食べます) carries a one-form reading over its first form.
+ * a language Lymi draws readings for, it has no reading in its engine's script, or its term has
+ * no kanji or hanzi. A term that lists forms (食べる · 食べます) carries a one-form reading over
+ * its first form.
  */
 export function termReading(card: {
   term: string;
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): ReadingSegment[] | null {
-  const reading = drawsReadings(card.language) ? kanaReading(card) : null;
+  if (readingEngine(card.language) === "pinyin") {
+    const segments = card.pronunciation ? pinyinTermReading(card.term, card.pronunciation) : null;
+    return segments?.some((segment) => segment.reading !== undefined) ? segments : null;
+  }
+  const reading = kanaReading(card);
   if (!reading) return null;
   const clean = foldReading(reading);
   const at = card.term.indexOf(" · ");
@@ -192,6 +203,11 @@ export function termReading(card: {
     ]);
   } else segments = alignReading(card.term, clean);
   return segments.some((segment) => segment.reading !== undefined) ? segments : null;
+}
+
+/** Whether a drawn reading is written in letters, as pinyin is, so it needs room from the reading beside it. */
+export function lettersReading(reading: string): boolean {
+  return /\p{Script=Latin}/u.test(reading);
 }
 
 /** Whether a reading is drawn over the card's term, for a screen that lays out around it. */
@@ -284,6 +300,7 @@ export function readingPairs(card: {
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): string[] {
+  if (readingEngine(card.language) === "pinyin") return pinyinPairs(termReading(card) ?? []);
   const keys: string[] = [];
   for (const { text, reading } of termReading(card) ?? []) {
     if (reading === undefined || ![...text].every(isBase)) continue;

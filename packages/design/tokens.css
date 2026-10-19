@@ -307,15 +307,25 @@
 /*
  * Faces for the scripts Onest has none of, one per ISO 15924 code, named --face-<code>. Every
  * platform ships one of each list, so there is no web font; the phone names the first on iOS.
- * Naming Japanese faces gives kanji that Chinese shares their Japanese forms.
+ * Each script names its own faces, so a character Japanese and Chinese share takes the form its
+ * language writes. Cantonese, zh-yue, is left to the system.
  */
 :root {
   --face-jpan:
     "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, "Noto Sans JP", Meiryo;
+  --face-hans: "PingFang SC", "Microsoft YaHei", "Noto Sans SC";
+  --face-hant: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC";
 }
 
 @layer base {
   :lang(ja) {
     font-family: "Onest", "Onest Fallback", var(--face-jpan), ui-sans-serif, system-ui, sans-serif;
+  }
+  :lang(zh):not(:lang(zh-yue)) {
+    font-family: "Onest", "Onest Fallback", var(--face-hans), ui-sans-serif, system-ui, sans-serif;
+  }
+  /* After zh, so a traditional tag wins; zh-Hans-TW still matches neither. */
+  :is(:lang(zh-Hant), :lang(zh-TW), :lang(zh-HK), :lang(zh-MO)):not(:lang(zh-yue)) {
+    font-family: "Onest", "Onest Fallback", var(--face-hant), ui-sans-serif, system-ui, sans-serif;
   }
 }

@@ -1,4 +1,5 @@
-# Chinese: a New card keeps its pinyin under the term cue before the reveal, and shows it once.
+# Chinese: a New card draws pinyin over each hanzi on the cue and keeps it after the reveal, in the
+# simplified and the traditional face.
 appId: app.lymi
 name: Chinese
 ---
@@ -7,14 +8,25 @@ name: Chinese
 - tapOn: "${DECK}.*"
 - tapOn: "^Review.*"
 - extendedWaitUntil:
-    visible: ".*${TERM}.*Tap to reveal"
+    visible: ".*${TERM}, read ${READING}. Tap to reveal"
     timeout: 30000
-- assertVisible: ".*${READING}.*"
 - assertNotVisible: ".*${MEANING}.*"
-- takeScreenshot: 01-new-cue-with-pinyin
+- takeScreenshot: 01-new-cue-pinyin
 # The card's centre can be its pronunciation button, so reveal by tapping low on the card.
 - tapOn:
     point: "50%,80%"
 - assertVisible: "^Good.*"
 - assertVisible: ".*${MEANING}.*"
 - takeScreenshot: 02-revealed
+- tapOn: "End review"
+- tapOn: "Library"
+- tapOn: "${TRAD_DECK}.*"
+- tapOn: "^Review.*"
+- extendedWaitUntil:
+    visible: ".*${TRAD_TERM}, read ${TRAD_READING}. Tap to reveal"
+    timeout: 30000
+- takeScreenshot: 03-traditional-cue-pinyin
+- tapOn:
+    point: "50%,80%"
+- assertVisible: ".*${TRAD_MEANING}.*"
+- takeScreenshot: 04-traditional-revealed

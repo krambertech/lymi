@@ -1,6 +1,6 @@
 import { knownReadings, markKnownReadings, parseReadings, termReading } from "@lymi/core";
 import { describe, expect, it } from "vitest";
-import { clampBoxes, furiganaBoxes, spokenReading } from "./furigana-boxes";
+import { clampBoxes, furiganaBoxes, readingInset, spokenReading } from "./furigana-boxes";
 
 const texts = (segments: Parameters<typeof furiganaBoxes>[0]) =>
   furiganaBoxes(segments).map((box) =>
@@ -50,6 +50,15 @@ describe("furiganaBoxes", () => {
     ]);
   });
 
+  it("gives each hanzi its own box under its syllable, and 儿 the box before it", () => {
+    const zh = (term: string, pronunciation: string) =>
+      texts(termReading({ term, language: "zh", pronunciation }) ?? []);
+    expect(zh("学习", "xuéxí")).toEqual(["学[xué]", "习[xí]"]);
+    expect(zh("一点儿", "yì diǎnr")).toEqual(["一[yì]", "点儿[diǎnr]"]);
+    expect(zh("學習", "xué xí")).toEqual(["學[xué]", "習[xí]"]);
+    expect(zh("卡拉OK", "kǎlā OK")).toEqual(["卡[kǎ]", "拉[lā]", "OK"]);
+  });
+
   it("returns nothing for nothing", () => {
     expect(furiganaBoxes([])).toEqual([]);
     expect(furiganaBoxes([{ text: "" }])).toEqual([]);
@@ -74,6 +83,13 @@ describe("clampBoxes", () => {
     expect(clampBoxes(frames, 2, 100, 20)).toBe(3);
     expect(clampBoxes(frames, 2, 100, 4)).toBe(4);
     expect(clampBoxes(frames, 1, 100, 70)).toBe(0);
+  });
+});
+
+describe("readingInset", () => {
+  it("pads pinyin so a wide syllable never meets the next, and leaves kana as it was", () => {
+    expect(readingInset("zhuāng", 17)).toBe(4);
+    expect(readingInset("きょう", 17)).toBe(0);
   });
 });
 

@@ -1,3 +1,4 @@
+import { speechLocale } from "@lymi/core";
 import { type DependencySource, type HealthEnv, meteredFetch } from "../dependency-health";
 import { createElevenLabsSpeechProvider, type ElevenLabsSpeechBindings } from "./elevenlabs-speech";
 import { createGeminiApiSpeechProvider, type GeminiApiSpeechBindings } from "./gemini-api-speech";
@@ -259,6 +260,9 @@ function publishedLocale(
   const normalized = language.trim().replace(/_/g, "-").toLowerCase();
   const match = [...exact].find((locale) => locale.toLowerCase() === normalized);
   if (match) return match;
+  // A traditional Chinese tag speaks with the Taiwan voice where the provider publishes one.
+  const script = speechLocale(normalized);
+  if (script && exact.has(script)) return script;
   const root = normalized.split("-")[0];
   return root ? (defaults.get(root) ?? null) : null;
 }

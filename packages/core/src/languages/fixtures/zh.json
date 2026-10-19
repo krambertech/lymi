@@ -1,0 +1,93 @@
+{
+  "tags": {
+    "zh": "Hans",
+    "zh-CN": "Hans",
+    "zh-SG": "Hans",
+    "zh-Hans-TW": "Hans",
+    "zh-TW": "Hant",
+    "zh-HK": "Hant",
+    "zh-MO": "Hant",
+    "zh-Hant": "Hant",
+    "zh_hant_cn": "Hant"
+  },
+  "terms": [
+    { "term": "行", "pronunciation": "háng", "drawn": "行[háng]" },
+    { "term": "行", "pronunciation": "xíng", "drawn": "行[xíng]" },
+    { "term": "长", "pronunciation": "zhǎng", "drawn": "长[zhǎng]" },
+    { "term": "还", "pronunciation": "huán", "drawn": "还[huán]" },
+    { "term": "东西", "pronunciation": "dōngxi", "drawn": "东[dōng]西[xi]" },
+    { "term": "一点儿", "pronunciation": "yì diǎnr", "drawn": "一[yì]点儿[diǎnr]" },
+    { "term": "不是", "pronunciation": "bù shì", "drawn": "不[bù]是[shì]" },
+    { "term": "卡拉OK", "pronunciation": "kǎlā OK", "drawn": "卡[kǎ]拉[lā]OK" },
+    { "term": "西安", "pronunciation": "Xī'ān", "drawn": "西[Xī]安[ān]" },
+    { "term": "學習", "pronunciation": "xuéxí", "drawn": "學[xué]習[xí]" },
+    { "term": "你好吗", "pronunciation": "nǐ hǎo", "drawn": "你好吗[nǐ hǎo]" },
+    { "term": "学习", "pronunciation": "ɕɥɛ̌ɕǐ", "drawn": null },
+    { "term": "OK", "pronunciation": "OK", "drawn": null }
+  ],
+  "examples": [
+    { "text": "我在银行[yínháng]工作。", "plain": "我在银行工作。" },
+    { "text": "我[wǒ]要一点儿[yì diǎnr]水。", "plain": "我要一点儿水。" },
+    { "text": "[sound:xing.mp3]不行", "plain": "[sound:xing.mp3]不行" }
+  ],
+  "keys": [
+    { "term": "行", "pronunciations": ["háng", "HÁNG", "hang2", "ha\u0301ng"] },
+    { "term": "东西", "pronunciations": ["dōngxi", "dōng xi", "dong1 xi5", "Dōngxi"] },
+    { "term": "西安", "pronunciations": ["Xī'ān", "xī ān", "xi1 an1", "xī’ān"] },
+    { "term": "你好", "pronunciations": ["nǐ hǎo", "Nǐ hǎo!", "nǐ hǎo.", "ni3 hao3"] },
+    { "term": "不是", "pronunciations": ["bù shì", "bú shì", "bu4 shi4", "Bú shì."] },
+    { "term": "一会儿", "pronunciations": ["yíhuìr", "yīhuìr", "yí huìr"] }
+  ],
+  "apart": [
+    { "term": "行", "pronunciations": ["háng", "xíng"] },
+    { "term": "东西", "pronunciations": ["dōngxi", "dōngxī"] },
+    { "term": "长", "pronunciations": ["cháng", "zhǎng"] }
+  ],
+  "noKey": [
+    { "term": "行", "pronunciation": "xing" },
+    { "term": "东西", "pronunciation": "dongxi" },
+    { "term": "学习", "pronunciation": "ɕɥɛ̌ɕǐ" },
+    { "term": "行", "pronunciation": "xuéxí" }
+  ],
+  "inputs": [
+    {
+      "sent": { "term": "你好", "pronunciation": "ni3 hao3" },
+      "stored": { "term": "你好", "pronunciation": "nǐ hǎo" },
+      "normalized": ["pronunciation"]
+    },
+    {
+      "sent": { "term": "女儿", "pronunciation": "nv3 er2" },
+      "stored": { "term": "女儿", "pronunciation": "nǚ ér" },
+      "normalized": ["pronunciation"]
+    },
+    {
+      "sent": { "term": "一点儿", "pronunciation": "yi4 dian3r" },
+      "stored": { "term": "一点儿", "pronunciation": "yì diǎnr" },
+      "normalized": ["pronunciation"]
+    },
+    {
+      "sent": { "term": "卡拉OK", "pronunciation": "ka3 la1 OK" },
+      "stored": { "term": "卡拉OK", "pronunciation": "kǎ lā OK" },
+      "normalized": ["pronunciation"]
+    },
+    {
+      "sent": { "term": "两个", "pronunciation": "2 ge4" },
+      "stored": { "term": "两个", "pronunciation": "2 ge4" },
+      "normalized": []
+    },
+    {
+      "sent": { "term": "你好[nǐ hǎo]" },
+      "stored": { "term": "你好[nǐ hǎo]" },
+      "normalized": []
+    },
+    {
+      "sent": { "term": "你好", "pronunciation": "nǐ hǎo" },
+      "stored": { "term": "你好", "pronunciation": "nǐ hǎo" },
+      "normalized": []
+    }
+  ],
+  "pairs": [
+    { "term": "银行", "pronunciation": "yínháng", "pairs": ["pinyin:银[yín]", "pinyin:行[háng]"] },
+    { "term": "一点儿", "pronunciation": "yì diǎnr", "pairs": ["pinyin:一[yì]", "pinyin:点[diǎn]"] }
+  ]
+}

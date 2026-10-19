@@ -4,6 +4,7 @@
  * correction of the AI. docs/proposals/supported-languages.md, Writes.
  */
 import { type ReadingEngine, readingEngine } from "./languages";
+import { toneMarks } from "./pinyin";
 import { foldReading, splitTermReading } from "./reading";
 
 /** A field `normalizeCardText` may convert. */
@@ -18,7 +19,13 @@ export type CardText = {
 /** Each engine's conversions, such as pinyin's tone numbers to marks; each returns only the fields it changed. */
 const CONVERT: Record<ReadingEngine, (text: CardText) => CardText> = {
   furigana: splitBracketedTerm,
+  pinyin: markTones,
 };
+
+/** Pinyin sent with tone numbers stores with tone marks: ni3 hao3 → nǐ hǎo. */
+function markTones({ pronunciation }: CardText): CardText {
+  return pronunciation ? { pronunciation: toneMarks(pronunciation) } : {};
+}
 
 /**
  * `食[た]べる` sent as the term splits into 食べる and its Reading たべる, unless the card was sent a

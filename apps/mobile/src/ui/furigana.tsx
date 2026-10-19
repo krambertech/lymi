@@ -1,4 +1,4 @@
-import type { ReadingSegment } from "@lymi/core";
+import { type ReadingSegment, saysReading } from "@lymi/core";
 import { READING_FADE } from "@lymi/design";
 import { type ComponentProps, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -13,7 +13,13 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-na
 import { useResolveClassNames } from "uniwind";
 import { timed, useReduceMotion } from "../theme/motion";
 import { fitType } from "../theme/type";
-import { clampBoxes, type Frame, furiganaBoxes, spokenReading } from "./furigana-boxes";
+import {
+  clampBoxes,
+  type Frame,
+  furiganaBoxes,
+  readingInset,
+  spokenReading,
+} from "./furigana-boxes";
 import { Text } from "./primitives";
 
 interface Props {
@@ -123,7 +129,13 @@ function Ruby({
   const reading = (run: string) => (
     <Text
       className="text-text-2"
-      style={{ fontSize: readingSize, lineHeight: slot, fontWeight: "400", letterSpacing: 0 }}
+      style={{
+        fontSize: readingSize,
+        lineHeight: slot,
+        fontWeight: "400",
+        letterSpacing: 0,
+        paddingHorizontal: readingInset(run, readingSize),
+      }}
       allowFontScaling={false}
       numberOfLines={1}
       lang={lang}
@@ -142,7 +154,9 @@ function Ruby({
     <View
       accessible
       accessibilityRole={accessibilityRole}
-      accessibilityLabel={spokenReading(segments, !hidden) + (tail?.text ?? "")}
+      accessibilityLabel={
+        spokenReading(segments, !hidden && saysReading(lang)) + (tail?.text ?? "")
+      }
       accessibilityLanguage={lang ?? undefined}
       className="flex-row flex-wrap"
       style={lines ? { maxHeight: pitch * lines, overflow: "hidden" } : undefined}

@@ -157,8 +157,11 @@ async function driveFeature(browser, name) {
     // Take the preview cookie without following the link into Today, whose requests the reset below would strand.
     if (values.entry) await page.request.get(values.entry, { maxRedirects: 0 });
     const signIn = `/api/dev/sign-in?as=${persona}&reset=1&returnTo=${encodeURIComponent(feature.start ?? "/today")}`;
-    await page.goto(`${base}${signIn}`);
-    // The first load after a cold start waits for Vite to bundle the dependencies.
+    // The reset reseeds the persona, which takes `heavy` about 40 seconds, and the first load after a
+    // cold start waits for Vite to bundle the dependencies.
+    const landed = await page.goto(`${base}${signIn}`, { timeout: 90_000 });
+    // The local Worker can fail the first request after a long reseed, so the start page is asked once more.
+    if (landed && landed.status() >= 500) await page.reload({ timeout: 90_000 });
     await page.getByRole("main").first().waitFor({ timeout: 90_000 });
     const cookie = (await context.cookies(base)).map((c) => `${c.name}=${c.value}`).join("; ");
     checks = await doctor({ url: base, sha, version: values.version, persona, cookie });

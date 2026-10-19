@@ -21,7 +21,8 @@
       "!**/worker-configuration.d.ts",
       "!packages/design/uniwind.gen.css",
       "!apps/mobile/src/uniwind-types.d.ts",
-      "!apps/mobile/contract"
+      "!apps/mobile/contract",
+      "!apps/web/src/server/enrichment/runs"
     ]
   },
   "formatter": {

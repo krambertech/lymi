@@ -1,5 +1,9 @@
 import { CARD_LIMITS } from "@lymi/core";
 import { z } from "zod";
+import { lessonReading } from "../languages";
+
+/** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
+export const LESSON_PROMPT_VERSION = 1;
 
 /** The rules come from docs/card-writing.md; change both together. */
 export const INSTRUCTIONS = `You turn one language lesson into a pick list: the terms worth a card in the learner's deck. The learner ticks the terms they want, so list every candidate and let them choose.
@@ -21,7 +25,7 @@ Write each term as one card: one term, one sense
 - "kind" is "word" for one lexical item, "phrase" for a fixed multi-word expression the lesson teaches as a unit.
 - "meaning" is one translation, one to three words, in the deck's meaning language. Use the lesson's own gloss, cut to the sense the lesson teaches, and set "meaningFromLesson". With no gloss in the lesson, write the usual translation and clear "meaningFromLesson".
 - When that meaning also fits another common word, add a short cue in parentheses so only this term fits it: "думать (размышлять)".
-- "pronunciation" is the reading the lesson prints for the term, copied as printed: furigana over or beside kanji, a kana gloss in brackets, pinyin. Give only the reading, without brackets, and "" when the lesson prints none; never write one the lesson does not print. A reading belongs on its term's card and is never a term of its own.
+- "pronunciation" is the reading the lesson prints for the term, copied as printed, in any form its deck's "Readings" line lists. Give only the reading, without brackets, and "" when the lesson prints none; never write one the lesson does not print. A reading belongs on its term's card and is never a term of its own.
 
 Questions
 Most lessons need no question: the learner sees the list and unticks what they do not want. Ask only when one answer unticks several terms at once, such as a page of exercises, a second lesson in the same upload, or the few words the learner marked among many printed ones; never ask when every option keeps nearly the same terms. Ask about marks, highlighting or handwriting only when a photo or PDF shows them on some of the terms and not the rest; glossed and listed words are not "marked". Grammar categories are always kept. Write each question as one plain sentence of at most 12 words, addressed to the learner as "you", and each option as the learner's own short reply to it, in at most 5 words and without repeating the question's nouns. Each option lists the ids of the terms it drops; "default" is the index of the option most learners want.`;
@@ -63,6 +67,8 @@ export function decksBrief(
     lines.push(
       `\nDeck ${deck.id}: ${deck.name}${deck.description ? ` (${deck.description})` : ""}, teaching ${english(deck.language) ?? "a language its cards show"}`,
     );
+    const reading = lessonReading(deck.language);
+    if (reading) lines.push(`  Readings: ${reading}.`);
     for (const card of deck.examples) lines.push(`  ${card.term} — ${card.meaning ?? ""}`);
   }
   lines.push(

@@ -17,6 +17,7 @@ import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
 import {
   cardBrief,
+  chunked,
   type DeckBrief,
   deckBrief,
   ENRICHMENT_INSTRUCTIONS,
@@ -33,9 +34,6 @@ import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
 import type { ServiceContext } from "./context";
 import { getSettings } from "./settings";
-
-/** Cards per model call. A lesson lands in waves rather than all at once. */
-export const CARDS_PER_CALL = 10;
 
 /** The deck's own cards each call shows the model, so it follows the deck's pattern. */
 export const SAMPLES_PER_DECK = 5;
@@ -58,13 +56,6 @@ export function enrichmentContext(
 }
 
 type Fillable = Pick<Card, EnrichedField>;
-
-/** Split a list into runs of `size`, keeping order, so the first cards fill before the last. */
-export function chunked<T>(items: readonly T[], size: number): T[][] {
-  const chunks: T[][] = [];
-  for (let i = 0; i < items.length; i += size) chunks.push(items.slice(i, i + size));
-  return chunks;
-}
 
 /** The text fields enrichment writes, each with the column that records who wrote it. */
 const SOURCE_COLUMN = {

@@ -9,6 +9,7 @@ import { and, eq, isNotNull, isNull, ne } from "@lymi/core/db";
 import { z } from "zod";
 import type { TextProvider } from "../ai";
 import { schema } from "../db";
+import { languagePrompts } from "../languages";
 import { getCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
 import { getSettings } from "./settings";
@@ -33,6 +34,9 @@ const DECK_MEANINGS = 8;
 /** One line the learner can read in a glance under the cue. */
 const MAX_WORDS = 6;
 
+/** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
+export const HOOK_PROMPT_VERSION = 1;
+
 export const HOOK_INSTRUCTIONS = [
   "You write one memory hook for a language learner's vocabulary card: a short line in the learner's own language that, once read, makes the term hard to forget.",
   "Write the hook entirely in the language the card's meaning is written in. Read the meaning text to tell which, along with deckMeanings, other meanings from the same deck in the same language, and give that language's tag in language before the hook. Most examples below are Russian, but a meaning in English gets an English hook, and a meaning in Ukrainian, with letters such as і, ї, є or ґ, gets a Ukrainian hook, never a Russian one. When the meaning alone could be either, such as магазин, the language of deckMeanings decides. No words of the language being learned appear in the hook.",
@@ -44,6 +48,7 @@ export const HOOK_INSTRUCTIONS = [
   "- A compound: check every term for one first. When the term is two or more words joined, its parts' literal meanings joined with a plus sign are usually the best hook, because they rebuild the term itself: a glove that is literally a hand shoe. Use them when they are vivid or sensible.",
   "- A loanword or a shared root with a word the learner already knows in their own language: name that word.",
   "Work like this. Say the term aloud as a native speaker does, using its pronunciation when one is given, and split it into syllables. Draft at least six candidates across different routes: a whole-word sound-alike, a chain of short words covering the term, a sound hidden inside a longer word, and a parts or root reading where one exists. Rate each on how much of the term it sounds like, how surely it leads to the meaning, how easily it is pictured or felt, and how naturally it reads. Keep the one that is strong on all four. If none is, return null.",
+  "A card may carry guide, advice for hooking terms in its language. Follow it.",
   "Write the sounds shared with the term in capitals.",
   "These are the learner's own hooks for cards asked meaning first, the standard to match, with what makes each work:",
   "- meri (Estonian, море): МЭРИ у моря. The whole word is a name.",
@@ -69,7 +74,7 @@ export const HOOK_INSTRUCTIONS = [
   "- Return null when the term is in the same language as its meaning, or when the card is not a word or phrase with a translation. Null is better than a weak hook.",
 ].join("\n");
 
-const REPLY_SCHEMA = {
+export const HOOK_REPLY_SCHEMA = {
   name: "memory_hook",
   schema: {
     type: "object",
@@ -185,21 +190,28 @@ export function hookable(card: Omit<HookCard, "asked">, meaningLanguage: string)
   return headword(card.term).trim().split(/\s+/).length <= 3;
 }
 
-/** One draft for one card, or null when the model has none it may offer. */
-export async function draftHook(provider: TextProvider, card: HookCard): Promise<string | null> {
-  const input = JSON.stringify({
+/** What the model reads about one card. */
+export function hookInput(card: HookCard): string {
+  const guide = languagePrompts(card.language)?.hook;
+  return JSON.stringify({
     term: card.term,
     meaning: card.meaning,
     termLanguage: card.language,
     ...(card.pronunciation ? { pronunciation: card.pronunciation } : {}),
     asked: card.asked,
     ...(card.deckMeanings?.length ? { deckMeanings: card.deckMeanings } : {}),
+    ...(guide ? { guide } : {}),
   });
+}
+
+/** One draft for one card, or null when the model has none it may offer. */
+export async function draftHook(provider: TextProvider, card: HookCard): Promise<string | null> {
+  const input = hookInput(card);
   const reply = Reply.safeParse(
     await provider.complete({
       instructions: HOOK_INSTRUCTIONS,
       input,
-      schema: REPLY_SCHEMA,
+      schema: HOOK_REPLY_SCHEMA,
       // Medium drafts hooks as well as high, measured on real cards, in about half the time.
       effort: "medium",
     }),

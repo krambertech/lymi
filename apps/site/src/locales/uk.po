@@ -2371,7 +2371,7 @@ msgid "Lymi costs nothing. No trial, and no payment details to sign up."
 msgstr "Lymi нічого не коштує. Ні пробного періоду, ні платіжних даних для реєстрації."
 
 msgid "Lymi doesn’t connect to tutoring sites. Smart add is in beta and reads up to 5 lessons a day."
-msgstr "Lymi не підключається до сайтів з репетиторами. Розумне додавання зараз у беті й читає до 5 уроків на день."
+msgstr "Lymi не підключається до сайтів з репетиторами. Розумне додавання в бета-версії, тому читає до 5 уроків на день."
 
 msgid "Lymi for certification prep · Flashcards with spaced repetition"
 msgstr "Lymi для підготовки до сертифікації · Картки з інтервальним повторенням"
@@ -3403,7 +3403,7 @@ msgid "Smart add"
 msgstr "Розумне додавання"
 
 msgid "Smart add is in beta and reads up to 5 lessons a day. A diagram can go on a card as its picture."
-msgstr "Розумне додавання зараз у беті й читає до 5 уроків на день. Схему можна додати на картку як зображення."
+msgstr "Розумне додавання в бета-версії, тому читає до 5 уроків на день. Схему можна додати на картку як зображення."
 
 msgid "So-so"
 msgstr "Так собі"
@@ -4480,7 +4480,7 @@ msgid "Yes, to everyone."
 msgstr "Так, усім."
 
 msgid "Yes, with Smart add. Add up to 3 PDFs or 10 photos, or paste the text, and tick the terms you want. It’s in beta, so it reads up to 5 lessons a day."
-msgstr "Так, через Розумне додавання. Додай до 3 PDF або 10 фото чи встав текст і познач потрібні терміни. Воно в беті, тож читає до 5 уроків на день."
+msgstr "Так, через Розумне додавання. Додай до 3 PDF або 10 фото чи встав текст і познач потрібні терміни. Воно в бета-версії, тому читає до 5 уроків на день."
 
 msgid "Yes. A card can hold one picture, such as a diagram or a slide, and a review can ask from the picture instead of the words."
 msgstr "Так. Картка може мати одне зображення, наприклад схему чи слайд, і повторення може питати за зображенням замість слів."

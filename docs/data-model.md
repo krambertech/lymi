@@ -142,6 +142,9 @@ erDiagram
     json choices "language per deck, role per field"
     json counts "what was written"
     int written "chunks written"
+    int media_total "pictures and recordings to store"
+    int media_done "pictures and recordings handled"
+    int confirmed_at "nullable, when writing started"
     int archived_at "nullable, stamped on the cards it archived"
   }
   user_settings {
@@ -385,6 +388,8 @@ An import writes ordinary decks, cards, states and reviews, and marks what it ma
 Each imported grade replays through the scheduler in order and is stored as a `reviews` row with `source = 'import'`, no `review_day_id` and no `state_before`, so Undo refuses it. The mode's state keeps the replayed memory and takes the source's due date. A mode with a schedule and no log starts from the source's stability and difficulty; a mode the source reset stays new with its log as history. Imported rows light days in Insights and are left out of the streak, today's draw log and the goal.
 
 A Lymi file brings back what other sources cannot: each card's own language where it differs from its deck's, the meaning and example sources it had, its free-text source, its picture description and picture modes, and an archived deck arrives archived. Its imported text keeps those recorded sources rather than `manual`, because Lymi wrote them. Sections and series are in the file but are not restored yet.
+
+A write's progress counts each chunk of cards and each picture or recording as one unit: `media_total` is counted when the decks are made, and `media_done` moves with every step of pictures, which store six at a time. An import waiting on the learner expires after three days; a write with no step landing for an hour is failed as `internal` by the cron sweep and reported to Error Tracking.
 
 A term's own recording becomes the card's audio: `audio_key` under `cards/<card_id>/recorded/` with `audio_source = 'recorded'`, and a `set_audio` audit row. The adapter picks one clip per note, the first in a field named for audio and not for a sentence, then one in the term, reading or meaning field; a cloze note's clips speak its sentence and are all left out. The writer reads the bytes, keeps MP3, M4A, AAC and WAV up to 2 MB, and counts the rest as `recordingsSkipped`; sentence clips and second clips are `soundsLeftOut`, and an Anki file's `lymi-*-speech` clips, Lymi's own generated speech, are neither. A recording is never regenerated or replaced by `AUDIO_CACHE_VERSION`; an edit that changes the normalised term drops it, and every other edit, the language included, keeps it. Generated speech (`audio_source = 'generated'`) fills only a card without audio, and a re-import puts a recording in place of generated speech without reading clips for cards already recorded. `CardOut.audioSource` lets the apps play a recording on a card with no language (`canPlayPronunciation`). A Lymi file carries recordings in `media/` and no generated speech; an Anki export names them `lymi-<id>-recording` and `lymi-<id>-speech` so either imports back the same way.
 

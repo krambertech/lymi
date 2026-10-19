@@ -871,6 +871,12 @@ export const imports = sqliteTable(
     counts: text("counts", { mode: "json" }).$type<unknown>(),
     /** Chunks written so far, for progress. */
     written: integer("written").notNull().default(0),
+    /** Pictures and recordings the write will store, counted when its decks are made. */
+    mediaTotal: integer("media_total").notNull().default(0),
+    /** Pictures and recordings handled so far, stored or left out, for progress. */
+    mediaDone: integer("media_done").notNull().default(0),
+    /** When the learner confirmed, which starts the write. */
+    confirmedAt: integer("confirmed_at", { mode: "timestamp_ms" }),
     createdBy: text("created_by", { enum: ["user", "api", "mcp", "ai", "system"] }).notNull(),
     finishedAt: integer("finished_at", { mode: "timestamp_ms" }),
     archivedAt: integer("archived_at", { mode: "timestamp_ms" }),

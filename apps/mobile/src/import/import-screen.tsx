@@ -10,6 +10,7 @@ import {
   useUpload,
 } from "@lymi/client/imports";
 import { importQuery } from "@lymi/client/queries";
+import { importProgress } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
@@ -270,8 +271,8 @@ function Working({
     ? upload.total > 0
       ? upload.sent / upload.total
       : 0
-    : item.status === "importing" && item.progress.chunks > 0
-      ? item.progress.written / item.progress.chunks
+    : item.status === "importing"
+      ? importProgress(item.progress)
       : null;
   const heading =
     item.status === "importing"

@@ -29,7 +29,19 @@ export async function uploadCardImage(
   deps: CardImageStorage,
 ) {
   const card = await writableCard(ctx, cardId, fields.version);
-  return storeImage(ctx, card, bytes, { kind: "upload", host: null }, fields.description, deps);
+  await storeImage(ctx, card, bytes, { kind: "upload", host: null }, fields.description, deps);
+  return showCard(ctx, card.id);
+}
+
+/** Store an imported picture on a card the import wrote and the caller has already read. */
+export async function storeImportedImage(
+  ctx: ServiceContext,
+  card: Card,
+  bytes: Uint8Array,
+  description: string | undefined,
+  deps: CardImageStorage,
+) {
+  await storeImage(ctx, card, bytes, { kind: "upload", host: null }, description, deps);
 }
 
 /** Fetch a public link once and store a private copy, keeping only the link's host. */
@@ -42,7 +54,8 @@ export async function importCardImage(
   const card = await writableCard(ctx, cardId, input.version);
   if (input.description !== undefined) checkDescription(card, input.description);
   const { bytes, host } = await fetchRemoteImage(input.url, deps.fetcher);
-  return storeImage(ctx, card, bytes, { kind: "url", host }, input.description, deps);
+  await storeImage(ctx, card, bytes, { kind: "url", host }, input.description, deps);
+  return showCard(ctx, card.id);
 }
 
 /** Change the active picture's description; null pauses the picture modes. */
@@ -225,7 +238,6 @@ async function storeImage(
     }
   }
   if (!won) throw stale();
-  return showCard(ctx, card.id);
 }
 
 async function setStatus(

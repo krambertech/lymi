@@ -300,6 +300,9 @@ export const analyticsEvents = {
     recordings: count.optional(),
     recordings_skipped: count.optional(),
     sounds_left_out: count.optional(),
+    pictures: count.optional(),
+    pictures_skipped: count.optional(),
+    write_seconds: count.optional(),
   }),
   import_failed: z.object({ source, card_count: count }),
   export_started: z.object({

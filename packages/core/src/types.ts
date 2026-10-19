@@ -737,13 +737,16 @@ export const CardImportanceInput = z
   .meta({ id: "CardImportance" });
 export type CardImportanceInput = z.infer<typeof CardImportanceInput>;
 
+/** The most cards one bulk card write takes; clients send a larger selection a call at a time. */
+export const CARD_BATCH_LIMIT = 200;
+
 /** A bulk change to important marks: each card with the mark it should have. */
 export const CardImportancesInput = z
   .object({
     cards: z
       .array(CardImportanceInput.extend({ cardId: z.string().min(1) }))
       .min(1, "Choose at least one card.")
-      .max(200)
+      .max(CARD_BATCH_LIMIT)
       .refine(
         (marks) => new Set(marks.map((mark) => mark.cardId)).size === marks.length,
         "List each card once.",
@@ -761,7 +764,7 @@ export const CardEditsInput = z.object({
   cards: z
     .array(CardEditInput)
     .min(1)
-    .max(200)
+    .max(CARD_BATCH_LIMIT)
     .refine(
       (edits) => new Set(edits.map((edit) => edit.cardId)).size === edits.length,
       "List each card once.",
@@ -771,7 +774,7 @@ export type CardEditsInput = z.infer<typeof CardEditsInput>;
 
 /** A bulk archive or restore. Each card succeeds or fails on its own. */
 export const CardArchiveInput = z.object({
-  cardIds: CardIds.min(1, "Choose at least one card.").max(200),
+  cardIds: CardIds.min(1, "Choose at least one card.").max(CARD_BATCH_LIMIT),
 });
 export type CardArchiveInput = z.infer<typeof CardArchiveInput>;
 

@@ -658,6 +658,18 @@ msgstr "{total, plural, one {{shown} з # картки} few {{shown} з # кар
 msgid "{total, plural, one {# card} other {# cards}}"
 msgstr "{total, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
 
+msgid "{total, plural, one {Archived {saved} of # card} other {Archived {saved} of # cards}}"
+msgstr "{total, plural, one {Заархівовано {saved} з # картки} few {Заархівовано {saved} з # карток} many {Заархівовано {saved} з # карток} other {Заархівовано {saved} з # картки}}"
+
+msgid "{total, plural, one {Marked {saved} of # card important} other {Marked {saved} of # cards important}}"
+msgstr "{total, plural, one {Позначено важливими {saved} з # картки} few {Позначено важливими {saved} з # карток} many {Позначено важливими {saved} з # карток} other {Позначено важливими {saved} з # картки}}"
+
+msgid "{total, plural, one {Moved {saved} of # card to {deckName}} other {Moved {saved} of # cards to {deckName}}}"
+msgstr "{total, plural, one {Переміщено {saved} з # картки в «{deckName}»} few {Переміщено {saved} з # карток в «{deckName}»} many {Переміщено {saved} з # карток в «{deckName}»} other {Переміщено {saved} з # картки в «{deckName}»}}"
+
+msgid "{total, plural, one {Removed the important mark from {saved} of # card} other {Removed the important mark from {saved} of # cards}}"
+msgstr "{total, plural, one {Знято позначку «важлива» з {saved} із # картки} few {Знято позначку «важлива» з {saved} із # карток} many {Знято позначку «важлива» з {saved} із # карток} other {Знято позначку «важлива» з {saved} із # картки}}"
+
 msgid "{total, plural, one {You know {knownN} of # card} other {You know {knownN} of # cards}}"
 msgstr "{total, plural, one {Засвоєно {knownN} з # картки} few {Засвоєно {knownN} з # карток} many {Засвоєно {knownN} з # карток} other {Засвоєно {knownN} з # картки}}"
 

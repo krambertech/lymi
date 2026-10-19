@@ -23,8 +23,8 @@ const changed = (out: Outcome) =>
   out.results.flatMap((r) => (r.status !== "error" && r.id ? [r.id] : []));
 
 /**
- * Takes cards off the deck's list at once, so the list answers the tap, then writes; a failure puts
- * the list back. Resolves with the cards the server changed.
+ * Takes cards off the deck's list at once, so the list answers the tap, then writes; a card the
+ * server did not change goes back. Resolves with the cards the server changed.
  */
 async function leave(
   qc: QueryClient,
@@ -39,6 +39,13 @@ async function leave(
   qc.setQueryData<DeckRow[]>(key, (prev) => prev?.filter((row) => !going.has(row.card.id)));
   try {
     const done = changed(await write());
+    if (done.length < cardIds.length) {
+      const gone = new Set(done);
+      qc.setQueryData<DeckRow[]>(
+        key,
+        (prev) => before?.filter((row) => !gone.has(row.card.id)) ?? prev,
+      );
+    }
     if (done.length === 0) throw new Error("none");
     return done;
   } catch (e) {
@@ -74,10 +81,18 @@ export function useCardBatch(deckId: string) {
 
   const archive = (cardIds: string[]) =>
     leave(qc, deckId, cardIds, () => api.archiveCards(cardIds)).then(
-      (done) =>
+      (done) => {
+        const saved = done.length;
+        const total = cardIds.length;
         toast.add({
           id,
-          title: t`Archived ${cards(done.length)}`,
+          title:
+            saved < total
+              ? plural(total, {
+                  one: `Archived ${saved} of # card`,
+                  other: `Archived ${saved} of # cards`,
+                })
+              : t`Archived ${cards(done.length)}`,
           action: {
             label: t`Undo`,
             onPress: () => {
@@ -88,7 +103,8 @@ export function useCardBatch(deckId: string) {
                 .finally(() => void refresh(qc));
             },
           },
-        }),
+        });
+      },
       (e) => failed(e, t`Couldn’t archive ${cards(cardIds.length)}.`, () => archive(cardIds)),
     );
 
@@ -97,10 +113,18 @@ export function useCardBatch(deckId: string) {
     return leave(qc, deckId, cardIds, () =>
       api.editCards(cardIds.map((cardId) => ({ cardId, deckId: to.id }))),
     ).then(
-      (done) =>
+      (done) => {
+        const saved = done.length;
+        const total = cardIds.length;
         toast.add({
           id,
-          title: t`Moved ${cards(done.length)} to ${deckName}`,
+          title:
+            saved < total
+              ? plural(total, {
+                  one: `Moved ${saved} of # card to ${deckName}`,
+                  other: `Moved ${saved} of # cards to ${deckName}`,
+                })
+              : t`Moved ${cards(done.length)} to ${deckName}`,
           action: {
             label: t`Undo`,
             onPress: () => {
@@ -111,7 +135,8 @@ export function useCardBatch(deckId: string) {
                 .finally(() => void refresh(qc));
             },
           },
-        }),
+        });
+      },
       (e) => failed(e, t`Couldn’t move ${cards(cardIds.length)}.`, () => moveToDeck(cardIds, to)),
     );
   };
@@ -142,18 +167,31 @@ export function useCardBatch(deckId: string) {
         .finally(() => void qc.invalidateQueries({ queryKey: ["queue"] }));
     };
     return write(new Map(cardIds.map((cardId) => [cardId, mark]))).then(
-      (done) =>
+      (done) => {
+        const saved = done.length;
+        const total = cardIds.length;
         toast.add({
           id,
-          title: mark
-            ? plural(done.length, {
-                one: "Marked # card important",
-                other: "Marked # cards important",
-              })
-            : plural(done.length, {
-                one: "Removed the important mark from # card",
-                other: "Removed the important mark from # cards",
-              }),
+          title:
+            saved < total
+              ? mark
+                ? plural(total, {
+                    one: `Marked ${saved} of # card important`,
+                    other: `Marked ${saved} of # cards important`,
+                  })
+                : plural(total, {
+                    one: `Removed the important mark from ${saved} of # card`,
+                    other: `Removed the important mark from ${saved} of # cards`,
+                  })
+              : mark
+                ? plural(done.length, {
+                    one: "Marked # card important",
+                    other: "Marked # cards important",
+                  })
+                : plural(done.length, {
+                    one: "Removed the important mark from # card",
+                    other: "Removed the important mark from # cards",
+                  }),
           action: {
             label: t`Undo`,
             onPress: () => {
@@ -162,7 +200,8 @@ export function useCardBatch(deckId: string) {
               write(back).catch((e) => toast.add({ id, error: true, title: errorMessage(e) }));
             },
           },
-        }),
+        });
+      },
       (e) =>
         failed(
           e,

@@ -6,8 +6,16 @@ const FIELDS: { name: string; type: string; note: string }[] = [
   { name: "deckId", type: "string", note: "Required. Which deck the card lands in." },
   { name: "term", type: "string", note: "Required. What the card asks about, as you met it." },
   { name: "meaning", type: "string", note: "What it means, in your own language." },
-  { name: "pronunciation", type: "string", note: "IPA or a plain respelling." },
-  { name: "example", type: "string", note: "One sentence using the term." },
+  {
+    name: "pronunciation",
+    type: "string",
+    note: "How the term is said: IPA or a plain respelling. A Japanese card holds its reading in kana (たべる for 食べる), a Chinese card in pinyin with tone marks (xuéxí for 学习).",
+  },
+  {
+    name: "example",
+    type: "string",
+    note: "One sentence using the term. A Japanese example carries a kana reading in square brackets after each run of kanji: 毎朝[まいあさ]パンを食[た]べます。",
+  },
   {
     name: "notes",
     type: "string",
@@ -179,6 +187,11 @@ export function Cards() {
         </li>
         <li>
           Articles are kept. <code>la nebbia</code> and <code>nebbia</code> are different terms.
+        </li>
+        <li>
+          In Japanese the reading counts too. <code>上手</code> read <code>じょうず</code> (skilful)
+          and read <code>うわて</code> (a cut above) are two words, and Lymi treats them as two.
+          When either card has no reading, term and language decide.
         </li>
         <li>A card with no language only collides with other cards that have no language.</li>
         <li>Archived cards do not collide. Adding a term you archived makes a fresh card.</li>

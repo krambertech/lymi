@@ -127,7 +127,7 @@ Start with list_decks. It names the decks, their languages and the language mean
 
 When the learner shares a lesson, transcript or text, you do the extraction: pick the terms worth remembering, one card each, and send them in one add_cards call rather than one call per term. Write the term as it is used in the language being learned. Put the meaning in the learner's meaning language. Say where each field came from: "lesson" when it is in the material; leave the source out when you wrote it yourself, and it is recorded as the learner's. If a field is missing, leave it out rather than guessing; the learner can fill it in later. Lymi fills empty fields with AI only for a card sent with enrich true, so ask for it only when the learner wants those fields written for them. Which fields it fills is set on the deck with update_deck enrichFields, and enrichInstructions tells it what the deck is about.
 
-A term already in the learner's decks is skipped, never rejected, and the result names the existing card. Re-sending the same batch is safe.
+A term already in the learner's decks is skipped, never rejected, and the result names the existing card. A Japanese term with a different kana reading is a different word and gets its own card. Re-sending the same batch is safe.
 
 To change, archive or restore many cards, send them in one update_cards, archive_cards or restore_cards call, up to 200 at a time, rather than one call per card. Each card succeeds or fails on its own and the result says which, with an error code. A card whose save failed comes back as unavailable with nothing on it changed; send only those again. Set response to "terse" on add_cards or update_cards when you only need each card's id and status back.
 

@@ -611,10 +611,13 @@ export const CardInput = z.object({
     .trim()
     .max(CARD_LIMITS.meaning, "Keep the meaning under 2000 characters.")
     .optional(),
-  pronunciation: z.string().trim().max(CARD_LIMITS.pronunciation).optional(),
+  pronunciation: z.string().trim().max(CARD_LIMITS.pronunciation).optional().meta({
+    description:
+      "How the term is said: IPA or a plain respelling. A Japanese card holds its reading in kana (たべる for 食べる), and a different reading makes a different card: 上手 read じょうず and うわて are two. A Chinese card holds pinyin with tone marks (xuéxí for 学习).",
+  }),
   example: z.string().trim().max(CARD_LIMITS.example).optional().meta({
     description:
-      "One sentence in the term's language. Japanese carries a hiragana reading in square brackets after each run of kanji: 毎朝[まいあさ]パンを食[た]べます。",
+      "One sentence in the term's language. A Japanese example carries a kana reading in square brackets after each run of kanji: 毎朝[まいあさ]パンを食[た]べます。 A Chinese example takes no inline pinyin.",
   }),
   notes: z
     .string()

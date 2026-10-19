@@ -66,6 +66,7 @@ const PARTIAL =
 const DUPLICATE_RULE =
   "A duplicate is a card whose normalised term and language match an active card anywhere in the learner's decks; for a first-party publisher, only in the target deck. " +
   "It is skipped, never rejected, and the response names the existing card. A card with no language only matches cards with no language. " +
+  "A Japanese card whose kana reading differs from the existing card's is a different word: 上手 read じょうず and うわて are two cards. " +
   "Re-running the same call is safe.";
 
 const ENRICH_RULE =

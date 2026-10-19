@@ -14,9 +14,11 @@ import {
   emptyFields,
   enrichmentStalled,
   fieldsToFill,
+  type NormalizedField,
   needsEnrichment,
   newId,
   normaliseTerm,
+  normalizeCardText,
   readingKey,
   sameReading,
   speechInputs,
@@ -49,7 +51,7 @@ import { syncTagStatements } from "./tags";
  * caller learns which card already holds the term and in which deck. See ADR 0004.
  */
 export type AddCardOutcome =
-  | { id: string; status: "added"; card: CardView }
+  | { id: string; status: "added"; card: CardView; normalized?: NormalizedField[] }
   | { id: string; status: "skipped"; term: string; existing: CardView; deckName: string };
 
 type Sources = {
@@ -162,17 +164,20 @@ export async function addCards(
   );
   const sectionDeck = new Map(sections.map((s) => [s.id, s.deckId]));
 
-  // Resolve language and key per input, then look up every key in one query.
-  const prepared = inputs.map((input) => {
-    if (input.id && replayed.has(input.id)) return { input, deck: null, language: null, key: "" };
-    const deck = deckById.get(input.deckId);
+  // Resolve language, stored text and key per input, then look up every key in one query.
+  const prepared = inputs.map((sent) => {
+    if (sent.id && replayed.has(sent.id)) {
+      return { input: sent, deck: null, language: null, key: "", normalized: [] };
+    }
+    const deck = deckById.get(sent.deckId);
     if (!deck) throw notFound("Deck");
     if (deck.userId !== userId) {
       throw new ServiceError("forbidden", "Only the deck's owner can add cards to it");
     }
-    if (input.sectionId && sectionDeck.get(input.sectionId) !== deck.id) throw notFound("Section");
-    const language = input.language === undefined ? deck.defaultLanguage : input.language;
-    return { input, deck, language, key: normaliseTerm(input.term) };
+    if (sent.sectionId && sectionDeck.get(sent.sectionId) !== deck.id) throw notFound("Section");
+    const language = sent.language === undefined ? deck.defaultLanguage : sent.language;
+    const { fields: input, normalized } = normalizeCardText(language, sent);
+    return { input, deck, language, key: normaliseTerm(input.term), normalized };
   });
 
   const terms = prepared.flatMap((p) => (p.deck ? [p.key] : []));
@@ -209,7 +214,7 @@ export async function addCards(
   // Which optional fields the new cards hold, for the typed add's event; never their text.
   const filled = new Set<TypedCardField>();
 
-  for (const { input, deck, language, key } of prepared) {
+  for (const { input, deck, language, key, normalized } of prepared) {
     const again = input.id ? replayed.get(input.id) : undefined;
     if (again || !deck) {
       if (again) {
@@ -225,7 +230,11 @@ export async function addCards(
       }
       continue;
     }
-    const reading = readingKey({ language, pronunciation: input.pronunciation });
+    const reading = readingKey({
+      term: input.term,
+      language,
+      pronunciation: input.pronunciation,
+    });
     const hit = existing
       .get(duplicateKey(language, key))
       ?.find(
@@ -314,7 +323,7 @@ export async function addCards(
     ]);
     // Later inputs in this batch with the same key are duplicates of this one.
     hold({ card, deckName: deck.name });
-    outcomes.push({ status: "added", card });
+    outcomes.push({ status: "added", card, normalized });
   }
 
   await runInBatches(db, groups);
@@ -335,11 +344,13 @@ export async function addCards(
           : options.fromLesson
             ? "lesson"
             : "typed";
+    const converted = outcomes.filter((o) => o.status === "added" && o.normalized?.length).length;
     track(ctx.analytics, {
       name: "cards_added",
       count: groups.length,
       source,
       ...(source === "typed" ? { fields: TYPED_CARD_FIELDS.filter((f) => filled.has(f)) } : {}),
+      ...(converted > 0 ? { normalized: converted } : {}),
     });
   }
   // The run is named after the add's first card, so the same add sent again finds it. A replay
@@ -372,9 +383,10 @@ export async function addCards(
   );
   return outcomes.map((outcome, index) => {
     const card = views[index] as CardView;
-    return outcome.status === "added"
-      ? { id: card.id, status: "added", card }
-      : { ...outcome, id: card.id, existing: card };
+    if (outcome.status === "skipped") return { ...outcome, id: card.id, existing: card };
+    return outcome.normalized?.length
+      ? { id: card.id, status: "added", card, normalized: outcome.normalized }
+      : { id: card.id, status: "added", card };
   });
 }
 
@@ -398,7 +410,7 @@ async function respellTags(db: Db, outcomes: RawOutcome[]) {
 }
 
 type RawOutcome =
-  | { status: "added"; card: Card }
+  | { status: "added"; card: Card; normalized?: NormalizedField[] }
   | { status: "skipped"; term: string; existing: Card; deckName: string };
 
 /** Case and Unicode folding for search, the same rule as the duplicate key. */
@@ -509,6 +521,8 @@ type CardWrite = {
   reports?: AnalyticsEvent | undefined;
   /** The AI's text from each field the write rewrites, for the deck's style. */
   corrections?: readonly Correction[] | undefined;
+  /** Fields the write converted to how Lymi stores them. */
+  normalized?: NormalizedField[] | undefined;
 };
 
 type Correction = typeof schema.cardCorrections.$inferInsert;
@@ -772,7 +786,9 @@ export async function updateCard(ctx: ServiceContext, id: string, patch: ServerC
   return showCard(ctx, id);
 }
 
-export type EditCardOutcome = { id: string; status: "updated"; card: CardView } | CardWriteError;
+export type EditCardOutcome =
+  | { id: string; status: "updated"; card: CardView; normalized?: NormalizedField[] }
+  | CardWriteError;
 
 /**
  * Edit many cards, each as `updateCard` would, with its own audit row. A card that is missing, not
@@ -804,11 +820,16 @@ export async function updateCards(
   const views = new Map(
     (await presentCards(db, [...written.values()], userId)).map((view) => [view.id, view]),
   );
+  const normalized = new Map(writes.map((write) => [write.id, write.normalized]));
   return edits.map(({ cardId: id }, index) => {
     const refused = refusals[index];
     if (refused) return refused;
     const card = views.get(id);
-    return failed.has(id) || !card ? writeFailed(id) : { id, status: "updated", card };
+    if (failed.has(id) || !card) return writeFailed(id);
+    const fields = normalized.get(id);
+    return fields?.length
+      ? { id, status: "updated", card, normalized: fields }
+      : { id, status: "updated", card };
   });
 }
 
@@ -874,13 +895,21 @@ function correctionsOf(
 function editWrite(
   ctx: ServiceContext,
   lookups: EditLookups,
-  { cardId: id, revision, ...patch }: ServerCardEdit,
+  { cardId: id, revision, ...sent }: ServerCardEdit,
   now: Date,
 ): CardWrite {
   const { db } = ctx;
   const current = lookups.cards.get(id);
   if (!current) throw notFound("Card");
   assertOwner(ctx, current);
+  // Converted against the pronunciation the card will have, so a split term keeps a Reading it already has.
+  const text = normalizeCardText(sent.language === undefined ? current.language : sent.language, {
+    term: sent.term,
+    pronunciation: sent.pronunciation === undefined ? current.pronunciation : sent.pronunciation,
+  });
+  const patch = { ...sent };
+  if (text.normalized.includes("term")) patch.term = text.fields.term;
+  if (text.normalized.includes("pronunciation")) patch.pronunciation = text.fields.pronunciation;
   if (patch.deckId && patch.deckId !== current.deckId && !lookups.ownedDecks.has(patch.deckId)) {
     throw notFound("Deck");
   }
@@ -958,6 +987,7 @@ function editWrite(
     states: modes !== undefined || patch.deckId !== undefined,
     tags: patch.tags,
     corrections: correctionsOf(ctx, current, patch, sources, now),
+    normalized: text.normalized,
     reports:
       hook && !current.hook && sources.hookSource
         ? { name: "hook_added", source: sources.hookSource }
@@ -1071,6 +1101,7 @@ export function terseOutcome(
         id: outcome.id,
         status: "added",
         enrichmentStatus: outcome.card.enrichmentStatus,
+        ...(outcome.normalized ? { normalized: outcome.normalized } : {}),
       };
     case "skipped":
       return {
@@ -1083,6 +1114,12 @@ export function terseOutcome(
       };
     case "error":
       return { id: outcome.id, status: "error", code: outcome.code, error: outcome.error };
+    case "updated":
+      return {
+        id: outcome.id,
+        status: "updated",
+        ...(outcome.normalized ? { normalized: outcome.normalized } : {}),
+      };
     default:
       return { id: outcome.id, status: outcome.status };
   }

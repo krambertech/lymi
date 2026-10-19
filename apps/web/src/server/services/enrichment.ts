@@ -8,6 +8,7 @@ import {
   LanguageTag,
   missingReadings,
   newId,
+  normalizeCardText,
   unsetFields,
 } from "@lymi/core";
 import { and, desc, eq, inArray, isNull, ne, notInArray, or, type SQL, sql } from "@lymi/core/db";
@@ -105,6 +106,13 @@ export function enrichmentWrite(
   const language = filled.language?.trim();
   if (language && open.has("language") && LanguageTag.safeParse(language).success) {
     write.language = language;
+  }
+  // The term is the learner's, so only the Reading the AI wrote is converted.
+  if (write.pronunciation !== undefined) {
+    const { fields } = normalizeCardText(write.language ?? card.language, {
+      pronunciation: write.pronunciation,
+    });
+    write.pronunciation = fields.pronunciation ?? write.pronunciation;
   }
   // Compared untrimmed: the learner's text comes back exactly, with readings and nothing else.
   if (

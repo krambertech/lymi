@@ -12,6 +12,7 @@ import {
   isImageMode,
   newId,
   normaliseTerm,
+  normalizeCardText,
   playableRecording,
   readingKey,
   replayProgress,
@@ -128,6 +129,7 @@ async function lookup(ctx: ServiceContext, cards: ImportedCard[], exceptImport?:
     selectIn(terms, (keys) =>
       db
         .select({
+          term: schema.cards.term,
           language: schema.cards.language,
           normalizedTerm: schema.cards.normalizedTerm,
           pronunciation: schema.cards.pronunciation,
@@ -189,6 +191,7 @@ async function lookupAll(ctx: ServiceContext): Promise<Lookup> {
       .where(and(eq(schema.cards.userId, userId), isNotNull(schema.cards.externalId))),
     db
       .select({
+        term: schema.cards.term,
         language: schema.cards.language,
         normalizedTerm: schema.cards.normalizedTerm,
         pronunciation: schema.cards.pronunciation,
@@ -252,10 +255,13 @@ function classify(
         !existing.recorded && normaliseTerm(existing.term) === normaliseTerm(card.fields.term);
       return { kind: "existing", card, id: existing.id, takesRecording };
     }
-    const language =
-      card.language !== undefined ? card.language : (languages[card.deckKey] ?? null);
+    const language = cardLanguage(card, languages);
     const key = dupKey(language, card.fields.term);
-    const reading = readingKey({ language, pronunciation: card.fields.pronunciation });
+    const reading = readingKey({
+      term: card.fields.term,
+      language,
+      pronunciation: card.fields.pronunciation,
+    });
     const held =
       heldDeck(found.active, key, reading) ??
       (keepRepeats ? undefined : heldDeck(seen, key, reading));
@@ -308,6 +314,22 @@ export type ImportWork<Note> = {
   bucket: R2Bucket;
 };
 
+function cardLanguage(card: ImportedCard, languages: ImportChoices["languages"]) {
+  return card.language !== undefined ? card.language : (languages[card.deckKey] ?? null);
+}
+
+/** Cards whose text `stored` converted, for `cards_added`. */
+const converted = new WeakSet<ImportedCard>();
+
+/** The card with its text as Lymi stores it, before anything compares or counts it. */
+function stored(card: ImportedCard, languages: ImportChoices["languages"]): ImportedCard {
+  const { fields, normalized } = normalizeCardText(cardLanguage(card, languages), card.fields);
+  if (normalized.length === 0) return card;
+  const changed = { ...card, fields };
+  converted.add(changed);
+  return changed;
+}
+
 async function* importedCards<Note>(work: ImportWork<Note>, from = 0) {
   if (!work.row.objectKey) throw new ServiceError("unavailable", "The import's file is gone");
   const leftOut = new Set(work.choices.skipDecks ?? []);
@@ -317,7 +339,9 @@ async function* importedCards<Note>(work: ImportWork<Note>, from = 0) {
     const cards = notes.flatMap((note) => {
       const made = work.adapter.cards(note, work.summary, work.choices);
       if (made.length === 0) skipped++;
-      return made.filter((card) => !leftOut.has(card.deckKey));
+      return made
+        .filter((card) => !leftOut.has(card.deckKey))
+        .map((card) => stored(card, work.choices.languages));
     });
     yield { chunk, cards, skipped };
   }
@@ -820,8 +844,14 @@ export async function writeChunk<Note>(
   const addedCount = counts.added - ((row.counts as ImportCounts | null)?.added ?? 0);
   if (moved && addedCount > 0)
     track(ctx.analytics, { name: "card_added", count: addedCount, source: "import" });
+  const normalized = added.filter((item) => converted.has(item.card)).length;
   if (moved && addedCount > 0)
-    track(ctx.analytics, { name: "cards_added", count: addedCount, source: row.source });
+    track(ctx.analytics, {
+      name: "cards_added",
+      count: addedCount,
+      source: row.source,
+      ...(normalized > 0 ? { normalized } : {}),
+    });
   return { pictures: moved ? pictures : [] };
 }
 

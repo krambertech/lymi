@@ -613,7 +613,7 @@ export const CardInput = z.object({
     .optional(),
   pronunciation: z.string().trim().max(CARD_LIMITS.pronunciation).optional().meta({
     description:
-      "How the term is said: IPA or a plain respelling. A Japanese card holds its reading in kana (たべる for 食べる), and a different reading makes a different card: 上手 read じょうず and うわて are two. A Chinese card holds pinyin with tone marks (xuéxí for 学习).",
+      "How the term is said: IPA or a plain respelling. A Japanese card holds its reading in kana (たべる for 食べる), and when two cards both have one, a different reading makes a different card: 上手 read じょうず and うわて are two. A Chinese card holds pinyin with tone marks (xuéxí for 学习).",
   }),
   example: z.string().trim().max(CARD_LIMITS.example).optional().meta({
     description:

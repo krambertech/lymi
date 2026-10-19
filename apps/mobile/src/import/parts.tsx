@@ -13,6 +13,7 @@ import Animated, {
 import { ALWAYS, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { Chip } from "../ui/chip";
+import { FieldError } from "../ui/field";
 import { Button, Icon, Plate, Text } from "../ui/primitives";
 
 export type Summary = NonNullable<Import["summary"]>;
@@ -146,15 +147,33 @@ export function Sweep({ label }: { label: string }) {
 }
 
 /** One imported card drawn as the card page draws it, so the learner checks the fields are read right. */
-export function SampleCard({ sample, loading }: { sample: Sample | undefined; loading: boolean }) {
+export function SampleCard({
+  sample,
+  loading,
+  error,
+  onRetry,
+}: {
+  sample: Sample | undefined;
+  loading: boolean;
+  /** Why the preview failed; without it, a missing sample means no card of this kind has a term. */
+  error?: string | undefined;
+  onRetry?: (() => void) | undefined;
+}) {
   const { t } = useLingui();
   const p = usePalette();
   if (!sample) {
     return (
-      <View className="min-h-40 items-center justify-center rounded-lg bg-plate-2 p-5">
-        <Text className="text-center text-base text-muted">
-          {loading ? t`Getting a card ready…` : t`No card of this kind has a term.`}
-        </Text>
+      <View className="min-h-40 items-center justify-center gap-3 rounded-lg bg-plate-2 p-5">
+        {!loading && error ? (
+          <>
+            <FieldError>{error}</FieldError>
+            {onRetry && <Button label={t`Try again`} size="sm" onPress={onRetry} />}
+          </>
+        ) : (
+          <Text className="text-center text-base text-muted">
+            {loading ? t`Getting a card ready…` : t`No card of this kind has a term.`}
+          </Text>
+        )}
       </View>
     );
   }

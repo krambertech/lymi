@@ -139,13 +139,35 @@ export function fileSize(bytes: number, locale: string) {
  * One imported card as it will arrive: the term large, the rule, then everything under it, in
  * the order the card page shows a card. It is the learner's check that the fields are read right.
  */
-export function SampleCard({ sample, loading }: { sample: Sample | undefined; loading?: boolean }) {
+export function SampleCard({
+  sample,
+  loading,
+  error,
+  onRetry,
+}: {
+  sample: Sample | undefined;
+  loading?: boolean;
+  /** Why the preview failed; without it, a missing sample means no card of this kind has a term. */
+  error?: string | undefined;
+  onRetry?: (() => void) | undefined;
+}) {
   const { t } = useLingui();
   if (!sample) {
     return (
       <div className="grid min-h-40 place-items-center rounded-lg bg-plate-2 p-5 text-center text-base text-muted">
         {loading ? (
           <Trans>Getting a card ready…</Trans>
+        ) : error ? (
+          <div className="grid justify-items-center gap-3">
+            <p role="alert">
+              <InlineError>{error}</InlineError>
+            </p>
+            {onRetry && (
+              <Button size="sm" variant="secondary" onClick={onRetry}>
+                <Trans>Try again</Trans>
+              </Button>
+            )}
+          </div>
         ) : (
           <Trans>No card of this kind has a term.</Trans>
         )}

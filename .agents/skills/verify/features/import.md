@@ -8,7 +8,7 @@ One Anki package brought into Lymi: the learner picks the decks to keep, confirm
 
 ## Drive
 
-[`import.mjs`](import.mjs), as `learner` from Settings, with the repository's real export at `apps/web/src/server/imports/anki/fixtures/current.apkg`: **Choose file**, **Continue** with every deck, **Looks right** for each kind of card, then **Import 9 cards**.
+[`import.mjs`](import.mjs), as `learner` from Settings, with the repository's real export at `apps/web/src/server/imports/anki/fixtures/current.apkg`: **Choose file**, **Continue** with every deck, then back to leave one deck out while the preview request is dropped, so the card step shows the error with **Try again**, which brings the card back. Then every deck again, **Looks right** for each kind of card, and **Import 9 cards**.
 
 ## End state
 

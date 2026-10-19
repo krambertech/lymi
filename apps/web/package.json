@@ -22,6 +22,7 @@
     "i18n:extract": "lingui extract --clean",
     "eval:enrichment": "tsx --env-file-if-exists=.dev.vars src/server/enrichment/evaluate.ts",
     "eval:style": "tsx --env-file-if-exists=.dev.vars src/server/enrichment/style-evaluate.ts",
+    "eval:lead-ins": "tsx --env-file-if-exists=.dev.vars src/server/lead-ins/evaluate.ts",
     "design:dev": "vite --config vite.design.config.ts",
     "design:build": "vite build --config vite.design.config.ts",
     "design:deploy": "pnpm design:build && wrangler deploy -c wrangler.design.jsonc",

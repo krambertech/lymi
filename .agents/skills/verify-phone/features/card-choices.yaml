@@ -38,16 +38,23 @@ name: Card choices
           start: 85%, 58%
           end: 5%, 58%
 - tapOn: "Tags"
+# Return on a name no tag has creates it, ticked on the card.
 - inputText: "${TAG_ONE}"
 - pressKey: Enter
 - inputText: "${TAG_TWO}"
 - pressKey: Enter
-- assertVisible: "Remove the tag ${TAG_TWO}"
+# iOS reads a tick as the row's value, which Maestro's checked does not see; check() reads the stored tags.
+- assertVisible: "^${TAG_TWO}$"
+- assertVisible: "^${TAG_ONE}$"
 - takeScreenshot: 01-tags
 - swipe:
     start: 50%, 30%
     end: 50%, 95%
 - waitForAnimationToEnd
+# The keyboard comes back on the term, and a new Simulator shows iOS's slide-to-type tip over it once.
+- tapOn:
+    text: "Continue"
+    optional: true
 - runFlow:
     file: _chip.yaml
     env:
@@ -139,9 +146,9 @@ name: Card choices
     element: "Tags.*"
 - tapOn: "Tags.*${TAG_TWO}.*"
 - extendedWaitUntil:
-    visible: "Remove the tag ${TAG_TWO}"
+    visible: "^${TAG_TWO}$"
     timeout: 20000
-- tapOn: "Remove the tag ${TAG_TWO}"
+- tapOn: "^${TAG_TWO}$"
 - takeScreenshot: 06-edit-tags
 - swipe:
     start: 50%, 30%

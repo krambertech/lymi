@@ -1,123 +1,139 @@
 import { useLingui } from "@lingui/react/macro";
-import { TAG_LIMITS } from "@lymi/core";
-import { type RefObject, useMemo, useState } from "react";
-import { type TextInput as Input, TextInput, View } from "react-native";
+import { retag, type TagChoice, tagPicker } from "@lymi/client/deck-list";
+import { tagsQuery } from "@lymi/client/queries";
+import { TAG_LIMITS, tagKey } from "@lymi/core";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo, useState } from "react";
+import { ScrollView, useWindowDimensions } from "react-native";
 import { useDeckCards } from "../data/queries";
-import { usePalette } from "../theme/palette";
-import { inputCap } from "../theme/type";
-import { Icon, Press, Text } from "../ui/primitives";
-import { SheetGroup, SheetHeading, SheetRow } from "../ui/sheet";
-import { useSheetFocus } from "../ui/sheet-focus";
-import { useOnGlass } from "../ui/surface";
-import { addTags } from "./tag-list";
+import { SearchField } from "../ui/menu";
+import { SheetGroup, SheetNote, SheetRow } from "../ui/sheet";
 
 export { tagsSummary } from "./tag-list";
 
-interface TagsBoxProps {
-  value: string[];
-  onChange: (tags: string[]) => void;
-  /** What is typed and not yet a tag, when the box's owner filters by it. */
-  draft?: string;
-  onDraft?: (draft: string) => void;
-  autoFocus?: boolean;
-  inputRef?: RefObject<Input | null>;
-  /** Return on an empty field, which is done with the tags. */
-  onDone?: () => void;
-  /** Inside a filled box, where the tags take the plate's fill rather than the box's. */
-  boxed?: boolean;
+type Change = { add: string[]; remove: string[] };
+
+/**
+ * Finding, creating and ticking tags, the one way the phone does it for a card's form and for
+ * chosen cards: `onChange` hears what a save would put on and take off as each tick lands.
+ */
+export function useTagList({
+  cards,
+  suggestions,
+  onChange,
+}: {
+  /** The tags each card holds as the list opens, one list per card. */
+  cards: readonly (readonly string[])[];
+  /** Tags in use elsewhere, offered after the ones the cards carry. */
+  suggestions: readonly { name: string }[];
+  onChange?: ((change: Change) => void) | undefined;
+}) {
+  const [created, setCreated] = useState<string[]>([]);
+  const [choices, setChoices] = useState<ReadonlyMap<string, TagChoice>>(new Map());
+  const [query, setQuery] = useState("");
+  const picker = tagPicker({ cards, created, suggestions, choices, query });
+  const choose = (next: ReadonlyMap<string, TagChoice>, made: string[]) => {
+    setChoices(next);
+    setCreated(made);
+    onChange?.(tagPicker({ cards, created: made, suggestions, choices: next, query: "" }).change);
+  };
+  const set = (name: string, choice: TagChoice) =>
+    choose(new Map(choices).set(tagKey(name), choice), created);
+  const create = () => {
+    choose(new Map(choices).set(tagKey(picker.typed), "all"), [...created, picker.typed]);
+    setQuery("");
+  };
+  return { picker, query, setQuery, set, create };
 }
 
-/** Tags typed one at a time: Return or a comma adds one, Delete on an empty field takes the last back. */
-export function TagsBox({
-  value,
-  onChange,
-  draft: held,
-  onDraft,
-  autoFocus,
-  inputRef,
+/**
+ * The list `useTagList` drives: a field that finds a tag or offers Create, then each tag with a
+ * check on every card, a dash on some, and on several cards how many will carry it.
+ */
+export function TagList({
+  list,
+  full = false,
   onDone,
-  boxed = false,
-}: TagsBoxProps) {
+}: {
+  list: ReturnType<typeof useTagList>;
+  /** The one card holds all the tags it can, so only taking one off is offered. */
+  full?: boolean;
+  /** Return on an empty field, which is done with the tags. */
+  onDone?: (() => void) | undefined;
+}) {
   const { t } = useLingui();
-  const p = usePalette();
-  const glass = useOnGlass();
-  const [own, setOwn] = useState("");
-  const draft = held ?? own;
-  const setDraft = onDraft ?? setOwn;
-  const full = value.length >= TAG_LIMITS.count;
-  const focus = useSheetFocus({ on: !!autoFocus, ref: inputRef });
-  const type = (text: string) => {
-    // A pasted "streets, signs" is two tags, so the cap is per tag here rather than a maxLength that cuts the paste.
-    const cut = text.lastIndexOf(",");
-    if (cut === -1) return setDraft(text.slice(0, TAG_LIMITS.length));
-    onChange(addTags(value, text.slice(0, cut)));
-    setDraft(
-      text
-        .slice(cut + 1)
-        .trimStart()
-        .slice(0, TAG_LIMITS.length),
-    );
-  };
+  const { height } = useWindowDimensions();
+  const { picker, query, setQuery, set, create } = list;
+  const { total, shown, typed, fresh, pick } = picker;
   return (
-    <View className="flex-row flex-wrap items-center gap-1.5">
-      {value.map((tag) => (
-        <Press
-          key={tag}
-          onPress={() => onChange(value.filter((v) => v !== tag))}
-          accessibilityRole="button"
-          accessibilityLabel={t`Remove the tag ${tag}`}
-          hitSlop={4}
-          className={`h-8 max-w-full flex-row items-center gap-1 rounded-full ps-3 pe-2 ${!glass ? "bg-plate-2" : boxed ? "bg-glass-plate" : "bg-glass-group"}`}
-        >
-          <Text className="shrink text-base font-medium text-text-2" numberOfLines={1}>
-            {tag}
-          </Text>
-          <Icon name="close" size={14} colour={p.muted} />
-        </Press>
-      ))}
-      <TextInput
-        {...focus}
-        value={draft}
-        onChangeText={type}
-        editable={!full}
-        placeholder={
-          full ? t`That’s the most tags a card can have` : value.length ? "" : t`Add a tag`
-        }
-        placeholderTextColor={p.muted}
-        accessibilityLabel={t`Tags`}
-        autoCapitalize="none"
-        autoCorrect={false}
-        returnKeyType="done"
-        submitBehavior="submit"
-        onSubmitEditing={() => {
-          if (!draft.trim()) return onDone?.();
-          onChange(addTags(value, draft));
-          setDraft("");
+    <>
+      <SearchField
+        label={t`Tags`}
+        placeholder={t`Find or create a tag`}
+        // The keyboard lifts the sheet to full height, where iOS makes it opaque and a plate fill vanishes.
+        fill="group"
+        // Several tags go on one after another, as the chip box let them.
+        stay
+        query={query}
+        onChange={setQuery}
+        onSubmit={() => {
+          if (!typed) onDone?.();
+          else if (fresh && !full) create();
+          else if (pick) {
+            set(pick, picker.next(pick));
+            setQuery("");
+          }
         }}
-        onKeyPress={(e) => {
-          if (e.nativeEvent.key === "Backspace" && !draft && value.length)
-            onChange(value.slice(0, -1));
-        }}
-        selectionColor={p.text}
-        className="h-9 min-w-24 flex-1 py-1.5 font-sans text-text"
-        style={{ fontSize: 17 }}
-        maxFontSizeMultiplier={inputCap(17)}
       />
-    </View>
+      <ScrollView
+        style={{ maxHeight: height * 0.5 }}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+      >
+        {shown.length > 0 || fresh ? (
+          <SheetGroup>
+            {shown.map((name) => {
+              const choice = picker.choiceOf(name);
+              const after = picker.after(name);
+              return (
+                <SheetRow
+                  key={tagKey(name)}
+                  label={name}
+                  chosen={choice === "mixed" ? "mixed" : choice === "all"}
+                  multiple
+                  value={total > 1 ? t`${after} of ${total}` : undefined}
+                  disabled={full && choice === "none"}
+                  onPress={() => set(name, picker.next(name))}
+                />
+              );
+            })}
+            {fresh && !full && (
+              <SheetRow icon="plus" label={t`Create “${typed}”`} onPress={create} />
+            )}
+          </SheetGroup>
+        ) : (
+          <SheetNote>{t`No tags yet. Type one to create it.`}</SheetNote>
+        )}
+        {full && <SheetNote>{t`That’s the most tags a card can have`}</SheetNote>}
+      </ScrollView>
+    </>
   );
 }
 
-/** The tags on the deck's cards, most used first, to tick rather than type again. */
-function useDeckTags(deckId: string | undefined) {
+/** The tags the learner uses, this deck's first, most used first, so a card picks up the deck's own. */
+export function useSuggestedTags(deckId: string | undefined, open = true) {
   const rows = useDeckCards(deckId ?? "").data;
+  const all = useQuery({ ...tagsQuery, enabled: open }).data;
   return useMemo(() => {
     const counts = new Map<string, number>();
     for (const r of rows ?? [])
       for (const tag of r.card.tags) counts.set(tag, (counts.get(tag) ?? 0) + 1);
-    return [...counts.entries()]
+    const deck = [...counts.entries()]
       .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-      .map(([tag]) => tag);
-  }, [rows]);
+      .map(([name]) => ({ name }));
+    // Offline, the learner's other tags may not have loaded, and the deck's own still offer.
+    return [...deck, ...(all ?? [])];
+  }, [rows, all]);
 }
 
 interface TagsChoicesProps {
@@ -127,46 +143,15 @@ interface TagsChoicesProps {
   onDone: () => void;
 }
 
-/** The card's tags in their sheet: typed in a box, or ticked from the tags the deck's cards carry. */
+/** A card's tags in their sheet, each tick applied to the form as it lands. */
 export function TagsChoices({ value, onChange, deckId, onDone }: TagsChoicesProps) {
-  const { t } = useLingui();
-  const [draft, setDraft] = useState("");
-  const deckTags = useDeckTags(deckId);
-  const query = draft.trim().toLocaleLowerCase();
-  const offered = [...new Set([...value, ...deckTags])].filter(
-    (tag) => !query || tag.toLocaleLowerCase().includes(query),
-  );
-  const toggle = (tag: string) =>
-    onChange(value.includes(tag) ? value.filter((v) => v !== tag) : addTags(value, tag));
-  return (
-    <>
-      <View className="rounded-xl bg-glass-group px-3 py-2">
-        <TagsBox
-          value={value}
-          onChange={onChange}
-          draft={draft}
-          onDraft={setDraft}
-          autoFocus
-          boxed
-          onDone={onDone}
-        />
-      </View>
-      {offered.length > 0 && (
-        <>
-          <SheetHeading>{t`In this deck`}</SheetHeading>
-          <SheetGroup>
-            {offered.map((tag) => (
-              <SheetRow
-                key={tag}
-                label={tag}
-                chosen={value.includes(tag)}
-                multiple
-                onPress={() => toggle(tag)}
-              />
-            ))}
-          </SheetGroup>
-        </>
-      )}
-    </>
-  );
+  // The tags as the sheet opened, which every tick is measured against.
+  const [start] = useState(value);
+  const suggestions = useSuggestedTags(deckId);
+  const list = useTagList({
+    cards: [start],
+    suggestions,
+    onChange: (change) => onChange(retag(start, change.add, change.remove).tags),
+  });
+  return <TagList list={list} full={value.length >= TAG_LIMITS.count} onDone={onDone} />;
 }

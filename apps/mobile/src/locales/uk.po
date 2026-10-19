@@ -829,9 +829,6 @@ msgstr "Додати картку"
 msgid "Add a lesson"
 msgstr "Додати урок"
 
-msgid "Add a tag"
-msgstr "Додати тег"
-
 msgid "Add a word"
 msgstr "Додати слово"
 
@@ -2420,9 +2417,6 @@ msgstr "У Noji відкрий створену тобою колоду, від�
 msgid "In the other account, open a deck’s menu and choose Export deck, or choose Export library in You."
 msgstr "В іншому акаунті відкрий меню колоди й вибери «Експортувати колоду» або вибери «Експортувати бібліотеку» в розділі «Ти»."
 
-msgid "In this deck"
-msgstr "У цій колоді"
-
 msgid "Includes your schedule and review history. Exporting doesn’t change the deck."
 msgstr "Містить твій розклад та історію повторень. Експорт не змінює колоду."
 
@@ -3381,9 +3375,6 @@ msgstr "Вилучити учасника"
 
 msgid "Remove photo"
 msgstr "Видалити фото"
-
-msgid "Remove the tag {tag}"
-msgstr "Прибрати тег {tag}"
 
 msgid "Remove the text"
 msgstr "Прибрати текст"

@@ -76,7 +76,7 @@ function TagCardsBody({
         onSubmit={(e) => {
           e.preventDefault();
           if (!fresh) return;
-          setCreated((prev) => [typed, ...prev]);
+          setCreated((prev) => [...prev, typed]);
           set(typed, "all");
           setQuery("");
         }}

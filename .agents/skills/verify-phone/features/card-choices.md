@@ -1,6 +1,6 @@
 # Card choices
 
-The choices Add a word and Edit card open as sheets over the form: tags, typed or ticked from the deck's; how it's asked, whose picture modes show once the card has a picture ([ADR 0014](../../../../docs/adr/0014-review-modes-use-explicit-cues-and-targets.md)); and a picture description, which may not name the term or the meaning. Tags stay for the next card. The card page's Tags and Asked open Edit card on that sheet.
+The choices Add a word and Edit card open as sheets over the form: tags, found or created in a search and ticked, as Select cards' Tags does; how it's asked, whose picture modes show once the card has a picture ([ADR 0014](../../../../docs/adr/0014-review-modes-use-explicit-cues-and-targets.md)); and a picture description, which may not name the term or the meaning. Tags stay for the next card. The card page's Tags and Asked open Edit card on that sheet.
 
 ## Reach
 
@@ -8,7 +8,7 @@ The choices Add a word and Edit card open as sheets over the form: tags, typed o
 
 ## Drive
 
-[`card-choices.yaml`](card-choices.yaml), as `learner` from Today: open **Add a card** with the AI off, write **il semaforo** and **the traffic light**, add the tags **street** and **city**, see that **How it’s asked** offers only Recognition and Production, choose the first photo and describe it as **the traffic light at a junction**, see the refusal under it, press **Add to** the deck and land back in the picture's sheet, describe it again without the answer, tick **Picture → term**, and add. The tags chip still reads **street**. Then in Library open the first deck, the card, its **Tags**, remove **city** and press **Save**.
+[`card-choices.yaml`](card-choices.yaml), as `learner` from Today: open **Add a card** with the AI off, write **il semaforo** and **the traffic light**, create the tags **street** and **city** by typing each and pressing Return, which ticks them, see that **How it’s asked** offers only Recognition and Production, choose the first photo and describe it as **the traffic light at a junction**, see the refusal under it, press **Add to** the deck and land back in the picture's sheet, describe it again without the answer, tick **Picture → term**, and add. The tags chip still reads **street**. Then in Library open the first deck, the card, its **Tags**, untick **city** and press **Save**.
 
 ## End state
 

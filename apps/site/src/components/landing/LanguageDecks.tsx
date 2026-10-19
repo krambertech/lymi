@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { ArrowRight } from "lucide-react";
+import type { ReactNode } from "react";
 import { shelfPath } from "../../lib/explore";
 import type { Locale } from "../../lib/routes";
 import { trayHues } from "../../lib/tray";
@@ -10,12 +11,16 @@ import { SectionTitle } from "./FeatureSection";
 interface Props {
   decks: PublicDeckSummary[];
   locale: Locale;
+  /** The language's shelf in Explore, as its path names it: `japanese`. */
+  shelf: string;
+  body: ReactNode;
+  /** The link to the whole shelf. */
+  all: ReactNode;
 }
 
-/** Every published Japanese deck in one row, and the way to the rest of the shelf. */
-export function JapaneseDecks({ decks, locale }: Props) {
+/** Every published deck in one language in one row, and the way to the rest of the shelf. */
+export function LanguageDecks({ decks, locale, shelf, body, all }: Props) {
   const hues = trayHues(decks);
-  const shelf = shelfPath({ kind: "languages", name: "japanese" }, locale);
 
   return (
     <section aria-labelledby="decks-title" className="border-b border-edge py-20 @4xl:py-28">
@@ -26,18 +31,13 @@ export function JapaneseDecks({ decks, locale }: Props) {
               <Trans>Explore ready-made decks.</Trans>
             </SectionTitle>
           </div>
-          <p className="mt-5 text-md text-pretty text-text-2">
-            <Trans>
-              Free Japanese decks with readings and a voice on every card. Add one in a tap. More
-              are on the way.
-            </Trans>
-          </p>
+          <p className="mt-5 text-md text-pretty text-text-2">{body}</p>
         </div>
         <a
-          href={shelf}
+          href={shelfPath({ kind: "languages", name: shelf }, locale)}
           className="inline-flex items-center gap-1.5 rounded-xs text-md font-medium text-text-2 hoverable:hover:text-text"
         >
-          <Trans>All Japanese decks</Trans>
+          {all}
           <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
         </a>
       </div>

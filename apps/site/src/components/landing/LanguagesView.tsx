@@ -9,18 +9,12 @@ import { openLymiUrl } from "../../lib/origins";
 import { type LocalizedPage, localizedPath } from "../../lib/routes";
 import { Added, AssistantChat, type Turn } from "./AssistantChat";
 import { AssistantMarks, AssistantMarksWithMore } from "./AssistantMarks";
-import { ConversationScenes } from "./ConversationScenes";
 import type { SampleCard } from "./cards";
-import { ESTONIAN_SCENES } from "./estonian-scenes";
 import { FeatureSection, SectionTitle } from "./FeatureSection";
-import { ESTONIAN_QUESTIONS, LANGUAGES_QUESTIONS, type Question } from "./faq";
+import { LANGUAGES_QUESTIONS, type Question } from "./faq";
 import { HandOfCards } from "./HandOfCards";
-import { Hero } from "./Hero";
 import { WORD_FRAMES, type WordFrame } from "./hero-words";
 import {
-  ESTONIAN,
-  ESTONIAN_HAND,
-  ESTONIAN_REVIEW,
   type LanguageCard,
   LEARNING_LANGUAGES,
   type LearningLanguage,
@@ -28,7 +22,6 @@ import {
 } from "./language-cards";
 import { NotesToCards } from "./NotesToCards";
 import { Questions } from "./Questions";
-import { ReviewDemo } from "./ReviewDemo";
 import { RightMoment } from "./RightMoment";
 import { SharedDeckDemo } from "./SharedDeckDemo";
 import { SignUpSection } from "./SignUpSection";
@@ -38,8 +31,6 @@ import { WordFieldHero } from "./WordFieldHero";
 
 export const LANGUAGES_TITLE = msg`Lymi for language learning · Keep the words from every lesson`;
 export const LANGUAGES_BLURB = msg`Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back before you forget.`;
-export const ESTONIAN_TITLE = msg`Remember Estonian vocabulary · Lymi`;
-export const ESTONIAN_BLURB = msg`Keep the Estonian from classes, letters and conversations. Photograph your notes, hear every word said, and review each card right before you’d forget.`;
 
 const SPANISH_ADDED: SampleCard = {
   label: msg`Español · new`,
@@ -316,84 +307,5 @@ export function LanguagesView() {
       questions={LANGUAGES_QUESTIONS}
       joinTitle={<Trans>Keep the words from your next lesson.</Trans>}
     />
-  );
-}
-
-/** The page for people learning Estonian: its words up top, then its notes, reviews and small talk. */
-export function EstonianView() {
-  const openAppUrl = openLymiUrl();
-
-  return (
-    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
-      <header>
-        <SiteNav openAppUrl={openAppUrl} current="estonian" />
-        <Hero
-          title={<Trans>Keep what you learn in Estonian.</Trans>}
-          lede={
-            <Trans>
-              The phrase from Tuesday’s class, the word on a letter from the tax office, the thing
-              the cashier said twice. Save it in a few seconds, hear it said, and Lymi brings it
-              back right before you’d forget.
-            </Trans>
-          }
-          cards={ESTONIAN_HAND}
-          layout="stack"
-        />
-      </header>
-
-      <main>
-        <NotesSection notebooks={[ESTONIAN]} />
-
-        <FeatureSection
-          id="how-it-works"
-          demoFirst
-          title={<Trans>Recall first. Reveal second.</Trans>}
-          body={
-            <Trans>
-              Try to recall the meaning before Lymi shows it. Then grade how well you remembered.
-              Difficult cards return sooner; easy ones wait.
-            </Trans>
-          }
-        >
-          <ReviewDemo cards={ESTONIAN_REVIEW} />
-        </FeatureSection>
-
-        <ConversationScenes
-          title={<Trans>Learn to speak Estonian.</Trans>}
-          body={
-            <Trans>
-              Keep the phrases you’ll actually say. Every card plays aloud, and Lymi asks both ways:
-              what a phrase means, and how to say it from the meaning.
-            </Trans>
-          }
-          scenes={ESTONIAN_SCENES}
-          language="et"
-        />
-
-        <FeatureSection
-          demoFirst
-          title={<Trans>Share one deck with your class.</Trans>}
-          after={<TeachersLink />}
-          body={
-            <Trans>
-              Make a deck for the class and send its join link. Every card you add after a lesson
-              reaches everyone who joined, and each person keeps their own schedule.
-            </Trans>
-          }
-        >
-          <SharedDeckDemo
-            name={ESTONIAN.classDeck.name}
-            language="et"
-            cards={classCards(ESTONIAN)}
-          />
-        </FeatureSection>
-
-        <Questions title={<Trans>Questions before you start.</Trans>} items={ESTONIAN_QUESTIONS} />
-
-        <SignUpSection title={<Trans>Keep the Estonian from your next class.</Trans>} />
-      </main>
-
-      <SiteFooter openAppUrl={openAppUrl} page="estonian" />
-    </div>
   );
 }

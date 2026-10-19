@@ -319,6 +319,11 @@ function FanCard({
           )}
           <div className="mt-auto border-t border-edge-2 pt-3.5">
             {answer}
+            {card.forms && (
+              <p lang={card.language} className="mt-1.5 text-md text-text-2 italic">
+                {card.forms}
+              </p>
+            )}
             {card.note && (
               <p className="mt-2 text-[0.84375rem] leading-[1.45] text-muted">{say(card.note)}</p>
             )}

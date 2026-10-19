@@ -24,6 +24,11 @@ name: Card tags
 - pressKey: Enter
 - assertVisible: "^loan$"
 - assertVisible: "^bank$"
+# Return on a tag the card already has keeps it on.
+- inputText: "noun"
+- pressKey: Enter
+# A name still in the field when ✓ applies goes on as Return would put it.
+- inputText: "fees"
 - takeScreenshot: 02-edited
 # The ticks are a draft until the sheet's ✓; a swipe would drop them.
 - tapOn: "Apply"

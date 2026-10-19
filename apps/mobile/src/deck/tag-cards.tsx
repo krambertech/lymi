@@ -226,7 +226,12 @@ function TagCardsSheet({
       description={online ? undefined : t`Changing tags needs a connection.`}
       open={open}
       onOpenChange={onOpenChange}
-      save={{ label: t`Save`, onPress: () => onSave(change), disabled: changed === 0 || !online }}
+      save={{
+        label: t`Save`,
+        // Anything still typed goes on too, as Return would put it.
+        onPress: () => onSave(list.settle()),
+        disabled: (changed === 0 && !list.query.trim()) || !online,
+      }}
     >
       <TagList list={list} />
     </Sheet>

@@ -278,7 +278,7 @@ export default function EditCard() {
           />
         )}
         {held === "tags" && (
-          <DraftedTags
+          <TagsChoices
             keep={keep}
             value={shownTags}
             onChange={setTags}
@@ -302,15 +302,4 @@ function DraftedModes({
 }: ComponentProps<typeof ModesChoices> & Keeps) {
   const [draft, setDraft] = useDraft(value, onChange, keep);
   return <ModesChoices {...rest} value={draft} onChange={setDraft} />;
-}
-
-/** The card's tags, ticked as a draft that the sheet's ✓ keeps. */
-function DraftedTags({
-  keep,
-  value,
-  onChange,
-  ...rest
-}: ComponentProps<typeof TagsChoices> & Keeps) {
-  const [draft, setDraft] = useDraft(value, onChange, keep);
-  return <TagsChoices {...rest} value={draft} onChange={setDraft} />;
 }

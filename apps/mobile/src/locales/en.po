@@ -1733,6 +1733,9 @@ msgstr "Countries, stars, birds or anything else with names."
 msgid "Create “{typed}”"
 msgstr "Create “{typed}”"
 
+msgid "Create {listed}"
+msgstr "Create {listed}"
+
 msgid "Create a deck first, then add a lesson to it."
 msgstr "Create a deck first, then add a lesson to it."
 

@@ -175,7 +175,7 @@ export function Sheets() {
     <>
       <Sub
         title="Sheet header"
-        note="Every sheet with a title has one header, which Sheet draws: close at the start, the title centred, and an amber ✓ at the end when the sheet holds something to save. A list where a tap is the choice has no ✓. Nothing explains the sheet under its title; a consequence the learner can’t see goes in a note under the rows."
+        note="Every sheet with a title has one header, which Sheet draws: the title centred. A sheet that holds something to save adds close at the start and an amber ✓ at the end; one that saves nothing shows its title alone. Nothing explains the sheet under its title; a consequence the learner can’t see goes in a note under the rows."
         source="docs/design/system/phone.md"
       >
         <Variants
@@ -197,8 +197,8 @@ export function Sheets() {
               ),
             },
             {
-              label: "A tap is the choice: close and title",
-              note: "The tap closes the sheet, so there is nothing for ✓ to do. A note under the rows says what the move keeps or loses.",
+              label: "A tap is the choice: title alone",
+              note: "The tap or a swipe closes the sheet, so it needs no buttons. A note under the rows says what the move keeps or loses.",
               render: () => (
                 <Row>
                   <Button

@@ -68,17 +68,14 @@ describe("deck enrichment fields", () => {
     expect(defaultEnrichFields("zh-Hans")).toEqual(["meaning", "example", "pronunciation"]);
     expect(defaultEnrichFields("ko-KR")).toEqual(["meaning", "example", "notes", "pronunciation"]);
     expect(defaultEnrichFields("vi")).toEqual(["meaning", "example", "pronunciation"]);
+    expect(defaultEnrichFields("tl")).toEqual(["meaning", "example", "notes", "pronunciation"]);
     expect(defaultEnrichFields("ka")).toEqual(["meaning", "example", "pronunciation"]);
+    expect(defaultEnrichFields("lt")).toEqual(["meaning", "example", "notes", "pronunciation"]);
+    for (const tag of ["fi", "lv", "nb", "no", "nn", "da", "nl"])
+      expect(defaultEnrichFields(tag)).toEqual(["meaning", "example", "notes"]);
     expect(deckEnrichFields(null, "et")).toEqual(["meaning", "example", "notes"]);
     expect(deckEnrichFields(["notes", "meaning"], "it")).toEqual(["meaning", "notes"]);
     expect(deckEnrichFields([], "it")).toEqual([]);
-  });
-
-  it("stores no AI fields on a new deck below the evaluation's bar, and leaves other decks to their defaults", () => {
-    for (const tag of ["tl", "fil-PH"]) expect(newDeckEnrichFields(tag)).toEqual([]);
-    expect(defaultEnrichFields("tl")).toEqual(["meaning", "example"]);
-    for (const tag of ["vi", "it", null]) expect(newDeckEnrichFields(tag)).toBeNull();
-    expect(newDeckEnrichFields("tl", "subject")).toBeNull();
   });
 
   it("starts a subject or other deck from the meaning alone, whatever its language", () => {

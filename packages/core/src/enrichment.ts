@@ -34,7 +34,7 @@ export const DECK_ENRICH_FIELDS = ["meaning", "example", "notes", "pronunciation
 export type DeckEnrichField = (typeof DECK_ENRICH_FIELDS)[number];
 
 /** Languages without a configured row whose cards list a word's forms, so notes start on. */
-const FORM_LANGUAGES = new Set(["et", "fi", "de", "nl", "sv"]);
+const FORM_LANGUAGES = new Set(["de", "sv"]);
 
 /** Languages without a configured row whose spelling does not show how a word is said or stressed. */
 const READING_LANGUAGES = new Set(["zh", "ja", "ru", "uk"]);

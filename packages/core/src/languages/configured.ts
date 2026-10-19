@@ -12,7 +12,8 @@ export interface LanguageConfig {
   pronunciation: "pronunciation";
   /** ISO 15924 codes of the scripts its terms are written in. */
   scripts: readonly string[];
-  format: LanguageFormat;
+  /** How its cards are written where that differs from the general way, or null where it does not. */
+  format: LanguageFormat | null;
   /** Other primary subtags learners use for the same language, such as `tl` for Filipino. */
   aliases?: readonly string[];
   starts: readonly StartingField[];
@@ -52,7 +53,7 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
       duplicates: "term",
     },
     starts: ["notes", "pronunciation"],
-    enrichByDefault: false,
+    enrichByDefault: true,
   },
   vi: {
     pronunciation: "pronunciation",
@@ -112,6 +113,71 @@ export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = {
       duplicates: "term",
     },
     starts: ["pronunciation"],
+    enrichByDefault: true,
+  },
+  et: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  fi: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  lv: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  lt: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: {
+      name: "Lithuanian",
+      pronunciation:
+        "The term with its accent mark, as Lithuanian dictionaries print it: an acute, grave or tilde on the stressed syllable (výras, kalbà).",
+      empty: null,
+      never: "Not IPA.",
+      sample: { term: "namas", pronunciation: "nãmas" },
+      duplicates: "term",
+    },
+    starts: ["notes", "pronunciation"],
+    enrichByDefault: true,
+  },
+  nb: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    aliases: ["no"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  nn: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  da: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
+    enrichByDefault: true,
+  },
+  nl: {
+    pronunciation: "pronunciation",
+    scripts: ["Latn"],
+    format: null,
+    starts: ["notes"],
     enrichByDefault: true,
   },
 };

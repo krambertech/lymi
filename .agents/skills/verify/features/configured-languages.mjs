@@ -15,65 +15,68 @@ export default async function drive({ page, base, step, api, expect }) {
   let tagalog;
   let georgian;
 
-  await step("Ask /api/languages: one Filipino entry, and the four others", async () => {
-    const { languages } = await api("/api/languages");
-    const tags = languages.map((language) => language.tag);
-    expect(tags).toEqual(expect.arrayContaining(["fil", "vi", "ka", "hy", "ta"]));
-    expect(tags).not.toContain("tl");
-    const ka = languages.find((language) => language.tag === "ka");
-    expect(ka.pronunciation.sample).toEqual({ term: "ჭიქა", pronunciation: "ch'ika" });
-    return { languages: languages.filter((language) => language.tag !== "ja") };
-  });
+  await step(
+    "Ask /api/languages: one Filipino entry, the others, and none for a language without a format",
+    async () => {
+      const { languages } = await api("/api/languages");
+      const tags = languages.map((language) => language.tag);
+      expect(tags).toEqual(expect.arrayContaining(["fil", "vi", "ka", "hy", "ta", "lt"]));
+      for (const tag of ["tl", "et", "nb"]) expect(tags).not.toContain(tag);
+      const ka = languages.find((language) => language.tag === "ka");
+      expect(ka.pronunciation.sample).toEqual({ term: "ჭიქა", pronunciation: "ch'ika" });
+      return { languages: languages.filter((language) => language.tag !== "ja") };
+    },
+  );
 
-  await step("Make a Tagalog and a Georgian deck: only Georgian enriches unasked", async () => {
+  await step("Make a Tagalog and a Georgian deck: each starts with its row's fields", async () => {
     tagalog = await post("/api/decks", { name: "Tagalog", defaultLanguage: "tl" });
     georgian = await post("/api/decks", { name: "ქართული", defaultLanguage: "ka" });
-    expect(tagalog.enrichFields).toEqual([]);
+    expect(tagalog.enrichFields).toEqual(["meaning", "example", "notes", "pronunciation"]);
     expect(georgian.enrichFields).toEqual(["meaning", "example", "pronunciation"]);
     return { decks: [tagalog, georgian] };
   });
 
-  await step("Add bahay and წყალი with enrichment, and wait for it", async () => {
-    const { results } = await post("/api/cards/batch", {
-      cards: [
-        { deckId: tagalog.id, term: "bahay", enrich: true },
-        { deckId: georgian.id, term: "წყალი", enrich: true },
-      ],
+  await step(
+    "Add bahay and წყალი with enrichment: stress marks and a romanization land",
+    async () => {
+      const { results } = await post("/api/cards/batch", {
+        cards: [
+          { deckId: tagalog.id, term: "bahay", enrich: true },
+          { deckId: georgian.id, term: "წყალი", enrich: true },
+        ],
+      });
+      expect(results.map((r) => r.status)).toEqual(["added", "added"]);
+      await expect.poll(settled(["bahay", "წყალი"]), { timeout: 120_000 }).toEqual([null, null]);
+      const house = await find("bahay");
+      const water = await find("წყალი");
+      expect(house).toMatchObject({ meaningSource: "ai", pronunciationSource: "ai" });
+      expect(house.meaning).toMatch(/house|home/i);
+      expect(house.pronunciation.normalize("NFD")).toMatch(/[\u0300\u0301\u0302]/);
+      expect(water).toMatchObject({ pronunciation: "ts'q'ali", pronunciationSource: "ai" });
+      return { house, water };
+    },
+  );
+
+  await step("Lithuanian keeps its accent mark; Norwegian decks start with notes", async () => {
+    const lithuanian = await post("/api/decks", { name: "Lietuvių", defaultLanguage: "lt" });
+    const norwegian = await post("/api/decks", { name: "Norsk", defaultLanguage: "no" });
+    expect(lithuanian.enrichFields).toEqual(["meaning", "example", "notes", "pronunciation"]);
+    expect(norwegian.enrichFields).toEqual(["meaning", "example", "notes"]);
+    await post("/api/cards/batch", {
+      cards: [{ deckId: lithuanian.id, term: "vyras", enrich: true }],
     });
-    expect(results.map((r) => r.status)).toEqual(["added", "added"]);
-    await expect.poll(settled(["bahay", "წყალი"]), { timeout: 120_000 }).toEqual([null, null]);
-    const water = await find("წყალი");
-    expect(water).toMatchObject({ pronunciation: "ts'q'ali", pronunciationSource: "ai" });
-    expect((await find("bahay")).meaning).toBeNull();
-    return { water };
-  });
-
-  await step("In the Tagalog deck's settings, let AI fill meaning and pronunciation", async () => {
-    const main = page.getByRole("main");
-    await page.goto(`/library/${tagalog.id}/settings`);
-    // The checkbox flips once the saved deck comes back, so click and wait rather than check().
-    for (const name of ["Meaning", "Pronunciation"]) {
-      const box = main.getByRole("checkbox", { name, exact: true });
-      await expect(box).not.toBeChecked();
-      await box.click();
-      await expect(box).toBeChecked();
-    }
-    const stored = async () => (await api("/api/decks")).find((d) => d.id === tagalog.id);
-    await expect
-      .poll(async () => (await stored()).enrichFields)
-      .toEqual(["meaning", "pronunciation"]);
-    return stored();
-  });
-
-  await step("Ask Enrich on bahay: its meaning and stress marks land", async () => {
-    const house = await find("bahay");
-    await post(`/api/cards/${house.id}/enrich`, {});
-    await expect.poll(settled(["bahay"]), { timeout: 120_000 }).toEqual([null]);
-    const filled = await find("bahay");
-    expect(filled).toMatchObject({ meaningSource: "ai", pronunciationSource: "ai" });
-    expect(filled.meaning).toMatch(/house|home/i);
-    expect(filled.pronunciation.normalize("NFD")).toMatch(/[\u0300\u0301\u0302]/);
-    return { filled };
+    await expect.poll(settled(["vyras"]), { timeout: 120_000 }).toEqual([null]);
+    const man = await find("vyras");
+    expect(man.pronunciationSource).toBe("ai");
+    expect(man.pronunciation.normalize("NFD")).toMatch(/^vy\p{M}+ras$/u);
+    await page.goto(`/review?deck=${lithuanian.id}`);
+    await page
+      .getByRole("button", { name: "Reveal the card" })
+      .click({ position: { x: 24, y: 24 } });
+    await expect(
+      page.getByText(man.pronunciation, { exact: true }).filter({ visible: true }),
+    ).toBeVisible();
+    return { man, decks: [lithuanian, norwegian] };
   });
 
   await step("Review წყალი and reveal it: ts'q'ali shows, in Georgian's face", async () => {

@@ -41,6 +41,10 @@ The AI may add readings to an example someone else wrote only when the text is o
 - **Georgian** (`ka`) and **Armenian** (`hy`): the pronunciation is a romanization, Georgian's national system with each ejective marked (ჭიქა ch'ika), and Eastern Armenian as it is said (քույր k'uyr).
 - **Tamil** (`ta`): the pronunciation romanizes the written word as it is read aloud, with macrons and dots (தம்பி tambi). Notes give the spoken form where it differs, *தண்ணீர்*, said *taṇṇi*.
 
+- **Lithuanian** (`lt`): the pronunciation is the term with its accent mark as dictionaries print it, an acute, grave or tilde on the stressed syllable (nãmas, výras, kalbà); the marks are never stripped. Notes give a noun's nominative and genitive and a verb's three forms: *eiti · eina · ėjo*.
+- **Estonian, Finnish and Latvian** are read as written, so the pronunciation stays empty; notes give the principal forms, and for Latvian the genitive and any gender the ending hides: *suns, suņa*.
+- **Norwegian** (`nb`, `no`, `nn`), **Danish** and **Dutch**: notes give a noun's gender or article with its definite and plural forms, *en bil, bilen, biler*, and a strong verb's forms; Nynorsk cards use Nynorsk forms, *ein bil, bilen, bilar*.
+
 A configured language's AI fills cards unasked only while its evaluation passes the bar ([long-tail languages](proposals/long-tail-languages.md)); a new deck in a language below it starts with no AI fields until the owner turns them on.
 
 `GET /api/languages` and [the docs](https://lymi.app/docs/languages) give every language's format from the records in `packages/core/src/languages`.

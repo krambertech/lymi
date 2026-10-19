@@ -161,8 +161,8 @@ describe("public deck media", () => {
     await expect(publicMediaFile(db, cardId, "audio", storage())).rejects.toEqual(missing);
   });
 
-  it("plays a recording only once its publisher approved that clip, and stays silent before", async () => {
-    const { deckId, cardId, slug } = await publishedCard("recording-approval");
+  it("plays a recording as soon as the deck is public, and never voices over a missing clip", async () => {
+    const { cardId, slug } = await publishedCard("recording-public");
     const recorded = `cards/${cardId}/recorded/first.mp3`;
     await env.AUDIO.put(recorded, new Uint8Array([1, 1, 1]), {
       httpMetadata: { contentType: "audio/mpeg" },
@@ -192,27 +192,18 @@ describe("public deck media", () => {
       return page.deck.sections[0]?.cards[0]?.audio;
     };
 
-    // Not approved: no play button, no clip, and no generated speech in its place.
-    expect(await audioOf()).toBeUndefined();
-    await expect(publicMediaFile(db, cardId, "audio", storage())).rejects.toEqual(missing);
-    await expect(publicPronunciation(db, cardId, deps, async () => null)).rejects.toEqual(missing);
-    expect(speak).not.toHaveBeenCalled();
-
-    await publishDeck(
-      publisher,
-      deckId,
-      { ...publication("recording-approval"), approveRecordings: true },
-      publishers,
-    );
     expect(await audioOf()).toEqual({ cardId });
     expect((await publicMediaFile(db, cardId, "audio", storage())).size).toBe(3);
 
-    // A replaced clip is a different recording, so it waits for its own approval.
+    // A recording added after publishing is public at once.
     const replaced = `cards/${cardId}/recorded/second.mp3`;
     await env.AUDIO.put(replaced, new Uint8Array([2, 2]));
     await db.update(schema.cards).set({ audioKey: replaced }).where(eq(schema.cards.id, cardId));
-    expect(await audioOf()).toBeUndefined();
-    await expect(publicMediaFile(db, cardId, "audio", storage())).rejects.toEqual(missing);
+    expect((await publicMediaFile(db, cardId, "audio", storage())).size).toBe(2);
+
+    await env.AUDIO.delete(replaced);
+    await expect(publicPronunciation(db, cardId, deps, async () => null)).rejects.toEqual(missing);
+    expect(speak).not.toHaveBeenCalled();
   });
 
   it.each(["audio/mpeg", "audio/wav"])(

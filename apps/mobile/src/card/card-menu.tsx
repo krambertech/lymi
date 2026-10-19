@@ -34,7 +34,7 @@ export function useArchiveCard() {
       refresh();
       toast.add({
         id: `archive-card-${id}`,
-        title: t`Archived “${term}”`,
+        title: t`Card archived`,
         action: {
           label: t`Undo`,
           onPress: () =>

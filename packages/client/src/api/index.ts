@@ -28,6 +28,7 @@ export {
   apiUrl,
   deviceTimezone,
   errorMessage,
+  RequestTimeout,
   refusalCode,
   refusalDetail,
 } from "./request";

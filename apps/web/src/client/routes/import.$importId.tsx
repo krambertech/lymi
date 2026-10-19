@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../components/button";
 import { ErrorState } from "../components/empty-state";
 import { type Choices, SOURCE_NAMES } from "../components/import-parts";
@@ -11,7 +11,7 @@ import { api, errorMessage, type Import } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
 import { importGuideUrl } from "../lib/import-guides";
 import { resumeUpload, retryUpload, stopUpload, uploading, useUpload } from "../lib/import-uploads";
-import { importQuery } from "../lib/queries";
+import { importPreviewQuery, importQuery, usePreviewState } from "../lib/queries";
 import {
   ImportDoneView,
   ImportPreviewView,
@@ -191,15 +191,8 @@ function Ready({
     roles: Object.fromEntries(summary.noteTypes.map((type) => [type.key, type.roles])),
     skipDecks: [],
   }));
-  const key = useMemo(() => JSON.stringify(choices), [choices]);
-  const preview = useQuery({
-    queryKey: ["imports", item.id, "preview", key],
-    queryFn: () => api.previewImport(item.id, choices),
-    staleTime: 60_000,
-    retry: 1,
-    placeholderData: (previous) => previous,
-    meta: { persist: false },
-  });
+  const preview = useQuery(importPreviewQuery(item.id, choices));
+  const previewState = usePreviewState(preview);
   const confirm = useMutation({
     mutationFn: () => api.confirmImport(item.id, choices),
     onSuccess: (next) => qc.setQueryData(importQuery(item.id).queryKey, next),
@@ -211,8 +204,9 @@ function Ready({
       choices={choices}
       onChoices={setChoices}
       preview={preview.data}
-      previewLoading={preview.isFetching}
-      previewError={preview.isError ? errorMessage(preview.error) : undefined}
+      previewLoading={previewState.waiting}
+      previewError={previewState.error}
+      onPreviewRetry={() => void preview.refetch()}
       onConfirm={() => confirm.mutate()}
       confirming={confirm.isPending}
       confirmError={confirm.isError ? errorMessage(confirm.error) : undefined}

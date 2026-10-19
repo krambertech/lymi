@@ -301,6 +301,9 @@ export const analyticsEvents = {
     recordings: count.optional(),
     recordings_skipped: count.optional(),
     sounds_left_out: count.optional(),
+    pictures: count.optional(),
+    pictures_skipped: count.optional(),
+    write_seconds: count.optional(),
   }),
   import_failed: z.object({ source, card_count: count }),
   export_started: z.object({
@@ -530,7 +533,7 @@ export const analyticsProducers = {
   pronunciation_played: ["browser", "phone"],
   lead_in_decided: ["worker"],
   deck_tag_changed: ["worker"],
-  cards_tagged: ["browser"],
+  cards_tagged: ["browser", "phone"],
   deck_enrichment_changed: ["worker"],
   deck_purpose_set: ["worker"],
   entry_opened: ["phone"],

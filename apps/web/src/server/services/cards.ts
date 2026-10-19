@@ -943,7 +943,7 @@ function editWrite(
       ...section,
       ...(revision === undefined ? bumped("card", patch, current) : { revision }),
       normalizedTerm,
-      ...(audioStale ? { audioKey: null, audioSource: null, audioApprovedKey: null } : {}),
+      ...(audioStale ? { audioKey: null, audioSource: null } : {}),
       ...(draftStale ? { hookDraft: null } : {}),
       updatedAt: now,
     })

@@ -822,6 +822,12 @@ export const ImportOut = z
     progress: z.object({
       written: z.number().int().meta({ description: "Chunks written" }),
       chunks: z.number().int().meta({ description: "Chunks to write" }),
+      media: z
+        .object({
+          done: z.number().int().meta({ description: "Stored or left out so far" }),
+          total: z.number().int().meta({ description: "Expected; 0 until the decks are made" }),
+        })
+        .meta({ description: "Pictures and recordings, which land after their chunk's cards" }),
     }),
     upload: z.object({
       partBytes: z.number().int().meta({ description: "Size of every part but the last" }),
@@ -836,3 +842,18 @@ export const ImportOut = z
   })
   .meta({ id: "Import" });
 export type ImportOut = z.infer<typeof ImportOut>;
+
+/**
+ * How far a write has come, from 0 to 1, or null before it can tell. A chunk of cards and a
+ * picture or recording each count as one, so a deck of pictures moves while they land.
+ */
+export function importProgress(progress: {
+  written: number;
+  chunks: number;
+  /** Absent from a response cached before media were counted. */
+  media?: { done: number; total: number } | undefined;
+}): number | null {
+  const total = progress.chunks + (progress.media?.total ?? 0);
+  if (total <= 0) return null;
+  return Math.min(1, (progress.written + (progress.media?.done ?? 0)) / total);
+}

@@ -18,6 +18,7 @@ import type {
   CardState as CardStateRow,
   Review as ReviewRow,
 } from "@lymi/core/schema";
+import { inCalls } from "./in-calls";
 import { apiUrl, request } from "./request";
 
 export type CardImage = CardImageOut;
@@ -154,28 +155,42 @@ export const cardsApi = {
     request<{ ok: true }>(`/api/cards/${id}/archive`, { method: "POST" }),
   restoreCard: (id: string) =>
     request<{ ok: true }>(`/api/cards/${id}/restore`, { method: "POST" }),
-  /** Up to 200 cards at once; each succeeds or fails on its own. */
+  /** Each card succeeds or fails on its own; a selection past one call's limit goes in several. */
   archiveCards: (cardIds: string[]) =>
-    request<ArchiveCardsOut>("/api/cards/archive", {
-      method: "POST",
-      body: JSON.stringify({ cardIds }),
-    }),
+    inCalls(cardIds, String, (chunk) =>
+      request<ArchiveCardsOut>("/api/cards/archive", {
+        method: "POST",
+        body: JSON.stringify({ cardIds: chunk }),
+      }),
+    ),
   restoreCards: (cardIds: string[]) =>
-    request<ArchiveCardsOut>("/api/cards/restore", {
-      method: "POST",
-      body: JSON.stringify({ cardIds }),
-    }),
+    inCalls(cardIds, String, (chunk) =>
+      request<ArchiveCardsOut>("/api/cards/restore", {
+        method: "POST",
+        body: JSON.stringify({ cardIds: chunk }),
+      }),
+    ),
   editCards: (cards: CardEditInput[]) =>
-    request<TerseCardsOut>("/api/cards/batch?response=terse", {
-      method: "PATCH",
-      body: JSON.stringify({ cards }),
-    }),
-  /** Each card's own mark, in one call of up to 200. */
+    inCalls(
+      cards,
+      (card) => card.cardId,
+      (chunk) =>
+        request<TerseCardsOut>("/api/cards/batch?response=terse", {
+          method: "PATCH",
+          body: JSON.stringify({ cards: chunk }),
+        }),
+    ),
+  /** Each card's own mark. */
   setCardsImportant: (cards: { cardId: string; important: boolean }[]) =>
-    request<ImportantCardsOut>("/api/cards/important", {
-      method: "POST",
-      body: JSON.stringify({ cards }),
-    }),
+    inCalls(
+      cards,
+      (card) => card.cardId,
+      (chunk) =>
+        request<ImportantCardsOut>("/api/cards/important", {
+          method: "POST",
+          body: JSON.stringify({ cards: chunk }),
+        }),
+    ),
   setCardImportant: (id: string, important: boolean) =>
     request<Card>(`/api/cards/${id}/important`, {
       method: "PUT",

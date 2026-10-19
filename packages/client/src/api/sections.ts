@@ -1,9 +1,10 @@
-import type {
-  CardSectionInput,
-  SectionArchiveInput,
-  SectionInput,
-  SectionOut,
-  SectionsOut,
+import {
+  CARD_BATCH_LIMIT,
+  type CardSectionInput,
+  type SectionArchiveInput,
+  type SectionInput,
+  type SectionOut,
+  type SectionsOut,
 } from "@lymi/core";
 import { request } from "./request";
 
@@ -28,11 +29,19 @@ export const sectionsApi = {
       method: "PUT",
       body: JSON.stringify({ sectionIds }),
     }),
-  moveCardsToSection: (deckId: string, body: CardSectionInput) =>
-    request<Sections>(`/api/decks/${deckId}/cards/section`, {
-      method: "PUT",
-      body: JSON.stringify(body),
-    }),
+  /** A call at a time past the bulk limit; a move is safe to send again, so a failed call throws. */
+  moveCardsToSection: async (deckId: string, { cardIds, sectionId }: CardSectionInput) => {
+    let at = 0;
+    let sections: Sections;
+    do {
+      sections = await request<Sections>(`/api/decks/${deckId}/cards/section`, {
+        method: "PUT",
+        body: JSON.stringify({ cardIds: cardIds.slice(at, at + CARD_BATCH_LIMIT), sectionId }),
+      });
+      at += CARD_BATCH_LIMIT;
+    } while (at < cardIds.length);
+    return sections;
+  },
   archiveSection: (id: string, body: SectionArchiveInput) =>
     request<{ ok: true }>(`/api/sections/${id}/archive`, {
       method: "POST",

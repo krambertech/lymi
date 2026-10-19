@@ -336,8 +336,8 @@ interface SheetRowProps {
   destructive?: boolean | undefined;
   /** A short figure at the row's end, such as how many cards a filter keeps. */
   value?: string | undefined;
-  /** In a choice list: whether this is the current one, marked with a check. */
-  chosen?: boolean | undefined;
+  /** In a choice list: whether this is the current one, marked with a check; mixed, a dash, is on some of what it applies to. */
+  chosen?: boolean | "mixed" | undefined;
   /** One of several that can be chosen together: a checkbox rather than a radio. */
   multiple?: boolean | undefined;
   /** Opens more, so it ends in a chevron. */
@@ -375,7 +375,14 @@ export function SheetRow({
             colour={disabled ? p.faint : destructive ? p.danger : p["text-2"]}
           />
         )
-      : chosen && <Icon name="check" size={20} colour={p.text} strokeWidth={2.25} />;
+      : chosen && (
+          <Icon
+            name={chosen === "mixed" ? "minus" : "check"}
+            size={20}
+            colour={p.text}
+            strokeWidth={2.25}
+          />
+        );
   return (
     <Pressable
       onPress={() => {

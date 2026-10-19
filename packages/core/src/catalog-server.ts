@@ -367,9 +367,7 @@ async function readPublicDeck(
         sectionId: cards.sectionId,
         directions: cards.directions,
         reviewModeKeys: cards.reviewModeKeys,
-        // A recording awaiting its publisher's approval keeps the card silent rather than voiced.
-        speakable: sql<number>`${cards.language} is not null and length(${cards.term}) <= ${SPOKEN_TERM_MAX}
-          and (${cards.audioSource} is not 'recorded' or ${cards.audioApprovedKey} = ${cards.audioKey})`,
+        speakable: sql<number>`${cards.language} is not null and length(${cards.term}) <= ${SPOKEN_TERM_MAX}`,
       })
       .from(cards)
       .leftJoin(

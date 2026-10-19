@@ -5,7 +5,7 @@
  * the syllable she hears. It calls paid voices, so it is a script and never a test:
  *
  *   pnpm --filter @lymi/web eval:stress [--dry] [--language ru|uk] [--voice elevenlabs,gemini,openai,chirp or a voice name] [--out dir]
- *   pnpm --filter @lymi/web eval:stress --summary stress-ratings.json [--out dir]
+ *   pnpm --filter @lymi/web eval:stress --summary ~/Downloads/stress-ratings.json [--out dir]
  *   pnpm --filter @lymi/web eval:stress --serve [--port 5243] [--out dir]
  *   pnpm --filter @lymi/web eval:stress --library uk
  *
@@ -252,7 +252,7 @@ if (dry) {
   }
 }
 console.log(
-  `\n${clips.length} clips. Run with --serve and open http://localhost:5243/, or open ${join(out, "index.html")}`,
+  `\n${clips.length} clips. Run with --serve${dry ? " --dry" : ""}${option("--out") ? ` --out ${out}` : ""} and open http://localhost:5243/.`,
 );
 
 async function listLibrary(language: string) {
@@ -319,7 +319,13 @@ function serve(port: number) {
     ".wav": "audio/wav",
   };
   createServer((request, response) => {
-    const pathname = decodeURIComponent(new URL(request.url ?? "/", "http://localhost").pathname);
+    let pathname: string;
+    try {
+      pathname = decodeURIComponent(new URL(request.url ?? "/", "http://localhost").pathname);
+    } catch {
+      response.writeHead(400).end();
+      return;
+    }
     const path = normalize(join(out, pathname.endsWith("/") ? `${pathname}index.html` : pathname));
     if (!path.startsWith(normalize(out) + sep) || !existsSync(path) || !statSync(path).isFile()) {
       response.writeHead(404).end();
@@ -363,10 +369,10 @@ function voices(env: Env, language: string): Voice[] {
         needs: "ELEVENLABS_API_KEY",
         ready: Boolean(env.ELEVENLABS_API_KEY?.trim()),
         name: native.name,
-        // Eleven v4 reads IPA between slashes; earlier models need SSML phoneme tags instead.
-        markup: "IPA between slashes",
+        // Eleven v4 reads IPA in double quotes and slashes; earlier models need SSML phoneme tags.
+        markup: "IPA in quotes and slashes",
         create: (request) => createElevenLabsSpeechProvider(env, gemini, native.voice, request),
-        markupRequest: (_plain, form) => ({ text: `/${form.ipa}/` }),
+        markupRequest: (_plain, form) => ({ text: `"/${form.ipa}/"` }),
       });
     for (const candidate of CANDIDATE_VOICES[language] ?? [])
       list.push({
@@ -459,6 +465,8 @@ function requests(voice: Voice, item: StressItem) {
       .update(
         JSON.stringify([
           item.language,
+          // Dry clips get their own ids, so practice ratings never count in a live run.
+          ...(dry ? ["dry"] : []),
           voiceLabel(voice),
           mode,
           spoken.text,
@@ -647,7 +655,7 @@ kbd { font: 0.8125rem ui-monospace, monospace; border: 1px solid GrayText; borde
 <body>
 <h1>Stress listening test</h1>
 <p>Play each clip and pick the syllable you hear stressed. Flag a clip when the voice says the accent mark or garbles the word, and, in Ukrainian, when it uses Russian vowels. Above each voice's clips, rate how native it sounds. Voices marked candidate are library voices weighed against today's, and they speak only the marked words. The page hides what was sent until you show answers, and keeps your ratings in this browser.</p>
-<p><kbd>Space</kbd> plays again, <kbd>1</kbd>–<kbd>5</kbd> pick a syllable and move on, <kbd>0</kbd> can't tell, <kbd>m</kbd> mark voiced or garbled, <kbd>r</kbd> Russian vowels, <kbd>↑</kbd> <kbd>↓</kbd> move.</p>
+<p><kbd>Space</kbd> plays again, <kbd>1</kbd>–<kbd>5</kbd> pick a syllable and move on, <kbd>0</kbd> can't tell, <kbd>m</kbd> mark voiced or garbled and <kbd>r</kbd> Russian vowels (before picking, or within a second after), <kbd>↑</kbd> <kbd>↓</kbd> move.</p>
 <div id="app"></div>
 <script>window.CLIPS = ${data};</script>
 <script>

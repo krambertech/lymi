@@ -12,7 +12,7 @@ function stressSummary(clips, ratings) {
     lines.push(
       `#### ${language}`,
       "",
-      `| Voice | Sounds native | Plain | Acute | Markup | Mark voiced or garbled |${accent ? ` ${accent} |` : ""} Acute | Markup |`,
+      `| Voice | Sounds native | Plain | Acute | Markup | Mark voiced or garbled |${accent ? ` ${accent} |` : ""} Acute verdict | Markup verdict |`,
       `| --- | --- | --- | --- | --- | --- |${accent ? " --- |" : ""} --- | --- |`,
     );
     const best = [];
@@ -113,6 +113,7 @@ if (typeof document !== "undefined") {
   const app = document.getElementById("app");
   const rows = [];
   let active = 0;
+  let advance;
 
   const element = (tag, props = {}, ...children) => {
     const node = Object.assign(document.createElement(tag), props);
@@ -183,6 +184,7 @@ if (typeof document !== "undefined") {
     if (clip.error) {
       item.append(element("span", { className: "failed", textContent: `Failed: ${clip.error}` }));
       item.options = 0;
+      item.rated = () => true;
       item.paint = () => {};
       item.choose = () => {};
       item.toggle = () => {};
@@ -236,11 +238,13 @@ if (typeof document !== "undefined") {
       ratings[clip.id] = { ...ratings[clip.id], heard };
       save();
       item.paint();
-      const next = rows.slice(index + 1).find((other) => !other.rated?.()) ?? rows[index + 1];
-      if (next) {
-        next.focus();
-        next.listen?.();
-      }
+      clearTimeout(advance);
+      // The pause lets m or r still flag this clip before the next one takes the keys.
+      advance = setTimeout(() => {
+        const next = rows.slice(index + 1).find((other) => !other.rated()) ?? rows[index + 1];
+        next?.focus();
+        next?.listen?.();
+      }, 900);
     };
     item.toggle = (flag) => {
       ratings[clip.id] = { ...ratings[clip.id], [flag]: !ratings[clip.id]?.[flag] };
@@ -313,9 +317,13 @@ if (typeof document !== "undefined") {
     else if (event.key === "0") current.choose(null);
     else if (event.key === "m") current.toggle("voiced");
     else if (event.key === "r" && current.accent) current.toggle("accent");
-    else if (event.key === "ArrowDown" || event.key === "j") rows[active + 1]?.focus();
-    else if (event.key === "ArrowUp" || event.key === "k") rows[active - 1]?.focus();
-    else return;
+    else if (event.key === "ArrowDown" || event.key === "j") {
+      clearTimeout(advance);
+      rows[active + 1]?.focus();
+    } else if (event.key === "ArrowUp" || event.key === "k") {
+      clearTimeout(advance);
+      rows[active - 1]?.focus();
+    } else return;
     event.preventDefault();
   });
 }

@@ -94,8 +94,8 @@ export const STRESS_ITEMS: StressItem[] = [
     { marked: "замо́к", gloss: "lock", ipa: "zɑˈmɔk" },
   ),
   uk(
-    { marked: "бра́ти", gloss: "brothers", ipa: "ˈbrɑtɪ" },
-    { marked: "брати́", gloss: "to take", ipa: "brɑˈtɪ" },
+    { marked: "бра́ти", gloss: "to take", ipa: "ˈbrɑtɪ" },
+    { marked: "брати́", gloss: "brothers", ipa: "brɑˈtɪ" },
   ),
   uk(
     { marked: "доро́га", gloss: "road", ipa: "dɔˈrɔɦɑ" },

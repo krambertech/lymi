@@ -203,7 +203,8 @@ export const JAPANESE_PATH: PathStep[] = [
 export interface VoiceWord {
   id: string;
   term: string;
-  reading: string;
+  /** How the term is read, for a script that doesn't show it: kana for kanji. */
+  reading?: string;
   meaning: MessageDescriptor;
 }
 

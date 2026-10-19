@@ -19,6 +19,7 @@ export type LocalizedPage = keyof typeof localizedPages;
 
 /** Pages rendered per request from the database, in every locale; `sitemap-decks.xml` lists them. */
 export const localizedRuntimePages = [
+  "/languages/estonian",
   "/languages/japanese",
   "/explore",
   "/explore/[slug]",

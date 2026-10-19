@@ -24,6 +24,8 @@ export interface HandCard {
   state?: "new" | "learning" | "known";
   pronunciation?: string;
   meaning: string | MessageDescriptor;
+  /** The forms a learner keeps with the word, as its notes list them: kallis · kalli · kallist. */
+  forms?: string;
   /** One line that makes the term stick: where it comes from, or when it is said. */
   note?: string | MessageDescriptor;
   /** Where the pronunciation plays from, or null for a card without one. Defaults to the clip named by `id`. */

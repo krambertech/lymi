@@ -14,11 +14,13 @@ const FIRST_MS = 300;
 
 interface Props {
   /** The steps whose decks are published, with the deck's name and card count in this edition. */
-  steps: (PathStep & { name: string; count: number })[];
+  steps: (PathStep & { name: string; count: number; edition?: string | undefined })[];
+  /** The language of the words on the cards. */
+  lang: string;
 }
 
 /** The beginner decks in order. The light walks the path once, and each step plays a few of its own cards. */
-export function DeckPath({ steps }: Props) {
+export function DeckPath({ steps, lang }: Props) {
   const { t, i18n } = useLingui();
   const still = useStill();
   const root = useRef<HTMLOListElement>(null);
@@ -35,6 +37,7 @@ export function DeckPath({ steps }: Props) {
   }
 
   const done = beat >= total - 1;
+  const stacked = lang !== "ja";
 
   useEffect(() => {
     // Once through the path, then it rests on the last word.
@@ -104,16 +107,36 @@ export function DeckPath({ steps }: Props) {
                       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                       exit={{ opacity: 0, y: -6, transition: { duration: still ? 0 : 0.2 } }}
                       transition={{ duration: 0.45, ease: EASE }}
-                      className="flex h-full items-end justify-between gap-3"
+                      className={clsx(
+                        "flex h-full",
+                        // Furigana needs the height, so a Japanese word sits beside its answer; a Latin phrase sits above it.
+                        stacked
+                          ? "min-w-0 flex-col items-start justify-end gap-1"
+                          : "items-end justify-between gap-3",
+                      )}
                     >
-                      <span lang="ja" className="text-[34px] leading-[1.55] font-medium text-text">
+                      <span
+                        lang={lang}
+                        className={clsx(
+                          "font-medium text-text",
+                          stacked
+                            ? "max-w-full truncate leading-tight"
+                            : "text-[34px] leading-[1.55]",
+                          stacked && (word.term.length > 9 ? "text-[26px]" : "text-[32px]"),
+                        )}
+                      >
                         {word.furigana ? (
-                          <Furigana term={word.term} reading={word.furigana} lang="ja" />
+                          <Furigana term={word.term} reading={word.furigana} lang={lang} />
                         ) : (
                           word.term
                         )}
                       </span>
-                      <span className="mb-2 truncate text-sm text-text-2">
+                      <span
+                        className={clsx(
+                          "max-w-full truncate text-sm text-text-2",
+                          !stacked && "mb-2",
+                        )}
+                      >
                         {typeof word.answer === "string" ? word.answer : i18n._(word.answer)}
                       </span>
                     </motion.div>
@@ -122,7 +145,7 @@ export function DeckPath({ steps }: Props) {
               </div>
 
               <a
-                href={addUrl(step.slug)}
+                href={addUrl(step.slug, step.edition)}
                 className="group mt-4 inline-flex items-center gap-1.5 rounded-xs text-md font-medium text-amber-text"
               >
                 <Trans>Add to Lymi</Trans>

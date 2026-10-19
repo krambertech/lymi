@@ -1891,8 +1891,8 @@ msgstr "Don’t use your email address in your password."
 msgid "Done"
 msgstr "Done"
 
-msgid "Draft a hook"
-msgstr "Draft a hook"
+msgid "Draft"
+msgstr "Draft"
 
 msgid "Drag a series by its handle. Library shows them in this order."
 msgstr "Drag a series by its handle. Library shows them in this order."

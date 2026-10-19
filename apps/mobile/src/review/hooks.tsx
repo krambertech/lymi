@@ -22,7 +22,7 @@ import { ALWAYS, CROSSFADE, curve, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { SourceChip } from "../ui/chip";
-import { Button, Icon, Text } from "../ui/primitives";
+import { Button, Icon, IconButton, Text } from "../ui/primitives";
 import { Sheet } from "../ui/sheet";
 import { useSheetFocus } from "../ui/sheet-focus";
 
@@ -332,16 +332,26 @@ export function HookSheet({
               </>
             ) : null}
           </View>
-          {draftable && (
-            <Button
-              size="sm"
-              variant="ghost"
-              icon="ai"
-              label={untouched ? t`Another draft` : t`Draft a hook`}
-              loading={drafting}
-              onPress={() => void draft()}
-            />
-          )}
+          {/* Labelled while the field is empty, an icon once a draft is in, as on the web. */}
+          {draftable &&
+            (untouched ? (
+              <IconButton
+                size="sm"
+                icon="ai"
+                label={t`Another draft`}
+                busy={drafting}
+                onPress={() => void draft()}
+              />
+            ) : (
+              <Button
+                size="sm"
+                variant="ghost"
+                icon="ai"
+                label={t`Draft`}
+                loading={drafting}
+                onPress={() => void draft()}
+              />
+            ))}
         </View>
       </View>
     </Sheet>

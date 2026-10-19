@@ -1891,8 +1891,8 @@ msgstr "Не используй адрес почты в пароле."
 msgid "Done"
 msgstr "Готово"
 
-msgid "Draft a hook"
-msgstr "Подготовить зацепку"
+msgid "Draft"
+msgstr "Черновик"
 
 msgid "Drag a series by its handle. Library shows them in this order."
 msgstr "Перетащите серию за ручку. В Библиотеке серии стоят в этом порядке."

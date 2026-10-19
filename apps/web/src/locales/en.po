@@ -2017,6 +2017,9 @@ msgstr "Download {0}"
 msgid "Download the file from Noji’s email within 24 hours, then choose it here."
 msgstr "Download the file from Noji’s email within 24 hours, then choose it here."
 
+msgid "Draft"
+msgstr "Draft"
+
 msgid "Draft a hook"
 msgstr "Draft a hook"
 

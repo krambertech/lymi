@@ -2017,6 +2017,9 @@ msgstr "Скачать {0}"
 msgid "Download the file from Noji’s email within 24 hours, then choose it here."
 msgstr "Скачай файл из письма Noji в течение 24 часов и выбери его здесь."
 
+msgid "Draft"
+msgstr "Черновик"
+
 msgid "Draft a hook"
 msgstr "Подготовить зацепку"
 

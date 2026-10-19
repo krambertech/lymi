@@ -2,14 +2,14 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
 import { CARD_LIMITS, hookable } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Anchor, Sparkle } from "lucide-react";
+import { Anchor, Loader2, Sparkle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { api, type Card, errorMessage } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
 import { composing } from "../lib/composing";
 import { settingsQuery } from "../lib/queries";
 import { captureAnalytics } from "../lib/telemetry";
-import { Button } from "./button";
+import { Button, IconButton } from "./button";
 import { InlineError } from "./inline-error";
 import { toast } from "./ui/toast";
 
@@ -148,39 +148,70 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
         if (!pending) void save();
       }}
     >
-      <label className="flex items-start gap-2 pe-1.5">
-        <Anchor className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
-        <span className="sr-only">{t`Memory hook`}</span>
-        <textarea
-          ref={field}
-          rows={1}
-          value={text}
-          maxLength={CARD_LIMITS.hook}
-          placeholder={t`A sound-alike, or something to picture`}
-          aria-invalid={!!problem || undefined}
-          onChange={(e) => {
-            setText(e.target.value);
-            setProblem(null);
-            setDraftNote(null);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Escape") {
-              // The review leaves on Escape; here it only closes the editor.
+      <div className="flex items-start gap-1">
+        <label className="flex min-w-0 flex-1 items-start gap-2 pe-1.5">
+          <Anchor className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
+          <span className="sr-only">{t`Memory hook`}</span>
+          <textarea
+            ref={field}
+            rows={1}
+            value={text}
+            maxLength={CARD_LIMITS.hook}
+            placeholder={t`A sound-alike, or something to picture`}
+            aria-invalid={!!problem || undefined}
+            onChange={(e) => {
+              setText(e.target.value);
+              setProblem(null);
+              setDraftNote(null);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                // The review leaves on Escape; here it only closes the editor.
+                e.preventDefault();
+                e.stopPropagation();
+                onCancel();
+                return;
+              }
+              // A hook is one phrase, so Enter keeps it; Shift Enter still breaks the line.
+              if (e.key !== "Enter" || e.shiftKey || composing(e)) return;
               e.preventDefault();
-              e.stopPropagation();
-              onCancel();
-              return;
-            }
-            // A hook is one phrase, so Enter keeps it; Shift Enter still breaks the line.
-            if (e.key !== "Enter" || e.shiftKey || composing(e)) return;
-            e.preventDefault();
-            e.currentTarget.form?.requestSubmit();
-          }}
-          autoComplete="off"
-          enterKeyHint="done"
-          className="field-sizing-content min-w-0 flex-1 resize-none bg-transparent text-md leading-snug text-text outline-none placeholder:text-faint"
-        />
-      </label>
+              e.currentTarget.form?.requestSubmit();
+            }}
+            autoComplete="off"
+            enterKeyHint="done"
+            className="field-sizing-content min-w-0 flex-1 resize-none bg-transparent text-md leading-snug text-text outline-none placeholder:text-faint"
+          />
+        </label>
+        {/* The field's own helper, so the foot keeps two actions: labelled while the field is empty, an icon once a draft is in. */}
+        {draftable &&
+          (untouched ? (
+            <IconButton
+              size="sm"
+              label={t`Another draft`}
+              aria-busy={drafting || undefined}
+              aria-disabled={drafting || undefined}
+              className="-my-1.5"
+              onClick={() => void draft()}
+            >
+              {drafting ? <Loader2 className="animate-spin" /> : <Sparkle />}
+            </IconButton>
+          ) : (
+            <Button
+              size="sm"
+              variant="ghost"
+              aria-label={t`Draft a hook`}
+              loading={drafting}
+              aria-disabled={drafting}
+              className="-my-1.5"
+              onClick={() => {
+                if (!drafting) void draft();
+              }}
+            >
+              <Sparkle data-icon="inline-start" aria-hidden="true" />
+              <Trans>Draft</Trans>
+            </Button>
+          ))}
+      </div>
       {/* A narrow card puts the status on its own line, so Save never leaves the edge. */}
       <div className="flex flex-wrap items-center justify-end gap-1 ps-6">
         <p
@@ -201,20 +232,6 @@ export function HookEditor({ card, onCancel, onSaved }: Props) {
             </span>
           ) : null}
         </p>
-        {draftable && (
-          <Button
-            size="sm"
-            variant="ghost"
-            loading={drafting}
-            aria-disabled={drafting}
-            onClick={() => {
-              if (!drafting) void draft();
-            }}
-          >
-            <Sparkle data-icon="inline-start" aria-hidden="true" />
-            {untouched ? <Trans>Another draft</Trans> : <Trans>Draft a hook</Trans>}
-          </Button>
-        )}
         <Button size="sm" variant="ghost" onClick={onCancel}>
           <Trans>Cancel</Trans>
         </Button>

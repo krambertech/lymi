@@ -87,6 +87,7 @@ const source = z.enum([
   "lymi",
   "csv",
   "quizlet",
+  "pleco",
   "ai_mcp",
   "typed",
   "lesson",
@@ -296,13 +297,13 @@ export const analyticsEvents = {
   import_started: z.object({
     source,
     card_count: count,
-    adapter: z.enum(["anki", "mochi", "noji", "lymi", "quizlet", "unknown"]),
+    adapter: z.enum(["anki", "mochi", "noji", "lymi", "quizlet", "pleco", "unknown"]),
     outcome: z.literal("started"),
   }),
   import_finished: z.object({
     source,
     card_count: count,
-    adapter: z.enum(["anki", "mochi", "noji", "lymi", "quizlet", "unknown"]),
+    adapter: z.enum(["anki", "mochi", "noji", "lymi", "quizlet", "pleco", "unknown"]),
     outcome: z.enum(["done", "failed"]),
     recordings: count.optional(),
     recordings_skipped: count.optional(),
@@ -310,6 +311,8 @@ export const analyticsEvents = {
     pictures: count.optional(),
     pictures_skipped: count.optional(),
     write_seconds: count.optional(),
+    /** New cards whose Reading was converted, such as pinyin tone numbers to marks. */
+    readings_converted: count.optional(),
   }),
   import_failed: z.object({ source, card_count: count }),
   export_started: z.object({

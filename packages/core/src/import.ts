@@ -4,7 +4,7 @@ import { OPEN } from "./responses/common";
 import { type FieldSource, LanguageTag, type Rating, ReviewModeKey } from "./types";
 
 /** Where an import's file came from. Each source is one adapter on the server. */
-export const ImportSource = z.enum(["anki", "mochi", "noji", "lymi", "quizlet"]);
+export const ImportSource = z.enum(["anki", "mochi", "noji", "lymi", "quizlet", "pleco"]);
 export type ImportSource = z.infer<typeof ImportSource>;
 
 /**
@@ -623,13 +623,17 @@ export const ImportStartInput = z.object({
     .max(255)
     .regex(
       IMPORT_FILE_NAME,
-      "Choose the .apkg, .colpkg, .mochi, .ofc or .zip file Anki, Mochi, Noji or Lymi exports, or the .txt of a Quizlet set.",
+      "Choose the .apkg, .colpkg, .mochi, .ofc or .zip file Anki, Mochi, Noji or Lymi exports, or the .txt of a Quizlet set or a Pleco export.",
     ),
   byteSize: z
     .number()
     .int()
     .positive()
     .max(MAX_IMPORT_BYTES, "The file is larger than 1 GB. Export one deck at a time instead."),
+  source: ImportSource.optional().meta({
+    description:
+      "The app the learner chose the file for, named until the file is read; reading the file decides",
+  }),
 });
 export type ImportStartInput = z.infer<typeof ImportStartInput>;
 
@@ -695,6 +699,10 @@ export const ImportCounts = z
       .number()
       .int()
       .meta({ description: "New cards whose pitch accent could not be read as text, left out" }),
+    readingsConverted: z.number().int().optional().meta({
+      description:
+        "New cards whose Reading was converted to how Lymi stores it, such as pinyin tone numbers to tone marks; absent for imports written before it was counted",
+    }),
     decks: z.number().int().meta({ description: "Decks created" }),
   })
   .meta({ id: "ImportCounts" });
@@ -715,6 +723,7 @@ export const emptyImportCounts = (): ImportCounts => ({
   recordingsSkipped: 0,
   soundsLeftOut: 0,
   pitchSkipped: 0,
+  readingsConverted: 0,
   decks: 0,
 });
 
@@ -757,6 +766,9 @@ export const ImportSummaryOut = z
     languages: z
       .record(z.string(), z.string().nullable())
       .meta({ description: "A first guess at each deck's language" }),
+    tags: z.array(z.string()).optional().meta({
+      description: "Tags the file names apart from its cards, such as Pleco's categories",
+    }),
   })
   .meta({ id: "ImportSummary" });
 export type ImportSummaryOut = z.infer<typeof ImportSummaryOut>;
